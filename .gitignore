@@ -1,0 +1,16 @@
+*vscode/*
+backup/*
+build/*
+*.txt
+*.bin
+*.elf
+*.cia
+*.3ds
+*.3dsx
+*.firm
+*.d
+*.o
+*.map
+*.lst
+*.elf
+*.smdh
