@@ -1,8 +1,11 @@
 #include "logic.hpp"
+#include "settings.hpp"
 #include <string>
 #include <cstdio>
 #include <algorithm>
 #include <3ds.h>
+
+using namespace Settings;
 
 namespace Logic {
 
@@ -121,6 +124,7 @@ namespace Logic {
   //Drops and Bottle Contents Access
   bool DekuNutDrop      = false;
   bool NutPot           = false;
+  bool NutCrate         = false;
   bool DekuBabaNuts     = false;
   bool DekuStickDrop    = false;
   bool StickPot         = false;
@@ -208,6 +212,7 @@ namespace Logic {
   bool CanPlantBean       = false;
   bool CanOpenBombGrotto  = false;
   bool CanOpenStormGrotto = false;
+  bool HookshotOrBoomerang = false;
 
   bool GuaranteeTradePath     = false;
   bool GuaranteeHint          = false;
@@ -228,13 +233,12 @@ namespace Logic {
   bool CanBuildRainbowBridge = false;
   bool CanTriggerLACS        = false;
 
-  //Other (idk where these go yet)
+  //Other
   bool AtDay         = false;
   bool AtNight       = false;
-  bool HasNightStart = false;
-  bool LinksCow      = false;
-  bool AtDampeTime   = false;
-  bool DeliverLetter = false;
+  bool IsStartingAge = false;
+  std::string Age    = "";
+  u16 CurAccessibleLocations = 0;
 
   //Events
   bool ShowedMidoSwordAndShield  = false;
@@ -246,115 +250,15 @@ namespace Logic {
   bool GCWoodsWarpOpen           = false;
   bool StopGCRollingGoronAsAdult = false;
   bool ChildWaterTemple          = false;
+  bool KakarikoVillageGateOpen   = false;
+  bool KingZoraThawed            = false;
+  bool ForestTempleJoAndBeth     = false;
+  bool ForestTempleAmyAndMeg     = false;
+  bool LinksCow                  = false;
+  bool AtDampeTime               = false;
+  bool DeliverLetter             = false;
 
   /* --- END OF HELPERS AND LOCATION ACCESS --- */
-
-  //Logic Settings
-  bool LogicMidoBackflip        = false;
-  bool LogicLostWoodsBridge     = false;
-  bool LogicGrottosWithoutAgony = false;
-  bool LogicBiggoronBolero      = false;
-  bool LogicGerudoKitchen       = false;
-  bool LogicWaterHookshotEntry  = false;
-  bool LogicLensWasteland       = false;
-  bool LogicReverseWasteland    = false;
-  bool LogicVisibleCollision    = false;
-  bool LogicManOnRoof           = false;
-  bool LogicKakarikoTowerGS     = false;
-  bool LogicDMTBombable              = false;
-  bool LogicLinkGoronDins            = false;
-  bool LogicGoronCityLeftMost        = false;
-  bool LogicGoronCityPot             = false;
-  bool LogicGoronCityPotWithStrength = false;
-  bool LogicChildRollingWithStrength = false;
-  bool LogicCraterUpperToLower       = false;
-  bool LogicCraterBeanPoHWithHovers  = false;
-  bool LogicZoraWithHovers           = false;
-  bool LogicZoraWithCucco            = false;
-  bool LogicFewerTunicRequirements   = false;
-  bool LogicDekuB1WebsWithBow        = false;
-  bool LogicDekuB1Skip               = false;
-  bool LogicDCStaircase              = false;
-  bool LogicDCJump                   = false;
-  bool LogicDCSlingshotSkip          = false;
-  bool LogicJabuBossGSAdult          = false;
-  bool LogicForestOutsideBackdoor    = false;
-  bool LogicForestScarecrow          = false;
-  bool LogicForestVines              = false;
-  bool LogicLabDiving                = false;
-  bool LogicZoraRiverLower           = false;
-  bool LogicZoraRiverUpper           = false;
-  bool LogicGraveyardPoH             = false;
-  bool LogicChildDampeRacePoH        = false;
-  bool LogicFireBossDoorJump         = false;
-  bool LogicFireStrength             = false;
-  bool LogicFireScarecrow            = false;
-  bool LogicFireFlameMaze            = false;
-  bool LogicWaterTempleTorchLongshot = false;
-  bool LogicWaterCentralBow          = false;
-  bool LogicWaterCrackedWallNothing  = false;
-  bool LogicWaterCrackedWallHovers   = false;
-  bool LogicWaterBossKeyRegion       = false;
-  bool LogicWaterDragonBombchu       = false;
-  bool LogicWaterBKJumpDive          = false;
-  bool LogicWaterNorthBasementLedgeJump = false;
-  bool LogicWaterBKChest             = false;
-  bool LogicWaterDragonJumpDive      = false;
-  bool LogicSpiritLowerAdultSwitch   = false;
-  bool LogicSpiritChildBombchu       = false;
-  bool LogicSpiritWall               = false;
-  bool LogicSpiritLobbyGS            = false;
-  bool LogicSpiritMapChest           = false;
-  bool LogicSpiritSunChest           = false;
-  bool LogicShadowFireArrowEntry     = false;
-  bool LogicShadowUmbrella           = false;
-  bool LogicShadowFreestandingKey    = false;
-  bool LogicShadowStatue             = false;
-  bool LogicBotwCageGS               = false;
-  bool LogicChildDeadhand            = false;
-  bool LogicGtgWithoutHookshot       = false;
-  bool LogicGtgFakeWall              = false;
-  bool LogicLensSpirit               = false;
-  bool LogicLensShadow               = false;
-  bool LogicLensShadowBack           = false;
-  bool LogicLensBotw                 = false;
-  bool LogicLensGtg                  = false;
-  bool LogicLensCastle               = false;
-  bool LogicSpiritTrialHookshot      = false;
-  bool KakarikoVillageGateOpen       = false;
-  bool KingZoraThawed                = false;
-  bool ForestTempleJoAndBeth         = false;
-  bool ForestTempleAmyAndMeg         = false;
-  bool BombchusInLogic       = false;
-  bool BombchuDrop           = false;
-  bool OpenDoorOfTime        = false;
-  bool SkippedTrials         = false;
-  std::string OpenForest       = "";
-  std::string OpenKakariko     = "";
-  std::string Bridge           = "";
-  std::string LACSCondition    = "";
-  std::string GerudoFortress   = "";
-  std::string DamageMultiplier = "";
-  std::string ZorasFountain    = "";
-  std::string StartingAge      = "";
-  std::string Age              = "";
-  std::string TimeOfDay        = "";
-  std::string Keysanity        = "";
-  std::string BossKeysanity    = "";
-  std::string MapsAndCompasses = "";
-  bool IsStartingAge = false;
-  bool CanBeAdult    = false;
-  bool CanBeChild    = false;
-  bool ShuffleDungeonEntrances       = false;
-  bool ShuffleOverworldEntrances     = false;
-  bool ShuffleSpecialIndoorEntrances = false;
-  bool ShuffleWeirdEgg               = false;
-  bool ShuffleGerudoToken            = false;
-  bool ShuffleZeldasLetter           = false;
-  bool ShuffleKokiriSword            = false;
-  bool ShuffleSongs                  = false;
-  bool Skullsanity                   = false;
-  bool Shopsanity                    = false;
 
   //Placement Tracking
   u8 AddedProgressiveBulletBags = 0;
@@ -366,6 +270,7 @@ namespace Logic {
   u8 AddedProgressiveWallets    = 0;
   u8 AddedProgressiveStrengths  = 0;
   u8 AddedProgressiveOcarinas   = 0;
+  u8 TokensInPool               = 0;
   bool DrainWellPast            = false;
   bool DampesWindmillAccessPast = false;
   bool DekuTreeClearPast        = false;
@@ -483,7 +388,7 @@ namespace Logic {
 
     //Drop Access
     DekuStickDrop = StickPot || DekuBabaSticks;
-    DekuNutDrop   = NutPot   || DekuBabaNuts;
+    DekuNutDrop   = NutPot   || NutCrate || DekuBabaNuts;
     BugsAccess    = BugShrub || WanderingBugs    || BugRock;
     FishAccess    = LoneFish || FishGroup;
     FairyAccess   = FairyPot || GossipStoneFairy || BeanPlantFairy || ButterflyFairy || FreeFairies || FairyPond;
@@ -524,8 +429,9 @@ namespace Logic {
     CanPlantBean       = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto  = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
+    HookshotOrBoomerang = CanUse("Hookshot") || CanUse("Boomerang");
 
-  //GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || 'Stop GC Rolling Goron As Adult';
+    GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
     HasFireSource          = CanUse("Dins Fire") || CanUse("Fire Arrows");
     HasFireSourceWithTorch = HasFireSource || (IsChild && Sticks);
@@ -555,34 +461,6 @@ namespace Logic {
                      (LACSCondition == "Medallions" && HasAllMedallions)                   ||
                      (LACSCondition == "Dungeons"   && HasAllStones && HasAllMedallions);
 
-  }
-
-  //Function to set flags depending on settings
-  void UpdateSettings() {
-    CanBeChild = true;
-    LogicGrottosWithoutAgony = true;
-    LogicBiggoronBolero = true;
-    LogicGerudoKitchen = false;
-    LogicManOnRoof = true;
-    ShuffleWeirdEgg = false;
-    ShuffleZeldasLetter = false;
-    ShuffleKokiriSword  = false;
-    BombchusInLogic = true;
-    LogicDekuB1Skip = true;
-    OpenDoorOfTime = true;
-    LightMedallion = true;
-
-    OpenForest = "Closed";
-    Bridge = "Medallions";
-    LACSCondition = "Medallions";
-    DamageMultiplier = "1x";
-    StartingAge = "Child";
-    Keysanity = "All Locations";
-    BossKeysanity = "Vanilla";
-    MapsAndCompasses = "Vanilla";
-    GerudoFortress = "Normal";
-
-    UpdateHelpers();
   }
 
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
@@ -625,5 +503,13 @@ namespace Logic {
     ButterflyFairy   = ButterflyFairy   || (CanUse("Sticks"));
     BugShrub         = CanCutShrubs;
     LoneFish         = true;
+  }
+
+  void DekuBabaSticksCheck() {
+    DekuBabaSticks = DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);
+  }
+
+  void DekuBabaNutsCheck() {
+    DekuBabaNuts   = DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse("Dins Fire"));
   }
 }

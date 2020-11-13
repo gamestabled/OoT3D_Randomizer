@@ -27,10 +27,6 @@ std::vector<ItemLocation *> allLocations = {
   &KF_MidoTopRightChest,
   &KF_MidoBottomLeftChest,
   &KF_MidoBottomRightChest,
-  //&KF_GSKNowItAllHouse,
-  //&KF_GSBeanPatch,
-  //&KF_GSHouseOfTwins,
-  //&KF_GossipStone,
   &KF_StormsGrottoChest,
 
   //Lost Woods
@@ -81,8 +77,8 @@ std::vector<ItemLocation *> allLocations = {
 
   //Gerudo Fortress
   &GF_Chest,
-  //&GF_HBA1000Points,
-  //&GF_HBA1500Points,
+  &GF_HBA1000Points,
+  &GF_HBA1500Points,
   &GF_NorthF1Carpenter,
   &GF_NorthF2Carpenter,
   &GF_SouthF1Carpenter,
@@ -112,13 +108,13 @@ std::vector<ItemLocation *> allLocations = {
   //Kakariko
   &Kak_RedeadGrottoChest,
   &Kak_OpenGrottoChest,
-  //&Kak_10GoldSkulltulaReward,
-  //&Kak_20GoldSkulltulaReward,
-  //&Kak_30GoldSkulltulaReward,
-  //&Kak_40GoldSkulltulaReward,
-  //&Kak_50GoldSkulltulaReward,
-  //&Kak_ManOnRoof,
-  //&Kak_ShootingGalleryReward,
+  &Kak_10GoldSkulltulaReward,
+  &Kak_20GoldSkulltulaReward,
+  &Kak_30GoldSkulltulaReward,
+  &Kak_40GoldSkulltulaReward,
+  &Kak_50GoldSkulltulaReward,
+  &Kak_ManOnRoof,
+  &Kak_ShootingGalleryReward,
   &Kak_AnjuAsChild,
   &Kak_AnjuAsAdult,
   &Kak_ImpasHouseFreestandingPoH,
@@ -163,7 +159,7 @@ std::vector<ItemLocation *> allLocations = {
   //Zoras River
   &ZR_OpenGrottoChest,
   &ZR_MagicBeanSalesman,
-  //&ZR_FrogsOcarinaGame,
+  &ZR_FrogsOcarinaGame,
   &ZR_FrogsInTheRain,
   &ZR_NearOpenGrottoFreestandingPoH,
   &ZR_NearDomainFreestandingPoH,
@@ -352,8 +348,147 @@ std::vector<ItemLocation *> allLocations = {
   &GanonsCastle_LightTrialThirdRightChest,
   &GanonsCastle_LightTrialInvisibleEnemiesChest,
   &GanonsCastle_LightTrialLullabyChest,
-
   &GanonsCastle_BossKeyChest,
+
+  /*-------------------------------
+     --- GOLD SKULLTULA TOKENS ---
+    -------------------------------*/
+
+  //Deku Tree
+  &DekuTree_GS_BasementBackRoom,
+  &DekuTree_GS_BasementGate,
+  &DekuTree_GS_BasementVines,
+  &DekuTree_GS_CompassRoom,
+
+  //Dodongos Cavern
+  &DodongosCavern_GS_VinesAboveStairs,
+  &DodongosCavern_GS_Scarecrow,
+  &DodongosCavern_GS_AlcoveAboveStairs,
+  &DodongosCavern_GS_BackRoom,
+  &DodongosCavern_GS_SideRoomNearLowerLizalfos,
+
+  //Jabu Jabus Belly
+  &JabuJabusBelly_GS_LobbyBasementLower,
+  &JabuJabusBelly_GS_LobbyBasementUpper,
+  &JabuJabusBelly_GS_NearBoss,
+  &JabuJabusBelly_GS_WaterSwitchRoom,
+
+  //Forest Temple
+  &ForestTemple_GS_RaisedIslandCourtyard,
+  &ForestTemple_GS_FirstRoom,
+  &ForestTemple_GS_LevelIslandCourtyard,
+  &ForestTemple_GS_Lobby,
+  &ForestTemple_GS_Basement,
+
+  //Fire Temple
+  &FireTemple_GS_SongOfTimeRoom,
+  &FireTemple_GS_BossKeyLoop,
+  &FireTemple_GS_BoulderMaze,
+  &FireTemple_GS_ScarecrowTop,
+  &FireTemple_GS_ScarecrowClimb,
+
+  //Water Temple
+  &WaterTemple_GS_BehindGate,
+  &WaterTemple_GS_FallingPlatformRoom,
+  &WaterTemple_GS_CentralPillar,
+  &WaterTemple_GS_NearBossKeyChest,
+  &WaterTemple_GS_River,
+
+  //Spirit Temple
+  &SpiritTemple_GS_HallAfterSunBlockRoom,
+  &SpiritTemple_GS_BoulderRoom,
+  &SpiritTemple_GS_Lobby,
+  &SpiritTemple_GS_SunOnFloorRoom,
+  &SpiritTemple_GS_MetalFence,
+
+  //Shadow Temple
+  &ShadowTemple_GS_SingleGiantPot,
+  &ShadowTemple_GS_FallingSpikesRoom,
+  &ShadowTemple_GS_TripleGiantPot,
+  &ShadowTemple_GS_LikeLikeRoom,
+  &ShadowTemple_GS_NearShip,
+
+  //Bottom of the Well
+  &BottomOfTheWell_GS_LikeLikeCage,
+  &BottomOfTheWell_GS_EastInnerRoom,
+  &BottomOfTheWell_GS_WestInnerRoom,
+
+  //Ice Cavern
+  &IceCavern_GS_PushBlockRoom,
+  &IceCavern_GS_SpinningScytheRoom,
+  &IceCavern_GS_HeartPieceRoom,
+
+  //Overworld
+  &KF_GS_BeanPatch,
+  &KF_GS_KnowItAllHouse,
+  &KF_GS_HouseOfTwins,
+
+  &LW_GS_BeanPatchNearBridge,
+  &LW_GS_BeanPatchNearTheater,
+  &LW_GS_AboveTheater,
+  &SFM_GS,
+
+  &HF_GS_CowGrotto,
+  &HF_GS_NearKakGrotto,
+
+  &LH_GS_BeanPatch,
+  &LH_GS_SmallIsland,
+  &LH_GS_LabWall,
+  &LH_GS_LabCrate,
+  &LH_GS_Tree,
+
+  &GV_GS_BeanPatch,
+  &GV_GS_SmallBridge,
+  &GV_GS_Pillar,
+  &GV_GS_BehindTent,
+
+  &GF_GS_ArcheryRange,
+  &GF_GS_TopFloor,
+
+  &HW_GS,
+  &Colossus_GS_BeanPatch,
+  &Colossus_GS_Hill,
+  &Colossus_GS_Tree,
+
+  &OGC_GS,
+  &HC_GS_StormsGrotto,
+  &HC_GS_Tree,
+  &MK_GS_GuardHouse,
+
+  &Kak_GS_HouseUnderConstruction,
+  &Kak_GS_SkulltulaHouse,
+  &Kak_GS_GuardsHouse,
+  &Kak_GS_Tree,
+  &Kak_GS_Watchtower,
+  &Kak_GS_AboveImpasHouse,
+
+  &DMC_GS_BeanPatch,
+  &DMC_GS_Crate,
+
+  &DMT_GS_BeanPatch,
+  &DMT_GS_NearKak,
+  &DMT_GS_AboveDodongosCavern,
+  &DMT_GS_FallingRocksPath,
+
+  &GC_GS_CenterPlatform,
+  &GC_GS_BoulderMaze,
+  &GY_GS_Wall,
+  &GY_GS_BeanPatch,
+
+  &ZR_GS_Ladder,
+  &ZR_GS_Tree,
+  &ZR_GS_AboveBridge,
+  &ZR_GS_NearRaisedGrottos,
+
+  &ZD_GS_FrozenWaterfall,
+  &ZF_GS_AboveTheLog,
+  &ZF_GS_HiddenCave,
+  &ZF_GS_Tree,
+
+  &LLR_GS_BackWall,
+  &LLR_GS_RainShed,
+  &LLR_GS_HouseWindow,
+  &LLR_GS_Tree,
 };
 
 void SpoilerLog_SaveLocation(const char *loc, const char *item) {

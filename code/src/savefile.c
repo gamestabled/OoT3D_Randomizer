@@ -17,12 +17,22 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xB] |= 0x03FF; //entered DMC, Colossus, Zora's Fountain, Graveyard, JJB, LLR, Gerudo Fortress, Gerudo Valley, Lake Hylia, DC
     gSaveContext.eventChkInf[0xC] |= 0x0022; //Sheik Spawned at MS pedestal as Adult and Saria gift cutscene
 
+    gSaveContext.itemGetInf [0x1] |= 0x0008; //Deku seeds text
+
+    gSaveContext.infTable  [0x20] |= 0x000E; //Ruto in Jabu can be escorted immediately
+
     //navi text triggers
-    gSaveContext.sceneFlags[0].swch |= 0x80080400; //deku tree vines and door and rolling spike
-    gSaveContext.sceneFlags[1].swch |= 0x00004800; //dodongo entrance text and spike trap text
+    gSaveContext.sceneFlags [0].swch |= 0x80080400; //deku tree vines and door and rolling spike
+    gSaveContext.sceneFlags [1].swch |= 0x00004900; //dodongo entrance text and spike trap text
+    gSaveContext.sceneFlags [2].swch |= 0x0F010000; //jabu jabu
+    gSaveContext.sceneFlags [3].swch |= 0x01C00300; //forest temple
+    gSaveContext.sceneFlags [4].swch |= 0x00080000; //fire temple
+    gSaveContext.sceneFlags [5].swch |= 0x00000080; //water temple
 
-    gSaveContext.sceneFlags[3].swch |= 0x01000000; //forest temple (twisted hallway)
+    gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern
 
-    gSaveContext.sceneFlags[5].swch |= 0x00000080; //water temple (snake water room)
+    gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
+    //open lowest fire temple locked door
+    gSaveContext.sceneFlags [4].swch |= 0x00008000;
 }

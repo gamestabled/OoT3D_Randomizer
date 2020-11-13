@@ -9,7 +9,7 @@
 #include "../code/src/item_override.h"
 
 
-#define ITEMOVERRIDETABLE_ADDR 0x005cc138 //TODO, make this automatically generate
+#define ITEMOVERRIDETABLE_ADDR 0x005d1e40 //TODO, make this automatically generate
 #define V_TO_P(addr) (addr - 0x100000)
 
 std::set<ItemOverride, Playthrough::ItemOverride_Compare> Overrides;
@@ -101,7 +101,6 @@ int main() {
 
 		if (kDown & KEY_A) { // If the A button got pressed, do the thing
 			Overrides.clear();
-			Playthrough::Reset(); //not implemented yet
 			printf("about to fill with seed %d\n", seed);
 			int ret = Playthrough::Fill(0, seed, Overrides);
 			if (ret < 0) {

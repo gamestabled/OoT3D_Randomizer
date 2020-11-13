@@ -6,6 +6,7 @@
 #include "item_location.hpp"
 #include "item_list.hpp"
 #include "logic.hpp"
+#include "settings.hpp"
 
 class Exit;
 
@@ -19,8 +20,8 @@ public:
 };
 
 class ExitPairing {
-public:         //This exit, the conditions needed to access the exit, whether this exit can be accessed at only day/night or both
-    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_, std::string ToD = "Both")
+public:         //The exit,  the conditions needed to access the exit, whether this exit can be accessed at only day/night or both
+    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_    , std::string ToD = "Both")
               : exit(exit_), ConditionsMet(ConditionsMet_) {}
     Exit* exit;
     std::function<bool()> ConditionsMet;
@@ -42,6 +43,7 @@ public:
         : regionName(regionName_),      scene(scene_),       hint(hint_), timePass(timePass_),          events(events_),             locations(locations_),         exits(exits_),   advancementNeeds(advancementNeeds_){
           accountedForChild = false;
           accountedForAdult = false;
+          addedToPool = false;
           dayChild   = false;
           nightChild = false;
           dayAdult   = false;
@@ -59,6 +61,7 @@ public:
 
     bool accountedForChild;
     bool accountedForAdult;
+    bool addedToPool;
     bool dayChild;
     bool nightChild;
     bool dayAdult;
@@ -79,34 +82,39 @@ public:
       return events();
     }
 
-    bool CanPlantBean() {
-      return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
+
+    bool Child() {
+      return dayChild || nightChild;
+    }
+
+    bool Adult() {
+      return dayAdult || nightAdult;
     }
 
     bool BothAges() {
-      return (dayChild || nightChild) && (dayAdult || nightAdult);
+      return Child() && Adult();
+    }
+
+    bool HasAccess() {
+      return Child() || Adult();
+    }
+
+    bool AllAccess() {
+      return dayChild && nightChild && dayAdult && nightAdult;
+    }
+
+    bool CanPlantBean() {
+      return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
     }
 
     //checks to see if all locations and exits are accessible
     bool AllAccountedFor() {
 
-      for (auto loc = locations.begin(); loc != locations.end(); loc++) {
-        if (!loc->location->isUsed())
-          return false;
-      }
-
-      for (auto exit = exits.begin(); exit != exits.end(); exit++) {
-        if (!exit->ConditionsMet())
-          return false;
-      }
-
-      for (auto item = advancementNeeds.begin(); item != advancementNeeds.end(); item++) {
-        if (!item->ConditionsMet()) {
-          return false;
-        }
-      }
-
-      return UpdateEvents() && dayChild && nightChild && dayAdult && nightAdult;
+      return UpdateEvents()        &&
+             AllAccess()           &&
+             locations.size() == 0 &&
+             exits.size()     == 0 &&
+             advancementNeeds.size() == 0;
     }
 
     void UpdateAdvancementNeeds() {
@@ -127,6 +135,11 @@ public:
         //If the adding conditions are met and the item is still in the item pool
         if (advancementNeeds[i].ConditionsMet() && foundInPool) {
           advancementNeeds[i].count--;
+
+          if (item.type == ITEMTYPE_SMALLKEY && Settings::Keysanity == "Dungeon Only") {
+            SmallKeyPool.push_back(item);
+          }
+
           AdvancementItemPool.push_back(item);
 
           //Check item for adding progressive things
@@ -139,6 +152,7 @@ public:
           if (item.name == "Progressive Scale")      Logic::AddedProgressiveBulletBags++;
           if (item.name == "Progressive Magic")      Logic::AddedProgressiveMagics++;
           if (item.name == "Progressive Ocarina")    Logic::AddedProgressiveOcarinas++;
+          if (item.name == "Gold Skulltula Token")   Logic::TokensInPool++;
 
           //then delete the item from the locations advancement needs and the regular item pool
           ItemPool.erase(ItemPool.begin() + j);
@@ -157,8 +171,10 @@ public:
 
 namespace Exits {
 
-  extern std::vector<Exit> ChildExitPool;
-  extern std::vector<Exit> AdultExitPool;
+  // extern std::vector<Exit> ChildExitPool;
+  // extern std::vector<Exit> AdultExitPool;
+
+  extern std::vector<Exit *> ExitPool;
 
   //Starting Locations
   extern Exit Root;

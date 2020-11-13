@@ -24,8 +24,8 @@ enum ItemType {
 
 class Item {
 public:
-    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, bool advancement_, std::function<void()> effect_)
-        : name(name_), type(type_), getItemId(getItemId_), progressive(progressive_), advancement(advancement_), effect(std::move(effect_)) {}
+    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, std::function<void()> effect_)
+        : name(name_), type(type_), getItemId(getItemId_), progressive(progressive_), effect(std::move(effect_)) {}
 
     void applyEffect() {
         effect();
@@ -76,6 +76,7 @@ extern Item A_GoronTunic;
 extern Item A_ZoraTunic;
 extern Item A_GerudoToken;
 extern Item A_MagicBeanPack;
+extern Item GoldSkulltulaToken;
 
 //progressive items
 extern Item A_ProgressiveHookshot;
@@ -167,6 +168,8 @@ extern Item NoItem;
 
 extern std::vector<Item *> PrePlacedItems;
 extern std::vector<Item>   AdvancementItemPool;
+extern std::vector<Item>   SmallKeyPool;
 extern std::vector<Item>   ItemPool;
 extern void UpdateSetItems();
-extern void AddHeartPiece();
+extern void GenerateItemPool();
+extern void AddGreenRupee();

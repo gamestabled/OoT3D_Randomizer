@@ -118,6 +118,7 @@ namespace Logic {
   //item and bottle drops
   extern bool DekuNutDrop;
   extern bool NutPot;
+  extern bool NutCrate;
   extern bool DekuBabaNuts;
   extern bool DekuStickDrop;
   extern bool StickPot;
@@ -202,6 +203,7 @@ namespace Logic {
   extern bool CanPlantBean;
   extern bool CanOpenBombGrotto;
   extern bool CanOpenStormGrotto;
+  extern bool HookshotOrBoomerang;
 
   extern bool GuaranteeTradePath;
   extern bool GuaranteeHint;
@@ -225,10 +227,9 @@ namespace Logic {
   //Other
   extern bool AtDay;
   extern bool AtNight;
-  extern bool HadNightStart;
   extern bool LinksCow;
-  extern bool AtDampeTime;
-  extern bool DeliverLetter;
+  extern std::string Age;
+  extern u16 CurAccessibleLocations;
 
   //Events
   extern bool ShowedMidoSwordAndShield;
@@ -240,118 +241,15 @@ namespace Logic {
   extern bool GCWoodsWarpOpen;
   extern bool StopGCRollingGoronAsAdult;
   extern bool ChildWaterTemple;
-
-  /* --- END OF HELPERS --- */
-
-  //Logic Settings
-  extern bool LogicMidoBackflip;
-  extern bool LogicLostWoodsBridge;
-  extern bool LogicGrottosWithoutAgony;
-  extern bool LogicBiggoronBolero;
-  extern bool LogicGerudoKitchen;
-  extern bool LogicWaterHookshotEntry;
-  extern bool LogicLensWasteland;
-  extern bool LogicReverseWasteland;
-  extern bool LogicVisibleCollision;
-  extern bool LogicManOnRoof;
-  extern bool LogicKakarikoTowerGS;
-  extern bool LogicDMTBombable;
-  extern bool LogicLinkGoronDins;
-  extern bool LogicGoronCityLeftMost;
-  extern bool LogicGoronCityPot;
-  extern bool LogicGoronCityPotWithStrength;
-  extern bool LogicChildRollingWithStrength;
-  extern bool LogicCraterUpperToLower;
-  extern bool LogicCraterBeanPoHWithHovers;
-  extern bool LogicFewerTunicRequirements;
-  extern bool LogicZoraWithHovers;
-  extern bool LogicZoraWithCucco;
-  extern bool LogicDekuB1Skip;
-  extern bool LogicDekuB1WebsWithBow;
-  extern bool LogicDCStaircase;
-  extern bool LogicDCJump;
-  extern bool LogicDCSlingshotSkip;
-  extern bool LogicJabuBossGSAdult;
-  extern bool LogicForestVines;
-  extern bool LogicForestScarecrow;
-  extern bool LogicForestOutsideBackdoor;
-  extern bool LogicLabDiving;
-  extern bool LogicZoraRiverLower;
-  extern bool LogicZoraRiverUpper;
-  extern bool LogicGraveyardPoH;
-  extern bool LogicChildDampeRacePoH;
-  extern bool LogicFireBossDoorJump;
-  extern bool LogicFireStrength;
-  extern bool LogicFireScarecrow;
-  extern bool LogicFireFlameMaze;
-  extern bool LogicWaterTempleTorchLongshot;
-  extern bool LogicWaterCentralBow;
-  extern bool LogicWaterCrackedWallNothing;
-  extern bool LogicWaterCrackedWallHovers;
-  extern bool LogicWaterBossKeyRegion;
-  extern bool LogicWaterDragonBombchu;
-  extern bool LogicWaterBKJumpDive;
-  extern bool LogicWaterBKChest;
-  extern bool LogicWaterNorthBasementLedgeJump;
-  extern bool LogicWaterDragonBombchu;
-  extern bool LogicWaterDragonJumpDive;
-  extern bool LogicWaterNorthBasementLedgeJump;
-  extern bool LogicWaterBKChest;
-  extern bool LogicWaterDragonJumpDive;
-  extern bool LogicSpiritLowerAdultSwitch;
-  extern bool LogicSpiritChildBombchu;
-  extern bool LogicSpiritWall;
-  extern bool LogicSpiritLobbyGS;
-  extern bool LogicSpiritMapChest;
-  extern bool LogicSpiritSunChest;
-  extern bool LogicShadowFireArrowEntry;
-  extern bool LogicShadowUmbrella;
-  extern bool LogicShadowFreestandingKey;
-  extern bool LogicShadowStatue;
-  extern bool LogicBotwCageGS;
-  extern bool LogicChildDeadhand;
-  extern bool LogicGtgWithoutHookshot;
-  extern bool LogicGtgFakeWall;
-  extern bool LogicLensSpirit;
-  extern bool LogicLensShadow;
-  extern bool LogicLensShadowBack;
-  extern bool LogicLensBotw;
-  extern bool LogicLensGtg;
-  extern bool LogicLensCastle;
-  extern bool LogicSpiritTrialHookshot;
+  extern bool KingZoraThawed;
+  extern bool IsStartingAge;
+  extern bool AtDampeTime;
+  extern bool DeliverLetter;
   extern bool KakarikoVillageGateOpen;
   extern bool ForestTempleJoAndBeth;
   extern bool ForestTempleAmyAndMeg;
-  extern bool KingZoraThawed;
-  extern bool OpenDoorOfTime;
-  extern bool HasNightStart;
-  extern bool SkippedTrials;
-  extern std::string OpenForest;
-  extern std::string OpenKakariko;
-  extern std::string Bridge;
-  extern std::string LACSCondition;
-  extern std::string GerudoFortress;
-  extern std::string DamageMultiplier;
-  extern std::string ZorasFountain;
-  extern std::string StartingAge;
-  extern std::string Age;
-  extern std::string Keysanity;
-  extern std::string BossKeysanity;
-  extern std::string MapsAndCompasses;
-  extern bool IsStartingAge;
-  extern bool CanBeChild;
-  extern bool CanBeAdult;
-  extern bool ShuffleDungeonEntrances;
-  extern bool ShuffleOverworldEntrances;
-  extern bool ShuffleSpecialIndoorEntrances;
-  extern bool ShuffleWeirdEgg;
-  extern bool ShuffleGerudoToken;
-  extern bool ShuffleZeldasLetter;
-  extern bool ShuffleKokiriSword;
-  extern bool ShuffleSongs;
-  extern bool BombchusInLogic;
-  extern bool Skullsanity;
-  extern bool Shopsanity;
+
+  /* --- END OF HELPERS --- */
 
   extern u8 AddedProgressiveBulletBags;
   extern u8 AddedProgressiveBombBags;
@@ -362,13 +260,15 @@ namespace Logic {
   extern u8 AddedProgressiveWallets;
   extern u8 AddedProgressiveStrengths;
   extern u8 AddedProgressiveOcarinas;
+  extern u8 TokensInPool;
 
   extern void UpdateHelpers();
-  extern void UpdateSettings();
   extern bool CanPlay(bool song);
   extern bool CanUse(std::string itemName);
   extern bool HasProjectile(std::string age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();
   extern void GenericGrottoChecks();
+  extern void DekuBabaSticksCheck();
+  extern void DekuBabaNutsCheck();
 }
