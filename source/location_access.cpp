@@ -1169,7 +1169,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   BugRock = true;
                   //Cojiro Access
                   //Kakariko Village Gate Open
-                  KakarikoVillageGateOpen = ZeldasLetter;
+                  KakarikoVillageGateOpen = KakarikoVillageGateOpen || (IsChild && (ZeldasLetter || OpenKakariko == "Open"));
                   return KakarikoVillageGateOpen;
                 }, {
                   //Locations
@@ -1953,9 +1953,9 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing(&ZR_BehindWaterfall, []{return CanPlay(ZeldasLullaby);})
                 }, {
                   //Advancement Needs
-                  AdvancementPairing(A_SongOfStorms,       []{return ProgressiveOcarina       >= 1;}),
-                  AdvancementPairing(A_IronBoots,          []{return IsAdult;}),
-                  AdvancementPairing(A_ProgressiveScale,   []{return AddedProgressiveScales   == 0;})
+                  AdvancementPairing(A_SongOfStorms,       []{return ProgressiveOcarina     >= 1;}),
+                  AdvancementPairing(A_IronBoots,          []{return AddedProgressiveScales == 0 && IsAdult;}),
+                  AdvancementPairing(A_ProgressiveScale,   []{return AddedProgressiveScales == 0;})
   });
 
   Exit ZR_BehindWaterfall = Exit("ZR Behind Waterfall", "Zora River", "", DAY_NIGHT_CYCLE, []{
@@ -2110,8 +2110,8 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit LLR_Main = Exit("Lon Lon Ranch", "Lon Lon Ranch", "Lon Lon Ranch", NO_DAY_NIGHT_CYCLE, []{
                   //Events
-                  Epona    = CanPlay(EponasSong) && IsAdult && AtDay;
-                  LinksCow = CanPlay(EponasSong) && IsAdult && AtDay;
+                  Epona    = Epona    || (CanPlay(EponasSong) && IsAdult && AtDay);
+                  LinksCow = LinksCow || (CanPlay(EponasSong) && IsAdult && AtDay);
                   return Epona && LinksCow;
                 }, {
                   //Locations
@@ -2128,8 +2128,8 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing(&LLR_Tower,       []{return true;}),
                   ExitPairing(&LLR_Grotto,      []{return IsChild;})
                 }, {
-                  AdvancementPairing(A_EponasSong,         []{return ProgressiveOcarina       >= 1  && AtDay   && IsAdult;}),
-                  AdvancementPairing(A_Boomerang,          []{return GoldSkulltulaTokens      <= 50 && AtNight && IsChild;}),
+                  AdvancementPairing(A_EponasSong, []{return ProgressiveOcarina  >= 1  && AtDay   && IsAdult;}),
+                  AdvancementPairing(A_Boomerang,  []{return GoldSkulltulaTokens <= 50 && AtNight && IsChild;}),
 
   });
 
@@ -3344,6 +3344,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     AdvancementPairing(A_ProgressiveBow,   []{return AddedProgressiveBows   == 0;}),
                     AdvancementPairing(A_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
                     AdvancementPairing(A_LightArrows,      []{return ProgressiveBow         >= 1 && ProgressiveMagic >= 1;}),
+                    AdvancementPairing(A_GoronTunic,       []{return IsAdult;}),
   });
 
   Exit GanonsCastle_WaterTrial = Exit("Ganon's Castle Water Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, []{

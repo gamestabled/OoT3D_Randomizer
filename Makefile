@@ -31,15 +31,18 @@ include $(DEVKITARM)/3ds_rules
 #     - icon.png
 #     - <libctru folder>/default_icon.png
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
-BUILD		:=	build
-SOURCES		:=	source
-DATA		:=	data
-INCLUDES	:=	include
-GRAPHICS	:=	gfx
-GFXBUILD	:=	$(BUILD)
-#ROMFS		:=	romfs
-#GFXBUILD	:=	$(ROMFS)/gfx
+APP_TITLE       :=  Ocarina of Time 3D Randomizer
+APP_AUTHOR      :=  Gamestabled
+APP_DESCRIPTION :=  A different Ocarina of Time experience
+TARGET		    :=	$(notdir $(CURDIR))
+BUILD		    :=	build
+SOURCES		    :=	source
+DATA		    :=	data
+INCLUDES	    :=	include
+GRAPHICS		:=	gfx
+GFXBUILD		:=	$(BUILD)
+#ROMFS			:=	romfs
+#GFXBUILD		:=	$(ROMFS)/gfx
 
 #---------------------------------------------------------------------------------
 # options for code generation

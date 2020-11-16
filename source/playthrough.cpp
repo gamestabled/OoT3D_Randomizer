@@ -25,7 +25,7 @@ namespace Playthrough {
 
     //static int debug = 0;
 
-    static u32 totalAccessibleLocations = 0;
+    static u32 totalItemsPlaced = 0;
     static std::vector<ItemLocation *> AccessibleLocationPool;
 
     void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
@@ -47,7 +47,9 @@ namespace Playthrough {
         }
 
         loc->placedItem = *item;
-        totalAccessibleLocations++;
+        totalItemsPlaced++;
+        printf("\x1b[10;10HPlacing Items");
+        printf("\x1b[11;10H%lu/328\n", totalItemsPlaced);
     }
 
     void UpdateToDAccess(Exit* exit, std::string age, std::string ToD) {
@@ -253,15 +255,15 @@ namespace Playthrough {
                 return ret;
             }
 
-
             if (ItemPool.empty() && !AccessibleLocationPool.empty()) {
               AddGreenRupee();
             }
+
         }
-        printf("Items Placed: %lu\n", totalAccessibleLocations);
+        //printf("Items Placed: %lu\n", totalItemsPlaced);
         bool rv = SpoilerLog_Write();
-        if (rv) printf("Wrote Spoiler Log\n");
-        else    printf("failed to write log\n");
+        //if (rv) printf("Wrote Spoiler Log\n");
+        //else    printf("failed to write log\n");
 
         rv = PlacementLog_Write();
         return 1;

@@ -1,5 +1,34 @@
 #pragma once
+#include <stdlib.h>
 #include <string>
+#include <vector>
+
+class Option {
+  public:
+    Option(std::string* var_, std::string name_, std::vector<std::string> options_)
+          :         var(var_),       name(name_),                 options(options_) {
+
+        selectedOption = 0;
+    }
+
+    std::string* var;
+    std::string name;
+    std::vector<std::string> options;
+    int selectedOption;
+
+};
+
+class Menu {
+  public:
+    Menu(std::string name_, std::vector<Option *> optionsList_)
+        :       name(name_),        optionsList(optionsList_) {
+          selectedSetting = 0;
+        }
+
+    std::string name;
+    std::vector<Option *> optionsList;
+    int selectedSetting;
+};
 
 namespace Settings {
   extern bool HasNightStart;
@@ -121,4 +150,7 @@ namespace Settings {
   extern bool LogicWaterFallingPlatformGS;
 
   extern void UpdateSettings();
+
+  extern std::vector<Option *> Options;
+  extern std::vector<Menu> mainMenu;
 }

@@ -136,10 +136,6 @@ public:
         if (advancementNeeds[i].ConditionsMet() && foundInPool) {
           advancementNeeds[i].count--;
 
-          if (item.type == ITEMTYPE_SMALLKEY && Settings::Keysanity == "Dungeon Only") {
-            SmallKeyPool.push_back(item);
-          }
-
           AdvancementItemPool.push_back(item);
 
           //Check item for adding progressive things

@@ -1,27 +1,29 @@
 #include "settings.hpp"
-#include <string>
 
 namespace Settings {
+  std::string Logic             = ""; Option O_Logic            = Option(&Logic,             "Logic",             {"Glitchless", "No Logic"});
+  std::string OpenForest        = ""; Option O_OpenForest       = Option(&OpenForest,        "Forest",            {"Open", "Closed"});
+  std::string OpenKakariko      = ""; Option O_OpenKakariko     = Option(&OpenKakariko,      "Kakariko Gate",     {"Open", "Closed"});
+  std::string OpenDoorOfTimeStr = ""; Option O_DoorOfTime       = Option(&OpenDoorOfTimeStr, "Door of Time",      {"Open", "Closed"});
+  std::string Bridge            = ""; Option O_Bridge           = Option(&Bridge,            "Rainbow Bridge",    {"Open", "Vanilla", "Stones", "Medallions", "Dungeons"});
+  std::string GerudoFortress    = ""; Option O_GerudoFortress   = Option(&GerudoFortress,    "Gerudo Fortress",   {"Default", "Open"});
+  std::string DamageMultiplier  = ""; Option O_DamageMultiplier = Option(&DamageMultiplier,  "Damage Multiplier", {"Default", "Double", "Quadruple", "OHKO", "Half"});
+  std::string ZorasFountain     = ""; Option O_ZorasFountain    = Option(&ZorasFountain,     "Zora's Fountain",   {"Default", "Open"});
+  std::string StartingAge       = ""; Option O_StartingAge      = Option(&StartingAge,       "Starting Age",      {"Child", "Adult"});
+  std::string TimeOfDay         = ""; Option O_TimeOfDay        = Option(&TimeOfDay,         "Starting Time",     {"Day", "Night"});
+  std::string Keysanity         = ""; Option O_Keysanity        = Option(&Keysanity,         "Small Keys",        {"Vanilla", "Dungeon Only", "All Locations"});
+  std::string BossKeysanity     = ""; Option O_BossKeysanity    = Option(&BossKeysanity,     "Boss Keys",         {"Vanilla", "Dungeon Only", "All Locations"});
+  std::string MapsAndCompasses  = ""; Option O_MapsAndCompasses = Option(&MapsAndCompasses,  "Maps/Compasses",    {"Vanilla", "Dungeon Only", "All Locations"});
+  std::string Skullsanity       = ""; Option O_Skullsanity      = Option(&Skullsanity,       "Tokensanity",       {"Vanilla",                 "All Locations"});
+  std::string Scrubsanity       = ""; Option O_Scrubsanity      = Option(&Scrubsanity,       "Scrub Shuffle",     {"Off", "Affordable", "Expensive", "Random Prices"});
+  std::string BombchusLogicStr  = ""; Option O_BombchusInLogic  = Option(&BombchusLogicStr,  "Bombchus in Logic", {"Off", "On"});
+  std::string LACSCondition     = "";
 
-  bool HasNightStart         = false;
-  bool BombchusInLogic       = false;
-  bool BombchuDrop           = false;
-  bool OpenDoorOfTime        = false;
-  bool SkippedTrials         = false;
-  std::string OpenForest       = "";
-  std::string OpenKakariko     = "";
-  std::string Bridge           = "";
-  std::string LACSCondition    = "";
-  std::string GerudoFortress   = "";
-  std::string DamageMultiplier = "";
-  std::string ZorasFountain    = "";
-  std::string StartingAge      = "";
-  std::string TimeOfDay        = "";
-  std::string Keysanity        = "";
-  std::string BossKeysanity    = "";
-  std::string MapsAndCompasses = "";
-  std::string Skullsanity      = "";
-  std::string Scrubsanity      = "";
+  bool HasNightStart                 = false;
+  bool BombchusInLogic               = false;
+  bool BombchuDrop                   = false;
+  bool OpenDoorOfTime                = false;
+  bool SkippedTrials                 = false;
   bool ShuffleDungeonEntrances       = false;
   bool ShuffleOverworldEntrances     = false;
   bool ShuffleInteriorEntrances      = false;
@@ -123,19 +125,58 @@ namespace Settings {
     LogicFewerTunicRequirements = true;
     LogicBiggoronBolero = true;
     LogicManOnRoof = true;
-    BombchusInLogic = true;
     LogicDekuB1Skip = true;
-    OpenDoorOfTime = true;
 
-    OpenForest = "Closed";
-    Bridge = "Medallions";
+    if (OpenDoorOfTimeStr == "Open")  OpenDoorOfTime  = true;
+    if (BombchusLogicStr  == "On")    BombchusInLogic = true;
+    if (TimeOfDay         == "Night") HasNightStart   = true;
+
+
+
+    // OpenForest = "Closed";
+    // Bridge = "Medallions";
     LACSCondition = "Medallions";
-    DamageMultiplier = "1x";
-    StartingAge = "Child";
-    Keysanity = "Dungeon Only";
-    BossKeysanity = "Dungeon Only";
-    Skullsanity = "Vanilla";
-    MapsAndCompasses = "Dungeon Only";
-    GerudoFortress = "Normal";
+    //DamageMultiplier = "1x";
+    //StartingAge = "Child";
+    // Keysanity = "Dungeon Only";
+    // BossKeysanity = "Dungeon Only";
+    // Skullsanity = "Vanilla";
+    // MapsAndCompasses = "Dungeon Only";
+    //GerudoFortress = "Normal";
+  }
+
+  std::vector<Option *> Options = {
+    &O_Logic,
+    &O_OpenForest,
+    &O_OpenKakariko,
+    &O_DoorOfTime,
+    &O_Bridge,
+    &O_GerudoFortress,
+    &O_DamageMultiplier,
+    &O_ZorasFountain,
+    &O_StartingAge,
+    &O_TimeOfDay,
+    &O_Keysanity,
+    &O_BossKeysanity,
+    &O_MapsAndCompasses,
+    &O_Skullsanity,
+    &O_Scrubsanity,
+    &O_BombchusInLogic,
+  };
+
+  std::vector<Option *> variousOptions = {
+    &O_OpenForest,
+    &O_OpenKakariko,
+    &O_DoorOfTime,
+    &O_ZorasFountain,
+    &O_GerudoFortress,
+    &O_Bridge,
+    &O_BombchusInLogic,
+  }
+
+  Menu various = Menu("Various", variousOptions);
+
+  std::vector<Menu> mainMenu = {
+    various,
   }
 }

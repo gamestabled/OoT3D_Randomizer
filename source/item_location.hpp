@@ -558,7 +558,6 @@ extern ItemLocation LLR_GS_RainShed;
 extern ItemLocation LLR_GS_HouseWindow;
 extern ItemLocation LLR_GS_Tree;
 
-
 extern std::vector<ItemLocationKeyPairing> DekuTreeKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> DodongosCavernKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> JabuJabusBellyKeyRequirements;
@@ -571,3 +570,5 @@ extern std::vector<ItemLocationKeyPairing> BottomOfTheWellKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> IceCavernKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> GerudoTrainingGroundsKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> GanonsCastleKeyRequirements;
+
+extern std::vector<ItemLocation *> allLocations;
