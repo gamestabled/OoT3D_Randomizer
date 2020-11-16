@@ -141,6 +141,7 @@ endif
 all: $(BUILD)
 
 $(BUILD):
+	@python3 custom_messages.py
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@python3 patch.py $(OUTPUT).elf

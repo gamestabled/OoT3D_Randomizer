@@ -72,6 +72,14 @@ SECTIONS
 		*(.patch_NoSilverGauntletsCutsceneWarp)
 	}
 
+	.patch_GetCustomMessageEntryOne 0x2CD3A4 : {
+		*(.patch_GetCustomMessageEntryOne)
+	}
+
+	.patch_GetCustomMessageTextOne 0x2CD3EC : {
+		*(.patch_GetCustomMessageTextOne)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}
@@ -154,6 +162,14 @@ SECTIONS
 
 	.patch_SaveFile_Init 0x449A04 : {
 		*(.patch_SaveFile_Init)
+	}
+
+	.patch_GetCustomMessageEntryTwo 0x44D564 : {
+		*(.patch_GetCustomMessageEntryTwo)
+	}
+
+	.patch_GetCustomMessageTextTwo 0x44D5A4 : {
+		*(.patch_GetCustomMessageTextTwo)
 	}
 
 	.patch_before_GlobalContext_Update 0x452390 : {
