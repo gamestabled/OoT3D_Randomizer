@@ -225,6 +225,26 @@ GetToken1_patch:
 GetToken2_patch:
     bl hook_GetToken
 
+.section .patch_GetCustomMessageEntryOne
+.global GetCustomMessageEntryOne_patch
+GetCustomMessageEntryOne_patch:
+    bl Message_GetCustomEntry
+
+.section .patch_GetCustomMessageEntryTwo
+.global GetCustomMessageEntryTwo_patch
+GetCustomMessageEntryTwo_patch:
+    bl Message_GetCustomEntry
+
+.section .patch_GetCustomMessageTextOne
+.global GetCustomMessageTextOne_patch
+GetCustomMessageTextOne_patch:
+    bl Message_GetCustomText
+
+.section .patch_GetCustomMessageTextTwo
+.global GetCustomMessageTextTwo_patch
+GetCustomMessageTextTwo_patch:
+    bl Message_GetCustomText
+
 .section .patch_loader
 .global loader_patch
 
