@@ -39,7 +39,7 @@ public:
       return used;
     }
 
-    const char * getName() {
+    const char * getName() const {
       return name.c_str();
     }
 

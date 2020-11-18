@@ -79,17 +79,16 @@ public:
       return events();
     }
 
-    bool CanPlantBean() {
+    bool CanPlantBean() const {
       return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
     }
 
-    bool BothAges() {
+    bool BothAges() const {
       return (dayChild || nightChild) && (dayAdult || nightAdult);
     }
 
     //checks to see if all locations and exits are accessible
     bool AllAccountedFor() {
-
       for (auto loc = locations.begin(); loc != locations.end(); loc++) {
         if (!loc->location->isUsed())
           return false;
