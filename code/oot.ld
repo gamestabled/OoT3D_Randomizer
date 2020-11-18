@@ -40,6 +40,10 @@ SECTIONS
 		*(.patch_AdultRollingGoronTwo)
 	}
 
+	.patch_DampeChest 0x19A420 : {
+		*(.patch_DampeChest)
+	}
+
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
 		*(.patch_KingZoraSecondTunic)
 	}

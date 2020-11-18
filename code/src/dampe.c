@@ -5,6 +5,12 @@ typedef struct {
     /* 0xBA8 */ u32  currentReward;
 } EnTk;
 
+typedef struct {
+    /* 0x000 */ char unk_00[0xB1C];
+    /* 0xB1C */ u8   unk_B1C;
+} EnPoRelay;
+
+
 // Sets the flag for having received the reward from Dampe
 // Upgrades the current reward to 4, the highest
 void EnTk_SetRewardFlag(EnTk* dampe) {
@@ -20,4 +26,11 @@ void EnTk_CheckCollectFlag(void) {
     if (!(gGlobalContext->actorCtx.flags.collect & 4)) {
         gSaveContext.itemGetInf[1] &= ~0x1000;
     }
+}
+
+
+// Checks the chest flag for the race chest
+// Replaces a check for hookshot in the inventory
+void EnPoRelay_CheckChestFlag(EnPoRelay* dampe) {
+    dampe->unk_B1C = ((gSaveContext.sceneFlags[0x48].chest & 0x1) != 0);
 }
