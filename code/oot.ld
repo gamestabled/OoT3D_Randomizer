@@ -160,6 +160,10 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeTwo)
 	}
 
+	.patch_FastChests 0x354CD8 : {
+		*(.patch_FastChests)
+	}
+
 	.patch_SaveFile_Init 0x449A04 : {
 		*(.patch_SaveFile_Init)
 	}
