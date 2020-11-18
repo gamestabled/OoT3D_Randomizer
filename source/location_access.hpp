@@ -20,8 +20,8 @@ public:
 
 class ExitPairing {
 public:         //This exit, the conditions needed to access the exit, whether this exit can be accessed at only day/night or both
-    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_, std::string ToD = "Both")
-              : exit(std::move(exit_)), ConditionsMet(std::move(ConditionsMet_)) {}
+    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_, std::string ToD_ = "Both")
+              : exit(std::move(exit_)), ConditionsMet(std::move(ConditionsMet_)), ToD(std::move(ToD_)) {}
     Exit* exit;
     std::function<bool()> ConditionsMet;
     std::string ToD;
