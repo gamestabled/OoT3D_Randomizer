@@ -19,10 +19,7 @@ enum ItemLocationType {
 class ItemLocation {
 public:
     ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_)
-        : scene(scene_), type(type_), flag(flag_), name(name_) {
-          placedItem = NoItem;
-          used = false;
-        }
+        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)) {}
 
     ItemOverride_Key key() const {
         ItemOverride_Key key;
@@ -42,7 +39,7 @@ public:
       return used;
     }
 
-    const char * getName() {
+    const char * getName() const {
       return name.c_str();
     }
 
@@ -52,7 +49,7 @@ private:
     u8 scene;
     ItemLocationType type;
     u8 flag;
-    bool used;
+    bool used = false;
 
 public:
     std::string name;
