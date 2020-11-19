@@ -22,15 +22,15 @@ public:
 class ItemLocationPairing {
 public:
     ItemLocationPairing(ItemLocation* location_, std::function<bool()> ConditionsMet_)
-                        : location(location_),           ConditionsMet(ConditionsMet_) {}
+                        : location(location_), ConditionsMet(std::move(ConditionsMet_)) {}
     ItemLocation* location;
     std::function<bool()> ConditionsMet;
 };
 
 class ExitPairing {
-public:         //The exit,  the conditions needed to access the exit, whether this exit can be accessed at only day/night or both
-    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_    , std::string ToD = "Both")
-              : exit(exit_), ConditionsMet(ConditionsMet_) {}
+public:         //This exit, the conditions needed to access the exit, whether this exit can be accessed at only day/night or both
+    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_, std::string ToD_ = "Both")
+              : exit(std::move(exit_)), ConditionsMet(std::move(ConditionsMet_)), ToD(std::move(ToD_)) {}
     Exit* exit;
     std::function<bool()> ConditionsMet;
     std::string ToD;
@@ -39,7 +39,7 @@ public:         //The exit,  the conditions needed to access the exit, whether t
 class AdvancementPairing {
 public:
     AdvancementPairing(Item item_, std::function<bool()> ConditionsMet_, u8 count_ = 1)
-                      :item(item_), ConditionsMet(ConditionsMet_), count(count_) {}
+                      :item(std::move(item_)), ConditionsMet(std::move(ConditionsMet_)), count(count_) {}
     Item item;
     std::function<bool()> ConditionsMet;
     u8 count;
@@ -47,16 +47,15 @@ public:
 
 class Exit {
 public:
-    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::vector<EventPairing> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
-        : regionName(regionName_),      scene(scene_),       hint(hint_), timePass(timePass_),              events(events_),      locations(locations_),         exits(exits_),   advancementNeeds(advancementNeeds_){
-          accountedForChild = false;
-          accountedForAdult = false;
-          addedToPool = false;
-          dayChild   = false;
-          nightChild = false;
-          dayAdult   = false;
-          nightAdult = false;
-        }
+    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::function<bool()> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
+        : regionName(std::move(regionName_)),
+          scene(std::move(scene_)),
+          hint(std::move(hint_)),
+          timePass(timePass_),
+          events(std::move(events_)),
+          locations(std::move(locations_)),
+          exits(std::move(exits_)),
+          advancementNeeds(std::move(advancementNeeds_)) {}
 
     std::string regionName;
     std::string scene;
@@ -67,13 +66,12 @@ public:
     std::vector<ExitPairing> exits;
     std::vector<AdvancementPairing> advancementNeeds;
 
-    bool accountedForChild;
-    bool accountedForAdult;
-    bool addedToPool;
-    bool dayChild;
-    bool nightChild;
-    bool dayAdult;
-    bool nightAdult;
+    bool accountedForChild = false;
+    bool accountedForAdult = false;
+    bool dayChild = false;
+    bool nightChild = false;
+    bool dayAdult = false;
+    bool nightAdult = false;
 
     void UpdateEvents() {
 
@@ -100,32 +98,32 @@ public:
     }
 
 
-    bool Child() {
+    bool Child() const {
       return dayChild || nightChild;
     }
 
-    bool Adult() {
+    bool Adult() const {
       return dayAdult || nightAdult;
     }
 
-    bool BothAges() {
+    bool BothAges() const {
       return Child() && Adult();
     }
 
-    bool HasAccess() {
+    bool HasAccess() const {
       return Child() || Adult();
     }
 
-    bool AllAccess() {
+    bool AllAccess() const {
       return dayChild && nightChild && dayAdult && nightAdult;
     }
 
-    bool CanPlantBean() {
+    bool CanPlantBean() const {
       return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
     }
 
     //checks to see if all locations and exits are accessible
-    bool AllAccountedFor() {
+    bool AllAccountedFor() const {
 
       return AllAccess()           &&
              events.size()    == 0 &&

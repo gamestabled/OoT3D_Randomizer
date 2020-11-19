@@ -40,6 +40,10 @@ SECTIONS
 		*(.patch_AdultRollingGoronTwo)
 	}
 
+	.patch_DampeChest 0x19A420 : {
+		*(.patch_DampeChest)
+	}
+
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
 		*(.patch_KingZoraSecondTunic)
 	}
@@ -158,6 +162,10 @@ SECTIONS
 
 	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
 		*(.patch_ScrubNutUpgradeTwo)
+	}
+
+	.patch_FastChests 0x354CD8 : {
+		*(.patch_FastChests)
 	}
 
 	.patch_SaveFile_Init 0x449A04 : {

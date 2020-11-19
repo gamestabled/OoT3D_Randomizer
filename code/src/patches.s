@@ -245,6 +245,18 @@ GetCustomMessageTextOne_patch:
 GetCustomMessageTextTwo_patch:
     bl Message_GetCustomText
 
+.section .patch_FastChests
+.global FastChests_patch
+FastChests_patch:
+    b 0x354D98
+
+.section .patch_DampeChest
+.global DampeChest_patch
+DampeChest_patch:
+    cpy r0,r4
+    bl EnPoRelay_CheckChestFlag
+    nop
+
 .section .patch_loader
 .global loader_patch
 
