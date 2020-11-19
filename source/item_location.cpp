@@ -801,7 +801,7 @@ std::vector<ItemLocation *> allLocations = {
   &Kak_WindmillFreestandingPoH,
 
   //Graveyard
-  //&GY_HookshotChest,
+  &GY_HookshotChest,
   &GY_ShieldGraveChest,
   &GY_HeartPieceGraveChest,
   &GY_ComposersGraveChest,

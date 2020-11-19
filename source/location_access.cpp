@@ -1257,7 +1257,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   EventPairing(&DampesWindmillAccess, []{return DampesWindmillAccess || (IsAdult && CanPlay(SongOfTime));}),
                 }, {
                   //Locations
-                //ItemLocationPairing(&GY_HookshotChest,            []{return true;}),
+                  ItemLocationPairing(&GY_HookshotChest,            []{return true;}),
                   ItemLocationPairing(&GY_DampeRaceFreestandingPoH, []{return IsAdult || LogicChildDampeRacePoH;}),
                 }, {
                   //Exits
