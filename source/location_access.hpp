@@ -10,11 +10,19 @@
 
 class Exit;
 
+class EventPairing {
+public:
+    EventPairing(bool* event_, std::function<bool()> ConditionsMet_)
+               : event(event_),        ConditionsMet(ConditionsMet_) {}
+    bool* event;
+    std::function<bool()> ConditionsMet;
+};
+
 //this class is meant to hold an item location with a boolean function to determine its accessibility from a specific area
 class ItemLocationPairing {
 public:
     ItemLocationPairing(ItemLocation* location_, std::function<bool()> ConditionsMet_)
-                        : location(location_), ConditionsMet(ConditionsMet_) {}
+                        : location(location_),           ConditionsMet(ConditionsMet_) {}
     ItemLocation* location;
     std::function<bool()> ConditionsMet;
 };
@@ -39,8 +47,8 @@ public:
 
 class Exit {
 public:
-    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::function<bool()> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
-        : regionName(regionName_),      scene(scene_),       hint(hint_), timePass(timePass_),          events(events_),             locations(locations_),         exits(exits_),   advancementNeeds(advancementNeeds_){
+    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::vector<EventPairing> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
+        : regionName(regionName_),      scene(scene_),       hint(hint_), timePass(timePass_),              events(events_),      locations(locations_),         exits(exits_),   advancementNeeds(advancementNeeds_){
           accountedForChild = false;
           accountedForAdult = false;
           addedToPool = false;
@@ -54,7 +62,7 @@ public:
     std::string scene;
     std::string hint;
     bool        timePass;
-    std::function<bool()> events;
+    std::vector<EventPairing> events;
     std::vector<ItemLocationPairing> locations;
     std::vector<ExitPairing> exits;
     std::vector<AdvancementPairing> advancementNeeds;
@@ -67,10 +75,10 @@ public:
     bool dayAdult;
     bool nightAdult;
 
-    bool UpdateEvents() {
+    void UpdateEvents() {
 
       if (timePass) {
-        if (Logic::Age == "Child") {
+        if (Logic::Age == AGE_CHILD) {
           dayChild = true;
           nightChild = true;
         } else {
@@ -79,7 +87,16 @@ public:
         }
 
       }
-      return events();
+
+      for (u8 i = 0; i < events.size(); i++) {
+        EventPairing eventPair = events[i];
+        bool* event = eventPair.event;
+
+        *event = eventPair.ConditionsMet();
+        if (*event) {
+          events.erase(events.begin() + i);
+        }
+      }
     }
 
 
@@ -110,8 +127,8 @@ public:
     //checks to see if all locations and exits are accessible
     bool AllAccountedFor() {
 
-      return UpdateEvents()        &&
-             AllAccess()           &&
+      return AllAccess()           &&
+             events.size()    == 0 &&
              locations.size() == 0 &&
              exits.size()     == 0 &&
              advancementNeeds.size() == 0;
@@ -121,6 +138,9 @@ public:
 
       for (u32 i = 0; i < advancementNeeds.size(); i++) {
         Item item = advancementNeeds[i].item;
+        //if the conditions aren't met, then skip for now
+        if (advancementNeeds[i].ConditionsMet()) continue;
+
         u32 j;
         bool foundInPool = false;
 
@@ -132,10 +152,16 @@ public:
           }
         }
 
-        //If the adding conditions are met and the item is still in the item pool
-        if (advancementNeeds[i].ConditionsMet() && foundInPool) {
-          advancementNeeds[i].count--;
+        //if the item isn't in the pool, then it's already been added or doesn't exist
+        if (!foundInPool) {
+          advancementNeeds.erase(advancementNeeds.begin() + i);
+          i--;
+          continue;
+        }
 
+        //If item is still in the item pool
+        if (foundInPool) {
+          advancementNeeds[i].count--;
           AdvancementItemPool.push_back(item);
 
           //Check item for adding progressive things
@@ -152,9 +178,10 @@ public:
 
           //then delete the item from the locations advancement needs and the regular item pool
           ItemPool.erase(ItemPool.begin() + j);
-          if (advancementNeeds[i].count == 0)
+          if (advancementNeeds[i].count == 0) {
             advancementNeeds.erase(advancementNeeds.begin() + i);
-          i--;
+            i--;
+          }
         }
       }
     }

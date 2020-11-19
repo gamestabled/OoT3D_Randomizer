@@ -62,9 +62,9 @@ namespace Logic {
   extern bool SpiritMedallion;
   extern bool ShadowMedallion;
   extern bool LightMedallion;
-  extern bool KokirisEmerald;
-  extern bool GoronsRuby;
-  extern bool ZorasSapphire;
+  extern bool KokiriEmerald;
+  extern bool GoronRuby;
+  extern bool ZoraSapphire;
 
   //Dungeon Clears
   extern bool DekuTreeClear;
@@ -228,7 +228,7 @@ namespace Logic {
   extern bool AtDay;
   extern bool AtNight;
   extern bool LinksCow;
-  extern std::string Age;
+  extern u8 Age;
   extern u16 CurAccessibleLocations;
 
   //Events
@@ -268,7 +268,4 @@ namespace Logic {
   extern bool HasProjectile(std::string age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();
-  extern void GenericGrottoChecks();
-  extern void DekuBabaSticksCheck();
-  extern void DekuBabaNutsCheck();
 }

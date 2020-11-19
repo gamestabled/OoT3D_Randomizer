@@ -11,15 +11,17 @@ sectionsInfo = [line.split()[1:6] for line in lines if line.split() and line.spl
 sections = ((sec[0], int(sec[2],16), int(sec[4],16), int(sec[1],16)) for sec in sectionsInfo if int(sec[2],16) != 0)
 
 # Put here the symbols from the patch which are needed by the app
-desiredSymbols = ("rItemOverrides")
+desiredSymbols = ("rItemOverrides", "gSettingsContext")
 
 nmResult = subprocess.run([os.environ["DEVKITARM"] + r'/bin/arm-none-eabi-nm', elf], stdout=subprocess.PIPE)
 nmLines = str(nmResult.stdout).split('\\n')
-symbolsInfo = [line.split() for line in nmLines if len(line.split()) >= 2 and line.split()[2] in desiredSymbols]
-symbols = {sym[2]:hex(int(sym[0],16)) for sym in symbolsInfo}
+symbolsInfo = [line.split() for line in nmLines if len(line.split()) >= 2 and line.split()[2].replace("\\r", "") in desiredSymbols]
+symbols = {sym[2].replace("\\r", ""):hex(int(sym[0],16)) for sym in symbolsInfo}
 symbolsJson = json.dumps(symbols, indent=4)
-with open("patch_symbols.json", 'w') as syms:
-    syms.write(symbolsJson)
+with open("../source/patch_symbols.hpp", 'w') as syms:
+    syms.write("#pragma once\n")
+    for sym in symbolsInfo:
+        syms.write("#define "+sym[2].replace("\\r", "").upper()+"_ADDR"+" 0x"+sym[0]+"\n")
 print("wrote desired symbols to patch_symbols.json")
 
 off = lambda vaddr: struct.pack(">I",vaddr - 0x100000)[1:]

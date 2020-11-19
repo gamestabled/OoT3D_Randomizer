@@ -49,27 +49,36 @@ namespace Playthrough {
         loc->placedItem = *item;
         totalItemsPlaced++;
         printf("\x1b[10;10HPlacing Items");
-        printf("\x1b[11;10H%lu/328\n", totalItemsPlaced);
+        printf("\x1b[11;10H%lu\n", totalItemsPlaced);
     }
 
-    void UpdateToDAccess(Exit* exit, std::string age, std::string ToD) {
+    void UpdateToDAccess(Exit* exit, u8 age, std::string ToD) {
       if (ToD == "Day") {
-        if (age == "Child") exit->dayChild = true;
-        if (age == "Adult") exit->dayAdult = true;
+        if (age == AGE_CHILD) exit->dayChild = true;
+        if (age == AGE_ADULT) exit->dayAdult = true;
       } else if (ToD == "Night") {
-        if (age == "Child") exit->nightChild = true;
-        if (age == "Adult") exit->nightAdult = true;
+        if (age == AGE_CHILD) exit->nightChild = true;
+        if (age == AGE_ADULT) exit->nightAdult = true;
 
       } else {
         //only update from false -> true, never true -> false
-        if (age == "Child") {
+        if (age == AGE_CHILD) {
           exit->dayChild   = Logic::AtDay   || exit->dayChild;
           exit->nightChild = Logic::AtNight || exit->nightChild;
         }
-        if (age == "Adult") {
+        if (age == AGE_ADULT) {
           exit->dayAdult   = Logic::AtDay   || exit->dayAdult;
           exit->nightAdult = Logic::AtNight || exit->nightAdult;
         }
+      }
+
+      //special check for temple of time
+      if (Exits::ToT_BeyondDoorOfTime.Child() && !Exits::ToT_BeyondDoorOfTime.Adult()) {
+        Exits::Root.dayAdult   = Exits::ToT_BeyondDoorOfTime.dayChild;
+        Exits::Root.nightAdult = Exits::ToT_BeyondDoorOfTime.nightChild;
+      } else if (!Exits::ToT_BeyondDoorOfTime.Child() && Exits::ToT_BeyondDoorOfTime.Adult()){
+        Exits::Root.dayChild   = Exits::ToT_BeyondDoorOfTime.dayAdult;
+        Exits::Root.nightChild = Exits::ToT_BeyondDoorOfTime.nightAdult;
       }
     }
 
@@ -77,12 +86,12 @@ namespace Playthrough {
 
         for (u32 i = 0; i < Exits::ExitPool.size(); i++) {
           //iterate twice on each area for different ages
-          for (std::string age : {"Child", "Adult"}) {
+          for (u8 age : {AGE_CHILD, AGE_ADULT}) {
             Logic::Age = age;
             Exit *area = Exits::ExitPool[i];
 
             //Check if the age can access this area and update ToD logic
-            if (age == "Child") {
+            if (age == AGE_CHILD) {
               if (area->Child()) {
                 Logic::AtDay   = area->dayChild;
                 Logic::AtNight = area->nightChild;
@@ -90,7 +99,7 @@ namespace Playthrough {
                 continue;
               }
 
-            } else if (age == "Adult") {
+            } else if (age == AGE_ADULT) {
               if (area->Adult()) {
                 Logic::AtDay   = area->dayAdult;
                 Logic::AtNight = area->nightAdult;
@@ -158,13 +167,13 @@ namespace Playthrough {
     static void AccessibleLocations_Init(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
       //set first access variable based upon settings
       if(Settings::HasNightStart) {
-        if(Settings::StartingAge == "Child") {
+        if(Settings::StartingAge == AGE_CHILD) {
           Exits::Root.nightChild = true;
         } else {
           Exits::Root.nightAdult = true;
         }
       } else {
-        if(Settings::StartingAge == "Child") {
+        if(Settings::StartingAge == AGE_CHILD) {
           Exits::Root.dayChild = true;
         } else {
           Exits::Root.dayAdult = true;
@@ -223,8 +232,9 @@ namespace Playthrough {
     static void Playthrough_Init(u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
         Random_Init(seed); //seed goes here
         Settings::UpdateSettings();
-        Logic::LightMedallion = true;
+        Settings::PrintSettings();
         Logic::UpdateHelpers();
+        totalItemsPlaced = 0;
         GenerateItemPool();
         UpdateSetItems();
         PlaceSetItems(overrides);
@@ -262,8 +272,8 @@ namespace Playthrough {
         }
         //printf("Items Placed: %lu\n", totalItemsPlaced);
         bool rv = SpoilerLog_Write();
-        //if (rv) printf("Wrote Spoiler Log\n");
-        //else    printf("failed to write log\n");
+        if (rv) printf("Wrote Spoiler Log\n");
+        else    printf("failed to write log\n");
 
         rv = PlacementLog_Write();
         return 1;
@@ -273,9 +283,17 @@ namespace Playthrough {
     void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
       const bool NO_EFFECT = false;
 
-      PlaceItemInLocation(&A_ProgressiveHookshot, &ZR_NearDomainFreestandingPoH, overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_ProgressiveScale,    &KF_MidoTopLeftChest, overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_HylianShield,        &ZR_NearOpenGrottoFreestandingPoH, overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
+
+      PlaceItemInLocation(&A_LightMedallion,  &LinksPocket,     overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_KokiriEmerald,   &QueenGohma,      overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_GoronRuby,       &KingDodongo,     overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_ZoraSaphhire,    &Barinade,        overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_ForestMedallion, &PhantomGanon,    overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_FireMedallion,   &Volvagia,        overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_WaterMedallion,  &Morpha,          overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_SpiritMedallion, &Twinrova,        overrides, NO_EFFECT);
+      PlaceItemInLocation(&A_ShadowMedallion, &BongoBongo,      overrides, NO_EFFECT);
 
       if (!Settings::ShuffleKokiriSword)
         PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);
@@ -283,13 +301,10 @@ namespace Playthrough {
       if (!Settings::ShuffleWeirdEgg)
         PlaceItemInLocation(&A_WeirdEgg, &HC_MalonEgg, overrides, NO_EFFECT);
 
-      if (!Settings::ShuffleZeldasLetter)
-        PlaceItemInLocation(&A_ZeldasLetter, &HC_ZeldasLetter, overrides, NO_EFFECT);
-
       if (!Settings::ShuffleGerudoToken)
         PlaceItemInLocation(&A_GerudoToken, &GF_GerudoToken, overrides, NO_EFFECT);
 
-      if (Settings::Skullsanity == "Vanilla") {
+      if (Settings::Skullsanity == TOKENSANITY_VANILLA) {
         //Overworld
         PlaceItemInLocation(&GoldSkulltulaToken, &KF_GS_BeanPatch,                             overrides, NO_EFFECT);
         PlaceItemInLocation(&GoldSkulltulaToken, &KF_GS_KnowItAllHouse,                        overrides, NO_EFFECT);
@@ -404,7 +419,7 @@ namespace Playthrough {
         PlaceItemInLocation(&GoldSkulltulaToken, &IceCavern_GS_PushBlockRoom,                  overrides, NO_EFFECT);
       }
 
-      if (Settings::Keysanity == "Vanilla") {
+      if (Settings::Keysanity == KEYSANITY_VANILLA) {
         //Forest Temple
         PlaceItemInLocation(&ForestTemple_SmallKey, &ForestTemple_FirstRoomChest,    overrides, NO_EFFECT);
         PlaceItemInLocation(&ForestTemple_SmallKey, &ForestTemple_FirstStalfosChest, overrides, NO_EFFECT);
@@ -471,7 +486,7 @@ namespace Playthrough {
         PlaceItemInLocation(&GanonsCastle_SmallKey, &GanonsCastle_LightTrialLullabyChest,          overrides, NO_EFFECT);
 }
 
-      if (Settings::BossKeysanity == "Vanilla") {
+      if (Settings::BossKeysanity == BOSSKEYSANITY_VANILLA) {
         PlaceItemInLocation(&ForestTemple_BossKey, &ForestTemple_BossKeyChest, overrides, NO_EFFECT);
         PlaceItemInLocation(&FireTemple_BossKey,   &FireTemple_BossKeyChest,   overrides, NO_EFFECT);
         PlaceItemInLocation(&WaterTemple_BossKey,  &WaterTemple_BossKeyChest,  overrides, NO_EFFECT);
@@ -480,7 +495,7 @@ namespace Playthrough {
         PlaceItemInLocation(&GanonsCastle_BossKey, &GanonsCastle_BossKeyChest, overrides, NO_EFFECT);
       }
 
-      if (Settings::MapsAndCompasses == "Vanilla") {
+      if (Settings::MapsAndCompasses == MAPSANDCOMPASSES_VANILLA) {
         PlaceItemInLocation(&DekuTree_Map, &DekuTree_MapChest,               overrides, NO_EFFECT);
         PlaceItemInLocation(&DodongosCavern_Map, &DodongosCavern_MapChest,   overrides, NO_EFFECT);
         PlaceItemInLocation(&JabuJabusBelly_Map, &JabuJabusBelly_MapChest,   overrides, NO_EFFECT);
@@ -504,7 +519,7 @@ namespace Playthrough {
         PlaceItemInLocation(&IceCavern_Compass, &IceCavern_CompassChest,             overrides, NO_EFFECT);
       }
 
-      if (Settings::Keysanity == "Dungeon Only") {
+      if (Settings::Keysanity == KEYSANITY_DUNGEON_ONLY) {
         //Gerudo Fortress (not much to randomize here)
         PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_NorthF1Carpenter, overrides, NO_EFFECT);
         PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_NorthF2Carpenter, overrides, NO_EFFECT);
@@ -522,7 +537,7 @@ namespace Playthrough {
         RandomizeDungeonKeys(GanonsCastleKeyRequirements,          &GanonsCastle_SmallKey,          2, overrides);
         }
 
-      if (Settings::BossKeysanity == "Dungeon Only") {
+      if (Settings::BossKeysanity == BOSSKEYSANITY_DUNGEON_ONLY) {
         RandomizeDungeonItem(ForestTempleKeyRequirements, &ForestTemple_BossKey, overrides);
         RandomizeDungeonItem(FireTempleKeyRequirements,   &FireTemple_BossKey,   overrides);
         RandomizeDungeonItem(WaterTempleKeyRequirements,  &WaterTemple_BossKey,  overrides);
@@ -531,7 +546,7 @@ namespace Playthrough {
         RandomizeDungeonItem(GanonsCastleKeyRequirements, &GanonsCastle_BossKey, overrides);
       }
 
-      if (Settings::MapsAndCompasses == "Dungeon Only") {
+      if (Settings::MapsAndCompasses == MAPSANDCOMPASSES_DUNGEON_ONLY) {
         RandomizeDungeonItem(DekuTreeKeyRequirements,        &DekuTree_Map,        overrides);
         RandomizeDungeonItem(DodongosCavernKeyRequirements,  &DodongosCavern_Map,  overrides);
         RandomizeDungeonItem(JabuJabusBellyKeyRequirements,  &JabuJabusBelly_Map,  overrides);

@@ -1,7 +1,5 @@
 #include "item_location.hpp"
 
-//ItemLocation LinksPocket = ItemLocation(0xFF, ITEMLOCATIONTYPE_NPC, 0x0);
-
 //Kokiri Forest
 ItemLocation KF_KokiriSwordChest                          = ItemLocation(0x55, ITEMLOCATIONTYPE_CHEST,        0x00, "KF Kokiri Sword Chest",                {"Kokiri Forest", "Forest",});
 ItemLocation KF_MidoTopLeftChest                          = ItemLocation(0x28, ITEMLOCATIONTYPE_CHEST,        0x00, "KF Mido Top Left Chest",               {"Kokiri Forest", "Forest",});
@@ -322,158 +320,172 @@ ItemLocation GerudoTrainingGrounds_HeavyBlockFourthChest      = ItemLocation(0x0
 ItemLocation GerudoTrainingGrounds_FreestandingKey            = ItemLocation(0x0B, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "Gerudo Training Grounds Freestanding Key",              {"Gerudo Training Grounds",});
 
 //Ganons Castle
-ItemLocation GanonsCastle_BossKeyChest                    = ItemLocation(0x0A, ITEMLOCATIONTYPE_CHEST,        0x0B, "Ganon's Castle Boss Key Chest",                      {"Ganon's Castle",});
-ItemLocation GanonsCastle_ForestTrialChest                = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x09, "Ganon's Castle Forest Trial Chest",                  {"Ganon's Castle",});
-ItemLocation GanonsCastle_WaterTrialLeftChest             = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x07, "Ganon's Castle Water Trial Left Chest",              {"Ganon's Castle",});
-ItemLocation GanonsCastle_WaterTrialRightChest            = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x06, "Ganon's Castle Water Trial Right Chest",             {"Ganon's Castle",});
-ItemLocation GanonsCastle_ShadowTrialFrontChest           = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x08, "Ganon's Castle Shadow Trial Front Chest",            {"Ganon's Castle",});
-ItemLocation GanonsCastle_ShadowTrialGoldenGauntletsChest = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x05, "Ganon's Castle Shadow Trial Golden Gauntlets Chest", {"Ganon's Castle",});
-ItemLocation GanonsCastle_SpiritTrialCrystalSwitchChest   = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x12, "Ganon's Castle Spirit Trial Crystal Switch Chest",   {"Ganon's Castle",});
-ItemLocation GanonsCastle_SpiritTrialInvisibleChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x14, "Ganon's Castle Spirit Trial Invisible Chest",        {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialFirstLeftChest        = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x0C, "Ganon's Castle Light Trial First Left Chest",        {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialSecondLeftChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x0B, "Ganon's Castle Light Trial Second Left Chest",       {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialThirdLeftChest        = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x0D, "Ganon's Castle Light Trial Third Left Chest",        {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialFirstRightChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x0E, "Ganon's Castle Light Trial First Right Chest",       {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialSecondRightChest      = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x0A, "Ganon's Castle Light Trial Second Right Chest",      {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialThirdRightChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x0F, "Ganon's Castle Light Trial Third Right Chest",       {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialInvisibleEnemiesChest = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x10, "Ganon's Castle Light Trial Invisible Enemies Chest", {"Ganon's Castle",});
-ItemLocation GanonsCastle_LightTrialLullabyChest          = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,        0x11, "Ganon's Castle Light Trial Lullaby Chest",           {"Ganon's Castle",});
-ItemLocation GanonsCastle_DekuScrubCenterLeft             = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,          0x37, "Ganon's Castle Deku Scrub Center-Left",              {"Ganon's Castle", "Deku Scrub",});
-ItemLocation GanonsCastle_DekuScrubCenterRight            = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,          0x33, "Ganon's Castle Deku Scrub Center-Right",             {"Ganon's Castle", "Deku Scrub",});
-ItemLocation GanonsCastle_DekuScrubRight                  = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,          0x39, "Ganon's Castle Deku Scrub Right",                    {"Ganon's Castle", "Deku Scrub",});
-ItemLocation GanonsCastle_DekuScrubLeft                   = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,          0x3A, "Ganon's Castle Deku Scrub Left",                     {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_BossKeyChest                    = ItemLocation(0x0A, ITEMLOCATIONTYPE_CHEST,         0x0B, "Ganon's Castle Boss Key Chest",                      {"Ganon's Castle",});
+ItemLocation GanonsCastle_ForestTrialChest                = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x09, "Ganon's Castle Forest Trial Chest",                  {"Ganon's Castle",});
+ItemLocation GanonsCastle_WaterTrialLeftChest             = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x07, "Ganon's Castle Water Trial Left Chest",              {"Ganon's Castle",});
+ItemLocation GanonsCastle_WaterTrialRightChest            = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x06, "Ganon's Castle Water Trial Right Chest",             {"Ganon's Castle",});
+ItemLocation GanonsCastle_ShadowTrialFrontChest           = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x08, "Ganon's Castle Shadow Trial Front Chest",            {"Ganon's Castle",});
+ItemLocation GanonsCastle_ShadowTrialGoldenGauntletsChest = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x05, "Ganon's Castle Shadow Trial Golden Gauntlets Chest", {"Ganon's Castle",});
+ItemLocation GanonsCastle_SpiritTrialCrystalSwitchChest   = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x12, "Ganon's Castle Spirit Trial Crystal Switch Chest",   {"Ganon's Castle",});
+ItemLocation GanonsCastle_SpiritTrialInvisibleChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x14, "Ganon's Castle Spirit Trial Invisible Chest",        {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialFirstLeftChest        = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x0C, "Ganon's Castle Light Trial First Left Chest",        {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialSecondLeftChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x0B, "Ganon's Castle Light Trial Second Left Chest",       {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialThirdLeftChest        = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x0D, "Ganon's Castle Light Trial Third Left Chest",        {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialFirstRightChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x0E, "Ganon's Castle Light Trial First Right Chest",       {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialSecondRightChest      = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x0A, "Ganon's Castle Light Trial Second Right Chest",      {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialThirdRightChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x0F, "Ganon's Castle Light Trial Third Right Chest",       {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialInvisibleEnemiesChest = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x10, "Ganon's Castle Light Trial Invisible Enemies Chest", {"Ganon's Castle",});
+ItemLocation GanonsCastle_LightTrialLullabyChest          = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x11, "Ganon's Castle Light Trial Lullaby Chest",           {"Ganon's Castle",});
+ItemLocation GanonsCastle_DekuScrubCenterLeft             = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x37, "Ganon's Castle Deku Scrub Center-Left",              {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_DekuScrubCenterRight            = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x33, "Ganon's Castle Deku Scrub Center-Right",             {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_DekuScrubRight                  = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x39, "Ganon's Castle Deku Scrub Right",                    {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_DekuScrubLeft                   = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x3A, "Ganon's Castle Deku Scrub Left",                     {"Ganon's Castle", "Deku Scrub",});
 
 /*-------------------------------
    --- GOLD SKULLTULA TOKENS ---
   -------------------------------*/
 
 //Dungeons
-ItemLocation DekuTree_GS_BasementBackRoom                 = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Deku Tree GS Basement Back Room",                  {"Deku Tree", "Skulltulas",});
-ItemLocation DekuTree_GS_BasementGate                     = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Deku Tree GS Basement Gate",                       {"Deku Tree", "Skulltulas",});
-ItemLocation DekuTree_GS_BasementVines                    = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Deku Tree GS Basement Vines",                      {"Deku Tree", "Skulltulas",});
-ItemLocation DekuTree_GS_CompassRoom                      = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Deku Tree GS Compass Room",                        {"Deku Tree", "Skulltulas",});
+ItemLocation DekuTree_GS_BasementBackRoom                 = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Deku Tree GS Basement Back Room",                  {"Deku Tree", "Skulltulas",});
+ItemLocation DekuTree_GS_BasementGate                     = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Deku Tree GS Basement Gate",                       {"Deku Tree", "Skulltulas",});
+ItemLocation DekuTree_GS_BasementVines                    = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Deku Tree GS Basement Vines",                      {"Deku Tree", "Skulltulas",});
+ItemLocation DekuTree_GS_CompassRoom                      = ItemLocation(0x00, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Deku Tree GS Compass Room",                        {"Deku Tree", "Skulltulas",});
 
-ItemLocation DodongosCavern_GS_VinesAboveStairs           = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Dodongos Cavern GS Vines Above Stairs",            {"Dodongo's Cavern", "Skulltulas",});
-ItemLocation DodongosCavern_GS_Scarecrow                  = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Dodongos Cavern GS Scarecrow",                     {"Dodongo's Cavern", "Skulltulas",});
-ItemLocation DodongosCavern_GS_AlcoveAboveStairs          = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Dodongos Cavern GS Alcove Above Stairs",           {"Dodongo's Cavern", "Skulltulas",});
-ItemLocation DodongosCavern_GS_BackRoom                   = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Dodongos Cavern GS Back Room",                     {"Dodongo's Cavern", "Skulltulas",});
-ItemLocation DodongosCavern_GS_SideRoomNearLowerLizalfos  = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "Dodongos Cavern GS Side Room Near Lower Lizalfos", {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_GS_VinesAboveStairs           = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Dodongos Cavern GS Vines Above Stairs",            {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_GS_Scarecrow                  = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Dodongos Cavern GS Scarecrow",                     {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_GS_AlcoveAboveStairs          = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Dodongos Cavern GS Alcove Above Stairs",           {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_GS_BackRoom                   = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Dodongos Cavern GS Back Room",                     {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_GS_SideRoomNearLowerLizalfos  = ItemLocation(0x01, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "Dodongos Cavern GS Side Room Near Lower Lizalfos", {"Dodongo's Cavern", "Skulltulas",});
 
-ItemLocation JabuJabusBelly_GS_LobbyBasementLower         = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Jabu Jabus Belly GS Lobby Basement Lower",         {"Jabu Jabu's Belly", "Skulltulas",});
-ItemLocation JabuJabusBelly_GS_LobbyBasementUpper         = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Jabu Jabus Belly GS Lobby Basement Upper",         {"Jabu Jabu's Belly", "Skulltulas",});
-ItemLocation JabuJabusBelly_GS_NearBoss                   = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Jabu Jabus Belly GS Near Boss",                    {"Jabu Jabu's Belly", "Skulltulas",});
-ItemLocation JabuJabusBelly_GS_WaterSwitchRoom            = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Jabu Jabus Belly GS Water Switch Room",            {"Jabu Jabu's Belly", "Skulltulas",});
+ItemLocation JabuJabusBelly_GS_LobbyBasementLower         = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Jabu Jabus Belly GS Lobby Basement Lower",         {"Jabu Jabu's Belly", "Skulltulas",});
+ItemLocation JabuJabusBelly_GS_LobbyBasementUpper         = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Jabu Jabus Belly GS Lobby Basement Upper",         {"Jabu Jabu's Belly", "Skulltulas",});
+ItemLocation JabuJabusBelly_GS_NearBoss                   = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Jabu Jabus Belly GS Near Boss",                    {"Jabu Jabu's Belly", "Skulltulas",});
+ItemLocation JabuJabusBelly_GS_WaterSwitchRoom            = ItemLocation(0x02, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Jabu Jabus Belly GS Water Switch Room",            {"Jabu Jabu's Belly", "Skulltulas",});
 
-ItemLocation ForestTemple_GS_RaisedIslandCourtyard        = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Forest Temple GS Raised Island Courtyard",         {"Forest Temple", "Skulltulas",});
-ItemLocation ForestTemple_GS_FirstRoom                    = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Forest Temple GS First Room",                      {"Forest Temple", "Skulltulas",});
-ItemLocation ForestTemple_GS_LevelIslandCourtyard         = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Forest Temple GS Level Island Courtyard",          {"Forest Temple", "Skulltulas",});
-ItemLocation ForestTemple_GS_Lobby                        = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Forest Temple GS Lobby",                           {"Forest Temple", "Skulltulas",});
-ItemLocation ForestTemple_GS_Basement                     = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "Forest Temple GS Basement",                        {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_GS_RaisedIslandCourtyard        = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Forest Temple GS Raised Island Courtyard",         {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_GS_FirstRoom                    = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Forest Temple GS First Room",                      {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_GS_LevelIslandCourtyard         = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Forest Temple GS Level Island Courtyard",          {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_GS_Lobby                        = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Forest Temple GS Lobby",                           {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_GS_Basement                     = ItemLocation(0x03, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "Forest Temple GS Basement",                        {"Forest Temple", "Skulltulas",});
 
-ItemLocation FireTemple_GS_SongOfTimeRoom                 = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Fire Temple GS Song of Time Room",                 {"Fire Temple", "Skulltulas",});
-ItemLocation FireTemple_GS_BossKeyLoop                    = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Fire Temple GS Boss Key Loop",                     {"Fire Temple", "Skulltulas",});
-ItemLocation FireTemple_GS_BoulderMaze                    = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Fire Temple GS Boulder Maze",                      {"Fire Temple", "Skulltulas",});
-ItemLocation FireTemple_GS_ScarecrowTop                   = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Fire Temple GS Scarecrow Top",                     {"Fire Temple", "Skulltulas",});
-ItemLocation FireTemple_GS_ScarecrowClimb                 = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "Fire Temple GS Scarecrow Climb",                   {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_GS_SongOfTimeRoom                 = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Fire Temple GS Song of Time Room",                 {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_GS_BossKeyLoop                    = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Fire Temple GS Boss Key Loop",                     {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_GS_BoulderMaze                    = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Fire Temple GS Boulder Maze",                      {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_GS_ScarecrowTop                   = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Fire Temple GS Scarecrow Top",                     {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_GS_ScarecrowClimb                 = ItemLocation(0x04, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "Fire Temple GS Scarecrow Climb",                   {"Fire Temple", "Skulltulas",});
 
-ItemLocation WaterTemple_GS_BehindGate                    = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Water Temple GS Behind Gate",                      {"Water Temple", "Skulltulas",});
-ItemLocation WaterTemple_GS_FallingPlatformRoom           = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Water Temple GS Falling Platform Room",            {"Water Temple", "Skulltulas",});
-ItemLocation WaterTemple_GS_CentralPillar                 = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Water Temple GS Central Pillar",                   {"Water Temple", "Skulltulas",});
-ItemLocation WaterTemple_GS_NearBossKeyChest              = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Water Temple GS Near Boss Key Chest",              {"Water Temple", "Skulltulas",});
-ItemLocation WaterTemple_GS_River                         = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "Water Temple GS River",                            {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_GS_BehindGate                    = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Water Temple GS Behind Gate",                      {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_GS_FallingPlatformRoom           = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Water Temple GS Falling Platform Room",            {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_GS_CentralPillar                 = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Water Temple GS Central Pillar",                   {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_GS_NearBossKeyChest              = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Water Temple GS Near Boss Key Chest",              {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_GS_River                         = ItemLocation(0x05, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "Water Temple GS River",                            {"Water Temple", "Skulltulas",});
 
-ItemLocation SpiritTemple_GS_HallAfterSunBlockRoom        = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Spirit Temple GS Hall After Sun Block Room",       {"Spirit Temple", "Skulltulas"});
-ItemLocation SpiritTemple_GS_BoulderRoom                  = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Spirit Temple GS Boulder Room",                    {"Spirit Temple", "Skulltulas"});
-ItemLocation SpiritTemple_GS_Lobby                        = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Spirit Temple GS Lobby",                           {"Spirit Temple", "Skulltulas"});
-ItemLocation SpiritTemple_GS_SunOnFloorRoom               = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Spirit Temple GS Sun on Floor Room",               {"Spirit Temple", "Skulltulas"});
-ItemLocation SpiritTemple_GS_MetalFence                   = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "Spirit Temple GS Metal Fence",                     {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_GS_HallAfterSunBlockRoom        = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Spirit Temple GS Hall After Sun Block Room",       {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_GS_BoulderRoom                  = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Spirit Temple GS Boulder Room",                    {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_GS_Lobby                        = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Spirit Temple GS Lobby",                           {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_GS_SunOnFloorRoom               = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Spirit Temple GS Sun on Floor Room",               {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_GS_MetalFence                   = ItemLocation(0x06, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "Spirit Temple GS Metal Fence",                     {"Spirit Temple", "Skulltulas"});
 
-ItemLocation ShadowTemple_GS_SingleGiantPot               = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Shadow Temple GS Single Giant Pot",                {"Shadow Temple", "Skulltulas",});
-ItemLocation ShadowTemple_GS_FallingSpikesRoom            = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Shadow Temple GS Falling Spikes Room",             {"Shadow Temple", "Skulltulas",});
-ItemLocation ShadowTemple_GS_TripleGiantPot               = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Shadow Temple GS Triple Giant Pot",                {"Shadow Temple", "Skulltulas",});
-ItemLocation ShadowTemple_GS_LikeLikeRoom                 = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Shadow Temple GS Like Like Room",                  {"Shadow Temple", "Skulltulas",});
-ItemLocation ShadowTemple_GS_NearShip                     = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "Shadow Temple GS Near Ship",                       {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_GS_SingleGiantPot               = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Shadow Temple GS Single Giant Pot",                {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_GS_FallingSpikesRoom            = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Shadow Temple GS Falling Spikes Room",             {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_GS_TripleGiantPot               = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Shadow Temple GS Triple Giant Pot",                {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_GS_LikeLikeRoom                 = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Shadow Temple GS Like Like Room",                  {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_GS_NearShip                     = ItemLocation(0x07, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "Shadow Temple GS Near Ship",                       {"Shadow Temple", "Skulltulas",});
 
-ItemLocation BottomOfTheWell_GS_LikeLikeCage              = ItemLocation(0x08, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Bottom of the Well GS Like Like Cage",             {"Bottom of the Well", "Skulltulas",});
-ItemLocation BottomOfTheWell_GS_EastInnerRoom             = ItemLocation(0x08, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Bottom of the Well GS East Inner Room",            {"Bottom of the Well", "Skulltulas",});
-ItemLocation BottomOfTheWell_GS_WestInnerRoom             = ItemLocation(0x08, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Bottom of the Well GS West Inner Room",            {"Bottom of the Well", "Skulltulas",});
+ItemLocation BottomOfTheWell_GS_LikeLikeCage              = ItemLocation(0x08, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Bottom of the Well GS Like Like Cage",             {"Bottom of the Well", "Skulltulas",});
+ItemLocation BottomOfTheWell_GS_EastInnerRoom             = ItemLocation(0x08, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Bottom of the Well GS East Inner Room",            {"Bottom of the Well", "Skulltulas",});
+ItemLocation BottomOfTheWell_GS_WestInnerRoom             = ItemLocation(0x08, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Bottom of the Well GS West Inner Room",            {"Bottom of the Well", "Skulltulas",});
 
-ItemLocation IceCavern_GS_PushBlockRoom                   = ItemLocation(0x09, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Ice Cavern GS Push Block Room",                    {"Ice Cavern", "Skulltulas",});
-ItemLocation IceCavern_GS_SpinningScytheRoom              = ItemLocation(0x09, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Ice Cavern GS Spinning Scythe Room",               {"Ice Cavern", "Skulltulas",});
-ItemLocation IceCavern_GS_HeartPieceRoom                  = ItemLocation(0x09, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Ice Cavern GS Heart Piece Room",                   {"Ice Cavern", "Skulltulas",});
+ItemLocation IceCavern_GS_PushBlockRoom                   = ItemLocation(0x09, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Ice Cavern GS Push Block Room",                    {"Ice Cavern", "Skulltulas",});
+ItemLocation IceCavern_GS_SpinningScytheRoom              = ItemLocation(0x09, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Ice Cavern GS Spinning Scythe Room",               {"Ice Cavern", "Skulltulas",});
+ItemLocation IceCavern_GS_HeartPieceRoom                  = ItemLocation(0x09, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Ice Cavern GS Heart Piece Room",                   {"Ice Cavern", "Skulltulas",});
 
 //Overworld
-ItemLocation KF_GS_BeanPatch                              = ItemLocation(0x0C, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "KF GS Bean Patch",                                 {"Kokiri Forest", "Skulltulas",});
-ItemLocation KF_GS_KnowItAllHouse                         = ItemLocation(0x0C, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "KF GS Know It All House",                          {"Kokiri Forest", "Skulltulas",});
-ItemLocation KF_GS_HouseOfTwins                           = ItemLocation(0x0C, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "KF GS House of Twins",                             {"Kokiri Forest", "Skulltulas",});
+ItemLocation KF_GS_BeanPatch                              = ItemLocation(0x0C, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "KF GS Bean Patch",                                 {"Kokiri Forest", "Skulltulas",});
+ItemLocation KF_GS_KnowItAllHouse                         = ItemLocation(0x0C, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "KF GS Know It All House",                          {"Kokiri Forest", "Skulltulas",});
+ItemLocation KF_GS_HouseOfTwins                           = ItemLocation(0x0C, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "KF GS House of Twins",                             {"Kokiri Forest", "Skulltulas",});
 
-ItemLocation LW_GS_BeanPatchNearBridge                    = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "LW GS Bean Patch Near Bridge",                     {"the Lost Woods", "Skulltulas",});
-ItemLocation LW_GS_BeanPatchNearTheater                   = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "LW GS Bean Patch Near Theater",                    {"the Lost Woods", "Skulltulas",});
-ItemLocation LW_GS_AboveTheater                           = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "LW GS Above Theater",                              {"the Lost Woods", "Skulltulas",});
-ItemLocation SFM_GS                                       = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "SFM GS",                                           {"Sacred Forest Meadow", "Skulltulas",});
+ItemLocation LW_GS_BeanPatchNearBridge                    = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "LW GS Bean Patch Near Bridge",                     {"the Lost Woods", "Skulltulas",});
+ItemLocation LW_GS_BeanPatchNearTheater                   = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "LW GS Bean Patch Near Theater",                    {"the Lost Woods", "Skulltulas",});
+ItemLocation LW_GS_AboveTheater                           = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "LW GS Above Theater",                              {"the Lost Woods", "Skulltulas",});
+ItemLocation SFM_GS                                       = ItemLocation(0x0D, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "SFM GS",                                           {"Sacred Forest Meadow", "Skulltulas",});
 
-ItemLocation HF_GS_CowGrotto                              = ItemLocation(0x0A, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "HF GS Cow Grotto",                                 {"Hyrule Field", "Skulltulas", "Grottos"});
-ItemLocation HF_GS_NearKakGrotto                          = ItemLocation(0x0A, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "HF GS Near Kak Grotto",                            {"Hyrule Field", "Skulltulas", "Grottos"});
+ItemLocation HF_GS_CowGrotto                              = ItemLocation(0x0A, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "HF GS Cow Grotto",                                 {"Hyrule Field", "Skulltulas", "Grottos"});
+ItemLocation HF_GS_NearKakGrotto                          = ItemLocation(0x0A, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "HF GS Near Kak Grotto",                            {"Hyrule Field", "Skulltulas", "Grottos"});
 
-ItemLocation LH_GS_BeanPatch                              = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "LH GS Bean Patch",                                 {"Lake Hylia", "Skulltulas",});
-ItemLocation LH_GS_SmallIsland                            = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "LH GS Small Island",                               {"Lake Hylia", "Skulltulas",});
-ItemLocation LH_GS_LabWall                                = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "LH GS Lab Wall",                                   {"Lake Hylia", "Skulltulas",});
-ItemLocation LH_GS_LabCrate                               = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "LH GS Lab Crate",                                  {"Lake Hylia", "Skulltulas",});
-ItemLocation LH_GS_Tree                                   = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "LH GS Tree",                                       {"Lake Hylia", "Skulltulas",});
+ItemLocation LH_GS_BeanPatch                              = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "LH GS Bean Patch",                                 {"Lake Hylia", "Skulltulas",});
+ItemLocation LH_GS_SmallIsland                            = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "LH GS Small Island",                               {"Lake Hylia", "Skulltulas",});
+ItemLocation LH_GS_LabWall                                = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "LH GS Lab Wall",                                   {"Lake Hylia", "Skulltulas",});
+ItemLocation LH_GS_LabCrate                               = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "LH GS Lab Crate",                                  {"Lake Hylia", "Skulltulas",});
+ItemLocation LH_GS_Tree                                   = ItemLocation(0x12, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "LH GS Tree",                                       {"Lake Hylia", "Skulltulas",});
 
-ItemLocation GV_GS_BeanPatch                              = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "GV GS Bean Patch",                                 {"Gerudo Valley", "Skulltulas",});
-ItemLocation GV_GS_SmallBridge                            = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "GV GS Small Bridge",                               {"Gerudo Valley", "Skulltulas",});
-ItemLocation GV_GS_Pillar                                 = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "GV GS Pillar",                                     {"Gerudo Valley", "Skulltulas",});
-ItemLocation GV_GS_BehindTent                             = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "GV GS Behind Tent",                                {"Gerudo Valley", "Skulltulas",});
+ItemLocation GV_GS_BeanPatch                              = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "GV GS Bean Patch",                                 {"Gerudo Valley", "Skulltulas",});
+ItemLocation GV_GS_SmallBridge                            = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "GV GS Small Bridge",                               {"Gerudo Valley", "Skulltulas",});
+ItemLocation GV_GS_Pillar                                 = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "GV GS Pillar",                                     {"Gerudo Valley", "Skulltulas",});
+ItemLocation GV_GS_BehindTent                             = ItemLocation(0x13, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "GV GS Behind Tent",                                {"Gerudo Valley", "Skulltulas",});
 
-ItemLocation GF_GS_ArcheryRange                           = ItemLocation(0x14, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "GF GS Archery Range",                              {"Gerudo's Fortress", "Skulltulas",});
-ItemLocation GF_GS_TopFloor                               = ItemLocation(0x14, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "GF GS Top Floor",                                  {"Gerudo's Fortress", "Skulltulas",});
+ItemLocation GF_GS_ArcheryRange                           = ItemLocation(0x14, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "GF GS Archery Range",                              {"Gerudo's Fortress", "Skulltulas",});
+ItemLocation GF_GS_TopFloor                               = ItemLocation(0x14, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "GF GS Top Floor",                                  {"Gerudo's Fortress", "Skulltulas",});
 
-ItemLocation HW_GS                                        = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "HW GS",                                            {"Haunted Wasteland", "Skulltulas",});
-ItemLocation Colossus_GS_BeanPatch                        = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Colossus GS Bean Patch",                           {"Desert Colossus", "Skulltulas",});
-ItemLocation Colossus_GS_Hill                             = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Colossus GS Hill",                                 {"Desert Colossus", "Skulltulas",});
-ItemLocation Colossus_GS_Tree                             = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Colossus GS Tree",                                 {"Desert Colossus", "Skulltulas",});
+ItemLocation HW_GS                                        = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "HW GS",                                            {"Haunted Wasteland", "Skulltulas",});
+ItemLocation Colossus_GS_BeanPatch                        = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Colossus GS Bean Patch",                           {"Desert Colossus", "Skulltulas",});
+ItemLocation Colossus_GS_Hill                             = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Colossus GS Hill",                                 {"Desert Colossus", "Skulltulas",});
+ItemLocation Colossus_GS_Tree                             = ItemLocation(0x15, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Colossus GS Tree",                                 {"Desert Colossus", "Skulltulas",});
 
-ItemLocation OGC_GS                                       = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "OGC GS",                                           {"outside Ganon's Castle", "Skulltulas",});
-ItemLocation HC_GS_StormsGrotto                           = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "HC GS Storms Grotto",                              {"Hyrule Castle", "Skulltulas", "Grottos"});
-ItemLocation HC_GS_Tree                                   = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "HC GS Tree",                                       {"Hyrule Castle", "Skulltulas",});
-ItemLocation MK_GS_GuardHouse                             = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Market GS Guard House",                            {"the Market", "Skulltulas",});
+ItemLocation OGC_GS                                       = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "OGC GS",                                           {"outside Ganon's Castle", "Skulltulas",});
+ItemLocation HC_GS_StormsGrotto                           = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "HC GS Storms Grotto",                              {"Hyrule Castle", "Skulltulas", "Grottos"});
+ItemLocation HC_GS_Tree                                   = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "HC GS Tree",                                       {"Hyrule Castle", "Skulltulas",});
+ItemLocation MK_GS_GuardHouse                             = ItemLocation(0x0E, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Market GS Guard House",                            {"the Market", "Skulltulas",});
 
-ItemLocation Kak_GS_HouseUnderConstruction                = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "Kak GS House Under Construction",                  {"Kakariko Village", "Skulltulas",});
-ItemLocation Kak_GS_SkulltulaHouse                        = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "Kak GS Skulltula House",                           {"Kakariko Village", "Skulltulas",});
-ItemLocation Kak_GS_GuardsHouse                           = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "Kak GS Guards House",                              {"Kakariko Village", "Skulltulas",});
-ItemLocation Kak_GS_Tree                                  = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x20, "Kak GS Tree",                                      {"Kakariko Village", "Skulltulas",});
-ItemLocation Kak_GS_Watchtower                            = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "Kak GS Watchtower",                                {"Kakariko Village", "Skulltulas",});
-ItemLocation Kak_GS_AboveImpasHouse                       = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x40, "Kak GS Above Impas House",                         {"Kakariko Village", "Skulltulas",});
+ItemLocation Kak_GS_HouseUnderConstruction                = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "Kak GS House Under Construction",                  {"Kakariko Village", "Skulltulas",});
+ItemLocation Kak_GS_SkulltulaHouse                        = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "Kak GS Skulltula House",                           {"Kakariko Village", "Skulltulas",});
+ItemLocation Kak_GS_GuardsHouse                           = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "Kak GS Guards House",                              {"Kakariko Village", "Skulltulas",});
+ItemLocation Kak_GS_Tree                                  = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x20, "Kak GS Tree",                                      {"Kakariko Village", "Skulltulas",});
+ItemLocation Kak_GS_Watchtower                            = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "Kak GS Watchtower",                                {"Kakariko Village", "Skulltulas",});
+ItemLocation Kak_GS_AboveImpasHouse                       = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x40, "Kak GS Above Impas House",                         {"Kakariko Village", "Skulltulas",});
 
-ItemLocation GY_GS_Wall                                   = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x80, "Graveyard GS Wall",                                {"the Graveyard", "Skulltulas",});
-ItemLocation GY_GS_BeanPatch                              = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "Graveyard GS Bean Patch",                          {"the Graveyard", "Skulltulas",});
+ItemLocation GY_GS_Wall                                   = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x80, "Graveyard GS Wall",                                {"the Graveyard", "Skulltulas",});
+ItemLocation GY_GS_BeanPatch                              = ItemLocation(0x10, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "Graveyard GS Bean Patch",                          {"the Graveyard", "Skulltulas",});
 
-ItemLocation DMC_GS_BeanPatch                             = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "DMC GS Bean Patch",                                {"Death Mountain Crater", "Skulltulas",});
-ItemLocation DMC_GS_Crate                                 = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x80, "DMC GS Crate",                                     {"Death Mountain Crater", "Skulltulas",});
+ItemLocation DMC_GS_BeanPatch                             = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "DMC GS Bean Patch",                                {"Death Mountain Crater", "Skulltulas",});
+ItemLocation DMC_GS_Crate                                 = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x80, "DMC GS Crate",                                     {"Death Mountain Crater", "Skulltulas",});
 
-ItemLocation DMT_GS_BeanPatch                             = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "DMT GS Bean Patch",                                {"Death Mountain Trail", "Skulltulas",});
-ItemLocation DMT_GS_NearKak                               = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "DMT GS Near Kak",                                  {"Death Mountain Trail", "Skulltulas",});
-ItemLocation DMT_GS_AboveDodongosCavern                   = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "DMT GS Above Dodongos Cavern",                     {"Death Mountain Trail", "Skulltulas",});
-ItemLocation DMT_GS_FallingRocksPath                      = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "DMT GS Falling Rocks Path",                        {"Death Mountain Trail", "Skulltulas",});
+ItemLocation DMT_GS_BeanPatch                             = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "DMT GS Bean Patch",                                {"Death Mountain Trail", "Skulltulas",});
+ItemLocation DMT_GS_NearKak                               = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "DMT GS Near Kak",                                  {"Death Mountain Trail", "Skulltulas",});
+ItemLocation DMT_GS_AboveDodongosCavern                   = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "DMT GS Above Dodongos Cavern",                     {"Death Mountain Trail", "Skulltulas",});
+ItemLocation DMT_GS_FallingRocksPath                      = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "DMT GS Falling Rocks Path",                        {"Death Mountain Trail", "Skulltulas",});
 
-ItemLocation GC_GS_CenterPlatform                         = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x20, "GC GS Center Platform",                            {"Goron City", "Skulltulas",});
-ItemLocation GC_GS_BoulderMaze                            = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,     0x40, "GC GS Boulder Maze",                               {"Goron City", "Skulltulas",});
+ItemLocation GC_GS_CenterPlatform                         = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x20, "GC GS Center Platform",                            {"Goron City", "Skulltulas",});
+ItemLocation GC_GS_BoulderMaze                            = ItemLocation(0x0F, ITEMLOCATIONTYPE_GS_TOKEN,      0x40, "GC GS Boulder Maze",                               {"Goron City", "Skulltulas",});
 
-ItemLocation ZR_GS_Ladder                                 = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "ZR GS Ladder",                                     {"Zora's River", "Skulltulas",});
-ItemLocation ZR_GS_Tree                                   = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "ZR GS Tree",                                       {"Zora's River", "Skulltulas",});
-ItemLocation ZR_GS_AboveBridge                            = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "ZR GS Above Bridge",                               {"Zora's River", "Skulltulas",});
-ItemLocation ZR_GS_NearRaisedGrottos                      = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x10, "ZR GS Near Raised Grottos",                        {"Zora's River", "Skulltulas",});
+ItemLocation ZR_GS_Ladder                                 = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "ZR GS Ladder",                                     {"Zora's River", "Skulltulas",});
+ItemLocation ZR_GS_Tree                                   = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "ZR GS Tree",                                       {"Zora's River", "Skulltulas",});
+ItemLocation ZR_GS_AboveBridge                            = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "ZR GS Above Bridge",                               {"Zora's River", "Skulltulas",});
+ItemLocation ZR_GS_NearRaisedGrottos                      = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x10, "ZR GS Near Raised Grottos",                        {"Zora's River", "Skulltulas",});
 
-ItemLocation ZD_GS_FrozenWaterfall                        = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x40, "ZD GS Frozen Waterfall",                           {"Zora's Domain", "Skulltulas",});
-ItemLocation ZF_GS_AboveTheLog                            = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "ZF GS Above The Log",                              {"Zora's Fountain", "Skulltulas",});
-ItemLocation ZF_GS_HiddenCave                             = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x20, "ZF GS Hidden Cave",                                {"Zora's Fountain", "Skulltulas",});
-ItemLocation ZF_GS_Tree                                   = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,     0x80, "ZF GS Tree",                                       {"Zora's Fountain", "Skulltulas",});
+ItemLocation ZD_GS_FrozenWaterfall                        = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x40, "ZD GS Frozen Waterfall",                           {"Zora's Domain", "Skulltulas",});
+ItemLocation ZF_GS_AboveTheLog                            = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "ZF GS Above The Log",                              {"Zora's Fountain", "Skulltulas",});
+ItemLocation ZF_GS_HiddenCave                             = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x20, "ZF GS Hidden Cave",                                {"Zora's Fountain", "Skulltulas",});
+ItemLocation ZF_GS_Tree                                   = ItemLocation(0x11, ITEMLOCATIONTYPE_GS_TOKEN,      0x80, "ZF GS Tree",                                       {"Zora's Fountain", "Skulltulas",});
 
-ItemLocation LLR_GS_BackWall                              = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,     0x01, "LLR GS Back Wall",                                 {"Lon Lon Ranch", "Skulltulas",});
-ItemLocation LLR_GS_RainShed                              = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,     0x02, "LLR GS Rain Shed",                                 {"Lon Lon Ranch", "Skulltulas",});
-ItemLocation LLR_GS_HouseWindow                           = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,     0x04, "LLR GS House Window",                              {"Lon Lon Ranch", "Skulltulas",});
-ItemLocation LLR_GS_Tree                                  = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,     0x08, "LLR GS Tree",                                      {"Lon Lon Ranch", "Skulltulas",});
+ItemLocation LLR_GS_BackWall                              = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,      0x01, "LLR GS Back Wall",                                 {"Lon Lon Ranch", "Skulltulas",});
+ItemLocation LLR_GS_RainShed                              = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,      0x02, "LLR GS Rain Shed",                                 {"Lon Lon Ranch", "Skulltulas",});
+ItemLocation LLR_GS_HouseWindow                           = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,      0x04, "LLR GS House Window",                              {"Lon Lon Ranch", "Skulltulas",});
+ItemLocation LLR_GS_Tree                                  = ItemLocation(0x0B, ITEMLOCATIONTYPE_GS_TOKEN,      0x08, "LLR GS Tree",                                      {"Lon Lon Ranch", "Skulltulas",});
+
+/*-------------------------------
+          --- BOSSES ---
+  -------------------------------*/
+
+ItemLocation LinksPocket                                  = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Link's Pocket",                                    {});
+ItemLocation QueenGohma                                   = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Queen Gohma",                                      {});
+ItemLocation KingDodongo                                  = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "King Dodongo",                                     {});
+ItemLocation Barinade                                     = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Barinade",                                         {});
+ItemLocation PhantomGanon                                 = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Phantom Ganon",                                    {});
+ItemLocation Volvagia                                     = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Volvagia",                                         {});
+ItemLocation Morpha                                       = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Morpha",                                           {});
+ItemLocation Twinrova                                     = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Twinrova",                                         {});
+ItemLocation BongoBongo                                   = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Bongo Bongo",                                      {});
 
 //key requirements for placing randomized keys and other items in dungeons
 std::vector<ItemLocationKeyPairing> DekuTreeKeyRequirements = {
@@ -563,10 +575,10 @@ std::vector<ItemLocationKeyPairing> WaterTempleKeyRequirements = {
   ItemLocationKeyPairing(&WaterTemple_GS_CentralPillar,       0),
   ItemLocationKeyPairing(&WaterTemple_GS_NearBossKeyChest,    5),
   ItemLocationKeyPairing(&WaterTemple_GS_FallingPlatformRoom, 5),
-  ItemLocationKeyPairing(&WaterTemple_LongshotChest,          6),
-  ItemLocationKeyPairing(&WaterTemple_RiverChest,             6),
-  ItemLocationKeyPairing(&WaterTemple_GS_River,               6),
-  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           6),
+  ItemLocationKeyPairing(&WaterTemple_LongshotChest,          5),
+  ItemLocationKeyPairing(&WaterTemple_RiverChest,             5),
+  ItemLocationKeyPairing(&WaterTemple_GS_River,               5),
+  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5), //FIX WHEN ADDING MORPHA HC
 };
 std::vector<ItemLocationKeyPairing> SpiritTempleKeyRequirements = {
   ItemLocationKeyPairing(&SpiritTemple_ChildBridgeChest,           0),

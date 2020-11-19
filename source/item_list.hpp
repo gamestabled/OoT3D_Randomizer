@@ -164,6 +164,16 @@ extern Item SpiritTemple_BossKey;
 extern Item ShadowTemple_BossKey;
 extern Item GanonsCastle_BossKey;
 
+extern Item A_KokiriEmerald;
+extern Item A_GoronRuby;
+extern Item A_ZoraSaphhire;
+extern Item A_ForestMedallion;
+extern Item A_FireMedallion;
+extern Item A_WaterMedallion;
+extern Item A_SpiritMedallion;
+extern Item A_ShadowMedallion;
+extern Item A_LightMedallion;
+
 extern Item NoItem;
 
 extern std::vector<Item *> PrePlacedItems;

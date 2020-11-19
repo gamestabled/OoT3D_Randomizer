@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <algorithm>
 #include <3ds.h>
+#include <vector>
 
 using namespace Settings;
 
@@ -65,9 +66,9 @@ namespace Logic {
   bool SpiritMedallion = false;
   bool ShadowMedallion = false;
   bool LightMedallion  = false;
-  bool KokirisEmerald  = false;
-  bool GoronsRuby      = false;
-  bool ZorasSapphire   = false;
+  bool KokiriEmerald   = false;
+  bool GoronRuby       = false;
+  bool ZoraSapphire    = false;
 
   //Dungeon Clears
   bool DekuTreeClear       = false;
@@ -237,7 +238,7 @@ namespace Logic {
   bool AtDay         = false;
   bool AtNight       = false;
   bool IsStartingAge = false;
-  std::string Age    = "";
+  u8 Age             = 0;
   u16 CurAccessibleLocations = 0;
 
   //Events
@@ -274,8 +275,8 @@ namespace Logic {
   bool DrainWellPast            = false;
   bool DampesWindmillAccessPast = false;
   bool DekuTreeClearPast        = false;
-  bool GoronsRubyPast           = false;
-  bool ZorasSapphirePast        = false;
+  bool GoronRubyPast            = false;
+  bool ZoraSapphirePast         = false;
   bool ForestTrialClearPast     = false;
   bool FireTrialClearPast       = false;
   bool WaterTrialClearPast      = false;
@@ -409,8 +410,8 @@ namespace Logic {
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
-    IsChild = Age == "Child";
-    IsAdult = Age == "Adult";
+    IsChild = Age == AGE_CHILD;
+    IsAdult = Age == AGE_ADULT;
     IsStartingAge = Age == StartingAge; //what's this for?
 
   //IsGlitched = false;
@@ -421,7 +422,7 @@ namespace Logic {
     CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse("Dins Fire") || Nuts || DekuShield);
     CanCutShrubs    = IsAdult || Sticks || KokiriSword || Boomerang || HasExplosives;
     CanDive         = ProgressiveScale >= 1;
-    CanLeaveForest  = OpenForest != "Closed" || IsAdult || DekuTreeClear;
+    CanLeaveForest  = OpenForest != OPENFOREST_CLOSED || IsAdult || DekuTreeClear;
     CanPlantBugs    = IsChild && Bugs;
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
@@ -437,9 +438,9 @@ namespace Logic {
     HasFireSourceWithTorch = HasFireSource || (IsChild && Sticks);
 
     //Gerudo Fortress
-    CanFinishGerudoFortress = (GerudoFortress == "Normal" && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword) && ((IsAdult && (Bow || Hookshot || HoverBoots)) || GerudoToken || LogicGerudoKitchen)) ||
-                              (GerudoFortress == "Fast"   && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword)) ||
-                              (GerudoFortress != "Normal"  && GerudoFortress != "Fast");
+    CanFinishGerudoFortress = (GerudoFortress == GERUDOFORTRESS_NORMAL && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword) && ((IsAdult && (Bow || Hookshot || HoverBoots)) || GerudoToken || LogicGerudoKitchen)) ||
+                              (GerudoFortress == GERUDOFORTRESS_FAST   && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword)) ||
+                              (GerudoFortress != GERUDOFORTRESS_NORMAL  && GerudoFortress != GERUDOFORTRESS_FAST);
 
     HasShield        = (IsAdult && HylianShield) ||                   (IsChild && DekuShield); //Mirror shield can't reflect attacks
     CanShield        = (IsAdult && (HylianShield || MirrorShield)) || (IsChild && DekuShield);
@@ -447,31 +448,31 @@ namespace Logic {
     CanUseProjectile = HasExplosives || (IsAdult && (Bow || Hookshot)) || (IsChild && (Slingshot || Boomerang));
 
     //Bridge Requirements
-    HasAllStones          = KokirisEmerald  && GoronsRuby    && ZorasSapphire;
+    HasAllStones          = KokiriEmerald   && GoronRuby     && ZoraSapphire;
     HasAllMedallions      = ForestMedallion && FireMedallion && WaterMedallion && ShadowMedallion && SpiritMedallion && LightMedallion;
-    CanBuildRainbowBridge = Bridge == "Open" ||
-                           (Bridge == "Vanilla"    && ShadowMedallion && SpiritMedallion && LightArrows) ||
-                           (Bridge == "Stones"     && HasAllStones) ||
-                           (Bridge == "Medallions" && HasAllMedallions) ||
-                           (Bridge == "Dungeons"   && HasAllStones && HasAllMedallions);
-                         //(Bridge == "Tokens"     && GoldSkulltulaTokens > Count);
+    CanBuildRainbowBridge = Bridge == RAINBOWBRIDGE_OPEN       ||
+                           (Bridge == RAINBOWBRIDGE_VANILLA    && ShadowMedallion && SpiritMedallion && LightArrows) ||
+                           (Bridge == RAINBOWBRIDGE_STONES     && HasAllStones) ||
+                           (Bridge == RAINBOWBRIDGE_MEDALLIONS && HasAllMedallions) ||
+                           (Bridge == RAINBOWBRIDGE_DUNGEONS   && HasAllStones && HasAllMedallions);
+                           //(Bridge == RAINBOWBRIDGE_TOKENS     && GoldSkulltulaTokens > Count);
 
-    CanTriggerLACS = (LACSCondition == "Vanilla"    && ShadowMedallion && SpiritMedallion) ||
-                     (LACSCondition == "Stones"     && HasAllStones)                       ||
-                     (LACSCondition == "Medallions" && HasAllMedallions)                   ||
-                     (LACSCondition == "Dungeons"   && HasAllStones && HasAllMedallions);
+    CanTriggerLACS = (LACSCondition == LACSCONDITION_VANILLA    && ShadowMedallion && SpiritMedallion) ||
+                     (LACSCondition == LACSCONDITION_STONES     && HasAllStones)                       ||
+                     (LACSCondition == LACSCONDITION_MEDALLIONS && HasAllMedallions)                   ||
+                     (LACSCondition == LACSCONDITION_DUNGEONS   && HasAllStones && HasAllMedallions);
 
   }
 
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
-    return (dungeonKeyCount >= requiredAmount) || Keysanity == "Vanilla";
+    return (dungeonKeyCount >= requiredAmount) || Keysanity == KEYSANITY_VANILLA;
   }
 
   bool EventsUpdated() {
 
       if (DekuTreeClearPast        != DekuTreeClear        ||
-          GoronsRubyPast           != GoronsRuby           ||
-          ZorasSapphirePast        != ZorasSapphire        ||
+          GoronRubyPast            != GoronRuby            ||
+          ZoraSapphirePast         != ZoraSapphire         ||
           ForestTrialClearPast     != ForestTrialClear     ||
           FireTrialClearPast       != FireTrialClear       ||
           WaterTrialClearPast      != WaterTrialClear      ||
@@ -482,8 +483,8 @@ namespace Logic {
           DampesWindmillAccessPast != DampesWindmillAccess ||
           BuyDekuShieldPast        != BuyDekuShield          ) {
             DekuTreeClearPast        = DekuTreeClear;
-            GoronsRubyPast           = GoronsRuby;
-            ZorasSapphirePast        = ZorasSapphire;
+            GoronRubyPast            = GoronRuby;
+            ZoraSapphirePast         = ZoraSapphire;
             ForestTrialClearPast     = ForestTrialClear;
             FireTrialClearPast       = FireTrialClear;
             WaterTrialClearPast      = WaterTrialClear;
@@ -497,19 +498,4 @@ namespace Logic {
           }
      return false;
    }
-
-  void GenericGrottoChecks() {
-    GossipStoneFairy = GossipStoneFairy || CanSummonGossipFairy;
-    ButterflyFairy   = ButterflyFairy   || (CanUse("Sticks"));
-    BugShrub         = CanCutShrubs;
-    LoneFish         = true;
-  }
-
-  void DekuBabaSticksCheck() {
-    DekuBabaSticks = DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);
-  }
-
-  void DekuBabaNutsCheck() {
-    DekuBabaNuts   = DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse("Dins Fire"));
-  }
 }

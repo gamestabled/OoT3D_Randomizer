@@ -1,56 +1,73 @@
 #pragma once
 #include <stdlib.h>
+#include <3ds.h>
 #include <string>
 #include <vector>
+#include "../code/src/settings.h"
 
 class Option {
   public:
-    Option(std::string* var_, std::string name_, std::vector<std::string> options_)
-          :         var(var_),       name(name_),                 options(options_) {
-
-        selectedOption = 0;
+    Option(u8* var_, std::string name_, std::vector<std::string> options_, u8 defaultOption_ = 0)
+          :   varu8(var_),       name(name_),                 options(options_), selectedOption(defaultOption_) {
+        *varu8 = selectedOption;
+        type == "u8";
     }
 
-    std::string* var;
+    Option(bool* var_, std::string name_, std::vector<std::string> options_, u8 defaultOption_ = 0)
+          :varBool(var_),     name(name_),                 options(options_), selectedOption(defaultOption_) {
+        type = "bool";
+        *varBool = selectedOption ? true : false;
+    }
+    u8* varu8;
+    bool* varBool;
     std::string name;
     std::vector<std::string> options;
-    int selectedOption;
+    u8 selectedOption;
+    std::string type;
 
+    void SetVariable() {
+      if (type == "bool") {
+        *varBool = selectedOption ? true : false;
+      } else {
+        *varu8 = selectedOption;
+      }
+    }
 };
 
 class Menu {
   public:
-    Menu(std::string name_, std::vector<Option *> optionsList_)
-        :       name(name_),        optionsList(optionsList_) {
+    Menu(std::string name_, std::vector<Option *> settingsList_)
+        :       name(name_),        settingsList(settingsList_) {
           selectedSetting = 0;
         }
 
     std::string name;
-    std::vector<Option *> optionsList;
+    std::vector<Option *> settingsList;
     int selectedSetting;
 };
 
 namespace Settings {
+  extern u8 OpenForest;
+  extern u8 OpenKakariko;
+  extern u8 Bridge;
+  extern u8 LACSCondition;
+  extern u8 GerudoFortress;
+  extern u8 DamageMultiplier;
+  extern u8 ZorasFountain;
+  extern u8 StartingAge;
+  extern u8 Keysanity;
+  extern u8 BossKeysanity;
+  extern u8 MapsAndCompasses;
+  extern u8 Skullsanity;
+  extern u8 Scrubsanity;
+
+  extern unsigned int seed;
+
   extern bool HasNightStart;
   extern bool BombchusInLogic;
   extern bool BombchuDrop;
   extern bool OpenDoorOfTime;
   extern bool SkippedTrials;
-
-  extern std::string OpenForest;
-  extern std::string OpenKakariko;
-  extern std::string Bridge;
-  extern std::string LACSCondition;
-  extern std::string GerudoFortress;
-  extern std::string DamageMultiplier;
-  extern std::string ZorasFountain;
-  extern std::string StartingAge;
-  extern std::string Keysanity;
-  extern std::string BossKeysanity;
-  extern std::string MapsAndCompasses;
-  extern std::string Skullsanity;
-  extern std::string Scrubsanity;
-
   extern bool ShuffleDungeonEntrances;
   extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;
@@ -150,7 +167,9 @@ namespace Settings {
   extern bool LogicWaterFallingPlatformGS;
 
   extern void UpdateSettings();
+  extern void PrintSettings();
+  extern SettingsContext FillContext();
 
   extern std::vector<Option *> Options;
-  extern std::vector<Menu> mainMenu;
+  extern std::vector<Menu *> mainMenu;
 }

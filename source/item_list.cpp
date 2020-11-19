@@ -84,6 +84,17 @@ static auto SpiritTempleBossKeyEffect           = []{BossKeySpiritTemple = true;
 static auto ShadowTempleBossKeyEffect           = []{BossKeyShadowTemple = true;};
 static auto GanonsCastleBossKeyEffect           = []{BossKeyGanonsCastle = true;};
 
+//Medallions and Stones Effects
+static auto KokiriEmeraldEffect   = []{KokiriEmerald   = true;};
+static auto GoronRubyEffect       = []{GoronRuby       = true;};
+static auto ZoraSapphireEffect    = []{ZoraSapphire    = true;};
+static auto ForestMedallionEffect = []{ForestMedallion = true;};
+static auto FireMedallionEffect   = []{FireMedallion   = true;};
+static auto WaterMedallionEffect  = []{WaterMedallion  = true;};
+static auto SpiritMedallionEffect = []{SpiritMedallion = true;};
+static auto ShadowMedallionEffect = []{ShadowMedallion = true;};
+static auto LightMedallionEffect  = []{LightMedallion  = true;};
+
 Item NoItem = Item("No Item", ITEMTYPE_ITEM,   GI_RUPEE_GREEN,   false, NoEffect);
 
 //Specific Advancement Items         // name              type           getItemId          prog   effect
@@ -200,34 +211,42 @@ Item GerudoFortress_SmallKey        = Item("Gerudo Fortress Small Key",         
 Item GanonsCastle_SmallKey          = Item("Ganon's Castle Small Key",          ITEMTYPE_SMALLKEY,          0xB7, false, GanonsCastleSmallKeyEffect);
 
 //Generic Items
-Item Heart                      = Item("Recovery Heart",  ITEMTYPE_ITEM, GI_HEART,         false, NoEffect);
-Item GreenRupee                 = Item("Green Rupee",     ITEMTYPE_ITEM, GI_RUPEE_GREEN,   false, NoEffect);
-Item BlueRupee                  = Item("Blue Rupee",      ITEMTYPE_ITEM, GI_RUPEE_BLUE,    false, NoEffect);
-Item RedRupee                   = Item("Red Rupee",       ITEMTYPE_ITEM, GI_RUPEE_RED,     false, NoEffect);
-Item PurpleRupee                = Item("Purple Rupee",    ITEMTYPE_ITEM, GI_RUPEE_PURPLE,  false, NoEffect);
-Item HugeRupee                  = Item("Huge Rupee",      ITEMTYPE_ITEM, GI_RUPEE_GOLD,    false, NoEffect);
-Item PieceOfHeart               = Item("Piece of Heart",  ITEMTYPE_ITEM, GI_HEART_PIECE,   false, NoEffect);
-Item IceTrap                    = Item("Ice Trap",        ITEMTYPE_ITEM, GI_ICE_TRAP,      false, NoEffect);
+Item Heart                      = Item("Recovery Heart",   ITEMTYPE_ITEM, GI_HEART,            false, NoEffect);
+Item GreenRupee                 = Item("Green Rupee",      ITEMTYPE_ITEM, GI_RUPEE_GREEN,      false, NoEffect);
+Item BlueRupee                  = Item("Blue Rupee",       ITEMTYPE_ITEM, GI_RUPEE_BLUE,       false, NoEffect);
+Item RedRupee                   = Item("Red Rupee",        ITEMTYPE_ITEM, GI_RUPEE_RED,        false, NoEffect);
+Item PurpleRupee                = Item("Purple Rupee",     ITEMTYPE_ITEM, GI_RUPEE_PURPLE,     false, NoEffect);
+Item HugeRupee                  = Item("Huge Rupee",       ITEMTYPE_ITEM, GI_RUPEE_GOLD,       false, NoEffect);
+Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEART_PIECE,      false, NoEffect);
+Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,         false, NoEffect);
 
 //Refills
-Item Bombs5                     = Item("Bomb Refill 5",   ITEMTYPE_ITEM, GI_BOMBS_5,       false, NoEffect);
-Item Bombs10                    = Item("Bomb Refill 10",  ITEMTYPE_ITEM, GI_BOMBS_10,      false, NoEffect);
-Item Bombs20                    = Item("Bomb Refill 20",  ITEMTYPE_ITEM, GI_BOMBS_20,      false, NoEffect);
-Item Arrows5                    = Item("Arrow Refill 5",  ITEMTYPE_ITEM, GI_ARROWS_SMALL,  false, NoEffect);
-Item Arrows10                   = Item("Arrow Refill 10", ITEMTYPE_ITEM, GI_ARROWS_MEDIUM, false, NoEffect);
-Item Arrows30                   = Item("Arrow Refill 30", ITEMTYPE_ITEM, GI_ARROWS_LARGE,  false, NoEffect);
+Item Bombs5                     = Item("Bomb Refill 5",    ITEMTYPE_ITEM, GI_BOMBS_5,          false, NoEffect);
+Item Bombs10                    = Item("Bomb Refill 10",   ITEMTYPE_ITEM, GI_BOMBS_10,         false, NoEffect);
+Item Bombs20                    = Item("Bomb Refill 20",   ITEMTYPE_ITEM, GI_BOMBS_20,         false, NoEffect);
+Item Arrows5                    = Item("Arrow Refill 5",   ITEMTYPE_ITEM, GI_ARROWS_SMALL,     false, NoEffect);
+Item Arrows10                   = Item("Arrow Refill 10",  ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,    false, NoEffect);
+Item Arrows30                   = Item("Arrow Refill 30",  ITEMTYPE_ITEM, GI_ARROWS_LARGE,     false, NoEffect);
 
-Item DekuNuts5                  = Item("Deku Nuts 5",     ITEMTYPE_ITEM, GI_NUTS_5,        false, NoEffect);
-Item DekuNuts10                 = Item("Deku Nuts 10",    ITEMTYPE_ITEM, GI_NUTS_10,       false, NoEffect);
-Item DekuSeeds30                = Item("Deku Seeds 30",   ITEMTYPE_ITEM, GI_SEEDS_30,      false, NoEffect);
+Item DekuNuts5                  = Item("Deku Nuts 5",      ITEMTYPE_ITEM, GI_NUTS_5,           false, NoEffect);
+Item DekuNuts10                 = Item("Deku Nuts 10",     ITEMTYPE_ITEM, GI_NUTS_10,          false, NoEffect);
+Item DekuSeeds30                = Item("Deku Seeds 30",    ITEMTYPE_ITEM, GI_SEEDS_30,         false, NoEffect);
 
-Item DekuStick1                 = Item("Deku Stick",      ITEMTYPE_ITEM, GI_STICKS_1,      false, NoEffect);
+Item DekuStick1                 = Item("Deku Stick",       ITEMTYPE_ITEM, GI_STICKS_1,         false, NoEffect);
+
+//Stones and Medallions
+Item A_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000, false, KokiriEmeraldEffect);
+Item A_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000, false, GoronRubyEffect);
+Item A_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000, false, ZoraSapphireEffect);
+Item A_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000001, false, ForestMedallionEffect);
+Item A_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0x00000002, false, FireMedallionEffect);
+Item A_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000004, false, WaterMedallionEffect);
+Item A_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008, false, SpiritMedallionEffect);
+Item A_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010, false, ShadowMedallionEffect);
+Item A_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020, false, LightMedallionEffect);
 
 //This pool will be used to give placement priority for items that can advance location access
 std::vector<Item> AdvancementItemPool = {};
-
-//Separate pool to give keys priority in dungeon only keysanity
-std::vector<Item> SmallKeyPool = {};
 
 //The beginning pool of items, filled in by GenerateItemPool()
 std::vector<Item> ItemPool = {};
@@ -324,19 +343,15 @@ void UpdateSetItems() {
     AddItemToPool(A_WeirdEgg);
   }
 
-  if (ShuffleZeldasLetter) {
-    AddItemToPool(A_ZeldasLetter);
+  if (ShuffleGerudoToken) {
+    AddItemToPool(A_GerudoToken);
   }
 
   if (BombchusInLogic) {
     AddItemToPool(A_ProgressiveBombchus);
   }
 
-  if (ShuffleGerudoToken) {
-    AddItemToPool(A_GerudoToken);
-  }
-
-  if (Keysanity == "All Locations") {
+  if (Keysanity == KEYSANITY_ALL_LOCATIONS) {
     AddItemToPool(ForestTemple_SmallKey, 5);
     AddItemToPool(FireTemple_SmallKey, 8);
     AddItemToPool(WaterTemple_SmallKey, 6);
@@ -348,7 +363,7 @@ void UpdateSetItems() {
     AddItemToPool(GanonsCastle_SmallKey, 2);
   }
 
-  if (BossKeysanity == "All Locations") {
+  if (BossKeysanity == BOSSKEYSANITY_ALL_LOCATIONS) {
     AddItemToPool(ForestTemple_BossKey);
     AddItemToPool(FireTemple_BossKey);
     AddItemToPool(WaterTemple_BossKey);
@@ -356,7 +371,7 @@ void UpdateSetItems() {
     AddItemToPool(ShadowTemple_BossKey);
   }
 
-  if (MapsAndCompasses == "All Locations") {
+  if (MapsAndCompasses == MAPSANDCOMPASSES_ALL_LOCATIONS) {
     AddItemToPool(DekuTree_Map);
     AddItemToPool(DodongosCavern_Map);
     AddItemToPool(JabuJabusBelly_Map);
@@ -380,7 +395,7 @@ void UpdateSetItems() {
     AddItemToPool(IceCavern_Compass);
   }
 
-  if (Skullsanity == "All Locations") {
+  if (Skullsanity == TOKENSANITY_ALL_LOCATIONS) {
     AddItemToPool(GoldSkulltulaToken, 100);
   }
 }

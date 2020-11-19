@@ -15,6 +15,7 @@ enum ItemLocationType {
     ITEMLOCATIONTYPE_GS_TOKEN,
     ITEMLOCATIONTYPE_GROTTO_SCRUB,
     ITEMLOCATIONTYPE_DELAYED,
+    ITEMLOCATIONTYPE_TEMPLE_REWARD
 };
 
 class ItemLocation {
@@ -73,8 +74,6 @@ public:
   ItemLocation* loc;
   u8 keysRequired;
 };
-
-extern ItemLocation LinksPocket;
 
 //Kokiri Forest
 extern ItemLocation KF_KokiriSwordChest;
@@ -557,6 +556,20 @@ extern ItemLocation LLR_GS_BackWall;
 extern ItemLocation LLR_GS_RainShed;
 extern ItemLocation LLR_GS_HouseWindow;
 extern ItemLocation LLR_GS_Tree;
+
+/*-------------------------------
+          --- BOSSES ---
+  -------------------------------*/
+
+extern ItemLocation LinksPocket;
+extern ItemLocation QueenGohma;
+extern ItemLocation KingDodongo;
+extern ItemLocation PhantomGanon;
+extern ItemLocation Barinade;
+extern ItemLocation Volvagia;
+extern ItemLocation Twinrova;
+extern ItemLocation Morpha;
+extern ItemLocation BongoBongo;
 
 extern std::vector<ItemLocationKeyPairing> DekuTreeKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> DodongosCavernKeyRequirements;
