@@ -24,12 +24,11 @@ enum ItemType {
 
 class Item {
 public:
-    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, bool advancement_, std::function<void()> effect_)
+    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, std::function<void()> effect_)
         : name(std::move(name_)),
           type(type_),
           getItemId(getItemId_),
           progressive(progressive_),
-          advancement(advancement_),
           effect(std::move(effect_)) {}
 
     void applyEffect() {
@@ -52,7 +51,6 @@ public:
     ItemType type;
     int  getItemId;
     bool progressive;
-    bool advancement;
 private:
     std::function<void()> effect;
 };

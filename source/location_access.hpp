@@ -13,7 +13,7 @@ class Exit;
 class EventPairing {
 public:
     EventPairing(bool* event_, std::function<bool()> ConditionsMet_)
-               : event(event_),        ConditionsMet(ConditionsMet_) {}
+               : event(event_),        ConditionsMet(std::move(ConditionsMet_)) {}
     bool* event;
     std::function<bool()> ConditionsMet;
 };
@@ -47,7 +47,7 @@ public:
 
 class Exit {
 public:
-    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::function<bool()> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
+    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::vector<EventPairing> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
         : regionName(std::move(regionName_)),
           scene(std::move(scene_)),
           hint(std::move(hint_)),
@@ -72,6 +72,7 @@ public:
     bool nightChild = false;
     bool dayAdult = false;
     bool nightAdult = false;
+    bool addedToPool = false;
 
     void UpdateEvents() {
 

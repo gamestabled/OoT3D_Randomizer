@@ -20,8 +20,8 @@ enum ItemLocationType {
 
 class ItemLocation {
 public:
-    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_)
-        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)) {}
+    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<std::string> categories_)
+        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)) {}
 
     ItemOverride_Key key() const {
         ItemOverride_Key key;
@@ -45,9 +45,6 @@ public:
       return name.c_str();
     }
 
-    Item placedItem = NoItem;
-
-
 private:
     u8 scene;
     ItemLocationType type;
@@ -59,6 +56,7 @@ public:
     std::string name;
     std::vector<std::string> categories;
     bool addedToPool = false;
+    Item placedItem = NoItem;
 
 };
 
