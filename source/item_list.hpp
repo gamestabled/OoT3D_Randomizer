@@ -24,12 +24,11 @@ enum ItemType {
 
 class Item {
 public:
-    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, bool advancement_, std::function<void()> effect_)
+    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, std::function<void()> effect_)
         : name(std::move(name_)),
           type(type_),
           getItemId(getItemId_),
           progressive(progressive_),
-          advancement(advancement_),
           effect(std::move(effect_)) {}
 
     void applyEffect() {
@@ -52,7 +51,6 @@ public:
     ItemType type;
     int  getItemId;
     bool progressive;
-    bool advancement;
 private:
     std::function<void()> effect;
 };
@@ -81,6 +79,7 @@ extern Item A_GoronTunic;
 extern Item A_ZoraTunic;
 extern Item A_GerudoToken;
 extern Item A_MagicBeanPack;
+extern Item GoldSkulltulaToken;
 
 //progressive items
 extern Item A_ProgressiveHookshot;
@@ -168,10 +167,22 @@ extern Item SpiritTemple_BossKey;
 extern Item ShadowTemple_BossKey;
 extern Item GanonsCastle_BossKey;
 
+extern Item A_KokiriEmerald;
+extern Item A_GoronRuby;
+extern Item A_ZoraSaphhire;
+extern Item A_ForestMedallion;
+extern Item A_FireMedallion;
+extern Item A_WaterMedallion;
+extern Item A_SpiritMedallion;
+extern Item A_ShadowMedallion;
+extern Item A_LightMedallion;
+
 extern Item NoItem;
 
 extern std::vector<Item *> PrePlacedItems;
 extern std::vector<Item>   AdvancementItemPool;
+extern std::vector<Item>   SmallKeyPool;
 extern std::vector<Item>   ItemPool;
 extern void UpdateSetItems();
-extern void AddHeartPiece();
+extern void GenerateItemPool();
+extern void AddGreenRupee();
