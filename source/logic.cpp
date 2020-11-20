@@ -1,6 +1,7 @@
 #include "logic.hpp"
 #include "settings.hpp"
 #include <string>
+#include <string_view>
 #include <cstdio>
 #include <algorithm>
 #include <3ds.h>
@@ -289,14 +290,14 @@ namespace Logic {
     return Ocarina && song;
   }
 
-  static bool IsMagicItem(std::string item) {
+  static bool IsMagicItem(std::string_view item) {
     return item == "Dins Fire"    ||
            item == "Farores Wind" ||
            item == "Nayrus Love"  ||
            item == "Lens of Truth";
   }
 
-  static bool IsAdultItem(std::string item) {
+  static bool IsAdultItem(std::string_view item) {
     return item == "Bow"              ||
            item == "Hammer"           ||
            item == "Iron Boots"       ||
@@ -311,7 +312,7 @@ namespace Logic {
            item == "Distant Scarecrow";
   }
 
-  static bool IsChildItem(std::string item) {
+  static bool IsChildItem(std::string_view item) {
     return item == "Slingshot"    ||
            item == "Boomerang"    ||
            item == "Kokiri Sword" ||
@@ -319,13 +320,13 @@ namespace Logic {
            item == "Deku Shield";
   }
 
-  static bool IsMagicArrow(std::string item) {
+  static bool IsMagicArrow(std::string_view item) {
     return item == "Fire Arrows" ||
            item == "Ice Arrows"  ||
            item == "Light Arrows";
   }
 
-  bool HasItem(std::string itemName) {
+  bool HasItem(std::string_view itemName) {
     return (itemName == "Dins Fire"        && DinsFire)        ||
            (itemName == "Farores Wind"     && FaroresWind)     ||
            (itemName == "NayrusLove"       && NayrusLove)      ||
@@ -344,24 +345,24 @@ namespace Logic {
            (itemName == "Distant Scarecrow"&& DistantScarecrow)||
            (itemName == "Slingshot"        && Slingshot)       ||
            (itemName == "Boomerang"        && Boomerang)       ||
-           (itemName == "KokiriSword"      && KokiriSword)     ||
+           (itemName == "Kokiri Sword"     && KokiriSword)     ||
            (itemName == "Sticks"           && Sticks)          ||
-           (itemName == "DekuShield"       && DekuShield)      ||
-           (itemName == "FireArrows"       && FireArrows)      ||
+           (itemName == "Deku Shield"      && DekuShield)      ||
+           (itemName == "Fire Arrows"      && FireArrows)      ||
            (itemName == "Ice Arrows"       && IceArrows)       ||
            (itemName == "Light Arrows"     && LightArrows);
 
   }
 
   //Can the passed in item be used?
-  bool CanUse(std::string itemName) {
+  bool CanUse(std::string_view itemName) {
     return (IsMagicItem(itemName)  && HasItem(itemName) && MagicMeter) ||
            (IsAdultItem(itemName)  && HasItem(itemName) && IsAdult)    ||
            (IsMagicArrow(itemName) && HasItem(itemName) && MagicMeter  && IsAdult && Bow) ||
            (IsChildItem(itemName)  && HasItem(itemName) && IsChild);
   }
 
-  bool HasProjectile(std::string age) {
+  bool HasProjectile(std::string_view age) {
     return HasExplosives ||
            (age == "Child"  && (Slingshot || Boomerang)) ||
            (age == "Adult"  && (Hookshot  || Bow      )) ||
@@ -427,9 +428,9 @@ namespace Logic {
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
-    CanPlantBean       = IsChild && (MagicBean || MagicBeanPack);
-    CanOpenBombGrotto  = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
-    CanOpenStormGrotto = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
+    CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
+    CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
+    CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
     HookshotOrBoomerang = CanUse("Hookshot") || CanUse("Boomerang");
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;

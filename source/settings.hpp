@@ -47,6 +47,7 @@ class Menu {
 };
 
 namespace Settings {
+  extern u8 Logic;
   extern u8 OpenForest;
   extern u8 OpenKakariko;
   extern u8 Bridge;
@@ -61,7 +62,7 @@ namespace Settings {
   extern u8 Skullsanity;
   extern u8 Scrubsanity;
 
-  extern unsigned int seed;
+  extern std::string seed;
 
   extern bool HasNightStart;
   extern bool BombchusInLogic;

@@ -26,6 +26,7 @@ namespace Playthrough {
     //static int debug = 0;
 
     static u32 totalItemsPlaced = 0;
+    static u64 accessibleLocationIterations = 0;
     static std::vector<ItemLocation *> AccessibleLocationPool;
 
     void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
@@ -141,6 +142,9 @@ namespace Playthrough {
                 if (location->placedItem.name == "No Item") {
                   PlacementLog_Msg(" | NO ITEM\n");
                   AccessibleLocationPool.push_back(location);
+                  if (accessibleLocationIterations > 2) {
+                    AccessibleLocationPool.push_back(location); //give the location more weight
+                  }
                   Logic::CurAccessibleLocations++;
                 } else {
                   PlacementLog_Msg(" | ITEM HERE\n");
@@ -162,6 +166,7 @@ namespace Playthrough {
         }
         //erase exits from the ExitPool if they can't open up more access to anything
         erase_if<Exit *>(Exits::ExitPool, [](Exit* exit){return exit->AllAccountedFor();});
+        accessibleLocationIterations++;
     }
 
     static void AccessibleLocations_Init(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
@@ -180,7 +185,13 @@ namespace Playthrough {
         }
       }
 
-      Exits::ExitPool.push_back(&Exits::Root);
+      if (Settings::Logic == LOGIC_GLITCHLESS) {
+        Exits::ExitPool.push_back(&Exits::Root);
+      } else if (Settings::Logic == LOGIC_NONE) {
+        Exits::ExitPool.clear();
+        AccessibleLocationPool = allLocations;
+      }
+
       AccessibleLocations_Update(overrides);
       if (Logic::EventsUpdated()) {
         AccessibleLocations_Update(overrides);
@@ -202,7 +213,8 @@ namespace Playthrough {
         PlaceItemInLocation(&AdvancementItemPool[itemIdx], AccessibleLocationPool[locIdx], overrides);
 
         AdvancementItemPool.erase(AdvancementItemPool.begin() + itemIdx);
-        AccessibleLocationPool.erase(AccessibleLocationPool.begin() + locIdx);
+        //erase locations that have been used
+        erase_if<ItemLocation *>(AccessibleLocationPool, [](ItemLocation* il){return il->isUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
@@ -219,7 +231,8 @@ namespace Playthrough {
         PlaceItemInLocation(&ItemPool[itemIdx], AccessibleLocationPool[locIdx], overrides);
 
         ItemPool.erase(ItemPool.begin() + itemIdx);
-        AccessibleLocationPool.erase(AccessibleLocationPool.begin() + locIdx);
+        //erase locations that have been used
+        erase_if<ItemLocation *>(AccessibleLocationPool, [](ItemLocation* il){return il->isUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
@@ -294,6 +307,7 @@ namespace Playthrough {
       PlaceItemInLocation(&A_WaterMedallion,  &Morpha,          overrides, NO_EFFECT);
       PlaceItemInLocation(&A_SpiritMedallion, &Twinrova,        overrides, NO_EFFECT);
       PlaceItemInLocation(&A_ShadowMedallion, &BongoBongo,      overrides, NO_EFFECT);
+
 
       if (!Settings::ShuffleKokiriSword)
         PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);

@@ -1,4 +1,5 @@
 #pragma once
+#include <3ds.h>
 
 #define MAIN_MENU 0
 #define SUB_MENU 1
@@ -11,6 +12,7 @@ void UpdateSubMenu(u32 kDown);
 void PrintMainMenu();
 void PrintSubMenu();
 void GenerateRandomizer();
+void GetInputSeed();
 
 extern void MenuInit();
 extern void MenuUpdate(u32 kDown);

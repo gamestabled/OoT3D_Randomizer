@@ -6,13 +6,13 @@ void SaveFile_Init() {
     //things to always set
     gSaveContext.cutsceneIndex     = 0;      //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
-    gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
-    gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except twinrova and ganondorf)
-    gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x01FB; //entered deku tree, temple of time, Goron city, hyrule castle, Zoras domain, kakariko village, DMT, hyrule field
-    gSaveContext.eventChkInf[0xB] |= 0x03FF; //entered DMC, Colossus, Zora's Fountain, Graveyard, JJB, LLR, Gerudo Fortress, Gerudo Valley, Lake Hylia, DC
-    gSaveContext.itemGetInf [0x1] |= 0x0008; //Deku seeds text
     gSaveContext.infTable  [0x20] |= 0x000E; //Ruto in Jabu can be escorted immediately
+    gSaveContext.itemGetInf [0x1] |= 0x0008; //Deku seeds text
+    gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
+    gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except Twinrova and Ganondorf)
+    gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
+    gSaveContext.eventChkInf[0xA] |= 0x01FB; //entered Deku Tree, Temple of Time, Goron City, Hyrule Castle, Zoras Domain, Kakariko Village, DMT, Hyrule Field
+    gSaveContext.eventChkInf[0xB] |= 0x07FF; //entered Ganons Castle Exterior, DMC, Colossus, Zora's Fountain, Graveyard, JJB, LLR, Gerudo Fortress, Gerudo Valley, Lake Hylia, DC
 
     //navi text triggers
     gSaveContext.sceneFlags [0].swch |= 0x80080400; //deku tree vines and door and rolling spike
@@ -23,6 +23,7 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags [5].swch |= 0x00000080; //water temple
     gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
+    
     //open lowest fire temple locked door
     gSaveContext.sceneFlags [4].swch |= 0x00008000;
 

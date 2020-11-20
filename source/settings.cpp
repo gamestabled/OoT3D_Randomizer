@@ -18,7 +18,7 @@ namespace Settings {
   u8 Scrubsanity                        = 0;     Option O_Scrubsanity         = Option(&Scrubsanity,         "Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"});
   u8 LACSCondition                      = 0;
 
-  unsigned int seed                     = 0;
+  std::string seed                      = "";
 
   bool HasNightStart                    = false;
   bool BombchusInLogic                  = false; Option O_BombchusInLogic     = Option(&BombchusInLogic,     "Bombchus in Logic",      {"Off", "On"});

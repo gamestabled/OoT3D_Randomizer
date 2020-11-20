@@ -1,9 +1,11 @@
 #include <stdlib.h>
+#include <time.h>
 #include <3ds.h>
 #include "menu.hpp"
 #include "patch.hpp"
 #include "settings.hpp"
 
+bool seedChanged;
 u8 mode;
 u8 settingIdx;
 u8 menuIdx;
@@ -13,16 +15,27 @@ Menu* currentMenu;
 Option* currentSetting;
 PrintConsole topScreen, bottomScreen;
 
+void PrintTopScreen() {
+  consoleSelect(&topScreen);
+  consoleClear();
+  printf("\x1b[1;10HOoT3D Randomizer testing!\n");
+  printf("\x1b[3;1HA/B/D-pad: Navigate Menu\n");
+  printf("   Select: Exit to Homebrew Menu\n");
+  printf("    Start: Create Patch\n");
+  printf("        Y: New Random Seed\n");
+  printf("        X: Input Custom Seed\n");
+  printf("\x1b[10;5HCurrent Seed: %s", Settings::seed.c_str());
+}
+
 void MenuInit() {
+  srand(time(NULL));
   consoleInit(GFX_TOP,    &topScreen);
   consoleInit(GFX_BOTTOM, &bottomScreen);
   consoleSelect(&topScreen);
 
-  printf("OoT3D Randomizer testing!\n");
-  printf("Press Select to exit!\n");
-  printf("Use D-pad to select settings!\n");
-  printf("Press Start to create the patch!\n");
+  PrintTopScreen();
 
+  seedChanged = false;
   mode = MAIN_MENU;
   menuIdx = 0;
   menuBound = 0;
@@ -33,7 +46,7 @@ void MenuInit() {
 }
 
 void MenuUpdate(u32 kDown) {
-  //clear the console if a button was pressed
+  //clear the bottom console if a button was pressed
   if (kDown & KEY_DUP || kDown & KEY_DDOWN || kDown & KEY_DLEFT || kDown & KEY_DRIGHT || kDown & KEY_A || kDown & KEY_B) {
 			consoleSelect(&bottomScreen);
 			consoleClear();
@@ -54,6 +67,23 @@ void MenuUpdate(u32 kDown) {
 		currentMenu = Settings::mainMenu[menuIdx];
 	}
 
+  //Check for seed change
+  if (kDown & KEY_Y) {
+    Settings::seed = std::to_string(rand());
+    seedChanged = true;
+  }
+
+  if (kDown & KEY_X) {
+    GetInputSeed();
+    seedChanged = true;
+  }
+
+  //reprint top console if the seed changed
+  if (seedChanged) {
+    PrintTopScreen();
+    seedChanged = false;
+  }
+
 	//Print current menu
 	consoleSelect(&bottomScreen);
 	if (mode == MAIN_MENU) {
@@ -63,7 +93,6 @@ void MenuUpdate(u32 kDown) {
 		UpdateSubMenu(kDown);
 		PrintSubMenu();
 	}
-	consoleSelect(&topScreen);
 }
 
 void UpdateMainMenu(u32 kDown) {
@@ -160,9 +189,17 @@ void PrintSubMenu() {
 }
 
 void GenerateRandomizer() {
-	Overrides.clear();
+  //if a blank seed was entered
+  if (Settings::seed == "") {
+    Settings::seed = std::to_string(rand());
+  }
+  unsigned int seedInt = std::hash<std::string>{}(Settings::seed);
+
+  consoleSelect(&topScreen);
 	consoleClear();
-	int ret = Playthrough::Fill(0, Settings::seed, Overrides);
+
+  Overrides.clear();
+	int ret = Playthrough::Fill(0, seedInt, Overrides);
 	if (ret < 0) {
 		printf("Error %d with fill. Press Start to exit.\n", ret);
 		return;
@@ -173,4 +210,21 @@ void GenerateRandomizer() {
 	} else {
 		printf("Error creating patch. Press Start to exit.\n");
 	}
+}
+
+void GetInputSeed() {
+  SwkbdState swkbd;
+  char mybuf[60];
+  SwkbdButton button = SWKBD_BUTTON_NONE;
+
+  swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 1, -1);
+	swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
+	swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
+	swkbdSetHintText(&swkbd, "Enter Seed");
+
+  while (button != SWKBD_BUTTON_CONFIRM) {
+    button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
+  }
+
+  Settings::seed = std::string(mybuf);
 }

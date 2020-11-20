@@ -711,7 +711,7 @@ std::vector<ItemLocation *> allLocations = {
 
   //Lost Woods
   &LW_SkullKid,
-  &LW_OcarinaMemoryGame,
+  //&LW_OcarinaMemoryGame,
   &LW_TargetInWoods,
   //&LW_DekuScrubNearDekuTheaterRight,
   //&LW_DekuScrubNearDekuTheaterLeft,
@@ -721,8 +721,8 @@ std::vector<ItemLocation *> allLocations = {
   &LW_NearShortcutsGrottoChest,
   //&LW_DekuScrubGrottoRear,
   //&LW_DekuScrubGrottoFront,
-  &DekuTheater_SkullMask,
-  &DekuTheater_MaskOfTruth,
+  //&DekuTheater_SkullMask,
+  //&DekuTheater_MaskOfTruth,
 
   //Sacred Forest Meadow
   &SFM_WolfosGrottoChest,
