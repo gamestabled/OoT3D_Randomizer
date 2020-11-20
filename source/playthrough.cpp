@@ -192,6 +192,7 @@ namespace Playthrough {
         }
       }
 
+      //glitchless logic or no logic
       if (Settings::Logic == LOGIC_GLITCHLESS) {
         Exits::ExitPool.push_back(&Exits::Root);
       } else if (Settings::Logic == LOGIC_NONE) {
