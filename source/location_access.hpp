@@ -28,12 +28,62 @@ public:
 };
 
 class ExitPairing {
-public:         //This exit, the conditions needed to access the exit, whether this exit can be accessed at only day/night or both
-    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_, std::string ToD_ = "Both")
-              : exit(std::move(exit_)), ConditionsMet(std::move(ConditionsMet_)), ToD(std::move(ToD_)) {}
+public:
+    using ConditionFn = bool (*)();
+
+    enum class Time {
+      Day,
+      Night,
+      Both,
+    };
+
+    constexpr ExitPairing(Exit* exit_, ConditionFn conditions_met_, Time time_of_day_ = Time::Both)
+        : exit(exit_), conditions_met(conditions_met_), time_of_day(time_of_day_) {}
+
+    constexpr bool IsBoth() const {
+        return time_of_day == ExitPairing::Time::Both;
+    }
+
+    constexpr bool IsDay() const {
+        return time_of_day == ExitPairing::Time::Day;
+    }
+
+    constexpr bool IsNight() const {
+        return time_of_day == ExitPairing::Time::Night;
+    }
+
+    constexpr Time TimeOfDay() const {
+        return time_of_day;
+    }
+
+    constexpr bool ConditionsMet() const {
+        return conditions_met();
+    }
+
+    constexpr Exit* GetExit() {
+        return exit;
+    }
+
+    constexpr const Exit* GetExit() const {
+        return exit;
+    }
+
+    static constexpr ExitPairing Both(Exit* exit, ConditionFn condition) {
+        return ExitPairing{exit, condition, Time::Both};
+    }
+
+    static constexpr ExitPairing Day(Exit* exit, ConditionFn condition) {
+        return ExitPairing{exit, condition, Time::Day};
+    }
+
+    static constexpr ExitPairing Night(Exit* exit, ConditionFn condition) {
+        return ExitPairing{exit, condition, Time::Night};
+    }
+
+private:
     Exit* exit;
-    std::function<bool()> ConditionsMet;
-    std::string ToD;
+    ConditionFn conditions_met;
+    Time time_of_day;
 };
 
 class AdvancementPairing {
