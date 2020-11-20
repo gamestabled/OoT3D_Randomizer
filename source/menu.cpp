@@ -7,8 +7,8 @@
 u8 mode;
 u8 settingIdx;
 u8 menuIdx;
-int settingBound;
-int menuBound;
+u8 settingBound;
+u8 menuBound;
 Menu* currentMenu;
 Option* currentSetting;
 PrintConsole topScreen, bottomScreen;
@@ -44,7 +44,6 @@ void MenuUpdate(u32 kDown) {
     return;
   }
 
-
 	//Check for a menu change
 	if (kDown & KEY_A && mode == MAIN_MENU) {
 		mode = SUB_MENU;
@@ -68,32 +67,44 @@ void MenuUpdate(u32 kDown) {
 }
 
 void UpdateMainMenu(u32 kDown) {
-	if (kDown & KEY_DUP && menuIdx != 0)
-			menuIdx--;
+	if (kDown & KEY_DUP)
+      menuIdx--;
 
-	if (kDown & KEY_DDOWN && menuIdx != Settings::mainMenu.size() - 1)
+	if (kDown & KEY_DDOWN)
 			menuIdx++;
+
+  //bounds checking
+  if (menuIdx == 0xFF) menuIdx = Settings::mainMenu.size() - 1;
+  if (menuIdx == Settings::mainMenu.size()) menuIdx = 0;
 
 	currentMenu = Settings::mainMenu[menuIdx];
 }
 
 void UpdateSubMenu(u32 kDown) {
-	if (kDown & KEY_DUP && settingIdx != 0)
+	if (kDown & KEY_DUP)
     settingIdx--;
 
-	if (kDown & KEY_DDOWN && settingIdx != currentMenu->settingsList.size() - 1)
+	if (kDown & KEY_DDOWN)
 		settingIdx++;
+
+  //bounds checking
+  if (settingIdx == 0xFF) settingIdx = currentMenu->settingsList.size() - 1;
+  if (settingIdx == currentMenu->settingsList.size()) settingIdx = 0;
 
 	currentSetting = currentMenu->settingsList[settingIdx];
 
 	if (kDown & KEY_DRIGHT) {
-		if (currentSetting->selectedOption != currentSetting->options.size() - 1)
-			currentSetting->selectedOption++;
+		currentSetting->selectedOption++;
 	}
 	if (kDown & KEY_DLEFT) {
-		if (currentSetting->selectedOption != 0)
-			currentSetting->selectedOption--;
+		currentSetting->selectedOption--;
 	}
+
+  //bounds checking
+  if (currentSetting->selectedOption == 0xFF)
+    currentSetting->selectedOption = currentSetting->options.size() - 1;
+  if (currentSetting->selectedOption == currentSetting->options.size())
+    currentSetting->selectedOption = 0;
 }
 
 void PrintMainMenu() {
@@ -104,8 +115,9 @@ void PrintMainMenu() {
 
 		Menu* menu = Settings::mainMenu[i + menuBound];
 
-    //make the current menu green
+
     u8 row = 3 + i;
+    //make the current menu green
 		if (menuIdx == i + menuBound) {
 			printf("\x1b[%d;%dH\x1b[32m>", row,  1);
 			printf("\x1b[%d;%dH%s\x1b[0m", row,  2, menu->name.c_str());
@@ -118,7 +130,7 @@ void PrintMainMenu() {
 void PrintSubMenu() {
 	//bounds checking incase settings go off screen
 	if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN) {
-		settingBound++;
+		settingBound = settingBound + MAX_SETTINGS_ON_SCREEN;
 	} else if (settingIdx < settingBound)  {
 		settingBound = settingIdx;
 	}
@@ -127,8 +139,7 @@ void PrintSubMenu() {
 	printf("\x1b[0;%dH%s", (BOTTOM_COLUMNS/2) - (currentMenu->name.length()/2), currentMenu->name.c_str());
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
-
-    //break if there are no more settings
+    //break if there are no more settings to print
 		if (i + settingBound >= currentMenu->settingsList.size()) break;
 
 		Option* setting = currentMenu->settingsList[i + settingBound];
