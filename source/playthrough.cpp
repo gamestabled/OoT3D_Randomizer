@@ -17,7 +17,8 @@
 
  //  /opt/devkitpro/devkitARM/bin/arm-none-eabi-nm code.elf > symbols.txt
 
-template<typename T> void erase_if(std::vector<T>& vector, std::function<bool(T)> pred) {
+template <typename T, typename Predicate>
+void erase_if(std::vector<T>& vector, Predicate pred) {
     vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
 }
 
@@ -52,14 +53,21 @@ namespace Playthrough {
         printf("\x1b[11;10H%lu\n", totalItemsPlaced);
     }
 
-    void UpdateToDAccess(Exit* exit, u8 age, std::string ToD) {
-      if (ToD == "Day") {
-        if (age == AGE_CHILD) exit->dayChild = true;
-        if (age == AGE_ADULT) exit->dayAdult = true;
-      } else if (ToD == "Night") {
-        if (age == AGE_CHILD) exit->nightChild = true;
-        if (age == AGE_ADULT) exit->nightAdult = true;
-
+    void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
+      if (ToD == ExitPairing::Time::Day) {
+        if (age == AGE_CHILD) {
+          exit->dayChild = true;
+        }
+        if (age == AGE_ADULT) {
+          exit->dayAdult = true;
+        }
+      } else if (ToD == ExitPairing::Time::Night) {
+        if (age == AGE_CHILD) {
+          exit->nightChild = true;
+        }
+        if (age == AGE_ADULT) {
+          exit->nightAdult = true;
+        }
       } else {
         //only update from false -> true, never true -> false
         if (age == AGE_CHILD) {
@@ -115,10 +123,10 @@ namespace Playthrough {
             //for each exit in this area
             for (u32 j = 0; j < area->exits.size(); j++) {
               ExitPairing exitPair = area->exits[j];
-              Exit *exit = exitPair.exit;
+              Exit *exit = exitPair.GetExit();
 
               if (exitPair.ConditionsMet()) {
-                UpdateToDAccess(exit, age, exitPair.ToD);
+                UpdateToDAccess(exit, age, exitPair.TimeOfDay());
 
                 //If the exit is accessible, but not in the exit pool, add it
                 if (exit->HasAccess() && !exit->addedToPool) {
@@ -154,14 +162,14 @@ namespace Playthrough {
             }
 
             //erase ItemLocationPairings that are placed into the AccessibleLocationPool
-            erase_if<ItemLocationPairing>(area->locations, [](ItemLocationPairing ilp){ return ilp.location->isUsed();});
+            erase_if(area->locations, [](const ItemLocationPairing& ilp){ return ilp.location->isUsed();});
 
             //erase ExitPairings whose conditions have been met while the exit has full day time access as both ages
-            erase_if<ExitPairing>(area->exits, [](ExitPairing ep){ return ep.ConditionsMet() && ep.exit->AllAccess();});
+            erase_if(area->exits, [](const ExitPairing& ep){ return ep.ConditionsMet() && ep.GetExit()->AllAccess();});
           }
         }
         //erase exits from the ExitPool if they can't open up more access to anything
-        erase_if<Exit *>(Exits::ExitPool, [](Exit* exit){return exit->AllAccountedFor();});
+        erase_if(Exits::ExitPool, [](const Exit* exit){return exit->AllAccountedFor();});
     }
 
     static void AccessibleLocations_Init(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
