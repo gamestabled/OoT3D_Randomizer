@@ -43,8 +43,8 @@ public:
         return val;
     }
 
-    const char * getName() const {
-      return name.c_str();
+    std::string_view getName() const {
+      return name;
     }
 
     std::string name;
