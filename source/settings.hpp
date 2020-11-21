@@ -8,13 +8,13 @@
 class Option {
   public:
     Option(u8* var_, std::string name_, std::vector<std::string> options_, u8 defaultOption_ = 0)
-          :   varu8(var_),       name(name_),                 options(options_), selectedOption(defaultOption_) {
-        *varu8 = selectedOption;
+          :   varu8(var_),       name(std::move(name_)),   options(std::move(options_)), selectedOption(defaultOption_) {
         type == "u8";
+        *varu8 = selectedOption;
     }
 
     Option(bool* var_, std::string name_, std::vector<std::string> options_, u8 defaultOption_ = 0)
-          :varBool(var_),     name(name_),                 options(options_), selectedOption(defaultOption_) {
+          :varBool(var_), name(std::move(name_)),  options(std::move(options_)), selectedOption(defaultOption_) {
         type = "bool";
         *varBool = selectedOption ? true : false;
     }
@@ -37,7 +37,7 @@ class Option {
 class Menu {
   public:
     Menu(std::string name_, std::vector<Option *> settingsList_)
-        :       name(name_),        settingsList(settingsList_) {
+        : name(std::move(name_)), settingsList(std::move(settingsList_)) {
           selectedSetting = 0;
         }
 
@@ -47,6 +47,7 @@ class Menu {
 };
 
 namespace Settings {
+  extern u8 Logic;
   extern u8 OpenForest;
   extern u8 OpenKakariko;
   extern u8 Bridge;
@@ -61,7 +62,7 @@ namespace Settings {
   extern u8 Skullsanity;
   extern u8 Scrubsanity;
 
-  extern unsigned int seed;
+  extern std::string seed;
 
   extern bool HasNightStart;
   extern bool BombchusInLogic;

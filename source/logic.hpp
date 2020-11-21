@@ -264,8 +264,8 @@ namespace Logic {
 
   extern void UpdateHelpers();
   extern bool CanPlay(bool song);
-  extern bool CanUse(std::string itemName);
-  extern bool HasProjectile(std::string age);
+  extern bool CanUse(std::string_view itemName);
+  extern bool HasProjectile(std::string_view age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();
 }
