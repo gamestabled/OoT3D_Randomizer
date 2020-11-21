@@ -160,7 +160,10 @@ namespace Playthrough {
 
                 //If the exit is accessible, but not in the exit pool, add it
                 if (exit->HasAccess() && !exit->addedToPool) {
-                  PlacementLog_Msg("NEW EXIT FOUND: "); PlacementLog_Msg(exit->regionName.c_str()); PlacementLog_Msg("\n");
+                  PlacementLog_Msg("NEW EXIT FOUND: ");
+                  PlacementLog_Msg(exit->regionName);
+                  PlacementLog_Msg("\n");
+
                   Exits::ExitPool.push_back(exit);
                   exit->addedToPool = true;
                 }
@@ -173,7 +176,9 @@ namespace Playthrough {
               ItemLocation *location = locPair.location;
 
               if (locPair.ConditionsMet() && !location->addedToPool) {
-                PlacementLog_Msg("NEW LOCATION FOUND: "); PlacementLog_Msg(location->getName());
+                PlacementLog_Msg("NEW LOCATION FOUND: ");
+                PlacementLog_Msg(location->getName());
+
                 location->addedToPool = true;
 
                 if (location->placedItem.name == "No Item") {
@@ -226,7 +231,7 @@ namespace Playthrough {
         Exits::ExitPool.push_back(&Exits::Root);
       } else if (Settings::Logic == LOGIC_NONE) {
         Exits::ExitPool.clear();
-        AccessibleLocationPool = allLocations;
+        AccessibleLocationPool.assign(allLocations.begin(), allLocations.end());
       }
 
       AccessibleLocations_Update(overrides);

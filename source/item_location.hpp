@@ -44,8 +44,8 @@ public:
       return used;
     }
 
-    const char * getName() const {
-      return name.c_str();
+    std::string_view getName() const {
+      return name;
     }
 
 private:
