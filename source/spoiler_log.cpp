@@ -30,19 +30,28 @@ void SpoilerLog_SaveLocation(const char *loc, const char *item) {
   //formatting for spoiler log (there's probably an easier way to do this)
   u8 remainingSpaces = LONGEST_LINE - (strlen(loc));
   for (u8 i = 0; i < remainingSpaces; i++) {
-    logtxt += " ";
+    logtxt += ' ';
   }
 
   logtxt += item;
-  logtxt += "\n";
 }
 
 bool SpoilerLog_Write() {
 
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
+  logtxt += "Playthrough:\n";
+  for (auto loc = advancementLocations.begin(); loc != advancementLocations.end(); loc++) {
+    logtxt += "    ";
+    SpoilerLog_SaveLocation((*loc)->getName(), (*loc)->placedItem.getName());
+    logtxt += '\n';
+  }
+
+  logtxt += "\nAll Locations:\n\n";
+
   for (auto loc = allLocations.begin(); loc != allLocations.end(); loc++) {
     SpoilerLog_SaveLocation((*loc)->getName(), (*loc)->placedItem.getName());
+    logtxt += (*loc)->addedToPool ? " ADDED\n" : " NOT ADDED\n";
   }
 
   //Open SD archive

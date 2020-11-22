@@ -1069,7 +1069,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&Kak_Main, []{return true;})
                 }, {
-                  AdvancementPairing(GoldSkulltulaToken, []{return CurAccessibleLocations > 10 && Skullsanity == TOKENSANITY_ALL_LOCATIONS && TokensInPool < 10;}, 50)
+                  AdvancementPairing(GoldSkulltulaToken, []{return Skullsanity == TOKENSANITY_ALL_LOCATIONS && TokensInPool < AdvancementItemPool.size()/3;}, 50)
   });
 
   Exit Kak_ImpasHouse = Exit("Kak Impas House", "", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1128,7 +1128,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit Kak_ShootingGallery = Exit("Kak Shooting Gallery", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Kak Shooting Gallery Reward
+                  ItemLocationPairing(&Kak_ShootingGalleryReward, []{return IsAdult && Bow;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main, []{return true;})
@@ -2147,7 +2147,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit ForestTemple_BowRegion = Exit("Forest Temple Bow Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
                     //Events
-                    EventPairing(&ForestTempleJoAndBeth, []{return ForestTempleJoAndBeth || CanUse("Bow");})
+                    EventPairing(&ForestTempleJoAndBeth, []{return ForestTempleJoAndBeth || CanUse("Bow");}),
                   }, {
                     //Locations
                     ItemLocationPairing(&ForestTemple_BowChest,     []{return true;}),
@@ -2234,7 +2234,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     ItemLocationPairing(&FireTemple_GS_ScarecrowTop,          []{return SmallKeys(FireTempleKeys, 6) && (CanUse("Scarecrow") || (LogicFireScarecrow && CanUse("Longshot")));}),
                   }, {
                     //Exits
-                    ExitPairing::Both(&FireTemple_Upper, []{return SmallKeys(FireTempleKeys, 8) || (SmallKeys(FireTempleKeys, 7) && ((CanUse("HoverBoots") && CanUse("Hammer")) || LogicFireFlameMaze));})
+                    ExitPairing::Both(&FireTemple_Upper, []{return SmallKeys(FireTempleKeys, 8) || (SmallKeys(FireTempleKeys, 7) && ((CanUse("Hover Boots") && CanUse("Hammer")) || LogicFireFlameMaze));})
                   }, {
                     //Advancement Needs
                     AdvancementPairing(A_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
@@ -2253,7 +2253,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     ItemLocationPairing(&FireTemple_MegatonHammerChest, []{return HasExplosives;}),
                   }, {}, {
                     //Advancement Needs
-                    AdvancementPairing(A_SongOfTime, []{return ProgressiveOcarina       >= 1 && IsAdult;}),
+                    AdvancementPairing(A_SongOfTime, []{return ProgressiveOcarina >= 1 && IsAdult;}),
   });
 
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
@@ -2277,13 +2277,13 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     //Water Temple Morpha Heart
                   }, {
                     //Exits
-                    ExitPairing::Both(&WaterTemple_DarkLinkRegion, []{return SmallKeys(WaterTempleKeys, 5) && CanUse("Hookshot");}),
+                    ExitPairing::Both(&WaterTemple_DarkLinkRegion, []{return SmallKeys(WaterTempleKeys, 4) && CanUse("Hookshot");}),
                     ExitPairing::Both(&WaterTemple_Dive,           []{return (CanUse("Zora Tunic") || LogicFewerTunicRequirements) && ((LogicWaterTempleTorchLongshot && CanUse("Longshot")) || IronBoots);}),
                   }, {
                     //Advancement Needs
                     AdvancementPairing(A_ZoraTunic,            []{return IsAdult && !LogicFewerTunicRequirements;}),
                     AdvancementPairing(A_IronBoots,            []{return IsAdult;}),
-                    AdvancementPairing(WaterTemple_SmallKey,   []{return true;}, 5),
+                    AdvancementPairing(WaterTemple_SmallKey,   []{return true;}, 4),
                     AdvancementPairing(WaterTemple_BossKey,    []{return true;}),
   });
 
@@ -2297,7 +2297,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   }, {
                     //Exits
                     ExitPairing::Both(&WaterTemple_CrackedWall,      []{return CanPlay(ZeldasLullaby) && (CanUse("Hookshot") || CanUse("Hover Boots")) && (LogicWaterCrackedWallNothing || (LogicWaterCrackedWallHovers && CanUse("Hover Boots")));}),
-                    ExitPairing::Both(&WaterTemple_MiddleWaterLevel, []{return (Bow || CanUse("Dins Fire") || (SmallKeys(WaterTempleKeys, 6) && CanUse("Hookshot")) || (ChildWaterTemple && Sticks)) && CanPlay(ZeldasLullaby);}),
+                    ExitPairing::Both(&WaterTemple_MiddleWaterLevel, []{return (Bow || CanUse("Dins Fire") || (SmallKeys(WaterTempleKeys, 5) && CanUse("Hookshot")) || (ChildWaterTemple && Sticks)) && CanPlay(ZeldasLullaby);}),
                     ExitPairing::Both(&WaterTemple_NorthBasement,    []{return SmallKeys(WaterTempleKeys, 5) && (CanUse("Longshot") || (LogicWaterBossKeyRegion && CanUse("Hover Boots"))) && (CanUse("Iron Boots") || CanPlay(ZeldasLullaby));}),
                     ExitPairing::Both(&WaterTemple_DragonStatue,     []{return CanPlay(ZeldasLullaby) && GoronBracelet && ((IronBoots && CanUse("Hookshot")) || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
                   }, {
@@ -2316,14 +2316,12 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit WaterTemple_NorthBasement = Exit("Water Temple North Basement", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                     //Events
-                    EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 6) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
+                    EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
                   }, {
                     //Locations
-                    ItemLocationPairing(&WaterTemple_BossKeyChest, []{return SmallKeys(WaterTempleKeys, 6) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
+                    ItemLocationPairing(&WaterTemple_BossKeyChest, []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
                     ItemLocationPairing(&WaterTemple_GS_NearBossKeyChest, []{return true;}),
-                  }, {
-                    //Exits
-                  }, {
+                  }, {}, {
                     //Advancement Needs
                     AdvancementPairing(WaterTemple_SmallKey,  []{return true;}, 6),
 
@@ -2345,8 +2343,8 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit WaterTemple_MiddleWaterLevel = Exit("Water Temple Middle Water Level", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                     //Locations
-                    ItemLocationPairing(&WaterTemple_CentralPillarChest, []{return CanUse("Zora Tunic") && CanUse("Hookshot") && ((SmallKeys(WaterTempleKeys, 6) || CanUse("Bow") || CanUse("Dins Fire")));}),
-                    ItemLocationPairing(&WaterTemple_GS_CentralPillar,   []{return ((CanUse("Longshot") || (CanUse("Farores Wind") && CanUse("Hookshot"))) && (SmallKeys(WaterTempleKeys, 6) || CanUse("Bow") || CanUse("Dins Fire"))) || (ChildWaterTemple && Boomerang && CanUse("Farores Wind") && (CanUse("Dins Fire") || Sticks));}),
+                    ItemLocationPairing(&WaterTemple_CentralPillarChest, []{return CanUse("Zora Tunic") && CanUse("Hookshot") && ((SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire")));}),
+                    ItemLocationPairing(&WaterTemple_GS_CentralPillar,   []{return ((CanUse("Longshot") || (CanUse("Farores Wind") && CanUse("Hookshot"))) && (SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire"))) || (ChildWaterTemple && Boomerang && CanUse("Farores Wind") && (CanUse("Dins Fire") || Sticks));}),
                   }, {
                     //Exits
                     ExitPairing::Both(&WaterTemple_CrackedWall, []{return true;}),
@@ -2357,16 +2355,16 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit WaterTemple_DarkLinkRegion = Exit("Water Temple Dark Link Region", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                     //Events
-                    EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 6) && CanPlay(SongOfTime));}),
+                    EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime));}),
                   }, {
                     //Locations
-                    ItemLocationPairing(&WaterTemple_LongshotChest,          []{return SmallKeys(WaterTempleKeys, 6);}),
-                    ItemLocationPairing(&WaterTemple_RiverChest,             []{return SmallKeys(WaterTempleKeys, 6) && CanPlay(SongOfTime) && Bow;}),
-                    ItemLocationPairing(&WaterTemple_GS_River,               []{return CanPlay(SongOfTime) && SmallKeys(WaterTempleKeys, 6) && (IronBoots || (LogicWaterRiverGS && CanUse("Longshot") && (Bow || HasBombchus)));}),
+                    ItemLocationPairing(&WaterTemple_LongshotChest,          []{return SmallKeys(WaterTempleKeys, 5);}),
+                    ItemLocationPairing(&WaterTemple_RiverChest,             []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow;}),
+                    ItemLocationPairing(&WaterTemple_GS_River,               []{return CanPlay(SongOfTime) && SmallKeys(WaterTempleKeys, 5) && (IronBoots || (LogicWaterRiverGS && CanUse("Longshot") && (Bow || HasBombchus)));}),
                     ItemLocationPairing(&WaterTemple_GS_FallingPlatformRoom, []{return CanUse("Longshot") || (LogicWaterFallingPlatformGS && CanUse("Hookshot"));}),
                   }, {
                     //Exits
-                    ExitPairing::Both(&WaterTemple_DragonStatue, []{return SmallKeys(WaterTempleKeys, 6) && CanPlay(SongOfTime) && Bow && ((IronBoots && (CanUse("Zora Tunic") || LogicFewerTunicRequirements)) || LogicWaterDragonJumpDive || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
+                    ExitPairing::Both(&WaterTemple_DragonStatue, []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow && ((IronBoots && (CanUse("Zora Tunic") || LogicFewerTunicRequirements)) || LogicWaterDragonJumpDive || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
                   }, {
                     //Advancement Needs
                     AdvancementPairing(A_SongOfTime,         []{return ProgressiveOcarina >= 1;}),

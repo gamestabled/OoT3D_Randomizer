@@ -369,6 +369,7 @@ void UpdateSetItems() {
     AddItemToPool(WaterTemple_BossKey);
     AddItemToPool(SpiritTemple_BossKey);
     AddItemToPool(ShadowTemple_BossKey);
+    AddItemToPool(GanonsCastle_BossKey);
   }
 
   if (MapsAndCompasses == MAPSANDCOMPASSES_ALL_LOCATIONS) {

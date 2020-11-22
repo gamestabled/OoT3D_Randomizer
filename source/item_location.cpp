@@ -573,12 +573,12 @@ std::vector<ItemLocationKeyPairing> WaterTempleKeyRequirements = {
   ItemLocationKeyPairing(&WaterTemple_DragonChest,            0),
   ItemLocationKeyPairing(&WaterTemple_CentralPillarChest,     0),
   ItemLocationKeyPairing(&WaterTemple_GS_CentralPillar,       0),
-  ItemLocationKeyPairing(&WaterTemple_GS_NearBossKeyChest,    5),
-  ItemLocationKeyPairing(&WaterTemple_GS_FallingPlatformRoom, 5),
+  ItemLocationKeyPairing(&WaterTemple_GS_NearBossKeyChest,    4),
+  ItemLocationKeyPairing(&WaterTemple_GS_FallingPlatformRoom, 4),
   ItemLocationKeyPairing(&WaterTemple_LongshotChest,          5),
   ItemLocationKeyPairing(&WaterTemple_RiverChest,             5),
   ItemLocationKeyPairing(&WaterTemple_GS_River,               5),
-  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5), //FIX WHEN ADDING MORPHA HC
+  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5), 
 };
 std::vector<ItemLocationKeyPairing> SpiritTempleKeyRequirements = {
   ItemLocationKeyPairing(&SpiritTemple_ChildBridgeChest,           0),
@@ -701,7 +701,21 @@ std::vector<ItemLocationKeyPairing> GanonsCastleKeyRequirements = {
   ItemLocationKeyPairing(&GanonsCastle_LightTrialLullabyChest,          1),
 };
 
+std::vector<ItemLocation *> advancementLocations = {};
+
 std::vector<ItemLocation *> allLocations = {
+  //Bosses
+  &LinksPocket,
+  &QueenGohma,
+  &KingDodongo,
+  &Barinade,
+  &PhantomGanon,
+  &Volvagia,
+  &Morpha,
+  &Twinrova,
+  &BongoBongo,
+
+  //Kokiri Forest
   &KF_KokiriSwordChest,
   &KF_MidoTopLeftChest,
   &KF_MidoTopRightChest,
@@ -716,7 +730,6 @@ std::vector<ItemLocation *> allLocations = {
   //&LW_DekuScrubNearDekuTheaterRight,
   //&LW_DekuScrubNearDekuTheaterLeft,
   //&LW_DekuScrubNearBridge,
-  //&LW_GSBeanPatchNearBridge,
   //&LW_GossipStone,
   &LW_NearShortcutsGrottoChest,
   //&LW_DekuScrubGrottoRear,
@@ -812,7 +825,7 @@ std::vector<ItemLocation *> allLocations = {
   //Death Mountain Trail
   &DMT_Chest,
   &DMT_StormsGrottoChest,
-  &DMT_Biggoron,
+  //&DMT_Biggoron,
   //&DMT_GreatFairyReward,
   &DMT_FreestandingPoH,
 

@@ -46,7 +46,7 @@ typedef enum {
   DAMAGEMULTIPLIER_DOUBLE,
   DAMAGEMULTIPLIER_QUADRUPLE,
   DAMAGEMULTIPLIER_OHKO,
-} DamageMUltiplierSetting;
+} DamageMultiplierSetting;
 
 typedef enum {
   ZORASFOUNTAIN_NORMAL,
@@ -63,7 +63,7 @@ typedef enum {
   KEYSANITY_VANILLA,
   KEYSANITY_DUNGEON_ONLY,
   KEYSANITY_ALL_LOCATIONS,
-} KeyasnitySetting;
+} KeysanitySetting;
 
 typedef enum {
   BOSSKEYSANITY_VANILLA,

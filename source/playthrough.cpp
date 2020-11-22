@@ -24,8 +24,7 @@ void erase_if(std::vector<T>& vector, Predicate pred) {
 
 namespace Playthrough {
 
-    //static int debug = 0;
-
+    static u32 totalLocationsFound = 0;
     static u32 totalItemsPlaced = 0;
     static u64 accessibleLocationIterations = 0;
     static std::vector<ItemLocation *> AccessibleLocationPool;
@@ -50,8 +49,8 @@ namespace Playthrough {
 
         loc->placedItem = *item;
         totalItemsPlaced++;
-        printf("\x1b[10;10HPlacing Items");
-        printf("\x1b[11;10H%lu\n", totalItemsPlaced);
+        printf("\x1b[2;20HPlacing Items");
+        printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size());
     }
 
     void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
@@ -92,86 +91,93 @@ namespace Playthrough {
     }
 
     static void AccessibleLocations_Update(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+        bool advancementChange = true;
+        while(advancementChange) {
+          advancementChange = false;
 
-        for (u32 i = 0; i < Exits::ExitPool.size(); i++) {
-          //iterate twice on each area for different ages
-          for (u8 age : {AGE_CHILD, AGE_ADULT}) {
-            Logic::Age = age;
-            Exit *area = Exits::ExitPool[i];
+          for (u32 i = 0; i < Exits::ExitPool.size(); i++) {
+            //iterate twice on each area for different ages
+            for (u8 age : {AGE_CHILD, AGE_ADULT}) {
+              Logic::Age = age;
+              Exit *area = Exits::ExitPool[i];
 
-            //Check if the age can access this area and update ToD logic
-            if (age == AGE_CHILD) {
-              if (area->Child()) {
-                Logic::AtDay   = area->dayChild;
-                Logic::AtNight = area->nightChild;
-              } else {
-                continue;
-              }
-
-            } else if (age == AGE_ADULT) {
-              if (area->Adult()) {
-                Logic::AtDay   = area->dayAdult;
-                Logic::AtNight = area->nightAdult;
-              } else {
-                continue;
-              }
-            }
-
-            area->UpdateEvents();
-            area->UpdateAdvancementNeeds();
-            Logic::UpdateHelpers();
-
-            //for each exit in this area
-            for (u32 j = 0; j < area->exits.size(); j++) {
-              ExitPairing exitPair = area->exits[j];
-              Exit *exit = exitPair.GetExit();
-
-              if (exitPair.ConditionsMet()) {
-                UpdateToDAccess(exit, age, exitPair.TimeOfDay());
-
-                //If the exit is accessible, but not in the exit pool, add it
-                if (exit->HasAccess() && !exit->addedToPool) {
-                  PlacementLog_Msg("NEW EXIT FOUND: "); PlacementLog_Msg(exit->regionName.c_str()); PlacementLog_Msg("\n");
-                  Exits::ExitPool.push_back(exit);
-                  exit->addedToPool = true;
-                }
-              }
-            }
-
-            //for each ItemLocation in this area
-            for (u32 k = 0; k < area->locations.size(); k++) {
-              ItemLocationPairing locPair = area->locations[k];
-              ItemLocation *location = locPair.location;
-
-              if (locPair.ConditionsMet() && !location->addedToPool) {
-                PlacementLog_Msg("NEW LOCATION FOUND: "); PlacementLog_Msg(location->getName());
-                location->addedToPool = true;
-
-                if (location->placedItem.name == "No Item") {
-                  PlacementLog_Msg(" | NO ITEM\n");
-                  AccessibleLocationPool.push_back(location);
-                  if (accessibleLocationIterations > 2) {
-                    AccessibleLocationPool.push_back(location); //give the location more weight
-                  }
-                  Logic::CurAccessibleLocations++;
+              //Check if the age can access this area and update ToD logic
+              if (age == AGE_CHILD) {
+                if (area->Child()) {
+                  Logic::AtDay   = area->dayChild;
+                  Logic::AtNight = area->nightChild;
                 } else {
-                  PlacementLog_Msg(" | ITEM HERE\n");
-                  location->placedItem.applyEffect();
-                  location->use();
-                  //If an item is found, recalculate all logic and try finding more accessible locations (this needs to be reworked to not cause potential stack overflows)
-                  AccessibleLocations_Update(overrides);
-                  return;
+                  continue;
+                }
+
+              } else if (age == AGE_ADULT) {
+                if (area->Adult()) {
+                  Logic::AtDay   = area->dayAdult;
+                  Logic::AtNight = area->nightAdult;
+                } else {
+                  continue;
                 }
               }
+
+              Logic::UpdateHelpers();
+              area->UpdateEvents();
+              area->UpdateAdvancementNeeds();
+
+              //for each exit in this area
+              for (u32 j = 0; j < area->exits.size(); j++) {
+                ExitPairing exitPair = area->exits[j];
+                Exit *exit = exitPair.GetExit();
+
+                if (exitPair.ConditionsMet()) {
+                  UpdateToDAccess(exit, age, exitPair.TimeOfDay());
+
+                  //If the exit is accessible, but not in the exit pool, add it
+                  if (exit->HasAccess() && !exit->addedToPool) {
+                    PlacementLog_Msg("NEW EXIT FOUND: "); PlacementLog_Msg(exit->regionName.c_str()); PlacementLog_Msg("\n");
+                    Exits::ExitPool.push_back(exit);
+                    exit->addedToPool = true;
+                    advancementChange = true;
+                  }
+                }
+              }
+
+              //for each ItemLocation in this area
+              for (u32 k = 0; k < area->locations.size(); k++) {
+                ItemLocationPairing locPair = area->locations[k];
+                ItemLocation *location = locPair.location;
+
+                if (locPair.ConditionsMet() && !location->addedToPool) {
+                  PlacementLog_Msg("NEW LOCATION FOUND: "); PlacementLog_Msg(location->getName());
+                  totalLocationsFound++;
+                  location->addedToPool = true;
+
+                  if (location->placedItem.name == "No Item") {
+                    PlacementLog_Msg(" | NO ITEM\n");
+                    AccessibleLocationPool.push_back(location);
+                    if (accessibleLocationIterations > 2) {
+                      AccessibleLocationPool.push_back(location); //give the location more weight
+                    }
+                    Logic::CurAccessibleLocations++;
+                  } else {
+                    PlacementLog_Msg(" | ITEM HERE\n");
+                    location->placedItem.applyEffect();
+                    location->use();
+                    //If an item is found, recalculate all logic and try finding more accessible locations (this needs to be reworked to not cause potential stack overflows)
+                    AccessibleLocations_Update(overrides);
+                    return;
+                  }
+                }
+              }
+
+              //erase ItemLocationPairings that are placed into the AccessibleLocationPool
+              erase_if(area->locations, [](const ItemLocationPairing& ilp){ return ilp.location->isUsed();});
+
+              //erase ExitPairings whose conditions have been met while the exit has full day time access as both ages
+              erase_if(area->exits, [](const ExitPairing& ep){ return ep.ConditionsMet() && ep.GetExit()->AllAccess();});
             }
-
-            //erase ItemLocationPairings that are placed into the AccessibleLocationPool
-            erase_if(area->locations, [](const ItemLocationPairing& ilp){ return ilp.location->isUsed();});
-
-            //erase ExitPairings whose conditions have been met while the exit has full day time access as both ages
-            erase_if(area->exits, [](const ExitPairing& ep){ return ep.ConditionsMet() && ep.GetExit()->AllAccess();});
           }
         }
+        accessibleLocationIterations++;
         //erase exits from the ExitPool if they can't open up more access to anything
         erase_if(Exits::ExitPool, [](const Exit* exit){return exit->AllAccountedFor();});
     }
@@ -219,6 +225,7 @@ namespace Playthrough {
         unsigned int locIdx  = Random() % AccessibleLocationPool.size();
 
         PlaceItemInLocation(&AdvancementItemPool[itemIdx], AccessibleLocationPool[locIdx], overrides);
+        advancementLocations.push_back(AccessibleLocationPool[locIdx]);
 
         AdvancementItemPool.erase(AdvancementItemPool.begin() + itemIdx);
         //erase locations that have been used
@@ -291,7 +298,7 @@ namespace Playthrough {
             }
 
         }
-        //printf("Items Placed: %lu\n", totalItemsPlaced);
+        printf("\x1b[20;3H");
         bool rv = SpoilerLog_Write();
         if (rv) printf("Wrote Spoiler Log\n");
         else    printf("failed to write log\n");

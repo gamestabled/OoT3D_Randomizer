@@ -578,4 +578,5 @@ extern std::vector<ItemLocationKeyPairing> IceCavernKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> GerudoTrainingGroundsKeyRequirements;
 extern std::vector<ItemLocationKeyPairing> GanonsCastleKeyRequirements;
 
+extern std::vector<ItemLocation *> advancementLocations;
 extern std::vector<ItemLocation *> allLocations;
