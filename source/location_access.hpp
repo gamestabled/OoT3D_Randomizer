@@ -6,31 +6,90 @@
 #include "item_location.hpp"
 #include "item_list.hpp"
 #include "logic.hpp"
+#include "settings.hpp"
 
 class Exit;
+
+class EventPairing {
+public:
+    EventPairing(bool* event_, std::function<bool()> ConditionsMet_)
+               : event(event_),        ConditionsMet(std::move(ConditionsMet_)) {}
+    bool* event;
+    std::function<bool()> ConditionsMet;
+};
 
 //this class is meant to hold an item location with a boolean function to determine its accessibility from a specific area
 class ItemLocationPairing {
 public:
     ItemLocationPairing(ItemLocation* location_, std::function<bool()> ConditionsMet_)
-                        : location(location_), ConditionsMet(ConditionsMet_) {}
+                        : location(location_), ConditionsMet(std::move(ConditionsMet_)) {}
     ItemLocation* location;
     std::function<bool()> ConditionsMet;
 };
 
 class ExitPairing {
-public:         //This exit, the conditions needed to access the exit, whether this exit can be accessed at only day/night or both
-    ExitPairing(Exit* exit_, std::function<bool()> ConditionsMet_, std::string ToD = "Both")
-              : exit(exit_), ConditionsMet(ConditionsMet_) {}
+public:
+    using ConditionFn = bool (*)();
+
+    enum class Time {
+      Day,
+      Night,
+      Both,
+    };
+
+    constexpr ExitPairing(Exit* exit_, ConditionFn conditions_met_, Time time_of_day_ = Time::Both)
+        : exit(exit_), conditions_met(conditions_met_), time_of_day(time_of_day_) {}
+
+    constexpr bool IsBoth() const {
+        return time_of_day == ExitPairing::Time::Both;
+    }
+
+    constexpr bool IsDay() const {
+        return time_of_day == ExitPairing::Time::Day;
+    }
+
+    constexpr bool IsNight() const {
+        return time_of_day == ExitPairing::Time::Night;
+    }
+
+    constexpr Time TimeOfDay() const {
+        return time_of_day;
+    }
+
+    constexpr bool ConditionsMet() const {
+        return conditions_met();
+    }
+
+    constexpr Exit* GetExit() {
+        return exit;
+    }
+
+    constexpr const Exit* GetExit() const {
+        return exit;
+    }
+
+    static constexpr ExitPairing Both(Exit* exit, ConditionFn condition) {
+        return ExitPairing{exit, condition, Time::Both};
+    }
+
+    static constexpr ExitPairing Day(Exit* exit, ConditionFn condition) {
+        return ExitPairing{exit, condition, Time::Day};
+    }
+
+    static constexpr ExitPairing Night(Exit* exit, ConditionFn condition) {
+        return ExitPairing{exit, condition, Time::Night};
+    }
+
+private:
     Exit* exit;
-    std::function<bool()> ConditionsMet;
-    std::string ToD;
+    ConditionFn conditions_met;
+    Time time_of_day;
 };
 
 class AdvancementPairing {
 public:
     AdvancementPairing(Item item_, std::function<bool()> ConditionsMet_, u8 count_ = 1)
-                      :item(item_), ConditionsMet(ConditionsMet_), count(count_) {}
+                      :item(std::move(item_)), ConditionsMet(std::move(ConditionsMet_)), count(count_) {}
     Item item;
     std::function<bool()> ConditionsMet;
     u8 count;
@@ -38,36 +97,37 @@ public:
 
 class Exit {
 public:
-    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::function<bool()> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
-        : regionName(regionName_),      scene(scene_),       hint(hint_), timePass(timePass_),          events(events_),             locations(locations_),         exits(exits_),   advancementNeeds(advancementNeeds_){
-          accountedForChild = false;
-          accountedForAdult = false;
-          dayChild   = false;
-          nightChild = false;
-          dayAdult   = false;
-          nightAdult = false;
-        }
+    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::vector<EventPairing> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
+        : regionName(std::move(regionName_)),
+          scene(std::move(scene_)),
+          hint(std::move(hint_)),
+          timePass(timePass_),
+          events(std::move(events_)),
+          locations(std::move(locations_)),
+          exits(std::move(exits_)),
+          advancementNeeds(std::move(advancementNeeds_)) {}
 
     std::string regionName;
     std::string scene;
     std::string hint;
     bool        timePass;
-    std::function<bool()> events;
+    std::vector<EventPairing> events;
     std::vector<ItemLocationPairing> locations;
     std::vector<ExitPairing> exits;
     std::vector<AdvancementPairing> advancementNeeds;
 
-    bool accountedForChild;
-    bool accountedForAdult;
-    bool dayChild;
-    bool nightChild;
-    bool dayAdult;
-    bool nightAdult;
+    bool accountedForChild = false;
+    bool accountedForAdult = false;
+    bool dayChild = false;
+    bool nightChild = false;
+    bool dayAdult = false;
+    bool nightAdult = false;
+    bool addedToPool = false;
 
-    bool UpdateEvents() {
+    void UpdateEvents() {
 
       if (timePass) {
-        if (Logic::Age == "Child") {
+        if (Logic::Age == AGE_CHILD) {
           dayChild = true;
           nightChild = true;
         } else {
@@ -76,43 +136,60 @@ public:
         }
 
       }
-      return events();
+
+      for (u8 i = 0; i < events.size(); i++) {
+        EventPairing eventPair = events[i];
+        bool* event = eventPair.event;
+
+        *event = eventPair.ConditionsMet();
+        if (*event) {
+          events.erase(events.begin() + i);
+        }
+      }
     }
 
-    bool CanPlantBean() {
+
+    bool Child() const {
+      return dayChild || nightChild;
+    }
+
+    bool Adult() const {
+      return dayAdult || nightAdult;
+    }
+
+    bool BothAges() const {
+      return Child() && Adult();
+    }
+
+    bool HasAccess() const {
+      return Child() || Adult();
+    }
+
+    bool AllAccess() const {
+      return dayChild && nightChild && dayAdult && nightAdult;
+    }
+
+    bool CanPlantBean() const {
       return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
     }
 
-    bool BothAges() {
-      return (dayChild || nightChild) && (dayAdult || nightAdult);
-    }
-
     //checks to see if all locations and exits are accessible
-    bool AllAccountedFor() {
+    bool AllAccountedFor() const {
 
-      for (auto loc = locations.begin(); loc != locations.end(); loc++) {
-        if (!loc->location->isUsed())
-          return false;
-      }
-
-      for (auto exit = exits.begin(); exit != exits.end(); exit++) {
-        if (!exit->ConditionsMet())
-          return false;
-      }
-
-      for (auto item = advancementNeeds.begin(); item != advancementNeeds.end(); item++) {
-        if (!item->ConditionsMet()) {
-          return false;
-        }
-      }
-
-      return UpdateEvents() && dayChild && nightChild && dayAdult && nightAdult;
+      return AllAccess()           &&
+             events.size()    == 0 &&
+             locations.size() == 0 &&
+             exits.size()     == 0 &&
+             advancementNeeds.size() == 0;
     }
 
     void UpdateAdvancementNeeds() {
 
       for (u32 i = 0; i < advancementNeeds.size(); i++) {
         Item item = advancementNeeds[i].item;
+        //if the conditions aren't met, then skip for now
+        if (advancementNeeds[i].ConditionsMet()) continue;
+
         u32 j;
         bool foundInPool = false;
 
@@ -124,8 +201,15 @@ public:
           }
         }
 
-        //If the adding conditions are met and the item is still in the item pool
-        if (advancementNeeds[i].ConditionsMet() && foundInPool) {
+        //if the item isn't in the pool, then it's already been added or doesn't exist
+        if (!foundInPool) {
+          advancementNeeds.erase(advancementNeeds.begin() + i);
+          i--;
+          continue;
+        }
+
+        //If item is still in the item pool
+        if (foundInPool) {
           advancementNeeds[i].count--;
           AdvancementItemPool.push_back(item);
 
@@ -139,12 +223,14 @@ public:
           if (item.name == "Progressive Scale")      Logic::AddedProgressiveBulletBags++;
           if (item.name == "Progressive Magic")      Logic::AddedProgressiveMagics++;
           if (item.name == "Progressive Ocarina")    Logic::AddedProgressiveOcarinas++;
+          if (item.name == "Gold Skulltula Token")   Logic::TokensInPool++;
 
           //then delete the item from the locations advancement needs and the regular item pool
           ItemPool.erase(ItemPool.begin() + j);
-          if (advancementNeeds[i].count == 0)
+          if (advancementNeeds[i].count == 0) {
             advancementNeeds.erase(advancementNeeds.begin() + i);
-          i--;
+            i--;
+          }
         }
       }
     }
@@ -157,8 +243,10 @@ public:
 
 namespace Exits {
 
-  extern std::vector<Exit> ChildExitPool;
-  extern std::vector<Exit> AdultExitPool;
+  // extern std::vector<Exit> ChildExitPool;
+  // extern std::vector<Exit> AdultExitPool;
+
+  extern std::vector<Exit *> ExitPool;
 
   //Starting Locations
   extern Exit Root;

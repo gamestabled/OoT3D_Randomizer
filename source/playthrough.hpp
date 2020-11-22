@@ -16,7 +16,5 @@ namespace Playthrough {
         }
     };
 
-    void Reset();
     int  Fill(int settings, u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides);
-    void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides);
 }

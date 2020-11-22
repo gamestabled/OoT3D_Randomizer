@@ -1,19 +1,20 @@
 #pragma once
+#include <stdlib.h>
 
 static bool init = false;
 static unsigned int state;
 
 void Random_Init(unsigned int seed) {
-    state = seed;
+    state = 0;
     init = true;
+    srand(seed);
 }
 
 unsigned int Random() {
     if (!init) {
         state = 0;
-        init = true;
+        init = true;    
     }
-    state *= 3;
-    state += 17; //TODO make this way more random looking
+    state = rand();
     return state;
 }

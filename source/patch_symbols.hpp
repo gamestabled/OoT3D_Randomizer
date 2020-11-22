@@ -1,0 +1,3 @@
+#pragma once
+#define GSETTINGSCONTEXT_ADDR 0x005d511c
+#define RITEMOVERRIDES_ADDR 0x005d3dd8

@@ -1,9 +1,12 @@
 #pragma once
-#include <functional>
-#include <vector>
-#include <unistd.h>
+
+#include <array>
 #include <cstdio>
+#include <functional>
 #include <string>
+#include <unistd.h>
+#include <vector>
+
 #include "../code/include/z3D/z3D.h"
 #include "../code/src/item_override.h"
 #include "item_list.hpp"
@@ -12,17 +15,16 @@ enum ItemLocationType {
     ITEMLOCATIONTYPE_NPC,
     ITEMLOCATIONTYPE_CHEST,
     ITEMLOCATIONTYPE_COLLECTABLE,
-    ITEMLOCATIONTYPE_SONG,
+    ITEMLOCATIONTYPE_GS_TOKEN,
     ITEMLOCATIONTYPE_GROTTO_SCRUB,
+    ITEMLOCATIONTYPE_DELAYED,
+    ITEMLOCATIONTYPE_TEMPLE_REWARD
 };
 
 class ItemLocation {
 public:
-    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_)
-        : scene(scene_), type(type_), flag(flag_), name(name_) {
-          placedItem = NoItem;
-          used = false;
-        }
+    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<std::string> categories_)
+        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)) {}
 
     ItemOverride_Key key() const {
         ItemOverride_Key key;
@@ -42,26 +44,33 @@ public:
       return used;
     }
 
-    const char * getName() {
-      return name.c_str();
+    std::string_view getName() const {
+      return name;
     }
-
-    Item placedItem = NoItem;
 
 private:
     u8 scene;
     ItemLocationType type;
     u8 flag;
-    bool used;
+    bool used = false;
+
 
 public:
     std::string name;
+    std::vector<std::string> categories;
+    bool addedToPool = false;
+    Item placedItem = NoItem;
 
 };
 
-extern std::vector<ItemLocation> LocationPool;
+class ItemLocationKeyPairing {
+public:
+  constexpr ItemLocationKeyPairing(ItemLocation* loc_, u8 keysRequired_)
+  : loc(loc_), keysRequired(keysRequired_) {}
 
-extern ItemLocation LinksPocket;
+  ItemLocation* loc;
+  u8 keysRequired;
+};
 
 //Kokiri Forest
 extern ItemLocation KF_KokiriSwordChest;
@@ -243,11 +252,16 @@ extern ItemLocation DodongosCavern_BombFlowerPlatformChest;
 extern ItemLocation DodongosCavern_BombBagChest;
 extern ItemLocation DodongosCavern_EndOfBridgeChest;
 extern ItemLocation DodongosCavern_BossRoomChest;
+extern ItemLocation DodongosCavern_DekuScrubNearBombBagLeft;
+extern ItemLocation DodongosCavern_DekuScrubSideRoomNearDodongos;
+extern ItemLocation DodongosCavern_DekuScrubNearBombBagRight;
+extern ItemLocation DodongosCavern_DekuScrubLobby;
 
 //Jabu Jabus Belly
 extern ItemLocation JabuJabusBelly_MapChest;
 extern ItemLocation JabuJabusBelly_CompassChest;
 extern ItemLocation JabuJabusBelly_BoomerangChest;
+extern ItemLocation JabuJabusBelly_DekuScrub;
 
 //Forest Temple
 extern ItemLocation ForestTemple_FirstRoomChest;
@@ -395,3 +409,176 @@ extern ItemLocation GanonsCastle_LightTrialSecondRightChest;
 extern ItemLocation GanonsCastle_LightTrialThirdRightChest;
 extern ItemLocation GanonsCastle_LightTrialInvisibleEnemiesChest;
 extern ItemLocation GanonsCastle_LightTrialLullabyChest;
+extern ItemLocation GanonsCastle_DekuScrubCenterLeft;
+extern ItemLocation GanonsCastle_DekuScrubCenterRight;
+extern ItemLocation GanonsCastle_DekuScrubRight;
+extern ItemLocation GanonsCastle_DekuScrubLeft;
+
+/*-------------------------------
+   --- GOLD SKULLTULA TOKENS ---
+  -------------------------------*/
+
+//Deku Tree
+extern ItemLocation DekuTree_GS_BasementBackRoom;
+extern ItemLocation DekuTree_GS_BasementGate;
+extern ItemLocation DekuTree_GS_BasementVines;
+extern ItemLocation DekuTree_GS_CompassRoom;
+
+//Dodongos Cavern
+extern ItemLocation DodongosCavern_GS_VinesAboveStairs;
+extern ItemLocation DodongosCavern_GS_Scarecrow;
+extern ItemLocation DodongosCavern_GS_AlcoveAboveStairs;
+extern ItemLocation DodongosCavern_GS_BackRoom;
+extern ItemLocation DodongosCavern_GS_SideRoomNearLowerLizalfos;
+
+//Jabu Jabus Belly
+extern ItemLocation JabuJabusBelly_GS_LobbyBasementLower;
+extern ItemLocation JabuJabusBelly_GS_LobbyBasementUpper;
+extern ItemLocation JabuJabusBelly_GS_NearBoss;
+extern ItemLocation JabuJabusBelly_GS_WaterSwitchRoom;
+
+//Forest Temple
+extern ItemLocation ForestTemple_GS_RaisedIslandCourtyard;
+extern ItemLocation ForestTemple_GS_FirstRoom;
+extern ItemLocation ForestTemple_GS_LevelIslandCourtyard;
+extern ItemLocation ForestTemple_GS_Lobby;
+extern ItemLocation ForestTemple_GS_Basement;
+
+//Fire Temple
+extern ItemLocation FireTemple_GS_SongOfTimeRoom;
+extern ItemLocation FireTemple_GS_BossKeyLoop;
+extern ItemLocation FireTemple_GS_BoulderMaze;
+extern ItemLocation FireTemple_GS_ScarecrowTop;
+extern ItemLocation FireTemple_GS_ScarecrowClimb;
+
+//Water Temple
+extern ItemLocation WaterTemple_GS_BehindGate;
+extern ItemLocation WaterTemple_GS_FallingPlatformRoom;
+extern ItemLocation WaterTemple_GS_CentralPillar;
+extern ItemLocation WaterTemple_GS_NearBossKeyChest;
+extern ItemLocation WaterTemple_GS_River;
+
+//Spirit Temple
+extern ItemLocation SpiritTemple_GS_HallAfterSunBlockRoom;
+extern ItemLocation SpiritTemple_GS_BoulderRoom;
+extern ItemLocation SpiritTemple_GS_Lobby;
+extern ItemLocation SpiritTemple_GS_SunOnFloorRoom;
+extern ItemLocation SpiritTemple_GS_MetalFence;
+
+//Shadow Temple
+extern ItemLocation ShadowTemple_GS_SingleGiantPot;
+extern ItemLocation ShadowTemple_GS_FallingSpikesRoom;
+extern ItemLocation ShadowTemple_GS_TripleGiantPot;
+extern ItemLocation ShadowTemple_GS_LikeLikeRoom;
+extern ItemLocation ShadowTemple_GS_NearShip;
+
+//Bottom of the Well
+extern ItemLocation BottomOfTheWell_GS_LikeLikeCage;
+extern ItemLocation BottomOfTheWell_GS_EastInnerRoom;
+extern ItemLocation BottomOfTheWell_GS_WestInnerRoom;
+
+//Ice Cavern
+extern ItemLocation IceCavern_GS_PushBlockRoom;
+extern ItemLocation IceCavern_GS_SpinningScytheRoom;
+extern ItemLocation IceCavern_GS_HeartPieceRoom;
+
+//Overworld
+extern ItemLocation KF_GS_BeanPatch;
+extern ItemLocation KF_GS_KnowItAllHouse;
+extern ItemLocation KF_GS_HouseOfTwins;
+
+extern ItemLocation LW_GS_BeanPatchNearBridge;
+extern ItemLocation LW_GS_BeanPatchNearTheater;
+extern ItemLocation LW_GS_AboveTheater;
+extern ItemLocation SFM_GS;
+
+extern ItemLocation HF_GS_CowGrotto;
+extern ItemLocation HF_GS_NearKakGrotto;
+
+extern ItemLocation LH_GS_BeanPatch;
+extern ItemLocation LH_GS_SmallIsland;
+extern ItemLocation LH_GS_LabWall;
+extern ItemLocation LH_GS_LabCrate;
+extern ItemLocation LH_GS_Tree;
+
+extern ItemLocation GV_GS_BeanPatch;
+extern ItemLocation GV_GS_SmallBridge;
+extern ItemLocation GV_GS_Pillar;
+extern ItemLocation GV_GS_BehindTent;
+
+extern ItemLocation GF_GS_ArcheryRange;
+extern ItemLocation GF_GS_TopFloor;
+
+extern ItemLocation HW_GS;
+extern ItemLocation Colossus_GS_BeanPatch;
+extern ItemLocation Colossus_GS_Hill;
+extern ItemLocation Colossus_GS_Tree;
+
+extern ItemLocation OGC_GS;
+extern ItemLocation HC_GS_StormsGrotto;
+extern ItemLocation HC_GS_Tree;
+extern ItemLocation MK_GS_GuardHouse;
+
+extern ItemLocation Kak_GS_HouseUnderConstruction;
+extern ItemLocation Kak_GS_SkulltulaHouse;
+extern ItemLocation Kak_GS_GuardsHouse;
+extern ItemLocation Kak_GS_Tree;
+extern ItemLocation Kak_GS_Watchtower;
+extern ItemLocation Kak_GS_AboveImpasHouse;
+
+extern ItemLocation DMC_GS_BeanPatch;
+extern ItemLocation DMC_GS_Crate;
+
+extern ItemLocation DMT_GS_BeanPatch;
+extern ItemLocation DMT_GS_NearKak;
+extern ItemLocation DMT_GS_AboveDodongosCavern;
+extern ItemLocation DMT_GS_FallingRocksPath;
+
+extern ItemLocation GC_GS_CenterPlatform;
+extern ItemLocation GC_GS_BoulderMaze;
+extern ItemLocation GY_GS_Wall;
+extern ItemLocation GY_GS_BeanPatch;
+
+extern ItemLocation ZR_GS_Ladder;
+extern ItemLocation ZR_GS_Tree;
+extern ItemLocation ZR_GS_AboveBridge;
+extern ItemLocation ZR_GS_NearRaisedGrottos;
+
+extern ItemLocation ZD_GS_FrozenWaterfall;
+extern ItemLocation ZF_GS_AboveTheLog;
+extern ItemLocation ZF_GS_HiddenCave;
+extern ItemLocation ZF_GS_Tree;
+
+extern ItemLocation LLR_GS_BackWall;
+extern ItemLocation LLR_GS_RainShed;
+extern ItemLocation LLR_GS_HouseWindow;
+extern ItemLocation LLR_GS_Tree;
+
+/*-------------------------------
+          --- BOSSES ---
+  -------------------------------*/
+
+extern ItemLocation LinksPocket;
+extern ItemLocation QueenGohma;
+extern ItemLocation KingDodongo;
+extern ItemLocation PhantomGanon;
+extern ItemLocation Barinade;
+extern ItemLocation Volvagia;
+extern ItemLocation Twinrova;
+extern ItemLocation Morpha;
+extern ItemLocation BongoBongo;
+
+extern const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 7>  JabuJabusBellyKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 7>  IceCavernKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements;
+
+extern const std::array<ItemLocation*, 334> allLocations;
