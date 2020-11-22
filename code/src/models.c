@@ -2,15 +2,8 @@
 #include "models.h"
 #include "item_override.h"
 #include "item_table.h"
+#include "objects.h"
 #include <stddef.h>
-
-typedef s32 (*Object_proc)(ObjectContext* objectCtx, s16 objectId);
-#define Object_Spawn_addr 0x32E21C
-#define Object_Spawn ((Object_proc)Object_Spawn_addr)
-#define Object_GetIndex_addr 0x363C10
-#define Object_GetIndex ((Object_proc)Object_GetIndex_addr)
-#define Object_IsLoaded_addr 0x373074
-#define Object_IsLoaded ((Object_proc)Object_IsLoaded_addr) //For Object_IsLoaded, second param is bankIndex
 
 typedef void (*GlModel_MatrixCopy_proc)(GlModel* glModel, nn_math_MTX34* mtx);
 #define GlModel_MatrixCopy_addr 0x3721E0
@@ -49,6 +42,7 @@ void Model_Destroy(Model* model) {
         model->glModel->vtbl->destroy(model->glModel);
         model->glModel = NULL;
     }
+
     model->actor = NULL;
     model->info.objectId = 0;
     model->info.objectBankIdx = 0;
@@ -58,6 +52,8 @@ void Model_Destroy(Model* model) {
 
 void Model_UpdateAll(GlobalContext* globalCtx) {
     Model* model;
+
+    Object_UpdateBank((ObjectContext*)&rExtendedObjectCtx);
 
     for (s32 i = 0; i < LOADEDMODELS_MAX; ++i) {
         model = &ModelContext[i];
@@ -75,7 +71,7 @@ void Model_UpdateAll(GlobalContext* globalCtx) {
 
         // Actor is alive, model has not been loaded yet
         if ((model->actor != NULL) && (!model->loaded)) {
-            if (Object_IsLoaded(&globalCtx->objectCtx, model->info.objectBankIdx)) {
+            if (ExtendedObject_IsLoaded(&globalCtx->objectCtx, model->info.objectBankIdx)) {
                 Model_Init(model, globalCtx);
             }
         }
@@ -137,9 +133,9 @@ void Model_LookupByOverride(Model* model, ItemOverride override) {
 }
 
 void Model_GetObjectBankIndex(Model* model, Actor* actor, GlobalContext* globalCtx) {
-    s32 objectBankIdx = Object_GetIndex(&globalCtx->objectCtx, model->info.objectId);
+    s32 objectBankIdx = ExtendedObject_GetIndex(&globalCtx->objectCtx, model->info.objectId);
     if (objectBankIdx < 0) {
-        objectBankIdx = Object_Spawn(&globalCtx->objectCtx, model->info.objectId);
+        objectBankIdx = ExtendedObject_Spawn(&globalCtx->objectCtx, model->info.objectId);
     }
     model->info.objectBankIdx = objectBankIdx;
 }

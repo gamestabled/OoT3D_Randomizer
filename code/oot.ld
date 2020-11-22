@@ -100,6 +100,10 @@ SECTIONS
 		*(.patch_OverrideGraphicID_354BB8)
 	}
 
+	.patch_FastChests 0x354CD8 : {
+		*(.patch_FastChests)
+	}
+
 	.patch_IncomingGetItemID 0x3725AC : {
 		*(.patch_IncomingGetItemID)
 	}
@@ -164,8 +168,8 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeTwo)
 	}
 
-	.patch_FastChests 0x354CD8 : {
-		*(.patch_FastChests)
+	.patch_RainbowBridge 0x3E7CAC : {
+		*(.patch_RainbowBridge)
 	}
 
 	.patch_SaveFile_Init 0x449A04 : {
