@@ -41,14 +41,13 @@ bool SpoilerLog_Write() {
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
   logtxt += "Playthrough:\n";
-  for (auto loc = advancementLocations.begin(); loc != advancementLocations.end(); loc++) {
+  for (const auto* location : allLocations) {
     logtxt += "    ";
-    SpoilerLog_SaveLocation((*loc)->getName(), (*loc)->placedItem.getName());
+    SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
     logtxt += '\n';
   }
 
   logtxt += "\nAll Locations:\n\n";
-
   for (const auto* location : allLocations) {
     SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
     logtxt += location->addedToPool ? " ADDED\n" : " NOT ADDED\n";

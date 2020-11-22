@@ -15,8 +15,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
- //  /opt/devkitpro/devkitARM/bin/arm-none-eabi-nm code.elf > symbols.txt
-
 template <typename T, typename Predicate>
 void erase_if(std::vector<T>& vector, Predicate pred) {
     vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
@@ -197,8 +195,7 @@ namespace Playthrough {
                     PlacementLog_Msg(" | ITEM HERE\n");
                     location->placedItem.applyEffect();
                     location->use();
-                    //If an item is found, recalculate all logic and try finding more accessible locations (this needs to be reworked to not cause potential stack overflows)
-                    AccessibleLocations_Update(overrides);
+                    advancementChange = true;
                     return;
                   }
                 }
