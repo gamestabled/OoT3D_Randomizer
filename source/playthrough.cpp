@@ -29,7 +29,7 @@ namespace Playthrough {
     static u64 accessibleLocationIterations = 0;
     static std::vector<ItemLocation *> AccessibleLocationPool;
 
-    void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
+    static void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
         // put item in the override table
         ItemOverride override;
         override.key.all = 0;
@@ -40,7 +40,11 @@ namespace Playthrough {
 
         overrides.insert(override);
 
-        PlacementLog_Msg("\n"); PlacementLog_Msg(item->getName()); PlacementLog_Msg(" placed at "); PlacementLog_Msg(loc->getName()); PlacementLog_Msg("\n\n");
+        PlacementLog_Msg("\n");
+        PlacementLog_Msg(item->getName());
+        PlacementLog_Msg(" placed at ");
+        PlacementLog_Msg(loc->getName());
+        PlacementLog_Msg("\n\n");
 
         if (applyEffectImmediately) {
           item->applyEffect();
@@ -51,6 +55,32 @@ namespace Playthrough {
         totalItemsPlaced++;
         printf("\x1b[2;20HPlacing Items");
         printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size());
+    }
+
+    template <typename Container>
+    static void RandomizeDungeonKeys(const Container& KeyRequirements, Item* smallKeyItem, u8 maxKeys, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+      for (size_t i = 0; i < maxKeys; i++) {
+        std::vector<ItemLocation *> dungeonPool;
+        for (const ItemLocationKeyPairing& ilkp : KeyRequirements) {
+          if (ilkp.keysRequired <= i && ilkp.loc->placedItem.name == "No Item") {
+            dungeonPool.push_back(ilkp.loc);
+          }
+        }
+        const u32 locIdx = Random() % dungeonPool.size();
+        PlaceItemInLocation(smallKeyItem, dungeonPool[locIdx], overrides, false);
+      }
+    }
+
+    template <typename Container>
+    static void RandomizeDungeonItem(const Container& dungeonLocations, Item* item, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+      std::vector<ItemLocation *> dungeonPool;
+      for (const ItemLocationKeyPairing& ilkp : dungeonLocations) {
+        if (ilkp.loc->placedItem.name == "No Item") {
+          dungeonPool.push_back(ilkp.loc);
+        }
+      }
+      const u32 locIdx = Random() % dungeonPool.size();
+      PlaceItemInLocation(item, dungeonPool[locIdx], overrides, false);
     }
 
     void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
@@ -133,7 +163,10 @@ namespace Playthrough {
 
                   //If the exit is accessible, but not in the exit pool, add it
                   if (exit->HasAccess() && !exit->addedToPool) {
-                    PlacementLog_Msg("NEW EXIT FOUND: "); PlacementLog_Msg(exit->regionName.c_str()); PlacementLog_Msg("\n");
+                    PlacementLog_Msg("NEW EXIT FOUND: ");
+                    PlacementLog_Msg(exit->regionName);
+                    PlacementLog_Msg("\n");
+
                     Exits::ExitPool.push_back(exit);
                     exit->addedToPool = true;
                     advancementChange = true;
@@ -147,7 +180,9 @@ namespace Playthrough {
                 ItemLocation *location = locPair.location;
 
                 if (locPair.ConditionsMet() && !location->addedToPool) {
-                  PlacementLog_Msg("NEW LOCATION FOUND: "); PlacementLog_Msg(location->getName());
+                  PlacementLog_Msg("NEW LOCATION FOUND: ");
+                  PlacementLog_Msg(location->getName());
+
                   totalLocationsFound++;
                   location->addedToPool = true;
 
@@ -203,7 +238,7 @@ namespace Playthrough {
         Exits::ExitPool.push_back(&Exits::Root);
       } else if (Settings::Logic == LOGIC_NONE) {
         Exits::ExitPool.clear();
-        AccessibleLocationPool = allLocations;
+        AccessibleLocationPool.assign(allLocations.begin(), allLocations.end());
       }
 
       AccessibleLocations_Update(overrides);
@@ -257,58 +292,10 @@ namespace Playthrough {
         return 1;
     }
 
-    static void Playthrough_Init(u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-        Random_Init(seed); //seed goes here
-        Settings::UpdateSettings();
-        Settings::PrintSettings();
-        Logic::UpdateHelpers();
-        totalItemsPlaced = 0;
-        GenerateItemPool();
-        UpdateSetItems();
-        PlaceSetItems(overrides);
-        AccessibleLocations_Init(overrides);
-    }
 
-    int Fill(int settings, u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-        (void)settings;
-
-        Playthrough_Init(seed, overrides);
-        /*
-        while (not all locations accessible)
-          - Determine which items can be placed for advancement
-          - Choose randomly from that list for placement
-          - Update accessibility and items that can be used for advancement
-          - Otherwise place a random item
-
-        */
-        while ((!ItemPool.empty() || !AdvancementItemPool.empty()) && !AccessibleLocationPool.empty()) {
-            int ret;
-            if (!AdvancementItemPool.empty()) {
-              ret = PlaceAdvancementItem(overrides);
-            } else {
-              ret = PlaceRandomItem(overrides);
-            }
-
-            if (ret < 0) {
-                return ret;
-            }
-
-            if (ItemPool.empty() && !AccessibleLocationPool.empty()) {
-              AddGreenRupee();
-            }
-
-        }
-        printf("\x1b[20;3H");
-        bool rv = SpoilerLog_Write();
-        if (rv) printf("Wrote Spoiler Log\n");
-        else    printf("failed to write log\n");
-
-        rv = PlacementLog_Write();
-        return 1;
-    }
 
     //Check for specific preset items in locations
-    void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+    static void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
       const bool NO_EFFECT = false;
 
       PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
@@ -600,28 +587,53 @@ namespace Playthrough {
       }
     }
 
-    void RandomizeDungeonKeys(std::vector<ItemLocationKeyPairing> KeyRequirements, Item* smallKeyItem, u8 maxKeys, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-      for (int i = 0; i < maxKeys; i++) {
-        std::vector<ItemLocation *> dungeonPool = {};
-        for (ItemLocationKeyPairing ilkp : KeyRequirements) {
-          if (ilkp.keysRequired <= i && ilkp.loc->placedItem.name == "No Item") {
-            dungeonPool.push_back(ilkp.loc);
-          }
-        }
-        u8 locIdx = Random() % dungeonPool.size();
-        PlaceItemInLocation(smallKeyItem, dungeonPool[locIdx], overrides, false);
-      }
+    static void Playthrough_Init(u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+        Random_Init(seed); //seed goes here
+        Settings::UpdateSettings();
+        Settings::PrintSettings();
+        Logic::UpdateHelpers();
+        totalItemsPlaced = 0;
+        GenerateItemPool();
+        UpdateSetItems();
+        PlaceSetItems(overrides);
+        AccessibleLocations_Init(overrides);
     }
 
-    void RandomizeDungeonItem(std::vector<ItemLocationKeyPairing> dungeonLocations, Item* item, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-      std::vector<ItemLocation *> dungeonPool = {};
-      for (ItemLocationKeyPairing ilkp : dungeonLocations) {
-        if (ilkp.loc->placedItem.name == "No Item") {
-          dungeonPool.push_back(ilkp.loc);
-        }
-      }
-      u8 locIdx = Random() % dungeonPool.size();
-      PlaceItemInLocation(item, dungeonPool[locIdx], overrides, false);
-    }
+    int Fill(int settings, u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+        (void)settings;
 
+        Playthrough_Init(seed, overrides);
+        /*
+        while (not all locations accessible)
+          - Determine which items can be placed for advancement
+          - Choose randomly from that list for placement
+          - Update accessibility and items that can be used for advancement
+          - Otherwise place a random item
+
+        */
+        while ((!ItemPool.empty() || !AdvancementItemPool.empty()) && !AccessibleLocationPool.empty()) {
+            int ret;
+            if (!AdvancementItemPool.empty()) {
+              ret = PlaceAdvancementItem(overrides);
+            } else {
+              ret = PlaceRandomItem(overrides);
+            }
+
+            if (ret < 0) {
+                return ret;
+            }
+
+            if (ItemPool.empty() && !AccessibleLocationPool.empty()) {
+              AddGreenRupee();
+            }
+
+        }
+        printf("\x1b[20;3H");
+        bool rv = SpoilerLog_Write();
+        if (rv) printf("Wrote Spoiler Log\n");
+        else    printf("failed to write log\n");
+
+        rv = PlacementLog_Write();
+        return 1;
+    }
 }

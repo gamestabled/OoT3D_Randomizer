@@ -1,9 +1,12 @@
 #pragma once
-#include <functional>
-#include <vector>
-#include <unistd.h>
+
+#include <array>
 #include <cstdio>
+#include <functional>
 #include <string>
+#include <unistd.h>
+#include <vector>
+
 #include "../code/include/z3D/z3D.h"
 #include "../code/src/item_override.h"
 #include "item_list.hpp"
@@ -41,8 +44,8 @@ public:
       return used;
     }
 
-    const char * getName() const {
-      return name.c_str();
+    std::string_view getName() const {
+      return name;
     }
 
 private:
@@ -62,7 +65,7 @@ public:
 
 class ItemLocationKeyPairing {
 public:
-  ItemLocationKeyPairing(ItemLocation* loc_, u8 keysRequired_)
+  constexpr ItemLocationKeyPairing(ItemLocation* loc_, u8 keysRequired_)
   : loc(loc_), keysRequired(keysRequired_) {}
 
   ItemLocation* loc;
@@ -565,18 +568,18 @@ extern ItemLocation Twinrova;
 extern ItemLocation Morpha;
 extern ItemLocation BongoBongo;
 
-extern std::vector<ItemLocationKeyPairing> DekuTreeKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> DodongosCavernKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> JabuJabusBellyKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> ForestTempleKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> FireTempleKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> WaterTempleKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> SpiritTempleKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> ShadowTempleKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> BottomOfTheWellKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> IceCavernKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> GerudoTrainingGroundsKeyRequirements;
-extern std::vector<ItemLocationKeyPairing> GanonsCastleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 7>  JabuJabusBellyKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 7>  IceCavernKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
-extern std::vector<ItemLocation *> allLocations;
+extern const std::array<ItemLocation*, 343> allLocations;

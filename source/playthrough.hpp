@@ -16,8 +16,5 @@ namespace Playthrough {
         }
     };
 
-    int  Fill(int settings, u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides);
-    void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides);
-    void RandomizeDungeonKeys(std::vector<ItemLocationKeyPairing> KeyRequirements, Item* smallKeyItem, u8 maxKeys, std::set<ItemOverride, ItemOverride_Compare>& overrides);
-    void RandomizeDungeonItem(std::vector<ItemLocationKeyPairing> KeyRequirements, Item* item, std::set<ItemOverride, ItemOverride_Compare>& overrides);
+    int Fill(int settings, u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides);
 }

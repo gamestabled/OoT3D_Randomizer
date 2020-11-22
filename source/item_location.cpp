@@ -488,7 +488,7 @@ ItemLocation Twinrova                                     = ItemLocation(0xFF, I
 ItemLocation BongoBongo                                   = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Bongo Bongo",                                      {});
 
 //key requirements for placing randomized keys and other items in dungeons
-std::vector<ItemLocationKeyPairing> DekuTreeKeyRequirements = {
+const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements{{
   ItemLocationKeyPairing(&DekuTree_MapChest,               0),
   ItemLocationKeyPairing(&DekuTree_CompassChest,           0),
   ItemLocationKeyPairing(&DekuTree_CompassRoomSideChest,   0),
@@ -499,8 +499,8 @@ std::vector<ItemLocationKeyPairing> DekuTreeKeyRequirements = {
   ItemLocationKeyPairing(&DekuTree_GS_BasementVines,       0),
   ItemLocationKeyPairing(&DekuTree_GS_BasementGate,        0),
   ItemLocationKeyPairing(&DekuTree_GS_BasementBackRoom,    0),
-};
-std::vector<ItemLocationKeyPairing> DodongosCavernKeyRequirements = {
+}};
+const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements{{
   ItemLocationKeyPairing(&DodongosCavern_MapChest,                     0),
   ItemLocationKeyPairing(&DodongosCavern_CompassChest,                 0),
   ItemLocationKeyPairing(&DodongosCavern_GS_SideRoomNearLowerLizalfos, 0),
@@ -512,8 +512,8 @@ std::vector<ItemLocationKeyPairing> DodongosCavernKeyRequirements = {
   ItemLocationKeyPairing(&DodongosCavern_GS_AlcoveAboveStairs,         0),
   ItemLocationKeyPairing(&DodongosCavern_BossRoomChest,                0),
   ItemLocationKeyPairing(&DodongosCavern_GS_BackRoom,                  0),
-};
-std::vector<ItemLocationKeyPairing> JabuJabusBellyKeyRequirements = {
+}};
+const std::array<ItemLocationKeyPairing, 7> JabuJabusBellyKeyRequirements{{
   ItemLocationKeyPairing(&JabuJabusBelly_BoomerangChest,        0),
   ItemLocationKeyPairing(&JabuJabusBelly_MapChest,              0),
   ItemLocationKeyPairing(&JabuJabusBelly_CompassChest,          0),
@@ -521,8 +521,8 @@ std::vector<ItemLocationKeyPairing> JabuJabusBellyKeyRequirements = {
   ItemLocationKeyPairing(&JabuJabusBelly_GS_LobbyBasementLower, 0),
   ItemLocationKeyPairing(&JabuJabusBelly_GS_LobbyBasementUpper, 0),
   ItemLocationKeyPairing(&JabuJabusBelly_GS_NearBoss,           0),
-};
-std::vector<ItemLocationKeyPairing> ForestTempleKeyRequirements = {
+}};
+const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements{{
   ItemLocationKeyPairing(&ForestTemple_FirstRoomChest,             0),
   ItemLocationKeyPairing(&ForestTemple_FirstStalfosChest,          0),
   ItemLocationKeyPairing(&ForestTemple_GS_FirstRoom,               0),
@@ -541,8 +541,8 @@ std::vector<ItemLocationKeyPairing> ForestTempleKeyRequirements = {
   ItemLocationKeyPairing(&ForestTemple_FallingCeilingRoomChest,    5),
   ItemLocationKeyPairing(&ForestTemple_BasementChest,              5),
   ItemLocationKeyPairing(&ForestTemple_GS_Basement,                5),
-};
-std::vector<ItemLocationKeyPairing> FireTempleKeyRequirements = {
+}};
+const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements{{
   ItemLocationKeyPairing(&FireTemple_NearBossChest,                 0),
   ItemLocationKeyPairing(&FireTemple_FlareDancerChest,              0),
   ItemLocationKeyPairing(&FireTemple_BossKeyChest,                  0),
@@ -562,8 +562,8 @@ std::vector<ItemLocationKeyPairing> FireTempleKeyRequirements = {
   ItemLocationKeyPairing(&FireTemple_GS_ScarecrowTop,               6),
   ItemLocationKeyPairing(&FireTemple_HighestGoronChest,             7),
   ItemLocationKeyPairing(&FireTemple_MegatonHammerChest,            7),
-};
-std::vector<ItemLocationKeyPairing> WaterTempleKeyRequirements = {
+}};
+const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements{{
   ItemLocationKeyPairing(&WaterTemple_MapChest,               0),
   ItemLocationKeyPairing(&WaterTemple_CompassChest,           0),
   ItemLocationKeyPairing(&WaterTemple_TorchesChest,           0),
@@ -578,9 +578,9 @@ std::vector<ItemLocationKeyPairing> WaterTempleKeyRequirements = {
   ItemLocationKeyPairing(&WaterTemple_LongshotChest,          5),
   ItemLocationKeyPairing(&WaterTemple_RiverChest,             5),
   ItemLocationKeyPairing(&WaterTemple_GS_River,               5),
-  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5), 
-};
-std::vector<ItemLocationKeyPairing> SpiritTempleKeyRequirements = {
+  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5), //FIX WHEN ADDING MORPHA HC
+}};
+const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements{{
   ItemLocationKeyPairing(&SpiritTemple_ChildBridgeChest,           0),
   ItemLocationKeyPairing(&SpiritTemple_ChildEarlyTorchesChest,     0),
   ItemLocationKeyPairing(&SpiritTemple_GS_MetalFence,              0),
@@ -606,8 +606,8 @@ std::vector<ItemLocationKeyPairing> SpiritTempleKeyRequirements = {
   ItemLocationKeyPairing(&SpiritTemple_HallwayRightInvisibleChest, 4),
   ItemLocationKeyPairing(&SpiritTemple_BossKeyChest,               5),
   ItemLocationKeyPairing(&SpiritTemple_TopmostChest,               5),
-};
-std::vector<ItemLocationKeyPairing> ShadowTempleKeyRequirements = {
+}};
+const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements = {
   ItemLocationKeyPairing(&ShadowTemple_MapChest,                      0),
   ItemLocationKeyPairing(&ShadowTemple_HoverBootsChest,               0),
   ItemLocationKeyPairing(&ShadowTemple_CompassChest,                  0),
@@ -631,7 +631,7 @@ std::vector<ItemLocationKeyPairing> ShadowTempleKeyRequirements = {
   ItemLocationKeyPairing(&ShadowTemple_InvisibleFloormasterChest,     4),
   ItemLocationKeyPairing(&ShadowTemple_GS_TripleGiantPot,             4),
 };
-std::vector<ItemLocationKeyPairing> BottomOfTheWellKeyRequirements = {
+const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements{{
   ItemLocationKeyPairing(&BottomOfTheWell_FrontLeftFakeWallChest,   0),
   ItemLocationKeyPairing(&BottomOfTheWell_FrontCenterBombableChest, 0),
   ItemLocationKeyPairing(&BottomOfTheWell_RightBottomFakeWallChest, 0),
@@ -649,8 +649,8 @@ std::vector<ItemLocationKeyPairing> BottomOfTheWellKeyRequirements = {
   ItemLocationKeyPairing(&BottomOfTheWell_GS_WestInnerRoom,         3),
   ItemLocationKeyPairing(&BottomOfTheWell_GS_EastInnerRoom,         3),
   ItemLocationKeyPairing(&BottomOfTheWell_GS_LikeLikeCage,          3),
-};
-std::vector<ItemLocationKeyPairing> IceCavernKeyRequirements = {
+}};
+const std::array<ItemLocationKeyPairing, 7> IceCavernKeyRequirements = {
   ItemLocationKeyPairing(&IceCavern_MapChest,              0),
   ItemLocationKeyPairing(&IceCavern_CompassChest,          0),
   ItemLocationKeyPairing(&IceCavern_IronBootsChest,        0),
@@ -659,7 +659,7 @@ std::vector<ItemLocationKeyPairing> IceCavernKeyRequirements = {
   ItemLocationKeyPairing(&IceCavern_GS_HeartPieceRoom,     0),
   ItemLocationKeyPairing(&IceCavern_GS_PushBlockRoom,      0),
 };
-std::vector<ItemLocationKeyPairing> GerudoTrainingGroundsKeyRequirements = {
+const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements = {
   ItemLocationKeyPairing(&GerudoTrainingGrounds_LobbyLeftChest,             0),
   ItemLocationKeyPairing(&GerudoTrainingGrounds_LobbyRightChest,            0),
   ItemLocationKeyPairing(&GerudoTrainingGrounds_StalfosChest,               0),
@@ -683,7 +683,7 @@ std::vector<ItemLocationKeyPairing> GerudoTrainingGroundsKeyRequirements = {
   ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathThirdChest,         7),
   ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathFinalChest,         9),
 };
-std::vector<ItemLocationKeyPairing> GanonsCastleKeyRequirements = {
+const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_ForestTrialChest,                0),
   ItemLocationKeyPairing(&GanonsCastle_WaterTrialLeftChest,             0),
   ItemLocationKeyPairing(&GanonsCastle_WaterTrialRightChest,            0),
@@ -699,11 +699,11 @@ std::vector<ItemLocationKeyPairing> GanonsCastleKeyRequirements = {
   ItemLocationKeyPairing(&GanonsCastle_LightTrialThirdRightChest,       0),
   ItemLocationKeyPairing(&GanonsCastle_LightTrialInvisibleEnemiesChest, 0),
   ItemLocationKeyPairing(&GanonsCastle_LightTrialLullabyChest,          1),
-};
+}};
 
 std::vector<ItemLocation *> advancementLocations = {};
 
-std::vector<ItemLocation *> allLocations = {
+const std::array<ItemLocation*, 343> allLocations{
   //Bosses
   &LinksPocket,
   &QueenGohma,
