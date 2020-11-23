@@ -32,6 +32,7 @@ namespace Settings {
   bool ShuffleWeirdEgg                  = false; Option O_ShuffleWeirdEgg     = Option(&ShuffleWeirdEgg,     "Shuffle Weird Egg",      {"Off", "On"});
   bool ShuffleGerudoToken               = false; Option O_ShuffleGerudoToken  = Option(&ShuffleGerudoToken,  "Shuffle Gerudo Token",   {"Off", "On"});
   bool ShuffleKokiriSword               = false; Option O_ShuffleKokiriSword  = Option(&ShuffleKokiriSword,  "Shuffle Kokiri Sword",   {"Off", "On"});
+  bool ShuffleMagicBeans                = false; Option O_ShuffleMagicBeans   = Option(&ShuffleMagicBeans,   "Shuffle Magic Beans",    {"Off", "On"});
   bool ShuffleSongs                     = false;
   bool Shopsanity                       = false;
 
@@ -142,6 +143,7 @@ namespace Settings {
     &O_ShuffleWeirdEgg,
     &O_ShuffleGerudoToken,
     &O_ShuffleKokiriSword,
+    &O_ShuffleMagicBeans,
   };
   std::vector<Option *> shuffleDungeonItemOptions = {
     &O_Keysanity,
@@ -175,7 +177,8 @@ namespace Settings {
     ctx.scrubsanity      = Scrubsanity;
     ctx.lacsCondition    = LACSCondition;
 
-    ctx.openDoorOfTime = (OpenDoorOfTime) ? 1 : 0;
+    ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
+    ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
 
     ctx.dungeonRewardBitMask = 0x00000020; //light medallion
     return ctx;

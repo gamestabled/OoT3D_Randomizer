@@ -573,8 +573,8 @@ const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements{{
   ItemLocationKeyPairing(&WaterTemple_DragonChest,            0),
   ItemLocationKeyPairing(&WaterTemple_CentralPillarChest,     0),
   ItemLocationKeyPairing(&WaterTemple_GS_CentralPillar,       0),
-  ItemLocationKeyPairing(&WaterTemple_GS_NearBossKeyChest,    5),
-  ItemLocationKeyPairing(&WaterTemple_GS_FallingPlatformRoom, 5),
+  ItemLocationKeyPairing(&WaterTemple_GS_NearBossKeyChest,    4),
+  ItemLocationKeyPairing(&WaterTemple_GS_FallingPlatformRoom, 4),
   ItemLocationKeyPairing(&WaterTemple_LongshotChest,          5),
   ItemLocationKeyPairing(&WaterTemple_RiverChest,             5),
   ItemLocationKeyPairing(&WaterTemple_GS_River,               5),
@@ -701,7 +701,21 @@ const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_LightTrialLullabyChest,          1),
 }};
 
-const std::array<ItemLocation*, 334> allLocations{
+std::vector<ItemLocation *> advancementLocations = {};
+
+std::array<ItemLocation*, 339> allLocations = {
+  //Bosses
+  &LinksPocket,
+  &QueenGohma,
+  &KingDodongo,
+  &Barinade,
+  &PhantomGanon,
+  &Volvagia,
+  &Morpha,
+  &Twinrova,
+  &BongoBongo,
+
+  //Kokiri Forest
   &KF_KokiriSwordChest,
   &KF_MidoTopLeftChest,
   &KF_MidoTopRightChest,
@@ -716,7 +730,6 @@ const std::array<ItemLocation*, 334> allLocations{
   //&LW_DekuScrubNearDekuTheaterRight,
   //&LW_DekuScrubNearDekuTheaterLeft,
   //&LW_DekuScrubNearBridge,
-  //&LW_GSBeanPatchNearBridge,
   //&LW_GossipStone,
   &LW_NearShortcutsGrottoChest,
   //&LW_DekuScrubGrottoRear,
@@ -812,7 +825,7 @@ const std::array<ItemLocation*, 334> allLocations{
   //Death Mountain Trail
   &DMT_Chest,
   &DMT_StormsGrottoChest,
-  &DMT_Biggoron,
+  //&DMT_Biggoron,
   //&DMT_GreatFairyReward,
   &DMT_FreestandingPoH,
 

@@ -78,6 +78,7 @@ extern Item A_LightArrows;
 extern Item A_GoronTunic;
 extern Item A_ZoraTunic;
 extern Item A_GerudoToken;
+extern Item A_MagicBean;
 extern Item A_MagicBeanPack;
 extern Item GoldSkulltulaToken;
 

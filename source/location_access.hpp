@@ -139,10 +139,9 @@ public:
 
       for (u8 i = 0; i < events.size(); i++) {
         EventPairing eventPair = events[i];
-        bool* event = eventPair.event;
 
-        *event = eventPair.ConditionsMet();
-        if (*event) {
+        if (eventPair.ConditionsMet()) {
+          *(eventPair.event) = true;
           events.erase(events.begin() + i);
         }
       }
@@ -188,7 +187,7 @@ public:
       for (u32 i = 0; i < advancementNeeds.size(); i++) {
         Item item = advancementNeeds[i].item;
         //if the conditions aren't met, then skip for now
-        if (advancementNeeds[i].ConditionsMet()) continue;
+        if (!advancementNeeds[i].ConditionsMet()) continue;
 
         u32 j;
         bool foundInPool = false;

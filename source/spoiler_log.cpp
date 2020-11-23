@@ -40,13 +40,21 @@ static auto GetSeedPath() {
 bool SpoilerLog_Write() {
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
-  for (const auto* location : allLocations) {
+  logtxt += "Playthrough:\n";
+  for (ItemLocation* location : advancementLocations) {
+    logtxt += "    ";
     SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
+    logtxt += '\n';
+  }
+
+  logtxt += "\nAll Locations:\n\n";
+  for (ItemLocation* location : allLocations) {
+    SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
+    logtxt += location->addedToPool ? " ADDED\n" : " NOT ADDED\n";
   }
 
   Result res = 0;
   u32 bytesWritten = 0;
-
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
     return false;
@@ -79,8 +87,8 @@ bool PlacementLog_Write() {
   }
 
   //Open placementlog.txt
-  const auto seed_path = "/3ds/" + Settings::seed + "-placementlog.txt";
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSeedPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  const auto seedPath = "/3ds/" + Settings::seed + "-placementlog.txt";
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, seedPath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 
