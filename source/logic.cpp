@@ -183,37 +183,37 @@ namespace Logic {
   bool Scarecrow        = false;
   bool DistantScarecrow = false;
 
-  bool Bombs        = false;
-  bool DekuShield   = false;
-  bool HylianShield = false;
-  bool Nuts         = false;
-  bool Sticks       = false;
-  bool Bugs         = false;
-  bool BlueFire     = false;
-  bool Fish         = false;
-  bool Fairy        = false;
-  bool HasBigPoe    = false;
+  bool Bombs            = false;
+  bool DekuShield       = false;
+  bool HylianShield     = false;
+  bool Nuts             = false;
+  bool Sticks           = false;
+  bool Bugs             = false;
+  bool BlueFire         = false;
+  bool Fish             = false;
+  bool Fairy            = false;
+  bool BottleWithBigPoe = false;
 
-  bool HasBombchus     = false;
-  bool FoundBombchus   = false;
-  bool HasExplosives   = false;
-  bool IsChild         = false;
-  bool IsAdult         = false;
-//bool IsGlitched      = false;
-  bool CanBlastOrSmash = false;
-  bool CanChildAttack  = false;
-  bool CanChildDamage  = false;
-  bool CanCutShrubs    = false;
-  bool CanDive         = false;
-  bool CanLeaveForest  = false;
-  bool CanPlantBugs    = false;
-  bool CanRideEpona    = false;
-  bool CanStunDeku     = false;
+  bool HasBombchus      = false;
+  bool FoundBombchus    = false;
+  bool HasExplosives    = false;
+  bool IsChild          = false;
+  bool IsAdult          = false;
+//bool IsGlitched       = false;
+  bool CanBlastOrSmash  = false;
+  bool CanChildAttack   = false;
+  bool CanChildDamage   = false;
+  bool CanCutShrubs     = false;
+  bool CanDive          = false;
+  bool CanLeaveForest   = false;
+  bool CanPlantBugs     = false;
+  bool CanRideEpona     = false;
+  bool CanStunDeku      = false;
   bool CanSummonGossipFairy = false;
   bool CanSummonGossipFairyWithoutSuns = false;
-  bool CanPlantBean       = false;
-  bool CanOpenBombGrotto  = false;
-  bool CanOpenStormGrotto = false;
+  bool CanPlantBean        = false;
+  bool CanOpenBombGrotto   = false;
+  bool CanOpenStormGrotto  = false;
   bool HookshotOrBoomerang = false;
 
   bool GuaranteeTradePath     = false;
@@ -221,7 +221,6 @@ namespace Logic {
   bool HasFireSource          = false;
   bool HasFireSourceWithTorch = false;
 
-  //Gerudo Fortress
   bool CanFinishGerudoFortress = false;
 
   bool HasShield        = false;

@@ -215,12 +215,12 @@ void GenerateRandomizer() {
 		printf("Error %d with fill. Press Start to exit.\n", ret);
 		return;
 	}
-	printf("about to write overrides to patch\n");
 	if (WriteOverridesToPatch()) {
-		printf("Created the patch. Have fun!\n");
+		printf("\x1b[11;10HWrote Patch\n");
 	} else {
 		printf("Error creating patch. Press Start to exit.\n");
 	}
+  printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
 }
 
 void GetInputSeed() {

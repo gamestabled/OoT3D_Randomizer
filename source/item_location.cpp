@@ -703,7 +703,7 @@ const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements{{
 
 std::vector<ItemLocation *> advancementLocations = {};
 
-const std::array<ItemLocation*, 343> allLocations{
+std::array<ItemLocation*, 339> allLocations = {
   //Bosses
   &LinksPocket,
   &QueenGohma,

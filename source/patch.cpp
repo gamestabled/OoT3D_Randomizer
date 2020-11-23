@@ -7,6 +7,7 @@ std::set<ItemOverride, Playthrough::ItemOverride_Compare> Overrides;
 //For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
 
 bool WriteOverridesToPatch() {
+
 	Result res = 0;
 	FS_Archive sdmcArchive = 0;
 	Handle basecode;

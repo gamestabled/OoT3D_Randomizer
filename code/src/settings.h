@@ -107,6 +107,7 @@ typedef struct {
   u8 lacsCondition;
 
   u8 openDoorOfTime;
+  u8 shuffleBeanSalesman;
 
   u32 dungeonRewardBitMask;
 } SettingsContext;

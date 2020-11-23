@@ -1628,7 +1628,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   EventPairing(&BugShrub,         []{return BugShrub         || CanCutShrubs;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&ZR_MagicBeanSalesman,             []{return IsChild;}),
+                  ItemLocationPairing(&ZR_MagicBeanSalesman,             []{return IsChild && ProgressiveWallet >= 1;}), //progressive wallet until rupee count is fixed
                   ItemLocationPairing(&ZR_FrogsOcarinaGame,              []{return IsChild && CanPlay(ZeldasLullaby) && CanPlay(SariasSong) && CanPlay(SunsSong) && CanPlay(EponasSong) && CanPlay(SongOfTime) && CanPlay(SongOfStorms);}),
                   ItemLocationPairing(&ZR_FrogsInTheRain,                []{return IsChild && CanPlay(SongOfStorms);}),
                   ItemLocationPairing(&ZR_NearOpenGrottoFreestandingPoH, []{return IsChild || CanUse("Hover Boots") || (IsAdult && LogicZoraRiverLower);}),

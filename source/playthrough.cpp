@@ -39,9 +39,9 @@ namespace Playthrough {
         overrides.insert(override);
 
         PlacementLog_Msg("\n");
-        PlacementLog_Msg(item->getName());
+        PlacementLog_Msg(item->name);
         PlacementLog_Msg(" placed at ");
-        PlacementLog_Msg(loc->getName());
+        PlacementLog_Msg(loc->name);
         PlacementLog_Msg("\n\n");
 
         if (applyEffectImmediately) {
@@ -178,8 +178,8 @@ namespace Playthrough {
                 ItemLocation *location = locPair.location;
 
                 if (locPair.ConditionsMet() && !location->addedToPool) {
-                  PlacementLog_Msg("NEW LOCATION FOUND: ");
-                  PlacementLog_Msg(location->getName());
+                  // PlacementLog_Msg("NEW LOCATION FOUND: ");
+                  // PlacementLog_Msg(location->name);
 
                   totalLocationsFound++;
                   location->addedToPool = true;
@@ -196,7 +196,6 @@ namespace Playthrough {
                     location->placedItem.applyEffect();
                     location->use();
                     advancementChange = true;
-                    return;
                   }
                 }
               }
@@ -316,6 +315,9 @@ namespace Playthrough {
 
       if (!Settings::ShuffleGerudoToken)
         PlaceItemInLocation(&A_GerudoToken, &GF_GerudoToken, overrides, NO_EFFECT);
+
+      if (!Settings::ShuffleMagicBeans)
+        PlaceItemInLocation(&A_MagicBean, &ZR_MagicBeanSalesman, overrides, NO_EFFECT);
 
       if (Settings::Skullsanity == TOKENSANITY_VANILLA) {
         //Overworld
@@ -625,7 +627,7 @@ namespace Playthrough {
             }
 
         }
-        printf("\x1b[20;3H");
+        printf("\x1b[10;10H");
         bool rv = SpoilerLog_Write();
         if (rv) printf("Wrote Spoiler Log\n");
         else    printf("failed to write log\n");

@@ -582,4 +582,4 @@ extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequ
 extern const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
-extern const std::array<ItemLocation*, 343> allLocations;
+extern std::array<ItemLocation *, 339> allLocations;
