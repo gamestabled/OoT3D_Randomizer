@@ -198,7 +198,7 @@ hook_GetToken:
 .global hook_ModelSpawnGetObjectStatus
 hook_ModelSpawnGetObjectStatus:
     push {r1-r12, lr}
-    cpy r0,r2
+    cpy r0,r1
     bl ExtendedObject_GetStatus
     pop {r1-r12, lr}
     bx lr

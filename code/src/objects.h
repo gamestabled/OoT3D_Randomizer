@@ -1,6 +1,6 @@
 #include "z3D/z3D.h"
 
-#define EXTENDED_OBJECT_EXCHANGE_BANK_MAX 4
+#define EXTENDED_OBJECT_EXCHANGE_BANK_MAX 6
 
 typedef s32 (*Object_proc)(ObjectContext* objectCtx, s16 objectId);
 

@@ -8,7 +8,7 @@ s32 ExtendedObject_Spawn(ObjectContext* objectCtx, s16 objectId) {
     if (objectCtx->num < OBJECT_EXCHANGE_BANK_MAX) {
         return Object_Spawn(objectCtx, objectId);
     } else {
-        return Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId);
+        return Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId) + OBJECT_EXCHANGE_BANK_MAX;
     }
 }
 
@@ -42,7 +42,7 @@ s32 ExtendedObject_IsLoaded(ObjectContext* objectCtx, s16 bankIndex) {
 
 ObjectStatus* ExtendedObject_GetStatus(s16 objectId) {
     s32 i;
-    for (i = 0; i < EXTENDED_OBJECT_EXCHANGE_BANK_MAX; ++i) {
+    for (i = 0; i < rExtendedObjectCtx.num; ++i) {
         s32 id = rExtendedObjectCtx.status[i].id;
         id = (id < 0 ? -id : id);
         if (id == objectId) return &rExtendedObjectCtx.status[i];

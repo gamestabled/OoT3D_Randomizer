@@ -3,7 +3,7 @@
 
 #include "z3D/z3D.h"
 
-typedef struct EnItem00{
+typedef struct EnItem00 {
     /* 0x000 */ Actor actor;
     /* 0x1A4 */ char unk_1A4[0x4];
     /* 0x1A8 */ u16 collectibleFlag;
