@@ -581,4 +581,5 @@ extern const std::array<ItemLocationKeyPairing, 7>  IceCavernKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements;
 
-extern const std::array<ItemLocation*, 334> allLocations;
+extern std::vector<ItemLocation *> advancementLocations;
+extern std::array<ItemLocation *, 339> allLocations;

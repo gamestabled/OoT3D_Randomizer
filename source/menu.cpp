@@ -13,6 +13,7 @@ namespace {
   u8 menuIdx;
   u8 settingBound;
   u8 menuBound;
+  u16 pastSeedLength;
   Menu* currentMenu;
   Option* currentSetting;
   PrintConsole topScreen, bottomScreen;
@@ -44,6 +45,7 @@ void MenuInit() {
   menuBound = 0;
   settingIdx = 0;
   settingBound = 0;
+  pastSeedLength = Settings::seed.length();
   currentMenu = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList[settingIdx];
 }
@@ -72,18 +74,24 @@ void MenuUpdate(u32 kDown) {
 
   //Check for seed change
   if (kDown & KEY_Y) {
+    pastSeedLength = Settings::seed.length();
     Settings::seed = std::to_string(rand());
     seedChanged = true;
   }
 
   if (kDown & KEY_X) {
+    pastSeedLength = Settings::seed.length();
     GetInputSeed();
     seedChanged = true;
   }
 
-  //reprint top console if the seed changed
+  //reprint seed if it changed
   if (seedChanged) {
-    PrintTopScreen();
+    std::string spaces = "";
+    spaces.append(pastSeedLength, ' ');
+    consoleSelect(&topScreen);
+    printf("\x1b[10;19H%s", spaces.c_str());
+    printf("\x1b[10;19H%s", Settings::seed.c_str());
     seedChanged = false;
   }
 
@@ -207,12 +215,12 @@ void GenerateRandomizer() {
 		printf("Error %d with fill. Press Start to exit.\n", ret);
 		return;
 	}
-	printf("about to write overrides to patch\n");
 	if (WriteOverridesToPatch()) {
-		printf("Created the patch. Have fun!\n");
+		printf("\x1b[11;10HWrote Patch\n");
 	} else {
 		printf("Error creating patch. Press Start to exit.\n");
 	}
+  printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
 }
 
 void GetInputSeed() {

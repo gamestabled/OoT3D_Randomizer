@@ -179,7 +179,7 @@ namespace Logic {
   extern bool BlueFire;
   extern bool Fish;
   extern bool Fairy;
-  extern bool HasBigPoe;
+  extern bool BottleWithBigPoe;
 
   extern bool Bombs;
   extern bool HasBombchus;

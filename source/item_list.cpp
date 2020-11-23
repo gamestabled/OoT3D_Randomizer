@@ -33,6 +33,7 @@ static auto LightArrowEffect           = []{LightArrows   = true;};
 static auto GoronTunicEffect           = []{GoronTunic    = true;};
 static auto ZoraTunicEffect            = []{ZoraTunic     = true;};
 static auto GerudoTokenEffect          = []{GerudoToken   = true;};
+static auto MagicBeanEffect            = []{MagicBean     = true;};
 static auto MagicBeanPackEffect        = []{MagicBeanPack = true;};
 static auto GoldSkulltulaTokenEffect   = []{GoldSkulltulaTokens++; TokensInPool--;};
 
@@ -47,9 +48,9 @@ static auto ProgressiveMagicEffect     = []{ProgressiveMagic++;    };
 static auto ProgressiveOcarinaEffect   = []{ProgressiveOcarina++;  };
 
 //Bottle Effects
-static auto BottleEffect               = []{HasBottle   = true;     };
-static auto RutosLetterEffect          = []{RutosLetter = true;     };
-static auto BigPoeBottleEffect         = []{HasBigPoe   = true;     };
+static auto BottleEffect               = []{HasBottle        = true;};
+static auto RutosLetterEffect          = []{RutosLetter      = true;};
+static auto BigPoeBottleEffect         = []{BottleWithBigPoe = true;};
 
 //Song Effects
 static auto ZeldasLullabyEffect        = []{ZeldasLullaby    = true;};
@@ -120,6 +121,7 @@ Item A_LightArrows              = Item("Light Arrows",    ITEMTYPE_ITEM, GI_ARRO
 Item A_GoronTunic               = Item("Goron Tunic",     ITEMTYPE_ITEM, GI_TUNIC_GORON,    false, GoronTunicEffect);
 Item A_ZoraTunic                = Item("Zora Tunic",      ITEMTYPE_ITEM, GI_TUNIC_ZORA,     false, ZoraTunicEffect);
 Item A_GerudoToken              = Item("Gerudo Token",    ITEMTYPE_ITEM, GI_GERUDO_CARD,    false, GerudoTokenEffect);
+Item A_MagicBean                = Item("Magic Bean",      ITEMTYPE_ITEM, GI_BEAN,           false, MagicBeanEffect);
 Item A_MagicBeanPack            = Item("Magic Bean Pack", ITEMTYPE_ITEM, 0xC9,              false, MagicBeanPackEffect);
 
 Item GoldSkulltulaToken         = Item("Gold Skulltula Token", ITEMTYPE_TOKEN, GI_SKULL_TOKEN, false, GoldSkulltulaTokenEffect);
@@ -347,6 +349,10 @@ void UpdateSetItems() {
     AddItemToPool(A_GerudoToken);
   }
 
+  if (ShuffleMagicBeans) {
+    AddItemToPool(A_MagicBeanPack);
+  }
+
   if (BombchusInLogic) {
     AddItemToPool(A_ProgressiveBombchus);
   }
@@ -369,6 +375,7 @@ void UpdateSetItems() {
     AddItemToPool(WaterTemple_BossKey);
     AddItemToPool(SpiritTemple_BossKey);
     AddItemToPool(ShadowTemple_BossKey);
+    AddItemToPool(GanonsCastle_BossKey);
   }
 
   if (MapsAndCompasses == MAPSANDCOMPASSES_ALL_LOCATIONS) {

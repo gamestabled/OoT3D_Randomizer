@@ -23,7 +23,7 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags [5].swch |= 0x00000080; //water temple
     gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
-    
+
     //open lowest fire temple locked door
     gSaveContext.sceneFlags [4].swch |= 0x00008000;
 
@@ -40,6 +40,10 @@ void SaveFile_Init() {
 
     if (gSettingsContext.openDoorOfTime) {
       gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
+    }
+
+    if (gSettingsContext.shuffleBeanSalesman) {
+      gSaveContext.ammo[15] = 9; //Magic bean salesman only sells one more bean
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
