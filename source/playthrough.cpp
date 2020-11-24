@@ -27,15 +27,11 @@ namespace Playthrough {
     static std::vector<ItemLocation *> AccessibleLocationPool;
 
     static void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
-        // put item in the override table
-        ItemOverride override;
-        override.key.all = 0;
-
-        override.value.all = 0;
-        override.key = loc->key();
-        override.value = item->value();
-
-        overrides.insert(override);
+        // Put item in the override table
+        overrides.insert({
+          .key = loc->key(),
+          .value = item->value(),
+        });
 
         PlacementLog_Msg("\n");
         PlacementLog_Msg(item->name);
