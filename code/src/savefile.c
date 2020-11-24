@@ -46,9 +46,6 @@ void SaveFile_Init() {
       gSaveContext.ammo[15] = 9; //Magic bean salesman only sells one more bean
     }
 
-    if (gSettingsContext.rainbowBridge == RAINBOWBRIDGE_OPEN) {
-      gSaveContext.eventChkInf[0x4] |= 0x2000; //Rainbow Bridge built
-    }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
     gSaveContext.eventChkInf[0x0] |= 0x1020; //met deku tree and opened mouth

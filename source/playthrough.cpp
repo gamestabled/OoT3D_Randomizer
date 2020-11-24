@@ -306,7 +306,6 @@ namespace Playthrough {
       PlaceItemInLocation(&A_SpiritMedallion, &Twinrova,        overrides, NO_EFFECT);
       PlaceItemInLocation(&A_ShadowMedallion, &BongoBongo,      overrides, NO_EFFECT);
 
-
       if (!Settings::ShuffleKokiriSword)
         PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);
 

@@ -220,6 +220,7 @@ Item RedRupee                   = Item("Red Rupee",        ITEMTYPE_ITEM, GI_RUP
 Item PurpleRupee                = Item("Purple Rupee",     ITEMTYPE_ITEM, GI_RUPEE_PURPLE,     false, NoEffect);
 Item HugeRupee                  = Item("Huge Rupee",       ITEMTYPE_ITEM, GI_RUPEE_GOLD,       false, NoEffect);
 Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEART_PIECE,      false, NoEffect);
+Item HeartContainer             = Item("Heart Container",  ITEMTYPE_ITEM, GI_HEART_CONTAINER,  false, NoEffect);
 Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,         false, NoEffect);
 
 //Refills

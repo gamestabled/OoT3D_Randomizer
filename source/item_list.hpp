@@ -179,6 +179,7 @@ extern Item A_ShadowMedallion;
 extern Item A_LightMedallion;
 
 extern Item NoItem;
+extern Item HeartContainer;
 
 extern std::vector<Item *> PrePlacedItems;
 extern std::vector<Item>   AdvancementItemPool;
