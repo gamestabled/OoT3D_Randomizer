@@ -7,16 +7,15 @@
 #include "spoiler_log.hpp"
 #include "../code/src/item_override.h"
 
-#include <set>
-#include <cstdio>
-#include <algorithm>
 #include <3ds.h>
+#include <algorithm>
+#include <cstdio>
+#include <set>
 #include <string>
 #include <unistd.h>
-#include <stdio.h>
 
 template <typename T, typename Predicate>
-void erase_if(std::vector<T>& vector, Predicate pred) {
+static void erase_if(std::vector<T>& vector, Predicate pred) {
     vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
 }
 
@@ -260,7 +259,7 @@ namespace Playthrough {
 
         AdvancementItemPool.erase(AdvancementItemPool.begin() + itemIdx);
         //erase locations that have been used
-        erase_if<ItemLocation *>(AccessibleLocationPool, [](ItemLocation* il){return il->isUsed();});
+        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->isUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
@@ -278,7 +277,7 @@ namespace Playthrough {
 
         ItemPool.erase(ItemPool.begin() + itemIdx);
         //erase locations that have been used
-        erase_if<ItemLocation *>(AccessibleLocationPool, [](ItemLocation* il){return il->isUsed();});
+        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->isUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
