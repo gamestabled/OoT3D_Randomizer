@@ -107,44 +107,51 @@ void MenuUpdate(u32 kDown) {
 }
 
 void UpdateMainMenu(u32 kDown) {
-	if (kDown & KEY_DUP)
-      menuIdx--;
+  if ((kDown & KEY_DUP) != 0) {
+    menuIdx--;
+  }
 
-	if (kDown & KEY_DDOWN)
-			menuIdx++;
+  if ((kDown & KEY_DDOWN) != 0) {
+    menuIdx++;
+  }
 
-  //bounds checking
-  if (menuIdx == 0xFF) menuIdx = Settings::mainMenu.size() - 1;
-  if (menuIdx == Settings::mainMenu.size()) menuIdx = 0;
+  // Bounds checking
+  if (menuIdx == Settings::mainMenu.size()) {
+    menuIdx = 0;
+  } else if (menuIdx == 0xFF) {
+    menuIdx = static_cast<u8>(Settings::mainMenu.size() - 1);
+  }
 
 	currentMenu = Settings::mainMenu[menuIdx];
 }
 
 void UpdateSubMenu(u32 kDown) {
-	if (kDown & KEY_DUP)
+  if ((kDown & KEY_DUP) != 0) {
     settingIdx--;
+  }
 
-	if (kDown & KEY_DDOWN)
-		settingIdx++;
+  if ((kDown & KEY_DDOWN) != 0)  {
+    settingIdx++;
+  }
 
-  //bounds checking
-  if (settingIdx == 0xFF) settingIdx = currentMenu->settingsList.size() - 1;
-  if (settingIdx == currentMenu->settingsList.size()) settingIdx = 0;
+  // Bounds checking
+  if (settingIdx == currentMenu->settingsList.size()) {
+    settingIdx = 0;
+  } else if (settingIdx == 0xFF) {
+    settingIdx = static_cast<u8>(currentMenu->settingsList.size() - 1);
+  }
 
-	currentSetting = currentMenu->settingsList[settingIdx];
+  currentSetting = currentMenu->settingsList[settingIdx];
 
-	if (kDown & KEY_DRIGHT) {
-		currentSetting->selectedOption++;
-	}
-	if (kDown & KEY_DLEFT) {
-		currentSetting->selectedOption--;
-	}
+  if ((kDown & KEY_DRIGHT) != 0) {
+    currentSetting->NextOptionIndex();
+  }
+  if ((kDown & KEY_DLEFT) != 0) {
+    currentSetting->PrevOptionIndex();
+  }
 
-  //bounds checking
-  if (currentSetting->selectedOption == 0xFF)
-    currentSetting->selectedOption = currentSetting->options.size() - 1;
-  if (currentSetting->selectedOption == currentSetting->options.size())
-    currentSetting->selectedOption = 0;
+  // Bounds checking
+  currentSetting->SanitizeSelectedOptionIndex();
 }
 
 void PrintMainMenu() {
@@ -188,11 +195,11 @@ void PrintSubMenu() {
     //make the current setting green
 		if (settingIdx == i + settingBound) {
 			printf("\x1b[%d;%dH\x1b[32m>", row,  1);
-			printf("\x1b[%d;%dH%s:",       row,  2, setting->name.c_str());
-			printf("\x1b[%d;%dH%s\x1b[0m", row, 26, setting->options[setting->selectedOption].c_str());
+			printf("\x1b[%d;%dH%s:",       row,  2, setting->GetName().data());
+			printf("\x1b[%d;%dH%s\x1b[0m", row, 26, setting->GetSelectedOption().data());
 		} else {
-			printf("\x1b[%d;%dH%s:",       row,  2, setting->name.c_str());
-			printf("\x1b[%d;%dH%s",        row, 26, setting->options[setting->selectedOption].c_str());
+			printf("\x1b[%d;%dH%s:",       row,  2, setting->GetName().data());
+			printf("\x1b[%d;%dH%s",        row, 26, setting->GetSelectedOption().data());
 		}
 
 		setting->SetVariable();
