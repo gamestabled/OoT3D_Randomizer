@@ -7,94 +7,94 @@
 using namespace Logic;
 using namespace Settings;
 
-//Effects to be run when an item is placed
-static auto NoEffect = []{ return; };
+// Effects to be run when an item is placed
+constexpr auto NoEffect = []{};
 
-//set the logic variable for this item to be true when it gets placed
-static auto KokiriSwordEffect          = []{KokiriSword   = true;};
-static auto DekuShieldEffect           = []{DekuShield    = true;};
-static auto HylianShieldEffect         = []{HylianShield  = true;};
-static auto MirrorShieldEffect         = []{MirrorShield  = true;};
-static auto BoomerangEffect            = []{Boomerang     = true;};
-static auto BombchuEffect              = []{Bombchus      = true;};
-static auto ZeldasLetterEffect         = []{ZeldasLetter  = true;};
-static auto WeirdEggEffect             = []{WeirdEgg      = true;};
-static auto LensOfTruthEffect          = []{LensOfTruth   = true;};
-static auto MegatonHammerEffect        = []{Hammer        = true;};
-static auto IronBootsEffect            = []{IronBoots     = true;};
-static auto HoverBootsEffect           = []{HoverBoots    = true;};
-static auto ShardOfAgonyEffect         = []{ShardOfAgony  = true;};
-static auto DinsFireEffect             = []{DinsFire      = true;};
-static auto FaroresWindEffect          = []{FaroresWind   = true;};
-static auto NayrusLoveEffect           = []{NayrusLove    = true;};
-static auto FireArrowEffect            = []{FireArrows    = true;};
-static auto IceArrowEffect             = []{IceArrows     = true;};
-static auto LightArrowEffect           = []{LightArrows   = true;};
-static auto GoronTunicEffect           = []{GoronTunic    = true;};
-static auto ZoraTunicEffect            = []{ZoraTunic     = true;};
-static auto GerudoTokenEffect          = []{GerudoToken   = true;};
-static auto MagicBeanEffect            = []{MagicBean     = true;};
-static auto MagicBeanPackEffect        = []{MagicBeanPack = true;};
-static auto GoldSkulltulaTokenEffect   = []{GoldSkulltulaTokens++; TokensInPool--;};
+// Set the logic variable for this item to be true when it gets placed
+constexpr auto KokiriSwordEffect          = []{KokiriSword   = true;};
+constexpr auto DekuShieldEffect           = []{DekuShield    = true;};
+constexpr auto HylianShieldEffect         = []{HylianShield  = true;};
+constexpr auto MirrorShieldEffect         = []{MirrorShield  = true;};
+constexpr auto BoomerangEffect            = []{Boomerang     = true;};
+constexpr auto BombchuEffect              = []{Bombchus      = true;};
+constexpr auto ZeldasLetterEffect         = []{ZeldasLetter  = true;};
+constexpr auto WeirdEggEffect             = []{WeirdEgg      = true;};
+constexpr auto LensOfTruthEffect          = []{LensOfTruth   = true;};
+constexpr auto MegatonHammerEffect        = []{Hammer        = true;};
+constexpr auto IronBootsEffect            = []{IronBoots     = true;};
+constexpr auto HoverBootsEffect           = []{HoverBoots    = true;};
+constexpr auto ShardOfAgonyEffect         = []{ShardOfAgony  = true;};
+constexpr auto DinsFireEffect             = []{DinsFire      = true;};
+constexpr auto FaroresWindEffect          = []{FaroresWind   = true;};
+constexpr auto NayrusLoveEffect           = []{NayrusLove    = true;};
+constexpr auto FireArrowEffect            = []{FireArrows    = true;};
+constexpr auto IceArrowEffect             = []{IceArrows     = true;};
+constexpr auto LightArrowEffect           = []{LightArrows   = true;};
+constexpr auto GoronTunicEffect           = []{GoronTunic    = true;};
+constexpr auto ZoraTunicEffect            = []{ZoraTunic     = true;};
+constexpr auto GerudoTokenEffect          = []{GerudoToken   = true;};
+constexpr auto MagicBeanEffect            = []{MagicBean     = true;};
+constexpr auto MagicBeanPackEffect        = []{MagicBeanPack = true;};
+constexpr auto GoldSkulltulaTokenEffect   = []{GoldSkulltulaTokens++; TokensInPool--;};
 
-static auto ProgressiveHookshotEffect  = []{ProgressiveHookshot++; };
-static auto ProgressiveBombBagEffect   = []{ProgressiveBombBag++;  };
-static auto ProgressiveStrengthEffect  = []{ProgressiveStrength++; };
-static auto ProgressiveScaleEffect     = []{ProgressiveScale++;    };
-static auto ProgressiveBowEffect       = []{ProgressiveBow++;      };
-static auto ProgressiveBulletBagEffect = []{ProgressiveBulletBag++;};
-static auto ProgressiveWalletEffect    = []{ProgressiveWallet++;   };
-static auto ProgressiveMagicEffect     = []{ProgressiveMagic++;    };
-static auto ProgressiveOcarinaEffect   = []{ProgressiveOcarina++;  };
+constexpr auto ProgressiveHookshotEffect  = []{ProgressiveHookshot++; };
+constexpr auto ProgressiveBombBagEffect   = []{ProgressiveBombBag++;  };
+constexpr auto ProgressiveStrengthEffect  = []{ProgressiveStrength++; };
+constexpr auto ProgressiveScaleEffect     = []{ProgressiveScale++;    };
+constexpr auto ProgressiveBowEffect       = []{ProgressiveBow++;      };
+constexpr auto ProgressiveBulletBagEffect = []{ProgressiveBulletBag++;};
+constexpr auto ProgressiveWalletEffect    = []{ProgressiveWallet++;   };
+constexpr auto ProgressiveMagicEffect     = []{ProgressiveMagic++;    };
+constexpr auto ProgressiveOcarinaEffect   = []{ProgressiveOcarina++;  };
 
-//Bottle Effects
-static auto BottleEffect               = []{HasBottle        = true;};
-static auto RutosLetterEffect          = []{RutosLetter      = true;};
-static auto BigPoeBottleEffect         = []{BottleWithBigPoe = true;};
+// Bottle Effects
+constexpr auto BottleEffect               = []{HasBottle        = true;};
+constexpr auto RutosLetterEffect          = []{RutosLetter      = true;};
+constexpr auto BigPoeBottleEffect         = []{BottleWithBigPoe = true;};
 
-//Song Effects
-static auto ZeldasLullabyEffect        = []{ZeldasLullaby    = true;};
-static auto SariasSongEffect           = []{SariasSong       = true;};
-static auto EponasSongEffect           = []{EponasSong       = true;};
-static auto SunsSongEffect             = []{SunsSong         = true;};
-static auto SongOfTimeEffect           = []{SongOfTime       = true;};
-static auto SongOfStormsEffect         = []{SongOfStorms     = true;};
+// Song Effects
+constexpr auto ZeldasLullabyEffect        = []{ZeldasLullaby    = true;};
+constexpr auto SariasSongEffect           = []{SariasSong       = true;};
+constexpr auto EponasSongEffect           = []{EponasSong       = true;};
+constexpr auto SunsSongEffect             = []{SunsSong         = true;};
+constexpr auto SongOfTimeEffect           = []{SongOfTime       = true;};
+constexpr auto SongOfStormsEffect         = []{SongOfStorms     = true;};
 
-static auto MinuetOfForestEffect       = []{MinuetOfForest   = true;};
-static auto BoleroOfFireEffect         = []{BoleroOfFire     = true;};
-static auto SerenadeOfWaterEffect      = []{SerenadeOfWater  = true;};
-static auto RequiemOfSpiritEffect      = []{RequiemOfSpirit  = true;};
-static auto NocturneOfShadowEffect     = []{NocturneOfShadow = true;};
-static auto PreludeOfLightEffect       = []{PreludeOfLight   = true;};
+constexpr auto MinuetOfForestEffect       = []{MinuetOfForest   = true;};
+constexpr auto BoleroOfFireEffect         = []{BoleroOfFire     = true;};
+constexpr auto SerenadeOfWaterEffect      = []{SerenadeOfWater  = true;};
+constexpr auto RequiemOfSpiritEffect      = []{RequiemOfSpirit  = true;};
+constexpr auto NocturneOfShadowEffect     = []{NocturneOfShadow = true;};
+constexpr auto PreludeOfLightEffect       = []{PreludeOfLight   = true;};
 
-//Small Key Effects
-static auto ForestTempleSmallKeyEffect          = []{ForestTempleKeys++;         };
-static auto FireTempleSmallKeyEffect            = []{FireTempleKeys++;           };
-static auto WaterTempleSmallKeyEffect           = []{WaterTempleKeys++;          };
-static auto SpiritTempleSmallKeyEffect          = []{SpiritTempleKeys++;         };
-static auto ShadowTempleSmallKeyEffect          = []{ShadowTempleKeys++;         };
-static auto BottomOfTheWellSmallKeyEffect       = []{BottomOfTheWellKeys++;      };
-static auto GerudoTrainingGroundsSmallKeyEffect = []{GerudoTrainingGroundsKeys++;};
-static auto GerudoFortressSmallKeyEffect        = []{GerudoFortressKeys++;       };
-static auto GanonsCastleSmallKeyEffect          = []{GanonsCastleKeys++;         };
+// Small Key Effects
+constexpr auto ForestTempleSmallKeyEffect          = []{ForestTempleKeys++;         };
+constexpr auto FireTempleSmallKeyEffect            = []{FireTempleKeys++;           };
+constexpr auto WaterTempleSmallKeyEffect           = []{WaterTempleKeys++;          };
+constexpr auto SpiritTempleSmallKeyEffect          = []{SpiritTempleKeys++;         };
+constexpr auto ShadowTempleSmallKeyEffect          = []{ShadowTempleKeys++;         };
+constexpr auto BottomOfTheWellSmallKeyEffect       = []{BottomOfTheWellKeys++;      };
+constexpr auto GerudoTrainingGroundsSmallKeyEffect = []{GerudoTrainingGroundsKeys++;};
+constexpr auto GerudoFortressSmallKeyEffect        = []{GerudoFortressKeys++;       };
+constexpr auto GanonsCastleSmallKeyEffect          = []{GanonsCastleKeys++;         };
 
-static auto ForestTempleBossKeyEffect           = []{BossKeyForestTemple = true;};
-static auto FireTempleBossKeyEffect             = []{BossKeyFireTemple   = true;};
-static auto WaterTempleBossKeyEffect            = []{BossKeyWaterTemple  = true;};
-static auto SpiritTempleBossKeyEffect           = []{BossKeySpiritTemple = true;};
-static auto ShadowTempleBossKeyEffect           = []{BossKeyShadowTemple = true;};
-static auto GanonsCastleBossKeyEffect           = []{BossKeyGanonsCastle = true;};
+constexpr auto ForestTempleBossKeyEffect           = []{BossKeyForestTemple = true;};
+constexpr auto FireTempleBossKeyEffect             = []{BossKeyFireTemple   = true;};
+constexpr auto WaterTempleBossKeyEffect            = []{BossKeyWaterTemple  = true;};
+constexpr auto SpiritTempleBossKeyEffect           = []{BossKeySpiritTemple = true;};
+constexpr auto ShadowTempleBossKeyEffect           = []{BossKeyShadowTemple = true;};
+constexpr auto GanonsCastleBossKeyEffect           = []{BossKeyGanonsCastle = true;};
 
-//Medallions and Stones Effects
-static auto KokiriEmeraldEffect   = []{KokiriEmerald   = true;};
-static auto GoronRubyEffect       = []{GoronRuby       = true;};
-static auto ZoraSapphireEffect    = []{ZoraSapphire    = true;};
-static auto ForestMedallionEffect = []{ForestMedallion = true;};
-static auto FireMedallionEffect   = []{FireMedallion   = true;};
-static auto WaterMedallionEffect  = []{WaterMedallion  = true;};
-static auto SpiritMedallionEffect = []{SpiritMedallion = true;};
-static auto ShadowMedallionEffect = []{ShadowMedallion = true;};
-static auto LightMedallionEffect  = []{LightMedallion  = true;};
+// Medallions and Stones Effects
+constexpr auto KokiriEmeraldEffect   = []{KokiriEmerald   = true;};
+constexpr auto GoronRubyEffect       = []{GoronRuby       = true;};
+constexpr auto ZoraSapphireEffect    = []{ZoraSapphire    = true;};
+constexpr auto ForestMedallionEffect = []{ForestMedallion = true;};
+constexpr auto FireMedallionEffect   = []{FireMedallion   = true;};
+constexpr auto WaterMedallionEffect  = []{WaterMedallion  = true;};
+constexpr auto SpiritMedallionEffect = []{SpiritMedallion = true;};
+constexpr auto ShadowMedallionEffect = []{ShadowMedallion = true;};
+constexpr auto LightMedallionEffect  = []{LightMedallion  = true;};
 
 Item NoItem = Item("No Item", ITEMTYPE_ITEM,   GI_RUPEE_GREEN,   false, NoEffect);
 
