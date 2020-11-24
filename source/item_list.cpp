@@ -253,10 +253,8 @@ std::vector<Item> AdvancementItemPool = {};
 //The beginning pool of items, filled in by GenerateItemPool()
 std::vector<Item> ItemPool = {};
 
-void AddItemToPool(Item item, u8 count = 1) {
-  for(u8 i = 0; i < count; i++) {
-    ItemPool.push_back(item);
-  }
+static void AddItemToPool(const Item& item, size_t count = 1) {
+  ItemPool.resize(ItemPool.size() + count, item);
 }
 
 void GenerateItemPool() {
