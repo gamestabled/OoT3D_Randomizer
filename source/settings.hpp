@@ -77,6 +77,7 @@ namespace Settings {
   extern bool ShuffleGerudoToken;
   extern bool ShuffleKokiriSword;
   extern bool ShuffleMagicBeans;
+  extern bool ShuffleOcarinas;
   extern bool ShuffleSongs;
   extern bool Shopsanity;
 

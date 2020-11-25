@@ -100,6 +100,14 @@ SECTIONS
 		*(.patch_OverrideGraphicID_354BB8)
 	}
 
+	.patch_FastChests 0x354CD8 : {
+		*(.patch_FastChests)
+	}
+
+	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
+		*(.patch_ModelSpawnGetObjectStatus)
+	}
+
 	.patch_IncomingGetItemID 0x3725AC : {
 		*(.patch_IncomingGetItemID)
 	}
@@ -164,8 +172,12 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeTwo)
 	}
 
-	.patch_FastChests 0x354CD8 : {
-		*(.patch_FastChests)
+	.patch_RainbowBridge 0x3E7CAC : {
+		*(.patch_RainbowBridge)
+	}
+
+	.patch_InitSceneClearExtendedObjects 0x449218 : {
+		*(.patch_InitSceneClearExtendedObjects)
 	}
 
 	.patch_SaveFile_Init 0x449A04 : {

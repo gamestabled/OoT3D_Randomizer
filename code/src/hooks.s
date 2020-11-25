@@ -195,6 +195,22 @@ hook_GetToken:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_ModelSpawnGetObjectStatus
+hook_ModelSpawnGetObjectStatus:
+    push {r1-r12, lr}
+    cpy r0,r1
+    bl ExtendedObject_GetStatus
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_InitSceneClearExtendedObjects
+hook_InitSceneClearExtendedObjects:
+    push {r0-r12, lr}
+    bl EntendedObject_Clear
+    pop {r0-r12, lr}
+    mov r0,#0x2
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

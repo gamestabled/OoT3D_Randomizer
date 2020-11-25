@@ -108,6 +108,7 @@ typedef struct {
 
   u8 openDoorOfTime;
   u8 shuffleBeanSalesman;
+  u8 shuffleOcarinas;
 
   u32 dungeonRewardBitMask;
 } SettingsContext;

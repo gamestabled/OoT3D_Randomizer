@@ -46,7 +46,6 @@ void SaveFile_Init() {
       gSaveContext.ammo[15] = 9; //Magic bean salesman only sells one more bean
     }
 
-
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
     gSaveContext.eventChkInf[0x0] |= 0x1020; //met deku tree and opened mouth
 

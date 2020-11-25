@@ -257,6 +257,26 @@ DampeChest_patch:
     bl EnPoRelay_CheckChestFlag
     nop
 
+.section .patch_RainbowBridge
+.global RainbowBridge_patch
+RainbowBridge_patch:
+    push {r0-r12, lr}
+    bl BgGjyoBridge_CheckCondition
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x3E7D70
+    b 0x3E7CE0
+
+.section .patch_ModelSpawnGetObjectStatus
+.global ModelSpawnGetObjectStatus_patch
+ModelSpawnGetObjectStatus_patch:
+    bl hook_ModelSpawnGetObjectStatus
+
+.section .patch_InitSceneClearExtendedObjects
+.global InitSceneClearExtendedObjects_patch
+InitSceneClearExtendedObjects_patch:
+    bl hook_InitSceneClearExtendedObjects
+
 .section .patch_loader
 .global loader_patch
 

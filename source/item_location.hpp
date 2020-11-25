@@ -12,14 +12,13 @@
 #include "item_list.hpp"
 
 enum ItemLocationType {
-    ITEMLOCATIONTYPE_NPC,
+    ITEMLOCATIONTYPE_BASE,
     ITEMLOCATIONTYPE_CHEST,
     ITEMLOCATIONTYPE_COLLECTABLE,
     ITEMLOCATIONTYPE_GS_TOKEN,
     ITEMLOCATIONTYPE_GROTTO_SCRUB,
     ITEMLOCATIONTYPE_DELAYED,
     ITEMLOCATIONTYPE_TEMPLE_REWARD,
-    ITEMLOCATIONTYPE_BOSS_HEART,
 };
 
 class ItemLocation {
@@ -86,6 +85,7 @@ extern ItemLocation KF_GossipStone;
 extern ItemLocation KF_StormsGrottoChest;
 
 //Lost Woods
+extern ItemLocation LW_GiftFromSaria;
 extern ItemLocation LW_SkullKid;
 extern ItemLocation LW_OcarinaMemoryGame;
 extern ItemLocation LW_TargetInWoods;
