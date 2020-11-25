@@ -85,7 +85,6 @@ extern ItemLocation KF_GossipStone;
 extern ItemLocation KF_StormsGrottoChest;
 
 //Lost Woods
-extern ItemLocation LW_GiftFromSaria;
 extern ItemLocation LW_SkullKid;
 extern ItemLocation LW_OcarinaMemoryGame;
 extern ItemLocation LW_TargetInWoods;
@@ -577,18 +576,32 @@ extern ItemLocation Twinrova;
 extern ItemLocation Morpha;
 extern ItemLocation BongoBongo;
 
+/*-------------------------------
+        --- CUTSCENES ---
+  -------------------------------*/
+
+extern ItemLocation ToT_LightArrowCutscene;
+extern ItemLocation LW_GiftFromSaria;
+extern ItemLocation ZF_GreatFairyReward;
+extern ItemLocation HC_GreatFairyReward;
+extern ItemLocation Colossus_GreatFairyReward;
+extern ItemLocation DMT_GreatFairyReward;
+extern ItemLocation DMC_GreatFairyReward;
+extern ItemLocation OGC_GreatFairyReward;
+
 extern const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 7>  JabuJabusBellyKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 19> ForestTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 20> FireTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 16> WaterTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 26> SpiritTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 23> ShadowTempleKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 7>  IceCavernKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
-extern std::array<ItemLocation *, 347> allLocations;
+extern std::array<ItemLocation *, 9> dungeonRewardLocations;
+extern std::array<ItemLocation *, 338> allLocations;

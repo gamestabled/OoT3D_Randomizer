@@ -183,7 +183,6 @@ extern Item HeartContainer;
 
 extern std::vector<Item *> PrePlacedItems;
 extern std::vector<Item>   AdvancementItemPool;
-extern std::vector<Item>   SmallKeyPool;
 extern std::vector<Item>   ItemPool;
 extern void UpdateSetItems();
 extern void GenerateItemPool();

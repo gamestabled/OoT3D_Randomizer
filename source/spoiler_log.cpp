@@ -48,6 +48,10 @@ bool SpoilerLog_Write() {
   }
 
   logtxt += "\nAll Locations:\n\n";
+  for (ItemLocation* location : dungeonRewardLocations) {
+    SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
+    logtxt += location->addedToPool ? " ADDED\n" : " NOT ADDED\n";
+  }
   for (ItemLocation* location : allLocations) {
     SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
     logtxt += location->addedToPool ? " ADDED\n" : " NOT ADDED\n";

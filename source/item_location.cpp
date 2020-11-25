@@ -9,7 +9,6 @@ ItemLocation KF_MidoBottomRightChest                      = ItemLocation(0x28, I
 ItemLocation KF_StormsGrottoChest                         = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x0C, "KF Storms Grotto Chest",               {"Kokiri Forest", "Forest", "Grottos"});
 
 //Lost Woods
-ItemLocation LW_GiftFromSaria                             = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x02, "LW Gift From Saria",                   {"the Lost Woods", "Forest"});
 ItemLocation LW_NearShortcutsGrottoChest                  = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x14, "LW Near Shortcuts Grotto Chest",       {"the Lost Woods", "Forest", "Grottos"});
 ItemLocation LW_SkullKid                                  = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x3E, "LW Skull Kid",                         {"the Lost Woods", "Forest",});
 ItemLocation LW_OcarinaMemoryGame                         = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x76, "LW Ocarina Memory Game",               {"the Lost Woods", "Forest", "Minigames"});//Gives wrong item
@@ -70,7 +69,6 @@ ItemLocation HW_Chest                                     = ItemLocation(0x5E, I
 ItemLocation Colossus_FreestandingPoH                     = ItemLocation(0x5C, ITEMLOCATIONTYPE_COLLECTABLE,  0x0D, "Colossus Freestanding PoH",            {"Desert Colossus",});
 ItemLocation Colossus_DekuScrubGrottoRear                 = ItemLocation(0xFD, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x39, "Colossus Deku Scrub Grotto Rear",      {"Desert Colossus", "Deku Scrub", "Grottos"});
 ItemLocation Colossus_DekuScrubGrottoFront                = ItemLocation(0xFD, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x3A, "Colossus Deku Scrub Grotto Front",     {"Desert Colossus", "Deku Scrub", "Grottos"});
-ItemLocation Colossus_GreatFairyReward                    = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x12, "Colossus Great Fairy Reward",          {"Desert Colossus", "Fairies"});
 
 //Market
 ItemLocation MK_TreasureChestGameReward                   = ItemLocation(0x10, ITEMLOCATIONTYPE_CHEST,        0x0A, "MK Treasure Chest Game Reward",        {"the Market", "Market", "Minigames"});
@@ -80,16 +78,9 @@ ItemLocation MK_LostDog                                   = ItemLocation(0x35, I
 ItemLocation MK_ShootingGalleryReward                     = ItemLocation(0x42, ITEMLOCATIONTYPE_BASE,         0x60, "MK Shooting Gallery",                  {"the Market", "Market", "Minigames"});
 ItemLocation MK_10BigPoes                                 = ItemLocation(0x4D, ITEMLOCATIONTYPE_BASE,         0x0F, "MK 10 Big Poes",                       {"the Market", "Hyrule Castle",});
 
-//Temple of Time
-ItemLocation ToT_LightArrowCutscene                       = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x01, "ToT Light Arrow Cutscene",             {"Temple of Time", "Market"});
-
 //Hyrule Castle
 ItemLocation HC_MalonEgg                                  = ItemLocation(0x5F, ITEMLOCATIONTYPE_BASE,         0x47, "HC Malon Egg",                         {"Hyrule Castle", "Market",});
 ItemLocation HC_ZeldasLetter                              = ItemLocation(0x4A, ITEMLOCATIONTYPE_BASE,         0x0B, "HC Zeldas Letter",                     {"Hyrule Castle", "Market",});
-ItemLocation HC_GreatFairyReward                          = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x11, "HC Great Fairy Reward",                {"Hyrule Castle", "Market", "Fairies"});
-
-//Outside Ganon's Castle
-ItemLocation OGC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x15, "OGC Great Fairy Reward",               {"outside Ganon's Castle", "Market", "Fairies"});
 
 //Kakariko
 ItemLocation Kak_RedeadGrottoChest                        = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x0A, "Kak Redead Grotto Chest",              {"Kakariko Village", "Kakariko", "Grottos"});
@@ -120,7 +111,6 @@ ItemLocation DMT_Chest                                    = ItemLocation(0x60, I
 ItemLocation DMT_StormsGrottoChest                        = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x17, "DMT Storms Grotto Chest",              {"Death Mountain Trail", "Death Mountain", "Grottos"});
 ItemLocation DMT_Biggoron                                 = ItemLocation(0x60, ITEMLOCATIONTYPE_BASE,         0x57, "DMT Biggoron",                         {"Death Mountain Trail", "Death Mountain",});
 ItemLocation DMT_FreestandingPoH                          = ItemLocation(0x60, ITEMLOCATIONTYPE_COLLECTABLE,  0x1E, "DMT Freestanding PoH",                 {"Death Mountain Trail", "Death Mountain",});
-ItemLocation DMT_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x13, "DMT Great Fairy Reward",               {"Death Mountain Trail", "Death Mountain", "Fairies"});
 
 //Goron City
 ItemLocation GC_MazeLeftChest                             = ItemLocation(0x62, ITEMLOCATIONTYPE_CHEST,        0x00, "GC Maze Left Chest",                   {"Goron City",});
@@ -142,7 +132,6 @@ ItemLocation DMC_DekuScrub                                = ItemLocation(0x61, I
 ItemLocation DMC_DekuScrubGrottoLeft                      = ItemLocation(0xF9, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x30, "DMC Deku Scrub Grotto Left",           {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
 ItemLocation DMC_DekuScrubGrottoRight                     = ItemLocation(0xF9, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x37, "DMC Deku Scrub Grotto Right",          {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
 ItemLocation DMC_DekuScrubGrottoCenter                    = ItemLocation(0xF9, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x33, "DMC Deku Scrub Grotto Center",         {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
-ItemLocation DMC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x14, "DMC Great Fairy Reward",               {"Death Mountain Crater", "Death Mountain", "Fairies"});
 
 //Zoras River
 ItemLocation ZR_OpenGrottoChest                           = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x09, "ZR Open Grotto Chest",                 {"Zora's River", "Grottos",});
@@ -162,7 +151,6 @@ ItemLocation ZD_KingZoraThawed                            = ItemLocation(0x58, I
 //Zoras Fountain
 ItemLocation ZF_IcebergFreestandingPoH                    = ItemLocation(0x59, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "ZF Iceberg Freestanding PoH",          {"Zora's Fountain",});
 ItemLocation ZF_BottomFreestandingPoH                     = ItemLocation(0x59, ITEMLOCATIONTYPE_COLLECTABLE,  0x14, "ZF Bottom Freestanding PoH",           {"Zora's Fountain",});
-ItemLocation ZF_GreatFairyReward                          = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,      0x10, "ZF Great Fairy Reward",                {"Zora's Fountain", "Fairies"});
 
 //Lon Lon Ranch
 ItemLocation LLR_TalonsChickens                           = ItemLocation(0x4C, ITEMLOCATIONTYPE_BASE,         0x14, "LLR Talons Chickens",                  {"Lon Lon Ranch", "Minigames"});
@@ -507,6 +495,19 @@ ItemLocation Morpha                                       = ItemLocation(0xFF, I
 ItemLocation Twinrova                                     = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Twinrova",                                         {});
 ItemLocation BongoBongo                                   = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Bongo Bongo",                                      {});
 
+/*-------------------------------
+        --- CUTSCENES ---
+  -------------------------------*/
+
+ItemLocation ToT_LightArrowCutscene                       = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x01, "ToT Light Arrow Cutscene",                         {"Temple of Time", "Market"});
+ItemLocation LW_GiftFromSaria                             = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x02, "LW Gift From Saria",                               {"the Lost Woods", "Forest"});
+ItemLocation ZF_GreatFairyReward                          = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x10, "ZF Great Fairy Reward",                            {"Zora's Fountain", "Fairies"});
+ItemLocation HC_GreatFairyReward                          = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x11, "HC Great Fairy Reward",                            {"Hyrule Castle", "Market", "Fairies"});
+ItemLocation Colossus_GreatFairyReward                    = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x12, "Colossus Great Fairy Reward",                      {"Desert Colossus", "Fairies"});
+ItemLocation DMT_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x13, "DMT Great Fairy Reward",                           {"Death Mountain Trail", "Death Mountain", "Fairies"});
+ItemLocation DMC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x14, "DMC Great Fairy Reward",                           {"Death Mountain Crater", "Death Mountain", "Fairies"});
+ItemLocation OGC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x15, "OGC Great Fairy Reward",                           {"outside Ganon's Castle", "Market", "Fairies"});
+
 //key requirements for placing randomized keys and other items in dungeons
 const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements{{
   ItemLocationKeyPairing(&DekuTree_MapChest,               0),
@@ -542,7 +543,7 @@ const std::array<ItemLocationKeyPairing, 7> JabuJabusBellyKeyRequirements{{
   ItemLocationKeyPairing(&JabuJabusBelly_GS_LobbyBasementUpper, 0),
   ItemLocationKeyPairing(&JabuJabusBelly_GS_NearBoss,           0),
 }};
-const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 19> ForestTempleKeyRequirements{{
   ItemLocationKeyPairing(&ForestTemple_FirstRoomChest,             0),
   ItemLocationKeyPairing(&ForestTemple_FirstStalfosChest,          0),
   ItemLocationKeyPairing(&ForestTemple_GS_FirstRoom,               0),
@@ -561,9 +562,11 @@ const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements{{
   ItemLocationKeyPairing(&ForestTemple_FallingCeilingRoomChest,    5),
   ItemLocationKeyPairing(&ForestTemple_BasementChest,              5),
   ItemLocationKeyPairing(&ForestTemple_GS_Basement,                5),
+  ItemLocationKeyPairing(&ForestTemple_PhantomGanonHeart,          5),
 }};
-const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 20> FireTempleKeyRequirements{{
   ItemLocationKeyPairing(&FireTemple_NearBossChest,                 0),
+  ItemLocationKeyPairing(&FireTemple_VolvagiaHeart,                 0),
   ItemLocationKeyPairing(&FireTemple_FlareDancerChest,              0),
   ItemLocationKeyPairing(&FireTemple_BossKeyChest,                  0),
   ItemLocationKeyPairing(&FireTemple_GS_BossKeyLoop,                0),
@@ -583,7 +586,8 @@ const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements{{
   ItemLocationKeyPairing(&FireTemple_HighestGoronChest,             7),
   ItemLocationKeyPairing(&FireTemple_MegatonHammerChest,            7),
 }};
-const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 16> WaterTempleKeyRequirements{{
+  ItemLocationKeyPairing(&WaterTemple_MorphaHeart,            0),
   ItemLocationKeyPairing(&WaterTemple_MapChest,               0),
   ItemLocationKeyPairing(&WaterTemple_CompassChest,           0),
   ItemLocationKeyPairing(&WaterTemple_TorchesChest,           0),
@@ -598,9 +602,9 @@ const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements{{
   ItemLocationKeyPairing(&WaterTemple_LongshotChest,          5),
   ItemLocationKeyPairing(&WaterTemple_RiverChest,             5),
   ItemLocationKeyPairing(&WaterTemple_GS_River,               5),
-  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5), //FIX WHEN ADDING MORPHA HC
+  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5),
 }};
-const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 26> SpiritTempleKeyRequirements{{
   ItemLocationKeyPairing(&SpiritTemple_ChildBridgeChest,           0),
   ItemLocationKeyPairing(&SpiritTemple_ChildEarlyTorchesChest,     0),
   ItemLocationKeyPairing(&SpiritTemple_GS_MetalFence,              0),
@@ -626,8 +630,9 @@ const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements{{
   ItemLocationKeyPairing(&SpiritTemple_HallwayRightInvisibleChest, 4),
   ItemLocationKeyPairing(&SpiritTemple_BossKeyChest,               5),
   ItemLocationKeyPairing(&SpiritTemple_TopmostChest,               5),
+  ItemLocationKeyPairing(&SpiritTemple_TwinrovaHeart,              5),
 }};
-const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements = {
+const std::array<ItemLocationKeyPairing, 23> ShadowTempleKeyRequirements = {
   ItemLocationKeyPairing(&ShadowTemple_MapChest,                      0),
   ItemLocationKeyPairing(&ShadowTemple_HoverBootsChest,               0),
   ItemLocationKeyPairing(&ShadowTemple_CompassChest,                  0),
@@ -650,6 +655,7 @@ const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements = {
   ItemLocationKeyPairing(&ShadowTemple_BossKeyChest,                  4),
   ItemLocationKeyPairing(&ShadowTemple_InvisibleFloormasterChest,     4),
   ItemLocationKeyPairing(&ShadowTemple_GS_TripleGiantPot,             4),
+  ItemLocationKeyPairing(&ShadowTemple_BongoBongoHeart,               5),
 };
 const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements{{
   ItemLocationKeyPairing(&BottomOfTheWell_FrontLeftFakeWallChest,   0),
@@ -703,7 +709,7 @@ const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirement
   ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathThirdChest,         7),
   ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathFinalChest,         9),
 };
-const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_ForestTrialChest,                0),
   ItemLocationKeyPairing(&GanonsCastle_WaterTrialLeftChest,             0),
   ItemLocationKeyPairing(&GanonsCastle_WaterTrialRightChest,            0),
@@ -719,11 +725,11 @@ const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_LightTrialThirdRightChest,       0),
   ItemLocationKeyPairing(&GanonsCastle_LightTrialInvisibleEnemiesChest, 0),
   ItemLocationKeyPairing(&GanonsCastle_LightTrialLullabyChest,          1),
+  ItemLocationKeyPairing(&GanonsCastle_BossKeyChest,                    2),
 }};
 
 std::vector<ItemLocation *> advancementLocations = {};
-
-std::array<ItemLocation*, 347> allLocations = {
+std::array<ItemLocation*, 9> dungeonRewardLocations = {
   //Bosses
   &LinksPocket,
   &QueenGohma,
@@ -734,6 +740,8 @@ std::array<ItemLocation*, 347> allLocations = {
   &Morpha,
   &Twinrova,
   &BongoBongo,
+};
+std::array<ItemLocation*, 338> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,

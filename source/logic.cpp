@@ -272,6 +272,8 @@ namespace Logic {
   u8 AddedProgressiveStrengths  = 0;
   u8 AddedProgressiveOcarinas   = 0;
   u8 TokensInPool               = 0;
+
+  //Event checking past
   bool DrainWellPast            = false;
   bool DampesWindmillAccessPast = false;
   bool DekuTreeClearPast        = false;

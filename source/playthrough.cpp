@@ -51,8 +51,11 @@ namespace Playthrough {
 
         loc->placedItem = *item;
         totalItemsPlaced++;
-        printf("\x1b[2;20HPlacing Items");
-        printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size());
+        printf("\x1b[2;20HPlacing Items...");
+        if (Settings::Logic == LOGIC_GLITCHLESS) {
+          printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
+        }
+
     }
 
     template <typename Container>
@@ -292,6 +295,7 @@ namespace Playthrough {
 
     //Check for specific preset items in locations
     static void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+      totalItemsPlaced = 0;
       const bool NO_EFFECT = false;
 
       PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
@@ -590,7 +594,6 @@ namespace Playthrough {
         Settings::UpdateSettings();
         Settings::PrintSettings();
         Logic::UpdateHelpers();
-        totalItemsPlaced = 0;
         GenerateItemPool();
         UpdateSetItems();
         PlaceSetItems(overrides);
