@@ -12,6 +12,12 @@ int main() {
 
 		MenuUpdate(kDown);
 
+		//launch oot3d directly by holding L and R
+		if (kDown & KEY_L && kDown & KEY_R) {
+			aptSetChainloader(0x0004000000033500, 2);
+			break;
+		}
+
 		// Flush and swap framebuffers
 		gfxFlushBuffers();
 		gfxSwapBuffers();
