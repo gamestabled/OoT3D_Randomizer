@@ -1,37 +1,61 @@
 #pragma once
-#include <stdlib.h>
+
 #include <3ds.h>
+#include <cstdlib>
 #include <string>
+#include <variant>
 #include <vector>
 #include "../code/src/settings.h"
 
 class Option {
-  public:
+public:
     Option(u8* var_, std::string name_, std::vector<std::string> options_, u8 defaultOption_ = 0)
-          :   varu8(var_),       name(std::move(name_)),   options(std::move(options_)), selectedOption(defaultOption_) {
-        type == "u8";
-        *varu8 = selectedOption;
+          : var(var_),           name(std::move(name_)),   options(std::move(options_)), selectedOption(defaultOption_) {
+        SetVariable();
     }
 
     Option(bool* var_, std::string name_, std::vector<std::string> options_, u8 defaultOption_ = 0)
-          :varBool(var_), name(std::move(name_)),  options(std::move(options_)), selectedOption(defaultOption_) {
-        type = "bool";
-        *varBool = selectedOption ? true : false;
+          : var(var_), name(std::move(name_)),  options(std::move(options_)), selectedOption(defaultOption_) {
+        SetVariable();
     }
-    u8* varu8;
-    bool* varBool;
-    std::string name;
-    std::vector<std::string> options;
-    u8 selectedOption;
-    std::string type;
+
+    std::string_view GetName() const {
+        return name;
+    }
+
+    std::string_view GetSelectedOption() const {
+        return options[selectedOption];
+    }
+
+    void NextOptionIndex() {
+        ++selectedOption;
+    }
+
+    void PrevOptionIndex() {
+        --selectedOption;
+    }
+
+    void SanitizeSelectedOptionIndex() {
+        if (selectedOption == options.size()) {
+            selectedOption = 0;
+        } else if (selectedOption == 0xFF) {
+            selectedOption = static_cast<u8>(options.size() - 1);
+        }
+    }
 
     void SetVariable() {
-      if (type == "bool") {
-        *varBool = selectedOption ? true : false;
+      if (std::holds_alternative<bool*>(var)) {
+        *std::get<bool*>(var) = selectedOption != 0;
       } else {
-        *varu8 = selectedOption;
+        *std::get<u8*>(var) = selectedOption;
       }
     }
+
+private:
+  std::variant<bool*, u8*> var;
+  std::string name;
+  std::vector<std::string> options;
+  u8 selectedOption;
 };
 
 class Menu {
