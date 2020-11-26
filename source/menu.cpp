@@ -230,6 +230,7 @@ void GenerateRandomizer() {
   printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
 }
 
+//opens up the 3ds software keyboard to type in a seed
 void GetInputSeed() {
   SwkbdState swkbd;
   char mybuf[60];

@@ -141,9 +141,6 @@ namespace Logic {
 
   extern bool BuyDekuShield;
   extern bool BuyHylianShield;
-  extern bool BuyDekuNut5;
-  extern bool BuyDekuNut10;
-  extern bool BuyDekuStick1;
   extern bool BuyBottleBug;
   extern bool BuyBlueFire;
   extern bool BuyBottledFish;
