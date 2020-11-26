@@ -2,6 +2,7 @@
 #include "rHeap.h"
 #include "item_table.h"
 #include "icetrap.h"
+#include "settings.h"
 #include <stddef.h>
 void svcBreak(u32 breakReason); //TODO: remove
 
@@ -300,7 +301,23 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemTable_CallEffect(itemRow);
 }
 
+typedef u32 (*EventCheck_proc)(u32 param_1);
+#define EventCheck_addr 0x350CF4
+#define EventCheck ((EventCheck_proc)EventCheck_addr)
+
+typedef void (*EventSet_proc)(u32 param_1);
+#define EventSet_addr 0x34CBF8
+#define EventSet ((EventSet_proc)EventSet_addr)
+
 s32 ItemOverride_GiveSariasGift(void) {
-    // TODO
-    return 0;
+    u32 receivedGift = EventCheck(0xC1);
+    if (receivedGift == 0) {
+        if (gSettingsContext.shuffleOcarinas) {
+            ItemOverride_PushDelayedOverride(0x02);
+        }
+        EventSet(0xC1);
+    }
+
+    // return 1 to skip the cutscene
+    return gSettingsContext.shuffleOcarinas || receivedGift;
 }

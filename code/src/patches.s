@@ -56,10 +56,10 @@ OverrideGraphicID_patch_35495C:
 OverrideGraphicID_patch_354BB8:
     bl hook_OverrideGraphicID_354BB8
 
-.section .patch_OverrideGraphicID_495CD0
-.global OverrideGraphicID_patch_495CD0
-OverrideGraphicID_patch_495CD0:
-    bl hook_OverrideGraphicID_495CD0
+#.section .patch_OverrideGraphicID_495CD0
+#.global OverrideGraphicID_patch_495CD0
+#OverrideGraphicID_patch_495CD0:
+#    bl hook_OverrideGraphicID_495CD0
 
 .section .patch_OverrideGraphicID_4BC604
 .global OverrideGraphicID_patch_4BC604
@@ -276,6 +276,11 @@ ModelSpawnGetObjectStatus_patch:
 .global InitSceneClearExtendedObjects_patch
 InitSceneClearExtendedObjects_patch:
     bl hook_InitSceneClearExtendedObjects
+
+.section .patch_SariasGift
+.global SariasGift_patch
+SariasGift_patch:
+    bl ItemOverride_GiveSariasGift
 
 .section .patch_loader
 .global loader_patch

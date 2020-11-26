@@ -71,5 +71,5 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x4] |= 0x8020; //entered MS chamber, Pulled MS from pedestal
     gSaveContext.eventChkInf[0x5] |= 0x0C37; //Sheik Moved From pedestal and get rid of song cutscenes
 
-    gSaveContext.eventChkInf[0xC] |= 0x0022; //Sheik Spawned at MS pedestal as Adult and Saria gift cutscene
+    gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
 }

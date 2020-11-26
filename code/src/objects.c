@@ -5,11 +5,7 @@
 ExtendedObjectContext rExtendedObjectCtx = { 0 };
 
 s32 ExtendedObject_Spawn(ObjectContext* objectCtx, s16 objectId) {
-    if (objectCtx->num < OBJECT_EXCHANGE_BANK_MAX) {
-        return Object_Spawn(objectCtx, objectId);
-    } else {
-        return Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId) + OBJECT_EXCHANGE_BANK_MAX;
-    }
+    return Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId) + OBJECT_EXCHANGE_BANK_MAX;
 }
 
 void EntendedObject_Clear() {

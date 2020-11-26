@@ -192,6 +192,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextTwo)
 	}
 
+	.patch_SariasGift 0x44F190 : {
+		*(.patch_SariasGift)
+	}
+
 	.patch_before_GlobalContext_Update 0x452390 : {
 		*(.patch_before_GlobalContext_Update)
 	}
@@ -200,9 +204,9 @@ SECTIONS
 		*(.patch_after_GlobalContext_Update)
 	}
 
-	.patch_OverrideGraphicID_495CD0 0x495CD0 : {
+	/*.patch_OverrideGraphicID_495CD0 0x495CD0 : {
 		*(.patch_OverrideGraphicID_495CD0)
-	}
+	}*/
 
 	.patch_OverrideGraphicID_4BC604 0x4BC604 : {
 		*(.patch_OverrideGraphicID_4BC604)
