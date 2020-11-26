@@ -1882,8 +1882,8 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   EventPairing(&DekuTreeClear, []{return DekuTreeClear || (HasShield && (IsAdult || KokiriSword || Sticks));})
                 }, {
                   //Locations
-                  ItemLocationPairing(&QueenGohma,                        []{return HasShield && (IsAdult || KokiriSword || Sticks);}),
-                  //ItemLocationPairing(&DekuTree_QueenGohmaHeartContainer, []{return HasShield && (IsAdult || KokiriSword || Sticks);}),
+                  ItemLocationPairing(&QueenGohma,               []{return HasShield && (IsAdult || KokiriSword || Sticks);}),
+                  ItemLocationPairing(&DekuTree_QueenGohmaHeart, []{return HasShield && (IsAdult || KokiriSword || Sticks);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DekuTree_Lobby, []{return true;})
@@ -1964,11 +1964,10 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     EventPairing(&FairyPot, []{return true;}),
                   }, {
                     //Locations
-                    ItemLocationPairing(&DodongosCavern_BossRoomChest, []{return true;}),
-                    //Dodongos Cavern King Dodongo Heart
-                    //King Dodongo
-                    ItemLocationPairing(&KingDodongo,                []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
-                    ItemLocationPairing(&DodongosCavern_GS_BackRoom, []{return true;}),
+                    ItemLocationPairing(&DodongosCavern_BossRoomChest,    []{return true;}),
+                    ItemLocationPairing(&DodongosCavern_KingDodongoHeart, []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
+                    ItemLocationPairing(&KingDodongo,                     []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
+                    ItemLocationPairing(&DodongosCavern_GS_BackRoom,      []{return true;}),
                   }, {
                     //Exits
                     ExitPairing::Both(&DodongosCavern_Lobby, []{return true;})
@@ -2022,9 +2021,9 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     EventPairing(&NutPot, []{return true;}),
                   }, {
                     //Locations
-                    //Jabu Jabus Belly Barinade Heart
-                    ItemLocationPairing(&Barinade,                   []{return CanUse("Boomerang");}),
-                    ItemLocationPairing(&JabuJabusBelly_GS_NearBoss, []{return true;}),
+                    ItemLocationPairing(&JabuJabusBelly_BarinadeHeart, []{return CanUse("Boomerang");}),
+                    ItemLocationPairing(&Barinade,                     []{return CanUse("Boomerang");}),
+                    ItemLocationPairing(&JabuJabusBelly_GS_NearBoss,   []{return true;}),
                   }, {
                     //Exits
                     ExitPairing::Both(&JabuJabusBelly_Main, []{return true;}),
@@ -2166,10 +2165,10 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit ForestTemple_BossRegion = Exit("Forest Temple Boss Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                     //Locations
-                    ItemLocationPairing(&ForestTemple_BasementChest, []{return true;}),
-                    //Forest Temple Phantom Ganon Heart
-                    ItemLocationPairing(&PhantomGanon,             []{return BossKeyForestTemple;}),
-                    ItemLocationPairing(&ForestTemple_GS_Basement, []{return HookshotOrBoomerang;}),
+                    ItemLocationPairing(&ForestTemple_BasementChest,     []{return true;}),
+                    ItemLocationPairing(&ForestTemple_PhantomGanonHeart, []{return BossKeyForestTemple;}),
+                    ItemLocationPairing(&PhantomGanon,                   []{return BossKeyForestTemple;}),
+                    ItemLocationPairing(&ForestTemple_GS_Basement,       []{return HookshotOrBoomerang;}),
                   }, {}, {
                     //Advancement Needs
                     AdvancementPairing(ForestTemple_BossKey, []{return true;}),
@@ -2183,7 +2182,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     ItemLocationPairing(&FireTemple_NearBossChest,    []{return LogicFewerTunicRequirements || CanUse("Goron Tunic");}),
                     ItemLocationPairing(&FireTemple_FlareDancerChest, []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
                     ItemLocationPairing(&FireTemple_BossKeyChest,     []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
-                  //ItemLocationPairing(&FireTemple_VolvagiaHeart),
+                    ItemLocationPairing(&FireTemple_VolvagiaHeart,    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
                     ItemLocationPairing(&Volvagia,                    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
                     ItemLocationPairing(&FireTemple_GS_BossKeyLoop,   []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
                   }, {
@@ -2272,9 +2271,8 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     EventPairing(&WaterTempleClear, []{return BossKeyWaterTemple && CanUse("Longshot");})
                   }, {
                     //Locations
-                    //Morpha
-                    ItemLocationPairing(&Morpha, []{return BossKeyWaterTemple && CanUse("Longshot");}),
-                    //Water Temple Morpha Heart
+                    ItemLocationPairing(&Morpha,                  []{return BossKeyWaterTemple && CanUse("Longshot");}),
+                    ItemLocationPairing(&WaterTemple_MorphaHeart, []{return BossKeyWaterTemple && CanUse("Longshot");}),
                   }, {
                     //Exits
                     ExitPairing::Both(&WaterTemple_DarkLinkRegion, []{return SmallKeys(WaterTempleKeys, 4) && CanUse("Hookshot");}),
@@ -2485,10 +2483,10 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit SpiritTemple_BeyondFinalLockedDoor = Exit("Spirit Temple Beyond Final Locked Door", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                     //Locations
-                    ItemLocationPairing(&SpiritTemple_BossKeyChest, []{return CanPlay(ZeldasLullaby) && Bow && Hookshot;}),
-                    ItemLocationPairing(&SpiritTemple_TopmostChest, []{return MirrorShield;}),
-                    //Twinrova Heart
-                    ItemLocationPairing(&Twinrova,                  []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
+                    ItemLocationPairing(&SpiritTemple_BossKeyChest,  []{return CanPlay(ZeldasLullaby) && Bow && Hookshot;}),
+                    ItemLocationPairing(&SpiritTemple_TopmostChest,  []{return MirrorShield;}),
+                    ItemLocationPairing(&SpiritTemple_TwinrovaHeart, []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
+                    ItemLocationPairing(&Twinrova,                   []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
                   }, {}, {
                     //Advancement Needs
                     AdvancementPairing(SpiritTemple_BossKey, []{return true;}),
@@ -2583,8 +2581,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     ItemLocationPairing(&ShadowTemple_SpikeWallsLeftChest,       []{return CanUse("Dins Fire");}),
                     ItemLocationPairing(&ShadowTemple_BossKeyChest,              []{return CanUse("Dins Fire");}),
                     ItemLocationPairing(&ShadowTemple_InvisibleFloormasterChest, []{return true;}),
-                    //Bongo Bongo Heart
-                    //Bongo Bongo
+                    ItemLocationPairing(&ShadowTemple_BongoBongoHeart,           []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse("Distant Scarecrow") || (LogicShadowStatue && HasBombchus));}),
                     ItemLocationPairing(&BongoBongo,                             []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse("Distant Scarecrow") || (LogicShadowStatue && HasBombchus));}),
                     ItemLocationPairing(&ShadowTemple_GS_TripleGiantPot,         []{return true;}),
                   }, {}, {

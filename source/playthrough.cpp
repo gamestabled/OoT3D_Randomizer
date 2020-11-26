@@ -46,8 +46,11 @@ namespace Playthrough {
 
         loc->placedItem = *item;
         totalItemsPlaced++;
-        printf("\x1b[2;20HPlacing Items");
-        printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size());
+        printf("\x1b[2;20HPlacing Items...");
+        if (Settings::Logic == LOGIC_GLITCHLESS) {
+          printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
+        }
+
     }
 
     template <typename Container>
@@ -287,6 +290,7 @@ namespace Playthrough {
 
     //Check for specific preset items in locations
     static void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+      totalItemsPlaced = 0;
       const bool NO_EFFECT = false;
 
       PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
@@ -300,7 +304,6 @@ namespace Playthrough {
       PlaceItemInLocation(&A_WaterMedallion,  &Morpha,          overrides, NO_EFFECT);
       PlaceItemInLocation(&A_SpiritMedallion, &Twinrova,        overrides, NO_EFFECT);
       PlaceItemInLocation(&A_ShadowMedallion, &BongoBongo,      overrides, NO_EFFECT);
-
 
       if (!Settings::ShuffleKokiriSword)
         PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);
@@ -586,7 +589,6 @@ namespace Playthrough {
         Settings::UpdateSettings();
         Settings::PrintSettings();
         Logic::UpdateHelpers();
-        totalItemsPlaced = 0;
         GenerateItemPool();
         UpdateSetItems();
         PlaceSetItems(overrides);

@@ -10,16 +10,16 @@ ItemLocation KF_StormsGrottoChest                         = ItemLocation(0x3E, I
 
 //Lost Woods
 ItemLocation LW_NearShortcutsGrottoChest                  = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x14, "LW Near Shortcuts Grotto Chest",       {"the Lost Woods", "Forest", "Grottos"});
-ItemLocation LW_SkullKid                                  = ItemLocation(0x5B, ITEMLOCATIONTYPE_NPC,          0x3E, "LW Skull Kid",                         {"the Lost Woods", "Forest",});
-ItemLocation LW_OcarinaMemoryGame                         = ItemLocation(0x5B, ITEMLOCATIONTYPE_NPC,          0x76, "LW Ocarina Memory Game",               {"the Lost Woods", "Forest", "Minigames"});//Gives wrong item
-ItemLocation LW_TargetInWoods                             = ItemLocation(0x5B, ITEMLOCATIONTYPE_NPC,          0x60, "LW Target in Woods",                   {"the Lost Woods", "Forest",});
-ItemLocation LW_DekuScrubNearDekuTheaterRight             = ItemLocation(0x5B, ITEMLOCATIONTYPE_NPC,          0x30, "LW Deku Scrub Near Deku Theater Right",{"the Lost Woods", "Forest", "Deku Scrub"});//doesnt work
-ItemLocation LW_DekuScrubNearDekuTheaterLeft              = ItemLocation(0x5B, ITEMLOCATIONTYPE_NPC,          0x31, "LW Deku Scrub Near Deku Theater Left", {"the Lost Woods", "Forest", "Deku Scrub"}); //doesnt work
-ItemLocation LW_DekuScrubNearBridge                       = ItemLocation(0x5B, ITEMLOCATIONTYPE_NPC,          0x77, "LW Deku Scrub Near Bridge",            {"the Lost Woods", "Forest", "Deku Scrub", "Deku Scrub Upgrades"});
+ItemLocation LW_SkullKid                                  = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x3E, "LW Skull Kid",                         {"the Lost Woods", "Forest",});
+ItemLocation LW_OcarinaMemoryGame                         = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x76, "LW Ocarina Memory Game",               {"the Lost Woods", "Forest", "Minigames"});//Gives wrong item
+ItemLocation LW_TargetInWoods                             = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x60, "LW Target in Woods",                   {"the Lost Woods", "Forest",});
+ItemLocation LW_DekuScrubNearDekuTheaterRight             = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x30, "LW Deku Scrub Near Deku Theater Right",{"the Lost Woods", "Forest", "Deku Scrub"});//doesnt work
+ItemLocation LW_DekuScrubNearDekuTheaterLeft              = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x31, "LW Deku Scrub Near Deku Theater Left", {"the Lost Woods", "Forest", "Deku Scrub"}); //doesnt work
+ItemLocation LW_DekuScrubNearBridge                       = ItemLocation(0x5B, ITEMLOCATIONTYPE_BASE,         0x77, "LW Deku Scrub Near Bridge",            {"the Lost Woods", "Forest", "Deku Scrub", "Deku Scrub Upgrades"});
 ItemLocation LW_DekuScrubGrottoRear                       = ItemLocation(0xF5, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x33, "LW Deku Scrub Grotto Rear",            {"the Lost Woods", "Forest", "Deku Scrub", "Grottos"});
 ItemLocation LW_DekuScrubGrottoFront                      = ItemLocation(0xF5, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x79, "LW Deku Scrub Grotto Front",           {"the Lost Woods", "Forest", "Deku Scrub", "Deku Scrub Upgrades", "Grottos"});
-ItemLocation DekuTheater_SkullMask                        = ItemLocation(0x3E, ITEMLOCATIONTYPE_NPC,          0x77, "Deku Theater Skull Mask",              {"the Lost Woods", "Forest", "Grottos"});
-ItemLocation DekuTheater_MaskOfTruth                      = ItemLocation(0x3E, ITEMLOCATIONTYPE_NPC,          0x7A, "Deku Theater Mask of Truth",           {"the Lost Woods", "Forest", "Need Spiritual Stones", "Grottos"});
+ItemLocation DekuTheater_SkullMask                        = ItemLocation(0x3E, ITEMLOCATIONTYPE_BASE,         0x77, "Deku Theater Skull Mask",              {"the Lost Woods", "Forest", "Grottos"});
+ItemLocation DekuTheater_MaskOfTruth                      = ItemLocation(0x3E, ITEMLOCATIONTYPE_BASE,         0x7A, "Deku Theater Mask of Truth",           {"the Lost Woods", "Forest", "Need Spiritual Stones", "Grottos"});
 
 //Sacred Forest Meadow
 ItemLocation SFM_WolfosGrottoChest                        = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x11, "SFM Wolfos Grotto Chest",              {"Sacred Forest Meadow", "Forest", "Grottos"});
@@ -30,16 +30,16 @@ ItemLocation SFM_DekuScrubGrottoFront                     = ItemLocation(0xEE, I
 ItemLocation HF_SoutheastGrottoChest                      = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x02, "HF Southeast Grotto Chest",            {"Hyrule Field", "Grottos",});
 ItemLocation HF_OpenGrottoChest                           = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x03, "HF Open Grotto Chest",                 {"Hyrule Field", "Grottos",});
 ItemLocation HF_NearMarketGrottoChest                     = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x00, "HF Near Market Grotto Chest",          {"Hyrule Field", "Grottos",});
-ItemLocation HF_OcarinaOfTimeItem                         = ItemLocation(0x51, ITEMLOCATIONTYPE_NPC,          0x0C, "HF Ocarina of Time Item",              {"Hyrule Field", "Need Spiritual Stones",});
+ItemLocation HF_OcarinaOfTimeItem                         = ItemLocation(0x51, ITEMLOCATIONTYPE_BASE,         0x0C, "HF Ocarina of Time Item",              {"Hyrule Field", "Need Spiritual Stones",});
 ItemLocation HF_TektiteGrottoFreestandingPoH              = ItemLocation(0x3E, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "HF Tektite Grotto Freestanding PoH",   {"Hyrule Field", "Grottos",});
 ItemLocation HF_DekuScrubGrotto                           = ItemLocation(0xE6, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x3E, "HF Deku Scrub Grotto",                 {"Hyrule Field", "Deku Scrub", "Deku Scrub Upgrades", "Grottos"});
 
 //Lake Hylia
-ItemLocation LH_ChildFishing                              = ItemLocation(0x49, ITEMLOCATIONTYPE_NPC,          0x3E, "LH Child Fishing",                     {"Lake Hylia", "Minigames",});
-ItemLocation LH_AdultFishing                              = ItemLocation(0x49, ITEMLOCATIONTYPE_NPC,          0x38, "LH Adult Fishing",                     {"Lake Hylia", "Minigames",});
-ItemLocation LH_LabDive                                   = ItemLocation(0x38, ITEMLOCATIONTYPE_NPC,          0x3E, "LH Lab Dive",                          {"Lake Hylia",});
-ItemLocation LH_UnderwaterItem                            = ItemLocation(0x57, ITEMLOCATIONTYPE_NPC,          0x15, "LH Underwater Item",                   {"Lake Hylia",});
-ItemLocation LH_Sun                                       = ItemLocation(0x57, ITEMLOCATIONTYPE_NPC,          0x58, "LH Sun",                               {"Lake Hylia",});
+ItemLocation LH_ChildFishing                              = ItemLocation(0x49, ITEMLOCATIONTYPE_BASE,         0x3E, "LH Child Fishing",                     {"Lake Hylia", "Minigames",});
+ItemLocation LH_AdultFishing                              = ItemLocation(0x49, ITEMLOCATIONTYPE_BASE,         0x38, "LH Adult Fishing",                     {"Lake Hylia", "Minigames",});
+ItemLocation LH_LabDive                                   = ItemLocation(0x38, ITEMLOCATIONTYPE_BASE,         0x3E, "LH Lab Dive",                          {"Lake Hylia",});
+ItemLocation LH_UnderwaterItem                            = ItemLocation(0x57, ITEMLOCATIONTYPE_BASE,         0x15, "LH Underwater Item",                   {"Lake Hylia",});
+ItemLocation LH_Sun                                       = ItemLocation(0x57, ITEMLOCATIONTYPE_BASE,         0x58, "LH Sun",                               {"Lake Hylia",});
 ItemLocation LH_FreestandingPoH                           = ItemLocation(0x57, ITEMLOCATIONTYPE_COLLECTABLE,  0x1E, "LH Freestanding PoH",                  {"Lake Hylia",});
 ItemLocation LH_DekuScrubGrottoLeft                       = ItemLocation(0xEF, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x30, "LH Deku Scrub Grotto Left",            {"Lake Hylia", "Deku Scrub", "Grottos"});
 ItemLocation LH_DekuScrubGrottoRight                      = ItemLocation(0xEF, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x37, "LH Deku Scrub Grotto Right",           {"Lake Hylia", "Deku Scrub", "Grottos"});
@@ -54,9 +54,9 @@ ItemLocation GV_DekuScrubGrottoFront                      = ItemLocation(0xF0, I
 
 //Gerudo Fortress
 ItemLocation GF_Chest                                     = ItemLocation(0x5D, ITEMLOCATIONTYPE_CHEST,        0x00, "GF Chest",                             {"Gerudo's Fortress", "Gerudo",});
-ItemLocation GF_HBA1000Points                             = ItemLocation(0x5D, ITEMLOCATIONTYPE_NPC,          0x3E, "GF HBA 1000 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
-ItemLocation GF_HBA1500Points                             = ItemLocation(0x5D, ITEMLOCATIONTYPE_NPC,          0x30, "GF HBA 1500 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
-ItemLocation GF_GerudoToken                               = ItemLocation(0x0C, ITEMLOCATIONTYPE_NPC,          0x3A, "GF Gerudo Token",                      {"Gerudo's Fortress", "Gerudo",});
+ItemLocation GF_HBA1000Points                             = ItemLocation(0x5D, ITEMLOCATIONTYPE_BASE,         0x3E, "GF HBA 1000 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
+ItemLocation GF_HBA1500Points                             = ItemLocation(0x5D, ITEMLOCATIONTYPE_BASE,         0x30, "GF HBA 1500 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
+ItemLocation GF_GerudoToken                               = ItemLocation(0x0C, ITEMLOCATIONTYPE_BASE,         0x3A, "GF Gerudo Token",                      {"Gerudo's Fortress", "Gerudo",});
 ItemLocation GF_NorthF1Carpenter                          = ItemLocation(0x0C, ITEMLOCATIONTYPE_COLLECTABLE,  0x0C, "GF North F1 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
 ItemLocation GF_NorthF2Carpenter                          = ItemLocation(0x0C, ITEMLOCATIONTYPE_COLLECTABLE,  0x0A, "GF North F2 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
 ItemLocation GF_SouthF1Carpenter                          = ItemLocation(0x0C, ITEMLOCATIONTYPE_COLLECTABLE,  0x0E, "GF South F1 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
@@ -72,28 +72,28 @@ ItemLocation Colossus_DekuScrubGrottoFront                = ItemLocation(0xFD, I
 
 //Market
 ItemLocation MK_TreasureChestGameReward                   = ItemLocation(0x10, ITEMLOCATIONTYPE_CHEST,        0x0A, "MK Treasure Chest Game Reward",        {"the Market", "Market", "Minigames"});
-ItemLocation MK_BombchuBowlingFirstPrize                  = ItemLocation(0x4B, ITEMLOCATIONTYPE_NPC,          0x34, "MK Bombchu Bowling First Prize",       {"the Market", "Market", "Minigames"});
-ItemLocation MK_BombchuBowlingSecondPrize                 = ItemLocation(0x4B, ITEMLOCATIONTYPE_NPC,          0x3E, "MK Bombchu Bowling Second Prize",      {"the Market", "Market", "Minigames"});
-ItemLocation MK_LostDog                                   = ItemLocation(0x35, ITEMLOCATIONTYPE_NPC,          0x3E, "MK Lost Dog",                          {"the Market", "Market",});
-ItemLocation MK_ShootingGalleryReward                     = ItemLocation(0x42, ITEMLOCATIONTYPE_NPC,          0x60, "MK Shooting Gallery",                  {"the Market", "Market", "Minigames"});
-ItemLocation MK_10BigPoes                                 = ItemLocation(0x4D, ITEMLOCATIONTYPE_NPC,          0x0F, "MK 10 Big Poes",                       {"the Market", "Hyrule Castle",});
+ItemLocation MK_BombchuBowlingFirstPrize                  = ItemLocation(0x4B, ITEMLOCATIONTYPE_BASE,         0x34, "MK Bombchu Bowling First Prize",       {"the Market", "Market", "Minigames"});
+ItemLocation MK_BombchuBowlingSecondPrize                 = ItemLocation(0x4B, ITEMLOCATIONTYPE_BASE,         0x3E, "MK Bombchu Bowling Second Prize",      {"the Market", "Market", "Minigames"});
+ItemLocation MK_LostDog                                   = ItemLocation(0x35, ITEMLOCATIONTYPE_BASE,         0x3E, "MK Lost Dog",                          {"the Market", "Market",});
+ItemLocation MK_ShootingGalleryReward                     = ItemLocation(0x42, ITEMLOCATIONTYPE_BASE,         0x60, "MK Shooting Gallery",                  {"the Market", "Market", "Minigames"});
+ItemLocation MK_10BigPoes                                 = ItemLocation(0x4D, ITEMLOCATIONTYPE_BASE,         0x0F, "MK 10 Big Poes",                       {"the Market", "Hyrule Castle",});
 
 //Hyrule Castle
-ItemLocation HC_MalonEgg                                  = ItemLocation(0x5F, ITEMLOCATIONTYPE_NPC,          0x47, "HC Malon Egg",                         {"Hyrule Castle", "Market",});
-ItemLocation HC_ZeldasLetter                              = ItemLocation(0x4A, ITEMLOCATIONTYPE_NPC,          0x0B, "HC Zeldas Letter",                     {"Hyrule Castle", "Market",});
+ItemLocation HC_MalonEgg                                  = ItemLocation(0x5F, ITEMLOCATIONTYPE_BASE,         0x47, "HC Malon Egg",                         {"Hyrule Castle", "Market",});
+ItemLocation HC_ZeldasLetter                              = ItemLocation(0x4A, ITEMLOCATIONTYPE_BASE,         0x0B, "HC Zeldas Letter",                     {"Hyrule Castle", "Market",});
 
 //Kakariko
 ItemLocation Kak_RedeadGrottoChest                        = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x0A, "Kak Redead Grotto Chest",              {"Kakariko Village", "Kakariko", "Grottos"});
 ItemLocation Kak_OpenGrottoChest                          = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x08, "Kak Open Grotto Chest",                {"Kakariko Village", "Kakariko", "Grottos"});
-ItemLocation Kak_10GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_NPC,          0x45, "Kak 10 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_20GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_NPC,          0x39, "Kak 20 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_30GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_NPC,          0x46, "Kak 30 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_40GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_NPC,          0x03, "Kak 40 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_50GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_NPC,          0x3E, "Kak 50 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_ManOnRoof                                = ItemLocation(0x52, ITEMLOCATIONTYPE_NPC,          0x3E, "Kak Man on Roof",                      {"Kakariko Village", "Kakariko",});
-ItemLocation Kak_ShootingGalleryReward                    = ItemLocation(0x42, ITEMLOCATIONTYPE_NPC,          0x30, "Kak Shooting Gallery Reward",          {"Kakariko Village", "Kakariko", "Minigames"});
-ItemLocation Kak_AnjuAsAdult                              = ItemLocation(0x52, ITEMLOCATIONTYPE_NPC,          0x1D, "Kak Anju as Adult",                    {"Kakariko Village", "Kakariko",});
-ItemLocation Kak_AnjuAsChild                              = ItemLocation(0x52, ITEMLOCATIONTYPE_NPC,          0x0F, "Kak Anju as Child",                    {"Kakariko Village", "Kakariko", "Minigames"});
+ItemLocation Kak_10GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_BASE,         0x45, "Kak 10 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_20GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_BASE,         0x39, "Kak 20 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_30GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_BASE,         0x46, "Kak 30 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_40GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_BASE,         0x03, "Kak 40 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_50GoldSkulltulaReward                    = ItemLocation(0x50, ITEMLOCATIONTYPE_BASE,         0x3E, "Kak 50 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_ManOnRoof                                = ItemLocation(0x52, ITEMLOCATIONTYPE_BASE,         0x3E, "Kak Man on Roof",                      {"Kakariko Village", "Kakariko",});
+ItemLocation Kak_ShootingGalleryReward                    = ItemLocation(0x42, ITEMLOCATIONTYPE_BASE,         0x30, "Kak Shooting Gallery Reward",          {"Kakariko Village", "Kakariko", "Minigames"});
+ItemLocation Kak_AnjuAsAdult                              = ItemLocation(0x52, ITEMLOCATIONTYPE_BASE,         0x1D, "Kak Anju as Adult",                    {"Kakariko Village", "Kakariko",});
+ItemLocation Kak_AnjuAsChild                              = ItemLocation(0x52, ITEMLOCATIONTYPE_BASE,         0x0F, "Kak Anju as Child",                    {"Kakariko Village", "Kakariko", "Minigames"});
 ItemLocation Kak_ImpasHouseFreestandingPoH                = ItemLocation(0x37, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "Kak Impas House Freestanding PoH",     {"Kakariko Village", "Kakariko",});
 ItemLocation Kak_WindmillFreestandingPoH                  = ItemLocation(0x48, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "Kak Windmill Freestanding PoH",        {"Kakariko Village", "Kakariko",});
 
@@ -109,16 +109,16 @@ ItemLocation GY_DampeGravediggingTour                     = ItemLocation(0x53, I
 //Death Mountain
 ItemLocation DMT_Chest                                    = ItemLocation(0x60, ITEMLOCATIONTYPE_CHEST,        0x01, "DMT Chest",                            {"Death Mountain Trail", "Death Mountain",});
 ItemLocation DMT_StormsGrottoChest                        = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x17, "DMT Storms Grotto Chest",              {"Death Mountain Trail", "Death Mountain", "Grottos"});
-ItemLocation DMT_Biggoron                                 = ItemLocation(0x60, ITEMLOCATIONTYPE_NPC,          0x57, "DMT Biggoron",                         {"Death Mountain Trail", "Death Mountain",});
+ItemLocation DMT_Biggoron                                 = ItemLocation(0x60, ITEMLOCATIONTYPE_BASE,         0x57, "DMT Biggoron",                         {"Death Mountain Trail", "Death Mountain",});
 ItemLocation DMT_FreestandingPoH                          = ItemLocation(0x60, ITEMLOCATIONTYPE_COLLECTABLE,  0x1E, "DMT Freestanding PoH",                 {"Death Mountain Trail", "Death Mountain",});
 
 //Goron City
 ItemLocation GC_MazeLeftChest                             = ItemLocation(0x62, ITEMLOCATIONTYPE_CHEST,        0x00, "GC Maze Left Chest",                   {"Goron City",});
 ItemLocation GC_MazeRightChest                            = ItemLocation(0x62, ITEMLOCATIONTYPE_CHEST,        0x01, "GC Maze Right Chest",                  {"Goron City",});
 ItemLocation GC_MazeCenterChest                           = ItemLocation(0x62, ITEMLOCATIONTYPE_CHEST,        0x02, "GC Maze Center Chest",                 {"Goron City",});
-ItemLocation GC_RollingGoronAsChild                       = ItemLocation(0x62, ITEMLOCATIONTYPE_NPC,          0x34, "GC Rolling Goron as Child",            {"Goron City",});
-ItemLocation GC_RollingGoronAsAdult                       = ItemLocation(0x62, ITEMLOCATIONTYPE_NPC,          0x2C, "GC Rolling Goron as Adult",            {"Goron City",});
-ItemLocation GC_DaruniasJoy                               = ItemLocation(0x62, ITEMLOCATIONTYPE_NPC,          0x54, "GC Darunias Joy",                      {"Goron City",});
+ItemLocation GC_RollingGoronAsChild                       = ItemLocation(0x62, ITEMLOCATIONTYPE_BASE,         0x34, "GC Rolling Goron as Child",            {"Goron City",});
+ItemLocation GC_RollingGoronAsAdult                       = ItemLocation(0x62, ITEMLOCATIONTYPE_BASE,         0x2C, "GC Rolling Goron as Adult",            {"Goron City",});
+ItemLocation GC_DaruniasJoy                               = ItemLocation(0x62, ITEMLOCATIONTYPE_BASE,         0x54, "GC Darunias Joy",                      {"Goron City",});
 ItemLocation GC_PotFreestandingPoH                        = ItemLocation(0x62, ITEMLOCATIONTYPE_COLLECTABLE,  0x1F, "GC Pot Freestanding PoH",              {"Goron City", "Goron City",});
 ItemLocation GC_DekuScrubGrottoLeft                       = ItemLocation(0xFB, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x30, "GC Deku Scrub Grotto Left",            {"Goron City", "Deku Scrub", "Grottos"});
 ItemLocation GC_DekuScrubGrottoRight                      = ItemLocation(0xFB, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x37, "GC Deku Scrub Grotto Right",           {"Goron City", "Deku Scrub", "Grottos"});
@@ -128,16 +128,16 @@ ItemLocation GC_DekuScrubGrottoCenter                     = ItemLocation(0xFB, I
 ItemLocation DMC_UpperGrottoChest                         = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x1A, "DMC Upper Grotto Chest",               {"Death Mountain Crater", "Death Mountain", "Grottos"});
 ItemLocation DMC_WallFreestandingPoH                      = ItemLocation(0x61, ITEMLOCATIONTYPE_COLLECTABLE,  0x02, "DMC Wall Freestanding PoH",            {"Death Mountain Crater", "Death Mountain",});
 ItemLocation DMC_VolcanoFreestandingPoH                   = ItemLocation(0x61, ITEMLOCATIONTYPE_COLLECTABLE,  0x08, "DMC Volcano Freestanding PoH",         {"Death Mountain Crater", "Death Mountain",});
-ItemLocation DMC_DekuScrub                                = ItemLocation(0x61, ITEMLOCATIONTYPE_NPC,          0x37, "DMC Deku Scrub",                       {"Death Mountain Crater", "Death Mountain", "Deku Scrub"});
+ItemLocation DMC_DekuScrub                                = ItemLocation(0x61, ITEMLOCATIONTYPE_BASE,         0x37, "DMC Deku Scrub",                       {"Death Mountain Crater", "Death Mountain", "Deku Scrub"});
 ItemLocation DMC_DekuScrubGrottoLeft                      = ItemLocation(0xF9, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x30, "DMC Deku Scrub Grotto Left",           {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
 ItemLocation DMC_DekuScrubGrottoRight                     = ItemLocation(0xF9, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x37, "DMC Deku Scrub Grotto Right",          {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
 ItemLocation DMC_DekuScrubGrottoCenter                    = ItemLocation(0xF9, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x33, "DMC Deku Scrub Grotto Center",         {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
 
 //Zoras River
 ItemLocation ZR_OpenGrottoChest                           = ItemLocation(0x3E, ITEMLOCATIONTYPE_CHEST,        0x09, "ZR Open Grotto Chest",                 {"Zora's River", "Grottos",});
-ItemLocation ZR_MagicBeanSalesman                         = ItemLocation(0x54, ITEMLOCATIONTYPE_NPC,          0x16, "ZR Magic Bean Salesman",               {"Zora's River",});
-ItemLocation ZR_FrogsOcarinaGame                          = ItemLocation(0x54, ITEMLOCATIONTYPE_NPC,          0x76, "ZR Frogs Ocarina Game",                {"Zora's River",});
-ItemLocation ZR_FrogsInTheRain                            = ItemLocation(0x54, ITEMLOCATIONTYPE_NPC,          0x3E, "ZR Frogs in the Rain",                 {"Zora's River", "Minigames",});
+ItemLocation ZR_MagicBeanSalesman                         = ItemLocation(0x54, ITEMLOCATIONTYPE_BASE,         0x16, "ZR Magic Bean Salesman",               {"Zora's River",});
+ItemLocation ZR_FrogsOcarinaGame                          = ItemLocation(0x54, ITEMLOCATIONTYPE_BASE,         0x76, "ZR Frogs Ocarina Game",                {"Zora's River",});
+ItemLocation ZR_FrogsInTheRain                            = ItemLocation(0x54, ITEMLOCATIONTYPE_BASE,         0x3E, "ZR Frogs in the Rain",                 {"Zora's River", "Minigames",});
 ItemLocation ZR_NearOpenGrottoFreestandingPoH             = ItemLocation(0x54, ITEMLOCATIONTYPE_COLLECTABLE,  0x04, "ZR Near Open Grotto Freestanding PoH", {"Zora's River",});
 ItemLocation ZR_NearDomainFreestandingPoH                 = ItemLocation(0x54, ITEMLOCATIONTYPE_COLLECTABLE,  0x0B, "ZR Near Domain Freestanding PoH",      {"Zora's River",});
 ItemLocation ZR_DekuScrubGrottoRear                       = ItemLocation(0xEB, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x39, "ZR Deku Scrub Grotto Rear",            {"Zora's River", "Deku Scrub", "Grottos"});
@@ -145,15 +145,15 @@ ItemLocation ZR_DekuScrubGrottoFront                      = ItemLocation(0xEB, I
 
 //Zoras Domain
 ItemLocation ZD_Chest                                     = ItemLocation(0x58, ITEMLOCATIONTYPE_CHEST,        0x00, "ZD Chest",                             {"Zora's Domain",});
-ItemLocation ZD_DivingMinigame                            = ItemLocation(0x58, ITEMLOCATIONTYPE_NPC,          0x37, "ZD Diving Minigame",                   {"Zora's Domain", "Minigames",});
-ItemLocation ZD_KingZoraThawed                            = ItemLocation(0x58, ITEMLOCATIONTYPE_NPC,          0x2D, "ZD King Zora Thawed",                  {"Zora's Domain",});
+ItemLocation ZD_DivingMinigame                            = ItemLocation(0x58, ITEMLOCATIONTYPE_BASE,         0x37, "ZD Diving Minigame",                   {"Zora's Domain", "Minigames",});
+ItemLocation ZD_KingZoraThawed                            = ItemLocation(0x58, ITEMLOCATIONTYPE_BASE,         0x2D, "ZD King Zora Thawed",                  {"Zora's Domain",});
 
 //Zoras Fountain
 ItemLocation ZF_IcebergFreestandingPoH                    = ItemLocation(0x59, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "ZF Iceberg Freestanding PoH",          {"Zora's Fountain",});
 ItemLocation ZF_BottomFreestandingPoH                     = ItemLocation(0x59, ITEMLOCATIONTYPE_COLLECTABLE,  0x14, "ZF Bottom Freestanding PoH",           {"Zora's Fountain",});
 
 //Lon Lon Ranch
-ItemLocation LLR_TalonsChickens                           = ItemLocation(0x4C, ITEMLOCATIONTYPE_NPC,          0x14, "LLR Talons Chickens",                  {"Lon Lon Ranch", "Minigames"});
+ItemLocation LLR_TalonsChickens                           = ItemLocation(0x4C, ITEMLOCATIONTYPE_BASE,         0x14, "LLR Talons Chickens",                  {"Lon Lon Ranch", "Minigames"});
 ItemLocation LLR_FreestandingPoH                          = ItemLocation(0x4C, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "LLR Freestanding PoH",                 {"Lon Lon Ranch",});
 ItemLocation LLR_DekuScrubGrottoLeft                      = ItemLocation(0xFC, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x30, "LLR Deku Scrub Grotto Left",           {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
 ItemLocation LLR_DekuScrubGrottoRight                     = ItemLocation(0xFC, ITEMLOCATIONTYPE_GROTTO_SCRUB, 0x37, "LLR Deku Scrub Grotto Right",          {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
@@ -170,6 +170,7 @@ ItemLocation DekuTree_CompassRoomSideChest                = ItemLocation(0x00, I
 ItemLocation DekuTree_BasementChest                       = ItemLocation(0x00, ITEMLOCATIONTYPE_CHEST,        0x04, "Deku Tree Basement Chest",                           {"Deku Tree",});
 ItemLocation DekuTree_SlingshotChest                      = ItemLocation(0x00, ITEMLOCATIONTYPE_CHEST,        0x01, "Deku Tree Slingshot Chest",                          {"Deku Tree",});
 ItemLocation DekuTree_SlingshotRoomSideChest              = ItemLocation(0x00, ITEMLOCATIONTYPE_CHEST,        0x05, "Deku Tree Slingshot Room Side Chest",                {"Deku Tree",});
+ItemLocation DekuTree_QueenGohmaHeart                     = ItemLocation(0x11, ITEMLOCATIONTYPE_BASE,         0x4F, "Deku Tree Queen Gohma Heart",                        {"Deku Tree",});
 
 //Dodongos Cavern
 ItemLocation DodongosCavern_MapChest                      = ItemLocation(0x01, ITEMLOCATIONTYPE_CHEST,        0x08, "Dodongos Cavern Map Chest",                          {"Dodongo's Cavern",});
@@ -178,16 +179,18 @@ ItemLocation DodongosCavern_BombFlowerPlatformChest       = ItemLocation(0x01, I
 ItemLocation DodongosCavern_BombBagChest                  = ItemLocation(0x01, ITEMLOCATIONTYPE_CHEST,        0x04, "Dodongos Cavern Bomb Bag Chest",                     {"Dodongo's Cavern",});
 ItemLocation DodongosCavern_EndOfBridgeChest              = ItemLocation(0x01, ITEMLOCATIONTYPE_CHEST,        0x0A, "Dodongos Cavern End Of Bridge Chest",                {"Dodongo's Cavern",});
 ItemLocation DodongosCavern_BossRoomChest                 = ItemLocation(0x12, ITEMLOCATIONTYPE_CHEST,        0x00, "Dodongos Cavern Boss Room Chest",                    {"Dodongo's Cavern",});
-ItemLocation DodongosCavern_DekuScrubNearBombBagLeft      = ItemLocation(0x01, ITEMLOCATIONTYPE_NPC,          0x30, "Dodongos Cavern Deku Scrub Near Bomb Bag Left",      {"Dodongo's Cavern", "Deku Scrub",});
-ItemLocation DodongosCavern_DekuScrubSideRoomNearDodongos = ItemLocation(0x01, ITEMLOCATIONTYPE_NPC,          0x31, "Dodongos Cavern Deku Scrub Side Room Near Dodongos", {"Dodongo's Cavern", "Deku Scrub",});
-ItemLocation DodongosCavern_DekuScrubNearBombBagRight     = ItemLocation(0x01, ITEMLOCATIONTYPE_NPC,          0x33, "Dodongos Cavern Deku Scrub Near Bomb Bag Right",     {"Dodongo's Cavern", "Deku Scrub",});
-ItemLocation DodongosCavern_DekuScrubLobby                = ItemLocation(0x01, ITEMLOCATIONTYPE_NPC,          0x34, "Dodongos Cavern Deku Scrub Lobby",                   {"Dodongo's Cavern", "Deku Scrub",});
+ItemLocation DodongosCavern_DekuScrubNearBombBagLeft      = ItemLocation(0x01, ITEMLOCATIONTYPE_BASE,         0x30, "Dodongos Cavern Deku Scrub Near Bomb Bag Left",      {"Dodongo's Cavern", "Deku Scrub",});
+ItemLocation DodongosCavern_DekuScrubSideRoomNearDodongos = ItemLocation(0x01, ITEMLOCATIONTYPE_BASE,         0x31, "Dodongos Cavern Deku Scrub Side Room Near Dodongos", {"Dodongo's Cavern", "Deku Scrub",});
+ItemLocation DodongosCavern_DekuScrubNearBombBagRight     = ItemLocation(0x01, ITEMLOCATIONTYPE_BASE,         0x33, "Dodongos Cavern Deku Scrub Near Bomb Bag Right",     {"Dodongo's Cavern", "Deku Scrub",});
+ItemLocation DodongosCavern_DekuScrubLobby                = ItemLocation(0x01, ITEMLOCATIONTYPE_BASE,         0x34, "Dodongos Cavern Deku Scrub Lobby",                   {"Dodongo's Cavern", "Deku Scrub",});
+ItemLocation DodongosCavern_KingDodongoHeart              = ItemLocation(0x12, ITEMLOCATIONTYPE_BASE,         0x4F, "Dodongos Cavern King Dodongo Heart",                 {"Dodongo's Cavern",});
 
 //Jabu Jabus Belly
 ItemLocation JabuJabusBelly_MapChest                      = ItemLocation(0x02, ITEMLOCATIONTYPE_CHEST,        0x02, "Jabu Jabus Belly Map Chest",                         {"Jabu Jabu's Belly",});
 ItemLocation JabuJabusBelly_CompassChest                  = ItemLocation(0x02, ITEMLOCATIONTYPE_CHEST,        0x04, "Jabu Jabus Belly Compass Chest",                     {"Jabu Jabu's Belly",});
 ItemLocation JabuJabusBelly_BoomerangChest                = ItemLocation(0x02, ITEMLOCATIONTYPE_CHEST,        0x01, "Jabu Jabus Belly Boomerang Chest",                   {"Jabu Jabu's Belly",});
-ItemLocation JabuJabusBelly_DekuScrub                     = ItemLocation(0x02, ITEMLOCATIONTYPE_NPC,          0x30, "Jabu Jabus Belly Deku Scrub",                        {"Jabu Jabu's Belly", "Deku Scrub",});
+ItemLocation JabuJabusBelly_DekuScrub                     = ItemLocation(0x02, ITEMLOCATIONTYPE_BASE,         0x30, "Jabu Jabus Belly Deku Scrub",                        {"Jabu Jabu's Belly", "Deku Scrub",});
+ItemLocation JabuJabusBelly_BarinadeHeart                 = ItemLocation(0x13, ITEMLOCATIONTYPE_BASE,         0x4F, "Jabu Jabus Belly Barinade Heart",                    {"Jabu Jabu's Belly",});
 
 //Forest Temple
 ItemLocation ForestTemple_FirstRoomChest                  = ItemLocation(0x03, ITEMLOCATIONTYPE_CHEST,        0x03, "Forest Temple First Room Chest",                     {"Forest Temple",});
@@ -203,6 +206,7 @@ ItemLocation ForestTemple_BowChest                        = ItemLocation(0x03, I
 ItemLocation ForestTemple_RedPoeChest                     = ItemLocation(0x03, ITEMLOCATIONTYPE_CHEST,        0x0D, "Forest Temple Red Poe Chest",                        {"Forest Temple",});
 ItemLocation ForestTemple_BluePoeChest                    = ItemLocation(0x03, ITEMLOCATIONTYPE_CHEST,        0x0F, "Forest Temple Blue Poe Chest",                       {"Forest Temple",});
 ItemLocation ForestTemple_BasementChest                   = ItemLocation(0x03, ITEMLOCATIONTYPE_CHEST,        0x0B, "Forest Temple Basement Chest",                       {"Forest Temple",});
+ItemLocation ForestTemple_PhantomGanonHeart               = ItemLocation(0x14, ITEMLOCATIONTYPE_BASE,         0x4F, "Forest Temple Phantom Ganon Heart",                  {"Forest Temple",});
 
 //Fire Temple
 ItemLocation FireTemple_NearBossChest                     = ItemLocation(0x04, ITEMLOCATIONTYPE_CHEST,        0x01, "Fire Temple Near Boss Chest",                        {"Fire Temple",});
@@ -219,6 +223,7 @@ ItemLocation FireTemple_MapChest                          = ItemLocation(0x04, I
 ItemLocation FireTemple_CompassChest                      = ItemLocation(0x04, ITEMLOCATIONTYPE_CHEST,        0x07, "Fire Temple Compass Chest",                          {"Fire Temple",});
 ItemLocation FireTemple_HighestGoronChest                 = ItemLocation(0x04, ITEMLOCATIONTYPE_CHEST,        0x09, "Fire Temple Highest Goron Chest",                    {"Fire Temple",});
 ItemLocation FireTemple_MegatonHammerChest                = ItemLocation(0x04, ITEMLOCATIONTYPE_CHEST,        0x05, "Fire Temple Megaton Hammer Chest",                   {"Fire Temple",});
+ItemLocation FireTemple_VolvagiaHeart                     = ItemLocation(0x15, ITEMLOCATIONTYPE_BASE,         0x4F, "Fire Temple Volvagia Heart",                         {"Fire Temple",});
 
 //Water Temple
 ItemLocation WaterTemple_MapChest                         = ItemLocation(0x05, ITEMLOCATIONTYPE_CHEST,        0x02, "Water Temple Map Chest",                             {"Water Temple",});
@@ -231,6 +236,7 @@ ItemLocation WaterTemple_CrackedWallChest                 = ItemLocation(0x05, I
 ItemLocation WaterTemple_BossKeyChest                     = ItemLocation(0x05, ITEMLOCATIONTYPE_CHEST,        0x05, "Water Temple Boss Key Chest",                        {"Water Temple",});
 ItemLocation WaterTemple_LongshotChest                    = ItemLocation(0x05, ITEMLOCATIONTYPE_CHEST,        0x07, "Water Temple Longshot Chest",                        {"Water Temple",});
 ItemLocation WaterTemple_RiverChest                       = ItemLocation(0x05, ITEMLOCATIONTYPE_CHEST,        0x03, "Water Temple River Chest",                           {"Water Temple",});
+ItemLocation WaterTemple_MorphaHeart                      = ItemLocation(0x16, ITEMLOCATIONTYPE_BASE,         0x4F, "Water Temple Morpha Heart",                          {"Water Temple",});
 
 //Spirit Temple Outside
 ItemLocation SpiritTemple_SilverGauntletsChest            = ItemLocation(0x5C, ITEMLOCATIONTYPE_CHEST,        0x0B, "Spirit Temple Silver Gauntlets Chest",               {"Spirit Temple", "Desert Colossus"});
@@ -253,6 +259,7 @@ ItemLocation SpiritTemple_HallwayRightInvisibleChest      = ItemLocation(0x06, I
 ItemLocation SpiritTemple_HallwayLeftInvisibleChest       = ItemLocation(0x06, ITEMLOCATIONTYPE_CHEST,        0x15, "Spirit Temple Hallway Left Invisible Chest",         {"Spirit Temple",});
 ItemLocation SpiritTemple_BossKeyChest                    = ItemLocation(0x06, ITEMLOCATIONTYPE_CHEST,        0x0A, "Spirit Temple Boss Key Chest",                       {"Spirit Temple",});
 ItemLocation SpiritTemple_TopmostChest                    = ItemLocation(0x06, ITEMLOCATIONTYPE_CHEST,        0x12, "Spirit Temple Topmost Chest",                        {"Spirit Temple",});
+ItemLocation SpiritTemple_TwinrovaHeart                   = ItemLocation(0x17, ITEMLOCATIONTYPE_BASE,         0x4F, "Spirit Temple Twinrova Heart",                       {"Spirit Temple",});
 
 //Shadow Temple
 ItemLocation ShadowTemple_MapChest                        = ItemLocation(0x07, ITEMLOCATIONTYPE_CHEST,        0x01, "Shadow Temple Map Chest",                            {"Shadow Temple",});
@@ -272,6 +279,7 @@ ItemLocation ShadowTemple_SpikeWallsLeftChest             = ItemLocation(0x07, I
 ItemLocation ShadowTemple_BossKeyChest                    = ItemLocation(0x07, ITEMLOCATIONTYPE_CHEST,        0x0B, "Shadow Temple Boss Key Chest",                       {"Shadow Temple",});
 ItemLocation ShadowTemple_InvisibleFloormasterChest       = ItemLocation(0x07, ITEMLOCATIONTYPE_CHEST,        0x0D, "Shadow Temple Invisible Floormaster Chest",          {"Shadow Temple",});
 ItemLocation ShadowTemple_FreestandingKey                 = ItemLocation(0x07, ITEMLOCATIONTYPE_COLLECTABLE,  0x01, "Shadow Temple Freestanding Key",                     {"Shadow Temple",});
+ItemLocation ShadowTemple_BongoBongoHeart                 = ItemLocation(0x13, ITEMLOCATIONTYPE_BASE,         0x4F, "Shadow Temple Bongo Bongo Heart",                    {"Shadow Temple",});
 
 //Bottom of the Well
 ItemLocation BottomOfTheWell_FrontLeftFakeWallChest       = ItemLocation(0x08, ITEMLOCATIONTYPE_CHEST,        0x08, "Bottom of the Well Front Left Fake Wall Chest",      {"Bottom of the Well",});
@@ -336,10 +344,10 @@ ItemLocation GanonsCastle_LightTrialSecondRightChest      = ItemLocation(0x0D, I
 ItemLocation GanonsCastle_LightTrialThirdRightChest       = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x0F, "Ganon's Castle Light Trial Third Right Chest",       {"Ganon's Castle",});
 ItemLocation GanonsCastle_LightTrialInvisibleEnemiesChest = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x10, "Ganon's Castle Light Trial Invisible Enemies Chest", {"Ganon's Castle",});
 ItemLocation GanonsCastle_LightTrialLullabyChest          = ItemLocation(0x0D, ITEMLOCATIONTYPE_CHEST,         0x11, "Ganon's Castle Light Trial Lullaby Chest",           {"Ganon's Castle",});
-ItemLocation GanonsCastle_DekuScrubCenterLeft             = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x37, "Ganon's Castle Deku Scrub Center-Left",              {"Ganon's Castle", "Deku Scrub",});
-ItemLocation GanonsCastle_DekuScrubCenterRight            = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x33, "Ganon's Castle Deku Scrub Center-Right",             {"Ganon's Castle", "Deku Scrub",});
-ItemLocation GanonsCastle_DekuScrubRight                  = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x39, "Ganon's Castle Deku Scrub Right",                    {"Ganon's Castle", "Deku Scrub",});
-ItemLocation GanonsCastle_DekuScrubLeft                   = ItemLocation(0x0D, ITEMLOCATIONTYPE_NPC,           0x3A, "Ganon's Castle Deku Scrub Left",                     {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_DekuScrubCenterLeft             = ItemLocation(0x0D, ITEMLOCATIONTYPE_BASE,           0x37, "Ganon's Castle Deku Scrub Center-Left",              {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_DekuScrubCenterRight            = ItemLocation(0x0D, ITEMLOCATIONTYPE_BASE,           0x33, "Ganon's Castle Deku Scrub Center-Right",             {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_DekuScrubRight                  = ItemLocation(0x0D, ITEMLOCATIONTYPE_BASE,           0x39, "Ganon's Castle Deku Scrub Right",                    {"Ganon's Castle", "Deku Scrub",});
+ItemLocation GanonsCastle_DekuScrubLeft                   = ItemLocation(0x0D, ITEMLOCATIONTYPE_BASE,           0x3A, "Ganon's Castle Deku Scrub Left",                     {"Ganon's Castle", "Deku Scrub",});
 
 /*-------------------------------
    --- GOLD SKULLTULA TOKENS ---
@@ -487,6 +495,19 @@ ItemLocation Morpha                                       = ItemLocation(0xFF, I
 ItemLocation Twinrova                                     = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Twinrova",                                         {});
 ItemLocation BongoBongo                                   = ItemLocation(0xFF, ITEMLOCATIONTYPE_TEMPLE_REWARD, 0xFF, "Bongo Bongo",                                      {});
 
+/*-------------------------------
+        --- CUTSCENES ---
+  -------------------------------*/
+
+ItemLocation ToT_LightArrowCutscene                       = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x01, "ToT Light Arrow Cutscene",                         {"Temple of Time", "Market"});
+ItemLocation LW_GiftFromSaria                             = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x02, "LW Gift From Saria",                               {"the Lost Woods", "Forest"});
+ItemLocation ZF_GreatFairyReward                          = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x10, "ZF Great Fairy Reward",                            {"Zora's Fountain", "Fairies"});
+ItemLocation HC_GreatFairyReward                          = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x11, "HC Great Fairy Reward",                            {"Hyrule Castle", "Market", "Fairies"});
+ItemLocation Colossus_GreatFairyReward                    = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x12, "Colossus Great Fairy Reward",                      {"Desert Colossus", "Fairies"});
+ItemLocation DMT_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x13, "DMT Great Fairy Reward",                           {"Death Mountain Trail", "Death Mountain", "Fairies"});
+ItemLocation DMC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x14, "DMC Great Fairy Reward",                           {"Death Mountain Crater", "Death Mountain", "Fairies"});
+ItemLocation OGC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x15, "OGC Great Fairy Reward",                           {"outside Ganon's Castle", "Market", "Fairies"});
+
 //key requirements for placing randomized keys and other items in dungeons
 const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements{{
   ItemLocationKeyPairing(&DekuTree_MapChest,               0),
@@ -522,7 +543,7 @@ const std::array<ItemLocationKeyPairing, 7> JabuJabusBellyKeyRequirements{{
   ItemLocationKeyPairing(&JabuJabusBelly_GS_LobbyBasementUpper, 0),
   ItemLocationKeyPairing(&JabuJabusBelly_GS_NearBoss,           0),
 }};
-const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 19> ForestTempleKeyRequirements{{
   ItemLocationKeyPairing(&ForestTemple_FirstRoomChest,             0),
   ItemLocationKeyPairing(&ForestTemple_FirstStalfosChest,          0),
   ItemLocationKeyPairing(&ForestTemple_GS_FirstRoom,               0),
@@ -541,9 +562,11 @@ const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements{{
   ItemLocationKeyPairing(&ForestTemple_FallingCeilingRoomChest,    5),
   ItemLocationKeyPairing(&ForestTemple_BasementChest,              5),
   ItemLocationKeyPairing(&ForestTemple_GS_Basement,                5),
+  ItemLocationKeyPairing(&ForestTemple_PhantomGanonHeart,          5),
 }};
-const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 20> FireTempleKeyRequirements{{
   ItemLocationKeyPairing(&FireTemple_NearBossChest,                 0),
+  ItemLocationKeyPairing(&FireTemple_VolvagiaHeart,                 0),
   ItemLocationKeyPairing(&FireTemple_FlareDancerChest,              0),
   ItemLocationKeyPairing(&FireTemple_BossKeyChest,                  0),
   ItemLocationKeyPairing(&FireTemple_GS_BossKeyLoop,                0),
@@ -563,7 +586,8 @@ const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements{{
   ItemLocationKeyPairing(&FireTemple_HighestGoronChest,             7),
   ItemLocationKeyPairing(&FireTemple_MegatonHammerChest,            7),
 }};
-const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 16> WaterTempleKeyRequirements{{
+  ItemLocationKeyPairing(&WaterTemple_MorphaHeart,            0),
   ItemLocationKeyPairing(&WaterTemple_MapChest,               0),
   ItemLocationKeyPairing(&WaterTemple_CompassChest,           0),
   ItemLocationKeyPairing(&WaterTemple_TorchesChest,           0),
@@ -578,9 +602,9 @@ const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements{{
   ItemLocationKeyPairing(&WaterTemple_LongshotChest,          5),
   ItemLocationKeyPairing(&WaterTemple_RiverChest,             5),
   ItemLocationKeyPairing(&WaterTemple_GS_River,               5),
-  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5), //FIX WHEN ADDING MORPHA HC
+  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5),
 }};
-const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 26> SpiritTempleKeyRequirements{{
   ItemLocationKeyPairing(&SpiritTemple_ChildBridgeChest,           0),
   ItemLocationKeyPairing(&SpiritTemple_ChildEarlyTorchesChest,     0),
   ItemLocationKeyPairing(&SpiritTemple_GS_MetalFence,              0),
@@ -606,8 +630,9 @@ const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements{{
   ItemLocationKeyPairing(&SpiritTemple_HallwayRightInvisibleChest, 4),
   ItemLocationKeyPairing(&SpiritTemple_BossKeyChest,               5),
   ItemLocationKeyPairing(&SpiritTemple_TopmostChest,               5),
+  ItemLocationKeyPairing(&SpiritTemple_TwinrovaHeart,              5),
 }};
-const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements = {
+const std::array<ItemLocationKeyPairing, 23> ShadowTempleKeyRequirements = {
   ItemLocationKeyPairing(&ShadowTemple_MapChest,                      0),
   ItemLocationKeyPairing(&ShadowTemple_HoverBootsChest,               0),
   ItemLocationKeyPairing(&ShadowTemple_CompassChest,                  0),
@@ -630,6 +655,7 @@ const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements = {
   ItemLocationKeyPairing(&ShadowTemple_BossKeyChest,                  4),
   ItemLocationKeyPairing(&ShadowTemple_InvisibleFloormasterChest,     4),
   ItemLocationKeyPairing(&ShadowTemple_GS_TripleGiantPot,             4),
+  ItemLocationKeyPairing(&ShadowTemple_BongoBongoHeart,               5),
 };
 const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements{{
   ItemLocationKeyPairing(&BottomOfTheWell_FrontLeftFakeWallChest,   0),
@@ -683,7 +709,7 @@ const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirement
   ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathThirdChest,         7),
   ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathFinalChest,         9),
 };
-const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements{{
+const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_ForestTrialChest,                0),
   ItemLocationKeyPairing(&GanonsCastle_WaterTrialLeftChest,             0),
   ItemLocationKeyPairing(&GanonsCastle_WaterTrialRightChest,            0),
@@ -699,11 +725,11 @@ const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_LightTrialThirdRightChest,       0),
   ItemLocationKeyPairing(&GanonsCastle_LightTrialInvisibleEnemiesChest, 0),
   ItemLocationKeyPairing(&GanonsCastle_LightTrialLullabyChest,          1),
+  ItemLocationKeyPairing(&GanonsCastle_BossKeyChest,                    2),
 }};
 
 std::vector<ItemLocation *> advancementLocations = {};
-
-std::array<ItemLocation*, 339> allLocations = {
+std::array<ItemLocation*, 9> dungeonRewardLocations = {
   //Bosses
   &LinksPocket,
   &QueenGohma,
@@ -714,6 +740,8 @@ std::array<ItemLocation*, 339> allLocations = {
   &Morpha,
   &Twinrova,
   &BongoBongo,
+};
+std::array<ItemLocation*, 338> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -882,6 +910,7 @@ std::array<ItemLocation*, 339> allLocations = {
   &DekuTree_BasementChest,
   &DekuTree_SlingshotChest,
   &DekuTree_SlingshotRoomSideChest,
+  &DekuTree_QueenGohmaHeart,
 
   //Dodongos Cavern
   &DodongosCavern_MapChest,
@@ -890,11 +919,13 @@ std::array<ItemLocation*, 339> allLocations = {
   &DodongosCavern_BombBagChest,
   &DodongosCavern_EndOfBridgeChest,
   &DodongosCavern_BossRoomChest,
+  &DodongosCavern_KingDodongoHeart,
 
   //Jabu Jabus Belly
   &JabuJabusBelly_MapChest,
   &JabuJabusBelly_CompassChest,
   &JabuJabusBelly_BoomerangChest,
+  &JabuJabusBelly_BarinadeHeart,
 
   //Forest Temple
   &ForestTemple_FirstRoomChest,
@@ -910,6 +941,7 @@ std::array<ItemLocation*, 339> allLocations = {
   &ForestTemple_RedPoeChest,
   &ForestTemple_BluePoeChest,
   &ForestTemple_BasementChest,
+  &ForestTemple_PhantomGanonHeart,
 
   //Fire Temple
   &FireTemple_NearBossChest,
@@ -926,6 +958,7 @@ std::array<ItemLocation*, 339> allLocations = {
   &FireTemple_CompassChest,
   &FireTemple_HighestGoronChest,
   &FireTemple_MegatonHammerChest,
+  &FireTemple_VolvagiaHeart,
 
   //Water Temple
   &WaterTemple_MapChest,
@@ -938,6 +971,7 @@ std::array<ItemLocation*, 339> allLocations = {
   &WaterTemple_BossKeyChest,
   &WaterTemple_LongshotChest,
   &WaterTemple_RiverChest,
+  &WaterTemple_MorphaHeart,
 
   //Spirit Temple
   &SpiritTemple_SilverGauntletsChest,
@@ -959,6 +993,7 @@ std::array<ItemLocation*, 339> allLocations = {
   &SpiritTemple_HallwayRightInvisibleChest,
   &SpiritTemple_BossKeyChest,
   &SpiritTemple_TopmostChest,
+  &SpiritTemple_TwinrovaHeart,
 
   //Shadow Temple
   &ShadowTemple_MapChest,
@@ -978,6 +1013,7 @@ std::array<ItemLocation*, 339> allLocations = {
   &ShadowTemple_BossKeyChest,
   &ShadowTemple_InvisibleFloormasterChest,
   &ShadowTemple_FreestandingKey,
+  &ShadowTemple_BongoBongoHeart,
 
   //Bottom of the Well
   &BottomOfTheWell_FrontLeftFakeWallChest,

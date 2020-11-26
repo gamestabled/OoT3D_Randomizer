@@ -3,16 +3,39 @@
 
 void SaveFile_Init() {
 
+    u8 debug = 0;
+    if (debug) {
+      gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
+      gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
+      gSaveContext.questItems |= 0x3FFC0; //songs
+      gSaveContext.items[SLOT_OCARINA]  = ITEM_OCARINA_FAIRY;
+      gSaveContext.items[SLOT_HOOKSHOT] = ITEM_LONGSHOT;
+      gSaveContext.items[SLOT_HAMMER]   = ITEM_HAMMER;
+      gSaveContext.items[SLOT_FARORES_WIND] = ITEM_FARORES_WIND;
+      gSaveContext.items[SLOT_DINS_FIRE] = ITEM_DINS_FIRE;
+      gSaveContext.items[SLOT_BOMB] = ITEM_BOMB;
+      gSaveContext.items[SLOT_BOW] = ITEM_BOW;
+      gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+      gSaveContext.magicAcquired = 1;
+      gSaveContext.magicLevel = 2;
+      gSaveContext.magic = 48;
+      gSaveContext.dungeonKeys[6] = 8;
+      gSaveContext.ammo[2] = 20; //bombs
+      gSaveContext.ammo[3] = 20; //arrows
+    }
+
     //things to always set
-    gSaveContext.cutsceneIndex     = 0;      //no intro cutscene
+    gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
-    gSaveContext.infTable  [0x20] |= 0x000E; //Ruto in Jabu can be escorted immediately
-    gSaveContext.itemGetInf [0x1] |= 0x0008; //Deku seeds text
+    gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
+    gSaveContext.itemGetInf [0x1] |= 0x0800; //Deku seeds text
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except Twinrova and Ganondorf)
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x01FB; //entered Deku Tree, Temple of Time, Goron City, Hyrule Castle, Zoras Domain, Kakariko Village, DMT, Hyrule Field
-    gSaveContext.eventChkInf[0xB] |= 0x07FF; //entered Ganons Castle Exterior, DMC, Colossus, Zora's Fountain, Graveyard, JJB, LLR, Gerudo Fortress, Gerudo Valley, Lake Hylia, DC
+    gSaveContext.eventChkInf[0xA] |= 0x01FB; //enterance cutscenes
+    gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
+    gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
+    gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
 
     //navi text triggers
     gSaveContext.sceneFlags [0].swch |= 0x80080400; //deku tree vines and door and rolling spike
@@ -25,7 +48,7 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
     //open lowest fire temple locked door
-    gSaveContext.sceneFlags [4].swch |= 0x00008000;
+    gSaveContext.sceneFlags[4].swch |= 0x00800000;
 
     //Everything else depends on settings
     //if starting age is adult
@@ -40,10 +63,6 @@ void SaveFile_Init() {
 
     if (gSettingsContext.openDoorOfTime) {
       gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
-    }
-
-    if (gSettingsContext.shuffleBeanSalesman) {
-      gSaveContext.ammo[15] = 9; //Magic bean salesman only sells one more bean
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him

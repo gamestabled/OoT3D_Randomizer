@@ -213,39 +213,40 @@ Item GerudoFortress_SmallKey        = Item("Gerudo Fortress Small Key",         
 Item GanonsCastle_SmallKey          = Item("Ganon's Castle Small Key",          ITEMTYPE_SMALLKEY,          0xB7, false, GanonsCastleSmallKeyEffect);
 
 //Generic Items
-Item Heart                      = Item("Recovery Heart",   ITEMTYPE_ITEM, GI_HEART,            false, NoEffect);
-Item GreenRupee                 = Item("Green Rupee",      ITEMTYPE_ITEM, GI_RUPEE_GREEN,      false, NoEffect);
-Item BlueRupee                  = Item("Blue Rupee",       ITEMTYPE_ITEM, GI_RUPEE_BLUE,       false, NoEffect);
-Item RedRupee                   = Item("Red Rupee",        ITEMTYPE_ITEM, GI_RUPEE_RED,        false, NoEffect);
-Item PurpleRupee                = Item("Purple Rupee",     ITEMTYPE_ITEM, GI_RUPEE_PURPLE,     false, NoEffect);
-Item HugeRupee                  = Item("Huge Rupee",       ITEMTYPE_ITEM, GI_RUPEE_GOLD,       false, NoEffect);
-Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEART_PIECE,      false, NoEffect);
-Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,         false, NoEffect);
+Item Heart                      = Item("Recovery Heart",   ITEMTYPE_ITEM, GI_HEART,             false, NoEffect);
+Item GreenRupee                 = Item("Green Rupee",      ITEMTYPE_ITEM, GI_RUPEE_GREEN,       false, NoEffect);
+Item BlueRupee                  = Item("Blue Rupee",       ITEMTYPE_ITEM, GI_RUPEE_BLUE,        false, NoEffect);
+Item RedRupee                   = Item("Red Rupee",        ITEMTYPE_ITEM, GI_RUPEE_RED,         false, NoEffect);
+Item PurpleRupee                = Item("Purple Rupee",     ITEMTYPE_ITEM, GI_RUPEE_PURPLE,      false, NoEffect);
+Item HugeRupee                  = Item("Huge Rupee",       ITEMTYPE_ITEM, GI_RUPEE_GOLD,        false, NoEffect);
+Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEART_PIECE,       false, NoEffect);
+Item HeartContainer             = Item("Heart Container",  ITEMTYPE_ITEM, GI_HEART_CONTAINER_2, false, NoEffect);
+Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,          false, NoEffect);
 
 //Refills
-Item Bombs5                     = Item("Bomb Refill 5",    ITEMTYPE_ITEM, GI_BOMBS_5,          false, NoEffect);
-Item Bombs10                    = Item("Bomb Refill 10",   ITEMTYPE_ITEM, GI_BOMBS_10,         false, NoEffect);
-Item Bombs20                    = Item("Bomb Refill 20",   ITEMTYPE_ITEM, GI_BOMBS_20,         false, NoEffect);
-Item Arrows5                    = Item("Arrow Refill 5",   ITEMTYPE_ITEM, GI_ARROWS_SMALL,     false, NoEffect);
-Item Arrows10                   = Item("Arrow Refill 10",  ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,    false, NoEffect);
-Item Arrows30                   = Item("Arrow Refill 30",  ITEMTYPE_ITEM, GI_ARROWS_LARGE,     false, NoEffect);
+Item Bombs5                     = Item("Bomb Refill 5",    ITEMTYPE_ITEM, GI_BOMBS_5,           false, NoEffect);
+Item Bombs10                    = Item("Bomb Refill 10",   ITEMTYPE_ITEM, GI_BOMBS_10,          false, NoEffect);
+Item Bombs20                    = Item("Bomb Refill 20",   ITEMTYPE_ITEM, GI_BOMBS_20,          false, NoEffect);
+Item Arrows5                    = Item("Arrow Refill 5",   ITEMTYPE_ITEM, GI_ARROWS_SMALL,      false, NoEffect);
+Item Arrows10                   = Item("Arrow Refill 10",  ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,     false, NoEffect);
+Item Arrows30                   = Item("Arrow Refill 30",  ITEMTYPE_ITEM, GI_ARROWS_LARGE,      false, NoEffect);
 
-Item DekuNuts5                  = Item("Deku Nuts 5",      ITEMTYPE_ITEM, GI_NUTS_5,           false, NoEffect);
-Item DekuNuts10                 = Item("Deku Nuts 10",     ITEMTYPE_ITEM, GI_NUTS_10,          false, NoEffect);
-Item DekuSeeds30                = Item("Deku Seeds 30",    ITEMTYPE_ITEM, GI_SEEDS_30,         false, NoEffect);
+Item DekuNuts5                  = Item("Deku Nuts 5",      ITEMTYPE_ITEM, GI_NUTS_5,            false, NoEffect);
+Item DekuNuts10                 = Item("Deku Nuts 10",     ITEMTYPE_ITEM, GI_NUTS_10,           false, NoEffect);
+Item DekuSeeds30                = Item("Deku Seeds 30",    ITEMTYPE_ITEM, GI_SEEDS_30,          false, NoEffect);
 
-Item DekuStick1                 = Item("Deku Stick",       ITEMTYPE_ITEM, GI_STICKS_1,         false, NoEffect);
+Item DekuStick1                 = Item("Deku Stick",       ITEMTYPE_ITEM, GI_STICKS_1,          false, NoEffect);
 
 //Stones and Medallions
-Item A_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000, false, KokiriEmeraldEffect);
-Item A_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000, false, GoronRubyEffect);
-Item A_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000, false, ZoraSapphireEffect);
-Item A_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000001, false, ForestMedallionEffect);
-Item A_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0x00000002, false, FireMedallionEffect);
-Item A_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000004, false, WaterMedallionEffect);
-Item A_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008, false, SpiritMedallionEffect);
-Item A_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010, false, ShadowMedallionEffect);
-Item A_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020, false, LightMedallionEffect);
+Item A_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  false, KokiriEmeraldEffect);
+Item A_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000,  false, GoronRubyEffect);
+Item A_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000,  false, ZoraSapphireEffect);
+Item A_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000001,  false, ForestMedallionEffect);
+Item A_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0x00000002,  false, FireMedallionEffect);
+Item A_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000004,  false, WaterMedallionEffect);
+Item A_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008,  false, SpiritMedallionEffect);
+Item A_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010,  false, ShadowMedallionEffect);
+Item A_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020,  false, LightMedallionEffect);
 
 //This pool will be used to give placement priority for items that can advance location access
 std::vector<Item> AdvancementItemPool = {};

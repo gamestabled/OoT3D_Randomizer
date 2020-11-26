@@ -12,13 +12,13 @@
 #include "item_list.hpp"
 
 enum ItemLocationType {
-    ITEMLOCATIONTYPE_NPC,
+    ITEMLOCATIONTYPE_BASE,
     ITEMLOCATIONTYPE_CHEST,
     ITEMLOCATIONTYPE_COLLECTABLE,
     ITEMLOCATIONTYPE_GS_TOKEN,
     ITEMLOCATIONTYPE_GROTTO_SCRUB,
     ITEMLOCATIONTYPE_DELAYED,
-    ITEMLOCATIONTYPE_TEMPLE_REWARD
+    ITEMLOCATIONTYPE_TEMPLE_REWARD,
 };
 
 class ItemLocation {
@@ -244,6 +244,7 @@ extern ItemLocation DekuTree_CompassRoomSideChest;
 extern ItemLocation DekuTree_BasementChest;
 extern ItemLocation DekuTree_SlingshotChest;
 extern ItemLocation DekuTree_SlingshotRoomSideChest;
+extern ItemLocation DekuTree_QueenGohmaHeart;
 
 //Dodongos Cavern
 extern ItemLocation DodongosCavern_MapChest;
@@ -256,12 +257,14 @@ extern ItemLocation DodongosCavern_DekuScrubNearBombBagLeft;
 extern ItemLocation DodongosCavern_DekuScrubSideRoomNearDodongos;
 extern ItemLocation DodongosCavern_DekuScrubNearBombBagRight;
 extern ItemLocation DodongosCavern_DekuScrubLobby;
+extern ItemLocation DodongosCavern_KingDodongoHeart;
 
 //Jabu Jabus Belly
 extern ItemLocation JabuJabusBelly_MapChest;
 extern ItemLocation JabuJabusBelly_CompassChest;
 extern ItemLocation JabuJabusBelly_BoomerangChest;
 extern ItemLocation JabuJabusBelly_DekuScrub;
+extern ItemLocation JabuJabusBelly_BarinadeHeart;
 
 //Forest Temple
 extern ItemLocation ForestTemple_FirstRoomChest;
@@ -277,6 +280,7 @@ extern ItemLocation ForestTemple_BowChest;
 extern ItemLocation ForestTemple_RedPoeChest;
 extern ItemLocation ForestTemple_BluePoeChest;
 extern ItemLocation ForestTemple_BasementChest;
+extern ItemLocation ForestTemple_PhantomGanonHeart;
 
 //Fire Temple
 extern ItemLocation FireTemple_NearBossChest;
@@ -293,6 +297,7 @@ extern ItemLocation FireTemple_MapChest;
 extern ItemLocation FireTemple_CompassChest;
 extern ItemLocation FireTemple_HighestGoronChest;
 extern ItemLocation FireTemple_MegatonHammerChest;
+extern ItemLocation FireTemple_VolvagiaHeart;
 
 //Water Temple
 extern ItemLocation WaterTemple_MapChest;
@@ -305,6 +310,7 @@ extern ItemLocation WaterTemple_CrackedWallChest;
 extern ItemLocation WaterTemple_BossKeyChest;
 extern ItemLocation WaterTemple_LongshotChest;
 extern ItemLocation WaterTemple_RiverChest;
+extern ItemLocation WaterTemple_MorphaHeart;
 
 //Spirit Temple
 extern ItemLocation SpiritTemple_SilverGauntletsChest;
@@ -326,6 +332,7 @@ extern ItemLocation SpiritTemple_HallwayLeftInvisibleChest;
 extern ItemLocation SpiritTemple_HallwayRightInvisibleChest;
 extern ItemLocation SpiritTemple_BossKeyChest;
 extern ItemLocation SpiritTemple_TopmostChest;
+extern ItemLocation SpiritTemple_TwinrovaHeart;
 
 //Shadow Temple
 extern ItemLocation ShadowTemple_MapChest;
@@ -345,6 +352,7 @@ extern ItemLocation ShadowTemple_SpikeWallsLeftChest;
 extern ItemLocation ShadowTemple_BossKeyChest;
 extern ItemLocation ShadowTemple_InvisibleFloormasterChest;
 extern ItemLocation ShadowTemple_FreestandingKey;
+extern ItemLocation ShadowTemple_BongoBongoHeart;
 
 //Bottom of the Well
 extern ItemLocation BottomOfTheWell_FrontLeftFakeWallChest;
@@ -568,18 +576,32 @@ extern ItemLocation Twinrova;
 extern ItemLocation Morpha;
 extern ItemLocation BongoBongo;
 
+/*-------------------------------
+        --- CUTSCENES ---
+  -------------------------------*/
+
+extern ItemLocation ToT_LightArrowCutscene;
+extern ItemLocation LW_GiftFromSaria;
+extern ItemLocation ZF_GreatFairyReward;
+extern ItemLocation HC_GreatFairyReward;
+extern ItemLocation Colossus_GreatFairyReward;
+extern ItemLocation DMT_GreatFairyReward;
+extern ItemLocation DMC_GreatFairyReward;
+extern ItemLocation OGC_GreatFairyReward;
+
 extern const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 7>  JabuJabusBellyKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 18> ForestTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 19> FireTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 15> WaterTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 25> SpiritTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 22> ShadowTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 19> ForestTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 20> FireTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 16> WaterTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 26> SpiritTempleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 23> ShadowTempleKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 7>  IceCavernKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 15> GanonsCastleKeyRequirements;
+extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
-extern std::array<ItemLocation *, 339> allLocations;
+extern std::array<ItemLocation *, 9> dungeonRewardLocations;
+extern std::array<ItemLocation *, 338> allLocations;
