@@ -30,17 +30,17 @@ namespace Playthrough {
         // Put item in the override table
         overrides.insert({
           .key = loc->Key(),
-          .value = item->value(),
+          .value = item->Value(),
         });
 
         PlacementLog_Msg("\n");
-        PlacementLog_Msg(item->name);
+        PlacementLog_Msg(item->GetName());
         PlacementLog_Msg(" placed at ");
         PlacementLog_Msg(loc->GetName());
         PlacementLog_Msg("\n\n");
 
         if (applyEffectImmediately) {
-          item->applyEffect();
+          item->ApplyEffect();
           loc->Use();
         }
 

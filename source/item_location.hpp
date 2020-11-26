@@ -57,7 +57,7 @@ public:
     }
 
     std::string_view GetPlacedItemName() const {
-      return placedItem.getName();
+      return placedItem.GetName();
     }
 
     void SetPlacedItem(Item item) {
@@ -65,7 +65,7 @@ public:
     }
 
     void ApplyPlacedItemEffect() {
-      placedItem.applyEffect();
+      placedItem.ApplyEffect();
     }
 
 private:
