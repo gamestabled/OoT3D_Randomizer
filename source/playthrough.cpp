@@ -7,16 +7,15 @@
 #include "spoiler_log.hpp"
 #include "../code/src/item_override.h"
 
-#include <set>
-#include <cstdio>
-#include <algorithm>
 #include <3ds.h>
+#include <algorithm>
+#include <cstdio>
+#include <set>
 #include <string>
 #include <unistd.h>
-#include <stdio.h>
 
 template <typename T, typename Predicate>
-void erase_if(std::vector<T>& vector, Predicate pred) {
+static void erase_if(std::vector<T>& vector, Predicate pred) {
     vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
 }
 
@@ -28,15 +27,11 @@ namespace Playthrough {
     static std::vector<ItemLocation *> AccessibleLocationPool;
 
     static void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
-        // put item in the override table
-        ItemOverride override;
-        override.key.all = 0;
-
-        override.value.all = 0;
-        override.key = loc->key();
-        override.value = item->value();
-
-        overrides.insert(override);
+        // Put item in the override table
+        overrides.insert({
+          .key = loc->key(),
+          .value = item->value(),
+        });
 
         PlacementLog_Msg("\n");
         PlacementLog_Msg(item->name);
@@ -260,7 +255,7 @@ namespace Playthrough {
 
         AdvancementItemPool.erase(AdvancementItemPool.begin() + itemIdx);
         //erase locations that have been used
-        erase_if<ItemLocation *>(AccessibleLocationPool, [](ItemLocation* il){return il->isUsed();});
+        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->isUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
@@ -278,7 +273,7 @@ namespace Playthrough {
 
         ItemPool.erase(ItemPool.begin() + itemIdx);
         //erase locations that have been used
-        erase_if<ItemLocation *>(AccessibleLocationPool, [](ItemLocation* il){return il->isUsed();});
+        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->isUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
