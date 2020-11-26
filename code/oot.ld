@@ -56,6 +56,10 @@ SECTIONS
 		*(.patch_DaruniaCheckStrength)
 	}
 
+	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
+		*(.patch_DekuTheaterMaskOfTruth)
+	}
+
 	.patch_LostWoodsShootingGame 0x259E4C : {
 		*(.patch_LostWoodsShootingGame)
 	}
@@ -174,6 +178,10 @@ SECTIONS
 
 	.patch_RainbowBridge 0x3E7CAC : {
 		*(.patch_RainbowBridge)
+	}
+
+	.patch_DekuTheaterSkullMask 0x3EAF38 : {
+		*(.patch_DekuTheaterSkullMask)
 	}
 
 	.patch_InitSceneClearExtendedObjects 0x449218 : {

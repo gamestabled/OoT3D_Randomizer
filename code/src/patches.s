@@ -282,6 +282,18 @@ InitSceneClearExtendedObjects_patch:
 SariasGift_patch:
     bl ItemOverride_GiveSariasGift
 
+.section .patch_DekuTheaterSkullMask
+.global DekuTheaterSkullMask_patch
+DekuTheaterSkullMask_patch:
+    mov r0,#0x77
+    nop
+
+.section .patch_DekuTheaterMaskOfTruth
+.global DekuTheaterMaskOfTruth_patch
+DekuTheaterMaskOfTruth_patch:
+    mov r0,#0x7A
+    nop
+
 .section .patch_loader
 .global loader_patch
 
