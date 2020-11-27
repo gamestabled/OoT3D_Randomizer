@@ -110,6 +110,8 @@ typedef struct {
   u8 shuffleBeanSalesman;
   u8 shuffleOcarinas;
 
+  u8 bigPoeTargetCount;
+
   u32 dungeonRewardBitMask;
 } SettingsContext;
 
