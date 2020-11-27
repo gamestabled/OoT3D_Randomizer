@@ -11,19 +11,19 @@
 #include "../code/src/item_override.h"
 #include "item_list.hpp"
 
-enum ItemLocationType {
-    ITEMLOCATIONTYPE_BASE,
-    ITEMLOCATIONTYPE_CHEST,
-    ITEMLOCATIONTYPE_COLLECTABLE,
-    ITEMLOCATIONTYPE_GS_TOKEN,
-    ITEMLOCATIONTYPE_GROTTO_SCRUB,
-    ITEMLOCATIONTYPE_DELAYED,
-    ITEMLOCATIONTYPE_TEMPLE_REWARD,
+enum class ItemLocationType {
+    Base,
+    Chest,
+    Collectable,
+    GSToken,
+    GrottoScrub,
+    Delayed,
+    TempleReward,
 };
 
 class ItemLocation {
 public:
-    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<std::string> categories_)
+    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<std::string> categories_)
         : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)) {}
 
     ItemOverride_Key Key() const {
@@ -31,7 +31,7 @@ public:
         key.all = 0;
 
         key.scene = scene;
-        key.type = type; //TODO make sure these match up
+        key.type = static_cast<u8>(type); //TODO make sure these match up
         key.flag = flag;
         return key;
     }
@@ -66,6 +66,34 @@ public:
 
     void ApplyPlacedItemEffect() {
       placedItem.ApplyEffect();
+    }
+
+    static auto Base(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), std::move(categories)};
+    }
+
+    static auto Chest(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), std::move(categories)};
+    }
+
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), std::move(categories)};
+    }
+
+    static auto GSToken(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+        return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), std::move(categories)};
+    }
+
+    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+        return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), std::move(categories)};
+    }
+
+    static auto Delayed(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), std::move(categories)};
+    }
+
+    static auto Reward(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+        return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), std::move(categories)};
     }
 
 private:
