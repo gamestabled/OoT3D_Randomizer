@@ -26,7 +26,7 @@ public:
     ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<std::string> categories_)
         : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)) {}
 
-    ItemOverride_Key key() const {
+    ItemOverride_Key Key() const {
         ItemOverride_Key key;
         key.all = 0;
 
@@ -36,16 +36,36 @@ public:
         return key;
     }
 
-    void use() {
+    void Use() {
       used = true;
     }
 
-    bool isUsed() const {
+    bool IsUsed() const {
       return used;
     }
 
-    std::string_view getName() const {
+    bool IsAddedToPool() const {
+      return addedToPool;
+    }
+
+    void AddToPool() {
+      addedToPool = true;
+    }
+
+    std::string_view GetName() const {
       return name;
+    }
+
+    std::string_view GetPlacedItemName() const {
+      return placedItem.GetName();
+    }
+
+    void SetPlacedItem(Item item) {
+      placedItem = std::move(item);
+    }
+
+    void ApplyPlacedItemEffect() {
+      placedItem.ApplyEffect();
     }
 
 private:
@@ -54,8 +74,6 @@ private:
     u8 flag;
     bool used = false;
 
-
-public:
     std::string name;
     std::vector<std::string> categories;
     bool addedToPool = false;
