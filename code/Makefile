@@ -140,6 +140,11 @@ endif
 #---------------------------------------------------------------------------------
 all: $(BUILD)
 
+# Debug target
+debug: CFLAGS += -g -DENABLE_DEBUG
+debug: CXXFLAGS += -g -DENABLE_DEBUG
+debug: all
+
 $(BUILD):
 	@python3 custom_messages.py
 	@[ -d $@ ] || mkdir -p $@

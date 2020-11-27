@@ -31,27 +31,39 @@ public:
           progressive(progressive_),
           effect(std::move(effect_)) {}
 
-    void applyEffect() {
+    void ApplyEffect() {
         effect();
         Logic::UpdateHelpers();
         return;
     }
 
-    ItemOverride_Value value() const {
+    ItemOverride_Value Value() const {
         ItemOverride_Value val;
         val.itemId = getItemId;
         return val;
     }
 
-    std::string_view getName() const {
-      return name;
+    std::string_view GetName() const {
+        return name;
     }
 
+    bool IsProgressive() const {
+        return progressive;
+    }
+
+    int GetItemID() const {
+        return getItemId;
+    }
+
+    ItemType GetItemType() const {
+        return type;
+    }
+
+private:
     std::string name;
     ItemType type;
     int  getItemId;
     bool progressive;
-private:
     std::function<void()> effect;
 };
 
@@ -80,6 +92,7 @@ extern Item A_ZoraTunic;
 extern Item A_GerudoToken;
 extern Item A_MagicBean;
 extern Item A_MagicBeanPack;
+extern Item A_DoubleDefense;
 extern Item GoldSkulltulaToken;
 
 //progressive items
@@ -125,6 +138,38 @@ extern Item A_SerenadeOfWater;
 extern Item A_RequiemOfSpirit;
 extern Item A_NocturneOfShadow;
 extern Item A_PreludeOfLight;
+
+extern Item BuyDekuNut5;
+extern Item BuyArrows30;
+extern Item BuyArrows50;
+extern Item BuyBombs525;
+extern Item BuyDekuNut10;
+extern Item BuyDekuStick1;
+extern Item BuyBombs10;
+extern Item BuyFish;
+extern Item BuyRedPotion30;
+extern Item BuyGreenPotion;
+extern Item BuyBluePotion;
+extern Item BuyHylianShield;
+extern Item BuyDekuShield;
+extern Item BuyGoronTunic;
+extern Item BuyZoraTunic;
+extern Item BuyHeart;
+extern Item BuyBombchu10;
+extern Item BuyBombchu20;
+extern Item BuyBombchu5;
+extern Item BuyDekuSeeds30;
+extern Item SoldOut;
+extern Item BuyBlueFire;
+extern Item BuyBottleBug;
+extern Item BuyPoe;
+extern Item BuyFairysSpirit;
+extern Item BuyArrows10;
+extern Item BuyBombs20;
+extern Item BuyBombs30;
+extern Item BuyBombs535;
+extern Item BuyRedPotion40;
+extern Item BuyRedPotion50;
 
 //maps and compasses
 extern Item DekuTree_Map;

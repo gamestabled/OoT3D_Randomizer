@@ -508,6 +508,85 @@ ItemLocation DMT_GreatFairyReward                         = ItemLocation(0xFF, I
 ItemLocation DMC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x14, "DMC Great Fairy Reward",                           {"Death Mountain Crater", "Death Mountain", "Fairies"});
 ItemLocation OGC_GreatFairyReward                         = ItemLocation(0xFF, ITEMLOCATIONTYPE_DELAYED,       0x15, "OGC Great Fairy Reward",                           {"outside Ganon's Castle", "Market", "Fairies"});
 
+/*-------------------------------
+          --- SHOPS ---
+  8     6               2     4
+
+  7     5               1     3
+  -------------------------------*/
+
+ItemLocation KF_ShopItem1                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x30, "KF Shop Item 1",                                   {"Kokiri Forest", "Forest", "Shops"});
+ItemLocation KF_ShopItem2                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x31, "KF Shop Item 2",                                   {"Kokiri Forest", "Forest", "Shops"});
+ItemLocation KF_ShopItem3                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x32, "KF Shop Item 3",                                   {"Kokiri Forest", "Forest", "Shops"});
+ItemLocation KF_ShopItem4                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x33, "KF Shop Item 4",                                   {"Kokiri Forest", "Forest", "Shops"});
+ItemLocation KF_ShopItem5                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x34, "KF Shop Item 5",                                   {"Kokiri Forest", "Forest", "Shops"});
+ItemLocation KF_ShopItem6                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x35, "KF Shop Item 6",                                   {"Kokiri Forest", "Forest", "Shops"});
+ItemLocation KF_ShopItem7                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x36, "KF Shop Item 7",                                   {"Kokiri Forest", "Forest", "Shops"});
+ItemLocation KF_ShopItem8                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x37, "KF Shop Item 8",                                   {"Kokiri Forest", "Forest", "Shops"});
+
+ItemLocation Kak_PotionShopItem1                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x30, "Kak Potion Shop Item 1",                           {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_PotionShopItem2                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x31, "Kak Potion Shop Item 2",                           {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_PotionShopItem3                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x32, "Kak Potion Shop Item 3",                           {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_PotionShopItem4                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x33, "Kak Potion Shop Item 4",                           {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_PotionShopItem5                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x34, "Kak Potion Shop Item 5",                           {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_PotionShopItem6                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x35, "Kak Potion Shop Item 6",                           {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_PotionShopItem7                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x36, "Kak Potion Shop Item 7",                           {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_PotionShopItem8                          = ItemLocation(0x30, ITEMLOCATIONTYPE_BASE,          0x37, "Kak Potion Shop Item 8",                           {"Kakariko Village", "Kakariko", "Shops"});
+
+ItemLocation MK_BombchuShopItem1                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x30, "MK Bombchu Shop Item 1",                           {"the Market", "Market", "Shops"});
+ItemLocation MK_BombchuShopItem2                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x31, "MK Bombchu Shop Item 2",                           {"the Market", "Market", "Shops"});
+ItemLocation MK_BombchuShopItem3                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x32, "MK Bombchu Shop Item 3",                           {"the Market", "Market", "Shops"});
+ItemLocation MK_BombchuShopItem4                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x33, "MK Bombchu Shop Item 4",                           {"the Market", "Market", "Shops"});
+ItemLocation MK_BombchuShopItem5                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x34, "MK Bombchu Shop Item 5",                           {"the Market", "Market", "Shops"});
+ItemLocation MK_BombchuShopItem6                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x35, "MK Bombchu Shop Item 6",                           {"the Market", "Market", "Shops"});
+ItemLocation MK_BombchuShopItem7                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x36, "MK Bombchu Shop Item 7",                           {"the Market", "Market", "Shops"});
+ItemLocation MK_BombchuShopItem8                          = ItemLocation(0x32, ITEMLOCATIONTYPE_BASE,          0x37, "MK Bombchu Shop Item 8",                           {"the Market", "Market", "Shops"});
+
+ItemLocation MK_PotionShopItem1                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x30, "MK Potion Shop Item 1",                            {"the Market", "Market", "Shops"});
+ItemLocation MK_PotionShopItem2                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x31, "MK Potion Shop Item 2",                            {"the Market", "Market", "Shops"});
+ItemLocation MK_PotionShopItem3                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x32, "MK Potion Shop Item 3",                            {"the Market", "Market", "Shops"});
+ItemLocation MK_PotionShopItem4                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x33, "MK Potion Shop Item 4",                            {"the Market", "Market", "Shops"});
+ItemLocation MK_PotionShopItem5                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x34, "MK Potion Shop Item 5",                            {"the Market", "Market", "Shops"});
+ItemLocation MK_PotionShopItem6                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x35, "MK Potion Shop Item 6",                            {"the Market", "Market", "Shops"});
+ItemLocation MK_PotionShopItem7                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x36, "MK Potion Shop Item 7",                            {"the Market", "Market", "Shops"});
+ItemLocation MK_PotionShopItem8                           = ItemLocation(0x31, ITEMLOCATIONTYPE_BASE,          0x37, "MK Potion Shop Item 8",                            {"the Market", "Market", "Shops"});
+
+ItemLocation MK_BazaarItem1                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x30, "MK Bazaar Item 1",                                 {"the Market", "Market", "Shops"});
+ItemLocation MK_BazaarItem2                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x31, "MK Bazaar Item 2",                                 {"the Market", "Market", "Shops"});
+ItemLocation MK_BazaarItem3                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x32, "MK Bazaar Item 3",                                 {"the Market", "Market", "Shops"});
+ItemLocation MK_BazaarItem4                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x33, "MK Bazaar Item 4",                                 {"the Market", "Market", "Shops"});
+ItemLocation MK_BazaarItem5                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x34, "MK Bazaar Item 5",                                 {"the Market", "Market", "Shops"});
+ItemLocation MK_BazaarItem6                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x35, "MK Bazaar Item 6",                                 {"the Market", "Market", "Shops"});
+ItemLocation MK_BazaarItem7                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x36, "MK Bazaar Item 7",                                 {"the Market", "Market", "Shops"});
+ItemLocation MK_BazaarItem8                               = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x37, "MK Bazaar Item 8",                                 {"the Market", "Market", "Shops"});
+
+ItemLocation Kak_BazaarItem1                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x38, "Kak Bazaar Item 1",                                {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_BazaarItem2                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x39, "Kak Bazaar Item 2",                                {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_BazaarItem3                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x3A, "Kak Bazaar Item 3",                                {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_BazaarItem4                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x3B, "Kak Bazaar Item 4",                                {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_BazaarItem5                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x3D, "Kak Bazaar Item 5",                                {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_BazaarItem6                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x3E, "Kak Bazaar Item 6",                                {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_BazaarItem7                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x3F, "Kak Bazaar Item 7",                                {"Kakariko Village", "Kakariko", "Shops"});
+ItemLocation Kak_BazaarItem8                              = ItemLocation(0x2C, ITEMLOCATIONTYPE_BASE,          0x40, "Kak Bazaar Item 8",                                {"Kakariko Village", "Kakariko", "Shops"});
+
+ItemLocation ZD_ShopItem1                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x30, "ZD Shop Item 1",                                   {"Zora's Domain", "Shops"});
+ItemLocation ZD_ShopItem2                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x31, "ZD Shop Item 2",                                   {"Zora's Domain", "Shops"});
+ItemLocation ZD_ShopItem3                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x32, "ZD Shop Item 3",                                   {"Zora's Domain", "Shops"});
+ItemLocation ZD_ShopItem4                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x33, "ZD Shop Item 4",                                   {"Zora's Domain", "Shops"});
+ItemLocation ZD_ShopItem5                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x34, "ZD Shop Item 5",                                   {"Zora's Domain", "Shops"});
+ItemLocation ZD_ShopItem6                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x35, "ZD Shop Item 6",                                   {"Zora's Domain", "Shops"});
+ItemLocation ZD_ShopItem7                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x36, "ZD Shop Item 7",                                   {"Zora's Domain", "Shops"});
+ItemLocation ZD_ShopItem8                                 = ItemLocation(0x2F, ITEMLOCATIONTYPE_BASE,          0x37, "ZD Shop Item 8",                                   {"Zora's Domain", "Shops"});
+
+ItemLocation GC_ShopItem1                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x30, "GC Shop Item 1",                                   {"Goron City", "Shops"});
+ItemLocation GC_ShopItem2                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x31, "GC Shop Item 2",                                   {"Goron City", "Shops"});
+ItemLocation GC_ShopItem3                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x32, "GC Shop Item 3",                                   {"Goron City", "Shops"});
+ItemLocation GC_ShopItem4                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x33, "GC Shop Item 4",                                   {"Goron City", "Shops"});
+ItemLocation GC_ShopItem5                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x34, "GC Shop Item 5",                                   {"Goron City", "Shops"});
+ItemLocation GC_ShopItem6                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x35, "GC Shop Item 6",                                   {"Goron City", "Shops"});
+ItemLocation GC_ShopItem7                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x36, "GC Shop Item 7",                                   {"Goron City", "Shops"});
+ItemLocation GC_ShopItem8                                 = ItemLocation(0x2E, ITEMLOCATIONTYPE_BASE,          0x37, "GC Shop Item 8",                                   {"Goron City", "Shops"});
+
 //key requirements for placing randomized keys and other items in dungeons
 const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements{{
   ItemLocationKeyPairing(&DekuTree_MapChest,               0),

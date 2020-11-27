@@ -13,7 +13,8 @@ int main() {
 		MenuUpdate(kDown);
 
 		//launch oot3d directly by holding L and R
-		if (kDown & KEY_L && kDown & KEY_R) {
+		u32 kHeld = hidKeysHeld();
+		if (kHeld & KEY_L && kHeld & KEY_R) {
 			aptSetChainloader(0x0004000000033500, 2);
 			break;
 		}

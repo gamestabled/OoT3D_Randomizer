@@ -26,7 +26,7 @@ public:
     ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<std::string> categories_)
         : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)) {}
 
-    ItemOverride_Key key() const {
+    ItemOverride_Key Key() const {
         ItemOverride_Key key;
         key.all = 0;
 
@@ -36,16 +36,36 @@ public:
         return key;
     }
 
-    void use() {
+    void Use() {
       used = true;
     }
 
-    bool isUsed() const {
+    bool IsUsed() const {
       return used;
     }
 
-    std::string_view getName() const {
+    bool IsAddedToPool() const {
+      return addedToPool;
+    }
+
+    void AddToPool() {
+      addedToPool = true;
+    }
+
+    std::string_view GetName() const {
       return name;
+    }
+
+    std::string_view GetPlacedItemName() const {
+      return placedItem.GetName();
+    }
+
+    void SetPlacedItem(Item item) {
+      placedItem = std::move(item);
+    }
+
+    void ApplyPlacedItemEffect() {
+      placedItem.ApplyEffect();
     }
 
 private:
@@ -54,8 +74,6 @@ private:
     u8 flag;
     bool used = false;
 
-
-public:
     std::string name;
     std::vector<std::string> categories;
     bool addedToPool = false;
@@ -588,6 +606,82 @@ extern ItemLocation Colossus_GreatFairyReward;
 extern ItemLocation DMT_GreatFairyReward;
 extern ItemLocation DMC_GreatFairyReward;
 extern ItemLocation OGC_GreatFairyReward;
+
+/*-------------------------------
+          --- SHOPS ---
+  -------------------------------*/
+
+extern ItemLocation KF_ShopItem1;
+extern ItemLocation KF_ShopItem2;
+extern ItemLocation KF_ShopItem3;
+extern ItemLocation KF_ShopItem4;
+extern ItemLocation KF_ShopItem5;
+extern ItemLocation KF_ShopItem6;
+extern ItemLocation KF_ShopItem7;
+extern ItemLocation KF_ShopItem8;
+
+extern ItemLocation Kak_PotionShopItem1;
+extern ItemLocation Kak_PotionShopItem2;
+extern ItemLocation Kak_PotionShopItem3;
+extern ItemLocation Kak_PotionShopItem4;
+extern ItemLocation Kak_PotionShopItem5;
+extern ItemLocation Kak_PotionShopItem6;
+extern ItemLocation Kak_PotionShopItem7;
+extern ItemLocation Kak_PotionShopItem8;
+
+extern ItemLocation MK_BombchuShopItem1;
+extern ItemLocation MK_BombchuShopItem2;
+extern ItemLocation MK_BombchuShopItem3;
+extern ItemLocation MK_BombchuShopItem4;
+extern ItemLocation MK_BombchuShopItem5;
+extern ItemLocation MK_BombchuShopItem6;
+extern ItemLocation MK_BombchuShopItem7;
+extern ItemLocation MK_BombchuShopItem8;
+
+extern ItemLocation MK_PotionShopItem1;
+extern ItemLocation MK_PotionShopItem2;
+extern ItemLocation MK_PotionShopItem3;
+extern ItemLocation MK_PotionShopItem4;
+extern ItemLocation MK_PotionShopItem5;
+extern ItemLocation MK_PotionShopItem6;
+extern ItemLocation MK_PotionShopItem7;
+extern ItemLocation MK_PotionShopItem8;
+
+extern ItemLocation MK_BazaarItem1;
+extern ItemLocation MK_BazaarItem2;
+extern ItemLocation MK_BazaarItem3;
+extern ItemLocation MK_BazaarItem4;
+extern ItemLocation MK_BazaarItem5;
+extern ItemLocation MK_BazaarItem6;
+extern ItemLocation MK_BazaarItem7;
+extern ItemLocation MK_BazaarItem8;
+
+extern ItemLocation Kak_BazaarItem1;
+extern ItemLocation Kak_BazaarItem2;
+extern ItemLocation Kak_BazaarItem3;
+extern ItemLocation Kak_BazaarItem4;
+extern ItemLocation Kak_BazaarItem5;
+extern ItemLocation Kak_BazaarItem6;
+extern ItemLocation Kak_BazaarItem7;
+extern ItemLocation Kak_BazaarItem8;
+
+extern ItemLocation ZD_ShopItem1;
+extern ItemLocation ZD_ShopItem2;
+extern ItemLocation ZD_ShopItem3;
+extern ItemLocation ZD_ShopItem4;
+extern ItemLocation ZD_ShopItem5;
+extern ItemLocation ZD_ShopItem6;
+extern ItemLocation ZD_ShopItem7;
+extern ItemLocation ZD_ShopItem8;
+
+extern ItemLocation GC_ShopItem1;
+extern ItemLocation GC_ShopItem2;
+extern ItemLocation GC_ShopItem3;
+extern ItemLocation GC_ShopItem4;
+extern ItemLocation GC_ShopItem5;
+extern ItemLocation GC_ShopItem6;
+extern ItemLocation GC_ShopItem7;
+extern ItemLocation GC_ShopItem8;
 
 extern const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements;

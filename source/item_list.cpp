@@ -11,6 +11,8 @@ using namespace Settings;
 constexpr auto NoEffect = []{};
 
 // Set the logic variable for this item to be true when it gets placed
+constexpr auto DekuNutEffect              = []{Nuts          = true;};
+constexpr auto DekuStickEffect            = []{Sticks        = true;};
 constexpr auto KokiriSwordEffect          = []{KokiriSword   = true;};
 constexpr auto DekuShieldEffect           = []{DekuShield    = true;};
 constexpr auto HylianShieldEffect         = []{HylianShield  = true;};
@@ -123,6 +125,7 @@ Item A_ZoraTunic                = Item("Zora Tunic",      ITEMTYPE_ITEM, GI_TUNI
 Item A_GerudoToken              = Item("Gerudo Token",    ITEMTYPE_ITEM, GI_GERUDO_CARD,    false, GerudoTokenEffect);
 Item A_MagicBean                = Item("Magic Bean",      ITEMTYPE_ITEM, GI_BEAN,           false, MagicBeanEffect);
 Item A_MagicBeanPack            = Item("Magic Bean Pack", ITEMTYPE_ITEM, 0xC9,              false, MagicBeanPackEffect);
+Item A_DoubleDefense            = Item("Double Defense",  ITEMTYPE_ITEM, 0xB8,              false, NoEffect);
 
 Item GoldSkulltulaToken         = Item("Gold Skulltula Token", ITEMTYPE_TOKEN, GI_SKULL_TOKEN, false, GoldSkulltulaTokenEffect);
 
@@ -222,20 +225,51 @@ Item HugeRupee                  = Item("Huge Rupee",       ITEMTYPE_ITEM, GI_RUP
 Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEART_PIECE,       false, NoEffect);
 Item HeartContainer             = Item("Heart Container",  ITEMTYPE_ITEM, GI_HEART_CONTAINER_2, false, NoEffect);
 Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,          false, NoEffect);
+Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN, false, NoEffect);
 
 //Refills
-Item Bombs5                     = Item("Bomb Refill 5",    ITEMTYPE_ITEM, GI_BOMBS_5,           false, NoEffect);
-Item Bombs10                    = Item("Bomb Refill 10",   ITEMTYPE_ITEM, GI_BOMBS_10,          false, NoEffect);
-Item Bombs20                    = Item("Bomb Refill 20",   ITEMTYPE_ITEM, GI_BOMBS_20,          false, NoEffect);
-Item Arrows5                    = Item("Arrow Refill 5",   ITEMTYPE_ITEM, GI_ARROWS_SMALL,      false, NoEffect);
-Item Arrows10                   = Item("Arrow Refill 10",  ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,     false, NoEffect);
-Item Arrows30                   = Item("Arrow Refill 30",  ITEMTYPE_ITEM, GI_ARROWS_LARGE,      false, NoEffect);
+Item Bombs5                     = Item("Bombs (5)",        ITEMTYPE_ITEM, GI_BOMBS_5,           false, NoEffect);
+Item Bombs10                    = Item("Bombs (10)",       ITEMTYPE_ITEM, GI_BOMBS_10,          false, NoEffect);
+Item Bombs20                    = Item("Bombs (20)",       ITEMTYPE_ITEM, GI_BOMBS_20,          false, NoEffect);
+Item Arrows5                    = Item("Arrows (5)",       ITEMTYPE_ITEM, GI_ARROWS_SMALL,      false, NoEffect);
+Item Arrows10                   = Item("Arrows (10)",      ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,     false, NoEffect);
+Item Arrows30                   = Item("Arrows (30)",      ITEMTYPE_ITEM, GI_ARROWS_LARGE,      false, NoEffect);
+Item DekuNuts5                  = Item("Deku Nuts (5)",    ITEMTYPE_ITEM, GI_NUTS_5,            false, NoEffect);
+Item DekuNuts10                 = Item("Deku Nuts (10)",   ITEMTYPE_ITEM, GI_NUTS_10,           false, NoEffect);
+Item DekuSeeds30                = Item("Deku Seeds (30)",  ITEMTYPE_ITEM, GI_SEEDS_30,          false, NoEffect);
+Item DekuStick1                 = Item("Deku Stick (1)",   ITEMTYPE_ITEM, GI_STICKS_1,          false, NoEffect);
 
-Item DekuNuts5                  = Item("Deku Nuts 5",      ITEMTYPE_ITEM, GI_NUTS_5,            false, NoEffect);
-Item DekuNuts10                 = Item("Deku Nuts 10",     ITEMTYPE_ITEM, GI_NUTS_10,           false, NoEffect);
-Item DekuSeeds30                = Item("Deku Seeds 30",    ITEMTYPE_ITEM, GI_SEEDS_30,          false, NoEffect);
-
-Item DekuStick1                 = Item("Deku Stick",       ITEMTYPE_ITEM, GI_STICKS_1,          false, NoEffect);
+Item BuyDekuNut5                = Item("Buy Deku Nut (5)",    ITEMTYPE_SHOP, 0x00, false, DekuNutEffect);
+Item BuyArrows30                = Item("Buy Arrows (30)",     ITEMTYPE_SHOP, 0x01, false, NoEffect);
+Item BuyArrows50                = Item("Buy Arrows (50)",     ITEMTYPE_SHOP, 0x02, false, NoEffect);
+Item BuyBombs525                = Item("Buy Bombs (5) [25]",  ITEMTYPE_SHOP, 0x03, false, NoEffect);
+Item BuyDekuNut10               = Item("Buy Deku Nut (10)",   ITEMTYPE_SHOP, 0x04, false, DekuNutEffect);
+Item BuyDekuStick1              = Item("Buy Deku Stick (1)",  ITEMTYPE_SHOP, 0x05, false, DekuStickEffect);
+Item BuyBombs10                 = Item("Buy Bombs (10)",      ITEMTYPE_SHOP, 0x06, false, NoEffect);
+Item BuyFish                    = Item("Buy Fish",            ITEMTYPE_SHOP, 0x07, false, NoEffect);
+Item BuyRedPotion30             = Item("Buy Red Potion [30]", ITEMTYPE_SHOP, 0x08, false, NoEffect);
+Item BuyGreenPotion             = Item("Buy Green Potion",    ITEMTYPE_SHOP, 0x09, false, NoEffect);
+Item BuyBluePotion              = Item("Buy Blue Potion",     ITEMTYPE_SHOP, 0x0A, false, NoEffect);
+Item BuyHylianShield            = Item("Buy Hylian Shield",   ITEMTYPE_SHOP, 0x0C, false, HylianShieldEffect);
+Item BuyDekuShield              = Item("Buy Deku Shield",     ITEMTYPE_SHOP, 0x0D, false, DekuShieldEffect);
+Item BuyGoronTunic              = Item("Buy Goron Tunic",     ITEMTYPE_SHOP, 0x0E, false, NoEffect);
+Item BuyZoraTunic               = Item("Buy Zora Tunic",      ITEMTYPE_SHOP, 0x0F, false, NoEffect);
+Item BuyHeart                   = Item("Buy Heart",           ITEMTYPE_SHOP, 0x10, false, NoEffect);
+Item BuyBombchu10               = Item("Buy Bombchu (10)",    ITEMTYPE_SHOP, 0x15, false, NoEffect);
+Item BuyBombchu20               = Item("Buy Bombchu (20)",    ITEMTYPE_SHOP, 0x16, false, NoEffect);
+Item BuyBombchu5                = Item("Buy Bombchu (5)",     ITEMTYPE_SHOP, 0x18, false, NoEffect);
+Item BuyDekuSeeds30             = Item("Buy Deku Seeds (30)", ITEMTYPE_SHOP, 0x1D, false, NoEffect);
+Item SoldOut                    = Item("Sold Out",            ITEMTYPE_SHOP, 0x26, false, NoEffect);
+Item BuyBlueFire                = Item("Buy Blue Fire",       ITEMTYPE_SHOP, 0x27, false, NoEffect);
+Item BuyBottleBug               = Item("Buy Bottle Bug",      ITEMTYPE_SHOP, 0x28, false, NoEffect);
+Item BuyPoe                     = Item("Buy Poe",             ITEMTYPE_SHOP, 0x2A, false, NoEffect);
+Item BuyFairysSpirit            = Item("Buy Fairy's Spirit",  ITEMTYPE_SHOP, 0x2B, false, NoEffect);
+Item BuyArrows10                = Item("Buy Arrows (10)",     ITEMTYPE_SHOP, 0x2C, false, NoEffect);
+Item BuyBombs20                 = Item("Buy Bombs (20)",      ITEMTYPE_SHOP, 0x2D, false, NoEffect);
+Item BuyBombs30                 = Item("Buy Bombs (30)",      ITEMTYPE_SHOP, 0x2E, false, NoEffect);
+Item BuyBombs535                = Item("Buy Bombs (5) [35]",  ITEMTYPE_SHOP, 0x2F, false, NoEffect);
+Item BuyRedPotion40             = Item("Buy Red Potion [40]", ITEMTYPE_SHOP, 0x30, false, NoEffect);
+Item BuyRedPotion50             = Item("Buy Red Potion [50]", ITEMTYPE_SHOP, 0x31, false, NoEffect);
 
 //Stones and Medallions
 Item A_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  false, KokiriEmeraldEffect);
@@ -247,6 +281,7 @@ Item A_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWAR
 Item A_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008,  false, SpiritMedallionEffect);
 Item A_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010,  false, ShadowMedallionEffect);
 Item A_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020,  false, LightMedallionEffect);
+
 
 //This pool will be used to give placement priority for items that can advance location access
 std::vector<Item> AdvancementItemPool = {};
@@ -279,7 +314,7 @@ void GenerateItemPool() {
     GreenRupee,
     A_DekuShield,
     A_HylianShield,
-    A_MagicBeanPack,
+    A_DoubleDefense,
 
     A_EmptyBottle,
     A_RedPotionBottle,
@@ -330,6 +365,8 @@ void GenerateItemPool() {
   AddItemToPool(HugeRupee, 3);
 
   AddItemToPool(PieceOfHeart, 35);
+  AddItemToPool(TreasureGameHeart);
+  AddItemToPool(HeartContainer, 8);
 }
 /*Adds extra shuffled items to the item Pool
   Checks must also be implemented in Playthrough::PlaceSetItems()

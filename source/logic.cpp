@@ -151,9 +151,6 @@ namespace Logic {
   //Shops
   bool BuyDekuShield   = false;
   bool BuyHylianShield = false;
-  bool BuyDekuNut5     = false;
-  bool BuyDekuNut10    = false;
-  bool BuyDekuStick1   = false;
   bool BuyBottleBug    = false;
   bool BuyBlueFire     = false;
   bool BuyBottledFish  = false;
@@ -401,8 +398,8 @@ namespace Logic {
     Bombs        = BombBag;
     DekuShield   = BuyDekuShield   || DekuShield;   //TODO: Change back once logic testing is done
     HylianShield = BuyHylianShield || HylianShield;
-    Nuts         = BuyDekuNut5     || BuyDekuNut10 || DekuNutDrop;
-    Sticks       = BuyDekuStick1   || DekuStickDrop;
+    Nuts         = DekuNutDrop || Nuts;
+    Sticks       = DekuStickDrop || Sticks;
     Bugs         = HasBottle && (BugsAccess      || BuyBottleBug);
     BlueFire     = HasBottle && (BlueFireAccess  || BuyBlueFire);
     Fish         = HasBottle && (FishAccess      || BuyBottledFish);

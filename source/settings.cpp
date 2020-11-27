@@ -2,38 +2,39 @@
 
 namespace Settings {
                                                                                       //logic variable       setting name                 options
-  u8 Logic                              = 0;     Option O_Logic               = Option(&Logic,               "Logic",                  {"Glitchless", "No Logic"});
-  u8 OpenForest                         = 0;     Option O_OpenForest          = Option(&OpenForest,          "Forest",                 {"Open", "Closed"});
-  u8 OpenKakariko                       = 0;     Option O_OpenKakariko        = Option(&OpenKakariko,        "Kakariko Gate",          {"Open", "Closed"}, 1);
-  u8 Bridge                             = 0;     Option O_Bridge              = Option(&Bridge,              "Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons"}, 1);
-  u8 GerudoFortress                     = 0;     Option O_GerudoFortress      = Option(&GerudoFortress,      "Gerudo Fortress",        {"Normal", "Fast", "Open"});
-  u8 DamageMultiplier                   = 0;     Option O_DamageMultiplier    = Option(&DamageMultiplier,    "Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"}, 1);
-  u8 ZorasFountain                      = 0;     Option O_ZorasFountain       = Option(&ZorasFountain,       "Zora's Fountain",        {"Normal", "Open"});
-  u8 StartingAge                        = 0;     Option O_StartingAge         = Option(&StartingAge,         "Starting Age",           {"Adult", "Child"}, 1);
-  u8 TimeOfDay                          = 0;     Option O_TimeOfDay           = Option(&TimeOfDay,           "Starting Time",          {"Day", "Night"});
-  u8 Keysanity                          = 0;     Option O_Keysanity           = Option(&Keysanity,           "Small Keys",             {"Vanilla", "Dungeon Only", "All Locations"});
-  u8 BossKeysanity                      = 0;     Option O_BossKeysanity       = Option(&BossKeysanity,       "Boss Keys",              {"Vanilla", "Dungeon Only", "All Locations"});
-  u8 MapsAndCompasses                   = 0;     Option O_MapsAndCompasses    = Option(&MapsAndCompasses,    "Maps/Compasses",         {"Vanilla", "Dungeon Only", "All Locations"});
-  u8 Skullsanity                        = 0;     Option O_Skullsanity         = Option(&Skullsanity,         "Tokensanity",            {"Vanilla",                 "All Locations"});
-  u8 Scrubsanity                        = 0;     Option O_Scrubsanity         = Option(&Scrubsanity,         "Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"});
+  u8 Logic                              = 0;     Option O_Logic               = Option(&Logic,               "Logic",                {"Glitchless", "No Logic"});
+  u8 OpenForest                         = 0;     Option O_OpenForest          = Option(&OpenForest,          "Forest",               {"Open", "Closed"});
+  u8 OpenKakariko                       = 0;     Option O_OpenKakariko        = Option(&OpenKakariko,        "Kakariko Gate",        {"Open", "Closed"}, 1);
+  u8 Bridge                             = 0;     Option O_Bridge              = Option(&Bridge,              "Rainbow Bridge",       {"Open", "Vanilla", "Stones", "Medallions", "Dungeons"}, 1);
+  u8 GerudoFortress                     = 0;     Option O_GerudoFortress      = Option(&GerudoFortress,      "Gerudo Fortress",      {"Normal", "Fast", "Open"});
+  u8 DamageMultiplier                   = 0;     Option O_DamageMultiplier    = Option(&DamageMultiplier,    "Damage Multiplier",    {"Half", "Default", "Double", "Quadruple", "OHKO"}, 1);
+  u8 ZorasFountain                      = 0;     Option O_ZorasFountain       = Option(&ZorasFountain,       "Zora's Fountain",      {"Normal", "Open"});
+  u8 StartingAge                        = 0;     Option O_StartingAge         = Option(&StartingAge,         "Starting Age",         {"Adult", "Child"}, 1);
+  u8 TimeOfDay                          = 0;     Option O_TimeOfDay           = Option(&TimeOfDay,           "Starting Time",        {"Day", "Night"});
+  u8 Keysanity                          = 0;     Option O_Keysanity           = Option(&Keysanity,           "Small Keys",           {"Vanilla", "Dungeon Only", "All Locations"});
+  u8 BossKeysanity                      = 0;     Option O_BossKeysanity       = Option(&BossKeysanity,       "Boss Keys",            {"Vanilla", "Dungeon Only", "All Locations"});
+  u8 MapsAndCompasses                   = 0;     Option O_MapsAndCompasses    = Option(&MapsAndCompasses,    "Maps/Compasses",       {"Vanilla", "Dungeon Only", "All Locations"});
+  u8 Skullsanity                        = 0;     Option O_Skullsanity         = Option(&Skullsanity,         "Tokensanity",          {"Vanilla",                 "All Locations"});
+  u8 Scrubsanity                        = 0;     Option O_Scrubsanity         = Option(&Scrubsanity,         "Scrub Shuffle",        {"Off", "Affordable", "Expensive", "Random Prices"});
+  u8 BigPoeTargetCount                  = 0;     Option O_BigPoeTargetCount   = Option(&BigPoeTargetCount,   "Big Poe Target Count", {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
   u8 LACSCondition                      = 0;
 
   std::string seed                      = "";
 
   bool HasNightStart                    = false;
-  bool BombchusInLogic                  = false; Option O_BombchusInLogic     = Option(&BombchusInLogic,     "Bombchus in Logic",      {"Off", "On"});
+  bool BombchusInLogic                  = false; Option O_BombchusInLogic     = Option(&BombchusInLogic,     "Bombchus in Logic",    {"Off", "On"});
   bool BombchuDrop                      = false;
-  bool OpenDoorOfTime                   = false; Option O_DoorOfTime          = Option(&OpenDoorOfTime,      "Door of Time",           {"Closed", "Open"}, 1);
+  bool OpenDoorOfTime                   = false; Option O_DoorOfTime          = Option(&OpenDoorOfTime,      "Door of Time",         {"Closed", "Open"}, 1);
   bool SkippedTrials                    = false;
   bool ShuffleDungeonEntrances          = false;
   bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
-  bool ShuffleWeirdEgg                  = false; Option O_ShuffleWeirdEgg     = Option(&ShuffleWeirdEgg,     "Shuffle Weird Egg",      {"Off", "On"});
-  bool ShuffleGerudoToken               = false; Option O_ShuffleGerudoToken  = Option(&ShuffleGerudoToken,  "Shuffle Gerudo Token",   {"Off", "On"});
-  bool ShuffleKokiriSword               = false; Option O_ShuffleKokiriSword  = Option(&ShuffleKokiriSword,  "Shuffle Kokiri Sword",   {"Off", "On"});
-  bool ShuffleMagicBeans                = false; Option O_ShuffleMagicBeans   = Option(&ShuffleMagicBeans,   "Shuffle Magic Beans",    {"Off", "On"});
-  bool ShuffleOcarinas                  = false; Option O_ShuffleOcarinas     = Option(&ShuffleOcarinas,     "Shuffle Ocarinas",       {"Off", "On"});
+  bool ShuffleWeirdEgg                  = false; Option O_ShuffleWeirdEgg     = Option(&ShuffleWeirdEgg,     "Shuffle Weird Egg",    {"Off", "On"});
+  bool ShuffleGerudoToken               = false; Option O_ShuffleGerudoToken  = Option(&ShuffleGerudoToken,  "Shuffle Gerudo Token", {"Off", "On"});
+  bool ShuffleKokiriSword               = false; Option O_ShuffleKokiriSword  = Option(&ShuffleKokiriSword,  "Shuffle Kokiri Sword", {"Off", "On"});
+  bool ShuffleMagicBeans                = false; Option O_ShuffleMagicBeans   = Option(&ShuffleMagicBeans,   "Shuffle Magic Beans",  {"Off", "On"});
+  bool ShuffleOcarinas                  = false; Option O_ShuffleOcarinas     = Option(&ShuffleOcarinas,     "Shuffle Ocarinas",     {"Off", "On"});
   bool ShuffleSongs                     = false;
   bool Shopsanity                       = false;
 
@@ -152,11 +153,15 @@ namespace Settings {
     &O_BossKeysanity,
     &O_MapsAndCompasses,
   };
+  std::vector<Option *> timesaverOptions = {
+    &O_BigPoeTargetCount,
+  };
 
   Menu various             = Menu("Various Settings",      variousOptions);
   Menu world               = Menu("World Settings",        worldOptions);
   Menu shuffle             = Menu("Shuffle Settings",      shuffleOptions);
   Menu shuffleDungeonItems = Menu("Shuffle Dungeon Items", shuffleDungeonItemOptions);
+  Menu timesaverSettings   = Menu("Timesaver Settings",    timesaverOptions);
 
   //adding a menu with no options crashes, will fix later
   std::vector<Menu *> mainMenu = {
@@ -164,6 +169,7 @@ namespace Settings {
     &world,
     &shuffle,
     &shuffleDungeonItems,
+    &timesaverSettings,
   };
 
   SettingsContext FillContext() {
@@ -182,6 +188,8 @@ namespace Settings {
     ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
     ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleOcarinas     = (ShuffleOcarinas)   ? 1 : 0;
+
+    ctx.bigPoeTargetCount = BigPoeTargetCount + 1;
 
     ctx.dungeonRewardBitMask = 0x00000020; //light medallion
     return ctx;

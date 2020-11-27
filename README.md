@@ -14,6 +14,8 @@ First, in the code folder, use ```make```. This should generate a ```basecode.ip
 
 Then, in the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```.
 
+To enable extra debugging features, follow the above instructions, but type ```make debug``` instead of ```make``` in the relevant steps.
+
 ## Installation
 
 On your SD card, copy the built ```basecode.ips``` to ```/luma/titles/0004000000033500/```. Also copy ```OoT3D_Randomizer.3dsx``` to ```/3ds/```.

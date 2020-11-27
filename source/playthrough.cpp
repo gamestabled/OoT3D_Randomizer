@@ -29,22 +29,22 @@ namespace Playthrough {
     static void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
         // Put item in the override table
         overrides.insert({
-          .key = loc->key(),
-          .value = item->value(),
+          .key = loc->Key(),
+          .value = item->Value(),
         });
 
         PlacementLog_Msg("\n");
-        PlacementLog_Msg(item->name);
+        PlacementLog_Msg(item->GetName());
         PlacementLog_Msg(" placed at ");
-        PlacementLog_Msg(loc->name);
+        PlacementLog_Msg(loc->GetName());
         PlacementLog_Msg("\n\n");
 
         if (applyEffectImmediately) {
-          item->applyEffect();
-          loc->use();
+          item->ApplyEffect();
+          loc->Use();
         }
 
-        loc->placedItem = *item;
+        loc->SetPlacedItem(*item);
         totalItemsPlaced++;
         printf("\x1b[2;20HPlacing Items...");
         if (Settings::Logic == LOGIC_GLITCHLESS) {
@@ -58,7 +58,7 @@ namespace Playthrough {
       for (size_t i = 0; i < maxKeys; i++) {
         std::vector<ItemLocation *> dungeonPool;
         for (const ItemLocationKeyPairing& ilkp : KeyRequirements) {
-          if (ilkp.keysRequired <= i && ilkp.loc->placedItem.name == "No Item") {
+          if (ilkp.keysRequired <= i && ilkp.loc->GetPlacedItemName() == "No Item") {
             dungeonPool.push_back(ilkp.loc);
           }
         }
@@ -71,7 +71,7 @@ namespace Playthrough {
     static void RandomizeDungeonItem(const Container& dungeonLocations, Item* item, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
       std::vector<ItemLocation *> dungeonPool;
       for (const ItemLocationKeyPairing& ilkp : dungeonLocations) {
-        if (ilkp.loc->placedItem.name == "No Item") {
+        if (ilkp.loc->GetPlacedItemName() == "No Item") {
           dungeonPool.push_back(ilkp.loc);
         }
       }
@@ -175,14 +175,14 @@ namespace Playthrough {
                 ItemLocationPairing locPair = area->locations[k];
                 ItemLocation *location = locPair.location;
 
-                if (locPair.ConditionsMet() && !location->addedToPool) {
+                if (locPair.ConditionsMet() && !location->IsAddedToPool()) {
                   // PlacementLog_Msg("NEW LOCATION FOUND: ");
                   // PlacementLog_Msg(location->name);
 
                   totalLocationsFound++;
-                  location->addedToPool = true;
+                  location->AddToPool();
 
-                  if (location->placedItem.name == "No Item") {
+                  if (location->GetPlacedItemName() == "No Item") {
                     PlacementLog_Msg(" | NO ITEM\n");
                     AccessibleLocationPool.push_back(location);
                     if (accessibleLocationIterations > 2) {
@@ -191,15 +191,15 @@ namespace Playthrough {
                     Logic::CurAccessibleLocations++;
                   } else {
                     PlacementLog_Msg(" | ITEM HERE\n");
-                    location->placedItem.applyEffect();
-                    location->use();
+                    location->ApplyPlacedItemEffect();
+                    location->Use();
                     advancementChange = true;
                   }
                 }
               }
 
               //erase ItemLocationPairings that are placed into the AccessibleLocationPool
-              erase_if(area->locations, [](const ItemLocationPairing& ilp){ return ilp.location->isUsed();});
+              erase_if(area->locations, [](const ItemLocationPairing& ilp){ return ilp.location->IsUsed();});
 
               //erase ExitPairings whose conditions have been met while the exit has full day time access as both ages
               erase_if(area->exits, [](const ExitPairing& ep){ return ep.ConditionsMet() && ep.GetExit()->AllAccess();});
@@ -258,7 +258,7 @@ namespace Playthrough {
 
         AdvancementItemPool.erase(AdvancementItemPool.begin() + itemIdx);
         //erase locations that have been used
-        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->isUsed();});
+        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->IsUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
@@ -276,7 +276,7 @@ namespace Playthrough {
 
         ItemPool.erase(ItemPool.begin() + itemIdx);
         //erase locations that have been used
-        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->isUsed();});
+        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->IsUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update(overrides);
