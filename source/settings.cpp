@@ -189,7 +189,7 @@ namespace Settings {
     ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleOcarinas     = (ShuffleOcarinas)   ? 1 : 0;
 
-    ctx.bigPoeTargetCount = BigPoeTargetCount;
+    ctx.bigPoeTargetCount = BigPoeTargetCount + 1;
 
     ctx.dungeonRewardBitMask = 0x00000020; //light medallion
     return ctx;

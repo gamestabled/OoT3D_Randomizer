@@ -510,6 +510,9 @@ ItemLocation OGC_GreatFairyReward                         = ItemLocation(0xFF, I
 
 /*-------------------------------
           --- SHOPS ---
+  8     6               2     4
+
+  7     5               1     3
   -------------------------------*/
 
 ItemLocation KF_ShopItem1                                 = ItemLocation(0x2D, ITEMLOCATIONTYPE_BASE,          0x30, "KF Shop Item 1",                                   {"Kokiri Forest", "Forest", "Shops"});
