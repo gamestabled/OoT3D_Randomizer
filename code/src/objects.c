@@ -5,23 +5,19 @@
 ExtendedObjectContext rExtendedObjectCtx = { 0 };
 
 s32 ExtendedObject_Spawn(ObjectContext* objectCtx, s16 objectId) {
-    return Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId) + OBJECT_EXCHANGE_BANK_MAX;
+    return Object_Spawn(&rExtendedObjectCtx, objectId) + OBJECT_EXCHANGE_BANK_MAX;
 }
 
-void EntendedObject_Clear() {
-    s32 i;
-    
-    rExtendedObjectCtx.num = 0;
-    for (i = 0; i < EXTENDED_OBJECT_EXCHANGE_BANK_MAX; ++i) {
-        rExtendedObjectCtx.status[i].id = 0;
-    }
+void ExtendedObject_Clear(GlobalContext* globalCtx, ObjectContext* objectCtx) {
+    Object_Clear(globalCtx, objectCtx);
+    Object_Clear(globalCtx, &rExtendedObjectCtx);
 }
 
 s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId) {
     s32 index = Object_GetIndex(objectCtx, objectId);
     if (index < 0) {
         s32 i;
-        for (i = 0; i < EXTENDED_OBJECT_EXCHANGE_BANK_MAX; ++i) {
+        for (i = 0; i < OBJECT_EXCHANGE_BANK_MAX; ++i) {
             s32 id = rExtendedObjectCtx.status[i].id;
             id = (id < 0 ? -id : id);
             if (id == objectId) return i + OBJECT_EXCHANGE_BANK_MAX;

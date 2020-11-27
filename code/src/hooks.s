@@ -147,21 +147,6 @@ returnGraphicID_354BB8:
     pop {lr}
     bx lr
 
-#.global hook_OverrideGraphicID_495CD0
-#hook_OverrideGraphicID_495CD0:
-#    push {r0,r1,lr}
-#    bl hook_OverrideGraphicID
-#    cpy r1,r0
-#    cmp r0,#-0x1
-#    pop {r0}
-#    bne returnGraphicID_495CD0
-#    ldrsh r1,[r0,#0x2]
-#returnGraphicID_495CD0:
-#    cpy r0,r1
-#    pop {r1,lr}
-#    pop {lr}
-#    bx lr
-
 # TODO: Text ID in game gets messed up,
 # Gives the "What's that?" text instead of
 # the text about moving the statue
@@ -201,14 +186,6 @@ hook_ModelSpawnGetObjectStatus:
     cpy r0,r1
     bl ExtendedObject_GetStatus
     pop {r1-r12, lr}
-    bx lr
-
-.global hook_InitSceneClearExtendedObjects
-hook_InitSceneClearExtendedObjects:
-    push {r0-r12, lr}
-    bl EntendedObject_Clear
-    pop {r0-r12, lr}
-    mov r0,#0x2
     bx lr
 
 .section .loader

@@ -56,11 +56,6 @@ OverrideGraphicID_patch_35495C:
 OverrideGraphicID_patch_354BB8:
     bl hook_OverrideGraphicID_354BB8
 
-#.section .patch_OverrideGraphicID_495CD0
-#.global OverrideGraphicID_patch_495CD0
-#OverrideGraphicID_patch_495CD0:
-#    bl hook_OverrideGraphicID_495CD0
-
 .section .patch_OverrideGraphicID_4BC604
 .global OverrideGraphicID_patch_4BC604
 OverrideGraphicID_patch_4BC604:
@@ -272,10 +267,10 @@ RainbowBridge_patch:
 ModelSpawnGetObjectStatus_patch:
     bl hook_ModelSpawnGetObjectStatus
 
-.section .patch_InitSceneClearExtendedObjects
-.global InitSceneClearExtendedObjects_patch
-InitSceneClearExtendedObjects_patch:
-    bl hook_InitSceneClearExtendedObjects
+.section .patch_ExtendedObjectClear
+.global ExtendedObjectClear_patch
+ExtendedObjectClear_patch:
+    bl ExtendedObject_Clear
 
 .section .patch_SariasGift
 .global SariasGift_patch

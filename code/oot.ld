@@ -200,6 +200,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextTwo)
 	}
 
+	.patch_ExtendedObjectClear 0x44E754 : {
+		*(.patch_ExtendedObjectClear)
+	}
+
 	.patch_SariasGift 0x44F190 : {
 		*(.patch_SariasGift)
 	}
