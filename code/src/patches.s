@@ -289,6 +289,11 @@ DekuTheaterMaskOfTruth_patch:
     mov r0,#0x7A
     nop
 
+.section .patch_PoeCollectorCheckPoints
+.global PoeCollectorCheckPoints_patch
+PoeCollectorCheckPoints_patch:
+    bl hook_PoeCollectorCheckPoints
+
 .section .patch_loader
 .global loader_patch
 

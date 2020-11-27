@@ -188,6 +188,14 @@ hook_ModelSpawnGetObjectStatus:
     pop {r1-r12, lr}
     bx lr
 
+.global hook_PoeCollectorCheckPoints
+hook_PoeCollectorCheckPoints:
+    push {r0-r12, lr}
+    bl EnGb_CheckPoints
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

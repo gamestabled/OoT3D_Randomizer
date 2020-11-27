@@ -28,6 +28,10 @@ SECTIONS
 		*(.patch_DampeCheckCollectibleFlag)
 	}
 
+	.patch_PoeCollectorCheckPoints 0x19091C : {
+		*(.patch_PoeCollectorCheckPoints)
+	}
+
 	.patch_ChildRollingGoron 0x194B18 : {
 		*(.patch_ChildRollingGoron)
 	}

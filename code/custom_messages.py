@@ -375,7 +375,7 @@ for textId in custom_messages:
             data += 'const char %s[] = "%s";\n'%(offset, custom_messages[textId][3][i])
         cfile += '        { %s, %s },\n'%(offset, length)
     cfile += '    },\n'
-cfile += '};'
+cfile += '};\n'
 
 with open("src/custom_messages.c", 'w') as c:
     c.write(data)
