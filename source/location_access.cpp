@@ -129,11 +129,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&KF_Main, []{return true;}),
   });
 
-  Exit KF_KokiriShop = Exit("KF Kokiri Shop", "", "", NO_DAY_NIGHT_CYCLE, {
-                  //Events
-                  EventPairing(&BuyDekuShield, []{return true;}), //temporary
-                  EventPairing(&BuyDekuStick1, []{return true;}),
-                }, {
+  Exit KF_KokiriShop = Exit("KF Kokiri Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   // ItemLocationPairing(&KF_KokiriShopItem1, []{return true;}),
                   // ItemLocationPairing(&KF_KokiriShopItem2, []{return true;}),
@@ -205,7 +201,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //ItemLocationPairing(&LW_DekuScrubNearDekuTheaterRight, []{return IsChild && CanStunDeku;}),
                   //ItemLocationPairing(&LW_DekuScrubNearDekuTheaterLeft,  []{return IsChild && CanStunDeku;})
                   ItemLocationPairing(&LW_GS_AboveTheater,         []{return IsAdult && AtNight && (LW_BeyondMido.CanPlantBean() || (LogicLostWoodsGSBean && CanUse("Hookshot") && (CanUse("Longshot") || CanUse("Bow") || HasBombchus || CanUse("Dins Fire"))));}),
-                  ItemLocationPairing(&LW_GS_BeanPatchNearTheater, []{return CanPlantBugs && (CanChildAttack || (Scrubsanity == SCRUBSANITY_OFF && BuyDekuShield));}),
+                  ItemLocationPairing(&LW_GS_BeanPatchNearTheater, []{return CanPlantBugs && (CanChildAttack || (Scrubsanity == SCRUBSANITY_OFF && DekuShield));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LW_ForestExit,   []{return true;}),
@@ -2059,7 +2055,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     ItemLocationPairing(&ForestTemple_GS_LevelIslandCourtyard, []{return CanUse("Longshot") || ((ForestTemple_OutsideUpperLedge.dayAdult || ForestTemple_OutsideUpperLedge.nightAdult) && CanUse("Hookshot"));}),
                   }, {
                     //Exits
-                    ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return IsAdult || (HasExplosives || ((CanUse("Boomerang") || Nuts || BuyDekuShield) && (Sticks || KokiriSword || CanUse("Slingshot"))));})
+                    ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return IsAdult || (HasExplosives || ((CanUse("Boomerang") || Nuts || DekuShield) && (Sticks || KokiriSword || CanUse("Slingshot"))));})
   });
 
   Exit ForestTemple_NEOutdoors = Exit("Forest Temple NE Outdoors", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
