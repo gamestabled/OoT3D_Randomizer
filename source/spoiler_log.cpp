@@ -33,8 +33,12 @@ static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item)
   logtxt += '\n';
 }
 
-static auto GetSeedPath() {
+static auto GetSpoilerLogPath() {
   return "/3ds/" + Settings::seed + "-spoilerlog.txt";
+}
+
+static auto GetPlacementLogPath() {
+  return "/3ds/" + Settings::seed + "-placementlog.txt";
 }
 
 bool SpoilerLog_Write() {
@@ -43,18 +47,18 @@ bool SpoilerLog_Write() {
   logtxt += "Playthrough:\n";
   for (ItemLocation* location : advancementLocations) {
     logtxt += "    ";
-    SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
+    SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += '\n';
   }
 
   logtxt += "\nAll Locations:\n\n";
   for (ItemLocation* location : dungeonRewardLocations) {
-    SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
-    logtxt += location->addedToPool ? " ADDED\n" : " NOT ADDED\n";
+    SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+    logtxt += location->IsAddedToPool() ? " ADDED\n" : " NOT ADDED\n";
   }
   for (ItemLocation* location : allLocations) {
-    SpoilerLog_SaveLocation(location->getName(), location->placedItem.getName());
-    logtxt += location->addedToPool ? " ADDED\n" : " NOT ADDED\n";
+    SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+    logtxt += location->IsAddedToPool() ? " ADDED\n" : " NOT ADDED\n";
   }
 
   Result res = 0;
@@ -65,7 +69,7 @@ bool SpoilerLog_Write() {
   }
 
   // Open spoilerlog.txt
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&spoilerlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSeedPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&spoilerlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSpoilerLogPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 
@@ -85,18 +89,17 @@ bool PlacementLog_Write() {
   Result res = 0;
   u32 bytesWritten = 0;
 
-  //Open SD archive
+  // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
     return false;
   }
 
-  //Open placementlog.txt
-  const auto seedPath = "/3ds/" + Settings::seed + "-placementlog.txt";
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, seedPath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  // Open placementlog.txt
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, GetPlacementLogPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 
-  //write to placementlog.txt
+  // Write to placementlog.txt
   if (!R_SUCCEEDED(res = FSFILE_Write(placementlog, &bytesWritten, 0, placementtxt.c_str(), placementtxt.size(), FS_WRITE_FLUSH))) {
     return false;
   }

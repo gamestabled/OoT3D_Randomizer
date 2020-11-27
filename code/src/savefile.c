@@ -2,27 +2,25 @@
 #include "settings.h"
 
 void SaveFile_Init() {
-
-    u8 debug = 0;
-    if (debug) {
-      gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
-      gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
-      gSaveContext.questItems |= 0x3FFC0; //songs
-      gSaveContext.items[SLOT_OCARINA]  = ITEM_OCARINA_FAIRY;
-      gSaveContext.items[SLOT_HOOKSHOT] = ITEM_LONGSHOT;
-      gSaveContext.items[SLOT_HAMMER]   = ITEM_HAMMER;
-      gSaveContext.items[SLOT_FARORES_WIND] = ITEM_FARORES_WIND;
-      gSaveContext.items[SLOT_DINS_FIRE] = ITEM_DINS_FIRE;
-      gSaveContext.items[SLOT_BOMB] = ITEM_BOMB;
-      gSaveContext.items[SLOT_BOW] = ITEM_BOW;
-      gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
-      gSaveContext.magicAcquired = 1;
-      gSaveContext.magicLevel = 2;
-      gSaveContext.magic = 48;
-      gSaveContext.dungeonKeys[6] = 8;
-      gSaveContext.ammo[2] = 20; //bombs
-      gSaveContext.ammo[3] = 20; //arrows
-    }
+#ifdef ENABLE_DEBUG
+    gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
+    gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
+    gSaveContext.questItems |= 0x3FFC0; //songs
+    gSaveContext.items[SLOT_OCARINA]  = ITEM_OCARINA_FAIRY;
+    gSaveContext.items[SLOT_HOOKSHOT] = ITEM_LONGSHOT;
+    gSaveContext.items[SLOT_HAMMER]   = ITEM_HAMMER;
+    gSaveContext.items[SLOT_FARORES_WIND] = ITEM_FARORES_WIND;
+    gSaveContext.items[SLOT_DINS_FIRE] = ITEM_DINS_FIRE;
+    gSaveContext.items[SLOT_BOMB] = ITEM_BOMB;
+    gSaveContext.items[SLOT_BOW] = ITEM_BOW;
+    gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+    gSaveContext.magicAcquired = 1;
+    gSaveContext.magicLevel = 2;
+    gSaveContext.magic = 48;
+    gSaveContext.dungeonKeys[6] = 8;
+    gSaveContext.ammo[2] = 20; //bombs
+    gSaveContext.ammo[3] = 20; //arrows
+#endif
 
     //things to always set
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene

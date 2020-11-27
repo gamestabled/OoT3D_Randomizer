@@ -31,27 +31,39 @@ public:
           progressive(progressive_),
           effect(std::move(effect_)) {}
 
-    void applyEffect() {
+    void ApplyEffect() {
         effect();
         Logic::UpdateHelpers();
         return;
     }
 
-    ItemOverride_Value value() const {
+    ItemOverride_Value Value() const {
         ItemOverride_Value val;
         val.itemId = getItemId;
         return val;
     }
 
-    std::string_view getName() const {
-      return name;
+    std::string_view GetName() const {
+        return name;
     }
 
+    bool IsProgressive() const {
+        return progressive;
+    }
+
+    int GetItemID() const {
+        return getItemId;
+    }
+
+    ItemType GetItemType() const {
+        return type;
+    }
+
+private:
     std::string name;
     ItemType type;
     int  getItemId;
     bool progressive;
-private:
     std::function<void()> effect;
 };
 

@@ -167,6 +167,11 @@ endif
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
+# Debug target
+debug: CFLAGS += -g -DENABLE_DEBUG
+debug: CXXFLAGS += -g -DENABLE_DEBUG
+debug: all
+
 $(BUILD):
 	@mkdir -p $@
 

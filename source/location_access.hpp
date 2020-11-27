@@ -186,45 +186,48 @@ public:
 
       for (u32 i = 0; i < advancementNeeds.size(); i++) {
         Item item = advancementNeeds[i].item;
-        //if the conditions aren't met, then skip for now
-        if (!advancementNeeds[i].ConditionsMet()) continue;
+        // If the conditions aren't met, then skip for now
+        if (!advancementNeeds[i].ConditionsMet()) {
+          continue;
+        }
 
         u32 j;
         bool foundInPool = false;
 
-        //find the item and index in the regular item pool
+        // Find the item and index in the regular item pool
         for (j = 0; j < ItemPool.size(); j++) {
-          if (ItemPool[j].name == item.name) {
+          if (ItemPool[j].GetName() == item.GetName()) {
             foundInPool = true;
             break;
           }
         }
 
-        //if the item isn't in the pool, then it's already been added or doesn't exist
+        // If the item isn't in the pool, then it's already been added or doesn't exist
         if (!foundInPool) {
           advancementNeeds.erase(advancementNeeds.begin() + i);
           i--;
           continue;
         }
 
-        //If item is still in the item pool
+        // If item is still in the item pool
         if (foundInPool) {
           advancementNeeds[i].count--;
           AdvancementItemPool.push_back(item);
 
-          //Check item for adding progressive things
-          if (item.name == "Progressive Hookshot")   Logic::AddedProgressiveHookshots++;
-          if (item.name == "Progressive Strength")   Logic::AddedProgressiveStrengths++;
-          if (item.name == "Progressive Bomb Bag")   Logic::AddedProgressiveBombBags++;
-          if (item.name == "Progressive Bow")        Logic::AddedProgressiveBows++;
-          if (item.name == "Progressive Bullet Bag") Logic::AddedProgressiveBulletBags++;
-          if (item.name == "Progressive Wallet")     Logic::AddedProgressiveWallets++;
-          if (item.name == "Progressive Scale")      Logic::AddedProgressiveBulletBags++;
-          if (item.name == "Progressive Magic")      Logic::AddedProgressiveMagics++;
-          if (item.name == "Progressive Ocarina")    Logic::AddedProgressiveOcarinas++;
-          if (item.name == "Gold Skulltula Token")   Logic::TokensInPool++;
+          // Check item for adding progressive things
+          const auto itemName = item.GetName();
+          if (itemName == "Progressive Hookshot")   Logic::AddedProgressiveHookshots++;
+          if (itemName == "Progressive Strength")   Logic::AddedProgressiveStrengths++;
+          if (itemName == "Progressive Bomb Bag")   Logic::AddedProgressiveBombBags++;
+          if (itemName == "Progressive Bow")        Logic::AddedProgressiveBows++;
+          if (itemName == "Progressive Bullet Bag") Logic::AddedProgressiveBulletBags++;
+          if (itemName == "Progressive Wallet")     Logic::AddedProgressiveWallets++;
+          if (itemName == "Progressive Scale")      Logic::AddedProgressiveBulletBags++;
+          if (itemName == "Progressive Magic")      Logic::AddedProgressiveMagics++;
+          if (itemName == "Progressive Ocarina")    Logic::AddedProgressiveOcarinas++;
+          if (itemName == "Gold Skulltula Token")   Logic::TokensInPool++;
 
-          //then delete the item from the locations advancement needs and the regular item pool
+          // Then delete the item from the locations advancement needs and the regular item pool
           ItemPool.erase(ItemPool.begin() + j);
           if (advancementNeeds[i].count == 0) {
             advancementNeeds.erase(advancementNeeds.begin() + i);
