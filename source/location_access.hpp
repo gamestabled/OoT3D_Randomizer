@@ -12,19 +12,53 @@ class Exit;
 
 class EventPairing {
 public:
-    EventPairing(bool* event_, std::function<bool()> ConditionsMet_)
-               : event(event_),        ConditionsMet(std::move(ConditionsMet_)) {}
+    using ConditionFn = bool (*)();
+
+    explicit EventPairing(bool* event_, ConditionFn conditions_met_)
+        : event(event_),
+          conditions_met(conditions_met_) {}
+
+    bool ConditionsMet() const {
+        return conditions_met();
+    }
+
+    void EventOccurred() {
+        *event = true;
+    }
+
+private:
     bool* event;
-    std::function<bool()> ConditionsMet;
+    ConditionFn conditions_met;
 };
 
 //this class is meant to hold an item location with a boolean function to determine its accessibility from a specific area
 class ItemLocationPairing {
 public:
-    ItemLocationPairing(ItemLocation* location_, std::function<bool()> ConditionsMet_)
-                        : location(location_), ConditionsMet(std::move(ConditionsMet_)) {}
+    using ConditionFn = bool (*)();
+
+    explicit ItemLocationPairing(ItemLocation* location_, ConditionFn conditions_met_)
+         : location(location_),
+           conditions_met(conditions_met_) {}
+
+    bool ConditionsMet() const {
+        return conditions_met();
+    }
+
+    ItemLocation* GetLocation() {
+        return location;
+    }
+
+    const ItemLocation* GetLocation() const {
+        return location;
+    }
+
+    bool IsLocationUsed() const {
+        return location->IsUsed();
+    }
+
+private:
     ItemLocation* location;
-    std::function<bool()> ConditionsMet;
+    ConditionFn conditions_met;
 };
 
 class ExitPairing {
@@ -88,10 +122,32 @@ private:
 
 class AdvancementPairing {
 public:
-    AdvancementPairing(Item item_, std::function<bool()> ConditionsMet_, u8 count_ = 1)
-                      :item(std::move(item_)), ConditionsMet(std::move(ConditionsMet_)), count(count_) {}
+    using ConditionFn = bool (*)();
+
+    explicit AdvancementPairing(Item item_, ConditionFn conditions_met_, u8 count_ = 1)
+        : item(std::move(item_)),
+          conditions_met(conditions_met_),
+          count(count_) {}
+
+    const Item& GetItem() const {
+        return item;
+    }
+
+    bool ConditionsMet() const {
+        return conditions_met();
+    }
+
+    bool HasNoOccurrences() const {
+        return count == 0;
+    }
+
+    void DecreaseCount() {
+        --count;
+    }
+
+private:
     Item item;
-    std::function<bool()> ConditionsMet;
+    ConditionFn conditions_met;
     u8 count;
 };
 
@@ -137,11 +193,11 @@ public:
 
       }
 
-      for (u8 i = 0; i < events.size(); i++) {
-        EventPairing eventPair = events[i];
+      for (size_t i = 0; i < events.size(); i++) {
+        EventPairing& eventPair = events[i];
 
         if (eventPair.ConditionsMet()) {
-          *(eventPair.event) = true;
+          eventPair.EventOccurred();
           events.erase(events.begin() + i);
         }
       }
@@ -185,7 +241,7 @@ public:
     void UpdateAdvancementNeeds() {
 
       for (u32 i = 0; i < advancementNeeds.size(); i++) {
-        Item item = advancementNeeds[i].item;
+        const Item& item = advancementNeeds[i].GetItem();
         // If the conditions aren't met, then skip for now
         if (!advancementNeeds[i].ConditionsMet()) {
           continue;
@@ -211,7 +267,7 @@ public:
 
         // If item is still in the item pool
         if (foundInPool) {
-          advancementNeeds[i].count--;
+          advancementNeeds[i].DecreaseCount();
           AdvancementItemPool.push_back(item);
 
           // Check item for adding progressive things
@@ -229,7 +285,7 @@ public:
 
           // Then delete the item from the locations advancement needs and the regular item pool
           ItemPool.erase(ItemPool.begin() + j);
-          if (advancementNeeds[i].count == 0) {
+          if (advancementNeeds[i].HasNoOccurrences()) {
             advancementNeeds.erase(advancementNeeds.begin() + i);
             i--;
           }

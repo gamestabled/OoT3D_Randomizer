@@ -121,11 +121,11 @@ namespace Playthrough {
         while(advancementChange) {
           advancementChange = false;
 
-          for (u32 i = 0; i < Exits::ExitPool.size(); i++) {
+          for (size_t i = 0; i < Exits::ExitPool.size(); i++) {
             //iterate twice on each area for different ages
             for (u8 age : {AGE_CHILD, AGE_ADULT}) {
               Logic::Age = age;
-              Exit *area = Exits::ExitPool[i];
+              Exit* area = Exits::ExitPool[i];
 
               //Check if the age can access this area and update ToD logic
               if (age == AGE_CHILD) {
@@ -150,9 +150,9 @@ namespace Playthrough {
               area->UpdateAdvancementNeeds();
 
               //for each exit in this area
-              for (u32 j = 0; j < area->exits.size(); j++) {
-                ExitPairing exitPair = area->exits[j];
-                Exit *exit = exitPair.GetExit();
+              for (size_t j = 0; j < area->exits.size(); j++) {
+                ExitPairing& exitPair = area->exits[j];
+                Exit* exit = exitPair.GetExit();
 
                 if (exitPair.ConditionsMet()) {
                   UpdateToDAccess(exit, age, exitPair.TimeOfDay());
@@ -171,9 +171,9 @@ namespace Playthrough {
               }
 
               //for each ItemLocation in this area
-              for (u32 k = 0; k < area->locations.size(); k++) {
-                ItemLocationPairing locPair = area->locations[k];
-                ItemLocation *location = locPair.location;
+              for (size_t k = 0; k < area->locations.size(); k++) {
+                ItemLocationPairing& locPair = area->locations[k];
+                ItemLocation* location = locPair.GetLocation();
 
                 if (locPair.ConditionsMet() && !location->IsAddedToPool()) {
                   // PlacementLog_Msg("NEW LOCATION FOUND: ");
@@ -198,10 +198,10 @@ namespace Playthrough {
                 }
               }
 
-              //erase ItemLocationPairings that are placed into the AccessibleLocationPool
-              erase_if(area->locations, [](const ItemLocationPairing& ilp){ return ilp.location->IsUsed();});
+              // Erase ItemLocationPairings that are placed into the AccessibleLocationPool
+              erase_if(area->locations, [](const ItemLocationPairing& ilp){ return ilp.IsLocationUsed(); });
 
-              //erase ExitPairings whose conditions have been met while the exit has full day time access as both ages
+              // Erase ExitPairings whose conditions have been met while the exit has full day time access as both ages
               erase_if(area->exits, [](const ExitPairing& ep){ return ep.ConditionsMet() && ep.GetExit()->AllAccess();});
             }
           }
