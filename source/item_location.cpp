@@ -820,7 +820,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &Twinrova,
   &BongoBongo,
 };
-std::array<ItemLocation*, 338> allLocations = {
+std::array<ItemLocation*, 339> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -831,6 +831,7 @@ std::array<ItemLocation*, 338> allLocations = {
   &KF_StormsGrottoChest,
 
   //Lost Woods
+  &LW_GiftFromSaria,
   &LW_SkullKid,
   //&LW_OcarinaMemoryGame,
   &LW_TargetInWoods,

@@ -317,6 +317,11 @@ namespace Playthrough {
       if (!Settings::ShuffleMagicBeans)
         PlaceItemInLocation(&A_MagicBean, &ZR_MagicBeanSalesman, overrides, NO_EFFECT);
 
+      if (!Settings::ShuffleOcarinas) {
+        PlaceItemInLocation(&A_ProgressiveOcarina, &LW_GiftFromSaria,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&A_ProgressiveOcarina, &HF_OcarinaOfTimeItem, overrides, NO_EFFECT);
+      }
+
       if (Settings::Skullsanity == TOKENSANITY_VANILLA) {
         //Overworld
         PlaceItemInLocation(&GoldSkulltulaToken, &KF_GS_BeanPatch,                             overrides, NO_EFFECT);
