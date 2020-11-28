@@ -109,6 +109,7 @@ typedef struct {
   u8 openDoorOfTime;
   u8 shuffleBeanSalesman;
   u8 shuffleOcarinas;
+  u8 fourPoesCutscene;
 
   u8 bigPoeTargetCount;
 

@@ -2,7 +2,7 @@
 #include "settings.h"
 
 void SaveFile_Init() {
-#ifdef ENABLE_DEBUG
+//#ifdef ENABLE_DEBUG
     gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
     gSaveContext.questItems |= 0x3FFC0; //songs
@@ -20,11 +20,12 @@ void SaveFile_Init() {
     gSaveContext.dungeonKeys[6] = 8;
     gSaveContext.ammo[2] = 20; //bombs
     gSaveContext.ammo[3] = 20; //arrows
-#endif
+//#endif
 
     //things to always set
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
+    gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.itemGetInf [0x1] |= 0x0800; //Deku seeds text cleared
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
@@ -45,8 +46,11 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern (doesn't work)
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
-    //open lowest fire temple locked door
+    //open lowest Fire Temple locked door
     gSaveContext.sceneFlags[4].swch |= 0x00800000;
+
+    //remove Ruto cutscene in Water Temple
+    gSaveContext.sceneFlags[5].swch |= 0x00010000;
 
     //Everything past this point depends on settings
     //if starting age is adult
@@ -59,9 +63,14 @@ void SaveFile_Init() {
     //give Link the starting stone or medallion
     gSaveContext.questItems |= gSettingsContext.dungeonRewardBitMask;
 
+
     //Open Door of Time
     if (gSettingsContext.openDoorOfTime) {
       gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
+    }
+
+    if (!gSettingsContext.fourPoesCutscene) {
+      gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him

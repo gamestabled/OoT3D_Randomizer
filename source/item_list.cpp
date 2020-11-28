@@ -239,6 +239,7 @@ Item DekuNuts10                 = Item("Deku Nuts (10)",   ITEMTYPE_ITEM, GI_NUT
 Item DekuSeeds30                = Item("Deku Seeds (30)",  ITEMTYPE_ITEM, GI_SEEDS_30,          false, NoEffect);
 Item DekuStick1                 = Item("Deku Stick (1)",   ITEMTYPE_ITEM, GI_STICKS_1,          false, NoEffect);
 
+//Shop Items
 Item BuyDekuNut5                = Item("Buy Deku Nut (5)",    ITEMTYPE_SHOP, 0x00, false, DekuNutEffect);
 Item BuyArrows30                = Item("Buy Arrows (30)",     ITEMTYPE_SHOP, 0x01, false, NoEffect);
 Item BuyArrows50                = Item("Buy Arrows (50)",     ITEMTYPE_SHOP, 0x02, false, NoEffect);
@@ -340,7 +341,6 @@ void GenerateItemPool() {
   AddItemToPool(A_ProgressiveBow,           3);
   AddItemToPool(A_ProgressiveBulletBag,     3);
   AddItemToPool(A_ProgressiveBombBag,       3);
-  AddItemToPool(A_ProgressiveOcarina,       2);
   AddItemToPool(A_ProgressiveWallet,        2);
   AddItemToPool(A_ProgressiveMagic,         2);
   AddItemToPool(A_ProgressiveNutCapacity,   2);
@@ -387,6 +387,10 @@ void UpdateSetItems() {
 
   if (ShuffleMagicBeans) {
     AddItemToPool(A_MagicBeanPack);
+  }
+
+  if (ShuffleOcarinas) {
+    AddItemToPool(A_ProgressiveOcarina, 2);
   }
 
   if (BombchusInLogic) {

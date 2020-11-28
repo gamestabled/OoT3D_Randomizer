@@ -37,6 +37,7 @@ namespace Settings {
   bool ShuffleOcarinas                  = false; Option O_ShuffleOcarinas     = Option(&ShuffleOcarinas,     "Shuffle Ocarinas",     {"Off", "On"});
   bool ShuffleSongs                     = false;
   bool Shopsanity                       = false;
+  bool FourPoesCutscene                 = false; Option O_FourPoesCutscene    = Option(&FourPoesCutscene,    "Four Poes Cutscene",   {"Off", "On"});
 
   //Individual Options
   bool LogicGrottosWithoutAgony         = false;
@@ -68,7 +69,6 @@ namespace Settings {
   bool LogicZoraWithCucco               = false;
   bool LogicZoraRiverLower              = false;
   bool LogicZoraRiverUpper              = false;
-
   bool LogicDekuB1WebsWithBow           = false;
   bool LogicDekuB1Skip                  = false;
   bool LogicDekuBasementGS              = false;
@@ -155,6 +155,7 @@ namespace Settings {
   };
   std::vector<Option *> timesaverOptions = {
     &O_BigPoeTargetCount,
+    &O_FourPoesCutscene,
   };
 
   Menu various             = Menu("Various Settings",      variousOptions);
@@ -188,6 +189,7 @@ namespace Settings {
     ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
     ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleOcarinas     = (ShuffleOcarinas)   ? 1 : 0;
+    ctx.fourPoesCutscene    = (FourPoesCutscene)  ? 1 : 0;
 
     ctx.bigPoeTargetCount = BigPoeTargetCount + 1;
 
