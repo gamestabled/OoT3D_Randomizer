@@ -394,11 +394,18 @@ typedef struct StaticContext {
 } StaticContext; //size 0x15D4
 // _Static_assert(sizeof(StaticContext) == 0x15D4, "Static Context size");
 
+typedef struct {
+    /* 0x00 */ s8  scene;
+    /* 0x01 */ s8  spawn;
+    /* 0x02 */ u16 field;
+} EntranceInfo; // size = 0x4
+
 extern GlobalContext* gGlobalContext;
 extern const u32 ItemSlots[];
 extern const char DungeonNames[][25];
 #define gSaveContext (*(SaveContext*)0x00587958)
 #define gStaticContext (*(StaticContext*)0x08080010)
+#define gEntranceTable ((EntranceInfo*)0x543BB8)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 
 typedef enum {
@@ -442,5 +449,13 @@ typedef void (*Item_Give_proc)(GlobalContext* globalCtx, u8 item);
 typedef void (*DisplayTextbox_proc)(GlobalContext* globalCtx, u16 textId, Actor* actor);
 #define DisplayTextbox_addr 0x367C7C
 #define DisplayTextbox ((DisplayTextbox_proc)DisplayTextbox_addr)
+
+typedef u32 (*EventCheck_proc)(u32 param_1);
+#define EventCheck_addr 0x350CF4
+#define EventCheck ((EventCheck_proc)EventCheck_addr)
+
+typedef void (*EventSet_proc)(u32 param_1);
+#define EventSet_addr 0x34CBF8
+#define EventSet ((EventSet_proc)EventSet_addr)
 
 #endif //_Z3D_H_

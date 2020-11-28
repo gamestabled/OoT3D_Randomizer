@@ -3,6 +3,7 @@
 #include "actor.h"
 #include "input.h"
 #include "models.h"
+#include "entrance.h"
 
 #include "z3D/z3D.h"
 
@@ -16,6 +17,7 @@ void set_GlobalContext(GlobalContext* globalCtx) {
 void Randomizer_Init() {
     rHeap_Init();
     Actor_Init();
+    Entrance_Init();
     ItemOverride_Init();
 }
 

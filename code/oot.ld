@@ -208,8 +208,20 @@ SECTIONS
 		*(.patch_ExtendedObjectClear)
 	}
 
+	.patch_RequiemLocation 0x44F10C : {
+		*(.patch_RequiemLocation)
+	}
+
 	.patch_SariasGift 0x44F190 : {
 		*(.patch_SariasGift)
+	}
+
+	.patch_LACSConditionOne 0x44F1D4 : {
+		*(.patch_LACSConditionOne)
+	}
+
+	.patch_LACSConditionTwo 0x44F20C : {
+		*(.patch_LACSConditionTwo)
 	}
 
 	.patch_before_GlobalContext_Update 0x452390 : {

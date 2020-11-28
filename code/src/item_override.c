@@ -28,19 +28,11 @@ u32 rActiveItemFastChest = 0;
 static u8 rSatisfiedPendingFrames = 0;
 
 void ItemOverride_Init(void) {
-    // ItemOverride test = { { .scene = 40, .type = OVR_CHEST, .flag = 0 } , { .itemId = 0x35 } };
-    // ItemOverride test2 = { { .scene = 40, .type = OVR_CHEST, .flag = 1 } , { .itemId = 0x0A } };
-    // rItemOverrides[0] = test; //testing silver gaunts in chest
-    // rItemOverrides[1] = test2; //lens in chest
-    // for (s32 i = 0; i < 512; i++) {
-    //     rItemOverrides[i] = test;
-    // }
-
     while(rItemOverrides[rItemOverrides_Count].key.all != 0) {
         rItemOverrides_Count++;
     }
 
-    // // Create an actor satisfying the minimum requirements to give the player an item
+    // Create an actor satisfying the minimum requirements to give the player an item
     rDummyActor = rHeap_Alloc(sizeof(Actor));
     rDummyActor->update = (void*)1;
 }
@@ -295,19 +287,11 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
 
     tokenActor->draw = NULL;
-    DisplayTextbox(gGlobalContext, itemRow->textId, 0); //TODO verify this works
+    DisplayTextbox(gGlobalContext, itemRow->textId, 0);
 
     Item_Give(gGlobalContext, itemRow->actionId);
     ItemTable_CallEffect(itemRow);
 }
-
-typedef u32 (*EventCheck_proc)(u32 param_1);
-#define EventCheck_addr 0x350CF4
-#define EventCheck ((EventCheck_proc)EventCheck_addr)
-
-typedef void (*EventSet_proc)(u32 param_1);
-#define EventSet_addr 0x34CBF8
-#define EventSet ((EventSet_proc)EventSet_addr)
 
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);

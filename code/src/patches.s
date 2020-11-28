@@ -294,6 +294,25 @@ DekuTheaterMaskOfTruth_patch:
 PoeCollectorCheckPoints_patch:
     bl hook_PoeCollectorCheckPoints
 
+.section .patch_LACSConditionOne
+.global LACSConditionOne_patch
+LACSConditionOne_patch:
+    nop
+
+.section .patch_LACSConditionTwo
+.global LACSConditionTwo_patch
+LACSConditionTwo_patch:
+    bl Cutscene_OverrideLACS
+    nop
+    nop
+    nop
+    nop
+
+.section .patch_RequiemLocation
+.global RequiemLocation_patch
+RequiemLocation_patch:
+    bl Cutscene_OverrideRequiem
+
 .section .patch_loader
 .global loader_patch
 
