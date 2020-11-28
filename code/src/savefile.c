@@ -69,6 +69,10 @@ void SaveFile_Init() {
       gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
     }
 
+    if (!gSettingsContext.fourPoesCutscene) {
+      gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
+    }
+
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
     gSaveContext.eventChkInf[0x0] |= 0x1020; //met deku tree and opened mouth
 
