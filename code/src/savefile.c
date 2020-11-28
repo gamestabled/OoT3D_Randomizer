@@ -2,7 +2,7 @@
 #include "settings.h"
 
 void SaveFile_Init() {
-#ifdef ENABLE_DEBUG
+//#ifdef ENABLE_DEBUG
     gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
     gSaveContext.questItems |= 0x3FFC0; //songs
@@ -20,11 +20,12 @@ void SaveFile_Init() {
     gSaveContext.dungeonKeys[6] = 8;
     gSaveContext.ammo[2] = 20; //bombs
     gSaveContext.ammo[3] = 20; //arrows
-#endif
+//#endif
 
     //things to always set
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
+    gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.itemGetInf [0x1] |= 0x0800; //Deku seeds text cleared
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
