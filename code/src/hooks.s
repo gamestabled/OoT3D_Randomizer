@@ -196,6 +196,16 @@ hook_PoeCollectorCheckPoints:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_ItemEtceteraModelDraw
+hook_ItemEtceteraModelDraw:
+    push {r0-r12, lr}
+    bl Model_DrawByActor
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x1170B4
+    cpy r4,r0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

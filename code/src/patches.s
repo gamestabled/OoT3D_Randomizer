@@ -313,6 +313,11 @@ LACSConditionTwo_patch:
 RequiemLocation_patch:
     bl Cutscene_OverrideRequiem
 
+.section .patch_ItemEtceteraModelDraw
+.global ItemEtceteraModelDraw_patch
+ItemEtceteraModelDraw_patch:
+    bl hook_ItemEtceteraModelDraw
+
 .section .patch_loader
 .global loader_patch
 

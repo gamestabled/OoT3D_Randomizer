@@ -8,6 +8,10 @@ SECTIONS
 		*(.patch_loader)
 	}
 	
+	.patch_ItemEtceteraModelDraw 0x117080 : {
+		*(.patch_ItemEtceteraModelDraw)
+	}
+
 	.patch_SkulltulaRewardOne 0x12CC68 : {
 		*(.patch_SkulltulaRewardOne)
 	}
