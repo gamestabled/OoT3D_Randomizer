@@ -313,7 +313,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit LW_BridgeFromForest = Exit("LW Bridge From Forest", "Lost Woods", "the Lost Woods", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  // ItemLocationPairing(&LW_GiftFromSaria, []{return true;})
+                  ItemLocationPairing(&LW_GiftFromSaria, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LW_Bridge, []{return true;})
