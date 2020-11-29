@@ -63,10 +63,12 @@ void SaveFile_Init() {
     //give Link the starting stone or medallion
     gSaveContext.questItems |= gSettingsContext.dungeonRewardBitMask;
 
-
-    //Open Door of Time
     if (gSettingsContext.openDoorOfTime) {
       gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
+    }
+
+    if (gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN) {
+      gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
     }
 
     if (!gSettingsContext.fourPoesCutscene) {

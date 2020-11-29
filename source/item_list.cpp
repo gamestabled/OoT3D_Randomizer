@@ -345,7 +345,6 @@ void GenerateItemPool() {
     A_EmptyBottle,
     A_RedPotionBottle,
     A_BlueFireBottle,
-    A_RutosLetter,
 
     A_SongOfStorms,
     A_SongOfTime,
@@ -422,6 +421,12 @@ void UpdateSetItems() {
 
   if (BombchusInLogic) {
     AddItemToPool(A_ProgressiveBombchus);
+  }
+
+  if (ZorasFountain != ZORASFOUNTAIN_OPEN) {
+    AddItemToPool(A_RutosLetter);
+  } else {
+    AddItemToPool(A_EmptyBottle);
   }
 
   if (Keysanity == KEYSANITY_ALL_LOCATIONS) {

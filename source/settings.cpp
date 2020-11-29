@@ -128,10 +128,10 @@ namespace Settings {
 
   std::vector<Option *> variousOptions = {
     &O_Logic,
-    //&O_OpenForest,
+    &O_OpenForest,
     //&O_OpenKakariko,
     &O_DoorOfTime,
-    //&O_ZorasFountain,
+    &O_ZorasFountain,
     //&O_GerudoFortress,
     &O_Bridge,
     &O_BombchusInLogic,
