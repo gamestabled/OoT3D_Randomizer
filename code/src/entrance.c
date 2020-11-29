@@ -3,19 +3,19 @@
 
 void Entrance_Init(void) {
     s32 index;
+
+    // Delete the title card for Desert Colossus from Requiem
+    for (index = 0x1ED; index < 0x1F1; ++index) {
+        gEntranceTable[index].field = 0x0102;
+    }
+
+    // Delete the title card for Kakariko Village from Nocturne
+    for (index = 0x513; index < 0x517; ++index) {
+        gEntranceTable[index].field = 0x0102;
+    }
     
-    // Delete the title card for Temple of Time from Outside Temple of Time
-    for (index = 0x53; index < 0x57; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Kakariko Village from Hyrule Field
-    for (index = 0xDB; index < 0xDF; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Desert Colossus from Spirit Temple Main Entrance
-    for (index = 0x1E1; index < 0x1E5; ++index) {
+    // Delete the title card for Temple of Time from LACS
+    for (index = 0x58C; index < 0x590; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 }

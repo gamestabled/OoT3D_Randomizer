@@ -42,7 +42,7 @@ void Cutscene_OverrideLACS(void) {
     if (conditionMet) {
         ItemOverride_PushDelayedOverride(0x01);
         EventSet(0xC4);
-        gSaveContext.entranceIndex = 0x53;
+        gSaveContext.entranceIndex = 0x58C;
     }
 }
 
@@ -50,6 +50,7 @@ u32 Cutscene_OverrideRequiem(void) {
     if (!EventCheck(0xAC)) {
         ItemOverride_PushDelayedOverride(0x23);
         EventSet(0xAC);
+        gSaveContext.entranceIndex = 0x1ED;
     }
     return 1;
 }
@@ -61,7 +62,7 @@ void Cutscene_OverrideNocturne(void) {
             if (!EventCheck(0xAA)) {
                 ItemOverride_PushDelayedOverride(0x24);
                 EventSet(0xAA);
-                gSaveContext.entranceIndex = 0xDB;
+                gSaveContext.entranceIndex = 0x513;
             }
         }
     }
