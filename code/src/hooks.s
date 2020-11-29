@@ -206,6 +206,14 @@ hook_ItemEtceteraModelDraw:
     cpy r4,r0
     bx lr
 
+.global hook_KokiriCheckOpenForest
+hook_KokiriCheckOpenForest:
+    push {r0-r12, lr}
+    bl EnKo_CheckOpenForest
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

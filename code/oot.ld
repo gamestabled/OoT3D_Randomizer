@@ -140,6 +140,10 @@ SECTIONS
 		*(.patch_AdultShootingGallery)
 	}
 
+	.patch_KokiriCheckOpenForest 0x3ACCFC : {
+		*(.patch_KokiriCheckOpenForest)
+	}
+
 	.patch_TokenNoItemGive2 0x3AD270 : {
 		*(.patch_TokenNoItemGive2)
 	}

@@ -329,6 +329,11 @@ BiggoronDayCheck_patch:
 ItemEtceteraModelDraw_patch:
     bl hook_ItemEtceteraModelDraw
 
+.section .patch_KokiriCheckOpenForest
+.global Kokiri_CheckOpenForest_patch
+Kokiri_CheckOpenForest_patch:
+    bl hook_KokiriCheckOpenForest
+
 .section .patch_loader
 .global loader_patch
 
