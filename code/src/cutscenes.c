@@ -53,3 +53,16 @@ u32 Cutscene_OverrideRequiem(void) {
     }
     return 1;
 }
+
+void Cutscene_OverrideNocturne(void) {
+    if ((gEntranceTable[gSaveContext.entranceIndex].scene == 0x52) && (gSaveContext.linkAge == AGE_ADULT)) {
+        if ((gSaveContext.questItems & 0x1) && (gSaveContext.questItems & 0x2)
+            && (gSaveContext.questItems & 0x4)) {
+            if (!EventCheck(0xAA)) {
+                ItemOverride_PushDelayedOverride(0x24);
+                EventSet(0xAA);
+                gSaveContext.entranceIndex = 0xDB;
+            }
+        }
+    }
+}

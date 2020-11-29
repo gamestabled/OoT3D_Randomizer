@@ -313,6 +313,12 @@ LACSConditionTwo_patch:
 RequiemLocation_patch:
     bl Cutscene_OverrideRequiem
 
+.section .patch_NocturneLocation
+.global NocturneLocation_patch
+NocturneLocation_patch:
+    bl Cutscene_OverrideNocturne
+    b 0x44F180
+
 .section .patch_ItemEtceteraModelDraw
 .global ItemEtceteraModelDraw_patch
 ItemEtceteraModelDraw_patch:

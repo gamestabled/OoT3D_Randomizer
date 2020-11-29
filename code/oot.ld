@@ -216,6 +216,10 @@ SECTIONS
 		*(.patch_RequiemLocation)
 	}
 
+	.patch_NocturneLocation 0x44F12C : {
+		*(.patch_NocturneLocation)
+	}
+
 	.patch_SariasGift 0x44F190 : {
 		*(.patch_SariasGift)
 	}
