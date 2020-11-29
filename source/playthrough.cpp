@@ -176,8 +176,8 @@ namespace Playthrough {
                 ItemLocation* location = locPair.GetLocation();
 
                 if (locPair.ConditionsMet() && !location->IsAddedToPool()) {
-                  // PlacementLog_Msg("NEW LOCATION FOUND: ");
-                  // PlacementLog_Msg(location->name);
+                  PlacementLog_Msg("NEW LOCATION FOUND: ");
+                  PlacementLog_Msg(location->GetName());
 
                   totalLocationsFound++;
                   location->AddToPool();
@@ -587,6 +587,17 @@ namespace Playthrough {
         RandomizeDungeonItem(BottomOfTheWellKeyRequirements, &BottomOfTheWell_Compass, overrides);
         RandomizeDungeonItem(IceCavernKeyRequirements,       &IceCavern_Compass,       overrides);
       }
+
+      if (!Settings::Shopsanity) {
+        PlaceItemInLocation(&BuyDekuShield,  &KF_ShopItem1, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,    &KF_ShopItem2, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut10,   &KF_ShopItem3, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuStick1,  &KF_ShopItem4, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuSeeds30, &KF_ShopItem5, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows10,    &KF_ShopItem6, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,    &KF_ShopItem7, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHeart,       &KF_ShopItem8, overrides, NO_EFFECT);
+      }
     }
 
     static void Playthrough_Init(u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
@@ -635,6 +646,7 @@ namespace Playthrough {
         else    printf("failed to write log\n");
 
         rv = PlacementLog_Write();
+        printf("\x1b[11;10HWrote Placement Log\n");
         return 1;
     }
 }

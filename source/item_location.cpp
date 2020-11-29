@@ -485,28 +485,39 @@ ItemLocation LLR_GS_Tree                                  = ItemLocation::GSToke
           --- BOSSES ---
   -------------------------------*/
 
-ItemLocation LinksPocket                                  = ItemLocation::Reward(0xFF, 0xFF, "Link's Pocket",                                  {});
-ItemLocation QueenGohma                                   = ItemLocation::Reward(0xFF, 0xFF, "Queen Gohma",                                    {});
-ItemLocation KingDodongo                                  = ItemLocation::Reward(0xFF, 0xFF, "King Dodongo",                                   {});
-ItemLocation Barinade                                     = ItemLocation::Reward(0xFF, 0xFF, "Barinade",                                       {});
-ItemLocation PhantomGanon                                 = ItemLocation::Reward(0xFF, 0xFF, "Phantom Ganon",                                  {});
-ItemLocation Volvagia                                     = ItemLocation::Reward(0xFF, 0xFF, "Volvagia",                                       {});
-ItemLocation Morpha                                       = ItemLocation::Reward(0xFF, 0xFF, "Morpha",                                         {});
-ItemLocation Twinrova                                     = ItemLocation::Reward(0xFF, 0xFF, "Twinrova",                                       {});
-ItemLocation BongoBongo                                   = ItemLocation::Reward(0xFF, 0xFF, "Bongo Bongo",                                    {});
-
+ItemLocation LinksPocket                                  = ItemLocation::Reward (0xFF, 0xFF, "Link's Pocket",                                  {});
+ItemLocation QueenGohma                                   = ItemLocation::Reward (0xFF, 0xFF, "Queen Gohma",                                    {});
+ItemLocation KingDodongo                                  = ItemLocation::Reward (0xFF, 0xFF, "King Dodongo",                                   {});
+ItemLocation Barinade                                     = ItemLocation::Reward (0xFF, 0xFF, "Barinade",                                       {});
+ItemLocation PhantomGanon                                 = ItemLocation::Reward (0xFF, 0xFF, "Phantom Ganon",                                  {});
+ItemLocation Volvagia                                     = ItemLocation::Reward (0xFF, 0xFF, "Volvagia",                                       {});
+ItemLocation Morpha                                       = ItemLocation::Reward (0xFF, 0xFF, "Morpha",                                         {});
+ItemLocation Twinrova                                     = ItemLocation::Reward (0xFF, 0xFF, "Twinrova",                                       {});
+ItemLocation BongoBongo                                   = ItemLocation::Reward (0xFF, 0xFF, "Bongo Bongo",                                    {});
 /*-------------------------------
         --- CUTSCENES ---
   -------------------------------*/
+ItemLocation ToT_LightArrowCutscene                       = ItemLocation::Delayed(0xFF, 0x01, "ToT Light Arrow Cutscene",                       {"Temple of Time", "Market"});
+ItemLocation LW_GiftFromSaria                             = ItemLocation::Delayed(0xFF, 0x02, "LW Gift From Saria",                             {"the Lost Woods", "Forest"});
+ItemLocation ZF_GreatFairyReward                          = ItemLocation::Delayed(0xFF, 0x10, "ZF Great Fairy Reward",                          {"Zora's Fountain", "Fairies"});
+ItemLocation HC_GreatFairyReward                          = ItemLocation::Delayed(0xFF, 0x11, "HC Great Fairy Reward",                          {"Hyrule Castle", "Market", "Fairies"});
+ItemLocation Colossus_GreatFairyReward                    = ItemLocation::Delayed(0xFF, 0x12, "Colossus Great Fairy Reward",                    {"Desert Colossus", "Fairies"});
+ItemLocation DMT_GreatFairyReward                         = ItemLocation::Delayed(0xFF, 0x13, "DMT Great Fairy Reward",                         {"Death Mountain Trail", "Death Mountain", "Fairies"});
+ItemLocation DMC_GreatFairyReward                         = ItemLocation::Delayed(0xFF, 0x14, "DMC Great Fairy Reward",                         {"Death Mountain Crater", "Death Mountain", "Fairies"});
+ItemLocation OGC_GreatFairyReward                         = ItemLocation::Delayed(0xFF, 0x15, "OGC Great Fairy Reward",                         {"outside Ganon's Castle", "Market", "Fairies"});
 
-ItemLocation ToT_LightArrowCutscene                       = ItemLocation::Delayed(0xFF, 0x01, "ToT Light Arrow Cutscene",                      {"Temple of Time", "Market"});
-ItemLocation LW_GiftFromSaria                             = ItemLocation::Delayed(0xFF, 0x02, "LW Gift From Saria",                            {"the Lost Woods", "Forest"});
-ItemLocation ZF_GreatFairyReward                          = ItemLocation::Delayed(0xFF, 0x10, "ZF Great Fairy Reward",                         {"Zora's Fountain", "Fairies"});
-ItemLocation HC_GreatFairyReward                          = ItemLocation::Delayed(0xFF, 0x11, "HC Great Fairy Reward",                         {"Hyrule Castle", "Market", "Fairies"});
-ItemLocation Colossus_GreatFairyReward                    = ItemLocation::Delayed(0xFF, 0x12, "Colossus Great Fairy Reward",                   {"Desert Colossus", "Fairies"});
-ItemLocation DMT_GreatFairyReward                         = ItemLocation::Delayed(0xFF, 0x13, "DMT Great Fairy Reward",                        {"Death Mountain Trail", "Death Mountain", "Fairies"});
-ItemLocation DMC_GreatFairyReward                         = ItemLocation::Delayed(0xFF, 0x14, "DMC Great Fairy Reward",                        {"Death Mountain Crater", "Death Mountain", "Fairies"});
-ItemLocation OGC_GreatFairyReward                         = ItemLocation::Delayed(0xFF, 0x15, "OGC Great Fairy Reward",                        {"outside Ganon's Castle", "Market", "Fairies"});
+ItemLocation SheikInForest                                = ItemLocation::Delayed(0xFF, 0x20, "Sheik in Forest",                                {"Sacred Forest Meadow", "Forest", "Songs",});
+ItemLocation SheikInCrater                                = ItemLocation::Delayed(0xFF, 0x21, "Sheik in Crater",                                {"Death Mountain Crater", "Death Mountain", "Songs",});
+ItemLocation SheikInIceCavern                             = ItemLocation::Delayed(0xFF, 0x22, "Sheik in Ice Cavern",                            {"Ice Cavern", "Songs",});
+ItemLocation SheikAtColossus                              = ItemLocation::Delayed(0xFF, 0x23, "Sheik at Colossus",                              {"Desert Colossus", "Songs",});
+ItemLocation SheikInKakariko                              = ItemLocation::Delayed(0xFF, 0x24, "Sheik in Kakariko",                              {"Kakariko Village", "Kakariko", "Songs",});
+ItemLocation SheikAtTemple                                = ItemLocation::Delayed(0xFF, 0x25, "Sheik at Temple",                                {"Temple of Time", "Market", "Songs",});
+ItemLocation SongFromImpa                                 = ItemLocation::Delayed(0xFF, 0x26, "Song from Impa",                                 {"Hyrule Castle", "Market", "Songs",});
+ItemLocation SongFromMalon                                = ItemLocation::Delayed(0xFF, 0x27, "Song from Malon",                                {"Lon Lon Ranch", "Songs",});
+ItemLocation SongFromSaria                                = ItemLocation::Delayed(0xFF, 0x28, "Song from Saria",                                {"Sacred Forest Meadow", "Forest", "Songs",});
+ItemLocation SongFromComposersGrave                       = ItemLocation::Delayed(0xFF, 0x29, "Song from Composers Grave",                      {"the Graveyard", "Kakariko", "Songs",});
+ItemLocation SongFromOcarinaOfTime                        = ItemLocation::Delayed(0xFF, 0x2A, "Song from Ocarina of Time",                      {"Hyrule Field", "Songs", "Need Spiritual Stones",});
+ItemLocation SongFromWindmill                             = ItemLocation::Delayed(0xFF, 0x2B, "Song from Windmill",                             {"Kakariko Village", "Kakariko", "Songs",});
 
 /*-------------------------------
           --- SHOPS ---
@@ -820,7 +831,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &Twinrova,
   &BongoBongo,
 };
-std::array<ItemLocation*, 339> allLocations = {
+std::array<ItemLocation*, 352> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -829,6 +840,16 @@ std::array<ItemLocation*, 339> allLocations = {
   &KF_MidoBottomLeftChest,
   &KF_MidoBottomRightChest,
   &KF_StormsGrottoChest,
+
+  //Shop
+  &KF_ShopItem1,
+  &KF_ShopItem2,
+  &KF_ShopItem3,
+  &KF_ShopItem4,
+  &KF_ShopItem5,
+  &KF_ShopItem6,
+  &KF_ShopItem7,
+  &KF_ShopItem8,
 
   //Lost Woods
   &LW_GiftFromSaria,
@@ -890,6 +911,7 @@ std::array<ItemLocation*, 339> allLocations = {
   &HW_Chest,
 
   //Desert Colossus
+  &SheikAtColossus,
   &Colossus_FreestandingPoH,
   //&Colossus_DekuScrubGrottoRear,
   //&Colossus_DekuScrubGrottoFront,
@@ -900,13 +922,17 @@ std::array<ItemLocation*, 339> allLocations = {
   //&MK_BombchuBowlingSecondPrize,
   &MK_LostDog,
   &MK_ShootingGalleryReward,
-  //&MK_10BigPoes,
+  &MK_10BigPoes,
 
   //Hyrule Castle
   &HC_ZeldasLetter,
   &HC_MalonEgg,
 
+  //Temple of Time
+  &ToT_LightArrowCutscene,
+
   //Kakariko
+  &SheikInKakariko,
   &Kak_RedeadGrottoChest,
   &Kak_OpenGrottoChest,
   &Kak_10GoldSkulltulaReward,
@@ -933,7 +959,7 @@ std::array<ItemLocation*, 339> allLocations = {
   //Death Mountain Trail
   &DMT_Chest,
   &DMT_StormsGrottoChest,
-  //&DMT_Biggoron,
+  &DMT_Biggoron,
   //&DMT_GreatFairyReward,
   &DMT_FreestandingPoH,
 
