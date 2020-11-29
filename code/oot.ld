@@ -100,6 +100,10 @@ SECTIONS
 		*(.patch_Gfx_Update)
 	}
 
+	.patch_BiggoronDayCheck 0x33DCC0 : {
+		*(.patch_BiggoronDayCheck)
+	}
+
 	.patch_OverrideGraphicID_351B94 0x351B94 : {
 		*(.patch_OverrideGraphicID_351B94)
 	}

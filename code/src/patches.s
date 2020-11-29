@@ -319,6 +319,11 @@ NocturneLocation_patch:
     bl Cutscene_OverrideNocturne
     b 0x44F180
 
+.section .patch_BiggoronDayCheck
+.global BiggoronDayCheck_patch
+BiggoronDayCheck_patch:
+    mov r0,#0x3
+
 .section .patch_ItemEtceteraModelDraw
 .global ItemEtceteraModelDraw_patch
 ItemEtceteraModelDraw_patch:
