@@ -334,6 +334,16 @@ ItemEtceteraModelDraw_patch:
 Kokiri_CheckOpenForest_patch:
     bl hook_KokiriCheckOpenForest
 
+.section .patch_BombchuBowlingStaticReward
+.global BombchuBowlingStaticReward_patch
+BombchuBowlingStaticReward_patch:
+    b 0x20618C
+
+.section .patch_EnExItemModelDraw
+.global EnExItemModelDraw_patch
+EnExItemModelDraw_patch:
+    bl hook_EnExItemModelDraw
+
 .section .patch_loader
 .global loader_patch
 

@@ -64,8 +64,16 @@ SECTIONS
 		*(.patch_DaruniaCheckStrength)
 	}
 
+	.patch_BombchuBowlingStaticReward 0x206150 : {
+		*(.patch_BombchuBowlingStaticReward)
+	}
+
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
 		*(.patch_DekuTheaterMaskOfTruth)
+	}
+
+	.patch_EnExItemModelDraw 0x249C94 : {
+		*(.patch_EnExItemModelDraw)
 	}
 
 	.patch_LostWoodsShootingGame 0x259E4C : {

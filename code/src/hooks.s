@@ -214,6 +214,17 @@ hook_KokiriCheckOpenForest:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_EnExItemModelDraw
+hook_EnExItemModelDraw:
+    push {r0-r12, lr}
+    mov r0,r4
+    bl Model_DrawByActor
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x249BC8
+    add r1,r4,#0x148
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
