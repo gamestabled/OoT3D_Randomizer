@@ -60,6 +60,10 @@ public:
       return placedItem.GetName();
     }
 
+    Item GetPlacedItem() const {
+      return placedItem;
+    }
+
     void SetPlacedItem(Item item) {
       placedItem = std::move(item);
     }

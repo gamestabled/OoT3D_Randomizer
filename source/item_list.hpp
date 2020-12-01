@@ -250,6 +250,6 @@ extern Item HeartContainer;
 extern std::vector<Item *> PrePlacedItems;
 extern std::vector<Item>   AdvancementItemPool;
 extern std::vector<Item>   ItemPool;
-extern void UpdateSetItems();
+extern std::array<Item, 9> dungeonRewards;
 extern void GenerateItemPool();
 extern void AddGreenRupee();

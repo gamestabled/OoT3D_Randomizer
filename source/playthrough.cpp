@@ -46,9 +46,9 @@ namespace Playthrough {
 
         loc->SetPlacedItem(*item);
         totalItemsPlaced++;
-        printf("\x1b[2;20HPlacing Items...");
+        printf("\x1b[8;10HPlacing Items...");
         if (Settings::Logic == LOGIC_GLITCHLESS) {
-          printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
+          printf("%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
         }
 
     }
@@ -286,7 +286,16 @@ namespace Playthrough {
         return 1;
     }
 
+    static void RandomizeDungeonRewards(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
 
+      std::shuffle(dungeonRewards.begin(), dungeonRewards.end(), std::default_random_engine(Random()));
+
+      for (u8 i = 0; i < dungeonRewards.size(); i++) {
+        PlaceItemInLocation(&dungeonRewards[i], dungeonRewardLocations[i], overrides, false);
+      }
+
+      Settings::LinksPocketRewardBitMask = LinksPocket.GetPlacedItem().GetItemID();
+    }
 
     //Check for specific preset items in locations
     static void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
@@ -295,15 +304,15 @@ namespace Playthrough {
 
       PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
 
-      PlaceItemInLocation(&A_LightMedallion,  &LinksPocket,     overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_KokiriEmerald,   &QueenGohma,      overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_GoronRuby,       &KingDodongo,     overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_ZoraSaphhire,    &Barinade,        overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_ForestMedallion, &PhantomGanon,    overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_FireMedallion,   &Volvagia,        overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_WaterMedallion,  &Morpha,          overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_SpiritMedallion, &Twinrova,        overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_ShadowMedallion, &BongoBongo,      overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_LightMedallion,  &LinksPocket,     overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_KokiriEmerald,   &QueenGohma,      overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_GoronRuby,       &KingDodongo,     overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_ZoraSaphhire,    &Barinade,        overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_ForestMedallion, &PhantomGanon,    overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_FireMedallion,   &Volvagia,        overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_WaterMedallion,  &Morpha,          overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_SpiritMedallion, &Twinrova,        overrides, NO_EFFECT);
+      // PlaceItemInLocation(&A_ShadowMedallion, &BongoBongo,      overrides, NO_EFFECT);
 
       if (!Settings::ShuffleKokiriSword)
         PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);
@@ -606,7 +615,7 @@ namespace Playthrough {
         Settings::PrintSettings();
         Logic::UpdateHelpers();
         GenerateItemPool();
-        UpdateSetItems();
+        RandomizeDungeonRewards(overrides);
         PlaceSetItems(overrides);
         AccessibleLocations_Init(overrides);
     }
@@ -640,13 +649,13 @@ namespace Playthrough {
             }
 
         }
-        printf("\x1b[10;10H");
+        printf("\x1b[9;10H");
         bool rv = SpoilerLog_Write();
         if (rv) printf("Wrote Spoiler Log\n");
         else    printf("failed to write log\n");
 
         rv = PlacementLog_Write();
-        printf("\x1b[11;10HWrote Placement Log\n");
+        printf("\x1b[10;10HWrote Placement Log\n");
         return 1;
     }
 }

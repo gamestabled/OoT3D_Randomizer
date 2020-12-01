@@ -121,6 +121,8 @@ namespace Settings {
   bool LogicLensCastle                  = false;
   bool LogicSpiritTrialHookshot         = false;
 
+  u32 LinksPocketRewardBitMask = 0;
+
   std::vector<Option *> Options = {
     //&O_DamageMultiplier,
     //&O_TimeOfDay,
@@ -164,7 +166,7 @@ namespace Settings {
   Menu shuffleDungeonItems = Menu("Shuffle Dungeon Items", shuffleDungeonItemOptions);
   Menu timesaverSettings   = Menu("Timesaver Settings",    timesaverOptions);
 
-  //adding a menu with no options crashes, will fix later
+  //adding a menu with no options crashes, might fix later
   std::vector<Menu *> mainMenu = {
     &various,
     &world,
@@ -193,7 +195,7 @@ namespace Settings {
 
     ctx.bigPoeTargetCount = BigPoeTargetCount + 1;
 
-    ctx.dungeonRewardBitMask = 0x00000020; //light medallion
+    ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
     return ctx;
   }
 

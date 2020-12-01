@@ -192,6 +192,8 @@ namespace Settings {
   extern bool LogicWaterRiverGS;
   extern bool LogicWaterFallingPlatformGS;
 
+  extern u32 LinksPocketRewardBitMask;
+
   extern void UpdateSettings();
   extern void PrintSettings();
   extern SettingsContext FillContext();

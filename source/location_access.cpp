@@ -852,7 +852,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Night(&CastleGrounds,          []{return AtNight;}),
                   ExitPairing::Night(&OGC_GreatFairyFountain, []{return CanUse("Golden Gauntlets") && AtNight;}),
-                  ExitPairing::Both(&GanonsCastle_Lobby,     []{return CanBuildRainbowBridge;})
+                  ExitPairing::Both(&GanonsCastle_Lobby,      []{return CanBuildRainbowBridge;})
                 }, {
                   //Advancement Needs
                   AdvancementPairing(A_ProgressiveStrength, []{return IsAdult && AddedProgressiveStrengths == 0;}),

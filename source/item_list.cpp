@@ -297,7 +297,7 @@ Item BuyBombs535                = Item("Buy Bombs (5) [35]",  ITEMTYPE_SHOP, 0x2
 Item BuyRedPotion40             = Item("Buy Red Potion [40]", ITEMTYPE_SHOP, 0x30, false, NoEffect,           40);
 Item BuyRedPotion50             = Item("Buy Red Potion [50]", ITEMTYPE_SHOP, 0x31, false, NoEffect,           50);
 
-//Stones and Medallions
+//Stones and Medallions                                                          //bitmask for questItems
 Item A_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  false, KokiriEmeraldEffect);
 Item A_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000,  false, GoronRubyEffect);
 Item A_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000,  false, ZoraSapphireEffect);
@@ -315,8 +315,40 @@ std::vector<Item> AdvancementItemPool = {};
 //The beginning pool of items, filled in by GenerateItemPool()
 std::vector<Item> ItemPool = {};
 
+std::vector<Item> BottlePool = {
+  A_EmptyBottle,
+  A_MilkBottle,
+  A_RedPotionBottle,
+  A_GreenPotionBottle,
+  A_BluePotionBottle,
+  A_FairyBottle,
+  A_FishBottle,
+  A_BugsBottle,
+  A_PoeBottle,
+  A_BigPoeBottle,
+  A_BlueFireBottle,
+};
+
+std::array<Item, 9> dungeonRewards = {
+  A_KokiriEmerald,
+  A_GoronRuby,
+  A_ZoraSaphhire,
+  A_ForestMedallion,
+  A_FireMedallion,
+  A_WaterMedallion,
+  A_SpiritMedallion,
+  A_ShadowMedallion,
+  A_LightMedallion,
+};
+
 static void AddItemToPool(const Item& item, size_t count = 1) {
   ItemPool.resize(ItemPool.size() + count, item);
+}
+
+static void AddRandomBottle() {
+  u32 idx = rand() % BottlePool.size();
+  AddItemToPool(BottlePool[idx]);
+  BottlePool.erase(BottlePool.begin() + idx);
 }
 
 void GenerateItemPool() {
@@ -337,14 +369,10 @@ void GenerateItemPool() {
     A_DinsFire,
     A_FaroresWind,
     A_NayrusLove,
-    GreenRupee,
     A_DekuShield,
     A_HylianShield,
     A_DoubleDefense,
-
-    A_EmptyBottle,
-    A_RedPotionBottle,
-    A_BlueFireBottle,
+    TreasureGameHeart,
 
     A_SongOfStorms,
     A_SongOfTime,
@@ -357,6 +385,8 @@ void GenerateItemPool() {
     A_NocturneOfShadow,
     A_RequiemOfSpirit,
     A_PreludeOfLight,
+
+    GreenRupee,
   };
 
   AddItemToPool(A_ProgressiveHookshot,      2);
@@ -389,16 +419,31 @@ void GenerateItemPool() {
   AddItemToPool(HugeRupee, 3);
 
   AddItemToPool(PieceOfHeart, 35);
-  AddItemToPool(TreasureGameHeart);
   AddItemToPool(HeartContainer, 8);
 
   AddItemToPool(A_ClaimCheck); //temporary
-}
-/*Adds extra shuffled items to the item Pool
-  Checks must also be implemented in Playthrough::PlaceSetItems()
-  if the item has a specific location it needs to be (i.e. Zeldas Letter)
-*/
-void UpdateSetItems() {
+
+  /*Adds extra shuffled items to the item Pool
+    Checks must also be implemented in Playthrough::PlaceSetItems()
+    if the item has a specific location it needs to be (i.e. Zeldas Letter)
+  */
+
+  //Add 4 total bottles
+  u8 bottleCount = 4;
+  u8 rutoBottles = 1;
+
+  if (ZorasFountain == ZORASFOUNTAIN_OPEN) {
+    rutoBottles = 0;
+  }
+
+  for (u8 i = 0; i < bottleCount; i++) {
+    if (i >= rutoBottles) {
+      AddRandomBottle();
+    } else {
+      AddItemToPool(A_RutosLetter);
+    }
+  }
+
   if (ShuffleKokiriSword) {
     AddItemToPool(A_KokiriSword);
   }
@@ -421,12 +466,6 @@ void UpdateSetItems() {
 
   if (BombchusInLogic) {
     AddItemToPool(A_ProgressiveBombchus);
-  }
-
-  if (ZorasFountain != ZORASFOUNTAIN_OPEN) {
-    AddItemToPool(A_RutosLetter);
-  } else {
-    AddItemToPool(A_EmptyBottle);
   }
 
   if (Keysanity == KEYSANITY_ALL_LOCATIONS) {
@@ -477,6 +516,7 @@ void UpdateSetItems() {
   if (Skullsanity == TOKENSANITY_ALL_LOCATIONS) {
     AddItemToPool(GoldSkulltulaToken, 100);
   }
+
 }
 
 void AddGreenRupee() {
