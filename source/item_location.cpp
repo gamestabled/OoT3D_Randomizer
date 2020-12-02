@@ -72,7 +72,7 @@ ItemLocation Colossus_DekuScrubGrottoFront                = ItemLocation::Grotto
 
 //Market
 ItemLocation MK_TreasureChestGameReward                   = ItemLocation::Chest      (0x10, 0x0A, "MK Treasure Chest Game Reward",        {"the Market", "Market", "Minigames"});
-ItemLocation MK_BombchuBowlingFirstPrize                  = ItemLocation::Base       (0x4B, 0x34, "MK Bombchu Bowling First Prize",       {"the Market", "Market", "Minigames"});
+ItemLocation MK_BombchuBowlingFirstPrize                  = ItemLocation::Base       (0x4B, 0x33, "MK Bombchu Bowling First Prize",       {"the Market", "Market", "Minigames"});
 ItemLocation MK_BombchuBowlingSecondPrize                 = ItemLocation::Base       (0x4B, 0x3E, "MK Bombchu Bowling Second Prize",      {"the Market", "Market", "Minigames"});
 ItemLocation MK_LostDog                                   = ItemLocation::Base       (0x35, 0x3E, "MK Lost Dog",                          {"the Market", "Market",});
 ItemLocation MK_ShootingGalleryReward                     = ItemLocation::Base       (0x42, 0x60, "MK Shooting Gallery",                  {"the Market", "Market", "Minigames"});

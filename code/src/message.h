@@ -9,21 +9,25 @@ typedef struct {
     u32 length;
 } MessageLanguageInfo;
 
+typedef enum {
+    /* 0x00 */ JAPANESE_J,
+    /* 0x01 */ ENGLISH_U,
+    /* 0x02 */ ENGLISH_E,
+    /* 0x03 */ GERMAN_E,
+    /* 0x04 */ FRENCH_E,
+    /* 0x05 */ FRENCH_U,
+    /* 0x06 */ SPANISH_E,
+    /* 0x07 */ SPANISH_U,
+    /* 0x08 */ ITALIAN_E,
+    /* 0x09 */ DUTCH_E,
+} MessageLanguage;
+
 typedef struct {
     u32 id;
     u32 unk_04;
     u32 unk_08;
     u32 unk_0C;
-    MessageLanguageInfo japaneseJ;
-    MessageLanguageInfo englishU;
-    MessageLanguageInfo englishE;
-    MessageLanguageInfo germanE;
-    MessageLanguageInfo frenchE;
-    MessageLanguageInfo frenchU;
-    MessageLanguageInfo spanishE;
-    MessageLanguageInfo spanishU;
-    MessageLanguageInfo italianE;
-    MessageLanguageInfo dutchE;
+    MessageLanguageInfo info[10];
 } MessageEntry; // size = 0x60
 
 typedef struct {

@@ -62,6 +62,14 @@ LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS	:= -lctru -lm
 
+# Debug-specific flags
+
+debug ?= 0
+ifneq ($(debug), 0)
+	CFLAGS += -g -DENABLE_DEBUG
+	CXXFLAGS += -g -DENABLE_DEBUG
+endif
+
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
@@ -166,11 +174,6 @@ endif
 #---------------------------------------------------------------------------------
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-
-# Debug target
-debug: CFLAGS += -g -DENABLE_DEBUG
-debug: CXXFLAGS += -g -DENABLE_DEBUG
-debug: all
 
 $(BUILD):
 	@mkdir -p $@

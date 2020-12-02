@@ -3,6 +3,7 @@
 #include "item_override.h"
 #include "item_table.h"
 #include "objects.h"
+#include "dungeon_rewards.h"
 #include <stddef.h>
 
 typedef void (*GlModel_MatrixCopy_proc)(GlModel* glModel, nn_math_MTX34* mtx);
@@ -132,6 +133,16 @@ void Model_LookupByOverride(Model* model, ItemOverride override) {
     }
 }
 
+s32 Model_LookupByDungeonReward(Model* model, Actor* reward) {
+    const DungeonRewardInfo* rewardInfo = DungeonReward_GetInfoByActor(reward);
+    if (rewardInfo != NULL) {
+        model->info.objectId = rewardInfo->objectId;
+        model->info.objectModelIdx = rewardInfo->objectModelIdx;
+        return 1;
+    }
+    return 0;
+}
+
 void Model_GetObjectBankIndex(Model* model, Actor* actor, GlobalContext* globalCtx) {
     s32 objectBankIdx = ExtendedObject_GetIndex(&globalCtx->objectCtx, model->info.objectId);
     if (objectBankIdx < 0) {
@@ -141,6 +152,16 @@ void Model_GetObjectBankIndex(Model* model, Actor* actor, GlobalContext* globalC
 }
 
 void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 baseItemId) {
+    // Special lookup for dungeon rewards outside of Temple of Time
+    if ((actor->id == 0x8B) && (globalCtx->sceneNum != 0x43)) {
+        if(Model_LookupByDungeonReward(model, actor)) {
+            //Unrotate the Spiritual Stones
+            actor->shape.rot.x = 0;
+            Model_GetObjectBankIndex(model, actor, globalCtx);
+        }
+        return;
+    }
+
     ItemOverride override = ItemOverride_Lookup(actor, globalCtx->sceneNum, baseItemId);
     if (override.key.all != 0) {
         Model_LookupByOverride(model, override);
@@ -166,6 +187,14 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
         switch(newModel->info.objectId) {
             case 0x0024 : //Skulltula token
                 newModel->scale = 0.25f;
+                break;
+            case 0x00BA : //Medallions
+                newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
+                break;
+            case 0x019C : //Kokiri Emerald
+            case 0x019D : //Goron Ruby
+            case 0x019E : //Zora Sapphire
+                newModel->scale = 0.082f;
                 break;
             default:
                 newModel->scale = 0.3f;

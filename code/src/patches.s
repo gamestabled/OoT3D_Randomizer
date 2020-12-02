@@ -334,6 +334,151 @@ ItemEtceteraModelDraw_patch:
 Kokiri_CheckOpenForest_patch:
     bl hook_KokiriCheckOpenForest
 
+.section .patch_BombchuBowlingStaticReward
+.global BombchuBowlingStaticReward_patch
+BombchuBowlingStaticReward_patch:
+    b 0x20618C
+
+.section .patch_DekuTreeItemGive
+.global DekuTreeItemGive_patch
+DekuTreeItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_DodongosCavernItemGive
+.global DodongosCavernItemGive_patch
+DodongosCavernItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_JabuJabuItemGive
+.global JabuJabuItemGive_patch
+JabuJabuItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_ForestTempleItemGive
+.global ForestTempleItemGive_patch
+ForestTempleItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_ForestTempleItemGiveTwo
+.global ForestTempleItemGiveTwo_patch
+ForestTempleItemGiveTwo_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_ForestTempleItemGiveThree
+.global ForestTempleItemGiveThree_patch
+ForestTempleItemGiveThree_patch:
+    b DungeonReward_OverrideItemGive
+
+.section .patch_FireTempleItemGive
+.global FireTempleItemGive_patch
+FireTempleItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_FireTempleItemGiveTwo
+.global FireTempleItemGiveTwo_patch
+FireTempleItemGiveTwo_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_FireTempleItemGiveThree
+.global FireTempleItemGiveThree_patch
+FireTempleItemGiveThree_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_FireTempleItemGiveFour
+.global FireTempleItemGiveFour_patch
+FireTempleItemGiveFour_patch:
+    b DungeonReward_OverrideItemGive
+
+.section .patch_WaterTempleItemGive
+.global WaterTempleItemGive_patch
+WaterTempleItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_WaterTempleItemGiveTwo
+.global WaterTempleItemGiveTwo_patch
+WaterTempleItemGiveTwo_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_WaterTempleItemGiveThree
+.global WaterTempleItemGiveThree_patch
+WaterTempleItemGiveThree_patch:
+    b DungeonReward_OverrideItemGive
+
+.section .patch_SpiritTempleItemGive
+.global SpiritTempleItemGive_patch
+SpiritTempleItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_SpiritTempleItemGiveTwo
+.global SpiritTempleItemGiveTwo_patch
+SpiritTempleItemGiveTwo_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_SpiritTempleItemGiveThree
+.global SpiritTempleItemGiveThree_patch
+SpiritTempleItemGiveThree_patch:
+    b DungeonReward_OverrideItemGive
+
+.section .patch_SpiritTempleBitMask
+.global SpiritTempleBitMask_patch
+SpiritTempleBitMask_patch:
+    bl hook_SpiritTempleBitMask
+
+.section .patch_ShadowTempleItemGive
+.global ShadowTempleItemGive_patch
+ShadowTempleItemGive_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_ShadowTempleItemGiveTwo
+.global ShadowTempleItemGiveTwo_patch
+ShadowTempleItemGiveTwo_patch:
+    bl DungeonReward_OverrideItemGive
+
+.section .patch_ShadowTempleItemGiveThree
+.global ShadowTempleItemGiveThree_patch
+ShadowTempleItemGiveThree_patch:
+    b DungeonReward_OverrideItemGive
+
+.section .patch_ShadowTempleBitMask
+.global ShadowTempleBitMask_patch
+ShadowTempleBitMask_patch:
+    bl hook_ShadowTempleBitMask
+
+.section .patch_EnExItemModelDraw
+.global EnExItemModelDraw_patch
+EnExItemModelDraw_patch:
+    bl hook_EnExItemModelDraw
+
+.section .patch_DemoEffectMedallionDraw
+.global DemoEffectMedallionDraw_patch
+DemoEffectMedallionDraw_patch:
+    b hook_DemoEffectMedallionDraw
+
+.section .patch_DemoEffectStoneDraw
+.global DemoEffectStoneDraw_patch
+DemoEffectStoneDraw_patch:
+    b hook_DemoEffectStoneDraw
+
+.section .patch_DekuSproutBitMask
+.global DekuSproutBitMask_patch
+DekuSproutBitMask_patch:
+    bl hook_DekuSproutBitMask
+
+.section .patch_FireArrowCheckChestFlagOne
+.global FireArrowCheckChestFlagOne_patch
+FireArrowCheckChestFlagOne_patch:
+    bl hook_FireArrowCheckChestFlag
+
+.section .patch_FireArrowCheckChestFlagTwo
+.global FireArrowCheckChestFlagTwo_patch
+FireArrowCheckChestFlagTwo_patch:
+    bl hook_FireArrowCheckChestFlag
+
+.section .patch_FireArrowBitMask
+.global FireArrowBitMask_patch
+FireArrowBitMask_patch:
+    bl hook_FireArrowBitMask
+
 .section .patch_loader
 .global loader_patch
 

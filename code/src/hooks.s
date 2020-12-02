@@ -214,6 +214,85 @@ hook_KokiriCheckOpenForest:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_EnExItemModelDraw
+hook_EnExItemModelDraw:
+    push {r0-r12, lr}
+    mov r0,r4
+    bl Model_DrawByActor
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x249BC8
+    add r1,r4,#0x148
+    bx lr
+
+.global hook_DemoEffectMedallionDraw
+hook_DemoEffectMedallionDraw:
+    push {r0-r12, lr}
+    mov r0,r4
+    bl Model_DrawByActor
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x372148
+    ldr r0,[r4,#0x2A8]
+    b 0x372150
+
+.global hook_DemoEffectStoneDraw
+hook_DemoEffectStoneDraw:
+    push {r0-r12, lr}
+    mov r0,r4
+    bl Model_DrawByActor
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x1D20C0
+    ldr r0,[r4,#0x2A8]
+    b 0x1D20A0
+
+#The magic number here is SPIRIT_MEDALLION from dungeon_rewards.h
+.global hook_SpiritTempleBitMask
+hook_SpiritTempleBitMask:
+    push {r1-r12, lr}
+    mov r0,#0x06
+    bl DungeonReward_GetBitMask
+    pop {r1-r12, lr}
+    bx lr
+
+#The magic number here is SHADOW_MEDALLION from dungeon_rewards.h
+.global hook_ShadowTempleBitMask
+hook_ShadowTempleBitMask:
+    push {r1-r12, lr}
+    mov r0,#0x07
+    bl DungeonReward_GetBitMask
+    pop {r1-r12, lr}
+    bx lr
+
+#The magic number here is FOREST_MEDALLION from dungeon_rewards.h
+.global hook_DekuSproutBitMask
+hook_DekuSproutBitMask:
+    push {r0, r2-r12, lr}
+    mov r0,#0x03
+    bl DungeonReward_GetBitMask
+    cpy r1,r0
+    pop {r0, r2-r12, lr}
+    bx lr
+
+#The magic number here is WATER_MEDALLION from dungeon_rewards.h
+.global hook_FireArrowBitMask
+hook_FireArrowBitMask:
+    push {r0-r2, r4-r12, lr}
+    mov r0,#0x05
+    bl DungeonReward_GetBitMask
+    cpy r3,r0
+    pop {r0-r2, r4-r12, lr}
+    bx lr
+
+.global hook_FireArrowCheckChestFlag
+hook_FireArrowCheckChestFlag:
+    push {r0-r12, lr}
+    bl ShotSun_CheckChestFlag
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

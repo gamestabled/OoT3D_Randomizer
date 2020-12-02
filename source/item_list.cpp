@@ -210,16 +210,16 @@ Item ShadowTemple_Map           = Item("Shadow Temple Map",          ITEMTYPE_MA
 Item BottomOfTheWell_Map        = Item("Bottom of the Well Map",     ITEMTYPE_MAP,      0xAD, false, NoEffect);
 Item IceCavern_Map              = Item("Ice Cavern Map",             ITEMTYPE_MAP,      0xAE, false, NoEffect);
 
-Item DekuTree_Compass           = Item("Deku Tree Compass",          ITEMTYPE_COMPASS,  0xA5, false, NoEffect);
-Item DodongosCavern_Compass     = Item("Dodongo's Cavern Compass",   ITEMTYPE_COMPASS,  0xA6, false, NoEffect);
-Item JabuJabusBelly_Compass     = Item("Jabu Jabu's Belly Compass",  ITEMTYPE_COMPASS,  0xA7, false, NoEffect);
-Item ForestTemple_Compass       = Item("Forest Temple Compass",      ITEMTYPE_COMPASS,  0xA8, false, NoEffect);
-Item FireTemple_Compass         = Item("Fire Temple Compass",        ITEMTYPE_COMPASS,  0xA9, false, NoEffect);
-Item WaterTemple_Compass        = Item("Water Temple Compass",       ITEMTYPE_COMPASS,  0xAA, false, NoEffect);
-Item SpiritTemple_Compass       = Item("Spirit Temple Compass",      ITEMTYPE_COMPASS,  0xAB, false, NoEffect);
-Item ShadowTemple_Compass       = Item("Shadow Temple Compass",      ITEMTYPE_COMPASS,  0xAC, false, NoEffect);
-Item BottomOfTheWell_Compass    = Item("Bottom of the Well Compass", ITEMTYPE_COMPASS,  0xAD, false, NoEffect);
-Item IceCavern_Compass          = Item("Ice Cavern Compass",         ITEMTYPE_COMPASS,  0xAE, false, NoEffect);
+Item DekuTree_Compass           = Item("Deku Tree Compass",          ITEMTYPE_COMPASS,  0x9B, false, NoEffect);
+Item DodongosCavern_Compass     = Item("Dodongo's Cavern Compass",   ITEMTYPE_COMPASS,  0x9C, false, NoEffect);
+Item JabuJabusBelly_Compass     = Item("Jabu Jabu's Belly Compass",  ITEMTYPE_COMPASS,  0x9D, false, NoEffect);
+Item ForestTemple_Compass       = Item("Forest Temple Compass",      ITEMTYPE_COMPASS,  0x9E, false, NoEffect);
+Item FireTemple_Compass         = Item("Fire Temple Compass",        ITEMTYPE_COMPASS,  0x9F, false, NoEffect);
+Item WaterTemple_Compass        = Item("Water Temple Compass",       ITEMTYPE_COMPASS,  0xA0, false, NoEffect);
+Item SpiritTemple_Compass       = Item("Spirit Temple Compass",      ITEMTYPE_COMPASS,  0xA1, false, NoEffect);
+Item ShadowTemple_Compass       = Item("Shadow Temple Compass",      ITEMTYPE_COMPASS,  0xA2, false, NoEffect);
+Item BottomOfTheWell_Compass    = Item("Bottom of the Well Compass", ITEMTYPE_COMPASS,  0xA3, false, NoEffect);
+Item IceCavern_Compass          = Item("Ice Cavern Compass",         ITEMTYPE_COMPASS,  0xA4, false, NoEffect);
 
 //Boss Keys
 Item ForestTemple_BossKey       = Item("Forest Temple Boss Key",     ITEMTYPE_BOSSKEY,  0x95, false, ForestTempleBossKeyEffect);

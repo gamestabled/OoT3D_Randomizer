@@ -68,6 +68,13 @@ LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) -nost
 
 LIBS	:=
 
+# Debug-specific flags
+debug ?= 0
+ifneq ($(debug), 0)
+	CFLAGS += -g -DENABLE_DEBUG
+	CXXFLAGS += -g -DENABLE_DEBUG
+endif
+
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
@@ -139,11 +146,6 @@ endif
 
 #---------------------------------------------------------------------------------
 all: $(BUILD)
-
-# Debug target
-debug: CFLAGS += -g -DENABLE_DEBUG
-debug: CXXFLAGS += -g -DENABLE_DEBUG
-debug: all
 
 $(BUILD):
 	@python3 custom_messages.py

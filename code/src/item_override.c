@@ -172,7 +172,7 @@ static void ItemOverride_AfterKeyReceived(ItemOverride_Key key) {
         .flag = 0x58, // Fire arrows item ID
     };
     if (key.all == fireArrowKey.all) {
-        // TODO
+        gGlobalContext->actorCtx.flags.chest |= 0x1;
     }
 }
 
