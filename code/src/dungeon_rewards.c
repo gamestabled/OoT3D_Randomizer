@@ -52,6 +52,10 @@ u32 DungeonReward_GetBitMask(u32 dungeonReward) {
     return rDungeonRewardTable[rDungeonRewardOverrides[dungeonReward]].bitMask;
 }
 
+const u32* DungeonReward_GetBitMaskAddr(u32 dungeonReward) {
+    return &rDungeonRewardTable[rDungeonRewardOverrides[dungeonReward]].bitMask;
+}
+
 const DungeonRewardInfo* DungeonReward_GetInfoByActor(Actor* reward) {
     switch(reward->params & 0xFF) {
         case 0x09:

@@ -469,6 +469,11 @@ DemoEffectStoneDraw_patch:
 DekuSproutBitMask_patch:
     bl hook_DekuSproutBitMask
 
+.section .patch_EnKoInitBitMask
+.global EnKoInitBitMask_patch
+EnKoInitBitMask_patch:
+    bl hook_EnKoInitBitMask
+
 .section .patch_FireArrowCheckChestFlagOne
 .global FireArrowCheckChestFlagOne_patch
 FireArrowCheckChestFlagOne_patch:

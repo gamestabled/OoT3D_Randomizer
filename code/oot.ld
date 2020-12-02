@@ -28,6 +28,10 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeOne)
 	}
 
+	.patch_EnKoInitBitMask 0x165760 : {
+		*(.patch_EnKoInitBitMask)
+	}
+
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
 	}
@@ -41,7 +45,7 @@ SECTIONS
 	}
 
 	.patch_AdultRollingGoronIgnoreMedallion 0x195450 : {
-		*(patch_AdultRollingGoronIgnoreMedallion)
+		*(.patch_AdultRollingGoronIgnoreMedallion)
 	}
 
 	.patch_AdultRollingGoronOne 0x195480 : {
