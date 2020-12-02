@@ -40,6 +40,10 @@ SECTIONS
 		*(.patch_ChildRollingGoron)
 	}
 
+	.patch_AdultRollingGoronIgnoreMedallion 0x195450 : {
+		*(patch_AdultRollingGoronIgnoreMedallion)
+	}
+
 	.patch_AdultRollingGoronOne 0x195480 : {
 		*(.patch_AdultRollingGoronOne)
 	}

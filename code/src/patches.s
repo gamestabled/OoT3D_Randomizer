@@ -128,6 +128,11 @@ ChildRollingGoron_patch:
     mov r2,#0x34
     nop
 
+.section .patch_AdultRollingGoronIgnoreMedallion
+.global AdultRollingGoronIgnoreMedallion_patch
+AdultRollingGoronIgnoreMedallion_patch:
+    b 0x19546C
+
 .section .patch_AdultRollingGoronOne
 .global AdultRollingGoronOne_patch
 AdultRollingGoronOne_patch:
