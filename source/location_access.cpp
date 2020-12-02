@@ -170,7 +170,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ItemLocationPairing(&LW_SkullKid,               []{return IsChild && CanPlay(SariasSong);}),
                 //ItemLocationPairing(&LW_OcarinaMemoryGame,      []{return IsChild && Ocarina;}),
                   ItemLocationPairing(&LW_TargetInWoods,          []{return CanUse("Slingshot");}),
-                //ItemLocationPairing(&LW_DekuScrubNearBridge,    []{return IsChild && CanStunDeku;}),
+                  ItemLocationPairing(&LW_DekuScrubNearBridge,    []{return IsChild && CanStunDeku;}),
                   ItemLocationPairing(&LW_GS_BeanPatchNearBridge, []{return CanPlantBugs && CanChildAttack;}),
                   //LW Gossip Stone
                 }, {
@@ -238,7 +238,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
   Exit LW_ScrubsGrotto = Exit("LW Scrubs Grotto", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   //ItemLocationPairing(&LW_DekuScrubGrottoRear,  []{return CanStunDeku;}),
-                  //ItemLocationPairing(&LW_DekuScrubGrottoFront, []{return CanStunDeku;}),
+                  ItemLocationPairing(&LW_DekuScrubGrottoFront, []{return CanStunDeku;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LW_BeyondMido, []{return true;}),

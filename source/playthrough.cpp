@@ -293,7 +293,6 @@ namespace Playthrough {
       for (u8 i = 0; i < dungeonRewards.size(); i++) {
         PlaceItemInLocation(&dungeonRewards[i], dungeonRewardLocations[i], overrides, false);
       }
-
       Settings::LinksPocketRewardBitMask = LinksPocket.GetPlacedItem().GetItemID();
     }
 

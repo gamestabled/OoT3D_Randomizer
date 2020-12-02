@@ -498,7 +498,7 @@ ItemLocation BongoBongo                                   = ItemLocation::Reward
 /*-------------------------------
         --- CUTSCENES ---
   -------------------------------*/
-  
+
 ItemLocation ToT_LightArrowCutscene                       = ItemLocation::Delayed(0xFF, 0x01, "ToT Light Arrow Cutscene",                       {"Temple of Time", "Market"});
 ItemLocation LW_GiftFromSaria                             = ItemLocation::Delayed(0xFF, 0x02, "LW Gift From Saria",                             {"the Lost Woods", "Forest"});
 ItemLocation ZF_GreatFairyReward                          = ItemLocation::Delayed(0xFF, 0x10, "ZF Great Fairy Reward",                          {"Zora's Fountain", "Fairies"});
@@ -833,7 +833,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &Twinrova,
   &BongoBongo,
 };
-std::array<ItemLocation*, 352> allLocations = {
+std::array<ItemLocation*, 354> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -860,11 +860,11 @@ std::array<ItemLocation*, 352> allLocations = {
   &LW_TargetInWoods,
   //&LW_DekuScrubNearDekuTheaterRight,
   //&LW_DekuScrubNearDekuTheaterLeft,
-  //&LW_DekuScrubNearBridge,
+  &LW_DekuScrubNearBridge,
   //&LW_GossipStone,
   &LW_NearShortcutsGrottoChest,
   //&LW_DekuScrubGrottoRear,
-  //&LW_DekuScrubGrottoFront,
+  &LW_DekuScrubGrottoFront,
   //&DekuTheater_SkullMask,
   //&DekuTheater_MaskOfTruth,
 
