@@ -1,5 +1,9 @@
 from text_codes import *
 
+# See message.h for the definitions for custom text.
+# make text a tuple with the custom text in each language
+#     (only ENGLISH_U, FRENCH_U, and SPANISH_U will be supported by the base game)
+
 custom_messages = {
     # TextId          unk_04, unk_08, unk_0C, text
     #Boss Keys
@@ -365,7 +369,7 @@ cfile += '#include <stddef.h>\n\n'
 cfile += 'const MessageFileHeader customMessageHeader = { "QM", 0, %s, 0 };\n\n'%len(custom_messages)
 cfile += 'const MessageEntry customMessageEntries[] = {\n'
 for textId in custom_messages:
-    cfile += '    { %s, %s, %s, %s, \n'%(textId, custom_messages[textId][0], custom_messages[textId][1], custom_messages[textId][2])
+    cfile += '    { %s, %s, %s, %s, { \n'%(textId, custom_messages[textId][0], custom_messages[textId][1], custom_messages[textId][2])
     for i in range(0,10):
         offset = 'NULL'
         length = 0
@@ -374,7 +378,7 @@ for textId in custom_messages:
             length = len(custom_messages[textId][3][i])
             data += 'const char %s[] = "%s";\n'%(offset, custom_messages[textId][3][i])
         cfile += '        { %s, %s },\n'%(offset, length)
-    cfile += '    },\n'
+    cfile += '    } },\n'
 cfile += '};\n'
 
 with open("src/custom_messages.c", 'w') as c:

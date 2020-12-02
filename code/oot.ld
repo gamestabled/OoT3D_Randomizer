@@ -52,6 +52,10 @@ SECTIONS
 		*(.patch_DampeChest)
 	}
 
+	.patch_JabuJabuItemGive 0x1A1918 : {
+		*(.patch_JabuJabuItemGive)
+	}
+
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
 		*(.patch_KingZoraSecondTunic)
 	}
@@ -59,13 +63,49 @@ SECTIONS
 	.patch_KingZoraGiveTunic 0x1B6A64 : {
 		*(.patch_KingZoraGiveTunic)
 	}
-	
+
+	.patch_DemoEffectStoneDraw 0x1D209C : {
+		*(.patch_DemoEffectStoneDraw)
+	}
+
+	.patch_ForestTempleItemGive 0x1E3F84 : {
+		*(.patch_ForestTempleItemGive)
+	}
+
+	.patch_FireTempleItemGive 0x1E4010 : {
+		*(.patch_FireTempleItemGive)
+	}
+
+	.patch_WaterTempleItemGive 0x1E40D8 : {
+		*(.patch_WaterTempleItemGive)
+	}
+
+	.patch_SpiritTempleBitMask 0x1E4154 : {
+		*(.patch_SpiritTempleBitMask)
+	}
+
+	.patch_SpiritTempleItemGive 0x1E4168 : {
+		*(.patch_SpiritTempleItemGive)
+	}
+
+	.patch_ShadowTempleBitMask 0x1E41DC : {
+		*(.patch_ShadowTempleBitMask)
+	}
+
+	.patch_ShadowTempleItemGive 0x1E41F0 : {
+		*(.patch_ShadowTempleItemGive)
+	}
+
 	.patch_DaruniaCheckStrength 0x1E489C : {
 		*(.patch_DaruniaCheckStrength)
 	}
 
 	.patch_BombchuBowlingStaticReward 0x206150 : {
 		*(.patch_BombchuBowlingStaticReward)
+	}
+
+	.patch_DekuSproutBitMask 0x2153A8 : {
+		*(.patch_DekuSproutBitMask)
 	}
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
@@ -76,12 +116,52 @@ SECTIONS
 		*(.patch_EnExItemModelDraw)
 	}
 
+	.patch_SpiritTempleItemGiveTwo 0x24CF4C : {
+		*(.patch_SpiritTempleItemGiveTwo)
+	}
+
 	.patch_LostWoodsShootingGame 0x259E4C : {
 		*(.patch_LostWoodsShootingGame)
 	}
 
+	.patch_SpiritTempleItemGiveThree 0x26B33C : {
+		*(.patch_SpiritTempleItemGiveThree)
+	}
+
 	.patch_OverrideOcarinaSongs 0x26C478 : {
 		*(.patch_OverrideOcarinaSongs)
+	}
+
+	.patch_WaterTempleItemGiveTwo 0x26DCD4 : {
+		*(.patch_WaterTempleItemGiveTwo)
+	}
+
+	.patch_FireTempleItemGiveThree 0x27D060 : {
+		*(.patch_FireTempleItemGiveThree)
+	}
+
+	.patch_ShadowTempleItemGiveTwo 0x27DED0 : {
+		*(.patch_ShadowTempleItemGiveTwo)
+	}
+
+	.patch_ForestTempleItemGiveTwo 0x27E074 : {
+		*(.patch_ForestTempleItemGiveTwo)
+	}
+
+	.patch_WaterTempleItemGiveThree 0x283CA8 : {
+		*(.patch_WaterTempleItemGiveThree)
+	}
+
+	.patch_FireTempleItemGiveFour 0x28E2AC : {
+		*(.patch_FireTempleItemGiveFour)
+	}
+
+	.patch_ShadowTempleItemGiveThree 0x28F258 : {
+		*(.patch_ShadowTempleItemGiveThree)
+	}
+
+	.patch_ForestTempleItemGiveThree 0x28FF44 : {
+		*(.patch_ForestTempleItemGiveThree)
 	}
 
 	.patch_OverrideTextID 0x2BC1C4 : {
@@ -130,6 +210,10 @@ SECTIONS
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
 		*(.patch_ModelSpawnGetObjectStatus)
+	}
+
+	.patch_DemoEffectMedallionDraw 0x37214C : {
+		*(.patch_DemoEffectMedallionDraw)
 	}
 
 	.patch_IncomingGetItemID 0x3725AC : {
@@ -208,6 +292,26 @@ SECTIONS
 		*(.patch_DekuTheaterSkullMask)
 	}
 
+	.patch_FireArrowBitMask 0x3F23B0 : {
+		*(.patch_FireArrowBitMask)
+	}
+
+	.patch_FireArrowCheckChestFlagOne 0x3F23FC : {
+		*(.patch_FireArrowCheckChestFlagOne)
+	}
+
+	.patch_FireArrowCheckChestFlagTwo 0x3F2448 : {
+		*(.patch_FireArrowCheckChestFlagTwo)
+	}
+
+	.patch_DodongosCavernItemGive 0x3F57B0 : {
+		*(.patch_DodongosCavernItemGive)
+	}
+
+	.patch_DekuTreeItemGive 0x3F582C : {
+		*(.patch_DekuTreeItemGive)
+	}
+
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}
@@ -256,9 +360,9 @@ SECTIONS
 		*(.patch_after_GlobalContext_Update)
 	}
 
-	/*.patch_OverrideGraphicID_495CD0 0x495CD0 : {
-		*(.patch_OverrideGraphicID_495CD0)
-	}*/
+	.patch_FireTempleItemGiveTwo 0x491B60 : {
+		*(.patch_FireTempleItemGiveTwo)
+	}
 
 	.patch_OverrideGraphicID_4BC604 0x4BC604 : {
 		*(.patch_OverrideGraphicID_4BC604)
