@@ -37,7 +37,7 @@ typedef struct {
     /* 0x0E */ s16   playerParams;
     /* 0x10 */ s16   entranceIndex;
     /* 0x12 */ u8    roomIndex;
-    /* 0x13 */ s8    data;
+    /* 0x13 */ u8    data;
     /* 0x14 */ u32   tempSwchFlags;
     /* 0x18 */ u32   tempCollectFlags;
 } RespawnData; // size = 0x1C
@@ -457,5 +457,9 @@ typedef u32 (*EventCheck_proc)(u32 param_1);
 typedef void (*EventSet_proc)(u32 param_1);
 #define EventSet_addr 0x34CBF8
 #define EventSet ((EventSet_proc)EventSet_addr)
+
+typedef void (*Rupees_ChangeBy_proc)(s16 rupeeChange);
+#define Rupees_ChangeBy_addr 0x376A60
+#define Rupees_ChangeBy ((Rupees_ChangeBy_proc)Rupees_ChangeBy_addr)
 
 #endif //_Z3D_H_

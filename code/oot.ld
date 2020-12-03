@@ -36,6 +36,10 @@ SECTIONS
 		*(.patch_DampeCheckCollectibleFlag)
 	}
 
+	.patch_BusinessScrubTable 0x18A634 : {
+		*(.patch_BusinessScrubTable)
+	}
+
 	.patch_PoeCollectorCheckPoints 0x19091C : {
 		*(.patch_PoeCollectorCheckPoints)
 	}
@@ -118,6 +122,10 @@ SECTIONS
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
 		*(.patch_DekuTheaterMaskOfTruth)
+	}
+
+	.patch_BusinessScrubCheckFlags 0x22EE64 : {
+		*(.patch_BusinessScrubCheckFlags)
 	}
 
 	.patch_EnExItemModelDraw 0x249C94 : {

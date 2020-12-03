@@ -489,6 +489,19 @@ FireArrowCheckChestFlagTwo_patch:
 FireArrowBitMask_patch:
     bl hook_FireArrowBitMask
 
+.section .patch_BusinessScrubCheckFlags
+.global BusinessScrubCheckFlags_patch
+BusinessScrubCheckFlags_patch:
+    cpy r0,r4
+    bl EnShopnnuts_rCheckFlags
+    cmp r0,#0x0
+
+.section .patch_BusinessScrubTable
+.global BusinessScrubTable_patch
+.global rScrubTable
+BusinessScrubTable_patch:
+    .word rScrubTable
+
 .section .patch_loader
 .global loader_patch
 
