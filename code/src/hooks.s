@@ -275,6 +275,15 @@ hook_DekuSproutBitMask:
     pop {r0, r2-r12, lr}
     bx lr
 
+.global hook_EnKoInitBitMask
+hook_EnKoInitBitMask:
+    push {r0, r2-r12, lr}
+    mov r0,#0x03
+    bl DungeonReward_GetBitMaskAddr
+    cpy r1,r0
+    pop {r0, r2-r12, lr}
+    bx lr
+
 #The magic number here is WATER_MEDALLION from dungeon_rewards.h
 .global hook_FireArrowBitMask
 hook_FireArrowBitMask:

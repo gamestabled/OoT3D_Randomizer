@@ -128,6 +128,11 @@ ChildRollingGoron_patch:
     mov r2,#0x34
     nop
 
+.section .patch_AdultRollingGoronIgnoreMedallion
+.global AdultRollingGoronIgnoreMedallion_patch
+AdultRollingGoronIgnoreMedallion_patch:
+    b 0x19546C
+
 .section .patch_AdultRollingGoronOne
 .global AdultRollingGoronOne_patch
 AdultRollingGoronOne_patch:
@@ -464,6 +469,11 @@ DemoEffectStoneDraw_patch:
 DekuSproutBitMask_patch:
     bl hook_DekuSproutBitMask
 
+.section .patch_EnKoInitBitMask
+.global EnKoInitBitMask_patch
+EnKoInitBitMask_patch:
+    bl hook_EnKoInitBitMask
+
 .section .patch_FireArrowCheckChestFlagOne
 .global FireArrowCheckChestFlagOne_patch
 FireArrowCheckChestFlagOne_patch:
@@ -478,6 +488,19 @@ FireArrowCheckChestFlagTwo_patch:
 .global FireArrowBitMask_patch
 FireArrowBitMask_patch:
     bl hook_FireArrowBitMask
+
+.section .patch_BusinessScrubCheckFlags
+.global BusinessScrubCheckFlags_patch
+BusinessScrubCheckFlags_patch:
+    cpy r0,r4
+    bl EnShopnnuts_rCheckFlags
+    cmp r0,#0x0
+
+.section .patch_BusinessScrubTable
+.global BusinessScrubTable_patch
+.global rScrubTable
+BusinessScrubTable_patch:
+    .word rScrubTable
 
 .section .patch_loader
 .global loader_patch

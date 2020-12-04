@@ -28,8 +28,16 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeOne)
 	}
 
+	.patch_EnKoInitBitMask 0x165760 : {
+		*(.patch_EnKoInitBitMask)
+	}
+
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
+	}
+
+	.patch_BusinessScrubTable 0x18A634 : {
+		*(.patch_BusinessScrubTable)
 	}
 
 	.patch_PoeCollectorCheckPoints 0x19091C : {
@@ -38,6 +46,10 @@ SECTIONS
 
 	.patch_ChildRollingGoron 0x194B18 : {
 		*(.patch_ChildRollingGoron)
+	}
+
+	.patch_AdultRollingGoronIgnoreMedallion 0x195450 : {
+		*(.patch_AdultRollingGoronIgnoreMedallion)
 	}
 
 	.patch_AdultRollingGoronOne 0x195480 : {
@@ -110,6 +122,10 @@ SECTIONS
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
 		*(.patch_DekuTheaterMaskOfTruth)
+	}
+
+	.patch_BusinessScrubCheckFlags 0x22EE64 : {
+		*(.patch_BusinessScrubCheckFlags)
 	}
 
 	.patch_EnExItemModelDraw 0x249C94 : {
