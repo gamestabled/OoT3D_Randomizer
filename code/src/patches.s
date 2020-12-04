@@ -502,6 +502,11 @@ BusinessScrubCheckFlags_patch:
 BusinessScrubTable_patch:
     .word rScrubTable
 
+.section .patch_KakarikoGateCheck
+.global KakarikoGateCheck_patch
+KakarikoGateCheck_patch:
+    b 0x28A6A0
+
 .section .patch_loader
 .global loader_patch
 

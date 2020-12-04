@@ -168,6 +168,10 @@ SECTIONS
 		*(.patch_WaterTempleItemGiveThree)
 	}
 
+	.patch_KakarikoGateCheck 0x28A67C : {
+		*(.patch_KakarikoGateCheck)
+	}
+
 	.patch_FireTempleItemGiveFour 0x28E2AC : {
 		*(.patch_FireTempleItemGiveFour)
 	}
