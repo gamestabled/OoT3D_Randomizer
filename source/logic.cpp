@@ -46,6 +46,31 @@ namespace Logic {
   bool IceArrows     = false;
   bool LightArrows   = false;
 
+  //Trade Quest
+  bool PocketEgg     = false;
+  bool PocketCucco   = false;
+  bool Cojiro        = false;
+  bool OddMushroom   = false;
+  bool OddPoultice   = false;
+  bool PoachersSaw   = false;
+  bool BrokenSword   = false;
+  bool Prescription  = false;
+  bool EyeballFrog   = false;
+  bool Eyedrops      = false;
+  bool ClaimCheck    = false;
+
+  //Trade Quest Events
+  bool WakeUpAdultTalon   = false;
+  bool CojiroAccess       = false;
+  bool OddMushroomAccess  = false;
+  bool OddPoulticeAccess  = false;
+  bool PoachersSawAccess  = false;
+  bool BrokenSwordAccess  = false;
+  bool PrescriptionAccess = false;
+  bool EyeballFrogAccess  = false;
+  bool EyedropsAccess     = false;
+  bool DisableTradeRevert = false;
+
   //Songs
   bool ZeldasLullaby    = false;
   bool SariasSong       = false;
@@ -119,7 +144,6 @@ namespace Logic {
   bool BossKeyShadowTemple = false;
   bool BossKeyGanonsCastle = false;
 
-
   //Gold Skulltula Count
   u8 GoldSkulltulaTokens = 0;
 
@@ -147,17 +171,9 @@ namespace Logic {
   bool FreeFairies      = false;
   bool FairyPond        = false;
 
-
-  //Shops
-  bool BuyDekuShield   = false;
-  bool BuyHylianShield = false;
-  bool BuyBottleBug    = false;
-  bool BuyBlueFire     = false;
-  bool BuyBottledFish  = false;
-  bool BuyFairysSpirit = false;
-  bool BuyBombchus5    = false;
-  bool BuyBombchus10   = false;
-  bool BuyBombchus20   = false;
+  bool BuyBombchus5     = false;
+  bool BuyBombchus10    = false;
+  bool BuyBombchus20    = false;
 
   /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
   /* These are used to simplify reading the logic, but need to be updated
@@ -211,6 +227,7 @@ namespace Logic {
   bool CanPlantBean        = false;
   bool CanOpenBombGrotto   = false;
   bool CanOpenStormGrotto  = false;
+  bool BigPoeKill          = false;
   bool HookshotOrBoomerang = false;
 
   bool GuaranteeTradePath     = false;
@@ -388,7 +405,7 @@ namespace Logic {
 
     //Drop Access
     DekuStickDrop = StickPot || DekuBabaSticks;
-    DekuNutDrop   = NutPot   || NutCrate || DekuBabaNuts;
+    DekuNutDrop   = NutPot   || NutCrate         || DekuBabaNuts;
     BugsAccess    = BugShrub || WanderingBugs    || BugRock;
     FishAccess    = LoneFish || FishGroup;
     FairyAccess   = FairyPot || GossipStoneFairy || BeanPlantFairy || ButterflyFairy || FreeFairies || FairyPond;
@@ -396,14 +413,12 @@ namespace Logic {
 
     //refills
     Bombs        = BombBag;
-    DekuShield   = BuyDekuShield   || DekuShield;   //TODO: Change back once logic testing is done
-    HylianShield = BuyHylianShield || HylianShield;
     Nuts         = DekuNutDrop || Nuts;
     Sticks       = DekuStickDrop || Sticks;
-    Bugs         = HasBottle && (BugsAccess      || BuyBottleBug);
-    BlueFire     = HasBottle && (BlueFireAccess  || BuyBlueFire);
-    Fish         = HasBottle && (FishAccess      || BuyBottledFish);
-    Fairy        = HasBottle && (FairyAccess     || BuyFairysSpirit);
+    Bugs         = HasBottle && BugsAccess;
+    BlueFire     = HasBottle && BlueFireAccess;
+    Fish         = HasBottle && FishAccess;
+    Fairy        = HasBottle && FairyAccess;
 
     HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || BombchuDrop) && (BombchusInLogic || BombBag);
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
@@ -479,8 +494,7 @@ namespace Logic {
           SpiritTrialClearPast     != SpiritTrialClear     ||
           LightTrialClearPast      != LightTrialClear      ||
           DrainWellPast            != DrainWell            ||
-          DampesWindmillAccessPast != DampesWindmillAccess ||
-          BuyDekuShieldPast        != BuyDekuShield          ) {
+          DampesWindmillAccessPast != DampesWindmillAccess) {
             DekuTreeClearPast        = DekuTreeClear;
             GoronRubyPast            = GoronRuby;
             ZoraSapphirePast         = ZoraSapphire;
@@ -492,7 +506,6 @@ namespace Logic {
             LightTrialClearPast      = LightTrialClear;
             DrainWellPast            = DrainWell;
             DampesWindmillAccessPast = DampesWindmillAccess;
-            BuyDekuShieldPast        = BuyDekuShield;
             return true;
           }
      return false;

@@ -60,6 +60,10 @@ public:
       return placedItem.GetName();
     }
 
+    Item GetPlacedItem() const {
+      return placedItem;
+    }
+
     void SetPlacedItem(Item item) {
       placedItem = std::move(item);
     }
@@ -626,6 +630,19 @@ extern ItemLocation BongoBongo;
         --- CUTSCENES ---
   -------------------------------*/
 
+extern ItemLocation SheikInForest;
+extern ItemLocation SheikInCrater;
+extern ItemLocation SheikInIceCavern;
+extern ItemLocation SheikAtColossus;
+extern ItemLocation SheikInKakariko;
+extern ItemLocation SheikAtTemple;
+extern ItemLocation SongFromImpa;
+extern ItemLocation SongFromMalon;
+extern ItemLocation SongFromSaria;
+extern ItemLocation SongFromComposersGrave;
+extern ItemLocation SongFromOcarinaOfTime;
+extern ItemLocation SongFromWindmill;
+
 extern ItemLocation ToT_LightArrowCutscene;
 extern ItemLocation LW_GiftFromSaria;
 extern ItemLocation ZF_GreatFairyReward;
@@ -726,4 +743,4 @@ extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
-extern std::array<ItemLocation *, 339> allLocations;
+extern std::array<ItemLocation *, 354> allLocations;

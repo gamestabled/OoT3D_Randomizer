@@ -41,6 +41,31 @@ namespace Logic {
   extern bool IceArrows;
   extern bool LightArrows;
 
+  //Trade Quest
+  extern bool PocketEgg;
+  extern bool PocketCucco;
+  extern bool Cojiro;
+  extern bool OddMushroom;
+  extern bool OddPoultice;
+  extern bool PoachersSaw;
+  extern bool BrokenSword;
+  extern bool Prescription;
+  extern bool EyeballFrog;
+  extern bool Eyedrops;
+  extern bool ClaimCheck;
+
+  //Trade Quest Events
+  extern bool WakeUpAdultTalon;
+  extern bool CojiroAccess;
+  extern bool OddMushroomAccess;
+  extern bool OddPoulticeAccess;
+  extern bool PoachersSawAccess;
+  extern bool BrokenSwordAccess;
+  extern bool PrescriptionAccess;
+  extern bool EyeballFrogAccess;
+  extern bool EyedropsAccess;
+  extern bool DisableTradeRevert;
+
   //Songs
   extern bool ZeldasLullaby;
   extern bool SariasSong;
@@ -76,6 +101,7 @@ namespace Logic {
   extern bool SpiritTempleClear;
   extern bool ShadowTempleClear;
 
+  //Trial Clears
   extern bool ForestTrialClear;
   extern bool FireTrialClear;
   extern bool WaterTrialClear;
@@ -105,6 +131,7 @@ namespace Logic {
   extern u8 GerudoFortressKeys;
   extern u8 GanonsCastleKeys;
 
+  //Boss Keys
   extern bool BossKeyForestTemple;
   extern bool BossKeyFireTemple;
   extern bool BossKeyWaterTemple;
@@ -139,12 +166,6 @@ namespace Logic {
   extern bool FreeFairies;
   extern bool FairyPond;
 
-  extern bool BuyDekuShield;
-  extern bool BuyHylianShield;
-  extern bool BuyBottleBug;
-  extern bool BuyBlueFire;
-  extern bool BuyBottledFish;
-  extern bool BuyFairysSpirit;
   extern bool BuyBombchus5;
   extern bool BuyBombchus10;
   extern bool BuyBombchus20;
@@ -201,6 +222,7 @@ namespace Logic {
   extern bool CanOpenBombGrotto;
   extern bool CanOpenStormGrotto;
   extern bool HookshotOrBoomerang;
+  extern bool BigPoeKill;
 
   extern bool GuaranteeTradePath;
   extern bool GuaranteeHint;

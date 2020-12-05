@@ -50,7 +50,7 @@ typedef enum {
 
 typedef enum {
   ZORASFOUNTAIN_NORMAL,
-  ZORASFOUNTAIN_ADULT,
+  //ZORASFOUNTAIN_ADULT,
   ZORASFOUNTAIN_OPEN,
 } ZorasFountainSetting;
 

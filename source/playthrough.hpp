@@ -17,4 +17,5 @@ namespace Playthrough {
     };
 
     int Fill(int settings, u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides);
+    s16 GetRandomPrice();
 }

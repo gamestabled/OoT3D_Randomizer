@@ -301,9 +301,6 @@ public:
 
 namespace Exits {
 
-  // extern std::vector<Exit> ChildExitPool;
-  // extern std::vector<Exit> AdultExitPool;
-
   extern std::vector<Exit *> ExitPool;
 
   //Starting Locations

@@ -26,12 +26,13 @@ class Item {
 public:
     using EffectFn = void (*)();
 
-    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, EffectFn effect_)
+    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, EffectFn effect_, u16 price_ = 0)
         : name(std::move(name_)),
           type(type_),
           getItemId(getItemId_),
           progressive(progressive_),
-          effect(effect_) {}
+          effect(effect_),
+          price(price_) {}
 
     void ApplyEffect() {
         effect();
@@ -61,12 +62,17 @@ public:
         return type;
     }
 
+    u16 GetPrice() const {
+        return price;
+    }
+
 private:
     std::string name;
     ItemType type;
     int  getItemId;
     bool progressive;
     EffectFn effect;
+    u16  price;
 };
 
 //specific advancement items
@@ -95,6 +101,19 @@ extern Item A_GerudoToken;
 extern Item A_MagicBean;
 extern Item A_MagicBeanPack;
 extern Item A_DoubleDefense;
+
+extern Item A_PocketEgg;
+extern Item A_PocketCucco;
+extern Item A_Cojiro;
+extern Item A_OddMushroom;
+extern Item A_OddPoultice;
+extern Item A_PoachersSaw;
+extern Item A_BrokenSword;
+extern Item A_Prescription;
+extern Item A_EyeballFrog;
+extern Item A_Eyedrops;
+extern Item A_ClaimCheck;
+
 extern Item GoldSkulltulaToken;
 
 //progressive items
@@ -231,6 +250,6 @@ extern Item HeartContainer;
 extern std::vector<Item *> PrePlacedItems;
 extern std::vector<Item>   AdvancementItemPool;
 extern std::vector<Item>   ItemPool;
-extern void UpdateSetItems();
+extern std::array<Item, 9> dungeonRewards;
 extern void GenerateItemPool();
 extern void AddGreenRupee();
