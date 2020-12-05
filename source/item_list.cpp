@@ -37,6 +37,19 @@ constexpr auto ZoraTunicEffect            = []{ZoraTunic     = true;};
 constexpr auto GerudoTokenEffect          = []{GerudoToken   = true;};
 constexpr auto MagicBeanEffect            = []{MagicBean     = true;};
 constexpr auto MagicBeanPackEffect        = []{MagicBeanPack = true;};
+
+constexpr auto PocketEggEffect            = []{PocketEgg     = true;};
+constexpr auto PocketCuccoEffect          = []{PocketCucco   = true;};
+constexpr auto CojiroEffect               = []{Cojiro        = true;};
+constexpr auto OddMushroomEffect          = []{OddMushroom   = true;};
+constexpr auto OddPoulticeEffect          = []{OddPoultice   = true;};
+constexpr auto PoachersSawEffect          = []{PoachersSaw   = true;};
+constexpr auto BrokenSwordEffect          = []{BrokenSword   = true;};
+constexpr auto PrescriptionEffect         = []{Prescription  = true;};
+constexpr auto EyeballFrogEffect          = []{EyeballFrog   = true;};
+constexpr auto EyedropsEffect             = []{Eyedrops      = true;};
+constexpr auto ClaimCheckEffect           = []{ClaimCheck    = true;};
+
 constexpr auto GoldSkulltulaTokenEffect   = []{GoldSkulltulaTokens++; TokensInPool--;};
 
 constexpr auto ProgressiveHookshotEffect  = []{ProgressiveHookshot++; };
@@ -126,6 +139,18 @@ Item A_GerudoToken              = Item("Gerudo Token",    ITEMTYPE_ITEM, GI_GERU
 Item A_MagicBean                = Item("Magic Bean",      ITEMTYPE_ITEM, GI_BEAN,           false, MagicBeanEffect);
 Item A_MagicBeanPack            = Item("Magic Bean Pack", ITEMTYPE_ITEM, 0xC9,              false, MagicBeanPackEffect);
 Item A_DoubleDefense            = Item("Double Defense",  ITEMTYPE_ITEM, 0xB8,              false, NoEffect);
+
+Item A_PocketEgg                = Item("Pocket Egg",      ITEMTYPE_ITEM, GI_POCKET_EGG,     false, PocketEggEffect);
+Item A_PocketCucco              = Item("Pocket Cucco",    ITEMTYPE_ITEM, GI_POCKET_CUCCO,   false, PocketCuccoEffect);
+Item A_Cojiro                   = Item("Cojiro",          ITEMTYPE_ITEM, GI_COJIRO,         false, CojiroEffect);
+Item A_OddMushroom              = Item("Odd Mushroom",    ITEMTYPE_ITEM, GI_ODD_MUSHROOM,   false, OddMushroomEffect);
+Item A_OddPoultice              = Item("Odd Poultice",    ITEMTYPE_ITEM, GI_ODD_POTION,     false, OddPoulticeEffect);
+Item A_PoachersSaw              = Item("Poachers Saw",    ITEMTYPE_ITEM, GI_SAW,            false, PoachersSawEffect);
+Item A_BrokenSword              = Item("Broken Sword",    ITEMTYPE_ITEM, GI_SWORD_BROKEN,   false, BrokenSwordEffect);
+Item A_Prescription             = Item("Prescription",    ITEMTYPE_ITEM, GI_PERSCRIPTION,   false, PrescriptionEffect);
+Item A_EyeballFrog              = Item("Eyeball Frog",    ITEMTYPE_ITEM, GI_FROG,           false, EyeballFrogEffect);
+Item A_Eyedrops                 = Item("Eyedrops",        ITEMTYPE_ITEM, GI_EYEDROPS,       false, EyedropsEffect);
+Item A_ClaimCheck               = Item("Claim Check",     ITEMTYPE_ITEM, GI_CLAIM_CHECK,    false, ClaimCheckEffect);
 
 Item GoldSkulltulaToken         = Item("Gold Skulltula Token", ITEMTYPE_TOKEN, GI_SKULL_TOKEN, false, GoldSkulltulaTokenEffect);
 
@@ -231,6 +256,9 @@ Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)
 Item Bombs5                     = Item("Bombs (5)",        ITEMTYPE_ITEM, GI_BOMBS_5,           false, NoEffect);
 Item Bombs10                    = Item("Bombs (10)",       ITEMTYPE_ITEM, GI_BOMBS_10,          false, NoEffect);
 Item Bombs20                    = Item("Bombs (20)",       ITEMTYPE_ITEM, GI_BOMBS_20,          false, NoEffect);
+Item Bombchu5                   = Item("Bombchu (5)",      ITEMTYPE_ITEM, GI_BOMBCHUS_5,        false, NoEffect);
+Item Bombchu10                  = Item("Bombchu (10)",     ITEMTYPE_ITEM, GI_BOMBCHUS_10,       false, NoEffect);
+Item Bombchu20                  = Item("Bombchu (20)",     ITEMTYPE_ITEM, GI_BOMBCHUS_20,       false, NoEffect);
 Item Arrows5                    = Item("Arrows (5)",       ITEMTYPE_ITEM, GI_ARROWS_SMALL,      false, NoEffect);
 Item Arrows10                   = Item("Arrows (10)",      ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,     false, NoEffect);
 Item Arrows30                   = Item("Arrows (30)",      ITEMTYPE_ITEM, GI_ARROWS_LARGE,      false, NoEffect);
@@ -239,40 +267,40 @@ Item DekuNuts10                 = Item("Deku Nuts (10)",   ITEMTYPE_ITEM, GI_NUT
 Item DekuSeeds30                = Item("Deku Seeds (30)",  ITEMTYPE_ITEM, GI_SEEDS_30,          false, NoEffect);
 Item DekuStick1                 = Item("Deku Stick (1)",   ITEMTYPE_ITEM, GI_STICKS_1,          false, NoEffect);
 
-//Shop Items
-Item BuyDekuNut5                = Item("Buy Deku Nut (5)",    ITEMTYPE_SHOP, 0x00, false, DekuNutEffect);
-Item BuyArrows30                = Item("Buy Arrows (30)",     ITEMTYPE_SHOP, 0x01, false, NoEffect);
-Item BuyArrows50                = Item("Buy Arrows (50)",     ITEMTYPE_SHOP, 0x02, false, NoEffect);
-Item BuyBombs525                = Item("Buy Bombs (5) [25]",  ITEMTYPE_SHOP, 0x03, false, NoEffect);
-Item BuyDekuNut10               = Item("Buy Deku Nut (10)",   ITEMTYPE_SHOP, 0x04, false, DekuNutEffect);
-Item BuyDekuStick1              = Item("Buy Deku Stick (1)",  ITEMTYPE_SHOP, 0x05, false, DekuStickEffect);
-Item BuyBombs10                 = Item("Buy Bombs (10)",      ITEMTYPE_SHOP, 0x06, false, NoEffect);
-Item BuyFish                    = Item("Buy Fish",            ITEMTYPE_SHOP, 0x07, false, NoEffect);
-Item BuyRedPotion30             = Item("Buy Red Potion [30]", ITEMTYPE_SHOP, 0x08, false, NoEffect);
-Item BuyGreenPotion             = Item("Buy Green Potion",    ITEMTYPE_SHOP, 0x09, false, NoEffect);
-Item BuyBluePotion              = Item("Buy Blue Potion",     ITEMTYPE_SHOP, 0x0A, false, NoEffect);
-Item BuyHylianShield            = Item("Buy Hylian Shield",   ITEMTYPE_SHOP, 0x0C, false, HylianShieldEffect);
-Item BuyDekuShield              = Item("Buy Deku Shield",     ITEMTYPE_SHOP, 0x0D, false, DekuShieldEffect);
-Item BuyGoronTunic              = Item("Buy Goron Tunic",     ITEMTYPE_SHOP, 0x0E, false, NoEffect);
-Item BuyZoraTunic               = Item("Buy Zora Tunic",      ITEMTYPE_SHOP, 0x0F, false, NoEffect);
-Item BuyHeart                   = Item("Buy Heart",           ITEMTYPE_SHOP, 0x10, false, NoEffect);
-Item BuyBombchu10               = Item("Buy Bombchu (10)",    ITEMTYPE_SHOP, 0x15, false, NoEffect);
-Item BuyBombchu20               = Item("Buy Bombchu (20)",    ITEMTYPE_SHOP, 0x16, false, NoEffect);
-Item BuyBombchu5                = Item("Buy Bombchu (5)",     ITEMTYPE_SHOP, 0x18, false, NoEffect);
-Item BuyDekuSeeds30             = Item("Buy Deku Seeds (30)", ITEMTYPE_SHOP, 0x1D, false, NoEffect);
-Item SoldOut                    = Item("Sold Out",            ITEMTYPE_SHOP, 0x26, false, NoEffect);
-Item BuyBlueFire                = Item("Buy Blue Fire",       ITEMTYPE_SHOP, 0x27, false, NoEffect);
-Item BuyBottleBug               = Item("Buy Bottle Bug",      ITEMTYPE_SHOP, 0x28, false, NoEffect);
-Item BuyPoe                     = Item("Buy Poe",             ITEMTYPE_SHOP, 0x2A, false, NoEffect);
-Item BuyFairysSpirit            = Item("Buy Fairy's Spirit",  ITEMTYPE_SHOP, 0x2B, false, NoEffect);
-Item BuyArrows10                = Item("Buy Arrows (10)",     ITEMTYPE_SHOP, 0x2C, false, NoEffect);
-Item BuyBombs20                 = Item("Buy Bombs (20)",      ITEMTYPE_SHOP, 0x2D, false, NoEffect);
-Item BuyBombs30                 = Item("Buy Bombs (30)",      ITEMTYPE_SHOP, 0x2E, false, NoEffect);
-Item BuyBombs535                = Item("Buy Bombs (5) [35]",  ITEMTYPE_SHOP, 0x2F, false, NoEffect);
-Item BuyRedPotion40             = Item("Buy Red Potion [40]", ITEMTYPE_SHOP, 0x30, false, NoEffect);
-Item BuyRedPotion50             = Item("Buy Red Potion [50]", ITEMTYPE_SHOP, 0x31, false, NoEffect);
+//Shop Items                                                                                               price
+Item BuyDekuNut5                = Item("Buy Deku Nut (5)",    ITEMTYPE_SHOP, 0x00, false, DekuNutEffect,      15);
+Item BuyArrows30                = Item("Buy Arrows (30)",     ITEMTYPE_SHOP, 0x01, false, NoEffect,           60);
+Item BuyArrows50                = Item("Buy Arrows (50)",     ITEMTYPE_SHOP, 0x02, false, NoEffect,           90);
+Item BuyBombs525                = Item("Buy Bombs (5) [25]",  ITEMTYPE_SHOP, 0x03, false, NoEffect,           25);
+Item BuyDekuNut10               = Item("Buy Deku Nut (10)",   ITEMTYPE_SHOP, 0x04, false, DekuNutEffect,      30);
+Item BuyDekuStick1              = Item("Buy Deku Stick (1)",  ITEMTYPE_SHOP, 0x05, false, DekuStickEffect,    10);
+Item BuyBombs10                 = Item("Buy Bombs (10)",      ITEMTYPE_SHOP, 0x06, false, NoEffect,           50);
+Item BuyFish                    = Item("Buy Fish",            ITEMTYPE_SHOP, 0x07, false, NoEffect,          200);
+Item BuyRedPotion30             = Item("Buy Red Potion [30]", ITEMTYPE_SHOP, 0x08, false, NoEffect,           30);
+Item BuyGreenPotion             = Item("Buy Green Potion",    ITEMTYPE_SHOP, 0x09, false, NoEffect,           30);
+Item BuyBluePotion              = Item("Buy Blue Potion",     ITEMTYPE_SHOP, 0x0A, false, NoEffect,          100);
+Item BuyHylianShield            = Item("Buy Hylian Shield",   ITEMTYPE_SHOP, 0x0C, false, HylianShieldEffect, 80);
+Item BuyDekuShield              = Item("Buy Deku Shield",     ITEMTYPE_SHOP, 0x0D, false, DekuShieldEffect,   40);
+Item BuyGoronTunic              = Item("Buy Goron Tunic",     ITEMTYPE_SHOP, 0x0E, false, NoEffect,          200);
+Item BuyZoraTunic               = Item("Buy Zora Tunic",      ITEMTYPE_SHOP, 0x0F, false, NoEffect,          300);
+Item BuyHeart                   = Item("Buy Heart",           ITEMTYPE_SHOP, 0x10, false, NoEffect,           10);
+Item BuyBombchu10               = Item("Buy Bombchu (10)",    ITEMTYPE_SHOP, 0x15, false, NoEffect,           99);
+Item BuyBombchu20               = Item("Buy Bombchu (20)",    ITEMTYPE_SHOP, 0x16, false, NoEffect,          180);
+Item BuyBombchu5                = Item("Buy Bombchu (5)",     ITEMTYPE_SHOP, 0x18, false, NoEffect,           60);
+Item BuyDekuSeeds30             = Item("Buy Deku Seeds (30)", ITEMTYPE_SHOP, 0x1D, false, NoEffect,           30);
+Item SoldOut                    = Item("Sold Out",            ITEMTYPE_SHOP, 0x26, false, NoEffect,            0);
+Item BuyBlueFire                = Item("Buy Blue Fire",       ITEMTYPE_SHOP, 0x27, false, NoEffect,          300);
+Item BuyBottleBug               = Item("Buy Bottle Bug",      ITEMTYPE_SHOP, 0x28, false, NoEffect,           50);
+Item BuyPoe                     = Item("Buy Poe",             ITEMTYPE_SHOP, 0x2A, false, NoEffect,           30);
+Item BuyFairysSpirit            = Item("Buy Fairy's Spirit",  ITEMTYPE_SHOP, 0x2B, false, NoEffect,           50);
+Item BuyArrows10                = Item("Buy Arrows (10)",     ITEMTYPE_SHOP, 0x2C, false, NoEffect,           20);
+Item BuyBombs20                 = Item("Buy Bombs (20)",      ITEMTYPE_SHOP, 0x2D, false, NoEffect,           80);
+Item BuyBombs30                 = Item("Buy Bombs (30)",      ITEMTYPE_SHOP, 0x2E, false, NoEffect,          120);
+Item BuyBombs535                = Item("Buy Bombs (5) [35]",  ITEMTYPE_SHOP, 0x2F, false, NoEffect,           35);
+Item BuyRedPotion40             = Item("Buy Red Potion [40]", ITEMTYPE_SHOP, 0x30, false, NoEffect,           40);
+Item BuyRedPotion50             = Item("Buy Red Potion [50]", ITEMTYPE_SHOP, 0x31, false, NoEffect,           50);
 
-//Stones and Medallions
+//Stones and Medallions                                                          //bitmask for questItems
 Item A_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  false, KokiriEmeraldEffect);
 Item A_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000,  false, GoronRubyEffect);
 Item A_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000,  false, ZoraSapphireEffect);
@@ -290,8 +318,40 @@ std::vector<Item> AdvancementItemPool = {};
 //The beginning pool of items, filled in by GenerateItemPool()
 std::vector<Item> ItemPool = {};
 
+std::vector<Item> BottlePool = {
+  A_EmptyBottle,
+  A_MilkBottle,
+  A_RedPotionBottle,
+  A_GreenPotionBottle,
+  A_BluePotionBottle,
+  A_FairyBottle,
+  A_FishBottle,
+  A_BugsBottle,
+  A_PoeBottle,
+  A_BigPoeBottle,
+  A_BlueFireBottle,
+};
+
+std::array<Item, 9> dungeonRewards = {
+  A_KokiriEmerald,
+  A_GoronRuby,
+  A_ZoraSaphhire,
+  A_ForestMedallion,
+  A_FireMedallion,
+  A_WaterMedallion,
+  A_SpiritMedallion,
+  A_ShadowMedallion,
+  A_LightMedallion,
+};
+
 static void AddItemToPool(const Item& item, size_t count = 1) {
   ItemPool.resize(ItemPool.size() + count, item);
+}
+
+static void AddRandomBottle() {
+  u32 idx = rand() % BottlePool.size();
+  AddItemToPool(BottlePool[idx]);
+  BottlePool.erase(BottlePool.begin() + idx);
 }
 
 void GenerateItemPool() {
@@ -312,15 +372,10 @@ void GenerateItemPool() {
     A_DinsFire,
     A_FaroresWind,
     A_NayrusLove,
-    GreenRupee,
     A_DekuShield,
     A_HylianShield,
     A_DoubleDefense,
-
-    A_EmptyBottle,
-    A_RedPotionBottle,
-    A_BlueFireBottle,
-    A_RutosLetter,
+    TreasureGameHeart,
 
     A_SongOfStorms,
     A_SongOfTime,
@@ -333,6 +388,8 @@ void GenerateItemPool() {
     A_NocturneOfShadow,
     A_RequiemOfSpirit,
     A_PreludeOfLight,
+
+    GreenRupee,
   };
 
   AddItemToPool(A_ProgressiveHookshot,      2);
@@ -365,14 +422,31 @@ void GenerateItemPool() {
   AddItemToPool(HugeRupee, 3);
 
   AddItemToPool(PieceOfHeart, 35);
-  AddItemToPool(TreasureGameHeart);
   AddItemToPool(HeartContainer, 8);
-}
-/*Adds extra shuffled items to the item Pool
-  Checks must also be implemented in Playthrough::PlaceSetItems()
-  if the item has a specific location it needs to be (i.e. Zeldas Letter)
-*/
-void UpdateSetItems() {
+
+  AddItemToPool(A_ClaimCheck); //temporary
+
+  /*Adds extra shuffled items to the item Pool
+    Checks must also be implemented in Playthrough::PlaceSetItems()
+    if the item has a specific location it needs to be (i.e. Zeldas Letter)
+  */
+
+  //Add 4 total bottles
+  u8 bottleCount = 4;
+  u8 rutoBottles = 1;
+
+  if (ZorasFountain == ZORASFOUNTAIN_OPEN) {
+    rutoBottles = 0;
+  }
+
+  for (u8 i = 0; i < bottleCount; i++) {
+    if (i >= rutoBottles) {
+      AddRandomBottle();
+    } else {
+      AddItemToPool(A_RutosLetter);
+    }
+  }
+
   if (ShuffleKokiriSword) {
     AddItemToPool(A_KokiriSword);
   }
@@ -394,7 +468,11 @@ void UpdateSetItems() {
   }
 
   if (BombchusInLogic) {
-    AddItemToPool(A_ProgressiveBombchus);
+    AddItemToPool(A_ProgressiveBombchus, 5);
+  } else {
+    AddItemToPool(Bombchu5);
+    AddItemToPool(Bombchu10, 3);
+    AddItemToPool(Bombchu20);
   }
 
   if (Keysanity == KEYSANITY_ALL_LOCATIONS) {
@@ -445,6 +523,7 @@ void UpdateSetItems() {
   if (Skullsanity == TOKENSANITY_ALL_LOCATIONS) {
     AddItemToPool(GoldSkulltulaToken, 100);
   }
+
 }
 
 void AddGreenRupee() {

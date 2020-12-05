@@ -46,9 +46,9 @@ namespace Playthrough {
 
         loc->SetPlacedItem(*item);
         totalItemsPlaced++;
-        printf("\x1b[2;20HPlacing Items...");
+        printf("\x1b[8;10HPlacing Items...");
         if (Settings::Logic == LOGIC_GLITCHLESS) {
-          printf("\x1b[3;25H%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
+          printf("%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
         }
 
     }
@@ -176,8 +176,8 @@ namespace Playthrough {
                 ItemLocation* location = locPair.GetLocation();
 
                 if (locPair.ConditionsMet() && !location->IsAddedToPool()) {
-                  // PlacementLog_Msg("NEW LOCATION FOUND: ");
-                  // PlacementLog_Msg(location->name);
+                  PlacementLog_Msg("NEW LOCATION FOUND: ");
+                  PlacementLog_Msg(location->GetName());
 
                   totalLocationsFound++;
                   location->AddToPool();
@@ -286,24 +286,27 @@ namespace Playthrough {
         return 1;
     }
 
+    static void RandomizeDungeonRewards(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
 
+      //shuffle an array of indices so that we can randomize the rewards both logically, and for the patch
+      std::array<int, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+      std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
+
+      for (u8 i = 0; i < dungeonRewards.size(); i++) {
+        int idx = idxArray[i];
+        PlaceItemInLocation(&dungeonRewards[idx], dungeonRewardLocations[i], overrides, false);
+        Settings::rDungeonRewardOverrides[i] = idx;
+      }
+      Settings::LinksPocketRewardBitMask = LinksPocket.GetPlacedItem().GetItemID();
+    }
 
     //Check for specific preset items in locations
     static void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
       totalItemsPlaced = 0;
+      //don't immediately apply the effect of placing the item. Let the playthrough apply it when it finds the item.
       const bool NO_EFFECT = false;
 
       PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
-
-      PlaceItemInLocation(&A_LightMedallion,  &LinksPocket,     overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_KokiriEmerald,   &QueenGohma,      overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_GoronRuby,       &KingDodongo,     overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_ZoraSaphhire,    &Barinade,        overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_ForestMedallion, &PhantomGanon,    overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_FireMedallion,   &Volvagia,        overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_WaterMedallion,  &Morpha,          overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_SpiritMedallion, &Twinrova,        overrides, NO_EFFECT);
-      PlaceItemInLocation(&A_ShadowMedallion, &BongoBongo,      overrides, NO_EFFECT);
 
       if (!Settings::ShuffleKokiriSword)
         PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);
@@ -587,6 +590,73 @@ namespace Playthrough {
         RandomizeDungeonItem(BottomOfTheWellKeyRequirements, &BottomOfTheWell_Compass, overrides);
         RandomizeDungeonItem(IceCavernKeyRequirements,       &IceCavern_Compass,       overrides);
       }
+
+      if (!Settings::Shopsanity) {
+        PlaceItemInLocation(&BuyDekuShield,   &KF_ShopItem1,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,     &KF_ShopItem2,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut10,    &KF_ShopItem3,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuStick1,   &KF_ShopItem4,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuSeeds30,  &KF_ShopItem5,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows10,     &KF_ShopItem6,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,     &KF_ShopItem7,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHeart,        &KF_ShopItem8,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,     &Kak_PotionShopItem1, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyFish,         &Kak_PotionShopItem2, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion30,  &Kak_PotionShopItem3, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyGreenPotion,  &Kak_PotionShopItem4, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBlueFire,     &Kak_PotionShopItem5, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBottleBug,    &Kak_PotionShopItem6, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyPoe,          &Kak_PotionShopItem7, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyFairysSpirit, &Kak_PotionShopItem8, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu5,     &MK_BombchuShopItem1, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu10,    &MK_BombchuShopItem2, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu10,    &MK_BombchuShopItem3, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu10,    &MK_BombchuShopItem4, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem5, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem6, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem7, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem8, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyGreenPotion,  &MK_PotionShopItem1,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBlueFire,     &MK_PotionShopItem2,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion30,  &MK_PotionShopItem3,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyFairysSpirit, &MK_PotionShopItem4,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,     &MK_PotionShopItem5,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBottleBug,    &MK_PotionShopItem6,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyPoe,          &MK_PotionShopItem7,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyFish,         &MK_PotionShopItem8,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHylianShield, &MK_BazaarItem1,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombs535,     &MK_BazaarItem2,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,     &MK_BazaarItem3,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHeart,        &MK_BazaarItem4,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows10,     &MK_BazaarItem5,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows50,     &MK_BazaarItem6,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuStick1,   &MK_BazaarItem7,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,     &MK_BazaarItem8,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHylianShield, &Kak_BazaarItem1,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombs535,     &Kak_BazaarItem2,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,     &Kak_BazaarItem3,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHeart,        &Kak_BazaarItem4,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows10,     &Kak_BazaarItem5,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows50,     &Kak_BazaarItem6,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuStick1,   &Kak_BazaarItem7,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,     &Kak_BazaarItem8,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyZoraTunic,    &ZD_ShopItem1,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows10,     &ZD_ShopItem2,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHeart,        &ZD_ShopItem3,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,     &ZD_ShopItem4,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,     &ZD_ShopItem5,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows50,     &ZD_ShopItem6,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyFish,         &ZD_ShopItem7,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion50,  &ZD_ShopItem8,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyZoraTunic,    &GC_ShopItem1,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows10,     &GC_ShopItem2,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyHeart,        &GC_ShopItem3,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,     &GC_ShopItem4,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,     &GC_ShopItem5,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows50,     &GC_ShopItem6,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyFish,         &GC_ShopItem7,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion50,  &GC_ShopItem8,        overrides, NO_EFFECT);
+      }
     }
 
     static void Playthrough_Init(u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
@@ -595,7 +665,7 @@ namespace Playthrough {
         Settings::PrintSettings();
         Logic::UpdateHelpers();
         GenerateItemPool();
-        UpdateSetItems();
+        RandomizeDungeonRewards(overrides);
         PlaceSetItems(overrides);
         AccessibleLocations_Init(overrides);
     }
@@ -629,12 +699,17 @@ namespace Playthrough {
             }
 
         }
-        printf("\x1b[10;10H");
+        printf("\x1b[9;10H");
         bool rv = SpoilerLog_Write();
         if (rv) printf("Wrote Spoiler Log\n");
         else    printf("failed to write log\n");
 
         rv = PlacementLog_Write();
+        printf("\x1b[10;10HWrote Placement Log\n");
         return 1;
+    }
+
+    s16 GetRandomPrice() {
+      return Random() % 100;
     }
 }
