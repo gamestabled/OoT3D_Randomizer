@@ -46,6 +46,25 @@ void Cutscene_OverrideLACS(void) {
     }
 }
 
+void Cutscene_OverrideMinuet(void) {
+    gSaveContext.eventChkInf[5] |= 0x1;
+    ItemOverride_PushDelayedOverride(0x20);
+}
+
+void Cutscene_OverrideBolero(void) {
+    gSaveContext.eventChkInf[5] |= 0x2;
+    ItemOverride_PushDelayedOverride(0x21);
+}
+
+u32 Cutscene_SerenadeCheckChestFlag(void) {
+    return ((gGlobalContext->actorCtx.flags.chest & 0x4) != 0);
+}
+
+void Cutscene_OverrideSerenade(void) {
+    gSaveContext.eventChkInf[5] |= 0x4;
+    ItemOverride_PushDelayedOverride(0x22);
+}
+
 u32 Cutscene_OverrideRequiem(void) {
     if (!EventCheck(0xAC)) {
         ItemOverride_PushDelayedOverride(0x23);
@@ -66,4 +85,13 @@ void Cutscene_OverrideNocturne(void) {
             }
         }
     }
+}
+
+u32 Cutscene_OverridePrelude(void) {
+    if (gSaveContext.questItems & 0x1) {
+        ItemOverride_PushDelayedOverride(0x25);
+        gSaveContext.eventChkInf[5] |= 0x20;
+        return 1;
+    }
+    return 0;
 }

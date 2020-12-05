@@ -239,6 +239,20 @@ typedef struct {
 } CollisionContext; // size = 0x15F4
 
 typedef struct {
+    /* 0x00 */ u8*  texture;
+    /* 0x04 */ s16  unk_04;
+    /* 0x06 */ s16  unk_06;
+    /* 0x08 */ s16  unk_08;
+    /* 0x0A */ s16  unk_0A;
+    /* 0x0C */ s32  unk_0C;
+    /* 0x10 */ u8   delayA;
+    /* 0x11 */ u8   delayB;
+    /* 0x12 */ s16  unk_12;
+    /* 0x14 */ s16  unk_14;
+    /* 0x16 */ s16  unk_16;
+} TitleCardContext; // size = 0x18
+
+typedef struct {
     /* 0x00 */ u32    length; // number of actors loaded of this type
     /* 0x04 */ Actor* first;  // pointer to first actor of this type
 } ActorListEntry; // size = 0x08
@@ -265,10 +279,8 @@ typedef struct {
         /* 0x01B8 */ u32    collect;
         /* 0x01BC */ u32    tempCollect;
     }                   flags;
-    // /* 0x0128 */ TitleCardContext titleCtx;
-    // /* 0x0138 */ char   unk_138[0x04];
-    // /* 0x013C */ void*  absoluteSpace; // Space used to allocate actor overlays of alloc type 1
-} ActorContext; // TODO: size = 0x1C0
+    /* 0x01C0 */ TitleCardContext titleCtx;
+} ActorContext; // TODO: size = 0x1D8
 
 typedef struct CutsceneContext {
     /* 0x00 */ char  unk_00[0x4];
@@ -368,7 +380,7 @@ typedef struct GlobalContext {
     /* 0x0A66 */ char                  unk_A66[0x0032];
     /* 0x0A98 */ CollisionContext      colCtx;
     /* 0x208C */ ActorContext          actorCtx;
-    /* 0x224C */ char                  unk_20F0[0x004C];
+    /* 0x2264 */ char                  unk_2264[0x0034];
     /* 0x2298 */ CutsceneContext       csCtx; // "demo_play"
     /* 0x2304 */ char                  unk_2304[0x1754];
     /* 0x3A58 */ ObjectContext         objectCtx;

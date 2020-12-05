@@ -202,7 +202,11 @@ void ItemOverride_AfterItemReceived(void) {
 static u32 ItemOverride_PlayerIsReady(void) {
     if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 &&
         (PLAYER->actor.bgCheckFlags & 0x0001) &&
-        (PLAYER->stateFlags2 & 0x000C0000) == 0
+        (PLAYER->stateFlags2 & 0x000C0000) == 0 &&
+        PLAYER->actor.draw != NULL &&
+        gGlobalContext->actorCtx.titleCtx.delayB == 0 &&
+        gGlobalContext->actorCtx.titleCtx.delayA == 0 &&
+        gGlobalContext->actorCtx.titleCtx.unk_12 == 0
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
         ) {

@@ -302,6 +302,15 @@ hook_FireArrowCheckChestFlag:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_SerenadeCheckChestFlag
+hook_SerenadeCheckChestFlag:
+    push {r0-r12, lr}
+    bl Cutscene_SerenadeCheckChestFlag
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    cpy r0,r5
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

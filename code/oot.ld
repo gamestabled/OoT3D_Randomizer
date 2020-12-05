@@ -40,6 +40,10 @@ SECTIONS
 		*(.patch_BusinessScrubTable)
 	}
 
+	.patch_PreludeLocation 0x18D9FC : {
+		*(.patch_PreludeLocation)
+	}
+
 	.patch_PoeCollectorCheckPoints 0x19091C : {
 		*(.patch_PoeCollectorCheckPoints)
 	}
@@ -144,8 +148,12 @@ SECTIONS
 		*(.patch_SpiritTempleItemGiveThree)
 	}
 
-	.patch_OverrideOcarinaSongs 0x26C478 : {
-		*(.patch_OverrideOcarinaSongs)
+	.patch_MinuetLocation 0x26C388 : {
+		*(.patch_MinuetLocation)
+	}
+
+	.patch_BoleroLocation 0x26C448 : {
+		*(.patch_BoleroLocation)
 	}
 
 	.patch_WaterTempleItemGiveTwo 0x26DCD4 : {
@@ -182,6 +190,14 @@ SECTIONS
 
 	.patch_ForestTempleItemGiveThree 0x28FF44 : {
 		*(.patch_ForestTempleItemGiveThree)
+	}
+
+	.patch_SerenadeCheckChestFlag 0x2B2544 : {
+		*(.patch_SerenadeCheckChestFlag)
+	}
+
+	.patch_SerenadeLocation 0x2B2574 : {
+		*(.patch_SerenadeLocation)
 	}
 
 	.patch_OverrideTextID 0x2BC1C4 : {
@@ -302,6 +318,10 @@ SECTIONS
 
 	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
 		*(.patch_ScrubNutUpgradeTwo)
+	}
+
+	.patch_MasterSwordAlwaysDrop 0x3E5E98 : {
+		*(.patch_MasterSwordAlwaysDrop)
 	}
 
 	.patch_RainbowBridge 0x3E7CAC : {

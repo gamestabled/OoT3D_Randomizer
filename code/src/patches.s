@@ -313,6 +313,29 @@ LACSConditionTwo_patch:
     nop
     nop
 
+.section .patch_MinuetLocation
+.global MinuetLocation_patch
+MinuetLocation_patch:
+    bl Cutscene_OverrideMinuet
+    b 0x26C47C
+
+.section .patch_BoleroLocation
+.global BoleroLocation_patch
+BoleroLocation_patch:
+    bl Cutscene_OverrideBolero
+    b 0x26C47C
+
+.section .patch_SerenadeCheckChestFlag
+.global SerenadeCheckChestFlag_patch
+SerenadeCheckChestFlag_patch:
+    bl hook_SerenadeCheckChestFlag
+
+.section .patch_SerenadeLocation
+.global SerenadeLocation_patch
+SerenadeLocation_patch:
+    bl Cutscene_OverrideSerenade
+    b 0x2B25A8
+
 .section .patch_RequiemLocation
 .global RequiemLocation_patch
 RequiemLocation_patch:
@@ -323,6 +346,19 @@ RequiemLocation_patch:
 NocturneLocation_patch:
     bl Cutscene_OverrideNocturne
     b 0x44F180
+
+.section .patch_MasterSwordAlwaysDrop
+.global MasterSwordAlwaysDrop_patch
+MasterSwordAlwaysDrop_patch:
+    nop
+
+.section .patch_PreludeLocation
+.global PreludeLocation_patch
+PreludeLocation_patch:
+    bl Cutscene_OverridePrelude
+    cmp r0,#0x0
+    beq 0x18DAD0
+    b 0x18DA38
 
 .section .patch_BiggoronDayCheck
 .global BiggoronDayCheck_patch

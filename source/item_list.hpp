@@ -41,6 +41,7 @@ public:
 
     ItemOverride_Value Value() const {
         ItemOverride_Value val;
+        val.all = 0;
         val.itemId = getItemId;
         return val;
     }
