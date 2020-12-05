@@ -879,14 +879,14 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit MK_Bazaar = Exit("Market Bazaar", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Market Bazaar Item 1
-                  //Market Bazaar Item 2
-                  //Market Bazaar Item 3
-                  //Market Bazaar Item 4
-                  //Market Bazaar Item 5
-                  //Market Bazaar Item 6
-                  //Market Bazaar Item 7
-                  //Market Bazaar Item 8
+                  ItemLocationPairing(&MK_BazaarItem1, []{return true;}),
+                  ItemLocationPairing(&MK_BazaarItem2, []{return true;}),
+                  ItemLocationPairing(&MK_BazaarItem3, []{return true;}),
+                  ItemLocationPairing(&MK_BazaarItem4, []{return true;}),
+                  ItemLocationPairing(&MK_BazaarItem5, []{return true;}),
+                  ItemLocationPairing(&MK_BazaarItem6, []{return true;}),
+                  ItemLocationPairing(&MK_BazaarItem7, []{return true;}),
+                  ItemLocationPairing(&MK_BazaarItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})
@@ -921,14 +921,14 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit MK_PotionShop = Exit("Market Potion Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Market Potion Shop Item 1
-                  //Market Potion Shop Item 2
-                  //Market Potion Shop Item 3
-                  //Market Potion Shop Item 4
-                  //Market Potion Shop Item 5
-                  //Market Potion Shop Item 6
-                  //Market Potion Shop Item 7
-                  //Market Potion Shop Item 8
+                  ItemLocationPairing(&MK_PotionShopItem1, []{return true;}),
+                  ItemLocationPairing(&MK_PotionShopItem2, []{return true;}),
+                  ItemLocationPairing(&MK_PotionShopItem3, []{return true;}),
+                  ItemLocationPairing(&MK_PotionShopItem4, []{return true;}),
+                  ItemLocationPairing(&MK_PotionShopItem5, []{return true;}),
+                  ItemLocationPairing(&MK_PotionShopItem6, []{return true;}),
+                  ItemLocationPairing(&MK_PotionShopItem7, []{return true;}),
+                  ItemLocationPairing(&MK_PotionShopItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})
@@ -952,14 +952,14 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   EventPairing(&BuyBombchus20, []{return GoronRuby;}),
                 }, {
                   //Locations
-                  //Market Bombchu Shop Item 1
-                  //Market Bombchu Shop Item 2
-                  //Market Bombchu Shop Item 3
-                  //Market Bombchu Shop Item 4
-                  //Market Bombchu Shop Item 5
-                  //Market Bombchu Shop Item 6
-                  //Market Bombchu Shop Item 7
-                  //Market Bombchu Shop Item 8
+                  ItemLocationPairing(&MK_BombchuShopItem1, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem2, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem3, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem4, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem5, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem6, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem7, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})

@@ -2,7 +2,7 @@
 #include "settings.h"
 
 void SaveFile_Init() {
-//#ifdef ENABLE_DEBUG
+#ifdef ENABLE_DEBUG
     gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
     gSaveContext.questItems |= 0x3FFC0; //songs
@@ -20,7 +20,7 @@ void SaveFile_Init() {
     gSaveContext.dungeonKeys[6] = 8;
     gSaveContext.ammo[2] = 20; //bombs
     gSaveContext.ammo[3] = 20; //arrows
-//#endif
+#endif
 
     //things to always set
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
@@ -35,6 +35,8 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
     gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
+    
+    gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
     //navi text triggers
     gSaveContext.sceneFlags [0].swch |= 0x80080400; //deku tree vines and door and rolling spike
@@ -48,9 +50,6 @@ void SaveFile_Init() {
 
     //open lowest Fire Temple locked door
     gSaveContext.sceneFlags[4].swch |= 0x00800000;
-
-    //remove Ruto cutscene in Water Temple
-    gSaveContext.sceneFlags[5].swch |= 0x00010000;
 
     //Everything past this point depends on settings
     //if starting age is adult

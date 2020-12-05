@@ -823,7 +823,6 @@ const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements{{
 std::vector<ItemLocation *> advancementLocations = {};
 std::array<ItemLocation*, 9> dungeonRewardLocations = {
   //Bosses
-  &LinksPocket,
   &QueenGohma,
   &KingDodongo,
   &Barinade,
@@ -832,6 +831,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &Morpha,
   &Twinrova,
   &BongoBongo,
+  &LinksPocket,
 };
 std::array<ItemLocation*, 354> allLocations = {
 

@@ -193,6 +193,7 @@ namespace Settings {
   extern bool LogicWaterFallingPlatformGS;
 
   extern u32 LinksPocketRewardBitMask;
+  extern u32 rDungeonRewardOverrides[9];
 
   extern void UpdateSettings();
   extern void PrintSettings();

@@ -256,6 +256,9 @@ Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)
 Item Bombs5                     = Item("Bombs (5)",        ITEMTYPE_ITEM, GI_BOMBS_5,           false, NoEffect);
 Item Bombs10                    = Item("Bombs (10)",       ITEMTYPE_ITEM, GI_BOMBS_10,          false, NoEffect);
 Item Bombs20                    = Item("Bombs (20)",       ITEMTYPE_ITEM, GI_BOMBS_20,          false, NoEffect);
+Item Bombchu5                   = Item("Bombchu (5)",      ITEMTYPE_ITEM, GI_BOMBCHUS_5,        false, NoEffect);
+Item Bombchu10                  = Item("Bombchu (10)",     ITEMTYPE_ITEM, GI_BOMBCHUS_10,       false, NoEffect);
+Item Bombchu20                  = Item("Bombchu (20)",     ITEMTYPE_ITEM, GI_BOMBCHUS_20,       false, NoEffect);
 Item Arrows5                    = Item("Arrows (5)",       ITEMTYPE_ITEM, GI_ARROWS_SMALL,      false, NoEffect);
 Item Arrows10                   = Item("Arrows (10)",      ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,     false, NoEffect);
 Item Arrows30                   = Item("Arrows (30)",      ITEMTYPE_ITEM, GI_ARROWS_LARGE,      false, NoEffect);
@@ -465,7 +468,11 @@ void GenerateItemPool() {
   }
 
   if (BombchusInLogic) {
-    AddItemToPool(A_ProgressiveBombchus);
+    AddItemToPool(A_ProgressiveBombchus, 5);
+  } else {
+    AddItemToPool(Bombchu5);
+    AddItemToPool(Bombchu10, 3);
+    AddItemToPool(Bombchu20);
   }
 
   if (Keysanity == KEYSANITY_ALL_LOCATIONS) {
