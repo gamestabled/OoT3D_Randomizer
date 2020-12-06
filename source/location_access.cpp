@@ -1109,14 +1109,14 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit Kak_Bazaar = Exit("Kak Bazaar", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Kak Bazaar Item 1
-                  //Kak Bazaar Item 2
-                  //Kak Bazaar Item 3
-                  //Kak Bazaar Item 4
-                  //Kak Bazaar Item 5
-                  //Kak Bazaar Item 6
-                  //Kak Bazaar Item 7
-                  //Kak Bazaar Item 8
+                  ItemLocationPairing(&Kak_BazaarItem1, []{return true;}),
+                  ItemLocationPairing(&Kak_BazaarItem2, []{return true;}),
+                  ItemLocationPairing(&Kak_BazaarItem3, []{return true;}),
+                  ItemLocationPairing(&Kak_BazaarItem4, []{return true;}),
+                  ItemLocationPairing(&Kak_BazaarItem5, []{return true;}),
+                  ItemLocationPairing(&Kak_BazaarItem6, []{return true;}),
+                  ItemLocationPairing(&Kak_BazaarItem7, []{return true;}),
+                  ItemLocationPairing(&Kak_BazaarItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main, []{return true;})
@@ -1132,14 +1132,14 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit Kak_PotionShopFront = Exit("Kak Potion Shop Front", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Kak Potion Shop Item 1
-                  //Kak Potion Shop Item 2
-                  //Kak Potion Shop Item 3
-                  //Kak Potion Shop Item 4
-                  //Kak Potion Shop Item 5
-                  //Kak Potion Shop Item 6
-                  //Kak Potion Shop Item 7
-                  //Kak Potion Shop Item 8
+                  ItemLocationPairing(&Kak_PotionShopItem1, []{return true;}),
+                  ItemLocationPairing(&Kak_PotionShopItem2, []{return true;}),
+                  ItemLocationPairing(&Kak_PotionShopItem3, []{return true;}),
+                  ItemLocationPairing(&Kak_PotionShopItem4, []{return true;}),
+                  ItemLocationPairing(&Kak_PotionShopItem5, []{return true;}),
+                  ItemLocationPairing(&Kak_PotionShopItem6, []{return true;}),
+                  ItemLocationPairing(&Kak_PotionShopItem7, []{return true;}),
+                  ItemLocationPairing(&Kak_PotionShopItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main,           []{return true;}),
@@ -1449,14 +1449,14 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit GC_Shop = Exit("GC Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //GC Shop Item 1
-                  //GC Shop Item 2
-                  //GC Shop Item 3
-                  //GC Shop Item 4
-                  //GC Shop Item 5
-                  //GC Shop Item 6
-                  //GC Shop Item 7
-                  //GC Shop Item 8
+                  ItemLocationPairing(&GC_ShopItem1, []{return true;}),
+                  ItemLocationPairing(&GC_ShopItem2, []{return true;}),
+                  ItemLocationPairing(&GC_ShopItem3, []{return true;}),
+                  ItemLocationPairing(&GC_ShopItem4, []{return true;}),
+                  ItemLocationPairing(&GC_ShopItem5, []{return true;}),
+                  ItemLocationPairing(&GC_ShopItem6, []{return true;}),
+                  ItemLocationPairing(&GC_ShopItem7, []{return true;}),
+                  ItemLocationPairing(&GC_ShopItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&GC_Main, []{return true;})
@@ -1721,14 +1721,14 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit ZD_Shop = Exit("ZD Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //ZD Shop Item 1
-                  //ZD Shop Item 2
-                  //ZD Shop Item 3
-                  //ZD Shop Item 4
-                  //ZD Shop Item 5
-                  //ZD Shop Item 6
-                  //ZD Shop Item 7
-                  //ZD Shop Item 8
+                  ItemLocationPairing(&ZD_ShopItem1, []{return true;}),
+                  ItemLocationPairing(&ZD_ShopItem2, []{return true;}),
+                  ItemLocationPairing(&ZD_ShopItem3, []{return true;}),
+                  ItemLocationPairing(&ZD_ShopItem4, []{return true;}),
+                  ItemLocationPairing(&ZD_ShopItem5, []{return true;}),
+                  ItemLocationPairing(&ZD_ShopItem6, []{return true;}),
+                  ItemLocationPairing(&ZD_ShopItem7, []{return true;}),
+                  ItemLocationPairing(&ZD_ShopItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ZD_Main, []{return true;})

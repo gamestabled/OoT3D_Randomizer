@@ -743,4 +743,4 @@ extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
-extern std::array<ItemLocation *, 354> allLocations;
+extern std::array<ItemLocation *, 410> allLocations;

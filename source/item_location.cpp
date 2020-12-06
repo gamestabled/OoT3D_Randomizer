@@ -833,7 +833,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 354> allLocations = {
+std::array<ItemLocation*, 410> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -926,6 +926,32 @@ std::array<ItemLocation*, 354> allLocations = {
   &MK_ShootingGalleryReward,
   &MK_10BigPoes,
 
+  //Market Shops
+  &MK_BombchuShopItem1,
+  &MK_BombchuShopItem2,
+  &MK_BombchuShopItem3,
+  &MK_BombchuShopItem4,
+  &MK_BombchuShopItem5,
+  &MK_BombchuShopItem6,
+  &MK_BombchuShopItem7,
+  &MK_BombchuShopItem8,
+  &MK_PotionShopItem1,
+  &MK_PotionShopItem2,
+  &MK_PotionShopItem3,
+  &MK_PotionShopItem4,
+  &MK_PotionShopItem5,
+  &MK_PotionShopItem6,
+  &MK_PotionShopItem7,
+  &MK_PotionShopItem8,
+  &MK_BazaarItem1,
+  &MK_BazaarItem2,
+  &MK_BazaarItem3,
+  &MK_BazaarItem4,
+  &MK_BazaarItem5,
+  &MK_BazaarItem6,
+  &MK_BazaarItem7,
+  &MK_BazaarItem8,
+
   //Hyrule Castle
   &HC_ZeldasLetter,
   &HC_MalonEgg,
@@ -948,6 +974,24 @@ std::array<ItemLocation*, 354> allLocations = {
   &Kak_AnjuAsAdult,
   &Kak_ImpasHouseFreestandingPoH,
   &Kak_WindmillFreestandingPoH,
+
+  //Kakariko Shops
+  &Kak_PotionShopItem1,
+  &Kak_PotionShopItem2,
+  &Kak_PotionShopItem3,
+  &Kak_PotionShopItem4,
+  &Kak_PotionShopItem5,
+  &Kak_PotionShopItem6,
+  &Kak_PotionShopItem7,
+  &Kak_PotionShopItem8,
+  &Kak_BazaarItem1,
+  &Kak_BazaarItem2,
+  &Kak_BazaarItem3,
+  &Kak_BazaarItem4,
+  &Kak_BazaarItem5,
+  &Kak_BazaarItem6,
+  &Kak_BazaarItem7,
+  &Kak_BazaarItem8,
 
   //Graveyard
   &GY_HookshotChest,
@@ -977,6 +1021,16 @@ std::array<ItemLocation*, 354> allLocations = {
   //&GC_DekuScrubGrottoRight,
   //&GC_DekuScrubGrottoCenter,
 
+  //Goron City Shop
+  &GC_ShopItem1,
+  &GC_ShopItem2,
+  &GC_ShopItem3,
+  &GC_ShopItem4,
+  &GC_ShopItem5,
+  &GC_ShopItem6,
+  &GC_ShopItem7,
+  &GC_ShopItem8,
+
   //Death Mountain
   &DMC_UpperGrottoChest,
   &DMC_WallFreestandingPoH,
@@ -999,6 +1053,16 @@ std::array<ItemLocation*, 354> allLocations = {
   &ZD_Chest,
   &ZD_DivingMinigame,
   &ZD_KingZoraThawed,
+
+  //Zora's Domain Shop
+  &ZD_ShopItem1,
+  &ZD_ShopItem2,
+  &ZD_ShopItem3,
+  &ZD_ShopItem4,
+  &ZD_ShopItem5,
+  &ZD_ShopItem6,
+  &ZD_ShopItem7,
+  &ZD_ShopItem8,
 
   //Zoras Fountain
   &ZF_IcebergFreestandingPoH,
