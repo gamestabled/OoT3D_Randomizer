@@ -311,6 +311,14 @@ hook_SerenadeCheckChestFlag:
     cpy r0,r5
     bx lr
 
+.global hook_EponasSongCheckFlag
+hook_EponasSongCheckFlag:
+    push {r0-r12, lr}
+    bl Cutscene_CheckEponasSongFlag
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

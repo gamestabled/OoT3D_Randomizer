@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "item_override.h"
 #include "settings.h"
+#include <stddef.h>
 
 //Patched over call to Item_Give
 void Cutscene_OverrideOcarinaSongs(GlobalContext* GlobalContext, ItemID songId) {
@@ -94,4 +95,49 @@ u32 Cutscene_OverridePrelude(void) {
         return 1;
     }
     return 0;
+}
+
+void Cutscene_OverrideLullaby(void) {
+    gSaveContext.eventChkInf[5] |= 0x200;
+    ItemOverride_PushDelayedOverride(0x26);
+    gGlobalContext->nextEntranceIndex = 0x594;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    PLAYER->actor.draw = NULL;
+}
+
+u32 Cutscene_CheckEponasSongFlag(void) {
+    return ((gSaveContext.eventChkInf[5] & 0x100) != 0);
+}
+
+void Cutscene_OverrideEponasSong(void) {
+    gSaveContext.eventChkInf[5] |= 0x100;
+    ItemOverride_PushDelayedOverride(0x27);
+    gGlobalContext->unk_2B7E = 4;
+}
+
+void Cutscene_OverrideSariasSong(void) {
+    if (!(gSaveContext.eventChkInf[5] & 0x80)) {
+        ItemOverride_PushDelayedOverride(0x28);
+        gSaveContext.eventChkInf[5] |= 0x80;
+    }
+}
+
+void Cutscene_OverrideSunsSong(void) {
+    if (!(gSaveContext.eventChkInf[5] & 0x400)) {
+        ItemOverride_PushDelayedOverride(0x29);
+        gSaveContext.eventChkInf[5] |= 0x400;
+    }
+}
+
+void Cutscene_OverrideSongOfTime(Actor* ocarina) {
+    ItemOverride_PushDelayedOverride(0x2A);
+    gGlobalContext->nextEntranceIndex = 0x50F;
+    gGlobalContext->sceneLoadFlag = 0x14;
+}
+
+void Cutscene_OverrideSongOfStorms(void) {
+    gSaveContext.eventChkInf[6] |= 0x20;
+    gSaveContext.eventChkInf[5] |= 0x800;
+    ItemOverride_PushDelayedOverride(0x2B);
+    gGlobalContext->unk_2B7E = 4;
 }

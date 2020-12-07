@@ -12,12 +12,24 @@ SECTIONS
 		*(.patch_ItemEtceteraModelDraw)
 	}
 
+	.patch_SariasSongItemGive 0x12C84C : {
+		*(.patch_SariasSongItemGive)
+	}
+	
+	.patch_SariasSongLocation 0x12C8F8 : {
+		*(.patch_SariasSongLocation)
+	}
+
 	.patch_SkulltulaRewardOne 0x12CC68 : {
 		*(.patch_SkulltulaRewardOne)
 	}
 
 	.patch_SkulltulaRewardTwo 0x12CD38 : {
 		*(.patch_SkulltulaRewardTwo)
+	}
+
+	.patch_SongOfStormsLocation 0x1427E0 : {
+		*(.patch_SongOfStormsLocation)
 	}
 
 	.patch_ScrubStickUpgradeOne 0x161898 : {
@@ -38,6 +50,10 @@ SECTIONS
 
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
+	}
+
+	.patch_EponasSongCheckFlag 0x18C56C : {
+		*(.patch_EponasSongCheckFlag)
 	}
 
 	.patch_PreludeLocation 0x18D9FC : {
@@ -176,6 +192,10 @@ SECTIONS
 		*(.patch_WaterTempleItemGiveThree)
 	}
 
+	.patch_SunsSongLocation 0x2888C8 : {
+		*(.patch_SunsSongLocation)
+	}
+
 	.patch_KakarikoGateCheck 0x28A67C : {
 		*(.patch_KakarikoGateCheck)
 	}
@@ -268,6 +288,10 @@ SECTIONS
 		*(.patch_AdultShootingGallery)
 	}
 
+	.patch_LullabyLocation 0x3A0A7C : {
+		*(.patch_LullabyLocation)
+	}
+
 	.patch_KokiriCheckOpenForest 0x3ACCFC : {
 		*(.patch_KokiriCheckOpenForest)
 	}
@@ -310,6 +334,18 @@ SECTIONS
 
 	.patch_DampeCheckCanDig2 0x3C35D0 : {
 		*(.patch_DampeCheckCanDig2)
+	}
+
+	.patch_SongOfTimeLocation 0x3C375C : {
+		*(.patch_SongOfTimeLocation)
+	}
+
+	.patch_EponasSongLocation 0x3C6194 : {
+		*(.patch_EponasSongLocation)
+	}
+
+	.patch_MalonNextAction 0x3C6210 : {
+		*(.patch_MalonNextAction)
 	}
 
 	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
