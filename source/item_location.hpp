@@ -257,6 +257,7 @@ extern ItemLocation GC_DekuScrubGrottoCenter;
 extern ItemLocation DMC_UpperGrottoChest;
 extern ItemLocation DMC_WallFreestandingPoH;
 extern ItemLocation DMC_VolcanoFreestandingPoH;
+extern ItemLocation DMC_DekuScrub;
 extern ItemLocation DMC_DekuScrubGrottoLeft;
 extern ItemLocation DMC_DekuScrubGrottoRight;
 extern ItemLocation DMC_DekuScrubGrottoCenter;
@@ -743,4 +744,4 @@ extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
-extern std::array<ItemLocation *, 410> allLocations;
+extern std::array<ItemLocation *, 443> allLocations;

@@ -77,6 +77,7 @@ namespace Settings {
   bool LogicDCSlingshotSkip             = false;
   bool LogicDCScarecrowGS               = false;
   bool LogicJabuBossGSAdult             = false;
+  bool LogicJabuScrubJumpDive           = false;
   bool LogicForestOutsideBackdoor       = false;
   bool LogicForestScarecrow             = false;
   bool LogicForestVines                 = false;
@@ -122,7 +123,7 @@ namespace Settings {
   bool LogicSpiritTrialHookshot         = false;
 
   u32 LinksPocketRewardBitMask = 0;
-  u32 rDungeonRewardOverrides[9] = {0}; 
+  u32 rDungeonRewardOverrides[9] = {0};
 
   std::vector<Option *> Options = {
     //&O_DamageMultiplier,

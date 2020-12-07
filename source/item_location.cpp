@@ -833,7 +833,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 410> allLocations = {
+std::array<ItemLocation*, 443> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -858,20 +858,20 @@ std::array<ItemLocation*, 410> allLocations = {
   &LW_SkullKid,
   //&LW_OcarinaMemoryGame,
   &LW_TargetInWoods,
-  //&LW_DekuScrubNearDekuTheaterRight,
-  //&LW_DekuScrubNearDekuTheaterLeft,
+  &LW_DekuScrubNearDekuTheaterRight,
+  &LW_DekuScrubNearDekuTheaterLeft,
   &LW_DekuScrubNearBridge,
   //&LW_GossipStone,
   &LW_NearShortcutsGrottoChest,
-  //&LW_DekuScrubGrottoRear,
+  &LW_DekuScrubGrottoRear,
   &LW_DekuScrubGrottoFront,
   //&DekuTheater_SkullMask,
   //&DekuTheater_MaskOfTruth,
 
   //Sacred Forest Meadow
   &SFM_WolfosGrottoChest,
-  //&SFM_DekuScrubGrottoRear,
-  //&SFM_DekuScrubGrottoFront,
+  &SFM_DekuScrubGrottoRear,
+  &SFM_DekuScrubGrottoFront,
 
   //Hyrule Field
   &HF_SoutheastGrottoChest,
@@ -888,16 +888,16 @@ std::array<ItemLocation*, 410> allLocations = {
   &LH_UnderwaterItem,
   &LH_Sun,
   &LH_FreestandingPoH,
-  //&LH_DekuScrubGrottoLeft,
-  //&LH_DekuScrubGrottoRight,
-  //&LH_DekuScrubGrottoCenter,
+  &LH_DekuScrubGrottoLeft,
+  &LH_DekuScrubGrottoRight,
+  &LH_DekuScrubGrottoCenter,
 
   //Gerudo Valley
   &GV_Chest,
   &GV_WaterfallFreestandingPoH,
   &GV_CrateFreestandingPoH,
-  //&GV_DekuScrubGrottoRear,
-  //&GV_DekuScrubGrottoFront,
+  &GV_DekuScrubGrottoRear,
+  &GV_DekuScrubGrottoFront,
 
   //Gerudo Fortress
   &GF_Chest,
@@ -915,8 +915,8 @@ std::array<ItemLocation*, 410> allLocations = {
   //Desert Colossus
   &SheikAtColossus,
   &Colossus_FreestandingPoH,
-  //&Colossus_DekuScrubGrottoRear,
-  //&Colossus_DekuScrubGrottoFront,
+  &Colossus_DekuScrubGrottoRear,
+  &Colossus_DekuScrubGrottoFront,
 
   //Market
   &MK_TreasureChestGameReward,
@@ -1017,9 +1017,9 @@ std::array<ItemLocation*, 410> allLocations = {
   &GC_RollingGoronAsAdult,
   &GC_DaruniasJoy,
   &GC_PotFreestandingPoH,
-  //&GC_DekuScrubGrottoLeft,
-  //&GC_DekuScrubGrottoRight,
-  //&GC_DekuScrubGrottoCenter,
+  &GC_DekuScrubGrottoLeft,
+  &GC_DekuScrubGrottoRight,
+  &GC_DekuScrubGrottoCenter,
 
   //Goron City Shop
   &GC_ShopItem1,
@@ -1035,9 +1035,10 @@ std::array<ItemLocation*, 410> allLocations = {
   &DMC_UpperGrottoChest,
   &DMC_WallFreestandingPoH,
   &DMC_VolcanoFreestandingPoH,
-  //&DMC_DekuScrubGrottoLeft,
-  //&DMC_DekuScrubGrottoRight,
-  //&DMC_DekuScrubGrottoCenter,
+  &DMC_DekuScrub,
+  &DMC_DekuScrubGrottoLeft,
+  &DMC_DekuScrubGrottoRight,
+  &DMC_DekuScrubGrottoCenter,
 
   //Zoras River
   &ZR_OpenGrottoChest,
@@ -1046,8 +1047,8 @@ std::array<ItemLocation*, 410> allLocations = {
   &ZR_FrogsInTheRain,
   &ZR_NearOpenGrottoFreestandingPoH,
   &ZR_NearDomainFreestandingPoH,
-  //&ZR_DekuScrubGrottoRear,
-  //&ZR_DekuScrubGrottoFront,
+  &ZR_DekuScrubGrottoRear,
+  &ZR_DekuScrubGrottoFront,
 
   //Zoras Domain
   &ZD_Chest,
@@ -1071,9 +1072,9 @@ std::array<ItemLocation*, 410> allLocations = {
   //Lon Lon Ranch
   &LLR_TalonsChickens,
   &LLR_FreestandingPoH,
-  //&LLR_DekuScrubGrottoLeft,
-  //&LLR_DekuScrubGrottoRight,
-  //&LLR_DekuScrubGrottoCenter,
+  &LLR_DekuScrubGrottoLeft,
+  &LLR_DekuScrubGrottoRight,
+  &LLR_DekuScrubGrottoCenter,
 
   //Deku Tree
   &DekuTree_MapChest,
@@ -1092,12 +1093,17 @@ std::array<ItemLocation*, 410> allLocations = {
   &DodongosCavern_EndOfBridgeChest,
   &DodongosCavern_BossRoomChest,
   &DodongosCavern_KingDodongoHeart,
+  &DodongosCavern_DekuScrubLobby,
+  &DodongosCavern_DekuScrubSideRoomNearDodongos,
+  &DodongosCavern_DekuScrubNearBombBagLeft,
+  &DodongosCavern_DekuScrubNearBombBagRight,
 
   //Jabu Jabus Belly
   &JabuJabusBelly_MapChest,
   &JabuJabusBelly_CompassChest,
   &JabuJabusBelly_BoomerangChest,
   &JabuJabusBelly_BarinadeHeart,
+  &JabuJabusBelly_DekuScrub,
 
   //Forest Temple
   &ForestTemple_FirstRoomChest,
@@ -1250,6 +1256,10 @@ std::array<ItemLocation*, 410> allLocations = {
   &GanonsCastle_LightTrialInvisibleEnemiesChest,
   &GanonsCastle_LightTrialLullabyChest,
   &GanonsCastle_BossKeyChest,
+  &GanonsCastle_DekuScrubLeft,
+  &GanonsCastle_DekuScrubCenterLeft,
+  &GanonsCastle_DekuScrubCenterRight,
+  &GanonsCastle_DekuScrubRight,
 
   /*-------------------------------
      --- GOLD SKULLTULA TOKENS ---

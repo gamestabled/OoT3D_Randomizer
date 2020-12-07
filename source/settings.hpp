@@ -134,6 +134,7 @@ namespace Settings {
   extern bool LogicDCJump;
   extern bool LogicDCSlingshotSkip;
   extern bool LogicJabuBossGSAdult;
+  extern bool LogicJabuScrubJumpDive;
   extern bool LogicForestVines;
   extern bool LogicForestScarecrow;
   extern bool LogicForestOutsideBackdoor;
