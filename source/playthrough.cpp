@@ -288,7 +288,7 @@ namespace Playthrough {
 
     static void RandomizeDungeonRewards(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
 
-      //shuffle an array of indices so that we can randomize the rewards both logically, and for the patch
+      //shuffle an array of indices so that we can randomize the rewards both logically and for the patch
       std::array<int, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
       std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
 
@@ -656,6 +656,47 @@ namespace Playthrough {
         PlaceItemInLocation(&BuyArrows50,     &GC_ShopItem6,        overrides, NO_EFFECT);
         PlaceItemInLocation(&BuyFish,         &GC_ShopItem7,        overrides, NO_EFFECT);
         PlaceItemInLocation(&BuyRedPotion50,  &GC_ShopItem8,        overrides, NO_EFFECT);
+      }
+
+      if (Settings::Scrubsanity == SCRUBSANITY_OFF) {
+        //Overworld Scrubs
+        PlaceItemInLocation(&BuyRedPotion30, &ZR_DekuScrubGrottoRear,           overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyGreenPotion, &ZR_DekuScrubGrottoFront,          overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion30, &SFM_DekuScrubGrottoRear,          overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyGreenPotion, &SFM_DekuScrubGrottoFront,         overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,    &LH_DekuScrubGrottoLeft,           overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombs535,    &LH_DekuScrubGrottoRight,          overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,    &LH_DekuScrubGrottoCenter,         overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion30, &GV_DekuScrubGrottoRear,           overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyGreenPotion, &GV_DekuScrubGrottoFront,          overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,    &LW_DekuScrubNearDekuTheaterRight, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuStick1,  &LW_DekuScrubNearDekuTheaterLeft,  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,    &LW_DekuScrubGrottoRear,           overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion30, &Colossus_DekuScrubGrottoRear,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyGreenPotion, &Colossus_DekuScrubGrottoFront,    overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombs535,    &DMC_DekuScrub,                    overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,    &DMC_DekuScrubGrottoLeft,          overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombs535,    &DMC_DekuScrubGrottoRight,         overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,    &DMC_DekuScrubGrottoCenter,        overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,    &GC_DekuScrubGrottoLeft,           overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombs535,    &GC_DekuScrubGrottoRight,          overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,    &GC_DekuScrubGrottoCenter,         overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuNut5,    &LLR_DekuScrubGrottoLeft,          overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyBombs535,    &LLR_DekuScrubGrottoRight,         overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,    &LLR_DekuScrubGrottoCenter,        overrides, NO_EFFECT);
+
+        //Dungeon Scrubs
+        PlaceItemInLocation(&BuyDekuNut5,    &DodongosCavern_DekuScrubNearBombBagLeft,      overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuStick1,  &DodongosCavern_DekuScrubSideRoomNearDodongos, overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuSeeds30, &DodongosCavern_DekuScrubNearBombBagRight,     overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyDekuShield,  &DodongosCavern_DekuScrubLobby,                overrides, NO_EFFECT);
+
+        PlaceItemInLocation(&BuyDekuNut5,    &JabuJabusBelly_DekuScrub,                     overrides, NO_EFFECT);
+
+        PlaceItemInLocation(&BuyBombs535,    &GanonsCastle_DekuScrubCenterLeft,             overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyArrows30,    &GanonsCastle_DekuScrubCenterRight,            overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyRedPotion30, &GanonsCastle_DekuScrubRight,                  overrides, NO_EFFECT);
+        PlaceItemInLocation(&BuyGreenPotion, &GanonsCastle_DekuScrubLeft,                   overrides, NO_EFFECT);
       }
     }
 

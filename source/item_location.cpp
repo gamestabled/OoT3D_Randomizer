@@ -833,7 +833,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 354> allLocations = {
+std::array<ItemLocation*, 443> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -858,20 +858,20 @@ std::array<ItemLocation*, 354> allLocations = {
   &LW_SkullKid,
   //&LW_OcarinaMemoryGame,
   &LW_TargetInWoods,
-  //&LW_DekuScrubNearDekuTheaterRight,
-  //&LW_DekuScrubNearDekuTheaterLeft,
+  &LW_DekuScrubNearDekuTheaterRight,
+  &LW_DekuScrubNearDekuTheaterLeft,
   &LW_DekuScrubNearBridge,
   //&LW_GossipStone,
   &LW_NearShortcutsGrottoChest,
-  //&LW_DekuScrubGrottoRear,
+  &LW_DekuScrubGrottoRear,
   &LW_DekuScrubGrottoFront,
   //&DekuTheater_SkullMask,
   //&DekuTheater_MaskOfTruth,
 
   //Sacred Forest Meadow
   &SFM_WolfosGrottoChest,
-  //&SFM_DekuScrubGrottoRear,
-  //&SFM_DekuScrubGrottoFront,
+  &SFM_DekuScrubGrottoRear,
+  &SFM_DekuScrubGrottoFront,
 
   //Hyrule Field
   &HF_SoutheastGrottoChest,
@@ -888,16 +888,16 @@ std::array<ItemLocation*, 354> allLocations = {
   &LH_UnderwaterItem,
   &LH_Sun,
   &LH_FreestandingPoH,
-  //&LH_DekuScrubGrottoLeft,
-  //&LH_DekuScrubGrottoRight,
-  //&LH_DekuScrubGrottoCenter,
+  &LH_DekuScrubGrottoLeft,
+  &LH_DekuScrubGrottoRight,
+  &LH_DekuScrubGrottoCenter,
 
   //Gerudo Valley
   &GV_Chest,
   &GV_WaterfallFreestandingPoH,
   &GV_CrateFreestandingPoH,
-  //&GV_DekuScrubGrottoRear,
-  //&GV_DekuScrubGrottoFront,
+  &GV_DekuScrubGrottoRear,
+  &GV_DekuScrubGrottoFront,
 
   //Gerudo Fortress
   &GF_Chest,
@@ -915,8 +915,8 @@ std::array<ItemLocation*, 354> allLocations = {
   //Desert Colossus
   &SheikAtColossus,
   &Colossus_FreestandingPoH,
-  //&Colossus_DekuScrubGrottoRear,
-  //&Colossus_DekuScrubGrottoFront,
+  &Colossus_DekuScrubGrottoRear,
+  &Colossus_DekuScrubGrottoFront,
 
   //Market
   &MK_TreasureChestGameReward,
@@ -925,6 +925,32 @@ std::array<ItemLocation*, 354> allLocations = {
   &MK_LostDog,
   &MK_ShootingGalleryReward,
   &MK_10BigPoes,
+
+  //Market Shops
+  &MK_BombchuShopItem1,
+  &MK_BombchuShopItem2,
+  &MK_BombchuShopItem3,
+  &MK_BombchuShopItem4,
+  &MK_BombchuShopItem5,
+  &MK_BombchuShopItem6,
+  &MK_BombchuShopItem7,
+  &MK_BombchuShopItem8,
+  &MK_PotionShopItem1,
+  &MK_PotionShopItem2,
+  &MK_PotionShopItem3,
+  &MK_PotionShopItem4,
+  &MK_PotionShopItem5,
+  &MK_PotionShopItem6,
+  &MK_PotionShopItem7,
+  &MK_PotionShopItem8,
+  &MK_BazaarItem1,
+  &MK_BazaarItem2,
+  &MK_BazaarItem3,
+  &MK_BazaarItem4,
+  &MK_BazaarItem5,
+  &MK_BazaarItem6,
+  &MK_BazaarItem7,
+  &MK_BazaarItem8,
 
   //Hyrule Castle
   &HC_ZeldasLetter,
@@ -948,6 +974,24 @@ std::array<ItemLocation*, 354> allLocations = {
   &Kak_AnjuAsAdult,
   &Kak_ImpasHouseFreestandingPoH,
   &Kak_WindmillFreestandingPoH,
+
+  //Kakariko Shops
+  &Kak_PotionShopItem1,
+  &Kak_PotionShopItem2,
+  &Kak_PotionShopItem3,
+  &Kak_PotionShopItem4,
+  &Kak_PotionShopItem5,
+  &Kak_PotionShopItem6,
+  &Kak_PotionShopItem7,
+  &Kak_PotionShopItem8,
+  &Kak_BazaarItem1,
+  &Kak_BazaarItem2,
+  &Kak_BazaarItem3,
+  &Kak_BazaarItem4,
+  &Kak_BazaarItem5,
+  &Kak_BazaarItem6,
+  &Kak_BazaarItem7,
+  &Kak_BazaarItem8,
 
   //Graveyard
   &GY_HookshotChest,
@@ -973,17 +1017,28 @@ std::array<ItemLocation*, 354> allLocations = {
   &GC_RollingGoronAsAdult,
   &GC_DaruniasJoy,
   &GC_PotFreestandingPoH,
-  //&GC_DekuScrubGrottoLeft,
-  //&GC_DekuScrubGrottoRight,
-  //&GC_DekuScrubGrottoCenter,
+  &GC_DekuScrubGrottoLeft,
+  &GC_DekuScrubGrottoRight,
+  &GC_DekuScrubGrottoCenter,
+
+  //Goron City Shop
+  &GC_ShopItem1,
+  &GC_ShopItem2,
+  &GC_ShopItem3,
+  &GC_ShopItem4,
+  &GC_ShopItem5,
+  &GC_ShopItem6,
+  &GC_ShopItem7,
+  &GC_ShopItem8,
 
   //Death Mountain
   &DMC_UpperGrottoChest,
   &DMC_WallFreestandingPoH,
   &DMC_VolcanoFreestandingPoH,
-  //&DMC_DekuScrubGrottoLeft,
-  //&DMC_DekuScrubGrottoRight,
-  //&DMC_DekuScrubGrottoCenter,
+  &DMC_DekuScrub,
+  &DMC_DekuScrubGrottoLeft,
+  &DMC_DekuScrubGrottoRight,
+  &DMC_DekuScrubGrottoCenter,
 
   //Zoras River
   &ZR_OpenGrottoChest,
@@ -992,13 +1047,23 @@ std::array<ItemLocation*, 354> allLocations = {
   &ZR_FrogsInTheRain,
   &ZR_NearOpenGrottoFreestandingPoH,
   &ZR_NearDomainFreestandingPoH,
-  //&ZR_DekuScrubGrottoRear,
-  //&ZR_DekuScrubGrottoFront,
+  &ZR_DekuScrubGrottoRear,
+  &ZR_DekuScrubGrottoFront,
 
   //Zoras Domain
   &ZD_Chest,
   &ZD_DivingMinigame,
   &ZD_KingZoraThawed,
+
+  //Zora's Domain Shop
+  &ZD_ShopItem1,
+  &ZD_ShopItem2,
+  &ZD_ShopItem3,
+  &ZD_ShopItem4,
+  &ZD_ShopItem5,
+  &ZD_ShopItem6,
+  &ZD_ShopItem7,
+  &ZD_ShopItem8,
 
   //Zoras Fountain
   &ZF_IcebergFreestandingPoH,
@@ -1007,9 +1072,9 @@ std::array<ItemLocation*, 354> allLocations = {
   //Lon Lon Ranch
   &LLR_TalonsChickens,
   &LLR_FreestandingPoH,
-  //&LLR_DekuScrubGrottoLeft,
-  //&LLR_DekuScrubGrottoRight,
-  //&LLR_DekuScrubGrottoCenter,
+  &LLR_DekuScrubGrottoLeft,
+  &LLR_DekuScrubGrottoRight,
+  &LLR_DekuScrubGrottoCenter,
 
   //Deku Tree
   &DekuTree_MapChest,
@@ -1028,12 +1093,17 @@ std::array<ItemLocation*, 354> allLocations = {
   &DodongosCavern_EndOfBridgeChest,
   &DodongosCavern_BossRoomChest,
   &DodongosCavern_KingDodongoHeart,
+  &DodongosCavern_DekuScrubLobby,
+  &DodongosCavern_DekuScrubSideRoomNearDodongos,
+  &DodongosCavern_DekuScrubNearBombBagLeft,
+  &DodongosCavern_DekuScrubNearBombBagRight,
 
   //Jabu Jabus Belly
   &JabuJabusBelly_MapChest,
   &JabuJabusBelly_CompassChest,
   &JabuJabusBelly_BoomerangChest,
   &JabuJabusBelly_BarinadeHeart,
+  &JabuJabusBelly_DekuScrub,
 
   //Forest Temple
   &ForestTemple_FirstRoomChest,
@@ -1186,6 +1256,10 @@ std::array<ItemLocation*, 354> allLocations = {
   &GanonsCastle_LightTrialInvisibleEnemiesChest,
   &GanonsCastle_LightTrialLullabyChest,
   &GanonsCastle_BossKeyChest,
+  &GanonsCastle_DekuScrubLeft,
+  &GanonsCastle_DekuScrubCenterLeft,
+  &GanonsCastle_DekuScrubCenterRight,
+  &GanonsCastle_DekuScrubRight,
 
   /*-------------------------------
      --- GOLD SKULLTULA TOKENS ---
