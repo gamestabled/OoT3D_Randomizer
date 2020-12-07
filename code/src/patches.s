@@ -360,6 +360,58 @@ PreludeLocation_patch:
     beq 0x18DAD0
     b 0x18DA38
 
+.section .patch_LullabyLocation
+.global LullabyLocation_patch
+LullabyLocation_patch:
+    bl Cutscene_OverrideLullaby
+    b 0x3A0AC8
+
+.section .patch_EponasSongCheckFlag
+.global EponasSongCheckFlag_patch
+EponasSongCheckFlag_patch:
+    bl hook_EponasSongCheckFlag
+
+.section .patch_EponasSongLocation
+.global EponasSongLocation_patch
+EponasSongLocation_patch:
+    bl Cutscene_OverrideEponasSong
+    b 0x3C61CC
+
+.section .patch_MalonNextAction
+.global MalonNextAction_patch
+MalonNextAction_patch:
+    .word 0x3D2A14
+
+.section .patch_SariasSongItemGive
+.global SariasSongItemGive_patch
+SariasSongItemGive_patch:
+    nop
+
+.section .patch_SariasSongLocation
+.global SariasSongLocation_patch
+SariasSongLocation_patch:
+    bl Cutscene_OverrideSariasSong
+    b 0x12C92C
+
+.section .patch_SunsSongLocation
+.global SunsSongLocation_patch
+SunsSongLocation_patch:
+    bl Cutscene_OverrideSunsSong
+    b 0x2888F0
+
+.section .patch_SongOfTimeLocation
+.global SongOfTimeLocation_patch
+SongOfTimeLocation_patch:
+    cpy r0,r5
+    bl Cutscene_OverrideSongOfTime
+    b 0x3C3780
+
+.section .patch_SongOfStormsLocation
+.global SongOfStormsLocation_patch
+SongOfStormsLocation_patch:
+    bl Cutscene_OverrideSongOfStorms
+    b 0x1427F8
+
 .section .patch_BiggoronDayCheck
 .global BiggoronDayCheck_patch
 BiggoronDayCheck_patch:

@@ -18,4 +18,9 @@ void Entrance_Init(void) {
     for (index = 0x58C; index < 0x590; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
+
+    // Delete the title card for Hyrule Field from Impa's first escort
+    for (index = 0x594; index < 0x598; ++index) {
+        gEntranceTable[index].field = 0x0102;
+    }
 }
