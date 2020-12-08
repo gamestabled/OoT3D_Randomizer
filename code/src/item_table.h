@@ -14,6 +14,7 @@ typedef struct {
     u16 objectId;
     s8 objectModelIdx;
     s8 graphicId;
+    s32 objectMeshId;
     u8 chestType;
 
     upgradeFunc upgrade;

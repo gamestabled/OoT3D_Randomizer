@@ -22,6 +22,10 @@ typedef GlModel* (*GlModel_Spawn_proc)(Actor* actor, GlobalContext* globalCtx, s
 #define GlModel_Spawn_addr 0x36A924
 #define GlModel_Spawn ((GlModel_Spawn_proc)GlModel_Spawn_addr)
 
+typedef void (*GlModel_SetMesh_proc)(GlModel* glModel, s32 mesh);
+#define GlModel_SetMesh_addr 0x369178
+#define GlModel_SetMesh ((GlModel_SetMesh_proc)GlModel_SetMesh_addr)
+
 typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
 #define Actor_SetModelMatrix_addr 0x3679D0
 #define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)Actor_SetModelMatrix_addr)
@@ -35,6 +39,10 @@ Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
     model->glModel = GlModel_Spawn(model->actor, globalCtx, model->info.objectId, model->info.objectModelIdx);
+    // need to set mesh for rupees
+    if (model->info.objectId == 0x017F) {
+        GlModel_SetMesh(model->glModel, model->info.objectMeshId);
+    }
     model->loaded = 1;
 }
 
@@ -48,6 +56,7 @@ void Model_Destroy(Model* model) {
     model->info.objectId = 0;
     model->info.objectBankIdx = 0;
     model->info.objectModelIdx = 0;
+    model->info.objectMeshId = 0;
     model->loaded = 0;
 }
 
@@ -130,6 +139,7 @@ void Model_LookupByOverride(Model* model, ItemOverride override) {
         ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
         model->info.objectId = itemRow->objectId;
         model->info.objectModelIdx = itemRow->objectModelIdx;
+        model->info.objectMeshId = itemRow->objectMeshId;
     }
 }
 
