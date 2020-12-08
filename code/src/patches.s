@@ -595,6 +595,13 @@ BusinessScrubTable_patch:
 KakarikoGateCheck_patch:
     b 0x28A6A0
 
+.section .patch_FairyReward
+.global FairyReward_patch
+FairyReward_patch:
+    cpy r0,r4
+    bl Cutscene_OverrideFairyReward
+    b 0x3E75F8
+
 .section .patch_loader
 .global loader_patch
 

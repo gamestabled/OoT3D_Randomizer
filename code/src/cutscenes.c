@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "item_override.h"
 #include "settings.h"
+#include "z3D/actors/z_bg_dy_yoseizo.h"
 #include <stddef.h>
 
 //Patched over call to Item_Give
@@ -140,4 +141,24 @@ void Cutscene_OverrideSongOfStorms(void) {
     gSaveContext.eventChkInf[5] |= 0x800;
     ItemOverride_PushDelayedOverride(0x2B);
     gGlobalContext->unk_2B7E = 4;
+}
+
+void Cutscene_OverrideFairyReward(BgDyYoseizo* fairy) {
+    s16 fairyIdx = fairy->unk_D2C;
+    
+    if (gGlobalContext->sceneNum == 0x3D) {
+        if (!(gSaveContext.itemGetInf[1] & (0x100 << fairyIdx))) {
+            ItemOverride_PushDelayedOverride(0x10 + fairyIdx);
+            gSaveContext.itemGetInf[1] |= (0x100 << fairyIdx);
+        }
+    } else if (gGlobalContext->sceneNum == 0x3B) {
+        if (!(gGlobalContext->actorCtx.flags.chest & (0x1 << fairyIdx))) {
+            ItemOverride_PushDelayedOverride(0x13 + fairyIdx);
+            gGlobalContext->actorCtx.flags.chest |= (0x1 << fairyIdx);
+        }
+    }
+
+    gSaveContext.healthAccumulator = 0x140;
+    gSaveContext.magic = gSaveContext.magicLevel * 0x30;
+    Actor_Kill(&fairy->actor);
 }
