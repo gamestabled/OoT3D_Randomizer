@@ -476,4 +476,8 @@ typedef void (*Rupees_ChangeBy_proc)(s16 rupeeChange);
 #define Rupees_ChangeBy_addr 0x376A60
 #define Rupees_ChangeBy ((Rupees_ChangeBy_proc)Rupees_ChangeBy_addr)
 
+typedef void (*LinkDamage_proc)(GlobalContext* globalCtx, Player* player, s32 arg2, f32 arg3, f32 arg4, s16 arg5, s32 arg6);
+#define LinkDamage_addr 0x35D304
+#define LinkDamage ((LinkDamage_proc)LinkDamage_addr)
+
 #endif //_Z3D_H_

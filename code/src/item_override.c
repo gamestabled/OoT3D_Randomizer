@@ -236,6 +236,7 @@ static void ItemOverride_TryPendingItem(void) {
 }
 
 void ItemOverride_Update(void) {
+    IceTrap_Update();
     if (ItemOverride_PlayerIsReady()) {
         ItemOverride_PopIceTrap();
         if (IceTrap_IsPending()) {

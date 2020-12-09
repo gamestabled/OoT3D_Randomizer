@@ -244,6 +244,10 @@ SECTIONS
 		*(.patch_Gfx_Update)
 	}
 
+	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
+		*(.patch_ChestGetIceTrapObjectStatus)
+	}
+
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
 	}

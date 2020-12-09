@@ -272,6 +272,11 @@ RainbowBridge_patch:
 ModelSpawnGetObjectStatus_patch:
     bl hook_ModelSpawnGetObjectStatus
 
+.section .patch_ChestGetIceTrapObjectStatus
+.global ChestGetIceTrapObjectStatus_patch
+ChestGetIceTrapObjectStatus_patch:
+    bl hook_ChestGetIceTrapObjectStatus
+
 .section .patch_ExtendedObjectClear
 .global ExtendedObjectClear_patch
 ExtendedObjectClear_patch:

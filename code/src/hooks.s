@@ -188,6 +188,14 @@ hook_ModelSpawnGetObjectStatus:
     pop {r1-r12, lr}
     bx lr
 
+.global hook_ChestGetIceTrapObjectStatus
+hook_ChestGetIceTrapObjectStatus:
+    push {r1-r12, lr}
+    mov r0,#0x3
+    bl ExtendedObject_GetStatus
+    pop {r1-r12, lr}
+    bx lr
+
 .global hook_PoeCollectorCheckPoints
 hook_PoeCollectorCheckPoints:
     push {r0-r12, lr}

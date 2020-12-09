@@ -44,6 +44,9 @@ public:
         ItemOverride_Value val;
         val.all = 0;
         val.itemId = getItemId;
+        if (getItemId == GI_ICE_TRAP) {
+            val.looksLikeItemId = GI_BOOMERANG; //TODO make random i guess
+        }
         return val;
     }
 
@@ -247,6 +250,7 @@ extern Item A_LightMedallion;
 
 extern Item NoItem;
 extern Item HeartContainer;
+extern Item IceTrap;
 
 extern std::vector<Item *> PrePlacedItems;
 extern std::vector<Item>   AdvancementItemPool;

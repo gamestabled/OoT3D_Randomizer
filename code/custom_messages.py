@@ -360,6 +360,17 @@ custom_messages = {
                                                 "El texto samplo en espagnol.\x7F\x00",
                                                 "",
                                                 "" ) ),
+    #Ice Trap
+    0x9002 :           ( 0x00,   0x02,   0x03, ( "",
+                                                UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(RED)+"FOOL!"+COLOR(WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                "",
+                                                "",
+                                                "",
+                                                "Le sample textre in francais.\x7F\x00",
+                                                "",
+                                                "El texto samplo en espagnol.\x7F\x00",
+                                                "",
+                                                "" ) ),
 
 }
 

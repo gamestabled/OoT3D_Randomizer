@@ -6,5 +6,6 @@
 void IceTrap_Push(void);
 void IceTrap_Give(void);
 u32 IceTrap_IsPending(void);
+void IceTrap_Update(void);
 
 #endif //_ICETRAP_H_
