@@ -29,7 +29,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     }
     ItemOverride_Update();
     Model_UpdateAll(globalCtx);
-    InputContext_Update();
+    Input_Update();
 }
 
 void after_GlobalContext_Update() {

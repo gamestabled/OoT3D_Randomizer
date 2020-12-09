@@ -8,6 +8,8 @@ typedef struct {
     btn_t old;
 } InputContext;
 
-void InputContext_Update(void);
+void Input_Update(void);
+u32 Input_WaitWithTimeout(u32 msec);
+u32 Input_Wait(void);
 
 extern InputContext rInputCtx;
