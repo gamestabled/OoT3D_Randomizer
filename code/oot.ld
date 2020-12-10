@@ -7,7 +7,11 @@ SECTIONS
 	.patch_loader 0x100000 : {
 		*(.patch_loader)
 	}
-	
+
+	.patch_PoeCollectorGetFirstTextbox 0x113844 : {
+		*(.patch_PoeCollectorGetFirstTextbox)
+	}
+
 	.patch_ItemEtceteraModelDraw 0x117080 : {
 		*(.patch_ItemEtceteraModelDraw)
 	}

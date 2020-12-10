@@ -607,6 +607,11 @@ FairyReward_patch:
     bl Cutscene_OverrideFairyReward
     b 0x3E75F8
 
+.section .patch_PoeCollectorGetFirstTextbox
+.global PoeCollectorGetFirstTextbox_patch
+PoeCollectorGetFirstTextbox_patch:
+    bl hook_PoeCollectorGetFirstTextbox
+
 .section .patch_loader
 .global loader_patch
 

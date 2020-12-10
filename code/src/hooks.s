@@ -327,6 +327,13 @@ hook_EponasSongCheckFlag:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_PoeCollectorGetFirstTextbox
+hook_PoeCollectorGetFirstTextbox:
+    push {r1-r12, lr}
+    bl EnGb_GetFirstTextbox
+    pop {r1-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
