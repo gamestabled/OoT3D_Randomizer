@@ -307,6 +307,7 @@ namespace Playthrough {
       const bool NO_EFFECT = false;
 
       PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
+      PlaceItemInLocation(&IceTrap, &KF_MidoTopLeftChest, overrides, NO_EFFECT);
 
       if (!Settings::ShuffleKokiriSword)
         PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);
@@ -505,7 +506,7 @@ namespace Playthrough {
         //Ganon's Castle
         PlaceItemInLocation(&GanonsCastle_SmallKey, &GanonsCastle_LightTrialInvisibleEnemiesChest, overrides, NO_EFFECT);
         PlaceItemInLocation(&GanonsCastle_SmallKey, &GanonsCastle_LightTrialLullabyChest,          overrides, NO_EFFECT);
-}
+      }
 
       if (Settings::BossKeysanity == BOSSKEYSANITY_VANILLA) {
         PlaceItemInLocation(&ForestTemple_BossKey, &ForestTemple_BossKeyChest, overrides, NO_EFFECT);

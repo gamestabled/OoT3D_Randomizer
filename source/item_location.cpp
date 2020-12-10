@@ -833,7 +833,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 443> allLocations = {
+std::array<ItemLocation*, 462> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -856,7 +856,7 @@ std::array<ItemLocation*, 443> allLocations = {
   //Lost Woods
   &LW_GiftFromSaria,
   &LW_SkullKid,
-  //&LW_OcarinaMemoryGame,
+  &LW_OcarinaMemoryGame,
   &LW_TargetInWoods,
   &LW_DekuScrubNearDekuTheaterRight,
   &LW_DekuScrubNearDekuTheaterLeft,
@@ -869,6 +869,8 @@ std::array<ItemLocation*, 443> allLocations = {
   //&DekuTheater_MaskOfTruth,
 
   //Sacred Forest Meadow
+  &SongFromSaria,
+  &SheikInForest,
   &SFM_WolfosGrottoChest,
   &SFM_DekuScrubGrottoRear,
   &SFM_DekuScrubGrottoFront,
@@ -878,6 +880,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &HF_OpenGrottoChest,
   &HF_NearMarketGrottoChest,
   &HF_OcarinaOfTimeItem,
+  &SongFromOcarinaOfTime,
   &HF_TektiteGrottoFreestandingPoH,
   &HF_DekuScrubGrotto,
 
@@ -915,13 +918,14 @@ std::array<ItemLocation*, 443> allLocations = {
   //Desert Colossus
   &SheikAtColossus,
   &Colossus_FreestandingPoH,
+  &Colossus_GreatFairyReward,
   &Colossus_DekuScrubGrottoRear,
   &Colossus_DekuScrubGrottoFront,
 
   //Market
   &MK_TreasureChestGameReward,
-  //&MK_BombchuBowlingFirstPrize,
-  //&MK_BombchuBowlingSecondPrize,
+  &MK_BombchuBowlingFirstPrize,
+  &MK_BombchuBowlingSecondPrize,
   &MK_LostDog,
   &MK_ShootingGalleryReward,
   &MK_10BigPoes,
@@ -953,10 +957,14 @@ std::array<ItemLocation*, 443> allLocations = {
   &MK_BazaarItem8,
 
   //Hyrule Castle
-  &HC_ZeldasLetter,
   &HC_MalonEgg,
+  &HC_ZeldasLetter,
+  &SongFromImpa,
+  &HC_GreatFairyReward,
+  &OGC_GreatFairyReward,
 
   //Temple of Time
+  &SheikAtTemple,
   &ToT_LightArrowCutscene,
 
   //Kakariko
@@ -974,6 +982,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &Kak_AnjuAsAdult,
   &Kak_ImpasHouseFreestandingPoH,
   &Kak_WindmillFreestandingPoH,
+  &SongFromWindmill,
 
   //Kakariko Shops
   &Kak_PotionShopItem1,
@@ -998,6 +1007,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &GY_ShieldGraveChest,
   &GY_HeartPieceGraveChest,
   &GY_ComposersGraveChest,
+  &SongFromComposersGrave,
   &GY_FreestandingPoH,
   &GY_DampeRaceFreestandingPoH,
   &GY_DampeGravediggingTour,
@@ -1006,7 +1016,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &DMT_Chest,
   &DMT_StormsGrottoChest,
   &DMT_Biggoron,
-  //&DMT_GreatFairyReward,
+  &DMT_GreatFairyReward,
   &DMT_FreestandingPoH,
 
   //Goron City
@@ -1035,7 +1045,9 @@ std::array<ItemLocation*, 443> allLocations = {
   &DMC_UpperGrottoChest,
   &DMC_WallFreestandingPoH,
   &DMC_VolcanoFreestandingPoH,
+  &SheikInCrater,
   &DMC_DekuScrub,
+  &DMC_GreatFairyReward,
   &DMC_DekuScrubGrottoLeft,
   &DMC_DekuScrubGrottoRight,
   &DMC_DekuScrubGrottoCenter,
@@ -1068,8 +1080,10 @@ std::array<ItemLocation*, 443> allLocations = {
   //Zoras Fountain
   &ZF_IcebergFreestandingPoH,
   &ZF_BottomFreestandingPoH,
+  &ZF_GreatFairyReward,
 
   //Lon Lon Ranch
+  &SongFromMalon,
   &LLR_TalonsChickens,
   &LLR_FreestandingPoH,
   &LLR_DekuScrubGrottoLeft,
@@ -1213,6 +1227,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &IceCavern_MapChest,
   &IceCavern_CompassChest,
   &IceCavern_IronBootsChest,
+  &SheikInIceCavern,
   &IceCavern_FreestandingPoH,
 
   //Gerudo Training Grounds

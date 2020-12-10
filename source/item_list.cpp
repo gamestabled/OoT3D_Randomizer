@@ -377,6 +377,7 @@ void GenerateItemPool() {
     A_DoubleDefense,
     TreasureGameHeart,
 
+    A_ZeldasLullaby,
     A_SongOfStorms,
     A_SongOfTime,
     A_SariasSong,

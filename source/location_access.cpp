@@ -168,7 +168,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Locations
                   ItemLocationPairing(&LW_SkullKid,               []{return IsChild && CanPlay(SariasSong);}),
-                //ItemLocationPairing(&LW_OcarinaMemoryGame,      []{return IsChild && Ocarina;}),
+                  ItemLocationPairing(&LW_OcarinaMemoryGame,      []{return IsChild && Ocarina;}),
                   ItemLocationPairing(&LW_TargetInWoods,          []{return CanUse("Slingshot");}),
                   ItemLocationPairing(&LW_DekuScrubNearBridge,    []{return IsChild && CanStunDeku;}),
                   ItemLocationPairing(&LW_GS_BeanPatchNearBridge, []{return CanPlantBugs && CanChildAttack;}),
@@ -260,9 +260,9 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   EventPairing(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairyWithoutSuns;})
                 }, {
                   //Locations
-                  //Song from Saria
-                  //Sheik in Forest
-                  ItemLocationPairing(&SFM_GS, []{return CanUse("Hookshot") && AtNight;}),
+                  ItemLocationPairing(&SongFromSaria, []{return IsChild && ZeldasLetter;}),
+                  ItemLocationPairing(&SheikInForest, []{return IsAdult;}),
+                  ItemLocationPairing(&SFM_GS,        []{return CanUse("Hookshot") && AtNight;}),
                   //SFM Maze Gossip Stone (Lower)
                   //SFM Maze Gossip Stone (Upper)
                   //SFM Saria Gossip Stone
@@ -334,8 +334,8 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   EventPairing(&BigPoeKill, []{return CanUse("Bow") && CanRideEpona && HasBottle;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&HF_OcarinaOfTimeItem, []{return IsChild && HasAllStones;}),
-                  //Song from Ocarina of Time
+                  ItemLocationPairing(&HF_OcarinaOfTimeItem,  []{return IsChild && HasAllStones;}),
+                  ItemLocationPairing(&SongFromOcarinaOfTime, []{return IsChild && HasAllStones;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LW_Bridge,            []{return true;}),
@@ -707,7 +707,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit Colossus_GreatFairyFountain = Exit("Colossus Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Colossus Great Fairy Reward
+                  ItemLocationPairing(&Colossus_GreatFairyReward, []{return CanPlay(ZeldasLullaby);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Colossus_Main, []{return true;})
@@ -773,8 +773,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit ToT_BeyondDoorOfTime = Exit("Beyond Door of Time", "", "Temple of Time", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Master Sword Pedestal
-                  //Sheik at Temple
+                  ItemLocationPairing(&SheikAtTemple, []{return ForestMedallion && IsAdult;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ToT_Main, []{return true;})
@@ -813,11 +812,11 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit HC_Garden = Exit("HC Garden", "Castle Grounds", "Hyrule Castle", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&ZeldasLullaby, []{return true;}), //TODO: remove eventually
+                  //EventPairing(&ZeldasLullaby, []{return true;}), //TODO: remove eventually
                 }, {
                   //Locations
-                  ItemLocationPairing(&HC_ZeldasLetter, []{return true;})
-                  //Song From Impa
+                  ItemLocationPairing(&HC_ZeldasLetter, []{return true;}),
+                  ItemLocationPairing(&SongFromImpa,    []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HC_Grounds, []{return true;})
@@ -825,7 +824,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit HC_GreatFairyFountain = Exit("HC Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //HC Great Fairy Reward
+                  ItemLocationPairing(&HC_GreatFairyReward, []{return CanPlay(ZeldasLullaby);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HC_Grounds, []{return true;})
@@ -862,7 +861,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit OGC_GreatFairyFountain = Exit("OGC Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //OGC Great Fairy Reward
+                  ItemLocationPairing(&OGC_GreatFairyReward, []{return CanPlay(ZeldasLullaby);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&CastleGrounds, []{return true;}),
@@ -911,8 +910,8 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit MK_BombchuBowling = Exit("Market Bombchu Bowling", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //ItemLocationPairing(&MK_BombchuBowlingFirstPrize,  []{return FoundBombchus;}),
-                  //ItemLocationPairing(&MK_BombchuBowlingSecondPrize, []{return FoundBombchus;})
+                  ItemLocationPairing(&MK_BombchuBowlingFirstPrize,  []{return FoundBombchus;}),
+                  ItemLocationPairing(&MK_BombchuBowlingSecondPrize, []{return FoundBombchus;}),
                   //Market Bombchu Bowling Bombchus
                 }, {
                   //Exits
@@ -1097,7 +1096,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Locations
                   ItemLocationPairing(&Kak_WindmillFreestandingPoH, []{return CanUse("Boomerang") || DampesWindmillAccess;}),
-                  //Song from Windmill
+                  ItemLocationPairing(&SongFromWindmill,            []{return IsAdult && Ocarina;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main, []{return true;})
@@ -1234,11 +1233,11 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit GY_ComposersGrave = Exit("GY Composers Grave", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(&GY_ComposersGraveChest, []{return HasFireSource;})
-                  //Song From Composers Grave
+                  ItemLocationPairing(&GY_ComposersGraveChest, []{return HasFireSource;}),
+                  ItemLocationPairing(&SongFromComposersGrave, []{return IsAdult || (Slingshot || Boomerang || Sticks || HasExplosives || KokiriSword);}),
                 }, {
                   //Exits
-                  ExitPairing::Both(&GY_Main, []{return true;})
+                  ExitPairing::Both(&GY_Main, []{return true;}),
                 }, {
                   //Advancement Needs
                   AdvancementPairing(A_DinsFire,         []{return ProgressiveMagic       >= 1 && !FireArrows;}),
@@ -1370,7 +1369,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit DMT_GreatFairyFountain = Exit("DMT Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //ItemLocationPairing(&DMT_GreatFairyReward, []{return CanPlay(ZeldasLullaby);})
+                  ItemLocationPairing(&DMT_GreatFairyReward, []{return CanPlay(ZeldasLullaby);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMT_Summit, []{return true;})
@@ -1444,7 +1443,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&GC_Main,        []{return true;}),
                   ExitPairing::Both(&DMC_LowerLocal, []{return IsAdult;})
                 }, {
-                  AdvancementPairing(A_SariasSong,         []{return IsChild && ProgressiveOcarina       >= 1;})
+                  AdvancementPairing(A_SariasSong,   []{return IsChild && ProgressiveOcarina >= 1;}),
   });
 
   Exit GC_Shop = Exit("GC Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1544,7 +1543,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
   Exit DMC_CentralNearby = Exit("DMC Central Nearby", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&DMC_VolcanoFreestandingPoH, []{return IsAdult && (DMC_CentralLocal.CanPlantBean() || (LogicCraterBeanPoHWithHovers && HoverBoots));}),
-                  //Sheik in Crater
+                  ItemLocationPairing(&SheikInCrater,              []{return IsAdult;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMC_CentralLocal, []{return CanUse("Goron Tunic");})
@@ -1579,7 +1578,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit DMC_GreatFairyFountain = Exit("DMC Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //ItemLocationPairing(&DMC_GreatFairyFountainReward, []{return CanPlay(ZeldasLullaby);})
+                  ItemLocationPairing(&DMC_GreatFairyReward, []{return CanPlay(ZeldasLullaby);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMC_LowerLocal, []{return true;})
@@ -1668,9 +1667,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
   Exit ZR_FairyGrotto = Exit("ZR Fairy Grotto", "", "", NO_DAY_NIGHT_CYCLE, {
                   //Event
                   EventPairing(&FreeFairies, []{return true;}),
-                }, {
-                  //Locations
-                }, {
+                }, {}, {
                   //Exits
                   ExitPairing::Both(&ZR_Main, []{return true;})
   });
@@ -1769,7 +1766,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
 
   Exit ZF_GreatFairyFountain = Exit("ZF Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //ZF Great Fairy Reward
+                  ItemLocationPairing(&ZF_GreatFairyReward, []{return CanPlay(ZeldasLullaby);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ZF_Main, []{return true;})
@@ -1781,7 +1778,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   EventPairing(&LinksCow, []{return LinksCow || (CanPlay(EponasSong) && IsAdult && AtDay);}),
                 }, {
                   //Locations
-                  //Song from Malon
+                  ItemLocationPairing(&SongFromMalon,      []{return IsChild && ZeldasLetter && Ocarina && AtDay;}),
                   ItemLocationPairing(&LLR_GS_Tree,        []{return IsChild;}),
                   ItemLocationPairing(&LLR_GS_RainShed,    []{return IsChild && AtNight;}),
                   ItemLocationPairing(&LLR_GS_HouseWindow, []{return CanUse("Boomerang") && AtNight;}),
@@ -2651,10 +2648,10 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                     EventPairing(&BlueFireAccess, []{return BlueFireAccess || (IsAdult && HasBottle);}),
                   }, {
                     //Locations
-                    ItemLocationPairing(&IceCavern_MapChest,        []{return BlueFire && IsAdult;}),
-                    ItemLocationPairing(&IceCavern_CompassChest,    []{return BlueFire;}),
-                    ItemLocationPairing(&IceCavern_IronBootsChest,  []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire"));}),
-                    //Sheik in Ice Cavern
+                    ItemLocationPairing(&IceCavern_MapChest,              []{return BlueFire && IsAdult;}),
+                    ItemLocationPairing(&IceCavern_CompassChest,          []{return BlueFire;}),
+                    ItemLocationPairing(&IceCavern_IronBootsChest,        []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire"));}),
+                    ItemLocationPairing(&SheikInIceCavern,                []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire"));}),
                     ItemLocationPairing(&IceCavern_FreestandingPoH,       []{return BlueFire;}),
                     ItemLocationPairing(&IceCavern_GS_SpinningScytheRoom, []{return HookshotOrBoomerang;}),
                     ItemLocationPairing(&IceCavern_GS_HeartPieceRoom,     []{return BlueFire && HookshotOrBoomerang;}),
