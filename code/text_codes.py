@@ -8,7 +8,7 @@ def HORIZONTAL_SPACE(x):
     return "\x7F\x02" + chr(x)
 
 def GOTO_MESSAGE_ID(x):
-    return "\x7F\x03" + chr(x / 0x100) + chr(x % 0x100) #TODO: endiannes correct?
+    return "\x7F\x03" + chr(x // 0x100) + chr(x % 0x100) #TODO: endiannes correct?
 
 def INSTANT_TEXT_ON():
     return "\x7F\x04"
@@ -35,7 +35,7 @@ def PLAY_OCARINA():
     return "\x7F\x0C"
 
 def PLAY_SOUND(x):
-    return "\x7F\x0E" + chr(x / 0x100) + chr(x % 0x100) #TODO: endiannes correct?
+    return "\x7F\x0E" + chr(x // 0x100) + chr(x % 0x100) #TODO: endiannes correct?
 
 def ITEM_OBTAINED(x):
     return "\x7F\x0F" + chr(x)
