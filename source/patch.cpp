@@ -88,15 +88,19 @@ bool WriteOverridesToPatch() {
 
 	/*-------------------------------
 	|     rScrubRandomItemPrices    |
+	|     rScrubTextIdTable         |
 	--------------------------------*/
+	u16 rScrubTextIdTable[11] = { 0x9020, 0x9015, 0x9010, 0x9040, 0x9050, 0x9040, 0x9070, 0x9040, 0x9040, 0x9040, 0x9040 };
 
-	//only fill it in if random prices
+	//only fill prices in if random prices
 	if (ctx.scrubsanity == SCRUBSANITY_RANDOM_PRICES) {
 
 		//create array of random prices
 		s16 rScrubRandomItemPrices[11] = {0};
 		for (u8 i = 0; i < 11; i++) {
-			rScrubRandomItemPrices[i] = Playthrough::GetRandomPrice();
+			s16 price = Playthrough::GetRandomPrice();
+			rScrubRandomItemPrices[i] = price;
+			rScrubTextIdTable[i] = 0x9000 + (u16)price;
 		}
 
 		//write scrub random prices address to code
@@ -116,7 +120,32 @@ bool WriteOverridesToPatch() {
 
 		//write scrub random prices to code
 		if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &rScrubRandomItemPrices, sizeof(rScrubRandomItemPrices), FS_WRITE_FLUSH))) return false;
-	  totalRW += sizeof(rScrubRandomItemPrices);
+	  	totalRW += sizeof(rScrubRandomItemPrices);
+	} else if (ctx.scrubsanity == SCRUBSANITY_AFFORDABLE) {
+		for (u8 i = 0; i < 11; i++) {
+			rScrubTextIdTable[i] = 0x900A;
+		}
+	}
+
+	if (ctx.scrubsanity != SCRUBSANITY_OFF) {
+		//write scrub text table address to code
+		patchOffset = V_TO_P(0x52236C); //this is the address of the base game's scrub textId table
+		buf[0] = (patchOffset >> 16) & 0xFF;
+		buf[1] = (patchOffset >> 8) & 0xFF;
+		buf[2] = (patchOffset) & 0xFF;
+		if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) return false;
+		totalRW += 3;
+
+		//Write scrub text table size to code
+		u32 scrubTextIdTableSize = sizeof(rScrubTextIdTable);
+		buf[0] = (scrubTextIdTableSize >> 8) & 0xFF;
+		buf[1] = (scrubTextIdTableSize) & 0xFF;
+		if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) return false;
+		totalRW += 2;
+
+		//write scrub text table to code
+		if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &rScrubTextIdTable, sizeof(rScrubTextIdTable), FS_WRITE_FLUSH))) return false;
+	  	totalRW += sizeof(rScrubTextIdTable);
 	}
 
 	/*--------------------------------

@@ -752,6 +752,6 @@ namespace Playthrough {
     }
 
     s16 GetRandomPrice() {
-      return Random() % 100;
+      return 5 * ((Random() % 19) + 1);
     }
 }
