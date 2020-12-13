@@ -17,6 +17,8 @@ namespace Settings {
   u8 Skullsanity                        = 0;     Option O_Skullsanity         = Option(&Skullsanity,         "Tokensanity",          {"Vanilla",                 "All Locations"});
   u8 Scrubsanity                        = 0;     Option O_Scrubsanity         = Option(&Scrubsanity,         "Scrub Shuffle",        {"Off", "Affordable", "Expensive", "Random Prices"});
   u8 BigPoeTargetCount                  = 0;     Option O_BigPoeTargetCount   = Option(&BigPoeTargetCount,   "Big Poe Target Count", {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
+  u8 BoomerangAsAdult                   = 0;     Option O_BoomerangAsAdult    = Option(&BoomerangAsAdult,    "Enable Adult Boomerang", {"No", "Yes"});
+  u8 HammerAsChild                      = 0;     Option O_HammerAsChild       = Option(&HammerAsChild,       "Enable Child Hammer",    {"No", "Yes"});
   u8 LACSCondition                      = 0;
 
   std::string seed                      = "";
@@ -161,12 +163,17 @@ namespace Settings {
     &O_BigPoeTargetCount,
     &O_FourPoesCutscene,
   };
+  std::vector<Option *> advancedGlitchedOptions = {
+    &O_BoomerangAsAdult,
+    &O_HammerAsChild,
+  };
 
   Menu various             = Menu("Various Settings",      variousOptions);
   Menu world               = Menu("World Settings",        worldOptions);
   Menu shuffle             = Menu("Shuffle Settings",      shuffleOptions);
   Menu shuffleDungeonItems = Menu("Shuffle Dungeon Items", shuffleDungeonItemOptions);
   Menu timesaverSettings   = Menu("Timesaver Settings",    timesaverOptions);
+  Menu advancedGlitchedSettings = Menu("Advanced Glitched Settings", advancedGlitchedOptions);
 
   //adding a menu with no options crashes, might fix later
   std::vector<Menu *> mainMenu = {
@@ -175,6 +182,7 @@ namespace Settings {
     &shuffle,
     &shuffleDungeonItems,
     &timesaverSettings,
+    &advancedGlitchedSettings,
   };
 
   SettingsContext FillContext() {
@@ -196,6 +204,9 @@ namespace Settings {
     ctx.fourPoesCutscene    = (FourPoesCutscene)  ? 1 : 0;
 
     ctx.bigPoeTargetCount = BigPoeTargetCount + 1;
+
+    ctx.boomerangAsAdult = BoomerangAsAdult;
+    ctx.hammerAsChild    = HammerAsChild;
 
     ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
     return ctx;

@@ -35,6 +35,14 @@ void ItemOverride_Init(void) {
     // Create an actor satisfying the minimum requirements to give the player an item
     rDummyActor = rHeap_Alloc(sizeof(Actor));
     rDummyActor->update = (void*)1;
+
+    // Enable items by age as determined by settings
+    if (gSettingsContext.boomerangAsAdult) {
+        gItemUsabilityTable[ITEM_BOOMERANG] = 0x09;
+    }
+    if (gSettingsContext.hammerAsChild) {
+        gItemUsabilityTable[ITEM_HAMMER] = 0x09;
+    }
 }
 
 static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 itemId) {

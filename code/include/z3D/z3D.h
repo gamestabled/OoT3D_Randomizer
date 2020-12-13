@@ -420,6 +420,7 @@ extern const char DungeonNames[][25];
 #define gSaveContext (*(SaveContext*)0x00587958)
 #define gStaticContext (*(StaticContext*)0x08080010)
 #define gEntranceTable ((EntranceInfo*)0x543BB8)
+#define gItemUsabilityTable ((u8*)0x506C58)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 
 typedef enum {

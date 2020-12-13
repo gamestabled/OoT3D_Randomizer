@@ -113,6 +113,9 @@ typedef struct {
 
   u8 bigPoeTargetCount;
 
+  u8 boomerangAsAdult;
+  u8 hammerAsChild;
+
   u32 dungeonRewardBitMask;
 } SettingsContext;
 

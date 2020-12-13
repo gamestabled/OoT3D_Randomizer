@@ -248,6 +248,10 @@ SECTIONS
 		*(.patch_Gfx_Update)
 	}
 
+	.patch_ISGPutaway 0x32B4AC : {
+		*(.patch_ISGPutaway)
+	}
+
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
@@ -270,6 +274,10 @@ SECTIONS
 
 	.patch_FastChests 0x354CD8 : {
 		*(.patch_FastChests)
+	}
+
+	.patch_ISGCrouchStab 0x360690 : {
+		*(.patch_ISGCrouchStab)
 	}
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {

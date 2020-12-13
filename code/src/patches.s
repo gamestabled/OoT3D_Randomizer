@@ -619,6 +619,16 @@ OcarinaMinigameRewardsOrder_patch:
     .word 0x4D
     .word 0x4E
 
+.section .patch_ISGPutaway
+.global ISGPutaway_patch
+ISGPutaway_patch:
+    nop
+
+.section .patch_ISGCrouchStab
+.global ISGCrouchStab_patch
+ISGCrouchStab_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 
