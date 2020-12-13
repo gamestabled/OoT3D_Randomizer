@@ -612,6 +612,13 @@ FairyReward_patch:
 PoeCollectorGetFirstTextbox_patch:
     bl hook_PoeCollectorGetFirstTextbox
 
+.section .patch_OcarinaMinigameRewardsOrder
+.global OcarinaMinigameRewardsOrder_patch
+OcarinaMinigameRewardsOrder_patch:
+    .word 0x3E
+    .word 0x4D
+    .word 0x4E
+
 .section .patch_loader
 .global loader_patch
 

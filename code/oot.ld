@@ -470,6 +470,10 @@ SECTIONS
 		*(.patch_DampeSetCollectibleFlag)
 	}
 
+	.patch_OcarinaMinigameRewardsOrder 0x52ED10 : {
+		*(.patch_OcarinaMinigameRewardsOrder)
+	}
+
 	. = 0x005C7000;
     .text : {
         __text_start = . ;
