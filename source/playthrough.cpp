@@ -740,13 +740,21 @@ namespace Playthrough {
             }
 
         }
-        printf("\x1b[9;10H");
-        bool rv = SpoilerLog_Write();
-        if (rv) printf("Wrote Spoiler Log\n");
-        else    printf("failed to write log\n");
 
-        rv = PlacementLog_Write();
-        printf("\x1b[10;10HWrote Placement Log\n");
+        printf("\x1b[9;10H");
+        if (SpoilerLog_Write()) {
+          printf("Wrote spoiler log\n");
+        } else {
+          printf("Failed to write spoiler log\n");
+        }
+
+        printf("\x1b[10;10H");
+        if (PlacementLog_Write()) {
+          printf("Wrote placement log\n");
+        } else {
+          printf("Failed to write placement log\n");
+        }
+
         return 1;
     }
 
