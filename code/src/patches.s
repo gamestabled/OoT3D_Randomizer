@@ -607,6 +607,28 @@ FairyReward_patch:
     bl Cutscene_OverrideFairyReward
     b 0x3E75F8
 
+.section .patch_PoeCollectorGetFirstTextbox
+.global PoeCollectorGetFirstTextbox_patch
+PoeCollectorGetFirstTextbox_patch:
+    bl hook_PoeCollectorGetFirstTextbox
+
+.section .patch_OcarinaMinigameRewardsOrder
+.global OcarinaMinigameRewardsOrder_patch
+OcarinaMinigameRewardsOrder_patch:
+    .word 0x3E
+    .word 0x4D
+    .word 0x4E
+
+.section .patch_ISGPutaway
+.global ISGPutaway_patch
+ISGPutaway_patch:
+    nop
+
+.section .patch_ISGCrouchStab
+.global ISGCrouchStab_patch
+ISGCrouchStab_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 

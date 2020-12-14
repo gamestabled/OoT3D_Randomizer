@@ -136,6 +136,9 @@ typedef struct {
 
   u8 bigPoeTargetCount;
 
+  u8 boomerangAsAdult;
+  u8 hammerAsChild;
+
   u8 dekuTreeDungeonMode;
   u8 dodongosCavernDungeonMode;
   u8 jabuJabusBellyDungeonMode;
@@ -149,6 +152,7 @@ typedef struct {
   u8 ganonsCastleDungeonMode;
 
   u32 dungeonRewardBitMask;
+  
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;

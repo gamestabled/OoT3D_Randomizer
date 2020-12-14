@@ -7,7 +7,11 @@ SECTIONS
 	.patch_loader 0x100000 : {
 		*(.patch_loader)
 	}
-	
+
+	.patch_PoeCollectorGetFirstTextbox 0x113844 : {
+		*(.patch_PoeCollectorGetFirstTextbox)
+	}
+
 	.patch_ItemEtceteraModelDraw 0x117080 : {
 		*(.patch_ItemEtceteraModelDraw)
 	}
@@ -244,6 +248,10 @@ SECTIONS
 		*(.patch_Gfx_Update)
 	}
 
+	.patch_ISGPutaway 0x32B4AC : {
+		*(.patch_ISGPutaway)
+	}
+
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
@@ -266,6 +274,10 @@ SECTIONS
 
 	.patch_FastChests 0x354CD8 : {
 		*(.patch_FastChests)
+	}
+
+	.patch_ISGCrouchStab 0x360690 : {
+		*(.patch_ISGCrouchStab)
 	}
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
@@ -464,6 +476,10 @@ SECTIONS
 
 	.patch_DampeSetCollectibleFlag 0x4D9D50 : {
 		*(.patch_DampeSetCollectibleFlag)
+	}
+
+	.patch_OcarinaMinigameRewardsOrder 0x52ED10 : {
+		*(.patch_OcarinaMinigameRewardsOrder)
 	}
 
 	. = 0x005C7000;

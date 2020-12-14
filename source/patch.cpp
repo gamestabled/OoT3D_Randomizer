@@ -88,7 +88,7 @@ bool WritePatch() {
 	|     rScrubRandomItemPrices    |
 	|     rScrubTextIdTable         |
 	--------------------------------*/
-	u16 rScrubTextIdTable[11] = { 0x9020, 0x9015, 0x9010, 0x9040, 0x9050, 0x9040, 0x9070, 0x9040, 0x9040, 0x9040, 0x9040 };
+	u16 rScrubTextIdTable[11] = { 0x9014, 0x900F, 0x900A, 0x9028, 0x9032, 0x9028, 0x9046, 0x9028, 0x9028, 0x9028, 0x9028 };
 
 	//only fill prices in if random prices
 	if (ctx.scrubsanity == SCRUBSANITY_RANDOM_PRICES) {
