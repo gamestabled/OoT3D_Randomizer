@@ -125,7 +125,7 @@ namespace Settings {
   bool LogicSpiritTrialHookshot         = false;
 
   u32 LinksPocketRewardBitMask = 0;
-  u32 rDungeonRewardOverrides[9] = {0};
+  std::array<u32, 9> rDungeonRewardOverrides{};
 
   std::vector<Option *> Options = {
     //&O_DamageMultiplier,
