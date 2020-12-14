@@ -60,7 +60,7 @@ bool WriteOverridesToPatch() {
   }
   totalRW += 3;
 
-  //Write override table size to code
+  // Write override table size to code
   const u32 ovrTableSize = sizeof(ItemOverride) * Overrides.size();
   buf[0] = (ovrTableSize >> 8) & 0xFF;
   buf[1] = (ovrTableSize) & 0xFF;
@@ -69,8 +69,8 @@ bool WriteOverridesToPatch() {
   }
   totalRW += 2;
 
-  //Write override table to code
-  for (auto override : Overrides) {
+  // Write override table to code
+  for (const auto& override : Overrides) {
     if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &override, sizeof(override), FS_WRITE_FLUSH))) {
       return false;
     }
