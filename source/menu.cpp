@@ -216,18 +216,17 @@ void GenerateRandomizer() {
   consoleSelect(&topScreen);
 	consoleClear();
 
-  Overrides.clear();
-	int ret = Playthrough::Fill(0, seedInt, Overrides);
+	int ret = Playthrough::Fill(seedInt);
 	if (ret < 0) {
 		printf("Error %d with fill. Press Start to exit.\n", ret);
 		return;
 	}
-	if (WriteOverridesToPatch()) {
+	if (WritePatch()) {
 		printf("\x1b[11;10HWrote Patch\n");
+    printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
 	} else {
 		printf("Error creating patch. Press Start to exit.\n");
 	}
-  printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
 }
 
 //opens up the 3ds software keyboard to type in a seed

@@ -2,11 +2,9 @@
 #include <fstream>
 #include <string>
 
-std::set<ItemOverride, Playthrough::ItemOverride_Compare> Overrides;
-
 //For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
 
-bool WriteOverridesToPatch() {
+bool WritePatch() {
 
 	Result res = 0;
 	FS_Archive sdmcArchive = 0;
@@ -48,14 +46,14 @@ bool WriteOverridesToPatch() {
 	totalRW += 3;
 
 	//Write override table size to code
-	u32 ovrTableSize = sizeof(ItemOverride) * Overrides.size();
+	u32 ovrTableSize = sizeof(ItemOverride) * overrides.size();
 	buf[0] = (ovrTableSize >> 8) & 0xFF;
 	buf[1] = (ovrTableSize) & 0xFF;
 	if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) return false;
 	totalRW += 2;
 
 	//Write override table to code
-	for (auto override : Overrides) {
+	for (auto override : overrides) {
 		if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &override, sizeof(override), FS_WRITE_FLUSH))) return false;
 		totalRW += sizeof(override);
 	}

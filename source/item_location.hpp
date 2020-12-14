@@ -6,9 +6,9 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include <set>
 
 #include "../code/include/z3D/z3D.h"
-#include "../code/src/item_override.h"
 #include "item_list.hpp"
 
 enum class ItemLocationType {
@@ -121,6 +121,19 @@ public:
   ItemLocation* loc;
   u8 keysRequired;
 };
+
+class ItemOverride_Compare {
+public:
+    bool operator()(ItemOverride lhs, ItemOverride rhs) const {
+        return lhs.key.all < rhs.key.all;
+    }
+};
+
+//set of overrides to write to the patch
+extern std::set<ItemOverride, ItemOverride_Compare> overrides;
+
+extern u32 totalLocationsFound;
+extern void PlaceItemInLocation(ItemLocation* loc, Item* item, bool applyEffectImmediately = false);
 
 //Kokiri Forest
 extern ItemLocation KF_KokiriSwordChest;

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "item_location.hpp"
-#include "item_list.hpp"
+#include "item_pool.hpp"
 #include "logic.hpp"
 #include "settings.hpp"
 
@@ -180,7 +180,7 @@ public:
     bool nightAdult = false;
     bool addedToPool = false;
 
-    void UpdateEvents() {
+    bool UpdateEvents() {
 
       if (timePass) {
         if (Logic::Age == AGE_CHILD) {
@@ -193,14 +193,19 @@ public:
 
       }
 
+      bool eventChange = false;
+
       for (size_t i = 0; i < events.size(); i++) {
         EventPairing& eventPair = events[i];
 
         if (eventPair.ConditionsMet()) {
           eventPair.EventOccurred();
+          eventChange = true;
           events.erase(events.begin() + i);
         }
       }
+
+      return eventChange;
     }
 
 
