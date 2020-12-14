@@ -289,11 +289,11 @@ namespace Playthrough {
     static void RandomizeDungeonRewards(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
 
       //shuffle an array of indices so that we can randomize the rewards both logically and for the patch
-      std::array<int, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+      std::array<u32, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
       std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
 
-      for (u8 i = 0; i < dungeonRewards.size(); i++) {
-        int idx = idxArray[i];
+      for (size_t i = 0; i < dungeonRewards.size(); i++) {
+        const u32 idx = idxArray[i];
         PlaceItemInLocation(&dungeonRewards[idx], dungeonRewardLocations[i], overrides, false);
         Settings::rDungeonRewardOverrides[i] = idx;
       }

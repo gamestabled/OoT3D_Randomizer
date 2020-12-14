@@ -207,7 +207,7 @@ bool WriteOverridesToPatch() {
   totalRW += 2;
 
   // Write rDungeonRewardOverrides to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &Settings::rDungeonRewardOverrides, sizeof(Settings::rDungeonRewardOverrides), FS_WRITE_FLUSH))) {
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, Settings::rDungeonRewardOverrides.data(), sizeof(Settings::rDungeonRewardOverrides), FS_WRITE_FLUSH))) {
     return false;
   }
   totalRW += sizeof(Settings::rDungeonRewardOverrides);

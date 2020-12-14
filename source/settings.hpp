@@ -1,6 +1,7 @@
 #pragma once
 
 #include <3ds.h>
+#include <array>
 #include <cstdlib>
 #include <string>
 #include <variant>
@@ -194,7 +195,7 @@ namespace Settings {
   extern bool LogicWaterFallingPlatformGS;
 
   extern u32 LinksPocketRewardBitMask;
-  extern u32 rDungeonRewardOverrides[9];
+  extern std::array<u32, 9> rDungeonRewardOverrides;
 
   extern void UpdateSettings();
   extern void PrintSettings();
