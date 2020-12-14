@@ -1,4 +1,6 @@
 #include "patch.hpp"
+
+#include <array>
 #include <fstream>
 #include <string>
 
@@ -111,13 +113,16 @@ bool WriteOverridesToPatch() {
   |     rScrubRandomItemPrices    |
   |     rScrubTextIdTable         |
   --------------------------------*/
-  u16 rScrubTextIdTable[11] = { 0x9014, 0x900F, 0x900A, 0x9028, 0x9032, 0x9028, 0x9046, 0x9028, 0x9028, 0x9028, 0x9028 };
+  std::array<u16, 11> rScrubTextIdTable{
+    0x9014, 0x900F, 0x900A, 0x9028, 0x9032, 0x9028,
+    0x9046, 0x9028, 0x9028, 0x9028, 0x9028
+  };
 
   // Only fill prices in if random prices
   if (ctx.scrubsanity == SCRUBSANITY_RANDOM_PRICES) {
     // Create array of random prices
-    s16 rScrubRandomItemPrices[11] = {0};
-    for (u8 i = 0; i < 11; i++) {
+    std::array<s16, 11> rScrubRandomItemPrices{};
+    for (size_t i = 0; i < rScrubRandomItemPrices.size(); i++) {
       const s16 price = Playthrough::GetRandomPrice();
       rScrubRandomItemPrices[i] = price;
       rScrubTextIdTable[i] = static_cast<u16>(0x9000 + static_cast<u16>(price));
@@ -148,9 +153,7 @@ bool WriteOverridesToPatch() {
     }
     totalRW += sizeof(rScrubRandomItemPrices);
   } else if (ctx.scrubsanity == SCRUBSANITY_AFFORDABLE) {
-    for (u8 i = 0; i < 11; i++) {
-      rScrubTextIdTable[i] = 0x900A;
-    }
+    rScrubTextIdTable.fill(0x900A);
   }
 
   if (ctx.scrubsanity != SCRUBSANITY_OFF) {
