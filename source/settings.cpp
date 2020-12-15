@@ -1,4 +1,5 @@
 #include "settings.hpp"
+#include "random.hpp"
 
 namespace Settings {
                                                                                       //logic variable       setting name                 options
@@ -13,10 +14,12 @@ namespace Settings {
   u8 TimeOfDay                          = 0;     Option O_TimeOfDay           = Option(&TimeOfDay,           "Starting Time",        {"Day", "Night"});
   u8 Keysanity                          = 0;     Option O_Keysanity           = Option(&Keysanity,           "Small Keys",           {"Vanilla", "Dungeon Only", "All Locations"});
   u8 BossKeysanity                      = 0;     Option O_BossKeysanity       = Option(&BossKeysanity,       "Boss Keys",            {"Vanilla", "Dungeon Only", "All Locations"});
-  u8 MapsAndCompasses                   = 0;     Option O_MapsAndCompasses    = Option(&MapsAndCompasses,    "Maps/Compasses",       {"Vanilla", "Dungeon Only", "All Locations"});
+  u8 GanonsBossKey                      = 0;     Option O_GanonsBossKey       = Option(&GanonsBossKey,       "Ganon's Boss Key",     {"Vanilla", "Dungeon Only", "All Locations", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"});
+  u8 MapsAndCompasses                   = 0;     Option O_MapsAndCompasses    = Option(&MapsAndCompasses,    "Maps/Compasses",       {"Start With", "Vanilla", "Dungeon Only", "All Locations"}, 1);
   u8 Skullsanity                        = 0;     Option O_Skullsanity         = Option(&Skullsanity,         "Tokensanity",          {"Vanilla",                 "All Locations"});
   u8 Scrubsanity                        = 0;     Option O_Scrubsanity         = Option(&Scrubsanity,         "Scrub Shuffle",        {"Off", "Affordable", "Expensive", "Random Prices"});
   u8 BigPoeTargetCount                  = 0;     Option O_BigPoeTargetCount   = Option(&BigPoeTargetCount,   "Big Poe Target Count", {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
+  u8 ItemPoolValue                      = 0;     Option O_ItemPoolValue       = Option(&ItemPoolValue,       "Item Pool",            {"Plentiful", "Balanced", "Scarce", "Minimal"}, 1);
   u8 BoomerangAsAdult                   = 0;     Option O_BoomerangAsAdult    = Option(&BoomerangAsAdult,    "Enable Adult Boomerang", {"No", "Yes"});
   u8 HammerAsChild                      = 0;     Option O_HammerAsChild       = Option(&HammerAsChild,       "Enable Child Hammer",    {"No", "Yes"});
   u8 LACSCondition                      = 0;
@@ -40,6 +43,18 @@ namespace Settings {
   bool ShuffleSongs                     = false;
   bool Shopsanity                       = false;
   bool FourPoesCutscene                 = false; Option O_FourPoesCutscene    = Option(&FourPoesCutscene,    "Four Poes Cutscene",   {"Off", "On"});
+  bool RandomMQDungeons                 = false; Option O_RandomMQDungeons    = Option(&RandomMQDungeons,    "Random MQ Dungeons",   {"Off", "On"});
+  bool DekuTreeDungeonMode              = false;
+  bool DodongosCavernDungeonMode        = false;
+  bool JabuJabusBellyDungeonMode        = false;
+  bool ForestTempleDungeonMode          = false;
+  bool FireTempleDungeonMode            = false;
+  bool WaterTempleDungeonMode           = false;
+  bool SpiritTempleDungeonMode          = false;
+  bool ShadowTempleDungeonMode          = false;
+  bool BottomOfTheWellDungeonMode       = false;
+  bool GerudoTrainingGroundsDungeonMode = false;
+  bool GanonsCastleDungeonMode          = false;
 
   //Individual Options
   bool LogicGrottosWithoutAgony         = false;
@@ -144,6 +159,7 @@ namespace Settings {
   };
   std::vector<Option *> worldOptions = {
     &O_StartingAge,
+    //&O_RandomMQDungeons,
   };
   std::vector<Option *> shuffleOptions = {
     &O_Skullsanity,
@@ -157,6 +173,7 @@ namespace Settings {
   std::vector<Option *> shuffleDungeonItemOptions = {
     &O_Keysanity,
     &O_BossKeysanity,
+    &O_GanonsBossKey,
     &O_MapsAndCompasses,
   };
   std::vector<Option *> timesaverOptions = {
@@ -204,9 +221,21 @@ namespace Settings {
     ctx.fourPoesCutscene    = (FourPoesCutscene)  ? 1 : 0;
 
     ctx.bigPoeTargetCount = BigPoeTargetCount + 1;
-
+    
     ctx.boomerangAsAdult = BoomerangAsAdult;
     ctx.hammerAsChild    = HammerAsChild;
+
+    ctx.dekuTreeDungeonMode              = (DekuTreeDungeonMode)              ? 1 : 0;
+    ctx.dodongosCavernDungeonMode        = (DodongosCavernDungeonMode)        ? 1 : 0;
+    ctx.jabuJabusBellyDungeonMode        = (JabuJabusBellyDungeonMode)        ? 1 : 0;
+    ctx.forestTempleDungeonMode          = (ForestTempleDungeonMode)          ? 1 : 0;
+    ctx.fireTempleDungeonMode            = (FireTempleDungeonMode)            ? 1 : 0;
+    ctx.waterTempleDungeonMode           = (WaterTempleDungeonMode)           ? 1 : 0;
+    ctx.spiritTempleDungeonMode          = (SpiritTempleDungeonMode)          ? 1 : 0;
+    ctx.shadowTempleDungeonMode          = (ShadowTempleDungeonMode)          ? 1 : 0;
+    ctx.bottomOfTheWellDungeonMode       = (BottomOfTheWellDungeonMode)       ? 1 : 0;
+    ctx.gerudoTrainingGroundsDungeonMode = (GerudoTrainingGroundsDungeonMode) ? 1 : 0;
+    ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
 
     ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
     return ctx;
@@ -220,10 +249,32 @@ namespace Settings {
     LogicManOnRoof = true;
     LogicDekuB1Skip = true;
 
+    if (RandomMQDungeons) {
+      DekuTreeDungeonMode              = Random() % 2;
+      DodongosCavernDungeonMode        = Random() % 2;
+      JabuJabusBellyDungeonMode        = Random() % 2;
+      ForestTempleDungeonMode          = Random() % 2;
+      FireTempleDungeonMode            = Random() % 2;
+      WaterTempleDungeonMode           = Random() % 2;
+      SpiritTempleDungeonMode          = Random() % 2;
+      ShadowTempleDungeonMode          = Random() % 2;
+      BottomOfTheWellDungeonMode       = Random() % 2;
+      GerudoTrainingGroundsDungeonMode = Random() % 2;
+      GanonsCastleDungeonMode          = Random() % 2;
+    }
+
     if (TimeOfDay == STARTINGTIME_NIGHT)
       HasNightStart = true;
 
-    LACSCondition = LACSCONDITION_MEDALLIONS;
+    if (GanonsBossKey == GANONSBOSSKEY_LACS_MEDALLIONS) {
+      LACSCondition = LACSCONDITION_MEDALLIONS;
+    } else if (GanonsBossKey == GANONSBOSSKEY_LACS_STONES) {
+      LACSCondition = LACSCONDITION_STONES;
+    } else if (GanonsBossKey == GANONSBOSSKEY_LACS_DUNGEONS) {
+      LACSCondition = LACSCONDITION_DUNGEONS;
+    } else {
+      LACSCondition = LACSCONDITION_VANILLA;
+    }
 
   }
 

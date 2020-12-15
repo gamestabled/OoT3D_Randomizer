@@ -1,5 +1,4 @@
 #include "item_list.hpp"
-#include "logic.hpp"
 #include "settings.hpp"
 #include "../code/include/z3D/z3Ditem.h"
 #include <vector>
@@ -114,89 +113,89 @@ constexpr auto LightMedallionEffect  = []{LightMedallion  = true;};
 Item NoItem = Item("No Item", ITEMTYPE_ITEM,   GI_RUPEE_GREEN,   false, NoEffect);
 
 //Specific Advancement Items         // name              type           getItemId          prog   effect
-Item A_KokiriSword              = Item("Kokiri Sword",    ITEMTYPE_ITEM, GI_SWORD_KOKIRI,   false, KokiriSwordEffect);
-Item A_BiggoronSword            = Item("Biggoron Sword",  ITEMTYPE_ITEM, GI_SWORD_BGS,      false, NoEffect);
-Item A_DekuShield               = Item("Deku Shield",     ITEMTYPE_ITEM, GI_SHIELD_DEKU,    false, DekuShieldEffect);
-Item A_HylianShield             = Item("Hylian Shield",   ITEMTYPE_ITEM, GI_SHIELD_HYLIAN,  false, HylianShieldEffect);
-Item A_MirrorShield             = Item("Mirror Shield",   ITEMTYPE_ITEM, GI_SHIELD_MIRROR,  false, MirrorShieldEffect);
-Item A_Boomerang                = Item("Boomerang",       ITEMTYPE_ITEM, GI_BOOMERANG,      false, BoomerangEffect);
-Item A_ZeldasLetter             = Item("Zelda's Letter",  ITEMTYPE_ITEM, GI_LETTER_ZELDA,   false, ZeldasLetterEffect);
-Item A_WeirdEgg                 = Item("Weird Egg",       ITEMTYPE_ITEM, GI_WEIRD_EGG,      false, WeirdEggEffect);
-Item A_LensOfTruth              = Item("Lens of Truth",   ITEMTYPE_ITEM, GI_LENS,           false, LensOfTruthEffect);
-Item A_MegatonHammer            = Item("Megaton Hammer",  ITEMTYPE_ITEM, GI_HAMMER,         false, MegatonHammerEffect);
-Item A_IronBoots                = Item("Iron Boots",      ITEMTYPE_ITEM, GI_BOOTS_IRON,     false, IronBootsEffect);
-Item A_HoverBoots               = Item("Hover Boots",     ITEMTYPE_ITEM, GI_BOOTS_HOVER,    false, HoverBootsEffect);
-Item A_ShardOfAgony             = Item("Shard of Agony",  ITEMTYPE_ITEM, GI_STONE_OF_AGONY, false, ShardOfAgonyEffect);
-Item A_DinsFire                 = Item("Din's Fire",      ITEMTYPE_ITEM, GI_DINS_FIRE,      false, DinsFireEffect);
-Item A_FaroresWind              = Item("Farore's Wind",   ITEMTYPE_ITEM, GI_FARORES_WIND,   false, FaroresWindEffect);
-Item A_NayrusLove               = Item("Nayru's Love",    ITEMTYPE_ITEM, GI_NAYRUS_LOVE,    false, NayrusLoveEffect);
-Item A_FireArrows               = Item("Fire Arrows",     ITEMTYPE_ITEM, GI_ARROW_FIRE,     false, FireArrowEffect);
-Item A_IceArrows                = Item("Ice Arrows",      ITEMTYPE_ITEM, GI_ARROW_ICE,      false, IceArrowEffect);
-Item A_LightArrows              = Item("Light Arrows",    ITEMTYPE_ITEM, GI_ARROW_LIGHT,    false, LightArrowEffect);
-Item A_GoronTunic               = Item("Goron Tunic",     ITEMTYPE_ITEM, GI_TUNIC_GORON,    false, GoronTunicEffect);
-Item A_ZoraTunic                = Item("Zora Tunic",      ITEMTYPE_ITEM, GI_TUNIC_ZORA,     false, ZoraTunicEffect);
-Item A_GerudoToken              = Item("Gerudo Token",    ITEMTYPE_ITEM, GI_GERUDO_CARD,    false, GerudoTokenEffect);
-Item A_MagicBean                = Item("Magic Bean",      ITEMTYPE_ITEM, GI_BEAN,           false, MagicBeanEffect);
-Item A_MagicBeanPack            = Item("Magic Bean Pack", ITEMTYPE_ITEM, 0xC9,              false, MagicBeanPackEffect);
-Item A_DoubleDefense            = Item("Double Defense",  ITEMTYPE_ITEM, 0xB8,              false, NoEffect);
+Item I_KokiriSword              = Item("Kokiri Sword",    ITEMTYPE_ITEM, GI_SWORD_KOKIRI,   false, KokiriSwordEffect);
+Item I_BiggoronSword            = Item("Biggoron Sword",  ITEMTYPE_ITEM, GI_SWORD_BGS,      false, NoEffect);
+Item I_DekuShield               = Item("Deku Shield",     ITEMTYPE_ITEM, GI_SHIELD_DEKU,    false, DekuShieldEffect);
+Item I_HylianShield             = Item("Hylian Shield",   ITEMTYPE_ITEM, GI_SHIELD_HYLIAN,  false, HylianShieldEffect);
+Item I_MirrorShield             = Item("Mirror Shield",   ITEMTYPE_ITEM, GI_SHIELD_MIRROR,  false, MirrorShieldEffect);
+Item I_Boomerang                = Item("Boomerang",       ITEMTYPE_ITEM, GI_BOOMERANG,      false, BoomerangEffect);
+Item I_ZeldasLetter             = Item("Zelda's Letter",  ITEMTYPE_ITEM, GI_LETTER_ZELDA,   false, ZeldasLetterEffect);
+Item I_WeirdEgg                 = Item("Weird Egg",       ITEMTYPE_ITEM, GI_WEIRD_EGG,      false, WeirdEggEffect);
+Item I_LensOfTruth              = Item("Lens of Truth",   ITEMTYPE_ITEM, GI_LENS,           false, LensOfTruthEffect);
+Item I_MegatonHammer            = Item("Megaton Hammer",  ITEMTYPE_ITEM, GI_HAMMER,         false, MegatonHammerEffect);
+Item I_IronBoots                = Item("Iron Boots",      ITEMTYPE_ITEM, GI_BOOTS_IRON,     false, IronBootsEffect);
+Item I_HoverBoots               = Item("Hover Boots",     ITEMTYPE_ITEM, GI_BOOTS_HOVER,    false, HoverBootsEffect);
+Item I_ShardOfAgony             = Item("Shard of Agony",  ITEMTYPE_ITEM, GI_STONE_OF_AGONY, false, ShardOfAgonyEffect);
+Item I_DinsFire                 = Item("Din's Fire",      ITEMTYPE_ITEM, GI_DINS_FIRE,      false, DinsFireEffect);
+Item I_FaroresWind              = Item("Farore's Wind",   ITEMTYPE_ITEM, GI_FARORES_WIND,   false, FaroresWindEffect);
+Item I_NayrusLove               = Item("Nayru's Love",    ITEMTYPE_ITEM, GI_NAYRUS_LOVE,    false, NayrusLoveEffect);
+Item I_FireArrows               = Item("Fire Arrows",     ITEMTYPE_ITEM, GI_ARROW_FIRE,     false, FireArrowEffect);
+Item I_IceArrows                = Item("Ice Arrows",      ITEMTYPE_ITEM, GI_ARROW_ICE,      false, IceArrowEffect);
+Item I_LightArrows              = Item("Light Arrows",    ITEMTYPE_ITEM, GI_ARROW_LIGHT,    false, LightArrowEffect);
+Item I_GoronTunic               = Item("Goron Tunic",     ITEMTYPE_ITEM, GI_TUNIC_GORON,    false, GoronTunicEffect);
+Item I_ZoraTunic                = Item("Zora Tunic",      ITEMTYPE_ITEM, GI_TUNIC_ZORA,     false, ZoraTunicEffect);
+Item I_GerudoToken              = Item("Gerudo Token",    ITEMTYPE_ITEM, GI_GERUDO_CARD,    false, GerudoTokenEffect);
+Item I_MagicBean                = Item("Magic Bean",      ITEMTYPE_ITEM, GI_BEAN,           false, MagicBeanEffect);
+Item I_MagicBeanPack            = Item("Magic Bean Pack", ITEMTYPE_ITEM, 0xC9,              false, MagicBeanPackEffect);
+Item I_DoubleDefense            = Item("Double Defense",  ITEMTYPE_ITEM, 0xB8,              false, NoEffect);
 
-Item A_PocketEgg                = Item("Pocket Egg",      ITEMTYPE_ITEM, GI_POCKET_EGG,     false, PocketEggEffect);
-Item A_PocketCucco              = Item("Pocket Cucco",    ITEMTYPE_ITEM, GI_POCKET_CUCCO,   false, PocketCuccoEffect);
-Item A_Cojiro                   = Item("Cojiro",          ITEMTYPE_ITEM, GI_COJIRO,         false, CojiroEffect);
-Item A_OddMushroom              = Item("Odd Mushroom",    ITEMTYPE_ITEM, GI_ODD_MUSHROOM,   false, OddMushroomEffect);
-Item A_OddPoultice              = Item("Odd Poultice",    ITEMTYPE_ITEM, GI_ODD_POTION,     false, OddPoulticeEffect);
-Item A_PoachersSaw              = Item("Poachers Saw",    ITEMTYPE_ITEM, GI_SAW,            false, PoachersSawEffect);
-Item A_BrokenSword              = Item("Broken Sword",    ITEMTYPE_ITEM, GI_SWORD_BROKEN,   false, BrokenSwordEffect);
-Item A_Prescription             = Item("Prescription",    ITEMTYPE_ITEM, GI_PERSCRIPTION,   false, PrescriptionEffect);
-Item A_EyeballFrog              = Item("Eyeball Frog",    ITEMTYPE_ITEM, GI_FROG,           false, EyeballFrogEffect);
-Item A_Eyedrops                 = Item("Eyedrops",        ITEMTYPE_ITEM, GI_EYEDROPS,       false, EyedropsEffect);
-Item A_ClaimCheck               = Item("Claim Check",     ITEMTYPE_ITEM, GI_CLAIM_CHECK,    false, ClaimCheckEffect);
+Item I_PocketEgg                = Item("Pocket Egg",      ITEMTYPE_ITEM, GI_POCKET_EGG,     false, PocketEggEffect);
+Item I_PocketCucco              = Item("Pocket Cucco",    ITEMTYPE_ITEM, GI_POCKET_CUCCO,   false, PocketCuccoEffect);
+Item I_Cojiro                   = Item("Cojiro",          ITEMTYPE_ITEM, GI_COJIRO,         false, CojiroEffect);
+Item I_OddMushroom              = Item("Odd Mushroom",    ITEMTYPE_ITEM, GI_ODD_MUSHROOM,   false, OddMushroomEffect);
+Item I_OddPoultice              = Item("Odd Poultice",    ITEMTYPE_ITEM, GI_ODD_POTION,     false, OddPoulticeEffect);
+Item I_PoachersSaw              = Item("Poachers Saw",    ITEMTYPE_ITEM, GI_SAW,            false, PoachersSawEffect);
+Item I_BrokenSword              = Item("Broken Sword",    ITEMTYPE_ITEM, GI_SWORD_BROKEN,   false, BrokenSwordEffect);
+Item I_Prescription             = Item("Prescription",    ITEMTYPE_ITEM, GI_PERSCRIPTION,   false, PrescriptionEffect);
+Item I_EyeballFrog              = Item("Eyeball Frog",    ITEMTYPE_ITEM, GI_FROG,           false, EyeballFrogEffect);
+Item I_Eyedrops                 = Item("Eyedrops",        ITEMTYPE_ITEM, GI_EYEDROPS,       false, EyedropsEffect);
+Item I_ClaimCheck               = Item("Claim Check",     ITEMTYPE_ITEM, GI_CLAIM_CHECK,    false, ClaimCheckEffect);
 
 Item GoldSkulltulaToken         = Item("Gold Skulltula Token", ITEMTYPE_TOKEN, GI_SKULL_TOKEN, false, GoldSkulltulaTokenEffect);
 
 //Progression Items
-Item A_ProgressiveHookshot      = Item("Progressive Hookshot",       ITEMTYPE_ITEM,     0x80, true, ProgressiveHookshotEffect);
-Item A_ProgressiveStrength      = Item("Progressive Strength",       ITEMTYPE_ITEM,     0x81, true, ProgressiveStrengthEffect);
-Item A_ProgressiveBombBag       = Item("Progressive Bomb Bag",       ITEMTYPE_ITEM,     0x82, true, ProgressiveBombBagEffect);
-Item A_ProgressiveBow           = Item("Progressive Bow",            ITEMTYPE_ITEM,     0x83, true, ProgressiveBowEffect);
-Item A_ProgressiveBulletBag     = Item("Progressive Bullet Bag",     ITEMTYPE_ITEM,     0x84, true, ProgressiveBulletBagEffect);
-Item A_ProgressiveWallet        = Item("Progressive Wallet",         ITEMTYPE_ITEM,     0x85, true, ProgressiveWalletEffect);
-Item A_ProgressiveScale         = Item("Progressive Scale",          ITEMTYPE_ITEM,     0x86, true, ProgressiveScaleEffect);
-Item A_ProgressiveNutCapacity   = Item("Progressive Nut Upgrade",    ITEMTYPE_ITEM,     0x87, true, NoEffect);
-Item A_ProgressiveStickCapacity = Item("Progressive Stick Upgrade",  ITEMTYPE_ITEM,     0x88, true, NoEffect);
-Item A_ProgressiveBombchus      = Item("Progressive Bombchus",       ITEMTYPE_ITEM,     0x89, true, BombchuEffect);
-Item A_ProgressiveMagic         = Item("Progressive Magic",          ITEMTYPE_ITEM,     0x8A, true, ProgressiveMagicEffect);
-Item A_ProgressiveOcarina       = Item("Progressive Ocarina",        ITEMTYPE_ITEM,     0x8B, true, ProgressiveOcarinaEffect);
+Item I_ProgressiveHookshot      = Item("Progressive Hookshot",       ITEMTYPE_ITEM,     0x80, true, ProgressiveHookshotEffect);
+Item I_ProgressiveStrength      = Item("Progressive Strength",       ITEMTYPE_ITEM,     0x81, true, ProgressiveStrengthEffect);
+Item I_ProgressiveBombBag       = Item("Progressive Bomb Bag",       ITEMTYPE_ITEM,     0x82, true, ProgressiveBombBagEffect);
+Item I_ProgressiveBow           = Item("Progressive Bow",            ITEMTYPE_ITEM,     0x83, true, ProgressiveBowEffect);
+Item I_ProgressiveBulletBag     = Item("Progressive Bullet Bag",     ITEMTYPE_ITEM,     0x84, true, ProgressiveBulletBagEffect);
+Item I_ProgressiveWallet        = Item("Progressive Wallet",         ITEMTYPE_ITEM,     0x85, true, ProgressiveWalletEffect);
+Item I_ProgressiveScale         = Item("Progressive Scale",          ITEMTYPE_ITEM,     0x86, true, ProgressiveScaleEffect);
+Item I_ProgressiveNutCapacity   = Item("Progressive Nut Upgrade",    ITEMTYPE_ITEM,     0x87, true, NoEffect);
+Item I_ProgressiveStickCapacity = Item("Progressive Stick Upgrade",  ITEMTYPE_ITEM,     0x88, true, NoEffect);
+Item I_ProgressiveBombchus      = Item("Progressive Bombchus",       ITEMTYPE_ITEM,     0x89, true, BombchuEffect);
+Item I_ProgressiveMagic         = Item("Progressive Magic",          ITEMTYPE_ITEM,     0x8A, true, ProgressiveMagicEffect);
+Item I_ProgressiveOcarina       = Item("Progressive Ocarina",        ITEMTYPE_ITEM,     0x8B, true, ProgressiveOcarinaEffect);
 
 //Bottles
-Item A_EmptyBottle              = Item("Empty Bottle",               ITEMTYPE_ITEM,     0x0F, false, BottleEffect);
-Item A_MilkBottle               = Item("Bottle with Milk",           ITEMTYPE_ITEM,     0x14, false, BottleEffect);
-Item A_RedPotionBottle          = Item("Bottle with Red Potion",     ITEMTYPE_ITEM,     0x8C, false, BottleEffect);
-Item A_GreenPotionBottle        = Item("Bottle with Green Potion",   ITEMTYPE_ITEM,     0x8D, false, BottleEffect);
-Item A_BluePotionBottle         = Item("Bottle with Blue Potion",    ITEMTYPE_ITEM,     0x8E, false, BottleEffect);
-Item A_FairyBottle              = Item("Bottle with Fairy",          ITEMTYPE_ITEM,     0x8F, false, BottleEffect);
-Item A_FishBottle               = Item("Bottle with Fish",           ITEMTYPE_ITEM,     0x90, false, BottleEffect);
-Item A_BlueFireBottle           = Item("Bottle with Blue Fire",      ITEMTYPE_ITEM,     0x91, false, BottleEffect);
-Item A_BugsBottle               = Item("Bottle with Bugs",           ITEMTYPE_ITEM,     0x92, false, BottleEffect);
-Item A_PoeBottle                = Item("Bottle with Poe",            ITEMTYPE_ITEM,     0x94, false, BottleEffect);
+Item I_EmptyBottle              = Item("Empty Bottle",               ITEMTYPE_ITEM,     0x0F, false, BottleEffect);
+Item I_MilkBottle               = Item("Bottle with Milk",           ITEMTYPE_ITEM,     0x14, false, BottleEffect);
+Item I_RedPotionBottle          = Item("Bottle with Red Potion",     ITEMTYPE_ITEM,     0x8C, false, BottleEffect);
+Item I_GreenPotionBottle        = Item("Bottle with Green Potion",   ITEMTYPE_ITEM,     0x8D, false, BottleEffect);
+Item I_BluePotionBottle         = Item("Bottle with Blue Potion",    ITEMTYPE_ITEM,     0x8E, false, BottleEffect);
+Item I_FairyBottle              = Item("Bottle with Fairy",          ITEMTYPE_ITEM,     0x8F, false, BottleEffect);
+Item I_FishBottle               = Item("Bottle with Fish",           ITEMTYPE_ITEM,     0x90, false, BottleEffect);
+Item I_BlueFireBottle           = Item("Bottle with Blue Fire",      ITEMTYPE_ITEM,     0x91, false, BottleEffect);
+Item I_BugsBottle               = Item("Bottle with Bugs",           ITEMTYPE_ITEM,     0x92, false, BottleEffect);
+Item I_PoeBottle                = Item("Bottle with Poe",            ITEMTYPE_ITEM,     0x94, false, BottleEffect);
 
 //Special bottles that can't immediately dump contents
-Item A_RutosLetter              = Item("Rutos Letter",               ITEMTYPE_ITEM,     0x15, false, RutosLetterEffect);
-Item A_BigPoeBottle             = Item("Bottle with Big Poe",        ITEMTYPE_ITEM,     0x93, false, BigPoeBottleEffect);
+Item I_RutosLetter              = Item("Rutos Letter",               ITEMTYPE_ITEM,     0x15, false, RutosLetterEffect);
+Item I_BigPoeBottle             = Item("Bottle with Big Poe",        ITEMTYPE_ITEM,     0x93, false, BigPoeBottleEffect);
 
 //Songs
-Item A_ZeldasLullaby            = Item("Zelda's Lullaby",            ITEMTYPE_SONG,     0xC1, false, ZeldasLullabyEffect);
-Item A_EponasSong               = Item("Epona's Song",               ITEMTYPE_SONG,     0xC2, false, EponasSongEffect);
-Item A_SariasSong               = Item("Saria's Song",               ITEMTYPE_SONG,     0xC3, false, SariasSongEffect);
-Item A_SunsSong                 = Item("Sun's Song",                 ITEMTYPE_SONG,     0xC4, false, SunsSongEffect);
-Item A_SongOfTime               = Item("Song of Time",               ITEMTYPE_SONG,     0xC5, false, SongOfTimeEffect);
-Item A_SongOfStorms             = Item("Song of Storms",             ITEMTYPE_SONG,     0xC6, false, SongOfStormsEffect);
-Item A_MinuetOfForest           = Item("Minuet of Forest",           ITEMTYPE_SONG,     0xBB, false, MinuetOfForestEffect);
-Item A_BoleroOfFire             = Item("Bolero of Fire",             ITEMTYPE_SONG,     0xBC, false, BoleroOfFireEffect);
-Item A_SerenadeOfWater          = Item("Serenade of Water",          ITEMTYPE_SONG,     0xBD, false, SerenadeOfWaterEffect);
-Item A_RequiemOfSpirit          = Item("Requiem of Spirit",          ITEMTYPE_SONG,     0xBE, false, RequiemOfSpiritEffect);
-Item A_NocturneOfShadow         = Item("Nocturne of Shadow",         ITEMTYPE_SONG,     0xBF, false, NocturneOfShadowEffect);
-Item A_PreludeOfLight           = Item("Prelude of Light",           ITEMTYPE_SONG,     0xC0, false, PreludeOfLightEffect);
+Item I_ZeldasLullaby            = Item("Zelda's Lullaby",            ITEMTYPE_SONG,     0xC1, false, ZeldasLullabyEffect);
+Item I_EponasSong               = Item("Epona's Song",               ITEMTYPE_SONG,     0xC2, false, EponasSongEffect);
+Item I_SariasSong               = Item("Saria's Song",               ITEMTYPE_SONG,     0xC3, false, SariasSongEffect);
+Item I_SunsSong                 = Item("Sun's Song",                 ITEMTYPE_SONG,     0xC4, false, SunsSongEffect);
+Item I_SongOfTime               = Item("Song of Time",               ITEMTYPE_SONG,     0xC5, false, SongOfTimeEffect);
+Item I_SongOfStorms             = Item("Song of Storms",             ITEMTYPE_SONG,     0xC6, false, SongOfStormsEffect);
+Item I_MinuetOfForest           = Item("Minuet of Forest",           ITEMTYPE_SONG,     0xBB, false, MinuetOfForestEffect);
+Item I_BoleroOfFire             = Item("Bolero of Fire",             ITEMTYPE_SONG,     0xBC, false, BoleroOfFireEffect);
+Item I_SerenadeOfWater          = Item("Serenade of Water",          ITEMTYPE_SONG,     0xBD, false, SerenadeOfWaterEffect);
+Item I_RequiemOfSpirit          = Item("Requiem of Spirit",          ITEMTYPE_SONG,     0xBE, false, RequiemOfSpiritEffect);
+Item I_NocturneOfShadow         = Item("Nocturne of Shadow",         ITEMTYPE_SONG,     0xBF, false, NocturneOfShadowEffect);
+Item I_PreludeOfLight           = Item("Prelude of Light",           ITEMTYPE_SONG,     0xC0, false, PreludeOfLightEffect);
 
 //Maps and Compasses
 Item DekuTree_Map               = Item("Deku Tree Map",              ITEMTYPE_MAP,      0xA5, false, NoEffect);
@@ -240,8 +239,19 @@ Item GerudoTrainingGrounds_SmallKey = Item("Gerudo Training Grounds Small Key", 
 Item GerudoFortress_SmallKey        = Item("Gerudo Fortress Small Key",         ITEMTYPE_FORTRESS_SMALLKEY, 0xB6, false, GerudoFortressSmallKeyEffect);
 Item GanonsCastle_SmallKey          = Item("Ganon's Castle Small Key",          ITEMTYPE_SMALLKEY,          0xB7, false, GanonsCastleSmallKeyEffect);
 
+//Stones and Medallions                                                          //bitmask for questItems
+Item I_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  false, KokiriEmeraldEffect);
+Item I_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000,  false, GoronRubyEffect);
+Item I_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000,  false, ZoraSapphireEffect);
+Item I_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000001,  false, ForestMedallionEffect);
+Item I_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0x00000002,  false, FireMedallionEffect);
+Item I_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000004,  false, WaterMedallionEffect);
+Item I_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008,  false, SpiritMedallionEffect);
+Item I_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010,  false, ShadowMedallionEffect);
+Item I_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020,  false, LightMedallionEffect);
+
 //Generic Items
-Item Heart                      = Item("Recovery Heart",   ITEMTYPE_ITEM, GI_HEART,             false, NoEffect);
+Item RecoveryHeart              = Item("Recovery Heart",   ITEMTYPE_ITEM, GI_HEART,             false, NoEffect);
 Item GreenRupee                 = Item("Green Rupee",      ITEMTYPE_ITEM, GI_RUPEE_GREEN,       false, NoEffect);
 Item BlueRupee                  = Item("Blue Rupee",       ITEMTYPE_ITEM, GI_RUPEE_BLUE,        false, NoEffect);
 Item RedRupee                   = Item("Red Rupee",        ITEMTYPE_ITEM, GI_RUPEE_RED,         false, NoEffect);
@@ -251,6 +261,7 @@ Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEA
 Item HeartContainer             = Item("Heart Container",  ITEMTYPE_ITEM, GI_HEART_CONTAINER_2, false, NoEffect);
 Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,          false, NoEffect);
 Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN, false, NoEffect);
+Item TreasureGameGreenRupee     = Item("Green Rupee (Treasure Chest Minigame)",    ITEMTYPE_ITEM, GI_RUPEE_GREEN_LOSE, false, NoEffect);
 
 //Refills
 Item Bombs5                     = Item("Bombs (5)",        ITEMTYPE_ITEM, GI_BOMBS_5,           false, NoEffect);
@@ -299,234 +310,3 @@ Item BuyBombs30                 = Item("Buy Bombs (30)",      ITEMTYPE_SHOP, 0x2
 Item BuyBombs535                = Item("Buy Bombs (5) [35]",  ITEMTYPE_SHOP, 0x2F, false, NoEffect,           35);
 Item BuyRedPotion40             = Item("Buy Red Potion [40]", ITEMTYPE_SHOP, 0x30, false, NoEffect,           40);
 Item BuyRedPotion50             = Item("Buy Red Potion [50]", ITEMTYPE_SHOP, 0x31, false, NoEffect,           50);
-
-//Stones and Medallions                                                          //bitmask for questItems
-Item A_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  false, KokiriEmeraldEffect);
-Item A_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000,  false, GoronRubyEffect);
-Item A_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000,  false, ZoraSapphireEffect);
-Item A_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000001,  false, ForestMedallionEffect);
-Item A_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0x00000002,  false, FireMedallionEffect);
-Item A_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000004,  false, WaterMedallionEffect);
-Item A_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008,  false, SpiritMedallionEffect);
-Item A_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010,  false, ShadowMedallionEffect);
-Item A_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020,  false, LightMedallionEffect);
-
-
-//This pool will be used to give placement priority for items that can advance location access
-std::vector<Item> AdvancementItemPool = {};
-
-//The beginning pool of items, filled in by GenerateItemPool()
-std::vector<Item> ItemPool = {};
-
-std::vector<Item> BottlePool = {
-  A_EmptyBottle,
-  A_MilkBottle,
-  A_RedPotionBottle,
-  A_GreenPotionBottle,
-  A_BluePotionBottle,
-  A_FairyBottle,
-  A_FishBottle,
-  A_BugsBottle,
-  A_PoeBottle,
-  A_BigPoeBottle,
-  A_BlueFireBottle,
-};
-
-std::array<Item, 9> dungeonRewards = {
-  A_KokiriEmerald,
-  A_GoronRuby,
-  A_ZoraSaphhire,
-  A_ForestMedallion,
-  A_FireMedallion,
-  A_WaterMedallion,
-  A_SpiritMedallion,
-  A_ShadowMedallion,
-  A_LightMedallion,
-};
-
-static void AddItemToPool(const Item& item, size_t count = 1) {
-  ItemPool.resize(ItemPool.size() + count, item);
-}
-
-static void AddRandomBottle() {
-  u32 idx = rand() % BottlePool.size();
-  AddItemToPool(BottlePool[idx]);
-  BottlePool.erase(BottlePool.begin() + idx);
-}
-
-void GenerateItemPool() {
-  ItemPool = {
-    A_BiggoronSword,
-    A_Boomerang,
-    A_LensOfTruth,
-    A_MegatonHammer,
-    A_IronBoots,
-    A_GoronTunic,
-    A_ZoraTunic,
-    A_HoverBoots,
-    A_MirrorShield,
-    A_ShardOfAgony,
-    A_FireArrows,
-    A_IceArrows,
-    A_LightArrows,
-    A_DinsFire,
-    A_FaroresWind,
-    A_NayrusLove,
-    A_DekuShield,
-    A_HylianShield,
-    A_DoubleDefense,
-    TreasureGameHeart,
-
-    A_ZeldasLullaby,
-    A_SongOfStorms,
-    A_SongOfTime,
-    A_SariasSong,
-    A_SunsSong,
-    A_EponasSong,
-    A_MinuetOfForest,
-    A_BoleroOfFire,
-    A_SerenadeOfWater,
-    A_NocturneOfShadow,
-    A_RequiemOfSpirit,
-    A_PreludeOfLight,
-
-    GreenRupee,
-  };
-
-  AddItemToPool(A_ProgressiveHookshot,      2);
-  AddItemToPool(A_ProgressiveStrength,      3);
-  AddItemToPool(A_ProgressiveScale,         2);
-  AddItemToPool(A_ProgressiveBow,           3);
-  AddItemToPool(A_ProgressiveBulletBag,     3);
-  AddItemToPool(A_ProgressiveBombBag,       3);
-  AddItemToPool(A_ProgressiveWallet,        2);
-  AddItemToPool(A_ProgressiveMagic,         2);
-  AddItemToPool(A_ProgressiveNutCapacity,   2);
-  AddItemToPool(A_ProgressiveStickCapacity, 2);
-
-  AddItemToPool(Bombs5, 2);
-  AddItemToPool(Bombs10, 2);
-  AddItemToPool(Bombs20, 2);
-  AddItemToPool(Arrows5, 1);
-  AddItemToPool(Arrows10, 6);
-  AddItemToPool(Arrows30, 6);
-  AddItemToPool(Heart, 4);
-
-  AddItemToPool(A_DekuShield, 3);
-  AddItemToPool(A_HylianShield, 1);
-
-  AddItemToPool(DekuNuts5, 1);
-  AddItemToPool(DekuNuts10, 1);
-
-  AddItemToPool(BlueRupee, 3);
-  AddItemToPool(RedRupee, 1);
-  AddItemToPool(HugeRupee, 3);
-
-  AddItemToPool(PieceOfHeart, 35);
-  AddItemToPool(HeartContainer, 8);
-
-  AddItemToPool(A_ClaimCheck); //temporary
-
-  /*Adds extra shuffled items to the item Pool
-    Checks must also be implemented in Playthrough::PlaceSetItems()
-    if the item has a specific location it needs to be (i.e. Zeldas Letter)
-  */
-
-  //Add 4 total bottles
-  u8 bottleCount = 4;
-  u8 rutoBottles = 1;
-
-  if (ZorasFountain == ZORASFOUNTAIN_OPEN) {
-    rutoBottles = 0;
-  }
-
-  for (u8 i = 0; i < bottleCount; i++) {
-    if (i >= rutoBottles) {
-      AddRandomBottle();
-    } else {
-      AddItemToPool(A_RutosLetter);
-    }
-  }
-
-  if (ShuffleKokiriSword) {
-    AddItemToPool(A_KokiriSword);
-  }
-
-  if (ShuffleWeirdEgg) {
-    AddItemToPool(A_WeirdEgg);
-  }
-
-  if (ShuffleGerudoToken) {
-    AddItemToPool(A_GerudoToken);
-  }
-
-  if (ShuffleMagicBeans) {
-    AddItemToPool(A_MagicBeanPack);
-  }
-
-  if (ShuffleOcarinas) {
-    AddItemToPool(A_ProgressiveOcarina, 2);
-  }
-
-  if (BombchusInLogic) {
-    AddItemToPool(A_ProgressiveBombchus, 5);
-  } else {
-    AddItemToPool(Bombchu5);
-    AddItemToPool(Bombchu10, 3);
-    AddItemToPool(Bombchu20);
-  }
-
-  if (Keysanity == KEYSANITY_ALL_LOCATIONS) {
-    AddItemToPool(ForestTemple_SmallKey, 5);
-    AddItemToPool(FireTemple_SmallKey, 8);
-    AddItemToPool(WaterTemple_SmallKey, 6);
-    AddItemToPool(SpiritTemple_SmallKey, 5);
-    AddItemToPool(ShadowTemple_SmallKey, 5);
-    AddItemToPool(BottomOfTheWell_SmallKey, 3);
-    AddItemToPool(GerudoFortress_SmallKey, 4);
-    AddItemToPool(GerudoTrainingGrounds_SmallKey, 9);
-    AddItemToPool(GanonsCastle_SmallKey, 2);
-  }
-
-  if (BossKeysanity == BOSSKEYSANITY_ALL_LOCATIONS) {
-    AddItemToPool(ForestTemple_BossKey);
-    AddItemToPool(FireTemple_BossKey);
-    AddItemToPool(WaterTemple_BossKey);
-    AddItemToPool(SpiritTemple_BossKey);
-    AddItemToPool(ShadowTemple_BossKey);
-    AddItemToPool(GanonsCastle_BossKey);
-  }
-
-  if (MapsAndCompasses == MAPSANDCOMPASSES_ALL_LOCATIONS) {
-    AddItemToPool(DekuTree_Map);
-    AddItemToPool(DodongosCavern_Map);
-    AddItemToPool(JabuJabusBelly_Map);
-    AddItemToPool(ForestTemple_Map);
-    AddItemToPool(FireTemple_Map);
-    AddItemToPool(WaterTemple_Map);
-    AddItemToPool(SpiritTemple_Map);
-    AddItemToPool(ShadowTemple_Map);
-    AddItemToPool(BottomOfTheWell_Map);
-    AddItemToPool(IceCavern_Map);
-
-    AddItemToPool(DekuTree_Compass);
-    AddItemToPool(DodongosCavern_Compass);
-    AddItemToPool(JabuJabusBelly_Compass);
-    AddItemToPool(ForestTemple_Compass);
-    AddItemToPool(FireTemple_Compass);
-    AddItemToPool(WaterTemple_Compass);
-    AddItemToPool(SpiritTemple_Compass);
-    AddItemToPool(ShadowTemple_Compass);
-    AddItemToPool(BottomOfTheWell_Compass);
-    AddItemToPool(IceCavern_Compass);
-  }
-
-  if (Skullsanity == TOKENSANITY_ALL_LOCATIONS) {
-    AddItemToPool(GoldSkulltulaToken, 100);
-  }
-
-}
-
-void AddGreenRupee() {
-  AddItemToPool(GreenRupee);
-}

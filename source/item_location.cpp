@@ -1,163 +1,196 @@
 #include "item_location.hpp"
+#include "spoiler_log.hpp"
+#include "settings.hpp"
 
+//set of overrides to write to the patch
+std::set<ItemOverride, ItemOverride_Compare> overrides = {};
+
+u32 totalLocationsFound = 0;
+void PlaceItemInLocation(ItemLocation* loc, Item* item, bool applyEffectImmediately /*= false*/) {
+    // Put item in the override table
+    overrides.insert({
+      .key = loc->Key(),
+      .value = item->Value(),
+    });
+
+    PlacementLog_Msg("\n");
+    PlacementLog_Msg(item->GetName());
+    PlacementLog_Msg(" placed at ");
+    PlacementLog_Msg(loc->GetName());
+    PlacementLog_Msg("\n\n");
+
+    if (applyEffectImmediately) {
+      item->ApplyEffect();
+      loc->Use();
+    }
+
+    loc->SetPlacedItem(*item);
+    printf("\x1b[8;10HPlacing Items...");
+    if (Settings::Logic == LOGIC_GLITCHLESS) {
+      printf("%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
+    }
+
+}
+
+//Location definitions
 //Kokiri Forest
-ItemLocation KF_KokiriSwordChest                          = ItemLocation::Chest      (0x55, 0x00, "KF Kokiri Sword Chest",                {"Kokiri Forest", "Forest",});
-ItemLocation KF_MidoTopLeftChest                          = ItemLocation::Chest      (0x28, 0x00, "KF Mido Top Left Chest",               {"Kokiri Forest", "Forest",});
-ItemLocation KF_MidoTopRightChest                         = ItemLocation::Chest      (0x28, 0x01, "KF Mido Top Right Chest",              {"Kokiri Forest", "Forest",});
-ItemLocation KF_MidoBottomLeftChest                       = ItemLocation::Chest      (0x28, 0x02, "KF Mido Bottom Left Chest",            {"Kokiri Forest", "Forest",});
-ItemLocation KF_MidoBottomRightChest                      = ItemLocation::Chest      (0x28, 0x03, "KF Mido Bottom Right Chest",           {"Kokiri Forest", "Forest",});
-ItemLocation KF_StormsGrottoChest                         = ItemLocation::Chest      (0x3E, 0x0C, "KF Storms Grotto Chest",               {"Kokiri Forest", "Forest", "Grottos"});
+ItemLocation KF_KokiriSwordChest              = ItemLocation::Chest      (0x55, 0x00, "KF Kokiri Sword Chest",                {"Kokiri Forest", "Forest",});
+ItemLocation KF_MidoTopLeftChest              = ItemLocation::Chest      (0x28, 0x00, "KF Mido Top Left Chest",               {"Kokiri Forest", "Forest",});
+ItemLocation KF_MidoTopRightChest             = ItemLocation::Chest      (0x28, 0x01, "KF Mido Top Right Chest",              {"Kokiri Forest", "Forest",});
+ItemLocation KF_MidoBottomLeftChest           = ItemLocation::Chest      (0x28, 0x02, "KF Mido Bottom Left Chest",            {"Kokiri Forest", "Forest",});
+ItemLocation KF_MidoBottomRightChest          = ItemLocation::Chest      (0x28, 0x03, "KF Mido Bottom Right Chest",           {"Kokiri Forest", "Forest",});
+ItemLocation KF_StormsGrottoChest             = ItemLocation::Chest      (0x3E, 0x0C, "KF Storms Grotto Chest",               {"Kokiri Forest", "Forest", "Grottos"});
 
 //Lost Woods
-ItemLocation LW_NearShortcutsGrottoChest                  = ItemLocation::Chest      (0x3E, 0x14, "LW Near Shortcuts Grotto Chest",       {"the Lost Woods", "Forest", "Grottos"});
-ItemLocation LW_SkullKid                                  = ItemLocation::Base       (0x5B, 0x3E, "LW Skull Kid",                         {"the Lost Woods", "Forest",});
-ItemLocation LW_OcarinaMemoryGame                         = ItemLocation::Base       (0x5B, 0x76, "LW Ocarina Memory Game",               {"the Lost Woods", "Forest", "Minigames"});//Gives wrong item
-ItemLocation LW_TargetInWoods                             = ItemLocation::Base       (0x5B, 0x60, "LW Target in Woods",                   {"the Lost Woods", "Forest",});
-ItemLocation LW_DekuScrubNearDekuTheaterRight             = ItemLocation::Base       (0x5B, 0x30, "LW Deku Scrub Near Deku Theater Right",{"the Lost Woods", "Forest", "Deku Scrub"});//doesnt work
-ItemLocation LW_DekuScrubNearDekuTheaterLeft              = ItemLocation::Base       (0x5B, 0x31, "LW Deku Scrub Near Deku Theater Left", {"the Lost Woods", "Forest", "Deku Scrub"}); //doesnt work
-ItemLocation LW_DekuScrubNearBridge                       = ItemLocation::Base       (0x5B, 0x77, "LW Deku Scrub Near Bridge",            {"the Lost Woods", "Forest", "Deku Scrub", "Deku Scrub Upgrades"});
-ItemLocation LW_DekuScrubGrottoRear                       = ItemLocation::GrottoScrub(0xF5, 0x33, "LW Deku Scrub Grotto Rear",            {"the Lost Woods", "Forest", "Deku Scrub", "Grottos"});
-ItemLocation LW_DekuScrubGrottoFront                      = ItemLocation::GrottoScrub(0xF5, 0x79, "LW Deku Scrub Grotto Front",           {"the Lost Woods", "Forest", "Deku Scrub", "Deku Scrub Upgrades", "Grottos"});
-ItemLocation DekuTheater_SkullMask                        = ItemLocation::Base       (0x3E, 0x77, "Deku Theater Skull Mask",              {"the Lost Woods", "Forest", "Grottos"});
-ItemLocation DekuTheater_MaskOfTruth                      = ItemLocation::Base       (0x3E, 0x7A, "Deku Theater Mask of Truth",           {"the Lost Woods", "Forest", "Need Spiritual Stones", "Grottos"});
+ItemLocation LW_NearShortcutsGrottoChest      = ItemLocation::Chest      (0x3E, 0x14, "LW Near Shortcuts Grotto Chest",       {"the Lost Woods", "Forest", "Grottos"});
+ItemLocation LW_SkullKid                      = ItemLocation::Base       (0x5B, 0x3E, "LW Skull Kid",                         {"the Lost Woods", "Forest",});
+ItemLocation LW_OcarinaMemoryGame             = ItemLocation::Base       (0x5B, 0x76, "LW Ocarina Memory Game",               {"the Lost Woods", "Forest", "Minigames"});
+ItemLocation LW_TargetInWoods                 = ItemLocation::Base       (0x5B, 0x60, "LW Target in Woods",                   {"the Lost Woods", "Forest",});
+ItemLocation LW_DekuScrubNearDekuTheaterRight = ItemLocation::Base       (0x5B, 0x30, "LW Deku Scrub Near Deku Theater Right",{"the Lost Woods", "Forest", "Deku Scrub"});
+ItemLocation LW_DekuScrubNearDekuTheaterLeft  = ItemLocation::Base       (0x5B, 0x31, "LW Deku Scrub Near Deku Theater Left", {"the Lost Woods", "Forest", "Deku Scrub"});
+ItemLocation LW_DekuScrubNearBridge           = ItemLocation::Base       (0x5B, 0x77, "LW Deku Scrub Near Bridge",            {"the Lost Woods", "Forest", "Deku Scrub", "Deku Scrub Upgrades"});
+ItemLocation LW_DekuScrubGrottoRear           = ItemLocation::GrottoScrub(0xF5, 0x33, "LW Deku Scrub Grotto Rear",            {"the Lost Woods", "Forest", "Deku Scrub", "Grottos"});
+ItemLocation LW_DekuScrubGrottoFront          = ItemLocation::GrottoScrub(0xF5, 0x79, "LW Deku Scrub Grotto Front",           {"the Lost Woods", "Forest", "Deku Scrub", "Deku Scrub Upgrades", "Grottos"});
+ItemLocation DekuTheater_SkullMask            = ItemLocation::Base       (0x3E, 0x77, "Deku Theater Skull Mask",              {"the Lost Woods", "Forest", "Grottos"});
+ItemLocation DekuTheater_MaskOfTruth          = ItemLocation::Base       (0x3E, 0x7A, "Deku Theater Mask of Truth",           {"the Lost Woods", "Forest", "Need Spiritual Stones", "Grottos"});
 
 //Sacred Forest Meadow
-ItemLocation SFM_WolfosGrottoChest                        = ItemLocation::Chest      (0x3E, 0x11, "SFM Wolfos Grotto Chest",              {"Sacred Forest Meadow", "Forest", "Grottos"});
-ItemLocation SFM_DekuScrubGrottoRear                      = ItemLocation::GrottoScrub(0xEE, 0x39, "SFM Deku Scrub Grotto Rear",           {"Sacred Forest Meadow", "Forest", "Deku Scrub", "Grottos"});
-ItemLocation SFM_DekuScrubGrottoFront                     = ItemLocation::GrottoScrub(0xEE, 0x3A, "SFM Deku Scrub Grotto Front",          {"Sacred Forest Meadow", "Forest", "Deku Scrub", "Grottos"});
+ItemLocation SFM_WolfosGrottoChest            = ItemLocation::Chest      (0x3E, 0x11, "SFM Wolfos Grotto Chest",              {"Sacred Forest Meadow", "Forest", "Grottos"});
+ItemLocation SFM_DekuScrubGrottoRear          = ItemLocation::GrottoScrub(0xEE, 0x39, "SFM Deku Scrub Grotto Rear",           {"Sacred Forest Meadow", "Forest", "Deku Scrub", "Grottos"});
+ItemLocation SFM_DekuScrubGrottoFront         = ItemLocation::GrottoScrub(0xEE, 0x3A, "SFM Deku Scrub Grotto Front",          {"Sacred Forest Meadow", "Forest", "Deku Scrub", "Grottos"});
 
 //Hyrule Field
-ItemLocation HF_SoutheastGrottoChest                      = ItemLocation::Chest      (0x3E, 0x02, "HF Southeast Grotto Chest",            {"Hyrule Field", "Grottos",});
-ItemLocation HF_OpenGrottoChest                           = ItemLocation::Chest      (0x3E, 0x03, "HF Open Grotto Chest",                 {"Hyrule Field", "Grottos",});
-ItemLocation HF_NearMarketGrottoChest                     = ItemLocation::Chest      (0x3E, 0x00, "HF Near Market Grotto Chest",          {"Hyrule Field", "Grottos",});
-ItemLocation HF_OcarinaOfTimeItem                         = ItemLocation::Base       (0x51, 0x0C, "HF Ocarina of Time Item",              {"Hyrule Field", "Need Spiritual Stones",});
-ItemLocation HF_TektiteGrottoFreestandingPoH              = ItemLocation::Collectable(0x3E, 0x01, "HF Tektite Grotto Freestanding PoH",   {"Hyrule Field", "Grottos",});
-ItemLocation HF_DekuScrubGrotto                           = ItemLocation::GrottoScrub(0xE6, 0x3E, "HF Deku Scrub Grotto",                 {"Hyrule Field", "Deku Scrub", "Deku Scrub Upgrades", "Grottos"});
+ItemLocation HF_SoutheastGrottoChest          = ItemLocation::Chest      (0x3E, 0x02, "HF Southeast Grotto Chest",            {"Hyrule Field", "Grottos",});
+ItemLocation HF_OpenGrottoChest               = ItemLocation::Chest      (0x3E, 0x03, "HF Open Grotto Chest",                 {"Hyrule Field", "Grottos",});
+ItemLocation HF_NearMarketGrottoChest         = ItemLocation::Chest      (0x3E, 0x00, "HF Near Market Grotto Chest",          {"Hyrule Field", "Grottos",});
+ItemLocation HF_OcarinaOfTimeItem             = ItemLocation::Base       (0x51, 0x0C, "HF Ocarina of Time Item",              {"Hyrule Field", "Need Spiritual Stones",});
+ItemLocation HF_TektiteGrottoFreestandingPoH  = ItemLocation::Collectable(0x3E, 0x01, "HF Tektite Grotto Freestanding PoH",   {"Hyrule Field", "Grottos",});
+ItemLocation HF_DekuScrubGrotto               = ItemLocation::GrottoScrub(0xE6, 0x3E, "HF Deku Scrub Grotto",                 {"Hyrule Field", "Deku Scrub", "Deku Scrub Upgrades", "Grottos"});
 
 //Lake Hylia
-ItemLocation LH_ChildFishing                              = ItemLocation::Base       (0x49, 0x3E, "LH Child Fishing",                     {"Lake Hylia", "Minigames",});
-ItemLocation LH_AdultFishing                              = ItemLocation::Base       (0x49, 0x38, "LH Adult Fishing",                     {"Lake Hylia", "Minigames",});
-ItemLocation LH_LabDive                                   = ItemLocation::Base       (0x38, 0x3E, "LH Lab Dive",                          {"Lake Hylia",});
-ItemLocation LH_UnderwaterItem                            = ItemLocation::Base       (0x57, 0x15, "LH Underwater Item",                   {"Lake Hylia",});
-ItemLocation LH_Sun                                       = ItemLocation::Base       (0x57, 0x58, "LH Sun",                               {"Lake Hylia",});
-ItemLocation LH_FreestandingPoH                           = ItemLocation::Collectable(0x57, 0x1E, "LH Freestanding PoH",                  {"Lake Hylia",});
-ItemLocation LH_DekuScrubGrottoLeft                       = ItemLocation::GrottoScrub(0xEF, 0x30, "LH Deku Scrub Grotto Left",            {"Lake Hylia", "Deku Scrub", "Grottos"});
-ItemLocation LH_DekuScrubGrottoRight                      = ItemLocation::GrottoScrub(0xEF, 0x37, "LH Deku Scrub Grotto Right",           {"Lake Hylia", "Deku Scrub", "Grottos"});
-ItemLocation LH_DekuScrubGrottoCenter                     = ItemLocation::GrottoScrub(0xEF, 0x33, "LH Deku Scrub Grotto Center",          {"Lake Hylia", "Deku Scrub", "Grottos"});
+ItemLocation LH_ChildFishing                  = ItemLocation::Base       (0x49, 0x3E, "LH Child Fishing",                     {"Lake Hylia", "Minigames",});
+ItemLocation LH_AdultFishing                  = ItemLocation::Base       (0x49, 0x38, "LH Adult Fishing",                     {"Lake Hylia", "Minigames",});
+ItemLocation LH_LabDive                       = ItemLocation::Base       (0x38, 0x3E, "LH Lab Dive",                          {"Lake Hylia",});
+ItemLocation LH_UnderwaterItem                = ItemLocation::Base       (0x57, 0x15, "LH Underwater Item",                   {"Lake Hylia",});
+ItemLocation LH_Sun                           = ItemLocation::Base       (0x57, 0x58, "LH Sun",                               {"Lake Hylia",});
+ItemLocation LH_FreestandingPoH               = ItemLocation::Collectable(0x57, 0x1E, "LH Freestanding PoH",                  {"Lake Hylia",});
+ItemLocation LH_DekuScrubGrottoLeft           = ItemLocation::GrottoScrub(0xEF, 0x30, "LH Deku Scrub Grotto Left",            {"Lake Hylia", "Deku Scrub", "Grottos"});
+ItemLocation LH_DekuScrubGrottoRight          = ItemLocation::GrottoScrub(0xEF, 0x37, "LH Deku Scrub Grotto Right",           {"Lake Hylia", "Deku Scrub", "Grottos"});
+ItemLocation LH_DekuScrubGrottoCenter         = ItemLocation::GrottoScrub(0xEF, 0x33, "LH Deku Scrub Grotto Center",          {"Lake Hylia", "Deku Scrub", "Grottos"});
 
 //Gerudo Valley
-ItemLocation GV_Chest                                     = ItemLocation::Chest      (0x5A, 0x00, "GV Chest",                             {"Gerudo Valley", "Gerudo",});
-ItemLocation GV_WaterfallFreestandingPoH                  = ItemLocation::Collectable(0x5A, 0x01, "GV Waterfall Freestanding PoH",        {"Gerudo Valley", "Gerudo",});
-ItemLocation GV_CrateFreestandingPoH                      = ItemLocation::Collectable(0x5A, 0x02, "GV Crate Freestanding PoH",            {"Gerudo Valley", "Gerudo",});
-ItemLocation GV_DekuScrubGrottoRear                       = ItemLocation::GrottoScrub(0xF0, 0x39, "GV Deku Scrub Grotto Rear",            {"Gerudo Valley", "Gerudo", "Deku Scrub", "Grottos"});
-ItemLocation GV_DekuScrubGrottoFront                      = ItemLocation::GrottoScrub(0xF0, 0x3A, "GV Deku Scrub Grotto Front",           {"Gerudo Valley", "Gerudo", "Deku Scrub", "Grottos"});
+ItemLocation GV_Chest                         = ItemLocation::Chest      (0x5A, 0x00, "GV Chest",                             {"Gerudo Valley", "Gerudo",});
+ItemLocation GV_WaterfallFreestandingPoH      = ItemLocation::Collectable(0x5A, 0x01, "GV Waterfall Freestanding PoH",        {"Gerudo Valley", "Gerudo",});
+ItemLocation GV_CrateFreestandingPoH          = ItemLocation::Collectable(0x5A, 0x02, "GV Crate Freestanding PoH",            {"Gerudo Valley", "Gerudo",});
+ItemLocation GV_DekuScrubGrottoRear           = ItemLocation::GrottoScrub(0xF0, 0x39, "GV Deku Scrub Grotto Rear",            {"Gerudo Valley", "Gerudo", "Deku Scrub", "Grottos"});
+ItemLocation GV_DekuScrubGrottoFront          = ItemLocation::GrottoScrub(0xF0, 0x3A, "GV Deku Scrub Grotto Front",           {"Gerudo Valley", "Gerudo", "Deku Scrub", "Grottos"});
 
 //Gerudo Fortress
-ItemLocation GF_Chest                                     = ItemLocation::Chest      (0x5D, 0x00, "GF Chest",                             {"Gerudo's Fortress", "Gerudo",});
-ItemLocation GF_HBA1000Points                             = ItemLocation::Base       (0x5D, 0x3E, "GF HBA 1000 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
-ItemLocation GF_HBA1500Points                             = ItemLocation::Base       (0x5D, 0x30, "GF HBA 1500 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
-ItemLocation GF_GerudoToken                               = ItemLocation::Base       (0x0C, 0x3A, "GF Gerudo Token",                      {"Gerudo's Fortress", "Gerudo",});
-ItemLocation GF_NorthF1Carpenter                          = ItemLocation::Collectable(0x0C, 0x0C, "GF North F1 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
-ItemLocation GF_NorthF2Carpenter                          = ItemLocation::Collectable(0x0C, 0x0A, "GF North F2 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
-ItemLocation GF_SouthF1Carpenter                          = ItemLocation::Collectable(0x0C, 0x0E, "GF South F1 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
-ItemLocation GF_SouthF2Carpenter                          = ItemLocation::Collectable(0x0C, 0x0F, "GF South F2 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
+ItemLocation GF_Chest                         = ItemLocation::Chest      (0x5D, 0x00, "GF Chest",                             {"Gerudo's Fortress", "Gerudo",});
+ItemLocation GF_HBA1000Points                 = ItemLocation::Base       (0x5D, 0x3E, "GF HBA 1000 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
+ItemLocation GF_HBA1500Points                 = ItemLocation::Base       (0x5D, 0x30, "GF HBA 1500 Points",                   {"Gerudo's Fortress", "Gerudo", "Minigames"});
+ItemLocation GF_GerudoToken                   = ItemLocation::Base       (0x0C, 0x3A, "GF Gerudo Token",                      {"Gerudo's Fortress", "Gerudo",});
+ItemLocation GF_NorthF1Carpenter              = ItemLocation::Collectable(0x0C, 0x0C, "GF North F1 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
+ItemLocation GF_NorthF2Carpenter              = ItemLocation::Collectable(0x0C, 0x0A, "GF North F2 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
+ItemLocation GF_SouthF1Carpenter              = ItemLocation::Collectable(0x0C, 0x0E, "GF South F1 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
+ItemLocation GF_SouthF2Carpenter              = ItemLocation::Collectable(0x0C, 0x0F, "GF South F2 Carpenter",                {"Gerudo's Fortress", "Gerudo",});
 
 //Haunted Wasteland
-ItemLocation HW_Chest                                     = ItemLocation::Chest      (0x5E, 0x00, "HW Chest",                             {"Haunted Wasteland",});
+ItemLocation HW_Chest                         = ItemLocation::Chest      (0x5E, 0x00, "HW Chest",                             {"Haunted Wasteland",});
 
 //Desert Colossus
-ItemLocation Colossus_FreestandingPoH                     = ItemLocation::Collectable(0x5C, 0x0D, "Colossus Freestanding PoH",            {"Desert Colossus",});
-ItemLocation Colossus_DekuScrubGrottoRear                 = ItemLocation::GrottoScrub(0xFD, 0x39, "Colossus Deku Scrub Grotto Rear",      {"Desert Colossus", "Deku Scrub", "Grottos"});
-ItemLocation Colossus_DekuScrubGrottoFront                = ItemLocation::GrottoScrub(0xFD, 0x3A, "Colossus Deku Scrub Grotto Front",     {"Desert Colossus", "Deku Scrub", "Grottos"});
+ItemLocation Colossus_FreestandingPoH         = ItemLocation::Collectable(0x5C, 0x0D, "Colossus Freestanding PoH",            {"Desert Colossus",});
+ItemLocation Colossus_DekuScrubGrottoRear     = ItemLocation::GrottoScrub(0xFD, 0x39, "Colossus Deku Scrub Grotto Rear",      {"Desert Colossus", "Deku Scrub", "Grottos"});
+ItemLocation Colossus_DekuScrubGrottoFront    = ItemLocation::GrottoScrub(0xFD, 0x3A, "Colossus Deku Scrub Grotto Front",     {"Desert Colossus", "Deku Scrub", "Grottos"});
 
 //Market
-ItemLocation MK_TreasureChestGameReward                   = ItemLocation::Chest      (0x10, 0x0A, "MK Treasure Chest Game Reward",        {"the Market", "Market", "Minigames"});
-ItemLocation MK_BombchuBowlingFirstPrize                  = ItemLocation::Base       (0x4B, 0x33, "MK Bombchu Bowling First Prize",       {"the Market", "Market", "Minigames"});
-ItemLocation MK_BombchuBowlingSecondPrize                 = ItemLocation::Base       (0x4B, 0x3E, "MK Bombchu Bowling Second Prize",      {"the Market", "Market", "Minigames"});
-ItemLocation MK_LostDog                                   = ItemLocation::Base       (0x35, 0x3E, "MK Lost Dog",                          {"the Market", "Market",});
-ItemLocation MK_ShootingGalleryReward                     = ItemLocation::Base       (0x42, 0x60, "MK Shooting Gallery",                  {"the Market", "Market", "Minigames"});
-ItemLocation MK_10BigPoes                                 = ItemLocation::Base       (0x4D, 0x0F, "MK 10 Big Poes",                       {"the Market", "Hyrule Castle",});
+ItemLocation MK_TreasureChestGameReward       = ItemLocation::Chest      (0x10, 0x0A, "MK Treasure Chest Game Reward",        {"the Market", "Market", "Minigames"});
+ItemLocation MK_BombchuBowlingFirstPrize      = ItemLocation::Base       (0x4B, 0x33, "MK Bombchu Bowling First Prize",       {"the Market", "Market", "Minigames"});
+ItemLocation MK_BombchuBowlingSecondPrize     = ItemLocation::Base       (0x4B, 0x3E, "MK Bombchu Bowling Second Prize",      {"the Market", "Market", "Minigames"});
+ItemLocation MK_LostDog                       = ItemLocation::Base       (0x35, 0x3E, "MK Lost Dog",                          {"the Market", "Market",});
+ItemLocation MK_ShootingGalleryReward         = ItemLocation::Base       (0x42, 0x60, "MK Shooting Gallery",                  {"the Market", "Market", "Minigames"});
+ItemLocation MK_10BigPoes                     = ItemLocation::Base       (0x4D, 0x0F, "MK 10 Big Poes",                       {"the Market", "Hyrule Castle",});
 
 //Hyrule Castle
-ItemLocation HC_MalonEgg                                  = ItemLocation::Base       (0x5F, 0x47, "HC Malon Egg",                         {"Hyrule Castle", "Market",});
-ItemLocation HC_ZeldasLetter                              = ItemLocation::Base       (0x4A, 0x0B, "HC Zeldas Letter",                     {"Hyrule Castle", "Market",});
+ItemLocation HC_MalonEgg                      = ItemLocation::Base       (0x5F, 0x47, "HC Malon Egg",                         {"Hyrule Castle", "Market",});
+ItemLocation HC_ZeldasLetter                  = ItemLocation::Base       (0x4A, 0x0B, "HC Zeldas Letter",                     {"Hyrule Castle", "Market",});
 
 //Kakariko
-ItemLocation Kak_RedeadGrottoChest                        = ItemLocation::Chest      (0x3E, 0x0A, "Kak Redead Grotto Chest",              {"Kakariko Village", "Kakariko", "Grottos"});
-ItemLocation Kak_OpenGrottoChest                          = ItemLocation::Chest      (0x3E, 0x08, "Kak Open Grotto Chest",                {"Kakariko Village", "Kakariko", "Grottos"});
-ItemLocation Kak_10GoldSkulltulaReward                    = ItemLocation::Base       (0x50, 0x45, "Kak 10 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_20GoldSkulltulaReward                    = ItemLocation::Base       (0x50, 0x39, "Kak 20 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_30GoldSkulltulaReward                    = ItemLocation::Base       (0x50, 0x46, "Kak 30 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_40GoldSkulltulaReward                    = ItemLocation::Base       (0x50, 0x03, "Kak 40 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_50GoldSkulltulaReward                    = ItemLocation::Base       (0x50, 0x3E, "Kak 50 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
-ItemLocation Kak_ManOnRoof                                = ItemLocation::Base       (0x52, 0x3E, "Kak Man on Roof",                      {"Kakariko Village", "Kakariko",});
-ItemLocation Kak_ShootingGalleryReward                    = ItemLocation::Base       (0x42, 0x30, "Kak Shooting Gallery Reward",          {"Kakariko Village", "Kakariko", "Minigames"});
-ItemLocation Kak_AnjuAsAdult                              = ItemLocation::Base       (0x52, 0x1D, "Kak Anju as Adult",                    {"Kakariko Village", "Kakariko",});
-ItemLocation Kak_AnjuAsChild                              = ItemLocation::Base       (0x52, 0x0F, "Kak Anju as Child",                    {"Kakariko Village", "Kakariko", "Minigames"});
-ItemLocation Kak_ImpasHouseFreestandingPoH                = ItemLocation::Collectable(0x37, 0x01, "Kak Impas House Freestanding PoH",     {"Kakariko Village", "Kakariko",});
-ItemLocation Kak_WindmillFreestandingPoH                  = ItemLocation::Collectable(0x48, 0x01, "Kak Windmill Freestanding PoH",        {"Kakariko Village", "Kakariko",});
+ItemLocation Kak_RedeadGrottoChest            = ItemLocation::Chest      (0x3E, 0x0A, "Kak Redead Grotto Chest",              {"Kakariko Village", "Kakariko", "Grottos"});
+ItemLocation Kak_OpenGrottoChest              = ItemLocation::Chest      (0x3E, 0x08, "Kak Open Grotto Chest",                {"Kakariko Village", "Kakariko", "Grottos"});
+ItemLocation Kak_10GoldSkulltulaReward        = ItemLocation::Base       (0x50, 0x45, "Kak 10 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_20GoldSkulltulaReward        = ItemLocation::Base       (0x50, 0x39, "Kak 20 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_30GoldSkulltulaReward        = ItemLocation::Base       (0x50, 0x46, "Kak 30 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_40GoldSkulltulaReward        = ItemLocation::Base       (0x50, 0x03, "Kak 40 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_50GoldSkulltulaReward        = ItemLocation::Base       (0x50, 0x3E, "Kak 50 Gold Skulltula Reward",         {"Kakariko Village", "Kakariko", "Skulltula House"});
+ItemLocation Kak_ManOnRoof                    = ItemLocation::Base       (0x52, 0x3E, "Kak Man on Roof",                      {"Kakariko Village", "Kakariko",});
+ItemLocation Kak_ShootingGalleryReward        = ItemLocation::Base       (0x42, 0x30, "Kak Shooting Gallery Reward",          {"Kakariko Village", "Kakariko", "Minigames"});
+ItemLocation Kak_AnjuAsAdult                  = ItemLocation::Base       (0x52, 0x1D, "Kak Anju as Adult",                    {"Kakariko Village", "Kakariko",});
+ItemLocation Kak_AnjuAsChild                  = ItemLocation::Base       (0x52, 0x0F, "Kak Anju as Child",                    {"Kakariko Village", "Kakariko", "Minigames"});
+ItemLocation Kak_ImpasHouseFreestandingPoH    = ItemLocation::Collectable(0x37, 0x01, "Kak Impas House Freestanding PoH",     {"Kakariko Village", "Kakariko",});
+ItemLocation Kak_WindmillFreestandingPoH      = ItemLocation::Collectable(0x48, 0x01, "Kak Windmill Freestanding PoH",        {"Kakariko Village", "Kakariko",});
 
 //Graveyard
-ItemLocation GY_ShieldGraveChest                          = ItemLocation::Chest      (0x40, 0x00, "GY Shield Grave Chest",                {"the Graveyard", "Kakariko",});
-ItemLocation GY_HeartPieceGraveChest                      = ItemLocation::Chest      (0x3F, 0x00, "GY Heart Piece Grave Chest",           {"the Graveyard", "Kakariko",});
-ItemLocation GY_ComposersGraveChest                       = ItemLocation::Chest      (0x41, 0x00, "GY Composers Grave Chest",             {"the Graveyard", "Kakariko",});
-ItemLocation GY_HookshotChest                             = ItemLocation::Chest      (0x48, 0x00, "GY Hookshot Chest",                    {"the Graveyard", "Kakariko",});
-ItemLocation GY_DampeRaceFreestandingPoH                  = ItemLocation::Collectable(0x48, 0x07, "GY Dampe Race Freestanding PoH",       {"the Graveyard", "Kakariko", "Minigames"});
-ItemLocation GY_FreestandingPoH                           = ItemLocation::Collectable(0x53, 0x04, "GY Freestanding PoH",                  {"the Graveyard", "Kakariko",});
-ItemLocation GY_DampeGravediggingTour                     = ItemLocation::Collectable(0x53, 0x08, "GY Dampe Gravedigging Tour",           {"the Graveyard", "Kakariko",});
+ItemLocation GY_ShieldGraveChest              = ItemLocation::Chest      (0x40, 0x00, "GY Shield Grave Chest",                {"the Graveyard", "Kakariko",});
+ItemLocation GY_HeartPieceGraveChest          = ItemLocation::Chest      (0x3F, 0x00, "GY Heart Piece Grave Chest",           {"the Graveyard", "Kakariko",});
+ItemLocation GY_ComposersGraveChest           = ItemLocation::Chest      (0x41, 0x00, "GY Composers Grave Chest",             {"the Graveyard", "Kakariko",});
+ItemLocation GY_HookshotChest                 = ItemLocation::Chest      (0x48, 0x00, "GY Hookshot Chest",                    {"the Graveyard", "Kakariko",});
+ItemLocation GY_DampeRaceFreestandingPoH      = ItemLocation::Collectable(0x48, 0x07, "GY Dampe Race Freestanding PoH",       {"the Graveyard", "Kakariko", "Minigames"});
+ItemLocation GY_FreestandingPoH               = ItemLocation::Collectable(0x53, 0x04, "GY Freestanding PoH",                  {"the Graveyard", "Kakariko",});
+ItemLocation GY_DampeGravediggingTour         = ItemLocation::Collectable(0x53, 0x08, "GY Dampe Gravedigging Tour",           {"the Graveyard", "Kakariko",});
 
 //Death Mountain
-ItemLocation DMT_Chest                                    = ItemLocation::Chest      (0x60, 0x01, "DMT Chest",                            {"Death Mountain Trail", "Death Mountain",});
-ItemLocation DMT_StormsGrottoChest                        = ItemLocation::Chest      (0x3E, 0x17, "DMT Storms Grotto Chest",              {"Death Mountain Trail", "Death Mountain", "Grottos"});
-ItemLocation DMT_Biggoron                                 = ItemLocation::Base       (0x60, 0x57, "DMT Biggoron",                         {"Death Mountain Trail", "Death Mountain",});
-ItemLocation DMT_FreestandingPoH                          = ItemLocation::Collectable(0x60, 0x1E, "DMT Freestanding PoH",                 {"Death Mountain Trail", "Death Mountain",});
+ItemLocation DMT_Chest                        = ItemLocation::Chest      (0x60, 0x01, "DMT Chest",                            {"Death Mountain Trail", "Death Mountain",});
+ItemLocation DMT_StormsGrottoChest            = ItemLocation::Chest      (0x3E, 0x17, "DMT Storms Grotto Chest",              {"Death Mountain Trail", "Death Mountain", "Grottos"});
+ItemLocation DMT_Biggoron                     = ItemLocation::Base       (0x60, 0x57, "DMT Biggoron",                         {"Death Mountain Trail", "Death Mountain",});
+ItemLocation DMT_FreestandingPoH              = ItemLocation::Collectable(0x60, 0x1E, "DMT Freestanding PoH",                 {"Death Mountain Trail", "Death Mountain",});
 
 //Goron City
-ItemLocation GC_MazeLeftChest                             = ItemLocation::Chest      (0x62, 0x00, "GC Maze Left Chest",                   {"Goron City",});
-ItemLocation GC_MazeRightChest                            = ItemLocation::Chest      (0x62, 0x01, "GC Maze Right Chest",                  {"Goron City",});
-ItemLocation GC_MazeCenterChest                           = ItemLocation::Chest      (0x62, 0x02, "GC Maze Center Chest",                 {"Goron City",});
-ItemLocation GC_RollingGoronAsChild                       = ItemLocation::Base       (0x62, 0x34, "GC Rolling Goron as Child",            {"Goron City",});
-ItemLocation GC_RollingGoronAsAdult                       = ItemLocation::Base       (0x62, 0x2C, "GC Rolling Goron as Adult",            {"Goron City",});
-ItemLocation GC_DaruniasJoy                               = ItemLocation::Base       (0x62, 0x54, "GC Darunias Joy",                      {"Goron City",});
-ItemLocation GC_PotFreestandingPoH                        = ItemLocation::Collectable(0x62, 0x1F, "GC Pot Freestanding PoH",              {"Goron City", "Goron City",});
-ItemLocation GC_DekuScrubGrottoLeft                       = ItemLocation::GrottoScrub(0xFB, 0x30, "GC Deku Scrub Grotto Left",            {"Goron City", "Deku Scrub", "Grottos"});
-ItemLocation GC_DekuScrubGrottoRight                      = ItemLocation::GrottoScrub(0xFB, 0x37, "GC Deku Scrub Grotto Right",           {"Goron City", "Deku Scrub", "Grottos"});
-ItemLocation GC_DekuScrubGrottoCenter                     = ItemLocation::GrottoScrub(0xFB, 0x33, "GC Deku Scrub Grotto Center",          {"Goron City", "Deku Scrub", "Grottos"});
+ItemLocation GC_MazeLeftChest                 = ItemLocation::Chest      (0x62, 0x00, "GC Maze Left Chest",                   {"Goron City",});
+ItemLocation GC_MazeRightChest                = ItemLocation::Chest      (0x62, 0x01, "GC Maze Right Chest",                  {"Goron City",});
+ItemLocation GC_MazeCenterChest               = ItemLocation::Chest      (0x62, 0x02, "GC Maze Center Chest",                 {"Goron City",});
+ItemLocation GC_RollingGoronAsChild           = ItemLocation::Base       (0x62, 0x34, "GC Rolling Goron as Child",            {"Goron City",});
+ItemLocation GC_RollingGoronAsAdult           = ItemLocation::Base       (0x62, 0x2C, "GC Rolling Goron as Adult",            {"Goron City",});
+ItemLocation GC_DaruniasJoy                   = ItemLocation::Base       (0x62, 0x54, "GC Darunias Joy",                      {"Goron City",});
+ItemLocation GC_PotFreestandingPoH            = ItemLocation::Collectable(0x62, 0x1F, "GC Pot Freestanding PoH",              {"Goron City", "Goron City",});
+ItemLocation GC_DekuScrubGrottoLeft           = ItemLocation::GrottoScrub(0xFB, 0x30, "GC Deku Scrub Grotto Left",            {"Goron City", "Deku Scrub", "Grottos"});
+ItemLocation GC_DekuScrubGrottoRight          = ItemLocation::GrottoScrub(0xFB, 0x37, "GC Deku Scrub Grotto Right",           {"Goron City", "Deku Scrub", "Grottos"});
+ItemLocation GC_DekuScrubGrottoCenter         = ItemLocation::GrottoScrub(0xFB, 0x33, "GC Deku Scrub Grotto Center",          {"Goron City", "Deku Scrub", "Grottos"});
 
 //Death Mountain Crater
-ItemLocation DMC_UpperGrottoChest                         = ItemLocation::Chest      (0x3E, 0x1A, "DMC Upper Grotto Chest",               {"Death Mountain Crater", "Death Mountain", "Grottos"});
-ItemLocation DMC_WallFreestandingPoH                      = ItemLocation::Collectable(0x61, 0x02, "DMC Wall Freestanding PoH",            {"Death Mountain Crater", "Death Mountain",});
-ItemLocation DMC_VolcanoFreestandingPoH                   = ItemLocation::Collectable(0x61, 0x08, "DMC Volcano Freestanding PoH",         {"Death Mountain Crater", "Death Mountain",});
-ItemLocation DMC_DekuScrub                                = ItemLocation::Base       (0x61, 0x37, "DMC Deku Scrub",                       {"Death Mountain Crater", "Death Mountain", "Deku Scrub"});
-ItemLocation DMC_DekuScrubGrottoLeft                      = ItemLocation::GrottoScrub(0xF9, 0x30, "DMC Deku Scrub Grotto Left",           {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
-ItemLocation DMC_DekuScrubGrottoRight                     = ItemLocation::GrottoScrub(0xF9, 0x37, "DMC Deku Scrub Grotto Right",          {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
-ItemLocation DMC_DekuScrubGrottoCenter                    = ItemLocation::GrottoScrub(0xF9, 0x33, "DMC Deku Scrub Grotto Center",         {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
+ItemLocation DMC_UpperGrottoChest             = ItemLocation::Chest      (0x3E, 0x1A, "DMC Upper Grotto Chest",               {"Death Mountain Crater", "Death Mountain", "Grottos"});
+ItemLocation DMC_WallFreestandingPoH          = ItemLocation::Collectable(0x61, 0x02, "DMC Wall Freestanding PoH",            {"Death Mountain Crater", "Death Mountain",});
+ItemLocation DMC_VolcanoFreestandingPoH       = ItemLocation::Collectable(0x61, 0x08, "DMC Volcano Freestanding PoH",         {"Death Mountain Crater", "Death Mountain",});
+ItemLocation DMC_DekuScrub                    = ItemLocation::Base       (0x61, 0x37, "DMC Deku Scrub",                       {"Death Mountain Crater", "Death Mountain", "Deku Scrub"});
+ItemLocation DMC_DekuScrubGrottoLeft          = ItemLocation::GrottoScrub(0xF9, 0x30, "DMC Deku Scrub Grotto Left",           {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
+ItemLocation DMC_DekuScrubGrottoRight         = ItemLocation::GrottoScrub(0xF9, 0x37, "DMC Deku Scrub Grotto Right",          {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
+ItemLocation DMC_DekuScrubGrottoCenter        = ItemLocation::GrottoScrub(0xF9, 0x33, "DMC Deku Scrub Grotto Center",         {"Death Mountain Crater", "Death Mountain", "Deku Scrub", "Grottos"});
 
 //Zoras River
-ItemLocation ZR_OpenGrottoChest                           = ItemLocation::Chest      (0x3E, 0x09, "ZR Open Grotto Chest",                 {"Zora's River", "Grottos",});
-ItemLocation ZR_MagicBeanSalesman                         = ItemLocation::Base       (0x54, 0x16, "ZR Magic Bean Salesman",               {"Zora's River",});
-ItemLocation ZR_FrogsOcarinaGame                          = ItemLocation::Base       (0x54, 0x76, "ZR Frogs Ocarina Game",                {"Zora's River",});
-ItemLocation ZR_FrogsInTheRain                            = ItemLocation::Base       (0x54, 0x3E, "ZR Frogs in the Rain",                 {"Zora's River", "Minigames",});
-ItemLocation ZR_NearOpenGrottoFreestandingPoH             = ItemLocation::Collectable(0x54, 0x04, "ZR Near Open Grotto Freestanding PoH", {"Zora's River",});
-ItemLocation ZR_NearDomainFreestandingPoH                 = ItemLocation::Collectable(0x54, 0x0B, "ZR Near Domain Freestanding PoH",      {"Zora's River",});
-ItemLocation ZR_DekuScrubGrottoRear                       = ItemLocation::GrottoScrub(0xEB, 0x39, "ZR Deku Scrub Grotto Rear",            {"Zora's River", "Deku Scrub", "Grottos"});
-ItemLocation ZR_DekuScrubGrottoFront                      = ItemLocation::GrottoScrub(0xEB, 0x3A, "ZR Deku Scrub Grotto Front",           {"Zora's River", "Deku Scrub", "Grottos"});
+ItemLocation ZR_OpenGrottoChest               = ItemLocation::Chest      (0x3E, 0x09, "ZR Open Grotto Chest",                 {"Zora's River", "Grottos",});
+ItemLocation ZR_MagicBeanSalesman             = ItemLocation::Base       (0x54, 0x16, "ZR Magic Bean Salesman",               {"Zora's River",});
+ItemLocation ZR_FrogsOcarinaGame              = ItemLocation::Base       (0x54, 0x76, "ZR Frogs Ocarina Game",                {"Zora's River",});
+ItemLocation ZR_FrogsInTheRain                = ItemLocation::Base       (0x54, 0x3E, "ZR Frogs in the Rain",                 {"Zora's River", "Minigames",});
+ItemLocation ZR_NearOpenGrottoFreestandingPoH = ItemLocation::Collectable(0x54, 0x04, "ZR Near Open Grotto Freestanding PoH", {"Zora's River",});
+ItemLocation ZR_NearDomainFreestandingPoH     = ItemLocation::Collectable(0x54, 0x0B, "ZR Near Domain Freestanding PoH",      {"Zora's River",});
+ItemLocation ZR_DekuScrubGrottoRear           = ItemLocation::GrottoScrub(0xEB, 0x39, "ZR Deku Scrub Grotto Rear",            {"Zora's River", "Deku Scrub", "Grottos"});
+ItemLocation ZR_DekuScrubGrottoFront          = ItemLocation::GrottoScrub(0xEB, 0x3A, "ZR Deku Scrub Grotto Front",           {"Zora's River", "Deku Scrub", "Grottos"});
 
 //Zoras Domain
-ItemLocation ZD_Chest                                     = ItemLocation::Chest      (0x58, 0x00, "ZD Chest",                             {"Zora's Domain",});
-ItemLocation ZD_DivingMinigame                            = ItemLocation::Base       (0x58, 0x37, "ZD Diving Minigame",                   {"Zora's Domain", "Minigames",});
-ItemLocation ZD_KingZoraThawed                            = ItemLocation::Base       (0x58, 0x2D, "ZD King Zora Thawed",                  {"Zora's Domain",});
+ItemLocation ZD_Chest                         = ItemLocation::Chest      (0x58, 0x00, "ZD Chest",                             {"Zora's Domain",});
+ItemLocation ZD_DivingMinigame                = ItemLocation::Base       (0x58, 0x37, "ZD Diving Minigame",                   {"Zora's Domain", "Minigames",});
+ItemLocation ZD_KingZoraThawed                = ItemLocation::Base       (0x58, 0x2D, "ZD King Zora Thawed",                  {"Zora's Domain",});
 
 //Zoras Fountain
-ItemLocation ZF_IcebergFreestandingPoH                    = ItemLocation::Collectable(0x59, 0x01, "ZF Iceberg Freestanding PoH",          {"Zora's Fountain",});
-ItemLocation ZF_BottomFreestandingPoH                     = ItemLocation::Collectable(0x59, 0x14, "ZF Bottom Freestanding PoH",           {"Zora's Fountain",});
+ItemLocation ZF_IcebergFreestandingPoH        = ItemLocation::Collectable(0x59, 0x01, "ZF Iceberg Freestanding PoH",          {"Zora's Fountain",});
+ItemLocation ZF_BottomFreestandingPoH         = ItemLocation::Collectable(0x59, 0x14, "ZF Bottom Freestanding PoH",           {"Zora's Fountain",});
 
 //Lon Lon Ranch
-ItemLocation LLR_TalonsChickens                           = ItemLocation::Base       (0x4C, 0x14, "LLR Talons Chickens",                  {"Lon Lon Ranch", "Minigames"});
-ItemLocation LLR_FreestandingPoH                          = ItemLocation::Collectable(0x4C, 0x01, "LLR Freestanding PoH",                 {"Lon Lon Ranch",});
-ItemLocation LLR_DekuScrubGrottoLeft                      = ItemLocation::GrottoScrub(0xFC, 0x30, "LLR Deku Scrub Grotto Left",           {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
-ItemLocation LLR_DekuScrubGrottoRight                     = ItemLocation::GrottoScrub(0xFC, 0x37, "LLR Deku Scrub Grotto Right",          {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
-ItemLocation LLR_DekuScrubGrottoCenter                    = ItemLocation::GrottoScrub(0xFC, 0x33, "LLR Deku Scrub Grotto Center",         {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
+ItemLocation LLR_TalonsChickens               = ItemLocation::Base       (0x4C, 0x14, "LLR Talons Chickens",                  {"Lon Lon Ranch", "Minigames"});
+ItemLocation LLR_FreestandingPoH              = ItemLocation::Collectable(0x4C, 0x01, "LLR Freestanding PoH",                 {"Lon Lon Ranch",});
+ItemLocation LLR_DekuScrubGrottoLeft          = ItemLocation::GrottoScrub(0xFC, 0x30, "LLR Deku Scrub Grotto Left",           {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
+ItemLocation LLR_DekuScrubGrottoRight         = ItemLocation::GrottoScrub(0xFC, 0x37, "LLR Deku Scrub Grotto Right",          {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
+ItemLocation LLR_DekuScrubGrottoCenter        = ItemLocation::GrottoScrub(0xFC, 0x33, "LLR Deku Scrub Grotto Center",         {"Lon Lon Ranch", "Deku Scrub", "Grottos"});
 
 /*-------------------
    --- DUNGEONS ---
@@ -279,7 +312,7 @@ ItemLocation ShadowTemple_SpikeWallsLeftChest                 = ItemLocation::Ch
 ItemLocation ShadowTemple_BossKeyChest                        = ItemLocation::Chest      (0x07, 0x0B, "Shadow Temple Boss Key Chest",                       {"Shadow Temple",});
 ItemLocation ShadowTemple_InvisibleFloormasterChest           = ItemLocation::Chest      (0x07, 0x0D, "Shadow Temple Invisible Floormaster Chest",          {"Shadow Temple",});
 ItemLocation ShadowTemple_FreestandingKey                     = ItemLocation::Collectable(0x07, 0x01, "Shadow Temple Freestanding Key",                     {"Shadow Temple",});
-ItemLocation ShadowTemple_BongoBongoHeart                     = ItemLocation::Base       (0x13, 0x4F, "Shadow Temple Bongo Bongo Heart",                    {"Shadow Temple",});
+ItemLocation ShadowTemple_BongoBongoHeart                     = ItemLocation::Base       (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart",                    {"Shadow Temple",});
 
 //Bottom of the Well
 ItemLocation BottomOfTheWell_FrontLeftFakeWallChest           = ItemLocation::Chest      (0x08, 0x08, "Bottom of the Well Front Left Fake Wall Chest",         {"Bottom of the Well",});
@@ -833,7 +866,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 443> allLocations = {
+std::array<ItemLocation*, 462> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -856,7 +889,7 @@ std::array<ItemLocation*, 443> allLocations = {
   //Lost Woods
   &LW_GiftFromSaria,
   &LW_SkullKid,
-  //&LW_OcarinaMemoryGame,
+  &LW_OcarinaMemoryGame,
   &LW_TargetInWoods,
   &LW_DekuScrubNearDekuTheaterRight,
   &LW_DekuScrubNearDekuTheaterLeft,
@@ -869,6 +902,8 @@ std::array<ItemLocation*, 443> allLocations = {
   //&DekuTheater_MaskOfTruth,
 
   //Sacred Forest Meadow
+  &SongFromSaria,
+  &SheikInForest,
   &SFM_WolfosGrottoChest,
   &SFM_DekuScrubGrottoRear,
   &SFM_DekuScrubGrottoFront,
@@ -878,6 +913,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &HF_OpenGrottoChest,
   &HF_NearMarketGrottoChest,
   &HF_OcarinaOfTimeItem,
+  &SongFromOcarinaOfTime,
   &HF_TektiteGrottoFreestandingPoH,
   &HF_DekuScrubGrotto,
 
@@ -915,13 +951,14 @@ std::array<ItemLocation*, 443> allLocations = {
   //Desert Colossus
   &SheikAtColossus,
   &Colossus_FreestandingPoH,
+  &Colossus_GreatFairyReward,
   &Colossus_DekuScrubGrottoRear,
   &Colossus_DekuScrubGrottoFront,
 
   //Market
   &MK_TreasureChestGameReward,
-  //&MK_BombchuBowlingFirstPrize,
-  //&MK_BombchuBowlingSecondPrize,
+  &MK_BombchuBowlingFirstPrize,
+  &MK_BombchuBowlingSecondPrize,
   &MK_LostDog,
   &MK_ShootingGalleryReward,
   &MK_10BigPoes,
@@ -953,10 +990,14 @@ std::array<ItemLocation*, 443> allLocations = {
   &MK_BazaarItem8,
 
   //Hyrule Castle
-  &HC_ZeldasLetter,
   &HC_MalonEgg,
+  &HC_ZeldasLetter,
+  &SongFromImpa,
+  &HC_GreatFairyReward,
+  &OGC_GreatFairyReward,
 
   //Temple of Time
+  &SheikAtTemple,
   &ToT_LightArrowCutscene,
 
   //Kakariko
@@ -974,6 +1015,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &Kak_AnjuAsAdult,
   &Kak_ImpasHouseFreestandingPoH,
   &Kak_WindmillFreestandingPoH,
+  &SongFromWindmill,
 
   //Kakariko Shops
   &Kak_PotionShopItem1,
@@ -998,6 +1040,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &GY_ShieldGraveChest,
   &GY_HeartPieceGraveChest,
   &GY_ComposersGraveChest,
+  &SongFromComposersGrave,
   &GY_FreestandingPoH,
   &GY_DampeRaceFreestandingPoH,
   &GY_DampeGravediggingTour,
@@ -1006,7 +1049,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &DMT_Chest,
   &DMT_StormsGrottoChest,
   &DMT_Biggoron,
-  //&DMT_GreatFairyReward,
+  &DMT_GreatFairyReward,
   &DMT_FreestandingPoH,
 
   //Goron City
@@ -1035,7 +1078,9 @@ std::array<ItemLocation*, 443> allLocations = {
   &DMC_UpperGrottoChest,
   &DMC_WallFreestandingPoH,
   &DMC_VolcanoFreestandingPoH,
+  &SheikInCrater,
   &DMC_DekuScrub,
+  &DMC_GreatFairyReward,
   &DMC_DekuScrubGrottoLeft,
   &DMC_DekuScrubGrottoRight,
   &DMC_DekuScrubGrottoCenter,
@@ -1068,8 +1113,10 @@ std::array<ItemLocation*, 443> allLocations = {
   //Zoras Fountain
   &ZF_IcebergFreestandingPoH,
   &ZF_BottomFreestandingPoH,
+  &ZF_GreatFairyReward,
 
   //Lon Lon Ranch
+  &SongFromMalon,
   &LLR_TalonsChickens,
   &LLR_FreestandingPoH,
   &LLR_DekuScrubGrottoLeft,
@@ -1213,6 +1260,7 @@ std::array<ItemLocation*, 443> allLocations = {
   &IceCavern_MapChest,
   &IceCavern_CompassChest,
   &IceCavern_IronBootsChest,
+  &SheikInIceCavern,
   &IceCavern_FreestandingPoH,
 
   //Gerudo Training Grounds

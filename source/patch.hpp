@@ -9,6 +9,5 @@
 
 
 #define V_TO_P(addr) (addr - 0x100000)
-extern std::set<ItemOverride, Playthrough::ItemOverride_Compare> Overrides;
 
-bool WriteOverridesToPatch();
+bool WritePatch();

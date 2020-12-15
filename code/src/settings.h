@@ -72,6 +72,17 @@ typedef enum {
 } BossKeysanitySetting;
 
 typedef enum {
+  GANONSBOSSKEY_VANILLA,
+  GANONSBOSSKEY_DUNGEON_ONLY,
+  GANONSBOSSKEY_ALL_LOCATIONS,
+  GANONSBOSSKEY_LACS_VANILLA,
+  GANONSBOSSKEY_LACS_MEDALLIONS,
+  GANONSBOSSKEY_LACS_STONES,
+  GANONSBOSSKEY_LACS_DUNGEONS,
+} GanonsBossKeySetting;
+
+typedef enum {
+  MAPSANDCOMPASSES_START_WITH,
   MAPSANDCOMPASSES_VANILLA,
   MAPSANDCOMPASSES_DUNGEON_ONLY,
   MAPSANDCOMPASSES_ALL_LOCATIONS,
@@ -88,6 +99,18 @@ typedef enum {
   SCRUBSANITY_EXPENSIVE,
   SCRUBSANITY_RANDOM_PRICES,
 } ScrubsanitySetting;
+
+typedef enum {
+  DUNGEONMODE_VANILLA,
+  DUNGEONMODE_MQ,
+} DungeonMode;
+
+typedef enum {
+  ITEMPOOL_PLENTIFUL,
+  ITEMPOOL_BALANCED,
+  ITEMPOOL_SCARCE,
+  ITEMPOOL_MINIMAL,
+} ItemPoolSetting;
 
 typedef enum {
   AGE_ADULT,
@@ -116,7 +139,20 @@ typedef struct {
   u8 boomerangAsAdult;
   u8 hammerAsChild;
 
+  u8 dekuTreeDungeonMode;
+  u8 dodongosCavernDungeonMode;
+  u8 jabuJabusBellyDungeonMode;
+  u8 forestTempleDungeonMode;
+  u8 fireTempleDungeonMode;
+  u8 waterTempleDungeonMode;
+  u8 spiritTempleDungeonMode;
+  u8 shadowTempleDungeonMode;
+  u8 bottomOfTheWellDungeonMode;
+  u8 gerudoTrainingGroundsDungeonMode;
+  u8 ganonsCastleDungeonMode;
+
   u32 dungeonRewardBitMask;
+  
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;

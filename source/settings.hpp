@@ -83,9 +83,11 @@ namespace Settings {
   extern u8 StartingAge;
   extern u8 Keysanity;
   extern u8 BossKeysanity;
+  extern u8 GanonsBossKey;
   extern u8 MapsAndCompasses;
   extern u8 Skullsanity;
   extern u8 Scrubsanity;
+  extern u8 ItemPoolValue;
 
   extern std::string seed;
 
@@ -105,6 +107,17 @@ namespace Settings {
   extern bool ShuffleOcarinas;
   extern bool ShuffleSongs;
   extern bool Shopsanity;
+  extern bool DekuTreeDungeonMode;
+  extern bool DodongosCavernDungeonMode;
+  extern bool JabuJabusBellyDungeonMode;
+  extern bool ForestTempleDungeonMode;
+  extern bool FireTempleDungeonMode;
+  extern bool WaterTempleDungeonMode;
+  extern bool SpiritTempleDungeonMode;
+  extern bool ShadowTempleDungeonMode;
+  extern bool BottomOfTheWellDungeonMode;
+  extern bool GerudoTrainingGroundsDungeonMode;
+  extern bool GanonsCastleDungeonMode;
 
   //Logic Settings
   extern bool LogicMidoBackflip;
