@@ -1,8 +1,16 @@
 #include "z3D/z3D.h"
 #include "entrance.h"
+#include "settings.h"
 
 void Entrance_Init(void) {
     s32 index;
+
+    // Skip Child Stealth if given by settings
+    if (gSettingsContext.skipChildStealth) {
+        gEntranceTable[0x07A].scene = 0x4A;
+        gEntranceTable[0x07A].spawn = 0x01;
+        gEntranceTable[0x07A].field = 0x0183;
+    }
 
     // Delete the title card for Desert Colossus from Requiem
     for (index = 0x1ED; index < 0x1F1; ++index) {

@@ -353,7 +353,9 @@ typedef struct {
 
 typedef struct GlModel {
     /* 0x00 */ GlModel_VTable* vtbl;
-    /* 0x04 */ char            unk_04[0x78];
+    /* 0x04 */ char            unk_04[0x08];
+    /* 0x0C */ void*           unk_0C;
+    /* 0x10 */ char            unk_10[0x6C];
     /* 0x7C */ nn_math_MTX34   mtx;
     /* 0xAC */ s8              unk_AC;
     /* 0xAD */ char            unk_AD[0x03];

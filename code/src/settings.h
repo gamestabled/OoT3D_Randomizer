@@ -128,6 +128,7 @@ typedef struct {
   u8 timeOfDay;
   u8 scrubsanity;
   u8 lacsCondition;
+  u8 skipChildStealth;
 
   u8 openDoorOfTime;
   u8 shuffleBeanSalesman;

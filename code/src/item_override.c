@@ -300,9 +300,9 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
 
     tokenActor->draw = NULL;
+    Item_Give(gGlobalContext, itemRow->actionId);
     DisplayTextbox(gGlobalContext, itemRow->textId, 0);
 
-    Item_Give(gGlobalContext, itemRow->actionId);
     ItemTable_CallEffect(itemRow);
 }
 

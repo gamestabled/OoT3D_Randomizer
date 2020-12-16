@@ -42,7 +42,7 @@ u32 DungeonReward_GetOverrideText(u32 incomingTextId) {
 
 void DungeonReward_OverrideItemGive(GlobalContext* globalCtx, u8 incomingItem) {
     if ((incomingItem >= ITEM_MEDALLION_FOREST) && (incomingItem < ITEM_KOKIRI_EMERALD)) {
-        Item_Give(globalCtx, rDungeonRewardTable[rDungeonRewardOverrides[incomingItem - ITEM_MEDALLION_FOREST]].itemId);
+        Item_Give(globalCtx, rDungeonRewardTable[rDungeonRewardOverrides[(incomingItem - ITEM_MEDALLION_FOREST) + FOREST_MEDALLION]].itemId);
     } else if ((incomingItem >= ITEM_KOKIRI_EMERALD) && (incomingItem <= ITEM_ZORA_SAPPHIRE)) {
         Item_Give(globalCtx, rDungeonRewardTable[rDungeonRewardOverrides[incomingItem - ITEM_KOKIRI_EMERALD]].itemId);  
     }

@@ -9,6 +9,17 @@ def APP_FILL():
 
 custom_messages = {
     # TextId          unk_04, unk_08, unk_0C, text
+    #Gold Skulltula Tokens
+    0x0B4 :           ( 0x00,   0x02,   0x03, ( "",
+                                                INSTANT_TEXT_ON()+"You destroyed a "+COLOR(RED)+"Gold Skulltula"+COLOR(WHITE)+". You got a"+NEWLINE()+"token proving you destroyed it!"+NEWLINE()+NEWLINE()+"You have "+COLOR(RED)+SKULLTULAS_DESTROYED()+COLOR(WHITE)+" tokens!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                "",
+                                                "",
+                                                "",
+                                                "Le sample textre in francais.\x7F\x00",
+                                                "",
+                                                "El texto samplo en espagnol.\x7F\x00",
+                                                "",
+                                                "" ) ),
     #Boss Keys
     0x9D4 :           ( 0x00,   0x02,   0x03, ( "",
                                                 UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"You got the "+COLOR(GREEN)+"Forest Temple Boss Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
@@ -61,7 +72,7 @@ custom_messages = {
                                                 "",
                                                 "" ) ),
     0x9D9 :           ( 0x00,   0x02,   0x03, ( "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"You got the "+COLOR(BLACK)+"Ganon's Castle Boss Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"You got the "+COLOR(RED)+"Ganon's Castle Boss Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "",
                                                 "",
@@ -92,7 +103,7 @@ custom_messages = {
                                                 "",
                                                 "" ) ),
     0x9DC :           ( 0x00,   0x02,   0x03, ( "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x75)+INSTANT_TEXT_ON()+"You got the "+COLOR(BLUE)+"Jabu Jabu's Belly Compass"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x75)+INSTANT_TEXT_ON()+"You got the "+COLOR(BLUE)+"Jabu Jabu's Belly"+NEWLINE()+"Compass"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "",
                                                 "",
@@ -354,7 +365,7 @@ custom_messages = {
                                                 "",
                                                 "" ) ),
     0x9F6 :           ( 0x00,   0x02,   0x03, ( "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"You got a "+COLOR(BLACK)+"Ganon's Castle Small Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"You got a "+COLOR(RED)+"Ganon's Castle Small Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "",
                                                 "",

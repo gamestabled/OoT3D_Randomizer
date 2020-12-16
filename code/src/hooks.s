@@ -334,6 +334,14 @@ hook_PoeCollectorGetFirstTextbox:
     pop {r1-r12, lr}
     bx lr
 
+.global hook_ApplyDamageMultiplier
+hook_ApplyDamageMultiplier:
+    push {r0-r3, r5-r12, lr}
+    bl Settings_ApplyDamageMultiplier
+    cpy r4,r0
+    pop {r0-r3, r5-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
