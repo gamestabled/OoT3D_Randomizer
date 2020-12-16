@@ -216,6 +216,10 @@ SECTIONS
 		*(.patch_ForestTempleItemGiveThree)
 	}
 
+	.patch_LostWoodsShootingGameTwo 0x2990E8 : {
+		*(.patch_LostWoodsShootingGameTwo)
+	}
+
 	.patch_SerenadeCheckChestFlag 0x2B2544 : {
 		*(.patch_SerenadeCheckChestFlag)
 	}
@@ -256,12 +260,20 @@ SECTIONS
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
 
+	.patch_MagicArrowsInInventory 0x33C350 : {
+		*(.patch_MagicArrowsInInventory)
+	}
+
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
 	}
 
 	.patch_OverrideGraphicID_351B94 0x351B94 : {
 		*(.patch_OverrideGraphicID_351B94)
+	}
+
+	.patch_ApplyDamageMultiplier 0x352DC0 : {
+		*(.patch_ApplyDamageMultiplier)
 	}
 
 	.patch_OverrideGraphicID_35495C 0x35495C : {
@@ -302,6 +314,10 @@ SECTIONS
 
 	.patch_AdultShootingGallery 0x38AB9C : {
 		*(.patch_AdultShootingGallery)
+	}
+
+	.patch_OcarinaMinigameEndAfterWin 0x39DF38 : {
+		*(.patch_OcarinaMinigameEndAfterWin)
 	}
 
 	.patch_LullabyLocation 0x3A0A7C : {

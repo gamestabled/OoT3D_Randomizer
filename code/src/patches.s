@@ -154,6 +154,12 @@ LostWoodsShootingGame_patch:
     mov r2,#0x60
     nop
 
+.section .patch_LostWoodsShootingGameTwo
+.global LostWoodsShootingGameTwo_patch
+LostWoodsShootingGameTwo_patch:
+    mov r2,#0x60
+    nop
+
 .section .patch_SkulltulaRewardOne
 .global SkulltulaRewardOne_patch
 SkulltulaRewardOne_patch:
@@ -615,9 +621,14 @@ PoeCollectorGetFirstTextbox_patch:
 .section .patch_OcarinaMinigameRewardsOrder
 .global OcarinaMinigameRewardsOrder_patch
 OcarinaMinigameRewardsOrder_patch:
-    .word 0x3E
+    .word 0x76
     .word 0x4D
     .word 0x4E
+
+.section .patch_OcarinaMinigameEndAfterWin
+.global OcarinaMinigameEndAfterWin_patch
+OcarinaMinigameEndAfterWin_patch:
+    nop
 
 .section .patch_ISGPutaway
 .global ISGPutaway_patch
@@ -628,6 +639,19 @@ ISGPutaway_patch:
 .global ISGCrouchStab_patch
 ISGCrouchStab_patch:
     nop
+
+.section .patch_MagicArrowsInInventory
+.global MagicArrowsInInventory_patch
+MagicArrowsInInventory_patch:
+    cmp r1,#0x8
+    cmpne r1,#0x7
+    beq 0x33C38C
+    b 0x33C37C
+
+.section .patch_ApplyDamageMultiplier
+.global ApplyDamageMultiplier_patch
+ApplyDamageMultiplier_patch:
+    bl hook_ApplyDamageMultiplier
 
 .section .patch_loader
 .global loader_patch
