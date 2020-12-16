@@ -1,5 +1,5 @@
 #include "playthrough.hpp"
-#include "item_list.hpp"
+#include "item_pool.hpp"
 #include "item_location.hpp"
 #include "location_access.hpp"
 #include "logic.hpp"
@@ -10,7 +10,6 @@
 #include <3ds.h>
 #include <algorithm>
 #include <cstdio>
-#include <set>
 #include <string>
 #include <unistd.h>
 
@@ -21,65 +20,13 @@ static void erase_if(std::vector<T>& vector, Predicate pred) {
 
 namespace Playthrough {
 
-    static u32 totalLocationsFound = 0;
-    static u32 totalItemsPlaced = 0;
     static u64 accessibleLocationIterations = 0;
     static std::vector<ItemLocation *> AccessibleLocationPool;
 
-    static void PlaceItemInLocation(Item* item, ItemLocation* loc, std::set<ItemOverride, ItemOverride_Compare>& overrides, bool applyEffectImmediately = true) {
-        // Put item in the override table
-        overrides.insert({
-          .key = loc->Key(),
-          .value = item->Value(),
-        });
+    //apply an items effect while placing it
+    const bool APPLY_IMMEDAITELY = true;
 
-        PlacementLog_Msg("\n");
-        PlacementLog_Msg(item->GetName());
-        PlacementLog_Msg(" placed at ");
-        PlacementLog_Msg(loc->GetName());
-        PlacementLog_Msg("\n\n");
-
-        if (applyEffectImmediately) {
-          item->ApplyEffect();
-          loc->Use();
-        }
-
-        loc->SetPlacedItem(*item);
-        totalItemsPlaced++;
-        printf("\x1b[8;10HPlacing Items...");
-        if (Settings::Logic == LOGIC_GLITCHLESS) {
-          printf("%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
-        }
-
-    }
-
-    template <typename Container>
-    static void RandomizeDungeonKeys(const Container& KeyRequirements, Item* smallKeyItem, u8 maxKeys, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-      for (size_t i = 0; i < maxKeys; i++) {
-        std::vector<ItemLocation *> dungeonPool;
-        for (const ItemLocationKeyPairing& ilkp : KeyRequirements) {
-          if (ilkp.keysRequired <= i && ilkp.loc->GetPlacedItemName() == "No Item") {
-            dungeonPool.push_back(ilkp.loc);
-          }
-        }
-        const u32 locIdx = Random() % dungeonPool.size();
-        PlaceItemInLocation(smallKeyItem, dungeonPool[locIdx], overrides, false);
-      }
-    }
-
-    template <typename Container>
-    static void RandomizeDungeonItem(const Container& dungeonLocations, Item* item, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-      std::vector<ItemLocation *> dungeonPool;
-      for (const ItemLocationKeyPairing& ilkp : dungeonLocations) {
-        if (ilkp.loc->GetPlacedItemName() == "No Item") {
-          dungeonPool.push_back(ilkp.loc);
-        }
-      }
-      const u32 locIdx = Random() % dungeonPool.size();
-      PlaceItemInLocation(item, dungeonPool[locIdx], overrides, false);
-    }
-
-    void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
+    static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
       if (ToD == ExitPairing::Time::Day) {
         if (age == AGE_CHILD) {
           exit->dayChild = true;
@@ -116,7 +63,7 @@ namespace Playthrough {
       }
     }
 
-    static void AccessibleLocations_Update(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+    static void AccessibleLocations_Update() {
         bool advancementChange = true;
         while(advancementChange) {
           advancementChange = false;
@@ -146,7 +93,9 @@ namespace Playthrough {
               }
 
               Logic::UpdateHelpers();
-              area->UpdateEvents();
+              if (area->UpdateEvents()) {
+                advancementChange = true;
+              }
               area->UpdateAdvancementNeeds();
 
               //for each exit in this area
@@ -211,7 +160,7 @@ namespace Playthrough {
         erase_if(Exits::ExitPool, [](const Exit* exit){return exit->AllAccountedFor();});
     }
 
-    static void AccessibleLocations_Init(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+    static void AccessibleLocations_Init() {
       //set first access variable based upon settings
       if(Settings::HasNightStart) {
         if(Settings::StartingAge == AGE_CHILD) {
@@ -235,13 +184,13 @@ namespace Playthrough {
         AccessibleLocationPool.assign(allLocations.begin(), allLocations.end());
       }
 
-      AccessibleLocations_Update(overrides);
+      AccessibleLocations_Update();
       if (Logic::EventsUpdated()) {
-        AccessibleLocations_Update(overrides);
+        AccessibleLocations_Update();
       }
     }
 
-    static int PlaceAdvancementItem(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+    static int PlaceAdvancementItem() {
         if (AdvancementItemPool.empty()) {
             return -1;
         }
@@ -253,7 +202,7 @@ namespace Playthrough {
         unsigned int itemIdx = Random() % AdvancementItemPool.size();
         unsigned int locIdx  = Random() % AccessibleLocationPool.size();
 
-        PlaceItemInLocation(&AdvancementItemPool[itemIdx], AccessibleLocationPool[locIdx], overrides);
+        PlaceItemInLocation(AccessibleLocationPool[locIdx], &AdvancementItemPool[itemIdx], APPLY_IMMEDAITELY);
         advancementLocations.push_back(AccessibleLocationPool[locIdx]);
 
         AdvancementItemPool.erase(AdvancementItemPool.begin() + itemIdx);
@@ -261,460 +210,58 @@ namespace Playthrough {
         erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->IsUsed();});
         Logic::CurAccessibleLocations--;
 
-        AccessibleLocations_Update(overrides);
+        AccessibleLocations_Update();
         if (Logic::EventsUpdated()) {
-          AccessibleLocations_Update(overrides);
+          AccessibleLocations_Update();
         }
         return 1;
     }
 
-    static int PlaceRandomItem(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+    static int PlaceRandomItem() {
         unsigned int itemIdx = Random() % ItemPool.size();
         unsigned int locIdx = Random() % AccessibleLocationPool.size();
 
-        PlaceItemInLocation(&ItemPool[itemIdx], AccessibleLocationPool[locIdx], overrides);
+        PlaceItemInLocation(AccessibleLocationPool[locIdx], &ItemPool[itemIdx], APPLY_IMMEDAITELY);
 
         ItemPool.erase(ItemPool.begin() + itemIdx);
         //erase locations that have been used
         erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->IsUsed();});
         Logic::CurAccessibleLocations--;
 
-        AccessibleLocations_Update(overrides);
+        AccessibleLocations_Update();
         if (Logic::EventsUpdated()) {
-          AccessibleLocations_Update(overrides);
+          AccessibleLocations_Update();
         }
         return 1;
     }
 
-    static void RandomizeDungeonRewards(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+    static void RandomizeDungeonRewards() {
 
       //shuffle an array of indices so that we can randomize the rewards both logically and for the patch
-      std::array<int, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+      std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
       std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
 
       for (u8 i = 0; i < dungeonRewards.size(); i++) {
-        int idx = idxArray[i];
-        PlaceItemInLocation(&dungeonRewards[idx], dungeonRewardLocations[i], overrides, false);
+        u8 idx = idxArray[i];
+        PlaceItemInLocation(dungeonRewardLocations[i], &dungeonRewards[idx]);
         Settings::rDungeonRewardOverrides[i] = idx;
       }
       Settings::LinksPocketRewardBitMask = LinksPocket.GetPlacedItem().GetItemID();
     }
 
-    //Check for specific preset items in locations
-    static void PlaceSetItems(std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-      totalItemsPlaced = 0;
-      //don't immediately apply the effect of placing the item. Let the playthrough apply it when it finds the item.
-      const bool NO_EFFECT = false;
-
-      PlaceItemInLocation(&A_ZeldasLetter,    &HC_ZeldasLetter, overrides, NO_EFFECT);
-
-      if (!Settings::ShuffleKokiriSword)
-        PlaceItemInLocation(&A_KokiriSword, &KF_KokiriSwordChest, overrides, NO_EFFECT);
-
-      if (!Settings::ShuffleWeirdEgg)
-        PlaceItemInLocation(&A_WeirdEgg, &HC_MalonEgg, overrides, NO_EFFECT);
-
-      if (!Settings::ShuffleGerudoToken)
-        PlaceItemInLocation(&A_GerudoToken, &GF_GerudoToken, overrides, NO_EFFECT);
-
-      if (!Settings::ShuffleMagicBeans)
-        PlaceItemInLocation(&A_MagicBean, &ZR_MagicBeanSalesman, overrides, NO_EFFECT);
-
-      if (!Settings::ShuffleOcarinas) {
-        PlaceItemInLocation(&A_ProgressiveOcarina, &LW_GiftFromSaria,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&A_ProgressiveOcarina, &HF_OcarinaOfTimeItem, overrides, NO_EFFECT);
-      }
-
-      if (Settings::Skullsanity == TOKENSANITY_VANILLA) {
-        //Overworld
-        PlaceItemInLocation(&GoldSkulltulaToken, &KF_GS_BeanPatch,                             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &KF_GS_KnowItAllHouse,                        overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &KF_GS_HouseOfTwins,                          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LW_GS_BeanPatchNearBridge,                   overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LW_GS_BeanPatchNearTheater,                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LW_GS_AboveTheater,                          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &SFM_GS,                                      overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &HF_GS_NearKakGrotto,                         overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &HF_GS_CowGrotto,                             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &MK_GS_GuardHouse,                            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &HC_GS_Tree,                                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &HC_GS_StormsGrotto,                          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &OGC_GS,                                      overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LLR_GS_Tree,                                 overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LLR_GS_RainShed,                             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LLR_GS_HouseWindow,                          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LLR_GS_BackWall,                             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Kak_GS_HouseUnderConstruction,               overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Kak_GS_SkulltulaHouse,                       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Kak_GS_GuardsHouse,                          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Kak_GS_Tree,                                 overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Kak_GS_Watchtower,                           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Kak_GS_AboveImpasHouse,                      overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GY_GS_Wall,                                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GY_GS_BeanPatch,                             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DMT_GS_BeanPatch,                            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DMT_GS_NearKak,                              overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DMT_GS_FallingRocksPath,                     overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DMT_GS_AboveDodongosCavern,                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GC_GS_BoulderMaze,                           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GC_GS_CenterPlatform,                        overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DMC_GS_Crate,                                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DMC_GS_BeanPatch,                            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZR_GS_Ladder,                                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZR_GS_Tree,                                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZR_GS_NearRaisedGrottos,                     overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZR_GS_AboveBridge,                           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZD_GS_FrozenWaterfall,                       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZF_GS_Tree,                                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZF_GS_AboveTheLog,                           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ZF_GS_HiddenCave,                            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LH_GS_BeanPatch,                             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LH_GS_LabWall,                               overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LH_GS_SmallIsland,                           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LH_GS_Tree,                                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &LH_GS_LabCrate,                              overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GV_GS_SmallBridge,                           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GV_GS_BeanPatch,                             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GV_GS_BehindTent,                            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GV_GS_Pillar,                                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GF_GS_ArcheryRange,                          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &GF_GS_TopFloor,                              overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &HW_GS,                                       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Colossus_GS_BeanPatch,                       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Colossus_GS_Tree,                            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &Colossus_GS_Hill,                            overrides, NO_EFFECT);
-
-        //Dungeons
-        PlaceItemInLocation(&GoldSkulltulaToken, &DekuTree_GS_CompassRoom,                     overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DekuTree_GS_BasementVines,                   overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DekuTree_GS_BasementGate,                    overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DekuTree_GS_BasementBackRoom,                overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &DodongosCavern_GS_SideRoomNearLowerLizalfos, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DodongosCavern_GS_VinesAboveStairs,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DodongosCavern_GS_BackRoom,                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DodongosCavern_GS_AlcoveAboveStairs,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &DodongosCavern_GS_Scarecrow,                 overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &JabuJabusBelly_GS_WaterSwitchRoom,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &JabuJabusBelly_GS_LobbyBasementLower,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &JabuJabusBelly_GS_LobbyBasementUpper,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &JabuJabusBelly_GS_NearBoss,                  overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &ForestTemple_GS_FirstRoom,                   overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ForestTemple_GS_Lobby,                       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ForestTemple_GS_RaisedIslandCourtyard,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ForestTemple_GS_LevelIslandCourtyard,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ForestTemple_GS_Basement,                    overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &FireTemple_GS_SongOfTimeRoom,                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &FireTemple_GS_BoulderMaze,                   overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &FireTemple_GS_ScarecrowClimb,                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &FireTemple_GS_ScarecrowTop,                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &FireTemple_GS_BossKeyLoop,                   overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &WaterTemple_GS_BehindGate,                   overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &WaterTemple_GS_River,                        overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &WaterTemple_GS_FallingPlatformRoom,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &WaterTemple_GS_CentralPillar,                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &WaterTemple_GS_NearBossKeyChest,             overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &SpiritTemple_GS_MetalFence,                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &SpiritTemple_GS_SunOnFloorRoom,              overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &SpiritTemple_GS_HallAfterSunBlockRoom,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &SpiritTemple_GS_BoulderRoom,                 overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &SpiritTemple_GS_Lobby,                       overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &ShadowTemple_GS_LikeLikeRoom,                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ShadowTemple_GS_FallingSpikesRoom,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ShadowTemple_GS_SingleGiantPot,              overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ShadowTemple_GS_NearShip,                    overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &ShadowTemple_GS_TripleGiantPot,              overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &BottomOfTheWell_GS_WestInnerRoom,            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &BottomOfTheWell_GS_EastInnerRoom,            overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &BottomOfTheWell_GS_LikeLikeCage,             overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&GoldSkulltulaToken, &IceCavern_GS_SpinningScytheRoom,             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &IceCavern_GS_HeartPieceRoom,                 overrides, NO_EFFECT);
-        PlaceItemInLocation(&GoldSkulltulaToken, &IceCavern_GS_PushBlockRoom,                  overrides, NO_EFFECT);
-      }
-
-      if (Settings::Keysanity == KEYSANITY_VANILLA) {
-        //Forest Temple
-        PlaceItemInLocation(&ForestTemple_SmallKey, &ForestTemple_FirstRoomChest,    overrides, NO_EFFECT);
-        PlaceItemInLocation(&ForestTemple_SmallKey, &ForestTemple_FirstStalfosChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&ForestTemple_SmallKey, &ForestTemple_FloormasterChest,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&ForestTemple_SmallKey, &ForestTemple_RedPoeChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&ForestTemple_SmallKey, &ForestTemple_WellChest,         overrides, NO_EFFECT);
-
-        //Fire Temple
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_NearBossChest,                 overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_BigLavaRoomBlockedDoorChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_BigLavaRoomLowerOpenDoorChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_BoulderMazeLowerChest,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_BoulderMazeUpperChest,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_BoulderMazeShortcutChest,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_BoulderMazeSideRoomChest,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_SmallKey, &FireTemple_HighestGoronChest,             overrides, NO_EFFECT);
-
-        //Water Temple
-        PlaceItemInLocation(&WaterTemple_SmallKey, &WaterTemple_TorchesChest,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_SmallKey, &WaterTemple_RiverChest,            overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_SmallKey, &WaterTemple_DragonChest,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_SmallKey, &WaterTemple_CrackedWallChest,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_SmallKey, &WaterTemple_CentralPillarChest,    overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_SmallKey, &WaterTemple_CentralBowTargetChest, overrides, NO_EFFECT);
-
-        //Spirit Temple
-        PlaceItemInLocation(&SpiritTemple_SmallKey, &SpiritTemple_ChildEarlyTorchesChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&SpiritTemple_SmallKey, &SpiritTemple_EarlyAdultRightChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&SpiritTemple_SmallKey, &SpiritTemple_NearFourArmosChest,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&SpiritTemple_SmallKey, &SpiritTemple_StatueRoomHandChest,    overrides, NO_EFFECT);
-        PlaceItemInLocation(&SpiritTemple_SmallKey, &SpiritTemple_SunBlockRoomChest,      overrides, NO_EFFECT);
-
-        //Shadow Temple
-        PlaceItemInLocation(&ShadowTemple_SmallKey, &ShadowTemple_EarlySilverRupeeChest,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&ShadowTemple_SmallKey, &ShadowTemple_FallingSpikesSwitchChest,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&ShadowTemple_SmallKey, &ShadowTemple_InvisibleFloormasterChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&ShadowTemple_SmallKey, &ShadowTemple_AfterWindHiddenChest,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&ShadowTemple_SmallKey, &ShadowTemple_FreestandingKey,           overrides, NO_EFFECT);
-
-        //Bottom of the Well
-        PlaceItemInLocation(&BottomOfTheWell_SmallKey, &BottomOfTheWell_FrontLeftFakeWallChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&BottomOfTheWell_SmallKey, &BottomOfTheWell_RightBottomFakeWallChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BottomOfTheWell_SmallKey, &BottomOfTheWell_FreestandingKey,          overrides, NO_EFFECT);
-
-        //Gerudo Fortress
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_NorthF1Carpenter, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_NorthF2Carpenter, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_SouthF1Carpenter, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_SouthF2Carpenter, overrides, NO_EFFECT);
-
-        //Gerudo Training Grounds
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_BeamosChest,                overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_EyeStatueChest,             overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_HammerRoomSwitchChest,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_HeavyBlockThirdChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_HiddenCeilingChest,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_NearScarecrowChest,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_StalfosChest,               overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_UnderwaterSilverRupeeChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoTrainingGrounds_SmallKey, &GerudoTrainingGrounds_FreestandingKey,            overrides, NO_EFFECT);
-
-        //Ganon's Castle
-        PlaceItemInLocation(&GanonsCastle_SmallKey, &GanonsCastle_LightTrialInvisibleEnemiesChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GanonsCastle_SmallKey, &GanonsCastle_LightTrialLullabyChest,          overrides, NO_EFFECT);
-}
-
-      if (Settings::BossKeysanity == BOSSKEYSANITY_VANILLA) {
-        PlaceItemInLocation(&ForestTemple_BossKey, &ForestTemple_BossKeyChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_BossKey,   &FireTemple_BossKeyChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_BossKey,  &WaterTemple_BossKeyChest,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&SpiritTemple_BossKey, &SpiritTemple_BossKeyChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&ShadowTemple_BossKey, &ShadowTemple_BossKeyChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GanonsCastle_BossKey, &GanonsCastle_BossKeyChest, overrides, NO_EFFECT);
-      }
-
-      if (Settings::MapsAndCompasses == MAPSANDCOMPASSES_VANILLA) {
-        PlaceItemInLocation(&DekuTree_Map, &DekuTree_MapChest,               overrides, NO_EFFECT);
-        PlaceItemInLocation(&DodongosCavern_Map, &DodongosCavern_MapChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&JabuJabusBelly_Map, &JabuJabusBelly_MapChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&ForestTemple_Map, &ForestTemple_MapChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_Map, &FireTemple_MapChest,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_Map, &WaterTemple_MapChest,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&SpiritTemple_Map, &SpiritTemple_MapChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&ShadowTemple_Map, &ShadowTemple_MapChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&BottomOfTheWell_Map, &BottomOfTheWell_MapChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&IceCavern_Map, &IceCavern_MapChest,             overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&DekuTree_Compass, &DekuTree_CompassChest,               overrides, NO_EFFECT);
-        PlaceItemInLocation(&DodongosCavern_Compass, &DodongosCavern_CompassChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&JabuJabusBelly_Compass, &JabuJabusBelly_CompassChest,   overrides, NO_EFFECT);
-        PlaceItemInLocation(&ForestTemple_Compass, &ForestTemple_BluePoeChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&FireTemple_Compass, &FireTemple_CompassChest,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&WaterTemple_Compass, &WaterTemple_CompassChest,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&SpiritTemple_Compass, &SpiritTemple_CompassChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&ShadowTemple_Compass, &ShadowTemple_CompassChest,       overrides, NO_EFFECT);
-        PlaceItemInLocation(&BottomOfTheWell_Compass, &BottomOfTheWell_CompassChest, overrides, NO_EFFECT);
-        PlaceItemInLocation(&IceCavern_Compass, &IceCavern_CompassChest,             overrides, NO_EFFECT);
-      }
-
-      if (Settings::Keysanity == KEYSANITY_DUNGEON_ONLY) {
-        //Gerudo Fortress (not much to randomize here)
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_NorthF1Carpenter, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_NorthF2Carpenter, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_SouthF1Carpenter, overrides, NO_EFFECT);
-        PlaceItemInLocation(&GerudoFortress_SmallKey, &GF_SouthF2Carpenter, overrides, NO_EFFECT);
-
-        //distribute keys into their dungeons
-        RandomizeDungeonKeys(ForestTempleKeyRequirements,          &ForestTemple_SmallKey,          5, overrides);
-        RandomizeDungeonKeys(FireTempleKeyRequirements,            &FireTemple_SmallKey,            8, overrides);
-        RandomizeDungeonKeys(WaterTempleKeyRequirements,           &WaterTemple_SmallKey,           6, overrides);
-        RandomizeDungeonKeys(SpiritTempleKeyRequirements,          &SpiritTemple_SmallKey,          5, overrides);
-        RandomizeDungeonKeys(ShadowTempleKeyRequirements,          &ShadowTemple_SmallKey,          5, overrides);
-        RandomizeDungeonKeys(BottomOfTheWellKeyRequirements,       &BottomOfTheWell_SmallKey,       3, overrides);
-        RandomizeDungeonKeys(GerudoTrainingGroundsKeyRequirements, &GerudoTrainingGrounds_SmallKey, 9, overrides);
-        RandomizeDungeonKeys(GanonsCastleKeyRequirements,          &GanonsCastle_SmallKey,          2, overrides);
-        }
-
-      if (Settings::BossKeysanity == BOSSKEYSANITY_DUNGEON_ONLY) {
-        RandomizeDungeonItem(ForestTempleKeyRequirements, &ForestTemple_BossKey, overrides);
-        RandomizeDungeonItem(FireTempleKeyRequirements,   &FireTemple_BossKey,   overrides);
-        RandomizeDungeonItem(WaterTempleKeyRequirements,  &WaterTemple_BossKey,  overrides);
-        RandomizeDungeonItem(SpiritTempleKeyRequirements, &SpiritTemple_BossKey, overrides);
-        RandomizeDungeonItem(ShadowTempleKeyRequirements, &ShadowTemple_BossKey, overrides);
-        RandomizeDungeonItem(GanonsCastleKeyRequirements, &GanonsCastle_BossKey, overrides);
-      }
-
-      if (Settings::MapsAndCompasses == MAPSANDCOMPASSES_DUNGEON_ONLY) {
-        RandomizeDungeonItem(DekuTreeKeyRequirements,        &DekuTree_Map,        overrides);
-        RandomizeDungeonItem(DodongosCavernKeyRequirements,  &DodongosCavern_Map,  overrides);
-        RandomizeDungeonItem(JabuJabusBellyKeyRequirements,  &JabuJabusBelly_Map,  overrides);
-        RandomizeDungeonItem(ForestTempleKeyRequirements,    &ForestTemple_Map,    overrides);
-        RandomizeDungeonItem(FireTempleKeyRequirements,      &FireTemple_Map,      overrides);
-        RandomizeDungeonItem(WaterTempleKeyRequirements,     &WaterTemple_Map,     overrides);
-        RandomizeDungeonItem(SpiritTempleKeyRequirements,    &SpiritTemple_Map,    overrides);
-        RandomizeDungeonItem(ShadowTempleKeyRequirements,    &ShadowTemple_Map,    overrides);
-        RandomizeDungeonItem(BottomOfTheWellKeyRequirements, &BottomOfTheWell_Map, overrides);
-        RandomizeDungeonItem(IceCavernKeyRequirements,       &IceCavern_Map,       overrides);
-
-        RandomizeDungeonItem(DekuTreeKeyRequirements,        &DekuTree_Compass,        overrides);
-        RandomizeDungeonItem(DodongosCavernKeyRequirements,  &DodongosCavern_Compass,  overrides);
-        RandomizeDungeonItem(JabuJabusBellyKeyRequirements,  &JabuJabusBelly_Compass,  overrides);
-        RandomizeDungeonItem(ForestTempleKeyRequirements,    &ForestTemple_Compass,    overrides);
-        RandomizeDungeonItem(FireTempleKeyRequirements,      &FireTemple_Compass,      overrides);
-        RandomizeDungeonItem(WaterTempleKeyRequirements,     &WaterTemple_Compass,     overrides);
-        RandomizeDungeonItem(SpiritTempleKeyRequirements,    &SpiritTemple_Compass,    overrides);
-        RandomizeDungeonItem(ShadowTempleKeyRequirements,    &ShadowTemple_Compass,    overrides);
-        RandomizeDungeonItem(BottomOfTheWellKeyRequirements, &BottomOfTheWell_Compass, overrides);
-        RandomizeDungeonItem(IceCavernKeyRequirements,       &IceCavern_Compass,       overrides);
-      }
-
-      if (!Settings::Shopsanity) {
-        PlaceItemInLocation(&BuyDekuShield,   &KF_ShopItem1,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,     &KF_ShopItem2,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut10,    &KF_ShopItem3,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuStick1,   &KF_ShopItem4,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuSeeds30,  &KF_ShopItem5,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows10,     &KF_ShopItem6,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,     &KF_ShopItem7,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyHeart,        &KF_ShopItem8,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,     &Kak_PotionShopItem1, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyFish,         &Kak_PotionShopItem2, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion30,  &Kak_PotionShopItem3, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyGreenPotion,  &Kak_PotionShopItem4, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBlueFire,     &Kak_PotionShopItem5, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBottleBug,    &Kak_PotionShopItem6, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyPoe,          &Kak_PotionShopItem7, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyFairysSpirit, &Kak_PotionShopItem8, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu5,     &MK_BombchuShopItem1, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu10,    &MK_BombchuShopItem2, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu10,    &MK_BombchuShopItem3, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu10,    &MK_BombchuShopItem4, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem5, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem6, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem7, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombchu20,    &MK_BombchuShopItem8, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyGreenPotion,  &MK_PotionShopItem1,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBlueFire,     &MK_PotionShopItem2,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion30,  &MK_PotionShopItem3,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyFairysSpirit, &MK_PotionShopItem4,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,     &MK_PotionShopItem5,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBottleBug,    &MK_PotionShopItem6,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyPoe,          &MK_PotionShopItem7,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyFish,         &MK_PotionShopItem8,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyHylianShield, &MK_BazaarItem1,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombs535,     &MK_BazaarItem2,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,     &MK_BazaarItem3,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyHeart,        &MK_BazaarItem4,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows10,     &MK_BazaarItem5,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows50,     &MK_BazaarItem6,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuStick1,   &MK_BazaarItem7,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,     &MK_BazaarItem8,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyHylianShield, &Kak_BazaarItem1,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombs535,     &Kak_BazaarItem2,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,     &Kak_BazaarItem3,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyHeart,        &Kak_BazaarItem4,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows10,     &Kak_BazaarItem5,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows50,     &Kak_BazaarItem6,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuStick1,   &Kak_BazaarItem7,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,     &Kak_BazaarItem8,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyZoraTunic,    &ZD_ShopItem1,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows10,     &ZD_ShopItem2,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyHeart,        &ZD_ShopItem3,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,     &ZD_ShopItem4,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,     &ZD_ShopItem5,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows50,     &ZD_ShopItem6,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyFish,         &ZD_ShopItem7,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion50,  &ZD_ShopItem8,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyZoraTunic,    &GC_ShopItem1,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows10,     &GC_ShopItem2,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyHeart,        &GC_ShopItem3,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,     &GC_ShopItem4,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,     &GC_ShopItem5,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows50,     &GC_ShopItem6,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyFish,         &GC_ShopItem7,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion50,  &GC_ShopItem8,        overrides, NO_EFFECT);
-      }
-
-      if (Settings::Scrubsanity == SCRUBSANITY_OFF) {
-        //Overworld Scrubs
-        PlaceItemInLocation(&BuyRedPotion30, &ZR_DekuScrubGrottoRear,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyGreenPotion, &ZR_DekuScrubGrottoFront,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion30, &SFM_DekuScrubGrottoRear,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyGreenPotion, &SFM_DekuScrubGrottoFront,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,    &LH_DekuScrubGrottoLeft,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombs535,    &LH_DekuScrubGrottoRight,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,    &LH_DekuScrubGrottoCenter,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion30, &GV_DekuScrubGrottoRear,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyGreenPotion, &GV_DekuScrubGrottoFront,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,    &LW_DekuScrubNearDekuTheaterRight, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuStick1,  &LW_DekuScrubNearDekuTheaterLeft,  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,    &LW_DekuScrubGrottoRear,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion30, &Colossus_DekuScrubGrottoRear,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyGreenPotion, &Colossus_DekuScrubGrottoFront,    overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombs535,    &DMC_DekuScrub,                    overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,    &DMC_DekuScrubGrottoLeft,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombs535,    &DMC_DekuScrubGrottoRight,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,    &DMC_DekuScrubGrottoCenter,        overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,    &GC_DekuScrubGrottoLeft,           overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombs535,    &GC_DekuScrubGrottoRight,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,    &GC_DekuScrubGrottoCenter,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuNut5,    &LLR_DekuScrubGrottoLeft,          overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyBombs535,    &LLR_DekuScrubGrottoRight,         overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,    &LLR_DekuScrubGrottoCenter,        overrides, NO_EFFECT);
-
-        //Dungeon Scrubs
-        PlaceItemInLocation(&BuyDekuNut5,    &DodongosCavern_DekuScrubNearBombBagLeft,      overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuStick1,  &DodongosCavern_DekuScrubSideRoomNearDodongos, overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuSeeds30, &DodongosCavern_DekuScrubNearBombBagRight,     overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyDekuShield,  &DodongosCavern_DekuScrubLobby,                overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&BuyDekuNut5,    &JabuJabusBelly_DekuScrub,                     overrides, NO_EFFECT);
-
-        PlaceItemInLocation(&BuyBombs535,    &GanonsCastle_DekuScrubCenterLeft,             overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyArrows30,    &GanonsCastle_DekuScrubCenterRight,            overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyRedPotion30, &GanonsCastle_DekuScrubRight,                  overrides, NO_EFFECT);
-        PlaceItemInLocation(&BuyGreenPotion, &GanonsCastle_DekuScrubLeft,                   overrides, NO_EFFECT);
-      }
-    }
-
-    static void Playthrough_Init(u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
+    static void Playthrough_Init(u32 seed) {
         Random_Init(seed); //seed goes here
         Settings::UpdateSettings();
         Settings::PrintSettings();
         Logic::UpdateHelpers();
         GenerateItemPool();
-        RandomizeDungeonRewards(overrides);
-        PlaceSetItems(overrides);
-        AccessibleLocations_Init(overrides);
+        RandomizeDungeonRewards();
+        AccessibleLocations_Init();
     }
 
-    int Fill(int settings, u32 seed, std::set<ItemOverride, ItemOverride_Compare>& overrides) {
-        (void)settings;
-
-        Playthrough_Init(seed, overrides);
+    int Fill(u32 seed) {
+        overrides.clear();
+        Playthrough_Init(seed);
         /*
         while (not all locations accessible)
           - Determine which items can be placed for advancement
@@ -726,9 +273,9 @@ namespace Playthrough {
         while ((!ItemPool.empty() || !AdvancementItemPool.empty()) && !AccessibleLocationPool.empty()) {
             int ret;
             if (!AdvancementItemPool.empty()) {
-              ret = PlaceAdvancementItem(overrides);
+              ret = PlaceAdvancementItem();
             } else {
-              ret = PlaceRandomItem(overrides);
+              ret = PlaceRandomItem();
             }
 
             if (ret < 0) {
@@ -740,13 +287,21 @@ namespace Playthrough {
             }
 
         }
-        printf("\x1b[9;10H");
-        bool rv = SpoilerLog_Write();
-        if (rv) printf("Wrote Spoiler Log\n");
-        else    printf("failed to write log\n");
 
-        rv = PlacementLog_Write();
-        printf("\x1b[10;10HWrote Placement Log\n");
+        printf("\x1b[9;10H");
+        if (SpoilerLog_Write()) {
+          printf("Wrote spoiler log\n");
+        } else {
+          printf("Failed to write spoiler log\n");
+        }
+
+        printf("\x1b[10;10H");
+        if (PlacementLog_Write()) {
+          printf("Wrote placement log\n");
+        } else {
+          printf("Failed to write placement log\n");
+        }
+
         return 1;
     }
 
