@@ -287,6 +287,8 @@ namespace Playthrough {
             }
 
         }
+        printf("\x1b[15;2HItems Left: %d", ItemPool.size());
+
         printf("\x1b[9;10H");
         bool rv = SpoilerLog_Write();
         if (rv) printf("Wrote Spoiler Log\n");
