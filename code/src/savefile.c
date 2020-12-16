@@ -35,7 +35,7 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
     gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
-    
+
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
     //navi text triggers
@@ -72,6 +72,13 @@ void SaveFile_Init() {
 
     if (!gSettingsContext.fourPoesCutscene) {
       gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
+    }
+
+    //give maps and compasses
+    if (gSettingsContext.mapsAndCompasses == MAPSANDCOMPASSES_START_WITH) {
+      for (u8 i = 0; i < 0xA; i++) {
+        gSaveContext.dungeonItems[i] |= 0x6;
+      }
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him

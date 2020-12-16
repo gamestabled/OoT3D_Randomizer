@@ -225,7 +225,7 @@ namespace Playthrough {
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update();
-        if (Logic::EventsUpdated()) {
+        if (true) {
           AccessibleLocations_Update();
         }
         return 1;
@@ -286,7 +286,7 @@ namespace Playthrough {
             }
 
         }
-        printf("\x1b[15;2HItems Left: %d", ItemPool.size());
+        printf("\x1b[15;2HItems Left: %d\n", ItemPool.size());
 
         printf("\x1b[9;10H");
         if (SpoilerLog_Write()) {

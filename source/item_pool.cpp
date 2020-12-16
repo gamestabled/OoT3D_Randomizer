@@ -966,12 +966,12 @@ void GenerateItemPool() {
 
   //scrubsanity
   if (Settings::Scrubsanity != SCRUBSANITY_OFF) {
-    AddItemToMainPool(DekuNuts5, 2);
-    AddItemToMainPool(DekuStick1);
-    AddItemToMainPool(I_DekuShield);
-    AddItemToMainPool(Bombs5);
-    AddItemToMainPool(RecoveryHeart);
-    AddItemToMainPool(BlueRupee);
+    // AddItemToMainPool(DekuNuts5, 2);
+    // AddItemToMainPool(DekuStick1);
+    // AddItemToMainPool(I_DekuShield);
+    // AddItemToMainPool(Bombs5);
+    // AddItemToMainPool(RecoveryHeart);
+    // AddItemToMainPool(BlueRupee);
     JoinPools(ItemPool, dekuScrubItems);
     // for (u8 i = 0; i < 7; i++) {
     //   if (Random() % 3) {
@@ -1061,12 +1061,6 @@ void GenerateItemPool() {
   //TODO: free scarecrow
 
   //TODO: no epona race
-
-  if (MapsAndCompasses == MAPSANDCOMPASSES_START_WITH) {
-    for (Item item : dungeonItems) {
-      AddItemToMainPool(GetJunkItem());
-    }
-  }
 
   //Vanilla Dungeon Placements
   if (MapsAndCompasses == MAPSANDCOMPASSES_VANILLA) {

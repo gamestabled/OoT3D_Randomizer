@@ -465,7 +465,7 @@ namespace Logic {
     HasAllStones          = KokiriEmerald   && GoronRuby     && ZoraSapphire;
     HasAllMedallions      = ForestMedallion && FireMedallion && WaterMedallion && ShadowMedallion && SpiritMedallion && LightMedallion;
     CanBuildRainbowBridge = Bridge == RAINBOWBRIDGE_OPEN       ||
-                           (Bridge == RAINBOWBRIDGE_VANILLA    && ShadowMedallion && SpiritMedallion && LightArrows) ||
+                           (Bridge == RAINBOWBRIDGE_VANILLA    && ShadowMedallion && SpiritMedallion) ||
                            (Bridge == RAINBOWBRIDGE_STONES     && HasAllStones) ||
                            (Bridge == RAINBOWBRIDGE_MEDALLIONS && HasAllMedallions) ||
                            (Bridge == RAINBOWBRIDGE_DUNGEONS   && HasAllStones && HasAllMedallions);
