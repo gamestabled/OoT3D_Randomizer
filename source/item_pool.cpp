@@ -470,7 +470,7 @@ static void AddItemToMainPool(const Item& item, size_t count = 1) {
 
 template <size_t N>
 static void JoinPools(std::vector<Item>& pool1, const std::array<Item, N>& pool2) {
-  for (Item item : pool2) {
+  for (const Item item : pool2) {
     AddItemToPool(pool1, item);
   }
 }
@@ -973,13 +973,13 @@ void GenerateItemPool() {
     AddItemToMainPool(RecoveryHeart);
     AddItemToMainPool(BlueRupee);
     JoinPools(ItemPool, dekuScrubItems);
-    for (u8 i = 0; i < 7; i++) {
-      if (Random() % 3) {
-        AddItemToMainPool(Arrows30);
-      } else {
-        AddItemToMainPool(DekuSeeds30);
-      }
-    }
+    // for (u8 i = 0; i < 7; i++) {
+    //   if (Random() % 3) {
+    //     AddItemToMainPool(Arrows30);
+    //   } else {
+    //     AddItemToMainPool(DekuSeeds30);
+    //   }
+    // }
   } else {
     PlaceVanillaDekuScrubItems();
   }
@@ -1188,6 +1188,6 @@ void GenerateItemPool() {
   }
 }
 
-void AddGreenRupee() {
-  AddItemToMainPool(GreenRupee);
+void AddJunk() {
+  AddItemToMainPool(GetJunkItem());
 }

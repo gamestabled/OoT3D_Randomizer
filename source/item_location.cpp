@@ -19,7 +19,7 @@ void PlaceItemInLocation(ItemLocation* loc, Item* item, bool applyEffectImmediat
     PlacementLog_Msg(loc->GetName());
     PlacementLog_Msg("\n\n");
 
-    if (applyEffectImmediately) {
+    if (applyEffectImmediately || Settings::Logic == LOGIC_NONE) {
       item->ApplyEffect();
       loc->Use();
     }
@@ -29,7 +29,6 @@ void PlaceItemInLocation(ItemLocation* loc, Item* item, bool applyEffectImmediat
     if (Settings::Logic == LOGIC_GLITCHLESS) {
       printf("%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
     }
-
 }
 
 //Location definitions
