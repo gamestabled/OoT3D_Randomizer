@@ -973,13 +973,13 @@ void GenerateItemPool() {
     AddItemToMainPool(RecoveryHeart);
     AddItemToMainPool(BlueRupee);
     JoinPools(ItemPool, dekuScrubItems);
-    for (u8 i = 0; i < 7; i++) {
-      if (Random() % 3) {
-        AddItemToMainPool(Arrows30);
-      } else {
-        AddItemToMainPool(DekuSeeds30);
-      }
-    }
+    // for (u8 i = 0; i < 7; i++) {
+    //   if (Random() % 3) {
+    //     AddItemToMainPool(Arrows30);
+    //   } else {
+    //     AddItemToMainPool(DekuSeeds30);
+    //   }
+    // }
   } else {
     PlaceVanillaDekuScrubItems();
   }
@@ -1188,6 +1188,6 @@ void GenerateItemPool() {
   }
 }
 
-void AddGreenRupee() {
-  AddItemToMainPool(GreenRupee);
+void AddJunk() {
+  AddItemToMainPool(GetJunkItem());
 }

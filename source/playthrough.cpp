@@ -206,8 +206,6 @@ namespace Playthrough {
         advancementLocations.push_back(AccessibleLocationPool[locIdx]);
 
         AdvancementItemPool.erase(AdvancementItemPool.begin() + itemIdx);
-        //erase locations that have been used
-        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->IsUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update();
@@ -224,8 +222,6 @@ namespace Playthrough {
         PlaceItemInLocation(AccessibleLocationPool[locIdx], &ItemPool[itemIdx], APPLY_IMMEDAITELY);
 
         ItemPool.erase(ItemPool.begin() + itemIdx);
-        //erase locations that have been used
-        erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->IsUsed();});
         Logic::CurAccessibleLocations--;
 
         AccessibleLocations_Update();
@@ -271,6 +267,9 @@ namespace Playthrough {
 
         */
         while ((!ItemPool.empty() || !AdvancementItemPool.empty()) && !AccessibleLocationPool.empty()) {
+            //erase locations that have been used
+            erase_if(AccessibleLocationPool, [](const ItemLocation* il){return il->IsUsed();});
+
             int ret;
             if (!AdvancementItemPool.empty()) {
               ret = PlaceAdvancementItem();
@@ -283,7 +282,7 @@ namespace Playthrough {
             }
 
             if (ItemPool.empty() && !AccessibleLocationPool.empty()) {
-              AddGreenRupee();
+              AddJunk();
             }
 
         }
