@@ -653,6 +653,29 @@ MagicArrowsInInventory_patch:
 ApplyDamageMultiplier_patch:
     bl hook_ApplyDamageMultiplier
 
+.section .patch_SceneInitAfterCopyScenes
+.global SceneInitAfterCopyScenes_patch
+SceneInitAfterCopyScenes_patch:
+    b hook_SceneInitAfterCopyScenes
+
+.section .patch_StoreChildBButtonEquip
+.global StoreChildBButtonEquip_patch
+StoreChildBButtonEquip_patch:
+    b hook_StoreChildBButtonEquip
+
+.section .patch_AlwaysRestoreChildEquips
+.global AlwaysRestoreChildEquips_patch
+AlwaysRestoreChildEquips_patch:
+    nop
+
+.section .patch_ChildDontEquipSwordSlotByDefault
+.global ChildDontEquipSwordSlotByDefault_patch
+ChildDontEquipSwordSlotByDefault_patch:
+    push {r1-r12, lr}
+    bl SaveFile_RestoreChildEquips
+    pop {r1-r12, lr}
+    nop
+
 .section .patch_loader
 .global loader_patch
 

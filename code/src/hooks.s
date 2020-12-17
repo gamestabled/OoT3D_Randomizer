@@ -342,6 +342,21 @@ hook_ApplyDamageMultiplier:
     pop {r0-r3, r5-r12, lr}
     bx lr
 
+.global hook_SceneInitAfterCopyScenes
+hook_SceneInitAfterCopyScenes:
+    push {r0-r12, lr}
+    bl 0x371738
+    bl Scene_Init
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_StoreChildBButtonEquip
+hook_StoreChildBButtonEquip:
+    push {r0-r12, lr}
+    bl SaveFile_SaveChildBButton
+    pop {r0-r12, lr}
+    b 0x45F210
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

@@ -26,6 +26,9 @@ void EnExItem_rInit(Actor* thisx, GlobalContext* globalCtx) {
         case 0x6:
             Model_SpawnByActor(&item->actor, globalCtx, 0x3E);
             break;
+        case 0x13:
+            Model_SpawnByActor(&item->actor, globalCtx, 0x60);
+            break;
     }
 }
 

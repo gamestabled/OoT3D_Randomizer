@@ -161,7 +161,7 @@ namespace Settings {
   };
   std::vector<Option *> worldOptions = {
     &O_StartingAge,
-    //&O_RandomMQDungeons,
+    &O_RandomMQDungeons,
   };
   std::vector<Option *> shuffleOptions = {
     &O_Skullsanity,

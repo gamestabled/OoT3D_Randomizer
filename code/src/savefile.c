@@ -57,6 +57,7 @@ void SaveFile_Init() {
       gSaveContext.linkAge       = AGE_ADULT;  //age is adult
       gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
       gSaveContext.sceneIndex    = 0x6100;     //^
+      gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
     }
 
     //give Link the starting stone or medallion
@@ -81,4 +82,12 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x5] |= 0x0C00; //Learned Sun's Song and Song of Storms
 
     gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
+}
+
+void SaveFile_SaveChildBButton(void) {
+    gSaveContext.childEquips.buttonItems[0] = (gSaveContext.equipment & 0x1) ? ITEM_SWORD_KOKIRI : ITEM_NONE;
+}
+
+u16 SaveFile_RestoreChildEquips(void) {
+  return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
 }
