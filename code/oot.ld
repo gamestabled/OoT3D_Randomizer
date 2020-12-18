@@ -248,6 +248,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
+	.patch_SceneInitAfterCopyScenes 0x2EAFDC : {
+		*(.patch_SceneInitAfterCopyScenes)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}
@@ -470,6 +474,18 @@ SECTIONS
 
 	.patch_after_GlobalContext_Update 0x452434 : {
 		*(.patch_after_GlobalContext_Update)
+	}
+
+	.patch_StoreChildBButtonEquip 0x45F20C : {
+		*(.patch_StoreChildBButtonEquip)
+	}
+
+	.patch_AlwaysRestoreChildEquips 0x45F3B0 : {
+		*(.patch_AlwaysRestoreChildEquips)
+	}
+
+	.patch_ChildDontEquipSwordSlotByDefault 0x45F49C : {
+		*(.patch_ChildDontEquipSwordSlotByDefault)
 	}
 
 	.patch_FireTempleItemGiveTwo 0x491B60 : {

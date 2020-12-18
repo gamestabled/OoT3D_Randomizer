@@ -416,6 +416,14 @@ typedef struct {
     /* 0x02 */ u16 field;
 } EntranceInfo; // size = 0x4
 
+typedef struct {
+    /* 0x00 */ char infoFilename[0x44];
+    /* 0x44 */ char filename[0x44];
+    /* 0x88 */ char unk_88[0x01];
+    /* 0x89 */ u8   config;
+    /* 0x8A */ char unk_8A[0x02];
+} Scene; // size = 0x8C
+
 extern GlobalContext* gGlobalContext;
 extern const u32 ItemSlots[];
 extern const char DungeonNames[][25];
@@ -423,6 +431,9 @@ extern const char DungeonNames[][25];
 #define gStaticContext (*(StaticContext*)0x08080010)
 #define gEntranceTable ((EntranceInfo*)0x543BB8)
 #define gItemUsabilityTable ((u8*)0x506C58)
+#define gDungeonSceneTable ((Scene*)0x4DC400)
+#define gMQDungeonSceneTable ((Scene*)0x4DCBA8)
+#define gSceneTable ((Scene*)0x545484)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 
 typedef enum {
