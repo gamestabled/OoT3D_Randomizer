@@ -98,6 +98,10 @@ u32 Cutscene_OverridePrelude(void) {
     return 0;
 }
 
+u32 Cutscene_CheckLullabyFlag(void) {
+    return ((gSaveContext.eventChkInf[5] & 0x200) != 0);
+}
+
 void Cutscene_OverrideLullaby(void) {
     gSaveContext.eventChkInf[5] |= 0x200;
     ItemOverride_PushDelayedOverride(0x26);

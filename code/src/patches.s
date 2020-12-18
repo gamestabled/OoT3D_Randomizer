@@ -676,6 +676,11 @@ ChildDontEquipSwordSlotByDefault_patch:
     pop {r1-r12, lr}
     nop
 
+.section .patch_LullabyCheckFlag
+.global LullabyCheckFlag_patch
+LullabyCheckFlag_patch:
+    bl hook_LullabyCheckFlag
+
 .section .patch_loader
 .global loader_patch
 

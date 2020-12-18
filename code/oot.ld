@@ -468,6 +468,10 @@ SECTIONS
 		*(.patch_LACSConditionTwo)
 	}
 
+	.patch_LullabyCheckFlag 0x44FD54 : {
+		*(.patch_LullabyCheckFlag)
+	}
+
 	.patch_before_GlobalContext_Update 0x452390 : {
 		*(.patch_before_GlobalContext_Update)
 	}

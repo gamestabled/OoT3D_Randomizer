@@ -357,6 +357,14 @@ hook_StoreChildBButtonEquip:
     pop {r0-r12, lr}
     b 0x45F210
 
+.global hook_LullabyCheckFlag
+hook_LullabyCheckFlag:
+    push {r0-r12, lr}
+    bl Cutscene_CheckLullabyFlag
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
