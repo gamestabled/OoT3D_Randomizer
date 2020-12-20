@@ -52,6 +52,10 @@ public:
       addedToPool = true;
     }
 
+    void RemoveFromPool() {
+      addedToPool = false;
+    }
+
     std::string_view GetName() const {
       return name;
     }
@@ -100,11 +104,19 @@ public:
         return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), std::move(categories)};
     }
 
+    void ResetVariables() {
+      used = false;
+      checked = false;
+      addedToPool = false;
+      placedItem = NoItem;
+    }
+
 private:
     u8 scene;
     ItemLocationType type;
     u8 flag;
     bool used = false;
+    bool checked = false;
 
     std::string name;
     std::vector<std::string> categories;
@@ -132,8 +144,12 @@ public:
 //set of overrides to write to the patch
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
 
+extern std::vector<ItemLocation*> playthroughLocations;
+
 extern u32 totalLocationsFound;
-extern void PlaceItemInLocation(ItemLocation* loc, Item* item, bool applyEffectImmediately = false);
+extern u16 itemsPlaced;
+
+extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
 
 //Kokiri Forest
 extern ItemLocation KF_KokiriSwordChest;
@@ -639,6 +655,7 @@ extern ItemLocation Volvagia;
 extern ItemLocation Twinrova;
 extern ItemLocation Morpha;
 extern ItemLocation BongoBongo;
+extern ItemLocation Ganon;
 
 /*-------------------------------
         --- CUTSCENES ---
@@ -757,4 +774,7 @@ extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
-extern std::array<ItemLocation *, 462> allLocations;
+extern std::array<ItemLocation *, 463> allLocations;
+
+extern void LocationReset();
+extern void ItemReset();

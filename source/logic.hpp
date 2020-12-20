@@ -14,6 +14,9 @@ namespace Logic {
   extern bool HasBottle;
   extern bool BombBag;
   extern bool Bombchus;
+  extern bool Bombchus5;
+  extern bool Bombchus10;
+  extern bool Bombchus20;
   extern bool MagicBean;
   extern bool MagicBeanPack;
   extern bool RutosLetter;
@@ -287,4 +290,5 @@ namespace Logic {
   extern bool HasProjectile(std::string_view age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();
+  extern void LogicReset();
 }

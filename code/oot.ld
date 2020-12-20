@@ -84,6 +84,10 @@ SECTIONS
 		*(.patch_AdultRollingGoronTwo)
 	}
 
+	.patch_EponasSongCheckFlagTwo 0x195CFC : {
+		*(.patch_EponasSongCheckFlagTwo)
+	}
+
 	.patch_DampeChest 0x19A420 : {
 		*(.patch_DampeChest)
 	}

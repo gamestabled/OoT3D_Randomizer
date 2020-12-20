@@ -214,9 +214,11 @@ namespace Settings {
     ctx.zorasFountain    = ZorasFountain;
     ctx.startingAge      = StartingAge;
     ctx.timeOfDay        = TimeOfDay;
+    ctx.mapsAndCompasses = MapsAndCompasses;
     ctx.scrubsanity      = Scrubsanity;
     ctx.lacsCondition    = LACSCondition;
     ctx.skipChildStealth = SkipChildStealth;
+
 
     ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
     ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
@@ -224,7 +226,7 @@ namespace Settings {
     ctx.fourPoesCutscene    = (FourPoesCutscene)  ? 1 : 0;
 
     ctx.bigPoeTargetCount = BigPoeTargetCount + 1;
-    
+
     ctx.boomerangAsAdult = BoomerangAsAdult;
     ctx.hammerAsChild    = HammerAsChild;
 

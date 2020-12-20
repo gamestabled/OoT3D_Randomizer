@@ -126,6 +126,7 @@ typedef struct {
   u8 zorasFountain;
   u8 startingAge;
   u8 timeOfDay;
+  u8 mapsAndCompasses;
   u8 scrubsanity;
   u8 lacsCondition;
   u8 skipChildStealth;
@@ -153,7 +154,7 @@ typedef struct {
   u8 ganonsCastleDungeonMode;
 
   u32 dungeonRewardBitMask;
-  
+
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;

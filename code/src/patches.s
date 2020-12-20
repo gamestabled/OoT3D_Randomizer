@@ -382,6 +382,11 @@ LullabyLocation_patch:
 EponasSongCheckFlag_patch:
     bl hook_EponasSongCheckFlag
 
+.section .patch_EponasSongCheckFlagTwo
+.global EponasSongCheckFlagTwo_patch
+EponasSongCheckFlagTwo_patch:
+    bl hook_EponasSongCheckFlag
+
 .section .patch_EponasSongLocation
 .global EponasSongLocation_patch
 EponasSongLocation_patch:

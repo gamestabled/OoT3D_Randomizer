@@ -7,6 +7,7 @@
 #include "item_pool.hpp"
 #include "logic.hpp"
 #include "settings.hpp"
+#include "spoiler_log.hpp"
 
 class Exit;
 
@@ -26,8 +27,22 @@ public:
         *event = true;
     }
 
+    bool IsChecked() {
+      return checked;
+    }
+
+    void Check() {
+      checked = true;
+    }
+
+    void Uncheck() {
+      checked = false;
+    }
+
+
 private:
     bool* event;
+    bool checked = false;
     ConditionFn conditions_met;
 };
 
@@ -120,48 +135,16 @@ private:
     Time time_of_day;
 };
 
-class AdvancementPairing {
-public:
-    using ConditionFn = bool (*)();
-
-    explicit AdvancementPairing(Item item_, ConditionFn conditions_met_, u8 count_ = 1)
-        : item(std::move(item_)),
-          conditions_met(conditions_met_),
-          count(count_) {}
-
-    const Item& GetItem() const {
-        return item;
-    }
-
-    bool ConditionsMet() const {
-        return conditions_met();
-    }
-
-    bool HasNoOccurrences() const {
-        return count == 0;
-    }
-
-    void DecreaseCount() {
-        --count;
-    }
-
-private:
-    Item item;
-    ConditionFn conditions_met;
-    u8 count;
-};
-
 class Exit {
 public:
-    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::vector<EventPairing> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_, std::vector<AdvancementPairing> advancementNeeds_ = {})
+    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::vector<EventPairing> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_)
         : regionName(std::move(regionName_)),
           scene(std::move(scene_)),
           hint(std::move(hint_)),
           timePass(timePass_),
           events(std::move(events_)),
           locations(std::move(locations_)),
-          exits(std::move(exits_)),
-          advancementNeeds(std::move(advancementNeeds_)) {}
+          exits(std::move(exits_)) {}
 
     std::string regionName;
     std::string scene;
@@ -170,7 +153,6 @@ public:
     std::vector<EventPairing> events;
     std::vector<ItemLocationPairing> locations;
     std::vector<ExitPairing> exits;
-    std::vector<AdvancementPairing> advancementNeeds;
 
     bool accountedForChild = false;
     bool accountedForAdult = false;
@@ -180,7 +162,7 @@ public:
     bool nightAdult = false;
     bool addedToPool = false;
 
-    bool UpdateEvents() {
+    void UpdateEvents() {
 
       if (timePass) {
         if (Logic::Age == AGE_CHILD) {
@@ -190,22 +172,15 @@ public:
           dayAdult = true;
           nightAdult = true;
         }
-
       }
-
-      bool eventChange = false;
 
       for (size_t i = 0; i < events.size(); i++) {
         EventPairing& eventPair = events[i];
 
         if (eventPair.ConditionsMet()) {
           eventPair.EventOccurred();
-          eventChange = true;
-          events.erase(events.begin() + i);
         }
       }
-
-      return eventChange;
     }
 
 
@@ -239,74 +214,41 @@ public:
       return AllAccess()           &&
              events.size()    == 0 &&
              locations.size() == 0 &&
-             exits.size()     == 0 &&
-             advancementNeeds.size() == 0;
-    }
-
-    void UpdateAdvancementNeeds() {
-
-      for (u32 i = 0; i < advancementNeeds.size(); i++) {
-        const Item& item = advancementNeeds[i].GetItem();
-        // If the conditions aren't met, then skip for now
-        if (!advancementNeeds[i].ConditionsMet()) {
-          continue;
-        }
-
-        u32 j;
-        bool foundInPool = false;
-
-        // Find the item and index in the regular item pool
-        for (j = 0; j < ItemPool.size(); j++) {
-          if (ItemPool[j].GetName() == item.GetName()) {
-            foundInPool = true;
-            break;
-          }
-        }
-
-        // If the item isn't in the pool, then it's already been added or doesn't exist
-        if (!foundInPool) {
-          advancementNeeds.erase(advancementNeeds.begin() + i);
-          i--;
-          continue;
-        }
-
-        // If item is still in the item pool
-        if (foundInPool) {
-          advancementNeeds[i].DecreaseCount();
-          AdvancementItemPool.push_back(item);
-
-          // Check item for adding progressive things
-          const auto itemName = item.GetName();
-          if (itemName == "Progressive Hookshot")   Logic::AddedProgressiveHookshots++;
-          if (itemName == "Progressive Strength")   Logic::AddedProgressiveStrengths++;
-          if (itemName == "Progressive Bomb Bag")   Logic::AddedProgressiveBombBags++;
-          if (itemName == "Progressive Bow")        Logic::AddedProgressiveBows++;
-          if (itemName == "Progressive Bullet Bag") Logic::AddedProgressiveBulletBags++;
-          if (itemName == "Progressive Wallet")     Logic::AddedProgressiveWallets++;
-          if (itemName == "Progressive Scale")      Logic::AddedProgressiveBulletBags++;
-          if (itemName == "Progressive Magic")      Logic::AddedProgressiveMagics++;
-          if (itemName == "Progressive Ocarina")    Logic::AddedProgressiveOcarinas++;
-          if (itemName == "Gold Skulltula Token")   Logic::TokensInPool++;
-
-          // Then delete the item from the locations advancement needs and the regular item pool
-          ItemPool.erase(ItemPool.begin() + j);
-          if (advancementNeeds[i].HasNoOccurrences()) {
-            advancementNeeds.erase(advancementNeeds.begin() + i);
-            i--;
-          }
-        }
-      }
+             exits.size()     == 0;
     }
 
     void printBools() {
       printf("%s: dayC: %d, nightC: %d, dayA: %d, nightA: %d\n", regionName.c_str(), dayChild, nightChild, dayAdult, nightAdult);
     }
 
+    void ResetVariables() {
+      accountedForChild = false;
+      accountedForAdult = false;
+      dayChild = false;
+      nightChild = false;
+      dayAdult = false;
+      nightAdult = false;
+      addedToPool = false;
+    }
+
+    void LogStatus() {
+      PlacementLog_Msg("\nNOW TRAVERSING ");
+      PlacementLog_Msg(regionName);
+      PlacementLog_Msg(" ");
+      PlacementLog_Msg((dayChild)   ? "dayChild " : "");
+      PlacementLog_Msg((nightChild) ? "nightChild " : "");
+      PlacementLog_Msg((dayAdult)   ? "dayAdult " : "");
+      PlacementLog_Msg((nightAdult) ? "nightAdult " : "");
+      PlacementLog_Msg("\n\n");
+    }
+
+    bool operator< (const Exit &right) const {
+      return regionName.compare(right.regionName);
+    }
+
 };
 
 namespace Exits {
-
-  extern std::vector<Exit *> ExitPool;
 
   //Starting Locations
   extern Exit Root;
@@ -590,4 +532,6 @@ namespace Exits {
   extern Exit GanonsCastle_SpiritTrial;
   extern Exit GanonsCastle_LightTrial;
   extern Exit GanonsCastle_Tower;
+
+  extern void AccessReset();
 }
