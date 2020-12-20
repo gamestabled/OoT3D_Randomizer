@@ -20,8 +20,8 @@ static void RandomizeDungeonRewards() {
   std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
   std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
 
-  for (u8 i = 0; i < dungeonRewards.size(); i++) {
-    u8 idx = idxArray[i];
+  for (size_t i = 0; i < dungeonRewards.size(); i++) {
+    const u8 idx = idxArray[i];
     PlaceItemInLocation(dungeonRewardLocations[i], dungeonRewards[idx]);
     Settings::rDungeonRewardOverrides[i] = idx;
   }
@@ -77,7 +77,7 @@ void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthr
   while(iterationsWithNoLocations < 5) {
     iterationsWithNoLocations++;
 
-    for (u8 i = 0; i < exitPool.size(); i++) {
+    for (size_t i = 0; i < exitPool.size(); i++) {
       Exit* area = exitPool[i];
       //area->LogStatus(); for some reason this function crashes the app when attempting max randomization options
 
@@ -149,7 +149,7 @@ void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthr
                 }
 
                 //log the item location if it contains an advancement item
-                for (Item item : placedItems) {
+                for (const Item& item : placedItems) {
                   if (location->GetPlacedItemName() == item.GetName()) {
                     playthroughLocations.push_back(location);
                     break;
@@ -204,8 +204,10 @@ int AssumedFill() {
   //get all the advancement items
   placedItems.clear();
   unplacedItems.clear();
-  std::copy_if(ItemPool.begin(), ItemPool.end(), std::back_inserter(unplacedItems), [](Item i){return i.IsAdvancement();});
-  erase_if(ItemPool, [](Item i){return i.IsAdvancement();});
+  std::copy_if(ItemPool.begin(), ItemPool.end(), std::back_inserter(unplacedItems), [](const Item& i) {
+    return i.IsAdvancement();
+  });
+  erase_if(ItemPool, [](const Item& i) { return i.IsAdvancement(); });
 
   //shuffle the order
   std::shuffle(unplacedItems.begin(), unplacedItems.end(), std::default_random_engine(Random()));
@@ -213,13 +215,13 @@ int AssumedFill() {
   while (!unplacedItems.empty()) {
 
     //move an item from unplaced to placed, this will be the item we place
-    Item item = unplacedItems.back();
+    Item item = std::move(unplacedItems.back());
     unplacedItems.pop_back();
     placedItems.push_back(item);
 
     //assume we have all of the unplaced items and nothing else
     Logic::LogicReset();
-    for (Item unplacedItem : unplacedItems) {
+    for (Item& unplacedItem : unplacedItems) {
       unplacedItem.ApplyEffect();
     }
 
@@ -227,7 +229,7 @@ int AssumedFill() {
     GetAccessibleLocations(locations);
 
     //if we get stuck, retry
-    if (locations.size() == 0) {
+    if (locations.empty()) {
       return 0;
     }
 
