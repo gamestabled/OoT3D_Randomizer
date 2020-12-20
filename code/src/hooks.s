@@ -365,6 +365,15 @@ hook_LullabyCheckFlag:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_MagicArrowsInInventory
+hook_MagicArrowsInInventory:
+    push {r0-r12, lr}
+    cpy r0,r1
+    bl ItemOverride_PlaceItemInInventoryCheck
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

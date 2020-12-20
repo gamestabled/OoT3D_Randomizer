@@ -643,8 +643,7 @@ ISGCrouchStab_patch:
 .section .patch_MagicArrowsInInventory
 .global MagicArrowsInInventory_patch
 MagicArrowsInInventory_patch:
-    cmp r1,#0x8
-    cmpne r1,#0x7
+    bl hook_MagicArrowsInInventory
     beq 0x33C38C
     b 0x33C37C
 
