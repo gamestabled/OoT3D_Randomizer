@@ -465,7 +465,7 @@ namespace Logic {
     HasAllStones          = KokiriEmerald   && GoronRuby     && ZoraSapphire;
     HasAllMedallions      = ForestMedallion && FireMedallion && WaterMedallion && ShadowMedallion && SpiritMedallion && LightMedallion;
     CanBuildRainbowBridge = Bridge == RAINBOWBRIDGE_OPEN       ||
-                           (Bridge == RAINBOWBRIDGE_VANILLA    && ShadowMedallion && SpiritMedallion && LightArrows) ||
+                           (Bridge == RAINBOWBRIDGE_VANILLA    && ShadowMedallion && SpiritMedallion) ||
                            (Bridge == RAINBOWBRIDGE_STONES     && HasAllStones) ||
                            (Bridge == RAINBOWBRIDGE_MEDALLIONS && HasAllMedallions) ||
                            (Bridge == RAINBOWBRIDGE_DUNGEONS   && HasAllStones && HasAllMedallions);
@@ -509,5 +509,281 @@ namespace Logic {
             return true;
           }
      return false;
+   }
+
+   void LogicReset() {
+     //Child item logic
+     KokiriSword   = false;
+     ZeldasLetter  = false;
+     WeirdEgg      = false;
+     HasBottle     = false;
+     Bombchus      = false;
+     Bombchus5     = false;
+     Bombchus10    = false;
+     Bombchus20    = false;
+     MagicBean     = false;
+     MagicBeanPack = false;
+     RutosLetter   = false;
+     Boomerang     = false;
+     DinsFire      = false;
+     FaroresWind   = false;
+     NayrusLove    = false;
+     LensOfTruth   = false;
+     ShardOfAgony  = false;
+     SkullMask     = false;
+     MaskOfTruth   = false;
+
+     //Adult logic
+     Hammer        = false;
+     IronBoots     = false;
+     HoverBoots    = false;
+     MirrorShield  = false;
+     GoronTunic    = false;
+     ZoraTunic     = false;
+     Epona         = false;
+     BigPoe        = false;
+     GerudoToken   = false;
+     FireArrows    = false;
+     IceArrows     = false;
+     LightArrows   = false;
+
+     //Trade Quest
+     PocketEgg     = false;
+     PocketCucco   = false;
+     Cojiro        = false;
+     OddMushroom   = false;
+     OddPoultice   = false;
+     PoachersSaw   = false;
+     BrokenSword   = false;
+     Prescription  = false;
+     EyeballFrog   = false;
+     Eyedrops      = false;
+     ClaimCheck    = false;
+
+     //Trade Quest Events
+     WakeUpAdultTalon   = false;
+     CojiroAccess       = false;
+     OddMushroomAccess  = false;
+     OddPoulticeAccess  = false;
+     PoachersSawAccess  = false;
+     BrokenSwordAccess  = false;
+     PrescriptionAccess = false;
+     EyeballFrogAccess  = false;
+     EyedropsAccess     = false;
+     DisableTradeRevert = false;
+
+     //Songs
+     ZeldasLullaby    = false;
+     SariasSong       = false;
+     SunsSong         = false;
+     SongOfStorms     = false;
+     EponasSong       = false;
+     SongOfTime       = false;
+     MinuetOfForest   = false;
+     BoleroOfFire     = false;
+     SerenadeOfWater  = false;
+     RequiemOfSpirit  = false;
+     NocturneOfShadow = false;
+     PreludeOfLight   = false;
+
+     //Stones and Meddallions
+     ForestMedallion = false;
+     FireMedallion   = false;
+     WaterMedallion  = false;
+     SpiritMedallion = false;
+     ShadowMedallion = false;
+     LightMedallion  = false;
+     KokiriEmerald   = false;
+     GoronRuby       = false;
+     ZoraSapphire    = false;
+
+     //Dungeon Clears
+     DekuTreeClear       = false;
+     DodongosCavernClear = false;
+     JabuJabusBellyClear = false;
+     ForestTempleClear   = false;
+     FireTempleClear     = false;
+     WaterTempleClear    = false;
+     SpiritTempleClear   = false;
+     ShadowTempleClear   = false;
+
+     //Trial Clears
+     ForestTrialClear = false;
+     FireTrialClear   = false;
+     WaterTrialClear  = false;
+     SpiritTrialClear = false;
+     ShadowTrialClear = false;
+     LightTrialClear  = false;
+
+     //Progressive Items
+     ProgressiveBulletBag = 0;
+     ProgressiveBombBag   = 0;
+     ProgressiveMagic     = 0;
+     ProgressiveScale     = 0;
+     ProgressiveHookshot  = 0;
+     ProgressiveBow       = 0;
+     ProgressiveWallet    = 0;
+     ProgressiveStrength  = 0;
+     ProgressiveOcarina   = 0;
+
+     //Keys
+     ForestTempleKeys          = 0;
+     FireTempleKeys            = 0;
+     WaterTempleKeys           = 0;
+     SpiritTempleKeys          = 0;
+     ShadowTempleKeys          = 0;
+     GanonsCastleKeys          = 0;
+     GerudoFortressKeys        = 0;
+     GerudoTrainingGroundsKeys = 0;
+     BottomOfTheWellKeys       = 0;
+
+     //Boss Keys
+     BossKeyForestTemple = false;
+     BossKeyFireTemple   = false;
+     BossKeyWaterTemple  = false;
+     BossKeySpiritTemple = false;
+     BossKeyShadowTemple = false;
+     BossKeyGanonsCastle = false;
+
+     //Gold Skulltula Count
+     GoldSkulltulaTokens = 0;
+
+     //Drops and Bottle Contents Access
+     DekuNutDrop      = false;
+     NutPot           = false;
+     NutCrate         = false;
+     DekuBabaNuts     = false;
+     DekuStickDrop    = false;
+     StickPot         = false;
+     DekuBabaSticks   = false;
+     BugsAccess       = false;
+     BugShrub         = false;
+     WanderingBugs    = false;
+     BugRock          = false;
+     BlueFireAccess   = false;
+     FishAccess       = false;
+     FishGroup        = false;
+     LoneFish         = false;
+     FairyAccess      = false;
+     GossipStoneFairy = false;
+     BeanPlantFairy   = false;
+     ButterflyFairy   = false;
+     FairyPot         = false;
+     FreeFairies      = false;
+     FairyPond        = false;
+
+     BuyBombchus5     = false;
+     BuyBombchus10    = false;
+     BuyBombchus20    = false;
+
+     /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
+     /* These are used to simplify reading the logic, but need to be updated
+     /  every time a base value is updated.                       */
+
+     Slingshot        = false;
+     Ocarina          = false;
+     BombBag          = false;
+     MagicMeter       = false;
+     Hookshot         = false;
+     Longshot         = false;
+     Bow              = false;
+     GoronBracelet    = false;
+     SilverGauntlets  = false;
+     GoldenGauntlets  = false;
+     SilverScale      = false;
+     GoldScale        = false;
+
+     ScarecrowSong    = false;
+     Scarecrow        = false;
+     DistantScarecrow = false;
+
+     Bombs            = false;
+     DekuShield       = false;
+     HylianShield     = false;
+     Nuts             = false;
+     Sticks           = false;
+     Bugs             = false;
+     BlueFire         = false;
+     Fish             = false;
+     Fairy            = false;
+     BottleWithBigPoe = false;
+
+     HasBombchus      = false;
+     FoundBombchus    = false;
+     HasExplosives    = false;
+     IsChild          = false;
+     IsAdult          = false;
+   //IsGlitched       = false;
+     CanBlastOrSmash  = false;
+     CanChildAttack   = false;
+     CanChildDamage   = false;
+     CanCutShrubs     = false;
+     CanDive          = false;
+     CanLeaveForest   = false;
+     CanPlantBugs     = false;
+     CanRideEpona     = false;
+     CanStunDeku      = false;
+     CanSummonGossipFairy = false;
+     CanSummonGossipFairyWithoutSuns = false;
+     CanPlantBean        = false;
+     CanOpenBombGrotto   = false;
+     CanOpenStormGrotto  = false;
+     BigPoeKill          = false;
+     HookshotOrBoomerang = false;
+
+     GuaranteeTradePath     = false;
+     GuaranteeHint          = false;
+     HasFireSource          = false;
+     HasFireSourceWithTorch = false;
+
+     CanFinishGerudoFortress = false;
+
+     HasShield        = false;
+     CanShield        = false;
+     CanJumpslash     = false;
+     CanUseProjectile = false;
+
+     //Bridge Requirements
+     HasAllStones          = false;
+     HasAllMedallions      = false;
+     CanBuildRainbowBridge = false;
+     CanTriggerLACS        = false;
+
+     //Other
+     AtDay         = false;
+     AtNight       = false;
+     IsStartingAge = false;
+     Age           = Settings::StartingAge;
+
+     //Events
+     ShowedMidoSwordAndShield  = false;
+     CarpenterRescue           = false;
+     GF_GateOpen               = false;
+     DampesWindmillAccess      = false;
+     DrainWell                 = false;
+     GoronCityChildFire        = false;
+     GCWoodsWarpOpen           = false;
+     StopGCRollingGoronAsAdult = false;
+     ChildWaterTemple          = false;
+     KakarikoVillageGateOpen   = false;
+     KingZoraThawed            = false;
+     ForestTempleJoAndBeth     = false;
+     ForestTempleAmyAndMeg     = false;
+     LinksCow                  = false;
+     AtDampeTime               = false;
+     DeliverLetter             = false;
+
+     DrainWellPast            = false;
+     DampesWindmillAccessPast = false;
+     DekuTreeClearPast        = false;
+     GoronRubyPast            = false;
+     ZoraSapphirePast         = false;
+     ForestTrialClearPast     = false;
+     FireTrialClearPast       = false;
+     WaterTrialClearPast      = false;
+     SpiritTrialClearPast     = false;
+     ShadowTrialClearPast     = false;
+     LightTrialClearPast      = false;
+     BuyDekuShieldPast        = false;
    }
 }

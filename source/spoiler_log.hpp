@@ -1,6 +1,7 @@
 #pragma once
-
 #include <string_view>
+#include <vector>
+#include "item_location.hpp"
 
 bool SpoilerLog_Write();
 

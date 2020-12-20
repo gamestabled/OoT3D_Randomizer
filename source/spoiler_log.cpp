@@ -1,5 +1,4 @@
 #include "spoiler_log.hpp"
-#include "item_location.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
 
@@ -9,15 +8,14 @@
 #include <cstring>
 #include <set>
 #include <string>
-#include <vector>
 
 namespace {
-FS_Archive sdmcArchive = 0;
-Handle spoilerlog;
-Handle placementlog;
+  FS_Archive sdmcArchive = 0;
+  Handle spoilerlog;
+  Handle placementlog;
 
-std::string logtxt;
-std::string placementtxt;
+  std::string logtxt;
+  std::string placementtxt;
 }
 
 static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
@@ -45,7 +43,7 @@ bool SpoilerLog_Write() {
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
   logtxt += "Playthrough:\n";
-  for (ItemLocation* location : advancementLocations) {
+  for (ItemLocation* location : playthroughLocations) {
     logtxt += "    ";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += '\n';

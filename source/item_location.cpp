@@ -5,30 +5,32 @@
 //set of overrides to write to the patch
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 
+std::vector<ItemLocation*> playthroughLocations = {};
+
 u32 totalLocationsFound = 0;
-void PlaceItemInLocation(ItemLocation* loc, Item* item, bool applyEffectImmediately /*= false*/) {
+u16 itemsPlaced = 0;
+
+void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
     // Put item in the override table
     overrides.insert({
       .key = loc->Key(),
-      .value = item->Value(),
+      .value = item.Value(),
     });
 
     PlacementLog_Msg("\n");
-    PlacementLog_Msg(item->GetName());
+    PlacementLog_Msg(item.GetName());
     PlacementLog_Msg(" placed at ");
     PlacementLog_Msg(loc->GetName());
     PlacementLog_Msg("\n\n");
 
     if (applyEffectImmediately || Settings::Logic == LOGIC_NONE) {
-      item->ApplyEffect();
+      item.ApplyEffect();
       loc->Use();
     }
 
-    loc->SetPlacedItem(*item);
-    printf("\x1b[8;10HPlacing Items...");
-    if (Settings::Logic == LOGIC_GLITCHLESS) {
-      printf("%lu/%d", totalLocationsFound, allLocations.size() + dungeonRewardLocations.size());
-    }
+    itemsPlaced++;
+    printf("\x1b[8;10HPlacing Items...%d/%d", itemsPlaced, allLocations.size() + dungeonRewardLocations.size());
+    loc->SetPlacedItem(item);
 }
 
 //Location definitions
@@ -202,7 +204,7 @@ ItemLocation DekuTree_CompassRoomSideChest                    = ItemLocation::Ch
 ItemLocation DekuTree_BasementChest                           = ItemLocation::Chest      (0x00, 0x04, "Deku Tree Basement Chest",                           {"Deku Tree",});
 ItemLocation DekuTree_SlingshotChest                          = ItemLocation::Chest      (0x00, 0x01, "Deku Tree Slingshot Chest",                          {"Deku Tree",});
 ItemLocation DekuTree_SlingshotRoomSideChest                  = ItemLocation::Chest      (0x00, 0x05, "Deku Tree Slingshot Room Side Chest",                {"Deku Tree",});
-ItemLocation DekuTree_QueenGohmaHeart                         = ItemLocation::Base       (0x11, 0x4F, "Deku Tree Queen Gohma Heart",                        {"Deku Tree",});
+ItemLocation DekuTree_QueenGohmaHeart                         = ItemLocation::Base       (0x11, 0x4F, "Deku Tree Queen Gohma Heart Container",              {"Deku Tree",});
 
 //Dodongos Cavern
 ItemLocation DodongosCavern_MapChest                          = ItemLocation::Chest      (0x01, 0x08, "Dodongos Cavern Map Chest",                          {"Dodongo's Cavern",});
@@ -215,14 +217,14 @@ ItemLocation DodongosCavern_DekuScrubNearBombBagLeft          = ItemLocation::Ba
 ItemLocation DodongosCavern_DekuScrubSideRoomNearDodongos     = ItemLocation::Base       (0x01, 0x31, "Dodongos Cavern Deku Scrub Side Room Near Dodongos", {"Dodongo's Cavern", "Deku Scrub",});
 ItemLocation DodongosCavern_DekuScrubNearBombBagRight         = ItemLocation::Base       (0x01, 0x33, "Dodongos Cavern Deku Scrub Near Bomb Bag Right",     {"Dodongo's Cavern", "Deku Scrub",});
 ItemLocation DodongosCavern_DekuScrubLobby                    = ItemLocation::Base       (0x01, 0x34, "Dodongos Cavern Deku Scrub Lobby",                   {"Dodongo's Cavern", "Deku Scrub",});
-ItemLocation DodongosCavern_KingDodongoHeart                  = ItemLocation::Base       (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart",                 {"Dodongo's Cavern",});
+ItemLocation DodongosCavern_KingDodongoHeart                  = ItemLocation::Base       (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart Container",       {"Dodongo's Cavern",});
 
 //Jabu Jabus Belly
 ItemLocation JabuJabusBelly_MapChest                          = ItemLocation::Chest      (0x02, 0x02, "Jabu Jabus Belly Map Chest",                         {"Jabu Jabu's Belly",});
 ItemLocation JabuJabusBelly_CompassChest                      = ItemLocation::Chest      (0x02, 0x04, "Jabu Jabus Belly Compass Chest",                     {"Jabu Jabu's Belly",});
 ItemLocation JabuJabusBelly_BoomerangChest                    = ItemLocation::Chest      (0x02, 0x01, "Jabu Jabus Belly Boomerang Chest",                   {"Jabu Jabu's Belly",});
 ItemLocation JabuJabusBelly_DekuScrub                         = ItemLocation::Base       (0x02, 0x30, "Jabu Jabus Belly Deku Scrub",                        {"Jabu Jabu's Belly", "Deku Scrub",});
-ItemLocation JabuJabusBelly_BarinadeHeart                     = ItemLocation::Base       (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart",                    {"Jabu Jabu's Belly",});
+ItemLocation JabuJabusBelly_BarinadeHeart                     = ItemLocation::Base       (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart Container",          {"Jabu Jabu's Belly",});
 
 //Forest Temple
 ItemLocation ForestTemple_FirstRoomChest                      = ItemLocation::Chest      (0x03, 0x03, "Forest Temple First Room Chest",                     {"Forest Temple",});
@@ -238,7 +240,7 @@ ItemLocation ForestTemple_BowChest                            = ItemLocation::Ch
 ItemLocation ForestTemple_RedPoeChest                         = ItemLocation::Chest      (0x03, 0x0D, "Forest Temple Red Poe Chest",                        {"Forest Temple",});
 ItemLocation ForestTemple_BluePoeChest                        = ItemLocation::Chest      (0x03, 0x0F, "Forest Temple Blue Poe Chest",                       {"Forest Temple",});
 ItemLocation ForestTemple_BasementChest                       = ItemLocation::Chest      (0x03, 0x0B, "Forest Temple Basement Chest",                       {"Forest Temple",});
-ItemLocation ForestTemple_PhantomGanonHeart                   = ItemLocation::Base       (0x14, 0x4F, "Forest Temple Phantom Ganon Heart",                  {"Forest Temple",});
+ItemLocation ForestTemple_PhantomGanonHeart                   = ItemLocation::Base       (0x14, 0x4F, "Forest Temple Phantom Ganon Heart Container",        {"Forest Temple",});
 
 //Fire Temple
 ItemLocation FireTemple_NearBossChest                         = ItemLocation::Chest      (0x04, 0x01, "Fire Temple Near Boss Chest",                        {"Fire Temple",});
@@ -255,7 +257,7 @@ ItemLocation FireTemple_MapChest                              = ItemLocation::Ch
 ItemLocation FireTemple_CompassChest                          = ItemLocation::Chest      (0x04, 0x07, "Fire Temple Compass Chest",                          {"Fire Temple",});
 ItemLocation FireTemple_HighestGoronChest                     = ItemLocation::Chest      (0x04, 0x09, "Fire Temple Highest Goron Chest",                    {"Fire Temple",});
 ItemLocation FireTemple_MegatonHammerChest                    = ItemLocation::Chest      (0x04, 0x05, "Fire Temple Megaton Hammer Chest",                   {"Fire Temple",});
-ItemLocation FireTemple_VolvagiaHeart                         = ItemLocation::Base       (0x15, 0x4F, "Fire Temple Volvagia Heart",                         {"Fire Temple",});
+ItemLocation FireTemple_VolvagiaHeart                         = ItemLocation::Base       (0x15, 0x4F, "Fire Temple Volvagia Heart Container",               {"Fire Temple",});
 
 //Water Temple
 ItemLocation WaterTemple_MapChest                             = ItemLocation::Chest      (0x05, 0x02, "Water Temple Map Chest",                             {"Water Temple",});
@@ -268,7 +270,7 @@ ItemLocation WaterTemple_CrackedWallChest                     = ItemLocation::Ch
 ItemLocation WaterTemple_BossKeyChest                         = ItemLocation::Chest      (0x05, 0x05, "Water Temple Boss Key Chest",                        {"Water Temple",});
 ItemLocation WaterTemple_LongshotChest                        = ItemLocation::Chest      (0x05, 0x07, "Water Temple Longshot Chest",                        {"Water Temple",});
 ItemLocation WaterTemple_RiverChest                           = ItemLocation::Chest      (0x05, 0x03, "Water Temple River Chest",                           {"Water Temple",});
-ItemLocation WaterTemple_MorphaHeart                          = ItemLocation::Base       (0x16, 0x4F, "Water Temple Morpha Heart",                          {"Water Temple",});
+ItemLocation WaterTemple_MorphaHeart                          = ItemLocation::Base       (0x16, 0x4F, "Water Temple Morpha Heart Container",                {"Water Temple",});
 
 //Spirit Temple Outside
 ItemLocation SpiritTemple_SilverGauntletsChest                = ItemLocation::Chest      (0x5C, 0x0B, "Spirit Temple Silver Gauntlets Chest",               {"Spirit Temple", "Desert Colossus"});
@@ -291,7 +293,7 @@ ItemLocation SpiritTemple_HallwayRightInvisibleChest          = ItemLocation::Ch
 ItemLocation SpiritTemple_HallwayLeftInvisibleChest           = ItemLocation::Chest      (0x06, 0x15, "Spirit Temple Hallway Left Invisible Chest",         {"Spirit Temple",});
 ItemLocation SpiritTemple_BossKeyChest                        = ItemLocation::Chest      (0x06, 0x0A, "Spirit Temple Boss Key Chest",                       {"Spirit Temple",});
 ItemLocation SpiritTemple_TopmostChest                        = ItemLocation::Chest      (0x06, 0x12, "Spirit Temple Topmost Chest",                        {"Spirit Temple",});
-ItemLocation SpiritTemple_TwinrovaHeart                       = ItemLocation::Base       (0x17, 0x4F, "Spirit Temple Twinrova Heart",                       {"Spirit Temple",});
+ItemLocation SpiritTemple_TwinrovaHeart                       = ItemLocation::Base       (0x17, 0x4F, "Spirit Temple Twinrova Heart Container",             {"Spirit Temple",});
 
 //Shadow Temple
 ItemLocation ShadowTemple_MapChest                            = ItemLocation::Chest      (0x07, 0x01, "Shadow Temple Map Chest",                            {"Shadow Temple",});
@@ -311,7 +313,7 @@ ItemLocation ShadowTemple_SpikeWallsLeftChest                 = ItemLocation::Ch
 ItemLocation ShadowTemple_BossKeyChest                        = ItemLocation::Chest      (0x07, 0x0B, "Shadow Temple Boss Key Chest",                       {"Shadow Temple",});
 ItemLocation ShadowTemple_InvisibleFloormasterChest           = ItemLocation::Chest      (0x07, 0x0D, "Shadow Temple Invisible Floormaster Chest",          {"Shadow Temple",});
 ItemLocation ShadowTemple_FreestandingKey                     = ItemLocation::Collectable(0x07, 0x01, "Shadow Temple Freestanding Key",                     {"Shadow Temple",});
-ItemLocation ShadowTemple_BongoBongoHeart                     = ItemLocation::Base       (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart",                    {"Shadow Temple",});
+ItemLocation ShadowTemple_BongoBongoHeart                     = ItemLocation::Base       (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart Container",          {"Shadow Temple",});
 
 //Bottom of the Well
 ItemLocation BottomOfTheWell_FrontLeftFakeWallChest           = ItemLocation::Chest      (0x08, 0x08, "Bottom of the Well Front Left Fake Wall Chest",         {"Bottom of the Well",});
@@ -526,6 +528,7 @@ ItemLocation Volvagia                                     = ItemLocation::Reward
 ItemLocation Morpha                                       = ItemLocation::Reward (0xFF, 0xFF, "Morpha",                                         {});
 ItemLocation Twinrova                                     = ItemLocation::Reward (0xFF, 0xFF, "Twinrova",                                       {});
 ItemLocation BongoBongo                                   = ItemLocation::Reward (0xFF, 0xFF, "Bongo Bongo",                                    {});
+ItemLocation Ganon                                        = ItemLocation::Reward (0xFF, 0xFF, "Ganon",                                          {});
 
 /*-------------------------------
         --- CUTSCENES ---
@@ -865,7 +868,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 462> allLocations = {
+std::array<ItemLocation*, 463> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -1307,6 +1310,7 @@ std::array<ItemLocation*, 462> allLocations = {
   &GanonsCastle_DekuScrubCenterLeft,
   &GanonsCastle_DekuScrubCenterRight,
   &GanonsCastle_DekuScrubRight,
+  &Ganon,
 
   /*-------------------------------
      --- GOLD SKULLTULA TOKENS ---
@@ -1448,3 +1452,23 @@ std::array<ItemLocation*, 462> allLocations = {
   &LLR_GS_HouseWindow,
   &LLR_GS_Tree,
 };
+
+void LocationReset() {
+  for (ItemLocation* il : allLocations) {
+    il->RemoveFromPool();
+  }
+
+  for (ItemLocation * il : dungeonRewardLocations) {
+    il->RemoveFromPool();
+  }
+}
+
+void ItemReset() {
+  for (ItemLocation* il : allLocations) {
+    il->ResetVariables();
+  }
+
+  for (ItemLocation* il : dungeonRewardLocations) {
+    il->ResetVariables();
+  }
+}
