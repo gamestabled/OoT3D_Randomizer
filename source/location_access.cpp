@@ -779,6 +779,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Events
                   //Skull Mask
                   //Mask Of Truth
+                  EventPairing(&SkullMask,   []{return SkullMask   || (ZeldasLetter && Kak_Main.Child());}),
+                  EventPairing(&MaskOfTruth, []{return MaskOfTruth || (SkullMask && (LW_Main.Child() && CanPlay(SariasSong) && GY_Main.dayChild && HF_Main.Child() && HasAllStones));}),
                 }, {}, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})
