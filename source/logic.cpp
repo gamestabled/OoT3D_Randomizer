@@ -426,7 +426,7 @@ namespace Logic {
 
     IsChild = Age == AGE_CHILD;
     IsAdult = Age == AGE_ADULT;
-    IsStartingAge = Age == StartingAge; //what's this for?
+    IsStartingAge = StartingAge.Is(Age); //what's this for?
 
   //IsGlitched = false;
 
@@ -436,7 +436,7 @@ namespace Logic {
     CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse("Dins Fire") || Nuts || DekuShield);
     CanCutShrubs    = IsAdult || Sticks || KokiriSword || Boomerang || HasExplosives;
     CanDive         = ProgressiveScale >= 1;
-    CanLeaveForest  = OpenForest != OPENFOREST_CLOSED || IsAdult || DekuTreeClear;
+    CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear;
     CanPlantBugs    = IsChild && Bugs;
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
@@ -452,9 +452,9 @@ namespace Logic {
     HasFireSourceWithTorch = HasFireSource || (IsChild && Sticks);
 
     //Gerudo Fortress
-    CanFinishGerudoFortress = (GerudoFortress == GERUDOFORTRESS_NORMAL && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword) && ((IsAdult && (Bow || Hookshot || HoverBoots)) || GerudoToken || LogicGerudoKitchen)) ||
-                              (GerudoFortress == GERUDOFORTRESS_FAST   && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword)) ||
-                              (GerudoFortress != GERUDOFORTRESS_NORMAL  && GerudoFortress != GERUDOFORTRESS_FAST);
+    CanFinishGerudoFortress = (GerudoFortress.Is(GERUDOFORTRESS_NORMAL)    && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword) && ((IsAdult && (Bow || Hookshot || HoverBoots)) || GerudoToken || LogicGerudoKitchen)) ||
+                              (GerudoFortress.Is(GERUDOFORTRESS_FAST)      && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword)) ||
+                              (GerudoFortress.IsNot(GERUDOFORTRESS_NORMAL) && GerudoFortress.IsNot(GERUDOFORTRESS_FAST));
 
     HasShield        = (IsAdult && HylianShield) ||                   (IsChild && DekuShield); //Mirror shield can't reflect attacks
     CanShield        = (IsAdult && (HylianShield || MirrorShield)) || (IsChild && DekuShield);
@@ -464,12 +464,12 @@ namespace Logic {
     //Bridge Requirements
     HasAllStones          = KokiriEmerald   && GoronRuby     && ZoraSapphire;
     HasAllMedallions      = ForestMedallion && FireMedallion && WaterMedallion && ShadowMedallion && SpiritMedallion && LightMedallion;
-    CanBuildRainbowBridge = Bridge == RAINBOWBRIDGE_OPEN       ||
-                           (Bridge == RAINBOWBRIDGE_VANILLA    && ShadowMedallion && SpiritMedallion) ||
-                           (Bridge == RAINBOWBRIDGE_STONES     && HasAllStones) ||
-                           (Bridge == RAINBOWBRIDGE_MEDALLIONS && HasAllMedallions) ||
-                           (Bridge == RAINBOWBRIDGE_DUNGEONS   && HasAllStones && HasAllMedallions);
-                           //(Bridge == RAINBOWBRIDGE_TOKENS     && GoldSkulltulaTokens > Count);
+    CanBuildRainbowBridge = Bridge.Is(RAINBOWBRIDGE_OPEN)       ||
+                           (Bridge.Is(RAINBOWBRIDGE_VANILLA)    && ShadowMedallion && SpiritMedallion) ||
+                           (Bridge.Is(RAINBOWBRIDGE_STONES)     && HasAllStones) ||
+                           (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && HasAllMedallions) ||
+                           (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && HasAllStones && HasAllMedallions);
+                           //(Bridge.Is(RAINBOWBRIDGE_TOKENS)   && GoldSkulltulaTokens > Count);
 
     CanTriggerLACS = (LACSCondition == LACSCONDITION_VANILLA    && ShadowMedallion && SpiritMedallion) ||
                      (LACSCondition == LACSCONDITION_STONES     && HasAllStones)                       ||
@@ -479,7 +479,7 @@ namespace Logic {
   }
 
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
-    return (dungeonKeyCount >= requiredAmount) || Keysanity == KEYSANITY_VANILLA;
+    return (dungeonKeyCount >= requiredAmount) || Keysanity.Is(KEYSANITY_VANILLA);
   }
 
   bool EventsUpdated() {
@@ -753,7 +753,7 @@ namespace Logic {
      AtDay         = false;
      AtNight       = false;
      IsStartingAge = false;
-     Age           = Settings::StartingAge;
+     Age           = Settings::StartingAge.Value<u8>();
 
      //Events
      ShowedMidoSwordAndShield  = false;
