@@ -20,8 +20,8 @@ std::vector<EventPairing> grottoEvents = {
   EventPairing(&LoneFish,         []{return true;}),
 };
 
-//TODO: Update all advancement logic needs for every area
-namespace Exits { //name, scene, hint, events, locations, exits, advancement items
+
+namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit Root = Exit("Root", "", "Link's Pocket", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
@@ -40,15 +40,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&LH_Main,          []{return  CanPlay(SerenadeOfWater)  && CanLeaveForest;}),
                   ExitPairing::Both(&GY_WarpPadRegion, []{return  CanPlay(NocturneOfShadow) && CanLeaveForest;}),
                   ExitPairing::Both(&Colossus_Main,    []{return  CanPlay(RequiemOfSpirit)  && CanLeaveForest;})
-               }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveOcarina, []{return AddedProgressiveOcarinas == 0;}),
-                  AdvancementPairing(I_MinuetOfForest,     []{return CanLeaveForest && ProgressiveOcarina >= 1 && !SFM_Main.BothAges();}),
-                  AdvancementPairing(I_BoleroOfFire,       []{return CanLeaveForest && ProgressiveOcarina >= 1;}),
-                  AdvancementPairing(I_SerenadeOfWater,    []{return CanLeaveForest && ProgressiveOcarina >= 1 && !LH_Main.BothAges();}),
-                  AdvancementPairing(I_RequiemOfSpirit,    []{return CanLeaveForest && ProgressiveOcarina >= 1;}),
-                  AdvancementPairing(I_NocturneOfShadow,   []{return CanLeaveForest && ProgressiveOcarina >= 1;}),
-                  AdvancementPairing(I_PreludeOfLight,     []{return CanLeaveForest && ProgressiveOcarina >= 1 && !ToT_Main.BothAges();}),
   });
 
   Exit KF_Main = Exit("Kokiri Forest", "Kokiri Forest", "Kokiri Forest", NO_DAY_NIGHT_CYCLE, {
@@ -74,12 +65,7 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&LW_Main,             []{return true;}),
                   ExitPairing::Both(&LW_BridgeFromForest, []{return CanLeaveForest;}),
                   ExitPairing::Both(&KF_StormsGrotto,     []{return CanOpenStormGrotto;})
-               }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_KokiriSword,        []{return IsChild;}),
-                  AdvancementPairing(I_DekuShield,         []{return IsChild && Shopsanity && OpenForest != OPENFOREST_OPEN && !DekuShield;}),
-                  AdvancementPairing(I_SongOfStorms,       []{return ProgressiveOcarina >= 1;}),
-});
+  });
 
   Exit KF_OutsideDekuTree = Exit("KF Outside Deku Tree", "Kokiri Forest", "Kokiri Forest", NO_DAY_NIGHT_CYCLE, {
                   //Events
@@ -181,16 +167,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&ZR_Main,                []{return CanLeaveForest && (CanDive || CanUse("Iron Boots"));}),
                   ExitPairing::Both(&LW_BeyondMido,          []{return IsChild || CanPlay(SariasSong);}),
                   ExitPairing::Both(&LW_NearShortcutsGrotto, []{return CanBlastOrSmash;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveBulletBag, []{return AddedProgressiveBulletBags == 0 && IsChild;}),
-                  AdvancementPairing(I_ProgressiveBombBag,   []{return AddedProgressiveBombBags   == 0 && (IsChild || (IsAdult && !Hammer));}),
-                  AdvancementPairing(I_ProgressiveScale,     []{return AddedProgressiveScales     == 0 && CanLeaveForest;}),
-                  AdvancementPairing(I_SariasSong,           []{return ProgressiveOcarina         >= 1 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 1 && IsAdult && !LogicLostWoodsBridge && !LW_Main.CanPlantBean() && !HoverBoots;}),
-                  AdvancementPairing(I_HoverBoots,           []{return AddedProgressiveHookshots  <= 2 && IsAdult && !LogicLostWoodsBridge && !LW_Main.CanPlantBean();}),
-                  AdvancementPairing(I_IronBoots,            []{return AddedProgressiveScales     == 0 && IsAdult;}),
-                  AdvancementPairing(I_MegatonHammer,        []{return AddedProgressiveBombBags   == 0 && IsAdult;}),
   });
 
   Exit LW_BeyondMido = Exit("LW Beyond Mido", "Lost Woods", "Lost Woods", NO_DAY_NIGHT_CYCLE, {
@@ -209,12 +185,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&SFM_Entryway,    []{return true;}),
                   ExitPairing::Both(&LW_DekuTheater,  []{return true;}),
                   ExitPairing::Both(&LW_ScrubsGrotto, []{return CanBlastOrSmash;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_SariasSong,           []{return ProgressiveOcarina       >= 1 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveBombBag,   []{return AddedProgressiveBombBags == 0 && (IsChild || (IsAdult && !Hammer));}),
-                  AdvancementPairing(I_MegatonHammer,        []{return AddedProgressiveBombBags == 0 && IsAdult;}),
-
   });
 
   Exit LW_NearShortcutsGrotto = Exit("LW Near Shortcuts Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
@@ -249,10 +219,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&LW_BeyondMido,    []{return true;}),
                   ExitPairing::Both(&SFM_Main,         []{return IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire");}),
                   ExitPairing::Both(&SFM_WolfosGrotto, []{return CanOpenBombGrotto;}),
-                }, {
-                  AdvancementPairing(I_ProgressiveBombBag,   []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_ProgressiveMagic,     []{return AddedProgressiveMagics   == 0 && !KokiriSword && !Sticks && !Slingshot && IsChild;}),
-                  AdvancementPairing(I_DinsFire,             []{return ProgressiveMagic         >= 1 && !KokiriSword && !Sticks && !Slingshot && IsChild;}),
   });
 
   Exit SFM_Main = Exit("Sacred Forest Meadow", "Sacred Forest Meadow", "Sacred Forest Meadow", NO_DAY_NIGHT_CYCLE, {
@@ -272,11 +238,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&ForestTemple_Lobby, []{return CanUse("Hookshot");}),
                   ExitPairing::Both(&SFM_FairyGrotto,    []{return true;}),
                   ExitPairing::Both(&SFM_StormsGrotto,   []{return CanOpenStormGrotto;}),
-                }, {
-                  //advancement needs
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 0 && IsAdult;}),
-                  AdvancementPairing(I_SongOfStorms,         []{return ProgressiveOcarina        >= 1;}),
-
   });
 
   Exit SFM_FairyGrotto = Exit("SFM Fairy Grotto", "", "", NO_DAY_NIGHT_CYCLE, {
@@ -293,13 +254,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&SFM_Main, []{return true;}),
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_KokiriSword,          []{return !Sticks && !Slingshot && !DinsFire && IsChild;}),
-                  AdvancementPairing(I_ProgressiveBulletBag, []{return AddedProgressiveBulletBags == 0 && !KokiriSword && !Sticks && !MagicMeter && IsChild;}),
-                  AdvancementPairing(I_ProgressiveMagic,     []{return AddedProgressiveMagics     == 0 && !KokiriSword && !Sticks && !Slingshot  && IsChild;}),
-                  AdvancementPairing(I_DinsFire,             []{return ProgressiveMagic           >= 1 && !KokiriSword && !Sticks && !Slingshot  && IsChild;}),
-
   });
 
   Exit SFM_StormsGrotto = Exit("SFM Storms Grotto", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -324,9 +278,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&KF_Main, []{return true;}),
                   ExitPairing::Both(&HF_Main, []{return true;}),
                   ExitPairing::Both(&LW_Main, []{return CanUse("Longshot");})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 1 && IsAdult;}),
   });
 
   Exit HF_Main = Exit("Hyrule Field", "Hyrule Field", "Hyrule Field", DAY_NIGHT_CYCLE, {
@@ -353,10 +304,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&HF_FairyGrotto,       []{return CanBlastOrSmash;}),
                   ExitPairing::Both(&HF_NearKakGrotto,     []{return CanOpenBombGrotto;}),
                   ExitPairing::Both(&HF_TektiteGrotto,     []{return CanOpenBombGrotto;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveBombBag, []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_MegatonHammer,      []{return AddedProgressiveBombBags == 0 && IsAdult && !Hammer;}),
   });
 
   Exit HF_SoutheastGrotto = Exit("HF Southeast Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
@@ -426,11 +373,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main, []{return true;}),
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveScale, []{return AddedProgressiveScales == 0;}),
-                  AdvancementPairing(I_ProgressiveScale, []{return AddedProgressiveScales == 1;}),
-                  AdvancementPairing(I_IronBoots,        []{return IsAdult && AddedProgressiveScales < 2;}),
   });
 
   Exit LH_Main = Exit("Lake Hylia", "Lake Hylia", "Lake Hylia", DAY_NIGHT_CYCLE, {
@@ -460,13 +402,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&LH_FishingHole,    []{return IsChild || CanUse("Scarecrow") || LH_Main.CanPlantBean() || WaterTempleClear;}),
                   ExitPairing::Both(&WaterTemple_Lobby, []{return CanUse("Hookshot") && (CanUse("Iron Boots") || ((CanUse("Longshot") || LogicWaterHookshotEntry) && ProgressiveScale >= 2));}),
                   ExitPairing::Both(&LH_Grotto,         []{return true;})
-                }, {
-                  AdvancementPairing(I_ProgressiveScale,     []{return AddedProgressiveScales     == 0 && IsChild;}),
-                  AdvancementPairing(I_ProgressiveScale,     []{return AddedProgressiveScales     == 1 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 0 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 1 && IsAdult;}),
-                  AdvancementPairing(I_ZoraTunic,            []{return IsAdult && !LogicFewerTunicRequirements;}),
-                  AdvancementPairing(I_IronBoots,            []{return IsAdult;}),
   });
 
   Exit LH_OwlFlight = Exit("LH Owl Flight", "Lake Hylia", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -484,12 +419,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&LH_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 0 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveScale,     []{return AddedProgressiveScales    == 0;}),
-                  AdvancementPairing(I_ProgressiveScale,     []{return AddedProgressiveScales    == 1;}),
-                  AdvancementPairing(I_IronBoots,            []{return IsAdult;}),
   });
 
   Exit LH_FishingHole = Exit("LH Fishing Hole", "", "", DAY_NIGHT_CYCLE, {}, {
@@ -524,11 +453,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&GV_CrateLedge,    []{return IsChild || CanUse("Longshot");}),
                   ExitPairing::Both(&GV_OctorokGrotto, []{return CanUse("Silver Gauntlets");}),
                   ExitPairing::Both(&GV_FortressSide,  []{return IsAdult && (CanRideEpona || CanUse("Longshot") || GerudoFortress == GERUDOFORTRESS_OPEN || CarpenterRescue);})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 0 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 1 && IsAdult;}),
-
   });
 
   Exit GV_Stream = Exit("GV Stream", "Gerudo Valley", "Gerudo Valley", DAY_NIGHT_CYCLE, {
@@ -568,11 +492,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&GV_Main,          []{return IsChild || CanRideEpona || CanUse("Longshot") || GerudoFortress == GERUDOFORTRESS_OPEN || CarpenterRescue;}),
                   ExitPairing::Both(&GV_CarpenterTent, []{return IsAdult;}),
                   ExitPairing::Both(&GV_StormsGrotto,  []{return IsAdult && CanOpenStormGrotto;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 0 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 1 && IsAdult;}),
-                  AdvancementPairing(I_MegatonHammer,        []{return IsAdult;}),
   });
 
   Exit GV_CarpenterTent = Exit("GV Carpenter Tent", "", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -616,12 +535,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&GF_OutsideGate,              []{return GF_GateOpen;}),
                   ExitPairing::Both(&GerudoTrainingGrounds_Lobby, []{return IsAdult && GerudoToken;}),
                   ExitPairing::Both(&GF_StormsGrotto,             []{return IsAdult && CanOpenStormGrotto;})
-                }, {
-                  AdvancementPairing(I_KokiriSword,           []{return IsChild;}),
-                  AdvancementPairing(I_HoverBoots,            []{return IsAdult && AddedProgressiveBows == 0 && AddedProgressiveHookshots == 0;}),
-                  AdvancementPairing(I_ProgressiveBow,        []{return IsAdult && AddedProgressiveBows == 0 && AddedProgressiveHookshots == 0 && !HoverBoots;}),
-                  AdvancementPairing(I_ProgressiveHookshot,   []{return IsAdult && AddedProgressiveBows == 0 && AddedProgressiveHookshots == 0 && !HoverBoots;}),
-                  AdvancementPairing(GerudoFortress_SmallKey, []{return true;}, 4),
   });
 
   Exit GF_OutsideGate = Exit("GF Outside Gate", "Gerudo Fortress", "", NO_DAY_NIGHT_CYCLE, {
@@ -645,11 +558,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&GF_OutsideGate, []{return true;}),
                   ExitPairing::Both(&HW_Main,        []{return CanUse("Hover Boots") || CanUse("Longshot");}),
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_HoverBoots,           []{return AddedProgressiveHookshots   < 2 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 0 && IsAdult && !HoverBoots;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 1 && IsAdult && !HoverBoots;}),
   });
 
   Exit HW_Main = Exit("Haunted Wasteland", "Haunted Wasteland", "Haunted Wasteland", NO_DAY_NIGHT_CYCLE, {
@@ -665,13 +573,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&HW_NearColossus, []{return LogicLensWasteland || CanUse("Lens of Truth");}),
                   ExitPairing::Both(&HW_NearFortress, []{return CanUse("Hover Boots") || CanUse("Longshot");}),
-                }, {
-                  AdvancementPairing(I_ProgressiveMagic,    []{return AddedProgressiveMagics    == 0 && !LogicLensWasteland;}),
-                  AdvancementPairing(I_LensOfTruth,         []{return ProgressiveMagic          >= 1 && !LogicLensWasteland;}),
-                  AdvancementPairing(I_HoverBoots,          []{return AddedProgressiveHookshots == 0;}),
-                  AdvancementPairing(I_ProgressiveHookshot, []{return AddedProgressiveHookshots == 1 && !HoverBoots;}),
-                  AdvancementPairing(I_DinsFire,            []{return ProgressiveMagic          >= 1 && !FireArrows;}),
-                  AdvancementPairing(I_FireArrows,          []{return ProgressiveMagic          >= 1 && ProgressiveBow >= 1 && !DinsFire;}),
   });
 
   Exit HW_NearColossus = Exit("Wasteland Near Colossus", "Haunted Wasteland", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -698,11 +599,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&SpiritTemple_Lobby,          []{return true;}),
                   ExitPairing::Both(&HW_NearColossus,             []{return true;}),
                   ExitPairing::Both(&Colossus_Grotto,             []{return CanUse("Silver Gauntlets");})
-                }, {
-                  AdvancementPairing(I_MagicBeanPack,       []{return Colossus_Main.BothAges();}),
-                  AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 1 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags  == 0;}),
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
   });
 
   Exit Colossus_GreatFairyFountain = Exit("Colossus Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -767,8 +663,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&ToT_Entrance,         []{return true;}),
                   ExitPairing::Both(&ToT_BeyondDoorOfTime, []{return CanPlay(SongOfTime) || OpenDoorOfTime;}),
-                }, {
-                  AdvancementPairing(I_SongOfTime, []{return !OpenDoorOfTime;}),
   });
 
   Exit ToT_BeyondDoorOfTime = Exit("Beyond Door of Time", "", "Temple of Time", NO_DAY_NIGHT_CYCLE, {}, {
@@ -803,11 +697,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&HC_Garden,             []{return WeirdEgg || !ShuffleWeirdEgg;}),
                   ExitPairing::Both(&HC_GreatFairyFountain, []{return HasExplosives;}),
                   ExitPairing::Both(&HC_StormsGrotto,       []{return CanOpenStormGrotto;})
-                }, {
-                  AdvancementPairing(I_WeirdEgg,            []{return true;}),
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return IsChild && AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_ProgressiveBombchus, []{return IsChild && AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_SongOfStorms,        []{return IsChild && ProgressiveOcarina       >= 1;}),
   });
 
   Exit HC_Garden = Exit("HC Garden", "Castle Grounds", "Hyrule Castle", NO_DAY_NIGHT_CYCLE, {
@@ -852,11 +741,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Night(&CastleGrounds,          []{return AtNight;}),
                   ExitPairing::Night(&OGC_GreatFairyFountain, []{return CanUse("Golden Gauntlets") && AtNight;}),
                   ExitPairing::Both(&GanonsCastle_Lobby,      []{return CanBuildRainbowBridge;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveStrength, []{return IsAdult && AddedProgressiveStrengths == 0;}),
-                  AdvancementPairing(I_ProgressiveStrength, []{return IsAdult && AddedProgressiveStrengths == 1;}),
-                  AdvancementPairing(I_ProgressiveStrength, []{return IsAdult && AddedProgressiveStrengths == 2;}),
   });
 
   Exit OGC_GreatFairyFountain = Exit("OGC Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -939,10 +823,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_LensOfTruth,      []{return IsChild && ProgressiveMagic       >= 1;}),
-                  AdvancementPairing(I_ProgressiveMagic, []{return IsChild && AddedProgressiveMagics == 0;}),
   });
 
   Exit MK_BombchuShop = Exit("Market Bombchu Shop", "", "", NO_DAY_NIGHT_CYCLE, {
@@ -1014,13 +894,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Day(&Kak_Rooftop,             []{return LogicManOnRoof && AtDay;}),
                   ExitPairing::Both(&GY_Main,                []{return true;}),
                   ExitPairing::Both(&Kak_BehindGate,         []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveBombBag,   []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_ZeldasLetter,         []{return IsChild;}),
-                  AdvancementPairing(I_MegatonHammer,        []{return IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return IsAdult && AddedProgressiveHookshots == 0;}),
-                  AdvancementPairing(I_ProgressiveBulletBag, []{return IsChild && AtNight && AddedProgressiveBulletBags == 0;})
   });
 
   Exit Kak_ImpasLedge = Exit("Kak Impas Ledge", "Kakariko Village", "Kakariko Village", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1063,8 +936,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main, []{return true;})
-                }, {
-                  AdvancementPairing(GoldSkulltulaToken, []{return Skullsanity == TOKENSANITY_ALL_LOCATIONS && TokensInPool < AdvancementItemPool.size()/3;}, 50)
   });
 
   Exit Kak_ImpasHouse = Exit("Kak Impas House", "", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1100,10 +971,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_Boomerang,          []{return IsChild && !DampesWindmillAccess;}),
-                  AdvancementPairing(I_SongOfStorms,       []{return ProgressiveOcarina >= 1 && IsAdult;}),
   });
 
   Exit Kak_Bazaar = Exit("Kak Bazaar", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1165,12 +1032,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_DinsFire,         []{return ProgressiveMagic       >= 1;}),
-                  AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                  AdvancementPairing(I_KokiriSword,      []{return IsChild;})
-                  //Sticks
   });
 
   Exit Kak_OpenGrotto = Exit("Kak Open Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
@@ -1203,12 +1064,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&GY_DampesGrave,      []{return IsAdult;}),
                   ExitPairing::Both(&GY_DampesHouse,      []{return IsAdult || AtDampeTime;}), //TODO: This needs to be handled
                   ExitPairing::Both(&Kak_Main,            []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 0 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 1 && IsAdult;}),
-                  AdvancementPairing(I_ZeldasLullaby,        []{return ProgressiveOcarina        >= 1;}),
-                  AdvancementPairing(I_Boomerang,            []{return IsChild && AtNight;}),
   });
 
   Exit GY_ShieldGrave = Exit("GY Shield Grave", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1226,9 +1081,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&GY_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_SunsSong, []{return ProgressiveOcarina >= 1;})
   });
 
   Exit GY_ComposersGrave = Exit("GY Composers Grave", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1238,12 +1090,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&GY_Main, []{return true;}),
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_DinsFire,         []{return ProgressiveMagic       >= 1 && !FireArrows;}),
-                  AdvancementPairing(I_FireArrows,       []{return ProgressiveMagic       >= 1 && !DinsFire && ProgressiveBow >= 1 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                  AdvancementPairing(I_ProgressiveBow,   []{return AddedProgressiveBows   == 0 && IsAdult;}),
   });
 
   Exit GY_DampesGrave = Exit("GY Dampes Grave", "", "", NO_DAY_NIGHT_CYCLE, {
@@ -1258,9 +1104,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&GY_Main,      []{return true;}),
                   ExitPairing::Both(&Kak_Windmill, []{return IsAdult && CanPlay(SongOfTime);})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_SongOfTime, []{return ProgressiveOcarina >= 1 && IsAdult;}),
   });
 
   Exit GY_DampesHouse = Exit("GY Dampes House", "", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1278,11 +1121,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&GY_Main,               []{return true;}),
                   ExitPairing::Both(&ShadowTemple_Entryway, []{return CanUse("Dins Fire") || (LogicShadowFireArrowEntry && CanUse("Fire Arrows"));}),
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                  AdvancementPairing(I_DinsFire,         []{return ProgressiveMagic       >= 1;}),
-                  AdvancementPairing(I_FireArrows,       []{return ProgressiveMagic       >= 1 && ProgressiveBow >= 1 && LogicShadowFireArrowEntry;}),
   });
 
   Exit Kak_BehindGate = Exit("Kak Behind Gate", "Kakariko Village", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1308,10 +1146,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&DMT_Summit,              []{return CanBlastOrSmash || (IsAdult && (DMT_Main.CanPlantBean() && GoronBracelet));}),
                   ExitPairing::Both(&DodongosCavern_Entryway, []{return HasExplosives || GoronBracelet || IsAdult;}),
                   ExitPairing::Both(&DMT_StormsGrotto,        []{return CanOpenStormGrotto;})
-                }, {
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
-                  AdvancementPairing(I_SongOfStorms,        []{return ProgressiveOcarina        >= 1;}),
-                  AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 0;}),
   });
 
   Exit DMT_Summit = Exit("Death Mountain Summit", "Death Mountain", "Death Mountain", DAY_NIGHT_CYCLE, {
@@ -1331,11 +1165,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&DMT_OwlFlight,          []{return IsChild;}),
                   ExitPairing::Both(&DMT_CowGrotto,          []{return CanBlastOrSmash;}),
                   ExitPairing::Both(&DMT_GreatFairyFountain, []{return CanBlastOrSmash;}),
-                }, {
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags == 0 && (IsChild || (IsAdult && !Hammer));}),
-                  AdvancementPairing(I_MegatonHammer,       []{return AddedProgressiveBombBags == 0 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_ClaimCheck,          []{return IsAdult;}),
   });
 
   Exit DMT_OwlFlight = Exit("DMT Owl Flight", "Death Mountain", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1373,7 +1202,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&DMT_Summit, []{return true;})
-                }, {
   });
 
   Exit GC_Main = Exit("Goron City", "Goron City", "Goron City", NO_DAY_NIGHT_CYCLE, {
@@ -1403,17 +1231,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&GC_Shop,            []{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && (HasExplosives || GoronBracelet || GoronCityChildFire));}),
                   ExitPairing::Both(&GC_DaruniasChamber, []{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && CanPlay(ZeldasLullaby));}),
                   ExitPairing::Both(&GC_Grotto,          []{return IsAdult && ((CanPlay(SongOfTime) && ((DamageMultiplier != DAMAGEMULTIPLIER_OHKO && DamageMultiplier != DAMAGEMULTIPLIER_QUADRUPLE) || CanUse("Goron Tunic") || CanUse("Longshot") || CanUse("Nayrus Love"))) || (DamageMultiplier != DAMAGEMULTIPLIER_OHKO && CanUse("Goron Tunic") && CanUse("Hookshot")) ||(CanUse("Nayrus Love") && CanUse("Hookshot")));}),
-                }, {
-                  //AdvancementNeeds
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
-                  AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags  == 0;}),
-                  AdvancementPairing(I_MegatonHammer,       []{return IsAdult;}),
-                  AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 0;}),
-                  AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 1 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveBow,      []{return AddedProgressiveBows      == 0 && IsAdult;}),
-                  AdvancementPairing(I_GoronTunic,          []{return IsAdult;}),
-                  AdvancementPairing(I_ProgressiveMagic,    []{return AddedProgressiveMagics    == 0;}),
-                  AdvancementPairing(I_DinsFire,            []{return ProgressiveMagic          >= 1;}),
   });
 
   Exit GC_WoodsWarp = Exit("GC Woods Warp", "Goron City", "", NO_DAY_NIGHT_CYCLE, {
@@ -1423,13 +1240,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&GC_Main, []{return CanLeaveForest && GCWoodsWarpOpen;}),
                   ExitPairing::Both(&LW_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_MegatonHammer,       []{return IsAdult;}),
-                  AdvancementPairing(I_ProgressiveMagic,    []{return AddedProgressiveMagics   == 0;}),
-                  AdvancementPairing(I_DinsFire,            []{return ProgressiveMagic         >= 1;}),
   });
 
   Exit GC_DaruniasChamber = Exit("GC Darunias Chamber", "Goron City", "Goron City", NO_DAY_NIGHT_CYCLE, {
@@ -1442,8 +1252,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&GC_Main,        []{return true;}),
                   ExitPairing::Both(&DMC_LowerLocal, []{return IsAdult;})
-                }, {
-                  AdvancementPairing(I_SariasSong,   []{return IsChild && ProgressiveOcarina >= 1;}),
   });
 
   Exit GC_Shop = Exit("GC Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1476,12 +1284,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&DMC_UpperLocal,  []{return CanUse("Goron Tunic");}),
                   ExitPairing::Both(&DMT_Summit,      []{return true;}),
                   ExitPairing::Both(&DMC_UpperGrotto, []{return CanBlastOrSmash;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_MegatonHammer,       []{return IsAdult;}),
-                  AdvancementPairing(I_GoronTunic,          []{return IsAdult;}),
   });
 
   Exit DMC_UpperLocal = Exit("DMC Upper Local", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {
@@ -1497,11 +1299,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&DMC_UpperNearby,      []{return true;}),
                   ExitPairing::Both(&DMC_LadderAreaNearby, []{return true;}),
                   ExitPairing::Both(&DMC_CentralNearby,    []{return CanUse("Goron Tunic") && CanUse("Longshot") && ((DamageMultiplier != DAMAGEMULTIPLIER_OHKO && DamageMultiplier != DAMAGEMULTIPLIER_QUADRUPLE) || (Fairy && !ShuffleDungeonEntrances) || CanUse("Nayrus Love"));})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_GoronTunic,          []{return IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0;}),
-                  AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 1;}),
   });
 
   Exit DMC_LadderAreaNearby = Exit("DMC Ladder Area Nearby", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1511,10 +1308,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&DMC_UpperNearby, []{return IsAdult;}),
                   ExitPairing::Both(&DMC_LowerNearby, []{return CanUse("Hover Boots") || (LogicCraterUpperToLower && CanUse("Hammer"));})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_HoverBoots,    []{return IsAdult;}),
-                  AdvancementPairing(I_MegatonHammer, []{return IsAdult;}),
   });
 
   Exit DMC_LowerNearby = Exit("DMC Lower Nearby", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1523,9 +1316,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&GC_DaruniasChamber,     []{return true;}),
                   ExitPairing::Both(&DMC_GreatFairyFountain, []{return CanUse("Hammer");}),
                   ExitPairing::Both(&DMC_HammerGrotto,       []{return CanUse("Hammer");})
-                }, {
-                  AdvancementPairing(I_MegatonHammer, []{return IsAdult;}),
-                  AdvancementPairing(I_GoronTunic,    []{return IsAdult;}),
   });
 
   Exit DMC_LowerLocal = Exit("DMC Lower Local", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1534,10 +1324,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&DMC_LadderAreaNearby, []{return true;}),
                   ExitPairing::Both(&DMC_CentralNearby,    []{return CanUse("Hover Boots") || CanUse("Hookshot");}),
                   ExitPairing::Both(&FireTemple_Entrance,  []{return (CanUse("Hover Boots") || CanUse("Hookshot")) && (LogicFewerTunicRequirements || CanUse("Goron Tunic"));}),
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_HoverBoots,          []{return IsAdult;}),
-                  AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0;}),
   });
 
   Exit DMC_CentralNearby = Exit("DMC Central Nearby", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1547,10 +1333,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&DMC_CentralLocal, []{return CanUse("Goron Tunic");})
-                }, {
-                  AdvancementPairing(I_MagicBeanPack, []{return DMC_CentralLocal.BothAges();}),
-                  AdvancementPairing(I_HoverBoots,    []{return IsAdult && LogicCraterBeanPoHWithHovers;}),
-
   });
 
   Exit DMC_CentralLocal = Exit("DMC Central Local", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {
@@ -1565,10 +1347,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&DMC_LowerNearby,     []{return IsAdult && (CanUse("Hover Boots") || CanUse("Hookshot") || DMC_CentralLocal.CanPlantBean());}),
                   ExitPairing::Both(&DMC_UpperNearby,     []{return IsAdult && DMC_CentralLocal.CanPlantBean();}),
                   ExitPairing::Both(&FireTemple_Entrance, []{return (IsChild && ShuffleDungeonEntrances) || (IsAdult && (LogicFewerTunicRequirements || CanUse("Goron Tunic")));}),
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_HoverBoots,          []{return IsAdult && AddedProgressiveHookshots == 0;}),
-                  AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0 && !HoverBoots;}),
   });
 
   Exit FireTemple_Entrance = Exit("Fire Temple Entrance", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1610,10 +1388,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   //Exits
                   ExitPairing::Both(&ZR_Main, []{return IsAdult || HasExplosives;}),
                   ExitPairing::Both(&HF_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveBombBag,  []{return IsChild && AddedProgressiveBombBags == 0;}),
-                  AdvancementPairing(I_ProgressiveBombchus, []{return IsChild && AddedProgressiveBombBags == 0;}),
   });
 
   Exit ZR_Main = Exit("Zora River", "Zora River", "Zora's River", DAY_NIGHT_CYCLE, {
@@ -1642,11 +1416,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&LW_Main,            []{return CanDive || CanUse("Iron Boots");}),
                   ExitPairing::Both(&ZR_StormsGrotto,    []{return CanOpenStormGrotto;}),
                   ExitPairing::Both(&ZR_BehindWaterfall, []{return CanPlay(ZeldasLullaby);})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_SongOfStorms,       []{return ProgressiveOcarina     >= 1;}),
-                  AdvancementPairing(I_IronBoots,          []{return AddedProgressiveScales == 0 && IsAdult;}),
-                  AdvancementPairing(I_ProgressiveScale,   []{return AddedProgressiveScales == 0;})
   });
 
   Exit ZR_BehindWaterfall = Exit("ZR Behind Waterfall", "Zora River", "", DAY_NIGHT_CYCLE, {}, {}, {
@@ -1704,10 +1473,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&ZD_BehindKingZora,  []{return DeliverLetter || ZorasFountain == ZORASFOUNTAIN_OPEN /*|| (ZorasFountain == ZORASFOUNTAIN_ADULT && IsAdult)*/;}),
                   ExitPairing::Both(&ZD_Shop,            []{return IsChild || BlueFire;}),
                   ExitPairing::Both(&ZD_StormsGrotto,    []{return CanOpenStormGrotto;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_RutosLetter,      []{return IsChild && CanDive;}),
-                  AdvancementPairing(I_ProgressiveScale, []{return IsChild && AddedProgressiveScales == 0;}),
   });
 
   Exit ZD_BehindKingZora = Exit("ZD Behind King Zora", "Zoras Domain", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1758,10 +1523,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&JabuJabusBelly_Beginning, []{return IsChild && FishAccess;}),
                   ExitPairing::Both(&IceCavern_Beginning,      []{return IsAdult;}),
                   ExitPairing::Both(&ZF_GreatFairyFountain,    []{return HasExplosives;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_EmptyBottle, []{return IsChild && !HasBottle;}),
-                  AdvancementPairing(I_ZoraTunic,   []{return IsAdult && !LogicFewerTunicRequirements;}),
   });
 
   Exit ZF_GreatFairyFountain = Exit("ZF Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1790,10 +1551,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&LLR_Stables,     []{return true;}),
                   ExitPairing::Both(&LLR_Tower,       []{return true;}),
                   ExitPairing::Both(&LLR_Grotto,      []{return IsChild;})
-                }, {
-                  AdvancementPairing(I_EponasSong, []{return ProgressiveOcarina  >= 1  && AtDay   && IsAdult;}),
-                  AdvancementPairing(I_Boomerang,  []{return GoldSkulltulaTokens <= 50 && AtNight && IsChild;}),
-
   });
 
   Exit LLR_TalonsHouse = Exit("LLR Talons House", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1802,9 +1559,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&LLR_Main, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ZeldasLetter, []{return IsChild;}),
   });
 
   Exit LLR_Stables = Exit("LLR Stables", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1855,11 +1609,6 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                   ExitPairing::Both(&KF_OutsideDekuTree,       []{return true;}),
                   ExitPairing::Both(&DekuTree_SlingshotRoom,   []{return HasShield;}),
                   ExitPairing::Both(&DekuTree_BossRoom,        []{return (HasFireSourceWithTorch || (LogicDekuB1WebsWithBow && CanUse("Bow"))) && (LogicDekuB1Skip || (IsAdult || CanUse("Slingshot")));})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_ProgressiveBulletBag, []{return IsChild && AddedProgressiveBulletBags == 0;}),
-                  AdvancementPairing(I_DekuShield,           []{return IsChild && !DekuShield;}),
-                  AdvancementPairing(I_HylianShield,         []{return IsAdult && !HylianShield;}),
   });
 
   Exit DekuTree_SlingshotRoom = Exit("Deku Tree Slingshot Room", "Deku Tree", "Deku Tree", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1881,1060 +1630,742 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
                 }, {
                   //Exits
                   ExitPairing::Both(&DekuTree_Lobby, []{return true;})
-                }, {
-                  //Advancement Needs
-                  AdvancementPairing(I_KokiriSword,  []{return IsChild;}),
-                  AdvancementPairing(I_DekuShield,   []{return IsChild;}),
-                  AdvancementPairing(I_HylianShield, []{return IsAdult;}),
   });
 
   Exit DodongosCavern_Beginning = Exit("Dodongos Cavern Beginning", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                    //Exits
-                    ExitPairing::Both(&DodongosCavern_Entryway, []{return true;}),
-                    ExitPairing::Both(&DodongosCavern_Lobby,    []{return CanBlastOrSmash || GoronBracelet;})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_MegatonHammer,       []{return IsAdult;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 0;}),
+                  //Exits
+                  ExitPairing::Both(&DodongosCavern_Entryway, []{return true;}),
+                  ExitPairing::Both(&DodongosCavern_Lobby,    []{return CanBlastOrSmash || GoronBracelet;})
   });
 
   Exit DodongosCavern_Lobby = Exit("Dodongos Cavern Lobby", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairy;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&DodongosCavern_MapChest,                      []{return true;}),
-                    ItemLocationPairing(&DodongosCavern_CompassChest,                  []{return IsAdult || Sticks || (CanUse("Dins Fire") && (Slingshot || HasExplosives || KokiriSword));}),
-                    ItemLocationPairing(&DodongosCavern_GS_SideRoomNearLowerLizalfos,  []{return HasExplosives || IsAdult || Slingshot || Boomerang || Sticks || KokiriSword;}),
-                    ItemLocationPairing(&DodongosCavern_GS_Scarecrow,                  []{return CanUse("Scarecrow") || CanUse("Longshot") || (LogicDCScarecrowGS && (IsAdult || CanChildAttack));}),
-                    ItemLocationPairing(&DodongosCavern_DekuScrubSideRoomNearDodongos, []{return IsAdult || Slingshot || Sticks || HasExplosives || KokiriSword;}),
-                    ItemLocationPairing(&DodongosCavern_DekuScrubLobby,                []{return true;}),
-                    //Dodongos Cavern Gossip Stone
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&DodongosCavern_Beginning, []{return true;}),
-                    ExitPairing::Both(&DodongosCavern_Climb,     []{return (IsAdult || ((Sticks || CanUse("Dins Fire")) && (Slingshot || Sticks || HasExplosives || KokiriSword))) && (HasExplosives || GoronBracelet || CanUse("Dins Fire") ||(LogicDCStaircase && CanUse("Bow")));})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 0;}),
-                    AdvancementPairing(I_DinsFire,            []{return ProgressiveMagic          >= 1;}),
-                    AdvancementPairing(I_ProgressiveMagic,    []{return AddedProgressiveMagics    == 0;}),
+                  //Events
+                  EventPairing(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairy;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&DodongosCavern_MapChest,                      []{return true;}),
+                  ItemLocationPairing(&DodongosCavern_CompassChest,                  []{return IsAdult || Sticks || (CanUse("Dins Fire") && (Slingshot || HasExplosives || KokiriSword));}),
+                  ItemLocationPairing(&DodongosCavern_GS_SideRoomNearLowerLizalfos,  []{return HasExplosives || IsAdult || Slingshot || Boomerang || Sticks || KokiriSword;}),
+                  ItemLocationPairing(&DodongosCavern_GS_Scarecrow,                  []{return CanUse("Scarecrow") || CanUse("Longshot") || (LogicDCScarecrowGS && (IsAdult || CanChildAttack));}),
+                  ItemLocationPairing(&DodongosCavern_DekuScrubSideRoomNearDodongos, []{return IsAdult || Slingshot || Sticks || HasExplosives || KokiriSword;}),
+                  ItemLocationPairing(&DodongosCavern_DekuScrubLobby,                []{return true;}),
+                  //Dodongos Cavern Gossip Stone
+                }, {
+                  //Exits
+                  ExitPairing::Both(&DodongosCavern_Beginning, []{return true;}),
+                  ExitPairing::Both(&DodongosCavern_Climb,     []{return (IsAdult || ((Sticks || CanUse("Dins Fire")) && (Slingshot || Sticks || HasExplosives || KokiriSword))) && (HasExplosives || GoronBracelet || CanUse("Dins Fire") ||(LogicDCStaircase && CanUse("Bow")));})
   });
 
   Exit DodongosCavern_Climb = Exit("Dodongos Cavern Climb", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&DodongosCavern_BombFlowerPlatformChest,   []{return true;}),
-                    ItemLocationPairing(&DodongosCavern_GS_VinesAboveStairs,       []{return true;}),
-                    ItemLocationPairing(&DodongosCavern_DekuScrubNearBombBagRight, []{return CanBlastOrSmash;}),
-                    ItemLocationPairing(&DodongosCavern_DekuScrubNearBombBagLeft,  []{return CanBlastOrSmash;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&DodongosCavern_Lobby,     []{return true;}),
-                    ExitPairing::Both(&DodongosCavern_FarBridge, []{return (IsChild && (Slingshot || (LogicDCSlingshotSkip && (Sticks || HasExplosives || KokiriSword)))) || (IsAdult && (Bow || HoverBoots || CanUse("Longshot") || LogicDCJump));})
+                  //Locations
+                  ItemLocationPairing(&DodongosCavern_BombFlowerPlatformChest,   []{return true;}),
+                  ItemLocationPairing(&DodongosCavern_GS_VinesAboveStairs,       []{return true;}),
+                  ItemLocationPairing(&DodongosCavern_DekuScrubNearBombBagRight, []{return CanBlastOrSmash;}),
+                  ItemLocationPairing(&DodongosCavern_DekuScrubNearBombBagLeft,  []{return CanBlastOrSmash;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&DodongosCavern_Lobby,     []{return true;}),
+                  ExitPairing::Both(&DodongosCavern_FarBridge, []{return (IsChild && (Slingshot || (LogicDCSlingshotSkip && (Sticks || HasExplosives || KokiriSword)))) || (IsAdult && (Bow || HoverBoots || CanUse("Longshot") || LogicDCJump));})
   });
 
   Exit DodongosCavern_FarBridge = Exit("Dodongos Cavern Far Bridge", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&DodongosCavern_BombBagChest,         []{return true;}),
-                    ItemLocationPairing(&DodongosCavern_EndOfBridgeChest,     []{return CanBlastOrSmash;}),
-                    ItemLocationPairing(&DodongosCavern_GS_AlcoveAboveStairs, []{return HookshotOrBoomerang;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&DodongosCavern_BossArea, []{return HasExplosives;}),
-                    ExitPairing::Both(&DodongosCavern_Lobby,    []{return true;})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(I_MegatonHammer,       []{return AddedProgressiveBombBags == 0 && IsAdult;}),
+                  //Locations
+                  ItemLocationPairing(&DodongosCavern_BombBagChest,         []{return true;}),
+                  ItemLocationPairing(&DodongosCavern_EndOfBridgeChest,     []{return CanBlastOrSmash;}),
+                  ItemLocationPairing(&DodongosCavern_GS_AlcoveAboveStairs, []{return HookshotOrBoomerang;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&DodongosCavern_BossArea, []{return HasExplosives;}),
+                  ExitPairing::Both(&DodongosCavern_Lobby,    []{return true;})
   });
 
   Exit DodongosCavern_BossArea = Exit("Dodongos Cavern Boss Area", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FairyPot, []{return true;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&DodongosCavern_BossRoomChest,    []{return true;}),
-                    ItemLocationPairing(&DodongosCavern_KingDodongoHeart, []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
-                    ItemLocationPairing(&KingDodongo,                     []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
-                    ItemLocationPairing(&DodongosCavern_GS_BackRoom,      []{return true;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&DodongosCavern_Lobby, []{return true;})
+                  //Events
+                  EventPairing(&FairyPot, []{return true;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&DodongosCavern_BossRoomChest,    []{return true;}),
+                  ItemLocationPairing(&DodongosCavern_KingDodongoHeart, []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
+                  ItemLocationPairing(&KingDodongo,                     []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
+                  ItemLocationPairing(&DodongosCavern_GS_BackRoom,      []{return true;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&DodongosCavern_Lobby, []{return true;})
   });
 
   Exit JabuJabusBelly_Beginning = Exit("Jabu Jabus Belly Beginning", "Jabu Jabus Belly", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                    //Exits
-                    ExitPairing::Both(&ZF_Main,             []{return true;}),
-                    ExitPairing::Both(&JabuJabusBelly_Main, []{return CanUseProjectile;})
-                  }, {
-                    AdvancementPairing(I_Boomerang,            []{return IsChild;}),
-                    AdvancementPairing(I_ProgressiveBulletBag, []{return IsChild && AddedProgressiveBulletBags == 0;}),
-                    AdvancementPairing(I_ProgressiveBow,       []{return IsAdult && AddedProgressiveBows       == 0;}),
-                    AdvancementPairing(I_ProgressiveHookshot,  []{return IsAdult && AddedProgressiveHookshots  == 0;}),
+                  //Exits
+                  ExitPairing::Both(&ZF_Main,             []{return true;}),
+                  ExitPairing::Both(&JabuJabusBelly_Main, []{return CanUseProjectile;})
   });
 
   Exit JabuJabusBelly_Main = Exit("Jabu Jabus Belly Main", "Jabu Jabus Belly", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FairyPot, []{return true;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&JabuJabusBelly_BoomerangChest,        []{return true;}),
-                    ItemLocationPairing(&JabuJabusBelly_GS_WaterSwitchRoom,    []{return true;}),
-                    ItemLocationPairing(&JabuJabusBelly_GS_LobbyBasementLower, []{return HookshotOrBoomerang;}),
-                    ItemLocationPairing(&JabuJabusBelly_GS_LobbyBasementUpper, []{return HookshotOrBoomerang;}),
-                    ItemLocationPairing(&JabuJabusBelly_DekuScrub,             []{return CanDive || IsChild || LogicJabuScrubJumpDive || CanUse("Iron Boots");}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&JabuJabusBelly_Beginning, []{return true;}),
-                    ExitPairing::Both(&JabuJabusBelly_Depths,    []{return CanUse("Boomerang");}),
-                    ExitPairing::Both(&JabuJabusBelly_BossArea,  []{return LogicJabuBossGSAdult && CanUse("Hover Boots");}),
-                  }, {
-                    AdvancementPairing(I_Boomerang, []{return IsChild;}),
+                  //Events
+                  EventPairing(&FairyPot, []{return true;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&JabuJabusBelly_BoomerangChest,        []{return true;}),
+                  ItemLocationPairing(&JabuJabusBelly_GS_WaterSwitchRoom,    []{return true;}),
+                  ItemLocationPairing(&JabuJabusBelly_GS_LobbyBasementLower, []{return HookshotOrBoomerang;}),
+                  ItemLocationPairing(&JabuJabusBelly_GS_LobbyBasementUpper, []{return HookshotOrBoomerang;}),
+                  ItemLocationPairing(&JabuJabusBelly_DekuScrub,             []{return CanDive || IsChild || LogicJabuScrubJumpDive || CanUse("Iron Boots");}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&JabuJabusBelly_Beginning, []{return true;}),
+                  ExitPairing::Both(&JabuJabusBelly_Depths,    []{return CanUse("Boomerang");}),
+                  ExitPairing::Both(&JabuJabusBelly_BossArea,  []{return LogicJabuBossGSAdult && CanUse("Hover Boots");}),
   });
 
   Exit JabuJabusBelly_Depths = Exit("Jabu Jabus Belly Depths", "Jabu Jabus Belly", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&JabuJabusBelly_MapChest,     []{return true;}),
-                    ItemLocationPairing(&JabuJabusBelly_CompassChest, []{return true;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&JabuJabusBelly_Main,     []{return true;}),
-                    ExitPairing::Both(&JabuJabusBelly_BossArea, []{return Sticks || KokiriSword;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_KokiriSword, []{return IsChild;}),
+                  //Locations
+                  ItemLocationPairing(&JabuJabusBelly_MapChest,     []{return true;}),
+                  ItemLocationPairing(&JabuJabusBelly_CompassChest, []{return true;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&JabuJabusBelly_Main,     []{return true;}),
+                  ExitPairing::Both(&JabuJabusBelly_BossArea, []{return Sticks || KokiriSword;}),
   });
 
   Exit JabuJabusBelly_BossArea = Exit("Jabu Jabus Belly Boss Area", "Jabu Jabus Belly", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&NutPot, []{return true;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&JabuJabusBelly_BarinadeHeart, []{return CanUse("Boomerang");}),
-                    ItemLocationPairing(&Barinade,                     []{return CanUse("Boomerang");}),
-                    ItemLocationPairing(&JabuJabusBelly_GS_NearBoss,   []{return true;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&JabuJabusBelly_Main, []{return true;}),
+                  //Events
+                  EventPairing(&NutPot, []{return true;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&JabuJabusBelly_BarinadeHeart, []{return CanUse("Boomerang");}),
+                  ItemLocationPairing(&Barinade,                     []{return CanUse("Boomerang");}),
+                  ItemLocationPairing(&JabuJabusBelly_GS_NearBoss,   []{return true;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&JabuJabusBelly_Main, []{return true;}),
   });
 
   Exit ForestTemple_Lobby = Exit("Forest Temple Lobby", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_FirstRoomChest,    []{return true;}),
-                    ItemLocationPairing(&ForestTemple_FirstStalfosChest, []{return IsAdult || KokiriSword;}),
-                    ItemLocationPairing(&ForestTemple_GS_FirstRoom,      []{return CanUse("Dins Fire") || CanUseProjectile;}),
-                    ItemLocationPairing(&ForestTemple_GS_Lobby,          []{return HookshotOrBoomerang;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&SFM_Main,                   []{return true;}),
-                    ExitPairing::Both(&ForestTemple_NWOutdoors,    []{return CanPlay(SongOfTime) || IsChild;}),
-                    ExitPairing::Both(&ForestTemple_NEOutdoors,    []{return CanUse("Bow") || CanUse("Slingshot");}),
-                    ExitPairing::Both(&ForestTemple_BlockPushRoom, []{return SmallKeys(ForestTempleKeys, 1);}),
-                    ExitPairing::Both(&ForestTemple_BossRegion,    []{return ForestTempleJoAndBeth && ForestTempleAmyAndMeg;})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(ForestTemple_SmallKey,  []{return true;}, 1),
-                    AdvancementPairing(I_SongOfTime,           []{return IsAdult && ProgressiveOcarina         >= 1;}),
-                    AdvancementPairing(I_ProgressiveBow,       []{return IsAdult && AddedProgressiveBows       == 0;}),
-                    AdvancementPairing(I_ProgressiveBulletBag, []{return IsChild && AddedProgressiveBulletBags == 0;}),
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_FirstRoomChest,    []{return true;}),
+                  ItemLocationPairing(&ForestTemple_FirstStalfosChest, []{return IsAdult || KokiriSword;}),
+                  ItemLocationPairing(&ForestTemple_GS_FirstRoom,      []{return CanUse("Dins Fire") || CanUseProjectile;}),
+                  ItemLocationPairing(&ForestTemple_GS_Lobby,          []{return HookshotOrBoomerang;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&SFM_Main,                   []{return true;}),
+                  ExitPairing::Both(&ForestTemple_NWOutdoors,    []{return CanPlay(SongOfTime) || IsChild;}),
+                  ExitPairing::Both(&ForestTemple_NEOutdoors,    []{return CanUse("Bow") || CanUse("Slingshot");}),
+                  ExitPairing::Both(&ForestTemple_BlockPushRoom, []{return SmallKeys(ForestTempleKeys, 1);}),
+                  ExitPairing::Both(&ForestTemple_BossRegion,    []{return ForestTempleJoAndBeth && ForestTempleAmyAndMeg;})
   });
 
   Exit ForestTemple_NWOutdoors = Exit("Forest Temple NW Outdoors", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&DekuBabaSticks, []{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}),
-                    EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse("Dins Fire"));}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_GS_LevelIslandCourtyard, []{return CanUse("Longshot") || ((ForestTemple_OutsideUpperLedge.dayAdult || ForestTemple_OutsideUpperLedge.nightAdult) && CanUse("Hookshot"));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return IsAdult || (HasExplosives || ((CanUse("Boomerang") || Nuts || DekuShield) && (Sticks || KokiriSword || CanUse("Slingshot"))));})
+                  //Events
+                  EventPairing(&DekuBabaSticks, []{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}),
+                  EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse("Dins Fire"));}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_GS_LevelIslandCourtyard, []{return CanUse("Longshot") || ((ForestTemple_OutsideUpperLedge.dayAdult || ForestTemple_OutsideUpperLedge.nightAdult) && CanUse("Hookshot"));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return IsAdult || (HasExplosives || ((CanUse("Boomerang") || Nuts || DekuShield) && (Sticks || KokiriSword || CanUse("Slingshot"))));})
   });
 
   Exit ForestTemple_NEOutdoors = Exit("Forest Temple NE Outdoors", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&DekuBabaSticks, []{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}),
-                    EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse("Dins Fire"));}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_RaisedIslandCourtyardChest, []{return CanUse("Hookshot");}),
-                    ItemLocationPairing(&ForestTemple_GS_RaisedIslandCourtyard,   []{return CanUse("Hookshot") || (LogicForestOutdoorEastGS && CanUse("Boomerang"));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return CanUse("Longshot")   || (LogicForestVines && CanUse("Hookshot"));}),
-                    ExitPairing::Both(&ForestTemple_NWOutdoors,            []{return CanUse("Iron Boots") || ProgressiveScale >= 2;}),
-                    ExitPairing::Both(&ForestTemple_Lobby,                 []{return true;})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 0 && IsAdult;}),
-                    AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots  == 1 && IsAdult;}),
-                    AdvancementPairing(I_ProgressiveScale,     []{return AddedProgressiveScales     == 0;}),
-                    AdvancementPairing(I_ProgressiveScale,     []{return AddedProgressiveScales     == 1;}),
-                    AdvancementPairing(I_IronBoots,            []{return IsAdult;}),
+                  //Events
+                  EventPairing(&DekuBabaSticks, []{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}),
+                  EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse("Dins Fire"));}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_RaisedIslandCourtyardChest, []{return CanUse("Hookshot");}),
+                  ItemLocationPairing(&ForestTemple_GS_RaisedIslandCourtyard,   []{return CanUse("Hookshot") || (LogicForestOutdoorEastGS && CanUse("Boomerang"));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return CanUse("Longshot")   || (LogicForestVines && CanUse("Hookshot"));}),
+                  ExitPairing::Both(&ForestTemple_NWOutdoors,            []{return CanUse("Iron Boots") || ProgressiveScale >= 2;}),
+                  ExitPairing::Both(&ForestTemple_Lobby,                 []{return true;})
   });
 
   Exit ForestTemple_OutdoorsHighBalconies = Exit("Forest Temple Outdoors High Balconies", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_WellChest, []{return true;}),
-                    ItemLocationPairing(&ForestTemple_MapChest,  []{return true;})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_NWOutdoors,  []{return true;}),
-                    ExitPairing::Both(&ForestTemple_NEOutdoors,  []{return true;}),
-                    ExitPairing::Both(&ForestTemple_FallingRoom, []{return LogicForestScarecrow && CanUse("Hover Boots") && CanUse("Scarecrow");})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_HoverBoots,          []{return IsAdult && LogicForestScarecrow;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && LogicForestScarecrow && AddedProgressiveHookshots == 0;}),
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_WellChest, []{return true;}),
+                  ItemLocationPairing(&ForestTemple_MapChest,  []{return true;})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_NWOutdoors,  []{return true;}),
+                  ExitPairing::Both(&ForestTemple_NEOutdoors,  []{return true;}),
+                  ExitPairing::Both(&ForestTemple_FallingRoom, []{return LogicForestScarecrow && CanUse("Hover Boots") && CanUse("Scarecrow");})
   });
 
   Exit ForestTemple_FallingRoom = Exit("Forest Temple Falling Room", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&ForestTempleAmyAndMeg, []{return ForestTempleAmyAndMeg || CanUse("Bow");}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_FallingCeilingRoomChest, []{return true;})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_NEOutdoors, []{return true;})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow, []{return IsAdult && AddedProgressiveBows == 0;}),
+                  //Events
+                  EventPairing(&ForestTempleAmyAndMeg, []{return ForestTempleAmyAndMeg || CanUse("Bow");}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_FallingCeilingRoomChest, []{return true;})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_NEOutdoors, []{return true;})
   });
 
   Exit ForestTemple_BlockPushRoom = Exit("Forest Temple Block Push Room", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_EyeSwitchChest, []{return GoronBracelet && (CanUse("Bow") || CanUse("Slingshot"));})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_OutsideUpperLedge, []{return CanUse("Hover Boots") || (LogicForestOutsideBackdoor && IsAdult && GoronBracelet);}),
-                    ExitPairing::Both(&ForestTemple_BowRegion,         []{return GoronBracelet && SmallKeys(ForestTempleKeys, 3) && IsAdult;}),
-                    ExitPairing::Both(&ForestTemple_StraightenedHall,  []{return GoronBracelet && SmallKeys(ForestTempleKeys, 2) && CanUse("Bow") && IsAdult;})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow,      []{return IsAdult && AddedProgressiveBows == 0;}),
-                    AdvancementPairing(I_HoverBoots,          []{return IsAdult;}),
-                    AdvancementPairing(ForestTemple_SmallKey, []{return true;}, 3),
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_EyeSwitchChest, []{return GoronBracelet && (CanUse("Bow") || CanUse("Slingshot"));})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_OutsideUpperLedge, []{return CanUse("Hover Boots") || (LogicForestOutsideBackdoor && IsAdult && GoronBracelet);}),
+                  ExitPairing::Both(&ForestTemple_BowRegion,         []{return GoronBracelet && SmallKeys(ForestTempleKeys, 3) && IsAdult;}),
+                  ExitPairing::Both(&ForestTemple_StraightenedHall,  []{return GoronBracelet && SmallKeys(ForestTempleKeys, 2) && CanUse("Bow") && IsAdult;})
   });
 
   Exit ForestTemple_StraightenedHall = Exit("Forest Temple Straightened Hall", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_BossKeyChest, []{return true;})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_OutsideUpperLedge, []{return true;})
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_BossKeyChest, []{return true;})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_OutsideUpperLedge, []{return true;})
   });
 
   Exit ForestTemple_OutsideUpperLedge = Exit("Forest Temple Outside Upper Ledge", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_FloormasterChest, []{return true;})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_NWOutdoors, []{return true;})
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_FloormasterChest, []{return true;})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_NWOutdoors, []{return true;})
   });
 
   Exit ForestTemple_BowRegion = Exit("Forest Temple Bow Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&ForestTempleJoAndBeth, []{return ForestTempleJoAndBeth || CanUse("Bow");}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_BowChest,     []{return true;}),
-                    ItemLocationPairing(&ForestTemple_RedPoeChest,  []{return CanUse("Bow");}),
-                    ItemLocationPairing(&ForestTemple_BluePoeChest, []{return CanUse("Bow");})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ForestTemple_FallingRoom, []{return SmallKeys(ForestTempleKeys, 5) && (Bow || CanUse("Dins Fire"));})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow,      []{return IsAdult && AddedProgressiveBows   == 0;}),
-                    AdvancementPairing(I_DinsFire,            []{return IsAdult && ProgressiveMagic       >= 1;}),
-                    AdvancementPairing(I_ProgressiveMagic,    []{return IsAdult && AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(ForestTemple_SmallKey, []{return true;}, 5),
+                  //Events
+                  EventPairing(&ForestTempleJoAndBeth, []{return ForestTempleJoAndBeth || CanUse("Bow");}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_BowChest,     []{return true;}),
+                  ItemLocationPairing(&ForestTemple_RedPoeChest,  []{return CanUse("Bow");}),
+                  ItemLocationPairing(&ForestTemple_BluePoeChest, []{return CanUse("Bow");})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ForestTemple_FallingRoom, []{return SmallKeys(ForestTempleKeys, 5) && (Bow || CanUse("Dins Fire"));})
   });
 
   Exit ForestTemple_BossRegion = Exit("Forest Temple Boss Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ForestTemple_BasementChest,     []{return true;}),
-                    ItemLocationPairing(&ForestTemple_PhantomGanonHeart, []{return BossKeyForestTemple;}),
-                    ItemLocationPairing(&PhantomGanon,                   []{return BossKeyForestTemple;}),
-                    ItemLocationPairing(&ForestTemple_GS_Basement,       []{return HookshotOrBoomerang;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(ForestTemple_BossKey, []{return true;}),
-  });
+                  //Locations
+                  ItemLocationPairing(&ForestTemple_BasementChest,     []{return true;}),
+                  ItemLocationPairing(&ForestTemple_PhantomGanonHeart, []{return BossKeyForestTemple;}),
+                  ItemLocationPairing(&PhantomGanon,                   []{return BossKeyForestTemple;}),
+                  ItemLocationPairing(&ForestTemple_GS_Basement,       []{return HookshotOrBoomerang;}),
+  }, {});
 
   Exit FireTemple_Lower = Exit("Fire Temple Lower", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FairyPot, []{return FairyPot || ((CanUse("Hover Boots") || CanUse("Hookshot")) && (LogicFewerTunicRequirements || CanUse("Goron Tunic")));}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&FireTemple_NearBossChest,    []{return LogicFewerTunicRequirements || CanUse("Goron Tunic");}),
-                    ItemLocationPairing(&FireTemple_FlareDancerChest, []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
-                    ItemLocationPairing(&FireTemple_BossKeyChest,     []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
-                    ItemLocationPairing(&FireTemple_VolvagiaHeart,    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
-                    ItemLocationPairing(&Volvagia,                    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
-                    ItemLocationPairing(&FireTemple_GS_BossKeyLoop,   []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&FireTemple_Entrance,    []{return true;}),
-                    ExitPairing::Both(&FireTemple_BigLavaRoom, []{return SmallKeys(FireTempleKeys, 1) && (LogicFewerTunicRequirements || CanUse("Goron Tunic"));}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_MegatonHammer,     []{return IsAdult;}),
-                    AdvancementPairing(I_HoverBoots,        []{return IsAdult;}),
-                    AdvancementPairing(I_GoronTunic,        []{return IsAdult && !LogicFewerTunicRequirements;}),
-                    AdvancementPairing(FireTemple_SmallKey, []{return true;}, 1),
-                    AdvancementPairing(FireTemple_BossKey,  []{return true;}),
+                  //Events
+                  EventPairing(&FairyPot, []{return FairyPot || ((CanUse("Hover Boots") || CanUse("Hookshot")) && (LogicFewerTunicRequirements || CanUse("Goron Tunic")));}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&FireTemple_NearBossChest,    []{return LogicFewerTunicRequirements || CanUse("Goron Tunic");}),
+                  ItemLocationPairing(&FireTemple_FlareDancerChest, []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
+                  ItemLocationPairing(&FireTemple_BossKeyChest,     []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
+                  ItemLocationPairing(&FireTemple_VolvagiaHeart,    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
+                  ItemLocationPairing(&Volvagia,                    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
+                  ItemLocationPairing(&FireTemple_GS_BossKeyLoop,   []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&FireTemple_Entrance,    []{return true;}),
+                  ExitPairing::Both(&FireTemple_BigLavaRoom, []{return SmallKeys(FireTempleKeys, 1) && (LogicFewerTunicRequirements || CanUse("Goron Tunic"));}),
   });
 
   Exit FireTemple_BigLavaRoom = Exit("Fire Temple Big Lava Room", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&FireTemple_BigLavaRoomLowerOpenDoorChest, []{return true;}),
-                    ItemLocationPairing(&FireTemple_BigLavaRoomBlockedDoorChest,   []{return IsAdult && HasExplosives;}),
-                    ItemLocationPairing(&FireTemple_GS_SongOfTimeRoom,             []{return IsAdult && (CanPlay(SongOfTime) || LogicFireSongOfTime);}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&FireTemple_Lower,  []{return true;}),
-                    ExitPairing::Both(&FireTemple_Middle, []{return CanUse("Goron Tunic") && SmallKeys(FireTempleKeys, 4) && (GoronBracelet || LogicFireStrength) && (HasExplosives || Bow || Hookshot);}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 0;}),
-                    AdvancementPairing(I_ProgressiveBow,      []{return AddedProgressiveBows      == 0 && IsAdult;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return AddedProgressiveHookshots == 0 && IsAdult;}),
-                    AdvancementPairing(I_SongOfTime,          []{return ProgressiveOcarina        >= 1 && IsAdult;}),
-                    AdvancementPairing(FireTemple_SmallKey,   []{return true;}, 4),
-
+                  //Locations
+                  ItemLocationPairing(&FireTemple_BigLavaRoomLowerOpenDoorChest, []{return true;}),
+                  ItemLocationPairing(&FireTemple_BigLavaRoomBlockedDoorChest,   []{return IsAdult && HasExplosives;}),
+                  ItemLocationPairing(&FireTemple_GS_SongOfTimeRoom,             []{return IsAdult && (CanPlay(SongOfTime) || LogicFireSongOfTime);}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&FireTemple_Lower,  []{return true;}),
+                  ExitPairing::Both(&FireTemple_Middle, []{return CanUse("Goron Tunic") && SmallKeys(FireTempleKeys, 4) && (GoronBracelet || LogicFireStrength) && (HasExplosives || Bow || Hookshot);}),
   });
 
   Exit FireTemple_Middle = Exit("Fire Temple Middle", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&FireTemple_BoulderMazeLowerChest,    []{return true;}),
-                    ItemLocationPairing(&FireTemple_BoulderMazeUpperChest,    []{return SmallKeys(FireTempleKeys, 6);}),
-                    ItemLocationPairing(&FireTemple_BoulderMazeSideRoomChest, []{return true;}),
-                    ItemLocationPairing(&FireTemple_BoulderMazeShortcutChest, []{return SmallKeys(FireTempleKeys, 6) && HasExplosives;}),
-                    ItemLocationPairing(&FireTemple_ScarecrowChest,           []{return SmallKeys(FireTempleKeys, 6) && (CanUse("Scarecrow") || (LogicFireScarecrow && CanUse("Longshot")));}),
-                    ItemLocationPairing(&FireTemple_MapChest,                 []{return SmallKeys(FireTempleKeys, 6) || (SmallKeys(FireTempleKeys, 5) && CanUse("Bow"));}),
-                    ItemLocationPairing(&FireTemple_CompassChest,             []{return SmallKeys(FireTempleKeys, 6);}),
-                    ItemLocationPairing(&FireTemple_GS_BoulderMaze,           []{return SmallKeys(FireTempleKeys, 4) && HasExplosives;}),
-                    ItemLocationPairing(&FireTemple_GS_ScarecrowClimb,        []{return SmallKeys(FireTempleKeys, 6) && (CanUse("Scarecrow") || (LogicFireScarecrow && CanUse("Longshot")));}),
-                    ItemLocationPairing(&FireTemple_GS_ScarecrowTop,          []{return SmallKeys(FireTempleKeys, 6) && (CanUse("Scarecrow") || (LogicFireScarecrow && CanUse("Longshot")));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&FireTemple_Upper, []{return SmallKeys(FireTempleKeys, 8) || (SmallKeys(FireTempleKeys, 7) && ((CanUse("Hover Boots") && CanUse("Hammer")) || LogicFireFlameMaze));})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveBow,      []{return AddedProgressiveBows      == 0 && IsAdult && SmallKeys(FireTempleKeys, 5);}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return AddedProgressiveHookshots == 0 && IsAdult && CanPlay(ScarecrowSong);}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return AddedProgressiveHookshots == 1 && IsAdult && LogicFireScarecrow;}),
-                    AdvancementPairing(I_MegatonHammer,       []{return IsAdult && !LogicFireFlameMaze && SmallKeys(FireTempleKeys, 7);}),
-                    AdvancementPairing(I_HoverBoots,          []{return IsAdult && !LogicFireFlameMaze && SmallKeys(FireTempleKeys, 7);}),
-                    AdvancementPairing(FireTemple_SmallKey,   []{return true;}, 8),
+                  //Locations
+                  ItemLocationPairing(&FireTemple_BoulderMazeLowerChest,    []{return true;}),
+                  ItemLocationPairing(&FireTemple_BoulderMazeUpperChest,    []{return SmallKeys(FireTempleKeys, 6);}),
+                  ItemLocationPairing(&FireTemple_BoulderMazeSideRoomChest, []{return true;}),
+                  ItemLocationPairing(&FireTemple_BoulderMazeShortcutChest, []{return SmallKeys(FireTempleKeys, 6) && HasExplosives;}),
+                  ItemLocationPairing(&FireTemple_ScarecrowChest,           []{return SmallKeys(FireTempleKeys, 6) && (CanUse("Scarecrow") || (LogicFireScarecrow && CanUse("Longshot")));}),
+                  ItemLocationPairing(&FireTemple_MapChest,                 []{return SmallKeys(FireTempleKeys, 6) || (SmallKeys(FireTempleKeys, 5) && CanUse("Bow"));}),
+                  ItemLocationPairing(&FireTemple_CompassChest,             []{return SmallKeys(FireTempleKeys, 6);}),
+                  ItemLocationPairing(&FireTemple_GS_BoulderMaze,           []{return SmallKeys(FireTempleKeys, 4) && HasExplosives;}),
+                  ItemLocationPairing(&FireTemple_GS_ScarecrowClimb,        []{return SmallKeys(FireTempleKeys, 6) && (CanUse("Scarecrow") || (LogicFireScarecrow && CanUse("Longshot")));}),
+                  ItemLocationPairing(&FireTemple_GS_ScarecrowTop,          []{return SmallKeys(FireTempleKeys, 6) && (CanUse("Scarecrow") || (LogicFireScarecrow && CanUse("Longshot")));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&FireTemple_Upper, []{return SmallKeys(FireTempleKeys, 8) || (SmallKeys(FireTempleKeys, 7) && ((CanUse("Hover Boots") && CanUse("Hammer")) || LogicFireFlameMaze));})
   });
 
   Exit FireTemple_Upper = Exit("Fire Temple Upper", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&FireTemple_HighestGoronChest,  []{return CanUse("Hammer") && CanPlay(SongOfTime);}),
-                    ItemLocationPairing(&FireTemple_MegatonHammerChest, []{return HasExplosives;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_SongOfTime, []{return ProgressiveOcarina >= 1 && IsAdult;}),
-  });
+                  //Locations
+                  ItemLocationPairing(&FireTemple_HighestGoronChest,  []{return CanUse("Hammer") && CanPlay(SongOfTime);}),
+                  ItemLocationPairing(&FireTemple_MegatonHammerChest, []{return HasExplosives;}),
+  }, {});
 
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&ChildWaterTemple, []{return IsChild;}),
-                  }, {}, {
-                    //Exits
-                    ExitPairing::Both(&LH_Main,                       []{return true;}),
-                    ExitPairing::Both(&WaterTemple_HighestWaterLevel, []{return IsAdult;}),
-                  }, {
+                  //Events
+                  EventPairing(&ChildWaterTemple, []{return IsChild;}),
+                }, {}, {
+                  //Exits
+                  ExitPairing::Both(&LH_Main,                       []{return true;}),
+                  ExitPairing::Both(&WaterTemple_HighestWaterLevel, []{return IsAdult;}),
   });
 
   Exit WaterTemple_HighestWaterLevel = Exit("Water Temple Highest Water Level", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FairyPot,         []{return FairyPot           || CanUse("Longshot");}),
-                    EventPairing(&WaterTempleClear, []{return BossKeyWaterTemple && CanUse("Longshot");})
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&Morpha,                  []{return BossKeyWaterTemple && CanUse("Longshot");}),
-                    ItemLocationPairing(&WaterTemple_MorphaHeart, []{return BossKeyWaterTemple && CanUse("Longshot");}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&WaterTemple_DarkLinkRegion, []{return SmallKeys(WaterTempleKeys, 4) && CanUse("Hookshot");}),
-                    ExitPairing::Both(&WaterTemple_Dive,           []{return (CanUse("Zora Tunic") || LogicFewerTunicRequirements) && ((LogicWaterTempleTorchLongshot && CanUse("Longshot")) || IronBoots);}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ZoraTunic,            []{return IsAdult && !LogicFewerTunicRequirements;}),
-                    AdvancementPairing(I_IronBoots,            []{return IsAdult;}),
-                    AdvancementPairing(WaterTemple_SmallKey,   []{return true;}, 4),
-                    AdvancementPairing(WaterTemple_BossKey,    []{return true;}),
+                  //Events
+                  EventPairing(&FairyPot,         []{return FairyPot           || CanUse("Longshot");}),
+                  EventPairing(&WaterTempleClear, []{return BossKeyWaterTemple && CanUse("Longshot");})
+                }, {
+                  //Locations
+                  ItemLocationPairing(&Morpha,                  []{return BossKeyWaterTemple && CanUse("Longshot");}),
+                  ItemLocationPairing(&WaterTemple_MorphaHeart, []{return BossKeyWaterTemple && CanUse("Longshot");}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&WaterTemple_DarkLinkRegion, []{return SmallKeys(WaterTempleKeys, 4) && CanUse("Hookshot");}),
+                  ExitPairing::Both(&WaterTemple_Dive,           []{return (CanUse("Zora Tunic") || LogicFewerTunicRequirements) && ((LogicWaterTempleTorchLongshot && CanUse("Longshot")) || IronBoots);}),
   });
 
   Exit WaterTemple_Dive = Exit("Water Temple Dive", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&WaterTemple_MapChest,              []{return CanUse("Hover Boots") || CanUse("Hookshot") || CanUse("Bow");}),
-                    ItemLocationPairing(&WaterTemple_CompassChest,          []{return (CanPlay(ZeldasLullaby) || IronBoots) && CanUse("Hookshot");}),
-                    ItemLocationPairing(&WaterTemple_TorchesChest,          []{return (Bow || CanUse("Dins Fire") || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}),
-                    ItemLocationPairing(&WaterTemple_CentralBowTargetChest, []{return GoronBracelet && CanPlay(ZeldasLullaby) && ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse("Longshot"))));}),
-                    ItemLocationPairing(&WaterTemple_GS_BehindGate,         []{return (CanUse("Hookshot") || CanUse("Hover Boots")) && (HasExplosives && CanPlay(ZeldasLullaby)) && (CanUse("Iron Boots") || CanDive);}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&WaterTemple_CrackedWall,      []{return CanPlay(ZeldasLullaby) && (CanUse("Hookshot") || CanUse("Hover Boots")) && (LogicWaterCrackedWallNothing || (LogicWaterCrackedWallHovers && CanUse("Hover Boots")));}),
-                    ExitPairing::Both(&WaterTemple_MiddleWaterLevel, []{return (Bow || CanUse("Dins Fire") || (SmallKeys(WaterTempleKeys, 5) && CanUse("Hookshot")) || (ChildWaterTemple && Sticks)) && CanPlay(ZeldasLullaby);}),
-                    ExitPairing::Both(&WaterTemple_NorthBasement,    []{return SmallKeys(WaterTempleKeys, 5) && (CanUse("Longshot") || (LogicWaterBossKeyRegion && CanUse("Hover Boots"))) && (CanUse("Iron Boots") || CanPlay(ZeldasLullaby));}),
-                    ExitPairing::Both(&WaterTemple_DragonStatue,     []{return CanPlay(ZeldasLullaby) && GoronBracelet && ((IronBoots && CanUse("Hookshot")) || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_HoverBoots,          []{return IsAdult;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 1;}),
-                    AdvancementPairing(I_ProgressiveBow,      []{return IsAdult && AddedProgressiveBows      == 0;}),
-                    AdvancementPairing(I_ZeldasLullaby,       []{return IsAdult && ProgressiveOcarina        >= 1;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return IsAdult && AddedProgressiveStrengths == 0;}),
-                    AdvancementPairing(I_DinsFire,            []{return IsAdult && ProgressiveMagic          >= 1 && AddedProgressiveBows == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic,    []{return IsAdult && AddedProgressiveMagics    == 0;}),
-                    AdvancementPairing(I_ProgressiveBombchus, []{return LogicWaterDragonBombchu;}),
-                    AdvancementPairing(WaterTemple_SmallKey,  []{return true;}, 6),
+                  //Locations
+                  ItemLocationPairing(&WaterTemple_MapChest,              []{return CanUse("Hover Boots") || CanUse("Hookshot") || CanUse("Bow");}),
+                  ItemLocationPairing(&WaterTemple_CompassChest,          []{return (CanPlay(ZeldasLullaby) || IronBoots) && CanUse("Hookshot");}),
+                  ItemLocationPairing(&WaterTemple_TorchesChest,          []{return (Bow || CanUse("Dins Fire") || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(&WaterTemple_CentralBowTargetChest, []{return GoronBracelet && CanPlay(ZeldasLullaby) && ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse("Longshot"))));}),
+                  ItemLocationPairing(&WaterTemple_GS_BehindGate,         []{return (CanUse("Hookshot") || CanUse("Hover Boots")) && (HasExplosives && CanPlay(ZeldasLullaby)) && (CanUse("Iron Boots") || CanDive);}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&WaterTemple_CrackedWall,      []{return CanPlay(ZeldasLullaby) && (CanUse("Hookshot") || CanUse("Hover Boots")) && (LogicWaterCrackedWallNothing || (LogicWaterCrackedWallHovers && CanUse("Hover Boots")));}),
+                  ExitPairing::Both(&WaterTemple_MiddleWaterLevel, []{return (Bow || CanUse("Dins Fire") || (SmallKeys(WaterTempleKeys, 5) && CanUse("Hookshot")) || (ChildWaterTemple && Sticks)) && CanPlay(ZeldasLullaby);}),
+                  ExitPairing::Both(&WaterTemple_NorthBasement,    []{return SmallKeys(WaterTempleKeys, 5) && (CanUse("Longshot") || (LogicWaterBossKeyRegion && CanUse("Hover Boots"))) && (CanUse("Iron Boots") || CanPlay(ZeldasLullaby));}),
+                  ExitPairing::Both(&WaterTemple_DragonStatue,     []{return CanPlay(ZeldasLullaby) && GoronBracelet && ((IronBoots && CanUse("Hookshot")) || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
   });
 
   Exit WaterTemple_NorthBasement = Exit("Water Temple North Basement", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&WaterTemple_BossKeyChest, []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
-                    ItemLocationPairing(&WaterTemple_GS_NearBossKeyChest, []{return true;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(WaterTemple_SmallKey,  []{return true;}, 6),
-
-  });
+                  //Events
+                  EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&WaterTemple_BossKeyChest, []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
+                  ItemLocationPairing(&WaterTemple_GS_NearBossKeyChest, []{return true;}),
+  }, {});
 
   Exit WaterTemple_CrackedWall = Exit("Water Temple Cracked Wall", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&WaterTemple_CrackedWallChest, []{return HasExplosives;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags == 0;}),
-  });
+                  //Locations
+                  ItemLocationPairing(&WaterTemple_CrackedWallChest, []{return HasExplosives;}),
+  }, {});
 
   Exit WaterTemple_DragonStatue = Exit("Water Temple Dragon Statue", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&WaterTemple_DragonChest, []{return true;}),
-                  }, {}, {
-  });
+                  //Locations
+                  ItemLocationPairing(&WaterTemple_DragonChest, []{return true;}),
+  }, {});
 
   Exit WaterTemple_MiddleWaterLevel = Exit("Water Temple Middle Water Level", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&WaterTemple_CentralPillarChest, []{return CanUse("Zora Tunic") && CanUse("Hookshot") && ((SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire")));}),
-                    ItemLocationPairing(&WaterTemple_GS_CentralPillar,   []{return ((CanUse("Longshot") || (CanUse("Farores Wind") && CanUse("Hookshot"))) && (SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire"))) || (ChildWaterTemple && Boomerang && CanUse("Farores Wind") && (CanUse("Dins Fire") || Sticks));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&WaterTemple_CrackedWall, []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(WaterTemple_SmallKey,  []{return true;}, 6),
+                  //Locations
+                  ItemLocationPairing(&WaterTemple_CentralPillarChest, []{return CanUse("Zora Tunic") && CanUse("Hookshot") && ((SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire")));}),
+                  ItemLocationPairing(&WaterTemple_GS_CentralPillar,   []{return ((CanUse("Longshot") || (CanUse("Farores Wind") && CanUse("Hookshot"))) && (SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire"))) || (ChildWaterTemple && Boomerang && CanUse("Farores Wind") && (CanUse("Dins Fire") || Sticks));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&WaterTemple_CrackedWall, []{return true;}),
   });
 
   Exit WaterTemple_DarkLinkRegion = Exit("Water Temple Dark Link Region", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime));}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&WaterTemple_LongshotChest,          []{return SmallKeys(WaterTempleKeys, 5);}),
-                    ItemLocationPairing(&WaterTemple_RiverChest,             []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow;}),
-                    ItemLocationPairing(&WaterTemple_GS_River,               []{return CanPlay(SongOfTime) && SmallKeys(WaterTempleKeys, 5) && (IronBoots || (LogicWaterRiverGS && CanUse("Longshot") && (Bow || HasBombchus)));}),
-                    ItemLocationPairing(&WaterTemple_GS_FallingPlatformRoom, []{return CanUse("Longshot") || (LogicWaterFallingPlatformGS && CanUse("Hookshot"));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&WaterTemple_DragonStatue, []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow && ((IronBoots && (CanUse("Zora Tunic") || LogicFewerTunicRequirements)) || LogicWaterDragonJumpDive || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_SongOfTime,         []{return ProgressiveOcarina >= 1;}),
-                    AdvancementPairing(WaterTemple_SmallKey, []{return true;}, 6),
+                  //Events
+                  EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime));}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&WaterTemple_LongshotChest,          []{return SmallKeys(WaterTempleKeys, 5);}),
+                  ItemLocationPairing(&WaterTemple_RiverChest,             []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow;}),
+                  ItemLocationPairing(&WaterTemple_GS_River,               []{return CanPlay(SongOfTime) && SmallKeys(WaterTempleKeys, 5) && (IronBoots || (LogicWaterRiverGS && CanUse("Longshot") && (Bow || HasBombchus)));}),
+                  ItemLocationPairing(&WaterTemple_GS_FallingPlatformRoom, []{return CanUse("Longshot") || (LogicWaterFallingPlatformGS && CanUse("Hookshot"));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&WaterTemple_DragonStatue, []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow && ((IronBoots && (CanUse("Zora Tunic") || LogicFewerTunicRequirements)) || LogicWaterDragonJumpDive || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
   });
 
   Exit SpiritTemple_Lobby = Exit("Spirit Temple Lobby", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                    //Exits
-                    ExitPairing::Both(&Colossus_Main,           []{return true;}),
-                    ExitPairing::Both(&SpiritTemple_Child,      []{return IsChild;}),
-                    ExitPairing::Both(&SpiritTemple_EarlyAdult, []{return CanUse("Silver Gauntlets");}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveStrength, []{return IsAdult && AddedProgressiveStrengths == 0;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return IsAdult && AddedProgressiveStrengths == 1;}),
+                  //Exits
+                  ExitPairing::Both(&Colossus_Main,           []{return true;}),
+                  ExitPairing::Both(&SpiritTemple_Child,      []{return IsChild;}),
+                  ExitPairing::Both(&SpiritTemple_EarlyAdult, []{return CanUse("Silver Gauntlets");}),
   });
 
   Exit SpiritTemple_Child = Exit("Child Spirit Temple", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&NutCrate, []{return true;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&SpiritTemple_ChildBridgeChest,       []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
-                    ItemLocationPairing(&SpiritTemple_ChildEarlyTorchesChest, []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot))) && (Sticks || CanUse("Dins Fire"));}),
-                    ItemLocationPairing(&SpiritTemple_GS_MetalFence,          []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&SpiritTemple_ChildClimb, []{return SmallKeys(SpiritTempleKeys, 1);}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_Boomerang,            []{return !Slingshot || (!HasExplosives && LogicSpiritChildBombchu);}),
-                    AdvancementPairing(I_ProgressiveBulletBag, []{return (!Boomerang || (!HasExplosives && LogicSpiritChildBombchu)) && AddedProgressiveBulletBags == 0;}),
-                    AdvancementPairing(I_KokiriSword,          []{return !Slingshot;}),
-                    AdvancementPairing(I_ProgressiveMagic,     []{return AddedProgressiveMagics   == 0 && !Sticks;}),
-                    AdvancementPairing(I_DinsFire,             []{return AddedProgressiveMagics   >= 1 && !Sticks;}),
-                    AdvancementPairing(I_ProgressiveBombchus,  []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(I_ProgressiveBombBag,   []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(SpiritTemple_SmallKey,  []{return true;}),
+                  //Events
+                  EventPairing(&NutCrate, []{return true;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&SpiritTemple_ChildBridgeChest,       []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
+                  ItemLocationPairing(&SpiritTemple_ChildEarlyTorchesChest, []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot))) && (Sticks || CanUse("Dins Fire"));}),
+                  ItemLocationPairing(&SpiritTemple_GS_MetalFence,          []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&SpiritTemple_ChildClimb, []{return SmallKeys(SpiritTempleKeys, 1);}),
   });
 
   Exit SpiritTemple_ChildClimb = Exit("Child Spirit Temple Climb", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&SpiritTemple_ChildClimbNorthChest, []{return HasProjectile("Both") || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse("Silver Gauntlets") && HasProjectile("Adult")) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile("Child"));}),
-                    ItemLocationPairing(&SpiritTemple_ChildClimbEastChest,  []{return HasProjectile("Both") || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse("Silver Gauntlets") && HasProjectile("Adult")) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile("Child"));}),
-                    ItemLocationPairing(&SpiritTemple_GS_SunOnFloorRoom,    []{return HasProjectile("Both") || CanUse("Dins Fire") || ((DamageMultiplier != DAMAGEMULTIPLIER_OHKO || Fairy || CanUse("Nayrus Love")) && (Sticks || KokiriSword || HasProjectile("Child"))) || (IsChild && SmallKeys(SpiritTempleKeys, 5) && HasProjectile("Child")) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse("Silver Gauntlets") && (HasProjectile("Adult") || DamageMultiplier != DAMAGEMULTIPLIER_OHKO || Fairy || CanUse("Nayrus Love")));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&SpiritTemple_CentralChamber, []{return HasExplosives;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(SpiritTemple_SmallKey, []{return true;}, 5),
+                  //Locations
+                  ItemLocationPairing(&SpiritTemple_ChildClimbNorthChest, []{return HasProjectile("Both") || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse("Silver Gauntlets") && HasProjectile("Adult")) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile("Child"));}),
+                  ItemLocationPairing(&SpiritTemple_ChildClimbEastChest,  []{return HasProjectile("Both") || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse("Silver Gauntlets") && HasProjectile("Adult")) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile("Child"));}),
+                  ItemLocationPairing(&SpiritTemple_GS_SunOnFloorRoom,    []{return HasProjectile("Both") || CanUse("Dins Fire") || ((DamageMultiplier != DAMAGEMULTIPLIER_OHKO || Fairy || CanUse("Nayrus Love")) && (Sticks || KokiriSword || HasProjectile("Child"))) || (IsChild && SmallKeys(SpiritTempleKeys, 5) && HasProjectile("Child")) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse("Silver Gauntlets") && (HasProjectile("Adult") || DamageMultiplier != DAMAGEMULTIPLIER_OHKO || Fairy || CanUse("Nayrus Love")));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&SpiritTemple_CentralChamber, []{return HasExplosives;}),
   });
 
   Exit SpiritTemple_EarlyAdult = Exit("Early Adult Spirit Temple", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&SpiritTemple_CompassChest,          []{return CanUse("Hookshot") && CanPlay(ZeldasLullaby);}),
-                    ItemLocationPairing(&SpiritTemple_EarlyAdultRightChest,  []{return Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch);}),
-                    ItemLocationPairing(&SpiritTemple_FirstMirrorLeftChest,  []{return SmallKeys(SpiritTempleKeys, 3);}),
-                    ItemLocationPairing(&SpiritTemple_FirstMirrorRightChest, []{return SmallKeys(SpiritTempleKeys, 3);}),
-                    ItemLocationPairing(&SpiritTemple_GS_BoulderRoom,        []{return CanPlay(SongOfTime) && (Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&SpiritTemple_CentralChamber, []{return SmallKeys(SpiritTempleKeys, 1);}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ZeldasLullaby,       []{return ProgressiveOcarina        >= 1;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0;}),
-                    AdvancementPairing(I_ProgressiveBow,      []{return IsAdult && AddedProgressiveHookshots == 0 && AddedProgressiveBows == 0;}),
-                    AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(SpiritTemple_SmallKey, []{return true;}, 3),
+                  //Locations
+                  ItemLocationPairing(&SpiritTemple_CompassChest,          []{return CanUse("Hookshot") && CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(&SpiritTemple_EarlyAdultRightChest,  []{return Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch);}),
+                  ItemLocationPairing(&SpiritTemple_FirstMirrorLeftChest,  []{return SmallKeys(SpiritTempleKeys, 3);}),
+                  ItemLocationPairing(&SpiritTemple_FirstMirrorRightChest, []{return SmallKeys(SpiritTempleKeys, 3);}),
+                  ItemLocationPairing(&SpiritTemple_GS_BoulderRoom,        []{return CanPlay(SongOfTime) && (Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&SpiritTemple_CentralChamber, []{return SmallKeys(SpiritTempleKeys, 1);}),
   });
 
   Exit SpiritTemple_CentralChamber = Exit("Spirit Temple Central Chamber", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&SpiritTemple_MapChest,                 []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && (CanUse("Dins Fire") || (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) || (SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse("Sticks")) || (SmallKeys(SpiritTempleKeys, 3) && (CanUse("Fire Arrows") || (LogicSpiritMapChest && Bow)) && CanUse("Silver Gauntlets"));}),
-                    ItemLocationPairing(&SpiritTemple_SunBlockRoomChest,        []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && (CanUse("Dins Fire") || (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) || (SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse("Sticks")) || (SmallKeys(SpiritTempleKeys, 3) && (CanUse("Fire Arrows") || (LogicSpiritMapChest && Bow)) && CanUse("Silver Gauntlets"));}),
-                    ItemLocationPairing(&SpiritTemple_StatueRoomHandChest,      []{return SmallKeys(SpiritTempleKeys, 3) && CanUse("Silver Gauntlets") && CanPlay(ZeldasLullaby);}),
-                    ItemLocationPairing(&SpiritTemple_StatueRoomNortheastChest, []{return SmallKeys(SpiritTempleKeys, 3) && CanUse("Silver Gauntlets") && CanPlay(ZeldasLullaby) && (Hookshot || HoverBoots);}),
-                    ItemLocationPairing(&SpiritTemple_GS_HallAfterSunBlockRoom, []{return (HasExplosives && Boomerang && Hookshot) || (CanUse("Boomerang") && SmallKeys(SpiritTempleKeys, 5) && HasExplosives) || (Hookshot && CanUse("Silver Gauntlets") && (SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && Boomerang && BombchusInLogic && !ShuffleDungeonEntrances)));}),
-                    ItemLocationPairing(&SpiritTemple_GS_Lobby,                 []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && LogicSpiritLobbyGS && Boomerang && (Hookshot || HoverBoots)) || (LogicSpiritLobbyGS && SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse("Boomerang")) || (SmallKeys(SpiritTempleKeys, 3) && CanUse("Silver Gauntlets") && (Hookshot || HoverBoots));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&SpiritTemple_OutdoorHands,            []{return true;}),
-                    ExitPairing::Both(&SpiritTemple_BeyondCentralLockedDoor, []{return SmallKeys(SpiritTempleKeys, 4) && CanUse("Silver Gauntlets");}),
-                    ExitPairing::Both(&SpiritTemple_ChildClimb,              []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_FireArrows, []{return IsAdult && AddedProgressiveBows >= 1 && LogicSpiritMapChest;}),
+                  //Locations
+                  ItemLocationPairing(&SpiritTemple_MapChest,                 []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && (CanUse("Dins Fire") || (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) || (SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse("Sticks")) || (SmallKeys(SpiritTempleKeys, 3) && (CanUse("Fire Arrows") || (LogicSpiritMapChest && Bow)) && CanUse("Silver Gauntlets"));}),
+                  ItemLocationPairing(&SpiritTemple_SunBlockRoomChest,        []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && (CanUse("Dins Fire") || (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) || (SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse("Sticks")) || (SmallKeys(SpiritTempleKeys, 3) && (CanUse("Fire Arrows") || (LogicSpiritMapChest && Bow)) && CanUse("Silver Gauntlets"));}),
+                  ItemLocationPairing(&SpiritTemple_StatueRoomHandChest,      []{return SmallKeys(SpiritTempleKeys, 3) && CanUse("Silver Gauntlets") && CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(&SpiritTemple_StatueRoomNortheastChest, []{return SmallKeys(SpiritTempleKeys, 3) && CanUse("Silver Gauntlets") && CanPlay(ZeldasLullaby) && (Hookshot || HoverBoots);}),
+                  ItemLocationPairing(&SpiritTemple_GS_HallAfterSunBlockRoom, []{return (HasExplosives && Boomerang && Hookshot) || (CanUse("Boomerang") && SmallKeys(SpiritTempleKeys, 5) && HasExplosives) || (Hookshot && CanUse("Silver Gauntlets") && (SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && Boomerang && BombchusInLogic && !ShuffleDungeonEntrances)));}),
+                  ItemLocationPairing(&SpiritTemple_GS_Lobby,                 []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && LogicSpiritLobbyGS && Boomerang && (Hookshot || HoverBoots)) || (LogicSpiritLobbyGS && SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse("Boomerang")) || (SmallKeys(SpiritTempleKeys, 3) && CanUse("Silver Gauntlets") && (Hookshot || HoverBoots));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&SpiritTemple_OutdoorHands,            []{return true;}),
+                  ExitPairing::Both(&SpiritTemple_BeyondCentralLockedDoor, []{return SmallKeys(SpiritTempleKeys, 4) && CanUse("Silver Gauntlets");}),
+                  ExitPairing::Both(&SpiritTemple_ChildClimb,              []{return true;}),
   });
 
   Exit SpiritTemple_OutdoorHands = Exit("Spirit Temple Outdoor Hands", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&SpiritTemple_SilverGauntletsChest, []{return (SmallKeys(SpiritTempleKeys, 3) && Longshot && HasExplosives) || SmallKeys(SpiritTempleKeys, 5);}),
-                    ItemLocationPairing(&SpiritTemple_MirrorShieldChest,    []{return SmallKeys(SpiritTempleKeys, 4) && CanUse("Silver Gauntlets") && HasExplosives;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&Colossus_Main, []{return (IsChild && SmallKeys(SpiritTempleKeys, 5)) || (CanUse("Silver Gauntlets") && ((SmallKeys(SpiritTempleKeys, 3) && HasExplosives) || SmallKeys(SpiritTempleKeys, 5)));}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 1;}),
-                    AdvancementPairing(SpiritTemple_SmallKey, []{return true;}, 5),
+                  //Locations
+                  ItemLocationPairing(&SpiritTemple_SilverGauntletsChest, []{return (SmallKeys(SpiritTempleKeys, 3) && Longshot && HasExplosives) || SmallKeys(SpiritTempleKeys, 5);}),
+                  ItemLocationPairing(&SpiritTemple_MirrorShieldChest,    []{return SmallKeys(SpiritTempleKeys, 4) && CanUse("Silver Gauntlets") && HasExplosives;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&Colossus_Main, []{return (IsChild && SmallKeys(SpiritTempleKeys, 5)) || (CanUse("Silver Gauntlets") && ((SmallKeys(SpiritTempleKeys, 3) && HasExplosives) || SmallKeys(SpiritTempleKeys, 5)));}),
   });
 
   Exit SpiritTemple_BeyondCentralLockedDoor = Exit("Spirit Temple Beyond Central Locked Door", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&SpiritTemple_NearFourArmosChest,         []{return MirrorShield && HasExplosives;}),
-                    ItemLocationPairing(&SpiritTemple_HallwayLeftInvisibleChest,  []{return (LogicLensSpirit || CanUse("Lens of Truth")) && HasExplosives;}),
-                    ItemLocationPairing(&SpiritTemple_HallwayRightInvisibleChest, []{return (LogicLensSpirit || CanUse("Lens of Truth")) && HasExplosives;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&SpiritTemple_BeyondFinalLockedDoor, []{return SmallKeys(SpiritTempleKeys, 5) && (LogicSpiritWall || CanUse("Longshot") || HasBombchus || ((Bombs || Nuts || CanUse("Dins Fire")) && (Bow || CanUse("Hookshot") || Hammer)));}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_MirrorShield, []{return IsAdult;}),
-                    AdvancementPairing(I_LensOfTruth,  []{return AddedProgressiveMagics >= 1 && !LogicLensSpirit;}),
+                  //Locations
+                  ItemLocationPairing(&SpiritTemple_NearFourArmosChest,         []{return MirrorShield && HasExplosives;}),
+                  ItemLocationPairing(&SpiritTemple_HallwayLeftInvisibleChest,  []{return (LogicLensSpirit || CanUse("Lens of Truth")) && HasExplosives;}),
+                  ItemLocationPairing(&SpiritTemple_HallwayRightInvisibleChest, []{return (LogicLensSpirit || CanUse("Lens of Truth")) && HasExplosives;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&SpiritTemple_BeyondFinalLockedDoor, []{return SmallKeys(SpiritTempleKeys, 5) && (LogicSpiritWall || CanUse("Longshot") || HasBombchus || ((Bombs || Nuts || CanUse("Dins Fire")) && (Bow || CanUse("Hookshot") || Hammer)));}),
   });
 
   Exit SpiritTemple_BeyondFinalLockedDoor = Exit("Spirit Temple Beyond Final Locked Door", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&SpiritTemple_BossKeyChest,  []{return CanPlay(ZeldasLullaby) && Bow && Hookshot;}),
-                    ItemLocationPairing(&SpiritTemple_TopmostChest,  []{return MirrorShield;}),
-                    ItemLocationPairing(&SpiritTemple_TwinrovaHeart, []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
-                    ItemLocationPairing(&Twinrova,                   []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(SpiritTemple_BossKey, []{return true;}),
-  });
+                  //Locations
+                  ItemLocationPairing(&SpiritTemple_BossKeyChest,  []{return CanPlay(ZeldasLullaby) && Bow && Hookshot;}),
+                  ItemLocationPairing(&SpiritTemple_TopmostChest,  []{return MirrorShield;}),
+                  ItemLocationPairing(&SpiritTemple_TwinrovaHeart, []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
+                  ItemLocationPairing(&Twinrova,                   []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
+  }, {});
 
   Exit ShadowTemple_Entryway = Exit("Shadow Temple Entryway", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                    //Exits
-                    ExitPairing::Both(&GY_WarpPadRegion,       []{return true;}),
-                    ExitPairing::Both(&ShadowTemple_Beginning, []{return (LogicLensShadow || CanUse("Lens of Truth")) && (CanUse("Hover Boots") || CanUse("Hookshot"));}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveMagic,    []{return IsAdult && AddedProgressiveMagics    == 0 && !LogicLensShadow;}),
-                    AdvancementPairing(I_LensOfTruth,         []{return IsAdult && ProgressiveMagic          >= 1 && !LogicLensShadow;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0 && !HoverBoots;}),
-                    AdvancementPairing(I_HoverBoots,          []{return IsAdult && AddedProgressiveHookshots == 0;}),
+                  //Exits
+                  ExitPairing::Both(&GY_WarpPadRegion,       []{return true;}),
+                  ExitPairing::Both(&ShadowTemple_Beginning, []{return (LogicLensShadow || CanUse("Lens of Truth")) && (CanUse("Hover Boots") || CanUse("Hookshot"));}),
   });
 
   Exit ShadowTemple_Beginning = Exit("Shadow Temple Beginning", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&NutPot, []{return true;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&ShadowTemple_MapChest,        []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_HoverBootsChest, []{return true;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ShadowTemple_Entryway,    []{return true;}),
-                    ExitPairing::Both(&ShadowTemple_FirstBeamos, []{return HoverBoots;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_HoverBoots, []{return true;}),
+                  //Events
+                  EventPairing(&NutPot, []{return true;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&ShadowTemple_MapChest,        []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_HoverBootsChest, []{return true;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ShadowTemple_Entryway,    []{return true;}),
+                  ExitPairing::Both(&ShadowTemple_FirstBeamos, []{return HoverBoots;}),
   });
 
   Exit ShadowTemple_FirstBeamos = Exit("Shadow Temple First Beamos", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FairyPot, []{return true;}), //This fairy pot is only on 3DS
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&ShadowTemple_CompassChest,          []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_EarlySilverRupeeChest, []{return true;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ShadowTemple_HugePit, []{return HasExplosives && SmallKeys(ShadowTempleKeys, 1);})
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombchus, []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(ShadowTemple_SmallKey, []{return true;}, 1),
+                  //Events
+                  EventPairing(&FairyPot, []{return true;}), //This fairy pot is only on 3DS
+                }, {
+                  //Locations
+                  ItemLocationPairing(&ShadowTemple_CompassChest,          []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_EarlySilverRupeeChest, []{return true;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ShadowTemple_HugePit, []{return HasExplosives && SmallKeys(ShadowTempleKeys, 1);})
   });
 
   Exit ShadowTemple_HugePit = Exit("Shadow Temple Huge Pit", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ShadowTemple_InvisibleBladesVisibleChest,   []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_InvisibleBladesInvisibleChest, []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_FallingSpikesLowerChest,       []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_FallingSpikesUpperChest,       []{return LogicShadowUmbrella || GoronBracelet;}),
-                    ItemLocationPairing(&ShadowTemple_FallingSpikesSwitchChest,      []{return LogicShadowUmbrella || GoronBracelet;}),
-                    ItemLocationPairing(&ShadowTemple_InvisibleSpikesChest,          []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse("Lens of Truth"));}),
-                    ItemLocationPairing(&ShadowTemple_FreestandingKey,               []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse("Lens of Truth")) && Hookshot && (Bombs || GoronBracelet || (LogicShadowFreestandingKey && HasBombchus));}),
-                    ItemLocationPairing(&ShadowTemple_GS_LikeLikeRoom,               []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_GS_FallingSpikesRoom,          []{return Hookshot;}),
-                    ItemLocationPairing(&ShadowTemple_GS_SingleGiantPot,             []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse("Lens of Truth")) && Hookshot;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ShadowTemple_WindTunnel, []{return (LogicLensShadowBack || CanUse("Lens of Truth")) && Hookshot && SmallKeys(ShadowTempleKeys, 3);}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveMagic,    []{return IsAdult && AddedProgressiveMagics    == 0 && !LogicLensShadowBack;}),
-                    AdvancementPairing(I_LensOfTruth,         []{return IsAdult && ProgressiveMagic          >= 1 && !LogicLensShadowBack;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 0 && (!HasExplosives || !LogicShadowUmbrella);}),
-                    AdvancementPairing(ShadowTemple_SmallKey, []{return true;}, 2),
+                  //Locations
+                  ItemLocationPairing(&ShadowTemple_InvisibleBladesVisibleChest,   []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_InvisibleBladesInvisibleChest, []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_FallingSpikesLowerChest,       []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_FallingSpikesUpperChest,       []{return LogicShadowUmbrella || GoronBracelet;}),
+                  ItemLocationPairing(&ShadowTemple_FallingSpikesSwitchChest,      []{return LogicShadowUmbrella || GoronBracelet;}),
+                  ItemLocationPairing(&ShadowTemple_InvisibleSpikesChest,          []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse("Lens of Truth"));}),
+                  ItemLocationPairing(&ShadowTemple_FreestandingKey,               []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse("Lens of Truth")) && Hookshot && (Bombs || GoronBracelet || (LogicShadowFreestandingKey && HasBombchus));}),
+                  ItemLocationPairing(&ShadowTemple_GS_LikeLikeRoom,               []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_GS_FallingSpikesRoom,          []{return Hookshot;}),
+                  ItemLocationPairing(&ShadowTemple_GS_SingleGiantPot,             []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse("Lens of Truth")) && Hookshot;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ShadowTemple_WindTunnel, []{return (LogicLensShadowBack || CanUse("Lens of Truth")) && Hookshot && SmallKeys(ShadowTempleKeys, 3);}),
   });
 
   Exit ShadowTemple_WindTunnel = Exit("Shadow Temple Wind Tunnel", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ShadowTemple_WindHintChest,        []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_AfterWindEnemyChest,  []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_AfterWindHiddenChest, []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_GS_NearShip,          []{return CanUse("Longshot") && SmallKeys(ShadowTempleKeys, 4);}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&ShadowTemple_BeyondBoat, []{return CanPlay(ZeldasLullaby) && SmallKeys(ShadowTempleKeys, 4);}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ZeldasLullaby,       []{return ProgressiveOcarina       >= 1;}),
-                    AdvancementPairing(ShadowTemple_SmallKey, []{return true;}, 4),
+                  //Locations
+                  ItemLocationPairing(&ShadowTemple_WindHintChest,        []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_AfterWindEnemyChest,  []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_AfterWindHiddenChest, []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_GS_NearShip,          []{return CanUse("Longshot") && SmallKeys(ShadowTempleKeys, 4);}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&ShadowTemple_BeyondBoat, []{return CanPlay(ZeldasLullaby) && SmallKeys(ShadowTempleKeys, 4);}),
   });
 
   Exit ShadowTemple_BeyondBoat = Exit("Shadow Temple Beyond Boat", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&ShadowTemple_SpikeWallsLeftChest,       []{return CanUse("Dins Fire");}),
-                    ItemLocationPairing(&ShadowTemple_BossKeyChest,              []{return CanUse("Dins Fire");}),
-                    ItemLocationPairing(&ShadowTemple_InvisibleFloormasterChest, []{return true;}),
-                    ItemLocationPairing(&ShadowTemple_BongoBongoHeart,           []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse("Distant Scarecrow") || (LogicShadowStatue && HasBombchus));}),
-                    ItemLocationPairing(&BongoBongo,                             []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse("Distant Scarecrow") || (LogicShadowStatue && HasBombchus));}),
-                    ItemLocationPairing(&ShadowTemple_GS_TripleGiantPot,         []{return true;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveMagic,    []{return AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_DinsFire,            []{return ProgressiveMagic       >= 1;}),
-                    AdvancementPairing(ShadowTemple_SmallKey, []{return true;}, 5),
-  });
+                  //Locations
+                  ItemLocationPairing(&ShadowTemple_SpikeWallsLeftChest,       []{return CanUse("Dins Fire");}),
+                  ItemLocationPairing(&ShadowTemple_BossKeyChest,              []{return CanUse("Dins Fire");}),
+                  ItemLocationPairing(&ShadowTemple_InvisibleFloormasterChest, []{return true;}),
+                  ItemLocationPairing(&ShadowTemple_BongoBongoHeart,           []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse("Distant Scarecrow") || (LogicShadowStatue && HasBombchus));}),
+                  ItemLocationPairing(&BongoBongo,                             []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse("Distant Scarecrow") || (LogicShadowStatue && HasBombchus));}),
+                  ItemLocationPairing(&ShadowTemple_GS_TripleGiantPot,         []{return true;}),
+  }, {});
 
   Exit BottomOfTheWell = Exit("Bottom of the Well", "Bottom of the Well", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                    //Exits
-                    ExitPairing::Both(&Kak_Main,                 []{return true;}),
-                    ExitPairing::Both(&BottomOfTheWell_MainArea, []{return IsChild && (CanChildAttack || Nuts);}),
-                  }, {
-                    //Advancement Needs
+                  //Exits
+                  ExitPairing::Both(&Kak_Main,                 []{return true;}),
+                  ExitPairing::Both(&BottomOfTheWell_MainArea, []{return IsChild && (CanChildAttack || Nuts);}),
   });
 
   Exit BottomOfTheWell_MainArea = Exit("Bottom of the Well Main Area", "Bottom of the Well", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&StickPot, []{return true;}),
-                    EventPairing(&NutPot,   []{return true;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&BottomOfTheWell_FrontLeftFakeWallChest,   []{return LogicLensBotw || CanUse("Lens of Truth");}),
-                    ItemLocationPairing(&BottomOfTheWell_FrontCenterBombableChest, []{return HasExplosives;}),
-                    ItemLocationPairing(&BottomOfTheWell_RightBottomFakeWallChest, []{return LogicLensBotw || CanUse("Lens of Truth");}),
-                    ItemLocationPairing(&BottomOfTheWell_CompassChest,             []{return LogicLensBotw || CanUse("Lens of Truth");}),
-                    ItemLocationPairing(&BottomOfTheWell_CenterSkulltulaChest,     []{return LogicLensBotw || CanUse("Lens of Truth");}),
-                    ItemLocationPairing(&BottomOfTheWell_BackLeftBombableChest,    []{return (LogicLensBotw || CanUse("Lens of Truth")) && HasExplosives;}),
-                    ItemLocationPairing(&BottomOfTheWell_FreestandingKey,          []{return Sticks || CanUse("Dins Fire");}),
-                    ItemLocationPairing(&BottomOfTheWell_LensOfTruthChest,         []{return CanPlay(ZeldasLullaby) && (KokiriSword || (Sticks && LogicChildDeadhand));}),
-                    ItemLocationPairing(&BottomOfTheWell_InvisibleChest,           []{return CanPlay(ZeldasLullaby) && (LogicLensBotw || CanUse("Lens of Truth"));}),
-                    ItemLocationPairing(&BottomOfTheWell_UnderwaterFrontChest,     []{return CanPlay(ZeldasLullaby);}),
-                    ItemLocationPairing(&BottomOfTheWell_UnderwaterLeftChest,      []{return CanPlay(ZeldasLullaby);}),
-                    ItemLocationPairing(&BottomOfTheWell_MapChest,                 []{return HasExplosives || (((SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth"))) || CanUse("Dins Fire")) && GoronBracelet);}),
-                    ItemLocationPairing(&BottomOfTheWell_FireKeeseChest,           []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth"));}),
-                    ItemLocationPairing(&BottomOfTheWell_LikeLikeChest,            []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth"));}),
-                    ItemLocationPairing(&BottomOfTheWell_GS_WestInnerRoom,         []{return Boomerang && (LogicLensBotw || CanUse("Lens of Truth")) && SmallKeys(BottomOfTheWellKeys, 3);}),
-                    ItemLocationPairing(&BottomOfTheWell_GS_EastInnerRoom,         []{return Boomerang && (LogicLensBotw || CanUse("Lens of Truth")) && SmallKeys(BottomOfTheWellKeys, 3);}),
-                    ItemLocationPairing(&BottomOfTheWell_GS_LikeLikeCage,          []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth")) && (Boomerang || (LogicBotwCageGS && CanChildAttack));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&BottomOfTheWell, []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_LensOfTruth,            []{return ProgressiveMagic         >= 1 && !LogicLensBotw;}),
-                    AdvancementPairing(I_ProgressiveBombchus,    []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(I_ProgressiveBombBag,     []{return AddedProgressiveBombBags == 0;}),
-                    AdvancementPairing(I_ZeldasLullaby,          []{return ProgressiveOcarina       >= 1;}),
-                    AdvancementPairing(I_ProgressiveMagic,       []{return AddedProgressiveMagics   == 0;}),
-                    AdvancementPairing(I_DinsFire,               []{return ProgressiveMagic         >= 1;}),
-                    AdvancementPairing(I_ProgressiveStrength,    []{return AddedProgressiveBombBags == 0 && AddedProgressiveStrengths == 0;}),
-                    AdvancementPairing(BottomOfTheWell_SmallKey, []{return true;}, 3),
+                  //Events
+                  EventPairing(&StickPot, []{return true;}),
+                  EventPairing(&NutPot,   []{return true;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&BottomOfTheWell_FrontLeftFakeWallChest,   []{return LogicLensBotw || CanUse("Lens of Truth");}),
+                  ItemLocationPairing(&BottomOfTheWell_FrontCenterBombableChest, []{return HasExplosives;}),
+                  ItemLocationPairing(&BottomOfTheWell_RightBottomFakeWallChest, []{return LogicLensBotw || CanUse("Lens of Truth");}),
+                  ItemLocationPairing(&BottomOfTheWell_CompassChest,             []{return LogicLensBotw || CanUse("Lens of Truth");}),
+                  ItemLocationPairing(&BottomOfTheWell_CenterSkulltulaChest,     []{return LogicLensBotw || CanUse("Lens of Truth");}),
+                  ItemLocationPairing(&BottomOfTheWell_BackLeftBombableChest,    []{return (LogicLensBotw || CanUse("Lens of Truth")) && HasExplosives;}),
+                  ItemLocationPairing(&BottomOfTheWell_FreestandingKey,          []{return Sticks || CanUse("Dins Fire");}),
+                  ItemLocationPairing(&BottomOfTheWell_LensOfTruthChest,         []{return CanPlay(ZeldasLullaby) && (KokiriSword || (Sticks && LogicChildDeadhand));}),
+                  ItemLocationPairing(&BottomOfTheWell_InvisibleChest,           []{return CanPlay(ZeldasLullaby) && (LogicLensBotw || CanUse("Lens of Truth"));}),
+                  ItemLocationPairing(&BottomOfTheWell_UnderwaterFrontChest,     []{return CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(&BottomOfTheWell_UnderwaterLeftChest,      []{return CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(&BottomOfTheWell_MapChest,                 []{return HasExplosives || (((SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth"))) || CanUse("Dins Fire")) && GoronBracelet);}),
+                  ItemLocationPairing(&BottomOfTheWell_FireKeeseChest,           []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth"));}),
+                  ItemLocationPairing(&BottomOfTheWell_LikeLikeChest,            []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth"));}),
+                  ItemLocationPairing(&BottomOfTheWell_GS_WestInnerRoom,         []{return Boomerang && (LogicLensBotw || CanUse("Lens of Truth")) && SmallKeys(BottomOfTheWellKeys, 3);}),
+                  ItemLocationPairing(&BottomOfTheWell_GS_EastInnerRoom,         []{return Boomerang && (LogicLensBotw || CanUse("Lens of Truth")) && SmallKeys(BottomOfTheWellKeys, 3);}),
+                  ItemLocationPairing(&BottomOfTheWell_GS_LikeLikeCage,          []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth")) && (Boomerang || (LogicBotwCageGS && CanChildAttack));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&BottomOfTheWell, []{return true;}),
   });
 
   Exit IceCavern_Beginning = Exit("Ice Cavern Beginning", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                    //Exits
-                    ExitPairing::Both(&ZF_Main,        []{return true;}),
-                    ExitPairing::Both(&IceCavern_Main, []{return IsAdult || HasExplosives || CanUse("Dins Fire");}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBombchus, []{return IsChild && AddedProgressiveBombBags == 0 && AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_ProgressiveBombBag,  []{return IsChild && AddedProgressiveBombBags == 0 && AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic,    []{return IsChild && AddedProgressiveBombBags == 0 && AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_DinsFire,            []{return IsChild && AddedProgressiveBombBags == 0 && ProgressiveMagic       >= 1;}),
+                  //Exits
+                  ExitPairing::Both(&ZF_Main,        []{return true;}),
+                  ExitPairing::Both(&IceCavern_Main, []{return IsAdult || HasExplosives || CanUse("Dins Fire");}),
   });
 
   Exit IceCavern_Main = Exit("Ice Cavern", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&BlueFireAccess, []{return BlueFireAccess || (IsAdult && HasBottle);}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&IceCavern_MapChest,              []{return BlueFire && IsAdult;}),
-                    ItemLocationPairing(&IceCavern_CompassChest,          []{return BlueFire;}),
-                    ItemLocationPairing(&IceCavern_IronBootsChest,        []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire"));}),
-                    ItemLocationPairing(&SheikInIceCavern,                []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire"));}),
-                    ItemLocationPairing(&IceCavern_FreestandingPoH,       []{return BlueFire;}),
-                    ItemLocationPairing(&IceCavern_GS_SpinningScytheRoom, []{return HookshotOrBoomerang;}),
-                    ItemLocationPairing(&IceCavern_GS_HeartPieceRoom,     []{return BlueFire && HookshotOrBoomerang;}),
-                    ItemLocationPairing(&IceCavern_GS_PushBlockRoom,      []{return BlueFire && HookshotOrBoomerang;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_EmptyBottle,          []{return !HasBottle;}),
-                    AdvancementPairing(I_ProgressiveBulletBag, []{return AddedProgressiveBulletBags == 0 && !Sticks && !KokiriSword && AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_KokiriSword,          []{return AddedProgressiveBulletBags == 0 && !Sticks && !KokiriSword && AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic,     []{return AddedProgressiveBulletBags == 0 && !Sticks && !KokiriSword && AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_DinsFire,             []{return AddedProgressiveBulletBags == 0 && !Sticks && !KokiriSword && ProgressiveMagic       >= 1;}),
-  });
+                  //Events
+                  EventPairing(&BlueFireAccess, []{return BlueFireAccess || (IsAdult && HasBottle);}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&IceCavern_MapChest,              []{return BlueFire && IsAdult;}),
+                  ItemLocationPairing(&IceCavern_CompassChest,          []{return BlueFire;}),
+                  ItemLocationPairing(&IceCavern_IronBootsChest,        []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire"));}),
+                  ItemLocationPairing(&SheikInIceCavern,                []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse("Dins Fire"));}),
+                  ItemLocationPairing(&IceCavern_FreestandingPoH,       []{return BlueFire;}),
+                  ItemLocationPairing(&IceCavern_GS_SpinningScytheRoom, []{return HookshotOrBoomerang;}),
+                  ItemLocationPairing(&IceCavern_GS_HeartPieceRoom,     []{return BlueFire && HookshotOrBoomerang;}),
+                  ItemLocationPairing(&IceCavern_GS_PushBlockRoom,      []{return BlueFire && HookshotOrBoomerang;}),
+  }, {});
 
   Exit GerudoTrainingGrounds_Lobby = Exit ("Gerudo Training Grounds Lobby", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_LobbyLeftChest,  []{return CanUse("Bow") || CanUse("Slingshot");}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_LobbyRightChest, []{return CanUse("Bow") || CanUse("Slingshot");}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_StalfosChest,    []{return IsAdult || KokiriSword;}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_BeamosChest,     []{return HasExplosives && (IsAdult || KokiriSword);}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GF_Main,                              []{return true;}),
-                    ExitPairing::Both(&GerudoTrainingGrounds_HeavyBlockRoom, []{return (IsAdult || KokiriSword) && (CanUse("Hookshot") || LogicGtgWithoutHookshot);}),
-                    ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,       []{return (IsAdult || KokiriSword) && HasExplosives;}),
-                    ExitPairing::Both(&GerudoTrainingGrounds_CentralMaze,    []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBulletBag, []{return IsChild && AddedProgressiveBulletBags == 0;}),
-                    AdvancementPairing(I_ProgressiveBow,       []{return IsAdult && AddedProgressiveBows       == 0;}),
-                    AdvancementPairing(I_KokiriSword,          []{return IsChild;}),
-                    AdvancementPairing(I_ProgressiveBombchus,  []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveBombBag,   []{return AddedProgressiveBombBags  == 0;}),
-                    AdvancementPairing(I_ProgressiveHookshot,  []{return AddedProgressiveHookshots == 0 && !LogicGtgWithoutHookshot;}),
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_LobbyLeftChest,  []{return CanUse("Bow") || CanUse("Slingshot");}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_LobbyRightChest, []{return CanUse("Bow") || CanUse("Slingshot");}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_StalfosChest,    []{return IsAdult || KokiriSword;}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_BeamosChest,     []{return HasExplosives && (IsAdult || KokiriSword);}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GF_Main,                              []{return true;}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_HeavyBlockRoom, []{return (IsAdult || KokiriSword) && (CanUse("Hookshot") || LogicGtgWithoutHookshot);}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,       []{return (IsAdult || KokiriSword) && HasExplosives;}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_CentralMaze,    []{return true;}),
   });
 
   Exit GerudoTrainingGrounds_CentralMaze = Exit ("Gerudo Training Grounds Central Maze", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_HiddenCeilingChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 3) && (LogicLensGtg || CanUse("Lens of Truth"));}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_MazePathFirstChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 4);}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_MazePathSecondChest, []{return SmallKeys(GerudoTrainingGroundsKeys, 6);}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_MazePathThirdChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 7);}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_MazePathFinalChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 9);}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GerudoTrainingGrounds_CentralMazeRight, []{return SmallKeys(GerudoTrainingGroundsKeys, 9);}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveMagic,             []{return AddedProgressiveMagics == 0 && !LogicLensGtg;}),
-                    AdvancementPairing(I_LensOfTruth,                  []{return ProgressiveMagic       >= 1 && !LogicLensGtg;}),
-                    AdvancementPairing(GerudoTrainingGrounds_SmallKey, []{return true;}, 9)
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_HiddenCeilingChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 3) && (LogicLensGtg || CanUse("Lens of Truth"));}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_MazePathFirstChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 4);}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_MazePathSecondChest, []{return SmallKeys(GerudoTrainingGroundsKeys, 6);}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_MazePathThirdChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 7);}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_MazePathFinalChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 9);}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GerudoTrainingGrounds_CentralMazeRight, []{return SmallKeys(GerudoTrainingGroundsKeys, 9);}),
   });
 
   Exit GerudoTrainingGrounds_CentralMazeRight = Exit("Gerudo Training Grounds Central Maze Right", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_MazeRightCentralChest, []{return true;}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_MazeRightSideChest,    []{return true;}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_FreestandingKey,       []{return true;}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GerudoTrainingGrounds_HammerRoom, []{return CanUse("Hookshot");}),
-                    ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,   []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveHookshot,  []{return IsAdult;}),
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_MazeRightCentralChest, []{return true;}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_MazeRightSideChest,    []{return true;}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_FreestandingKey,       []{return true;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GerudoTrainingGrounds_HammerRoom, []{return CanUse("Hookshot");}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,   []{return true;}),
   });
 
   Exit GerudoTrainingGrounds_LavaRoom = Exit("Gerudo Training Grounds Lava Room", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_UnderwaterSilverRupeeChest, []{return CanUse("Hookshot") && CanPlay(SongOfTime) && IronBoots && (LogicFewerTunicRequirements || CanUse("Zora Tunic"));}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GerudoTrainingGrounds_CentralMazeRight, []{return CanPlay(SongOfTime) || IsChild;}),
-                    ExitPairing::Both(&GerudoTrainingGrounds_HammerRoom,       []{return CanUse("Longshot")  || (CanUse("Hover Boots") && CanUse("Hookshot"));}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_SongOfTime,          []{return IsAdult && ProgressiveOcarina        >= 1;}),
-                    AdvancementPairing(I_IronBoots,           []{return IsAdult;}),
-                    AdvancementPairing(I_ZoraTunic,           []{return IsAdult &&!LogicFewerTunicRequirements;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 0;}),
-                    AdvancementPairing(I_HoverBoots,          []{return IsAdult && AddedProgressiveHookshots <= 1;}),
-                    AdvancementPairing(I_ProgressiveHookshot, []{return IsAdult && AddedProgressiveHookshots == 1 && !HoverBoots;}),
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_UnderwaterSilverRupeeChest, []{return CanUse("Hookshot") && CanPlay(SongOfTime) && IronBoots && (LogicFewerTunicRequirements || CanUse("Zora Tunic"));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GerudoTrainingGrounds_CentralMazeRight, []{return CanPlay(SongOfTime) || IsChild;}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_HammerRoom,       []{return CanUse("Longshot")  || (CanUse("Hover Boots") && CanUse("Hookshot"));}),
   });
 
   Exit GerudoTrainingGrounds_HammerRoom = Exit("Gerudo Training Grounds Hammer Room", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_HammerRoomClearChest,  []{return true;}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_HammerRoomSwitchChest, []{return CanUse("Hammer");})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GerudoTrainingGrounds_EyeStatueLower, []{return CanUse("Hammer") && Bow;}),
-                    ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,       []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_MegatonHammer,  []{return true;}),
-                    AdvancementPairing(I_ProgressiveBow, []{return AddedProgressiveBows == 0;}),
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_HammerRoomClearChest,  []{return true;}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_HammerRoomSwitchChest, []{return CanUse("Hammer");})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GerudoTrainingGrounds_EyeStatueLower, []{return CanUse("Hammer") && Bow;}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,       []{return true;}),
   });
 
   Exit GerudoTrainingGrounds_EyeStatueLower = Exit("Gerudo Training Grounds Eye Statue Lower", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_EyeStatueChest, []{return CanUse("Bow");}),
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GerudoTrainingGrounds_HammerRoom, []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow, []{return AddedProgressiveBows == 0;}),
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_EyeStatueChest, []{return CanUse("Bow");}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GerudoTrainingGrounds_HammerRoom, []{return true;}),
   });
 
   Exit GerudoTrainingGrounds_EyeStatueUpper = Exit("Gerudo Training Grounds Eye Statue Upper", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_NearScarecrowChest, []{return CanUse("Bow");})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GerudoTrainingGrounds_EyeStatueLower, []{return true;}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow, []{return AddedProgressiveBows == 0;}),
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_NearScarecrowChest, []{return CanUse("Bow");})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GerudoTrainingGrounds_EyeStatueLower, []{return true;}),
   });
 
   Exit GerudoTrainingGrounds_HeavyBlockRoom = Exit("Gerudo Training Grounds Heavy Block Room", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_BeforeHeavyBlockChest, []{return true;})
-                  }, {
-                    //Exits
-                    ExitPairing::Both(&GerudoTrainingGrounds_EyeStatueUpper, []{return (LogicLensGtg || CanUse("Lens of Truth")) && (CanUse("Hookshot") || (LogicGtgFakeWall && CanUse("Hover Boots")));}),
-                    ExitPairing::Both(&GerudoTrainingGrounds_LikeLikeRoom,   []{return (LogicLensGtg || CanUse("Lens of Truth")) && (CanUse("Hookshot") || (LogicGtgFakeWall && CanUse("Hover Boots"))) && CanUse("Silver Gauntlets");}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveMagic,       []{return AddedProgressiveMagics    == 0 && !LogicLensGtg;}),
-                    AdvancementPairing(I_LensOfTruth,            []{return ProgressiveMagic          >= 1 && !LogicLensGtg;}),
-                    AdvancementPairing(I_ProgressiveHookshot,    []{return AddedProgressiveHookshots == 0;}),
-                    AdvancementPairing(I_ProgressiveStrength,    []{return AddedProgressiveStrengths == 0;}),
-                    AdvancementPairing(I_ProgressiveStrength,    []{return AddedProgressiveStrengths == 1;}),
-                    AdvancementPairing(I_HoverBoots,             []{return LogicGtgFakeWall;}),
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_BeforeHeavyBlockChest, []{return true;})
+                }, {
+                  //Exits
+                  ExitPairing::Both(&GerudoTrainingGrounds_EyeStatueUpper, []{return (LogicLensGtg || CanUse("Lens of Truth")) && (CanUse("Hookshot") || (LogicGtgFakeWall && CanUse("Hover Boots")));}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_LikeLikeRoom,   []{return (LogicLensGtg || CanUse("Lens of Truth")) && (CanUse("Hookshot") || (LogicGtgFakeWall && CanUse("Hover Boots"))) && CanUse("Silver Gauntlets");}),
   });
 
   Exit GerudoTrainingGrounds_LikeLikeRoom = Exit("Gerudo Training Grounds Like Like Room", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
-                    //Locations
-                    ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockFirstChest,  []{return true;}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockSecondChest, []{return true;}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockThirdChest,  []{return true;}),
-                    ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockFourthChest, []{return true;}),
-                  }, {}, {
-  });
+                  //Locations
+                  ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockFirstChest,  []{return true;}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockSecondChest, []{return true;}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockThirdChest,  []{return true;}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_HeavyBlockFourthChest, []{return true;}),
+  }, {});
 
   Exit GanonsCastle_Lobby = Exit("Ganon's Castle Lobby", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                    //Exits
-                    ExitPairing::Both(&OGC_Grounds,              []{return true;}),
-                    ExitPairing::Both(&GanonsCastle_ForestTrial, []{return true;}),
-                    ExitPairing::Both(&GanonsCastle_FireTrial,   []{return true;}),
-                    ExitPairing::Both(&GanonsCastle_WaterTrial,  []{return true;}),
-                    ExitPairing::Both(&GanonsCastle_ShadowTrial, []{return true;}),
-                    ExitPairing::Both(&GanonsCastle_SpiritTrial, []{return true;}),
-                    ExitPairing::Both(&GanonsCastle_LightTrial,  []{return CanUse("Golden Gauntlets");}),
-                    ExitPairing::Both(&GanonsCastle_Tower,       []{return SkippedTrials || (ForestTrialClear && FireTrialClear && WaterTrialClear && ShadowTrialClear && SpiritTrialClear && LightTrialClear);}),
-                    ExitPairing::Both(&GanonsCastle_DekuScrubs,  []{return LogicLensCastle || CanUse("Lens of Truth");}),
-                  }, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 0;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 1;}),
-                    AdvancementPairing(I_ProgressiveStrength, []{return AddedProgressiveStrengths == 2;}),
-                    AdvancementPairing(I_ProgressiveMagic,    []{return AddedProgressiveMagics    == 0 && !LogicLensCastle;}),
-                    AdvancementPairing(I_LensOfTruth,         []{return ProgressiveMagic          >= 1 && !LogicLensCastle;}),
+                  //Exits
+                  ExitPairing::Both(&OGC_Grounds,              []{return true;}),
+                  ExitPairing::Both(&GanonsCastle_ForestTrial, []{return true;}),
+                  ExitPairing::Both(&GanonsCastle_FireTrial,   []{return true;}),
+                  ExitPairing::Both(&GanonsCastle_WaterTrial,  []{return true;}),
+                  ExitPairing::Both(&GanonsCastle_ShadowTrial, []{return true;}),
+                  ExitPairing::Both(&GanonsCastle_SpiritTrial, []{return true;}),
+                  ExitPairing::Both(&GanonsCastle_LightTrial,  []{return CanUse("Golden Gauntlets");}),
+                  ExitPairing::Both(&GanonsCastle_Tower,       []{return SkippedTrials || (ForestTrialClear && FireTrialClear && WaterTrialClear && ShadowTrialClear && SpiritTrialClear && LightTrialClear);}),
+                  ExitPairing::Both(&GanonsCastle_DekuScrubs,  []{return LogicLensCastle || CanUse("Lens of Truth");}),
   });
 
   Exit GanonsCastle_DekuScrubs = Exit("Ganon's Castle Deku Scrubs", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FreeFairies, []{return true;}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&GanonsCastle_DekuScrubCenterLeft, []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_DekuScrubCenterRight, []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_DekuScrubRight, []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_DekuScrubLeft, []{return true;}),
-                  }, {}, {
-                    //Advancement Needs
-  });
+                  //Events
+                  EventPairing(&FreeFairies, []{return true;}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&GanonsCastle_DekuScrubCenterLeft, []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_DekuScrubCenterRight, []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_DekuScrubRight, []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_DekuScrubLeft, []{return true;}),
+  }, {});
 
   Exit GanonsCastle_ForestTrial = Exit("Ganon's Castle Forest Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&ForestTrialClear, []{return CanUse("Light Arrows") && (FireArrows || DinsFire);}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&GanonsCastle_ForestTrialChest, []{return true;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_DinsFire,         []{return ProgressiveMagic       >= 1 && !FireArrows;}),
-                    AdvancementPairing(I_ProgressiveBow,   []{return AddedProgressiveBows   == 0 && !DinsFire;}),
-                    AdvancementPairing(I_FireArrows,       []{return ProgressiveBow         >= 1 && ProgressiveMagic >= 1 && !DinsFire;}),
-                    AdvancementPairing(I_LightArrows,      []{return ProgressiveBow         >= 1 && ProgressiveMagic >= 1;}),
-  });
+                  //Events
+                  EventPairing(&ForestTrialClear, []{return CanUse("Light Arrows") && (FireArrows || DinsFire);}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&GanonsCastle_ForestTrialChest, []{return true;}),
+  }, {});
 
   Exit GanonsCastle_FireTrial = Exit("Ganon's Castle Fire Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&FireTrialClear, []{return CanUse("Goron Tunic") && CanUse("Golden Gauntlets") && CanUse("Light Arrows") && CanUse("Longshot");}),
-                  }, {}, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow,   []{return AddedProgressiveBows   == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_LightArrows,      []{return ProgressiveBow         >= 1 && ProgressiveMagic >= 1;}),
-                    AdvancementPairing(I_GoronTunic,       []{return IsAdult;}),
-  });
+                  //Events
+                  EventPairing(&FireTrialClear, []{return CanUse("Goron Tunic") && CanUse("Golden Gauntlets") && CanUse("Light Arrows") && CanUse("Longshot");}),
+  }, {}, {});
 
   Exit GanonsCastle_WaterTrial = Exit("Ganon's Castle Water Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&BlueFireAccess,  []{return true;}),
-                    EventPairing(&FairyPot,        []{return FairyPot || BlueFire;}),
-                    EventPairing(&WaterTrialClear, []{return BlueFire && Hammer && CanUse("Light Arrows");}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&GanonsCastle_WaterTrialLeftChest,  []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_WaterTrialRightChest, []{return true;}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_EmptyBottle,      []{return true;}),
-                    AdvancementPairing(I_MegatonHammer,    []{return IsAdult;}),
-                    AdvancementPairing(I_ProgressiveBow,   []{return AddedProgressiveBows   == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_LightArrows,      []{return ProgressiveBow         >= 1 && ProgressiveMagic >= 1;}),
-  });
+                  //Events
+                  EventPairing(&BlueFireAccess,  []{return true;}),
+                  EventPairing(&FairyPot,        []{return FairyPot || BlueFire;}),
+                  EventPairing(&WaterTrialClear, []{return BlueFire && Hammer && CanUse("Light Arrows");}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&GanonsCastle_WaterTrialLeftChest,  []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_WaterTrialRightChest, []{return true;}),
+  }, {});
 
   Exit GanonsCastle_ShadowTrial = Exit("Ganon's Castle Shadow Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&ShadowTrialClear, []{return CanUse("Light Arrows") && Hammer && ((FireArrows && (LogicLensCastle || CanUse("Lens of Truth"))) || (CanUse("Longshot") && (HoverBoots || (DinsFire && (LogicLensCastle || CanUse("Lens of Truth"))))));}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&GanonsCastle_ShadowTrialFrontChest,           []{return CanUse("Fire Arrows") || Hookshot || HoverBoots || CanPlay(SongOfTime);}),
-                    ItemLocationPairing(&GanonsCastle_ShadowTrialGoldenGauntletsChest, []{return CanUse("Fire Arrows") || (CanUse("Longshot") && (HoverBoots || CanUse("Dins Fire")));}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow,   []{return AddedProgressiveBows   == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_LightArrows,      []{return ProgressiveBow         >= 1 && ProgressiveMagic >= 1;}),
-  });
+                  //Events
+                  EventPairing(&ShadowTrialClear, []{return CanUse("Light Arrows") && Hammer && ((FireArrows && (LogicLensCastle || CanUse("Lens of Truth"))) || (CanUse("Longshot") && (HoverBoots || (DinsFire && (LogicLensCastle || CanUse("Lens of Truth"))))));}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&GanonsCastle_ShadowTrialFrontChest,           []{return CanUse("Fire Arrows") || Hookshot || HoverBoots || CanPlay(SongOfTime);}),
+                  ItemLocationPairing(&GanonsCastle_ShadowTrialGoldenGauntletsChest, []{return CanUse("Fire Arrows") || (CanUse("Longshot") && (HoverBoots || CanUse("Dins Fire")));}),
+  }, {});
 
   Exit GanonsCastle_SpiritTrial = Exit("Ganon's Castle Spirit Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&NutPot,           []{return NutPot || ((LogicSpiritTrialHookshot || Hookshot) && HasBombchus && Bow && MirrorShield);}),
-                    EventPairing(&SpiritTrialClear, []{return CanUse("Light Arrows")  && MirrorShield && HasBombchus && (LogicSpiritTrialHookshot || Hookshot);}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&GanonsCastle_SpiritTrialCrystalSwitchChest, []{return LogicSpiritTrialHookshot || Hookshot;}),
-                    ItemLocationPairing(&GanonsCastle_SpiritTrialInvisibleChest,     []{return (LogicSpiritTrialHookshot || Hookshot) && HasBombchus && (LogicLensCastle || CanUse("Lens of Truth"));}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_ProgressiveBow,   []{return AddedProgressiveBows   == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic, []{return AddedProgressiveMagics == 0;}),
-                    AdvancementPairing(I_LightArrows,      []{return ProgressiveBow         >= 1 && ProgressiveMagic >= 1;}),
-  });
+                  //Events
+                  EventPairing(&NutPot,           []{return NutPot || ((LogicSpiritTrialHookshot || Hookshot) && HasBombchus && Bow && MirrorShield);}),
+                  EventPairing(&SpiritTrialClear, []{return CanUse("Light Arrows")  && MirrorShield && HasBombchus && (LogicSpiritTrialHookshot || Hookshot);}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&GanonsCastle_SpiritTrialCrystalSwitchChest, []{return LogicSpiritTrialHookshot || Hookshot;}),
+                  ItemLocationPairing(&GanonsCastle_SpiritTrialInvisibleChest,     []{return (LogicSpiritTrialHookshot || Hookshot) && HasBombchus && (LogicLensCastle || CanUse("Lens of Truth"));}),
+  }, {});
 
   Exit GanonsCastle_LightTrial = Exit("Ganon's Castle Light Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
-                    //Events
-                    EventPairing(&LightTrialClear, []{return CanUse("Light Arrows") && Hookshot && SmallKeys(GanonsCastleKeys, 2) && (LogicLensCastle || CanUse("Lens of Truth"));}),
-                  }, {
-                    //Locations
-                    ItemLocationPairing(&GanonsCastle_LightTrialFirstLeftChest,        []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_LightTrialSecondLeftChest,       []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_LightTrialThirdLeftChest,        []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_LightTrialFirstRightChest,       []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_LightTrialSecondRightChest,      []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_LightTrialThirdRightChest,       []{return true;}),
-                    ItemLocationPairing(&GanonsCastle_LightTrialInvisibleEnemiesChest, []{return LogicLensCastle || CanUse("Lens of Truth");}),
-                    ItemLocationPairing(&GanonsCastle_LightTrialLullabyChest,          []{return CanPlay(ZeldasLullaby) && SmallKeys(GanonsCastleKeys, 1);}),
-                  }, {}, {
-                    //Advancement Needs
-                    AdvancementPairing(I_LensOfTruth,         []{return ProgressiveMagic         >= 1 && !LogicLensCastle;}),
-                    AdvancementPairing(I_ZeldasLullaby,       []{return ProgressiveOcarina       >= 1;}),
-                    AdvancementPairing(I_ProgressiveBow,      []{return AddedProgressiveBows     == 0;}),
-                    AdvancementPairing(I_ProgressiveMagic,    []{return AddedProgressiveMagics   == 0;}),
-                    AdvancementPairing(I_LightArrows,         []{return ProgressiveBow           >= 1 && ProgressiveMagic >= 1;}),
-                    AdvancementPairing(GanonsCastle_SmallKey, []{return true;}, 2),
-  });
+                  //Events
+                  EventPairing(&LightTrialClear, []{return CanUse("Light Arrows") && Hookshot && SmallKeys(GanonsCastleKeys, 2) && (LogicLensCastle || CanUse("Lens of Truth"));}),
+                }, {
+                  //Locations
+                  ItemLocationPairing(&GanonsCastle_LightTrialFirstLeftChest,        []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_LightTrialSecondLeftChest,       []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_LightTrialThirdLeftChest,        []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_LightTrialFirstRightChest,       []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_LightTrialSecondRightChest,      []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_LightTrialThirdRightChest,       []{return true;}),
+                  ItemLocationPairing(&GanonsCastle_LightTrialInvisibleEnemiesChest, []{return LogicLensCastle || CanUse("Lens of Truth");}),
+                  ItemLocationPairing(&GanonsCastle_LightTrialLullabyChest,          []{return CanPlay(ZeldasLullaby) && SmallKeys(GanonsCastleKeys, 1);}),
+  }, {});
 
   Exit GanonsCastle_Tower = Exit("Ganon's Castle Tower", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&GanonsCastle_BossKeyChest, []{return true;}),
                   //Ganondorf Hint
-                  //Ganon
-                }, {}, {
-                  //Advancement Needs
-                  AdvancementPairing(GanonsCastle_BossKey, []{return true;}),
-  });
+                  ItemLocationPairing(&Ganon, []{return BossKeyGanonsCastle && CanUse("Light Arrows");}),
+  }, {});
 
   /*
   //Events
@@ -2942,9 +2373,243 @@ namespace Exits { //name, scene, hint, events, locations, exits, advancement ite
   //Locations
 }, {
   //Exits
-}, {
-  //Advancement Needs
 */
 
   std::vector<Exit *> ExitPool = {};
+
+  std::array<Exit *, 212> allExits = {
+
+    &Root,
+    &RootExits,
+    &KF_Main,
+    &KF_LinksHouse,
+    &KF_MidosHouse,
+    &KF_SariasHouse,
+    &KF_HouseOfTwins,
+    &KF_KnowItAllHouse,
+    &KF_KokiriShop,
+    &KF_OutsideDekuTree,
+    &KF_StormsGrotto,
+    &LW_Main,
+    &LW_BridgeFromForest,
+    &LW_Bridge,
+    &LW_ForestExit,
+    &LW_BeyondMido,
+    &LW_NearShortcutsGrotto,
+    &LW_DekuTheater,
+    &LW_ScrubsGrotto,
+    &SFM_Entryway,
+    &SFM_Main,
+    &SFM_WolfosGrotto,
+    &SFM_FairyGrotto,
+    &SFM_StormsGrotto,
+    &HF_Main,
+    &HF_SoutheastGrotto,
+    &HF_OpenGrotto,
+    &HF_InsideFenceGrotto,
+    &HF_CowGrotto,
+    &HF_NearMarketGrotto,
+    &HF_NearKakGrotto,
+    &HF_FairyGrotto,
+    &HF_NearKakGrotto,
+    &HF_TektiteGrotto,
+    &LH_Main,
+    &LH_OwlFlight,
+    &LH_Lab,
+    &LH_FishingHole,
+    &LH_Grotto,
+    &GV_Main,
+    &GV_Stream,
+    &GV_CrateLedge,
+    &GV_OctorokGrotto,
+    &GV_FortressSide,
+    &GV_CarpenterTent,
+    &GV_StormsGrotto,
+    &GF_Main,
+    &GF_OutsideGate,
+    &GF_StormsGrotto,
+    &HW_NearFortress,
+    &HW_Main,
+    &HW_NearColossus,
+    &Colossus_Main,
+    &Colossus_GreatFairyFountain,
+    &Colossus_Grotto,
+    &MK_Entrance,
+    &MK_Main,
+    &MK_GuardHouse,
+    &MK_Bazaar,
+    &MK_MaskShop,
+    &MK_ShootingGallery,
+    &MK_BombchuBowling,
+    &MK_TreasureChestGame,
+    &MK_PotionShop,
+    &MK_BombchuShop,
+    &MK_DogLadyHouse,
+    &MK_ManInGreenHouse,
+    &ToT_Entrance,
+    &ToT_Main,
+    &ToT_BeyondDoorOfTime,
+    &CastleGrounds,
+    &HC_Grounds,
+    &HC_Garden,
+    &HC_GreatFairyFountain,
+    &HC_StormsGrotto,
+    &OGC_Grounds,
+    &OGC_GreatFairyFountain,
+    &Kak_Main,
+    &Kak_CarpenterBossHouse,
+    &Kak_HouseOfSkulltula,
+    &Kak_ImpasHouse,
+    &Kak_ImpasLedge,
+    &Kak_ImpasHouseBack,
+    &Kak_ImpasHouseNearCow,
+    &Kak_Windmill,
+    &Kak_Bazaar,
+    &Kak_ShootingGallery,
+    &Kak_PotionShopFront,
+    &Kak_PotionShopBack,
+    &Kak_Rooftop,
+    &Kak_BehindGate,
+    &Kak_Backyard,
+    &Kak_OddMedicineBuilding,
+    &Kak_RedeadGrotto,
+    &Kak_OpenGrotto,
+    &GY_Main,
+    &GY_DampesGrave,
+    &GY_DampesHouse,
+    &GY_ShieldGrave,
+    &GY_ComposersGrave,
+    &GY_HeartPieceGrave,
+    &GY_WarpPadRegion,
+    &DMT_Main,
+    &DMT_Summit,
+    &DMT_OwlFlight,
+    &DMT_GreatFairyFountain,
+    &DMT_CowGrotto,
+    &DMT_StormsGrotto,
+    &GC_Main,
+    &GC_WoodsWarp,
+    &GC_DaruniasChamber,
+    &GC_Shop,
+    &GC_Grotto,
+    &DMC_UpperLocal,
+    &DMC_CentralLocal,
+    &DMC_LowerLocal,
+    &DMC_LowerNearby,
+    &DMC_UpperNearby,
+    &DMC_CentralNearby,
+    &DMC_LadderAreaNearby,
+    &DMC_UpperGrotto,
+    &DMC_HammerGrotto,
+    &DMC_GreatFairyFountain,
+    &ZR_Front,
+    &ZR_Main,
+    &ZR_BehindWaterfall,
+    &ZR_OpenGrotto,
+    &ZR_FairyGrotto,
+    &ZR_StormsGrotto,
+    &ZD_Main,
+    &ZD_BehindKingZora,
+    &ZD_Shop,
+    &ZD_StormsGrotto,
+    &ZF_Main,
+    &ZF_GreatFairyFountain,
+    &LLR_Main,
+    &LLR_TalonsHouse,
+    &LLR_Stables,
+    &LLR_Tower,
+    &LLR_Grotto,
+    &DekuTree_Lobby,
+    &DekuTree_SlingshotRoom,
+    &DekuTree_BossRoom,
+    &DodongosCavern_Entryway,
+    &DodongosCavern_Beginning,
+    &DodongosCavern_Lobby,
+    &DodongosCavern_Climb,
+    &DodongosCavern_FarBridge,
+    &DodongosCavern_BossArea,
+    &JabuJabusBelly_Beginning,
+    &JabuJabusBelly_Main,
+    &JabuJabusBelly_Depths,
+    &JabuJabusBelly_BossArea,
+    &ForestTemple_Lobby,
+    &ForestTemple_NWOutdoors,
+    &ForestTemple_NEOutdoors,
+    &ForestTemple_OutdoorsHighBalconies,
+    &ForestTemple_FallingRoom,
+    &ForestTemple_BlockPushRoom,
+    &ForestTemple_StraightenedHall,
+    &ForestTemple_OutsideUpperLedge,
+    &ForestTemple_BowRegion,
+    &ForestTemple_BossRegion,
+    &FireTemple_Entrance,
+    &FireTemple_Lower,
+    &FireTemple_BigLavaRoom,
+    &FireTemple_Middle,
+    &FireTemple_Upper,
+    &WaterTemple_Lobby,
+    &WaterTemple_HighestWaterLevel,
+    &WaterTemple_Dive,
+    &WaterTemple_CrackedWall,
+    &WaterTemple_NorthBasement,
+    &WaterTemple_DragonStatue,
+    &WaterTemple_MiddleWaterLevel,
+    &WaterTemple_DarkLinkRegion,
+    &SpiritTemple_Lobby,
+    &SpiritTemple_Child,
+    &SpiritTemple_ChildClimb,
+    &SpiritTemple_EarlyAdult,
+    &SpiritTemple_CentralChamber,
+    &SpiritTemple_OutdoorHands,
+    &SpiritTemple_BeyondCentralLockedDoor,
+    &SpiritTemple_BeyondFinalLockedDoor,
+    &ShadowTemple_Entryway,
+    &ShadowTemple_Beginning,
+    &ShadowTemple_FirstBeamos,
+    &ShadowTemple_HugePit,
+    &ShadowTemple_WindTunnel,
+    &ShadowTemple_BeyondBoat,
+    &BottomOfTheWell,
+    &BottomOfTheWell_MainArea,
+    &IceCavern_Beginning,
+    &IceCavern_Main,
+    &GerudoTrainingGrounds_Lobby,
+    &GerudoTrainingGrounds_CentralMaze,
+    &GerudoTrainingGrounds_CentralMazeRight,
+    &GerudoTrainingGrounds_LavaRoom,
+    &GerudoTrainingGrounds_HammerRoom,
+    &GerudoTrainingGrounds_EyeStatueLower,
+    &GerudoTrainingGrounds_EyeStatueUpper,
+    &GerudoTrainingGrounds_HeavyBlockRoom,
+    &GerudoTrainingGrounds_LikeLikeRoom,
+    &GanonsCastle_Lobby,
+    &GanonsCastle_DekuScrubs,
+    &GanonsCastle_ForestTrial,
+    &GanonsCastle_FireTrial,
+    &GanonsCastle_WaterTrial,
+    &GanonsCastle_ShadowTrial,
+    &GanonsCastle_SpiritTrial,
+    &GanonsCastle_LightTrial,
+    &GanonsCastle_Tower,
+  };
+
+  void AccessReset() {
+    for (Exit* exit : allExits) {
+      exit->ResetVariables();
+    }
+
+    if(Settings::HasNightStart) {
+        if(Settings::StartingAge == AGE_CHILD) {
+          Exits::Root.nightChild = true;
+        } else {
+          Exits::Root.nightAdult = true;
+        }
+      } else {
+        if(Settings::StartingAge == AGE_CHILD) {
+          Exits::Root.dayChild = true;
+        } else {
+          Exits::Root.dayAdult = true;
+        }
+    }
+  }
 }

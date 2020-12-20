@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include <string>
 #include <functional>
+#include <variant>
 
 #include "../code/src/item_override.h"
 
@@ -25,18 +26,38 @@ class Item {
 public:
     using EffectFn = void (*)();
 
-    Item(std::string name_, ItemType type_, int getItemId_, bool progressive_, EffectFn effect_, u16 price_ = 0)
+    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, u16 price_ = 0)
         : name(std::move(name_)),
           type(type_),
           getItemId(getItemId_),
-          progressive(progressive_),
-          effect(effect_),
+          advancement(advancement_),
+          logicVar(logicVar_),
+          price(price_) {}
+
+    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, u16 price_ = 0)
+        : name(std::move(name_)),
+          type(type_),
+          getItemId(getItemId_),
+          advancement(advancement_),
+          logicVar(logicVar_),
           price(price_) {}
 
     void ApplyEffect() {
-        effect();
+        if (std::holds_alternative<bool*>(logicVar)) {
+          *std::get<bool*>(logicVar) = true;
+        } else {
+          *std::get<u8*>(logicVar) += 1;
+        }
         Logic::UpdateHelpers();
-        return;
+    }
+
+    void UndoEffect() {
+        if (std::holds_alternative<bool*>(logicVar)) {
+          *std::get<bool*>(logicVar) = false;
+        } else {
+          *std::get<u8*>(logicVar) -= 1;
+        }
+        Logic::UpdateHelpers();
     }
 
     ItemOverride_Value Value() const {
@@ -53,8 +74,8 @@ public:
         return name;
     }
 
-    bool IsProgressive() const {
-        return progressive;
+    bool IsAdvancement() const {
+        return advancement;
     }
 
     int GetItemID() const {
@@ -73,12 +94,13 @@ private:
     std::string name;
     ItemType type;
     int  getItemId;
-    bool progressive;
-    EffectFn effect;
+    bool advancement;
+    std::variant<bool*, u8*> logicVar;
     u16  price;
 };
 
 extern Item NoItem;
+extern Item I_Triforce;
 
 //specific advancement items
 extern Item I_KokiriSword;

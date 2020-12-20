@@ -207,7 +207,7 @@ void PrintSubMenu() {
 }
 
 void GenerateRandomizer() {
-  //if a blank seed was entered
+  //if a blank seed was entered, make a random one
   if (Settings::seed == "") {
     Settings::seed = std::to_string(rand());
   }
@@ -216,7 +216,7 @@ void GenerateRandomizer() {
   consoleSelect(&topScreen);
 	consoleClear();
 
-	int ret = Playthrough::Fill(seedInt);
+	int ret = Playthrough::Playthrough_Init(seedInt);
 	if (ret < 0) {
 		printf("Error %d with fill. Press Start to exit.\n", ret);
 		return;
