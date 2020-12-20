@@ -20,8 +20,8 @@ static void RandomizeDungeonRewards() {
   std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
   std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
 
-  for (u8 i = 0; i < dungeonRewards.size(); i++) {
-    u8 idx = idxArray[i];
+  for (size_t i = 0; i < dungeonRewards.size(); i++) {
+    const u8 idx = idxArray[i];
     PlaceItemInLocation(dungeonRewardLocations[i], dungeonRewards[idx]);
     Settings::rDungeonRewardOverrides[i] = idx;
   }
@@ -77,7 +77,7 @@ void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthr
   while(iterationsWithNoLocations < 5) {
     iterationsWithNoLocations++;
 
-    for (u8 i = 0; i < exitPool.size(); i++) {
+    for (size_t i = 0; i < exitPool.size(); i++) {
       Exit* area = exitPool[i];
       //area->LogStatus(); for some reason this function crashes the app when attempting max randomization options
 
