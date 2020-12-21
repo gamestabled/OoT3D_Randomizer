@@ -1154,7 +1154,6 @@ void GenerateItemPool() {
     AddItemToMainPool(SpiritTemple_SmallKey, 5);
     AddItemToMainPool(ShadowTemple_SmallKey, 5);
     AddItemToMainPool(BottomOfTheWell_SmallKey, 3);
-    AddItemToMainPool(GerudoFortress_SmallKey, 4);
     AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 9);
     AddItemToMainPool(GanonsCastle_SmallKey, 2);
   }

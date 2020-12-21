@@ -325,6 +325,14 @@ extern ItemLocation DekuTree_BasementChest;
 extern ItemLocation DekuTree_SlingshotChest;
 extern ItemLocation DekuTree_SlingshotRoomSideChest;
 extern ItemLocation DekuTree_QueenGohmaHeart;
+//Deku Tree MQ
+extern ItemLocation DekuTree_MQ_MapChest;
+extern ItemLocation DekuTree_MQ_CompassChest;
+extern ItemLocation DekuTree_MQ_SlingshotChest;
+extern ItemLocation DekuTree_MQ_SlingshotRoomBackChest;
+extern ItemLocation DekuTree_MQ_BasementChest;
+extern ItemLocation DekuTree_MQ_BeforeSpinningLogChest;
+extern ItemLocation DekuTree_MQ_AfterSpinningLowChest;
 
 //Dodongos Cavern
 extern ItemLocation DodongosCavern_MapChest;
@@ -338,6 +346,17 @@ extern ItemLocation DodongosCavern_DekuScrubSideRoomNearDodongos;
 extern ItemLocation DodongosCavern_DekuScrubNearBombBagRight;
 extern ItemLocation DodongosCavern_DekuScrubLobby;
 extern ItemLocation DodongosCavern_KingDodongoHeart;
+//Dodongos Cavern MQ
+extern ItemLocation DodongosCavern_MQ_MapChest;
+extern ItemLocation DodongosCavern_MQ_BombBagChest;
+extern ItemLocation DodongosCavern_MQ_CompassChest;
+extern ItemLocation DodongosCavern_MQ_LarvaeRoomChest;
+extern ItemLocation DodongosCavern_MQ_TorchPuzzleRoomChest;
+extern ItemLocation DodongosCavern_MQ_UnderGraveChest;
+extern ItemLocation DodongosCavern_MQ_DekuScrubLobbyRear;
+extern ItemLocation DodongosCavern_MQ_DekuScrubLobbyFront;
+extern ItemLocation DodongosCavern_MQ_DekuScrubStaircase;
+extern ItemLocation DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos;
 
 //Jabu Jabus Belly
 extern ItemLocation JabuJabusBelly_MapChest;
@@ -345,6 +364,19 @@ extern ItemLocation JabuJabusBelly_CompassChest;
 extern ItemLocation JabuJabusBelly_BoomerangChest;
 extern ItemLocation JabuJabusBelly_DekuScrub;
 extern ItemLocation JabuJabusBelly_BarinadeHeart;
+//Jabu Jabus Belly MQ
+extern ItemLocation JabuJabusBelly_MQ_FirstRoomSideChest;
+extern ItemLocation JabuJabusBelly_MQ_MapChest;
+extern ItemLocation JabuJabusBelly_MQ_SecondRoomLowerChest;
+extern ItemLocation JabuJabusBelly_MQ_CompassChest;
+extern ItemLocation JabuJabusBelly_MQ_SecondRoomUpperChest;
+extern ItemLocation JabuJabusBelly_MQ_BasementNearSwitchesChest;
+extern ItemLocation JabuJabusBelly_MQ_BasementNearVinesChest;
+extern ItemLocation JabuJabusBelly_MQ_NearBossChest;
+extern ItemLocation JabuJabusBelly_MQ_FallingLikeLikeRoomChest;
+extern ItemLocation JabuJabusBelly_MQ_BoomerangRoomSmallChest;
+extern ItemLocation JabuJabusBelly_MQ_BoomerangChest;
+//COW
 
 //Forest Temple
 extern ItemLocation ForestTemple_FirstRoomChest;
@@ -361,6 +393,19 @@ extern ItemLocation ForestTemple_RedPoeChest;
 extern ItemLocation ForestTemple_BluePoeChest;
 extern ItemLocation ForestTemple_BasementChest;
 extern ItemLocation ForestTemple_PhantomGanonHeart;
+//Forest Temple MQ
+extern ItemLocation ForestTemple_MQ_FirstRoomChest;
+extern ItemLocation ForestTemple_MQ_WolfosChest;
+extern ItemLocation ForestTemple_MQ_BowChest;
+extern ItemLocation ForestTemple_MQ_RaisedIslandCourtyardLowerChest;
+extern ItemLocation ForestTemple_MQ_RaisedIslandCourtyardUpperChest;
+extern ItemLocation ForestTemple_MQ_WellChest;
+extern ItemLocation ForestTemple_MQ_MapChest;
+extern ItemLocation ForestTemple_MQ_CompassChest;
+extern ItemLocation ForestTemple_MQ_FallingCeilingRoomChest;
+extern ItemLocation ForestTemple_MQ_BasementChest;
+extern ItemLocation ForestTemple_MQ_RedeadChest;
+extern ItemLocation ForestTemple_MQ_BossKeyChest;
 
 //Fire Temple
 extern ItemLocation FireTemple_NearBossChest;
@@ -378,6 +423,19 @@ extern ItemLocation FireTemple_CompassChest;
 extern ItemLocation FireTemple_HighestGoronChest;
 extern ItemLocation FireTemple_MegatonHammerChest;
 extern ItemLocation FireTemple_VolvagiaHeart;
+//Fire Temple MQ
+extern ItemLocation FireTemple_MQ_NearBossChest;
+extern ItemLocation FireTemple_MQ_MegatonHammerChest;
+extern ItemLocation FireTemple_MQ_CompassChest;
+extern ItemLocation FireTemple_MQ_LizalfosMazeLowerChest;
+extern ItemLocation FireTemple_MQ_LizalfosMazeUpperChest;
+extern ItemLocation FireTemple_MQ_ChestOnFire;
+extern ItemLocation FireTemple_MQ_MapRoomSideChest;
+extern ItemLocation FireTemple_MQ_MapChest;
+extern ItemLocation FireTemple_MQ_BossKeyChest;
+extern ItemLocation FireTemple_MQ_BigLavaRoomBlockedDoorChest;
+extern ItemLocation FireTemple_MQ_LizalfosMazeSideRoomChest;
+extern ItemLocation FireTemple_MQ_FreestandingKey;
 
 //Water Temple
 extern ItemLocation WaterTemple_MapChest;
@@ -391,10 +449,18 @@ extern ItemLocation WaterTemple_BossKeyChest;
 extern ItemLocation WaterTemple_LongshotChest;
 extern ItemLocation WaterTemple_RiverChest;
 extern ItemLocation WaterTemple_MorphaHeart;
+//Water Temple MQ
+extern ItemLocation WaterTemple_MQ_CentralPillarChest;
+extern ItemLocation WaterTemple_MQ_BossKeyChest;
+extern ItemLocation WaterTemple_MQ_LongshotChest;
+extern ItemLocation WaterTemple_MQ_CompassChest;
+extern ItemLocation WaterTemple_MQ_MapChest;
+extern ItemLocation WaterTemple_MQ_FreestandingKey;
 
-//Spirit Temple
+//Spirit Temple Shared
 extern ItemLocation SpiritTemple_SilverGauntletsChest;
 extern ItemLocation SpiritTemple_MirrorShieldChest;
+//Spirit Temple Vanilla
 extern ItemLocation SpiritTemple_ChildBridgeChest;
 extern ItemLocation SpiritTemple_ChildEarlyTorchesChest;
 extern ItemLocation SpiritTemple_CompassChest;
@@ -413,6 +479,27 @@ extern ItemLocation SpiritTemple_HallwayRightInvisibleChest;
 extern ItemLocation SpiritTemple_BossKeyChest;
 extern ItemLocation SpiritTemple_TopmostChest;
 extern ItemLocation SpiritTemple_TwinrovaHeart;
+//Spirit Temple MQ
+extern ItemLocation SpiritTemple_MQ_EntranceFrontLeftChest;
+extern ItemLocation SpiritTemple_MQ_EntranceBackRightChest;
+extern ItemLocation SpiritTemple_MQ_EntranceFrontRightChest;
+extern ItemLocation SpiritTemple_MQ_EntranceBackLeftChest;
+extern ItemLocation SpiritTemple_MQ_ChildHammerSwitchChest;
+extern ItemLocation SpiritTemple_MQ_MapChest;
+extern ItemLocation SpiritTemple_MQ_MapRoomEnemyChest;
+extern ItemLocation SpiritTemple_MQ_ChildClimbNorthChest;
+extern ItemLocation SpiritTemple_MQ_ChildClimbSouthChest;
+extern ItemLocation SpiritTemple_MQ_CompassChest;
+extern ItemLocation SpiritTemple_MQ_StatueRoomLullabyChest;
+extern ItemLocation SpiritTemple_MQ_StatueRoomInvisibleChest;
+extern ItemLocation SpiritTemple_MQ_SilverBlockHallwayChest;
+extern ItemLocation SpiritTemple_MQ_SunBlockRoomChest;
+extern ItemLocation SpiritTemple_MQ_SymphonyRoomChest;
+extern ItemLocation SpiritTemple_MQ_LeaverRoomChest;
+extern ItemLocation SpiritTemple_MQ_BeamosRoomChest;
+extern ItemLocation SpiritTemple_MQ_ChestSwitchChest;
+extern ItemLocation SpiritTemple_MQ_BossKeyChest;
+extern ItemLocation SpiritTemple_MQ_MirrorPuzzleInvisibleChest;
 
 //Shadow Temple
 extern ItemLocation ShadowTemple_MapChest;
@@ -433,6 +520,27 @@ extern ItemLocation ShadowTemple_BossKeyChest;
 extern ItemLocation ShadowTemple_InvisibleFloormasterChest;
 extern ItemLocation ShadowTemple_FreestandingKey;
 extern ItemLocation ShadowTemple_BongoBongoHeart;
+//Shadow Temple MQ
+extern ItemLocation ShadowTemple_MQ_CompassChest;
+extern ItemLocation ShadowTemple_MQ_HoverBootsChest;
+extern ItemLocation ShadowTemple_MQ_EarlyGibdosChest;
+extern ItemLocation ShadowTemple_MQ_MapChest;
+extern ItemLocation ShadowTemple_MQ_BeamosSilverRupeesChest;
+extern ItemLocation ShadowTemple_MQ_FallingSpikesSwitchChest;
+extern ItemLocation ShadowTemple_MQ_FallingSpikesLowerChest;
+extern ItemLocation ShadowTemple_MQ_FallingSpikesUpperChest;
+extern ItemLocation ShadowTemple_MQ_InvisibleSpikesChest;
+extern ItemLocation ShadowTemple_MQ_BossKeyChest;
+extern ItemLocation ShadowTemple_MQ_SpikeWallsLeftChest;
+extern ItemLocation ShadowTemple_MQ_StalfosRoomChest;
+extern ItemLocation ShadowTemple_MQ_InvisibleBladesInvisibleChest;
+extern ItemLocation ShadowTemple_MQ_InvisibleBladesVisibleChest;
+extern ItemLocation ShadowTemple_MQ_BombFlowerChest;
+extern ItemLocation ShadowTemple_MQ_WindHintChest;
+extern ItemLocation ShadowTemple_MQ_AfterWindHiddenChest;
+extern ItemLocation ShadowTemple_MQ_AfterWindEnemyChest;
+extern ItemLocation ShadowTemple_MQ_NearShipInvisibleChest;
+extern ItemLocation ShadowTemple_MQ_FreestandingKey;
 
 //Bottom of the Well
 extern ItemLocation BottomOfTheWell_FrontLeftFakeWallChest;
@@ -449,12 +557,23 @@ extern ItemLocation BottomOfTheWell_MapChest;
 extern ItemLocation BottomOfTheWell_FireKeeseChest;
 extern ItemLocation BottomOfTheWell_LikeLikeChest;
 extern ItemLocation BottomOfTheWell_FreestandingKey;
+//Bottom of the Well MQ
+extern ItemLocation BottomOfTheWell_MQ_MapChest;
+extern ItemLocation BottomOfTheWell_MQ_LensOfTruthChest;
+extern ItemLocation BottomOfTheWell_MQ_CompassChest;
+extern ItemLocation BottomOfTheWell_MQ_DeadHandFreestandingKey;
+extern ItemLocation BottomOfTheWell_MQ_EastInnerRoomFreestandingKey;
 
 //Ice Cavern
 extern ItemLocation IceCavern_MapChest;
 extern ItemLocation IceCavern_CompassChest;
 extern ItemLocation IceCavern_IronBootsChest;
 extern ItemLocation IceCavern_FreestandingPoH;
+//Ice Cavern MQ
+extern ItemLocation IceCavern_MQ_IronBootsChest;
+extern ItemLocation IceCavern_MQ_CompassChest;
+extern ItemLocation IceCavern_MQ_MapChest;
+extern ItemLocation IceCavern_MQ_FreestandingPoH;
 
 //Gerudo Training Grounds
 extern ItemLocation GerudoTrainingGrounds_LobbyLeftChest;
@@ -479,9 +598,28 @@ extern ItemLocation GerudoTrainingGrounds_HeavyBlockSecondChest;
 extern ItemLocation GerudoTrainingGrounds_HeavyBlockThirdChest;
 extern ItemLocation GerudoTrainingGrounds_HeavyBlockFourthChest;
 extern ItemLocation GerudoTrainingGrounds_FreestandingKey;
+//Gerudo Training Grounds MQ
+extern ItemLocation GerudoTrainingGrounds_MQ_LobbyRightChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_LobbyLeftChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_FirstIronKnuckleChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_BeforeHeavyBlockChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_EyeStatueChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_FlameCircleChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_SecondIronKnuckleChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_DinalfosChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_IceArrowsChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_MazeRightCentralChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_MazePathFirstChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_MazeRightSideChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_MazePathThirdChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_MazePathSecondChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_HiddenCeilingChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest;
+extern ItemLocation GerudoTrainingGrounds_MQ_HeavyBlockChest;
 
-//Ganon's Castle
+//Ganon's Castle Shared
 extern ItemLocation GanonsCastle_BossKeyChest;
+//Ganon's Castle Vanilla
 extern ItemLocation GanonsCastle_ForestTrialChest;
 extern ItemLocation GanonsCastle_WaterTrialLeftChest;
 extern ItemLocation GanonsCastle_WaterTrialRightChest;
@@ -501,6 +639,25 @@ extern ItemLocation GanonsCastle_DekuScrubCenterLeft;
 extern ItemLocation GanonsCastle_DekuScrubCenterRight;
 extern ItemLocation GanonsCastle_DekuScrubRight;
 extern ItemLocation GanonsCastle_DekuScrubLeft;
+//Ganons Castle MQ
+extern ItemLocation GanonsCastle_MQ_WaterTrialChest;
+extern ItemLocation GanonsCastle_MQ_ForestTrialEyeSwitchChest;
+extern ItemLocation GanonsCastle_MQ_ForestTrialFrozenEyeSwitchChest;
+extern ItemLocation GanonsCastle_MQ_LightTrialLullabyChest;
+extern ItemLocation GanonsCastle_MQ_ShadowTrialBombFlowerChest;
+extern ItemLocation GanonsCastle_MQ_ShadowTrialEyeSwitchChest;
+extern ItemLocation GanonsCastle_MQ_SpiritTrialGoldenGauntletsChest;
+extern ItemLocation GanonsCastle_MQ_SpiritTrialSunBackRightChest;
+extern ItemLocation GanonsCastle_MQ_SpiritTrialSunBackLeftChest;
+extern ItemLocation GanonsCastle_MQ_SpiritTrialSunFrontLeftChest;
+extern ItemLocation GanonsCastle_MQ_SpiritTrialFirstChest;
+extern ItemLocation GanonsCastle_MQ_SpiritTrialInvisibleChest;
+extern ItemLocation GanonsCastle_MQ_ForestTrialFreestandingKey;
+extern ItemLocation GanonsCastle_MQ_DekuScrubRight;
+extern ItemLocation GanonsCastle_MQ_DekuScrubCenterLeft;
+extern ItemLocation GanonsCastle_MQ_DekuScrubCenter;
+extern ItemLocation GanonsCastle_MQ_DekuScrubCenterRight;
+extern ItemLocation GanonsCastle_MQ_DekuScrubLeft;
 
 /*-------------------------------
    --- GOLD SKULLTULA TOKENS ---
