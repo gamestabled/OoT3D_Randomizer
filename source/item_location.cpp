@@ -23,7 +23,7 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     PlacementLog_Msg(loc->GetName());
     PlacementLog_Msg("\n\n");
 
-    if (applyEffectImmediately || Settings::Logic == LOGIC_NONE) {
+    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
       item.ApplyEffect();
       loc->Use();
     }
