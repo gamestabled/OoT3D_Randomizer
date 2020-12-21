@@ -1589,6 +1589,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&LLR_Main, []{return true;}),
   });
 
+  /*--------------------------
+  |    VANILLA DUNGEONS     |
+  ---------------------------*/
+
   Exit DekuTree_Lobby = Exit("Deku Tree Lobby", "Deku Tree", "Deku Tree", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&DekuBabaSticks, []{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}),
@@ -2365,6 +2369,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Ganondorf Hint
                   ItemLocationPairing(&Ganon, []{return BossKeyGanonsCastle && CanUse("Light Arrows");}),
   }, {});
+
+  /*---------------------------
+  |   MASTER QUEST DUNGEONS   |
+  ---------------------------*/
 
   /*
   //Events
