@@ -266,7 +266,7 @@ void Fill_Init() {
   GenerateItemPool();
   RandomizeDungeonRewards();
 
-  if (Settings::Logic == LOGIC_GLITCHLESS) {
+  if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
     int success = 0;
 
     while(!success) {
