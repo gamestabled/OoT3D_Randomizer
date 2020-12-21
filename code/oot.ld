@@ -84,6 +84,10 @@ SECTIONS
 		*(.patch_AdultRollingGoronTwo)
 	}
 
+	.patch_EponasSongCheckFlagTwo 0x195CFC : {
+		*(.patch_EponasSongCheckFlagTwo)
+	}
+
 	.patch_DampeChest 0x19A420 : {
 		*(.patch_DampeChest)
 	}
@@ -264,9 +268,9 @@ SECTIONS
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
 
-	.patch_MagicArrowsInInventory 0x33C350 : {
+	/*.patch_MagicArrowsInInventory 0x33C350 : {
 		*(.patch_MagicArrowsInInventory)
-	}
+	}*/
 
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
@@ -466,6 +470,10 @@ SECTIONS
 
 	.patch_LACSConditionTwo 0x44F20C : {
 		*(.patch_LACSConditionTwo)
+	}
+
+	.patch_LullabyCheckFlag 0x44FD54 : {
+		*(.patch_LullabyCheckFlag)
 	}
 
 	.patch_before_GlobalContext_Update 0x452390 : {

@@ -7,6 +7,7 @@
 #include "en_ex_item.h"
 #include "demo_effect.h"
 #include "business_scrubs.h"
+#include "ocarina.h"
 
 void Actor_Init() {
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unneccesary owls
@@ -21,6 +22,10 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
+
+    gActorOverlayTable[0xF1].initInfo->init = ItemOcarina_rInit;
+    gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
+    gActorOverlayTable[0xF1].initInfo->draw = ItemOcarina_rDraw;
 
     gActorOverlayTable[0x10F].initInfo->init = ItemEtcetera_rInit;
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;

@@ -27,7 +27,7 @@ public:
         *event = true;
     }
 
-    bool IsChecked() {
+    bool IsChecked() const {
       return checked;
     }
 
@@ -38,7 +38,6 @@ public:
     void Uncheck() {
       checked = false;
     }
-
 
 private:
     bool* event;

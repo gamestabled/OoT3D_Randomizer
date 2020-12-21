@@ -62,7 +62,7 @@ custom_messages = {
                                                 "",
                                                 "" ) ),
     0x9D8 :           ( 0x00,   0x02,   0x03, ( "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"You got the "+COLOR(PINK)+"Shadow Temple Boss Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"You got the "+COLOR(PINK)+"Shadow Temple Boss"+NEWLINE()+"Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "",
                                                 "",

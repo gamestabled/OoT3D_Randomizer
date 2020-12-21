@@ -382,6 +382,11 @@ LullabyLocation_patch:
 EponasSongCheckFlag_patch:
     bl hook_EponasSongCheckFlag
 
+.section .patch_EponasSongCheckFlagTwo
+.global EponasSongCheckFlagTwo_patch
+EponasSongCheckFlagTwo_patch:
+    bl hook_EponasSongCheckFlag
+
 .section .patch_EponasSongLocation
 .global EponasSongLocation_patch
 EponasSongLocation_patch:
@@ -643,8 +648,7 @@ ISGCrouchStab_patch:
 .section .patch_MagicArrowsInInventory
 .global MagicArrowsInInventory_patch
 MagicArrowsInInventory_patch:
-    cmp r1,#0x8
-    cmpne r1,#0x7
+    bl hook_MagicArrowsInInventory
     beq 0x33C38C
     b 0x33C37C
 
@@ -675,6 +679,11 @@ ChildDontEquipSwordSlotByDefault_patch:
     bl SaveFile_RestoreChildEquips
     pop {r1-r12, lr}
     nop
+
+.section .patch_LullabyCheckFlag
+.global LullabyCheckFlag_patch
+LullabyCheckFlag_patch:
+    bl hook_LullabyCheckFlag
 
 .section .patch_loader
 .global loader_patch
