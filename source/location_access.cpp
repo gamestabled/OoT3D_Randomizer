@@ -28,7 +28,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&LinksPocket, []{return true;})
                 }, {
                   //Exits
-                  ExitPairing::Both(&RootExits, []{return true;}) //is_starting_age || Time_Travel
+                  ExitPairing::Both(&RootExits, []{return true;})
   });
 
   Exit RootExits = Exit("Root Exits", "", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -701,7 +701,6 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit HC_Garden = Exit("HC Garden", "Castle Grounds", "Hyrule Castle", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  //EventPairing(&ZeldasLullaby, []{return true;}), //TODO: remove eventually
                 }, {
                   //Locations
                   ItemLocationPairing(&HC_ZeldasLetter, []{return true;}),
@@ -777,8 +776,6 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit MK_MaskShop = Exit("Market Mask Shop", "", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  //Skull Mask
-                  //Mask Of Truth
                   EventPairing(&SkullMask,   []{return SkullMask   || (ZeldasLetter && Kak_Main.Child());}),
                   EventPairing(&MaskOfTruth, []{return MaskOfTruth || (SkullMask && (LW_Main.Child() && CanPlay(SariasSong) && GY_Main.dayChild && HF_Main.Child() && HasAllStones));}),
                 }, {}, {
