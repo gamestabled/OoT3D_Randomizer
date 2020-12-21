@@ -1160,6 +1160,9 @@ void GenerateItemPool() {
     AddItemToMainPool(WaterTemple_BossKey);
     AddItemToMainPool(SpiritTemple_BossKey);
     AddItemToMainPool(ShadowTemple_BossKey);
+  }
+
+  if (GanonsBossKey == GANONSBOSSKEY_ALL_LOCATIONS) {
     AddItemToMainPool(GanonsCastle_BossKey);
   }
 
