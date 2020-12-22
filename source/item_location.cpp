@@ -542,16 +542,32 @@ ItemLocation DekuTree_GS_BasementGate                     = ItemLocation::GSToke
 ItemLocation DekuTree_GS_BasementVines                    = ItemLocation::GSToken(0x00, 0x04, "Deku Tree GS Basement Vines",                      {"Deku Tree", "Skulltulas",});
 ItemLocation DekuTree_GS_CompassRoom                      = ItemLocation::GSToken(0x00, 0x08, "Deku Tree GS Compass Room",                        {"Deku Tree", "Skulltulas",});
 
+ItemLocation DekuTree_MQ_GS_Lobby                         = ItemLocation::GSToken(0x00, 0x02, "Deku Tree MQ GS Lobby",                            {"Deku Tree", "Skulltulas",});
+ItemLocation DekuTree_MQ_GS_CompassRoom                   = ItemLocation::GSToken(0x00, 0x08, "Deku Tree MQ GS Compass Room",                     {"Deku Tree", "Skulltulas",});
+ItemLocation DekuTree_MQ_GS_BasementGravesRoom            = ItemLocation::GSToken(0x00, 0x04, "Deku Tree MQ GS Basement Graves Room",             {"Deku Tree", "Skulltulas",});
+ItemLocation DekuTree_MQ_GS_BasementBackRoom              = ItemLocation::GSToken(0x00, 0x01, "Deku Tree MQ GS Basement Back Room",               {"Deku Tree", "Skulltulas",});
+
 ItemLocation DodongosCavern_GS_VinesAboveStairs           = ItemLocation::GSToken(0x01, 0x01, "Dodongos Cavern GS Vines Above Stairs",            {"Dodongo's Cavern", "Skulltulas",});
 ItemLocation DodongosCavern_GS_Scarecrow                  = ItemLocation::GSToken(0x01, 0x02, "Dodongos Cavern GS Scarecrow",                     {"Dodongo's Cavern", "Skulltulas",});
 ItemLocation DodongosCavern_GS_AlcoveAboveStairs          = ItemLocation::GSToken(0x01, 0x04, "Dodongos Cavern GS Alcove Above Stairs",           {"Dodongo's Cavern", "Skulltulas",});
 ItemLocation DodongosCavern_GS_BackRoom                   = ItemLocation::GSToken(0x01, 0x08, "Dodongos Cavern GS Back Room",                     {"Dodongo's Cavern", "Skulltulas",});
 ItemLocation DodongosCavern_GS_SideRoomNearLowerLizalfos  = ItemLocation::GSToken(0x01, 0x10, "Dodongos Cavern GS Side Room Near Lower Lizalfos", {"Dodongo's Cavern", "Skulltulas",});
 
+ItemLocation DodongosCavern_MQ_GS_ScrubRoom               = ItemLocation::GSToken(0x01, 0x02, "Dodongos Cavern MQ GS Scrub Room",                 {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_MQ_GS_SongOfTimeBlockRoom     = ItemLocation::GSToken(0x01, 0x08, "Dodongos Cavern MQ GS Song of Time Block Room",    {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_MQ_GS_LizalfosRoom            = ItemLocation::GSToken(0x01, 0x04, "Dodongos Cavern MQ GS Lizalfos Room",              {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_MQ_GS_LarvaeRoom              = ItemLocation::GSToken(0x01, 0x10, "Dodongos Cavern MQ GS Larvae Room",                {"Dodongo's Cavern", "Skulltulas",});
+ItemLocation DodongosCavern_MQ_GS_BackRoom                = ItemLocation::GSToken(0x01, 0x01, "Dodongos Cavern MQ GS Back Room",                  {"Dodongo's Cavern", "Skulltulas",});
+
 ItemLocation JabuJabusBelly_GS_LobbyBasementLower         = ItemLocation::GSToken(0x02, 0x01, "Jabu Jabus Belly GS Lobby Basement Lower",         {"Jabu Jabu's Belly", "Skulltulas",});
 ItemLocation JabuJabusBelly_GS_LobbyBasementUpper         = ItemLocation::GSToken(0x02, 0x02, "Jabu Jabus Belly GS Lobby Basement Upper",         {"Jabu Jabu's Belly", "Skulltulas",});
 ItemLocation JabuJabusBelly_GS_NearBoss                   = ItemLocation::GSToken(0x02, 0x04, "Jabu Jabus Belly GS Near Boss",                    {"Jabu Jabu's Belly", "Skulltulas",});
 ItemLocation JabuJabusBelly_GS_WaterSwitchRoom            = ItemLocation::GSToken(0x02, 0x08, "Jabu Jabus Belly GS Water Switch Room",            {"Jabu Jabu's Belly", "Skulltulas",});
+
+ItemLocation JabuJabusBelly_MQ_GS_TailPasaranRoom         = ItemLocation::GSToken(0x02, 0x04, "Jabu Jabus Belly MQ GS Tail Parasan Room",         {"Jabu Jabu's Belly", "Skulltulas",});
+ItemLocation JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom    = ItemLocation::GSToken(0x02, 0x08, "Jabu Jabus Belly MQ GS Invisible Enemies Room",    {"Jabu Jabu's Belly", "Skulltulas",});
+ItemLocation JabuJabusBelly_MQ_GS_BoomerangChestRoom      = ItemLocation::GSToken(0x02, 0x01, "Jabu Jabus Belly MQ GS Boomerang Chest Room",      {"Jabu Jabu's Belly", "Skulltulas",});
+ItemLocation JabuJabusBelly_MQ_GS_NearBoss                = ItemLocation::GSToken(0x02, 0x02, "Jabu Jabus Belly MQ GS Near Boss",                 {"Jabu Jabu's Belly", "Skulltulas",});
 
 ItemLocation ForestTemple_GS_RaisedIslandCourtyard        = ItemLocation::GSToken(0x03, 0x01, "Forest Temple GS Raised Island Courtyard",         {"Forest Temple", "Skulltulas",});
 ItemLocation ForestTemple_GS_FirstRoom                    = ItemLocation::GSToken(0x03, 0x02, "Forest Temple GS First Room",                      {"Forest Temple", "Skulltulas",});
@@ -559,11 +575,23 @@ ItemLocation ForestTemple_GS_LevelIslandCourtyard         = ItemLocation::GSToke
 ItemLocation ForestTemple_GS_Lobby                        = ItemLocation::GSToken(0x03, 0x08, "Forest Temple GS Lobby",                           {"Forest Temple", "Skulltulas",});
 ItemLocation ForestTemple_GS_Basement                     = ItemLocation::GSToken(0x03, 0x10, "Forest Temple GS Basement",                        {"Forest Temple", "Skulltulas",});
 
+ItemLocation ForestTemple_MQ_GS_FirstHallway              = ItemLocation::GSToken(0x03, 0x02, "Forest Temple GS First Hallway",                   {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_MQ_GS_BlockPushRoom             = ItemLocation::GSToken(0x03, 0x10, "Forest Temple GS Block Push Room",                 {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_MQ_GS_RaisedIslandCourtyard     = ItemLocation::GSToken(0x03, 0x01, "Forest Temple GS Raised Island Courtyard",         {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_MQ_GS_LevelIslandCourtyard      = ItemLocation::GSToken(0x03, 0x04, "Forest Temple GS Level Island Courtyard",          {"Forest Temple", "Skulltulas",});
+ItemLocation ForestTemple_MQ_GS_Well                      = ItemLocation::GSToken(0x03, 0x08, "Forest Temple GS Well",                            {"Forest Temple", "Skulltulas",});
+
 ItemLocation FireTemple_GS_SongOfTimeRoom                 = ItemLocation::GSToken(0x04, 0x01, "Fire Temple GS Song of Time Room",                 {"Fire Temple", "Skulltulas",});
 ItemLocation FireTemple_GS_BossKeyLoop                    = ItemLocation::GSToken(0x04, 0x02, "Fire Temple GS Boss Key Loop",                     {"Fire Temple", "Skulltulas",});
 ItemLocation FireTemple_GS_BoulderMaze                    = ItemLocation::GSToken(0x04, 0x04, "Fire Temple GS Boulder Maze",                      {"Fire Temple", "Skulltulas",});
 ItemLocation FireTemple_GS_ScarecrowTop                   = ItemLocation::GSToken(0x04, 0x08, "Fire Temple GS Scarecrow Top",                     {"Fire Temple", "Skulltulas",});
 ItemLocation FireTemple_GS_ScarecrowClimb                 = ItemLocation::GSToken(0x04, 0x10, "Fire Temple GS Scarecrow Climb",                   {"Fire Temple", "Skulltulas",});
+
+ItemLocation FireTemple_MQ_GS_AboveFireWallMaze           = ItemLocation::GSToken(0x04, 0x02, "Fire Temple MQ GS Above Fire Wall Maze",           {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_MQ_GS_FireWallMazeCenter          = ItemLocation::GSToken(0x04, 0x08, "Fire Temple MQ GS Fire Wall Maze Center",          {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_MQ_GS_BigLavaRoomOpenDoor         = ItemLocation::GSToken(0x04, 0x01, "Fire Temple MQ GS Big Lava Room Open Door",        {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_MQ_GS_FireWallMazeSideRoom        = ItemLocation::GSToken(0x04, 0x10, "Fire Temple MQ GS Fire Wall Maze Side Room",       {"Fire Temple", "Skulltulas",});
+ItemLocation FireTemple_MQ_GS_SkullOnFire                 = ItemLocation::GSToken(0x04, 0x04, "Fire Temple MQ GS Skull on Fire",                  {"Fire Temple", "Skulltulas",});
 
 ItemLocation WaterTemple_GS_BehindGate                    = ItemLocation::GSToken(0x05, 0x01, "Water Temple GS Behind Gate",                      {"Water Temple", "Skulltulas",});
 ItemLocation WaterTemple_GS_FallingPlatformRoom           = ItemLocation::GSToken(0x05, 0x02, "Water Temple GS Falling Platform Room",            {"Water Temple", "Skulltulas",});
@@ -571,11 +599,23 @@ ItemLocation WaterTemple_GS_CentralPillar                 = ItemLocation::GSToke
 ItemLocation WaterTemple_GS_NearBossKeyChest              = ItemLocation::GSToken(0x05, 0x08, "Water Temple GS Near Boss Key Chest",              {"Water Temple", "Skulltulas",});
 ItemLocation WaterTemple_GS_River                         = ItemLocation::GSToken(0x05, 0x10, "Water Temple GS River",                            {"Water Temple", "Skulltulas",});
 
+ItemLocation WaterTemple_MQ_GS_BeforeUpperWaterSwitch     = ItemLocation::GSToken(0x05, 0x04, "Water Temple MQ GS Before Upper Water Switch",     {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_MQ_GS_FreestandingKeyArea        = ItemLocation::GSToken(0x05, 0x08, "Water Temple MQ GS Freestanding Key Area",         {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_MQ_GS_LizalfosHallway            = ItemLocation::GSToken(0x05, 0x01, "Water Temple MQ GS Lizalfos Hallway",              {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_MQ_GS_River                      = ItemLocation::GSToken(0x05, 0x02, "Water Temple MQ GS River",                         {"Water Temple", "Skulltulas",});
+ItemLocation WaterTemple_MQ_GS_TripleWallTorch            = ItemLocation::GSToken(0x05, 0x10, "Water Temple MQ GS Triple Wall Torch",             {"Water Temple", "Skulltulas",});
+
 ItemLocation SpiritTemple_GS_HallAfterSunBlockRoom        = ItemLocation::GSToken(0x06, 0x01, "Spirit Temple GS Hall After Sun Block Room",       {"Spirit Temple", "Skulltulas"});
 ItemLocation SpiritTemple_GS_BoulderRoom                  = ItemLocation::GSToken(0x06, 0x02, "Spirit Temple GS Boulder Room",                    {"Spirit Temple", "Skulltulas"});
 ItemLocation SpiritTemple_GS_Lobby                        = ItemLocation::GSToken(0x06, 0x04, "Spirit Temple GS Lobby",                           {"Spirit Temple", "Skulltulas"});
 ItemLocation SpiritTemple_GS_SunOnFloorRoom               = ItemLocation::GSToken(0x06, 0x08, "Spirit Temple GS Sun on Floor Room",               {"Spirit Temple", "Skulltulas"});
 ItemLocation SpiritTemple_GS_MetalFence                   = ItemLocation::GSToken(0x06, 0x10, "Spirit Temple GS Metal Fence",                     {"Spirit Temple", "Skulltulas"});
+
+ItemLocation SpiritTemple_MQ_GS_SymphonyRoom              = ItemLocation::GSToken(0x06, 0x08, "Spirit Temple MQ GS Symphony Room",                {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_MQ_GS_LeeverRoom                = ItemLocation::GSToken(0x06, 0x02, "Spirit Temple MQ GS Leever Room",                  {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_MQ_GS_NineThronesRoomWest       = ItemLocation::GSToken(0x06, 0x04, "Spirit Temple MQ GS Nine Thrones Room West",       {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_MQ_GS_NineThronesRoomNorth      = ItemLocation::GSToken(0x06, 0x10, "Spirit Temple MQ GS Nine Thrones Room North",      {"Spirit Temple", "Skulltulas"});
+ItemLocation SpiritTemple_MQ_GS_SunBlockRoom              = ItemLocation::GSToken(0x06, 0x01, "Spirit Temple MQ GS Sun Block Room",               {"Spirit Temple", "Skulltulas"});
 
 ItemLocation ShadowTemple_GS_SingleGiantPot               = ItemLocation::GSToken(0x07, 0x01, "Shadow Temple GS Single Giant Pot",                {"Shadow Temple", "Skulltulas",});
 ItemLocation ShadowTemple_GS_FallingSpikesRoom            = ItemLocation::GSToken(0x07, 0x02, "Shadow Temple GS Falling Spikes Room",             {"Shadow Temple", "Skulltulas",});
@@ -583,13 +623,27 @@ ItemLocation ShadowTemple_GS_TripleGiantPot               = ItemLocation::GSToke
 ItemLocation ShadowTemple_GS_LikeLikeRoom                 = ItemLocation::GSToken(0x07, 0x08, "Shadow Temple GS Like Like Room",                  {"Shadow Temple", "Skulltulas",});
 ItemLocation ShadowTemple_GS_NearShip                     = ItemLocation::GSToken(0x07, 0x10, "Shadow Temple GS Near Ship",                       {"Shadow Temple", "Skulltulas",});
 
+ItemLocation ShadowTemple_MQ_GS_FallingSpikesRoom         = ItemLocation::GSToken(0x07, 0x02, "Shadow Temple MQ GS Falling Spikes Room",          {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_MQ_GS_WindHintRoom              = ItemLocation::GSToken(0x07, 0x01, "Shadow Temple MQ GS Wind Hint Room",               {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_MQ_GS_AfterWind                 = ItemLocation::GSToken(0x07, 0x08, "Shadow Temple MQ GS After Wind",                   {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_MQ_GS_AfterShip                 = ItemLocation::GSToken(0x07, 0x10, "Shadow Temple MQ GS After Ship",                   {"Shadow Temple", "Skulltulas",});
+ItemLocation ShadowTemple_MQ_GS_NearBoss                  = ItemLocation::GSToken(0x07, 0x04, "Shadow Temple MQ GS Near Boss",                    {"Shadow Temple", "Skulltulas",});
+
 ItemLocation BottomOfTheWell_GS_LikeLikeCage              = ItemLocation::GSToken(0x08, 0x01, "Bottom of the Well GS Like Like Cage",             {"Bottom of the Well", "Skulltulas",});
 ItemLocation BottomOfTheWell_GS_EastInnerRoom             = ItemLocation::GSToken(0x08, 0x02, "Bottom of the Well GS East Inner Room",            {"Bottom of the Well", "Skulltulas",});
 ItemLocation BottomOfTheWell_GS_WestInnerRoom             = ItemLocation::GSToken(0x08, 0x04, "Bottom of the Well GS West Inner Room",            {"Bottom of the Well", "Skulltulas",});
 
+ItemLocation BottomOfTheWell_MQ_GS_Basement               = ItemLocation::GSToken(0x08, 0x01, "Bottom of the Well MQ GS Basement",                {"Bottom of the Well", "Skulltulas",});
+ItemLocation BottomOfTheWell_MQ_GS_CoffinRoom             = ItemLocation::GSToken(0x08, 0x04, "Bottom of the Well MQ GS Coffin Room",             {"Bottom of the Well", "Skulltulas",});
+ItemLocation BottomOfTheWell_MQ_GS_WestInnerRoom          = ItemLocation::GSToken(0x08, 0x02, "Bottom of the Well MQ GS West Inner Room",         {"Bottom of the Well", "Skulltulas",});
+
 ItemLocation IceCavern_GS_PushBlockRoom                   = ItemLocation::GSToken(0x09, 0x01, "Ice Cavern GS Push Block Room",                    {"Ice Cavern", "Skulltulas",});
 ItemLocation IceCavern_GS_SpinningScytheRoom              = ItemLocation::GSToken(0x09, 0x02, "Ice Cavern GS Spinning Scythe Room",               {"Ice Cavern", "Skulltulas",});
 ItemLocation IceCavern_GS_HeartPieceRoom                  = ItemLocation::GSToken(0x09, 0x04, "Ice Cavern GS Heart Piece Room",                   {"Ice Cavern", "Skulltulas",});
+
+ItemLocation IceCavern_MQ_GS_Scarecrow                    = ItemLocation::GSToken(0x09, 0x01, "Ice Cavern MQ GS Scarecrow",                       {"Ice Cavern", "Skulltulas",});
+ItemLocation IceCavern_MQ_GS_IceBlock                     = ItemLocation::GSToken(0x09, 0x04, "Ice Cavern MQ GS Ice Block",                       {"Ice Cavern", "Skulltulas",});
+ItemLocation IceCavern_MQ_GS_RedIce                       = ItemLocation::GSToken(0x09, 0x02, "Ice Cavern MQ GS Red Ice",                         {"Ice Cavern", "Skulltulas",});
 
 //Overworld
 ItemLocation KF_GS_BeanPatch                              = ItemLocation::GSToken(0x0C, 0x01, "KF GS Bean Patch",                                 {"Kokiri Forest", "Skulltulas",});

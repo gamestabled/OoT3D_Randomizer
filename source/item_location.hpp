@@ -669,6 +669,11 @@ extern ItemLocation DekuTree_GS_BasementGate;
 extern ItemLocation DekuTree_GS_BasementVines;
 extern ItemLocation DekuTree_GS_CompassRoom;
 
+extern ItemLocation DekuTree_MQ_GS_Lobby;
+extern ItemLocation DekuTree_MQ_GS_CompassRoom;
+extern ItemLocation DekuTree_MQ_GS_BasementGravesRoom;
+extern ItemLocation DekuTree_MQ_GS_BasementBackRoom;
+
 //Dodongos Cavern
 extern ItemLocation DodongosCavern_GS_VinesAboveStairs;
 extern ItemLocation DodongosCavern_GS_Scarecrow;
@@ -676,11 +681,22 @@ extern ItemLocation DodongosCavern_GS_AlcoveAboveStairs;
 extern ItemLocation DodongosCavern_GS_BackRoom;
 extern ItemLocation DodongosCavern_GS_SideRoomNearLowerLizalfos;
 
+extern ItemLocation DodongosCavern_MQ_GS_ScrubRoom;
+extern ItemLocation DodongosCavern_MQ_GS_SongOfTimeBlockRoom;
+extern ItemLocation DodongosCavern_MQ_GS_LizalfosRoom;
+extern ItemLocation DodongosCavern_MQ_GS_LarvaeRoom;
+extern ItemLocation DodongosCavern_MQ_GS_BackRoom;
+
 //Jabu Jabus Belly
 extern ItemLocation JabuJabusBelly_GS_LobbyBasementLower;
 extern ItemLocation JabuJabusBelly_GS_LobbyBasementUpper;
 extern ItemLocation JabuJabusBelly_GS_NearBoss;
 extern ItemLocation JabuJabusBelly_GS_WaterSwitchRoom;
+
+extern ItemLocation JabuJabusBelly_MQ_GS_TailPasaranRoom;
+extern ItemLocation JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom;
+extern ItemLocation JabuJabusBelly_MQ_GS_BoomerangChestRoom;
+extern ItemLocation JabuJabusBelly_MQ_GS_NearBoss;
 
 //Forest Temple
 extern ItemLocation ForestTemple_GS_RaisedIslandCourtyard;
@@ -689,12 +705,24 @@ extern ItemLocation ForestTemple_GS_LevelIslandCourtyard;
 extern ItemLocation ForestTemple_GS_Lobby;
 extern ItemLocation ForestTemple_GS_Basement;
 
+extern ItemLocation ForestTemple_MQ_GS_FirstHallway;
+extern ItemLocation ForestTemple_MQ_GS_BlockPushRoom;
+extern ItemLocation ForestTemple_MQ_GS_RaisedIslandCourtyard;
+extern ItemLocation ForestTemple_MQ_GS_LevelIslandCourtyard;
+extern ItemLocation ForestTemple_MQ_GS_Well;
+
 //Fire Temple
 extern ItemLocation FireTemple_GS_SongOfTimeRoom;
 extern ItemLocation FireTemple_GS_BossKeyLoop;
 extern ItemLocation FireTemple_GS_BoulderMaze;
 extern ItemLocation FireTemple_GS_ScarecrowTop;
 extern ItemLocation FireTemple_GS_ScarecrowClimb;
+
+extern ItemLocation FireTemple_MQ_GS_AboveFireWallMaze;
+extern ItemLocation FireTemple_MQ_GS_FireWallMazeCenter;
+extern ItemLocation FireTemple_MQ_GS_BigLavaRoomOpenDoor;
+extern ItemLocation FireTemple_MQ_GS_FireWallMazeSideRoom;
+extern ItemLocation FireTemple_MQ_GS_SkullOnFire;
 
 //Water Temple
 extern ItemLocation WaterTemple_GS_BehindGate;
@@ -703,12 +731,24 @@ extern ItemLocation WaterTemple_GS_CentralPillar;
 extern ItemLocation WaterTemple_GS_NearBossKeyChest;
 extern ItemLocation WaterTemple_GS_River;
 
+extern ItemLocation WaterTemple_MQ_GS_BeforeUpperWaterSwitch;
+extern ItemLocation WaterTemple_MQ_GS_FreestandingKeyArea;
+extern ItemLocation WaterTemple_MQ_GS_LizalfosHallway;
+extern ItemLocation WaterTemple_MQ_GS_River;
+extern ItemLocation WaterTemple_MQ_GS_TripleWallTorch;
+
 //Spirit Temple
 extern ItemLocation SpiritTemple_GS_HallAfterSunBlockRoom;
 extern ItemLocation SpiritTemple_GS_BoulderRoom;
 extern ItemLocation SpiritTemple_GS_Lobby;
 extern ItemLocation SpiritTemple_GS_SunOnFloorRoom;
 extern ItemLocation SpiritTemple_GS_MetalFence;
+
+extern ItemLocation SpiritTemple_MQ_GS_SymphonyRoom;
+extern ItemLocation SpiritTemple_MQ_GS_LeeverRoom;
+extern ItemLocation SpiritTemple_MQ_GS_NineThronesRoomWest;
+extern ItemLocation SpiritTemple_MQ_GS_NineThronesRoomNorth;
+extern ItemLocation SpiritTemple_MQ_GS_SunBlockRoom;
 
 //Shadow Temple
 extern ItemLocation ShadowTemple_GS_SingleGiantPot;
@@ -717,15 +757,29 @@ extern ItemLocation ShadowTemple_GS_TripleGiantPot;
 extern ItemLocation ShadowTemple_GS_LikeLikeRoom;
 extern ItemLocation ShadowTemple_GS_NearShip;
 
+extern ItemLocation ShadowTemple_MQ_GS_FallingSpikesRoom;
+extern ItemLocation ShadowTemple_MQ_GS_WindHintRoom;
+extern ItemLocation ShadowTemple_MQ_GS_AfterWind;
+extern ItemLocation ShadowTemple_MQ_GS_AfterShip;
+extern ItemLocation ShadowTemple_MQ_GS_NearBoss;
+
 //Bottom of the Well
 extern ItemLocation BottomOfTheWell_GS_LikeLikeCage;
 extern ItemLocation BottomOfTheWell_GS_EastInnerRoom;
 extern ItemLocation BottomOfTheWell_GS_WestInnerRoom;
 
+extern ItemLocation BottomOfTheWell_MQ_GS_Basement;
+extern ItemLocation BottomOfTheWell_MQ_GS_CoffinRoom;
+extern ItemLocation BottomOfTheWell_MQ_GS_WestInnerRoom;
+
 //Ice Cavern
 extern ItemLocation IceCavern_GS_PushBlockRoom;
 extern ItemLocation IceCavern_GS_SpinningScytheRoom;
 extern ItemLocation IceCavern_GS_HeartPieceRoom;
+
+extern ItemLocation IceCavern_MQ_GS_Scarecrow;
+extern ItemLocation IceCavern_MQ_GS_IceBlock;
+extern ItemLocation IceCavern_MQ_GS_RedIce;
 
 //Overworld
 extern ItemLocation KF_GS_BeanPatch;
