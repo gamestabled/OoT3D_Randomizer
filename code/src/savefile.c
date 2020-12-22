@@ -86,7 +86,6 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x0] |= 0x1020; //met deku tree and opened mouth
 
     gSaveContext.eventChkInf[0x4] |= 0x8020; //entered MS chamber, Pulled MS from pedestal
-    gSaveContext.eventChkInf[0x5] |= 0x0C00; //Learned Sun's Song and Song of Storms
 
     gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
 }
