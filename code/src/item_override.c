@@ -309,14 +309,12 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
     if (receivedGift == 0) {
-        if (gSettingsContext.shuffleOcarinas) {
-            ItemOverride_PushDelayedOverride(0x02);
-        }
+        ItemOverride_PushDelayedOverride(0x02);
         EventSet(0xC1);
     }
 
     // return 1 to skip the cutscene
-    return gSettingsContext.shuffleOcarinas || receivedGift;
+    return 1;
 }
 
 u32 ItemOverride_PlaceItemInInventoryCheck(u32 itemId) {
