@@ -34,12 +34,12 @@ OverrideOcarinaSongs_patch:
 .section .patch_OverrideTextID
 .global OverrideTextID_patch
 OverrideTextID_patch:
-    bl hook_OverrideTextID
+    b hook_OverrideTextID
 
 .section .patch_OverrideItemID
 .global OverrideItemID_patch
 OverrideItemID_patch:
-    bl hook_OverrideItemID
+    b hook_OverrideItemID
 
 .section .patch_OverrideGraphicID_351B94
 .global OverrideGraphicID_patch_351B94
