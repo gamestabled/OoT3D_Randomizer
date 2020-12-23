@@ -685,6 +685,16 @@ ChildDontEquipSwordSlotByDefault_patch:
 LullabyCheckFlag_patch:
     bl hook_LullabyCheckFlag
 
+.section .patch_FishingStoreTempB
+.global FishingStoreTempB_patch
+FishingStoreTempB_patch:
+    bl hook_FishingStoreTempB
+
+.section .patch_FishingRestoreTempB
+.global FishingRestoreTempB_patch
+FishingRestoreTempB_patch:
+    bl hook_FishingRestoreTempB
+
 .section .patch_loader
 .global loader_patch
 

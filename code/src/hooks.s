@@ -374,6 +374,20 @@ hook_MagicArrowsInInventory:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_FishingStoreTempB
+hook_FishingStoreTempB:
+    push {r0-r12, lr}
+    bl Fishing_StoreTempB
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_FishingRestoreTempB
+hook_FishingRestoreTempB:
+    push {r0-r12, lr}
+    bl Fishing_RestoreTempB
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
