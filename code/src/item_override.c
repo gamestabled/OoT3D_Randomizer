@@ -286,6 +286,23 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
     player->getItemId = incomingNegative ? -baseItemId : baseItemId;
 }
 
+void ItemOverride_GetItemTextAndItemID(Actor* actor) {
+    if (rActiveItemRow != NULL) {
+        u16 textId = rActiveItemRow->textId;
+        u8 actionId = rActiveItemRow->actionId;
+
+        ItemTable_CallEffect(rActiveItemRow);
+        if (actionId == ITEM_SKULL_TOKEN) {
+            Item_Give(gGlobalContext, actionId);
+            DisplayTextbox(gGlobalContext, textId, actor);
+        } else {
+            DisplayTextbox(gGlobalContext, textId, actor);
+            Item_Give(gGlobalContext, actionId);
+        }
+        ItemOverride_AfterItemReceived();
+    }
+}
+
 void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemOverride override = ItemOverride_Lookup(tokenActor, 0, 0);
     u16 itemId;
@@ -300,8 +317,13 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
 
     tokenActor->draw = NULL;
-    Item_Give(gGlobalContext, itemRow->actionId);
-    DisplayTextbox(gGlobalContext, itemRow->textId, 0);
+    if (resolvedItemId == GI_SKULL_TOKEN) {
+        Item_Give(gGlobalContext, itemRow->actionId);
+        DisplayTextbox(gGlobalContext, itemRow->textId, 0);
+    } else {
+        DisplayTextbox(gGlobalContext, itemRow->textId, 0);
+        Item_Give(gGlobalContext, itemRow->actionId);
+    }
 
     ItemTable_CallEffect(itemRow);
 }
@@ -309,14 +331,12 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
     if (receivedGift == 0) {
-        if (gSettingsContext.shuffleOcarinas) {
-            ItemOverride_PushDelayedOverride(0x02);
-        }
+        ItemOverride_PushDelayedOverride(0x02);
         EventSet(0xC1);
     }
 
     // return 1 to skip the cutscene
-    return gSettingsContext.shuffleOcarinas || receivedGift;
+    return 1;
 }
 
 u32 ItemOverride_PlaceItemInInventoryCheck(u32 itemId) {

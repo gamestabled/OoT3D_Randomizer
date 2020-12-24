@@ -34,12 +34,12 @@ OverrideOcarinaSongs_patch:
 .section .patch_OverrideTextID
 .global OverrideTextID_patch
 OverrideTextID_patch:
-    bl hook_OverrideTextID
+    b hook_OverrideTextID
 
 .section .patch_OverrideItemID
 .global OverrideItemID_patch
 OverrideItemID_patch:
-    bl hook_OverrideItemID
+    b hook_OverrideItemID
 
 .section .patch_OverrideGraphicID_351B94
 .global OverrideGraphicID_patch_351B94
@@ -684,6 +684,16 @@ ChildDontEquipSwordSlotByDefault_patch:
 .global LullabyCheckFlag_patch
 LullabyCheckFlag_patch:
     bl hook_LullabyCheckFlag
+
+.section .patch_FishingStoreTempB
+.global FishingStoreTempB_patch
+FishingStoreTempB_patch:
+    bl hook_FishingStoreTempB
+
+.section .patch_FishingRestoreTempB
+.global FishingRestoreTempB_patch
+FishingRestoreTempB_patch:
+    bl hook_FishingRestoreTempB
 
 .section .patch_loader
 .global loader_patch

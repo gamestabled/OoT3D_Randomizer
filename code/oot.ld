@@ -496,6 +496,14 @@ SECTIONS
 		*(.patch_ChildDontEquipSwordSlotByDefault)
 	}
 
+	.patch_FishingStoreTempB 0x475F8C : {
+		*(.patch_FishingStoreTempB)
+	}
+
+	.patch_FishingRestoreTempB 0x475FC0 : {
+		*(.patch_FishingRestoreTempB)
+	}
+
 	.patch_FireTempleItemGiveTwo 0x491B60 : {
 		*(.patch_FireTempleItemGiveTwo)
 	}

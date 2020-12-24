@@ -46,54 +46,38 @@ hook_SaveFile_Init:
     .word rActiveItemRow
 
 .global hook_OverrideTextID
-.global rActiveItemTextId
-.rActiveItemTextId_addr:
-    .word rActiveItemTextId
 hook_OverrideTextID:
     ldr r1,.rActiveItemRow_addr
     ldr r1,[r1]
     cmp r1,#0x0
     beq noOverrideTextID
-
-    ldr r1,.rActiveItemTextId_addr
-    ldr r1,[r1]
-    b returnTextID
+    b 0x2BC1D0
 noOverrideTextID:
     ldrb r1,[r6,#0x4]
-returnTextID:
-    bx lr
+    b 0x2BC1C8
 
 .global hook_OverrideItemID
-.global rActiveItemActionId
-.rActiveItemActionId_addr:
-    .word rActiveItemActionId
 hook_OverrideItemID:
-    push {r0, lr}
     ldr r1,.rActiveItemRow_addr
     ldr r1,[r1]
     cmp r1,#0x0
     beq noOverrideItemID
-
-    ldr r0,.rActiveItemRow_addr
-    ldr r0,[r0]
-    bl ItemTable_CallEffect
-    
-    ldr r1,.rActiveItemActionId_addr
-    ldr r1,[r1]
-    b returnItemID
+    push {r0-r12, lr}
+    cpy r0,r2
+    bl ItemOverride_GetItemTextAndItemID
+    pop {r0-r12, lr}
+    b 0x2BC1DC
 noOverrideItemID:    
     ldrb r1,[r6,#0x0]
-returnItemID:
-    push {r0-r4}
-    bl ItemOverride_AfterItemReceived
-    pop {r0-r4}
-    pop {r0, lr}
-    bx lr
+    b 0x2BC1D4
 
 # Puts override graphic ID into r0, no other effects
 # If no active override, puts -0x1
 # Need to wrap around this for individual cases because of differing register usage
 .global hook_OverrideGraphicID
+.global rActiveItemActionId
+.rActiveItemActionId_addr:
+    .word rActiveItemActionId
 .global rActiveItemGraphicId_addr
 .rActiveItemGraphicId_addr:
     .word rActiveItemGraphicId
@@ -371,6 +355,20 @@ hook_MagicArrowsInInventory:
     cpy r0,r1
     bl ItemOverride_PlaceItemInInventoryCheck
     cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_FishingStoreTempB
+hook_FishingStoreTempB:
+    push {r0-r12, lr}
+    bl Fishing_StoreTempB
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_FishingRestoreTempB
+hook_FishingRestoreTempB:
+    push {r0-r12, lr}
+    bl Fishing_RestoreTempB
     pop {r0-r12, lr}
     bx lr
 
