@@ -102,11 +102,11 @@ private:
 
 class Menu {
   public:
-    Menu(std::string name_, std::vector<Option *> settingsList_)
+    Menu(std::string name_, std::vector<Option *>* settingsList_)
         : name(std::move(name_)), settingsList(std::move(settingsList_)) {}
 
     std::string name;
-    std::vector<Option *> settingsList;
+    std::vector<Option *>* settingsList;
     int selectedSetting = 0;
 };
 
@@ -252,8 +252,9 @@ namespace Settings {
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
 
+  extern std::vector<Option *> excludeLocationsOptions;
+
   extern void UpdateSettings();
-  extern void PrintSettings();
   extern SettingsContext FillContext();
 
   extern std::vector<Option *> Options;

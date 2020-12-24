@@ -1,5 +1,4 @@
 #include "item_pool.hpp"
-#include "item_location.hpp"
 #include "random.hpp"
 
 using namespace Settings;
@@ -482,6 +481,19 @@ static void AddRandomBottle(std::vector<Item> bottlePool) {
 static Item GetJunkItem() {
   u8 idx = Random() % JunkPoolItems.size();
   return JunkPoolItems[idx];
+}
+
+int PlaceJunkInExcludedLocation(ItemLocation * il) {
+  //place a non-advancement item in this location
+  for (size_t i = 0; i < ItemPool.size(); i++) {
+    if (!ItemPool[i].IsAdvancement()) {
+      PlaceItemInLocation(il, ItemPool[i]);
+      ItemPool.erase(ItemPool.begin() + i);
+      return 0;
+    }
+  }
+  printf("No Junk to Place!!!\n");
+  return -1;
 }
 
 static void PlaceVanillaShopItems() {

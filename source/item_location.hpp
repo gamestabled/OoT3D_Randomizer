@@ -10,6 +10,7 @@
 
 #include "../code/include/z3D/z3D.h"
 #include "item_list.hpp"
+#include "settings.hpp"
 
 enum class ItemLocationType {
     Base,
@@ -76,6 +77,26 @@ public:
       placedItem.ApplyEffect();
     }
 
+    bool IsForbidden() const {
+      return forbiddenOption.Value<bool>();
+    }
+
+    void AddExcludeOption() {
+      //add option to forbid any location from progress items
+      if (name.length() < 23) {
+        forbiddenOption = Option::Bool(name, {"Include", "Exclude"});
+      } else {
+        size_t lastSpace = name.rfind(' ', 23);
+        std::string settingText = name;
+        settingText.replace(lastSpace, 1, "\n ");
+
+        forbiddenOption = Option::Bool(settingText, {"Include", "Exclude"});
+
+      }
+
+      Settings::excludeLocationsOptions.push_back(&forbiddenOption);
+    }
+
     static auto Base(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
         return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), std::move(categories)};
     }
@@ -122,6 +143,7 @@ private:
     std::vector<std::string> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
+    Option forbiddenOption = Option::Bool(name, {"Include", "Exclude"});
 
 };
 
@@ -333,6 +355,7 @@ extern ItemLocation DekuTree_MQ_SlingshotRoomBackChest;
 extern ItemLocation DekuTree_MQ_BasementChest;
 extern ItemLocation DekuTree_MQ_BeforeSpinningLogChest;
 extern ItemLocation DekuTree_MQ_AfterSpinningLowChest;
+extern ItemLocation DekuTree_MQ_DekuScrub;
 
 //Dodongos Cavern
 extern ItemLocation DodongosCavern_MapChest;
@@ -989,3 +1012,4 @@ extern std::array<ItemLocation *, 463> allLocations;
 
 extern void LocationReset();
 extern void ItemReset();
+extern void AddForbiddenOptions();

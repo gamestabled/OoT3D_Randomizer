@@ -15,8 +15,8 @@ static void erase_if(std::vector<T>& vector, Predicate pred) {
 }
 
 static void RandomizeDungeonRewards() {
-
-  //shuffle an array of indices so that we can randomize the rewards both logically and for the patch
+  //shuffle an array of indices so that we can randomize the rewards both
+  //logically and for the patch
   std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
   std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
 
@@ -137,7 +137,6 @@ void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthr
             iterationsWithNoLocations = 0;
 
             if (location->GetPlacedItemName() == "No Item") {
-              // PlacementLog_Msg(" | NO ITEM\n");
               locations.push_back(location);
             } else {
 
@@ -169,7 +168,7 @@ void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthr
   }
 }
 
-void FastFill(std::vector<ItemLocation*> locations) {
+static void FastFill(std::vector<ItemLocation*> locations) {
 
   //Place everything randomly
   while (!locations.empty()) {
@@ -187,19 +186,7 @@ void FastFill(std::vector<ItemLocation*> locations) {
   }
 }
 
-int AssumedFill() {
-
-  /*
-  for item in items:
-    set placed items logic variables to false
-    choose an unplaced item
-    set it's logic variable to false
-    get all reachable locations
-      traverse world graph repeatedly updating logic for found items
-      add locations as they are found
-      when an iteration finds no more locations, return the location set
-    set item in random location of location set
-  */
+static int AssumedFill() {
 
   //get all the advancement items
   placedItems.clear();
@@ -252,7 +239,7 @@ int AssumedFill() {
   return 1;
 }
 
-void RandomFill() {
+static void RandomFill() {
   //get every location that doesn't have an item yet
   locations.assign(allLocations.begin(), allLocations.end());
   erase_if(locations, [](ItemLocation* il){return il->GetPlacedItemName() != "No Item";});
@@ -261,10 +248,22 @@ void RandomFill() {
   FastFill(locations);
 }
 
+static void FillExcludedLocations() {
+  //Only fill in excluded locations that don't already have something and are forbidden
+  locations.assign(allLocations.begin(), allLocations.end());
+  erase_if(locations, [](ItemLocation* il){return !il->IsForbidden() || il->GetPlacedItemName() != "No Item";});
+
+  for (ItemLocation* il : locations) {
+    PlaceJunkInExcludedLocation(il);
+  }
+}
+
 void Fill_Init() {
 
   GenerateItemPool();
   RandomizeDungeonRewards();
+
+  FillExcludedLocations();
 
   if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
     int success = 0;

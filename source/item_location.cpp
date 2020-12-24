@@ -212,6 +212,7 @@ ItemLocation DekuTree_MQ_SlingshotRoomBackChest               = ItemLocation::Ch
 ItemLocation DekuTree_MQ_BasementChest                        = ItemLocation::Chest      (0x00, 0x04, "Deku Tree MQ Basement Chest",                        {"Deku Tree",});
 ItemLocation DekuTree_MQ_BeforeSpinningLogChest               = ItemLocation::Chest      (0x00, 0x05, "Deku Tree MQ Before Spinning Log Chest",             {"Deku Tree",});
 ItemLocation DekuTree_MQ_AfterSpinningLowChest                = ItemLocation::Chest      (0x00, 0x00, "Deku Tree MQ After Spinning Log Chest",              {"Deku Tree",});
+ItemLocation DekuTree_MQ_DekuScrub                            = ItemLocation::Base       (0x00, 0x34, "Deku Tree MQ Deku Scrub",                            {"Deku Tree",});
 
 //Dodongos Cavern Shared
 ItemLocation DodongosCavern_BossRoomChest                     = ItemLocation::Chest      (0x12, 0x00, "Dodongos Cavern Boss Room Chest",                    {"Dodongo's Cavern",});
@@ -1686,5 +1687,11 @@ void ItemReset() {
 
   for (ItemLocation* il : dungeonRewardLocations) {
     il->ResetVariables();
+  }
+}
+
+void AddForbiddenOptions() {
+  for (ItemLocation * il: allLocations) {
+    il->AddExcludeOption();
   }
 }

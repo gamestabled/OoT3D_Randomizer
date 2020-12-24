@@ -9,9 +9,9 @@
 namespace {
   bool seedChanged;
   u8 mode;
-  u8 settingIdx;
+  u16 settingIdx;
   u8 menuIdx;
-  u8 settingBound;
+  u16 settingBound;
   u8 menuBound;
   u16 pastSeedLength;
   Menu* currentMenu;
@@ -32,6 +32,9 @@ void PrintTopScreen() {
 }
 
 void MenuInit() {
+
+  AddForbiddenOptions();
+
   srand(time(NULL));
   consoleInit(GFX_TOP,    &topScreen);
   consoleInit(GFX_BOTTOM, &bottomScreen);
@@ -47,7 +50,7 @@ void MenuInit() {
   settingBound = 0;
   pastSeedLength = Settings::seed.length();
   currentMenu = Settings::mainMenu[menuIdx];
-  currentSetting = Settings::mainMenu[menuIdx]->settingsList[settingIdx];
+  currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
 }
 
 void MenuUpdate(u32 kDown) {
@@ -66,7 +69,7 @@ void MenuUpdate(u32 kDown) {
 	if (kDown & KEY_A && mode == MAIN_MENU) {
 		mode = SUB_MENU;
 		settingIdx = 0;
-		currentSetting = currentMenu->settingsList[settingIdx];
+		currentSetting = currentMenu->settingsList->at(settingIdx);
 	} else if (kDown & KEY_B && mode == SUB_MENU) {
 		mode = MAIN_MENU;
 		currentMenu = Settings::mainMenu[menuIdx];
@@ -135,13 +138,13 @@ void UpdateSubMenu(u32 kDown) {
   }
 
   // Bounds checking
-  if (settingIdx == currentMenu->settingsList.size()) {
+  if (settingIdx == currentMenu->settingsList->size()) {
     settingIdx = 0;
-  } else if (settingIdx == 0xFF) {
-    settingIdx = static_cast<u8>(currentMenu->settingsList.size() - 1);
+  } else if (settingIdx == 0xFFFF) {
+    settingIdx = static_cast<u16>(currentMenu->settingsList->size() - 1);
   }
 
-  currentSetting = currentMenu->settingsList[settingIdx];
+  currentSetting = currentMenu->settingsList->at(settingIdx);
 
   if ((kDown & KEY_DRIGHT) != 0) {
     currentSetting->NextOptionIndex();
@@ -187,9 +190,9 @@ void PrintSubMenu() {
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
-		if (i + settingBound >= currentMenu->settingsList.size()) break;
+		if (i + settingBound >= currentMenu->settingsList->size()) break;
 
-		Option* setting = currentMenu->settingsList[i + settingBound];
+		Option* setting = currentMenu->settingsList->at(i + settingBound);
 
 		u8 row = 3 + (i * 2);
     //make the current setting green
@@ -218,14 +221,14 @@ void GenerateRandomizer() {
 
 	int ret = Playthrough::Playthrough_Init(seedInt);
 	if (ret < 0) {
-		printf("Error %d with fill. Press Start to exit.\n", ret);
+		printf("Error %d with fill. Press Select to exit.\n", ret);
 		return;
 	}
 	if (WritePatch()) {
 		printf("\x1b[11;10HWrote Patch\n");
     printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
 	} else {
-		printf("Error creating patch. Press Start to exit.\n");
+		printf("Error creating patch. Press Select to exit.\n");
 	}
 }
 

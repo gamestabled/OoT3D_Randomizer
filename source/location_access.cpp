@@ -2374,6 +2374,67 @@ namespace Exits { //name, scene, hint, events, locations, exits
   |   MASTER QUEST DUNGEONS   |
   ---------------------------*/
 
+  Exit DekuTree_MQ_Lobby = Exit("Deku Tree MQ Lobby", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&DekuBabaSticks, []{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}),
+    EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse("Dins Fire"));}),
+  }, {
+    //Locations
+    ItemLocationPairing(&DekuTree_MQ_MapChest,               []{return true;}),
+    ItemLocationPairing(&DekuTree_MQ_SlingshotChest,         []{return IsAdult || CanChildAttack;}),
+    ItemLocationPairing(&DekuTree_MQ_SlingshotRoomBackChest, []{return HasFireSourceWithTorch || CanUse("Bow");}),
+    ItemLocationPairing(&DekuTree_MQ_BasementChest,          []{return HasFireSourceWithTorch || CanUse("Bow");}),
+    ItemLocationPairing(&DekuTree_MQ_GS_Lobby,               []{return IsAdult || CanChildAttack;}),
+  }, {
+    //Exits
+    ExitPairing(&KF_OutsideDekuTree,            []{return true;}),
+    ExitPairing(&DekuTree_MQ_CompassRoom,       []{return (CanUse("Slingshot") || CanUse("Bow")) && (HasFireSourceWithTorch || CanUse("Bow"));}),
+    ExitPairing(&DekuTree_MQ_BasementWaterRoom, []{return (CanUse("Slingshot") || CanUse("Bow")) && HasFireSourceWithTorch;}),
+    ExitPairing(&DekuTree_MQ_BasementLedge,     []{return LogicDekuB1Skip || IsAdult;}),
+  });
+
+  Exit DekuTree_MQ_CompassRoom = Exit("Deku Tree MQ Compass Room", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&DekuTree_MQ_CompassChest, []{return true;}),
+    ItemLocationPairing(&DekuTree_MQ_GS_CompassRoom, []{return (CanUse("Hookshot") || CanUse("Boomerang")) && (HasBombchus || (Bombs && (IsAdult || CanPlay(SongOfTime))));}),
+  }, {
+    //Exits
+    ExitPairing(&DekuTree_MQ_Lobby, []{return true;}),
+  });
+
+  Exit DekuTree_MQ_BasementWaterRoom = Exit("Deku Tree MQ Basement Water Room", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&DekuTree_MQ_BeforeSpinningLogChest, []{return true;}),
+    ItemLocationPairing(&DekuTree_MQ_AfterSpinningLowChest,  []{return true;}),
+  }, {
+    //Exits
+    ExitPairing(&DekuTree_MQ_BasementBackRoom, []{return true;}),
+    ExitPairing(&DekuTree_MQ_Lobby,            []{return true;}),
+  });
+
+  Exit DekuTree_MQ_BasementBackRoom = Exit("Deku Tree MQ Basement Back Room", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&DekuTree_MQ_GS_BasementGravesRoom, []{return CanUse("Longshot") || (CanPlay(SongOfTime) && HookshotOrBoomerang);}),
+    ItemLocationPairing(&DekuTree_MQ_GS_BasementBackRoom,   []{return HasFireSourceWithTorch && HookshotOrBoomerang;})
+  }, {
+    //Exits
+    ExitPairing(&DekuTree_MQ_BasementLedge,     []{return IsChild;}),
+    ExitPairing(&DekuTree_MQ_BasementWaterRoom, []{return CanUse("Kokiri Sword") || CanUseProjectile || (Nuts && CanUse("Sticks"));}),
+  });
+
+  Exit DekuTree_MQ_BasementLedge = Exit("Deku Tree MQ Basement Ledge", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&DekuTreeClear, []{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks);}),
+  }, {
+    //Locations
+    ItemLocationPairing(&DekuTree_MQ_DekuScrub,    []{return CanStunDeku;}),
+    ItemLocationPairing(&DekuTree_QueenGohmaHeart, []{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks);}),
+    ItemLocationPairing(&QueenGohma,               []{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks);}),
+  }, {
+    //Exits
+    ExitPairing(&DekuTree_MQ_BasementBackRoom, []{return IsChild;}),
+    ExitPairing(&DekuTree_MQ_Lobby,            []{return true;}),
+  });
   /*
   //Events
 }, {
@@ -2381,8 +2442,6 @@ namespace Exits { //name, scene, hint, events, locations, exits
 }, {
   //Exits
 */
-
-  std::vector<Exit *> ExitPool = {};
 
   std::array<Exit *, 212> allExits = {
 

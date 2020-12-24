@@ -4,41 +4,53 @@
 namespace Settings {
   std::string seed;
 
-  //                                      Setting name               Options
-  Option Logic               = Option::U8("Logic",                  {"Glitchless", "No Logic"});
-  Option OpenForest          = Option::U8("Forest",                 {"Open", "Closed"});
-  Option OpenKakariko        = Option::U8("Kakariko Gate",          {"Open", "Closed"}, 1);
-  Option Bridge              = Option::U8("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons"}, 1);
-  Option GerudoFortress      = Option::U8("Gerudo Fortress",        {"Normal", "Fast", "Open"});
-  Option DamageMultiplier    = Option::U8("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"}, 1);
-  Option ZorasFountain       = Option::U8("Zora's Fountain",        {"Normal", "Open"});
-  Option StartingAge         = Option::U8("Starting Age",           {"Adult", "Child"}, 1);
-  Option TimeOfDay           = Option::U8("Starting Time",          {"Day", "Night"});
-  Option Keysanity           = Option::U8("Small Keys",             {"Vanilla", "Dungeon Only", "All Locations"});
-  Option BossKeysanity       = Option::U8("Boss Keys",              {"Vanilla", "Dungeon Only", "All Locations"});
-  Option GanonsBossKey       = Option::U8("Ganon's Boss Key",       {"Vanilla", "Dungeon Only", "All Locations", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"});
-  Option MapsAndCompasses    = Option::U8("Maps/Compasses",         {"Start With", "Vanilla", "Dungeon Only", "All Locations"}, 1);
-  Option Skullsanity         = Option::U8("Tokensanity",            {"Vanilla",                 "All Locations"});
-  Option Scrubsanity         = Option::U8("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"});
-  Option BigPoeTargetCount   = Option::U8("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
-  Option ItemPoolValue       = Option::U8("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"}, 1);
-  Option BoomerangAsAdult    = Option::U8("Enable Adult Boomerang", {"No", "Yes"});
-  Option HammerAsChild       = Option::U8("Enable Child Hammer",    {"No", "Yes"});
-  Option SkipChildStealth    = Option::U8("Skip Child Sealth",      {"Don't Skip", "Skip"});
+  //                                        Setting name               Options
+  //Various Settings
+  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"}, 1);
+  Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"});
+  Option OpenForest          = Option::U8  ("Forest",                 {"Open", "Closed"});
+  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"}, true);
+  Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Open"});
+  Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"});
+  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Open", "Closed"}, 1);
+  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons"}, 1);
+  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"});
+
+  //World Settings
+  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child"}, 1);
+  Option TimeOfDay           = Option::U8  ("Starting Time",          {"Day", "Night"});
+  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"});
+  bool HasNightStart         = false;
+
+  //Shuffle Settings
+  Option Skullsanity         = Option::U8  ("Tokensanity",            {"Vanilla", "All Locations"});
+  Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"});
+  Option ShuffleWeirdEgg     = Option::Bool("Shuffle Weird Egg",      {"Off", "On"});
+  Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"});
+  Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"});
+  Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"});
+  Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",       {"Off", "On"});
+
+  //Shuffle Dungeon Items
+  Option Keysanity           = Option::U8  ("Small Keys",             {"Vanilla", "Own Dungeon", "All Locations"});
+  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Vanilla", "Own Dungeon", "All Locations"});
+  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Vanilla", "Own Dungeon", "All Locations", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"});
+  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Dungeon Only", "All Locations"}, 1);
   u8 LACSCondition           = 0;
 
+  //Timesaver Settings
+  Option SkipChildStealth    = Option::U8  ("Skip Child Sealth",      {"Don't Skip", "Skip"});
+  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Skip Cutscene", "Don't Skip"});
+  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
 
-  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",    {"Off", "On"});
-  Option OpenDoorOfTime      = Option::Bool("Door of Time",         {"Closed", "Open"}, true);
-  Option ShuffleWeirdEgg     = Option::Bool("Shuffle Weird Egg",    {"Off", "On"});
-  Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token", {"Off", "On"});
-  Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword", {"Off", "On"});
-  Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",  {"Off", "On"});
-  Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",     {"Off", "On"});
-  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",   {"Skip Cutscene", "Don't Skip"});
-  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",   {"Off", "On"});
+  //Advanced Glitch Settings
+  Option BoomerangAsAdult    = Option::U8  ("Enable Adult Boomerang", {"No", "Yes"});
+  Option HammerAsChild       = Option::U8  ("Enable Child Hammer",    {"No", "Yes"});
 
-  bool HasNightStart                    = false;
+  //No menu yet
+  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"}, 1);
+
+
   bool BombchuDrop                      = false;
   bool SkippedTrials                    = false;
   bool ShuffleDungeonEntrances          = false;
@@ -159,11 +171,10 @@ namespace Settings {
     //&GerudoFortress,
     &Bridge,
     &BombchusInLogic,
-    &SkipChildStealth,
   };
   std::vector<Option *> worldOptions = {
     &StartingAge,
-    &RandomMQDungeons,
+    //&RandomMQDungeons,
   };
   std::vector<Option *> shuffleOptions = {
     &Skullsanity,
@@ -181,20 +192,23 @@ namespace Settings {
     &MapsAndCompasses,
   };
   std::vector<Option *> timesaverOptions = {
-    &BigPoeTargetCount,
+    &SkipChildStealth,
     &FourPoesCutscene,
+    &BigPoeTargetCount,
   };
   std::vector<Option *> advancedGlitchedOptions = {
     &BoomerangAsAdult,
     &HammerAsChild,
   };
+  std::vector<Option *> excludeLocationsOptions = {&TimeOfDay};
 
-  Menu various             = Menu("Various Settings",      variousOptions);
-  Menu world               = Menu("World Settings",        worldOptions);
-  Menu shuffle             = Menu("Shuffle Settings",      shuffleOptions);
-  Menu shuffleDungeonItems = Menu("Shuffle Dungeon Items", shuffleDungeonItemOptions);
-  Menu timesaverSettings   = Menu("Timesaver Settings",    timesaverOptions);
-  Menu advancedGlitchedSettings = Menu("Advanced Glitched Settings", advancedGlitchedOptions);
+  Menu various                  = Menu("Various Settings",           &variousOptions);
+  Menu world                    = Menu("World Settings",             &worldOptions);
+  Menu shuffle                  = Menu("Shuffle Settings",           &shuffleOptions);
+  Menu shuffleDungeonItems      = Menu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
+  Menu timesaverSettings        = Menu("Timesaver Settings",         &timesaverOptions);
+  Menu excludeLocations         = Menu("Exclude Locations",          &excludeLocationsOptions);
+  Menu advancedGlitchedSettings = Menu("Advanced Glitched Settings", &advancedGlitchedOptions);
 
   //adding a menu with no options crashes, might fix later
   std::vector<Menu *> mainMenu = {
@@ -203,6 +217,7 @@ namespace Settings {
     &shuffle,
     &shuffleDungeonItems,
     &timesaverSettings,
+    &excludeLocations,
     &advancedGlitchedSettings,
   };
 
@@ -220,7 +235,6 @@ namespace Settings {
     ctx.scrubsanity      = Scrubsanity.Value<u8>();
     ctx.lacsCondition    = LACSCondition;
     ctx.skipChildStealth = SkipChildStealth.Value<u8>();
-
 
     ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
     ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
@@ -284,10 +298,4 @@ namespace Settings {
     }
 
   }
-
-  void PrintSettings() {
-
-  }
-
-
 }
