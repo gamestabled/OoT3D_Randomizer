@@ -33,7 +33,8 @@ void PrintTopScreen() {
 
 void MenuInit() {
 
-  AddForbiddenOptions();
+  //Call to fill in the Excluded Locations menu
+  AddExcludedOptions();
 
   srand(time(NULL));
   consoleInit(GFX_TOP,    &topScreen);

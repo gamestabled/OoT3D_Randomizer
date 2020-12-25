@@ -160,8 +160,7 @@ Item HugeRupee                  = Item("Huge Rupee",       ITEMTYPE_ITEM, GI_RUP
 Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEART_PIECE,       false, &none);
 Item HeartContainer             = Item("Heart Container",  ITEMTYPE_ITEM, GI_HEART_CONTAINER_2, false, &none);
 Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,          false, &none);
-Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN, false, &none);
-Item TreasureGameGreenRupee     = Item("Green Rupee (Treasure Chest Minigame)",    ITEMTYPE_ITEM, GI_RUPEE_GREEN_LOSE, false, &none);
+Item Milk                       = Item("Milk",             ITEMTYPE_ITEM, GI_MILK,              false, &none);
 
 //Refills
 Item Bombs5                     = Item("Bombs (5)",        ITEMTYPE_ITEM, GI_BOMBS_5,           false, &none);
@@ -177,6 +176,10 @@ Item DekuNuts5                  = Item("Deku Nuts (5)",    ITEMTYPE_ITEM, GI_NUT
 Item DekuNuts10                 = Item("Deku Nuts (10)",   ITEMTYPE_ITEM, GI_NUTS_10,           false, &none);
 Item DekuSeeds30                = Item("Deku Seeds (30)",  ITEMTYPE_ITEM, GI_SEEDS_30,          false, &none);
 Item DekuStick1                 = Item("Deku Stick (1)",   ITEMTYPE_ITEM, GI_STICKS_1,          false, &none);
+
+//Treasure Game
+Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN, false, &none);
+Item TreasureGameGreenRupee     = Item("Green Rupee (Treasure Chest Minigame)",    ITEMTYPE_ITEM, GI_RUPEE_GREEN_LOSE, false, &none);
 
 //Shop Items                                                                                               price
 Item BuyDekuNut5                = Item("Buy Deku Nut (5)",    ITEMTYPE_SHOP, 0x00, true,  &Nuts,       15);

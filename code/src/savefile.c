@@ -22,12 +22,13 @@ void SaveFile_Init() {
     gSaveContext.ammo[3] = 20; //arrows
 #endif
 
-    //things to always set
+    //things to always set//
+    
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
-    gSaveContext.itemGetInf [0x1] |= 0x0800; //Deku seeds text cleared
+    gSaveContext.itemGetInf [0x1] |= 0x0800; //Deku seeds text cleared (doesn't work)
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except Twinrova and Ganondorf)
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
@@ -51,13 +52,17 @@ void SaveFile_Init() {
     //open lowest Fire Temple locked door
     gSaveContext.sceneFlags[4].swch |= 0x00800000;
 
-    //Everything past this point depends on settings
-    //if starting age is adult
+    //Everything past this point depends on settings//
+
     if (gSettingsContext.startingAge == AGE_ADULT) {
       gSaveContext.linkAge       = AGE_ADULT;  //age is adult
       gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
       gSaveContext.sceneIndex    = 0x6100;     //^
       gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
+    }
+
+    if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
+      gSaveContext.dayTime = 0x1400; //Set night time
     }
 
     //give Link the starting stone or medallion

@@ -77,24 +77,24 @@ public:
       placedItem.ApplyEffect();
     }
 
-    bool IsForbidden() const {
-      return forbiddenOption.Value<bool>();
+    bool IsExcluded() const {
+      return excludedOption.Value<bool>();
     }
 
     void AddExcludeOption() {
       //add option to forbid any location from progress items
       if (name.length() < 23) {
-        forbiddenOption = Option::Bool(name, {"Include", "Exclude"});
+        excludedOption = Option::Bool(name, {"Include", "Exclude"});
       } else {
         size_t lastSpace = name.rfind(' ', 23);
         std::string settingText = name;
         settingText.replace(lastSpace, 1, "\n ");
 
-        forbiddenOption = Option::Bool(settingText, {"Include", "Exclude"});
+        excludedOption = Option::Bool(settingText, {"Include", "Exclude"});
 
       }
 
-      Settings::excludeLocationsOptions.push_back(&forbiddenOption);
+      Settings::excludeLocationsOptions.push_back(&excludedOption);
     }
 
     static auto Base(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
@@ -143,7 +143,7 @@ private:
     std::vector<std::string> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
-    Option forbiddenOption = Option::Bool(name, {"Include", "Exclude"});
+    Option excludedOption = Option::Bool(name, {"Include", "Exclude"});
 
 };
 
@@ -1008,8 +1008,8 @@ extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
-extern std::array<ItemLocation *, 463> allLocations;
+extern std::array<ItemLocation *, 465> allLocations;
 
 extern void LocationReset();
 extern void ItemReset();
-extern void AddForbiddenOptions();
+extern void AddExcludedOptions();

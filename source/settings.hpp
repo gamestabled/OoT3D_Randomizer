@@ -257,6 +257,5 @@ namespace Settings {
   extern void UpdateSettings();
   extern SettingsContext FillContext();
 
-  extern std::vector<Option *> Options;
   extern std::vector<Menu *> mainMenu;
 }

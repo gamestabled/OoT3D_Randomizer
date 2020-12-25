@@ -250,6 +250,7 @@ extern Item HugeRupee;
 extern Item PieceOfHeart;
 extern Item HeartContainer;
 extern Item IceTrap;
+extern Item Milk;
 extern Item TreasureGameHeart;
 extern Item TreasureGameGreenRupee;
 

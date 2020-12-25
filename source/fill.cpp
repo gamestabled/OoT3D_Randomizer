@@ -65,7 +65,7 @@ static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   }
 }
 
-void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
+static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
 
   locations.clear();
   Exits::AccessReset();
@@ -251,7 +251,7 @@ static void RandomFill() {
 static void FillExcludedLocations() {
   //Only fill in excluded locations that don't already have something and are forbidden
   locations.assign(allLocations.begin(), allLocations.end());
-  erase_if(locations, [](ItemLocation* il){return !il->IsForbidden() || il->GetPlacedItemName() != "No Item";});
+  erase_if(locations, [](ItemLocation* il){return !il->IsExcluded() || il->GetPlacedItemName() != "No Item";});
 
   for (ItemLocation* il : locations) {
     PlaceJunkInExcludedLocation(il);

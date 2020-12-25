@@ -1085,7 +1085,7 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 463> allLocations = {
+std::array<ItemLocation*, 465> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -1113,12 +1113,11 @@ std::array<ItemLocation*, 463> allLocations = {
   &LW_DekuScrubNearDekuTheaterRight,
   &LW_DekuScrubNearDekuTheaterLeft,
   &LW_DekuScrubNearBridge,
-  //&LW_GossipStone,
   &LW_NearShortcutsGrottoChest,
   &LW_DekuScrubGrottoRear,
   &LW_DekuScrubGrottoFront,
-  //&DekuTheater_SkullMask,
-  //&DekuTheater_MaskOfTruth,
+  &DekuTheater_SkullMask,
+  &DekuTheater_MaskOfTruth,
 
   //Sacred Forest Meadow
   &SongFromSaria,
@@ -1690,7 +1689,7 @@ void ItemReset() {
   }
 }
 
-void AddForbiddenOptions() {
+void AddExcludedOptions() {
   for (ItemLocation * il: allLocations) {
     il->AddExcludeOption();
   }
