@@ -23,7 +23,7 @@ void SaveFile_Init() {
 #endif
 
     //things to always set//
-    
+
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
@@ -70,6 +70,12 @@ void SaveFile_Init() {
 
     if (gSettingsContext.openDoorOfTime) {
       gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
+    }
+
+    if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_FAST) {
+      gSaveContext.eventChkInf[0x9] |= 0x000E;
+    } else if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) {
+      gSaveContext.eventChkInf[0x9] |= 0x000F;
     }
 
     if (gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN) {

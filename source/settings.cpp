@@ -19,7 +19,7 @@ namespace Settings {
     //&OpenKakariko,
     &OpenDoorOfTime,
     &ZorasFountain,
-    //&GerudoFortress,
+    &GerudoFortress,
     &Bridge,
   };
 

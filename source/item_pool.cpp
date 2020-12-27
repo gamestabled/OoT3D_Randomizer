@@ -483,17 +483,16 @@ static Item GetJunkItem() {
   return JunkPoolItems[idx];
 }
 
-int PlaceJunkInExcludedLocation(ItemLocation * il) {
+void PlaceJunkInExcludedLocation(ItemLocation * il) {
   //place a non-advancement item in this location
   for (size_t i = 0; i < ItemPool.size(); i++) {
     if (!ItemPool[i].IsAdvancement()) {
       PlaceItemInLocation(il, ItemPool[i]);
       ItemPool.erase(ItemPool.begin() + i);
-      return 0;
+      return;
     }
   }
-  printf("No Junk to Place!!!\n");
-  return -1;
+  printf("ERROR: No Junk to Place!!!\n");
 }
 
 static void PlaceVanillaShopItems() {

@@ -7,6 +7,6 @@
 extern std::vector<Item>   AdvancementItemPool;
 extern std::vector<Item>   ItemPool;
 extern std::array<Item, 9> dungeonRewards;
-extern int PlaceJunkInExcludedLocation(ItemLocation* il);
+extern void PlaceJunkInExcludedLocation(ItemLocation* il);
 extern void GenerateItemPool();
 extern void AddJunk();
