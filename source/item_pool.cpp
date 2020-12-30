@@ -1,5 +1,4 @@
 #include "item_pool.hpp"
-#include "item_location.hpp"
 #include "random.hpp"
 
 using namespace Settings;
@@ -482,6 +481,18 @@ static void AddRandomBottle(std::vector<Item> bottlePool) {
 static Item GetJunkItem() {
   u8 idx = Random() % JunkPoolItems.size();
   return JunkPoolItems[idx];
+}
+
+void PlaceJunkInExcludedLocation(ItemLocation * il) {
+  //place a non-advancement item in this location
+  for (size_t i = 0; i < ItemPool.size(); i++) {
+    if (!ItemPool[i].IsAdvancement()) {
+      PlaceItemInLocation(il, ItemPool[i]);
+      ItemPool.erase(ItemPool.begin() + i);
+      return;
+    }
+  }
+  printf("ERROR: No Junk to Place!!!\n");
 }
 
 static void PlaceVanillaShopItems() {
@@ -1154,7 +1165,6 @@ void GenerateItemPool() {
     AddItemToMainPool(SpiritTemple_SmallKey, 5);
     AddItemToMainPool(ShadowTemple_SmallKey, 5);
     AddItemToMainPool(BottomOfTheWell_SmallKey, 3);
-    AddItemToMainPool(GerudoFortress_SmallKey, 4);
     AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 9);
     AddItemToMainPool(GanonsCastle_SmallKey, 2);
   }

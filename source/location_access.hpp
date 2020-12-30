@@ -439,6 +439,12 @@ namespace Exits {
   extern Exit DekuTree_Lobby;
   extern Exit DekuTree_SlingshotRoom;
   extern Exit DekuTree_BossRoom;
+  //Deku Tree MQ
+  extern Exit DekuTree_MQ_Lobby;
+  extern Exit DekuTree_MQ_CompassRoom;
+  extern Exit DekuTree_MQ_BasementWaterRoom;
+  extern Exit DekuTree_MQ_BasementBackRoom;
+  extern Exit DekuTree_MQ_BasementLedge;
 
   //Dodongos Cavern
   extern Exit DodongosCavern_Entryway;

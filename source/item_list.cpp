@@ -9,107 +9,6 @@ using namespace Settings;
 // Effects to be run when an item is placed
 bool none = false;
 
-// // Set the logic variable for this item to be true when it gets placed
-// constexpr auto DekuNutEffect              = []{Nuts          = true;};
-// constexpr auto DekuStickEffect            = []{Sticks        = true;};
-// constexpr auto KokiriSwordEffect          = []{KokiriSword   = true;};
-// constexpr auto DekuShieldEffect           = []{DekuShield    = true;};
-// constexpr auto HylianShieldEffect         = []{HylianShield  = true;};
-// constexpr auto MirrorShieldEffect         = []{MirrorShield  = true;};
-// constexpr auto BoomerangEffect            = []{Boomerang     = true;};
-// constexpr auto BombchuEffect              = []{Bombchus      = true;};
-// constexpr auto ZeldasLetterEffect         = []{ZeldasLetter  = true;};
-// constexpr auto WeirdEggEffect             = []{WeirdEgg      = true;};
-// constexpr auto LensOfTruthEffect          = []{LensOfTruth   = true;};
-// constexpr auto MegatonHammerEffect        = []{Hammer        = true;};
-// constexpr auto IronBootsEffect            = []{IronBoots     = true;};
-// constexpr auto HoverBootsEffect           = []{HoverBoots    = true;};
-// constexpr auto ShardOfAgonyEffect         = []{ShardOfAgony  = true;};
-// constexpr auto DinsFireEffect             = []{DinsFire      = true;};
-// constexpr auto FaroresWindEffect          = []{FaroresWind   = true;};
-// constexpr auto NayrusLoveEffect           = []{NayrusLove    = true;};
-// constexpr auto FireArrowEffect            = []{FireArrows    = true;};
-// constexpr auto IceArrowEffect             = []{IceArrows     = true;};
-// constexpr auto LightArrowEffect           = []{LightArrows   = true;};
-// constexpr auto GoronTunicEffect           = []{GoronTunic    = true;};
-// constexpr auto ZoraTunicEffect            = []{ZoraTunic     = true;};
-// constexpr auto GerudoTokenEffect          = []{GerudoToken   = true;};
-// constexpr auto MagicBeanEffect            = []{MagicBean     = true;};
-// constexpr auto MagicBeanPackEffect        = []{MagicBeanPack = true;};
-//
-// constexpr auto PocketEggEffect            = []{PocketEgg     = true;};
-// constexpr auto PocketCuccoEffect          = []{PocketCucco   = true;};
-// constexpr auto CojiroEffect               = []{Cojiro        = true;};
-// constexpr auto OddMushroomEffect          = []{OddMushroom   = true;};
-// constexpr auto OddPoulticeEffect          = []{OddPoultice   = true;};
-// constexpr auto PoachersSawEffect          = []{PoachersSaw   = true;};
-// constexpr auto BrokenSwordEffect          = []{BrokenSword   = true;};
-// constexpr auto PrescriptionEffect         = []{Prescription  = true;};
-// constexpr auto EyeballFrogEffect          = []{EyeballFrog   = true;};
-// constexpr auto EyedropsEffect             = []{Eyedrops      = true;};
-// constexpr auto ClaimCheckEffect           = []{ClaimCheck    = true;};
-//
-// constexpr auto GoldSkulltulaTokenEffect   = []{GoldSkulltulaTokens++; };
-//
-// constexpr auto ProgressiveHookshotEffect  = []{ProgressiveHookshot++; };
-// constexpr auto ProgressiveBombBagEffect   = []{ProgressiveBombBag++;  };
-// constexpr auto ProgressiveStrengthEffect  = []{ProgressiveStrength++; };
-// constexpr auto ProgressiveScaleEffect     = []{ProgressiveScale++;    };
-// constexpr auto ProgressiveBowEffect       = []{ProgressiveBow++;      };
-// constexpr auto ProgressiveBulletBagEffect = []{ProgressiveBulletBag++;};
-// constexpr auto ProgressiveWalletEffect    = []{ProgressiveWallet++;   };
-// constexpr auto ProgressiveMagicEffect     = []{ProgressiveMagic++;    };
-// constexpr auto ProgressiveOcarinaEffect   = []{ProgressiveOcarina++;  };
-//
-// // Bottle Effects
-// constexpr auto BottleEffect               = []{HasBottle        = true;};
-// constexpr auto RutosLetterEffect          = []{RutosLetter      = true;};
-// constexpr auto BigPoeBottleEffect         = []{BottleWithBigPoe = true;};
-//
-// // Song Effects
-// constexpr auto ZeldasLullabyEffect        = []{ZeldasLullaby    = true;};
-// constexpr auto SariasSongEffect           = []{SariasSong       = true;};
-// constexpr auto EponasSongEffect           = []{EponasSong       = true;};
-// constexpr auto SunsSongEffect             = []{SunsSong         = true;};
-// constexpr auto SongOfTimeEffect           = []{SongOfTime       = true;};
-// constexpr auto SongOfStormsEffect         = []{SongOfStorms     = true;};
-//
-// constexpr auto MinuetOfForestEffect       = []{MinuetOfForest   = true;};
-// constexpr auto BoleroOfFireEffect         = []{BoleroOfFire     = true;};
-// constexpr auto SerenadeOfWaterEffect      = []{SerenadeOfWater  = true;};
-// constexpr auto RequiemOfSpiritEffect      = []{RequiemOfSpirit  = true;};
-// constexpr auto NocturneOfShadowEffect     = []{NocturneOfShadow = true;};
-// constexpr auto PreludeOfLightEffect       = []{PreludeOfLight   = true;};
-//
-// // Small Key Effects
-// constexpr auto ForestTempleSmallKeyEffect          = []{ForestTempleKeys++;         };
-// constexpr auto FireTempleSmallKeyEffect            = []{FireTempleKeys++;           };
-// constexpr auto WaterTempleSmallKeyEffect           = []{WaterTempleKeys++;          };
-// constexpr auto SpiritTempleSmallKeyEffect          = []{SpiritTempleKeys++;         };
-// constexpr auto ShadowTempleSmallKeyEffect          = []{ShadowTempleKeys++;         };
-// constexpr auto BottomOfTheWellSmallKeyEffect       = []{BottomOfTheWellKeys++;      };
-// constexpr auto GerudoTrainingGroundsSmallKeyEffect = []{GerudoTrainingGroundsKeys++;};
-// constexpr auto GerudoFortressSmallKeyEffect        = []{GerudoFortressKeys++;       };
-// constexpr auto GanonsCastleSmallKeyEffect          = []{GanonsCastleKeys++;         };
-//
-// constexpr auto ForestTempleBossKeyEffect           = []{BossKeyForestTemple = true;};
-// constexpr auto FireTempleBossKeyEffect             = []{BossKeyFireTemple   = true;};
-// constexpr auto WaterTempleBossKeyEffect            = []{BossKeyWaterTemple  = true;};
-// constexpr auto SpiritTempleBossKeyEffect           = []{BossKeySpiritTemple = true;};
-// constexpr auto ShadowTempleBossKeyEffect           = []{BossKeyShadowTemple = true;};
-// constexpr auto GanonsCastleBossKeyEffect           = []{BossKeyGanonsCastle = true;};
-//
-// // Medallions and Stones Effects
-// constexpr auto KokiriEmeraldEffect   = []{KokiriEmerald   = true;};
-// constexpr auto GoronRubyEffect       = []{GoronRuby       = true;};
-// constexpr auto ZoraSapphireEffect    = []{ZoraSapphire    = true;};
-// constexpr auto ForestMedallionEffect = []{ForestMedallion = true;};
-// constexpr auto FireMedallionEffect   = []{FireMedallion   = true;};
-// constexpr auto WaterMedallionEffect  = []{WaterMedallion  = true;};
-// constexpr auto SpiritMedallionEffect = []{SpiritMedallion = true;};
-// constexpr auto ShadowMedallionEffect = []{ShadowMedallion = true;};
-// constexpr auto LightMedallionEffect  = []{LightMedallion  = true;};
-
 Item NoItem = Item("No Item", ITEMTYPE_ITEM,   GI_RUPEE_GREEN,   false, &none);
 Item I_Triforce = Item("Triforce", ITEMTYPE_ITEM, GI_RUPEE_RED_LOSE, false, &none);
 
@@ -261,8 +160,7 @@ Item HugeRupee                  = Item("Huge Rupee",       ITEMTYPE_ITEM, GI_RUP
 Item PieceOfHeart               = Item("Piece of Heart",   ITEMTYPE_ITEM, GI_HEART_PIECE,       false, &none);
 Item HeartContainer             = Item("Heart Container",  ITEMTYPE_ITEM, GI_HEART_CONTAINER_2, false, &none);
 Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE_TRAP,          false, &none);
-Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN, false, &none);
-Item TreasureGameGreenRupee     = Item("Green Rupee (Treasure Chest Minigame)",    ITEMTYPE_ITEM, GI_RUPEE_GREEN_LOSE, false, &none);
+Item Milk                       = Item("Milk",             ITEMTYPE_ITEM, GI_MILK,              false, &none);
 
 //Refills
 Item Bombs5                     = Item("Bombs (5)",        ITEMTYPE_ITEM, GI_BOMBS_5,           false, &none);
@@ -278,6 +176,10 @@ Item DekuNuts5                  = Item("Deku Nuts (5)",    ITEMTYPE_ITEM, GI_NUT
 Item DekuNuts10                 = Item("Deku Nuts (10)",   ITEMTYPE_ITEM, GI_NUTS_10,           false, &none);
 Item DekuSeeds30                = Item("Deku Seeds (30)",  ITEMTYPE_ITEM, GI_SEEDS_30,          false, &none);
 Item DekuStick1                 = Item("Deku Stick (1)",   ITEMTYPE_ITEM, GI_STICKS_1,          false, &none);
+
+//Treasure Game
+Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN, false, &none);
+Item TreasureGameGreenRupee     = Item("Green Rupee (Treasure Chest Minigame)",    ITEMTYPE_ITEM, GI_RUPEE_GREEN_LOSE, false, &none);
 
 //Shop Items                                                                                               price
 Item BuyDekuNut5                = Item("Buy Deku Nut (5)",    ITEMTYPE_SHOP, 0x00, true,  &Nuts,       15);

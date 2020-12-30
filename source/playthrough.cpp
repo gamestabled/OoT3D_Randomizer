@@ -69,6 +69,7 @@ namespace Playthrough {
       return 1;
     }
 
+    //idk where else to put this so it goes here
     s16 GetRandomPrice() {
       return 5 * ((Random() % 19) + 1);
     }

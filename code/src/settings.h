@@ -125,7 +125,7 @@ typedef struct {
   u8 damageMultiplier;
   u8 zorasFountain;
   u8 startingAge;
-  u8 timeOfDay;
+  u8 startingTime;
   u8 mapsAndCompasses;
   u8 scrubsanity;
   u8 lacsCondition;
