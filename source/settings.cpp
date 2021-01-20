@@ -138,6 +138,7 @@ namespace Settings {
     ctx.scrubsanity      = Scrubsanity.Value<u8>();
     ctx.lacsCondition    = LACSCondition;
     ctx.skipChildStealth = SkipChildStealth.Value<u8>();
+    ctx.bombchusInLogic  = BombchusInLogic.Value<bool>();
 
     ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
     ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;

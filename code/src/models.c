@@ -172,6 +172,14 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
         return;
     }
 
+    // Special case for bombchu drops
+    if ((actor->id == 0x15) && (actor->params == 5)) {
+        model->info.objectId = 0x00D9;
+        model->info.objectModelIdx = 0x00;
+        Model_GetObjectBankIndex(model, actor, globalCtx);
+        return;
+    }
+
     ItemOverride override = ItemOverride_Lookup(actor, globalCtx->sceneNum, baseItemId);
     if (override.key.all != 0) {
         Model_LookupByOverride(model, override);
