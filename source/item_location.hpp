@@ -81,6 +81,15 @@ public:
       return excludedOption.Value<bool>();
     }
 
+    bool IsCategory(std::string_view cat) {
+      for (std::string s : categories) {
+        if (s.compare(cat) == 0) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     void AddExcludeOption() {
       //add option to forbid any location from progress items
       if (name.length() < 23) {

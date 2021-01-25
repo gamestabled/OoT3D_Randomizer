@@ -126,6 +126,7 @@ namespace Settings {
   extern Option BossKeysanity;
   extern Option GanonsBossKey;
   extern Option MapsAndCompasses;
+  extern Option ShuffleSongs;
   extern Option Skullsanity;
   extern Option Scrubsanity;
   extern Option ItemPoolValue;
@@ -147,7 +148,6 @@ namespace Settings {
   extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
-  extern bool ShuffleSongs;
   extern bool Shopsanity;
   extern bool DekuTreeDungeonMode;
   extern bool DodongosCavernDungeonMode;

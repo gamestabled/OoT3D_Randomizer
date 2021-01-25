@@ -589,17 +589,37 @@ static void PlaceVanillaDekuScrubItems() {
     PlaceItemInLocation(&LLR_DekuScrubGrottoCenter,        BuyArrows30);
 
     //Dungeon Scrubs
-    PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagLeft,      BuyDekuNut5);
-    PlaceItemInLocation(&DodongosCavern_DekuScrubSideRoomNearDodongos, BuyDekuStick1);
-    PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagRight,     BuyDekuSeeds30);
-    PlaceItemInLocation(&DodongosCavern_DekuScrubLobby,                BuyDekuShield);
+    if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&DekuTree_MQ_DekuScrub, BuyDekuShield);
+    }
+    if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyRear,                 BuyDekuStick1);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyFront,                BuyDekuSeeds30);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubStaircase,                 BuyDekuShield);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos, BuyRedPotion30);
+    } else {
+      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagLeft,      BuyDekuNut5);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubSideRoomNearDodongos, BuyDekuStick1);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagRight,     BuyDekuSeeds30);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubLobby,                BuyDekuShield);
+    }
+    if (JabuJabusBellyDungeonMode == DUNGEONMODE_VANILLA) {
+      PlaceItemInLocation(&JabuJabusBelly_DekuScrub, BuyDekuNut5);
+    }
+    if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubRight,       BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterLeft,  BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenter,      BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterRight, BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubLeft,        BuyDekuNut5);
+    } else {
+      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterLeft,  BuyBombs535);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterRight, BuyArrows30);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubRight,       BuyRedPotion30);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubLeft,        BuyGreenPotion);
+    }
 
-    PlaceItemInLocation(&JabuJabusBelly_DekuScrub, BuyDekuNut5);
 
-    PlaceItemInLocation(&GanonsCastle_DekuScrubCenterLeft,  BuyBombs535);
-    PlaceItemInLocation(&GanonsCastle_DekuScrubCenterRight, BuyArrows30);
-    PlaceItemInLocation(&GanonsCastle_DekuScrubRight,       BuyRedPotion30);
-    PlaceItemInLocation(&GanonsCastle_DekuScrubLeft,        BuyGreenPotion);
 }
 
 static void PlaceVanillaMapsAndCompasses() {
@@ -902,7 +922,13 @@ void GenerateItemPool() {
   }
 
   //Ice Traps
-  AddItemToMainPool(IceTrap, 6);
+  AddItemToMainPool(IceTrap);
+  if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_VANILLA) {
+    AddItemToMainPool(IceTrap);
+  }
+  if (GanonsCastleDungeonMode == DUNGEONMODE_VANILLA) {
+    AddItemToMainPool(IceTrap, 4);
+  }
 
   //Gerudo Fortress
   if (GerudoFortress.Is(GERUDOFORTRESS_OPEN)) {

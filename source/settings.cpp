@@ -34,6 +34,7 @@ namespace Settings {
   };
 
   //Shuffle Settings
+  Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "All Locations"}); //TODO: Dungeon Rewards
   Option Skullsanity         = Option::U8  ("Tokensanity",            {"Vanilla", "All Locations"});
   Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"});
   Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"});
@@ -171,7 +172,6 @@ namespace Settings {
   bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
-  bool ShuffleSongs                     = false;
   bool Shopsanity                       = false;
   bool DekuTreeDungeonMode              = false;
   bool DodongosCavernDungeonMode        = false;

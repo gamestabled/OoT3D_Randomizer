@@ -220,6 +220,17 @@ static int AssumedFill() {
       return 0;
     }
 
+    /*if songs are restricted to song locations and a song is being placed, then
+      filter to only song locations. If it isn't a song, then remove song
+      locations.*/
+    if (Settings::ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
+      if (item.GetItemType() == ITEMTYPE_SONG) {
+        erase_if(locations, [](const ItemLocation& loc) { return !loc.IsCategory("Songs");});
+      } else {
+        erase_if(locations, [](const ItemLocation& loc) { return loc.IsCategory("Songs");});
+      }
+    }
+
     //place the item
     unsigned int locIdx = Random() % locations.size();
     PlaceItemInLocation(locations[locIdx], item);

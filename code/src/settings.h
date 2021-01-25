@@ -89,6 +89,11 @@ typedef enum {
 } MapsAndCompassesSetting;
 
 typedef enum {
+  SONGSHUFFLE_SONG_LOCATIONS,
+  SONGSHUFFLE_ALL_LOCATIONS,
+} SongShuffleSetting;
+
+typedef enum {
   TOKENSANITY_VANILLA,
   TOKENSANITY_ALL_LOCATIONS,
 } TokensanitySetting;

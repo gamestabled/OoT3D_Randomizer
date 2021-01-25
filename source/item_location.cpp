@@ -1085,6 +1085,20 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
+std::array<ItemLocation*, 12> songLocations = {
+  &SheikInForest,
+  &SheikInCrater,
+  &SheikInIceCavern,
+  &SheikAtColossus,
+  &SheikInKakariko,
+  &SheikAtTemple,
+  &SongFromImpa,
+  &SongFromMalon,
+  &SongFromSaria,
+  &SongFromOcarinaOfTime,
+  &SongFromComposersGrave,
+  &SongFromWindmill,
+};
 std::array<ItemLocation*, 465> allLocations = {
 
   //Kokiri Forest
