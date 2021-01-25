@@ -436,6 +436,8 @@ extern const char DungeonNames[][25];
 #define gDungeonSceneTable ((Scene*)0x4DC400)
 #define gMQDungeonSceneTable ((Scene*)0x4DCBA8)
 #define gSceneTable ((Scene*)0x545484)
+#define gRandInt (*(u32*)0x50C0C4)
+#define gRandFloat (*(f32*)0x50C0C8)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 
 typedef enum {

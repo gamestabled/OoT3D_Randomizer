@@ -140,6 +140,10 @@ SECTIONS
 		*(.patch_DaruniaCheckStrength)
 	}
 
+	.patch_ItemGiveBombchuDropOne 0x1F6F70 : {
+		*(.patch_ItemGiveBombchuDropOne)
+	}
+
 	.patch_BombchuBowlingStaticReward 0x206150 : {
 		*(.patch_BombchuBowlingStaticReward)
 	}
@@ -150,6 +154,10 @@ SECTIONS
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
 		*(.patch_DekuTheaterMaskOfTruth)
+	}
+
+	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {
+		*(.patch_ItemGiveBombchuDropTwo)
 	}
 
 	.patch_BusinessScrubCheckFlags 0x22EE64 : {
@@ -296,6 +304,10 @@ SECTIONS
 		*(.patch_FastChests)
 	}
 
+	.patch_ConvertBombDropOne 0x35E46C : {
+		*(.patch_ConvertBombDropOne)
+	}
+
 	.patch_ISGCrouchStab 0x360690 : {
 		*(.patch_ISGCrouchStab)
 	}
@@ -310,6 +322,10 @@ SECTIONS
 
 	.patch_IncomingGetItemID 0x3725AC : {
 		*(.patch_IncomingGetItemID)
+	}
+
+	.patch_ConvertBombDropTwo 0x3747A4 : {
+		*(.patch_ConvertBombDropTwo)
 	}
 
 	.patch_NoLensOfTruthNaviText 0x37798C : {

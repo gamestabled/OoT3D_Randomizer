@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_item00.h"
 #include "models.h"
+#include "settings.h"
 
 #define EnItem00_Init_addr 0x1F69B4
 #define EnItem00_Init ((ActorFunc)EnItem00_Init_addr)
@@ -33,6 +34,47 @@ void EnItem00_rDraw(Actor* thisx, GlobalContext* globalCtX) {
     if ((item->unk_1B0 & item->unk_1AE) == 0) {
         if (!Model_DrawByActor(&item->actor)) {
             EnItem00_Draw(&item->actor, globalCtX);
+        }
+    }
+}
+
+// overrides the incoming dropId to either a bombchu drop (5)
+// or no drop (-1) as appropriate
+u32 Item_ConvertBombDrop(u32 dropId) {
+    u8 hasBombs = (gSaveContext.items[ItemSlots[ITEM_BOMB]] != ITEM_NONE);
+    u8 hasChus = (gSaveContext.items[ItemSlots[ITEM_BOMBCHU]] != ITEM_NONE);
+    u8 bombCount = gSaveContext.ammo[ItemSlots[ITEM_BOMB]];
+    u8 chuCount = gSaveContext.ammo[ItemSlots[ITEM_BOMBCHU]];
+
+    if (!gSettingsContext.bombchusInLogic) {
+        if (hasBombs) {
+            return dropId;
+        } else {
+            return -1;
+        }
+    }
+
+    if (!hasBombs && !hasChus) {
+        return -1;
+    } else if (hasBombs && !hasChus) {
+        return dropId;
+    } else if (!hasBombs && hasChus) {
+        return 5;
+    } else {
+        if (bombCount <= 15) {
+            if (chuCount < bombCount) {
+                return 5;
+            } else {
+                return dropId;
+            }
+        } else if (chuCount <= 15) {
+            return 5;
+        } else {
+            if (gRandInt % 2) {
+                return 5;
+            } else {
+                return dropId;
+            }
         }
     }
 }

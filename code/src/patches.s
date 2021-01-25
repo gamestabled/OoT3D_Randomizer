@@ -695,6 +695,26 @@ FishingStoreTempB_patch:
 FishingRestoreTempB_patch:
     bl hook_FishingRestoreTempB
 
+.section .patch_ItemGiveBombchuDropOne
+.global ItemGiveBombchuDropOne_patch
+ItemGiveBombchuDropOne_patch:
+    mov r1,#0x96
+
+.section .patch_ItemGiveBombchuDropTwo
+.global ItemGiveBombchuDropTwo_patch
+ItemGiveBombchuDropTwo_patch:
+    mov r1,#0x96
+
+.section .patch_ConvertBombDropOne
+.global ConvertBombDropOne_patch
+ConvertBombDropOne_patch:
+    b hook_ConvertBombDropOne
+
+.section .patch_ConvertBombDropTwo
+.global ConvertBombDropTwo_patch
+ConvertBombDropTwo_patch:
+    b hook_ConvertBombDropTwo
+
 .section .patch_loader
 .global loader_patch
 
