@@ -75,6 +75,7 @@ void MenuUpdate(u32 kDown) {
 		settingIdx = 0;
 		currentSetting = currentMenu->settingsList->at(settingIdx);
 	} else if ((kDown & KEY_B && mode == SUB_MENU) || (kDown & KEY_A && mode == GENERATE_MODE)) {
+    //reprint the top screen if we're coming from generate mode
     if (mode == GENERATE_MODE) {
       consoleSelect(&topScreen);
       PrintTopScreen();
@@ -188,7 +189,7 @@ void PrintMainMenu() {
 void PrintSubMenu() {
 	//bounds checking incase settings go off screen
 	if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN) {
-		settingBound = settingBound + MAX_SETTINGS_ON_SCREEN;
+		settingBound = settingIdx - (MAX_SETTINGS_ON_SCREEN - 1);
 	} else if (settingIdx < settingBound)  {
 		settingBound = settingIdx;
 	}
@@ -234,8 +235,8 @@ void GenerateRandomizer() {
 	}
 	if (WritePatch()) {
 		printf("\x1b[11;10HWrote Patch\n");
-    printf("\x1b[12;10HQuit out using the home menu. Then\n");
-    printf("\x1b[13;10Henable game patching and launch OoT3D!\n");
+    printf("\x1b[13;10HQuit out using the home menu. Then\n");
+    printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
 	} else {
 		printf("Error creating patch. Press Select to exit.\n");
 	}

@@ -123,7 +123,7 @@ namespace Settings {
     &advancedGlitchedSettings,
   };
 
-  //declared here, set in 
+  //declared here, set in fill.cpp
   u32 LinksPocketRewardBitMask = 0;
 
   std::array<u32, 9> rDungeonRewardOverrides{};
