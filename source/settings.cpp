@@ -44,6 +44,7 @@ namespace Settings {
   Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"});
   //TODO: Medigoron and Carpet Salesman
   std::vector<Option *> shuffleOptions = {
+    &ShuffleSongs,
     &Skullsanity,
     &Scrubsanity,
     &ShuffleKokiriSword,
@@ -122,9 +123,12 @@ namespace Settings {
     &advancedGlitchedSettings,
   };
 
+  //declared here, set in 
   u32 LinksPocketRewardBitMask = 0;
+
   std::array<u32, 9> rDungeonRewardOverrides{};
 
+  //Fills a SettingsContext struct which is sent to the patch
   SettingsContext FillContext() {
     SettingsContext ctx = {};
     ctx.openForest       = OpenForest.Value<u8>();
@@ -140,6 +144,7 @@ namespace Settings {
     ctx.lacsCondition    = LACSCondition;
     ctx.skipChildStealth = SkipChildStealth.Value<u8>();
     ctx.bombchusInLogic  = BombchusInLogic.Value<bool>();
+    ctx.shuffleSongs     = ShuffleSongs.Value<u8>();
 
     ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
     ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
@@ -277,6 +282,7 @@ namespace Settings {
     LogicManOnRoof = true;
     LogicDekuB1Skip = true;
 
+    //1 is MQ, 0 is Vanilla
     if (RandomMQDungeons) {
       DekuTreeDungeonMode              = Random() % 2;
       DodongosCavernDungeonMode        = Random() % 2;

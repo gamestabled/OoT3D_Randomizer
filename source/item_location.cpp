@@ -1701,6 +1701,8 @@ void ItemReset() {
   for (ItemLocation* il : dungeonRewardLocations) {
     il->ResetVariables();
   }
+
+  itemsPlaced = 0;
 }
 
 void AddExcludedOptions() {

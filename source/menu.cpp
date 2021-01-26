@@ -61,8 +61,11 @@ void MenuUpdate(u32 kDown) {
 			consoleClear();
 	}
 
-	if (kDown & KEY_START) {
+	if (kDown & KEY_START && mode != GENERATE_MODE) {
+    consoleSelect(&bottomScreen);
+    consoleClear();
     GenerateRandomizer();
+    mode = GENERATE_MODE;
     return;
   }
 
@@ -71,7 +74,11 @@ void MenuUpdate(u32 kDown) {
 		mode = SUB_MENU;
 		settingIdx = 0;
 		currentSetting = currentMenu->settingsList->at(settingIdx);
-	} else if (kDown & KEY_B && mode == SUB_MENU) {
+	} else if ((kDown & KEY_B && mode == SUB_MENU) || (kDown & KEY_A && mode == GENERATE_MODE)) {
+    if (mode == GENERATE_MODE) {
+      consoleSelect(&topScreen);
+      PrintTopScreen();
+    }
 		mode = MAIN_MENU;
 		currentMenu = Settings::mainMenu[menuIdx];
 	}
@@ -227,7 +234,8 @@ void GenerateRandomizer() {
 	}
 	if (WritePatch()) {
 		printf("\x1b[11;10HWrote Patch\n");
-    printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
+    printf("\x1b[12;10HQuit out using the home menu. Then\n");
+    printf("\x1b[13;10Henable game patching and launch OoT3D!\n");
 	} else {
 		printf("Error creating patch. Press Select to exit.\n");
 	}
@@ -236,7 +244,7 @@ void GenerateRandomizer() {
 //opens up the 3ds software keyboard to type in a seed
 void GetInputSeed() {
   SwkbdState swkbd;
-  char mybuf[60];
+  char seed[60];
   SwkbdButton button = SWKBD_BUTTON_NONE;
 
   swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 1, -1);
@@ -245,8 +253,8 @@ void GetInputSeed() {
 	swkbdSetHintText(&swkbd, "Enter Seed");
 
   while (button != SWKBD_BUTTON_CONFIRM) {
-    button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
+    button = swkbdInputText(&swkbd, seed, sizeof(seed));
   }
 
-  Settings::seed = std::string(mybuf);
+  Settings::seed = std::string(seed);
 }

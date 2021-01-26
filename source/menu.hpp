@@ -3,6 +3,7 @@
 
 #define MAIN_MENU 0
 #define SUB_MENU 1
+#define GENERATE_MODE 2
 #define MAX_SETTINGS_ON_SCREEN 13
 #define BOTTOM_COLUMNS 40
 #define BOTTOM_ROWS 30

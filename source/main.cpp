@@ -12,7 +12,7 @@ int main() {
 
 		MenuUpdate(kDown);
 
-		//launch oot3d directly by holding L and R
+		//launch oot3d directly by holding L and R (cartridge only)
 		u32 kHeld = hidKeysHeld();
 		if (kHeld & KEY_L && kHeld & KEY_R) {
 			aptSetChainloader(0x0004000000033500, 2);

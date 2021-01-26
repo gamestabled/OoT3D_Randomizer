@@ -136,6 +136,7 @@ typedef struct {
   u8 lacsCondition;
   u8 skipChildStealth;
   u8 bombchusInLogic;
+  u8 shuffleSongs;
 
   u8 openDoorOfTime;
   u8 shuffleBeanSalesman;
