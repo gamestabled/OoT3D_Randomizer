@@ -35,8 +35,8 @@ namespace Settings {
   };
 
   //Shuffle Settings
-  Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "All Locations"},                     {songsSongLocations, songsAllLocations}); //TODO: Dungeon Rewards
-  Option Skullsanity         = Option::U8  ("Tokensanity",            {"Vanilla", "All Locations"},                            {tokensVanilla, tokensAllLocations});
+  Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Anywhere"},                          {songsSongLocations, songsAllLocations}); //TODO: Dungeon Rewards
+  Option Skullsanity         = Option::U8  ("Tokensanity",            {"Vanilla", "Anywhere"},                                 {tokensVanilla, tokensAllLocations});
   Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},     {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
   Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                           {kokiriSwordDesc, kokiriSwordDesc});
   Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                           {ocarinasDesc, ocarinasDesc});
@@ -57,11 +57,11 @@ namespace Settings {
   };
 
   //Shuffle Dungeon Items
-  Option Keysanity           = Option::U8  ("Small Keys",             {"Vanilla", "Own Dungeon", "All Locations"},             {smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
-  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Vanilla", "Own Dungeon", "All Locations"},             {bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
-  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Vanilla", "Own Dungeon", "All Locations", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"},
+  Option Keysanity           = Option::U8  ("Small Keys",             {"Vanilla", "Own Dungeon", "Anywhere"},                 {smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
+  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Vanilla", "Own Dungeon", "Anywhere"},                 {bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
+  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Vanilla", "Own Dungeon", "Anywhere", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"},
                                                                       {ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS});
-  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "All Locations"}, {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
+  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"}, {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
   u8 LACSCondition           = 0;
   std::vector<Option *> shuffleDungeonItemOptions = {
     &Keysanity,

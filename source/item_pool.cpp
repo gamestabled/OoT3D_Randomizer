@@ -936,7 +936,7 @@ void GenerateItemPool() {
     PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF1Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF2Carpenter, RecoveryHeart);
-  } else if (Keysanity.Is(KEYSANITY_ALL_LOCATIONS)) {
+  } else if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
     if (GerudoFortress.Is(GERUDOFORTRESS_FAST)) {
       AddItemToMainPool(GerudoFortress_SmallKey);
       PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);
@@ -978,7 +978,7 @@ void GenerateItemPool() {
     }
 
     // Plentiful small keys
-    if (Keysanity.Is(KEYSANITY_ALL_LOCATIONS)) {
+    if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
       AddItemToPool(PendingJunkPool, BottomOfTheWell_SmallKey);
       AddItemToPool(PendingJunkPool, ForestTemple_SmallKey);
       AddItemToPool(PendingJunkPool, FireTemple_SmallKey);
@@ -989,7 +989,7 @@ void GenerateItemPool() {
       AddItemToPool(PendingJunkPool, GanonsCastle_SmallKey);
     }
 
-    if (BossKeysanity.Is(BOSSKEYSANITY_ALL_LOCATIONS)) {
+    if (BossKeysanity.Is(BOSSKEYSANITY_ANYWHERE)) {
       AddItemToPool(PendingJunkPool, ForestTemple_BossKey);
       AddItemToPool(PendingJunkPool, FireTemple_BossKey);
       AddItemToPool(PendingJunkPool, WaterTemple_BossKey);
@@ -997,7 +997,7 @@ void GenerateItemPool() {
       AddItemToPool(PendingJunkPool, ShadowTemple_BossKey);
     }
 
-    if (GanonsBossKey.Is(GANONSBOSSKEY_ALL_LOCATIONS)) {
+    if (GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE)) {
       AddItemToPool(PendingJunkPool, GanonsCastle_BossKey);
     }
   }
@@ -1136,7 +1136,7 @@ void GenerateItemPool() {
   }
 
   //dungeon only dungeon placements
-  if (Keysanity.Is(KEYSANITY_DUNGEON_ONLY)) {
+  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON)) {
     RandomizeDungeonKeys(ForestTempleKeyRequirements,          ForestTemple_SmallKey,          5);
     RandomizeDungeonKeys(FireTempleKeyRequirements,            FireTemple_SmallKey,            8);
     RandomizeDungeonKeys(WaterTempleKeyRequirements,           WaterTemple_SmallKey,           6);
@@ -1147,7 +1147,7 @@ void GenerateItemPool() {
     RandomizeDungeonKeys(GanonsCastleKeyRequirements,          GanonsCastle_SmallKey,          2);
   }
 
-  if (BossKeysanity.Is(BOSSKEYSANITY_DUNGEON_ONLY)) {
+  if (BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON)) {
     RandomizeDungeonItem(ForestTempleKeyRequirements, ForestTemple_BossKey);
     RandomizeDungeonItem(FireTempleKeyRequirements,   FireTemple_BossKey);
     RandomizeDungeonItem(WaterTempleKeyRequirements,  WaterTemple_BossKey);
@@ -1155,7 +1155,7 @@ void GenerateItemPool() {
     RandomizeDungeonItem(ShadowTempleKeyRequirements, ShadowTemple_BossKey);
   }
 
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_DUNGEON_ONLY)) {
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON)) {
     RandomizeDungeonItem(DekuTreeKeyRequirements,        DekuTree_Map);
     RandomizeDungeonItem(DodongosCavernKeyRequirements,  DodongosCavern_Map);
     RandomizeDungeonItem(JabuJabusBellyKeyRequirements,  JabuJabusBelly_Map);
@@ -1179,12 +1179,12 @@ void GenerateItemPool() {
     RandomizeDungeonItem(IceCavernKeyRequirements,       IceCavern_Compass);
   }
 
-  if(GanonsBossKey.Is(GANONSBOSSKEY_DUNGEON_ONLY)) {
+  if(GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON)) {
     RandomizeDungeonItem(GanonsCastleKeyRequirements, GanonsCastle_BossKey);
   }
 
   //all locations placements
-  if (Keysanity.Is(KEYSANITY_ALL_LOCATIONS)) {
+  if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
     AddItemToMainPool(ForestTemple_SmallKey, 5);
     AddItemToMainPool(FireTemple_SmallKey, 8);
     AddItemToMainPool(WaterTemple_SmallKey, 6);
@@ -1195,7 +1195,7 @@ void GenerateItemPool() {
     AddItemToMainPool(GanonsCastle_SmallKey, 2);
   }
 
-  if (BossKeysanity.Is(BOSSKEYSANITY_ALL_LOCATIONS)) {
+  if (BossKeysanity.Is(BOSSKEYSANITY_ANYWHERE)) {
     AddItemToMainPool(ForestTemple_BossKey);
     AddItemToMainPool(FireTemple_BossKey);
     AddItemToMainPool(WaterTemple_BossKey);
@@ -1203,11 +1203,11 @@ void GenerateItemPool() {
     AddItemToMainPool(ShadowTemple_BossKey);
   }
 
-  if (GanonsBossKey.Is(GANONSBOSSKEY_ALL_LOCATIONS)) {
+  if (GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE)) {
     AddItemToMainPool(GanonsCastle_BossKey);
   }
 
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_ALL_LOCATIONS)) {
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_ANYWHERE)) {
     AddItemToMainPool(DekuTree_Map);
     AddItemToMainPool(DodongosCavern_Map);
     AddItemToMainPool(JabuJabusBelly_Map);
