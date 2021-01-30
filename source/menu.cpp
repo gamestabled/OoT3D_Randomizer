@@ -36,13 +36,6 @@ void MenuInit() {
   //Call to fill in the Excluded Locations menu
   AddExcludedOptions();
 
-  srand(time(NULL));
-  consoleInit(GFX_TOP,    &topScreen);
-  consoleInit(GFX_BOTTOM, &bottomScreen);
-  consoleSelect(&topScreen);
-
-  PrintTopScreen();
-
   seedChanged = false;
   mode = MAIN_MENU;
   menuIdx = 0;
@@ -52,6 +45,16 @@ void MenuInit() {
   pastSeedLength = Settings::seed.length();
   currentMenu = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
+
+  srand(time(NULL));
+  consoleInit(GFX_TOP,    &topScreen);
+  consoleInit(GFX_BOTTOM, &bottomScreen);
+
+  consoleSelect(&topScreen);
+  PrintTopScreen();
+
+  consoleSelect(&bottomScreen);
+  PrintMainMenu();
 }
 
 void MenuUpdate(u32 kDown) {
@@ -109,10 +112,11 @@ void MenuUpdate(u32 kDown) {
 
 	//Print current menu
 	consoleSelect(&bottomScreen);
-	if (mode == MAIN_MENU) {
+	if (mode == MAIN_MENU && kDown) {
 		UpdateMainMenu(kDown);
 		PrintMainMenu();
-	} else if (mode == SUB_MENU) {
+    ClearDescription();
+	} else if (mode == SUB_MENU && kDown) {
 		UpdateSubMenu(kDown);
 		PrintSubMenu();
 	}
@@ -167,7 +171,7 @@ void UpdateSubMenu(u32 kDown) {
 }
 
 void PrintMainMenu() {
-	printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_COLUMNS/2) - 9);
+	printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
 		if (i + menuBound >= Settings::mainMenu.size()) break;
@@ -195,7 +199,7 @@ void PrintSubMenu() {
 	}
 
 	//print menu name
-	printf("\x1b[0;%dH%s", (BOTTOM_COLUMNS/2) - (currentMenu->name.length()/2), currentMenu->name.c_str());
+	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenu->name.length()/2), currentMenu->name.c_str());
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
@@ -216,6 +220,24 @@ void PrintSubMenu() {
 
 		setting->SetVariable();
 	}
+
+  PrintOptionDescrption();
+}
+
+void ClearDescription() {
+  consoleSelect(&topScreen);
+
+  //clear the previous description
+  std::string spaces = "";
+  spaces.append(9 * TOP_WIDTH, ' ');
+  printf("\x1b[22;0H%s", spaces.c_str());
+}
+
+void PrintOptionDescrption() {
+  ClearDescription();
+  std::string_view description = currentSetting->GetSelectedOptionDescription();
+
+  printf("\x1b[22;0H%s", description.data());
 }
 
 void GenerateRandomizer() {

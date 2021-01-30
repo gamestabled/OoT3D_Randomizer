@@ -93,13 +93,13 @@ public:
     void AddExcludeOption() {
       //add option to forbid any location from progress items
       if (name.length() < 23) {
-        excludedOption = Option::Bool(name, {"Include", "Exclude"});
+        excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
       } else {
         size_t lastSpace = name.rfind(' ', 23);
         std::string settingText = name;
         settingText.replace(lastSpace, 1, "\n ");
 
-        excludedOption = Option::Bool(settingText, {"Include", "Exclude"});
+        excludedOption = Option::Bool(settingText, {"Include", "Exclude"}, {"", ""});
 
       }
 
@@ -152,7 +152,7 @@ private:
     std::vector<std::string> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
-    Option excludedOption = Option::Bool(name, {"Include", "Exclude"});
+    Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
 
 };
 

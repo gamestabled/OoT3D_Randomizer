@@ -5,13 +5,16 @@
 #define SUB_MENU 1
 #define GENERATE_MODE 2
 #define MAX_SETTINGS_ON_SCREEN 13
-#define BOTTOM_COLUMNS 40
-#define BOTTOM_ROWS 30
+#define TOP_WIDTH 50
+#define BOTTOM_WIDTH 40
+#define SCREEN_HEIGHT 30
 
 void UpdateMainMenu(u32 kDown);
 void UpdateSubMenu(u32 kDown);
 void PrintMainMenu();
 void PrintSubMenu();
+void ClearDescription();
+void PrintOptionDescrption();
 void GenerateRandomizer();
 void GetInputSeed();
 
