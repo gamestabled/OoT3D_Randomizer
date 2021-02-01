@@ -81,16 +81,25 @@ public:
       return excludedOption.Value<bool>();
     }
 
+    bool IsCategory(std::string_view cat) {
+      for (std::string s : categories) {
+        if (s.compare(cat) == 0) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     void AddExcludeOption() {
       //add option to forbid any location from progress items
       if (name.length() < 23) {
-        excludedOption = Option::Bool(name, {"Include", "Exclude"});
+        excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
       } else {
         size_t lastSpace = name.rfind(' ', 23);
         std::string settingText = name;
         settingText.replace(lastSpace, 1, "\n ");
 
-        excludedOption = Option::Bool(settingText, {"Include", "Exclude"});
+        excludedOption = Option::Bool(settingText, {"Include", "Exclude"}, {"", ""});
 
       }
 
@@ -143,7 +152,7 @@ private:
     std::vector<std::string> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
-    Option excludedOption = Option::Bool(name, {"Include", "Exclude"});
+    Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
 
 };
 
@@ -1008,6 +1017,7 @@ extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::vector<ItemLocation *> advancementLocations;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
+extern std::array<ItemLocation *, 12> songLocations;
 extern std::array<ItemLocation *, 465> allLocations;
 
 extern void LocationReset();

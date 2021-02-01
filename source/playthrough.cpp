@@ -15,12 +15,14 @@
 namespace Playthrough {
 
     int Playthrough_Init(u32 seed) {
+        Random_Init(seed);
 
         overrides.clear();
-        Random_Init(seed); //seed goes here
+        ItemReset();
+        Exits::AccessReset();
+
         Settings::UpdateSettings();
         Logic::UpdateHelpers();
-        Exits::AccessReset();
         Fill_Init();
 
         //write logs
@@ -48,7 +50,6 @@ namespace Playthrough {
       for (int i = 0; i < count; i++) {
         ItemReset();
         repeatedSeed = rand() % 0xFFFFFFFF;
-        overrides.clear();
         Playthrough_Init(repeatedSeed);
 
         PlacementLog_Msg(" --- ");

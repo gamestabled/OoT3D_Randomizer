@@ -36,13 +36,6 @@ void MenuInit() {
   //Call to fill in the Excluded Locations menu
   AddExcludedOptions();
 
-  srand(time(NULL));
-  consoleInit(GFX_TOP,    &topScreen);
-  consoleInit(GFX_BOTTOM, &bottomScreen);
-  consoleSelect(&topScreen);
-
-  PrintTopScreen();
-
   seedChanged = false;
   mode = MAIN_MENU;
   menuIdx = 0;
@@ -52,6 +45,16 @@ void MenuInit() {
   pastSeedLength = Settings::seed.length();
   currentMenu = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
+
+  srand(time(NULL));
+  consoleInit(GFX_TOP,    &topScreen);
+  consoleInit(GFX_BOTTOM, &bottomScreen);
+
+  consoleSelect(&topScreen);
+  PrintTopScreen();
+
+  consoleSelect(&bottomScreen);
+  PrintMainMenu();
 }
 
 void MenuUpdate(u32 kDown) {
@@ -61,8 +64,11 @@ void MenuUpdate(u32 kDown) {
 			consoleClear();
 	}
 
-	if (kDown & KEY_START) {
+	if (kDown & KEY_START && mode != GENERATE_MODE) {
+    consoleSelect(&bottomScreen);
+    consoleClear();
     GenerateRandomizer();
+    mode = GENERATE_MODE;
     return;
   }
 
@@ -71,7 +77,12 @@ void MenuUpdate(u32 kDown) {
 		mode = SUB_MENU;
 		settingIdx = 0;
 		currentSetting = currentMenu->settingsList->at(settingIdx);
-	} else if (kDown & KEY_B && mode == SUB_MENU) {
+	} else if ((kDown & KEY_B && mode == SUB_MENU) || (kDown & KEY_A && mode == GENERATE_MODE)) {
+    //reprint the top screen if we're coming from generate mode
+    if (mode == GENERATE_MODE) {
+      consoleSelect(&topScreen);
+      PrintTopScreen();
+    }
 		mode = MAIN_MENU;
 		currentMenu = Settings::mainMenu[menuIdx];
 	}
@@ -101,10 +112,11 @@ void MenuUpdate(u32 kDown) {
 
 	//Print current menu
 	consoleSelect(&bottomScreen);
-	if (mode == MAIN_MENU) {
+	if (mode == MAIN_MENU && kDown) {
 		UpdateMainMenu(kDown);
 		PrintMainMenu();
-	} else if (mode == SUB_MENU) {
+    ClearDescription();
+	} else if (mode == SUB_MENU && kDown) {
 		UpdateSubMenu(kDown);
 		PrintSubMenu();
 	}
@@ -159,7 +171,7 @@ void UpdateSubMenu(u32 kDown) {
 }
 
 void PrintMainMenu() {
-	printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_COLUMNS/2) - 9);
+	printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
 		if (i + menuBound >= Settings::mainMenu.size()) break;
@@ -181,13 +193,13 @@ void PrintMainMenu() {
 void PrintSubMenu() {
 	//bounds checking incase settings go off screen
 	if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN) {
-		settingBound = settingBound + MAX_SETTINGS_ON_SCREEN;
+		settingBound = settingIdx - (MAX_SETTINGS_ON_SCREEN - 1);
 	} else if (settingIdx < settingBound)  {
 		settingBound = settingIdx;
 	}
 
 	//print menu name
-	printf("\x1b[0;%dH%s", (BOTTOM_COLUMNS/2) - (currentMenu->name.length()/2), currentMenu->name.c_str());
+	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenu->name.length()/2), currentMenu->name.c_str());
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
@@ -208,6 +220,24 @@ void PrintSubMenu() {
 
 		setting->SetVariable();
 	}
+
+  PrintOptionDescrption();
+}
+
+void ClearDescription() {
+  consoleSelect(&topScreen);
+
+  //clear the previous description
+  std::string spaces = "";
+  spaces.append(9 * TOP_WIDTH, ' ');
+  printf("\x1b[22;0H%s", spaces.c_str());
+}
+
+void PrintOptionDescrption() {
+  ClearDescription();
+  std::string_view description = currentSetting->GetSelectedOptionDescription();
+
+  printf("\x1b[22;0H%s", description.data());
 }
 
 void GenerateRandomizer() {
@@ -227,7 +257,8 @@ void GenerateRandomizer() {
 	}
 	if (WritePatch()) {
 		printf("\x1b[11;10HWrote Patch\n");
-    printf("\x1b[12;10HEnable game patching and launch OoT3D!\n");
+    printf("\x1b[13;10HQuit out using the home menu. Then\n");
+    printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
 	} else {
 		printf("Error creating patch. Press Select to exit.\n");
 	}
@@ -236,7 +267,7 @@ void GenerateRandomizer() {
 //opens up the 3ds software keyboard to type in a seed
 void GetInputSeed() {
   SwkbdState swkbd;
-  char mybuf[60];
+  char seed[60];
   SwkbdButton button = SWKBD_BUTTON_NONE;
 
   swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 1, -1);
@@ -245,8 +276,8 @@ void GetInputSeed() {
 	swkbdSetHintText(&swkbd, "Enter Seed");
 
   while (button != SWKBD_BUTTON_CONFIRM) {
-    button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
+    button = swkbdInputText(&swkbd, seed, sizeof(seed));
   }
 
-  Settings::seed = std::string(mybuf);
+  Settings::seed = std::string(seed);
 }

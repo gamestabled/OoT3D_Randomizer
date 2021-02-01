@@ -65,6 +65,22 @@ static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   }
 }
 
+static Item GetItemToPlace() {
+  for (size_t i = 0; i < unplacedItems.size(); i++) {
+    //keep iterating to select a song during song shuffling to other song locations
+    if (Settings::ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS) && unplacedItems[i].GetItemType() != ITEMTYPE_SONG && placedItems.size() < songLocations.size()) {
+      continue;
+    }
+
+    Item item = std::move(unplacedItems[i]);
+    unplacedItems.erase(unplacedItems.begin() + i);
+    return item;
+  }
+
+  printf("ERROR: COULD NOT FIND ITEM TO PLACE\n");
+  return GreenRupee;
+}
+
 static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
 
   locations.clear();
@@ -202,8 +218,7 @@ static int AssumedFill() {
   while (!unplacedItems.empty()) {
 
     //move an item from unplaced to placed, this will be the item we place
-    Item item = std::move(unplacedItems.back());
-    unplacedItems.pop_back();
+    Item item = GetItemToPlace();
     placedItems.push_back(item);
 
     //assume we have all of the unplaced items and nothing else
@@ -215,8 +230,15 @@ static int AssumedFill() {
     //retrieve all possible locations to place the next item
     GetAccessibleLocations(locations);
 
+    /*if songs are restricted to song locations and a song is being placed, then
+      filter to only song locations.*/
+    if (Settings::ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS) && item.GetItemType() == ITEMTYPE_SONG) {
+        erase_if(locations, [](ItemLocation* loc) { return !loc->IsCategory("Songs");});
+    }
+
     //if we get stuck, retry
     if (locations.empty()) {
+      printf("ERROR: NO LOCATIONS TO PLACE ITEM. TRYING AGAIN...");
       return 0;
     }
 
