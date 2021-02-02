@@ -8,6 +8,7 @@
 #include "menu.hpp"
 #include "patch.hpp"
 #include "settings.hpp"
+#include "spoiler_log.hpp"
 namespace fs = std::filesystem;
 
 namespace {
@@ -119,7 +120,6 @@ void MenuUpdate(u32 kDown) {
       seedChanged = false;
     }
   }
-
 
 	//Print current menu (if applicable)
 	consoleSelect(&bottomScreen);
@@ -459,6 +459,11 @@ void GenerateRandomizer() {
 		printf("\x1b[11;10HWrote Patch\n");
     printf("\x1b[13;10HQuit out using the home menu. Then\n");
     printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
+
+    printf("\x1b[16;10HHash:");
+    for (u8 i = 0; i < randomizerHash.size(); i++) {
+      printf("\x1b[%d;11H- %s", i + 17, randomizerHash[i].c_str());
+    }
 	} else {
 		printf("Error creating patch. Press Select to exit.\n");
 	}

@@ -1,6 +1,7 @@
 #include "spoiler_log.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
+#include "random.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -16,6 +17,49 @@ namespace {
 
   std::string logtxt;
   std::string placementtxt;
+
+  std::array<std::string_view, 32> hashIcons = {
+    "Deku Stick",
+    "Deku Nut",
+    "Bow",
+    "Slingshot",
+    "Fairy Ocarina",
+    "Bombchu",
+    "Longshot",
+    "Boomerang",
+    "Lens of Truth",
+    "Beans",
+    "Megaton Hammer",
+    "Bottled Fish",
+    "Bottled Milk",
+    "Mask of Truth",
+    "SOLD OUT",
+    "Cucco",
+    "Mushroom",
+    "Saw",
+    "Frog",
+    "Master Sword",
+    "Mirror Shield",
+    "Kokiri Tunic",
+    "Hover Boots",
+    "Silver Gauntlets",
+    "Gold Scale",
+    "Shard of Agony",
+    "Skull Token",
+    "Heart Container",
+    "Boss Key",
+    "Compass",
+    "Map",
+    "Big Magic",
+  };
+}
+
+std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
+
+void GenerateHash() {
+  for (std::string& str : randomizerHash) {
+    str = hashIcons[Random() % hashIcons.size()];
+  }
 }
 
 static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
@@ -41,6 +85,12 @@ static auto GetPlacementLogPath() {
 
 bool SpoilerLog_Write() {
   logtxt += "Seed: " + Settings::seed + "\n\n";
+
+  logtxt += "Hash: ";
+  for (std::string& str : randomizerHash) {
+    logtxt += str + " ";
+  }
+  logtxt += "\n\n";
 
   logtxt += "Playthrough:\n";
   for (ItemLocation* location : playthroughLocations) {
