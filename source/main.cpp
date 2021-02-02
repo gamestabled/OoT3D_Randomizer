@@ -10,7 +10,8 @@ int main() {
 		u32 kDown = hidKeysDown();
 		if (kDown & KEY_SELECT) break; //stop the app
 
-		MenuUpdate(kDown);
+		if (kDown)
+			MenuUpdate(kDown);
 
 		//launch oot3d directly by holding L and R (cartridge only)
 		u32 kHeld = hidKeysHeld();

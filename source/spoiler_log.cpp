@@ -57,7 +57,7 @@ namespace {
 std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
 
 void GenerateHash() {
-  for (std::string& str : randomizerHash) {
+  for (auto& str : randomizerHash) {
     str = hashIcons[Random() % hashIcons.size()];
   }
 }
@@ -75,12 +75,19 @@ static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item)
   logtxt += '\n';
 }
 
+static auto GetGeneralPath() {
+  std::string path = "/3ds/" + Settings::seed;
+  for (auto& str : randomizerHash)
+    path += str;
+  return path;
+}
+
 static auto GetSpoilerLogPath() {
-  return "/3ds/" + Settings::seed + "-spoilerlog.txt";
+  return GetGeneralPath() + "-spoilerlog.txt";
 }
 
 static auto GetPlacementLogPath() {
-  return "/3ds/" + Settings::seed + "-placementlog.txt";
+  return GetGeneralPath() + "-placementlog.txt";
 }
 
 bool SpoilerLog_Write() {
@@ -117,7 +124,7 @@ bool SpoilerLog_Write() {
   }
 
   // Open spoilerlog.txt
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&spoilerlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSpoilerLogPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&spoilerlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSpoilerLogPath().c_str()), FS_OPEN_CREATE | FS_OPEN_WRITE, 0))) {
     return false;
   }
 
@@ -143,7 +150,7 @@ bool PlacementLog_Write() {
   }
 
   // Open placementlog.txt
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, GetPlacementLogPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, GetPlacementLogPath().c_str()), FS_OPEN_CREATE | FS_OPEN_WRITE, 0))) {
     return false;
   }
 

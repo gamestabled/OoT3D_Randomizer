@@ -74,22 +74,19 @@ void MenuInit() {
 }
 
 void MenuUpdate(u32 kDown) {
-  //clear the bottom console if a button was pressed
-  if (kDown) {
-			consoleSelect(&bottomScreen);
-			consoleClear();
-	}
+
+	consoleSelect(&bottomScreen);
+	consoleClear();
 
 	//Check for a menu change
 	if (kDown & KEY_A && mode == MAIN_MENU) {
     mode = currentMenuItem->mode;
     ModeChangeInit();
+    kDown = 0;
 	} else if ((kDown & KEY_B && mode != MAIN_MENU)) {
-    //reprint the top screen if we're coming from generate mode
-    if (mode == GENERATE_MODE) {
-      consoleSelect(&topScreen);
-      PrintTopScreen();
-    }
+
+    consoleSelect(&topScreen);
+    PrintTopScreen();
 		mode = MAIN_MENU;
 		currentMenuItem = Settings::mainMenu[menuIdx];
 	}
@@ -123,14 +120,14 @@ void MenuUpdate(u32 kDown) {
 
 	//Print current menu (if applicable)
 	consoleSelect(&bottomScreen);
-	if (mode == MAIN_MENU && kDown) {
+	if (mode == MAIN_MENU) {
 		UpdateMainMenu(kDown);
 		PrintMainMenu();
     ClearDescription();
-	} else if (mode == SUB_MENU && kDown) {
+	} else if (mode == SUB_MENU) {
 		UpdateSubMenu(kDown);
 		PrintSubMenu();
-	} else if (mode == LOAD_PRESET && kDown) {
+	} else if (mode == LOAD_PRESET) {
     UpdatePresetsMenu(kDown);
     PrintPresetsMenu();
   }
@@ -287,6 +284,7 @@ void PrintSubMenu() {
 }
 
 void PrintPresetsMenu() {
+  consoleSelect(&bottomScreen);
   if (presetEntries.empty()) {
     printf("\x1b[10;5HNo Presets Detected!");
     printf("\x1b[12;5HPress B to return to the main menu.");
@@ -357,6 +355,9 @@ void GetPresets() {
 
 //Load the selected preset
 bool LoadPreset(std::string presetName) {
+  //clear any potential 'failed to load preset' message on previous attempt
+  ClearDescription();
+
   Result res;
   FS_Archive sdmcArchive = 0;
   Handle presetFile;
@@ -385,7 +386,7 @@ bool LoadPreset(std::string presetName) {
   //If the sizes don't match, then the preset is incompatible (there's probably a better way to do this)
   if (ctxSize != sizeof(SettingsContext)) {
     consoleSelect(&topScreen);
-    printf("\x1b[22;5Preset not compatible with current randomizer.");
+    printf("\x1b[22;5HPreset not compatible with current randomizer.");
     return false;
   }
 
@@ -445,12 +446,19 @@ void GenerateRandomizer() {
   if (Settings::seed == "") {
     Settings::seed = std::to_string(rand());
   }
-  unsigned int seedInt = std::hash<std::string>{}(Settings::seed);
+
+  //turn the settings into a string for hashing
+  SettingsContext ctx = Settings::FillContext();
+  const void* ctxPtr = &ctx;
+  std::string settingsStr(sizeof(ctx), 'A');
+  std::memcpy(settingsStr.data(), ctxPtr, sizeof(ctx));
+
+  unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
 
   consoleSelect(&topScreen);
 	consoleClear();
 
-	int ret = Playthrough::Playthrough_Init(seedInt);
+	int ret = Playthrough::Playthrough_Init(finalHash);
 	if (ret < 0) {
 		printf("Error %d with fill. Press Select to exit.\n", ret);
 		return;

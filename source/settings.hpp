@@ -92,6 +92,8 @@ public:
         printf("\x1b[30;0HERROR: Incomptaible selection for %s\n", name.c_str());
         selectedOption = 0;
       }
+
+      SetVariable();
     }
 
 private:
