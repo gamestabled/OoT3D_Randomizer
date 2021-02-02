@@ -233,11 +233,11 @@ std::string_view startingTimeDesc     = "Change up Link's sleep routine.";      
 /*------------------------------                                                           //
 |          ITEM POOL           |                                                           //
 ------------------------------*/                                                           //
-std::string_view itemPoolPlentiful = "Extra major items are added to the pool.";           //
-std::string_view itemPoolBalanced  = "Original item pool.";                                //
-std::string_view itemPoolScarce    = "Some excess items are removed, including health\n"   //
-                                     "upgrades.";                                          //
-std::string_view itemPoolMinimal   = "Most excess items are removed.";                     //
+std::string_view itemPoolPlentiful    = "Extra major items are added to the pool.";        //
+std::string_view itemPoolBalanced     = "Original item pool.";                             //
+std::string_view itemPoolScarce       = "Some excess items are removed, including health\n"//
+                                        "upgrades.";                                       //
+std::string_view itemPoolMinimal      = "Most excess items are removed.";                  //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //

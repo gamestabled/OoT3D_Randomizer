@@ -1,22 +1,29 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <dirent.h>
+#include <filesystem>
+#include <cstring>
 #include <time.h>
 #include <3ds.h>
 #include "menu.hpp"
 #include "patch.hpp"
 #include "settings.hpp"
-
+namespace fs = std::filesystem;
 
 namespace {
   bool seedChanged;
   u8 mode;
   u16 settingIdx;
   u8 menuIdx;
+  u8 presetIdx;
   u16 settingBound;
   u8 menuBound;
+  u8 presetBound;
   u16 pastSeedLength;
-  Menu* currentMenu;
+  MenuItem* currentMenuItem;
   Option* currentSetting;
   PrintConsole topScreen, bottomScreen;
+  std::vector<std::string> presetEntries;
 }
 
 void PrintTopScreen() {
@@ -25,7 +32,6 @@ void PrintTopScreen() {
   printf("\x1b[1;10HOoT3D Randomizer testing!\n");
   printf("\x1b[3;1HA/B/D-pad: Navigate Menu\n");
   printf("   Select: Exit to Homebrew Menu\n");
-  printf("    Start: Create Patch\n");
   printf("        Y: New Random Seed\n");
   printf("        X: Input Custom Seed\n");
   printf("\x1b[10;5HCurrent Seed: %s", Settings::seed.c_str());
@@ -42,8 +48,10 @@ void MenuInit() {
   menuBound = 0;
   settingIdx = 0;
   settingBound = 0;
+  presetIdx = 0;
+  presetBound = 0;
   pastSeedLength = Settings::seed.length();
-  currentMenu = Settings::mainMenu[menuIdx];
+  currentMenuItem = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
 
   srand(time(NULL));
@@ -53,64 +61,67 @@ void MenuInit() {
   consoleSelect(&topScreen);
   PrintTopScreen();
 
+  if (!CreatePresetDirectories()) {
+    printf("\x1b[20;5Failed to create preset directories.");
+    printf("\x1b[21;5Loading presets might crash.");
+  }
+
   consoleSelect(&bottomScreen);
   PrintMainMenu();
+
+
 }
 
 void MenuUpdate(u32 kDown) {
   //clear the bottom console if a button was pressed
-  if (kDown & KEY_DUP || kDown & KEY_DDOWN || kDown & KEY_DLEFT || kDown & KEY_DRIGHT || kDown & KEY_A || kDown & KEY_B) {
+  if (kDown) {
 			consoleSelect(&bottomScreen);
 			consoleClear();
 	}
 
-	if (kDown & KEY_START && mode != GENERATE_MODE) {
-    consoleSelect(&bottomScreen);
-    consoleClear();
-    GenerateRandomizer();
-    mode = GENERATE_MODE;
-    return;
-  }
-
 	//Check for a menu change
 	if (kDown & KEY_A && mode == MAIN_MENU) {
-		mode = SUB_MENU;
-		settingIdx = 0;
-		currentSetting = currentMenu->settingsList->at(settingIdx);
-	} else if ((kDown & KEY_B && mode == SUB_MENU) || (kDown & KEY_A && mode == GENERATE_MODE)) {
+    mode = currentMenuItem->mode;
+    ModeChangeInit();
+	} else if ((kDown & KEY_B && mode != MAIN_MENU)) {
     //reprint the top screen if we're coming from generate mode
     if (mode == GENERATE_MODE) {
       consoleSelect(&topScreen);
       PrintTopScreen();
     }
 		mode = MAIN_MENU;
-		currentMenu = Settings::mainMenu[menuIdx];
+		currentMenuItem = Settings::mainMenu[menuIdx];
 	}
 
-  //Check for seed change
-  if (kDown & KEY_Y) {
-    pastSeedLength = Settings::seed.length();
-    Settings::seed = std::to_string(rand());
-    seedChanged = true;
+  if (mode != GENERATE_MODE) {
+
+    //New Random Seed
+    if (kDown & KEY_Y) {
+      pastSeedLength = Settings::seed.length();
+      Settings::seed = std::to_string(rand());
+      seedChanged = true;
+    }
+
+    //Input Custom Seed
+    if (kDown & KEY_X) {
+      pastSeedLength = Settings::seed.length();
+      Settings::seed = GetInput("Enter Seed");
+      seedChanged = true;
+    }
+
+    //Reprint seed if it changed
+    if (seedChanged) {
+      std::string spaces = "";
+      spaces.append(pastSeedLength, ' ');
+      consoleSelect(&topScreen);
+      printf("\x1b[10;19H%s", spaces.c_str());
+      printf("\x1b[10;19H%s", Settings::seed.c_str());
+      seedChanged = false;
+    }
   }
 
-  if (kDown & KEY_X) {
-    pastSeedLength = Settings::seed.length();
-    GetInputSeed();
-    seedChanged = true;
-  }
 
-  //reprint seed if it changed
-  if (seedChanged) {
-    std::string spaces = "";
-    spaces.append(pastSeedLength, ' ');
-    consoleSelect(&topScreen);
-    printf("\x1b[10;19H%s", spaces.c_str());
-    printf("\x1b[10;19H%s", Settings::seed.c_str());
-    seedChanged = false;
-  }
-
-	//Print current menu
+	//Print current menu (if applicable)
 	consoleSelect(&bottomScreen);
 	if (mode == MAIN_MENU && kDown) {
 		UpdateMainMenu(kDown);
@@ -119,7 +130,35 @@ void MenuUpdate(u32 kDown) {
 	} else if (mode == SUB_MENU && kDown) {
 		UpdateSubMenu(kDown);
 		PrintSubMenu();
-	}
+	} else if (mode == LOAD_PRESET && kDown) {
+    UpdatePresetsMenu(kDown);
+    PrintPresetsMenu();
+  }
+}
+
+void ModeChangeInit() {
+  if (mode == SUB_MENU) {
+    settingIdx = 0;
+    currentSetting = currentMenuItem->settingsList->at(settingIdx);
+
+  } else if (mode == SAVE_PRESET) {
+    if (SaveSettingsPreset()) {
+      printf("\x1b[10;5HPreset Saved!");
+      printf("\x1b[12;5HPress B to return to the main menu.");
+    } else {
+      printf("\x1b[10;5HFailed to save preset.");
+      printf("\x1b[12;5HPress B to return to the main menu.");
+    }
+
+  } else if (mode == LOAD_PRESET) {
+    GetPresets();
+
+  } else if (mode == GENERATE_MODE) {
+    consoleSelect(&bottomScreen);
+    consoleClear();
+    GenerateRandomizer();
+  }
+
 }
 
 void UpdateMainMenu(u32 kDown) {
@@ -138,7 +177,7 @@ void UpdateMainMenu(u32 kDown) {
     menuIdx = static_cast<u8>(Settings::mainMenu.size() - 1);
   }
 
-	currentMenu = Settings::mainMenu[menuIdx];
+	currentMenuItem = Settings::mainMenu[menuIdx];
 }
 
 void UpdateSubMenu(u32 kDown) {
@@ -151,13 +190,13 @@ void UpdateSubMenu(u32 kDown) {
   }
 
   // Bounds checking
-  if (settingIdx == currentMenu->settingsList->size()) {
+  if (settingIdx == currentMenuItem->settingsList->size()) {
     settingIdx = 0;
   } else if (settingIdx == 0xFFFF) {
-    settingIdx = static_cast<u16>(currentMenu->settingsList->size() - 1);
+    settingIdx = static_cast<u16>(currentMenuItem->settingsList->size() - 1);
   }
 
-  currentSetting = currentMenu->settingsList->at(settingIdx);
+  currentSetting = currentMenuItem->settingsList->at(settingIdx);
 
   if ((kDown & KEY_DRIGHT) != 0) {
     currentSetting->NextOptionIndex();
@@ -170,22 +209,45 @@ void UpdateSubMenu(u32 kDown) {
   currentSetting->SanitizeSelectedOptionIndex();
 }
 
+void UpdatePresetsMenu(u32 kDown) {
+  if ((kDown & KEY_DUP) != 0) {
+    presetIdx--;
+  }
+
+  if ((kDown & KEY_DDOWN) != 0) {
+    presetIdx++;
+  }
+
+  // Bounds checking
+  if (presetIdx == presetEntries.size()) {
+    presetIdx = 0;
+  } else if (presetIdx == 0xFF) {
+    presetIdx = static_cast<u8>(presetEntries.size() - 1);
+  }
+
+  if ((kDown & KEY_A) != 0) {
+    if (!LoadPreset(presetEntries[presetIdx])) {
+      consoleSelect(&topScreen);
+      printf("\x1b[24;5HFailed to load preset.");
+    }
+  }
+}
+
 void PrintMainMenu() {
 	printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
 		if (i + menuBound >= Settings::mainMenu.size()) break;
 
-		Menu* menu = Settings::mainMenu[i + menuBound];
-
+		MenuItem* menu = Settings::mainMenu[i + menuBound];
 
     u8 row = 3 + i;
     //make the current menu green
 		if (menuIdx == i + menuBound) {
-			printf("\x1b[%d;%dH\x1b[32m>", row,  1);
-			printf("\x1b[%d;%dH%s\x1b[0m", row,  2, menu->name.c_str());
+			printf("\x1b[%d;%dH\x1b[32m>", row,  2);
+			printf("\x1b[%d;%dH%s\x1b[0m", row,  3, menu->name.c_str());
 		} else {
-			printf("\x1b[%d;%dH%s\x1b[0m", row,  2, menu->name.c_str());
+			printf("\x1b[%d;%dH%s\x1b[0m", row,  3, menu->name.c_str());
 		}
 	}
 }
@@ -199,13 +261,13 @@ void PrintSubMenu() {
 	}
 
 	//print menu name
-	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenu->name.length()/2), currentMenu->name.c_str());
+	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
-		if (i + settingBound >= currentMenu->settingsList->size()) break;
+		if (i + settingBound >= currentMenuItem->settingsList->size()) break;
 
-		Option* setting = currentMenu->settingsList->at(i + settingBound);
+		Option* setting = currentMenuItem->settingsList->at(i + settingBound);
 
 		u8 row = 3 + (i * 2);
     //make the current setting green
@@ -224,6 +286,31 @@ void PrintSubMenu() {
   PrintOptionDescrption();
 }
 
+void PrintPresetsMenu() {
+  if (presetEntries.empty()) {
+    printf("\x1b[10;5HNo Presets Detected!");
+    printf("\x1b[12;5HPress B to return to the main menu.");
+    return;
+  }
+
+  printf("\x1b[0;%dHSelect a Preset", (BOTTOM_WIDTH/2) - 7);
+
+	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+		if (i + presetBound >= presetEntries.size()) break;
+
+		std::string preset = presetEntries[i];
+
+    u8 row = 3 + (i * 2);
+    //make the current preset green
+		if (presetIdx == i + presetBound) {
+			printf("\x1b[%d;%dH\x1b[32m>", row, 14);
+			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, preset.c_str());
+		} else {
+			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, preset.c_str());
+		}
+	}
+}
+
 void ClearDescription() {
   consoleSelect(&topScreen);
 
@@ -238,6 +325,119 @@ void PrintOptionDescrption() {
   std::string_view description = currentSetting->GetSelectedOptionDescription();
 
   printf("\x1b[22;0H%s", description.data());
+}
+
+//Creates preset directories if they don't exist
+bool CreatePresetDirectories() {
+  Result res;
+  FS_Archive sdmcArchive;
+
+  // Open SD archive
+  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+    return false;
+  }
+
+  //Create the presets directory if it doesn't exist
+  res = FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the oot3d directory if it doesn't exist
+  res = FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets/oot3d"), FS_ATTRIBUTE_DIRECTORY);
+
+  // Close SD archive
+  res = FSUSER_CloseArchive(sdmcArchive);
+  return true;
+}
+
+//Gets the preset filenames
+void GetPresets() {
+  presetEntries = {};
+  for (const auto & entry : fs::directory_iterator("/3ds/presets/oot3d")) {
+    presetEntries.push_back(entry.path().stem().string());
+  }
+}
+
+//Load the selected preset
+bool LoadPreset(std::string presetName) {
+  Result res;
+  FS_Archive sdmcArchive = 0;
+  Handle presetFile;
+  u32 bytesRead = 0;
+  u32 totalRW = 0;
+
+  std::string filepath = "/3ds/presets/oot3d/" + presetName + ".bin";
+
+  // Open SD archive
+  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+    return false;
+  }
+
+  // Open preset file
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&presetFile, sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+    return false;
+  }
+
+  //Read ctx size
+  size_t ctxSize;
+  if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctxSize, sizeof(ctxSize)))) {
+    return false;
+  }
+  totalRW += bytesRead;
+
+  //If the sizes don't match, then the preset is incompatible (there's probably a better way to do this)
+  if (ctxSize != sizeof(SettingsContext)) {
+    consoleSelect(&topScreen);
+    printf("\x1b[22;5Preset not compatible with current randomizer.");
+    return false;
+  }
+
+  //Read preset SettingsContext
+  SettingsContext ctx;
+  if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctx, sizeof(ctx)))) {
+    return false;
+  }
+
+  Settings::FillSettings(ctx);
+  return true;
+}
+
+//Saves the new preset to a file
+bool SaveSettingsPreset() {
+  Result res;
+  FS_Archive sdmcArchive = 0;
+  Handle presetFile;
+  u32 bytesWritten = 0;
+  u32 totalRW = 0;
+
+  std::string presetName = (GetInput("Preset Name")).substr(0, 19);
+  std::string presetsFilepath = "/3ds/presets/oot3d/";
+  std::string filepath = presetsFilepath + presetName + ".bin";
+
+  SettingsContext ctx = Settings::FillContext();
+
+  // Open SD archive
+  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+    return false;
+  }
+
+  // Open preset file
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&presetFile, sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+    return false;
+  }
+
+  // Write struct size to preset file
+  totalRW = 0;
+  size_t ctxSize = sizeof(ctx);
+  if (!R_SUCCEEDED(res = FSFILE_Write(presetFile, &bytesWritten, totalRW, &ctxSize, sizeof(ctxSize), FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += bytesWritten;
+
+  // Write struct to preset file
+  if (!R_SUCCEEDED(res = FSFILE_Write(presetFile, &bytesWritten, totalRW, &ctx, sizeof(ctx), FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += bytesWritten;
+
+  return true;
 }
 
 void GenerateRandomizer() {
@@ -264,8 +464,8 @@ void GenerateRandomizer() {
 	}
 }
 
-//opens up the 3ds software keyboard to type in a seed
-void GetInputSeed() {
+//opens up the 3ds software keyboard for getting user input
+std::string GetInput(const char* hintText) {
   SwkbdState swkbd;
   char seed[60];
   SwkbdButton button = SWKBD_BUTTON_NONE;
@@ -273,11 +473,11 @@ void GetInputSeed() {
   swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 1, -1);
 	swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
 	swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
-	swkbdSetHintText(&swkbd, "Enter Seed");
+	swkbdSetHintText(&swkbd, hintText);
 
   while (button != SWKBD_BUTTON_CONFIRM) {
     button = swkbdInputText(&swkbd, seed, sizeof(seed));
   }
 
-  Settings::seed = std::string(seed);
+  return std::string(seed);
 }

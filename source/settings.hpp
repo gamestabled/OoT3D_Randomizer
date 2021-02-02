@@ -8,6 +8,7 @@
 #include <variant>
 #include <vector>
 #include "../code/src/settings.h"
+#include "menu.hpp"
 
 class Option {
 public:
@@ -85,6 +86,14 @@ public:
       }
     }
 
+    void SetSelectedIndex(u8 idx) {
+      selectedOption = idx;
+      if (selectedOption >= options.size()) {
+        printf("\x1b[30;0HERROR: Incomptaible selection for %s\n", name.c_str());
+        selectedOption = 0;
+      }
+    }
+
 private:
     Option(u8 var_, std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_, u8 defaultOption_ = 0)
           : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), selectedOption(defaultOption_) {
@@ -103,15 +112,29 @@ private:
   u8 selectedOption;
 };
 
+enum class MenuItemType {
+  SubMenu,
+  Action,
+};
 
-
-class Menu {
+class MenuItem {
   public:
-    Menu(std::string name_, std::vector<Option *>* settingsList_)
-        : name(std::move(name_)), settingsList(std::move(settingsList_)) {}
+
+    static MenuItem SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
+      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), SUB_MENU};
+    }
+
+    static MenuItem Action(std::string name_, u8 mode_) {
+      return MenuItem{std::move(name_), MenuItemType::Action, {}, std::move(mode_)};
+    }
+
+    MenuItem(std::string name_, MenuItemType type_, std::vector<Option *>* settingsList_, u8 mode_)
+        : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_) {}
 
     std::string name;
+    MenuItemType type;
     std::vector<Option *>* settingsList;
+    u8 mode;
     int selectedSetting = 0;
 };
 
@@ -132,7 +155,7 @@ namespace Settings {
   extern Option GanonsBossKey;
   extern Option MapsAndCompasses;
   extern Option ShuffleSongs;
-  extern Option Skullsanity;
+  extern Option Tokensanity;
   extern Option Scrubsanity;
   extern Option ItemPoolValue;
   extern u8 LACSCondition;
@@ -261,6 +284,7 @@ namespace Settings {
 
   extern void UpdateSettings();
   extern SettingsContext FillContext();
+  extern void FillSettings(SettingsContext ctx);
 
-  extern std::vector<Menu *> mainMenu;
+  extern std::vector<MenuItem *> mainMenu;
 }

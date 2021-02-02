@@ -36,7 +36,7 @@ namespace Settings {
 
   //Shuffle Settings
   Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Anywhere"},                          {songsSongLocations, songsAllLocations}); //TODO: Dungeon Rewards
-  Option Skullsanity         = Option::U8  ("Tokensanity",            {"Vanilla", "Anywhere"},                                 {tokensVanilla, tokensAllLocations});
+  Option Tokensanity         = Option::U8  ("Tokensanity",            {"Vanilla", "Anywhere"},                                 {tokensVanilla, tokensAllLocations});
   Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},     {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
   Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                           {kokiriSwordDesc, kokiriSwordDesc});
   Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                           {ocarinasDesc, ocarinasDesc});
@@ -46,7 +46,7 @@ namespace Settings {
   //TODO: Medigoron and Carpet Salesman
   std::vector<Option *> shuffleOptions = {
     &ShuffleSongs,
-    &Skullsanity,
+    &Tokensanity,
     &Scrubsanity,
     &ShuffleKokiriSword,
     &ShuffleOcarinas,
@@ -57,11 +57,11 @@ namespace Settings {
   };
 
   //Shuffle Dungeon Items
-  Option Keysanity           = Option::U8  ("Small Keys",             {"Vanilla", "Own Dungeon", "Anywhere"},                 {smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
-  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Vanilla", "Own Dungeon", "Anywhere"},                 {bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
+  Option Keysanity           = Option::U8  ("Small Keys",             {"Vanilla", "Own Dungeon", "Anywhere"},                  {smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
+  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Vanilla", "Own Dungeon", "Anywhere"},                  {bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
   Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Vanilla", "Own Dungeon", "Anywhere", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"},
                                                                       {ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS});
-  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"}, {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
+  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
   u8 LACSCondition           = 0;
   std::vector<Option *> shuffleDungeonItemOptions = {
     &Keysanity,
@@ -71,9 +71,9 @@ namespace Settings {
   };
 
   //Timesaver Settings
-  Option SkipChildStealth    = Option::U8  ("Skip Child Sealth",      {"Don't Skip", "Skip"},                              {childStealthDesc, childStealthDesc});
-  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Skip", "Don't Skip"},                              {fourPoesDesc, fourPoesDesc});
-  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, {"", "", "", "", "", "", "", "", "", ""});
+  Option SkipChildStealth    = Option::U8  ("Skip Child Sealth",      {"Don't Skip", "Skip"},                                  {childStealthDesc, childStealthDesc});
+  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Skip", "Don't Skip"},                                  {fourPoesDesc, fourPoesDesc});
+  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     {"", "", "", "", "", "", "", "", "", ""});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &FourPoesCutscene,
@@ -81,8 +81,8 @@ namespace Settings {
   };
 
   //Misc Settings
-  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"}, {damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc}, 1);
-  Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                   {startingTimeDesc, startingTimeDesc});
+  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc}, 1);
+  Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc, startingTimeDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &DamageMultiplier,
@@ -90,31 +90,34 @@ namespace Settings {
   };
 
   //Advanced Glitch Settings
-  Option BoomerangAsAdult    = Option::U8  ("Enable Adult Boomerang", {"No", "Yes"}, {adultBoomerangDesc, adultBoomerangDesc});
-  Option HammerAsChild       = Option::U8  ("Enable Child Hammer",    {"No", "Yes"}, {childHammerDesc, childHammerDesc});
+  Option BoomerangAsAdult    = Option::U8  ("Enable Adult Boomerang", {"No", "Yes"},                                           {adultBoomerangDesc, adultBoomerangDesc});
+  Option HammerAsChild       = Option::U8  ("Enable Child Hammer",    {"No", "Yes"},                                           {childHammerDesc, childHammerDesc});
   std::vector<Option *> advancedGlitchedOptions = {
     &BoomerangAsAdult,
     &HammerAsChild,
   };
 
   //Item Pool Settings
-  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"}, {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal}, 1);
+  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},          {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal}, 1);
   //TODO: Ice Traps
 
   //Excluded Locations (definitions made in ItemLocation class)
   std::vector<Option *> excludeLocationsOptions = {};
 
-  Menu open                     = Menu("Open Settings",              &openOptions);
-  Menu world                    = Menu("World Settings",             &worldOptions);
-  Menu shuffle                  = Menu("Shuffle Settings",           &shuffleOptions);
-  Menu shuffleDungeonItems      = Menu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
-  Menu excludeLocations         = Menu("Exclude Locations",          &excludeLocationsOptions);
-  Menu timesaverSettings        = Menu("Timesaver Settings",         &timesaverOptions);
-  Menu miscSettings             = Menu("Misc Settings",              &miscOptions);
-  Menu advancedGlitchedSettings = Menu("Advanced Glitched Settings", &advancedGlitchedOptions);
+  MenuItem open                     = MenuItem::SubMenu("Open Settings",              &openOptions);
+  MenuItem world                    = MenuItem::SubMenu("World Settings",             &worldOptions);
+  MenuItem shuffle                  = MenuItem::SubMenu("Shuffle Settings",           &shuffleOptions);
+  MenuItem shuffleDungeonItems      = MenuItem::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
+  MenuItem excludeLocations         = MenuItem::SubMenu("Exclude Locations",          &excludeLocationsOptions);
+  MenuItem timesaverSettings        = MenuItem::SubMenu("Timesaver Settings",         &timesaverOptions);
+  MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
+  MenuItem advancedGlitchedSettings = MenuItem::SubMenu("Advanced Glitched Settings", &advancedGlitchedOptions);
+  MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
+  MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
+  MenuItem generateRandomizer       = MenuItem::Action ("Generate Randomizer",        GENERATE_MODE);
 
   //adding a menu with no options crashes, might fix later
-  std::vector<Menu *> mainMenu = {
+  std::vector<MenuItem *> mainMenu = {
     &open,
     &world,
     &shuffle,
@@ -123,6 +126,9 @@ namespace Settings {
     &excludeLocations,
     &miscSettings,
     &advancedGlitchedSettings,
+    &loadSettingsPreset,
+    &saveSettingsPreset,
+    &generateRandomizer,
   };
 
   //declared here, set in fill.cpp
@@ -133,30 +139,44 @@ namespace Settings {
   //Fills a SettingsContext struct which is sent to the patch
   SettingsContext FillContext() {
     SettingsContext ctx = {};
-    ctx.openForest       = OpenForest.Value<u8>();
-    ctx.openKakariko     = OpenKakariko.Value<u8>();
-    ctx.rainbowBridge    = Bridge.Value<u8>();
-    ctx.gerudoFortress   = GerudoFortress.Value<u8>();
-    ctx.damageMultiplier = DamageMultiplier.Value<u8>();
-    ctx.zorasFountain    = ZorasFountain.Value<u8>();
-    ctx.startingAge      = StartingAge.Value<u8>();
-    ctx.startingTime     = StartingTime.Value<u8>();
-    ctx.mapsAndCompasses = MapsAndCompasses.Value<u8>();
-    ctx.scrubsanity      = Scrubsanity.Value<u8>();
-    ctx.lacsCondition    = LACSCondition;
-    ctx.skipChildStealth = SkipChildStealth.Value<u8>();
-    ctx.bombchusInLogic  = BombchusInLogic.Value<bool>();
-    ctx.shuffleSongs     = ShuffleSongs.Value<u8>();
+    ctx.logic              = Logic.Value<u8>();
+    ctx.openForest         = OpenForest.Value<u8>();
+    ctx.openKakariko       = OpenKakariko.Value<u8>();
+    ctx.openDoorOfTime     = OpenDoorOfTime.Value<bool>();
+    ctx.zorasFountain      = ZorasFountain.Value<u8>();
+    ctx.gerudoFortress     = GerudoFortress.Value<u8>();
+    ctx.rainbowBridge      = Bridge.Value<u8>();
 
-    ctx.openDoorOfTime      = (OpenDoorOfTime)    ? 1 : 0;
-    ctx.shuffleBeanSalesman = (ShuffleMagicBeans) ? 1 : 0;
-    ctx.shuffleOcarinas     = (ShuffleOcarinas)   ? 1 : 0;
-    ctx.fourPoesCutscene    = (FourPoesCutscene)  ? 1 : 0;
+    ctx.startingAge        = StartingAge.Value<u8>();
+    ctx.bombchusInLogic    = BombchusInLogic.Value<bool>();
+    ctx.randomMQDungeons   = RandomMQDungeons.Value<bool>();
 
-    ctx.bigPoeTargetCount = BigPoeTargetCount.Value<u8>() + 1;
+    ctx.shuffleSongs       = ShuffleSongs.Value<u8>();
+    ctx.tokensanity        = Tokensanity.Value<u8>();
+    ctx.scrubsanity        = Scrubsanity.Value<u8>();
+    ctx.shuffleKokiriSword = ShuffleKokiriSword.Value<bool>();
+    ctx.shuffleOcarinas    = ShuffleOcarinas.Value<bool>();
+    ctx.shuffleWeirdEgg    = ShuffleWeirdEgg.Value<bool>();
+    ctx.shuffleGerudoToken = ShuffleGerudoToken.Value<bool>();
+    ctx.shuffleMagicBeans  = ShuffleMagicBeans.Value<bool>();
 
-    ctx.boomerangAsAdult = BoomerangAsAdult.Value<u8>();
-    ctx.hammerAsChild    = HammerAsChild.Value<u8>();
+    ctx.keysanity          = Keysanity.Value<u8>();
+    ctx.bossKeysanity      = BossKeysanity.Value<u8>();
+    ctx.ganonsBossKey      = GanonsBossKey.Value<u8>();
+    ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
+    ctx.lacsCondition      = LACSCondition;
+
+    ctx.skipChildStealth   = SkipChildStealth.Value<u8>();
+    ctx.fourPoesCutscene   = FourPoesCutscene.Value<bool>();
+    ctx.bigPoeTargetCount  = BigPoeTargetCount.Value<u8>() + 1;
+
+    ctx.damageMultiplier   = DamageMultiplier.Value<u8>();
+    ctx.startingTime       = StartingTime.Value<u8>();
+
+    ctx.boomerangAsAdult   = BoomerangAsAdult.Value<u8>();
+    ctx.hammerAsChild      = HammerAsChild.Value<u8>();
+
+    ctx.itemPoolValue      = ItemPoolValue.Value<u8>();
 
     ctx.dekuTreeDungeonMode              = (DekuTreeDungeonMode)              ? 1 : 0;
     ctx.dodongosCavernDungeonMode        = (DodongosCavernDungeonMode)        ? 1 : 0;
@@ -172,6 +192,47 @@ namespace Settings {
 
     ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
     return ctx;
+  }
+
+  //Takes a SettingsContext to use for the current settings
+  void FillSettings(SettingsContext ctx) {
+    Logic.SetSelectedIndex(ctx.logic);
+    OpenForest.SetSelectedIndex(ctx.openForest);
+    OpenKakariko.SetSelectedIndex(ctx.openKakariko);
+    OpenDoorOfTime.SetSelectedIndex(ctx.openDoorOfTime);
+    ZorasFountain.SetSelectedIndex(ctx.zorasFountain);
+    GerudoFortress.SetSelectedIndex(ctx.gerudoFortress);
+    Bridge.SetSelectedIndex(ctx.rainbowBridge);
+
+    StartingAge.SetSelectedIndex(ctx.startingAge);
+    BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
+    RandomMQDungeons.SetSelectedIndex(ctx.randomMQDungeons);
+
+    ShuffleSongs.SetSelectedIndex(ctx.shuffleSongs);
+    Tokensanity.SetSelectedIndex(ctx.tokensanity);
+    Scrubsanity.SetSelectedIndex(ctx.scrubsanity);
+    ShuffleKokiriSword.SetSelectedIndex(ctx.shuffleKokiriSword);
+    ShuffleOcarinas.SetSelectedIndex(ctx.shuffleOcarinas);
+    ShuffleWeirdEgg.SetSelectedIndex(ctx.shuffleWeirdEgg);
+    ShuffleGerudoToken.SetSelectedIndex(ctx.shuffleGerudoToken);
+    ShuffleMagicBeans.SetSelectedIndex(ctx.shuffleMagicBeans);
+
+    Keysanity.SetSelectedIndex(ctx.keysanity);
+    BossKeysanity.SetSelectedIndex(ctx.bossKeysanity);
+    GanonsBossKey.SetSelectedIndex(ctx.ganonsBossKey);
+    MapsAndCompasses.SetSelectedIndex(ctx.mapsAndCompasses);
+
+    SkipChildStealth.SetSelectedIndex(ctx.skipChildStealth);
+    FourPoesCutscene.SetSelectedIndex(ctx.fourPoesCutscene);
+    BigPoeTargetCount.SetSelectedIndex(ctx.bigPoeTargetCount - 1);
+
+    DamageMultiplier.SetSelectedIndex(ctx.damageMultiplier);
+    StartingTime.SetSelectedIndex(ctx.startingTime);
+
+    BoomerangAsAdult.SetSelectedIndex(ctx.boomerangAsAdult);
+    HammerAsChild.SetSelectedIndex(ctx.hammerAsChild);
+
+    ItemPoolValue.SetSelectedIndex(ctx.itemPoolValue);
   }
 
   bool BombchuDrop                      = false;

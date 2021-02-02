@@ -52,11 +52,11 @@ bool SpoilerLog_Write() {
   logtxt += "\nAll Locations:\n\n";
   for (ItemLocation* location : dungeonRewardLocations) {
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
-    logtxt += location->IsAddedToPool() ? " ADDED\n" : " NOT ADDED\n";
+    logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
   for (ItemLocation* location : allLocations) {
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
-    logtxt += location->IsAddedToPool() ? " ADDED\n" : " NOT ADDED\n";
+    logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
 
   Result res = 0;

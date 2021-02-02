@@ -123,30 +123,44 @@ typedef enum {
 } AgeSetting;
 
 typedef struct {
+  u8 logic;
   u8 openForest;
   u8 openKakariko;
-  u8 rainbowBridge;
-  u8 gerudoFortress;
-  u8 damageMultiplier;
-  u8 zorasFountain;
-  u8 startingAge;
-  u8 startingTime;
-  u8 mapsAndCompasses;
-  u8 scrubsanity;
-  u8 lacsCondition;
-  u8 skipChildStealth;
-  u8 bombchusInLogic;
-  u8 shuffleSongs;
-
   u8 openDoorOfTime;
-  u8 shuffleBeanSalesman;
-  u8 shuffleOcarinas;
-  u8 fourPoesCutscene;
+  u8 zorasFountain;
+  u8 gerudoFortress;
+  u8 rainbowBridge;
 
+  u8 startingAge;
+  u8 bombchusInLogic;
+  u8 randomMQDungeons;
+
+  u8 shuffleSongs;
+  u8 tokensanity;
+  u8 scrubsanity;
+  u8 shuffleKokiriSword;
+  u8 shuffleOcarinas;
+  u8 shuffleWeirdEgg;
+  u8 shuffleGerudoToken;
+  u8 shuffleMagicBeans;
+
+  u8 keysanity;
+  u8 bossKeysanity;
+  u8 ganonsBossKey;
+  u8 mapsAndCompasses;
+  u8 lacsCondition;
+
+  u8 skipChildStealth;
+  u8 fourPoesCutscene;
   u8 bigPoeTargetCount;
+
+  u8 damageMultiplier;
+  u8 startingTime;
 
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+
+  u8 itemPoolValue;
 
   u8 dekuTreeDungeonMode;
   u8 dodongosCavernDungeonMode;
