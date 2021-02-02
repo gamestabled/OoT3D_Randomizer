@@ -223,8 +223,10 @@ void UpdatePresetsMenu(u32 kDown) {
   }
 
   if ((kDown & KEY_A) != 0) {
-    if (!LoadPreset(presetEntries[presetIdx])) {
-      consoleSelect(&topScreen);
+    consoleSelect(&topScreen);
+    if (LoadPreset(presetEntries[presetIdx])) {
+      printf("\x1b[24;5HPreset Loaded!");
+    } else {
       printf("\x1b[24;5HFailed to load preset.");
     }
   }
