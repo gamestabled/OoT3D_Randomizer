@@ -40,7 +40,7 @@ void PrintTopScreen() {
 
 void MenuInit() {
 
-  //Call to fill in the Excluded Locations menu
+  //Call to fill in the Excluded Locations menu (from item_location.hpp)
   AddExcludedOptions();
 
   seedChanged = false;
@@ -69,7 +69,6 @@ void MenuInit() {
 
   consoleSelect(&bottomScreen);
   PrintMainMenu();
-
 
 }
 
@@ -337,6 +336,8 @@ bool CreatePresetDirectories() {
     return false;
   }
 
+  //Create the 3ds directory if it doesn't exist (on citra)
+  res = FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds"), FS_ATTRIBUTE_DIRECTORY);
   //Create the presets directory if it doesn't exist
   res = FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets"), FS_ATTRIBUTE_DIRECTORY);
   //Create the oot3d directory if it doesn't exist
@@ -370,17 +371,20 @@ bool LoadPreset(std::string presetName) {
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+    printf("\x1b[22;5HFailed to load SD Archive.");
     return false;
   }
 
   // Open preset file
   if (!R_SUCCEEDED(res = FSUSER_OpenFile(&presetFile, sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+    printf("\x1b[22;5HFailed to open preset file %s.", filepath.c_str());
     return false;
   }
 
   //Read ctx size
   size_t ctxSize;
   if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctxSize, sizeof(ctxSize)))) {
+    printf("\x1b[22;5HFailed to read preset size.");
     return false;
   }
   totalRW += bytesRead;
@@ -397,6 +401,9 @@ bool LoadPreset(std::string presetName) {
   if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctx, sizeof(ctx)))) {
     return false;
   }
+
+  FSFILE_Close(presetFile);
+  FSUSER_CloseArchive(sdmcArchive);
 
   Settings::FillSettings(ctx);
   return true;
@@ -439,6 +446,9 @@ bool SaveSettingsPreset() {
     return false;
   }
   totalRW += bytesWritten;
+
+  FSFILE_Close(presetFile);
+  FSUSER_CloseArchive(sdmcArchive);
 
   return true;
 }

@@ -104,11 +104,170 @@ namespace Settings {
   //Excluded Locations (definitions made in ItemLocation class)
   std::vector<Option *> excludeLocationsOptions = {};
 
+  //Enable Tricks                                         ---------------------
+  Option LogicGrottosWithoutAgony         = Option::Bool("Grottos Without Agony",                          {"Disable", "Enable"}, {"", ""});
+  Option LogicVisibleCollision            = Option::Bool("Pass Through Visible\n One-Way Collisions",      {"Disable", "Enable"}, {"", ""});
+  Option LogicFewerTunicRequirements      = Option::Bool("Fewer Tunic\n Requirements",                     {"Disable", "Enable"}, {"", ""});
+  Option LogicLostWoodsBridge             = Option::Bool("Jump onto the Lost\n Woods Bridge as Adult",     {"Disable", "Enable"}, {"", ""});
+  Option LogicLostWoodsGSBean             = Option::Bool("Lost Woods Adult GS\n without Bean",             {"Disable", "Enable"}, {"", ""});
+  Option LogicLabDiving                   = Option::Bool("Lake Hylia Lab Dive\n without Gold Scale",       {"Disable", "Enable"}, {"", ""});
+  Option LogicLabWallGS                   = Option::Bool("Lake Hylia Lab Wall\n GS with Jump Slash",       {"Disable", "Enable"}, {"", ""});
+  Option LogicGraveyardPoH                = Option::Bool("Graveyard Freestanding\n PoH with Boomerang",    {"Disable", "Enable"}, {"", ""});
+  Option LogicChildDampeRacePoH           = Option::Bool("Second Dampe Race as\n Child",                   {"Disable", "Enable"}, {"", ""});
+  Option LogicGerudoKitchen               = Option::Bool("Gerudo Fortress\n Kitchen with No Items",        {"Disable", "Enable"}, {"", ""});
+  Option LogicLensWasteland               = Option::Bool("Lensless Wasteland",                             {"Disable", "Enable"}, {"", ""});
+  Option LogicReverseWasteland            = Option::Bool("Reverse Wasteland",                              {"Disable", "Enable"}, {"", ""});
+  Option LogicColossusGS                  = Option::Bool("Colossus Hill GS\n with Hookshot",               {"Disable", "Enable"}, {"", ""});
+  Option LogicManOnRoof                   = Option::Bool("Man on Roof without\n Hookshot",                 {"Disable", "Enable"}, {"", ""});
+  Option LogicKakarikoTowerGS             = Option::Bool("Kakariko Tower GS\n with Jump Slash",            {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicDMTBombable                 = Option::Bool("Death Mountain Trail\n Chest with Strength",     {"Disable", "Enable"}, {"", ""});
+  Option LogicDMTSoilGS                   = Option::Bool("DMT Soil GS without\n Destroying Boulder",       {"Disable", "Enable"}, {"", ""});
+  Option LogicLinkGoronDins               = Option::Bool("Stop Link the Goron\n with Din's Fire",          {"Disable", "Enable"}, {"", ""});
+  Option LogicGoronCityLeftMost           = Option::Bool("Goron City Maze Left\n Chest with Hover Boots",  {"Disable", "Enable"}, {"", ""});
+  Option LogicGoronCityPot                = Option::Bool("Goron City Spinning\n Pot PoH with Bombchu",     {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicGoronCityPotWithStrength    = Option::Bool("Goron City Spinning\n Pot PoH with Strength",    {"Disable", "Enable"}, {"", ""});
+  Option LogicChildRollingWithStrength    = Option::Bool("Rolling Goron as\n Child with Strength",         {"Disable", "Enable"}, {"", ""});
+  Option LogicCraterUpperToLower          = Option::Bool("Crater Upper to Lower\n with Hammer",            {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicCraterBeanPoHWithHovers     = Option::Bool("Crater's Bean PoH\n with Hover Boots",           {"Disable", "Enable"}, {"", ""});
+  Option LogicBiggoronBolero              = Option::Bool("Deliver Eye Drops\n with Bolero of Fire",        {"Disable", "Enable"}, {"", ""});
+  Option LogicZoraRiverLower              = Option::Bool("Zora's River Lower\n PoH with Nothing",          {"Disable", "Enable"}, {"", ""});
+  Option LogicZoraRiverUpper              = Option::Bool("Zora's River Upper\n PoH with Nothing",          {"Disable", "Enable"}, {"", ""});
+  Option LogicDekuB1WebsWithBow           = Option::Bool("Deku Tree Basement\n Web with Bow",              {"Disable", "Enable"}, {"", ""});
+  Option LogicDekuB1Skip                  = Option::Bool("Deku Tree Basement\n without Slingshot",         {"Disable", "Enable"}, {"", ""});
+  Option LogicDekuBasementGS              = Option::Bool("Deku Tree Basement\n Vines GS w/ Jump Slash",    {"Disable", "Enable"}, {"", ""});
+  Option LogicDCStaircase                 = Option::Bool("Dodongo's Cavern\n Staircase with Bow",          {"Disable", "Enable"}, {"", ""});
+  Option LogicDCJump                      = Option::Bool("DC Spike Trap room\n Jump w/o Hover Boots",      {"Disable", "Enable"}, {"", ""});
+  Option LogicDCSlingshotSkip             = Option::Bool("DC Child Slingshot\n Skips",                     {"Disable", "Enable"}, {"", ""});
+  Option LogicDCScarecrowGS               = Option::Bool("DC Scarecrow GS with\n Armos Statue",            {"Disable", "Enable"}, {"", ""});
+  Option LogicJabuBossGSAdult             = Option::Bool("Jabu Near Boss GS as\n Adult w/o Boomerang",     {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicJabuScrubJumpDive           = Option::Bool("Jabu Scrub as Adult\n w/ Jump Dive",             {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicForestOutsideBackdoor       = Option::Bool("FoT Outisde Backdoor\n w/ Jump Slash",           {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicForestDoorFrame             = Option::Bool("FoT East Courtyard\n Door Frame w/ Hover Boots", {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicForestOutdoorEastGS         = Option::Bool("FoT East Courtyard GS\n with Boomerang",         {"Disable", "Enable"}, {"", ""});
+  Option LogicFireBossDoorJump            = Option::Bool("FiT Boss Door without\n Hover Boots or Pillar",  {"Disable", "Enable"}, {"", ""});
+  Option LogicFireStrength                = Option::Bool("FiT Climb without\n Strength",                   {"Disable", "Enable"}, {"", ""});
+  Option LogicFireScarecrow               = Option::Bool("FiT East Tower w/o\n Scarecrow\'s Song",         {"Disable", "Enable"}, {"", ""});
+  Option LogicFireFlameMaze               = Option::Bool("FiT Flame Wall Maze\n Skip",                     {"Disable", "Enable"}, {"", ""});
+  Option LogicFireSongOfTime              = Option::Bool("FiT Song of Time Room\n GS w/o Song of Time",    {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterHookshotEntry          = Option::Bool("WaT Entry w/o Iron\n Boots using Hookshot",      {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicWaterTempleTorchLongshot    = Option::Bool("WaT Torch Longshot",                             {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterCentralBow             = Option::Bool("WaT Bow Target w/o\n Longshot or Hover Boots",   {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterCrackedWallNothing     = Option::Bool("WaT Cracked Wall with\n No Additional Items",    {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterCrackedWallHovers      = Option::Bool("WaT Cracked Wall with\n Hover Boots",            {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterBossKeyRegion          = Option::Bool("WaT Boss Key Region\n with Hover Boots",         {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterBKJumpDive             = Option::Bool("WaT Boss Key Jump\n Dive",                       {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterNorthBasementLedgeJump = Option::Bool("WaT North Basement\n Ledge with Precise Jump",   {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterDragonBombchu          = Option::Bool("", {"Disable", "Enable"}, {"", ""}); //Needs to be updated
+  Option LogicWaterDragonJumpDive         = Option::Bool("Wat Dragon Statue\n Jump Dive",                  {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterRiverGS                = Option::Bool("WaT River GS without\n Iron Boots",              {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterFallingPlatformGS      = Option::Bool("WaT Falling Platform\n Room GS with Hookshot",   {"Disable", "Enable"}, {"", ""});
+  Option LogicSpiritLowerAdultSwitch      = Option::Bool("SpT Lower Adult\n Switch with Bombs",            {"Disable", "Enable"}, {"", ""});
+  Option LogicSpiritChildBombchu          = Option::Bool("SpT Child Side Bridge\n with Bombchu",           {"Disable", "Enable"}, {"", ""});
+  Option LogicSpiritWall                  = Option::Bool("SpT Shifting Wall w/\n No Additional Items",     {"Disable", "Enable"}, {"", ""});
+  Option LogicSpiritLobbyGS               = Option::Bool("SpT Main Room GS with\n Boomerang",              {"Disable", "Enable"}, {"", ""});
+  Option LogicSpiritMapChest              = Option::Bool("SpT Map Chest with\n Bow",                       {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicSpiritSunChest              = Option::Bool("SpT Sun Block Room\n Chest with Bow",            {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicShadowFireArrowEntry        = Option::Bool("ShT Entry with Fire\n Arrows",                   {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicShadowUmbrella              = Option::Bool("ShT Stone Umbrella\n Skip",                      {"Disable", "Enable"}, {"", ""});
+  Option LogicShadowFreestandingKey       = Option::Bool("ShT Freestanding Key\n with Bombchu",            {"Disable", "Enable"}, {"", ""});
+  Option LogicShadowStatue                = Option::Bool("ShT River Statue with\n Bombchu",                {"Disable", "Enable"}, {"", ""});
+  Option LogicBotwCageGS                  = Option::Bool("BotW Map Chest with\n Strength & Sticks",        {"Disable", "Enable"}, {"", ""}); //Needs Testing
+  Option LogicChildDeadhand               = Option::Bool("Child Deadhand w/o\n Kokiri Sword",              {"Disable", "Enable"}, {"", ""});
+  Option LogicGtgWithoutHookshot          = Option::Bool("GTG Left Side Silver\n Rupees w/o Hookshot",     {"Disable", "Enable"}, {"", ""});
+  Option LogicGtgFakeWall                 = Option::Bool("GTG Fake Wall Ledge\n with Hover Boots",         {"Disable", "Enable"}, {"", ""});
+  Option LogicLensSpirit                  = Option::Bool("SpT without Lens of\n Truth",                    {"Disable", "Enable"}, {"", ""});
+  Option LogicLensShadow                  = Option::Bool("ShT before Invisible\n Moving Platform w/o Lens",{"Disable", "Enable"}, {"", ""});
+  Option LogicLensShadowBack              = Option::Bool("ShT beyond Invisible\n Moving Platform w/o Lens",{"Disable", "Enable"}, {"", ""});
+  Option LogicLensBotw                    = Option::Bool("BotW without Lens of\n Truth",                   {"Disable", "Enable"}, {"", ""});
+  Option LogicLensGtg                     = Option::Bool("GTG without Lens of\n Truth",                    {"Disable", "Enable"}, {"", ""});
+  Option LogicLensCastle                  = Option::Bool("Ganon's Castle w/o\n Lens of Truth",             {"Disable", "Enable"}, {"", ""});
+  Option LogicSpiritTrialHookshot         = Option::Bool("Spirit Trial without\n Hookshot",                {"Disable", "Enable"}, {"", ""});
+  std::vector<Option *> detailedLogicOptions = {
+    &LogicGrottosWithoutAgony,
+    &LogicVisibleCollision,
+    &LogicFewerTunicRequirements,
+    &LogicLostWoodsBridge,
+    &LogicLostWoodsGSBean,
+    &LogicLabDiving,
+    &LogicLabWallGS,
+    &LogicGraveyardPoH,
+    &LogicChildDampeRacePoH,
+    &LogicGerudoKitchen,
+    &LogicLensWasteland,
+    &LogicReverseWasteland,
+    &LogicColossusGS,
+    &LogicManOnRoof,
+    &LogicKakarikoTowerGS,
+    &LogicDMTBombable,
+    &LogicDMTSoilGS,
+    &LogicLinkGoronDins,
+    &LogicGoronCityLeftMost,
+    &LogicGoronCityPot,
+    &LogicGoronCityPotWithStrength,
+    &LogicChildRollingWithStrength,
+    &LogicCraterUpperToLower,
+    &LogicCraterBeanPoHWithHovers,
+    &LogicBiggoronBolero,
+    &LogicZoraRiverLower,
+    &LogicZoraRiverUpper,
+    &LogicDekuB1WebsWithBow,
+    &LogicDekuB1Skip,
+    &LogicDekuBasementGS,
+    &LogicDCStaircase,
+    &LogicDCJump,
+    &LogicDCSlingshotSkip,
+    &LogicDCScarecrowGS,
+    &LogicJabuBossGSAdult,
+    &LogicJabuScrubJumpDive,
+    &LogicForestOutsideBackdoor,
+    &LogicForestDoorFrame,
+    &LogicForestOutdoorEastGS,
+    &LogicFireBossDoorJump,
+    &LogicFireStrength,
+    &LogicFireScarecrow,
+    &LogicFireFlameMaze,
+    &LogicFireSongOfTime,
+    &LogicWaterHookshotEntry,
+    &LogicWaterTempleTorchLongshot,
+    &LogicWaterCentralBow,
+    &LogicWaterCrackedWallNothing,
+    &LogicWaterCrackedWallHovers,
+    &LogicWaterBossKeyRegion,
+    &LogicWaterBKJumpDive,
+    &LogicWaterNorthBasementLedgeJump,
+    //&LogicWaterDragonBombchu,
+    &LogicWaterDragonJumpDive,
+    &LogicWaterRiverGS,
+    &LogicWaterFallingPlatformGS,
+    &LogicSpiritLowerAdultSwitch,
+    &LogicSpiritChildBombchu,
+    &LogicSpiritWall,
+    &LogicSpiritLobbyGS,
+    &LogicSpiritMapChest,
+    &LogicSpiritSunChest,
+    &LogicShadowFireArrowEntry,
+    &LogicShadowUmbrella,
+    &LogicShadowFreestandingKey,
+    &LogicShadowStatue,
+    &LogicBotwCageGS,
+    &LogicChildDeadhand,
+    &LogicGtgWithoutHookshot,
+    &LogicGtgFakeWall,
+    &LogicLensSpirit,
+    &LogicLensShadow,
+    &LogicLensShadowBack,
+    &LogicLensBotw,
+    &LogicLensGtg,
+    &LogicLensCastle,
+    &LogicSpiritTrialHookshot,
+  };
+
   MenuItem open                     = MenuItem::SubMenu("Open Settings",              &openOptions);
   MenuItem world                    = MenuItem::SubMenu("World Settings",             &worldOptions);
   MenuItem shuffle                  = MenuItem::SubMenu("Shuffle Settings",           &shuffleOptions);
   MenuItem shuffleDungeonItems      = MenuItem::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
   MenuItem excludeLocations         = MenuItem::SubMenu("Exclude Locations",          &excludeLocationsOptions);
+  MenuItem detailedLogic            = MenuItem::SubMenu("Detailed Logic Settings",    &detailedLogicOptions);
   MenuItem timesaverSettings        = MenuItem::SubMenu("Timesaver Settings",         &timesaverOptions);
   MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
   MenuItem advancedGlitchedSettings = MenuItem::SubMenu("Advanced Glitched Settings", &advancedGlitchedOptions);
@@ -124,6 +283,7 @@ namespace Settings {
     &shuffleDungeonItems,
     &timesaverSettings,
     &excludeLocations,
+    &detailedLogic,
     &miscSettings,
     &advancedGlitchedSettings,
     &loadSettingsPreset,
@@ -191,6 +351,14 @@ namespace Settings {
     ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
 
     ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
+
+    for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
+      ctx.detailedLogic[i] = detailedLogicOptions[i]->GetSelectedOptionIndex();
+    }
+
+    for (u16 i = 0; i < excludeLocationsOptions.size(); i++) {
+      ctx.excludeLocations[i] = excludeLocationsOptions[i]->GetSelectedOptionIndex();
+    }
     return ctx;
   }
 
@@ -233,6 +401,14 @@ namespace Settings {
     HammerAsChild.SetSelectedIndex(ctx.hammerAsChild);
 
     ItemPoolValue.SetSelectedIndex(ctx.itemPoolValue);
+
+    for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
+      detailedLogicOptions[i]->SetSelectedIndex(ctx.detailedLogic[i]);
+    }
+
+    for (u16 i = 0; i < excludeLocationsOptions.size(); i++) {
+      excludeLocationsOptions[i]->SetSelectedIndex(ctx.excludeLocations[i]);
+    }
   }
 
   bool BombchuDrop                      = false;
@@ -254,96 +430,8 @@ namespace Settings {
   bool GerudoTrainingGroundsDungeonMode = false;
   bool GanonsCastleDungeonMode          = false;
 
-  //Individual Options
-  bool LogicGrottosWithoutAgony         = false;
-  bool LogicVisibleCollision            = false;
-  bool LogicFewerTunicRequirements      = false;
-  bool LogicLostWoodsBridge             = false;
-  bool LogicLostWoodsGSBean             = false;
-  bool LogicLabDiving                   = false;
-  bool LogicLabWallGS                   = false;
-  bool LogicGraveyardPoH                = false;
-  bool LogicChildDampeRacePoH           = false;
-  bool LogicGerudoKitchen               = false;
-  bool LogicLensWasteland               = false;
-  bool LogicReverseWasteland            = false;
-  bool LogicColossusGS                  = false;
-  bool LogicManOnRoof                   = false;
-  bool LogicKakarikoTowerGS             = false;
-  bool LogicDMTBombable                 = false;
-  bool LogicDMTSoilGS                   = false;
-  bool LogicLinkGoronDins               = false;
-  bool LogicGoronCityLeftMost           = false;
-  bool LogicGoronCityPot                = false;
-  bool LogicGoronCityPotWithStrength    = false;
-  bool LogicChildRollingWithStrength    = false;
-  bool LogicCraterUpperToLower          = false;
-  bool LogicCraterBeanPoHWithHovers     = false;
-  bool LogicBiggoronBolero              = false;
-  bool LogicZoraWithHovers              = false;
-  bool LogicZoraWithCucco               = false;
-  bool LogicZoraRiverLower              = false;
-  bool LogicZoraRiverUpper              = false;
-  bool LogicDekuB1WebsWithBow           = false;
-  bool LogicDekuB1Skip                  = false;
-  bool LogicDekuBasementGS              = false;
-  bool LogicDCStaircase                 = false;
-  bool LogicDCJump                      = false;
-  bool LogicDCSlingshotSkip             = false;
-  bool LogicDCScarecrowGS               = false;
-  bool LogicJabuBossGSAdult             = false;
-  bool LogicJabuScrubJumpDive           = false;
-  bool LogicForestOutsideBackdoor       = false;
-  bool LogicForestScarecrow             = false;
-  bool LogicForestVines                 = false;
-  bool LogicForestOutdoorEastGS         = false;
-  bool LogicFireBossDoorJump            = false;
-  bool LogicFireStrength                = false;
-  bool LogicFireScarecrow               = false;
-  bool LogicFireFlameMaze               = false;
-  bool LogicFireSongOfTime              = false;
-  bool LogicWaterHookshotEntry          = false;
-  bool LogicWaterTempleTorchLongshot    = false;
-  bool LogicWaterCentralBow             = false;
-  bool LogicWaterCrackedWallNothing     = false;
-  bool LogicWaterCrackedWallHovers      = false;
-  bool LogicWaterBossKeyRegion          = false;
-  bool LogicWaterDragonBombchu          = false;
-  bool LogicWaterBKJumpDive             = false;
-  bool LogicWaterNorthBasementLedgeJump = false;
-  bool LogicWaterBKChest                = false;
-  bool LogicWaterDragonJumpDive         = false;
-  bool LogicWaterRiverGS                = false;
-  bool LogicWaterFallingPlatformGS      = false;
-  bool LogicSpiritLowerAdultSwitch      = false;
-  bool LogicSpiritChildBombchu          = false;
-  bool LogicSpiritWall                  = false;
-  bool LogicSpiritLobbyGS               = false;
-  bool LogicSpiritMapChest              = false;
-  bool LogicSpiritSunChest              = false;
-  bool LogicShadowFireArrowEntry        = false;
-  bool LogicShadowUmbrella              = false;
-  bool LogicShadowFreestandingKey       = false;
-  bool LogicShadowStatue                = false;
-  bool LogicBotwCageGS                  = false;
-  bool LogicChildDeadhand               = false;
-  bool LogicGtgWithoutHookshot          = false;
-  bool LogicGtgFakeWall                 = false;
-  bool LogicLensSpirit                  = false;
-  bool LogicLensShadow                  = false;
-  bool LogicLensShadowBack              = false;
-  bool LogicLensBotw                    = false;
-  bool LogicLensGtg                     = false;
-  bool LogicLensCastle                  = false;
-  bool LogicSpiritTrialHookshot         = false;
-
   //Function to set flags depending on settings
   void UpdateSettings() {
-    LogicGrottosWithoutAgony = true;
-    LogicFewerTunicRequirements = true;
-    LogicBiggoronBolero = true;
-    LogicManOnRoof = true;
-    LogicDekuB1Skip = true;
 
     //1 is MQ, 0 is Vanilla
     if (RandomMQDungeons) {

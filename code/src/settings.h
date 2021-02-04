@@ -176,6 +176,10 @@ typedef struct {
 
   u32 dungeonRewardBitMask;
 
+  //this wastes like 500 bytes, but idk if anyone cares enough
+  u8 detailedLogic[100];    //extra space incase we add more
+  u8 excludeLocations[500]; //^
+
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;
