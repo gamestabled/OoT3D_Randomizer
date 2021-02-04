@@ -302,23 +302,23 @@ namespace Settings {
     ctx.logic              = Logic.Value<u8>();
     ctx.openForest         = OpenForest.Value<u8>();
     ctx.openKakariko       = OpenKakariko.Value<u8>();
-    ctx.openDoorOfTime     = OpenDoorOfTime.Value<bool>();
+    ctx.openDoorOfTime     = (OpenDoorOfTime) ? 1 : 0;
     ctx.zorasFountain      = ZorasFountain.Value<u8>();
     ctx.gerudoFortress     = GerudoFortress.Value<u8>();
     ctx.rainbowBridge      = Bridge.Value<u8>();
 
     ctx.startingAge        = StartingAge.Value<u8>();
-    ctx.bombchusInLogic    = BombchusInLogic.Value<bool>();
-    ctx.randomMQDungeons   = RandomMQDungeons.Value<bool>();
+    ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
+    ctx.randomMQDungeons   = (RandomMQDungeons) ? 1 : 0;
 
     ctx.shuffleSongs       = ShuffleSongs.Value<u8>();
     ctx.tokensanity        = Tokensanity.Value<u8>();
     ctx.scrubsanity        = Scrubsanity.Value<u8>();
-    ctx.shuffleKokiriSword = ShuffleKokiriSword.Value<bool>();
-    ctx.shuffleOcarinas    = ShuffleOcarinas.Value<bool>();
-    ctx.shuffleWeirdEgg    = ShuffleWeirdEgg.Value<bool>();
-    ctx.shuffleGerudoToken = ShuffleGerudoToken.Value<bool>();
-    ctx.shuffleMagicBeans  = ShuffleMagicBeans.Value<bool>();
+    ctx.shuffleKokiriSword = (ShuffleKokiriSword) ? 1 : 0;
+    ctx.shuffleOcarinas    = (ShuffleOcarinas) ? 1 : 0;
+    ctx.shuffleWeirdEgg    = (ShuffleWeirdEgg) ? 1 : 0;
+    ctx.shuffleGerudoToken = (ShuffleGerudoToken) ? 1 : 0;
+    ctx.shuffleMagicBeans  = (ShuffleMagicBeans) ? 1 : 0;
 
     ctx.keysanity          = Keysanity.Value<u8>();
     ctx.bossKeysanity      = BossKeysanity.Value<u8>();
@@ -327,7 +327,7 @@ namespace Settings {
     ctx.lacsCondition      = LACSCondition;
 
     ctx.skipChildStealth   = SkipChildStealth.Value<u8>();
-    ctx.fourPoesCutscene   = FourPoesCutscene.Value<bool>();
+    ctx.fourPoesCutscene   = (FourPoesCutscene) ? 1 : 0;
     ctx.bigPoeTargetCount  = BigPoeTargetCount.Value<u8>() + 1;
 
     ctx.damageMultiplier   = DamageMultiplier.Value<u8>();
