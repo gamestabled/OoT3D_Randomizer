@@ -1,3 +1,6 @@
+#ifndef _DUNGEON_REWARDS_H_
+#define _DUNGEON_REWARDS_H_
+
 #include "z3D/z3D.h"
 #include <stddef.h>
 
@@ -23,4 +26,7 @@ typedef struct {
 } DungeonRewardInfo;
 
 u32 DungeonReward_GetOverrideText(u32 incomingTextId);
+const char* DungeonReward_GetName(u32 dungeonReward);
 const DungeonRewardInfo* DungeonReward_GetInfoByActor(Actor* reward);
+
+#endif //_DUNGEON_REWARDS_H_

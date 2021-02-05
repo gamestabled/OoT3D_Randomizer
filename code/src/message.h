@@ -1,3 +1,6 @@
+#ifndef _MESSAGE_H_
+#define _MESSAGE_H_
+
 #include "z3D/z3D.h"
 
 typedef struct {
@@ -36,3 +39,5 @@ typedef struct {
     u32  numEntries;
     u32  unk_0C;
 } MessageFileHeader;
+
+#endif //_MESSAGE_H_
