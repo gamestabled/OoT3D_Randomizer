@@ -46,7 +46,7 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags [3].swch |= 0x01C00300; //forest temple
     gSaveContext.sceneFlags [4].swch |= 0x00080000; //fire temple
     gSaveContext.sceneFlags [5].swch |= 0x00000080; //water temple
-    gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern (doesn't work)
+    gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern TODO: doesn't work
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
     //open lowest Fire Temple locked door

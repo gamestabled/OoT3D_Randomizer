@@ -589,17 +589,37 @@ static void PlaceVanillaDekuScrubItems() {
     PlaceItemInLocation(&LLR_DekuScrubGrottoCenter,        BuyArrows30);
 
     //Dungeon Scrubs
-    PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagLeft,      BuyDekuNut5);
-    PlaceItemInLocation(&DodongosCavern_DekuScrubSideRoomNearDodongos, BuyDekuStick1);
-    PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagRight,     BuyDekuSeeds30);
-    PlaceItemInLocation(&DodongosCavern_DekuScrubLobby,                BuyDekuShield);
+    if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&DekuTree_MQ_DekuScrub, BuyDekuShield);
+    }
+    if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyRear,                 BuyDekuStick1);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyFront,                BuyDekuSeeds30);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubStaircase,                 BuyDekuShield);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos, BuyRedPotion30);
+    } else {
+      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagLeft,      BuyDekuNut5);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubSideRoomNearDodongos, BuyDekuStick1);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagRight,     BuyDekuSeeds30);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubLobby,                BuyDekuShield);
+    }
+    if (JabuJabusBellyDungeonMode == DUNGEONMODE_VANILLA) {
+      PlaceItemInLocation(&JabuJabusBelly_DekuScrub, BuyDekuNut5);
+    }
+    if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubRight,       BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterLeft,  BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenter,      BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterRight, BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubLeft,        BuyDekuNut5);
+    } else {
+      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterLeft,  BuyBombs535);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterRight, BuyArrows30);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubRight,       BuyRedPotion30);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubLeft,        BuyGreenPotion);
+    }
 
-    PlaceItemInLocation(&JabuJabusBelly_DekuScrub, BuyDekuNut5);
 
-    PlaceItemInLocation(&GanonsCastle_DekuScrubCenterLeft,  BuyBombs535);
-    PlaceItemInLocation(&GanonsCastle_DekuScrubCenterRight, BuyArrows30);
-    PlaceItemInLocation(&GanonsCastle_DekuScrubRight,       BuyRedPotion30);
-    PlaceItemInLocation(&GanonsCastle_DekuScrubLeft,        BuyGreenPotion);
 }
 
 static void PlaceVanillaMapsAndCompasses() {
@@ -902,7 +922,13 @@ void GenerateItemPool() {
   }
 
   //Ice Traps
-  AddItemToMainPool(IceTrap, 6);
+  AddItemToMainPool(IceTrap);
+  if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_VANILLA) {
+    AddItemToMainPool(IceTrap);
+  }
+  if (GanonsCastleDungeonMode == DUNGEONMODE_VANILLA) {
+    AddItemToMainPool(IceTrap, 4);
+  }
 
   //Gerudo Fortress
   if (GerudoFortress.Is(GERUDOFORTRESS_OPEN)) {
@@ -910,7 +936,7 @@ void GenerateItemPool() {
     PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF1Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF2Carpenter, RecoveryHeart);
-  } else if (Keysanity.Is(KEYSANITY_ALL_LOCATIONS)) {
+  } else if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
     if (GerudoFortress.Is(GERUDOFORTRESS_FAST)) {
       AddItemToMainPool(GerudoFortress_SmallKey);
       PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);
@@ -952,7 +978,7 @@ void GenerateItemPool() {
     }
 
     // Plentiful small keys
-    if (Keysanity.Is(KEYSANITY_ALL_LOCATIONS)) {
+    if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
       AddItemToPool(PendingJunkPool, BottomOfTheWell_SmallKey);
       AddItemToPool(PendingJunkPool, ForestTemple_SmallKey);
       AddItemToPool(PendingJunkPool, FireTemple_SmallKey);
@@ -963,7 +989,7 @@ void GenerateItemPool() {
       AddItemToPool(PendingJunkPool, GanonsCastle_SmallKey);
     }
 
-    if (BossKeysanity.Is(BOSSKEYSANITY_ALL_LOCATIONS)) {
+    if (BossKeysanity.Is(BOSSKEYSANITY_ANYWHERE)) {
       AddItemToPool(PendingJunkPool, ForestTemple_BossKey);
       AddItemToPool(PendingJunkPool, FireTemple_BossKey);
       AddItemToPool(PendingJunkPool, WaterTemple_BossKey);
@@ -971,7 +997,7 @@ void GenerateItemPool() {
       AddItemToPool(PendingJunkPool, ShadowTemple_BossKey);
     }
 
-    if (GanonsBossKey.Is(GANONSBOSSKEY_ALL_LOCATIONS)) {
+    if (GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE)) {
       AddItemToPool(PendingJunkPool, GanonsCastle_BossKey);
     }
   }
@@ -1110,7 +1136,7 @@ void GenerateItemPool() {
   }
 
   //dungeon only dungeon placements
-  if (Keysanity.Is(KEYSANITY_DUNGEON_ONLY)) {
+  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON)) {
     RandomizeDungeonKeys(ForestTempleKeyRequirements,          ForestTemple_SmallKey,          5);
     RandomizeDungeonKeys(FireTempleKeyRequirements,            FireTemple_SmallKey,            8);
     RandomizeDungeonKeys(WaterTempleKeyRequirements,           WaterTemple_SmallKey,           6);
@@ -1121,7 +1147,7 @@ void GenerateItemPool() {
     RandomizeDungeonKeys(GanonsCastleKeyRequirements,          GanonsCastle_SmallKey,          2);
   }
 
-  if (BossKeysanity.Is(BOSSKEYSANITY_DUNGEON_ONLY)) {
+  if (BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON)) {
     RandomizeDungeonItem(ForestTempleKeyRequirements, ForestTemple_BossKey);
     RandomizeDungeonItem(FireTempleKeyRequirements,   FireTemple_BossKey);
     RandomizeDungeonItem(WaterTempleKeyRequirements,  WaterTemple_BossKey);
@@ -1129,7 +1155,7 @@ void GenerateItemPool() {
     RandomizeDungeonItem(ShadowTempleKeyRequirements, ShadowTemple_BossKey);
   }
 
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_DUNGEON_ONLY)) {
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON)) {
     RandomizeDungeonItem(DekuTreeKeyRequirements,        DekuTree_Map);
     RandomizeDungeonItem(DodongosCavernKeyRequirements,  DodongosCavern_Map);
     RandomizeDungeonItem(JabuJabusBellyKeyRequirements,  JabuJabusBelly_Map);
@@ -1153,12 +1179,12 @@ void GenerateItemPool() {
     RandomizeDungeonItem(IceCavernKeyRequirements,       IceCavern_Compass);
   }
 
-  if(GanonsBossKey.Is(GANONSBOSSKEY_DUNGEON_ONLY)) {
+  if(GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON)) {
     RandomizeDungeonItem(GanonsCastleKeyRequirements, GanonsCastle_BossKey);
   }
 
   //all locations placements
-  if (Keysanity.Is(KEYSANITY_ALL_LOCATIONS)) {
+  if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
     AddItemToMainPool(ForestTemple_SmallKey, 5);
     AddItemToMainPool(FireTemple_SmallKey, 8);
     AddItemToMainPool(WaterTemple_SmallKey, 6);
@@ -1169,7 +1195,7 @@ void GenerateItemPool() {
     AddItemToMainPool(GanonsCastle_SmallKey, 2);
   }
 
-  if (BossKeysanity.Is(BOSSKEYSANITY_ALL_LOCATIONS)) {
+  if (BossKeysanity.Is(BOSSKEYSANITY_ANYWHERE)) {
     AddItemToMainPool(ForestTemple_BossKey);
     AddItemToMainPool(FireTemple_BossKey);
     AddItemToMainPool(WaterTemple_BossKey);
@@ -1177,11 +1203,11 @@ void GenerateItemPool() {
     AddItemToMainPool(ShadowTemple_BossKey);
   }
 
-  if (GanonsBossKey.Is(GANONSBOSSKEY_ALL_LOCATIONS)) {
+  if (GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE)) {
     AddItemToMainPool(GanonsCastle_BossKey);
   }
 
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_ALL_LOCATIONS)) {
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_ANYWHERE)) {
     AddItemToMainPool(DekuTree_Map);
     AddItemToMainPool(DodongosCavern_Map);
     AddItemToMainPool(JabuJabusBelly_Map);
