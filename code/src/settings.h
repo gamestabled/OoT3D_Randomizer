@@ -123,44 +123,62 @@ typedef enum {
 } AgeSetting;
 
 typedef struct {
-  u8 openForest;
-  u8 openKakariko;
-  u8 rainbowBridge;
-  u8 gerudoFortress;
-  u8 damageMultiplier;
-  u8 zorasFountain;
-  u8 startingAge;
-  u8 startingTime;
-  u8 mapsAndCompasses;
-  u8 scrubsanity;
-  u8 lacsCondition;
-  u8 skipChildStealth;
-  u8 bombchusInLogic;
-  u8 shuffleSongs;
+  u8 logic : 1;
+  u8 openForest : 2;
+  u8 openKakariko : 2;
+  u8 openDoorOfTime : 1;
+  u8 zorasFountain : 2;
+  u8 gerudoFortress : 2;
+  u8 rainbowBridge : 3;
 
-  u8 openDoorOfTime;
-  u8 shuffleBeanSalesman;
-  u8 shuffleOcarinas;
-  u8 fourPoesCutscene;
+  u8 startingAge : 1;
+  u8 bombchusInLogic : 1;
+  u8 randomMQDungeons : 1;
 
-  u8 bigPoeTargetCount;
+  u8 shuffleSongs : 2;
+  u8 tokensanity : 2;
+  u8 scrubsanity : 2;
+  u8 shuffleKokiriSword : 1;
+  u8 shuffleOcarinas : 1;
+  u8 shuffleWeirdEgg : 1;
+  u8 shuffleGerudoToken : 1;
+  u8 shuffleMagicBeans : 1;
 
-  u8 boomerangAsAdult;
-  u8 hammerAsChild;
+  u8 keysanity : 3;
+  u8 bossKeysanity : 3;
+  u8 ganonsBossKey : 4;
+  u8 mapsAndCompasses : 3;
+  u8 lacsCondition : 3;
 
-  u8 dekuTreeDungeonMode;
-  u8 dodongosCavernDungeonMode;
-  u8 jabuJabusBellyDungeonMode;
-  u8 forestTempleDungeonMode;
-  u8 fireTempleDungeonMode;
-  u8 waterTempleDungeonMode;
-  u8 spiritTempleDungeonMode;
-  u8 shadowTempleDungeonMode;
-  u8 bottomOfTheWellDungeonMode;
-  u8 gerudoTrainingGroundsDungeonMode;
-  u8 ganonsCastleDungeonMode;
+  u8 skipChildStealth : 1;
+  u8 fourPoesCutscene : 1;
+  u8 bigPoeTargetCount : 4;
+
+  u8 damageMultiplier : 3;
+  u8 startingTime : 3;
+
+  u8 boomerangAsAdult : 1;
+  u8 hammerAsChild : 1;
+
+  u8 itemPoolValue : 3;
+
+  u8 dekuTreeDungeonMode : 1;
+  u8 dodongosCavernDungeonMode : 1;
+  u8 jabuJabusBellyDungeonMode : 1;
+  u8 forestTempleDungeonMode : 1;
+  u8 fireTempleDungeonMode : 1;
+  u8 waterTempleDungeonMode : 1;
+  u8 spiritTempleDungeonMode : 1;
+  u8 shadowTempleDungeonMode : 1;
+  u8 bottomOfTheWellDungeonMode : 1;
+  u8 gerudoTrainingGroundsDungeonMode : 1;
+  u8 ganonsCastleDungeonMode : 1;
 
   u32 dungeonRewardBitMask;
+
+  //this wastes like 500 bytes, but idk if anyone cares enough
+  u8 detailedLogic[100];    //extra space incase we add more
+  u8 excludeLocations[500]; //^
 
 } SettingsContext;
 

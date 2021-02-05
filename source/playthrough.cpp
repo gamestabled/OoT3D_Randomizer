@@ -25,12 +25,14 @@ namespace Playthrough {
         Logic::UpdateHelpers();
         Fill_Init();
 
+        GenerateHash();
+
         //write logs
         printf("\x1b[9;10H");
         if (SpoilerLog_Write()) {
-          printf("Wrote spoiler log\n");
+          printf("Wrote spoiler log");
         } else {
-          printf("Failed to write spoiler log\n");
+          printf("Failed to write spoiler log");
         }
 
         printf("\x1b[10;10H");

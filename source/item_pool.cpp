@@ -907,7 +907,7 @@ void GenerateItemPool() {
 
   //TODO: sort between mq and vanilla dungeon skulltulas
 
-  if (Skullsanity.Is(TOKENSANITY_VANILLA)) {
+  if (Tokensanity.Is(TOKENSANITY_VANILLA)) {
     PlaceVanillaSkulltulaTokens();
   } else {
     AddItemToMainPool(GoldSkulltulaToken, 100);

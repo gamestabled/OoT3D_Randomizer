@@ -578,7 +578,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit HW_NearColossus = Exit("Wasteland Near Colossus", "Haunted Wasteland", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   ExitPairing::Both(&Colossus_Main, []{return true;}),
-                  ExitPairing::Both(&HW_Main,       []{return LogicReverseWasteland;})
+                  ExitPairing::Both(&HW_Main,       []{return LogicReverseWasteland || false;})
   });
 
   Exit Colossus_Main = Exit("Desert Colossus", "Desert Colossus", "Desert Colossus", DAY_NIGHT_CYCLE, {
@@ -1397,7 +1397,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&BugShrub,         []{return BugShrub         || CanCutShrubs;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&ZR_MagicBeanSalesman,             []{return IsChild;}), //progressive wallet until rupee count is fixed
+                  ItemLocationPairing(&ZR_MagicBeanSalesman,             []{return IsChild;}),
                   ItemLocationPairing(&ZR_FrogsOcarinaGame,              []{return IsChild && CanPlay(ZeldasLullaby) && CanPlay(SariasSong) && CanPlay(SunsSong) && CanPlay(EponasSong) && CanPlay(SongOfTime) && CanPlay(SongOfStorms);}),
                   ItemLocationPairing(&ZR_FrogsInTheRain,                []{return IsChild && CanPlay(SongOfStorms);}),
                   ItemLocationPairing(&ZR_NearOpenGrottoFreestandingPoH, []{return IsChild || CanUse("Hover Boots") || (IsAdult && LogicZoraRiverLower);}),
@@ -1779,7 +1779,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ForestTemple_GS_RaisedIslandCourtyard,   []{return CanUse("Hookshot") || (LogicForestOutdoorEastGS && CanUse("Boomerang"));}),
                 }, {
                   //Exits
-                  ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return CanUse("Longshot")   || (LogicForestVines && CanUse("Hookshot"));}),
+                  ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return CanUse("Longshot");}),
                   ExitPairing::Both(&ForestTemple_NWOutdoors,            []{return CanUse("Iron Boots") || ProgressiveScale >= 2;}),
                   ExitPairing::Both(&ForestTemple_Lobby,                 []{return true;})
   });
@@ -1792,7 +1792,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&ForestTemple_NWOutdoors,  []{return true;}),
                   ExitPairing::Both(&ForestTemple_NEOutdoors,  []{return true;}),
-                  ExitPairing::Both(&ForestTemple_FallingRoom, []{return LogicForestScarecrow && CanUse("Hover Boots") && CanUse("Scarecrow");})
+                  ExitPairing::Both(&ForestTemple_FallingRoom, []{return LogicForestDoorFrame && CanUse("Hover Boots") && CanUse("Scarecrow");})
   });
 
   Exit ForestTemple_FallingRoom = Exit("Forest Temple Falling Room", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
@@ -1944,10 +1944,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit WaterTemple_NorthBasement = Exit("Water Temple North Basement", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
+                  EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&WaterTemple_BossKeyChest, []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && ((LogicWaterBKChest && IronBoots) || LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
+                  ItemLocationPairing(&WaterTemple_BossKeyChest, []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
                   ItemLocationPairing(&WaterTemple_GS_NearBossKeyChest, []{return true;}),
   }, {});
 

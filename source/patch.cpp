@@ -44,6 +44,8 @@ bool WritePatch() {
 
   totalRW -= 3;
 
+  FSFILE_Close(basecode);
+
   /*-------------------------
   |      rItemOverrides     |
   --------------------------*/
@@ -218,6 +220,9 @@ bool WritePatch() {
   if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, "EOF", 3, FS_WRITE_FLUSH | FS_WRITE_UPDATE_TIME))) {
     return false;
   }
+
+  FSFILE_Close(code);
+  FSUSER_CloseArchive(sdmcArchive);
 
   return true;
 }

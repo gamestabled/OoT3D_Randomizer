@@ -8,6 +8,7 @@
 #include <variant>
 #include <vector>
 #include "../code/src/settings.h"
+#include "menu.hpp"
 
 class Option {
 public:
@@ -61,6 +62,10 @@ public:
       return optionDescriptions[selectedOption];
     }
 
+    u8 GetSelectedOptionIndex() {
+      return selectedOption;
+    }
+
     void NextOptionIndex() {
         ++selectedOption;
     }
@@ -85,6 +90,16 @@ public:
       }
     }
 
+    void SetSelectedIndex(u8 idx) {
+      selectedOption = idx;
+      if (selectedOption >= options.size()) {
+        printf("\x1b[30;0HERROR: Incomptaible selection for %s\n", name.c_str());
+        selectedOption = 0;
+      }
+
+      SetVariable();
+    }
+
 private:
     Option(u8 var_, std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_, u8 defaultOption_ = 0)
           : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), selectedOption(defaultOption_) {
@@ -103,15 +118,29 @@ private:
   u8 selectedOption;
 };
 
+enum class MenuItemType {
+  SubMenu,
+  Action,
+};
 
-
-class Menu {
+class MenuItem {
   public:
-    Menu(std::string name_, std::vector<Option *>* settingsList_)
-        : name(std::move(name_)), settingsList(std::move(settingsList_)) {}
+
+    static MenuItem SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
+      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), SUB_MENU};
+    }
+
+    static MenuItem Action(std::string name_, u8 mode_) {
+      return MenuItem{std::move(name_), MenuItemType::Action, {}, std::move(mode_)};
+    }
+
+    MenuItem(std::string name_, MenuItemType type_, std::vector<Option *>* settingsList_, u8 mode_)
+        : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_) {}
 
     std::string name;
+    MenuItemType type;
     std::vector<Option *>* settingsList;
+    u8 mode;
     int selectedSetting = 0;
 };
 
@@ -132,7 +161,7 @@ namespace Settings {
   extern Option GanonsBossKey;
   extern Option MapsAndCompasses;
   extern Option ShuffleSongs;
-  extern Option Skullsanity;
+  extern Option Tokensanity;
   extern Option Scrubsanity;
   extern Option ItemPoolValue;
   extern u8 LACSCondition;
@@ -167,92 +196,83 @@ namespace Settings {
   extern bool GanonsCastleDungeonMode;
 
   //Logic Settings
-  extern bool LogicMidoBackflip;
-  extern bool LogicLostWoodsBridge;
-  extern bool LogicGrottosWithoutAgony;
-  extern bool LogicBiggoronBolero;
-  extern bool LogicGerudoKitchen;
-  extern bool LogicWaterHookshotEntry;
-  extern bool LogicLensWasteland;
-  extern bool LogicReverseWasteland;
-  extern bool LogicVisibleCollision;
-  extern bool LogicManOnRoof;
-  extern bool LogicKakarikoTowerGS;
-  extern bool LogicDMTBombable;
-  extern bool LogicLinkGoronDins;
-  extern bool LogicGoronCityLeftMost;
-  extern bool LogicGoronCityPot;
-  extern bool LogicGoronCityPotWithStrength;
-  extern bool LogicChildRollingWithStrength;
-  extern bool LogicCraterUpperToLower;
-  extern bool LogicCraterBeanPoHWithHovers;
-  extern bool LogicFewerTunicRequirements;
-  extern bool LogicZoraWithHovers;
-  extern bool LogicZoraWithCucco;
-  extern bool LogicDekuB1Skip;
-  extern bool LogicDekuB1WebsWithBow;
-  extern bool LogicDCStaircase;
-  extern bool LogicDCJump;
-  extern bool LogicDCSlingshotSkip;
-  extern bool LogicJabuBossGSAdult;
-  extern bool LogicJabuScrubJumpDive;
-  extern bool LogicForestVines;
-  extern bool LogicForestScarecrow;
-  extern bool LogicForestOutsideBackdoor;
-  extern bool LogicLabDiving;
-  extern bool LogicZoraRiverLower;
-  extern bool LogicZoraRiverUpper;
-  extern bool LogicGraveyardPoH;
-  extern bool LogicChildDampeRacePoH;
-  extern bool LogicFireBossDoorJump;
-  extern bool LogicFireStrength;
-  extern bool LogicFireScarecrow;
-  extern bool LogicFireFlameMaze;
-  extern bool LogicWaterTempleTorchLongshot;
-  extern bool LogicWaterCentralBow;
-  extern bool LogicWaterCrackedWallNothing;
-  extern bool LogicWaterCrackedWallHovers;
-  extern bool LogicWaterBossKeyRegion;
-  extern bool LogicWaterDragonBombchu;
-  extern bool LogicWaterBKJumpDive;
-  extern bool LogicWaterBKChest;
-  extern bool LogicWaterNorthBasementLedgeJump;
-  extern bool LogicWaterDragonBombchu;
-  extern bool LogicWaterDragonJumpDive;
-  extern bool LogicWaterNorthBasementLedgeJump;
-  extern bool LogicWaterBKChest;
-  extern bool LogicWaterDragonJumpDive;
-  extern bool LogicSpiritLowerAdultSwitch;
-  extern bool LogicSpiritChildBombchu;
-  extern bool LogicSpiritWall;
-  extern bool LogicSpiritLobbyGS;
-  extern bool LogicSpiritMapChest;
-  extern bool LogicSpiritSunChest;
-  extern bool LogicShadowFireArrowEntry;
-  extern bool LogicShadowUmbrella;
-  extern bool LogicShadowFreestandingKey;
-  extern bool LogicShadowStatue;
-  extern bool LogicBotwCageGS;
-  extern bool LogicChildDeadhand;
-  extern bool LogicGtgWithoutHookshot;
-  extern bool LogicGtgFakeWall;
-  extern bool LogicLensSpirit;
-  extern bool LogicLensShadow;
-  extern bool LogicLensShadowBack;
-  extern bool LogicLensBotw;
-  extern bool LogicLensGtg;
-  extern bool LogicLensCastle;
-  extern bool LogicSpiritTrialHookshot;
-  extern bool LogicLostWoodsGSBean;
-  extern bool LogicLabWallGS;
-  extern bool LogicColossusGS;
-  extern bool LogicDMTSoilGS;
-  extern bool LogicDekuBasementGS;
-  extern bool LogicDCScarecrowGS;
-  extern bool LogicForestOutdoorEastGS;
-  extern bool LogicFireSongOfTime;
-  extern bool LogicWaterRiverGS;
-  extern bool LogicWaterFallingPlatformGS;
+  extern Option LogicGrottosWithoutAgony;
+  extern Option LogicVisibleCollision;
+  extern Option LogicFewerTunicRequirements;
+  extern Option LogicLostWoodsBridge;
+  extern Option LogicLostWoodsGSBean;
+  extern Option LogicLabDiving;
+  extern Option LogicLabWallGS;
+  extern Option LogicGraveyardPoH;
+  extern Option LogicChildDampeRacePoH;
+  extern Option LogicGerudoKitchen;
+  extern Option LogicLensWasteland;
+  extern Option LogicReverseWasteland;
+  extern Option LogicColossusGS;
+  extern Option LogicManOnRoof;
+  extern Option LogicKakarikoTowerGS;
+  extern Option LogicDMTBombable;
+  extern Option LogicDMTSoilGS;
+  extern Option LogicLinkGoronDins;
+  extern Option LogicGoronCityLeftMost;
+  extern Option LogicGoronCityPot;
+  extern Option LogicGoronCityPotWithStrength;
+  extern Option LogicChildRollingWithStrength;
+  extern Option LogicCraterUpperToLower;
+  extern Option LogicCraterBeanPoHWithHovers;
+  extern Option LogicBiggoronBolero;
+  extern Option LogicZoraRiverLower;
+  extern Option LogicZoraRiverUpper;
+  extern Option LogicDekuB1WebsWithBow;
+  extern Option LogicDekuB1Skip;
+  extern Option LogicDekuBasementGS;
+  extern Option LogicDCStaircase;
+  extern Option LogicDCJump;
+  extern Option LogicDCSlingshotSkip;
+  extern Option LogicDCScarecrowGS;
+  extern Option LogicJabuBossGSAdult;
+  extern Option LogicJabuScrubJumpDive;
+  extern Option LogicForestOutsideBackdoor;
+  extern Option LogicForestDoorFrame;
+  extern Option LogicForestOutdoorEastGS;
+  extern Option LogicFireBossDoorJump;
+  extern Option LogicFireStrength;
+  extern Option LogicFireScarecrow;
+  extern Option LogicFireFlameMaze;
+  extern Option LogicFireSongOfTime;
+  extern Option LogicWaterHookshotEntry;
+  extern Option LogicWaterTempleTorchLongshot;
+  extern Option LogicWaterCentralBow;
+  extern Option LogicWaterCrackedWallNothing;
+  extern Option LogicWaterCrackedWallHovers;
+  extern Option LogicWaterBossKeyRegion;
+  extern Option LogicWaterBKJumpDive;
+  extern Option LogicWaterNorthBasementLedgeJump;
+  extern Option LogicWaterDragonBombchu;
+  extern Option LogicWaterDragonJumpDive;
+  extern Option LogicWaterRiverGS;
+  extern Option LogicWaterFallingPlatformGS;
+  extern Option LogicSpiritLowerAdultSwitch;
+  extern Option LogicSpiritChildBombchu;
+  extern Option LogicSpiritWall;
+  extern Option LogicSpiritLobbyGS;
+  extern Option LogicSpiritMapChest;
+  extern Option LogicSpiritSunChest;
+  extern Option LogicShadowFireArrowEntry;
+  extern Option LogicShadowUmbrella;
+  extern Option LogicShadowFreestandingKey;
+  extern Option LogicShadowStatue;
+  extern Option LogicBotwCageGS;
+  extern Option LogicChildDeadhand;
+  extern Option LogicGtgWithoutHookshot;
+  extern Option LogicGtgFakeWall;
+  extern Option LogicLensSpirit;
+  extern Option LogicLensShadow;
+  extern Option LogicLensShadowBack;
+  extern Option LogicLensBotw;
+  extern Option LogicLensGtg;
+  extern Option LogicLensCastle;
+  extern Option LogicSpiritTrialHookshot;
 
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
@@ -261,6 +281,7 @@ namespace Settings {
 
   extern void UpdateSettings();
   extern SettingsContext FillContext();
+  extern void FillSettings(SettingsContext ctx);
 
-  extern std::vector<Menu *> mainMenu;
+  extern std::vector<MenuItem *> mainMenu;
 }

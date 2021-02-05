@@ -1,6 +1,7 @@
 #include "spoiler_log.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
+#include "random.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -16,6 +17,49 @@ namespace {
 
   std::string logtxt;
   std::string placementtxt;
+
+  std::array<std::string_view, 32> hashIcons = {
+    "Deku Stick",
+    "Deku Nut",
+    "Bow",
+    "Slingshot",
+    "Fairy Ocarina",
+    "Bombchu",
+    "Longshot",
+    "Boomerang",
+    "Lens of Truth",
+    "Beans",
+    "Megaton Hammer",
+    "Bottled Fish",
+    "Bottled Milk",
+    "Mask of Truth",
+    "SOLD OUT",
+    "Cucco",
+    "Mushroom",
+    "Saw",
+    "Frog",
+    "Master Sword",
+    "Mirror Shield",
+    "Kokiri Tunic",
+    "Hover Boots",
+    "Silver Gauntlets",
+    "Gold Scale",
+    "Shard of Agony",
+    "Skull Token",
+    "Heart Container",
+    "Boss Key",
+    "Compass",
+    "Map",
+    "Big Magic",
+  };
+}
+
+std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
+
+void GenerateHash() {
+  for (auto& str : randomizerHash) {
+    str = hashIcons[Random() % hashIcons.size()];
+  }
 }
 
 static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
@@ -31,16 +75,29 @@ static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item)
   logtxt += '\n';
 }
 
+static auto GetGeneralPath() {
+  std::string path = "/3ds/" + Settings::seed;
+  for (auto& str : randomizerHash)
+    path += str;
+  return path;
+}
+
 static auto GetSpoilerLogPath() {
-  return "/3ds/" + Settings::seed + "-spoilerlog.txt";
+  return GetGeneralPath() + "-spoilerlog.txt";
 }
 
 static auto GetPlacementLogPath() {
-  return "/3ds/" + Settings::seed + "-placementlog.txt";
+  return GetGeneralPath() + "-placementlog.txt";
 }
 
 bool SpoilerLog_Write() {
   logtxt += "Seed: " + Settings::seed + "\n\n";
+
+  logtxt += "Hash: ";
+  for (std::string& str : randomizerHash) {
+    logtxt += str + " ";
+  }
+  logtxt += "\n\n";
 
   logtxt += "Playthrough:\n";
   for (ItemLocation* location : playthroughLocations) {
@@ -52,11 +109,11 @@ bool SpoilerLog_Write() {
   logtxt += "\nAll Locations:\n\n";
   for (ItemLocation* location : dungeonRewardLocations) {
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
-    logtxt += location->IsAddedToPool() ? " ADDED\n" : " NOT ADDED\n";
+    logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
   for (ItemLocation* location : allLocations) {
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
-    logtxt += location->IsAddedToPool() ? " ADDED\n" : " NOT ADDED\n";
+    logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
 
   Result res = 0;
@@ -67,7 +124,7 @@ bool SpoilerLog_Write() {
   }
 
   // Open spoilerlog.txt
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&spoilerlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSpoilerLogPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&spoilerlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSpoilerLogPath().c_str()), FS_OPEN_CREATE | FS_OPEN_WRITE, 0))) {
     return false;
   }
 
@@ -93,7 +150,7 @@ bool PlacementLog_Write() {
   }
 
   // Open placementlog.txt
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, GetPlacementLogPath().c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&placementlog, sdmcArchive, fsMakePath(PATH_ASCII, GetPlacementLogPath().c_str()), FS_OPEN_CREATE | FS_OPEN_WRITE, 0))) {
     return false;
   }
 
