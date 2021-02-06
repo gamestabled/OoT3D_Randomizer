@@ -265,6 +265,7 @@ namespace Logic {
   bool GCWoodsWarpOpen           = false;
   bool StopGCRollingGoronAsAdult = false;
   bool ChildWaterTemple          = false;
+  bool RaiseWaterLevel           = false;
   bool KakarikoVillageGateOpen   = false;
   bool KingZoraThawed            = false;
   bool ForestTempleJoAndBeth     = false;

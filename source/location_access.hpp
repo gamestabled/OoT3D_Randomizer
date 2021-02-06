@@ -483,6 +483,7 @@ namespace Exits {
   extern Exit WaterTemple_Lobby;
   extern Exit WaterTemple_HighestWaterLevel;
   extern Exit WaterTemple_Dive;
+  extern Exit WaterTemple_FallingPlatformRoom;
   extern Exit WaterTemple_CrackedWall;
   extern Exit WaterTemple_NorthBasement;
   extern Exit WaterTemple_DragonStatue;

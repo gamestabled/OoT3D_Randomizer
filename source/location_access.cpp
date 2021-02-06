@@ -27,12 +27,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&LinksPocket, []{return true;})
                 }, {
-                  //Exits
+                  //Exits      Age
                   ExitPairing::Both(&RootExits, []{return true;})
   });
 
   Exit RootExits = Exit("Root Exits", "", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                  //Exits
+                  //Exits      Age
                   ExitPairing::Both(&KF_LinksHouse,    []{return IsChild;}),
                   ExitPairing::Both(&ToT_Main,         []{return (CanPlay(PreludeOfLight)   && CanLeaveForest) || IsAdult;}),
                   ExitPairing::Both(&SFM_Main,         []{return  CanPlay(MinuetOfForest);}),
@@ -1907,10 +1907,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&ChildWaterTemple, []{return IsChild;}),
+                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && (Hookshot || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
                 }, {}, {
                   //Exits
                   ExitPairing::Both(&LH_Main,                       []{return true;}),
-                  ExitPairing::Both(&WaterTemple_HighestWaterLevel, []{return IsAdult;}),
+                  ExitPairing::Both(&WaterTemple_HighestWaterLevel, []{return RaiseWaterLevel;}),
+                  ExitPairing::Both(&WaterTemple_Dive,              []{return (CanUse("Zora Tunic") || LogicFewerTunicRequirements) && ((LogicWaterTempleTorchLongshot && CanUse("Longshot")) || CanUse("Iron Boots"));}),
   });
 
   Exit WaterTemple_HighestWaterLevel = Exit("Water Temple Highest Water Level", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
@@ -1923,23 +1925,31 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&WaterTemple_MorphaHeart, []{return BossKeyWaterTemple && CanUse("Longshot");}),
                 }, {
                   //Exits
-                  ExitPairing::Both(&WaterTemple_DarkLinkRegion, []{return SmallKeys(WaterTempleKeys, 4) && CanUse("Hookshot");}),
-                  ExitPairing::Both(&WaterTemple_Dive,           []{return (CanUse("Zora Tunic") || LogicFewerTunicRequirements) && ((LogicWaterTempleTorchLongshot && CanUse("Longshot")) || IronBoots);}),
+                  ExitPairing::Both(&WaterTemple_FallingPlatformRoom, []{return SmallKeys(WaterTempleKeys, 4);}),
+
   });
 
   Exit WaterTemple_Dive = Exit("Water Temple Dive", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(&WaterTemple_MapChest,              []{return CanUse("Hover Boots") || CanUse("Hookshot") || CanUse("Bow");}),
+                  ItemLocationPairing(&WaterTemple_MapChest,              []{return RaiseWaterLevel;}),
                   ItemLocationPairing(&WaterTemple_CompassChest,          []{return (CanPlay(ZeldasLullaby) || IronBoots) && CanUse("Hookshot");}),
                   ItemLocationPairing(&WaterTemple_TorchesChest,          []{return (Bow || CanUse("Dins Fire") || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}),
                   ItemLocationPairing(&WaterTemple_CentralBowTargetChest, []{return GoronBracelet && CanPlay(ZeldasLullaby) && ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse("Longshot"))));}),
                   ItemLocationPairing(&WaterTemple_GS_BehindGate,         []{return (CanUse("Hookshot") || CanUse("Hover Boots")) && (HasExplosives && CanPlay(ZeldasLullaby)) && (CanUse("Iron Boots") || CanDive);}),
+                  ItemLocationPairing(&WaterTemple_GS_CentralPillar,      []{return CanPlay(ZeldasLullaby) &&
+                                                                                      (((CanUse("Longshot") || (LogicWaterCentralGSFW && CanUse("Hookshot") && CanUse("Farores Wind"))) &&
+                                                                                        (SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire"))) ||
+                                                                                      (LogicWaterCentralGSFW && ChildWaterTemple && Boomerang && CanUse("Farores Wind") &&
+                                                                                        (Sticks || CanUse("Dins Fire") ||
+                                                                                        (SmallKeys(WaterTempleKeys, 5) && (CanUse("Hover Boots") || CanUse("Bow"))))));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&WaterTemple_CrackedWall,      []{return CanPlay(ZeldasLullaby) && (CanUse("Hookshot") || CanUse("Hover Boots")) && (LogicWaterCrackedWallNothing || (LogicWaterCrackedWallHovers && CanUse("Hover Boots")));}),
                   ExitPairing::Both(&WaterTemple_MiddleWaterLevel, []{return (Bow || CanUse("Dins Fire") || (SmallKeys(WaterTempleKeys, 5) && CanUse("Hookshot")) || (ChildWaterTemple && Sticks)) && CanPlay(ZeldasLullaby);}),
                   ExitPairing::Both(&WaterTemple_NorthBasement,    []{return SmallKeys(WaterTempleKeys, 5) && (CanUse("Longshot") || (LogicWaterBossKeyRegion && CanUse("Hover Boots"))) && (CanUse("Iron Boots") || CanPlay(ZeldasLullaby));}),
-                  ExitPairing::Both(&WaterTemple_DragonStatue,     []{return CanPlay(ZeldasLullaby) && GoronBracelet && ((IronBoots && CanUse("Hookshot")) || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
+                  ExitPairing::Both(&WaterTemple_DragonStatue,     []{return CanPlay(ZeldasLullaby) && GoronBracelet &&
+                                                                                ((IronBoots && CanUse("Hookshot")) ||
+                                                                                (LogicWaterDragonAdult && (HasBombchus || CanUse("Bow") || CanUse("Hookshot")) && (CanDive || IronBoots)));}),
   });
 
   Exit WaterTemple_NorthBasement = Exit("Water Temple North Basement", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
@@ -1947,7 +1957,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&WaterTemple_BossKeyChest, []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
+                  ItemLocationPairing(&WaterTemple_BossKeyChest,        []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse("Iron Boots")) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
                   ItemLocationPairing(&WaterTemple_GS_NearBossKeyChest, []{return true;}),
   }, {});
 
@@ -1964,10 +1974,17 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit WaterTemple_MiddleWaterLevel = Exit("Water Temple Middle Water Level", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&WaterTemple_CentralPillarChest, []{return CanUse("Zora Tunic") && CanUse("Hookshot") && ((SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire")));}),
-                  ItemLocationPairing(&WaterTemple_GS_CentralPillar,   []{return ((CanUse("Longshot") || (CanUse("Farores Wind") && CanUse("Hookshot"))) && (SmallKeys(WaterTempleKeys, 5) || CanUse("Bow") || CanUse("Dins Fire"))) || (ChildWaterTemple && Boomerang && CanUse("Farores Wind") && (CanUse("Dins Fire") || Sticks));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&WaterTemple_CrackedWall, []{return true;}),
+  });
+
+  Exit WaterTemple_FallingPlatformRoom = Exit("Water Temple Falling Platform Room", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  ItemLocationPairing(&WaterTemple_GS_FallingPlatformRoom, []{return CanUse("Longshot") || (LogicWaterFallingPlatformGS && CanUse("Hookshot"));}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&WaterTemple_DarkLinkRegion, []{return SmallKeys(WaterTempleKeys, 5) && CanUse("Hookshot");}),
   });
 
   Exit WaterTemple_DarkLinkRegion = Exit("Water Temple Dark Link Region", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
@@ -1978,10 +1995,11 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&WaterTemple_LongshotChest,          []{return SmallKeys(WaterTempleKeys, 5);}),
                   ItemLocationPairing(&WaterTemple_RiverChest,             []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow;}),
                   ItemLocationPairing(&WaterTemple_GS_River,               []{return CanPlay(SongOfTime) && SmallKeys(WaterTempleKeys, 5) && (IronBoots || (LogicWaterRiverGS && CanUse("Longshot") && (Bow || HasBombchus)));}),
-                  ItemLocationPairing(&WaterTemple_GS_FallingPlatformRoom, []{return CanUse("Longshot") || (LogicWaterFallingPlatformGS && CanUse("Hookshot"));}),
                 }, {
                   //Exits
-                  ExitPairing::Both(&WaterTemple_DragonStatue, []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow && ((IronBoots && (CanUse("Zora Tunic") || LogicFewerTunicRequirements)) || LogicWaterDragonJumpDive || (LogicWaterDragonBombchu && HasBombchus && CanDive));}),
+                  ExitPairing::Both(&WaterTemple_DragonStatue, []{return (CanUse("Zora Tunic") || LogicFewerTunicRequirements) &&
+                                                                         CanPlay(SongOfTime) && Bow &&
+                                                                         (IronBoots || LogicWaterDragonJumpDive || LogicWaterDragonAdult);}),
   });
 
   Exit SpiritTemple_Lobby = Exit("Spirit Temple Lobby", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2446,7 +2464,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   //Exits
 */
 
-  std::array<Exit *, 212> allExits = {
+  std::array<Exit *, 213> allExits = {
 
     &Root,
     &RootExits,
@@ -2623,6 +2641,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
     &WaterTemple_NorthBasement,
     &WaterTemple_DragonStatue,
     &WaterTemple_MiddleWaterLevel,
+    &WaterTemple_FallingPlatformRoom,
     &WaterTemple_DarkLinkRegion,
     &SpiritTemple_Lobby,
     &SpiritTemple_Child,

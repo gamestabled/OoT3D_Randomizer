@@ -243,13 +243,14 @@ namespace Settings {
   extern Option LogicWaterHookshotEntry;
   extern Option LogicWaterTempleTorchLongshot;
   extern Option LogicWaterCentralBow;
+  extern Option LogicWaterCentralGSFW;
   extern Option LogicWaterCrackedWallNothing;
   extern Option LogicWaterCrackedWallHovers;
   extern Option LogicWaterBossKeyRegion;
   extern Option LogicWaterBKJumpDive;
   extern Option LogicWaterNorthBasementLedgeJump;
-  extern Option LogicWaterDragonBombchu;
   extern Option LogicWaterDragonJumpDive;
+  extern Option LogicWaterDragonAdult;
   extern Option LogicWaterRiverGS;
   extern Option LogicWaterFallingPlatformGS;
   extern Option LogicSpiritLowerAdultSwitch;

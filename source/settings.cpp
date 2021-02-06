@@ -104,7 +104,7 @@ namespace Settings {
   //Excluded Locations (definitions made in ItemLocation class)
   std::vector<Option *> excludeLocationsOptions = {};
 
-  //Enable Tricks                                         ---------------------
+  //Detailed Logic Tricks                                         ---------------------
   Option LogicGrottosWithoutAgony         = Option::Bool("Grottos Without Agony",                          {"Disable", "Enable"}, {"", ""});
   Option LogicVisibleCollision            = Option::Bool("Pass Through Visible\n One-Way Collisions",      {"Disable", "Enable"}, {"", ""});
   Option LogicFewerTunicRequirements      = Option::Bool("Fewer Tunic\n Requirements",                     {"Disable", "Enable"}, {"", ""});
@@ -152,13 +152,14 @@ namespace Settings {
   Option LogicWaterHookshotEntry          = Option::Bool("WaT Entry w/o Iron\n Boots using Hookshot",      {"Disable", "Enable"}, {"", ""}); //Needs Testing
   Option LogicWaterTempleTorchLongshot    = Option::Bool("WaT Torch Longshot",                             {"Disable", "Enable"}, {"", ""});
   Option LogicWaterCentralBow             = Option::Bool("WaT Bow Target w/o\n Longshot or Hover Boots",   {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterCentralGSFW            = Option::Bool("WaT Central Pillar GS\n with Farore's Wind",     {"Disable", "Enable"}, {"", ""});
   Option LogicWaterCrackedWallNothing     = Option::Bool("WaT Cracked Wall with\n No Additional Items",    {"Disable", "Enable"}, {"", ""});
   Option LogicWaterCrackedWallHovers      = Option::Bool("WaT Cracked Wall with\n Hover Boots",            {"Disable", "Enable"}, {"", ""});
   Option LogicWaterBossKeyRegion          = Option::Bool("WaT Boss Key Region\n with Hover Boots",         {"Disable", "Enable"}, {"", ""});
   Option LogicWaterBKJumpDive             = Option::Bool("WaT Boss Key Jump\n Dive",                       {"Disable", "Enable"}, {"", ""});
   Option LogicWaterNorthBasementLedgeJump = Option::Bool("WaT North Basement\n Ledge with Precise Jump",   {"Disable", "Enable"}, {"", ""});
-  Option LogicWaterDragonBombchu          = Option::Bool("", {"Disable", "Enable"}, {"", ""}); //Needs to be updated
-  Option LogicWaterDragonJumpDive         = Option::Bool("Wat Dragon Statue\n Jump Dive",                  {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterDragonAdult            = Option::Bool("WaT Dragon Statue\n Jump Dive",                  {"Disable", "Enable"}, {"", ""});
+  Option LogicWaterDragonJumpDive         = Option::Bool("WaT Dragon Statue\n Switch Above as Adult",      {"Disable", "Enable"}, {"", ""});
   Option LogicWaterRiverGS                = Option::Bool("WaT River GS without\n Iron Boots",              {"Disable", "Enable"}, {"", ""});
   Option LogicWaterFallingPlatformGS      = Option::Bool("WaT Falling Platform\n Room GS with Hookshot",   {"Disable", "Enable"}, {"", ""});
   Option LogicSpiritLowerAdultSwitch      = Option::Bool("SpT Lower Adult\n Switch with Bombs",            {"Disable", "Enable"}, {"", ""});
@@ -197,7 +198,7 @@ namespace Settings {
     &LogicReverseWasteland,
     &LogicColossusGS,
     &LogicManOnRoof,
-    &LogicKakarikoTowerGS,
+    //&LogicKakarikoTowerGS, I can't get this to work
     &LogicDMTBombable,
     &LogicDMTSoilGS,
     &LogicLinkGoronDins,
@@ -352,10 +353,12 @@ namespace Settings {
 
     ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
 
+    //Filling detailed logic
     for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
       ctx.detailedLogic[i] = detailedLogicOptions[i]->GetSelectedOptionIndex();
     }
 
+    //Filling excluded locations
     for (u16 i = 0; i < excludeLocationsOptions.size(); i++) {
       ctx.excludeLocations[i] = excludeLocationsOptions[i]->GetSelectedOptionIndex();
     }
