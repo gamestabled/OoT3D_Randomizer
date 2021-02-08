@@ -480,7 +480,7 @@ namespace Logic {
   }
 
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
-    return (dungeonKeyCount >= requiredAmount) || Keysanity.Is(KEYSANITY_VANILLA);
+    return (dungeonKeyCount >= requiredAmount);
   }
 
   bool EventsUpdated() {

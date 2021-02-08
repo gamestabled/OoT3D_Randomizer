@@ -199,7 +199,6 @@ namespace Settings {
   extern Option LogicGrottosWithoutAgony;
   extern Option LogicVisibleCollision;
   extern Option LogicFewerTunicRequirements;
-  extern Option LogicLostWoodsBridge;
   extern Option LogicLostWoodsGSBean;
   extern Option LogicLabDiving;
   extern Option LogicLabWallGS;
@@ -210,7 +209,6 @@ namespace Settings {
   extern Option LogicReverseWasteland;
   extern Option LogicColossusGS;
   extern Option LogicManOnRoof;
-  extern Option LogicKakarikoTowerGS;
   extern Option LogicDMTBombable;
   extern Option LogicDMTSoilGS;
   extern Option LogicLinkGoronDins;
@@ -240,7 +238,6 @@ namespace Settings {
   extern Option LogicFireScarecrow;
   extern Option LogicFireFlameMaze;
   extern Option LogicFireSongOfTime;
-  extern Option LogicWaterHookshotEntry;
   extern Option LogicWaterTempleTorchLongshot;
   extern Option LogicWaterCentralBow;
   extern Option LogicWaterCentralGSFW;
@@ -263,7 +260,6 @@ namespace Settings {
   extern Option LogicShadowUmbrella;
   extern Option LogicShadowFreestandingKey;
   extern Option LogicShadowStatue;
-  extern Option LogicBotwCageGS;
   extern Option LogicChildDeadhand;
   extern Option LogicGtgWithoutHookshot;
   extern Option LogicGtgFakeWall;

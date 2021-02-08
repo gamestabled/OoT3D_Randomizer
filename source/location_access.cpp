@@ -163,7 +163,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&LW_ForestExit,          []{return true;}),
                   ExitPairing::Both(&GC_WoodsWarp,           []{return true;}),
-                  ExitPairing::Both(&LW_Bridge,              []{return IsAdult && (CanUse("Hover Boots") || CanUse("Longshot") || LW_Main.CanPlantBean() || LogicLostWoodsBridge);}),
+                  ExitPairing::Both(&LW_Bridge,              []{return IsAdult && (CanUse("Hover Boots") || CanUse("Longshot") || LW_Main.CanPlantBean());}),
                   ExitPairing::Both(&ZR_Main,                []{return CanLeaveForest && (CanDive || CanUse("Iron Boots"));}),
                   ExitPairing::Both(&LW_BeyondMido,          []{return IsChild || CanPlay(SariasSong);}),
                   ExitPairing::Both(&LW_NearShortcutsGrotto, []{return CanBlastOrSmash;})
@@ -400,7 +400,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&LH_OwlFlight,      []{return IsChild;}),
                   ExitPairing::Both(&LH_Lab,            []{return true;}),
                   ExitPairing::Both(&LH_FishingHole,    []{return IsChild || CanUse("Scarecrow") || LH_Main.CanPlantBean() || WaterTempleClear;}),
-                  ExitPairing::Both(&WaterTemple_Lobby, []{return CanUse("Hookshot") && (CanUse("Iron Boots") || ((CanUse("Longshot") || LogicWaterHookshotEntry) && ProgressiveScale >= 2));}),
+                  ExitPairing::Both(&WaterTemple_Lobby, []{return CanUse("Hookshot") && (CanUse("Iron Boots") || ((CanUse("Longshot")) && ProgressiveScale >= 2));}),
                   ExitPairing::Both(&LH_Grotto,         []{return true;})
   });
 
@@ -872,7 +872,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&Kak_GS_SkulltulaHouse,         []{return IsChild && AtNight;}),
                   ItemLocationPairing(&Kak_GS_GuardsHouse,            []{return IsChild && AtNight;}),
                   ItemLocationPairing(&Kak_GS_Tree,                   []{return IsChild && AtNight;}),
-                  ItemLocationPairing(&Kak_GS_Watchtower,             []{return IsChild && (Slingshot || HasBombchus || (LogicKakarikoTowerGS && (Sticks || KokiriSword) && (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || Fairy || CanUse("Nayrus Love")))) && AtNight;}),
+                  ItemLocationPairing(&Kak_GS_Watchtower,             []{return IsChild && (Slingshot || HasBombchus) && AtNight;}),
                   ItemLocationPairing(&Kak_GS_AboveImpasHouse,        []{return CanUse("Hookshot") && AtNight;}),
                 }, {
                   //Exits
@@ -889,7 +889,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&Kak_RedeadGrotto,       []{return CanOpenBombGrotto;}),
                   ExitPairing::Both(&Kak_ImpasLedge,         []{return (IsAdult && LogicVisibleCollision);}),
                   ExitPairing::Day(&Kak_ImpasLedge,          []{return (IsChild && AtDay);}),
-                  ExitPairing::Both(&Kak_Rooftop,            []{return CanUse("Hookshot") || (LogicManOnRoof && (IsAdult || Slingshot || HasBombchus || (LogicKakarikoTowerGS && (Sticks || KokiriSword) && (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || Fairy || CanUse("Nayrus Love")))));}),
+                  ExitPairing::Both(&Kak_Rooftop,            []{return CanUse("Hookshot") || (LogicManOnRoof && (IsAdult || Slingshot || HasBombchus));}),
                   ExitPairing::Day(&Kak_Rooftop,             []{return LogicManOnRoof && AtDay;}),
                   ExitPairing::Both(&GY_Main,                []{return true;}),
                   ExitPairing::Both(&Kak_BehindGate,         []{return true;})
@@ -2183,7 +2183,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&BottomOfTheWell_LikeLikeChest,            []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth"));}),
                   ItemLocationPairing(&BottomOfTheWell_GS_WestInnerRoom,         []{return Boomerang && (LogicLensBotw || CanUse("Lens of Truth")) && SmallKeys(BottomOfTheWellKeys, 3);}),
                   ItemLocationPairing(&BottomOfTheWell_GS_EastInnerRoom,         []{return Boomerang && (LogicLensBotw || CanUse("Lens of Truth")) && SmallKeys(BottomOfTheWellKeys, 3);}),
-                  ItemLocationPairing(&BottomOfTheWell_GS_LikeLikeCage,          []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth")) && (Boomerang || (LogicBotwCageGS && CanChildAttack));}),
+                  ItemLocationPairing(&BottomOfTheWell_GS_LikeLikeCage,          []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse("Lens of Truth")) && Boomerang;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&BottomOfTheWell, []{return true;}),
