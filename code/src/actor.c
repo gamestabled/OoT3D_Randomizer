@@ -8,6 +8,10 @@
 #include "demo_effect.h"
 #include "business_scrubs.h"
 #include "ocarina.h"
+#include "string.h"
+
+#define OBJECT_CUSTOM_DOUBLEDEFENSE 4
+#define OBJECT_GI_HEARTS 189
 
 void Actor_Init() {
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unneccesary owls
@@ -38,4 +42,11 @@ void Actor_Init() {
     gActorOverlayTable[0x19C].initInfo->init = EnSi_rInit;
     gActorOverlayTable[0x19C].initInfo->destroy = EnSi_rDestroy;
     gActorOverlayTable[0x19C].initInfo->draw = EnSi_rDraw;
+
+    // Define object 4 to be by default the same as object 189
+    strncpy(gObjectTable[OBJECT_CUSTOM_DOUBLEDEFENSE].filename, gObjectTable[OBJECT_GI_HEARTS].filename, 0x40);
+
+    // Define draw item 3 (corresponding to gi 4) to be double defense custom model
+    gDrawItemTable[3].objectId = OBJECT_CUSTOM_DOUBLEDEFENSE;
+    gDrawItemTable[3].objectModelIdx = 0;
 }

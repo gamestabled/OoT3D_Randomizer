@@ -1,3 +1,6 @@
+#ifndef _MODELS_H_
+#define _MODELS_H_
+
 #include "z3D/z3D.h"
 
 typedef struct {
@@ -20,3 +23,5 @@ void Model_UpdateAll(GlobalContext* globalCtx);
 void Model_SpawnByActor(Actor* actor, GlobalContext* globalCtx, u16 baseItemId);
 void Model_DestroyByActor(Actor* actor);
 s32 Model_DrawByActor(Actor* actor);
+
+#endif //_MODELS_H_

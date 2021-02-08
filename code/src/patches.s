@@ -66,6 +66,11 @@ OverrideGraphicID_patch_4BC604:
 OverrideGraphicID_patch_4BD5D0:
     bl hook_OverrideGraphicID_351B94
 
+.section .patch_EditDrawGetItem
+.global EditDrawGetItem_patch
+EditDrawGetItem_patch:
+    bl hook_EditDrawGetItem
+
 .section .patch_NoLensOfTruthNaviText
     nop
 

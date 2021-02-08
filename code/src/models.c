@@ -4,6 +4,7 @@
 #include "item_table.h"
 #include "objects.h"
 #include "dungeon_rewards.h"
+#include "custom_models.h"
 #include <stddef.h>
 
 typedef void (*GlModel_MatrixCopy_proc)(GlModel* glModel, nn_math_MTX34* mtx);
@@ -42,6 +43,11 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
     // need to set mesh for rupees
     if (model->info.objectId == 0x017F) {
         GlModel_SetMesh(model->glModel, model->info.objectMeshId);
+    }
+
+    // check for double defense and edit the model if needed
+    if (model->info.objectId == 0x0004) {
+        CustomModel_EditHeartContainerToDoubleDefense(rExtendedObjectCtx.status[model->info.objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.cmbPtrs[model->info.objectModelIdx][0]);
     }
     model->loaded = 1;
 }

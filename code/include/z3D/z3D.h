@@ -333,10 +333,19 @@ typedef struct {
 // _Static_assert(sizeof(CollisionCheckContext) == 0x29C, "CollisionCheckContext size");
 
 #define OBJECT_EXCHANGE_BANK_MAX 19
+#define OBJECT_ID_MAX 417
+
+typedef struct {
+    /* 0x00 */ char unk_00[0x4C];
+    /* 0x4C */ void*** cmbPtrs; /* Really, this is a pointer to an array of pointers to CMB descriptors,
+                                   the first member of which is a pointer to the CMB data (I think) */
+    /* 0x50 */ char unk_50[0x20];
+} ZARInfo; // size = 0x70
 
 typedef struct {
     /* 0x00 */ s16 id;
-    /* 0x02 */ char unk_02[0x7E];
+    /* 0x02 */ char unk_02[0x0E];
+    /* 0x10 */ ZARInfo zarInfo;
 } ObjectStatus; // size = 0x80
 
 typedef struct {
@@ -344,6 +353,11 @@ typedef struct {
     /* 0x000 */ char unk_01[0x3];
     /* 0x004 */ ObjectStatus status[OBJECT_EXCHANGE_BANK_MAX];
 } ObjectContext; // size = 0x984
+
+typedef struct {
+    /* 0x00 */ char filename[0x40];
+    /* 0x40 */ u32 size; 
+} ObjectFile;
 
 struct GlModel;
 typedef void (*GlModelFunc)(struct GlModel*);
@@ -426,11 +440,18 @@ typedef struct {
     /* 0x8A */ char unk_8A[0x02];
 } Scene; // size = 0x8C
 
+typedef struct {
+    /* 0x00 */ s16 objectId;
+    /* 0x02 */ u8 objectModelIdx;
+    /* 0x03 */ char unk_03[0x3];
+} DrawItemTableEntry;
+
 extern GlobalContext* gGlobalContext;
 extern const u32 ItemSlots[];
 extern const char DungeonNames[][25];
 #define gSaveContext (*(SaveContext*)0x00587958)
 #define gStaticContext (*(StaticContext*)0x08080010)
+#define gObjectTable ((ObjectFile*)0x53CCF4)
 #define gEntranceTable ((EntranceInfo*)0x543BB8)
 #define gItemUsabilityTable ((u8*)0x506C58)
 #define gDungeonSceneTable ((Scene*)0x4DC400)
@@ -438,6 +459,7 @@ extern const char DungeonNames[][25];
 #define gSceneTable ((Scene*)0x545484)
 #define gRandInt (*(u32*)0x50C0C4)
 #define gRandFloat (*(f32*)0x50C0C8)
+#define gDrawItemTable ((DrawItemTableEntry*)0x4D88C8)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 
 typedef enum {

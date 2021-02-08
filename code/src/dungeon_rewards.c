@@ -19,6 +19,18 @@ u32 rDungeonRewardOverrides[LIGHT_MEDALLION + 1] = {
     LIGHT_MEDALLION,
  };
 
+const char DungeonRewardNames[][25] = {
+    "Kokiri Emerald",
+    "Goron Ruby",
+    "Zora's Sapphire",
+    "Forest Medallion",
+    "Fire Medallion",
+    "Water Medallion",
+    "Spirit Medallion",
+    "Shadow Medallion",
+    "Light Medallion",
+};
+
 static const DungeonRewardInfo rDungeonRewardTable[] = {
     [KOKIRI_EMERALD]   = DUNGEON_REWARD(0x80, 0x00040000, ITEM_KOKIRI_EMERALD,   0x13, 0x019C, 0x00),
     [GORON_RUBY]       = DUNGEON_REWARD(0x81, 0x00080000, ITEM_GORON_RUBY,       0x14, 0x019D, 0x00),
@@ -54,6 +66,10 @@ u32 DungeonReward_GetBitMask(u32 dungeonReward) {
 
 const u32* DungeonReward_GetBitMaskAddr(u32 dungeonReward) {
     return &rDungeonRewardTable[rDungeonRewardOverrides[dungeonReward]].bitMask;
+}
+
+const char* DungeonReward_GetName(u32 dungeonReward) {
+    return DungeonRewardNames[rDungeonRewardOverrides[dungeonReward]];
 }
 
 const DungeonRewardInfo* DungeonReward_GetInfoByActor(Actor* reward) {
