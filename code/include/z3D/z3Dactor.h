@@ -177,7 +177,9 @@ typedef struct {
 
 typedef struct {
     /* 0x0000 */ Actor  actor;
-    /* 0x01A4 */ char   unk_148[0x1108];
+    /* 0x01A4 */ char   unk_148[0x00A8];
+    /* 0x024C */ void*  giDrawSpace;
+    /* 0x0250 */ char   unk_250[0x105C];
     /* 0x12AC */ u8     getItemId;
     /* 0x12AD */ char   unk_12AD[0x0001];
     /* 0x12AE */ u16    getItemDirection;

@@ -3,6 +3,7 @@
 #include "item_table.h"
 #include "icetrap.h"
 #include "settings.h"
+#include "custom_models.h"
 #include <stddef.h>
 void svcBreak(u32 breakReason); //TODO: remove
 
@@ -326,6 +327,16 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     }
 
     ItemTable_CallEffect(itemRow);
+}
+
+void ItemOverride_EditDrawGetItem(void) {
+    // Check for the custom graphicId for double defense
+    if (rActiveItemGraphicId == 0x04) {
+        // Should probably parse the ZAR to find the CMB correctly,
+        // but this is fine for now
+        void* heartContainerCMB = (void*)(((char*)PLAYER->giDrawSpace) + 0xA4);
+        CustomModel_EditHeartContainerToDoubleDefense(heartContainerCMB);
+    }
 }
 
 s32 ItemOverride_GiveSariasGift(void) {

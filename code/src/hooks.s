@@ -131,6 +131,14 @@ returnGraphicID_354BB8:
     pop {lr}
     bx lr
 
+.global hook_EditDrawGetItem
+hook_EditDrawGetItem:
+    push {r0-r12, lr}
+    bl ItemOverride_EditDrawGetItem
+    pop {r0-r12, lr}
+    mov r7,#0x0
+    bx lr
+
 # TODO: Text ID in game gets messed up,
 # Gives the "What's that?" text instead of
 # the text about moving the statue

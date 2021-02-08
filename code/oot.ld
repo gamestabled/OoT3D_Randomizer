@@ -531,7 +531,11 @@ SECTIONS
 	.patch_OverrideGraphicID_4BD5D0 0x4BD5D0 : {
 		*(.patch_OverrideGraphicID_4BD5D0)
 	}
-	
+
+	.patch_EditDrawGetItem 0x4C0FD0 : {
+		*(.patch_EditDrawGetItem)
+	}
+
 	. = 0x4C99A8;
 	. = ALIGN(4);
 	.loader : {

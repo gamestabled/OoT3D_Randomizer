@@ -203,7 +203,7 @@ static ItemRow rItemTable[] = {
     [0xB6] = ITEM_ROW(0x53, 3, 0x41, 0x09F5, 0x00AA, 0x00, 0x00, 0x02, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_GERUDO_FORTRESS,          -1), // Gerudo Fortress Small Key
     [0xB7] = ITEM_ROW(0x53, 3, 0x41, 0x09F6, 0x00AA, 0x00, 0x00, 0x02, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_GANONS_CASTLE_FIRST_PART, -1), // Ganon's Castle Small Key
 
-    [0xB8] = ITEM_ROW(0x53, 0, 0x41, 0x00E9, 0x00BD, 0x00, 0x00, 0x13, ItemUpgrade_None, ItemEffect_GiveDefense,     -1, -1), // Double Defense
+    [0xB8] = ITEM_ROW(0x53, 0, 0x41, 0x00E9, 0x0004, 0x00, 0x00, 0x04, ItemUpgrade_None, ItemEffect_GiveDefense,     -1, -1), // Double Defense
     [0xB9] = ITEM_ROW(0x53, 0, 0x41, 0x00E4, 0x00CD, 0x00, 0x00, 0x1E, ItemUpgrade_None, ItemEffect_GiveMagic,       -1, -1), // Magic Meter
     [0xBA] = ITEM_ROW(0x53, 0, 0x41, 0x00E8, 0x00CD, 0x00, 0x00, 0x1F, ItemUpgrade_None, ItemEffect_GiveDoubleMagic, -1, -1), // Double Magic
 
