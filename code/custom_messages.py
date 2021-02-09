@@ -15,7 +15,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                INSTANT_TEXT_ON()+"Vous venez de détruire une "+COLOR(RED)+"Skulltula d’or"+COLOR(WHITE)+". Vous avez un"+NEWLINE()+"jeton prouvant que vous l'avez détruit!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(RED)+SKULLTULAS_DESTROYED()+COLOR(WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                INSTANT_TEXT_ON()+"Vous venez de d\x7F\xC3\xA9truire une "+COLOR(RED)+"Skulltula d’or"+COLOR(WHITE)+". Vous avez un"+NEWLINE()+"jeton prouvant que vous l'avez d\x7F\xC3\xA9truit!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(RED)+SKULLTULAS_DESTROYED()+COLOR(WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -26,7 +26,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(GREEN)+"clé d'or du Temple de la Forêt"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(GREEN)+"cl\x7F\xC3\xA9 d'or du Temple de la Forêt"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -36,7 +36,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(RED)+"clé d'or du Temple du Feu"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(RED)+"cl\x7F\xC3\xA9 d'or du Temple du Feu"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -46,7 +46,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(BLUE)+"clé d'or du Temple de l'Eau"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(BLUE)+"cl\x7F\xC3\xA9 d'or du Temple de l'Eau"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -56,7 +56,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(YELLOW)+"clé d'or du Temple de l'Esprit"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(YELLOW)+"cl\x7F\xC3\xA9 d'or du Temple de l'Esprit"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -66,7 +66,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(PINK)+"clé d'or du Temple de l'Ombre"+NEWLINE()+"Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(PINK)+"cl\x7F\xC3\xA9 d'or du Temple de l'Ombre"+NEWLINE()+"Key"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -76,7 +76,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(RED)+"clé d'or du Château de Ganon"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x74)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(RED)+"cl\x7F\xC3\xA9 d'or du Ch\x7F\xC3\x82teau de Ganon"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -97,7 +97,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                "FRENCH GOES HERE"+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x75)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(RED)+"boussole de la"+NEWLINE()+"Caverne Dodongo"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -107,7 +107,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                "FRENCH GOES HERE"+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x75)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(BLUE)+"boussole du"+NEWLINE()+"ventre de Jabu-Jabu"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -117,7 +117,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                               UNSKIPPABLE()+ITEM_OBTAINED(0x75)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(GREEN)+"boussole du Temple de la Forêt"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x75)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(GREEN)+"boussole du Temple de la Forêt"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -167,7 +167,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                "FRENCH GOES HERE"+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x75)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(PINK)+"boussole du Puits"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -289,7 +289,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(GREEN)+"petite clé du Temple de la Forêt"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(GREEN)+"petite cl\x7F\xC3\xA9 du Temple de la Forêt"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -299,7 +299,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(RED)+"petite clé du Temple du Feu"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(RED)+"petite cl\x7F\xC3\xA9 du Temple du Feu"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -309,7 +309,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(BLUE)+"petite clé du Temple de l'Eau"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(BLUE)+"petite cl\x7F\xC3\xA9 du Temple de l'Eau"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -319,7 +319,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(YELLOW)+"petite clé du Temple de l'Esprit"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(YELLOW)+"petite cl\x7F\xC3\xA9 du Temple de l'Esprit"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -329,7 +329,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(PINK)+"petite clé du Temple de l'Ombre"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(PINK)+"petite cl\x7F\xC3\xA9 du Temple de l'Ombre"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -339,7 +339,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                "FRENCH GOES HERE"+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(PINK)+"petite cl\x7F\xC3\xA9 du Puits"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -349,7 +349,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                "FRENCH GOES HERE"+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(YELLOW)+"petite cl\x7F\xC3\xA9 du"+NEWLINE()+"Gymnase Gerudo"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -359,7 +359,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(YELLOW)+"petite clé de la Forteresse Gerudo"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(YELLOW)+"petite cl\x7F\xC3\xA9 de la Forteresse Gerudo"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -369,7 +369,7 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(RED)+"petite clé du Château de Ganon"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                UNSKIPPABLE()+ITEM_OBTAINED(0x77)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(RED)+"petite cl\x7F\xC3\xA9 du Ch\x7F\xC3\x82teau de Ganon"+COLOR(WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -383,10 +383,10 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Attends une minute! HOU LA LA!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu as gagné suffisamment de points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Jeune homme, tu es un véritable "+COLOR(RED)+"chasseur de fantômes"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"C’est ce que tu attendais de moi ?"+NEWLINE()+"Heh heh heh!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Grâce à toi, j’ai un stock supplémentaire d'"+NEWLINE()+COLOR(RED)+"Âmes"+COLOR(WHITE)+", donc ce sera la dernière fois que je peux ""+NEWLINE()
-                                                    +"achetez un de ces fantômes."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu penses à ce que j'ai promis"+NEWLINE()+"lorsque tu as gagné suffisamment de points."+NEWLINE()+"Heh heh."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Ne t'inquiète pas. Je n'ai pas oublié. Prends ça."+MESSAGE_END(),
+                                                UNSKIPPABLE()+"Attends une minute! HOU LA LA!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu as gagn\x7F\xC3\xA9 suffisamment de points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Jeune homme, tu es un v\x7F\xC3\xA9ritable "+COLOR(RED)+"chasseur de fant\x7F\xC3\xB4mes"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"C’est ce que tu attendais de moi ?"+NEWLINE()+"Heh heh heh!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Gr\x7F\xC3\x82ce \x7F\xC3\xA0 toi, j’ai un stock suppl\x7F\xC3\xA9mentaire d'"+NEWLINE()+COLOR(RED)+"\x7F\xC3\x82mes"+COLOR(WHITE)+", donc ce sera la derni\x7F\xC3\xA8re fois que je peux ""+NEWLINE()
+                                                    +"achetez un de ces fant\x7F\xC3\xB4mes."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu penses \x7F\xC3\xA0 ce que j'ai promis"+NEWLINE()+"lorsque tu as gagn\x7F\xC3\xA9 suffisamment de points."+NEWLINE()+"Heh heh."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Ne t'inqui\x7F\xC3\xA8te pas. Je n'ai pas oubli\x7F\xC3\xA9. Prends \x7F\xC3\xA7a."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
                                                 "",
@@ -603,8 +603,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"100 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -617,8 +617,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"200 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -631,8 +631,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"300 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -645,8 +645,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"400 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -659,8 +659,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"500 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -673,8 +673,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"600 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -687,8 +687,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"700 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -701,8 +701,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"800 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -715,8 +715,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"900 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
@@ -729,8 +729,8 @@ custom_messages = {
                                                 "",
                                                 "",
                                                 "",
-                                                UNSKIPPABLE()+"Oh, tu as amené un fantôme aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(RED)+"Âme"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                                                    +"Je te l'achète pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                UNSKIPPABLE()+"Oh, tu as amen\x7F\xC3\xA9 un fant\x7F\xC3\xB4me aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tr\x7F\xC3\xA8s int\x7F\xC3\xA9ressant! C'est un "+COLOR(RED)+"\x7F\xC3\x82me"+COLOR(WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                                                    +"Je te l'ach\x7F\xC3\xA8te pour "+COLOR(RED)+"50 Rubis"+COLOR(WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de \x7F\xC3\xA7a, je vais mettre "+COLOR(RED)+"100 points "+COLOR(WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                                                     +"Si tu gagnes "+COLOR(RED)+"1,000 points"+COLOR(WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
                                                 "",
                                                 "SPANISH GOES HERE"+MESSAGE_END(),
