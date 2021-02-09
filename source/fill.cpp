@@ -77,8 +77,8 @@ static Item GetItemToPlace() {
     return item;
   }
 
-  printf("ERROR: COULD NOT FIND ITEM TO PLACE\n");
-  return GreenRupee;
+  printf("\x1b[28;0HERROR: COULD NOT FIND ITEM TO PLACE\n");
+  return NoItem;
 }
 
 static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
@@ -219,6 +219,10 @@ static int AssumedFill() {
 
     //move an item from unplaced to placed, this will be the item we place
     Item item = GetItemToPlace();
+    if (item.GetName() == "No Item") {
+      printf("\x1b[20;0HRETRYING PLACEMENT...");
+      return 0;
+    }
     placedItems.push_back(item);
 
     //assume we have all of the unplaced items and nothing else
@@ -238,7 +242,10 @@ static int AssumedFill() {
 
     //if we get stuck, retry
     if (locations.empty()) {
-      printf("ERROR: NO LOCATIONS TO PLACE ITEM. TRYING AGAIN...");
+      printf("\x1b[25;0HERROR: NO LOCATIONS TO PLACE ITEM\n%s     \nTRYING AGAIN...", item.GetName().data());
+      PlacementLog_Msg("\nCANNOT PLACE ");
+      PlacementLog_Msg(item.GetName());
+      PlacementLog_Msg("\n");
       return 0;
     }
 
@@ -280,22 +287,16 @@ static void FillExcludedLocations() {
   }
 }
 
-void Fill_Init() {
-
+int Fill_Init() {
   GenerateItemPool();
   RandomizeDungeonRewards();
 
   FillExcludedLocations();
 
   if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
-    int success = 0;
-
-    while(!success) {
-      success = AssumedFill();
-      if (!success) {
-        itemsPlaced = 0;
-        GenerateItemPool();
-      }
+    if (!AssumedFill()) {
+      itemsPlaced = 0;
+      return 0;
     }
 
   } else {
@@ -304,4 +305,6 @@ void Fill_Init() {
 
   PlacementLog_Msg("\nSeed: ");
   PlacementLog_Msg(Settings::seed);
+
+  return 1;
 }

@@ -105,6 +105,7 @@ bool SpoilerLog_Write() {
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += '\n';
   }
+  playthroughLocations = {};
 
   logtxt += "\nAll Locations:\n\n";
   for (ItemLocation* location : dungeonRewardLocations) {
@@ -133,6 +134,7 @@ bool SpoilerLog_Write() {
     return false;
   }
 
+  logtxt = "";
   return true;
 }
 
@@ -159,5 +161,6 @@ bool PlacementLog_Write() {
     return false;
   }
 
+  placementtxt = "";
   return true;
 }
