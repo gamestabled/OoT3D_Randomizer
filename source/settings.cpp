@@ -73,7 +73,7 @@ namespace Settings {
   //Timesaver Settings
   Option SkipChildStealth    = Option::U8  ("Skip Child Sealth",      {"Don't Skip", "Skip"},                                  {childStealthDesc, childStealthDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Skip", "Don't Skip"},                                  {fourPoesDesc, fourPoesDesc});
-  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     {"", "", "", "", "", "", "", "", "", ""});
+  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     std::vector<std::string_view>{10, bigPoeTargetCountDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &FourPoesCutscene,

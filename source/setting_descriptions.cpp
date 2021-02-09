@@ -220,6 +220,11 @@ std::string_view fourPoesDesc         = "The cutscene with the 4 poes in Forest 
                                         "be skipped. If the cutscene is not skipped, it can"
                                         "be exploited to reach the basement early.";       //
 /*------------------------------                                                           //
+|     BIG POE TARGET COUNT     |                                                           //
+------------------------------*/                                                           //
+std::string_view bigPoeTargetCountDesc= "The Poe buyer will give a reward for turning in\n"//
+                                        "the chosen number of Big Poes.";                  //
+/*------------------------------                                                           //
 |       DAMAGE MULTIPLIER      |                                                           //
 ------------------------------*/                                                           //
 std::string_view damageMultiDesc      = "Changes the amount of damage taken.\n"            //
