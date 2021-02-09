@@ -201,7 +201,13 @@ static void FastFill(std::vector<ItemLocation*> locations) {
     }
   }
 }
-
+/*
+| The algorithm places items in the world in reverse.
+| This means we first assume we have every item in the item pool and
+| remove an item and try to place it somewhere that is still reachable
+| This method helps distribution of items locked behind many requirements.
+| - OoT Randomizer
+*/
 static int AssumedFill() {
 
   //get all the advancement items

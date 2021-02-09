@@ -147,33 +147,38 @@ class MenuItem {
 namespace Settings {
   extern std::string seed;
 
-  // U8 options
   extern Option Logic;
   extern Option OpenForest;
   extern Option OpenKakariko;
-  extern Option Bridge;
-  extern Option GerudoFortress;
-  extern Option DamageMultiplier;
+  extern Option OpenDoorOfTime;
   extern Option ZorasFountain;
+  extern Option GerudoFortress;
+  extern Option Bridge;
+
   extern Option StartingAge;
+  extern Option BombchusInLogic;
+  extern Option RandomMQDungeons;
+
+  extern Option ShuffleSongs;
+  extern Option Tokensanity;
+  extern Option Scrubsanity;
+  extern Option ShuffleKokiriSword;
+  extern Option ShuffleOcarinas;
+  extern Option ShuffleWeirdEgg;
+  extern Option ShuffleGerudoToken;
+  extern Option ShuffleMagicBeans;
+
   extern Option Keysanity;
   extern Option BossKeysanity;
   extern Option GanonsBossKey;
   extern Option MapsAndCompasses;
-  extern Option ShuffleSongs;
-  extern Option Tokensanity;
-  extern Option Scrubsanity;
-  extern Option ItemPoolValue;
-  extern u8 LACSCondition;
 
-  // Bool options
-  extern Option BombchusInLogic;
-  extern Option OpenDoorOfTime;
-  extern Option ShuffleWeirdEgg;
-  extern Option ShuffleGerudoToken;
-  extern Option ShuffleKokiriSword;
-  extern Option ShuffleMagicBeans;
-  extern Option ShuffleOcarinas;
+  extern Option DamageMultiplier;
+  extern Option GenerateSpoilerLog;
+
+  extern Option ItemPoolValue;
+
+  extern u8 LACSCondition;
 
   extern bool HasNightStart;
   extern bool BombchuDrop;

@@ -19,6 +19,18 @@ typedef enum {
 } OpenKakarikoSetting;
 
 typedef enum {
+  ZORASFOUNTAIN_NORMAL,
+  //ZORASFOUNTAIN_ADULT,
+  ZORASFOUNTAIN_OPEN,
+} ZorasFountainSetting;
+
+typedef enum {
+  GERUDOFORTRESS_NORMAL,
+  GERUDOFORTRESS_FAST,
+  GERUDOFORTRESS_OPEN,
+} GerudoFortressSetting;
+
+typedef enum {
   RAINBOWBRIDGE_OPEN,
   RAINBOWBRIDGE_VANILLA,
   RAINBOWBRIDGE_STONES,
@@ -35,29 +47,31 @@ typedef enum {
 } LACSConditionSetting;
 
 typedef enum {
-  GERUDOFORTRESS_NORMAL,
-  GERUDOFORTRESS_FAST,
-  GERUDOFORTRESS_OPEN,
-} GerudoFortressSetting;
+  AGE_ADULT,
+  AGE_CHILD,
+} AgeSetting;
 
 typedef enum {
-  DAMAGEMULTIPLIER_HALF,
-  DAMAGEMULTIPLIER_DEFAULT,
-  DAMAGEMULTIPLIER_DOUBLE,
-  DAMAGEMULTIPLIER_QUADRUPLE,
-  DAMAGEMULTIPLIER_OHKO,
-} DamageMultiplierSetting;
+  DUNGEONMODE_VANILLA,
+  DUNGEONMODE_MQ,
+} DungeonMode;
 
 typedef enum {
-  ZORASFOUNTAIN_NORMAL,
-  //ZORASFOUNTAIN_ADULT,
-  ZORASFOUNTAIN_OPEN,
-} ZorasFountainSetting;
+  SONGSHUFFLE_SONG_LOCATIONS,
+  SONGSHUFFLE_ANYWHERE,
+} SongShuffleSetting;
 
 typedef enum {
-  STARTINGTIME_DAY,
-  STARTINGTIME_NIGHT,
-} StartingTimeSetting;
+  TOKENSANITY_VANILLA,
+  TOKENSANITY_ANYWHERE,
+} TokensanitySetting;
+
+typedef enum {
+  SCRUBSANITY_OFF,
+  SCRUBSANITY_AFFORDABLE,
+  SCRUBSANITY_EXPENSIVE,
+  SCRUBSANITY_RANDOM_PRICES,
+} ScrubsanitySetting;
 
 typedef enum {
   KEYSANITY_VANILLA,
@@ -89,26 +103,17 @@ typedef enum {
 } MapsAndCompassesSetting;
 
 typedef enum {
-  SONGSHUFFLE_SONG_LOCATIONS,
-  SONGSHUFFLE_ANYWHERE,
-} SongShuffleSetting;
+  DAMAGEMULTIPLIER_HALF,
+  DAMAGEMULTIPLIER_DEFAULT,
+  DAMAGEMULTIPLIER_DOUBLE,
+  DAMAGEMULTIPLIER_QUADRUPLE,
+  DAMAGEMULTIPLIER_OHKO,
+} DamageMultiplierSetting;
 
 typedef enum {
-  TOKENSANITY_VANILLA,
-  TOKENSANITY_ANYWHERE,
-} TokensanitySetting;
-
-typedef enum {
-  SCRUBSANITY_OFF,
-  SCRUBSANITY_AFFORDABLE,
-  SCRUBSANITY_EXPENSIVE,
-  SCRUBSANITY_RANDOM_PRICES,
-} ScrubsanitySetting;
-
-typedef enum {
-  DUNGEONMODE_VANILLA,
-  DUNGEONMODE_MQ,
-} DungeonMode;
+  STARTINGTIME_DAY,
+  STARTINGTIME_NIGHT,
+} StartingTimeSetting;
 
 typedef enum {
   ITEMPOOL_PLENTIFUL,
@@ -116,11 +121,6 @@ typedef enum {
   ITEMPOOL_SCARCE,
   ITEMPOOL_MINIMAL,
 } ItemPoolSetting;
-
-typedef enum {
-  AGE_ADULT,
-  AGE_CHILD,
-} AgeSetting;
 
 typedef struct {
   u8 logic : 1;
@@ -156,6 +156,7 @@ typedef struct {
 
   u8 damageMultiplier : 3;
   u8 startingTime : 3;
+  u8 generateSpoilerLog : 1;
 
   u8 boomerangAsAdult : 1;
   u8 hammerAsChild : 1;

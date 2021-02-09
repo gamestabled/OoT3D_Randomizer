@@ -28,22 +28,25 @@ namespace Playthrough {
           success = Fill_Init();
         }
 
-
         GenerateHash();
 
-        //write logs
-        printf("\x1b[9;10H");
-        if (SpoilerLog_Write()) {
-          printf("Wrote spoiler log");
-        } else {
-          printf("Failed to write spoiler log");
-        }
+        if (Settings::GenerateSpoilerLog) {
+          //write logs
+          printf("\x1b[9;10H");
+          if (SpoilerLog_Write()) {
+            printf("Wrote spoiler log");
+          } else {
+            printf("Failed to write spoiler log");
+          }
 
-        printf("\x1b[10;10H");
-        if (PlacementLog_Write()) {
-          printf("Wrote placement log\n");
+          printf("\x1b[10;10H");
+          if (PlacementLog_Write()) {
+            printf("Wrote placement log\n");
+          } else {
+            printf("Failed to write placement log\n");
+          }
         } else {
-          printf("Failed to write placement log\n");
+          playthroughLocations = {};
         }
 
         return 1;

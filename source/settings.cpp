@@ -71,8 +71,8 @@ namespace Settings {
   };
 
   //Timesaver Settings
-  Option SkipChildStealth    = Option::U8  ("Skip Child Sealth",      {"Don't Skip", "Skip"},                                  {childStealthDesc, childStealthDesc});
-  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Skip", "Don't Skip"},                                  {fourPoesDesc, fourPoesDesc});
+  Option SkipChildStealth    = Option::Bool("Skip Child Sealth",      {"Don't Skip", "Skip"},                                  {childStealthDesc, childStealthDesc});
+  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                  {fourPoesDesc, fourPoesDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     std::vector<std::string_view>{10, bigPoeTargetCountDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
@@ -83,15 +83,17 @@ namespace Settings {
   //Misc Settings
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc}, 1);
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc, startingTimeDesc});
+  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""}, true);
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &DamageMultiplier,
     &StartingTime,
+    &GenerateSpoilerLog,
   };
 
   //Advanced Glitch Settings
-  Option BoomerangAsAdult    = Option::U8  ("Enable Adult Boomerang", {"No", "Yes"},                                           {adultBoomerangDesc, adultBoomerangDesc});
-  Option HammerAsChild       = Option::U8  ("Enable Child Hammer",    {"No", "Yes"},                                           {childHammerDesc, childHammerDesc});
+  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disable", "Enable"},                                   {adultBoomerangDesc, adultBoomerangDesc});
+  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disable", "Enable"},                                   {childHammerDesc, childHammerDesc});
   std::vector<Option *> advancedGlitchedOptions = {
     &BoomerangAsAdult,
     &HammerAsChild,
@@ -320,15 +322,16 @@ namespace Settings {
     ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
     ctx.lacsCondition      = LACSCondition;
 
-    ctx.skipChildStealth   = SkipChildStealth.Value<u8>();
+    ctx.skipChildStealth   = (SkipChildStealth) ? 1 : 0;
     ctx.fourPoesCutscene   = (FourPoesCutscene) ? 1 : 0;
     ctx.bigPoeTargetCount  = BigPoeTargetCount.Value<u8>() + 1;
 
     ctx.damageMultiplier   = DamageMultiplier.Value<u8>();
     ctx.startingTime       = StartingTime.Value<u8>();
+    ctx.generateSpoilerLog = (GenerateSpoilerLog) ? 1 : 0;
 
-    ctx.boomerangAsAdult   = BoomerangAsAdult.Value<u8>();
-    ctx.hammerAsChild      = HammerAsChild.Value<u8>();
+    ctx.boomerangAsAdult   = (BoomerangAsAdult) ? 1 : 0;
+    ctx.hammerAsChild      = (HammerAsChild) ? 1 : 0;
 
     ctx.itemPoolValue      = ItemPoolValue.Value<u8>();
 
@@ -392,6 +395,7 @@ namespace Settings {
 
     DamageMultiplier.SetSelectedIndex(ctx.damageMultiplier);
     StartingTime.SetSelectedIndex(ctx.startingTime);
+    GenerateSpoilerLog.SetSelectedIndex(ctx.generateSpoilerLog);
 
     BoomerangAsAdult.SetSelectedIndex(ctx.boomerangAsAdult);
     HammerAsChild.SetSelectedIndex(ctx.hammerAsChild);
