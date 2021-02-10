@@ -77,7 +77,7 @@ static Item GetItemToPlace() {
     return item;
   }
 
-  printf("\x1b[28;0HERROR: COULD NOT FIND ITEM TO PLACE\n");
+  PlacementLog_Msg("\nERROR: COULD NOT FIND ITEM TO PLACE\n");
   return NoItem;
 }
 
@@ -226,7 +226,7 @@ static int AssumedFill() {
     //move an item from unplaced to placed, this will be the item we place
     Item item = GetItemToPlace();
     if (item.GetName() == "No Item") {
-      printf("\x1b[20;0HRETRYING PLACEMENT...");
+      PlacementLog_Msg("\nRETRYING PLACEMENT...\n");
       return 0;
     }
     placedItems.push_back(item);
@@ -248,10 +248,9 @@ static int AssumedFill() {
 
     //if we get stuck, retry
     if (locations.empty()) {
-      printf("\x1b[25;0HERROR: NO LOCATIONS TO PLACE ITEM\n%s     \nTRYING AGAIN...", item.GetName().data());
       PlacementLog_Msg("\nCANNOT PLACE ");
       PlacementLog_Msg(item.GetName());
-      PlacementLog_Msg("\n");
+      PlacementLog_Msg(". TRYING AGAIN...\n");
       return 0;
     }
 
@@ -294,6 +293,7 @@ static void FillExcludedLocations() {
 }
 
 int Fill_Init() {
+  itemsPlaced = 0;
   GenerateItemPool();
   RandomizeDungeonRewards();
 
@@ -301,7 +301,6 @@ int Fill_Init() {
 
   if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
     if (!AssumedFill()) {
-      itemsPlaced = 0;
       return 0;
     }
 

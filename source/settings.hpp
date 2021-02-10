@@ -173,8 +173,16 @@ namespace Settings {
   extern Option GanonsBossKey;
   extern Option MapsAndCompasses;
 
+  extern Option SkipChildStealth;
+  extern Option FourPoesCutscene;
+  extern Option BigPoeTargetCount;
+
   extern Option DamageMultiplier;
+  extern Option StartingTime;
   extern Option GenerateSpoilerLog;
+
+  extern Option BoomerangAsAdult;
+  extern Option HammerAsChild;
 
   extern Option ItemPoolValue;
 
@@ -280,6 +288,7 @@ namespace Settings {
   extern std::array<u32, 9> rDungeonRewardOverrides;
 
   extern std::vector<Option *> excludeLocationsOptions;
+  extern std::vector<Option *> detailedLogicOptions;
 
   extern void UpdateSettings();
   extern SettingsContext FillContext();
