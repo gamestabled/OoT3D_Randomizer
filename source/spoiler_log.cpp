@@ -52,6 +52,39 @@ namespace {
     "Map",
     "Big Magic",
   };
+  std::array<Option *, 31> settings = {
+    &Settings::Logic,
+    &Settings::OpenForest,
+    &Settings::OpenKakariko,
+    &Settings::OpenDoorOfTime,
+    &Settings::ZorasFountain,
+    &Settings::GerudoFortress,
+    &Settings::Bridge,
+    &Settings::StartingAge,
+    &Settings::BombchusInLogic,
+    &Settings::RandomMQDungeons,
+    &Settings::ShuffleSongs,
+    &Settings::Tokensanity,
+    &Settings::Scrubsanity,
+    &Settings::ShuffleKokiriSword,
+    &Settings::ShuffleOcarinas,
+    &Settings::ShuffleWeirdEgg,
+    &Settings::ShuffleGerudoToken,
+    &Settings::ShuffleMagicBeans,
+    &Settings::Keysanity,
+    &Settings::BossKeysanity,
+    &Settings::GanonsBossKey,
+    &Settings::MapsAndCompasses,
+    &Settings::SkipChildStealth,
+    &Settings::FourPoesCutscene,
+    &Settings::BigPoeTargetCount,
+    &Settings::DamageMultiplier,
+    &Settings::StartingTime,
+    &Settings::GenerateSpoilerLog,
+    &Settings::BoomerangAsAdult,
+    &Settings::HammerAsChild,
+    &Settings::ItemPoolValue,
+  };
 }
 
 std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
@@ -82,12 +115,55 @@ static auto GetGeneralPath() {
   return path;
 }
 
+
 static auto GetSpoilerLogPath() {
   return GetGeneralPath() + "-spoilerlog.txt";
 }
 
 static auto GetPlacementLogPath() {
   return GetGeneralPath() + "-placementlog.txt";
+}
+
+static void WriteSettings() {
+  //List Settings
+  logtxt += "Settings:\n";
+  for (auto& s : settings) {
+    logtxt += "\t";
+    logtxt += s->GetName();
+    logtxt += ": ";
+    logtxt += s->GetSelectedOption();
+    logtxt += "\n";
+  }
+
+  //List Excluded Locations
+  logtxt += "\nExcluded Locations:\n";
+  for (auto& l : Settings::excludeLocationsOptions) {
+    if (l->GetSelectedOption() == "Exclude") {
+      std::string name = l->GetName().data();
+      if (name.find('\n') != std::string::npos)
+        name.replace(name.find('\n'), 1, "");
+
+      logtxt += "\t";
+      logtxt += name;
+      logtxt += "\n";
+    }
+  }
+
+  //List Enabled Tricks
+  logtxt += "\nEnabled Tricks:\n";
+  for (auto& l : Settings::detailedLogicOptions) {
+    if (l->GetSelectedOption() == "Enable") {
+      std::string name = l->GetName().data();
+      if (name.find('\n') != std::string::npos)
+        name.replace(name.find('\n'), 1, "");
+
+      logtxt += "\t";
+      logtxt += name;
+      logtxt += "\n";
+    }
+  }
+
+  logtxt += "\n";
 }
 
 bool SpoilerLog_Write() {
@@ -99,12 +175,15 @@ bool SpoilerLog_Write() {
   }
   logtxt += "\n\n";
 
+  WriteSettings();
+
   logtxt += "Playthrough:\n";
   for (ItemLocation* location : playthroughLocations) {
     logtxt += "    ";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += '\n';
   }
+  playthroughLocations = {};
 
   logtxt += "\nAll Locations:\n\n";
   for (ItemLocation* location : dungeonRewardLocations) {
@@ -133,6 +212,7 @@ bool SpoilerLog_Write() {
     return false;
   }
 
+  logtxt = "";
   return true;
 }
 
@@ -159,5 +239,6 @@ bool PlacementLog_Write() {
     return false;
   }
 
+  placementtxt = "";
   return true;
 }

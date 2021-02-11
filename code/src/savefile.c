@@ -82,7 +82,7 @@ void SaveFile_Init() {
       gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
     }
 
-    if (!gSettingsContext.fourPoesCutscene) {
+    if (gSettingsContext.fourPoesCutscene) {
       gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }
 

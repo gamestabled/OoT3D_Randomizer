@@ -263,6 +263,7 @@ namespace Logic {
   extern bool GCWoodsWarpOpen;
   extern bool StopGCRollingGoronAsAdult;
   extern bool ChildWaterTemple;
+  extern bool RaiseWaterLevel;
   extern bool KingZoraThawed;
   extern bool IsStartingAge;
   extern bool AtDampeTime;

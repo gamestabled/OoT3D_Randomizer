@@ -265,6 +265,7 @@ namespace Logic {
   bool GCWoodsWarpOpen           = false;
   bool StopGCRollingGoronAsAdult = false;
   bool ChildWaterTemple          = false;
+  bool RaiseWaterLevel           = false;
   bool KakarikoVillageGateOpen   = false;
   bool KingZoraThawed            = false;
   bool ForestTempleJoAndBeth     = false;
@@ -479,7 +480,7 @@ namespace Logic {
   }
 
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
-    return (dungeonKeyCount >= requiredAmount) || Keysanity.Is(KEYSANITY_VANILLA);
+    return (dungeonKeyCount >= requiredAmount);
   }
 
   bool EventsUpdated() {

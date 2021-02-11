@@ -77,8 +77,8 @@ static Item GetItemToPlace() {
     return item;
   }
 
-  printf("ERROR: COULD NOT FIND ITEM TO PLACE\n");
-  return GreenRupee;
+  PlacementLog_Msg("\nERROR: COULD NOT FIND ITEM TO PLACE\n");
+  return NoItem;
 }
 
 static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
@@ -201,7 +201,13 @@ static void FastFill(std::vector<ItemLocation*> locations) {
     }
   }
 }
-
+/*
+| The algorithm places items in the world in reverse.
+| This means we first assume we have every item in the item pool and
+| remove an item and try to place it somewhere that is still reachable
+| This method helps distribution of items locked behind many requirements.
+| - OoT Randomizer
+*/
 static int AssumedFill() {
 
   //get all the advancement items
@@ -219,6 +225,10 @@ static int AssumedFill() {
 
     //move an item from unplaced to placed, this will be the item we place
     Item item = GetItemToPlace();
+    if (item.GetName() == "No Item") {
+      PlacementLog_Msg("\nRETRYING PLACEMENT...\n");
+      return 0;
+    }
     placedItems.push_back(item);
 
     //assume we have all of the unplaced items and nothing else
@@ -238,7 +248,9 @@ static int AssumedFill() {
 
     //if we get stuck, retry
     if (locations.empty()) {
-      printf("ERROR: NO LOCATIONS TO PLACE ITEM. TRYING AGAIN...");
+      PlacementLog_Msg("\nCANNOT PLACE ");
+      PlacementLog_Msg(item.GetName());
+      PlacementLog_Msg(". TRYING AGAIN...\n");
       return 0;
     }
 
@@ -280,22 +292,16 @@ static void FillExcludedLocations() {
   }
 }
 
-void Fill_Init() {
-
+int Fill_Init() {
+  itemsPlaced = 0;
   GenerateItemPool();
   RandomizeDungeonRewards();
 
   FillExcludedLocations();
 
   if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
-    int success = 0;
-
-    while(!success) {
-      success = AssumedFill();
-      if (!success) {
-        itemsPlaced = 0;
-        GenerateItemPool();
-      }
+    if (!AssumedFill()) {
+      return 0;
     }
 
   } else {
@@ -304,4 +310,6 @@ void Fill_Init() {
 
   PlacementLog_Msg("\nSeed: ");
   PlacementLog_Msg(Settings::seed);
+
+  return 1;
 }

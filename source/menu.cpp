@@ -454,9 +454,17 @@ bool SaveSettingsPreset() {
 }
 
 void GenerateRandomizer() {
+
+  consoleSelect(&topScreen);
+  consoleClear();
+
   //if a blank seed was entered, make a random one
   if (Settings::seed == "") {
     Settings::seed = std::to_string(rand());
+  } else if (Settings::seed.rfind("seed_testing_count", 0) == 0) {
+    int count = std::stoi(Settings::seed.substr(18, std::string::npos), nullptr);
+    Playthrough::Playthrough_Repeat(count);
+    return;
   }
 
   //turn the settings into a string for hashing
@@ -466,9 +474,6 @@ void GenerateRandomizer() {
   std::memcpy(settingsStr.data(), ctxPtr, sizeof(ctx));
 
   unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
-
-  consoleSelect(&topScreen);
-	consoleClear();
 
 	int ret = Playthrough::Playthrough_Init(finalHash);
 	if (ret < 0) {
