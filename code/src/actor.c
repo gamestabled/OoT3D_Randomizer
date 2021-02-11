@@ -10,8 +10,16 @@
 #include "ocarina.h"
 #include "string.h"
 
-#define OBJECT_CUSTOM_DOUBLEDEFENSE 4
+#define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
+#define OBJECT_CUSTOM_ZELDAS_LULLABY 5
+#define OBJECT_CUSTOM_SARIAS_SONG 16
+#define OBJECT_CUSTOM_SUNS_SONG 17
+#define OBJECT_CUSTOM_EPONAS_SONG 58
+#define OBJECT_CUSTOM_SONG_OF_STORMS 120
+#define OBJECT_CUSTOM_SONG_OF_TIME 121
+
 #define OBJECT_GI_HEARTS 189
+#define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unneccesary owls
@@ -44,9 +52,31 @@ void Actor_Init() {
     gActorOverlayTable[0x19C].initInfo->draw = EnSi_rDraw;
 
     // Define object 4 to be by default the same as object 189
-    strncpy(gObjectTable[OBJECT_CUSTOM_DOUBLEDEFENSE].filename, gObjectTable[OBJECT_GI_HEARTS].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_DOUBLE_DEFENSE].filename, gObjectTable[OBJECT_GI_HEARTS].filename, 0x40);
+
+    // Define object 5 to be by default the same as object 270
+    strncpy(gObjectTable[OBJECT_CUSTOM_ZELDAS_LULLABY].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
+
+    // Define object 16 to be by default the same as object 270
+    strncpy(gObjectTable[OBJECT_CUSTOM_SARIAS_SONG].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
+
+    // Define object 17 to be by default the same as object 270
+    strncpy(gObjectTable[OBJECT_CUSTOM_SUNS_SONG].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
+
+    // Define object 58 to be by default the same as object 270
+    strncpy(gObjectTable[OBJECT_CUSTOM_EPONAS_SONG].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
+
+    // Define object 120 to be by default the same as object 270
+    strncpy(gObjectTable[OBJECT_CUSTOM_SONG_OF_STORMS].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
+
+    // Define object 121 to be by default the same as object 270
+    strncpy(gObjectTable[OBJECT_CUSTOM_SONG_OF_TIME].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
 
     // Define draw item 3 (corresponding to gi 4) to be double defense custom model
-    gDrawItemTable[3].objectId = OBJECT_CUSTOM_DOUBLEDEFENSE;
+    gDrawItemTable[3].objectId = OBJECT_CUSTOM_DOUBLE_DEFENSE;
     gDrawItemTable[3].objectModelIdx = 0;
+
+    // Define draw item 4 (corresponding to gi 5) to be a child song custom model
+    gDrawItemTable[4].objectId = OBJECT_CUSTOM_ZELDAS_LULLABY;
+    gDrawItemTable[4].objectModelIdx = 2;
 }
