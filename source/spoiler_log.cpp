@@ -224,6 +224,9 @@ bool PlacementLog_Write() {
   Result res = 0;
   u32 bytesWritten = 0;
 
+  placementtxt += "\nSeed: ";
+  placementtxt += Settings::seed;
+
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
     return false;

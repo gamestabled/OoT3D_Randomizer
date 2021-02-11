@@ -25,7 +25,7 @@ namespace Playthrough {
 
           Settings::UpdateSettings();
           Logic::UpdateHelpers();
-          success = Fill_Init();
+          success = Fill();
         }
 
         GenerateHash();
@@ -52,7 +52,7 @@ namespace Playthrough {
         return 1;
     }
 
-    //used for testing
+    //used for generating a lot of seeds at once
     int Playthrough_Repeat(int count /*= 1*/) {
       printf("\x1b[0;0HGENERATING %d SEEDS", count);
       u32 repeatedSeed = 0;
