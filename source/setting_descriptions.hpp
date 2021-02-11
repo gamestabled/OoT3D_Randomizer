@@ -42,6 +42,8 @@ extern std::string_view scrubsAffordable;
 extern std::string_view scrubsExpensive;
 extern std::string_view scrubsRandomPrices;
 
+extern std::string_view shuffleCowsDesc;
+
 extern std::string_view kokiriSwordDesc;
 
 extern std::string_view ocarinasDesc;

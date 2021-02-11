@@ -831,6 +831,22 @@ static void PlaceVanillaSkulltulaTokens() {
     PlaceItemInLocation(&IceCavern_GS_PushBlockRoom,                  GoldSkulltulaToken);
 }
 
+static void PlaceVanillaCowMilk() {
+  PlaceItemInLocation(&KF_LinksHouseCow,    Milk);
+  PlaceItemInLocation(&HF_CowGrottoCow,     Milk);
+  PlaceItemInLocation(&GV_Cow,              Milk);
+  PlaceItemInLocation(&Kak_ImpasHouseCow,   Milk);
+  PlaceItemInLocation(&DMT_CowGrottoCow,    Milk);
+  PlaceItemInLocation(&LLR_StablesLeftCow,  Milk);
+  PlaceItemInLocation(&LLR_StablesRightCow, Milk);
+  PlaceItemInLocation(&LLR_TowerLeftCow,    Milk);
+  PlaceItemInLocation(&LLR_TowerRightCow,   Milk);
+
+  if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&JabuJabusBelly_MQ_Cow, Milk);
+  }
+}
+
 template <typename Container>
 static void RandomizeDungeonKeys(const Container& KeyRequirements, Item smallKeyItem, u8 maxKeys) {
   for (size_t i = 0; i < maxKeys; i++) {
@@ -894,7 +910,18 @@ void GenerateItemPool() {
     PlaceItemInLocation(&HF_OcarinaOfTimeItem, I_ProgressiveOcarina);
   }
 
-  //TODO: Cows
+  if (ShuffleCows) {
+    //9 total cow locations
+    for (u8 i = 0; i < 9; i++) {
+      AddItemToMainPool(GetJunkItem());
+    }
+    //extra location for Jabu MQ
+    if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
+      AddItemToMainPool(GetJunkItem());
+    }
+  } else {
+    PlaceVanillaCowMilk();
+  }
 
   if (ShuffleMagicBeans) {
     AddItemToMainPool(I_MagicBeanPack);

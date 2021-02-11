@@ -121,6 +121,13 @@ std::string_view scrubsExpensive      = "All Scrub prices will be their vanilla 
 std::string_view scrubsRandomPrices   = "All Scrub prices will be between 0-99 rupees. This"
                                         "will on average be very, very expensive overall.";//
 /*------------------------------                                                           //
+|         SHUFFLE COWS         |                                                           //
+------------------------------*/                                                           //
+std::string_view shuffleCowsDesc      = "Enabling this will let cows give you items upon\n"//
+                                        "performing Epona's song in front of them. There\n"//
+                                        "are 9 cows, and an extra in MQ Jabu.";            //
+                                                                                           //
+/*------------------------------                                                           //
 |     SHUFFLE KOKIRI SWORD     |                                                           //
 ------------------------------*/                                                           //
 std::string_view kokiriSwordDesc      = "Enabling this shuffles the Kokiri Sword into the\n"
