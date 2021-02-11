@@ -330,12 +330,39 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
 }
 
 void ItemOverride_EditDrawGetItem(void) {
-    // Check for the custom graphicId for double defense
-    if (rActiveItemGraphicId == 0x04) {
-        // Should probably parse the ZAR to find the CMB correctly,
+    void* cmb;
+
+    // Check for custom graphicIds
+    switch (rActiveItemGraphicId) {
+        // Should probably parse the ZAR to find the CMBs correctly,
         // but this is fine for now
-        void* heartContainerCMB = (void*)(((char*)PLAYER->giDrawSpace) + 0xA4);
-        CustomModel_EditHeartContainerToDoubleDefense(heartContainerCMB);
+        case 4: // double defense
+            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0xA4);
+            CustomModel_EditHeartContainerToDoubleDefense(cmb);
+            break;
+        case 5: // child songs
+            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0x2E60);
+            switch (rActiveItemObjectId) {
+                case 5: // zeldas lullaby
+                    CustomModel_EditFairyOcarinaToZeldasLullaby(cmb);
+                    break;
+                case 16: // sarias song
+                    CustomModel_EditFairyOcarinaToSariasSong(cmb);
+                    break;
+                case 17: // suns song
+                    CustomModel_EditFairyOcarinaToSunsSong(cmb);
+                    break;
+                case 58: // eponas song
+                    CustomModel_EditFairyOcarinaToEponasSong(cmb);
+                    break;
+                case 120: // song of storms
+                    CustomModel_EditFairyOcarinaToSongOfStorms(cmb);
+                    break;
+                case 121: // song of time
+                    CustomModel_EditFairyOcarinaToSongOfTime(cmb);
+                    break;
+            }
+            break;
     }
 }
 

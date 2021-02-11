@@ -336,7 +336,8 @@ typedef struct {
 #define OBJECT_ID_MAX 417
 
 typedef struct {
-    /* 0x00 */ char unk_00[0x4C];
+    /* 0x00 */ void* buf;
+    /* 0x04 */ char unk_04[0x48];
     /* 0x4C */ void*** cmbPtrs; /* Really, this is a pointer to an array of pointers to CMB descriptors,
                                    the first member of which is a pointer to the CMB data (I think) */
     /* 0x50 */ char unk_50[0x20];
@@ -350,7 +351,7 @@ typedef struct {
 
 typedef struct {
     /* 0x000 */ u8 num;
-    /* 0x000 */ char unk_01[0x3];
+    /* 0x001 */ char unk_01[0x3];
     /* 0x004 */ ObjectStatus status[OBJECT_EXCHANGE_BANK_MAX];
 } ObjectContext; // size = 0x984
 
