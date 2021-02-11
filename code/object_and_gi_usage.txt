@@ -1,0 +1,27 @@
+The following custom objectIds are currently being used:
+4: Double Defense
+5: Zeldas Lullaby
+16: Sarias Song
+17: Suns Song
+58: Eponas Song
+120: Song of Storms
+121: Song of Time
+122: Minuet of Forest
+123: Bolero of Fire
+125: Serenade of Water
+126: Requiem of Spirit
+127: Nocturne of Shadow
+128: Prelude of Light
+
+The following custom graphicIds are currently being used:
+4: Double Defense
+5: Child Songs
+6: Adult Songs
+
+To use a custom asset, currently:
+    -make an editing function in custom_models.c
+    -assign it an objectId and graphicId in item_table.c
+    -add it to gObjectTable and gDrawItemTable in Actor_Init
+    -add a case for the objectId in Model_Init
+    -add a case for the graphicId in ItemOverride_EditDrawGetItem
+    -add it to this txt file

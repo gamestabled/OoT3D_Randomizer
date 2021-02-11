@@ -17,8 +17,15 @@
 #define OBJECT_CUSTOM_EPONAS_SONG 58
 #define OBJECT_CUSTOM_SONG_OF_STORMS 120
 #define OBJECT_CUSTOM_SONG_OF_TIME 121
+#define OBJECT_CUSTOM_MINUET_OF_FOREST 122
+#define OBJECT_CUSTOM_BOLERO_OF_FIRE 123
+#define OBJECT_CUSTOM_SERENADE_OF_WATER 125
+#define OBJECT_CUSTOM_REQUIEM_OF_SPIRIT 126
+#define OBJECT_CUSTOM_NOCTURNE_OF_SHADOW 127
+#define OBJECT_CUSTOM_PRELUDE_OF_LIGHT 128
 
 #define OBJECT_GI_HEARTS 189
+#define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
@@ -72,6 +79,24 @@ void Actor_Init() {
     // Define object 121 to be by default the same as object 270
     strncpy(gObjectTable[OBJECT_CUSTOM_SONG_OF_TIME].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
 
+    // Define object 122 to be by default the same as object 222
+    strncpy(gObjectTable[OBJECT_CUSTOM_MINUET_OF_FOREST].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
+
+    // Define object 123 to be by default the same as object 222
+    strncpy(gObjectTable[OBJECT_CUSTOM_BOLERO_OF_FIRE].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
+
+    // Define object 125 to be by default the same as object 222
+    strncpy(gObjectTable[OBJECT_CUSTOM_SERENADE_OF_WATER].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
+
+    // Define object 126 to be by default the same as object 222
+    strncpy(gObjectTable[OBJECT_CUSTOM_REQUIEM_OF_SPIRIT].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
+
+    // Define object 127 to be by default the same as object 222
+    strncpy(gObjectTable[OBJECT_CUSTOM_NOCTURNE_OF_SHADOW].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
+
+    // Define object 128 to be by default the same as object 222
+    strncpy(gObjectTable[OBJECT_CUSTOM_PRELUDE_OF_LIGHT].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
+
     // Define draw item 3 (corresponding to gi 4) to be double defense custom model
     gDrawItemTable[3].objectId = OBJECT_CUSTOM_DOUBLE_DEFENSE;
     gDrawItemTable[3].objectModelIdx = 0;
@@ -79,4 +104,8 @@ void Actor_Init() {
     // Define draw item 4 (corresponding to gi 5) to be a child song custom model
     gDrawItemTable[4].objectId = OBJECT_CUSTOM_ZELDAS_LULLABY;
     gDrawItemTable[4].objectModelIdx = 2;
+
+    // Define draw item 5 (corresponding to gi 6) to be an adult song custom model
+    gDrawItemTable[5].objectId = OBJECT_CUSTOM_MINUET_OF_FOREST;
+    gDrawItemTable[5].objectModelIdx = 0;
 }

@@ -8,5 +8,11 @@ void CustomModel_EditFairyOcarinaToSunsSong(void* fairyOcarinaCMB);
 void CustomModel_EditFairyOcarinaToEponasSong(void* fairyOcarinaCMB);
 void CustomModel_EditFairyOcarinaToSongOfStorms(void* fairyOcarinaCMB);
 void CustomModel_EditFairyOcarinaToSongOfTime(void* fairyOcarinaCMB);
+void CustomModel_EditOcarinaOfTimeToMinuetOfForest(void* ocarinaOfTimeCMB);
+void CustomModel_EditOcarinaOfTimeToBoleroOfFire(void* ocarinaOfTimeCMB);
+void CustomModel_EditOcarinaOfTimeToSerenadeOfWater(void* ocarinaOfTimeCMB);
+void CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(void* ocarinaOfTimeCMB);
+void CustomModel_EditOcarinaOfTimeToNocturneOfShadow(void* ocarinaOfTimeCMB);
+void CustomModel_EditOcarinaOfTimeToPreludeOfLight(void* ocarinaOfTimeCMB);
 
 #endif //_CUSTOM_MODELS_H_

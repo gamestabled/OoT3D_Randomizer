@@ -79,3 +79,63 @@ void CustomModel_EditFairyOcarinaToSongOfTime(void* fairyOcarinaCMB) {
 
     memcpy(fairyOcarinaTex0, songOfTimeTex, 0x2000);
 }
+
+void CustomModel_EditOcarinaOfTimeToMinuetOfForest(void* ocarinaOfTimeCMB) {
+    static u8 minuetOfForestTex[] = {
+        #include "minuet_of_forest_texture.inc.c"
+    };
+
+    void* ocarinaOfTimeTex0 = (((char*)ocarinaOfTimeCMB) + 0x1700);
+
+    memcpy(ocarinaOfTimeTex0, minuetOfForestTex, 0x2000);
+}
+
+void CustomModel_EditOcarinaOfTimeToBoleroOfFire(void* ocarinaOfTimeCMB) {
+    static u8 boleroOfFireTex[] = {
+        #include "bolero_of_fire_texture.inc.c"
+    };
+
+    void* ocarinaOfTimeTex0 = (((char*)ocarinaOfTimeCMB) + 0x1700);
+
+    memcpy(ocarinaOfTimeTex0, boleroOfFireTex, 0x2000);
+}
+
+void CustomModel_EditOcarinaOfTimeToSerenadeOfWater(void* ocarinaOfTimeCMB) {
+    static u8 serenadeOfWaterTex[] = {
+        #include "serenade_of_water_texture.inc.c"
+    };
+
+    void* ocarinaOfTimeTex0 = (((char*)ocarinaOfTimeCMB) + 0x1700);
+
+    memcpy(ocarinaOfTimeTex0, serenadeOfWaterTex, 0x2000);
+}
+
+void CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(void* ocarinaOfTimeCMB) {
+    static u8 requiemOfSpiritTex[] = {
+        #include "requiem_of_spirit_texture.inc.c"
+    };
+
+    void* ocarinaOfTimeTex0 = (((char*)ocarinaOfTimeCMB) + 0x1700);
+
+    memcpy(ocarinaOfTimeTex0, requiemOfSpiritTex, 0x2000);
+}
+
+void CustomModel_EditOcarinaOfTimeToNocturneOfShadow(void* ocarinaOfTimeCMB) {
+    static u8 nocturneOfShadowTex[] = {
+        #include "nocturne_of_shadow_texture.inc.c"
+    };
+
+    void* ocarinaOfTimeTex0 = (((char*)ocarinaOfTimeCMB) + 0x1700);
+
+    memcpy(ocarinaOfTimeTex0, nocturneOfShadowTex, 0x2000);
+}
+
+void CustomModel_EditOcarinaOfTimeToPreludeOfLight(void* ocarinaOfTimeCMB) {
+    static u8 preludeOfLightTex[] = {
+        #include "prelude_of_light_texture.inc.c"
+    };
+
+    void* ocarinaOfTimeTex0 = (((char*)ocarinaOfTimeCMB) + 0x1700);
+
+    memcpy(ocarinaOfTimeTex0, preludeOfLightTex, 0x2000);
+}
