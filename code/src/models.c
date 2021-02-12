@@ -72,6 +72,30 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
             cmb = (void*)(((char*)ZARBuf) + 0x2E60);
             CustomModel_EditFairyOcarinaToSongOfTime(cmb);
             break;
+        case 122: // minuet of forest
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToMinuetOfForest(cmb);
+            break;
+        case 123: // bolero of fire
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToBoleroOfFire(cmb);
+            break;
+        case 125: // serenade of water
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToSerenadeOfWater(cmb);
+            break;
+        case 126: // requiem of spirit
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(cmb);
+            break;
+        case 127: // nocturne of shadow
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToNocturneOfShadow(cmb);
+            break;
+        case 128: // prelude of light
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToPreludeOfLight(cmb);
+            break;
     }
 
     model->glModel = GlModel_Spawn(model->actor, globalCtx, model->info.objectId, model->info.objectModelIdx);

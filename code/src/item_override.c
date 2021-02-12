@@ -363,6 +363,28 @@ void ItemOverride_EditDrawGetItem(void) {
                     break;
             }
             break;
+        case 6: // adult songs
+            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0xE8);
+            switch (rActiveItemObjectId) {
+                case 122: // minuet of forest
+                    CustomModel_EditOcarinaOfTimeToMinuetOfForest(cmb);
+                    break;
+                case 123: // bolero of fire
+                    CustomModel_EditOcarinaOfTimeToBoleroOfFire(cmb);
+                    break;
+                case 125: // serenade of water
+                    CustomModel_EditOcarinaOfTimeToSerenadeOfWater(cmb);
+                    break;
+                case 126: // requiem of spirit
+                    CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(cmb);
+                    break;
+                case 127: // nocturne of shadow
+                    CustomModel_EditOcarinaOfTimeToNocturneOfShadow(cmb);
+                    break;
+                case 128: // prelude of light
+                    CustomModel_EditOcarinaOfTimeToPreludeOfLight(cmb);
+                    break;
+            }
     }
 }
 
