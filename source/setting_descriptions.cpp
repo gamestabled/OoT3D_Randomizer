@@ -252,6 +252,16 @@ std::string_view itemPoolScarce       = "Some excess items are removed, includin
 std::string_view itemPoolMinimal      = "Most excess items are removed.";                  //
                                                                                            //
 /*------------------------------                                                           //
+|          ICE TRAPS           |                                                           //
+------------------------------*/                                                           //
+std::string_view iceTrapsOff          = "All Ice Traps are removed.";                      //
+std::string_view iceTrapsNormal       = "Only Ice Traps from the base item pool are placed.";
+std::string_view iceTrapsExtra        = "Chance to add extra Ice Traps when junk items are\n"
+                                        "added to the itempool.";                          //
+std::string_view iceTrapsMayhem       = "All added junk items will be Ice Traps.";         //
+std::string_view iceTrapsOnslaught    = "All junk items will be replaced by Ice Traps, even"
+                                        "those in the base pool.";                         //
+/*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
 ------------------------------*/                                                           //
 std::string_view adultBoomerangDesc   = "Adult Link can throw the boomerang.";             //

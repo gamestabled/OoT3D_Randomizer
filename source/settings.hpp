@@ -186,6 +186,7 @@ namespace Settings {
   extern Option HammerAsChild;
 
   extern Option ItemPoolValue;
+  extern Option IceTrapValue;
 
   extern u8 LACSCondition;
 

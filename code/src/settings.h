@@ -122,6 +122,14 @@ typedef enum {
   ITEMPOOL_MINIMAL,
 } ItemPoolSetting;
 
+typedef enum {
+  ICETRAPS_OFF,
+  ICETRAPS_NORMAL,
+  ICETRAPS_EXTRA,
+  ICETRAPS_MAYHEM,
+  ICETRAPS_ONSLAUGHT,
+} IceTrapSetting;
+
 typedef struct {
   u8 logic : 1;
   u8 openForest : 2;
@@ -178,8 +186,8 @@ typedef struct {
   u32 dungeonRewardBitMask;
 
   //this wastes like 500 bytes, but idk if anyone cares enough
-  u8 detailedLogic[100];    //extra space incase we add more
-  u8 excludeLocations[500]; //^
+  u8 detailedLogic[100];
+  u8 excludeLocations[500]; 
 
 } SettingsContext;
 

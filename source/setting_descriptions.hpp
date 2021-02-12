@@ -87,6 +87,12 @@ extern std::string_view itemPoolBalanced;
 extern std::string_view itemPoolScarce;
 extern std::string_view itemPoolMinimal;
 
+extern std::string_view iceTrapsOff;
+extern std::string_view iceTrapsNormal;
+extern std::string_view iceTrapsExtra;
+extern std::string_view iceTrapsMayhem;
+extern std::string_view iceTrapsOnslaught;
+
 extern std::string_view adultBoomerangDesc;
 
 extern std::string_view childHammerDesc;

@@ -103,7 +103,11 @@ namespace Settings {
 
   //Item Pool Settings
   Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},          {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal}, 1);
-  //TODO: Ice Traps
+  Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},       {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught}, 1);
+  std::vector<Option *> itemPoolOptions = {
+    //&ItemPoolValue,
+    &IceTrapValue,
+  };
 
   //Excluded Locations (definitions made in ItemLocation class)
   std::vector<Option *> excludeLocationsOptions = {};
@@ -268,6 +272,7 @@ namespace Settings {
   MenuItem detailedLogic            = MenuItem::SubMenu("Detailed Logic Settings",    &detailedLogicOptions);
   MenuItem timesaverSettings        = MenuItem::SubMenu("Timesaver Settings",         &timesaverOptions);
   MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
+  MenuItem itemPoolSettings         = MenuItem::SubMenu("Item Pool Settings",         &itemPoolOptions);
   MenuItem advancedGlitchedSettings = MenuItem::SubMenu("Advanced Glitched Settings", &advancedGlitchedOptions);
   MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
   MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
@@ -283,6 +288,7 @@ namespace Settings {
     &excludeLocations,
     &detailedLogic,
     &miscSettings,
+    &itemPoolSettings,
     &advancedGlitchedSettings,
     &loadSettingsPreset,
     &saveSettingsPreset,

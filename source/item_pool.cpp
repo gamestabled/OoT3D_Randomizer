@@ -479,7 +479,15 @@ static void AddRandomBottle(std::vector<Item> bottlePool) {
 }
 
 static Item GetJunkItem() {
-  u8 idx = Random() % JunkPoolItems.size();
+  switch (IceTrapValue.Value<u8>()) {
+    case ICETRAPS_MAYHEM :
+      return IceTrap;
+    case ICETRAPS_EXTRA :
+      u8 idx = Random() % JunkPoolItems.size();
+      return JunkPoolItems[idx];
+  }
+  //Ice Trap is the last item in JunkPoolItems, so subtract 1 to never hit that index
+  u8 idx = Random() % (JunkPoolItems.size() - 1);
   return JunkPoolItems[idx];
 }
 
@@ -1263,6 +1271,25 @@ void GenerateItemPool() {
   } else {
     JoinPools(ItemPool, normalItems);
   }
+
+  if (IceTrapValue.Is(ICETRAPS_OFF)) {
+    for (Item& item : ItemPool) {
+      if (item.GetName() == "Ice Trap") {
+        item = GetJunkItem();
+      }
+    }
+  }
+  //Replace all junk items with ice traps for onslaught mode
+  else if (IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
+    for (Item& item : ItemPool) {
+      for (u8 i = 0; i < JunkPoolItems.size() - 2; i++) { // -2 skips checking huge rupee and ice trap
+        if (item.GetName() == JunkPoolItems[i].GetName()) {
+          item = IceTrap;
+        }
+      }
+    }
+  }
+
 }
 
 void AddJunk() {
