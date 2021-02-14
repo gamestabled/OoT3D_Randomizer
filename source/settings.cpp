@@ -8,8 +8,8 @@ namespace Settings {
   //                                        Setting name,              Options,                                                Option Descriptions (assigned in setting_descriptions.cpp), default setting index
   //Open Settings
   Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                              {logicGlitchless, logicNoLogic});
-  Option OpenForest          = Option::U8  ("Forest",                 {"Open", "Closed"},                                      {forestOpen, forestClosed});
-  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Open", "Closed"},                                      {kakGateOpen, kakGateClosed}, 1);
+  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                      {forestClosed, forestOpen}, 1);
+  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                      {kakGateClosed, kakGateOpen}, 0);
   Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc, doorOfTimeDesc}, true);
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Open"},                                      {fountainNormal, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                              {gerudoNormal, gerudoFast, gerudoOpen});
@@ -105,7 +105,7 @@ namespace Settings {
   Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},          {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal}, 1);
   Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},       {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught}, 1);
   std::vector<Option *> itemPoolOptions = {
-    //&ItemPoolValue,
+    &ItemPoolValue,
     &IceTrapValue,
   };
 
@@ -318,6 +318,7 @@ namespace Settings {
     ctx.shuffleSongs       = ShuffleSongs.Value<u8>();
     ctx.tokensanity        = Tokensanity.Value<u8>();
     ctx.scrubsanity        = Scrubsanity.Value<u8>();
+    ctx.shuffleCows        = (ShuffleCows) ? 1 : 0;
     ctx.shuffleKokiriSword = (ShuffleKokiriSword) ? 1 : 0;
     ctx.shuffleOcarinas    = (ShuffleOcarinas) ? 1 : 0;
     ctx.shuffleWeirdEgg    = (ShuffleWeirdEgg) ? 1 : 0;
@@ -342,6 +343,7 @@ namespace Settings {
     ctx.hammerAsChild      = (HammerAsChild) ? 1 : 0;
 
     ctx.itemPoolValue      = ItemPoolValue.Value<u8>();
+    ctx.iceTrapValue       = IceTrapValue.Value<u8>();
 
     ctx.dekuTreeDungeonMode              = (DekuTreeDungeonMode)              ? 1 : 0;
     ctx.dodongosCavernDungeonMode        = (DodongosCavernDungeonMode)        ? 1 : 0;
@@ -386,6 +388,7 @@ namespace Settings {
     ShuffleSongs.SetSelectedIndex(ctx.shuffleSongs);
     Tokensanity.SetSelectedIndex(ctx.tokensanity);
     Scrubsanity.SetSelectedIndex(ctx.scrubsanity);
+    ShuffleCows.SetSelectedIndex(ctx.shuffleCows);
     ShuffleKokiriSword.SetSelectedIndex(ctx.shuffleKokiriSword);
     ShuffleOcarinas.SetSelectedIndex(ctx.shuffleOcarinas);
     ShuffleWeirdEgg.SetSelectedIndex(ctx.shuffleWeirdEgg);
@@ -409,6 +412,7 @@ namespace Settings {
     HammerAsChild.SetSelectedIndex(ctx.hammerAsChild);
 
     ItemPoolValue.SetSelectedIndex(ctx.itemPoolValue);
+    IceTrapValue.SetSelectedIndex(ctx.iceTrapValue);
 
     for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
       detailedLogicOptions[i]->SetSelectedIndex(ctx.detailedLogic[i]);

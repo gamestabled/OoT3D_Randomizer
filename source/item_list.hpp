@@ -62,7 +62,7 @@ public:
     }
 
     ItemOverride_Value Value() const {
-
+        //just a random list of progression items
         const std::array<u16, 10> items = {
           GI_BOOMERANG,
           GI_HAMMER,
@@ -103,6 +103,10 @@ public:
 
     u16 GetPrice() const {
         return price;
+    }
+
+    bool operator== (const Item& right) const {
+      return name == right.GetName();
     }
 
 private:

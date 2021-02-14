@@ -9,13 +9,13 @@ typedef enum {
 } LogicSetting;
 
 typedef enum {
-  OPENFOREST_OPEN,
   OPENFOREST_CLOSED,
+  OPENFOREST_OPEN,
 } OpenForestSetting;
 
 typedef enum {
-  OPENKAKARIKO_OPEN,
   OPENKAKARIKO_CLOSED,
+  OPENKAKARIKO_OPEN,
 } OpenKakarikoSetting;
 
 typedef enum {
@@ -146,6 +146,7 @@ typedef struct {
   u8 shuffleSongs : 2;
   u8 tokensanity : 2;
   u8 scrubsanity : 2;
+  u8 shuffleCows : 1;
   u8 shuffleKokiriSword : 1;
   u8 shuffleOcarinas : 1;
   u8 shuffleWeirdEgg : 1;
@@ -170,6 +171,7 @@ typedef struct {
   u8 hammerAsChild : 1;
 
   u8 itemPoolValue : 3;
+  u8 iceTrapValue : 3;
 
   u8 dekuTreeDungeonMode : 1;
   u8 dodongosCavernDungeonMode : 1;
@@ -187,7 +189,7 @@ typedef struct {
 
   //this wastes like 500 bytes, but idk if anyone cares enough
   u8 detailedLogic[100];
-  u8 excludeLocations[500]; 
+  u8 excludeLocations[500];
 
 } SettingsContext;
 
