@@ -720,6 +720,21 @@ ConvertBombDropOne_patch:
 ConvertBombDropTwo_patch:
     b hook_ConvertBombDropTwo
 
+.section .patch_BeanDaddyModifyBeansBought
+.global BeanDaddyModifyBeansBought_patch
+BeanDaddyModifyBeansBought_patch:
+    bl hook_BeanDaddyModifyBeansBought
+
+.section .patch_BeanDaddyModifyPrice
+.global BeanDaddyModifyPrice_patch
+BeanDaddyModifyPrice_patch:
+    bl hook_BeanDaddyModifyPrice
+
+.section .patch_BeanDaddyPurchase
+.global BeanDaddyPurchase_patch
+BeanDaddyTakeRupees_patch:
+    bl EnMs_Purchase
+
 .section .patch_loader
 .global loader_patch
 
