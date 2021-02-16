@@ -4,8 +4,6 @@
 
 using namespace Settings;
 
-unsigned int extraJunkAmount = 0;
-
 //The beginning pool of items, filled in by GenerateItemPool()
 std::vector<Item> ItemPool = {};
 std::vector<Item> PendingJunkPool = {};
@@ -479,12 +477,11 @@ static void AddRandomBottle(std::vector<Item> bottlePool) {
 }
 
 static Item GetJunkItem() {
-  switch (IceTrapValue.Value<u8>()) {
-    case ICETRAPS_MAYHEM :
-      return IceTrap;
-    case ICETRAPS_EXTRA :
-      u8 idx = Random() % JunkPoolItems.size();
-      return JunkPoolItems[idx];
+  if (IceTrapValue.Is(ICETRAPS_MAYHEM) || IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
+    return IceTrap;
+  } else if (IceTrapValue.Is(ICETRAPS_EXTRA)) {
+    u8 idx = Random() % (JunkPoolItems.size());
+    return JunkPoolItems[idx];
   }
   //Ice Trap is the last item in JunkPoolItems, so subtract 1 to never hit that index
   u8 idx = Random() % (JunkPoolItems.size() - 1);
@@ -496,19 +493,19 @@ static Item GetPendingJunkItem() {
     return GetJunkItem();
   }
 
-  u8 idx = Random() % (PendingJunkPool.size());
+  int idx = Random() % (PendingJunkPool.size());
   Item returnItem = PendingJunkPool[idx];
   PendingJunkPool.erase(PendingJunkPool.begin() + idx);
   return returnItem;
 }
 
 //Replace junk items in the pool with pending junk
-static void ReplaceMaxItem(Item item, int max) {
+static void ReplaceMaxItem(Item itemToReplace, int max) {
   int itemCount = 0;
-  for (Item& val : ItemPool) {
-    if (item == val) {
+  for (Item& item : ItemPool) {
+    if (item == itemToReplace) {
       if (itemCount >= max) {
-        item = GetPendingJunkItem();
+        item = GetJunkItem();
       }
       itemCount++;
     }
@@ -877,6 +874,38 @@ static void PlaceVanillaCowMilk() {
   if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
     PlaceItemInLocation(&JabuJabusBelly_MQ_Cow, Milk);
   }
+}
+
+static void SetScarceItemPool() {
+  ReplaceMaxItem(I_ProgressiveBombchus, 3);
+  ReplaceMaxItem(Bombchu5, 1);
+  ReplaceMaxItem(Bombchu10, 2);
+  ReplaceMaxItem(Bombchu20, 0);
+  ReplaceMaxItem(I_ProgressiveMagic, 1);
+  ReplaceMaxItem(I_DoubleDefense, 0);
+  ReplaceMaxItem(I_ProgressiveStickCapacity, 1);
+  ReplaceMaxItem(I_ProgressiveNutCapacity, 1);
+  ReplaceMaxItem(I_ProgressiveBow, 2);
+  ReplaceMaxItem(I_ProgressiveBulletBag, 2);
+  ReplaceMaxItem(I_ProgressiveBombBag, 2);
+  ReplaceMaxItem(HeartContainer, 0);
+}
+
+static void SetMinimalItemPool() {
+  ReplaceMaxItem(I_ProgressiveBombchus, 1);
+  ReplaceMaxItem(Bombchu5, 1);
+  ReplaceMaxItem(Bombchu10, 0);
+  ReplaceMaxItem(Bombchu20, 0);
+  ReplaceMaxItem(I_NayrusLove, 0);
+  ReplaceMaxItem(I_ProgressiveMagic, 1);
+  ReplaceMaxItem(I_DoubleDefense, 0);
+  ReplaceMaxItem(I_ProgressiveStickCapacity, 0);
+  ReplaceMaxItem(I_ProgressiveNutCapacity, 0);
+  ReplaceMaxItem(I_ProgressiveBow, 1);
+  ReplaceMaxItem(I_ProgressiveBulletBag, 1);
+  ReplaceMaxItem(I_ProgressiveBombBag, 1);
+  ReplaceMaxItem(PieceOfHeart, 0);
+  ReplaceMaxItem(HeartContainer, 0);
 }
 
 //Randomizes dungeon keys for the "Own Dungeon" setting
@@ -1343,11 +1372,32 @@ void GenerateItemPool() {
       ReplaceMaxItem(JunkPoolItems[i], 0);
     }
   }
+
+  if (ItemPoolValue.Is(ITEMPOOL_SCARCE)) {
+    SetScarceItemPool();
+  } else if (ItemPoolValue.Is(ITEMPOOL_MINIMAL)) {
+    SetMinimalItemPool();
+  }
+
+  //this feels ugly and there's probably a better way, but
+  //it replaces random junk with pending junk.
+  bool junkSet;
+  for (Item pendingJunk : PendingJunkPool) {
+    junkSet = false;
+    for (Item& item : ItemPool) {
+      for (const Item& junk : JunkPoolItems) {
+        if (item == junk && item != HugeRupee && item != DekuNuts10) {
+          item = pendingJunk;
+          junkSet = true;
+          break;
+        }
+      }
+      if (junkSet) break;
+    }
+  }
 }
 
 void AddJunk() {
-  extraJunkAmount++;
   PlacementLog_Msg("HAD TO PLACE EXTRA JUNK ");
-  PlacementLog_Msg(std::to_string(extraJunkAmount));
   AddItemToMainPool(GetPendingJunkItem());
 }

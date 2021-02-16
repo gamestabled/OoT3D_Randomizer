@@ -52,7 +52,7 @@ namespace {
     "Map",
     "Big Magic",
   };
-  std::array<Option *, 31> settings = {
+  std::array<Option *, 32> settings = {
     &Settings::Logic,
     &Settings::OpenForest,
     &Settings::OpenKakariko,
@@ -84,6 +84,7 @@ namespace {
     &Settings::BoomerangAsAdult,
     &Settings::HammerAsChild,
     &Settings::ItemPoolValue,
+    &Settings::IceTrapValue,
   };
 }
 

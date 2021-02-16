@@ -109,6 +109,10 @@ public:
       return name == right.GetName();
     }
 
+    bool operator!= (const Item& right) const {
+      return name != right.GetName();
+    }
+
 private:
     std::string name;
     ItemType type;
