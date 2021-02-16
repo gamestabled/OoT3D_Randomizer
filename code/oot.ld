@@ -32,8 +32,20 @@ SECTIONS
 		*(.patch_SkulltulaRewardTwo)
 	}
 
+	.patch_BeanDaddyModifyBeansBought 0x130CEC : {
+		*(.patch_BeanDaddyModifyBeansBought)
+	}
+
 	.patch_SongOfStormsLocation 0x1427E0 : {
 		*(.patch_SongOfStormsLocation)
+	}
+
+	.patch_BeanDaddyPurchase 0x14EDA8 : {
+		*(.patch_BeanDaddyPurchase)
+	}
+
+	.patch_BeanDaddyModifyPrice 0x14EE98 : {
+		*(.patch_BeanDaddyModifyPrice)
 	}
 
 	.patch_ScrubStickUpgradeOne 0x161898 : {

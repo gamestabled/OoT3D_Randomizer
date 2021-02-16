@@ -397,6 +397,24 @@ hook_ConvertBombDropTwo:
     cpy r6,r0
     b 0x3747B0
 
+.global hook_BeanDaddyModifyBeansBought
+hook_BeanDaddyModifyBeansBought:
+    push {r1-r12, lr}
+    bl EnMs_ModifyBeansBought
+    pop {r1-r12, lr}
+    cmp r0,#0xa
+    bx lr
+
+.global hook_BeanDaddyModifyPrice
+hook_BeanDaddyModifyPrice:
+    push {r0,r2-r12, lr}
+    cpy r0,r1
+    bl EnMs_ModifyPrice
+    cpy r1,r0
+    pop {r0,r2-r12, lr}
+    cmp r0,r1
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
