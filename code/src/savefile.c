@@ -22,8 +22,9 @@ void SaveFile_Init() {
     gSaveContext.ammo[3] = 20; //arrows
 #endif
 
-    //things to always set//
-
+    /*-----------------------------------
+    |       THINGS TO ALWAYS SET        |
+    -----------------------------------*/
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
@@ -32,7 +33,7 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except Twinrova and Ganondorf)
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x01FB; //entrance cutscenes
+    gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
     gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
@@ -52,7 +53,9 @@ void SaveFile_Init() {
     //open lowest Fire Temple locked door
     gSaveContext.sceneFlags[4].swch |= 0x00800000;
 
-    //Everything past this point depends on settings//
+    /*-----------------------------------
+    |THINGS TO SET DEPENDING ON SETTINGS|
+    -----------------------------------*/
 
     if (gSettingsContext.startingAge == AGE_ADULT) {
       gSaveContext.linkAge       = AGE_ADULT;  //age is adult
@@ -84,6 +87,10 @@ void SaveFile_Init() {
 
     if (gSettingsContext.fourPoesCutscene) {
       gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
+    }
+
+    if (gSettingsContext.templeOfTimeIntro) {
+      gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
     }
 
     //give maps and compasses

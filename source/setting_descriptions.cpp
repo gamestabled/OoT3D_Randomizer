@@ -227,6 +227,13 @@ std::string_view fourPoesDesc         = "The cutscene with the 4 poes in Forest 
                                         "be skipped. If the cutscene is not skipped, it can"
                                         "be exploited to reach the basement early.";       //
 /*------------------------------                                                           //
+|     TEMPLE OF TIME INTRO     |                                                           //
+------------------------------*/                                                           //
+std::string_view templeOfTimeIntroDesc= "The introduction cutscene to Temple of Time will\n"
+                                        "remain. This cutscene is helpful for performing\n"//
+                                        "Door of Time Skip should the Door of Time be\n"   //
+                                        "closed.";                                         //
+/*------------------------------                                                           //
 |     BIG POE TARGET COUNT     |                                                           //
 ------------------------------*/                                                           //
 std::string_view bigPoeTargetCountDesc= "The Poe buyer will give a reward for turning in\n"//

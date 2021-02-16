@@ -161,6 +161,7 @@ typedef struct {
 
   u8 skipChildStealth : 1;
   u8 fourPoesCutscene : 1;
+  u8 templeOfTimeIntro : 1;
   u8 bigPoeTargetCount : 4;
 
   u8 damageMultiplier : 3;

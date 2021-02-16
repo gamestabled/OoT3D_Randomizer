@@ -76,6 +76,8 @@ extern std::string_view childStealthDesc;
 
 extern std::string_view fourPoesDesc;
 
+extern std::string_view templeOfTimeIntroDesc;
+
 extern std::string_view bigPoeTargetCountDesc;
 
 extern std::string_view damageMultiDesc;
