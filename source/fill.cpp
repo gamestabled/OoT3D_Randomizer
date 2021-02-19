@@ -127,7 +127,7 @@ static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool 
           ExitPairing& exitPair = area->exits[j];
           Exit* exit = exitPair.GetExit();
 
-          if (exitPair.ConditionsMet()) {
+          if (exitPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) {
             UpdateToDAccess(exit, age, exitPair.TimeOfDay());
 
             //If the exit is accessible, try adding it
@@ -147,7 +147,7 @@ static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool 
           ItemLocationPairing& locPair = area->locations[k];
           ItemLocation* location = locPair.GetLocation();
 
-          if (locPair.ConditionsMet() && !location->IsAddedToPool()) {
+          if ((locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) && !location->IsAddedToPool()) {
 
             location->AddToPool();
             iterationsWithNoLocations = 0;
@@ -273,15 +273,6 @@ static int AssumedFill() {
   return 1;
 }
 
-static void RandomFill() {
-  //get every location that doesn't have an item yet
-  locations.assign(allLocations.begin(), allLocations.end());
-  erase_if(locations, [](ItemLocation* il){return il->GetPlacedItemName() != "No Item";});
-
-  //fast fill every location
-  FastFill(locations);
-}
-
 static void FillExcludedLocations() {
   //Only fill in excluded locations that don't already have something and are forbidden
   locations.assign(allLocations.begin(), allLocations.end());
@@ -292,24 +283,15 @@ static void FillExcludedLocations() {
   }
 }
 
-int Fill_Init() {
+int Fill() {
   itemsPlaced = 0;
   GenerateItemPool();
   RandomizeDungeonRewards();
-
   FillExcludedLocations();
 
-  if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
-    if (!AssumedFill()) {
-      return 0;
-    }
-
-  } else {
-    RandomFill();
+  if (!AssumedFill()) {
+    return 0;
   }
-
-  PlacementLog_Msg("\nSeed: ");
-  PlacementLog_Msg(Settings::seed);
 
   return 1;
 }

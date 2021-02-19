@@ -162,6 +162,7 @@ namespace Settings {
   extern Option ShuffleSongs;
   extern Option Tokensanity;
   extern Option Scrubsanity;
+  extern Option ShuffleCows;
   extern Option ShuffleKokiriSword;
   extern Option ShuffleOcarinas;
   extern Option ShuffleWeirdEgg;
@@ -185,6 +186,7 @@ namespace Settings {
   extern Option HammerAsChild;
 
   extern Option ItemPoolValue;
+  extern Option IceTrapValue;
 
   extern u8 LACSCondition;
 

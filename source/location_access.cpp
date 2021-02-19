@@ -83,7 +83,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit KF_LinksHouse = Exit("KF Link's House", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //ItemLocationPairing(&KF_LinksHouseCow, []{return IsAdult && CanPlay(EponasSong) && LinksCow;})
+                  ItemLocationPairing(&KF_LinksHouseCow, []{return IsAdult && CanPlay(EponasSong) && LinksCow;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&KF_Main, []{return true;})
@@ -335,7 +335,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit HF_CowGrotto = Exit("HF Cow Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
                   ItemLocationPairing(&HF_GS_CowGrotto, []{return HasFireSource && HookshotOrBoomerang;}),
-                  //HF Cow Grotto Cow
+                  ItemLocationPairing(&HF_CowGrottoCow, []{return HasFireSource && CanPlay(EponasSong);}),
                   //HF Open Grotto Gossip Stone
                 }, {
                   //Exits
@@ -463,7 +463,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&GV_WaterfallFreestandingPoH, []{return true;}),
                   ItemLocationPairing(&GV_GS_BeanPatch,             []{return CanPlantBugs && CanChildAttack;}),
-                  //GV Cow
+                  ItemLocationPairing(&GV_Cow,                      []{return IsChild && CanPlay(EponasSong);}),
                   //GV Gossip Stone
                 }, {
                   //Exits
@@ -954,7 +954,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit Kak_ImpasHouseNearCow = Exit("Kak Impas House Near Cow", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //Kak Impas House Cow
+                  ItemLocationPairing(&Kak_ImpasHouseCow, []{return CanPlay(EponasSong);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_ImpasHouseBack, []{return false;})
@@ -1179,10 +1179,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit DMT_CowGrotto = Exit("DMT Cow Grotto", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //DMT Cow Grotto Cow
+                  ItemLocationPairing(&DMT_CowGrottoCow, []{return CanPlay(EponasSong);}),
                 }, {
                   //Exits
-                  ExitPairing::Both(&DMT_Main,     []{return true;})
+                  ExitPairing::Both(&DMT_Main, []{return true;})
 
   });
 
@@ -1562,8 +1562,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit LLR_Stables = Exit("LLR Stables", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  //LLR Stables Left Cow
-                  //LLR Stables Right Cow
+                  ItemLocationPairing(&LLR_StablesLeftCow,  []{return CanPlay(EponasSong);}),
+                  ItemLocationPairing(&LLR_StablesRightCow, []{return CanPlay(EponasSong);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LLR_Main, []{return true;})
@@ -1572,8 +1572,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit LLR_Tower = Exit("LLR Tower", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&LLR_FreestandingPoH, []{return IsChild;}),
-                  //LLR Tower Left Cow
-                  //LLR Tower Right Cow
+                  ItemLocationPairing(&LLR_TowerLeftCow,  []{return CanPlay(EponasSong);}),
+                  ItemLocationPairing(&LLR_TowerRightCow, []{return CanPlay(EponasSong);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LLR_Main, []{return true;}),

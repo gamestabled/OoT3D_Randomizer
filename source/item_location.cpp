@@ -774,6 +774,21 @@ ItemLocation SongFromOcarinaOfTime                        = ItemLocation::Delaye
 ItemLocation SongFromWindmill                             = ItemLocation::Delayed(0xFF, 0x2B, "Song from Windmill",                             {"Kakariko Village", "Kakariko", "Songs",});
 
 /*-------------------------------
+           --- COWS ---
+  -------------------------------*/
+
+ItemLocation KF_LinksHouseCow                             = ItemLocation::Base   (0x34, 0x15, "KF Links House Cow",                             {"KF Links House", "Forest", "Cow", "Minigames"});
+ItemLocation HF_CowGrottoCow                              = ItemLocation::Base   (0x3E, 0x16, "HF Cow Grotto Cow",                              {"Hyrule Field", "Cow", "Grotto"});
+ItemLocation LLR_StablesLeftCow                           = ItemLocation::Base   (0x36, 0x15, "LLR Stables Left Cow",                           {"Lon Lon Ranch", "Cow"});
+ItemLocation LLR_StablesRightCow                          = ItemLocation::Base   (0x36, 0x16, "LLR Stables Right Cow",                          {"Lon Lon Ranch", "Cow"});
+ItemLocation LLR_TowerLeftCow                             = ItemLocation::Base   (0x4C, 0x16, "LLR Tower Left Cow",                             {"Lon Lon Ranch", "Cow"});
+ItemLocation LLR_TowerRightCow                            = ItemLocation::Base   (0x4C, 0x15, "LLR Tower Right Cow",                            {"Lon Lon Ranch", "Cow"});
+ItemLocation Kak_ImpasHouseCow                            = ItemLocation::Base   (0x37, 0x15, "Kak Impas House Cow",                            {"Kakariko Village", "Kakariko", "Cow"});
+ItemLocation DMT_CowGrottoCow                             = ItemLocation::Base   (0x3E, 0x15, "DMT Cow Grotto Cow",                             {"Death Mountain Trail", "Death Mountain", "Cow", "Grottos"});
+ItemLocation GV_Cow                                       = ItemLocation::Base   (0x5A, 0x15, "GV Cow",                                         {"Gerudo Valley", "Gerudo", "Cow"});
+ItemLocation JabuJabusBelly_MQ_Cow                        = ItemLocation::Base   (0x02, 0x15, "Jabu Jabus Belly MQ Cow",                        {"Jabu Jabu's Belly", "Cow"});
+
+/*-------------------------------
           --- SHOPS ---
   8     6               2     4
 
@@ -1072,7 +1087,6 @@ const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_BossKeyChest,                    2),
 }};
 
-std::vector<ItemLocation *> advancementLocations = {};
 std::array<ItemLocation*, 9> dungeonRewardLocations = {
   //Bosses
   &QueenGohma,
@@ -1099,7 +1113,7 @@ std::array<ItemLocation*, 12> songLocations = {
   &SongFromComposersGrave,
   &SongFromWindmill,
 };
-std::array<ItemLocation*, 465> allLocations = {
+std::array<ItemLocation*, 474> allLocations = {
 
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -1108,6 +1122,7 @@ std::array<ItemLocation*, 465> allLocations = {
   &KF_MidoBottomLeftChest,
   &KF_MidoBottomRightChest,
   &KF_StormsGrottoChest,
+  &KF_LinksHouseCow,
 
   //Shop
   &KF_ShopItem1,
@@ -1148,6 +1163,7 @@ std::array<ItemLocation*, 465> allLocations = {
   &SongFromOcarinaOfTime,
   &HF_TektiteGrottoFreestandingPoH,
   &HF_DekuScrubGrotto,
+  &HF_CowGrottoCow,
 
   //Lake Hylia
   &LH_ChildFishing,
@@ -1166,6 +1182,7 @@ std::array<ItemLocation*, 465> allLocations = {
   &GV_CrateFreestandingPoH,
   &GV_DekuScrubGrottoRear,
   &GV_DekuScrubGrottoFront,
+  &GV_Cow,
 
   //Gerudo Fortress
   &GF_Chest,
@@ -1248,6 +1265,7 @@ std::array<ItemLocation*, 465> allLocations = {
   &Kak_ImpasHouseFreestandingPoH,
   &Kak_WindmillFreestandingPoH,
   &SongFromWindmill,
+  &Kak_ImpasHouseCow,
 
   //Kakariko Shops
   &Kak_PotionShopItem1,
@@ -1283,6 +1301,7 @@ std::array<ItemLocation*, 465> allLocations = {
   &DMT_Biggoron,
   &DMT_GreatFairyReward,
   &DMT_FreestandingPoH,
+  &DMT_CowGrottoCow,
 
   //Goron City
   &GC_MazeLeftChest,
@@ -1354,6 +1373,10 @@ std::array<ItemLocation*, 465> allLocations = {
   &LLR_DekuScrubGrottoLeft,
   &LLR_DekuScrubGrottoRight,
   &LLR_DekuScrubGrottoCenter,
+  &LLR_StablesLeftCow,
+  &LLR_StablesRightCow,
+  &LLR_TowerLeftCow,
+  &LLR_TowerRightCow,
 
   //Deku Tree
   &DekuTree_MapChest,
