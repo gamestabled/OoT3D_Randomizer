@@ -52,42 +52,6 @@ namespace {
     "Map",
     "Big Magic",
   };
-  std::array<Option *, 34> settings = {
-    &Settings::Logic,
-    &Settings::OpenForest,
-    &Settings::OpenKakariko,
-    &Settings::OpenDoorOfTime,
-    &Settings::ZorasFountain,
-    &Settings::GerudoFortress,
-    &Settings::Bridge,
-    &Settings::StartingAge,
-    &Settings::BombchusInLogic,
-    &Settings::RandomMQDungeons,
-    &Settings::ShuffleSongs,
-    &Settings::Tokensanity,
-    &Settings::Scrubsanity,
-    &Settings::ShuffleKokiriSword,
-    &Settings::ShuffleOcarinas,
-    &Settings::ShuffleWeirdEgg,
-    &Settings::ShuffleGerudoToken,
-    &Settings::ShuffleMagicBeans,
-    &Settings::MapsAndCompasses,
-    &Settings::Keysanity,
-    &Settings::GerudoKeys,
-    &Settings::BossKeysanity,
-    &Settings::GanonsBossKey,
-    &Settings::SkipChildStealth,
-    &Settings::FourPoesCutscene,
-    &Settings::TempleOfTimeIntro,
-    &Settings::BigPoeTargetCount,
-    &Settings::DamageMultiplier,
-    &Settings::StartingTime,
-    &Settings::GenerateSpoilerLog,
-    &Settings::BoomerangAsAdult,
-    &Settings::HammerAsChild,
-    &Settings::ItemPoolValue,
-    &Settings::IceTrapValue,
-  };
 }
 
 std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
@@ -130,12 +94,20 @@ static auto GetPlacementLogPath() {
 static void WriteSettings() {
   //List Settings
   logtxt += "Settings:\n";
-  for (auto& s : settings) {
-    logtxt += "\t";
-    logtxt += s->GetName();
-    logtxt += ": ";
-    logtxt += s->GetSelectedOption();
-    logtxt += "\n";
+  for (MenuItem* menu : Settings::mainMenu) {
+    //don't log the detailed logic or exclude location menus yet
+    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations") {
+      continue;
+    }
+
+    for (size_t i = 0; i < menu->settingsList->size(); i++) {
+      Option* setting = menu->settingsList->at(i);
+      logtxt += "\t";
+      logtxt += setting->GetName();
+      logtxt += ": ";
+      logtxt += setting->GetSelectedOption();
+      logtxt += "\n";
+    }
   }
 
   //List Excluded Locations
@@ -190,10 +162,12 @@ bool SpoilerLog_Write() {
 
   logtxt += "\nAll Locations:\n\n";
   for (ItemLocation* location : dungeonRewardLocations) {
+    logtxt += "\t";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
   for (ItemLocation* location : allLocations) {
+    logtxt += "\t";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
