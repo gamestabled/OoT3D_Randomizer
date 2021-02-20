@@ -735,6 +735,11 @@ BeanDaddyModifyPrice_patch:
 BeanDaddyTakeRupees_patch:
     bl EnMs_Purchase
 
+.section .patch_SetupTitleScreenZARInfo
+.global SetupTitleScreenZARInfo_patch
+SetupTitleScreenZARInfo_patch:
+    bl hook_SetupTitleScreenZARInfo
+
 .section .patch_loader
 .global loader_patch
 

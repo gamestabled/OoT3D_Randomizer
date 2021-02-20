@@ -14,5 +14,6 @@ void CustomModel_EditOcarinaOfTimeToSerenadeOfWater(void* ocarinaOfTimeCMB);
 void CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(void* ocarinaOfTimeCMB);
 void CustomModel_EditOcarinaOfTimeToNocturneOfShadow(void* ocarinaOfTimeCMB);
 void CustomModel_EditOcarinaOfTimeToPreludeOfLight(void* ocarinaOfTimeCMB);
+void CustomModel_EditTitleScreenLogo(void* titleScreenZAR);
 
 #endif //_CUSTOM_MODELS_H_

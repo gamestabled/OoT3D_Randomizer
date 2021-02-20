@@ -5,12 +5,19 @@
 #include "z3D/z3D.h"
 #include "dungeon_rewards.h"
 #include "rHeap.h"
+#include "custom_models.h"
+#include "objects.h"
 
 static u8 GfxInit = 0;
 
-static void Gfx_TitleScreen(void) {
-    Draw_DrawFormattedStringTop(150, 20, COLOR_WHITE, "OoT3D Randomizer Test");
-    Draw_FlushFramebufferTop();
+void Gfx_SetupTitleScreenZARInfo(ZARInfo* zarInfo, void* buf, s32 size, s8 param_4) {
+    const ObjectContext* objCtx = (ObjectContext*)0x8722298;
+
+    if(gSaveContext.entranceIndex == 0x0629 && gSaveContext.cutsceneIndex == 0xFFF3) {
+        if (zarInfo == &objCtx->status[5].zarInfo) {
+            CustomModel_EditTitleScreenLogo(buf);
+        }
+    }
 }
 
 static void Gfx_DrawChangeMenuPrompt(void) {
@@ -77,6 +84,10 @@ static void Gfx_ShowMenu(void) {
 
 void Gfx_Init(void) {
     Draw_SetupFramebuffer();
+
+    // Increase the filesize for the title screen object
+    gObjectTable[330].size = 0xA5CB0;
+
     GfxInit = 1;
 }
 
@@ -84,9 +95,7 @@ void Gfx_Update(void) {
     if (!GfxInit) {
         Gfx_Init();
     }
-    if(gSaveContext.entranceIndex == 0x0629 && gSaveContext.cutsceneIndex == 0xFFF3) {
-        Gfx_TitleScreen();
-    }
+
     if(gSaveContext.gameMode == 0 && rInputCtx.cur.sel) {
         Gfx_ShowMenu();
         svcSleepThread(1000 * 1000 * 300LL);

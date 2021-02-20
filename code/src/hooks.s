@@ -415,6 +415,14 @@ hook_BeanDaddyModifyPrice:
     cmp r0,r1
     bx lr
 
+.global hook_SetupTitleScreenZARInfo
+hook_SetupTitleScreenZARInfo:
+    push {r0-r12, lr}
+    bl Gfx_SetupTitleScreenZARInfo
+    pop {r0-r12, lr}
+    cpy r4,r0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
