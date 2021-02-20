@@ -52,7 +52,7 @@ namespace {
     "Map",
     "Big Magic",
   };
-  std::array<Option *, 32> settings = {
+  std::array<Option *, 34> settings = {
     &Settings::Logic,
     &Settings::OpenForest,
     &Settings::OpenKakariko,
@@ -71,12 +71,14 @@ namespace {
     &Settings::ShuffleWeirdEgg,
     &Settings::ShuffleGerudoToken,
     &Settings::ShuffleMagicBeans,
+    &Settings::MapsAndCompasses,
     &Settings::Keysanity,
+    &Settings::GerudoKeys,
     &Settings::BossKeysanity,
     &Settings::GanonsBossKey,
-    &Settings::MapsAndCompasses,
     &Settings::SkipChildStealth,
     &Settings::FourPoesCutscene,
+    &Settings::TempleOfTimeIntro,
     &Settings::BigPoeTargetCount,
     &Settings::DamageMultiplier,
     &Settings::StartingTime,

@@ -1026,7 +1026,7 @@ void GenerateItemPool() {
     PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF1Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF2Carpenter, RecoveryHeart);
-  } else if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
+  } else if (GerudoKeys.IsNot(GERUDOKEYS_VANILLA)) {
     if (GerudoFortress.Is(GERUDOFORTRESS_FAST)) {
       AddItemToMainPool(GerudoFortress_SmallKey);
       PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);

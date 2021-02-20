@@ -179,7 +179,7 @@ std::string_view mapCompassVanilla    = "Maps and Compasses will appear in their
                                         "locations.";                                      //
 std::string_view mapCompassOwnDungeon = "Maps and Compasses can only appear in their\n"    //
                                         "respective dungeon.";                             //
-std::string_view mapCompassAnywhere   = "Maps and Compasses can appear anywhere in th\n"   //
+std::string_view mapCompassAnywhere   = "Maps and Compasses can appear anywhere in the\n"  //
                                         "world.";                                          //
 /*------------------------------                                                           //
 |         SMALL KEYS           |                                                           //
@@ -194,6 +194,15 @@ std::string_view smallKeyOwnDungeon   = "Small Keys can only appear in their res
 std::string_view smallKeyAnywhere     = "Small Keys can appear anywhere in the world. A\n" //
                                         "difficult mode since it is more likely to need to\n"
                                         "enter a dungeon multiple times.";                 //
+/*------------------------------                                                           //
+|     GERUDO FORTRESS KEYS     |                                                           //
+------------------------------*/                                                           //
+std::string_view gerudoKeysVanilla    = "Gerudo Fortress Keys will appear in their vanilla\n"
+                                        "location, dropping from fighting Gerudo guards\n" //
+                                        "that attack when trying to free the jailed\n"     //
+                                        "carpenters.";                                     //
+std::string_view gerudoKeysAnywhere   = "Gerudo Fortress Keys can appear anywhere in the\n"//
+                                        "world.";                                          //
 /*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
@@ -230,9 +239,9 @@ std::string_view fourPoesDesc         = "The cutscene with the 4 poes in Forest 
 |     TEMPLE OF TIME INTRO     |                                                           //
 ------------------------------*/                                                           //
 std::string_view templeOfTimeIntroDesc= "The introduction cutscene to Temple of Time will\n"
-                                        "remain. This cutscene is helpful for performing\n"//
-                                        "Door of Time Skip should the Door of Time be\n"   //
-                                        "closed.";                                         //
+                                        "be skipped. This cutscene is helpful for\n"       //
+                                        "performing Door of Time Skip should the Door of\n"//
+                                        "Time be closed.";                                 //
 /*------------------------------                                                           //
 |     BIG POE TARGET COUNT     |                                                           //
 ------------------------------*/                                                           //

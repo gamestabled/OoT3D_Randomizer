@@ -59,17 +59,19 @@ namespace Settings {
   };
 
   //Shuffle Dungeon Items
+  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
   Option Keysanity           = Option::U8  ("Small Keys",             {"Vanilla", "Own Dungeon", "Anywhere"},                  {smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
+  Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Anywhere"},                                 {gerudoKeysVanilla, gerudoKeysAnywhere});
   Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Vanilla", "Own Dungeon", "Anywhere"},                  {bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
   Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Vanilla", "Own Dungeon", "Anywhere", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"},
                                                                       {ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS});
-  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
   u8 LACSCondition           = 0;
   std::vector<Option *> shuffleDungeonItemOptions = {
+    &MapsAndCompasses,
     &Keysanity,
+    &GerudoKeys,
     &BossKeysanity,
     &GanonsBossKey,
-    &MapsAndCompasses,
   };
 
   //Timesaver Settings
@@ -300,6 +302,7 @@ namespace Settings {
   //declared here, set in fill.cpp
   u32 LinksPocketRewardBitMask = 0;
 
+  //declared here, set in fill.cpp
   std::array<u32, 9> rDungeonRewardOverrides{};
 
   //Fills a SettingsContext struct which is sent to the patch
@@ -327,10 +330,10 @@ namespace Settings {
     ctx.shuffleGerudoToken = (ShuffleGerudoToken) ? 1 : 0;
     ctx.shuffleMagicBeans  = (ShuffleMagicBeans) ? 1 : 0;
 
+    ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
     ctx.keysanity          = Keysanity.Value<u8>();
     ctx.bossKeysanity      = BossKeysanity.Value<u8>();
     ctx.ganonsBossKey      = GanonsBossKey.Value<u8>();
-    ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
     ctx.lacsCondition      = LACSCondition;
 
     ctx.skipChildStealth   = (SkipChildStealth) ? 1 : 0;
@@ -398,10 +401,11 @@ namespace Settings {
     ShuffleGerudoToken.SetSelectedIndex(ctx.shuffleGerudoToken);
     ShuffleMagicBeans.SetSelectedIndex(ctx.shuffleMagicBeans);
 
+    MapsAndCompasses.SetSelectedIndex(ctx.mapsAndCompasses);
     Keysanity.SetSelectedIndex(ctx.keysanity);
     BossKeysanity.SetSelectedIndex(ctx.bossKeysanity);
     GanonsBossKey.SetSelectedIndex(ctx.ganonsBossKey);
-    MapsAndCompasses.SetSelectedIndex(ctx.mapsAndCompasses);
+
 
     SkipChildStealth.SetSelectedIndex(ctx.skipChildStealth);
     FourPoesCutscene.SetSelectedIndex(ctx.fourPoesCutscene);
