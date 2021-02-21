@@ -74,10 +74,22 @@ typedef enum {
 } ScrubsanitySetting;
 
 typedef enum {
+  MAPSANDCOMPASSES_START_WITH,
+  MAPSANDCOMPASSES_VANILLA,
+  MAPSANDCOMPASSES_OWN_DUNGEON,
+  MAPSANDCOMPASSES_ANYWHERE,
+} MapsAndCompassesSetting;
+
+typedef enum {
   KEYSANITY_VANILLA,
   KEYSANITY_OWN_DUNGEON,
   KEYSANITY_ANYWHERE,
 } KeysanitySetting;
+
+typedef enum {
+  GERUDOKEYS_VANILLA,
+  GERUDOKEYS_ANYWHERE,
+} GerudoKeysSetting;
 
 typedef enum {
   BOSSKEYSANITY_VANILLA,
@@ -94,13 +106,6 @@ typedef enum {
   GANONSBOSSKEY_LACS_STONES,
   GANONSBOSSKEY_LACS_DUNGEONS,
 } GanonsBossKeySetting;
-
-typedef enum {
-  MAPSANDCOMPASSES_START_WITH,
-  MAPSANDCOMPASSES_VANILLA,
-  MAPSANDCOMPASSES_OWN_DUNGEON,
-  MAPSANDCOMPASSES_ANYWHERE,
-} MapsAndCompassesSetting;
 
 typedef enum {
   DAMAGEMULTIPLIER_HALF,
@@ -153,10 +158,11 @@ typedef struct {
   u8 shuffleGerudoToken : 1;
   u8 shuffleMagicBeans : 1;
 
+  u8 mapsAndCompasses : 3;
   u8 keysanity : 3;
+  u8 gerudoKeys : 3;
   u8 bossKeysanity : 3;
   u8 ganonsBossKey : 4;
-  u8 mapsAndCompasses : 3;
   u8 lacsCondition : 3;
 
   u8 skipChildStealth : 1;

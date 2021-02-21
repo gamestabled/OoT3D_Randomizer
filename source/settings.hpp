@@ -169,13 +169,15 @@ namespace Settings {
   extern Option ShuffleGerudoToken;
   extern Option ShuffleMagicBeans;
 
+  extern Option MapsAndCompasses;
   extern Option Keysanity;
+  extern Option GerudoKeys;
   extern Option BossKeysanity;
   extern Option GanonsBossKey;
-  extern Option MapsAndCompasses;
 
   extern Option SkipChildStealth;
   extern Option FourPoesCutscene;
+  extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
 
   extern Option DamageMultiplier;

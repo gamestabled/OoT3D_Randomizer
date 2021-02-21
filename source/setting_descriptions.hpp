@@ -63,6 +63,9 @@ extern std::string_view smallKeyVanilla;
 extern std::string_view smallKeyOwnDungeon;
 extern std::string_view smallKeyAnywhere;
 
+extern std::string_view gerudoKeysVanilla;
+extern std::string_view gerudoKeysAnywhere;
+
 extern std::string_view bossKeyVanilla;
 extern std::string_view bossKeyOwnDungeon;
 extern std::string_view bossKeyAnywhere;
