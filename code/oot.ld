@@ -280,10 +280,6 @@ SECTIONS
 		*(.patch_Gfx_Update)
 	}
 
-	.patch_SetupTitleScreenZARInfo 0x31B128 : {
-		*(.patch_SetupTitleScreenZARInfo)
-	}
-
 	.patch_ISGPutaway 0x32B4AC : {
 		*(.patch_ISGPutaway)
 	}

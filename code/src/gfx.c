@@ -7,18 +7,9 @@
 #include "rHeap.h"
 #include "custom_models.h"
 #include "objects.h"
+#include "title_screen.h"
 
 static u8 GfxInit = 0;
-
-void Gfx_SetupTitleScreenZARInfo(ZARInfo* zarInfo, void* buf, s32 size, s8 param_4) {
-    const ObjectContext* objCtx = (ObjectContext*)0x8722298;
-
-    if(gSaveContext.entranceIndex == 0x0629 && gSaveContext.cutsceneIndex == 0xFFF3) {
-        if (zarInfo == &objCtx->status[5].zarInfo) {
-            CustomModel_EditTitleScreenLogo(buf);
-        }
-    }
-}
 
 static void Gfx_DrawChangeMenuPrompt(void) {
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press L/R to change menu");
@@ -85,8 +76,9 @@ static void Gfx_ShowMenu(void) {
 void Gfx_Init(void) {
     Draw_SetupFramebuffer();
 
-    // Increase the filesize for the title screen object
+    // Setup the title screen logo edits
     gObjectTable[330].size = 0xA5CB0;
+    gActorOverlayTable[0x171].initInfo->init = EnMag_rInit;
 
     GfxInit = 1;
 }
