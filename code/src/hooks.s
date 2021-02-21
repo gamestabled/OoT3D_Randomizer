@@ -415,6 +415,13 @@ hook_BeanDaddyModifyPrice:
     cmp r0,r1
     bx lr
 
+.global hook_CheckGerudoToken
+hook_CheckGerudoToken:
+    push {r1-r12, lr}
+    bl SaveFile_CheckGerudoToken
+    pop {r1-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

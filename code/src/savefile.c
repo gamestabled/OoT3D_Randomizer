@@ -58,46 +58,46 @@ void SaveFile_Init() {
     -----------------------------------*/
 
     if (gSettingsContext.startingAge == AGE_ADULT) {
-      gSaveContext.linkAge       = AGE_ADULT;  //age is adult
-      gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
-      gSaveContext.sceneIndex    = 0x6100;     //^
-      gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
+        gSaveContext.linkAge       = AGE_ADULT;  //age is adult
+        gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
+        gSaveContext.sceneIndex    = 0x6100;     //^
+        gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
     }
 
     if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
-      gSaveContext.dayTime = 0x1400; //Set night time
+        gSaveContext.dayTime = 0x1400; //Set night time
     }
 
     //give Link the starting stone or medallion
     gSaveContext.questItems |= gSettingsContext.dungeonRewardBitMask;
 
     if (gSettingsContext.openDoorOfTime) {
-      gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
+        gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
     }
 
     if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_FAST) {
-      gSaveContext.eventChkInf[0x9] |= 0x000E; //Free 3 carpenters
+        gSaveContext.eventChkInf[0x9] |= 0x000E; //Free 3 carpenters
     } else if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) {
-      gSaveContext.eventChkInf[0x9] |= 0x000F; //Free all carpenters
+        gSaveContext.eventChkInf[0x9] |= 0x000F; //Free all carpenters
     }
 
     if (gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN) {
-      gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
+        gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
     }
 
     if (gSettingsContext.fourPoesCutscene) {
-      gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
+        gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }
 
     if (gSettingsContext.templeOfTimeIntro) {
-      gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
+        gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
     }
 
     //give maps and compasses
     if (gSettingsContext.mapsAndCompasses == MAPSANDCOMPASSES_START_WITH) {
-      for (u8 i = 0; i < 0xA; i++) {
-        gSaveContext.dungeonItems[i] |= 0x6;
-      }
+        for (u8 i = 0; i < 0xA; i++) {
+            gSaveContext.dungeonItems[i] |= 0x6;
+        }
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
@@ -113,5 +113,9 @@ void SaveFile_SaveChildBButton(void) {
 }
 
 u16 SaveFile_RestoreChildEquips(void) {
-  return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
+    return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
+}
+
+u32 SaveFile_CheckGerudoToken(void) {
+    return ((gSaveContext.questItems & 0x400000) != 0) ? 1 : 0;
 }

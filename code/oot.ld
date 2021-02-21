@@ -68,6 +68,30 @@ SECTIONS
 		*(.patch_BusinessScrubTable)
 	}
 
+	.patch_CheckGerudoToken_18B368 0x18B368 : {
+		*(.patch_CheckGerudoToken_18B368)
+	}
+
+	.patch_CheckGerudoToken_18B3A0 0x18B3A0 : {
+		*(.patch_CheckGerudoToken_18B3A0)
+	}
+
+	.patch_CheckGerudoToken_18B3C0 0x18B3C0 : {
+		*(.patch_CheckGerudoToken_18B3C0)
+	}
+
+	.patch_CheckGerudoToken_18B448 0x18B448 : {
+		*(.patch_CheckGerudoToken_18B448)
+	}
+
+	.patch_CheckGerudoToken_18B6F4 0x18B6F4 : {
+		*(.patch_CheckGerudoToken_18B6F4)
+	}
+
+	.patch_CheckGerudoToken_18B710 0x18B710 : {
+		*(.patch_CheckGerudoToken_18B710)
+	}
+
 	.patch_EponasSongCheckFlag 0x18C56C : {
 		*(.patch_EponasSongCheckFlag)
 	}
@@ -118,6 +142,10 @@ SECTIONS
 
 	.patch_DemoEffectStoneDraw 0x1D209C : {
 		*(.patch_DemoEffectStoneDraw)
+	}
+
+	.patch_CheckGerudoToken_1D7AD4 0x1D7AD4 : {
+		*(.patch_CheckGerudoToken_1D7AD4)
 	}
 
 	.patch_ForestTempleItemGive 0x1E3F84 : {
@@ -186,6 +214,10 @@ SECTIONS
 
 	.patch_LostWoodsShootingGame 0x259E4C : {
 		*(.patch_LostWoodsShootingGame)
+	}
+
+	.patch_CheckGerudoToken_269884 0x269884 : {
+		*(.patch_CheckGerudoToken_269884)
 	}
 
 	.patch_SpiritTempleItemGiveThree 0x26B33C : {
