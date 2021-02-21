@@ -15,4 +15,6 @@ build/*
 *.elf
 *.smdh
 *.pyc
+*.ips
+*.zar
 source/patch_symbols.hpp

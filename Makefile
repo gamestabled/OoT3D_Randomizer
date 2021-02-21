@@ -41,7 +41,7 @@ DATA		    :=	data
 INCLUDES	    :=	include
 GRAPHICS		:=	gfx
 GFXBUILD		:=	$(BUILD)
-#ROMFS			:=	romfs
+ROMFS			:=	romfs
 #GFXBUILD		:=	$(ROMFS)/gfx
 
 #---------------------------------------------------------------------------------
@@ -176,6 +176,8 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 $(BUILD):
+	$(MAKE) -C code
+	@mv code/basecode.ips romfs/basecode.ips
 	@mkdir -p $@
 
 ifneq ($(GFXBUILD),$(BUILD))
@@ -191,7 +193,8 @@ endif
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD)
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) $(ROMFS)/basecode.ips
+	$(MAKE) clean -C code
 
 #---------------------------------------------------------------------------------
 $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s
