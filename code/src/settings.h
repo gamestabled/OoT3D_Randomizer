@@ -9,13 +9,13 @@ typedef enum {
 } LogicSetting;
 
 typedef enum {
-  OPENFOREST_OPEN,
   OPENFOREST_CLOSED,
+  OPENFOREST_OPEN,
 } OpenForestSetting;
 
 typedef enum {
-  OPENKAKARIKO_OPEN,
   OPENKAKARIKO_CLOSED,
+  OPENKAKARIKO_OPEN,
 } OpenKakarikoSetting;
 
 typedef enum {
@@ -74,10 +74,22 @@ typedef enum {
 } ScrubsanitySetting;
 
 typedef enum {
+  MAPSANDCOMPASSES_START_WITH,
+  MAPSANDCOMPASSES_VANILLA,
+  MAPSANDCOMPASSES_OWN_DUNGEON,
+  MAPSANDCOMPASSES_ANYWHERE,
+} MapsAndCompassesSetting;
+
+typedef enum {
   KEYSANITY_VANILLA,
   KEYSANITY_OWN_DUNGEON,
   KEYSANITY_ANYWHERE,
 } KeysanitySetting;
+
+typedef enum {
+  GERUDOKEYS_VANILLA,
+  GERUDOKEYS_ANYWHERE,
+} GerudoKeysSetting;
 
 typedef enum {
   BOSSKEYSANITY_VANILLA,
@@ -94,13 +106,6 @@ typedef enum {
   GANONSBOSSKEY_LACS_STONES,
   GANONSBOSSKEY_LACS_DUNGEONS,
 } GanonsBossKeySetting;
-
-typedef enum {
-  MAPSANDCOMPASSES_START_WITH,
-  MAPSANDCOMPASSES_VANILLA,
-  MAPSANDCOMPASSES_OWN_DUNGEON,
-  MAPSANDCOMPASSES_ANYWHERE,
-} MapsAndCompassesSetting;
 
 typedef enum {
   DAMAGEMULTIPLIER_HALF,
@@ -122,6 +127,14 @@ typedef enum {
   ITEMPOOL_MINIMAL,
 } ItemPoolSetting;
 
+typedef enum {
+  ICETRAPS_OFF,
+  ICETRAPS_NORMAL,
+  ICETRAPS_EXTRA,
+  ICETRAPS_MAYHEM,
+  ICETRAPS_ONSLAUGHT,
+} IceTrapSetting;
+
 typedef struct {
   u8 logic : 1;
   u8 openForest : 2;
@@ -138,20 +151,23 @@ typedef struct {
   u8 shuffleSongs : 2;
   u8 tokensanity : 2;
   u8 scrubsanity : 2;
+  u8 shuffleCows : 1;
   u8 shuffleKokiriSword : 1;
   u8 shuffleOcarinas : 1;
   u8 shuffleWeirdEgg : 1;
   u8 shuffleGerudoToken : 1;
   u8 shuffleMagicBeans : 1;
 
+  u8 mapsAndCompasses : 3;
   u8 keysanity : 3;
+  u8 gerudoKeys : 3;
   u8 bossKeysanity : 3;
   u8 ganonsBossKey : 4;
-  u8 mapsAndCompasses : 3;
   u8 lacsCondition : 3;
 
   u8 skipChildStealth : 1;
   u8 fourPoesCutscene : 1;
+  u8 templeOfTimeIntro : 1;
   u8 bigPoeTargetCount : 4;
 
   u8 damageMultiplier : 3;
@@ -162,6 +178,7 @@ typedef struct {
   u8 hammerAsChild : 1;
 
   u8 itemPoolValue : 3;
+  u8 iceTrapValue : 3;
 
   u8 dekuTreeDungeonMode : 1;
   u8 dodongosCavernDungeonMode : 1;
@@ -178,8 +195,8 @@ typedef struct {
   u32 dungeonRewardBitMask;
 
   //this wastes like 500 bytes, but idk if anyone cares enough
-  u8 detailedLogic[100];    //extra space incase we add more
-  u8 excludeLocations[500]; //^
+  u8 detailedLogic[100];
+  u8 excludeLocations[500];
 
 } SettingsContext;
 

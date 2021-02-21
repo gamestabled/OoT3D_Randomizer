@@ -162,19 +162,22 @@ namespace Settings {
   extern Option ShuffleSongs;
   extern Option Tokensanity;
   extern Option Scrubsanity;
+  extern Option ShuffleCows;
   extern Option ShuffleKokiriSword;
   extern Option ShuffleOcarinas;
   extern Option ShuffleWeirdEgg;
   extern Option ShuffleGerudoToken;
   extern Option ShuffleMagicBeans;
 
+  extern Option MapsAndCompasses;
   extern Option Keysanity;
+  extern Option GerudoKeys;
   extern Option BossKeysanity;
   extern Option GanonsBossKey;
-  extern Option MapsAndCompasses;
 
   extern Option SkipChildStealth;
   extern Option FourPoesCutscene;
+  extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
 
   extern Option DamageMultiplier;
@@ -185,6 +188,7 @@ namespace Settings {
   extern Option HammerAsChild;
 
   extern Option ItemPoolValue;
+  extern Option IceTrapValue;
 
   extern u8 LACSCondition;
 

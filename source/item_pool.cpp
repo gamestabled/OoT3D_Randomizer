@@ -1,10 +1,8 @@
 #include "item_pool.hpp"
 #include "random.hpp"
+#include "spoiler_log.hpp"
 
 using namespace Settings;
-
-//This pool will be used to give placement priority for items that can advance location access
-std::vector<Item> AdvancementItemPool = {};
 
 //The beginning pool of items, filled in by GenerateItemPool()
 std::vector<Item> ItemPool = {};
@@ -14,7 +12,6 @@ const std::array<Item, 16> JunkPoolItems = {
   Bombs10,
   Bombs20,
   DekuNuts5,
-  DekuNuts10,
   DekuStick1,
   DekuSeeds30,
   RecoveryHeart,
@@ -25,6 +22,7 @@ const std::array<Item, 16> JunkPoolItems = {
   RedRupee,
   PurpleRupee,
   HugeRupee,
+  DekuNuts10,
   IceTrap,
 };
 const std::array<Item, 59> alwaysItems = {
@@ -479,8 +477,39 @@ static void AddRandomBottle(std::vector<Item> bottlePool) {
 }
 
 static Item GetJunkItem() {
-  u8 idx = Random() % JunkPoolItems.size();
+  if (IceTrapValue.Is(ICETRAPS_MAYHEM) || IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
+    return IceTrap;
+  } else if (IceTrapValue.Is(ICETRAPS_EXTRA)) {
+    u8 idx = Random() % (JunkPoolItems.size());
+    return JunkPoolItems[idx];
+  }
+  //Ice Trap is the last item in JunkPoolItems, so subtract 1 to never hit that index
+  u8 idx = Random() % (JunkPoolItems.size() - 1);
   return JunkPoolItems[idx];
+}
+
+static Item GetPendingJunkItem() {
+  if (PendingJunkPool.empty()) {
+    return GetJunkItem();
+  }
+
+  int idx = Random() % (PendingJunkPool.size());
+  Item returnItem = PendingJunkPool[idx];
+  PendingJunkPool.erase(PendingJunkPool.begin() + idx);
+  return returnItem;
+}
+
+//Replace junk items in the pool with pending junk
+static void ReplaceMaxItem(Item itemToReplace, int max) {
+  int itemCount = 0;
+  for (Item& item : ItemPool) {
+    if (item == itemToReplace) {
+      if (itemCount >= max) {
+        item = GetJunkItem();
+      }
+      itemCount++;
+    }
+  }
 }
 
 void PlaceJunkInExcludedLocation(ItemLocation * il) {
@@ -831,6 +860,55 @@ static void PlaceVanillaSkulltulaTokens() {
     PlaceItemInLocation(&IceCavern_GS_PushBlockRoom,                  GoldSkulltulaToken);
 }
 
+static void PlaceVanillaCowMilk() {
+  PlaceItemInLocation(&KF_LinksHouseCow,    Milk);
+  PlaceItemInLocation(&HF_CowGrottoCow,     Milk);
+  PlaceItemInLocation(&GV_Cow,              Milk);
+  PlaceItemInLocation(&Kak_ImpasHouseCow,   Milk);
+  PlaceItemInLocation(&DMT_CowGrottoCow,    Milk);
+  PlaceItemInLocation(&LLR_StablesLeftCow,  Milk);
+  PlaceItemInLocation(&LLR_StablesRightCow, Milk);
+  PlaceItemInLocation(&LLR_TowerLeftCow,    Milk);
+  PlaceItemInLocation(&LLR_TowerRightCow,   Milk);
+
+  if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&JabuJabusBelly_MQ_Cow, Milk);
+  }
+}
+
+static void SetScarceItemPool() {
+  ReplaceMaxItem(I_ProgressiveBombchus, 3);
+  ReplaceMaxItem(Bombchu5, 1);
+  ReplaceMaxItem(Bombchu10, 2);
+  ReplaceMaxItem(Bombchu20, 0);
+  ReplaceMaxItem(I_ProgressiveMagic, 1);
+  ReplaceMaxItem(I_DoubleDefense, 0);
+  ReplaceMaxItem(I_ProgressiveStickCapacity, 1);
+  ReplaceMaxItem(I_ProgressiveNutCapacity, 1);
+  ReplaceMaxItem(I_ProgressiveBow, 2);
+  ReplaceMaxItem(I_ProgressiveBulletBag, 2);
+  ReplaceMaxItem(I_ProgressiveBombBag, 2);
+  ReplaceMaxItem(HeartContainer, 0);
+}
+
+static void SetMinimalItemPool() {
+  ReplaceMaxItem(I_ProgressiveBombchus, 1);
+  ReplaceMaxItem(Bombchu5, 1);
+  ReplaceMaxItem(Bombchu10, 0);
+  ReplaceMaxItem(Bombchu20, 0);
+  ReplaceMaxItem(I_NayrusLove, 0);
+  ReplaceMaxItem(I_ProgressiveMagic, 1);
+  ReplaceMaxItem(I_DoubleDefense, 0);
+  ReplaceMaxItem(I_ProgressiveStickCapacity, 0);
+  ReplaceMaxItem(I_ProgressiveNutCapacity, 0);
+  ReplaceMaxItem(I_ProgressiveBow, 1);
+  ReplaceMaxItem(I_ProgressiveBulletBag, 1);
+  ReplaceMaxItem(I_ProgressiveBombBag, 1);
+  ReplaceMaxItem(PieceOfHeart, 0);
+  ReplaceMaxItem(HeartContainer, 0);
+}
+
+//Randomizes dungeon keys for the "Own Dungeon" setting
 template <typename Container>
 static void RandomizeDungeonKeys(const Container& KeyRequirements, Item smallKeyItem, u8 maxKeys) {
   for (size_t i = 0; i < maxKeys; i++) {
@@ -845,6 +923,7 @@ static void RandomizeDungeonKeys(const Container& KeyRequirements, Item smallKey
   }
 }
 
+//Randomizes Maps/Compasses/Boss Keys for the "Own Dungeon" settings
 template <typename Container>
 static void RandomizeDungeonItem(const Container& dungeonLocations, Item item) {
   std::vector<ItemLocation *> dungeonPool;
@@ -870,7 +949,7 @@ void GenerateItemPool() {
   ItemPool = {};
 
   PlaceItemInLocation(&HC_ZeldasLetter, I_ZeldasLetter);
-  PlaceItemInLocation(&Ganon, I_Triforce);
+  PlaceItemInLocation(&Ganon, I_Triforce); //The Triforce is only used to make sure Ganon is accessible
 
   if (ShuffleKokiriSword) {
     AddItemToMainPool(I_KokiriSword);
@@ -894,7 +973,18 @@ void GenerateItemPool() {
     PlaceItemInLocation(&HF_OcarinaOfTimeItem, I_ProgressiveOcarina);
   }
 
-  //TODO: Cows
+  if (ShuffleCows) {
+    //9 total cow locations
+    for (u8 i = 0; i < 9; i++) {
+      AddItemToMainPool(GetJunkItem());
+    }
+    //extra location for Jabu MQ
+    if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
+      AddItemToMainPool(GetJunkItem());
+    }
+  } else {
+    PlaceVanillaCowMilk();
+  }
 
   if (ShuffleMagicBeans) {
     AddItemToMainPool(I_MagicBeanPack);
@@ -936,7 +1026,7 @@ void GenerateItemPool() {
     PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF1Carpenter, RecoveryHeart);
     PlaceItemInLocation(&GF_SouthF2Carpenter, RecoveryHeart);
-  } else if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
+  } else if (GerudoKeys.IsNot(GERUDOKEYS_VANILLA)) {
     if (GerudoFortress.Is(GERUDOFORTRESS_FAST)) {
       AddItemToMainPool(GerudoFortress_SmallKey);
       PlaceItemInLocation(&GF_NorthF2Carpenter, RecoveryHeart);
@@ -1017,20 +1107,44 @@ void GenerateItemPool() {
 
   //scrubsanity
   if (Settings::Scrubsanity.IsNot(SCRUBSANITY_OFF)) {
-    // AddItemToMainPool(DekuNuts5, 2);
-    // AddItemToMainPool(DekuStick1);
-    // AddItemToMainPool(I_DekuShield);
-    // AddItemToMainPool(Bombs5);
-    // AddItemToMainPool(RecoveryHeart);
-    // AddItemToMainPool(BlueRupee);
+    //Deku Tree
+    if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
+      AddItemToMainPool(I_DekuShield);
+    }
+
+    //Dodongos Cavern
+    AddItemToMainPool(DekuStick1);
+    AddItemToMainPool(I_DekuShield);
+    if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
+      AddItemToMainPool(RecoveryHeart);
+    } else {
+      AddItemToMainPool(DekuNuts5);
+    }
+
+    //Jabu Jabus Belly
+    if (JabuJabusBellyDungeonMode == DUNGEONMODE_VANILLA) {
+      AddItemToMainPool(DekuNuts5);
+    }
+
+    //Ganons Castle
+    AddItemToMainPool(Bombs5);
+    AddItemToMainPool(RecoveryHeart);
+    AddItemToMainPool(BlueRupee);
+    if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
+      AddItemToMainPool(DekuNuts5);
+    }
+
+    //Overworld Scrubs
     JoinPools(ItemPool, dekuScrubItems);
-    // for (u8 i = 0; i < 7; i++) {
-    //   if (Random() % 3) {
-    //     AddItemToMainPool(Arrows30);
-    //   } else {
-    //     AddItemToMainPool(DekuSeeds30);
-    //   }
-    // }
+
+    //I'm not sure what this is for, but it was in ootr so I copied it
+    for (u8 i = 0; i < 7; i++) {
+      if (Random() % 3) {
+        AddItemToMainPool(Arrows30);
+      } else {
+        AddItemToMainPool(DekuSeeds30);
+      }
+    }
   } else {
     PlaceVanillaDekuScrubItems();
   }
@@ -1115,6 +1229,13 @@ void GenerateItemPool() {
   //TODO: free scarecrow
 
   //TODO: no epona race
+
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_START_WITH)) {
+    //10 maps + 10 compasses = 20 items
+    for (u8 i = 0; i < 20; i++) {
+      AddItemToMainPool(GetJunkItem());
+    }
+  }
 
   //Vanilla Dungeon Placements
   if (MapsAndCompasses.Is(MAPSANDCOMPASSES_VANILLA)) {
@@ -1236,8 +1357,47 @@ void GenerateItemPool() {
   } else {
     JoinPools(ItemPool, normalItems);
   }
+
+  if (!ShuffleKokiriSword) {
+    ReplaceMaxItem(I_KokiriSword, 0);
+  }
+
+  //Replace ice traps with junk from the pending junk pool if necessary
+  if (IceTrapValue.Is(ICETRAPS_OFF)) {
+    ReplaceMaxItem(IceTrap, 0);
+  }
+  //Replace all junk items with ice traps for onslaught mode
+  else if (IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
+    for (u8 i = 0; i < JunkPoolItems.size() - 3; i++) { // -3 Omits Huge Rupees and Deku Nuts 10
+      ReplaceMaxItem(JunkPoolItems[i], 0);
+    }
+  }
+
+  if (ItemPoolValue.Is(ITEMPOOL_SCARCE)) {
+    SetScarceItemPool();
+  } else if (ItemPoolValue.Is(ITEMPOOL_MINIMAL)) {
+    SetMinimalItemPool();
+  }
+
+  //this feels ugly and there's probably a better way, but
+  //it replaces random junk with pending junk.
+  bool junkSet;
+  for (Item pendingJunk : PendingJunkPool) {
+    junkSet = false;
+    for (Item& item : ItemPool) {
+      for (const Item& junk : JunkPoolItems) {
+        if (item == junk && item != HugeRupee && item != DekuNuts10) {
+          item = pendingJunk;
+          junkSet = true;
+          break;
+        }
+      }
+      if (junkSet) break;
+    }
+  }
 }
 
 void AddJunk() {
-  AddItemToMainPool(GetJunkItem());
+  PlacementLog_Msg("HAD TO PLACE EXTRA JUNK ");
+  AddItemToMainPool(GetPendingJunkItem());
 }

@@ -42,6 +42,8 @@ extern std::string_view scrubsAffordable;
 extern std::string_view scrubsExpensive;
 extern std::string_view scrubsRandomPrices;
 
+extern std::string_view shuffleCowsDesc;
+
 extern std::string_view kokiriSwordDesc;
 
 extern std::string_view ocarinasDesc;
@@ -61,6 +63,9 @@ extern std::string_view smallKeyVanilla;
 extern std::string_view smallKeyOwnDungeon;
 extern std::string_view smallKeyAnywhere;
 
+extern std::string_view gerudoKeysVanilla;
+extern std::string_view gerudoKeysAnywhere;
+
 extern std::string_view bossKeyVanilla;
 extern std::string_view bossKeyOwnDungeon;
 extern std::string_view bossKeyAnywhere;
@@ -74,6 +79,8 @@ extern std::string_view childStealthDesc;
 
 extern std::string_view fourPoesDesc;
 
+extern std::string_view templeOfTimeIntroDesc;
+
 extern std::string_view bigPoeTargetCountDesc;
 
 extern std::string_view damageMultiDesc;
@@ -84,6 +91,12 @@ extern std::string_view itemPoolPlentiful;
 extern std::string_view itemPoolBalanced;
 extern std::string_view itemPoolScarce;
 extern std::string_view itemPoolMinimal;
+
+extern std::string_view iceTrapsOff;
+extern std::string_view iceTrapsNormal;
+extern std::string_view iceTrapsExtra;
+extern std::string_view iceTrapsMayhem;
+extern std::string_view iceTrapsOnslaught;
 
 extern std::string_view adultBoomerangDesc;
 

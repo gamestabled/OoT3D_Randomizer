@@ -121,6 +121,13 @@ std::string_view scrubsExpensive      = "All Scrub prices will be their vanilla 
 std::string_view scrubsRandomPrices   = "All Scrub prices will be between 0-99 rupees. This"
                                         "will on average be very, very expensive overall.";//
 /*------------------------------                                                           //
+|         SHUFFLE COWS         |                                                           //
+------------------------------*/                                                           //
+std::string_view shuffleCowsDesc      = "Enabling this will let cows give you items upon\n"//
+                                        "performing Epona's song in front of them. There\n"//
+                                        "are 9 cows, and an extra in MQ Jabu.";            //
+                                                                                           //
+/*------------------------------                                                           //
 |     SHUFFLE KOKIRI SWORD     |                                                           //
 ------------------------------*/                                                           //
 std::string_view kokiriSwordDesc      = "Enabling this shuffles the Kokiri Sword into the\n"
@@ -172,7 +179,7 @@ std::string_view mapCompassVanilla    = "Maps and Compasses will appear in their
                                         "locations.";                                      //
 std::string_view mapCompassOwnDungeon = "Maps and Compasses can only appear in their\n"    //
                                         "respective dungeon.";                             //
-std::string_view mapCompassAnywhere   = "Maps and Compasses can appear anywhere in th\n"   //
+std::string_view mapCompassAnywhere   = "Maps and Compasses can appear anywhere in the\n"  //
                                         "world.";                                          //
 /*------------------------------                                                           //
 |         SMALL KEYS           |                                                           //
@@ -187,6 +194,15 @@ std::string_view smallKeyOwnDungeon   = "Small Keys can only appear in their res
 std::string_view smallKeyAnywhere     = "Small Keys can appear anywhere in the world. A\n" //
                                         "difficult mode since it is more likely to need to\n"
                                         "enter a dungeon multiple times.";                 //
+/*------------------------------                                                           //
+|     GERUDO FORTRESS KEYS     |                                                           //
+------------------------------*/                                                           //
+std::string_view gerudoKeysVanilla    = "Gerudo Fortress Keys will appear in their vanilla\n"
+                                        "location, dropping from fighting Gerudo guards\n" //
+                                        "that attack when trying to free the jailed\n"     //
+                                        "carpenters.";                                     //
+std::string_view gerudoKeysAnywhere   = "Gerudo Fortress Keys can appear anywhere in the\n"//
+                                        "world.";                                          //
 /*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
@@ -220,6 +236,13 @@ std::string_view fourPoesDesc         = "The cutscene with the 4 poes in Forest 
                                         "be skipped. If the cutscene is not skipped, it can"
                                         "be exploited to reach the basement early.";       //
 /*------------------------------                                                           //
+|     TEMPLE OF TIME INTRO     |                                                           //
+------------------------------*/                                                           //
+std::string_view templeOfTimeIntroDesc= "The introduction cutscene to Temple of Time will\n"
+                                        "be skipped. This cutscene is helpful for\n"       //
+                                        "performing Door of Time Skip should the Door of\n"//
+                                        "Time be closed.";                                 //
+/*------------------------------                                                           //
 |     BIG POE TARGET COUNT     |                                                           //
 ------------------------------*/                                                           //
 std::string_view bigPoeTargetCountDesc= "The Poe buyer will give a reward for turning in\n"//
@@ -244,6 +267,16 @@ std::string_view itemPoolScarce       = "Some excess items are removed, includin
                                         "upgrades.";                                       //
 std::string_view itemPoolMinimal      = "Most excess items are removed.";                  //
                                                                                            //
+/*------------------------------                                                           //
+|          ICE TRAPS           |                                                           //
+------------------------------*/                                                           //
+std::string_view iceTrapsOff          = "All Ice Traps are removed.";                      //
+std::string_view iceTrapsNormal       = "Only Ice Traps from the base item pool are placed.";
+std::string_view iceTrapsExtra        = "Chance to add extra Ice Traps when junk items are\n"
+                                        "added to the itempool.";                          //
+std::string_view iceTrapsMayhem       = "All added junk items will be Ice Traps.";         //
+std::string_view iceTrapsOnslaught    = "All junk items will be replaced by Ice Traps, even"
+                                        "those in the base pool.";                         //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
 ------------------------------*/                                                           //
