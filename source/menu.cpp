@@ -411,13 +411,19 @@ bool LoadPreset(std::string presetName) {
 
 //Saves the new preset to a file
 bool SaveSettingsPreset() {
+
+  std::string presetName = (GetInput("Preset Name")).substr(0, 19);
+  //don't save if the user cancelled
+  if (presetName == "") {
+    return false;
+  }
+
   Result res;
   FS_Archive sdmcArchive = 0;
   Handle presetFile;
   u32 bytesWritten = 0;
   u32 totalRW = 0;
 
-  std::string presetName = (GetInput("Preset Name")).substr(0, 19);
   std::string presetsFilepath = "/3ds/presets/oot3d/";
   std::string filepath = presetsFilepath + presetName + ".bin";
 
@@ -500,13 +506,16 @@ std::string GetInput(const char* hintText) {
   char seed[60];
   SwkbdButton button = SWKBD_BUTTON_NONE;
 
-  swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 1, -1);
+  swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 2, -1);
 	swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
 	swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
 	swkbdSetHintText(&swkbd, hintText);
+  swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "Cancel", false);
 
-  while (button != SWKBD_BUTTON_CONFIRM) {
-    button = swkbdInputText(&swkbd, seed, sizeof(seed));
+  button = swkbdInputText(&swkbd, seed, sizeof(seed));
+
+  if (button == SWKBD_BUTTON_LEFT) {
+    return "";
   }
 
   return std::string(seed);

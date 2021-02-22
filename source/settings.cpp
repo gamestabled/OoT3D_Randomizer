@@ -332,6 +332,7 @@ namespace Settings {
 
     ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
     ctx.keysanity          = Keysanity.Value<u8>();
+    ctx.gerudoKeys         = GerudoKeys.Value<u8>();
     ctx.bossKeysanity      = BossKeysanity.Value<u8>();
     ctx.ganonsBossKey      = GanonsBossKey.Value<u8>();
     ctx.lacsCondition      = LACSCondition;
@@ -403,9 +404,9 @@ namespace Settings {
 
     MapsAndCompasses.SetSelectedIndex(ctx.mapsAndCompasses);
     Keysanity.SetSelectedIndex(ctx.keysanity);
+    GerudoKeys.SetSelectedIndex(ctx.gerudoKeys);
     BossKeysanity.SetSelectedIndex(ctx.bossKeysanity);
     GanonsBossKey.SetSelectedIndex(ctx.ganonsBossKey);
-
 
     SkipChildStealth.SetSelectedIndex(ctx.skipChildStealth);
     FourPoesCutscene.SetSelectedIndex(ctx.fourPoesCutscene);
@@ -453,6 +454,11 @@ namespace Settings {
   //Function to set flags depending on settings
   void UpdateSettings() {
 
+    //force child on closed forest
+    if (OpenForest.Is(OPENFOREST_CLOSED)) {
+      StartingAge.SetSelectedIndex(AGE_CHILD);
+    }
+
     //1 is MQ, 0 is Vanilla
     if (RandomMQDungeons) {
       DekuTreeDungeonMode              = Random() % 2;
@@ -468,8 +474,7 @@ namespace Settings {
       GanonsCastleDungeonMode          = Random() % 2;
     }
 
-    if (StartingTime.Is(STARTINGTIME_NIGHT))
-      HasNightStart = true;
+    HasNightStart = StartingTime.Is(STARTINGTIME_NIGHT);
 
     if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
       LACSCondition = LACSCONDITION_MEDALLIONS;

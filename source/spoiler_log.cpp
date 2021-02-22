@@ -96,7 +96,7 @@ static void WriteSettings() {
   logtxt += "Settings:\n";
   for (MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic or exclude location menus yet
-    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations") {
+    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations" || menu->type == MenuItemType::Action) {
       continue;
     }
 
@@ -115,6 +115,8 @@ static void WriteSettings() {
   for (auto& l : Settings::excludeLocationsOptions) {
     if (l->GetSelectedOption() == "Exclude") {
       std::string name = l->GetName().data();
+
+      //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
@@ -129,6 +131,8 @@ static void WriteSettings() {
   for (auto& l : Settings::detailedLogicOptions) {
     if (l->GetSelectedOption() == "Enable") {
       std::string name = l->GetName().data();
+
+      //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
