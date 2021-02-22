@@ -109,12 +109,14 @@ static void WriteSettings() {
       logtxt += "\n";
     }
   }
-  
+
   //List Excluded Locations
   logtxt += "\nExcluded Locations:\n";
   for (auto& l : Settings::excludeLocationsOptions) {
     if (l->GetSelectedOption() == "Exclude") {
       std::string name = l->GetName().data();
+
+      //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
@@ -129,6 +131,8 @@ static void WriteSettings() {
   for (auto& l : Settings::detailedLogicOptions) {
     if (l->GetSelectedOption() == "Enable") {
       std::string name = l->GetName().data();
+
+      //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
