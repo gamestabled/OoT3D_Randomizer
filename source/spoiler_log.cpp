@@ -96,7 +96,7 @@ static void WriteSettings() {
   logtxt += "Settings:\n";
   for (MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic or exclude location menus yet
-    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations") {
+    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations" || menu->type == MenuItemType::Action) {
       continue;
     }
 
@@ -109,7 +109,7 @@ static void WriteSettings() {
       logtxt += "\n";
     }
   }
-
+  
   //List Excluded Locations
   logtxt += "\nExcluded Locations:\n";
   for (auto& l : Settings::excludeLocationsOptions) {
