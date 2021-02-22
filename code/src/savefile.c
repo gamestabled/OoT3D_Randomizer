@@ -29,7 +29,6 @@ void SaveFile_Init() {
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
-    gSaveContext.itemGetInf [0x1] |= 0x0800; //Deku seeds text cleared (TODO: doesn't work)
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except Twinrova and Ganondorf)
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
