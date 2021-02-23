@@ -32,18 +32,19 @@ namespace Playthrough {
 
         if (Settings::GenerateSpoilerLog) {
           //write logs
-          printf("\x1b[9;10H");
+          printf("\x1b[9;10HWriting Spoiler Log...");
           if (SpoilerLog_Write()) {
-            printf("Wrote spoiler log");
+            printf("Done");
           } else {
-            printf("Failed to write spoiler log");
+            printf("Failed");
           }
 
-          printf("\x1b[10;10H");
+
+          printf("\x1b[10;10HWriting Placement Log...");
           if (PlacementLog_Write()) {
-            printf("Wrote placement log\n");
+            printf("Done\n");
           } else {
-            printf("Failed to write placement log\n");
+            printf("Failed\n");
           }
         } else {
           playthroughLocations = {};

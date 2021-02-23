@@ -17,6 +17,7 @@ namespace {
   u16 settingIdx;
   u8 menuIdx;
   u8 presetIdx;
+  u8 generateIdx;
   u16 settingBound;
   u8 menuBound;
   u8 presetBound;
@@ -51,6 +52,7 @@ void MenuInit() {
   settingBound = 0;
   presetIdx = 0;
   presetBound = 0;
+  generateIdx = 0;
   pastSeedLength = Settings::seed.length();
   currentMenuItem = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
@@ -129,6 +131,11 @@ void MenuUpdate(u32 kDown) {
 	} else if (mode == LOAD_PRESET) {
     UpdatePresetsMenu(kDown);
     PrintPresetsMenu();
+  } else if (mode == GENERATE_MODE) {
+    UpdateGenerateMenu(kDown);
+    if (mode != POST_GENERATE) {
+      PrintGenerateMenu();
+    }
   }
 }
 
@@ -150,9 +157,7 @@ void ModeChangeInit() {
     GetPresets();
 
   } else if (mode == GENERATE_MODE) {
-    consoleSelect(&bottomScreen);
-    consoleClear();
-    GenerateRandomizer();
+
   }
 
 }
@@ -228,6 +233,25 @@ void UpdatePresetsMenu(u32 kDown) {
     } else {
       printf("\x1b[24;5HFailed to load preset.");
     }
+  }
+}
+
+void UpdateGenerateMenu(u32 kDown) {
+  if ((kDown & KEY_DDOWN) || (kDown & KEY_DUP)) {
+    if (generateIdx) {
+      generateIdx = 0;
+    } else {
+      generateIdx = 1;
+    }
+  }
+
+  if ((kDown & KEY_A) != 0) {
+    Settings::PlayOption = generateIdx;
+    consoleSelect(&bottomScreen);
+    consoleClear();
+    GenerateRandomizer();
+    //This is just a dummy mode to stop the prompt from appearing again
+    mode = POST_GENERATE;
   }
 }
 
@@ -310,6 +334,27 @@ void PrintPresetsMenu() {
 	}
 }
 
+void PrintGenerateMenu() {
+
+  consoleSelect(&bottomScreen);
+
+  printf("\x1b[3;%dHHow will you play?", (BOTTOM_WIDTH/2) - 8);
+  std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
+
+	for (u8 i = 0; i < playOptions.size(); i++) {
+
+		std::string option = playOptions[i];
+    u8 row = 6 + (i * 2);
+    //make the current preset green
+		if (generateIdx == i) {
+			printf("\x1b[%d;%dH\x1b[32m>", row, 14);
+			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, option.c_str());
+		} else {
+			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, option.c_str());
+		}
+	}
+}
+
 void ClearDescription() {
   consoleSelect(&topScreen);
 
@@ -336,15 +381,15 @@ bool CreatePresetDirectories() {
     return false;
   }
 
-  //Create the 3ds directory if it doesn't exist (on citra)
-  res = FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the 3ds directory if it doesn't exist
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds"), FS_ATTRIBUTE_DIRECTORY);
   //Create the presets directory if it doesn't exist
-  res = FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets"), FS_ATTRIBUTE_DIRECTORY);
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets"), FS_ATTRIBUTE_DIRECTORY);
   //Create the oot3d directory if it doesn't exist
-  res = FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets/oot3d"), FS_ATTRIBUTE_DIRECTORY);
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets/oot3d"), FS_ATTRIBUTE_DIRECTORY);
 
   // Close SD archive
-  res = FSUSER_CloseArchive(sdmcArchive);
+  FSUSER_CloseArchive(sdmcArchive);
   return true;
 }
 
@@ -486,8 +531,9 @@ void GenerateRandomizer() {
 		printf("Error %d with fill. Press Select to exit.\n", ret);
 		return;
 	}
+  printf("\x1b[11;10HWriting Patch...");
 	if (WritePatch()) {
-		printf("\x1b[11;10HWrote Patch\n");
+		printf("Done");
     printf("\x1b[13;10HQuit out using the home menu. Then\n");
     printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
 
@@ -496,7 +542,7 @@ void GenerateRandomizer() {
       printf("\x1b[%d;11H- %s", i + 17, randomizerHash[i].c_str());
     }
 	} else {
-		printf("Error creating patch. Press Select to exit.\n");
+		printf("Failed\nPress Select to exit.\n");
 	}
 }
 
