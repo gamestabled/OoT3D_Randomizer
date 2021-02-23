@@ -301,9 +301,10 @@ namespace Settings {
 
   //declared here, set in fill.cpp
   u32 LinksPocketRewardBitMask = 0;
-
-  //declared here, set in fill.cpp
   std::array<u32, 9> rDungeonRewardOverrides{};
+
+  //declared here, set in menu.cpp
+  u8 PlayOption;
 
   //Fills a SettingsContext struct which is sent to the patch
   SettingsContext FillContext() {

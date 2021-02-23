@@ -291,6 +291,8 @@ namespace Settings {
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
 
+  extern u8 PlayOption;
+
   extern std::vector<Option *> excludeLocationsOptions;
   extern std::vector<Option *> detailedLogicOptions;
 
