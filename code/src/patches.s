@@ -791,6 +791,38 @@ CheckGerudoToken_269884_patch:
     bl hook_CheckGerudoToken
     cmp r0,#0x1
 
+.section .patch_MovableBlockSpeed
+    .word 0x40800000
+
+.section .patch_MovableBlockCooldownTimer
+.global MovableBlockCooldownTimer_patch
+MovableBlockCooldownTimer_patch:
+    mov r0,#0x1
+
+.section .patch_MilkCrateSpeed
+    .word 0x40800000
+
+.section .patch_MilkCrateCooldownTimer
+.global MilkCrateCooldownTimer_patch
+MilkCrateCooldownTimer_patch:
+    mov r0,#0x1
+
+.section .patch_AmyBlockSpeed
+    .word 0x40800000
+
+.section .patch_FireBlockSpeed
+    .word 0x40800000
+
+.section .patch_FireBlockCooldownTimer
+.global FireBlockCooldownTimer_patch
+FireBlockCooldownTimer_patch:
+    mov r0,#0x1
+
+.section .patch_ForestTempleBasementPuzzleDelay
+.global ForestTempleBasementPuzzleDelay_patch
+ForestTempleBasementPuzzleDelay_patch:
+    cmp r0,#0x1
+
 .section .patch_loader
 .global loader_patch
 

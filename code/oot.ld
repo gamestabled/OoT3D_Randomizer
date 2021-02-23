@@ -124,6 +124,10 @@ SECTIONS
 		*(.patch_EponasSongCheckFlagTwo)
 	}
 
+	.patch_AmyBlockSpeed 0x196F3C : {
+		*(.patch_AmyBlockSpeed)
+	}
+
 	.patch_DampeChest 0x19A420 : {
 		*(.patch_DampeChest)
 	}
@@ -416,6 +420,26 @@ SECTIONS
 		*(.patch_GerudoArcheryOne)
 	}
 
+	.patch_MovableBlockCooldownTimer 0x3BD46C : {
+		*(.patch_MovableBlockCooldownTimer)
+	}
+
+	.patch_MovableBlockSpeed 0x3BD508 : {
+		*(.patch_MovableBlockSpeed)
+	}
+
+	.patch_MilkCrateCooldownTimer 0x3BD85C : {
+		*(.patch_MilkCrateCooldownTimer)
+	}
+
+	.patch_MilkCrateSpeed 0x3BD88C : {
+		*(.patch_MilkCrateSpeed)
+	}
+
+	.patch_ForestTempleBasementPuzzleDelay 0x3BFA8C : {
+		*(.patch_ForestTempleBasementPuzzleDelay)
+	}
+
 	.patch_GerudoArcheryTwo 0x3C2D80 : {
 		*(.patch_GerudoArcheryTwo)
 	}
@@ -446,6 +470,14 @@ SECTIONS
 
 	.patch_MalonNextAction 0x3C6210 : {
 		*(.patch_MalonNextAction)
+	}
+
+	.patch_FireBlockCooldownTimer 0x3E0A2C : {
+		*(.patch_FireBlockCooldownTimer)
+	}
+
+	.patch_FireBlockSpeed 0x3E0BA8 : {
+		*(.patch_FireBlockSpeed)
 	}
 
 	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
