@@ -823,6 +823,16 @@ FireBlockCooldownTimer_patch:
 ForestTempleBasementPuzzleDelay_patch:
     cmp r0,#0x1
 
+.section .patch_CowBottleCheck
+.global CowBottleCheck_patch
+CowBottleCheck_patch:
+    bl hook_CowBottleCheck
+
+.section .patch_CowItemOverride
+.global CowItemOverride_patch
+CowItemOverride_patch:
+    b hook_CowItemOverride
+
 .section .patch_loader
 .global loader_patch
 

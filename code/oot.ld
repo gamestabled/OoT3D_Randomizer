@@ -504,6 +504,14 @@ SECTIONS
 		*(.patch_DekuTheaterSkullMask)
 	}
 
+	.patch_CowItemOverride 0x3EE378 : {
+		*(.patch_CowItemOverride)
+	}
+
+	.patch_CowBottleCheck 0x3F065C : {
+		*(.patch_CowBottleCheck)
+	}
+
 	.patch_FireArrowBitMask 0x3F23B0 : {
 		*(.patch_FireArrowBitMask)
 	}

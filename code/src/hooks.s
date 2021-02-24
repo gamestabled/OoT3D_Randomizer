@@ -422,6 +422,22 @@ hook_CheckGerudoToken:
     pop {r1-r12, lr}
     bx lr
 
+.global hook_CowBottleCheck
+hook_CowBottleCheck:
+    push {r1-r12, lr}
+    cpy r0,r4
+    bl EnCow_BottleCheck
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_CowItemOverride
+hook_CowItemOverride:
+    push {r0-r1, r3-r12, lr}
+    bl EnCow_ItemOverride
+    cpy r2,r0
+    pop {r0-r1, r3-r12, lr}
+    b 0x3EE37C
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
