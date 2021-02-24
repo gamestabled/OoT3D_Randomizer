@@ -3,15 +3,15 @@
 #include <array>
 #include <fstream>
 #include <string>
+#include <cstring>
 
 // For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
 
 bool WritePatch() {
   Result res = 0;
   FS_Archive sdmcArchive = 0;
-  Handle basecode;
   Handle code;
-  u32 bytesRead = 0;
+  Handle finalExheader;
   u32 bytesWritten = 0;
   u32 totalRW = 0;
   char buf[512];
@@ -20,31 +20,61 @@ bool WritePatch() {
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
     return false;
   }
-  // Open basecode
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&basecode, sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/basecode.ips"), FS_OPEN_READ, FS_ATTRIBUTE_READ_ONLY))) {
-    return false;
+
+  //Create necessary folders where patch files need to go (if they don't exist);
+  //Create the luma directory if it doesn't exist (on citra)
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the titles directory if it doesn't exist
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the 0004000000033500 directory if it doesn't exist (oot3d game id)
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500"), FS_ATTRIBUTE_DIRECTORY);
+
+  /*romfs is used to get files from the romfs folder. This allows us to copy
+  from basecode and write the exheader without the user needing to worry about
+  placing them manually on their SD card.*/
+  Result rc = romfsInit();
+  if (rc) {
+    printf("\nromfsInit: %08lX\n", rc);
   }
-  // Open code
+
+  /*-------------------------
+  |       basecode.ips      |
+  --------------------------*/
+
+  // Delete code.ips if it exists
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/code.ips"));
+
+  // Open code.ips
   if (!R_SUCCEEDED(res = FSUSER_OpenFile(&code, sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/code.ips"), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 
   // Copy basecode to code
-  do {
-    // Read from basecode
-    if (!R_SUCCEEDED(res = FSFILE_Read(basecode, &bytesRead, totalRW, buf, sizeof(buf)))) {
+  FILE* basecode = fopen("romfs:/basecode.ips", "r");
+  if (basecode) {
+    char* buffer;
+    long lSize;
+
+    // obtain basecode.ips file size
+    fseek(basecode , 0 , SEEK_END);
+    lSize = ftell(basecode);
+    rewind(basecode);
+
+    // allocate memory to contain basecode.ips
+    buffer = (char*) malloc(sizeof(char) * lSize);
+
+    // copy basecode.ips into the buffer
+    fread(buffer,1,lSize,basecode);
+
+    // Write the buffer to code.ips
+    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buffer, lSize, FS_WRITE_FLUSH))) {
       return false;
     }
-    // Write to code
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, bytesRead, FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += bytesRead;
-  } while (bytesRead > 0);
 
-  totalRW -= 3;
-
-  FSFILE_Close(basecode);
+    totalRW += bytesWritten - 3; // -3 to overwrite EOF
+    fclose(basecode);
+    free(buffer);
+  }
 
   /*-------------------------
   |      rItemOverrides     |
@@ -221,7 +251,53 @@ bool WritePatch() {
     return false;
   }
 
+  /*-------------------------
+  |       exheader.bin      |
+  --------------------------*/
+  // Delete exheader.bin if it exists
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/exheader.bin"));
+
+  // Open final exheader.bin destination
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&finalExheader, sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/exheader.bin"), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+    return false;
+  }
+
+  // Get exheader for proper playOption
+  const char * filePath;
+  if (Settings::PlayOption == PATCH_CONSOLE) {
+    filePath = "romfs:/exheader.bin";
+  } else {
+    filePath = "romfs:/exheader_citra.bin";
+  }
+
+  // Copy exheader.bin from romfs to final destination
+  FILE* exheader = fopen(filePath, "r");
+  if (exheader) {
+    char* buffer;
+    long lSize;
+
+    // obtain exheader file size
+    fseek(exheader , 0 , SEEK_END);
+    lSize = ftell(exheader);
+    rewind(exheader);
+
+    // allocate memory to contain exheader
+    buffer = (char*) malloc(sizeof(char) * lSize);
+
+    // copy exheader into the buffer
+    fread(buffer,1,lSize,exheader);
+
+    // Write the buffer to final exheader.bin destination
+    if (!R_SUCCEEDED(res = FSFILE_Write(finalExheader, &bytesWritten, 0, buffer, lSize, FS_WRITE_FLUSH))) {
+      return false;
+    }
+
+    fclose(exheader);
+    free(buffer);
+  }
+
   FSFILE_Close(code);
+  FSFILE_Close(finalExheader);
   FSUSER_CloseArchive(sdmcArchive);
 
   return true;
