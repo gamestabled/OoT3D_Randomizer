@@ -8,6 +8,7 @@
 #include "demo_effect.h"
 #include "business_scrubs.h"
 #include "ocarina.h"
+#include "cow.h"
 #include "string.h"
 
 #define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
@@ -57,6 +58,9 @@ void Actor_Init() {
     gActorOverlayTable[0x19C].initInfo->init = EnSi_rInit;
     gActorOverlayTable[0x19C].initInfo->destroy = EnSi_rDestroy;
     gActorOverlayTable[0x19C].initInfo->draw = EnSi_rDraw;
+
+    gActorOverlayTable[0x1C6].initInfo->init = EnCow_rInit;
+    gActorOverlayTable[0x1C6].initInfo->destroy = EnCow_rDestroy;
 
     // Define object 4 to be by default the same as object 189
     strncpy(gObjectTable[OBJECT_CUSTOM_DOUBLE_DEFENSE].filename, gObjectTable[OBJECT_GI_HEARTS].filename, 0x40);

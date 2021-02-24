@@ -49,7 +49,7 @@ namespace Settings {
     &ShuffleSongs,
     &Tokensanity,
     &Scrubsanity,
-    //&ShuffleCows,
+    &ShuffleCows,
     &ShuffleKokiriSword,
     &ShuffleOcarinas,
     &ShuffleWeirdEgg,

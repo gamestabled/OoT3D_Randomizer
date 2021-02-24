@@ -1,0 +1,69 @@
+#include "z3D/z3D.h"
+#include "settings.h"
+#include "cow.h"
+
+#define EnCow_Init_addr 0x189FD4
+#define EnCow_Init ((ActorFunc)EnCow_Init_addr)
+
+#define EnCow_Destroy_addr 0x18A3E4
+#define EnCow_Destroy ((ActorFunc)EnCow_Destroy_addr)
+
+static s32 sNumCows = 0;
+
+void EnCow_rInit(Actor* thisx, GlobalContext* globalCtx) {
+    static PosRot LLR_TowerRightCow_PosRot = {
+        { -283.13f, 0.0f, 110.46f }, { 0x0000, 0x5044, 0x0000 }
+    };
+
+    if (gSaveContext.entranceIndex == 0x05FC) { // DMT grotto
+        thisx->home.rot.x = 1;
+    } else if (gSaveContext.entranceIndex == 0x05A8) { // HF grotto
+        thisx->home.rot.x = 2;
+    } else if (gGlobalContext->sceneNum == 0x0002) { // Jabu-Jabu (MQ)
+        thisx->home.rot.x = 1;
+    } else {
+        thisx->home.rot.x = (sNumCows == 0) ? 1 : 2; // All others
+    }
+    sNumCows++;
+
+    // Move the right cow in LLR tower
+    if ((gGlobalContext->sceneNum == 0x004C) && (thisx->home.rot.x == 1)) {
+        thisx->world = LLR_TowerRightCow_PosRot;
+    }
+
+    // Change the flag for the left cow in LLR tower
+    if ((gGlobalContext->sceneNum == 0x004C) && (thisx->home.rot.x == 2)) {
+        thisx->home.rot.x = 4;
+    }
+
+    EnCow_Init(thisx, globalCtx);
+}
+
+void EnCow_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
+    sNumCows = 0;
+    EnCow_Destroy(thisx, globalCtx);
+}
+
+u32 EnCow_BottleCheck(Actor* cow) {
+    s16 cowId = cow->home.rot.x;
+
+    // If cow doesn't give an item, or the collect flag is set, check for bottle
+    // Otherwise, we give the item, return true
+    if (!gSettingsContext.shuffleCows || (cowId == 0) || (gGlobalContext->actorCtx.flags.collect & cowId)) {
+        return Inventory_HasEmptyBottle();
+    } else {
+        return 1;
+    }
+}
+
+s32 EnCow_ItemOverride(Actor* cow) {
+    s16 cowId = cow->home.rot.x;
+
+    // If cow doesn't give an item, or the collect flag is set, give milk refill
+    if (!gSettingsContext.shuffleCows || (cowId == 0) || (gGlobalContext->actorCtx.flags.collect & cowId)) {
+        return GI_MILK;
+    } else {
+        gGlobalContext->actorCtx.flags.collect |= cowId;
+        return GI_MILK_BOTTLE + cowId;
+    }
+}

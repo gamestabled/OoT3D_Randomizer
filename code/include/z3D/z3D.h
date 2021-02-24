@@ -524,4 +524,8 @@ typedef void (*LinkDamage_proc)(GlobalContext* globalCtx, Player* player, s32 ar
 #define LinkDamage_addr 0x35D304
 #define LinkDamage ((LinkDamage_proc)LinkDamage_addr)
 
+typedef u32 (*Inventory_HasEmptyBottle_proc)(void);
+#define Inventory_HasEmptyBottle_addr 0x377A04
+#define Inventory_HasEmptyBottle ((Inventory_HasEmptyBottle_proc)Inventory_HasEmptyBottle_addr)
+
 #endif //_Z3D_H_
