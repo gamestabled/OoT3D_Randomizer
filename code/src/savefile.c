@@ -49,8 +49,11 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern TODO: doesn't work
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
-    //open lowest Fire Temple locked door
+    //open lowest Fire Temple locked door (to prevent key logic lockouts)
     gSaveContext.sceneFlags[4].swch |= 0x00800000;
+
+    //open middle locked door in Water Temple (to prevent key logic lockouts)
+    gSaveContext.sceneFlags[5].swch |= 0x00200000;
 
     /*-----------------------------------
     |THINGS TO SET DEPENDING ON SETTINGS|
