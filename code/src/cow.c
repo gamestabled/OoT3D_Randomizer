@@ -31,11 +31,6 @@ void EnCow_rInit(Actor* thisx, GlobalContext* globalCtx) {
         thisx->world = LLR_TowerRightCow_PosRot;
     }
 
-    // Change the flag for the left cow in LLR tower
-    if ((gGlobalContext->sceneNum == 0x004C) && (thisx->home.rot.x == 2)) {
-        thisx->home.rot.x = 4;
-    }
-
     EnCow_Init(thisx, globalCtx);
 }
 
@@ -49,7 +44,7 @@ u32 EnCow_BottleCheck(Actor* cow) {
 
     // If cow doesn't give an item, or the collect flag is set, check for bottle
     // Otherwise, we give the item, return true
-    if (!gSettingsContext.shuffleCows || (cowId == 0) || (gGlobalContext->actorCtx.flags.collect & cowId)) {
+    if (!gSettingsContext.shuffleCows || (cowId == 0) || (gGlobalContext->actorCtx.flags.collect & (cowId << 0x18))) {
         return Inventory_HasEmptyBottle();
     } else {
         return 1;
@@ -60,10 +55,10 @@ s32 EnCow_ItemOverride(Actor* cow) {
     s16 cowId = cow->home.rot.x;
 
     // If cow doesn't give an item, or the collect flag is set, give milk refill
-    if (!gSettingsContext.shuffleCows || (cowId == 0) || (gGlobalContext->actorCtx.flags.collect & cowId)) {
+    if (!gSettingsContext.shuffleCows || (cowId == 0) || (gGlobalContext->actorCtx.flags.collect & (cowId << 0x18))) {
         return GI_MILK;
     } else {
-        gGlobalContext->actorCtx.flags.collect |= cowId;
+        gGlobalContext->actorCtx.flags.collect |= (cowId << 0x18);
         return GI_MILK_BOTTLE + cowId;
     }
 }
