@@ -4,6 +4,16 @@
 #include "../include/z3D/z3D.h"
 
 typedef enum {
+  OFF,
+  ON,
+} BooleanSetting;
+
+typedef enum {
+  DONT_SKIP,
+  SKIP,
+} SkipSetting;
+
+typedef enum {
   LOGIC_GLITCHLESS,
   LOGIC_NONE,
 } LogicSetting;
@@ -81,6 +91,7 @@ typedef enum {
 } MapsAndCompassesSetting;
 
 typedef enum {
+  KEYSANITY_START_WITH,
   KEYSANITY_VANILLA,
   KEYSANITY_OWN_DUNGEON,
   KEYSANITY_ANYWHERE,
@@ -92,12 +103,14 @@ typedef enum {
 } GerudoKeysSetting;
 
 typedef enum {
+  BOSSKEYSANITY_START_WITH,
   BOSSKEYSANITY_VANILLA,
   BOSSKEYSANITY_OWN_DUNGEON,
   BOSSKEYSANITY_ANYWHERE,
 } BossKeysanitySetting;
 
 typedef enum {
+  GANONSBOSSKEY_START_WITH,
   GANONSBOSSKEY_VANILLA,
   GANONSBOSSKEY_OWN_DUNGEON,
   GANONSBOSSKEY_ANYWHERE,
@@ -147,6 +160,7 @@ typedef struct {
   u8 startingAge : 1;
   u8 bombchusInLogic : 1;
   u8 randomMQDungeons : 1;
+  u8 mirrorWorld : 1;
 
   u8 shuffleSongs : 2;
   u8 tokensanity : 2;
@@ -189,6 +203,7 @@ typedef struct {
   u8 spiritTempleDungeonMode : 1;
   u8 shadowTempleDungeonMode : 1;
   u8 bottomOfTheWellDungeonMode : 1;
+  u8 iceCavernDungeonMode : 1;
   u8 gerudoTrainingGroundsDungeonMode : 1;
   u8 ganonsCastleDungeonMode : 1;
 

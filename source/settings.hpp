@@ -158,6 +158,7 @@ namespace Settings {
   extern Option StartingAge;
   extern Option BombchusInLogic;
   extern Option RandomMQDungeons;
+  extern Option MirrorWorld;
 
   extern Option ShuffleSongs;
   extern Option Tokensanity;
@@ -209,6 +210,7 @@ namespace Settings {
   extern bool SpiritTempleDungeonMode;
   extern bool ShadowTempleDungeonMode;
   extern bool BottomOfTheWellDungeonMode;
+  extern bool IceCavernDungeonMode;
   extern bool GerudoTrainingGroundsDungeonMode;
   extern bool GanonsCastleDungeonMode;
 

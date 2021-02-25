@@ -1,5 +1,6 @@
 #include "fill.hpp"
 #include "item_pool.hpp"
+#include "starting_inventory.hpp"
 #include "location_access.hpp"
 #include "spoiler_log.hpp"
 #include "logic.hpp"
@@ -12,6 +13,17 @@ std::vector<ItemLocation *> locations = {};
 template <typename T, typename Predicate>
 static void erase_if(std::vector<T>& vector, Predicate pred) {
     vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
+}
+
+static void RemoveStartingItemsFromPool() {
+  for (Item& startingItem : StartingInventory) {
+    for (u16 i = 0; i < ItemPool.size(); i++) {
+      if (startingItem == ItemPool[i]) {
+        ItemPool[i] = GetJunkItem();
+        break;
+      }
+    }
+  }
 }
 
 static void RandomizeDungeonRewards() {
@@ -82,6 +94,8 @@ static Item GetItemToPlace() {
 }
 
 static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
+  //logically give the starting inventory
+  ApplyStartingInventory();
 
   locations.clear();
   Exits::AccessReset();
@@ -286,6 +300,8 @@ static void FillExcludedLocations() {
 int Fill() {
   itemsPlaced = 0;
   GenerateItemPool();
+  GenerateStartingInventory();
+  RemoveStartingItemsFromPool();
   RandomizeDungeonRewards();
   FillExcludedLocations();
 

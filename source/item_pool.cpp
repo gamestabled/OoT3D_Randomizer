@@ -4,7 +4,6 @@
 
 using namespace Settings;
 
-//The beginning pool of items, filled in by GenerateItemPool()
 std::vector<Item> ItemPool = {};
 std::vector<Item> PendingJunkPool = {};
 const std::array<Item, 16> JunkPoolItems = {
@@ -476,7 +475,7 @@ static void AddRandomBottle(std::vector<Item> bottlePool) {
   bottlePool.erase(bottlePool.begin() + idx);
 }
 
-static Item GetJunkItem() {
+Item GetJunkItem() {
   if (IceTrapValue.Is(ICETRAPS_MAYHEM) || IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
     return IceTrap;
   } else if (IceTrapValue.Is(ICETRAPS_EXTRA)) {
@@ -946,7 +945,7 @@ static void RandomizeDungeonItem(const Container& dungeonLocations, Item item) {
 
 void GenerateItemPool() {
 
-  ItemPool = {};
+  ItemPool.clear();
 
   PlaceItemInLocation(&HC_ZeldasLetter, I_ZeldasLetter);
   PlaceItemInLocation(&Ganon, I_Triforce); //The Triforce is only used to make sure Ganon is accessible

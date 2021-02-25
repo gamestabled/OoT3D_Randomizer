@@ -49,8 +49,11 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern TODO: doesn't work
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
-    //open lowest Fire Temple locked door
+    //open lowest Fire Temple locked door (to prevent key logic lockouts)
     gSaveContext.sceneFlags[4].swch |= 0x00800000;
+
+    //open middle locked door in Water Temple (to prevent key logic lockouts)
+    gSaveContext.sceneFlags[5].swch |= 0x00200000;
 
     /*-----------------------------------
     |THINGS TO SET DEPENDING ON SETTINGS|
@@ -61,6 +64,11 @@ void SaveFile_Init() {
         gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
         gSaveContext.sceneIndex    = 0x6100;     //^
         gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
+    }
+
+    //set master quest flag for mirror world
+    if (gSettingsContext.mirrorWorld == ON) {
+        gSaveContext.masterQuestFlag = 1;
     }
 
     if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
@@ -84,11 +92,11 @@ void SaveFile_Init() {
         gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
     }
 
-    if (gSettingsContext.fourPoesCutscene) {
+    if (gSettingsContext.fourPoesCutscene == SKIP) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }
 
-    if (gSettingsContext.templeOfTimeIntro) {
+    if (gSettingsContext.templeOfTimeIntro == SKIP) {
         gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
     }
 
@@ -97,6 +105,35 @@ void SaveFile_Init() {
         for (u8 i = 0; i < 0xA; i++) {
             gSaveContext.dungeonItems[i] |= 0x6;
         }
+    }
+
+    //give small keys
+    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {
+      gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE] = 5;
+      gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE] = 8;
+      gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE] = 6;
+      gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 5;
+      gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE] = 5;
+      gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL] = 3;
+      gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS] = 9;
+      gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = 2;
+    }
+
+    //give boss keys
+    if (gSettingsContext.bossKeysanity == BOSSKEYSANITY_START_WITH) {
+      for (u8 i = 3; i < 8; i++) {
+        gSaveContext.dungeonItems[i] |= 0x1;
+      }
+    }
+
+    //give Ganon's Castle Boss Key
+    if (gSettingsContext.ganonsBossKey == GANONSBOSSKEY_START_WITH) {
+      gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
+    }
+
+    //give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
+    if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN && gSettingsContext.shuffleGerudoToken == OFF) {
+      gSaveContext.questItems |= 0x00400000;
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
