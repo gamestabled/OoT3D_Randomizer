@@ -7,6 +7,7 @@
 #define GENERATE_MODE 2
 #define LOAD_PRESET 3
 #define SAVE_PRESET 4
+#define POST_GENERATE 5
 #define MAX_SETTINGS_ON_SCREEN 13
 #define TOP_WIDTH 50
 #define BOTTOM_WIDTH 40
@@ -16,9 +17,11 @@ void ModeChangeInit();
 void UpdateMainMenu(u32 kDown);
 void UpdateSubMenu(u32 kDown);
 void UpdatePresetsMenu(u32 kdown);
+void UpdateGenerateMenu(u32 kDown);
 void PrintMainMenu();
 void PrintSubMenu();
 void PrintPresetsMenu();
+void PrintGenerateMenu();
 void ClearDescription();
 void PrintOptionDescrption();
 bool CreatePresetDirectories();

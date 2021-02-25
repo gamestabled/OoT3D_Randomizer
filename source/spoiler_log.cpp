@@ -82,12 +82,67 @@ static auto GetGeneralPath() {
   return path;
 }
 
+
 static auto GetSpoilerLogPath() {
   return GetGeneralPath() + "-spoilerlog.txt";
 }
 
 static auto GetPlacementLogPath() {
   return GetGeneralPath() + "-placementlog.txt";
+}
+
+static void WriteSettings() {
+  //List Settings
+  logtxt += "Settings:\n";
+  for (MenuItem* menu : Settings::mainMenu) {
+    //don't log the detailed logic or exclude location menus yet
+    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations" || menu->type == MenuItemType::Action) {
+      continue;
+    }
+
+    for (size_t i = 0; i < menu->settingsList->size(); i++) {
+      Option* setting = menu->settingsList->at(i);
+      logtxt += "\t";
+      logtxt += setting->GetName();
+      logtxt += ": ";
+      logtxt += setting->GetSelectedOption();
+      logtxt += "\n";
+    }
+  }
+
+  //List Excluded Locations
+  logtxt += "\nExcluded Locations:\n";
+  for (auto& l : Settings::excludeLocationsOptions) {
+    if (l->GetSelectedOption() == "Exclude") {
+      std::string name = l->GetName().data();
+
+      //get rid of newline characters if necessary
+      if (name.find('\n') != std::string::npos)
+        name.replace(name.find('\n'), 1, "");
+
+      logtxt += "\t";
+      logtxt += name;
+      logtxt += "\n";
+    }
+  }
+
+  //List Enabled Tricks
+  logtxt += "\nEnabled Tricks:\n";
+  for (auto& l : Settings::detailedLogicOptions) {
+    if (l->GetSelectedOption() == "Enable") {
+      std::string name = l->GetName().data();
+
+      //get rid of newline characters if necessary
+      if (name.find('\n') != std::string::npos)
+        name.replace(name.find('\n'), 1, "");
+
+      logtxt += "\t";
+      logtxt += name;
+      logtxt += "\n";
+    }
+  }
+
+  logtxt += "\n";
 }
 
 bool SpoilerLog_Write() {
@@ -99,19 +154,24 @@ bool SpoilerLog_Write() {
   }
   logtxt += "\n\n";
 
+  WriteSettings();
+
   logtxt += "Playthrough:\n";
   for (ItemLocation* location : playthroughLocations) {
     logtxt += "    ";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += '\n';
   }
+  playthroughLocations = {};
 
   logtxt += "\nAll Locations:\n\n";
   for (ItemLocation* location : dungeonRewardLocations) {
+    logtxt += "\t";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
   for (ItemLocation* location : allLocations) {
+    logtxt += "\t";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
@@ -133,6 +193,7 @@ bool SpoilerLog_Write() {
     return false;
   }
 
+  logtxt = "";
   return true;
 }
 
@@ -143,6 +204,9 @@ void PlacementLog_Msg(std::string_view msg) {
 bool PlacementLog_Write() {
   Result res = 0;
   u32 bytesWritten = 0;
+
+  placementtxt += "\nSeed: ";
+  placementtxt += Settings::seed;
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
@@ -159,5 +223,6 @@ bool PlacementLog_Write() {
     return false;
   }
 
+  placementtxt = "";
   return true;
 }

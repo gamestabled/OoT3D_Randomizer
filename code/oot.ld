@@ -32,8 +32,20 @@ SECTIONS
 		*(.patch_SkulltulaRewardTwo)
 	}
 
+	.patch_BeanDaddyModifyBeansBought 0x130CEC : {
+		*(.patch_BeanDaddyModifyBeansBought)
+	}
+
 	.patch_SongOfStormsLocation 0x1427E0 : {
 		*(.patch_SongOfStormsLocation)
+	}
+
+	.patch_BeanDaddyPurchase 0x14EDA8 : {
+		*(.patch_BeanDaddyPurchase)
+	}
+
+	.patch_BeanDaddyModifyPrice 0x14EE98 : {
+		*(.patch_BeanDaddyModifyPrice)
 	}
 
 	.patch_ScrubStickUpgradeOne 0x161898 : {
@@ -54,6 +66,30 @@ SECTIONS
 
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
+	}
+
+	.patch_CheckGerudoToken_18B368 0x18B368 : {
+		*(.patch_CheckGerudoToken_18B368)
+	}
+
+	.patch_CheckGerudoToken_18B3A0 0x18B3A0 : {
+		*(.patch_CheckGerudoToken_18B3A0)
+	}
+
+	.patch_CheckGerudoToken_18B3C0 0x18B3C0 : {
+		*(.patch_CheckGerudoToken_18B3C0)
+	}
+
+	.patch_CheckGerudoToken_18B448 0x18B448 : {
+		*(.patch_CheckGerudoToken_18B448)
+	}
+
+	.patch_CheckGerudoToken_18B6F4 0x18B6F4 : {
+		*(.patch_CheckGerudoToken_18B6F4)
+	}
+
+	.patch_CheckGerudoToken_18B710 0x18B710 : {
+		*(.patch_CheckGerudoToken_18B710)
 	}
 
 	.patch_EponasSongCheckFlag 0x18C56C : {
@@ -88,6 +124,10 @@ SECTIONS
 		*(.patch_EponasSongCheckFlagTwo)
 	}
 
+	.patch_AmyBlockSpeed 0x196F3C : {
+		*(.patch_AmyBlockSpeed)
+	}
+
 	.patch_DampeChest 0x19A420 : {
 		*(.patch_DampeChest)
 	}
@@ -106,6 +146,10 @@ SECTIONS
 
 	.patch_DemoEffectStoneDraw 0x1D209C : {
 		*(.patch_DemoEffectStoneDraw)
+	}
+
+	.patch_CheckGerudoToken_1D7AD4 0x1D7AD4 : {
+		*(.patch_CheckGerudoToken_1D7AD4)
 	}
 
 	.patch_ForestTempleItemGive 0x1E3F84 : {
@@ -174,6 +218,10 @@ SECTIONS
 
 	.patch_LostWoodsShootingGame 0x259E4C : {
 		*(.patch_LostWoodsShootingGame)
+	}
+
+	.patch_CheckGerudoToken_269884 0x269884 : {
+		*(.patch_CheckGerudoToken_269884)
 	}
 
 	.patch_SpiritTempleItemGiveThree 0x26B33C : {
@@ -372,6 +420,26 @@ SECTIONS
 		*(.patch_GerudoArcheryOne)
 	}
 
+	.patch_MovableBlockCooldownTimer 0x3BD46C : {
+		*(.patch_MovableBlockCooldownTimer)
+	}
+
+	.patch_MovableBlockSpeed 0x3BD508 : {
+		*(.patch_MovableBlockSpeed)
+	}
+
+	.patch_MilkCrateCooldownTimer 0x3BD85C : {
+		*(.patch_MilkCrateCooldownTimer)
+	}
+
+	.patch_MilkCrateSpeed 0x3BD88C : {
+		*(.patch_MilkCrateSpeed)
+	}
+
+	.patch_ForestTempleBasementPuzzleDelay 0x3BFA8C : {
+		*(.patch_ForestTempleBasementPuzzleDelay)
+	}
+
 	.patch_GerudoArcheryTwo 0x3C2D80 : {
 		*(.patch_GerudoArcheryTwo)
 	}
@@ -404,6 +472,14 @@ SECTIONS
 		*(.patch_MalonNextAction)
 	}
 
+	.patch_FireBlockCooldownTimer 0x3E0A2C : {
+		*(.patch_FireBlockCooldownTimer)
+	}
+
+	.patch_FireBlockSpeed 0x3E0BA8 : {
+		*(.patch_FireBlockSpeed)
+	}
+
 	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
 		*(.patch_ScrubStickUpgradeTwo)
 	}
@@ -426,6 +502,14 @@ SECTIONS
 
 	.patch_DekuTheaterSkullMask 0x3EAF38 : {
 		*(.patch_DekuTheaterSkullMask)
+	}
+
+	.patch_CowItemOverride 0x3EE378 : {
+		*(.patch_CowItemOverride)
+	}
+
+	.patch_CowBottleCheck 0x3F065C : {
+		*(.patch_CowBottleCheck)
 	}
 
 	.patch_FireArrowBitMask 0x3F23B0 : {

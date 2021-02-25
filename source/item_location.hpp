@@ -927,6 +927,21 @@ extern ItemLocation DMC_GreatFairyReward;
 extern ItemLocation OGC_GreatFairyReward;
 
 /*-------------------------------
+           --- COWS ---
+  -------------------------------*/
+
+extern ItemLocation KF_LinksHouseCow;
+extern ItemLocation HF_CowGrottoCow;
+extern ItemLocation LLR_StablesLeftCow;
+extern ItemLocation LLR_StablesRightCow;
+extern ItemLocation LLR_TowerLeftCow;
+extern ItemLocation LLR_TowerRightCow;
+extern ItemLocation Kak_ImpasHouseCow;
+extern ItemLocation DMT_CowGrottoCow;
+extern ItemLocation GV_Cow;
+extern ItemLocation JabuJabusBelly_MQ_Cow;
+
+/*-------------------------------
           --- SHOPS ---
   -------------------------------*/
 
@@ -1015,10 +1030,9 @@ extern const std::array<ItemLocationKeyPairing, 7>  IceCavernKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements;
 extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
-extern std::vector<ItemLocation *> advancementLocations;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
 extern std::array<ItemLocation *, 12> songLocations;
-extern std::array<ItemLocation *, 465> allLocations;
+extern std::array<ItemLocation *, 474> allLocations;
 
 extern void LocationReset();
 extern void ItemReset();

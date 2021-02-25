@@ -147,33 +147,50 @@ class MenuItem {
 namespace Settings {
   extern std::string seed;
 
-  // U8 options
   extern Option Logic;
   extern Option OpenForest;
   extern Option OpenKakariko;
-  extern Option Bridge;
-  extern Option GerudoFortress;
-  extern Option DamageMultiplier;
+  extern Option OpenDoorOfTime;
   extern Option ZorasFountain;
+  extern Option GerudoFortress;
+  extern Option Bridge;
+
   extern Option StartingAge;
-  extern Option Keysanity;
-  extern Option BossKeysanity;
-  extern Option GanonsBossKey;
-  extern Option MapsAndCompasses;
+  extern Option BombchusInLogic;
+  extern Option RandomMQDungeons;
+
   extern Option ShuffleSongs;
   extern Option Tokensanity;
   extern Option Scrubsanity;
-  extern Option ItemPoolValue;
-  extern u8 LACSCondition;
-
-  // Bool options
-  extern Option BombchusInLogic;
-  extern Option OpenDoorOfTime;
+  extern Option ShuffleCows;
+  extern Option ShuffleKokiriSword;
+  extern Option ShuffleOcarinas;
   extern Option ShuffleWeirdEgg;
   extern Option ShuffleGerudoToken;
-  extern Option ShuffleKokiriSword;
   extern Option ShuffleMagicBeans;
-  extern Option ShuffleOcarinas;
+
+  extern Option MapsAndCompasses;
+  extern Option Keysanity;
+  extern Option GerudoKeys;
+  extern Option BossKeysanity;
+  extern Option GanonsBossKey;
+
+  extern Option SkipChildStealth;
+  extern Option FourPoesCutscene;
+  extern Option TempleOfTimeIntro;
+  extern Option BigPoeTargetCount;
+
+  extern Option DamageMultiplier;
+  extern Option StartingTime;
+  extern Option GenerateSpoilerLog;
+
+  extern Option BoomerangAsAdult;
+  extern Option HammerAsChild;
+
+  extern Option ItemPoolValue;
+  extern Option IceTrapValue;
+
+  extern u8 LACSCondition;
 
   extern bool HasNightStart;
   extern bool BombchuDrop;
@@ -199,7 +216,6 @@ namespace Settings {
   extern Option LogicGrottosWithoutAgony;
   extern Option LogicVisibleCollision;
   extern Option LogicFewerTunicRequirements;
-  extern Option LogicLostWoodsBridge;
   extern Option LogicLostWoodsGSBean;
   extern Option LogicLabDiving;
   extern Option LogicLabWallGS;
@@ -210,7 +226,6 @@ namespace Settings {
   extern Option LogicReverseWasteland;
   extern Option LogicColossusGS;
   extern Option LogicManOnRoof;
-  extern Option LogicKakarikoTowerGS;
   extern Option LogicDMTBombable;
   extern Option LogicDMTSoilGS;
   extern Option LogicLinkGoronDins;
@@ -240,16 +255,16 @@ namespace Settings {
   extern Option LogicFireScarecrow;
   extern Option LogicFireFlameMaze;
   extern Option LogicFireSongOfTime;
-  extern Option LogicWaterHookshotEntry;
   extern Option LogicWaterTempleTorchLongshot;
   extern Option LogicWaterCentralBow;
+  extern Option LogicWaterCentralGSFW;
   extern Option LogicWaterCrackedWallNothing;
   extern Option LogicWaterCrackedWallHovers;
   extern Option LogicWaterBossKeyRegion;
   extern Option LogicWaterBKJumpDive;
   extern Option LogicWaterNorthBasementLedgeJump;
-  extern Option LogicWaterDragonBombchu;
   extern Option LogicWaterDragonJumpDive;
+  extern Option LogicWaterDragonAdult;
   extern Option LogicWaterRiverGS;
   extern Option LogicWaterFallingPlatformGS;
   extern Option LogicSpiritLowerAdultSwitch;
@@ -262,7 +277,6 @@ namespace Settings {
   extern Option LogicShadowUmbrella;
   extern Option LogicShadowFreestandingKey;
   extern Option LogicShadowStatue;
-  extern Option LogicBotwCageGS;
   extern Option LogicChildDeadhand;
   extern Option LogicGtgWithoutHookshot;
   extern Option LogicGtgFakeWall;
@@ -277,7 +291,10 @@ namespace Settings {
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
 
+  extern u8 PlayOption;
+
   extern std::vector<Option *> excludeLocationsOptions;
+  extern std::vector<Option *> detailedLogicOptions;
 
   extern void UpdateSettings();
   extern SettingsContext FillContext();

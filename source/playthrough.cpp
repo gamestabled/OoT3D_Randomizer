@@ -16,57 +16,53 @@ namespace Playthrough {
 
     int Playthrough_Init(u32 seed) {
         Random_Init(seed);
+        int success  = 0;
 
-        overrides.clear();
-        ItemReset();
-        Exits::AccessReset();
+        while (success == 0) {
+          overrides.clear();
+          ItemReset();
+          Exits::AccessReset();
 
-        Settings::UpdateSettings();
-        Logic::UpdateHelpers();
-        Fill_Init();
+          Settings::UpdateSettings();
+          Logic::UpdateHelpers();
+          success = Fill();
+        }
 
         GenerateHash();
 
-        //write logs
-        printf("\x1b[9;10H");
-        if (SpoilerLog_Write()) {
-          printf("Wrote spoiler log");
-        } else {
-          printf("Failed to write spoiler log");
-        }
+        if (Settings::GenerateSpoilerLog) {
+          //write logs
+          printf("\x1b[9;10HWriting Spoiler Log...");
+          if (SpoilerLog_Write()) {
+            printf("Done");
+          } else {
+            printf("Failed");
+          }
 
-        printf("\x1b[10;10H");
-        if (PlacementLog_Write()) {
-          printf("Wrote placement log\n");
+
+          printf("\x1b[10;10HWriting Placement Log...");
+          if (PlacementLog_Write()) {
+            printf("Done\n");
+          } else {
+            printf("Failed\n");
+          }
         } else {
-          printf("Failed to write placement log\n");
+          playthroughLocations = {};
         }
 
         return 1;
     }
 
-    //used for testing
+    //used for generating a lot of seeds at once
     int Playthrough_Repeat(int count /*= 1*/) {
-
+      printf("\x1b[0;0HGENERATING %d SEEDS", count);
       u32 repeatedSeed = 0;
       for (int i = 0; i < count; i++) {
-        ItemReset();
         repeatedSeed = rand() % 0xFFFFFFFF;
+        Settings::seed = std::to_string(repeatedSeed);
         Playthrough_Init(repeatedSeed);
 
-        PlacementLog_Msg(" --- ");
-        std::string seedStr = std::to_string(repeatedSeed);
-        PlacementLog_Msg(seedStr);
-        PlacementLog_Msg("\n");
-
         printf("\x1b[15;15HSeeds Generated: %d\n", i + 1);
-      }
-
-      printf("\x1b[10;10H");
-      if (PlacementLog_Write()) {
-        printf("Wrote placement log\n");
-      } else {
-        printf("Failed to write placement log\n");
       }
 
       return 1;

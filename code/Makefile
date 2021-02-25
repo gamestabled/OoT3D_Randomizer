@@ -32,6 +32,7 @@ BUILD		:=	build
 SOURCES		:=	src
 DATA		:=	data
 INCLUDES	:=	include
+INCLUDES    +=  assets
 #ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------

@@ -86,72 +86,63 @@ typedef struct {
 typedef struct Actor {
     /* 0x000 */ s16     id; // Actor Id
     /* 0x002 */ u8      type; // Actor Type. Refer to the corresponding enum for values
-    /* 0x003 */ s8      room; // Room number the actor is part of. FF denotes that the actor won't despawn on a room change
+    /* 0x003 */ s8      room; // Room number the actor is in. -1 denotes that the actor won't despawn on a room change
     /* 0x004 */ u32     flags; // Flags used for various purposes
-    /* 0x008 */ PosRot  initPosRot; // Contains Initial Rotation when Object is Spawned
-    /* 0x01C */ s16     params; // original name: "args_data"; Configurable variable set by an actor's spawn data
-    /* 0x01E */ s8      objBankIndex;
-    /* 0x01F */ s8      unk_1F;
+    /* 0x008 */ PosRot  home; // Initial position/rotation when spawned. Can be used for other purposes
+    /* 0x01C */ s16     params; // Configurable variable set by the actor's spawn data; original name: "args_data"
+    /* 0x01E */ s8      objBankIndex; // Object bank index of the actor's object dependency; original name: "bank"
+    /* 0x01F */ s8      targetMode; // Controls how far the actor can be targeted from and how far it can stay locked on
     /* 0x020 */ u8      unk_20;
     /* 0x021 */ char    unk_21[0x3];
-    /* 0x024 */ u32     sfx;
-    /* 0x028 */ PosRot  posRot; // Current coordinates
-    /* 0x03C */ PosRot  posRot2; // Related to camera
-    /* 0x050 */ f32     unk_4C;
-    /* 0x054 */ Vec3f   scale; // Sets x,y,z scaling factor. Typically, a factor of 0.01 is used for each axis
-    /* 0x060 */ Vec3f   velocity;
-    /* 0x06C */ f32     speedXZ; // Always positive, stores how fast the actor is traveling along the XZ plane
-    /* 0x070 */ f32     gravity; // Acceleration due to gravity; value is added to Y velocity every frame
+    /* 0x024 */ u32     sfx; // SFX ID to play. Sound plays when value is set, then is cleared the following update cycle
+    /* 0x028 */ PosRot  world; // Position/rotation in the world
+    /* 0x03C */ PosRot  focus; // Target reticle focuses on this position. For player this represents head pos and rot
+    /* 0x050 */ f32     targetArrowOffset; // Height offset of the target arrow relative to `focus` position
+    /* 0x054 */ Vec3f   scale; // Scale of the actor in each axis
+    /* 0x060 */ Vec3f   velocity; // Velocity of the actor in each axis
+    /* 0x06C */ f32     speedXZ; // How fast the actor is traveling along the XZ plane
+    /* 0x070 */ f32     gravity; // Acceleration due to gravity. Value is added to Y velocity every frame
     /* 0x074 */ f32     minVelocityY; // Sets the lower bounds cap on velocity along the Y axis
     /* 0x078 */ CollisionPoly* wallPoly; // Wall polygon an actor is touching
-    /* 0x07C */ CollisionPoly* floorPoly; // Floor polygon an actor is over/touching
-    /* 0x080 */ u8      wallPolySource; // Complex Poly Surface Source. 0x32 = Scene
-    /* 0x081 */ u8      floorPolySource; // Complex Poly Surface Source. 0x32 = Scene. related to 0x80/88
-    /* 0x082 */ s16     wallPolyRot; //TODO: check
-    /* 0x084 */ f32     groundY;
-    /* 0x088 */ f32     waterY; //TODO: check
-    /* 0x08C */ f32     xyzDistFromLinkSq; //TODO: check
+    /* 0x07C */ CollisionPoly* floorPoly; // Floor polygon directly below the actor
+    /* 0x080 */ u8      wallBgId; // Bg ID of the wall polygon the actor is touching
+    /* 0x081 */ u8      floorBgId; // Bg ID of the floor polygon directly below the actor
+    /* 0x082 */ s16     wallYaw; // Y rotation of the wall polygon the actor is touching
+    /* 0x084 */ f32     floorHeight; // Y position of the floor polygon directly below the actor
+    /* 0x088 */ f32     yDistToWater; // Distance to the surface of active waterbox. Negative value means above water
+    /* 0x08C */ f32     waterBoxYSurface;
     /* 0x090 */ u16     bgCheckFlags;
-    /* 0x092 */ s16     yawTowardsLink;
-    /* 0x094 */ f32     xzDistanceFromLink;
-    /* 0x098 */ f32     yDistanceFromLink;
-    /* 0x09C */ f32     unk_9C;
-    /* 0x0A0 */ CollisionCheckInfo colChkInfo;
-    /* 0x0BC */ ActorShape shape;
+    /* 0x092 */ s16     yawTowardsPlayer; // Y rotation difference between the actor and the player
+    /* 0x094 */ f32     xyzDistToPlayerSq; // Squared distance between the actor and the player in the x,y,z axis
+    /* 0x098 */ f32     xzDistToPlayer; // Distance between the actor and the player in the XZ plane
+    /* 0x09C */ f32     yDistToPlayer; // Dist is negative if the actor is above the player
+    /* 0x0A0 */ CollisionCheckInfo colChkInfo; // Variables related to the Collision Check system
+    /* 0x0BC */ ActorShape shape; // Variables related to the physical shape of the actor
     /* 0x0D4 */ Vec3f   unk_D4[2];
     /* 0x0EC */ Vec3f   unk_EC; // Stores result of some vector transformation involving actor xyz vector, and a matrix at Global Context + 11D60
     /* 0x0F8 */ f32     unk_F8; // Related to above
-    /* 0x0FC */ f32     uncullZoneForward;
-    /* 0x100 */ f32     uncullZoneScale;
-    /* 0x104 */ f32     uncullZoneDownward;
-    /* 0x108 */ Vec3f   pos4; // Final Coordinates last frame
-    /* 0x114 */ u8      unk_114; // Z-Target related
-    /* 0x115 */ u8      unk_115; // Z-Target related
-    /* 0x116 */ u16     textId; // Text id to pass to link/display when interacting with an actor (navi text, probably others)
-    /* 0x118 */ u16     freezeTimer;
+    /* 0x0FC */ f32     uncullZoneForward; // Amount to increase the uncull zone forward by (in projected space)
+    /* 0x100 */ f32     uncullZoneScale; // Amount to increase the uncull zone scale by (in projected space)
+    /* 0x104 */ f32     uncullZoneDownward; // Amount to increase uncull zone downward by (in projected space)
+    /* 0x108 */ Vec3f   prevPos; // World position from the previous update cycle
+    /* 0x114 */ u8      isTargeted; // Set to true if the actor is currently being targeted by the player
+    /* 0x115 */ u8      targetPriority; // Lower values have higher priority. Resets to 0 when player stops targeting
+    /* 0x116 */ u16     textId; // Text ID to pass to link/display when interacting with the actor
+    /* 0x118 */ u16     freezeTimer; // Actor does not update when set. Timer decrements automatically
     /* 0x120 */ char    unk_118[0x7];
-    /* 0x121 */ u8      activelyDrawn; // Indicates whether the actor is currently being drawn (but not through lens). 01 for yes, 00 for no
+    /* 0x121 */ u8      isDrawn; // Set to true if the actor is currently being drawn. Always stays false for lens actors
     /* 0x122 */ u8      unk_122; // Set within a routine that deals with collision
     /* 0x123 */ u8      naviEnemyId; // Sets what 0600 dialog to display when talking to navi. Default 0xFF
-
-    /* 0x124 */ struct Actor* attachedA; // Interfacing Actor?
-    // e.g. Link holding chu, Chu instance stores ptr to Link instance here;
-    //      Anju having Link's ptr when giving an item
-    //      Volvagia Hole stores Volvagia Flying here
-
-    /* 0x128 */ struct Actor* attachedB; // Attached to Actor
-    // e.g. Link holding chu, Link instance stores ptr to Bombchu instance here
-
-    /* 0x12C */ struct Actor* next; // Next Actor of this type
-    /* 0x130 */ struct Actor* prev; // Previous Actor of this type
-
-    /* 0x134 */ ActorFunc init; // Initialization Routine. Mandatory
-    /* 0x138 */ ActorFunc destroy; // Destruction Routine
-    /* 0x13C */ ActorFunc update; // Main Update Routine, called every frame the actor is to be updated
-    /* 0x140 */ ActorFunc draw; // Draw Routine, writes necessary display lists
-
+    /* 0x124 */ struct Actor* parent; // Usage is actor specific. Set if actor is spawned via `Actor_SpawnAsChild`
+    /* 0x128 */ struct Actor* child; // Usage is actor specific. Set if actor is spawned via `Actor_SpawnAsChild`
+    /* 0x12C */ struct Actor* prev; // Previous actor of this category
+    /* 0x130 */ struct Actor* next; // Next actor of this category
+    /* 0x134 */ ActorFunc init; // Initialization Routine. Called by `Actor_Init` or `Actor_UpdateAll`
+    /* 0x138 */ ActorFunc destroy; // Destruction Routine. Called by `Actor_Destroy`
+    /* 0x13C */ ActorFunc update; // Update Routine. Called by `Actor_UpdateAll`
+    /* 0x140 */ ActorFunc draw; // Draw Routine. Called by `Actor_Draw`
     /* 0x144 */ ActorOverlay* overlayEntry; // Pointer to the overlay table entry for this actor
-    /* 0x148 */ nn_math_MTX34 unk_148; // Copied to a model before drawing it
+    /* 0x148 */ nn_math_MTX34 modelMtx; // Transforms model space coordinates to world coordinates
     /* 0x178 */ void*         unk_178; // Unknown pointer type
     /* 0x17C */ void*         unk_17C[6]; // Unknown pointer type
     /* 0x194 */ u32           unk_194;

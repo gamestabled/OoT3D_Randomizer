@@ -1,5 +1,6 @@
 #pragma once
 #include "logic.hpp"
+#include "random.hpp"
 #include <string>
 #include <functional>
 #include <variant>
@@ -61,11 +62,25 @@ public:
     }
 
     ItemOverride_Value Value() const {
+        //just a random list of progression items
+        const std::array<u16, 10> items = {
+          GI_BOOMERANG,
+          GI_HAMMER,
+          GI_ARROW_LIGHT,
+          0x80,
+          0x81,
+          0x82,
+          0x83,
+          0x84,
+          0x85,
+          0x8A,
+        };
+
         ItemOverride_Value val;
         val.all = 0;
         val.itemId = getItemId;
         if (getItemId == GI_ICE_TRAP) {
-            val.looksLikeItemId = GI_BOOMERANG; //TODO make random i guess
+            val.looksLikeItemId = items[Random() % items.size()];
         }
         return val;
     }
@@ -88,6 +103,14 @@ public:
 
     u16 GetPrice() const {
         return price;
+    }
+
+    bool operator== (const Item& right) const {
+      return name == right.GetName();
+    }
+
+    bool operator!= (const Item& right) const {
+      return name != right.GetName();
     }
 
 private:

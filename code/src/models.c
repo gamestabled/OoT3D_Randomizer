@@ -39,16 +39,71 @@ typedef void (*Matrix_Multiply_proc)(nn_math_MTX34* dst, nn_math_MTX34* lhs, nn_
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
+    // Should probably parse the ZAR to find the CMBs correctly,
+    // but this is fine for now
+    void* ZARBuf = rExtendedObjectCtx.status[model->info.objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.buf;
+    void* cmb;
+    switch (model->info.objectId) {
+        case 4: // double defense
+            cmb = (void*)(((char*)ZARBuf) + 0xA4);
+            CustomModel_EditHeartContainerToDoubleDefense(cmb);
+            break;
+        case 5: // zeldas lullaby
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_EditFairyOcarinaToZeldasLullaby(cmb);
+            break;
+        case 16: // sarias song
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_EditFairyOcarinaToSariasSong(cmb);
+            break;
+        case 17: // suns song
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_EditFairyOcarinaToSunsSong(cmb);
+            break;
+        case 58: // eponas song
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_EditFairyOcarinaToEponasSong(cmb);
+            break;
+        case 120: // song of storms
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_EditFairyOcarinaToSongOfStorms(cmb);
+            break;
+        case 121: // song of time
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_EditFairyOcarinaToSongOfTime(cmb);
+            break;
+        case 122: // minuet of forest
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToMinuetOfForest(cmb);
+            break;
+        case 123: // bolero of fire
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToBoleroOfFire(cmb);
+            break;
+        case 125: // serenade of water
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToSerenadeOfWater(cmb);
+            break;
+        case 126: // requiem of spirit
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(cmb);
+            break;
+        case 127: // nocturne of shadow
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToNocturneOfShadow(cmb);
+            break;
+        case 128: // prelude of light
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_EditOcarinaOfTimeToPreludeOfLight(cmb);
+            break;
+    }
+
     model->glModel = GlModel_Spawn(model->actor, globalCtx, model->info.objectId, model->info.objectModelIdx);
     // need to set mesh for rupees
     if (model->info.objectId == 0x017F) {
         GlModel_SetMesh(model->glModel, model->info.objectMeshId);
     }
 
-    // check for double defense and edit the model if needed
-    if (model->info.objectId == 0x0004) {
-        CustomModel_EditHeartContainerToDoubleDefense(rExtendedObjectCtx.status[model->info.objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.cmbPtrs[model->info.objectModelIdx][0]);
-    }
     model->loaded = 1;
 }
 

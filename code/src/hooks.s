@@ -397,6 +397,47 @@ hook_ConvertBombDropTwo:
     cpy r6,r0
     b 0x3747B0
 
+.global hook_BeanDaddyModifyBeansBought
+hook_BeanDaddyModifyBeansBought:
+    push {r1-r12, lr}
+    bl EnMs_ModifyBeansBought
+    pop {r1-r12, lr}
+    cmp r0,#0xa
+    bx lr
+
+.global hook_BeanDaddyModifyPrice
+hook_BeanDaddyModifyPrice:
+    push {r0,r2-r12, lr}
+    cpy r0,r1
+    bl EnMs_ModifyPrice
+    cpy r1,r0
+    pop {r0,r2-r12, lr}
+    cmp r0,r1
+    bx lr
+
+.global hook_CheckGerudoToken
+hook_CheckGerudoToken:
+    push {r1-r12, lr}
+    bl SaveFile_CheckGerudoToken
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_CowBottleCheck
+hook_CowBottleCheck:
+    push {r1-r12, lr}
+    cpy r0,r4
+    bl EnCow_BottleCheck
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_CowItemOverride
+hook_CowItemOverride:
+    push {r0-r1, r3-r12, lr}
+    bl EnCow_ItemOverride
+    cpy r2,r0
+    pop {r0-r1, r3-r12, lr}
+    b 0x3EE37C
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

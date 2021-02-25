@@ -77,8 +77,8 @@ static Item GetItemToPlace() {
     return item;
   }
 
-  printf("ERROR: COULD NOT FIND ITEM TO PLACE\n");
-  return GreenRupee;
+  PlacementLog_Msg("\nERROR: COULD NOT FIND ITEM TO PLACE\n");
+  return NoItem;
 }
 
 static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
@@ -127,7 +127,7 @@ static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool 
           ExitPairing& exitPair = area->exits[j];
           Exit* exit = exitPair.GetExit();
 
-          if (exitPair.ConditionsMet()) {
+          if (exitPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) {
             UpdateToDAccess(exit, age, exitPair.TimeOfDay());
 
             //If the exit is accessible, try adding it
@@ -147,7 +147,7 @@ static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool 
           ItemLocationPairing& locPair = area->locations[k];
           ItemLocation* location = locPair.GetLocation();
 
-          if (locPair.ConditionsMet() && !location->IsAddedToPool()) {
+          if ((locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) && !location->IsAddedToPool()) {
 
             location->AddToPool();
             iterationsWithNoLocations = 0;
@@ -201,7 +201,13 @@ static void FastFill(std::vector<ItemLocation*> locations) {
     }
   }
 }
-
+/*
+| The algorithm places items in the world in reverse.
+| This means we first assume we have every item in the item pool and
+| remove an item and try to place it somewhere that is still reachable
+| This method helps distribution of items locked behind many requirements.
+| - OoT Randomizer
+*/
 static int AssumedFill() {
 
   //get all the advancement items
@@ -219,6 +225,10 @@ static int AssumedFill() {
 
     //move an item from unplaced to placed, this will be the item we place
     Item item = GetItemToPlace();
+    if (item.GetName() == "No Item") {
+      PlacementLog_Msg("\nRETRYING PLACEMENT...\n");
+      return 0;
+    }
     placedItems.push_back(item);
 
     //assume we have all of the unplaced items and nothing else
@@ -238,7 +248,9 @@ static int AssumedFill() {
 
     //if we get stuck, retry
     if (locations.empty()) {
-      printf("ERROR: NO LOCATIONS TO PLACE ITEM. TRYING AGAIN...");
+      PlacementLog_Msg("\nCANNOT PLACE ");
+      PlacementLog_Msg(item.GetName());
+      PlacementLog_Msg(". TRYING AGAIN...\n");
       return 0;
     }
 
@@ -261,15 +273,6 @@ static int AssumedFill() {
   return 1;
 }
 
-static void RandomFill() {
-  //get every location that doesn't have an item yet
-  locations.assign(allLocations.begin(), allLocations.end());
-  erase_if(locations, [](ItemLocation* il){return il->GetPlacedItemName() != "No Item";});
-
-  //fast fill every location
-  FastFill(locations);
-}
-
 static void FillExcludedLocations() {
   //Only fill in excluded locations that don't already have something and are forbidden
   locations.assign(allLocations.begin(), allLocations.end());
@@ -280,28 +283,15 @@ static void FillExcludedLocations() {
   }
 }
 
-void Fill_Init() {
-
+int Fill() {
+  itemsPlaced = 0;
   GenerateItemPool();
   RandomizeDungeonRewards();
-
   FillExcludedLocations();
 
-  if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
-    int success = 0;
-
-    while(!success) {
-      success = AssumedFill();
-      if (!success) {
-        itemsPlaced = 0;
-        GenerateItemPool();
-      }
-    }
-
-  } else {
-    RandomFill();
+  if (!AssumedFill()) {
+    return 0;
   }
 
-  PlacementLog_Msg("\nSeed: ");
-  PlacementLog_Msg(Settings::seed);
+  return 1;
 }

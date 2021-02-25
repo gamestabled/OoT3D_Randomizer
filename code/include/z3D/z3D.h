@@ -336,10 +336,14 @@ typedef struct {
 #define OBJECT_ID_MAX 417
 
 typedef struct {
-    /* 0x00 */ char unk_00[0x4C];
-    /* 0x4C */ void*** cmbPtrs; /* Really, this is a pointer to an array of pointers to CMB descriptors,
-                                   the first member of which is a pointer to the CMB data (I think) */
-    /* 0x50 */ char unk_50[0x20];
+    /* 0x00 */ void* buf;
+    /* 0x04 */ char unk_04[0x48];
+    /* 0x4C */ void*** cmbPtrs;  /* Really, this is a pointer to an array of pointers to CMB managers,
+                                    the first member of which is a pointer to the CMB data */
+    /* 0x50 */ void*** csabPtrs; /* Same as above but for CSAB */
+    /* 0x54 */ char unk_54[0x04];
+    /* 0x58 */ void*** cmabPtrs; /* Same as above but for CMAB */
+    /* 0x5C */ char unk_5C[0x14];
 } ZARInfo; // size = 0x70
 
 typedef struct {
@@ -350,7 +354,7 @@ typedef struct {
 
 typedef struct {
     /* 0x000 */ u8 num;
-    /* 0x000 */ char unk_01[0x3];
+    /* 0x001 */ char unk_01[0x3];
     /* 0x004 */ ObjectStatus status[OBJECT_EXCHANGE_BANK_MAX];
 } ObjectContext; // size = 0x984
 
@@ -519,5 +523,9 @@ typedef void (*Rupees_ChangeBy_proc)(s16 rupeeChange);
 typedef void (*LinkDamage_proc)(GlobalContext* globalCtx, Player* player, s32 arg2, f32 arg3, f32 arg4, s16 arg5, s32 arg6);
 #define LinkDamage_addr 0x35D304
 #define LinkDamage ((LinkDamage_proc)LinkDamage_addr)
+
+typedef u32 (*Inventory_HasEmptyBottle_proc)(void);
+#define Inventory_HasEmptyBottle_addr 0x377A04
+#define Inventory_HasEmptyBottle ((Inventory_HasEmptyBottle_proc)Inventory_HasEmptyBottle_addr)
 
 #endif //_Z3D_H_

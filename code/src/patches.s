@@ -720,6 +720,119 @@ ConvertBombDropOne_patch:
 ConvertBombDropTwo_patch:
     b hook_ConvertBombDropTwo
 
+.section .patch_BeanDaddyModifyBeansBought
+.global BeanDaddyModifyBeansBought_patch
+BeanDaddyModifyBeansBought_patch:
+    bl hook_BeanDaddyModifyBeansBought
+
+.section .patch_BeanDaddyModifyPrice
+.global BeanDaddyModifyPrice_patch
+BeanDaddyModifyPrice_patch:
+    bl hook_BeanDaddyModifyPrice
+
+.section .patch_BeanDaddyPurchase
+.global BeanDaddyPurchase_patch
+BeanDaddyTakeRupees_patch:
+    bl EnMs_Purchase
+
+.section .patch_CheckGerudoToken_18B368
+.global CheckGerudoToken_18B368_patch
+CheckGerudoToken_18B368_patch:
+    push {r1-r12, lr}
+    bl SaveFile_CheckGerudoToken
+    pop {r1-r12, lr}
+    cmp r0,#0x0
+
+.section .patch_CheckGerudoToken_18B3A0
+.global CheckGerudoToken_18B3A0_patch
+CheckGerudoToken_18B3A0_patch:
+    push {r1-r12, lr}
+    bl SaveFile_CheckGerudoToken
+    pop {r1-r12, lr}
+    cmp r0,#0x0
+
+.section .patch_CheckGerudoToken_18B3C0
+.global CheckGerudoToken_18B3C0_patch
+CheckGerudoToken_18B3C0_patch:
+    push {r1-r12, lr}
+    bl SaveFile_CheckGerudoToken
+    pop {r1-r12, lr}
+    cmp r0,#0x0
+
+.section .patch_CheckGerudoToken_18B448
+.global CheckGerudoToken_18B448_patch
+CheckGerudoToken_18B448_patch:
+    push {r1-r12, lr}
+    bl SaveFile_CheckGerudoToken
+    pop {r1-r12, lr}
+    cmp r0,#0x0
+
+.section .patch_CheckGerudoToken_18B6F4
+.global CheckGerudoToken_18B6F4_patch
+CheckGerudoToken_18B6F4_patch:
+    bl hook_CheckGerudoToken
+    cmp r0,#0x1
+
+.section .patch_CheckGerudoToken_18B710
+.global CheckGerudoToken_18B710_patch
+CheckGerudoToken_18B710_patch:
+    bl hook_CheckGerudoToken
+    cmp r0,#0x1
+
+.section .patch_CheckGerudoToken_1D7AD4
+.global CheckGerudoToken_1D7AD4_patch
+CheckGerudoToken_1D7AD4_patch:
+    bl hook_CheckGerudoToken
+    cmp r0,#0x1
+
+.section .patch_CheckGerudoToken_269884
+.global CheckGerudoToken_269884_patch
+CheckGerudoToken_269884_patch:
+    bl hook_CheckGerudoToken
+    cmp r0,#0x1
+
+.section .patch_MovableBlockSpeed
+    .word 0x40800000
+
+.section .patch_MovableBlockCooldownTimer
+.global MovableBlockCooldownTimer_patch
+MovableBlockCooldownTimer_patch:
+    mov r0,#0x1
+
+.section .patch_MilkCrateSpeed
+    .word 0x40800000
+
+.section .patch_MilkCrateCooldownTimer
+.global MilkCrateCooldownTimer_patch
+MilkCrateCooldownTimer_patch:
+    mov r0,#0x1
+
+.section .patch_AmyBlockSpeed
+    .word 0x40800000
+
+.section .patch_FireBlockSpeed
+    .word 0x40800000
+
+.section .patch_FireBlockCooldownTimer
+.global FireBlockCooldownTimer_patch
+FireBlockCooldownTimer_patch:
+    mov r0,#0x1
+
+.section .patch_ForestTempleBasementPuzzleDelay
+.global ForestTempleBasementPuzzleDelay_patch
+ForestTempleBasementPuzzleDelay_patch:
+    cmp r0,#0x1
+
+.section .patch_CowBottleCheck
+.global CowBottleCheck_patch
+CowBottleCheck_patch:
+    bl hook_CowBottleCheck
+
+.section .patch_CowItemOverride
+.global CowItemOverride_patch
+CowItemOverride_patch:
+    b hook_CowItemOverride
+
 .section .patch_loader
 .global loader_patch
 
