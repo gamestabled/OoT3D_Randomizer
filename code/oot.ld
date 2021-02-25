@@ -36,6 +36,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyBeansBought)
 	}
 
+	.patch_BiggoronSetGivenReward 0x133F7C :{
+		*(.patch_BiggoronSetGivenReward)
+	}
+
 	.patch_SongOfStormsLocation 0x1427E0 : {
 		*(.patch_SongOfStormsLocation)
 	}
@@ -108,6 +112,10 @@ SECTIONS
 		*(.patch_ChildRollingGoron)
 	}
 
+	.patch_BiggoronCheckGivenRewardThree 0x194DA4 : {
+		*(.patch_BiggoronCheckGivenRewardThree)
+	}
+
 	.patch_AdultRollingGoronIgnoreMedallion 0x195450 : {
 		*(.patch_AdultRollingGoronIgnoreMedallion)
 	}
@@ -118,6 +126,10 @@ SECTIONS
 
 	.patch_AdultRollingGoronTwo 0x1954AC : {
 		*(.patch_AdultRollingGoronTwo)
+	}
+
+	.patch_BiggoronCheckGivenRewardTwo 0x1954EC : {
+		*(.patch_BiggoronCheckGivenRewardTwo)
 	}
 
 	.patch_EponasSongCheckFlagTwo 0x195CFC : {
@@ -150,6 +162,10 @@ SECTIONS
 
 	.patch_CheckGerudoToken_1D7AD4 0x1D7AD4 : {
 		*(.patch_CheckGerudoToken_1D7AD4)
+	}
+
+	.patch_BiggoronCheckGivenRewardOne 0x1D8A18 : {
+		*(.patch_BiggoronCheckGivenRewardOne)
 	}
 
 	.patch_ForestTempleItemGive 0x1E3F84 : {

@@ -438,6 +438,28 @@ SongOfStormsLocation_patch:
 BiggoronDayCheck_patch:
     mov r0,#0x3
 
+# Save context + 0x4F is normally unused
+# We will use it to denote Biggoron's reward
+.section .patch_BiggoronCheckGivenRewardOne
+.global BiggoronCheckGivenRewardOne_patch
+BiggoronCheckGivenRewardOne_patch:
+    ldrb r0,[r0,#0x4F]
+
+.section .patch_BiggoronCheckGivenRewardTwo
+.global BiggoronCheckGivenRewardTwo_patch
+BiggoronCheckGivenRewardTwo_patch:
+    ldrb r1,[r1,#0x4F]
+
+.section .patch_BiggoronCheckGivenRewardThree
+.global BiggoronCheckGivenRewardThree_patch
+BiggoronCheckGivenRewardThree_patch:
+    ldreqb r0,[r0,#0x4F]
+
+.section .patch_BiggoronSetGivenReward
+.global BiggoronSetGivenReward_patch
+BiggoronSetGivenReward_patch:
+    streqb r5,[r0,#0x4F]
+
 .section .patch_ItemEtceteraModelDraw
 .global ItemEtceteraModelDraw_patch
 ItemEtceteraModelDraw_patch:
