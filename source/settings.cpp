@@ -28,10 +28,12 @@ namespace Settings {
   Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child"},                                      {ageDesc, ageDesc}, 1);
   Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc, bombchuLogicDesc});
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc, randomMQDungeonsDesc});
+  Option MirrorWorld         = Option::Bool("Mirror World",           {"Off", "On"},                                           {mirrorWorldDesc, mirrorWorldDesc});
   std::vector<Option *> worldOptions = {
     &StartingAge,
     &BombchusInLogic,
     //&RandomMQDungeons, TODO: Finish MQ logic before enabling this
+    &MirrorWorld,
   };
 
   //Shuffle Settings
@@ -320,6 +322,7 @@ namespace Settings {
     ctx.startingAge        = StartingAge.Value<u8>();
     ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
     ctx.randomMQDungeons   = (RandomMQDungeons) ? 1 : 0;
+    ctx.mirrorWorld        = (MirrorWorld) ? 1 : 0;
 
     ctx.shuffleSongs       = ShuffleSongs.Value<u8>();
     ctx.tokensanity        = Tokensanity.Value<u8>();
@@ -393,6 +396,7 @@ namespace Settings {
     StartingAge.SetSelectedIndex(ctx.startingAge);
     BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
     RandomMQDungeons.SetSelectedIndex(ctx.randomMQDungeons);
+    MirrorWorld.SetSelectedIndex(ctx.mirrorWorld);
 
     ShuffleSongs.SetSelectedIndex(ctx.shuffleSongs);
     Tokensanity.SetSelectedIndex(ctx.tokensanity);

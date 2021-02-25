@@ -160,6 +160,7 @@ typedef struct {
   u8 startingAge : 1;
   u8 bombchusInLogic : 1;
   u8 randomMQDungeons : 1;
+  u8 mirrorWorld : 1;
 
   u8 shuffleSongs : 2;
   u8 tokensanity : 2;

@@ -31,6 +31,8 @@ extern std::string_view bombchuLogicDesc;
 
 extern std::string_view randomMQDungeonsDesc;
 
+extern std::string_view mirrorWorldDesc;
+
 extern std::string_view songsSongLocations;
 extern std::string_view songsAllLocations;
 

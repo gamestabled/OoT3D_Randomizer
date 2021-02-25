@@ -66,6 +66,11 @@ void SaveFile_Init() {
         gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
     }
 
+    //set master quest flag for mirror world
+    if (gSettingsContext.mirrorWorld == ON) {
+        gSaveContext.masterQuestFlag = 1;
+    }
+
     if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
         gSaveContext.dayTime = 0x1400; //Set night time
     }

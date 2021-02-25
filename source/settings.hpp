@@ -158,6 +158,7 @@ namespace Settings {
   extern Option StartingAge;
   extern Option BombchusInLogic;
   extern Option RandomMQDungeons;
+  extern Option MirrorWorld;
 
   extern Option ShuffleSongs;
   extern Option Tokensanity;

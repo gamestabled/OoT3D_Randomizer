@@ -95,6 +95,11 @@ std::string_view randomMQDungeonsDesc = "If set, a random number of dungeons wil
                                         "Master Quest designs";                            //
                                                                                            //
 /*------------------------------                                                           //
+|         MIRROR WORLD         |                                                           //
+------------------------------*/                                                           //
+std::string_view mirrorWorldDesc      = "If set, the world will be mirrored.";             //
+                                                                                           //
+/*------------------------------                                                           //
 |         SONG SHUFFLE         |                                                           //
 ------------------------------*/                                                           //
 std::string_view songsSongLocations   = "Songs will only appear at locations that normally\n"

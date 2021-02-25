@@ -4,7 +4,12 @@ SettingsContext gSettingsContext = {0};
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
     s32 modifiedChangeHealth = changeHealth;
-    
+
+    //disregard master quest damage
+    if (gSaveContext.masterQuestFlag) {
+      modifiedChangeHealth /= 2;
+    }
+
     if (changeHealth < 0) {
         switch (gSettingsContext.damageMultiplier) {
             case DAMAGEMULTIPLIER_HALF:
