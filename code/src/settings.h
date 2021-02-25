@@ -4,6 +4,16 @@
 #include "../include/z3D/z3D.h"
 
 typedef enum {
+  OFF,
+  ON,
+} BooleanSetting;
+
+typedef enum {
+  DONT_SKIP,
+  SKIP,
+} SkipSetting;
+
+typedef enum {
   LOGIC_GLITCHLESS,
   LOGIC_NONE,
 } LogicSetting;

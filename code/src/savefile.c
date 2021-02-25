@@ -87,11 +87,11 @@ void SaveFile_Init() {
         gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
     }
 
-    if (gSettingsContext.fourPoesCutscene) {
+    if (gSettingsContext.fourPoesCutscene == SKIP) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }
 
-    if (gSettingsContext.templeOfTimeIntro) {
+    if (gSettingsContext.templeOfTimeIntro == SKIP) {
         gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
     }
 
@@ -102,8 +102,8 @@ void SaveFile_Init() {
         }
     }
 
-    //give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is disabled
-    if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN && !gSettingsContext.shuffleGerudoToken) {
+    //give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
+    if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN && gSettingsContext.shuffleGerudoToken == OFF) {
       gSaveContext.questItems |= 0x00400000;
     }
 
