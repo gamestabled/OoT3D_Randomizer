@@ -102,6 +102,11 @@ void SaveFile_Init() {
         }
     }
 
+    //give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is disabled
+    if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN && !gSettingsContext.shuffleGerudoToken) {
+      gSaveContext.questItems |= 0x00400000;
+    }
+
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
     gSaveContext.eventChkInf[0x0] |= 0x1020; //met deku tree and opened mouth
 
