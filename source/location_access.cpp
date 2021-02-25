@@ -1853,6 +1853,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ForestTemple_GS_Basement,       []{return HookshotOrBoomerang;}),
   }, {});
 
+  //Fire Temple logic currently assumes that the lowest locked door is unlocked from the start
   Exit FireTemple_Lower = Exit("Fire Temple Lower", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&FairyPot, []{return FairyPot || ((CanUse("Hover Boots") || CanUse("Hookshot")) && (LogicFewerTunicRequirements || CanUse("Goron Tunic")));}),
@@ -1904,6 +1905,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&FireTemple_MegatonHammerChest, []{return HasExplosives;}),
   }, {});
 
+  //Water Temple logic currently assumes that the locked door leading to the upper water raising location is unlocked from the start
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&ChildWaterTemple, []{return IsChild;}),

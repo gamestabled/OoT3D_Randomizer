@@ -95,6 +95,11 @@ std::string_view randomMQDungeonsDesc = "If set, a random number of dungeons wil
                                         "Master Quest designs";                            //
                                                                                            //
 /*------------------------------                                                           //
+|         MIRROR WORLD         |                                                           //
+------------------------------*/                                                           //
+std::string_view mirrorWorldDesc      = "If set, the world will be mirrored.";             //
+                                                                                           //
+/*------------------------------                                                           //
 |         SONG SHUFFLE         |                                                           //
 ------------------------------*/                                                           //
 std::string_view songsSongLocations   = "Songs will only appear at locations that normally\n"
@@ -184,6 +189,9 @@ std::string_view mapCompassAnywhere   = "Maps and Compasses can appear anywhere 
 /*------------------------------                                                           //
 |         SMALL KEYS           |                                                           //
 ------------------------------*/                                                           //
+std::string_view smallKeyStartWith    = "Small Keys are given to you from the start so you\n"
+                                        "won't have to worry about locked doors. An easier\n"
+                                        "mode.";                                           //
 std::string_view smallKeyVanilla      = "Small Keys will appear in their vanilla locations."
                                         "You start with 3 keys in Spirit Temple MQ because\n"
                                         "the vanilla key layout is not beatable in logic.";//
@@ -206,6 +214,9 @@ std::string_view gerudoKeysAnywhere   = "Gerudo Fortress Keys can appear anywher
 /*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
+std::string_view bossKeyStartWith     = "Boss Keys are given to you from the start so you\n"
+                                        "won't have to worry about boss doors. An easier\n"//
+                                        "mode.";                                           //
 std::string_view bossKeyVanilla       = "Boss Keys will appear in their vanilla locations.";
 std::string_view bossKeyOwnDungeon    = "Boss Keys can only appear in their respective\n"  //
                                         "dungeon.";                                        //
@@ -215,6 +226,8 @@ std::string_view bossKeyAnywhere      = "Boss Keys can appear anywhere in the wo
 /*------------------------------                                                           //
 |   GANON'S CASTLE BOSS KEY    |                                                           //
 ------------------------------*/                                                           //
+std::string_view ganonKeyStartWith    = "Ganon's Castle Boss Key is given to you from the\n"
+                                        "start and you don't have to worry about finding it";
 std::string_view ganonKeyVanilla      = "Ganon's Castle Boss Key will appear in the vanilla"
                                         "location.";                                       //
 std::string_view ganonKeyOwnDungeon   = "Ganon's Castle Boss Key can only appear inside\n" //

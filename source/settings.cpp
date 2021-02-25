@@ -28,10 +28,12 @@ namespace Settings {
   Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child"},                                      {ageDesc, ageDesc}, 1);
   Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc, bombchuLogicDesc});
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc, randomMQDungeonsDesc});
+  Option MirrorWorld         = Option::Bool("Mirror World",           {"Off", "On"},                                           {mirrorWorldDesc, mirrorWorldDesc});
   std::vector<Option *> worldOptions = {
     &StartingAge,
     &BombchusInLogic,
     //&RandomMQDungeons, TODO: Finish MQ logic before enabling this
+    &MirrorWorld,
   };
 
   //Shuffle Settings
@@ -60,11 +62,11 @@ namespace Settings {
 
   //Shuffle Dungeon Items
   Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
-  Option Keysanity           = Option::U8  ("Small Keys",             {"Vanilla", "Own Dungeon", "Anywhere"},                  {smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
+  Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere}, 1);
   Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Anywhere"},                                 {gerudoKeysVanilla, gerudoKeysAnywhere});
-  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Vanilla", "Own Dungeon", "Anywhere"},                  {bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
-  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Vanilla", "Own Dungeon", "Anywhere", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"},
-                                                                      {ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS});
+  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere}, 1);
+  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Anywhere", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"},
+                                                                      {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS}, 1);
   u8 LACSCondition           = 0;
   std::vector<Option *> shuffleDungeonItemOptions = {
     &MapsAndCompasses,
@@ -320,6 +322,7 @@ namespace Settings {
     ctx.startingAge        = StartingAge.Value<u8>();
     ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
     ctx.randomMQDungeons   = (RandomMQDungeons) ? 1 : 0;
+    ctx.mirrorWorld        = (MirrorWorld) ? 1 : 0;
 
     ctx.shuffleSongs       = ShuffleSongs.Value<u8>();
     ctx.tokensanity        = Tokensanity.Value<u8>();
@@ -362,6 +365,7 @@ namespace Settings {
     ctx.spiritTempleDungeonMode          = (SpiritTempleDungeonMode)          ? 1 : 0;
     ctx.shadowTempleDungeonMode          = (ShadowTempleDungeonMode)          ? 1 : 0;
     ctx.bottomOfTheWellDungeonMode       = (BottomOfTheWellDungeonMode)       ? 1 : 0;
+    ctx.iceCavernDungeonMode             = (IceCavernDungeonMode)             ? 1 : 0;
     ctx.gerudoTrainingGroundsDungeonMode = (GerudoTrainingGroundsDungeonMode) ? 1 : 0;
     ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
 
@@ -392,6 +396,7 @@ namespace Settings {
     StartingAge.SetSelectedIndex(ctx.startingAge);
     BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
     RandomMQDungeons.SetSelectedIndex(ctx.randomMQDungeons);
+    MirrorWorld.SetSelectedIndex(ctx.mirrorWorld);
 
     ShuffleSongs.SetSelectedIndex(ctx.shuffleSongs);
     Tokensanity.SetSelectedIndex(ctx.tokensanity);
@@ -449,6 +454,7 @@ namespace Settings {
   bool SpiritTempleDungeonMode          = false;
   bool ShadowTempleDungeonMode          = false;
   bool BottomOfTheWellDungeonMode       = false;
+  bool IceCavernDungeonMode             = false;
   bool GerudoTrainingGroundsDungeonMode = false;
   bool GanonsCastleDungeonMode          = false;
 
@@ -471,6 +477,7 @@ namespace Settings {
       SpiritTempleDungeonMode          = Random() % 2;
       ShadowTempleDungeonMode          = Random() % 2;
       BottomOfTheWellDungeonMode       = Random() % 2;
+      IceCavernDungeonMode             = Random() % 2;
       GerudoTrainingGroundsDungeonMode = Random() % 2;
       GanonsCastleDungeonMode          = Random() % 2;
     }
