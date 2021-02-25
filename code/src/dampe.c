@@ -23,11 +23,10 @@ void EnTk_SetRewardFlag(EnTk* dampe) {
 // unsets the flag for having received the reward
 void EnTk_CheckCollectFlag(void) {
     // Custom collectible flag for the heart piece
-    if (!(gGlobalContext->actorCtx.flags.collect & 4)) {
+    if (!(gGlobalContext->actorCtx.flags.collect & 0x100)) {
         gSaveContext.itemGetInf[1] &= ~0x1000;
     }
 }
-
 
 // Checks the chest flag for the race chest
 // Replaces a check for hookshot in the inventory

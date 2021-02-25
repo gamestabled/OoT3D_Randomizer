@@ -199,7 +199,7 @@ DampeCheckRewardFlag_patch:
     bleq EnTk_SetRewardFlag
 
 .section .patch_DampeSetCollectibleFlag
-    .word 0x00000206
+    .word 0x00000806
 
 .section .patch_DampeCheckCollectibleFlag
 .global DampeCheckCollectibleFlag_patch
