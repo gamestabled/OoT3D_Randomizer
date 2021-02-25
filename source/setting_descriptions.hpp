@@ -59,6 +59,7 @@ extern std::string_view mapCompassVanilla;
 extern std::string_view mapCompassOwnDungeon;
 extern std::string_view mapCompassAnywhere;
 
+extern std::string_view smallKeyStartWith;
 extern std::string_view smallKeyVanilla;
 extern std::string_view smallKeyOwnDungeon;
 extern std::string_view smallKeyAnywhere;
@@ -66,10 +67,12 @@ extern std::string_view smallKeyAnywhere;
 extern std::string_view gerudoKeysVanilla;
 extern std::string_view gerudoKeysAnywhere;
 
+extern std::string_view bossKeyStartWith;
 extern std::string_view bossKeyVanilla;
 extern std::string_view bossKeyOwnDungeon;
 extern std::string_view bossKeyAnywhere;
 
+extern std::string_view ganonKeyStartWith;
 extern std::string_view ganonKeyVanilla;
 extern std::string_view ganonKeyOwnDungeon;
 extern std::string_view ganonKeyAnywhere;

@@ -21,7 +21,7 @@ void Entrance_Init(void) {
     s32 index;
 
     // Skip Child Stealth if given by settings
-    if (gSettingsContext.skipChildStealth) {
+    if (gSettingsContext.skipChildStealth == SKIP) {
         gEntranceTable[0x07A].scene = 0x4A;
         gEntranceTable[0x07A].spawn = 0x01;
         gEntranceTable[0x07A].field = 0x0183;
@@ -36,7 +36,7 @@ void Entrance_Init(void) {
     for (index = 0x513; index < 0x517; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
-    
+
     // Delete the title card for Temple of Time from LACS
     for (index = 0x58C; index < 0x590; ++index) {
         gEntranceTable[index].field = 0x0102;

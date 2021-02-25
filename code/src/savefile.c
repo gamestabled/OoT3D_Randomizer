@@ -102,6 +102,30 @@ void SaveFile_Init() {
         }
     }
 
+    //give small keys
+    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {
+      gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE] = 5;
+      gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE] = 8;
+      gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE] = 6;
+      gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 5;
+      gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE] = 5;
+      gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL] = 3;
+      gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS] = 9;
+      gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = 2;
+    }
+
+    //give boss keys
+    if (gSettingsContext.bossKeysanity == BOSSKEYSANITY_START_WITH) {
+      for (u8 i = 3; i < 8; i++) {
+        gSaveContext.dungeonItems[i] |= 0x1;
+      }
+    }
+
+    //give Ganon's Castle Boss Key
+    if (gSettingsContext.ganonsBossKey == GANONSBOSSKEY_START_WITH) {
+      gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
+    }
+
     //give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
     if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN && gSettingsContext.shuffleGerudoToken == OFF) {
       gSaveContext.questItems |= 0x00400000;
