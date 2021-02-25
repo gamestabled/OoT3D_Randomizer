@@ -362,6 +362,7 @@ namespace Settings {
     ctx.spiritTempleDungeonMode          = (SpiritTempleDungeonMode)          ? 1 : 0;
     ctx.shadowTempleDungeonMode          = (ShadowTempleDungeonMode)          ? 1 : 0;
     ctx.bottomOfTheWellDungeonMode       = (BottomOfTheWellDungeonMode)       ? 1 : 0;
+    ctx.iceCavernDungeonMode             = (IceCavernDungeonMode)             ? 1 : 0;
     ctx.gerudoTrainingGroundsDungeonMode = (GerudoTrainingGroundsDungeonMode) ? 1 : 0;
     ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
 
@@ -449,6 +450,7 @@ namespace Settings {
   bool SpiritTempleDungeonMode          = false;
   bool ShadowTempleDungeonMode          = false;
   bool BottomOfTheWellDungeonMode       = false;
+  bool IceCavernDungeonMode             = false;
   bool GerudoTrainingGroundsDungeonMode = false;
   bool GanonsCastleDungeonMode          = false;
 
@@ -471,6 +473,7 @@ namespace Settings {
       SpiritTempleDungeonMode          = Random() % 2;
       ShadowTempleDungeonMode          = Random() % 2;
       BottomOfTheWellDungeonMode       = Random() % 2;
+      IceCavernDungeonMode             = Random() % 2;
       GerudoTrainingGroundsDungeonMode = Random() % 2;
       GanonsCastleDungeonMode          = Random() % 2;
     }

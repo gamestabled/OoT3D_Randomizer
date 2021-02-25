@@ -209,6 +209,7 @@ namespace Settings {
   extern bool SpiritTempleDungeonMode;
   extern bool ShadowTempleDungeonMode;
   extern bool BottomOfTheWellDungeonMode;
+  extern bool IceCavernDungeonMode;
   extern bool GerudoTrainingGroundsDungeonMode;
   extern bool GanonsCastleDungeonMode;
 

@@ -202,6 +202,7 @@ typedef struct {
   u8 spiritTempleDungeonMode : 1;
   u8 shadowTempleDungeonMode : 1;
   u8 bottomOfTheWellDungeonMode : 1;
+  u8 iceCavernDungeonMode : 1;
   u8 gerudoTrainingGroundsDungeonMode : 1;
   u8 ganonsCastleDungeonMode : 1;
 
