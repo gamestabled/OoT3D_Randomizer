@@ -188,6 +188,7 @@ typedef struct {
   u8 startingTime : 3;
   u8 generateSpoilerLog : 1;
 
+  u8 stickAsAdult : 1;
   u8 boomerangAsAdult : 1;
   u8 hammerAsChild : 1;
 
