@@ -16,6 +16,9 @@ void Scene_Init(void) {
     memcpy(&gSceneTable[9],  gSettingsContext.iceCavernDungeonMode             == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[9]  : &gDungeonSceneTable[9],  sizeof(Scene));
     memcpy(&gSceneTable[11], gSettingsContext.gerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[11] : &gDungeonSceneTable[11], sizeof(Scene));
     memcpy(&gSceneTable[13], gSettingsContext.ganonsCastleDungeonMode          == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[13] : &gDungeonSceneTable[13], sizeof(Scene));
+
+    gRestrictionFlags[72].flags2 = 0; // Allows warp songs in GTG
+    gRestrictionFlags[94].flags2 = 0; // Allows warp songs in Ganon's Castle
 }
 
 void Entrance_Init(void) {
