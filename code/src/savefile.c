@@ -14,10 +14,12 @@ void SaveFile_Init() {
     gSaveContext.items[SLOT_BOMB] = ITEM_BOMB;
     gSaveContext.items[SLOT_BOW] = ITEM_BOW;
     gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+    gSaveContext.items[SLOT_HOVER_BOOTS] = ITEM_BOOTS_HOVER;
     gSaveContext.magicAcquired = 1;
     gSaveContext.magicLevel = 2;
     gSaveContext.magic = 48;
     gSaveContext.dungeonKeys[6] = 8;
+    gSaveContext.dungeonKeys[7] = 5;
     gSaveContext.ammo[2] = 20; //bombs
     gSaveContext.ammo[3] = 20; //arrows
 #endif

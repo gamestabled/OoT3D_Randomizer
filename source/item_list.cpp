@@ -12,6 +12,8 @@ bool none = false;
 Item NoItem = Item("No Item", ITEMTYPE_ITEM,   GI_RUPEE_GREEN,   false, &none);
 Item I_Triforce = Item("Triforce", ITEMTYPE_ITEM, GI_RUPEE_RED_LOSE, false, &none);
 
+Item GenericSmallKey = Item("Small Key", ITEMTYPE_SMALLKEY, GI_KEY_SMALL, true, &none);
+
 //Specific Advancement Items         // name              type           getItemId          advancement logic variable
 Item I_KokiriSword              = Item("Kokiri Sword",    ITEMTYPE_ITEM, GI_SWORD_KOKIRI,   true,  &KokiriSword);
 Item I_BiggoronSword            = Item("Biggoron Sword",  ITEMTYPE_ITEM, GI_SWORD_BGS,      true,  &none);
