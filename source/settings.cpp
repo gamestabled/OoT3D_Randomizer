@@ -100,9 +100,11 @@ namespace Settings {
   };
 
   //Advanced Glitch Settings
+  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disable", "Enable"},                                   {adultStickDesc, adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disable", "Enable"},                                   {adultBoomerangDesc, adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disable", "Enable"},                                   {childHammerDesc, childHammerDesc});
   std::vector<Option *> advancedGlitchedOptions = {
+    &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
   };
@@ -350,6 +352,7 @@ namespace Settings {
     ctx.startingTime       = StartingTime.Value<u8>();
     ctx.generateSpoilerLog = (GenerateSpoilerLog) ? 1 : 0;
 
+    ctx.stickAsAdult       = (StickAsAdult) ? 1 : 0;
     ctx.boomerangAsAdult   = (BoomerangAsAdult) ? 1 : 0;
     ctx.hammerAsChild      = (HammerAsChild) ? 1 : 0;
 
@@ -423,6 +426,7 @@ namespace Settings {
     StartingTime.SetSelectedIndex(ctx.startingTime);
     GenerateSpoilerLog.SetSelectedIndex(ctx.generateSpoilerLog);
 
+    StickAsAdult.SetSelectedIndex(ctx.stickAsAdult);
     BoomerangAsAdult.SetSelectedIndex(ctx.boomerangAsAdult);
     HammerAsChild.SetSelectedIndex(ctx.hammerAsChild);
 

@@ -185,6 +185,7 @@ namespace Settings {
   extern Option StartingTime;
   extern Option GenerateSpoilerLog;
 
+  extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
 

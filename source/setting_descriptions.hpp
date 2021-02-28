@@ -103,6 +103,8 @@ extern std::string_view iceTrapsExtra;
 extern std::string_view iceTrapsMayhem;
 extern std::string_view iceTrapsOnslaught;
 
+extern std::string_view adultStickDesc;
+
 extern std::string_view adultBoomerangDesc;
 
 extern std::string_view childHammerDesc;

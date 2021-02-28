@@ -371,10 +371,17 @@ typedef struct {
     /* 0x04 */ GlModelFunc destroy;
 } GlModel_VTable;
 
+typedef struct {
+    /* 0x00 */ char unk_00[0x0C];
+    /* 0x0C */ f32  unk_0C; // animation speed?
+    /* 0x10 */ s8   unk_10; // animation mode?
+    /* 0x11 */ char unk_11[0x87];
+} GlModel_unk_0C; // size = 0x98
+
 typedef struct GlModel {
     /* 0x00 */ GlModel_VTable* vtbl;
     /* 0x04 */ char            unk_04[0x08];
-    /* 0x0C */ void*           unk_0C;
+    /* 0x0C */ GlModel_unk_0C* unk_0C;
     /* 0x10 */ char            unk_10[0x6C];
     /* 0x7C */ nn_math_MTX34   mtx;
     /* 0xAC */ s8              unk_AC;
@@ -450,6 +457,13 @@ typedef struct {
     /* 0x03 */ char unk_03[0x3];
 } DrawItemTableEntry;
 
+typedef struct {
+    /* 0x00 */ u8 scene;
+    /* 0x01 */ u8 flags1;
+    /* 0x02 */ u8 flags2;
+    /* 0x03 */ u8 flags3;
+} RestrictionFlags;
+
 extern GlobalContext* gGlobalContext;
 extern const u32 ItemSlots[];
 extern const char DungeonNames[][25];
@@ -464,6 +478,7 @@ extern const char DungeonNames[][25];
 #define gRandInt (*(u32*)0x50C0C4)
 #define gRandFloat (*(f32*)0x50C0C8)
 #define gDrawItemTable ((DrawItemTableEntry*)0x4D88C8)
+#define gRestrictionFlags ((RestrictionFlags*)0x539DC4)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 
 typedef enum {

@@ -35,8 +35,30 @@ typedef void (*Matrix_Multiply_proc)(nn_math_MTX34* dst, nn_math_MTX34* lhs, nn_
 #define Matrix_Multiply_addr 0x36C174
 #define Matrix_Multiply ((Matrix_Multiply_proc)Matrix_Multiply_addr)
 
+typedef void* (*ZAR_Get_proc)(ZARInfo* zarInfo, u32 index);
+#define ZAR_GetCMABByIndex_addr 0x372F0C
+#define ZAR_GetCMABByIndex ((ZAR_Get_proc)ZAR_GetCMABByIndex_addr)
+
+typedef void (*AnimSpawn_proc)(void*, void*, void*, void*);
+#define AnimSpawn_addr 0x372D94
+#define AnimSpawn ((AnimSpawn_proc)AnimSpawn_addr)
+
 #define LOADEDMODELS_MAX 16
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
+
+void Model_SetAnim(Model* model, u32 objectAnimIdx) {
+    s16 objectBankIdx = ExtendedObject_GetIndex(&gGlobalContext->objectCtx, model->info.objectId);
+    void* cmabMan;
+
+    if (objectBankIdx < OBJECT_EXCHANGE_BANK_MAX) {
+        cmabMan = ZAR_GetCMABByIndex(&gGlobalContext->objectCtx.status[objectBankIdx].zarInfo, objectAnimIdx);
+    } else {
+        cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo, objectAnimIdx);
+    }
+
+    GlModel_unk_0C* temp = model->glModel->unk_0C;
+    AnimSpawn(temp, cmabMan, temp, (void*)0x3FF53C);
+}
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
     // Should probably parse the ZAR to find the CMBs correctly,
@@ -102,6 +124,12 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
     // need to set mesh for rupees
     if (model->info.objectId == 0x017F) {
         GlModel_SetMesh(model->glModel, model->info.objectMeshId);
+    }
+    // spawn the skulltula token animation
+    if ((model->info.objectId == 0x0024) && (model->info.objectModelIdx == 0x03)) {
+        Model_SetAnim(model, 0);
+        model->glModel->unk_0C->unk_0C = 2.0f;
+        model->glModel->unk_0C->unk_10 = 1;
     }
 
     model->loaded = 1;

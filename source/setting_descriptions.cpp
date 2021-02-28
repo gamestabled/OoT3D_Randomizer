@@ -291,6 +291,11 @@ std::string_view iceTrapsMayhem       = "All added junk items will be Ice Traps.
 std::string_view iceTrapsOnslaught    = "All junk items will be replaced by Ice Traps, even"
                                         "those in the base pool.";                         //
 /*------------------------------                                                           //
+|    ENABLE ADULT DEKU STICK   |                                                           //
+------------------------------*/                                                           //
+std::string_view adultStickDesc       = "Adult Link can weild a deku stick.";             //
+                                                                                           //
+/*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
 ------------------------------*/                                                           //
 std::string_view adultBoomerangDesc   = "Adult Link can throw the boomerang.";             //
