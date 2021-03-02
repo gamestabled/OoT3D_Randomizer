@@ -527,6 +527,7 @@ void GenerateRandomizer() {
 
   //turn the settings into a string for hashing
   SettingsContext ctx = Settings::FillContext();
+  ctx.mirrorWorld = 0; //Mirror World shouldn't affect the seed
   const void* ctxPtr = &ctx;
   std::string settingsStr(sizeof(ctx), 'A');
   std::memcpy(settingsStr.data(), ctxPtr, sizeof(ctx));
