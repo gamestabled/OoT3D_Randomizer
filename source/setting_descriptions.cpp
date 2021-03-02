@@ -308,6 +308,8 @@ std::string_view childHammerDesc      = "Child Link can swing the Megaton Hammer
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
 ------------------------------*/                                                                           //
+std::string_view ToggleAllDetailedLogicDesc           = "Enable or Disable all Detailed Logic tricks at\n" //
+                                                        "once.";                                           //
 std::string_view LogicGrottosWithoutAgonyDesc         = "Allows entering hidden grottos without the Stone\n"
                                                         "of Agony.";                                       //
 std::string_view LogicVisibleCollisionDesc            = "Allows going through the Kakariko Village Gate as\n"

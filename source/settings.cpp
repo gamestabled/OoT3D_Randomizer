@@ -117,10 +117,11 @@ namespace Settings {
     &IceTrapValue,
   };
 
-  //Excluded Locations (definitions made in ItemLocation class)
+  //Excluded Locations (Individual definitions made in ItemLocation class)
   std::vector<Option *> excludeLocationsOptions = {};
 
   //Detailed Logic Tricks                                 ---------------------
+  Option ToggleAllDetailedLogic           = Option::Bool("All Tricks",                                     {"Disable", "Enable"}, std::vector<std::string_view>{2, ToggleAllDetailedLogicDesc});
   Option LogicGrottosWithoutAgony         = Option::Bool("Grottos Without Agony",                          {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicGrottosWithoutAgonyDesc});
   Option LogicVisibleCollision            = Option::Bool("Pass Through Visible\n One-Way Collisions",      {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicVisibleCollisionDesc});
   Option LogicFewerTunicRequirements      = Option::Bool("Fewer Tunic\n Requirements",                     {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicFewerTunicRequirementsDesc});
@@ -196,6 +197,7 @@ namespace Settings {
   Option LogicLensCastle                  = Option::Bool("Ganon's Castle w/o\n Lens of Truth",             {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicLensCastleDesc});
   Option LogicSpiritTrialHookshot         = Option::Bool("Spirit Trial without\n Hookshot",                {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicSpiritTrialHookshotDesc});
   std::vector<Option *> detailedLogicOptions = {
+    &ToggleAllDetailedLogic,
     &LogicGrottosWithoutAgony,
     &LogicVisibleCollision,
     &LogicFewerTunicRequirements,

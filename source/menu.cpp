@@ -208,6 +208,13 @@ void UpdateSubMenu(u32 kDown) {
 
   // Bounds checking
   currentSetting->SanitizeSelectedOptionIndex();
+
+  //Set toggle for all tricks
+  if (((kDown & KEY_DRIGHT) != 0 || (kDown & KEY_DLEFT) != 0) && currentSetting->GetName() == "All Tricks")  {
+    for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
+      Settings::detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+    }
+  }
 }
 
 void UpdatePresetsMenu(u32 kDown) {
