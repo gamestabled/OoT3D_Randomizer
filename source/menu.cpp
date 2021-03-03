@@ -526,11 +526,20 @@ void GenerateRandomizer() {
   }
 
   //turn the settings into a string for hashing
-  SettingsContext ctx = Settings::FillContext();
-  ctx.mirrorWorld = 0; //Mirror World shouldn't affect the seed
-  const void* ctxPtr = &ctx;
-  std::string settingsStr(sizeof(ctx), 'A');
-  std::memcpy(settingsStr.data(), ctxPtr, sizeof(ctx));
+  std::string settingsStr = "";
+  for (MenuItem* menu : Settings::mainMenu) {
+    //don't go through non-menus
+    if (menu->type == MenuItemType::Action) {
+      continue;
+    }
+
+    for (size_t i = 0; i < menu->settingsList->size(); i++) {
+      Option* setting = menu->settingsList->at(i);
+      if (setting->GetName() != "Mirror World") {
+        settingsStr += setting->GetSelectedOption();
+      }
+    }
+  }
 
   unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
 

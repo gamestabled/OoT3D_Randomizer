@@ -149,64 +149,64 @@ typedef enum {
 } IceTrapSetting;
 
 typedef struct {
-  u8 logic : 1;
-  u8 openForest : 2;
-  u8 openKakariko : 2;
-  u8 openDoorOfTime : 1;
-  u8 zorasFountain : 2;
-  u8 gerudoFortress : 2;
-  u8 rainbowBridge : 3;
+  u8 logic;
+  u8 openForest;
+  u8 openKakariko;
+  u8 openDoorOfTime;
+  u8 zorasFountain;
+  u8 gerudoFortress;
+  u8 rainbowBridge;
 
-  u8 startingAge : 1;
-  u8 bombchusInLogic : 1;
-  u8 randomMQDungeons : 1;
-  u8 mirrorWorld : 1;
+  u8 startingAge;
+  u8 bombchusInLogic;
+  u8 randomMQDungeons;
+  u8 mirrorWorld;
 
-  u8 shuffleSongs : 2;
-  u8 tokensanity : 2;
-  u8 scrubsanity : 2;
-  u8 shuffleCows : 1;
-  u8 shuffleKokiriSword : 1;
-  u8 shuffleOcarinas : 1;
-  u8 shuffleWeirdEgg : 1;
-  u8 shuffleGerudoToken : 1;
-  u8 shuffleMagicBeans : 1;
+  u8 shuffleSongs;
+  u8 tokensanity;
+  u8 scrubsanity;
+  u8 shuffleCows;
+  u8 shuffleKokiriSword;
+  u8 shuffleOcarinas;
+  u8 shuffleWeirdEgg;
+  u8 shuffleGerudoToken;
+  u8 shuffleMagicBeans;
 
-  u8 mapsAndCompasses : 3;
-  u8 keysanity : 3;
-  u8 gerudoKeys : 3;
-  u8 bossKeysanity : 3;
-  u8 ganonsBossKey : 4;
-  u8 lacsCondition : 3;
+  u8 mapsAndCompasses;
+  u8 keysanity;
+  u8 gerudoKeys;
+  u8 bossKeysanity;
+  u8 ganonsBossKey;
+  u8 lacsCondition;
 
-  u8 skipChildStealth : 1;
-  u8 fourPoesCutscene : 1;
-  u8 templeOfTimeIntro : 1;
-  u8 bigPoeTargetCount : 4;
+  u8 skipChildStealth;
+  u8 fourPoesCutscene;
+  u8 templeOfTimeIntro;
+  u8 bigPoeTargetCount;
 
-  u8 damageMultiplier : 3;
-  u8 startingTime : 3;
-  u8 generateSpoilerLog : 1;
+  u8 damageMultiplier;
+  u8 startingTime;
+  u8 generateSpoilerLog;
 
-  u8 stickAsAdult : 1;
-  u8 boomerangAsAdult : 1;
-  u8 hammerAsChild : 1;
+  u8 stickAsAdult;
+  u8 boomerangAsAdult;
+  u8 hammerAsChild;
 
-  u8 itemPoolValue : 3;
-  u8 iceTrapValue : 3;
+  u8 itemPoolValue;
+  u8 iceTrapValue;
 
-  u8 dekuTreeDungeonMode : 1;
-  u8 dodongosCavernDungeonMode : 1;
-  u8 jabuJabusBellyDungeonMode : 1;
-  u8 forestTempleDungeonMode : 1;
-  u8 fireTempleDungeonMode : 1;
-  u8 waterTempleDungeonMode : 1;
-  u8 spiritTempleDungeonMode : 1;
-  u8 shadowTempleDungeonMode : 1;
-  u8 bottomOfTheWellDungeonMode : 1;
-  u8 iceCavernDungeonMode : 1;
-  u8 gerudoTrainingGroundsDungeonMode : 1;
-  u8 ganonsCastleDungeonMode : 1;
+  u8 dekuTreeDungeonMode;
+  u8 dodongosCavernDungeonMode;
+  u8 jabuJabusBellyDungeonMode;
+  u8 forestTempleDungeonMode;
+  u8 fireTempleDungeonMode;
+  u8 waterTempleDungeonMode;
+  u8 spiritTempleDungeonMode;
+  u8 shadowTempleDungeonMode;
+  u8 bottomOfTheWellDungeonMode;
+  u8 iceCavernDungeonMode;
+  u8 gerudoTrainingGroundsDungeonMode;
+  u8 ganonsCastleDungeonMode;
 
   u32 dungeonRewardBitMask;
 
