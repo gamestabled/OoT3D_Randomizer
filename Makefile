@@ -177,7 +177,7 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 
 $(BUILD):
 	$(MAKE) -C code
-	@mv code/basecode.ips romfs/basecode.ips
+	@mv code/basecode.ips $(ROMFS)/basecode.ips
 	@mkdir -p $@
 
 ifneq ($(GFXBUILD),$(BUILD))
