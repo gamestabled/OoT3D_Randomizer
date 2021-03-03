@@ -11,11 +11,16 @@ u32 totalLocationsFound = 0;
 u16 itemsPlaced = 0;
 
 void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
-    // Put item in the override table
-    overrides.insert({
-      .key = loc->Key(),
-      .value = item.Value(),
-    });
+    /*-------------------------------------------------
+    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
+    --------------------------------------------------*/
+    //this prevents an override from being created for these two locations
+    if (loc->GetName() != "Shadow Temple Freestanding Key" && loc->GetName() != "Gerudo Training Grounds Freestanding Key") {
+      overrides.insert({
+        .key = loc->Key(),
+        .value = item.Value(),
+      });
+    }
 
     PlacementLog_Msg("\n");
     PlacementLog_Msg(item.GetName());

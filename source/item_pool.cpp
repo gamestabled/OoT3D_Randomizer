@@ -911,6 +911,20 @@ static void SetMinimalItemPool() {
 template <typename Container>
 static void RandomizeDungeonKeys(const Container& KeyRequirements, Item smallKeyItem, u8 maxKeys) {
   for (size_t i = 0; i < maxKeys; i++) {
+
+    /*-------------------------------------------------
+    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
+    --------------------------------------------------*/
+    //this keeps the number of keys for the Own Dungeon setting consistent
+    if (smallKeyItem == ShadowTemple_SmallKey && i == 2) {
+      i = 3;
+    } else if (smallKeyItem == GerudoTrainingGrounds_SmallKey && i == 0) {
+      i = 1;
+    }
+    /*-------------------------------------------------
+    |END OF TEMPORARY FIX FOR FREESTANDING KEY CRASHES|
+    --------------------------------------------------*/
+
     std::vector<ItemLocation *> dungeonPool;
     for (const ItemLocationKeyPairing& ilkp : KeyRequirements) {
       if (ilkp.keysRequired <= i && ilkp.loc->GetPlacedItemName() == "No Item") {
@@ -1241,6 +1255,16 @@ void GenerateItemPool() {
     PlaceVanillaMapsAndCompasses();
   }
 
+  /*-------------------------------------------------
+  |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
+  --------------------------------------------------*/
+  //Placing keys here for the logic to still work
+  PlaceItemInLocation(&ShadowTemple_FreestandingKey, ShadowTemple_SmallKey);
+  PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey, GerudoTrainingGrounds_SmallKey);
+  /*-------------------------------------------------
+  |END OF TEMPORARY FIX FOR FREESTANDING KEY CRASHES|
+  --------------------------------------------------*/
+
   if (Keysanity.Is(KEYSANITY_VANILLA)) {
     PlaceVanillaSmallKeys();
   }
@@ -1309,9 +1333,9 @@ void GenerateItemPool() {
     AddItemToMainPool(FireTemple_SmallKey, 8);
     AddItemToMainPool(WaterTemple_SmallKey, 6);
     AddItemToMainPool(SpiritTemple_SmallKey, 5);
-    AddItemToMainPool(ShadowTemple_SmallKey, 5);
+    AddItemToMainPool(ShadowTemple_SmallKey, 4); //SHOULD BE 5, CHANGE WHEN CRASH IS FIXED
     AddItemToMainPool(BottomOfTheWell_SmallKey, 3);
-    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 9);
+    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 8); //SHOULD BE 9, CHANGE WHEN CRASH IS FIXED
     AddItemToMainPool(GanonsCastle_SmallKey, 2);
   }
 

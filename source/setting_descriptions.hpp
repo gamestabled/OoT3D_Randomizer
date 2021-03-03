@@ -109,6 +109,7 @@ extern std::string_view adultBoomerangDesc;
 
 extern std::string_view childHammerDesc;
 
+extern std::string_view ToggleAllDetailedLogicDesc;
 extern std::string_view LogicGrottosWithoutAgonyDesc;
 extern std::string_view LogicVisibleCollisionDesc;
 extern std::string_view LogicFewerTunicRequirementsDesc;

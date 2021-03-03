@@ -125,6 +125,8 @@ private:
 extern Item NoItem;
 extern Item I_Triforce;
 
+extern Item GenericSmallKey;
+
 //specific advancement items
 extern Item I_KokiriSword;
 extern Item I_BiggoronSword;

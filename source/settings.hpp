@@ -216,6 +216,7 @@ namespace Settings {
   extern bool GanonsCastleDungeonMode;
 
   //Logic Settings
+  extern Option ToggleAllDetailedLogic;
   extern Option LogicGrottosWithoutAgony;
   extern Option LogicVisibleCollision;
   extern Option LogicFewerTunicRequirements;
