@@ -43,6 +43,7 @@ void MenuInit() {
 
   //Call to fill in the Excluded Locations menu (from item_location.hpp)
   AddExcludedOptions();
+  Settings::SetDefaultSettings();
 
   seedChanged = false;
   mode = MAIN_MENU;
