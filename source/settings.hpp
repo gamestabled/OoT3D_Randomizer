@@ -103,13 +103,11 @@ public:
 private:
     Option(u8 var_, std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_)
           : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)) {
-        selectedOption = 0;
         SetVariable();
     }
 
     Option(bool var_, std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_)
           : var(var_), name(std::move(name_)),  options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)) {
-        selectedOption = 0;
         SetVariable();
     }
 
@@ -117,7 +115,7 @@ private:
   std::string name;
   std::vector<std::string_view> options;
   std::vector<std::string_view> optionDescriptions;
-  u8 selectedOption;
+  u8 selectedOption = 0;
 };
 
 enum class MenuItemType {

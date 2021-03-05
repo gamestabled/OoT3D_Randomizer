@@ -293,17 +293,25 @@ std::string_view iceTrapsOnslaught    = "All junk items will be replaced by Ice 
 /*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
-std::string_view adultStickDesc       = "Adult Link can weild a deku stick.";             //
+std::string_view adultStickDesc       = "Adult Link can wield a deku stick. In game Adult\n"
+                                        "Link will look like he's holding a Hylian Shield,\n"
+                                        "but rest assured it is a deku stick.\n"           //
+                                        "\n"                                               //
+                                        "This setting will not change the logic";          //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
 ------------------------------*/                                                           //
-std::string_view adultBoomerangDesc   = "Adult Link can throw the boomerang.";             //
+std::string_view adultBoomerangDesc   = "Adult Link can throw the boomerang."              //
+                                        "\n"                                               //
+                                        "This setting will not change the logic";          //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE CHILD HAMMER      |                                                           //
 ------------------------------*/                                                           //
 std::string_view childHammerDesc      = "Child Link can swing the Megaton Hammer.";        //
+                                        "\n"                                               //
+                                        "This setting will not change the logic";          //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
