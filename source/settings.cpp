@@ -99,11 +99,11 @@ namespace Settings {
     &GenerateSpoilerLog,
   };
 
-  //Advanced Glitch Settings
+  //Item Usability Settings
   Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disable", "Enable"},                                   {adultStickDesc, adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disable", "Enable"},                                   {adultBoomerangDesc, adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disable", "Enable"},                                   {childHammerDesc, childHammerDesc});
-  std::vector<Option *> advancedGlitchedOptions = {
+  std::vector<Option *> itemUsabilityOptions = {
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
@@ -283,7 +283,7 @@ namespace Settings {
   MenuItem timesaverSettings        = MenuItem::SubMenu("Timesaver Settings",         &timesaverOptions);
   MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
   MenuItem itemPoolSettings         = MenuItem::SubMenu("Item Pool Settings",         &itemPoolOptions);
-  MenuItem advancedGlitchedSettings = MenuItem::SubMenu("Advanced Glitched Settings", &advancedGlitchedOptions);
+  MenuItem itemUsabilitySettings    = MenuItem::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
   MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
   MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
   MenuItem generateRandomizer       = MenuItem::Action ("Generate Randomizer",        GENERATE_MODE);
@@ -299,7 +299,7 @@ namespace Settings {
     &detailedLogic,
     &miscSettings,
     &itemPoolSettings,
-    &advancedGlitchedSettings,
+    &itemUsabilitySettings,
     &loadSettingsPreset,
     &saveSettingsPreset,
     &generateRandomizer,
