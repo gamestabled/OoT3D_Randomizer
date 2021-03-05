@@ -309,7 +309,7 @@ std::string_view adultBoomerangDesc   = "Adult Link can throw the boomerang."   
 /*------------------------------                                                           //
 |     ENABLE CHILD HAMMER      |                                                           //
 ------------------------------*/                                                           //
-std::string_view childHammerDesc      = "Child Link can swing the Megaton Hammer.";        //
+std::string_view childHammerDesc      = "Child Link can swing the Megaton Hammer."         //
                                         "\n"                                               //
                                         "This setting will not change the logic";          //
                                                                                            //--------------//
