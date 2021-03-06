@@ -116,6 +116,10 @@ SECTIONS
 		*(.patch_BiggoronCheckGivenRewardThree)
 	}
 
+	.patch_ChildRollingGoronDontCheckBombBag 0x195414 : {
+		*(.patch_ChildRollingGoronDontCheckBombBag)
+	}
+
 	.patch_AdultRollingGoronIgnoreMedallion 0x195450 : {
 		*(.patch_AdultRollingGoronIgnoreMedallion)
 	}
