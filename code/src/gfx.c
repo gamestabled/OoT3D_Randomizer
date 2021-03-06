@@ -18,7 +18,7 @@ static void Gfx_DrawChangeMenuPrompt(void) {
 static void Gfx_DrawDungeonItems(void) {
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
         s32 keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-25s %s: %d %s", 
+        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-25s %s: %d %s",
             DungeonNames[dungeonId], "Small Keys", keys, gSaveContext.dungeonItems[dungeonId] & 1 ? "Boss Key" : "");
     }
     Gfx_DrawChangeMenuPrompt();
@@ -27,7 +27,7 @@ static void Gfx_DrawDungeonItems(void) {
 
 static void Gfx_DrawDungeonRewards(void) {
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", 
+        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s",
             DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
     }
     Gfx_DrawChangeMenuPrompt();
@@ -61,10 +61,10 @@ static void Gfx_ShowMenu(void) {
             Draw_FlushFramebuffer();
         }
 
-        if (curMenuIdx >= ARR_SIZE(menu_draw_funcs)) {
-            curMenuIdx = 0;
-        } else if (curMenuIdx < 0) {
+        if (curMenuIdx < 0) {
             curMenuIdx = (ARR_SIZE(menu_draw_funcs) - 1);
+        } else if (curMenuIdx >= ARR_SIZE(menu_draw_funcs)) {
+            curMenuIdx = 0;
         }
 
         menu_draw_funcs[curMenuIdx]();
