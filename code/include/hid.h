@@ -99,8 +99,6 @@ typedef struct {
     uint32_t                 bool_44;
 } hid_ctx_t;
 
-#define HID_PAD           (REG32(0x10146000) ^ 0xFFF)
-
 #define BUTTON_A          (1 << 0)
 #define BUTTON_B          (1 << 1)
 #define BUTTON_SELECT     (1 << 2)
