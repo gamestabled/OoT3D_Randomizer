@@ -5,7 +5,7 @@
 namespace Settings {
   std::string seed;
 
-  //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp), default setting index
+  //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
   //Open Settings
   Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                              {logicGlitchless, logicNoLogic});
   Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                      {forestClosed, forestOpen});
@@ -89,7 +89,7 @@ namespace Settings {
   };
 
   //Misc Settings
-  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc});
+  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      std::vector<std::string_view>{5, damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc, startingTimeDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""});
   bool HasNightStart         = false;
@@ -464,6 +464,25 @@ namespace Settings {
     IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
   }
 
+  //Make any forcible setting changes when certain settings change
+  void ForceChange(u32 kDown, Option* currentSetting) {
+
+    //Adult is not compatible with Closed Forest
+    if (OpenForest.Is(OPENFOREST_CLOSED)) {
+      StartingAge.SetSelectedIndex(AGE_CHILD);
+      StartingAge.Lock();
+    } else {
+      StartingAge.Unlock();
+    }
+
+    //Set toggle for all tricks
+    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
+      for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
+        detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+      }
+    }
+  }
+
   bool BombchuDrop                      = false;
   bool SkippedTrials                    = false;
   bool ShuffleDungeonEntrances          = false;
@@ -486,11 +505,6 @@ namespace Settings {
 
   //Function to set flags depending on settings
   void UpdateSettings() {
-
-    //force child on closed forest
-    if (OpenForest.Is(OPENFOREST_CLOSED)) {
-      StartingAge.SetSelectedIndex(AGE_CHILD);
-    }
 
     //1 is MQ, 0 is Vanilla
     if (RandomMQDungeons) {
@@ -521,4 +535,5 @@ namespace Settings {
     }
 
   }
-}
+
+} // namespace Settings

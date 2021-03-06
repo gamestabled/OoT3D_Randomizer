@@ -100,6 +100,18 @@ public:
       SetVariable();
     }
 
+    void Lock() {
+      locked = true;
+    }
+
+    void Unlock() {
+      locked = false;
+    }
+
+    bool IsLocked() {
+      return locked;
+    }
+
 private:
     Option(u8 var_, std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_)
           : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)) {
@@ -116,6 +128,7 @@ private:
   std::vector<std::string_view> options;
   std::vector<std::string_view> optionDescriptions;
   u8 selectedOption = 0;
+  bool locked = false;
 };
 
 enum class MenuItemType {
@@ -304,6 +317,7 @@ namespace Settings {
   extern SettingsContext FillContext();
   extern void FillSettings(SettingsContext ctx);
   extern void SetDefaultSettings();
+  extern void ForceChange(u32 kDown, Option* currentSetting);
 
   extern std::vector<MenuItem *> mainMenu;
 }

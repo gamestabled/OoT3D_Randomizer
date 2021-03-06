@@ -143,6 +143,12 @@ void MenuUpdate(u32 kDown) {
 void ModeChangeInit() {
   if (mode == SUB_MENU) {
     settingIdx = 0;
+
+    //loop through until we reach an unlocked setting
+    while(currentMenuItem->settingsList->at(settingIdx)->IsLocked()) {
+      settingIdx++;
+    }
+
     currentSetting = currentMenuItem->settingsList->at(settingIdx);
 
   } else if (mode == SAVE_PRESET) {
@@ -183,22 +189,25 @@ void UpdateMainMenu(u32 kDown) {
 }
 
 void UpdateSubMenu(u32 kDown) {
-  if ((kDown & KEY_DUP) != 0) {
-    settingIdx--;
-  }
+  //loop through settings until an unlocked one is reached
+  do {
+    if ((kDown & KEY_DUP) != 0) {
+      settingIdx--;
+    }
 
-  if ((kDown & KEY_DDOWN) != 0)  {
-    settingIdx++;
-  }
+    if ((kDown & KEY_DDOWN) != 0)  {
+      settingIdx++;
+    }
 
-  // Bounds checking
-  if (settingIdx == currentMenuItem->settingsList->size()) {
-    settingIdx = 0;
-  } else if (settingIdx == 0xFFFF) {
-    settingIdx = static_cast<u16>(currentMenuItem->settingsList->size() - 1);
-  }
+    // Bounds checking
+    if (settingIdx == currentMenuItem->settingsList->size()) {
+      settingIdx = 0;
+    } else if (settingIdx == 0xFFFF) {
+      settingIdx = static_cast<u16>(currentMenuItem->settingsList->size() - 1);
+    }
 
-  currentSetting = currentMenuItem->settingsList->at(settingIdx);
+    currentSetting = currentMenuItem->settingsList->at(settingIdx);
+  } while (currentSetting->IsLocked());
 
   if ((kDown & KEY_DRIGHT) != 0) {
     currentSetting->NextOptionIndex();
@@ -210,12 +219,8 @@ void UpdateSubMenu(u32 kDown) {
   // Bounds checking
   currentSetting->SanitizeSelectedOptionIndex();
 
-  //Set toggle for all tricks
-  if (((kDown & KEY_DRIGHT) != 0 || (kDown & KEY_DLEFT) != 0) && currentSetting->GetName() == "All Tricks")  {
-    for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
-      Settings::detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
-    }
-  }
+  currentSetting->SetVariable();
+  Settings::ForceChange(kDown, currentSetting);
 }
 
 void UpdatePresetsMenu(u32 kDown) {
@@ -305,12 +310,13 @@ void PrintSubMenu() {
 			printf("\x1b[%d;%dH\x1b[32m>", row,  1);
 			printf("\x1b[%d;%dH%s:",       row,  2, setting->GetName().data());
 			printf("\x1b[%d;%dH%s\x1b[0m", row, 26, setting->GetSelectedOption().data());
+		} else if (setting->IsLocked()) {
+			printf("\x1b[%d;%dH\x1b[2m%s:",row,  2, setting->GetName().data());
+			printf("\x1b[%d;%dH%s\x1b[0m", row, 26, setting->GetSelectedOption().data());
 		} else {
-			printf("\x1b[%d;%dH%s:",       row,  2, setting->GetName().data());
-			printf("\x1b[%d;%dH%s",        row, 26, setting->GetSelectedOption().data());
-		}
-
-		setting->SetVariable();
+      printf("\x1b[%d;%dH%s:",       row,  2, setting->GetName().data());
+      printf("\x1b[%d;%dH%s",        row, 26, setting->GetSelectedOption().data());
+    }
 	}
 
   PrintOptionDescrption();

@@ -1,186 +1,188 @@
 #pragma once
 #include <string_view>
 
-extern std::string_view logicGlitchless;
-extern std::string_view logicNoLogic;
+using string_view = std::string_view;
 
-extern std::string_view forestOpen;
-extern std::string_view forestClosed;
+extern string_view logicGlitchless;
+extern string_view logicNoLogic;
 
-extern std::string_view kakGateOpen;
-extern std::string_view kakGateClosed;
+extern string_view forestOpen;
+extern string_view forestClosed;
 
-extern std::string_view doorOfTimeDesc;
+extern string_view kakGateOpen;
+extern string_view kakGateClosed;
 
-extern std::string_view fountainNormal;
-extern std::string_view fountainOpen;
+extern string_view doorOfTimeDesc;
 
-extern std::string_view gerudoNormal;
-extern std::string_view gerudoFast;
-extern std::string_view gerudoOpen;
+extern string_view fountainNormal;
+extern string_view fountainOpen;
 
-extern std::string_view bridgeOpen;
-extern std::string_view bridgeVanilla;
-extern std::string_view bridgeStones;
-extern std::string_view bridgeMedallions;
-extern std::string_view bridgeDungeons;
+extern string_view gerudoNormal;
+extern string_view gerudoFast;
+extern string_view gerudoOpen;
 
-extern std::string_view ageDesc;
+extern string_view bridgeOpen;
+extern string_view bridgeVanilla;
+extern string_view bridgeStones;
+extern string_view bridgeMedallions;
+extern string_view bridgeDungeons;
 
-extern std::string_view bombchuLogicDesc;
+extern string_view ageDesc;
 
-extern std::string_view randomMQDungeonsDesc;
+extern string_view bombchuLogicDesc;
 
-extern std::string_view mirrorWorldDesc;
+extern string_view randomMQDungeonsDesc;
 
-extern std::string_view songsSongLocations;
-extern std::string_view songsAllLocations;
+extern string_view mirrorWorldDesc;
 
-extern std::string_view tokensVanilla;
-extern std::string_view tokensAllLocations;
+extern string_view songsSongLocations;
+extern string_view songsAllLocations;
 
-extern std::string_view scrubsOff;
-extern std::string_view scrubsAffordable;
-extern std::string_view scrubsExpensive;
-extern std::string_view scrubsRandomPrices;
+extern string_view tokensVanilla;
+extern string_view tokensAllLocations;
 
-extern std::string_view shuffleCowsDesc;
+extern string_view scrubsOff;
+extern string_view scrubsAffordable;
+extern string_view scrubsExpensive;
+extern string_view scrubsRandomPrices;
 
-extern std::string_view kokiriSwordDesc;
+extern string_view shuffleCowsDesc;
 
-extern std::string_view ocarinasDesc;
+extern string_view kokiriSwordDesc;
 
-extern std::string_view weirdEggDesc;
+extern string_view ocarinasDesc;
 
-extern std::string_view gerudoTokenDesc;
+extern string_view weirdEggDesc;
 
-extern std::string_view magicBeansDesc;
+extern string_view gerudoTokenDesc;
 
-extern std::string_view mapCompassStartWith;
-extern std::string_view mapCompassVanilla;
-extern std::string_view mapCompassOwnDungeon;
-extern std::string_view mapCompassAnywhere;
+extern string_view magicBeansDesc;
 
-extern std::string_view smallKeyStartWith;
-extern std::string_view smallKeyVanilla;
-extern std::string_view smallKeyOwnDungeon;
-extern std::string_view smallKeyAnywhere;
+extern string_view mapCompassStartWith;
+extern string_view mapCompassVanilla;
+extern string_view mapCompassOwnDungeon;
+extern string_view mapCompassAnywhere;
 
-extern std::string_view gerudoKeysVanilla;
-extern std::string_view gerudoKeysAnywhere;
+extern string_view smallKeyStartWith;
+extern string_view smallKeyVanilla;
+extern string_view smallKeyOwnDungeon;
+extern string_view smallKeyAnywhere;
 
-extern std::string_view bossKeyStartWith;
-extern std::string_view bossKeyVanilla;
-extern std::string_view bossKeyOwnDungeon;
-extern std::string_view bossKeyAnywhere;
+extern string_view gerudoKeysVanilla;
+extern string_view gerudoKeysAnywhere;
 
-extern std::string_view ganonKeyStartWith;
-extern std::string_view ganonKeyVanilla;
-extern std::string_view ganonKeyOwnDungeon;
-extern std::string_view ganonKeyAnywhere;
-extern std::string_view ganonKeyLACS;
+extern string_view bossKeyStartWith;
+extern string_view bossKeyVanilla;
+extern string_view bossKeyOwnDungeon;
+extern string_view bossKeyAnywhere;
 
-extern std::string_view childStealthDesc;
+extern string_view ganonKeyStartWith;
+extern string_view ganonKeyVanilla;
+extern string_view ganonKeyOwnDungeon;
+extern string_view ganonKeyAnywhere;
+extern string_view ganonKeyLACS;
 
-extern std::string_view fourPoesDesc;
+extern string_view childStealthDesc;
 
-extern std::string_view templeOfTimeIntroDesc;
+extern string_view fourPoesDesc;
 
-extern std::string_view bigPoeTargetCountDesc;
+extern string_view templeOfTimeIntroDesc;
 
-extern std::string_view damageMultiDesc;
+extern string_view bigPoeTargetCountDesc;
 
-extern std::string_view startingTimeDesc;
+extern string_view damageMultiDesc;
 
-extern std::string_view itemPoolPlentiful;
-extern std::string_view itemPoolBalanced;
-extern std::string_view itemPoolScarce;
-extern std::string_view itemPoolMinimal;
+extern string_view startingTimeDesc;
 
-extern std::string_view iceTrapsOff;
-extern std::string_view iceTrapsNormal;
-extern std::string_view iceTrapsExtra;
-extern std::string_view iceTrapsMayhem;
-extern std::string_view iceTrapsOnslaught;
+extern string_view itemPoolPlentiful;
+extern string_view itemPoolBalanced;
+extern string_view itemPoolScarce;
+extern string_view itemPoolMinimal;
 
-extern std::string_view adultStickDesc;
+extern string_view iceTrapsOff;
+extern string_view iceTrapsNormal;
+extern string_view iceTrapsExtra;
+extern string_view iceTrapsMayhem;
+extern string_view iceTrapsOnslaught;
 
-extern std::string_view adultBoomerangDesc;
+extern string_view adultStickDesc;
 
-extern std::string_view childHammerDesc;
+extern string_view adultBoomerangDesc;
 
-extern std::string_view ToggleAllDetailedLogicDesc;
-extern std::string_view LogicGrottosWithoutAgonyDesc;
-extern std::string_view LogicVisibleCollisionDesc;
-extern std::string_view LogicFewerTunicRequirementsDesc;
-extern std::string_view LogicLostWoodsGSBeanDesc;
-extern std::string_view LogicLabDivingDesc;
-extern std::string_view LogicLabWallGSDesc;
-extern std::string_view LogicGraveyardPoHDesc;
-extern std::string_view LogicChildDampeRacePoHDesc;
-extern std::string_view LogicGerudoKitchenDesc;
-extern std::string_view LogicLensWastelandDesc;
-extern std::string_view LogicReverseWastelandDesc;
-extern std::string_view LogicColossusGSDesc;
-extern std::string_view LogicManOnRoofDesc;
-extern std::string_view LogicDMTBombableDesc;
-extern std::string_view LogicDMTSoilGSDesc;
-extern std::string_view LogicLinkGoronDinsDesc;
-extern std::string_view LogicGoronCityLeftMostDesc;
-extern std::string_view LogicGoronCityPotDesc;
-extern std::string_view LogicGoronCityPotWithStrengthDesc;
-extern std::string_view LogicChildRollingWithStrengthDesc;
-extern std::string_view LogicCraterUpperToLowerDesc;
-extern std::string_view LogicCraterBeanPoHWithHoversDesc;
-extern std::string_view LogicBiggoronBoleroDesc;
-extern std::string_view LogicZoraRiverLowerDesc;
-extern std::string_view LogicZoraRiverUpperDesc;
-extern std::string_view LogicDekuB1WebsWithBowDesc;
-extern std::string_view LogicDekuB1SkipDesc;
-extern std::string_view LogicDekuBasementGSDesc;
-extern std::string_view LogicDCStaircaseDesc;
-extern std::string_view LogicDCJumpDesc;
-extern std::string_view LogicDCSlingshotSkipDesc;
-extern std::string_view LogicDCScarecrowGSDesc;
-extern std::string_view LogicJabuBossGSAdultDesc;
-extern std::string_view LogicJabuScrubJumpDiveDesc;
-extern std::string_view LogicForestOutsideBackdoorDesc;
-extern std::string_view LogicForestDoorFrameDesc;
-extern std::string_view LogicForestOutdoorEastGSDesc;
-extern std::string_view LogicFireBossDoorJumpDesc;
-extern std::string_view LogicFireStrengthDesc;
-extern std::string_view LogicFireScarecrowDesc;
-extern std::string_view LogicFireFlameMazeDesc;
-extern std::string_view LogicFireSongOfTimeDesc;
-extern std::string_view LogicWaterTempleTorchLongshotDesc;
-extern std::string_view LogicWaterCentralBowDesc;
-extern std::string_view LogicWaterCentralGSFWDesc;
-extern std::string_view LogicWaterCrackedWallNothingDesc;
-extern std::string_view LogicWaterCrackedWallHoversDesc;
-extern std::string_view LogicWaterBossKeyRegionDesc;
-extern std::string_view LogicWaterBKJumpDiveDesc;
-extern std::string_view LogicWaterNorthBasementLedgeJumpDesc;
-extern std::string_view LogicWaterDragonAdultDesc;
-extern std::string_view LogicWaterDragonJumpDiveDesc;
-extern std::string_view LogicWaterRiverGSDesc;
-extern std::string_view LogicWaterFallingPlatformGSDesc;
-extern std::string_view LogicSpiritLowerAdultSwitchDesc;
-extern std::string_view LogicSpiritChildBombchuDesc;
-extern std::string_view LogicSpiritWallDesc;
-extern std::string_view LogicSpiritLobbyGSDesc;
-extern std::string_view LogicSpiritMapChestDesc;
-extern std::string_view LogicSpiritSunChestDesc;
-extern std::string_view LogicShadowFireArrowEntryDesc;
-extern std::string_view LogicShadowUmbrellaDesc;
-extern std::string_view LogicShadowFreestandingKeyDesc;
-extern std::string_view LogicShadowStatueDesc;
-extern std::string_view LogicChildDeadhandDesc;
-extern std::string_view LogicGtgWithoutHookshotDesc;
-extern std::string_view LogicGtgFakeWallDesc;
-extern std::string_view LogicLensSpiritDesc;
-extern std::string_view LogicLensShadowDesc;
-extern std::string_view LogicLensShadowBackDesc;
-extern std::string_view LogicLensBotwDesc;
-extern std::string_view LogicLensGtgDesc;
-extern std::string_view LogicLensCastleDesc;
-extern std::string_view LogicSpiritTrialHookshotDesc;
+extern string_view childHammerDesc;
+
+extern string_view ToggleAllDetailedLogicDesc;
+extern string_view LogicGrottosWithoutAgonyDesc;
+extern string_view LogicVisibleCollisionDesc;
+extern string_view LogicFewerTunicRequirementsDesc;
+extern string_view LogicLostWoodsGSBeanDesc;
+extern string_view LogicLabDivingDesc;
+extern string_view LogicLabWallGSDesc;
+extern string_view LogicGraveyardPoHDesc;
+extern string_view LogicChildDampeRacePoHDesc;
+extern string_view LogicGerudoKitchenDesc;
+extern string_view LogicLensWastelandDesc;
+extern string_view LogicReverseWastelandDesc;
+extern string_view LogicColossusGSDesc;
+extern string_view LogicManOnRoofDesc;
+extern string_view LogicDMTBombableDesc;
+extern string_view LogicDMTSoilGSDesc;
+extern string_view LogicLinkGoronDinsDesc;
+extern string_view LogicGoronCityLeftMostDesc;
+extern string_view LogicGoronCityPotDesc;
+extern string_view LogicGoronCityPotWithStrengthDesc;
+extern string_view LogicChildRollingWithStrengthDesc;
+extern string_view LogicCraterUpperToLowerDesc;
+extern string_view LogicCraterBeanPoHWithHoversDesc;
+extern string_view LogicBiggoronBoleroDesc;
+extern string_view LogicZoraRiverLowerDesc;
+extern string_view LogicZoraRiverUpperDesc;
+extern string_view LogicDekuB1WebsWithBowDesc;
+extern string_view LogicDekuB1SkipDesc;
+extern string_view LogicDekuBasementGSDesc;
+extern string_view LogicDCStaircaseDesc;
+extern string_view LogicDCJumpDesc;
+extern string_view LogicDCSlingshotSkipDesc;
+extern string_view LogicDCScarecrowGSDesc;
+extern string_view LogicJabuBossGSAdultDesc;
+extern string_view LogicJabuScrubJumpDiveDesc;
+extern string_view LogicForestOutsideBackdoorDesc;
+extern string_view LogicForestDoorFrameDesc;
+extern string_view LogicForestOutdoorEastGSDesc;
+extern string_view LogicFireBossDoorJumpDesc;
+extern string_view LogicFireStrengthDesc;
+extern string_view LogicFireScarecrowDesc;
+extern string_view LogicFireFlameMazeDesc;
+extern string_view LogicFireSongOfTimeDesc;
+extern string_view LogicWaterTempleTorchLongshotDesc;
+extern string_view LogicWaterCentralBowDesc;
+extern string_view LogicWaterCentralGSFWDesc;
+extern string_view LogicWaterCrackedWallNothingDesc;
+extern string_view LogicWaterCrackedWallHoversDesc;
+extern string_view LogicWaterBossKeyRegionDesc;
+extern string_view LogicWaterBKJumpDiveDesc;
+extern string_view LogicWaterNorthBasementLedgeJumpDesc;
+extern string_view LogicWaterDragonAdultDesc;
+extern string_view LogicWaterDragonJumpDiveDesc;
+extern string_view LogicWaterRiverGSDesc;
+extern string_view LogicWaterFallingPlatformGSDesc;
+extern string_view LogicSpiritLowerAdultSwitchDesc;
+extern string_view LogicSpiritChildBombchuDesc;
+extern string_view LogicSpiritWallDesc;
+extern string_view LogicSpiritLobbyGSDesc;
+extern string_view LogicSpiritMapChestDesc;
+extern string_view LogicSpiritSunChestDesc;
+extern string_view LogicShadowFireArrowEntryDesc;
+extern string_view LogicShadowUmbrellaDesc;
+extern string_view LogicShadowFreestandingKeyDesc;
+extern string_view LogicShadowStatueDesc;
+extern string_view LogicChildDeadhandDesc;
+extern string_view LogicGtgWithoutHookshotDesc;
+extern string_view LogicGtgFakeWallDesc;
+extern string_view LogicLensSpiritDesc;
+extern string_view LogicLensShadowDesc;
+extern string_view LogicLensShadowBackDesc;
+extern string_view LogicLensBotwDesc;
+extern string_view LogicLensGtgDesc;
+extern string_view LogicLensCastleDesc;
+extern string_view LogicSpiritTrialHookshotDesc;
