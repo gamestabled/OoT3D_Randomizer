@@ -27,11 +27,13 @@ namespace Settings {
   //World Settings
   Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child"},                                      {ageDesc, ageDesc});
   Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc, bombchuLogicDesc});
+  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                           {"", ""});
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc, randomMQDungeonsDesc});
   Option MirrorWorld         = Option::Bool("Mirror World",           {"Off", "On"},                                           {mirrorWorldDesc, mirrorWorldDesc});
   std::vector<Option *> worldOptions = {
     &StartingAge,
     &BombchusInLogic,
+    &BombchuDrops,
     //&RandomMQDungeons, TODO: Finish MQ logic before enabling this
     &MirrorWorld,
   };
@@ -325,6 +327,7 @@ namespace Settings {
 
     ctx.startingAge        = StartingAge.Value<u8>();
     ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
+    ctx.bombchuDrops       = (BombchuDrops) ? 1 : 0;
     ctx.randomMQDungeons   = (RandomMQDungeons) ? 1 : 0;
     ctx.mirrorWorld        = (MirrorWorld) ? 1 : 0;
 
@@ -400,6 +403,7 @@ namespace Settings {
 
     StartingAge.SetSelectedIndex(ctx.startingAge);
     BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
+    BombchuDrops.SetSelectedIndex(ctx.bombchuDrops);
     RandomMQDungeons.SetSelectedIndex(ctx.randomMQDungeons);
     MirrorWorld.SetSelectedIndex(ctx.mirrorWorld);
 
@@ -475,6 +479,14 @@ namespace Settings {
       StartingAge.Unlock();
     }
 
+    //Bombchus in Logic forces Bombchu Drops
+     if (BombchusInLogic) {
+       BombchuDrops.SetSelectedIndex(ON);
+       BombchuDrops.Lock();
+     } else {
+       BombchuDrops.Unlock();
+     }
+
     //Set toggle for all tricks
     if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
       for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
@@ -483,7 +495,6 @@ namespace Settings {
     }
   }
 
-  bool BombchuDrop                      = false;
   bool SkippedTrials                    = false;
   bool ShuffleDungeonEntrances          = false;
   bool ShuffleOverworldEntrances        = false;

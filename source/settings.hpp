@@ -170,6 +170,7 @@ namespace Settings {
 
   extern Option StartingAge;
   extern Option BombchusInLogic;
+  extern Option BombchuDrops;
   extern Option RandomMQDungeons;
   extern Option MirrorWorld;
 

@@ -159,6 +159,7 @@ typedef struct {
 
   u8 startingAge;
   u8 bombchusInLogic;
+  u8 bombchuDrops;
   u8 randomMQDungeons;
   u8 mirrorWorld;
 
@@ -210,7 +211,6 @@ typedef struct {
 
   u32 dungeonRewardBitMask;
 
-  //this wastes like 500 bytes, but idk if anyone cares enough
   u8 detailedLogic[100];
   u8 excludeLocations[500];
 
