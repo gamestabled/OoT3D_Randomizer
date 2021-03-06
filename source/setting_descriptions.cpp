@@ -354,6 +354,8 @@ string_view LogicReverseWastelandDesc                 = "By memorizing the path,
 string_view LogicColossusGSDesc                       = "Somewhat precise. If you kill enough Leevers you\n"
                                                         "can get enough of a break to take some time to aim"
                                                         "more carefully.";                                 //
+string_view LogicOutsideGanonsGSDesc                  = "Can be killed with a precise sidehop jumpslash\n" //
+                                                        "from the top of the broken arch.";                //
 string_view LogicManOnRoofDesc                        = "Can be reached by side-hopping off the watchtower.";
 string_view LogicDMTBombableDesc                      = "Child Link can blow up the wall using a nearby\n" //
                                                         "bomb flower. You must backwalk with the flower and"

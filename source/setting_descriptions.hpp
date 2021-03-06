@@ -124,6 +124,7 @@ extern string_view LogicGerudoKitchenDesc;
 extern string_view LogicLensWastelandDesc;
 extern string_view LogicReverseWastelandDesc;
 extern string_view LogicColossusGSDesc;
+extern string_view LogicOutsideGanonsGSDesc;
 extern string_view LogicManOnRoofDesc;
 extern string_view LogicDMTBombableDesc;
 extern string_view LogicDMTSoilGSDesc;

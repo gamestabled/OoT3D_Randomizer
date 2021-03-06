@@ -136,6 +136,7 @@ namespace Settings {
   Option LogicLensWasteland               = Option::Bool("Lensless Wasteland",                             {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicLensWastelandDesc});
   Option LogicReverseWasteland            = Option::Bool("Reverse Wasteland",                              {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicReverseWastelandDesc});
   Option LogicColossusGS                  = Option::Bool("Colossus Hill GS\n with Hookshot",               {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicColossusGSDesc});
+  Option LogicOutsideGanonsGS             = Option::Bool("OGC GS with No Items",                           {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicOutsideGanonsGSDesc});
   Option LogicManOnRoof                   = Option::Bool("Man on Roof without\n Hookshot",                 {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicManOnRoofDesc});
   Option LogicDMTBombable                 = Option::Bool("Death Mountain Trail\n Chest with Strength",     {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicDMTBombableDesc});
   Option LogicDMTSoilGS                   = Option::Bool("DMT Soil GS without\n Destroying Boulder",       {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicDMTSoilGSDesc});
@@ -212,6 +213,7 @@ namespace Settings {
     &LogicLensWasteland,
     &LogicReverseWasteland,
     &LogicColossusGS,
+    &LogicOutsideGanonsGS,
     &LogicManOnRoof,
     &LogicDMTBombable,
     //&LogicDMTSoilGS, Needs Testing

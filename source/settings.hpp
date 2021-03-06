@@ -243,6 +243,7 @@ namespace Settings {
   extern Option LogicLensWasteland;
   extern Option LogicReverseWasteland;
   extern Option LogicColossusGS;
+  extern Option LogicOutsideGanonsGS;
   extern Option LogicManOnRoof;
   extern Option LogicDMTBombable;
   extern Option LogicDMTSoilGS;
