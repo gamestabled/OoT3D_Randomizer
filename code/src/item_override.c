@@ -401,14 +401,3 @@ s32 ItemOverride_GiveSariasGift(void) {
     // return 1 to skip the cutscene
     return 1;
 }
-
-u32 ItemOverride_PlaceItemInInventoryCheck(u32 itemId) {
-    if (itemId == ITEM_OCARINA_FAIRY || itemId == ITEM_OCARINA_TIME) {
-        return 0;
-    } else if (gSaveContext.items[ItemSlots[ITEM_BOW]] != ITEM_BOW) {
-        if (itemId == ITEM_ARROW_FIRE || itemId == ITEM_ARROW_ICE || itemId == ITEM_ARROW_LIGHT) {
-            return 0;
-        }
-    }
-    return 1;
-}

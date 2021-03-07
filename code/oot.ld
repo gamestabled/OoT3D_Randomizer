@@ -344,10 +344,6 @@ SECTIONS
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
 
-	/*.patch_MagicArrowsInInventory 0x33C350 : {
-		*(.patch_MagicArrowsInInventory)
-	}*/
-
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
 	}
