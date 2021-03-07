@@ -1,14 +1,17 @@
+#include <3ds.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
+#include <time.h>
+
 #include <filesystem>
 #include <cstring>
-#include <time.h>
-#include <3ds.h>
+
 #include "menu.hpp"
 #include "patch.hpp"
 #include "settings.hpp"
 #include "spoiler_log.hpp"
+
 namespace fs = std::filesystem;
 
 namespace {
@@ -31,12 +34,12 @@ namespace {
 void PrintTopScreen() {
   consoleSelect(&topScreen);
   consoleClear();
-  printf("\x1b[1;10HOoT3D Randomizer testing!\n");
-  printf("\x1b[3;1HA/B/D-pad: Navigate Menu\n");
-  printf("   Select: Exit to Homebrew Menu\n");
-  printf("        Y: New Random Seed\n");
-  printf("        X: Input Custom Seed\n");
-  printf("\x1b[10;5HCurrent Seed: %s", Settings::seed.c_str());
+  printf("\x1b[2;9H%sOcarina of Time 3D Randomizer v1.0%s", CYAN, RESET);
+  printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
+  printf("            Select: Exit to Homebrew Menu\n");
+  printf("                 Y: New Random Seed\n");
+  printf("                 X: Input Custom Seed\n");
+  printf("\x1b[11;7HCurrent Seed: %s", Settings::seed.c_str());
 }
 
 void MenuInit() {
@@ -114,8 +117,8 @@ void MenuUpdate(u32 kDown) {
       std::string spaces = "";
       spaces.append(pastSeedLength, ' ');
       consoleSelect(&topScreen);
-      printf("\x1b[10;19H%s", spaces.c_str());
-      printf("\x1b[10;19H%s", Settings::seed.c_str());
+      printf("\x1b[11;21H%s", spaces.c_str());
+      printf("\x1b[11;21H%s", Settings::seed.c_str());
       seedChanged = false;
     }
   }
@@ -279,10 +282,10 @@ void PrintMainMenu() {
     u8 row = 3 + i;
     //make the current menu green
 		if (menuIdx == i + menuBound) {
-			printf("\x1b[%d;%dH\x1b[32m>", row,  2);
-			printf("\x1b[%d;%dH%s\x1b[0m", row,  3, menu->name.c_str());
+			printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
+			printf("\x1b[%d;%dH%s%s", row,  3, menu->name.c_str(), RESET);
 		} else {
-			printf("\x1b[%d;%dH%s\x1b[0m", row,  3, menu->name.c_str());
+			printf("\x1b[%d;%dH%s",   row,  3, menu->name.c_str());
 		}
 	}
 }
@@ -307,15 +310,16 @@ void PrintSubMenu() {
 		u8 row = 3 + (i * 2);
     //make the current setting green
 		if (settingIdx == i + settingBound) {
-			printf("\x1b[%d;%dH\x1b[32m>", row,  1);
-			printf("\x1b[%d;%dH%s:",       row,  2, setting->GetName().data());
-			printf("\x1b[%d;%dH%s\x1b[0m", row, 26, setting->GetSelectedOption().data());
+			printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
+			printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
+			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+    //dim to make a locked setting grey
 		} else if (setting->IsLocked()) {
-			printf("\x1b[%d;%dH\x1b[2m%s:",row,  2, setting->GetName().data());
-			printf("\x1b[%d;%dH%s\x1b[0m", row, 26, setting->GetSelectedOption().data());
+			printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
+			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
 		} else {
-      printf("\x1b[%d;%dH%s:",       row,  2, setting->GetName().data());
-      printf("\x1b[%d;%dH%s",        row, 26, setting->GetSelectedOption().data());
+      printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
+      printf("\x1b[%d;%dH%s",    row, 26, setting->GetSelectedOption().data());
     }
 	}
 
@@ -340,10 +344,10 @@ void PrintPresetsMenu() {
     u8 row = 3 + (i * 2);
     //make the current preset green
 		if (presetIdx == i + presetBound) {
-			printf("\x1b[%d;%dH\x1b[32m>", row, 14);
-			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, preset.c_str());
+			printf("\x1b[%d;%dH%s>",  row, 14, GREEN);
+			printf("\x1b[%d;%dH%s%s", row, 15, preset.c_str(), RESET);
 		} else {
-			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, preset.c_str());
+			printf("\x1b[%d;%dH%s",   row, 15, preset.c_str());
 		}
 	}
 }
@@ -361,10 +365,10 @@ void PrintGenerateMenu() {
     u8 row = 6 + (i * 2);
     //make the current preset green
 		if (generateIdx == i) {
-			printf("\x1b[%d;%dH\x1b[32m>", row, 14);
-			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, option.c_str());
+			printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
+			printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
 		} else {
-			printf("\x1b[%d;%dH%s\x1b[0m", row, 15, option.c_str());
+			printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
 		}
 	}
 }
@@ -558,8 +562,14 @@ void GenerateRandomizer() {
   printf("\x1b[11;10HWriting Patch...");
 	if (WritePatch()) {
 		printf("Done");
-    printf("\x1b[13;10HQuit out using the home menu. Then\n");
-    printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
+    if (Settings::PlayOption == PATCH_CONSOLE) {
+      printf("\x1b[13;10HQuit out using the home menu. Then\n");
+      printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
+    } else if (Settings::PlayOption == PATCH_CITRA) {
+      printf("\x1b[13;10HCopy code.ips and exheader.bin to the\n");
+      printf("\x1b[14;10HOoT3D mods folder, then launch OoT3D!\n");
+    }
+
 
     printf("\x1b[16;10HHash:");
     for (u8 i = 0; i < randomizerHash.size(); i++) {

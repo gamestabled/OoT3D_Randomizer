@@ -1,4 +1,5 @@
 #include <3ds.h>
+
 #include "menu.hpp"
 
 #define TICKS_PER_SEC 268123480.0
