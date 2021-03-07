@@ -135,3 +135,45 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     //     save->event_chk_inf[8] = save->event_chk_inf[8] | 0xF000; // "Paid Back Mask Fees"
     // }
 }
+
+static void ResetItemSlotsIfMatchesID(u8 itemSlot) {
+    // Remove the slot from child/adult grids
+    for (u32 i = 0; i < 0x18; ++i) {
+        if (gSaveContext.itemMenuChild[i] == itemSlot) {
+            gSaveContext.itemMenuChild[i] = 0xFF;
+        }
+        if (gSaveContext.itemMenuAdult[i] == itemSlot) {
+            gSaveContext.itemMenuAdult[i] = 0xFF;
+        }
+    }
+}
+
+static void PushSlotIntoInventoryMenu(u8 itemSlot) {
+    u8 currentSlot = 0;
+    while(gSaveContext.itemMenuChild[currentSlot] != 0xFF) {
+        currentSlot++;
+    }
+    gSaveContext.itemMenuChild[currentSlot] = itemSlot;
+
+    currentSlot = 0;
+    while(gSaveContext.itemMenuAdult[currentSlot] != 0xFF) {
+        currentSlot++;
+    }
+    gSaveContext.itemMenuAdult[currentSlot] = itemSlot;
+}
+
+void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    if (arg1 == 0) { // Fairy Bow
+        ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_FIRE]);
+        ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_ICE]);
+        ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_LIGHT]);
+    } else if (saveCtx->items[ItemSlots[ITEM_BOW]] != ITEM_BOW) {
+        if (arg1 == 1) { // Fire Arrow
+            PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_FIRE]);
+        } else if (arg1 == 2) { // Ice Arrow
+            PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_ICE]);
+        } else if (arg1 == 3) { // Light Arrow
+            PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_LIGHT]);
+        }
+    }
+}

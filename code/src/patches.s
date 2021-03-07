@@ -677,13 +677,6 @@ ISGPutaway_patch:
 ISGCrouchStab_patch:
     nop
 
-.section .patch_MagicArrowsInInventory
-.global MagicArrowsInInventory_patch
-MagicArrowsInInventory_patch:
-    bl hook_MagicArrowsInInventory
-    beq 0x33C38C
-    b 0x33C37C
-
 .section .patch_ApplyDamageMultiplier
 .global ApplyDamageMultiplier_patch
 ApplyDamageMultiplier_patch:
