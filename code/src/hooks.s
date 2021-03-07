@@ -75,14 +75,11 @@ noOverrideItemID:
 # If no active override, puts -0x1
 # Need to wrap around this for individual cases because of differing register usage
 .global hook_OverrideGraphicID
-.global rActiveItemActionId
-.rActiveItemActionId_addr:
-    .word rActiveItemActionId
 .global rActiveItemGraphicId_addr
 .rActiveItemGraphicId_addr:
     .word rActiveItemGraphicId
 hook_OverrideGraphicID:
-    ldr r0,.rActiveItemActionId_addr
+    ldr r0,.rActiveItemRow_addr
     ldr r0,[r0]
     cmp r0,#0x0
     beq noOverrideGraphicID

@@ -131,7 +131,12 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
         model->glModel->unk_0C->unk_0C = 2.0f;
         model->glModel->unk_0C->unk_10 = 1;
     }
-
+    // spawn the blue fire animation
+    if ((model->info.objectId == 0x0173) && (model->info.objectModelIdx == 0x01)) {
+        Model_SetAnim(model, 0);
+        model->glModel->unk_0C->unk_0C = 2.0f;
+        model->glModel->unk_0C->unk_10 = 1;
+    }
     model->loaded = 1;
 }
 
@@ -319,6 +324,10 @@ void Model_SpawnByActor(Actor* actor, GlobalContext* globalCtx, u16 baseItemId) 
         Model_Create(&model, globalCtx);
         if ((model.info.objectId == 0x0024) && (model.info.objectModelIdx == 0x02)) { //Special case for Token's second model
             model.info.objectModelIdx = 0x03;
+            Model_Create(&model, globalCtx);
+        }
+        if ((model.info.objectId == 0x0173) && (model.info.objectModelIdx == 0x00)) { //Special case for Blue Fire's second model
+            model.info.objectModelIdx = 0x01;
             Model_Create(&model, globalCtx);
         }
     }

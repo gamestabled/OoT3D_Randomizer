@@ -133,6 +133,11 @@ ChildRollingGoron_patch:
     mov r2,#0x34
     nop
 
+.section .patch_ChildRollingGoronDontCheckBombBag
+.global ChildRollingGoronDontCheckBombBag_patch
+ChildRollingGoronDontCheckBombBag_patch:
+    nop
+
 .section .patch_AdultRollingGoronIgnoreMedallion
 .global AdultRollingGoronIgnoreMedallion_patch
 AdultRollingGoronIgnoreMedallion_patch:
