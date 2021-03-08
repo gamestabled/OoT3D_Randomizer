@@ -19,6 +19,9 @@ void Scene_Init(void) {
 
     gRestrictionFlags[72].flags2 = 0; // Allows warp songs in GTG
     gRestrictionFlags[94].flags2 = 0; // Allows warp songs in Ganon's Castle
+
+    gRestrictionFlags[72].flags3 = 0; // Allows farore's wind in GTG
+    gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
 }
 
 void Entrance_Init(void) {
