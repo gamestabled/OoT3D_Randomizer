@@ -37,6 +37,10 @@ public:
         return key;
     }
 
+    u8 GetScene() const {
+      return scene;
+    }
+
     void Use() {
       used = true;
     }
@@ -171,16 +175,6 @@ public:
         return lhs.key.all < rhs.key.all;
     }
 };
-
-//set of overrides to write to the patch
-extern std::set<ItemOverride, ItemOverride_Compare> overrides;
-
-extern std::vector<ItemLocation*> playthroughLocations;
-
-extern u32 totalLocationsFound;
-extern u16 itemsPlaced;
-
-extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
 
 //Kokiri Forest
 extern ItemLocation KF_KokiriSwordChest;
@@ -1032,8 +1026,19 @@ extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
 extern std::array<ItemLocation *, 12> songLocations;
-extern std::array<ItemLocation *, 474> allLocations;
+extern std::vector<ItemLocation *> allLocations;
 
+//set of overrides to write to the patch
+extern std::set<ItemOverride, ItemOverride_Compare> overrides;
+
+extern std::vector<ItemLocation*> playthroughLocations;
+
+extern u32 totalLocationsFound;
+extern u16 itemsPlaced;
+
+extern void GenerateLocationPool();
+extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
+extern std::vector<ItemLocation*> GetLocations(const std::string_view category);
 extern void LocationReset();
 extern void ItemReset();
 extern void AddExcludedOptions();

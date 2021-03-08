@@ -652,211 +652,242 @@ static void PlaceVanillaDekuScrubItems() {
 
 static void PlaceVanillaMapsAndCompasses() {
   //Maps
-  PlaceItemInLocation(&DekuTree_MapChest,         DekuTree_Map);
-  PlaceItemInLocation(&DodongosCavern_MapChest,   DodongosCavern_Map);
-  PlaceItemInLocation(&JabuJabusBelly_MapChest,   JabuJabusBelly_Map);
-  PlaceItemInLocation(&ForestTemple_MapChest,     ForestTemple_Map);
-  PlaceItemInLocation(&FireTemple_MapChest,       FireTemple_Map);
-  PlaceItemInLocation(&WaterTemple_MapChest,      WaterTemple_Map);
-  PlaceItemInLocation(&SpiritTemple_MapChest,     SpiritTemple_Map);
-  PlaceItemInLocation(&ShadowTemple_MapChest,     ShadowTemple_Map);
-  PlaceItemInLocation(&BottomOfTheWell_MapChest,  BottomOfTheWell_Map);
-  PlaceItemInLocation(&IceCavern_MapChest,        IceCavern_Map);
+  if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&DekuTree_MQ_MapChest,     DekuTree_Map);
+    PlaceItemInLocation(&DekuTree_MQ_CompassChest, DekuTree_Compass);
+  } else {
+    PlaceItemInLocation(&DekuTree_MapChest,     DekuTree_Map);
+    PlaceItemInLocation(&DekuTree_CompassChest, DekuTree_Compass);
+  }
 
-  //Compasses
-  PlaceItemInLocation(&DekuTree_CompassChest,        DekuTree_Compass);
-  PlaceItemInLocation(&DodongosCavern_CompassChest,  DodongosCavern_Compass);
-  PlaceItemInLocation(&JabuJabusBelly_CompassChest,  JabuJabusBelly_Compass);
-  PlaceItemInLocation(&ForestTemple_BluePoeChest,    ForestTemple_Compass);
-  PlaceItemInLocation(&FireTemple_CompassChest,      FireTemple_Compass);
-  PlaceItemInLocation(&WaterTemple_CompassChest,     WaterTemple_Compass);
-  PlaceItemInLocation(&SpiritTemple_CompassChest,    SpiritTemple_Compass);
-  PlaceItemInLocation(&ShadowTemple_CompassChest,    ShadowTemple_Compass);
-  PlaceItemInLocation(&BottomOfTheWell_CompassChest, BottomOfTheWell_Compass);
-  PlaceItemInLocation(&IceCavern_CompassChest,       IceCavern_Compass);
+  if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&DodongosCavern_MQ_MapChest,     DodongosCavern_Map);
+    PlaceItemInLocation(&DodongosCavern_MQ_CompassChest, DodongosCavern_Compass);
+  } else {
+    PlaceItemInLocation(&DodongosCavern_MapChest,     DodongosCavern_Map);
+    PlaceItemInLocation(&DodongosCavern_CompassChest, DodongosCavern_Compass);
+  }
+
+  if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&JabuJabusBelly_MQ_MapChest,     JabuJabusBelly_Map);
+    PlaceItemInLocation(&JabuJabusBelly_MQ_CompassChest, JabuJabusBelly_Compass);
+  } else {
+    PlaceItemInLocation(&JabuJabusBelly_MapChest,     JabuJabusBelly_Map);
+    PlaceItemInLocation(&JabuJabusBelly_CompassChest, JabuJabusBelly_Compass);
+  }
+
+  if (ForestTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&ForestTemple_MQ_MapChest,     ForestTemple_Map);
+    PlaceItemInLocation(&ForestTemple_MQ_CompassChest, ForestTemple_Compass);
+  } else {
+    PlaceItemInLocation(&ForestTemple_MapChest,     ForestTemple_Map);
+    PlaceItemInLocation(&ForestTemple_BluePoeChest, ForestTemple_Compass);
+  }
+
+  if (FireTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&FireTemple_MQ_MapChest,     FireTemple_Map);
+    PlaceItemInLocation(&FireTemple_MQ_CompassChest, FireTemple_Compass);
+  } else {
+    PlaceItemInLocation(&FireTemple_MapChest,     FireTemple_Map);
+    PlaceItemInLocation(&FireTemple_CompassChest, FireTemple_Compass);
+  }
+
+  if (WaterTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&WaterTemple_MQ_MapChest,     WaterTemple_Map);
+    PlaceItemInLocation(&WaterTemple_MQ_CompassChest, WaterTemple_Compass);
+  } else {
+    PlaceItemInLocation(&WaterTemple_MapChest,     WaterTemple_Map);
+    PlaceItemInLocation(&WaterTemple_CompassChest, WaterTemple_Compass);
+  }
+
+  if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&SpiritTemple_MQ_MapChest,     SpiritTemple_Map);
+    PlaceItemInLocation(&SpiritTemple_MQ_CompassChest, SpiritTemple_Compass);
+  } else {
+    PlaceItemInLocation(&SpiritTemple_MapChest,     SpiritTemple_Map);
+    PlaceItemInLocation(&SpiritTemple_CompassChest, SpiritTemple_Compass);
+  }
+
+  if (ShadowTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&ShadowTemple_MQ_MapChest,     ShadowTemple_Map);
+    PlaceItemInLocation(&ShadowTemple_MQ_CompassChest, ShadowTemple_Compass);
+  } else {
+    PlaceItemInLocation(&ShadowTemple_MapChest,     ShadowTemple_Map);
+    PlaceItemInLocation(&ShadowTemple_CompassChest, ShadowTemple_Compass);
+  }
+
+  if (BottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&BottomOfTheWell_MQ_MapChest,     BottomOfTheWell_Map);
+    PlaceItemInLocation(&BottomOfTheWell_MQ_CompassChest, BottomOfTheWell_Compass);
+  } else {
+    PlaceItemInLocation(&BottomOfTheWell_MapChest,     BottomOfTheWell_Map);
+    PlaceItemInLocation(&BottomOfTheWell_CompassChest, BottomOfTheWell_Compass);
+  }
+
+  if (IceCavernDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&IceCavern_MQ_MapChest,     IceCavern_Map);
+    PlaceItemInLocation(&IceCavern_MQ_CompassChest, IceCavern_Compass);
+  } else {
+    PlaceItemInLocation(&IceCavern_MapChest,     IceCavern_Map);
+    PlaceItemInLocation(&IceCavern_CompassChest, IceCavern_Compass);
+  }
 }
 
 static void PlaceVanillaSmallKeys() {
     //Forest Temple
-    PlaceItemInLocation(&ForestTemple_FirstRoomChest,    ForestTemple_SmallKey);
-    PlaceItemInLocation(&ForestTemple_FirstStalfosChest, ForestTemple_SmallKey);
-    PlaceItemInLocation(&ForestTemple_FloormasterChest,  ForestTemple_SmallKey);
-    PlaceItemInLocation(&ForestTemple_RedPoeChest,       ForestTemple_SmallKey);
-    PlaceItemInLocation(&ForestTemple_WellChest,         ForestTemple_SmallKey);
+    if (ForestTempleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&ForestTemple_MQ_WolfosChest,                     ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_MQ_FirstRoomChest,                  ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_MQ_RaisedIslandCourtyardLowerChest, ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_MQ_RaisedIslandCourtyardUpperChest, ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_MQ_RedeadChest,                     ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_MQ_WellChest,                       ForestTemple_SmallKey);
+    } else {
+      PlaceItemInLocation(&ForestTemple_FirstRoomChest,    ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_FirstStalfosChest, ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_FloormasterChest,  ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_RedPoeChest,       ForestTemple_SmallKey);
+      PlaceItemInLocation(&ForestTemple_WellChest,         ForestTemple_SmallKey);
+    }
 
     //Fire Temple
-    PlaceItemInLocation(&FireTemple_NearBossChest,                 FireTemple_SmallKey);
-    PlaceItemInLocation(&FireTemple_BigLavaRoomBlockedDoorChest,   FireTemple_SmallKey);
-    PlaceItemInLocation(&FireTemple_BigLavaRoomLowerOpenDoorChest, FireTemple_SmallKey);
-    PlaceItemInLocation(&FireTemple_BoulderMazeLowerChest,         FireTemple_SmallKey);
-    PlaceItemInLocation(&FireTemple_BoulderMazeUpperChest,         FireTemple_SmallKey);
-    PlaceItemInLocation(&FireTemple_BoulderMazeShortcutChest,      FireTemple_SmallKey);
-    PlaceItemInLocation(&FireTemple_BoulderMazeSideRoomChest,      FireTemple_SmallKey);
-    PlaceItemInLocation(&FireTemple_HighestGoronChest,             FireTemple_SmallKey);
+    if (FireTempleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&FireTemple_MQ_BigLavaRoomBlockedDoorChest, FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_MQ_NearBossChest,               FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_MQ_LizalfosMazeSideRoomChest,   FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_MQ_ChestOnFire,                 FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_MQ_FreestandingKey,             FireTemple_SmallKey);
+    } else {
+      PlaceItemInLocation(&FireTemple_NearBossChest,                 FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_BigLavaRoomBlockedDoorChest,   FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_BigLavaRoomLowerOpenDoorChest, FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_BoulderMazeLowerChest,         FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_BoulderMazeUpperChest,         FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_BoulderMazeShortcutChest,      FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_BoulderMazeSideRoomChest,      FireTemple_SmallKey);
+      PlaceItemInLocation(&FireTemple_HighestGoronChest,             FireTemple_SmallKey);
+    }
 
     //Water Temple
-    PlaceItemInLocation(&WaterTemple_TorchesChest,          WaterTemple_SmallKey);
-    PlaceItemInLocation(&WaterTemple_RiverChest,            WaterTemple_SmallKey);
-    PlaceItemInLocation(&WaterTemple_DragonChest,           WaterTemple_SmallKey);
-    PlaceItemInLocation(&WaterTemple_CrackedWallChest,      WaterTemple_SmallKey);
-    PlaceItemInLocation(&WaterTemple_CentralPillarChest,    WaterTemple_SmallKey);
-    PlaceItemInLocation(&WaterTemple_CentralBowTargetChest, WaterTemple_SmallKey);
+    if (WaterTempleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&WaterTemple_MQ_CentralPillarChest, WaterTemple_SmallKey);
+      PlaceItemInLocation(&WaterTemple_MQ_FreestandingKey,    WaterTemple_SmallKey);
+    } else {
+      PlaceItemInLocation(&WaterTemple_TorchesChest,          WaterTemple_SmallKey);
+      PlaceItemInLocation(&WaterTemple_RiverChest,            WaterTemple_SmallKey);
+      PlaceItemInLocation(&WaterTemple_DragonChest,           WaterTemple_SmallKey);
+      PlaceItemInLocation(&WaterTemple_CrackedWallChest,      WaterTemple_SmallKey);
+      PlaceItemInLocation(&WaterTemple_CentralPillarChest,    WaterTemple_SmallKey);
+      PlaceItemInLocation(&WaterTemple_CentralBowTargetChest, WaterTemple_SmallKey);
+    }
 
     //Spirit Temple
-    PlaceItemInLocation(&SpiritTemple_ChildEarlyTorchesChest, SpiritTemple_SmallKey);
-    PlaceItemInLocation(&SpiritTemple_EarlyAdultRightChest,   SpiritTemple_SmallKey);
-    PlaceItemInLocation(&SpiritTemple_NearFourArmosChest,     SpiritTemple_SmallKey);
-    PlaceItemInLocation(&SpiritTemple_StatueRoomHandChest,    SpiritTemple_SmallKey);
-    PlaceItemInLocation(&SpiritTemple_SunBlockRoomChest,      SpiritTemple_SmallKey);
+    if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&SpiritTemple_MQ_ChildHammerSwitchChest,     SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_MQ_ChildClimbSouthChest,       SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_MQ_MapRoomEnemyChest,          SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_MQ_EntranceBackLeftChest,      SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_MQ_EntranceFrontRightChest,    SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_MQ_MirrorPuzzleInvisibleChest, SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_MQ_SilverBlockHallwayChest,    SpiritTemple_SmallKey);
+    } else {
+      PlaceItemInLocation(&SpiritTemple_ChildEarlyTorchesChest, SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_EarlyAdultRightChest,   SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_NearFourArmosChest,     SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_StatueRoomHandChest,    SpiritTemple_SmallKey);
+      PlaceItemInLocation(&SpiritTemple_SunBlockRoomChest,      SpiritTemple_SmallKey);
+    }
 
     //Shadow Temple
-    PlaceItemInLocation(&ShadowTemple_EarlySilverRupeeChest,     ShadowTemple_SmallKey);
-    PlaceItemInLocation(&ShadowTemple_FallingSpikesSwitchChest,  ShadowTemple_SmallKey);
-    PlaceItemInLocation(&ShadowTemple_InvisibleFloormasterChest, ShadowTemple_SmallKey);
-    PlaceItemInLocation(&ShadowTemple_AfterWindHiddenChest,      ShadowTemple_SmallKey);
-    PlaceItemInLocation(&ShadowTemple_FreestandingKey,           ShadowTemple_SmallKey);
+    if (ShadowTempleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&ShadowTemple_MQ_FallingSpikesSwitchChest,      ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_MQ_InvisibleBladesInvisibleChest, ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_MQ_EarlyGibdosChest,              ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_MQ_NearShipInvisibleChest,        ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_MQ_WindHintChest,                 ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_MQ_FreestandingKey,               ShadowTemple_SmallKey);
+    } else {
+      PlaceItemInLocation(&ShadowTemple_EarlySilverRupeeChest,     ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_FallingSpikesSwitchChest,  ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_InvisibleFloormasterChest, ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_AfterWindHiddenChest,      ShadowTemple_SmallKey);
+      PlaceItemInLocation(&ShadowTemple_FreestandingKey,           ShadowTemple_SmallKey);
+    }
 
     //Bottom of the Well
-    PlaceItemInLocation(&BottomOfTheWell_FrontLeftFakeWallChest,   BottomOfTheWell_SmallKey);
-    PlaceItemInLocation(&BottomOfTheWell_RightBottomFakeWallChest, BottomOfTheWell_SmallKey);
-    PlaceItemInLocation(&BottomOfTheWell_FreestandingKey,          BottomOfTheWell_SmallKey);
+    if (BottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&BottomOfTheWell_MQ_DeadHandFreestandingKey,      BottomOfTheWell_SmallKey);
+      PlaceItemInLocation(&BottomOfTheWell_MQ_EastInnerRoomFreestandingKey, BottomOfTheWell_SmallKey);
+    } else {
+      PlaceItemInLocation(&BottomOfTheWell_FrontLeftFakeWallChest,   BottomOfTheWell_SmallKey);
+      PlaceItemInLocation(&BottomOfTheWell_RightBottomFakeWallChest, BottomOfTheWell_SmallKey);
+      PlaceItemInLocation(&BottomOfTheWell_FreestandingKey,          BottomOfTheWell_SmallKey);
+    }
 
     //Gerudo Training Grounds
-    PlaceItemInLocation(&GerudoTrainingGrounds_BeamosChest,                GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_EyeStatueChest,             GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_HammerRoomSwitchChest,      GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_HeavyBlockThirdChest,       GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_HiddenCeilingChest,         GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_NearScarecrowChest,         GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_StalfosChest,               GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_UnderwaterSilverRupeeChest, GerudoTrainingGrounds_SmallKey);
-    PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey,            GerudoTrainingGrounds_SmallKey);
+    if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&GerudoTrainingGrounds_MQ_DinalfosChest,              GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_MQ_FlameCircleChest,           GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest, GerudoTrainingGrounds_SmallKey);
+    } else {
+      PlaceItemInLocation(&GerudoTrainingGrounds_BeamosChest,                GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_EyeStatueChest,             GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_HammerRoomSwitchChest,      GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_HeavyBlockThirdChest,       GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_HiddenCeilingChest,         GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_NearScarecrowChest,         GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_StalfosChest,               GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_UnderwaterSilverRupeeChest, GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey,            GerudoTrainingGrounds_SmallKey);
+    }
 
     //Ganon's Castle
-    PlaceItemInLocation(&GanonsCastle_LightTrialInvisibleEnemiesChest, GanonsCastle_SmallKey);
-    PlaceItemInLocation(&GanonsCastle_LightTrialLullabyChest,          GanonsCastle_SmallKey);
+    if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
+      PlaceItemInLocation(&GanonsCastle_MQ_ShadowTrialEyeSwitchChest,   GanonsCastle_SmallKey);
+      PlaceItemInLocation(&GanonsCastle_MQ_SpiritTrialSunBackLeftChest, GanonsCastle_SmallKey);
+      PlaceItemInLocation(&GanonsCastle_MQ_ForestTrialFreestandingKey,  GanonsCastle_SmallKey);
+    } else {
+      PlaceItemInLocation(&GanonsCastle_LightTrialInvisibleEnemiesChest, GanonsCastle_SmallKey);
+      PlaceItemInLocation(&GanonsCastle_LightTrialLullabyChest,          GanonsCastle_SmallKey);
+    }
 }
 
 static void PlaceVanillaBossKeys() {
-  PlaceItemInLocation(&ForestTemple_BossKeyChest, ForestTemple_BossKey);
-  PlaceItemInLocation(&FireTemple_BossKeyChest,   FireTemple_BossKey);
-  PlaceItemInLocation(&WaterTemple_BossKeyChest,  WaterTemple_BossKey);
-  PlaceItemInLocation(&SpiritTemple_BossKeyChest, SpiritTemple_BossKey);
-  PlaceItemInLocation(&ShadowTemple_BossKeyChest, ShadowTemple_BossKey);
-}
 
-static void PlaceVanillaSkulltulaTokens() {
-    PlaceItemInLocation(&KF_GS_BeanPatch,               GoldSkulltulaToken);
-    PlaceItemInLocation(&KF_GS_KnowItAllHouse,          GoldSkulltulaToken);
-    PlaceItemInLocation(&KF_GS_HouseOfTwins,            GoldSkulltulaToken);
-    PlaceItemInLocation(&LW_GS_BeanPatchNearBridge,     GoldSkulltulaToken);
-    PlaceItemInLocation(&LW_GS_BeanPatchNearTheater,    GoldSkulltulaToken);
-    PlaceItemInLocation(&LW_GS_AboveTheater,            GoldSkulltulaToken);
-    PlaceItemInLocation(&SFM_GS,                        GoldSkulltulaToken);
-    PlaceItemInLocation(&HF_GS_NearKakGrotto,           GoldSkulltulaToken);
-    PlaceItemInLocation(&HF_GS_CowGrotto,               GoldSkulltulaToken);
-    PlaceItemInLocation(&MK_GS_GuardHouse,              GoldSkulltulaToken);
-    PlaceItemInLocation(&HC_GS_Tree,                    GoldSkulltulaToken);
-    PlaceItemInLocation(&HC_GS_StormsGrotto,            GoldSkulltulaToken);
-    PlaceItemInLocation(&OGC_GS,                        GoldSkulltulaToken);
-    PlaceItemInLocation(&LLR_GS_Tree,                   GoldSkulltulaToken);
-    PlaceItemInLocation(&LLR_GS_RainShed,               GoldSkulltulaToken);
-    PlaceItemInLocation(&LLR_GS_HouseWindow,            GoldSkulltulaToken);
-    PlaceItemInLocation(&LLR_GS_BackWall,               GoldSkulltulaToken);
-    PlaceItemInLocation(&Kak_GS_HouseUnderConstruction, GoldSkulltulaToken);
-    PlaceItemInLocation(&Kak_GS_SkulltulaHouse,         GoldSkulltulaToken);
-    PlaceItemInLocation(&Kak_GS_GuardsHouse,            GoldSkulltulaToken);
-    PlaceItemInLocation(&Kak_GS_Tree,                   GoldSkulltulaToken);
-    PlaceItemInLocation(&Kak_GS_Watchtower,             GoldSkulltulaToken);
-    PlaceItemInLocation(&Kak_GS_AboveImpasHouse,        GoldSkulltulaToken);
-    PlaceItemInLocation(&GY_GS_Wall,                    GoldSkulltulaToken);
-    PlaceItemInLocation(&GY_GS_BeanPatch,               GoldSkulltulaToken);
-    PlaceItemInLocation(&DMT_GS_BeanPatch,              GoldSkulltulaToken);
-    PlaceItemInLocation(&DMT_GS_NearKak,                GoldSkulltulaToken);
-    PlaceItemInLocation(&DMT_GS_FallingRocksPath,       GoldSkulltulaToken);
-    PlaceItemInLocation(&DMT_GS_AboveDodongosCavern,    GoldSkulltulaToken);
-    PlaceItemInLocation(&GC_GS_BoulderMaze,             GoldSkulltulaToken);
-    PlaceItemInLocation(&GC_GS_CenterPlatform,          GoldSkulltulaToken);
-    PlaceItemInLocation(&DMC_GS_Crate,                  GoldSkulltulaToken);
-    PlaceItemInLocation(&DMC_GS_BeanPatch,              GoldSkulltulaToken);
-    PlaceItemInLocation(&ZR_GS_Ladder,                  GoldSkulltulaToken);
-    PlaceItemInLocation(&ZR_GS_Tree,                    GoldSkulltulaToken);
-    PlaceItemInLocation(&ZR_GS_NearRaisedGrottos,       GoldSkulltulaToken);
-    PlaceItemInLocation(&ZR_GS_AboveBridge,             GoldSkulltulaToken);
-    PlaceItemInLocation(&ZD_GS_FrozenWaterfall,         GoldSkulltulaToken);
-    PlaceItemInLocation(&ZF_GS_Tree,                    GoldSkulltulaToken);
-    PlaceItemInLocation(&ZF_GS_AboveTheLog,             GoldSkulltulaToken);
-    PlaceItemInLocation(&ZF_GS_HiddenCave,              GoldSkulltulaToken);
-    PlaceItemInLocation(&LH_GS_BeanPatch,               GoldSkulltulaToken);
-    PlaceItemInLocation(&LH_GS_LabWall,                 GoldSkulltulaToken);
-    PlaceItemInLocation(&LH_GS_SmallIsland,             GoldSkulltulaToken);
-    PlaceItemInLocation(&LH_GS_Tree,                    GoldSkulltulaToken);
-    PlaceItemInLocation(&LH_GS_LabCrate,                GoldSkulltulaToken);
-    PlaceItemInLocation(&GV_GS_SmallBridge,             GoldSkulltulaToken);
-    PlaceItemInLocation(&GV_GS_BeanPatch,               GoldSkulltulaToken);
-    PlaceItemInLocation(&GV_GS_BehindTent,              GoldSkulltulaToken);
-    PlaceItemInLocation(&GV_GS_Pillar,                  GoldSkulltulaToken);
-    PlaceItemInLocation(&GF_GS_ArcheryRange,            GoldSkulltulaToken);
-    PlaceItemInLocation(&GF_GS_TopFloor,                GoldSkulltulaToken);
-    PlaceItemInLocation(&HW_GS,                         GoldSkulltulaToken);
-    PlaceItemInLocation(&Colossus_GS_BeanPatch,         GoldSkulltulaToken);
-    PlaceItemInLocation(&Colossus_GS_Tree,              GoldSkulltulaToken);
-    PlaceItemInLocation(&Colossus_GS_Hill,              GoldSkulltulaToken);
+  //Forest Temple
+  if (ForestTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&ForestTemple_MQ_BossKeyChest, ForestTemple_BossKey);
+  } else {
+    PlaceItemInLocation(&ForestTemple_BossKeyChest, ForestTemple_BossKey);
+  }
 
-    //Dungeons
-    PlaceItemInLocation(&DekuTree_GS_CompassRoom,                     GoldSkulltulaToken);
-    PlaceItemInLocation(&DekuTree_GS_BasementVines,                   GoldSkulltulaToken);
-    PlaceItemInLocation(&DekuTree_GS_BasementGate,                    GoldSkulltulaToken);
-    PlaceItemInLocation(&DekuTree_GS_BasementBackRoom,                GoldSkulltulaToken);
+  //Fire Temple
+  if (FireTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&FireTemple_MQ_BossKeyChest, FireTemple_BossKey);
+  } else {
+    PlaceItemInLocation(&FireTemple_BossKeyChest, FireTemple_BossKey);
+  }
 
-    PlaceItemInLocation(&DodongosCavern_GS_SideRoomNearLowerLizalfos, GoldSkulltulaToken);
-    PlaceItemInLocation(&DodongosCavern_GS_VinesAboveStairs,          GoldSkulltulaToken);
-    PlaceItemInLocation(&DodongosCavern_GS_BackRoom,                  GoldSkulltulaToken);
-    PlaceItemInLocation(&DodongosCavern_GS_AlcoveAboveStairs,         GoldSkulltulaToken);
-    PlaceItemInLocation(&DodongosCavern_GS_Scarecrow,                 GoldSkulltulaToken);
+  //Water Temple
+  if (WaterTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&WaterTemple_MQ_BossKeyChest,  WaterTemple_BossKey);
+  } else {
+    PlaceItemInLocation(&WaterTemple_BossKeyChest,  WaterTemple_BossKey);
+  }
 
-    PlaceItemInLocation(&JabuJabusBelly_GS_WaterSwitchRoom,           GoldSkulltulaToken);
-    PlaceItemInLocation(&JabuJabusBelly_GS_LobbyBasementLower,        GoldSkulltulaToken);
-    PlaceItemInLocation(&JabuJabusBelly_GS_LobbyBasementUpper,        GoldSkulltulaToken);
-    PlaceItemInLocation(&JabuJabusBelly_GS_NearBoss,                  GoldSkulltulaToken);
+  //Spirit Temple
+  if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&SpiritTemple_MQ_BossKeyChest, SpiritTemple_BossKey);
+  } else {
+    PlaceItemInLocation(&SpiritTemple_BossKeyChest, SpiritTemple_BossKey);
+  }
 
-    PlaceItemInLocation(&ForestTemple_GS_FirstRoom,                   GoldSkulltulaToken);
-    PlaceItemInLocation(&ForestTemple_GS_Lobby,                       GoldSkulltulaToken);
-    PlaceItemInLocation(&ForestTemple_GS_RaisedIslandCourtyard,       GoldSkulltulaToken);
-    PlaceItemInLocation(&ForestTemple_GS_LevelIslandCourtyard,        GoldSkulltulaToken);
-    PlaceItemInLocation(&ForestTemple_GS_Basement,                    GoldSkulltulaToken);
-
-    PlaceItemInLocation(&FireTemple_GS_SongOfTimeRoom,                GoldSkulltulaToken);
-    PlaceItemInLocation(&FireTemple_GS_BoulderMaze,                   GoldSkulltulaToken);
-    PlaceItemInLocation(&FireTemple_GS_ScarecrowClimb,                GoldSkulltulaToken);
-    PlaceItemInLocation(&FireTemple_GS_ScarecrowTop,                  GoldSkulltulaToken);
-    PlaceItemInLocation(&FireTemple_GS_BossKeyLoop,                   GoldSkulltulaToken);
-
-    PlaceItemInLocation(&WaterTemple_GS_BehindGate,                   GoldSkulltulaToken);
-    PlaceItemInLocation(&WaterTemple_GS_River,                        GoldSkulltulaToken);
-    PlaceItemInLocation(&WaterTemple_GS_FallingPlatformRoom,          GoldSkulltulaToken);
-    PlaceItemInLocation(&WaterTemple_GS_CentralPillar,                GoldSkulltulaToken);
-    PlaceItemInLocation(&WaterTemple_GS_NearBossKeyChest,             GoldSkulltulaToken);
-
-    PlaceItemInLocation(&SpiritTemple_GS_MetalFence,                  GoldSkulltulaToken);
-    PlaceItemInLocation(&SpiritTemple_GS_SunOnFloorRoom,              GoldSkulltulaToken);
-    PlaceItemInLocation(&SpiritTemple_GS_HallAfterSunBlockRoom,       GoldSkulltulaToken);
-    PlaceItemInLocation(&SpiritTemple_GS_BoulderRoom,                 GoldSkulltulaToken);
-    PlaceItemInLocation(&SpiritTemple_GS_Lobby,                       GoldSkulltulaToken);
-
-    PlaceItemInLocation(&ShadowTemple_GS_LikeLikeRoom,                GoldSkulltulaToken);
-    PlaceItemInLocation(&ShadowTemple_GS_FallingSpikesRoom,           GoldSkulltulaToken);
-    PlaceItemInLocation(&ShadowTemple_GS_SingleGiantPot,              GoldSkulltulaToken);
-    PlaceItemInLocation(&ShadowTemple_GS_NearShip,                    GoldSkulltulaToken);
-    PlaceItemInLocation(&ShadowTemple_GS_TripleGiantPot,              GoldSkulltulaToken);
-
-    PlaceItemInLocation(&BottomOfTheWell_GS_WestInnerRoom,            GoldSkulltulaToken);
-    PlaceItemInLocation(&BottomOfTheWell_GS_EastInnerRoom,            GoldSkulltulaToken);
-    PlaceItemInLocation(&BottomOfTheWell_GS_LikeLikeCage,             GoldSkulltulaToken);
-
-    PlaceItemInLocation(&IceCavern_GS_SpinningScytheRoom,             GoldSkulltulaToken);
-    PlaceItemInLocation(&IceCavern_GS_HeartPieceRoom,                 GoldSkulltulaToken);
-    PlaceItemInLocation(&IceCavern_GS_PushBlockRoom,                  GoldSkulltulaToken);
+  //Shadow Temple
+  if (ShadowTempleDungeonMode == DUNGEONMODE_MQ) {
+    PlaceItemInLocation(&ShadowTemple_MQ_BossKeyChest, ShadowTemple_BossKey);
+  } else {
+    PlaceItemInLocation(&ShadowTemple_BossKeyChest, ShadowTemple_BossKey);
+  }
 }
 
 static void PlaceVanillaCowMilk() {
@@ -1008,10 +1039,26 @@ void GenerateItemPool() {
     PlaceItemInLocation(&ZR_MagicBeanSalesman, I_MagicBean);
   }
 
-  //TODO: sort between mq and vanilla dungeon skulltulas
-
-  if (Tokensanity.Is(TOKENSANITY_VANILLA)) {
-    PlaceVanillaSkulltulaTokens();
+  if (Tokensanity.Is(TOKENSANITY_OFF)) {
+    for (auto& loc : GetLocations("Skulltulas")) {
+      PlaceItemInLocation(loc, GoldSkulltulaToken);
+    }
+  } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
+    for (auto& loc : GetLocations("Skulltulas")) {
+      if (loc->GetScene() >= 0x0A) {
+        PlaceItemInLocation(loc, GoldSkulltulaToken);
+      } else {
+        AddItemToMainPool(GoldSkulltulaToken);
+      }
+    }
+  } else if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
+    for (auto& loc : GetLocations("Skulltulas")) {
+      if (loc->GetScene() < 0x0A) {
+        PlaceItemInLocation(loc, GoldSkulltulaToken);
+      } else {
+        AddItemToMainPool(GoldSkulltulaToken);
+      }
+    }
   } else {
     AddItemToMainPool(GoldSkulltulaToken, 100);
   }

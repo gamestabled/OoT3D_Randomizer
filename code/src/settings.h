@@ -72,8 +72,10 @@ typedef enum {
 } SongShuffleSetting;
 
 typedef enum {
-  TOKENSANITY_VANILLA,
-  TOKENSANITY_ANYWHERE,
+  TOKENSANITY_OFF,
+  TOKENSANITY_DUNGEONS,
+  TOKENSANITY_OVERWORLD,
+  TOKENSANITY_ALL_TOKENS,
 } TokensanitySetting;
 
 typedef enum {

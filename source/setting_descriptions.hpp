@@ -31,6 +31,8 @@ extern string_view ageDesc;
 
 extern string_view bombchuLogicDesc;
 
+extern string_view bombchuDropDesc;
+
 extern string_view randomMQDungeonsDesc;
 
 extern string_view mirrorWorldDesc;
@@ -38,8 +40,10 @@ extern string_view mirrorWorldDesc;
 extern string_view songsSongLocations;
 extern string_view songsAllLocations;
 
-extern string_view tokensVanilla;
-extern string_view tokensAllLocations;
+extern string_view tokensOff;
+extern string_view tokensDungeon;
+extern string_view tokensOverworld;
+extern string_view tokensAllTokens;
 
 extern string_view scrubsOff;
 extern string_view scrubsAffordable;

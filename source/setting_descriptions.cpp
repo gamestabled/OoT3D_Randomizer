@@ -85,9 +85,15 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //
-                                        "bombchu drops can appear similar to bomb drops.\n"//
+                                        "bombchu drops are forced on to guarentee a\n"     //
+                                        "replenishable source.\n"                          //
                                         "\n"                                               //
                                         "Bombchu Bowling is opened by bombchus.";          //
+/*------------------------------                                                           //
+|        BOMBCHU DROPS         |                                                           //
+------------------------------*/                                                           //
+string_view bombchuDropDesc           = "Bombchu drops can appear from cutting grass and\n"//
+                                        "breaking rocks just like bomb drops can.\n";      //
 /*------------------------------                                                           //
 |      RANDOM MQ DUNGEONS      |                                                           //
 ------------------------------*/                                                           //
@@ -109,9 +115,15 @@ string_view songsAllLocations         = "Songs can appear in any location.";    
 /*------------------------------                                                           //
 |         TOKENSANITY          |                                                           //
 ------------------------------*/                                                           //
-string_view tokensVanilla             = "Gold Skulltula Tokens will appear after defeating\n"
-                                        "Gold Skulltulas.";                                //
-string_view tokensAllLocations        = "Gold Skulltula Tokens can appear anywhere.";      //
+string_view tokensOff                 = "GS locations will not be shuffled.";              //
+string_view tokensDungeon             = "This only shuffles the GS locations that are\n"   //
+                                        "within dungeons, increasing the value of most\n"  //
+                                        "dungeons and making internal dungeon exploration\n"
+                                        "more diverse.";                                   //
+string_view tokensOverworld           = "This only shuffles the GS locations that are\n"   //
+                                        "outside of dungeons.";                            //
+string_view tokensAllTokens           = "Effectively adds 100 new locations for items to\n"//
+                                        "appear.";                                         //
                                                                                            //
 /*------------------------------                                                           //
 |        SCRUB SHUFFLE         |                                                           //
