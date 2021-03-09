@@ -1,5 +1,8 @@
+#include <unistd.h>
+
 #include "settings.hpp"
 #include "setting_descriptions.hpp"
+#include "item_location.hpp"
 #include "random.hpp"
 
 namespace Settings {
@@ -13,7 +16,9 @@ namespace Settings {
   Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc, doorOfTimeDesc});
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Open"},                                      {fountainNormal, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                              {gerudoNormal, gerudoFast, gerudoOpen});
-  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons});
+  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"},
+                                                                      {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
+  Option TokenCount          = Option::U8  ("Token Count",            {/*Options 0-100 defined in SetDefaultOptions()*/},      std::vector<std::string_view>{101, tokenCountDesc});
   std::vector<Option *> openOptions = {
     &Logic,
     &OpenForest,
@@ -22,6 +27,7 @@ namespace Settings {
     &ZorasFountain,
     &GerudoFortress,
     &Bridge,
+    &TokenCount,
   };
 
   //World Settings
@@ -326,6 +332,7 @@ namespace Settings {
     ctx.zorasFountain      = ZorasFountain.Value<u8>();
     ctx.gerudoFortress     = GerudoFortress.Value<u8>();
     ctx.rainbowBridge      = Bridge.Value<u8>();
+    ctx.tokenCount         = TokenCount.Value<u8>();
 
     ctx.startingAge        = StartingAge.Value<u8>();
     ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
@@ -402,6 +409,7 @@ namespace Settings {
     ZorasFountain.SetSelectedIndex(ctx.zorasFountain);
     GerudoFortress.SetSelectedIndex(ctx.gerudoFortress);
     Bridge.SetSelectedIndex(ctx.rainbowBridge);
+    TokenCount.SetSelectedIndex(ctx.tokenCount);
 
     StartingAge.SetSelectedIndex(ctx.startingAge);
     BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
@@ -456,12 +464,21 @@ namespace Settings {
     OpenDoorOfTime.SetSelectedIndex(1); //1 is Open, 0 is Closed
     Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
 
+    std::vector<std::string> tokenOptions = {};
+    for (int i = 0; i <= 100; i++) {
+      tokenOptions.push_back(std::to_string(i));
+    }
+    TokenCount.SetOptions(tokenOptions);
+    TokenCount.SetSelectedIndex(1);
+
     StartingAge.SetSelectedIndex(AGE_CHILD);
 
     MapsAndCompasses.SetSelectedIndex(MAPSANDCOMPASSES_VANILLA);
     Keysanity.SetSelectedIndex(KEYSANITY_VANILLA);
     BossKeysanity.SetSelectedIndex(BOSSKEYSANITY_VANILLA);
     GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
+
+    AddExcludedOptions();
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
@@ -481,13 +498,20 @@ namespace Settings {
       StartingAge.Unlock();
     }
 
+    if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
+      TokenCount.Unhide();
+    } else {
+      TokenCount.Hide();
+      TokenCount.SetSelectedIndex(1);
+    }
+
     //Bombchus in Logic forces Bombchu Drops
-     if (BombchusInLogic) {
-       BombchuDrops.SetSelectedIndex(ON);
-       BombchuDrops.Lock();
-     } else {
-       BombchuDrops.Unlock();
-     }
+    if (BombchusInLogic) {
+      BombchuDrops.SetSelectedIndex(ON);
+      BombchuDrops.Lock();
+    } else {
+      BombchuDrops.Unlock();
+    }
 
     //Set toggle for all tricks
     if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {

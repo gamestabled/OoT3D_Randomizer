@@ -26,6 +26,9 @@ extern string_view bridgeVanilla;
 extern string_view bridgeStones;
 extern string_view bridgeMedallions;
 extern string_view bridgeDungeons;
+extern string_view bridgeTokens;
+
+extern string_view tokenCountDesc;
 
 extern string_view ageDesc;
 

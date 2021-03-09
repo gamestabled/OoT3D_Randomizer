@@ -44,8 +44,6 @@ void PrintTopScreen() {
 
 void MenuInit() {
 
-  //Call to fill in the Excluded Locations menu (from item_location.hpp)
-  AddExcludedOptions();
   Settings::SetDefaultSettings();
 
   seedChanged = false;
@@ -75,7 +73,7 @@ void MenuInit() {
 
   consoleSelect(&bottomScreen);
   PrintMainMenu();
-
+  
 }
 
 void MenuUpdate(u32 kDown) {
@@ -210,7 +208,7 @@ void UpdateSubMenu(u32 kDown) {
     }
 
     currentSetting = currentMenuItem->settingsList->at(settingIdx);
-  } while (currentSetting->IsLocked());
+  } while (currentSetting->IsLocked() || currentSetting->IsHidden());
 
   if ((kDown & KEY_DRIGHT) != 0) {
     currentSetting->NextOptionIndex();
@@ -317,6 +315,8 @@ void PrintSubMenu() {
 		} else if (setting->IsLocked()) {
 			printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
 			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+    } else if (setting->IsHidden()) {
+      continue;
 		} else {
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
       printf("\x1b[%d;%dH%s",    row, 26, setting->GetSelectedOption().data());

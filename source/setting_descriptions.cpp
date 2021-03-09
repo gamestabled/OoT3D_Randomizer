@@ -70,7 +70,13 @@ string_view bridgeStones              = "The Rainbow Bridge requires the Kokiri'
 string_view bridgeMedallions          = "The Rainbow Bridge requires Forest, Fire, Water,\n"
                                         "Shadow, Spirit, and Light Medallions";            //
 string_view bridgeDungeons            = "The Rainbow Bridge requires beating every dungeon.";
-                                                                                           //
+string_view bridgeTokens              = "The Rainbow Bridge requires collecting a certain\n"
+                                        "number of Gold Skulltula Tokens.";                //
+/*------------------------------                                                           //
+|          TOKEN COUNT         |                                                           //
+------------------------------*/                                                           //
+string_view tokenCountDesc            = "Set the number of Gold Skulltula Tokens for the\n"//
+                                        "Rainbow Bridge.";                                 //
 /*------------------------------                                                           //
 |         STARTING AGE         |                                                           //
 ------------------------------*/                                                           //

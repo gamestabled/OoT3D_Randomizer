@@ -12,11 +12,11 @@
 
 class Option {
 public:
-    static Option Bool(std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_) {
+    static Option Bool(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_) {
         return Option{false, std::move(name_), std::move(options_), std::move(optionDescriptions_)};
     }
 
-    static Option U8(std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_) {
+    static Option U8(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_) {
         return Option{u8{0}, std::move(name_), std::move(options_), std::move(optionDescriptions_)};
     }
 
@@ -48,6 +48,10 @@ public:
         } else {
             return Value<u8>() != 0;
         }
+    }
+
+    void SetOptions(std::vector<std::string> o) {
+      options = o;
     }
 
     std::string_view GetName() const {
@@ -108,27 +112,40 @@ public:
       locked = false;
     }
 
-    bool IsLocked() {
+    bool IsLocked() const {
       return locked;
     }
 
+    void Hide() {
+      hidden = true;
+    }
+
+    void Unhide() {
+      hidden = false;
+    }
+
+    bool IsHidden() const {
+      return hidden;
+    }
+
 private:
-    Option(u8 var_, std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_)
+    Option(u8 var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_)
           : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)) {
         SetVariable();
     }
 
-    Option(bool var_, std::string name_, std::vector<std::string_view> options_, std::vector<std::string_view> optionDescriptions_)
+    Option(bool var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_)
           : var(var_), name(std::move(name_)),  options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)) {
         SetVariable();
     }
 
   std::variant<bool, u8> var;
   std::string name;
-  std::vector<std::string_view> options;
+  std::vector<std::string> options;
   std::vector<std::string_view> optionDescriptions;
   u8 selectedOption = 0;
   bool locked = false;
+  bool hidden = false;
 };
 
 enum class MenuItemType {
@@ -167,6 +184,7 @@ namespace Settings {
   extern Option ZorasFountain;
   extern Option GerudoFortress;
   extern Option Bridge;
+  extern Option TokenCount;
 
   extern Option StartingAge;
   extern Option BombchusInLogic;

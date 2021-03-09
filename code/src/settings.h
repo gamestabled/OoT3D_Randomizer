@@ -158,6 +158,7 @@ typedef struct {
   u8 zorasFountain;
   u8 gerudoFortress;
   u8 rainbowBridge;
+  u8 tokenCount;
 
   u8 startingAge;
   u8 bombchusInLogic;
