@@ -2042,56 +2042,64 @@ void AddExcludedOptions() {
   allLocations.clear();
   AddLocations(overworldLocations);
 
-  AddLocations(DT_MQ);
-  AddLocations(DT_Vanilla);
-  AddLocation(&DekuTree_QueenGohmaHeart);
+  /*For some reason, trying to add all the dungeon locations here will crash
+    the app if it calls Settings::FillContext() later on.
 
-  AddLocations(DC_MQ);
-  AddLocations(DC_Vanilla);
-  AddLocation(&DodongosCavern_BossRoomChest);
-  AddLocation(&DodongosCavern_KingDodongoHeart);
+    I have no idea why this happens, but we'll leave out the dungeon locations
+    for now since most of the long checks that are typically excluded are overworld
+    ones.*/
 
-  AddLocations(Jabu_MQ);
-  AddLocations(Jabu_Vanilla);
-  AddLocation(&JabuJabusBelly_BarinadeHeart);
-
-  AddLocations(FoT_MQ);
-  AddLocations(FoT_Vanilla);
-  AddLocation(&ForestTemple_PhantomGanonHeart);
-
-  AddLocations(FiT_MQ);
-  AddLocations(FiT_Vanilla);
-  AddLocation(&FireTemple_VolvagiaHeart);
-
-  AddLocations(WaT_MQ);
-  AddLocations(WaT_Vanilla);
-  AddLocation(&WaterTemple_MorphaHeart);
-
-  AddLocation(&SpiritTemple_SilverGauntletsChest);
-  AddLocation(&SpiritTemple_MirrorShieldChest);
-  AddLocations(SpT_MQ);
-  AddLocations(SpT_Vanilla);
-  AddLocation(&SpiritTemple_TwinrovaHeart);
-
-  AddLocations(ShT_MQ);
-  AddLocations(ShT_Vanilla);
-  AddLocation(&ShadowTemple_BongoBongoHeart);
-
-  AddLocations(BotW_MQ);
-  AddLocations(BotW_Vanilla);
-
-  AddLocations(IC_MQ);
-  AddLocations(IC_Vanilla);
-  AddLocation(&SheikInIceCavern);
-
-  AddLocations(GTG_MQ);
-  AddLocations(GTG_Vanilla);
-
-  AddLocations(GC_MQ);
-  AddLocations(GC_Vanilla);
-  AddLocation(&GanonsCastle_BossKeyChest);
+  // AddLocations(DT_MQ);
+  // AddLocations(DT_Vanilla);
+  // AddLocation(&DekuTree_QueenGohmaHeart);
+  //
+  // AddLocations(DC_MQ);
+  // AddLocations(DC_Vanilla);
+  // AddLocation(&DodongosCavern_BossRoomChest);
+  // AddLocation(&DodongosCavern_KingDodongoHeart);
+  //
+  // AddLocations(Jabu_MQ);
+  // AddLocations(Jabu_Vanilla);
+  // AddLocation(&JabuJabusBelly_BarinadeHeart);
+  //
+  // AddLocations(FoT_MQ);
+  // AddLocations(FoT_Vanilla);
+  // AddLocation(&ForestTemple_PhantomGanonHeart);
+  //
+  // AddLocations(FiT_MQ);
+  // AddLocations(FiT_Vanilla);
+  // AddLocation(&FireTemple_VolvagiaHeart);
+  //
+  // AddLocations(WaT_MQ);
+  // AddLocations(WaT_Vanilla);
+  // AddLocation(&WaterTemple_MorphaHeart);
+  //
+  // AddLocation(&SpiritTemple_SilverGauntletsChest);
+  // AddLocation(&SpiritTemple_MirrorShieldChest);
+  // AddLocations(SpT_MQ);
+  // AddLocations(SpT_Vanilla);
+  // AddLocation(&SpiritTemple_TwinrovaHeart);
+  //
+  // AddLocations(ShT_MQ);
+  // AddLocations(ShT_Vanilla);
+  // AddLocation(&ShadowTemple_BongoBongoHeart);
+  //
+  // AddLocations(BotW_MQ);
+  // AddLocations(BotW_Vanilla);
+  //
+  // AddLocations(IC_MQ);
+  // AddLocations(IC_Vanilla);
+  // AddLocation(&SheikInIceCavern);
+  //
+  // AddLocations(GTG_MQ);
+  // AddLocations(GTG_Vanilla);
+  //
+  // AddLocations(GC_MQ);
+  // AddLocations(GC_Vanilla);
+  // AddLocation(&GanonsCastle_BossKeyChest);
 
   for (ItemLocation * il: allLocations) {
     il->AddExcludeOption();
   }
+  allLocations.clear();
 }
