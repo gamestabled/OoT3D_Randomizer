@@ -733,8 +733,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
   });
 
   Exit OGC_Grounds = Exit("Ganon's Castle Grounds", "Castle Grounds", "outside Ganon's Castle", NO_DAY_NIGHT_CYCLE, {}, {
-                  //Locations
-                  ItemLocationPairing(&OGC_GS, []{return true;}),
+                  //Locations                     //the terrain was lowered such that you can't get this GS with a simple sword slash
+                  ItemLocationPairing(&OGC_GS, []{return HasExplosives || (IsAdult && (LogicOutsideGanonsGS || Bow || Hookshot || CanUse("Dins Fire")));}),
                 }, {
                   //Exits
                   ExitPairing::Night(&CastleGrounds,          []{return AtNight;}),

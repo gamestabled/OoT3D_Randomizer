@@ -421,7 +421,7 @@ namespace Logic {
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
 
-    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || BombchuDrop) && (BombchusInLogic || BombBag);
+    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 /*|| BombchuDrops*/) && (BombchusInLogic || BombBag);
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
@@ -469,8 +469,8 @@ namespace Logic {
                            (Bridge.Is(RAINBOWBRIDGE_VANILLA)    && ShadowMedallion && SpiritMedallion) ||
                            (Bridge.Is(RAINBOWBRIDGE_STONES)     && HasAllStones) ||
                            (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && HasAllMedallions) ||
-                           (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && HasAllStones && HasAllMedallions);
-                           //(Bridge.Is(RAINBOWBRIDGE_TOKENS)   && GoldSkulltulaTokens > Count);
+                           (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && HasAllStones && HasAllMedallions) ||
+                           (Bridge.Is(RAINBOWBRIDGE_TOKENS)     && GoldSkulltulaTokens >= TokenCount.Value<u8>());
 
     CanTriggerLACS = (LACSCondition == LACSCONDITION_VANILLA    && ShadowMedallion && SpiritMedallion) ||
                      (LACSCondition == LACSCONDITION_STONES     && HasAllStones)                       ||

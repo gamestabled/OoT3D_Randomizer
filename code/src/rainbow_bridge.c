@@ -2,7 +2,7 @@
 #include "settings.h"
 
 u32 BgGjyoBridge_ConditionVanilla(void) {
-    return ((gSaveContext.questItems & 0x8) && (gSaveContext.questItems & 0x10) 
+    return ((gSaveContext.questItems & 0x8) && (gSaveContext.questItems & 0x10)
         && (gSaveContext.items[ItemSlots[ITEM_ARROW_LIGHT]] == ITEM_ARROW_LIGHT));
 }
 
@@ -29,6 +29,8 @@ u32 BgGjyoBridge_CheckCondition(void) {
             return BgGjyoBridge_ConditionMedallions();
         case RAINBOWBRIDGE_DUNGEONS:
             return BgGjyoBridge_ConditionStones() && BgGjyoBridge_ConditionMedallions();
+        case RAINBOWBRIDGE_TOKENS:
+            return gSaveContext.gsTokens >= gSettingsContext.tokenCount;
         default:
             return BgGjyoBridge_ConditionVanilla();
     }

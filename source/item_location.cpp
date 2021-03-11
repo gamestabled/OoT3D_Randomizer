@@ -2,42 +2,6 @@
 #include "spoiler_log.hpp"
 #include "settings.hpp"
 
-//set of overrides to write to the patch
-std::set<ItemOverride, ItemOverride_Compare> overrides = {};
-
-std::vector<ItemLocation*> playthroughLocations = {};
-
-u32 totalLocationsFound = 0;
-u16 itemsPlaced = 0;
-
-void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
-    /*-------------------------------------------------
-    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
-    --------------------------------------------------*/
-    //this prevents an override from being created for these two locations
-    if (loc->GetName() != "Shadow Temple Freestanding Key" && loc->GetName() != "Gerudo Training Grounds Freestanding Key") {
-      overrides.insert({
-        .key = loc->Key(),
-        .value = item.Value(),
-      });
-    }
-
-    PlacementLog_Msg("\n");
-    PlacementLog_Msg(item.GetName());
-    PlacementLog_Msg(" placed at ");
-    PlacementLog_Msg(loc->GetName());
-    PlacementLog_Msg("\n\n");
-
-    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-      item.ApplyEffect();
-      loc->Use();
-    }
-
-    itemsPlaced++;
-    printf("\x1b[8;10HPlacing Items...%d/%d", itemsPlaced, allLocations.size() + dungeonRewardLocations.size());
-    loc->SetPlacedItem(item);
-}
-
 //Location definitions
 //Kokiri Forest
 ItemLocation KF_KokiriSwordChest              = ItemLocation::Chest      (0x55, 0x00, "KF Kokiri Sword Chest",                {"Kokiri Forest", "Forest",});
@@ -1092,6 +1056,435 @@ const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements{{
   ItemLocationKeyPairing(&GanonsCastle_BossKeyChest,                    2),
 }};
 
+const std::array<ItemLocation*, 10> DT_Vanilla = {
+  &DekuTree_MapChest,
+  &DekuTree_CompassChest,
+  &DekuTree_CompassRoomSideChest,
+  &DekuTree_BasementChest,
+  &DekuTree_SlingshotChest,
+  &DekuTree_SlingshotRoomSideChest,
+  &DekuTree_GS_BasementBackRoom,
+  &DekuTree_GS_BasementGate,
+  &DekuTree_GS_BasementVines,
+  &DekuTree_GS_CompassRoom,
+};
+const std::array<ItemLocation*, 12> DT_MQ = {
+  &DekuTree_MQ_MapChest,
+  &DekuTree_MQ_CompassChest,
+  &DekuTree_MQ_SlingshotChest,
+  &DekuTree_MQ_SlingshotRoomBackChest,
+  &DekuTree_MQ_BasementChest,
+  &DekuTree_MQ_BeforeSpinningLogChest,
+  &DekuTree_MQ_AfterSpinningLowChest,
+  &DekuTree_MQ_DekuScrub,
+  &DekuTree_MQ_GS_Lobby,
+  &DekuTree_MQ_GS_CompassRoom,
+  &DekuTree_MQ_GS_BasementGravesRoom,
+  &DekuTree_MQ_GS_BasementBackRoom,
+};
+const std::array<ItemLocation*, 14> DC_Vanilla = {
+  &DodongosCavern_MapChest,
+  &DodongosCavern_CompassChest,
+  &DodongosCavern_BombFlowerPlatformChest,
+  &DodongosCavern_BombBagChest,
+  &DodongosCavern_EndOfBridgeChest,
+  &DodongosCavern_DekuScrubLobby,
+  &DodongosCavern_DekuScrubSideRoomNearDodongos,
+  &DodongosCavern_DekuScrubNearBombBagLeft,
+  &DodongosCavern_DekuScrubNearBombBagRight,
+  &DodongosCavern_GS_VinesAboveStairs,
+  &DodongosCavern_GS_Scarecrow,
+  &DodongosCavern_GS_AlcoveAboveStairs,
+  &DodongosCavern_GS_BackRoom,
+  &DodongosCavern_GS_SideRoomNearLowerLizalfos,
+};
+const std::array<ItemLocation*, 15> DC_MQ = {
+  &DodongosCavern_MQ_MapChest,
+  &DodongosCavern_MQ_BombBagChest,
+  &DodongosCavern_MQ_CompassChest,
+  &DodongosCavern_MQ_LarvaeRoomChest,
+  &DodongosCavern_MQ_TorchPuzzleRoomChest,
+  &DodongosCavern_MQ_UnderGraveChest,
+  &DodongosCavern_MQ_DekuScrubLobbyRear,
+  &DodongosCavern_MQ_DekuScrubLobbyFront,
+  &DodongosCavern_MQ_DekuScrubStaircase,
+  &DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos,
+  &DodongosCavern_MQ_GS_ScrubRoom,
+  &DodongosCavern_MQ_GS_SongOfTimeBlockRoom,
+  &DodongosCavern_MQ_GS_LizalfosRoom,
+  &DodongosCavern_MQ_GS_LarvaeRoom,
+  &DodongosCavern_MQ_GS_BackRoom,
+};
+const std::array<ItemLocation*, 8> Jabu_Vanilla = {
+  &JabuJabusBelly_MapChest,
+  &JabuJabusBelly_CompassChest,
+  &JabuJabusBelly_BoomerangChest,
+  &JabuJabusBelly_DekuScrub,
+  &JabuJabusBelly_GS_LobbyBasementLower,
+  &JabuJabusBelly_GS_LobbyBasementUpper,
+  &JabuJabusBelly_GS_NearBoss,
+  &JabuJabusBelly_GS_WaterSwitchRoom,
+};
+const std::array<ItemLocation*, 15> Jabu_MQ = {
+  &JabuJabusBelly_MQ_FirstRoomSideChest,
+  &JabuJabusBelly_MQ_MapChest,
+  &JabuJabusBelly_MQ_SecondRoomLowerChest,
+  &JabuJabusBelly_MQ_CompassChest,
+  &JabuJabusBelly_MQ_SecondRoomUpperChest,
+  &JabuJabusBelly_MQ_BasementNearSwitchesChest,
+  &JabuJabusBelly_MQ_BasementNearVinesChest,
+  &JabuJabusBelly_MQ_NearBossChest,
+  &JabuJabusBelly_MQ_FallingLikeLikeRoomChest,
+  &JabuJabusBelly_MQ_BoomerangRoomSmallChest,
+  &JabuJabusBelly_MQ_BoomerangChest,
+  &JabuJabusBelly_MQ_GS_TailPasaranRoom,
+  &JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom,
+  &JabuJabusBelly_MQ_GS_BoomerangChestRoom,
+  &JabuJabusBelly_MQ_GS_NearBoss,
+};
+const std::array<ItemLocation*, 18> FoT_Vanilla = {
+  &ForestTemple_FirstRoomChest,
+  &ForestTemple_FirstStalfosChest,
+  &ForestTemple_RaisedIslandCourtyardChest,
+  &ForestTemple_MapChest,
+  &ForestTemple_WellChest,
+  &ForestTemple_FallingCeilingRoomChest,
+  &ForestTemple_EyeSwitchChest,
+  &ForestTemple_BossKeyChest,
+  &ForestTemple_FloormasterChest,
+  &ForestTemple_BowChest,
+  &ForestTemple_RedPoeChest,
+  &ForestTemple_BluePoeChest,
+  &ForestTemple_BasementChest,
+  &ForestTemple_GS_RaisedIslandCourtyard,
+  &ForestTemple_GS_FirstRoom,
+  &ForestTemple_GS_LevelIslandCourtyard,
+  &ForestTemple_GS_Lobby,
+  &ForestTemple_GS_Basement,
+};
+const std::array<ItemLocation*, 17> FoT_MQ = {
+  &ForestTemple_MQ_FirstRoomChest,
+  &ForestTemple_MQ_WolfosChest,
+  &ForestTemple_MQ_BowChest,
+  &ForestTemple_MQ_RaisedIslandCourtyardLowerChest,
+  &ForestTemple_MQ_RaisedIslandCourtyardUpperChest,
+  &ForestTemple_MQ_WellChest,
+  &ForestTemple_MQ_MapChest,
+  &ForestTemple_MQ_CompassChest,
+  &ForestTemple_MQ_FallingCeilingRoomChest,
+  &ForestTemple_MQ_BasementChest,
+  &ForestTemple_MQ_RedeadChest,
+  &ForestTemple_MQ_BossKeyChest,
+  &ForestTemple_MQ_GS_FirstHallway,
+  &ForestTemple_MQ_GS_BlockPushRoom,
+  &ForestTemple_MQ_GS_RaisedIslandCourtyard,
+  &ForestTemple_MQ_GS_LevelIslandCourtyard,
+  &ForestTemple_MQ_GS_Well,
+};
+const std::array<ItemLocation*, 19> FiT_Vanilla = {
+  &FireTemple_NearBossChest,
+  &FireTemple_FlareDancerChest,
+  &FireTemple_BossKeyChest,
+  &FireTemple_BigLavaRoomBlockedDoorChest,
+  &FireTemple_BigLavaRoomLowerOpenDoorChest,
+  &FireTemple_BoulderMazeLowerChest,
+  &FireTemple_BoulderMazeUpperChest,
+  &FireTemple_BoulderMazeSideRoomChest,
+  &FireTemple_BoulderMazeShortcutChest,
+  &FireTemple_ScarecrowChest,
+  &FireTemple_MapChest,
+  &FireTemple_CompassChest,
+  &FireTemple_HighestGoronChest,
+  &FireTemple_MegatonHammerChest,
+  &FireTemple_GS_SongOfTimeRoom,
+  &FireTemple_GS_BossKeyLoop,
+  &FireTemple_GS_BoulderMaze,
+  &FireTemple_GS_ScarecrowTop,
+  &FireTemple_GS_ScarecrowClimb,
+};
+const std::array<ItemLocation*, 17> FiT_MQ = {
+  &FireTemple_MQ_NearBossChest,
+  &FireTemple_MQ_MegatonHammerChest,
+  &FireTemple_MQ_CompassChest,
+  &FireTemple_MQ_LizalfosMazeLowerChest,
+  &FireTemple_MQ_LizalfosMazeUpperChest,
+  &FireTemple_MQ_ChestOnFire,
+  &FireTemple_MQ_MapRoomSideChest,
+  &FireTemple_MQ_MapChest,
+  &FireTemple_MQ_BossKeyChest,
+  &FireTemple_MQ_BigLavaRoomBlockedDoorChest,
+  &FireTemple_MQ_LizalfosMazeSideRoomChest,
+  &FireTemple_MQ_FreestandingKey,
+  &FireTemple_MQ_GS_AboveFireWallMaze,
+  &FireTemple_MQ_GS_FireWallMazeCenter,
+  &FireTemple_MQ_GS_BigLavaRoomOpenDoor,
+  &FireTemple_MQ_GS_FireWallMazeSideRoom,
+  &FireTemple_MQ_GS_SkullOnFire,
+};
+const std::array<ItemLocation*, 15> WaT_Vanilla = {
+  &WaterTemple_MapChest,
+  &WaterTemple_CompassChest,
+  &WaterTemple_TorchesChest,
+  &WaterTemple_DragonChest,
+  &WaterTemple_CentralBowTargetChest,
+  &WaterTemple_CentralPillarChest,
+  &WaterTemple_CrackedWallChest,
+  &WaterTemple_BossKeyChest,
+  &WaterTemple_LongshotChest,
+  &WaterTemple_RiverChest,
+  &WaterTemple_GS_BehindGate,
+  &WaterTemple_GS_FallingPlatformRoom,
+  &WaterTemple_GS_CentralPillar,
+  &WaterTemple_GS_NearBossKeyChest,
+  &WaterTemple_GS_River,
+};
+const std::array<ItemLocation*, 11> WaT_MQ = {
+  &WaterTemple_MQ_CentralPillarChest,
+  &WaterTemple_MQ_BossKeyChest,
+  &WaterTemple_MQ_LongshotChest,
+  &WaterTemple_MQ_CompassChest,
+  &WaterTemple_MQ_MapChest,
+  &WaterTemple_MQ_FreestandingKey,
+  &WaterTemple_MQ_GS_BeforeUpperWaterSwitch,
+  &WaterTemple_MQ_GS_FreestandingKeyArea,
+  &WaterTemple_MQ_GS_LizalfosHallway,
+  &WaterTemple_MQ_GS_River,
+  &WaterTemple_MQ_GS_TripleWallTorch,
+};
+const std::array<ItemLocation*, 22> SpT_Vanilla = {
+  &SpiritTemple_ChildBridgeChest,
+  &SpiritTemple_ChildEarlyTorchesChest,
+  &SpiritTemple_CompassChest,
+  &SpiritTemple_EarlyAdultRightChest,
+  &SpiritTemple_FirstMirrorLeftChest,
+  &SpiritTemple_FirstMirrorRightChest,
+  &SpiritTemple_MapChest,
+  &SpiritTemple_ChildClimbNorthChest,
+  &SpiritTemple_ChildClimbEastChest,
+  &SpiritTemple_SunBlockRoomChest,
+  &SpiritTemple_StatueRoomHandChest,
+  &SpiritTemple_StatueRoomNortheastChest,
+  &SpiritTemple_NearFourArmosChest,
+  &SpiritTemple_HallwayLeftInvisibleChest,
+  &SpiritTemple_HallwayRightInvisibleChest,
+  &SpiritTemple_BossKeyChest,
+  &SpiritTemple_TopmostChest,
+  &SpiritTemple_GS_HallAfterSunBlockRoom,
+  &SpiritTemple_GS_BoulderRoom,
+  &SpiritTemple_GS_Lobby,
+  &SpiritTemple_GS_SunOnFloorRoom,
+  &SpiritTemple_GS_MetalFence,
+};
+const std::array<ItemLocation*, 25> SpT_MQ = {
+  &SpiritTemple_MQ_EntranceFrontLeftChest,
+  &SpiritTemple_MQ_EntranceBackRightChest,
+  &SpiritTemple_MQ_EntranceFrontRightChest,
+  &SpiritTemple_MQ_EntranceBackLeftChest,
+  &SpiritTemple_MQ_ChildHammerSwitchChest,
+  &SpiritTemple_MQ_MapChest,
+  &SpiritTemple_MQ_MapRoomEnemyChest,
+  &SpiritTemple_MQ_ChildClimbNorthChest,
+  &SpiritTemple_MQ_ChildClimbSouthChest,
+  &SpiritTemple_MQ_CompassChest,
+  &SpiritTemple_MQ_StatueRoomLullabyChest,
+  &SpiritTemple_MQ_StatueRoomInvisibleChest,
+  &SpiritTemple_MQ_SilverBlockHallwayChest,
+  &SpiritTemple_MQ_SunBlockRoomChest,
+  &SpiritTemple_MQ_SymphonyRoomChest,
+  &SpiritTemple_MQ_LeaverRoomChest,
+  &SpiritTemple_MQ_BeamosRoomChest,
+  &SpiritTemple_MQ_ChestSwitchChest,
+  &SpiritTemple_MQ_BossKeyChest,
+  &SpiritTemple_MQ_MirrorPuzzleInvisibleChest,
+  &SpiritTemple_MQ_GS_SymphonyRoom,
+  &SpiritTemple_MQ_GS_LeeverRoom,
+  &SpiritTemple_MQ_GS_NineThronesRoomWest,
+  &SpiritTemple_MQ_GS_NineThronesRoomNorth,
+  &SpiritTemple_MQ_GS_SunBlockRoom,
+};
+const std::array<ItemLocation*, 22> ShT_Vanilla = {
+  &ShadowTemple_MapChest,
+  &ShadowTemple_HoverBootsChest,
+  &ShadowTemple_CompassChest,
+  &ShadowTemple_EarlySilverRupeeChest,
+  &ShadowTemple_InvisibleBladesVisibleChest,
+  &ShadowTemple_InvisibleBladesInvisibleChest,
+  &ShadowTemple_FallingSpikesLowerChest,
+  &ShadowTemple_FallingSpikesUpperChest,
+  &ShadowTemple_FallingSpikesSwitchChest,
+  &ShadowTemple_InvisibleSpikesChest,
+  &ShadowTemple_WindHintChest,
+  &ShadowTemple_AfterWindEnemyChest,
+  &ShadowTemple_AfterWindHiddenChest,
+  &ShadowTemple_SpikeWallsLeftChest,
+  &ShadowTemple_BossKeyChest,
+  &ShadowTemple_InvisibleFloormasterChest,
+  &ShadowTemple_FreestandingKey,
+  &ShadowTemple_GS_SingleGiantPot,
+  &ShadowTemple_GS_FallingSpikesRoom,
+  &ShadowTemple_GS_TripleGiantPot,
+  &ShadowTemple_GS_LikeLikeRoom,
+  &ShadowTemple_GS_NearShip,
+};
+const std::array<ItemLocation*, 25> ShT_MQ = {
+  &ShadowTemple_MQ_CompassChest,
+  &ShadowTemple_MQ_HoverBootsChest,
+  &ShadowTemple_MQ_EarlyGibdosChest,
+  &ShadowTemple_MQ_MapChest,
+  &ShadowTemple_MQ_BeamosSilverRupeesChest,
+  &ShadowTemple_MQ_FallingSpikesSwitchChest,
+  &ShadowTemple_MQ_FallingSpikesLowerChest,
+  &ShadowTemple_MQ_FallingSpikesUpperChest,
+  &ShadowTemple_MQ_InvisibleSpikesChest,
+  &ShadowTemple_MQ_BossKeyChest,
+  &ShadowTemple_MQ_SpikeWallsLeftChest,
+  &ShadowTemple_MQ_StalfosRoomChest,
+  &ShadowTemple_MQ_InvisibleBladesInvisibleChest,
+  &ShadowTemple_MQ_InvisibleBladesVisibleChest,
+  &ShadowTemple_MQ_BombFlowerChest,
+  &ShadowTemple_MQ_WindHintChest,
+  &ShadowTemple_MQ_AfterWindHiddenChest,
+  &ShadowTemple_MQ_AfterWindEnemyChest,
+  &ShadowTemple_MQ_NearShipInvisibleChest,
+  &ShadowTemple_MQ_FreestandingKey,
+  &ShadowTemple_MQ_GS_FallingSpikesRoom,
+  &ShadowTemple_MQ_GS_WindHintRoom,
+  &ShadowTemple_MQ_GS_AfterWind,
+  &ShadowTemple_MQ_GS_AfterShip,
+  &ShadowTemple_MQ_GS_NearBoss,
+};
+const std::array<ItemLocation*, 17> BotW_Vanilla = {
+  &BottomOfTheWell_FrontLeftFakeWallChest,
+  &BottomOfTheWell_FrontCenterBombableChest,
+  &BottomOfTheWell_RightBottomFakeWallChest,
+  &BottomOfTheWell_CompassChest,
+  &BottomOfTheWell_CenterSkulltulaChest,
+  &BottomOfTheWell_BackLeftBombableChest,
+  &BottomOfTheWell_LensOfTruthChest,
+  &BottomOfTheWell_InvisibleChest,
+  &BottomOfTheWell_UnderwaterFrontChest,
+  &BottomOfTheWell_UnderwaterLeftChest,
+  &BottomOfTheWell_MapChest,
+  &BottomOfTheWell_FireKeeseChest,
+  &BottomOfTheWell_LikeLikeChest,
+  &BottomOfTheWell_FreestandingKey,
+  &BottomOfTheWell_GS_LikeLikeCage,
+  &BottomOfTheWell_GS_EastInnerRoom,
+  &BottomOfTheWell_GS_WestInnerRoom,
+};
+const std::array<ItemLocation*, 8> BotW_MQ = {
+  &BottomOfTheWell_MQ_MapChest,
+  &BottomOfTheWell_MQ_LensOfTruthChest,
+  &BottomOfTheWell_MQ_CompassChest,
+  &BottomOfTheWell_MQ_DeadHandFreestandingKey,
+  &BottomOfTheWell_MQ_EastInnerRoomFreestandingKey,
+  &BottomOfTheWell_MQ_GS_Basement,
+  &BottomOfTheWell_MQ_GS_CoffinRoom,
+  &BottomOfTheWell_MQ_GS_WestInnerRoom,
+};
+const std::array<ItemLocation*, 7> IC_Vanilla = {
+  &IceCavern_MapChest,
+  &IceCavern_CompassChest,
+  &IceCavern_IronBootsChest,
+  &IceCavern_FreestandingPoH,
+  &IceCavern_GS_PushBlockRoom,
+  &IceCavern_GS_SpinningScytheRoom,
+  &IceCavern_GS_HeartPieceRoom,
+};
+const std::array<ItemLocation*, 7> IC_MQ = {
+  &IceCavern_MQ_IronBootsChest,
+  &IceCavern_MQ_CompassChest,
+  &IceCavern_MQ_MapChest,
+  &IceCavern_MQ_FreestandingPoH,
+  &IceCavern_MQ_GS_Scarecrow,
+  &IceCavern_MQ_GS_IceBlock,
+  &IceCavern_MQ_GS_RedIce,
+};
+const std::array<ItemLocation*, 22> GTG_Vanilla = {
+  &GerudoTrainingGrounds_LobbyLeftChest,
+  &GerudoTrainingGrounds_LobbyRightChest,
+  &GerudoTrainingGrounds_StalfosChest,
+  &GerudoTrainingGrounds_BeamosChest,
+  &GerudoTrainingGrounds_HiddenCeilingChest,
+  &GerudoTrainingGrounds_MazePathFirstChest,
+  &GerudoTrainingGrounds_MazePathSecondChest,
+  &GerudoTrainingGrounds_MazePathThirdChest,
+  &GerudoTrainingGrounds_MazePathFinalChest,
+  &GerudoTrainingGrounds_MazeRightCentralChest,
+  &GerudoTrainingGrounds_MazeRightSideChest,
+  &GerudoTrainingGrounds_UnderwaterSilverRupeeChest,
+  &GerudoTrainingGrounds_HammerRoomClearChest,
+  &GerudoTrainingGrounds_HammerRoomSwitchChest,
+  &GerudoTrainingGrounds_EyeStatueChest,
+  &GerudoTrainingGrounds_NearScarecrowChest,
+  &GerudoTrainingGrounds_BeforeHeavyBlockChest,
+  &GerudoTrainingGrounds_HeavyBlockFirstChest,
+  &GerudoTrainingGrounds_HeavyBlockSecondChest,
+  &GerudoTrainingGrounds_HeavyBlockThirdChest,
+  &GerudoTrainingGrounds_HeavyBlockFourthChest,
+  &GerudoTrainingGrounds_FreestandingKey,
+};
+const std::array<ItemLocation*, 17> GTG_MQ = {
+  &GerudoTrainingGrounds_MQ_LobbyRightChest,
+  &GerudoTrainingGrounds_MQ_LobbyLeftChest,
+  &GerudoTrainingGrounds_MQ_FirstIronKnuckleChest,
+  &GerudoTrainingGrounds_MQ_BeforeHeavyBlockChest,
+  &GerudoTrainingGrounds_MQ_EyeStatueChest,
+  &GerudoTrainingGrounds_MQ_FlameCircleChest,
+  &GerudoTrainingGrounds_MQ_SecondIronKnuckleChest,
+  &GerudoTrainingGrounds_MQ_DinalfosChest,
+  &GerudoTrainingGrounds_MQ_IceArrowsChest,
+  &GerudoTrainingGrounds_MQ_MazeRightCentralChest,
+  &GerudoTrainingGrounds_MQ_MazePathFirstChest,
+  &GerudoTrainingGrounds_MQ_MazeRightSideChest,
+  &GerudoTrainingGrounds_MQ_MazePathThirdChest,
+  &GerudoTrainingGrounds_MQ_MazePathSecondChest,
+  &GerudoTrainingGrounds_MQ_HiddenCeilingChest,
+  &GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest,
+  &GerudoTrainingGrounds_MQ_HeavyBlockChest,
+};
+const std::array<ItemLocation*, 19> GC_Vanilla = {
+  &GanonsCastle_ForestTrialChest,
+  &GanonsCastle_WaterTrialLeftChest,
+  &GanonsCastle_WaterTrialRightChest,
+  &GanonsCastle_ShadowTrialFrontChest,
+  &GanonsCastle_ShadowTrialGoldenGauntletsChest,
+  &GanonsCastle_SpiritTrialCrystalSwitchChest,
+  &GanonsCastle_SpiritTrialInvisibleChest,
+  &GanonsCastle_LightTrialFirstLeftChest,
+  &GanonsCastle_LightTrialSecondLeftChest,
+  &GanonsCastle_LightTrialThirdLeftChest,
+  &GanonsCastle_LightTrialFirstRightChest,
+  &GanonsCastle_LightTrialSecondRightChest,
+  &GanonsCastle_LightTrialThirdRightChest,
+  &GanonsCastle_LightTrialInvisibleEnemiesChest,
+  &GanonsCastle_LightTrialLullabyChest,
+  &GanonsCastle_DekuScrubLeft,
+  &GanonsCastle_DekuScrubCenterLeft,
+  &GanonsCastle_DekuScrubCenterRight,
+  &GanonsCastle_DekuScrubRight,
+};
+const std::array<ItemLocation*, 18> GC_MQ = {
+  &GanonsCastle_MQ_WaterTrialChest,
+  &GanonsCastle_MQ_ForestTrialEyeSwitchChest,
+  &GanonsCastle_MQ_ForestTrialFrozenEyeSwitchChest,
+  &GanonsCastle_MQ_LightTrialLullabyChest,
+  &GanonsCastle_MQ_ShadowTrialBombFlowerChest,
+  &GanonsCastle_MQ_ShadowTrialEyeSwitchChest,
+  &GanonsCastle_MQ_SpiritTrialGoldenGauntletsChest,
+  &GanonsCastle_MQ_SpiritTrialSunBackRightChest,
+  &GanonsCastle_MQ_SpiritTrialSunBackLeftChest,
+  &GanonsCastle_MQ_SpiritTrialSunFrontLeftChest,
+  &GanonsCastle_MQ_SpiritTrialFirstChest,
+  &GanonsCastle_MQ_SpiritTrialInvisibleChest,
+  &GanonsCastle_MQ_ForestTrialFreestandingKey,
+  &GanonsCastle_MQ_DekuScrubRight,
+  &GanonsCastle_MQ_DekuScrubCenterLeft,
+  &GanonsCastle_MQ_DekuScrubCenter,
+  &GanonsCastle_MQ_DekuScrubCenterRight,
+  &GanonsCastle_MQ_DekuScrubLeft,
+};
+
 std::array<ItemLocation*, 9> dungeonRewardLocations = {
   //Bosses
   &QueenGohma,
@@ -1118,8 +1511,7 @@ std::array<ItemLocation*, 12> songLocations = {
   &SongFromComposersGrave,
   &SongFromWindmill,
 };
-std::array<ItemLocation*, 474> allLocations = {
-
+std::vector<ItemLocation*> overworldLocations = {
   //Kokiri Forest
   &KF_KokiriSwordChest,
   &KF_MidoTopLeftChest,
@@ -1383,260 +1775,9 @@ std::array<ItemLocation*, 474> allLocations = {
   &LLR_TowerLeftCow,
   &LLR_TowerRightCow,
 
-  //Deku Tree
-  &DekuTree_MapChest,
-  &DekuTree_CompassChest,
-  &DekuTree_CompassRoomSideChest,
-  &DekuTree_BasementChest,
-  &DekuTree_SlingshotChest,
-  &DekuTree_SlingshotRoomSideChest,
-  &DekuTree_QueenGohmaHeart,
-
-  //Dodongos Cavern
-  &DodongosCavern_MapChest,
-  &DodongosCavern_CompassChest,
-  &DodongosCavern_BombFlowerPlatformChest,
-  &DodongosCavern_BombBagChest,
-  &DodongosCavern_EndOfBridgeChest,
-  &DodongosCavern_BossRoomChest,
-  &DodongosCavern_KingDodongoHeart,
-  &DodongosCavern_DekuScrubLobby,
-  &DodongosCavern_DekuScrubSideRoomNearDodongos,
-  &DodongosCavern_DekuScrubNearBombBagLeft,
-  &DodongosCavern_DekuScrubNearBombBagRight,
-
-  //Jabu Jabus Belly
-  &JabuJabusBelly_MapChest,
-  &JabuJabusBelly_CompassChest,
-  &JabuJabusBelly_BoomerangChest,
-  &JabuJabusBelly_BarinadeHeart,
-  &JabuJabusBelly_DekuScrub,
-
-  //Forest Temple
-  &ForestTemple_FirstRoomChest,
-  &ForestTemple_FirstStalfosChest,
-  &ForestTemple_RaisedIslandCourtyardChest,
-  &ForestTemple_MapChest,
-  &ForestTemple_WellChest,
-  &ForestTemple_FallingCeilingRoomChest,
-  &ForestTemple_EyeSwitchChest,
-  &ForestTemple_BossKeyChest,
-  &ForestTemple_FloormasterChest,
-  &ForestTemple_BowChest,
-  &ForestTemple_RedPoeChest,
-  &ForestTemple_BluePoeChest,
-  &ForestTemple_BasementChest,
-  &ForestTemple_PhantomGanonHeart,
-
-  //Fire Temple
-  &FireTemple_NearBossChest,
-  &FireTemple_FlareDancerChest,
-  &FireTemple_BossKeyChest,
-  &FireTemple_BigLavaRoomBlockedDoorChest,
-  &FireTemple_BigLavaRoomLowerOpenDoorChest,
-  &FireTemple_BoulderMazeLowerChest,
-  &FireTemple_BoulderMazeUpperChest,
-  &FireTemple_BoulderMazeSideRoomChest,
-  &FireTemple_BoulderMazeShortcutChest,
-  &FireTemple_ScarecrowChest,
-  &FireTemple_MapChest,
-  &FireTemple_CompassChest,
-  &FireTemple_HighestGoronChest,
-  &FireTemple_MegatonHammerChest,
-  &FireTemple_VolvagiaHeart,
-
-  //Water Temple
-  &WaterTemple_MapChest,
-  &WaterTemple_CompassChest,
-  &WaterTemple_TorchesChest,
-  &WaterTemple_DragonChest,
-  &WaterTemple_CentralBowTargetChest,
-  &WaterTemple_CentralPillarChest,
-  &WaterTemple_CrackedWallChest,
-  &WaterTemple_BossKeyChest,
-  &WaterTemple_LongshotChest,
-  &WaterTemple_RiverChest,
-  &WaterTemple_MorphaHeart,
-
-  //Spirit Temple
-  &SpiritTemple_SilverGauntletsChest,
-  &SpiritTemple_MirrorShieldChest,
-  &SpiritTemple_ChildBridgeChest,
-  &SpiritTemple_ChildEarlyTorchesChest,
-  &SpiritTemple_CompassChest,
-  &SpiritTemple_EarlyAdultRightChest,
-  &SpiritTemple_FirstMirrorLeftChest,
-  &SpiritTemple_FirstMirrorRightChest,
-  &SpiritTemple_MapChest,
-  &SpiritTemple_ChildClimbNorthChest,
-  &SpiritTemple_ChildClimbEastChest,
-  &SpiritTemple_SunBlockRoomChest,
-  &SpiritTemple_StatueRoomHandChest,
-  &SpiritTemple_StatueRoomNortheastChest,
-  &SpiritTemple_NearFourArmosChest,
-  &SpiritTemple_HallwayLeftInvisibleChest,
-  &SpiritTemple_HallwayRightInvisibleChest,
-  &SpiritTemple_BossKeyChest,
-  &SpiritTemple_TopmostChest,
-  &SpiritTemple_TwinrovaHeart,
-
-  //Shadow Temple
-  &ShadowTemple_MapChest,
-  &ShadowTemple_HoverBootsChest,
-  &ShadowTemple_CompassChest,
-  &ShadowTemple_EarlySilverRupeeChest,
-  &ShadowTemple_InvisibleBladesVisibleChest,
-  &ShadowTemple_InvisibleBladesInvisibleChest,
-  &ShadowTemple_FallingSpikesLowerChest,
-  &ShadowTemple_FallingSpikesUpperChest,
-  &ShadowTemple_FallingSpikesSwitchChest,
-  &ShadowTemple_InvisibleSpikesChest,
-  &ShadowTemple_WindHintChest,
-  &ShadowTemple_AfterWindEnemyChest,
-  &ShadowTemple_AfterWindHiddenChest,
-  &ShadowTemple_SpikeWallsLeftChest,
-  &ShadowTemple_BossKeyChest,
-  &ShadowTemple_InvisibleFloormasterChest,
-  &ShadowTemple_FreestandingKey,
-  &ShadowTemple_BongoBongoHeart,
-
-  //Bottom of the Well
-  &BottomOfTheWell_FrontLeftFakeWallChest,
-  &BottomOfTheWell_FrontCenterBombableChest,
-  &BottomOfTheWell_RightBottomFakeWallChest,
-  &BottomOfTheWell_CompassChest,
-  &BottomOfTheWell_CenterSkulltulaChest,
-  &BottomOfTheWell_BackLeftBombableChest,
-  &BottomOfTheWell_LensOfTruthChest,
-  &BottomOfTheWell_InvisibleChest,
-  &BottomOfTheWell_UnderwaterFrontChest,
-  &BottomOfTheWell_UnderwaterLeftChest,
-  &BottomOfTheWell_MapChest,
-  &BottomOfTheWell_FireKeeseChest,
-  &BottomOfTheWell_LikeLikeChest,
-  &BottomOfTheWell_FreestandingKey,
-
-  //Ice Cavern
-  &IceCavern_MapChest,
-  &IceCavern_CompassChest,
-  &IceCavern_IronBootsChest,
-  &SheikInIceCavern,
-  &IceCavern_FreestandingPoH,
-
-  //Gerudo Training Grounds
-  &GerudoTrainingGrounds_LobbyLeftChest,
-  &GerudoTrainingGrounds_LobbyRightChest,
-  &GerudoTrainingGrounds_StalfosChest,
-  &GerudoTrainingGrounds_BeamosChest,
-  &GerudoTrainingGrounds_HiddenCeilingChest,
-  &GerudoTrainingGrounds_MazePathFirstChest,
-  &GerudoTrainingGrounds_MazePathSecondChest,
-  &GerudoTrainingGrounds_MazePathThirdChest,
-  &GerudoTrainingGrounds_MazePathFinalChest,
-  &GerudoTrainingGrounds_MazeRightCentralChest,
-  &GerudoTrainingGrounds_MazeRightSideChest,
-  &GerudoTrainingGrounds_UnderwaterSilverRupeeChest,
-  &GerudoTrainingGrounds_HammerRoomClearChest,
-  &GerudoTrainingGrounds_HammerRoomSwitchChest,
-  &GerudoTrainingGrounds_EyeStatueChest,
-  &GerudoTrainingGrounds_NearScarecrowChest,
-  &GerudoTrainingGrounds_BeforeHeavyBlockChest,
-  &GerudoTrainingGrounds_HeavyBlockFirstChest,
-  &GerudoTrainingGrounds_HeavyBlockSecondChest,
-  &GerudoTrainingGrounds_HeavyBlockThirdChest,
-  &GerudoTrainingGrounds_HeavyBlockFourthChest,
-  &GerudoTrainingGrounds_FreestandingKey,
-
-  //Ganon's Castle
-  &GanonsCastle_ForestTrialChest,
-  &GanonsCastle_WaterTrialLeftChest,
-  &GanonsCastle_WaterTrialRightChest,
-  &GanonsCastle_ShadowTrialFrontChest,
-  &GanonsCastle_ShadowTrialGoldenGauntletsChest,
-  &GanonsCastle_SpiritTrialCrystalSwitchChest,
-  &GanonsCastle_SpiritTrialInvisibleChest,
-  &GanonsCastle_LightTrialFirstLeftChest,
-  &GanonsCastle_LightTrialSecondLeftChest,
-  &GanonsCastle_LightTrialThirdLeftChest,
-  &GanonsCastle_LightTrialFirstRightChest,
-  &GanonsCastle_LightTrialSecondRightChest,
-  &GanonsCastle_LightTrialThirdRightChest,
-  &GanonsCastle_LightTrialInvisibleEnemiesChest,
-  &GanonsCastle_LightTrialLullabyChest,
-  &GanonsCastle_BossKeyChest,
-  &GanonsCastle_DekuScrubLeft,
-  &GanonsCastle_DekuScrubCenterLeft,
-  &GanonsCastle_DekuScrubCenterRight,
-  &GanonsCastle_DekuScrubRight,
-  &Ganon,
-
   /*-------------------------------
      --- GOLD SKULLTULA TOKENS ---
     -------------------------------*/
-
-  //Deku Tree
-  &DekuTree_GS_BasementBackRoom,
-  &DekuTree_GS_BasementGate,
-  &DekuTree_GS_BasementVines,
-  &DekuTree_GS_CompassRoom,
-
-  //Dodongos Cavern
-  &DodongosCavern_GS_VinesAboveStairs,
-  &DodongosCavern_GS_Scarecrow,
-  &DodongosCavern_GS_AlcoveAboveStairs,
-  &DodongosCavern_GS_BackRoom,
-  &DodongosCavern_GS_SideRoomNearLowerLizalfos,
-
-  //Jabu Jabus Belly
-  &JabuJabusBelly_GS_LobbyBasementLower,
-  &JabuJabusBelly_GS_LobbyBasementUpper,
-  &JabuJabusBelly_GS_NearBoss,
-  &JabuJabusBelly_GS_WaterSwitchRoom,
-
-  //Forest Temple
-  &ForestTemple_GS_RaisedIslandCourtyard,
-  &ForestTemple_GS_FirstRoom,
-  &ForestTemple_GS_LevelIslandCourtyard,
-  &ForestTemple_GS_Lobby,
-  &ForestTemple_GS_Basement,
-
-  //Fire Temple
-  &FireTemple_GS_SongOfTimeRoom,
-  &FireTemple_GS_BossKeyLoop,
-  &FireTemple_GS_BoulderMaze,
-  &FireTemple_GS_ScarecrowTop,
-  &FireTemple_GS_ScarecrowClimb,
-
-  //Water Temple
-  &WaterTemple_GS_BehindGate,
-  &WaterTemple_GS_FallingPlatformRoom,
-  &WaterTemple_GS_CentralPillar,
-  &WaterTemple_GS_NearBossKeyChest,
-  &WaterTemple_GS_River,
-
-  //Spirit Temple
-  &SpiritTemple_GS_HallAfterSunBlockRoom,
-  &SpiritTemple_GS_BoulderRoom,
-  &SpiritTemple_GS_Lobby,
-  &SpiritTemple_GS_SunOnFloorRoom,
-  &SpiritTemple_GS_MetalFence,
-
-  //Shadow Temple
-  &ShadowTemple_GS_SingleGiantPot,
-  &ShadowTemple_GS_FallingSpikesRoom,
-  &ShadowTemple_GS_TripleGiantPot,
-  &ShadowTemple_GS_LikeLikeRoom,
-  &ShadowTemple_GS_NearShip,
-
-  //Bottom of the Well
-  &BottomOfTheWell_GS_LikeLikeCage,
-  &BottomOfTheWell_GS_EastInnerRoom,
-  &BottomOfTheWell_GS_WestInnerRoom,
-
-  //Ice Cavern
-  &IceCavern_GS_PushBlockRoom,
-  &IceCavern_GS_SpinningScytheRoom,
-  &IceCavern_GS_HeartPieceRoom,
 
   //Overworld
   &KF_GS_BeanPatch,
@@ -1711,6 +1852,170 @@ std::array<ItemLocation*, 474> allLocations = {
   &LLR_GS_Tree,
 };
 
+std::vector<ItemLocation*> allLocations = {};
+
+//set of overrides to write to the patch
+std::set<ItemOverride, ItemOverride_Compare> overrides = {};
+
+std::vector<ItemLocation*> playthroughLocations = {};
+
+u32 totalLocationsFound = 0;
+u16 itemsPlaced = 0;
+
+void AddLocation(ItemLocation * loc) {
+  allLocations.push_back(loc);
+}
+
+template <typename Container>
+void AddLocations(const Container& locations) {
+  for (auto& loc : locations) {
+    allLocations.push_back(loc);
+  }
+}
+
+void GenerateLocationPool() {
+  using namespace Settings;
+
+  allLocations.clear();
+  AddLocations(overworldLocations);
+
+  //Deku Tree
+  if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(DT_MQ);
+  } else {
+    AddLocations(DT_Vanilla);
+  }
+  AddLocation(&DekuTree_QueenGohmaHeart);
+
+  //Dodongos Cavern
+  if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(DC_MQ);
+  } else {
+    AddLocations(DC_Vanilla);
+  }
+  AddLocation(&DodongosCavern_BossRoomChest);
+  AddLocation(&DodongosCavern_KingDodongoHeart);
+
+  //Jabu Jabu's Belly
+  if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(Jabu_MQ);
+  } else {
+    AddLocations(Jabu_Vanilla);
+  }
+  AddLocation(&JabuJabusBelly_BarinadeHeart);
+
+  //Forest Temple
+  if (ForestTempleDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(FoT_MQ);
+  } else {
+    AddLocations(FoT_Vanilla);
+  }
+  AddLocation(&ForestTemple_PhantomGanonHeart);
+
+  //Fire Temple
+  if (FireTempleDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(FiT_MQ);
+  } else {
+    AddLocations(FiT_Vanilla);
+  }
+  AddLocation(&FireTemple_VolvagiaHeart);
+
+  //Water Temple
+  if (WaterTempleDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(WaT_MQ);
+  } else {
+    AddLocations(WaT_Vanilla);
+  }
+  AddLocation(&WaterTemple_MorphaHeart);
+
+  //Spirit Temple
+  AddLocation(&SpiritTemple_SilverGauntletsChest);
+  AddLocation(&SpiritTemple_MirrorShieldChest);
+  if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(SpT_MQ);
+  } else {
+    AddLocations(SpT_Vanilla);
+  }
+  AddLocation(&SpiritTemple_TwinrovaHeart);
+
+  //Shadow Temple
+  if (ShadowTempleDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(ShT_MQ);
+  } else {
+    AddLocations(ShT_Vanilla);
+  }
+  AddLocation(&ShadowTemple_BongoBongoHeart);
+
+  //Bottom of the Well
+  if (BottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(BotW_MQ);
+  } else {
+    AddLocations(BotW_Vanilla);
+  }
+
+  //Ice Cavern
+  if (IceCavernDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(IC_MQ);
+  } else {
+    AddLocations(IC_Vanilla);
+  }
+  AddLocation(&SheikInIceCavern);
+
+  //Gerudo Training Grounds
+  if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(GTG_MQ);
+  } else {
+    AddLocations(GTG_Vanilla);
+  }
+
+  //Ganons Castle
+  if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
+    AddLocations(GC_MQ);
+  } else {
+    AddLocations(GC_Vanilla);
+  }
+  AddLocation(&GanonsCastle_BossKeyChest);
+  AddLocation(&Ganon);
+}
+
+void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
+    /*-------------------------------------------------
+    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
+    --------------------------------------------------*/
+    //this prevents an override from being created for these two locations
+    if (loc->GetName() != "Shadow Temple Freestanding Key" && loc->GetName() != "Gerudo Training Grounds Freestanding Key") {
+      overrides.insert({
+        .key = loc->Key(),
+        .value = item.Value(),
+      });
+    }
+
+    PlacementLog_Msg("\n");
+    PlacementLog_Msg(item.GetName());
+    PlacementLog_Msg(" placed at ");
+    PlacementLog_Msg(loc->GetName());
+    PlacementLog_Msg("\n\n");
+
+    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+      item.ApplyEffect();
+      loc->Use();
+    }
+
+    itemsPlaced++;
+    printf("\x1b[8;10HPlacing Items...%d/%d", itemsPlaced, allLocations.size() + dungeonRewardLocations.size());
+    loc->SetPlacedItem(item);
+}
+
+std::vector<ItemLocation*> GetLocations(const std::string_view category) {
+  std::vector<ItemLocation*> locationsInCategory = {};
+  for (auto& loc : allLocations) {
+    if (loc->IsCategory(category)) {
+      locationsInCategory.push_back(loc);
+    }
+  }
+  return locationsInCategory;
+}
+
 void LocationReset() {
   for (ItemLocation* il : allLocations) {
     il->RemoveFromPool();
@@ -1734,7 +2039,67 @@ void ItemReset() {
 }
 
 void AddExcludedOptions() {
+  allLocations.clear();
+  AddLocations(overworldLocations);
+
+  /*For some reason, trying to add all the dungeon locations here will crash
+    the app if it calls Settings::FillContext() later on.
+
+    I have no idea why this happens, but we'll leave out the dungeon locations
+    for now since most of the long checks that are typically excluded are overworld
+    ones.*/
+
+  // AddLocations(DT_MQ);
+  // AddLocations(DT_Vanilla);
+  // AddLocation(&DekuTree_QueenGohmaHeart);
+  //
+  // AddLocations(DC_MQ);
+  // AddLocations(DC_Vanilla);
+  // AddLocation(&DodongosCavern_BossRoomChest);
+  // AddLocation(&DodongosCavern_KingDodongoHeart);
+  //
+  // AddLocations(Jabu_MQ);
+  // AddLocations(Jabu_Vanilla);
+  // AddLocation(&JabuJabusBelly_BarinadeHeart);
+  //
+  // AddLocations(FoT_MQ);
+  // AddLocations(FoT_Vanilla);
+  // AddLocation(&ForestTemple_PhantomGanonHeart);
+  //
+  // AddLocations(FiT_MQ);
+  // AddLocations(FiT_Vanilla);
+  // AddLocation(&FireTemple_VolvagiaHeart);
+  //
+  // AddLocations(WaT_MQ);
+  // AddLocations(WaT_Vanilla);
+  // AddLocation(&WaterTemple_MorphaHeart);
+  //
+  // AddLocation(&SpiritTemple_SilverGauntletsChest);
+  // AddLocation(&SpiritTemple_MirrorShieldChest);
+  // AddLocations(SpT_MQ);
+  // AddLocations(SpT_Vanilla);
+  // AddLocation(&SpiritTemple_TwinrovaHeart);
+  //
+  // AddLocations(ShT_MQ);
+  // AddLocations(ShT_Vanilla);
+  // AddLocation(&ShadowTemple_BongoBongoHeart);
+  //
+  // AddLocations(BotW_MQ);
+  // AddLocations(BotW_Vanilla);
+  //
+  // AddLocations(IC_MQ);
+  // AddLocations(IC_Vanilla);
+  // AddLocation(&SheikInIceCavern);
+  //
+  // AddLocations(GTG_MQ);
+  // AddLocations(GTG_Vanilla);
+  //
+  // AddLocations(GC_MQ);
+  // AddLocations(GC_Vanilla);
+  // AddLocation(&GanonsCastle_BossKeyChest);
+
   for (ItemLocation * il: allLocations) {
     il->AddExcludeOption();
   }
+  allLocations.clear();
 }

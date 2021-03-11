@@ -30,7 +30,7 @@ void EnItem00_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 
 void EnItem00_rDraw(Actor* thisx, GlobalContext* globalCtX) {
     EnItem00* item = THIS;
-    
+
     if ((item->unk_1B0 & item->unk_1AE) == 0) {
         if (!Model_DrawByActor(&item->actor)) {
             EnItem00_Draw(&item->actor, globalCtX);
@@ -46,7 +46,7 @@ u32 Item_ConvertBombDrop(u32 dropId) {
     u8 bombCount = gSaveContext.ammo[ItemSlots[ITEM_BOMB]];
     u8 chuCount = gSaveContext.ammo[ItemSlots[ITEM_BOMBCHU]];
 
-    if (!gSettingsContext.bombchusInLogic) {
+    if (!gSettingsContext.bombchuDrops) {
         if (hasBombs) {
             return dropId;
         } else {

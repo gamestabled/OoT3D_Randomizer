@@ -1,19 +1,24 @@
+#include <unistd.h>
+
 #include "settings.hpp"
 #include "setting_descriptions.hpp"
+#include "item_location.hpp"
 #include "random.hpp"
 
 namespace Settings {
   std::string seed;
 
-  //                                        Setting name,              Options,                                                Option Descriptions (assigned in setting_descriptions.cpp), default setting index
+  //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
   //Open Settings
   Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                              {logicGlitchless, logicNoLogic});
-  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                      {forestClosed, forestOpen}, 1);
-  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                      {kakGateClosed, kakGateOpen}, 0);
-  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc, doorOfTimeDesc}, true);
+  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                      {forestClosed, forestOpen});
+  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                      {kakGateClosed, kakGateOpen});
+  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc, doorOfTimeDesc});
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Open"},                                      {fountainNormal, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                              {gerudoNormal, gerudoFast, gerudoOpen});
-  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons}, 1);
+  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"},
+                                                                      {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
+  Option TokenCount          = Option::U8  ("Token Count",            {/*Options 0-100 defined in SetDefaultOptions()*/},      std::vector<std::string_view>{101, tokenCountDesc});
   std::vector<Option *> openOptions = {
     &Logic,
     &OpenForest,
@@ -22,23 +27,26 @@ namespace Settings {
     &ZorasFountain,
     &GerudoFortress,
     &Bridge,
+    &TokenCount,
   };
 
   //World Settings
-  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child"},                                      {ageDesc, ageDesc}, 1);
+  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child"},                                      {ageDesc, ageDesc});
   Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc, bombchuLogicDesc});
+  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                           {bombchuDropDesc, bombchuDropDesc});
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc, randomMQDungeonsDesc});
   Option MirrorWorld         = Option::Bool("Mirror World",           {"Off", "On"},                                           {mirrorWorldDesc, mirrorWorldDesc});
   std::vector<Option *> worldOptions = {
     &StartingAge,
     &BombchusInLogic,
+    &BombchuDrops,
     //&RandomMQDungeons, TODO: Finish MQ logic before enabling this
     &MirrorWorld,
   };
 
   //Shuffle Settings
   Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Anywhere"},                          {songsSongLocations, songsAllLocations}); //TODO: Dungeon Rewards
-  Option Tokensanity         = Option::U8  ("Tokensanity",            {"Vanilla", "Anywhere"},                                 {tokensVanilla, tokensAllLocations});
+  Option Tokensanity         = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},          {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
   Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},     {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
   Option ShuffleCows         = Option::Bool("Shuffle Cows",           {"Off", "On"},                                           {shuffleCowsDesc, shuffleCowsDesc});
   Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                           {kokiriSwordDesc, kokiriSwordDesc});
@@ -61,12 +69,12 @@ namespace Settings {
   };
 
   //Shuffle Dungeon Items
-  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere}, 1);
-  Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere}, 1);
+  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere});
+  Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
   Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Anywhere"},                                 {gerudoKeysVanilla, gerudoKeysAnywhere});
-  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere}, 1);
+  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
   Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Anywhere", "LACS: Vanilla", "LACS: Medallions", "LACS: Stones", "LACS: Dungeons"},
-                                                                      {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS}, 1);
+                                                                      {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS});
   u8 LACSCondition           = 0;
   std::vector<Option *> shuffleDungeonItemOptions = {
     &MapsAndCompasses,
@@ -89,9 +97,9 @@ namespace Settings {
   };
 
   //Misc Settings
-  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc, damageMultiDesc}, 1);
+  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      std::vector<std::string_view>{5, damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc, startingTimeDesc});
-  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""}, true);
+  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &DamageMultiplier,
@@ -99,19 +107,19 @@ namespace Settings {
     &GenerateSpoilerLog,
   };
 
-  //Advanced Glitch Settings
+  //Item Usability Settings
   Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disable", "Enable"},                                   {adultStickDesc, adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disable", "Enable"},                                   {adultBoomerangDesc, adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disable", "Enable"},                                   {childHammerDesc, childHammerDesc});
-  std::vector<Option *> advancedGlitchedOptions = {
+  std::vector<Option *> itemUsabilityOptions = {
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
   };
 
   //Item Pool Settings
-  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},          {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal}, 1);
-  Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},       {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught}, 1);
+  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},          {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
+  Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},       {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
   std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
     &IceTrapValue,
@@ -134,6 +142,7 @@ namespace Settings {
   Option LogicLensWasteland               = Option::Bool("Lensless Wasteland",                             {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicLensWastelandDesc});
   Option LogicReverseWasteland            = Option::Bool("Reverse Wasteland",                              {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicReverseWastelandDesc});
   Option LogicColossusGS                  = Option::Bool("Colossus Hill GS\n with Hookshot",               {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicColossusGSDesc});
+  Option LogicOutsideGanonsGS             = Option::Bool("OGC GS with No Items",                           {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicOutsideGanonsGSDesc});
   Option LogicManOnRoof                   = Option::Bool("Man on Roof without\n Hookshot",                 {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicManOnRoofDesc});
   Option LogicDMTBombable                 = Option::Bool("Death Mountain Trail\n Chest with Strength",     {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicDMTBombableDesc});
   Option LogicDMTSoilGS                   = Option::Bool("DMT Soil GS without\n Destroying Boulder",       {"Disable", "Enable"}, std::vector<std::string_view>{2, LogicDMTSoilGSDesc});
@@ -210,6 +219,7 @@ namespace Settings {
     &LogicLensWasteland,
     &LogicReverseWasteland,
     &LogicColossusGS,
+    &LogicOutsideGanonsGS,
     &LogicManOnRoof,
     &LogicDMTBombable,
     //&LogicDMTSoilGS, Needs Testing
@@ -283,7 +293,7 @@ namespace Settings {
   MenuItem timesaverSettings        = MenuItem::SubMenu("Timesaver Settings",         &timesaverOptions);
   MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
   MenuItem itemPoolSettings         = MenuItem::SubMenu("Item Pool Settings",         &itemPoolOptions);
-  MenuItem advancedGlitchedSettings = MenuItem::SubMenu("Advanced Glitched Settings", &advancedGlitchedOptions);
+  MenuItem itemUsabilitySettings    = MenuItem::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
   MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
   MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
   MenuItem generateRandomizer       = MenuItem::Action ("Generate Randomizer",        GENERATE_MODE);
@@ -299,7 +309,7 @@ namespace Settings {
     &detailedLogic,
     &miscSettings,
     &itemPoolSettings,
-    &advancedGlitchedSettings,
+    &itemUsabilitySettings,
     &loadSettingsPreset,
     &saveSettingsPreset,
     &generateRandomizer,
@@ -322,9 +332,11 @@ namespace Settings {
     ctx.zorasFountain      = ZorasFountain.Value<u8>();
     ctx.gerudoFortress     = GerudoFortress.Value<u8>();
     ctx.rainbowBridge      = Bridge.Value<u8>();
+    ctx.tokenCount         = TokenCount.Value<u8>();
 
     ctx.startingAge        = StartingAge.Value<u8>();
     ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
+    ctx.bombchuDrops       = (BombchuDrops) ? 1 : 0;
     ctx.randomMQDungeons   = (RandomMQDungeons) ? 1 : 0;
     ctx.mirrorWorld        = (MirrorWorld) ? 1 : 0;
 
@@ -397,9 +409,11 @@ namespace Settings {
     ZorasFountain.SetSelectedIndex(ctx.zorasFountain);
     GerudoFortress.SetSelectedIndex(ctx.gerudoFortress);
     Bridge.SetSelectedIndex(ctx.rainbowBridge);
+    TokenCount.SetSelectedIndex(ctx.tokenCount);
 
     StartingAge.SetSelectedIndex(ctx.startingAge);
     BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
+    BombchuDrops.SetSelectedIndex(ctx.bombchuDrops);
     RandomMQDungeons.SetSelectedIndex(ctx.randomMQDungeons);
     MirrorWorld.SetSelectedIndex(ctx.mirrorWorld);
 
@@ -444,7 +458,69 @@ namespace Settings {
     }
   }
 
-  bool BombchuDrop                      = false;
+  //Set default settings for all settings where the default is not the first option
+  void SetDefaultSettings() {
+    OpenForest.SetSelectedIndex(OPENFOREST_OPEN);
+    OpenDoorOfTime.SetSelectedIndex(1); //1 is Open, 0 is Closed
+    Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
+
+    std::vector<std::string> tokenOptions = {};
+    for (int i = 0; i <= 100; i++) {
+      tokenOptions.push_back(std::to_string(i));
+    }
+    TokenCount.SetOptions(tokenOptions);
+    TokenCount.SetSelectedIndex(1);
+
+    StartingAge.SetSelectedIndex(AGE_CHILD);
+
+    MapsAndCompasses.SetSelectedIndex(MAPSANDCOMPASSES_VANILLA);
+    Keysanity.SetSelectedIndex(KEYSANITY_VANILLA);
+    BossKeysanity.SetSelectedIndex(BOSSKEYSANITY_VANILLA);
+    GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
+
+    AddExcludedOptions();
+
+    DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
+    GenerateSpoilerLog.SetSelectedIndex(1); //true
+
+    ItemPoolValue.SetSelectedIndex(ITEMPOOL_BALANCED);
+    IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
+  }
+
+  //Make any forcible setting changes when certain settings change
+  void ForceChange(u32 kDown, Option* currentSetting) {
+
+    //Adult is not compatible with Closed Forest
+    if (OpenForest.Is(OPENFOREST_CLOSED)) {
+      StartingAge.SetSelectedIndex(AGE_CHILD);
+      StartingAge.Lock();
+    } else {
+      StartingAge.Unlock();
+    }
+
+    if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
+      TokenCount.Unhide();
+    } else {
+      TokenCount.Hide();
+      TokenCount.SetSelectedIndex(1);
+    }
+
+    //Bombchus in Logic forces Bombchu Drops
+    if (BombchusInLogic) {
+      BombchuDrops.SetSelectedIndex(ON);
+      BombchuDrops.Lock();
+    } else {
+      BombchuDrops.Unlock();
+    }
+
+    //Set toggle for all tricks
+    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
+      for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
+        detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+      }
+    }
+  }
+
   bool SkippedTrials                    = false;
   bool ShuffleDungeonEntrances          = false;
   bool ShuffleOverworldEntrances        = false;
@@ -466,11 +542,6 @@ namespace Settings {
 
   //Function to set flags depending on settings
   void UpdateSettings() {
-
-    //force child on closed forest
-    if (OpenForest.Is(OPENFOREST_CLOSED)) {
-      StartingAge.SetSelectedIndex(AGE_CHILD);
-    }
 
     //1 is MQ, 0 is Vanilla
     if (RandomMQDungeons) {
@@ -501,4 +572,5 @@ namespace Settings {
     }
 
   }
-}
+
+} // namespace Settings

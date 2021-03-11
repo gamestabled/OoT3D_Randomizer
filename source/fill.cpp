@@ -299,6 +299,7 @@ static void FillExcludedLocations() {
 
 int Fill() {
   itemsPlaced = 0;
+  GenerateLocationPool();
   GenerateItemPool();
   GenerateStartingInventory();
   RemoveStartingItemsFromPool();
