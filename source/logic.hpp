@@ -291,5 +291,5 @@ namespace Logic {
   extern bool HasProjectile(std::string_view age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();
-  extern void LogicReset();
+  extern void LogicReset(const bool val = false);
 }

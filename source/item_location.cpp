@@ -1497,20 +1497,6 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 12> songLocations = {
-  &SheikInForest,
-  &SheikInCrater,
-  &SheikInIceCavern,
-  &SheikAtColossus,
-  &SheikInKakariko,
-  &SheikAtTemple,
-  &SongFromImpa,
-  &SongFromMalon,
-  &SongFromSaria,
-  &SongFromOcarinaOfTime,
-  &SongFromComposersGrave,
-  &SongFromWindmill,
-};
 std::vector<ItemLocation*> overworldLocations = {
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -2043,7 +2029,8 @@ void AddExcludedOptions() {
   AddLocations(overworldLocations);
 
   /*For some reason, trying to add all the dungeon locations here will crash
-    the app if it calls Settings::FillContext() later on.
+    the app if it calls Settings::FillContext() later on which for some reason
+    sets the program counter to 0x00000000.
 
     I have no idea why this happens, but we'll leave out the dungeon locations
     for now since most of the long checks that are typically excluded are overworld

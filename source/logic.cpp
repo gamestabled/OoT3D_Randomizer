@@ -512,279 +512,312 @@ namespace Logic {
      return false;
    }
 
-   void LogicReset() {
+   //Reset All Logic to true or false
+   void LogicReset(const bool val /*= false*/) {
      //Child item logic
-     KokiriSword   = false;
-     ZeldasLetter  = false;
-     WeirdEgg      = false;
-     HasBottle     = false;
-     Bombchus      = false;
-     Bombchus5     = false;
-     Bombchus10    = false;
-     Bombchus20    = false;
-     MagicBean     = false;
-     MagicBeanPack = false;
-     RutosLetter   = false;
-     Boomerang     = false;
-     DinsFire      = false;
-     FaroresWind   = false;
-     NayrusLove    = false;
-     LensOfTruth   = false;
-     ShardOfAgony  = false;
-     SkullMask     = false;
-     MaskOfTruth   = false;
+     KokiriSword   = val;
+     ZeldasLetter  = val;
+     WeirdEgg      = val;
+     HasBottle     = val;
+     Bombchus      = val;
+     Bombchus5     = val;
+     Bombchus10    = val;
+     Bombchus20    = val;
+     MagicBean     = val;
+     MagicBeanPack = val;
+     RutosLetter   = val;
+     Boomerang     = val;
+     DinsFire      = val;
+     FaroresWind   = val;
+     NayrusLove    = val;
+     LensOfTruth   = val;
+     ShardOfAgony  = val;
+     SkullMask     = val;
+     MaskOfTruth   = val;
 
      //Adult logic
-     Hammer        = false;
-     IronBoots     = false;
-     HoverBoots    = false;
-     MirrorShield  = false;
-     GoronTunic    = false;
-     ZoraTunic     = false;
-     Epona         = false;
-     BigPoe        = false;
-     GerudoToken   = false;
-     FireArrows    = false;
-     IceArrows     = false;
-     LightArrows   = false;
+     Hammer        = val;
+     IronBoots     = val;
+     HoverBoots    = val;
+     MirrorShield  = val;
+     GoronTunic    = val;
+     ZoraTunic     = val;
+     Epona         = val;
+     BigPoe        = val;
+     GerudoToken   = val;
+     FireArrows    = val;
+     IceArrows     = val;
+     LightArrows   = val;
 
      //Trade Quest
-     PocketEgg     = false;
-     PocketCucco   = false;
-     Cojiro        = false;
-     OddMushroom   = false;
-     OddPoultice   = false;
-     PoachersSaw   = false;
-     BrokenSword   = false;
-     Prescription  = false;
-     EyeballFrog   = false;
-     Eyedrops      = false;
-     ClaimCheck    = false;
+     PocketEgg     = val;
+     PocketCucco   = val;
+     Cojiro        = val;
+     OddMushroom   = val;
+     OddPoultice   = val;
+     PoachersSaw   = val;
+     BrokenSword   = val;
+     Prescription  = val;
+     EyeballFrog   = val;
+     Eyedrops      = val;
+     ClaimCheck    = val;
 
      //Trade Quest Events
-     WakeUpAdultTalon   = false;
-     CojiroAccess       = false;
-     OddMushroomAccess  = false;
-     OddPoulticeAccess  = false;
-     PoachersSawAccess  = false;
-     BrokenSwordAccess  = false;
-     PrescriptionAccess = false;
-     EyeballFrogAccess  = false;
-     EyedropsAccess     = false;
-     DisableTradeRevert = false;
+     WakeUpAdultTalon   = val;
+     CojiroAccess       = val;
+     OddMushroomAccess  = val;
+     OddPoulticeAccess  = val;
+     PoachersSawAccess  = val;
+     BrokenSwordAccess  = val;
+     PrescriptionAccess = val;
+     EyeballFrogAccess  = val;
+     EyedropsAccess     = val;
+     DisableTradeRevert = val;
 
      //Songs
-     ZeldasLullaby    = false;
-     SariasSong       = false;
-     SunsSong         = false;
-     SongOfStorms     = false;
-     EponasSong       = false;
-     SongOfTime       = false;
-     MinuetOfForest   = false;
-     BoleroOfFire     = false;
-     SerenadeOfWater  = false;
-     RequiemOfSpirit  = false;
-     NocturneOfShadow = false;
-     PreludeOfLight   = false;
+     ZeldasLullaby    = val;
+     SariasSong       = val;
+     SunsSong         = val;
+     SongOfStorms     = val;
+     EponasSong       = val;
+     SongOfTime       = val;
+     MinuetOfForest   = val;
+     BoleroOfFire     = val;
+     SerenadeOfWater  = val;
+     RequiemOfSpirit  = val;
+     NocturneOfShadow = val;
+     PreludeOfLight   = val;
 
      //Stones and Meddallions
-     ForestMedallion = false;
-     FireMedallion   = false;
-     WaterMedallion  = false;
-     SpiritMedallion = false;
-     ShadowMedallion = false;
-     LightMedallion  = false;
-     KokiriEmerald   = false;
-     GoronRuby       = false;
-     ZoraSapphire    = false;
+     ForestMedallion = val;
+     FireMedallion   = val;
+     WaterMedallion  = val;
+     SpiritMedallion = val;
+     ShadowMedallion = val;
+     LightMedallion  = val;
+     KokiriEmerald   = val;
+     GoronRuby       = val;
+     ZoraSapphire    = val;
 
      //Dungeon Clears
-     DekuTreeClear       = false;
-     DodongosCavernClear = false;
-     JabuJabusBellyClear = false;
-     ForestTempleClear   = false;
-     FireTempleClear     = false;
-     WaterTempleClear    = false;
-     SpiritTempleClear   = false;
-     ShadowTempleClear   = false;
+     DekuTreeClear       = val;
+     DodongosCavernClear = val;
+     JabuJabusBellyClear = val;
+     ForestTempleClear   = val;
+     FireTempleClear     = val;
+     WaterTempleClear    = val;
+     SpiritTempleClear   = val;
+     ShadowTempleClear   = val;
 
      //Trial Clears
-     ForestTrialClear = false;
-     FireTrialClear   = false;
-     WaterTrialClear  = false;
-     SpiritTrialClear = false;
-     ShadowTrialClear = false;
-     LightTrialClear  = false;
+     ForestTrialClear = val;
+     FireTrialClear   = val;
+     WaterTrialClear  = val;
+     SpiritTrialClear = val;
+     ShadowTrialClear = val;
+     LightTrialClear  = val;
 
      //Progressive Items
-     ProgressiveBulletBag = 0;
-     ProgressiveBombBag   = 0;
-     ProgressiveMagic     = 0;
-     ProgressiveScale     = 0;
-     ProgressiveHookshot  = 0;
-     ProgressiveBow       = 0;
-     ProgressiveWallet    = 0;
-     ProgressiveStrength  = 0;
-     ProgressiveOcarina   = 0;
+     if (val) {
+       ProgressiveBulletBag = 3;
+       ProgressiveBombBag   = 3;
+       ProgressiveMagic     = 2;
+       ProgressiveScale     = 2;
+       ProgressiveHookshot  = 2;
+       ProgressiveBow       = 3;
+       ProgressiveWallet    = 2;
+       ProgressiveStrength  = 3;
+       ProgressiveOcarina   = 2;
+     } else {
+       ProgressiveBulletBag = 0;
+       ProgressiveBombBag   = 0;
+       ProgressiveMagic     = 0;
+       ProgressiveScale     = 0;
+       ProgressiveHookshot  = 0;
+       ProgressiveBow       = 0;
+       ProgressiveWallet    = 0;
+       ProgressiveStrength  = 0;
+       ProgressiveOcarina   = 0;
+     }
+
 
      //Keys
-     ForestTempleKeys          = 0;
-     FireTempleKeys            = 0;
-     WaterTempleKeys           = 0;
-     SpiritTempleKeys          = 0;
-     ShadowTempleKeys          = 0;
-     GanonsCastleKeys          = 0;
-     GerudoFortressKeys        = 0;
-     GerudoTrainingGroundsKeys = 0;
-     BottomOfTheWellKeys       = 0;
+     if (val) {
+       //10 satisfies vanilla and MQ
+       ForestTempleKeys          = 10;
+       FireTempleKeys            = 10;
+       WaterTempleKeys           = 10;
+       SpiritTempleKeys          = 10;
+       ShadowTempleKeys          = 10;
+       GanonsCastleKeys          = 10;
+       GerudoFortressKeys        = 10;
+       GerudoTrainingGroundsKeys = 10;
+       BottomOfTheWellKeys       = 10;
+     } else {
+       ForestTempleKeys          = 0;
+       FireTempleKeys            = 0;
+       WaterTempleKeys           = 0;
+       SpiritTempleKeys          = 0;
+       ShadowTempleKeys          = 0;
+       GanonsCastleKeys          = 0;
+       GerudoFortressKeys        = 0;
+       GerudoTrainingGroundsKeys = 0;
+       BottomOfTheWellKeys       = 0;
+     }
+
 
      //Boss Keys
-     BossKeyForestTemple = false;
-     BossKeyFireTemple   = false;
-     BossKeyWaterTemple  = false;
-     BossKeySpiritTemple = false;
-     BossKeyShadowTemple = false;
-     BossKeyGanonsCastle = false;
+     BossKeyForestTemple = val;
+     BossKeyFireTemple   = val;
+     BossKeyWaterTemple  = val;
+     BossKeySpiritTemple = val;
+     BossKeyShadowTemple = val;
+     BossKeyGanonsCastle = val;
 
      //Gold Skulltula Count
-     GoldSkulltulaTokens = 0;
+     if (val) {
+       GoldSkulltulaTokens = 100;
+     } else {
+       GoldSkulltulaTokens = 0;
+     }
+
 
      //Drops and Bottle Contents Access
-     DekuNutDrop      = false;
-     NutPot           = false;
-     NutCrate         = false;
-     DekuBabaNuts     = false;
-     DekuStickDrop    = false;
-     StickPot         = false;
-     DekuBabaSticks   = false;
-     BugsAccess       = false;
-     BugShrub         = false;
-     WanderingBugs    = false;
-     BugRock          = false;
-     BlueFireAccess   = false;
-     FishAccess       = false;
-     FishGroup        = false;
-     LoneFish         = false;
-     FairyAccess      = false;
-     GossipStoneFairy = false;
-     BeanPlantFairy   = false;
-     ButterflyFairy   = false;
-     FairyPot         = false;
-     FreeFairies      = false;
-     FairyPond        = false;
+     DekuNutDrop      = val;
+     NutPot           = val;
+     NutCrate         = val;
+     DekuBabaNuts     = val;
+     DekuStickDrop    = val;
+     StickPot         = val;
+     DekuBabaSticks   = val;
+     BugsAccess       = val;
+     BugShrub         = val;
+     WanderingBugs    = val;
+     BugRock          = val;
+     BlueFireAccess   = val;
+     FishAccess       = val;
+     FishGroup        = val;
+     LoneFish         = val;
+     FairyAccess      = val;
+     GossipStoneFairy = val;
+     BeanPlantFairy   = val;
+     ButterflyFairy   = val;
+     FairyPot         = val;
+     FreeFairies      = val;
+     FairyPond        = val;
 
-     BuyBombchus5     = false;
-     BuyBombchus10    = false;
-     BuyBombchus20    = false;
+     BuyBombchus5     = val;
+     BuyBombchus10    = val;
+     BuyBombchus20    = val;
 
      /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
      /* These are used to simplify reading the logic, but need to be updated
      /  every time a base value is updated.                       */
 
-     Slingshot        = false;
-     Ocarina          = false;
-     BombBag          = false;
-     MagicMeter       = false;
-     Hookshot         = false;
-     Longshot         = false;
-     Bow              = false;
-     GoronBracelet    = false;
-     SilverGauntlets  = false;
-     GoldenGauntlets  = false;
-     SilverScale      = false;
-     GoldScale        = false;
+     Slingshot        = val;
+     Ocarina          = val;
+     BombBag          = val;
+     MagicMeter       = val;
+     Hookshot         = val;
+     Longshot         = val;
+     Bow              = val;
+     GoronBracelet    = val;
+     SilverGauntlets  = val;
+     GoldenGauntlets  = val;
+     SilverScale      = val;
+     GoldScale        = val;
 
-     ScarecrowSong    = false;
-     Scarecrow        = false;
-     DistantScarecrow = false;
+     ScarecrowSong    = val;
+     Scarecrow        = val;
+     DistantScarecrow = val;
 
-     Bombs            = false;
-     DekuShield       = false;
-     HylianShield     = false;
-     Nuts             = false;
-     Sticks           = false;
-     Bugs             = false;
-     BlueFire         = false;
-     Fish             = false;
-     Fairy            = false;
-     BottleWithBigPoe = false;
+     Bombs            = val;
+     DekuShield       = val;
+     HylianShield     = val;
+     Nuts             = val;
+     Sticks           = val;
+     Bugs             = val;
+     BlueFire         = val;
+     Fish             = val;
+     Fairy            = val;
+     BottleWithBigPoe = val;
 
-     HasBombchus      = false;
-     FoundBombchus    = false;
-     HasExplosives    = false;
-     IsChild          = false;
-     IsAdult          = false;
-   //IsGlitched       = false;
-     CanBlastOrSmash  = false;
-     CanChildAttack   = false;
-     CanChildDamage   = false;
-     CanCutShrubs     = false;
-     CanDive          = false;
-     CanLeaveForest   = false;
-     CanPlantBugs     = false;
-     CanRideEpona     = false;
-     CanStunDeku      = false;
-     CanSummonGossipFairy = false;
-     CanSummonGossipFairyWithoutSuns = false;
-     CanPlantBean        = false;
-     CanOpenBombGrotto   = false;
-     CanOpenStormGrotto  = false;
-     BigPoeKill          = false;
-     HookshotOrBoomerang = false;
+     HasBombchus      = val;
+     FoundBombchus    = val;
+     HasExplosives    = val;
+     IsChild          = val;
+     IsAdult          = val;
+   //IsGlitched       = val;
+     CanBlastOrSmash  = val;
+     CanChildAttack   = val;
+     CanChildDamage   = val;
+     CanCutShrubs     = val;
+     CanDive          = val;
+     CanLeaveForest   = val;
+     CanPlantBugs     = val;
+     CanRideEpona     = val;
+     CanStunDeku      = val;
+     CanSummonGossipFairy = val;
+     CanSummonGossipFairyWithoutSuns = val;
+     CanPlantBean        = val;
+     CanOpenBombGrotto   = val;
+     CanOpenStormGrotto  = val;
+     BigPoeKill          = val;
+     HookshotOrBoomerang = val;
 
-     GuaranteeTradePath     = false;
-     GuaranteeHint          = false;
-     HasFireSource          = false;
-     HasFireSourceWithTorch = false;
+     GuaranteeTradePath     = val;
+     GuaranteeHint          = val;
+     HasFireSource          = val;
+     HasFireSourceWithTorch = val;
 
-     CanFinishGerudoFortress = false;
+     CanFinishGerudoFortress = val;
 
-     HasShield        = false;
-     CanShield        = false;
-     CanJumpslash     = false;
-     CanUseProjectile = false;
+     HasShield        = val;
+     CanShield        = val;
+     CanJumpslash     = val;
+     CanUseProjectile = val;
 
      //Bridge Requirements
-     HasAllStones          = false;
-     HasAllMedallions      = false;
-     CanBuildRainbowBridge = false;
-     CanTriggerLACS        = false;
+     HasAllStones          = val;
+     HasAllMedallions      = val;
+     CanBuildRainbowBridge = val;
+     CanTriggerLACS        = val;
 
      //Other
-     AtDay         = false;
-     AtNight       = false;
-     IsStartingAge = false;
+     AtDay         = val;
+     AtNight       = val;
+     IsStartingAge = val;
      Age           = Settings::StartingAge.Value<u8>();
 
      //Events
-     ShowedMidoSwordAndShield  = false;
-     CarpenterRescue           = false;
-     GF_GateOpen               = false;
-     DampesWindmillAccess      = false;
-     DrainWell                 = false;
-     GoronCityChildFire        = false;
-     GCWoodsWarpOpen           = false;
-     StopGCRollingGoronAsAdult = false;
-     ChildWaterTemple          = false;
-     KakarikoVillageGateOpen   = false;
-     KingZoraThawed            = false;
-     ForestTempleJoAndBeth     = false;
-     ForestTempleAmyAndMeg     = false;
-     LinksCow                  = false;
-     AtDampeTime               = false;
-     DeliverLetter             = false;
+     ShowedMidoSwordAndShield  = val;
+     CarpenterRescue           = val;
+     GF_GateOpen               = val;
+     DampesWindmillAccess      = val;
+     DrainWell                 = val;
+     GoronCityChildFire        = val;
+     GCWoodsWarpOpen           = val;
+     StopGCRollingGoronAsAdult = val;
+     ChildWaterTemple          = val;
+     KakarikoVillageGateOpen   = val;
+     KingZoraThawed            = val;
+     ForestTempleJoAndBeth     = val;
+     ForestTempleAmyAndMeg     = val;
+     LinksCow                  = val;
+     AtDampeTime               = val;
+     DeliverLetter             = val;
 
-     DrainWellPast            = false;
-     DampesWindmillAccessPast = false;
-     DekuTreeClearPast        = false;
-     GoronRubyPast            = false;
-     ZoraSapphirePast         = false;
-     ForestTrialClearPast     = false;
-     FireTrialClearPast       = false;
-     WaterTrialClearPast      = false;
-     SpiritTrialClearPast     = false;
-     ShadowTrialClearPast     = false;
-     LightTrialClearPast      = false;
-     BuyDekuShieldPast        = false;
+     DrainWellPast            = val;
+     DampesWindmillAccessPast = val;
+     DekuTreeClearPast        = val;
+     GoronRubyPast            = val;
+     ZoraSapphirePast         = val;
+     ForestTrialClearPast     = val;
+     FireTrialClearPast       = val;
+     WaterTrialClearPast      = val;
+     SpiritTrialClearPast     = val;
+     ShadowTrialClearPast     = val;
+     LightTrialClearPast      = val;
+     BuyDekuShieldPast        = val;
    }
 }
