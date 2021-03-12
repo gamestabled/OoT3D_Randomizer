@@ -105,12 +105,20 @@ public:
         return price;
     }
 
+    void SetAsPlaythrough() {
+        playthrough = true;
+    }
+
+    bool IsPlaythrough() const {
+        return playthrough;
+    }
+
     bool operator== (const Item& right) const {
-      return name == right.GetName();
+        return name == right.GetName();
     }
 
     bool operator!= (const Item& right) const {
-      return name != right.GetName();
+        return name != right.GetName();
     }
 
 private:
@@ -120,6 +128,7 @@ private:
     bool advancement;
     std::variant<bool*, u8*> logicVar;
     u16  price;
+    bool playthrough = false;
 };
 
 extern Item NoItem;

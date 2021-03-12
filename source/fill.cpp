@@ -92,7 +92,7 @@ static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   }
 }
 
-static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations) {
+static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, bool playthrough = false) {
   //logically give the starting inventory
   ApplyStartingInventory();
 
@@ -169,6 +169,10 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             } else {
               location->ApplyPlacedItemEffect();
             }
+
+            if (playthrough && location->GetPlacedItem().IsPlaythrough() && location->GetPlacedItem().IsAdvancement()) {
+              playthroughLocations.push_back(location);
+            }
           }
         }
       }
@@ -188,6 +192,10 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
   });
 
   return accessibleLocations;
+}
+
+static void GeneratePlaythrough() {
+  GetAccessibleLocations(allLocations, true);
 }
 
 static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
@@ -235,6 +243,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
 
     while (!itemsToPlace.empty()) {
       Item item = std::move(itemsToPlace.back());
+      item.SetAsPlaythrough();
       itemsToPlace.pop_back();
 
       //assume we have all unplaced items
@@ -318,4 +327,7 @@ void Fill() {
   std::vector<Item> remainingPool = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return true;});
   Logic::LogicReset();
   FastFill(remainingPool, GetAccessibleLocations(allLocations));
+
+  Logic::LogicReset();
+  GeneratePlaythrough();
 }

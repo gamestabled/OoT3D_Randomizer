@@ -463,6 +463,7 @@ namespace Settings {
     OpenForest.SetSelectedIndex(OPENFOREST_OPEN);
     OpenDoorOfTime.SetSelectedIndex(1); //1 is Open, 0 is Closed
     Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
+    TokenCount.Hide();
 
     std::vector<std::string> tokenOptions = {};
     for (int i = 0; i <= 100; i++) {

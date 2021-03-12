@@ -102,11 +102,13 @@ static void WriteSettings() {
 
     for (size_t i = 0; i < menu->settingsList->size(); i++) {
       Option* setting = menu->settingsList->at(i);
-      logtxt += "\t";
-      logtxt += setting->GetName();
-      logtxt += ": ";
-      logtxt += setting->GetSelectedOption();
-      logtxt += "\n";
+      if (!setting->IsHidden()) {
+        logtxt += "\t";
+        logtxt += setting->GetName();
+        logtxt += ": ";
+        logtxt += setting->GetSelectedOption();
+        logtxt += "\n";
+      }
     }
   }
 
@@ -158,13 +160,13 @@ bool SpoilerLog_Write() {
 
   logtxt += "Playthrough:\n";
   for (ItemLocation* location : playthroughLocations) {
-    logtxt += "    ";
+    logtxt += "\t";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     logtxt += '\n';
   }
   playthroughLocations = {};
 
-  logtxt += "\nAll Locations:\n\n";
+  logtxt += "\nAll Locations:\n";
   for (ItemLocation* location : dungeonRewardLocations) {
     logtxt += "\t";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
