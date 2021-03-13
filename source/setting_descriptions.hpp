@@ -41,6 +41,7 @@ extern string_view randomMQDungeonsDesc;
 extern string_view mirrorWorldDesc;
 
 extern string_view songsSongLocations;
+extern string_view songsDungeonRewards;
 extern string_view songsAllLocations;
 
 extern string_view tokensOff;

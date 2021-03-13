@@ -269,7 +269,6 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
         PlacementLog_Msg(item.GetName());
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
-        printf("\nFailed to Place: %s", item.GetName().data());
         PlacementLog_Write();
 
         //reset any locations that got an item
@@ -311,7 +310,15 @@ static void RandomizeOwnDungeon(std::string_view dungeonName, const Item bossKey
     if (dungeonName == "Ice Cavern" && loc->GetName() == "Sheik in Ice Cavern" && ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
       return false;
     }
-    
+
+    //prevent using dungeon reward locations when songs need to go there
+    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory("Boss Heart") ||
+       loc->GetName() == "Gerudo Training Grounds MQ Ice Arrows Chest" ||
+       loc->GetName() == "Gerudo Training Grounds Maze Path Final Chest" ||
+       loc->GetName() == "Bottom of the Well Lens of Truth Chest" ||
+       loc->GetName() == "Bottom of the Well MQ Lens of Truth Chest")) {
+      return false;
+    }
     return loc->IsCategory(dungeonName);
   });
   std::vector<Item> dungeonItems = {};
@@ -390,6 +397,13 @@ void Fill() {
     std::vector<ItemLocation*> songLocations = {};
     if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
       songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory("Songs");});
+
+    } else if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
+      songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory("Boss Heart");});
+      songLocations.push_back(&SheikInIceCavern);
+      songLocations.push_back(&SongFromImpa);
+      songLocations.push_back(GerudoTrainingGroundsDungeonMode ? &GerudoTrainingGrounds_MQ_IceArrowsChest : &GerudoTrainingGrounds_MazePathFinalChest);
+      songLocations.push_back(BottomOfTheWellDungeonMode ? &BottomOfTheWell_MQ_LensOfTruthChest : &BottomOfTheWell_LensOfTruthChest);
     }
 
     AssumedFill(songs, songLocations);
