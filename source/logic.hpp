@@ -251,7 +251,6 @@ namespace Logic {
   extern bool AtNight;
   extern bool LinksCow;
   extern u8 Age;
-  extern u16 CurAccessibleLocations;
 
   //Events
   extern bool ShowedMidoSwordAndShield;
@@ -291,5 +290,5 @@ namespace Logic {
   extern bool HasProjectile(std::string_view age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();
-  extern void LogicReset(const bool val = false);
+  extern void LogicReset();
 }
