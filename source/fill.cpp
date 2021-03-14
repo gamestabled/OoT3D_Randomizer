@@ -6,13 +6,31 @@
 #include "logic.hpp"
 #include "random.hpp"
 
-std::vector<Item> unplacedItems = {};
-std::vector<Item> placedItems = {};
-std::vector<ItemLocation *> locations = {};
+const bool ERASE_AFTER_FILTER = true;
+
+using namespace Logic;
+using namespace Settings;
 
 template <typename T, typename Predicate>
 static void erase_if(std::vector<T>& vector, Predicate pred) {
     vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
+}
+
+template <typename T, typename Predicate>
+std::vector<T> FilterFromPool(std::vector<T>& vector, Predicate pred, bool eraseAfterFilter = false) {
+  std::vector<T> filteredPool = {};
+  std::copy_if(vector.begin(), vector.end(), std::back_inserter(filteredPool), pred);
+
+  if (eraseAfterFilter) {
+    erase_if(vector, pred);
+  }
+
+  return filteredPool;
+}
+
+template <typename T, typename Predicate>
+std::vector<T> FilterAndEraseFromPool(std::vector<T>& vector, Predicate pred) {
+  return FilterFromPool(vector, pred, ERASE_AFTER_FILTER);
 }
 
 static void RemoveStartingItemsFromPool() {
@@ -35,9 +53,9 @@ static void RandomizeDungeonRewards() {
   for (size_t i = 0; i < dungeonRewards.size(); i++) {
     const u8 idx = idxArray[i];
     PlaceItemInLocation(dungeonRewardLocations[i], dungeonRewards[idx]);
-    Settings::rDungeonRewardOverrides[i] = idx;
+    rDungeonRewardOverrides[i] = idx;
   }
-  Settings::LinksPocketRewardBitMask = LinksPocket.GetPlacedItem().GetItemID();
+  LinksPocketRewardBitMask = LinksPocket.GetPlacedItem().GetItemID();
 }
 
 static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
@@ -77,27 +95,11 @@ static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   }
 }
 
-static Item GetItemToPlace() {
-  for (size_t i = 0; i < unplacedItems.size(); i++) {
-    //keep iterating to select a song during song shuffling to other song locations
-    if (Settings::ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS) && unplacedItems[i].GetItemType() != ITEMTYPE_SONG && placedItems.size() < songLocations.size()) {
-      continue;
-    }
-
-    Item item = std::move(unplacedItems[i]);
-    unplacedItems.erase(unplacedItems.begin() + i);
-    return item;
-  }
-
-  PlacementLog_Msg("\nERROR: COULD NOT FIND ITEM TO PLACE\n");
-  return NoItem;
-}
-
-static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool playthrough = false) {
+static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, bool playthrough = false) {
   //logically give the starting inventory
   ApplyStartingInventory();
 
-  locations.clear();
+  std::vector<ItemLocation*> accessibleLocations = {};
   Exits::AccessReset();
   LocationReset();
   Logic::UpdateHelpers();
@@ -109,7 +111,6 @@ static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool 
 
     for (size_t i = 0; i < exitPool.size(); i++) {
       Exit* area = exitPool[i];
-      //area->LogStatus(); for some reason this function crashes the app when attempting max randomization options
 
       //iterate twice on each area for different ages
       for (u8 age : {AGE_CHILD, AGE_ADULT}) {
@@ -166,26 +167,14 @@ static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool 
             location->AddToPool();
             iterationsWithNoLocations = 0;
 
-            if (location->GetPlacedItemName() == "No Item") {
-              locations.push_back(location);
+            if (location->GetPlacedItem() == NoItem) {
+              accessibleLocations.push_back(location);
             } else {
-
-              //used when generating playthrough text
-              if (playthrough) {
-                if (location->GetPlacedItemName() == "Triforce") {
-                  PlacementLog_Msg("\nSEED BEATABLE");
-                  playthroughLocations.push_back(location);
-                }
-
-                //log the item location if it contains an advancement item
-                for (const Item& item : placedItems) {
-                  if (location->GetPlacedItemName() == item.GetName()) {
-                    playthroughLocations.push_back(location);
-                    break;
-                  }
-                }
-              }
               location->ApplyPlacedItemEffect();
+            }
+
+            if (playthrough && location->GetPlacedItem().IsPlaythrough() && location->GetPlacedItem().IsAdvancement()) {
+              playthroughLocations.push_back(location);
             }
           }
         }
@@ -196,25 +185,40 @@ static void GetAccessibleLocations(std::vector<ItemLocation *>& locations, bool 
       iterationsWithNoLocations = 0;
     }
   }
+  erase_if(accessibleLocations, [allowedLocations](ItemLocation* loc){
+    for (ItemLocation* allowedLocation : allowedLocations) {
+      if (loc == allowedLocation) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  return accessibleLocations;
 }
 
-static void FastFill(std::vector<ItemLocation*> locations) {
+static void GeneratePlaythrough() {
+  GetAccessibleLocations(allLocations, true);
+}
+
+static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
 
   //Place everything randomly
   while (!locations.empty()) {
-    unsigned int itemIdx = Random() % ItemPool.size();
+    unsigned int itemIdx = Random() % items.size();
     unsigned int locIdx = Random() % locations.size();
 
-    PlaceItemInLocation(locations[locIdx], ItemPool[itemIdx]);
+    PlaceItemInLocation(locations[locIdx], items[itemIdx]);
 
-    ItemPool.erase(ItemPool.begin() + itemIdx);
+    items.erase(items.begin() + itemIdx);
     locations.erase(locations.begin() + locIdx);
 
-    if (ItemPool.empty()) {
-      AddJunk();
+    if (items.empty()) {
+      items.push_back(GetJunkItem());
     }
   }
 }
+
 /*
 | The algorithm places items in the world in reverse.
 | This means we first assume we have every item in the item pool and
@@ -222,93 +226,198 @@ static void FastFill(std::vector<ItemLocation*> locations) {
 | This method helps distribution of items locked behind many requirements.
 | - OoT Randomizer
 */
-static int AssumedFill() {
+static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allowedLocations) {
 
-  //get all the advancement items
-  placedItems.clear();
-  unplacedItems.clear();
-  std::copy_if(ItemPool.begin(), ItemPool.end(), std::back_inserter(unplacedItems), [](const Item& i) {
-    return i.IsAdvancement();
-  });
-  erase_if(ItemPool, [](const Item& i) { return i.IsAdvancement(); });
-
-  //shuffle the order
-  std::shuffle(unplacedItems.begin(), unplacedItems.end(), std::default_random_engine(Random()));
-
-  while (!unplacedItems.empty()) {
-
-    //move an item from unplaced to placed, this will be the item we place
-    Item item = GetItemToPlace();
-    if (item.GetName() == "No Item") {
-      PlacementLog_Msg("\nRETRYING PLACEMENT...\n");
-      return 0;
-    }
-    placedItems.push_back(item);
-
-    //assume we have all of the unplaced items and nothing else
-    Logic::LogicReset();
-    for (Item& unplacedItem : unplacedItems) {
-      unplacedItem.ApplyEffect();
-    }
-
-    //retrieve all possible locations to place the next item
-    GetAccessibleLocations(locations);
-
-    /*if songs are restricted to song locations and a song is being placed, then
-      filter to only song locations.*/
-    if (Settings::ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS) && item.GetItemType() == ITEMTYPE_SONG) {
-        erase_if(locations, [](ItemLocation* loc) { return !loc->IsCategory("Songs");});
-    }
-
-    //if we get stuck, retry
-    if (locations.empty()) {
-      PlacementLog_Msg("\nCANNOT PLACE ");
-      PlacementLog_Msg(item.GetName());
-      PlacementLog_Msg(". TRYING AGAIN...\n");
-      return 0;
-    }
-
-    //place the item
-    unsigned int locIdx = Random() % locations.size();
-    PlaceItemInLocation(locations[locIdx], item);
+  if (items.size() > allowedLocations.size()) {
+    printf("\x1b[H1;1ERROR: MORE ITEMS THAN LOCATIONS");
   }
 
-  //get the rest of locations that don't have items
-  Logic::LogicReset();
-  GetAccessibleLocations(locations);
+  //keep retrying to place everything until it works
+  bool unsuccessfulPlacement = false;
+  std::vector<ItemLocation*> attemptedLocations = {};
+  do {
+    unsuccessfulPlacement = false;
+    std::vector<Item> itemsToPlace = items;
 
-  //fast fill for the rest
-  FastFill(locations);
+    //copy all not yet placed advancement items so that we can apply their effects for the fill algorithm
+    std::vector<Item> itemsToNotPlace = FilterFromPool(ItemPool, [](const Item& i){ return i .IsAdvancement();});
 
-  //calculate playthrough
-  Logic::LogicReset();
-  GetAccessibleLocations(locations, true);
+    //shuffle the order of items to place
+    std::shuffle(itemsToPlace.begin(), itemsToPlace.end(), std::default_random_engine(Random()));
 
-  return 1;
+    while (!itemsToPlace.empty()) {
+      Item item = std::move(itemsToPlace.back());
+      item.SetAsPlaythrough();
+      itemsToPlace.pop_back();
+
+      //assume we have all unplaced items
+      LogicReset();
+      for (Item& unplacedItem : itemsToPlace) {
+        unplacedItem.ApplyEffect();
+      }
+      for (Item& unplacedItem : itemsToNotPlace) {
+        unplacedItem.ApplyEffect();
+      }
+
+      //get all accessible locations that are allowed
+      std::vector<ItemLocation*> accessibleLocations = GetAccessibleLocations(allowedLocations);
+
+      //retry if there are no more locations to place items
+      if (accessibleLocations.empty()) {
+
+        PlacementLog_Msg("\nCANNOT PLACE ");
+        PlacementLog_Msg(item.GetName());
+        PlacementLog_Msg(". TRYING AGAIN...\n");
+
+        PlacementLog_Write();
+
+        //reset any locations that got an item
+        for (ItemLocation* loc : attemptedLocations) {
+          loc->SetPlacedItem(NoItem);
+          itemsPlaced--;
+        }
+        attemptedLocations.clear();
+
+        unsuccessfulPlacement = true;
+        break;
+      }
+
+      //place the item within one of the allowed locations
+      unsigned int locIdx = Random() % accessibleLocations.size();
+      PlaceItemInLocation(accessibleLocations[locIdx], item);
+      attemptedLocations.push_back(accessibleLocations[locIdx]);
+
+    }
+  } while (unsuccessfulPlacement);
 }
 
 static void FillExcludedLocations() {
   //Only fill in excluded locations that don't already have something and are forbidden
-  locations.assign(allLocations.begin(), allLocations.end());
-  erase_if(locations, [](ItemLocation* il){return !il->IsExcluded() || il->GetPlacedItemName() != "No Item";});
+  std::vector<ItemLocation*> excludedLocations = FilterFromPool(allLocations, [](ItemLocation* loc){
+    return loc->IsExcluded();
+  });
 
-  for (ItemLocation* il : locations) {
-    PlaceJunkInExcludedLocation(il);
+  for (ItemLocation* loc : excludedLocations) {
+    PlaceJunkInExcludedLocation(loc);
   }
 }
 
-int Fill() {
-  itemsPlaced = 0;
+//Fill in dungeon items that have to be within their own dungeon
+static void RandomizeOwnDungeon(std::string_view dungeonName, const Item bossKey, const Item map, const Item compass, const Item smallKey, u8 keyCount) {
+
+  std::vector<ItemLocation*> dungeonLocations = FilterFromPool(allLocations, [dungeonName](ItemLocation* loc){
+    //prevent accidentally placing a map or compass at Sheik in Ice Cavern if a song needs to go there
+    if (dungeonName == "Ice Cavern" && loc->GetName() == "Sheik in Ice Cavern" && ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
+      return false;
+    }
+
+    //prevent using dungeon reward locations when songs need to go there
+    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory("Boss Heart") ||
+       loc->GetName() == "Gerudo Training Grounds MQ Ice Arrows Chest" ||
+       loc->GetName() == "Gerudo Training Grounds Maze Path Final Chest" ||
+       loc->GetName() == "Bottom of the Well Lens of Truth Chest" ||
+       loc->GetName() == "Bottom of the Well MQ Lens of Truth Chest")) {
+      return false;
+    }
+    return loc->IsCategory(dungeonName);
+  });
+  std::vector<Item> dungeonItems = {};
+
+  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && keyCount > 0) {
+    AddItemToPool(dungeonItems, smallKey, keyCount);
+  }
+
+  if ((BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) && dungeonName != "Ganon's Castle" && bossKey != NoItem) ||
+      (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) && dungeonName == "Ganon's Castle")) {
+        AddItemToPool(dungeonItems, bossKey);
+  }
+
+  //randomize boss key and small keys together for even distribution
+  AssumedFill(dungeonItems, dungeonLocations);
+
+  //randomize map and compass separately since they're not progressive
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) && map != NoItem) {
+    AssumedFill({map, compass}, dungeonLocations);
+  }
+}
+
+static void RandomizeOwnDungeonItems() {
+  //variable to hold Vanilla/MQ key count for each dungeon
+  u8 keyCount = 0;
+
+  //                  dungeon name       boss key, map,                compass,             small key, key count
+  RandomizeOwnDungeon("Deku Tree",         NoItem, DekuTree_Map,       DekuTree_Compass,       NoItem, keyCount);
+  RandomizeOwnDungeon("Dodongo's Cavern",  NoItem, DodongosCavern_Map, DodongosCavern_Compass, NoItem, keyCount);
+  RandomizeOwnDungeon("Jabu Jabu's Belly", NoItem, JabuJabusBelly_Map, JabuJabusBelly_Compass, NoItem, keyCount);
+
+  keyCount = (ForestTempleDungeonMode) ? 6 : 5; //MQ key count : Vanilla key count
+  RandomizeOwnDungeon("Forest Temple", ForestTemple_BossKey, ForestTemple_Map, ForestTemple_Compass, ForestTemple_SmallKey, keyCount);
+
+  keyCount = (FireTempleDungeonMode) ? 5 : 8;
+  RandomizeOwnDungeon("Fire Temple", FireTemple_BossKey, FireTemple_Map, FireTemple_Compass, FireTemple_SmallKey, keyCount);
+
+  keyCount = (WaterTempleDungeonMode) ? 2 : 6;
+  RandomizeOwnDungeon("Water Temple", WaterTemple_BossKey, WaterTemple_Map, WaterTemple_Compass, WaterTemple_SmallKey, keyCount);
+
+  keyCount = (SpiritTempleDungeonMode) ? 7 : 5;
+  RandomizeOwnDungeon("Spirit Temple", SpiritTemple_BossKey, SpiritTemple_Map, SpiritTemple_Compass, SpiritTemple_SmallKey, keyCount);
+
+  keyCount = (ShadowTempleDungeonMode) ? 6 : 4; //TEMPORARY FIX FOR FREESTANDING KEY CRASH, VANILLA SHOULD BE 5
+  RandomizeOwnDungeon("Shadow Temple", ShadowTemple_BossKey, ShadowTemple_Map, ShadowTemple_Compass, ShadowTemple_SmallKey, keyCount);
+
+  keyCount = (BottomOfTheWellDungeonMode) ? 2 : 3;
+  RandomizeOwnDungeon("Bottom of the Well", NoItem, BottomOfTheWell_Map, BottomOfTheWell_Compass, BottomOfTheWell_SmallKey, keyCount);
+
+  keyCount = (IceCavernDungeonMode) ? 0 : 0;
+  RandomizeOwnDungeon("Ice Cavern", NoItem, IceCavern_Map, IceCavern_Compass, NoItem, keyCount);
+
+  keyCount = (GerudoTrainingGroundsDungeonMode) ? 3 : 8;//TEMPORARY FIX FOR FREESTANDING KEY CRASH, VANILLA SHOULD BE 9
+  RandomizeOwnDungeon("Gerudo Training Grounds", NoItem, NoItem, NoItem, GerudoTrainingGrounds_SmallKey, keyCount);
+
+  keyCount = (GanonsCastleDungeonMode) ? 3 : 2;
+  RandomizeOwnDungeon("Ganon's Castle", GanonsCastle_BossKey, NoItem, NoItem, GanonsCastle_SmallKey, keyCount);
+}
+
+void Fill() {
   GenerateLocationPool();
   GenerateItemPool();
   GenerateStartingInventory();
   RemoveStartingItemsFromPool();
   RandomizeDungeonRewards();
   FillExcludedLocations();
+  RandomizeOwnDungeonItems();
 
-  if (!AssumedFill()) {
-    return 0;
+  //Place songs first if song shuffle is set to specific locations
+  if (ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
+
+    //Get each song
+    std::vector<Item> songs = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.GetItemType() == ITEMTYPE_SONG;});
+
+    //Get each song location
+    std::vector<ItemLocation*> songLocations = {};
+    if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
+      songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory("Songs");});
+
+    } else if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
+      songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory("Boss Heart");});
+      songLocations.push_back(&SheikInIceCavern);
+      songLocations.push_back(&SongFromImpa);
+      songLocations.push_back(GerudoTrainingGroundsDungeonMode ? &GerudoTrainingGrounds_MQ_IceArrowsChest : &GerudoTrainingGrounds_MazePathFinalChest);
+      songLocations.push_back(BottomOfTheWellDungeonMode ? &BottomOfTheWell_MQ_LensOfTruthChest : &BottomOfTheWell_LensOfTruthChest);
+    }
+
+    AssumedFill(songs, songLocations);
   }
 
-  return 1;
+  //Then place the rest of the advancement items
+  std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});
+  AssumedFill(remainingAdvancementItems, allLocations);
+
+  //Fast fill for the rest of the pool
+  std::vector<Item> remainingPool = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return true;});
+  LogicReset();
+  FastFill(remainingPool, GetAccessibleLocations(allLocations));
+
+  LogicReset();
+  GeneratePlaythrough();
 }

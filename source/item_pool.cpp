@@ -1,6 +1,7 @@
 #include "item_pool.hpp"
 #include "random.hpp"
 #include "spoiler_log.hpp"
+#include "fill.hpp"
 
 using namespace Settings;
 
@@ -454,7 +455,7 @@ const std::array<Item, 10> tradeItems = {
   I_ClaimCheck,
 };
 
-static void AddItemToPool(std::vector<Item>& pool, const Item& item, size_t count = 1) {
+void AddItemToPool(std::vector<Item>& pool, const Item& item, size_t count /*= 1*/) {
   pool.resize(pool.size() + count, item);
 }
 
@@ -811,7 +812,7 @@ static void PlaceVanillaSmallKeys() {
       PlaceItemInLocation(&ShadowTemple_FallingSpikesSwitchChest,  ShadowTemple_SmallKey);
       PlaceItemInLocation(&ShadowTemple_InvisibleFloormasterChest, ShadowTemple_SmallKey);
       PlaceItemInLocation(&ShadowTemple_AfterWindHiddenChest,      ShadowTemple_SmallKey);
-      PlaceItemInLocation(&ShadowTemple_FreestandingKey,           ShadowTemple_SmallKey);
+      //PlaceItemInLocation(&ShadowTemple_FreestandingKey,           ShadowTemple_SmallKey); //UNCOMMENT WHEN FREESTANDING KEY CRASH IS FIXED
     }
 
     //Bottom of the Well
@@ -838,7 +839,7 @@ static void PlaceVanillaSmallKeys() {
       PlaceItemInLocation(&GerudoTrainingGrounds_NearScarecrowChest,         GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_StalfosChest,               GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_UnderwaterSilverRupeeChest, GerudoTrainingGrounds_SmallKey);
-      PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey,            GerudoTrainingGrounds_SmallKey);
+      //PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey,            GerudoTrainingGrounds_SmallKey); //UNCOMMENT WHEN FREESTANDING KEY CRASH IS FIXED
     }
 
     //Ganon's Castle
@@ -936,56 +937,6 @@ static void SetMinimalItemPool() {
   ReplaceMaxItem(I_ProgressiveBombBag, 1);
   ReplaceMaxItem(PieceOfHeart, 0);
   ReplaceMaxItem(HeartContainer, 0);
-}
-
-//Randomizes dungeon keys for the "Own Dungeon" setting
-template <typename Container>
-static void RandomizeDungeonKeys(const Container& KeyRequirements, Item smallKeyItem, u8 maxKeys) {
-  for (size_t i = 0; i < maxKeys; i++) {
-
-    /*-------------------------------------------------
-    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
-    --------------------------------------------------*/
-    //this keeps the number of keys for the Own Dungeon setting consistent
-    if (smallKeyItem == ShadowTemple_SmallKey && i == 2) {
-      i = 3;
-    } else if (smallKeyItem == GerudoTrainingGrounds_SmallKey && i == 0) {
-      i = 1;
-    }
-    /*-------------------------------------------------
-    |END OF TEMPORARY FIX FOR FREESTANDING KEY CRASHES|
-    --------------------------------------------------*/
-
-    std::vector<ItemLocation *> dungeonPool;
-    for (const ItemLocationKeyPairing& ilkp : KeyRequirements) {
-      if (ilkp.keysRequired <= i && ilkp.loc->GetPlacedItemName() == "No Item") {
-        dungeonPool.push_back(ilkp.loc);
-      }
-    }
-    const u32 locIdx = Random() % dungeonPool.size();
-    PlaceItemInLocation(dungeonPool[locIdx], smallKeyItem);
-  }
-}
-
-//Randomizes Maps/Compasses/Boss Keys for the "Own Dungeon" settings
-template <typename Container>
-static void RandomizeDungeonItem(const Container& dungeonLocations, Item item) {
-  std::vector<ItemLocation *> dungeonPool;
-  for (const ItemLocationKeyPairing& ilkp : dungeonLocations) {
-
-    //don't allow boss keys to be placed at Heart Container spots in glitchless logic
-    if (item.GetName().rfind("Boss Key") != std::string::npos &&
-        ilkp.loc->GetName().rfind("Heart Container") != std::string::npos &&
-        Settings::Logic.Is(LOGIC_GLITCHLESS)) {
-          continue;
-    }
-
-    if (ilkp.loc->GetPlacedItemName() == "No Item") {
-      dungeonPool.push_back(ilkp.loc);
-    }
-  }
-  const u32 locIdx = Random() % dungeonPool.size();
-  PlaceItemInLocation(dungeonPool[locIdx], item);
 }
 
 void GenerateItemPool() {
@@ -1324,54 +1275,6 @@ void GenerateItemPool() {
     PlaceItemInLocation(&ToT_LightArrowCutscene, GanonsCastle_BossKey);
   } else if (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA)) {
     PlaceItemInLocation(&GanonsCastle_BossKeyChest, GanonsCastle_BossKey);
-  }
-
-  //dungeon only dungeon placements
-  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON)) {
-    RandomizeDungeonKeys(ForestTempleKeyRequirements,          ForestTemple_SmallKey,          5);
-    RandomizeDungeonKeys(FireTempleKeyRequirements,            FireTemple_SmallKey,            8);
-    RandomizeDungeonKeys(WaterTempleKeyRequirements,           WaterTemple_SmallKey,           6);
-    RandomizeDungeonKeys(SpiritTempleKeyRequirements,          SpiritTemple_SmallKey,          5);
-    RandomizeDungeonKeys(ShadowTempleKeyRequirements,          ShadowTemple_SmallKey,          5);
-    RandomizeDungeonKeys(BottomOfTheWellKeyRequirements,       BottomOfTheWell_SmallKey,       3);
-    RandomizeDungeonKeys(GerudoTrainingGroundsKeyRequirements, GerudoTrainingGrounds_SmallKey, 9);
-    RandomizeDungeonKeys(GanonsCastleKeyRequirements,          GanonsCastle_SmallKey,          2);
-  }
-
-  if (BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON)) {
-    RandomizeDungeonItem(ForestTempleKeyRequirements, ForestTemple_BossKey);
-    RandomizeDungeonItem(FireTempleKeyRequirements,   FireTemple_BossKey);
-    RandomizeDungeonItem(WaterTempleKeyRequirements,  WaterTemple_BossKey);
-    RandomizeDungeonItem(SpiritTempleKeyRequirements, SpiritTemple_BossKey);
-    RandomizeDungeonItem(ShadowTempleKeyRequirements, ShadowTemple_BossKey);
-  }
-
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON)) {
-    RandomizeDungeonItem(DekuTreeKeyRequirements,        DekuTree_Map);
-    RandomizeDungeonItem(DodongosCavernKeyRequirements,  DodongosCavern_Map);
-    RandomizeDungeonItem(JabuJabusBellyKeyRequirements,  JabuJabusBelly_Map);
-    RandomizeDungeonItem(ForestTempleKeyRequirements,    ForestTemple_Map);
-    RandomizeDungeonItem(FireTempleKeyRequirements,      FireTemple_Map);
-    RandomizeDungeonItem(WaterTempleKeyRequirements,     WaterTemple_Map);
-    RandomizeDungeonItem(SpiritTempleKeyRequirements,    SpiritTemple_Map);
-    RandomizeDungeonItem(ShadowTempleKeyRequirements,    ShadowTemple_Map);
-    RandomizeDungeonItem(BottomOfTheWellKeyRequirements, BottomOfTheWell_Map);
-    RandomizeDungeonItem(IceCavernKeyRequirements,       IceCavern_Map);
-
-    RandomizeDungeonItem(DekuTreeKeyRequirements,        DekuTree_Compass);
-    RandomizeDungeonItem(DodongosCavernKeyRequirements,  DodongosCavern_Compass);
-    RandomizeDungeonItem(JabuJabusBellyKeyRequirements,  JabuJabusBelly_Compass);
-    RandomizeDungeonItem(ForestTempleKeyRequirements,    ForestTemple_Compass);
-    RandomizeDungeonItem(FireTempleKeyRequirements,      FireTemple_Compass);
-    RandomizeDungeonItem(WaterTempleKeyRequirements,     WaterTemple_Compass);
-    RandomizeDungeonItem(SpiritTempleKeyRequirements,    SpiritTemple_Compass);
-    RandomizeDungeonItem(ShadowTempleKeyRequirements,    ShadowTemple_Compass);
-    RandomizeDungeonItem(BottomOfTheWellKeyRequirements, BottomOfTheWell_Compass);
-    RandomizeDungeonItem(IceCavernKeyRequirements,       IceCavern_Compass);
-  }
-
-  if(GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON)) {
-    RandomizeDungeonItem(GanonsCastleKeyRequirements, GanonsCastle_BossKey);
   }
 
   //all locations placements
