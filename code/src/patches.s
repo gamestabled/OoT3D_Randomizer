@@ -853,6 +853,12 @@ CowBottleCheck_patch:
 CowItemOverride_patch:
     b hook_CowItemOverride
 
+.section .patch_AnjuCheckCuccoAmount
+.global AnjuCheckCuccoAmount_patch
+AnjuCheckCuccoAmount_patch:
+    b hook_AnjuCheckCuccoAmount
+    beq 0x179444
+
 .section .patch_loader
 .global loader_patch
 

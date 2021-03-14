@@ -212,6 +212,7 @@ namespace Settings {
   extern Option FourPoesCutscene;
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
+  extern Option NumRequiredCuccos;
 
   extern Option DamageMultiplier;
   extern Option StartingTime;

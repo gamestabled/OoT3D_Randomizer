@@ -68,6 +68,10 @@ SECTIONS
 		*(.patch_DampeCheckCollectibleFlag)
 	}
 
+	.patch_AnjuCheckCuccoAmount 0x179420 : {
+		*(.patch_AnjuCheckCuccoAmount)
+	}
+
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
 	}

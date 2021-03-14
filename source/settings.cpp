@@ -89,11 +89,13 @@ namespace Settings {
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                  {fourPoesDesc, fourPoesDesc});
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                  {templeOfTimeIntroDesc, templeOfTimeIntroDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     std::vector<std::string_view>{10, bigPoeTargetCountDesc});
+  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"1", "2", "3", "4", "5", "6", "7"},                     std::vector<std::string_view>{7, numRequiredCuccosDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &FourPoesCutscene,
     &TempleOfTimeIntro,
     &BigPoeTargetCount,
+    &NumRequiredCuccos,
   };
 
   //Misc Settings
@@ -361,6 +363,7 @@ namespace Settings {
     ctx.fourPoesCutscene   = (FourPoesCutscene) ? 1 : 0;
     ctx.templeOfTimeIntro  = (TempleOfTimeIntro) ? 1 : 0;
     ctx.bigPoeTargetCount  = BigPoeTargetCount.Value<u8>() + 1;
+    ctx.numRequiredCuccos  = NumRequiredCuccos.Value<u8>() + 1;
 
     ctx.damageMultiplier   = DamageMultiplier.Value<u8>();
     ctx.startingTime       = StartingTime.Value<u8>();
@@ -437,6 +440,7 @@ namespace Settings {
     FourPoesCutscene.SetSelectedIndex(ctx.fourPoesCutscene);
     TempleOfTimeIntro.SetSelectedIndex(ctx.templeOfTimeIntro);
     BigPoeTargetCount.SetSelectedIndex(ctx.bigPoeTargetCount - 1);
+    NumRequiredCuccos.SetSelectedIndex(ctx.numRequiredCuccos - 1);
 
     DamageMultiplier.SetSelectedIndex(ctx.damageMultiplier);
     StartingTime.SetSelectedIndex(ctx.startingTime);

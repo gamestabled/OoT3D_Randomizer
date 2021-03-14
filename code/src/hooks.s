@@ -426,6 +426,14 @@ hook_CowItemOverride:
     pop {r0-r1, r3-r12, lr}
     b 0x3EE37C
 
+.global hook_AnjuCheckCuccoAmount
+hook_AnjuCheckCuccoAmount:
+    push {r1-r12, lr}
+    bl EnNiwLady_CheckCuccoAmount
+    pop {r1-r12, lr}
+    cmp r0,#0x0
+    b 0x179424
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
