@@ -991,11 +991,11 @@ void GenerateItemPool() {
   }
 
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
-    for (auto& loc : GetLocations("Skulltulas")) {
+    for (auto& loc : GetLocations(Category::cSkulltula)) {
       PlaceItemInLocation(loc, GoldSkulltulaToken);
     }
   } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
-    for (auto& loc : GetLocations("Skulltulas")) {
+    for (auto& loc : GetLocations(Category::cSkulltula)) {
       if (loc->GetScene() >= 0x0A) {
         PlaceItemInLocation(loc, GoldSkulltulaToken);
       } else {
@@ -1003,7 +1003,7 @@ void GenerateItemPool() {
       }
     }
   } else if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
-    for (auto& loc : GetLocations("Skulltulas")) {
+    for (auto& loc : GetLocations(Category::cSkulltula)) {
       if (loc->GetScene() < 0x0A) {
         PlaceItemInLocation(loc, GoldSkulltulaToken);
       } else {

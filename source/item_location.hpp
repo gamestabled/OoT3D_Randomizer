@@ -22,9 +22,63 @@ enum class ItemLocationType {
     TempleReward,
 };
 
+enum class Category {
+    cKokiriForest,
+    cForest,
+    cGrotto,
+    cMinigame,
+    cLostWoods,
+    cDekuScrub,
+    cDekuScrubUpgrades,
+    cNeedSpiritualStones,
+    cSacredForestMeadow,
+    cHyruleField,
+    cLakeHylia,
+    cGerudo,
+    cGerudoValley,
+    cGerudoFortress,
+    cHauntedWasteland,
+    cDesertColossus,
+    cInnerMarket,
+    cMarket,
+    cHyruleCastle,
+    cKakarikoVillage,
+    cKakariko,
+    cSkulltulaHouse,
+    cGraveyard,
+    cDeathMountainTrail,
+    cDeathMountain,
+    cGoronCity,
+    cDeathMountainCrater,
+    cZorasRiver,
+    cZorasDomain,
+    cZorasFountain,
+    cLonLonRanch,
+    cDekuTree,
+    cDodongosCavern,
+    cJabuJabusBelly,
+    cForestTemple,
+    cFireTemple,
+    cWaterTemple,
+    cSpiritTemple,
+    cShadowTemple,
+    cBottomOfTheWell,
+    cIceCavern,
+    cGerudoTrainingGrounds,
+    cGanonsCastle,
+    cSkulltula,
+    cBossHeart,
+    cTempleOfTime,
+    cFairies,
+    cOutsideGanonsCastle,
+    cSong,
+    cCow,
+    cShop
+};
+
 class ItemLocation {
 public:
-    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<std::string> categories_)
+    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<Category> categories_)
         : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)) {}
 
     ItemOverride_Key Key() const {
@@ -85,9 +139,9 @@ public:
       return excludedOption.Value<bool>();
     }
 
-    bool IsCategory(std::string_view cat) {
-      for (std::string s : categories) {
-        if (s.compare(cat) == 0) {
+    bool IsCategory(Category category) {
+      for (const Category& cat : categories) {
+        if (category == cat) {
           return true;
         }
       }
@@ -110,31 +164,31 @@ public:
       Settings::excludeLocationsOptions.push_back(&excludedOption);
     }
 
-    static auto Base(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+    static auto Base(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), std::move(categories)};
     }
 
-    static auto Chest(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+    static auto Chest(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), std::move(categories)};
     }
 
-    static auto Collectable(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), std::move(categories)};
     }
 
-    static auto GSToken(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+    static auto GSToken(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), std::move(categories)};
     }
 
-    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), std::move(categories)};
     }
 
-    static auto Delayed(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+    static auto Delayed(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), std::move(categories)};
     }
 
-    static auto Reward(u8 scene, u8 flag, std::string&& name, std::vector<std::string>&& categories) {
+    static auto Reward(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), std::move(categories)};
     }
 
@@ -153,7 +207,7 @@ private:
     bool checked = false;
 
     std::string name;
-    std::vector<std::string> categories;
+    std::vector<Category> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
@@ -1037,7 +1091,7 @@ extern u16 itemsPlaced;
 
 extern void GenerateLocationPool();
 extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
-extern std::vector<ItemLocation*> GetLocations(const std::string_view category);
+extern std::vector<ItemLocation*> GetLocations(const Category category);
 extern void LocationReset();
 extern void ItemReset();
 extern void AddExcludedOptions();
