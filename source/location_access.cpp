@@ -1469,14 +1469,14 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&ZR_BehindWaterfall, []{return true;}),
                   ExitPairing::Both(&LH_Main,            []{return IsChild && CanDive;}),
-                  ExitPairing::Both(&ZD_BehindKingZora,  []{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) /*|| (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult)*/;}),
+                  ExitPairing::Both(&ZD_BehindKingZora,  []{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) || (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult);}),
                   ExitPairing::Both(&ZD_Shop,            []{return IsChild || BlueFire;}),
                   ExitPairing::Both(&ZD_StormsGrotto,    []{return CanOpenStormGrotto;})
   });
 
   Exit ZD_BehindKingZora = Exit("ZD Behind King Zora", "Zoras Domain", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  ExitPairing::Both(&ZD_Main, []{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) /*|| (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult)*/;}),
+                  ExitPairing::Both(&ZD_Main, []{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) || (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult);}),
                   ExitPairing::Both(&ZF_Main, []{return true;})
   });
 

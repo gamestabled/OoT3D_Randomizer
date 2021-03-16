@@ -15,6 +15,7 @@ extern string_view kakGateClosed;
 extern string_view doorOfTimeDesc;
 
 extern string_view fountainNormal;
+extern string_view fountainAdult;
 extern string_view fountainOpen;
 
 extern string_view gerudoNormal;

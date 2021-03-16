@@ -46,6 +46,9 @@ string_view doorOfTimeDesc            = "The Door of Time starts opened instead 
 string_view fountainNormal            = "King Zora obstructs the way to Zora's Fountain.\n"//
                                         "Ruto's Letter must be shown as child in order to\n"
                                         "move him for both eras.";                         //
+string_view fountainAdult             = "King Zora is always moved in the adult era. This\n"
+                                        "means Ruto's Letter is only required to access\n" //
+                                        "Zora's Fountain as child.";                       //
 string_view fountainOpen              = "King Zora starts as moved in both the child and\n"//
                                         "adult eras. This also removes Ruto's Letter from\n"
                                         "the pool since it can't be used.";                //
