@@ -98,6 +98,8 @@ extern string_view templeOfTimeIntroDesc;
 
 extern string_view bigPoeTargetCountDesc;
 
+extern string_view numRequiredCuccosDesc;
+
 extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;

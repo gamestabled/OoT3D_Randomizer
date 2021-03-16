@@ -191,6 +191,17 @@ KingZoraGiveTunic_patch:
 KingZoraSecondTunic_patch:
     b 0x1B6A40
 
+.section .patch_KingZoraCheckMovedFlag
+.global KingZoraCheckMovedFlag_patch
+KingZoraCheckMovedFlag_patch:
+    bl hook_KingZoraCheckMovedFlag
+
+.section .patch_KingZoraIgnoreSapphire
+.global KingZoraIgnoreSapphire_patch
+KingZoraIgnoreSapphire_patch:
+    nop
+    nop
+
 .section .patch_DampeRollHigh
 .global DampeRollHigh_patch
 DampeRollHigh_patch:
@@ -852,6 +863,12 @@ CowBottleCheck_patch:
 .global CowItemOverride_patch
 CowItemOverride_patch:
     b hook_CowItemOverride
+
+.section .patch_AnjuCheckCuccoAmount
+.global AnjuCheckCuccoAmount_patch
+AnjuCheckCuccoAmount_patch:
+    b hook_AnjuCheckCuccoAmount
+    beq 0x179444
 
 .section .patch_loader
 .global loader_patch

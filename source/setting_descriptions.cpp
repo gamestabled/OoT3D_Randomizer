@@ -286,6 +286,11 @@ string_view templeOfTimeIntroDesc     = "The introduction cutscene to Temple of 
 string_view bigPoeTargetCountDesc     = "The Poe buyer will give a reward for turning in\n"//
                                         "the chosen number of Big Poes.";                  //
 /*------------------------------                                                           //
+|     NUM REQUIRED CUCCOS      |                                                           //
+------------------------------*/                                                           //
+string_view numRequiredCuccosDesc     = "The cucco lady will give a reward for returning\n"//
+                                        "this many of her cuccos to the pen.";             //
+/*------------------------------                                                           //
 |       DAMAGE MULTIPLIER      |                                                           //
 ------------------------------*/                                                           //
 string_view damageMultiDesc           = "Changes the amount of damage taken.\n"            //

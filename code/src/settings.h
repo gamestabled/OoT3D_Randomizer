@@ -188,6 +188,7 @@ typedef struct {
   u8 fourPoesCutscene;
   u8 templeOfTimeIntro;
   u8 bigPoeTargetCount;
+  u8 numRequiredCuccos;
 
   u8 damageMultiplier;
   u8 startingTime;
