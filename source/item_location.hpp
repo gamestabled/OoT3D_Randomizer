@@ -1065,19 +1065,6 @@ extern ItemLocation GC_ShopItem6;
 extern ItemLocation GC_ShopItem7;
 extern ItemLocation GC_ShopItem8;
 
-extern const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 7>  JabuJabusBellyKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 19> ForestTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 20> FireTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 16> WaterTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 26> SpiritTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 23> ShadowTempleKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 7>  IceCavernKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements;
-extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
-
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
 extern std::vector<ItemLocation *> allLocations;
 
