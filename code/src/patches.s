@@ -191,6 +191,17 @@ KingZoraGiveTunic_patch:
 KingZoraSecondTunic_patch:
     b 0x1B6A40
 
+.section .patch_KingZoraCheckMovedFlag
+.global KingZoraCheckMovedFlag_patch
+KingZoraCheckMovedFlag_patch:
+    bl hook_KingZoraCheckMovedFlag
+
+.section .patch_KingZoraIgnoreSapphire
+.global KingZoraIgnoreSapphire_patch
+KingZoraIgnoreSapphire_patch:
+    nop
+    nop
+
 .section .patch_DampeRollHigh
 .global DampeRollHigh_patch
 DampeRollHigh_patch:

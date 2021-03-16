@@ -64,8 +64,16 @@ SECTIONS
 		*(.patch_EnKoInitBitMask)
 	}
 
+	.patch_KingZoraCheckMovedFlag 0x165A60 : {
+		*(.patch_KingZoraCheckMovedFlag)
+	}
+
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
+	}
+
+	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
+		*(.patch_KingZoraIgnoreSapphire)
 	}
 
 	.patch_AnjuCheckCuccoAmount 0x179420 : {

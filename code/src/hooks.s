@@ -434,6 +434,14 @@ hook_AnjuCheckCuccoAmount:
     cmp r0,#0x0
     b 0x179424
 
+.global hook_KingZoraCheckMovedFlag
+hook_KingZoraCheckMovedFlag:
+    push {r1-r12, lr}
+    bl EnKz_CheckMovedFlag
+    pop {r1-r12, lr}
+    cmp r0,#0x0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
