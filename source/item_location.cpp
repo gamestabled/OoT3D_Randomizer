@@ -707,14 +707,14 @@ ItemLocation Ganon                                        = ItemLocation::Reward
       ---HEART CONTAINERS ---
   -------------------------------*/
 
-ItemLocation DekuTree_QueenGohmaHeart                     = ItemLocation::Base   (0x11, 0x4F, "Deku Tree Queen Gohma Heart Container",          {"Deku Tree",});
-ItemLocation DodongosCavern_KingDodongoHeart              = ItemLocation::Base   (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart Container",   {"Dodongo's Cavern",});
-ItemLocation JabuJabusBelly_BarinadeHeart                 = ItemLocation::Base   (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart Container",      {"Jabu Jabu's Belly",});
-ItemLocation ForestTemple_PhantomGanonHeart               = ItemLocation::Base   (0x14, 0x4F, "Forest Temple Phantom Ganon Heart Container",    {"Forest Temple",});
-ItemLocation FireTemple_VolvagiaHeart                     = ItemLocation::Base   (0x15, 0x4F, "Fire Temple Volvagia Heart Container",           {"Fire Temple",});
-ItemLocation WaterTemple_MorphaHeart                      = ItemLocation::Base   (0x16, 0x4F, "Water Temple Morpha Heart Container",            {"Water Temple",});
-ItemLocation SpiritTemple_TwinrovaHeart                   = ItemLocation::Base   (0x17, 0x4F, "Spirit Temple Twinrova Heart Container",         {"Spirit Temple",});
-ItemLocation ShadowTemple_BongoBongoHeart                 = ItemLocation::Base   (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart Container",      {"Shadow Temple",});
+ItemLocation DekuTree_QueenGohmaHeart                     = ItemLocation::Base   (0x11, 0x4F, "Deku Tree Queen Gohma Heart Container",          {"Deku Tree", "Boss Heart"});
+ItemLocation DodongosCavern_KingDodongoHeart              = ItemLocation::Base   (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart Container",   {"Dodongo's Cavern", "Boss Heart"});
+ItemLocation JabuJabusBelly_BarinadeHeart                 = ItemLocation::Base   (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart Container",      {"Jabu Jabu's Belly", "Boss Heart"});
+ItemLocation ForestTemple_PhantomGanonHeart               = ItemLocation::Base   (0x14, 0x4F, "Forest Temple Phantom Ganon Heart Container",    {"Forest Temple", "Boss Heart"});
+ItemLocation FireTemple_VolvagiaHeart                     = ItemLocation::Base   (0x15, 0x4F, "Fire Temple Volvagia Heart Container",           {"Fire Temple", "Boss Heart"});
+ItemLocation WaterTemple_MorphaHeart                      = ItemLocation::Base   (0x16, 0x4F, "Water Temple Morpha Heart Container",            {"Water Temple", "Boss Heart"});
+ItemLocation SpiritTemple_TwinrovaHeart                   = ItemLocation::Base   (0x17, 0x4F, "Spirit Temple Twinrova Heart Container",         {"Spirit Temple", "Boss Heart"});
+ItemLocation ShadowTemple_BongoBongoHeart                 = ItemLocation::Base   (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart Container",      {"Shadow Temple", "Boss Heart"});
 
 /*-------------------------------
         --- CUTSCENES ---
@@ -835,226 +835,6 @@ ItemLocation GC_ShopItem5                                 = ItemLocation::Base(0
 ItemLocation GC_ShopItem6                                 = ItemLocation::Base(0x2E, 0x35, "GC Shop Item 6",                                   {"Goron City", "Shops"});
 ItemLocation GC_ShopItem7                                 = ItemLocation::Base(0x2E, 0x36, "GC Shop Item 7",                                   {"Goron City", "Shops"});
 ItemLocation GC_ShopItem8                                 = ItemLocation::Base(0x2E, 0x37, "GC Shop Item 8",                                   {"Goron City", "Shops"});
-
-//key requirements for placing randomized keys and other items in dungeons
-const std::array<ItemLocationKeyPairing, 10> DekuTreeKeyRequirements{{
-  ItemLocationKeyPairing(&DekuTree_MapChest,               0),
-  ItemLocationKeyPairing(&DekuTree_CompassChest,           0),
-  ItemLocationKeyPairing(&DekuTree_CompassRoomSideChest,   0),
-  ItemLocationKeyPairing(&DekuTree_BasementChest,          0),
-  ItemLocationKeyPairing(&DekuTree_SlingshotChest,         0),
-  ItemLocationKeyPairing(&DekuTree_SlingshotRoomSideChest, 0),
-  ItemLocationKeyPairing(&DekuTree_GS_CompassRoom,         0),
-  ItemLocationKeyPairing(&DekuTree_GS_BasementVines,       0),
-  ItemLocationKeyPairing(&DekuTree_GS_BasementGate,        0),
-  ItemLocationKeyPairing(&DekuTree_GS_BasementBackRoom,    0),
-}};
-const std::array<ItemLocationKeyPairing, 11> DodongosCavernKeyRequirements{{
-  ItemLocationKeyPairing(&DodongosCavern_MapChest,                     0),
-  ItemLocationKeyPairing(&DodongosCavern_CompassChest,                 0),
-  ItemLocationKeyPairing(&DodongosCavern_GS_SideRoomNearLowerLizalfos, 0),
-  ItemLocationKeyPairing(&DodongosCavern_GS_Scarecrow,                 0),
-  ItemLocationKeyPairing(&DodongosCavern_BombFlowerPlatformChest,      0),
-  ItemLocationKeyPairing(&DodongosCavern_GS_VinesAboveStairs,          0),
-  ItemLocationKeyPairing(&DodongosCavern_BombBagChest,                 0),
-  ItemLocationKeyPairing(&DodongosCavern_EndOfBridgeChest,             0),
-  ItemLocationKeyPairing(&DodongosCavern_GS_AlcoveAboveStairs,         0),
-  ItemLocationKeyPairing(&DodongosCavern_BossRoomChest,                0),
-  ItemLocationKeyPairing(&DodongosCavern_GS_BackRoom,                  0),
-}};
-const std::array<ItemLocationKeyPairing, 7> JabuJabusBellyKeyRequirements{{
-  ItemLocationKeyPairing(&JabuJabusBelly_BoomerangChest,        0),
-  ItemLocationKeyPairing(&JabuJabusBelly_MapChest,              0),
-  ItemLocationKeyPairing(&JabuJabusBelly_CompassChest,          0),
-  ItemLocationKeyPairing(&JabuJabusBelly_GS_WaterSwitchRoom,    0),
-  ItemLocationKeyPairing(&JabuJabusBelly_GS_LobbyBasementLower, 0),
-  ItemLocationKeyPairing(&JabuJabusBelly_GS_LobbyBasementUpper, 0),
-  ItemLocationKeyPairing(&JabuJabusBelly_GS_NearBoss,           0),
-}};
-const std::array<ItemLocationKeyPairing, 19> ForestTempleKeyRequirements{{
-  ItemLocationKeyPairing(&ForestTemple_FirstRoomChest,             0),
-  ItemLocationKeyPairing(&ForestTemple_FirstStalfosChest,          0),
-  ItemLocationKeyPairing(&ForestTemple_GS_FirstRoom,               0),
-  ItemLocationKeyPairing(&ForestTemple_GS_Lobby,                   0),
-  ItemLocationKeyPairing(&ForestTemple_RaisedIslandCourtyardChest, 0),
-  ItemLocationKeyPairing(&ForestTemple_GS_RaisedIslandCourtyard,   0),
-  ItemLocationKeyPairing(&ForestTemple_GS_LevelIslandCourtyard,    0),
-  ItemLocationKeyPairing(&ForestTemple_MapChest,                   0),
-  ItemLocationKeyPairing(&ForestTemple_WellChest,                  0),
-  ItemLocationKeyPairing(&ForestTemple_EyeSwitchChest,             1),
-  ItemLocationKeyPairing(&ForestTemple_FloormasterChest,           1),
-  ItemLocationKeyPairing(&ForestTemple_BossKeyChest,               2),
-  ItemLocationKeyPairing(&ForestTemple_BowChest,                   3),
-  ItemLocationKeyPairing(&ForestTemple_RedPoeChest,                3),
-  ItemLocationKeyPairing(&ForestTemple_BluePoeChest,               3),
-  ItemLocationKeyPairing(&ForestTemple_FallingCeilingRoomChest,    5),
-  ItemLocationKeyPairing(&ForestTemple_BasementChest,              5),
-  ItemLocationKeyPairing(&ForestTemple_GS_Basement,                5),
-  ItemLocationKeyPairing(&ForestTemple_PhantomGanonHeart,          5),
-}};
-const std::array<ItemLocationKeyPairing, 20> FireTempleKeyRequirements{{
-  ItemLocationKeyPairing(&FireTemple_NearBossChest,                 0),
-  ItemLocationKeyPairing(&FireTemple_VolvagiaHeart,                 0),
-  ItemLocationKeyPairing(&FireTemple_FlareDancerChest,              0),
-  ItemLocationKeyPairing(&FireTemple_BossKeyChest,                  0),
-  ItemLocationKeyPairing(&FireTemple_GS_BossKeyLoop,                0),
-  ItemLocationKeyPairing(&FireTemple_BigLavaRoomLowerOpenDoorChest, 1),
-  ItemLocationKeyPairing(&FireTemple_BigLavaRoomBlockedDoorChest,   1),
-  ItemLocationKeyPairing(&FireTemple_GS_SongOfTimeRoom,             1),
-  ItemLocationKeyPairing(&FireTemple_BoulderMazeLowerChest,         4),
-  ItemLocationKeyPairing(&FireTemple_BoulderMazeSideRoomChest,      4),
-  ItemLocationKeyPairing(&FireTemple_GS_BoulderMaze,                4),
-  ItemLocationKeyPairing(&FireTemple_MapChest,                      5),
-  ItemLocationKeyPairing(&FireTemple_BoulderMazeUpperChest,         6),
-  ItemLocationKeyPairing(&FireTemple_BoulderMazeShortcutChest,      6),
-  ItemLocationKeyPairing(&FireTemple_ScarecrowChest,                6),
-  ItemLocationKeyPairing(&FireTemple_CompassChest,                  6),
-  ItemLocationKeyPairing(&FireTemple_GS_ScarecrowClimb,             6),
-  ItemLocationKeyPairing(&FireTemple_GS_ScarecrowTop,               6),
-  ItemLocationKeyPairing(&FireTemple_HighestGoronChest,             7),
-  ItemLocationKeyPairing(&FireTemple_MegatonHammerChest,            7),
-}};
-const std::array<ItemLocationKeyPairing, 16> WaterTempleKeyRequirements{{
-  ItemLocationKeyPairing(&WaterTemple_MorphaHeart,            0),
-  ItemLocationKeyPairing(&WaterTemple_MapChest,               0),
-  ItemLocationKeyPairing(&WaterTemple_CompassChest,           0),
-  ItemLocationKeyPairing(&WaterTemple_TorchesChest,           0),
-  ItemLocationKeyPairing(&WaterTemple_CentralBowTargetChest,  0),
-  ItemLocationKeyPairing(&WaterTemple_GS_BehindGate,          0),
-  ItemLocationKeyPairing(&WaterTemple_CrackedWallChest,       0),
-  ItemLocationKeyPairing(&WaterTemple_DragonChest,            0),
-  ItemLocationKeyPairing(&WaterTemple_CentralPillarChest,     0),
-  ItemLocationKeyPairing(&WaterTemple_GS_CentralPillar,       0),
-  ItemLocationKeyPairing(&WaterTemple_GS_NearBossKeyChest,    4),
-  ItemLocationKeyPairing(&WaterTemple_GS_FallingPlatformRoom, 4),
-  ItemLocationKeyPairing(&WaterTemple_LongshotChest,          5),
-  ItemLocationKeyPairing(&WaterTemple_RiverChest,             5),
-  ItemLocationKeyPairing(&WaterTemple_GS_River,               5),
-  ItemLocationKeyPairing(&WaterTemple_BossKeyChest,           5),
-}};
-const std::array<ItemLocationKeyPairing, 26> SpiritTempleKeyRequirements{{
-  ItemLocationKeyPairing(&SpiritTemple_ChildBridgeChest,           0),
-  ItemLocationKeyPairing(&SpiritTemple_ChildEarlyTorchesChest,     0),
-  ItemLocationKeyPairing(&SpiritTemple_GS_MetalFence,              0),
-  ItemLocationKeyPairing(&SpiritTemple_CompassChest,               0),
-  ItemLocationKeyPairing(&SpiritTemple_EarlyAdultRightChest,       0),
-  ItemLocationKeyPairing(&SpiritTemple_GS_BoulderRoom,             0),
-  ItemLocationKeyPairing(&SpiritTemple_ChildClimbNorthChest,       1),
-  ItemLocationKeyPairing(&SpiritTemple_ChildClimbEastChest,        1),
-  ItemLocationKeyPairing(&SpiritTemple_GS_SunOnFloorRoom,          3),
-  ItemLocationKeyPairing(&SpiritTemple_MapChest,                   3),
-  ItemLocationKeyPairing(&SpiritTemple_SunBlockRoomChest,          3),
-  ItemLocationKeyPairing(&SpiritTemple_StatueRoomHandChest,        3),
-  ItemLocationKeyPairing(&SpiritTemple_FirstMirrorLeftChest,       3),
-  ItemLocationKeyPairing(&SpiritTemple_FirstMirrorRightChest,      3),
-  ItemLocationKeyPairing(&SpiritTemple_StatueRoomHandChest,        3),
-  ItemLocationKeyPairing(&SpiritTemple_StatueRoomNortheastChest,   3),
-  ItemLocationKeyPairing(&SpiritTemple_GS_HallAfterSunBlockRoom,   3),
-  ItemLocationKeyPairing(&SpiritTemple_GS_Lobby,                   3),
-  ItemLocationKeyPairing(&SpiritTemple_SilverGauntletsChest,       3),
-  ItemLocationKeyPairing(&SpiritTemple_MirrorShieldChest,          4),
-  ItemLocationKeyPairing(&SpiritTemple_NearFourArmosChest,         4),
-  ItemLocationKeyPairing(&SpiritTemple_HallwayLeftInvisibleChest,  4),
-  ItemLocationKeyPairing(&SpiritTemple_HallwayRightInvisibleChest, 4),
-  ItemLocationKeyPairing(&SpiritTemple_BossKeyChest,               5),
-  ItemLocationKeyPairing(&SpiritTemple_TopmostChest,               5),
-  ItemLocationKeyPairing(&SpiritTemple_TwinrovaHeart,              5),
-}};
-const std::array<ItemLocationKeyPairing, 23> ShadowTempleKeyRequirements = {
-  ItemLocationKeyPairing(&ShadowTemple_MapChest,                      0),
-  ItemLocationKeyPairing(&ShadowTemple_HoverBootsChest,               0),
-  ItemLocationKeyPairing(&ShadowTemple_CompassChest,                  0),
-  ItemLocationKeyPairing(&ShadowTemple_EarlySilverRupeeChest,         0),
-  ItemLocationKeyPairing(&ShadowTemple_InvisibleBladesVisibleChest,   1),
-  ItemLocationKeyPairing(&ShadowTemple_InvisibleBladesInvisibleChest, 1),
-  ItemLocationKeyPairing(&ShadowTemple_FallingSpikesLowerChest,       1),
-  ItemLocationKeyPairing(&ShadowTemple_FallingSpikesUpperChest,       1),
-  ItemLocationKeyPairing(&ShadowTemple_FallingSpikesSwitchChest,      1),
-  ItemLocationKeyPairing(&ShadowTemple_GS_LikeLikeRoom,               1),
-  ItemLocationKeyPairing(&ShadowTemple_GS_FallingSpikesRoom,          1),
-  ItemLocationKeyPairing(&ShadowTemple_InvisibleSpikesChest,          2),
-  ItemLocationKeyPairing(&ShadowTemple_FreestandingKey,               2),
-  ItemLocationKeyPairing(&ShadowTemple_GS_SingleGiantPot,             2),
-  ItemLocationKeyPairing(&ShadowTemple_WindHintChest,                 3),
-  ItemLocationKeyPairing(&ShadowTemple_AfterWindEnemyChest,           3),
-  ItemLocationKeyPairing(&ShadowTemple_AfterWindHiddenChest,          3),
-  ItemLocationKeyPairing(&ShadowTemple_GS_NearShip,                   4),
-  ItemLocationKeyPairing(&ShadowTemple_SpikeWallsLeftChest,           4),
-  ItemLocationKeyPairing(&ShadowTemple_BossKeyChest,                  4),
-  ItemLocationKeyPairing(&ShadowTemple_InvisibleFloormasterChest,     4),
-  ItemLocationKeyPairing(&ShadowTemple_GS_TripleGiantPot,             4),
-  ItemLocationKeyPairing(&ShadowTemple_BongoBongoHeart,               5),
-};
-const std::array<ItemLocationKeyPairing, 17> BottomOfTheWellKeyRequirements{{
-  ItemLocationKeyPairing(&BottomOfTheWell_FrontLeftFakeWallChest,   0),
-  ItemLocationKeyPairing(&BottomOfTheWell_FrontCenterBombableChest, 0),
-  ItemLocationKeyPairing(&BottomOfTheWell_RightBottomFakeWallChest, 0),
-  ItemLocationKeyPairing(&BottomOfTheWell_CompassChest,             0),
-  ItemLocationKeyPairing(&BottomOfTheWell_CenterSkulltulaChest,     0),
-  ItemLocationKeyPairing(&BottomOfTheWell_BackLeftBombableChest,    0),
-  ItemLocationKeyPairing(&BottomOfTheWell_FreestandingKey,          0),
-  ItemLocationKeyPairing(&BottomOfTheWell_LensOfTruthChest,         0),
-  ItemLocationKeyPairing(&BottomOfTheWell_InvisibleChest,           0),
-  ItemLocationKeyPairing(&BottomOfTheWell_UnderwaterFrontChest,     0),
-  ItemLocationKeyPairing(&BottomOfTheWell_UnderwaterLeftChest,      0),
-  ItemLocationKeyPairing(&BottomOfTheWell_MapChest,                 0),
-  ItemLocationKeyPairing(&BottomOfTheWell_FireKeeseChest,           3),
-  ItemLocationKeyPairing(&BottomOfTheWell_LikeLikeChest,            3),
-  ItemLocationKeyPairing(&BottomOfTheWell_GS_WestInnerRoom,         3),
-  ItemLocationKeyPairing(&BottomOfTheWell_GS_EastInnerRoom,         3),
-  ItemLocationKeyPairing(&BottomOfTheWell_GS_LikeLikeCage,          3),
-}};
-const std::array<ItemLocationKeyPairing, 7> IceCavernKeyRequirements = {
-  ItemLocationKeyPairing(&IceCavern_MapChest,              0),
-  ItemLocationKeyPairing(&IceCavern_CompassChest,          0),
-  ItemLocationKeyPairing(&IceCavern_IronBootsChest,        0),
-  ItemLocationKeyPairing(&IceCavern_FreestandingPoH,       0),
-  ItemLocationKeyPairing(&IceCavern_GS_SpinningScytheRoom, 0),
-  ItemLocationKeyPairing(&IceCavern_GS_HeartPieceRoom,     0),
-  ItemLocationKeyPairing(&IceCavern_GS_PushBlockRoom,      0),
-};
-const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequirements = {
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_LobbyLeftChest,             0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_LobbyRightChest,            0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_StalfosChest,               0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_BeamosChest,                0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_MazeRightCentralChest,      0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_MazeRightSideChest,         0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_FreestandingKey,            0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_UnderwaterSilverRupeeChest, 0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_HammerRoomClearChest,       0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_HammerRoomSwitchChest,      0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_EyeStatueChest,             0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_NearScarecrowChest,         0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_BeforeHeavyBlockChest,      0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_HeavyBlockFirstChest,       0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_HeavyBlockSecondChest,      0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_HeavyBlockThirdChest,       0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_HeavyBlockFourthChest,      0),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_HiddenCeilingChest,         3),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathFirstChest,         4),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathSecondChest,        6),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathThirdChest,         7),
-  ItemLocationKeyPairing(&GerudoTrainingGrounds_MazePathFinalChest,         9),
-};
-const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements{{
-  ItemLocationKeyPairing(&GanonsCastle_ForestTrialChest,                0),
-  ItemLocationKeyPairing(&GanonsCastle_WaterTrialLeftChest,             0),
-  ItemLocationKeyPairing(&GanonsCastle_WaterTrialRightChest,            0),
-  ItemLocationKeyPairing(&GanonsCastle_ShadowTrialFrontChest,           0),
-  ItemLocationKeyPairing(&GanonsCastle_ShadowTrialGoldenGauntletsChest, 0),
-  ItemLocationKeyPairing(&GanonsCastle_SpiritTrialCrystalSwitchChest,   0),
-  ItemLocationKeyPairing(&GanonsCastle_SpiritTrialInvisibleChest,       0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialFirstLeftChest,        0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialSecondLeftChest,       0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialThirdLeftChest,        0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialFirstRightChest,       0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialSecondRightChest,      0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialThirdRightChest,       0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialInvisibleEnemiesChest, 0),
-  ItemLocationKeyPairing(&GanonsCastle_LightTrialLullabyChest,          1),
-  ItemLocationKeyPairing(&GanonsCastle_BossKeyChest,                    2),
-}};
 
 const std::array<ItemLocation*, 10> DT_Vanilla = {
   &DekuTree_MapChest,
@@ -1497,20 +1277,6 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &BongoBongo,
   &LinksPocket,
 };
-std::array<ItemLocation*, 12> songLocations = {
-  &SheikInForest,
-  &SheikInCrater,
-  &SheikInIceCavern,
-  &SheikAtColossus,
-  &SheikInKakariko,
-  &SheikAtTemple,
-  &SongFromImpa,
-  &SongFromMalon,
-  &SongFromSaria,
-  &SongFromOcarinaOfTime,
-  &SongFromComposersGrave,
-  &SongFromWindmill,
-};
 std::vector<ItemLocation*> overworldLocations = {
   //Kokiri Forest
   &KF_KokiriSwordChest,
@@ -1873,6 +1639,7 @@ void AddLocations(const Container& locations) {
   }
 }
 
+//sort through Vanilla and MQ dungeon locations
 void GenerateLocationPool() {
   using namespace Settings;
 
@@ -2043,7 +1810,8 @@ void AddExcludedOptions() {
   AddLocations(overworldLocations);
 
   /*For some reason, trying to add all the dungeon locations here will crash
-    the app if it calls Settings::FillContext() later on.
+    the app if it calls Settings::FillContext() later on which for some reason
+    sets the program counter to 0x00000000.
 
     I have no idea why this happens, but we'll leave out the dungeon locations
     for now since most of the long checks that are typically excluded are overworld

@@ -16,17 +16,14 @@ namespace Playthrough {
 
     int Playthrough_Init(u32 seed) {
         Random_Init(seed);
-        int success  = 0;
 
-        while (success == 0) {
-          overrides.clear();
-          ItemReset();
-          Exits::AccessReset();
+        overrides.clear();
+        ItemReset();
+        Exits::AccessReset();
 
-          Settings::UpdateSettings();
-          Logic::UpdateHelpers();
-          success = Fill();
-        }
+        Settings::UpdateSettings();
+        Logic::UpdateHelpers();
+        Fill();
 
         GenerateHash();
 

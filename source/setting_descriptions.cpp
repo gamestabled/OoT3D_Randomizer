@@ -116,6 +116,13 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 ------------------------------*/                                                           //
 string_view songsSongLocations        = "Songs will only appear at locations that normally\n"
                                         "teach songs.";                                    //
+string_view songsDungeonRewards       = "Songs appear at the end of dungeons. For major\n" //
+                                        "dungeons, they will be at the boss heart container"
+                                        "location. The remaining 4 songs are placed at:\n" //
+                                        "- Zelda's Lullaby Location\n"                     //
+                                        "- Ice Cavern's Serenade of Water Location\n"      //
+                                        "- Bottom of the Well's Lens of Truth Location\n"  //
+                                        "- Gerudo Training Ground's Ice Arrow Location";   //
 string_view songsAllLocations         = "Songs can appear in any location.";               //
                                                                                            //
 /*------------------------------                                                           //

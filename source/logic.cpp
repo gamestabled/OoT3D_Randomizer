@@ -253,7 +253,6 @@ namespace Logic {
   bool AtNight       = false;
   bool IsStartingAge = false;
   u8 Age             = 0;
-  u16 CurAccessibleLocations = 0;
 
   //Events
   bool ShowedMidoSwordAndShield  = false;
@@ -512,6 +511,7 @@ namespace Logic {
      return false;
    }
 
+   //Reset All Logic to true or false
    void LogicReset() {
      //Child item logic
      KokiriSword   = false;
@@ -639,15 +639,17 @@ namespace Logic {
      BottomOfTheWellKeys       = 0;
 
      //Boss Keys
-     BossKeyForestTemple = false;
-     BossKeyFireTemple   = false;
-     BossKeyWaterTemple  = false;
-     BossKeySpiritTemple = false;
-     BossKeyShadowTemple = false;
-     BossKeyGanonsCastle = false;
+     BossKeyForestTemple = 0;
+     BossKeyFireTemple   = 0;
+     BossKeyWaterTemple  = 0;
+     BossKeySpiritTemple = 0;
+     BossKeyShadowTemple = 0;
+     BossKeyGanonsCastle = 0;
 
      //Gold Skulltula Count
      GoldSkulltulaTokens = 0;
+
+
 
      //Drops and Bottle Contents Access
      DekuNutDrop      = false;

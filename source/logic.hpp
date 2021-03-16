@@ -251,7 +251,6 @@ namespace Logic {
   extern bool AtNight;
   extern bool LinksCow;
   extern u8 Age;
-  extern u16 CurAccessibleLocations;
 
   //Events
   extern bool ShowedMidoSwordAndShield;

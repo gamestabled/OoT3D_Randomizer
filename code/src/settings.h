@@ -68,6 +68,7 @@ typedef enum {
 
 typedef enum {
   SONGSHUFFLE_SONG_LOCATIONS,
+  SONGSHUFFLE_DUNGEON_REWARDS,
   SONGSHUFFLE_ANYWHERE,
 } SongShuffleSetting;
 

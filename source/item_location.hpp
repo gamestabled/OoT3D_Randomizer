@@ -1025,7 +1025,6 @@ extern const std::array<ItemLocationKeyPairing, 22> GerudoTrainingGroundsKeyRequ
 extern const std::array<ItemLocationKeyPairing, 16> GanonsCastleKeyRequirements;
 
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
-extern std::array<ItemLocation *, 12> songLocations;
 extern std::vector<ItemLocation *> allLocations;
 
 //set of overrides to write to the patch
