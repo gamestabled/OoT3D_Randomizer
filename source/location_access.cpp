@@ -2310,7 +2310,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&GanonsCastle_ShadowTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_SpiritTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_LightTrial,  []{return CanUse("Golden Gauntlets");}),
-                  ExitPairing::Both(&GanonsCastle_Tower,       []{return SkippedTrials || (ForestTrialClear && FireTrialClear && WaterTrialClear && ShadowTrialClear && SpiritTrialClear && LightTrialClear);}),
+                  ExitPairing::Both(&GanonsCastle_Tower,       []{return (ForestTrialClear || ForestTrialSkip) &&
+                                                                         (FireTrialClear   || FireTrialSkip)   &&
+                                                                         (WaterTrialClear  || WaterTrialSkip)  && 
+                                                                         (ShadowTrialClear || ShadowTrialSkip) &&
+                                                                         (SpiritTrialClear || SpiritTrialSkip) &&
+                                                                         (LightTrialClear  || LightTrialSkip);}),
                   ExitPairing::Both(&GanonsCastle_DekuScrubs,  []{return LogicLensCastle || CanUse("Lens of Truth");}),
   });
 

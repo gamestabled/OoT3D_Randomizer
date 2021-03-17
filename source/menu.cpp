@@ -73,7 +73,7 @@ void MenuInit() {
 
   consoleSelect(&bottomScreen);
   PrintMainMenu();
-  
+
 }
 
 void MenuUpdate(u32 kDown) {
@@ -299,13 +299,14 @@ void PrintSubMenu() {
 	//print menu name
 	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
 
+  u16 hiddenSettings = 0;
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
 		if (i + settingBound >= currentMenuItem->settingsList->size()) break;
 
 		Option* setting = currentMenuItem->settingsList->at(i + settingBound);
 
-		u8 row = 3 + (i * 2);
+		u8 row = 3 + ((i - hiddenSettings) * 2);
     //make the current setting green
 		if (settingIdx == i + settingBound) {
 			printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
@@ -315,7 +316,9 @@ void PrintSubMenu() {
 		} else if (setting->IsLocked()) {
 			printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
 			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+    //don't display hidden settings
     } else if (setting->IsHidden()) {
+      hiddenSettings++;
       continue;
 		} else {
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
@@ -363,7 +366,7 @@ void PrintGenerateMenu() {
 
 		std::string option = playOptions[i];
     u8 row = 6 + (i * 2);
-    //make the current preset green
+    //make the current selection green
 		if (generateIdx == i) {
 			printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
 			printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);

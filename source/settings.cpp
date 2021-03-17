@@ -18,7 +18,8 @@ namespace Settings {
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                              {gerudoNormal, gerudoFast, gerudoOpen});
   Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"},
                                                                       {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
-  Option TokenCount          = Option::U8  ("Token Count",            {/*Options 0-100 defined in SetDefaultOptions()*/},      std::vector<std::string_view>{101, tokenCountDesc});
+  Option TokenCount          = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultOptions()*/},      std::vector<std::string_view>{101, tokenCountDesc});
+  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                           {randomGanonsTrialsDesc, randomGanonsTrialsDesc});
   std::vector<Option *> openOptions = {
     &Logic,
     &OpenForest,
@@ -28,6 +29,7 @@ namespace Settings {
     &GerudoFortress,
     &Bridge,
     &TokenCount,
+    &RandomGanonsTrials,
   };
 
   //World Settings
@@ -389,6 +391,13 @@ namespace Settings {
     ctx.gerudoTrainingGroundsDungeonMode = (GerudoTrainingGroundsDungeonMode) ? 1 : 0;
     ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
 
+    ctx.forestTrialSkip = (ForestTrialSkip) ? 1 : 0;
+    ctx.fireTrialSkip   = (FireTrialSkip)   ? 1 : 0;
+    ctx.waterTrialSkip  = (WaterTrialSkip)  ? 1 : 0;
+    ctx.spiritTrialSkip = (SpiritTrialSkip) ? 1 : 0;
+    ctx.shadowTrialSkip = (ShadowTrialSkip) ? 1 : 0;
+    ctx.lightTrialSkip  = (LightTrialSkip)  ? 1 : 0;
+
     ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
 
     //Filling detailed logic
@@ -526,12 +535,14 @@ namespace Settings {
     }
   }
 
-  bool SkippedTrials                    = false;
+  //eventual settings
   bool ShuffleDungeonEntrances          = false;
   bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
   bool Shopsanity                       = false;
+
+  //MQ vs Vanilla Dungeon Modes
   bool DekuTreeDungeonMode              = false;
   bool DodongosCavernDungeonMode        = false;
   bool JabuJabusBellyDungeonMode        = false;
@@ -544,6 +555,14 @@ namespace Settings {
   bool IceCavernDungeonMode             = false;
   bool GerudoTrainingGroundsDungeonMode = false;
   bool GanonsCastleDungeonMode          = false;
+
+  //Skipped Trials (initially set to true, then false ones filtered out)
+  bool ForestTrialSkip                  = true;
+  bool FireTrialSkip                    = true;
+  bool WaterTrialSkip                   = true;
+  bool SpiritTrialSkip                  = true;
+  bool ShadowTrialSkip                  = true;
+  bool LightTrialSkip                   = true;
 
   //Function to set flags depending on settings
   void UpdateSettings() {
@@ -562,6 +581,15 @@ namespace Settings {
       IceCavernDungeonMode             = Random() % 2;
       GerudoTrainingGroundsDungeonMode = Random() % 2;
       GanonsCastleDungeonMode          = Random() % 2;
+    }
+
+    if (RandomGanonsTrials) {
+      ForestTrialSkip = Random() % 2;
+      FireTrialSkip   = Random() % 2;
+      WaterTrialSkip  = Random() % 2;
+      SpiritTrialSkip = Random() % 2;
+      ShadowTrialSkip = Random() % 2;
+      LightTrialSkip  = Random() % 2;
     }
 
     HasNightStart = StartingTime.Is(STARTINGTIME_NIGHT);

@@ -31,6 +31,8 @@ extern string_view bridgeTokens;
 
 extern string_view tokenCountDesc;
 
+extern string_view randomGanonsTrialsDesc;
+
 extern string_view ageDesc;
 
 extern string_view bombchuLogicDesc;

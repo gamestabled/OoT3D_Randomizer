@@ -81,6 +81,11 @@ string_view bridgeTokens              = "The Rainbow Bridge requires collecting 
 string_view tokenCountDesc            = "Set the number of Gold Skulltula Tokens for the\n"//
                                         "Rainbow Bridge.";                                 //
 /*------------------------------                                                           //
+|     RANDOM GANONS TRIALS     |                                                           //
+------------------------------*/                                                           //
+string_view randomGanonsTrialsDesc    = "Sets a random number of required trials to enter\n"
+                                        "Ganon's Tower";                                   //
+/*------------------------------                                                           //
 |         STARTING AGE         |                                                           //
 ------------------------------*/                                                           //
 string_view ageDesc                   = "Choose which age Link will start as.\n"           //
