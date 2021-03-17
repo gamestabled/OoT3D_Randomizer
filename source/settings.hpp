@@ -184,8 +184,9 @@ namespace Settings {
   extern Option ZorasFountain;
   extern Option GerudoFortress;
   extern Option Bridge;
-  extern Option TokenCount;
+  extern Option BridgeTokenCount;
   extern Option RandomGanonsTrials;
+  extern Option GanonsTrialsCount;
 
   extern Option StartingAge;
   extern Option BombchusInLogic;

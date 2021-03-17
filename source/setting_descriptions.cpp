@@ -76,15 +76,20 @@ string_view bridgeDungeons            = "The Rainbow Bridge requires beating eve
 string_view bridgeTokens              = "The Rainbow Bridge requires collecting a certain\n"
                                         "number of Gold Skulltula Tokens.";                //
 /*------------------------------                                                           //
-|          TOKEN COUNT         |                                                           //
+|      BRIDGE TOKEN COUNT      |                                                           //
 ------------------------------*/                                                           //
-string_view tokenCountDesc            = "Set the number of Gold Skulltula Tokens for the\n"//
+string_view bridgeTokenCountDesc      = "Set the number of Gold Skulltula Tokens for the\n"//
                                         "Rainbow Bridge.";                                 //
 /*------------------------------                                                           //
 |     RANDOM GANONS TRIALS     |                                                           //
 ------------------------------*/                                                           //
 string_view randomGanonsTrialsDesc    = "Sets a random number of required trials to enter\n"
-                                        "Ganon's Tower";                                   //
+                                        "Ganon's Tower.";                                  //
+/*------------------------------                                                           //
+|     GANON'S TRIAL COUNT      |                                                           //
+------------------------------*/                                                           //
+string_view ganonsTrialCountDesc      = "Sets the number of trials required to enter\n"    //
+                                        "Ganon's Tower. Trials will be randomly selected.";//
 /*------------------------------                                                           //
 |         STARTING AGE         |                                                           //
 ------------------------------*/                                                           //

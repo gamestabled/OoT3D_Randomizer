@@ -469,7 +469,7 @@ namespace Logic {
                            (Bridge.Is(RAINBOWBRIDGE_STONES)     && HasAllStones) ||
                            (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && HasAllMedallions) ||
                            (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && HasAllStones && HasAllMedallions) ||
-                           (Bridge.Is(RAINBOWBRIDGE_TOKENS)     && GoldSkulltulaTokens >= TokenCount.Value<u8>());
+                           (Bridge.Is(RAINBOWBRIDGE_TOKENS)     && GoldSkulltulaTokens >= BridgeTokenCount.Value<u8>());
 
     CanTriggerLACS = (LACSCondition == LACSCONDITION_VANILLA    && ShadowMedallion && SpiritMedallion) ||
                      (LACSCondition == LACSCONDITION_STONES     && HasAllStones)                       ||
