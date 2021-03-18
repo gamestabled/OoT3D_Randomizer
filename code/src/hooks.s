@@ -442,6 +442,13 @@ hook_KingZoraCheckMovedFlag:
     cmp r0,#0x0
     bx lr
 
+.global hook_FrogReward
+hook_FrogReward:
+    push {r0-r12, lr}
+    bl EnFr_rSetReward
+    pop {r0-r12, lr}
+    b 0x389930
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

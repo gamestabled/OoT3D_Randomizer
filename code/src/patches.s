@@ -870,6 +870,11 @@ AnjuCheckCuccoAmount_patch:
     b hook_AnjuCheckCuccoAmount
     beq 0x179444
 
+.section .patch_FrogReward
+.global FrogReward_patch
+FrogReward_patch:
+    b hook_FrogReward
+
 .section .patch_loader
 .global loader_patch
 

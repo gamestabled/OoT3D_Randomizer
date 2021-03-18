@@ -408,6 +408,10 @@ SECTIONS
 		*(.patch_NoLensOfTruthNaviText)
 	}
 
+	.patch_FrogReward 0x38992C : {
+		*(.patch_FrogReward)
+	}
+
 	.patch_ChildShootingGallery 0x38AB70 : {
 		*(.patch_ChildShootingGallery)
 	}
