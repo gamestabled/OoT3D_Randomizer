@@ -15,6 +15,7 @@ extern string_view kakGateClosed;
 extern string_view doorOfTimeDesc;
 
 extern string_view fountainNormal;
+extern string_view fountainAdult;
 extern string_view fountainOpen;
 
 extern string_view gerudoNormal;
@@ -28,7 +29,11 @@ extern string_view bridgeMedallions;
 extern string_view bridgeDungeons;
 extern string_view bridgeTokens;
 
-extern string_view tokenCountDesc;
+extern string_view bridgeTokenCountDesc;
+
+extern string_view randomGanonsTrialsDesc;
+
+extern string_view ganonsTrialCountDesc;
 
 extern string_view ageDesc;
 

@@ -184,7 +184,9 @@ namespace Settings {
   extern Option ZorasFountain;
   extern Option GerudoFortress;
   extern Option Bridge;
-  extern Option TokenCount;
+  extern Option BridgeTokenCount;
+  extern Option RandomGanonsTrials;
+  extern Option GanonsTrialsCount;
 
   extern Option StartingAge;
   extern Option BombchusInLogic;
@@ -207,6 +209,7 @@ namespace Settings {
   extern Option GerudoKeys;
   extern Option BossKeysanity;
   extern Option GanonsBossKey;
+  extern u8 LACSCondition;
 
   extern Option SkipChildStealth;
   extern Option FourPoesCutscene;
@@ -217,6 +220,7 @@ namespace Settings {
   extern Option DamageMultiplier;
   extern Option StartingTime;
   extern Option GenerateSpoilerLog;
+  extern bool HasNightStart;
 
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
@@ -225,10 +229,6 @@ namespace Settings {
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
 
-  extern u8 LACSCondition;
-
-  extern bool HasNightStart;
-  extern bool BombchuDrop;
   extern bool SkippedTrials;
   extern bool ShuffleDungeonEntrances;
   extern bool ShuffleOverworldEntrances;
@@ -247,6 +247,12 @@ namespace Settings {
   extern bool IceCavernDungeonMode;
   extern bool GerudoTrainingGroundsDungeonMode;
   extern bool GanonsCastleDungeonMode;
+  extern bool ForestTrialSkip;
+  extern bool FireTrialSkip;
+  extern bool WaterTrialSkip;
+  extern bool SpiritTrialSkip;
+  extern bool ShadowTrialSkip;
+  extern bool LightTrialSkip;
 
   //Logic Settings
   extern Option ToggleAllDetailedLogic;

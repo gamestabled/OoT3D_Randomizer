@@ -14,11 +14,13 @@ namespace Settings {
   Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                      {forestClosed, forestOpen});
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                      {kakGateClosed, kakGateOpen});
   Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc, doorOfTimeDesc});
-  Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Open"},                                      {fountainNormal, fountainOpen});
+  Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                             {fountainNormal, fountainAdult, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                              {gerudoNormal, gerudoFast, gerudoOpen});
   Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"},
                                                                       {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
-  Option TokenCount          = Option::U8  ("Token Count",            {/*Options 0-100 defined in SetDefaultOptions()*/},      std::vector<std::string_view>{101, tokenCountDesc});
+  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultOptions()*/},      std::vector<std::string_view>{101, bridgeTokenCountDesc});
+  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                           {randomGanonsTrialsDesc, randomGanonsTrialsDesc});
+  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                     std::vector<std::string_view>{7, ganonsTrialCountDesc});
   std::vector<Option *> openOptions = {
     &Logic,
     &OpenForest,
@@ -27,7 +29,9 @@ namespace Settings {
     &ZorasFountain,
     &GerudoFortress,
     &Bridge,
-    &TokenCount,
+    &BridgeTokenCount,
+    &RandomGanonsTrials,
+    &GanonsTrialsCount,
   };
 
   //World Settings
@@ -334,7 +338,9 @@ namespace Settings {
     ctx.zorasFountain      = ZorasFountain.Value<u8>();
     ctx.gerudoFortress     = GerudoFortress.Value<u8>();
     ctx.rainbowBridge      = Bridge.Value<u8>();
-    ctx.tokenCount         = TokenCount.Value<u8>();
+    ctx.bridgeTokenCount   = BridgeTokenCount.Value<u8>();
+    ctx.randomGanonsTrials = (RandomGanonsTrials) ? 1 : 0;
+    ctx.ganonsTrialsCount  = GanonsTrialsCount.Value<u8>();
 
     ctx.startingAge        = StartingAge.Value<u8>();
     ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
@@ -389,6 +395,13 @@ namespace Settings {
     ctx.gerudoTrainingGroundsDungeonMode = (GerudoTrainingGroundsDungeonMode) ? 1 : 0;
     ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
 
+    ctx.forestTrialSkip = (ForestTrialSkip) ? 1 : 0;
+    ctx.fireTrialSkip   = (FireTrialSkip)   ? 1 : 0;
+    ctx.waterTrialSkip  = (WaterTrialSkip)  ? 1 : 0;
+    ctx.spiritTrialSkip = (SpiritTrialSkip) ? 1 : 0;
+    ctx.shadowTrialSkip = (ShadowTrialSkip) ? 1 : 0;
+    ctx.lightTrialSkip  = (LightTrialSkip)  ? 1 : 0;
+
     ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
 
     //Filling detailed logic
@@ -412,7 +425,9 @@ namespace Settings {
     ZorasFountain.SetSelectedIndex(ctx.zorasFountain);
     GerudoFortress.SetSelectedIndex(ctx.gerudoFortress);
     Bridge.SetSelectedIndex(ctx.rainbowBridge);
-    TokenCount.SetSelectedIndex(ctx.tokenCount);
+    BridgeTokenCount.SetSelectedIndex(ctx.bridgeTokenCount);
+    RandomGanonsTrials.SetSelectedIndex(ctx.randomGanonsTrials);
+    GanonsTrialsCount.SetSelectedIndex(ctx.ganonsTrialsCount);
 
     StartingAge.SetSelectedIndex(ctx.startingAge);
     BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
@@ -467,14 +482,16 @@ namespace Settings {
     OpenForest.SetSelectedIndex(OPENFOREST_OPEN);
     OpenDoorOfTime.SetSelectedIndex(1); //1 is Open, 0 is Closed
     Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
-    TokenCount.Hide();
+    BridgeTokenCount.Hide();
+    RandomGanonsTrials.SetSelectedIndex(ON);
+    GanonsTrialsCount.Hide();
 
-    std::vector<std::string> tokenOptions = {};
+    std::vector<std::string> bridgeTokenOptions = {};
     for (int i = 0; i <= 100; i++) {
-      tokenOptions.push_back(std::to_string(i));
+      bridgeTokenOptions.push_back(std::to_string(i));
     }
-    TokenCount.SetOptions(tokenOptions);
-    TokenCount.SetSelectedIndex(1);
+    BridgeTokenCount.SetOptions(bridgeTokenOptions);
+    BridgeTokenCount.SetSelectedIndex(1);
 
     StartingAge.SetSelectedIndex(AGE_CHILD);
 
@@ -504,10 +521,17 @@ namespace Settings {
     }
 
     if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
-      TokenCount.Unhide();
+      BridgeTokenCount.Unhide();
     } else {
-      TokenCount.Hide();
-      TokenCount.SetSelectedIndex(1);
+      BridgeTokenCount.Hide();
+      BridgeTokenCount.SetSelectedIndex(1);
+    }
+
+    if (RandomGanonsTrials) {
+      GanonsTrialsCount.Hide();
+      GanonsTrialsCount.SetSelectedIndex(6);
+    } else {
+      GanonsTrialsCount.Unhide();
     }
 
     //Bombchus in Logic forces Bombchu Drops
@@ -526,12 +550,14 @@ namespace Settings {
     }
   }
 
-  bool SkippedTrials                    = false;
+  //eventual settings
   bool ShuffleDungeonEntrances          = false;
   bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
   bool Shopsanity                       = false;
+
+  //MQ vs Vanilla Dungeon Modes
   bool DekuTreeDungeonMode              = false;
   bool DodongosCavernDungeonMode        = false;
   bool JabuJabusBellyDungeonMode        = false;
@@ -544,6 +570,14 @@ namespace Settings {
   bool IceCavernDungeonMode             = false;
   bool GerudoTrainingGroundsDungeonMode = false;
   bool GanonsCastleDungeonMode          = false;
+
+  //Skipped Trials (initially set to true, then false ones filtered out)
+  bool ForestTrialSkip                  = true;
+  bool FireTrialSkip                    = true;
+  bool WaterTrialSkip                   = true;
+  bool SpiritTrialSkip                  = true;
+  bool ShadowTrialSkip                  = true;
+  bool LightTrialSkip                   = true;
 
   //Function to set flags depending on settings
   void UpdateSettings() {
@@ -562,6 +596,18 @@ namespace Settings {
       IceCavernDungeonMode             = Random() % 2;
       GerudoTrainingGroundsDungeonMode = Random() % 2;
       GanonsCastleDungeonMode          = Random() % 2;
+    }
+
+    //randomzie the trial order then require the amount set in GanonsTrialsCount
+    std::array<bool*, 6> ganonsTrialsSkipped = {&ForestTrialSkip, &FireTrialSkip, &WaterTrialSkip, &SpiritTrialSkip, &ShadowTrialSkip, &LightTrialSkip};
+    std::shuffle(ganonsTrialsSkipped.begin(), ganonsTrialsSkipped.end(), std::default_random_engine(Random()));
+
+    if (RandomGanonsTrials) {
+      GanonsTrialsCount.SetSelectedIndex(Random() % 7);
+    }
+
+    for (u8 i = 0; i < GanonsTrialsCount.Value<u8>(); i++) {
+      *ganonsTrialsSkipped[i] = false;
     }
 
     HasNightStart = StartingTime.Is(STARTINGTIME_NIGHT);

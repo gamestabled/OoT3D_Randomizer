@@ -30,7 +30,7 @@ typedef enum {
 
 typedef enum {
   ZORASFOUNTAIN_NORMAL,
-  //ZORASFOUNTAIN_ADULT,
+  ZORASFOUNTAIN_ADULT,
   ZORASFOUNTAIN_OPEN,
 } ZorasFountainSetting;
 
@@ -159,7 +159,9 @@ typedef struct {
   u8 zorasFountain;
   u8 gerudoFortress;
   u8 rainbowBridge;
-  u8 tokenCount;
+  u8 bridgeTokenCount;
+  u8 randomGanonsTrials;
+  u8 ganonsTrialsCount;
 
   u8 startingAge;
   u8 bombchusInLogic;
@@ -213,6 +215,13 @@ typedef struct {
   u8 iceCavernDungeonMode;
   u8 gerudoTrainingGroundsDungeonMode;
   u8 ganonsCastleDungeonMode;
+
+  u8 forestTrialSkip;
+  u8 fireTrialSkip;
+  u8 waterTrialSkip;
+  u8 spiritTrialSkip;
+  u8 shadowTrialSkip;
+  u8 lightTrialSkip;
 
   u32 dungeonRewardBitMask;
 

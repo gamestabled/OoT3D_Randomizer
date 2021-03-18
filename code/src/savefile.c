@@ -94,6 +94,14 @@ void SaveFile_Init() {
         gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
     }
 
+    //Set Skipped Trials
+    gSaveContext.eventChkInf[0xB] |= (gSettingsContext.forestTrialSkip) ? 0x0800 : 0;
+    gSaveContext.eventChkInf[0xB] |= (gSettingsContext.fireTrialSkip)   ? 0x4000 : 0;
+    gSaveContext.eventChkInf[0xB] |= (gSettingsContext.waterTrialSkip)  ? 0x1000 : 0;
+    gSaveContext.eventChkInf[0xA] |= (gSettingsContext.spiritTrialSkip) ? 0x2000 : 0;
+    gSaveContext.eventChkInf[0xB] |= (gSettingsContext.shadowTrialSkip) ? 0x2000 : 0;
+    gSaveContext.eventChkInf[0xB] |= (gSettingsContext.lightTrialSkip)  ? 0x8000 : 0;
+
     if (gSettingsContext.fourPoesCutscene == SKIP) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }

@@ -30,7 +30,7 @@ u32 BgGjyoBridge_CheckCondition(void) {
         case RAINBOWBRIDGE_DUNGEONS:
             return BgGjyoBridge_ConditionStones() && BgGjyoBridge_ConditionMedallions();
         case RAINBOWBRIDGE_TOKENS:
-            return gSaveContext.gsTokens >= gSettingsContext.tokenCount;
+            return gSaveContext.gsTokens >= gSettingsContext.bridgeTokenCount;
         default:
             return BgGjyoBridge_ConditionVanilla();
     }

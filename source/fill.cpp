@@ -303,23 +303,23 @@ static void FillExcludedLocations() {
 }
 
 //Fill in dungeon items that have to be within their own dungeon
-static void RandomizeOwnDungeon(std::string_view dungeonName, const Item bossKey, const Item map, const Item compass, const Item smallKey, u8 keyCount) {
+static void RandomizeOwnDungeon(Category dungeon, const Item bossKey, const Item map, const Item compass, const Item smallKey, u8 keyCount) {
 
-  std::vector<ItemLocation*> dungeonLocations = FilterFromPool(allLocations, [dungeonName](ItemLocation* loc){
+  std::vector<ItemLocation*> dungeonLocations = FilterFromPool(allLocations, [dungeon](ItemLocation* loc){
     //prevent accidentally placing a map or compass at Sheik in Ice Cavern if a song needs to go there
-    if (dungeonName == "Ice Cavern" && loc->GetName() == "Sheik in Ice Cavern" && ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
+    if (dungeon == Category::cIceCavern && loc->GetName() == "Sheik in Ice Cavern" && ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
       return false;
     }
 
     //prevent using dungeon reward locations when songs need to go there
-    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory("Boss Heart") ||
+    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cBossHeart) ||
        loc->GetName() == "Gerudo Training Grounds MQ Ice Arrows Chest" ||
        loc->GetName() == "Gerudo Training Grounds Maze Path Final Chest" ||
        loc->GetName() == "Bottom of the Well Lens of Truth Chest" ||
        loc->GetName() == "Bottom of the Well MQ Lens of Truth Chest")) {
       return false;
     }
-    return loc->IsCategory(dungeonName);
+    return loc->IsCategory(dungeon);
   });
   std::vector<Item> dungeonItems = {};
 
@@ -327,8 +327,8 @@ static void RandomizeOwnDungeon(std::string_view dungeonName, const Item bossKey
     AddItemToPool(dungeonItems, smallKey, keyCount);
   }
 
-  if ((BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) && dungeonName != "Ganon's Castle" && bossKey != NoItem) ||
-      (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) && dungeonName == "Ganon's Castle")) {
+  if ((BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) && dungeon != Category::cGanonsCastle && bossKey != NoItem) ||
+      (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) && dungeon == Category::cGanonsCastle)) {
         AddItemToPool(dungeonItems, bossKey);
   }
 
@@ -345,37 +345,37 @@ static void RandomizeOwnDungeonItems() {
   //variable to hold Vanilla/MQ key count for each dungeon
   u8 keyCount = 0;
 
-  //                  dungeon name       boss key, map,                compass,             small key, key count
-  RandomizeOwnDungeon("Deku Tree",         NoItem, DekuTree_Map,       DekuTree_Compass,       NoItem, keyCount);
-  RandomizeOwnDungeon("Dodongo's Cavern",  NoItem, DodongosCavern_Map, DodongosCavern_Compass, NoItem, keyCount);
-  RandomizeOwnDungeon("Jabu Jabu's Belly", NoItem, JabuJabusBelly_Map, JabuJabusBelly_Compass, NoItem, keyCount);
+  //                  dungeon category   boss key, map,                compass,             small key, key count
+  RandomizeOwnDungeon(Category::cDekuTree,       NoItem, DekuTree_Map,       DekuTree_Compass,       NoItem, keyCount);
+  RandomizeOwnDungeon(Category::cDodongosCavern, NoItem, DodongosCavern_Map, DodongosCavern_Compass, NoItem, keyCount);
+  RandomizeOwnDungeon(Category::cJabuJabusBelly, NoItem, JabuJabusBelly_Map, JabuJabusBelly_Compass, NoItem, keyCount);
 
   keyCount = (ForestTempleDungeonMode) ? 6 : 5; //MQ key count : Vanilla key count
-  RandomizeOwnDungeon("Forest Temple", ForestTemple_BossKey, ForestTemple_Map, ForestTemple_Compass, ForestTemple_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cForestTemple, ForestTemple_BossKey, ForestTemple_Map, ForestTemple_Compass, ForestTemple_SmallKey, keyCount);
 
   keyCount = (FireTempleDungeonMode) ? 5 : 8;
-  RandomizeOwnDungeon("Fire Temple", FireTemple_BossKey, FireTemple_Map, FireTemple_Compass, FireTemple_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cFireTemple, FireTemple_BossKey, FireTemple_Map, FireTemple_Compass, FireTemple_SmallKey, keyCount);
 
   keyCount = (WaterTempleDungeonMode) ? 2 : 6;
-  RandomizeOwnDungeon("Water Temple", WaterTemple_BossKey, WaterTemple_Map, WaterTemple_Compass, WaterTemple_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cWaterTemple, WaterTemple_BossKey, WaterTemple_Map, WaterTemple_Compass, WaterTemple_SmallKey, keyCount);
 
   keyCount = (SpiritTempleDungeonMode) ? 7 : 5;
-  RandomizeOwnDungeon("Spirit Temple", SpiritTemple_BossKey, SpiritTemple_Map, SpiritTemple_Compass, SpiritTemple_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cSpiritTemple, SpiritTemple_BossKey, SpiritTemple_Map, SpiritTemple_Compass, SpiritTemple_SmallKey, keyCount);
 
   keyCount = (ShadowTempleDungeonMode) ? 6 : 4; //TEMPORARY FIX FOR FREESTANDING KEY CRASH, VANILLA SHOULD BE 5
-  RandomizeOwnDungeon("Shadow Temple", ShadowTemple_BossKey, ShadowTemple_Map, ShadowTemple_Compass, ShadowTemple_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cShadowTemple, ShadowTemple_BossKey, ShadowTemple_Map, ShadowTemple_Compass, ShadowTemple_SmallKey, keyCount);
 
   keyCount = (BottomOfTheWellDungeonMode) ? 2 : 3;
-  RandomizeOwnDungeon("Bottom of the Well", NoItem, BottomOfTheWell_Map, BottomOfTheWell_Compass, BottomOfTheWell_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cBottomOfTheWell, NoItem, BottomOfTheWell_Map, BottomOfTheWell_Compass, BottomOfTheWell_SmallKey, keyCount);
 
   keyCount = (IceCavernDungeonMode) ? 0 : 0;
-  RandomizeOwnDungeon("Ice Cavern", NoItem, IceCavern_Map, IceCavern_Compass, NoItem, keyCount);
+  RandomizeOwnDungeon(Category::cIceCavern, NoItem, IceCavern_Map, IceCavern_Compass, NoItem, keyCount);
 
   keyCount = (GerudoTrainingGroundsDungeonMode) ? 3 : 8;//TEMPORARY FIX FOR FREESTANDING KEY CRASH, VANILLA SHOULD BE 9
-  RandomizeOwnDungeon("Gerudo Training Grounds", NoItem, NoItem, NoItem, GerudoTrainingGrounds_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cGerudoTrainingGrounds, NoItem, NoItem, NoItem, GerudoTrainingGrounds_SmallKey, keyCount);
 
   keyCount = (GanonsCastleDungeonMode) ? 3 : 2;
-  RandomizeOwnDungeon("Ganon's Castle", GanonsCastle_BossKey, NoItem, NoItem, GanonsCastle_SmallKey, keyCount);
+  RandomizeOwnDungeon(Category::cGanonsCastle, GanonsCastle_BossKey, NoItem, NoItem, GanonsCastle_SmallKey, keyCount);
 }
 
 void Fill() {
@@ -396,10 +396,10 @@ void Fill() {
     //Get each song location
     std::vector<ItemLocation*> songLocations = {};
     if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
-      songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory("Songs");});
+      songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory(Category::cSong);});
 
     } else if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
-      songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory("Boss Heart");});
+      songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory(Category::cBossHeart);});
       songLocations.push_back(&SheikInIceCavern);
       songLocations.push_back(&SongFromImpa);
       songLocations.push_back(GerudoTrainingGroundsDungeonMode ? &GerudoTrainingGrounds_MQ_IceArrowsChest : &GerudoTrainingGrounds_MazePathFinalChest);
