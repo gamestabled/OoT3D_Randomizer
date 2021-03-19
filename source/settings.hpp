@@ -54,6 +54,10 @@ public:
       options = o;
     }
 
+    size_t GetOptionCount() {
+      return options.size();
+    }
+
     std::string_view GetName() const {
         return name;
     }
@@ -192,6 +196,7 @@ namespace Settings {
   extern Option BombchusInLogic;
   extern Option BombchuDrops;
   extern Option RandomMQDungeons;
+  extern Option MQDungeonCount;
   extern Option MirrorWorld;
 
   extern Option ShuffleSongs;

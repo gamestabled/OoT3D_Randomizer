@@ -27,21 +27,12 @@ public:
         *event = true;
     }
 
-    bool IsChecked() const {
-      return checked;
-    }
-
-    void Check() {
-      checked = true;
-    }
-
-    void Uncheck() {
-      checked = false;
+    bool GetEvent() const {
+        return *event;
     }
 
 private:
     bool* event;
-    bool checked = false;
     ConditionFn conditions_met;
 };
 
@@ -153,8 +144,6 @@ public:
     std::vector<ItemLocationPairing> locations;
     std::vector<ExitPairing> exits;
 
-    bool accountedForChild = false;
-    bool accountedForAdult = false;
     bool dayChild = false;
     bool nightChild = false;
     bool dayAdult = false;
@@ -182,7 +171,6 @@ public:
       }
     }
 
-
     bool Child() const {
       return dayChild || nightChild;
     }
@@ -207,38 +195,34 @@ public:
       return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
     }
 
-    //checks to see if all locations and exits are accessible
-    bool AllAccountedFor() const {
+    bool AllAccountedFor() {
+      for (EventPairing event : events) {
+        if (!event.ConditionsMet() || !event.GetEvent()) {
+          return false;
+        }
+      }
 
-      return AllAccess()           &&
-             events.size()    == 0 &&
-             locations.size() == 0 &&
-             exits.size()     == 0;
-    }
+      for (ItemLocationPairing loc : locations) {
+        if (!loc.ConditionsMet() || !loc.GetLocation()->IsAddedToPool()) {
+          return false;
+        }
+      }
 
-    void printBools() {
-      printf("%s: dayC: %d, nightC: %d, dayA: %d, nightA: %d\n", regionName.c_str(), dayChild, nightChild, dayAdult, nightAdult);
+      for (ExitPairing exit : exits) {
+        if (!exit.ConditionsMet() || !exit.GetExit()->AllAccess()) {
+          return false;
+        }
+      }
+
+      return AllAccess();
     }
 
     void ResetVariables() {
-      accountedForChild = false;
-      accountedForAdult = false;
       dayChild = false;
       nightChild = false;
       dayAdult = false;
       nightAdult = false;
       addedToPool = false;
-    }
-
-    void LogStatus() {
-      PlacementLog_Msg("\nNOW TRAVERSING ");
-      PlacementLog_Msg(regionName);
-      PlacementLog_Msg(" ");
-      PlacementLog_Msg((dayChild)   ? "dayChild " : "");
-      PlacementLog_Msg((nightChild) ? "nightChild " : "");
-      PlacementLog_Msg((dayAdult)   ? "dayAdult " : "");
-      PlacementLog_Msg((nightAdult) ? "nightAdult " : "");
-      PlacementLog_Msg("\n\n");
     }
 
     bool operator< (const Exit &right) const {
@@ -540,4 +524,4 @@ namespace Exits {
   extern Exit GanonsCastle_Tower;
 
   extern void AccessReset();
-}
+} //namespace Exits

@@ -167,6 +167,7 @@ typedef struct {
   u8 bombchusInLogic;
   u8 bombchuDrops;
   u8 randomMQDungeons;
+  u8 mqDungeonCount;
   u8 mirrorWorld;
 
   u8 shuffleSongs;

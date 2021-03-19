@@ -214,15 +214,6 @@ private:
 
 };
 
-class ItemLocationKeyPairing {
-public:
-  constexpr ItemLocationKeyPairing(ItemLocation* loc_, u8 keysRequired_)
-  : loc(loc_), keysRequired(keysRequired_) {}
-
-  ItemLocation* loc;
-  u8 keysRequired;
-};
-
 class ItemOverride_Compare {
 public:
     bool operator()(ItemOverride lhs, ItemOverride rhs) const {
@@ -1073,7 +1064,6 @@ extern std::set<ItemOverride, ItemOverride_Compare> overrides;
 
 extern std::vector<ItemLocation*> playthroughLocations;
 
-extern u32 totalLocationsFound;
 extern u16 itemsPlaced;
 
 extern void GenerateLocationPool();

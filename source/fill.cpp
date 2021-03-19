@@ -96,17 +96,18 @@ static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
 }
 
 static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, bool playthrough = false) {
-  //logically give the starting inventory
-  ApplyStartingInventory();
 
   std::vector<ItemLocation*> accessibleLocations = {};
+
+  //Reset all access to begin a new search
+  ApplyStartingInventory();
   Exits::AccessReset();
   LocationReset();
   Logic::UpdateHelpers();
   std::vector<Exit *> exitPool = {&Exits::Root};
 
   u8 iterationsWithNoLocations = 0;
-  while(iterationsWithNoLocations < 5) {
+  while(iterationsWithNoLocations < 4) {
     iterationsWithNoLocations++;
 
     for (size_t i = 0; i < exitPool.size(); i++) {
@@ -154,9 +155,6 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
           }
         }
 
-        // Erase ExitPairings whose conditions have been met while the exit has full day time access as both ages
-        //erase_if(area->exits, [](const ExitPairing& ep){ return ep.ConditionsMet() && ep.GetExit()->AllAccess();});
-
         //for each ItemLocation in this area
         for (size_t k = 0; k < area->locations.size(); k++) {
           ItemLocationPairing& locPair = area->locations[k];
@@ -184,6 +182,8 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
     if (Logic::EventsUpdated()) {
       iterationsWithNoLocations = 0;
     }
+
+    erase_if(exitPool, [](Exit* e){ return e->AllAccountedFor();});
   }
   erase_if(accessibleLocations, [allowedLocations](ItemLocation* loc){
     for (ItemLocation* allowedLocation : allowedLocations) {
@@ -345,7 +345,7 @@ static void RandomizeOwnDungeonItems() {
   //variable to hold Vanilla/MQ key count for each dungeon
   u8 keyCount = 0;
 
-  //                  dungeon category   boss key, map,                compass,             small key, key count
+  //                  dungeon category         boss key, map,                compass,             small key, key count
   RandomizeOwnDungeon(Category::cDekuTree,       NoItem, DekuTree_Map,       DekuTree_Compass,       NoItem, keyCount);
   RandomizeOwnDungeon(Category::cDodongosCavern, NoItem, DodongosCavern_Map, DodongosCavern_Compass, NoItem, keyCount);
   RandomizeOwnDungeon(Category::cJabuJabusBelly, NoItem, JabuJabusBelly_Map, JabuJabusBelly_Compass, NoItem, keyCount);
@@ -420,4 +420,5 @@ void Fill() {
 
   LogicReset();
   GeneratePlaythrough();
+  printf("Done");
 }
