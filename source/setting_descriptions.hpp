@@ -43,6 +43,8 @@ extern string_view bombchuDropDesc;
 
 extern string_view randomMQDungeonsDesc;
 
+extern string_view mqDungeonCountDesc;
+
 extern string_view mirrorWorldDesc;
 
 extern string_view songsSongLocations;

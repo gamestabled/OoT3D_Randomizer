@@ -299,7 +299,9 @@ void PrintSubMenu() {
 	//print menu name
 	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
 
+  //keep count of hidden settings to not make blank spaces appear in the list
   u16 hiddenSettings = 0;
+  
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
 		if (i + settingBound >= currentMenuItem->settingsList->size()) break;

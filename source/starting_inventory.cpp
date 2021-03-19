@@ -12,53 +12,15 @@ void GenerateStartingInventory() {
   StartingInventory.clear();
 
   if (Keysanity.Is(KEYSANITY_START_WITH)) {
-    if (ForestTempleDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(ForestTemple_SmallKey, 6);
-    } else {
-      AddItemToInventory(ForestTemple_SmallKey, 5);
-    }
-
-    if (FireTempleDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(FireTemple_SmallKey, 5);
-    } else {
-      AddItemToInventory(FireTemple_SmallKey, 8);
-    }
-
-    if (WaterTempleDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(WaterTemple_SmallKey, 2);
-    } else {
-      AddItemToInventory(WaterTemple_SmallKey, 6);
-    }
-
-    if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(SpiritTemple_SmallKey, 7);
-    } else {
-      AddItemToInventory(SpiritTemple_SmallKey, 5);
-    }
-
-    if (ShadowTempleDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(ShadowTemple_SmallKey, 6);
-    } else {
-      AddItemToInventory(ShadowTemple_SmallKey, 5);
-    }
-
-    if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(GerudoTrainingGrounds_SmallKey, 3);
-    } else {
-      AddItemToInventory(GerudoTrainingGrounds_SmallKey, 9);
-    }
-
-    if (BottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(BottomOfTheWell_SmallKey, 2);
-    } else {
-      AddItemToInventory(BottomOfTheWell_SmallKey, 3);
-    }
-
-    if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
-      AddItemToInventory(GanonsCastle_SmallKey, 3);
-    } else {
-      AddItemToInventory(GanonsCastle_SmallKey, 2);
-    }
+    //                Dungeon small key item,          check if MQ dungeon                 MQ : Vanilla key count
+    AddItemToInventory(ForestTemple_SmallKey,          (ForestTempleDungeonMode)          ? 6 : 5);
+    AddItemToInventory(FireTemple_SmallKey,            (FireTempleDungeonMode)            ? 5 : 8);
+    AddItemToInventory(WaterTemple_SmallKey,           (WaterTempleDungeonMode)           ? 2 : 6);
+    AddItemToInventory(SpiritTemple_SmallKey,          (SpiritTempleDungeonMode)          ? 7 : 5);
+    AddItemToInventory(ShadowTemple_SmallKey,          (ShadowTempleDungeonMode)          ? 6 : 5);
+    AddItemToInventory(GerudoTrainingGrounds_SmallKey, (GerudoTrainingGroundsDungeonMode) ? 3 : 9);
+    AddItemToInventory(BottomOfTheWell_SmallKey,       (BottomOfTheWellDungeonMode)       ? 2 : 3);
+    AddItemToInventory(GanonsCastle_SmallKey,          (GanonsCastleDungeonMode)          ? 3 : 2);
 
   } else if (Keysanity.Is(KEYSANITY_VANILLA)) {
   /*Logic cannot handle vanilla key layout in some dungeons

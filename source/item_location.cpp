@@ -836,7 +836,7 @@ ItemLocation GC_ShopItem6                                 = ItemLocation::Base(0
 ItemLocation GC_ShopItem7                                 = ItemLocation::Base(0x2E, 0x36, "GC Shop Item 7",                                   {Category::cGoronCity, Category::cShop});
 ItemLocation GC_ShopItem8                                 = ItemLocation::Base(0x2E, 0x37, "GC Shop Item 8",                                   {Category::cGoronCity, Category::cShop});
 
-const std::array<ItemLocation*, 10> DT_Vanilla = {
+const std::vector<ItemLocation*> DT_Vanilla = {
   &DekuTree_MapChest,
   &DekuTree_CompassChest,
   &DekuTree_CompassRoomSideChest,
@@ -848,7 +848,7 @@ const std::array<ItemLocation*, 10> DT_Vanilla = {
   &DekuTree_GS_BasementVines,
   &DekuTree_GS_CompassRoom,
 };
-const std::array<ItemLocation*, 12> DT_MQ = {
+const std::vector<ItemLocation*> DT_MQ = {
   &DekuTree_MQ_MapChest,
   &DekuTree_MQ_CompassChest,
   &DekuTree_MQ_SlingshotChest,
@@ -862,7 +862,7 @@ const std::array<ItemLocation*, 12> DT_MQ = {
   &DekuTree_MQ_GS_BasementGravesRoom,
   &DekuTree_MQ_GS_BasementBackRoom,
 };
-const std::array<ItemLocation*, 14> DC_Vanilla = {
+const std::vector<ItemLocation*> DC_Vanilla = {
   &DodongosCavern_MapChest,
   &DodongosCavern_CompassChest,
   &DodongosCavern_BombFlowerPlatformChest,
@@ -878,7 +878,7 @@ const std::array<ItemLocation*, 14> DC_Vanilla = {
   &DodongosCavern_GS_BackRoom,
   &DodongosCavern_GS_SideRoomNearLowerLizalfos,
 };
-const std::array<ItemLocation*, 15> DC_MQ = {
+const std::vector<ItemLocation*> DC_MQ = {
   &DodongosCavern_MQ_MapChest,
   &DodongosCavern_MQ_BombBagChest,
   &DodongosCavern_MQ_CompassChest,
@@ -895,7 +895,7 @@ const std::array<ItemLocation*, 15> DC_MQ = {
   &DodongosCavern_MQ_GS_LarvaeRoom,
   &DodongosCavern_MQ_GS_BackRoom,
 };
-const std::array<ItemLocation*, 8> Jabu_Vanilla = {
+const std::vector<ItemLocation*> Jabu_Vanilla = {
   &JabuJabusBelly_MapChest,
   &JabuJabusBelly_CompassChest,
   &JabuJabusBelly_BoomerangChest,
@@ -905,7 +905,7 @@ const std::array<ItemLocation*, 8> Jabu_Vanilla = {
   &JabuJabusBelly_GS_NearBoss,
   &JabuJabusBelly_GS_WaterSwitchRoom,
 };
-const std::array<ItemLocation*, 15> Jabu_MQ = {
+const std::vector<ItemLocation*> Jabu_MQ = {
   &JabuJabusBelly_MQ_FirstRoomSideChest,
   &JabuJabusBelly_MQ_MapChest,
   &JabuJabusBelly_MQ_SecondRoomLowerChest,
@@ -922,7 +922,7 @@ const std::array<ItemLocation*, 15> Jabu_MQ = {
   &JabuJabusBelly_MQ_GS_BoomerangChestRoom,
   &JabuJabusBelly_MQ_GS_NearBoss,
 };
-const std::array<ItemLocation*, 18> FoT_Vanilla = {
+const std::vector<ItemLocation*> FoT_Vanilla = {
   &ForestTemple_FirstRoomChest,
   &ForestTemple_FirstStalfosChest,
   &ForestTemple_RaisedIslandCourtyardChest,
@@ -942,7 +942,7 @@ const std::array<ItemLocation*, 18> FoT_Vanilla = {
   &ForestTemple_GS_Lobby,
   &ForestTemple_GS_Basement,
 };
-const std::array<ItemLocation*, 17> FoT_MQ = {
+const std::vector<ItemLocation*> FoT_MQ = {
   &ForestTemple_MQ_FirstRoomChest,
   &ForestTemple_MQ_WolfosChest,
   &ForestTemple_MQ_BowChest,
@@ -961,7 +961,7 @@ const std::array<ItemLocation*, 17> FoT_MQ = {
   &ForestTemple_MQ_GS_LevelIslandCourtyard,
   &ForestTemple_MQ_GS_Well,
 };
-const std::array<ItemLocation*, 19> FiT_Vanilla = {
+const std::vector<ItemLocation*> FiT_Vanilla = {
   &FireTemple_NearBossChest,
   &FireTemple_FlareDancerChest,
   &FireTemple_BossKeyChest,
@@ -982,7 +982,7 @@ const std::array<ItemLocation*, 19> FiT_Vanilla = {
   &FireTemple_GS_ScarecrowTop,
   &FireTemple_GS_ScarecrowClimb,
 };
-const std::array<ItemLocation*, 17> FiT_MQ = {
+const std::vector<ItemLocation*> FiT_MQ = {
   &FireTemple_MQ_NearBossChest,
   &FireTemple_MQ_MegatonHammerChest,
   &FireTemple_MQ_CompassChest,
@@ -1001,7 +1001,7 @@ const std::array<ItemLocation*, 17> FiT_MQ = {
   &FireTemple_MQ_GS_FireWallMazeSideRoom,
   &FireTemple_MQ_GS_SkullOnFire,
 };
-const std::array<ItemLocation*, 15> WaT_Vanilla = {
+const std::vector<ItemLocation*> WaT_Vanilla = {
   &WaterTemple_MapChest,
   &WaterTemple_CompassChest,
   &WaterTemple_TorchesChest,
@@ -1018,7 +1018,7 @@ const std::array<ItemLocation*, 15> WaT_Vanilla = {
   &WaterTemple_GS_NearBossKeyChest,
   &WaterTemple_GS_River,
 };
-const std::array<ItemLocation*, 11> WaT_MQ = {
+const std::vector<ItemLocation*> WaT_MQ = {
   &WaterTemple_MQ_CentralPillarChest,
   &WaterTemple_MQ_BossKeyChest,
   &WaterTemple_MQ_LongshotChest,
@@ -1031,7 +1031,7 @@ const std::array<ItemLocation*, 11> WaT_MQ = {
   &WaterTemple_MQ_GS_River,
   &WaterTemple_MQ_GS_TripleWallTorch,
 };
-const std::array<ItemLocation*, 22> SpT_Vanilla = {
+const std::vector<ItemLocation*> SpT_Vanilla = {
   &SpiritTemple_ChildBridgeChest,
   &SpiritTemple_ChildEarlyTorchesChest,
   &SpiritTemple_CompassChest,
@@ -1055,7 +1055,7 @@ const std::array<ItemLocation*, 22> SpT_Vanilla = {
   &SpiritTemple_GS_SunOnFloorRoom,
   &SpiritTemple_GS_MetalFence,
 };
-const std::array<ItemLocation*, 25> SpT_MQ = {
+const std::vector<ItemLocation*> SpT_MQ = {
   &SpiritTemple_MQ_EntranceFrontLeftChest,
   &SpiritTemple_MQ_EntranceBackRightChest,
   &SpiritTemple_MQ_EntranceFrontRightChest,
@@ -1082,7 +1082,7 @@ const std::array<ItemLocation*, 25> SpT_MQ = {
   &SpiritTemple_MQ_GS_NineThronesRoomNorth,
   &SpiritTemple_MQ_GS_SunBlockRoom,
 };
-const std::array<ItemLocation*, 22> ShT_Vanilla = {
+const std::vector<ItemLocation*> ShT_Vanilla = {
   &ShadowTemple_MapChest,
   &ShadowTemple_HoverBootsChest,
   &ShadowTemple_CompassChest,
@@ -1106,7 +1106,7 @@ const std::array<ItemLocation*, 22> ShT_Vanilla = {
   &ShadowTemple_GS_LikeLikeRoom,
   &ShadowTemple_GS_NearShip,
 };
-const std::array<ItemLocation*, 25> ShT_MQ = {
+const std::vector<ItemLocation*> ShT_MQ = {
   &ShadowTemple_MQ_CompassChest,
   &ShadowTemple_MQ_HoverBootsChest,
   &ShadowTemple_MQ_EarlyGibdosChest,
@@ -1133,7 +1133,7 @@ const std::array<ItemLocation*, 25> ShT_MQ = {
   &ShadowTemple_MQ_GS_AfterShip,
   &ShadowTemple_MQ_GS_NearBoss,
 };
-const std::array<ItemLocation*, 17> BotW_Vanilla = {
+const std::vector<ItemLocation*> BotW_Vanilla = {
   &BottomOfTheWell_FrontLeftFakeWallChest,
   &BottomOfTheWell_FrontCenterBombableChest,
   &BottomOfTheWell_RightBottomFakeWallChest,
@@ -1152,7 +1152,7 @@ const std::array<ItemLocation*, 17> BotW_Vanilla = {
   &BottomOfTheWell_GS_EastInnerRoom,
   &BottomOfTheWell_GS_WestInnerRoom,
 };
-const std::array<ItemLocation*, 8> BotW_MQ = {
+const std::vector<ItemLocation*> BotW_MQ = {
   &BottomOfTheWell_MQ_MapChest,
   &BottomOfTheWell_MQ_LensOfTruthChest,
   &BottomOfTheWell_MQ_CompassChest,
@@ -1162,7 +1162,7 @@ const std::array<ItemLocation*, 8> BotW_MQ = {
   &BottomOfTheWell_MQ_GS_CoffinRoom,
   &BottomOfTheWell_MQ_GS_WestInnerRoom,
 };
-const std::array<ItemLocation*, 7> IC_Vanilla = {
+const std::vector<ItemLocation*> IC_Vanilla = {
   &IceCavern_MapChest,
   &IceCavern_CompassChest,
   &IceCavern_IronBootsChest,
@@ -1171,7 +1171,7 @@ const std::array<ItemLocation*, 7> IC_Vanilla = {
   &IceCavern_GS_SpinningScytheRoom,
   &IceCavern_GS_HeartPieceRoom,
 };
-const std::array<ItemLocation*, 7> IC_MQ = {
+const std::vector<ItemLocation*> IC_MQ = {
   &IceCavern_MQ_IronBootsChest,
   &IceCavern_MQ_CompassChest,
   &IceCavern_MQ_MapChest,
@@ -1180,7 +1180,7 @@ const std::array<ItemLocation*, 7> IC_MQ = {
   &IceCavern_MQ_GS_IceBlock,
   &IceCavern_MQ_GS_RedIce,
 };
-const std::array<ItemLocation*, 22> GTG_Vanilla = {
+const std::vector<ItemLocation*> GTG_Vanilla = {
   &GerudoTrainingGrounds_LobbyLeftChest,
   &GerudoTrainingGrounds_LobbyRightChest,
   &GerudoTrainingGrounds_StalfosChest,
@@ -1204,7 +1204,7 @@ const std::array<ItemLocation*, 22> GTG_Vanilla = {
   &GerudoTrainingGrounds_HeavyBlockFourthChest,
   &GerudoTrainingGrounds_FreestandingKey,
 };
-const std::array<ItemLocation*, 17> GTG_MQ = {
+const std::vector<ItemLocation*> GTG_MQ = {
   &GerudoTrainingGrounds_MQ_LobbyRightChest,
   &GerudoTrainingGrounds_MQ_LobbyLeftChest,
   &GerudoTrainingGrounds_MQ_FirstIronKnuckleChest,
@@ -1223,7 +1223,7 @@ const std::array<ItemLocation*, 17> GTG_MQ = {
   &GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest,
   &GerudoTrainingGrounds_MQ_HeavyBlockChest,
 };
-const std::array<ItemLocation*, 19> GC_Vanilla = {
+const std::vector<ItemLocation*> GC_Vanilla = {
   &GanonsCastle_ForestTrialChest,
   &GanonsCastle_WaterTrialLeftChest,
   &GanonsCastle_WaterTrialRightChest,
@@ -1244,7 +1244,7 @@ const std::array<ItemLocation*, 19> GC_Vanilla = {
   &GanonsCastle_DekuScrubCenterRight,
   &GanonsCastle_DekuScrubRight,
 };
-const std::array<ItemLocation*, 18> GC_MQ = {
+const std::vector<ItemLocation*> GC_MQ = {
   &GanonsCastle_MQ_WaterTrialChest,
   &GanonsCastle_MQ_ForestTrialEyeSwitchChest,
   &GanonsCastle_MQ_ForestTrialFrozenEyeSwitchChest,
@@ -1625,7 +1625,6 @@ std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 
 std::vector<ItemLocation*> playthroughLocations = {};
 
-u32 totalLocationsFound = 0;
 u16 itemsPlaced = 0;
 
 void AddLocation(ItemLocation * loc) {
@@ -1647,100 +1646,52 @@ void GenerateLocationPool() {
   AddLocations(overworldLocations);
 
   //Deku Tree
-  if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(DT_MQ);
-  } else {
-    AddLocations(DT_Vanilla);
-  }
+  AddLocations((DekuTreeDungeonMode) ? DT_MQ : DT_Vanilla);
   AddLocation(&DekuTree_QueenGohmaHeart);
 
   //Dodongos Cavern
-  if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(DC_MQ);
-  } else {
-    AddLocations(DC_Vanilla);
-  }
+  AddLocations((DodongosCavernDungeonMode) ? DC_MQ : DC_Vanilla);
   AddLocation(&DodongosCavern_BossRoomChest);
   AddLocation(&DodongosCavern_KingDodongoHeart);
 
   //Jabu Jabu's Belly
-  if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(Jabu_MQ);
-  } else {
-    AddLocations(Jabu_Vanilla);
-  }
+  AddLocations((JabuJabusBellyDungeonMode) ? Jabu_MQ : Jabu_Vanilla);
   AddLocation(&JabuJabusBelly_BarinadeHeart);
 
   //Forest Temple
-  if (ForestTempleDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(FoT_MQ);
-  } else {
-    AddLocations(FoT_Vanilla);
-  }
+  AddLocations((ForestTempleDungeonMode) ? FoT_MQ : FoT_Vanilla);
   AddLocation(&ForestTemple_PhantomGanonHeart);
 
   //Fire Temple
-  if (FireTempleDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(FiT_MQ);
-  } else {
-    AddLocations(FiT_Vanilla);
-  }
+  AddLocations((FireTempleDungeonMode) ? FiT_MQ : FiT_Vanilla);
   AddLocation(&FireTemple_VolvagiaHeart);
 
   //Water Temple
-  if (WaterTempleDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(WaT_MQ);
-  } else {
-    AddLocations(WaT_Vanilla);
-  }
+  AddLocations((WaterTempleDungeonMode) ? WaT_MQ : WaT_Vanilla);
   AddLocation(&WaterTemple_MorphaHeart);
 
   //Spirit Temple
   AddLocation(&SpiritTemple_SilverGauntletsChest);
   AddLocation(&SpiritTemple_MirrorShieldChest);
-  if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(SpT_MQ);
-  } else {
-    AddLocations(SpT_Vanilla);
-  }
+  AddLocations((SpiritTempleDungeonMode) ? SpT_MQ : SpT_Vanilla);
   AddLocation(&SpiritTemple_TwinrovaHeart);
 
   //Shadow Temple
-  if (ShadowTempleDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(ShT_MQ);
-  } else {
-    AddLocations(ShT_Vanilla);
-  }
+  AddLocations((ShadowTempleDungeonMode) ? ShT_MQ : ShT_Vanilla);
   AddLocation(&ShadowTemple_BongoBongoHeart);
 
   //Bottom of the Well
-  if (BottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(BotW_MQ);
-  } else {
-    AddLocations(BotW_Vanilla);
-  }
+  AddLocations((BottomOfTheWellDungeonMode) ? BotW_MQ : BotW_Vanilla);
 
   //Ice Cavern
-  if (IceCavernDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(IC_MQ);
-  } else {
-    AddLocations(IC_Vanilla);
-  }
+  AddLocations((IceCavernDungeonMode) ? IC_MQ : IC_Vanilla);
   AddLocation(&SheikInIceCavern);
 
   //Gerudo Training Grounds
-  if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(GTG_MQ);
-  } else {
-    AddLocations(GTG_Vanilla);
-  }
+  AddLocations((GerudoTrainingGroundsDungeonMode) ? GTG_MQ : GTG_Vanilla);
 
   //Ganons Castle
-  if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
-    AddLocations(GC_MQ);
-  } else {
-    AddLocations(GC_Vanilla);
-  }
+  AddLocations((GanonsCastleDungeonMode) ? GC_MQ : GC_Vanilla);
   AddLocation(&GanonsCastle_BossKeyChest);
   AddLocation(&Ganon);
 }
@@ -1769,7 +1720,11 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     }
 
     itemsPlaced++;
-    printf("\x1b[8;10HPlacing Items...%d/%d", itemsPlaced, allLocations.size() + dungeonRewardLocations.size());
+    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+    printf("\x1b[8;10HPlacing Items.");
+    if (completion > 0.25) printf(".");
+    if (completion > 0.50) printf(".");
+
     loc->SetPlacedItem(item);
 }
 
