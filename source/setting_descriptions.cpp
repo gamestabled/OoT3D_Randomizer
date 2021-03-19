@@ -122,7 +122,7 @@ string_view randomMQDungeonsDesc      = "If set, a random number of dungeons wil
 /*------------------------------                                                           //
 |       MQ DUNGEON COUNT       |                                                           //
 ------------------------------*/                                                           //
-string_view mqDungeonCountDesc        = "Specificy the number of Master Quest dungeons to\n"
+string_view mqDungeonCountDesc        = "Specify the number of Master Quest dungeons to\n"
                                         "appear in the game. Which dungeons become Master\n"
                                         "Quest will be chosen at random";                  //
                                                                                            //
