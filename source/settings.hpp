@@ -176,6 +176,7 @@ class MenuItem {
 
 namespace Settings {
   extern std::string seed;
+  extern std::array<u8, 5> hashIconIndexes;
 
   extern Option Logic;
   extern Option OpenForest;

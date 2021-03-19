@@ -7,6 +7,7 @@
 
 namespace Settings {
   std::string seed;
+  std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
   //Open Settings
@@ -331,6 +332,12 @@ namespace Settings {
   //Fills a SettingsContext struct which is sent to the patch
   SettingsContext FillContext() {
     SettingsContext ctx = {};
+    ctx.hashIndexes[0] = hashIconIndexes[0];
+    ctx.hashIndexes[1] = hashIconIndexes[1];
+    ctx.hashIndexes[2] = hashIconIndexes[2];
+    ctx.hashIndexes[3] = hashIconIndexes[3];
+    ctx.hashIndexes[4] = hashIconIndexes[4];
+
     ctx.logic              = Logic.Value<u8>();
     ctx.openForest         = OpenForest.Value<u8>();
     ctx.openKakariko       = OpenKakariko.Value<u8>();

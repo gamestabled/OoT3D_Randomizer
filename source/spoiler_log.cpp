@@ -57,8 +57,10 @@ namespace {
 std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
 
 void GenerateHash() {
-  for (auto& str : randomizerHash) {
-    str = hashIcons[Random() % hashIcons.size()];
+  for (u32 i = 0; i < 5; i++) {
+    u8 iconIndex = Random() % hashIcons.size();
+    Settings::hashIconIndexes[i] = iconIndex;
+    randomizerHash[i] = hashIcons[iconIndex];
   }
 }
 

@@ -8,12 +8,22 @@
 #include "custom_models.h"
 #include "objects.h"
 #include "title_screen.h"
+#include "settings.h"
 
 static u8 GfxInit = 0;
 
 static void Gfx_DrawChangeMenuPrompt(void) {
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 40, COLOR_TITLE, "Press B to close menu");
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press L/R to change menu");
+}
+
+static void Gfx_DrawSeedHash(void) {
+    Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Seed Hash:");
+    for (u32 hashIndex = 0; hashIndex < 5; ++hashIndex) {
+        Draw_DrawFormattedString(10, 10 + SPACING_Y + (hashIndex * SPACING_Y), COLOR_WHITE, "    %s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
+    }
+    Gfx_DrawChangeMenuPrompt();
+    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawDungeonItems(void) {
@@ -43,6 +53,7 @@ static void Gfx_DrawDungeonRewards(void) {
 }
 
 static const void (*menu_draw_funcs[])(void) = {
+    Gfx_DrawSeedHash,
     Gfx_DrawDungeonItems,
     Gfx_DrawDungeonRewards,
 };

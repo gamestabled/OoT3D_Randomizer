@@ -152,6 +152,8 @@ typedef enum {
 } IceTrapSetting;
 
 typedef struct {
+  u8 hashIndexes[5];
+
   u8 logic;
   u8 openForest;
   u8 openKakariko;
@@ -231,5 +233,6 @@ typedef struct {
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;
+extern const char hashIconNames[32][25];
 
 #endif
