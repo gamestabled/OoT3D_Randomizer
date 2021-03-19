@@ -1,6 +1,6 @@
 # OoT3D_Randomizer
 
-This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the Nintendo 3DS. The first official release is coming soon!
+This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the Nintendo 3DS.
 
 * [Building](#building)
 * [Installation](#installation)
@@ -35,7 +35,7 @@ Proper logic is used to ensure every seed is possible to complete without the us
 
 The randomizer will ensure a glitchless path through the seed will exist, but the randomizer will not prevent the use of glitches for those players who enjoy that sort of thing, though we offer no guarantees that all glitches will have identical behavior to the original game. Glitchless can still mean that clever or unintuitive strategies may be required involving the use of things like Hover Boots, the Hookshot, or other items that may not have been as important in the original game.
 
-Each major dungeon will earn you a random Spiritual Stone or Medallion once completed. The particular dungeons where these can be found, as well as other relevant dungeon information can be viewed by pressing Select, and using the L or R button to move between pages.
+Each major dungeon will earn you a random Spiritual Stone or Medallion once completed. The particular dungeons where these can be found, as well as other relevant dungeon information and the current seed hash can be viewed by pressing Select, and using the L or R button to move between pages.
 
 As a service to the player in this very long game, various tedious elements of the game have been removed or sped up, and more convenience tweaks are planned for the future. Some of these changes can be customized when creating your seed.
 
@@ -52,4 +52,5 @@ Before reporting an issue, please make sure to check out the [the Logic wiki for
 
 Surely, following our first release, there will be issues discovered by the community of players. Let us know if you believe you have discovered a bug by posting in our Discord server, or by opening an issue.
 
+* Do not attempt to enter the Boss Rush/Relive a Battle mode from Link's house. Entering this mode will crash the game. A subsequent release may fix this issue, but for now, just don't do it.
 * There is a crash that can occur during certain room transitions, related to free-standing item locations. For this reason, the free-standing Small Key in Gerudo Training Grounds and the Small Key in the single huge pot room in Shadow Temple are not randomized.
