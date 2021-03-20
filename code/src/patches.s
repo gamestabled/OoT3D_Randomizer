@@ -846,6 +846,11 @@ MilkCrateCooldownTimer_patch:
 .section .patch_AmyBlockSpeed
     .word 0x40800000
 
+.section .patch_AmyBlockCooldownTimer
+.global AmyBlockCooldownTimer_patch
+AmyBlockCooldownTimer_patch:
+    mov r1,#0x1
+
 .section .patch_FireBlockSpeed
     .word 0x40800000
 
