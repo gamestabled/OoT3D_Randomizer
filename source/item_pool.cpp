@@ -471,20 +471,17 @@ static void JoinPools(std::vector<Item>& pool1, const std::array<Item, N>& pool2
 }
 
 static void AddRandomBottle(std::vector<Item> bottlePool) {
-  u32 idx = Random() % bottlePool.size();
-  AddItemToMainPool(bottlePool[idx]);
-  bottlePool.erase(bottlePool.begin() + idx);
+  AddItemToMainPool(RandomElement(bottlePool, true));
 }
 
 Item GetJunkItem() {
   if (IceTrapValue.Is(ICETRAPS_MAYHEM) || IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
     return IceTrap;
   } else if (IceTrapValue.Is(ICETRAPS_EXTRA)) {
-    u8 idx = Random() % (JunkPoolItems.size());
-    return JunkPoolItems[idx];
+      return RandomElement(JunkPoolItems);
   }
   //Ice Trap is the last item in JunkPoolItems, so subtract 1 to never hit that index
-  u8 idx = Random() % (JunkPoolItems.size() - 1);
+  u8 idx = Random(0, JunkPoolItems.size() - 1);
   return JunkPoolItems[idx];
 }
 
@@ -493,9 +490,7 @@ static Item GetPendingJunkItem() {
     return GetJunkItem();
   }
 
-  int idx = Random() % (PendingJunkPool.size());
-  Item returnItem = PendingJunkPool[idx];
-  PendingJunkPool.erase(PendingJunkPool.begin() + idx);
+  Item returnItem = RandomElement(PendingJunkPool, true);
   return returnItem;
 }
 
@@ -1150,7 +1145,7 @@ void GenerateItemPool() {
 
     //I'm not sure what this is for, but it was in ootr so I copied it
     for (u8 i = 0; i < 7; i++) {
-      if (Random() % 3) {
+      if (Random(0, 3)) {
         AddItemToMainPool(Arrows30);
       } else {
         AddItemToMainPool(DekuSeeds30);

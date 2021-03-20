@@ -48,7 +48,7 @@ static void RandomizeDungeonRewards() {
   //shuffle an array of indices so that we can randomize the rewards both
   //logically and for the patch
   std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-  std::shuffle(idxArray.begin(), idxArray.end(), std::default_random_engine(Random()));
+  Shuffle(idxArray);
 
   for (size_t i = 0; i < dungeonRewards.size(); i++) {
     const u8 idx = idxArray[i];
@@ -209,13 +209,8 @@ static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locatio
 
   //Place everything randomly
   while (!locations.empty()) {
-    unsigned int itemIdx = Random() % items.size();
-    unsigned int locIdx = Random() % locations.size();
 
-    PlaceItemInLocation(locations[locIdx], items[itemIdx]);
-
-    items.erase(items.begin() + itemIdx);
-    locations.erase(locations.begin() + locIdx);
+    PlaceItemInLocation(RandomElement(locations, true), RandomElement(items, true));
 
     if (items.empty()) {
       items.push_back(GetJunkItem());
@@ -247,7 +242,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
     std::vector<Item> itemsToNotPlace = FilterFromPool(ItemPool, [](const Item& i){ return i .IsAdvancement();});
 
     //shuffle the order of items to place
-    std::shuffle(itemsToPlace.begin(), itemsToPlace.end(), std::default_random_engine(Random()));
+    Shuffle(itemsToPlace);
 
     while (!itemsToPlace.empty()) {
       Item item = std::move(itemsToPlace.back());
@@ -287,9 +282,9 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       }
 
       //place the item within one of the allowed locations
-      unsigned int locIdx = Random() % accessibleLocations.size();
-      PlaceItemInLocation(accessibleLocations[locIdx], item);
-      attemptedLocations.push_back(accessibleLocations[locIdx]);
+      ItemLocation* selectedLocation = RandomElement(accessibleLocations, false);
+      PlaceItemInLocation(selectedLocation, item);
+      attemptedLocations.push_back(selectedLocation);
 
     }
   } while (unsuccessfulPlacement);

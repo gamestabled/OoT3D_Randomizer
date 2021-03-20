@@ -1,19 +1,22 @@
 #include "random.hpp"
 
 static bool init = false;
-static unsigned int state;
+std::mt19937_64 generator;
 
 void Random_Init(unsigned int seed) {
-    state = 0;
     init = true;
-    srand(seed);
+    std::mt19937_64 newgen(seed);
+    generator = newgen;
 }
 
-unsigned int Random() {
+//Returns a random integer in range [min, max-1]
+unsigned int Random(int min, int max) {
     if (!init) {
-        state = 0;
+        std::random_device rd;
+        std::mt19937_64 newgen(rd());
+        generator = newgen;
         init = true;
     }
-    state = rand();
-    return state;
+    std::uniform_int_distribution<> distribution(min, max-1);
+    return distribution(generator);
 }
