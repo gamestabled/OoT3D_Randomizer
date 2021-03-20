@@ -156,7 +156,7 @@ SECTIONS
 		*(.patch_EponasSongCheckFlagTwo)
 	}
 
-	.patch_AmyBlockCooldownTimer 0x196CC : {
+	.patch_AmyBlockCooldownTimer 0x196ECC : {
 		*(.patch_AmyBlockCooldownTimer)
 	}
 
