@@ -15,6 +15,7 @@ void SaveFile_Init() {
     gSaveContext.items[SLOT_BOW] = ITEM_BOW;
     gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
     gSaveContext.items[SLOT_HOVER_BOOTS] = ITEM_BOOTS_HOVER;
+    gSaveContext.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
     gSaveContext.magicAcquired = 1;
     gSaveContext.magicLevel = 2;
     gSaveContext.magic = 48;
@@ -101,6 +102,11 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xA] |= (gSettingsContext.spiritTrialSkip) ? 0x2000 : 0;
     gSaveContext.eventChkInf[0xB] |= (gSettingsContext.shadowTrialSkip) ? 0x2000 : 0;
     gSaveContext.eventChkInf[0xB] |= (gSettingsContext.lightTrialSkip)  ? 0x8000 : 0;
+
+    if (gSettingsContext.forestTrialSkip && gSettingsContext.fireTrialSkip && gSettingsContext.waterTrialSkip &&
+        gSettingsContext.spiritTrialSkip && gSettingsContext.shadowTrialSkip && gSettingsContext.lightTrialSkip) {
+          gSaveContext.eventChkInf[0xC] |= 0x0008; //dispel Ganon's Tower Barrier
+    }
 
     if (gSettingsContext.fourPoesCutscene == SKIP) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
