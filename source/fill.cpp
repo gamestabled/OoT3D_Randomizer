@@ -108,6 +108,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
 
   std::vector<ItemLocation *> newItemLocations;
   bool firstIteration = true;
+  //If no new items are found, then the next iteration won't provide any new location
   while(newItemLocations.size() > 0 || firstIteration) {
     firstIteration = false;;
 
@@ -172,7 +173,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             location->AddToPool();
 
             if (location->GetPlacedItem() == NoItem) {
-              accessibleLocations.push_back(location);
+              accessibleLocations.push_back(location); //Empty location, consider for placement
             } else {
               newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
             }
