@@ -190,6 +190,7 @@ typedef struct {
   u8 lacsCondition;
 
   u8 skipChildStealth;
+  u8 skipEponaRace;
   u8 fourPoesCutscene;
   u8 templeOfTimeIntro;
   u8 bigPoeTargetCount;
