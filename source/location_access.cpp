@@ -1909,7 +1909,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&ChildWaterTemple, []{return IsChild;}),
-                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && (Hookshot || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
+                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((LogicWaterTempleUpperBoost && Bombs) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
                 }, {}, {
                   //Exits
                   ExitPairing::Both(&LH_Main,                       []{return true;}),
@@ -2312,7 +2312,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&GanonsCastle_LightTrial,  []{return CanUse("Golden Gauntlets");}),
                   ExitPairing::Both(&GanonsCastle_Tower,       []{return (ForestTrialClear || ForestTrialSkip) &&
                                                                          (FireTrialClear   || FireTrialSkip)   &&
-                                                                         (WaterTrialClear  || WaterTrialSkip)  && 
+                                                                         (WaterTrialClear  || WaterTrialSkip)  &&
                                                                          (ShadowTrialClear || ShadowTrialSkip) &&
                                                                          (SpiritTrialClear || SpiritTrialSkip) &&
                                                                          (LightTrialClear  || LightTrialSkip);}),

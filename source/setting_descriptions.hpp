@@ -173,6 +173,7 @@ extern string_view LogicFireScarecrowDesc;
 extern string_view LogicFireFlameMazeDesc;
 extern string_view LogicFireSongOfTimeDesc;
 extern string_view LogicWaterTempleTorchLongshotDesc;
+extern string_view LogicWaterTempleUpperBoostDesc;
 extern string_view LogicWaterCentralBowDesc;
 extern string_view LogicWaterCentralGSFWDesc;
 extern string_view LogicWaterCrackedWallNothingDesc;

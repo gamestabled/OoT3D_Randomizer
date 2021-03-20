@@ -187,6 +187,7 @@ namespace Settings {
   Option LogicFireFlameMaze               = LogicTrick("FiT Flame Wall Maze\n Skip",                      LogicFireFlameMazeDesc);
   Option LogicFireSongOfTime              = LogicTrick("FiT Song of Time Room\n GS w/o Song of Time",     LogicFireSongOfTimeDesc);
   Option LogicWaterTempleTorchLongshot    = LogicTrick("WaT Torch Longshot",                              LogicWaterTempleTorchLongshotDesc);
+  Option LogicWaterTempleUpperBoost       = LogicTrick("WaT Upper Ledge Jump\n with Bombs",               LogicWaterTempleUpperBoostDesc);
   Option LogicWaterCentralBow             = LogicTrick("WaT Bow Target w/o\n Longshot or Hover Boots",    LogicWaterCentralBowDesc);
   Option LogicWaterCentralGSFW            = LogicTrick("WaT Central Pillar GS\n with Farore's Wind",      LogicWaterCentralGSFWDesc);
   Option LogicWaterCrackedWallNothing     = LogicTrick("WaT Cracked Wall with\n No Additional Items",     LogicWaterCrackedWallNothingDesc);
@@ -264,6 +265,7 @@ namespace Settings {
     &LogicFireFlameMaze,
     &LogicFireSongOfTime,
     &LogicWaterTempleTorchLongshot,
+    &LogicWaterTempleUpperBoost,
     &LogicWaterCentralBow,
     &LogicWaterCentralGSFW,
     &LogicWaterCrackedWallNothing,
