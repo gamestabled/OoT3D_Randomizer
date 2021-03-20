@@ -10,6 +10,8 @@ This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the
 
 ## Building
 
+(If you are looking to play the randomizer, jump to [Installation](#installation), this section is for people interested in contributing or messing with the code)!
+
 Install the 3DS packages from [devkitPro](https://devkitpro.org/wiki/Getting_Started)
 
 In the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```. Use ```make debug=1``` for extra debugging features. In the case of problems, try using a ```make clean```.
@@ -27,6 +29,9 @@ To generate a playthrough, run Ocarina of Time 3D Randomizer from the homebrew l
 
 ### On Citra
 Use Citra to launch ```OoT3D_Randomizer.3dsx```. Navigate the menus to choose the settings for your playthrough, and finish by selecting ```Generate Randomizer```. When prompted, make sure to select that you are playing on Citra emulator. After the app has finished, on the Citra window, click on ```File->Open Citra Folder```. From this folder, navigate to ```\sdmc\luma\titles\0004000000033500```, and you should find files called ```code.ips``` and ```exheader.bin```. In the Citra window, right-click on the installed copy Ocarina of Time 3D, and choose ```Open Mods Location```. Copy both ```code.ips``` and ```exheader.bin``` into this folder. Now, launch Ocarina of Time 3D and enjoy your playthrough!
+
+### Savefiles
+Right now, save files are shared between any playthroughs you create and the base game. This means that you are responsible for managing your own save files. If you are playing on a 3DS, check out [Checkpoint](https://github.com/FlagBrew/Checkpoint/releases), an easy-to-use homebrew save manager.
 
 ## General Description
 
