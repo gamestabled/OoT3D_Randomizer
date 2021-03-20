@@ -107,16 +107,15 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
   std::vector<Exit *> exitPool = {&Exits::Root};
 
   std::vector<ItemLocation *> newItemLocations;
-  bool iterationWithNoLocations = false;
-  while(!iterationWithNoLocations) {
-    iterationWithNoLocations = true;
+  bool firstIteration = true;
+  while(newItemLocations.size() > 0 || firstIteration) {
+    firstIteration = false;;
 
     //Add items found during previous search iteration to logic
-    if (newItemLocations.size() > 0) {
-      for (ItemLocation* location : newItemLocations) {
-        location->ApplyPlacedItemEffect();
-      }
+    for (ItemLocation* location : newItemLocations) {
+      location->ApplyPlacedItemEffect();
     }
+    newItemLocations.clear();
 
     for (size_t i = 0; i < exitPool.size(); i++) {
       Exit* area = exitPool[i];
@@ -171,7 +170,6 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
           if ((locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) && !location->IsAddedToPool()) {
 
             location->AddToPool();
-            iterationWithNoLocations = false; //At least new one location has been found, continue looping
 
             if (location->GetPlacedItem() == NoItem) {
               accessibleLocations.push_back(location);
