@@ -106,9 +106,17 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
   Logic::UpdateHelpers();
   std::vector<Exit *> exitPool = {&Exits::Root};
 
-  u8 iterationsWithNoLocations = 0;
-  while(iterationsWithNoLocations < 4) {
-    iterationsWithNoLocations++;
+  std::vector<ItemLocation *> newItemLocations;
+  bool iterationWithNoLocations = false;
+  while(!iterationWithNoLocations) {
+    iterationWithNoLocations = true;
+
+    //Add items found during previous search iteration to logic
+    if (newItemLocations.size() > 0) {
+      for (ItemLocation* location : newItemLocations) {
+        location->ApplyPlacedItemEffect();
+      }
+    }
 
     for (size_t i = 0; i < exitPool.size(); i++) {
       Exit* area = exitPool[i];
@@ -163,12 +171,12 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
           if ((locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) && !location->IsAddedToPool()) {
 
             location->AddToPool();
-            iterationsWithNoLocations = 0;
+            iterationWithNoLocations = false; //At least new one location has been found, continue looping
 
             if (location->GetPlacedItem() == NoItem) {
               accessibleLocations.push_back(location);
             } else {
-              location->ApplyPlacedItemEffect();
+              newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
             }
 
             if (playthrough && location->GetPlacedItem().IsPlaythrough() && location->GetPlacedItem().IsAdvancement()) {
@@ -177,10 +185,6 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
           }
         }
       }
-    }
-
-    if (Logic::EventsUpdated()) {
-      iterationsWithNoLocations = 0;
     }
 
     erase_if(exitPool, [](Exit* e){ return e->AllAccountedFor();});
