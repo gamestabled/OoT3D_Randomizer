@@ -67,7 +67,7 @@ string_view gerudoOpen                = "The carpenters are rescued from the sta
 ------------------------------*/                                                           //
 string_view bridgeOpen                = "The Rainbow Bridge is always present.";           //
 string_view bridgeVanilla             = "The Rainbow Bridge requires Shadow and Spirit\n"  //
-                                        "Medallions.";                                     //
+                                        "Medallions as well as Light Arrows.";             //
 string_view bridgeStones              = "The Rainbow Bridge requires the Kokiri's Emerald,\n"
                                         "Goron's Ruby and Zora's Sapphire.";               //
 string_view bridgeMedallions          = "The Rainbow Bridge requires Forest, Fire, Water,\n"
