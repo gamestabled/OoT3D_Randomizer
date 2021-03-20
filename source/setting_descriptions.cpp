@@ -521,6 +521,11 @@ string_view LogicWaterTempleTorchLongshotDesc         = "Stand on the eastern si
                                                         "the tricks that allow you to skip Iron Boots in\n"//
                                                         "the Water Temple are not going to be relevant\n"  //
                                                         "unless this trick is first enabled.";             //
+string_view LogicWaterTempleUpperBoostDesc            = "Stand on the corner closest to the upper ledge\n" //
+                                                        "where you play Zelda's Lullaby to raise the water\n"
+                                                        "and put a bomb down behind you. Hold forward when\n"
+                                                        "the bomb explodes and Link should jump just far\n"//
+                                                        "enough to grab the ledge.";                       //
 string_view LogicWaterCentralBowDesc                  = "A very precise Bow shot can hit the eye switch\n" //
                                                         "from the floor above. Then, you can jump down into"
                                                         "the hallway and make through it before the gate\n"//

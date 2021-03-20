@@ -306,6 +306,7 @@ namespace Settings {
   extern Option LogicFireFlameMaze;
   extern Option LogicFireSongOfTime;
   extern Option LogicWaterTempleTorchLongshot;
+  extern Option LogicWaterTempleUpperBoost;
   extern Option LogicWaterCentralBow;
   extern Option LogicWaterCentralGSFW;
   extern Option LogicWaterCrackedWallNothing;
