@@ -68,6 +68,10 @@ SECTIONS
 		*(.patch_KingZoraCheckMovedFlag)
 	}
 
+	.patch_SariasSongCheckFlag 0x1686A0 : {
+		*(.patch_SariasSongCheckFlag)
+	}
+
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
 	}

@@ -419,6 +419,11 @@ EponasSongLocation_patch:
 MalonNextAction_patch:
     .word 0x3D2A14
 
+.section .patch_SariasSongCheckFlag
+.global SariasSongCheckFlag_patch
+SariasSongCheckFlag_patch:
+    bl hook_SariasSongCheckFlag
+
 .section .patch_SariasSongItemGive
 .global SariasSongItemGive_patch
 SariasSongItemGive_patch:

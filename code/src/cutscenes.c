@@ -120,6 +120,10 @@ void Cutscene_OverrideEponasSong(void) {
     gGlobalContext->unk_2B7E = 4;
 }
 
+u32 Cutscene_CheckSariasSongFlag(void) {
+    return ((gSaveContext.eventChkInf[5] & 0x80) != 0);
+}
+
 void Cutscene_OverrideSariasSong(void) {
     if (!(gSaveContext.eventChkInf[5] & 0x80)) {
         ItemOverride_PushDelayedOverride(0x28);
