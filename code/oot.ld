@@ -68,6 +68,10 @@ SECTIONS
 		*(.patch_KingZoraCheckMovedFlag)
 	}
 
+	.patch_SariasSongCheckFlag 0x1686A0 : {
+		*(.patch_SariasSongCheckFlag)
+	}
+
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
 	}
@@ -150,6 +154,10 @@ SECTIONS
 
 	.patch_EponasSongCheckFlagTwo 0x195CFC : {
 		*(.patch_EponasSongCheckFlagTwo)
+	}
+
+	.patch_AmyBlockCooldownTimer 0x196ECC : {
+		*(.patch_AmyBlockCooldownTimer)
 	}
 
 	.patch_AmyBlockSpeed 0x196F3C : {

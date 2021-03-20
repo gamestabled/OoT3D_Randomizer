@@ -419,6 +419,11 @@ EponasSongLocation_patch:
 MalonNextAction_patch:
     .word 0x3D2A14
 
+.section .patch_SariasSongCheckFlag
+.global SariasSongCheckFlag_patch
+SariasSongCheckFlag_patch:
+    bl hook_SariasSongCheckFlag
+
 .section .patch_SariasSongItemGive
 .global SariasSongItemGive_patch
 SariasSongItemGive_patch:
@@ -840,6 +845,11 @@ MilkCrateCooldownTimer_patch:
 
 .section .patch_AmyBlockSpeed
     .word 0x40800000
+
+.section .patch_AmyBlockCooldownTimer
+.global AmyBlockCooldownTimer_patch
+AmyBlockCooldownTimer_patch:
+    mov r1,#0x1
 
 .section .patch_FireBlockSpeed
     .word 0x40800000

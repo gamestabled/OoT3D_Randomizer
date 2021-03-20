@@ -316,6 +316,14 @@ hook_EponasSongCheckFlag:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_SariasSongCheckFlag
+hook_SariasSongCheckFlag:
+    push {r0-r12, lr}
+    bl Cutscene_CheckSariasSongFlag
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_PoeCollectorGetFirstTextbox
 hook_PoeCollectorGetFirstTextbox:
     push {r1-r12, lr}
