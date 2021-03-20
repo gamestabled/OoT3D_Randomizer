@@ -197,6 +197,9 @@ bool SpoilerLog_Write() {
     return false;
   }
 
+  FSFILE_Close(spoilerlog);
+  FSUSER_CloseArchive(sdmcArchive);
+
   logtxt = "";
   return true;
 }
@@ -226,6 +229,9 @@ bool PlacementLog_Write() {
   if (!R_SUCCEEDED(res = FSFILE_Write(placementlog, &bytesWritten, 0, placementtxt.c_str(), placementtxt.size(), FS_WRITE_FLUSH))) {
     return false;
   }
+
+  FSFILE_Close(placementlog);
+  FSUSER_CloseArchive(sdmcArchive);
 
   placementtxt = "";
   return true;
