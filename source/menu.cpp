@@ -34,7 +34,7 @@ namespace {
 void PrintTopScreen() {
   consoleSelect(&topScreen);
   consoleClear();
-  printf("\x1b[2;9H%sOcarina of Time 3D Randomizer v1.0%s", CYAN, RESET);
+  printf("\x1b[2;8H%sOcarina of Time 3D Randomizer v1.0.1%s", CYAN, RESET);
   printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
   printf("            Select: Exit to Homebrew Menu\n");
   printf("                 Y: New Random Seed\n");
@@ -301,7 +301,7 @@ void PrintSubMenu() {
 
   //keep count of hidden settings to not make blank spaces appear in the list
   u16 hiddenSettings = 0;
-  
+
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
 		if (i + settingBound >= currentMenuItem->settingsList->size()) break;

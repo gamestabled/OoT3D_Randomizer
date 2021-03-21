@@ -4,6 +4,7 @@
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
     gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
+    gSaveContext.bgsFlag     = 1;
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
     gSaveContext.questItems |= 0x3FFC0; //songs
     gSaveContext.items[SLOT_OCARINA]  = ITEM_OCARINA_FAIRY;
@@ -33,7 +34,7 @@ void SaveFile_Init() {
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
-    gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except Twinrova and Ganondorf)
+    gSaveContext.eventChkInf[0x7] |= 0x01DF; //began boss battles (except Twinrova and Ganondorf)
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
     gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
@@ -70,9 +71,6 @@ void SaveFile_Init() {
         gSaveContext.adultEquips.equipment = 0x1120; //Adult equips Kokiri Tunic, Kokiri Boots, and Master Sword
         gSaveContext.infTable[29]  = 0x00; //Unset swordless flag
     }
-
-
-    // gSaveContext.infTable[29] = 0x00;
 
     //set master quest flag for mirror world
     if (gSettingsContext.mirrorWorld == ON) {

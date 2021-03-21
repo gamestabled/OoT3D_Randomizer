@@ -99,6 +99,8 @@ extern string_view ganonKeyLACS;
 
 extern string_view childStealthDesc;
 
+extern string_view skipTowerEscapeDesc;
+
 extern string_view skipEponaRaceDesc;
 
 extern string_view fourPoesDesc;
