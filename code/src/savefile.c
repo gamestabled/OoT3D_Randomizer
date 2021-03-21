@@ -4,6 +4,7 @@
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
     gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
+    gSaveContext.bgsFlag     = 1;
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
     gSaveContext.questItems |= 0x3FFC0; //songs
     gSaveContext.items[SLOT_OCARINA]  = ITEM_OCARINA_FAIRY;
@@ -33,7 +34,7 @@ void SaveFile_Init() {
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
-    gSaveContext.eventChkInf[0x7] |= 0x00DF; //began boss battles (except Twinrova and Ganondorf)
+    gSaveContext.eventChkInf[0x7] |= 0x01DF; //began boss battles (except Twinrova and Ganondorf)
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
     gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
@@ -67,6 +68,8 @@ void SaveFile_Init() {
         gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
         gSaveContext.sceneIndex    = 0x6100;     //^
         gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
+        gSaveContext.adultEquips.equipment = 0x1120; //Adult equips Kokiri Tunic, Kokiri Boots, and Master Sword
+        gSaveContext.infTable[29]  = 0x00; //Unset swordless flag
     }
 
     //set master quest flag for mirror world
@@ -162,10 +165,13 @@ void SaveFile_Init() {
 
 void SaveFile_SaveChildBButton(void) {
     gSaveContext.childEquips.buttonItems[0] = (gSaveContext.equipment & 0x1) ? ITEM_SWORD_KOKIRI : ITEM_NONE;
+    gSaveContext.infTable[29] &= 0x00; //Unset the swordless flag when going adult
 }
 
 u16 SaveFile_RestoreChildEquips(void) {
+    gSaveContext.infTable[29] |= (gSaveContext.equipment & 0x1) ? 0x00 : 0x1; //If we don't have Kokiri Sword, set the swordless flag
     return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
+
 }
 
 u32 SaveFile_CheckGerudoToken(void) {

@@ -218,6 +218,8 @@ namespace Settings {
   extern u8 LACSCondition;
 
   extern Option SkipChildStealth;
+  extern Option SkipTowerEscape;
+  extern Option SkipEponaRace;
   extern Option FourPoesCutscene;
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
@@ -235,7 +237,6 @@ namespace Settings {
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
 
-  extern bool SkippedTrials;
   extern bool ShuffleDungeonEntrances;
   extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;

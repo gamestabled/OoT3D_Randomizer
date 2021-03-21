@@ -91,13 +91,17 @@ namespace Settings {
   };
 
   //Timesaver Settings
-  Option SkipChildStealth    = Option::Bool("Skip Child Sealth",      {"Don't Skip", "Skip"},                                  {childStealthDesc, childStealthDesc});
+  Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                  {childStealthDesc, childStealthDesc});
+  Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                  {skipTowerEscapeDesc, skipTowerEscapeDesc});
+  Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                  {skipEponaRaceDesc, skipEponaRaceDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                  {fourPoesDesc, fourPoesDesc});
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                  {templeOfTimeIntroDesc, templeOfTimeIntroDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     std::vector<std::string_view>{10, bigPoeTargetCountDesc});
-  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"1", "2", "3", "4", "5", "6", "7"},                     std::vector<std::string_view>{7, numRequiredCuccosDesc});
+  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                std::vector<std::string_view>{8, numRequiredCuccosDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
+    &SkipTowerEscape,
+    &SkipEponaRace,
     &FourPoesCutscene,
     &TempleOfTimeIntro,
     &BigPoeTargetCount,
@@ -382,10 +386,12 @@ namespace Settings {
     ctx.lacsCondition      = LACSCondition;
 
     ctx.skipChildStealth   = (SkipChildStealth) ? 1 : 0;
+    ctx.skipTowerEscape    = (SkipTowerEscape) ? 1 : 0;
+    ctx.skipEponaRace      = (SkipEponaRace) ? 1 : 0;
     ctx.fourPoesCutscene   = (FourPoesCutscene) ? 1 : 0;
     ctx.templeOfTimeIntro  = (TempleOfTimeIntro) ? 1 : 0;
     ctx.bigPoeTargetCount  = BigPoeTargetCount.Value<u8>() + 1;
-    ctx.numRequiredCuccos  = NumRequiredCuccos.Value<u8>() + 1;
+    ctx.numRequiredCuccos  = NumRequiredCuccos.Value<u8>();
 
     ctx.damageMultiplier   = DamageMultiplier.Value<u8>();
     ctx.startingTime       = StartingTime.Value<u8>();
@@ -469,10 +475,12 @@ namespace Settings {
     GanonsBossKey.SetSelectedIndex(ctx.ganonsBossKey);
 
     SkipChildStealth.SetSelectedIndex(ctx.skipChildStealth);
+    SkipTowerEscape.SetSelectedIndex(ctx.skipTowerEscape);
+    SkipEponaRace.SetSelectedIndex(ctx.skipEponaRace);
     FourPoesCutscene.SetSelectedIndex(ctx.fourPoesCutscene);
     TempleOfTimeIntro.SetSelectedIndex(ctx.templeOfTimeIntro);
     BigPoeTargetCount.SetSelectedIndex(ctx.bigPoeTargetCount - 1);
-    NumRequiredCuccos.SetSelectedIndex(ctx.numRequiredCuccos - 1);
+    NumRequiredCuccos.SetSelectedIndex(ctx.numRequiredCuccos);
 
     DamageMultiplier.SetSelectedIndex(ctx.damageMultiplier);
     StartingTime.SetSelectedIndex(ctx.startingTime);

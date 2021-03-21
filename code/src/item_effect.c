@@ -1,5 +1,5 @@
 #include "item_effect.h"
-
+#include "settings.h"
 #include "z3D/z3D.h"
 
 // #define rupee_cap ((us16*)0x800F8CEC)
@@ -98,6 +98,11 @@ void ItemEffect_GiveFairyOcarina(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2) {
     saveCtx->questItems |= 1 << questBit;
+
+    //give epona for Skip Epona Race setting
+    if (questBit == 13 && gSettingsContext.skipEponaRace == SKIP) {
+      saveCtx->eventChkInf[0x1] |= 0x0100;
+    }
 }
 
 void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {

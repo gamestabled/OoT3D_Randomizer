@@ -218,7 +218,7 @@ string_view gerudoTokenDesc           = "Enabling this shuffles the Gerudo Token
 ------------------------------*/                                                           //
 string_view magicBeansDesc            = "Enabling this adds a pack of 10 beans to the item\n"
                                         "pool and changes the Magic Bean Salesman to sell a"
-                                        "random item at a price of 10 rupees.";            //
+                                        "random item at a price of 60 rupees.";            //
 /*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
@@ -287,6 +287,16 @@ string_view ganonKeyLACS              = "These settings put the boss key on the 
 ------------------------------*/                                                           //
 string_view childStealthDesc          = "The crawlspace into Hyrule Castle goes straight to"
                                         "Zelda, skipping the guards.";                     //
+/*------------------------------                                                           //
+|      SKIP TOWER ESCAPE       |                                                           //
+------------------------------*/                                                           //
+string_view skipTowerEscapeDesc       = "The tower escape sequence between Ganondorf and\n"//
+                                        "Ganon will be skipped.";                          //
+/*------------------------------                                                           //
+|       SKIP EPONA RACE        |                                                           //
+------------------------------*/                                                           //
+string_view skipEponaRaceDesc         = "Epona can be summoned with Epona's Song without\n"//
+                                        "needing to race Ingo.";                           //
 /*------------------------------                                                           //
 |      FOUR POES CUTSCENE      |                                                           //
 ------------------------------*/                                                           //

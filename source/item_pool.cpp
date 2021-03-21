@@ -1239,8 +1239,6 @@ void GenerateItemPool() {
 
   //TODO: free scarecrow
 
-  //TODO: no epona race
-
   if (MapsAndCompasses.Is(MAPSANDCOMPASSES_START_WITH)) {
     //10 maps + 10 compasses = 20 items
     for (u8 i = 0; i < 20; i++) {

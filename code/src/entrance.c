@@ -34,6 +34,13 @@ void Entrance_Init(void) {
         gEntranceTable[0x07A].field = 0x0183;
     }
 
+    //Skip Tower Escape Sequence if given by settings
+    if (gSettingsContext.skipTowerEscape == SKIP) {
+        gEntranceTable[0x43F].scene = 0x4F;
+        gEntranceTable[0x43F].spawn = 0x01;
+        gEntranceTable[0x43F].field = 0x4183;
+    }
+
     // Delete the title card for Desert Colossus from Requiem
     for (index = 0x1ED; index < 0x1F1; ++index) {
         gEntranceTable[index].field = 0x0102;
