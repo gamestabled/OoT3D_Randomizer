@@ -67,7 +67,12 @@ void SaveFile_Init() {
         gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
         gSaveContext.sceneIndex    = 0x6100;     //^
         gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
+        gSaveContext.adultEquips.equipment = 0x1120; //Adult equips Kokiri Tunic, Kokiri Boots, and Master Sword
+        gSaveContext.infTable[29]  = 0x00; //Unset swordless flag
     }
+
+
+    // gSaveContext.infTable[29] = 0x00;
 
     //set master quest flag for mirror world
     if (gSettingsContext.mirrorWorld == ON) {
@@ -162,10 +167,13 @@ void SaveFile_Init() {
 
 void SaveFile_SaveChildBButton(void) {
     gSaveContext.childEquips.buttonItems[0] = (gSaveContext.equipment & 0x1) ? ITEM_SWORD_KOKIRI : ITEM_NONE;
+    gSaveContext.infTable[29] &= 0x00; //Unset the swordless flag when going adult
 }
 
 u16 SaveFile_RestoreChildEquips(void) {
+    gSaveContext.infTable[29] |= (gSaveContext.equipment & 0x1) ? 0x00 : 0x1; //If we don't have Kokiri Sword, set the swordless flag
     return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
+
 }
 
 u32 SaveFile_CheckGerudoToken(void) {
