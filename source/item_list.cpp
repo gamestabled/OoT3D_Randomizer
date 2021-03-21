@@ -163,19 +163,23 @@ Item IceTrap                    = Item("Ice Trap",         ITEMTYPE_ITEM, GI_ICE
 Item Milk                       = Item("Milk",             ITEMTYPE_ITEM, GI_MILK,              false, &none);
 
 //Refills
-Item Bombs5                     = Item("Bombs (5)",        ITEMTYPE_ITEM, GI_BOMBS_5,           false, &none);
-Item Bombs10                    = Item("Bombs (10)",       ITEMTYPE_ITEM, GI_BOMBS_10,          false, &none);
-Item Bombs20                    = Item("Bombs (20)",       ITEMTYPE_ITEM, GI_BOMBS_20,          false, &none);
-Item Bombchu5                   = Item("Bombchu (5)",      ITEMTYPE_ITEM, GI_BOMBCHUS_5,        true,  &Bombchus5);
-Item Bombchu10                  = Item("Bombchu (10)",     ITEMTYPE_ITEM, GI_BOMBCHUS_10,       true,  &Bombchus10);
-Item Bombchu20                  = Item("Bombchu (20)",     ITEMTYPE_ITEM, GI_BOMBCHUS_20,       true,  &Bombchus20);
-Item Arrows5                    = Item("Arrows (5)",       ITEMTYPE_ITEM, GI_ARROWS_SMALL,      false, &none);
-Item Arrows10                   = Item("Arrows (10)",      ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,     false, &none);
-Item Arrows30                   = Item("Arrows (30)",      ITEMTYPE_ITEM, GI_ARROWS_LARGE,      false, &none);
-Item DekuNuts5                  = Item("Deku Nuts (5)",    ITEMTYPE_ITEM, GI_NUTS_5,            false, &none);
-Item DekuNuts10                 = Item("Deku Nuts (10)",   ITEMTYPE_ITEM, GI_NUTS_10,           false, &none);
-Item DekuSeeds30                = Item("Deku Seeds (30)",  ITEMTYPE_ITEM, GI_SEEDS_30,          false, &none);
-Item DekuStick1                 = Item("Deku Stick (1)",   ITEMTYPE_ITEM, GI_STICKS_1,          false, &none);
+Item Bombs5                     = Item("Bombs (5)",           ITEMTYPE_ITEM, GI_BOMBS_5,        false, &none);
+Item Bombs10                    = Item("Bombs (10)",          ITEMTYPE_ITEM, GI_BOMBS_10,       false, &none);
+Item Bombs20                    = Item("Bombs (20)",          ITEMTYPE_ITEM, GI_BOMBS_20,       false, &none);
+Item Bombchu5                   = Item("Bombchu (5)",         ITEMTYPE_ITEM, GI_BOMBCHUS_5,     true,  &Bombchus5);
+Item Bombchu10                  = Item("Bombchu (10)",        ITEMTYPE_ITEM, GI_BOMBCHUS_10,    true,  &Bombchus10);
+Item Bombchu20                  = Item("Bombchu (20)",        ITEMTYPE_ITEM, GI_BOMBCHUS_20,    true,  &Bombchus20);
+Item Arrows5                    = Item("Arrows (5)",          ITEMTYPE_ITEM, GI_ARROWS_SMALL,   false, &none);
+Item Arrows10                   = Item("Arrows (10)",         ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,  false, &none);
+Item Arrows30                   = Item("Arrows (30)",         ITEMTYPE_ITEM, GI_ARROWS_LARGE,   false, &none);
+Item DekuNuts5                  = Item("Deku Nuts (5)",       ITEMTYPE_ITEM, GI_NUTS_5,         false, &none);
+Item DekuNuts10                 = Item("Deku Nuts (10)",      ITEMTYPE_ITEM, GI_NUTS_10,        false, &none);
+Item DekuSeeds30                = Item("Deku Seeds (30)",     ITEMTYPE_ITEM, GI_SEEDS_30,       false, &none);
+Item DekuStick1                 = Item("Deku Stick (1)",      ITEMTYPE_ITEM, GI_STICKS_1,       false, &none);
+Item RedPotionRefill            = Item("Red Potion Refill",   ITEMTYPE_ITEM, GI_POTION_RED,     false, &none);
+Item GreenPotionRefill          = Item("Green Potion Refill", ITEMTYPE_ITEM, GI_POTION_GREEN,   false, &none);
+Item BluePotionRefill           = Item("Blue Potion Refill",  ITEMTYPE_ITEM, GI_POTION_BLUE,    false, &none);
+
 
 //Treasure Game
 Item TreasureGameHeart          = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN, false, &none);

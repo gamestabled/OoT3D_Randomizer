@@ -302,6 +302,9 @@ extern Item DekuNuts5;
 extern Item DekuNuts10;
 extern Item DekuSeeds30;
 extern Item DekuStick1;
+extern Item RedPotionRefill;
+extern Item GreenPotionRefill;
+extern Item BluePotionRefill;
 
 //shop items
 extern Item BuyDekuNut5;

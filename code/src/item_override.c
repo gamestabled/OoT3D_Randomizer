@@ -275,6 +275,13 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
         return;
     }
 
+    // Hack for scrubsanity off
+    if ((gSettingsContext.scrubsanity == SCRUBSANITY_OFF) && (override.key.type == OVR_GROTTO_SCRUB)) {
+        if (override.value.itemId == GI_ARROWS_LARGE) {
+            override.value.itemId = GI_SEEDS_30;
+        }
+    }
+
     ItemOverride_Activate(override);
     s8 baseItemId = rActiveItemRow->baseItemId;
 

@@ -592,60 +592,60 @@ static void PlaceVanillaShopItems() {
 }
 
 static void PlaceVanillaDekuScrubItems() {
-    PlaceItemInLocation(&ZR_DekuScrubGrottoRear,           BuyRedPotion30);
-    PlaceItemInLocation(&ZR_DekuScrubGrottoFront,          BuyGreenPotion);
-    PlaceItemInLocation(&SFM_DekuScrubGrottoRear,          BuyRedPotion30);
-    PlaceItemInLocation(&SFM_DekuScrubGrottoFront,         BuyGreenPotion);
-    PlaceItemInLocation(&LH_DekuScrubGrottoLeft,           BuyDekuNut5);
-    PlaceItemInLocation(&LH_DekuScrubGrottoRight,          BuyBombs535);
-    PlaceItemInLocation(&LH_DekuScrubGrottoCenter,         BuyArrows30);
-    PlaceItemInLocation(&GV_DekuScrubGrottoRear,           BuyRedPotion30);
-    PlaceItemInLocation(&GV_DekuScrubGrottoFront,          BuyGreenPotion);
-    PlaceItemInLocation(&LW_DekuScrubNearDekuTheaterRight, BuyDekuNut5);
-    PlaceItemInLocation(&LW_DekuScrubNearDekuTheaterLeft,  BuyDekuStick1);
-    PlaceItemInLocation(&LW_DekuScrubGrottoRear,           BuyArrows30);
-    PlaceItemInLocation(&Colossus_DekuScrubGrottoRear,     BuyRedPotion30);
-    PlaceItemInLocation(&Colossus_DekuScrubGrottoFront,    BuyGreenPotion);
-    PlaceItemInLocation(&DMC_DekuScrub,                    BuyBombs535);
-    PlaceItemInLocation(&DMC_DekuScrubGrottoLeft,          BuyDekuNut5);
-    PlaceItemInLocation(&DMC_DekuScrubGrottoRight,         BuyBombs535);
-    PlaceItemInLocation(&DMC_DekuScrubGrottoCenter,        BuyArrows30);
-    PlaceItemInLocation(&GC_DekuScrubGrottoLeft,           BuyDekuNut5);
-    PlaceItemInLocation(&GC_DekuScrubGrottoRight,          BuyBombs535);
-    PlaceItemInLocation(&GC_DekuScrubGrottoCenter,         BuyArrows30);
-    PlaceItemInLocation(&LLR_DekuScrubGrottoLeft,          BuyDekuNut5);
-    PlaceItemInLocation(&LLR_DekuScrubGrottoRight,         BuyBombs535);
-    PlaceItemInLocation(&LLR_DekuScrubGrottoCenter,        BuyArrows30);
+    PlaceItemInLocation(&ZR_DekuScrubGrottoRear,           RedPotionRefill);
+    PlaceItemInLocation(&ZR_DekuScrubGrottoFront,          GreenPotionRefill);
+    PlaceItemInLocation(&SFM_DekuScrubGrottoRear,          RedPotionRefill);
+    PlaceItemInLocation(&SFM_DekuScrubGrottoFront,         GreenPotionRefill);
+    PlaceItemInLocation(&LH_DekuScrubGrottoLeft,           DekuNuts5);
+    PlaceItemInLocation(&LH_DekuScrubGrottoRight,          Bombs5);
+    PlaceItemInLocation(&LH_DekuScrubGrottoCenter,         Arrows30);
+    PlaceItemInLocation(&GV_DekuScrubGrottoRear,           RedPotionRefill);
+    PlaceItemInLocation(&GV_DekuScrubGrottoFront,          GreenPotionRefill);
+    PlaceItemInLocation(&LW_DekuScrubNearDekuTheaterRight, DekuNuts5);
+    PlaceItemInLocation(&LW_DekuScrubNearDekuTheaterLeft,  DekuStick1);
+    PlaceItemInLocation(&LW_DekuScrubGrottoRear,           Arrows30);
+    PlaceItemInLocation(&Colossus_DekuScrubGrottoRear,     RedPotionRefill);
+    PlaceItemInLocation(&Colossus_DekuScrubGrottoFront,    GreenPotionRefill);
+    PlaceItemInLocation(&DMC_DekuScrub,                    Bombs5);
+    PlaceItemInLocation(&DMC_DekuScrubGrottoLeft,          DekuNuts5);
+    PlaceItemInLocation(&DMC_DekuScrubGrottoRight,         Bombs5);
+    PlaceItemInLocation(&DMC_DekuScrubGrottoCenter,        Arrows30);
+    PlaceItemInLocation(&GC_DekuScrubGrottoLeft,           DekuNuts5);
+    PlaceItemInLocation(&GC_DekuScrubGrottoRight,          Bombs5);
+    PlaceItemInLocation(&GC_DekuScrubGrottoCenter,         Arrows30);
+    PlaceItemInLocation(&LLR_DekuScrubGrottoLeft,          DekuNuts5);
+    PlaceItemInLocation(&LLR_DekuScrubGrottoRight,         Bombs5);
+    PlaceItemInLocation(&LLR_DekuScrubGrottoCenter,        Arrows30);
 
     //Dungeon Scrubs
     if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
-      PlaceItemInLocation(&DekuTree_MQ_DekuScrub, BuyDekuShield);
+      PlaceItemInLocation(&DekuTree_MQ_DekuScrub, I_DekuShield);
     }
     if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
-      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyRear,                 BuyDekuStick1);
-      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyFront,                BuyDekuSeeds30);
-      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubStaircase,                 BuyDekuShield);
-      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos, BuyRedPotion30);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyRear,                 DekuStick1);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubLobbyFront,                DekuSeeds30);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubStaircase,                 I_DekuShield);
+      PlaceItemInLocation(&DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos, RedPotionRefill);
     } else {
-      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagLeft,      BuyDekuNut5);
-      PlaceItemInLocation(&DodongosCavern_DekuScrubSideRoomNearDodongos, BuyDekuStick1);
-      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagRight,     BuyDekuSeeds30);
-      PlaceItemInLocation(&DodongosCavern_DekuScrubLobby,                BuyDekuShield);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagLeft,      DekuNuts5);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubSideRoomNearDodongos, DekuStick1);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubNearBombBagRight,     DekuSeeds30);
+      PlaceItemInLocation(&DodongosCavern_DekuScrubLobby,                I_DekuShield);
     }
     if (JabuJabusBellyDungeonMode == DUNGEONMODE_VANILLA) {
-      PlaceItemInLocation(&JabuJabusBelly_DekuScrub, BuyDekuNut5);
+      PlaceItemInLocation(&JabuJabusBelly_DekuScrub, DekuNuts5);
     }
     if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
-      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubRight,       BuyDekuNut5);
-      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterLeft,  BuyDekuNut5);
-      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenter,      BuyDekuNut5);
-      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterRight, BuyDekuNut5);
-      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubLeft,        BuyDekuNut5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubRight,       DekuNuts5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterLeft,  DekuNuts5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenter,      DekuNuts5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubCenterRight, DekuNuts5);
+      PlaceItemInLocation(&GanonsCastle_MQ_DekuScrubLeft,        DekuNuts5);
     } else {
-      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterLeft,  BuyBombs535);
-      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterRight, BuyArrows30);
-      PlaceItemInLocation(&GanonsCastle_DekuScrubRight,       BuyRedPotion30);
-      PlaceItemInLocation(&GanonsCastle_DekuScrubLeft,        BuyGreenPotion);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterLeft,  Bombs5);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubCenterRight, Arrows30);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubRight,       RedPotionRefill);
+      PlaceItemInLocation(&GanonsCastle_DekuScrubLeft,        GreenPotionRefill);
     }
 
 
