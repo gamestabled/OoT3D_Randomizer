@@ -621,10 +621,10 @@ namespace Settings {
     std::array<bool*, 12> dungeonModes = {&DekuTreeDungeonMode, &DodongosCavernDungeonMode, &JabuJabusBellyDungeonMode, &ForestTempleDungeonMode,
                                           &FireTempleDungeonMode, &WaterTempleDungeonMode, &SpiritTempleDungeonMode, &ShadowTempleDungeonMode,
                                           &BottomOfTheWellDungeonMode, &IceCavernDungeonMode, &GerudoTrainingGroundsDungeonMode, &GanonsCastleDungeonMode};
-    std::shuffle(dungeonModes.begin(), dungeonModes.end(), std::default_random_engine(Random()));
+    Shuffle(dungeonModes);
 
     if (RandomMQDungeons) {
-      MQDungeonCount.SetSelectedIndex(Random() % MQDungeonCount.GetOptionCount());
+      MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()+1));
     }
     for (u8 i = 0; i < MQDungeonCount.Value<u8>(); i++) {
       *dungeonModes[i] = DUNGEONMODE_MQ;
@@ -632,10 +632,10 @@ namespace Settings {
 
     //shuffle the trials then require the amount set in GanonsTrialsCount
     std::array<bool*, 6> trialsSkipped = {&ForestTrialSkip, &FireTrialSkip, &WaterTrialSkip, &SpiritTrialSkip, &ShadowTrialSkip, &LightTrialSkip};
-    std::shuffle(trialsSkipped.begin(), trialsSkipped.end(), std::default_random_engine(Random()));
+    Shuffle(trialsSkipped);
 
     if (RandomGanonsTrials) {
-      GanonsTrialsCount.SetSelectedIndex(Random() % GanonsTrialsCount.GetOptionCount());
+      GanonsTrialsCount.SetSelectedIndex(Random(0, GanonsTrialsCount.GetOptionCount()+1));
     }
     for (u8 i = 0; i < GanonsTrialsCount.Value<u8>(); i++) {
       *trialsSkipped[i] = false; //the selected trial is not skipped

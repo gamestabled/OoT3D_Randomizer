@@ -58,7 +58,7 @@ std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
 
 void GenerateHash() {
   for (u32 i = 0; i < 5; i++) {
-    u8 iconIndex = Random() % hashIcons.size();
+    u8 iconIndex = Random(0, hashIcons.size());
     Settings::hashIconIndexes[i] = iconIndex;
     randomizerHash[i] = hashIcons[iconIndex];
   }

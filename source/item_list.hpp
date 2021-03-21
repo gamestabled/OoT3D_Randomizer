@@ -80,7 +80,7 @@ public:
         val.all = 0;
         val.itemId = getItemId;
         if (getItemId == GI_ICE_TRAP) {
-            val.looksLikeItemId = items[Random() % items.size()];
+            val.looksLikeItemId = RandomElement(items);
         }
         return val;
     }
