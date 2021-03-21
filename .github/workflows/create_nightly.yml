@@ -1,0 +1,70 @@
+name: Create 3DSX and CIA Files, and drafts/posts a new Release.
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-cia-3dsx:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkitarm
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Environment
+      
+        run: |
+          gather_required_files() {
+            sudo apt update && sudo apt install automake build-essential wget unzip -y
+            echo $PATH
+            git clone -b cxi-stuff https://github.com/devkitPro/3dstools.git
+            cd 3dstools
+            chmod +x autogen.sh
+            ./autogen.sh
+            ./configure
+            make
+            cd ../
+            wget https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip
+            unzip makerom-v0.17-ubuntu_x86_64.zip
+          }
+
+          compile() {
+            make
+            chmod +x 3dstools
+            chmod +x makerom
+            ./3dstools/cxitool OoT3D_Randomizer.3dsx OoT3D_Randomizer.cxi
+            ./makerom -f cia -o OoT3D_Randomizer.cia -target t -i OoT3D_Randomizer.cxi:0:0 -ignoresign
+          }
+          gather_required_files
+          compile
+      - name: Create a Release
+        id: create_release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: Nightly-${{ github.sha }}
+          release_name: nightly-${{ github.sha }}
+          draft: false
+      - name: Upload release asset CIA
+        id: upload-release-asset-cia
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./OoT3D_Randomizer.cia
+          asset_name: OoT3D_Randomizer.cia
+          asset_content_type: application/octet-stream
+      - name: Upload release asset 3dsx
+        id: upload-release-asset-3dsx
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./OoT3D_Randomizer.3dsx
+          asset_name: OoT3D_Randomizer.3dsx
+          asset_content_type: application/octet-stream
