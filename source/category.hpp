@@ -52,5 +52,9 @@ enum class Category {
     cSong,
     cSongDungeonReward,
     cCow,
-    cShop
+    cShop,
+    cVanillaSmallKey,
+    cVanillaBossKey,
+    cVanillaMap,
+    cVanillaCompass,
 };

@@ -527,6 +527,7 @@ namespace Settings {
     GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
 
     AddExcludedOptions();
+    HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users change this location
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
@@ -552,8 +553,6 @@ namespace Settings {
 
   //Lock required locations based on current settings
   void ResolveExcludedLocationConflicts() {
-
-    HC_ZeldasLetter.GetExcludedOption()->Hide(); //this location must always be included
 
     //Force include shops if shopsanity is off
     std::vector<ItemLocation*> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
@@ -638,14 +637,46 @@ namespace Settings {
       IncludeAndHide({&ZR_MagicBeanSalesman});
     }
 
-    //Force include Light Arrow item if ganons boss key has to be there
-    if (GanonsBossKey.Value<u8>() < GANONSBOSSKEY_LACS_VANILLA) {
-      Unhide({&ToT_LightArrowCutscene});
+    //Force include Map and Compass Chests when Vanilla
+    std::vector<ItemLocation*> mapChests = GetLocations(everyPossibleLocation, Category::cVanillaMap);
+    std::vector<ItemLocation*> compassChests = GetLocations(everyPossibleLocation, Category::cVanillaCompass);
+    if (MapsAndCompasses.Is(MAPSANDCOMPASSES_VANILLA)) {
+      IncludeAndHide(mapChests);
+      IncludeAndHide(compassChests);
     } else {
-      IncludeAndHide({&ToT_LightArrowCutscene});
+      Unhide(mapChests);
+      Unhide(compassChests);
     }
 
-    //TODO: Vanilla Keys and Boss Keys
+    //Force include Vanilla Small Key Locations (except gerudo Fortress) on Vanilla Keys
+    std::vector<ItemLocation*> smallKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaSmallKey);
+    if (Keysanity.Is(KEYSANITY_VANILLA)) {
+      IncludeAndHide(smallKeyChests);
+    } else {
+      Unhide(smallKeyChests);
+    }
+
+    //Force include Boss Key Chests if Boss Keys are Vanilla
+    std::vector<ItemLocation*> bossKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaBossKey);
+    if (BossKeysanity.Is(BOSSKEYSANITY_VANILLA)) {
+      IncludeAndHide(bossKeyChests);
+    } else {
+      Unhide(bossKeyChests);
+    }
+
+    //Force include Ganons Boss Key Chest if ganons boss key has to be there
+    if (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA)) {
+      IncludeAndHide({&GanonsCastle_BossKeyChest});
+    } else {
+      Unhide({&GanonsCastle_BossKeyChest});
+    }
+
+    //Force include Light Arrow item if ganons boss key has to be there
+    if (GanonsBossKey.Value<u8>() >= GANONSBOSSKEY_LACS_VANILLA) {
+      IncludeAndHide({&ToT_LightArrowCutscene});
+    } else {
+      Unhide({&ToT_LightArrowCutscene});
+    }
   }
 
   //Make any forcible setting changes when certain settings change
