@@ -536,93 +536,116 @@ namespace Settings {
   }
 
   //Include and Lock the desired locations
-  void IncludeAndLock(std::vector<ItemLocation*> locations) {
+  void IncludeAndHide(std::vector<ItemLocation*> locations) {
     for (auto& loc : locations) {
       loc->GetExcludedOption()->SetSelectedIndex(INCLUDE);
-      loc->GetExcludedOption()->Lock();
+      loc->GetExcludedOption()->Hide();
     }
   }
 
   //Unlock the desired locations
-  void Unlock(std::vector<ItemLocation*> locations) {
+  void Unhide(std::vector<ItemLocation*> locations) {
     for (auto& loc : locations) {
-      loc->GetExcludedOption()->Unlock();
+      loc->GetExcludedOption()->Unhide();
     }
   }
 
   //Lock required locations based on current settings
   void ResolveExcludedLocationConflicts() {
 
-    HC_ZeldasLetter.GetExcludedOption()->Lock(); //this location must always be included
+    HC_ZeldasLetter.GetExcludedOption()->Hide(); //this location must always be included
 
-    //TODO: Implement a giant vector of all possible locations to filter from so we don't have to hardcode everything
+    //Force include shops if shopsanity is off
+    std::vector<ItemLocation*> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
+    if (Shopsanity) {
+      Unhide(shopLocations);
+    } else {
+      IncludeAndHide(shopLocations);
+    }
 
     //Force include song locations
-    std::vector<ItemLocation*> songLocations = {&SongFromImpa, &SongFromSaria, &SongFromSaria, &SongFromWindmill, &SongFromOcarinaOfTime, &SongFromComposersGrave,
-                                                &SheikInForest, &SheikInCrater, &SheikInIceCavern, &SheikAtTemple, &SheikInKakariko, &SheikAtColossus};
-    std::vector<ItemLocation*> songDungeonRewards = {&DekuTree_QueenGohmaHeart, &DodongosCavern_KingDodongoHeart, &JabuJabusBelly_BarinadeHeart,
-                                                     &ForestTemple_PhantomGanonHeart, &FireTemple_VolvagiaHeart, &WaterTemple_MorphaHeart,
-                                                     &SpiritTemple_TwinrovaHeart, &ShadowTemple_BongoBongoHeart, &SheikInIceCavern,
-                                                     &SongFromImpa, &GerudoTrainingGrounds_MazePathFinalChest, &GerudoTrainingGrounds_MQ_IceArrowsChest,
-                                                     &BottomOfTheWell_LensOfTruthChest, &BottomOfTheWell_MQ_LensOfTruthChest};
+    std::vector<ItemLocation*> songLocations = GetLocations(everyPossibleLocation, Category::cSong);
+    std::vector<ItemLocation*> songDungeonRewards = GetLocations(everyPossibleLocation, Category::cSongDungeonReward);
 
-    //Unlock all song locations, then lock necessary ones
-    Unlock(songLocations);
-    Unlock(songDungeonRewards);
+    //Unhide all song locations, then lock necessary ones
+    Unhide(songLocations);
+    Unhide(songDungeonRewards);
 
     if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
-      IncludeAndLock(songLocations);
+      IncludeAndHide(songLocations);
     } else if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
-      IncludeAndLock(songDungeonRewards);
+      IncludeAndHide(songDungeonRewards);
+    }
+
+    //Force Include Vanilla Skulltula locations
+    std::vector<ItemLocation*> skulltulaLocations = GetLocations(everyPossibleLocation, Category::cSkulltula);
+    Unhide(skulltulaLocations);
+    if (Tokensanity.IsNot(TOKENSANITY_ALL_TOKENS)) {
+      if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
+        //filter overworld skulls so we're just left with dungeons
+        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() > 0x0A;});
+      } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
+        //filter dungeon skulls so we're just left with overworld
+        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() <= 0x0A;});
+      }
+      IncludeAndHide(skulltulaLocations);
+    }
+
+    //Force Include scrubs if Scrubsanity is Off
+    std::vector<ItemLocation*> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub);
+    if (Scrubsanity.Is(OFF)) {
+      IncludeAndHide(scrubLocations);
+    } else {
+      Unhide(scrubLocations);
     }
 
     //Force include Cows if Shuffle Cows is Off
-    std::vector<ItemLocation*> cowLocations = {&KF_LinksHouseCow, &HF_CowGrottoCow, &LLR_StablesLeftCow, &LLR_StablesRightCow,
-                                               &LLR_TowerLeftCow, &LLR_TowerRightCow, &Kak_ImpasHouseCow, &DMT_CowGrottoCow,
-                                               &GV_Cow, &JabuJabusBelly_MQ_Cow};
+    std::vector<ItemLocation*> cowLocations = GetLocations(everyPossibleLocation, Category::cCow);
     if (ShuffleCows) {
-      Unlock(cowLocations);
+      Unhide(cowLocations);
     } else {
-      IncludeAndLock(cowLocations);
+      IncludeAndHide(cowLocations);
     }
 
     //Force include the Kokiri Sword Chest if Shuffle Kokiri Sword is Off
     if (ShuffleKokiriSword) {
-      Unlock({&KF_KokiriSwordChest});
+      Unhide({&KF_KokiriSwordChest});
     } else {
-      IncludeAndLock({&KF_KokiriSwordChest});
+      IncludeAndHide({&KF_KokiriSwordChest});
     }
 
     //Force include the ocarina locations if Shuffle Ocarinas is Off
     std::vector<ItemLocation*> ocarinaLocations = {&LW_GiftFromSaria, &HF_OcarinaOfTimeItem};
     if (ShuffleOcarinas) {
-      Unlock(ocarinaLocations);
+      Unhide(ocarinaLocations);
     } else {
-      IncludeAndLock(ocarinaLocations);
+      IncludeAndHide(ocarinaLocations);
     }
 
     //Force include Malon if Shuffle Weird Egg is Off
     if (ShuffleWeirdEgg) {
-      Unlock({&HC_MalonEgg});
+      Unhide({&HC_MalonEgg});
     } else {
-      IncludeAndLock({&HC_MalonEgg});
+      IncludeAndHide({&HC_MalonEgg});
     }
 
     //Gerudo Card is handled in item_pool.cpp
 
     //Force include Magic Bean salesman if Shuffle Magic Beans is off
     if (ShuffleMagicBeans) {
-      Unlock({&ZR_MagicBeanSalesman});
+      Unhide({&ZR_MagicBeanSalesman});
     } else {
-      IncludeAndLock({&ZR_MagicBeanSalesman});
+      IncludeAndHide({&ZR_MagicBeanSalesman});
     }
 
     //Force include Light Arrow item if ganons boss key has to be there
     if (GanonsBossKey.Value<u8>() < GANONSBOSSKEY_LACS_VANILLA) {
-      Unlock({&ToT_LightArrowCutscene});
+      Unhide({&ToT_LightArrowCutscene});
     } else {
-      IncludeAndLock({&ToT_LightArrowCutscene});
+      IncludeAndHide({&ToT_LightArrowCutscene});
     }
+
+    //TODO: Vanilla Keys and Boss Keys
   }
 
   //Make any forcible setting changes when certain settings change

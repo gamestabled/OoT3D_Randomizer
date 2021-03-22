@@ -1016,6 +1016,7 @@ extern ItemLocation GC_ShopItem8;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
 extern std::vector<ItemLocation*> overworldLocations;
 extern std::vector<ItemLocation *> allLocations;
+extern std::vector<ItemLocation *> everyPossibleLocation;
 
 //set of overrides to write to the patch
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
@@ -1026,7 +1027,7 @@ extern u16 itemsPlaced;
 
 extern void GenerateLocationPool();
 extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
-extern std::vector<ItemLocation*> GetLocations(const Category category);
+extern std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locationPool, const Category category);
 extern void LocationReset();
 extern void ItemReset();
 extern void AddExcludedOptions();

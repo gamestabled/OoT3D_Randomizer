@@ -50,6 +50,7 @@ enum class Category {
     cFairies,
     cOutsideGanonsCastle,
     cSong,
+    cSongDungeonReward,
     cCow,
     cShop
 };

@@ -392,7 +392,7 @@ ItemLocation BottomOfTheWell_RightBottomFakeWallChest         = ItemLocation::Ch
 ItemLocation BottomOfTheWell_CompassChest                     = ItemLocation::Chest      (0x08, 0x01, "Bottom of the Well Compass Chest",                      {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_CenterSkulltulaChest             = ItemLocation::Chest      (0x08, 0x0E, "Bottom of the Well Center Skulltula Chest",             {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_BackLeftBombableChest            = ItemLocation::Chest      (0x08, 0x04, "Bottom of the Well Back Left Bombable Chest",           {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_LensOfTruthChest                 = ItemLocation::Chest      (0x08, 0x03, "Bottom of the Well Lens of Truth Chest",                {Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_LensOfTruthChest                 = ItemLocation::Chest      (0x08, 0x03, "Bottom of the Well Lens of Truth Chest",                {Category::cBottomOfTheWell, Category::cSongDungeonReward});
 ItemLocation BottomOfTheWell_InvisibleChest                   = ItemLocation::Chest      (0x08, 0x14, "Bottom of the Well Invisible Chest",                    {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_UnderwaterFrontChest             = ItemLocation::Chest      (0x08, 0x10, "Bottom of the Well Underwater Front Chest",             {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_UnderwaterLeftChest              = ItemLocation::Chest      (0x08, 0x09, "Bottom of the Well Underwater Left Chest",              {Category::cBottomOfTheWell,});
@@ -402,7 +402,7 @@ ItemLocation BottomOfTheWell_LikeLikeChest                    = ItemLocation::Ch
 ItemLocation BottomOfTheWell_FreestandingKey                  = ItemLocation::Collectable(0x08, 0x01, "Bottom of the Well Freestanding Key",                   {Category::cBottomOfTheWell,});
 //Bottom of the Well MQ
 ItemLocation BottomOfTheWell_MQ_MapChest                      = ItemLocation::Chest      (0x08, 0x03, "Bottom of the Well MQ Map Chest",                       {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_MQ_LensOfTruthChest              = ItemLocation::Chest      (0x08, 0x01, "Bottom of the Well MQ Lens of Truth Chest",             {Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_MQ_LensOfTruthChest              = ItemLocation::Chest      (0x08, 0x01, "Bottom of the Well MQ Lens of Truth Chest",             {Category::cBottomOfTheWell, Category::cSongDungeonReward});
 ItemLocation BottomOfTheWell_MQ_CompassChest                  = ItemLocation::Chest      (0x08, 0x02, "Bottom of the Well MQ Compass Chest",                   {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_MQ_DeadHandFreestandingKey       = ItemLocation::Collectable(0x08, 0x02, "Bottom of the Well MQ Dead Hand Freestanding Key",      {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_MQ_EastInnerRoomFreestandingKey  = ItemLocation::Collectable(0x08, 0x01, "Bottom of the Well MQ East Inner Room Freestanding Key",{Category::cBottomOfTheWell,});
@@ -427,7 +427,7 @@ ItemLocation GerudoTrainingGrounds_HiddenCeilingChest         = ItemLocation::Ch
 ItemLocation GerudoTrainingGrounds_MazePathFirstChest         = ItemLocation::Chest      (0x0B, 0x06, "Gerudo Training Grounds Maze Path First Chest",         {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MazePathSecondChest        = ItemLocation::Chest      (0x0B, 0x0A, "Gerudo Training Grounds Maze Path Second Chest",        {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MazePathThirdChest         = ItemLocation::Chest      (0x0B, 0x09, "Gerudo Training Grounds Maze Path Third Chest",         {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MazePathFinalChest         = ItemLocation::Chest      (0x0B, 0x0C, "Gerudo Training Grounds Maze Path Final Chest",         {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_MazePathFinalChest         = ItemLocation::Chest      (0x0B, 0x0C, "Gerudo Training Grounds Maze Path Final Chest",         {Category::cGerudoTrainingGrounds, Category::cSongDungeonReward});
 ItemLocation GerudoTrainingGrounds_MazeRightCentralChest      = ItemLocation::Chest      (0x0B, 0x05, "Gerudo Training Grounds Maze Right Central Chest",      {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MazeRightSideChest         = ItemLocation::Chest      (0x0B, 0x08, "Gerudo Training Grounds Maze Right Side Chest",         {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_UnderwaterSilverRupeeChest = ItemLocation::Chest      (0x0B, 0x0D, "Gerudo Training Grounds Underwater Silver Rupee Chest", {Category::cGerudoTrainingGrounds,});
@@ -450,7 +450,7 @@ ItemLocation GerudoTrainingGrounds_MQ_EyeStatueChest          = ItemLocation::Ch
 ItemLocation GerudoTrainingGrounds_MQ_FlameCircleChest        = ItemLocation::Chest      (0x0B, 0x0E, "Gerudo Training Grounds MQ Flame Circle Chest",         {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_SecondIronKnuckleChest  = ItemLocation::Chest      (0x0B, 0x12, "Gerudo Training Grounds MQ Second Iron Knuckle Chest",  {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_DinalfosChest           = ItemLocation::Chest      (0x0B, 0x01, "Gerudo Training Grounds MQ Dinalfos Chest",             {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MQ_IceArrowsChest          = ItemLocation::Chest      (0x0B, 0x04, "Gerudo Training Grounds MQ Ice Arrows Chest",           {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_MQ_IceArrowsChest          = ItemLocation::Chest      (0x0B, 0x04, "Gerudo Training Grounds MQ Ice Arrows Chest",           {Category::cGerudoTrainingGrounds, Category::cSongDungeonReward});
 ItemLocation GerudoTrainingGrounds_MQ_MazeRightCentralChest   = ItemLocation::Chest      (0x0B, 0x05, "Gerudo Training Grounds MQ Maze Right Central Chest",   {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_MazePathFirstChest      = ItemLocation::Chest      (0x0B, 0x06, "Gerudo Training Grounds MQ Maze Path First Chest",      {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_MazeRightSideChest      = ItemLocation::Chest      (0x0B, 0x08, "Gerudo Training Grounds MQ Maze Right Side Chest",      {Category::cGerudoTrainingGrounds,});
@@ -707,14 +707,14 @@ ItemLocation Ganon                                        = ItemLocation::Reward
       ---HEART CONTAINERS ---
   -------------------------------*/
 
-ItemLocation DekuTree_QueenGohmaHeart                     = ItemLocation::Base   (0x11, 0x4F, "Deku Tree Queen Gohma Heart Container",          {Category::cDekuTree, Category::cBossHeart});
-ItemLocation DodongosCavern_KingDodongoHeart              = ItemLocation::Base   (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart Container",   {Category::cDodongosCavern, Category::cBossHeart});
-ItemLocation JabuJabusBelly_BarinadeHeart                 = ItemLocation::Base   (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart Container",      {Category::cJabuJabusBelly, Category::cBossHeart});
-ItemLocation ForestTemple_PhantomGanonHeart               = ItemLocation::Base   (0x14, 0x4F, "Forest Temple Phantom Ganon Heart Container",    {Category::cForestTemple, Category::cBossHeart});
-ItemLocation FireTemple_VolvagiaHeart                     = ItemLocation::Base   (0x15, 0x4F, "Fire Temple Volvagia Heart Container",           {Category::cFireTemple, Category::cBossHeart});
-ItemLocation WaterTemple_MorphaHeart                      = ItemLocation::Base   (0x16, 0x4F, "Water Temple Morpha Heart Container",            {Category::cWaterTemple, Category::cBossHeart});
-ItemLocation SpiritTemple_TwinrovaHeart                   = ItemLocation::Base   (0x17, 0x4F, "Spirit Temple Twinrova Heart Container",         {Category::cSpiritTemple, Category::cBossHeart});
-ItemLocation ShadowTemple_BongoBongoHeart                 = ItemLocation::Base   (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart Container",      {Category::cShadowTemple, Category::cBossHeart});
+ItemLocation DekuTree_QueenGohmaHeart                     = ItemLocation::Base   (0x11, 0x4F, "Deku Tree Queen Gohma Heart Container",          {Category::cDekuTree, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation DodongosCavern_KingDodongoHeart              = ItemLocation::Base   (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart Container",   {Category::cDodongosCavern, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation JabuJabusBelly_BarinadeHeart                 = ItemLocation::Base   (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart Container",      {Category::cJabuJabusBelly, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation ForestTemple_PhantomGanonHeart               = ItemLocation::Base   (0x14, 0x4F, "Forest Temple Phantom Ganon Heart Container",    {Category::cForestTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation FireTemple_VolvagiaHeart                     = ItemLocation::Base   (0x15, 0x4F, "Fire Temple Volvagia Heart Container",           {Category::cFireTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation WaterTemple_MorphaHeart                      = ItemLocation::Base   (0x16, 0x4F, "Water Temple Morpha Heart Container",            {Category::cWaterTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation SpiritTemple_TwinrovaHeart                   = ItemLocation::Base   (0x17, 0x4F, "Spirit Temple Twinrova Heart Container",         {Category::cSpiritTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation ShadowTemple_BongoBongoHeart                 = ItemLocation::Base   (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart Container",      {Category::cShadowTemple, Category::cBossHeart, Category::cSongDungeonReward});
 
 /*-------------------------------
         --- CUTSCENES ---
@@ -731,11 +731,11 @@ ItemLocation OGC_GreatFairyReward                         = ItemLocation::Delaye
 
 ItemLocation SheikInForest                                = ItemLocation::Delayed(0xFF, 0x20, "Sheik in Forest",                                {Category::cSacredForestMeadow, Category::cForest, Category::cSong,});
 ItemLocation SheikInCrater                                = ItemLocation::Delayed(0xFF, 0x21, "Sheik in Crater",                                {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cSong,});
-ItemLocation SheikInIceCavern                             = ItemLocation::Delayed(0xFF, 0x22, "Sheik in Ice Cavern",                            {Category::cIceCavern, Category::cSong,});
+ItemLocation SheikInIceCavern                             = ItemLocation::Delayed(0xFF, 0x22, "Sheik in Ice Cavern",                            {Category::cIceCavern, Category::cSong, Category::cSongDungeonReward});
 ItemLocation SheikAtColossus                              = ItemLocation::Delayed(0xFF, 0x23, "Sheik at Colossus",                              {Category::cDesertColossus, Category::cSong,});
 ItemLocation SheikInKakariko                              = ItemLocation::Delayed(0xFF, 0x24, "Sheik in Kakariko",                              {Category::cKakarikoVillage, Category::cKakariko, Category::cSong,});
 ItemLocation SheikAtTemple                                = ItemLocation::Delayed(0xFF, 0x25, "Sheik at Temple",                                {Category::cTempleOfTime, Category::cMarket, Category::cSong,});
-ItemLocation SongFromImpa                                 = ItemLocation::Delayed(0xFF, 0x26, "Song from Impa",                                 {Category::cHyruleCastle, Category::cMarket, Category::cSong,});
+ItemLocation SongFromImpa                                 = ItemLocation::Delayed(0xFF, 0x26, "Song from Impa",                                 {Category::cHyruleCastle, Category::cMarket, Category::cSong, Category::cSongDungeonReward});
 ItemLocation SongFromMalon                                = ItemLocation::Delayed(0xFF, 0x27, "Song from Malon",                                {Category::cLonLonRanch, Category::cSong,});
 ItemLocation SongFromSaria                                = ItemLocation::Delayed(0xFF, 0x28, "Song from Saria",                                {Category::cSacredForestMeadow, Category::cForest, Category::cSong,});
 ItemLocation SongFromComposersGrave                       = ItemLocation::Delayed(0xFF, 0x29, "Song from Composers Grave",                      {Category::cGraveyard, Category::cKakariko, Category::cSong,});
@@ -1619,6 +1619,7 @@ std::vector<ItemLocation*> overworldLocations = {
 };
 
 std::vector<ItemLocation*> allLocations = {};
+std::vector<ItemLocation*> everyPossibleLocation = {};
 
 //set of overrides to write to the patch
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
@@ -1627,14 +1628,14 @@ std::vector<ItemLocation*> playthroughLocations = {};
 
 u16 itemsPlaced = 0;
 
-void AddLocation(ItemLocation * loc) {
-  allLocations.push_back(loc);
+void AddLocation(ItemLocation * loc, std::vector<ItemLocation*>* destination = &allLocations) {
+  destination->push_back(loc);
 }
 
 template <typename Container>
-void AddLocations(const Container& locations) {
+void AddLocations(const Container& locations, std::vector<ItemLocation*>* destination = &allLocations) {
   for (auto& loc : locations) {
-    allLocations.push_back(loc);
+    destination->push_back(loc);
   }
 }
 
@@ -1728,9 +1729,9 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     loc->SetPlacedItem(item);
 }
 
-std::vector<ItemLocation*> GetLocations(Category category) {
+std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locationPool, Category category) {
   std::vector<ItemLocation*> locationsInCategory = {};
-  for (auto& loc : allLocations) {
+  for (auto& loc : locationPool) {
     if (loc->IsCategory(category)) {
       locationsInCategory.push_back(loc);
     }
@@ -1760,69 +1761,61 @@ void ItemReset() {
   itemsPlaced = 0;
 }
 
+//Fills everyPossibleLocation and creates an exclusion option for each location
+//everyPossibleLocation is used in the menu to lock/hide excluding locations
 void AddExcludedOptions() {
-  allLocations.clear();
-  AddLocations(overworldLocations);
+  AddLocations(overworldLocations, &everyPossibleLocation);
 
-  /*For some reason, trying to add all the dungeon locations here will crash
-    the app if it calls Settings::FillContext() later on which for some reason
-    sets the program counter to 0x00000000.
+  AddLocations(DT_MQ, &everyPossibleLocation);
+  AddLocations(DT_Vanilla, &everyPossibleLocation);
+  AddLocation(&DekuTree_QueenGohmaHeart, &everyPossibleLocation);
 
-    I have no idea why this happens, but we'll leave out the dungeon locations
-    for now since most of the long checks that are typically excluded are overworld
-    ones.*/
+  AddLocations(DC_MQ, &everyPossibleLocation);
+  AddLocations(DC_Vanilla, &everyPossibleLocation);
+  AddLocation(&DodongosCavern_BossRoomChest, &everyPossibleLocation);
+  AddLocation(&DodongosCavern_KingDodongoHeart, &everyPossibleLocation);
 
-  // AddLocations(DT_MQ);
-  // AddLocations(DT_Vanilla);
-  // AddLocation(&DekuTree_QueenGohmaHeart);
-  //
-  // AddLocations(DC_MQ);
-  // AddLocations(DC_Vanilla);
-  // AddLocation(&DodongosCavern_BossRoomChest);
-  // AddLocation(&DodongosCavern_KingDodongoHeart);
-  //
-  // AddLocations(Jabu_MQ);
-  // AddLocations(Jabu_Vanilla);
-  // AddLocation(&JabuJabusBelly_BarinadeHeart);
-  //
-  // AddLocations(FoT_MQ);
-  // AddLocations(FoT_Vanilla);
-  // AddLocation(&ForestTemple_PhantomGanonHeart);
-  //
-  // AddLocations(FiT_MQ);
-  // AddLocations(FiT_Vanilla);
-  // AddLocation(&FireTemple_VolvagiaHeart);
-  //
-  // AddLocations(WaT_MQ);
-  // AddLocations(WaT_Vanilla);
-  // AddLocation(&WaterTemple_MorphaHeart);
-  //
-  // AddLocation(&SpiritTemple_SilverGauntletsChest);
-  // AddLocation(&SpiritTemple_MirrorShieldChest);
-  // AddLocations(SpT_MQ);
-  // AddLocations(SpT_Vanilla);
-  // AddLocation(&SpiritTemple_TwinrovaHeart);
-  //
-  // AddLocations(ShT_MQ);
-  // AddLocations(ShT_Vanilla);
-  // AddLocation(&ShadowTemple_BongoBongoHeart);
-  //
-  // AddLocations(BotW_MQ);
-  // AddLocations(BotW_Vanilla);
-  //
-  // AddLocations(IC_MQ);
-  // AddLocations(IC_Vanilla);
-  // AddLocation(&SheikInIceCavern);
-  //
-  // AddLocations(GTG_MQ);
-  // AddLocations(GTG_Vanilla);
-  //
-  // AddLocations(GC_MQ);
-  // AddLocations(GC_Vanilla);
-  // AddLocation(&GanonsCastle_BossKeyChest);
+  AddLocations(Jabu_MQ, &everyPossibleLocation);
+  AddLocations(Jabu_Vanilla, &everyPossibleLocation);
+  AddLocation(&JabuJabusBelly_BarinadeHeart, &everyPossibleLocation);
 
-  for (ItemLocation * il: allLocations) {
+  AddLocations(FoT_MQ, &everyPossibleLocation);
+  AddLocations(FoT_Vanilla, &everyPossibleLocation);
+  AddLocation(&ForestTemple_PhantomGanonHeart, &everyPossibleLocation);
+
+  AddLocations(FiT_MQ, &everyPossibleLocation);
+  AddLocations(FiT_Vanilla, &everyPossibleLocation);
+  AddLocation(&FireTemple_VolvagiaHeart, &everyPossibleLocation);
+
+  AddLocations(WaT_MQ, &everyPossibleLocation);
+  AddLocations(WaT_Vanilla, &everyPossibleLocation);
+  AddLocation(&WaterTemple_MorphaHeart, &everyPossibleLocation);
+
+  AddLocation(&SpiritTemple_SilverGauntletsChest, &everyPossibleLocation);
+  AddLocation(&SpiritTemple_MirrorShieldChest, &everyPossibleLocation);
+  AddLocations(SpT_MQ, &everyPossibleLocation);
+  AddLocations(SpT_Vanilla, &everyPossibleLocation);
+  AddLocation(&SpiritTemple_TwinrovaHeart, &everyPossibleLocation);
+
+  AddLocations(ShT_MQ, &everyPossibleLocation);
+  AddLocations(ShT_Vanilla, &everyPossibleLocation);
+  AddLocation(&ShadowTemple_BongoBongoHeart, &everyPossibleLocation);
+
+  AddLocations(BotW_MQ, &everyPossibleLocation);
+  AddLocations(BotW_Vanilla, &everyPossibleLocation);
+
+  AddLocations(IC_MQ, &everyPossibleLocation);
+  AddLocations(IC_Vanilla, &everyPossibleLocation);
+  AddLocation(&SheikInIceCavern, &everyPossibleLocation);
+
+  AddLocations(GTG_MQ, &everyPossibleLocation);
+  AddLocations(GTG_Vanilla, &everyPossibleLocation);
+
+  AddLocations(GC_MQ, &everyPossibleLocation);
+  AddLocations(GC_Vanilla, &everyPossibleLocation);
+  AddLocation(&GanonsCastle_BossKeyChest, &everyPossibleLocation);
+
+  for (ItemLocation * il: everyPossibleLocation) {
     il->AddExcludeOption();
   }
-  allLocations.clear();
 }
