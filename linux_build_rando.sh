@@ -3,8 +3,9 @@
 gather_required_files() {
   echo "Our python version: "
   python3 -V
-  sudo apt update && sudo apt install automake build-essential wget unzip zip -y
-  sudo apt-get upgrade python3 -y
+  sudo apt update && sudo apt install automake build-essential wget unzip zip python3.8 -y
+  sudo rm /usr/bin/python3
+  sudo ln -s python3.8 /usr/bin/python3
   wget https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip
   unzip makerom-v0.17-ubuntu_x86_64.zip
   git clone https://github.com/Steveice10/bannertool.git
