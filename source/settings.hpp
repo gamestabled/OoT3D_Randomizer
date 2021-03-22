@@ -1,13 +1,16 @@
 #pragma once
 
 #include <3ds.h>
+
 #include <array>
 #include <cstdlib>
 #include <string>
 #include <type_traits>
 #include <variant>
 #include <vector>
+
 #include "../code/src/settings.h"
+#include "category.hpp"
 #include "menu.hpp"
 
 class Option {
