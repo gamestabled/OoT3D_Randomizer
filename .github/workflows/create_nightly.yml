@@ -19,23 +19,20 @@ jobs:
           gather_required_files() {
             sudo apt update && sudo apt install automake build-essential wget unzip -y
             echo $PATH
-            git clone -b cxi-stuff https://github.com/devkitPro/3dstools.git
-            cd 3dstools
-            chmod +x autogen.sh
-            ./autogen.sh
-            ./configure
-            make
-            cd ../
             wget https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip
             unzip makerom-v0.17-ubuntu_x86_64.zip
+            wget https://github.com/Steveice10/bannertool/releases/download/1.2.0/bannertool.zip
+            unzip bannertool.zip
+            mv ./linux-x86_64/bannertool .
+            chmod +x bannertool
+            chmod +x makerom
           }
 
           compile() {
             make
-            chmod +x 3dstools
-            chmod +x makerom
-            ./3dstools/cxitool OoT3D_Randomizer.3dsx OoT3D_Randomizer.cxi
-            ./makerom -f cia -o OoT3D_Randomizer.cia -target t -i OoT3D_Randomizer.cxi:0:0 -ignoresign
+            ./bannertool makebanner -i ./banner.png -a ./audio.wav -o ./banner.bnr
+            ./bannertool makesmdh -s "Ocarina of Time 3D Randomizer" -l "A different Ocarina of Time experience" -p "Gamestabled" -i icon.png -o ./icon.icn
+            ./makerom -f cia -o OoT3D_Randomizer.cia -DAPP_ENCRYPTED=false -target t -exefslogo -elf ./OoT3D_Randomizer.elf -icon ./icon.icn -banner ./banner.bnr -rsf ./ootrando.rsf
           }
           gather_required_files
           compile
