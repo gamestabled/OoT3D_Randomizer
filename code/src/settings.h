@@ -236,7 +236,7 @@ typedef struct {
   u32 dungeonRewardBitMask;
 
   u8 detailedLogic[100];
-  u8 excludeLocations[500];
+  u8 excludeLocations[700];
 
 } SettingsContext;
 

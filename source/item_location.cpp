@@ -167,15 +167,15 @@ ItemLocation LLR_DekuScrubGrottoCenter        = ItemLocation::GrottoScrub(0xFC, 
   -------------------*/
 
 //Deku Tree Vanilla
-ItemLocation DekuTree_MapChest                                = ItemLocation::Chest      (0x00, 0x03, "Deku Tree Map Chest",                                {Category::cDekuTree,});
-ItemLocation DekuTree_CompassChest                            = ItemLocation::Chest      (0x00, 0x02, "Deku Tree Compass Chest",                            {Category::cDekuTree,});
+ItemLocation DekuTree_MapChest                                = ItemLocation::Chest      (0x00, 0x03, "Deku Tree Map Chest",                                {Category::cDekuTree, Category::cVanillaMap,});
+ItemLocation DekuTree_CompassChest                            = ItemLocation::Chest      (0x00, 0x02, "Deku Tree Compass Chest",                            {Category::cDekuTree, Category::cVanillaCompass,});
 ItemLocation DekuTree_CompassRoomSideChest                    = ItemLocation::Chest      (0x00, 0x06, "Deku Tree Compass Room Side Chest",                  {Category::cDekuTree,});
 ItemLocation DekuTree_BasementChest                           = ItemLocation::Chest      (0x00, 0x04, "Deku Tree Basement Chest",                           {Category::cDekuTree,});
 ItemLocation DekuTree_SlingshotChest                          = ItemLocation::Chest      (0x00, 0x01, "Deku Tree Slingshot Chest",                          {Category::cDekuTree,});
 ItemLocation DekuTree_SlingshotRoomSideChest                  = ItemLocation::Chest      (0x00, 0x05, "Deku Tree Slingshot Room Side Chest",                {Category::cDekuTree,});
 //Deku Tree MQ
-ItemLocation DekuTree_MQ_MapChest                             = ItemLocation::Chest      (0x00, 0x03, "Deku Tree MQ Map Chest",                             {Category::cDekuTree,});
-ItemLocation DekuTree_MQ_CompassChest                         = ItemLocation::Chest      (0x00, 0x01, "Deku Tree MQ Compass Chest",                         {Category::cDekuTree,});
+ItemLocation DekuTree_MQ_MapChest                             = ItemLocation::Chest      (0x00, 0x03, "Deku Tree MQ Map Chest",                             {Category::cDekuTree, Category::cVanillaMap,});
+ItemLocation DekuTree_MQ_CompassChest                         = ItemLocation::Chest      (0x00, 0x01, "Deku Tree MQ Compass Chest",                         {Category::cDekuTree, Category::cVanillaCompass,});
 ItemLocation DekuTree_MQ_SlingshotChest                       = ItemLocation::Chest      (0x00, 0x06, "Deku Tree MQ Slingshot Chest",                       {Category::cDekuTree,});
 ItemLocation DekuTree_MQ_SlingshotRoomBackChest               = ItemLocation::Chest      (0x00, 0x02, "Deku Tree MQ Slingshot Room Back Chest",             {Category::cDekuTree,});
 ItemLocation DekuTree_MQ_BasementChest                        = ItemLocation::Chest      (0x00, 0x04, "Deku Tree MQ Basement Chest",                        {Category::cDekuTree,});
@@ -186,8 +186,8 @@ ItemLocation DekuTree_MQ_DekuScrub                            = ItemLocation::Ba
 //Dodongos Cavern Shared
 ItemLocation DodongosCavern_BossRoomChest                     = ItemLocation::Chest      (0x12, 0x00, "Dodongos Cavern Boss Room Chest",                    {Category::cDodongosCavern,});
 //Dodongos Cavern Vanilla
-ItemLocation DodongosCavern_MapChest                          = ItemLocation::Chest      (0x01, 0x08, "Dodongos Cavern Map Chest",                          {Category::cDodongosCavern,});
-ItemLocation DodongosCavern_CompassChest                      = ItemLocation::Chest      (0x01, 0x05, "Dodongos Cavern Compass Chest",                      {Category::cDodongosCavern,});
+ItemLocation DodongosCavern_MapChest                          = ItemLocation::Chest      (0x01, 0x08, "Dodongos Cavern Map Chest",                          {Category::cDodongosCavern, Category::cVanillaMap,});
+ItemLocation DodongosCavern_CompassChest                      = ItemLocation::Chest      (0x01, 0x05, "Dodongos Cavern Compass Chest",                      {Category::cDodongosCavern, Category::cVanillaCompass,});
 ItemLocation DodongosCavern_BombFlowerPlatformChest           = ItemLocation::Chest      (0x01, 0x06, "Dodongos Cavern Bomb Flower Platform Chest",         {Category::cDodongosCavern,});
 ItemLocation DodongosCavern_BombBagChest                      = ItemLocation::Chest      (0x01, 0x04, "Dodongos Cavern Bomb Bag Chest",                     {Category::cDodongosCavern,});
 ItemLocation DodongosCavern_EndOfBridgeChest                  = ItemLocation::Chest      (0x01, 0x0A, "Dodongos Cavern End Of Bridge Chest",                {Category::cDodongosCavern,});
@@ -196,9 +196,9 @@ ItemLocation DodongosCavern_DekuScrubSideRoomNearDodongos     = ItemLocation::Ba
 ItemLocation DodongosCavern_DekuScrubNearBombBagRight         = ItemLocation::Base       (0x01, 0x33, "Dodongos Cavern Deku Scrub Near Bomb Bag Right",     {Category::cDodongosCavern, Category::cDekuScrub,});
 ItemLocation DodongosCavern_DekuScrubLobby                    = ItemLocation::Base       (0x01, 0x34, "Dodongos Cavern Deku Scrub Lobby",                   {Category::cDodongosCavern, Category::cDekuScrub,});
 //Dodongos Cavern MQ
-ItemLocation DodongosCavern_MQ_MapChest                       = ItemLocation::Chest      (0x01, 0x00, "Dodongos Cavern MQ Map Chest",                       {Category::cDodongosCavern,});
+ItemLocation DodongosCavern_MQ_MapChest                       = ItemLocation::Chest      (0x01, 0x00, "Dodongos Cavern MQ Map Chest",                       {Category::cDodongosCavern, Category::cVanillaMap,});
 ItemLocation DodongosCavern_MQ_BombBagChest                   = ItemLocation::Chest      (0x01, 0x04, "Dodongos Cavern MQ Bomb Bag Chest",                  {Category::cDodongosCavern,});
-ItemLocation DodongosCavern_MQ_CompassChest                   = ItemLocation::Chest      (0x01, 0x05, "Dodongos Cavern MQ Compass Chest",                   {Category::cDodongosCavern,});
+ItemLocation DodongosCavern_MQ_CompassChest                   = ItemLocation::Chest      (0x01, 0x05, "Dodongos Cavern MQ Compass Chest",                   {Category::cDodongosCavern, Category::cVanillaCompass,});
 ItemLocation DodongosCavern_MQ_LarvaeRoomChest                = ItemLocation::Chest      (0x01, 0x02, "Dodongos Cavern MQ Larvae Room Chest",               {Category::cDodongosCavern,});
 ItemLocation DodongosCavern_MQ_TorchPuzzleRoomChest           = ItemLocation::Chest      (0x01, 0x03, "Dodongos Cavern MQ Torch Puzzle Room Chest",         {Category::cDodongosCavern,});
 ItemLocation DodongosCavern_MQ_UnderGraveChest                = ItemLocation::Chest      (0x01, 0x01, "Dodongos Cavern MQ Under Grave Chest",               {Category::cDodongosCavern,});
@@ -208,15 +208,15 @@ ItemLocation DodongosCavern_MQ_DekuScrubStaircase             = ItemLocation::Ba
 ItemLocation DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos = ItemLocation::Base   (0x01, 0x39, "Dodongos Cavern Deku Scrub Side Room Near Lower Lizalfos", {Category::cDodongosCavern, Category::cDekuScrub,});
 
 //Jabu Jabus Belly Vanilla
-ItemLocation JabuJabusBelly_MapChest                          = ItemLocation::Chest      (0x02, 0x02, "Jabu Jabus Belly Map Chest",                         {Category::cJabuJabusBelly,});
-ItemLocation JabuJabusBelly_CompassChest                      = ItemLocation::Chest      (0x02, 0x04, "Jabu Jabus Belly Compass Chest",                     {Category::cJabuJabusBelly,});
+ItemLocation JabuJabusBelly_MapChest                          = ItemLocation::Chest      (0x02, 0x02, "Jabu Jabus Belly Map Chest",                         {Category::cJabuJabusBelly, Category::cVanillaMap,});
+ItemLocation JabuJabusBelly_CompassChest                      = ItemLocation::Chest      (0x02, 0x04, "Jabu Jabus Belly Compass Chest",                     {Category::cJabuJabusBelly, Category::cVanillaCompass,});
 ItemLocation JabuJabusBelly_BoomerangChest                    = ItemLocation::Chest      (0x02, 0x01, "Jabu Jabus Belly Boomerang Chest",                   {Category::cJabuJabusBelly,});
 ItemLocation JabuJabusBelly_DekuScrub                         = ItemLocation::Base       (0x02, 0x30, "Jabu Jabus Belly Deku Scrub",                        {Category::cJabuJabusBelly, Category::cDekuScrub,});
 //Jabu Jabus Belly MQ
 ItemLocation JabuJabusBelly_MQ_FirstRoomSideChest             = ItemLocation::Chest      (0x02, 0x05, "Jabu Jabus Belly MQ First Room Side Chest",          {Category::cJabuJabusBelly,});
-ItemLocation JabuJabusBelly_MQ_MapChest                       = ItemLocation::Chest      (0x02, 0x03, "Jabu Jabus Belly MQ Map Chest",                      {Category::cJabuJabusBelly,});
+ItemLocation JabuJabusBelly_MQ_MapChest                       = ItemLocation::Chest      (0x02, 0x03, "Jabu Jabus Belly MQ Map Chest",                      {Category::cJabuJabusBelly, Category::cVanillaMap,});
 ItemLocation JabuJabusBelly_MQ_SecondRoomLowerChest           = ItemLocation::Chest      (0x02, 0x02, "Jabu Jabus Belly MQ Second Room Lower Chest",        {Category::cJabuJabusBelly,});
-ItemLocation JabuJabusBelly_MQ_CompassChest                   = ItemLocation::Chest      (0x02, 0x00, "Jabu Jabus Belly MQ Compass Chest",                  {Category::cJabuJabusBelly,});
+ItemLocation JabuJabusBelly_MQ_CompassChest                   = ItemLocation::Chest      (0x02, 0x00, "Jabu Jabus Belly MQ Compass Chest",                  {Category::cJabuJabusBelly, Category::cVanillaCompass,});
 ItemLocation JabuJabusBelly_MQ_SecondRoomUpperChest           = ItemLocation::Chest      (0x02, 0x07, "Jabu Jabus Belly MQ Second Room Upper Chest",        {Category::cJabuJabusBelly,});
 ItemLocation JabuJabusBelly_MQ_BasementNearSwitchesChest      = ItemLocation::Chest      (0x02, 0x08, "Jabu Jabus Belly MQ Basement Near Switches Chest",   {Category::cJabuJabusBelly,});
 ItemLocation JabuJabusBelly_MQ_BasementNearVinesChest         = ItemLocation::Chest      (0x02, 0x04, "Jabu Jabus Belly MQ Basement Near Vines Chest",      {Category::cJabuJabusBelly,});
@@ -227,237 +227,237 @@ ItemLocation JabuJabusBelly_MQ_BoomerangChest                 = ItemLocation::Ch
 //COW
 
 //Forest Temple Vanilla
-ItemLocation ForestTemple_FirstRoomChest                      = ItemLocation::Chest      (0x03, 0x03, "Forest Temple First Room Chest",                     {Category::cForestTemple,});
-ItemLocation ForestTemple_FirstStalfosChest                   = ItemLocation::Chest      (0x03, 0x00, "Forest Temple First Stalfos Chest",                  {Category::cForestTemple,});
+ItemLocation ForestTemple_FirstRoomChest                      = ItemLocation::Chest      (0x03, 0x03, "Forest Temple First Room Chest",                     {Category::cForestTemple, Category::cVanillaSmallKey});
+ItemLocation ForestTemple_FirstStalfosChest                   = ItemLocation::Chest      (0x03, 0x00, "Forest Temple First Stalfos Chest",                  {Category::cForestTemple, Category::cVanillaSmallKey});
 ItemLocation ForestTemple_RaisedIslandCourtyardChest          = ItemLocation::Chest      (0x03, 0x05, "Forest Temple Raised Island Courtyard Chest",        {Category::cForestTemple,});
-ItemLocation ForestTemple_MapChest                            = ItemLocation::Chest      (0x03, 0x01, "Forest Temple Map Chest",                            {Category::cForestTemple,});
-ItemLocation ForestTemple_WellChest                           = ItemLocation::Chest      (0x03, 0x09, "Forest Temple Well Chest",                           {Category::cForestTemple,});
+ItemLocation ForestTemple_MapChest                            = ItemLocation::Chest      (0x03, 0x01, "Forest Temple Map Chest",                            {Category::cForestTemple, Category::cVanillaMap,});
+ItemLocation ForestTemple_WellChest                           = ItemLocation::Chest      (0x03, 0x09, "Forest Temple Well Chest",                           {Category::cForestTemple, Category::cVanillaSmallKey});
 ItemLocation ForestTemple_FallingCeilingRoomChest             = ItemLocation::Chest      (0x03, 0x07, "Forest Temple Falling Ceiling Room Chest",           {Category::cForestTemple,});
 ItemLocation ForestTemple_EyeSwitchChest                      = ItemLocation::Chest      (0x03, 0x04, "Forest Temple Eye Switch Chest",                     {Category::cForestTemple,});
-ItemLocation ForestTemple_BossKeyChest                        = ItemLocation::Chest      (0x03, 0x0E, "Forest Temple Boss Key Chest",                       {Category::cForestTemple,});
-ItemLocation ForestTemple_FloormasterChest                    = ItemLocation::Chest      (0x03, 0x02, "Forest Temple Floormaster Chest",                    {Category::cForestTemple,});
+ItemLocation ForestTemple_BossKeyChest                        = ItemLocation::Chest      (0x03, 0x0E, "Forest Temple Boss Key Chest",                       {Category::cForestTemple, Category::cVanillaBossKey});
+ItemLocation ForestTemple_FloormasterChest                    = ItemLocation::Chest      (0x03, 0x02, "Forest Temple Floormaster Chest",                    {Category::cForestTemple, Category::cVanillaSmallKey});
 ItemLocation ForestTemple_BowChest                            = ItemLocation::Chest      (0x03, 0x0C, "Forest Temple Bow Chest",                            {Category::cForestTemple,});
-ItemLocation ForestTemple_RedPoeChest                         = ItemLocation::Chest      (0x03, 0x0D, "Forest Temple Red Poe Chest",                        {Category::cForestTemple,});
-ItemLocation ForestTemple_BluePoeChest                        = ItemLocation::Chest      (0x03, 0x0F, "Forest Temple Blue Poe Chest",                       {Category::cForestTemple,});
+ItemLocation ForestTemple_RedPoeChest                         = ItemLocation::Chest      (0x03, 0x0D, "Forest Temple Red Poe Chest",                        {Category::cForestTemple, Category::cVanillaSmallKey});
+ItemLocation ForestTemple_BluePoeChest                        = ItemLocation::Chest      (0x03, 0x0F, "Forest Temple Blue Poe Chest",                       {Category::cForestTemple, Category::cVanillaCompass,});
 ItemLocation ForestTemple_BasementChest                       = ItemLocation::Chest      (0x03, 0x0B, "Forest Temple Basement Chest",                       {Category::cForestTemple,});
 //Forest Temple MQ
-ItemLocation ForestTemple_MQ_FirstRoomChest                   = ItemLocation::Chest      (0x03, 0x03, "Forest Temple MQ First Room Chest",                  {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_WolfosChest                      = ItemLocation::Chest      (0x03, 0x00, "Forest Temple MQ Wolfos Chest",                      {Category::cForestTemple,});
+ItemLocation ForestTemple_MQ_FirstRoomChest                   = ItemLocation::Chest      (0x03, 0x03, "Forest Temple MQ First Room Chest",                  {Category::cForestTemple, Category::cVanillaSmallKey});
+ItemLocation ForestTemple_MQ_WolfosChest                      = ItemLocation::Chest      (0x03, 0x00, "Forest Temple MQ Wolfos Chest",                      {Category::cForestTemple, Category::cVanillaSmallKey});
 ItemLocation ForestTemple_MQ_BowChest                         = ItemLocation::Chest      (0x03, 0x0C, "Forest Temple MQ Bow Chest",                         {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_RaisedIslandCourtyardLowerChest  = ItemLocation::Chest      (0x03, 0x01, "Forest Temple MQ Raised Island Courtyard Lower Chest", {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_RaisedIslandCourtyardUpperChest  = ItemLocation::Chest      (0x03, 0x05, "Forest Temple MQ Raised Island Courtyard Upper Chest", {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_WellChest                        = ItemLocation::Chest      (0x03, 0x09, "Forest Temple MQ Well Chest",                        {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_MapChest                         = ItemLocation::Chest      (0x03, 0x0D, "Forest Temple MQ Map Chest",                         {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_CompassChest                     = ItemLocation::Chest      (0x03, 0x0F, "Forest Temple MQ Compass Chest",                     {Category::cForestTemple,});
+ItemLocation ForestTemple_MQ_RaisedIslandCourtyardLowerChest  = ItemLocation::Chest      (0x03, 0x01, "Forest Temple MQ Raised Island Courtyard Lower Chest", {Category::cForestTemple, Category::cVanillaSmallKey});
+ItemLocation ForestTemple_MQ_RaisedIslandCourtyardUpperChest  = ItemLocation::Chest      (0x03, 0x05, "Forest Temple MQ Raised Island Courtyard Upper Chest", {Category::cForestTemple, Category::cVanillaSmallKey});
+ItemLocation ForestTemple_MQ_WellChest                        = ItemLocation::Chest      (0x03, 0x09, "Forest Temple MQ Well Chest",                        {Category::cForestTemple, Category::cVanillaSmallKey});
+ItemLocation ForestTemple_MQ_MapChest                         = ItemLocation::Chest      (0x03, 0x0D, "Forest Temple MQ Map Chest",                         {Category::cForestTemple, Category::cVanillaMap,});
+ItemLocation ForestTemple_MQ_CompassChest                     = ItemLocation::Chest      (0x03, 0x0F, "Forest Temple MQ Compass Chest",                     {Category::cForestTemple, Category::cVanillaCompass,});
 ItemLocation ForestTemple_MQ_FallingCeilingRoomChest          = ItemLocation::Chest      (0x03, 0x06, "Forest Temple MQ Falling Ceiling Room Chest",        {Category::cForestTemple,});
 ItemLocation ForestTemple_MQ_BasementChest                    = ItemLocation::Chest      (0x03, 0x0B, "Forest Temple MQ Basement Chest",                    {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_RedeadChest                      = ItemLocation::Chest      (0x03, 0x02, "Forest Temple MQ Redead Chest",                      {Category::cForestTemple,});
-ItemLocation ForestTemple_MQ_BossKeyChest                     = ItemLocation::Chest      (0x03, 0x0E, "Forest Temple MQ Boss Key Chest",                    {Category::cForestTemple,});
+ItemLocation ForestTemple_MQ_RedeadChest                      = ItemLocation::Chest      (0x03, 0x02, "Forest Temple MQ Redead Chest",                      {Category::cForestTemple, Category::cVanillaSmallKey});
+ItemLocation ForestTemple_MQ_BossKeyChest                     = ItemLocation::Chest      (0x03, 0x0E, "Forest Temple MQ Boss Key Chest",                    {Category::cForestTemple, Category::cVanillaBossKey});
 
 //Fire Temple Vanilla
-ItemLocation FireTemple_NearBossChest                         = ItemLocation::Chest      (0x04, 0x01, "Fire Temple Near Boss Chest",                        {Category::cFireTemple,});
+ItemLocation FireTemple_NearBossChest                         = ItemLocation::Chest      (0x04, 0x01, "Fire Temple Near Boss Chest",                        {Category::cFireTemple, Category::cVanillaSmallKey});
 ItemLocation FireTemple_FlareDancerChest                      = ItemLocation::Chest      (0x04, 0x00, "Fire Temple Flare Dancer Chest",                     {Category::cFireTemple,});
-ItemLocation FireTemple_BossKeyChest                          = ItemLocation::Chest      (0x04, 0x0C, "Fire Temple Boss Key Chest",                         {Category::cFireTemple,});
-ItemLocation FireTemple_BigLavaRoomBlockedDoorChest           = ItemLocation::Chest      (0x04, 0x02, "Fire Temple Big Lava Room Blocked Door Chest",       {Category::cFireTemple,});
-ItemLocation FireTemple_BigLavaRoomLowerOpenDoorChest         = ItemLocation::Chest      (0x04, 0x04, "Fire Temple Big Lava Room Lower Open Door Chest",    {Category::cFireTemple,});
-ItemLocation FireTemple_BoulderMazeLowerChest                 = ItemLocation::Chest      (0x04, 0x03, "Fire Temple Boulder Maze Lower Chest",               {Category::cFireTemple,});
-ItemLocation FireTemple_BoulderMazeUpperChest                 = ItemLocation::Chest      (0x04, 0x06, "Fire Temple Boulder Maze Upper Chest",               {Category::cFireTemple,});
-ItemLocation FireTemple_BoulderMazeSideRoomChest              = ItemLocation::Chest      (0x04, 0x08, "Fire Temple Boulder Maze Side Room Chest",           {Category::cFireTemple,});
-ItemLocation FireTemple_BoulderMazeShortcutChest              = ItemLocation::Chest      (0x04, 0x0B, "Fire Temple Boulder Maze Shortcut Chest",            {Category::cFireTemple,});
+ItemLocation FireTemple_BossKeyChest                          = ItemLocation::Chest      (0x04, 0x0C, "Fire Temple Boss Key Chest",                         {Category::cFireTemple, Category::cVanillaBossKey});
+ItemLocation FireTemple_BigLavaRoomBlockedDoorChest           = ItemLocation::Chest      (0x04, 0x02, "Fire Temple Big Lava Room Blocked Door Chest",       {Category::cFireTemple, Category::cVanillaSmallKey});
+ItemLocation FireTemple_BigLavaRoomLowerOpenDoorChest         = ItemLocation::Chest      (0x04, 0x04, "Fire Temple Big Lava Room Lower Open Door Chest",    {Category::cFireTemple, Category::cVanillaSmallKey});
+ItemLocation FireTemple_BoulderMazeLowerChest                 = ItemLocation::Chest      (0x04, 0x03, "Fire Temple Boulder Maze Lower Chest",               {Category::cFireTemple, Category::cVanillaSmallKey});
+ItemLocation FireTemple_BoulderMazeUpperChest                 = ItemLocation::Chest      (0x04, 0x06, "Fire Temple Boulder Maze Upper Chest",               {Category::cFireTemple, Category::cVanillaSmallKey});
+ItemLocation FireTemple_BoulderMazeSideRoomChest              = ItemLocation::Chest      (0x04, 0x08, "Fire Temple Boulder Maze Side Room Chest",           {Category::cFireTemple, Category::cVanillaSmallKey});
+ItemLocation FireTemple_BoulderMazeShortcutChest              = ItemLocation::Chest      (0x04, 0x0B, "Fire Temple Boulder Maze Shortcut Chest",            {Category::cFireTemple, Category::cVanillaSmallKey});
 ItemLocation FireTemple_ScarecrowChest                        = ItemLocation::Chest      (0x04, 0x0D, "Fire Temple Scarecrow Chest",                        {Category::cFireTemple,});
-ItemLocation FireTemple_MapChest                              = ItemLocation::Chest      (0x04, 0x0A, "Fire Temple Map Chest",                              {Category::cFireTemple,});
-ItemLocation FireTemple_CompassChest                          = ItemLocation::Chest      (0x04, 0x07, "Fire Temple Compass Chest",                          {Category::cFireTemple,});
-ItemLocation FireTemple_HighestGoronChest                     = ItemLocation::Chest      (0x04, 0x09, "Fire Temple Highest Goron Chest",                    {Category::cFireTemple,});
+ItemLocation FireTemple_MapChest                              = ItemLocation::Chest      (0x04, 0x0A, "Fire Temple Map Chest",                              {Category::cFireTemple, Category::cVanillaMap,});
+ItemLocation FireTemple_CompassChest                          = ItemLocation::Chest      (0x04, 0x07, "Fire Temple Compass Chest",                          {Category::cFireTemple, Category::cVanillaCompass,});
+ItemLocation FireTemple_HighestGoronChest                     = ItemLocation::Chest      (0x04, 0x09, "Fire Temple Highest Goron Chest",                    {Category::cFireTemple, Category::cVanillaSmallKey});
 ItemLocation FireTemple_MegatonHammerChest                    = ItemLocation::Chest      (0x04, 0x05, "Fire Temple Megaton Hammer Chest",                   {Category::cFireTemple,});
 //Fire Temple MQ
-ItemLocation FireTemple_MQ_NearBossChest                      = ItemLocation::Chest      (0x04, 0x07, "Fire Temple MQ Near Boss Chest",                     {Category::cFireTemple,});
+ItemLocation FireTemple_MQ_NearBossChest                      = ItemLocation::Chest      (0x04, 0x07, "Fire Temple MQ Near Boss Chest",                     {Category::cFireTemple, Category::cVanillaSmallKey});
 ItemLocation FireTemple_MQ_MegatonHammerChest                 = ItemLocation::Chest      (0x04, 0x00, "Fire Temple MQ Megaton Hammer Chest",                {Category::cFireTemple,});
-ItemLocation FireTemple_MQ_CompassChest                       = ItemLocation::Chest      (0x04, 0x0B, "Fire Temple MQ Compass Chest",                       {Category::cFireTemple,});
+ItemLocation FireTemple_MQ_CompassChest                       = ItemLocation::Chest      (0x04, 0x0B, "Fire Temple MQ Compass Chest",                       {Category::cFireTemple, Category::cVanillaCompass,});
 ItemLocation FireTemple_MQ_LizalfosMazeLowerChest             = ItemLocation::Chest      (0x04, 0x03, "Fire Temple MQ Lizalfos Maze Lower Chest",           {Category::cFireTemple,});
 ItemLocation FireTemple_MQ_LizalfosMazeUpperChest             = ItemLocation::Chest      (0x04, 0x06, "Fire Temple MQ Lizalfos Maze Upper Chest",           {Category::cFireTemple,});
-ItemLocation FireTemple_MQ_ChestOnFire                        = ItemLocation::Chest      (0x04, 0x05, "Fire Temple MQ Chest on Fire",                       {Category::cFireTemple,});
+ItemLocation FireTemple_MQ_ChestOnFire                        = ItemLocation::Chest      (0x04, 0x05, "Fire Temple MQ Chest on Fire",                       {Category::cFireTemple, Category::cVanillaSmallKey});
 ItemLocation FireTemple_MQ_MapRoomSideChest                   = ItemLocation::Chest      (0x04, 0x02, "Fire Temple MQ Map Room Side Chest",                 {Category::cFireTemple,});
-ItemLocation FireTemple_MQ_MapChest                           = ItemLocation::Chest      (0x04, 0x0C, "Fire Temple MQ Map Chest",                           {Category::cFireTemple,});
-ItemLocation FireTemple_MQ_BossKeyChest                       = ItemLocation::Chest      (0x04, 0x04, "Fire Temple MQ Boss Key Chest",                      {Category::cFireTemple,});
-ItemLocation FireTemple_MQ_BigLavaRoomBlockedDoorChest        = ItemLocation::Chest      (0x04, 0x01, "Fire Temple MQ Big Lava Room Blocked Door Chest",    {Category::cFireTemple,});
-ItemLocation FireTemple_MQ_LizalfosMazeSideRoomChest          = ItemLocation::Chest      (0x04, 0x08, "Fire Temple MQ Lizalfos Maze Side Room Chest",       {Category::cFireTemple,});
-ItemLocation FireTemple_MQ_FreestandingKey                    = ItemLocation::Collectable(0x04, 0x1C, "Fire Temple MQ Freestanding Key",                    {Category::cFireTemple,});
+ItemLocation FireTemple_MQ_MapChest                           = ItemLocation::Chest      (0x04, 0x0C, "Fire Temple MQ Map Chest",                           {Category::cFireTemple, Category::cVanillaMap,});
+ItemLocation FireTemple_MQ_BossKeyChest                       = ItemLocation::Chest      (0x04, 0x04, "Fire Temple MQ Boss Key Chest",                      {Category::cFireTemple, Category::cVanillaBossKey});
+ItemLocation FireTemple_MQ_BigLavaRoomBlockedDoorChest        = ItemLocation::Chest      (0x04, 0x01, "Fire Temple MQ Big Lava Room Blocked Door Chest",    {Category::cFireTemple, Category::cVanillaSmallKey});
+ItemLocation FireTemple_MQ_LizalfosMazeSideRoomChest          = ItemLocation::Chest      (0x04, 0x08, "Fire Temple MQ Lizalfos Maze Side Room Chest",       {Category::cFireTemple, Category::cVanillaSmallKey});
+ItemLocation FireTemple_MQ_FreestandingKey                    = ItemLocation::Collectable(0x04, 0x1C, "Fire Temple MQ Freestanding Key",                    {Category::cFireTemple, Category::cVanillaSmallKey});
 
 //Water Temple Vanilla
-ItemLocation WaterTemple_MapChest                             = ItemLocation::Chest      (0x05, 0x02, "Water Temple Map Chest",                             {Category::cWaterTemple,});
-ItemLocation WaterTemple_CompassChest                         = ItemLocation::Chest      (0x05, 0x09, "Water Temple Compass Chest",                         {Category::cWaterTemple,});
-ItemLocation WaterTemple_TorchesChest                         = ItemLocation::Chest      (0x05, 0x01, "Water Temple Torches Chest",                         {Category::cWaterTemple,});
-ItemLocation WaterTemple_DragonChest                          = ItemLocation::Chest      (0x05, 0x0A, "Water Temple Dragon Chest",                          {Category::cWaterTemple,});
-ItemLocation WaterTemple_CentralBowTargetChest                = ItemLocation::Chest      (0x05, 0x08, "Water Temple Central Bow Target Chest",              {Category::cWaterTemple,});
-ItemLocation WaterTemple_CentralPillarChest                   = ItemLocation::Chest      (0x05, 0x06, "Water Temple Central Pillar Chest",                  {Category::cWaterTemple,});
-ItemLocation WaterTemple_CrackedWallChest                     = ItemLocation::Chest      (0x05, 0x00, "Water Temple Cracked Wall Chest",                    {Category::cWaterTemple,});
-ItemLocation WaterTemple_BossKeyChest                         = ItemLocation::Chest      (0x05, 0x05, "Water Temple Boss Key Chest",                        {Category::cWaterTemple,});
+ItemLocation WaterTemple_MapChest                             = ItemLocation::Chest      (0x05, 0x02, "Water Temple Map Chest",                             {Category::cWaterTemple, Category::cVanillaMap,});
+ItemLocation WaterTemple_CompassChest                         = ItemLocation::Chest      (0x05, 0x09, "Water Temple Compass Chest",                         {Category::cWaterTemple, Category::cVanillaCompass,});
+ItemLocation WaterTemple_TorchesChest                         = ItemLocation::Chest      (0x05, 0x01, "Water Temple Torches Chest",                         {Category::cWaterTemple, Category::cVanillaSmallKey});
+ItemLocation WaterTemple_DragonChest                          = ItemLocation::Chest      (0x05, 0x0A, "Water Temple Dragon Chest",                          {Category::cWaterTemple, Category::cVanillaSmallKey});
+ItemLocation WaterTemple_CentralBowTargetChest                = ItemLocation::Chest      (0x05, 0x08, "Water Temple Central Bow Target Chest",              {Category::cWaterTemple, Category::cVanillaSmallKey});
+ItemLocation WaterTemple_CentralPillarChest                   = ItemLocation::Chest      (0x05, 0x06, "Water Temple Central Pillar Chest",                  {Category::cWaterTemple, Category::cVanillaSmallKey});
+ItemLocation WaterTemple_CrackedWallChest                     = ItemLocation::Chest      (0x05, 0x00, "Water Temple Cracked Wall Chest",                    {Category::cWaterTemple, Category::cVanillaSmallKey});
+ItemLocation WaterTemple_BossKeyChest                         = ItemLocation::Chest      (0x05, 0x05, "Water Temple Boss Key Chest",                        {Category::cWaterTemple, Category::cVanillaBossKey});
 ItemLocation WaterTemple_LongshotChest                        = ItemLocation::Chest      (0x05, 0x07, "Water Temple Longshot Chest",                        {Category::cWaterTemple,});
-ItemLocation WaterTemple_RiverChest                           = ItemLocation::Chest      (0x05, 0x03, "Water Temple River Chest",                           {Category::cWaterTemple,});
+ItemLocation WaterTemple_RiverChest                           = ItemLocation::Chest      (0x05, 0x03, "Water Temple River Chest",                           {Category::cWaterTemple, Category::cVanillaSmallKey});
 //Water Temple MQ
-ItemLocation WaterTemple_MQ_CentralPillarChest                = ItemLocation::Chest      (0x05, 0x06, "Water Temple MQ Central Pillar Chest",               {Category::cWaterTemple,});
-ItemLocation WaterTemple_MQ_BossKeyChest                      = ItemLocation::Chest      (0x05, 0x05, "Water Temple MQ Boss Key Chest",                     {Category::cWaterTemple,});
+ItemLocation WaterTemple_MQ_CentralPillarChest                = ItemLocation::Chest      (0x05, 0x06, "Water Temple MQ Central Pillar Chest",               {Category::cWaterTemple, Category::cVanillaSmallKey});
+ItemLocation WaterTemple_MQ_BossKeyChest                      = ItemLocation::Chest      (0x05, 0x05, "Water Temple MQ Boss Key Chest",                     {Category::cWaterTemple, Category::cVanillaBossKey});
 ItemLocation WaterTemple_MQ_LongshotChest                     = ItemLocation::Chest      (0x05, 0x00, "Water Temple MQ Longshot Chest",                     {Category::cWaterTemple,});
-ItemLocation WaterTemple_MQ_CompassChest                      = ItemLocation::Chest      (0x05, 0x01, "Water Temple MQ Compass Chest",                      {Category::cWaterTemple,});
-ItemLocation WaterTemple_MQ_MapChest                          = ItemLocation::Chest      (0x05, 0x02, "Water Temple MQ Map Chest",                          {Category::cWaterTemple,});
-ItemLocation WaterTemple_MQ_FreestandingKey                   = ItemLocation::Collectable(0x05, 0x01, "Water Temple MQ Freestanding Key",                   {Category::cWaterTemple,});
+ItemLocation WaterTemple_MQ_CompassChest                      = ItemLocation::Chest      (0x05, 0x01, "Water Temple MQ Compass Chest",                      {Category::cWaterTemple, Category::cVanillaCompass,});
+ItemLocation WaterTemple_MQ_MapChest                          = ItemLocation::Chest      (0x05, 0x02, "Water Temple MQ Map Chest",                          {Category::cWaterTemple, Category::cVanillaMap,});
+ItemLocation WaterTemple_MQ_FreestandingKey                   = ItemLocation::Collectable(0x05, 0x01, "Water Temple MQ Freestanding Key",                   {Category::cWaterTemple, Category::cVanillaSmallKey});
 
 //Spirit Temple Shared
 ItemLocation SpiritTemple_SilverGauntletsChest                = ItemLocation::Chest      (0x5C, 0x0B, "Spirit Temple Silver Gauntlets Chest",               {Category::cSpiritTemple, Category::cDesertColossus});
 ItemLocation SpiritTemple_MirrorShieldChest                   = ItemLocation::Chest      (0x5C, 0x09, "Spirit Temple Mirror Shield Chest",                  {Category::cSpiritTemple, Category::cDesertColossus});
 //Spirit Temple Vanilla
 ItemLocation SpiritTemple_ChildBridgeChest                    = ItemLocation::Chest      (0x06, 0x08, "Spirit Temple Child Bridge Chest",                   {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_ChildEarlyTorchesChest              = ItemLocation::Chest      (0x06, 0x00, "Spirit Temple Child Early Torches Chest",            {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_CompassChest                        = ItemLocation::Chest      (0x06, 0x04, "Spirit Temple Compass Chest",                        {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_EarlyAdultRightChest                = ItemLocation::Chest      (0x06, 0x07, "Spirit Temple Early Adult Right Chest",              {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_ChildEarlyTorchesChest              = ItemLocation::Chest      (0x06, 0x00, "Spirit Temple Child Early Torches Chest",            {Category::cSpiritTemple, Category::cVanillaSmallKey});
+ItemLocation SpiritTemple_CompassChest                        = ItemLocation::Chest      (0x06, 0x04, "Spirit Temple Compass Chest",                        {Category::cSpiritTemple, Category::cVanillaCompass,});
+ItemLocation SpiritTemple_EarlyAdultRightChest                = ItemLocation::Chest      (0x06, 0x07, "Spirit Temple Early Adult Right Chest",              {Category::cSpiritTemple, Category::cVanillaSmallKey});
 ItemLocation SpiritTemple_FirstMirrorLeftChest                = ItemLocation::Chest      (0x06, 0x0D, "Spirit Temple First Mirror Left Chest",              {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_FirstMirrorRightChest               = ItemLocation::Chest      (0x06, 0x0E, "Spirit Temple First Mirror Right Chest",             {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MapChest                            = ItemLocation::Chest      (0x06, 0x03, "Spirit Temple Map Chest",                            {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_MapChest                            = ItemLocation::Chest      (0x06, 0x03, "Spirit Temple Map Chest",                            {Category::cSpiritTemple, Category::cVanillaMap,});
 ItemLocation SpiritTemple_ChildClimbNorthChest                = ItemLocation::Chest      (0x06, 0x06, "Spirit Temple Child Climb North Chest",              {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_ChildClimbEastChest                 = ItemLocation::Chest      (0x06, 0x0C, "Spirit Temple Child Climb East Chest",               {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_SunBlockRoomChest                   = ItemLocation::Chest      (0x06, 0x01, "Spirit Temple Sun Block Room Chest",                 {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_StatueRoomHandChest                 = ItemLocation::Chest      (0x06, 0x02, "Spirit Temple Statue Room Hand Chest",               {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_SunBlockRoomChest                   = ItemLocation::Chest      (0x06, 0x01, "Spirit Temple Sun Block Room Chest",                 {Category::cSpiritTemple, Category::cVanillaSmallKey});
+ItemLocation SpiritTemple_StatueRoomHandChest                 = ItemLocation::Chest      (0x06, 0x02, "Spirit Temple Statue Room Hand Chest",               {Category::cSpiritTemple, Category::cVanillaSmallKey});
 ItemLocation SpiritTemple_StatueRoomNortheastChest            = ItemLocation::Chest      (0x06, 0x0F, "Spirit Temple Statue Room Northeast Chest",          {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_NearFourArmosChest                  = ItemLocation::Chest      (0x06, 0x05, "Spirit Temple Near Four Armos Chest",                {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_NearFourArmosChest                  = ItemLocation::Chest      (0x06, 0x05, "Spirit Temple Near Four Armos Chest",                {Category::cSpiritTemple, Category::cVanillaSmallKey});
 ItemLocation SpiritTemple_HallwayRightInvisibleChest          = ItemLocation::Chest      (0x06, 0x14, "Spirit Temple Hallway Right Invisible Chest",        {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_HallwayLeftInvisibleChest           = ItemLocation::Chest      (0x06, 0x15, "Spirit Temple Hallway Left Invisible Chest",         {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_BossKeyChest                        = ItemLocation::Chest      (0x06, 0x0A, "Spirit Temple Boss Key Chest",                       {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_BossKeyChest                        = ItemLocation::Chest      (0x06, 0x0A, "Spirit Temple Boss Key Chest",                       {Category::cSpiritTemple, Category::cVanillaBossKey});
 ItemLocation SpiritTemple_TopmostChest                        = ItemLocation::Chest      (0x06, 0x12, "Spirit Temple Topmost Chest",                        {Category::cSpiritTemple,});
 //Spirit Temple MQ
 ItemLocation SpiritTemple_MQ_EntranceFrontLeftChest           = ItemLocation::Chest      (0x06, 0x1A, "Spirit Temple MQ Entrance Front Left Chest",         {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_EntranceBackRightChest           = ItemLocation::Chest      (0x06, 0x1F, "Spirit Temple MQ Entrance Back Right Chest",         {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_EntranceFrontRightChest          = ItemLocation::Chest      (0x06, 0x1B, "Spirit Temple MQ Entrance Front Right Chest",        {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_EntranceBackLeftChest            = ItemLocation::Chest      (0x06, 0x1E, "Spirit Temple MQ Entrance Back Left Chest",          {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_ChildHammerSwitchChest           = ItemLocation::Chest      (0x06, 0x1D, "Spirit Temple MQ Child Hammer Switch Chest",         {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_MapChest                         = ItemLocation::Chest      (0x06, 0x00, "Spirit Temple MQ Map Chest",                         {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_MapRoomEnemyChest                = ItemLocation::Chest      (0x06, 0x08, "Spirit Temple MQ Map Room Enemy Chest",              {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_MQ_EntranceFrontRightChest          = ItemLocation::Chest      (0x06, 0x1B, "Spirit Temple MQ Entrance Front Right Chest",        {Category::cSpiritTemple, Category::cVanillaSmallKey});
+ItemLocation SpiritTemple_MQ_EntranceBackLeftChest            = ItemLocation::Chest      (0x06, 0x1E, "Spirit Temple MQ Entrance Back Left Chest",          {Category::cSpiritTemple, Category::cVanillaSmallKey});
+ItemLocation SpiritTemple_MQ_ChildHammerSwitchChest           = ItemLocation::Chest      (0x06, 0x1D, "Spirit Temple MQ Child Hammer Switch Chest",         {Category::cSpiritTemple, Category::cVanillaSmallKey});
+ItemLocation SpiritTemple_MQ_MapChest                         = ItemLocation::Chest      (0x06, 0x00, "Spirit Temple MQ Map Chest",                         {Category::cSpiritTemple, Category::cVanillaMap,});
+ItemLocation SpiritTemple_MQ_MapRoomEnemyChest                = ItemLocation::Chest      (0x06, 0x08, "Spirit Temple MQ Map Room Enemy Chest",              {Category::cSpiritTemple, Category::cVanillaSmallKey});
 ItemLocation SpiritTemple_MQ_ChildClimbNorthChest             = ItemLocation::Chest      (0x06, 0x06, "Spirit Temple MQ Child Climb North Chest",           {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_ChildClimbSouthChest             = ItemLocation::Chest      (0x06, 0x0C, "Spirit Temple MQ Child Climb East Chest",            {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_CompassChest                     = ItemLocation::Chest      (0x06, 0x03, "Spirit Temple MQ Compass Chest",                     {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_MQ_ChildClimbSouthChest             = ItemLocation::Chest      (0x06, 0x0C, "Spirit Temple MQ Child Climb South Chest",           {Category::cSpiritTemple, Category::cVanillaSmallKey});
+ItemLocation SpiritTemple_MQ_CompassChest                     = ItemLocation::Chest      (0x06, 0x03, "Spirit Temple MQ Compass Chest",                     {Category::cSpiritTemple, Category::cVanillaCompass,});
 ItemLocation SpiritTemple_MQ_StatueRoomLullabyChest           = ItemLocation::Chest      (0x06, 0x0F, "Spirit Temple MQ Statue Room Lullaby Chest",         {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_StatueRoomInvisibleChest         = ItemLocation::Chest      (0x06, 0x02, "Spirit Temple MQ Statue Room Invisible Chest",       {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_SilverBlockHallwayChest          = ItemLocation::Chest      (0x06, 0x1C, "Spirit Temple MQ Silver Block Hallway Chest",        {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_MQ_SilverBlockHallwayChest          = ItemLocation::Chest      (0x06, 0x1C, "Spirit Temple MQ Silver Block Hallway Chest",        {Category::cSpiritTemple, Category::cVanillaSmallKey});
 ItemLocation SpiritTemple_MQ_SunBlockRoomChest                = ItemLocation::Chest      (0x06, 0x01, "Spirit Temple MQ Sun Block Room Chest",              {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_SymphonyRoomChest                = ItemLocation::Chest      (0x06, 0x07, "Spirit Temple MQ Symphony Room Chest",               {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_LeaverRoomChest                  = ItemLocation::Chest      (0x06, 0x04, "Spirit Temple MQ Leaver Room Chest",                 {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_BeamosRoomChest                  = ItemLocation::Chest      (0x06, 0x19, "Spirit Temple MQ Beamos Room Chest",                 {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_ChestSwitchChest                 = ItemLocation::Chest      (0x06, 0x18, "Spirit Temple MQ Chest Switch Chest",                {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_BossKeyChest                     = ItemLocation::Chest      (0x06, 0x05, "Spirit Temple MQ Boss Key Chest",                    {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_MirrorPuzzleInvisibleChest       = ItemLocation::Chest      (0x06, 0x12, "Spirit Temple MQ Mirror Puzzle Invisible Chest",     {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_MQ_BossKeyChest                     = ItemLocation::Chest      (0x06, 0x05, "Spirit Temple MQ Boss Key Chest",                    {Category::cSpiritTemple, Category::cVanillaBossKey});
+ItemLocation SpiritTemple_MQ_MirrorPuzzleInvisibleChest       = ItemLocation::Chest      (0x06, 0x12, "Spirit Temple MQ Mirror Puzzle Invisible Chest",     {Category::cSpiritTemple, Category::cVanillaSmallKey});
 
 //Shadow Temple Vanilla
-ItemLocation ShadowTemple_MapChest                            = ItemLocation::Chest      (0x07, 0x01, "Shadow Temple Map Chest",                            {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MapChest                            = ItemLocation::Chest      (0x07, 0x01, "Shadow Temple Map Chest",                            {Category::cShadowTemple, Category::cVanillaMap,});
 ItemLocation ShadowTemple_HoverBootsChest                     = ItemLocation::Chest      (0x07, 0x07, "Shadow Temple Hover Boots Chest",                    {Category::cShadowTemple,});
-ItemLocation ShadowTemple_CompassChest                        = ItemLocation::Chest      (0x07, 0x03, "Shadow Temple Compass Chest",                        {Category::cShadowTemple,});
-ItemLocation ShadowTemple_EarlySilverRupeeChest               = ItemLocation::Chest      (0x07, 0x02, "Shadow Temple Early Silver Rupee Chest",             {Category::cShadowTemple,});
+ItemLocation ShadowTemple_CompassChest                        = ItemLocation::Chest      (0x07, 0x03, "Shadow Temple Compass Chest",                        {Category::cShadowTemple, Category::cVanillaCompass,});
+ItemLocation ShadowTemple_EarlySilverRupeeChest               = ItemLocation::Chest      (0x07, 0x02, "Shadow Temple Early Silver Rupee Chest",             {Category::cShadowTemple, Category::cVanillaSmallKey});
 ItemLocation ShadowTemple_InvisibleBladesVisibleChest         = ItemLocation::Chest      (0x07, 0x0C, "Shadow Temple Invisible Blades Visible Chest",       {Category::cShadowTemple,});
 ItemLocation ShadowTemple_InvisibleBladesInvisibleChest       = ItemLocation::Chest      (0x07, 0x16, "Shadow Temple Invisible Blades Invisible Chest",     {Category::cShadowTemple,});
 ItemLocation ShadowTemple_FallingSpikesLowerChest             = ItemLocation::Chest      (0x07, 0x05, "Shadow Temple Falling Spikes Lower Chest",           {Category::cShadowTemple,});
 ItemLocation ShadowTemple_FallingSpikesUpperChest             = ItemLocation::Chest      (0x07, 0x06, "Shadow Temple Falling Spikes Upper Chest",           {Category::cShadowTemple,});
-ItemLocation ShadowTemple_FallingSpikesSwitchChest            = ItemLocation::Chest      (0x07, 0x04, "Shadow Temple Falling Spikes Switch Chest",          {Category::cShadowTemple,});
+ItemLocation ShadowTemple_FallingSpikesSwitchChest            = ItemLocation::Chest      (0x07, 0x04, "Shadow Temple Falling Spikes Switch Chest",          {Category::cShadowTemple, Category::cVanillaSmallKey});
 ItemLocation ShadowTemple_InvisibleSpikesChest                = ItemLocation::Chest      (0x07, 0x09, "Shadow Temple Invisible Spikes Chest",               {Category::cShadowTemple,});
 ItemLocation ShadowTemple_WindHintChest                       = ItemLocation::Chest      (0x07, 0x15, "Shadow Temple Wind Hint Chest",                      {Category::cShadowTemple,});
 ItemLocation ShadowTemple_AfterWindEnemyChest                 = ItemLocation::Chest      (0x07, 0x08, "Shadow Temple After Wind Enemey Chest",              {Category::cShadowTemple,});
-ItemLocation ShadowTemple_AfterWindHiddenChest                = ItemLocation::Chest      (0x07, 0x14, "Shadow Temple After Wind Hidden Chest",              {Category::cShadowTemple,});
+ItemLocation ShadowTemple_AfterWindHiddenChest                = ItemLocation::Chest      (0x07, 0x14, "Shadow Temple After Wind Hidden Chest",              {Category::cShadowTemple, Category::cVanillaSmallKey});
 ItemLocation ShadowTemple_SpikeWallsLeftChest                 = ItemLocation::Chest      (0x07, 0x0A, "Shadow Temple Spike Walls Left Chest",               {Category::cShadowTemple,});
-ItemLocation ShadowTemple_BossKeyChest                        = ItemLocation::Chest      (0x07, 0x0B, "Shadow Temple Boss Key Chest",                       {Category::cShadowTemple,});
-ItemLocation ShadowTemple_InvisibleFloormasterChest           = ItemLocation::Chest      (0x07, 0x0D, "Shadow Temple Invisible Floormaster Chest",          {Category::cShadowTemple,});
-ItemLocation ShadowTemple_FreestandingKey                     = ItemLocation::Collectable(0x07, 0x01, "Shadow Temple Freestanding Key",                     {Category::cShadowTemple,});
+ItemLocation ShadowTemple_BossKeyChest                        = ItemLocation::Chest      (0x07, 0x0B, "Shadow Temple Boss Key Chest",                       {Category::cShadowTemple, Category::cVanillaBossKey});
+ItemLocation ShadowTemple_InvisibleFloormasterChest           = ItemLocation::Chest      (0x07, 0x0D, "Shadow Temple Invisible Floormaster Chest",          {Category::cShadowTemple, Category::cVanillaSmallKey});
+ItemLocation ShadowTemple_FreestandingKey                     = ItemLocation::Collectable(0x07, 0x01, "Shadow Temple Freestanding Key",                     {Category::cShadowTemple, Category::cVanillaSmallKey});
 //Shadow Temple MQ
-ItemLocation ShadowTemple_MQ_CompassChest                     = ItemLocation::Chest      (0x07, 0x01, "Shadow Temple MQ Compass Chest",                     {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MQ_CompassChest                     = ItemLocation::Chest      (0x07, 0x01, "Shadow Temple MQ Compass Chest",                     {Category::cShadowTemple, Category::cVanillaCompass,});
 ItemLocation ShadowTemple_MQ_HoverBootsChest                  = ItemLocation::Chest      (0x07, 0x07, "Shadow Temple MQ Hover Boots Chest",                 {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_EarlyGibdosChest                 = ItemLocation::Chest      (0x07, 0x03, "Shadow Temple MQ Early Gibdos Chest",                {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_MapChest                         = ItemLocation::Chest      (0x07, 0x02, "Shadow Temple MQ Map Chest",                         {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MQ_EarlyGibdosChest                 = ItemLocation::Chest      (0x07, 0x03, "Shadow Temple MQ Early Gibdos Chest",                {Category::cShadowTemple, Category::cVanillaSmallKey});
+ItemLocation ShadowTemple_MQ_MapChest                         = ItemLocation::Chest      (0x07, 0x02, "Shadow Temple MQ Map Chest",                         {Category::cShadowTemple, Category::cVanillaMap,});
 ItemLocation ShadowTemple_MQ_BeamosSilverRupeesChest          = ItemLocation::Chest      (0x07, 0x0F, "Shadow Temple MQ Beamos Silver Rupees Chest",        {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_FallingSpikesSwitchChest         = ItemLocation::Chest      (0x07, 0x04, "Shadow Temple MQ Falling Spikes Switch Chest",       {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MQ_FallingSpikesSwitchChest         = ItemLocation::Chest      (0x07, 0x04, "Shadow Temple MQ Falling Spikes Switch Chest",       {Category::cShadowTemple, Category::cVanillaSmallKey});
 ItemLocation ShadowTemple_MQ_FallingSpikesLowerChest          = ItemLocation::Chest      (0x07, 0x05, "Shadow Temple MQ Falling Spikes Lower Chest",        {Category::cShadowTemple,});
 ItemLocation ShadowTemple_MQ_FallingSpikesUpperChest          = ItemLocation::Chest      (0x07, 0x06, "Shadow Temple MQ Falling Spikes Upper Chest",        {Category::cShadowTemple,});
 ItemLocation ShadowTemple_MQ_InvisibleSpikesChest             = ItemLocation::Chest      (0x07, 0x09, "Shadow Temple MQ Invisible Spikes Chest",            {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_BossKeyChest                     = ItemLocation::Chest      (0x07, 0x0B, "Shadow Temple MQ Boss Key Chest",                    {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MQ_BossKeyChest                     = ItemLocation::Chest      (0x07, 0x0B, "Shadow Temple MQ Boss Key Chest",                    {Category::cShadowTemple, Category::cVanillaBossKey});
 ItemLocation ShadowTemple_MQ_SpikeWallsLeftChest              = ItemLocation::Chest      (0x07, 0x0A, "Shadow Temple MQ Spike Walls Left Chest",            {Category::cShadowTemple,});
 ItemLocation ShadowTemple_MQ_StalfosRoomChest                 = ItemLocation::Chest      (0x07, 0x10, "Shadow Temple MQ Stalfos Room Chest",                {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_InvisibleBladesInvisibleChest    = ItemLocation::Chest      (0x07, 0x16, "Shadow Temple MQ Invisible Blades Invisible Chest",  {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MQ_InvisibleBladesInvisibleChest    = ItemLocation::Chest      (0x07, 0x16, "Shadow Temple MQ Invisible Blades Invisible Chest",  {Category::cShadowTemple, Category::cVanillaSmallKey});
 ItemLocation ShadowTemple_MQ_InvisibleBladesVisibleChest      = ItemLocation::Chest      (0x07, 0x0C, "Shadow Temple MQ Invisible Blades Visible Chest",    {Category::cShadowTemple,});
 ItemLocation ShadowTemple_MQ_BombFlowerChest                  = ItemLocation::Chest      (0x07, 0x0D, "Shadow Temple MQ Bomb Flower Chest",                 {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_WindHintChest                    = ItemLocation::Chest      (0x07, 0x15, "Shadow Temple MQ Wind Hint Chest",                   {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MQ_WindHintChest                    = ItemLocation::Chest      (0x07, 0x15, "Shadow Temple MQ Wind Hint Chest",                   {Category::cShadowTemple, Category::cVanillaSmallKey});
 ItemLocation ShadowTemple_MQ_AfterWindHiddenChest             = ItemLocation::Chest      (0x07, 0x14, "Shadow Temple MQ After Wind Hidden Chest",           {Category::cShadowTemple,});
 ItemLocation ShadowTemple_MQ_AfterWindEnemyChest              = ItemLocation::Chest      (0x07, 0x08, "Shadow Temple MQ After Wind Enemy Chest",            {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_NearShipInvisibleChest           = ItemLocation::Chest      (0x07, 0x0E, "Shadow Temple MQ Near Ship Invisible Chest",         {Category::cShadowTemple,});
-ItemLocation ShadowTemple_MQ_FreestandingKey                  = ItemLocation::Collectable(0x07, 0x06, "Shadow Temple MQ Freestanding Key",                  {Category::cShadowTemple,});
+ItemLocation ShadowTemple_MQ_NearShipInvisibleChest           = ItemLocation::Chest      (0x07, 0x0E, "Shadow Temple MQ Near Ship Invisible Chest",         {Category::cShadowTemple, Category::cVanillaSmallKey});
+ItemLocation ShadowTemple_MQ_FreestandingKey                  = ItemLocation::Collectable(0x07, 0x06, "Shadow Temple MQ Freestanding Key",                  {Category::cShadowTemple, Category::cVanillaSmallKey});
 
 //Bottom of the Well Vanilla
-ItemLocation BottomOfTheWell_FrontLeftFakeWallChest           = ItemLocation::Chest      (0x08, 0x08, "Bottom of the Well Front Left Fake Wall Chest",         {Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_FrontLeftFakeWallChest           = ItemLocation::Chest      (0x08, 0x08, "Bottom of the Well Front Left Fake Wall Chest",         {Category::cBottomOfTheWell, Category::cVanillaSmallKey});
 ItemLocation BottomOfTheWell_FrontCenterBombableChest         = ItemLocation::Chest      (0x08, 0x02, "Bottom of the Well Front Center Bombable Chest",        {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_RightBottomFakeWallChest         = ItemLocation::Chest      (0x08, 0x05, "Bottom of the Well Right Bottom Fake Wall Chest",       {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_CompassChest                     = ItemLocation::Chest      (0x08, 0x01, "Bottom of the Well Compass Chest",                      {Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_RightBottomFakeWallChest         = ItemLocation::Chest      (0x08, 0x05, "Bottom of the Well Right Bottom Fake Wall Chest",       {Category::cBottomOfTheWell, Category::cVanillaSmallKey});
+ItemLocation BottomOfTheWell_CompassChest                     = ItemLocation::Chest      (0x08, 0x01, "Bottom of the Well Compass Chest",                      {Category::cBottomOfTheWell, Category::cVanillaCompass,});
 ItemLocation BottomOfTheWell_CenterSkulltulaChest             = ItemLocation::Chest      (0x08, 0x0E, "Bottom of the Well Center Skulltula Chest",             {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_BackLeftBombableChest            = ItemLocation::Chest      (0x08, 0x04, "Bottom of the Well Back Left Bombable Chest",           {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_LensOfTruthChest                 = ItemLocation::Chest      (0x08, 0x03, "Bottom of the Well Lens of Truth Chest",                {Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_LensOfTruthChest                 = ItemLocation::Chest      (0x08, 0x03, "Bottom of the Well Lens of Truth Chest",                {Category::cBottomOfTheWell, Category::cSongDungeonReward});
 ItemLocation BottomOfTheWell_InvisibleChest                   = ItemLocation::Chest      (0x08, 0x14, "Bottom of the Well Invisible Chest",                    {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_UnderwaterFrontChest             = ItemLocation::Chest      (0x08, 0x10, "Bottom of the Well Underwater Front Chest",             {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_UnderwaterLeftChest              = ItemLocation::Chest      (0x08, 0x09, "Bottom of the Well Underwater Left Chest",              {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_MapChest                         = ItemLocation::Chest      (0x08, 0x07, "Bottom of the Well Map Chest",                          {Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_MapChest                         = ItemLocation::Chest      (0x08, 0x07, "Bottom of the Well Map Chest",                          {Category::cBottomOfTheWell, Category::cVanillaMap,});
 ItemLocation BottomOfTheWell_FireKeeseChest                   = ItemLocation::Chest      (0x08, 0x0A, "Bottom of the Well Fire Keese Chest",                   {Category::cBottomOfTheWell,});
 ItemLocation BottomOfTheWell_LikeLikeChest                    = ItemLocation::Chest      (0x08, 0x0C, "Bottom of the Well Like Like Chest",                    {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_FreestandingKey                  = ItemLocation::Collectable(0x08, 0x01, "Bottom of the Well Freestanding Key",                   {Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_FreestandingKey                  = ItemLocation::Collectable(0x08, 0x01, "Bottom of the Well Freestanding Key",                   {Category::cBottomOfTheWell, Category::cVanillaSmallKey});
 //Bottom of the Well MQ
-ItemLocation BottomOfTheWell_MQ_MapChest                      = ItemLocation::Chest      (0x08, 0x03, "Bottom of the Well MQ Map Chest",                       {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_MQ_LensOfTruthChest              = ItemLocation::Chest      (0x08, 0x01, "Bottom of the Well MQ Lens of Truth Chest",             {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_MQ_CompassChest                  = ItemLocation::Chest      (0x08, 0x02, "Bottom of the Well MQ Compass Chest",                   {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_MQ_DeadHandFreestandingKey       = ItemLocation::Collectable(0x08, 0x02, "Bottom of the Well MQ Dead Hand Freestanding Key",      {Category::cBottomOfTheWell,});
-ItemLocation BottomOfTheWell_MQ_EastInnerRoomFreestandingKey  = ItemLocation::Collectable(0x08, 0x01, "Bottom of the Well MQ East Inner Room Freestanding Key",{Category::cBottomOfTheWell,});
+ItemLocation BottomOfTheWell_MQ_MapChest                      = ItemLocation::Chest      (0x08, 0x03, "Bottom of the Well MQ Map Chest",                       {Category::cBottomOfTheWell, Category::cVanillaMap,});
+ItemLocation BottomOfTheWell_MQ_LensOfTruthChest              = ItemLocation::Chest      (0x08, 0x01, "Bottom of the Well MQ Lens of Truth Chest",             {Category::cBottomOfTheWell, Category::cSongDungeonReward});
+ItemLocation BottomOfTheWell_MQ_CompassChest                  = ItemLocation::Chest      (0x08, 0x02, "Bottom of the Well MQ Compass Chest",                   {Category::cBottomOfTheWell, Category::cVanillaCompass,});
+ItemLocation BottomOfTheWell_MQ_DeadHandFreestandingKey       = ItemLocation::Collectable(0x08, 0x02, "Bottom of the Well MQ Dead Hand Freestanding Key",      {Category::cBottomOfTheWell, Category::cVanillaSmallKey});
+ItemLocation BottomOfTheWell_MQ_EastInnerRoomFreestandingKey  = ItemLocation::Collectable(0x08, 0x01, "Bottom of the Well MQ East Inner Room Freestanding Key",{Category::cBottomOfTheWell, Category::cVanillaSmallKey});
 
 //Ice Cavern Vanilla
-ItemLocation IceCavern_MapChest                               = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern Map Chest",                                  {Category::cIceCavern,});
-ItemLocation IceCavern_CompassChest                           = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern Compass Chest",                              {Category::cIceCavern,});
+ItemLocation IceCavern_MapChest                               = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern Map Chest",                                  {Category::cIceCavern, Category::cVanillaMap,});
+ItemLocation IceCavern_CompassChest                           = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern Compass Chest",                              {Category::cIceCavern, Category::cVanillaCompass,});
 ItemLocation IceCavern_IronBootsChest                         = ItemLocation::Chest      (0x09, 0x02, "Ice Cavern Iron Boots Chest",                           {Category::cIceCavern,});
 ItemLocation IceCavern_FreestandingPoH                        = ItemLocation::Collectable(0x09, 0x01, "Ice Cavern Freestanding PoH",                           {Category::cIceCavern,});
 //Ice Cavern MQ
 ItemLocation IceCavern_MQ_IronBootsChest                      = ItemLocation::Chest      (0x09, 0x02, "Ice Cavern MQ Iron Boots Chest",                        {Category::cIceCavern,});
-ItemLocation IceCavern_MQ_CompassChest                        = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern MQ Compass Chest",                           {Category::cIceCavern,});
-ItemLocation IceCavern_MQ_MapChest                            = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern MQ Map Chest",                               {Category::cIceCavern,});
+ItemLocation IceCavern_MQ_CompassChest                        = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern MQ Compass Chest",                           {Category::cIceCavern, Category::cVanillaCompass,});
+ItemLocation IceCavern_MQ_MapChest                            = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern MQ Map Chest",                               {Category::cIceCavern, Category::cVanillaMap,});
 ItemLocation IceCavern_MQ_FreestandingPoH                     = ItemLocation::Collectable(0x09, 0x01, "Ice Cavern MQ Freestanding PoH",                        {Category::cIceCavern,});
 
 //Gerudo Training Ground Vanilla
 ItemLocation GerudoTrainingGrounds_LobbyLeftChest             = ItemLocation::Chest      (0x0B, 0x13, "Gerudo Training Grounds Lobby Left Chest",              {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_LobbyRightChest            = ItemLocation::Chest      (0x0B, 0x07, "Gerudo Training Grounds Lobby Right Chest",             {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_StalfosChest               = ItemLocation::Chest      (0x0B, 0x00, "Gerudo Training Grounds Stalfos Chest",                 {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_BeamosChest                = ItemLocation::Chest      (0x0B, 0x01, "Gerudo Training Grounds Beamos Chest",                  {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_HiddenCeilingChest         = ItemLocation::Chest      (0x0B, 0x0B, "Gerudo Training Grounds Hidden Ceiling Chest",          {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_StalfosChest               = ItemLocation::Chest      (0x0B, 0x00, "Gerudo Training Grounds Stalfos Chest",                 {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
+ItemLocation GerudoTrainingGrounds_BeamosChest                = ItemLocation::Chest      (0x0B, 0x01, "Gerudo Training Grounds Beamos Chest",                  {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
+ItemLocation GerudoTrainingGrounds_HiddenCeilingChest         = ItemLocation::Chest      (0x0B, 0x0B, "Gerudo Training Grounds Hidden Ceiling Chest",          {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_MazePathFirstChest         = ItemLocation::Chest      (0x0B, 0x06, "Gerudo Training Grounds Maze Path First Chest",         {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MazePathSecondChest        = ItemLocation::Chest      (0x0B, 0x0A, "Gerudo Training Grounds Maze Path Second Chest",        {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MazePathThirdChest         = ItemLocation::Chest      (0x0B, 0x09, "Gerudo Training Grounds Maze Path Third Chest",         {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MazePathFinalChest         = ItemLocation::Chest      (0x0B, 0x0C, "Gerudo Training Grounds Maze Path Final Chest",         {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_MazePathFinalChest         = ItemLocation::Chest      (0x0B, 0x0C, "Gerudo Training Grounds Maze Path Final Chest",         {Category::cGerudoTrainingGrounds, Category::cSongDungeonReward});
 ItemLocation GerudoTrainingGrounds_MazeRightCentralChest      = ItemLocation::Chest      (0x0B, 0x05, "Gerudo Training Grounds Maze Right Central Chest",      {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MazeRightSideChest         = ItemLocation::Chest      (0x0B, 0x08, "Gerudo Training Grounds Maze Right Side Chest",         {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_UnderwaterSilverRupeeChest = ItemLocation::Chest      (0x0B, 0x0D, "Gerudo Training Grounds Underwater Silver Rupee Chest", {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_UnderwaterSilverRupeeChest = ItemLocation::Chest      (0x0B, 0x0D, "Gerudo Training Grounds Underwater Silver Rupee Chest", {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_HammerRoomClearChest       = ItemLocation::Chest      (0x0B, 0x12, "Gerudo Training Grounds Hammer Room Clear Chest",       {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_HammerRoomSwitchChest      = ItemLocation::Chest      (0x0B, 0x10, "Gerudo Training Grounds Hammer Room Switch Chest",      {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_EyeStatueChest             = ItemLocation::Chest      (0x0B, 0x03, "Gerudo Training Grounds Eye Statue Chest",              {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_NearScarecrowChest         = ItemLocation::Chest      (0x0B, 0x04, "Gerudo Training Grounds Near Scarecrow Chest",          {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_HammerRoomSwitchChest      = ItemLocation::Chest      (0x0B, 0x10, "Gerudo Training Grounds Hammer Room Switch Chest",      {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
+ItemLocation GerudoTrainingGrounds_EyeStatueChest             = ItemLocation::Chest      (0x0B, 0x03, "Gerudo Training Grounds Eye Statue Chest",              {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
+ItemLocation GerudoTrainingGrounds_NearScarecrowChest         = ItemLocation::Chest      (0x0B, 0x04, "Gerudo Training Grounds Near Scarecrow Chest",          {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_BeforeHeavyBlockChest      = ItemLocation::Chest      (0x0B, 0x11, "Gerudo Training Grounds Before Heavy Block Chest",      {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_HeavyBlockFirstChest       = ItemLocation::Chest      (0x0B, 0x0F, "Gerudo Training Grounds Heavy Block First Chest",       {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_HeavyBlockSecondChest      = ItemLocation::Chest      (0x0B, 0x0E, "Gerudo Training Grounds Heavy Block Second Chest",      {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_HeavyBlockThirdChest       = ItemLocation::Chest      (0x0B, 0x14, "Gerudo Training Grounds Heavy Block Third Chest",       {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_HeavyBlockThirdChest       = ItemLocation::Chest      (0x0B, 0x14, "Gerudo Training Grounds Heavy Block Third Chest",       {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_HeavyBlockFourthChest      = ItemLocation::Chest      (0x0B, 0x02, "Gerudo Training Grounds Heavy Block Fourth Chest",      {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_FreestandingKey            = ItemLocation::Collectable(0x0B, 0x01, "Gerudo Training Grounds Freestanding Key",              {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_FreestandingKey            = ItemLocation::Collectable(0x0B, 0x01, "Gerudo Training Grounds Freestanding Key",              {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 //Gerudo Training Grounds MQ
 ItemLocation GerudoTrainingGrounds_MQ_LobbyRightChest         = ItemLocation::Chest      (0x0B, 0x07, "Gerudo Training Grounds MQ Lobby Right Chest",          {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_LobbyLeftChest          = ItemLocation::Chest      (0x0B, 0x13, "Gerudo Training Grounds MQ Lobby Left Chest",           {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_FirstIronKnuckleChest   = ItemLocation::Chest      (0x0B, 0x00, "Gerudo Training Grounds MQ First Iron Knuckle Chest",   {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_BeforeHeavyBlockChest   = ItemLocation::Chest      (0x0B, 0x11, "Gerudo Training Grounds MQ Before Heavy Block Chest",   {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_EyeStatueChest          = ItemLocation::Chest      (0x0B, 0x03, "Gerudo Training Grounds MQ Eye Statue Chest",           {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MQ_FlameCircleChest        = ItemLocation::Chest      (0x0B, 0x0E, "Gerudo Training Grounds MQ Flame Circle Chest",         {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_MQ_FlameCircleChest        = ItemLocation::Chest      (0x0B, 0x0E, "Gerudo Training Grounds MQ Flame Circle Chest",         {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_MQ_SecondIronKnuckleChest  = ItemLocation::Chest      (0x0B, 0x12, "Gerudo Training Grounds MQ Second Iron Knuckle Chest",  {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MQ_DinalfosChest           = ItemLocation::Chest      (0x0B, 0x01, "Gerudo Training Grounds MQ Dinalfos Chest",             {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MQ_IceArrowsChest          = ItemLocation::Chest      (0x0B, 0x04, "Gerudo Training Grounds MQ Ice Arrows Chest",           {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_MQ_DinalfosChest           = ItemLocation::Chest      (0x0B, 0x01, "Gerudo Training Grounds MQ Dinalfos Chest",             {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
+ItemLocation GerudoTrainingGrounds_MQ_IceArrowsChest          = ItemLocation::Chest      (0x0B, 0x04, "Gerudo Training Grounds MQ Ice Arrows Chest",           {Category::cGerudoTrainingGrounds, Category::cSongDungeonReward});
 ItemLocation GerudoTrainingGrounds_MQ_MazeRightCentralChest   = ItemLocation::Chest      (0x0B, 0x05, "Gerudo Training Grounds MQ Maze Right Central Chest",   {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_MazePathFirstChest      = ItemLocation::Chest      (0x0B, 0x06, "Gerudo Training Grounds MQ Maze Path First Chest",      {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_MazeRightSideChest      = ItemLocation::Chest      (0x0B, 0x08, "Gerudo Training Grounds MQ Maze Right Side Chest",      {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_MazePathThirdChest      = ItemLocation::Chest      (0x0B, 0x09, "Gerudo Training Grounds MQ Maze Path Third Chest",      {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_MazePathSecondChest     = ItemLocation::Chest      (0x0B, 0x0A, "Gerudo Training Grounds MQ Maze Path Second Chest",     {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_HiddenCeilingChest      = ItemLocation::Chest      (0x0B, 0x0B, "Gerudo Training Grounds MQ Hidden Ceiling Chest",       {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest = ItemLocation::Chest   (0x0B, 0x0D, "Gerudo Training Grounds MQ Underwater Silver Rupee Chest", {Category::cGerudoTrainingGrounds,});
+ItemLocation GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest = ItemLocation::Chest   (0x0B, 0x0D, "Gerudo Training Grounds MQ Underwater Silver Rupee Chest", {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_MQ_HeavyBlockChest         = ItemLocation::Chest      (0x0B, 0x02, "Gerudo Training Grounds MQ Heavy Block Chest",          {Category::cGerudoTrainingGrounds,});
 
 //Ganons Castle Shared
@@ -476,8 +476,8 @@ ItemLocation GanonsCastle_LightTrialThirdLeftChest            = ItemLocation::Ch
 ItemLocation GanonsCastle_LightTrialFirstRightChest           = ItemLocation::Chest      (0x0D, 0x0E, "Ganon's Castle Light Trial First Right Chest",          {Category::cGanonsCastle,});
 ItemLocation GanonsCastle_LightTrialSecondRightChest          = ItemLocation::Chest      (0x0D, 0x0A, "Ganon's Castle Light Trial Second Right Chest",         {Category::cGanonsCastle,});
 ItemLocation GanonsCastle_LightTrialThirdRightChest           = ItemLocation::Chest      (0x0D, 0x0F, "Ganon's Castle Light Trial Third Right Chest",          {Category::cGanonsCastle,});
-ItemLocation GanonsCastle_LightTrialInvisibleEnemiesChest     = ItemLocation::Chest      (0x0D, 0x10, "Ganon's Castle Light Trial Invisible Enemies Chest",    {Category::cGanonsCastle,});
-ItemLocation GanonsCastle_LightTrialLullabyChest              = ItemLocation::Chest      (0x0D, 0x11, "Ganon's Castle Light Trial Lullaby Chest",              {Category::cGanonsCastle,});
+ItemLocation GanonsCastle_LightTrialInvisibleEnemiesChest     = ItemLocation::Chest      (0x0D, 0x10, "Ganon's Castle Light Trial Invisible Enemies Chest",    {Category::cGanonsCastle, Category::cVanillaSmallKey});
+ItemLocation GanonsCastle_LightTrialLullabyChest              = ItemLocation::Chest      (0x0D, 0x11, "Ganon's Castle Light Trial Lullaby Chest",              {Category::cGanonsCastle, Category::cVanillaSmallKey});
 ItemLocation GanonsCastle_DekuScrubCenterLeft                 = ItemLocation::Base       (0x0D, 0x37, "Ganon's Castle Deku Scrub Center-Left",                 {Category::cGanonsCastle, Category::cDekuScrub,});
 ItemLocation GanonsCastle_DekuScrubCenterRight                = ItemLocation::Base       (0x0D, 0x33, "Ganon's Castle Deku Scrub Center-Right",                {Category::cGanonsCastle, Category::cDekuScrub,});
 ItemLocation GanonsCastle_DekuScrubRight                      = ItemLocation::Base       (0x0D, 0x39, "Ganon's Castle Deku Scrub Right",                       {Category::cGanonsCastle, Category::cDekuScrub,});
@@ -488,14 +488,14 @@ ItemLocation GanonsCastle_MQ_ForestTrialEyeSwitchChest        = ItemLocation::Ch
 ItemLocation GanonsCastle_MQ_ForestTrialFrozenEyeSwitchChest  = ItemLocation::Chest      (0x0D, 0x03, "Ganon's Castle MQ Forest Trial Frozen Eye Switch Chest",{Category::cGanonsCastle,});
 ItemLocation GanonsCastle_MQ_LightTrialLullabyChest           = ItemLocation::Chest      (0x0D, 0x04, "Ganon's Castle MQ Light Trial Lullaby Chest",           {Category::cGanonsCastle,});
 ItemLocation GanonsCastle_MQ_ShadowTrialBombFlowerChest       = ItemLocation::Chest      (0x0D, 0x00, "Ganon's Castle MQ Shadow Trial Bomb Flower Chest",      {Category::cGanonsCastle,});
-ItemLocation GanonsCastle_MQ_ShadowTrialEyeSwitchChest        = ItemLocation::Chest      (0x0D, 0x05, "Ganon's Castle MQ Shadow Trial Eye Switch Chest",       {Category::cGanonsCastle,});
+ItemLocation GanonsCastle_MQ_ShadowTrialEyeSwitchChest        = ItemLocation::Chest      (0x0D, 0x05, "Ganon's Castle MQ Shadow Trial Eye Switch Chest",       {Category::cGanonsCastle,  Category::cVanillaSmallKey});
 ItemLocation GanonsCastle_MQ_SpiritTrialGoldenGauntletsChest  = ItemLocation::Chest      (0x0D, 0x06, "Ganon's Castle MQ Spirit Trial Golden Gauntlets Chest", {Category::cGanonsCastle,});
 ItemLocation GanonsCastle_MQ_SpiritTrialSunBackRightChest     = ItemLocation::Chest      (0x0D, 0x07, "Ganon's Castle MQ Spirit Trial Sun Back Right Chest",   {Category::cGanonsCastle,});
-ItemLocation GanonsCastle_MQ_SpiritTrialSunBackLeftChest      = ItemLocation::Chest      (0x0D, 0x08, "Ganon's Castle MQ Spirit Trial Sun Back Left Chest",    {Category::cGanonsCastle,});
+ItemLocation GanonsCastle_MQ_SpiritTrialSunBackLeftChest      = ItemLocation::Chest      (0x0D, 0x08, "Ganon's Castle MQ Spirit Trial Sun Back Left Chest",    {Category::cGanonsCastle,  Category::cVanillaSmallKey});
 ItemLocation GanonsCastle_MQ_SpiritTrialSunFrontLeftChest     = ItemLocation::Chest      (0x0D, 0x09, "Ganon's Castle MQ Spirit Trial Sun Front Left Chest",   {Category::cGanonsCastle,});
 ItemLocation GanonsCastle_MQ_SpiritTrialFirstChest            = ItemLocation::Chest      (0x0D, 0x0A, "Ganon's Castle MQ Spirit Trial First Chest",            {Category::cGanonsCastle,});
 ItemLocation GanonsCastle_MQ_SpiritTrialInvisibleChest        = ItemLocation::Chest      (0x0D, 0x14, "Ganon's Castle MQ Spirit Trial Invisible Chest",        {Category::cGanonsCastle,});
-ItemLocation GanonsCastle_MQ_ForestTrialFreestandingKey       = ItemLocation::Collectable(0x0D, 0x01, "Ganon's Castle MQ Forest Trial Freestanding Key",       {Category::cGanonsCastle,});
+ItemLocation GanonsCastle_MQ_ForestTrialFreestandingKey       = ItemLocation::Collectable(0x0D, 0x01, "Ganon's Castle MQ Forest Trial Freestanding Key",       {Category::cGanonsCastle,  Category::cVanillaSmallKey});
 ItemLocation GanonsCastle_MQ_DekuScrubRight                   = ItemLocation::Base       (0x0D, 0x30, "Ganon's Castle MQ Deku Scrub Right",                    {Category::cGanonsCastle, Category::cDekuScrub,});
 ItemLocation GanonsCastle_MQ_DekuScrubCenterLeft              = ItemLocation::Base       (0x0D, 0x37, "Ganon's Castle MQ Deku Scrub Center-Left",              {Category::cGanonsCastle, Category::cDekuScrub,});
 ItemLocation GanonsCastle_MQ_DekuScrubCenter                  = ItemLocation::Base       (0x0D, 0x33, "Ganon's Castle MQ Deku Scrub Center",                   {Category::cGanonsCastle, Category::cDekuScrub,});
@@ -707,14 +707,14 @@ ItemLocation Ganon                                        = ItemLocation::Reward
       ---HEART CONTAINERS ---
   -------------------------------*/
 
-ItemLocation DekuTree_QueenGohmaHeart                     = ItemLocation::Base   (0x11, 0x4F, "Deku Tree Queen Gohma Heart Container",          {Category::cDekuTree, Category::cBossHeart});
-ItemLocation DodongosCavern_KingDodongoHeart              = ItemLocation::Base   (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart Container",   {Category::cDodongosCavern, Category::cBossHeart});
-ItemLocation JabuJabusBelly_BarinadeHeart                 = ItemLocation::Base   (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart Container",      {Category::cJabuJabusBelly, Category::cBossHeart});
-ItemLocation ForestTemple_PhantomGanonHeart               = ItemLocation::Base   (0x14, 0x4F, "Forest Temple Phantom Ganon Heart Container",    {Category::cForestTemple, Category::cBossHeart});
-ItemLocation FireTemple_VolvagiaHeart                     = ItemLocation::Base   (0x15, 0x4F, "Fire Temple Volvagia Heart Container",           {Category::cFireTemple, Category::cBossHeart});
-ItemLocation WaterTemple_MorphaHeart                      = ItemLocation::Base   (0x16, 0x4F, "Water Temple Morpha Heart Container",            {Category::cWaterTemple, Category::cBossHeart});
-ItemLocation SpiritTemple_TwinrovaHeart                   = ItemLocation::Base   (0x17, 0x4F, "Spirit Temple Twinrova Heart Container",         {Category::cSpiritTemple, Category::cBossHeart});
-ItemLocation ShadowTemple_BongoBongoHeart                 = ItemLocation::Base   (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart Container",      {Category::cShadowTemple, Category::cBossHeart});
+ItemLocation DekuTree_QueenGohmaHeart                     = ItemLocation::Base   (0x11, 0x4F, "Deku Tree Queen Gohma Heart Container",          {Category::cDekuTree, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation DodongosCavern_KingDodongoHeart              = ItemLocation::Base   (0x12, 0x4F, "Dodongos Cavern King Dodongo Heart Container",   {Category::cDodongosCavern, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation JabuJabusBelly_BarinadeHeart                 = ItemLocation::Base   (0x13, 0x4F, "Jabu Jabus Belly Barinade Heart Container",      {Category::cJabuJabusBelly, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation ForestTemple_PhantomGanonHeart               = ItemLocation::Base   (0x14, 0x4F, "Forest Temple Phantom Ganon Heart Container",    {Category::cForestTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation FireTemple_VolvagiaHeart                     = ItemLocation::Base   (0x15, 0x4F, "Fire Temple Volvagia Heart Container",           {Category::cFireTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation WaterTemple_MorphaHeart                      = ItemLocation::Base   (0x16, 0x4F, "Water Temple Morpha Heart Container",            {Category::cWaterTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation SpiritTemple_TwinrovaHeart                   = ItemLocation::Base   (0x17, 0x4F, "Spirit Temple Twinrova Heart Container",         {Category::cSpiritTemple, Category::cBossHeart, Category::cSongDungeonReward});
+ItemLocation ShadowTemple_BongoBongoHeart                 = ItemLocation::Base   (0x18, 0x4F, "Shadow Temple Bongo Bongo Heart Container",      {Category::cShadowTemple, Category::cBossHeart, Category::cSongDungeonReward});
 
 /*-------------------------------
         --- CUTSCENES ---
@@ -731,11 +731,11 @@ ItemLocation OGC_GreatFairyReward                         = ItemLocation::Delaye
 
 ItemLocation SheikInForest                                = ItemLocation::Delayed(0xFF, 0x20, "Sheik in Forest",                                {Category::cSacredForestMeadow, Category::cForest, Category::cSong,});
 ItemLocation SheikInCrater                                = ItemLocation::Delayed(0xFF, 0x21, "Sheik in Crater",                                {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cSong,});
-ItemLocation SheikInIceCavern                             = ItemLocation::Delayed(0xFF, 0x22, "Sheik in Ice Cavern",                            {Category::cIceCavern, Category::cSong,});
+ItemLocation SheikInIceCavern                             = ItemLocation::Delayed(0xFF, 0x22, "Sheik in Ice Cavern",                            {Category::cIceCavern, Category::cSong, Category::cSongDungeonReward});
 ItemLocation SheikAtColossus                              = ItemLocation::Delayed(0xFF, 0x23, "Sheik at Colossus",                              {Category::cDesertColossus, Category::cSong,});
 ItemLocation SheikInKakariko                              = ItemLocation::Delayed(0xFF, 0x24, "Sheik in Kakariko",                              {Category::cKakarikoVillage, Category::cKakariko, Category::cSong,});
 ItemLocation SheikAtTemple                                = ItemLocation::Delayed(0xFF, 0x25, "Sheik at Temple",                                {Category::cTempleOfTime, Category::cMarket, Category::cSong,});
-ItemLocation SongFromImpa                                 = ItemLocation::Delayed(0xFF, 0x26, "Song from Impa",                                 {Category::cHyruleCastle, Category::cMarket, Category::cSong,});
+ItemLocation SongFromImpa                                 = ItemLocation::Delayed(0xFF, 0x26, "Song from Impa",                                 {Category::cHyruleCastle, Category::cMarket, Category::cSong, Category::cSongDungeonReward});
 ItemLocation SongFromMalon                                = ItemLocation::Delayed(0xFF, 0x27, "Song from Malon",                                {Category::cLonLonRanch, Category::cSong,});
 ItemLocation SongFromSaria                                = ItemLocation::Delayed(0xFF, 0x28, "Song from Saria",                                {Category::cSacredForestMeadow, Category::cForest, Category::cSong,});
 ItemLocation SongFromComposersGrave                       = ItemLocation::Delayed(0xFF, 0x29, "Song from Composers Grave",                      {Category::cGraveyard, Category::cKakariko, Category::cSong,});
@@ -1619,6 +1619,7 @@ std::vector<ItemLocation*> overworldLocations = {
 };
 
 std::vector<ItemLocation*> allLocations = {};
+std::vector<ItemLocation*> everyPossibleLocation = {};
 
 //set of overrides to write to the patch
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
@@ -1627,14 +1628,14 @@ std::vector<ItemLocation*> playthroughLocations = {};
 
 u16 itemsPlaced = 0;
 
-void AddLocation(ItemLocation * loc) {
-  allLocations.push_back(loc);
+void AddLocation(ItemLocation * loc, std::vector<ItemLocation*>* destination = &allLocations) {
+  destination->push_back(loc);
 }
 
 template <typename Container>
-void AddLocations(const Container& locations) {
+void AddLocations(const Container& locations, std::vector<ItemLocation*>* destination = &allLocations) {
   for (auto& loc : locations) {
-    allLocations.push_back(loc);
+    destination->push_back(loc);
   }
 }
 
@@ -1728,9 +1729,9 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     loc->SetPlacedItem(item);
 }
 
-std::vector<ItemLocation*> GetLocations(Category category) {
+std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locationPool, Category category) {
   std::vector<ItemLocation*> locationsInCategory = {};
-  for (auto& loc : allLocations) {
+  for (auto& loc : locationPool) {
     if (loc->IsCategory(category)) {
       locationsInCategory.push_back(loc);
     }
@@ -1760,69 +1761,61 @@ void ItemReset() {
   itemsPlaced = 0;
 }
 
+//Fills everyPossibleLocation and creates an exclusion option for each location
+//everyPossibleLocation is used in the menu to lock/hide excluding locations
 void AddExcludedOptions() {
-  allLocations.clear();
-  AddLocations(overworldLocations);
+  AddLocations(overworldLocations, &everyPossibleLocation);
 
-  /*For some reason, trying to add all the dungeon locations here will crash
-    the app if it calls Settings::FillContext() later on which for some reason
-    sets the program counter to 0x00000000.
+  AddLocations(DT_MQ, &everyPossibleLocation);
+  AddLocations(DT_Vanilla, &everyPossibleLocation);
+  AddLocation(&DekuTree_QueenGohmaHeart, &everyPossibleLocation);
 
-    I have no idea why this happens, but we'll leave out the dungeon locations
-    for now since most of the long checks that are typically excluded are overworld
-    ones.*/
+  AddLocations(DC_MQ, &everyPossibleLocation);
+  AddLocations(DC_Vanilla, &everyPossibleLocation);
+  AddLocation(&DodongosCavern_BossRoomChest, &everyPossibleLocation);
+  AddLocation(&DodongosCavern_KingDodongoHeart, &everyPossibleLocation);
 
-  // AddLocations(DT_MQ);
-  // AddLocations(DT_Vanilla);
-  // AddLocation(&DekuTree_QueenGohmaHeart);
-  //
-  // AddLocations(DC_MQ);
-  // AddLocations(DC_Vanilla);
-  // AddLocation(&DodongosCavern_BossRoomChest);
-  // AddLocation(&DodongosCavern_KingDodongoHeart);
-  //
-  // AddLocations(Jabu_MQ);
-  // AddLocations(Jabu_Vanilla);
-  // AddLocation(&JabuJabusBelly_BarinadeHeart);
-  //
-  // AddLocations(FoT_MQ);
-  // AddLocations(FoT_Vanilla);
-  // AddLocation(&ForestTemple_PhantomGanonHeart);
-  //
-  // AddLocations(FiT_MQ);
-  // AddLocations(FiT_Vanilla);
-  // AddLocation(&FireTemple_VolvagiaHeart);
-  //
-  // AddLocations(WaT_MQ);
-  // AddLocations(WaT_Vanilla);
-  // AddLocation(&WaterTemple_MorphaHeart);
-  //
-  // AddLocation(&SpiritTemple_SilverGauntletsChest);
-  // AddLocation(&SpiritTemple_MirrorShieldChest);
-  // AddLocations(SpT_MQ);
-  // AddLocations(SpT_Vanilla);
-  // AddLocation(&SpiritTemple_TwinrovaHeart);
-  //
-  // AddLocations(ShT_MQ);
-  // AddLocations(ShT_Vanilla);
-  // AddLocation(&ShadowTemple_BongoBongoHeart);
-  //
-  // AddLocations(BotW_MQ);
-  // AddLocations(BotW_Vanilla);
-  //
-  // AddLocations(IC_MQ);
-  // AddLocations(IC_Vanilla);
-  // AddLocation(&SheikInIceCavern);
-  //
-  // AddLocations(GTG_MQ);
-  // AddLocations(GTG_Vanilla);
-  //
-  // AddLocations(GC_MQ);
-  // AddLocations(GC_Vanilla);
-  // AddLocation(&GanonsCastle_BossKeyChest);
+  AddLocations(Jabu_MQ, &everyPossibleLocation);
+  AddLocations(Jabu_Vanilla, &everyPossibleLocation);
+  AddLocation(&JabuJabusBelly_BarinadeHeart, &everyPossibleLocation);
 
-  for (ItemLocation * il: allLocations) {
+  AddLocations(FoT_MQ, &everyPossibleLocation);
+  AddLocations(FoT_Vanilla, &everyPossibleLocation);
+  AddLocation(&ForestTemple_PhantomGanonHeart, &everyPossibleLocation);
+
+  AddLocations(FiT_MQ, &everyPossibleLocation);
+  AddLocations(FiT_Vanilla, &everyPossibleLocation);
+  AddLocation(&FireTemple_VolvagiaHeart, &everyPossibleLocation);
+
+  AddLocations(WaT_MQ, &everyPossibleLocation);
+  AddLocations(WaT_Vanilla, &everyPossibleLocation);
+  AddLocation(&WaterTemple_MorphaHeart, &everyPossibleLocation);
+
+  AddLocation(&SpiritTemple_SilverGauntletsChest, &everyPossibleLocation);
+  AddLocation(&SpiritTemple_MirrorShieldChest, &everyPossibleLocation);
+  AddLocations(SpT_MQ, &everyPossibleLocation);
+  AddLocations(SpT_Vanilla, &everyPossibleLocation);
+  AddLocation(&SpiritTemple_TwinrovaHeart, &everyPossibleLocation);
+
+  AddLocations(ShT_MQ, &everyPossibleLocation);
+  AddLocations(ShT_Vanilla, &everyPossibleLocation);
+  AddLocation(&ShadowTemple_BongoBongoHeart, &everyPossibleLocation);
+
+  AddLocations(BotW_MQ, &everyPossibleLocation);
+  AddLocations(BotW_Vanilla, &everyPossibleLocation);
+
+  AddLocations(IC_MQ, &everyPossibleLocation);
+  AddLocations(IC_Vanilla, &everyPossibleLocation);
+  AddLocation(&SheikInIceCavern, &everyPossibleLocation);
+
+  AddLocations(GTG_MQ, &everyPossibleLocation);
+  AddLocations(GTG_Vanilla, &everyPossibleLocation);
+
+  AddLocations(GC_MQ, &everyPossibleLocation);
+  AddLocations(GC_Vanilla, &everyPossibleLocation);
+  AddLocation(&GanonsCastle_BossKeyChest, &everyPossibleLocation);
+
+  for (ItemLocation * il: everyPossibleLocation) {
     il->AddExcludeOption();
   }
-  allLocations.clear();
 }

@@ -104,7 +104,8 @@ public:
       std::string_view desc = "Decide which locations you want to exclude from\n"
                               "the location pool. Locations that require an item\n"
                               "to be placed at them based on your current\n"
-                              "settings cannot be excluded.";
+                              "settings cannot be excluded and won't be shown\n"
+                              "unless you change your settings.";
 
       //add option to forbid any location from progress items
       if (name.length() < 23) {
@@ -1016,6 +1017,7 @@ extern ItemLocation GC_ShopItem8;
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
 extern std::vector<ItemLocation*> overworldLocations;
 extern std::vector<ItemLocation *> allLocations;
+extern std::vector<ItemLocation *> everyPossibleLocation;
 
 //set of overrides to write to the patch
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
@@ -1026,7 +1028,7 @@ extern u16 itemsPlaced;
 
 extern void GenerateLocationPool();
 extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
-extern std::vector<ItemLocation*> GetLocations(const Category category);
+extern std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locationPool, const Category category);
 extern void LocationReset();
 extern void ItemReset();
 extern void AddExcludedOptions();

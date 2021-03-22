@@ -6,6 +6,7 @@
 
 #include <filesystem>
 #include <cstring>
+#include <algorithm>
 
 #include "menu.hpp"
 #include "patch.hpp"
@@ -290,22 +291,42 @@ void PrintMainMenu() {
 }
 
 void PrintSubMenu() {
-	//bounds checking incase settings go off screen
-	if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN) {
-		settingBound = settingIdx - (MAX_SETTINGS_ON_SCREEN - 1);
-	} else if (settingIdx < settingBound - MAX_SETTINGS_ON_SCREEN) {
-    settingBound = 0;
+  //bounds checking incase settings go off screen
+  //this is complicated to account for hidden settings and there's probably a better way to do it
+  u16 hiddenSettings = 0;
+  u16 visibleSettings = 0;
+  for (u16 i = settingBound; visibleSettings < MAX_SETTINGS_ON_SCREEN; i++) {
+    if (i >= currentMenuItem->settingsList->size()) {
+      break;
+    }
+    if (currentMenuItem->settingsList->at(i)->IsHidden()) {
+      hiddenSettings++;
+    } else {
+      visibleSettings++;
+    }
+  }
+  if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN + hiddenSettings) {
+    settingBound = settingIdx;
+    u8 offset = 0;
+    //skip over hidden settings
+    while (offset < MAX_SETTINGS_ON_SCREEN - 1) {
+      settingBound--;
+      if (settingBound == 0) {
+        break;
+      }
+      offset += currentMenuItem->settingsList->at(settingBound)->IsHidden() ? 0 : 1;
+    }
   } else if (settingIdx < settingBound)  {
-		settingBound = settingIdx;
-	}
+    settingBound = settingIdx;
+  }
 
 	//print menu name
 	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
 
   //keep count of hidden settings to not make blank spaces appear in the list
-  u16 hiddenSettings = 0;
+  hiddenSettings = 0;
 
-	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+	for (u8 i = 0; i - hiddenSettings < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
 		if (i + settingBound >= currentMenuItem->settingsList->size()) break;
 

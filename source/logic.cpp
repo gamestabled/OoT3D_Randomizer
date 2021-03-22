@@ -465,7 +465,7 @@ namespace Logic {
     HasAllStones          = KokiriEmerald   && GoronRuby     && ZoraSapphire;
     HasAllMedallions      = ForestMedallion && FireMedallion && WaterMedallion && ShadowMedallion && SpiritMedallion && LightMedallion;
     CanBuildRainbowBridge = Bridge.Is(RAINBOWBRIDGE_OPEN)       ||
-                           (Bridge.Is(RAINBOWBRIDGE_VANILLA)    && ShadowMedallion && SpiritMedallion) ||
+                           (Bridge.Is(RAINBOWBRIDGE_VANILLA)    && ShadowMedallion && SpiritMedallion && LightArrows) ||
                            (Bridge.Is(RAINBOWBRIDGE_STONES)     && HasAllStones) ||
                            (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && HasAllMedallions) ||
                            (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && HasAllStones && HasAllMedallions) ||
