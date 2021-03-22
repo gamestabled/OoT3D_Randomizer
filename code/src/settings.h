@@ -124,6 +124,11 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+  INCLUDE,
+  EXCLUDE,
+} ExcludeLocationSetting;
+
+typedef enum {
   DAMAGEMULTIPLIER_HALF,
   DAMAGEMULTIPLIER_DEFAULT,
   DAMAGEMULTIPLIER_DOUBLE,

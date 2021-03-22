@@ -4,6 +4,7 @@
 #include "setting_descriptions.hpp"
 #include "item_location.hpp"
 #include "random.hpp"
+#include "fill.hpp"
 
 namespace Settings {
   std::string seed;
@@ -534,6 +535,96 @@ namespace Settings {
     IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
   }
 
+  //Include and Lock the desired locations
+  void IncludeAndLock(std::vector<ItemLocation*> locations) {
+    for (auto& loc : locations) {
+      loc->GetExcludedOption()->SetSelectedIndex(INCLUDE);
+      loc->GetExcludedOption()->Lock();
+    }
+  }
+
+  //Unlock the desired locations
+  void Unlock(std::vector<ItemLocation*> locations) {
+    for (auto& loc : locations) {
+      loc->GetExcludedOption()->Unlock();
+    }
+  }
+
+  //Lock required locations based on current settings
+  void ResolveExcludedLocationConflicts() {
+
+    HC_ZeldasLetter.GetExcludedOption()->Lock(); //this location must always be included
+
+    //TODO: Implement a giant vector of all possible locations to filter from so we don't have to hardcode everything
+
+    //Force include song locations
+    std::vector<ItemLocation*> songLocations = {&SongFromImpa, &SongFromSaria, &SongFromSaria, &SongFromWindmill, &SongFromOcarinaOfTime, &SongFromComposersGrave,
+                                                &SheikInForest, &SheikInCrater, &SheikInIceCavern, &SheikAtTemple, &SheikInKakariko, &SheikAtColossus};
+    std::vector<ItemLocation*> songDungeonRewards = {&DekuTree_QueenGohmaHeart, &DodongosCavern_KingDodongoHeart, &JabuJabusBelly_BarinadeHeart,
+                                                     &ForestTemple_PhantomGanonHeart, &FireTemple_VolvagiaHeart, &WaterTemple_MorphaHeart,
+                                                     &SpiritTemple_TwinrovaHeart, &ShadowTemple_BongoBongoHeart, &SheikInIceCavern,
+                                                     &SongFromImpa, &GerudoTrainingGrounds_MazePathFinalChest, &GerudoTrainingGrounds_MQ_IceArrowsChest,
+                                                     &BottomOfTheWell_LensOfTruthChest, &BottomOfTheWell_MQ_LensOfTruthChest};
+
+    //Unlock all song locations, then lock necessary ones
+    Unlock(songLocations);
+    Unlock(songDungeonRewards);
+
+    if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
+      IncludeAndLock(songLocations);
+    } else if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
+      IncludeAndLock(songDungeonRewards);
+    }
+
+    //Force include Cows if Shuffle Cows is Off
+    std::vector<ItemLocation*> cowLocations = {&KF_LinksHouseCow, &HF_CowGrottoCow, &LLR_StablesLeftCow, &LLR_StablesRightCow,
+                                               &LLR_TowerLeftCow, &LLR_TowerRightCow, &Kak_ImpasHouseCow, &DMT_CowGrottoCow,
+                                               &GV_Cow, &JabuJabusBelly_MQ_Cow};
+    if (ShuffleCows) {
+      Unlock(cowLocations);
+    } else {
+      IncludeAndLock(cowLocations);
+    }
+
+    //Force include the Kokiri Sword Chest if Shuffle Kokiri Sword is Off
+    if (ShuffleKokiriSword) {
+      Unlock({&KF_KokiriSwordChest});
+    } else {
+      IncludeAndLock({&KF_KokiriSwordChest});
+    }
+
+    //Force include the ocarina locations if Shuffle Ocarinas is Off
+    std::vector<ItemLocation*> ocarinaLocations = {&LW_GiftFromSaria, &HF_OcarinaOfTimeItem};
+    if (ShuffleOcarinas) {
+      Unlock(ocarinaLocations);
+    } else {
+      IncludeAndLock(ocarinaLocations);
+    }
+
+    //Force include Malon if Shuffle Weird Egg is Off
+    if (ShuffleWeirdEgg) {
+      Unlock({&HC_MalonEgg});
+    } else {
+      IncludeAndLock({&HC_MalonEgg});
+    }
+
+    //Gerudo Card is handled in item_pool.cpp
+
+    //Force include Magic Bean salesman if Shuffle Magic Beans is off
+    if (ShuffleMagicBeans) {
+      Unlock({&ZR_MagicBeanSalesman});
+    } else {
+      IncludeAndLock({&ZR_MagicBeanSalesman});
+    }
+
+    //Force include Light Arrow item if ganons boss key has to be there
+    if (GanonsBossKey.Value<u8>() < GANONSBOSSKEY_LACS_VANILLA) {
+      Unlock({&ToT_LightArrowCutscene});
+    } else {
+      IncludeAndLock({&ToT_LightArrowCutscene});
+    }
+  }
+
   //Make any forcible setting changes when certain settings change
   void ForceChange(u32 kDown, Option* currentSetting) {
 
@@ -583,6 +674,8 @@ namespace Settings {
         detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
       }
     }
+
+    ResolveExcludedLocationConflicts();
   }
 
   //eventual settings
@@ -624,7 +717,7 @@ namespace Settings {
     Shuffle(dungeonModes);
 
     if (RandomMQDungeons) {
-      MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()+1));
+      MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
     }
     for (u8 i = 0; i < MQDungeonCount.Value<u8>(); i++) {
       *dungeonModes[i] = DUNGEONMODE_MQ;
@@ -635,7 +728,7 @@ namespace Settings {
     Shuffle(trialsSkipped);
 
     if (RandomGanonsTrials) {
-      GanonsTrialsCount.SetSelectedIndex(Random(0, GanonsTrialsCount.GetOptionCount()+1));
+      GanonsTrialsCount.SetSelectedIndex(Random(0, GanonsTrialsCount.GetOptionCount()));
     }
     for (u8 i = 0; i < GanonsTrialsCount.Value<u8>(); i++) {
       *trialsSkipped[i] = false; //the selected trial is not skipped

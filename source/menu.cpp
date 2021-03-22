@@ -58,6 +58,7 @@ void MenuInit() {
   pastSeedLength = Settings::seed.length();
   currentMenuItem = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
+  Settings::ForceChange(0, currentSetting);
 
   srand(time(NULL));
   consoleInit(GFX_TOP,    &topScreen);
@@ -146,7 +147,7 @@ void ModeChangeInit() {
     settingIdx = 0;
 
     //loop through until we reach an unlocked setting
-    while(currentMenuItem->settingsList->at(settingIdx)->IsLocked()) {
+    while(currentMenuItem->settingsList->at(settingIdx)->IsLocked() || currentMenuItem->settingsList->at(settingIdx)->IsHidden()) {
       settingIdx++;
     }
 
@@ -292,7 +293,9 @@ void PrintSubMenu() {
 	//bounds checking incase settings go off screen
 	if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN) {
 		settingBound = settingIdx - (MAX_SETTINGS_ON_SCREEN - 1);
-	} else if (settingIdx < settingBound)  {
+	} else if (settingIdx < settingBound - MAX_SETTINGS_ON_SCREEN) {
+    settingBound = 0;
+  } else if (settingIdx < settingBound)  {
 		settingBound = settingIdx;
 	}
 
