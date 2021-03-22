@@ -520,6 +520,7 @@ void PlaceJunkInExcludedLocation(ItemLocation * il) {
 }
 
 static void PlaceVanillaShopItems() {
+  PlaceItemInLocation(&KF_MidoTopLeftChest, GoldSkulltulaToken);
   PlaceItemInLocation(&KF_ShopItem1,        BuyDekuShield);
   PlaceItemInLocation(&KF_ShopItem2,        BuyDekuNut5);
   PlaceItemInLocation(&KF_ShopItem3,        BuyDekuNut10);
