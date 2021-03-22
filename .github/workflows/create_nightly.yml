@@ -28,6 +28,11 @@ jobs:
           tag_name: Nightly-${{ github.sha }}
           release_name: nightly-${{ github.sha }}
           draft: false
+          prerelease: true
+          body: |
+            Please note that these are DEVELOPMENT builds and may not be entirely stable.
+
+            When reporting issues, please mention the six character commit listed in the randomizer menu.
       - name: Upload release asset CIA
         id: upload-release-asset-cia
         uses: actions/upload-release-asset@v1.0.2

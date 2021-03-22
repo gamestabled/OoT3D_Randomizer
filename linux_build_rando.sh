@@ -19,9 +19,8 @@ gather_required_files() {
 }
 
 compile() {
-  # If building manually just replace this.
-  export commitHashShort=${{ github.sha }}
-  commitHashShort=$(echo ${commitHashShort::6})
+  # If building manually just replace SHA with your own text.
+  export commitHashShort=$(echo ${GITHUB_SHA::6})
   sed -i "s/COMMITNUM/$commitHashShort/" ./source/menu.cpp
   make
   ./bannertoolexec makebanner -i ./banner.png -a ./audio.wav -o ./banner.bnr
