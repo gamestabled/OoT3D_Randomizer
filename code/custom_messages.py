@@ -763,5 +763,5 @@ cfile += '};\n'
 
 with open("src/custom_messages.c", 'wb') as c:
     c.write(bytes(data))
-    c.write(bytes(\n\n'))
+    c.write(bytes('\n\n'))
     c.write(bytes(cfile))
