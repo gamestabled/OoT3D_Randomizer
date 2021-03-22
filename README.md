@@ -14,7 +14,7 @@ This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the
 
 Install the 3DS packages from [devkitPro](https://devkitpro.org/wiki/Getting_Started)
 
-In the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```. Use ```make debug=1``` for extra debugging features. In the case of problems, try using a ```make clean```.
+In the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```. Use ```make debug=1``` for extra debugging features, including extra items when starting a new file. In the case of problems, try using a ```make clean```.
 
 ## Installation
 
@@ -26,6 +26,8 @@ On your SD card, copy ```OoT3D_Randomizer.3dsx``` to ```SD:/3ds/```.
 Power on your 3DS while holding the SELECT key to launch the Luma3DS menu. Make sure that ```Enable game patching``` is turned on, then press START to save and launch the home menu. You only have to do this once.
 
 To generate a playthrough, run Ocarina of Time 3D Randomizer from the homebrew launcher. Navigate the menus to choose the settings for your playthrough, and finish by selecting ```Generate Randomizer```. When prompted, make sure to select that you are playing on a 3DS console. After the app has finished, launch Ocarina of Time 3D from the home menu and enjoy your playthough!
+
+If the 3DS crashes when you launch the game, you probably need to update Luma3DS.
 
 ### On Citra
 Use Citra to launch ```OoT3D_Randomizer.3dsx```. Navigate the menus to choose the settings for your playthrough, and finish by selecting ```Generate Randomizer```. When prompted, make sure to select that you are playing on Citra emulator. After the app has finished, on the Citra window, click on ```File->Open Citra Folder```. From this folder, navigate to ```\sdmc\luma\titles\0004000000033500```, and you should find files called ```code.ips``` and ```exheader.bin```. In the Citra window, right-click on the installed copy Ocarina of Time 3D, and choose ```Open Mods Location```. (If you haven't installed OoT3D, you can go to ```File->Open Citra Folder``` and then open up ```\load\mods\0004000000033500```.) Copy both ```code.ips``` and ```exheader.bin``` into this folder. Now, launch Ocarina of Time 3D and enjoy your playthrough!

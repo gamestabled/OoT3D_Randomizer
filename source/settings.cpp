@@ -717,7 +717,7 @@ namespace Settings {
     Shuffle(dungeonModes);
 
     if (RandomMQDungeons) {
-      MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()+1));
+      MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
     }
     for (u8 i = 0; i < MQDungeonCount.Value<u8>(); i++) {
       *dungeonModes[i] = DUNGEONMODE_MQ;
@@ -728,7 +728,7 @@ namespace Settings {
     Shuffle(trialsSkipped);
 
     if (RandomGanonsTrials) {
-      GanonsTrialsCount.SetSelectedIndex(Random(0, GanonsTrialsCount.GetOptionCount()+1));
+      GanonsTrialsCount.SetSelectedIndex(Random(0, GanonsTrialsCount.GetOptionCount()));
     }
     for (u8 i = 0; i < GanonsTrialsCount.Value<u8>(); i++) {
       *trialsSkipped[i] = false; //the selected trial is not skipped
