@@ -34,7 +34,7 @@ namespace {
 void PrintTopScreen() {
   consoleSelect(&topScreen);
   consoleClear();
-  printf("\x1b[2;8H%sOcarina of Time 3D Randomizer v1.0.1-2904b2%s", CYAN, RESET);
+  printf("\x1b[2;8H%sOcarina of Time 3D Randomizer v1.0.1-COMMITNUM%s", CYAN, RESET);
   printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
   printf("            Select: Exit to Homebrew Menu\n");
   printf("                 Y: New Random Seed\n");
@@ -58,7 +58,6 @@ void MenuInit() {
   pastSeedLength = Settings::seed.length();
   currentMenuItem = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
-  Settings::ForceChange(0, currentSetting);
 
   srand(time(NULL));
   consoleInit(GFX_TOP,    &topScreen);
@@ -147,7 +146,7 @@ void ModeChangeInit() {
     settingIdx = 0;
 
     //loop through until we reach an unlocked setting
-    while(currentMenuItem->settingsList->at(settingIdx)->IsLocked() || currentMenuItem->settingsList->at(settingIdx)->IsHidden()) {
+    while(currentMenuItem->settingsList->at(settingIdx)->IsLocked()) {
       settingIdx++;
     }
 
@@ -293,9 +292,7 @@ void PrintSubMenu() {
 	//bounds checking incase settings go off screen
 	if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN) {
 		settingBound = settingIdx - (MAX_SETTINGS_ON_SCREEN - 1);
-	} else if (settingIdx < settingBound - MAX_SETTINGS_ON_SCREEN) {
-    settingBound = 0;
-  } else if (settingIdx < settingBound)  {
+	} else if (settingIdx < settingBound)  {
 		settingBound = settingIdx;
 	}
 
