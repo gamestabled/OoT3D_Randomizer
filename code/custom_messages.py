@@ -1,10 +1,5 @@
 from text_codes import *
 
-import locale
-def getpreferredencoding(do_setlocale = True):
-    return "UTF-8"
-locale.getpreferredencoding = getpreferredencoding
-
 def APP_FILL():
     return "APP_FILL"
 
