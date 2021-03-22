@@ -524,4 +524,5 @@ namespace Exits {
   extern Exit GanonsCastle_Tower;
 
   extern void AccessReset();
+  extern void ResetAllLocations();
 } //namespace Exits

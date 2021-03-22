@@ -15,40 +15,42 @@
 namespace Playthrough {
 
     int Playthrough_Init(u32 seed) {
-        Random_Init(seed);
+      Random_Init(seed);
 
-        overrides.clear();
-        ItemReset();
-        Exits::AccessReset();
+      overrides.clear();
+      ItemReset();
+      Exits::AccessReset();
 
-        Settings::UpdateSettings();
-        Logic::UpdateHelpers();
-        Fill();
+      Settings::UpdateSettings();
+      Logic::UpdateHelpers();
 
-        GenerateHash();
+      int ret = Fill();
+      if (ret < 0) {
+        return ret;
+      }
 
-        if (Settings::GenerateSpoilerLog) {
-          //write logs
-          printf("\x1b[9;10HWriting Spoiler Log...");
-          if (SpoilerLog_Write()) {
-            printf("Done");
-          } else {
-            printf("Failed");
-          }
+      GenerateHash();
 
-
-          printf("\x1b[10;10HWriting Placement Log...");
-          if (PlacementLog_Write()) {
-            printf("Done\n");
-          } else {
-            printf("Failed\n");
-          }
+      if (Settings::GenerateSpoilerLog) {
+        //write logs
+        printf("\x1b[9;10HWriting Spoiler Log...");
+        if (SpoilerLog_Write()) {
+          printf("Done");
         } else {
-          playthroughLocations.clear();
-          playthroughBeatable = false;
+          printf("Failed");
         }
 
-        return 1;
+        printf("\x1b[10;10HWriting Placement Log...");
+        if (PlacementLog_Write()) {
+          printf("Done\n");
+        } else {
+          printf("Failed\n");
+        }
+      } else {
+        playthroughLocations.clear();
+        playthroughBeatable = false;
+      }
+      return 1;
     }
 
     //used for generating a lot of seeds at once

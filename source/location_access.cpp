@@ -2707,4 +2707,30 @@ namespace Exits { //name, scene, hint, events, locations, exits
         }
     }
   }
+
+  //Reset exits and clear items from locations
+  void ResetAllLocations() {
+    for (Exit* exit : allExits) {
+      exit->ResetVariables();
+      for (size_t i = 0; i < exit->locations.size(); i++) {
+          ItemLocationPairing& locPair = exit->locations[i];
+          ItemLocation* location = locPair.GetLocation();
+          location->ResetVariables();
+      }
+    }
+
+    if(Settings::HasNightStart) {
+        if(Settings::StartingAge.Is(AGE_CHILD)) {
+          Exits::Root.nightChild = true;
+        } else {
+          Exits::Root.nightAdult = true;
+        }
+      } else {
+        if(Settings::StartingAge.Is(AGE_CHILD)) {
+          Exits::Root.dayChild = true;
+        } else {
+          Exits::Root.dayAdult = true;
+        }
+    }
+  }
 }
