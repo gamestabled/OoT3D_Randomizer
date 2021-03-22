@@ -11,6 +11,7 @@ gather_required_files() {
   cd Python-3.8.5
   sudo ./configure --enable-optimizations
   sudo make install
+  cd ../
   wget https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip
   unzip makerom-v0.17-ubuntu_x86_64.zip
   git clone https://github.com/Steveice10/bannertool.git
