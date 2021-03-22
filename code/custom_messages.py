@@ -761,7 +761,7 @@ for textId in custom_messages:
     cfile += '    } },\n'
 cfile += '};\n'
 
-with open("src/custom_messages.c", 'wb') as c:
-    c.write(bytes(data))
-    c.write(bytes('\n\n'))
-    c.write(bytes(cfile))
+with open("src/custom_messages.c", 'w') as c:
+    c.write(data)
+    c.write('\n\n')
+    c.write(cfile)
