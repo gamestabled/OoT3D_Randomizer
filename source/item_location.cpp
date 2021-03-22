@@ -357,7 +357,7 @@ ItemLocation ShadowTemple_FallingSpikesUpperChest             = ItemLocation::Ch
 ItemLocation ShadowTemple_FallingSpikesSwitchChest            = ItemLocation::Chest      (0x07, 0x04, "Shadow Temple Falling Spikes Switch Chest",          {Category::cShadowTemple,});
 ItemLocation ShadowTemple_InvisibleSpikesChest                = ItemLocation::Chest      (0x07, 0x09, "Shadow Temple Invisible Spikes Chest",               {Category::cShadowTemple,});
 ItemLocation ShadowTemple_WindHintChest                       = ItemLocation::Chest      (0x07, 0x15, "Shadow Temple Wind Hint Chest",                      {Category::cShadowTemple,});
-ItemLocation ShadowTemple_AfterWindEnemyChest                 = ItemLocation::Chest      (0x07, 0x08, "Shadow Temple After Wind Enemey Chest",              {Category::cShadowTemple,});
+ItemLocation ShadowTemple_AfterWindEnemyChest                 = ItemLocation::Chest      (0x07, 0x08, "Shadow Temple After Wind Enemy Chest",               {Category::cShadowTemple,});
 ItemLocation ShadowTemple_AfterWindHiddenChest                = ItemLocation::Chest      (0x07, 0x14, "Shadow Temple After Wind Hidden Chest",              {Category::cShadowTemple,});
 ItemLocation ShadowTemple_SpikeWallsLeftChest                 = ItemLocation::Chest      (0x07, 0x0A, "Shadow Temple Spike Walls Left Chest",               {Category::cShadowTemple,});
 ItemLocation ShadowTemple_BossKeyChest                        = ItemLocation::Chest      (0x07, 0x0B, "Shadow Temple Boss Key Chest",                       {Category::cShadowTemple,});
@@ -1623,7 +1623,8 @@ std::vector<ItemLocation*> allLocations = {};
 //set of overrides to write to the patch
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 
-std::vector<ItemLocation*> playthroughLocations = {};
+std::vector<std::vector<ItemLocation*>> playthroughLocations;
+bool playthroughBeatable = false;
 
 u16 itemsPlaced = 0;
 

@@ -154,19 +154,24 @@ bool SpoilerLog_Write() {
 
   logtxt += "Hash: ";
   for (std::string& str : randomizerHash) {
-    logtxt += str + " ";
+    logtxt += str + ", ";
   }
   logtxt += "\n\n";
 
   WriteSettings();
 
   logtxt += "Playthrough:\n";
-  for (ItemLocation* location : playthroughLocations) {
-    logtxt += "\t";
-    SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
-    logtxt += '\n';
+  for (uint i = 0; i < playthroughLocations.size(); i++) {
+    logtxt += "Sphere " + std::to_string(i+1) + ":\n";
+    std::vector<ItemLocation*> sphere = playthroughLocations[i];
+    for (ItemLocation* location : sphere) {
+      logtxt += "\t";
+      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+      logtxt += '\n';
+    }
   }
-  playthroughLocations = {};
+  playthroughLocations.clear();
+  playthroughBeatable = false;
 
   logtxt += "\nAll Locations:\n";
   for (ItemLocation* location : dungeonRewardLocations) {

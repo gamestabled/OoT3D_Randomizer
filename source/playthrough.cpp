@@ -44,7 +44,8 @@ namespace Playthrough {
             printf("Failed\n");
           }
         } else {
-          playthroughLocations = {};
+          playthroughLocations.clear();
+          playthroughBeatable = false;
         }
 
         return 1;

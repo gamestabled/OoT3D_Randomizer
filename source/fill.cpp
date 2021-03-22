@@ -106,6 +106,10 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
   Logic::UpdateHelpers();
   std::vector<Exit *> exitPool = {&Exits::Root};
 
+  //Variables for playthrough
+  int gsCount = 0;
+  bool bombchusFound = false;
+  //Variables for search
   std::vector<ItemLocation *> newItemLocations;
   bool firstIteration = true;
   //If no new items are found, then the next iteration won't provide any new location
@@ -117,6 +121,8 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
       location->ApplyPlacedItemEffect();
     }
     newItemLocations.clear();
+
+    std::vector<ItemLocation *> sphere;
 
     for (size_t i = 0; i < exitPool.size(); i++) {
       Exit* area = exitPool[i];
@@ -178,8 +184,29 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
               newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
             }
 
-            if (playthrough && location->GetPlacedItem().IsPlaythrough() && location->GetPlacedItem().IsAdvancement()) {
-              playthroughLocations.push_back(location);
+            if (playthrough && !playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {            
+              ItemType type = location->GetPlacedItem().GetItemType();
+              bool bombchus = location->GetPlacedItem().GetName().find("Bombchu") != std::string::npos;
+              //Don't print Buy locations
+              if(type != ITEMTYPE_SHOP && type != ITEMTYPE_TOKEN && !bombchus) {
+                sphere.push_back(location);
+              }     
+              //Only print first 50 token locations
+              else if(type == ITEMTYPE_TOKEN && gsCount < 50 && !bombchus) {
+                sphere.push_back(location);
+                gsCount++;
+              }
+              //Only print first bombchu location found
+              else if (type != ITEMTYPE_SHOP && type != ITEMTYPE_TOKEN && bombchus && !bombchusFound) {
+                sphere.push_back(location);
+                bombchusFound = true;
+              }
+            }
+            //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
+            else if(playthrough && location->GetPlacedItem().GetName() == "Triforce") {
+              sphere.clear(); 
+              sphere.push_back(location);
+              playthroughBeatable = true;
             }
           }
         }
@@ -187,6 +214,11 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
     }
 
     erase_if(exitPool, [](Exit* e){ return e->AllAccountedFor();});
+
+    if(playthrough && sphere.size() > 0) {
+      playthroughLocations.push_back(sphere);
+    }
+
   }
   erase_if(accessibleLocations, [allowedLocations](ItemLocation* loc){
     for (ItemLocation* allowedLocation : allowedLocations) {
