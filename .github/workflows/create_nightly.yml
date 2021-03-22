@@ -18,7 +18,6 @@ jobs:
         run: |
           gather_required_files() {
             sudo apt update && sudo apt install automake build-essential wget unzip zip -y
-            echo $PATH
             wget https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip
             unzip makerom-v0.17-ubuntu_x86_64.zip
             git clone https://github.com/Steveice10/bannertool.git
@@ -28,15 +27,19 @@ jobs:
             unzip ./output/bannertool.zip
             mv linux-x86_64/bannertool ../bannertoolexec
             cd ..
+            wget https://github.com/dnasdw/3dstool/releases/download/v1.2.6/3dstool_linux_x86_64.tar.gz
+            tar -zxvf 3dstool_linux_x86_64.tar.gz
             chmod +x bannertoolexec
             chmod +x makerom
+            chmod + 3dstool
           }
 
           compile() {
             make
             ./bannertoolexec makebanner -i ./banner.png -a ./audio.wav -o ./banner.bnr
-            ./bannertoolexec makesmdh -s "Ocarina of Time 3D Randomizer" -l "A different Ocarina of Time experience" -p "Gamestabled" -i icon.png -o ./icon.icn
-            ./makerom -f cia -o OoT3D_Randomizer.cia -DAPP_ENCRYPTED=false -target t -exefslogo -elf ./OoT3D_Randomizer.elf -icon ./icon.icn -banner ./banner.bnr -rsf ./ootrando.rsf -exheader ./romfs/exheader.bin -major 1 -minor 0 -micro 1
+            ./bannertoolexec makesmdh -s "Ocarina of Time 3D Randomizer" -l "A different Ocarina of Time experience" -p "Gamestabled & Gymnast86" -i icon.png -o ./icon.icn
+            ./3dstool -cvtf romfs ./romfs.bin --romfs-dir ./romfs
+            ./makerom -f cia -o OoT3D_Randomizer.cia -DAPP_ENCRYPTED=false -target t -exefslogo -elf ./OoT3D_Randomizer.elf -icon ./icon.icn -banner ./banner.bnr -rsf ./ootrando.rsf -romfs ./romfs.bin -major 1 -minor 0 -micro 1
           }
           gather_required_files
           compile
