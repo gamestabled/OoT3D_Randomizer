@@ -1,6 +1,8 @@
 #!/bin/bash
 
 gather_required_files() {
+  echo "Our python version: "
+  python3 -V
   sudo apt update && sudo apt install automake build-essential wget unzip zip -y
   wget https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip
   unzip makerom-v0.17-ubuntu_x86_64.zip
