@@ -5,7 +5,7 @@ gather_required_files() {
   python3 -V
   sudo apt update && sudo apt install automake build-essential wget unzip zip -y
   sudo wget https://www.python.org/ftp/python/3.8.5/Python-3.8.5.tgz
-  sudo tar xzf Python-3.8.0.tgz
+  sudo tar xzf Python-3.8.5.tgz
   cd Python-3.8.5
   sudo ./configure --enable-optimizations
   sudo make install
