@@ -1022,7 +1022,8 @@ extern std::vector<ItemLocation *> everyPossibleLocation;
 //set of overrides to write to the patch
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
 
-extern std::vector<ItemLocation*> playthroughLocations;
+extern std::vector<std::vector<ItemLocation*>> playthroughLocations;
+extern bool playthroughBeatable;
 
 extern u16 itemsPlaced;
 
