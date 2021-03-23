@@ -1,13 +1,12 @@
 #include "random.hpp"
 
 static bool init = false;
-std::mt19937_64 generator;
+static std::mt19937_64 generator;
 
 //Initialize with seed specified
 void Random_Init(unsigned int seed) {
     init = true;
-    std::mt19937_64 newgen(seed);
-    generator = newgen;
+    generator = std::mt19937_64{seed};
 }
 
 //Returns a random integer in range [min, max-1]
