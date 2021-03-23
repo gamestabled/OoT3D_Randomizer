@@ -157,15 +157,17 @@ bool SpoilerLog_Write() {
   for (std::string& str : randomizerHash) {
     logtxt += str + ", ";
   }
+  logtxt.erase(logtxt.length() - 2); //Erase last comma
   logtxt += "\n\n";
 
   WriteSettings();
 
+  //Write playthrough to spoiler, by accessibility sphere
   logtxt += "Playthrough:\n";
   for (uint i = 0; i < playthroughLocations.size(); i++) {
     logtxt += "Sphere " + std::to_string(i+1) + ":\n";
-    std::vector<ItemLocation*> sphere = playthroughLocations[i];
-    for (ItemLocation* location : sphere) {
+    //Print all item locations in this sphere
+    for (ItemLocation* location : playthroughLocations[i]) {
       logtxt += "\t";
       SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
       logtxt += '\n';

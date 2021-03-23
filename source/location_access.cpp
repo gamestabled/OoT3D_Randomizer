@@ -2712,8 +2712,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
   void ResetAllLocations() {
     for (Exit* exit : allExits) {
       exit->ResetVariables();
-      for (size_t i = 0; i < exit->locations.size(); i++) {
-          ItemLocationPairing& locPair = exit->locations[i];
+      //Erase item from every location in this exit
+      for (ItemLocationPairing& locPair : exit->locations) {
           ItemLocation* location = locPair.GetLocation();
           location->ResetVariables();
       }
