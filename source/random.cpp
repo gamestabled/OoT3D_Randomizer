@@ -13,10 +13,8 @@ void Random_Init(unsigned int seed) {
 unsigned int Random(int min, int max) {
     if (!init) {
         //No seed given, get a random number from device to seed
-        std::random_device rd;
-        std::mt19937_64 newgen(rd());
-        generator = newgen;
-        init = true;
+        const auto seed = static_cast<uint32_t>(std::random_device{}());
+        Random_Init(seed);
     }
     std::uniform_int_distribution<> distribution(min, max-1);
     return distribution(generator);
