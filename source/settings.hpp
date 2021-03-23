@@ -1,13 +1,17 @@
 #pragma once
 
 #include <3ds.h>
+
 #include <array>
+#include <algorithm>
 #include <cstdlib>
 #include <string>
 #include <type_traits>
 #include <variant>
 #include <vector>
+
 #include "../code/src/settings.h"
+#include "category.hpp"
 #include "menu.hpp"
 
 class Option {
@@ -180,6 +184,7 @@ class MenuItem {
 
 namespace Settings {
   extern std::string seed;
+  extern std::string version;
   extern std::array<u8, 5> hashIconIndexes;
 
   extern Option Logic;
@@ -355,4 +360,26 @@ namespace Settings {
   extern void ForceChange(u32 kDown, Option* currentSetting);
 
   extern std::vector<MenuItem *> mainMenu;
+
+  template <typename T, typename Predicate>
+  static void erase_if(std::vector<T>& vector, Predicate pred) {
+    vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
+  }
+
+  template <typename T, typename Predicate>
+  std::vector<T> FilterFromPool(std::vector<T>& vector, Predicate pred, bool eraseAfterFilter = false) {
+    std::vector<T> filteredPool = {};
+    std::copy_if(vector.begin(), vector.end(), std::back_inserter(filteredPool), pred);
+
+    if (eraseAfterFilter) {
+      erase_if(vector, pred);
+    }
+
+    return filteredPool;
+  }
+
+  template <typename T, typename Predicate>
+  std::vector<T> FilterAndEraseFromPool(std::vector<T>& vector, Predicate pred) {
+    return FilterFromPool(vector, pred, true);
+  }
 }

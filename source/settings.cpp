@@ -4,9 +4,11 @@
 #include "setting_descriptions.hpp"
 #include "item_location.hpp"
 #include "random.hpp"
+#include "fill.hpp"
 
 namespace Settings {
   std::string seed;
+  std::string version = "v1.0.1_COMMITNUM";
   std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
@@ -526,12 +528,156 @@ namespace Settings {
     GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
 
     AddExcludedOptions();
+    HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users change this location
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
 
     ItemPoolValue.SetSelectedIndex(ITEMPOOL_BALANCED);
     IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
+  }
+
+  //Include and Lock the desired locations
+  void IncludeAndHide(std::vector<ItemLocation*> locations) {
+    for (auto& loc : locations) {
+      loc->GetExcludedOption()->SetSelectedIndex(INCLUDE);
+      loc->GetExcludedOption()->Hide();
+    }
+  }
+
+  //Unlock the desired locations
+  void Unhide(std::vector<ItemLocation*> locations) {
+    for (auto& loc : locations) {
+      loc->GetExcludedOption()->Unhide();
+    }
+  }
+
+  //Lock required locations based on current settings
+  void ResolveExcludedLocationConflicts() {
+
+    //Force include shops if shopsanity is off
+    std::vector<ItemLocation*> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
+    if (Shopsanity) {
+      Unhide(shopLocations);
+    } else {
+      IncludeAndHide(shopLocations);
+    }
+
+    //Force include song locations
+    std::vector<ItemLocation*> songLocations = GetLocations(everyPossibleLocation, Category::cSong);
+    std::vector<ItemLocation*> songDungeonRewards = GetLocations(everyPossibleLocation, Category::cSongDungeonReward);
+
+    //Unhide all song locations, then lock necessary ones
+    Unhide(songLocations);
+    Unhide(songDungeonRewards);
+
+    if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
+      IncludeAndHide(songLocations);
+    } else if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
+      IncludeAndHide(songDungeonRewards);
+    }
+
+    //Force Include Vanilla Skulltula locations
+    std::vector<ItemLocation*> skulltulaLocations = GetLocations(everyPossibleLocation, Category::cSkulltula);
+    Unhide(skulltulaLocations);
+    if (Tokensanity.IsNot(TOKENSANITY_ALL_TOKENS)) {
+      if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
+        //filter overworld skulls so we're just left with dungeons
+        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() >= 0x0A;});
+      } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
+        //filter dungeon skulls so we're just left with overworld
+        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() < 0x0A;});
+      }
+      IncludeAndHide(skulltulaLocations);
+    }
+
+    //Force Include scrubs if Scrubsanity is Off
+    std::vector<ItemLocation*> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub);
+    if (Scrubsanity.Is(OFF)) {
+      IncludeAndHide(scrubLocations);
+    } else {
+      Unhide(scrubLocations);
+    }
+
+    //Force include Cows if Shuffle Cows is Off
+    std::vector<ItemLocation*> cowLocations = GetLocations(everyPossibleLocation, Category::cCow);
+    if (ShuffleCows) {
+      Unhide(cowLocations);
+    } else {
+      IncludeAndHide(cowLocations);
+    }
+
+    //Force include the Kokiri Sword Chest if Shuffle Kokiri Sword is Off
+    if (ShuffleKokiriSword) {
+      Unhide({&KF_KokiriSwordChest});
+    } else {
+      IncludeAndHide({&KF_KokiriSwordChest});
+    }
+
+    //Force include the ocarina locations if Shuffle Ocarinas is Off
+    std::vector<ItemLocation*> ocarinaLocations = {&LW_GiftFromSaria, &HF_OcarinaOfTimeItem};
+    if (ShuffleOcarinas) {
+      Unhide(ocarinaLocations);
+    } else {
+      IncludeAndHide(ocarinaLocations);
+    }
+
+    //Force include Malon if Shuffle Weird Egg is Off
+    if (ShuffleWeirdEgg) {
+      Unhide({&HC_MalonEgg});
+    } else {
+      IncludeAndHide({&HC_MalonEgg});
+    }
+
+    //Gerudo Card is handled in item_pool.cpp
+
+    //Force include Magic Bean salesman if Shuffle Magic Beans is off
+    if (ShuffleMagicBeans) {
+      Unhide({&ZR_MagicBeanSalesman});
+    } else {
+      IncludeAndHide({&ZR_MagicBeanSalesman});
+    }
+
+    //Force include Map and Compass Chests when Vanilla
+    std::vector<ItemLocation*> mapChests = GetLocations(everyPossibleLocation, Category::cVanillaMap);
+    std::vector<ItemLocation*> compassChests = GetLocations(everyPossibleLocation, Category::cVanillaCompass);
+    if (MapsAndCompasses.Is(MAPSANDCOMPASSES_VANILLA)) {
+      IncludeAndHide(mapChests);
+      IncludeAndHide(compassChests);
+    } else {
+      Unhide(mapChests);
+      Unhide(compassChests);
+    }
+
+    //Force include Vanilla Small Key Locations (except gerudo Fortress) on Vanilla Keys
+    std::vector<ItemLocation*> smallKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaSmallKey);
+    if (Keysanity.Is(KEYSANITY_VANILLA)) {
+      IncludeAndHide(smallKeyChests);
+    } else {
+      Unhide(smallKeyChests);
+    }
+
+    //Force include Boss Key Chests if Boss Keys are Vanilla
+    std::vector<ItemLocation*> bossKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaBossKey);
+    if (BossKeysanity.Is(BOSSKEYSANITY_VANILLA)) {
+      IncludeAndHide(bossKeyChests);
+    } else {
+      Unhide(bossKeyChests);
+    }
+
+    //Force include Ganons Boss Key Chest if ganons boss key has to be there
+    if (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA)) {
+      IncludeAndHide({&GanonsCastle_BossKeyChest});
+    } else {
+      Unhide({&GanonsCastle_BossKeyChest});
+    }
+
+    //Force include Light Arrow item if ganons boss key has to be there
+    if (GanonsBossKey.Value<u8>() >= GANONSBOSSKEY_LACS_VANILLA) {
+      IncludeAndHide({&ToT_LightArrowCutscene});
+    } else {
+      Unhide({&ToT_LightArrowCutscene});
+    }
   }
 
   //Make any forcible setting changes when certain settings change
@@ -583,6 +729,8 @@ namespace Settings {
         detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
       }
     }
+
+    ResolveExcludedLocationConflicts();
   }
 
   //eventual settings

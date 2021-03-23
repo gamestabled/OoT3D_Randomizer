@@ -150,6 +150,7 @@ static void WriteSettings() {
 }
 
 bool SpoilerLog_Write() {
+  logtxt += "Version: " + Settings::version + "\n";
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
   logtxt += "Hash: ";

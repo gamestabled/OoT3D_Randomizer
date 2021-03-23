@@ -16,30 +16,9 @@ jobs:
       - name: Create Environment
       
         run: |
-          gather_required_files() {
-            sudo apt update && sudo apt install automake build-essential wget unzip zip -y
-            echo $PATH
-            wget https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip
-            unzip makerom-v0.17-ubuntu_x86_64.zip
-            git clone https://github.com/Steveice10/bannertool.git
-            cd bannertool
-            git submodule update --init
-            make
-            unzip ./output/bannertool.zip
-            mv linux-x86_64/bannertool ../bannertoolexec
-            cd ..
-            chmod +x bannertoolexec
-            chmod +x makerom
-          }
-
-          compile() {
-            make
-            ./bannertoolexec makebanner -i ./banner.png -a ./audio.wav -o ./banner.bnr
-            ./bannertoolexec makesmdh -s "Ocarina of Time 3D Randomizer" -l "A different Ocarina of Time experience" -p "Gamestabled" -i icon.png -o ./icon.icn
-            ./makerom -f cia -o OoT3D_Randomizer.cia -DAPP_ENCRYPTED=false -target t -exefslogo -elf ./OoT3D_Randomizer.elf -icon ./icon.icn -banner ./banner.bnr -rsf ./ootrando.rsf
-          }
-          gather_required_files
-          compile
+          chmod +x linux_build_rando.sh
+          ./linux_build_rando.sh
+          
       - name: Create a Release
         id: create_release
         uses: actions/create-release@v1.1.4
@@ -49,6 +28,11 @@ jobs:
           tag_name: Nightly-${{ github.sha }}
           release_name: nightly-${{ github.sha }}
           draft: false
+          prerelease: true
+          body: |
+            Please note that these are DEVELOPMENT builds and may not be entirely stable.
+            When reporting issues, please mention the six character commit listed in the randomizer menu.
+            
       - name: Upload release asset CIA
         id: upload-release-asset-cia
         uses: actions/upload-release-asset@v1.0.2

@@ -124,6 +124,11 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+  INCLUDE,
+  EXCLUDE,
+} ExcludeLocationSetting;
+
+typedef enum {
   DAMAGEMULTIPLIER_HALF,
   DAMAGEMULTIPLIER_DEFAULT,
   DAMAGEMULTIPLIER_DOUBLE,
@@ -231,7 +236,7 @@ typedef struct {
   u32 dungeonRewardBitMask;
 
   u8 detailedLogic[100];
-  u8 excludeLocations[500];
+  u8 excludeLocations[700];
 
 } SettingsContext;
 

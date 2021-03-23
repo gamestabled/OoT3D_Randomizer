@@ -9,6 +9,7 @@
 #include <set>
 
 #include "../code/include/z3D/z3D.h"
+#include "category.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
 
@@ -20,60 +21,6 @@ enum class ItemLocationType {
     GrottoScrub,
     Delayed,
     TempleReward,
-};
-
-enum class Category {
-    cKokiriForest,
-    cForest,
-    cGrotto,
-    cMinigame,
-    cLostWoods,
-    cDekuScrub,
-    cDekuScrubUpgrades,
-    cNeedSpiritualStones,
-    cSacredForestMeadow,
-    cHyruleField,
-    cLakeHylia,
-    cGerudo,
-    cGerudoValley,
-    cGerudoFortress,
-    cHauntedWasteland,
-    cDesertColossus,
-    cInnerMarket,
-    cMarket,
-    cHyruleCastle,
-    cKakarikoVillage,
-    cKakariko,
-    cSkulltulaHouse,
-    cGraveyard,
-    cDeathMountainTrail,
-    cDeathMountain,
-    cGoronCity,
-    cDeathMountainCrater,
-    cZorasRiver,
-    cZorasDomain,
-    cZorasFountain,
-    cLonLonRanch,
-    cDekuTree,
-    cDodongosCavern,
-    cJabuJabusBelly,
-    cForestTemple,
-    cFireTemple,
-    cWaterTemple,
-    cSpiritTemple,
-    cShadowTemple,
-    cBottomOfTheWell,
-    cIceCavern,
-    cGerudoTrainingGrounds,
-    cGanonsCastle,
-    cSkulltula,
-    cBossHeart,
-    cTempleOfTime,
-    cFairies,
-    cOutsideGanonsCastle,
-    cSong,
-    cCow,
-    cShop
 };
 
 class ItemLocation {
@@ -148,17 +95,28 @@ public:
       return false;
     }
 
+    Option * GetExcludedOption() {
+      return &excludedOption;
+    }
+
     void AddExcludeOption() {
+      //setting description  /*--------------------------------------------------*/
+      std::string_view desc = "Decide which locations you want to exclude from\n"
+                              "the location pool. Locations that require an item\n"
+                              "to be placed at them based on your current\n"
+                              "settings cannot be excluded and won't be shown\n"
+                              "unless you change your settings.";
+
       //add option to forbid any location from progress items
       if (name.length() < 23) {
-        excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
+        excludedOption = Option::Bool(name, {"Include", "Exclude"}, {desc, desc});
       } else {
+        //insert a newline character if the text is too long for one row
         size_t lastSpace = name.rfind(' ', 23);
         std::string settingText = name;
         settingText.replace(lastSpace, 1, "\n ");
 
-        excludedOption = Option::Bool(settingText, {"Include", "Exclude"}, {"", ""});
-
+        excludedOption = Option::Bool(settingText, {"Include", "Exclude"}, {desc, desc});
       }
 
       Settings::excludeLocationsOptions.push_back(&excludedOption);
@@ -1057,7 +1015,9 @@ extern ItemLocation GC_ShopItem7;
 extern ItemLocation GC_ShopItem8;
 
 extern std::array<ItemLocation *, 9> dungeonRewardLocations;
+extern std::vector<ItemLocation*> overworldLocations;
 extern std::vector<ItemLocation *> allLocations;
+extern std::vector<ItemLocation *> everyPossibleLocation;
 
 //set of overrides to write to the patch
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
@@ -1069,7 +1029,7 @@ extern u16 itemsPlaced;
 
 extern void GenerateLocationPool();
 extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
-extern std::vector<ItemLocation*> GetLocations(const Category category);
+extern std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locationPool, const Category category);
 extern void LocationReset();
 extern void ItemReset();
 extern void AddExcludedOptions();

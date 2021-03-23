@@ -6,32 +6,8 @@
 #include "logic.hpp"
 #include "random.hpp"
 
-const bool ERASE_AFTER_FILTER = true;
-
 using namespace Logic;
 using namespace Settings;
-
-template <typename T, typename Predicate>
-static void erase_if(std::vector<T>& vector, Predicate pred) {
-    vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
-}
-
-template <typename T, typename Predicate>
-std::vector<T> FilterFromPool(std::vector<T>& vector, Predicate pred, bool eraseAfterFilter = false) {
-  std::vector<T> filteredPool = {};
-  std::copy_if(vector.begin(), vector.end(), std::back_inserter(filteredPool), pred);
-
-  if (eraseAfterFilter) {
-    erase_if(vector, pred);
-  }
-
-  return filteredPool;
-}
-
-template <typename T, typename Predicate>
-std::vector<T> FilterAndEraseFromPool(std::vector<T>& vector, Predicate pred) {
-  return FilterFromPool(vector, pred, ERASE_AFTER_FILTER);
-}
 
 static void RemoveStartingItemsFromPool() {
   for (Item& startingItem : StartingInventory) {
@@ -432,11 +408,7 @@ int Fill() {
         songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory(Category::cSong);});
 
       } else if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
-        songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory(Category::cBossHeart);});
-        songLocations.push_back(&SheikInIceCavern);
-        songLocations.push_back(&SongFromImpa);
-        songLocations.push_back(GerudoTrainingGroundsDungeonMode ? &GerudoTrainingGrounds_MQ_IceArrowsChest : &GerudoTrainingGrounds_MazePathFinalChest);
-        songLocations.push_back(BottomOfTheWellDungeonMode ? &BottomOfTheWell_MQ_LensOfTruthChest : &BottomOfTheWell_LensOfTruthChest);
+        songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory(Category::cSongDungeonReward);});
       }
 
       AssumedFill(songs, songLocations);
