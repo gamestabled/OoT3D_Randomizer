@@ -54,14 +54,18 @@ namespace {
   };
 }
 
-std::array<std::string, 5> randomizerHash = {"", "", "", "", ""};
+static RandomizerHash randomizerHash;
 
 void GenerateHash() {
-  for (u32 i = 0; i < 5; i++) {
-    u8 iconIndex = Random(0, hashIcons.size());
+  for (size_t i = 0; i < randomizerHash.size(); i++) {
+    const auto iconIndex = static_cast<u8>(Random(0, hashIcons.size()));
     Settings::hashIconIndexes[i] = iconIndex;
     randomizerHash[i] = hashIcons[iconIndex];
   }
+}
+
+const RandomizerHash& GetRandomizerHash() {
+  return randomizerHash;
 }
 
 static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {

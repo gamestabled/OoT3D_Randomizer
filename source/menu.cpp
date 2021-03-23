@@ -600,14 +600,14 @@ void GenerateRandomizer() {
       printf("\x1b[14;10HOoT3D mods folder, then launch OoT3D!\n");
     }
 
-
+    const auto& randomizerHash = GetRandomizerHash();
     printf("\x1b[16;10HHash:");
-    for (u8 i = 0; i < randomizerHash.size(); i++) {
-      printf("\x1b[%d;11H- %s", i + 17, randomizerHash[i].c_str());
+    for (size_t i = 0; i < randomizerHash.size(); i++) {
+      printf("\x1b[%zu;11H- %s", i + 17, randomizerHash[i].c_str());
     }
-	} else {
-		printf("Failed\nPress Select to exit.\n");
-	}
+  } else {
+    printf("Failed\nPress Select to exit.\n");
+  }
 }
 
 //opens up the 3ds software keyboard for getting user input
