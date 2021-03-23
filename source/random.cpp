@@ -1,24 +1,21 @@
 #include "random.hpp"
 
 static bool init = false;
-std::mt19937_64 generator;
+static std::mt19937_64 generator;
 
 //Initialize with seed specified
-void Random_Init(unsigned int seed) {
+void Random_Init(uint32_t seed) {
     init = true;
-    std::mt19937_64 newgen(seed);
-    generator = newgen;
+    generator = std::mt19937_64{seed};
 }
 
 //Returns a random integer in range [min, max-1]
-unsigned int Random(int min, int max) {
+uint32_t Random(int min, int max) {
     if (!init) {
         //No seed given, get a random number from device to seed
-        std::random_device rd;
-        std::mt19937_64 newgen(rd());
-        generator = newgen;
-        init = true;
+        const auto seed = static_cast<uint32_t>(std::random_device{}());
+        Random_Init(seed);
     }
-    std::uniform_int_distribution<> distribution(min, max-1);
+    std::uniform_int_distribution<uint32_t> distribution(min, max-1);
     return distribution(generator);
 }
