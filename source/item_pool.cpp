@@ -470,7 +470,7 @@ static void JoinPools(std::vector<Item>& pool1, const std::array<Item, N>& pool2
   }
 }
 
-static void AddRandomBottle(std::vector<Item> bottlePool) {
+static void AddRandomBottle(std::vector<Item>& bottlePool) {
   AddItemToMainPool(RandomElement(bottlePool, true));
 }
 
