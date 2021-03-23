@@ -105,7 +105,7 @@ public:
     void SetSelectedIndex(u8 idx) {
       selectedOption = idx;
       if (selectedOption >= options.size()) {
-        printf("\x1b[30;0HERROR: Incomptaible selection for %s\n", name.c_str());
+        printf("\x1b[30;0HERROR: Incompatible selection for %s\n", name.c_str());
         selectedOption = 0;
       }
 
