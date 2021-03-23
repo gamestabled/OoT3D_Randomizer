@@ -36,13 +36,14 @@ namespace Playthrough {
             printf("Failed");
           }
 
-
-          printf("\x1b[10;10HWriting Placement Log...");
-          if (PlacementLog_Write()) {
-            printf("Done\n");
-          } else {
-            printf("Failed\n");
-          }
+          #ifdef ENABLE_DEBUG
+            printf("\x1b[10;10HWriting Placement Log...");
+            if (PlacementLog_Write()) {
+              printf("Done\n");
+            } else {
+              printf("Failed\n");
+            }
+          #endif
         } else {
           playthroughLocations = {};
         }

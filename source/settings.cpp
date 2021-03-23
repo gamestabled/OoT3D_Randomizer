@@ -8,6 +8,7 @@
 
 namespace Settings {
   std::string seed;
+  std::string version = "v1.0.1_COMMITNUM";
   std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
@@ -582,10 +583,10 @@ namespace Settings {
     if (Tokensanity.IsNot(TOKENSANITY_ALL_TOKENS)) {
       if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
         //filter overworld skulls so we're just left with dungeons
-        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() > 0x0A;});
+        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() >= 0x0A;});
       } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
         //filter dungeon skulls so we're just left with overworld
-        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() <= 0x0A;});
+        FilterAndEraseFromPool(skulltulaLocations, [](ItemLocation* loc){return loc->GetScene() < 0x0A;});
       }
       IncludeAndHide(skulltulaLocations);
     }
