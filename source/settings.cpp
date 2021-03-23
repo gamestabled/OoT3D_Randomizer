@@ -308,9 +308,11 @@ namespace Settings {
 
   MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
   MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
+  MenuItem deleteSettingsPreset     = MenuItem::Action ("Delete Settings Preset",     DELETE_PRESET);
   std::vector<MenuItem *> settingsPresetItems = {
     &loadSettingsPreset,
     &saveSettingsPreset,
+    &deleteSettingsPreset,
   };
 
   MenuItem open                     = MenuItem::SubMenu("Open Settings",              &openOptions);

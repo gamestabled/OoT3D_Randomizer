@@ -5,11 +5,12 @@
 
 #define MAIN_MENU 0
 #define OPTION_SUB_MENU 1
-#define GENERATE_MODE 2
-#define LOAD_PRESET 3
-#define SAVE_PRESET 4
-#define POST_GENERATE 5
-#define SUB_MENU 6
+#define SUB_MENU 2
+#define GENERATE_MODE 3
+#define LOAD_PRESET 4
+#define SAVE_PRESET 5
+#define DELETE_PRESET 6
+#define POST_GENERATE 7
 #define MAX_SETTINGS_ON_SCREEN 13
 #define TOP_WIDTH 50
 #define BOTTOM_WIDTH 40
@@ -43,7 +44,8 @@ void PrintOptionDescrption();
 bool CreatePresetDirectories();
 void GetPresets();
 bool LoadPreset(std::string presetName);
-bool SaveSettingsPreset();
+bool SavePreset();
+bool DeletePreset(std::string presetName);
 void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 

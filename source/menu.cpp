@@ -21,6 +21,7 @@ namespace {
   u8 subMode;
   u16 settingIdx;
   u16 itemIdx;
+  u16 subItemIdx;
   u8 menuIdx;
   u8 presetIdx;
   u8 generateIdx;
@@ -152,6 +153,9 @@ void MenuUpdate(u32 kDown) {
 	} else if (mode == LOAD_PRESET) {
     UpdatePresetsMenu(kDown);
     PrintPresetsMenu();
+  } else if (mode == DELETE_PRESET) {
+    UpdatePresetsMenu(kDown);
+    PrintPresetsMenu();
   } else if (mode == GENERATE_MODE) {
     UpdateGenerateMenu(kDown);
     if (mode != POST_GENERATE) {
@@ -164,6 +168,9 @@ void MenuUpdate(u32 kDown) {
 }
 
 void ModeChangeInit() {
+  if(subMode == SUB_MENU) {
+    subItemIdx = itemIdx;
+  }
   if (mode == OPTION_SUB_MENU) {
     settingIdx = 0;
 
@@ -175,18 +182,20 @@ void ModeChangeInit() {
     currentSetting = currentMenuItem->settingsList->at(settingIdx);
 
   } else if (mode == SUB_MENU) {
-    itemIdx = 0;
+    itemIdx = subItemIdx;
+    subItemIdx = 0;
+    presetIdx = 0;
     currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
   } else if (mode == SAVE_PRESET) {
-    if (SaveSettingsPreset()) {
-      printf("\x1b[10;5HPreset Saved!");
-      printf("\x1b[12;5HPress B to return to the main menu.");
+    if (SavePreset()) {
+      printf("\x1b[10;4HPreset Saved!");
+      printf("\x1b[12;4HPress B to return to the preset menu.");
     } else {
-      printf("\x1b[10;5HFailed to save preset.");
-      printf("\x1b[12;5HPress B to return to the main menu.");
+      printf("\x1b[10;4HFailed to save preset.");
+      printf("\x1b[12;4HPress B to return to the preset menu.");
     }
 
-  } else if (mode == LOAD_PRESET) {
+  } else if (mode == LOAD_PRESET || mode == DELETE_PRESET) {
     GetPresets();
 
   } else if (mode == GENERATE_MODE) {
@@ -284,12 +293,20 @@ void UpdatePresetsMenu(u32 kDown) {
     presetIdx = static_cast<u8>(presetEntries.size() - 1);
   }
 
-  if ((kDown & KEY_A) != 0) {
-    consoleSelect(&topScreen);
+  consoleSelect(&topScreen);
+  if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET) {
     if (LoadPreset(presetEntries[presetIdx])) {
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
+    }
+  } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET) {
+    if (DeletePreset(presetEntries[presetIdx])) {
+      presetEntries.erase(presetEntries.begin() + presetIdx);
+      printf("\x1b[24;5HPreset Deleted.");
+    } else {
+      consoleSelect(&topScreen);
+      printf("\x1b[24;5HFailed to delete preset.");
     }
   }
 }
@@ -417,12 +434,16 @@ void PrintSubMenu() {
 void PrintPresetsMenu() {
   consoleSelect(&bottomScreen);
   if (presetEntries.empty()) {
-    printf("\x1b[10;5HNo Presets Detected!");
-    printf("\x1b[12;5HPress B to return to the main menu.");
+    printf("\x1b[10;4HNo Presets Detected!");
+    printf("\x1b[12;4HPress B to return to the preset menu.");
     return;
   }
 
-  printf("\x1b[0;%dHSelect a Preset", (BOTTOM_WIDTH/2) - 7);
+  if(mode == LOAD_PRESET) {
+    printf("\x1b[0;%dHSelect a Preset to Load", (BOTTOM_WIDTH/2) - 7);
+  } else if (mode == DELETE_PRESET) {
+    printf("\x1b[0;%dHSelect a Preset to Delete", (BOTTOM_WIDTH/2) - 7);
+  }
 
 	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
 		if (i + presetBound >= presetEntries.size()) break;
@@ -561,7 +582,7 @@ bool LoadPreset(std::string presetName) {
 }
 
 //Saves the new preset to a file
-bool SaveSettingsPreset() {
+bool SavePreset() {
 
   std::string presetName = (GetInput("Preset Name")).substr(0, 19);
   //don't save if the user cancelled
@@ -607,6 +628,26 @@ bool SaveSettingsPreset() {
   FSFILE_Close(presetFile);
   FSUSER_CloseArchive(sdmcArchive);
 
+  return true;
+}
+
+//Delete the selected preset
+bool DeletePreset(std::string presetName) {
+  //clear any potential message
+  ClearDescription();
+
+  Result res;
+  FS_Archive sdmcArchive = 0;
+
+  std::string filepath = "/3ds/presets/oot3d/" + presetName + ".bin";
+
+  // Open SD archive
+  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+    printf("\x1b[22;5HFailed to load SD Archive.");
+    return false;
+  }
+
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()));
   return true;
 }
 
