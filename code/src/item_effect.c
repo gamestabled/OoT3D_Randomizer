@@ -182,3 +182,8 @@ void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 
         }
     }
 }
+
+void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    //Put the Kokiri Sword on Child B button when Link goes back child
+    saveCtx->childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
+}

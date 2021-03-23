@@ -3,7 +3,7 @@
 
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
-    gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
+    //gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
     gSaveContext.bgsFlag     = 1;
     gSaveContext.bgsHitsLeft = 1;
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
@@ -173,14 +173,15 @@ void SaveFile_Init() {
 }
 
 void SaveFile_SaveChildBButton(void) {
-    gSaveContext.childEquips.buttonItems[0] = (gSaveContext.equipment & 0x1) ? ITEM_SWORD_KOKIRI : ITEM_NONE;
     gSaveContext.infTable[29] &= 0x00; //Unset the swordless flag when going adult
 }
 
 u16 SaveFile_RestoreChildEquips(void) {
-    gSaveContext.infTable[29] |= (gSaveContext.equipment & 0x1) ? 0x00 : 0x1; //If we don't have Kokiri Sword, set the swordless flag
+    //if Kokiri Sword is not on child B button
+    if (gSaveContext.childEquips.buttonItems[0] != ITEM_SWORD_KOKIRI) {
+      gSaveContext.infTable[29] |= 0x1; //set swordless flag
+    }
     return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
-
 }
 
 u32 SaveFile_CheckGerudoToken(void) {
