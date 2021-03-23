@@ -80,6 +80,8 @@ void MenuInit() {
     printf("\x1b[21;5Loading presets might crash.");
   }
 
+  LoadCachedPreset(); //If cached settings preset exists, load it
+
   consoleSelect(&bottomScreen);
   PrintMainMenu();
 
@@ -187,7 +189,7 @@ void ModeChangeInit() {
     presetIdx = 0;
     currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
   } else if (mode == SAVE_PRESET) {
-    if (SavePreset()) {
+    if (SaveSpecifiedPreset()) {
       printf("\x1b[10;4HPreset Saved!");
       printf("\x1b[12;4HPress B to return to the preset menu.");
     } else {
@@ -295,7 +297,7 @@ void UpdatePresetsMenu(u32 kDown) {
 
   consoleSelect(&topScreen);
   if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET) {
-    if (LoadPreset(presetEntries[presetIdx])) {
+    if (LoadPreset(presetEntries[presetIdx], true)) {
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
@@ -528,8 +530,17 @@ void GetPresets() {
   }
 }
 
+void LoadCachedPreset() {
+  //If cache file exists, load it
+  for (const auto & entry : fs::directory_iterator("/3ds/presets/oot3d")) {
+    if(entry.path().stem().string() == "CACHED_SETTINGS") {
+      LoadPreset("CACHED_SETTINGS", false); //File exists, open
+    }
+  }
+}
+
 //Load the selected preset
-bool LoadPreset(std::string presetName) {
+bool LoadPreset(std::string presetName, bool print) {
   //clear any potential 'failed to load preset' message on previous attempt
   ClearDescription();
 
@@ -543,20 +554,20 @@ bool LoadPreset(std::string presetName) {
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-    printf("\x1b[22;5HFailed to load SD Archive.");
+    if (print) printf("\x1b[22;5HFailed to load SD Archive.");
     return false;
   }
 
   // Open preset file
   if (!R_SUCCEEDED(res = FSUSER_OpenFile(&presetFile, sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
-    printf("\x1b[22;5HFailed to open preset file %s.", filepath.c_str());
+    if (print) printf("\x1b[22;5HFailed to open preset file %s.", filepath.c_str());
     return false;
   }
 
   //Read ctx size
   size_t ctxSize;
   if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctxSize, sizeof(ctxSize)))) {
-    printf("\x1b[22;5HFailed to read preset size.");
+    if (print) printf("\x1b[22;5HFailed to read preset size.");
     return false;
   }
   totalRW += bytesRead;
@@ -564,7 +575,7 @@ bool LoadPreset(std::string presetName) {
   //If the sizes don't match, then the preset is incompatible (there's probably a better way to do this)
   if (ctxSize != sizeof(SettingsContext)) {
     consoleSelect(&topScreen);
-    printf("\x1b[22;5HPreset not compatible with current randomizer.");
+    if (print) printf("\x1b[22;5HPreset not compatible with current randomizer.");
     return false;
   }
 
@@ -582,14 +593,22 @@ bool LoadPreset(std::string presetName) {
 }
 
 //Saves the new preset to a file
-bool SavePreset() {
-
+bool SaveSpecifiedPreset() {
   std::string presetName = (GetInput("Preset Name")).substr(0, 19);
   //don't save if the user cancelled
   if (presetName == "") {
     return false;
   }
+  return SavePreset(presetName);
+}
 
+//Save cached preset after choosing to generate
+bool SaveCachedPreset() {
+  return SavePreset("CACHED_SETTINGS");
+}
+
+//Saves the new preset to a file
+bool SavePreset(std::string presetName) {
   Result res;
   FS_Archive sdmcArchive = 0;
   Handle presetFile;
@@ -652,6 +671,8 @@ bool DeletePreset(std::string presetName) {
 }
 
 void GenerateRandomizer() {
+
+  SaveCachedPreset(); //After choosing to generate, cache chosen settings for later
 
   consoleSelect(&topScreen);
   consoleClear();
