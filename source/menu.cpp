@@ -89,20 +89,20 @@ void MenuInit() {
 
 void MenuUpdate(u32 kDown) {
 
-	consoleSelect(&bottomScreen);
-	consoleClear();
+  consoleSelect(&bottomScreen);
+  consoleClear();
 
-	//Check for a main menu change
-	if (kDown & KEY_A && mode == MAIN_MENU) {
+  //Check for a main menu change
+  if (kDown & KEY_A && mode == MAIN_MENU) {
     mode = currentMenuItem->mode;
     ModeChangeInit();
     kDown = 0;
-	} else if ((kDown & KEY_B && mode != MAIN_MENU && subMode != SUB_MENU)) {
+  } else if ((kDown & KEY_B && mode != MAIN_MENU && subMode != SUB_MENU)) {
     consoleSelect(&topScreen);
     PrintTopScreen();
-		mode = MAIN_MENU;
-		currentMenuItem = Settings::mainMenu[menuIdx];
-	}
+    mode = MAIN_MENU;
+    currentMenuItem = Settings::mainMenu[menuIdx];
+  }
   //Check for a sub menu change
   else if (kDown & KEY_A && mode == SUB_MENU) {
     mode = currentMenuItem->itemsList->at(itemIdx)->mode;
@@ -143,16 +143,16 @@ void MenuUpdate(u32 kDown) {
     }
   }
 
-	//Print current menu (if applicable)
-	consoleSelect(&bottomScreen);
-	if (mode == MAIN_MENU) {
-		UpdateMainMenu(kDown);
-		PrintMainMenu();
+  //Print current menu (if applicable)
+  consoleSelect(&bottomScreen);
+  if (mode == MAIN_MENU) {
+    UpdateMainMenu(kDown);
+    PrintMainMenu();
     ClearDescription();
-	} else if (mode == OPTION_SUB_MENU) {
-		UpdateOptionSubMenu(kDown);
-		PrintOptionSubMenu();
-	} else if (mode == LOAD_PRESET) {
+  } else if (mode == OPTION_SUB_MENU) {
+    UpdateOptionSubMenu(kDown);
+    PrintOptionSubMenu();
+  } else if (mode == LOAD_PRESET) {
     UpdatePresetsMenu(kDown);
     PrintPresetsMenu();
   } else if (mode == DELETE_PRESET) {
@@ -165,7 +165,7 @@ void MenuUpdate(u32 kDown) {
     }
   } else if (mode == SUB_MENU) {
     UpdateSubMenu(kDown);
-		PrintSubMenu();
+    PrintSubMenu();
   }
 }
 
@@ -222,7 +222,7 @@ void UpdateMainMenu(u32 kDown) {
     menuIdx = static_cast<u8>(Settings::mainMenu.size() - 1);
   }
 
-	currentMenuItem = Settings::mainMenu[menuIdx];
+  currentMenuItem = Settings::mainMenu[menuIdx];
 }
 
 void UpdateOptionSubMenu(u32 kDown) {
@@ -333,22 +333,22 @@ void UpdateGenerateMenu(u32 kDown) {
 }
 
 void PrintMainMenu() {
-	printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
+  printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
 
-	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
-		if (i + menuBound >= Settings::mainMenu.size()) break;
+  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+    if (i + menuBound >= Settings::mainMenu.size()) break;
 
-		MenuItem* menu = Settings::mainMenu[i + menuBound];
+    MenuItem* menu = Settings::mainMenu[i + menuBound];
 
     u8 row = 3 + i;
     //make the current menu green
-		if (menuIdx == i + menuBound) {
-			printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
-			printf("\x1b[%d;%dH%s%s", row,  3, menu->name.c_str(), RESET);
-		} else {
-			printf("\x1b[%d;%dH%s",   row,  3, menu->name.c_str());
-		}
-	}
+    if (menuIdx == i + menuBound) {
+      printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
+      printf("\x1b[%d;%dH%s%s", row,  3, menu->name.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",   row,  3, menu->name.c_str());
+    }
+  }
 }
 
 void PrintOptionSubMenu() {
@@ -381,56 +381,56 @@ void PrintOptionSubMenu() {
     settingBound = settingIdx;
   }
 
-	//print menu name
-	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
+  //print menu name
+  printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
 
   //keep count of hidden settings to not make blank spaces appear in the list
   hiddenSettings = 0;
 
-	for (u8 i = 0; i - hiddenSettings < MAX_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i - hiddenSettings < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
-		if (i + settingBound >= currentMenuItem->settingsList->size()) break;
+    if (i + settingBound >= currentMenuItem->settingsList->size()) break;
 
-		Option* setting = currentMenuItem->settingsList->at(i + settingBound);
+    Option* setting = currentMenuItem->settingsList->at(i + settingBound);
 
-		u8 row = 3 + ((i - hiddenSettings) * 2);
+    u8 row = 3 + ((i - hiddenSettings) * 2);
     //make the current setting green
-		if (settingIdx == i + settingBound) {
-			printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
-			printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
-			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+    if (settingIdx == i + settingBound) {
+      printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
+      printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
+      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
     //dim to make a locked setting grey
-		} else if (setting->IsLocked()) {
-			printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
-			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+    } else if (setting->IsLocked()) {
+      printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
+      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
     //don't display hidden settings
     } else if (setting->IsHidden()) {
       hiddenSettings++;
       continue;
-		} else {
+    } else {
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
       printf("\x1b[%d;%dH%s",    row, 26, setting->GetSelectedOption().data());
     }
-	}
+  }
 
   PrintOptionDescrption();
 }
 
 void PrintSubMenu() {
-	printf("\x1b[0;%dH%s Menu", (BOTTOM_WIDTH/2) - 9, currentMenuItem->name.c_str());
+  printf("\x1b[0;%dH%s Menu", (BOTTOM_WIDTH/2) - 9, currentMenuItem->name.c_str());
 
-	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
-		if (i + menuBound >= currentMenuItem->itemsList->size()) break;
+  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+    if (i + menuBound >= currentMenuItem->itemsList->size()) break;
 
     u8 row = 3 + i;
     //make the current menu green
-		if (itemIdx == i + menuBound) {
-			printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
-			printf("\x1b[%d;%dH%s%s", row,  3, currentMenuItem->itemsList->at(i)->name.c_str(), RESET);
-		} else {
-			printf("\x1b[%d;%dH%s",   row,  3, currentMenuItem->itemsList->at(i)->name.c_str());
-		}
-	}
+    if (itemIdx == i + menuBound) {
+      printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
+      printf("\x1b[%d;%dH%s%s", row,  3, currentMenuItem->itemsList->at(i)->name.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",   row,  3, currentMenuItem->itemsList->at(i)->name.c_str());
+    }
+  }
 }
 
 void PrintPresetsMenu() {
@@ -447,20 +447,20 @@ void PrintPresetsMenu() {
     printf("\x1b[0;%dHSelect a Preset to Delete", (BOTTOM_WIDTH/2) - 7);
   }
 
-	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
-		if (i + presetBound >= presetEntries.size()) break;
+  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+    if (i + presetBound >= presetEntries.size()) break;
 
-		std::string preset = presetEntries[i];
+    std::string preset = presetEntries[i];
 
     u8 row = 3 + (i * 2);
     //make the current preset green
-		if (presetIdx == i + presetBound) {
-			printf("\x1b[%d;%dH%s>",  row, 14, GREEN);
-			printf("\x1b[%d;%dH%s%s", row, 15, preset.c_str(), RESET);
-		} else {
-			printf("\x1b[%d;%dH%s",   row, 15, preset.c_str());
-		}
-	}
+    if (presetIdx == i + presetBound) {
+      printf("\x1b[%d;%dH%s>",  row, 14, GREEN);
+      printf("\x1b[%d;%dH%s%s", row, 15, preset.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",   row, 15, preset.c_str());
+    }
+  }
 }
 
 void PrintGenerateMenu() {
@@ -470,18 +470,18 @@ void PrintGenerateMenu() {
   printf("\x1b[3;%dHHow will you play?", (BOTTOM_WIDTH/2) - 8);
   std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
 
-	for (u8 i = 0; i < playOptions.size(); i++) {
+  for (u8 i = 0; i < playOptions.size(); i++) {
 
-		std::string option = playOptions[i];
+    std::string option = playOptions[i];
     u8 row = 6 + (i * 2);
     //make the current selection green
-		if (generateIdx == i) {
-			printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
-			printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
-		} else {
-			printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
-		}
-	}
+    if (generateIdx == i) {
+      printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
+      printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+    }
+  }
 }
 
 void ClearDescription() {
@@ -704,14 +704,14 @@ void GenerateRandomizer() {
 
   unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
 
-	int ret = Playthrough::Playthrough_Init(finalHash);
-	if (ret < 0) {
-		printf("Error %d with fill. Press Select to exit.\n", ret);
-		return;
-	}
+  int ret = Playthrough::Playthrough_Init(finalHash);
+  if (ret < 0) {
+    printf("Error %d with fill. Press Select to exit.\n", ret);
+    return;
+  }
   printf("\x1b[11;10HWriting Patch...");
-	if (WritePatch()) {
-		printf("Done");
+  if (WritePatch()) {
+    printf("Done");
     if (Settings::PlayOption == PATCH_CONSOLE) {
       printf("\x1b[13;10HQuit out using the home menu. Then\n");
       printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
@@ -725,9 +725,9 @@ void GenerateRandomizer() {
     for (u8 i = 0; i < randomizerHash.size(); i++) {
       printf("\x1b[%d;11H- %s", i + 17, randomizerHash[i].c_str());
     }
-	} else {
-		printf("Failed\nPress Select to exit.\n");
-	}
+  } else {
+    printf("Failed\nPress Select to exit.\n");
+  }
 }
 
 //opens up the 3ds software keyboard for getting user input
@@ -737,9 +737,9 @@ std::string GetInput(const char* hintText) {
   SwkbdButton button = SWKBD_BUTTON_NONE;
 
   swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 2, -1);
-	swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
-	swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
-	swkbdSetHintText(&swkbd, hintText);
+  swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
+  swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
+  swkbdSetHintText(&swkbd, hintText);
   swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "Cancel", false);
 
   button = swkbdInputText(&swkbd, seed, sizeof(seed));
