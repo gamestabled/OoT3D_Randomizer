@@ -55,11 +55,11 @@ public:
     }
 
     void SetOptions(std::vector<std::string> o) {
-      options = o;
+        options = std::move(o);
     }
 
-    size_t GetOptionCount() {
-      return options.size();
+    size_t GetOptionCount() const {
+        return options.size();
     }
 
     std::string_view GetName() const {
@@ -74,7 +74,7 @@ public:
       return optionDescriptions[selectedOption];
     }
 
-    u8 GetSelectedOptionIndex() {
+    u8 GetSelectedOptionIndex() const {
       return selectedOption;
     }
 
@@ -105,7 +105,7 @@ public:
     void SetSelectedIndex(u8 idx) {
       selectedOption = idx;
       if (selectedOption >= options.size()) {
-        printf("\x1b[30;0HERROR: Incomptaible selection for %s\n", name.c_str());
+        printf("\x1b[30;0HERROR: Incompatible selection for %s\n", name.c_str());
         selectedOption = 0;
       }
 

@@ -465,12 +465,12 @@ static void AddItemToMainPool(const Item& item, size_t count = 1) {
 
 template <size_t N>
 static void JoinPools(std::vector<Item>& pool1, const std::array<Item, N>& pool2) {
-  for (const Item item : pool2) {
+  for (const Item& item : pool2) {
     AddItemToPool(pool1, item);
   }
 }
 
-static void AddRandomBottle(std::vector<Item> bottlePool) {
+static void AddRandomBottle(std::vector<Item>& bottlePool) {
   AddItemToMainPool(RandomElement(bottlePool, true));
 }
 
