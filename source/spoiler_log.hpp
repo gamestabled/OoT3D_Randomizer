@@ -1,11 +1,13 @@
 #pragma once
+
+#include <string>
 #include <string_view>
 #include <vector>
 #include "item_location.hpp"
 
-extern std::array<std::string, 5> randomizerHash;
-
+using RandomizerHash = std::array<std::string, 5>;
 void GenerateHash();
+const RandomizerHash& GetRandomizerHash();
 
 bool SpoilerLog_Write();
 
