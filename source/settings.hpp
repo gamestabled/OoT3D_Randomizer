@@ -58,8 +58,8 @@ public:
         options = std::move(o);
     }
 
-    size_t GetOptionCount() {
-      return options.size();
+    size_t GetOptionCount() const {
+        return options.size();
     }
 
     std::string_view GetName() const {
@@ -74,7 +74,7 @@ public:
       return optionDescriptions[selectedOption];
     }
 
-    u8 GetSelectedOptionIndex() {
+    u8 GetSelectedOptionIndex() const {
       return selectedOption;
     }
 
