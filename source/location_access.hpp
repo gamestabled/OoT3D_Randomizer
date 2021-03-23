@@ -224,11 +224,6 @@ public:
       nightAdult = false;
       addedToPool = false;
     }
-
-    bool operator< (const Exit &right) const {
-      return regionName.compare(right.regionName);
-    }
-
 };
 
 namespace Exits {
