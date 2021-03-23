@@ -165,19 +165,30 @@ class MenuItem {
   public:
 
     static MenuItem SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), SUB_MENU};
+      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
+    }
+
+    static MenuItem SubMenu(std::string name_, std::vector<MenuItem *>* itemsList_) {
+      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(itemsList_), SUB_MENU};
     }
 
     static MenuItem Action(std::string name_, u8 mode_) {
-      return MenuItem{std::move(name_), MenuItemType::Action, {}, std::move(mode_)};
+      return MenuItem{std::move(name_), MenuItemType::Action, std::move(mode_)};
     }
 
     MenuItem(std::string name_, MenuItemType type_, std::vector<Option *>* settingsList_, u8 mode_)
         : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_) {}
 
+    MenuItem(std::string name_, MenuItemType type_, std::vector<MenuItem *>* itemsList_, u8 mode_)
+        : name(std::move(name_)), type(type_), itemsList(std::move(itemsList_)), mode(mode_) {}
+
+    MenuItem(std::string name_, MenuItemType type_, u8 mode_)
+        : name(std::move(name_)), type(type_), mode(mode_) {}
+
     std::string name;
     MenuItemType type;
     std::vector<Option *>* settingsList;
+    std::vector<MenuItem *>* itemsList;
     u8 mode;
     int selectedSetting = 0;
 };

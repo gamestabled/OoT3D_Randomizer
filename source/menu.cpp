@@ -18,7 +18,9 @@ namespace fs = std::filesystem;
 namespace {
   bool seedChanged;
   u8 mode;
+  u8 subMode;
   u16 settingIdx;
+  u16 itemIdx;
   u8 menuIdx;
   u8 presetIdx;
   u8 generateIdx;
@@ -27,6 +29,7 @@ namespace {
   u8 presetBound;
   u16 pastSeedLength;
   MenuItem* currentMenuItem;
+  MenuItem* currentSubMenuItem;
   Option* currentSetting;
   PrintConsole topScreen, bottomScreen;
   std::vector<std::string> presetEntries;
@@ -50,9 +53,11 @@ void MenuInit() {
 
   seedChanged = false;
   mode = MAIN_MENU;
+  subMode = -1;
   menuIdx = 0;
   menuBound = 0;
   settingIdx = 0;
+  itemIdx = 0;
   settingBound = 0;
   presetIdx = 0;
   presetBound = 0;
@@ -84,18 +89,29 @@ void MenuUpdate(u32 kDown) {
 	consoleSelect(&bottomScreen);
 	consoleClear();
 
-	//Check for a menu change
+	//Check for a main menu change
 	if (kDown & KEY_A && mode == MAIN_MENU) {
     mode = currentMenuItem->mode;
     ModeChangeInit();
     kDown = 0;
-	} else if ((kDown & KEY_B && mode != MAIN_MENU)) {
-
+	} else if ((kDown & KEY_B && mode != MAIN_MENU && subMode != SUB_MENU)) {
     consoleSelect(&topScreen);
     PrintTopScreen();
 		mode = MAIN_MENU;
 		currentMenuItem = Settings::mainMenu[menuIdx];
 	}
+  //Check for a sub menu change
+  else if (kDown & KEY_A && mode == SUB_MENU) {
+    mode = currentMenuItem->itemsList->at(itemIdx)->mode;
+    subMode = SUB_MENU;
+    ModeChangeInit();
+    kDown = 0;
+  } else if ((kDown & KEY_B && mode != MAIN_MENU)) {
+    mode = currentMenuItem->mode;
+    subMode = -1;
+    ModeChangeInit();
+    kDown = 0;
+  }
 
   if (mode != GENERATE_MODE) {
 
@@ -130,9 +146,9 @@ void MenuUpdate(u32 kDown) {
 		UpdateMainMenu(kDown);
 		PrintMainMenu();
     ClearDescription();
-	} else if (mode == SUB_MENU) {
-		UpdateSubMenu(kDown);
-		PrintSubMenu();
+	} else if (mode == OPTION_SUB_MENU) {
+		UpdateOptionSubMenu(kDown);
+		PrintOptionSubMenu();
 	} else if (mode == LOAD_PRESET) {
     UpdatePresetsMenu(kDown);
     PrintPresetsMenu();
@@ -141,11 +157,14 @@ void MenuUpdate(u32 kDown) {
     if (mode != POST_GENERATE) {
       PrintGenerateMenu();
     }
+  } else if (mode == SUB_MENU) {
+    UpdateSubMenu(kDown);
+		PrintSubMenu();
   }
 }
 
 void ModeChangeInit() {
-  if (mode == SUB_MENU) {
+  if (mode == OPTION_SUB_MENU) {
     settingIdx = 0;
 
     //loop through until we reach an unlocked setting
@@ -155,6 +174,9 @@ void ModeChangeInit() {
 
     currentSetting = currentMenuItem->settingsList->at(settingIdx);
 
+  } else if (mode == SUB_MENU) {
+    itemIdx = 0;
+    currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
   } else if (mode == SAVE_PRESET) {
     if (SaveSettingsPreset()) {
       printf("\x1b[10;5HPreset Saved!");
@@ -192,7 +214,7 @@ void UpdateMainMenu(u32 kDown) {
 	currentMenuItem = Settings::mainMenu[menuIdx];
 }
 
-void UpdateSubMenu(u32 kDown) {
+void UpdateOptionSubMenu(u32 kDown) {
   //loop through settings until an unlocked one is reached
   do {
     if ((kDown & KEY_DUP) != 0) {
@@ -225,6 +247,25 @@ void UpdateSubMenu(u32 kDown) {
 
   currentSetting->SetVariable();
   Settings::ForceChange(kDown, currentSetting);
+}
+
+void UpdateSubMenu(u32 kDown) {
+  if ((kDown & KEY_DUP) != 0) {
+    itemIdx--;
+  }
+
+  if ((kDown & KEY_DDOWN) != 0)  {
+    itemIdx++;
+  }
+
+  // Bounds checking
+  if (itemIdx == currentMenuItem->itemsList->size()) {
+    itemIdx = 0;
+  } else if (itemIdx == 0xFFFF) {
+    itemIdx = static_cast<u16>(currentMenuItem->itemsList->size() - 1);
+  }
+
+  currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
 }
 
 void UpdatePresetsMenu(u32 kDown) {
@@ -291,7 +332,7 @@ void PrintMainMenu() {
 	}
 }
 
-void PrintSubMenu() {
+void PrintOptionSubMenu() {
   //bounds checking incase settings go off screen
   //this is complicated to account for hidden settings and there's probably a better way to do it
   u16 hiddenSettings = 0;
@@ -354,6 +395,23 @@ void PrintSubMenu() {
 	}
 
   PrintOptionDescrption();
+}
+
+void PrintSubMenu() {
+	printf("\x1b[0;%dH%s Menu", (BOTTOM_WIDTH/2) - 9, currentMenuItem->name.c_str());
+
+	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+		if (i + menuBound >= currentMenuItem->itemsList->size()) break;
+
+    u8 row = 3 + i;
+    //make the current menu green
+		if (itemIdx == i + menuBound) {
+			printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
+			printf("\x1b[%d;%dH%s%s", row,  3, currentMenuItem->itemsList->at(i)->name.c_str(), RESET);
+		} else {
+			printf("\x1b[%d;%dH%s",   row,  3, currentMenuItem->itemsList->at(i)->name.c_str());
+		}
+	}
 }
 
 void PrintPresetsMenu() {

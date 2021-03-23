@@ -305,6 +305,14 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
+
+  MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
+  MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
+  std::vector<MenuItem *> settingsPresetItems = {
+    &loadSettingsPreset,
+    &saveSettingsPreset,
+  };
+
   MenuItem open                     = MenuItem::SubMenu("Open Settings",              &openOptions);
   MenuItem world                    = MenuItem::SubMenu("World Settings",             &worldOptions);
   MenuItem shuffle                  = MenuItem::SubMenu("Shuffle Settings",           &shuffleOptions);
@@ -315,8 +323,7 @@ namespace Settings {
   MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
   MenuItem itemPoolSettings         = MenuItem::SubMenu("Item Pool Settings",         &itemPoolOptions);
   MenuItem itemUsabilitySettings    = MenuItem::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
-  MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
-  MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
+  MenuItem settingsPresets          = MenuItem::SubMenu("Settings Presets",           &settingsPresetItems);
   MenuItem generateRandomizer       = MenuItem::Action ("Generate Randomizer",        GENERATE_MODE);
 
   //adding a menu with no options crashes, might fix later
@@ -331,8 +338,7 @@ namespace Settings {
     &miscSettings,
     &itemPoolSettings,
     &itemUsabilitySettings,
-    &loadSettingsPreset,
-    &saveSettingsPreset,
+    &settingsPresets,
     &generateRandomizer,
   };
 
