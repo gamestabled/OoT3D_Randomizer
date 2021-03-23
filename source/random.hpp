@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <random>
 
-void Random_Init(unsigned int seed);
-unsigned int Random(int min, int max);
+void Random_Init(uint32_t seed);
+uint32_t Random(int min, int max);
 
 //Get a random element from a vector or array
 template <typename T>
