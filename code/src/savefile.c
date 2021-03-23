@@ -64,6 +64,10 @@ void SaveFile_Init() {
     |THINGS TO SET DEPENDING ON SETTINGS|
     -----------------------------------*/
 
+    if (gSettingsContext.rainbowBridge == RAINBOWBRIDGE_OPEN) {
+        gSaveContext.eventChkInf[0x4] |= 0x2000;
+    }
+
     if (gSettingsContext.startingAge == AGE_ADULT) {
         gSaveContext.linkAge       = AGE_ADULT;  //age is adult
         gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
