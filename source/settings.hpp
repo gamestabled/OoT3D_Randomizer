@@ -55,7 +55,7 @@ public:
     }
 
     void SetOptions(std::vector<std::string> o) {
-      options = o;
+        options = std::move(o);
     }
 
     size_t GetOptionCount() {
