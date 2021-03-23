@@ -9,10 +9,10 @@ unsigned int Random(int min, int max);
 
 //Get a random element from a vector or array
 template <typename T>
-T RandomElement(std::vector<T> &vector, bool erase) {
-    int idx = Random(0, vector.size());
-    T selected = vector[idx];
-    if(erase) {
+T RandomElement(std::vector<T>& vector, bool erase) {
+    const auto idx = Random(0, vector.size());
+    const T selected = vector[idx];
+    if (erase) {
         vector.erase(vector.begin() + idx);
     }
     return selected;
@@ -25,7 +25,7 @@ T RandomElement(std::array<T, size> arr) {
 //Shuffle items within a vector or array
 template <typename T>
 void Shuffle(std::vector<T> &vector) {
-    for (uint i = 0; i + 1 < vector.size(); i++)
+    for (std::size_t i = 0; i + 1 < vector.size(); i++)
     {
         std::swap(vector[i], vector[Random(i, vector.size())]);
     }
