@@ -2,14 +2,14 @@ name: Create 3DSX and CIA Files, and drafts/posts a new Release.
 
 on:
   push:
-    branches: [ main, docker-image-update ]
+    branches: [ main ]
 
 jobs:
   build-cia-3dsx:
     runs-on: ubuntu-latest
     container:
       image: phlex/oot3dr-build-tools
-      
+
     steps:
       - uses: actions/checkout@v2
 
