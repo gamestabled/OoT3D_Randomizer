@@ -709,7 +709,7 @@ void GenerateRandomizer() {
 
   unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
 
-	int ret = Playthrough::Playthrough_Init(finalHash);
+  int ret = Playthrough::Playthrough_Init(finalHash);
   if (ret < 0) {
     if(ret == -1) { //Failed to generate after 5 tries
       printf("\n\nFailed to generate after 5 tries.\nPress Select to exit or B to go back to the menu.\n");
