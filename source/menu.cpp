@@ -305,6 +305,9 @@ void UpdatePresetsMenu(u32 kDown) {
   } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET) {
     if (DeletePreset(presetEntries[presetIdx])) {
       presetEntries.erase(presetEntries.begin() + presetIdx);
+      if(presetIdx == presetEntries.size()) { //Catch when last preset is deleted
+        presetIdx--;
+      }
       printf("\x1b[24;5HPreset Deleted.");
     } else {
       consoleSelect(&topScreen);
