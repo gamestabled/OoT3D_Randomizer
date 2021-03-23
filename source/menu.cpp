@@ -526,7 +526,9 @@ bool CreatePresetDirectories() {
 void GetPresets() {
   presetEntries = {};
   for (const auto & entry : fs::directory_iterator("/3ds/presets/oot3d")) {
-    presetEntries.push_back(entry.path().stem().string());
+    if(entry.path().stem().string() != "CACHED_SETTINGS") {
+      presetEntries.push_back(entry.path().stem().string());
+    }
   }
 }
 
