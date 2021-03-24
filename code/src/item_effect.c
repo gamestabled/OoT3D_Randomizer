@@ -80,7 +80,7 @@ void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->magicLevel = 1; // Set meter level
     saveCtx->magicAcquired = 1; // Required for meter to persist on save load
-    // save->magic_meter_size = 0x30; // Set meter size //TODO? is this needed?
+    saveCtx->magicMeterSize = 0x30; // Set meter size
     saveCtx->magic = 0x30; // Fill meter
 }
 
