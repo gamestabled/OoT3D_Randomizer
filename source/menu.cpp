@@ -549,7 +549,7 @@ static std::string PresetPath(std::string_view presetName) {
 }
 
 //Load the selected preset
-bool LoadPreset(std::string presetName, bool print) {
+bool LoadPreset(std::string_view presetName, bool print) {
   //clear any potential 'failed to load preset' message on previous attempt
   ClearDescription();
 
@@ -617,7 +617,7 @@ bool SaveCachedPreset() {
 }
 
 //Saves the new preset to a file
-bool SavePreset(std::string presetName) {
+bool SavePreset(std::string_view presetName) {
   Result res;
   FS_Archive sdmcArchive = 0;
   Handle presetFile;
@@ -658,7 +658,7 @@ bool SavePreset(std::string presetName) {
 }
 
 //Delete the selected preset
-bool DeletePreset(std::string presetName) {
+bool DeletePreset(std::string_view presetName) {
   //clear any potential message
   ClearDescription();
 
