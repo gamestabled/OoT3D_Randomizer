@@ -122,9 +122,9 @@ namespace Settings {
   };
 
   //Item Usability Settings
-  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disable", "Enable"},                                   {adultStickDesc, adultStickDesc});
-  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disable", "Enable"},                                   {adultBoomerangDesc, adultBoomerangDesc});
-  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disable", "Enable"},                                   {childHammerDesc, childHammerDesc});
+  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                 {adultStickDesc, adultStickDesc});
+  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                 {adultBoomerangDesc, adultBoomerangDesc});
+  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                 {childHammerDesc, childHammerDesc});
   std::vector<Option *> itemUsabilityOptions = {
     &StickAsAdult,
     &BoomerangAsAdult,
@@ -144,7 +144,7 @@ namespace Settings {
 
   //Function to make defining logic tricks easier to read
   Option LogicTrick(std::string setting, std::string_view description) {
-    return Option::Bool(setting, {"Disable", "Enable"}, std::vector<std::string_view>{2, description});
+    return Option::Bool(setting, {"Disabled", "Enabled"}, std::vector<std::string_view>{2, description});
   }
 
   //Detailed Logic Tricks                               ---------------------
