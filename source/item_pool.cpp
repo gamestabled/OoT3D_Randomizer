@@ -488,8 +488,7 @@ static Item GetPendingJunkItem() {
     return GetJunkItem();
   }
 
-  Item returnItem = RandomElement(PendingJunkPool, true);
-  return returnItem;
+  return RandomElement(PendingJunkPool, true);
 }
 
 //Replace junk items in the pool with pending junk
