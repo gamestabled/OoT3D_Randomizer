@@ -23,5 +23,6 @@ void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2);
 
 #endif //_ITEM_EFFECT_H_

@@ -385,7 +385,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(&LH_UnderwaterItem,  []{return IsChild && CanDive;}),
-                  ItemLocationPairing(&LH_Sun,             []{return IsAdult && (CanUse("Distant Scarecrow") || WaterTempleClear) && CanUse("Bow");}),
+                  ItemLocationPairing(&LH_Sun,             []{return IsAdult && WaterTempleClear && CanUse("Bow");}),
                   ItemLocationPairing(&LH_FreestandingPoH, []{return IsAdult && (CanUse("Scarecrow") || LH_Main.CanPlantBean());}),
                   ItemLocationPairing(&LH_GS_BeanPatch,    []{return CanPlantBugs && CanChildAttack;}),
                   ItemLocationPairing(&LH_GS_LabWall,      []{return IsChild && (Boomerang || (LogicLabWallGS && (Sticks || KokiriSword))) && AtNight;}),
@@ -1909,7 +1909,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&ChildWaterTemple, []{return IsChild;}),
-                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((LogicWaterTempleUpperBoost && Bombs && (CanUse("Nayrus Love") || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO))) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
+                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((Hookshot && (LogicWaterTempleUpperBoost && Bombs && (CanUse("Nayrus Love") || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO)))) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
                 }, {}, {
                   //Exits
                   ExitPairing::Both(&LH_Main,                       []{return true;}),

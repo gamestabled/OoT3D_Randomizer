@@ -3,8 +3,9 @@
 
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
-    gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
+    //gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
     gSaveContext.bgsFlag     = 1;
+    gSaveContext.bgsHitsLeft = 1;
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
     gSaveContext.questItems |= 0x3FFC0; //songs
     gSaveContext.items[SLOT_OCARINA]  = ITEM_OCARINA_FAIRY;
@@ -44,24 +45,28 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
     //navi text triggers
-    gSaveContext.sceneFlags [0].swch |= 0x80080400; //deku tree vines and door and rolling spike
-    gSaveContext.sceneFlags [1].swch |= 0x00004900; //dodongo entrance text and spike trap text
-    gSaveContext.sceneFlags [2].swch |= 0x0F010000; //jabu jabu
-    gSaveContext.sceneFlags [3].swch |= 0x01C00300; //forest temple
-    gSaveContext.sceneFlags [4].swch |= 0x00080000; //fire temple
-    gSaveContext.sceneFlags [5].swch |= 0x00000080; //water temple
-    gSaveContext.sceneFlags [9].swch |= 0x00000020; //ice cavern TODO: doesn't work
+    gSaveContext.sceneFlags[DUNGEON_DEKU_TREE]      .swch |= 0x80080400; //deku tree vines and door and rolling spike
+    gSaveContext.sceneFlags[DUNGEON_DODONGOS_CAVERN].swch |= 0x00004900; //dodongo entrance text and spike trap text
+    gSaveContext.sceneFlags[DUNGEON_JABUJABUS_BELLY].swch |= 0x0F010000; //jabu jabu
+    gSaveContext.sceneFlags[DUNGEON_FOREST_TEMPLE]  .swch |= 0x01C00300; //forest temple
+    gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE]    .swch |= 0x00080000; //fire temple
+    gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE]   .swch |= 0x00000080; //water temple
+    gSaveContext.sceneFlags[DUNGEON_ICE_CAVERN]     .swch |= 0x00000020; //ice cavern TODO: doesn't work
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
     //open lowest Fire Temple locked door (to prevent key logic lockouts)
-    gSaveContext.sceneFlags[4].swch |= 0x00800000;
+    gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
 
     //open middle locked door in Water Temple (to prevent key logic lockouts)
-    gSaveContext.sceneFlags[5].swch |= 0x00200000;
+    gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE].swch |= 0x00200000;
 
     /*-----------------------------------
     |THINGS TO SET DEPENDING ON SETTINGS|
     -----------------------------------*/
+
+    if (gSettingsContext.rainbowBridge == RAINBOWBRIDGE_OPEN) {
+        gSaveContext.eventChkInf[0x4] |= 0x2000;
+    }
 
     if (gSettingsContext.startingAge == AGE_ADULT) {
         gSaveContext.linkAge       = AGE_ADULT;  //age is adult
@@ -90,8 +95,12 @@ void SaveFile_Init() {
 
     if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_FAST) {
         gSaveContext.eventChkInf[0x9] |= 0x000E; //Free 3 carpenters
+        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].swch    |= 0x000D01DC; //heard yells/unlocked doors
+        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].collect |= 0x0000C400; //picked up keys
     } else if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) {
         gSaveContext.eventChkInf[0x9] |= 0x000F; //Free all carpenters
+        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].swch    |= 0x000F01FE; //heard yells/unlocked doors
+        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].collect |= 0x0000D400; //picked up keys
     }
 
     if (gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN) {
@@ -164,14 +173,15 @@ void SaveFile_Init() {
 }
 
 void SaveFile_SaveChildBButton(void) {
-    gSaveContext.childEquips.buttonItems[0] = (gSaveContext.equipment & 0x1) ? ITEM_SWORD_KOKIRI : ITEM_NONE;
     gSaveContext.infTable[29] &= 0x00; //Unset the swordless flag when going adult
 }
 
 u16 SaveFile_RestoreChildEquips(void) {
-    gSaveContext.infTable[29] |= (gSaveContext.equipment & 0x1) ? 0x00 : 0x1; //If we don't have Kokiri Sword, set the swordless flag
+    //if Kokiri Sword is not on child B button
+    if (gSaveContext.childEquips.buttonItems[0] != ITEM_SWORD_KOKIRI) {
+      gSaveContext.infTable[29] |= 0x1; //set swordless flag
+    }
     return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
-
 }
 
 u32 SaveFile_CheckGerudoToken(void) {

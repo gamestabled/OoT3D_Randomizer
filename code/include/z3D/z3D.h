@@ -158,7 +158,9 @@ typedef struct {
     /* 0x156A */ s16          timerY[2]; //changing these doesn't seem to actually move the timer?
     /* 0x156E */ u8           nightSeqIndex;
     /* 0x156F */ u8           buttonStatus[5];
-    /* 0x1574 */ char         unk_1574[0x001E];
+    /* 0x1574 */ char         unk_1574[0x000F];
+    /* 0x1584 */ u16          magicMeterSize;
+    /* 0x1586 */ char         unk_1586[0x000C];
     /* 0x1592 */ u16          dungeonIndex;
     /* 0x1594 */ char         unk_1594[0x000C];
     /* 0x15A0 */ u16          nextCutsceneIndex;
@@ -360,7 +362,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ char filename[0x40];
-    /* 0x40 */ u32 size; 
+    /* 0x40 */ u32 size;
 } ObjectFile;
 
 struct GlModel;
