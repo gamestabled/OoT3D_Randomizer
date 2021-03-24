@@ -601,7 +601,7 @@ bool LoadPreset(std::string presetName, bool print) {
 bool SaveSpecifiedPreset() {
   std::string presetName = (GetInput("Preset Name")).substr(0, 19);
   //don't save if the user cancelled
-  if (presetName == "") {
+  if (presetName.empty()) {
     return false;
   }
   return SavePreset(presetName);
@@ -683,16 +683,16 @@ void GenerateRandomizer() {
   consoleClear();
 
   //if a blank seed was entered, make a random one
-  if (Settings::seed == "") {
+  if (Settings::seed.empty()) {
     Settings::seed = std::to_string(rand());
   } else if (Settings::seed.rfind("seed_testing_count", 0) == 0) {
-    int count = std::stoi(Settings::seed.substr(18, std::string::npos), nullptr);
+    const int count = std::stoi(Settings::seed.substr(18), nullptr);
     Playthrough::Playthrough_Repeat(count);
     return;
   }
 
   //turn the settings into a string for hashing
-  std::string settingsStr = "";
+  std::string settingsStr;
   for (MenuItem* menu : Settings::mainMenu) {
     //don't go through non-menus
     if (menu->type == MenuItemType::Action) {
