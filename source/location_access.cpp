@@ -1909,7 +1909,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&ChildWaterTemple, []{return IsChild;}),
-                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((LogicWaterTempleUpperBoost && Bombs && (CanUse("Nayrus Love") || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO))) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
+                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((Hookshot && (LogicWaterTempleUpperBoost && Bombs && (CanUse("Nayrus Love") || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO)))) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
                 }, {}, {
                   //Exits
                   ExitPairing::Both(&LH_Main,                       []{return true;}),
