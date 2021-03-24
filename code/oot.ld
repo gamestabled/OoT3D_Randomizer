@@ -244,6 +244,10 @@ SECTIONS
 		*(.patch_DekuTheaterMaskOfTruth)
 	}
 
+	.patch_BombchuBowlingPrizeOrder 0x21CAD4 : {
+		*(.patch_BombchuBowlingPrizeOrder)
+	}
+
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {
 		*(.patch_ItemGiveBombchuDropTwo)
 	}
@@ -322,6 +326,10 @@ SECTIONS
 
 	.patch_ForestTempleItemGiveThree 0x28FF44 : {
 		*(.patch_ForestTempleItemGiveThree)
+	}
+
+	.patch_BombchuBowlingAlwaysFirstPrize 0x291924 : {
+		*(.patch_BombchuBowlingAlwaysFirstPrize)
 	}
 
 	.patch_LostWoodsShootingGameTwo 0x2990E8 : {
