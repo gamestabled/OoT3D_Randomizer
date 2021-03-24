@@ -456,7 +456,7 @@ const std::array<Item, 10> tradeItems = {
 };
 
 void AddItemToPool(std::vector<Item>& pool, const Item& item, size_t count /*= 1*/) {
-  pool.resize(pool.size() + count, item);
+  pool.insert(pool.end(), count, item);
 }
 
 template <typename FromPool>
@@ -465,7 +465,7 @@ static void AddItemsToPool(std::vector<Item>& toPool, const FromPool& fromPool) 
 }
 
 static void AddItemToMainPool(const Item& item, size_t count = 1) {
-  ItemPool.resize(ItemPool.size() + count, item);
+  ItemPool.insert(ItemPool.end(), count, item);
 }
 
 static void AddRandomBottle(std::vector<Item>& bottlePool) {
