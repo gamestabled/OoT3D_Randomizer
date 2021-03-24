@@ -459,15 +459,13 @@ void AddItemToPool(std::vector<Item>& pool, const Item& item, size_t count /*= 1
   pool.resize(pool.size() + count, item);
 }
 
-static void AddItemToMainPool(const Item& item, size_t count = 1) {
-  ItemPool.resize(ItemPool.size() + count, item);
+template <typename FromPool>
+static void AddItemsToPool(std::vector<Item>& toPool, const FromPool& fromPool) {
+  toPool.insert(toPool.end(), std::cbegin(fromPool), std::cend(fromPool));
 }
 
-template <size_t N>
-static void JoinPools(std::vector<Item>& pool1, const std::array<Item, N>& pool2) {
-  for (const Item& item : pool2) {
-    AddItemToPool(pool1, item);
-  }
+static void AddItemToMainPool(const Item& item, size_t count = 1) {
+  ItemPool.resize(ItemPool.size() + count, item);
 }
 
 static void AddRandomBottle(std::vector<Item>& bottlePool) {
@@ -1106,7 +1104,7 @@ void GenerateItemPool() {
       // PlaceItemInLocation(&MK_BazaarItem4,  &BuyBombchu5);
       // PlaceItemInLocation(&Kak_BazaarItem4, &BuyBombchu5);
     }
-    JoinPools(ItemPool, normalRupees);
+    AddItemsToPool(ItemPool, normalRupees);
   } else {
     //shopsanity settings
   }
@@ -1141,7 +1139,7 @@ void GenerateItemPool() {
     }
 
     //Overworld Scrubs
-    JoinPools(ItemPool, dekuScrubItems);
+    AddItemsToPool(ItemPool, dekuScrubItems);
 
     //I'm not sure what this is for, but it was in ootr so I copied it
     for (u8 i = 0; i < 7; i++) {
@@ -1155,54 +1153,54 @@ void GenerateItemPool() {
     PlaceVanillaDekuScrubItems();
   }
 
-  JoinPools(ItemPool, alwaysItems);
+  AddItemsToPool(ItemPool, alwaysItems);
 
   //dungeon pools
   if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, DT_MQ);
+    AddItemsToPool(ItemPool, DT_MQ);
   } else {
-    JoinPools(ItemPool, DT_Vanilla);
+    AddItemsToPool(ItemPool, DT_Vanilla);
   }
   if (DodongosCavernDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, DC_MQ);
+    AddItemsToPool(ItemPool, DC_MQ);
   } else {
-    JoinPools(ItemPool, DC_Vanilla);
+    AddItemsToPool(ItemPool, DC_Vanilla);
   }
   if (JabuJabusBellyDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, JB_MQ);
+    AddItemsToPool(ItemPool, JB_MQ);
   }
   if (ForestTempleDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, FoT_MQ);
+    AddItemsToPool(ItemPool, FoT_MQ);
   } else {
-    JoinPools(ItemPool, FoT_Vanilla);
+    AddItemsToPool(ItemPool, FoT_Vanilla);
   }
   if (FireTempleDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, FiT_MQ);
+    AddItemsToPool(ItemPool, FiT_MQ);
   } else {
-    JoinPools(ItemPool, FiT_Vanilla);
+    AddItemsToPool(ItemPool, FiT_Vanilla);
   }
   if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, SpT_MQ);
+    AddItemsToPool(ItemPool, SpT_MQ);
   } else {
-    JoinPools(ItemPool, SpT_Vanilla);
+    AddItemsToPool(ItemPool, SpT_Vanilla);
   }
   if (ShadowTempleDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, ShT_MQ);
+    AddItemsToPool(ItemPool, ShT_MQ);
   } else {
-    JoinPools(ItemPool, ShT_Vanilla);
+    AddItemsToPool(ItemPool, ShT_Vanilla);
   }
   if (BottomOfTheWellDungeonMode == DUNGEONMODE_VANILLA) {
-    JoinPools(ItemPool, BW_Vanilla);
+    AddItemsToPool(ItemPool, BW_Vanilla);
   }
   if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, GTG_MQ);
+    AddItemsToPool(ItemPool, GTG_MQ);
   } else {
-    JoinPools(ItemPool, GTG_Vanilla);
+    AddItemsToPool(ItemPool, GTG_Vanilla);
   }
   if (GanonsCastleDungeonMode == DUNGEONMODE_MQ) {
-    JoinPools(ItemPool, GC_MQ);
+    AddItemsToPool(ItemPool, GC_MQ);
   } else {
-    JoinPools(ItemPool, GC_Vanilla);
+    AddItemsToPool(ItemPool, GC_Vanilla);
   }
 
   u8 rutoBottles = 1;
@@ -1227,9 +1225,9 @@ void GenerateItemPool() {
   AddItemToMainPool(I_ClaimCheck);
 
   //add songs
-  JoinPools(ItemPool, songList);
+  AddItemsToPool(ItemPool, songList);
   if (ShuffleSongs && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
-    JoinPools(PendingJunkPool, songList);
+    AddItemsToPool(PendingJunkPool, songList);
   }
 
   //TODO: free scarecrow
@@ -1319,9 +1317,9 @@ void GenerateItemPool() {
   }
 
   if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
-    JoinPools(ItemPool, easyItems);
+    AddItemsToPool(ItemPool, easyItems);
   } else {
-    JoinPools(ItemPool, normalItems);
+    AddItemsToPool(ItemPool, normalItems);
   }
 
   if (!ShuffleKokiriSword) {
