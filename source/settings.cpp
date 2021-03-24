@@ -513,12 +513,15 @@ namespace Settings {
     RandomGanonsTrials.SetSelectedIndex(ON);
     GanonsTrialsCount.Hide();
 
-    std::vector<std::string> bridgeTokenOptions = {};
-    for (int i = 0; i <= 100; i++) {
-      bridgeTokenOptions.push_back(std::to_string(i));
+    {
+      std::vector<std::string> bridgeTokenOptions;
+      bridgeTokenOptions.reserve(101);
+      for (int i = 0; i <= 100; i++) {
+        bridgeTokenOptions.push_back(std::to_string(i));
+      }
+      BridgeTokenCount.SetOptions(std::move(bridgeTokenOptions));
+      BridgeTokenCount.SetSelectedIndex(1);
     }
-    BridgeTokenCount.SetOptions(bridgeTokenOptions);
-    BridgeTokenCount.SetSelectedIndex(1);
 
     StartingAge.SetSelectedIndex(AGE_CHILD);
 

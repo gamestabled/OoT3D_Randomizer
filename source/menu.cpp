@@ -585,13 +585,19 @@ void GenerateRandomizer() {
   unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
 
 	int ret = Playthrough::Playthrough_Init(finalHash);
-	if (ret < 0) {
-		printf("Error %d with fill. Press Select to exit.\n", ret);
-		return;
-	}
+  if (ret < 0) {
+    if(ret == -1) { //Failed to generate after 5 tries
+      printf("\n\nFailed to generate after 5 tries.\nPress Select to exit or B to go back to the menu.\n");
+      return;
+    }
+    else {
+      printf("\n\nError %d with fill.\nPress Select to exit or B to go back to the menu.\n", ret);
+      return;
+    }
+  }
   printf("\x1b[11;10HWriting Patch...");
-	if (WritePatch()) {
-		printf("Done");
+  if (WritePatch()) {
+    printf("Done");
     if (Settings::PlayOption == PATCH_CONSOLE) {
       printf("\x1b[13;10HQuit out using the home menu. Then\n");
       printf("\x1b[14;10Henable game patching and launch OoT3D!\n");
@@ -600,14 +606,14 @@ void GenerateRandomizer() {
       printf("\x1b[14;10HOoT3D mods folder, then launch OoT3D!\n");
     }
 
-
+    const auto& randomizerHash = GetRandomizerHash();
     printf("\x1b[16;10HHash:");
-    for (u8 i = 0; i < randomizerHash.size(); i++) {
-      printf("\x1b[%d;11H- %s", i + 17, randomizerHash[i].c_str());
+    for (size_t i = 0; i < randomizerHash.size(); i++) {
+      printf("\x1b[%zu;11H- %s", i + 17, randomizerHash[i].c_str());
     }
-	} else {
-		printf("Failed\nPress Select to exit.\n");
-	}
+  } else {
+    printf("Failed\nPress Select to exit.\n");
+  }
 }
 
 //opens up the 3ds software keyboard for getting user input

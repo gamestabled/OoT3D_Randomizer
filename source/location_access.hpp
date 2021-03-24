@@ -195,20 +195,20 @@ public:
       return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
     }
 
-    bool AllAccountedFor() {
-      for (EventPairing event : events) {
+    bool AllAccountedFor() const {
+      for (const EventPairing& event : events) {
         if (!event.ConditionsMet() || !event.GetEvent()) {
           return false;
         }
       }
 
-      for (ItemLocationPairing loc : locations) {
+      for (const ItemLocationPairing loc : locations) {
         if (!loc.ConditionsMet() || !loc.GetLocation()->IsAddedToPool()) {
           return false;
         }
       }
 
-      for (ExitPairing exit : exits) {
+      for (const ExitPairing& exit : exits) {
         if (!exit.ConditionsMet() || !exit.GetExit()->AllAccess()) {
           return false;
         }
@@ -224,11 +224,6 @@ public:
       nightAdult = false;
       addedToPool = false;
     }
-
-    bool operator< (const Exit &right) const {
-      return regionName.compare(right.regionName);
-    }
-
 };
 
 namespace Exits {
@@ -524,4 +519,5 @@ namespace Exits {
   extern Exit GanonsCastle_Tower;
 
   extern void AccessReset();
+  extern void ResetAllLocations();
 } //namespace Exits
