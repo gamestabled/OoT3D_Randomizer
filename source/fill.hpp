@@ -1,3 +1,3 @@
 #pragma once
 
-extern void Fill();
+extern int Fill();

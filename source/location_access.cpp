@@ -385,7 +385,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(&LH_UnderwaterItem,  []{return IsChild && CanDive;}),
-                  ItemLocationPairing(&LH_Sun,             []{return IsAdult && (CanUse("Distant Scarecrow") || WaterTempleClear) && CanUse("Bow");}),
+                  ItemLocationPairing(&LH_Sun,             []{return IsAdult && WaterTempleClear && CanUse("Bow");}),
                   ItemLocationPairing(&LH_FreestandingPoH, []{return IsAdult && (CanUse("Scarecrow") || LH_Main.CanPlantBean());}),
                   ItemLocationPairing(&LH_GS_BeanPatch,    []{return CanPlantBugs && CanChildAttack;}),
                   ItemLocationPairing(&LH_GS_LabWall,      []{return IsChild && (Boomerang || (LogicLabWallGS && (Sticks || KokiriSword))) && AtNight;}),
@@ -1909,7 +1909,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&ChildWaterTemple, []{return IsChild;}),
-                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((LogicWaterTempleUpperBoost && Bombs && (CanUse("Nayrus Love") || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO))) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
+                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((Hookshot && (LogicWaterTempleUpperBoost && Bombs && (CanUse("Nayrus Love") || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO)))) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
                 }, {}, {
                   //Exits
                   ExitPairing::Both(&LH_Main,                       []{return true;}),
@@ -2691,6 +2691,32 @@ namespace Exits { //name, scene, hint, events, locations, exits
   void AccessReset() {
     for (Exit* exit : allExits) {
       exit->ResetVariables();
+    }
+
+    if(Settings::HasNightStart) {
+        if(Settings::StartingAge.Is(AGE_CHILD)) {
+          Exits::Root.nightChild = true;
+        } else {
+          Exits::Root.nightAdult = true;
+        }
+      } else {
+        if(Settings::StartingAge.Is(AGE_CHILD)) {
+          Exits::Root.dayChild = true;
+        } else {
+          Exits::Root.dayAdult = true;
+        }
+    }
+  }
+
+  //Reset exits and clear items from locations
+  void ResetAllLocations() {
+    for (Exit* exit : allExits) {
+      exit->ResetVariables();
+      //Erase item from every location in this exit
+      for (ItemLocationPairing& locPair : exit->locations) {
+          ItemLocation* location = locPair.GetLocation();
+          location->ResetVariables();
+      }
     }
 
     if(Settings::HasNightStart) {

@@ -122,9 +122,9 @@ namespace Settings {
   };
 
   //Item Usability Settings
-  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disable", "Enable"},                                   {adultStickDesc, adultStickDesc});
-  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disable", "Enable"},                                   {adultBoomerangDesc, adultBoomerangDesc});
-  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disable", "Enable"},                                   {childHammerDesc, childHammerDesc});
+  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                 {adultStickDesc, adultStickDesc});
+  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                 {adultBoomerangDesc, adultBoomerangDesc});
+  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                 {childHammerDesc, childHammerDesc});
   std::vector<Option *> itemUsabilityOptions = {
     &StickAsAdult,
     &BoomerangAsAdult,
@@ -144,7 +144,7 @@ namespace Settings {
 
   //Function to make defining logic tricks easier to read
   Option LogicTrick(std::string setting, std::string_view description) {
-    return Option::Bool(setting, {"Disable", "Enable"}, std::vector<std::string_view>{2, description});
+    return Option::Bool(setting, {"Disabled", "Enabled"}, std::vector<std::string_view>{2, description});
   }
 
   //Detailed Logic Tricks                               ---------------------
@@ -305,6 +305,16 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
+
+  MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
+  MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
+  MenuItem deleteSettingsPreset     = MenuItem::Action ("Delete Settings Preset",     DELETE_PRESET);
+  std::vector<MenuItem *> settingsPresetItems = {
+    &loadSettingsPreset,
+    &saveSettingsPreset,
+    &deleteSettingsPreset,
+  };
+
   MenuItem open                     = MenuItem::SubMenu("Open Settings",              &openOptions);
   MenuItem world                    = MenuItem::SubMenu("World Settings",             &worldOptions);
   MenuItem shuffle                  = MenuItem::SubMenu("Shuffle Settings",           &shuffleOptions);
@@ -315,8 +325,7 @@ namespace Settings {
   MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
   MenuItem itemPoolSettings         = MenuItem::SubMenu("Item Pool Settings",         &itemPoolOptions);
   MenuItem itemUsabilitySettings    = MenuItem::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
-  MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
-  MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
+  MenuItem settingsPresets          = MenuItem::SubMenu("Settings Presets",           &settingsPresetItems);
   MenuItem generateRandomizer       = MenuItem::Action ("Generate Randomizer",        GENERATE_MODE);
 
   //adding a menu with no options crashes, might fix later
@@ -331,8 +340,7 @@ namespace Settings {
     &miscSettings,
     &itemPoolSettings,
     &itemUsabilitySettings,
-    &loadSettingsPreset,
-    &saveSettingsPreset,
+    &settingsPresets,
     &generateRandomizer,
   };
 
@@ -513,12 +521,15 @@ namespace Settings {
     RandomGanonsTrials.SetSelectedIndex(ON);
     GanonsTrialsCount.Hide();
 
-    std::vector<std::string> bridgeTokenOptions = {};
-    for (int i = 0; i <= 100; i++) {
-      bridgeTokenOptions.push_back(std::to_string(i));
+    {
+      std::vector<std::string> bridgeTokenOptions;
+      bridgeTokenOptions.reserve(101);
+      for (int i = 0; i <= 100; i++) {
+        bridgeTokenOptions.push_back(std::to_string(i));
+      }
+      BridgeTokenCount.SetOptions(std::move(bridgeTokenOptions));
+      BridgeTokenCount.SetSelectedIndex(1);
     }
-    BridgeTokenCount.SetOptions(bridgeTokenOptions);
-    BridgeTokenCount.SetSelectedIndex(1);
 
     StartingAge.SetSelectedIndex(AGE_CHILD);
 
