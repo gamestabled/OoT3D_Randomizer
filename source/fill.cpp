@@ -88,8 +88,8 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
   //Variables for search
   std::vector<ItemLocation *> newItemLocations;
   bool firstIteration = true;
-  //If no new items are found, then the next iteration won't provide any new location
-  while(newItemLocations.size() > 0 || firstIteration) {
+  //If no new items are found and no events are updated, then the next iteration won't provide any new location
+  while(newItemLocations.size() > 0 || firstIteration || EventsUpdated()) {
     firstIteration = false;;
 
     //Add items found during previous search iteration to logic
@@ -161,13 +161,13 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             }
 
             //Playthrough stuff
-            if (playthrough && !playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {            
+            if (playthrough && !playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
               ItemType type = location->GetPlacedItem().GetItemType();
               bool bombchus = location->GetPlacedItem().GetName().find("Bombchu") != std::string::npos;
               //Don't print Buy locations
               if(type != ITEMTYPE_SHOP && type != ITEMTYPE_TOKEN && !bombchus) {
                 sphere.push_back(location);
-              }     
+              }
               //Only print first 50 token locations
               else if(type == ITEMTYPE_TOKEN && gsCount < 50 && !bombchus) {
                 sphere.push_back(location);
@@ -181,7 +181,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             }
             //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
             else if(playthrough && location->GetPlacedItem().GetName() == "Triforce") {
-              sphere.clear(); 
+              sphere.clear();
               sphere.push_back(location);
               playthroughBeatable = true;
             }
