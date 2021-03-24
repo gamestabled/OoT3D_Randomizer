@@ -492,7 +492,7 @@ static Item GetPendingJunkItem() {
 }
 
 //Replace junk items in the pool with pending junk
-static void ReplaceMaxItem(Item itemToReplace, int max) {
+static void ReplaceMaxItem(const Item& itemToReplace, int max) {
   int itemCount = 0;
   for (Item& item : ItemPool) {
     if (item == itemToReplace) {
