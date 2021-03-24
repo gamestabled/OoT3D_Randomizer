@@ -544,6 +544,10 @@ void LoadCachedPreset() {
   }
 }
 
+static std::string PresetPath(std::string_view presetName) {
+  return std::string("/3ds/presets/oot3d/").append(presetName).append(".bin");
+}
+
 //Load the selected preset
 bool LoadPreset(std::string presetName, bool print) {
   //clear any potential 'failed to load preset' message on previous attempt
@@ -555,7 +559,7 @@ bool LoadPreset(std::string presetName, bool print) {
   u32 bytesRead = 0;
   u32 totalRW = 0;
 
-  std::string filepath = "/3ds/presets/oot3d/" + presetName + ".bin";
+  const std::string filepath = PresetPath(presetName);
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
@@ -620,9 +624,7 @@ bool SavePreset(std::string presetName) {
   u32 bytesWritten = 0;
   u32 totalRW = 0;
 
-  std::string presetsFilepath = "/3ds/presets/oot3d/";
-  std::string filepath = presetsFilepath + presetName + ".bin";
-
+  const std::string filepath = PresetPath(presetName);
   SettingsContext ctx = Settings::FillContext();
 
   // Open SD archive
@@ -663,7 +665,7 @@ bool DeletePreset(std::string presetName) {
   Result res;
   FS_Archive sdmcArchive = 0;
 
-  std::string filepath = "/3ds/presets/oot3d/" + presetName + ".bin";
+  const std::string filepath = PresetPath(presetName);
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
