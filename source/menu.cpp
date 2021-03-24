@@ -18,7 +18,10 @@ namespace fs = std::filesystem;
 namespace {
   bool seedChanged;
   u8 mode;
+  u8 subMode;
   u16 settingIdx;
+  u16 itemIdx;
+  u16 subItemIdx;
   u8 menuIdx;
   u8 presetIdx;
   u8 generateIdx;
@@ -27,6 +30,7 @@ namespace {
   u8 presetBound;
   u16 pastSeedLength;
   MenuItem* currentMenuItem;
+  MenuItem* currentSubMenuItem;
   Option* currentSetting;
   PrintConsole topScreen, bottomScreen;
   std::vector<std::string> presetEntries;
@@ -50,9 +54,11 @@ void MenuInit() {
 
   seedChanged = false;
   mode = MAIN_MENU;
+  subMode = -1;
   menuIdx = 0;
   menuBound = 0;
   settingIdx = 0;
+  itemIdx = 0;
   settingBound = 0;
   presetIdx = 0;
   presetBound = 0;
@@ -74,6 +80,8 @@ void MenuInit() {
     printf("\x1b[21;5Loading presets might crash.");
   }
 
+  LoadCachedPreset(); //If cached settings preset exists, load it
+
   consoleSelect(&bottomScreen);
   PrintMainMenu();
 
@@ -81,21 +89,32 @@ void MenuInit() {
 
 void MenuUpdate(u32 kDown) {
 
-	consoleSelect(&bottomScreen);
-	consoleClear();
+  consoleSelect(&bottomScreen);
+  consoleClear();
 
-	//Check for a menu change
-	if (kDown & KEY_A && mode == MAIN_MENU) {
+  //Check for a main menu change
+  if (kDown & KEY_A && mode == MAIN_MENU) {
     mode = currentMenuItem->mode;
     ModeChangeInit();
     kDown = 0;
-	} else if ((kDown & KEY_B && mode != MAIN_MENU)) {
-
+  } else if ((kDown & KEY_B && mode != MAIN_MENU && subMode != SUB_MENU)) {
     consoleSelect(&topScreen);
     PrintTopScreen();
-		mode = MAIN_MENU;
-		currentMenuItem = Settings::mainMenu[menuIdx];
-	}
+    mode = MAIN_MENU;
+    currentMenuItem = Settings::mainMenu[menuIdx];
+  }
+  //Check for a sub menu change
+  else if (kDown & KEY_A && mode == SUB_MENU) {
+    mode = currentMenuItem->itemsList->at(itemIdx)->mode;
+    subMode = SUB_MENU;
+    ModeChangeInit();
+    kDown = 0;
+  } else if ((kDown & KEY_B && mode != MAIN_MENU)) {
+    mode = currentMenuItem->mode;
+    subMode = -1;
+    ModeChangeInit();
+    kDown = 0;
+  }
 
   if (mode != GENERATE_MODE) {
 
@@ -124,16 +143,19 @@ void MenuUpdate(u32 kDown) {
     }
   }
 
-	//Print current menu (if applicable)
-	consoleSelect(&bottomScreen);
-	if (mode == MAIN_MENU) {
-		UpdateMainMenu(kDown);
-		PrintMainMenu();
+  //Print current menu (if applicable)
+  consoleSelect(&bottomScreen);
+  if (mode == MAIN_MENU) {
+    UpdateMainMenu(kDown);
+    PrintMainMenu();
     ClearDescription();
-	} else if (mode == SUB_MENU) {
-		UpdateSubMenu(kDown);
-		PrintSubMenu();
-	} else if (mode == LOAD_PRESET) {
+  } else if (mode == OPTION_SUB_MENU) {
+    UpdateOptionSubMenu(kDown);
+    PrintOptionSubMenu();
+  } else if (mode == LOAD_PRESET) {
+    UpdatePresetsMenu(kDown);
+    PrintPresetsMenu();
+  } else if (mode == DELETE_PRESET) {
     UpdatePresetsMenu(kDown);
     PrintPresetsMenu();
   } else if (mode == GENERATE_MODE) {
@@ -141,11 +163,17 @@ void MenuUpdate(u32 kDown) {
     if (mode != POST_GENERATE) {
       PrintGenerateMenu();
     }
+  } else if (mode == SUB_MENU) {
+    UpdateSubMenu(kDown);
+    PrintSubMenu();
   }
 }
 
 void ModeChangeInit() {
-  if (mode == SUB_MENU) {
+  if(subMode == SUB_MENU) {
+    subItemIdx = itemIdx;
+  }
+  if (mode == OPTION_SUB_MENU) {
     settingIdx = 0;
 
     //loop through until we reach an unlocked setting
@@ -155,16 +183,21 @@ void ModeChangeInit() {
 
     currentSetting = currentMenuItem->settingsList->at(settingIdx);
 
+  } else if (mode == SUB_MENU) {
+    itemIdx = subItemIdx;
+    subItemIdx = 0;
+    presetIdx = 0;
+    currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
   } else if (mode == SAVE_PRESET) {
-    if (SaveSettingsPreset()) {
-      printf("\x1b[10;5HPreset Saved!");
-      printf("\x1b[12;5HPress B to return to the main menu.");
+    if (SaveSpecifiedPreset()) {
+      printf("\x1b[10;4HPreset Saved!");
+      printf("\x1b[12;4HPress B to return to the preset menu.");
     } else {
-      printf("\x1b[10;5HFailed to save preset.");
-      printf("\x1b[12;5HPress B to return to the main menu.");
+      printf("\x1b[10;4HFailed to save preset.");
+      printf("\x1b[12;4HPress B to return to the preset menu.");
     }
 
-  } else if (mode == LOAD_PRESET) {
+  } else if (mode == LOAD_PRESET || mode == DELETE_PRESET) {
     GetPresets();
 
   } else if (mode == GENERATE_MODE) {
@@ -189,10 +222,10 @@ void UpdateMainMenu(u32 kDown) {
     menuIdx = static_cast<u8>(Settings::mainMenu.size() - 1);
   }
 
-	currentMenuItem = Settings::mainMenu[menuIdx];
+  currentMenuItem = Settings::mainMenu[menuIdx];
 }
 
-void UpdateSubMenu(u32 kDown) {
+void UpdateOptionSubMenu(u32 kDown) {
   //loop through settings until an unlocked one is reached
   do {
     if ((kDown & KEY_DUP) != 0) {
@@ -227,6 +260,25 @@ void UpdateSubMenu(u32 kDown) {
   Settings::ForceChange(kDown, currentSetting);
 }
 
+void UpdateSubMenu(u32 kDown) {
+  if ((kDown & KEY_DUP) != 0) {
+    itemIdx--;
+  }
+
+  if ((kDown & KEY_DDOWN) != 0)  {
+    itemIdx++;
+  }
+
+  // Bounds checking
+  if (itemIdx == currentMenuItem->itemsList->size()) {
+    itemIdx = 0;
+  } else if (itemIdx == 0xFFFF) {
+    itemIdx = static_cast<u16>(currentMenuItem->itemsList->size() - 1);
+  }
+
+  currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
+}
+
 void UpdatePresetsMenu(u32 kDown) {
   if ((kDown & KEY_DUP) != 0) {
     presetIdx--;
@@ -243,12 +295,23 @@ void UpdatePresetsMenu(u32 kDown) {
     presetIdx = static_cast<u8>(presetEntries.size() - 1);
   }
 
-  if ((kDown & KEY_A) != 0) {
-    consoleSelect(&topScreen);
-    if (LoadPreset(presetEntries[presetIdx])) {
+  consoleSelect(&topScreen);
+  if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET) {
+    if (LoadPreset(presetEntries[presetIdx], true)) {
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
+    }
+  } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET) {
+    if (DeletePreset(presetEntries[presetIdx])) {
+      presetEntries.erase(presetEntries.begin() + presetIdx);
+      if(presetIdx == presetEntries.size()) { //Catch when last preset is deleted
+        presetIdx--;
+      }
+      printf("\x1b[24;5HPreset Deleted.");
+    } else {
+      consoleSelect(&topScreen);
+      printf("\x1b[24;5HFailed to delete preset.");
     }
   }
 }
@@ -273,25 +336,25 @@ void UpdateGenerateMenu(u32 kDown) {
 }
 
 void PrintMainMenu() {
-	printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
+  printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
 
-	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
-		if (i + menuBound >= Settings::mainMenu.size()) break;
+  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+    if (i + menuBound >= Settings::mainMenu.size()) break;
 
-		MenuItem* menu = Settings::mainMenu[i + menuBound];
+    MenuItem* menu = Settings::mainMenu[i + menuBound];
 
     u8 row = 3 + i;
     //make the current menu green
-		if (menuIdx == i + menuBound) {
-			printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
-			printf("\x1b[%d;%dH%s%s", row,  3, menu->name.c_str(), RESET);
-		} else {
-			printf("\x1b[%d;%dH%s",   row,  3, menu->name.c_str());
-		}
-	}
+    if (menuIdx == i + menuBound) {
+      printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
+      printf("\x1b[%d;%dH%s%s", row,  3, menu->name.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",   row,  3, menu->name.c_str());
+    }
+  }
 }
 
-void PrintSubMenu() {
+void PrintOptionSubMenu() {
   //bounds checking incase settings go off screen
   //this is complicated to account for hidden settings and there's probably a better way to do it
   u16 hiddenSettings = 0;
@@ -321,65 +384,86 @@ void PrintSubMenu() {
     settingBound = settingIdx;
   }
 
-	//print menu name
-	printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
+  //print menu name
+  printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenuItem->name.length()/2), currentMenuItem->name.c_str());
 
   //keep count of hidden settings to not make blank spaces appear in the list
   hiddenSettings = 0;
 
-	for (u8 i = 0; i - hiddenSettings < MAX_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i - hiddenSettings < MAX_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
-		if (i + settingBound >= currentMenuItem->settingsList->size()) break;
+    if (i + settingBound >= currentMenuItem->settingsList->size()) break;
 
-		Option* setting = currentMenuItem->settingsList->at(i + settingBound);
+    Option* setting = currentMenuItem->settingsList->at(i + settingBound);
 
-		u8 row = 3 + ((i - hiddenSettings) * 2);
+    u8 row = 3 + ((i - hiddenSettings) * 2);
     //make the current setting green
-		if (settingIdx == i + settingBound) {
-			printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
-			printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
-			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+    if (settingIdx == i + settingBound) {
+      printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
+      printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
+      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
     //dim to make a locked setting grey
-		} else if (setting->IsLocked()) {
-			printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
-			printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+    } else if (setting->IsLocked()) {
+      printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
+      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
     //don't display hidden settings
     } else if (setting->IsHidden()) {
       hiddenSettings++;
       continue;
-		} else {
+    } else {
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
       printf("\x1b[%d;%dH%s",    row, 26, setting->GetSelectedOption().data());
     }
-	}
+  }
 
   PrintOptionDescrption();
+}
+
+void PrintSubMenu() {
+  printf("\x1b[0;%dH%s Menu", (BOTTOM_WIDTH/2) - 9, currentMenuItem->name.c_str());
+
+  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+    if (i + menuBound >= currentMenuItem->itemsList->size()) break;
+
+    u8 row = 3 + i;
+    //make the current menu green
+    if (itemIdx == i + menuBound) {
+      printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
+      printf("\x1b[%d;%dH%s%s", row,  3, currentMenuItem->itemsList->at(i)->name.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",   row,  3, currentMenuItem->itemsList->at(i)->name.c_str());
+    }
+  }
 }
 
 void PrintPresetsMenu() {
   consoleSelect(&bottomScreen);
   if (presetEntries.empty()) {
-    printf("\x1b[10;5HNo Presets Detected!");
-    printf("\x1b[12;5HPress B to return to the main menu.");
+    printf("\x1b[10;4HNo Presets Detected!");
+    printf("\x1b[12;4HPress B to return to the preset menu.");
     return;
   }
 
-  printf("\x1b[0;%dHSelect a Preset", (BOTTOM_WIDTH/2) - 7);
+  if(mode == LOAD_PRESET) {
+    printf("\x1b[0;%dHSelect a Preset to Load", (BOTTOM_WIDTH/2) - 7);
+  } else if (mode == DELETE_PRESET) {
+    printf("\x1b[0;%dHSelect a Preset to Delete", (BOTTOM_WIDTH/2) - 7);
+  }
 
-	for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
-		if (i + presetBound >= presetEntries.size()) break;
+  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+    if (i + presetBound >= presetEntries.size()) break;
 
-		std::string preset = presetEntries[i];
+    std::string preset = presetEntries[i];
 
     u8 row = 3 + (i * 2);
     //make the current preset green
-		if (presetIdx == i + presetBound) {
-			printf("\x1b[%d;%dH%s>",  row, 14, GREEN);
-			printf("\x1b[%d;%dH%s%s", row, 15, preset.c_str(), RESET);
-		} else {
-			printf("\x1b[%d;%dH%s",   row, 15, preset.c_str());
-		}
-	}
+    if (presetIdx == i + presetBound) {
+      printf("\x1b[%d;%dH%s>",  row, 14, GREEN);
+      printf("\x1b[%d;%dH%s%s", row, 15, preset.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",   row, 15, preset.c_str());
+    }
+  }
 }
 
 void PrintGenerateMenu() {
@@ -389,18 +473,18 @@ void PrintGenerateMenu() {
   printf("\x1b[3;%dHHow will you play?", (BOTTOM_WIDTH/2) - 8);
   std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
 
-	for (u8 i = 0; i < playOptions.size(); i++) {
+  for (u8 i = 0; i < playOptions.size(); i++) {
 
-		std::string option = playOptions[i];
+    std::string option = playOptions[i];
     u8 row = 6 + (i * 2);
     //make the current selection green
-		if (generateIdx == i) {
-			printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
-			printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
-		} else {
-			printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
-		}
-	}
+    if (generateIdx == i) {
+      printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
+      printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
+    } else {
+      printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+    }
+  }
 }
 
 void ClearDescription() {
@@ -445,12 +529,23 @@ bool CreatePresetDirectories() {
 void GetPresets() {
   presetEntries = {};
   for (const auto & entry : fs::directory_iterator("/3ds/presets/oot3d")) {
-    presetEntries.push_back(entry.path().stem().string());
+    if(entry.path().stem().string() != "CACHED_SETTINGS") {
+      presetEntries.push_back(entry.path().stem().string());
+    }
+  }
+}
+
+void LoadCachedPreset() {
+  //If cache file exists, load it
+  for (const auto & entry : fs::directory_iterator("/3ds/presets/oot3d")) {
+    if(entry.path().stem().string() == "CACHED_SETTINGS") {
+      LoadPreset("CACHED_SETTINGS", false); //File exists, open
+    }
   }
 }
 
 //Load the selected preset
-bool LoadPreset(std::string presetName) {
+bool LoadPreset(std::string presetName, bool print) {
   //clear any potential 'failed to load preset' message on previous attempt
   ClearDescription();
 
@@ -464,20 +559,20 @@ bool LoadPreset(std::string presetName) {
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-    printf("\x1b[22;5HFailed to load SD Archive.");
+    if (print) printf("\x1b[22;5HFailed to load SD Archive.");
     return false;
   }
 
   // Open preset file
   if (!R_SUCCEEDED(res = FSUSER_OpenFile(&presetFile, sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
-    printf("\x1b[22;5HFailed to open preset file %s.", filepath.c_str());
+    if (print) printf("\x1b[22;5HFailed to open preset file %s.", filepath.c_str());
     return false;
   }
 
   //Read ctx size
   size_t ctxSize;
   if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctxSize, sizeof(ctxSize)))) {
-    printf("\x1b[22;5HFailed to read preset size.");
+    if (print) printf("\x1b[22;5HFailed to read preset size.");
     return false;
   }
   totalRW += bytesRead;
@@ -485,7 +580,7 @@ bool LoadPreset(std::string presetName) {
   //If the sizes don't match, then the preset is incompatible (there's probably a better way to do this)
   if (ctxSize != sizeof(SettingsContext)) {
     consoleSelect(&topScreen);
-    printf("\x1b[22;5HPreset not compatible with current randomizer.");
+    if (print) printf("\x1b[22;5HPreset not compatible with current randomizer.");
     return false;
   }
 
@@ -503,14 +598,22 @@ bool LoadPreset(std::string presetName) {
 }
 
 //Saves the new preset to a file
-bool SaveSettingsPreset() {
-
+bool SaveSpecifiedPreset() {
   std::string presetName = (GetInput("Preset Name")).substr(0, 19);
   //don't save if the user cancelled
   if (presetName == "") {
     return false;
   }
+  return SavePreset(presetName);
+}
 
+//Save cached preset after choosing to generate
+bool SaveCachedPreset() {
+  return SavePreset("CACHED_SETTINGS");
+}
+
+//Saves the new preset to a file
+bool SavePreset(std::string presetName) {
   Result res;
   FS_Archive sdmcArchive = 0;
   Handle presetFile;
@@ -552,7 +655,29 @@ bool SaveSettingsPreset() {
   return true;
 }
 
+//Delete the selected preset
+bool DeletePreset(std::string presetName) {
+  //clear any potential message
+  ClearDescription();
+
+  Result res;
+  FS_Archive sdmcArchive = 0;
+
+  std::string filepath = "/3ds/presets/oot3d/" + presetName + ".bin";
+
+  // Open SD archive
+  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+    printf("\x1b[22;5HFailed to load SD Archive.");
+    return false;
+  }
+
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()));
+  return true;
+}
+
 void GenerateRandomizer() {
+
+  SaveCachedPreset(); //After choosing to generate, cache chosen settings for later
 
   consoleSelect(&topScreen);
   consoleClear();
@@ -584,7 +709,7 @@ void GenerateRandomizer() {
 
   unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
 
-	int ret = Playthrough::Playthrough_Init(finalHash);
+  int ret = Playthrough::Playthrough_Init(finalHash);
   if (ret < 0) {
     if(ret == -1) { //Failed to generate after 5 tries
       printf("\n\nFailed to generate after 5 tries.\nPress Select to exit or B to go back to the menu.\n");
@@ -623,9 +748,9 @@ std::string GetInput(const char* hintText) {
   SwkbdButton button = SWKBD_BUTTON_NONE;
 
   swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 2, -1);
-	swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
-	swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
-	swkbdSetHintText(&swkbd, hintText);
+  swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
+  swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
+  swkbdSetHintText(&swkbd, hintText);
   swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "Cancel", false);
 
   button = swkbdInputText(&swkbd, seed, sizeof(seed));
