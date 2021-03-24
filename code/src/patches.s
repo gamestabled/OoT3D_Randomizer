@@ -885,6 +885,16 @@ AnjuCheckCuccoAmount_patch:
 FrogReward_patch:
     b hook_FrogReward
 
+.section .patch_CanPlayBombchuBowlingOne
+.global CanPlayBombchuBowlingOne_patch
+CanPlayBombchuBowlingOne_patch:
+    bl hook_CanPlayBombchuBowling
+
+.section .patch_CanPlayBombchuBowlingTwo
+.global CanPlayBombchuBowlingTwo_patch
+CanPlayBombchuBowlingTwo_patch:
+    bl hook_CanPlayBombchuBowling
+
 .section .patch_loader
 .global loader_patch
 

@@ -224,6 +224,10 @@ SECTIONS
 		*(.patch_DaruniaCheckStrength)
 	}
 
+	.patch_CanPlayBombchuBowlingTwo 0x1EA1D4 : {
+		*(.patch_CanPlayBombchuBowlingTwo)
+	}
+
 	.patch_ItemGiveBombchuDropOne 0x1F6F70 : {
 		*(.patch_ItemGiveBombchuDropOne)
 	}
@@ -258,6 +262,10 @@ SECTIONS
 
 	.patch_LostWoodsShootingGame 0x259E4C : {
 		*(.patch_LostWoodsShootingGame)
+	}
+
+	.patch_CanPlayBombchuBowlingOne 0x25A744 : {
+		*(.patch_CanPlayBombchuBowlingOne)
 	}
 
 	.patch_CheckGerudoToken_269884 0x269884 : {
