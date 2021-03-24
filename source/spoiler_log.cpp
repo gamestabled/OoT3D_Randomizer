@@ -102,7 +102,7 @@ static void WriteSettings() {
   logtxt += "Settings:\n";
   for (MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic or exclude location menus yet
-    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations" || menu->type == MenuItemType::Action) {
+    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations" || menu->mode != OPTION_SUB_MENU) {
       continue;
     }
 
