@@ -88,7 +88,7 @@ void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->magicLevel = 2; // Set meter level
     saveCtx->magicAcquired = 1; // Required for meter to persist on save load
     saveCtx->doubleMagic = 1; // Required for meter to persist on save load
-    // saveCtx->magic_meter_size = 0x60; // Set meter size //TODO? is this needed?
+    saveCtx->magicMeterSize = 0x60; // Set meter size
     saveCtx->magic = 0x60; // Fill meter
 }
 
