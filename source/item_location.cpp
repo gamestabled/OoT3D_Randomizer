@@ -1699,16 +1699,6 @@ void GenerateLocationPool() {
 }
 
 void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
-    /*-------------------------------------------------
-    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
-    --------------------------------------------------*/
-    //this prevents an override from being created for these two locations
-    if (loc->GetName() != "Shadow Temple Freestanding Key" && loc->GetName() != "Gerudo Training Grounds Freestanding Key") {
-      overrides.insert({
-        .key = loc->Key(),
-        .value = item.Value(),
-      });
-    }
 
     PlacementLog_Msg("\n");
     PlacementLog_Msg(item.GetName());
@@ -1819,4 +1809,27 @@ void AddExcludedOptions() {
   for (ItemLocation * il: everyPossibleLocation) {
     il->AddExcludeOption();
   }
+}
+
+void CreateOverrides() {
+  PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
+  for (ItemLocation* loc : allLocations) {
+    PlacementLog_Msg("\t");
+    PlacementLog_Msg(loc->GetName());
+    PlacementLog_Msg(": ");
+    PlacementLog_Msg(loc->GetPlacedItemName());
+    PlacementLog_Msg("\n");
+    /*-------------------------------------------------
+    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
+    --------------------------------------------------*/
+    //this prevents an override from being created for these two locations
+    if (loc->GetName() != "Shadow Temple Freestanding Key" && loc->GetName() != "Gerudo Training Grounds Freestanding Key") {
+      overrides.insert({
+        .key = loc->Key(),
+        .value = loc->GetPlacedItem().Value(),
+      });
+    }
+  }
+  PlacementLog_Msg("Overrides Created: ");
+  PlacementLog_Msg(std::to_string(overrides.size()));
 }

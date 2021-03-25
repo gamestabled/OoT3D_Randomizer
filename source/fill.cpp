@@ -428,6 +428,7 @@ int Fill() {
     //Successful placement, produced beatable result
     if(playthroughBeatable) {
       printf("Done");
+      CreateOverrides();
       return 1;
     }
     //Unsuccessful placement
