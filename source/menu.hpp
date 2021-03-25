@@ -44,11 +44,11 @@ void PrintOptionDescrption();
 bool CreatePresetDirectories();
 void GetPresets();
 void LoadCachedPreset();
-bool LoadPreset(std::string presetName, bool print);
+bool LoadPreset(std::string_view presetName, bool print);
 bool SaveSpecifiedPreset();
 bool SaveCachedPreset();
-bool SavePreset(std::string presetName);
-bool DeletePreset(std::string presetName);
+bool SavePreset(std::string_view presetName);
+bool DeletePreset(std::string_view presetName);
 void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 
