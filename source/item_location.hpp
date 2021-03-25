@@ -1033,3 +1033,4 @@ extern std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locati
 extern void LocationReset();
 extern void ItemReset();
 extern void AddExcludedOptions();
+extern void CreateOverrides();

@@ -12,4 +12,5 @@ const RandomizerHash& GetRandomizerHash();
 bool SpoilerLog_Write();
 
 void PlacementLog_Msg(std::string_view msg);
+void PlacementLog_Clear();
 bool PlacementLog_Write();

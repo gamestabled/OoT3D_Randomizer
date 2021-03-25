@@ -220,6 +220,10 @@ void PlacementLog_Msg(std::string_view msg) {
   placementtxt += msg;
 }
 
+void PlacementLog_Clear() {
+  placementtxt = "";
+}
+
 bool PlacementLog_Write() {
   Result res = 0;
   u32 bytesWritten = 0;
@@ -245,6 +249,5 @@ bool PlacementLog_Write() {
   FSFILE_Close(placementlog);
   FSUSER_CloseArchive(sdmcArchive);
 
-  placementtxt = "";
   return true;
 }
