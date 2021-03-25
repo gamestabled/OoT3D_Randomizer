@@ -87,7 +87,7 @@ public:
       placedItem.ApplyEffect();
     }
 
-    //Set placedItem as delayedItem
+    //Set placedItem as item saved in SetDelayedItem
     void SaveDelayedItem() {
       placedItem = delayedItem;
       delayedItem = NoItem;

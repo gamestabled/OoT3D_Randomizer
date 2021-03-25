@@ -71,7 +71,7 @@ static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   }
 }
 
-//Get the max number of tokens that can possibly give a necessary item
+//Get the max number of tokens that can possibly be useful
 static int GetMaxGSCount() {
   //If bridge is set to tokens, get how many are required
   int maxBridge = 0;
@@ -121,8 +121,8 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
   //Variables for search
   std::vector<ItemLocation *> newItemLocations;
   bool firstIteration = true;
-  //If no new items are found, then the next iteration won't provide any new location
-  while ((newItemLocations.size() > 0 || EventsUpdated() || firstIteration) && !(mode == CHECK_BEATABLE && playthroughBeatable)) {
+  //If no new items are found and no events are updated, then the next iteration won't provide any new location
+  while (newItemLocations.size() > 0 || EventsUpdated() || firstIteration) {
     firstIteration = false;
 
     //Add items found during previous search iteration to logic
@@ -194,7 +194,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             }
 
             //Playthrough stuff
-            //Generate the playthrough, so we want to add important items, unless we know to ignore them
+            //Generate the playthrough, so we want to add advancement items, unless we know to ignore them
             if (mode == GENERATE_PLAYTHROUGH) {
               //Item is an advancement item, figure out if it should be added to this sphere
               if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
@@ -205,9 +205,9 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                 //Decide whether to exclude this location
                 //This preprocessing is done to reduce the amount of searches performed in PareDownPlaythrough
                 //Want to exclude:
-                //1) Tokens after the last potentially useful one (the last one that gives an advancement item)
+                //1) Tokens after the last potentially useful one (the last one that gives an advancement item or last for token bridge)
                 //2) Bombchus after the first (including buy bombchus)
-                //3) Buy items of the same type, after the first (So only see Buy Deku Nut once)
+                //3) Buy items of the same type, after the first (So only see Buy Deku Nut of any amount once)
                 bool exclude = true;
                 //Exclude tokens after the last possibly useful one
                 if (type == ITEMTYPE_TOKEN && gsCount < maxGsCount) {
@@ -223,7 +223,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                 else if (!(bombchus && bombchusFound) && type == ITEMTYPE_SHOP) {
                   //Only check each buy item once
                   std::string buyItem = itemName.erase(0, 4); //Delete "Buy "
-                  //Delete amount, if present
+                  //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
                   if (buyItem.find("(") != std::string::npos) {
                     buyItem = buyItem.erase(buyItem.find("(")); 
                   }
@@ -233,10 +233,11 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                     buyIgnores.push_back(buyItem);
                   }
                 }
+                //Add all other advancement items
                 else if (!bombchus && type != ITEMTYPE_TOKEN && type != ITEMTYPE_SHOP) {
                   exclude = false;
                 }
-
+                //Has not been excluded, add to playthrough
                 if (!exclude) {
                   sphere.push_back(location);
                 }
@@ -251,7 +252,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             //All we care about is if the game is beatable, used to pare down playthrough
             else if (mode == CHECK_BEATABLE && location->GetPlacedItem().GetName() == "Triforce") {
               playthroughBeatable = true;
-              return {};
+              return {}; //Return early for efficiency
             }
           }
         }
@@ -282,13 +283,12 @@ static void GeneratePlaythrough() {
 }
 
 //Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
-//To reduce searches, some preprocessing done in playthrough generation to avoid adding obviously unnecessary items
+//To reduce searches, some preprocessing is done in playthrough generation to avoid adding obviously unnecessary items
 static void PareDownPlaythrough() {
   std::vector<ItemLocation*> toAddBackItem;
   //Start at sphere before Ganon's and count down
   for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
     //Check each item location in sphere
-    std::string hi = std::to_string(i);
     std::vector<int> erasableIndices;
     std::vector<ItemLocation*> sphere = playthroughLocations.at(i);
     for (int j = sphere.size() - 1; j >= 0; j--) {
@@ -314,7 +314,7 @@ static void PareDownPlaythrough() {
       }
     }
   }
-  //Now some spheres may now be empty, remove these
+  //Some spheres may now be empty, remove these
   for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
     if (playthroughLocations.at(i).size() == 0) {
       playthroughLocations.erase(playthroughLocations.begin() + i);
@@ -324,6 +324,7 @@ static void PareDownPlaythrough() {
   for (ItemLocation* location : toAddBackItem) {
     location->SaveDelayedItem();
   }
+  playthroughBeatable = true;
   //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
   LogicReset();
   GetAccessibleLocations(allLocations);
