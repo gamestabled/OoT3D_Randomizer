@@ -325,7 +325,7 @@ static void PareDownPlaythrough() {
   }
   //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
   LogicReset();
-  GetAccessibleLocations(allLocations, CHECK_BEATABLE);
+  GetAccessibleLocations(allLocations);
 }
 
 static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
