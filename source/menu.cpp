@@ -697,7 +697,7 @@ void GenerateRandomizer() {
   std::string settingsStr;
   for (MenuItem* menu : Settings::mainMenu) {
     //don't go through non-menus
-    if (menu->type == MenuItemType::Action) {
+    if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
 
