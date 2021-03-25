@@ -1862,8 +1862,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&FireTemple_NearBossChest,    []{return LogicFewerTunicRequirements || CanUse("Goron Tunic");}),
                   ItemLocationPairing(&FireTemple_FlareDancerChest, []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
                   ItemLocationPairing(&FireTemple_BossKeyChest,     []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
-                  ItemLocationPairing(&FireTemple_VolvagiaHeart,    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
-                  ItemLocationPairing(&Volvagia,                    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
+                  ItemLocationPairing(&FireTemple_VolvagiaHeart,    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple &&
+                                                                                (LogicFireBossDoorJump || HoverBoots ||
+                                                                                  (FireTemple_Upper.Adult() && (CanPlay(SongOfTime) || HasExplosives)));}),
+                  ItemLocationPairing(&Volvagia,                    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple &&
+                                                                                (LogicFireBossDoorJump || HoverBoots ||
+                                                                                  (FireTemple_Upper.Adult() && (CanPlay(SongOfTime) || HasExplosives)));}),
                   ItemLocationPairing(&FireTemple_GS_BossKeyLoop,   []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
                 }, {
                   //Exits
