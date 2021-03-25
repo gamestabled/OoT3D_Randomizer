@@ -78,8 +78,19 @@ public:
       placedItem = std::move(item);
     }
 
+    //Saves an item to be set as placedItem later
+    void SetDelayedItem(Item item) {
+      delayedItem = std::move(item);
+    }
+
     void ApplyPlacedItemEffect() {
       placedItem.ApplyEffect();
+    }
+
+    //Set placedItem as delayedItem
+    void SaveDelayedItem() {
+      placedItem = delayedItem;
+      delayedItem = NoItem;
     }
 
     bool IsExcluded() const {
@@ -155,6 +166,7 @@ public:
       checked = false;
       addedToPool = false;
       placedItem = NoItem;
+      delayedItem = NoItem;
     }
 
 private:
@@ -168,6 +180,7 @@ private:
     std::vector<Category> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
+    Item delayedItem = NoItem;
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
 
 };

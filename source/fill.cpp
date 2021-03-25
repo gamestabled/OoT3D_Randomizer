@@ -283,6 +283,7 @@ static void GeneratePlaythrough() {
 //Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
 //To reduce searches, some preprocessing done in playthrough generation to avoid adding obviously unnecessary items
 static void PareDownPlaythrough() {
+  std::vector<ItemLocation*> toAddBackItem;
   //Start at sphere before Ganon's and count down
   for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
     //Check each item location in sphere
@@ -295,15 +296,20 @@ static void PareDownPlaythrough() {
       location->SetPlacedItem(NoItem); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable
-      location->SetPlacedItem(copy); //Write back copied item (very important)
+      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable     
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
-        std::string locationname(copy.GetName());
-        std::string itemname(location->GetName());
-        std::string removallog = locationname + " at " + itemname + " removed from playthrough";
-        svcOutputDebugString(removallog.c_str(), removallog.length());
+        //Uncomment to print playthrough deletion log in citra
+        // std::string locationname(copy.GetName());
+        // std::string itemname(location->GetName());
+        // std::string removallog = locationname + " at " + itemname + " removed from playthrough";
+        // svcOutputDebugString(removallog.c_str(), removallog.length());
         playthroughLocations[i].erase(playthroughLocations[i].begin() + j);
+        location->SetDelayedItem(copy); //Game is still beatable, don't add back until later
+        toAddBackItem.push_back(location);
+      }
+      else {
+        location->SetPlacedItem(copy); //Immediately put item back so game is beatable again
       }
     }
   }
@@ -313,7 +319,13 @@ static void PareDownPlaythrough() {
       playthroughLocations.erase(playthroughLocations.begin() + i);
     }
   }
-  playthroughBeatable = true;
+  //Now we can add back items which were removed previously
+  for (ItemLocation* location : toAddBackItem) {
+    location->SaveDelayedItem();
+  }
+  //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
+  LogicReset();
+  GetAccessibleLocations(allLocations, CHECK_BEATABLE);
 }
 
 static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
