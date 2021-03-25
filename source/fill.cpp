@@ -71,7 +71,38 @@ static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   }
 }
 
-static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, bool playthrough = false) {
+//Get the max number of tokens that can possibly give a necessary item
+static int GetMaxGSCount() {
+  //If bridge is set to tokens, get how many are required
+  int maxBridge = 0;
+  if (Settings::Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
+    maxBridge = Settings::BridgeTokenCount.Value<u8>();
+  }
+  //Get the max amount of GS which could be useful from token reward locations
+  int maxUseful = 0;
+  //If the highest advancement item is a token, we know it is useless since it won't lead to an otherwise useful item
+  if (Kak_50GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_50GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+    maxUseful = 50;
+  }
+  else if (Kak_40GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_40GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+    maxUseful = 40;
+  }
+  else if (Kak_30GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_30GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+    maxUseful = 30;
+  }
+  else if (Kak_20GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_20GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+    maxUseful = 20;
+  }
+  else if (Kak_10GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_10GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+    maxUseful = 10;
+  }
+  //Return max of the two possible reasons tokens could be important
+  return std::max(maxUseful, maxBridge);
+}
+
+enum SearchMode {REACHABILITY_SEARCH, GENERATE_PLAYTHROUGH, CHECK_BEATABLE};
+
+static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, SearchMode mode = REACHABILITY_SEARCH) {
 
   std::vector<ItemLocation*> accessibleLocations = {};
 
@@ -84,7 +115,9 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
 
   //Variables for playthrough
   int gsCount = 0;
+  const int maxGsCount = GENERATE_PLAYTHROUGH ? GetMaxGSCount() : 0; //If generating playthrough want the max that's possibly useful, else doesn't matter
   bool bombchusFound = false;
+  std::vector<std::string> buyIgnores;
   //Variables for search
   std::vector<ItemLocation *> newItemLocations;
   bool firstIteration = true;
@@ -161,29 +194,64 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             }
 
             //Playthrough stuff
-            if (playthrough && !playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {            
-              ItemType type = location->GetPlacedItem().GetItemType();
-              bool bombchus = location->GetPlacedItem().GetName().find("Bombchu") != std::string::npos;
-              //Don't print Buy locations
-              if(type != ITEMTYPE_SHOP && type != ITEMTYPE_TOKEN && !bombchus) {
-                sphere.push_back(location);
-              }     
-              //Only print first 50 token locations
-              else if(type == ITEMTYPE_TOKEN && gsCount < 50 && !bombchus) {
-                sphere.push_back(location);
-                gsCount++;
+            //Generate the playthrough, so we want to add important items, unless we know to ignore them
+            if (mode == GENERATE_PLAYTHROUGH) {
+              //Item is an advancement item, figure out if it should be added to this sphere
+              if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
+                ItemType type = location->GetPlacedItem().GetItemType();
+                std::string itemName(location->GetPlacedItem().GetName());
+                bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
+                
+                //Decide whether to exclude this location
+                //This preprocessing is done to reduce the amount of searches performed in PareDownPlaythrough
+                //Want to exclude:
+                //1) Tokens after the last potentially useful one (the last one that gives an advancement item)
+                //2) Bombchus after the first (including buy bombchus)
+                //3) Buy items of the same type, after the first (So only see Buy Deku Nut once)
+                bool exclude = true;
+                //Exclude tokens after the last possibly useful one
+                if (type == ITEMTYPE_TOKEN && gsCount < maxGsCount) {
+                  gsCount++;
+                  exclude = false;
+                }
+                //Only print first bombchu location found
+                else if (bombchus && !bombchusFound) {
+                  bombchusFound = true;
+                  exclude = false;
+                }
+                //Handle buy items
+                else if (!(bombchus && bombchusFound) && type == ITEMTYPE_SHOP) {
+                  //Only check each buy item once
+                  std::string buyItem = itemName.erase(0, 4); //Delete "Buy "
+                  //Delete amount, if present
+                  if (buyItem.find("(") != std::string::npos) {
+                    buyItem = buyItem.erase(buyItem.find("(")); 
+                  }
+                  //Buy item not in list to ignore, add it to list and write to playthrough
+                  if (std::find(buyIgnores.begin(), buyIgnores.end(), buyItem) == buyIgnores.end()) {
+                    exclude = false;
+                    buyIgnores.push_back(buyItem);
+                  }
+                }
+                else if (!bombchus && type != ITEMTYPE_TOKEN && type != ITEMTYPE_SHOP) {
+                  exclude = false;
+                }
+
+                if (!exclude) {
+                  sphere.push_back(location);
+                }
               }
-              //Only print first bombchu location found
-              else if (type != ITEMTYPE_SHOP && type != ITEMTYPE_TOKEN && bombchus && !bombchusFound) {
+              //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
+              else if (location->GetPlacedItem().GetName() == "Triforce") {
+                sphere.clear(); 
                 sphere.push_back(location);
-                bombchusFound = true;
+                playthroughBeatable = true;
               }
             }
-            //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
-            else if(playthrough && location->GetPlacedItem().GetName() == "Triforce") {
-              sphere.clear(); 
-              sphere.push_back(location);
+            //All we care about is if the game is beatable, used to pare down playthrough
+            else if (mode == CHECK_BEATABLE && location->GetPlacedItem().GetName() == "Triforce") {
               playthroughBeatable = true;
+              return {};
             }
           }
         }
@@ -192,7 +260,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
 
     erase_if(exitPool, [](Exit* e){ return e->AllAccountedFor();});
 
-    if(playthrough && sphere.size() > 0) {
+    if (mode == GENERATE_PLAYTHROUGH && sphere.size() > 0) {
       playthroughLocations.push_back(sphere);
     }
 
@@ -210,7 +278,15 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
 }
 
 static void GeneratePlaythrough() {
-  GetAccessibleLocations(allLocations, true);
+  GetAccessibleLocations(allLocations, GENERATE_PLAYTHROUGH);
+}
+
+//Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
+//To reduce searches, some preprocessing done in playthrough generation to avoid adding obviously unnecessary items
+static void PareDownPlaythrough() {
+  for(int i = playthroughLocations.size() - 2; i >= 0; i--) {
+
+  }
 }
 
 static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
@@ -427,6 +503,7 @@ int Fill() {
     GeneratePlaythrough();
     //Successful placement, produced beatable result
     if(playthroughBeatable) {
+      PareDownPlaythrough();
       printf("Done");
       return 1;
     }
