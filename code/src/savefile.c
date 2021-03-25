@@ -3,7 +3,7 @@
 
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
-    //gSaveContext.equipment  |= 0xFFFF;  //Swords, shields, tunics, boots
+    gSaveContext.equipment  |= 0x0FFF;  //Swords, shields, tunics, boots
     gSaveContext.bgsFlag     = 1;
     gSaveContext.bgsHitsLeft = 1;
     gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength

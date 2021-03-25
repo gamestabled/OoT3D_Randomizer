@@ -544,8 +544,12 @@ void LoadCachedPreset() {
   }
 }
 
+static std::string PresetPath(std::string_view presetName) {
+  return std::string("/3ds/presets/oot3d/").append(presetName).append(".bin");
+}
+
 //Load the selected preset
-bool LoadPreset(std::string presetName, bool print) {
+bool LoadPreset(std::string_view presetName, bool print) {
   //clear any potential 'failed to load preset' message on previous attempt
   ClearDescription();
 
@@ -555,7 +559,7 @@ bool LoadPreset(std::string presetName, bool print) {
   u32 bytesRead = 0;
   u32 totalRW = 0;
 
-  std::string filepath = "/3ds/presets/oot3d/" + presetName + ".bin";
+  const std::string filepath = PresetPath(presetName);
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
@@ -601,7 +605,7 @@ bool LoadPreset(std::string presetName, bool print) {
 bool SaveSpecifiedPreset() {
   std::string presetName = (GetInput("Preset Name")).substr(0, 19);
   //don't save if the user cancelled
-  if (presetName == "") {
+  if (presetName.empty()) {
     return false;
   }
   return SavePreset(presetName);
@@ -613,16 +617,14 @@ bool SaveCachedPreset() {
 }
 
 //Saves the new preset to a file
-bool SavePreset(std::string presetName) {
+bool SavePreset(std::string_view presetName) {
   Result res;
   FS_Archive sdmcArchive = 0;
   Handle presetFile;
   u32 bytesWritten = 0;
   u32 totalRW = 0;
 
-  std::string presetsFilepath = "/3ds/presets/oot3d/";
-  std::string filepath = presetsFilepath + presetName + ".bin";
-
+  const std::string filepath = PresetPath(presetName);
   SettingsContext ctx = Settings::FillContext();
 
   // Open SD archive
@@ -656,14 +658,14 @@ bool SavePreset(std::string presetName) {
 }
 
 //Delete the selected preset
-bool DeletePreset(std::string presetName) {
+bool DeletePreset(std::string_view presetName) {
   //clear any potential message
   ClearDescription();
 
   Result res;
   FS_Archive sdmcArchive = 0;
 
-  std::string filepath = "/3ds/presets/oot3d/" + presetName + ".bin";
+  const std::string filepath = PresetPath(presetName);
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
@@ -683,19 +685,19 @@ void GenerateRandomizer() {
   consoleClear();
 
   //if a blank seed was entered, make a random one
-  if (Settings::seed == "") {
+  if (Settings::seed.empty()) {
     Settings::seed = std::to_string(rand());
   } else if (Settings::seed.rfind("seed_testing_count", 0) == 0) {
-    int count = std::stoi(Settings::seed.substr(18, std::string::npos), nullptr);
+    const int count = std::stoi(Settings::seed.substr(18), nullptr);
     Playthrough::Playthrough_Repeat(count);
     return;
   }
 
   //turn the settings into a string for hashing
-  std::string settingsStr = "";
+  std::string settingsStr;
   for (MenuItem* menu : Settings::mainMenu) {
     //don't go through non-menus
-    if (menu->type == MenuItemType::Action) {
+    if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
 

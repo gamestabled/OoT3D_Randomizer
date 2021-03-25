@@ -36,6 +36,7 @@ void ItemOverride_Init(void) {
     // Create an actor satisfying the minimum requirements to give the player an item
     rDummyActor = rHeap_Alloc(sizeof(Actor));
     rDummyActor->update = (void*)1;
+    rDummyActor->parent = NULL;
 
     // Enable items by age as determined by settings
     if (gSettingsContext.stickAsAdult) {
@@ -241,10 +242,14 @@ static void ItemOverride_TryPendingItem(void) {
         return;
     }
 
-    ItemOverride_Activate(override);
-    PLAYER->interactRangeActor = rDummyActor;
-    PLAYER->getItemId = rActiveItemRow->baseItemId;
-    ItemOverride_PopPendingOverride();
+    if (rDummyActor->parent == NULL) {
+        ItemOverride_Activate(override);
+        PLAYER->interactRangeActor = rDummyActor;
+        PLAYER->getItemId = rActiveItemRow->baseItemId;
+    } else {
+        rDummyActor->parent = NULL;
+        ItemOverride_PopPendingOverride();
+    }
 }
 
 void ItemOverride_Update(void) {

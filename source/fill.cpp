@@ -251,6 +251,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             //All we care about is if the game is beatable, used to pare down playthrough
             else if (mode == CHECK_BEATABLE && location->GetPlacedItem().GetName() == "Triforce") {
               playthroughBeatable = true;
+              return {};
             }
           }
         }
