@@ -122,8 +122,8 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
   std::vector<ItemLocation *> newItemLocations;
   bool firstIteration = true;
   //If no new items are found, then the next iteration won't provide any new location
-  while(newItemLocations.size() > 0 || firstIteration) {
-    firstIteration = false;;
+  while ((newItemLocations.size() > 0 || EventsUpdated() || firstIteration) && !(mode == CHECK_BEATABLE && playthroughBeatable)) {
+    firstIteration = false;
 
     //Add items found during previous search iteration to logic
     for (ItemLocation* location : newItemLocations) {
@@ -251,7 +251,6 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
             //All we care about is if the game is beatable, used to pare down playthrough
             else if (mode == CHECK_BEATABLE && location->GetPlacedItem().GetName() == "Triforce") {
               playthroughBeatable = true;
-              return {};
             }
           }
         }
@@ -284,9 +283,37 @@ static void GeneratePlaythrough() {
 //Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
 //To reduce searches, some preprocessing done in playthrough generation to avoid adding obviously unnecessary items
 static void PareDownPlaythrough() {
-  for(int i = playthroughLocations.size() - 2; i >= 0; i--) {
-
+  //Start at sphere before Ganon's and count down
+  for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
+    //Check each item location in sphere
+    std::string hi = std::to_string(i);
+    std::vector<int> erasableIndices;
+    std::vector<ItemLocation*> sphere = playthroughLocations.at(i);
+    for (int j = sphere.size() - 1; j >= 0; j--) {
+      ItemLocation* location = sphere.at(j);
+      Item copy = location->GetPlacedItem(); //Copy out item
+      location->SetPlacedItem(NoItem); //Write in empty item
+      playthroughBeatable = false;
+      LogicReset();
+      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable
+      location->SetPlacedItem(copy); //Write back copied item (very important)
+      //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
+      if (playthroughBeatable) {
+        std::string locationname(copy.GetName());
+        std::string itemname(location->GetName());
+        std::string removallog = locationname + " at " + itemname + " removed from playthrough";
+        svcOutputDebugString(removallog.c_str(), removallog.length());
+        playthroughLocations[i].erase(playthroughLocations[i].begin() + j);
+      }
+    }
   }
+  //Now some spheres may now be empty, remove these
+  for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
+    if (playthroughLocations.at(i).size() == 0) {
+      playthroughLocations.erase(playthroughLocations.begin() + i);
+    }
+  }
+  playthroughBeatable = true;
 }
 
 static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
