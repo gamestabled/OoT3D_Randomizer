@@ -1635,9 +1635,7 @@ void AddLocation(ItemLocation * loc, std::vector<ItemLocation*>* destination = &
 
 template <typename Container>
 void AddLocations(const Container& locations, std::vector<ItemLocation*>* destination = &allLocations) {
-  for (auto& loc : locations) {
-    destination->push_back(loc);
-  }
+  destination->insert(destination->end(), std::cbegin(locations), std::cend(locations));
 }
 
 //sort through Vanilla and MQ dungeon locations

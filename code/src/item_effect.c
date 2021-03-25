@@ -172,7 +172,7 @@ void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 
         ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_FIRE]);
         ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_ICE]);
         ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_LIGHT]);
-    } else if (saveCtx->items[ItemSlots[ITEM_BOW]] != ITEM_BOW) {
+    } else if (saveCtx->items[ItemSlots[ITEM_BOW]] == ITEM_NONE) {
         if (arg1 == 1) { // Fire Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_FIRE]);
         } else if (arg1 == 2) { // Ice Arrow

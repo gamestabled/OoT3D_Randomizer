@@ -8,7 +8,7 @@ jobs:
   build-cia-3dsx:
     runs-on: ubuntu-latest
     container:
-      image: devkitpro/devkitarm
+      image: phlex/oot3dr-build-tools
 
     steps:
       - uses: actions/checkout@v2

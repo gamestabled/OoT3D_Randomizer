@@ -457,6 +457,14 @@ hook_FrogReward:
     pop {r0-r12, lr}
     b 0x389930
 
+.global hook_CanPlayBombchuBowling
+hook_CanPlayBombchuBowling:
+    push {r0-r12, lr}
+    bl EnBomBowlMan_CheckExplosives
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

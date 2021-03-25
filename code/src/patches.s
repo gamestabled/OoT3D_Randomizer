@@ -885,6 +885,28 @@ AnjuCheckCuccoAmount_patch:
 FrogReward_patch:
     b hook_FrogReward
 
+.section .patch_CanPlayBombchuBowlingOne
+.global CanPlayBombchuBowlingOne_patch
+CanPlayBombchuBowlingOne_patch:
+    bl hook_CanPlayBombchuBowling
+
+.section .patch_CanPlayBombchuBowlingTwo
+.global CanPlayBombchuBowlingTwo_patch
+CanPlayBombchuBowlingTwo_patch:
+    bl hook_CanPlayBombchuBowling
+
+.section .patch_BombchuBowlingAlwaysFirstPrize
+.global BombchuBowlingAlwaysFirstPrize_patch
+BombchuBowlingAlwaysFirstPrize_patch:
+    mov r0,#0x0
+
+.section .patch_BombchuBowlingPrizeOrder
+.global BombchuBowlingPrizeOrder_patch
+BombchuBowlingPrizeOrder_patch:
+    .word 0x0021CAFC
+    .word 0x0021CB0C
+    .word 0x0021CAF4
+
 .section .patch_loader
 .global loader_patch
 
