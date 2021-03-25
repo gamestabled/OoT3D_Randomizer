@@ -62,7 +62,7 @@ namespace Playthrough {
         repeatedSeed = rand() % 0xFFFFFFFF;
         Settings::seed = std::to_string(repeatedSeed);
         Playthrough_Init(repeatedSeed);
-
+        PlacementLog_Clear();
         printf("\x1b[15;15HSeeds Generated: %d\n", i + 1);
       }
 
