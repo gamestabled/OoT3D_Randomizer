@@ -46,6 +46,11 @@ void Entrance_Init(void) {
         gEntranceTable[index].field = 0x0102;
     }
 
+    // Delete the title card for Temple of Time from Pulling/Placing Master Sword
+    for (index = 0x2CA; index < 0x2CE; ++index) {
+        gEntranceTable[index].field = 0x0102;
+    }
+
     // Delete the title card for Kakariko Village from Nocturne
     for (index = 0x513; index < 0x517; ++index) {
         gEntranceTable[index].field = 0x0102;
