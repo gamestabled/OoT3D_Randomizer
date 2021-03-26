@@ -205,9 +205,10 @@ void ItemOverride_AfterItemReceived(void) {
         return;
     }
 
-    if (key.all == rPendingOverrideQueue[0].key.all) {
-        ItemOverride_PopPendingOverride();
-    }
+    // Commenting this for now, I believe it is the correct fix, but it is an experimental change
+    // if (key.all == rPendingOverrideQueue[0].key.all) {
+    //     ItemOverride_PopPendingOverride();
+    // }
     ItemOverride_AfterKeyReceived(key);
     ItemOverride_Clear();
 }
