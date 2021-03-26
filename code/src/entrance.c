@@ -30,7 +30,7 @@ void Entrance_Init(void) {
     // Skip Child Stealth if given by settings
     if (gSettingsContext.skipChildStealth == SKIP) {
         gEntranceTable[0x07A].scene = 0x4A;
-        gEntranceTable[0x07A].spawn = 0x01;
+        gEntranceTable[0x07A].spawn = 0x00;
         gEntranceTable[0x07A].field = 0x0183;
     }
 
