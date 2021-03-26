@@ -42,5 +42,6 @@ typedef struct {
 ItemOverride ItemOverride_LookupByKey(ItemOverride_Key key);
 ItemOverride ItemOverride_Lookup(Actor* actor, u8 scene, u8 item_id);
 void ItemOverride_PushDelayedOverride(u8 flag);
+void ItemOverride_CheckZeldasLetter();
 
 #endif
