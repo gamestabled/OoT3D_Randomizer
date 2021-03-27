@@ -922,6 +922,11 @@ CourtyardCheckForVisitedZeldaTwo_patch:
 ImpaInCourtyardCheckForVisitedZelda_patch:
     ldrh r2,[r1,#0xF4]
 
+.section .patch_LikeLikeNeverEatTunic
+.global LikeLikeNeverEatTunic_patch
+LikeLikeNeverEatTunic_patch:
+    b 0x355C48
+
 .section .patch_loader
 .global loader_patch
 

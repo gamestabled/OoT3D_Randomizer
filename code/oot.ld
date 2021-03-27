@@ -416,6 +416,10 @@ SECTIONS
 		*(.patch_FastChests)
 	}
 
+	.patch_LikeLikeNeverEatTunic 0x355C2C : {
+		*(.patch_LikeLikeNeverEatTunic)
+	}
+
 	.patch_ConvertBombDropOne 0x35E46C : {
 		*(.patch_ConvertBombDropOne)
 	}
