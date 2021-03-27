@@ -907,6 +907,21 @@ BombchuBowlingPrizeOrder_patch:
     .word 0x0021CB0C
     .word 0x0021CAF4
 
+.section .patch_CourtyardCheckForVisitedZeldaOne
+.global CourtyardCheckForVisitedZeldaOne_patch
+CourtyardCheckForVisitedZeldaOne_patch:
+    ldreqh r0,[r0,#0xF4]
+
+.section .patch_CourtyardCheckForVisitedZeldaTwo
+.global CourtyardCheckForVisitedZeldaTwo_patch
+CourtyardCheckForVisitedZeldaTwo_patch:
+    ldreqh r0,[r0,#0xF4]
+
+.section .patch_ImpaInCourtyardCheckForVisitedZelda
+.global ImpaInCourtyardCheckForVisitedZelda_patch
+ImpaInCourtyardCheckForVisitedZelda_patch:
+    ldrh r2,[r1,#0xF4]
+
 .section .patch_loader
 .global loader_patch
 

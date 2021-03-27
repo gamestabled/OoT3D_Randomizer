@@ -236,6 +236,14 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_CourtyardCheckForVisitedZeldaOne 0x210C4C : {
+		*(.patch_CourtyardCheckForVisitedZeldaOne)
+	}
+
+	.patch_CourtyardCheckForVisitedZeldaTwo 0x210C78 : {
+		*(.patch_CourtyardCheckForVisitedZeldaTwo)
+	}
+
 	.patch_DekuSproutBitMask 0x2153A8 : {
 		*(.patch_DekuSproutBitMask)
 	}
@@ -298,6 +306,10 @@ SECTIONS
 
 	.patch_ShadowTempleItemGiveTwo 0x27DED0 : {
 		*(.patch_ShadowTempleItemGiveTwo)
+	}
+
+	.patch_ImpaInCourtyardCheckForVisitedZelda 0x27DEF8 : {
+		*(.patch_ImpaInCourtyardCheckForVisitedZelda)
 	}
 
 	.patch_ForestTempleItemGiveTwo 0x27E074 : {
