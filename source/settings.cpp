@@ -8,7 +8,7 @@
 
 namespace Settings {
   std::string seed;
-  std::string version = "v1.0.1_COMMITNUM";
+  std::string version = "v1.0.2_COMMITNUM";
   std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
