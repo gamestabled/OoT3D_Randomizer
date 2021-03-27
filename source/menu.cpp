@@ -703,7 +703,7 @@ void GenerateRandomizer() {
 
     for (size_t i = 0; i < menu->settingsList->size(); i++) {
       Option* setting = menu->settingsList->at(i);
-      if (setting->GetName() != "Mirror World") {
+      if (setting->GetName() != "Mirror World" && setting->GetName() != "All Tricks") {
         settingsStr += setting->GetSelectedOption();
       }
     }
