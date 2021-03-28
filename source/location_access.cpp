@@ -892,7 +892,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&Kak_Rooftop,            []{return CanUse("Hookshot") || (LogicManOnRoof && (IsAdult || Slingshot || HasBombchus));}),
                   ExitPairing::Day(&Kak_Rooftop,             []{return LogicManOnRoof && AtDay;}),
                   ExitPairing::Both(&GY_Main,                []{return true;}),
-                  ExitPairing::Both(&Kak_BehindGate,         []{return true;})
+                  ExitPairing::Both(&Kak_BehindGate,         []{return IsAdult || (KakarikoVillageGateOpen);})
   });
 
   Exit Kak_ImpasLedge = Exit("Kak Impas Ledge", "Kakariko Village", "Kakariko Village", NO_DAY_NIGHT_CYCLE, {}, {}, {
