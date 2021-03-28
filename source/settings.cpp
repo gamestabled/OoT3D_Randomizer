@@ -38,7 +38,8 @@ namespace Settings {
   };
 
   //World Settings
-  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child"},                                      {ageDesc, ageDesc});
+  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                            {ageDesc, ageDesc, ageDesc});
+  u8 ResolvedStartingAge;
   Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc, bombchuLogicDesc});
   Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                           {bombchuDropDesc, bombchuDropDesc});
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc, randomMQDungeonsDesc});
@@ -372,6 +373,8 @@ namespace Settings {
     ctx.ganonsTrialsCount  = GanonsTrialsCount.Value<u8>();
 
     ctx.startingAge        = StartingAge.Value<u8>();
+    ctx.resolvedStartingAge = ResolvedStartingAge;
+
     ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
     ctx.bombchuDrops       = (BombchuDrops) ? 1 : 0;
     ctx.randomMQDungeons   = (RandomMQDungeons) ? 1 : 0;
@@ -798,6 +801,19 @@ namespace Settings {
     }
     for (u8 i = 0; i < GanonsTrialsCount.Value<u8>(); i++) {
       *trialsSkipped[i] = false; //the selected trial is not skipped
+    }
+
+    if (StartingAge.Is(AGE_RANDOM)) {
+      int choice = Random(0, 2); //50% chance of each
+      if (choice == 0) {
+        ResolvedStartingAge = AGE_CHILD;
+      }
+      else {
+        ResolvedStartingAge = AGE_ADULT;
+      }
+    }
+    else {
+      ResolvedStartingAge = StartingAge.Value<u8>();
     }
 
     HasNightStart = StartingTime.Is(STARTINGTIME_NIGHT);

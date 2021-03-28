@@ -208,7 +208,6 @@ namespace Logic {
   extern bool HasExplosives;
   extern bool IsChild;
   extern bool IsAdult;
-  extern bool IsStartingAge;
 //extern bool IsGlitched;
   extern bool CanBlastOrSmash;
   extern bool CanChildAttack;
@@ -264,7 +263,6 @@ namespace Logic {
   extern bool ChildWaterTemple;
   extern bool RaiseWaterLevel;
   extern bool KingZoraThawed;
-  extern bool IsStartingAge;
   extern bool AtDampeTime;
   extern bool DeliverLetter;
   extern bool KakarikoVillageGateOpen;
