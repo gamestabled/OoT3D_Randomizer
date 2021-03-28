@@ -260,6 +260,14 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_CourtyardCheckForVisitedZeldaOne 0x210C4C : {
+		*(.patch_CourtyardCheckForVisitedZeldaOne)
+	}
+
+	.patch_CourtyardCheckForVisitedZeldaTwo 0x210C78 : {
+		*(.patch_CourtyardCheckForVisitedZeldaTwo)
+	}
+
 	.patch_DekuSproutBitMask 0x2153A8 : {
 		*(.patch_DekuSproutBitMask)
 	}
@@ -322,6 +330,10 @@ SECTIONS
 
 	.patch_ShadowTempleItemGiveTwo 0x27DED0 : {
 		*(.patch_ShadowTempleItemGiveTwo)
+	}
+
+	.patch_ImpaInCourtyardCheckForVisitedZelda 0x27DEF8 : {
+		*(.patch_ImpaInCourtyardCheckForVisitedZelda)
 	}
 
 	.patch_ForestTempleItemGiveTwo 0x27E074 : {
@@ -426,6 +438,10 @@ SECTIONS
 
 	.patch_FastChests 0x354CD8 : {
 		*(.patch_FastChests)
+	}
+
+	.patch_LikeLikeNeverEatTunic 0x355C2C : {
+		*(.patch_LikeLikeNeverEatTunic)
 	}
 
 	.patch_ConvertBombDropOne 0x35E46C : {
@@ -690,6 +706,10 @@ SECTIONS
 
 	.patch_FishingRestoreTempB 0x475FC0 : {
 		*(.patch_FishingRestoreTempB)
+	}
+
+	.patch_SwapFaroresWind 0x49186C : {
+		*(.patch_SwapFaroresWind)
 	}
 
 	.patch_FireTempleItemGiveTwo 0x491B60 : {

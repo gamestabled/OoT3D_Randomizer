@@ -2698,13 +2698,13 @@ namespace Exits { //name, scene, hint, events, locations, exits
     }
 
     if(Settings::HasNightStart) {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.nightChild = true;
         } else {
           Exits::Root.nightAdult = true;
         }
       } else {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.dayChild = true;
         } else {
           Exits::Root.dayAdult = true;
@@ -2724,13 +2724,13 @@ namespace Exits { //name, scene, hint, events, locations, exits
     }
 
     if(Settings::HasNightStart) {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.nightChild = true;
         } else {
           Exits::Root.nightAdult = true;
         }
       } else {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.dayChild = true;
         } else {
           Exits::Root.dayAdult = true;

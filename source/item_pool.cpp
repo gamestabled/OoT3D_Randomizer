@@ -1225,7 +1225,7 @@ void GenerateItemPool() {
 
   //add songs
   AddItemsToPool(ItemPool, songList);
-  if (ShuffleSongs && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
+  if (ShuffleSongs && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL) && !ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
     AddItemsToPool(PendingJunkPool, songList);
   }
 
