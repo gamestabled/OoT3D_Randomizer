@@ -676,6 +676,10 @@ SECTIONS
 		*(.patch_FishingRestoreTempB)
 	}
 
+	.patch_SwapFaroresWind 0x49186C : {
+		*(.patch_SwapFaroresWind)
+	}
+
 	.patch_FireTempleItemGiveTwo 0x491B60 : {
 		*(.patch_FireTempleItemGiveTwo)
 	}

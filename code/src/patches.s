@@ -927,6 +927,12 @@ ImpaInCourtyardCheckForVisitedZelda_patch:
 LikeLikeNeverEatTunic_patch:
     b 0x355C48
 
+.section .patch_SwapFaroresWind
+.global SwapFaroresWind_patch
+SwapFaroresWind_patch:
+    bl SaveFile_SwapFaroresWind
+    nop
+
 .section .patch_loader
 .global loader_patch
 
