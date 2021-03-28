@@ -153,7 +153,7 @@ void Cutscene_OverrideSongOfStorms(void) {
 
 void Cutscene_OverrideFairyReward(BgDyYoseizo* fairy) {
     s16 fairyIdx = fairy->unk_D2C;
-    
+
     if (gGlobalContext->sceneNum == 0x3D) {
         if (!(gSaveContext.itemGetInf[1] & (0x100 << fairyIdx))) {
             ItemOverride_PushDelayedOverride(0x10 + fairyIdx);
@@ -169,4 +169,70 @@ void Cutscene_OverrideFairyReward(BgDyYoseizo* fairy) {
     gSaveContext.healthAccumulator = 0x140;
     gSaveContext.magic = gSaveContext.magicLevel * 0x30;
     Actor_Kill(&fairy->actor);
+}
+
+//skip dungeon exit cutscenes
+void Cutscene_OverrideDekuTree(void) {
+    gGlobalContext->nextEntranceIndex = 0x457;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0xA;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_DEKU_TREE);
+}
+
+void Custcene_OverrideDodongosCavern(void) {
+    gGlobalContext->nextEntranceIndex = 0x47A;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0xA;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_DODONGOS_CAVERN);
+}
+
+void Custcene_OverrideJabuJabusBelly(void) {
+    gGlobalContext->nextEntranceIndex = 0x221;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0xA;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_JABUJABUS_BELLY);
+}
+
+void Custcene_OverrideForestTemple(void) {
+    gGlobalContext->nextEntranceIndex = 0x608;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0x3;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_FOREST_TEMPLE);
+}
+
+void Cutscene_OverrideFireTemple(void) {
+    gGlobalContext->nextEntranceIndex = 0x564;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0x3;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_FIRE_TEMPLE);
+}
+
+void Custcene_OverrideWaterTemple(void) {
+    gGlobalContext->nextEntranceIndex = 0x60C;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0x3;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_WATER_TEMPLE);
+    gSaveContext.eventChkInf[6] |= 0x0200; //Raise Lake Hylia's Water
+}
+
+void Custcene_OverrideSpiritTemple(void) {
+    gGlobalContext->nextEntranceIndex = 0x610;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0x3;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_SPIRIT_TEMPLE);
+}
+
+void Custcene_OverrideShadowTemple(void) {
+    gGlobalContext->nextEntranceIndex = 0x580;
+    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->fadeOutTransition = 0x3;
+    gSaveContext.nextCutsceneIndex = 0x0;
+    ItemOverride_PushDungeonReward(DUNGEON_SHADOW_TEMPLE);
 }

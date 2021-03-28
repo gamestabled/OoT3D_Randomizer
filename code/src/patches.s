@@ -501,15 +501,34 @@ BombchuBowlingStaticReward_patch:
 DekuTreeItemGive_patch:
     bl DungeonReward_OverrideItemGive
 
+.section .patch_DekuTreeCutsceneOverride
+.global DekuTreeCutsceneOverride_patch
+DekuTreeCutsceneOverride_patch:
+    bl Cutscene_OverrideDekuTree
+    nop
+
 .section .patch_DodongosCavernItemGive
 .global DodongosCavernItemGive_patch
 DodongosCavernItemGive_patch:
     bl DungeonReward_OverrideItemGive
 
+.section .patch_DodongosCavernCutsceneOverride
+.global DodongosCavernCutsceneOverride_patch
+DodongosCavernCutsceneOverride_patch:
+    bl Custcene_OverrideDodongosCavern
+    nop
+
 .section .patch_JabuJabuItemGive
 .global JabuJabuItemGive_patch
 JabuJabuItemGive_patch:
     bl DungeonReward_OverrideItemGive
+
+.section .patch_JabuJabuCutsceneOverride
+.global JabuJabuCutsceneOverride_patch
+JabuJabuCutsceneOverride_patch:
+    bl Custcene_OverrideJabuJabusBelly
+    nop
+    nop
 
 .section .patch_ForestTempleItemGive
 .global ForestTempleItemGive_patch
@@ -525,6 +544,13 @@ ForestTempleItemGiveTwo_patch:
 .global ForestTempleItemGiveThree_patch
 ForestTempleItemGiveThree_patch:
     b DungeonReward_OverrideItemGive
+
+.section .patch_ForestTempleCutsceneOverride
+.global ForestTempleCutsceneOverride_patch
+ForestTempleCutsceneOverride_patch:
+    bl Custcene_OverrideForestTemple
+    nop
+    nop
 
 .section .patch_FireTempleItemGive
 .global FireTempleItemGive_patch
@@ -546,6 +572,13 @@ FireTempleItemGiveThree_patch:
 FireTempleItemGiveFour_patch:
     b DungeonReward_OverrideItemGive
 
+.section .patch_FireTempleCutsceneOverride
+.global FireTempleCutsceneOverride_patch
+FireTempleCutsceneOverride_patch:
+    bl Cutscene_OverrideFireTemple
+    nop
+    nop
+
 .section .patch_WaterTempleItemGive
 .global WaterTempleItemGive_patch
 WaterTempleItemGive_patch:
@@ -560,6 +593,14 @@ WaterTempleItemGiveTwo_patch:
 .global WaterTempleItemGiveThree_patch
 WaterTempleItemGiveThree_patch:
     b DungeonReward_OverrideItemGive
+
+.section .patch_WaterTempleCutsceneOverride
+.global WaterTempleCutsceneOverride_patch
+WaterTempleCutsceneOverride_patch:
+    bl Custcene_OverrideWaterTemple
+    nop
+    nop
+    nop
 
 .section .patch_SpiritTempleItemGive
 .global SpiritTempleItemGive_patch
@@ -581,6 +622,12 @@ SpiritTempleItemGiveThree_patch:
 SpiritTempleBitMask_patch:
     bl hook_SpiritTempleBitMask
 
+.section .patch_SpiritTempleCutsceneOverride
+.global SpiritTempleCutsceneOverride_patch
+SpiritTempleCutsceneOverride_patch:
+    bl Custcene_OverrideSpiritTemple
+    nop
+
 .section .patch_ShadowTempleItemGive
 .global ShadowTempleItemGive_patch
 ShadowTempleItemGive_patch:
@@ -600,6 +647,12 @@ ShadowTempleItemGiveThree_patch:
 .global ShadowTempleBitMask_patch
 ShadowTempleBitMask_patch:
     bl hook_ShadowTempleBitMask
+
+.section .patch_ShadowTempleCutsceneOverride
+.global ShadowTempleCutsceneOverride_patch
+ShadowTempleCutsceneOverride_patch:
+    bl Custcene_OverrideShadowTemple
+    nop
 
 .section .patch_EnExItemModelDraw
 .global EnExItemModelDraw_patch

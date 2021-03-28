@@ -13,6 +13,7 @@ enum ItemOverride_Type {
     OVR_SKULL = 3,
     OVR_GROTTO_SCRUB = 4,
     OVR_DELAYED = 5,
+    OVR_TEMPLE = 6,
 };
 
 typedef union {
@@ -43,5 +44,6 @@ ItemOverride ItemOverride_LookupByKey(ItemOverride_Key key);
 ItemOverride ItemOverride_Lookup(Actor* actor, u8 scene, u8 item_id);
 void ItemOverride_PushDelayedOverride(u8 flag);
 void ItemOverride_CheckZeldasLetter();
+void ItemOverride_PushDungeonReward(u8 dungeon);
 
 #endif

@@ -21,6 +21,18 @@ static void RemoveStartingItemsFromPool() {
 }
 
 static void RandomizeDungeonRewards() {
+  u32 bitmaskTable[9] = {
+    0x00040000,
+    0x00080000,
+    0x00100000,
+    0x00000001,
+    0x00000002,
+    0x00000004,
+    0x00000008,
+    0x00000010,
+    0x00000020,
+  };
+
   //shuffle an array of indices so that we can randomize the rewards both
   //logically and for the patch
   std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -30,8 +42,11 @@ static void RandomizeDungeonRewards() {
     const u8 idx = idxArray[i];
     PlaceItemInLocation(dungeonRewardLocations[i], dungeonRewards[idx]);
     rDungeonRewardOverrides[i] = idx;
+
+    if (i == dungeonRewardLocations.size() - 1) {
+      LinksPocketRewardBitMask = bitmaskTable[idx];
+    }
   }
-  LinksPocketRewardBitMask = LinksPocket.GetPlacedItem().GetItemID();
 }
 
 static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {

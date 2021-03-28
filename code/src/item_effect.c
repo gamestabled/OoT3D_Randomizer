@@ -187,3 +187,12 @@ void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     //Put the Kokiri Sword on Child B button when Link goes back child
     saveCtx->childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
 }
+
+void ItemEffect_GiveStone(SaveContext* saveCtx, s16 mask, s16 arg2) {
+    s32 trueMask = mask << 16;
+    saveCtx->questItems |= trueMask;
+}
+
+void ItemEffect_GiveMedallion(SaveContext* saveCtx, s16 mask, s16 arg2) {
+    saveCtx->questItems |= mask;
+}

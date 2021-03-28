@@ -428,3 +428,12 @@ void ItemOverride_CheckZeldasLetter() {
       EventSet(0x40);
   }
 }
+
+void ItemOverride_PushDungeonReward(u8 dungeon) {
+    ItemOverride_Key key = { .all = 0 };
+    key.scene = 0xFF;
+    key.type = OVR_TEMPLE;
+    key.flag = dungeon;
+    ItemOverride override = ItemOverride_LookupByKey(key);
+    ItemOverride_PushPendingOverride(override);
+}
