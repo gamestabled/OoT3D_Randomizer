@@ -210,6 +210,7 @@ namespace Settings {
   extern Option GanonsTrialsCount;
 
   extern Option StartingAge;
+  extern u8 ResolvedStartingAge;
   extern Option BombchusInLogic;
   extern Option BombchuDrops;
   extern Option RandomMQDungeons;

@@ -251,7 +251,6 @@ namespace Logic {
   //Other
   bool AtDay         = false;
   bool AtNight       = false;
-  bool IsStartingAge = false;
   u8 Age             = 0;
 
   //Events
@@ -426,7 +425,6 @@ namespace Logic {
 
     IsChild = Age == AGE_CHILD;
     IsAdult = Age == AGE_ADULT;
-    IsStartingAge = StartingAge.Is(Age); //what's this for?
 
   //IsGlitched = false;
 
@@ -755,8 +753,7 @@ namespace Logic {
      //Other
      AtDay         = false;
      AtNight       = false;
-     IsStartingAge = false;
-     Age           = Settings::StartingAge.Value<u8>();
+     Age           = Settings::ResolvedStartingAge;
 
      //Events
      ShowedMidoSwordAndShield  = false;
