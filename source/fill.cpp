@@ -544,6 +544,8 @@ int Fill() {
     GeneratePlaythrough();
     //Successful placement, produced beatable result
     if(playthroughBeatable) {
+      printf("Done");
+      printf("\x1b[9;10HCalculating Playthrough...");
       PareDownPlaythrough();
       printf("Done");
       return 1;
