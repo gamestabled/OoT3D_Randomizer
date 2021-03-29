@@ -560,6 +560,10 @@ SECTIONS
 		*(.patch_FireBlockSpeed)
 	}
 
+	.patch_BombPurchaseableCheck 0x3CE800 : {
+		*(.patch_BombPurchaseableCheck)
+	}
+
 	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
 		*(.patch_ScrubStickUpgradeTwo)
 	}

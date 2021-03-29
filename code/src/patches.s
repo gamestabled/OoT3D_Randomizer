@@ -958,6 +958,11 @@ BombchuPurchaseableCheck_patch:
     nop
     nop
 
+.section .patch_BombPurchaseableCheck
+.global BombPurchaseableCheck_patch
+BombPurchaseableCheck_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 
