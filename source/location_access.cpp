@@ -1862,8 +1862,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&FireTemple_NearBossChest,    []{return LogicFewerTunicRequirements || CanUse("Goron Tunic");}),
                   ItemLocationPairing(&FireTemple_FlareDancerChest, []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
                   ItemLocationPairing(&FireTemple_BossKeyChest,     []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
-                  ItemLocationPairing(&FireTemple_VolvagiaHeart,    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
-                  ItemLocationPairing(&Volvagia,                    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple && (LogicFireBossDoorJump || HoverBoots || CanPlay(SongOfTime) || HasExplosives);}),
+                  ItemLocationPairing(&FireTemple_VolvagiaHeart,    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple &&
+                                                                                (LogicFireBossDoorJump || HoverBoots ||
+                                                                                  (FireTemple_Upper.Adult() && (CanPlay(SongOfTime) || HasExplosives)));}),
+                  ItemLocationPairing(&Volvagia,                    []{return CanUse("Goron Tunic") && CanUse("Hammer") && BossKeyFireTemple &&
+                                                                                (LogicFireBossDoorJump || HoverBoots ||
+                                                                                  (FireTemple_Upper.Adult() && (CanPlay(SongOfTime) || HasExplosives)));}),
                   ItemLocationPairing(&FireTemple_GS_BossKeyLoop,   []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse("Hammer");}),
                 }, {
                   //Exits
@@ -2694,13 +2698,13 @@ namespace Exits { //name, scene, hint, events, locations, exits
     }
 
     if(Settings::HasNightStart) {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.nightChild = true;
         } else {
           Exits::Root.nightAdult = true;
         }
       } else {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.dayChild = true;
         } else {
           Exits::Root.dayAdult = true;
@@ -2720,13 +2724,13 @@ namespace Exits { //name, scene, hint, events, locations, exits
     }
 
     if(Settings::HasNightStart) {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.nightChild = true;
         } else {
           Exits::Root.nightAdult = true;
         }
       } else {
-        if(Settings::StartingAge.Is(AGE_CHILD)) {
+        if(Settings::ResolvedStartingAge == AGE_CHILD) {
           Exits::Root.dayChild = true;
         } else {
           Exits::Root.dayAdult = true;

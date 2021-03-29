@@ -907,6 +907,62 @@ BombchuBowlingPrizeOrder_patch:
     .word 0x0021CB0C
     .word 0x0021CAF4
 
+.section .patch_CourtyardCheckForVisitedZeldaOne
+.global CourtyardCheckForVisitedZeldaOne_patch
+CourtyardCheckForVisitedZeldaOne_patch:
+    ldreqh r0,[r0,#0xF4]
+
+.section .patch_CourtyardCheckForVisitedZeldaTwo
+.global CourtyardCheckForVisitedZeldaTwo_patch
+CourtyardCheckForVisitedZeldaTwo_patch:
+    ldreqh r0,[r0,#0xF4]
+
+.section .patch_ImpaInCourtyardCheckForVisitedZelda
+.global ImpaInCourtyardCheckForVisitedZelda_patch
+ImpaInCourtyardCheckForVisitedZelda_patch:
+    ldrh r2,[r1,#0xF4]
+
+.section .patch_LikeLikeNeverEatTunic
+.global LikeLikeNeverEatTunic_patch
+LikeLikeNeverEatTunic_patch:
+    b 0x355C48
+
+.section .patch_SwapFaroresWind
+.global SwapFaroresWind_patch
+SwapFaroresWind_patch:
+    bl SaveFile_SwapFaroresWind
+    nop
+
+.section .patch_BombchuShopAlwaysOpen
+.global BombchuShopAlwaysOpen_patch
+BombchuShopAlwaysOpen_patch:
+    nop
+
+.section .patch_BombchuCheapestPriceOne
+    .word 0x0063FFFF
+
+.section .patch_BombchuCheapestPriceTwo
+    .word 0x0063FFFF
+
+.section .patch_BombchuCheapestPriceThree
+    .word 0x0063FFFF
+
+.section .patch_BombchuCheapestPriceFour
+    .word 0x0063FFFF
+
+.section .patch_BombchuPurchaseableCheck
+.global BombchuPurchaseableCheck_patch
+BombchuPurchaseableCheck_patch:
+    bl Shop_CheckCanBuyBombchus
+    nop
+    nop
+    nop
+
+.section .patch_BombPurchaseableCheck
+.global BombPurchaseableCheck_patch
+BombPurchaseableCheck_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 

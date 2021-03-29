@@ -68,7 +68,7 @@ void SaveFile_Init() {
         gSaveContext.eventChkInf[0x4] |= 0x2000;
     }
 
-    if (gSettingsContext.startingAge == AGE_ADULT) {
+    if (gSettingsContext.resolvedStartingAge == AGE_ADULT) {
         gSaveContext.linkAge       = AGE_ADULT;  //age is adult
         gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
         gSaveContext.sceneIndex    = 0x6100;     //^
@@ -186,4 +186,23 @@ u16 SaveFile_RestoreChildEquips(void) {
 
 u32 SaveFile_CheckGerudoToken(void) {
     return ((gSaveContext.questItems & 0x400000) != 0) ? 1 : 0;
+}
+
+void SaveFile_SwapFaroresWind(void) {
+    const u32 numWordsToSwap = sizeof(gSaveContext.fw) / sizeof(u32);
+
+    u32* curFWData = (u32*)&gSaveContext.fw;
+    u32* storedFWData = &gSaveContext.sceneFlags[0x40].unk;
+    u32 tempCur;
+    u32 tempStored;
+
+    for (s32 i = 0; i < numWordsToSwap; i++) {
+        tempCur = *curFWData;
+        tempStored = *storedFWData;
+        *curFWData = tempStored;
+        *storedFWData = tempCur;
+
+        curFWData++;
+        storedFWData += sizeof(SaveSceneFlags);
+    }
 }

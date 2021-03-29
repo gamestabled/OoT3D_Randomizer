@@ -205,9 +205,10 @@ void ItemOverride_AfterItemReceived(void) {
         return;
     }
 
-    if (key.all == rPendingOverrideQueue[0].key.all) {
-        ItemOverride_PopPendingOverride();
-    }
+    // Commenting this for now, I believe it is the correct fix, but it is an experimental change
+    // if (key.all == rPendingOverrideQueue[0].key.all) {
+    //     ItemOverride_PopPendingOverride();
+    // }
     ItemOverride_AfterKeyReceived(key);
     ItemOverride_Clear();
 }
@@ -253,6 +254,7 @@ static void ItemOverride_TryPendingItem(void) {
 }
 
 void ItemOverride_Update(void) {
+    ItemOverride_CheckZeldasLetter();
     IceTrap_Update();
     if (ItemOverride_PlayerIsReady()) {
         ItemOverride_PopIceTrap();
@@ -412,4 +414,17 @@ s32 ItemOverride_GiveSariasGift(void) {
 
     // return 1 to skip the cutscene
     return 1;
+}
+
+//If we haven't obtained Zelda's Letter and are in the castle courtyard, push it
+void ItemOverride_CheckZeldasLetter() {
+  if (EventCheck(0x40) == 0 && gGlobalContext->sceneNum == 0x4A) {
+      ItemOverride_Key key = { .all = 0 };
+      key.scene = 0x4A;
+      key.type = OVR_BASE_ITEM;
+      key.flag = 0x0B;
+      ItemOverride override = ItemOverride_LookupByKey(key);
+      ItemOverride_PushPendingOverride(override);
+      EventSet(0x40);
+  }
 }

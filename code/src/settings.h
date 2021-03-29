@@ -59,6 +59,7 @@ typedef enum {
 typedef enum {
   AGE_ADULT,
   AGE_CHILD,
+  AGE_RANDOM,
 } AgeSetting;
 
 typedef enum {
@@ -171,6 +172,7 @@ typedef struct {
   u8 ganonsTrialsCount;
 
   u8 startingAge;
+  u8 resolvedStartingAge;
   u8 bombchusInLogic;
   u8 bombchuDrops;
   u8 randomMQDungeons;

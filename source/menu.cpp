@@ -40,7 +40,7 @@ void PrintTopScreen() {
   consoleSelect(&topScreen);
   consoleClear();
   printf("\x1b[2;11H%sOcarina of Time 3D Randomizer%s", CYAN, RESET);
-  printf("\x1b[3;18H%sv1.0.1-COMMITNUM%s", CYAN, RESET);
+  printf("\x1b[3;18H%sv1.0.2-COMMITNUM%s", CYAN, RESET);
   printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
   printf("            Select: Exit to Homebrew Menu\n");
   printf("                 Y: New Random Seed\n");
@@ -703,7 +703,7 @@ void GenerateRandomizer() {
 
     for (size_t i = 0; i < menu->settingsList->size(); i++) {
       Option* setting = menu->settingsList->at(i);
-      if (setting->GetName() != "Mirror World") {
+      if (setting->GetName() != "Mirror World" && setting->GetName() != "All Tricks") {
         settingsStr += setting->GetSelectedOption();
       }
     }

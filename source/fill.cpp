@@ -548,6 +548,7 @@ int Fill() {
       printf("\x1b[9;10HCalculating Playthrough...");
       PareDownPlaythrough();
       printf("Done");
+      CreateOverrides();
       return 1;
     }
     //Unsuccessful placement

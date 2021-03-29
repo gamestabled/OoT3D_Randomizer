@@ -30,7 +30,7 @@ void Entrance_Init(void) {
     // Skip Child Stealth if given by settings
     if (gSettingsContext.skipChildStealth == SKIP) {
         gEntranceTable[0x07A].scene = 0x4A;
-        gEntranceTable[0x07A].spawn = 0x01;
+        gEntranceTable[0x07A].spawn = 0x00;
         gEntranceTable[0x07A].field = 0x0183;
     }
 
@@ -43,6 +43,11 @@ void Entrance_Init(void) {
 
     // Delete the title card for Desert Colossus from Requiem
     for (index = 0x1ED; index < 0x1F1; ++index) {
+        gEntranceTable[index].field = 0x0102;
+    }
+
+    // Delete the title card for Temple of Time from Pulling/Placing Master Sword
+    for (index = 0x2CA; index < 0x2CE; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 

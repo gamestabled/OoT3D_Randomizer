@@ -8,6 +8,10 @@ SECTIONS
 		*(.patch_loader)
 	}
 
+	.patch_BombchuPurchaseableCheck 0x112ED0 : {
+		*(.patch_BombchuPurchaseableCheck)
+	}
+
 	.patch_PoeCollectorGetFirstTextbox 0x113844 : {
 		*(.patch_PoeCollectorGetFirstTextbox)
 	}
@@ -192,6 +196,10 @@ SECTIONS
 		*(.patch_BiggoronCheckGivenRewardOne)
 	}
 
+	.patch_BombchuShopAlwaysOpen 0x1DC6B0 : {
+		*(.patch_BombchuShopAlwaysOpen)
+	}
+
 	.patch_ForestTempleItemGive 0x1E3F84 : {
 		*(.patch_ForestTempleItemGive)
 	}
@@ -234,6 +242,14 @@ SECTIONS
 
 	.patch_BombchuBowlingStaticReward 0x206150 : {
 		*(.patch_BombchuBowlingStaticReward)
+	}
+
+	.patch_CourtyardCheckForVisitedZeldaOne 0x210C4C : {
+		*(.patch_CourtyardCheckForVisitedZeldaOne)
+	}
+
+	.patch_CourtyardCheckForVisitedZeldaTwo 0x210C78 : {
+		*(.patch_CourtyardCheckForVisitedZeldaTwo)
 	}
 
 	.patch_DekuSproutBitMask 0x2153A8 : {
@@ -298,6 +314,10 @@ SECTIONS
 
 	.patch_ShadowTempleItemGiveTwo 0x27DED0 : {
 		*(.patch_ShadowTempleItemGiveTwo)
+	}
+
+	.patch_ImpaInCourtyardCheckForVisitedZelda 0x27DEF8 : {
+		*(.patch_ImpaInCourtyardCheckForVisitedZelda)
 	}
 
 	.patch_ForestTempleItemGiveTwo 0x27E074 : {
@@ -402,6 +422,10 @@ SECTIONS
 
 	.patch_FastChests 0x354CD8 : {
 		*(.patch_FastChests)
+	}
+
+	.patch_LikeLikeNeverEatTunic 0x355C2C : {
+		*(.patch_LikeLikeNeverEatTunic)
 	}
 
 	.patch_ConvertBombDropOne 0x35E46C : {
@@ -536,6 +560,10 @@ SECTIONS
 		*(.patch_FireBlockSpeed)
 	}
 
+	.patch_BombPurchaseableCheck 0x3CE800 : {
+		*(.patch_BombPurchaseableCheck)
+	}
+
 	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
 		*(.patch_ScrubStickUpgradeTwo)
 	}
@@ -660,6 +688,10 @@ SECTIONS
 		*(.patch_FishingRestoreTempB)
 	}
 
+	.patch_SwapFaroresWind 0x49186C : {
+		*(.patch_SwapFaroresWind)
+	}
+
 	.patch_FireTempleItemGiveTwo 0x491B60 : {
 		*(.patch_FireTempleItemGiveTwo)
 	}
@@ -684,6 +716,22 @@ SECTIONS
 
 	.patch_DampeSetCollectibleFlag 0x4D9D50 : {
 		*(.patch_DampeSetCollectibleFlag)
+	}
+
+	.patch_BombchuCheapestPriceOne 0x525348 : {
+		*(.patch_BombchuCheapestPriceOne)
+	}
+
+	.patch_BombchuCheapestPriceTwo 0x5253D8 : {
+		*(.patch_BombchuCheapestPriceTwo)
+	}
+
+	.patch_BombchuCheapestPriceThree 0x525408 : {
+		*(.patch_BombchuCheapestPriceThree)
+	}
+
+	.patch_BombchuCheapestPriceFour 0x525498 : {
+		*(.patch_BombchuCheapestPriceFour)
 	}
 
 	.patch_OcarinaMinigameRewardsOrder 0x52ED10 : {
