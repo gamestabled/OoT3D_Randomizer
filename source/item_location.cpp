@@ -692,16 +692,16 @@ ItemLocation LLR_GS_Tree                                  = ItemLocation::GSToke
           --- BOSSES ---
   -------------------------------*/
 
-ItemLocation LinksPocket                                  = ItemLocation::Reward (0xFF, 0xFF, "Link's Pocket",                                  {});
-ItemLocation QueenGohma                                   = ItemLocation::Reward (0xFF, 0xFF, "Queen Gohma",                                    {});
-ItemLocation KingDodongo                                  = ItemLocation::Reward (0xFF, 0xFF, "King Dodongo",                                   {});
-ItemLocation Barinade                                     = ItemLocation::Reward (0xFF, 0xFF, "Barinade",                                       {});
-ItemLocation PhantomGanon                                 = ItemLocation::Reward (0xFF, 0xFF, "Phantom Ganon",                                  {});
-ItemLocation Volvagia                                     = ItemLocation::Reward (0xFF, 0xFF, "Volvagia",                                       {});
-ItemLocation Morpha                                       = ItemLocation::Reward (0xFF, 0xFF, "Morpha",                                         {});
-ItemLocation Twinrova                                     = ItemLocation::Reward (0xFF, 0xFF, "Twinrova",                                       {});
-ItemLocation BongoBongo                                   = ItemLocation::Reward (0xFF, 0xFF, "Bongo Bongo",                                    {});
-ItemLocation Ganon                                        = ItemLocation::Reward (0xFF, 0xFF, "Ganon",                                          {});
+ItemLocation LinksPocket                                  = ItemLocation::Reward (0xFF, 0x08,                    "Link's Pocket",               {});
+ItemLocation QueenGohma                                   = ItemLocation::Reward (0xFF, DUNGEON_DEKU_TREE,       "Queen Gohma",                 {});
+ItemLocation KingDodongo                                  = ItemLocation::Reward (0xFF, DUNGEON_DODONGOS_CAVERN, "King Dodongo",                {});
+ItemLocation Barinade                                     = ItemLocation::Reward (0xFF, DUNGEON_JABUJABUS_BELLY, "Barinade",                    {});
+ItemLocation PhantomGanon                                 = ItemLocation::Reward (0xFF, DUNGEON_FOREST_TEMPLE,   "Phantom Ganon",               {});
+ItemLocation Volvagia                                     = ItemLocation::Reward (0xFF, DUNGEON_FIRE_TEMPLE,     "Volvagia",                    {});
+ItemLocation Morpha                                       = ItemLocation::Reward (0xFF, DUNGEON_WATER_TEMPLE,    "Morpha",                      {});
+ItemLocation Twinrova                                     = ItemLocation::Reward (0xFF, DUNGEON_SPIRIT_TEMPLE,   "Twinrova",                    {});
+ItemLocation BongoBongo                                   = ItemLocation::Reward (0xFF, DUNGEON_SHADOW_TEMPLE,   "Bongo Bongo",                 {});
+ItemLocation Ganon                                        = ItemLocation::Reward (0xFF, 0xFF,                    "Ganon",                       {});
 
 /*-------------------------------
       ---HEART CONTAINERS ---
@@ -1811,12 +1811,8 @@ void AddExcludedOptions() {
 
 void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
+  AddLocations(dungeonRewardLocations, &allLocations);
   for (ItemLocation* loc : allLocations) {
-    PlacementLog_Msg("\t");
-    PlacementLog_Msg(loc->GetName());
-    PlacementLog_Msg(": ");
-    PlacementLog_Msg(loc->GetPlacedItemName());
-    PlacementLog_Msg("\n");
     /*-------------------------------------------------
     |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
     --------------------------------------------------*/
@@ -1826,7 +1822,18 @@ void CreateOverrides() {
         .key = loc->Key(),
         .value = loc->GetPlacedItem().Value(),
       });
+      PlacementLog_Msg("\tScene: ");
+      PlacementLog_Msg(std::to_string(loc->Key().scene));
+      PlacementLog_Msg("\tType: ");
+      PlacementLog_Msg(std::to_string(loc->Key().type));
+      PlacementLog_Msg("\tFlag: ");
+      PlacementLog_Msg(std::to_string(loc->Key().flag));
     }
+    PlacementLog_Msg("\t");
+    PlacementLog_Msg(loc->GetName());
+    PlacementLog_Msg(": ");
+    PlacementLog_Msg(loc->GetPlacedItemName());
+    PlacementLog_Msg("\n");
   }
   PlacementLog_Msg("Overrides Created: ");
   PlacementLog_Msg(std::to_string(overrides.size()));

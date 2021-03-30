@@ -7,7 +7,7 @@
     { .textId = textId_, .bitMask = bitMask_, .objectId = objectId_, \
       .objectModelIdx = objectModelIdx_, .itemId = itemId_, .actorParam = actorParam_ }
 
-u32 rDungeonRewardOverrides[LIGHT_MEDALLION + 1] = { 
+u32 rDungeonRewardOverrides[LIGHT_MEDALLION + 1] = {
     KOKIRI_EMERALD,
     GORON_RUBY,
     ZORA_SAPPHIRE,
@@ -44,11 +44,12 @@ static const DungeonRewardInfo rDungeonRewardTable[] = {
 };
 
 u32 DungeonReward_GetOverrideText(u32 incomingTextId) {
-    for (u32 i = KOKIRI_EMERALD; i <= LIGHT_MEDALLION; ++i) {
-        if (rDungeonRewardTable[i].textId == incomingTextId) {
-            return rDungeonRewardTable[rDungeonRewardOverrides[i]].textId;
-        }
-    }
+    // commenting out for now
+    // for (u32 i = KOKIRI_EMERALD; i <= LIGHT_MEDALLION; ++i) {
+    //     if (rDungeonRewardTable[i].textId == incomingTextId) {
+    //         return rDungeonRewardTable[rDungeonRewardOverrides[i]].textId;
+    //     }
+    // }
     return incomingTextId;
 }
 
@@ -56,7 +57,7 @@ void DungeonReward_OverrideItemGive(GlobalContext* globalCtx, u8 incomingItem) {
     if ((incomingItem >= ITEM_MEDALLION_FOREST) && (incomingItem < ITEM_KOKIRI_EMERALD)) {
         Item_Give(globalCtx, rDungeonRewardTable[rDungeonRewardOverrides[(incomingItem - ITEM_MEDALLION_FOREST) + FOREST_MEDALLION]].itemId);
     } else if ((incomingItem >= ITEM_KOKIRI_EMERALD) && (incomingItem <= ITEM_ZORA_SAPPHIRE)) {
-        Item_Give(globalCtx, rDungeonRewardTable[rDungeonRewardOverrides[incomingItem - ITEM_KOKIRI_EMERALD]].itemId);  
+        Item_Give(globalCtx, rDungeonRewardTable[rDungeonRewardOverrides[incomingItem - ITEM_KOKIRI_EMERALD]].itemId);
     }
 }
 

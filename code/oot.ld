@@ -23,7 +23,7 @@ SECTIONS
 	.patch_SariasSongItemGive 0x12C84C : {
 		*(.patch_SariasSongItemGive)
 	}
-	
+
 	.patch_SariasSongLocation 0x12C8F8 : {
 		*(.patch_SariasSongLocation)
 	}
@@ -176,6 +176,10 @@ SECTIONS
 		*(.patch_JabuJabuItemGive)
 	}
 
+	.patch_JabuJabuCutsceneOverride 0x1A192C : {
+		*(.patch_JabuJabuCutsceneOverride)
+	}
+
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
 		*(.patch_KingZoraSecondTunic)
 	}
@@ -204,12 +208,24 @@ SECTIONS
 		*(.patch_ForestTempleItemGive)
 	}
 
+	.patch_ForestTempleCutsceneOverride 0x1E3F98 : {
+		*(.patch_ForestTempleCutsceneOverride)
+	}
+
 	.patch_FireTempleItemGive 0x1E4010 : {
 		*(.patch_FireTempleItemGive)
 	}
 
+	.patch_FireTempleCutsceneOverride 0x1E4024 : {
+		*(.patch_FireTempleCutsceneOverride)
+	}
+
 	.patch_WaterTempleItemGive 0x1E40D8 : {
 		*(.patch_WaterTempleItemGive)
+	}
+
+	.patch_WaterTempleCutsceneOverride 0x1E40EC : {
+		*(.patch_WaterTempleCutsceneOverride)
 	}
 
 	.patch_SpiritTempleBitMask 0x1E4154 : {
@@ -220,12 +236,20 @@ SECTIONS
 		*(.patch_SpiritTempleItemGive)
 	}
 
+	.patch_SpiritTempleCutsceneOverride 0x1E417C : {
+		*(.patch_SpiritTempleCutsceneOverride)
+	}
+
 	.patch_ShadowTempleBitMask 0x1E41DC : {
 		*(.patch_ShadowTempleBitMask)
 	}
 
 	.patch_ShadowTempleItemGive 0x1E41F0 : {
 		*(.patch_ShadowTempleItemGive)
+	}
+
+	.patch_ShadowTempleCutsceneOverride 0x1E4204 : {
+		*(.patch_ShadowTempleCutsceneOverride)
 	}
 
 	.patch_DaruniaCheckStrength 0x1E489C : {
@@ -612,8 +636,16 @@ SECTIONS
 		*(.patch_DodongosCavernItemGive)
 	}
 
+	.patch_DodongosCavernCutsceneOverride 0x3F57C4 : {
+		*(.patch_DodongosCavernCutsceneOverride)
+	}
+
 	.patch_DekuTreeItemGive 0x3F582C : {
 		*(.patch_DekuTreeItemGive)
+	}
+
+	.patch_DekuTreeCutsceneOverride 0x3F5840 : {
+		*(.patch_DekuTreeCutsceneOverride)
 	}
 
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
