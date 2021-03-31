@@ -17,7 +17,7 @@ def INSTANT_TEXT_OFF():
     return "\x7F\x05"
 
 def SHOP_MESSAGE_BOX():
-    return "\x7F\x06"
+    return "\x7F\x06\x00"
 
 def EVENT_TRIGGER():
     return "\x7F\x07"

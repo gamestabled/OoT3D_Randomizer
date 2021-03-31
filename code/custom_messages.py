@@ -9,6 +9,17 @@ def APP_FILL():
 
 custom_messages = {
     # TextId          unk_04, unk_08, unk_0C, text
+    #Bombchu (10) Purchase Prompt
+    0x08C :           ( 0x00,   0x02,   0x03, ( "",
+                                                INSTANT_TEXT_ON()+"Bombchu (10): 99 Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(WHITE)+MESSAGE_END(),
+                                                "",
+                                                "",
+                                                "",
+                                                INSTANT_TEXT_ON()+"Bombchus (10): 99 rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(WHITE)+MESSAGE_END(),
+                                                "",
+                                                INSTANT_TEXT_ON()+"Bombchus (10): 99 rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(WHITE)+MESSAGE_END(),
+                                                "",
+                                                "" ) ),
     #Gold Skulltula Tokens
     0x0B4 :           ( 0x00,   0x02,   0x03, ( "",
                                                 INSTANT_TEXT_ON()+"You destroyed a "+COLOR(RED)+"Gold Skulltula"+COLOR(WHITE)+". You got a"+NEWLINE()+"token proving you destroyed it!"+NEWLINE()+NEWLINE()+"You have "+COLOR(RED)+SKULLTULAS_DESTROYED()+COLOR(WHITE)+" tokens!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
@@ -18,6 +29,17 @@ custom_messages = {
                                                 INSTANT_TEXT_ON()+"Vous venez de détruire une "+COLOR(RED)+"Skulltula dorée"+COLOR(WHITE)+"!"+NEWLINE()+"Ce jeton prouve votre prouesse!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(RED)+SKULLTULAS_DESTROYED()+COLOR(WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                                                 "",
                                                 INSTANT_TEXT_ON()+"¡Has eliminado una "+COLOR(RED)+"skulltula dorada"+COLOR(WHITE)+" y has"+NEWLINE()+"conseguido un símbolo para probarlo!"+NEWLINE()+NEWLINE()+"¡Tienes "+COLOR(RED)+SKULLTULAS_DESTROYED()+COLOR(WHITE)+" símbolos!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                                                "",
+                                                "" ) ),
+    #Bombchu (10) Description
+    0x0BC :           ( 0x00,   0x02,   0x03, ( "",
+                                                INSTANT_TEXT_ON()+COLOR(RED)+"Bombchu (10): 99 Rupees"+NEWLINE()+COLOR(WHITE)+"These look like toy mice, but they're"+NEWLINE()+"actually self-propelled time bombs!"+INSTANT_TEXT_OFF()+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                                                "",
+                                                "",
+                                                "",
+                                                INSTANT_TEXT_ON()+COLOR(RED)+"Bombchus (10): 99 rubis"+NEWLINE()+COLOR(WHITE)+"Profilée comme une souris mécanique, il"+NEWLINE()+"s'agit en fait d'une bombe à retardement"+NEWLINE()+"autopropulsée!"+INSTANT_TEXT_OFF()+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                                                "",
+                                                INSTANT_TEXT_ON()+COLOR(RED)+"Bombchus (10): 99 rupias"+NEWLINE()+COLOR(WHITE)+"Aunque parezcan ratoncitos de juguete,"+NEWLINE()+"¡son bombas de tiempo autopropulsadas!"+INSTANT_TEXT_OFF()+SHOP_MESSAGE_BOX()+MESSAGE_END(),
                                                 "",
                                                 "" ) ),
     #Boss Keys

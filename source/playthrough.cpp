@@ -33,7 +33,7 @@ namespace Playthrough {
 
       if (Settings::GenerateSpoilerLog) {
         //write logs
-        printf("\x1b[9;10HWriting Spoiler Log...");
+        printf("\x1b[10;10HWriting Spoiler Log...");
         if (SpoilerLog_Write()) {
           printf("Done");
         } else {

@@ -8,6 +8,10 @@ SECTIONS
 		*(.patch_loader)
 	}
 
+	.patch_BombchuPurchaseableCheck 0x112ED0 : {
+		*(.patch_BombchuPurchaseableCheck)
+	}
+
 	.patch_PoeCollectorGetFirstTextbox 0x113844 : {
 		*(.patch_PoeCollectorGetFirstTextbox)
 	}
@@ -194,6 +198,10 @@ SECTIONS
 
 	.patch_BiggoronCheckGivenRewardOne 0x1D8A18 : {
 		*(.patch_BiggoronCheckGivenRewardOne)
+	}
+
+	.patch_BombchuShopAlwaysOpen 0x1DC6B0 : {
+		*(.patch_BombchuShopAlwaysOpen)
 	}
 
 	.patch_ForestTempleItemGive 0x1E3F84 : {
@@ -576,6 +584,10 @@ SECTIONS
 		*(.patch_FireBlockSpeed)
 	}
 
+	.patch_BombPurchaseableCheck 0x3CE800 : {
+		*(.patch_BombPurchaseableCheck)
+	}
+
 	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
 		*(.patch_ScrubStickUpgradeTwo)
 	}
@@ -736,6 +748,22 @@ SECTIONS
 
 	.patch_DampeSetCollectibleFlag 0x4D9D50 : {
 		*(.patch_DampeSetCollectibleFlag)
+	}
+
+	.patch_BombchuCheapestPriceOne 0x525348 : {
+		*(.patch_BombchuCheapestPriceOne)
+	}
+
+	.patch_BombchuCheapestPriceTwo 0x5253D8 : {
+		*(.patch_BombchuCheapestPriceTwo)
+	}
+
+	.patch_BombchuCheapestPriceThree 0x525408 : {
+		*(.patch_BombchuCheapestPriceThree)
+	}
+
+	.patch_BombchuCheapestPriceFour 0x525498 : {
+		*(.patch_BombchuCheapestPriceFour)
 	}
 
 	.patch_OcarinaMinigameRewardsOrder 0x52ED10 : {

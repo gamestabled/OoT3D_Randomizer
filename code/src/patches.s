@@ -986,6 +986,36 @@ SwapFaroresWind_patch:
     bl SaveFile_SwapFaroresWind
     nop
 
+.section .patch_BombchuShopAlwaysOpen
+.global BombchuShopAlwaysOpen_patch
+BombchuShopAlwaysOpen_patch:
+    nop
+
+.section .patch_BombchuCheapestPriceOne
+    .word 0x0063FFFF
+
+.section .patch_BombchuCheapestPriceTwo
+    .word 0x0063FFFF
+
+.section .patch_BombchuCheapestPriceThree
+    .word 0x0063FFFF
+
+.section .patch_BombchuCheapestPriceFour
+    .word 0x0063FFFF
+
+.section .patch_BombchuPurchaseableCheck
+.global BombchuPurchaseableCheck_patch
+BombchuPurchaseableCheck_patch:
+    bl Shop_CheckCanBuyBombchus
+    nop
+    nop
+    nop
+
+.section .patch_BombPurchaseableCheck
+.global BombPurchaseableCheck_patch
+BombPurchaseableCheck_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 
