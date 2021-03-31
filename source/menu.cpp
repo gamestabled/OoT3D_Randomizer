@@ -11,6 +11,7 @@
 #include "menu.hpp"
 #include "patch.hpp"
 #include "settings.hpp"
+#include "cosmetics.hpp"
 #include "spoiler_log.hpp"
 
 namespace fs = std::filesystem;
@@ -225,6 +226,17 @@ void UpdateMainMenu(u32 kDown) {
   currentMenuItem = Settings::mainMenu[menuIdx];
 }
 
+void UpdateCustomCosmeticColors(u32 kDown) {
+  if (kDown & KEY_A) {
+    if (currentSetting->GetSelectedOption().substr(0, 8) == "Custom #") {
+      std::string newColor = GetInput("Enter a 6 digit hex color").substr(0, 6);
+      if (Cosmetics::ValidHexString(newColor)) {
+        currentSetting->SetSelectedOptionText(Cosmetics::CustomColorOptionText(newColor));
+      }
+    }
+  }
+}
+
 void UpdateOptionSubMenu(u32 kDown) {
   //loop through settings until an unlocked one is reached
   do {
@@ -258,6 +270,7 @@ void UpdateOptionSubMenu(u32 kDown) {
 
   currentSetting->SetVariable();
   Settings::ForceChange(kDown, currentSetting);
+  UpdateCustomCosmeticColors(kDown);
 }
 
 void UpdateSubMenu(u32 kDown) {
@@ -697,7 +710,7 @@ void GenerateRandomizer() {
   std::string settingsStr;
   for (MenuItem* menu : Settings::mainMenu) {
     //don't go through non-menus
-    if (menu->mode != OPTION_SUB_MENU) {
+    if (menu->mode != OPTION_SUB_MENU || menu->name == "Cosmetic Settings") {
       continue;
     }
 
@@ -746,7 +759,7 @@ void GenerateRandomizer() {
 //opens up the 3ds software keyboard for getting user input
 std::string GetInput(const char* hintText) {
   SwkbdState swkbd;
-  char seed[60];
+  char text[60];
   SwkbdButton button = SWKBD_BUTTON_NONE;
 
   swkbdInit(&swkbd, SWKBD_TYPE_WESTERN, 2, -1);
@@ -755,11 +768,11 @@ std::string GetInput(const char* hintText) {
   swkbdSetHintText(&swkbd, hintText);
   swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "Cancel", false);
 
-  button = swkbdInputText(&swkbd, seed, sizeof(seed));
+  button = swkbdInputText(&swkbd, text, sizeof(text));
 
   if (button == SWKBD_BUTTON_LEFT) {
     return "";
   }
 
-  return std::string(seed);
+  return std::string(text);
 }

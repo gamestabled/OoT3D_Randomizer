@@ -66,8 +66,12 @@ public:
         return name;
     }
 
-    std::string_view GetSelectedOption() const {
+    std::string GetSelectedOption() const {
         return options[selectedOption];
+    }
+
+    void SetSelectedOptionText(std::string newText) {
+        options[selectedOption] = std::move(newText);
     }
 
     std::string_view GetSelectedOptionDescription() const {
@@ -356,6 +360,11 @@ namespace Settings {
   extern Option LogicLensGtg;
   extern Option LogicLensCastle;
   extern Option LogicSpiritTrialHookshot;
+
+  extern Option SilverGauntletsColor;
+  extern Option GoldGauntletsColor;
+  extern std::string finalSilverGauntletsColor;
+  extern std::string finalGoldGauntletsColor;
 
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;

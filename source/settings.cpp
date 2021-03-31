@@ -5,6 +5,9 @@
 #include "item_location.hpp"
 #include "random.hpp"
 #include "fill.hpp"
+#include "cosmetics.hpp"
+
+using namespace Cosmetics;
 
 namespace Settings {
   std::string seed;
@@ -306,6 +309,14 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
+  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, std::vector<std::string_view>{gauntletOptions.size(), ""});
+  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, std::vector<std::string_view>{gauntletOptions.size(), ""});
+  std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOption();
+  std::string finalGoldGauntletsColor  = GoldGauntletsColor.GetSelectedOption();
+  std::vector<Option *> cosmeticOptions = {
+    &SilverGauntletsColor,
+    &GoldGauntletsColor,
+  };
 
   MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
   MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
@@ -327,6 +338,7 @@ namespace Settings {
   MenuItem itemPoolSettings         = MenuItem::SubMenu("Item Pool Settings",         &itemPoolOptions);
   MenuItem itemUsabilitySettings    = MenuItem::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
   MenuItem settingsPresets          = MenuItem::SubMenu("Settings Presets",           &settingsPresetItems);
+  MenuItem cosmetics                = MenuItem::SubMenu("Cosmetic Settings",          &cosmeticOptions);
   MenuItem generateRandomizer       = MenuItem::Action ("Generate Randomizer",        GENERATE_MODE);
 
   //adding a menu with no options crashes, might fix later
@@ -341,6 +353,7 @@ namespace Settings {
     &miscSettings,
     &itemPoolSettings,
     &itemUsabilitySettings,
+    &cosmetics,
     &settingsPresets,
     &generateRandomizer,
   };
@@ -515,6 +528,12 @@ namespace Settings {
     }
   }
 
+  //set default cosmetics where the default is not the first option
+  void SetDefaultCosmetics() {
+    SilverGauntletsColor.SetSelectedIndex(3); //Silver
+    GoldGauntletsColor.SetSelectedIndex(4);   //Gold
+  }
+
   //Set default settings for all settings where the default is not the first option
   void SetDefaultSettings() {
     OpenForest.SetSelectedIndex(OPENFOREST_OPEN);
@@ -549,6 +568,8 @@ namespace Settings {
 
     ItemPoolValue.SetSelectedIndex(ITEMPOOL_BALANCED);
     IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
+
+    SetDefaultCosmetics();
   }
 
   //Include and Lock the desired locations
@@ -776,6 +797,29 @@ namespace Settings {
   bool ShadowTrialSkip                  = true;
   bool LightTrialSkip                   = true;
 
+  //Function to update cosmetics options depending on choices
+  void UpdateCosmetics() {
+    if (SilverGauntletsColor.Is(CUSTOM_COLOR)) {
+      finalSilverGauntletsColor = GetCustomColor(SilverGauntletsColor.GetSelectedOption());
+    } else if (SilverGauntletsColor.Is(RANDOM_CHOICE)) {
+      finalSilverGauntletsColor = RandomElement(gauntletColors);
+    } else if (SilverGauntletsColor.Is(RANDOM_COLOR)) {
+      finalSilverGauntletsColor = RandomColor();
+    } else {
+      finalSilverGauntletsColor = gauntletColors[SilverGauntletsColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    }
+
+    if (GoldGauntletsColor.Is(CUSTOM_COLOR)) {
+      finalGoldGauntletsColor = GetCustomColor(GoldGauntletsColor.GetSelectedOption());
+    } else if (GoldGauntletsColor.Is(RANDOM_CHOICE)) {
+      finalGoldGauntletsColor = RandomElement(gauntletColors);
+    } else if (GoldGauntletsColor.Is(RANDOM_COLOR)) {
+      finalGoldGauntletsColor = RandomColor();
+    } else {
+      finalGoldGauntletsColor = gauntletColors[GoldGauntletsColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    }
+  }
+
   //Function to set flags depending on settings
   void UpdateSettings() {
 
@@ -828,6 +872,7 @@ namespace Settings {
       LACSCondition = LACSCONDITION_VANILLA;
     }
 
+    UpdateCosmetics();
   }
 
 } // namespace Settings
