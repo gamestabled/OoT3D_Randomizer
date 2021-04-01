@@ -4,17 +4,15 @@
 #include <dirent.h>
 #include <time.h>
 
-#include <filesystem>
 #include <cstring>
 #include <algorithm>
 
 #include "menu.hpp"
 #include "patch.hpp"
+#include "preset.hpp"
 #include "settings.hpp"
 #include "cosmetics.hpp"
 #include "spoiler_log.hpp"
-
-namespace fs = std::filesystem;
 
 namespace {
   bool seedChanged;
@@ -111,6 +109,7 @@ void MenuUpdate(u32 kDown) {
     ModeChangeInit();
     kDown = 0;
   } else if ((kDown & KEY_B && mode != MAIN_MENU)) {
+    ClearDescription();
     mode = currentMenuItem->mode;
     subMode = -1;
     ModeChangeInit();
@@ -190,16 +189,17 @@ void ModeChangeInit() {
     presetIdx = 0;
     currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
   } else if (mode == SAVE_PRESET) {
-    if (SaveSpecifiedPreset()) {
-      printf("\x1b[10;4HPreset Saved!");
-      printf("\x1b[12;4HPress B to return to the preset menu.");
+    ClearDescription();
+    if (SaveSpecifiedPreset(GetInput("Preset Name").substr(0, 19))) {
+      printf("\x1b[24;5HPreset Saved!");
+      printf("\x1b[26;5HPress B to return to the preset menu.");
     } else {
-      printf("\x1b[10;4HFailed to save preset.");
-      printf("\x1b[12;4HPress B to return to the preset menu.");
+      printf("\x1b[24;5HFailed to save preset.");
+      printf("\x1b[26;5HPress B to return to the preset menu.");
     }
 
   } else if (mode == LOAD_PRESET || mode == DELETE_PRESET) {
-    GetPresets();
+    presetEntries = GetPresets();
 
   } else if (mode == GENERATE_MODE) {
 
@@ -310,12 +310,16 @@ void UpdatePresetsMenu(u32 kDown) {
 
   consoleSelect(&topScreen);
   if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET) {
+    //clear any potential message
+    ClearDescription();
     if (LoadPreset(presetEntries[presetIdx], true)) {
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
     }
   } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET) {
+    //clear any potential message
+    ClearDescription();
     if (DeletePreset(presetEntries[presetIdx])) {
       presetEntries.erase(presetEntries.begin() + presetIdx);
       if(presetIdx == presetEntries.size()) { //Catch when last preset is deleted
@@ -514,180 +518,6 @@ void PrintOptionDescrption() {
   std::string_view description = currentSetting->GetSelectedOptionDescription();
 
   printf("\x1b[22;0H%s", description.data());
-}
-
-//Creates preset directories if they don't exist
-bool CreatePresetDirectories() {
-  Result res;
-  FS_Archive sdmcArchive;
-
-  // Open SD archive
-  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-    return false;
-  }
-
-  //Create the 3ds directory if it doesn't exist
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds"), FS_ATTRIBUTE_DIRECTORY);
-  //Create the presets directory if it doesn't exist
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets"), FS_ATTRIBUTE_DIRECTORY);
-  //Create the oot3d directory if it doesn't exist
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets/oot3d"), FS_ATTRIBUTE_DIRECTORY);
-
-  // Close SD archive
-  FSUSER_CloseArchive(sdmcArchive);
-  return true;
-}
-
-//Gets the preset filenames
-void GetPresets() {
-  presetEntries = {};
-  for (const auto & entry : fs::directory_iterator("/3ds/presets/oot3d")) {
-    if(entry.path().stem().string() != "CACHED_SETTINGS") {
-      presetEntries.push_back(entry.path().stem().string());
-    }
-  }
-}
-
-void LoadCachedPreset() {
-  //If cache file exists, load it
-  for (const auto & entry : fs::directory_iterator("/3ds/presets/oot3d")) {
-    if(entry.path().stem().string() == "CACHED_SETTINGS") {
-      LoadPreset("CACHED_SETTINGS", false); //File exists, open
-    }
-  }
-}
-
-static std::string PresetPath(std::string_view presetName) {
-  return std::string("/3ds/presets/oot3d/").append(presetName).append(".bin");
-}
-
-//Load the selected preset
-bool LoadPreset(std::string_view presetName, bool print) {
-  //clear any potential 'failed to load preset' message on previous attempt
-  ClearDescription();
-
-  Result res;
-  FS_Archive sdmcArchive = 0;
-  Handle presetFile;
-  u32 bytesRead = 0;
-  u32 totalRW = 0;
-
-  const std::string filepath = PresetPath(presetName);
-
-  // Open SD archive
-  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-    if (print) printf("\x1b[22;5HFailed to load SD Archive.");
-    return false;
-  }
-
-  // Open preset file
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&presetFile, sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
-    if (print) printf("\x1b[22;5HFailed to open preset file %s.", filepath.c_str());
-    return false;
-  }
-
-  //Read ctx size
-  size_t ctxSize;
-  if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctxSize, sizeof(ctxSize)))) {
-    if (print) printf("\x1b[22;5HFailed to read preset size.");
-    return false;
-  }
-  totalRW += bytesRead;
-
-  //If the sizes don't match, then the preset is incompatible (there's probably a better way to do this)
-  if (ctxSize != sizeof(SettingsContext)) {
-    consoleSelect(&topScreen);
-    if (print) printf("\x1b[22;5HPreset not compatible with current randomizer.");
-    return false;
-  }
-
-  //Read preset SettingsContext
-  SettingsContext ctx;
-  if (!R_SUCCEEDED(res = FSFILE_Read(presetFile, &bytesRead, totalRW, &ctx, sizeof(ctx)))) {
-    return false;
-  }
-
-  FSFILE_Close(presetFile);
-  FSUSER_CloseArchive(sdmcArchive);
-
-  Settings::FillSettings(ctx);
-  return true;
-}
-
-//Saves the new preset to a file
-bool SaveSpecifiedPreset() {
-  std::string presetName = (GetInput("Preset Name")).substr(0, 19);
-  //don't save if the user cancelled
-  if (presetName.empty()) {
-    return false;
-  }
-  return SavePreset(presetName);
-}
-
-//Save cached preset after choosing to generate
-bool SaveCachedPreset() {
-  return SavePreset("CACHED_SETTINGS");
-}
-
-//Saves the new preset to a file
-bool SavePreset(std::string_view presetName) {
-  Result res;
-  FS_Archive sdmcArchive = 0;
-  Handle presetFile;
-  u32 bytesWritten = 0;
-  u32 totalRW = 0;
-
-  const std::string filepath = PresetPath(presetName);
-  SettingsContext ctx = Settings::FillContext();
-
-  // Open SD archive
-  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-    return false;
-  }
-
-  // Open preset file
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&presetFile, sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
-    return false;
-  }
-
-  // Write struct size to preset file
-  totalRW = 0;
-  size_t ctxSize = sizeof(ctx);
-  if (!R_SUCCEEDED(res = FSFILE_Write(presetFile, &bytesWritten, totalRW, &ctxSize, sizeof(ctxSize), FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += bytesWritten;
-
-  // Write struct to preset file
-  if (!R_SUCCEEDED(res = FSFILE_Write(presetFile, &bytesWritten, totalRW, &ctx, sizeof(ctx), FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += bytesWritten;
-
-  FSFILE_Close(presetFile);
-  FSUSER_CloseArchive(sdmcArchive);
-
-  return true;
-}
-
-//Delete the selected preset
-bool DeletePreset(std::string_view presetName) {
-  //clear any potential message
-  ClearDescription();
-
-  Result res;
-  FS_Archive sdmcArchive = 0;
-
-  const std::string filepath = PresetPath(presetName);
-
-  // Open SD archive
-  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-    printf("\x1b[22;5HFailed to load SD Archive.");
-    return false;
-  }
-
-  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, filepath.c_str()));
-  return true;
 }
 
 void GenerateRandomizer() {
