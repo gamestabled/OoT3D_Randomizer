@@ -228,7 +228,7 @@ void UpdateMainMenu(u32 kDown) {
 
 void UpdateCustomCosmeticColors(u32 kDown) {
   if (kDown & KEY_A) {
-    if (currentSetting->GetSelectedOption().substr(0, 8) == "Custom #") {
+    if (currentSetting->GetSelectedOptionText().substr(0, 8) == "Custom #") {
       std::string newColor = GetInput("Enter a 6 digit hex color").substr(0, 6);
       if (Cosmetics::ValidHexString(newColor)) {
         currentSetting->SetSelectedOptionText(Cosmetics::CustomColorOptionText(newColor));
@@ -414,18 +414,18 @@ void PrintOptionSubMenu() {
     if (settingIdx == i + settingBound) {
       printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
-      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOptionText().data(), RESET);
     //dim to make a locked setting grey
     } else if (setting->IsLocked()) {
       printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
-      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOption().data(), RESET);
+      printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOptionText().data(), RESET);
     //don't display hidden settings
     } else if (setting->IsHidden()) {
       hiddenSettings++;
       continue;
     } else {
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
-      printf("\x1b[%d;%dH%s",    row, 26, setting->GetSelectedOption().data());
+      printf("\x1b[%d;%dH%s",    row, 26, setting->GetSelectedOptionText().data());
     }
   }
 
@@ -717,7 +717,7 @@ void GenerateRandomizer() {
     for (size_t i = 0; i < menu->settingsList->size(); i++) {
       Option* setting = menu->settingsList->at(i);
       if (setting->GetName() != "Mirror World" && setting->GetName() != "All Tricks") {
-        settingsStr += setting->GetSelectedOption();
+        settingsStr += setting->GetSelectedOptionText();
       }
     }
   }

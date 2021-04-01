@@ -112,7 +112,7 @@ static void WriteSettings() {
         logtxt += "\t";
         logtxt += setting->GetName();
         logtxt += ": ";
-        logtxt += setting->GetSelectedOption();
+        logtxt += setting->GetSelectedOptionText();
         logtxt += "\n";
       }
     }
@@ -121,7 +121,7 @@ static void WriteSettings() {
   //List Excluded Locations
   logtxt += "\nExcluded Locations:\n";
   for (auto& l : Settings::excludeLocationsOptions) {
-    if (l->GetSelectedOption() == "Exclude") {
+    if (l->GetSelectedOptionText() == "Exclude") {
       std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary
@@ -137,7 +137,7 @@ static void WriteSettings() {
   //List Enabled Tricks
   logtxt += "\nEnabled Tricks:\n";
   for (auto& l : Settings::detailedLogicOptions) {
-    if (l->GetSelectedOption() == "Enable" && l->GetName() != "All Tricks") {
+    if (l->GetSelectedOptionText() == "Enable" && l->GetName() != "All Tricks") {
       std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary

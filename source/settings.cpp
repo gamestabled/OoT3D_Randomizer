@@ -309,10 +309,10 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
-  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, std::vector<std::string_view>{gauntletOptions.size(), ""});
-  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, std::vector<std::string_view>{gauntletOptions.size(), ""});
-  std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOption();
-  std::string finalGoldGauntletsColor  = GoldGauntletsColor.GetSelectedOption();
+  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, gauntletDescriptions);
+  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, gauntletDescriptions);
+  std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOptionText();
+  std::string finalGoldGauntletsColor  = GoldGauntletsColor.GetSelectedOptionText();
   std::vector<Option *> cosmeticOptions = {
     &SilverGauntletsColor,
     &GoldGauntletsColor,
@@ -800,7 +800,7 @@ namespace Settings {
   //Function to update cosmetics options depending on choices
   void UpdateCosmetics() {
     if (SilverGauntletsColor.Is(CUSTOM_COLOR)) {
-      finalSilverGauntletsColor = GetCustomColor(SilverGauntletsColor.GetSelectedOption());
+      finalSilverGauntletsColor = GetCustomColor(SilverGauntletsColor.GetSelectedOptionText());
     } else if (SilverGauntletsColor.Is(RANDOM_CHOICE)) {
       finalSilverGauntletsColor = RandomElement(gauntletColors);
     } else if (SilverGauntletsColor.Is(RANDOM_COLOR)) {
@@ -810,7 +810,7 @@ namespace Settings {
     }
 
     if (GoldGauntletsColor.Is(CUSTOM_COLOR)) {
-      finalGoldGauntletsColor = GetCustomColor(GoldGauntletsColor.GetSelectedOption());
+      finalGoldGauntletsColor = GetCustomColor(GoldGauntletsColor.GetSelectedOptionText());
     } else if (GoldGauntletsColor.Is(RANDOM_CHOICE)) {
       finalGoldGauntletsColor = RandomElement(gauntletColors);
     } else if (GoldGauntletsColor.Is(RANDOM_COLOR)) {

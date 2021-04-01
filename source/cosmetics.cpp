@@ -35,6 +35,21 @@ namespace Cosmetics {
     return color.str();
   }
 
+  const std::array<std::string, 13> gauntletColors = {
+    "FFFFFF", //Silver
+    "FECF0F", //Gold
+    "000006", //Black
+    "025918", //Green
+    "06025A", //Blue
+    "600602", //Bronze
+    "FF0000", //Red
+    "025DB0", //Sky Blue
+    "FA6A90", //Pink
+    "FF00FF", //Magenta
+    "D83A00", //Orange
+    "5B8A06", //Lime
+    "800080", //Purple
+  };
   std::vector<std::string> gauntletOptions = {
     RANDOM_CHOICE_STR,
     RANDOM_COLOR_STR,
@@ -53,21 +68,11 @@ namespace Cosmetics {
     "Lime",
     "Purple",
   };
-
-  const std::array<std::string, 13> gauntletColors = {
-    "FFFFFF", //Silver
-    "FECF0F", //Gold
-    "000006", //Black
-    "025918", //Green
-    "06025A", //Blue
-    "600602", //Bronze
-    "FF0000", //Red
-    "025DB0", //Sky Blue
-    "FA6A90", //Pink
-    "FF00FF", //Magenta
-    "D83A00", //Orange
-    "5B8A06", //Lime
-    "800080", //Purple
+  std::vector<std::string_view> gauntletDescriptions = {
+    RANDOM_CHOICE_DESC,
+    RANDOM_COLOR_DESC,
+    CUSTOM_COLOR_DESC,
+    "","","","","","","","","","","","","",
   };
 
 } //namespace Cosmetics

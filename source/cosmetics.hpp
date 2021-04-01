@@ -7,7 +7,10 @@
 const std::string RANDOM_CHOICE_STR = "Random Choice";
 const std::string RANDOM_COLOR_STR  = "Random Color";
 const std::string CUSTOM_COLOR_STR  = "Custom #FFFFFF";
-const std::string CUSTOM_COLOR_DESCRIPTION = "Press A and type in a 6 digit hex color.";
+                                             /*--------------------------------------------------*/
+const std::string RANDOM_CHOICE_DESC = "A random color from the list of colors will be\nchosen";
+const std::string RANDOM_COLOR_DESC  = "A completely random color will be chosen";
+const std::string CUSTOM_COLOR_DESC  = "Press A and type in a custom 6 digit hex color.";
 
 typedef enum {
   RANDOM_CHOICE,
@@ -31,7 +34,7 @@ namespace Cosmetics {
   extern std::string GetCustomColor(std::string str);
   extern std::string RandomColor();
 
-  extern std::vector<std::string> gauntletOptions;
   extern const std::array<std::string, 13> gauntletColors;
-
+  extern std::vector<std::string> gauntletOptions;
+  extern std::vector<std::string_view> gauntletDescriptions;
 } //namespace Cosmetics
