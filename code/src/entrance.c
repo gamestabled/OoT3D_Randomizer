@@ -43,42 +43,42 @@ void Entrance_Init(void) {
     }
 
     // Delete the title card for Kokiri Forest from Deku Tree Death Cutscene
-    for (index = 0x457; index < 0x45A; ++index) {
+    for (index = 0x457; index <= 0x45A; ++index) {
         gEntranceTable[index].field = 0x0202;
     }
 
     // Delete the title card for Death Mountain Trail from Goron Ruby Cutscene
-    for (index = 0x47A; index < 0x47D; ++index) {
+    for (index = 0x47A; index <= 0x47D; ++index) {
         gEntranceTable[index].field = 0x0202;
     }
 
     // Delete the title card for Zora's Fountain from Inside Jabu Jabu's Belly
-    for (index = 0x221; index < 0x224; ++index) {
+    for (index = 0x221; index <= 0x224; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Sacred Forest Meadow from Forest Temple Blue Warp
-    for (index = 0x608; index < 0x60B; ++index) {
+    for (index = 0x608; index <= 0x60B; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Death Mountain Crater from Fire Temple Blue Warp
-    for (index = 0x564; index < 0x567; ++index) {
+    for (index = 0x564; index <= 0x567; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Lake Hylia from Water Temple Blue Warp
-    for (index = 0x60C; index < 0x60F; ++index) {
+    for (index = 0x60C; index <= 0x60F; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Desert Colossus from Spirit Temple Blue Warp
-    for (index = 0x610; index < 0x613; ++index) {
+    for (index = 0x610; index <= 0x613; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Graveyard from Shadow Temple Blue Warp
-    for (index = 0x580; index < 0x583; ++index) {
+    for (index = 0x580; index <= 0x583; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
