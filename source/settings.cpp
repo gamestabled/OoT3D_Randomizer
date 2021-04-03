@@ -47,13 +47,11 @@ namespace Settings {
   Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                           {bombchuDropDesc, bombchuDropDesc});
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc, randomMQDungeonsDesc});
   Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},std::vector<std::string_view>{13, mqDungeonCountDesc});
-  Option MirrorWorld         = Option::Bool("Mirror World",           {"Off", "On"},                                           {mirrorWorldDesc, mirrorWorldDesc});
   std::vector<Option *> worldOptions = {
     &StartingAge,
     &BombchusInLogic,
     &BombchuDrops,
     //&RandomMQDungeons, TODO: Finish MQ logic before enabling this
-    &MirrorWorld,
   };
 
   //Shuffle Settings
@@ -152,7 +150,7 @@ namespace Settings {
   }
 
   //Detailed Logic Tricks                               ---------------------
-  Option ToggleAllDetailedLogic           = LogicTrick("All Tricks",                                      ToggleAllDetailedLogicDesc);
+  Option ToggleAllDetailedLogic           = Option::Bool("All Tricks", {"Disabled", "Enabled"},           std::vector<std::string_view>{2, "Toggle all tricks at once."}, OptionCategory::Toggle);
   Option LogicGrottosWithoutAgony         = LogicTrick("Grottos Without Agony",                           LogicGrottosWithoutAgonyDesc);
   Option LogicVisibleCollision            = LogicTrick("Pass Through Visible\n One-Way Collisions",       LogicVisibleCollisionDesc);
   Option LogicFewerTunicRequirements      = LogicTrick("Fewer Tunic\n Requirements",                      LogicFewerTunicRequirementsDesc);
@@ -309,13 +307,15 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
-  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, gauntletDescriptions);
-  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, gauntletDescriptions);
+  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, gauntletDescriptions, OptionCategory::Cosmetic);
+  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, gauntletDescriptions, OptionCategory::Cosmetic);
   std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOptionText();
   std::string finalGoldGauntletsColor  = GoldGauntletsColor.GetSelectedOptionText();
+  Option MirrorWorld                = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc, mirrorWorldDesc}, OptionCategory::Cosmetic);
   std::vector<Option *> cosmeticOptions = {
     &SilverGauntletsColor,
     &GoldGauntletsColor,
+    &MirrorWorld,
   };
 
   MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
@@ -462,70 +462,6 @@ namespace Settings {
       ctx.excludeLocations[i] = excludeLocationsOptions[i]->GetSelectedOptionIndex();
     }
     return ctx;
-  }
-
-  //Takes a SettingsContext to use for the current settings
-  void FillSettings(SettingsContext ctx) {
-    Logic.SetSelectedIndex(ctx.logic);
-    OpenForest.SetSelectedIndex(ctx.openForest);
-    OpenKakariko.SetSelectedIndex(ctx.openKakariko);
-    OpenDoorOfTime.SetSelectedIndex(ctx.openDoorOfTime);
-    ZorasFountain.SetSelectedIndex(ctx.zorasFountain);
-    GerudoFortress.SetSelectedIndex(ctx.gerudoFortress);
-    Bridge.SetSelectedIndex(ctx.rainbowBridge);
-    BridgeTokenCount.SetSelectedIndex(ctx.bridgeTokenCount);
-    RandomGanonsTrials.SetSelectedIndex(ctx.randomGanonsTrials);
-    GanonsTrialsCount.SetSelectedIndex(ctx.ganonsTrialsCount);
-
-    StartingAge.SetSelectedIndex(ctx.startingAge);
-    BombchusInLogic.SetSelectedIndex(ctx.bombchusInLogic);
-    BombchuDrops.SetSelectedIndex(ctx.bombchuDrops);
-    RandomMQDungeons.SetSelectedIndex(ctx.randomMQDungeons);
-    MQDungeonCount.SetSelectedIndex(ctx.mqDungeonCount);
-    MirrorWorld.SetSelectedIndex(ctx.mirrorWorld);
-
-    ShuffleSongs.SetSelectedIndex(ctx.shuffleSongs);
-    Tokensanity.SetSelectedIndex(ctx.tokensanity);
-    Scrubsanity.SetSelectedIndex(ctx.scrubsanity);
-    ShuffleCows.SetSelectedIndex(ctx.shuffleCows);
-    ShuffleKokiriSword.SetSelectedIndex(ctx.shuffleKokiriSword);
-    ShuffleOcarinas.SetSelectedIndex(ctx.shuffleOcarinas);
-    ShuffleWeirdEgg.SetSelectedIndex(ctx.shuffleWeirdEgg);
-    ShuffleGerudoToken.SetSelectedIndex(ctx.shuffleGerudoToken);
-    ShuffleMagicBeans.SetSelectedIndex(ctx.shuffleMagicBeans);
-
-    MapsAndCompasses.SetSelectedIndex(ctx.mapsAndCompasses);
-    Keysanity.SetSelectedIndex(ctx.keysanity);
-    GerudoKeys.SetSelectedIndex(ctx.gerudoKeys);
-    BossKeysanity.SetSelectedIndex(ctx.bossKeysanity);
-    GanonsBossKey.SetSelectedIndex(ctx.ganonsBossKey);
-
-    SkipChildStealth.SetSelectedIndex(ctx.skipChildStealth);
-    SkipTowerEscape.SetSelectedIndex(ctx.skipTowerEscape);
-    SkipEponaRace.SetSelectedIndex(ctx.skipEponaRace);
-    FourPoesCutscene.SetSelectedIndex(ctx.fourPoesCutscene);
-    TempleOfTimeIntro.SetSelectedIndex(ctx.templeOfTimeIntro);
-    BigPoeTargetCount.SetSelectedIndex(ctx.bigPoeTargetCount - 1);
-    NumRequiredCuccos.SetSelectedIndex(ctx.numRequiredCuccos);
-
-    DamageMultiplier.SetSelectedIndex(ctx.damageMultiplier);
-    StartingTime.SetSelectedIndex(ctx.startingTime);
-    GenerateSpoilerLog.SetSelectedIndex(ctx.generateSpoilerLog);
-
-    StickAsAdult.SetSelectedIndex(ctx.stickAsAdult);
-    BoomerangAsAdult.SetSelectedIndex(ctx.boomerangAsAdult);
-    HammerAsChild.SetSelectedIndex(ctx.hammerAsChild);
-
-    ItemPoolValue.SetSelectedIndex(ctx.itemPoolValue);
-    IceTrapValue.SetSelectedIndex(ctx.iceTrapValue);
-
-    for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
-      detailedLogicOptions[i]->SetSelectedIndex(ctx.detailedLogic[i]);
-    }
-
-    for (u16 i = 0; i < excludeLocationsOptions.size(); i++) {
-      excludeLocationsOptions[i]->SetSelectedIndex(ctx.excludeLocations[i]);
-    }
   }
 
   //set default cosmetics where the default is not the first option
@@ -802,7 +738,7 @@ namespace Settings {
     if (SilverGauntletsColor.Is(CUSTOM_COLOR)) {
       finalSilverGauntletsColor = GetCustomColor(SilverGauntletsColor.GetSelectedOptionText());
     } else if (SilverGauntletsColor.Is(RANDOM_CHOICE)) {
-      finalSilverGauntletsColor = RandomElement(gauntletColors);
+      finalSilverGauntletsColor = gauntletColors[rand() % gauntletColors.size()]; //use default rand to not interfere with seed
     } else if (SilverGauntletsColor.Is(RANDOM_COLOR)) {
       finalSilverGauntletsColor = RandomColor();
     } else {
@@ -812,7 +748,7 @@ namespace Settings {
     if (GoldGauntletsColor.Is(CUSTOM_COLOR)) {
       finalGoldGauntletsColor = GetCustomColor(GoldGauntletsColor.GetSelectedOptionText());
     } else if (GoldGauntletsColor.Is(RANDOM_CHOICE)) {
-      finalGoldGauntletsColor = RandomElement(gauntletColors);
+      finalGoldGauntletsColor = gauntletColors[rand() % gauntletColors.size()]; //use default rand to not interfere with seed
     } else if (GoldGauntletsColor.Is(RANDOM_COLOR)) {
       finalGoldGauntletsColor = RandomColor();
     } else {

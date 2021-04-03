@@ -72,14 +72,17 @@ void MenuInit() {
   consoleInit(GFX_BOTTOM, &bottomScreen);
 
   consoleSelect(&topScreen);
-  PrintTopScreen();
 
   if (!CreatePresetDirectories()) {
     printf("\x1b[20;5Failed to create preset directories.");
     printf("\x1b[21;5Loading presets might crash.");
   }
 
-  LoadCachedPreset(); //If cached settings preset exists, load it
+  //If cached presets exist, load them
+  LoadCachedSettings();
+  LoadCachedCosmetics();
+
+  PrintTopScreen();
 
   consoleSelect(&bottomScreen);
   PrintMainMenu();
@@ -190,7 +193,7 @@ void ModeChangeInit() {
     currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
   } else if (mode == SAVE_PRESET) {
     ClearDescription();
-    if (SaveSpecifiedPreset(GetInput("Preset Name").substr(0, 19))) {
+    if (SaveSpecifiedPreset(GetInput("Preset Name").substr(0, 19), OptionCategory::Setting)) {
       printf("\x1b[24;5HPreset Saved!");
       printf("\x1b[26;5HPress B to return to the preset menu.");
     } else {
@@ -199,7 +202,7 @@ void ModeChangeInit() {
     }
 
   } else if (mode == LOAD_PRESET || mode == DELETE_PRESET) {
-    presetEntries = GetPresets();
+    presetEntries = GetSettingsPresets();
 
   } else if (mode == GENERATE_MODE) {
 
@@ -228,7 +231,7 @@ void UpdateMainMenu(u32 kDown) {
 
 void UpdateCustomCosmeticColors(u32 kDown) {
   if (kDown & KEY_A) {
-    if (currentSetting->GetSelectedOptionText().substr(0, 8) == "Custom #") {
+    if (currentSetting->GetSelectedOptionText().substr(0, 8) == CUSTOM_COLOR_PREFIX) {
       std::string newColor = GetInput("Enter a 6 digit hex color").substr(0, 6);
       if (Cosmetics::ValidHexString(newColor)) {
         currentSetting->SetSelectedOptionText(Cosmetics::CustomColorOptionText(newColor));
@@ -309,25 +312,22 @@ void UpdatePresetsMenu(u32 kDown) {
   }
 
   consoleSelect(&topScreen);
+  //clear any potential message
+  ClearDescription();
   if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET) {
-    //clear any potential message
-    ClearDescription();
-    if (LoadPreset(presetEntries[presetIdx], true)) {
+    if (LoadPreset(presetEntries[presetIdx], OptionCategory::Setting)) {
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
     }
   } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET) {
-    //clear any potential message
-    ClearDescription();
-    if (DeletePreset(presetEntries[presetIdx])) {
+    if (DeletePreset(presetEntries[presetIdx], OptionCategory::Setting)) {
       presetEntries.erase(presetEntries.begin() + presetIdx);
       if(presetIdx == presetEntries.size()) { //Catch when last preset is deleted
         presetIdx--;
       }
       printf("\x1b[24;5HPreset Deleted.");
     } else {
-      consoleSelect(&topScreen);
       printf("\x1b[24;5HFailed to delete preset.");
     }
   }
@@ -522,10 +522,14 @@ void PrintOptionDescrption() {
 
 void GenerateRandomizer() {
 
-  SaveCachedPreset(); //After choosing to generate, cache chosen settings for later
-
   consoleSelect(&topScreen);
   consoleClear();
+  printf("\x1b[7;10HCaching Settings...");
+
+  //After choosing to generate, cache chosen settings for later
+  SaveCachedSettings();
+  SaveCachedCosmetics();
+  printf("Done");
 
   //if a blank seed was entered, make a random one
   if (Settings::seed.empty()) {
@@ -540,13 +544,13 @@ void GenerateRandomizer() {
   std::string settingsStr;
   for (MenuItem* menu : Settings::mainMenu) {
     //don't go through non-menus
-    if (menu->mode != OPTION_SUB_MENU || menu->name == "Cosmetic Settings") {
+    if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
 
     for (size_t i = 0; i < menu->settingsList->size(); i++) {
       Option* setting = menu->settingsList->at(i);
-      if (setting->GetName() != "Mirror World" && setting->GetName() != "All Tricks") {
+      if (setting->IsCategory(OptionCategory::Setting)) {
         settingsStr += setting->GetSelectedOptionText();
       }
     }

@@ -58,3 +58,9 @@ enum class Category {
     cVanillaMap,
     cVanillaCompass,
 };
+
+enum class OptionCategory {
+  Setting,
+  Cosmetic,
+  Toggle,
+};

@@ -1,11 +1,16 @@
 #pragma once
 
 #include <vector>
+#include "category.hpp"
 
 extern bool CreatePresetDirectories();
-extern std::vector<std::string> GetPresets();
-extern void LoadCachedPreset();
-extern bool LoadPreset(std::string_view presetName, bool print);
-extern bool SaveSpecifiedPreset(std::string presetName);
-extern bool SaveCachedPreset();
-extern bool DeletePreset(std::string_view presetName);
+extern std::vector<std::string> GetSettingsPresets();
+extern void LoadCachedSettings();
+extern bool SavePreset(std::string presetName, OptionCategory category);
+extern bool LoadPreset(std::string presetName, OptionCategory category);
+extern bool DeletePreset(std::string presetName, OptionCategory category);
+extern bool SaveSpecifiedPreset(std::string presetName, OptionCategory category);
+extern void SaveCachedSettings();
+extern void LoadCachedSettings();
+extern bool SaveCachedCosmetics();
+extern bool LoadCachedCosmetics();

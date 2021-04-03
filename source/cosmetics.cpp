@@ -31,7 +31,7 @@ namespace Cosmetics {
   //Generate random hex color
   std::string RandomColor() {
     std::stringstream color;
-    color << std::hex << Random(0, 0xFFFFFF);
+    color << std::hex << (rand() % 0x1000000); //use default rand to not interfere with main settings
     return color.str();
   }
 
