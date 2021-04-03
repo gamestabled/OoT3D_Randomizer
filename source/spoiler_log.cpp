@@ -108,11 +108,11 @@ static void WriteSettings() {
 
     for (size_t i = 0; i < menu->settingsList->size(); i++) {
       Option* setting = menu->settingsList->at(i);
-      if (!setting->IsHidden()) {
+      if (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting)) {
         logtxt += "\t";
         logtxt += setting->GetName();
         logtxt += ": ";
-        logtxt += setting->GetSelectedOption();
+        logtxt += setting->GetSelectedOptionText();
         logtxt += "\n";
       }
     }
@@ -121,7 +121,7 @@ static void WriteSettings() {
   //List Excluded Locations
   logtxt += "\nExcluded Locations:\n";
   for (auto& l : Settings::excludeLocationsOptions) {
-    if (l->GetSelectedOption() == "Exclude") {
+    if (l->GetSelectedOptionText() == "Exclude") {
       std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary
@@ -137,7 +137,7 @@ static void WriteSettings() {
   //List Enabled Tricks
   logtxt += "\nEnabled Tricks:\n";
   for (auto& l : Settings::detailedLogicOptions) {
-    if (l->GetSelectedOption() == "Enable" && l->GetName() != "All Tricks") {
+    if (l->GetSelectedOptionText() == "Enable" && l->IsCategory(OptionCategory::Setting)) {
       std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary

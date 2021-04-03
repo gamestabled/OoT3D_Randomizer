@@ -1,4 +1,5 @@
 #include "patch.hpp"
+#include "cosmetics.hpp"
 
 #include <array>
 #include <fstream>
@@ -241,6 +242,41 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(Settings::rDungeonRewardOverrides);
+
+  /*--------------------------------
+  |         Gauntlet Colors        |
+  ---------------------------------*/
+
+  const u32 GAUNTLETCOLORSARRAY_ADDR = 0x0053CA1C;
+  Color_RGB rGauntletColors[2] = {
+    Cosmetics::HexStrToColorRGB(Settings::finalSilverGauntletsColor),
+    Cosmetics::HexStrToColorRGB(Settings::finalGoldGauntletsColor),
+  };
+
+  // Write Gauntlet Colors address to code
+  patchOffset = V_TO_P(GAUNTLETCOLORSARRAY_ADDR);
+  buf[0] = (patchOffset >> 16) & 0xFF;
+  buf[1] = (patchOffset >> 8) & 0xFF;
+  buf[2] = (patchOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  // Write gauntletColors size to code
+  const u32 rGauntletColorsSize = sizeof(rGauntletColors);
+  buf[0] = (rGauntletColorsSize >> 8) & 0xFF;
+  buf[1] = (rGauntletColorsSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  // Write gauntletColors to code
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, rGauntletColors, sizeof(rGauntletColors), FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += sizeof(rGauntletColors);
 
   /*-------------------------
   |           EOF           |

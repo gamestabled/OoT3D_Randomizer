@@ -54,7 +54,14 @@ enum class Category {
     cCow,
     cShop,
     cVanillaSmallKey,
+    cVanillaGFSmallKey,
     cVanillaBossKey,
     cVanillaMap,
     cVanillaCompass,
+};
+
+enum class OptionCategory {
+  Setting,
+  Cosmetic,
+  Toggle,
 };
