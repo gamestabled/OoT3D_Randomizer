@@ -54,6 +54,7 @@ enum class Category {
     cCow,
     cShop,
     cVanillaSmallKey,
+    cVanillaGFSmallKey,
     cVanillaBossKey,
     cVanillaMap,
     cVanillaCompass,

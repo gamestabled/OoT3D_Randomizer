@@ -628,6 +628,14 @@ namespace Settings {
       Unhide(smallKeyChests);
     }
 
+    //Force include Gerudo Fortress carpenter fights if GF Small Keys are Vanilla
+    std::vector<ItemLocation*> vanillaGFKeyLocations = GetLocations(everyPossibleLocation, Category::cVanillaGFSmallKey);
+    if (GerudoKeys.Is(GERUDOKEYS_VANILLA)) {
+      IncludeAndHide(vanillaGFKeyLocations);
+    } else {
+      Unhide(vanillaGFKeyLocations);
+    }
+
     //Force include Boss Key Chests if Boss Keys are Vanilla
     std::vector<ItemLocation*> bossKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaBossKey);
     if (BossKeysanity.Is(BOSSKEYSANITY_VANILLA)) {
