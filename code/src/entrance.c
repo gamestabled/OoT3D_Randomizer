@@ -37,48 +37,50 @@ void Entrance_Init(void) {
 
     //Skip Tower Escape Sequence if given by settings
     if (gSettingsContext.skipTowerEscape == SKIP) {
-        gEntranceTable[0x43F].scene = 0x4F;
-        gEntranceTable[0x43F].spawn = 0x01;
-        gEntranceTable[0x43F].field = 0x4183;
+        for (index = 0x43F; index < 0x443; ++index) {
+            gEntranceTable[index].scene = 0x4F;
+            gEntranceTable[index].spawn = 0x01;
+            gEntranceTable[index].field = 0x4183;
+        }
     }
 
     // Delete the title card for Kokiri Forest from Deku Tree Death Cutscene
-    for (index = 0x457; index < 0x45A; ++index) {
+    for (index = 0x457; index < 0x45B; ++index) {
         gEntranceTable[index].field = 0x0202;
     }
 
     // Delete the title card for Death Mountain Trail from Goron Ruby Cutscene
-    for (index = 0x47A; index < 0x47D; ++index) {
+    for (index = 0x47A; index < 0x47E; ++index) {
         gEntranceTable[index].field = 0x0202;
     }
 
     // Delete the title card for Zora's Fountain from Inside Jabu Jabu's Belly
-    for (index = 0x221; index < 0x224; ++index) {
+    for (index = 0x221; index < 0x225; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Sacred Forest Meadow from Forest Temple Blue Warp
-    for (index = 0x608; index < 0x60B; ++index) {
+    for (index = 0x608; index < 0x60C; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Death Mountain Crater from Fire Temple Blue Warp
-    for (index = 0x564; index < 0x567; ++index) {
+    for (index = 0x564; index < 0x568; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Lake Hylia from Water Temple Blue Warp
-    for (index = 0x60C; index < 0x60F; ++index) {
+    for (index = 0x60C; index < 0x610; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Desert Colossus from Spirit Temple Blue Warp
-    for (index = 0x610; index < 0x613; ++index) {
+    for (index = 0x610; index < 0x614; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Graveyard from Shadow Temple Blue Warp
-    for (index = 0x580; index < 0x583; ++index) {
+    for (index = 0x580; index < 0x584; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
