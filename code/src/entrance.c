@@ -4,6 +4,10 @@
 #include "string.h"
 #include "item_override.h"
 
+typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
+#define SetNextEntrance_addr 0x3716F0
+#define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
+
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
     memcpy(&gSceneTable[1],  gSettingsContext.dodongosCavernDungeonMode        == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[1]  : &gDungeonSceneTable[1],  sizeof(Scene));
@@ -37,11 +41,9 @@ void Entrance_Init(void) {
 
     //Skip Tower Escape Sequence if given by settings
     if (gSettingsContext.skipTowerEscape == SKIP) {
-        for (index = 0x43F; index < 0x443; ++index) {
-            gEntranceTable[index].scene = 0x4F;
-            gEntranceTable[index].spawn = 0x01;
-            gEntranceTable[index].field = 0x4183;
-        }
+        gEntranceTable[0x43F].scene = 0x4F;
+        gEntranceTable[0x43F].spawn = 0x01;
+        gEntranceTable[0x43F].field = 0x4183;
     }
 
     // Delete the title card for Kokiri Forest from Deku Tree Death Cutscene
@@ -107,5 +109,13 @@ void Entrance_Init(void) {
     // Delete the title card for Hyrule Field from Impa's first escort
     for (index = 0x594; index < 0x598; ++index) {
         gEntranceTable[index].field = 0x0102;
+    }
+}
+
+void Entrance_DeathInGanonBattle(void) {
+    if ((gGlobalContext->sceneNum == 0x004F) && (gSettingsContext.skipTowerEscape == SKIP)) {
+        SetNextEntrance(gGlobalContext, 0x517, 0x14, 2);
+    } else {
+        SetNextEntrance(gGlobalContext, 0x43F, 0x14, 2);
     }
 }

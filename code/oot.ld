@@ -728,6 +728,10 @@ SECTIONS
 		*(.patch_FireTempleItemGiveTwo)
 	}
 
+	.patch_GanonBattleDeathWarp 0x496C98 : {
+		*(.patch_GanonBattleDeathWarp)
+	}
+
 	.patch_OverrideGraphicID_4BC604 0x4BC604 : {
 		*(.patch_OverrideGraphicID_4BC604)
 	}
