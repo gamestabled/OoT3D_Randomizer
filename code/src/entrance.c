@@ -4,6 +4,10 @@
 #include "string.h"
 #include "item_override.h"
 
+typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
+#define SetNextEntrance_addr 0x3716F0
+#define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
+
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
     memcpy(&gSceneTable[1],  gSettingsContext.dodongosCavernDungeonMode        == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[1]  : &gDungeonSceneTable[1],  sizeof(Scene));
@@ -43,42 +47,42 @@ void Entrance_Init(void) {
     }
 
     // Delete the title card for Kokiri Forest from Deku Tree Death Cutscene
-    for (index = 0x457; index < 0x45A; ++index) {
+    for (index = 0x457; index < 0x45B; ++index) {
         gEntranceTable[index].field = 0x0202;
     }
 
     // Delete the title card for Death Mountain Trail from Goron Ruby Cutscene
-    for (index = 0x47A; index < 0x47D; ++index) {
+    for (index = 0x47A; index < 0x47E; ++index) {
         gEntranceTable[index].field = 0x0202;
     }
 
     // Delete the title card for Zora's Fountain from Inside Jabu Jabu's Belly
-    for (index = 0x221; index < 0x224; ++index) {
+    for (index = 0x221; index < 0x225; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Sacred Forest Meadow from Forest Temple Blue Warp
-    for (index = 0x608; index < 0x60B; ++index) {
+    for (index = 0x608; index < 0x60C; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Death Mountain Crater from Fire Temple Blue Warp
-    for (index = 0x564; index < 0x567; ++index) {
+    for (index = 0x564; index < 0x568; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Lake Hylia from Water Temple Blue Warp
-    for (index = 0x60C; index < 0x60F; ++index) {
+    for (index = 0x60C; index < 0x610; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Desert Colossus from Spirit Temple Blue Warp
-    for (index = 0x610; index < 0x613; ++index) {
+    for (index = 0x610; index < 0x614; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
     // Delete the title card for Graveyard from Shadow Temple Blue Warp
-    for (index = 0x580; index < 0x583; ++index) {
+    for (index = 0x580; index < 0x584; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
 
@@ -105,5 +109,13 @@ void Entrance_Init(void) {
     // Delete the title card for Hyrule Field from Impa's first escort
     for (index = 0x594; index < 0x598; ++index) {
         gEntranceTable[index].field = 0x0102;
+    }
+}
+
+void Entrance_DeathInGanonBattle(void) {
+    if ((gGlobalContext->sceneNum == 0x004F) && (gSettingsContext.skipTowerEscape == SKIP)) {
+        SetNextEntrance(gGlobalContext, 0x517, 0x14, 2);
+    } else {
+        SetNextEntrance(gGlobalContext, 0x43F, 0x14, 2);
     }
 }

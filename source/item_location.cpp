@@ -60,10 +60,10 @@ ItemLocation GF_Chest                         = ItemLocation::Chest      (0x5D, 
 ItemLocation GF_HBA1000Points                 = ItemLocation::Base       (0x5D, 0x3E, "GF HBA 1000 Points",                   {Category::cGerudoFortress, Category::cGerudo, Category::cMinigame});
 ItemLocation GF_HBA1500Points                 = ItemLocation::Base       (0x5D, 0x30, "GF HBA 1500 Points",                   {Category::cGerudoFortress, Category::cGerudo, Category::cMinigame});
 ItemLocation GF_GerudoToken                   = ItemLocation::Base       (0x0C, 0x3A, "GF Gerudo Token",                      {Category::cGerudoFortress, Category::cGerudo,});
-ItemLocation GF_NorthF1Carpenter              = ItemLocation::Collectable(0x0C, 0x0C, "GF North F1 Carpenter",                {Category::cGerudoFortress, Category::cGerudo,});
-ItemLocation GF_NorthF2Carpenter              = ItemLocation::Collectable(0x0C, 0x0A, "GF North F2 Carpenter",                {Category::cGerudoFortress, Category::cGerudo,});
-ItemLocation GF_SouthF1Carpenter              = ItemLocation::Collectable(0x0C, 0x0E, "GF South F1 Carpenter",                {Category::cGerudoFortress, Category::cGerudo,});
-ItemLocation GF_SouthF2Carpenter              = ItemLocation::Collectable(0x0C, 0x0F, "GF South F2 Carpenter",                {Category::cGerudoFortress, Category::cGerudo,});
+ItemLocation GF_NorthF1Carpenter              = ItemLocation::Collectable(0x0C, 0x0C, "GF North F1 Carpenter",                {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
+ItemLocation GF_NorthF2Carpenter              = ItemLocation::Collectable(0x0C, 0x0A, "GF North F2 Carpenter",                {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
+ItemLocation GF_SouthF1Carpenter              = ItemLocation::Collectable(0x0C, 0x0E, "GF South F1 Carpenter",                {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
+ItemLocation GF_SouthF2Carpenter              = ItemLocation::Collectable(0x0C, 0x0F, "GF South F2 Carpenter",                {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
 
 //Haunted Wasteland
 ItemLocation HW_Chest                         = ItemLocation::Chest      (0x5E, 0x00, "HW Chest",                             {Category::cHauntedWasteland,});

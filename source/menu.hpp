@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "preset.hpp"
+
 #define MAIN_MENU 0
 #define OPTION_SUB_MENU 1
 #define SUB_MENU 2
@@ -41,14 +43,6 @@ void PrintPresetsMenu();
 void PrintGenerateMenu();
 void ClearDescription();
 void PrintOptionDescrption();
-bool CreatePresetDirectories();
-void GetPresets();
-void LoadCachedPreset();
-bool LoadPreset(std::string_view presetName, bool print);
-bool SaveSpecifiedPreset();
-bool SaveCachedPreset();
-bool SavePreset(std::string_view presetName);
-bool DeletePreset(std::string_view presetName);
 void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 

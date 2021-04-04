@@ -13,15 +13,16 @@
 #include "../code/src/settings.h"
 #include "category.hpp"
 #include "menu.hpp"
+#include "cosmetics.hpp"
 
 class Option {
 public:
-    static Option Bool(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_) {
-        return Option{false, std::move(name_), std::move(options_), std::move(optionDescriptions_)};
+    static Option Bool(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_ = OptionCategory::Setting) {
+        return Option{false, std::move(name_), std::move(options_), std::move(optionDescriptions_), category_};
     }
 
-    static Option U8(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_) {
-        return Option{u8{0}, std::move(name_), std::move(options_), std::move(optionDescriptions_)};
+    static Option U8(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_  = OptionCategory::Setting) {
+        return Option{u8{0}, std::move(name_), std::move(options_), std::move(optionDescriptions_), category_};
     }
 
     template <typename T>
@@ -66,8 +67,12 @@ public:
         return name;
     }
 
-    std::string_view GetSelectedOption() const {
+    std::string GetSelectedOptionText() const {
         return options[selectedOption];
+    }
+
+    void SetSelectedOptionText(std::string newText) {
+        options[selectedOption] = std::move(newText);
     }
 
     std::string_view GetSelectedOptionDescription() const {
@@ -102,7 +107,7 @@ public:
       }
     }
 
-    void SetSelectedIndex(u8 idx) {
+    void SetSelectedIndex(size_t idx) {
       selectedOption = idx;
       if (selectedOption >= options.size()) {
         printf("\x1b[30;0HERROR: Incompatible selection for %s\n", name.c_str());
@@ -110,6 +115,26 @@ public:
       }
 
       SetVariable();
+    }
+
+    void SetSelectedIndexByString(std::string newSetting) {
+
+      //Special case for custom cosmetic settings
+      if (options.size() > CUSTOM_COLOR) {
+        if (newSetting.substr(0, 8) == CUSTOM_COLOR_PREFIX && options[CUSTOM_COLOR].substr(0, 8) == CUSTOM_COLOR_PREFIX) {
+          SetSelectedIndex(CUSTOM_COLOR);
+          SetSelectedOptionText(newSetting);
+          return;
+        }
+      }
+
+      for (size_t i = 0; i < options.size(); i++) {
+        std::string settingName = options[i];
+        if (settingName == newSetting) {
+          SetSelectedIndex(i);
+          return;
+        }
+      }
     }
 
     void Lock() {
@@ -136,14 +161,18 @@ public:
       return hidden;
     }
 
+    bool IsCategory(OptionCategory category) {
+      return category == this->category;
+    }
+
 private:
-    Option(u8 var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_)
-          : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)) {
+    Option(u8 var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_)
+          : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), category(category_) {
         SetVariable();
     }
 
-    Option(bool var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_)
-          : var(var_), name(std::move(name_)),  options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)) {
+    Option(bool var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_)
+          : var(var_), name(std::move(name_)),  options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), category(category_) {
         SetVariable();
     }
 
@@ -154,6 +183,7 @@ private:
   u8 selectedOption = 0;
   bool locked = false;
   bool hidden = false;
+  OptionCategory category;
 };
 
 enum class MenuItemType {
@@ -363,6 +393,11 @@ namespace Settings {
   extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
 
+  extern Option SilverGauntletsColor;
+  extern Option GoldGauntletsColor;
+  extern std::string finalSilverGauntletsColor;
+  extern std::string finalGoldGauntletsColor;
+
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
 
@@ -373,7 +408,6 @@ namespace Settings {
 
   extern void UpdateSettings();
   extern SettingsContext FillContext();
-  extern void FillSettings(SettingsContext ctx);
   extern void SetDefaultSettings();
   extern void ForceChange(u32 kDown, Option* currentSetting);
 

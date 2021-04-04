@@ -5,9 +5,11 @@
 #include "spoiler_log.hpp"
 #include "logic.hpp"
 #include "random.hpp"
+#include "custom_messages.hpp"
 
 using namespace Logic;
 using namespace Settings;
+using namespace CustomMessages;
 
 static void RemoveStartingItemsFromPool() {
   for (Item& startingItem : StartingInventory) {
@@ -564,6 +566,7 @@ int Fill() {
       PareDownPlaythrough();
       printf("Done");
       CreateOverrides();
+      CreateAlwaysIncludedMessages();
       return 1;
     }
     //Unsuccessful placement

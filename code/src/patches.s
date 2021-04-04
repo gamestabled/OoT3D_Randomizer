@@ -1016,6 +1016,11 @@ BombchuPurchaseableCheck_patch:
 BombPurchaseableCheck_patch:
     nop
 
+.section .patch_GanonBattleDeathWarp
+.global GanonBattleDeathWarp_patch
+GanonBattleDeathWarp_patch:
+    bl Entrance_DeathInGanonBattle
+
 .section .patch_loader
 .global loader_patch
 

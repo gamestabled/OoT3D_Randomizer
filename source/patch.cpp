@@ -1,4 +1,6 @@
 #include "patch.hpp"
+#include "custom_messages.hpp"
+#include "cosmetics.hpp"
 
 #include <array>
 #include <fstream>
@@ -241,6 +243,150 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(Settings::rDungeonRewardOverrides);
+
+  /*--------------------------------
+  |     rCustomMessageEntries      |
+  ---------------------------------*/
+
+  std::pair<const char*, u32> messageDataInfo = CustomMessages::RawMessageData();
+  std::pair<const char*, u32> messageEntriesInfo = CustomMessages::RawMessageEntryData();
+
+  // Write message data address to code
+  u32 messageDataOffset = V_TO_P(RCUSTOMMESSAGES_ADDR);
+  buf[0] = (messageDataOffset >> 16) & 0xFF;
+  buf[1] = (messageDataOffset >> 8) & 0xFF;
+  buf[2] = (messageDataOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  // Write message data size to code
+  const u32 messageDataSize = messageDataInfo.second;
+  buf[0] = (messageDataSize >> 8) & 0xFF;
+  buf[1] = (messageDataSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  // Write message data to code
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, messageDataInfo.first, messageDataSize, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += messageDataSize;
+
+  // Write message entries address to code
+  u32 messageEntriesOffset = (messageDataOffset + messageDataSize + 3) & ~3; //round up and align with u32
+  buf[0] = (messageEntriesOffset >> 16) & 0xFF;
+  buf[1] = (messageEntriesOffset >> 8) & 0xFF;
+  buf[2] = (messageEntriesOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  // Write message entries size to code
+  const u32 messageEntriesSize = messageEntriesInfo.second;
+  buf[0] = (messageEntriesSize >> 8) & 0xFF;
+  buf[1] = (messageEntriesSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  // Write message entries to code
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, messageEntriesInfo.first, messageEntriesSize, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += messageEntriesSize;
+
+  // Write ptrCustomMessageEntries address to code
+  patchOffset = V_TO_P(PTRCUSTOMMESSAGEENTRIES_ADDR);
+  buf[0] = (patchOffset >> 16) & 0xFF;
+  buf[1] = (patchOffset >> 8) & 0xFF;
+  buf[2] = (patchOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  // Write ptrCustomMessageEntries size to code
+  const u32 ptrCustomMessageEntriesSize = 4;
+  buf[0] = (ptrCustomMessageEntriesSize >> 8) & 0xFF;
+  buf[1] = (ptrCustomMessageEntriesSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  // Write ptrCustomMessageEntries to code
+  const u32 ptrCustomMessageEntriesData = P_TO_V(messageEntriesOffset);
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &ptrCustomMessageEntriesData, 4, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 4;
+
+  // Write numCustomMessageEntries address to code
+  patchOffset = V_TO_P(NUMCUSTOMMESSAGEENTRIES_ADDR);
+  buf[0] = (patchOffset >> 16) & 0xFF;
+  buf[1] = (patchOffset >> 8) & 0xFF;
+  buf[2] = (patchOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  // Write numCustomMessageEntries size to code
+  const u32 numCustomMessageEntriesSize = 4;
+  buf[0] = (numCustomMessageEntriesSize >> 8) & 0xFF;
+  buf[1] = (numCustomMessageEntriesSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  // Write numCustomMessageEntries to code
+  const u32 numCustomMessageEntriesData = CustomMessages::NumMessages();
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &numCustomMessageEntriesData, 4, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 4;
+
+  /*--------------------------------
+  |         Gauntlet Colors        |
+  ---------------------------------*/
+
+  const u32 GAUNTLETCOLORSARRAY_ADDR = 0x0053CA1C;
+  Color_RGB rGauntletColors[2] = {
+    Cosmetics::HexStrToColorRGB(Settings::finalSilverGauntletsColor),
+    Cosmetics::HexStrToColorRGB(Settings::finalGoldGauntletsColor),
+  };
+
+  // Write Gauntlet Colors address to code
+  patchOffset = V_TO_P(GAUNTLETCOLORSARRAY_ADDR);
+  buf[0] = (patchOffset >> 16) & 0xFF;
+  buf[1] = (patchOffset >> 8) & 0xFF;
+  buf[2] = (patchOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  // Write gauntletColors size to code
+  const u32 rGauntletColorsSize = sizeof(rGauntletColors);
+  buf[0] = (rGauntletColorsSize >> 8) & 0xFF;
+  buf[1] = (rGauntletColorsSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  // Write gauntletColors to code
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, rGauntletColors, sizeof(rGauntletColors), FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += sizeof(rGauntletColors);
 
   /*-------------------------
   |           EOF           |

@@ -1,7 +1,7 @@
 #ifndef _MESSAGE_H_
 #define _MESSAGE_H_
 
-#include "z3D/z3D.h"
+#include "../include/z3D/z3D.h"
 
 typedef struct {
     // In the true file format, offset is the offset into the QM file.

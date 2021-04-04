@@ -8,6 +8,7 @@
 #include "../code/src/item_override.h"
 
 #define V_TO_P(addr) (addr - 0x100000)
+#define P_TO_V(offset) (offset + 0x100000)
 #define PATCH_CONSOLE 0
 #define PATCH_CITRA 1
 
