@@ -570,6 +570,14 @@ namespace Exits {
   extern Exit GerudoTrainingGrounds_EyeStatueUpper;
   extern Exit GerudoTrainingGrounds_HeavyBlockRoom;
   extern Exit GerudoTrainingGrounds_LikeLikeRoom;
+  //Gerudo Training Grounds MQ
+  extern Exit GerudoTrainingGrounds_MQ_Lobby;
+  extern Exit GerudoTrainingGrounds_MQ_RightSide;
+  extern Exit GerudoTrainingGrounds_MQ_Underwater;
+  extern Exit GerudoTrainingGrounds_MQ_LeftSide;
+  extern Exit GerudoTrainingGrounds_MQ_StalfosRoom;
+  extern Exit GerudoTrainingGrounds_MQ_BackAreas;
+  extern Exit GerudoTrainingGrounds_MQ_CentralMazeRight;
 
   //Ganon's Castle
   extern Exit GanonsCastle_Lobby;
@@ -581,6 +589,15 @@ namespace Exits {
   extern Exit GanonsCastle_SpiritTrial;
   extern Exit GanonsCastle_LightTrial;
   extern Exit GanonsCastle_Tower;
+  //Ganon's Castle MQ
+  extern Exit GanonsCastle_MQ_Lobby;
+  extern Exit GanonsCastle_MQ_DekuScrubs;
+  extern Exit GanonsCastle_MQ_ForestTrial;
+  extern Exit GanonsCastle_MQ_FireTrial;
+  extern Exit GanonsCastle_MQ_WaterTrial;
+  extern Exit GanonsCastle_MQ_ShadowTrial;
+  extern Exit GanonsCastle_MQ_SpiritTrial;
+  extern Exit GanonsCastle_MQ_LightTrial;
 
   extern void AccessReset();
   extern void ResetAllLocations();

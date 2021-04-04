@@ -2349,7 +2349,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit GanonsCastle_WaterTrial = Exit("Ganon's Castle Water Trial", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&BlueFireAccess,  []{return true;}),
+                  EventPairing(&BlueFireAccess,  []{return BlueFireAccess || HasBottle;}),
                   EventPairing(&FairyPot,        []{return FairyPot || BlueFire;}),
                   EventPairing(&WaterTrialClear, []{return BlueFire && Hammer && CanUse("Light Arrows");}),
                 }, {
@@ -2453,7 +2453,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit DekuTree_MQ_BasementLedge = Exit("Deku Tree MQ Basement Ledge", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    EventPairing(&DekuTreeClear, []{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks);}),
+    EventPairing(&DekuTreeClear, []{return DekuTreeClear || (HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks));}),
   }, {
     //Locations
     ItemLocationPairing(&DekuTree_MQ_DekuScrub,    []{return CanStunDeku;}),
@@ -2677,7 +2677,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit ForestTemple_MQ_BowRegion = Exit("Forest Temple MQ Bow Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
     //Events 
-    EventPairing(&ForestTempleJoAndBeth, []{return CanUse("Bow");}),
+    EventPairing(&ForestTempleJoAndBeth, []{return ForestTempleJoAndBeth || CanUse("Bow");}),
   }, {
     //Locations
     ItemLocationPairing(&ForestTemple_MQ_BowChest,     []{return true;}),
@@ -2690,7 +2690,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit ForestTemple_MQ_FallingRoom = Exit("Forest Temple MQ Falling Room", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
     //Events 
-    EventPairing(&ForestTempleAmyAndMeg, []{return CanUse("Bow") && SmallKeys(ForestTempleKeys, 6);}),
+    EventPairing(&ForestTempleAmyAndMeg, []{return ForestTempleAmyAndMeg || (CanUse("Bow") && SmallKeys(ForestTempleKeys, 6));}),
   }, {
     //Locations
     ItemLocationPairing(&ForestTemple_MQ_FallingCeilingRoomChest, []{return true;}),
@@ -2730,7 +2730,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit FireTemple_MQ_BigLavaRoom = Exit("Fire Temple MQ Big Lava Room", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    EventPairing(&FairyPot, []{return HasFireSource && Bow && (CanUse("Hookshot") || LogicFireSongOfTime);}),
+    EventPairing(&FairyPot, []{return FairyPot || (HasFireSource && Bow && (CanUse("Hookshot") || LogicFireSongOfTime));}),
       //Trick: HasFireSource && (Bow || LogicFireMQBKChest) && (CanUse("Hookshot") || LogicFireSongOfTime)
   }, {
     //Locations
@@ -2758,7 +2758,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit FireTemple_MQ_UpperMaze = Exit("Fire Temple MQ Upper Maze", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    //EventPairing(&WallFairy, []{return (CanPlay(SongOfTime) && CanUse("Hookshot") && HasExplosives) || CanUse("Longshot");}),
+    //EventPairing(&WallFairy, []{return WallFairy || ((CanPlay(SongOfTime) && CanUse("Hookshot") && HasExplosives) || CanUse("Longshot"));}),
     EventPairing(&FairyPot,  []{return SmallKeys(FireTempleKeys, 3);}),
   }, {
     //Locations
@@ -2856,7 +2856,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit SpiritTemple_MQ_Child = Exit("Spirit Temple MQ Child", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    EventPairing(&FairyPot, []{return (Sticks || KokiriSword) && HasBombchus && Slingshot;}),
+    EventPairing(&FairyPot, []{return FairyPot || ((Sticks || KokiriSword) && HasBombchus && Slingshot);}),
   }, {
     //Locations
     ItemLocationPairing(&SpiritTemple_MQ_ChildHammerSwitchChest, []{return SpiritTemple_MQ_Adult.Adult() && SmallKeys(SpiritTempleKeys, 7) && Hammer;}),
@@ -3028,7 +3028,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit BottomOfTheWell_MQ_Perimeter = Exit("Bottom of the Well MQ Perimeter", "Bottom of the Well", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    //EventPairing(&WallFairy, []{return Slingshot;}),
+    //EventPairing(&WallFairy, []{return WallFairy || Slingshot;}),
   }, {
     //Locations
     ItemLocationPairing(&BottomOfTheWell_MQ_CompassChest,            []{return KokiriSword || (Sticks && LogicChildDeadhand);}),
@@ -3068,7 +3068,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit IceCavern_MQ_MapRoom = Exit("Ice Cavern MQ Map Room", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    EventPairing(&BlueFireAccess, []{return true;}),
+    EventPairing(&BlueFireAccess,  []{return BlueFireAccess || HasBottle;}),
   }, {
     //Locations
     ItemLocationPairing(&IceCavern_MQ_MapChest, []{return BlueFire && (IsAdult || CanUse("Sticks") || KokiriSword || CanUseProjectile);}),
@@ -3089,6 +3089,170 @@ namespace Exits { //name, scene, hint, events, locations, exits
     ItemLocationPairing(&IceCavern_MQ_FreestandingPoH, []{return HasExplosives;}),
     ItemLocationPairing(&IceCavern_MQ_GS_RedIce,       []{return CanPlay(SongOfTime);}),
       //Trick: CanPlay(SongOfTime) || LogicIceMQRedIceGS
+  }, {});
+
+  Exit GerudoTrainingGrounds_MQ_Lobby = Exit("Gerudo Training Grounds MQ Lobby", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_LobbyLeftChest,      []{return true;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_LobbyRightChest,     []{return true;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_HiddenCeilingChest,  []{return LogicLensGtgMQ || CanUse("Lens of Truth");}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_MazePathFirstChest,  []{return true;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_MazePathSecondChest, []{return true;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_MazePathThirdChest,  []{return SmallKeys(GerudoTrainingGroundsKeys, 1);}),
+  }, {
+    //Exits
+    ExitPairing::Both(&GF_Main,                            []{return true;}),
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_LeftSide,  []{return HasFireSource;}),
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_RightSide, []{return CanUse("Bow") || CanUse("Slingshot");}),
+  });
+
+  Exit GerudoTrainingGrounds_MQ_RightSide = Exit("Gerudo Training Grounds MQ Right Side", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    //EventPairing(&WallFairy, []{return WallFairy || CanUse("Bow");}),
+  }, {
+    //Locations
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_DinolfosChest, []{return IsAdult;}),
+  }, {
+    //Exits
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_Underwater, []{return (Bow || CanUse("Longshot")) && CanUse("Hover Boots");}),
+  });
+
+  Exit GerudoTrainingGrounds_MQ_Underwater = Exit("Gerudo Training Grounds MQ Underwater", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest, []{return HasFireSource && CanUse("Iron Boots") && (LogicFewerTunicRequirements || CanUse("Zora Tunic")) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO);}),
+  }, {});
+
+  Exit GerudoTrainingGrounds_MQ_LeftSide = Exit("Gerudo Training Grounds MQ Left Side", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_FirstIronKnuckleChest, []{return IsAdult || KokiriSword || HasExplosives;}),
+  }, {
+    //Exits
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_StalfosRoom, []{return CanUse("Longshot");}),
+      //Trick: CanUse("Longshot") || LogicGtgMQWithoutHookshot || (LogicGtgMQWithHookshot && CanUse("Hookshot"))
+  });
+
+  Exit GerudoTrainingGrounds_MQ_StalfosRoom = Exit("Gerudo Training Grounds MQ Stalfos Room", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&BlueFireAccess,  []{return BlueFireAccess || HasBottle;}),
+  }, {
+    //Locations
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_BeforeHeavyBlockChest, []{return IsAdult;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_HeavyBlockChest,       []{return CanUse("Silver Gauntlets");}),
+  }, {
+    //Exits
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_BackAreas, []{return IsAdult && (LogicLensGtgMQ || CanUse("Lens of Truth")) && BlueFire && CanPlay(SongOfTime);}),
+      //Trick: IsAdult && (LogicLensGtgMQ || CanUse("Lens of Truth")) && BlueFire && (CanPlay(SongOfTime) || (LogicGtgFakeWall && CanUse("Hover Boots")))
+  });
+
+  Exit GerudoTrainingGrounds_MQ_BackAreas = Exit("Gerudo Training Grounds MQ Back Areas", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_EyeStatueChest,         []{return Bow;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_SecondIronKnuckleChest, []{return true;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_FlameCircleChest,       []{return CanUse("Hookshot") || Bow || HasExplosives;}),
+  }, {
+    //Exits
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_CentralMazeRight, []{return Hammer;}),
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_RightSide,        []{return CanUse("Longshot");}),
+  });
+
+  Exit GerudoTrainingGrounds_MQ_CentralMazeRight = Exit("Gerudo Training Grounds MQ Central Maze Right", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_MazeRightCentralChest, []{return true;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_MazeRightSideChest,    []{return true;}),
+    ItemLocationPairing(&GerudoTrainingGrounds_MQ_IceArrowsChest,        []{return SmallKeys(GerudoTrainingGroundsKeys, 3);}),
+  }, {
+    //Exits
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_Underwater, []{return CanUse("Longshot") || (CanUse("Hookshot") && Bow);}),
+    ExitPairing::Both(&GerudoTrainingGrounds_MQ_RightSide,  []{return CanUse("Hookshot");}),
+  });
+
+  Exit GanonsCastle_MQ_Lobby = Exit("Ganon's Castle MQ Lobby", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
+    //Exits
+    ExitPairing::Both(&OGC_Grounds,                 []{return true;}),
+    ExitPairing::Both(&GanonsCastle_MQ_ForestTrial, []{return true;}),
+    ExitPairing::Both(&GanonsCastle_MQ_FireTrial,   []{return true;}),
+    ExitPairing::Both(&GanonsCastle_MQ_WaterTrial,  []{return true;}),
+    ExitPairing::Both(&GanonsCastle_MQ_ShadowTrial, []{return true;}),
+    ExitPairing::Both(&GanonsCastle_MQ_SpiritTrial, []{return true;}),
+    ExitPairing::Both(&GanonsCastle_MQ_LightTrial,  []{return CanUse("Golden Gauntlets");}),
+    ExitPairing::Both(&GanonsCastle_Tower,          []{return (ForestTrialClear || ForestTrialSkip) &&
+                                                              (FireTrialClear   || FireTrialSkip)   &&
+                                                              (WaterTrialClear  || WaterTrialSkip)  &&
+                                                              (ShadowTrialClear || ShadowTrialSkip) &&
+                                                              (SpiritTrialClear || SpiritTrialSkip) &&
+                                                              (LightTrialClear  || LightTrialSkip);}),
+    ExitPairing::Both(&GanonsCastle_MQ_DekuScrubs,  []{return LogicLensCastleMQ || CanUse("Lens of Truth");}),
+  });
+
+  Exit GanonsCastle_MQ_DekuScrubs = Exit("Ganon's Castle MQ Deku Scrubs", "Ganon's Castle", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&FreeFairies, []{return true;}),
+  }, {
+    //Locations
+    ItemLocationPairing(&GanonsCastle_MQ_DekuScrubCenterLeft,  []{return true;}),
+    ItemLocationPairing(&GanonsCastle_MQ_DekuScrubCenter,      []{return true;}),
+    ItemLocationPairing(&GanonsCastle_MQ_DekuScrubCenterRight, []{return true;}),
+    ItemLocationPairing(&GanonsCastle_MQ_DekuScrubLeft,        []{return true;}),
+    ItemLocationPairing(&GanonsCastle_MQ_DekuScrubRight,       []{return true;}),
+  }, {});
+
+  Exit GanonsCastle_MQ_ForestTrial = Exit("Ganon's Castle MQ Forest Trial", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&ForestTrialClear, []{return CanUse("Light Arrows") && CanPlay(SongOfTime);}),
+  }, {
+    //Locations
+    ItemLocationPairing(&GanonsCastle_MQ_ForestTrialEyeSwitchChest,       []{return Bow;}),
+    ItemLocationPairing(&GanonsCastle_MQ_ForestTrialFrozenEyeSwitchChest, []{return HasFireSource;}),
+    ItemLocationPairing(&GanonsCastle_MQ_ForestTrialFreestandingKey,      []{return Hookshot;}),
+  }, {});
+
+  Exit GanonsCastle_MQ_FireTrial = Exit("Ganon's Castle MQ Fire Trial", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&FireTrialClear, []{return CanUse("Goron Tunic") && CanUse("Golden Gauntlets") && CanUse("Light Arrows") && (CanUse("Longshot") || HoverBoots);}),
+      //Trick: CanUse("Goron Tunic") && CanUse("Golden Gauntlets") && CanUse("Light Arrows") && (CanUse("Longshot") || HoverBoots || (LogicFireTrialMQ && CanUse("Hookshot")))
+  }, {}, {});
+
+  Exit GanonsCastle_MQ_WaterTrial = Exit("Ganon's Castle MQ Water Trial", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&WaterTrialClear, []{return BlueFire && CanUse("Light Arrows") && SmallKeys(GanonsCastleKeys, 3);}),
+    EventPairing(&BlueFireAccess,  []{return BlueFireAccess || HasBottle;}),
+  }, {
+    //Locations
+    ItemLocationPairing(&GanonsCastle_MQ_WaterTrialChest, []{return BlueFire;}),
+  }, {});
+
+  Exit GanonsCastle_MQ_ShadowTrial = Exit("Ganon's Castle MQ Shadow Trial", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&ShadowTrialClear, []{return CanUse("Light Arrows") && (LogicLensCastleMQ || CanUse("Lens of Truth")) && (HoverBoots || (Hookshot && HasFireSource));}),
+      //Trick: CanUse("Light Arrows") && (LogicLensCastleMQ || CanUse("Lens of Truth")) && (HoverBoots || (Hookshot && (HasFireSource || LogicShadowTrialMQ)))
+  }, {
+    //Locations
+    ItemLocationPairing(&GanonsCastle_MQ_ShadowTrialBombFlowerChest, []{return (Bow && (Hookshot || HoverBoots)) || (HoverBoots && (LogicLensCastleMQ || CanUse("Lens of Truth")) && (HasExplosives || GoronBracelet || CanUse("Dins Fire")));}),
+    ItemLocationPairing(&GanonsCastle_MQ_ShadowTrialEyeSwitchChest,  []{return Bow && (LogicLensCastleMQ || CanUse("Lens of Truth")) && (HoverBoots || (Hookshot && HasFireSource));}),
+      //Trick: Bow && (LogicLensCastleMQ || CanUse("Lens of Truth")) && (HoverBoots || (Hookshot && (HasFireSource || LogicShadowTrialMQ)))
+  }, {});
+
+  Exit GanonsCastle_MQ_SpiritTrial = Exit("Ganon's Castle MQ Spirit Castle", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&SpiritTrialClear, []{return CanUse("Light Arrows") && Hammer && HasBombchus && FireArrows && MirrorShield;}),
+    EventPairing(&NutPot,           []{return NutPot || (Hammer && HasBombchus && CanUse("Fire Arrows") && MirrorShield);}),
+  }, {
+    //Locations
+    ItemLocationPairing(&GanonsCastle_MQ_SpiritTrialFirstChest,           []{return Bow && Hammer;}),
+    ItemLocationPairing(&GanonsCastle_MQ_SpiritTrialInvisibleChest,       []{return Bow && Hammer && HasBombchus && (LogicLensCastleMQ || CanUse("Lens of Truth"));}),
+    ItemLocationPairing(&GanonsCastle_MQ_SpiritTrialSunFrontLeftChest,    []{return Hammer && HasBombchus && CanUse("Fire Arrows") && MirrorShield;}),
+    ItemLocationPairing(&GanonsCastle_MQ_SpiritTrialSunBackLeftChest,     []{return Hammer && HasBombchus && CanUse("Fire Arrows") && MirrorShield;}),
+    ItemLocationPairing(&GanonsCastle_MQ_SpiritTrialGoldenGauntletsChest, []{return Hammer && HasBombchus && CanUse("Fire Arrows") && MirrorShield;}),
+    ItemLocationPairing(&GanonsCastle_MQ_SpiritTrialSunBackRightChest,    []{return Hammer && HasBombchus && CanUse("Fire Arrows") && MirrorShield;}),
+  }, {});
+
+  Exit GanonsCastle_MQ_LightTrial = Exit("Ganon's Castle MQ Light Trial", "Ganons Castle", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&LightTrialClear, []{return CanUse("Light Arrows") && SmallKeys(GanonsCastleKeys, 3) && (LogicLensCastleMQ || CanUse("Lens of Truth")) && Hookshot;}),
+      //Trick: CanUse("Light Arrows") && SmallKeys(GanonsCastleKeys, 3) && (LogicLensCastleMQ || CanUse("Lens of Truth")) && (Hookshot || LogicLightTrialMQ)
+  }, {
+    //Locations
+    ItemLocationPairing(&GanonsCastle_MQ_LightTrialLullabyChest, []{return CanPlay(ZeldasLullaby);}),
   }, {});
 
   /*

@@ -449,7 +449,7 @@ ItemLocation GerudoTrainingGrounds_MQ_BeforeHeavyBlockChest   = ItemLocation::Ch
 ItemLocation GerudoTrainingGrounds_MQ_EyeStatueChest          = ItemLocation::Chest      (0x0B, 0x03, "Gerudo Training Grounds MQ Eye Statue Chest",           {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_FlameCircleChest        = ItemLocation::Chest      (0x0B, 0x0E, "Gerudo Training Grounds MQ Flame Circle Chest",         {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_MQ_SecondIronKnuckleChest  = ItemLocation::Chest      (0x0B, 0x12, "Gerudo Training Grounds MQ Second Iron Knuckle Chest",  {Category::cGerudoTrainingGrounds,});
-ItemLocation GerudoTrainingGrounds_MQ_DinalfosChest           = ItemLocation::Chest      (0x0B, 0x01, "Gerudo Training Grounds MQ Dinalfos Chest",             {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
+ItemLocation GerudoTrainingGrounds_MQ_DinolfosChest           = ItemLocation::Chest      (0x0B, 0x01, "Gerudo Training Grounds MQ Dinolfos Chest",             {Category::cGerudoTrainingGrounds, Category::cVanillaSmallKey});
 ItemLocation GerudoTrainingGrounds_MQ_IceArrowsChest          = ItemLocation::Chest      (0x0B, 0x04, "Gerudo Training Grounds MQ Ice Arrows Chest",           {Category::cGerudoTrainingGrounds, Category::cSongDungeonReward});
 ItemLocation GerudoTrainingGrounds_MQ_MazeRightCentralChest   = ItemLocation::Chest      (0x0B, 0x05, "Gerudo Training Grounds MQ Maze Right Central Chest",   {Category::cGerudoTrainingGrounds,});
 ItemLocation GerudoTrainingGrounds_MQ_MazePathFirstChest      = ItemLocation::Chest      (0x0B, 0x06, "Gerudo Training Grounds MQ Maze Path First Chest",      {Category::cGerudoTrainingGrounds,});
@@ -1212,7 +1212,7 @@ const std::vector<ItemLocation*> GTG_MQ = {
   &GerudoTrainingGrounds_MQ_EyeStatueChest,
   &GerudoTrainingGrounds_MQ_FlameCircleChest,
   &GerudoTrainingGrounds_MQ_SecondIronKnuckleChest,
-  &GerudoTrainingGrounds_MQ_DinalfosChest,
+  &GerudoTrainingGrounds_MQ_DinolfosChest,
   &GerudoTrainingGrounds_MQ_IceArrowsChest,
   &GerudoTrainingGrounds_MQ_MazeRightCentralChest,
   &GerudoTrainingGrounds_MQ_MazePathFirstChest,
