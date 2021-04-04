@@ -242,7 +242,9 @@ namespace Logic {
   bool CanJumpslash     = false;
   bool CanUseProjectile = false;
 
-  //Bridge Requirements
+  //Bridge and LACS Requirements
+  u8 MedallionCount          = 0;
+  u8 StoneCount              = 0;
   bool HasAllStones          = false;
   bool HasAllMedallions      = false;
   bool CanBuildRainbowBridge = false;
@@ -459,20 +461,24 @@ namespace Logic {
     CanJumpslash     = IsAdult || Sticks || KokiriSword;
     CanUseProjectile = HasExplosives || (IsAdult && (Bow || Hookshot)) || (IsChild && (Slingshot || Boomerang));
 
-    //Bridge Requirements
-    HasAllStones          = KokiriEmerald   && GoronRuby     && ZoraSapphire;
-    HasAllMedallions      = ForestMedallion && FireMedallion && WaterMedallion && ShadowMedallion && SpiritMedallion && LightMedallion;
-    CanBuildRainbowBridge = Bridge.Is(RAINBOWBRIDGE_OPEN)       ||
-                           (Bridge.Is(RAINBOWBRIDGE_VANILLA)    && ShadowMedallion && SpiritMedallion && LightArrows) ||
-                           (Bridge.Is(RAINBOWBRIDGE_STONES)     && HasAllStones) ||
-                           (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && HasAllMedallions) ||
-                           (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && HasAllStones && HasAllMedallions) ||
+    //Bridge and LACS Requirements
+    MedallionCount        = (ForestMedallion ? 1:0) + (FireMedallion ? 1:0) + (WaterMedallion ? 1:0) + (SpiritMedallion ? 1:0) + (ShadowMedallion ? 1:0) + (LightMedallion ? 1:0);
+    StoneCount            = (KokiriEmerald ? 1:0) + (GoronRuby ? 1:0) + (ZoraSapphire ? 1:0);
+    HasAllStones          = StoneCount == 3;
+    HasAllMedallions      = MedallionCount == 6;
+
+    CanBuildRainbowBridge = Bridge.Is(RAINBOWBRIDGE_OPEN)                                                                         ||
+                           (Bridge.Is(RAINBOWBRIDGE_VANILLA)    && ShadowMedallion && SpiritMedallion && LightArrows)             ||
+                           (Bridge.Is(RAINBOWBRIDGE_STONES)     && StoneCount >= BridgeStoneCount.Value<u8>())                    ||
+                           (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && MedallionCount >= BridgeMedallionCount.Value<u8>())            ||
+                           (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && StoneCount + MedallionCount >= BridgeDungeonCount.Value<u8>()) ||
                            (Bridge.Is(RAINBOWBRIDGE_TOKENS)     && GoldSkulltulaTokens >= BridgeTokenCount.Value<u8>());
 
-    CanTriggerLACS = (LACSCondition == LACSCONDITION_VANILLA    && ShadowMedallion && SpiritMedallion) ||
-                     (LACSCondition == LACSCONDITION_STONES     && HasAllStones)                       ||
-                     (LACSCondition == LACSCONDITION_MEDALLIONS && HasAllMedallions)                   ||
-                     (LACSCondition == LACSCONDITION_DUNGEONS   && HasAllStones && HasAllMedallions);
+    CanTriggerLACS = (LACSCondition == LACSCONDITION_VANILLA    && ShadowMedallion && SpiritMedallion)                          ||
+                     (LACSCondition == LACSCONDITION_STONES     && StoneCount >= LACSStoneCount.Value<u8>())                    ||
+                     (LACSCondition == LACSCONDITION_MEDALLIONS && MedallionCount >= LACSMedallionCount.Value<u8>())            ||
+                     (LACSCondition == LACSCONDITION_DUNGEONS   && StoneCount + MedallionCount >= LACSDungeonCount.Value<u8>()) ||
+                     (LACSCondition == LACSCONDITION_TOKENS     && GoldSkulltulaTokens >= LACSTokenCount.Value<u8>());
 
   }
 

@@ -1,5 +1,6 @@
 #include "z3D/z3D.h"
 #include "settings.h"
+#include "savefile.h"
 
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
@@ -205,4 +206,22 @@ void SaveFile_SwapFaroresWind(void) {
         curFWData++;
         storedFWData += sizeof(SaveSceneFlags);
     }
+}
+
+u8 SaveFile_GetMedallionCount(void) {
+  u8 count = 0;
+
+  for (u8 i = 0; i <= 5; i++) {
+    count += (gSaveContext.questItems >> i) & 0x1;
+  }
+  return count;
+}
+
+u8 SaveFile_GetStoneCount(void) {
+  u8 count = 0;
+
+  for (u8 i = 18; i <= 20; i++) {
+    count += (gSaveContext.questItems >> i) & 0x1;
+  }
+  return count;
 }

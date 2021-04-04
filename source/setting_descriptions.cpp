@@ -39,7 +39,7 @@ string_view kakGateClosed             = "The gate and the Happy Mask Shop both r
 string_view doorOfTimeDesc            = "The Door of Time starts opened instead of needing\n"
                                         "to play the Song of Time. If closed, only an\n"   //
                                         "Ocarina and the Song of Time need to be found to\n"
-                                        "open the Door of Time";                           //
+                                        "open the Door of Time.";                          //
 /*------------------------------                                                           //
 |       ZORA'S FOUNTAIN        |                                                           //
 ------------------------------*/                                                           //
@@ -68,18 +68,26 @@ string_view gerudoOpen                = "The carpenters are rescued from the sta
 string_view bridgeOpen                = "The Rainbow Bridge is always present.";           //
 string_view bridgeVanilla             = "The Rainbow Bridge requires Shadow and Spirit\n"  //
                                         "Medallions as well as Light Arrows.";             //
-string_view bridgeStones              = "The Rainbow Bridge requires the Kokiri's Emerald,\n"
-                                        "Goron's Ruby and Zora's Sapphire.";               //
-string_view bridgeMedallions          = "The Rainbow Bridge requires Forest, Fire, Water,\n"
-                                        "Shadow, Spirit, and Light Medallions";            //
-string_view bridgeDungeons            = "The Rainbow Bridge requires beating every dungeon.";
-string_view bridgeTokens              = "The Rainbow Bridge requires collecting a certain\n"
-                                        "number of Gold Skulltula Tokens.";                //
+string_view bridgeStones              = "The Rainbow Bridge requires collecting a\n"       //
+                                        "configurable number of Spiritual Stones.";        //
+string_view bridgeMedallions          = "The Rainbow Bridge requires collecting a\n"       //
+                                        "configurable number of Medallions.";              //
+string_view bridgeDungeons            = "The Rainbow Bridge requires collecting a\n"       //
+                                        "configurable number of Dungeon Rewards.";         //
+string_view bridgeTokens              = "The Rainbow Bridge requires collecting a\n"       //
+                                        "configurable number of Gold Skulltula Tokens.";   //
 /*------------------------------                                                           //
-|      BRIDGE TOKEN COUNT      |                                                           //
+|      BRIDGE CONDITIONS       |                                                           //
 ------------------------------*/                                                           //
-string_view bridgeTokenCountDesc      = "Set the number of Gold Skulltula Tokens for the\n"//
+string_view bridgeStoneCountDesc      = "Set the number of Spiritual Stones required to\n" //
+                                        "spawn the Rainbow Bridge.";                       //
+string_view bridgeMedallionCountDesc  = "Set the number of Medallions required to spawn the"
                                         "Rainbow Bridge.";                                 //
+string_view bridgeDungeonCountDesc    = "Set the number of Dungeon Rewards (Spiritual\n"   //
+                                        "Stones and Medallions) required to spawn the\n"   //
+                                        "Rainbow Bridge.";                                 //
+string_view bridgeTokenCountDesc      = "Set the number of Gold Skulltula Tokens required\n"
+                                        "to spawn the Rainbow Bridge.";                    //
 /*------------------------------                                                           //
 |     RANDOM GANONS TRIALS     |                                                           //
 ------------------------------*/                                                           //
@@ -88,7 +96,7 @@ string_view randomGanonsTrialsDesc    = "Sets a random number of required trials
 /*------------------------------                                                           //
 |     GANON'S TRIAL COUNT      |                                                           //
 ------------------------------*/                                                           //
-string_view ganonsTrialCountDesc      = "Sets the number of trials required to enter\n"    //
+string_view ganonsTrialCountDesc      = "Set the number of trials required to enter\n"     //
                                         "Ganon's Tower. Trials will be randomly selected.";//
 /*------------------------------                                                           //
 |         STARTING AGE         |                                                           //
@@ -282,6 +290,18 @@ string_view ganonKeyAnywhere          = "Ganon's Castle Boss Key can appear anyw
 string_view ganonKeyLACS              = "These settings put the boss key on the Light Arrow"
                                         "Cutscene location, from Zelda in Temple of Time as"
                                         "adult, with differing requirements.";             //
+/*------------------------------                                                           //
+|        LACS CONDITIONS       |                                                           //
+------------------------------*/                                                           //
+string_view lacsMedallionCountDesc    = "Set the number of Medallions required to trigger\n"
+                                        "the Light Arrow Cutscene.";                       //
+string_view lacsStoneCountDesc        = "Set the number of Spiritual Stones required to\n" //
+                                        "trigger the Light Arrow Cutscene.";               //
+string_view lacsDungeonCountDesc      = "Set the number of Dungeon Rewards (Spiritual\n"   //
+                                        "Stones and Medallions) required to trigger the\n" //
+                                        "Light Arrow Cutscene.";                           //
+string_view lacsTokenCountDesc        = "Set the number of Gold Skulltula Tokens required\n"
+                                        "to trigger the Light Arrow Cutscene.";            //
 /*------------------------------                                                           //
 |      SKIP CHILD STEALTH      |                                                           //
 ------------------------------*/                                                           //
