@@ -515,6 +515,15 @@ namespace Exits {
   extern Exit SpiritTemple_OutdoorHands;
   extern Exit SpiritTemple_BeyondCentralLockedDoor;
   extern Exit SpiritTemple_BeyondFinalLockedDoor;
+  //Spirit Temple MQ
+  extern Exit SpiritTemple_MQ_Lobby;
+  extern Exit SpiritTemple_MQ_Child;
+  extern Exit SpiritTemple_MQ_Adult;
+  extern Exit SpiritTemple_MQ_Shared;
+  extern Exit SpiritTemple_MQ_LowerAdult;
+  extern Exit SpiritTemple_MQ_BossArea;
+  extern Exit SpiritTemple_MQ_MirrorShieldHand;
+  extern Exit SpiritTemple_MQ_SilverGauntletsHand;
 
   //Shadow Temple
   extern Exit ShadowTemple_Entryway;
@@ -523,14 +532,33 @@ namespace Exits {
   extern Exit ShadowTemple_HugePit;
   extern Exit ShadowTemple_WindTunnel;
   extern Exit ShadowTemple_BeyondBoat;
+  //Shadow Temple MQ
+  extern Exit ShadowTemple_MQ_Entryway;
+  extern Exit ShadowTemple_MQ_Beginning;
+  extern Exit ShadowTemple_MQ_DeadHandArea;
+  extern Exit ShadowTemple_MQ_FirstBeamos;
+  extern Exit ShadowTemple_MQ_UpperHugePit;
+  extern Exit ShadowTemple_MQ_LowerHugePit;
+  extern Exit ShadowTemple_MQ_WindTunnel;
+  extern Exit ShadowTemple_MQ_BeyondBoat;
+  extern Exit ShadowTemple_MQ_InvisibleMaze;
 
   //Bottom of the Well
   extern Exit BottomOfTheWell;
   extern Exit BottomOfTheWell_MainArea;
+  //Bottom of the Well MQ
+  extern Exit BottomOfTheWell_MQ;
+  extern Exit BottomOfTheWell_MQ_Perimeter;
+  extern Exit BottomOfTheWell_MQ_Middle;
 
   //Ice Cavern
   extern Exit IceCavern_Beginning;
   extern Exit IceCavern_Main;
+  //Ice Cavern MQ
+  extern Exit IceCavern_MQ_Beginning;
+  extern Exit IceCavern_MQ_MapRoom;
+  extern Exit IceCavern_MQ_IronBootsRegion;
+  extern Exit IceCavern_MQ_CompassRoom;
 
   //Gerudo Training Grounds
   extern Exit GerudoTrainingGrounds_Lobby;

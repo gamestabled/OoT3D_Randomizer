@@ -339,7 +339,7 @@ ItemLocation SpiritTemple_MQ_StatueRoomInvisibleChest         = ItemLocation::Ch
 ItemLocation SpiritTemple_MQ_SilverBlockHallwayChest          = ItemLocation::Chest      (0x06, 0x1C, "Spirit Temple MQ Silver Block Hallway Chest",        {Category::cSpiritTemple, Category::cVanillaSmallKey});
 ItemLocation SpiritTemple_MQ_SunBlockRoomChest                = ItemLocation::Chest      (0x06, 0x01, "Spirit Temple MQ Sun Block Room Chest",              {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_SymphonyRoomChest                = ItemLocation::Chest      (0x06, 0x07, "Spirit Temple MQ Symphony Room Chest",               {Category::cSpiritTemple,});
-ItemLocation SpiritTemple_MQ_LeaverRoomChest                  = ItemLocation::Chest      (0x06, 0x04, "Spirit Temple MQ Leaver Room Chest",                 {Category::cSpiritTemple,});
+ItemLocation SpiritTemple_MQ_LeeverRoomChest                  = ItemLocation::Chest      (0x06, 0x04, "Spirit Temple MQ Leever Room Chest",                 {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_BeamosRoomChest                  = ItemLocation::Chest      (0x06, 0x19, "Spirit Temple MQ Beamos Room Chest",                 {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_ChestSwitchChest                 = ItemLocation::Chest      (0x06, 0x18, "Spirit Temple MQ Chest Switch Chest",                {Category::cSpiritTemple,});
 ItemLocation SpiritTemple_MQ_BossKeyChest                     = ItemLocation::Chest      (0x06, 0x05, "Spirit Temple MQ Boss Key Chest",                    {Category::cSpiritTemple, Category::cVanillaBossKey});
@@ -1071,7 +1071,7 @@ const std::vector<ItemLocation*> SpT_MQ = {
   &SpiritTemple_MQ_SilverBlockHallwayChest,
   &SpiritTemple_MQ_SunBlockRoomChest,
   &SpiritTemple_MQ_SymphonyRoomChest,
-  &SpiritTemple_MQ_LeaverRoomChest,
+  &SpiritTemple_MQ_LeeverRoomChest,
   &SpiritTemple_MQ_BeamosRoomChest,
   &SpiritTemple_MQ_ChestSwitchChest,
   &SpiritTemple_MQ_BossKeyChest,

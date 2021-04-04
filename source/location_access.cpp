@@ -2842,6 +2842,255 @@ namespace Exits { //name, scene, hint, events, locations, exits
       //Trick: LogicWaterMQLockedGS || (SmallKeys(WaterTempleKeys, 2) && (HoverBoots || CanUse("Scarecrow") || LogicWaterNorthBasementLedgeJump))
   }, {});
 
+  Exit SpiritTemple_MQ_Lobby = Exit("Spirit Temple MQ Lobby", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_MQ_EntranceFrontLeftChest, []{return true;}),
+    ItemLocationPairing(&SpiritTemple_MQ_EntranceBackLeftChest,  []{return CanBlastOrSmash && (CanUse("Slingshot") || CanUse("Bow"));}),
+    ItemLocationPairing(&SpiritTemple_MQ_EntranceBackRightChest, []{return HasBombchus || CanUse("Bow") || CanUse("Hookshot") || CanUse("Slingshot") || CanUse("Boomerang");}),
+  }, {
+    //Exits
+    ExitPairing::Both(&Colossus_Main,         []{return true;}),
+    ExitPairing::Both(&SpiritTemple_MQ_Child, []{return IsChild;}),
+    ExitPairing::Both(&SpiritTemple_MQ_Adult, []{return HasBombchus && CanUse("Longshot") && CanUse("Silver Gauntlets");}),
+  });
+
+  Exit SpiritTemple_MQ_Child = Exit("Spirit Temple MQ Child", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&FairyPot, []{return (Sticks || KokiriSword) && HasBombchus && Slingshot;}),
+  }, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_MQ_ChildHammerSwitchChest, []{return SpiritTemple_MQ_Adult.Adult() && SmallKeys(SpiritTempleKeys, 7) && Hammer;}),
+    ItemLocationPairing(&SpiritTemple_MQ_MapRoomEnemyChest, []{return (Sticks || KokiriSword) && HasBombchus && Slingshot && CanUse("Dins Fire");}),
+    ItemLocationPairing(&SpiritTemple_MQ_MapChest, []{return Sticks || KokiriSword || Bombs;}),
+    ItemLocationPairing(&SpiritTemple_MQ_SilverBlockHallwayChest, []{return HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse("Dins Fire") || (SpiritTemple_MQ_Adult.Adult() && CanUse("Fire Arrows")));}),
+      //Trick: HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse("Dins Fire") || (SpiritTemple_MQ_Adult.Adult() && (CanUse("Fire Arrows") || (LogicSpiritMQFrozenEye && CanUse("Bow") && CanPlay(SongOfTime)))))
+  }, {
+    //Exits
+    ExitPairing::Both(&SpiritTemple_MQ_Shared, []{return HasBombchus && SmallKeys(SpiritTempleKeys, 2);}),
+  });
+
+  Exit SpiritTemple_MQ_Adult = Exit("Spirit Temple MQ Adult", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_MQ_ChildClimbSouthChest,     []{return SmallKeys(SpiritTempleKeys, 7);}),
+    ItemLocationPairing(&SpiritTemple_MQ_StatueRoomLullabyChest,   []{return CanPlay(ZeldasLullaby);}),
+    ItemLocationPairing(&SpiritTemple_MQ_StatueRoomInvisibleChest, []{return (LogicLensSpiritMQ || CanUse("Lens of Truth"));}),
+    ItemLocationPairing(&SpiritTemple_MQ_BeamosRoomChest,          []{return SmallKeys(SpiritTempleKeys, 5);}),
+    ItemLocationPairing(&SpiritTemple_MQ_ChestSwitchChest,         []{return SmallKeys(SpiritTempleKeys, 5) && CanPlay(SongOfTime);}),
+    ItemLocationPairing(&SpiritTemple_MQ_BossKeyChest,             []{return SmallKeys(SpiritTempleKeys, 5) && CanPlay(SongOfTime) && MirrorShield;}),
+    ItemLocationPairing(&SpiritTemple_MQ_GS_NineThronesRoomWest,   []{return SmallKeys(SpiritTempleKeys, 7);}),
+    ItemLocationPairing(&SpiritTemple_MQ_GS_NineThronesRoomNorth,  []{return SmallKeys(SpiritTempleKeys, 7);}),
+  }, {
+    //Exits
+    ExitPairing::Both(&SpiritTemple_MQ_LowerAdult,       []{return MirrorShield && CanUse("Fire Arrows");}),
+      //Trick: MirrorShield && (CanUse("Fire Arrows") || (LogicSpiritMQLowerAdult && CanUse("Dins Fire") && Bow)) 
+    ExitPairing::Both(&SpiritTemple_MQ_Shared,           []{return true;}),
+    ExitPairing::Both(&SpiritTemple_MQ_BossArea,         []{return SmallKeys(SpiritTempleKeys, 6) && CanPlay(ZeldasLullaby) && Hammer;}),
+    ExitPairing::Both(&SpiritTemple_MQ_MirrorShieldHand, []{return SmallKeys(SpiritTempleKeys, 5) && CanPlay(SongOfTime) && (LogicLensSpiritMQ || CanUse("Lens of Truth"));}),
+  });
+
+  Exit SpiritTemple_MQ_Shared = Exit("Spirit Temple MQ Shared", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_MQ_ChildClimbNorthChest, []{return SmallKeys(SpiritTempleKeys, 6);}),
+    ItemLocationPairing(&SpiritTemple_MQ_CompassChest,         []{return (CanUse("Slingshot") && SmallKeys(SpiritTempleKeys, 7)) || CanUse("Bow") || (Bow && Slingshot);}),
+    ItemLocationPairing(&SpiritTemple_MQ_SunBlockRoomChest,    []{return CanPlay(SongOfTime) || IsAdult;}),
+      //Trick: CanPlay(SongOfTime) || LogicSpiritMQSunBlockSoT || IsAdult
+    ItemLocationPairing(&SpiritTemple_MQ_GS_SunBlockRoom,      []{return IsAdult;}),
+      //Trick: (LogicSpiritMQSunBlockGS && Boomerange && (CanPlay(SongOfTime) || LogicSpiritMQSunBlockSoT)) || IsAdult
+   }, {
+    //Exits
+    ExitPairing::Both(&SpiritTemple_MQ_SilverGauntletsHand, []{return (SmallKeys(SpiritTempleKeys, 7) && (CanPlay(SongOfTime) || IsAdult)) || (SmallKeys(SpiritTempleKeys, 4) && CanPlay(SongOfTime) && (LogicLensSpiritMQ || CanUse("Lens of Truth")));}),
+      //Trick: (SmallKeys(SpiritTempleKeys, 7) && (CanPlay(SongOfTime) || LogicSpiritMQSunBlockSoT || IsAdult)) || (SmallKeys(SpiritTempleKeys, 4) && CanPlay(SongOfTime) && (LogicLensSpiritMQ || CanUse("Lens of Truth")))
+    ExitPairing::Both(&Colossus_Main,                       []{return (SmallKeys(SpiritTempleKeys, 7) && (CanPlay(SongOfTime) || IsAdult)) || (SmallKeys(SpiritTempleKeys, 4) && CanPlay(SongOfTime) && (LogicLensSpiritMQ || CanUse("Lens of Truth")) && IsAdult);}),
+      //Trick: (SmallKeys(SpiritTempleKeys, 7) && (CanPlay(SongOfTime) || LogicSpiritMQSunBlockSoT || IsAdult)) || (SmallKeys(SpiritTempleKeys, 4) && CanPlay(SongOfTime) && (LogicLensSpiritMQ || CanUse("Lens of Truth")) && IsAdult)
+  });
+
+  Exit SpiritTemple_MQ_LowerAdult = Exit("Spirit Temple MQ Lower Adult", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_MQ_LeeverRoomChest,         []{return true;}),
+    ItemLocationPairing(&SpiritTemple_MQ_SymphonyRoomChest,       []{return SmallKeys(SpiritTempleKeys, 7) && Hammer && Ocarina && SongOfTime && EponasSong && SunsSong && SongOfStorms && ZeldasLullaby;}),
+    ItemLocationPairing(&SpiritTemple_MQ_EntranceFrontRightChest, []{return Hammer;}),
+    ItemLocationPairing(&SpiritTemple_MQ_GS_LeeverRoom,           []{return true;}),
+    ItemLocationPairing(&SpiritTemple_MQ_GS_SymphonyRoom,         []{return SmallKeys(SpiritTempleKeys, 7) && Hammer && Ocarina && SongOfTime && EponasSong && SunsSong && SongOfStorms && ZeldasLullaby;}),
+  }, {});
+
+  Exit SpiritTemple_MQ_BossArea = Exit("Spirit Temple MQ Boss Area", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_MQ_MirrorPuzzleInvisibleChest, []{return LogicLensSpiritMQ || CanUse("Lens of Truth");}),
+    ItemLocationPairing(&SpiritTemple_TwinrovaHeart,                 []{return MirrorShield && BossKeySpiritTemple;}),
+    ItemLocationPairing(&Twinrova,                                   []{return MirrorShield && BossKeySpiritTemple;}),
+  }, {});
+
+  Exit SpiritTemple_MQ_MirrorShieldHand = Exit("Spirit Temple MQ Mirror Shield Hand", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_MirrorShieldChest, []{return true;}),
+  }, {});
+
+  Exit SpiritTemple_MQ_SilverGauntletsHand = Exit("Spirit Temple MQ Silver Gauntlets Hand", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&SpiritTemple_SilverGauntletsChest, []{return true;}),
+  }, {});
+
+  Exit ShadowTemple_MQ_Entryway = Exit("Shadow Temple MQ Entryway", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
+    //Exits
+    ExitPairing::Both(&GY_WarpPadRegion,          []{return true;}),
+    ExitPairing::Both(&ShadowTemple_MQ_Beginning, []{return (LogicLensShadowMQ || CanUse("Lens of Truth")) && (CanUse("Hover Boots") || CanUse("Hookshot"));}),
+  });
+
+  Exit ShadowTemple_MQ_Beginning = Exit("Shadow Temple MQ Beginning", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
+    //Exits
+    ExitPairing::Both(&ShadowTemple_MQ_Entryway,     []{return true;}),
+    ExitPairing::Both(&ShadowTemple_MQ_FirstBeamos,  []{return CanUse("Fire Arrows") || HoverBoots;}),
+      //Trick: CanUse("Fire Arrows") || HoverBoots || (LogicShadowMQGap && CanUse("Longshot"))
+    ExitPairing::Both(&ShadowTemple_MQ_DeadHandArea, []{return HasExplosives && SmallKeys(ShadowTempleKeys, 6);}),
+  });
+
+  Exit ShadowTemple_MQ_DeadHandArea = Exit("Shadow Temple MQ Dead Hand Area", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&ShadowTemple_MQ_CompassChest,    []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_HoverBootsChest, []{return CanPlay(SongOfTime) && Bow;}),
+  }, {});
+
+  Exit ShadowTemple_MQ_FirstBeamos = Exit("Shadow Temple MQ First Beamos", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&ShadowTemple_MQ_MapChest,               []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_EarlyGibdosChest,       []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_NearShipInvisibleChest, []{return true;}),
+  }, {
+    //Exits
+    ExitPairing::Both(&ShadowTemple_MQ_UpperHugePit, []{return HasExplosives && SmallKeys(ShadowTempleKeys, 2);}),
+  });
+
+  Exit ShadowTemple_MQ_UpperHugePit = Exit("Shadow Temple MQ Upper Huge Pit", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&ShadowTemple_MQ_InvisibleBladesVisibleChest,   []{return CanPlay(SongOfTime);}),
+      //Trick: CanPlay(SongOfTime) || (LogicShadowMQInvisibleBlades && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO))
+    ItemLocationPairing(&ShadowTemple_MQ_InvisibleBladesInvisibleChest, []{return CanPlay(SongOfTime);}),
+      //Trick: CanPlay(SongOfTime) || (LogicShadowMQInvisibleBlades && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO))
+  }, {
+    //Exits
+    ExitPairing::Both(&ShadowTemple_MQ_LowerHugePit, []{return HasFireSource;}),
+      //Trick: HasFireSource || LogicShadowMQHugePit
+  });
+
+  Exit ShadowTemple_MQ_LowerHugePit = Exit("Shadow Temple MQ Lower Huge Pit", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&ShadowTemple_MQ_BeamosSilverRupeesChest,  []{return CanUse("Longshot");}),
+    ItemLocationPairing(&ShadowTemple_MQ_FallingSpikesLowerChest,  []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_FallingSpikesUpperChest,  []{return (LogicShadowUmbrella && HoverBoots) || GoronBracelet;}),
+    ItemLocationPairing(&ShadowTemple_MQ_FallingSpikesSwitchChest, []{return (LogicShadowUmbrella && HoverBoots) || GoronBracelet;}),
+    ItemLocationPairing(&ShadowTemple_MQ_InvisibleSpikesChest,     []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && (LogicLensShadowBackMQ || CanUse("Lens of Truth"));}),
+    ItemLocationPairing(&ShadowTemple_MQ_StalfosRoomChest,         []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && Hookshot && (LogicLensShadowBackMQ || CanUse("Lens of Truth"));}),
+    ItemLocationPairing(&ShadowTemple_MQ_GS_FallingSpikesRoom,     []{return Hookshot;}),
+  }, {
+    //Exits
+    ExitPairing::Both(&ShadowTemple_MQ_WindTunnel, []{return HoverBoots && (LogicLensShadowBackMQ || CanUse("Lens of Truth")) && Hookshot && SmallKeys(ShadowTempleKeys, 4);}),
+  });
+
+  Exit ShadowTemple_MQ_WindTunnel = Exit("Shadow Temple MQ Wind Tunnel", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&NutPot, []{return true;}),
+  }, {
+    //Locations
+    ItemLocationPairing(&ShadowTemple_MQ_WindHintChest,        []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_AfterWindEnemyChest,  []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_AfterWindHiddenChest, []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_GS_WindHintRoom,      []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_GS_AfterWind,         []{return true;}),
+  }, {
+    //Exits
+    ExitPairing::Both(&ShadowTemple_MQ_BeyondBoat, []{return CanPlay(ZeldasLullaby) && SmallKeys(ShadowTempleKeys, 5);}),
+  });
+
+  Exit ShadowTemple_MQ_BeyondBoat = Exit("Shadow Temple MQ Beyond Boat", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&ShadowTemple_BongoBongoHeart, []{return (Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple;}),
+    ItemLocationPairing(&BongoBongo,                   []{return (Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple;}),
+    ItemLocationPairing(&ShadowTemple_MQ_GS_AfterShip, []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_GS_NearBoss,  []{return Bow || (LogicShadowStatue && HasBombchus);}),
+  }, {
+    //Exits
+    ExitPairing::Both(&ShadowTemple_MQ_InvisibleMaze, []{return Bow && CanPlay(SongOfTime) && CanUse("Longshot");}),
+  });
+
+  Exit ShadowTemple_MQ_InvisibleMaze = Exit("Shadow Temple MQ Invisible Maze", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&ShadowTemple_MQ_SpikeWallsLeftChest, []{return CanUse("Dins Fire") && SmallKeys(ShadowTempleKeys, 6);}),
+    ItemLocationPairing(&ShadowTemple_MQ_BossKeyChest,        []{return CanUse("Dins Fire") && SmallKeys(ShadowTempleKeys, 6);}),
+    ItemLocationPairing(&ShadowTemple_MQ_BombFlowerChest,     []{return true;}),
+    ItemLocationPairing(&ShadowTemple_MQ_FreestandingKey,     []{return true;}),
+  }, {});
+
+  Exit BottomOfTheWell_MQ = Exit("Bottom of the Well MQ", "Bottom of the Well", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
+    //Exits
+    ExitPairing::Both(&Kak_Main,                     []{return true;}),
+    ExitPairing::Both(&BottomOfTheWell_MQ_Perimeter, []{return IsChild;}),
+  });
+
+  Exit BottomOfTheWell_MQ_Perimeter = Exit("Bottom of the Well MQ Perimeter", "Bottom of the Well", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    //EventPairing(&WallFairy, []{return Slingshot;}),
+  }, {
+    //Locations
+    ItemLocationPairing(&BottomOfTheWell_MQ_CompassChest,            []{return KokiriSword || (Sticks && LogicChildDeadhand);}),
+    ItemLocationPairing(&BottomOfTheWell_MQ_DeadHandFreestandingKey, []{return HasExplosives;}),
+      //Trick: HasExplosives || (LogicBotWMQDeadHandKey && Boomerang)
+    ItemLocationPairing(&BottomOfTheWell_MQ_GS_Basement,             []{return CanChildAttack;}),
+    ItemLocationPairing(&BottomOfTheWell_MQ_GS_CoffinRoom,           []{return CanChildAttack && SmallKeys(BottomOfTheWellKeys, 2);}),
+  }, {
+    //Exits
+    ExitPairing::Both(&BottomOfTheWell_MQ,        []{return true;}),
+    ExitPairing::Both(&BottomOfTheWell_MQ_Middle, []{return CanPlay(ZeldasLullaby);}),
+      //Trick: CanPlay(ZeldasLullaby) || (LogicBotWMQPits && HasExplosives)
+  });
+
+  Exit BottomOfTheWell_MQ_Middle = Exit("Bottom of the Well MQ Middle", "Bottom of the Well", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&BottomOfTheWell_MQ_MapChest,                     []{return true;}),
+    ItemLocationPairing(&BottomOfTheWell_MQ_LensOfTruthChest,             []{return HasExplosives && SmallKeys(BottomOfTheWellKeys, 2);}),
+    ItemLocationPairing(&BottomOfTheWell_MQ_EastInnerRoomFreestandingKey, []{return true;}),
+    ItemLocationPairing(&BottomOfTheWell_MQ_GS_WestInnerRoom,             []{return CanChildAttack && HasExplosives;}),
+      //Trick: CanChildAttack && (LogicBotWMQPits || HasExplosives)
+  }, {
+    //Exits
+    ExitPairing::Both(&BottomOfTheWell_MQ_Perimeter, []{return true;}),
+  });
+
+  Exit IceCavern_MQ_Beginning = Exit("Ice Cavern MQ Beginning", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&FairyPot, []{return true;}),
+  }, {}, {
+    //Exits
+    ExitPairing::Both(&ZF_Main,                      []{return true;}),
+    ExitPairing::Both(&IceCavern_MQ_MapRoom,         []{return IsAdult || CanUse("Dins Fire") || (HasExplosives && (CanUse("Sticks") || CanUse("Slingshot") || KokiriSword));}),
+    ExitPairing::Both(&IceCavern_MQ_CompassRoom,     []{return IsAdult && BlueFire;}),
+    ExitPairing::Both(&IceCavern_MQ_IronBootsRegion, []{return BlueFire;}),
+  });
+
+  Exit IceCavern_MQ_MapRoom = Exit("Ice Cavern MQ Map Room", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&BlueFireAccess, []{return true;}),
+  }, {
+    //Locations
+    ItemLocationPairing(&IceCavern_MQ_MapChest, []{return BlueFire && (IsAdult || CanUse("Sticks") || KokiriSword || CanUseProjectile);}),
+  }, {});
+
+  Exit IceCavern_MQ_IronBootsRegion = Exit("Ice Cavern MQ Iron Boots Region", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&IceCavern_MQ_IronBootsChest, []{return IsAdult;}),
+    ItemLocationPairing(&SheikInIceCavern,            []{return IsAdult;}),
+    ItemLocationPairing(&IceCavern_MQ_GS_IceBlock,    []{return IsAdult || CanChildAttack;}),
+    ItemLocationPairing(&IceCavern_MQ_GS_Scarecrow,   []{return CanUse("Scarecrow") || (HoverBoots && CanUse("Longshot"));}),
+      //Tricks: CanUse("Scarecrow") || (HoverBoots && CanUse("Longshot")) || (LogicIceMQScarecrow && IsAdult)
+  }, {});
+
+  Exit IceCavern_MQ_CompassRoom = Exit("Ice Cavern MQ Compass Room", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {
+    //Locations
+    ItemLocationPairing(&IceCavern_MQ_CompassChest,    []{return true;}),
+    ItemLocationPairing(&IceCavern_MQ_FreestandingPoH, []{return HasExplosives;}),
+    ItemLocationPairing(&IceCavern_MQ_GS_RedIce,       []{return CanPlay(SongOfTime);}),
+      //Trick: CanPlay(SongOfTime) || LogicIceMQRedIceGS
+  }, {});
+
   /*
   //Events
 }, {

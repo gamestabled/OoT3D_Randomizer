@@ -537,7 +537,7 @@ extern ItemLocation SpiritTemple_MQ_StatueRoomInvisibleChest;
 extern ItemLocation SpiritTemple_MQ_SilverBlockHallwayChest;
 extern ItemLocation SpiritTemple_MQ_SunBlockRoomChest;
 extern ItemLocation SpiritTemple_MQ_SymphonyRoomChest;
-extern ItemLocation SpiritTemple_MQ_LeaverRoomChest;
+extern ItemLocation SpiritTemple_MQ_LeeverRoomChest;
 extern ItemLocation SpiritTemple_MQ_BeamosRoomChest;
 extern ItemLocation SpiritTemple_MQ_ChestSwitchChest;
 extern ItemLocation SpiritTemple_MQ_BossKeyChest;
