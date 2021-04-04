@@ -2468,7 +2468,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit DodongosCavern_MQ_Beginning = Exit("Dodongos Cavern MQ Beginning", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
     //Exits
     ExitPairing::Both(&DodongosCavern_Entryway, []{return true;}),
-    ExitPairing::Both(&DodongosCavern_Lobby,    []{return CanBlastOrSmash || GoronBracelet;})
+    ExitPairing::Both(&DodongosCavern_MQ_Lobby, []{return CanBlastOrSmash || GoronBracelet;})
   });
 
   Exit DodongosCavern_MQ_Lobby = Exit("Dodongos Cavern MQ Lobby", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {
@@ -2549,7 +2549,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
     ItemLocationPairing(&JabuJabusBelly_MQ_BoomerangRoomSmallChest,   []{return true;}),
     ItemLocationPairing(&JabuJabusBelly_MQ_BoomerangChest,            []{return true;}),
     ItemLocationPairing(&JabuJabusBelly_MQ_GS_BoomerangChestRoom,     []{return CanPlay(SongOfTime);}),
-      //Trick: CanPlay(SongOfTime) || (LogicJabuMQSotGS && CanUse("Boomerang"))
+      //Trick: CanPlay(SongOfTime) || (LogicJabuMQSoTGS && CanUse("Boomerang"))
   }, {
     //Exits
     ExitPairing::Both(&JabuJabusBelly_MQ_Beginning, []{return true;}),
@@ -2560,8 +2560,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
     //Locations
     ItemLocationPairing(&JabuJabusBelly_MQ_FallingLikeLikeRoomChest, []{return true;}),
     ItemLocationPairing(&JabuJabusBelly_MQ_GS_TailPasaranRoom,       []{return Sticks || CanUse("Dins Fire");}),
-    ItemLocationPairing(&JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom,  []{return CanUse("Lens of Truth") || (JabuJabusBelly_MQ_Main.Adult() && CanUse("Hover Boots") && CanUse("Hookshot"));}),
-      //Trick: (LogicLensJabuMQ || CanUse("Lens of Truth")) || JabuJabusBelly_MQ_Main.Adult() && CanUse("Hover Boots") && CanUse("Hookshot")
+    ItemLocationPairing(&JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom,  []{return (LogicLensJabuMQ || CanUse("Lens of Truth")) || (JabuJabusBelly_MQ_Main.Adult() && CanUse("Hover Boots") && CanUse("Hookshot"));}),
   }, {
     //Exits
     ExitPairing::Both(&JabuJabusBelly_MQ_Main,     []{return true;}),
@@ -2605,7 +2604,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
     ExitPairing::Both(&ForestTemple_MQ_NWOutdoors,       []{return CanUse("Bow") || CanUse("Slingshot");}),
     ExitPairing::Both(&ForestTemple_MQ_NEOutdoors,       []{return CanUse("Bow") || CanUse("Slingshot");}), //This is as far as child can get
     ExitPairing::Both(&ForestTemple_MQ_AfterBlockPuzzle, []{return IsAdult && GoronBracelet;}),
-      //Trick: IsAdult && (GoronBracelent || (LogicForestMQBlockPuzzle && HasBombchus && CanUse("Hookshot")))
+      //Trick: IsAdult && (GoronBracelet || (LogicForestMQBlockPuzzle && HasBombchus && CanUse("Hookshot")))
     ExitPairing::Both(&ForestTemple_MQ_OutdoorLedge,     []{return false;}),
       //Trick: (LogicForestMQHallwaySwitchJumpslash && CanUse("Hover Boots")) || (LogicForestMQHallwaySwitchHookshot && CanUse("Hookshot"))
     ExitPairing::Both(&ForestTemple_MQ_BossRegion,       []{return ForestTempleJoAndBeth && ForestTempleAmyAndMeg;}),
@@ -2636,7 +2635,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   }, {
     //Exits
     ExitPairing::Both(&ForestTemple_MQ_NEOutdoors,        []{return CanUse("Iron Boots") || CanUse("Longshot") || ProgressiveScale >= 2;}),
-      //Trick: CanUse("Iron Boots") || CanUse("Longshot") || ProgressiveScale >= 2 || (LogicForestWellSwim && CanUse("Hookshot"))
+      //Trick: CanUse("Iron Boots") || CanUse("Longshot") || ProgressiveScale >= 2 || (LogicForestMQWellSwim && CanUse("Hookshot"))
     ExitPairing::Both(&ForestTemple_MQ_OutdoorsTopLedges, []{return CanUse("FireArrows");}),
   });
 
@@ -2652,7 +2651,6 @@ namespace Exits { //name, scene, hint, events, locations, exits
   }, {
     //Exits
     ExitPairing::Both(&ForestTemple_MQ_OutdoorsTopLedges, []{return CanUse("Hookshot") && (CanUse("Longshot") || CanUse("Hover Boots") || CanPlay(SongOfTime));}),
-      //Trick: CanUse("Hookshot") && (CanUse("Longshot") || CanUse("Hover Boots") || CanPlay(SongOfTime) || LogicForestVines)
     ExitPairing::Both(&ForestTemple_MQ_NEOutdoorsLedge,   []{return CanUse("Longshot");}),
   });
 
@@ -2978,12 +2976,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
     ItemLocationPairing(&ShadowTemple_MQ_FallingSpikesLowerChest,  []{return true;}),
     ItemLocationPairing(&ShadowTemple_MQ_FallingSpikesUpperChest,  []{return (LogicShadowUmbrella && HoverBoots) || GoronBracelet;}),
     ItemLocationPairing(&ShadowTemple_MQ_FallingSpikesSwitchChest, []{return (LogicShadowUmbrella && HoverBoots) || GoronBracelet;}),
-    ItemLocationPairing(&ShadowTemple_MQ_InvisibleSpikesChest,     []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && (LogicLensShadowBackMQ || CanUse("Lens of Truth"));}),
-    ItemLocationPairing(&ShadowTemple_MQ_StalfosRoomChest,         []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && Hookshot && (LogicLensShadowBackMQ || CanUse("Lens of Truth"));}),
+    ItemLocationPairing(&ShadowTemple_MQ_InvisibleSpikesChest,     []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && (LogicLensShadowMQBack || CanUse("Lens of Truth"));}),
+    ItemLocationPairing(&ShadowTemple_MQ_StalfosRoomChest,         []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && Hookshot && (LogicLensShadowMQBack || CanUse("Lens of Truth"));}),
     ItemLocationPairing(&ShadowTemple_MQ_GS_FallingSpikesRoom,     []{return Hookshot;}),
   }, {
     //Exits
-    ExitPairing::Both(&ShadowTemple_MQ_WindTunnel, []{return HoverBoots && (LogicLensShadowBackMQ || CanUse("Lens of Truth")) && Hookshot && SmallKeys(ShadowTempleKeys, 4);}),
+    ExitPairing::Both(&ShadowTemple_MQ_WindTunnel, []{return HoverBoots && (LogicLensShadowMQBack || CanUse("Lens of Truth")) && Hookshot && SmallKeys(ShadowTempleKeys, 4);}),
   });
 
   Exit ShadowTemple_MQ_WindTunnel = Exit("Shadow Temple MQ Wind Tunnel", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {

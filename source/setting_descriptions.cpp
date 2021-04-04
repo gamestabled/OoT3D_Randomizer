@@ -652,19 +652,21 @@ string_view LogicLensGtgDesc                          = "Removes the requirement
                                                         "Gerudo Training Grounds.";                        //
 string_view LogicLensCastleDesc                       = "Removes the requirements for the Lens of Truth in\n"
                                                         "Ganon's Castle.";                                 //
+string_view LogicLensJabuMQDesc                       = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Jabu Jabu's Belly MQ.";                           //
 string_view LogicLensSpiritMQDesc                     = "Removes the requirements for the Lens of Truth in\n"
-                                                        "MQ Spirit Temple.";                               //
+                                                        "Spirit Temple MQ.";                               //
 string_view LogicLensShadowMQDesc                     = "Removes the requirements for the Lens of Truth in\n"
-                                                        "MQ Shadow Temple before the invisible moving \n"  //
+                                                        "Shadow Temple MQ before the invisible moving \n"  //
                                                         "platform";                                        //
 string_view LogicLensShadowMQBackDesc                 = "Removes the requirements for the Lens of Truth in\n"
-                                                        "MQ Shadow Temple beyond the invisible moving \n"  //
+                                                        "Shadow Temple MQ beyond the invisible moving \n"  //
                                                         "platform";                                        //
 string_view LogicLensBotwMQDesc                       = "Removes the requirements for the Lens of Truth in\n"
-                                                        "MQ Bottom of the Well.";                          //
+                                                        "Bottom of the Well MQ.";                          //
 string_view LogicLensGtgMQDesc                        = "Removes the requirements for the Lens of Truth in\n"
-                                                        "MQ Gerudo Training Grounds.";                     //
+                                                        "Gerudo Training Grounds MQ.";                     //
 string_view LogicLensCastleMQDesc                     = "Removes the requirements for the Lens of Truth in\n"
-                                                        "MQ Ganon's Castle.";                              //
+                                                        "Ganon's Castle MQ.";                              //
 string_view LogicSpiritTrialHookshotDesc              = "A precise jump off of an Armos can collect the\n" //
                                                         "highest rupee.";                                  //

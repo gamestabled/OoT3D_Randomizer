@@ -208,6 +208,7 @@ extern string_view LogicLensShadowBackDesc;
 extern string_view LogicLensBotwDesc;
 extern string_view LogicLensGtgDesc;
 extern string_view LogicLensCastleDesc;
+extern string_view LogicLensJabuMQDesc;
 extern string_view LogicLensSpiritMQDesc;
 extern string_view LogicLensShadowMQDesc;
 extern string_view LogicLensShadowMQBackDesc;
