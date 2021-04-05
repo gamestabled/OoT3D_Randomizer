@@ -1021,6 +1021,11 @@ BombPurchaseableCheck_patch:
 GanonBattleDeathWarp_patch:
     bl Entrance_DeathInGanonBattle
 
+.section .patch_SlidingDoorDestroyCustomModels
+.global SlidingDoorDestroyCustomModels_patch
+SlidingDoorDestroyCustomModels_patch:
+    bl hook_SlidingDoorDestroyCustomModels
+
 .section .patch_loader
 .global loader_patch
 

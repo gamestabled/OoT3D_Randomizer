@@ -632,6 +632,10 @@ SECTIONS
 		*(.patch_FireArrowCheckChestFlagTwo)
 	}
 
+	.patch_SlidingDoorDestroyCustomModels 0x3F4A70 : {
+		*(.patch_SlidingDoorDestroyCustomModels)
+	}
+
 	.patch_DodongosCavernItemGive 0x3F57B0 : {
 		*(.patch_DodongosCavernItemGive)
 	}
