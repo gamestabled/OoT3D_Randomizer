@@ -620,6 +620,10 @@ SECTIONS
 		*(.patch_CowBottleCheck)
 	}
 
+	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
+		*(.patch_HandleDoorDestroyCustomModels)
+	}
+
 	.patch_FireArrowBitMask 0x3F23B0 : {
 		*(.patch_FireArrowBitMask)
 	}
