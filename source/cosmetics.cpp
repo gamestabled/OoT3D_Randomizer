@@ -68,11 +68,11 @@ namespace Cosmetics {
     "Lime",
     "Purple",
   };
-  std::vector<std::string_view> gauntletDescriptions = {
+  std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
     RANDOM_COLOR_DESC,
     CUSTOM_COLOR_DESC,
-    "","","","","","","","","","","","","",
+    "",
   };
 
 } //namespace Cosmetics

@@ -620,6 +620,10 @@ SECTIONS
 		*(.patch_CowBottleCheck)
 	}
 
+	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
+		*(.patch_HandleDoorDestroyCustomModels)
+	}
+
 	.patch_FireArrowBitMask 0x3F23B0 : {
 		*(.patch_FireArrowBitMask)
 	}
@@ -630,6 +634,10 @@ SECTIONS
 
 	.patch_FireArrowCheckChestFlagTwo 0x3F2448 : {
 		*(.patch_FireArrowCheckChestFlagTwo)
+	}
+
+	.patch_SlidingDoorDestroyCustomModels 0x3F4A70 : {
+		*(.patch_SlidingDoorDestroyCustomModels)
 	}
 
 	.patch_DodongosCavernItemGive 0x3F57B0 : {

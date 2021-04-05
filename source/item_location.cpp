@@ -1813,22 +1813,16 @@ void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
   AddLocations(dungeonRewardLocations, &allLocations);
   for (ItemLocation* loc : allLocations) {
-    /*-------------------------------------------------
-    |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
-    --------------------------------------------------*/
-    //this prevents an override from being created for these two locations
-    if (loc->GetName() != "Shadow Temple Freestanding Key" && loc->GetName() != "Gerudo Training Grounds Freestanding Key") {
-      overrides.insert({
-        .key = loc->Key(),
-        .value = loc->GetPlacedItem().Value(),
-      });
-      PlacementLog_Msg("\tScene: ");
-      PlacementLog_Msg(std::to_string(loc->Key().scene));
-      PlacementLog_Msg("\tType: ");
-      PlacementLog_Msg(std::to_string(loc->Key().type));
-      PlacementLog_Msg("\tFlag: ");
-      PlacementLog_Msg(std::to_string(loc->Key().flag));
-    }
+    overrides.insert({
+      .key = loc->Key(),
+      .value = loc->GetPlacedItem().Value(),
+    });
+    PlacementLog_Msg("\tScene: ");
+    PlacementLog_Msg(std::to_string(loc->Key().scene));
+    PlacementLog_Msg("\tType: ");
+    PlacementLog_Msg(std::to_string(loc->Key().type));
+    PlacementLog_Msg("\tFlag: ");
+    PlacementLog_Msg(std::to_string(loc->Key().flag));
     PlacementLog_Msg("\t");
     PlacementLog_Msg(loc->GetName());
     PlacementLog_Msg(": ");

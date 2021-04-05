@@ -120,14 +120,14 @@ public:
 
       //add option to forbid any location from progress items
       if (name.length() < 23) {
-        excludedOption = Option::Bool(name, {"Include", "Exclude"}, {desc, desc});
+        excludedOption = Option::Bool(name, {"Include", "Exclude"}, {desc});
       } else {
         //insert a newline character if the text is too long for one row
         size_t lastSpace = name.rfind(' ', 23);
         std::string settingText = name;
         settingText.replace(lastSpace, 1, "\n ");
 
-        excludedOption = Option::Bool(settingText, {"Include", "Exclude"}, {desc, desc});
+        excludedOption = Option::Bool(settingText, {"Include", "Exclude"}, {desc});
       }
 
       Settings::excludeLocationsOptions.push_back(&excludedOption);

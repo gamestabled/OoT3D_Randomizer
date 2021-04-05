@@ -503,7 +503,7 @@ static void RandomizeOwnDungeonItems() {
   keyCount = (SpiritTempleDungeonMode) ? 7 : 5;
   RandomizeOwnDungeon(Category::cSpiritTemple, SpiritTemple_BossKey, SpiritTemple_Map, SpiritTemple_Compass, SpiritTemple_SmallKey, keyCount);
 
-  keyCount = (ShadowTempleDungeonMode) ? 6 : 4; //TEMPORARY FIX FOR FREESTANDING KEY CRASH, VANILLA SHOULD BE 5
+  keyCount = (ShadowTempleDungeonMode) ? 6 : 5;
   RandomizeOwnDungeon(Category::cShadowTemple, ShadowTemple_BossKey, ShadowTemple_Map, ShadowTemple_Compass, ShadowTemple_SmallKey, keyCount);
 
   keyCount = (BottomOfTheWellDungeonMode) ? 2 : 3;
@@ -512,7 +512,7 @@ static void RandomizeOwnDungeonItems() {
   keyCount = (IceCavernDungeonMode) ? 0 : 0;
   RandomizeOwnDungeon(Category::cIceCavern, NoItem, IceCavern_Map, IceCavern_Compass, NoItem, keyCount);
 
-  keyCount = (GerudoTrainingGroundsDungeonMode) ? 3 : 8;//TEMPORARY FIX FOR FREESTANDING KEY CRASH, VANILLA SHOULD BE 9
+  keyCount = (GerudoTrainingGroundsDungeonMode) ? 3 : 9;
   RandomizeOwnDungeon(Category::cGerudoTrainingGrounds, NoItem, NoItem, NoItem, GerudoTrainingGrounds_SmallKey, keyCount);
 
   keyCount = (GanonsCastleDungeonMode) ? 3 : 2;

@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "item_override.h"
 #include "settings.h"
+#include "savefile.h"
 #include "z3D/actors/z_bg_dy_yoseizo.h"
 #include <stddef.h>
 
@@ -14,14 +15,19 @@ u32 LACS_ConditionVanilla(void) {
 }
 
 u32 LACS_ConditionStones(void) {
-    return ((gSaveContext.questItems & 0x40000) && (gSaveContext.questItems & 0x80000)
-        && (gSaveContext.questItems & 0x100000));
+    return SaveFile_GetStoneCount() >= gSettingsContext.lacsStoneCount;
 }
 
 u32 LACS_ConditionMedallions(void) {
-    return ((gSaveContext.questItems & 0x1) && (gSaveContext.questItems & 0x2)
-        && (gSaveContext.questItems & 0x4) && (gSaveContext.questItems & 0x8)
-        && (gSaveContext.questItems & 0x10) && (gSaveContext.questItems & 0x20));
+    return SaveFile_GetMedallionCount() >= gSettingsContext.lacsMedallionCount;
+}
+
+u32 LACS_ConditionDungeons(void) {
+    return SaveFile_GetStoneCount() + SaveFile_GetMedallionCount() >= gSettingsContext.lacsDungeonCount;
+}
+
+u32 LACS_ConditionTokens(void) {
+    return gSaveContext.gsTokens >= gSettingsContext.lacsTokenCount;
 }
 
 void Cutscene_OverrideLACS(void) {
@@ -38,7 +44,10 @@ void Cutscene_OverrideLACS(void) {
             conditionMet = LACS_ConditionMedallions();
             break;
         case LACSCONDITION_DUNGEONS:
-            conditionMet = (LACS_ConditionStones() && LACS_ConditionMedallions());
+            conditionMet = LACS_ConditionDungeons();
+            break;
+        case LACSCONDITION_TOKENS:
+            conditionMet = LACS_ConditionTokens();
             break;
     }
     if (conditionMet) {

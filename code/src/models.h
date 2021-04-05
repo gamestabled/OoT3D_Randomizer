@@ -22,6 +22,7 @@ void Model_UpdateAll(GlobalContext* globalCtx);
 
 void Model_SpawnByActor(Actor* actor, GlobalContext* globalCtx, u16 baseItemId);
 void Model_DestroyByActor(Actor* actor);
+void Model_DestroyAll(void);
 s32 Model_DrawByActor(Actor* actor);
 
 #endif //_MODELS_H_

@@ -76,6 +76,10 @@ public:
     }
 
     std::string_view GetSelectedOptionDescription() const {
+      //bounds checking
+      if (selectedOption >= optionDescriptions.size()) {
+        return optionDescriptions[optionDescriptions.size()-1];
+      }
       return optionDescriptions[selectedOption];
     }
 
@@ -235,6 +239,9 @@ namespace Settings {
   extern Option ZorasFountain;
   extern Option GerudoFortress;
   extern Option Bridge;
+  extern Option BridgeStoneCount;
+  extern Option BridgeMedallionCount;
+  extern Option BridgeDungeonCount;
   extern Option BridgeTokenCount;
   extern Option RandomGanonsTrials;
   extern Option GanonsTrialsCount;
@@ -263,6 +270,10 @@ namespace Settings {
   extern Option BossKeysanity;
   extern Option GanonsBossKey;
   extern u8 LACSCondition;
+  extern Option LACSMedallionCount;
+  extern Option LACSStoneCount;
+  extern Option LACSDungeonCount;
+  extern Option LACSTokenCount;
 
   extern Option SkipChildStealth;
   extern Option SkipTowerEscape;

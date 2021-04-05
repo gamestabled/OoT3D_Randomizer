@@ -27,12 +27,17 @@ const DnsItemEntry* rScrubTable[] = {
     &Scrub_6, &Scrub_7, &Scrub_8, &Scrub_9, &Scrub_A,
 };
 
+#define Vanilla_DnsItemEntries_addr 0x522384
+#define VanillaScrubTable ((DnsItemEntry**)Vanilla_DnsItemEntries_addr)
+
 s16 rScrubRandomItemPrices[11] = { 0 };
 
 u32 EnDns_rPurchaseableCheck(EnDns* scrub) {
     s16 price;
 
-    if (gSettingsContext.scrubsanity == SCRUBSANITY_AFFORDABLE) {
+    if (gSettingsContext.scrubsanity == SCRUBSANITY_OFF) {
+        return VanillaScrubTable[scrub->actor.params]->purchaseableCheck(scrub);
+    } else if (gSettingsContext.scrubsanity == SCRUBSANITY_AFFORDABLE) {
         price = 10;
     } else if (gSettingsContext.scrubsanity == SCRUBSANITY_RANDOM_PRICES) {
         price = rScrubRandomItemPrices[scrub->actor.params];
