@@ -163,6 +163,7 @@ bool LoadPreset(std::string presetName, OptionCategory category) {
           linearly from the beginning. This will get us back on track if the
           next setting and element line up with each other*/
           curNode = preset.FirstChild();
+          bool settingFound = false;
           while (curNode != nullptr) {
             curSettingName = curNode->FirstChildElement("settingName")->GetText();
             curSettingValue = curNode->FirstChildElement("valueName")->GetText();
@@ -170,9 +171,14 @@ bool LoadPreset(std::string presetName, OptionCategory category) {
             if (curSettingName == settingToFind) {
               setting->SetSelectedIndexByString(curSettingValue);
               curNode = curNode->NextSibling();
+              settingFound = true;
               break;
             }
             curNode = curNode->NextSibling();
+          }
+          //reset to the beginning if the setting wasn't found
+          if (!settingFound) {
+            curNode = preset.FirstChild();
           }
         }
       }

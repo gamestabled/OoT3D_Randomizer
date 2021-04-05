@@ -13,6 +13,7 @@
 static u8 GfxInit = 0;
 
 static void Gfx_DrawChangeMenuPrompt(void) {
+    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 70, COLOR_TITLE, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 40, COLOR_TITLE, "Press B to close menu");
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press L/R to change menu");
 }

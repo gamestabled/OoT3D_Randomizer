@@ -54,6 +54,7 @@ typedef enum {
   LACSCONDITION_STONES,
   LACSCONDITION_MEDALLIONS,
   LACSCONDITION_DUNGEONS,
+  LACSCONDITION_TOKENS,
 } LACSConditionSetting;
 
 typedef enum {
@@ -122,6 +123,7 @@ typedef enum {
   GANONSBOSSKEY_LACS_MEDALLIONS,
   GANONSBOSSKEY_LACS_STONES,
   GANONSBOSSKEY_LACS_DUNGEONS,
+  GANONSBOSSKEY_LACS_TOKENS,
 } GanonsBossKeySetting;
 
 typedef enum {
@@ -167,6 +169,9 @@ typedef struct {
   u8 zorasFountain;
   u8 gerudoFortress;
   u8 rainbowBridge;
+  u8 bridgeStoneCount;
+  u8 bridgeMedallionCount;
+  u8 bridgeDungeonCount;
   u8 bridgeTokenCount;
   u8 randomGanonsTrials;
   u8 ganonsTrialsCount;
@@ -195,6 +200,10 @@ typedef struct {
   u8 bossKeysanity;
   u8 ganonsBossKey;
   u8 lacsCondition;
+  u8 lacsMedallionCount;
+  u8 lacsStoneCount;
+  u8 lacsDungeonCount;
+  u8 lacsTokenCount;
 
   u8 skipChildStealth;
   u8 skipTowerEscape;

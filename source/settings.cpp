@@ -15,18 +15,21 @@ namespace Settings {
   std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
-  //Open Settings
+  //Open Settings                                                                                                              Any option index past the last description will use the last description
   Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                              {logicGlitchless, logicNoLogic});
   Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                      {forestClosed, forestOpen});
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                      {kakGateClosed, kakGateOpen});
-  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc, doorOfTimeDesc});
+  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc});
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                             {fountainNormal, fountainAdult, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                              {gerudoNormal, gerudoFast, gerudoOpen});
   Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"},
                                                                       {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
-  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultOptions()*/},      std::vector<std::string_view>{101, bridgeTokenCountDesc});
-  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                           {randomGanonsTrialsDesc, randomGanonsTrialsDesc});
-  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                     std::vector<std::string_view>{7, ganonsTrialCountDesc});
+  Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                    {bridgeStoneCountDesc});
+  Option BridgeMedallionCount= Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                     {bridgeMedallionCountDesc});
+  Option BridgeDungeonCount  = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},      {bridgeDungeonCountDesc});
+  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},     {bridgeTokenCountDesc});
+  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                           {randomGanonsTrialsDesc});
+  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                     {ganonsTrialCountDesc});
   std::vector<Option *> openOptions = {
     &Logic,
     &OpenForest,
@@ -35,18 +38,21 @@ namespace Settings {
     &ZorasFountain,
     &GerudoFortress,
     &Bridge,
+    &BridgeStoneCount,
+    &BridgeMedallionCount,
+    &BridgeDungeonCount,
     &BridgeTokenCount,
     &RandomGanonsTrials,
     &GanonsTrialsCount,
   };
 
   //World Settings
-  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                            {ageDesc, ageDesc, ageDesc});
+  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                            {ageDesc});
   u8 ResolvedStartingAge;
-  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc, bombchuLogicDesc});
-  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                           {bombchuDropDesc, bombchuDropDesc});
-  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc, randomMQDungeonsDesc});
-  Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},std::vector<std::string_view>{13, mqDungeonCountDesc});
+  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc});
+  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                           {bombchuDropDesc});
+  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc});
+  Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},{mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
     &StartingAge,
     &BombchusInLogic,
@@ -58,12 +64,12 @@ namespace Settings {
   Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},       {songsSongLocations, songsDungeonRewards, songsAllLocations});
   Option Tokensanity         = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},          {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
   Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},     {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
-  Option ShuffleCows         = Option::Bool("Shuffle Cows",           {"Off", "On"},                                           {shuffleCowsDesc, shuffleCowsDesc});
-  Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                           {kokiriSwordDesc, kokiriSwordDesc});
-  Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                           {ocarinasDesc, ocarinasDesc});
-  Option ShuffleWeirdEgg     = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                           {weirdEggDesc, weirdEggDesc});
-  Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                           {gerudoTokenDesc, gerudoTokenDesc});
-  Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                           {magicBeansDesc, magicBeansDesc});
+  Option ShuffleCows         = Option::Bool("Shuffle Cows",           {"Off", "On"},                                           {shuffleCowsDesc});
+  Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                           {kokiriSwordDesc});
+  Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                           {ocarinasDesc});
+  Option ShuffleWeirdEgg     = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                           {weirdEggDesc});
+  Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                           {gerudoTokenDesc});
+  Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                           {magicBeansDesc});
   //TODO: Medigoron and Carpet Salesman
   std::vector<Option *> shuffleOptions = {
     &ShuffleSongs,
@@ -83,25 +89,33 @@ namespace Settings {
   Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
   Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Anywhere"},                                 {gerudoKeysVanilla, gerudoKeysAnywhere});
   Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
-  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Dungeons"},
-                                                                      {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS, ganonKeyLACS});
+  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Dungeons", "LACS-Tokens"},
+                                                                      {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS});
   u8 LACSCondition           = 0;
+  Option LACSMedallionCount  = Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                     {lacsMedallionCountDesc});
+  Option LACSStoneCount      = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                    {lacsStoneCountDesc});
+  Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},      {lacsDungeonCountDesc});
+  Option LACSTokenCount      = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},     {lacsTokenCountDesc});
   std::vector<Option *> shuffleDungeonItemOptions = {
     &MapsAndCompasses,
     &Keysanity,
     &GerudoKeys,
     &BossKeysanity,
     &GanonsBossKey,
+    &LACSMedallionCount,
+    &LACSStoneCount,
+    &LACSDungeonCount,
+    &LACSTokenCount,
   };
 
   //Timesaver Settings
-  Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                  {childStealthDesc, childStealthDesc});
-  Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                  {skipTowerEscapeDesc, skipTowerEscapeDesc});
-  Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                  {skipEponaRaceDesc, skipEponaRaceDesc});
-  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                  {fourPoesDesc, fourPoesDesc});
-  Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                  {templeOfTimeIntroDesc, templeOfTimeIntroDesc});
-  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     std::vector<std::string_view>{10, bigPoeTargetCountDesc});
-  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                std::vector<std::string_view>{8, numRequiredCuccosDesc});
+  Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                  {childStealthDesc});
+  Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                  {skipTowerEscapeDesc});
+  Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                  {skipEponaRaceDesc});
+  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                  {fourPoesDesc});
+  Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                  {templeOfTimeIntroDesc});
+  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     {bigPoeTargetCountDesc});
+  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                {numRequiredCuccosDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -113,8 +127,8 @@ namespace Settings {
   };
 
   //Misc Settings
-  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      std::vector<std::string_view>{5, damageMultiDesc});
-  Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc, startingTimeDesc});
+  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc});
+  Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
@@ -124,9 +138,9 @@ namespace Settings {
   };
 
   //Item Usability Settings
-  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                 {adultStickDesc, adultStickDesc});
-  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                 {adultBoomerangDesc, adultBoomerangDesc});
-  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                 {childHammerDesc, childHammerDesc});
+  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                 {adultStickDesc});
+  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                 {adultBoomerangDesc});
+  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                 {childHammerDesc});
   std::vector<Option *> itemUsabilityOptions = {
     &StickAsAdult,
     &BoomerangAsAdult,
@@ -146,11 +160,11 @@ namespace Settings {
 
   //Function to make defining logic tricks easier to read
   Option LogicTrick(std::string setting, std::string_view description) {
-    return Option::Bool(setting, {"Disabled", "Enabled"}, std::vector<std::string_view>{2, description});
+    return Option::Bool(setting, {"Disabled", "Enabled"}, {description});
   }
 
   //Detailed Logic Tricks                               ---------------------
-  Option ToggleAllDetailedLogic           = Option::Bool("All Tricks", {"Disabled", "Enabled"},           std::vector<std::string_view>{2, "Toggle all tricks at once."}, OptionCategory::Toggle);
+  Option ToggleAllDetailedLogic           = Option::Bool("All Tricks", {"Disabled", "Enabled"},           {"Toggle all tricks at once."}, OptionCategory::Toggle);
   Option LogicGrottosWithoutAgony         = LogicTrick("Grottos Without Agony",                           LogicGrottosWithoutAgonyDesc);
   Option LogicVisibleCollision            = LogicTrick("Pass Through Visible\n One-Way Collisions",       LogicVisibleCollisionDesc);
   Option LogicFewerTunicRequirements      = LogicTrick("Fewer Tunic\n Requirements",                      LogicFewerTunicRequirementsDesc);
@@ -307,11 +321,11 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
-  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, gauntletDescriptions, OptionCategory::Cosmetic);
-  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, gauntletDescriptions, OptionCategory::Cosmetic);
+  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
   std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOptionText();
   std::string finalGoldGauntletsColor  = GoldGauntletsColor.GetSelectedOptionText();
-  Option MirrorWorld                = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc, mirrorWorldDesc}, OptionCategory::Cosmetic);
+  Option MirrorWorld                = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc}, OptionCategory::Cosmetic);
   std::vector<Option *> cosmeticOptions = {
     &SilverGauntletsColor,
     &GoldGauntletsColor,
@@ -374,61 +388,68 @@ namespace Settings {
     ctx.hashIndexes[3] = hashIconIndexes[3];
     ctx.hashIndexes[4] = hashIconIndexes[4];
 
-    ctx.logic              = Logic.Value<u8>();
-    ctx.openForest         = OpenForest.Value<u8>();
-    ctx.openKakariko       = OpenKakariko.Value<u8>();
-    ctx.openDoorOfTime     = (OpenDoorOfTime) ? 1 : 0;
-    ctx.zorasFountain      = ZorasFountain.Value<u8>();
-    ctx.gerudoFortress     = GerudoFortress.Value<u8>();
-    ctx.rainbowBridge      = Bridge.Value<u8>();
-    ctx.bridgeTokenCount   = BridgeTokenCount.Value<u8>();
-    ctx.randomGanonsTrials = (RandomGanonsTrials) ? 1 : 0;
-    ctx.ganonsTrialsCount  = GanonsTrialsCount.Value<u8>();
+    ctx.logic                = Logic.Value<u8>();
+    ctx.openForest           = OpenForest.Value<u8>();
+    ctx.openKakariko         = OpenKakariko.Value<u8>();
+    ctx.openDoorOfTime       = (OpenDoorOfTime) ? 1 : 0;
+    ctx.zorasFountain        = ZorasFountain.Value<u8>();
+    ctx.gerudoFortress       = GerudoFortress.Value<u8>();
+    ctx.rainbowBridge        = Bridge.Value<u8>();
+    ctx.bridgeStoneCount     = BridgeStoneCount.Value<u8>();
+    ctx.bridgeMedallionCount = BridgeMedallionCount.Value<u8>();
+    ctx.bridgeDungeonCount   = BridgeDungeonCount.Value<u8>();
+    ctx.bridgeTokenCount     = BridgeTokenCount.Value<u8>();
+    ctx.randomGanonsTrials   = (RandomGanonsTrials) ? 1 : 0;
+    ctx.ganonsTrialsCount    = GanonsTrialsCount.Value<u8>();
 
-    ctx.startingAge        = StartingAge.Value<u8>();
-    ctx.resolvedStartingAge = ResolvedStartingAge;
+    ctx.startingAge          = StartingAge.Value<u8>();
+    ctx.resolvedStartingAge  = ResolvedStartingAge;
 
-    ctx.bombchusInLogic    = (BombchusInLogic) ? 1 : 0;
-    ctx.bombchuDrops       = (BombchuDrops) ? 1 : 0;
-    ctx.randomMQDungeons   = (RandomMQDungeons) ? 1 : 0;
-    ctx.mqDungeonCount     = MQDungeonCount.Value<u8>();
-    ctx.mirrorWorld        = (MirrorWorld) ? 1 : 0;
+    ctx.bombchusInLogic      = (BombchusInLogic) ? 1 : 0;
+    ctx.bombchuDrops         = (BombchuDrops) ? 1 : 0;
+    ctx.randomMQDungeons     = (RandomMQDungeons) ? 1 : 0;
+    ctx.mqDungeonCount       = MQDungeonCount.Value<u8>();
+    ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
 
-    ctx.shuffleSongs       = ShuffleSongs.Value<u8>();
-    ctx.tokensanity        = Tokensanity.Value<u8>();
-    ctx.scrubsanity        = Scrubsanity.Value<u8>();
-    ctx.shuffleCows        = (ShuffleCows) ? 1 : 0;
-    ctx.shuffleKokiriSword = (ShuffleKokiriSword) ? 1 : 0;
-    ctx.shuffleOcarinas    = (ShuffleOcarinas) ? 1 : 0;
-    ctx.shuffleWeirdEgg    = (ShuffleWeirdEgg) ? 1 : 0;
-    ctx.shuffleGerudoToken = (ShuffleGerudoToken) ? 1 : 0;
-    ctx.shuffleMagicBeans  = (ShuffleMagicBeans) ? 1 : 0;
+    ctx.shuffleSongs         = ShuffleSongs.Value<u8>();
+    ctx.tokensanity          = Tokensanity.Value<u8>();
+    ctx.scrubsanity          = Scrubsanity.Value<u8>();
+    ctx.shuffleCows          = (ShuffleCows) ? 1 : 0;
+    ctx.shuffleKokiriSword   = (ShuffleKokiriSword) ? 1 : 0;
+    ctx.shuffleOcarinas      = (ShuffleOcarinas) ? 1 : 0;
+    ctx.shuffleWeirdEgg      = (ShuffleWeirdEgg) ? 1 : 0;
+    ctx.shuffleGerudoToken   = (ShuffleGerudoToken) ? 1 : 0;
+    ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
 
-    ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
-    ctx.keysanity          = Keysanity.Value<u8>();
-    ctx.gerudoKeys         = GerudoKeys.Value<u8>();
-    ctx.bossKeysanity      = BossKeysanity.Value<u8>();
-    ctx.ganonsBossKey      = GanonsBossKey.Value<u8>();
-    ctx.lacsCondition      = LACSCondition;
+    ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
+    ctx.keysanity            = Keysanity.Value<u8>();
+    ctx.gerudoKeys           = GerudoKeys.Value<u8>();
+    ctx.bossKeysanity        = BossKeysanity.Value<u8>();
+    ctx.ganonsBossKey        = GanonsBossKey.Value<u8>();
+    ctx.lacsCondition        = LACSCondition;
+    ctx.lacsMedallionCount   = LACSMedallionCount.Value<u8>();
+    ctx.lacsStoneCount       = LACSStoneCount.Value<u8>();
+    ctx.lacsDungeonCount     = LACSDungeonCount.Value<u8>();
+    ctx.lacsTokenCount       = LACSTokenCount.Value<u8>();
 
-    ctx.skipChildStealth   = (SkipChildStealth) ? 1 : 0;
-    ctx.skipTowerEscape    = (SkipTowerEscape) ? 1 : 0;
-    ctx.skipEponaRace      = (SkipEponaRace) ? 1 : 0;
-    ctx.fourPoesCutscene   = (FourPoesCutscene) ? 1 : 0;
-    ctx.templeOfTimeIntro  = (TempleOfTimeIntro) ? 1 : 0;
-    ctx.bigPoeTargetCount  = BigPoeTargetCount.Value<u8>() + 1;
-    ctx.numRequiredCuccos  = NumRequiredCuccos.Value<u8>();
+    ctx.skipChildStealth     = (SkipChildStealth) ? 1 : 0;
+    ctx.skipTowerEscape      = (SkipTowerEscape) ? 1 : 0;
+    ctx.skipEponaRace        = (SkipEponaRace) ? 1 : 0;
+    ctx.fourPoesCutscene     = (FourPoesCutscene) ? 1 : 0;
+    ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
+    ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
+    ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
 
-    ctx.damageMultiplier   = DamageMultiplier.Value<u8>();
-    ctx.startingTime       = StartingTime.Value<u8>();
-    ctx.generateSpoilerLog = (GenerateSpoilerLog) ? 1 : 0;
+    ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
+    ctx.startingTime         = StartingTime.Value<u8>();
+    ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
 
-    ctx.stickAsAdult       = (StickAsAdult) ? 1 : 0;
-    ctx.boomerangAsAdult   = (BoomerangAsAdult) ? 1 : 0;
-    ctx.hammerAsChild      = (HammerAsChild) ? 1 : 0;
+    ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
+    ctx.boomerangAsAdult     = (BoomerangAsAdult) ? 1 : 0;
+    ctx.hammerAsChild        = (HammerAsChild) ? 1 : 0;
 
-    ctx.itemPoolValue      = ItemPoolValue.Value<u8>();
-    ctx.iceTrapValue       = IceTrapValue.Value<u8>();
+    ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
+    ctx.iceTrapValue         = IceTrapValue.Value<u8>();
 
     ctx.dekuTreeDungeonMode              = (DekuTreeDungeonMode)              ? 1 : 0;
     ctx.dodongosCavernDungeonMode        = (DodongosCavernDungeonMode)        ? 1 : 0;
@@ -480,13 +501,15 @@ namespace Settings {
     GanonsTrialsCount.Hide();
 
     {
-      std::vector<std::string> bridgeTokenOptions;
-      bridgeTokenOptions.reserve(101);
+      std::vector<std::string> tokenOptions;
+      tokenOptions.reserve(101);
       for (int i = 0; i <= 100; i++) {
-        bridgeTokenOptions.push_back(std::to_string(i));
+        tokenOptions.push_back(std::to_string(i));
       }
-      BridgeTokenCount.SetOptions(std::move(bridgeTokenOptions));
+      BridgeTokenCount.SetOptions(tokenOptions);
       BridgeTokenCount.SetSelectedIndex(1);
+      LACSTokenCount.SetOptions(tokenOptions);
+      LACSTokenCount.SetSelectedIndex(1);
     }
 
     StartingAge.SetSelectedIndex(AGE_CHILD);
@@ -670,6 +693,30 @@ namespace Settings {
       StartingAge.Unlock();
     }
 
+    //Only show stone count option if Stones is selected
+    if (Bridge.Is(RAINBOWBRIDGE_STONES)) {
+      BridgeStoneCount.Unhide();
+    } else {
+      BridgeStoneCount.Hide();
+      BridgeStoneCount.SetSelectedIndex(3);
+    }
+
+    //Only show medallion count option if Medallions is selected
+    if (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS)) {
+      BridgeMedallionCount.Unhide();
+    } else {
+      BridgeMedallionCount.Hide();
+      BridgeMedallionCount.SetSelectedIndex(6);
+    }
+
+    //Only show dungeon count option if Dungeons is selected
+    if (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) {
+      BridgeDungeonCount.Unhide();
+    } else {
+      BridgeDungeonCount.Hide();
+      BridgeDungeonCount.SetSelectedIndex(9);
+    }
+
     //Only show token count option if Tokens is selected
     if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
       BridgeTokenCount.Unhide();
@@ -700,6 +747,38 @@ namespace Settings {
       MQDungeonCount.SetSelectedIndex(0);
     } else {
       MQDungeonCount.Unhide();
+    }
+
+    //Only show Medallion Count if setting Ganons Boss Key to LACS Medallions
+    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
+      LACSMedallionCount.Unhide();
+    } else {
+      LACSMedallionCount.SetSelectedIndex(6);
+      LACSMedallionCount.Hide();
+    }
+
+    //Only show Stone Count if setting Ganons Boss Key to LACS Stones
+    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES)) {
+      LACSStoneCount.Unhide();
+    } else {
+      LACSStoneCount.SetSelectedIndex(3);
+      LACSStoneCount.Hide();
+    }
+
+    //Only show Dungeon Count if setting Ganons Boss Key to LACS Dungeons
+    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
+      LACSDungeonCount.Unhide();
+    } else {
+      LACSDungeonCount.SetSelectedIndex(9);
+      LACSDungeonCount.Hide();
+    }
+
+    //Only show Token Count if setting Ganons Boss Key to LACS Tokens
+    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+      LACSTokenCount.Unhide();
+    } else {
+      LACSTokenCount.SetSelectedIndex(100);
+      LACSTokenCount.Hide();
     }
 
     //Set toggle for all tricks
@@ -812,6 +891,8 @@ namespace Settings {
       LACSCondition = LACSCONDITION_STONES;
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
       LACSCondition = LACSCONDITION_DUNGEONS;
+    } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+      LACSCondition = LACSCONDITION_TOKENS;
     } else {
       LACSCondition = LACSCONDITION_VANILLA;
     }

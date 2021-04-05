@@ -37,5 +37,5 @@ namespace Cosmetics {
 
   extern const std::array<std::string, 13> gauntletColors;
   extern std::vector<std::string> gauntletOptions;
-  extern std::vector<std::string_view> gauntletDescriptions;
+  extern std::vector<std::string_view> cosmeticDescriptions;
 } //namespace Cosmetics
