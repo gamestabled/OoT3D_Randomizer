@@ -55,9 +55,6 @@ Want to discuss the randomizer with others? Join our [Discord server](https://di
 With a game the size of _Ocarina of Time 3D_, it's quite easy for players to get stuck in certain situations with no apparent path to progressing. 
 Before reporting an issue, please make sure to check out the [the Logic wiki for the original OoTRandomizer](https://wiki.ootrandomizer.com/index.php?title=Logic), the information there will apply to OoT3D in nearly every situation.
 
-### Known issues
+### Reporting bugs
 
-Surely, following our first release, there will be issues discovered by the community of players. Let us know if you believe you have discovered a bug by posting in our Discord server, or by opening an issue.
-
-* Do not attempt to enter the Boss Rush/Relive a Battle mode from Link's house. Entering this mode will crash the game. A subsequent release may fix this issue, but for now, just don't do it.
-* There is a crash that can occur during certain room transitions, related to free-standing item locations. For this reason, the free-standing Small Key in Gerudo Training Grounds and the Small Key in the single huge pot room in Shadow Temple are not randomized.
+Let us know if you believe you have discovered a bug by posting in our Discord server, or by opening an issue. In the [Discord](https://discord.gg/wumv4wWWeB), we have a list of currently known issues and fixes which are pending release, which we try to keep fairly up to date.
