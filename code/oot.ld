@@ -400,6 +400,10 @@ SECTIONS
 		*(.patch_NoSilverGauntletsCutsceneWarp)
 	}
 
+	.patch_DoorOfTimeOpenCutscene 0x2C6218 : {
+		*(.patch_DoorOfTimeOpenCutscene)
+	}
+
 	.patch_GetCustomMessageEntryOne 0x2CD3A4 : {
 		*(.patch_GetCustomMessageEntryOne)
 	}

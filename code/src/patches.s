@@ -1031,6 +1031,13 @@ SlidingDoorDestroyCustomModels_patch:
 HandleDoorDestroyCustomModels_patch:
     bl hook_HandleDoorDestroyCustomModels
 
+.section .patch_DoorOfTimeOpenCutscene
+.global DoorOfTimeOpenCutscene_patch
+DoorOfTimeOpenCutscene_patch:
+    add r0,r6,#0x100
+    ldrh r0,[r0,#0x4]
+    cmp r0,#0x43
+
 .section .patch_loader
 .global loader_patch
 
