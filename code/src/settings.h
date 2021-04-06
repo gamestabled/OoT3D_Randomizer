@@ -216,6 +216,7 @@ typedef struct {
   u8 damageMultiplier;
   u8 startingTime;
   u8 generateSpoilerLog;
+  u8 menuOpeningButton;
 
   u8 stickAsAdult;
   u8 boomerangAsAdult;

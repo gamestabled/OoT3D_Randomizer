@@ -107,8 +107,18 @@ void Gfx_Update(void) {
     if (!GfxInit) {
         Gfx_Init();
     }
+    
+    u8 openingButton = 0;
+    if(	(gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) ||
+	(gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt) ||
+	(gSettingsContext.menuOpeningButton == 2 && rInputCtx.cur.d_up) ||
+	(gSettingsContext.menuOpeningButton == 3 && rInputCtx.cur.d_down) ||
+	(gSettingsContext.menuOpeningButton == 4 && rInputCtx.cur.d_right) ||
+	(gSettingsContext.menuOpeningButton == 5 && rInputCtx.cur.d_left)){
+		openingButton = 1;
+    }
 
-    if(gSaveContext.gameMode == 0 && rInputCtx.cur.sel) {
+    if(gSaveContext.gameMode == 0 && openingButton) {
         Gfx_ShowMenu();
         svcSleepThread(1000 * 1000 * 300LL);
     }

@@ -352,6 +352,13 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //
                                                                                            //
 /*------------------------------                                                           //
+|      MENU OPENING BUTTON     |                                                           //
+------------------------------*/                                                           //
+string_view menuButtonDesc            = "Choose which button will bring up the Dungeon\n"  //
+                                        "Information Menu. You can also use the menu to\n" //
+                                        "buffer frame perfect inputs if you choose D-Pad"; //
+                                                                                           //
+/*------------------------------                                                           //
 |          ITEM POOL           |                                                           //
 ------------------------------*/                                                           //
 string_view itemPoolPlentiful         = "Extra major items are added to the pool.";        //
