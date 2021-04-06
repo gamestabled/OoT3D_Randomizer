@@ -748,8 +748,8 @@ ItemLocation SongFromWindmill                             = ItemLocation::Delaye
 
 ItemLocation KF_LinksHouseCow                             = ItemLocation::Base   (0x34, 0x15, "KF Links House Cow",                             {Category::cForest, Category::cCow, Category::cMinigame});
 ItemLocation HF_CowGrottoCow                              = ItemLocation::Base   (0x3E, 0x16, "HF Cow Grotto Cow",                              {Category::cHyruleField, Category::cCow, Category::cGrotto});
-ItemLocation LLR_StablesLeftCow                           = ItemLocation::Base   (0x36, 0x15, "LLR Stables Left Cow",                           {Category::cLonLonRanch, Category::cCow});
-ItemLocation LLR_StablesRightCow                          = ItemLocation::Base   (0x36, 0x16, "LLR Stables Right Cow",                          {Category::cLonLonRanch, Category::cCow});
+ItemLocation LLR_StablesLeftCow                           = ItemLocation::Base   (0x36, 0x16, "LLR Stables Left Cow",                           {Category::cLonLonRanch, Category::cCow});
+ItemLocation LLR_StablesRightCow                          = ItemLocation::Base   (0x36, 0x15, "LLR Stables Right Cow",                          {Category::cLonLonRanch, Category::cCow});
 ItemLocation LLR_TowerLeftCow                             = ItemLocation::Base   (0x4C, 0x16, "LLR Tower Left Cow",                             {Category::cLonLonRanch, Category::cCow});
 ItemLocation LLR_TowerRightCow                            = ItemLocation::Base   (0x4C, 0x15, "LLR Tower Right Cow",                            {Category::cLonLonRanch, Category::cCow});
 ItemLocation Kak_ImpasHouseCow                            = ItemLocation::Base   (0x37, 0x15, "Kak Impas House Cow",                            {Category::cKakarikoVillage, Category::cKakariko, Category::cCow});
