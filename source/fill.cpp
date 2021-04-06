@@ -218,7 +218,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                 ItemType type = location->GetPlacedItem().GetItemType();
                 std::string itemName(location->GetPlacedItem().GetName());
                 bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
-                
+
                 //Decide whether to exclude this location
                 //This preprocessing is done to reduce the amount of searches performed in PareDownPlaythrough
                 //Want to exclude:
@@ -242,7 +242,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                   std::string buyItem = itemName.erase(0, 4); //Delete "Buy "
                   //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
                   if (buyItem.find("(") != std::string::npos) {
-                    buyItem = buyItem.erase(buyItem.find("(")); 
+                    buyItem = buyItem.erase(buyItem.find("("));
                   }
                   //Buy item not in list to ignore, add it to list and write to playthrough
                   if (std::find(buyIgnores.begin(), buyIgnores.end(), buyItem) == buyIgnores.end()) {
@@ -261,7 +261,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
               }
               //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
               else if (location->GetPlacedItem().GetName() == "Triforce") {
-                sphere.clear(); 
+                sphere.clear();
                 sphere.push_back(location);
                 playthroughBeatable = true;
               }
@@ -314,7 +314,7 @@ static void PareDownPlaythrough() {
       location->SetPlacedItem(NoItem); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable     
+      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
@@ -453,11 +453,7 @@ static void RandomizeOwnDungeon(Category dungeon, const Item bossKey, const Item
     }
 
     //prevent using dungeon reward locations when songs need to go there
-    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cBossHeart) ||
-       loc->GetName() == "Gerudo Training Grounds MQ Ice Arrows Chest" ||
-       loc->GetName() == "Gerudo Training Grounds Maze Path Final Chest" ||
-       loc->GetName() == "Bottom of the Well Lens of Truth Chest" ||
-       loc->GetName() == "Bottom of the Well MQ Lens of Truth Chest")) {
+    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cSongDungeonReward) {
       return false;
     }
     return loc->IsCategory(dungeon);

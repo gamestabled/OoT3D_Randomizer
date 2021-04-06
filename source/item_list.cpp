@@ -139,17 +139,7 @@ Item GerudoTrainingGrounds_SmallKey = Item("Gerudo Training Grounds Small Key", 
 Item GerudoFortress_SmallKey        = Item("Gerudo Fortress Small Key",         ITEMTYPE_FORTRESS_SMALLKEY, 0xB6, true, &GerudoFortressKeys);
 Item GanonsCastle_SmallKey          = Item("Ganon's Castle Small Key",          ITEMTYPE_SMALLKEY,          0xB7, true, &GanonsCastleKeys);
 
-//Stones and Medallions                                                          //bitmask for questItems
-// Item I_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  true, &KokiriEmerald);
-// Item I_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000,  true, &GoronRuby);
-// Item I_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000,  true, &ZoraSapphire);
-// Item I_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000001,  true, &ForestMedallion);
-// Item I_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0x00000002,  true, &FireMedallion);
-// Item I_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000004,  true, &WaterMedallion);
-// Item I_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008,  true, &SpiritMedallion);
-// Item I_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010,  true, &ShadowMedallion);
-// Item I_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020,  true, &LightMedallion);
-
+//Stones and Medallions
 Item I_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_ITEM, 0xCB,  true, &KokiriEmerald);
 Item I_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_ITEM, 0xCC,  true, &GoronRuby);
 Item I_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_ITEM, 0xCD,  true, &ZoraSapphire);
