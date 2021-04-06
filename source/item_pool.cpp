@@ -1223,9 +1223,9 @@ void GenerateItemPool() {
   //TODO: trade item logic
   AddItemToMainPool(I_ClaimCheck);
 
-  //add songs
+  //add songs only if song shuffle is anywhere
   AddItemsToPool(ItemPool, songList);
-  if (ShuffleSongs && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL) && !ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
+  if (ShuffleSongs.Is(SONGSHUFFLE_ANYWHERE) && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
     AddItemsToPool(PendingJunkPool, songList);
   }
 
@@ -1263,9 +1263,9 @@ void GenerateItemPool() {
     AddItemToMainPool(FireTemple_SmallKey, 8);
     AddItemToMainPool(WaterTemple_SmallKey, 6);
     AddItemToMainPool(SpiritTemple_SmallKey, 5);
-    AddItemToMainPool(ShadowTemple_SmallKey, 4); //SHOULD BE 5, CHANGE WHEN CRASH IS FIXED
+    AddItemToMainPool(ShadowTemple_SmallKey, 5);
     AddItemToMainPool(BottomOfTheWell_SmallKey, 3);
-    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 8); //SHOULD BE 9, CHANGE WHEN CRASH IS FIXED
+    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 9);
     AddItemToMainPool(GanonsCastle_SmallKey, 2);
   }
 

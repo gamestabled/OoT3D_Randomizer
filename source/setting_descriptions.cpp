@@ -125,14 +125,14 @@ string_view bombchuDropDesc           = "Bombchu drops can appear from cutting g
 |      RANDOM MQ DUNGEONS      |                                                           //
 ------------------------------*/                                                           //
 string_view randomMQDungeonsDesc      = "If set, a random number of dungeons will have\n"  //
-                                        "Master Quest designs";                            //
+                                        "Master Quest designs.";                           //
                                                                                            //
 /*------------------------------                                                           //
 |       MQ DUNGEON COUNT       |                                                           //
 ------------------------------*/                                                           //
 string_view mqDungeonCountDesc        = "Specify the number of Master Quest dungeons to\n"
                                         "appear in the game. Which dungeons become Master\n"
-                                        "Quest will be chosen at random";                  //
+                                        "Quest will be chosen at random.";                 //
                                                                                            //
 /*------------------------------                                                           //
 |         MIRROR WORLD         |                                                           //

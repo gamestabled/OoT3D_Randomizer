@@ -453,7 +453,7 @@ static void RandomizeOwnDungeon(Category dungeon, const Item bossKey, const Item
     }
 
     //prevent using dungeon reward locations when songs need to go there
-    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cSongDungeonReward) {
+    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cSongDungeonReward))) {
       return false;
     }
     return loc->IsCategory(dungeon);

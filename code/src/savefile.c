@@ -46,20 +46,24 @@ void SaveFile_Init() {
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
     //navi text triggers
-    gSaveContext.sceneFlags[DUNGEON_DEKU_TREE]      .swch |= 0x80080400; //deku tree vines and door and rolling spike
-    gSaveContext.sceneFlags[DUNGEON_DODONGOS_CAVERN].swch |= 0x00004900; //dodongo entrance text and spike trap text
-    gSaveContext.sceneFlags[DUNGEON_JABUJABUS_BELLY].swch |= 0x0F010000; //jabu jabu
-    gSaveContext.sceneFlags[DUNGEON_FOREST_TEMPLE]  .swch |= 0x01C00300; //forest temple
-    gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE]    .swch |= 0x00080000; //fire temple
-    gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE]   .swch |= 0x00000080; //water temple
-    gSaveContext.sceneFlags[DUNGEON_ICE_CAVERN]     .swch |= 0x00000020; //ice cavern TODO: doesn't work
+    gSaveContext.sceneFlags[DUNGEON_DEKU_TREE]      .swch |= gSettingsContext.dekuTreeDungeonMode       ? 0x0 : 0x80080400; //deku tree vines and door and rolling spike
+    gSaveContext.sceneFlags[DUNGEON_DODONGOS_CAVERN].swch |= gSettingsContext.dodongosCavernDungeonMode ? 0x0 : 0x00004900; //dodongo entrance text and spike trap text
+    gSaveContext.sceneFlags[DUNGEON_JABUJABUS_BELLY].swch |= gSettingsContext.jabuJabusBellyDungeonMode ? 0x0 : 0x0F010000; //jabu jabu
+    gSaveContext.sceneFlags[DUNGEON_FOREST_TEMPLE]  .swch |= gSettingsContext.forestTempleDungeonMode   ? 0x0 : 0x01C00300; //forest temple
+    gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE]    .swch |= gSettingsContext.fireTempleDungeonMode     ? 0x0 : 0x00080000; //fire temple
+    gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE]   .swch |= gSettingsContext.waterTempleDungeonMode    ? 0x0 : 0x00000080; //water temple
+    gSaveContext.sceneFlags[DUNGEON_ICE_CAVERN]     .swch |= gSettingsContext.iceCavernDungeonMode      ? 0x0 : 0x00000020; //ice cavern TODO: doesn't work
     gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
 
-    //open lowest Fire Temple locked door (to prevent key logic lockouts)
-    gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
+    //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
+    if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA) {
+        gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
+    }
+    //open middle locked door in Vanilla Water Temple (to prevent key logic lockouts)
+    if (gSettingsContext.waterTempleDungeonMode == DUNGEONMODE_VANILLA) {
+        gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE].swch |= 0x00200000;
+    }
 
-    //open middle locked door in Water Temple (to prevent key logic lockouts)
-    gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE].swch |= 0x00200000;
 
     /*-----------------------------------
     |THINGS TO SET DEPENDING ON SETTINGS|
@@ -137,15 +141,20 @@ void SaveFile_Init() {
     }
 
     //give small keys
-    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {
-      gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE] = 5;
-      gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE] = 8;
-      gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE] = 6;
-      gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 5;
-      gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE] = 5;
-      gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL] = 3;
-      gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS] = 9;
-      gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = 2;
+    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {                     //check if MQ dungeon               MQ : Vanilla key count
+      gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE]            = gSettingsContext.forestTempleDungeonMode          ? 6 : 5;
+      gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE]              = gSettingsContext.fireTempleDungeonMode            ? 5 : 8;
+      gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE]             = gSettingsContext.waterTempleDungeonMode           ? 2 : 6;
+      gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE]            = gSettingsContext.spiritTempleDungeonMode          ? 7 : 5;
+      gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE]            = gSettingsContext.shadowTempleDungeonMode          ? 6 : 5;
+      gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL]       = gSettingsContext.bottomOfTheWellDungeonMode       ? 2 : 3;
+      gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS]  = gSettingsContext.gerudoTrainingGroundsDungeonMode ? 3 : 9;
+      gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = gSettingsContext.ganonsCastleDungeonMode          ? 3 : 2;
+      //give starting spirit keys for vanilla key locations
+    } else if (gSettingsContext.keysanity == KEYSANITY_VANILLA) {
+      if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
+        gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 3;
+      }
     }
 
     //give boss keys

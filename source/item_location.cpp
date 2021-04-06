@@ -545,11 +545,11 @@ ItemLocation ForestTemple_GS_LevelIslandCourtyard         = ItemLocation::GSToke
 ItemLocation ForestTemple_GS_Lobby                        = ItemLocation::GSToken(0x03, 0x08, "Forest Temple GS Lobby",                           {Category::cForestTemple, Category::cSkulltula,});
 ItemLocation ForestTemple_GS_Basement                     = ItemLocation::GSToken(0x03, 0x10, "Forest Temple GS Basement",                        {Category::cForestTemple, Category::cSkulltula,});
 
-ItemLocation ForestTemple_MQ_GS_FirstHallway              = ItemLocation::GSToken(0x03, 0x02, "Forest Temple GS First Hallway",                   {Category::cForestTemple, Category::cSkulltula,});
-ItemLocation ForestTemple_MQ_GS_BlockPushRoom             = ItemLocation::GSToken(0x03, 0x10, "Forest Temple GS Block Push Room",                 {Category::cForestTemple, Category::cSkulltula,});
-ItemLocation ForestTemple_MQ_GS_RaisedIslandCourtyard     = ItemLocation::GSToken(0x03, 0x01, "Forest Temple GS Raised Island Courtyard",         {Category::cForestTemple, Category::cSkulltula,});
-ItemLocation ForestTemple_MQ_GS_LevelIslandCourtyard      = ItemLocation::GSToken(0x03, 0x04, "Forest Temple GS Level Island Courtyard",          {Category::cForestTemple, Category::cSkulltula,});
-ItemLocation ForestTemple_MQ_GS_Well                      = ItemLocation::GSToken(0x03, 0x08, "Forest Temple GS Well",                            {Category::cForestTemple, Category::cSkulltula,});
+ItemLocation ForestTemple_MQ_GS_FirstHallway              = ItemLocation::GSToken(0x03, 0x02, "Forest Temple MQ GS First Hallway",                {Category::cForestTemple, Category::cSkulltula,});
+ItemLocation ForestTemple_MQ_GS_BlockPushRoom             = ItemLocation::GSToken(0x03, 0x10, "Forest Temple MQ GS Block Push Room",              {Category::cForestTemple, Category::cSkulltula,});
+ItemLocation ForestTemple_MQ_GS_RaisedIslandCourtyard     = ItemLocation::GSToken(0x03, 0x01, "Forest Temple MQ GS Raised Island Courtyard",      {Category::cForestTemple, Category::cSkulltula,});
+ItemLocation ForestTemple_MQ_GS_LevelIslandCourtyard      = ItemLocation::GSToken(0x03, 0x04, "Forest Temple MQ GS Level Island Courtyard",       {Category::cForestTemple, Category::cSkulltula,});
+ItemLocation ForestTemple_MQ_GS_Well                      = ItemLocation::GSToken(0x03, 0x08, "Forest Temple MQ GS Well",                         {Category::cForestTemple, Category::cSkulltula,});
 
 ItemLocation FireTemple_GS_SongOfTimeRoom                 = ItemLocation::GSToken(0x04, 0x01, "Fire Temple GS Song of Time Room",                 {Category::cFireTemple, Category::cSkulltula,});
 ItemLocation FireTemple_GS_BossKeyLoop                    = ItemLocation::GSToken(0x04, 0x02, "Fire Temple GS Boss Key Loop",                     {Category::cFireTemple, Category::cSkulltula,});

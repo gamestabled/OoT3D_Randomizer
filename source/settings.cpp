@@ -57,7 +57,8 @@ namespace Settings {
     &StartingAge,
     &BombchusInLogic,
     &BombchuDrops,
-    //&RandomMQDungeons, TODO: Finish MQ logic before enabling this
+    &RandomMQDungeons,
+    &MQDungeonCount,
   };
 
   //Shuffle Settings
@@ -324,7 +325,7 @@ namespace Settings {
     &LogicLensShadowBack,
     &LogicLensBotw,
     &LogicLensGtg,
-    &LogicLensCastle,  
+    &LogicLensCastle,
     //MQ Doesn't exist yet
     // &LogicLensJabuMQ
     // &LogicLensSpiritMQ,
