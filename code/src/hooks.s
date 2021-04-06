@@ -465,6 +465,24 @@ hook_CanPlayBombchuBowling:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_SlidingDoorDestroyCustomModels
+hook_SlidingDoorDestroyCustomModels:
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl Door_CheckToDeleteCustomModels
+    pop {r0-r12, lr}
+    mov r0,#0x0
+    bx lr
+
+.global hook_HandleDoorDestroyCustomModels
+hook_HandleDoorDestroyCustomModels:
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl Door_CheckToDeleteCustomModels
+    pop {r0-r12, lr}
+    str r0,[r4,#0x3E4]
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

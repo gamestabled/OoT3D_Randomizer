@@ -804,7 +804,7 @@ static void PlaceVanillaSmallKeys() {
       PlaceItemInLocation(&ShadowTemple_FallingSpikesSwitchChest,  ShadowTemple_SmallKey);
       PlaceItemInLocation(&ShadowTemple_InvisibleFloormasterChest, ShadowTemple_SmallKey);
       PlaceItemInLocation(&ShadowTemple_AfterWindHiddenChest,      ShadowTemple_SmallKey);
-      //PlaceItemInLocation(&ShadowTemple_FreestandingKey,           ShadowTemple_SmallKey); //UNCOMMENT WHEN FREESTANDING KEY CRASH IS FIXED
+      PlaceItemInLocation(&ShadowTemple_FreestandingKey,           ShadowTemple_SmallKey);
     }
 
     //Bottom of the Well
@@ -819,7 +819,7 @@ static void PlaceVanillaSmallKeys() {
 
     //Gerudo Training Grounds
     if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
-      PlaceItemInLocation(&GerudoTrainingGrounds_MQ_DinalfosChest,              GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_MQ_DinolfosChest,              GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_MQ_FlameCircleChest,           GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest, GerudoTrainingGrounds_SmallKey);
     } else {
@@ -831,7 +831,7 @@ static void PlaceVanillaSmallKeys() {
       PlaceItemInLocation(&GerudoTrainingGrounds_NearScarecrowChest,         GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_StalfosChest,               GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_UnderwaterSilverRupeeChest, GerudoTrainingGrounds_SmallKey);
-      //PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey,            GerudoTrainingGrounds_SmallKey); //UNCOMMENT WHEN FREESTANDING KEY CRASH IS FIXED
+      PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey,            GerudoTrainingGrounds_SmallKey);
     }
 
     //Ganon's Castle
@@ -1242,16 +1242,6 @@ void GenerateItemPool() {
   if (MapsAndCompasses.Is(MAPSANDCOMPASSES_VANILLA)) {
     PlaceVanillaMapsAndCompasses();
   }
-
-  /*-------------------------------------------------
-  |    TEMPORARY FIX FOR FREESTANDING KEY CRASHES   |
-  --------------------------------------------------*/
-  //Placing keys here for the logic to still work
-  PlaceItemInLocation(&ShadowTemple_FreestandingKey, ShadowTemple_SmallKey);
-  PlaceItemInLocation(&GerudoTrainingGrounds_FreestandingKey, GerudoTrainingGrounds_SmallKey);
-  /*-------------------------------------------------
-  |END OF TEMPORARY FIX FOR FREESTANDING KEY CRASHES|
-  --------------------------------------------------*/
 
   if (Keysanity.Is(KEYSANITY_VANILLA)) {
     PlaceVanillaSmallKeys();

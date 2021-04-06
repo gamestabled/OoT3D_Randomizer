@@ -361,6 +361,12 @@ void Model_DestroyByActor(Actor* actor) {
     }
 }
 
+void Model_DestroyAll(void) {
+    for (s32 i = 0; i < LOADEDMODELS_MAX; ++i) {
+        Model_Destroy(&ModelContext[i]);
+    }
+}
+
 s32 Model_DrawByActor(Actor* actor) {
     s32 actorDrawn = 0;
 
