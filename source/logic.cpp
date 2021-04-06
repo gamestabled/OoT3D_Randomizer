@@ -306,72 +306,72 @@ namespace Logic {
     return Ocarina && song;
   }
 
-  static bool IsMagicItem(std::string_view item) {
-    return item == "Dins Fire"    ||
-           item == "Farores Wind" ||
-           item == "Nayrus Love"  ||
-           item == "Lens of Truth";
+  static bool IsMagicItem(CanUseItem item) {
+    return item == CanUseItem::Dins_Fire    ||
+           item == CanUseItem::Farores_Wind ||
+           item == CanUseItem::Nayrus_Love  ||
+           item == CanUseItem::Lens_of_Truth;
   }
 
-  static bool IsAdultItem(std::string_view item) {
-    return item == "Bow"              ||
-           item == "Hammer"           ||
-           item == "Iron Boots"       ||
-           item == "Hover Boots"      ||
-           item == "Hookshot"         ||
-           item == "Longshot"         ||
-           item == "Silver Gauntlets" ||
-           item == "Golden Gauntlets" ||
-           item == "Goron Tunic"      ||
-           item == "Zora Tunic"       ||
-           item == "Scarecrow"        ||
-           item == "Distant Scarecrow";
+  static bool IsAdultItem(CanUseItem item) {
+    return item == CanUseItem::Bow              ||
+           item == CanUseItem::Hammer           ||
+           item == CanUseItem::Iron_Boots       ||
+           item == CanUseItem::Hover_Boots      ||
+           item == CanUseItem::Hookshot         ||
+           item == CanUseItem::Longshot         ||
+           item == CanUseItem::Silver_Gauntlets ||
+           item == CanUseItem::Golden_Gauntlets ||
+           item == CanUseItem::Goron_Tunic      ||
+           item == CanUseItem::Zora_Tunic       ||
+           item == CanUseItem::Scarecrow        ||
+           item == CanUseItem::Distant_Scarecrow;
   }
 
-  static bool IsChildItem(std::string_view item) {
-    return item == "Slingshot"    ||
-           item == "Boomerang"    ||
-           item == "Kokiri Sword" ||
-           item == "Sticks"       ||
-           item == "Deku Shield";
+  static bool IsChildItem(CanUseItem item) {
+    return item == CanUseItem::Slingshot    ||
+           item == CanUseItem::Boomerang    ||
+           item == CanUseItem::Kokiri_Sword ||
+           item == CanUseItem::Sticks       ||
+           item == CanUseItem::Deku_Shield;
   }
 
-  static bool IsMagicArrow(std::string_view item) {
-    return item == "Fire Arrows" ||
-           item == "Ice Arrows"  ||
-           item == "Light Arrows";
+  static bool IsMagicArrow(CanUseItem item) {
+    return item == CanUseItem::Fire_Arrows ||
+           item == CanUseItem::Ice_Arrows  ||
+           item == CanUseItem::Light_Arrows;
   }
 
-  bool HasItem(std::string_view itemName) {
-    return (itemName == "Dins Fire"        && DinsFire)        ||
-           (itemName == "Farores Wind"     && FaroresWind)     ||
-           (itemName == "NayrusLove"       && NayrusLove)      ||
-           (itemName == "Lens of Truth"    && LensOfTruth)     ||
-           (itemName == "Bow"              && Bow)             ||
-           (itemName == "Hammer"           && Hammer)          ||
-           (itemName == "Iron Boots"       && IronBoots)       ||
-           (itemName == "Hover Boots"      && HoverBoots)      ||
-           (itemName == "Hookshot"         && Hookshot)        ||
-           (itemName == "Longshot"         && Longshot)        ||
-           (itemName == "Silver Gauntlets" && SilverGauntlets) ||
-           (itemName == "Golden Gauntlets" && GoldenGauntlets) ||
-           (itemName == "Goron Tunic"      && GoronTunic)      ||
-           (itemName == "Zora Tunic"       && ZoraTunic)       ||
-           (itemName == "Scarecrow"        && Scarecrow)       ||
-           (itemName == "Distant Scarecrow"&& DistantScarecrow)||
-           (itemName == "Slingshot"        && Slingshot)       ||
-           (itemName == "Boomerang"        && Boomerang)       ||
-           (itemName == "Kokiri Sword"     && KokiriSword)     ||
-           (itemName == "Sticks"           && Sticks)          ||
-           (itemName == "Deku Shield"      && DekuShield)      ||
-           (itemName == "Fire Arrows"      && FireArrows)      ||
-           (itemName == "Ice Arrows"       && IceArrows)       ||
-           (itemName == "Light Arrows"     && LightArrows);
+  bool HasItem(CanUseItem itemName) {
+    return (itemName == CanUseItem::Dins_Fire         && DinsFire)        ||
+           (itemName == CanUseItem::Farores_Wind      && FaroresWind)     ||
+           (itemName == CanUseItem::Nayrus_Love       && NayrusLove)      ||
+           (itemName == CanUseItem::Lens_of_Truth     && LensOfTruth)     ||
+           (itemName == CanUseItem::Bow               && Bow)             ||
+           (itemName == CanUseItem::Hammer            && Hammer)          ||
+           (itemName == CanUseItem::Iron_Boots        && IronBoots)       ||
+           (itemName == CanUseItem::Hover_Boots       && HoverBoots)      ||
+           (itemName == CanUseItem::Hookshot          && Hookshot)        ||
+           (itemName == CanUseItem::Longshot          && Longshot)        ||
+           (itemName == CanUseItem::Silver_Gauntlets  && SilverGauntlets) ||
+           (itemName == CanUseItem::Golden_Gauntlets  && GoldenGauntlets) ||
+           (itemName == CanUseItem::Goron_Tunic       && GoronTunic)      ||
+           (itemName == CanUseItem::Zora_Tunic        && ZoraTunic)       ||
+           (itemName == CanUseItem::Scarecrow         && Scarecrow)       ||
+           (itemName == CanUseItem::Distant_Scarecrow && DistantScarecrow)||
+           (itemName == CanUseItem::Slingshot         && Slingshot)       ||
+           (itemName == CanUseItem::Boomerang         && Boomerang)       ||
+           (itemName == CanUseItem::Kokiri_Sword      && KokiriSword)     ||
+           (itemName == CanUseItem::Sticks            && Sticks)          ||
+           (itemName == CanUseItem::Deku_Shield       && DekuShield)      ||
+           (itemName == CanUseItem::Fire_Arrows       && FireArrows)      ||
+           (itemName == CanUseItem::Ice_Arrows        && IceArrows)       ||
+           (itemName == CanUseItem::Light_Arrows      && LightArrows);
 
   }
 
   //Can the passed in item be used?
-  bool CanUse(std::string_view itemName) {
+  bool CanUse(CanUseItem itemName) {
     return (IsMagicItem(itemName)  && HasItem(itemName) && MagicMeter) ||
            (IsAdultItem(itemName)  && HasItem(itemName) && IsAdult)    ||
            (IsMagicArrow(itemName) && HasItem(itemName) && MagicMeter  && IsAdult && Bow) ||
@@ -430,10 +430,10 @@ namespace Logic {
 
   //IsGlitched = false;
 
-    CanBlastOrSmash = HasExplosives || CanUse("Hammer");
-    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse("Dins Fire"));
-    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse("Dins Fire"));
-    CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse("Dins Fire") || Nuts || DekuShield);
+    CanBlastOrSmash = HasExplosives || CanUse(CanUseItem::Hammer);
+    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(CanUseItem::Dins_Fire));
+    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(CanUseItem::Dins_Fire));
+    CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(CanUseItem::Dins_Fire) || Nuts || DekuShield);
     CanCutShrubs    = IsAdult || Sticks || KokiriSword || Boomerang || HasExplosives;
     CanDive         = ProgressiveScale >= 1;
     CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear;
@@ -444,11 +444,11 @@ namespace Logic {
     CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
-    HookshotOrBoomerang = CanUse("Hookshot") || CanUse("Boomerang");
+    HookshotOrBoomerang = CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang);
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
-    HasFireSource          = CanUse("Dins Fire") || CanUse("Fire Arrows");
+    HasFireSource          = CanUse(CanUseItem::Dins_Fire) || CanUse(CanUseItem::Fire_Arrows);
     HasFireSourceWithTorch = HasFireSource || (IsChild && Sticks);
 
     //Gerudo Fortress
