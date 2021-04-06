@@ -45,16 +45,6 @@ void SaveFile_Init() {
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
-    //navi text triggers
-    gSaveContext.sceneFlags[DUNGEON_DEKU_TREE]      .swch |= 0x80080400; //deku tree vines and door and rolling spike
-    gSaveContext.sceneFlags[DUNGEON_DODONGOS_CAVERN].swch |= 0x00004900; //dodongo entrance text and spike trap text
-    gSaveContext.sceneFlags[DUNGEON_JABUJABUS_BELLY].swch |= 0x0F010000; //jabu jabu
-    gSaveContext.sceneFlags[DUNGEON_FOREST_TEMPLE]  .swch |= 0x01C00300; //forest temple
-    gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE]    .swch |= 0x00080000; //fire temple
-    gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE]   .swch |= 0x00000080; //water temple
-    gSaveContext.sceneFlags[DUNGEON_ICE_CAVERN]     .swch |= 0x00000020; //ice cavern TODO: doesn't work
-    gSaveContext.sceneFlags[86].swch |= 0x00004000; //sacred forest meadow
-
     //open lowest Fire Temple locked door (to prevent key logic lockouts)
     gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
 
@@ -209,19 +199,19 @@ void SaveFile_SwapFaroresWind(void) {
 }
 
 u8 SaveFile_GetMedallionCount(void) {
-  u8 count = 0;
+    u8 count = 0;
 
-  for (u8 i = 0; i <= 5; i++) {
-    count += (gSaveContext.questItems >> i) & 0x1;
-  }
-  return count;
+    for (u8 i = 0; i <= 5; i++) {
+        count += (gSaveContext.questItems >> i) & 0x1;
+    }
+    return count;
 }
 
 u8 SaveFile_GetStoneCount(void) {
-  u8 count = 0;
+    u8 count = 0;
 
-  for (u8 i = 18; i <= 20; i++) {
-    count += (gSaveContext.questItems >> i) & 0x1;
-  }
-  return count;
+    for (u8 i = 18; i <= 20; i++) {
+        count += (gSaveContext.questItems >> i) & 0x1;
+    }
+    return count;
 }

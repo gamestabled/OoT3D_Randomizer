@@ -50,6 +50,8 @@ void Actor_Init() {
     gActorOverlayTable[0x10F].initInfo->init = ItemEtcetera_rInit;
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
 
+    gActorOverlayTable[0x11B].initInfo->update = NULL;
+
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
 
