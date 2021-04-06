@@ -164,83 +164,90 @@ namespace Settings {
   }
 
   //Detailed Logic Tricks                               ---------------------
-  Option ToggleAllDetailedLogic           = Option::Bool("All Tricks", {"Disabled", "Enabled"},           {"Toggle all tricks at once."}, OptionCategory::Toggle);
-  Option LogicGrottosWithoutAgony         = LogicTrick("Grottos Without Agony",                           LogicGrottosWithoutAgonyDesc);
-  Option LogicVisibleCollision            = LogicTrick("Pass Through Visible\n One-Way Collisions",       LogicVisibleCollisionDesc);
-  Option LogicFewerTunicRequirements      = LogicTrick("Fewer Tunic\n Requirements",                      LogicFewerTunicRequirementsDesc);
-  Option LogicLostWoodsGSBean             = LogicTrick("Lost Woods Adult GS\n without Bean",              LogicLostWoodsGSBeanDesc);
-  Option LogicLabDiving                   = LogicTrick("Lake Hylia Lab Dive\n without Gold Scale",        LogicLabDivingDesc);
-  Option LogicLabWallGS                   = LogicTrick("Lake Hylia Lab Wall\n GS with Jump Slash",        LogicLabWallGSDesc);
-  Option LogicGraveyardPoH                = LogicTrick("Graveyard Freestanding\n PoH with Boomerang",     LogicGraveyardPoHDesc);
-  Option LogicChildDampeRacePoH           = LogicTrick("Second Dampe Race as\n Child",                    LogicChildDampeRacePoHDesc);
-  Option LogicGerudoKitchen               = LogicTrick("Gerudo Fortress\n Kitchen with No Items",         LogicGerudoKitchenDesc);
-  Option LogicLensWasteland               = LogicTrick("Lensless Wasteland",                              LogicLensWastelandDesc);
-  Option LogicReverseWasteland            = LogicTrick("Reverse Wasteland",                               LogicReverseWastelandDesc);
-  Option LogicColossusGS                  = LogicTrick("Colossus Hill GS\n with Hookshot",                LogicColossusGSDesc);
-  Option LogicOutsideGanonsGS             = LogicTrick("OGC GS with No Items",                            LogicOutsideGanonsGSDesc);
-  Option LogicManOnRoof                   = LogicTrick("Man on Roof without\n Hookshot",                  LogicManOnRoofDesc);
-  Option LogicDMTBombable                 = LogicTrick("Death Mountain Trail\n Chest with Strength",      LogicDMTBombableDesc);
-  Option LogicDMTSoilGS                   = LogicTrick("DMT Soil GS without\n Destroying Boulder",        LogicDMTSoilGSDesc);
-  Option LogicLinkGoronDins               = LogicTrick("Stop Link the Goron\n with Din's Fire",           LogicLinkGoronDinsDesc);
-  Option LogicGoronCityLeftMost           = LogicTrick("Goron City Maze Left\n Chest with Hover Boots",   LogicGoronCityLeftMostDesc);
-  Option LogicGoronCityPot                = LogicTrick("Goron City Spinning\n Pot PoH with Bombchu",      LogicGoronCityPotDesc); //Needs Testing
-  Option LogicGoronCityPotWithStrength    = LogicTrick("Goron City Spinning\n Pot PoH with Strength",     LogicGoronCityPotWithStrengthDesc);
-  Option LogicChildRollingWithStrength    = LogicTrick("Rolling Goron as\n Child with Strength",          LogicChildRollingWithStrengthDesc);
-  Option LogicCraterUpperToLower          = LogicTrick("Crater Upper to Lower\n with Hammer",             LogicCraterUpperToLowerDesc); //Needs Testing
-  Option LogicCraterBeanPoHWithHovers     = LogicTrick("Crater's Bean PoH\n with Hover Boots",            LogicCraterBeanPoHWithHoversDesc);
-  Option LogicBiggoronBolero              = LogicTrick("Deliver Eye Drops\n with Bolero of Fire",         LogicBiggoronBoleroDesc);
-  Option LogicZoraRiverLower              = LogicTrick("Zora's River Lower\n PoH with Nothing",           LogicZoraRiverLowerDesc);
-  Option LogicZoraRiverUpper              = LogicTrick("Zora's River Upper\n PoH with Nothing",           LogicZoraRiverUpperDesc);
-  Option LogicDekuB1WebsWithBow           = LogicTrick("Deku Tree Basement\n Web with Bow",               LogicDekuB1WebsWithBowDesc);
-  Option LogicDekuB1Skip                  = LogicTrick("Deku Tree Basement\n without Slingshot",          LogicDekuB1SkipDesc);
-  Option LogicDekuBasementGS              = LogicTrick("Deku Tree Basement\n Vines GS w/ Jump Slash",     LogicDekuBasementGSDesc);
-  Option LogicDCStaircase                 = LogicTrick("Dodongo's Cavern\n Staircase with Bow",           LogicDCStaircaseDesc);
-  Option LogicDCJump                      = LogicTrick("DC Spike Trap room\n Jump w/o Hover Boots",       LogicDCJumpDesc);
-  Option LogicDCSlingshotSkip             = LogicTrick("DC Child Slingshot\n Skips",                      LogicDCSlingshotSkipDesc);
-  Option LogicDCScarecrowGS               = LogicTrick("DC Scarecrow GS with\n Armos Statue",             LogicDCScarecrowGSDesc);
-  Option LogicJabuBossGSAdult             = LogicTrick("Jabu Near Boss GS as\n Adult w/o Boomerang",      LogicJabuBossGSAdultDesc); //Needs Testing
-  Option LogicJabuScrubJumpDive           = LogicTrick("Jabu Scrub as Adult\n w/ Jump Dive",              LogicJabuScrubJumpDiveDesc); //Needs Testing
-  Option LogicForestOutsideBackdoor       = LogicTrick("FoT Outisde Backdoor\n w/ Jump Slash",            LogicForestOutsideBackdoorDesc); //Needs Testing
-  Option LogicForestDoorFrame             = LogicTrick("FoT East Courtyard\n Door Frame w/ Hover Boots",  LogicForestDoorFrameDesc); //Needs Testing
-  Option LogicForestOutdoorEastGS         = LogicTrick("FoT East Courtyard GS\n with Boomerang",          LogicForestOutdoorEastGSDesc);
-  Option LogicFireBossDoorJump            = LogicTrick("FiT Boss Door without\n Hover Boots or Pillar",   LogicFireBossDoorJumpDesc);
-  Option LogicFireStrength                = LogicTrick("FiT Climb without\n Strength",                    LogicFireStrengthDesc);
-  Option LogicFireScarecrow               = LogicTrick("FiT East Tower w/o\n Scarecrow\'s Song",          LogicFireScarecrowDesc);
-  Option LogicFireFlameMaze               = LogicTrick("FiT Flame Wall Maze\n Skip",                      LogicFireFlameMazeDesc);
-  Option LogicFireSongOfTime              = LogicTrick("FiT Song of Time Room\n GS w/o Song of Time",     LogicFireSongOfTimeDesc);
-  Option LogicWaterTempleTorchLongshot    = LogicTrick("WaT Torch Longshot",                              LogicWaterTempleTorchLongshotDesc);
-  Option LogicWaterTempleUpperBoost       = LogicTrick("WaT Upper Ledge Jump\n with Bombs",               LogicWaterTempleUpperBoostDesc);
-  Option LogicWaterCentralBow             = LogicTrick("WaT Bow Target w/o\n Longshot or Hover Boots",    LogicWaterCentralBowDesc);
-  Option LogicWaterCentralGSFW            = LogicTrick("WaT Central Pillar GS\n with Farore's Wind",      LogicWaterCentralGSFWDesc);
-  Option LogicWaterCrackedWallNothing     = LogicTrick("WaT Cracked Wall with\n No Additional Items",     LogicWaterCrackedWallNothingDesc);
-  Option LogicWaterCrackedWallHovers      = LogicTrick("WaT Cracked Wall with\n Hover Boots",             LogicWaterCrackedWallHoversDesc);
-  Option LogicWaterBossKeyRegion          = LogicTrick("WaT Boss Key Region\n with Hover Boots",          LogicWaterBossKeyRegionDesc);
-  Option LogicWaterBKJumpDive             = LogicTrick("WaT Boss Key Jump\n Dive",                        LogicWaterBKJumpDiveDesc);
-  Option LogicWaterNorthBasementLedgeJump = LogicTrick("WaT North Basement\n Ledge with Precise Jump",    LogicWaterNorthBasementLedgeJumpDesc);
-  Option LogicWaterDragonAdult            = LogicTrick("WaT Dragon Statue\n Jump Dive",                   LogicWaterDragonAdultDesc);
-  Option LogicWaterDragonJumpDive         = LogicTrick("WaT Dragon Statue\n Switch Above as Adult",       LogicWaterDragonJumpDiveDesc);
-  Option LogicWaterRiverGS                = LogicTrick("WaT River GS without\n Iron Boots",               LogicWaterRiverGSDesc);
-  Option LogicWaterFallingPlatformGS      = LogicTrick("WaT Falling Platform\n Room GS with Hookshot",    LogicWaterFallingPlatformGSDesc);
-  Option LogicSpiritLowerAdultSwitch      = LogicTrick("SpT Lower Adult\n Switch with Bombs",             LogicSpiritLowerAdultSwitchDesc);
-  Option LogicSpiritChildBombchu          = LogicTrick("SpT Child Side Bridge\n with Bombchu",            LogicSpiritChildBombchuDesc);
-  Option LogicSpiritWall                  = LogicTrick("SpT Shifting Wall w/\n No Additional Items",      LogicSpiritWallDesc);
-  Option LogicSpiritLobbyGS               = LogicTrick("SpT Main Room GS with\n Boomerang",               LogicSpiritLobbyGSDesc);
-  Option LogicSpiritMapChest              = LogicTrick("SpT Map Chest with\n Bow",                        LogicSpiritMapChestDesc);
-  Option LogicSpiritSunChest              = LogicTrick("SpT Sun Block Room\n Chest with Bow",             LogicSpiritSunChestDesc); //Needs Testing
-  Option LogicShadowFireArrowEntry        = LogicTrick("ShT Entry with Fire\n Arrows",                    LogicShadowFireArrowEntryDesc); //Needs Testing
-  Option LogicShadowUmbrella              = LogicTrick("ShT Stone Umbrella\n Skip",                       LogicShadowUmbrellaDesc);
-  Option LogicShadowFreestandingKey       = LogicTrick("ShT Freestanding Key\n with Bombchu",             LogicShadowFreestandingKeyDesc);
-  Option LogicShadowStatue                = LogicTrick("ShT River Statue with\n Bombchu",                 LogicShadowStatueDesc);
-  Option LogicChildDeadhand               = LogicTrick("Child Deadhand w/o\n Kokiri Sword",               LogicChildDeadhandDesc);
-  Option LogicGtgWithoutHookshot          = LogicTrick("GTG Left Side Silver\n Rupees w/o Hookshot",      LogicGtgWithoutHookshotDesc);
-  Option LogicGtgFakeWall                 = LogicTrick("GTG Fake Wall Ledge\n with Hover Boots",          LogicGtgFakeWallDesc);
-  Option LogicLensSpirit                  = LogicTrick("SpT without Lens of\n Truth",                     LogicLensSpiritDesc);
-  Option LogicLensShadow                  = LogicTrick("ShT before Invisible\n Moving Platform w/o Lens", LogicLensShadowDesc);
-  Option LogicLensShadowBack              = LogicTrick("ShT beyond Invisible\n Moving Platform w/o Lens", LogicLensShadowBackDesc);
-  Option LogicLensBotw                    = LogicTrick("BotW without Lens of\n Truth",                    LogicLensBotwDesc);
-  Option LogicLensGtg                     = LogicTrick("GTG without Lens of\n Truth",                     LogicLensGtgDesc);
-  Option LogicLensCastle                  = LogicTrick("Ganon's Castle w/o\n Lens of Truth",              LogicLensCastleDesc);
-  Option LogicSpiritTrialHookshot         = LogicTrick("Spirit Trial without\n Hookshot",                 LogicSpiritTrialHookshotDesc);
+  Option ToggleAllDetailedLogic           = Option::Bool("All Tricks", {"Disabled", "Enabled"},              {"Toggle all tricks at once."}, OptionCategory::Toggle);
+  Option LogicGrottosWithoutAgony         = LogicTrick("Grottos Without Agony",                              LogicGrottosWithoutAgonyDesc);
+  Option LogicVisibleCollision            = LogicTrick("Pass Through Visible\n One-Way Collisions",          LogicVisibleCollisionDesc);
+  Option LogicFewerTunicRequirements      = LogicTrick("Fewer Tunic\n Requirements",                         LogicFewerTunicRequirementsDesc);
+  Option LogicLostWoodsGSBean             = LogicTrick("Lost Woods Adult GS\n without Bean",                 LogicLostWoodsGSBeanDesc);
+  Option LogicLabDiving                   = LogicTrick("Lake Hylia Lab Dive\n without Gold Scale",           LogicLabDivingDesc);
+  Option LogicLabWallGS                   = LogicTrick("Lake Hylia Lab Wall\n GS with Jump Slash",           LogicLabWallGSDesc);
+  Option LogicGraveyardPoH                = LogicTrick("Graveyard Freestanding\n PoH with Boomerang",        LogicGraveyardPoHDesc);
+  Option LogicChildDampeRacePoH           = LogicTrick("Second Dampe Race as\n Child",                       LogicChildDampeRacePoHDesc);
+  Option LogicGerudoKitchen               = LogicTrick("Gerudo Fortress\n Kitchen with No Items",            LogicGerudoKitchenDesc);
+  Option LogicLensWasteland               = LogicTrick("Lensless Wasteland",                                 LogicLensWastelandDesc);
+  Option LogicReverseWasteland            = LogicTrick("Reverse Wasteland",                                  LogicReverseWastelandDesc);
+  Option LogicColossusGS                  = LogicTrick("Colossus Hill GS\n with Hookshot",                   LogicColossusGSDesc);
+  Option LogicOutsideGanonsGS             = LogicTrick("OGC GS with No Items",                               LogicOutsideGanonsGSDesc);
+  Option LogicManOnRoof                   = LogicTrick("Man on Roof without\n Hookshot",                     LogicManOnRoofDesc);
+  Option LogicDMTBombable                 = LogicTrick("Death Mountain Trail\n Chest with Strength",         LogicDMTBombableDesc);
+  Option LogicDMTSoilGS                   = LogicTrick("DMT Soil GS without\n Destroying Boulder",           LogicDMTSoilGSDesc);
+  Option LogicLinkGoronDins               = LogicTrick("Stop Link the Goron\n with Din's Fire",              LogicLinkGoronDinsDesc);
+  Option LogicGoronCityLeftMost           = LogicTrick("Goron City Maze Left\n Chest with Hover Boots",      LogicGoronCityLeftMostDesc);
+  Option LogicGoronCityPot                = LogicTrick("Goron City Spinning\n Pot PoH with Bombchu",         LogicGoronCityPotDesc); //Needs Testing
+  Option LogicGoronCityPotWithStrength    = LogicTrick("Goron City Spinning\n Pot PoH with Strength",        LogicGoronCityPotWithStrengthDesc);
+  Option LogicChildRollingWithStrength    = LogicTrick("Rolling Goron as\n Child with Strength",             LogicChildRollingWithStrengthDesc);
+  Option LogicCraterUpperToLower          = LogicTrick("Crater Upper to Lower\n with Hammer",                LogicCraterUpperToLowerDesc); //Needs Testing
+  Option LogicCraterBeanPoHWithHovers     = LogicTrick("Crater's Bean PoH\n with Hover Boots",               LogicCraterBeanPoHWithHoversDesc);
+  Option LogicBiggoronBolero              = LogicTrick("Deliver Eye Drops\n with Bolero of Fire",            LogicBiggoronBoleroDesc);
+  Option LogicZoraRiverLower              = LogicTrick("Zora's River Lower\n PoH with Nothing",              LogicZoraRiverLowerDesc);
+  Option LogicZoraRiverUpper              = LogicTrick("Zora's River Upper\n PoH with Nothing",              LogicZoraRiverUpperDesc);
+  Option LogicDekuB1WebsWithBow           = LogicTrick("Deku Tree Basement\n Web with Bow",                  LogicDekuB1WebsWithBowDesc);
+  Option LogicDekuB1Skip                  = LogicTrick("Deku Tree Basement\n without Slingshot",             LogicDekuB1SkipDesc);
+  Option LogicDekuBasementGS              = LogicTrick("Deku Tree Basement\n Vines GS w/ Jump Slash",        LogicDekuBasementGSDesc);
+  Option LogicDCStaircase                 = LogicTrick("Dodongo's Cavern\n Staircase with Bow",              LogicDCStaircaseDesc);
+  Option LogicDCJump                      = LogicTrick("DC Spike Trap room\n Jump w/o Hover Boots",          LogicDCJumpDesc);
+  Option LogicDCSlingshotSkip             = LogicTrick("DC Child Slingshot\n Skips",                         LogicDCSlingshotSkipDesc);
+  Option LogicDCScarecrowGS               = LogicTrick("DC Scarecrow GS with\n Armos Statue",                LogicDCScarecrowGSDesc);
+  Option LogicJabuBossGSAdult             = LogicTrick("Jabu Near Boss GS as\n Adult w/o Boomerang",         LogicJabuBossGSAdultDesc); //Needs Testing
+  Option LogicJabuScrubJumpDive           = LogicTrick("Jabu Scrub as Adult\n w/ Jump Dive",                 LogicJabuScrubJumpDiveDesc); //Needs Testing
+  Option LogicForestOutsideBackdoor       = LogicTrick("FoT Outisde Backdoor\n w/ Jump Slash",               LogicForestOutsideBackdoorDesc); //Needs Testing
+  Option LogicForestDoorFrame             = LogicTrick("FoT East Courtyard\n Door Frame w/ Hover Boots",     LogicForestDoorFrameDesc); //Needs Testing
+  Option LogicForestOutdoorEastGS         = LogicTrick("FoT East Courtyard GS\n with Boomerang",             LogicForestOutdoorEastGSDesc);
+  Option LogicFireBossDoorJump            = LogicTrick("FiT Boss Door without\n Hover Boots or Pillar",      LogicFireBossDoorJumpDesc);
+  Option LogicFireStrength                = LogicTrick("FiT Climb without\n Strength",                       LogicFireStrengthDesc);
+  Option LogicFireScarecrow               = LogicTrick("FiT East Tower w/o\n Scarecrow\'s Song",             LogicFireScarecrowDesc);
+  Option LogicFireFlameMaze               = LogicTrick("FiT Flame Wall Maze\n Skip",                         LogicFireFlameMazeDesc);
+  Option LogicFireSongOfTime              = LogicTrick("FiT Song of Time Room\n GS w/o Song of Time",        LogicFireSongOfTimeDesc);
+  Option LogicWaterTempleTorchLongshot    = LogicTrick("WaT Torch Longshot",                                 LogicWaterTempleTorchLongshotDesc);
+  Option LogicWaterTempleUpperBoost       = LogicTrick("WaT Upper Ledge Jump\n with Bombs",                  LogicWaterTempleUpperBoostDesc);
+  Option LogicWaterCentralBow             = LogicTrick("WaT Bow Target w/o\n Longshot or Hover Boots",       LogicWaterCentralBowDesc);
+  Option LogicWaterCentralGSFW            = LogicTrick("WaT Central Pillar GS\n with Farore's Wind",         LogicWaterCentralGSFWDesc);
+  Option LogicWaterCrackedWallNothing     = LogicTrick("WaT Cracked Wall with\n No Additional Items",        LogicWaterCrackedWallNothingDesc);
+  Option LogicWaterCrackedWallHovers      = LogicTrick("WaT Cracked Wall with\n Hover Boots",                LogicWaterCrackedWallHoversDesc);
+  Option LogicWaterBossKeyRegion          = LogicTrick("WaT Boss Key Region\n with Hover Boots",             LogicWaterBossKeyRegionDesc);
+  Option LogicWaterBKJumpDive             = LogicTrick("WaT Boss Key Jump\n Dive",                           LogicWaterBKJumpDiveDesc);
+  Option LogicWaterNorthBasementLedgeJump = LogicTrick("WaT North Basement\n Ledge with Precise Jump",       LogicWaterNorthBasementLedgeJumpDesc);
+  Option LogicWaterDragonAdult            = LogicTrick("WaT Dragon Statue\n Jump Dive",                      LogicWaterDragonAdultDesc);
+  Option LogicWaterDragonJumpDive         = LogicTrick("WaT Dragon Statue\n Switch Above as Adult",          LogicWaterDragonJumpDiveDesc);
+  Option LogicWaterRiverGS                = LogicTrick("WaT River GS without\n Iron Boots",                  LogicWaterRiverGSDesc);
+  Option LogicWaterFallingPlatformGS      = LogicTrick("WaT Falling Platform\n Room GS with Hookshot",       LogicWaterFallingPlatformGSDesc);
+  Option LogicSpiritLowerAdultSwitch      = LogicTrick("SpT Lower Adult\n Switch with Bombs",                LogicSpiritLowerAdultSwitchDesc);
+  Option LogicSpiritChildBombchu          = LogicTrick("SpT Child Side Bridge\n with Bombchu",               LogicSpiritChildBombchuDesc);
+  Option LogicSpiritWall                  = LogicTrick("SpT Shifting Wall w/\n No Additional Items",         LogicSpiritWallDesc);
+  Option LogicSpiritLobbyGS               = LogicTrick("SpT Main Room GS with\n Boomerang",                  LogicSpiritLobbyGSDesc);
+  Option LogicSpiritMapChest              = LogicTrick("SpT Map Chest with\n Bow",                           LogicSpiritMapChestDesc);
+  Option LogicSpiritSunChest              = LogicTrick("SpT Sun Block Room\n Chest with Bow",                LogicSpiritSunChestDesc); //Needs Testing
+  Option LogicShadowFireArrowEntry        = LogicTrick("ShT Entry with Fire\n Arrows",                       LogicShadowFireArrowEntryDesc); //Needs Testing
+  Option LogicShadowUmbrella              = LogicTrick("ShT Stone Umbrella\n Skip",                          LogicShadowUmbrellaDesc);
+  Option LogicShadowFreestandingKey       = LogicTrick("ShT Freestanding Key\n with Bombchu",                LogicShadowFreestandingKeyDesc);
+  Option LogicShadowStatue                = LogicTrick("ShT River Statue with\n Bombchu",                    LogicShadowStatueDesc);
+  Option LogicChildDeadhand               = LogicTrick("Child Deadhand w/o\n Kokiri Sword",                  LogicChildDeadhandDesc);
+  Option LogicGtgWithoutHookshot          = LogicTrick("GTG Left Side Silver\n Rupees w/o Hookshot",         LogicGtgWithoutHookshotDesc);
+  Option LogicGtgFakeWall                 = LogicTrick("GTG Fake Wall Ledge\n with Hover Boots",             LogicGtgFakeWallDesc);
+  Option LogicLensSpirit                  = LogicTrick("SpT without Lens of\n Truth",                        LogicLensSpiritDesc);
+  Option LogicLensShadow                  = LogicTrick("ShT before Invisible\n Moving Platform w/o Lens",    LogicLensShadowDesc);
+  Option LogicLensShadowBack              = LogicTrick("ShT beyond Invisible\n Moving Platform w/o Lens",    LogicLensShadowBackDesc);
+  Option LogicLensBotw                    = LogicTrick("BotW without Lens of\n Truth",                       LogicLensBotwDesc);
+  Option LogicLensGtg                     = LogicTrick("GTG without Lens of\n Truth",                        LogicLensGtgDesc);
+  Option LogicLensCastle                  = LogicTrick("Ganon's Castle w/o\n Lens of Truth",                 LogicLensCastleDesc);
+  Option LogicLensJabuMQ                  = LogicTrick("JJB MQ without Lens of\n Truth",                     LogicLensJabuMQDesc);
+  Option LogicLensSpiritMQ                = LogicTrick("SpT MQ without Lens of\n Truth",                     LogicLensSpiritMQDesc);
+  Option LogicLensShadowMQ                = LogicTrick("ShT MQ before Invisible\n Moving Platform w/o Lens", LogicLensShadowMQDesc);
+  Option LogicLensShadowMQBack            = LogicTrick("ShT MQ beyond Invisible\n Moving Platform w/o Lens", LogicLensShadowMQBackDesc);
+  Option LogicLensBotwMQ                  = LogicTrick("BotW MQ without Lens of\n Truth",                    LogicLensBotwMQDesc);
+  Option LogicLensGtgMQ                   = LogicTrick("GTG MQ without Lens of\n Truth",                     LogicLensGtgMQDesc);
+  Option LogicLensCastleMQ                = LogicTrick("Ganon's Castle MQ w/o\n Lens of Truth",              LogicLensCastleMQDesc);
+  Option LogicSpiritTrialHookshot         = LogicTrick("Spirit Trial without\n Hookshot",                    LogicSpiritTrialHookshotDesc);
   std::vector<Option *> detailedLogicOptions = {
     &ToggleAllDetailedLogic,
     &LogicGrottosWithoutAgony,
@@ -317,7 +324,15 @@ namespace Settings {
     &LogicLensShadowBack,
     &LogicLensBotw,
     &LogicLensGtg,
-    &LogicLensCastle,
+    &LogicLensCastle,  
+    //MQ Doesn't exist yet
+    // &LogicLensJabuMQ
+    // &LogicLensSpiritMQ,
+    // &LogicLensShadowMQ,
+    // &LogicLensShadowMQBack,
+    // &LogicLensBotwMQ,
+    // &LogicLensGtgMQ,
+    // &LogicLensCastleMQ,
     &LogicSpiritTrialHookshot,
   };
 

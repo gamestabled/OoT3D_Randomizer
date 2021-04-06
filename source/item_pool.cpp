@@ -819,7 +819,7 @@ static void PlaceVanillaSmallKeys() {
 
     //Gerudo Training Grounds
     if (GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
-      PlaceItemInLocation(&GerudoTrainingGrounds_MQ_DinalfosChest,              GerudoTrainingGrounds_SmallKey);
+      PlaceItemInLocation(&GerudoTrainingGrounds_MQ_DinolfosChest,              GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_MQ_FlameCircleChest,           GerudoTrainingGrounds_SmallKey);
       PlaceItemInLocation(&GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest, GerudoTrainingGrounds_SmallKey);
     } else {
