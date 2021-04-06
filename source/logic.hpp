@@ -282,9 +282,37 @@ namespace Logic {
   extern u8 AddedProgressiveOcarinas;
   extern u8 TokensInPool;
 
+  //Enum values for CanUse() and related functions
+  enum class CanUseItem {
+    Dins_Fire,
+    Farores_Wind,
+    Nayrus_Love,
+    Lens_of_Truth,
+    Bow,
+    Hammer,
+    Iron_Boots,
+    Hover_Boots,
+    Hookshot,
+    Longshot,
+    Silver_Gauntlets,
+    Golden_Gauntlets,
+    Goron_Tunic,
+    Zora_Tunic,
+    Scarecrow,
+    Distant_Scarecrow,
+    Slingshot,
+    Boomerang,
+    Kokiri_Sword,
+    Sticks,
+    Deku_Shield,
+    Fire_Arrows,
+    Ice_Arrows,
+    Light_Arrows,
+  };
+
   extern void UpdateHelpers();
   extern bool CanPlay(bool song);
-  extern bool CanUse(std::string_view itemName);
+  extern bool CanUse(CanUseItem itemName);
   extern bool HasProjectile(std::string_view age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();

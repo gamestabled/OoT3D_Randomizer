@@ -432,12 +432,23 @@ namespace Exits {
   extern Exit DodongosCavern_Climb;
   extern Exit DodongosCavern_FarBridge;
   extern Exit DodongosCavern_BossArea;
+  //Dodongos Cavern MQ
+  extern Exit DodongosCavern_MQ_Beginning;
+  extern Exit DodongosCavern_MQ_Lobby;
+  extern Exit DodongosCavern_MQ_LowerRightSide;
+  extern Exit DodongosCavern_MQ_BombBagArea;
+  extern Exit DodongosCavern_MQ_BossArea;
 
   //Jabu Jabus Belly
   extern Exit JabuJabusBelly_Beginning;
   extern Exit JabuJabusBelly_Main;
   extern Exit JabuJabusBelly_Depths;
   extern Exit JabuJabusBelly_BossArea;
+  //Jabu Jabus Belly MQ
+  extern Exit JabuJabusBelly_MQ_Beginning;
+  extern Exit JabuJabusBelly_MQ_Main;
+  extern Exit JabuJabusBelly_MQ_Depths;
+  extern Exit JabuJabusBelly_MQ_BossArea;
 
   //Forest Temple
   extern Exit ForestTemple_Lobby;
@@ -450,6 +461,18 @@ namespace Exits {
   extern Exit ForestTemple_OutsideUpperLedge;
   extern Exit ForestTemple_BowRegion;
   extern Exit ForestTemple_BossRegion;
+  //Forest Temple MQ
+  extern Exit ForestTemple_MQ_Lobby;
+  extern Exit ForestTemple_MQ_CentralArea;
+  extern Exit ForestTemple_MQ_AfterBlockPuzzle;
+  extern Exit ForestTemple_MQ_OutdoorLedge;
+  extern Exit ForestTemple_MQ_NWOutdoors;
+  extern Exit ForestTemple_MQ_NEOutdoors;
+  extern Exit ForestTemple_MQ_OutdoorsTopLedges;
+  extern Exit ForestTemple_MQ_NEOutdoorsLedge;
+  extern Exit ForestTemple_MQ_BowRegion;
+  extern Exit ForestTemple_MQ_FallingRoom;
+  extern Exit ForestTemple_MQ_BossRegion;
 
   //Fire Temple
   extern Exit FireTemple_Entrance;
@@ -457,6 +480,14 @@ namespace Exits {
   extern Exit FireTemple_BigLavaRoom;
   extern Exit FireTemple_Middle;
   extern Exit FireTemple_Upper;
+  //Fire Temple MQ
+  extern Exit FireTemple_MQ_Lower;
+  extern Exit FireTemple_MQ_LowerLockedDoor;
+  extern Exit FireTemple_MQ_BigLavaRoom;
+  extern Exit FireTemple_MQ_LowerMaze;
+  extern Exit FireTemple_MQ_UpperMaze;
+  extern Exit FireTemple_MQ_Upper;
+  extern Exit FireTemple_MQ_BossRoom;
 
   //Water Temple
   extern Exit WaterTemple_Lobby;
@@ -468,6 +499,12 @@ namespace Exits {
   extern Exit WaterTemple_DragonStatue;
   extern Exit WaterTemple_MiddleWaterLevel;
   extern Exit WaterTemple_DarkLinkRegion;
+  //Water Temple MQ
+  extern Exit WaterTemple_MQ_Lobby;
+  extern Exit WaterTemple_MQ_Dive;
+  extern Exit WaterTemple_MQ_LoweredWaterLevels;
+  extern Exit WaterTemple_MQ_DarkLinkRegion;
+  extern Exit WaterTemple_MQ_BasementGatedAreas;
 
   //Spirit Temple
   extern Exit SpiritTemple_Lobby;
@@ -478,7 +515,15 @@ namespace Exits {
   extern Exit SpiritTemple_OutdoorHands;
   extern Exit SpiritTemple_BeyondCentralLockedDoor;
   extern Exit SpiritTemple_BeyondFinalLockedDoor;
-
+  //Spirit Temple MQ
+  extern Exit SpiritTemple_MQ_Lobby;
+  extern Exit SpiritTemple_MQ_Child;
+  extern Exit SpiritTemple_MQ_Adult;
+  extern Exit SpiritTemple_MQ_Shared;
+  extern Exit SpiritTemple_MQ_LowerAdult;
+  extern Exit SpiritTemple_MQ_BossArea;
+  extern Exit SpiritTemple_MQ_MirrorShieldHand;
+  extern Exit SpiritTemple_MQ_SilverGauntletsHand;
 
   //Shadow Temple
   extern Exit ShadowTemple_Entryway;
@@ -487,14 +532,33 @@ namespace Exits {
   extern Exit ShadowTemple_HugePit;
   extern Exit ShadowTemple_WindTunnel;
   extern Exit ShadowTemple_BeyondBoat;
+  //Shadow Temple MQ
+  extern Exit ShadowTemple_MQ_Entryway;
+  extern Exit ShadowTemple_MQ_Beginning;
+  extern Exit ShadowTemple_MQ_DeadHandArea;
+  extern Exit ShadowTemple_MQ_FirstBeamos;
+  extern Exit ShadowTemple_MQ_UpperHugePit;
+  extern Exit ShadowTemple_MQ_LowerHugePit;
+  extern Exit ShadowTemple_MQ_WindTunnel;
+  extern Exit ShadowTemple_MQ_BeyondBoat;
+  extern Exit ShadowTemple_MQ_InvisibleMaze;
 
   //Bottom of the Well
   extern Exit BottomOfTheWell;
   extern Exit BottomOfTheWell_MainArea;
+  //Bottom of the Well MQ
+  extern Exit BottomOfTheWell_MQ;
+  extern Exit BottomOfTheWell_MQ_Perimeter;
+  extern Exit BottomOfTheWell_MQ_Middle;
 
   //Ice Cavern
   extern Exit IceCavern_Beginning;
   extern Exit IceCavern_Main;
+  //Ice Cavern MQ
+  extern Exit IceCavern_MQ_Beginning;
+  extern Exit IceCavern_MQ_MapRoom;
+  extern Exit IceCavern_MQ_IronBootsRegion;
+  extern Exit IceCavern_MQ_CompassRoom;
 
   //Gerudo Training Grounds
   extern Exit GerudoTrainingGrounds_Lobby;
@@ -506,6 +570,14 @@ namespace Exits {
   extern Exit GerudoTrainingGrounds_EyeStatueUpper;
   extern Exit GerudoTrainingGrounds_HeavyBlockRoom;
   extern Exit GerudoTrainingGrounds_LikeLikeRoom;
+  //Gerudo Training Grounds MQ
+  extern Exit GerudoTrainingGrounds_MQ_Lobby;
+  extern Exit GerudoTrainingGrounds_MQ_RightSide;
+  extern Exit GerudoTrainingGrounds_MQ_Underwater;
+  extern Exit GerudoTrainingGrounds_MQ_LeftSide;
+  extern Exit GerudoTrainingGrounds_MQ_StalfosRoom;
+  extern Exit GerudoTrainingGrounds_MQ_BackAreas;
+  extern Exit GerudoTrainingGrounds_MQ_CentralMazeRight;
 
   //Ganon's Castle
   extern Exit GanonsCastle_Lobby;
@@ -517,6 +589,15 @@ namespace Exits {
   extern Exit GanonsCastle_SpiritTrial;
   extern Exit GanonsCastle_LightTrial;
   extern Exit GanonsCastle_Tower;
+  //Ganon's Castle MQ
+  extern Exit GanonsCastle_MQ_Lobby;
+  extern Exit GanonsCastle_MQ_DekuScrubs;
+  extern Exit GanonsCastle_MQ_ForestTrial;
+  extern Exit GanonsCastle_MQ_FireTrial;
+  extern Exit GanonsCastle_MQ_WaterTrial;
+  extern Exit GanonsCastle_MQ_ShadowTrial;
+  extern Exit GanonsCastle_MQ_SpiritTrial;
+  extern Exit GanonsCastle_MQ_LightTrial;
 
   extern void AccessReset();
   extern void ResetAllLocations();

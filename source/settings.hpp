@@ -286,6 +286,7 @@ namespace Settings {
   extern Option DamageMultiplier;
   extern Option StartingTime;
   extern Option GenerateSpoilerLog;
+  extern Option MenuOpeningButton;
   extern bool HasNightStart;
 
   extern Option StickAsAdult;
@@ -396,6 +397,13 @@ namespace Settings {
   extern Option LogicLensBotw;
   extern Option LogicLensGtg;
   extern Option LogicLensCastle;
+  extern Option LogicLensJabuMQ;
+  extern Option LogicLensSpiritMQ;
+  extern Option LogicLensShadowMQ;
+  extern Option LogicLensShadowMQBack;
+  extern Option LogicLensBotwMQ;
+  extern Option LogicLensGtgMQ;
+  extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
 
   extern Option SilverGauntletsColor;

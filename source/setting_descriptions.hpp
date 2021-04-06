@@ -123,6 +123,8 @@ extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;
 
+extern string_view menuButtonDesc;
+
 extern string_view itemPoolPlentiful;
 extern string_view itemPoolBalanced;
 extern string_view itemPoolScarce;
@@ -216,4 +218,11 @@ extern string_view LogicLensShadowBackDesc;
 extern string_view LogicLensBotwDesc;
 extern string_view LogicLensGtgDesc;
 extern string_view LogicLensCastleDesc;
+extern string_view LogicLensJabuMQDesc;
+extern string_view LogicLensSpiritMQDesc;
+extern string_view LogicLensShadowMQDesc;
+extern string_view LogicLensShadowMQBackDesc;
+extern string_view LogicLensBotwMQDesc;
+extern string_view LogicLensGtgMQDesc;
+extern string_view LogicLensCastleMQDesc;
 extern string_view LogicSpiritTrialHookshotDesc;

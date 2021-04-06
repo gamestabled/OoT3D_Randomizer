@@ -352,6 +352,13 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //
                                                                                            //
 /*------------------------------                                                           //
+|      MENU OPENING BUTTON     |                                                           //
+------------------------------*/                                                           //
+string_view menuButtonDesc            = "Choose which button will bring up the Dungeon\n"  //
+                                        "Information Menu. You can also use the menu to\n" //
+                                        "buffer frame perfect inputs if you choose D-Pad"; //
+                                                                                           //
+/*------------------------------                                                           //
 |          ITEM POOL           |                                                           //
 ------------------------------*/                                                           //
 string_view itemPoolPlentiful         = "Extra major items are added to the pool.";        //
@@ -672,5 +679,21 @@ string_view LogicLensGtgDesc                          = "Removes the requirement
                                                         "Gerudo Training Grounds.";                        //
 string_view LogicLensCastleDesc                       = "Removes the requirements for the Lens of Truth in\n"
                                                         "Ganon's Castle.";                                 //
+string_view LogicLensJabuMQDesc                       = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Jabu Jabu's Belly MQ.";                           //
+string_view LogicLensSpiritMQDesc                     = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Spirit Temple MQ.";                               //
+string_view LogicLensShadowMQDesc                     = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Shadow Temple MQ before the invisible moving \n"  //
+                                                        "platform";                                        //
+string_view LogicLensShadowMQBackDesc                 = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Shadow Temple MQ beyond the invisible moving \n"  //
+                                                        "platform";                                        //
+string_view LogicLensBotwMQDesc                       = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Bottom of the Well MQ.";                          //
+string_view LogicLensGtgMQDesc                        = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Gerudo Training Grounds MQ.";                     //
+string_view LogicLensCastleMQDesc                     = "Removes the requirements for the Lens of Truth in\n"
+                                                        "Ganon's Castle MQ.";                              //
 string_view LogicSpiritTrialHookshotDesc              = "A precise jump off of an Armos can collect the\n" //
                                                         "highest rupee.";                                  //
