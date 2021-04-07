@@ -487,8 +487,6 @@ namespace Settings {
     ctx.shadowTrialSkip = (ShadowTrialSkip) ? 1 : 0;
     ctx.lightTrialSkip  = (LightTrialSkip)  ? 1 : 0;
 
-    ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
-
     //Filling detailed logic
     for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
       ctx.detailedLogic[i] = detailedLogicOptions[i]->GetSelectedOptionIndex();

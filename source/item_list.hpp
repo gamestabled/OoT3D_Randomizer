@@ -295,6 +295,7 @@ extern Item Bombs20;
 extern Item Bombchu5;
 extern Item Bombchu10;
 extern Item Bombchu20;
+extern Item I_BombchuDrop;
 extern Item Arrows5;
 extern Item Arrows10;
 extern Item Arrows30;

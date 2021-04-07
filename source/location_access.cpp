@@ -670,7 +670,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&ToT_BeyondDoorOfTime, []{return CanPlay(SongOfTime) || OpenDoorOfTime;}),
   });
 
-  Exit ToT_BeyondDoorOfTime = Exit("Beyond Door of Time", "", "Temple of Time", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit ToT_BeyondDoorOfTime = Exit("Beyond Door of Time", "", "Temple of Time", NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  //EventPairing(&TimeTravel, []{return true;}),
+                }, {
                   //Locations
                   ItemLocationPairing(&SheikAtTemple, []{return ForestMedallion && IsAdult;}),
                 }, {
@@ -801,7 +804,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&MK_BombchuBowlingFirstPrize,  []{return FoundBombchus;}),
                   ItemLocationPairing(&MK_BombchuBowlingSecondPrize, []{return FoundBombchus;}),
-                  //Market Bombchu Bowling Bombchus
+                  ItemLocationPairing(&MK_BombchuBowlingBombchus,    []{return FoundBombchus;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})

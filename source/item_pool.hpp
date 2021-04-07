@@ -4,9 +4,9 @@
 #include "settings.hpp"
 #include <vector>
 
-extern std::vector<Item>   AdvancementItemPool;
-extern std::vector<Item>   ItemPool;
-extern std::array<Item, 9> dungeonRewards;
+extern std::vector<Item> AdvancementItemPool;
+extern std::vector<Item> ItemPool;
+extern std::vector<Item> dungeonRewards;
 extern void AddItemToPool(std::vector<Item>& pool, const Item& item, size_t count = 1);
 extern Item GetJunkItem();
 extern void PlaceJunkInExcludedLocation(ItemLocation* il);

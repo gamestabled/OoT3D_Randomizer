@@ -14,6 +14,7 @@
 #include "category.hpp"
 #include "menu.hpp"
 #include "cosmetics.hpp"
+#include "debug.hpp"
 
 class Option {
 public:

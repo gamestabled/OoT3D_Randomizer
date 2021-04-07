@@ -91,9 +91,6 @@ void SaveFile_Init() {
         gSaveContext.dayTime = 0x1400; //Set night time
     }
 
-    //give Link the starting stone or medallion
-    gSaveContext.questItems |= gSettingsContext.dungeonRewardBitMask;
-
     if (gSettingsContext.openDoorOfTime) {
         gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
     }

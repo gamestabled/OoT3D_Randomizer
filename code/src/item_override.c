@@ -254,6 +254,7 @@ static void ItemOverride_TryPendingItem(void) {
 }
 
 void ItemOverride_Update(void) {
+    ItemOverride_CheckStartingItem();
     ItemOverride_CheckZeldasLetter();
     IceTrap_Update();
     if (ItemOverride_PlayerIsReady()) {
@@ -436,4 +437,12 @@ void ItemOverride_PushDungeonReward(u8 dungeon) {
     key.flag = dungeon;
     ItemOverride override = ItemOverride_LookupByKey(key);
     ItemOverride_PushPendingOverride(override);
+}
+
+void ItemOverride_CheckStartingItem() {
+  //use eventChkInf[0] |= 0x0001 as the check for this
+  if (EventCheck(0x00) == 0) {
+    ItemOverride_PushDungeonReward(0xFF); //Push Link's Pocket Reward
+    EventSet(0x00);
+  }
 }

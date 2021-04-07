@@ -77,6 +77,7 @@ ItemLocation Colossus_DekuScrubGrottoFront    = ItemLocation::GrottoScrub(0xFD, 
 ItemLocation MK_TreasureChestGameReward       = ItemLocation::Chest      (0x10, 0x0A, "MK Treasure Chest Game Reward",        {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
 ItemLocation MK_BombchuBowlingFirstPrize      = ItemLocation::Base       (0x4B, 0x33, "MK Bombchu Bowling First Prize",       {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
 ItemLocation MK_BombchuBowlingSecondPrize     = ItemLocation::Base       (0x4B, 0x3E, "MK Bombchu Bowling Second Prize",      {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
+ItemLocation MK_BombchuBowlingBombchus        = ItemLocation::Base       (0x4B, 0xFF, "MK Bombchu Bowling Bombchus",          {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
 ItemLocation MK_LostDog                       = ItemLocation::Base       (0x35, 0x3E, "MK Lost Dog",                          {Category::cInnerMarket, Category::cMarket,});
 ItemLocation MK_ShootingGalleryReward         = ItemLocation::Base       (0x42, 0x60, "MK Shooting Gallery",                  {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
 ItemLocation MK_10BigPoes                     = ItemLocation::Base       (0x4D, 0x0F, "MK 10 Big Poes",                       {Category::cInnerMarket, Category::cHyruleCastle,});
@@ -692,7 +693,7 @@ ItemLocation LLR_GS_Tree                                  = ItemLocation::GSToke
           --- BOSSES ---
   -------------------------------*/
 
-ItemLocation LinksPocket                                  = ItemLocation::Reward (0xFF, 0x08,                    "Link's Pocket",               {});
+ItemLocation LinksPocket                                  = ItemLocation::Reward (0xFF, 0xFF,                    "Link's Pocket",               {});
 ItemLocation QueenGohma                                   = ItemLocation::Reward (0xFF, DUNGEON_DEKU_TREE,       "Queen Gohma",                 {});
 ItemLocation KingDodongo                                  = ItemLocation::Reward (0xFF, DUNGEON_DODONGOS_CAVERN, "King Dodongo",                {});
 ItemLocation Barinade                                     = ItemLocation::Reward (0xFF, DUNGEON_JABUJABUS_BELLY, "Barinade",                    {});
@@ -701,7 +702,7 @@ ItemLocation Volvagia                                     = ItemLocation::Reward
 ItemLocation Morpha                                       = ItemLocation::Reward (0xFF, DUNGEON_WATER_TEMPLE,    "Morpha",                      {});
 ItemLocation Twinrova                                     = ItemLocation::Reward (0xFF, DUNGEON_SPIRIT_TEMPLE,   "Twinrova",                    {});
 ItemLocation BongoBongo                                   = ItemLocation::Reward (0xFF, DUNGEON_SHADOW_TEMPLE,   "Bongo Bongo",                 {});
-ItemLocation Ganon                                        = ItemLocation::Reward (0xFF, 0xFF,                    "Ganon",                       {});
+ItemLocation Ganon                                        = ItemLocation::Reward (0xFF, 0xF0,                    "Ganon",                       {});
 
 /*-------------------------------
       ---HEART CONTAINERS ---
@@ -1265,7 +1266,7 @@ const std::vector<ItemLocation*> GC_MQ = {
   &GanonsCastle_MQ_DekuScrubLeft,
 };
 
-std::array<ItemLocation*, 9> dungeonRewardLocations = {
+std::vector<ItemLocation*> dungeonRewardLocations = {
   //Bosses
   &QueenGohma,
   &KingDodongo,
@@ -1278,6 +1279,9 @@ std::array<ItemLocation*, 9> dungeonRewardLocations = {
   &LinksPocket,
 };
 std::vector<ItemLocation*> overworldLocations = {
+  //Starting Item
+  &LinksPocket,
+
   //Kokiri Forest
   &KF_KokiriSwordChest,
   &KF_MidoTopLeftChest,
@@ -1648,37 +1652,45 @@ void GenerateLocationPool() {
   //Deku Tree
   AddLocations((DekuTreeDungeonMode) ? DT_MQ : DT_Vanilla);
   AddLocation(&DekuTree_QueenGohmaHeart);
+  AddLocation(&QueenGohma);
 
   //Dodongos Cavern
   AddLocations((DodongosCavernDungeonMode) ? DC_MQ : DC_Vanilla);
   AddLocation(&DodongosCavern_BossRoomChest);
   AddLocation(&DodongosCavern_KingDodongoHeart);
+  AddLocation(&KingDodongo);
 
   //Jabu Jabu's Belly
   AddLocations((JabuJabusBellyDungeonMode) ? Jabu_MQ : Jabu_Vanilla);
   AddLocation(&JabuJabusBelly_BarinadeHeart);
+  AddLocation(&Barinade);
 
   //Forest Temple
   AddLocations((ForestTempleDungeonMode) ? FoT_MQ : FoT_Vanilla);
   AddLocation(&ForestTemple_PhantomGanonHeart);
+  AddLocation(&PhantomGanon);
 
   //Fire Temple
   AddLocations((FireTempleDungeonMode) ? FiT_MQ : FiT_Vanilla);
   AddLocation(&FireTemple_VolvagiaHeart);
+  AddLocation(&Volvagia);
 
   //Water Temple
   AddLocations((WaterTempleDungeonMode) ? WaT_MQ : WaT_Vanilla);
   AddLocation(&WaterTemple_MorphaHeart);
+  AddLocation(&Morpha);
 
   //Spirit Temple
   AddLocation(&SpiritTemple_SilverGauntletsChest);
   AddLocation(&SpiritTemple_MirrorShieldChest);
   AddLocations((SpiritTempleDungeonMode) ? SpT_MQ : SpT_Vanilla);
   AddLocation(&SpiritTemple_TwinrovaHeart);
+  AddLocation(&Twinrova);
 
   //Shadow Temple
   AddLocations((ShadowTempleDungeonMode) ? ShT_MQ : ShT_Vanilla);
   AddLocation(&ShadowTemple_BongoBongoHeart);
+  AddLocation(&BongoBongo);
 
   //Bottom of the Well
   AddLocations((BottomOfTheWellDungeonMode) ? BotW_MQ : BotW_Vanilla);
@@ -1811,7 +1823,6 @@ void AddExcludedOptions() {
 
 void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
-  AddLocations(dungeonRewardLocations, &allLocations);
   for (ItemLocation* loc : allLocations) {
     overrides.insert({
       .key = loc->Key(),
@@ -1821,7 +1832,7 @@ void CreateOverrides() {
     PlacementLog_Msg(std::to_string(loc->Key().scene));
     PlacementLog_Msg("\tType: ");
     PlacementLog_Msg(std::to_string(loc->Key().type));
-    PlacementLog_Msg("\tFlag: ");
+    PlacementLog_Msg("\tFlag:  ");
     PlacementLog_Msg(std::to_string(loc->Key().flag));
     PlacementLog_Msg("\t");
     PlacementLog_Msg(loc->GetName());

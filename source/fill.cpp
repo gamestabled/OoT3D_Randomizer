@@ -22,35 +22,6 @@ static void RemoveStartingItemsFromPool() {
   }
 }
 
-static void RandomizeDungeonRewards() {
-  u32 bitmaskTable[9] = {
-    0x00040000,
-    0x00080000,
-    0x00100000,
-    0x00000001,
-    0x00000002,
-    0x00000004,
-    0x00000008,
-    0x00000010,
-    0x00000020,
-  };
-
-  //shuffle an array of indices so that we can randomize the rewards both
-  //logically and for the patch
-  std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-  Shuffle(idxArray);
-
-  for (size_t i = 0; i < dungeonRewards.size(); i++) {
-    const u8 idx = idxArray[i];
-    PlaceItemInLocation(dungeonRewardLocations[i], dungeonRewards[idx]);
-    rDungeonRewardOverrides[i] = idx;
-
-    if (i == dungeonRewardLocations.size() - 1) {
-      LinksPocketRewardBitMask = bitmaskTable[idx];
-    }
-  }
-}
-
 static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   if (ToD == ExitPairing::Time::Day) {
     if (age == AGE_CHILD) {
@@ -432,6 +403,18 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
   } while (unsuccessfulPlacement);
 }
 
+static void RandomizeDungeonRewards() {
+
+  //get stones and medallions
+  std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+  AssumedFill(rewards, dungeonRewardLocations);
+
+  int baseOffset = I_KokiriEmerald.GetItemID();
+  for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
+    rDungeonRewardOverrides[i] = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+  }
+}
+
 static void FillExcludedLocations() {
   //Only fill in excluded locations that don't already have something and are forbidden
   std::vector<ItemLocation*> excludedLocations = FilterFromPool(allLocations, [](ItemLocation* loc){
@@ -522,9 +505,9 @@ int Fill() {
     GenerateItemPool();
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
-    RandomizeDungeonRewards();
     FillExcludedLocations();
     RandomizeOwnDungeonItems();
+    RandomizeDungeonRewards();
 
     //Place songs first if song shuffle is set to specific locations
     if (ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {

@@ -272,6 +272,7 @@ extern ItemLocation Colossus_DekuScrubGrottoFront;
 extern ItemLocation MK_TreasureChestGameReward;
 extern ItemLocation MK_BombchuBowlingFirstPrize;
 extern ItemLocation MK_BombchuBowlingSecondPrize;
+extern ItemLocation MK_BombchuBowlingBombchus;
 extern ItemLocation MK_LostDog;
 extern ItemLocation MK_ShootingGalleryReward;
 extern ItemLocation MK_10BigPoes;
@@ -1027,8 +1028,8 @@ extern ItemLocation GC_ShopItem6;
 extern ItemLocation GC_ShopItem7;
 extern ItemLocation GC_ShopItem8;
 
-extern std::array<ItemLocation *, 9> dungeonRewardLocations;
-extern std::vector<ItemLocation*> overworldLocations;
+extern std::vector<ItemLocation *> dungeonRewardLocations;
+extern std::vector<ItemLocation *> overworldLocations;
 extern std::vector<ItemLocation *> allLocations;
 extern std::vector<ItemLocation *> everyPossibleLocation;
 
