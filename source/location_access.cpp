@@ -1894,7 +1894,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&FireTemple_BoulderMazeShortcutChest, []{return SmallKeys(FireTempleKeys, 5) && HasExplosives;}),
                   ItemLocationPairing(&FireTemple_ScarecrowChest,           []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
                   ItemLocationPairing(&FireTemple_MapChest,                 []{return SmallKeys(FireTempleKeys, 5) || (SmallKeys(FireTempleKeys, 4) && CanUse(CanUseItem::Bow));}),
-                  ItemLocationPairing(&FireTemple_CompassChest,             []{return SmallKeys(FireTempleKeys, 5);}),
+                  ItemLocationPairing(&FireTemple_CompassChest,             []{return SmallKeys(FireTempleKeys, 6);}),
                   ItemLocationPairing(&FireTemple_GS_BoulderMaze,           []{return SmallKeys(FireTempleKeys, 4) && HasExplosives;}),
                   ItemLocationPairing(&FireTemple_GS_ScarecrowClimb,        []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
                   ItemLocationPairing(&FireTemple_GS_ScarecrowTop,          []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
