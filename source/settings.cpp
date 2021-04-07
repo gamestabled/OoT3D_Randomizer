@@ -131,11 +131,13 @@ namespace Settings {
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""});
+  Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",  {"Select", "Start", "D-Pad Up", "D-Pad Down", "D-Pad Right", "D-Pad Left",},    {menuButtonDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &DamageMultiplier,
     &StartingTime,
     &GenerateSpoilerLog,
+    &MenuOpeningButton,
   };
 
   //Item Usability Settings
@@ -459,6 +461,7 @@ namespace Settings {
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
     ctx.startingTime         = StartingTime.Value<u8>();
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
+    ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
 
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
     ctx.boomerangAsAdult     = (BoomerangAsAdult) ? 1 : 0;
