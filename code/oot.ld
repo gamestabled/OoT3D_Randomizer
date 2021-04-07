@@ -88,6 +88,10 @@ SECTIONS
 		*(.patch_AnjuCheckCuccoAmount)
 	}
 
+	.patch_BombchuShopInfinitePurchases 0x188D4C : {
+		*(.patch_BombchuShopInfinitePurchases)
+	}
+
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
 	}

@@ -1016,6 +1016,11 @@ BombchuPurchaseableCheck_patch:
 BombPurchaseableCheck_patch:
     nop
 
+.section .patch_BombchuShopInfinitePurchases
+.global BombchuShopInfinitePurchases_patch
+BombchuShopInfinitePurchases_patch:
+    nop
+
 .section .patch_GanonBattleDeathWarp
 .global GanonBattleDeathWarp_patch
 GanonBattleDeathWarp_patch:
