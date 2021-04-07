@@ -1226,7 +1226,7 @@ void GenerateItemPool() {
   //TODO: trade item logic
   AddItemToMainPool(I_ClaimCheck);
 
-  //add songs only if song shuffle is anywhere
+  //add extra songs only if song shuffle is anywhere
   AddItemsToPool(ItemPool, songList);
   if (ShuffleSongs.Is(SONGSHUFFLE_ANYWHERE) && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
     AddItemsToPool(PendingJunkPool, songList);

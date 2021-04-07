@@ -114,11 +114,11 @@ public:
     }
 
     bool operator== (const Item& right) const {
-        return name == right.GetName();
+        return type == right.GetItemType() && getItemId == right.GetItemID();
     }
 
     bool operator!= (const Item& right) const {
-        return name != right.GetName();
+        return type != right.GetItemType() || getItemId != right.GetItemID();
     }
 
 private:

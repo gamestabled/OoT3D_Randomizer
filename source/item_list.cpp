@@ -9,8 +9,8 @@ using namespace Settings;
 // Effects to be run when an item is placed
 bool none = false;
 
-Item NoItem = Item("No Item", ITEMTYPE_ITEM,   GI_RUPEE_GREEN,   false, &none);
-Item I_Triforce = Item("Triforce", ITEMTYPE_ITEM, GI_RUPEE_RED_LOSE, false, &none);
+Item NoItem = Item("No Item", ITEMTYPE_EVENT,   GI_RUPEE_GREEN,   false, &none);
+Item I_Triforce = Item("Triforce", ITEMTYPE_EVENT, GI_RUPEE_RED_LOSE, false, &none);
 
 //Specific Advancement Items         // name              type           getItemId          advancement logic variable
 Item I_KokiriSword              = Item("Kokiri Sword",    ITEMTYPE_ITEM, GI_SWORD_KOKIRI,   true,  &KokiriSword);
