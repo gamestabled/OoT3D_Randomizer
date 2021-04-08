@@ -357,7 +357,7 @@ string_view startingTimeDesc          = "Change up Link's sleep routine.";      
 string_view nightGSDesc               = "GS Tokens that can only be obtained during the\n" //
                                         "night expect you to have Sun's Song to collect\n" //
                                         "them. This prevents needing to wait until night\n"//
-                                        "for some locations";                              //
+                                        "for some locations.";                             //
                                                                                            //
 /*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
