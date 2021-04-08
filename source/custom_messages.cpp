@@ -270,7 +270,7 @@ namespace CustomMessages {
     const std::string SKULLTULAS_DESTROYED() { return  "\x7F\x15"s; }
     const std::string CURRENT_TIME()         { return  "\x7F\x17"s; }
     const std::string UNSKIPPABLE()          { return  "\x7F\x19"s; }
-    const std::string TWO_WAY_CHOICE()       { return  "\x7F\x1A\xFF\xFF"s; }
+    const std::string TWO_WAY_CHOICE()       { return  "\x7F\x1A\xFF\xFF\xFF\xFF"s; }
     const std::string NEWLINE()              { return  "\x7F\x1C"s; }
     const std::string COLOR(u8 x)            { return  "\x7F\x1D"s + char(x); }
     const std::string CENTER_TEXT()          { return  "\x7F\x1E"s; }
