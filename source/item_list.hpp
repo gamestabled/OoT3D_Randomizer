@@ -114,11 +114,11 @@ public:
     }
 
     bool operator== (const Item& right) const {
-        return name == right.GetName();
+        return type == right.GetItemType() && getItemId == right.GetItemID();
     }
 
     bool operator!= (const Item& right) const {
-        return name != right.GetName();
+        return type != right.GetItemType() || getItemId != right.GetItemID();
     }
 
 private:
@@ -295,6 +295,7 @@ extern Item Bombs20;
 extern Item Bombchu5;
 extern Item Bombchu10;
 extern Item Bombchu20;
+extern Item I_BombchuDrop;
 extern Item Arrows5;
 extern Item Arrows10;
 extern Item Arrows30;

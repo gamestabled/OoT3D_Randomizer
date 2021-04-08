@@ -73,7 +73,7 @@ static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item)
   logtxt += ": ";
 
   // Formatting for spoiler log
-  constexpr u32 LONGEST_LINE = 53;
+  constexpr u32 LONGEST_LINE = 56;
   const auto remainingSpaces = LONGEST_LINE - loc.size();
   logtxt.append(remainingSpaces, ' ');
 
@@ -181,11 +181,6 @@ bool SpoilerLog_Write() {
   playthroughBeatable = false;
 
   logtxt += "\nAll Locations:\n";
-  for (ItemLocation* location : dungeonRewardLocations) {
-    logtxt += "\t";
-    SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
-    logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
-  }
   for (ItemLocation* location : allLocations) {
     logtxt += "\t";
     SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());

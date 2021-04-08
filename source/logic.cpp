@@ -170,6 +170,7 @@ namespace Logic {
   bool FairyPot         = false;
   bool FreeFairies      = false;
   bool FairyPond        = false;
+  bool BombchuDrop      = false;
 
   bool BuyBombchus5     = false;
   bool BuyBombchus10    = false;
@@ -273,6 +274,7 @@ namespace Logic {
   bool LinksCow                  = false;
   bool AtDampeTime               = false;
   bool DeliverLetter             = false;
+  bool TimeTravel                = false;
 
   /* --- END OF HELPERS AND LOCATION ACCESS --- */
 
@@ -301,6 +303,7 @@ namespace Logic {
   bool ShadowTrialClearPast     = false;
   bool LightTrialClearPast      = false;
   bool BuyDekuShieldPast        = false;
+  bool TimeTravelPast           = false;
 
   bool CanPlay(bool song) {
     return Ocarina && song;
@@ -421,7 +424,7 @@ namespace Logic {
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
 
-    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 /*|| BombchuDrops*/) && (BombchusInLogic || BombBag);
+    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || BombchuDrops || BombchuDrop) && (BombchusInLogic || BombBag);
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
@@ -498,7 +501,8 @@ namespace Logic {
           SpiritTrialClearPast     != SpiritTrialClear     ||
           LightTrialClearPast      != LightTrialClear      ||
           DrainWellPast            != DrainWell            ||
-          DampesWindmillAccessPast != DampesWindmillAccess) {
+          DampesWindmillAccessPast != DampesWindmillAccess ||
+          TimeTravelPast           != TimeTravel) {
             DekuTreeClearPast        = DekuTreeClear;
             GoronRubyPast            = GoronRuby;
             ZoraSapphirePast         = ZoraSapphire;
@@ -678,6 +682,7 @@ namespace Logic {
      FairyPot         = false;
      FreeFairies      = false;
      FairyPond        = false;
+     BombchuDrop      = false;
 
      BuyBombchus5     = false;
      BuyBombchus10    = false;
@@ -778,6 +783,7 @@ namespace Logic {
      LinksCow                  = false;
      AtDampeTime               = false;
      DeliverLetter             = false;
+     TimeTravel                = false;
 
      DrainWellPast            = false;
      DampesWindmillAccessPast = false;
@@ -791,5 +797,6 @@ namespace Logic {
      ShadowTrialClearPast     = false;
      LightTrialClearPast      = false;
      BuyDekuShieldPast        = false;
+     TimeTravelPast           = false;
    }
 }
