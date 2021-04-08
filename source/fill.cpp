@@ -410,8 +410,26 @@ static void RandomizeDungeonRewards() {
   AssumedFill(rewards, dungeonRewardLocations);
 
   int baseOffset = I_KokiriEmerald.GetItemID();
+  static constexpr std::array<u32, 9> bitMaskTable = {
+    0x00040000,
+    0x00080000,
+    0x00100000,
+    0x00000001,
+    0x00000002,
+    0x00000004,
+    0x00000008,
+    0x00000010,
+    0x00000020,
+  };
+
   for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
-    rDungeonRewardOverrides[i] = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+    const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+    rDungeonRewardOverrides[i] = index;
+
+    //set the player's dugeon reward on file creation instead of pushing it to them at the start
+    if (i == dungeonRewardLocations.size()-1 /*&& LinksPocket.Is(LINKSPOCKET_DUNGEON_REWARD)*/) {
+      LinksPocketRewardBitMask = bitMaskTable[index];
+    }
   }
 }
 

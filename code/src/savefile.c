@@ -112,6 +112,9 @@ void SaveFile_Init() {
             gSaveContext.eventChkInf[0xC] |= 0x0008; //dispel Ganon's Tower Barrier
     }
 
+    //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
+    gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
+
     if (gSettingsContext.fourPoesCutscene == SKIP) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }

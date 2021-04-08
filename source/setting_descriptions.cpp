@@ -135,10 +135,15 @@ string_view mqDungeonCountDesc        = "Specify the number of Master Quest dung
                                         "Quest will be chosen at random.";                 //
                                                                                            //
 /*------------------------------                                                           //
-|         MIRROR WORLD         |                                                           //
+|        LINK'S POCKET         |                                                           //
 ------------------------------*/                                                           //
-string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
-                                                                                           //
+string_view linksPocketDungeonReward  = "Link will start with a Dungeon Reward in his\n"   //
+                                        "inventory.";                                      //
+string_view linksPocketAdvancement    = "Link will receive a random advancement item at the"
+                                        "beginning of the playthrough.";                   //
+string_view linksPocketAnything       = "Link will receive a random item from the item pool"
+                                        "at the beginning of the playthrough.";            //
+string_view linksPocketNothing        = "Link will start with nothing.";                   //
 /*------------------------------                                                           //
 |         SONG SHUFFLE         |                                                           //
 ------------------------------*/                                                           //
@@ -399,6 +404,11 @@ string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.\n" 
 string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.\n"       //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|         MIRROR WORLD         |                                                           //
+------------------------------*/                                                           //
+string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

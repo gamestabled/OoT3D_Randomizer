@@ -72,7 +72,7 @@ namespace Cosmetics {
     RANDOM_CHOICE_DESC,
     RANDOM_COLOR_DESC,
     CUSTOM_COLOR_DESC,
-    "",
+    "This will only affect the color on Link's model.",
   };
 
 } //namespace Cosmetics
