@@ -130,12 +130,14 @@ namespace Settings {
   //Misc Settings
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc});
+  Option NightGSExpectSuns   = Option::Bool("Night GS Expect Sun's",  {"Off", "On"},                                 {nightGSDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""});
-  Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",  {"Select", "Start", "D-Pad Up", "D-Pad Down", "D-Pad Right", "D-Pad Left",},    {menuButtonDesc});
+  Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select", "Start", "D-Pad Up", "D-Pad Down", "D-Pad Right", "D-Pad Left",},    {menuButtonDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &DamageMultiplier,
     &StartingTime,
+    &NightGSExpectSuns,
     &GenerateSpoilerLog,
     &MenuOpeningButton,
   };

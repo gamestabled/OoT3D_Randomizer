@@ -123,6 +123,8 @@ extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;
 
+extern string_view nightGSDesc;
+
 extern string_view menuButtonDesc;
 
 extern string_view itemPoolPlentiful;

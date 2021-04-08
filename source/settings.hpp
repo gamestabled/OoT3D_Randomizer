@@ -286,6 +286,7 @@ namespace Settings {
 
   extern Option DamageMultiplier;
   extern Option StartingTime;
+  extern Option NightGXExpectSuns;
   extern Option GenerateSpoilerLog;
   extern Option MenuOpeningButton;
   extern bool HasNightStart;
