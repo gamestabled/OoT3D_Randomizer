@@ -50,6 +50,11 @@ extern string_view mqDungeonCountDesc;
 
 extern string_view mirrorWorldDesc;
 
+extern string_view linksPocketDungeonReward;
+extern string_view linksPocketAdvancement;
+extern string_view linksPocketAnything;
+extern string_view linksPocketNothing;
+
 extern string_view songsSongLocations;
 extern string_view songsDungeonRewards;
 extern string_view songsAllLocations;

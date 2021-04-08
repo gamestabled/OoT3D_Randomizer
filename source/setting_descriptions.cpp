@@ -135,6 +135,16 @@ string_view mqDungeonCountDesc        = "Specify the number of Master Quest dung
                                         "Quest will be chosen at random.";                 //
                                                                                            //
 /*------------------------------                                                           //
+|        LINK'S POCKET         |                                                           //
+------------------------------*/                                                           //
+string_view linksPocketDungeonReward  = "Link will start with a Dungeon Reward in his\n"   //
+                                        "inventory.";                                      //
+string_view linksPocketAdvancement    = "Link will receive a random advancement item at the"
+                                        "beginning of the playthrough.";                   //
+string_view linksPocketAnything       = "Link will receive a random item from the item pool"
+                                        "at the beginning of the playthrough.";            //
+string_view linksPocketNothing        = "Link will start with nothing.";                   //
+/*------------------------------                                                           //
 |         SONG SHUFFLE         |                                                           //
 ------------------------------*/                                                           //
 string_view songsSongLocations        = "Songs will only appear at locations that normally\n"
