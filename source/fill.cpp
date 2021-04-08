@@ -410,7 +410,7 @@ static void RandomizeDungeonRewards() {
   AssumedFill(rewards, dungeonRewardLocations);
 
   int baseOffset = I_KokiriEmerald.GetItemID();
-  u32 bitMaskTable[9] = {
+  static constexpr std::array<u32, 9> bitMaskTable = {
     0x00040000,
     0x00080000,
     0x00100000,
