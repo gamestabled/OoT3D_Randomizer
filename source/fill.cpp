@@ -22,35 +22,6 @@ static void RemoveStartingItemsFromPool() {
   }
 }
 
-static void RandomizeDungeonRewards() {
-  u32 bitmaskTable[9] = {
-    0x00040000,
-    0x00080000,
-    0x00100000,
-    0x00000001,
-    0x00000002,
-    0x00000004,
-    0x00000008,
-    0x00000010,
-    0x00000020,
-  };
-
-  //shuffle an array of indices so that we can randomize the rewards both
-  //logically and for the patch
-  std::array<u8, 9> idxArray = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-  Shuffle(idxArray);
-
-  for (size_t i = 0; i < dungeonRewards.size(); i++) {
-    const u8 idx = idxArray[i];
-    PlaceItemInLocation(dungeonRewardLocations[i], dungeonRewards[idx]);
-    rDungeonRewardOverrides[i] = idx;
-
-    if (i == dungeonRewardLocations.size() - 1) {
-      LinksPocketRewardBitMask = bitmaskTable[idx];
-    }
-  }
-}
-
 static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   if (ToD == ExitPairing::Time::Day) {
     if (age == AGE_CHILD) {
@@ -218,7 +189,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                 ItemType type = location->GetPlacedItem().GetItemType();
                 std::string itemName(location->GetPlacedItem().GetName());
                 bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
-                
+
                 //Decide whether to exclude this location
                 //This preprocessing is done to reduce the amount of searches performed in PareDownPlaythrough
                 //Want to exclude:
@@ -242,7 +213,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                   std::string buyItem = itemName.erase(0, 4); //Delete "Buy "
                   //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
                   if (buyItem.find("(") != std::string::npos) {
-                    buyItem = buyItem.erase(buyItem.find("(")); 
+                    buyItem = buyItem.erase(buyItem.find("("));
                   }
                   //Buy item not in list to ignore, add it to list and write to playthrough
                   if (std::find(buyIgnores.begin(), buyIgnores.end(), buyItem) == buyIgnores.end()) {
@@ -261,7 +232,7 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
               }
               //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
               else if (location->GetPlacedItem().GetName() == "Triforce") {
-                sphere.clear(); 
+                sphere.clear();
                 sphere.push_back(location);
                 playthroughBeatable = true;
               }
@@ -314,7 +285,7 @@ static void PareDownPlaythrough() {
       location->SetPlacedItem(NoItem); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable     
+      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
@@ -432,6 +403,18 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
   } while (unsuccessfulPlacement);
 }
 
+static void RandomizeDungeonRewards() {
+
+  //get stones and medallions
+  std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+  AssumedFill(rewards, dungeonRewardLocations);
+
+  int baseOffset = I_KokiriEmerald.GetItemID();
+  for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
+    rDungeonRewardOverrides[i] = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+  }
+}
+
 static void FillExcludedLocations() {
   //Only fill in excluded locations that don't already have something and are forbidden
   std::vector<ItemLocation*> excludedLocations = FilterFromPool(allLocations, [](ItemLocation* loc){
@@ -453,11 +436,7 @@ static void RandomizeOwnDungeon(Category dungeon, const Item bossKey, const Item
     }
 
     //prevent using dungeon reward locations when songs need to go there
-    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cBossHeart) ||
-       loc->GetName() == "Gerudo Training Grounds MQ Ice Arrows Chest" ||
-       loc->GetName() == "Gerudo Training Grounds Maze Path Final Chest" ||
-       loc->GetName() == "Bottom of the Well Lens of Truth Chest" ||
-       loc->GetName() == "Bottom of the Well MQ Lens of Truth Chest")) {
+    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cSongDungeonReward))) {
       return false;
     }
     return loc->IsCategory(dungeon);
@@ -526,9 +505,9 @@ int Fill() {
     GenerateItemPool();
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
-    RandomizeDungeonRewards();
     FillExcludedLocations();
     RandomizeOwnDungeonItems();
+    RandomizeDungeonRewards();
 
     //Place songs first if song shuffle is set to specific locations
     if (ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {

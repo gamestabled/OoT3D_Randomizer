@@ -57,7 +57,8 @@ namespace Settings {
     &StartingAge,
     &BombchusInLogic,
     &BombchuDrops,
-    //&RandomMQDungeons, TODO: Finish MQ logic before enabling this
+    &RandomMQDungeons,
+    &MQDungeonCount,
   };
 
   //Shuffle Settings
@@ -326,7 +327,7 @@ namespace Settings {
     &LogicLensShadowBack,
     &LogicLensBotw,
     &LogicLensGtg,
-    &LogicLensCastle,  
+    &LogicLensCastle,
     //MQ Doesn't exist yet
     // &LogicLensJabuMQ
     // &LogicLensSpiritMQ,
@@ -488,8 +489,6 @@ namespace Settings {
     ctx.spiritTrialSkip = (SpiritTrialSkip) ? 1 : 0;
     ctx.shadowTrialSkip = (ShadowTrialSkip) ? 1 : 0;
     ctx.lightTrialSkip  = (LightTrialSkip)  ? 1 : 0;
-
-    ctx.dungeonRewardBitMask = LinksPocketRewardBitMask;
 
     //Filling detailed logic
     for (u16 i = 0; i < detailedLogicOptions.size(); i++) {

@@ -168,6 +168,7 @@ namespace Logic {
   extern bool FairyPot;
   extern bool FreeFairies;
   extern bool FairyPond;
+  extern bool BombchuDrop;
 
   extern bool BuyBombchus5;
   extern bool BuyBombchus10;
@@ -268,6 +269,7 @@ namespace Logic {
   extern bool KakarikoVillageGateOpen;
   extern bool ForestTempleJoAndBeth;
   extern bool ForestTempleAmyAndMeg;
+  extern bool TimeTravel;
 
   /* --- END OF HELPERS --- */
 

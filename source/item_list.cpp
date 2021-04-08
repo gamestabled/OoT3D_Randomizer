@@ -9,8 +9,8 @@ using namespace Settings;
 // Effects to be run when an item is placed
 bool none = false;
 
-Item NoItem = Item("No Item", ITEMTYPE_ITEM,   GI_RUPEE_GREEN,   false, &none);
-Item I_Triforce = Item("Triforce", ITEMTYPE_ITEM, GI_RUPEE_RED_LOSE, false, &none);
+Item NoItem = Item("No Item", ITEMTYPE_EVENT,   GI_RUPEE_GREEN,   false, &none);
+Item I_Triforce = Item("Triforce", ITEMTYPE_EVENT, GI_RUPEE_RED_LOSE, false, &none);
 
 //Specific Advancement Items         // name              type           getItemId          advancement logic variable
 Item I_KokiriSword              = Item("Kokiri Sword",    ITEMTYPE_ITEM, GI_SWORD_KOKIRI,   true,  &KokiriSword);
@@ -139,26 +139,16 @@ Item GerudoTrainingGrounds_SmallKey = Item("Gerudo Training Grounds Small Key", 
 Item GerudoFortress_SmallKey        = Item("Gerudo Fortress Small Key",         ITEMTYPE_FORTRESS_SMALLKEY, 0xB6, true, &GerudoFortressKeys);
 Item GanonsCastle_SmallKey          = Item("Ganon's Castle Small Key",          ITEMTYPE_SMALLKEY,          0xB7, true, &GanonsCastleKeys);
 
-//Stones and Medallions                                                          //bitmask for questItems
-// Item I_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0x00040000,  true, &KokiriEmerald);
-// Item I_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0x00080000,  true, &GoronRuby);
-// Item I_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0x00100000,  true, &ZoraSapphire);
-// Item I_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000001,  true, &ForestMedallion);
-// Item I_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0x00000002,  true, &FireMedallion);
-// Item I_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000004,  true, &WaterMedallion);
-// Item I_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000008,  true, &SpiritMedallion);
-// Item I_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0x00000010,  true, &ShadowMedallion);
-// Item I_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0x00000020,  true, &LightMedallion);
-
-Item I_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_ITEM, 0xCB,  true, &KokiriEmerald);
-Item I_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_ITEM, 0xCC,  true, &GoronRuby);
-Item I_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_ITEM, 0xCD,  true, &ZoraSapphire);
-Item I_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_ITEM, 0xCE,  true, &ForestMedallion);
-Item I_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_ITEM, 0xCF,  true, &FireMedallion);
-Item I_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_ITEM, 0xD0,  true, &WaterMedallion);
-Item I_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_ITEM, 0xD1,  true, &SpiritMedallion);
-Item I_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_ITEM, 0xD2,  true, &ShadowMedallion);
-Item I_LightMedallion           = Item("Light Medallion",  ITEMTYPE_ITEM, 0xD3,  true, &LightMedallion);
+//Stones and Medallions
+Item I_KokiriEmerald            = Item("Kokiri Emerald",   ITEMTYPE_DUNGEONREWARD, 0xCB,  true, &KokiriEmerald);
+Item I_GoronRuby                = Item("Goron Ruby",       ITEMTYPE_DUNGEONREWARD, 0xCC,  true, &GoronRuby);
+Item I_ZoraSaphhire             = Item("Zora Sapphire",    ITEMTYPE_DUNGEONREWARD, 0xCD,  true, &ZoraSapphire);
+Item I_ForestMedallion          = Item("Forest Medallion", ITEMTYPE_DUNGEONREWARD, 0xCE,  true, &ForestMedallion);
+Item I_FireMedallion            = Item("Fire Medallion",   ITEMTYPE_DUNGEONREWARD, 0xCF,  true, &FireMedallion);
+Item I_WaterMedallion           = Item("Water Medallion",  ITEMTYPE_DUNGEONREWARD, 0xD0,  true, &WaterMedallion);
+Item I_SpiritMedallion          = Item("Spirit Medallion", ITEMTYPE_DUNGEONREWARD, 0xD1,  true, &SpiritMedallion);
+Item I_ShadowMedallion          = Item("Shadow Medallion", ITEMTYPE_DUNGEONREWARD, 0xD2,  true, &ShadowMedallion);
+Item I_LightMedallion           = Item("Light Medallion",  ITEMTYPE_DUNGEONREWARD, 0xD3,  true, &LightMedallion);
 
 //Generic Items
 Item RecoveryHeart              = Item("Recovery Heart",   ITEMTYPE_ITEM, GI_HEART,             false, &none);
@@ -179,6 +169,7 @@ Item Bombs20                    = Item("Bombs (20)",          ITEMTYPE_ITEM, GI_
 Item Bombchu5                   = Item("Bombchu (5)",         ITEMTYPE_ITEM, GI_BOMBCHUS_5,     true,  &Bombchus5);
 Item Bombchu10                  = Item("Bombchu (10)",        ITEMTYPE_ITEM, GI_BOMBCHUS_10,    true,  &Bombchus10);
 Item Bombchu20                  = Item("Bombchu (20)",        ITEMTYPE_ITEM, GI_BOMBCHUS_20,    true,  &Bombchus20);
+Item I_BombchuDrop              = Item("Bombchu Drop",        ITEMTYPE_DROP, GI_BOMBCHUS_10,    true,  &BombchuDrop);
 Item Arrows5                    = Item("Arrows (5)",          ITEMTYPE_ITEM, GI_ARROWS_SMALL,   false, &none);
 Item Arrows10                   = Item("Arrows (10)",         ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,  false, &none);
 Item Arrows30                   = Item("Arrows (30)",         ITEMTYPE_ITEM, GI_ARROWS_LARGE,   false, &none);
@@ -212,9 +203,9 @@ Item BuyDekuShield              = Item("Buy Deku Shield",     ITEMTYPE_SHOP, 0x0
 Item BuyGoronTunic              = Item("Buy Goron Tunic",     ITEMTYPE_SHOP, 0x0E, true,  &none,          200);
 Item BuyZoraTunic               = Item("Buy Zora Tunic",      ITEMTYPE_SHOP, 0x0F, true,  &none,          300);
 Item BuyHeart                   = Item("Buy Heart",           ITEMTYPE_SHOP, 0x10, false, &none,           10);
-Item BuyBombchu10               = Item("Buy Bombchu (10)",    ITEMTYPE_SHOP, 0x15, true,  &none,           99);
-Item BuyBombchu20               = Item("Buy Bombchu (20)",    ITEMTYPE_SHOP, 0x16, true,  &none,          180);
-Item BuyBombchu5                = Item("Buy Bombchu (5)",     ITEMTYPE_SHOP, 0x18, true,  &none,           60);
+Item BuyBombchu10               = Item("Buy Bombchu (10)",    ITEMTYPE_SHOP, 0x15, true,  &BuyBombchus10,  99);
+Item BuyBombchu20               = Item("Buy Bombchu (20)",    ITEMTYPE_SHOP, 0x16, true,  &BuyBombchus20, 180);
+Item BuyBombchu5                = Item("Buy Bombchu (5)",     ITEMTYPE_SHOP, 0x18, true,  &BuyBombchus5,   60);
 Item BuyDekuSeeds30             = Item("Buy Deku Seeds (30)", ITEMTYPE_SHOP, 0x1D, false, &none,           30);
 Item SoldOut                    = Item("Sold Out",            ITEMTYPE_SHOP, 0x26, false, &none,            0);
 Item BuyBlueFire                = Item("Buy Blue Fire",       ITEMTYPE_SHOP, 0x27, true,  &none,          300);

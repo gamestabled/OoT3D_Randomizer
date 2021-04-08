@@ -7,6 +7,17 @@ using namespace Settings;
 
 std::vector<Item> ItemPool = {};
 std::vector<Item> PendingJunkPool = {};
+std::vector<Item> dungeonRewards = {
+  I_KokiriEmerald,
+  I_GoronRuby,
+  I_ZoraSaphhire,
+  I_ForestMedallion,
+  I_FireMedallion,
+  I_WaterMedallion,
+  I_SpiritMedallion,
+  I_ShadowMedallion,
+  I_LightMedallion,
+};
 const std::array<Item, 16> JunkPoolItems = {
   Bombs5,
   Bombs10,
@@ -282,17 +293,6 @@ const std::array<Item, 11> normalBottles = {
   I_PoeBottle,
   I_BigPoeBottle,
   I_BlueFireBottle,
-};
-std::array<Item, 9> dungeonRewards = {
-  I_KokiriEmerald,
-  I_GoronRuby,
-  I_ZoraSaphhire,
-  I_ForestMedallion,
-  I_FireMedallion,
-  I_WaterMedallion,
-  I_SpiritMedallion,
-  I_ShadowMedallion,
-  I_LightMedallion,
 };
 const std::array<Item, 20> dungeonItems = {
   DekuTree_Map,
@@ -935,8 +935,10 @@ void GenerateItemPool() {
 
   ItemPool.clear();
 
+  //Fixed item locations
   PlaceItemInLocation(&HC_ZeldasLetter, I_ZeldasLetter);
   PlaceItemInLocation(&Ganon, I_Triforce); //The Triforce is only used to make sure Ganon is accessible
+  PlaceItemInLocation(&MK_BombchuBowlingBombchus, I_BombchuDrop);
 
   if (ShuffleKokiriSword) {
     AddItemToMainPool(I_KokiriSword);
@@ -1153,6 +1155,7 @@ void GenerateItemPool() {
   }
 
   AddItemsToPool(ItemPool, alwaysItems);
+  AddItemsToPool(ItemPool, dungeonRewards);
 
   //dungeon pools
   if (DekuTreeDungeonMode == DUNGEONMODE_MQ) {
@@ -1223,9 +1226,9 @@ void GenerateItemPool() {
   //TODO: trade item logic
   AddItemToMainPool(I_ClaimCheck);
 
-  //add songs
+  //add extra songs only if song shuffle is anywhere
   AddItemsToPool(ItemPool, songList);
-  if (ShuffleSongs && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL) && !ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
+  if (ShuffleSongs.Is(SONGSHUFFLE_ANYWHERE) && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
     AddItemsToPool(PendingJunkPool, songList);
   }
 
@@ -1263,9 +1266,9 @@ void GenerateItemPool() {
     AddItemToMainPool(FireTemple_SmallKey, 8);
     AddItemToMainPool(WaterTemple_SmallKey, 6);
     AddItemToMainPool(SpiritTemple_SmallKey, 5);
-    AddItemToMainPool(ShadowTemple_SmallKey, 4); //SHOULD BE 5, CHANGE WHEN CRASH IS FIXED
+    AddItemToMainPool(ShadowTemple_SmallKey, 5);
     AddItemToMainPool(BottomOfTheWell_SmallKey, 3);
-    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 8); //SHOULD BE 9, CHANGE WHEN CRASH IS FIXED
+    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 9);
     AddItemToMainPool(GanonsCastle_SmallKey, 2);
   }
 

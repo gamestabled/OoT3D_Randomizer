@@ -109,7 +109,7 @@ namespace CustomMessages {
     std::stringstream messageData;
     std::string arrangedMessageData;
 
-    void CreateMessage(u32 textId, u32 unk_04, u32 unk_08, u32 unk_0C, 
+    void CreateMessage(u32 textId, u32 unk_04, u32 unk_08, u32 unk_0C,
         std::string englishText, std::string frenchText, std::string spanishText) {
             MessageEntry newEntry = { textId, unk_04, unk_08, unk_0C, { 0 } };
 
@@ -154,42 +154,42 @@ namespace CustomMessages {
 
     void CreateAlwaysIncludedMessages(void) {
         // Bombchu (10) Purchase Prompt
-        CreateMessage(0x8C, 0, 2, 3, 
+        CreateMessage(0x8C, 0, 2, 3,
             INSTANT_TEXT_ON()+"Bombchu (10): 99 Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
             INSTANT_TEXT_ON()+"Bombchus (10): 99 rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+MESSAGE_END(),
             INSTANT_TEXT_ON()+"Bombchus (10): 99 rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+MESSAGE_END());
         //Gold Skulltula Tokens
-        CreateMessage(0xB4, 0, 2, 3, 
+        CreateMessage(0xB4, 0, 2, 3,
             INSTANT_TEXT_ON()+"You destroyed a "+COLOR(QM_RED)+"Gold Skulltula"+COLOR(QM_WHITE)+". You got a"+NEWLINE()+"token proving you destroyed it!"+NEWLINE()+NEWLINE()+"You have "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" tokens!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             INSTANT_TEXT_ON()+"Vous venez de détruire une "+COLOR(QM_RED)+"Skulltula dorée"+COLOR(QM_WHITE)+"!"+NEWLINE()+"Ce jeton prouve votre prouesse!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             INSTANT_TEXT_ON()+"¡Has eliminado una "+COLOR(QM_RED)+"skulltula dorada"+COLOR(QM_WHITE)+" y has"+NEWLINE()+"conseguido un símbolo para probarlo!"+NEWLINE()+NEWLINE()+"¡Tienes "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" símbolos!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Bombchu (10) Description
-        CreateMessage(0xBC, 0, 2, 3, 
+        CreateMessage(0xBC, 0, 2, 3,
             INSTANT_TEXT_ON()+COLOR(QM_RED)+"Bombchu (10): 99 Rupees"+NEWLINE()+COLOR(QM_WHITE)+"These look like toy mice, but they're"+NEWLINE()+"actually self-propelled time bombs!"+INSTANT_TEXT_OFF()+SHOP_MESSAGE_BOX()+MESSAGE_END(),
             INSTANT_TEXT_ON()+COLOR(QM_RED)+"Bombchus (10): 99 rubis"+NEWLINE()+COLOR(QM_WHITE)+"Profilée comme une souris mécanique, il"+NEWLINE()+"s'agit en fait d'une bombe à retardement"+NEWLINE()+"autopropulsée!"+INSTANT_TEXT_OFF()+SHOP_MESSAGE_BOX()+MESSAGE_END(),
             INSTANT_TEXT_ON()+COLOR(QM_RED)+"Bombchus (10): 99 rupias"+NEWLINE()+COLOR(QM_WHITE)+"Aunque parezcan ratoncitos de juguete,"+NEWLINE()+"¡son bombas de tiempo autopropulsadas!"+INSTANT_TEXT_OFF()+SHOP_MESSAGE_BOX()+MESSAGE_END());
         //Boss Keys
         for (u32 bossKey = 0; bossKey <= (DUNGEON_SHADOW_TEMPLE - DUNGEON_FOREST_TEMPLE); bossKey++) {
             u32 dungeon = DUNGEON_FOREST_TEMPLE + bossKey;
-            CreateMessage(0x9D4 + bossKey, 0, 2, 3, 
+            CreateMessage(0x9D4 + bossKey, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[dungeon])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[dungeon])+"gran llave "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
-        CreateMessage(0x9D9, 0, 2, 3, 
+        CreateMessage(0x9D9, 0, 2, 3,
             UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+EnglishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+FrenchDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"gran llave "+SpanishDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+SpanishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Compasses
         for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
-            CreateMessage(0x9DA + dungeon, 0, 2, 3, 
+            CreateMessage(0x9DA + dungeon, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_COMPASS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Compass"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_COMPASS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[dungeon])+"boussole "+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_COMPASS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[dungeon])+"brújula "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //Maps
         for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
-            CreateMessage(0x9E4 + dungeon, 0, 2, 3, 
+            CreateMessage(0x9E4 + dungeon, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_DUNGEON_MAP)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Map"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_DUNGEON_MAP)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[dungeon])+"carte "+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_DUNGEON_MAP)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[dungeon])+"mapa "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
@@ -197,14 +197,14 @@ namespace CustomMessages {
         //Small Keys
         for (u32 smallKey = 0; smallKey <= (DUNGEON_BOTTOM_OF_THE_WELL - DUNGEON_FOREST_TEMPLE); smallKey++) {
             u32 dungeon = DUNGEON_FOREST_TEMPLE + smallKey;
-            CreateMessage(0x9EE + smallKey, 0, 2, 3, 
+            CreateMessage(0x9EE + smallKey, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got a "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Small Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(DungeonColors[dungeon])+"petite clé"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Es una "+COLOR(DungeonColors[dungeon])+"llave pequeña "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         for (u32 smallKey = 0; smallKey <= (DUNGEON_GANONS_CASTLE_FIRST_PART - DUNGEON_GERUDO_TRAINING_GROUNDS); smallKey++) {
             u32 dungeon = DUNGEON_GERUDO_TRAINING_GROUNDS + smallKey;
-            CreateMessage(0x9F4 + smallKey, 0, 2, 3, 
+            CreateMessage(0x9F4 + smallKey, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got a "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Small Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(DungeonColors[dungeon])+"petite clé"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Es una "+COLOR(DungeonColors[dungeon])+"llave pequeña "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
@@ -243,11 +243,11 @@ namespace CustomMessages {
                 UNSKIPPABLE()+"Oh, you brought a Poe today!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Very interesting! This is a "+COLOR(QM_RED)+"Big Poe"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"I'll buy it for "+COLOR(QM_RED)+"50 Rupees"+COLOR(QM_WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"On top of that, I'll put "+COLOR(QM_RED)+"100 points "+COLOR(QM_WHITE)+"on"+NEWLINE()+"your card."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"If you earn "+COLOR(QM_RED)+std::to_string(poes * 100)+" points"+COLOR(QM_WHITE)+", you'll be a"+NEWLINE()+"happy man! Heh heh."+MESSAGE_END(),
-                
+
                 UNSKIPPABLE()+"Oh, tu as amené un esprit aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(QM_RED)+"Grand esprit"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"Je te l'achète pour "+COLOR(QM_RED)+"50 Rubis"+COLOR(QM_WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(QM_RED)+"100 points "+COLOR(QM_WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"Si tu gagnes "+COLOR(QM_RED)+std::to_string(poes * 100)+" points"+COLOR(QM_WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
-                                                    
+
                 UNSKIPPABLE()+"¡Vaya! ¡Traes un poe!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Mmm! ¿A ver?"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Qué interesante! ¡Es un "+COLOR(QM_RED)+"gran poe"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"Te daré "+COLOR(QM_RED)+"50 rupias "+COLOR(QM_WHITE)+"por él."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Y además agregaré "+COLOR(QM_RED)+"100 puntos "+COLOR(QM_WHITE)+"en tu"+NEWLINE()+"tarjeta."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"¡Si llegas a "+COLOR(QM_RED)+std::to_string(poes * 100)+" puntos"+COLOR(QM_WHITE)+", serás muy feliz!"+NEWLINE()+"Je, je, je..."+MESSAGE_END());

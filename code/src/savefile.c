@@ -45,11 +45,15 @@ void SaveFile_Init() {
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
-    //open lowest Fire Temple locked door (to prevent key logic lockouts)
-    gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
+    //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
+    if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA) {
+        gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
+    }
+    //open middle locked door in Vanilla Water Temple (to prevent key logic lockouts)
+    if (gSettingsContext.waterTempleDungeonMode == DUNGEONMODE_VANILLA) {
+        gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE].swch |= 0x00200000;
+    }
 
-    //open middle locked door in Water Temple (to prevent key logic lockouts)
-    gSaveContext.sceneFlags[DUNGEON_WATER_TEMPLE].swch |= 0x00200000;
 
     /*-----------------------------------
     |THINGS TO SET DEPENDING ON SETTINGS|
@@ -76,9 +80,6 @@ void SaveFile_Init() {
     if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
         gSaveContext.dayTime = 0x1400; //Set night time
     }
-
-    //give Link the starting stone or medallion
-    gSaveContext.questItems |= gSettingsContext.dungeonRewardBitMask;
 
     if (gSettingsContext.openDoorOfTime) {
         gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
@@ -108,7 +109,7 @@ void SaveFile_Init() {
 
     if (gSettingsContext.forestTrialSkip && gSettingsContext.fireTrialSkip && gSettingsContext.waterTrialSkip &&
         gSettingsContext.spiritTrialSkip && gSettingsContext.shadowTrialSkip && gSettingsContext.lightTrialSkip) {
-          gSaveContext.eventChkInf[0xC] |= 0x0008; //dispel Ganon's Tower Barrier
+            gSaveContext.eventChkInf[0xC] |= 0x0008; //dispel Ganon's Tower Barrier
     }
 
     if (gSettingsContext.fourPoesCutscene == SKIP) {
@@ -127,32 +128,37 @@ void SaveFile_Init() {
     }
 
     //give small keys
-    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {
-      gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE] = 5;
-      gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE] = 8;
-      gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE] = 6;
-      gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 5;
-      gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE] = 5;
-      gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL] = 3;
-      gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS] = 9;
-      gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = 2;
+    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {                     //check if MQ dungeon               MQ : Vanilla key count
+        gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE]            = gSettingsContext.forestTempleDungeonMode          ? 6 : 5;
+        gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE]              = gSettingsContext.fireTempleDungeonMode            ? 5 : 8;
+        gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE]             = gSettingsContext.waterTempleDungeonMode           ? 2 : 6;
+        gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE]            = gSettingsContext.spiritTempleDungeonMode          ? 7 : 5;
+        gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE]            = gSettingsContext.shadowTempleDungeonMode          ? 6 : 5;
+        gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL]       = gSettingsContext.bottomOfTheWellDungeonMode       ? 2 : 3;
+        gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS]  = gSettingsContext.gerudoTrainingGroundsDungeonMode ? 3 : 9;
+        gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = gSettingsContext.ganonsCastleDungeonMode          ? 3 : 2;
+        //give starting spirit keys for vanilla key locations
+    } else if (gSettingsContext.keysanity == KEYSANITY_VANILLA) {
+        if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
+            gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 3;
+        }
     }
 
     //give boss keys
     if (gSettingsContext.bossKeysanity == BOSSKEYSANITY_START_WITH) {
-      for (u8 i = 3; i < 8; i++) {
-        gSaveContext.dungeonItems[i] |= 0x1;
-      }
+        for (u8 i = 3; i < 8; i++) {
+            gSaveContext.dungeonItems[i] |= 0x1;
+        }
     }
 
     //give Ganon's Castle Boss Key
     if (gSettingsContext.ganonsBossKey == GANONSBOSSKEY_START_WITH) {
-      gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
+        gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
     }
 
     //give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
     if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN && gSettingsContext.shuffleGerudoToken == OFF) {
-      gSaveContext.questItems |= 0x00400000;
+        gSaveContext.questItems |= 0x00400000;
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
@@ -170,7 +176,7 @@ void SaveFile_SaveChildBButton(void) {
 u16 SaveFile_RestoreChildEquips(void) {
     //if Kokiri Sword is not on child B button
     if (gSaveContext.childEquips.buttonItems[0] != ITEM_SWORD_KOKIRI) {
-      gSaveContext.infTable[29] |= 0x1; //set swordless flag
+        gSaveContext.infTable[29] |= 0x1; //set swordless flag
     }
     return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
 }
