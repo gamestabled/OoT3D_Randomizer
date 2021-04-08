@@ -423,11 +423,12 @@ static void RandomizeDungeonRewards() {
   };
 
   for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
-    rDungeonRewardOverrides[i] = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+    const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+    rDungeonRewardOverrides[i] = index;
 
     //set the player's dugeon reward on file creation instead of pushing it to them at the start
     if (i == dungeonRewardLocations.size()-1 /*&& LinksPocket.Is(LINKSPOCKET_DUNGEON_REWARD)*/) {
-      LinksPocketRewardBitMask = bitMaskTable[dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset];
+      LinksPocketRewardBitMask = bitMaskTable[index];
     }
   }
 }
