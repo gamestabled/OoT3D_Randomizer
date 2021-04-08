@@ -3,14 +3,13 @@
 
 // Certain doors can cause a crash depending on a freestanding
 // model in the room that is being transitioned out of. We can
-// avoid the crash by delete all the models as soon as these
-// doors are opened
+// avoid the crash by delete all the models as soon as link
+// opens a door. However, some scenes have doors near freestanding
+// items which don't cause a room transition, so we have to avoid
+// those
 void Door_CheckToDeleteCustomModels(Actor* door) {
-    s32 transitionActorId = (u16)door->params >> 0xA;
-
-    if ((gGlobalContext->sceneNum == 0x000B) || //GTG (it's safe to do all doors in here, though we just need to cover the lava room)
-        ((gGlobalContext->sceneNum == 0x0007) && (transitionActorId == 0xA)) || //Shadow Temple one huge pot room -> invisible spikes room
-        ((gGlobalContext->sceneNum == 0x0008) && (transitionActorId == 0x5))) { //BOTW coffin room -> main room
+    if ((gGlobalContext->sceneNum != 0x000C) && //Theive's Hideout
+        (gGlobalContext->sceneNum != 0x0001)) { //Dodongo's Cavern
         Model_DestroyAll();
     }
 }
