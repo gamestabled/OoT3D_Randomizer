@@ -135,11 +135,6 @@ string_view mqDungeonCountDesc        = "Specify the number of Master Quest dung
                                         "Quest will be chosen at random.";                 //
                                                                                            //
 /*------------------------------                                                           //
-|         MIRROR WORLD         |                                                           //
-------------------------------*/                                                           //
-string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
-                                                                                           //
-/*------------------------------                                                           //
 |         SONG SHUFFLE         |                                                           //
 ------------------------------*/                                                           //
 string_view songsSongLocations        = "Songs will only appear at locations that normally\n"
@@ -399,6 +394,11 @@ string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.\n" 
 string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.\n"       //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|         MIRROR WORLD         |                                                           //
+------------------------------*/                                                           //
+string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
