@@ -1261,15 +1261,15 @@ void GenerateItemPool() {
   }
 
   //all locations placements
-  if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
-    AddItemToMainPool(ForestTemple_SmallKey, 5);
-    AddItemToMainPool(FireTemple_SmallKey, 8);
-    AddItemToMainPool(WaterTemple_SmallKey, 6);
-    AddItemToMainPool(SpiritTemple_SmallKey, 5);
-    AddItemToMainPool(ShadowTemple_SmallKey, 5);
-    AddItemToMainPool(BottomOfTheWell_SmallKey, 3);
-    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, 9);
-    AddItemToMainPool(GanonsCastle_SmallKey, 2);
+  if (Keysanity.Is(KEYSANITY_ANYWHERE)) {           //check if MQ dungeon               MQ : Vanilla key count
+    AddItemToMainPool(ForestTemple_SmallKey,          ForestTempleDungeonMode          ? 6 : 5);
+    AddItemToMainPool(FireTemple_SmallKey,            FireTempleDungeonMode            ? 5 : 8);
+    AddItemToMainPool(WaterTemple_SmallKey,           WaterTempleDungeonMode           ? 2 : 6);
+    AddItemToMainPool(SpiritTemple_SmallKey,          SpiritTempleDungeonMode          ? 7 : 5);
+    AddItemToMainPool(ShadowTemple_SmallKey,          ShadowTempleDungeonMode          ? 6 : 5);
+    AddItemToMainPool(BottomOfTheWell_SmallKey,       BottomOfTheWellDungeonMode       ? 2 : 3);
+    AddItemToMainPool(GerudoTrainingGrounds_SmallKey, GerudoTrainingGroundsDungeonMode ? 3 : 9);
+    AddItemToMainPool(GanonsCastle_SmallKey,          GanonsCastleDungeonMode          ? 3 : 2);
   }
 
   if (BossKeysanity.Is(BOSSKEYSANITY_ANYWHERE)) {
