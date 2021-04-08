@@ -10,6 +10,7 @@
 #include "ocarina.h"
 #include "cow.h"
 #include "string.h"
+#include "ganondorf_organ.h"
 
 #define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
 #define OBJECT_CUSTOM_ZELDAS_LULLABY 5
@@ -51,6 +52,8 @@ void Actor_Init() {
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
 
     gActorOverlayTable[0x11B].initInfo->update = NULL;
+
+    gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
