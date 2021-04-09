@@ -50,9 +50,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(&KF_KokiriSwordChest,  []{return IsChild;}),
-                  ItemLocationPairing(&KF_GS_KnowItAllHouse, []{return IsChild && CanChildAttack && AtNight && (HasNightStart || CanLeaveForest || CanPlay(SunsSong));}),
+                  ItemLocationPairing(&KF_GS_KnowItAllHouse, []{return IsChild && CanChildAttack && AtNight && (HasNightStart || CanLeaveForest || CanPlay(SunsSong)) && CanGetNightTimeGS;}),
                   ItemLocationPairing(&KF_GS_BeanPatch,      []{return CanPlantBugs && CanChildAttack;}),
-                  ItemLocationPairing(&KF_GS_HouseOfTwins,   []{return IsAdult && AtNight && CanUse(CanUseItem::Hookshot);}),
+                  ItemLocationPairing(&KF_GS_HouseOfTwins,   []{return IsAdult && AtNight && CanUse(CanUseItem::Hookshot) && CanGetNightTimeGS;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&KF_LinksHouse,       []{return true;}),
@@ -177,7 +177,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&LW_DekuScrubNearDekuTheaterRight, []{return IsChild && CanStunDeku;}),
                   ItemLocationPairing(&LW_DekuScrubNearDekuTheaterLeft,  []{return IsChild && CanStunDeku;}),
-                  ItemLocationPairing(&LW_GS_AboveTheater,               []{return IsAdult && AtNight && (LW_BeyondMido.CanPlantBean() || (LogicLostWoodsGSBean && CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Longshot) || CanUse(CanUseItem::Bow) || HasBombchus || CanUse(CanUseItem::Dins_Fire))));}),
+                  ItemLocationPairing(&LW_GS_AboveTheater,               []{return IsAdult && AtNight && (LW_BeyondMido.CanPlantBean() || (LogicLostWoodsGSBean && CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Longshot) || CanUse(CanUseItem::Bow) || HasBombchus || CanUse(CanUseItem::Dins_Fire)))) && CanGetNightTimeGS;}),
                   ItemLocationPairing(&LW_GS_BeanPatchNearTheater,       []{return CanPlantBugs && (CanChildAttack || (Scrubsanity.Is(SCRUBSANITY_OFF) && DekuShield));}),
                 }, {
                   //Exits
@@ -229,7 +229,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&SongFromSaria, []{return IsChild && ZeldasLetter;}),
                   ItemLocationPairing(&SheikInForest, []{return IsAdult;}),
-                  ItemLocationPairing(&SFM_GS,        []{return CanUse(CanUseItem::Hookshot) && AtNight;}),
+                  ItemLocationPairing(&SFM_GS,        []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                   //SFM Maze Gossip Stone (Lower)
                   //SFM Maze Gossip Stone (Upper)
                   //SFM Saria Gossip Stone
@@ -390,9 +390,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&LH_Sun,             []{return IsAdult && WaterTempleClear && CanUse(CanUseItem::Bow);}),
                   ItemLocationPairing(&LH_FreestandingPoH, []{return IsAdult && (CanUse(CanUseItem::Scarecrow) || LH_Main.CanPlantBean());}),
                   ItemLocationPairing(&LH_GS_BeanPatch,    []{return CanPlantBugs && CanChildAttack;}),
-                  ItemLocationPairing(&LH_GS_LabWall,      []{return IsChild && (Boomerang || (LogicLabWallGS && (Sticks || KokiriSword))) && AtNight;}),
-                  ItemLocationPairing(&LH_GS_SmallIsland,  []{return IsChild && CanChildAttack && AtNight;}),
-                  ItemLocationPairing(&LH_GS_Tree,         []{return CanUse(CanUseItem::Longshot) && AtNight;}),
+                  ItemLocationPairing(&LH_GS_LabWall,      []{return IsChild && (Boomerang || (LogicLabWallGS && (Sticks || KokiriSword))) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&LH_GS_SmallIsland,  []{return IsChild && CanChildAttack && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&LH_GS_Tree,         []{return CanUse(CanUseItem::Longshot) && AtNight && CanGetNightTimeGS;}),
                   //LH Gossip Stone (Southeast)
                   //LH Gossip Stone (Southwest)
                 }, {
@@ -448,7 +448,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&BugRock, []{return IsChild && HasBottle;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&GV_GS_SmallBridge, []{return CanUse(CanUseItem::Boomerang) && AtNight;}),
+                  ItemLocationPairing(&GV_GS_SmallBridge, []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main,          []{return true;}),
@@ -486,8 +486,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(&GV_Chest,         []{return CanUse(CanUseItem::Hammer);}),
-                  ItemLocationPairing(&GV_GS_BehindTent, []{return CanUse(CanUseItem::Hookshot) && AtNight;}),
-                  ItemLocationPairing(&GV_GS_Pillar,     []{return CanUse(CanUseItem::Hookshot) && AtNight;}),
+                  ItemLocationPairing(&GV_GS_BehindTent, []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&GV_GS_Pillar,     []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&GF_Main,          []{return true;}),
@@ -530,8 +530,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&GF_SouthF1Carpenter, []{return  IsAdult || KokiriSword;}),
                   ItemLocationPairing(&GF_SouthF2Carpenter, []{return  IsAdult || KokiriSword;}),
                   ItemLocationPairing(&GF_GerudoToken,      []{return CanFinishGerudoFortress;}),
-                  ItemLocationPairing(&GF_GS_ArcheryRange,  []{return CanUse(CanUseItem::Hookshot) && GerudoToken && AtNight;}),
-                  ItemLocationPairing(&GF_GS_TopFloor,      []{return IsAdult && AtNight && (GerudoToken || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots) || LogicGerudoKitchen);})
+                  ItemLocationPairing(&GF_GS_ArcheryRange,  []{return CanUse(CanUseItem::Hookshot) && GerudoToken && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&GF_GS_TopFloor,      []{return IsAdult && AtNight && (GerudoToken || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots) || LogicGerudoKitchen) && CanGetNightTimeGS;})
                 }, {
                   //Exits
                   ExitPairing::Both(&GV_FortressSide,                []{return true;}),
@@ -594,8 +594,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&Colossus_FreestandingPoH, []{return IsAdult && Colossus_Main.CanPlantBean();}),
                   ItemLocationPairing(&SheikAtColossus,          []{return true;}),
                   ItemLocationPairing(&Colossus_GS_BeanPatch,    []{return CanPlantBugs && CanChildAttack;}),
-                  ItemLocationPairing(&Colossus_GS_Tree,         []{return CanUse(CanUseItem::Hookshot) && AtNight;}),
-                  ItemLocationPairing(&Colossus_GS_Hill,         []{return IsAdult && AtNight && (Colossus_Main.CanPlantBean() || CanUse(CanUseItem::Longshot) || (LogicColossusGS && CanUse(CanUseItem::Hookshot)));})
+                  ItemLocationPairing(&Colossus_GS_Tree,         []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&Colossus_GS_Hill,         []{return IsAdult && AtNight && (Colossus_Main.CanPlantBean() || CanUse(CanUseItem::Longshot) || (LogicColossusGS && CanUse(CanUseItem::Hookshot))) && CanGetNightTimeGS;})
                   //Colossus Gossip Stone
                 }, {
                   //Exits
@@ -877,12 +877,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&SheikInKakariko,               []{return IsAdult && ForestMedallion && FireMedallion && WaterMedallion;}),
                   ItemLocationPairing(&Kak_AnjuAsChild,               []{return IsChild && AtDay;}),
                   ItemLocationPairing(&Kak_AnjuAsAdult,               []{return IsAdult && AtDay;}),
-                  ItemLocationPairing(&Kak_GS_HouseUnderConstruction, []{return IsChild && AtNight;}),
-                  ItemLocationPairing(&Kak_GS_SkulltulaHouse,         []{return IsChild && AtNight;}),
-                  ItemLocationPairing(&Kak_GS_GuardsHouse,            []{return IsChild && AtNight;}),
-                  ItemLocationPairing(&Kak_GS_Tree,                   []{return IsChild && AtNight;}),
-                  ItemLocationPairing(&Kak_GS_Watchtower,             []{return IsChild && (Slingshot || HasBombchus) && AtNight;}),
-                  ItemLocationPairing(&Kak_GS_AboveImpasHouse,        []{return CanUse(CanUseItem::Hookshot) && AtNight;}),
+                  ItemLocationPairing(&Kak_GS_HouseUnderConstruction, []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&Kak_GS_SkulltulaHouse,         []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&Kak_GS_GuardsHouse,            []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&Kak_GS_Tree,                   []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&Kak_GS_Watchtower,             []{return IsChild && (Slingshot || HasBombchus) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&Kak_GS_AboveImpasHouse,        []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main,                []{return true;}),
@@ -1061,7 +1061,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&GY_FreestandingPoH,       []{return (IsAdult && (GY_Main.CanPlantBean() || CanUse(CanUseItem::Longshot))) || (LogicGraveyardPoH && CanUse(CanUseItem::Boomerang));}),
                   ItemLocationPairing(&GY_DampeGravediggingTour, []{return IsChild && AtNight;}), //This needs to change
-                  ItemLocationPairing(&GY_GS_Wall,               []{return CanUse(CanUseItem::Boomerang) && AtNight;}),
+                  ItemLocationPairing(&GY_GS_Wall,               []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(&GY_GS_BeanPatch,          []{return CanPlantBugs && CanChildAttack;}),
                 }, {
                   //Exits
@@ -1148,7 +1148,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&DMT_FreestandingPoH,        []{return (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO)) || CanUse(CanUseItem::Nayrus_Love) || Fairy || CanUse(CanUseItem::Hover_Boots) || (IsAdult && DMT_Main.CanPlantBean() && (HasExplosives || GoronBracelet));}),
                   ItemLocationPairing(&DMT_GS_BeanPatch,           []{return CanPlantBugs && (HasExplosives || GoronBracelet || (LogicDMTSoilGS && CanUse(CanUseItem::Boomerang)));}),
                   ItemLocationPairing(&DMT_GS_NearKak,             []{return CanBlastOrSmash;}),
-                  ItemLocationPairing(&DMT_GS_AboveDodongosCavern, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer);})
+                  ItemLocationPairing(&DMT_GS_AboveDodongosCavern, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;})
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_BehindGate,          []{return true;}),
@@ -1166,7 +1166,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(&DMT_Biggoron,            []{return IsAdult && (ClaimCheck || (GuaranteeTradePath && (EyedropsAccess || (Eyedrops && DisableTradeRevert))));}),
-                  ItemLocationPairing(&DMT_GS_FallingRocksPath, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer);}),
+                  ItemLocationPairing(&DMT_GS_FallingRocksPath, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;}),
                   //DMT Gossip Stone
                 }, {
                   //Exits
@@ -1415,9 +1415,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ZR_FrogsInTheRain,                []{return IsChild && CanPlay(SongOfStorms);}),
                   ItemLocationPairing(&ZR_NearOpenGrottoFreestandingPoH, []{return IsChild || CanUse(CanUseItem::Hover_Boots) || (IsAdult && LogicZoraRiverLower);}),
                   ItemLocationPairing(&ZR_NearDomainFreestandingPoH,     []{return IsChild || CanUse(CanUseItem::Hover_Boots) || (IsAdult && LogicZoraRiverUpper);}),
-                  ItemLocationPairing(&ZR_GS_Ladder,                     []{return IsChild && AtNight && CanChildAttack;}),
-                  ItemLocationPairing(&ZR_GS_NearRaisedGrottos,          []{return CanUse(CanUseItem::Hookshot) && AtNight;}),
-                  ItemLocationPairing(&ZR_GS_AboveBridge,                []{return CanUse(CanUseItem::Hookshot) && AtNight;}),
+                  ItemLocationPairing(&ZR_GS_Ladder,                     []{return IsChild && AtNight && CanChildAttack && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&ZR_GS_NearRaisedGrottos,          []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&ZR_GS_AboveBridge,                []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                   //ZR Near Grottos Gossip Stone
                   //ZR Near Domain Gossip Stone
                 }, {
@@ -1476,7 +1476,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ZD_DivingMinigame,     []{return IsChild;}),
                   ItemLocationPairing(&ZD_Chest,              []{return CanUse(CanUseItem::Sticks);}),
                   ItemLocationPairing(&ZD_KingZoraThawed,     []{return KingZoraThawed;}),
-                  ItemLocationPairing(&ZD_GS_FrozenWaterfall, []{return IsAdult && AtNight && (Hookshot || Bow || MagicMeter);}),
+                  ItemLocationPairing(&ZD_GS_FrozenWaterfall, []{return IsAdult && AtNight && (Hookshot || Bow || MagicMeter) && CanGetNightTimeGS;}),
                   //ZD Gossip Stone
                 }, {
                   //Exits
@@ -1525,8 +1525,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ZF_IcebergFreestandingPoH, []{return IsAdult;}),
                   ItemLocationPairing(&ZF_BottomFreestandingPoH,  []{return IsAdult && IronBoots && (LogicFewerTunicRequirements || CanUse(CanUseItem::Zora_Tunic));}),
                   ItemLocationPairing(&ZF_GS_Tree,                []{return IsChild;}),
-                  ItemLocationPairing(&ZF_GS_AboveTheLog,         []{return CanUse(CanUseItem::Boomerang) && AtNight;}),
-                  ItemLocationPairing(&ZF_GS_HiddenCave,          []{return CanUse(CanUseItem::Silver_Gauntlets) && CanBlastOrSmash && CanUse(CanUseItem::Hookshot) && AtNight;}),
+                  ItemLocationPairing(&ZF_GS_AboveTheLog,         []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&ZF_GS_HiddenCave,          []{return CanUse(CanUseItem::Silver_Gauntlets) && CanBlastOrSmash && CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                   //ZF Fairy Gossip Stone
                   //ZF Jabu Gossip Stone
                 }, {
@@ -1555,9 +1555,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&SongFromMalon,      []{return IsChild && ZeldasLetter && Ocarina && AtDay;}),
                   ItemLocationPairing(&LLR_GS_Tree,        []{return IsChild;}),
-                  ItemLocationPairing(&LLR_GS_RainShed,    []{return IsChild && AtNight;}),
-                  ItemLocationPairing(&LLR_GS_HouseWindow, []{return CanUse(CanUseItem::Boomerang) && AtNight;}),
-                  ItemLocationPairing(&LLR_GS_BackWall,    []{return CanUse(CanUseItem::Boomerang) && AtNight;}),
+                  ItemLocationPairing(&LLR_GS_RainShed,    []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&LLR_GS_HouseWindow, []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&LLR_GS_BackWall,    []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main,         []{return true;}),

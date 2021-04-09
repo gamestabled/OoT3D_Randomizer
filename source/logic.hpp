@@ -225,6 +225,7 @@ namespace Logic {
   extern bool CanOpenBombGrotto;
   extern bool CanOpenStormGrotto;
   extern bool HookshotOrBoomerang;
+  extern bool CanGetNightTimeGS;
   extern bool BigPoeKill;
 
   extern bool GuaranteeTradePath;

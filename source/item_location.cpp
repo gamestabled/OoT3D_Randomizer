@@ -1279,9 +1279,6 @@ std::vector<ItemLocation*> dungeonRewardLocations = {
   &LinksPocket,
 };
 std::vector<ItemLocation*> overworldLocations = {
-  //Starting Item
-  &LinksPocket,
-
   //Kokiri Forest
   &KF_KokiriSwordChest,
   &KF_MidoTopLeftChest,
@@ -1647,6 +1644,7 @@ void GenerateLocationPool() {
   using namespace Settings;
 
   allLocations.clear();
+  AddLocation(&LinksPocket);
   AddLocations(overworldLocations);
 
   //Deku Tree
