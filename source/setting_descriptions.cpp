@@ -357,6 +357,14 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //
                                                                                            //
 /*------------------------------                                                           //
+|     NIGHT GS EXPECT SUNS     |                                                           //
+------------------------------*/                                                           //
+string_view nightGSDesc               = "GS Tokens that can only be obtained during the\n" //
+                                        "night expect you to have Sun's Song to collect\n" //
+                                        "them. This prevents needing to wait until night\n"//
+                                        "for some locations.";                             //
+                                                                                           //
+/*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
 ------------------------------*/                                                           //
 string_view menuButtonDesc            = "Choose which button will bring up the Dungeon\n"  //

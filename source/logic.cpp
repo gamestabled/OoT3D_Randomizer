@@ -230,6 +230,7 @@ namespace Logic {
   bool CanOpenStormGrotto  = false;
   bool BigPoeKill          = false;
   bool HookshotOrBoomerang = false;
+  bool CanGetNightTimeGS   = false;
 
   bool GuaranteeTradePath     = false;
   bool GuaranteeHint          = false;
@@ -448,6 +449,7 @@ namespace Logic {
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
     HookshotOrBoomerang = CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang);
+    CanGetNightTimeGS = (CanPlay(SunsSong) || !NightGSExpectSuns);
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
