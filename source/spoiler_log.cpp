@@ -137,7 +137,7 @@ static void WriteSettings() {
   //List Enabled Tricks
   logtxt += "\nEnabled Tricks:\n";
   for (auto& l : Settings::detailedLogicOptions) {
-    if (l->GetSelectedOptionText() == "Enable" && l->IsCategory(OptionCategory::Setting)) {
+    if (l->GetSelectedOptionText() == "Enabled" && l->IsCategory(OptionCategory::Setting)) {
       std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary

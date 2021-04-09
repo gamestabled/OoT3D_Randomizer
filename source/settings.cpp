@@ -332,14 +332,13 @@ namespace Settings {
     &LogicLensBotw,
     &LogicLensGtg,
     &LogicLensCastle,
-    //MQ Doesn't exist yet
-    // &LogicLensJabuMQ
-    // &LogicLensSpiritMQ,
-    // &LogicLensShadowMQ,
-    // &LogicLensShadowMQBack,
-    // &LogicLensBotwMQ,
-    // &LogicLensGtgMQ,
-    // &LogicLensCastleMQ,
+    &LogicLensJabuMQ,
+    &LogicLensSpiritMQ,
+    &LogicLensShadowMQ,
+    &LogicLensShadowMQBack,
+    &LogicLensBotwMQ,
+    &LogicLensGtgMQ,
+    &LogicLensCastleMQ,
     &LogicSpiritTrialHookshot,
   };
 
