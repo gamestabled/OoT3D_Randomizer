@@ -382,12 +382,12 @@ namespace Logic {
            (IsChildItem(itemName)  && HasItem(itemName) && IsChild);
   }
 
-  bool HasProjectile(std::string_view age) {
+  bool HasProjectile(HasProjectileAge age) {
     return HasExplosives ||
-           (age == "Child"  && (Slingshot || Boomerang)) ||
-           (age == "Adult"  && (Hookshot  || Bow      )) ||
-           (age == "Both"   && (Slingshot || Boomerang)  && (Hookshot || Bow)) ||
-           (age == "Either" && (Slingshot || Boomerang   ||  Hookshot || Bow));
+           (age == HasProjectileAge::Child  && (Slingshot || Boomerang)) ||
+           (age == HasProjectileAge::Adult  && (Hookshot  || Bow      )) ||
+           (age == HasProjectileAge::Both   && (Slingshot || Boomerang)  && (Hookshot || Bow)) ||
+           (age == HasProjectileAge::Either && (Slingshot || Boomerang   ||  Hookshot || Bow));
   }
 
   //Updates all logic helpers. Should be called whenever a non-helper is changed
