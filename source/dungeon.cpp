@@ -99,6 +99,7 @@ namespace Dungeon {
                             &JabuJabusBelly_MQ_FallingLikeLikeRoomChest,
                             &JabuJabusBelly_MQ_BoomerangRoomSmallChest,
                             &JabuJabusBelly_MQ_BoomerangChest,
+                            &JabuJabusBelly_MQ_Cow,
                             &JabuJabusBelly_MQ_GS_TailPasaranRoom,
                             &JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom,
                             &JabuJabusBelly_MQ_GS_BoomerangChestRoom,
