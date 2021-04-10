@@ -153,11 +153,64 @@ static void ResetItemSlotsIfMatchesID(u8 itemSlot) {
     }
 }
 
+static u8 MakeSpaceInItemMenu(u8 itemMenu[]){
+    u8 currentSlot = 5;
+    u8 emptyButton = 0xFF;
+    u8 slotToFree = 0xFF;
+    
+    //find an empty button
+    for(currentSlot = 5; currentSlot < 24; currentSlot += 6){
+        if(itemMenu[currentSlot] == 0xFF){
+                emptyButton = currentSlot;
+                break;
+        }
+    }
+    
+    if(emptyButton == 0xFF){
+        return 0xFF;
+    }
+    
+    //search the inventory for an equippable item
+    for(currentSlot = 0; currentSlot < 24; currentSlot++){
+        
+        //ignore the button slots
+        if((currentSlot + 1) % 6 == 0){
+            currentSlot++;
+        }
+        
+        if(itemMenu[currentSlot] == 2){ //Bomb slot
+            slotToFree = currentSlot;
+        }
+        else if(itemMenu[currentSlot] == 8){//Bombchu slot
+            slotToFree = currentSlot;
+        }
+        else if(itemMenu[currentSlot] == 1){//Deku Nuts slot
+            slotToFree = currentSlot;
+        }
+        else if(itemMenu[currentSlot] == 5){//Din's Fire slot
+            slotToFree = currentSlot;
+        }
+        
+        //equip the item and free up the slot it occupied
+        if(slotToFree != 0xFF){
+            itemMenu[emptyButton] = itemMenu[slotToFree];
+            itemMenu[slotToFree] = 0xFF;
+            return slotToFree;
+        }
+    }
+    return 0xFF;
+}
+
 static void PushSlotIntoInventoryMenu(u8 itemSlot) {
     u8 currentSlot = 0;
-    while(gSaveContext.itemMenuChild[currentSlot] != 0xFF) {
+    while((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuChild[currentSlot] != 0xFF) {
         currentSlot++;
+        if(currentSlot == 24){
+            currentSlot = MakeSpaceInItemMenu(gSaveContext.itemMenuChild);
+            break;
+        }
     }
+    
     gSaveContext.itemMenuChild[currentSlot] = itemSlot;
 
     currentSlot = 0;
