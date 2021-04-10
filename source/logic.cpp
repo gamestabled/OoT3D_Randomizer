@@ -425,7 +425,7 @@ namespace Logic {
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
 
-    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || BombchuDrops || BombchuDrop) && (BombchusInLogic || BombBag);
+    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || BombchuDrop) && (BombchusInLogic || BombBag);
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
