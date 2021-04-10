@@ -6,8 +6,10 @@
 #include "random.hpp"
 #include "fill.hpp"
 #include "cosmetics.hpp"
+#include "dungeon.hpp"
 
 using namespace Cosmetics;
+using namespace Dungeon;
 
 namespace Settings {
   std::string seed;
@@ -476,18 +478,18 @@ namespace Settings {
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
-    ctx.dekuTreeDungeonMode              = (DekuTreeDungeonMode)              ? 1 : 0;
-    ctx.dodongosCavernDungeonMode        = (DodongosCavernDungeonMode)        ? 1 : 0;
-    ctx.jabuJabusBellyDungeonMode        = (JabuJabusBellyDungeonMode)        ? 1 : 0;
-    ctx.forestTempleDungeonMode          = (ForestTempleDungeonMode)          ? 1 : 0;
-    ctx.fireTempleDungeonMode            = (FireTempleDungeonMode)            ? 1 : 0;
-    ctx.waterTempleDungeonMode           = (WaterTempleDungeonMode)           ? 1 : 0;
-    ctx.spiritTempleDungeonMode          = (SpiritTempleDungeonMode)          ? 1 : 0;
-    ctx.shadowTempleDungeonMode          = (ShadowTempleDungeonMode)          ? 1 : 0;
-    ctx.bottomOfTheWellDungeonMode       = (BottomOfTheWellDungeonMode)       ? 1 : 0;
-    ctx.iceCavernDungeonMode             = (IceCavernDungeonMode)             ? 1 : 0;
-    ctx.gerudoTrainingGroundsDungeonMode = (GerudoTrainingGroundsDungeonMode) ? 1 : 0;
-    ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
+    ctx.dekuTreeDungeonMode              = DekuTree.IsMQ()              ? 1 : 0;
+    ctx.dodongosCavernDungeonMode        = DodongosCavern.IsMQ()        ? 1 : 0;
+    ctx.jabuJabusBellyDungeonMode        = JabuJabusBelly.IsMQ()        ? 1 : 0;
+    ctx.forestTempleDungeonMode          = ForestTemple.IsMQ()          ? 1 : 0;
+    ctx.fireTempleDungeonMode            = FireTemple.IsMQ()            ? 1 : 0;
+    ctx.waterTempleDungeonMode           = WaterTemple.IsMQ()           ? 1 : 0;
+    ctx.spiritTempleDungeonMode          = SpiritTemple.IsMQ()          ? 1 : 0;
+    ctx.shadowTempleDungeonMode          = ShadowTemple.IsMQ()          ? 1 : 0;
+    ctx.bottomOfTheWellDungeonMode       = BottomOfTheWell.IsMQ()       ? 1 : 0;
+    ctx.iceCavernDungeonMode             = IceCavern.IsMQ()             ? 1 : 0;
+    ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
+    ctx.ganonsCastleDungeonMode          = GanonsCastle.IsMQ()          ? 1 : 0;
 
     ctx.forestTrialSkip = (ForestTrialSkip) ? 1 : 0;
     ctx.fireTrialSkip   = (FireTrialSkip)   ? 1 : 0;
@@ -543,7 +545,9 @@ namespace Settings {
     GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
 
     AddExcludedOptions();
-    HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users change this location
+    HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users exclude these locations
+    MK_BombchuBowlingBombchus.GetExcludedOption()->Hide();
+    Ganon.GetExcludedOption()->Hide();
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
@@ -821,20 +825,6 @@ namespace Settings {
   bool ShuffleSpecialIndoorEntrances    = false;
   bool Shopsanity                       = false;
 
-  //MQ vs Vanilla Dungeon Modes
-  bool DekuTreeDungeonMode              = false;
-  bool DodongosCavernDungeonMode        = false;
-  bool JabuJabusBellyDungeonMode        = false;
-  bool ForestTempleDungeonMode          = false;
-  bool FireTempleDungeonMode            = false;
-  bool WaterTempleDungeonMode           = false;
-  bool SpiritTempleDungeonMode          = false;
-  bool ShadowTempleDungeonMode          = false;
-  bool BottomOfTheWellDungeonMode       = false;
-  bool IceCavernDungeonMode             = false;
-  bool GerudoTrainingGroundsDungeonMode = false;
-  bool GanonsCastleDungeonMode          = false;
-
   //Skipped Trials (initially set to true, then false ones filtered out)
   bool ForestTrialSkip                  = true;
   bool FireTrialSkip                    = true;
@@ -869,17 +859,15 @@ namespace Settings {
   //Function to set flags depending on settings
   void UpdateSettings() {
 
-    //shuffle the dungeon mode variables then change the amount set in MQDungeonCount
-    std::array<bool*, 12> dungeonModes = {&DekuTreeDungeonMode, &DodongosCavernDungeonMode, &JabuJabusBellyDungeonMode, &ForestTempleDungeonMode,
-                                          &FireTempleDungeonMode, &WaterTempleDungeonMode, &SpiritTempleDungeonMode, &ShadowTempleDungeonMode,
-                                          &BottomOfTheWellDungeonMode, &IceCavernDungeonMode, &GerudoTrainingGroundsDungeonMode, &GanonsCastleDungeonMode};
-    Shuffle(dungeonModes);
+    //shuffle the dungeons and then set MQ for as many as necessary
+    auto dungeons = dungeonList;
+    Shuffle(dungeons);
 
     if (RandomMQDungeons) {
       MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
     }
     for (u8 i = 0; i < MQDungeonCount.Value<u8>(); i++) {
-      *dungeonModes[i] = DUNGEONMODE_MQ;
+      dungeons[i].SetMQ();
     }
 
     //shuffle the trials then require the amount set in GanonsTrialsCount

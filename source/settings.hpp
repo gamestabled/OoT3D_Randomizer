@@ -15,6 +15,7 @@
 #include "menu.hpp"
 #include "cosmetics.hpp"
 #include "debug.hpp"
+#include "pool_functions.hpp"
 
 class Option {
 public:
@@ -303,18 +304,7 @@ namespace Settings {
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
   extern bool Shopsanity;
-  extern bool DekuTreeDungeonMode;
-  extern bool DodongosCavernDungeonMode;
-  extern bool JabuJabusBellyDungeonMode;
-  extern bool ForestTempleDungeonMode;
-  extern bool FireTempleDungeonMode;
-  extern bool WaterTempleDungeonMode;
-  extern bool SpiritTempleDungeonMode;
-  extern bool ShadowTempleDungeonMode;
-  extern bool BottomOfTheWellDungeonMode;
-  extern bool IceCavernDungeonMode;
-  extern bool GerudoTrainingGroundsDungeonMode;
-  extern bool GanonsCastleDungeonMode;
+
   extern bool ForestTrialSkip;
   extern bool FireTrialSkip;
   extern bool WaterTrialSkip;
@@ -427,26 +417,4 @@ namespace Settings {
   extern void ForceChange(u32 kDown, Option* currentSetting);
 
   extern std::vector<MenuItem *> mainMenu;
-
-  template <typename T, typename Predicate>
-  static void erase_if(std::vector<T>& vector, Predicate pred) {
-    vector.erase(std::remove_if(begin(vector), end(vector), pred), end(vector));
-  }
-
-  template <typename T, typename Predicate>
-  std::vector<T> FilterFromPool(std::vector<T>& vector, Predicate pred, bool eraseAfterFilter = false) {
-    std::vector<T> filteredPool = {};
-    std::copy_if(vector.begin(), vector.end(), std::back_inserter(filteredPool), pred);
-
-    if (eraseAfterFilter) {
-      erase_if(vector, pred);
-    }
-
-    return filteredPool;
-  }
-
-  template <typename T, typename Predicate>
-  std::vector<T> FilterAndEraseFromPool(std::vector<T>& vector, Predicate pred) {
-    return FilterFromPool(vector, pred, true);
-  }
 }
