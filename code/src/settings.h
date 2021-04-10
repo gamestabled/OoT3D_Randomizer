@@ -139,6 +139,11 @@ typedef enum {
 } ExcludeLocationSetting;
 
 typedef enum {
+  TRICK_DISABLED,
+  TRICK_ENABLED,
+} LogicTrickSetting;
+
+typedef enum {
   DAMAGEMULTIPLIER_HALF,
   DAMAGEMULTIPLIER_DEFAULT,
   DAMAGEMULTIPLIER_DOUBLE,

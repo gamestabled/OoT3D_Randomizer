@@ -313,10 +313,17 @@ namespace Logic {
     Light_Arrows,
   };
 
+  enum class HasProjectileAge {
+    Adult,
+    Child,
+    Both,
+    Either,
+  };
+
   extern void UpdateHelpers();
   extern bool CanPlay(bool song);
   extern bool CanUse(CanUseItem itemName);
-  extern bool HasProjectile(std::string_view age);
+  extern bool HasProjectile(HasProjectileAge age);
   extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   extern bool EventsUpdated();
   extern void LogicReset();

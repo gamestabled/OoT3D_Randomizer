@@ -231,14 +231,14 @@ static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocatio
                 }
               }
               //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
-              else if (location->GetPlacedItem().GetName() == "Triforce") {
+              else if (location->GetPlacedItem() == I_Triforce) {
                 sphere.clear();
                 sphere.push_back(location);
                 playthroughBeatable = true;
               }
             }
             //All we care about is if the game is beatable, used to pare down playthrough
-            else if (mode == CHECK_BEATABLE && location->GetPlacedItem().GetName() == "Triforce") {
+            else if (mode == CHECK_BEATABLE && location->GetPlacedItem() == I_Triforce) {
               playthroughBeatable = true;
               return {}; //Return early for efficiency
             }
