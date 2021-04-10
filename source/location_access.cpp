@@ -834,20 +834,16 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&MK_Main, []{return true;})
   });
 
-  Exit MK_BombchuShop = Exit("Market Bombchu Shop", "", "", NO_DAY_NIGHT_CYCLE, {
-                  //Events
-                  EventPairing(&BuyBombchus10, []{return GoronRuby;}),
-                  EventPairing(&BuyBombchus20, []{return GoronRuby;}),
-                }, {
+  Exit MK_BombchuShop = Exit("Market Bombchu Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(&MK_BombchuShopItem1, []{return true;}),
-                  ItemLocationPairing(&MK_BombchuShopItem2, []{return true;}),
-                  ItemLocationPairing(&MK_BombchuShopItem3, []{return true;}),
-                  ItemLocationPairing(&MK_BombchuShopItem4, []{return true;}),
-                  ItemLocationPairing(&MK_BombchuShopItem5, []{return true;}),
-                  ItemLocationPairing(&MK_BombchuShopItem6, []{return true;}),
-                  ItemLocationPairing(&MK_BombchuShopItem7, []{return true;}),
-                  ItemLocationPairing(&MK_BombchuShopItem8, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem1, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem2, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem3, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem4, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem5, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem6, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem7, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem8, []{return HasExplosives;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})

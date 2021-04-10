@@ -13,7 +13,7 @@ using namespace Dungeon;
 
 namespace Settings {
   std::string seed;
-  std::string version = "v1.1";
+  std::string version = "v1.1.1-COMMITNUM";
   std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
