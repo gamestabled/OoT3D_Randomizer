@@ -867,7 +867,7 @@ namespace Settings {
       MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
     }
     for (u8 i = 0; i < MQDungeonCount.Value<u8>(); i++) {
-      dungeons[i].SetMQ();
+      dungeons[i]->SetMQ();
     }
 
     //shuffle the trials then require the amount set in GanonsTrialsCount

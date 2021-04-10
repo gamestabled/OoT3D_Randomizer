@@ -499,19 +499,19 @@ namespace Dungeon {
                             &Ganon,
                           });
 
-  std::vector<DungeonInfo> dungeonList = {
-    DekuTree,
-    DodongosCavern,
-    JabuJabusBelly,
-    ForestTemple,
-    FireTemple,
-    WaterTemple,
-    SpiritTemple,
-    ShadowTemple,
-    BottomOfTheWell,
-    IceCavern,
-    GerudoTrainingGrounds,
-    GanonsCastle,
+  std::vector<DungeonInfo*> dungeonList = {
+    &DekuTree,
+    &DodongosCavern,
+    &JabuJabusBelly,
+    &ForestTemple,
+    &FireTemple,
+    &WaterTemple,
+    &SpiritTemple,
+    &ShadowTemple,
+    &BottomOfTheWell,
+    &IceCavern,
+    &GerudoTrainingGrounds,
+    &GanonsCastle,
   };
 
 } //namespace Dungeon

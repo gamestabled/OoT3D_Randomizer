@@ -135,5 +135,5 @@ namespace Dungeon {
     extern DungeonInfo GerudoTrainingGrounds;
     extern DungeonInfo GanonsCastle;
 
-    extern std::vector<DungeonInfo> dungeonList;
+    extern std::vector<DungeonInfo*> dungeonList;
 }

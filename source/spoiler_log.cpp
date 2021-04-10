@@ -154,8 +154,8 @@ static void WriteSettings() {
   //Master Quest Dungeons
   logtxt += "\nMaster Quest Dungeons:\n";
   for (auto dungeon : Dungeon::dungeonList) {
-    if (dungeon.IsMQ()) {
-      logtxt += dungeon.GetName();
+    if (dungeon->IsMQ()) {
+      logtxt += "\t" + dungeon->GetName() + "\n";
     }
   }
   logtxt += "\n";

@@ -648,20 +648,20 @@ static void PlaceVanillaDekuScrubItems() {
 
 static void PlaceVanillaMapsAndCompasses() {
   for (auto dungeon : dungeonList) {
-    dungeon.PlaceVanillaMap();
-    dungeon.PlaceVanillaCompass();
+    dungeon->PlaceVanillaMap();
+    dungeon->PlaceVanillaCompass();
   }
 }
 
 static void PlaceVanillaSmallKeys() {
   for (auto dungeon : dungeonList) {
-    dungeon.PlaceVanillaSmallKeys();
+    dungeon->PlaceVanillaSmallKeys();
   }
 }
 
 static void PlaceVanillaBossKeys() {
   for (auto dungeon : dungeonList) {
-    dungeon.PlaceVanillaBossKey();
+    dungeon->PlaceVanillaBossKey();
   }
 }
 
@@ -1018,11 +1018,11 @@ void GenerateItemPool() {
 
   if (MapsAndCompasses.Is(MAPSANDCOMPASSES_START_WITH)) {
     for (auto dungeon : dungeonList) {
-      if (dungeon.GetMap() != NoItem) {
+      if (dungeon->GetMap() != NoItem) {
         AddItemToMainPool(GetJunkItem());
       }
 
-      if (dungeon.GetCompass() != NoItem) {
+      if (dungeon->GetCompass() != NoItem) {
         AddItemToMainPool(GetJunkItem());
       }
     }
@@ -1033,9 +1033,9 @@ void GenerateItemPool() {
     PlaceVanillaMapsAndCompasses();
   } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) || MapsAndCompasses.Is(MAPSANDCOMPASSES_ANYWHERE)) {
     for (auto dungeon : dungeonList) {
-      if (dungeon.GetMap() != NoItem) {
-        AddItemToMainPool(dungeon.GetMap());
-        AddItemToMainPool(dungeon.GetCompass());
+      if (dungeon->GetMap() != NoItem) {
+        AddItemToMainPool(dungeon->GetMap());
+        AddItemToMainPool(dungeon->GetCompass());
       }
     }
   }
@@ -1044,8 +1044,8 @@ void GenerateItemPool() {
     PlaceVanillaSmallKeys();
   } else if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) || Keysanity.Is(KEYSANITY_ANYWHERE)) {
     for (auto dungeon : dungeonList) {
-      if (dungeon.GetSmallKeyCount() > 0) {
-        AddItemToMainPool(dungeon.GetSmallKey(), dungeon.GetSmallKeyCount());
+      if (dungeon->GetSmallKeyCount() > 0) {
+        AddItemToMainPool(dungeon->GetSmallKey(), dungeon->GetSmallKeyCount());
       }
     }
   }

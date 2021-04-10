@@ -1221,7 +1221,7 @@ void GenerateLocationPool() {
   AddLocations(overworldLocations);
 
   for (auto dungeon : Dungeon::dungeonList) {
-    AddLocations(dungeon.GetDungeonLocations());
+    AddLocations(dungeon->GetDungeonLocations());
   }
 }
 
@@ -1285,7 +1285,7 @@ void AddExcludedOptions() {
   AddLocations(overworldLocations, &everyPossibleLocation);
 
   for (auto dungeon : Dungeon::dungeonList) {
-    AddLocations(dungeon.GetEveryLocation(), &everyPossibleLocation);
+    AddLocations(dungeon->GetEveryLocation(), &everyPossibleLocation);
   }
 
   for (ItemLocation * il: everyPossibleLocation) {

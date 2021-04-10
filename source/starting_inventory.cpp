@@ -17,8 +17,8 @@ void GenerateStartingInventory() {
 
   if (Keysanity.Is(KEYSANITY_START_WITH)) {
     for (auto dungeon : dungeonList) {
-      if (dungeon.GetSmallKeyCount() > 0) {
-        AddItemToInventory(dungeon.GetSmallKey(), dungeon.GetSmallKeyCount());
+      if (dungeon->GetSmallKeyCount() > 0) {
+        AddItemToInventory(dungeon->GetSmallKey(), dungeon->GetSmallKeyCount());
       }
     }
 
