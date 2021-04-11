@@ -382,8 +382,10 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
         PlacementLog_Msg(item.GetName());
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
-        PlacementLog_Write();
-
+        #ifdef ENABLE_DEBUG
+          PlacementLog_Write();
+        #endif
+        
         //reset any locations that got an item
         for (ItemLocation* loc : attemptedLocations) {
           loc->SetPlacedItem(NoItem);
