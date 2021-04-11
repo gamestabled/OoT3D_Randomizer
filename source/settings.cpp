@@ -650,7 +650,12 @@ namespace Settings {
       IncludeAndHide({&HC_MalonEgg});
     }
 
-    //Gerudo Card is handled in item_pool.cpp
+    //Force include Gerudo Token Location if it's not shuffled
+    if (ShuffleGerudoToken) {
+      Unhide({&GF_GerudoToken});
+    } else {
+      IncludeAndHide({&GF_GerudoToken});
+    }
 
     //Force include Magic Bean salesman if Shuffle Magic Beans is off
     if (ShuffleMagicBeans) {

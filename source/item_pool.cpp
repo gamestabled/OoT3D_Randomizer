@@ -297,29 +297,6 @@ const std::array<Item, 11> normalBottles = {
   I_BigPoeBottle,
   I_BlueFireBottle,
 };
-const std::array<Item, 20> dungeonItems = {
-  DekuTree_Map,
-  DodongosCavern_Map,
-  JabuJabusBelly_Map,
-  ForestTemple_Map,
-  FireTemple_Map,
-  WaterTemple_Map,
-  SpiritTemple_Map,
-  ShadowTemple_Map,
-  IceCavern_Map,
-  BottomOfTheWell_Map,
-
-  DekuTree_Compass,
-  DodongosCavern_Compass,
-  JabuJabusBelly_Compass,
-  ForestTemple_Compass,
-  FireTemple_Compass,
-  WaterTemple_Compass,
-  SpiritTemple_Compass,
-  ShadowTemple_Compass,
-  IceCavern_Compass,
-  BottomOfTheWell_Compass,
-};
 const std::array<Item, 28> normalRupees = {
   BlueRupee,
   BlueRupee,
@@ -1028,7 +1005,7 @@ void GenerateItemPool() {
     }
   }
 
-  //Vanilla Dungeon Placements
+  
   if (MapsAndCompasses.Is(MAPSANDCOMPASSES_VANILLA)) {
     PlaceVanillaMapsAndCompasses();
   } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) || MapsAndCompasses.Is(MAPSANDCOMPASSES_ANYWHERE)) {
