@@ -749,7 +749,7 @@ void GenerateItemPool() {
     }
   } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
     for (auto& loc : GetLocations(allLocations, Category::cSkulltula)) {
-      if (loc->GetScene() >= 0x0A) {
+      if (loc->IsOverworld()) {
         PlaceItemInLocation(loc, GoldSkulltulaToken);
       } else {
         AddItemToMainPool(GoldSkulltulaToken);
@@ -757,7 +757,7 @@ void GenerateItemPool() {
     }
   } else if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
     for (auto& loc : GetLocations(allLocations, Category::cSkulltula)) {
-      if (loc->GetScene() < 0x0A) {
+      if (loc->IsDungeon()) {
         PlaceItemInLocation(loc, GoldSkulltulaToken);
       } else {
         AddItemToMainPool(GoldSkulltulaToken);
@@ -993,25 +993,22 @@ void GenerateItemPool() {
 
   //TODO: free scarecrow
 
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_START_WITH)) {
-    for (auto dungeon : dungeonList) {
-      if (dungeon->GetMap() != NoItem) {
-        AddItemToMainPool(GetJunkItem());
-      }
+  /*For item pool generation, dungeon items are either placed in their vanilla
+  | location, or added to the pool now and filtered out later depending on when
+  | they need to get placed or removed in fill.cpp. These items are kept in the
+  | pool until removal because the filling algorithm needs to know all of the
+  | advancement items that haven't been placed yet for placing higher priority
+  | items like stones/medallions.*/
 
-      if (dungeon->GetCompass() != NoItem) {
-        AddItemToMainPool(GetJunkItem());
-      }
-    }
-  }
-
-  
   if (MapsAndCompasses.Is(MAPSANDCOMPASSES_VANILLA)) {
     PlaceVanillaMapsAndCompasses();
-  } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) || MapsAndCompasses.Is(MAPSANDCOMPASSES_ANYWHERE)) {
+  } else  {
     for (auto dungeon : dungeonList) {
       if (dungeon->GetMap() != NoItem) {
         AddItemToMainPool(dungeon->GetMap());
+      }
+
+      if (dungeon->GetCompass() != NoItem) {
         AddItemToMainPool(dungeon->GetCompass());
       }
     }
@@ -1019,7 +1016,7 @@ void GenerateItemPool() {
 
   if (Keysanity.Is(KEYSANITY_VANILLA)) {
     PlaceVanillaSmallKeys();
-  } else if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) || Keysanity.Is(KEYSANITY_ANYWHERE)) {
+  } else {
     for (auto dungeon : dungeonList) {
       if (dungeon->GetSmallKeyCount() > 0) {
         AddItemToMainPool(dungeon->GetSmallKey(), dungeon->GetSmallKeyCount());
@@ -1029,7 +1026,7 @@ void GenerateItemPool() {
 
   if (BossKeysanity.Is(BOSSKEYSANITY_VANILLA)) {
     PlaceVanillaBossKeys();
-  } else if (BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) || BossKeysanity.Is(BOSSKEYSANITY_ANYWHERE)) {
+  } else {
     AddItemToMainPool(ForestTemple_BossKey);
     AddItemToMainPool(FireTemple_BossKey);
     AddItemToMainPool(WaterTemple_BossKey);
@@ -1041,7 +1038,7 @@ void GenerateItemPool() {
     PlaceItemInLocation(&ToT_LightArrowCutscene, GanonsCastle_BossKey);
   } else if (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA)) {
     PlaceItemInLocation(&GanonsCastle_BossKeyChest, GanonsCastle_BossKey);
-  } else if (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) || GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE)) {
+  } else {
     AddItemToMainPool(GanonsCastle_BossKey);
   }
 

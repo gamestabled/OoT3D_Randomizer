@@ -15,6 +15,18 @@ void AddItemToInventory(Item item, int count = 1) {
 void GenerateStartingInventory() {
   StartingInventory.clear();
 
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_START_WITH)) {
+    for (auto dungeon : dungeonList) {
+      if (dungeon->GetMap() != NoItem) {
+        AddItemToInventory(dungeon->GetMap());
+      }
+
+      if (dungeon->GetCompass() != NoItem) {
+        AddItemToInventory(dungeon->GetCompass());
+      }
+    }
+  }
+
   if (Keysanity.Is(KEYSANITY_START_WITH)) {
     for (auto dungeon : dungeonList) {
       if (dungeon->GetSmallKeyCount() > 0) {

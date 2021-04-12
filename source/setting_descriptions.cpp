@@ -242,6 +242,10 @@ string_view mapCompassVanilla         = "Maps and Compasses will appear in their
                                         "locations.";                                      //
 string_view mapCompassOwnDungeon      = "Maps and Compasses can only appear in their\n"    //
                                         "respective dungeon.";                             //
+string_view mapCompassAnyDungeon      = "Maps and Compasses can only appear in a dungeon,\n"
+                                        "but not necessarily the dungeon they are for.";   //
+string_view mapCompassOverworld       = "Maps and Compasses can only appear outside of\n"  //
+                                        "dungeons.";                                       //
 string_view mapCompassAnywhere        = "Maps and Compasses can appear anywhere in the\n"  //
                                         "world.";                                          //
 /*------------------------------                                                           //
@@ -257,6 +261,14 @@ string_view smallKeyOwnDungeon        = "Small Keys can only appear in their res
                                         "dungeon. If Fire Temple is not a Master Quest\n"  //
                                         "dungeon, the door to the Boss Key chest will be\n"//
                                         "unlocked.";                                       //
+string_view smallKeyAnyDungeon        = "Small Keys can only appear inside of any dungeon,\n"
+                                        "but won't necessarily be in the dungeon that the\n"
+                                        "key is for. A difficult mode since it is more\n"  //
+                                        "likely to need to enter a dungeon multiple times.";
+string_view smallKeyOverworld         = "Small Keys can only appear outside of dungeons.\n"//
+                                        "You may need to enter a dungeon multiple times to\n"
+                                        "gain items to access the overworld locations with\n"
+                                        "the keys required to finish a dungeon.";          //
 string_view smallKeyAnywhere          = "Small Keys can appear anywhere in the world. A\n" //
                                         "difficult mode since it is more likely to need to\n"
                                         "enter a dungeon multiple times.";                 //
@@ -267,6 +279,10 @@ string_view gerudoKeysVanilla         = "Gerudo Fortress Keys will appear in the
                                         "location, dropping from fighting Gerudo guards\n" //
                                         "that attack when trying to free the jailed\n"     //
                                         "carpenters.";                                     //
+string_view gerudoKeysAnyDungeon      = "Gerudo Fortress Keys can only appear inside of\n" //
+                                        "dungeons.";                                       //
+string_view gerudoKeysOverworld       = "Gerudo Fortress Keys can only appear outside of\n"//
+                                        "dungeons.";                                       //
 string_view gerudoKeysAnywhere        = "Gerudo Fortress Keys can appear anywhere in the\n"//
                                         "world.";                                          //
 /*------------------------------                                                           //
@@ -278,6 +294,14 @@ string_view bossKeyStartWith          = "Boss Keys are given to you from the sta
 string_view bossKeyVanilla            = "Boss Keys will appear in their vanilla locations.";
 string_view bossKeyOwnDungeon         = "Boss Keys can only appear in their respective\n"  //
                                         "dungeon.";                                        //
+string_view bossKeyAnyDungeon         = "Boss Keys can only appear inside of any dungeon,\n"
+                                        "but won't necessarily be in the dungeon that the\n"
+                                        "key is for. A difficult mode since it is more\n"  //
+                                        "likely to need to enter a dungeon multiple times.";
+string_view bossKeyOverworld          = "Boss Keys can only appear outside of dungeons.\n" //
+                                        "You may need to enter a dungeon without the boss\n"
+                                        "key to get items required to find the key in the\n"
+                                        "overworld.";                                      //
 string_view bossKeyAnywhere           = "Boss Keys can appear anywhere in the world. A\n"  //
                                         "difficult mode since it is more likely to need to\n"
                                         "enter a dungeon multiple times.";                 //
@@ -290,6 +314,10 @@ string_view ganonKeyVanilla           = "Ganon's Castle Boss Key will appear in 
                                         "location.";                                       //
 string_view ganonKeyOwnDungeon        = "Ganon's Castle Boss Key can only appear inside\n" //
                                         "Ganon's Castle.";                                 //
+string_view ganonKeyAnyDungeon        = "Ganon's Castle Boss Key can only appear inside of\n"
+                                        "a dungeon, but not necessarily Ganon's Castle.";  //
+string_view ganonKeyOverworld         = "Ganon's Castle Boss Key can only appear outside of"
+                                        "dungeons.";                                       //
 string_view ganonKeyAnywhere          = "Ganon's Castle Boss Key can appear anywhere in the"
                                         "world.";                                          //
 string_view ganonKeyLACS              = "These settings put the boss key on the Light Arrow"
