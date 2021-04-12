@@ -92,7 +92,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
         XMLElement* newSetting = preset.NewElement("setting");
         XMLElement* settingName = preset.NewElement("settingName");
         XMLElement* valueName = preset.NewElement("valueName");
-        XMLText* settingText = preset.NewText(setting->GetName().data());
+        XMLText* settingText = preset.NewText(std::string(setting->GetName()).c_str());
         XMLText* valueText = preset.NewText(setting->GetSelectedOptionText().c_str());
 
         //Some setting names have punctuation in them. Set all values as CDATA so
@@ -141,7 +141,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
         // Since presets are saved linearly, we can simply loop through the nodes as
         // we loop through the settings to find most of the matching elements.
-        std::string settingToFind = std::string{setting->GetName().data()};
+        std::string settingToFind = std::string{setting->GetName()};
         std::string curSettingName = curNode->FirstChildElement("settingName")->GetText();
         std::string curSettingValue = curNode->FirstChildElement("valueName")->GetText();
 
