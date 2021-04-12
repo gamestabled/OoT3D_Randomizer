@@ -11,6 +11,7 @@
 #include "settings.h"
 
 static u8 GfxInit = 0;
+static u32 closingButton = 0;
 
 static void Gfx_DrawChangeMenuPrompt(void) {
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 70, COLOR_TITLE, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
@@ -67,7 +68,7 @@ static void Gfx_ShowMenu(void) {
     Draw_FlushFramebuffer();
 
     do {
-        if (pressed & BUTTON_B) {
+        if (pressed & closingButton) {
             Draw_ClearFramebuffer();
             Draw_FlushFramebuffer();
             break;
@@ -99,26 +100,32 @@ void Gfx_Init(void) {
     // Setup the title screen logo edits
     gObjectTable[330].size = 0xA5CB0;
     gActorOverlayTable[0x171].initInfo->init = EnMag_rInit;
+    
+    if(gSettingsContext.menuOpeningButton == 0)         closingButton = BUTTON_B | BUTTON_SELECT;
+    else if(gSettingsContext.menuOpeningButton == 1)    closingButton = BUTTON_B | BUTTON_START;
+    else if(gSettingsContext.menuOpeningButton == 2)    closingButton = BUTTON_B | BUTTON_UP;
+    else if(gSettingsContext.menuOpeningButton == 3)    closingButton = BUTTON_B | BUTTON_DOWN;
+    else if(gSettingsContext.menuOpeningButton == 4)    closingButton = BUTTON_B | BUTTON_RIGHT;
+    else if(gSettingsContext.menuOpeningButton == 5)    closingButton = BUTTON_B | BUTTON_LEFT;
 
     GfxInit = 1;
+}
+
+static u8 openingButton(void){
+        return((gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) ||
+	(gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt) ||
+	(gSettingsContext.menuOpeningButton == 2 && rInputCtx.cur.d_up) ||
+	(gSettingsContext.menuOpeningButton == 3 && rInputCtx.cur.d_down) ||
+	(gSettingsContext.menuOpeningButton == 4 && rInputCtx.cur.d_right) ||
+	(gSettingsContext.menuOpeningButton == 5 && rInputCtx.cur.d_left));
 }
 
 void Gfx_Update(void) {
     if (!GfxInit) {
         Gfx_Init();
     }
-    
-    u8 openingButton = 0;
-    if(	(gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) ||
-	(gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt) ||
-	(gSettingsContext.menuOpeningButton == 2 && rInputCtx.cur.d_up) ||
-	(gSettingsContext.menuOpeningButton == 3 && rInputCtx.cur.d_down) ||
-	(gSettingsContext.menuOpeningButton == 4 && rInputCtx.cur.d_right) ||
-	(gSettingsContext.menuOpeningButton == 5 && rInputCtx.cur.d_left)){
-		openingButton = 1;
-    }
 
-    if(gSaveContext.gameMode == 0 && openingButton) {
+    if(gSaveContext.gameMode == 0 && openingButton()) {
         Gfx_ShowMenu();
         svcSleepThread(1000 * 1000 * 300LL);
     }
