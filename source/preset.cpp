@@ -60,7 +60,7 @@ bool CreatePresetDirectories() {
 //Gets the preset filenames
 std::vector<std::string> GetSettingsPresets() {
   std::vector<std::string> presetEntries = {};
-  for (const auto & entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
+  for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
     if(entry.path().stem().string() != "CACHED_SETTINGS") {
       presetEntries.push_back(entry.path().stem().string());
     }
@@ -68,14 +68,13 @@ std::vector<std::string> GetSettingsPresets() {
   return presetEntries;
 }
 
-std::string PresetPath(std::string presetName, OptionCategory category) {
+static std::string PresetPath(std::string_view presetName, OptionCategory category) {
   return std::string(GetBasePath(category)).append(presetName).append(".xml");
 }
 
-/* Presets are now saved as XML files using the tinyxml2 library.
-   Documentation: https://leethomason.github.io/tinyxml2/index.html
-*/
-bool SavePreset(std::string presetName, OptionCategory category) {
+// Presets are now saved as XML files using the tinyxml2 library.
+// Documentation: https://leethomason.github.io/tinyxml2/index.html
+bool SavePreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
   XMLDocument preset = XMLDocument();
@@ -125,7 +124,7 @@ bool SavePreset(std::string presetName, OptionCategory category) {
 }
 
 //Read the preset XML file
-bool LoadPreset(std::string presetName, OptionCategory category) {
+bool LoadPreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
   //setup for opening the file
@@ -151,8 +150,8 @@ bool LoadPreset(std::string presetName, OptionCategory category) {
       Option* setting = menu->settingsList->at(i);
       if (setting->IsCategory(category)) {
 
-        /*Since presets are saved linearly, we can simply loop through the nodes as
-          we loop through the settings to find most of the matching elements.*/
+        // Since presets are saved linearly, we can simply loop through the nodes as
+        // we loop through the settings to find most of the matching elements.
         std::string settingToFind = std::string{setting->GetName().data()};
         std::string curSettingName = curNode->FirstChildElement("settingName")->GetText();
         std::string curSettingValue = curNode->FirstChildElement("valueName")->GetText();
@@ -161,9 +160,9 @@ bool LoadPreset(std::string presetName, OptionCategory category) {
           setting->SetSelectedIndexByString(curSettingValue);
           curNode = curNode->NextSibling();
         } else {
-        /*If the current setting and element don't match, then search
-          linearly from the beginning. This will get us back on track if the
-          next setting and element line up with each other*/
+          // If the current setting and element don't match, then search
+          // linearly from the beginning. This will get us back on track if the
+          // next setting and element line up with each other*/
           curNode = preset.FirstChild();
           bool settingFound = false;
           while (curNode != nullptr) {
@@ -190,7 +189,7 @@ bool LoadPreset(std::string presetName, OptionCategory category) {
 }
 
 //Delete the selected preset
-bool DeletePreset(std::string presetName, OptionCategory category) {
+bool DeletePreset(std::string_view presetName, OptionCategory category) {
   Result res;
   FS_Archive sdmcArchive = 0;
 
@@ -207,7 +206,7 @@ bool DeletePreset(std::string presetName, OptionCategory category) {
 }
 
 //Saves the new preset to a file
-bool SaveSpecifiedPreset(std::string presetName, OptionCategory category) {
+bool SaveSpecifiedPreset(std::string_view presetName, OptionCategory category) {
   //don't save if the user cancelled
   if (presetName.empty()) {
     return false;
@@ -221,9 +220,10 @@ void SaveCachedSettings() {
 
 void LoadCachedSettings() {
   //If cache file exists, load it
-  for (const auto & entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
+  for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
     if(entry.path().stem().string() == "CACHED_SETTINGS") {
-      LoadPreset("CACHED_SETTINGS", OptionCategory::Setting); //File exists, open
+      //File exists, open
+      LoadPreset("CACHED_SETTINGS", OptionCategory::Setting);
     }
   }
 }
