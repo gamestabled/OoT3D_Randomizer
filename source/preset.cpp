@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 
+#include "category.hpp"
 #include "preset.hpp"
 #include "settings.hpp"
 #include "tinyxml2.h"
