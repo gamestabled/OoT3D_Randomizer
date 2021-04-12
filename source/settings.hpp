@@ -166,7 +166,7 @@ public:
       return hidden;
     }
 
-    bool IsCategory(OptionCategory category) {
+    bool IsCategory(OptionCategory category) const {
       return category == this->category;
     }
 
