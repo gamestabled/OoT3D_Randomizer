@@ -23,7 +23,7 @@ jobs:
         uses: ncipollo/release-action@v1.8.3
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
-          artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png"
+          artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
           prerelease: true
           commit: "${{ github.sha }}"
           tag: "Nightly-${{ github.sha }}"
@@ -33,3 +33,5 @@ jobs:
             When reporting issues, please mention the six character commit listed in the randomizer menu.
             CIA QR Code:
             ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ github.sha }}/cia.png)
+            3DSX QR Code:
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ github.sha }}/3dsx.png)
