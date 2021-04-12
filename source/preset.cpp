@@ -110,13 +110,8 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
     }
   }
 
-  //setup for file path variable
-  std::string filepathStr = PresetPath(presetName, category);
-  char* filepath = static_cast<char*>(malloc(filepathStr.length() + 1));
-  std::memcpy(filepath, filepathStr.c_str(), filepathStr.length());
-  filepath[filepathStr.length()] = '\0';
-
-  XMLError e = preset.SaveFile(filepath);
+  const std::string filepath = PresetPath(presetName, category);
+  XMLError e = preset.SaveFile(filepath.c_str());
   if (e != XML_SUCCESS) {
     return false;
   }
@@ -127,14 +122,8 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
 bool LoadPreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
-  //setup for opening the file
-  std::string filepathStr = PresetPath(presetName, category);
-  char* filepath = static_cast<char*>(malloc(filepathStr.length() + 1));
-  std::memcpy(filepath, filepathStr.c_str(), filepathStr.length());
-  filepath[filepathStr.length()] = '\0';
-
   XMLDocument preset;
-  XMLError e = preset.LoadFile(filepath);
+  XMLError e = preset.LoadFile(PresetPath(presetName, category).c_str());
   if (e != XML_SUCCESS) {
     return false;
   }
