@@ -7,11 +7,12 @@
 #include <cstring>
 #include <algorithm>
 
+#include "cosmetics.hpp"
 #include "menu.hpp"
 #include "patch.hpp"
 #include "preset.hpp"
+#include "randomizer.hpp"
 #include "settings.hpp"
-#include "cosmetics.hpp"
 #include "spoiler_log.hpp"
 
 namespace {
@@ -39,7 +40,7 @@ void PrintTopScreen() {
   consoleSelect(&topScreen);
   consoleClear();
   printf("\x1b[2;11H%sOcarina of Time 3D Randomizer%s", CYAN, RESET);
-  printf("\x1b[3;18H%sv1.1.1%s", CYAN, RESET);
+  printf("\x1b[3;18H%s%s%s", CYAN, RANDOMIZER_VERSION, RESET);
   printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
   printf("            Select: Exit to Homebrew Menu\n");
   printf("                 Y: New Random Seed\n");
