@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <array>
 #include <filesystem>
 #include <fstream>
 #include <vector>
@@ -13,16 +14,16 @@
 
 namespace fs = std::filesystem;
 
-const std::string SETTINGS_PATH = "/3ds/presets/oot3dr/settings/";
-const std::string COSMETICS_PATH = "/3ds/presets/oot3dr/cosmetics/";
+static std::string_view GetBasePath(OptionCategory category) {
+  static constexpr std::array<std::string_view, 2> paths{
+    "/3ds/presets/oot3dr/settings/",
+    "/3ds/presets/oot3dr/cosmetics/",
+  };
 
-//I don't know why we can't use class enums as array indices, so I guess we do this instead
-std::string GetBasePath(OptionCategory category) {
   switch(category) {
     case OptionCategory::Setting :
-      return SETTINGS_PATH;
     case OptionCategory::Cosmetic :
-      return COSMETICS_PATH;
+      return paths[static_cast<size_t>(category)];
     case OptionCategory::Toggle :
       break;
   }
@@ -67,7 +68,7 @@ std::vector<std::string> GetSettingsPresets() {
 }
 
 std::string PresetPath(std::string presetName, OptionCategory category) {
-  return GetBasePath(category).append(presetName).append(".xml");
+  return std::string(GetBasePath(category)).append(presetName).append(".xml");
 }
 
 /* Presets are now saved as XML files using the tinyxml2 library.
