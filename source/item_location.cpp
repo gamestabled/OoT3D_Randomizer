@@ -1728,9 +1728,9 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     loc->SetPlacedItem(item);
 }
 
-std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locationPool, Category category) {
-  std::vector<ItemLocation*> locationsInCategory = {};
-  for (auto& loc : locationPool) {
+std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category) {
+  std::vector<ItemLocation*> locationsInCategory;
+  for (auto* loc : locationPool) {
     if (loc->IsCategory(category)) {
       locationsInCategory.push_back(loc);
     }
