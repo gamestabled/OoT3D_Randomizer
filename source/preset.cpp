@@ -3,26 +3,28 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <array>
 #include <filesystem>
 #include <fstream>
 #include <vector>
 
+#include "category.hpp"
 #include "preset.hpp"
 #include "settings.hpp"
 #include "tinyxml2.h"
 
 namespace fs = std::filesystem;
 
-const std::string SETTINGS_PATH = "/3ds/presets/oot3dr/settings/";
-const std::string COSMETICS_PATH = "/3ds/presets/oot3dr/cosmetics/";
+static std::string_view GetBasePath(OptionCategory category) {
+  static constexpr std::array<std::string_view, 2> paths{
+    "/3ds/presets/oot3dr/settings/",
+    "/3ds/presets/oot3dr/cosmetics/",
+  };
 
-//I don't know why we can't use class enums as array indices, so I guess we do this instead
-std::string GetBasePath(OptionCategory category) {
   switch(category) {
     case OptionCategory::Setting :
-      return SETTINGS_PATH;
     case OptionCategory::Cosmetic :
-      return COSMETICS_PATH;
+      return paths[static_cast<size_t>(category)];
     case OptionCategory::Toggle :
       break;
   }
@@ -58,7 +60,7 @@ bool CreatePresetDirectories() {
 //Gets the preset filenames
 std::vector<std::string> GetSettingsPresets() {
   std::vector<std::string> presetEntries = {};
-  for (const auto & entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
+  for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
     if(entry.path().stem().string() != "CACHED_SETTINGS") {
       presetEntries.push_back(entry.path().stem().string());
     }
@@ -66,14 +68,13 @@ std::vector<std::string> GetSettingsPresets() {
   return presetEntries;
 }
 
-std::string PresetPath(std::string presetName, OptionCategory category) {
-  return GetBasePath(category).append(presetName).append(".xml");
+static std::string PresetPath(std::string_view presetName, OptionCategory category) {
+  return std::string(GetBasePath(category)).append(presetName).append(".xml");
 }
 
-/* Presets are now saved as XML files using the tinyxml2 library.
-   Documentation: https://leethomason.github.io/tinyxml2/index.html
-*/
-bool SavePreset(std::string presetName, OptionCategory category) {
+// Presets are now saved as XML files using the tinyxml2 library.
+// Documentation: https://leethomason.github.io/tinyxml2/index.html
+bool SavePreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
   XMLDocument preset = XMLDocument();
@@ -83,39 +84,34 @@ bool SavePreset(std::string presetName, OptionCategory category) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
-    for (size_t i = 0; i < menu->settingsList->size(); i++) {
-      Option* setting = menu->settingsList->at(i);
-      if (setting->IsCategory(category)) {
-
-        //Create all necessary elements
-        XMLElement* newSetting = preset.NewElement("setting");
-        XMLElement* settingName = preset.NewElement("settingName");
-        XMLElement* valueName = preset.NewElement("valueName");
-        XMLText* settingText = preset.NewText(setting->GetName().data());
-        XMLText* valueText = preset.NewText(setting->GetSelectedOptionText().c_str());
-
-        //Some setting names have punctuation in them. Set all values as CDATA so
-        //there are no conflicts with XML
-        settingText->SetCData(true);
-        valueText->SetCData(true);
-
-        //add elements to the document
-        settingName->InsertEndChild(settingText);
-        valueName->InsertEndChild(valueText);
-        newSetting->InsertEndChild(settingName);
-        newSetting->InsertEndChild(valueName);
-        preset.InsertEndChild(newSetting);
+    for (const Option* setting : *menu->settingsList) {
+      if (!setting->IsCategory(category)) {
+        continue;
       }
+
+      //Create all necessary elements
+      XMLElement* newSetting = preset.NewElement("setting");
+      XMLElement* settingName = preset.NewElement("settingName");
+      XMLElement* valueName = preset.NewElement("valueName");
+      XMLText* settingText = preset.NewText(std::string(setting->GetName()).c_str());
+      XMLText* valueText = preset.NewText(setting->GetSelectedOptionText().c_str());
+
+      //Some setting names have punctuation in them. Set all values as CDATA so
+      //there are no conflicts with XML
+      settingText->SetCData(true);
+      valueText->SetCData(true);
+
+      //add elements to the document
+      settingName->InsertEndChild(settingText);
+      valueName->InsertEndChild(valueText);
+      newSetting->InsertEndChild(settingName);
+      newSetting->InsertEndChild(valueName);
+      preset.InsertEndChild(newSetting);
     }
   }
 
-  //setup for file path variable
-  std::string filepathStr = PresetPath(presetName, category);
-  char* filepath = static_cast<char*>(malloc(filepathStr.length() + 1));
-  std::memcpy(filepath, filepathStr.c_str(), filepathStr.length());
-  filepath[filepathStr.length()] = '\0';
-
-  XMLError e = preset.SaveFile(filepath);
+  const std::string filepath = PresetPath(presetName, category);
+  XMLError e = preset.SaveFile(filepath.c_str());
   if (e != XML_SUCCESS) {
     return false;
   }
@@ -123,17 +119,11 @@ bool SavePreset(std::string presetName, OptionCategory category) {
 }
 
 //Read the preset XML file
-bool LoadPreset(std::string presetName, OptionCategory category) {
+bool LoadPreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
-  //setup for opening the file
-  std::string filepathStr = PresetPath(presetName, category);
-  char* filepath = static_cast<char*>(malloc(filepathStr.length() + 1));
-  std::memcpy(filepath, filepathStr.c_str(), filepathStr.length());
-  filepath[filepathStr.length()] = '\0';
-
   XMLDocument preset;
-  XMLError e = preset.LoadFile(filepath);
+  XMLError e = preset.LoadFile(PresetPath(presetName, category).c_str());
   if (e != XML_SUCCESS) {
     return false;
   }
@@ -145,41 +135,41 @@ bool LoadPreset(std::string presetName, OptionCategory category) {
       continue;
     }
 
-    for (size_t i = 0; i < menu->settingsList->size(); i++) {
-      Option* setting = menu->settingsList->at(i);
-      if (setting->IsCategory(category)) {
+    for (Option* setting : *menu->settingsList) {
+      if (!setting->IsCategory(category)) {
+        continue;
+      }
 
-        /*Since presets are saved linearly, we can simply loop through the nodes as
-          we loop through the settings to find most of the matching elements.*/
-        std::string settingToFind = std::string{setting->GetName().data()};
-        std::string curSettingName = curNode->FirstChildElement("settingName")->GetText();
-        std::string curSettingValue = curNode->FirstChildElement("valueName")->GetText();
+      // Since presets are saved linearly, we can simply loop through the nodes as
+      // we loop through the settings to find most of the matching elements.
+      std::string settingToFind = std::string{setting->GetName()};
+      std::string curSettingName = curNode->FirstChildElement("settingName")->GetText();
+      std::string curSettingValue = curNode->FirstChildElement("valueName")->GetText();
 
-        if (curSettingName == settingToFind) {
-          setting->SetSelectedIndexByString(curSettingValue);
-          curNode = curNode->NextSibling();
-        } else {
-        /*If the current setting and element don't match, then search
-          linearly from the beginning. This will get us back on track if the
-          next setting and element line up with each other*/
-          curNode = preset.FirstChild();
-          bool settingFound = false;
-          while (curNode != nullptr) {
-            curSettingName = curNode->FirstChildElement("settingName")->GetText();
-            curSettingValue = curNode->FirstChildElement("valueName")->GetText();
+      if (curSettingName == settingToFind) {
+        setting->SetSelectedIndexByString(curSettingValue);
+        curNode = curNode->NextSibling();
+      } else {
+        // If the current setting and element don't match, then search
+        // linearly from the beginning. This will get us back on track if the
+        // next setting and element line up with each other*/
+        curNode = preset.FirstChild();
+        bool settingFound = false;
+        while (curNode != nullptr) {
+          curSettingName = curNode->FirstChildElement("settingName")->GetText();
+          curSettingValue = curNode->FirstChildElement("valueName")->GetText();
 
-            if (curSettingName == settingToFind) {
-              setting->SetSelectedIndexByString(curSettingValue);
-              curNode = curNode->NextSibling();
-              settingFound = true;
-              break;
-            }
+          if (curSettingName == settingToFind) {
+            setting->SetSelectedIndexByString(curSettingValue);
             curNode = curNode->NextSibling();
+            settingFound = true;
+            break;
           }
-          //reset to the beginning if the setting wasn't found
-          if (!settingFound) {
-            curNode = preset.FirstChild();
-          }
+          curNode = curNode->NextSibling();
+        }
+        //reset to the beginning if the setting wasn't found
+        if (!settingFound) {
+          curNode = preset.FirstChild();
         }
       }
     }
@@ -188,7 +178,7 @@ bool LoadPreset(std::string presetName, OptionCategory category) {
 }
 
 //Delete the selected preset
-bool DeletePreset(std::string presetName, OptionCategory category) {
+bool DeletePreset(std::string_view presetName, OptionCategory category) {
   Result res;
   FS_Archive sdmcArchive = 0;
 
@@ -205,7 +195,7 @@ bool DeletePreset(std::string presetName, OptionCategory category) {
 }
 
 //Saves the new preset to a file
-bool SaveSpecifiedPreset(std::string presetName, OptionCategory category) {
+bool SaveSpecifiedPreset(std::string_view presetName, OptionCategory category) {
   //don't save if the user cancelled
   if (presetName.empty()) {
     return false;
@@ -219,9 +209,10 @@ void SaveCachedSettings() {
 
 void LoadCachedSettings() {
   //If cache file exists, load it
-  for (const auto & entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
+  for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
     if(entry.path().stem().string() == "CACHED_SETTINGS") {
-      LoadPreset("CACHED_SETTINGS", OptionCategory::Setting); //File exists, open
+      //File exists, open
+      LoadPreset("CACHED_SETTINGS", OptionCategory::Setting);
     }
   }
 }
