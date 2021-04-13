@@ -2,11 +2,12 @@
 
 #include <string>
 
+#include "category.hpp"
 #include "item_list.hpp"
 #include "item_location.hpp"
 #include "pool_functions.hpp"
-#include "category.hpp"
 
+namespace Dungeon {
 class DungeonInfo {
 public:
       DungeonInfo(std::string name_, Item* map_, Item* compass_, Item* smallKey_, Item* bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
@@ -54,14 +55,14 @@ public:
           return *bossKey;
       }
 
-      u8 GetSmallKeyCount() {
+      u8 GetSmallKeyCount() const {
           return (masterQuest) ? mqKeyCount : vanillaKeyCount;
       }
 
       void PlaceVanillaMap() {
           if (*map != NoItem) {
               auto dungeonLocations = GetDungeonLocations();
-              auto mapLocation = FilterFromPool(dungeonLocations, [](ItemLocation* loc){ return loc->IsCategory(Category::cVanillaMap);})[0];
+              auto mapLocation = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaMap); })[0];
               PlaceItemInLocation(mapLocation, *map);
           }
       }
@@ -69,7 +70,7 @@ public:
       void PlaceVanillaCompass() {
           if (*compass != NoItem) {
               auto dungeonLocations = GetDungeonLocations();
-              auto compassLocation = FilterFromPool(dungeonLocations, [](ItemLocation* loc){ return loc->IsCategory(Category::cVanillaCompass);})[0];
+              auto compassLocation = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaCompass); })[0];
               PlaceItemInLocation(compassLocation, *compass);
           }
       }
@@ -77,7 +78,7 @@ public:
       void PlaceVanillaBossKey() {
           if (*bossKey != NoItem) {
               auto dungeonLocations = GetDungeonLocations();
-              auto bossKeyLocation = FilterFromPool(dungeonLocations, [](ItemLocation* loc){ return loc->IsCategory(Category::cVanillaBossKey);})[0];
+              auto bossKeyLocation = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaBossKey); })[0];
               PlaceItemInLocation(bossKeyLocation, *bossKey);
           }
       }
@@ -85,7 +86,7 @@ public:
       void PlaceVanillaSmallKeys() {
           if (*smallKey != NoItem) {
               auto dungeonLocations = GetDungeonLocations();
-              auto smallKeyLocations = FilterFromPool(dungeonLocations, [](ItemLocation* loc){ return loc->IsCategory(Category::cVanillaSmallKey);});
+              auto smallKeyLocations = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaSmallKey); });
               for (auto location : smallKeyLocations) {
                   PlaceItemInLocation(location, *smallKey);
               }
@@ -93,14 +94,14 @@ public:
       }
 
       //Gets the chosen dungeon locations for a playthrough (so either MQ or Vanilla)
-      std::vector<ItemLocation*> GetDungeonLocations() {
+      std::vector<ItemLocation*> GetDungeonLocations() const {
           auto locations = masterQuest ? mqLocations : vanillaLocations;
           AddElementsToPool(locations, sharedLocations);
           return locations;
       }
 
       //Gets all dungeon locations (MQ + Vanilla)
-      std::vector<ItemLocation*> GetEveryLocation() {
+      std::vector<ItemLocation*> GetEveryLocation() const {
           auto locations = vanillaLocations;
           AddElementsToPool(locations, mqLocations);
           AddElementsToPool(locations, sharedLocations);
@@ -121,19 +122,18 @@ private:
       std::vector<ItemLocation*> sharedLocations;
 };
 
-namespace Dungeon {
-    extern DungeonInfo DekuTree;
-    extern DungeonInfo DodongosCavern;
-    extern DungeonInfo JabuJabusBelly;
-    extern DungeonInfo ForestTemple;
-    extern DungeonInfo FireTemple;
-    extern DungeonInfo WaterTemple;
-    extern DungeonInfo SpiritTemple;
-    extern DungeonInfo ShadowTemple;
-    extern DungeonInfo BottomOfTheWell;
-    extern DungeonInfo IceCavern;
-    extern DungeonInfo GerudoTrainingGrounds;
-    extern DungeonInfo GanonsCastle;
+extern DungeonInfo DekuTree;
+extern DungeonInfo DodongosCavern;
+extern DungeonInfo JabuJabusBelly;
+extern DungeonInfo ForestTemple;
+extern DungeonInfo FireTemple;
+extern DungeonInfo WaterTemple;
+extern DungeonInfo SpiritTemple;
+extern DungeonInfo ShadowTemple;
+extern DungeonInfo BottomOfTheWell;
+extern DungeonInfo IceCavern;
+extern DungeonInfo GerudoTrainingGrounds;
+extern DungeonInfo GanonsCastle;
 
-    extern std::vector<DungeonInfo*> dungeonList;
-}
+extern std::vector<DungeonInfo*> dungeonList;
+} // namespace Dungeon
