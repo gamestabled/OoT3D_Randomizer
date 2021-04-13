@@ -1,41 +1,40 @@
 #pragma once
 
-#include <vector>
-#include <string>
 #include <array>
-
-const std::string RANDOM_CHOICE_STR = "Random Choice";
-const std::string RANDOM_COLOR_STR  = "Random Color";
-const std::string CUSTOM_COLOR_STR  = "Custom #FFFFFF";
-const std::string CUSTOM_COLOR_PREFIX = "Custom #";
-                                      /*--------------------------------------------------*/
-const std::string RANDOM_CHOICE_DESC = "A random color from the list of colors will be\nchosen.";
-const std::string RANDOM_COLOR_DESC  = "A completely random color will be chosen.";
-const std::string CUSTOM_COLOR_DESC  = "Press A and type in a custom 6 digit hex color.";
-
-typedef enum {
-  RANDOM_CHOICE,
-  RANDOM_COLOR,
-  CUSTOM_COLOR,
-  NON_COLOR_COUNT,
-} CosmeticSettings;
-
-typedef struct {
-  float r;
-  float g;
-  float b;
-  float a;
-} Color_RGB;
+#include <string>
+#include <vector>
 
 namespace Cosmetics {
+  constexpr std::string_view RANDOM_CHOICE_STR = "Random Choice";
+  constexpr std::string_view RANDOM_COLOR_STR  = "Random Color";
+  constexpr std::string_view CUSTOM_COLOR_STR  = "Custom #FFFFFF";
+  constexpr std::string_view CUSTOM_COLOR_PREFIX = "Custom #";
 
-  extern bool ValidHexString(std::string hexStr);
-  extern Color_RGB HexStrToColorRGB(std::string hexStr);
-  extern std::string CustomColorOptionText(std::string color);
-  extern std::string GetCustomColor(std::string str);
-  extern std::string RandomColor();
+  constexpr std::string_view RANDOM_CHOICE_DESC = "A random color from the list of colors will be\nchosen.";
+  constexpr std::string_view RANDOM_COLOR_DESC  = "A completely random color will be chosen.";
+  constexpr std::string_view CUSTOM_COLOR_DESC  = "Press A and type in a custom 6 digit hex color.";
 
-  extern const std::array<std::string, 13> gauntletColors;
-  extern std::vector<std::string> gauntletOptions;
-  extern std::vector<std::string_view> cosmeticDescriptions;
+  enum CosmeticSettings {
+    RANDOM_CHOICE,
+    RANDOM_COLOR,
+    CUSTOM_COLOR,
+    NON_COLOR_COUNT,
+  };
+
+  struct Color_RGB {
+    float r;
+    float g;
+    float b;
+    float a;
+  };
+
+  extern const std::array<std::string_view, 13> gauntletColors;
+  extern const std::vector<std::string> gauntletOptions;
+  extern const std::vector<std::string_view> cosmeticDescriptions;
+
+  bool ValidHexString(std::string_view hexStr);
+  Color_RGB HexStrToColorRGB(const std::string& hexStr);
+  std::string CustomColorOptionText(std::string_view color);
+  std::string GetCustomColor(std::string_view str);
+  std::string RandomColor();
 } //namespace Cosmetics

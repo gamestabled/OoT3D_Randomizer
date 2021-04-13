@@ -358,7 +358,7 @@ bool WritePatch() {
   ---------------------------------*/
 
   const u32 GAUNTLETCOLORSARRAY_ADDR = 0x0053CA1C;
-  Color_RGB rGauntletColors[2] = {
+  const std::array rGauntletColors{
     Cosmetics::HexStrToColorRGB(Settings::finalSilverGauntletsColor),
     Cosmetics::HexStrToColorRGB(Settings::finalGoldGauntletsColor),
   };
@@ -383,7 +383,7 @@ bool WritePatch() {
   totalRW += 2;
 
   // Write gauntletColors to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, rGauntletColors, sizeof(rGauntletColors), FS_WRITE_FLUSH))) {
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, rGauntletColors.data(), sizeof(rGauntletColors), FS_WRITE_FLUSH))) {
     return false;
   }
   totalRW += sizeof(rGauntletColors);
