@@ -25,19 +25,19 @@ DungeonInfo::DungeonInfo(std::string name_, Item* map_, Item* compass_,
 
 DungeonInfo::~DungeonInfo() = default;
 
-Item DungeonInfo::GetSmallKey() const {
+const Item& DungeonInfo::GetSmallKey() const {
   return *smallKey;
 }
 
-Item DungeonInfo::GetMap() const {
+const Item& DungeonInfo::GetMap() const {
   return *map;
 }
 
-Item DungeonInfo::GetCompass() const {
+const Item& DungeonInfo::GetCompass() const {
   return *compass;
 }
 
-Item DungeonInfo::GetBossKey() const {
+const Item& DungeonInfo::GetBossKey() const {
   return *bossKey;
 }
 

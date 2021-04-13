@@ -37,10 +37,10 @@ public:
         return (masterQuest) ? mqKeyCount : vanillaKeyCount;
     }
 
-    Item GetSmallKey() const;
-    Item GetMap() const;
-    Item GetCompass() const;
-    Item GetBossKey() const;
+    const Item& GetSmallKey() const;
+    const Item& GetMap() const;
+    const Item& GetCompass() const;
+    const Item& GetBossKey() const;
 
     void PlaceVanillaMap();
     void PlaceVanillaCompass();
