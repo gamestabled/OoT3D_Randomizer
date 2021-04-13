@@ -18,7 +18,7 @@ public:
                 std::vector<ItemLocation*> sharedLocations_);
     ~DungeonInfo();
 
-    std::string GetName() const {
+    std::string_view GetName() const {
         return name;
     }
 
