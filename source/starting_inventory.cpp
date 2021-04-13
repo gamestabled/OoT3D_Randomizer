@@ -1,6 +1,10 @@
 #include "starting_inventory.hpp"
+#include "dungeon.hpp"
+#include "debug.hpp"
+#include <unistd.h>
 
 using namespace Settings;
+using namespace Dungeon;
 
 std::vector<Item> StartingInventory = {};
 
@@ -11,16 +15,24 @@ void AddItemToInventory(Item item, int count = 1) {
 void GenerateStartingInventory() {
   StartingInventory.clear();
 
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_START_WITH)) {
+    for (auto dungeon : dungeonList) {
+      if (dungeon->GetMap() != NoItem) {
+        AddItemToInventory(dungeon->GetMap());
+      }
+
+      if (dungeon->GetCompass() != NoItem) {
+        AddItemToInventory(dungeon->GetCompass());
+      }
+    }
+  }
+
   if (Keysanity.Is(KEYSANITY_START_WITH)) {
-    //                Dungeon small key item,          check if MQ dungeon                 MQ : Vanilla key count
-    AddItemToInventory(ForestTemple_SmallKey,          (ForestTempleDungeonMode)          ? 6 : 5);
-    AddItemToInventory(FireTemple_SmallKey,            (FireTempleDungeonMode)            ? 5 : 8);
-    AddItemToInventory(WaterTemple_SmallKey,           (WaterTempleDungeonMode)           ? 2 : 6);
-    AddItemToInventory(SpiritTemple_SmallKey,          (SpiritTempleDungeonMode)          ? 7 : 5);
-    AddItemToInventory(ShadowTemple_SmallKey,          (ShadowTempleDungeonMode)          ? 6 : 5);
-    AddItemToInventory(GerudoTrainingGrounds_SmallKey, (GerudoTrainingGroundsDungeonMode) ? 3 : 9);
-    AddItemToInventory(BottomOfTheWell_SmallKey,       (BottomOfTheWellDungeonMode)       ? 2 : 3);
-    AddItemToInventory(GanonsCastle_SmallKey,          (GanonsCastleDungeonMode)          ? 3 : 2);
+    for (auto dungeon : dungeonList) {
+      if (dungeon->GetSmallKeyCount() > 0) {
+        AddItemToInventory(dungeon->GetSmallKey(), dungeon->GetSmallKeyCount());
+      }
+    }
 
   } else if (Keysanity.Is(KEYSANITY_VANILLA)) {
   /*Logic cannot handle vanilla key layout in some dungeons
@@ -28,7 +40,7 @@ void GenerateStartingInventory() {
     locked behind the keys, which is not always true in rando.
     We can resolve this by starting with some extra keys
     - OoT Randomizer*/
-    if (SpiritTempleDungeonMode == DUNGEONMODE_MQ) {
+    if (SpiritTemple.IsMQ()) {
       AddItemToInventory(SpiritTemple_SmallKey, 3);
     }
   }

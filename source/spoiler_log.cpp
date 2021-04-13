@@ -2,6 +2,7 @@
 #include "item_list.hpp"
 #include "settings.hpp"
 #include "random.hpp"
+#include "dungeon.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -152,18 +153,11 @@ static void WriteSettings() {
 
   //Master Quest Dungeons
   logtxt += "\nMaster Quest Dungeons:\n";
-  logtxt += (Settings::DekuTreeDungeonMode == DUNGEONMODE_MQ)              ? "\tDeku Tree\n" : "";
-  logtxt += (Settings::DodongosCavernDungeonMode == DUNGEONMODE_MQ)        ? "\tDodongo's Cavern\n" : "";
-  logtxt += (Settings::JabuJabusBellyDungeonMode == DUNGEONMODE_MQ)        ? "\tJabu Jabu's Belly\n" : "";
-  logtxt += (Settings::ForestTempleDungeonMode == DUNGEONMODE_MQ)          ? "\tForest Temple\n" : "";
-  logtxt += (Settings::FireTempleDungeonMode == DUNGEONMODE_MQ)            ? "\tFire Temple\n" : "";
-  logtxt += (Settings::WaterTempleDungeonMode == DUNGEONMODE_MQ)           ? "\tWater Temple\n" : "";
-  logtxt += (Settings::SpiritTempleDungeonMode == DUNGEONMODE_MQ)          ? "\tSpirit Temple\n" : "";
-  logtxt += (Settings::ShadowTempleDungeonMode == DUNGEONMODE_MQ)          ? "\tShadow Temple\n" : "";
-  logtxt += (Settings::BottomOfTheWellDungeonMode == DUNGEONMODE_MQ)       ? "\tBottom of the Well\n" : "";
-  logtxt += (Settings::IceCavernDungeonMode == DUNGEONMODE_MQ)             ? "\tIce Cavern\n" : "";
-  logtxt += (Settings::GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) ? "\tGerudo Training Grounds\n" : "";
-  logtxt += (Settings::GanonsCastleDungeonMode == DUNGEONMODE_MQ)          ? "\tGanon's Castle\n" : "";
+  for (auto dungeon : Dungeon::dungeonList) {
+    if (dungeon->IsMQ()) {
+      logtxt += "\t" + dungeon->GetName() + "\n";
+    }
+  }
   logtxt += "\n";
 
 }

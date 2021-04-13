@@ -3,6 +3,7 @@
 #include "logic.hpp"
 #include "item_location.hpp"
 #include "item_list.hpp"
+#include "dungeon.hpp"
 #include <unistd.h>
 #include <vector>
 
@@ -77,8 +78,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   // ItemLocationPairing(&KF_DekuTreeGossipStoneRight, []{return true;})
                 }, {
                   //Exits
-                  ExitPairing::Both(&DekuTree_Lobby,    []{return DekuTreeDungeonMode == DUNGEONMODE_VANILLA && (IsChild || (ShuffleDungeonEntrances && ShowedMidoSwordAndShield));}),
-                  ExitPairing::Both(&DekuTree_MQ_Lobby, []{return DekuTreeDungeonMode == DUNGEONMODE_MQ      && (IsChild || (ShuffleDungeonEntrances && ShowedMidoSwordAndShield));}),
+                  ExitPairing::Both(&DekuTree_Lobby,    []{return Dungeon::DekuTree.IsVanilla() && (IsChild || (ShuffleDungeonEntrances && ShowedMidoSwordAndShield));}),
+                  ExitPairing::Both(&DekuTree_MQ_Lobby, []{return Dungeon::DekuTree.IsMQ()      && (IsChild || (ShuffleDungeonEntrances && ShowedMidoSwordAndShield));}),
                   ExitPairing::Both(&KF_Main,           []{return true;}),
   });
 
@@ -236,8 +237,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Exits
                   ExitPairing::Both(&SFM_Entryway,          []{return true;}),
-                  ExitPairing::Both(&ForestTemple_Lobby,    []{return ForestTempleDungeonMode == DUNGEONMODE_VANILLA && CanUse(CanUseItem::Hookshot);}),
-                  ExitPairing::Both(&ForestTemple_MQ_Lobby, []{return ForestTempleDungeonMode == DUNGEONMODE_MQ      && CanUse(CanUseItem::Hookshot);}),
+                  ExitPairing::Both(&ForestTemple_Lobby,    []{return Dungeon::ForestTemple.IsVanilla() && CanUse(CanUseItem::Hookshot);}),
+                  ExitPairing::Both(&ForestTemple_MQ_Lobby, []{return Dungeon::ForestTemple.IsMQ()      && CanUse(CanUseItem::Hookshot);}),
                   ExitPairing::Both(&SFM_FairyGrotto,       []{return true;}),
                   ExitPairing::Both(&SFM_StormsGrotto,      []{return CanOpenStormGrotto;}),
   });
@@ -402,8 +403,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&LH_OwlFlight,         []{return IsChild;}),
                   ExitPairing::Both(&LH_Lab,               []{return true;}),
                   ExitPairing::Both(&LH_FishingHole,       []{return IsChild || CanUse(CanUseItem::Scarecrow) || LH_Main.CanPlantBean() || WaterTempleClear;}),
-                  ExitPairing::Both(&WaterTemple_Lobby,    []{return WaterTempleDungeonMode == DUNGEONMODE_VANILLA && CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Iron_Boots) || ((CanUse(CanUseItem::Longshot)) && ProgressiveScale >= 2));}),
-                  ExitPairing::Both(&WaterTemple_MQ_Lobby, []{return WaterTempleDungeonMode == DUNGEONMODE_MQ      && CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Iron_Boots) || ((CanUse(CanUseItem::Longshot)) && ProgressiveScale >= 2));}),
+                  ExitPairing::Both(&WaterTemple_Lobby,    []{return Dungeon::WaterTemple.IsVanilla() && CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Iron_Boots) || ((CanUse(CanUseItem::Longshot)) && ProgressiveScale >= 2));}),
+                  ExitPairing::Both(&WaterTemple_MQ_Lobby, []{return Dungeon::WaterTemple.IsMQ()      && CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Iron_Boots) || ((CanUse(CanUseItem::Longshot)) && ProgressiveScale >= 2));}),
                   ExitPairing::Both(&LH_Grotto,            []{return true;})
   });
 
@@ -536,8 +537,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&GV_FortressSide,                []{return true;}),
                   ExitPairing::Both(&GF_OutsideGate,                 []{return GF_GateOpen;}),
-                  ExitPairing::Both(&GerudoTrainingGrounds_Lobby,    []{return GerudoTrainingGroundsDungeonMode == DUNGEONMODE_VANILLA && IsAdult && GerudoToken;}),
-                  ExitPairing::Both(&GerudoTrainingGrounds_MQ_Lobby, []{return GerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ      && IsAdult && GerudoToken;}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_Lobby,    []{return Dungeon::GerudoTrainingGrounds.IsVanilla() && IsAdult && GerudoToken;}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_MQ_Lobby, []{return Dungeon::GerudoTrainingGrounds.IsMQ()      && IsAdult && GerudoToken;}),
                   ExitPairing::Both(&GF_StormsGrotto,                []{return IsAdult && CanOpenStormGrotto;})
   });
 
@@ -600,8 +601,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Exits
                   ExitPairing::Both(&Colossus_GreatFairyFountain, []{return HasExplosives;}),
-                  ExitPairing::Both(&SpiritTemple_Lobby,          []{return SpiritTempleDungeonMode == DUNGEONMODE_VANILLA;}),
-                  ExitPairing::Both(&SpiritTemple_MQ_Lobby,       []{return SpiritTempleDungeonMode == DUNGEONMODE_MQ;}),
+                  ExitPairing::Both(&SpiritTemple_Lobby,          []{return Dungeon::SpiritTemple.IsVanilla();}),
+                  ExitPairing::Both(&SpiritTemple_MQ_Lobby,       []{return Dungeon::SpiritTemple.IsMQ();}),
                   ExitPairing::Both(&HW_NearColossus,             []{return true;}),
                   ExitPairing::Both(&Colossus_Grotto,             []{return CanUse(CanUseItem::Silver_Gauntlets);})
   });
@@ -747,8 +748,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Night(&CastleGrounds,          []{return AtNight;}),
                   ExitPairing::Night(&OGC_GreatFairyFountain, []{return CanUse(CanUseItem::Golden_Gauntlets) && AtNight;}),
-                  ExitPairing::Both(&GanonsCastle_Lobby,      []{return GanonsCastleDungeonMode == DUNGEONMODE_VANILLA && CanBuildRainbowBridge;}),
-                  ExitPairing::Both(&GanonsCastle_MQ_Lobby,   []{return GanonsCastleDungeonMode == DUNGEONMODE_MQ      && CanBuildRainbowBridge;}),
+                  ExitPairing::Both(&GanonsCastle_Lobby,      []{return Dungeon::GanonsCastle.IsVanilla() && CanBuildRainbowBridge;}),
+                  ExitPairing::Both(&GanonsCastle_MQ_Lobby,   []{return Dungeon::GanonsCastle.IsMQ()      && CanBuildRainbowBridge;}),
   });
 
   Exit OGC_GreatFairyFountain = Exit("OGC Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -888,8 +889,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&Kak_Windmill,           []{return true;}),
                   ExitPairing::Day(&Kak_Bazaar,              []{return IsAdult && AtDay;}),
                   ExitPairing::Day(&Kak_ShootingGallery,     []{return IsAdult && AtDay;}),
-                  ExitPairing::Both(&BottomOfTheWell,        []{return BottomOfTheWellDungeonMode == DUNGEONMODE_VANILLA && DrainWell && (IsChild || ShuffleDungeonEntrances);}),
-                  ExitPairing::Both(&BottomOfTheWell_MQ,     []{return BottomOfTheWellDungeonMode == DUNGEONMODE_MQ      && DrainWell && (IsChild || ShuffleDungeonEntrances);}),
+                  ExitPairing::Both(&BottomOfTheWell,        []{return Dungeon::BottomOfTheWell.IsVanilla() && DrainWell && (IsChild || ShuffleDungeonEntrances);}),
+                  ExitPairing::Both(&BottomOfTheWell_MQ,     []{return Dungeon::BottomOfTheWell.IsMQ()      && DrainWell && (IsChild || ShuffleDungeonEntrances);}),
                   ExitPairing::Day(&Kak_PotionShopFront,     []{return AtDay;}),
                   ExitPairing::Both(&Kak_PotionShopFront,    []{return IsChild;}),
                   ExitPairing::Both(&Kak_RedeadGrotto,       []{return CanOpenBombGrotto;}),
@@ -1125,8 +1126,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Exits
                   ExitPairing::Both(&GY_Main,                  []{return true;}),
-                  ExitPairing::Both(&ShadowTemple_Entryway,    []{return ShadowTempleDungeonMode == DUNGEONMODE_VANILLA && (CanUse(CanUseItem::Dins_Fire) || (LogicShadowFireArrowEntry && CanUse(CanUseItem::Fire_Arrows)));}),
-                  ExitPairing::Both(&ShadowTemple_MQ_Entryway, []{return ShadowTempleDungeonMode == DUNGEONMODE_MQ      && (CanUse(CanUseItem::Dins_Fire) || (LogicShadowFireArrowEntry && CanUse(CanUseItem::Fire_Arrows)));}),
+                  ExitPairing::Both(&ShadowTemple_Entryway,    []{return Dungeon::ShadowTemple.IsVanilla() && (CanUse(CanUseItem::Dins_Fire) || (LogicShadowFireArrowEntry && CanUse(CanUseItem::Fire_Arrows)));}),
+                  ExitPairing::Both(&ShadowTemple_MQ_Entryway, []{return Dungeon::ShadowTemple.IsMQ()      && (CanUse(CanUseItem::Dins_Fire) || (LogicShadowFireArrowEntry && CanUse(CanUseItem::Fire_Arrows)));}),
   });
 
   Exit Kak_BehindGate = Exit("Kak Behind Gate", "Kakariko Village", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1180,8 +1181,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit DodongosCavern_Entryway = Exit("Dodongos Cavern Entryway", "Death Mountain", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  ExitPairing::Both(&DodongosCavern_Beginning,    []{return DodongosCavernDungeonMode == DUNGEONMODE_VANILLA;}),
-                  ExitPairing::Both(&DodongosCavern_MQ_Beginning, []{return DodongosCavernDungeonMode == DUNGEONMODE_MQ;}),
+                  ExitPairing::Both(&DodongosCavern_Beginning,    []{return Dungeon::DodongosCavern.IsVanilla();}),
+                  ExitPairing::Both(&DodongosCavern_MQ_Beginning, []{return Dungeon::DodongosCavern.IsMQ();}),
                   ExitPairing::Both(&DMT_Main,                    []{return true;}),
   });
 
@@ -1358,8 +1359,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit FireTemple_Entrance = Exit("Fire Temple Entrance", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                    ExitPairing::Both(&FireTemple_Lower,    []{return FireTempleDungeonMode == DUNGEONMODE_VANILLA;}),
-                    ExitPairing::Both(&FireTemple_MQ_Lower, []{return FireTempleDungeonMode == DUNGEONMODE_MQ;}),
+                    ExitPairing::Both(&FireTemple_Lower,    []{return Dungeon::FireTemple.IsVanilla();}),
+                    ExitPairing::Both(&FireTemple_MQ_Lower, []{return Dungeon::FireTemple.IsMQ();}),
   });
 
   Exit DMC_GreatFairyFountain = Exit("DMC Great Fairy Fountain", "", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1528,10 +1529,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Exits
                   ExitPairing::Both(&ZD_BehindKingZora,           []{return true;}),
-                  ExitPairing::Both(&JabuJabusBelly_Beginning,    []{return JabuJabusBellyDungeonMode == DUNGEONMODE_VANILLA && (IsChild && FishAccess);}),
-                  ExitPairing::Both(&JabuJabusBelly_MQ_Beginning, []{return JabuJabusBellyDungeonMode == DUNGEONMODE_MQ      && (IsChild && FishAccess);}),
-                  ExitPairing::Both(&IceCavern_Beginning,         []{return IceCavernDungeonMode == DUNGEONMODE_VANILLA && IsAdult;}),
-                  ExitPairing::Both(&IceCavern_MQ_Beginning,      []{return IceCavernDungeonMode == DUNGEONMODE_MQ      && IsAdult;}),
+                  ExitPairing::Both(&JabuJabusBelly_Beginning,    []{return Dungeon::JabuJabusBelly.IsVanilla() && (IsChild && FishAccess);}),
+                  ExitPairing::Both(&JabuJabusBelly_MQ_Beginning, []{return Dungeon::JabuJabusBelly.IsMQ()      && (IsChild && FishAccess);}),
+                  ExitPairing::Both(&IceCavern_Beginning,         []{return Dungeon::IceCavern.IsVanilla() && IsAdult;}),
+                  ExitPairing::Both(&IceCavern_MQ_Beginning,      []{return Dungeon::IceCavern.IsMQ()      && IsAdult;}),
                   ExitPairing::Both(&ZF_GreatFairyFountain,       []{return HasExplosives;})
   });
 

@@ -106,6 +106,14 @@ public:
       return false;
     }
 
+    bool IsDungeon() const {
+      return scene < 0x0A;
+    }
+
+    bool IsOverworld() const {
+      return scene >= 0x0A;
+    }
+
     Option * GetExcludedOption() {
       return &excludedOption;
     }
