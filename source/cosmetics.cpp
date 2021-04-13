@@ -5,11 +5,11 @@
 
 namespace Cosmetics {
 
-  bool ValidHexString(std::string hexStr) {
-    return hexStr.find_first_not_of("0123456789ABCDEFabcdef") == std::string::npos;
+  bool ValidHexString(std::string_view hexStr) {
+    return hexStr.find_first_not_of("0123456789ABCDEFabcdef") == std::string_view::npos;
   }
 
-  Color_RGB HexStrToColorRGB(std::string hexStr) {
+  Color_RGB HexStrToColorRGB(const std::string& hexStr) {
     u32 hex = std::stoi(hexStr, nullptr, 16);
 
     return Color_RGB{
@@ -20,22 +20,22 @@ namespace Cosmetics {
     };
   }
 
-  std::string CustomColorOptionText(std::string color) {
-    return CUSTOM_COLOR_STR.substr(0, CUSTOM_COLOR_STR.length() - 6) + color;
+  std::string CustomColorOptionText(std::string_view color) {
+    return std::string(CUSTOM_COLOR_STR.substr(0, CUSTOM_COLOR_STR.length() - 6)).append(color);
   }
 
-  std::string GetCustomColor(std::string str) {
-    return str.substr(str.length() - 6);
+  std::string GetCustomColor(std::string_view str) {
+    return std::string(str.substr(str.length() - 6));
   }
 
   //Generate random hex color
   std::string RandomColor() {
-    std::stringstream color;
+    std::ostringstream color;
     color << std::hex << (rand() % 0x1000000); //use default rand to not interfere with main settings
     return color.str();
   }
 
-  const std::array<std::string, 13> gauntletColors = {
+  const std::array<std::string_view, 13> gauntletColors = {
     "FFFFFF", //Silver
     "FECF0F", //Gold
     "000006", //Black
@@ -50,10 +50,10 @@ namespace Cosmetics {
     "5B8A06", //Lime
     "800080", //Purple
   };
-  std::vector<std::string> gauntletOptions = {
-    RANDOM_CHOICE_STR,
-    RANDOM_COLOR_STR,
-    CUSTOM_COLOR_STR,
+  const std::vector<std::string> gauntletOptions = {
+    std::string(RANDOM_CHOICE_STR),
+    std::string(RANDOM_COLOR_STR),
+    std::string(CUSTOM_COLOR_STR),
     "Silver",
     "Gold",
     "Black",
@@ -68,7 +68,7 @@ namespace Cosmetics {
     "Lime",
     "Purple",
   };
-  std::vector<std::string_view> cosmeticDescriptions = {
+  const std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
     RANDOM_COLOR_DESC,
     CUSTOM_COLOR_DESC,

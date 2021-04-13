@@ -6,6 +6,7 @@
 #include "logic.hpp"
 #include "random.hpp"
 #include "custom_messages.hpp"
+#include "dungeon.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -381,7 +382,9 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
         PlacementLog_Msg(item.GetName());
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
-        PlacementLog_Write();
+        #ifdef ENABLE_DEBUG
+          PlacementLog_Write();
+        #endif
 
         //reset any locations that got an item
         for (ItemLocation* loc : attemptedLocations) {
@@ -426,7 +429,7 @@ static void RandomizeDungeonRewards() {
     const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
     rDungeonRewardOverrides[i] = index;
 
-    //set the player's dugeon reward on file creation instead of pushing it to them at the start
+    //set the player's dungeon reward on file creation instead of pushing it to them at the start
     if (i == dungeonRewardLocations.size()-1 /*&& LinksPocket.Is(LINKSPOCKET_DUNGEON_REWARD)*/) {
       LinksPocketRewardBitMask = bitMaskTable[index];
     }
@@ -444,76 +447,106 @@ static void FillExcludedLocations() {
   }
 }
 
-//Fill in dungeon items that have to be within their own dungeon
-static void RandomizeOwnDungeon(Category dungeon, const Item bossKey, const Item map, const Item compass, const Item smallKey, u8 keyCount) {
+//Function to handle the Own Dungeon setting
+static void RandomizeOwnDungeon(DungeonInfo* dungeon) {
 
-  std::vector<ItemLocation*> dungeonLocations = FilterFromPool(allLocations, [dungeon](ItemLocation* loc){
-    //prevent accidentally placing a map or compass at Sheik in Ice Cavern if a song needs to go there
-    if (dungeon == Category::cIceCavern && loc->GetName() == "Sheik in Ice Cavern" && ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
-      return false;
-    }
-
-    //prevent using dungeon reward locations when songs need to go there
-    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS) && (loc->IsCategory(Category::cSongDungeonReward))) {
-      return false;
-    }
-    return loc->IsCategory(dungeon);
-  });
+  std::vector<ItemLocation*> dungeonLocations = dungeon->GetDungeonLocations();
   std::vector<Item> dungeonItems = {};
 
-  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && keyCount > 0) {
-    AddItemToPool(dungeonItems, smallKey, keyCount);
+  //Add specific items that need be randomized within this dungeon
+  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && dungeon->GetSmallKey() != NoItem) {
+    std::vector<Item> dungeonSmallKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){ return i == dungeon->GetSmallKey();});
+    AddElementsToPool(dungeonItems, dungeonSmallKeys);
   }
 
-  if ((BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) && dungeon != Category::cGanonsCastle && bossKey != NoItem) ||
-      (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) && dungeon == Category::cGanonsCastle)) {
-        AddItemToPool(dungeonItems, bossKey);
+  if ((BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) && dungeon->GetBossKey() != GanonsCastle_BossKey) ||
+      (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) && dungeon->GetBossKey() == GanonsCastle_BossKey)) {
+        auto dungeonBossKey = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){ return i == dungeon->GetBossKey();});
+        AddElementsToPool(dungeonItems, dungeonBossKey);
   }
 
   //randomize boss key and small keys together for even distribution
   AssumedFill(dungeonItems, dungeonLocations);
 
   //randomize map and compass separately since they're not progressive
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) && map != NoItem) {
-    AssumedFill({map, compass}, dungeonLocations);
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) && dungeon->GetMap() != NoItem && dungeon->GetCompass() != NoItem) {
+    auto dungeonMapAndCompass = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){ return i == dungeon->GetMap() || i == dungeon->GetCompass();});
+    AssumedFill(dungeonMapAndCompass, dungeonLocations);
   }
 }
 
-static void RandomizeOwnDungeonItems() {
-  //variable to hold Vanilla/MQ key count for each dungeon
-  u8 keyCount = 0;
+/*Randomize dungeon items restricted to a certain set of locations.
+  The fill order of location groups is as follows:
+    - Own Dungeon
+    - Any Dungeon
+    - Overworld
+  Small Keys, Gerudo Keys, Boss Keys, and/or Ganon's Boss Key will be randomized
+  together if they have the same setting. Maps and Compasses are randomized
+  separately once the dungeon advancement items have all been placed.*/
+static void RandomizeDungeonItems() {
+  using namespace Dungeon;
 
-  //                  dungeon category         boss key, map,                compass,             small key, key count
-  RandomizeOwnDungeon(Category::cDekuTree,       NoItem, DekuTree_Map,       DekuTree_Compass,       NoItem, keyCount);
-  RandomizeOwnDungeon(Category::cDodongosCavern, NoItem, DodongosCavern_Map, DodongosCavern_Compass, NoItem, keyCount);
-  RandomizeOwnDungeon(Category::cJabuJabusBelly, NoItem, JabuJabusBelly_Map, JabuJabusBelly_Compass, NoItem, keyCount);
+  //Own Dungeon
+  for (auto dungeon : dungeonList) {
+    RandomizeOwnDungeon(dungeon);
+  }
 
-  keyCount = (ForestTempleDungeonMode) ? 6 : 5; //MQ key count : Vanilla key count
-  RandomizeOwnDungeon(Category::cForestTemple, ForestTemple_BossKey, ForestTemple_Map, ForestTemple_Compass, ForestTemple_SmallKey, keyCount);
+  //Get Any Dungeon and Overworld group locations
+  std::vector<ItemLocation*> anyDungeonLocations = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->IsDungeon();});
+  //overworldLocations defined in item_location.cpp
 
-  keyCount = (FireTempleDungeonMode) ? 5 : 8;
-  RandomizeOwnDungeon(Category::cFireTemple, FireTemple_BossKey, FireTemple_Map, FireTemple_Compass, FireTemple_SmallKey, keyCount);
+  //Create Any Dungeon and Overworld item pools
+  std::vector<Item> anyDungeonItems = {};
+  std::vector<Item> overworldItems = {};
 
-  keyCount = (WaterTempleDungeonMode) ? 2 : 6;
-  RandomizeOwnDungeon(Category::cWaterTemple, WaterTemple_BossKey, WaterTemple_Map, WaterTemple_Compass, WaterTemple_SmallKey, keyCount);
+  for (auto dungeon : dungeonList) {
+    if (Keysanity.Is(KEYSANITY_ANY_DUNGEON)) {
+      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetSmallKey();});
+      AddElementsToPool(anyDungeonItems, dungeonKeys);
+    } else if (Keysanity.Is(KEYSANITY_OVERWORLD)) {
+      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetSmallKey();});
+      AddElementsToPool(overworldItems, dungeonKeys);
+    }
 
-  keyCount = (SpiritTempleDungeonMode) ? 7 : 5;
-  RandomizeOwnDungeon(Category::cSpiritTemple, SpiritTemple_BossKey, SpiritTemple_Map, SpiritTemple_Compass, SpiritTemple_SmallKey, keyCount);
+    if (BossKeysanity.Is(BOSSKEYSANITY_ANY_DUNGEON) && dungeon->GetBossKey() != GanonsCastle_BossKey) {
+      auto bossKey = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetBossKey();});
+      AddElementsToPool(anyDungeonItems, bossKey);
+    } else if (BossKeysanity.Is(BOSSKEYSANITY_OVERWORLD) && dungeon->GetBossKey() != GanonsCastle_BossKey) {
+      auto bossKey = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetBossKey();});
+      AddElementsToPool(overworldItems, bossKey);
+    }
 
-  keyCount = (ShadowTempleDungeonMode) ? 6 : 5;
-  RandomizeOwnDungeon(Category::cShadowTemple, ShadowTemple_BossKey, ShadowTemple_Map, ShadowTemple_Compass, ShadowTemple_SmallKey, keyCount);
+    if (GanonsBossKey.Is(GANONSBOSSKEY_ANY_DUNGEON)) {
+      auto ganonBossKey = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GanonsCastle_BossKey;});
+      AddElementsToPool(anyDungeonItems, ganonBossKey);
+    } else if (GanonsBossKey.Is(GANONSBOSSKEY_OVERWORLD)) {
+      auto ganonBossKey = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GanonsCastle_BossKey;});
+      AddElementsToPool(overworldItems, ganonBossKey);
+    }
+  }
 
-  keyCount = (BottomOfTheWellDungeonMode) ? 2 : 3;
-  RandomizeOwnDungeon(Category::cBottomOfTheWell, NoItem, BottomOfTheWell_Map, BottomOfTheWell_Compass, BottomOfTheWell_SmallKey, keyCount);
+  if (GerudoKeys.Is(GERUDOKEYS_ANY_DUNGEON)) {
+    auto gerudoKeys = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GerudoFortress_SmallKey;});
+    AddElementsToPool(anyDungeonItems, gerudoKeys);
+  } else if (GerudoKeys.Is(GERUDOKEYS_OVERWORLD)) {
+    auto gerudoKeys = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GerudoFortress_SmallKey;});
+    AddElementsToPool(overworldItems, gerudoKeys);
+  }
 
-  keyCount = (IceCavernDungeonMode) ? 0 : 0;
-  RandomizeOwnDungeon(Category::cIceCavern, NoItem, IceCavern_Map, IceCavern_Compass, NoItem, keyCount);
+  //Randomize Any Dungeon and Overworld pools
+  AssumedFill(anyDungeonItems, anyDungeonLocations);
+  AssumedFill(overworldItems, overworldLocations);
 
-  keyCount = (GerudoTrainingGroundsDungeonMode) ? 3 : 9;
-  RandomizeOwnDungeon(Category::cGerudoTrainingGrounds, NoItem, NoItem, NoItem, GerudoTrainingGrounds_SmallKey, keyCount);
-
-  keyCount = (GanonsCastleDungeonMode) ? 3 : 2;
-  RandomizeOwnDungeon(Category::cGanonsCastle, GanonsCastle_BossKey, NoItem, NoItem, GanonsCastle_SmallKey, keyCount);
+  //Randomize maps and compasses after since they're not advancement items
+  for (auto dungeon : dungeonList) {
+    if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON)) {
+      auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
+      AssumedFill(mapAndCompassItems, anyDungeonLocations);
+    } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OVERWORLD)) {
+      auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
+      AssumedFill(mapAndCompassItems, overworldLocations);
+    }
+  }
 }
 
 int Fill() {
@@ -524,7 +557,6 @@ int Fill() {
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
-    RandomizeOwnDungeonItems();
     RandomizeDungeonRewards();
 
     //Place songs first if song shuffle is set to specific locations
@@ -544,6 +576,9 @@ int Fill() {
 
       AssumedFill(songs, songLocations);
     }
+
+    //Then place dungeon items that are assigned to restrictive pools
+    RandomizeDungeonItems();
 
     //Then place the rest of the advancement items
     std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});

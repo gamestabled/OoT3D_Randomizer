@@ -1,4 +1,4 @@
-name: Create 3DSX and CIA Files, and drafts/posts a new Release.
+name: OoT3DR Nightly Builds
 
 on:
   push:
@@ -13,43 +13,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create Environment
+      - name: Run Build Script
       
         run: |
           chmod +x linux_build_rando.sh
           ./linux_build_rando.sh
           
-      - name: Create a Release
-        id: create_release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Pre-release
+        uses: ncipollo/release-action@v1.8.3
         with:
-          tag_name: Nightly-${{ github.sha }}
-          release_name: nightly-${{ github.sha }}
-          draft: false
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
           prerelease: true
+          commit: "${{ github.sha }}"
+          tag: "Nightly-${{ github.sha }}"
+          name: "Nightly-${{ github.sha }}"
           body: |
             Please note that these are DEVELOPMENT builds and may not be entirely stable.
             When reporting issues, please mention the six character commit listed in the randomizer menu.
-            
-      - name: Upload release asset CIA
-        id: upload-release-asset-cia
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./OoT3D_Randomizer.cia
-          asset_name: OoT3D_Randomizer.cia
-          asset_content_type: application/octet-stream
-      - name: Upload release asset 3dsx
-        id: upload-release-asset-3dsx
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./OoT3D_Randomizer.3dsx
-          asset_name: OoT3D_Randomizer.3dsx
-          asset_content_type: application/octet-stream
+            CIA QR Code:
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ github.sha }}/cia.png)
+            3DSX QR Code:
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ github.sha }}/3dsx.png)

@@ -1,35 +1,37 @@
 #include <unistd.h>
 
-#include "settings.hpp"
-#include "setting_descriptions.hpp"
+#include "cosmetics.hpp"
+#include "dungeon.hpp"
+#include "fill.hpp"
 #include "item_location.hpp"
 #include "random.hpp"
-#include "fill.hpp"
-#include "cosmetics.hpp"
+#include "randomizer.hpp"
+#include "settings.hpp"
+#include "setting_descriptions.hpp"
 
 using namespace Cosmetics;
+using namespace Dungeon;
 
 namespace Settings {
   std::string seed;
-  std::string version = "v1.1.1-COMMITNUM";
+  std::string version = RANDOMIZER_VERSION "-COMMITNUM";
   std::array<u8, 5> hashIconIndexes;
 
-  //                                        Setting name,              Options,                                                Setting Descriptions (assigned in setting_descriptions.cpp)
-  //Open Settings                                                                                                              Any option index past the last description will use the last description
-  Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                              {logicGlitchless, logicNoLogic});
-  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                      {forestClosed, forestOpen});
-  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                      {kakGateClosed, kakGateOpen});
-  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                      {doorOfTimeDesc});
-  Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                             {fountainNormal, fountainAdult, fountainOpen});
-  Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                              {gerudoNormal, gerudoFast, gerudoOpen});
-  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"},
-                                                                      {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
-  Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                    {bridgeStoneCountDesc});
-  Option BridgeMedallionCount= Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                     {bridgeMedallionCountDesc});
-  Option BridgeDungeonCount  = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},      {bridgeDungeonCountDesc});
-  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},     {bridgeTokenCountDesc});
-  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                           {randomGanonsTrialsDesc});
-  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                     {ganonsTrialCountDesc});
+  //                                        Setting name,              Options,                                                          Setting Descriptions (assigned in setting_descriptions.cpp)
+  //Open Settings                                                                                                                        Any option index past the last description will use the last description
+  Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                                        {logicGlitchless, logicNoLogic});
+  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                                {forestClosed, forestOpen});
+  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                {kakGateClosed, kakGateOpen});
+  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                                {doorOfTimeDesc});
+  Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                       {fountainNormal, fountainAdult, fountainOpen});
+  Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                        {gerudoNormal, gerudoFast, gerudoOpen});
+  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
+  Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                              {bridgeStoneCountDesc});
+  Option BridgeMedallionCount= Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                               {bridgeMedallionCountDesc});
+  Option BridgeDungeonCount  = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                {bridgeDungeonCountDesc});
+  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},               {bridgeTokenCountDesc});
+  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                                     {randomGanonsTrialsDesc});
+  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                               {ganonsTrialCountDesc});
   std::vector<Option *> openOptions = {
     &Logic,
     &OpenForest,
@@ -47,12 +49,12 @@ namespace Settings {
   };
 
   //World Settings
-  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                            {ageDesc});
+  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                      {ageDesc});
   u8 ResolvedStartingAge;
-  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                           {bombchuLogicDesc});
-  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                           {bombchuDropDesc});
-  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                           {randomMQDungeonsDesc});
-  Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},{mqDungeonCountDesc});
+  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
+  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                                     {bombchuDropDesc});
+  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                                     {randomMQDungeonsDesc});
+  Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
     &StartingAge,
     &BombchusInLogic,
@@ -62,16 +64,16 @@ namespace Settings {
   };
 
   //Shuffle Settings
-  Option LinksPocketItem     = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},{linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
-  Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},       {songsSongLocations, songsDungeonRewards, songsAllLocations});
-  Option Tokensanity         = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},          {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
-  Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},     {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
-  Option ShuffleCows         = Option::Bool("Shuffle Cows",           {"Off", "On"},                                           {shuffleCowsDesc});
-  Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                           {kokiriSwordDesc});
-  Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                           {ocarinasDesc});
-  Option ShuffleWeirdEgg     = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                           {weirdEggDesc});
-  Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                           {gerudoTokenDesc});
-  Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                           {magicBeansDesc});
+  Option LinksPocketItem     = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
+  Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {songsSongLocations, songsDungeonRewards, songsAllLocations});
+  Option Tokensanity         = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},                    {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
+  Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
+  Option ShuffleCows         = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {shuffleCowsDesc});
+  Option ShuffleKokiriSword  = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                                     {kokiriSwordDesc});
+  Option ShuffleOcarinas     = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                                     {ocarinasDesc});
+  Option ShuffleWeirdEgg     = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {weirdEggDesc});
+  Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
+  Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   //TODO: Medigoron and Carpet Salesman
   std::vector<Option *> shuffleOptions = {
     //&LinksPocketItem,
@@ -88,17 +90,21 @@ namespace Settings {
   };
 
   //Shuffle Dungeon Items
-  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnywhere});
-  Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnywhere});
-  Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Anywhere"},                                 {gerudoKeysVanilla, gerudoKeysAnywhere});
-  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Anywhere"},    {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnywhere});
-  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Dungeons", "LACS-Tokens"},
+  Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
+                                                                      {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere});
+  Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
+                                                                      {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere});
+  Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Any Dungeon", "Overworld", "Anywhere"},
+                                                                      {gerudoKeysVanilla, gerudoKeysAnyDungeon, gerudoKeysOverworld, gerudoKeysAnywhere});
+  Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
+                                                                      {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere});
+  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Dungeons", "LACS-Tokens"},
                                                                       {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS});
   u8 LACSCondition           = 0;
-  Option LACSMedallionCount  = Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                     {lacsMedallionCountDesc});
-  Option LACSStoneCount      = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                    {lacsStoneCountDesc});
-  Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},      {lacsDungeonCountDesc});
-  Option LACSTokenCount      = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},     {lacsTokenCountDesc});
+  Option LACSMedallionCount  = Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                                    {lacsMedallionCountDesc});
+  Option LACSStoneCount      = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                                   {lacsStoneCountDesc});
+  Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                     {lacsDungeonCountDesc});
+  Option LACSTokenCount      = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},                    {lacsTokenCountDesc});
   std::vector<Option *> shuffleDungeonItemOptions = {
     &MapsAndCompasses,
     &Keysanity,
@@ -112,13 +118,13 @@ namespace Settings {
   };
 
   //Timesaver Settings
-  Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                  {childStealthDesc});
-  Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                  {skipTowerEscapeDesc});
-  Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                  {skipEponaRaceDesc});
-  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                  {fourPoesDesc});
-  Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                  {templeOfTimeIntroDesc});
-  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},     {bigPoeTargetCountDesc});
-  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                {numRequiredCuccosDesc});
+  Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                                 {childStealthDesc});
+  Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {skipTowerEscapeDesc});
+  Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                                 {skipEponaRaceDesc});
+  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc});
+  Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
+  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
+  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -130,11 +136,11 @@ namespace Settings {
   };
 
   //Misc Settings
-  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},      {damageMultiDesc});
-  Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                        {startingTimeDesc});
-  Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                 {nightGSDesc});
-  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                           {"", ""});
-  Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select", "Start", "D-Pad Up", "D-Pad Down", "D-Pad Right", "D-Pad Left",},    {menuButtonDesc});
+  Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
+  Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
+  Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
+  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""});
+  Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &DamageMultiplier,
@@ -145,9 +151,9 @@ namespace Settings {
   };
 
   //Item Usability Settings
-  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                 {adultStickDesc});
-  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                 {adultBoomerangDesc});
-  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                 {childHammerDesc});
+  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                                {adultStickDesc});
+  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
+  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                                {childHammerDesc});
   std::vector<Option *> itemUsabilityOptions = {
     &StickAsAdult,
     &BoomerangAsAdult,
@@ -155,8 +161,8 @@ namespace Settings {
   };
 
   //Item Pool Settings
-  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},          {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
-  Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},       {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
+  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},                         {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
+  Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                      {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
   std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
     &IceTrapValue,
@@ -476,18 +482,18 @@ namespace Settings {
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
-    ctx.dekuTreeDungeonMode              = (DekuTreeDungeonMode)              ? 1 : 0;
-    ctx.dodongosCavernDungeonMode        = (DodongosCavernDungeonMode)        ? 1 : 0;
-    ctx.jabuJabusBellyDungeonMode        = (JabuJabusBellyDungeonMode)        ? 1 : 0;
-    ctx.forestTempleDungeonMode          = (ForestTempleDungeonMode)          ? 1 : 0;
-    ctx.fireTempleDungeonMode            = (FireTempleDungeonMode)            ? 1 : 0;
-    ctx.waterTempleDungeonMode           = (WaterTempleDungeonMode)           ? 1 : 0;
-    ctx.spiritTempleDungeonMode          = (SpiritTempleDungeonMode)          ? 1 : 0;
-    ctx.shadowTempleDungeonMode          = (ShadowTempleDungeonMode)          ? 1 : 0;
-    ctx.bottomOfTheWellDungeonMode       = (BottomOfTheWellDungeonMode)       ? 1 : 0;
-    ctx.iceCavernDungeonMode             = (IceCavernDungeonMode)             ? 1 : 0;
-    ctx.gerudoTrainingGroundsDungeonMode = (GerudoTrainingGroundsDungeonMode) ? 1 : 0;
-    ctx.ganonsCastleDungeonMode          = (GanonsCastleDungeonMode)          ? 1 : 0;
+    ctx.dekuTreeDungeonMode              = DekuTree.IsMQ()              ? 1 : 0;
+    ctx.dodongosCavernDungeonMode        = DodongosCavern.IsMQ()        ? 1 : 0;
+    ctx.jabuJabusBellyDungeonMode        = JabuJabusBelly.IsMQ()        ? 1 : 0;
+    ctx.forestTempleDungeonMode          = ForestTemple.IsMQ()          ? 1 : 0;
+    ctx.fireTempleDungeonMode            = FireTemple.IsMQ()            ? 1 : 0;
+    ctx.waterTempleDungeonMode           = WaterTemple.IsMQ()           ? 1 : 0;
+    ctx.spiritTempleDungeonMode          = SpiritTemple.IsMQ()          ? 1 : 0;
+    ctx.shadowTempleDungeonMode          = ShadowTemple.IsMQ()          ? 1 : 0;
+    ctx.bottomOfTheWellDungeonMode       = BottomOfTheWell.IsMQ()       ? 1 : 0;
+    ctx.iceCavernDungeonMode             = IceCavern.IsMQ()             ? 1 : 0;
+    ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
+    ctx.ganonsCastleDungeonMode          = GanonsCastle.IsMQ()          ? 1 : 0;
 
     ctx.forestTrialSkip = (ForestTrialSkip) ? 1 : 0;
     ctx.fireTrialSkip   = (FireTrialSkip)   ? 1 : 0;
@@ -543,7 +549,9 @@ namespace Settings {
     GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
 
     AddExcludedOptions();
-    HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users change this location
+    HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users exclude these locations
+    MK_BombchuBowlingBombchus.GetExcludedOption()->Hide();
+    Ganon.GetExcludedOption()->Hide();
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
@@ -646,7 +654,12 @@ namespace Settings {
       IncludeAndHide({&HC_MalonEgg});
     }
 
-    //Gerudo Card is handled in item_pool.cpp
+    //Force include Gerudo Token Location if it's not shuffled
+    if (ShuffleGerudoToken) {
+      Unhide({&GF_GerudoToken});
+    } else {
+      IncludeAndHide({&GF_GerudoToken});
+    }
 
     //Force include Magic Bean salesman if Shuffle Magic Beans is off
     if (ShuffleMagicBeans) {
@@ -821,20 +834,6 @@ namespace Settings {
   bool ShuffleSpecialIndoorEntrances    = false;
   bool Shopsanity                       = false;
 
-  //MQ vs Vanilla Dungeon Modes
-  bool DekuTreeDungeonMode              = false;
-  bool DodongosCavernDungeonMode        = false;
-  bool JabuJabusBellyDungeonMode        = false;
-  bool ForestTempleDungeonMode          = false;
-  bool FireTempleDungeonMode            = false;
-  bool WaterTempleDungeonMode           = false;
-  bool SpiritTempleDungeonMode          = false;
-  bool ShadowTempleDungeonMode          = false;
-  bool BottomOfTheWellDungeonMode       = false;
-  bool IceCavernDungeonMode             = false;
-  bool GerudoTrainingGroundsDungeonMode = false;
-  bool GanonsCastleDungeonMode          = false;
-
   //Skipped Trials (initially set to true, then false ones filtered out)
   bool ForestTrialSkip                  = true;
   bool FireTrialSkip                    = true;
@@ -869,17 +868,15 @@ namespace Settings {
   //Function to set flags depending on settings
   void UpdateSettings() {
 
-    //shuffle the dungeon mode variables then change the amount set in MQDungeonCount
-    std::array<bool*, 12> dungeonModes = {&DekuTreeDungeonMode, &DodongosCavernDungeonMode, &JabuJabusBellyDungeonMode, &ForestTempleDungeonMode,
-                                          &FireTempleDungeonMode, &WaterTempleDungeonMode, &SpiritTempleDungeonMode, &ShadowTempleDungeonMode,
-                                          &BottomOfTheWellDungeonMode, &IceCavernDungeonMode, &GerudoTrainingGroundsDungeonMode, &GanonsCastleDungeonMode};
-    Shuffle(dungeonModes);
+    //shuffle the dungeons and then set MQ for as many as necessary
+    auto dungeons = dungeonList;
+    Shuffle(dungeons);
 
     if (RandomMQDungeons) {
       MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
     }
     for (u8 i = 0; i < MQDungeonCount.Value<u8>(); i++) {
-      *dungeonModes[i] = DUNGEONMODE_MQ;
+      dungeons[i]->SetMQ();
     }
 
     //shuffle the trials then require the amount set in GanonsTrialsCount

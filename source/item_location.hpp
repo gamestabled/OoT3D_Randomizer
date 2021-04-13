@@ -106,6 +106,14 @@ public:
       return false;
     }
 
+    bool IsDungeon() const {
+      return scene < 0x0A;
+    }
+
+    bool IsOverworld() const {
+      return scene >= 0x0A;
+    }
+
     Option * GetExcludedOption() {
       return &excludedOption;
     }
@@ -1041,10 +1049,10 @@ extern bool playthroughBeatable;
 
 extern u16 itemsPlaced;
 
-extern void GenerateLocationPool();
-extern void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
-extern std::vector<ItemLocation*> GetLocations(std::vector<ItemLocation*> locationPool, const Category category);
-extern void LocationReset();
-extern void ItemReset();
-extern void AddExcludedOptions();
-extern void CreateOverrides();
+void GenerateLocationPool();
+void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
+std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category);
+void LocationReset();
+void ItemReset();
+void AddExcludedOptions();
+void CreateOverrides();

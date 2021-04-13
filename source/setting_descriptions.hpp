@@ -84,24 +84,34 @@ extern string_view magicBeansDesc;
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
 extern string_view mapCompassOwnDungeon;
+extern string_view mapCompassAnyDungeon;
+extern string_view mapCompassOverworld;
 extern string_view mapCompassAnywhere;
 
 extern string_view smallKeyStartWith;
 extern string_view smallKeyVanilla;
 extern string_view smallKeyOwnDungeon;
+extern string_view smallKeyAnyDungeon;
+extern string_view smallKeyOverworld;
 extern string_view smallKeyAnywhere;
 
 extern string_view gerudoKeysVanilla;
+extern string_view gerudoKeysAnyDungeon;
+extern string_view gerudoKeysOverworld;
 extern string_view gerudoKeysAnywhere;
 
 extern string_view bossKeyStartWith;
 extern string_view bossKeyVanilla;
 extern string_view bossKeyOwnDungeon;
+extern string_view bossKeyAnyDungeon;
+extern string_view bossKeyOverworld;
 extern string_view bossKeyAnywhere;
 
 extern string_view ganonKeyStartWith;
 extern string_view ganonKeyVanilla;
 extern string_view ganonKeyOwnDungeon;
+extern string_view ganonKeyAnyDungeon;
+extern string_view ganonKeyOverworld;
 extern string_view ganonKeyAnywhere;
 extern string_view ganonKeyLACS;
 
