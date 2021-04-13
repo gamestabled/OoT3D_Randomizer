@@ -124,6 +124,7 @@ public:
     }
 
     void SetSelectedIndexByString(std::string newSetting) {
+      using namespace Cosmetics;
 
       //Special case for custom cosmetic settings
       if (options.size() > CUSTOM_COLOR) {
@@ -167,7 +168,7 @@ public:
       return hidden;
     }
 
-    bool IsCategory(OptionCategory category) {
+    bool IsCategory(OptionCategory category) const {
       return category == this->category;
     }
 
