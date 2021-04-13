@@ -151,7 +151,6 @@ public:
     bool addedToPool = false;
 
     void UpdateEvents() {
-
       if (timePass) {
         if (Logic::Age == AGE_CHILD) {
           dayChild = true;
@@ -162,9 +161,7 @@ public:
         }
       }
 
-      for (size_t i = 0; i < events.size(); i++) {
-        EventPairing& eventPair = events[i];
-
+      for (EventPairing& eventPair : events) {
         if (eventPair.ConditionsMet()) {
           eventPair.EventOccurred();
         }
