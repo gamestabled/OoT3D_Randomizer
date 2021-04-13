@@ -127,14 +127,18 @@ private:
 
 class Exit {
 public:
-    Exit(std::string regionName_, std::string scene_, std::string hint_, bool timePass_, std::vector<EventPairing> events_, std::vector<ItemLocationPairing> locations_, std::vector<ExitPairing> exits_)
-        : regionName(std::move(regionName_)),
-          scene(std::move(scene_)),
-          hint(std::move(hint_)),
-          timePass(timePass_),
-          events(std::move(events_)),
-          locations(std::move(locations_)),
-          exits(std::move(exits_)) {}
+    Exit(std::string regionName_, std::string scene_, std::string hint_,
+         bool timePass_,
+         std::vector<EventPairing> events_,
+         std::vector<ItemLocationPairing> locations_,
+         std::vector<ExitPairing> exits_)
+    : regionName(std::move(regionName_)),
+      scene(std::move(scene_)),
+      hint(std::move(hint_)),
+      timePass(timePass_),
+      events(std::move(events_)),
+      locations(std::move(locations_)),
+      exits(std::move(exits_)) {}
 
     std::string regionName;
     std::string scene;
