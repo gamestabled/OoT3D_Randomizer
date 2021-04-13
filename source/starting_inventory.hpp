@@ -1,8 +1,9 @@
 #pragma once
-#include "item_list.hpp"
-#include "settings.hpp"
 
+#include <vector>
+
+class Item;
 extern std::vector<Item> StartingInventory;
 
-extern void GenerateStartingInventory();
-extern void ApplyStartingInventory();
+void GenerateStartingInventory();
+void ApplyStartingInventory();
