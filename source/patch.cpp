@@ -1,13 +1,18 @@
 #include "patch.hpp"
-#include "custom_messages.hpp"
+
 #include "cosmetics.hpp"
+#include "custom_messages.hpp"
 
 #include <array>
-#include <fstream>
-#include <string>
 #include <cstring>
+#include <fstream>
+#include <memory>
+#include <string>
+#include <vector>
 
 // For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
+
+using FILEPtr = std::unique_ptr<FILE, decltype(&std::fclose)>;
 
 bool WritePatch() {
   Result res = 0;
@@ -52,30 +57,22 @@ bool WritePatch() {
   }
 
   // Copy basecode to code
-  FILE* basecode = fopen("romfs:/basecode.ips", "r");
-  if (basecode) {
-    char* buffer;
-    long lSize;
-
+  if (auto basecode = FILEPtr{std::fopen("romfs:/basecode.ips", "r"), std::fclose}) {
     // obtain basecode.ips file size
-    fseek(basecode , 0 , SEEK_END);
-    lSize = ftell(basecode);
-    rewind(basecode);
-
-    // allocate memory to contain basecode.ips
-    buffer = (char*) malloc(sizeof(char) * lSize);
+    fseek(basecode.get(), 0, SEEK_END);
+    const auto lSize = static_cast<size_t>(ftell(basecode.get()));
+    rewind(basecode.get());
 
     // copy basecode.ips into the buffer
-    fread(buffer,1,lSize,basecode);
+    std::vector<char> buffer(lSize);
+    fread(buffer.data(), 1, buffer.size(), basecode.get());
 
     // Write the buffer to code.ips
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buffer, lSize, FS_WRITE_FLUSH))) {
+    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buffer.data(), buffer.size(), FS_WRITE_FLUSH))) {
       return false;
     }
 
     totalRW += bytesWritten - 3; // -3 to overwrite EOF
-    fclose(basecode);
-    free(buffer);
   }
 
   /*-------------------------
@@ -417,29 +414,20 @@ bool WritePatch() {
   }
 
   // Copy exheader.bin from romfs to final destination
-  FILE* exheader = fopen(filePath, "r");
-  if (exheader) {
-    char* buffer;
-    long lSize;
-
+  if (auto exheader = FILEPtr{std::fopen(filePath, "r"), std::fclose}) {
     // obtain exheader file size
-    fseek(exheader , 0 , SEEK_END);
-    lSize = ftell(exheader);
-    rewind(exheader);
-
-    // allocate memory to contain exheader
-    buffer = (char*) malloc(sizeof(char) * lSize);
+    fseek(exheader.get(), 0, SEEK_END);
+    const auto lSize = static_cast<size_t>(ftell(exheader.get()));
+    rewind(exheader.get());
 
     // copy exheader into the buffer
-    fread(buffer,1,lSize,exheader);
+    std::vector<char> buffer(lSize);
+    fread(buffer.data(), 1, buffer.size(), exheader.get());
 
     // Write the buffer to final exheader.bin destination
-    if (!R_SUCCEEDED(res = FSFILE_Write(finalExheader, &bytesWritten, 0, buffer, lSize, FS_WRITE_FLUSH))) {
+    if (!R_SUCCEEDED(res = FSFILE_Write(finalExheader, &bytesWritten, 0, buffer.data(), buffer.size(), FS_WRITE_FLUSH))) {
       return false;
     }
-
-    fclose(exheader);
-    free(buffer);
   }
 
   FSFILE_Close(code);
