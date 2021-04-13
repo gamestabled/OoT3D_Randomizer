@@ -593,7 +593,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &Ganon,
                           });
 
-  std::vector<DungeonInfo*> dungeonList = {
+  const DungeonArray dungeonList = {
     &DekuTree,
     &DodongosCavern,
     &JabuJabusBelly,

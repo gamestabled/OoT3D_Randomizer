@@ -1,6 +1,7 @@
 #pragma once
 
 #include <3ds.h>
+#include <array>
 #include <string>
 #include <vector>
 
@@ -80,5 +81,7 @@ extern DungeonInfo IceCavern;
 extern DungeonInfo GerudoTrainingGrounds;
 extern DungeonInfo GanonsCastle;
 
-extern std::vector<DungeonInfo*> dungeonList;
+using DungeonArray = std::array<DungeonInfo*, 12>;
+
+extern const DungeonArray dungeonList;
 } // namespace Dungeon
