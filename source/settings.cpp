@@ -1,19 +1,20 @@
 #include <unistd.h>
 
-#include "settings.hpp"
-#include "setting_descriptions.hpp"
-#include "item_location.hpp"
-#include "random.hpp"
-#include "fill.hpp"
 #include "cosmetics.hpp"
 #include "dungeon.hpp"
+#include "fill.hpp"
+#include "item_location.hpp"
+#include "random.hpp"
+#include "randomizer.hpp"
+#include "settings.hpp"
+#include "setting_descriptions.hpp"
 
 using namespace Cosmetics;
 using namespace Dungeon;
 
 namespace Settings {
   std::string seed;
-  std::string version = "v1.1.1-COMMITNUM";
+  std::string version = RANDOMIZER_VERSION "-COMMITNUM";
   std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                          Setting Descriptions (assigned in setting_descriptions.cpp)
