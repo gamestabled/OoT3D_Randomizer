@@ -16,7 +16,7 @@ enum ItemOverride_Type {
     OVR_TEMPLE = 6,
 };
 
-typedef union {
+typedef union ItemOverride_Key {
     u32 all;
     struct {
         char    pad_;
@@ -26,7 +26,7 @@ typedef union {
     };
 } ItemOverride_Key;
 
-typedef union {
+typedef union ItemOverride_Value {
     u32 all;
     struct {
         u16 itemId;
@@ -35,7 +35,7 @@ typedef union {
     };
 } ItemOverride_Value;
 
-typedef struct {
+typedef struct ItemOverride {
     ItemOverride_Key   key;
     ItemOverride_Value value;
 } ItemOverride;
