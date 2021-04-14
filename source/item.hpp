@@ -66,7 +66,7 @@ public:
     }
 
     bool operator!= (const Item& right) const {
-        return type != right.GetItemType() || getItemId != right.GetItemID();
+        return !operator==(right);
     }
 
 private:
