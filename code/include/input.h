@@ -9,7 +9,7 @@ typedef struct {
 } InputContext;
 
 void Input_Update(void);
-u32 Input_WaitWithTimeout(u32 msec);
+u32 Input_WaitWithTimeout(u32 msec, u32 closingButton);
 u32 Input_Wait(void);
 
 extern InputContext rInputCtx;

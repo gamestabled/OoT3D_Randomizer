@@ -89,7 +89,7 @@ static void Gfx_ShowMenu(void) {
         }
 
         menu_draw_funcs[curMenuIdx]();
-        pressed = Input_WaitWithTimeout(1000);
+        pressed = Input_WaitWithTimeout(1000, closingButton);
 
     } while(true);
 }
