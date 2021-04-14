@@ -1,92 +1,96 @@
 #include "custom_messages.hpp"
 #include "patch_symbols.hpp"
 
-static const std::string EnglishDungeonNames[] = {
-    "Deku Tree"s,
-    "Dodongo's Cavern"s,
-    "Jabu Jabu's Belly"s,
-    "Forest Temple"s,
-    "Fire Temple"s,
-    "Water Temple"s,
-    "Spirit Temple"s,
-    "Shadow Temple"s,
-    "Bottom of the Well"s,
-    "Ice Cavern"s,
-    "Ganon's Tower"s,
-    "Gerudo Training Grounds"s,
+#include <array>
+
+namespace CustomMessages {
+
+constexpr std::array EnglishDungeonNames = {
+    "Deku Tree",
+    "Dodongo's Cavern",
+    "Jabu Jabu's Belly",
+    "Forest Temple",
+    "Fire Temple",
+    "Water Temple",
+    "Spirit Temple",
+    "Shadow Temple",
+    "Bottom of the Well",
+    "Ice Cavern",
+    "Ganon's Tower",
+    "Gerudo Training Grounds",
     "Gerudo Fortress",
-    "Ganon's Castle"s,
+    "Ganon's Castle",
 };
 
-static const std::string FrenchDungeonNames[] = {
-    "Arbre Mojo"s,
-    "Caverne Dodongo"s,
-    "Ventre de Jabu-Jabu"s,
-    "Temple de la Forêt"s,
-    "Temple du Feu"s,
-    "Temple de l'Eau"s,
-    "Temple de l'Esprit"s,
-    "Temple de l'Ombre"s,
-    "Puits"s,
-    "Caverne de glace"s,
-    ""s,
-    "Gymnase Gerudo"s,
-    "Forteresse Gerudo"s,
-    "Château de Ganon"s,
+constexpr std::array FrenchDungeonNames = {
+    "Arbre Mojo",
+    "Caverne Dodongo",
+    "Ventre de Jabu-Jabu",
+    "Temple de la Forêt",
+    "Temple du Feu",
+    "Temple de l'Eau",
+    "Temple de l'Esprit",
+    "Temple de l'Ombre",
+    "Puits",
+    "Caverne de glace",
+    "",
+    "Gymnase Gerudo",
+    "Forteresse Gerudo",
+    "Château de Ganon",
 };
 
-static const std::string FrenchDungeonArticles[] = {
-    "de l'"s,
-    "de la"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "de la"s,
-    ""s,
-    "du"s,
-    "de la"s,
-    "du"s,
+constexpr std::array FrenchDungeonArticles = {
+    "de l'",
+    "de la",
+    "du",
+    "du",
+    "du",
+    "du",
+    "du",
+    "du",
+    "du",
+    "de la",
+    "",
+    "du",
+    "de la",
+    "du",
 };
 
-static const std::string SpanishDungeonNames[] = {
-    "Gran Árbol Deku"s,
-    "Cueva de los Dodongos"s,
-    "Barriga de Jabu-Jabu"s,
-    "Templo del Bosque"s,
-    "Templo de Fuego"s,
-    "Templo del Agua"s,
-    "Templo del Espíritu"s,
-    "Templo de las Sombras"s,
-    "Fondo del Pozo"s,
-    "Caverna de hielo"s,
-    ""s,
-    "Centro de Instrucción Gerudo"s,
-    "Fortaleza Gerudo"s,
-    "Castillo de Ganon"s,
+constexpr std::array SpanishDungeonNames = {
+    "Gran Árbol Deku",
+    "Cueva de los Dodongos",
+    "Barriga de Jabu-Jabu",
+    "Templo del Bosque",
+    "Templo de Fuego",
+    "Templo del Agua",
+    "Templo del Espíritu",
+    "Templo de las Sombras",
+    "Fondo del Pozo",
+    "Caverna de hielo",
+    "",
+    "Centro de Instrucción Gerudo",
+    "Fortaleza Gerudo",
+    "Castillo de Ganon",
 };
 
-static const std::string SpanishDungeonArticles[] = {
-    "del"s,
-    "de la"s,
-    "de la"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "de la"s,
-    ""s,
-    "del"s,
-    "de la"s,
-    "del"s,
+constexpr std::array SpanishDungeonArticles = {
+    "del",
+    "de la",
+    "de la",
+    "del",
+    "del",
+    "del",
+    "del",
+    "del",
+    "del",
+    "de la",
+    "",
+    "del",
+    "de la",
+    "del",
 };
 
-static const u32 DungeonColors[] = {
+constexpr std::array DungeonColors = {
     CustomMessages::QM_GREEN,
     CustomMessages::QM_RED,
     CustomMessages::QM_BLUE,
@@ -103,7 +107,6 @@ static const u32 DungeonColors[] = {
     CustomMessages::QM_RED,
 };
 
-namespace CustomMessages {
     std::set<MessageEntry, MessageEntryComp> messageEntries;
     std::vector<MessageEntry> arrangedMessageEntries;
     std::stringstream messageData;
