@@ -40,8 +40,14 @@ u32 Input_WaitWithTimeout(u32 msec, u32 closingButton) {
         
         // If the player presses the closing button while still holding other buttons, the menu closes (useful for buffering);
         u32 tempButtons = HID_PAD;
-        if(tempButtons != startingButtonState && buttonCheck(tempButtons) && (tempButtons & closingButton)){
-            break;
+        if(tempButtons != startingButtonState && buttonCheck(tempButtons)){
+            
+            if(tempButtons & closingButton){
+                break;
+            }
+            else{
+                startingButtonState = tempButtons;
+            }
         }
     }
 
