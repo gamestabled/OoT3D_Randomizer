@@ -1,9 +1,31 @@
 #include "custom_messages.hpp"
 #include "patch_symbols.hpp"
+#include "../code/src/message.h"
 
 #include <array>
+#include <set>
+#include <sstream>
+#include <vector>
 
 namespace CustomMessages {
+
+using namespace std::literals::string_literals;
+
+class MessageEntryComp {
+public:
+    bool operator()(const MessageEntry& lhs, const MessageEntry& rhs) const {
+        return lhs.id < rhs.id;
+    }
+};
+
+constexpr u8 QM_WHITE  = 0x00;
+constexpr u8 QM_RED    = 0x41;
+constexpr u8 QM_GREEN  = 0x42;
+constexpr u8 QM_BLUE   = 0x43;
+constexpr u8 QM_LBLUE  = 0x44;
+constexpr u8 QM_PINK   = 0x45;
+constexpr u8 QM_YELLOW = 0x46;
+constexpr u8 QM_BLACK  = 0x47;
 
 constexpr std::array EnglishDungeonNames = {
     "Deku Tree",
@@ -137,25 +159,25 @@ constexpr std::array DungeonColors = {
             messageEntries.insert(newEntry);
     }
 
-    u32 NumMessages(void) {
+    u32 NumMessages() {
         return messageEntries.size();
     }
 
-    std::pair<const char*, u32> RawMessageEntryData(void) {
+    std::pair<const char*, u32> RawMessageEntryData() {
         arrangedMessageEntries.assign(messageEntries.begin(), messageEntries.end());
         const char* data = (const char*)arrangedMessageEntries.data();
         u32 size = arrangedMessageEntries.size() * sizeof(MessageEntry);
         return { data, size };
     }
 
-    std::pair<const char*, u32> RawMessageData(void) {
+    std::pair<const char*, u32> RawMessageData() {
         arrangedMessageData = messageData.str();
         const char* data = arrangedMessageData.data();
         u32 size = arrangedMessageData.size();
         return { data, size };
     }
 
-    void CreateAlwaysIncludedMessages(void) {
+    void CreateAlwaysIncludedMessages() {
         // Bombchu (10) Purchase Prompt
         CreateMessage(0x8C, 0, 2, 3,
             INSTANT_TEXT_ON()+"Bombchu (10): 99 Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
@@ -257,24 +279,24 @@ constexpr std::array DungeonColors = {
         }
     }
 
-    const std::string MESSAGE_END()          { return  "\x7F\x00"s; }
-    const std::string WAIT_FOR_INPUT()       { return  "\x7F\x01"s; }
-    const std::string HORIZONTAL_SPACE(u8 x) { return  "\x7F\x02"s + char(x); }
-    const std::string INSTANT_TEXT_ON()      { return  "\x7F\x04"s; }
-    const std::string INSTANT_TEXT_OFF()     { return  "\x7F\x05"s; }
-    const std::string SHOP_MESSAGE_BOX()     { return  "\x7F\x06\x00"s; }
-    const std::string EVENT_TRIGGER()        { return  "\x7F\x07"s; }
-    const std::string DELAY_FRAMES(u8 x)     { return  "\x7F\x08"s + char(x); }
-    const std::string CLOSE_AFTER(u8 x)      { return  "\x7F\x0A"s + char(x); }
-    const std::string PLAYER_NAME()          { return  "\x7F\x0B"s; }
-    const std::string PLAY_OCARINA()         { return  "\x7F\x0C"s; }
-    const std::string ITEM_OBTAINED(u8 x)    { return  "\x7F\x0F"s + char(x); }
-    const std::string SET_SPEED(u8 x)        { return  "\x7F\x10"s + char(x); }
-    const std::string SKULLTULAS_DESTROYED() { return  "\x7F\x15"s; }
-    const std::string CURRENT_TIME()         { return  "\x7F\x17"s; }
-    const std::string UNSKIPPABLE()          { return  "\x7F\x19"s; }
-    const std::string TWO_WAY_CHOICE()       { return  "\x7F\x1A\xFF\xFF\xFF\xFF"s; }
-    const std::string NEWLINE()              { return  "\x7F\x1C"s; }
-    const std::string COLOR(u8 x)            { return  "\x7F\x1D"s + char(x); }
-    const std::string CENTER_TEXT()          { return  "\x7F\x1E"s; }
+    std::string MESSAGE_END()          { return  "\x7F\x00"s; }
+    std::string WAIT_FOR_INPUT()       { return  "\x7F\x01"s; }
+    std::string HORIZONTAL_SPACE(u8 x) { return  "\x7F\x02"s + char(x); }
+    std::string INSTANT_TEXT_ON()      { return  "\x7F\x04"s; }
+    std::string INSTANT_TEXT_OFF()     { return  "\x7F\x05"s; }
+    std::string SHOP_MESSAGE_BOX()     { return  "\x7F\x06\x00"s; }
+    std::string EVENT_TRIGGER()        { return  "\x7F\x07"s; }
+    std::string DELAY_FRAMES(u8 x)     { return  "\x7F\x08"s + char(x); }
+    std::string CLOSE_AFTER(u8 x)      { return  "\x7F\x0A"s + char(x); }
+    std::string PLAYER_NAME()          { return  "\x7F\x0B"s; }
+    std::string PLAY_OCARINA()         { return  "\x7F\x0C"s; }
+    std::string ITEM_OBTAINED(u8 x)    { return  "\x7F\x0F"s + char(x); }
+    std::string SET_SPEED(u8 x)        { return  "\x7F\x10"s + char(x); }
+    std::string SKULLTULAS_DESTROYED() { return  "\x7F\x15"s; }
+    std::string CURRENT_TIME()         { return  "\x7F\x17"s; }
+    std::string UNSKIPPABLE()          { return  "\x7F\x19"s; }
+    std::string TWO_WAY_CHOICE()       { return  "\x7F\x1A\xFF\xFF\xFF\xFF"s; }
+    std::string NEWLINE()              { return  "\x7F\x1C"s; }
+    std::string COLOR(u8 x)            { return  "\x7F\x1D"s + char(x); }
+    std::string CENTER_TEXT()          { return  "\x7F\x1E"s; }
 }
