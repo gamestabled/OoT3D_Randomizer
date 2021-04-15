@@ -26,6 +26,10 @@ public:
         masterQuest = true;
     }
 
+    void ClearMQ() {
+        masterQuest = false;
+    }
+
     bool IsMQ() const {
         return masterQuest;
     }
