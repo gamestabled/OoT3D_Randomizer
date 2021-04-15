@@ -1529,8 +1529,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Exits
                   ExitPairing::Both(&ZD_BehindKingZora,           []{return true;}),
-                  ExitPairing::Both(&JabuJabusBelly_Beginning,    []{return Dungeon::JabuJabusBelly.IsVanilla() && (IsChild && FishAccess);}),
-                  ExitPairing::Both(&JabuJabusBelly_MQ_Beginning, []{return Dungeon::JabuJabusBelly.IsMQ()      && (IsChild && FishAccess);}),
+                  ExitPairing::Both(&JabuJabusBelly_Beginning,    []{return Dungeon::JabuJabusBelly.IsVanilla() && (IsChild && Fish);}),
+                  ExitPairing::Both(&JabuJabusBelly_MQ_Beginning, []{return Dungeon::JabuJabusBelly.IsMQ()      && (IsChild && Fish);}),
                   ExitPairing::Both(&IceCavern_Beginning,         []{return Dungeon::IceCavern.IsVanilla() && IsAdult;}),
                   ExitPairing::Both(&IceCavern_MQ_Beginning,      []{return Dungeon::IceCavern.IsMQ()      && IsAdult;}),
                   ExitPairing::Both(&ZF_GreatFairyFountain,       []{return HasExplosives;})
