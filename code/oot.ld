@@ -72,12 +72,12 @@ SECTIONS
 		*(.patch_EnKoInitCheckForest_165878)
 	}
 
-	.patch_EnKoInitCheckForest_1658c0 0x1658c0 : {
-		*(.patch_EnKoInitCheckForest_1658c0)
+	.patch_EnKoInitCheckForest_1658C0 0x1658C0 : {
+		*(.patch_EnKoInitCheckForest_1658C0)
 	}
 
-	.patch_EnKoInitCheckForest_1658f0 0x1658f0 : {
-		*(.patch_EnKoInitCheckForest_1658f0)
+	.patch_EnKoInitCheckForest_1658F0 0x1658F0 : {
+		*(.patch_EnKoInitCheckForest_1658F0)
 	}
 
 	.patch_KingZoraCheckMovedFlag 0x165A60 : {

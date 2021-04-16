@@ -690,16 +690,16 @@ EnKoInitCheckForest_165878_patch:
     nop
     nop
 
-.section .patch_EnKoInitCheckForest_1658c0
-.global EnKoInitCheckForest_1658c0_patch
-EnKoInitCheckForest_1658c0_patch:
+.section .patch_EnKoInitCheckForest_1658C0
+.global EnKoInitCheckForest_1658C0_patch
+EnKoInitCheckForest_1658C0_patch:
     bl hook_EnKoInitCheckForest
     nop
     nop
 
-.section .patch_EnKoInitCheckForest_1658f0
-.global EnKoInitCheckForest_1658f0_patch
-EnKoInitCheckForest_1658f0_patch:
+.section .patch_EnKoInitCheckForest_1658F0
+.global EnKoInitCheckForest_1658F0_patch
+EnKoInitCheckForest_1658F0_patch:
     bl hook_EnKoInitCheckForest
     nop
     nop
