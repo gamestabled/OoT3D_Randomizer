@@ -496,102 +496,91 @@ void PlaceJunkInExcludedLocation(ItemLocation * il) {
   printf("ERROR: No Junk to Place!!!\n");
 }
 
-std::vector<Item> Vanilla_KF_ShopItems = {
-  BuyDekuShield,
-  BuyDekuNut5,
-  BuyDekuNut10,
-  BuyDekuStick1,
-  BuyDekuSeeds30,
-  BuyArrows10,
-  BuyArrows30,
-  BuyHeart,
-};
-std::vector<Item> Vanilla_Kak_PotionShopItems = {
-  BuyDekuNut5,
-  BuyFish,
-  BuyRedPotion30,
-  BuyGreenPotion,
-  BuyBlueFire,
-  BuyBottleBug,
-  BuyPoe,
-  BuyFairysSpirit,
-};
-std::vector<Item> Vanilla_MK_BombchuShopItems = {
-  BuyBombchu5,
-  BuyBombchu10,
-  BuyBombchu10,
-  BuyBombchu10,
-  BuyBombchu20,
-  BuyBombchu20,
-  BuyBombchu20,
-  BuyBombchu20,
-};
-std::vector<Item> Vanilla_MK_PotionShopItems = {
-  BuyGreenPotion,
-  BuyBlueFire,
-  BuyRedPotion30,
-  BuyFairysSpirit,
-  BuyDekuNut5,
-  BuyBottleBug,
-  BuyPoe,
-  BuyFish,
-};
-std::vector<Item> Vanilla_MK_BazaarItems = {
-  BuyHylianShield,
-  BuyBombs535,
-  BuyDekuNut5,
-  BuyHeart,
-  BuyArrows10,
-  BuyArrows50,
-  BuyDekuStick1,
-  BuyArrows30,
-};
-std::vector<Item> Vanilla_Kak_BazaarItems = {
-  BuyHylianShield,
-  BuyBombs535,
-  BuyDekuNut5,
-  BuyHeart,
-  BuyArrows10,
-  BuyArrows50,
-  BuyDekuStick1,
-  BuyArrows30,
-};
-std::vector<Item> Vanilla_ZD_ShopItems = {
-  BuyZoraTunic,
-  BuyArrows10,
-  BuyHeart,
-  BuyArrows30,
-  BuyDekuNut5,
-  BuyArrows50,
-  BuyFish,
-  BuyRedPotion50,
-};
-std::vector<Item> Vanilla_GC_ShopItems = {
-  BuyBombs525,
-  BuyBombs10,
-  BuyBombs20,
-  BuyBombs30,
-  BuyGoronTunic,
-  BuyHeart,
-  BuyRedPotion40,
-  BuyHeart,
-};
-std::vector<std::vector<Item>> ShopItems = {
-  Vanilla_KF_ShopItems,
-  Vanilla_Kak_PotionShopItems,
-  Vanilla_MK_BombchuShopItems,
-  Vanilla_MK_PotionShopItems,
-  Vanilla_MK_BazaarItems,
-  Vanilla_Kak_BazaarItems,
-  Vanilla_ZD_ShopItems,
-  Vanilla_GC_ShopItems,
-};
+std::vector<Item> ShopItems;
 
+//Set vanilla shop item locations before potentially shuffling
+void SetVanillaShopItems() {
+  ShopItems = {
+    //Vanilla KF 
+    BuyDekuShield,
+    BuyDekuNut5,
+    BuyDekuNut10,
+    BuyDekuStick1,
+    BuyDekuSeeds30,
+    BuyArrows10,
+    BuyArrows30,
+    BuyHeart,
+    //Vanilla Kak Potion
+    BuyDekuNut5,
+    BuyFish,
+    BuyRedPotion30,
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFairysSpirit,
+    //Vanilla Bombchu
+    BuyBombchu5,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    //Vanilla MK Potion
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyRedPotion30,
+    BuyFairysSpirit,
+    BuyDekuNut5,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFish,
+    //Vanilla MK Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla Kak Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla ZD
+    BuyZoraTunic,
+    BuyArrows10,
+    BuyHeart,
+    BuyArrows30,
+    BuyDekuNut5,
+    BuyArrows50,
+    BuyFish,
+    BuyRedPotion50,
+    //Vanilla GC Shop
+    BuyBombs525,
+    BuyBombs10,
+    BuyBombs20,
+    BuyBombs30,
+    BuyGoronTunic,
+    BuyHeart,
+    BuyRedPotion40,
+    BuyHeart,
+  };
+}
 
 static void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i][j], ShopItems[i][j].GetPrice());
+      //Multiply i by 8 to get the correct shop
+      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
     }
   }
 }
@@ -908,6 +897,7 @@ void GenerateItemPool() {
     }
   }
 
+  SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
   //Shopsanity
   if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
     PlaceShopItems();
