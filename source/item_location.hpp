@@ -10,6 +10,7 @@
 #include <set>
 
 #include "../code/include/z3D/z3D.h"
+#include "../code/src/item_override.h"
 #include "category.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"

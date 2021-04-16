@@ -1,4 +1,6 @@
 #include "item_list.hpp"
+
+#include "logic.hpp"
 #include "settings.hpp"
 #include "../code/include/z3D/z3Ditem.h"
 #include <vector>
