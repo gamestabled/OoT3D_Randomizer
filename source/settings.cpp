@@ -81,7 +81,7 @@ namespace Settings {
     &ShuffleRewards,
     &LinksPocketItem,
     &ShuffleSongs,
-    &Shopsanity,
+    //&Shopsanity,
     &Tokensanity,
     &Scrubsanity,
     &ShuffleCows,
@@ -587,11 +587,14 @@ namespace Settings {
 
     //Force include shops if shopsanity is off
     std::vector<ItemLocation*> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
-    if (Shopsanity.IsNot(SHOPSANITY_OFF)) {
-      Unhide(shopLocations);
-    } else {
-      IncludeAndHide(shopLocations);
-    }
+    // if (Shopsanity.IsNot(SHOPSANITY_OFF)) {
+    //   Unhide(shopLocations);
+    // } else {
+    //   IncludeAndHide(shopLocations);
+    // }
+    //For now, just always hide shop locations, as not sure how to handle hiding them-
+    //1-4 should always be hidden, while the others should be settings dependent, but random shopsanity makes that more complicated...
+    IncludeAndHide(shopLocations);
 
     //Force include song locations
     std::vector<ItemLocation*> songLocations = GetLocations(everyPossibleLocation, Category::cSong);

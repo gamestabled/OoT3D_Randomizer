@@ -65,6 +65,7 @@ private:
     ItemLocation* location;
     ConditionFn conditions_met;
 
+    //Makes sure shop locations are buyable
     bool CanBuy() const {
       //Not a shop location, don't need to check if buyable
       if(!location->IsCategory(Category::cShop)) { 

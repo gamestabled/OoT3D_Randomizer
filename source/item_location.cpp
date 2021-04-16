@@ -918,6 +918,7 @@ std::vector<ItemLocation*> GC_ShopLocations = {
   &GC_ShopItem8,
 };
 
+//List of shop location lists, used for shop shuffle
 std::vector<std::vector<ItemLocation*>> ShopLocationLists = {
   KF_ShopLocations,
   Kak_PotionShopLocations,
@@ -1338,6 +1339,7 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     loc->SetPlacedItem(item);
 }
 
+//Same as PlaceItemInLocation, except a price is set as well as the item
 void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately /*= false*/) {
 
     PlacementLog_Msg("\n");

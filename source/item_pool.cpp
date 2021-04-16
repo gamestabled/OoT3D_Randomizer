@@ -496,8 +496,7 @@ void PlaceJunkInExcludedLocation(ItemLocation * il) {
   printf("ERROR: No Junk to Place!!!\n");
 }
 
-std::vector<Item> ShopItems;
-
+std::vector<Item> ShopItems; //Vector of all shop items, initialized to vanilla items in specific order but can be shuffled and items replaced
 //Set vanilla shop item locations before potentially shuffling
 void SetVanillaShopItems() {
   ShopItems = {
@@ -922,19 +921,20 @@ void GenerateItemPool() {
         }
       }
     }
-    PlaceShopItems();
+    PlaceShopItems(); //Place now-shuffled shop items
     if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
       AddItemsToPool(ItemPool, normalRupees);
-    } else { //Shopsanity 1-4, random
+    } 
+    else { //Shopsanity 1-4, random
       //Overwrite appropriate number of shop items
-      const std::array<int, 4> indices = {7, 5, 8, 6};
+      const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR
       for (size_t i = 0; i < ShopLocationLists.size(); i++) {
-        int num_to_replace = GetShopsanityReplaceAmount();
+        int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
         for(int j = 0; j < num_to_replace; j++) {
           ShopLocationLists[i][indices[j]-1]->SetPlacedShopItem(NoItem, GetRandomShopPrice()); //Clear item and put a random price
         }
       }
-      AddItemsToPool(ItemPool, shopsanityRupees);
+      AddItemsToPool(ItemPool, shopsanityRupees); //Shopsanity gets extra large rupees
     }
   }
 
