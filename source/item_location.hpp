@@ -1052,6 +1052,8 @@ extern ItemLocation GC_ShopItem6;
 extern ItemLocation GC_ShopItem7;
 extern ItemLocation GC_ShopItem8;
 
+extern std::vector<std::vector<ItemLocation *>> ShopLocationLists;
+
 extern std::vector<ItemLocation *> dungeonRewardLocations;
 extern std::vector<ItemLocation *> overworldLocations;
 extern std::vector<ItemLocation *> allLocations;

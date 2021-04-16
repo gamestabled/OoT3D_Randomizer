@@ -496,71 +496,105 @@ void PlaceJunkInExcludedLocation(ItemLocation * il) {
   printf("ERROR: No Junk to Place!!!\n");
 }
 
+std::vector<Item> Vanilla_KF_ShopItems = {
+  BuyDekuShield,
+  BuyDekuNut5,
+  BuyDekuNut10,
+  BuyDekuStick1,
+  BuyDekuSeeds30,
+  BuyArrows10,
+  BuyArrows30,
+  BuyHeart,
+};
+std::vector<Item> Vanilla_Kak_PotionShopItems = {
+  BuyDekuNut5,
+  BuyFish,
+  BuyRedPotion30,
+  BuyGreenPotion,
+  BuyBlueFire,
+  BuyBottleBug,
+  BuyPoe,
+  BuyFairysSpirit,
+};
+std::vector<Item> Vanilla_MK_BombchuShopItems = {
+  BuyBombchu5,
+  BuyBombchu10,
+  BuyBombchu10,
+  BuyBombchu10,
+  BuyBombchu20,
+  BuyBombchu20,
+  BuyBombchu20,
+  BuyBombchu20,
+};
+std::vector<Item> Vanilla_MK_PotionShopItems = {
+  BuyGreenPotion,
+  BuyBlueFire,
+  BuyRedPotion30,
+  BuyFairysSpirit,
+  BuyDekuNut5,
+  BuyBottleBug,
+  BuyPoe,
+  BuyFish,
+};
+std::vector<Item> Vanilla_MK_BazaarItems = {
+  BuyHylianShield,
+  BuyBombs535,
+  BuyDekuNut5,
+  BuyHeart,
+  BuyArrows10,
+  BuyArrows50,
+  BuyDekuStick1,
+  BuyArrows30,
+};
+std::vector<Item> Vanilla_Kak_BazaarItems = {
+  BuyHylianShield,
+  BuyBombs535,
+  BuyDekuNut5,
+  BuyHeart,
+  BuyArrows10,
+  BuyArrows50,
+  BuyDekuStick1,
+  BuyArrows30,
+};
+std::vector<Item> Vanilla_ZD_ShopItems = {
+  BuyZoraTunic,
+  BuyArrows10,
+  BuyHeart,
+  BuyArrows30,
+  BuyDekuNut5,
+  BuyArrows50,
+  BuyFish,
+  BuyRedPotion50,
+};
+std::vector<Item> Vanilla_GC_ShopItems = {
+  BuyBombs525,
+  BuyBombs10,
+  BuyBombs20,
+  BuyBombs30,
+  BuyGoronTunic,
+  BuyHeart,
+  BuyRedPotion40,
+  BuyHeart,
+};
+std::vector<std::vector<Item>> ShopItems = {
+  Vanilla_KF_ShopItems,
+  Vanilla_Kak_PotionShopItems,
+  Vanilla_MK_BombchuShopItems,
+  Vanilla_MK_PotionShopItems,
+  Vanilla_MK_BazaarItems,
+  Vanilla_Kak_BazaarItems,
+  Vanilla_ZD_ShopItems,
+  Vanilla_GC_ShopItems,
+};
+
+
 static void PlaceVanillaShopItems() {
-  PlaceShopItemInLocation(&KF_ShopItem1,        BuyDekuShield,   BuyDekuShield.GetPrice());
-  PlaceShopItemInLocation(&KF_ShopItem2,        BuyDekuNut5,     BuyDekuNut5.GetPrice());
-  PlaceShopItemInLocation(&KF_ShopItem3,        BuyDekuNut10,    BuyDekuNut10.GetPrice());
-  PlaceShopItemInLocation(&KF_ShopItem4,        BuyDekuStick1,   BuyDekuStick1.GetPrice());
-  PlaceShopItemInLocation(&KF_ShopItem5,        BuyDekuSeeds30,  BuyDekuSeeds30.GetPrice());
-  PlaceShopItemInLocation(&KF_ShopItem6,        BuyArrows10,     BuyArrows10.GetPrice());
-  PlaceShopItemInLocation(&KF_ShopItem7,        BuyArrows30,     BuyArrows30.GetPrice());
-  PlaceShopItemInLocation(&KF_ShopItem8,        BuyHeart,        BuyHeart.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem1, BuyDekuNut5,     BuyDekuNut5.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem2, BuyFish,         BuyFish.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem3, BuyRedPotion30,  BuyRedPotion30.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem4, BuyGreenPotion,  BuyGreenPotion.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem5, BuyBlueFire,     BuyBlueFire.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem6, BuyBottleBug,    BuyBottleBug.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem7, BuyPoe,          BuyPoe.GetPrice());
-  PlaceShopItemInLocation(&Kak_PotionShopItem8, BuyFairysSpirit, BuyFairysSpirit.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem1, BuyBombchu5,     BuyBombchu5.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem2, BuyBombchu10,    BuyBombchu10.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem3, BuyBombchu10,    BuyBombchu10.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem4, BuyBombchu10,    BuyBombchu10.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem5, BuyBombchu20,    BuyBombchu20.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem6, BuyBombchu20,    BuyBombchu20.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem7, BuyBombchu20,    BuyBombchu20.GetPrice());
-  PlaceShopItemInLocation(&MK_BombchuShopItem8, BuyBombchu20,    BuyBombchu20.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem1,  BuyGreenPotion,  BuyGreenPotion.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem2,  BuyBlueFire,     BuyBlueFire.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem3,  BuyRedPotion30,  BuyRedPotion30.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem4,  BuyFairysSpirit, BuyFairysSpirit.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem5,  BuyDekuNut5,     BuyDekuNut5.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem6,  BuyBottleBug,    BuyBottleBug.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem7,  BuyPoe,          BuyPoe.GetPrice());
-  PlaceShopItemInLocation(&MK_PotionShopItem8,  BuyFish,         BuyFish.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem1,      BuyHylianShield, BuyHylianShield.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem2,      BuyBombs535,     BuyBombs535.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem3,      BuyDekuNut5,     BuyDekuNut5.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem4,      BuyHeart,        BuyHeart.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem5,      BuyArrows10,     BuyArrows10.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem6,      BuyArrows50,     BuyArrows50.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem7,      BuyDekuStick1,   BuyDekuStick1.GetPrice());
-  PlaceShopItemInLocation(&MK_BazaarItem8,      BuyArrows30,     BuyArrows30.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem1,     BuyHylianShield, BuyHylianShield.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem2,     BuyBombs535,     BuyBombs535.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem3,     BuyDekuNut5,     BuyDekuNut5.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem4,     BuyHeart,        BuyHeart.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem5,     BuyArrows10,     BuyArrows10.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem6,     BuyArrows50,     BuyArrows50.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem7,     BuyDekuStick1,   BuyDekuStick1.GetPrice());
-  PlaceShopItemInLocation(&Kak_BazaarItem8,     BuyArrows30,     BuyArrows30.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem1,        BuyZoraTunic,    BuyZoraTunic.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem2,        BuyArrows10,     BuyArrows10.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem3,        BuyHeart,        BuyHeart.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem4,        BuyArrows30,     BuyArrows30.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem5,        BuyDekuNut5,     BuyDekuNut5.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem6,        BuyArrows50,     BuyArrows50.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem7,        BuyFish,         BuyFish.GetPrice());
-  PlaceShopItemInLocation(&ZD_ShopItem8,        BuyRedPotion50,  BuyRedPotion50.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem1,        BuyBombs525,     BuyBombs525.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem2,        BuyBombs10,      BuyBombs10.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem3,        BuyBombs20,      BuyBombs20.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem4,        BuyBombs30,      BuyBombs30.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem5,        BuyGoronTunic,   BuyGoronTunic.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem6,        BuyHeart,         BuyHeart.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem7,        BuyRedPotion40,  BuyRedPotion40.GetPrice());
-  PlaceShopItemInLocation(&GC_ShopItem8,        BuyHeart,        BuyHeart.GetPrice());
+
+  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
+      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i][j], ShopItems[i][j].GetPrice());
+    }
+  }
 }
 
 static void PlaceVanillaDekuScrubItems() {
