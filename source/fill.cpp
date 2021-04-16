@@ -459,8 +459,7 @@ static void FillExcludedLocations() {
 }
 
 //Function to handle the Own Dungeon setting
-static void RandomizeOwnDungeon(DungeonInfo* dungeon) {
-
+static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
   std::vector<ItemLocation*> dungeonLocations = dungeon->GetDungeonLocations();
   std::vector<Item> dungeonItems = {};
 

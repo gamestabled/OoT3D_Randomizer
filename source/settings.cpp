@@ -883,6 +883,12 @@ namespace Settings {
     auto dungeons = dungeonList;
     Shuffle(dungeons);
 
+    //Clear MQ dungeons
+    for (u8 i = 0; i < dungeons.size(); i++) {
+      dungeons[i]->ClearMQ();
+    }
+
+    //Set appropriate amount of MQ dungeons
     if (RandomMQDungeons) {
       MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
     }

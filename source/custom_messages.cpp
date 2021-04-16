@@ -1,92 +1,118 @@
 #include "custom_messages.hpp"
 #include "patch_symbols.hpp"
+#include "../code/src/message.h"
 
-static const std::string EnglishDungeonNames[] = {
-    "Deku Tree"s,
-    "Dodongo's Cavern"s,
-    "Jabu Jabu's Belly"s,
-    "Forest Temple"s,
-    "Fire Temple"s,
-    "Water Temple"s,
-    "Spirit Temple"s,
-    "Shadow Temple"s,
-    "Bottom of the Well"s,
-    "Ice Cavern"s,
-    "Ganon's Tower"s,
-    "Gerudo Training Grounds"s,
+#include <array>
+#include <set>
+#include <sstream>
+#include <vector>
+
+namespace CustomMessages {
+
+using namespace std::literals::string_literals;
+
+class MessageEntryComp {
+public:
+    bool operator()(const MessageEntry& lhs, const MessageEntry& rhs) const {
+        return lhs.id < rhs.id;
+    }
+};
+
+constexpr u8 QM_WHITE  = 0x00;
+constexpr u8 QM_RED    = 0x41;
+constexpr u8 QM_GREEN  = 0x42;
+constexpr u8 QM_BLUE   = 0x43;
+constexpr u8 QM_LBLUE  = 0x44;
+constexpr u8 QM_PINK   = 0x45;
+constexpr u8 QM_YELLOW = 0x46;
+constexpr u8 QM_BLACK  = 0x47;
+
+constexpr std::array EnglishDungeonNames = {
+    "Deku Tree",
+    "Dodongo's Cavern",
+    "Jabu Jabu's Belly",
+    "Forest Temple",
+    "Fire Temple",
+    "Water Temple",
+    "Spirit Temple",
+    "Shadow Temple",
+    "Bottom of the Well",
+    "Ice Cavern",
+    "Ganon's Tower",
+    "Gerudo Training Grounds",
     "Gerudo Fortress",
-    "Ganon's Castle"s,
+    "Ganon's Castle",
 };
 
-static const std::string FrenchDungeonNames[] = {
-    "Arbre Mojo"s,
-    "Caverne Dodongo"s,
-    "Ventre de Jabu-Jabu"s,
-    "Temple de la Forêt"s,
-    "Temple du Feu"s,
-    "Temple de l'Eau"s,
-    "Temple de l'Esprit"s,
-    "Temple de l'Ombre"s,
-    "Puits"s,
-    "Caverne de glace"s,
-    ""s,
-    "Gymnase Gerudo"s,
-    "Forteresse Gerudo"s,
-    "Château de Ganon"s,
+constexpr std::array FrenchDungeonNames = {
+    "Arbre Mojo",
+    "Caverne Dodongo",
+    "Ventre de Jabu-Jabu",
+    "Temple de la Forêt",
+    "Temple du Feu",
+    "Temple de l'Eau",
+    "Temple de l'Esprit",
+    "Temple de l'Ombre",
+    "Puits",
+    "Caverne de glace",
+    "",
+    "Gymnase Gerudo",
+    "Forteresse Gerudo",
+    "Château de Ganon",
 };
 
-static const std::string FrenchDungeonArticles[] = {
-    "de l'"s,
-    "de la"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "du"s,
-    "de la"s,
-    ""s,
-    "du"s,
-    "de la"s,
-    "du"s,
+constexpr std::array FrenchDungeonArticles = {
+    "de l'",
+    "de la",
+    "du",
+    "du",
+    "du",
+    "du",
+    "du",
+    "du",
+    "du",
+    "de la",
+    "",
+    "du",
+    "de la",
+    "du",
 };
 
-static const std::string SpanishDungeonNames[] = {
-    "Gran Árbol Deku"s,
-    "Cueva de los Dodongos"s,
-    "Barriga de Jabu-Jabu"s,
-    "Templo del Bosque"s,
-    "Templo de Fuego"s,
-    "Templo del Agua"s,
-    "Templo del Espíritu"s,
-    "Templo de las Sombras"s,
-    "Fondo del Pozo"s,
-    "Caverna de hielo"s,
-    ""s,
-    "Centro de Instrucción Gerudo"s,
-    "Fortaleza Gerudo"s,
-    "Castillo de Ganon"s,
+constexpr std::array SpanishDungeonNames = {
+    "Gran Árbol Deku",
+    "Cueva de los Dodongos",
+    "Barriga de Jabu-Jabu",
+    "Templo del Bosque",
+    "Templo de Fuego",
+    "Templo del Agua",
+    "Templo del Espíritu",
+    "Templo de las Sombras",
+    "Fondo del Pozo",
+    "Caverna de hielo",
+    "",
+    "Centro de Instrucción Gerudo",
+    "Fortaleza Gerudo",
+    "Castillo de Ganon",
 };
 
-static const std::string SpanishDungeonArticles[] = {
-    "del"s,
-    "de la"s,
-    "de la"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "del"s,
-    "de la"s,
-    ""s,
-    "del"s,
-    "de la"s,
-    "del"s,
+constexpr std::array SpanishDungeonArticles = {
+    "del",
+    "de la",
+    "de la",
+    "del",
+    "del",
+    "del",
+    "del",
+    "del",
+    "del",
+    "de la",
+    "",
+    "del",
+    "de la",
+    "del",
 };
 
-static const u32 DungeonColors[] = {
+constexpr std::array DungeonColors = {
     CustomMessages::QM_GREEN,
     CustomMessages::QM_RED,
     CustomMessages::QM_BLUE,
@@ -103,7 +129,6 @@ static const u32 DungeonColors[] = {
     CustomMessages::QM_RED,
 };
 
-namespace CustomMessages {
     std::set<MessageEntry, MessageEntryComp> messageEntries;
     std::vector<MessageEntry> arrangedMessageEntries;
     std::stringstream messageData;
@@ -134,25 +159,25 @@ namespace CustomMessages {
             messageEntries.insert(newEntry);
     }
 
-    u32 NumMessages(void) {
+    u32 NumMessages() {
         return messageEntries.size();
     }
 
-    std::pair<const char*, u32> RawMessageEntryData(void) {
+    std::pair<const char*, u32> RawMessageEntryData() {
         arrangedMessageEntries.assign(messageEntries.begin(), messageEntries.end());
         const char* data = (const char*)arrangedMessageEntries.data();
         u32 size = arrangedMessageEntries.size() * sizeof(MessageEntry);
         return { data, size };
     }
 
-    std::pair<const char*, u32> RawMessageData(void) {
+    std::pair<const char*, u32> RawMessageData() {
         arrangedMessageData = messageData.str();
         const char* data = arrangedMessageData.data();
         u32 size = arrangedMessageData.size();
         return { data, size };
     }
 
-    void CreateAlwaysIncludedMessages(void) {
+    void CreateAlwaysIncludedMessages() {
         // Bombchu (10) Purchase Prompt
         CreateMessage(0x8C, 0, 2, 3,
             INSTANT_TEXT_ON()+"Bombchu (10): 99 Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
@@ -254,24 +279,24 @@ namespace CustomMessages {
         }
     }
 
-    const std::string MESSAGE_END()          { return  "\x7F\x00"s; }
-    const std::string WAIT_FOR_INPUT()       { return  "\x7F\x01"s; }
-    const std::string HORIZONTAL_SPACE(u8 x) { return  "\x7F\x02"s + char(x); }
-    const std::string INSTANT_TEXT_ON()      { return  "\x7F\x04"s; }
-    const std::string INSTANT_TEXT_OFF()     { return  "\x7F\x05"s; }
-    const std::string SHOP_MESSAGE_BOX()     { return  "\x7F\x06\x00"s; }
-    const std::string EVENT_TRIGGER()        { return  "\x7F\x07"s; }
-    const std::string DELAY_FRAMES(u8 x)     { return  "\x7F\x08"s + char(x); }
-    const std::string CLOSE_AFTER(u8 x)      { return  "\x7F\x0A"s + char(x); }
-    const std::string PLAYER_NAME()          { return  "\x7F\x0B"s; }
-    const std::string PLAY_OCARINA()         { return  "\x7F\x0C"s; }
-    const std::string ITEM_OBTAINED(u8 x)    { return  "\x7F\x0F"s + char(x); }
-    const std::string SET_SPEED(u8 x)        { return  "\x7F\x10"s + char(x); }
-    const std::string SKULLTULAS_DESTROYED() { return  "\x7F\x15"s; }
-    const std::string CURRENT_TIME()         { return  "\x7F\x17"s; }
-    const std::string UNSKIPPABLE()          { return  "\x7F\x19"s; }
-    const std::string TWO_WAY_CHOICE()       { return  "\x7F\x1A\xFF\xFF\xFF\xFF"s; }
-    const std::string NEWLINE()              { return  "\x7F\x1C"s; }
-    const std::string COLOR(u8 x)            { return  "\x7F\x1D"s + char(x); }
-    const std::string CENTER_TEXT()          { return  "\x7F\x1E"s; }
+    std::string MESSAGE_END()          { return  "\x7F\x00"s; }
+    std::string WAIT_FOR_INPUT()       { return  "\x7F\x01"s; }
+    std::string HORIZONTAL_SPACE(u8 x) { return  "\x7F\x02"s + char(x); }
+    std::string INSTANT_TEXT_ON()      { return  "\x7F\x04"s; }
+    std::string INSTANT_TEXT_OFF()     { return  "\x7F\x05"s; }
+    std::string SHOP_MESSAGE_BOX()     { return  "\x7F\x06\x00"s; }
+    std::string EVENT_TRIGGER()        { return  "\x7F\x07"s; }
+    std::string DELAY_FRAMES(u8 x)     { return  "\x7F\x08"s + char(x); }
+    std::string CLOSE_AFTER(u8 x)      { return  "\x7F\x0A"s + char(x); }
+    std::string PLAYER_NAME()          { return  "\x7F\x0B"s; }
+    std::string PLAY_OCARINA()         { return  "\x7F\x0C"s; }
+    std::string ITEM_OBTAINED(u8 x)    { return  "\x7F\x0F"s + char(x); }
+    std::string SET_SPEED(u8 x)        { return  "\x7F\x10"s + char(x); }
+    std::string SKULLTULAS_DESTROYED() { return  "\x7F\x15"s; }
+    std::string CURRENT_TIME()         { return  "\x7F\x17"s; }
+    std::string UNSKIPPABLE()          { return  "\x7F\x19"s; }
+    std::string TWO_WAY_CHOICE()       { return  "\x7F\x1A\xFF\xFF\xFF\xFF"s; }
+    std::string NEWLINE()              { return  "\x7F\x1C"s; }
+    std::string COLOR(u8 x)            { return  "\x7F\x1D"s + char(x); }
+    std::string CENTER_TEXT()          { return  "\x7F\x1E"s; }
 }

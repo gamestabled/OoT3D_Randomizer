@@ -153,12 +153,12 @@ static void WriteSettings() {
 
   //Master Quest Dungeons
   logtxt += "\nMaster Quest Dungeons:\n";
-  for (auto dungeon : Dungeon::dungeonList) {
+  for (const auto* dungeon : Dungeon::dungeonList) {
     if (dungeon->IsMQ()) {
-      logtxt += "\t" + dungeon->GetName() + "\n";
+      logtxt += std::string("\t").append(dungeon->GetName()).append("\n");
     }
   }
-  logtxt += "\n";
+  logtxt += '\n';
 
 }
 

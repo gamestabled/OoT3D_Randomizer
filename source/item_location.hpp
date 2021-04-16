@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <cstdio>
 #include <functional>
@@ -97,13 +98,9 @@ public:
       return excludedOption.Value<bool>();
     }
 
-    bool IsCategory(Category category) {
-      for (const Category& cat : categories) {
-        if (category == cat) {
-          return true;
-        }
-      }
-      return false;
+    bool IsCategory(Category category) const {
+      return std::any_of(categories.begin(), categories.end(),
+                         [category](auto entry) { return entry == category; });
     }
 
     bool IsDungeon() const {
