@@ -64,6 +64,7 @@ namespace Settings {
   };
 
   //Shuffle Settings
+  Option ShuffleRewards      = Option::U8  ("Shuffle Dungeon Rewards",{"End of Dungeons", "Any Dungeon", "Overworld", "Anywhere"},       {shuffleRewardsEndOfDungeon, shuffleRewardsAnyDungeon, shuffleRewardsOverworld, shuffleRewardsAnywhere});
   Option LinksPocketItem     = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
   Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {songsSongLocations, songsDungeonRewards, songsAllLocations});
   Option Tokensanity         = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},                    {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
@@ -76,7 +77,8 @@ namespace Settings {
   Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   //TODO: Medigoron and Carpet Salesman
   std::vector<Option *> shuffleOptions = {
-    //&LinksPocketItem,
+    &ShuffleRewards,
+    &LinksPocketItem,
     &ShuffleSongs,
     &Tokensanity,
     &Scrubsanity,
@@ -438,6 +440,7 @@ namespace Settings {
     ctx.mqDungeonCount       = MQDungeonCount.Value<u8>();
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
 
+    ctx.shuffleRewards       = ShuffleRewards.Value<u8>();
     ctx.linksPocketItem      = LinksPocketItem.Value<u8>();
     ctx.shuffleSongs         = ShuffleSongs.Value<u8>();
     ctx.tokensanity          = Tokensanity.Value<u8>();
@@ -785,6 +788,14 @@ namespace Settings {
       MQDungeonCount.Unhide();
     }
 
+    //Force Link's Pocket Item to be a dungeon reward if Shuffle Rewards is end of dungeons
+    if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
+      LinksPocketItem.Lock();
+      LinksPocketItem.SetSelectedIndex(LINKSPOCKETITEM_DUNGEON_REWARD);
+    } else {
+      LinksPocketItem.Unlock();
+    }
+
     //Only show Medallion Count if setting Ganons Boss Key to LACS Medallions
     if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
       LACSMedallionCount.Unhide();
@@ -872,6 +883,12 @@ namespace Settings {
     auto dungeons = dungeonList;
     Shuffle(dungeons);
 
+    //Clear MQ dungeons
+    for (u8 i = 0; i < dungeons.size(); i++) {
+      dungeons[i]->ClearMQ();
+    }
+
+    //Set appropriate amount of MQ dungeons
     if (RandomMQDungeons) {
       MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
     }

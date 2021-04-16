@@ -48,7 +48,7 @@ static void Gfx_DrawDungeonItems(void) {
 static void Gfx_DrawDungeonRewards(void) {
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
         Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s",
-            DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
+            DungeonNames[dungeonId], (gSettingsContext.shuffleRewards == REWARDSHUFFLE_END_OF_DUNGEON) ? DungeonReward_GetName(dungeonId) : "???");
     }
     Gfx_DrawChangeMenuPrompt();
     Draw_FlushFramebuffer();
@@ -100,7 +100,7 @@ void Gfx_Init(void) {
     // Setup the title screen logo edits
     gObjectTable[330].size = 0xA5CB0;
     gActorOverlayTable[0x171].initInfo->init = EnMag_rInit;
-    
+
     if(gSettingsContext.menuOpeningButton == 0)         closingButton = BUTTON_B | BUTTON_SELECT;
     else if(gSettingsContext.menuOpeningButton == 1)    closingButton = BUTTON_B | BUTTON_START;
     else if(gSettingsContext.menuOpeningButton == 2)    closingButton = BUTTON_B | BUTTON_UP;

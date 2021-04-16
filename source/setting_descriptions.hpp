@@ -50,6 +50,11 @@ extern string_view mqDungeonCountDesc;
 
 extern string_view mirrorWorldDesc;
 
+extern string_view shuffleRewardsEndOfDungeon;
+extern string_view shuffleRewardsAnyDungeon;
+extern string_view shuffleRewardsOverworld;
+extern string_view shuffleRewardsAnywhere;
+
 extern string_view linksPocketDungeonReward;
 extern string_view linksPocketAdvancement;
 extern string_view linksPocketAnything;

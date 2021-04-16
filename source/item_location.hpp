@@ -10,6 +10,7 @@
 #include <set>
 
 #include "../code/include/z3D/z3D.h"
+#include "../code/src/item_override.h"
 #include "category.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
@@ -121,7 +122,10 @@ public:
                               "the location pool. Locations that require an item\n"
                               "to be placed at them based on your current\n"
                               "settings cannot be excluded and won't be shown\n"
-                              "unless you change your settings.";
+                              "unless you change your settings.\n"
+                              "\n"
+                              "If you exclude to many locations, it might not be\n"
+                              "possible to fill the world.";
 
       //add option to forbid any location from progress items
       if (name.length() < 23) {

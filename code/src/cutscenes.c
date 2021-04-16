@@ -235,7 +235,10 @@ void Custcene_OverrideSpiritTemple(void) {
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
-    ItemOverride_PushDungeonReward(DUNGEON_SPIRIT_TEMPLE);
+    if (EventCheck(0x47) == 0) {
+        ItemOverride_PushDungeonReward(DUNGEON_SPIRIT_TEMPLE);
+        EventSet(0x47);
+    }
 }
 
 void Custcene_OverrideShadowTemple(void) {
@@ -243,5 +246,8 @@ void Custcene_OverrideShadowTemple(void) {
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
-    ItemOverride_PushDungeonReward(DUNGEON_SHADOW_TEMPLE);
+    if (EventCheck(0x46) == 0) {
+        ItemOverride_PushDungeonReward(DUNGEON_SHADOW_TEMPLE);
+        EventSet(0x46);
+    }
 }

@@ -257,6 +257,8 @@ namespace Settings {
   extern Option MQDungeonCount;
   extern Option MirrorWorld;
 
+  extern Option ShuffleRewards;
+  extern Option LinksPocketItem;
   extern Option ShuffleSongs;
   extern Option Tokensanity;
   extern Option Scrubsanity;
