@@ -588,8 +588,7 @@ std::vector<std::vector<Item>> ShopItems = {
 };
 
 
-static void PlaceVanillaShopItems() {
-
+static void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
       PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i][j], ShopItems[i][j].GetPrice());
@@ -891,8 +890,8 @@ void GenerateItemPool() {
   }
 
   //Shopsanity
-  if (!Settings::Shopsanity) {
-    PlaceVanillaShopItems();
+  if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
+    PlaceShopItems();
     if (BombchusInLogic) {
       // PlaceItemInLocation(&KF_ShopItem8,    &BuyBombchu5);
       // PlaceItemInLocation(&MK_BazaarItem4,  &BuyBombchu5);
@@ -900,7 +899,9 @@ void GenerateItemPool() {
     }
     AddItemsToPool(ItemPool, normalRupees);
   } else {
-    //shopsanity settings
+    Shuffle(ShopItems); //Shuffle shop items amongst themselves
+    PlaceShopItems();
+    AddItemsToPool(ItemPool, shopsanityRupees);
   }
 
   //scrubsanity
