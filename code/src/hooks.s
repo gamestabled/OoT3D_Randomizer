@@ -67,7 +67,7 @@ hook_OverrideItemID:
     bl ItemOverride_GetItemTextAndItemID
     pop {r0-r12, lr}
     b 0x2BC1DC
-noOverrideItemID:    
+noOverrideItemID:
     ldrb r1,[r6,#0x0]
     b 0x2BC1D4
 
@@ -86,7 +86,7 @@ hook_OverrideGraphicID:
 
     ldr r0,.rActiveItemGraphicId_addr
     ldr r0,[r0]
-    b returnGraphicID    
+    b returnGraphicID
 noOverrideGraphicID:
     mov r0,#-0x1
 returnGraphicID:
@@ -244,51 +244,12 @@ hook_DemoEffectStoneDraw:
     ldr r0,[r4,#0x2A8]
     b 0x1D20A0
 
-#The magic number here is SPIRIT_MEDALLION from dungeon_rewards.h
-.global hook_SpiritTempleBitMask
-hook_SpiritTempleBitMask:
+.global hook_EnKoInitCheckForest
+hook_EnKoInitCheckForest:
     push {r1-r12, lr}
-    mov r0,#0x06
-    bl DungeonReward_GetBitMask
+    bl EnKo_CheckForestTempleBeat
+    tst r0,#0x1
     pop {r1-r12, lr}
-    bx lr
-
-#The magic number here is SHADOW_MEDALLION from dungeon_rewards.h
-.global hook_ShadowTempleBitMask
-hook_ShadowTempleBitMask:
-    push {r1-r12, lr}
-    mov r0,#0x07
-    bl DungeonReward_GetBitMask
-    pop {r1-r12, lr}
-    bx lr
-
-#The magic number here is FOREST_MEDALLION from dungeon_rewards.h
-.global hook_DekuSproutBitMask
-hook_DekuSproutBitMask:
-    push {r0, r2-r12, lr}
-    mov r0,#0x03
-    bl DungeonReward_GetBitMask
-    cpy r1,r0
-    pop {r0, r2-r12, lr}
-    bx lr
-
-.global hook_EnKoInitBitMask
-hook_EnKoInitBitMask:
-    push {r0, r2-r12, lr}
-    mov r0,#0x03
-    bl DungeonReward_GetBitMaskAddr
-    cpy r1,r0
-    pop {r0, r2-r12, lr}
-    bx lr
-
-#The magic number here is WATER_MEDALLION from dungeon_rewards.h
-.global hook_FireArrowBitMask
-hook_FireArrowBitMask:
-    push {r0-r2, r4-r12, lr}
-    mov r0,#0x05
-    bl DungeonReward_GetBitMask
-    cpy r3,r0
-    pop {r0-r2, r4-r12, lr}
     bx lr
 
 .global hook_FireArrowCheckChestFlag

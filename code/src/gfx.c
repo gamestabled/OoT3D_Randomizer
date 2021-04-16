@@ -47,7 +47,7 @@ static void Gfx_DrawDungeonItems(void) {
 static void Gfx_DrawDungeonRewards(void) {
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
         Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s",
-            DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
+            DungeonNames[dungeonId], (gSettingsContext.shuffleRewards == REWARDSHUFFLE_END_OF_DUNGEON) ? DungeonReward_GetName(dungeonId) : "???");
     }
     Gfx_DrawChangeMenuPrompt();
     Draw_FlushFramebuffer();
@@ -107,7 +107,7 @@ void Gfx_Update(void) {
     if (!GfxInit) {
         Gfx_Init();
     }
-    
+
     u8 openingButton = 0;
     if(	(gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) ||
 	(gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt) ||

@@ -8,3 +8,11 @@ u32 EnKo_CheckOpenForest(void) {
         return 0;
     }
 }
+
+u32 EnKo_CheckForestTempleBeat(void) {
+    if (EventCheck(0x48) == 0) {
+      return 0;
+    } else {
+      return 1;
+    }
+}

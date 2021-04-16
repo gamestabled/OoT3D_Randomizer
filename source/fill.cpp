@@ -408,11 +408,6 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
 
 static void RandomizeDungeonRewards() {
 
-  //get stones and medallions
-  std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
-  AssumedFill(rewards, dungeonRewardLocations);
-
-  int baseOffset = I_KokiriEmerald.GetItemID();
   static constexpr std::array<u32, 9> bitMaskTable = {
     0x00040000,
     0x00080000,
@@ -424,15 +419,31 @@ static void RandomizeDungeonRewards() {
     0x00000010,
     0x00000020,
   };
+  int baseOffset = I_KokiriEmerald.GetItemID();
 
-  for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
-    const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
-    rDungeonRewardOverrides[i] = index;
+  if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
+    //get stones and medallions
+    std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    AssumedFill(rewards, dungeonRewardLocations);
 
-    //set the player's dungeon reward on file creation instead of pushing it to them at the start
-    if (i == dungeonRewardLocations.size()-1 /*&& LinksPocket.Is(LINKSPOCKET_DUNGEON_REWARD)*/) {
-      LinksPocketRewardBitMask = bitMaskTable[index];
+    for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
+      const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+      rDungeonRewardOverrides[i] = index;
+
+      //set the player's dungeon reward on file creation instead of pushing it to them at the start
+      if (i == dungeonRewardLocations.size()-1) {
+        LinksPocketRewardBitMask = bitMaskTable[index];
+      }
     }
+  } else if (LinksPocketItem.Is(LINKSPOCKETITEM_DUNGEON_REWARD)) {
+    //get 1 stone/medallion
+    std::vector<Item> rewards = FilterFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    Item startingReward = RandomElement(rewards, true);
+
+    LinksPocketRewardBitMask = bitMaskTable[startingReward.GetItemID() - baseOffset];
+    PlaceItemInLocation(&LinksPocket, startingReward);
+    //erase the stone/medallion from the Item Pool
+    FilterAndEraseFromPool(ItemPool, [startingReward](const Item& i) {return i == startingReward;});
   }
 }
 
@@ -474,7 +485,7 @@ static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
   }
 }
 
-/*Randomize dungeon items restricted to a certain set of locations.
+/*Randomize items restricted to a certain set of locations.
   The fill order of location groups is as follows:
     - Own Dungeon
     - Any Dungeon
@@ -532,6 +543,14 @@ static void RandomizeDungeonItems() {
     AddElementsToPool(overworldItems, gerudoKeys);
   }
 
+  if (ShuffleRewards.Is(REWARDSHUFFLE_ANY_DUNGEON)) {
+    auto rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    AddElementsToPool(anyDungeonItems, rewards);
+  } else if (ShuffleRewards.Is(REWARDSHUFFLE_OVERWORLD)) {
+    auto rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    AddElementsToPool(overworldItems, rewards);
+  }
+
   //Randomize Any Dungeon and Overworld pools
   AssumedFill(anyDungeonItems, anyDungeonLocations);
   AssumedFill(overworldItems, overworldLocations);
@@ -546,6 +565,21 @@ static void RandomizeDungeonItems() {
       AssumedFill(mapAndCompassItems, overworldLocations);
     }
   }
+}
+
+static void RandomizeLinksPocket() {
+  if (LinksPocketItem.Is(LINKSPOCKETITEM_ADVANCEMENT)) {
+   //Get all the advancement items                                                                                     don't include tokens
+   std::vector<Item> advancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i.IsAdvancement() && i.GetItemType() != ITEMTYPE_TOKEN;});
+   //select a random one
+   Item startingItem = RandomElement(advancementItems, true);
+   //add the others back
+   AddElementsToPool(ItemPool, advancementItems);
+
+   PlaceItemInLocation(&LinksPocket, startingItem);
+ } else if (LinksPocketItem.Is(LINKSPOCKETITEM_NOTHING)) {
+   PlaceItemInLocation(&LinksPocket, GreenRupee);
+ }
 }
 
 int Fill() {
@@ -578,6 +612,9 @@ int Fill() {
 
     //Then place dungeon items that are assigned to restrictive pools
     RandomizeDungeonItems();
+
+    //Then place Link's Pocket Item if it has to be an advancement item
+    RandomizeLinksPocket();
 
     //Then place the rest of the advancement items
     std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});

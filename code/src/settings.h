@@ -69,10 +69,17 @@ typedef enum {
 } DungeonMode;
 
 typedef enum {
-  LINKSPOCKET_DUNGEON_REWARD,
-  LINKSPOCKET_ADVANCEMENT,
-  LINKSPOCKET_ANYTHING,
-  LINKSPOCKET_NOTHING,
+  REWARDSHUFFLE_END_OF_DUNGEON,
+  REWARDSHUFFLE_ANY_DUNGEON,
+  REWARDSHUFFLE_OVERWORLD,
+  REWARDSHUFFLE_ANYWHERE,
+} RewardShuffleSetting;
+
+typedef enum {
+  LINKSPOCKETITEM_DUNGEON_REWARD,
+  LINKSPOCKETITEM_ADVANCEMENT,
+  LINKSPOCKETITEM_ANYTHING,
+  LINKSPOCKETITEM_NOTHING,
 } LinksPocketSetting;
 
 typedef enum {
@@ -206,6 +213,7 @@ typedef struct {
   u8 mqDungeonCount;
   u8 mirrorWorld;
 
+  u8 shuffleRewards;
   u8 linksPocketItem;
   u8 shuffleSongs;
   u8 tokensanity;

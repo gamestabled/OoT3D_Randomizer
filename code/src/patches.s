@@ -499,7 +499,7 @@ BombchuBowlingStaticReward_patch:
 .section .patch_DekuTreeItemGive
 .global DekuTreeItemGive_patch
 DekuTreeItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_DekuTreeCutsceneOverride
 .global DekuTreeCutsceneOverride_patch
@@ -510,7 +510,7 @@ DekuTreeCutsceneOverride_patch:
 .section .patch_DodongosCavernItemGive
 .global DodongosCavernItemGive_patch
 DodongosCavernItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_DodongosCavernCutsceneOverride
 .global DodongosCavernCutsceneOverride_patch
@@ -521,7 +521,7 @@ DodongosCavernCutsceneOverride_patch:
 .section .patch_JabuJabuItemGive
 .global JabuJabuItemGive_patch
 JabuJabuItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_JabuJabuCutsceneOverride
 .global JabuJabuCutsceneOverride_patch
@@ -533,17 +533,17 @@ JabuJabuCutsceneOverride_patch:
 .section .patch_ForestTempleItemGive
 .global ForestTempleItemGive_patch
 ForestTempleItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_ForestTempleItemGiveTwo
 .global ForestTempleItemGiveTwo_patch
 ForestTempleItemGiveTwo_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_ForestTempleItemGiveThree
 .global ForestTempleItemGiveThree_patch
 ForestTempleItemGiveThree_patch:
-    b DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_ForestTempleCutsceneOverride
 .global ForestTempleCutsceneOverride_patch
@@ -555,22 +555,22 @@ ForestTempleCutsceneOverride_patch:
 .section .patch_FireTempleItemGive
 .global FireTempleItemGive_patch
 FireTempleItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_FireTempleItemGiveTwo
 .global FireTempleItemGiveTwo_patch
 FireTempleItemGiveTwo_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_FireTempleItemGiveThree
 .global FireTempleItemGiveThree_patch
 FireTempleItemGiveThree_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_FireTempleItemGiveFour
 .global FireTempleItemGiveFour_patch
 FireTempleItemGiveFour_patch:
-    b DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_FireTempleCutsceneOverride
 .global FireTempleCutsceneOverride_patch
@@ -582,17 +582,17 @@ FireTempleCutsceneOverride_patch:
 .section .patch_WaterTempleItemGive
 .global WaterTempleItemGive_patch
 WaterTempleItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_WaterTempleItemGiveTwo
 .global WaterTempleItemGiveTwo_patch
 WaterTempleItemGiveTwo_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_WaterTempleItemGiveThree
 .global WaterTempleItemGiveThree_patch
 WaterTempleItemGiveThree_patch:
-    b DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_WaterTempleCutsceneOverride
 .global WaterTempleCutsceneOverride_patch
@@ -605,22 +605,22 @@ WaterTempleCutsceneOverride_patch:
 .section .patch_SpiritTempleItemGive
 .global SpiritTempleItemGive_patch
 SpiritTempleItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_SpiritTempleItemGiveTwo
 .global SpiritTempleItemGiveTwo_patch
 SpiritTempleItemGiveTwo_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_SpiritTempleItemGiveThree
 .global SpiritTempleItemGiveThree_patch
 SpiritTempleItemGiveThree_patch:
-    b DungeonReward_OverrideItemGive
+    nop
 
-.section .patch_SpiritTempleBitMask
-.global SpiritTempleBitMask_patch
-SpiritTempleBitMask_patch:
-    bl hook_SpiritTempleBitMask
+.section .patch_SpiritTempleCompleteCheck
+.global SpiritTempleCompleteCheck_patch
+SpiritTempleCompleteCheck_patch:
+    nop
 
 .section .patch_SpiritTempleCutsceneOverride
 .global SpiritTempleCutsceneOverride_patch
@@ -631,22 +631,22 @@ SpiritTempleCutsceneOverride_patch:
 .section .patch_ShadowTempleItemGive
 .global ShadowTempleItemGive_patch
 ShadowTempleItemGive_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_ShadowTempleItemGiveTwo
 .global ShadowTempleItemGiveTwo_patch
 ShadowTempleItemGiveTwo_patch:
-    bl DungeonReward_OverrideItemGive
+    nop
 
 .section .patch_ShadowTempleItemGiveThree
 .global ShadowTempleItemGiveThree_patch
 ShadowTempleItemGiveThree_patch:
-    b DungeonReward_OverrideItemGive
+    nop
 
-.section .patch_ShadowTempleBitMask
-.global ShadowTempleBitMask_patch
-ShadowTempleBitMask_patch:
-    bl hook_ShadowTempleBitMask
+.section .patch_ShadowTempleCompleteCheck
+.global ShadowTempleCompleteCheck_patch
+ShadowTempleCompleteCheck_patch:
+    nop
 
 .section .patch_ShadowTempleCutsceneOverride
 .global ShadowTempleCutsceneOverride_patch
@@ -669,15 +669,40 @@ DemoEffectMedallionDraw_patch:
 DemoEffectStoneDraw_patch:
     b hook_DemoEffectStoneDraw
 
-.section .patch_DekuSproutBitMask
-.global DekuSproutBitMask_patch
-DekuSproutBitMask_patch:
-    bl hook_DekuSproutBitMask
+.section .patch_DekuSproutCheckForest
+.global DekuSproutCheckForest_patch
+DekuSproutCheckForest_patch:
+    ldr r0, [r0,#0xEF4]
+    nop
+    tst r0,#0x100
 
-.section .patch_EnKoInitBitMask
-.global EnKoInitBitMask_patch
-EnKoInitBitMask_patch:
-    bl hook_EnKoInitBitMask
+.section .patch_EnKoInitCheckForest_165834
+.global EnKoInitCheckForest_165834_patch
+EnKoInitCheckForest_165834_patch:
+    bl hook_EnKoInitCheckForest
+    nop
+    nop
+
+.section .patch_EnKoInitCheckForest_165878
+.global EnKoInitCheckForest_165878_patch
+EnKoInitCheckForest_165878_patch:
+    bl hook_EnKoInitCheckForest
+    nop
+    nop
+
+.section .patch_EnKoInitCheckForest_1658C0
+.global EnKoInitCheckForest_1658C0_patch
+EnKoInitCheckForest_1658C0_patch:
+    bl hook_EnKoInitCheckForest
+    nop
+    nop
+
+.section .patch_EnKoInitCheckForest_1658F0
+.global EnKoInitCheckForest_1658F0_patch
+EnKoInitCheckForest_1658F0_patch:
+    bl hook_EnKoInitCheckForest
+    nop
+    nop
 
 .section .patch_FireArrowCheckChestFlagOne
 .global FireArrowCheckChestFlagOne_patch
@@ -689,10 +714,12 @@ FireArrowCheckChestFlagOne_patch:
 FireArrowCheckChestFlagTwo_patch:
     bl hook_FireArrowCheckChestFlag
 
-.section .patch_FireArrowBitMask
-.global FireArrowBitMask_patch
-FireArrowBitMask_patch:
-    bl hook_FireArrowBitMask
+.section .patch_FireArrowRequirement
+.global FireArrowRequirement_patch
+FireArrowRequirement_patch:
+    ldr r2, [r1,#0xEF4]
+    nop
+    tst r2,#0x400
 
 .section .patch_BusinessScrubCheckFlags
 .global BusinessScrubCheckFlags_patch

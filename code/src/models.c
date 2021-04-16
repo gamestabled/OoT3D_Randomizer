@@ -313,12 +313,12 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
                 newModel->scale = 0.25f;
                 break;
             case 0x00BA : //Medallions
-                newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
-                break;
+                // newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
+                // break;
             case 0x019C : //Kokiri Emerald
             case 0x019D : //Goron Ruby
             case 0x019E : //Zora Sapphire
-                newModel->scale = 0.082f;
+                newModel->scale = 0.2f;
                 break;
             default:
                 newModel->scale = 0.3f;
@@ -329,7 +329,7 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
 
 void Model_SpawnByActor(Actor* actor, GlobalContext* globalCtx, u16 baseItemId) {
     Model model = { NULL, { 0, 0, 0 }, 0, NULL };
-    
+
     Model_InfoLookup(&model, actor, globalCtx, baseItemId);
     if (model.info.objectId != 0) {
         model.actor = actor;
