@@ -27,8 +27,8 @@ enum class ItemLocationType {
 
 class ItemLocation {
 public:
-    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<Category> categories_)
-        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)) {}
+    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<Category> categories_, u16 price_ = 0)
+        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)), price(price_) {}
 
     ItemOverride_Key Key() const {
         ItemOverride_Key key;
@@ -80,6 +80,11 @@ public:
       placedItem = std::move(item);
     }
 
+    void SetPlacedShopItem(Item item, u16 price_) {
+      placedItem = std::move(item);
+      price = price_;
+    }
+
     //Saves an item to be set as placedItem later
     void SetDelayedItem(Item item) {
       delayedItem = std::move(item);
@@ -93,6 +98,14 @@ public:
     void SaveDelayedItem() {
       placedItem = delayedItem;
       delayedItem = NoItem;
+    }
+
+    u16 GetPrice() const {
+      return price;
+    }
+
+    void SetPrice(u16 price_) {
+      price = price_;
     }
 
     bool IsExcluded() const {
@@ -176,6 +189,7 @@ public:
       addedToPool = false;
       placedItem = NoItem;
       delayedItem = NoItem;
+      price = 0;
     }
 
 private:
@@ -191,6 +205,7 @@ private:
     Item placedItem = NoItem;
     Item delayedItem = NoItem;
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
+    u16 price = 0;
 
 };
 
@@ -1052,6 +1067,7 @@ extern u16 itemsPlaced;
 
 void GenerateLocationPool();
 void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
+void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately = false);
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category);
 void LocationReset();
 void ItemReset();

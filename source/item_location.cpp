@@ -1247,6 +1247,28 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     loc->SetPlacedItem(item);
 }
 
+void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately /*= false*/) {
+
+    PlacementLog_Msg("\n");
+    PlacementLog_Msg(item.GetName());
+    PlacementLog_Msg(" placed at ");
+    PlacementLog_Msg(loc->GetName());
+    PlacementLog_Msg("\n\n");
+
+    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+      item.ApplyEffect();
+      loc->Use();
+    }
+
+    itemsPlaced++;
+    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+    printf("\x1b[8;10HPlacing Items.");
+    if (completion > 0.25) printf(".");
+    if (completion > 0.50) printf(".");
+
+    loc->SetPlacedShopItem(item, price);
+}
+
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category) {
   std::vector<ItemLocation*> locationsInCategory;
   for (auto* loc : locationPool) {
