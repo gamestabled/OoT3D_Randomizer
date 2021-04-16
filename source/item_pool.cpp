@@ -596,6 +596,25 @@ static void PlaceShopItems() {
   }
 }
 
+static int GetShopsanityReplaceAmount() {
+  if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
+    return 1;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_TWO)) {
+    return 2;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_THREE)) {
+    return 3;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_FOUR)) {
+    return 4;
+  } else { //Random
+    return Random(1, 5);
+  }
+}
+
+//OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
+static int GetRandomShopPrice() {
+  return Random(0, 61) * 5;
+}
+
 static void PlaceVanillaDekuScrubItems() {
     PlaceItemInLocation(&ZR_DekuScrubGrottoRear,           RedPotionRefill);
     PlaceItemInLocation(&ZR_DekuScrubGrottoFront,          GreenPotionRefill);
@@ -901,7 +920,19 @@ void GenerateItemPool() {
   } else {
     Shuffle(ShopItems); //Shuffle shop items amongst themselves
     PlaceShopItems();
-    AddItemsToPool(ItemPool, shopsanityRupees);
+    if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
+      AddItemsToPool(ItemPool, normalRupees);
+    } else { //Shopsanity 1-4, random
+      //Overwrite appropriate number of shop items
+      const std::array<int, 4> indices = {7, 5, 8, 6};
+      for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+        int num_to_replace = GetShopsanityReplaceAmount();
+        for(int j = 0; j < num_to_replace; j++) {
+          ShopLocationLists[i][indices[j]-1]->SetPlacedShopItem(NoItem, GetRandomShopPrice()); //Clear item and put a random price
+        }
+      }
+      AddItemsToPool(ItemPool, shopsanityRupees);
+    }
   }
 
   //scrubsanity

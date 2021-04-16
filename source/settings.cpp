@@ -81,7 +81,7 @@ namespace Settings {
     &ShuffleRewards,
     &LinksPocketItem,
     &ShuffleSongs,
-    //&Shopsanity,
+    &Shopsanity,
     &Tokensanity,
     &Scrubsanity,
     &ShuffleCows,
