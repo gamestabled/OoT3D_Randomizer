@@ -442,7 +442,7 @@ void ItemOverride_PushDungeonReward(u8 dungeon) {
 void ItemOverride_CheckStartingItem() {
     //use eventChkInf[0] |= 0x0001 as the check for this
     if (EventCheck(0x00) == 0) {
-        if (gSettingsContext.linksPocketItem != LINKSPOCKET_DUNGEON_REWARD) {
+        if (gSettingsContext.linksPocketItem != LINKSPOCKETITEM_DUNGEON_REWARD) {
             ItemOverride_PushDungeonReward(0xFF); //Push Link's Pocket Reward
         }
         EventSet(0x00);

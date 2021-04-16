@@ -133,7 +133,20 @@ string_view randomMQDungeonsDesc      = "If set, a random number of dungeons wil
 string_view mqDungeonCountDesc        = "Specify the number of Master Quest dungeons to\n"
                                         "appear in the game. Which dungeons become Master\n"
                                         "Quest will be chosen at random.";                 //
-                                                                                           //
+/*------------------------------                                                           //
+|   SHUFFLE DUNGEON REWARDS    |                                                           //
+------------------------------*/                                                           //
+string_view shuffleRewardsEndOfDungeon= "Medallions and Spiritual Stones will be given as\n"
+                                        "rewards for beating dungeons.\n"                  //
+                                        "\n"                                               //
+                                        "This setting will force Link's Pocket to be a\n"  //
+                                        "Medallion or Spiritual Stone.";                   //
+string_view shuffleRewardsAnyDungeon  = "Medallions and Spiritual Stones can only appear\n"//
+                                        "inside of dungeons.";                             //
+string_view shuffleRewardsOverworld   = "Medallions and Spiritual Stones can only appear\n"//
+                                        "outside of dungeons.";                            //
+string_view shuffleRewardsAnywhere    = "Medallions and Spiritual Stones can appear\n"     //
+                                        "anywhere.";                                       //
 /*------------------------------                                                           //
 |        LINK'S POCKET         |                                                           //
 ------------------------------*/                                                           //
@@ -143,7 +156,7 @@ string_view linksPocketAdvancement    = "Link will receive a random advancement 
                                         "beginning of the playthrough.";                   //
 string_view linksPocketAnything       = "Link will receive a random item from the item pool"
                                         "at the beginning of the playthrough.";            //
-string_view linksPocketNothing        = "Link will start with nothing.";                   //
+string_view linksPocketNothing        = "Link will start with a very useful green rupee."; //
 /*------------------------------                                                           //
 |         SONG SHUFFLE         |                                                           //
 ------------------------------*/                                                           //

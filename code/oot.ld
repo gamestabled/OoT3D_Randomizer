@@ -64,8 +64,20 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeOne)
 	}
 
-	.patch_EnKoInitBitMask 0x165760 : {
-		*(.patch_EnKoInitBitMask)
+	.patch_EnKoInitCheckForest_165834 0x165834 : {
+		*(.patch_EnKoInitCheckForest_165834)
+	}
+
+	.patch_EnKoInitCheckForest_165878 0x165878 : {
+		*(.patch_EnKoInitCheckForest_165878)
+	}
+
+	.patch_EnKoInitCheckForest_1658c0 0x1658c0 : {
+		*(.patch_EnKoInitCheckForest_1658c0)
+	}
+
+	.patch_EnKoInitCheckForest_1658f0 0x1658f0 : {
+		*(.patch_EnKoInitCheckForest_1658f0)
 	}
 
 	.patch_KingZoraCheckMovedFlag 0x165A60 : {
@@ -232,8 +244,8 @@ SECTIONS
 		*(.patch_WaterTempleCutsceneOverride)
 	}
 
-	.patch_SpiritTempleBitMask 0x1E4154 : {
-		*(.patch_SpiritTempleBitMask)
+	.patch_SpiritTempleCompleteCheck 0x1E415C : {
+		*(.patch_SpiritTempleCompleteCheck)
 	}
 
 	.patch_SpiritTempleItemGive 0x1E4168 : {
@@ -244,8 +256,8 @@ SECTIONS
 		*(.patch_SpiritTempleCutsceneOverride)
 	}
 
-	.patch_ShadowTempleBitMask 0x1E41DC : {
-		*(.patch_ShadowTempleBitMask)
+	.patch_ShadowTempleCompleteCheck 0x1E41E4 : {
+		*(.patch_ShadowTempleCompleteCheck)
 	}
 
 	.patch_ShadowTempleItemGive 0x1E41F0 : {
@@ -280,8 +292,8 @@ SECTIONS
 		*(.patch_CourtyardCheckForVisitedZeldaTwo)
 	}
 
-	.patch_DekuSproutBitMask 0x2153A8 : {
-		*(.patch_DekuSproutBitMask)
+	.patch_DekuSproutCheckForest 0x2153A4 : {
+		*(.patch_DekuSproutCheckForest)
 	}
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
@@ -632,8 +644,8 @@ SECTIONS
 		*(.patch_HandleDoorDestroyCustomModels)
 	}
 
-	.patch_FireArrowBitMask 0x3F23B0 : {
-		*(.patch_FireArrowBitMask)
+	.patch_FireArrowRequirement 0x3F23AC : {
+		*(.patch_FireArrowRequirement)
 	}
 
 	.patch_FireArrowCheckChestFlagOne 0x3F23FC : {
