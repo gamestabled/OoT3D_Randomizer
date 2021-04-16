@@ -908,7 +908,20 @@ void GenerateItemPool() {
     }
     AddItemsToPool(ItemPool, normalRupees);
   } else {
-    Shuffle(ShopItems); //Shuffle shop items amongst themselves
+    //Make sure tunics are not shuffled into child-only shops
+    bool tunicInChild = true;
+    while(tunicInChild) {
+      Shuffle(ShopItems); //Shuffle shop items amongst themselves
+      tunicInChild = false;
+      //16-23: Bombchu, 24-31: Market Potion, 32-39: Market Bazaar
+      for(int i = 16; i < 40; i++) {
+        //Tunics were placed in a child-only location, run loop again to re-shuffle
+        if (ShopItems[i] == BuyZoraTunic || ShopItems[i] == BuyGoronTunic) {
+          tunicInChild = true;
+          break;
+        }
+      }
+    }
     PlaceShopItems();
     if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
       AddItemsToPool(ItemPool, normalRupees);
