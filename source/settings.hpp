@@ -261,6 +261,7 @@ namespace Settings {
   extern Option ShuffleRewards;
   extern Option LinksPocketItem;
   extern Option ShuffleSongs;
+  extern Option Shopsanity;
   extern Option Tokensanity;
   extern Option Scrubsanity;
   extern Option ShuffleCows;
@@ -308,7 +309,6 @@ namespace Settings {
   extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
-  extern bool Shopsanity;
 
   extern bool ForestTrialSkip;
   extern bool FireTrialSkip;

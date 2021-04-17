@@ -179,6 +179,27 @@ string_view songsDungeonRewards       = "Songs appear at the end of dungeons. Fo
 string_view songsAllLocations         = "Songs can appear in any location.";               //
                                                                                            //
 /*------------------------------                                                           //
+|         SHOPSANITY           |                                                           //
+------------------------------*/                                                           //
+string_view shopsOff                  = "All shop items will be the same as vanilla.";     //
+string_view shopsZero                 = "Vanilla shop items will be shuffled among\n"      //
+                                        "different shops.";                                //
+string_view shopsOne                  = "Vanilla shop items will be shuffled among\n"      //
+                                        "different shops, and each shop will contain\n"    //
+                                        "one non-vanilla shop item.";                      //
+string_view shopsTwo                  = "Vanilla shop items will be shuffled among\n"      //
+                                        "different shops, and each shop will contain\n"    //
+                                        "two non-vanilla shop items.";                     //
+string_view shopsThree                = "Vanilla shop items will be shuffled among\n"      //
+                                        "different shops, and each shop will contain\n"    //
+                                        "three non-vanilla shop items.";                   //
+string_view shopsFour                 = "Vanilla shop items will be shuffled among\n"      //
+                                        "different shops, and each shop will contain\n"    //
+                                        "four non-vanilla shop items.";                    //
+string_view shopsRandom               = "Vanilla shop items will be shuffled among\n"      //
+                                        "different shops, and each shop will contain\n"    //
+                                        "1-4 non-vanilla shop items.";                     //
+/*------------------------------                                                           //
 |         TOKENSANITY          |                                                           //
 ------------------------------*/                                                           //
 string_view tokensOff                 = "GS locations will not be shuffled.";              //

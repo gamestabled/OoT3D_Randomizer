@@ -91,6 +91,16 @@ typedef enum {
 } SongShuffleSetting;
 
 typedef enum {
+  SHOPSANITY_OFF,
+  SHOPSANITY_ZERO,
+  SHOPSANITY_ONE,
+  SHOPSANITY_TWO,
+  SHOPSANITY_THREE,
+  SHOPSANITY_FOUR,
+  SHOPSANITY_RANDOM,
+} ShopsanitySetting;
+
+typedef enum {
   TOKENSANITY_OFF,
   TOKENSANITY_DUNGEONS,
   TOKENSANITY_OVERWORLD,

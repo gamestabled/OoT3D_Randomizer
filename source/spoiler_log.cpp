@@ -82,6 +82,22 @@ static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item)
   logtxt += '\n';
 }
 
+static void SpoilerLog_SaveShopLocation(std::string_view loc, std::string_view item, u16 price) {
+  std::string locandprice = "";
+  locandprice += loc;
+  locandprice += " (Price: " + std::to_string(price) + ")";
+  logtxt += locandprice;
+  logtxt += ": ";
+
+  // Formatting for spoiler log
+  constexpr u32 LONGEST_LINE = 56;
+  const auto remainingSpaces = LONGEST_LINE - locandprice.size();
+  logtxt.append(remainingSpaces, ' ');
+
+  logtxt += item;
+  logtxt += '\n';
+}
+
 static auto GetGeneralPath() {
   std::string path = "/3ds/" + Settings::seed;
   for (auto& str : randomizerHash)
@@ -192,7 +208,12 @@ bool SpoilerLog_Write() {
   logtxt += "\nAll Locations:\n";
   for (ItemLocation* location : allLocations) {
     logtxt += "\t";
-    SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+    if (location->IsCategory(Category::cShop)) { //Shop item
+      SpoilerLog_SaveShopLocation(location->GetName(), location->GetPlacedItemName(), location->GetPrice());
+    }
+    else { //Normal item
+      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+    }
     logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
 
