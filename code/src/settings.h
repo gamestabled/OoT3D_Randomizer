@@ -45,6 +45,7 @@ typedef enum {
   RAINBOWBRIDGE_VANILLA,
   RAINBOWBRIDGE_STONES,
   RAINBOWBRIDGE_MEDALLIONS,
+  RAINBOWBRIDGE_REWARDS,
   RAINBOWBRIDGE_DUNGEONS,
   RAINBOWBRIDGE_TOKENS,
 } RainbowBridgeSetting;
@@ -53,6 +54,7 @@ typedef enum {
   LACSCONDITION_VANILLA,
   LACSCONDITION_STONES,
   LACSCONDITION_MEDALLIONS,
+  LACSCONDITION_REWARDS,
   LACSCONDITION_DUNGEONS,
   LACSCONDITION_TOKENS,
 } LACSConditionSetting;
@@ -146,6 +148,7 @@ typedef enum {
   GANONSBOSSKEY_LACS_VANILLA,
   GANONSBOSSKEY_LACS_MEDALLIONS,
   GANONSBOSSKEY_LACS_STONES,
+  GANONSBOSSKEY_LACS_REWARDS,
   GANONSBOSSKEY_LACS_DUNGEONS,
   GANONSBOSSKEY_LACS_TOKENS,
 } GanonsBossKeySetting;
@@ -200,6 +203,7 @@ typedef struct {
   u8 rainbowBridge;
   u8 bridgeStoneCount;
   u8 bridgeMedallionCount;
+  u8 bridgeRewardCount;
   u8 bridgeDungeonCount;
   u8 bridgeTokenCount;
   u8 randomGanonsTrials;
@@ -233,6 +237,7 @@ typedef struct {
   u8 lacsCondition;
   u8 lacsMedallionCount;
   u8 lacsStoneCount;
+  u8 lacsRewardCount;
   u8 lacsDungeonCount;
   u8 lacsTokenCount;
 

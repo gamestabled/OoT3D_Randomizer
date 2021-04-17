@@ -224,3 +224,19 @@ u8 SaveFile_GetStoneCount(void) {
     }
     return count;
 }
+
+u8 SaveFile_GetDungeonCount(void) {
+    u8 count = 0;
+
+    //Adult dungeons
+    for (u8 i = 0x6; i <= 0xA; i++) {
+        count += (gSaveContext.eventChkInf[4] >> i) & 0x1;
+    }
+
+    //Child dungeons
+    count += (gSaveContext.eventChkInf[0] >> 9) & 0x1; //Deku Tree
+    count += (gSaveContext.eventChkInf[2] >> 5) & 0x1; //Dodongo's Cavern
+    count += (gSaveContext.eventChkInf[3] >> 7) & 0x1; //Jabu Jabu's Belly
+
+    return count;
+}

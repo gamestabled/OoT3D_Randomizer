@@ -15,8 +15,12 @@ u32 BgGjyoBridge_ConditionMedallions(void) {
     return SaveFile_GetMedallionCount() >= gSettingsContext.bridgeMedallionCount;
 }
 
+u32 BgGjyoBridge_ConditionRewards(void) {
+    return SaveFile_GetMedallionCount() + SaveFile_GetStoneCount() >= gSettingsContext.bridgeRewardCount;
+}
+
 u32 BgGjyoBridge_ConditionDungeons(void) {
-    return SaveFile_GetMedallionCount() + SaveFile_GetStoneCount() >= gSettingsContext.bridgeDungeonCount;
+    return SaveFile_GetDungeonCount() >= gSettingsContext.bridgeDungeonCount;
 }
 
 u32 BgGjyoBridge_CheckCondition(void) {
@@ -29,6 +33,8 @@ u32 BgGjyoBridge_CheckCondition(void) {
             return BgGjyoBridge_ConditionStones();
         case RAINBOWBRIDGE_MEDALLIONS:
             return BgGjyoBridge_ConditionMedallions();
+        case RAINBOWBRIDGE_REWARDS:
+            return BgGjyoBridge_ConditionRewards();
         case RAINBOWBRIDGE_DUNGEONS:
             return BgGjyoBridge_ConditionDungeons();
         case RAINBOWBRIDGE_TOKENS:

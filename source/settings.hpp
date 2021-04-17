@@ -244,6 +244,7 @@ namespace Settings {
   extern Option Bridge;
   extern Option BridgeStoneCount;
   extern Option BridgeMedallionCount;
+  extern Option BridgeRewardCount;
   extern Option BridgeDungeonCount;
   extern Option BridgeTokenCount;
   extern Option RandomGanonsTrials;
@@ -277,6 +278,7 @@ namespace Settings {
   extern u8 LACSCondition;
   extern Option LACSMedallionCount;
   extern Option LACSStoneCount;
+  extern Option LACSRewardCount;
   extern Option LACSDungeonCount;
   extern Option LACSTokenCount;
 

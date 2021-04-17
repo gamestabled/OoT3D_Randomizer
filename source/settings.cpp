@@ -17,21 +17,22 @@ namespace Settings {
   std::string version = RANDOMIZER_VERSION "-COMMITNUM";
   std::array<u8, 5> hashIconIndexes;
 
-  //                                        Setting name,              Options,                                                          Setting Descriptions (assigned in setting_descriptions.cpp)
-  //Open Settings                                                                                                                        Any option index past the last description will use the last description
-  Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                                        {logicGlitchless, logicNoLogic});
-  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                                {forestClosed, forestOpen});
-  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                {kakGateClosed, kakGateOpen});
-  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                                {doorOfTimeDesc});
-  Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                       {fountainNormal, fountainAdult, fountainOpen});
-  Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                        {gerudoNormal, gerudoFast, gerudoOpen});
-  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeDungeons, bridgeTokens});
-  Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                              {bridgeStoneCountDesc});
-  Option BridgeMedallionCount= Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                               {bridgeMedallionCountDesc});
-  Option BridgeDungeonCount  = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                {bridgeDungeonCountDesc});
-  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},               {bridgeTokenCountDesc});
-  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                                     {randomGanonsTrialsDesc});
-  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                               {ganonsTrialCountDesc});
+  //                                        Setting name,              Options,                                                                     Setting Descriptions (assigned in setting_descriptions.cpp)
+  //Open Settings                                                                                                                                   Any option index past the last description will use the last description
+  Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                                                   {logicGlitchless, logicNoLogic});
+  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                                           {forestClosed, forestOpen});
+  Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
+  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                                           {doorOfTimeDesc});
+  Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
+  Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {gerudoNormal, gerudoFast, gerudoOpen});
+  Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens});
+  Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                                         {bridgeStoneCountDesc});
+  Option BridgeMedallionCount= Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                                          {bridgeMedallionCountDesc});
+  Option BridgeRewardCount   = Option::U8  ("  Reward Count",         {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                           {bridgeRewardCountDesc});
+  Option BridgeDungeonCount  = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8"},                                {bridgeDungeonCountDesc});
+  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},                          {bridgeTokenCountDesc});
+  Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                                                {randomGanonsTrialsDesc});
+  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                                          {ganonsTrialCountDesc});
   std::vector<Option *> openOptions = {
     &Logic,
     &OpenForest,
@@ -42,6 +43,7 @@ namespace Settings {
     &Bridge,
     &BridgeStoneCount,
     &BridgeMedallionCount,
+    &BridgeRewardCount,
     &BridgeDungeonCount,
     &BridgeTokenCount,
     &RandomGanonsTrials,
@@ -100,12 +102,13 @@ namespace Settings {
                                                                       {gerudoKeysVanilla, gerudoKeysAnyDungeon, gerudoKeysOverworld, gerudoKeysAnywhere});
   Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
                                                                       {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere});
-  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Dungeons", "LACS-Tokens"},
+  Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens"},
                                                                       {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnywhere, ganonKeyLACS});
   u8 LACSCondition           = 0;
   Option LACSMedallionCount  = Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                                    {lacsMedallionCountDesc});
   Option LACSStoneCount      = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                                   {lacsStoneCountDesc});
-  Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                     {lacsDungeonCountDesc});
+  Option LACSRewardCount     = Option::U8  ("  Reward Count",         {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                     {lacsRewardCountDesc});
+  Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8"},                          {lacsDungeonCountDesc});
   Option LACSTokenCount      = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},                    {lacsTokenCountDesc});
   std::vector<Option *> shuffleDungeonItemOptions = {
     &MapsAndCompasses,
@@ -115,6 +118,7 @@ namespace Settings {
     &GanonsBossKey,
     &LACSMedallionCount,
     &LACSStoneCount,
+    &LACSRewardCount,
     &LACSDungeonCount,
     &LACSTokenCount,
   };
@@ -426,6 +430,7 @@ namespace Settings {
     ctx.rainbowBridge        = Bridge.Value<u8>();
     ctx.bridgeStoneCount     = BridgeStoneCount.Value<u8>();
     ctx.bridgeMedallionCount = BridgeMedallionCount.Value<u8>();
+    ctx.bridgeRewardCount    = BridgeRewardCount.Value<u8>();
     ctx.bridgeDungeonCount   = BridgeDungeonCount.Value<u8>();
     ctx.bridgeTokenCount     = BridgeTokenCount.Value<u8>();
     ctx.randomGanonsTrials   = (RandomGanonsTrials) ? 1 : 0;
@@ -460,6 +465,7 @@ namespace Settings {
     ctx.lacsCondition        = LACSCondition;
     ctx.lacsMedallionCount   = LACSMedallionCount.Value<u8>();
     ctx.lacsStoneCount       = LACSStoneCount.Value<u8>();
+    ctx.lacsRewardCount      = LACSRewardCount.Value<u8>();
     ctx.lacsDungeonCount     = LACSDungeonCount.Value<u8>();
     ctx.lacsTokenCount       = LACSTokenCount.Value<u8>();
 
@@ -734,10 +740,10 @@ namespace Settings {
 
     //Only show stone count option if Stones is selected
     if (Bridge.Is(RAINBOWBRIDGE_STONES)) {
+      BridgeStoneCount.SetSelectedIndex(3);
       BridgeStoneCount.Unhide();
     } else {
       BridgeStoneCount.Hide();
-      BridgeStoneCount.SetSelectedIndex(3);
     }
 
     //Only show medallion count option if Medallions is selected
@@ -748,27 +754,35 @@ namespace Settings {
       BridgeMedallionCount.SetSelectedIndex(6);
     }
 
-    //Only show dungeon count option if Dungeons is selected
+    //Only show reward count option if Rewards is selected
+    if (Bridge.Is(RAINBOWBRIDGE_REWARDS)) {
+      BridgeRewardCount.SetSelectedIndex(9);
+      BridgeRewardCount.Unhide();
+    } else {
+      BridgeRewardCount.Hide();
+    }
+
+    //Only show reward count option if Rewards is selected
     if (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) {
+      BridgeDungeonCount.SetSelectedIndex(8);
       BridgeDungeonCount.Unhide();
     } else {
       BridgeDungeonCount.Hide();
-      BridgeDungeonCount.SetSelectedIndex(9);
     }
 
     //Only show token count option if Tokens is selected
     if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
+      BridgeTokenCount.SetSelectedIndex(1);
       BridgeTokenCount.Unhide();
     } else {
       BridgeTokenCount.Hide();
-      BridgeTokenCount.SetSelectedIndex(1);
     }
 
     //Only show Trial Count option if Random Trial Count is off
     if (RandomGanonsTrials) {
       GanonsTrialsCount.Hide();
-      GanonsTrialsCount.SetSelectedIndex(6);
     } else {
+      GanonsTrialsCount.SetSelectedIndex(6);
       GanonsTrialsCount.Unhide();
     }
 
@@ -783,8 +797,8 @@ namespace Settings {
     //Only show MQ Dungeon Count if Random MQ Dungeons is off
     if (RandomMQDungeons) {
       MQDungeonCount.Hide();
-      MQDungeonCount.SetSelectedIndex(0);
     } else {
+      MQDungeonCount.SetSelectedIndex(0);
       MQDungeonCount.Unhide();
     }
 
@@ -812,11 +826,19 @@ namespace Settings {
       LACSStoneCount.Hide();
     }
 
+    //Only show Reward Count if setting Ganons Boss Key to LACS Rewards
+    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS)) {
+      LACSRewardCount.Unhide();
+    } else {
+      LACSRewardCount.SetSelectedIndex(9);
+      LACSRewardCount.Hide();
+    }
+
     //Only show Dungeon Count if setting Ganons Boss Key to LACS Dungeons
     if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
       LACSDungeonCount.Unhide();
     } else {
-      LACSDungeonCount.SetSelectedIndex(9);
+      LACSDungeonCount.SetSelectedIndex(8);
       LACSDungeonCount.Hide();
     }
 
@@ -926,6 +948,8 @@ namespace Settings {
       LACSCondition = LACSCONDITION_MEDALLIONS;
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES)) {
       LACSCondition = LACSCONDITION_STONES;
+    } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS)) {
+      LACSCondition = LACSCONDITION_REWARDS;
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
       LACSCondition = LACSCONDITION_DUNGEONS;
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {

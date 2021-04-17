@@ -247,6 +247,7 @@ namespace Logic {
   //Bridge and LACS Requirements
   u8 MedallionCount          = 0;
   u8 StoneCount              = 0;
+  u8 DungeonCount            = 0;
   bool HasAllStones          = false;
   bool HasAllMedallions      = false;
   bool CanBuildRainbowBridge = false;
@@ -469,6 +470,7 @@ namespace Logic {
     //Bridge and LACS Requirements
     MedallionCount        = (ForestMedallion ? 1:0) + (FireMedallion ? 1:0) + (WaterMedallion ? 1:0) + (SpiritMedallion ? 1:0) + (ShadowMedallion ? 1:0) + (LightMedallion ? 1:0);
     StoneCount            = (KokiriEmerald ? 1:0) + (GoronRuby ? 1:0) + (ZoraSapphire ? 1:0);
+    DungeonCount          = (DekuTreeClear ? 1:0) + (DodongosCavernClear ? 1:0) + (JabuJabusBellyClear ? 1:0) + (ForestTempleClear ? 1:0) + (FireTempleClear ? 1:0) + (WaterTempleClear ? 1:0) + (SpiritTempleClear ? 1:0) + (ShadowTempleClear ? 1:0);
     HasAllStones          = StoneCount == 3;
     HasAllMedallions      = MedallionCount == 6;
 
@@ -476,13 +478,15 @@ namespace Logic {
                            (Bridge.Is(RAINBOWBRIDGE_VANILLA)    && ShadowMedallion && SpiritMedallion && LightArrows)             ||
                            (Bridge.Is(RAINBOWBRIDGE_STONES)     && StoneCount >= BridgeStoneCount.Value<u8>())                    ||
                            (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && MedallionCount >= BridgeMedallionCount.Value<u8>())            ||
-                           (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && StoneCount + MedallionCount >= BridgeDungeonCount.Value<u8>()) ||
+                           (Bridge.Is(RAINBOWBRIDGE_REWARDS)    && StoneCount + MedallionCount >= BridgeRewardCount.Value<u8>())  ||
+                           (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)   && DungeonCount >= BridgeDungeonCount.Value<u8>())                ||
                            (Bridge.Is(RAINBOWBRIDGE_TOKENS)     && GoldSkulltulaTokens >= BridgeTokenCount.Value<u8>());
 
     CanTriggerLACS = (LACSCondition == LACSCONDITION_VANILLA    && ShadowMedallion && SpiritMedallion)                          ||
                      (LACSCondition == LACSCONDITION_STONES     && StoneCount >= LACSStoneCount.Value<u8>())                    ||
                      (LACSCondition == LACSCONDITION_MEDALLIONS && MedallionCount >= LACSMedallionCount.Value<u8>())            ||
-                     (LACSCondition == LACSCONDITION_DUNGEONS   && StoneCount + MedallionCount >= LACSDungeonCount.Value<u8>()) ||
+                     (LACSCondition == LACSCONDITION_REWARDS    && StoneCount + MedallionCount >= LACSRewardCount.Value<u8>())  ||
+                     (LACSCondition == LACSCONDITION_DUNGEONS   && DungeonCount >= LACSDungeonCount.Value<u8>())                ||
                      (LACSCondition == LACSCONDITION_TOKENS     && GoldSkulltulaTokens >= LACSTokenCount.Value<u8>());
 
   }
@@ -521,7 +525,7 @@ namespace Logic {
      return false;
    }
 
-   //Reset All Logic to true or false
+   //Reset All Logic to false
    void LogicReset() {
      //Child item logic
      KokiriSword   = false;

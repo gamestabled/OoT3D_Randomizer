@@ -1696,7 +1696,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit DodongosCavern_BossArea = Exit("Dodongos Cavern Boss Area", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&FairyPot, []{return true;}),
+                  EventPairing(&FairyPot,            []{return true;}),
+                  EventPairing(&DodongosCavernClear, []{return DodongosCavernClear || ((Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword));})
                 }, {
                   //Locations
                   ItemLocationPairing(&DodongosCavern_BossRoomChest,    []{return true;}),
@@ -1743,7 +1744,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit JabuJabusBelly_BossArea = Exit("Jabu Jabus Belly Boss Area", "Jabu Jabus Belly", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&NutPot, []{return true;}),
+                  EventPairing(&NutPot,              []{return true;}),
+                  EventPairing(&JabuJabusBellyClear, []{return JabuJabusBellyClear || CanUse(CanUseItem::Boomerang);}),
                 }, {
                   //Locations
                   ItemLocationPairing(&JabuJabusBelly_BarinadeHeart, []{return CanUse(CanUseItem::Boomerang);}),
@@ -1857,7 +1859,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&ForestTemple_FallingRoom, []{return SmallKeys(ForestTempleKeys, 5) && (Bow || CanUse(CanUseItem::Dins_Fire));})
   });
 
-  Exit ForestTemple_BossRegion = Exit("Forest Temple Boss Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit ForestTemple_BossRegion = Exit("Forest Temple Boss Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventPairing(&ForestTempleClear, []{return ForestTempleClear || (BossKeyForestTemple);}),
+  }, {
                   //Locations
                   ItemLocationPairing(&ForestTemple_BasementChest,     []{return true;}),
                   ItemLocationPairing(&ForestTemple_PhantomGanonHeart, []{return BossKeyForestTemple;}),
@@ -1868,7 +1873,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
   //Fire Temple logic currently assumes that the lowest locked door is unlocked from the start
   Exit FireTemple_Lower = Exit("Fire Temple Lower", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&FairyPot, []{return FairyPot || ((CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot)) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic)));}),
+                  EventPairing(&FairyPot,        []{return FairyPot || ((CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot)) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic)));}),
+                  EventPairing(&FireTempleClear, []{return FireTempleClear || (CanUse(CanUseItem::Goron_Tunic) && CanUse(CanUseItem::Hammer) && BossKeyFireTemple &&
+                                                                                (LogicFireBossDoorJump || HoverBoots ||
+                                                                                  (FireTemple_Upper.Adult() && (CanPlay(SongOfTime) || HasExplosives))));})
                 }, {
                   //Locations
                   ItemLocationPairing(&FireTemple_NearBossChest,    []{return LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic);}),
@@ -1935,8 +1943,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit WaterTemple_HighestWaterLevel = Exit("Water Temple Highest Water Level", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&FairyPot,         []{return FairyPot           || CanUse(CanUseItem::Longshot);}),
-                  EventPairing(&WaterTempleClear, []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);})
+                  EventPairing(&FairyPot,         []{return FairyPot         || CanUse(CanUseItem::Longshot);}),
+                  EventPairing(&WaterTempleClear, []{return WaterTempleClear || (BossKeyWaterTemple && CanUse(CanUseItem::Longshot));})
                 }, {
                   //Locations
                   ItemLocationPairing(&Morpha,                  []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);}),
@@ -2099,7 +2107,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&SpiritTemple_BeyondFinalLockedDoor, []{return SmallKeys(SpiritTempleKeys, 5) && (LogicSpiritWall || CanUse(CanUseItem::Longshot) || HasBombchus || ((Bombs || Nuts || CanUse(CanUseItem::Dins_Fire)) && (Bow || CanUse(CanUseItem::Hookshot) || Hammer)));}),
   });
 
-  Exit SpiritTemple_BeyondFinalLockedDoor = Exit("Spirit Temple Beyond Final Locked Door", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit SpiritTemple_BeyondFinalLockedDoor = Exit("Spirit Temple Beyond Final Locked Door", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventPairing(&SpiritTempleClear, []{return SpiritTempleClear || (MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple);}),
+  }, {
                   //Locations
                   ItemLocationPairing(&SpiritTemple_BossKeyChest,  []{return CanPlay(ZeldasLullaby) && Bow && Hookshot;}),
                   ItemLocationPairing(&SpiritTemple_TopmostChest,  []{return MirrorShield;}),
@@ -2166,7 +2177,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&ShadowTemple_BeyondBoat, []{return CanPlay(ZeldasLullaby) && SmallKeys(ShadowTempleKeys, 4);}),
   });
 
-  Exit ShadowTemple_BeyondBoat = Exit("Shadow Temple Beyond Boat", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit ShadowTemple_BeyondBoat = Exit("Shadow Temple Beyond Boat", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventPairing(&ShadowTempleClear, []{return ShadowTempleClear || (SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse(CanUseItem::Distant_Scarecrow) || (LogicShadowStatue && HasBombchus)));}),
+  }, {
                   //Locations
                   ItemLocationPairing(&ShadowTemple_SpikeWallsLeftChest,       []{return CanUse(CanUseItem::Dins_Fire);}),
                   ItemLocationPairing(&ShadowTemple_BossKeyChest,              []{return CanUse(CanUseItem::Dins_Fire);}),
@@ -2531,7 +2545,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit DodongosCavern_MQ_BossArea = Exit("Dodongos Cavern MQ BossArea", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    EventPairing(&FairyPot, []{return true;}),
+    EventPairing(&FairyPot,            []{return true;}),
+    EventPairing(&DodongosCavernClear, []{return DodongosCavernClear || (CanBlastOrSmash && (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword));}),
   }, {
     //Locations
     ItemLocationPairing(&DodongosCavern_MQ_UnderGraveChest, []{return true;}),
@@ -2584,7 +2599,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit JabuJabusBelly_MQ_BossArea = Exit("Jabu Jabus Belly MQ Boss Area", "Jabu Jabus Belly", "", NO_DAY_NIGHT_CYCLE, {
     //Events
-    EventPairing(&FairyPot, []{return true;}),
+    EventPairing(&FairyPot,            []{return true;}),
+    EventPairing(&JabuJabusBellyClear, []{return true;}),
   }, {
     //Locations
     ItemLocationPairing(&JabuJabusBelly_MQ_Cow,           []{return CanPlay(EponasSong);}),
@@ -2712,7 +2728,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
     ExitPairing::Both(&ForestTemple_MQ_NEOutdoorsLedge, []{return true;}),
   });
 
-  Exit ForestTemple_MQ_BossRegion = Exit("Forest Temple MQ Boss Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit ForestTemple_MQ_BossRegion = Exit("Forest Temple MQ Boss Region", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&ForestTempleClear, []{return ForestTempleClear || BossKeyForestTemple;}),
+  }, {
     //Locations
     ItemLocationPairing(&ForestTemple_MQ_BasementChest,  []{return true;}),
     ItemLocationPairing(&ForestTemple_PhantomGanonHeart, []{return BossKeyForestTemple;}),
@@ -2796,7 +2815,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
       //Trick: (CanUse(CanUseItem::Hookshot) && SmallKeys(FireTempleKeys, 5)) || (LogicFireMQAboveMazeGS && CanUse(CanUseItem::Longshot))
   }, {});
 
-  Exit FireTemple_MQ_BossRoom = Exit("Fire Temple MQ Boss Room", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit FireTemple_MQ_BossRoom = Exit("Fire Temple MQ Boss Room", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&FireTempleClear, []{return true;}),
+  }, {
     //Locations
     ItemLocationPairing(&FireTemple_VolvagiaHeart, []{return true;}),
     ItemLocationPairing(&Volvagia, []{return true;}),
@@ -2926,7 +2948,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
     ItemLocationPairing(&SpiritTemple_MQ_GS_SymphonyRoom,         []{return SmallKeys(SpiritTempleKeys, 7) && Hammer && Ocarina && SongOfTime && EponasSong && SunsSong && SongOfStorms && ZeldasLullaby;}),
   }, {});
 
-  Exit SpiritTemple_MQ_BossArea = Exit("Spirit Temple MQ Boss Area", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit SpiritTemple_MQ_BossArea = Exit("Spirit Temple MQ Boss Area", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&SpiritTempleClear, []{return SpiritTempleClear || (MirrorShield && BossKeySpiritTemple);})
+  }, {
     //Locations
     ItemLocationPairing(&SpiritTemple_MQ_MirrorPuzzleInvisibleChest, []{return LogicLensSpiritMQ || CanUse(CanUseItem::Lens_of_Truth);}),
     ItemLocationPairing(&SpiritTemple_TwinrovaHeart,                 []{return MirrorShield && BossKeySpiritTemple;}),
@@ -3014,7 +3039,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
     ExitPairing::Both(&ShadowTemple_MQ_BeyondBoat, []{return CanPlay(ZeldasLullaby) && SmallKeys(ShadowTempleKeys, 5);}),
   });
 
-  Exit ShadowTemple_MQ_BeyondBoat = Exit("Shadow Temple MQ Beyond Boat", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit ShadowTemple_MQ_BeyondBoat = Exit("Shadow Temple MQ Beyond Boat", "Shadow Temple", "", NO_DAY_NIGHT_CYCLE, {
+    //Events
+    EventPairing(&ShadowTempleClear, []{return ShadowTempleClear || ((Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple);})
+  }, {
     //Locations
     ItemLocationPairing(&ShadowTemple_BongoBongoHeart, []{return (Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple;}),
     ItemLocationPairing(&BongoBongo,                   []{return (Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple;}),

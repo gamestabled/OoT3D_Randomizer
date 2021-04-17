@@ -22,8 +22,12 @@ u32 LACS_ConditionMedallions(void) {
     return SaveFile_GetMedallionCount() >= gSettingsContext.lacsMedallionCount;
 }
 
+u32 LACS_ConditionRewards(void) {
+    return SaveFile_GetStoneCount() + SaveFile_GetMedallionCount() >= gSettingsContext.lacsRewardCount;
+}
+
 u32 LACS_ConditionDungeons(void) {
-    return SaveFile_GetStoneCount() + SaveFile_GetMedallionCount() >= gSettingsContext.lacsDungeonCount;
+    return SaveFile_GetDungeonCount() >= gSettingsContext.lacsDungeonCount;
 }
 
 u32 LACS_ConditionTokens(void) {
@@ -42,6 +46,9 @@ void Cutscene_OverrideLACS(void) {
             break;
         case LACSCONDITION_MEDALLIONS:
             conditionMet = LACS_ConditionMedallions();
+            break;
+        case LACSCONDITION_REWARDS:
+            conditionMet = LACS_ConditionRewards();
             break;
         case LACSCONDITION_DUNGEONS:
             conditionMet = LACS_ConditionDungeons();
