@@ -72,8 +72,13 @@ string_view bridgeStones              = "The Rainbow Bridge requires collecting 
                                         "configurable number of Spiritual Stones.";        //
 string_view bridgeMedallions          = "The Rainbow Bridge requires collecting a\n"       //
                                         "configurable number of Medallions.";              //
-string_view bridgeDungeons            = "The Rainbow Bridge requires collecting a\n"       //
+string_view bridgeRewards             = "The Rainbow Bridge requires collecting a\n"       //
                                         "configurable number of Dungeon Rewards.";         //
+string_view bridgeDungeons            = "The Rainbow Bridge requires completing a\n"       //
+                                        "configurable number of Dungeons.\n"               //
+                                        "\n"                                               //
+                                        "Dungeons are considered complete when Link steps\n"
+                                        "into the blue warp at the end of them.";          //
 string_view bridgeTokens              = "The Rainbow Bridge requires collecting a\n"       //
                                         "configurable number of Gold Skulltula Tokens.";   //
 /*------------------------------                                                           //
@@ -83,9 +88,11 @@ string_view bridgeStoneCountDesc      = "Set the number of Spiritual Stones requ
                                         "spawn the Rainbow Bridge.";                       //
 string_view bridgeMedallionCountDesc  = "Set the number of Medallions required to spawn the"
                                         "Rainbow Bridge.";                                 //
-string_view bridgeDungeonCountDesc    = "Set the number of Dungeon Rewards (Spiritual\n"   //
+string_view bridgeRewardCountDesc     = "Set the number of Dungeon Rewards (Spiritual\n"   //
                                         "Stones and Medallions) required to spawn the\n"   //
                                         "Rainbow Bridge.";                                 //
+string_view bridgeDungeonCountDesc    = "Set the number of completed dungeons required to\n"
+                                        "spawn the Rainbow Bridge.";                       //
 string_view bridgeTokenCountDesc      = "Set the number of Gold Skulltula Tokens required\n"
                                         "to spawn the Rainbow Bridge.";                    //
 /*------------------------------                                                           //
@@ -343,9 +350,14 @@ string_view lacsMedallionCountDesc    = "Set the number of Medallions required t
                                         "the Light Arrow Cutscene.";                       //
 string_view lacsStoneCountDesc        = "Set the number of Spiritual Stones required to\n" //
                                         "trigger the Light Arrow Cutscene.";               //
-string_view lacsDungeonCountDesc      = "Set the number of Dungeon Rewards (Spiritual\n"   //
+string_view lacsRewardCountDesc       = "Set the number of Dungeon Rewards (Spiritual\n"   //
                                         "Stones and Medallions) required to trigger the\n" //
                                         "Light Arrow Cutscene.";                           //
+string_view lacsDungeonCountDesc      = "Set the number of completed dungeons required to\n"
+                                        "trigger the Light Arrow Cutscene.\n"              //
+                                        "\n"                                               //
+                                        "Dungeons are considered complete when Link steps\n"
+                                        "into the blue warp at the end of them.";          //
 string_view lacsTokenCountDesc        = "Set the number of Gold Skulltula Tokens required\n"
                                         "to trigger the Light Arrow Cutscene.";            //
 /*------------------------------                                                           //

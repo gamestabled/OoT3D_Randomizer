@@ -5,5 +5,6 @@
 
 u8 SaveFile_GetMedallionCount(void);
 u8 SaveFile_GetStoneCount(void);
+u8 SaveFile_GetDungeonCount(void);
 
 #endif //_SAVEFILE_H_
