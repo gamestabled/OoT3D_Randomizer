@@ -740,9 +740,9 @@ namespace Settings {
 
     //Only show stone count option if Stones is selected
     if (Bridge.Is(RAINBOWBRIDGE_STONES)) {
-      BridgeStoneCount.SetSelectedIndex(3);
       BridgeStoneCount.Unhide();
     } else {
+      BridgeStoneCount.SetSelectedIndex(3);
       BridgeStoneCount.Hide();
     }
 
@@ -756,33 +756,33 @@ namespace Settings {
 
     //Only show reward count option if Rewards is selected
     if (Bridge.Is(RAINBOWBRIDGE_REWARDS)) {
-      BridgeRewardCount.SetSelectedIndex(9);
       BridgeRewardCount.Unhide();
     } else {
+      BridgeRewardCount.SetSelectedIndex(9);
       BridgeRewardCount.Hide();
     }
 
     //Only show reward count option if Rewards is selected
     if (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) {
-      BridgeDungeonCount.SetSelectedIndex(8);
       BridgeDungeonCount.Unhide();
     } else {
+      BridgeDungeonCount.SetSelectedIndex(8);
       BridgeDungeonCount.Hide();
     }
 
     //Only show token count option if Tokens is selected
     if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
-      BridgeTokenCount.SetSelectedIndex(1);
       BridgeTokenCount.Unhide();
     } else {
+      BridgeTokenCount.SetSelectedIndex(1);
       BridgeTokenCount.Hide();
     }
 
     //Only show Trial Count option if Random Trial Count is off
     if (RandomGanonsTrials) {
+      GanonsTrialsCount.SetSelectedIndex(6);
       GanonsTrialsCount.Hide();
     } else {
-      GanonsTrialsCount.SetSelectedIndex(6);
       GanonsTrialsCount.Unhide();
     }
 
@@ -796,9 +796,9 @@ namespace Settings {
 
     //Only show MQ Dungeon Count if Random MQ Dungeons is off
     if (RandomMQDungeons) {
+      MQDungeonCount.SetSelectedIndex(0);
       MQDungeonCount.Hide();
     } else {
-      MQDungeonCount.SetSelectedIndex(0);
       MQDungeonCount.Unhide();
     }
 
