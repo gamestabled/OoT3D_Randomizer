@@ -540,6 +540,10 @@ SECTIONS
 		*(.patch_GetToken1)
 	}
 
+        .patch_TalonGetCastleTextbox 0x3AE6E8 : {
+                *(.patch_TalonGetCastleTextbox)
+        }
+
 	.patch_GerudoArcheryOne 0x3AFA34 : {
 		*(.patch_GerudoArcheryOne)
 	}
