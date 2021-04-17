@@ -134,6 +134,7 @@ constexpr std::array DungeonColors = {
     std::stringstream messageData;
     std::string arrangedMessageData;
 
+    //textBoxType and textBoxPosition are defined here: https://wiki.cloudmodding.com/oot/Text_Format#Message_Id
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
         std::string englishText, std::string frenchText, std::string spanishText) {
             MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
