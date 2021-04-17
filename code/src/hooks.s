@@ -444,6 +444,14 @@ hook_HandleDoorDestroyCustomModels:
     str r0,[r4,#0x3E4]
     bx lr
 
+.global hook_TalonGetCastleTextbox
+hook_TalonGetCastleTextbox:
+    push {r0, r2-r12, lr}
+    bl EnTa_GetCastleTextbox
+    mov r1, r0
+    pop {r0, r2-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

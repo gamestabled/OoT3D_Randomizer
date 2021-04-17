@@ -134,9 +134,9 @@ constexpr std::array DungeonColors = {
     std::stringstream messageData;
     std::string arrangedMessageData;
 
-    void CreateMessage(u32 textId, u32 unk_04, u32 unk_08, u32 unk_0C,
+    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
         std::string englishText, std::string frenchText, std::string spanishText) {
-            MessageEntry newEntry = { textId, unk_04, unk_08, unk_0C, { 0 } };
+            MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
             while ((englishText.size() % 4) != 0) englishText += "\0"s;
             messageData.seekg(0, messageData.end);
@@ -277,11 +277,18 @@ constexpr std::array DungeonColors = {
                     +"Te daré "+COLOR(QM_RED)+"50 rupias "+COLOR(QM_WHITE)+"por él."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Y además agregaré "+COLOR(QM_RED)+"100 puntos "+COLOR(QM_WHITE)+"en tu"+NEWLINE()+"tarjeta."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"¡Si llegas a "+COLOR(QM_RED)+std::to_string(poes * 100)+" puntos"+COLOR(QM_WHITE)+", serás muy feliz!"+NEWLINE()+"Je, je, je..."+MESSAGE_END());
         }
+        
+        //Talon (this is to prevent accidentally skipping Malon in HC)
+        CreateMessage(0x9100, 0, 2, 0,
+            UNSKIPPABLE()+"You should go talk to my daughter Malon,"+NEWLINE()+"she has an item for you."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"I have to think about some stuff now,"+NEWLINE()+"please don't distract me."+MESSAGE_END(),
+            UNSKIPPABLE()+"Parle avec Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END(),
+            UNSKIPPABLE()+"Habla con Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
     }
 
     std::string MESSAGE_END()          { return  "\x7F\x00"s; }
     std::string WAIT_FOR_INPUT()       { return  "\x7F\x01"s; }
     std::string HORIZONTAL_SPACE(u8 x) { return  "\x7F\x02"s + char(x); }
+    std::string GO_TO(u16 x)           { return  "\x7F\x03"s + char(x >> 8) + char(x & 0x00FF); }
     std::string INSTANT_TEXT_ON()      { return  "\x7F\x04"s; }
     std::string INSTANT_TEXT_OFF()     { return  "\x7F\x05"s; }
     std::string SHOP_MESSAGE_BOX()     { return  "\x7F\x06\x00"s; }

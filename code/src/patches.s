@@ -1070,6 +1070,11 @@ DoorOfTimeOpenCutscene_patch:
     ldrh r0,[r0,#0x4]
     cmp r0,#0x43
 
+.section .patch_TalonGetCastleTextbox
+.global TalonGetCastleTextbox_patch
+TalonGetCastleTextbox_patch:
+    bl hook_TalonGetCastleTextbox
+
 .section .patch_loader
 .global loader_patch
 
