@@ -1,9 +1,7 @@
 #pragma once
+
 #include <3ds.h>
-
 #include <string>
-
-#include "preset.hpp"
 
 #define MAIN_MENU 0
 #define OPTION_SUB_MENU 1

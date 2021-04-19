@@ -1,11 +1,11 @@
 #include <3ds.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <dirent.h>
-#include <time.h>
 
-#include <cstring>
 #include <algorithm>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <ctime>
 
 #include "cosmetics.hpp"
 #include "menu.hpp"

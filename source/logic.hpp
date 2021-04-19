@@ -1,7 +1,5 @@
 #pragma once
-#include <string>
-#include <cstdio>
-#include <algorithm>
+
 #include <3ds.h>
 
 namespace Logic {
@@ -320,11 +318,11 @@ namespace Logic {
     Either,
   };
 
-  extern void UpdateHelpers();
-  extern bool CanPlay(bool song);
-  extern bool CanUse(CanUseItem itemName);
-  extern bool HasProjectile(HasProjectileAge age);
-  extern bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
-  extern bool EventsUpdated();
-  extern void LogicReset();
+  void UpdateHelpers();
+  bool CanPlay(bool song);
+  bool CanUse(CanUseItem itemName);
+  bool HasProjectile(HasProjectileAge age);
+  bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
+  bool EventsUpdated();
+  void LogicReset();
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include <3ds.h>
-#include <string>
 
-extern void CitraPrint(std::string_view str);
+#include <string_view>
+
+void CitraPrint(std::string_view str);

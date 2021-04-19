@@ -1,11 +1,11 @@
 #pragma once
 
+#include <array>
 #include <string>
 #include <string_view>
-#include <vector>
-#include "item_location.hpp"
 
 using RandomizerHash = std::array<std::string, 5>;
+
 void GenerateHash();
 const RandomizerHash& GetRandomizerHash();
 

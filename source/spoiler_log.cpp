@@ -1,8 +1,10 @@
 #include "spoiler_log.hpp"
-#include "item_list.hpp"
-#include "settings.hpp"
-#include "random.hpp"
+
 #include "dungeon.hpp"
+#include "item_list.hpp"
+#include "item_location.hpp"
+#include "random.hpp"
+#include "settings.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -10,6 +12,7 @@
 #include <cstring>
 #include <set>
 #include <string>
+#include <vector>
 
 namespace {
   FS_Archive sdmcArchive = 0;

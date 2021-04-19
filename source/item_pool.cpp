@@ -1,9 +1,13 @@
 #include "item_pool.hpp"
-#include "random.hpp"
-#include "spoiler_log.hpp"
-#include "fill.hpp"
-#include "pool_functions.hpp"
+
 #include "dungeon.hpp"
+#include "fill.hpp"
+#include "item_list.hpp"
+#include "item_location.hpp"
+#include "pool_functions.hpp"
+#include "random.hpp"
+#include "settings.hpp"
+#include "spoiler_log.hpp"
 
 using namespace Settings;
 using namespace Dungeon;

@@ -1,5 +1,7 @@
 #include "random.hpp"
 
+#include <random>
+
 static bool init = false;
 static std::mt19937_64 generator;
 
