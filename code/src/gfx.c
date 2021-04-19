@@ -125,7 +125,13 @@ void Gfx_Update(void) {
         Gfx_Init();
     }
 
-    if(gSaveContext.gameMode == 0 && openingButton()) {
+    s32 entr = gSaveContext.entranceIndex;
+    s32 mode = gSaveContext.gameMode;
+    if(openingButton() && 
+        (mode == 0 || 
+        (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D)
+        )
+      ){
         Gfx_ShowMenu();
         svcSleepThread(1000 * 1000 * 300LL);
     }
