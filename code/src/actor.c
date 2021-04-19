@@ -11,6 +11,7 @@
 #include "cow.h"
 #include "string.h"
 #include "ganondorf_organ.h"
+#include "checkable_spot.h"
 
 #define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
 #define OBJECT_CUSTOM_ZELDAS_LULLABY 5
@@ -57,6 +58,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
+
+    gActorOverlayTable[0x185].initInfo->update = EnWonderTalk2_rUpdate;
 
     gActorOverlayTable[0x195].initInfo->init = EnShopnuts_rInit;
 
