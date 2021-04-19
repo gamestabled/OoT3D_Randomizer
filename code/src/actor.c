@@ -12,6 +12,7 @@
 #include "string.h"
 #include "ganondorf_organ.h"
 #include "checkable_spot.h"
+#include "twinrova.h"
 
 #define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
 #define OBJECT_CUSTOM_ZELDAS_LULLABY 5
@@ -44,6 +45,9 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
+    
+    gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;
+    gActorOverlayTable[0xDC].initInfo->draw = Boss_Tw_rDraw;
 
     gActorOverlayTable[0xF1].initInfo->init = ItemOcarina_rInit;
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
