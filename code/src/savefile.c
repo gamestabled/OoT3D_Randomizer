@@ -44,6 +44,8 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
+    
+    gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
     if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA) {
