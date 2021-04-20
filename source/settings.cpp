@@ -69,6 +69,7 @@ namespace Settings {
   Option ShuffleRewards      = Option::U8  ("Shuffle Dungeon Rewards",{"End of Dungeons", "Any Dungeon", "Overworld", "Anywhere"},       {shuffleRewardsEndOfDungeon, shuffleRewardsAnyDungeon, shuffleRewardsOverworld, shuffleRewardsAnywhere});
   Option LinksPocketItem     = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
   Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {songsSongLocations, songsDungeonRewards, songsAllLocations});
+  Option Shopsanity          = Option::U8  ("Shopsanity",             {"Off", "0", "1", "2", "3", "4", "Random"},                        {shopsOff, shopsZero, shopsOne, shopsTwo, shopsThree, shopsFour, shopsRandom});
   Option Tokensanity         = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},                    {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
   Option Scrubsanity         = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
   Option ShuffleCows         = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {shuffleCowsDesc});
@@ -82,6 +83,7 @@ namespace Settings {
     &ShuffleRewards,
     &LinksPocketItem,
     &ShuffleSongs,
+    //&Shopsanity,
     &Tokensanity,
     &Scrubsanity,
     &ShuffleCows,
@@ -591,11 +593,14 @@ namespace Settings {
 
     //Force include shops if shopsanity is off
     std::vector<ItemLocation*> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
-    if (Shopsanity) {
-      Unhide(shopLocations);
-    } else {
-      IncludeAndHide(shopLocations);
-    }
+    // if (Shopsanity.IsNot(SHOPSANITY_OFF)) {
+    //   Unhide(shopLocations);
+    // } else {
+    //   IncludeAndHide(shopLocations);
+    // }
+    //For now, just always hide shop locations, as not sure how to handle hiding them-
+    //1-4 should always be hidden, while the others should be settings dependent, but random shopsanity makes that more complicated...
+    IncludeAndHide(shopLocations);
 
     //Force include song locations
     std::vector<ItemLocation*> songLocations = GetLocations(everyPossibleLocation, Category::cSong);
@@ -865,7 +870,6 @@ namespace Settings {
   bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
-  bool Shopsanity                       = false;
 
   //Skipped Trials (initially set to true, then false ones filtered out)
   bool ForestTrialSkip                  = true;

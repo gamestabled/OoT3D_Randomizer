@@ -66,6 +66,14 @@ extern string_view songsSongLocations;
 extern string_view songsDungeonRewards;
 extern string_view songsAllLocations;
 
+extern string_view shopsOff;
+extern string_view shopsZero;
+extern string_view shopsOne;
+extern string_view shopsTwo;
+extern string_view shopsThree;
+extern string_view shopsFour;
+extern string_view shopsRandom;
+
 extern string_view tokensOff;
 extern string_view tokensDungeon;
 extern string_view tokensOverworld;

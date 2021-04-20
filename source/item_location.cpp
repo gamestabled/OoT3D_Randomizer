@@ -774,6 +774,16 @@ ItemLocation KF_ShopItem5                                 = ItemLocation::Base(0
 ItemLocation KF_ShopItem6                                 = ItemLocation::Base(0x2D, 0x35, "KF Shop Item 6",                                   {Category::cKokiriForest, Category::cForest, Category::cShop});
 ItemLocation KF_ShopItem7                                 = ItemLocation::Base(0x2D, 0x36, "KF Shop Item 7",                                   {Category::cKokiriForest, Category::cForest, Category::cShop});
 ItemLocation KF_ShopItem8                                 = ItemLocation::Base(0x2D, 0x37, "KF Shop Item 8",                                   {Category::cKokiriForest, Category::cForest, Category::cShop});
+std::vector<ItemLocation*> KF_ShopLocations = {
+  &KF_ShopItem1,
+  &KF_ShopItem2,
+  &KF_ShopItem3,
+  &KF_ShopItem4,
+  &KF_ShopItem5,
+  &KF_ShopItem6,
+  &KF_ShopItem7,
+  &KF_ShopItem8,
+};
 
 ItemLocation Kak_PotionShopItem1                          = ItemLocation::Base(0x30, 0x30, "Kak Potion Shop Item 1",                           {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_PotionShopItem2                          = ItemLocation::Base(0x30, 0x31, "Kak Potion Shop Item 2",                           {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
@@ -783,6 +793,16 @@ ItemLocation Kak_PotionShopItem5                          = ItemLocation::Base(0
 ItemLocation Kak_PotionShopItem6                          = ItemLocation::Base(0x30, 0x35, "Kak Potion Shop Item 6",                           {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_PotionShopItem7                          = ItemLocation::Base(0x30, 0x36, "Kak Potion Shop Item 7",                           {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_PotionShopItem8                          = ItemLocation::Base(0x30, 0x37, "Kak Potion Shop Item 8",                           {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+std::vector<ItemLocation*> Kak_PotionShopLocations = {
+  &Kak_PotionShopItem1,
+  &Kak_PotionShopItem2,
+  &Kak_PotionShopItem3,
+  &Kak_PotionShopItem4,
+  &Kak_PotionShopItem5,
+  &Kak_PotionShopItem6,
+  &Kak_PotionShopItem7,
+  &Kak_PotionShopItem8,
+};
 
 ItemLocation MK_BombchuShopItem1                          = ItemLocation::Base(0x32, 0x30, "MK Bombchu Shop Item 1",                           {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_BombchuShopItem2                          = ItemLocation::Base(0x32, 0x31, "MK Bombchu Shop Item 2",                           {Category::cInnerMarket, Category::cMarket, Category::cShop});
@@ -792,6 +812,16 @@ ItemLocation MK_BombchuShopItem5                          = ItemLocation::Base(0
 ItemLocation MK_BombchuShopItem6                          = ItemLocation::Base(0x32, 0x35, "MK Bombchu Shop Item 6",                           {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_BombchuShopItem7                          = ItemLocation::Base(0x32, 0x36, "MK Bombchu Shop Item 7",                           {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_BombchuShopItem8                          = ItemLocation::Base(0x32, 0x37, "MK Bombchu Shop Item 8",                           {Category::cInnerMarket, Category::cMarket, Category::cShop});
+std::vector<ItemLocation*> MK_BombchuShopLocations = {
+  &MK_BombchuShopItem1,
+  &MK_BombchuShopItem2,
+  &MK_BombchuShopItem3,
+  &MK_BombchuShopItem4,
+  &MK_BombchuShopItem5,
+  &MK_BombchuShopItem6,
+  &MK_BombchuShopItem7,
+  &MK_BombchuShopItem8,
+};
 
 ItemLocation MK_PotionShopItem1                           = ItemLocation::Base(0x31, 0x30, "MK Potion Shop Item 1",                            {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_PotionShopItem2                           = ItemLocation::Base(0x31, 0x31, "MK Potion Shop Item 2",                            {Category::cInnerMarket, Category::cMarket, Category::cShop});
@@ -801,6 +831,16 @@ ItemLocation MK_PotionShopItem5                           = ItemLocation::Base(0
 ItemLocation MK_PotionShopItem6                           = ItemLocation::Base(0x31, 0x35, "MK Potion Shop Item 6",                            {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_PotionShopItem7                           = ItemLocation::Base(0x31, 0x36, "MK Potion Shop Item 7",                            {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_PotionShopItem8                           = ItemLocation::Base(0x31, 0x37, "MK Potion Shop Item 8",                            {Category::cInnerMarket, Category::cMarket, Category::cShop});
+std::vector<ItemLocation*> MK_PotionShopLocations = {
+  &MK_PotionShopItem1,
+  &MK_PotionShopItem2,
+  &MK_PotionShopItem3,
+  &MK_PotionShopItem4,
+  &MK_PotionShopItem5,
+  &MK_PotionShopItem6,
+  &MK_PotionShopItem7,
+  &MK_PotionShopItem8,
+};
 
 ItemLocation MK_BazaarItem1                               = ItemLocation::Base(0x2C, 0x30, "MK Bazaar Item 1",                                 {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_BazaarItem2                               = ItemLocation::Base(0x2C, 0x31, "MK Bazaar Item 2",                                 {Category::cInnerMarket, Category::cMarket, Category::cShop});
@@ -810,6 +850,16 @@ ItemLocation MK_BazaarItem5                               = ItemLocation::Base(0
 ItemLocation MK_BazaarItem6                               = ItemLocation::Base(0x2C, 0x35, "MK Bazaar Item 6",                                 {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_BazaarItem7                               = ItemLocation::Base(0x2C, 0x36, "MK Bazaar Item 7",                                 {Category::cInnerMarket, Category::cMarket, Category::cShop});
 ItemLocation MK_BazaarItem8                               = ItemLocation::Base(0x2C, 0x37, "MK Bazaar Item 8",                                 {Category::cInnerMarket, Category::cMarket, Category::cShop});
+std::vector<ItemLocation*> MK_BazaarLocations = {
+  &MK_BazaarItem1,
+  &MK_BazaarItem2,
+  &MK_BazaarItem3,
+  &MK_BazaarItem4,
+  &MK_BazaarItem5,
+  &MK_BazaarItem6,
+  &MK_BazaarItem7,
+  &MK_BazaarItem8,
+};
 
 ItemLocation Kak_BazaarItem1                              = ItemLocation::Base(0x2C, 0x38, "Kak Bazaar Item 1",                                {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem2                              = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
@@ -819,6 +869,16 @@ ItemLocation Kak_BazaarItem5                              = ItemLocation::Base(0
 ItemLocation Kak_BazaarItem6                              = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 6",                                {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem7                              = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 7",                                {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem8                              = ItemLocation::Base(0x2C, 0x40, "Kak Bazaar Item 8",                                {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+std::vector<ItemLocation*> Kak_BazaarLocations = {
+  &Kak_BazaarItem1,
+  &Kak_BazaarItem2,
+  &Kak_BazaarItem3,
+  &Kak_BazaarItem4,
+  &Kak_BazaarItem5,
+  &Kak_BazaarItem6,
+  &Kak_BazaarItem7,
+  &Kak_BazaarItem8,
+};
 
 ItemLocation ZD_ShopItem1                                 = ItemLocation::Base(0x2F, 0x30, "ZD Shop Item 1",                                   {Category::cZorasDomain, Category::cShop});
 ItemLocation ZD_ShopItem2                                 = ItemLocation::Base(0x2F, 0x31, "ZD Shop Item 2",                                   {Category::cZorasDomain, Category::cShop});
@@ -828,6 +888,16 @@ ItemLocation ZD_ShopItem5                                 = ItemLocation::Base(0
 ItemLocation ZD_ShopItem6                                 = ItemLocation::Base(0x2F, 0x35, "ZD Shop Item 6",                                   {Category::cZorasDomain, Category::cShop});
 ItemLocation ZD_ShopItem7                                 = ItemLocation::Base(0x2F, 0x36, "ZD Shop Item 7",                                   {Category::cZorasDomain, Category::cShop});
 ItemLocation ZD_ShopItem8                                 = ItemLocation::Base(0x2F, 0x37, "ZD Shop Item 8",                                   {Category::cZorasDomain, Category::cShop});
+std::vector<ItemLocation*> ZD_ShopLocations = {
+  &ZD_ShopItem1,
+  &ZD_ShopItem2,
+  &ZD_ShopItem3,
+  &ZD_ShopItem4,
+  &ZD_ShopItem5,
+  &ZD_ShopItem6,
+  &ZD_ShopItem7,
+  &ZD_ShopItem8,
+};
 
 ItemLocation GC_ShopItem1                                 = ItemLocation::Base(0x2E, 0x30, "GC Shop Item 1",                                   {Category::cGoronCity, Category::cShop});
 ItemLocation GC_ShopItem2                                 = ItemLocation::Base(0x2E, 0x31, "GC Shop Item 2",                                   {Category::cGoronCity, Category::cShop});
@@ -837,6 +907,28 @@ ItemLocation GC_ShopItem5                                 = ItemLocation::Base(0
 ItemLocation GC_ShopItem6                                 = ItemLocation::Base(0x2E, 0x35, "GC Shop Item 6",                                   {Category::cGoronCity, Category::cShop});
 ItemLocation GC_ShopItem7                                 = ItemLocation::Base(0x2E, 0x36, "GC Shop Item 7",                                   {Category::cGoronCity, Category::cShop});
 ItemLocation GC_ShopItem8                                 = ItemLocation::Base(0x2E, 0x37, "GC Shop Item 8",                                   {Category::cGoronCity, Category::cShop});
+std::vector<ItemLocation*> GC_ShopLocations = {
+  &GC_ShopItem1,
+  &GC_ShopItem2,
+  &GC_ShopItem3,
+  &GC_ShopItem4,
+  &GC_ShopItem5,
+  &GC_ShopItem6,
+  &GC_ShopItem7,
+  &GC_ShopItem8,
+};
+
+//List of shop location lists, used for shop shuffle
+std::vector<std::vector<ItemLocation*>> ShopLocationLists = {
+  KF_ShopLocations,
+  Kak_PotionShopLocations,
+  MK_BombchuShopLocations,
+  MK_PotionShopLocations,
+  MK_BazaarLocations,
+  Kak_BazaarLocations,
+  ZD_ShopLocations,
+  GC_ShopLocations,
+};
 
 std::vector<ItemLocation*> dungeonRewardLocations = {
   //Bosses
@@ -1245,6 +1337,29 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     if (completion > 0.50) printf(".");
 
     loc->SetPlacedItem(item);
+}
+
+//Same as PlaceItemInLocation, except a price is set as well as the item
+void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately /*= false*/) {
+
+    PlacementLog_Msg("\n");
+    PlacementLog_Msg(item.GetName());
+    PlacementLog_Msg(" placed at ");
+    PlacementLog_Msg(loc->GetName());
+    PlacementLog_Msg("\n\n");
+
+    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+      item.ApplyEffect();
+      loc->Use();
+    }
+
+    itemsPlaced++;
+    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+    printf("\x1b[8;10HPlacing Items.");
+    if (completion > 0.25) printf(".");
+    if (completion > 0.50) printf(".");
+
+    loc->SetPlacedShopItem(item, price);
 }
 
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category) {

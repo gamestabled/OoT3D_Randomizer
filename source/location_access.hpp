@@ -46,7 +46,7 @@ public:
            conditions_met(conditions_met_) {}
 
     bool ConditionsMet() const {
-        return conditions_met();
+        return conditions_met() && CanBuy();
     }
 
     ItemLocation* GetLocation() {
@@ -64,6 +64,35 @@ public:
 private:
     ItemLocation* location;
     ConditionFn conditions_met;
+
+    //Makes sure shop locations are buyable
+    bool CanBuy() const {
+      //Not a shop location, don't need to check if buyable
+      if(!location->IsCategory(Category::cShop)) { 
+        return true;
+      }
+      //Check if wallet is large enough to buy item
+      bool SufficientWallet = true;
+      if (location->GetPrice() > 500) {
+        SufficientWallet = Logic::ProgressiveWallet >= 3;
+      } else if (location->GetPrice() > 200) {
+        SufficientWallet = Logic::ProgressiveWallet >= 2;
+      } else if (location->GetPrice() > 99) {
+        SufficientWallet = Logic::ProgressiveWallet >= 1;
+      }
+      //Check for other conditions on buy items
+      bool OtherCondition = true;
+      //Need to be adult to buy tunic
+      Item placed = location->GetPlacedItem();
+      if (placed == BuyGoronTunic || placed == BuyZoraTunic) {
+        OtherCondition = Logic::IsAdult;
+      }
+      //Need bottle to buy bottle items, only logically relevant bottle items included here 
+      else if (placed == BuyBlueFire || placed == BuyBottleBug || placed == BuyFish || placed == BuyFairysSpirit) {
+        OtherCondition = Logic::HasBottle;
+      }
+      return SufficientWallet && OtherCondition;
+    }
 };
 
 class ExitPairing {

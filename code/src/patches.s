@@ -1075,6 +1075,12 @@ DoorOfTimeOpenCutscene_patch:
     DungeonCheckJabuMQBox_patch:
     bl Dungeon_GetJabuJabusBellyDungeonMode
 
+.section .patch_TalonGetCastleTextbox
+.global TalonGetCastleTextbox_patch
+TalonGetCastleTextbox_patch:
+    bl hook_TalonGetCastleTextbox
+
+
 .section .patch_loader
 .global loader_patch
 

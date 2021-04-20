@@ -17,6 +17,7 @@ namespace CustomMessages {
     std::string MESSAGE_END();
     std::string WAIT_FOR_INPUT();
     std::string HORIZONTAL_SPACE(u8 x);
+    std::string GO_TO(u16 x);
     std::string INSTANT_TEXT_ON();
     std::string INSTANT_TEXT_OFF();
     std::string SHOP_MESSAGE_BOX();

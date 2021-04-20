@@ -496,71 +496,111 @@ void PlaceJunkInExcludedLocation(ItemLocation * il) {
   printf("ERROR: No Junk to Place!!!\n");
 }
 
-static void PlaceVanillaShopItems() {
-  PlaceItemInLocation(&KF_ShopItem1,        BuyDekuShield);
-  PlaceItemInLocation(&KF_ShopItem2,        BuyDekuNut5);
-  PlaceItemInLocation(&KF_ShopItem3,        BuyDekuNut10);
-  PlaceItemInLocation(&KF_ShopItem4,        BuyDekuStick1);
-  PlaceItemInLocation(&KF_ShopItem5,        BuyDekuSeeds30);
-  PlaceItemInLocation(&KF_ShopItem6,        BuyArrows10);
-  PlaceItemInLocation(&KF_ShopItem7,        BuyArrows30);
-  PlaceItemInLocation(&KF_ShopItem8,        BuyHeart);
-  PlaceItemInLocation(&Kak_PotionShopItem1, BuyDekuNut5);
-  PlaceItemInLocation(&Kak_PotionShopItem2, BuyFish);
-  PlaceItemInLocation(&Kak_PotionShopItem3, BuyRedPotion30);
-  PlaceItemInLocation(&Kak_PotionShopItem4, BuyGreenPotion);
-  PlaceItemInLocation(&Kak_PotionShopItem5, BuyBlueFire);
-  PlaceItemInLocation(&Kak_PotionShopItem6, BuyBottleBug);
-  PlaceItemInLocation(&Kak_PotionShopItem7, BuyPoe);
-  PlaceItemInLocation(&Kak_PotionShopItem8, BuyFairysSpirit);
-  PlaceItemInLocation(&MK_BombchuShopItem1, BuyBombchu5);
-  PlaceItemInLocation(&MK_BombchuShopItem2, BuyBombchu10);
-  PlaceItemInLocation(&MK_BombchuShopItem3, BuyBombchu10);
-  PlaceItemInLocation(&MK_BombchuShopItem4, BuyBombchu10);
-  PlaceItemInLocation(&MK_BombchuShopItem5, BuyBombchu20);
-  PlaceItemInLocation(&MK_BombchuShopItem6, BuyBombchu20);
-  PlaceItemInLocation(&MK_BombchuShopItem7, BuyBombchu20);
-  PlaceItemInLocation(&MK_BombchuShopItem8, BuyBombchu20);
-  PlaceItemInLocation(&MK_PotionShopItem1,  BuyGreenPotion);
-  PlaceItemInLocation(&MK_PotionShopItem2,  BuyBlueFire);
-  PlaceItemInLocation(&MK_PotionShopItem3,  BuyRedPotion30);
-  PlaceItemInLocation(&MK_PotionShopItem4,  BuyFairysSpirit);
-  PlaceItemInLocation(&MK_PotionShopItem5,  BuyDekuNut5);
-  PlaceItemInLocation(&MK_PotionShopItem6,  BuyBottleBug);
-  PlaceItemInLocation(&MK_PotionShopItem7,  BuyPoe);
-  PlaceItemInLocation(&MK_PotionShopItem8,  BuyFish);
-  PlaceItemInLocation(&MK_BazaarItem1,      BuyHylianShield);
-  PlaceItemInLocation(&MK_BazaarItem2,      BuyBombs535);
-  PlaceItemInLocation(&MK_BazaarItem3,      BuyDekuNut5);
-  PlaceItemInLocation(&MK_BazaarItem4,      BuyHeart);
-  PlaceItemInLocation(&MK_BazaarItem5,      BuyArrows10);
-  PlaceItemInLocation(&MK_BazaarItem6,      BuyArrows50);
-  PlaceItemInLocation(&MK_BazaarItem7,      BuyDekuStick1);
-  PlaceItemInLocation(&MK_BazaarItem8,      BuyArrows30);
-  PlaceItemInLocation(&Kak_BazaarItem1,     BuyHylianShield);
-  PlaceItemInLocation(&Kak_BazaarItem2,     BuyBombs535);
-  PlaceItemInLocation(&Kak_BazaarItem3,     BuyDekuNut5);
-  PlaceItemInLocation(&Kak_BazaarItem4,     BuyHeart);
-  PlaceItemInLocation(&Kak_BazaarItem5,     BuyArrows10);
-  PlaceItemInLocation(&Kak_BazaarItem6,     BuyArrows50);
-  PlaceItemInLocation(&Kak_BazaarItem7,     BuyDekuStick1);
-  PlaceItemInLocation(&Kak_BazaarItem8,     BuyArrows30);
-  PlaceItemInLocation(&ZD_ShopItem1,        BuyZoraTunic);
-  PlaceItemInLocation(&ZD_ShopItem2,        BuyArrows10);
-  PlaceItemInLocation(&ZD_ShopItem3,        BuyHeart);
-  PlaceItemInLocation(&ZD_ShopItem4,        BuyArrows30);
-  PlaceItemInLocation(&ZD_ShopItem5,        BuyDekuNut5);
-  PlaceItemInLocation(&ZD_ShopItem6,        BuyArrows50);
-  PlaceItemInLocation(&ZD_ShopItem7,        BuyFish);
-  PlaceItemInLocation(&ZD_ShopItem8,        BuyRedPotion50);
-  PlaceItemInLocation(&GC_ShopItem1,        BuyBombs525);
-  PlaceItemInLocation(&GC_ShopItem2,        BuyBombs10);
-  PlaceItemInLocation(&GC_ShopItem3,        BuyBombs20);
-  PlaceItemInLocation(&GC_ShopItem4,        BuyBombs30);
-  PlaceItemInLocation(&GC_ShopItem5,        BuyGoronTunic);
-  PlaceItemInLocation(&GC_ShopItem6,        BuyHeart);
-  PlaceItemInLocation(&GC_ShopItem7,        BuyRedPotion40);
-  PlaceItemInLocation(&GC_ShopItem8,        BuyHeart);
+std::vector<Item> ShopItems; //Vector of all shop items, initialized to vanilla items in specific order but can be shuffled and items replaced
+//Set vanilla shop item locations before potentially shuffling
+void SetVanillaShopItems() {
+  ShopItems = {
+    //Vanilla KF 
+    BuyDekuShield,
+    BuyDekuNut5,
+    BuyDekuNut10,
+    BuyDekuStick1,
+    BuyDekuSeeds30,
+    BuyArrows10,
+    BuyArrows30,
+    BuyHeart,
+    //Vanilla Kak Potion
+    BuyDekuNut5,
+    BuyFish,
+    BuyRedPotion30,
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFairysSpirit,
+    //Vanilla Bombchu
+    BuyBombchu5,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    //Vanilla MK Potion
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyRedPotion30,
+    BuyFairysSpirit,
+    BuyDekuNut5,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFish,
+    //Vanilla MK Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla Kak Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla ZD
+    BuyZoraTunic,
+    BuyArrows10,
+    BuyHeart,
+    BuyArrows30,
+    BuyDekuNut5,
+    BuyArrows50,
+    BuyFish,
+    BuyRedPotion50,
+    //Vanilla GC Shop
+    BuyBombs525,
+    BuyBombs10,
+    BuyBombs20,
+    BuyBombs30,
+    BuyGoronTunic,
+    BuyHeart,
+    BuyRedPotion40,
+    BuyHeart,
+  };
+}
+
+static void PlaceShopItems() {
+  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
+      //Multiply i by 8 to get the correct shop
+      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
+    }
+  }
+}
+
+static int GetShopsanityReplaceAmount() {
+  if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
+    return 1;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_TWO)) {
+    return 2;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_THREE)) {
+    return 3;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_FOUR)) {
+    return 4;
+  } else { //Random
+    return Random(1, 5);
+  }
+}
+
+//OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
+static int GetRandomShopPrice() {
+  return Random(0, 61) * 5;
 }
 
 static void PlaceVanillaDekuScrubItems() {
@@ -856,9 +896,10 @@ void GenerateItemPool() {
     }
   }
 
+  SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
   //Shopsanity
-  if (!Settings::Shopsanity) {
-    PlaceVanillaShopItems();
+  if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
+    PlaceShopItems();
     if (BombchusInLogic) {
       // PlaceItemInLocation(&KF_ShopItem8,    &BuyBombchu5);
       // PlaceItemInLocation(&MK_BazaarItem4,  &BuyBombchu5);
@@ -866,7 +907,35 @@ void GenerateItemPool() {
     }
     AddItemsToPool(ItemPool, normalRupees);
   } else {
-    //shopsanity settings
+    //Make sure tunics are not shuffled into child-only shops
+    bool tunicInChild = true;
+    while(tunicInChild) {
+      Shuffle(ShopItems); //Shuffle shop items amongst themselves
+      tunicInChild = false;
+      //16-23: Bombchu, 24-31: Market Potion, 32-39: Market Bazaar
+      for(int i = 16; i < 40; i++) {
+        //Tunics were placed in a child-only location, run loop again to re-shuffle
+        if (ShopItems[i] == BuyZoraTunic || ShopItems[i] == BuyGoronTunic) {
+          tunicInChild = true;
+          break;
+        }
+      }
+    }
+    PlaceShopItems(); //Place now-shuffled shop items
+    if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
+      AddItemsToPool(ItemPool, normalRupees);
+    } 
+    else { //Shopsanity 1-4, random
+      //Overwrite appropriate number of shop items
+      const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR
+      for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+        int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
+        for(int j = 0; j < num_to_replace; j++) {
+          ShopLocationLists[i][indices[j]-1]->SetPlacedShopItem(NoItem, GetRandomShopPrice()); //Clear item and put a random price
+        }
+      }
+      AddItemsToPool(ItemPool, shopsanityRupees); //Shopsanity gets extra large rupees
+    }
   }
 
   //scrubsanity

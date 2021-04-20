@@ -20,15 +20,35 @@ void Input_Update(void) {
     rInputCtx.old.val = rInputCtx.cur.val;
 }
 
-u32 Input_WaitWithTimeout(u32 msec) {
+u32 buttonCheck(u32 key){
+        for (u32 i = 0x26000; i > 0; i--) {
+            if (key != real_hid.pad.pads[real_hid.pad.index].curr.val) return 0;
+        }
+        return 1;
+}
+
+u32 Input_WaitWithTimeout(u32 msec, u32 closingButton) {
     u32 pressedKey = 0;
     u32 key = 0;
     u32 n = 0;
+    u32 startingButtonState = HID_PAD;
 
     // Wait for no keys to be pressed
     while (HID_PAD && (msec == 0 || n <= msec)) {
         svcSleepThread(1 * 1000 * 1000LL);
         n++;
+        
+        // If the player presses the closing button while still holding other buttons, the menu closes (useful for buffering);
+        u32 tempButtons = HID_PAD;
+        if(tempButtons != startingButtonState && buttonCheck(tempButtons)){
+            
+            if(tempButtons & closingButton){
+                break;
+            }
+            else{
+                startingButtonState = tempButtons;
+            }
+        }
     }
 
     if (msec != 0 && n >= msec) {
@@ -49,17 +69,12 @@ u32 Input_WaitWithTimeout(u32 msec) {
         key = HID_PAD;
 
         //Make sure it's pressed
-        for (u32 i = 0x26000; i > 0; i--) {
-            if (key != real_hid.pad.pads[real_hid.pad.index].curr.val) break;
-            if (i == 1) {
-                pressedKey = 1;
-            }
-        }
+        pressedKey = buttonCheck(key);
     } while(!pressedKey);
 
     return key;
 }
 
 u32 Input_Wait(void) {
-    return Input_WaitWithTimeout(0);
+    return Input_WaitWithTimeout(0, 0);
 }
