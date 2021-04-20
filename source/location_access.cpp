@@ -1792,7 +1792,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(CanUseItem::Dins_Fire));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&ForestTemple_GS_LevelIslandCourtyard, []{return CanUse(CanUseItem::Longshot) || ((ForestTemple_OutsideUpperLedge.dayAdult || ForestTemple_OutsideUpperLedge.nightAdult) && CanUse(CanUseItem::Hookshot));}),
+                  ItemLocationPairing(&ForestTemple_GS_LevelIslandCourtyard, []{return CanUse(CanUseItem::Longshot) || ForestTemple_OutsideUpperLedge.Here([]{return CanUse(CanUseItem::Hookshot);});}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ForestTemple_NEOutdoors,            []{return GoldScale;}),
@@ -1805,8 +1805,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(CanUseItem::Dins_Fire));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&ForestTemple_RaisedIslandCourtyardChest, []{return CanUse(CanUseItem::Hookshot);}),
-                  ItemLocationPairing(&ForestTemple_GS_RaisedIslandCourtyard,   []{return CanUse(CanUseItem::Hookshot) || (LogicForestOutdoorEastGS && CanUse(CanUseItem::Boomerang));}),
+                  ItemLocationPairing(&ForestTemple_RaisedIslandCourtyardChest, []{return CanUse(CanUseItem::Hookshot) || ForestTemple_FallingRoom.HasAccess();}),
+                  ItemLocationPairing(&ForestTemple_GS_RaisedIslandCourtyard,   []{return CanUse(CanUseItem::Hookshot) ||
+                                                                                          (LogicForestOutdoorEastGS && CanUse(CanUseItem::Boomerang)) ||
+                                                                                          ForestTemple_FallingRoom.Here([]{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire) || HasExplosives;});}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return CanUse(CanUseItem::Longshot);}),
@@ -1976,8 +1978,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&WaterTemple_MapChest,              []{return RaiseWaterLevel;}),
                   ItemLocationPairing(&WaterTemple_CompassChest,          []{return (CanPlay(ZeldasLullaby) || IronBoots) && CanUse(CanUseItem::Hookshot);}),
                   ItemLocationPairing(&WaterTemple_TorchesChest,          []{return (Bow || CanUse(CanUseItem::Dins_Fire) || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}),
-                  ItemLocationPairing(&WaterTemple_CentralBowTargetChest, []{return GoronBracelet && CanPlay(ZeldasLullaby) && ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse(CanUseItem::Longshot))));}),
-                  ItemLocationPairing(&WaterTemple_GS_BehindGate,         []{return (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots)) && (HasExplosives && CanPlay(ZeldasLullaby)) && (CanUse(CanUseItem::Iron_Boots) || CanDive);}),
+                  ItemLocationPairing(&WaterTemple_CentralBowTargetChest, []{return GoronBracelet && CanPlay(ZeldasLullaby) &&
+                                                                                    ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse(CanUseItem::Longshot))) ||
+                                                                                      (LogicWaterCentralBow && ChildWaterTemple && Slingshot && WaterTemple_MiddleWaterLevel.HasAccess());}),
+                  ItemLocationPairing(&WaterTemple_GS_BehindGate,         []{return (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots)) &&
+                                                                                    (HasExplosives && CanPlay(ZeldasLullaby)) &&
+                                                                                    (CanUse(CanUseItem::Iron_Boots) || CanDive);}),
                   ItemLocationPairing(&WaterTemple_GS_CentralPillar,      []{return CanPlay(ZeldasLullaby) &&
                                                                                       (((CanUse(CanUseItem::Longshot) || (LogicWaterCentralGSFW && CanUse(CanUseItem::Hookshot) && CanUse(CanUseItem::Farores_Wind))) &&
                                                                                         (SmallKeys(WaterTempleKeys, 5) || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire))) ||
@@ -2626,7 +2632,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&JabuJabusBelly_MQ_FallingLikeLikeRoomChest, []{return true;}),
                   ItemLocationPairing(&JabuJabusBelly_MQ_GS_TailPasaranRoom,       []{return Sticks || CanUse(CanUseItem::Dins_Fire);}),
-                  ItemLocationPairing(&JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom,  []{return (LogicLensJabuMQ || CanUse(CanUseItem::Lens_of_Truth)) || (JabuJabusBelly_MQ_Main.Adult() && CanUse(CanUseItem::Hover_Boots) && CanUse(CanUseItem::Hookshot));}),
+                  ItemLocationPairing(&JabuJabusBelly_MQ_GS_InvisibleEnemiesRoom,  []{return (LogicLensJabuMQ || CanUse(CanUseItem::Lens_of_Truth)) || JabuJabusBelly_MQ_Main.Here([]{return CanUse(CanUseItem::Hover_Boots) && CanUse(CanUseItem::Hookshot);});}),
   }, {
                   //Exits
                   ExitPairing::Both(&JabuJabusBelly_MQ_Main,     []{return true;}),
@@ -2782,7 +2788,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   }, {
                   //Exits
                   ExitPairing::Both(&FireTemple_Entrance,           []{return true;}),
-                  ExitPairing::Both(&FireTemple_MQ_BossRoom,        []{return CanUse(CanUseItem::Goron_Tunic) && CanUse(CanUseItem::Hammer) && BossKeyFireTemple && ((HasFireSource && (LogicFireBossDoorJump || HoverBoots)) || FireTemple_MQ_Upper.Adult());}),
+                  ExitPairing::Both(&FireTemple_MQ_BossRoom,        []{return CanUse(CanUseItem::Goron_Tunic) && CanUse(CanUseItem::Hammer) && BossKeyFireTemple && ((HasFireSource && (LogicFireBossDoorJump || HoverBoots)) || FireTemple_MQ_Upper.HasAccess());}),
                   ExitPairing::Both(&FireTemple_MQ_LowerLockedDoor, []{return SmallKeys(FireTempleKeys, 5) && (IsAdult || KokiriSword);}),
                   ExitPairing::Both(&FireTemple_MQ_BigLavaRoom,     []{return (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic)) && CanUse(CanUseItem::Hammer);}),
   });
@@ -2816,7 +2822,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit FireTemple_MQ_LowerMaze = Exit("Fire Temple MQ Lower Maze", "Fire Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&FireTemple_MQ_LizalfosMazeLowerChest,    []{return true;}),
-                  ItemLocationPairing(&FireTemple_MQ_LizalfosMazeSideRoomChest, []{return HasExplosives && FireTemple_MQ_UpperMaze.Adult();}),
+                  ItemLocationPairing(&FireTemple_MQ_LizalfosMazeSideRoomChest, []{return HasExplosives && FireTemple_MQ_UpperMaze.HasAccess();}),
                     //Trick: HasExplosives && (LogicFireMQMazeSideRoom || FireTemple_MQ_UpperMaze.Adult())
    }, {
                   //Exits
@@ -2886,7 +2892,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit WaterTemple_MQ_LoweredWaterLevels = Exit("Water Temple MQ Lowered Water Levels", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(&WaterTemple_MQ_CompassChest,              []{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire) || (WaterTemple_MQ_Lobby.Child() && CanUse(CanUseItem::Sticks) && HasExplosives);}),
+                  ItemLocationPairing(&WaterTemple_MQ_CompassChest,              []{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire) || WaterTemple_MQ_Lobby.Here([]{return CanUse(CanUseItem::Sticks) && HasExplosives;});}),
                   ItemLocationPairing(&WaterTemple_MQ_LongshotChest,             []{return CanUse(CanUseItem::Hookshot);}),
                   ItemLocationPairing(&WaterTemple_MQ_GS_LizalfosHallway,        []{return CanUse(CanUseItem::Dins_Fire);}),
                   ItemLocationPairing(&WaterTemple_MQ_GS_BeforeUpperWaterSwitch, []{return CanUse(CanUseItem::Longshot);}),
@@ -2930,10 +2936,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&FairyPot, []{return FairyPot || ((Sticks || KokiriSword) && HasBombchus && Slingshot);}),
   }, {
                   //Locations
-                  ItemLocationPairing(&SpiritTemple_MQ_ChildHammerSwitchChest,  []{return SpiritTemple_MQ_Adult.Adult() && SmallKeys(SpiritTempleKeys, 7) && Hammer;}),
+                  ItemLocationPairing(&SpiritTemple_MQ_ChildHammerSwitchChest,  []{return SpiritTemple_MQ_Adult.Here([]{return SmallKeys(SpiritTempleKeys, 7) && Hammer;});}),
                   ItemLocationPairing(&SpiritTemple_MQ_MapRoomEnemyChest,       []{return (Sticks || KokiriSword) && HasBombchus && Slingshot && CanUse(CanUseItem::Dins_Fire);}),
                   ItemLocationPairing(&SpiritTemple_MQ_MapChest,                []{return Sticks || KokiriSword || Bombs;}),
-                  ItemLocationPairing(&SpiritTemple_MQ_SilverBlockHallwayChest, []{return HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SpiritTemple_MQ_Adult.Adult() && CanUse(CanUseItem::Fire_Arrows)));}),
+                  ItemLocationPairing(&SpiritTemple_MQ_SilverBlockHallwayChest, []{return HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SpiritTemple_MQ_Adult.Here([]{return CanUse(CanUseItem::Fire_Arrows);})));}),
                     //Trick: HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SpiritTemple_MQ_Adult.Adult() && (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMQFrozenEye && CanUse(CanUseItem::Bow) && CanPlay(SongOfTime)))))
   }, {
                   //Exits
