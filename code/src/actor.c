@@ -33,7 +33,7 @@
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
-    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unneccesary owls
+    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
 
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
@@ -45,9 +45,10 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
-    
+
     gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;
     gActorOverlayTable[0xDC].initInfo->draw = Boss_Tw_rDraw;
+    gActorOverlayTable[0xDC].initInfo->destroy = Boss_Tw_rDestroy;
 
     gActorOverlayTable[0xF1].initInfo->init = ItemOcarina_rInit;
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
