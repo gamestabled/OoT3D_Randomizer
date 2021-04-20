@@ -1980,7 +1980,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&WaterTemple_TorchesChest,          []{return (Bow || CanUse(CanUseItem::Dins_Fire) || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}),
                   ItemLocationPairing(&WaterTemple_CentralBowTargetChest, []{return GoronBracelet && CanPlay(ZeldasLullaby) &&
                                                                                     ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse(CanUseItem::Longshot))) ||
-                                                                                      (LogicWaterCentralBow && ChildWaterTemple && Slingshot && WaterTemple_MiddleWaterLevel.HasAccess());}),
+                                                                                      (LogicWaterCentralBow && ChildWaterTemple && Slingshot && WaterTemple_MiddleWaterLevel.HasAccess()));}),
                   ItemLocationPairing(&WaterTemple_GS_BehindGate,         []{return (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots)) &&
                                                                                     (HasExplosives && CanPlay(ZeldasLullaby)) &&
                                                                                     (CanUse(CanUseItem::Iron_Boots) || CanDive);}),
