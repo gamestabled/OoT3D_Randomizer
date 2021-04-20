@@ -168,7 +168,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&LW_Bridge,              []{return IsAdult && (CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Longshot) || LW_Main.CanPlantBean());}),
                   ExitPairing::Both(&ZR_Main,                []{return CanLeaveForest && (CanDive || CanUse(CanUseItem::Iron_Boots));}),
                   ExitPairing::Both(&LW_BeyondMido,          []{return IsChild || CanPlay(SariasSong);}),
-                  ExitPairing::Both(&LW_NearShortcutsGrotto, []{return CanBlastOrSmash;})
+                  ExitPairing::Both(&LW_NearShortcutsGrotto, []{return LW_Main.Here([]{return CanBlastOrSmash;});})
   });
 
   Exit LW_BeyondMido = Exit("LW Beyond Mido", "Lost Woods", "Lost Woods", NO_DAY_NIGHT_CYCLE, {
@@ -186,7 +186,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&LW_Main,         []{return IsChild || CanPlay(SariasSong);}),
                   ExitPairing::Both(&SFM_Entryway,    []{return true;}),
                   ExitPairing::Both(&LW_DekuTheater,  []{return true;}),
-                  ExitPairing::Both(&LW_ScrubsGrotto, []{return CanBlastOrSmash;})
+                  ExitPairing::Both(&LW_ScrubsGrotto, []{return LW_BeyondMido.Here([]{return CanBlastOrSmash;});})
   });
 
   Exit LW_NearShortcutsGrotto = Exit("LW Near Shortcuts Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
@@ -299,12 +299,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&Kak_Main,             []{return true;}),
                   ExitPairing::Both(&ZR_Front,             []{return true;}),
                   ExitPairing::Both(&LLR_Main,             []{return true;}),
-                  ExitPairing::Both(&HF_SoutheastGrotto,   []{return CanBlastOrSmash;}),
+                  ExitPairing::Both(&HF_SoutheastGrotto,   []{return HF_Main.Here([]{return CanBlastOrSmash;});}),
                   ExitPairing::Both(&HF_OpenGrotto,        []{return true;}),
                   ExitPairing::Both(&HF_InsideFenceGrotto, []{return CanOpenBombGrotto;}),
                   ExitPairing::Both(&HF_CowGrotto,         []{return (CanUse(CanUseItem::Hammer) || IsChild) && CanOpenBombGrotto;}),
-                  ExitPairing::Both(&HF_NearMarketGrotto,  []{return CanBlastOrSmash;}),
-                  ExitPairing::Both(&HF_FairyGrotto,       []{return CanBlastOrSmash;}),
+                  ExitPairing::Both(&HF_NearMarketGrotto,  []{return HF_Main.Here([]{return CanBlastOrSmash;});}),
+                  ExitPairing::Both(&HF_FairyGrotto,       []{return HF_Main.Here([]{return CanBlastOrSmash;});}),
                   ExitPairing::Both(&HF_NearKakGrotto,     []{return CanOpenBombGrotto;}),
                   ExitPairing::Both(&HF_TektiteGrotto,     []{return CanOpenBombGrotto;})
   });
@@ -1150,7 +1150,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&Kak_BehindGate,          []{return true;}),
                   ExitPairing::Both(&GC_Main,                 []{return true;}),
-                  ExitPairing::Both(&DMT_Summit,              []{return CanBlastOrSmash || (IsAdult && (DMT_Main.CanPlantBean() && GoronBracelet));}),
+                  ExitPairing::Both(&DMT_Summit,              []{return CanBlastOrSmash || (DMT_Main.Adult() && Hammer) || (IsAdult && (DMT_Main.CanPlantBean() && GoronBracelet));}),
                   ExitPairing::Both(&DodongosCavern_Entryway, []{return HasExplosives || GoronBracelet || IsAdult;}),
                   ExitPairing::Both(&DMT_StormsGrotto,        []{return CanOpenStormGrotto;})
   });
@@ -1170,8 +1170,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&DMT_Main,               []{return true;}),
                   ExitPairing::Both(&DMC_UpperLocal,         []{return true;}),
                   ExitPairing::Both(&DMT_OwlFlight,          []{return IsChild;}),
-                  ExitPairing::Both(&DMT_CowGrotto,          []{return CanBlastOrSmash;}),
-                  ExitPairing::Both(&DMT_GreatFairyFountain, []{return CanBlastOrSmash;}),
+                  ExitPairing::Both(&DMT_CowGrotto,          []{return DMT_Summit.Here([]{return CanBlastOrSmash;});}),
+                  ExitPairing::Both(&DMT_GreatFairyFountain, []{return DMT_Summit.Here([]{return CanBlastOrSmash;});}),
   });
 
   Exit DMT_OwlFlight = Exit("DMT Owl Flight", "Death Mountain", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1291,7 +1291,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&DMC_UpperLocal,  []{return CanUse(CanUseItem::Goron_Tunic);}),
                   ExitPairing::Both(&DMT_Summit,      []{return true;}),
-                  ExitPairing::Both(&DMC_UpperGrotto, []{return CanBlastOrSmash;})
+                  ExitPairing::Both(&DMC_UpperGrotto, []{return DMC_UpperNearby.Here([]{return CanBlastOrSmash;});})
   });
 
   Exit DMC_UpperLocal = Exit("DMC Upper Local", "Death Mountain Crater", "Death Mountain Crater", NO_DAY_NIGHT_CYCLE, {
@@ -1421,7 +1421,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&ZR_Front,           []{return true;}),
                   ExitPairing::Both(&ZR_OpenGrotto,      []{return true;}),
-                  ExitPairing::Both(&ZR_FairyGrotto,     []{return CanBlastOrSmash;}),
+                  ExitPairing::Both(&ZR_FairyGrotto,     []{return ZR_Main.Here([]{return CanBlastOrSmash;});}),
                   ExitPairing::Both(&LW_Main,            []{return CanDive || CanUse(CanUseItem::Iron_Boots);}),
                   ExitPairing::Both(&ZR_StormsGrotto,    []{return CanOpenStormGrotto;}),
                   ExitPairing::Both(&ZR_BehindWaterfall, []{return CanPlay(ZeldasLullaby);})
@@ -1618,12 +1618,15 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&DekuTree_GS_CompassRoom,       []{return IsAdult || CanChildAttack;}),
                   ItemLocationPairing(&DekuTree_GS_BasementVines,     []{return CanUseProjectile || CanUse(CanUseItem::Dins_Fire) || (LogicDekuBasementGS && (IsAdult || Sticks || KokiriSword));}),
                   ItemLocationPairing(&DekuTree_GS_BasementGate,      []{return IsAdult || CanChildAttack;}),
-                  ItemLocationPairing(&DekuTree_GS_BasementBackRoom,  []{return ((HasFireSourceWithTorch || (LogicDekuB1WebsWithBow && CanUse(CanUseItem::Bow))) && (CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow)) && CanBlastOrSmash && HookshotOrBoomerang) || ((LogicDekuB1Skip || IsAdult) && IsChild && HasExplosives && CanUse(CanUseItem::Boomerang) && (Sticks || CanUse(CanUseItem::Dins_Fire)));}),
                 }, {
                   //Exits
-                  ExitPairing::Both(&KF_OutsideDekuTree,       []{return true;}),
-                  ExitPairing::Both(&DekuTree_SlingshotRoom,   []{return HasShield;}),
-                  ExitPairing::Both(&DekuTree_BossRoom,        []{return (HasFireSourceWithTorch || (LogicDekuB1WebsWithBow && CanUse(CanUseItem::Bow))) && (LogicDekuB1Skip || (IsAdult || CanUse(CanUseItem::Slingshot)));})
+                  ExitPairing::Both(&KF_OutsideDekuTree,        []{return true;}),
+                  ExitPairing::Both(&DekuTree_SlingshotRoom,    []{return DekuTree_Lobby.Here([]{return HasShield;});}),
+                  ExitPairing::Both(&DekuTree_BasementBackRoom, []{return (DekuTree_Lobby.Here([]{return HasFireSourceWithTorch || CanUse(CanUseItem::Bow);}) &&
+                                                                            DekuTree_Lobby.Here([]{return CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow);})) ||
+                                                                            (IsChild && (LogicDekuB1Skip || DekuTree_Lobby.Here([]{return IsAdult;})));}),
+                  ExitPairing::Both(&DekuTree_BossRoom,         []{return DekuTree_Lobby.Here([]{return HasFireSourceWithTorch || (LogicDekuB1WebsWithBow && CanUse(CanUseItem::Bow));}) &&
+                                                                            (LogicDekuB1Skip || DekuTree_Lobby.Here([]{return IsAdult || CanUse(CanUseItem::Slingshot);}));}),
   });
 
   Exit DekuTree_SlingshotRoom = Exit("Deku Tree Slingshot Room", "Deku Tree", "Deku Tree", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1635,13 +1638,24 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ExitPairing::Both(&DekuTree_Lobby, []{return true;})
   });
 
+  Exit DekuTree_BasementBackRoom = Exit("Deku Tree Basement Backroom", "Deku Tree", "Deku Tree", NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  ItemLocationPairing(&DekuTree_GS_BasementBackRoom,  []{return DekuTree_BasementBackRoom.Here([]{return HasFireSourceWithTorch || CanUse(CanUseItem::Bow);}) &&
+                                                                                  DekuTree_BasementBackRoom.Here([]{return CanBlastOrSmash;}) &&
+                                                                                    HookshotOrBoomerang;}),
+                }, {
+                  //Exits
+                  ExitPairing::Both(&DekuTree_Lobby, []{return true;}),
+
+  });
+
   Exit DekuTree_BossRoom = Exit("Deku Tree Boss Room", "Deku Tree", "Deku Tree", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&DekuTreeClear, []{return DekuTreeClear || (HasShield && (IsAdult || KokiriSword || Sticks));})
+                  EventPairing(&DekuTreeClear, []{return DekuTreeClear || (DekuTree_BossRoom.Here([]{return HasShield;}) && (IsAdult || KokiriSword || Sticks));})
                 }, {
                   //Locations
-                  ItemLocationPairing(&QueenGohma,               []{return HasShield && (IsAdult || KokiriSword || Sticks);}),
-                  ItemLocationPairing(&DekuTree_QueenGohmaHeart, []{return HasShield && (IsAdult || KokiriSword || Sticks);}),
+                  ItemLocationPairing(&QueenGohma,               []{return DekuTree_BossRoom.Here([]{return HasShield;}) && (IsAdult || KokiriSword || Sticks);}),
+                  ItemLocationPairing(&DekuTree_QueenGohmaHeart, []{return DekuTree_BossRoom.Here([]{return HasShield;}) && (IsAdult || KokiriSword || Sticks);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DekuTree_Lobby, []{return true;})
@@ -1650,7 +1664,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit DodongosCavern_Beginning = Exit("Dodongos Cavern Beginning", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_Entryway, []{return true;}),
-                  ExitPairing::Both(&DodongosCavern_Lobby,    []{return CanBlastOrSmash || GoronBracelet;})
+                  ExitPairing::Both(&DodongosCavern_Lobby,    []{return DodongosCavern_Beginning.Here([]{return CanBlastOrSmash || GoronBracelet;});}),
   });
 
   Exit DodongosCavern_Lobby = Exit("Dodongos Cavern Lobby", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {
@@ -1668,7 +1682,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_Beginning, []{return true;}),
-                  ExitPairing::Both(&DodongosCavern_Climb,     []{return (IsAdult || ((Sticks || CanUse(CanUseItem::Dins_Fire)) && (Slingshot || Sticks || HasExplosives || KokiriSword))) && (HasExplosives || GoronBracelet || CanUse(CanUseItem::Dins_Fire) ||(LogicDCStaircase && CanUse(CanUseItem::Bow)));})
+                  ExitPairing::Both(&DodongosCavern_Climb,     []{return DodongosCavern_Lobby.Here([]{return IsAdult || ((Sticks || CanUse(CanUseItem::Dins_Fire)) && (Slingshot || Sticks || HasExplosives || KokiriSword));}) && (HasExplosives || GoronBracelet || CanUse(CanUseItem::Dins_Fire) ||(LogicDCStaircase && CanUse(CanUseItem::Bow)));}),
+                  ExitPairing::Both(&DodongosCavern_FarBridge, []{return DodongosCavern_FarBridge.HasAccess();}),
   });
 
   Exit DodongosCavern_Climb = Exit("Dodongos Cavern Climb", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -1780,7 +1795,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ForestTemple_GS_LevelIslandCourtyard, []{return CanUse(CanUseItem::Longshot) || ((ForestTemple_OutsideUpperLedge.dayAdult || ForestTemple_OutsideUpperLedge.nightAdult) && CanUse(CanUseItem::Hookshot));}),
                 }, {
                   //Exits
-                  ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return IsAdult || (HasExplosives || ((CanUse(CanUseItem::Boomerang) || Nuts || DekuShield) && (Sticks || KokiriSword || CanUse(CanUseItem::Slingshot))));})
+                  ExitPairing::Both(&ForestTemple_NEOutdoors,            []{return GoldScale;}),
+                  ExitPairing::Both(&ForestTemple_OutdoorsHighBalconies, []{return ForestTemple_NWOutdoors.Here([]{return IsAdult || (HasExplosives || ((CanUse(CanUseItem::Boomerang) || Nuts || DekuShield) && (Sticks || KokiriSword || CanUse(CanUseItem::Slingshot))));});}),
   });
 
   Exit ForestTemple_NEOutdoors = Exit("Forest Temple NE Outdoors", "Forest Temple", "", NO_DAY_NIGHT_CYCLE, {
@@ -2227,7 +2243,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit IceCavern_Beginning = Exit("Ice Cavern Beginning", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   ExitPairing::Both(&ZF_Main,        []{return true;}),
-                  ExitPairing::Both(&IceCavern_Main, []{return IsAdult || HasExplosives || CanUse(CanUseItem::Dins_Fire);}),
+                  ExitPairing::Both(&IceCavern_Main, []{return IceCavern_Beginning.Here([]{return IsAdult || HasExplosives || CanUse(CanUseItem::Dins_Fire);});}),
   });
 
   Exit IceCavern_Main = Exit("Ice Cavern", "Ice Cavern", "", NO_DAY_NIGHT_CYCLE, {
@@ -2255,7 +2271,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Exits
                   ExitPairing::Both(&GF_Main,                              []{return true;}),
                   ExitPairing::Both(&GerudoTrainingGrounds_HeavyBlockRoom, []{return (IsAdult || KokiriSword) && (CanUse(CanUseItem::Hookshot) || LogicGtgWithoutHookshot);}),
-                  ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,       []{return (IsAdult || KokiriSword) && HasExplosives;}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_LavaRoom,       []{return GerudoTrainingGrounds_Lobby.Here([]{return (IsAdult || KokiriSword) && HasExplosives;});}),
                   ExitPairing::Both(&GerudoTrainingGrounds_CentralMaze,    []{return true;}),
   });
 
@@ -2445,29 +2461,45 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&DekuTree_MQ_GS_Lobby,               []{return IsAdult || CanChildAttack;}),
   }, {
                   //Exits
-                  ExitPairing(&KF_OutsideDekuTree,            []{return true;}),
-                  ExitPairing(&DekuTree_MQ_CompassRoom,       []{return (CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow)) && (HasFireSourceWithTorch || CanUse(CanUseItem::Bow));}),
-                  ExitPairing(&DekuTree_MQ_BasementWaterRoom, []{return (CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow)) && HasFireSourceWithTorch;}),
-                  ExitPairing(&DekuTree_MQ_BasementLedge,     []{return LogicDekuB1Skip || IsAdult;}),
+                  ExitPairing(&KF_OutsideDekuTree,                 []{return true;}),
+                  ExitPairing(&DekuTree_MQ_CompassRoom,            []{return DekuTree_MQ_Lobby.Here([]{return CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow);}) &&
+                                                                               DekuTree_MQ_Lobby.Here([]{return HasFireSourceWithTorch || CanUse(CanUseItem::Bow);});}),
+                  ExitPairing(&DekuTree_MQ_BasementWaterRoomFront, []{return DekuTree_MQ_Lobby.Here([]{return CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow);}) &&
+                                                                               DekuTree_MQ_Lobby.Here([]{return HasFireSourceWithTorch;});}),
+                  ExitPairing(&DekuTree_MQ_BasementLedge,          []{return LogicDekuB1Skip || DekuTree_MQ_Lobby.Here([]{return IsAdult;});}),
   });
 
   Exit DekuTree_MQ_CompassRoom = Exit("Deku Tree MQ Compass Room", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&DekuTree_MQ_CompassChest, []{return true;}),
-                  ItemLocationPairing(&DekuTree_MQ_GS_CompassRoom, []{return (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang)) && (HasBombchus || (Bombs && (IsAdult || CanPlay(SongOfTime))));}),
+                  ItemLocationPairing(&DekuTree_MQ_GS_CompassRoom, []{return HookshotOrBoomerang &&
+                                                                               DekuTree_MQ_CompassRoom.Here([]{return HasBombchus ||
+                                                                               (Bombs && (CanPlay(SongOfTime) || IsAdult)) ||
+                                                                               (CanUse(CanUseItem::Hammer) && (CanPlay(SongOfTime) /*|| LogicDekuMQCompassGS*/));});}),
   }, {
                   //Exits
                   ExitPairing(&DekuTree_MQ_Lobby, []{return true;}),
   });
 
-  Exit DekuTree_MQ_BasementWaterRoom = Exit("Deku Tree MQ Basement Water Room", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
+  Exit DekuTree_MQ_BasementWaterRoomFront = Exit("Deku Tree MQ Basement Water Room Front", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&DekuTree_MQ_BeforeSpinningLogChest, []{return true;}),
-                  ItemLocationPairing(&DekuTree_MQ_AfterSpinningLowChest,  []{return true;}),
   }, {
                   //Exits
-                  ExitPairing(&DekuTree_MQ_BasementBackRoom, []{return true;}),
-                  ExitPairing(&DekuTree_MQ_Lobby,            []{return true;}),
+                  ExitPairing(&DekuTree_MQ_BasementWaterRoomBack, []{return /*LogicDekuMQLog || */ (IsChild && (DekuShield || HylianShield)) ||
+                                                                             CanUse(CanUseItem::Longshot) || (CanUse(CanUseItem::Hookshot) && CanUse(CanUseItem::Iron_Boots));}),
+                  ExitPairing(&DekuTree_MQ_Lobby,                  []{return true;}),
+  });
+
+  Exit DekuTree_MQ_BasementWaterRoomBack = Exit("Deku Tree MQ Basement Water Room Front", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  ItemLocationPairing(&DekuTree_MQ_AfterSpinningLogChest, []{return CanPlay(SongOfTime);}),
+  }, {
+                  //Exits
+                  ExitPairing(&DekuTree_MQ_BasementBackRoom,       []{return DekuTree_MQ_BasementWaterRoomBack.Here([]{return CanUse(CanUseItem::Sticks) || CanUse(CanUseItem::Dins_Fire) ||
+                                                                               DekuTree_MQ_BasementWaterRoomFront.Here([]{return CanUse(CanUseItem::Fire_Arrows);});}) &&
+                                                                                 DekuTree_MQ_BasementWaterRoomBack.Here([]{return IsAdult || KokiriSword || CanUseProjectile || (Nuts && Sticks);});}),
+                  ExitPairing(&DekuTree_MQ_BasementWaterRoomFront, []{return true;}),
   });
 
   Exit DekuTree_MQ_BasementBackRoom = Exit("Deku Tree MQ Basement Back Room", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -2476,13 +2508,15 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&DekuTree_MQ_GS_BasementBackRoom,   []{return HasFireSourceWithTorch && HookshotOrBoomerang;})
   }, {
                   //Exits
-                  ExitPairing(&DekuTree_MQ_BasementLedge,     []{return IsChild;}),
-                  ExitPairing(&DekuTree_MQ_BasementWaterRoom, []{return CanUse(CanUseItem::Kokiri_Sword) || CanUseProjectile || (Nuts && CanUse(CanUseItem::Sticks));}),
+                  ExitPairing(&DekuTree_MQ_BasementLedge,         []{return IsChild;}),
+                  ExitPairing(&DekuTree_MQ_BasementWaterRoomBack, []{return CanUse(CanUseItem::Kokiri_Sword) || CanUseProjectile || (Nuts && CanUse(CanUseItem::Sticks));}),
   });
 
   Exit DekuTree_MQ_BasementLedge = Exit("Deku Tree MQ Basement Ledge", "Deku Tree", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventPairing(&DekuTreeClear, []{return DekuTreeClear || (HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks));}),
+                  EventPairing(&DekuTreeClear, []{return DekuTreeClear || (DekuTree_MQ_BasementLedge.Here([]{return HasFireSourceWithTorch;}) &&
+                                                                           DekuTree_MQ_BasementLedge.Here([]{return HasShield;})  &&
+                                                                           (IsAdult || KokiriSword || Sticks));}),
   }, {
                   //Locations
                   ItemLocationPairing(&DekuTree_MQ_DekuScrub,    []{return CanStunDeku;}),
@@ -2497,7 +2531,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit DodongosCavern_MQ_Beginning = Exit("Dodongos Cavern MQ Beginning", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_Entryway, []{return true;}),
-                  ExitPairing::Both(&DodongosCavern_MQ_Lobby, []{return CanBlastOrSmash || GoronBracelet;})
+                  ExitPairing::Both(&DodongosCavern_MQ_Lobby, []{return DodongosCavern_MQ_Beginning.Here([]{return CanBlastOrSmash || GoronBracelet;});}),
   });
 
   Exit DodongosCavern_MQ_Lobby = Exit("Dodongos Cavern MQ Lobby", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {
@@ -2519,8 +2553,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Dodongos Cavern Gossip Stone
   }, {
                   //Exits
-                  ExitPairing::Both(&DodongosCavern_MQ_LowerRightSide,  []{return CanBlastOrSmash || ((CanUse(CanUseItem::Sticks) || CanUse(CanUseItem::Dins_Fire)) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO));}),
-                  ExitPairing::Both(&DodongosCavern_MQ_BombBagArea,     []{return IsAdult || HasExplosives;}),
+                  ExitPairing::Both(&DodongosCavern_MQ_LowerRightSide,  []{return DodongosCavern_MQ_Lobby.Here([]{return CanBlastOrSmash || ((CanUse(CanUseItem::Sticks) || CanUse(CanUseItem::Dins_Fire)) && CanTakeDamage);});}),
+                  ExitPairing::Both(&DodongosCavern_MQ_BombBagArea,     []{return IsAdult || (DodongosCavern_MQ_Lobby.Here([]{return IsAdult;}) && HasExplosives);}),
                     //Trick: IsAdult || HasExplosives || (LogicDCMQChildBombs && (KokiriSword || Sticks) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO))
                   ExitPairing::Both(&DodongosCavern_MQ_BossArea,        []{return HasExplosives;}),
                     //Trick: HasExplosives || (LogicDCMQEyes && GoronBracelet && (IsAdult || LogicDCMQChildBack) && (CanUse(CanUseItem::Sticks) || CanUse(CanUseItem::Dins_Fire) || (IsAdult && (LogicDCJump || Hammer || HoverBoots || Hookshot))))
@@ -2531,13 +2565,15 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&DodongosCavern_MQ_DekuScrubSideRoomNearLowerLizalfos, []{return CanStunDeku;}),
   }, {
                   //Exits
-                  ExitPairing::Both(&DodongosCavern_MQ_BombBagArea, []{return (CanUse(CanUseItem::Bow) || GoronBracelet || CanUse(CanUseItem::Dins_Fire) || HasExplosives) && CanUse(CanUseItem::Slingshot);}),
+                  ExitPairing::Both(&DodongosCavern_MQ_BombBagArea, []{return (DodongosCavern_MQ_LowerRightSide.Here([]{return CanUse(CanUseItem::Bow);}) || GoronBracelet ||
+                                                                                CanUse(CanUseItem::Dins_Fire) || HasExplosives) &&
+                                                                                CanUse(CanUseItem::Slingshot);}),
   });
 
   Exit DodongosCavern_MQ_BombBagArea = Exit("Dodongos Cavern MQ Bomb Bag Area", "Dodongos Cavern", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&DodongosCavern_MQ_BombBagChest, []{return true;}),
-                  ItemLocationPairing(&DodongosCavern_MQ_GS_ScrubRoom, []{return (CanUse(CanUseItem::Bow) ||  GoronBracelet || CanUse(CanUseItem::Dins_Fire) || HasExplosives) && (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang));}),
+                  ItemLocationPairing(&DodongosCavern_MQ_GS_ScrubRoom, []{return (DodongosCavern_MQ_BombBagArea.Here([]{return CanUse(CanUseItem::Bow);}) ||  GoronBracelet || CanUse(CanUseItem::Dins_Fire) || HasExplosives) && (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang));}),
   }, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_MQ_LowerRightSide, []{return true;}),
@@ -2566,7 +2602,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   }, {
                   //Exits
                   ExitPairing::Both(&ZF_Main,                []{return true;}),
-                  ExitPairing::Both(&JabuJabusBelly_MQ_Main, []{return IsChild && CanUse(CanUseItem::Slingshot);}),
+                  ExitPairing::Both(&JabuJabusBelly_MQ_Main, []{return JabuJabusBelly_MQ_Beginning.Here([]{return IsChild && CanUse(CanUseItem::Slingshot);});}),
   });
 
   Exit JabuJabusBelly_MQ_Main = Exit("Jabu Jabus Belly MQ Main", "Jabu Jabus Belly", "", NO_DAY_NIGHT_CYCLE, {}, {
@@ -2880,7 +2916,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit SpiritTemple_MQ_Lobby = Exit("Spirit Temple MQ Lobby", "Spirit Temple", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&SpiritTemple_MQ_EntranceFrontLeftChest, []{return true;}),
-                  ItemLocationPairing(&SpiritTemple_MQ_EntranceBackLeftChest,  []{return CanBlastOrSmash && (CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow));}),
+                  ItemLocationPairing(&SpiritTemple_MQ_EntranceBackLeftChest,  []{return SpiritTemple_MQ_Lobby.Here([]{return CanBlastOrSmash;}) && (CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Bow));}),
                   ItemLocationPairing(&SpiritTemple_MQ_EntranceBackRightChest, []{return HasBombchus || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Slingshot) || CanUse(CanUseItem::Boomerang);}),
   }, {
                   //Exits
@@ -2894,9 +2930,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&FairyPot, []{return FairyPot || ((Sticks || KokiriSword) && HasBombchus && Slingshot);}),
   }, {
                   //Locations
-                  ItemLocationPairing(&SpiritTemple_MQ_ChildHammerSwitchChest, []{return SpiritTemple_MQ_Adult.Adult() && SmallKeys(SpiritTempleKeys, 7) && Hammer;}),
-                  ItemLocationPairing(&SpiritTemple_MQ_MapRoomEnemyChest, []{return (Sticks || KokiriSword) && HasBombchus && Slingshot && CanUse(CanUseItem::Dins_Fire);}),
-                  ItemLocationPairing(&SpiritTemple_MQ_MapChest, []{return Sticks || KokiriSword || Bombs;}),
+                  ItemLocationPairing(&SpiritTemple_MQ_ChildHammerSwitchChest,  []{return SpiritTemple_MQ_Adult.Adult() && SmallKeys(SpiritTempleKeys, 7) && Hammer;}),
+                  ItemLocationPairing(&SpiritTemple_MQ_MapRoomEnemyChest,       []{return (Sticks || KokiriSword) && HasBombchus && Slingshot && CanUse(CanUseItem::Dins_Fire);}),
+                  ItemLocationPairing(&SpiritTemple_MQ_MapChest,                []{return Sticks || KokiriSword || Bombs;}),
                   ItemLocationPairing(&SpiritTemple_MQ_SilverBlockHallwayChest, []{return HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SpiritTemple_MQ_Adult.Adult() && CanUse(CanUseItem::Fire_Arrows)));}),
                     //Trick: HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SpiritTemple_MQ_Adult.Adult() && (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMQFrozenEye && CanUse(CanUseItem::Bow) && CanPlay(SongOfTime)))))
   }, {
@@ -3143,8 +3179,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
   }, {
                   //Exits
                   ExitPairing::Both(&GF_Main,                            []{return true;}),
-                  ExitPairing::Both(&GerudoTrainingGrounds_MQ_LeftSide,  []{return HasFireSource;}),
-                  ExitPairing::Both(&GerudoTrainingGrounds_MQ_RightSide, []{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Slingshot);}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_MQ_LeftSide,  []{return GerudoTrainingGrounds_MQ_Lobby.Here([]{return HasFireSource;});}),
+                  ExitPairing::Both(&GerudoTrainingGrounds_MQ_RightSide, []{return GerudoTrainingGrounds_MQ_Lobby.Here([]{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Slingshot);});}),
   });
 
   Exit GerudoTrainingGrounds_MQ_RightSide = Exit("Gerudo Training Grounds MQ Right Side", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {
@@ -3304,7 +3340,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   //Exits
 */
 
-  std::array<Exit *, 289> allExits = {
+  std::array<Exit *, 291> allExits = {
 
     &Root,
     &RootExits,
@@ -3448,6 +3484,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
     &LLR_Grotto,
     &DekuTree_Lobby,
     &DekuTree_SlingshotRoom,
+    &DekuTree_BasementBackRoom,
     &DekuTree_BossRoom,
     &DodongosCavern_Entryway,
     &DodongosCavern_Beginning,
@@ -3521,7 +3558,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
     &GanonsCastle_Tower,
     &DekuTree_MQ_Lobby,
     &DekuTree_MQ_CompassRoom,
-    &DekuTree_MQ_BasementWaterRoom,
+    &DekuTree_MQ_BasementWaterRoomFront,
+    &DekuTree_MQ_BasementWaterRoomBack,
     &DekuTree_MQ_BasementBackRoom,
     &DekuTree_MQ_BasementLedge,
     &DodongosCavern_MQ_Beginning,

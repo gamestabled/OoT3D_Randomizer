@@ -127,6 +127,8 @@ private:
 
 class Exit {
 public:
+    using ConditionFn = bool (*)();
+
     Exit(std::string regionName_, std::string scene_, std::string hint_,
          bool timePass_,
          std::vector<EventPairing> events_,
@@ -190,6 +192,32 @@ public:
 
     bool AllAccess() const {
       return dayChild && nightChild && dayAdult && nightAdult;
+    }
+
+    //Here checks conditional access based on whether or not both ages have
+    //access to this exit. For example: if there are rocks that block a path
+    //which both child and adult can access, adult having hammer can give
+    //both child and adult access to the path.
+    bool Here(ConditionFn condition) {
+
+      //store current age variables
+      bool pastAdult = Logic::IsAdult;
+      bool pastChild = Logic::IsChild;
+
+      //set age access as this exits ages
+      Logic::IsChild = Child();
+      Logic::IsAdult = Adult();
+
+      //update helpers and check condition
+      Logic::UpdateHelpers();
+      bool hereVal = condition();
+
+      //set back age variables
+      Logic::IsChild = pastChild;
+      Logic::IsAdult = pastAdult;
+      Logic::UpdateHelpers();
+
+      return hereVal;
     }
 
     bool CanPlantBean() const {
@@ -418,11 +446,13 @@ namespace Exits {
   //Deku Tree
   extern Exit DekuTree_Lobby;
   extern Exit DekuTree_SlingshotRoom;
+  extern Exit DekuTree_BasementBackRoom;
   extern Exit DekuTree_BossRoom;
   //Deku Tree MQ
   extern Exit DekuTree_MQ_Lobby;
   extern Exit DekuTree_MQ_CompassRoom;
-  extern Exit DekuTree_MQ_BasementWaterRoom;
+  extern Exit DekuTree_MQ_BasementWaterRoomFront;
+  extern Exit DekuTree_MQ_BasementWaterRoomBack;
   extern Exit DekuTree_MQ_BasementBackRoom;
   extern Exit DekuTree_MQ_BasementLedge;
 
