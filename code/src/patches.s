@@ -1070,6 +1070,11 @@ DoorOfTimeOpenCutscene_patch:
     ldrh r0,[r0,#0x4]
     cmp r0,#0x43
 
+.section .patch_DungeonCheckJabuMQBox
+.global DungeonCheckJabuMQBox_patch
+    DungeonCheckJabuMQBox_patch:
+    bl Dungeon_GetJabuJabusBellyDungeonMode
+
 .section .patch_loader
 .global loader_patch
 
