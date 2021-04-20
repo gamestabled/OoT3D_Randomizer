@@ -1142,7 +1142,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(&DMT_Chest,                  []{return CanBlastOrSmash || (LogicDMTBombable && IsChild && GoronBracelet);}),
-                  ItemLocationPairing(&DMT_FreestandingPoH,        []{return (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO)) || CanUse(CanUseItem::Nayrus_Love) || Fairy || CanUse(CanUseItem::Hover_Boots) || (IsAdult && DMT_Main.CanPlantBean() && (HasExplosives || GoronBracelet));}),
+                  ItemLocationPairing(&DMT_FreestandingPoH,        []{return CanTakeDamage || CanUse(CanUseItem::Hover_Boots) || (IsAdult && DMT_Main.CanPlantBean() && (HasExplosives || GoronBracelet));}),
                   ItemLocationPairing(&DMT_GS_BeanPatch,           []{return CanPlantBugs && (HasExplosives || GoronBracelet || (LogicDMTSoilGS && CanUse(CanUseItem::Boomerang)));}),
                   ItemLocationPairing(&DMT_GS_NearKak,             []{return CanBlastOrSmash;}),
                   ItemLocationPairing(&DMT_GS_AboveDodongosCavern, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;})
@@ -1775,7 +1775,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&ForestTemple_FirstRoomChest,    []{return true;}),
                   ItemLocationPairing(&ForestTemple_FirstStalfosChest, []{return IsAdult || KokiriSword;}),
-                  ItemLocationPairing(&ForestTemple_GS_FirstRoom,      []{return CanUse(CanUseItem::Dins_Fire) || CanUseProjectile;}),
+                  ItemLocationPairing(&ForestTemple_GS_FirstRoom,      []{return (IsAdult && (Hookshot || Bow || Bombs)) || (IsChild && (Boomerang || Slingshot)) || HasBombchus || CanUse(CanUseItem::Dins_Fire);}),
                   ItemLocationPairing(&ForestTemple_GS_Lobby,          []{return HookshotOrBoomerang;}),
                 }, {
                   //Exits
@@ -1949,7 +1949,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
   Exit WaterTemple_Lobby = Exit("Water Temple Lobby", "Water Temple", "", NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventPairing(&ChildWaterTemple, []{return IsChild;}),
-                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((Hookshot && (LogicWaterTempleUpperBoost && Bombs && (CanUse(CanUseItem::Nayrus_Love) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO)))) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
+                  EventPairing(&RaiseWaterLevel,  []{return (IsAdult && ((Hookshot && (LogicWaterTempleUpperBoost && Bombs && CanTakeDamage)) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}),
                 }, {}, {
                   //Exits
                   ExitPairing::Both(&LH_Main,                       []{return true;}),
@@ -2069,9 +2069,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&SpiritTemple_ChildClimbNorthChest, []{return HasProjectile(HasProjectileAge::Both) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse(CanUseItem::Silver_Gauntlets) && HasProjectile(HasProjectileAge::Adult)) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile(HasProjectileAge::Child));}),
                   ItemLocationPairing(&SpiritTemple_ChildClimbEastChest,  []{return HasProjectile(HasProjectileAge::Both) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse(CanUseItem::Silver_Gauntlets) && HasProjectile(HasProjectileAge::Adult)) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile(HasProjectileAge::Child));}),
                   ItemLocationPairing(&SpiritTemple_GS_SunOnFloorRoom,    []{return HasProjectile(HasProjectileAge::Both) || CanUse(CanUseItem::Dins_Fire) ||
-                                                                                      ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || Fairy || CanUse(CanUseItem::Nayrus_Love)) && (Sticks || KokiriSword || HasProjectile(HasProjectileAge::Child))) ||
+                                                                                      (CanTakeDamage && (Sticks || KokiriSword || HasProjectile(HasProjectileAge::Child))) ||
                                                                                         (IsChild && SmallKeys(SpiritTempleKeys, 5) && HasProjectile(HasProjectileAge::Child)) ||
-                                                                                          ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse(CanUseItem::Silver_Gauntlets) && (HasProjectile(HasProjectileAge::Adult) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || Fairy || CanUse(CanUseItem::Nayrus_Love)));}),
+                                                                                          ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse(CanUseItem::Silver_Gauntlets) && (HasProjectile(HasProjectileAge::Adult) || CanTakeDamage));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&SpiritTemple_CentralChamber, []{return HasExplosives;}),
@@ -3196,7 +3196,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit GerudoTrainingGrounds_MQ_Underwater = Exit("Gerudo Training Grounds MQ Underwater", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(&GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest, []{return HasFireSource && CanUse(CanUseItem::Iron_Boots) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Zora_Tunic)) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO);}),
+                  ItemLocationPairing(&GerudoTrainingGrounds_MQ_UnderwaterSilverRupeeChest, []{return HasFireSource && CanUse(CanUseItem::Iron_Boots) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Zora_Tunic)) && CanTakeDamage;}),
   }, {});
 
   Exit GerudoTrainingGrounds_MQ_LeftSide = Exit("Gerudo Training Grounds MQ Left Side", "Gerudo Training Grounds", "", NO_DAY_NIGHT_CYCLE, {}, {
