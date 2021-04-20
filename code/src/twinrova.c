@@ -29,6 +29,8 @@ void Boss_Tw_rDraw(Actor* thisx, GlobalContext* globalCtx){
 }
 
 void Boss_Tw_rDestroy(Actor* thisx, GlobalContext* globalCtx){
-    fightStarted = 0;
+    if(thisx->params == 0x0001)    //Koume. This check is needed because the elemental
+        fightStarted = 0;          //attacks are different instances of the actor
+    
     Boss_Tw_Destroy(thisx, globalCtx);
 }
