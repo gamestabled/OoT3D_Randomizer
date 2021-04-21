@@ -1,8 +1,9 @@
 #include "starting_inventory.hpp"
-#include "dungeon.hpp"
-#include "debug.hpp"
+
 #include <unistd.h>
 
+#include "debug.hpp"
+#include "dungeon.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
 

@@ -1,11 +1,13 @@
 #include "logic.hpp"
-#include "settings.hpp"
+
+#include <3ds.h>
+#include <algorithm>
+#include <cstdio>
 #include <string>
 #include <string_view>
-#include <cstdio>
-#include <algorithm>
-#include <3ds.h>
 #include <vector>
+
+#include "settings.hpp"
 
 using namespace Settings;
 

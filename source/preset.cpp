@@ -1,15 +1,16 @@
+#include "preset.hpp"
+
 #include <3ds.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 #include <array>
+#include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <vector>
 
 #include "category.hpp"
-#include "preset.hpp"
 #include "settings.hpp"
 #include "tinyxml2.h"
 

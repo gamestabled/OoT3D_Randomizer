@@ -2,6 +2,7 @@
 
 #include <3ds.h>
 #include <string>
+#include <utility>
 
 namespace CustomMessages {
     void CreateMessage(u32 textId, u32 unk_04, u32 unk_08, u32 unk_0C,

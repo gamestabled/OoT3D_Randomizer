@@ -1,15 +1,10 @@
 #pragma once
-#include <functional>
-#include <tuple>
+
 #include <string>
 #include <vector>
-#include "item_location.hpp"
-#include "item_pool.hpp"
-#include "logic.hpp"
-#include "settings.hpp"
-#include "spoiler_log.hpp"
 
 class Exit;
+class ItemLocation;
 
 class EventPairing {
 public:
@@ -57,42 +52,14 @@ public:
         return location;
     }
 
-    bool IsLocationUsed() const {
-        return location->IsUsed();
-    }
+    bool IsLocationUsed() const;
 
 private:
     ItemLocation* location;
     ConditionFn conditions_met;
 
     //Makes sure shop locations are buyable
-    bool CanBuy() const {
-      //Not a shop location, don't need to check if buyable
-      if(!location->IsCategory(Category::cShop)) { 
-        return true;
-      }
-      //Check if wallet is large enough to buy item
-      bool SufficientWallet = true;
-      if (location->GetPrice() > 500) {
-        SufficientWallet = Logic::ProgressiveWallet >= 3;
-      } else if (location->GetPrice() > 200) {
-        SufficientWallet = Logic::ProgressiveWallet >= 2;
-      } else if (location->GetPrice() > 99) {
-        SufficientWallet = Logic::ProgressiveWallet >= 1;
-      }
-      //Check for other conditions on buy items
-      bool OtherCondition = true;
-      //Need to be adult to buy tunic
-      Item placed = location->GetPlacedItem();
-      if (placed == BuyGoronTunic || placed == BuyZoraTunic) {
-        OtherCondition = Logic::IsAdult;
-      }
-      //Need bottle to buy bottle items, only logically relevant bottle items included here 
-      else if (placed == BuyBlueFire || placed == BuyBottleBug || placed == BuyFish || placed == BuyFairysSpirit) {
-        OtherCondition = Logic::HasBottle;
-      }
-      return SufficientWallet && OtherCondition;
-    }
+    bool CanBuy() const;
 };
 
 class ExitPairing {
@@ -160,14 +127,8 @@ public:
          bool timePass_,
          std::vector<EventPairing> events_,
          std::vector<ItemLocationPairing> locations_,
-         std::vector<ExitPairing> exits_)
-    : regionName(std::move(regionName_)),
-      scene(std::move(scene_)),
-      hint(std::move(hint_)),
-      timePass(timePass_),
-      events(std::move(events_)),
-      locations(std::move(locations_)),
-      exits(std::move(exits_)) {}
+         std::vector<ExitPairing> exits_);
+    ~Exit();
 
     std::string regionName;
     std::string scene;
@@ -183,23 +144,7 @@ public:
     bool nightAdult = false;
     bool addedToPool = false;
 
-    void UpdateEvents() {
-      if (timePass) {
-        if (Logic::Age == AGE_CHILD) {
-          dayChild = true;
-          nightChild = true;
-        } else {
-          dayAdult = true;
-          nightAdult = true;
-        }
-      }
-
-      for (EventPairing& eventPair : events) {
-        if (eventPair.ConditionsMet()) {
-          eventPair.EventOccurred();
-        }
-      }
-    }
+    void UpdateEvents();
 
     bool Child() const {
       return dayChild || nightChild;
@@ -221,31 +166,8 @@ public:
       return dayChild && nightChild && dayAdult && nightAdult;
     }
 
-    bool CanPlantBean() const {
-      return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
-    }
-
-    bool AllAccountedFor() const {
-      for (const EventPairing& event : events) {
-        if (!event.ConditionsMet() || !event.GetEvent()) {
-          return false;
-        }
-      }
-
-      for (const ItemLocationPairing loc : locations) {
-        if (!loc.ConditionsMet() || !loc.GetLocation()->IsAddedToPool()) {
-          return false;
-        }
-      }
-
-      for (const ExitPairing& exit : exits) {
-        if (!exit.ConditionsMet() || !exit.GetExit()->AllAccess()) {
-          return false;
-        }
-      }
-
-      return AllAccess();
-    }
+    bool CanPlantBean() const;
+    bool AllAccountedFor() const;
 
     void ResetVariables() {
       dayChild = false;

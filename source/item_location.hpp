@@ -4,10 +4,10 @@
 #include <array>
 #include <cstdio>
 #include <functional>
+#include <set>
 #include <string>
 #include <unistd.h>
 #include <vector>
-#include <set>
 
 #include "../code/include/z3D/z3D.h"
 #include "../code/src/item_override.h"
@@ -72,7 +72,7 @@ public:
       return placedItem.GetName();
     }
 
-    Item GetPlacedItem() const {
+    const Item& GetPlacedItem() const {
       return placedItem;
     }
 

@@ -1,3 +1,5 @@
+#include "settings.hpp"
+
 #include <unistd.h>
 
 #include "cosmetics.hpp"
@@ -6,7 +8,6 @@
 #include "item_location.hpp"
 #include "random.hpp"
 #include "randomizer.hpp"
-#include "settings.hpp"
 #include "setting_descriptions.hpp"
 
 using namespace Cosmetics;

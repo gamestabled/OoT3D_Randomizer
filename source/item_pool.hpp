@@ -1,14 +1,17 @@
 #pragma once
-#include "item_list.hpp"
-#include "item_location.hpp"
-#include "settings.hpp"
+
+#include <cstddef>
 #include <vector>
+
+class Item;
+class ItemLocation;
+
+void AddItemToPool(std::vector<Item>& pool, const Item& item, size_t count = 1);
+Item GetJunkItem();
+void PlaceJunkInExcludedLocation(ItemLocation* il);
+void GenerateItemPool();
+void AddJunk();
 
 extern std::vector<Item> AdvancementItemPool;
 extern std::vector<Item> ItemPool;
 extern std::vector<Item> dungeonRewards;
-extern void AddItemToPool(std::vector<Item>& pool, const Item& item, size_t count = 1);
-extern Item GetJunkItem();
-extern void PlaceJunkInExcludedLocation(ItemLocation* il);
-extern void GenerateItemPool();
-extern void AddJunk();
