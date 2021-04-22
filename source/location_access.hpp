@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "logic.hpp"
+
 class Exit;
 class ItemLocation;
 
@@ -192,32 +194,6 @@ public:
       Logic::UpdateHelpers();
 
       return hereVal;
-    }
-
-    bool CanPlantBean() const {
-      return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
-    }
-
-    bool AllAccountedFor() const {
-      for (const EventPairing& event : events) {
-        if (!event.ConditionsMet() || !event.GetEvent()) {
-          return false;
-        }
-      }
-
-      for (const ItemLocationPairing loc : locations) {
-        if (!loc.ConditionsMet() || !loc.GetLocation()->IsAddedToPool()) {
-          return false;
-        }
-      }
-
-      for (const ExitPairing& exit : exits) {
-        if (!exit.ConditionsMet() || !exit.GetExit()->AllAccess()) {
-          return false;
-        }
-      }
-
-      return AllAccess();
     }
 
     bool CanPlantBean() const;
