@@ -37,7 +37,7 @@ void SaveFile_Init() {
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
-    gSaveContext.eventChkInf[0x7] |= 0x01DF; //began boss battles (except Twinrova and Ganondorf)
+    gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles (except Ganondorf)
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
     gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
@@ -45,6 +45,8 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
+    
+    gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
     if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA) {

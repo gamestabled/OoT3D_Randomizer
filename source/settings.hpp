@@ -12,9 +12,9 @@
 
 #include "../code/src/settings.h"
 #include "category.hpp"
-#include "menu.hpp"
 #include "cosmetics.hpp"
 #include "debug.hpp"
+#include "menu.hpp"
 #include "pool_functions.hpp"
 
 class Option {
@@ -231,6 +231,11 @@ class MenuItem {
 };
 
 namespace Settings {
+  void UpdateSettings();
+  SettingsContext FillContext();
+  void SetDefaultSettings();
+  void ForceChange(u32 kDown, Option* currentSetting);
+
   extern std::string seed;
   extern std::string version;
   extern std::array<u8, 5> hashIconIndexes;
@@ -415,11 +420,6 @@ namespace Settings {
 
   extern std::vector<Option *> excludeLocationsOptions;
   extern std::vector<Option *> detailedLogicOptions;
-
-  extern void UpdateSettings();
-  extern SettingsContext FillContext();
-  extern void SetDefaultSettings();
-  extern void ForceChange(u32 kDown, Option* currentSetting);
 
   extern std::vector<MenuItem *> mainMenu;
 }

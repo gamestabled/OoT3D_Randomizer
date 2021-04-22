@@ -11,6 +11,9 @@
 #include "cow.h"
 #include "string.h"
 #include "ganondorf_organ.h"
+#include "checkable_spot.h"
+#include "twinrova.h"
+#include "nabooru.h"
 
 #define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
 #define OBJECT_CUSTOM_ZELDAS_LULLABY 5
@@ -31,7 +34,7 @@
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
-    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unneccesary owls
+    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
 
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
@@ -43,6 +46,12 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
+
+    gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
+
+    gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;
+    gActorOverlayTable[0xDC].initInfo->draw = Boss_Tw_rDraw;
+    gActorOverlayTable[0xDC].initInfo->destroy = Boss_Tw_rDestroy;
 
     gActorOverlayTable[0xF1].initInfo->init = ItemOcarina_rInit;
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
@@ -57,6 +66,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
+
+    gActorOverlayTable[0x185].initInfo->update = EnWonderTalk2_rUpdate;
 
     gActorOverlayTable[0x195].initInfo->init = EnShopnuts_rInit;
 

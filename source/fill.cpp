@@ -1,16 +1,18 @@
 #include "fill.hpp"
-#include "item_pool.hpp"
-#include "starting_inventory.hpp"
-#include "location_access.hpp"
-#include "spoiler_log.hpp"
-#include "logic.hpp"
-#include "random.hpp"
+
 #include "custom_messages.hpp"
 #include "dungeon.hpp"
+#include "item_location.hpp"
+#include "item_pool.hpp"
+#include "location_access.hpp"
+#include "logic.hpp"
+#include "random.hpp"
+#include "spoiler_log.hpp"
+#include "starting_inventory.hpp"
 
+using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
-using namespace CustomMessages;
 
 static void RemoveStartingItemsFromPool() {
   for (Item& startingItem : StartingInventory) {

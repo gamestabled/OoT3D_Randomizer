@@ -1,15 +1,13 @@
 #include "playthrough.hpp"
+
+#include "fill.hpp"
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "random.hpp"
 #include "spoiler_log.hpp"
 #include "../code/src/item_override.h"
-#include "fill.hpp"
 
 #include <3ds.h>
-#include <algorithm>
-#include <cstdio>
-#include <string>
 #include <unistd.h>
 
 namespace Playthrough {

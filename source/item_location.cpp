@@ -1,7 +1,8 @@
 #include "item_location.hpp"
-#include "spoiler_log.hpp"
-#include "settings.hpp"
+
 #include "dungeon.hpp"
+#include "settings.hpp"
+#include "spoiler_log.hpp"
 
 //Location definitions
 //Kokiri Forest

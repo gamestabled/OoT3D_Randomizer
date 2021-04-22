@@ -1,9 +1,13 @@
 #include "location_access.hpp"
-#include "settings.hpp"
-#include "logic.hpp"
-#include "item_location.hpp"
-#include "item_list.hpp"
+
 #include "dungeon.hpp"
+#include "item_list.hpp"
+#include "item_location.hpp"
+#include "item_pool.hpp"
+#include "logic.hpp"
+#include "settings.hpp"
+#include "spoiler_log.hpp"
+
 #include <unistd.h>
 #include <vector>
 
@@ -21,6 +25,98 @@ std::vector<EventPairing> grottoEvents = {
   EventPairing(&LoneFish,         []{return true;}),
 };
 
+bool ItemLocationPairing::IsLocationUsed() const {
+  return location->IsUsed();
+}
+
+bool ItemLocationPairing::CanBuy() const {
+  //Not a shop location, don't need to check if buyable
+  if (!location->IsCategory(Category::cShop)) {
+    return true;
+  }
+
+  //Check if wallet is large enough to buy item
+  bool SufficientWallet = true;
+  if (location->GetPrice() > 500) {
+    SufficientWallet = Logic::ProgressiveWallet >= 3;
+  } else if (location->GetPrice() > 200) {
+    SufficientWallet = Logic::ProgressiveWallet >= 2;
+  } else if (location->GetPrice() > 99) {
+    SufficientWallet = Logic::ProgressiveWallet >= 1;
+  }
+
+  //Check for other conditions on buy items
+  bool OtherCondition = true;
+  //Need to be adult to buy tunic
+  const Item& placed = location->GetPlacedItem();
+  if (placed == BuyGoronTunic || placed == BuyZoraTunic) {
+    OtherCondition = Logic::IsAdult;
+  }
+  //Need bottle to buy bottle items, only logically relevant bottle items included here
+  else if (placed == BuyBlueFire || placed == BuyBottleBug || placed == BuyFish || placed == BuyFairysSpirit) {
+    OtherCondition = Logic::HasBottle;
+  }
+  return SufficientWallet && OtherCondition;
+}
+
+Exit::Exit(std::string regionName_, std::string scene_, std::string hint_,
+         bool timePass_,
+         std::vector<EventPairing> events_,
+         std::vector<ItemLocationPairing> locations_,
+         std::vector<ExitPairing> exits_)
+  : regionName(std::move(regionName_)),
+    scene(std::move(scene_)),
+    hint(std::move(hint_)),
+    timePass(timePass_),
+    events(std::move(events_)),
+    locations(std::move(locations_)),
+    exits(std::move(exits_)) {}
+
+Exit::~Exit() = default;
+
+void Exit::UpdateEvents() {
+  if (timePass) {
+    if (Logic::Age == AGE_CHILD) {
+      dayChild = true;
+      nightChild = true;
+    } else {
+      dayAdult = true;
+      nightAdult = true;
+    }
+  }
+
+  for (EventPairing& eventPair : events) {
+    if (eventPair.ConditionsMet()) {
+      eventPair.EventOccurred();
+    }
+  }
+}
+
+bool Exit::CanPlantBean() const {
+  return (Logic::MagicBean || Logic::MagicBeanPack) && BothAges();
+}
+
+bool Exit::AllAccountedFor() const {
+  for (const EventPairing& event : events) {
+    if (!event.ConditionsMet() || !event.GetEvent()) {
+      return false;
+    }
+  }
+
+  for (const ItemLocationPairing loc : locations) {
+    if (!loc.ConditionsMet() || !loc.GetLocation()->IsAddedToPool()) {
+      return false;
+    }
+  }
+
+  for (const ExitPairing& exit : exits) {
+    if (!exit.ConditionsMet() || !exit.GetExit()->AllAccess()) {
+      return false;
+    }
+  }
+
+  return AllAccess();
+}
 
 namespace Exits { //name, scene, hint, events, locations, exits
 

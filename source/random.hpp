@@ -1,8 +1,10 @@
 #pragma once
 
 #include <array>
-#include <cstdlib>
-#include <random>
+#include <cstddef>
+#include <cstdint>
+#include <utility>
+#include <vector>
 
 void Random_Init(uint32_t seed);
 uint32_t Random(int min, int max);
