@@ -398,7 +398,7 @@ extern ItemLocation DekuTree_MQ_SlingshotChest;
 extern ItemLocation DekuTree_MQ_SlingshotRoomBackChest;
 extern ItemLocation DekuTree_MQ_BasementChest;
 extern ItemLocation DekuTree_MQ_BeforeSpinningLogChest;
-extern ItemLocation DekuTree_MQ_AfterSpinningLowChest;
+extern ItemLocation DekuTree_MQ_AfterSpinningLogChest;
 extern ItemLocation DekuTree_MQ_DekuScrub;
 
 //Dodongos Cavern

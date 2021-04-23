@@ -219,6 +219,7 @@ namespace Logic {
   extern bool CanStunDeku;
   extern bool CanSummonGossipFairy;
   extern bool CanSummonGossipFairyWithoutSuns;
+  extern bool CanTakeDamage;
   extern bool CanPlantBean;
   extern bool CanOpenBombGrotto;
   extern bool CanOpenStormGrotto;
