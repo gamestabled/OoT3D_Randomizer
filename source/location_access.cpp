@@ -45,18 +45,14 @@ bool ItemLocationPairing::CanBuy() const {
     SufficientWallet = Logic::ProgressiveWallet >= 1;
   }
 
-  //Check for other conditions on buy items
-  bool OtherCondition = true;
-  //Need to be adult to buy tunic
-  const Item& placed = location->GetPlacedItem();
-  if (placed == BuyGoronTunic || placed == BuyZoraTunic) {
-    OtherCondition = Logic::IsAdult;
-  }
   //Need bottle to buy bottle items, only logically relevant bottle items included here
-  else if (placed == BuyBlueFire || placed == BuyBottleBug || placed == BuyFish || placed == BuyFairysSpirit) {
-    OtherCondition = Logic::HasBottle;
+  bool HasOrDoesntNeedBottle = true;
+  const Item& placed = location->GetPlacedItem();
+  if (placed == BuyBlueFire || placed == BuyBottleBug || placed == BuyFish || placed == BuyFairysSpirit) {
+    HasOrDoesntNeedBottle = Logic::HasBottle;
   }
-  return SufficientWallet && OtherCondition;
+
+  return SufficientWallet && HasOrDoesntNeedBottle;
 }
 
 Exit::Exit(std::string regionName_, std::string scene_, std::string hint_,
