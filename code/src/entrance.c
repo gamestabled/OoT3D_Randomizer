@@ -23,6 +23,7 @@ void Scene_Init(void) {
     memcpy(&gSceneTable[13], gSettingsContext.ganonsCastleDungeonMode          == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[13] : &gDungeonSceneTable[13], sizeof(Scene));
 
     gRestrictionFlags[72].flags2 = 0; // Allows warp songs in GTG
+    gRestrictionFlags[93].flags2 = 0; // Allows warp songs in Windmill / Dampe's grave
     gRestrictionFlags[94].flags2 = 0; // Allows warp songs in Ganon's Castle
 
     gRestrictionFlags[72].flags3 = 0; // Allows farore's wind in GTG
