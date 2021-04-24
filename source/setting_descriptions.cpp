@@ -397,6 +397,12 @@ string_view skipTowerEscapeDesc       = "The tower escape sequence between Ganon
 string_view skipEponaRaceDesc         = "Epona can be summoned with Epona's Song without\n"//
                                         "needing to race Ingo.";                           //
 /*------------------------------                                                           //
+|       SKIP DAMPE RACE        |                                                           //
+------------------------------*/                                                           //
+string_view skipDampeRaceDesc         = "Dampe will start with the second race so you can\n"
+                                        "finish the race in under a minute and get both\n" //
+                                        "rewards at once";                                 //
+/*------------------------------                                                           //
 |      FOUR POES CUTSCENE      |                                                           //
 ------------------------------*/                                                           //
 string_view fourPoesDesc              = "The cutscene with the 4 poes in Forest Temple will"

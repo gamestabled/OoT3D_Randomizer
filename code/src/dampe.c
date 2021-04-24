@@ -28,8 +28,8 @@ void EnTk_CheckCollectFlag(void) {
     }
 }
 
-// Checks the chest flag for the race chest
+// Checks the clear flag for the first race (chest spawned, not opened)
 // Replaces a check for hookshot in the inventory
 void EnPoRelay_CheckChestFlag(EnPoRelay* dampe) {
-    dampe->unk_B1C = ((gSaveContext.sceneFlags[0x48].chest & 0x1) != 0);
+    dampe->unk_B1C = ((gSaveContext.sceneFlags[0x48].clear & 0x00000010) != 0);
 }
