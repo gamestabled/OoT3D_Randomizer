@@ -118,7 +118,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &DekuTree_MQ_SlingshotRoomBackChest,
                             &DekuTree_MQ_BasementChest,
                             &DekuTree_MQ_BeforeSpinningLogChest,
-                            &DekuTree_MQ_AfterSpinningLowChest,
+                            &DekuTree_MQ_AfterSpinningLogChest,
                             &DekuTree_MQ_DekuScrub,
                             &DekuTree_MQ_GS_Lobby,
                             &DekuTree_MQ_GS_CompassRoom,

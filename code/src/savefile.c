@@ -7,7 +7,7 @@ void SaveFile_Init() {
     gSaveContext.equipment  |= 0x0FFF;  //Swords, shields, tunics, boots
     gSaveContext.bgsFlag     = 1;
     gSaveContext.bgsHitsLeft = 1;
-    gSaveContext.upgrades   |= 0x109;   //bomb bag, quiver, strength
+    gSaveContext.upgrades   |= 0x309;   //bomb bag, quiver, strength, scale
     gSaveContext.questItems |= 0x3FFC0; //songs
     gSaveContext.items[SLOT_OCARINA]  = ITEM_OCARINA_FAIRY;
     gSaveContext.items[SLOT_HOOKSHOT] = ITEM_LONGSHOT;
@@ -19,6 +19,7 @@ void SaveFile_Init() {
     gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
     gSaveContext.items[SLOT_HOVER_BOOTS] = ITEM_BOOTS_HOVER;
     gSaveContext.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+    gSaveContext.items[SLOT_BOTTLE_1] = ITEM_FISH;
     gSaveContext.magicAcquired = 1;
     gSaveContext.magicLevel = 2;
     gSaveContext.magic = 48;

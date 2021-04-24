@@ -183,7 +183,7 @@ ItemLocation DekuTree_MQ_SlingshotChest                       = ItemLocation::Ch
 ItemLocation DekuTree_MQ_SlingshotRoomBackChest               = ItemLocation::Chest      (0x00, 0x02, "Deku Tree MQ Slingshot Room Back Chest",             {Category::cDekuTree,});
 ItemLocation DekuTree_MQ_BasementChest                        = ItemLocation::Chest      (0x00, 0x04, "Deku Tree MQ Basement Chest",                        {Category::cDekuTree,});
 ItemLocation DekuTree_MQ_BeforeSpinningLogChest               = ItemLocation::Chest      (0x00, 0x05, "Deku Tree MQ Before Spinning Log Chest",             {Category::cDekuTree,});
-ItemLocation DekuTree_MQ_AfterSpinningLowChest                = ItemLocation::Chest      (0x00, 0x00, "Deku Tree MQ After Spinning Log Chest",              {Category::cDekuTree,});
+ItemLocation DekuTree_MQ_AfterSpinningLogChest                = ItemLocation::Chest      (0x00, 0x00, "Deku Tree MQ After Spinning Log Chest",              {Category::cDekuTree,});
 ItemLocation DekuTree_MQ_DekuScrub                            = ItemLocation::Base       (0x00, 0x34, "Deku Tree MQ Deku Scrub",                            {Category::cDekuTree,});
 
 //Dodongos Cavern Shared

@@ -296,6 +296,10 @@ SECTIONS
 		*(.patch_DekuSproutCheckForest)
 	}
 
+	.patch_DungeonCheckJabuMQBox 0x21590C : {
+	  *(.patch_DungeonCheckJabuMQBox)
+	}
+
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
 		*(.patch_DekuTheaterMaskOfTruth)
 	}
