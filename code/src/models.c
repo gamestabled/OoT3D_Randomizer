@@ -35,92 +35,27 @@ typedef void (*Matrix_Multiply_proc)(nn_math_MTX34* dst, nn_math_MTX34* lhs, nn_
 #define Matrix_Multiply_addr 0x36C174
 #define Matrix_Multiply ((Matrix_Multiply_proc)Matrix_Multiply_addr)
 
-typedef void* (*ZAR_Get_proc)(ZARInfo* zarInfo, u32 index);
-#define ZAR_GetCMABByIndex_addr 0x372F0C
-#define ZAR_GetCMABByIndex ((ZAR_Get_proc)ZAR_GetCMABByIndex_addr)
-
-typedef void (*AnimSpawn_proc)(void*, void*, void*, void*);
-#define AnimSpawn_addr 0x372D94
-#define AnimSpawn ((AnimSpawn_proc)AnimSpawn_addr)
-
 #define LOADEDMODELS_MAX 16
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
 void Model_SetAnim(Model* model, u32 objectAnimIdx) {
-    s16 objectBankIdx = ExtendedObject_GetIndex(&gGlobalContext->objectCtx, model->info.objectId);
-    void* cmabMan;
-
-    if (objectBankIdx < OBJECT_EXCHANGE_BANK_MAX) {
-        cmabMan = ZAR_GetCMABByIndex(&gGlobalContext->objectCtx.status[objectBankIdx].zarInfo, objectAnimIdx);
-    } else {
-        cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo, objectAnimIdx);
-    }
-
-    GlModel_unk_0C* temp = model->glModel->unk_0C;
-    AnimSpawn(temp, cmabMan, temp, (void*)0x3FF53C);
+    void* cmabMan = ExtendedObject_GetCMABByIndex(model->info.objectId, objectAnimIdx);
+    TexAnim_Spawn(model->glModel->unk_0C, cmabMan);
 }
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
     // Should probably parse the ZAR to find the CMBs correctly,
     // but this is fine for now
     void* ZARBuf = rExtendedObjectCtx.status[model->info.objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.buf;
-    void* cmb;
-    switch (model->info.objectId) {
-        case 4: // double defense
-            cmb = (void*)(((char*)ZARBuf) + 0xA4);
-            CustomModel_EditHeartContainerToDoubleDefense(cmb);
-            break;
-        case 5: // zeldas lullaby
-            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-            CustomModel_EditFairyOcarinaToZeldasLullaby(cmb);
-            break;
-        case 16: // sarias song
-            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-            CustomModel_EditFairyOcarinaToSariasSong(cmb);
-            break;
-        case 17: // suns song
-            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-            CustomModel_EditFairyOcarinaToSunsSong(cmb);
-            break;
-        case 58: // eponas song
-            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-            CustomModel_EditFairyOcarinaToEponasSong(cmb);
-            break;
-        case 120: // song of storms
-            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-            CustomModel_EditFairyOcarinaToSongOfStorms(cmb);
-            break;
-        case 121: // song of time
-            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-            CustomModel_EditFairyOcarinaToSongOfTime(cmb);
-            break;
-        case 122: // minuet of forest
-            cmb = (void*)(((char*)ZARBuf) + 0xE8);
-            CustomModel_EditOcarinaOfTimeToMinuetOfForest(cmb);
-            break;
-        case 123: // bolero of fire
-            cmb = (void*)(((char*)ZARBuf) + 0xE8);
-            CustomModel_EditOcarinaOfTimeToBoleroOfFire(cmb);
-            break;
-        case 125: // serenade of water
-            cmb = (void*)(((char*)ZARBuf) + 0xE8);
-            CustomModel_EditOcarinaOfTimeToSerenadeOfWater(cmb);
-            break;
-        case 126: // requiem of spirit
-            cmb = (void*)(((char*)ZARBuf) + 0xE8);
-            CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(cmb);
-            break;
-        case 127: // nocturne of shadow
-            cmb = (void*)(((char*)ZARBuf) + 0xE8);
-            CustomModel_EditOcarinaOfTimeToNocturneOfShadow(cmb);
-            break;
-        case 128: // prelude of light
-            cmb = (void*)(((char*)ZARBuf) + 0xE8);
-            CustomModel_EditOcarinaOfTimeToPreludeOfLight(cmb);
-            break;
+    
+    // edit the cmb for double defense
+    if (model->info.objectId == OBJECT_CUSTOM_DOUBLE_DEFENSE) {
+        void* cmb = (void*)(((char*)ZARBuf) + 0xA4);
+        CustomModel_EditHeartContainerToDoubleDefense(cmb);
     }
 
     model->glModel = GlModel_Spawn(model->actor, globalCtx, model->info.objectId, model->info.objectModelIdx);
+
     // need to set mesh for rupees
     if (model->info.objectId == 0x017F) {
         GlModel_SetMesh(model->glModel, model->info.objectMeshId);
@@ -128,26 +63,46 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
     // spawn the skulltula token animation
     if ((model->info.objectId == 0x0024) && (model->info.objectModelIdx == 0x03)) {
         Model_SetAnim(model, 0);
-        model->glModel->unk_0C->unk_0C = 2.0f;
-        model->glModel->unk_0C->unk_10 = 1;
+        model->glModel->unk_0C->animSpeed = 2.0f;
+        model->glModel->unk_0C->animMode = 1;
     }
     // spawn the blue fire animation
     if ((model->info.objectId == 0x0173) && (model->info.objectModelIdx == 0x01)) {
         Model_SetAnim(model, 0);
-        model->glModel->unk_0C->unk_0C = 2.0f;
-        model->glModel->unk_0C->unk_10 = 1;
+        model->glModel->unk_0C->animSpeed = 2.0f;
+        model->glModel->unk_0C->animMode = 1;
     }
     // spawn the poe animation
     if ((model->info.objectId == 0x0176) && (model->info.objectModelIdx == 0x00)) {
         Model_SetAnim(model, 0);
-        model->glModel->unk_0C->unk_0C = 2.0f;
-        model->glModel->unk_0C->unk_10 = 1;
+        model->glModel->unk_0C->animSpeed = 2.0f;
+        model->glModel->unk_0C->animMode = 1;
     }
     // spawn the big poe animation
     if ((model->info.objectId == 0x019A) && (model->info.objectModelIdx == 0x01)) {
         Model_SetAnim(model, 0);
-        model->glModel->unk_0C->unk_0C = 2.0f;
-        model->glModel->unk_0C->unk_10 = 1;
+        model->glModel->unk_0C->animSpeed = 2.0f;
+        model->glModel->unk_0C->animMode = 1;
+    }
+    // spawn the cmab on child song items
+    if (model->info.objectId == OBJECT_CUSTOM_CHILD_SONGS) {
+        void* cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+        CustomModel_SetOcarinaToRGBA565(cmb);
+        model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
+        Model_SetAnim(model, TEXANIM_CHILD_SONG);
+        model->glModel->unk_0C->animSpeed = 0.0f;
+        model->glModel->unk_0C->animMode = 0;
+        model->glModel->unk_0C->curFrame = model->info.objectMeshId;
+    }
+    // spawn the cmab on adult song items
+    if (model->info.objectId == OBJECT_CUSTOM_ADULT_SONGS) {
+        void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
+        CustomModel_SetOcarinaToRGBA565(cmb);
+        model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
+        Model_SetAnim(model, TEXANIM_ADULT_SONG);
+        model->glModel->unk_0C->animSpeed = 0.0f;
+        model->glModel->unk_0C->animMode = 0;
+        model->glModel->unk_0C->curFrame = model->info.objectMeshId;
     }
     model->loaded = 1;
 }

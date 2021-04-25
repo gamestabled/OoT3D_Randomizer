@@ -7,7 +7,7 @@ typedef struct {
     s16 objectId;
     s8 objectBankIdx;
     s8 objectModelIdx;
-    s32 objectMeshId;
+    s32 objectMeshId; //or anim frame
 } ObjectInfo;
 
 typedef struct {

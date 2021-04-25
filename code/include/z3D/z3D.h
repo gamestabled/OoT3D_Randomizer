@@ -374,9 +374,10 @@ typedef struct {
 } GlModel_VTable;
 
 typedef struct {
-    /* 0x00 */ char unk_00[0x0C];
-    /* 0x0C */ f32  unk_0C; // animation speed?
-    /* 0x10 */ s8   unk_10; // animation mode?
+    /* 0x00 */ char unk_00[0x08];
+    /* 0x08 */ f32  curFrame;
+    /* 0x0C */ f32  animSpeed;
+    /* 0x10 */ s8   animMode;
     /* 0x11 */ char unk_11[0x87];
 } GlModel_unk_0C; // size = 0x98
 
