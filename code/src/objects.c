@@ -41,3 +41,16 @@ ObjectStatus* ExtendedObject_GetStatus(s16 objectId) {
     }
     return NULL;
 }
+
+void* ExtendedObject_GetCMABByIndex(s16 objectId, u32 objectAnimIdx) {
+    s16 objectBankIdx = ExtendedObject_GetIndex(&gGlobalContext->objectCtx, objectId);
+    void* cmabMan;
+
+    if (objectBankIdx < OBJECT_EXCHANGE_BANK_MAX) {
+        cmabMan = ZAR_GetCMABByIndex(&gGlobalContext->objectCtx.status[objectBankIdx].zarInfo, objectAnimIdx);
+    } else {
+        cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo, objectAnimIdx);
+    }
+
+    return cmabMan;
+}
