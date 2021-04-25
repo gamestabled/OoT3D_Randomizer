@@ -4,6 +4,7 @@
 #include "icetrap.h"
 #include "settings.h"
 #include "custom_models.h"
+#include "objects.h"
 #include <stddef.h>
 void svcBreak(u32 breakReason); //TODO: remove
 
@@ -204,11 +205,6 @@ void ItemOverride_AfterItemReceived(void) {
     if (key.all == 0) {
         return;
     }
-
-    // Commenting this for now, I believe it is the correct fix, but it is an experimental change
-    // if (key.all == rPendingOverrideQueue[0].key.all) {
-    //     ItemOverride_PopPendingOverride();
-    // }
     ItemOverride_AfterKeyReceived(key);
     ItemOverride_Clear();
 }
@@ -257,6 +253,7 @@ void ItemOverride_Update(void) {
     ItemOverride_CheckStartingItem();
     ItemOverride_CheckZeldasLetter();
     IceTrap_Update();
+    CustomModel_Update();
     if (ItemOverride_PlayerIsReady()) {
         ItemOverride_PopIceTrap();
         if (IceTrap_IsPending()) {
@@ -347,62 +344,43 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemTable_CallEffect(itemRow);
 }
 
-void ItemOverride_EditDrawGetItem(void) {
+void ItemOverride_EditDrawGetItemBeforeModelSpawn(void) {
     void* cmb;
 
-    // Check for custom graphicIds
     switch (rActiveItemGraphicId) {
-        // Should probably parse the ZAR to find the CMBs correctly,
-        // but this is fine for now
-        case 4: // double defense
+        case GID_CUSTOM_DOUBLE_DEFENSE:
             cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0xA4);
             CustomModel_EditHeartContainerToDoubleDefense(cmb);
             break;
-        case 5: // child songs
+        case GID_CUSTOM_CHILD_SONGS:
             cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0x2E60);
-            switch (rActiveItemObjectId) {
-                case 5: // zeldas lullaby
-                    CustomModel_EditFairyOcarinaToZeldasLullaby(cmb);
-                    break;
-                case 16: // sarias song
-                    CustomModel_EditFairyOcarinaToSariasSong(cmb);
-                    break;
-                case 17: // suns song
-                    CustomModel_EditFairyOcarinaToSunsSong(cmb);
-                    break;
-                case 58: // eponas song
-                    CustomModel_EditFairyOcarinaToEponasSong(cmb);
-                    break;
-                case 120: // song of storms
-                    CustomModel_EditFairyOcarinaToSongOfStorms(cmb);
-                    break;
-                case 121: // song of time
-                    CustomModel_EditFairyOcarinaToSongOfTime(cmb);
-                    break;
-            }
+            CustomModel_SetOcarinaToRGBA565(cmb);
             break;
-        case 6: // adult songs
+        case GID_CUSTOM_ADULT_SONGS:
             cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0xE8);
-            switch (rActiveItemObjectId) {
-                case 122: // minuet of forest
-                    CustomModel_EditOcarinaOfTimeToMinuetOfForest(cmb);
-                    break;
-                case 123: // bolero of fire
-                    CustomModel_EditOcarinaOfTimeToBoleroOfFire(cmb);
-                    break;
-                case 125: // serenade of water
-                    CustomModel_EditOcarinaOfTimeToSerenadeOfWater(cmb);
-                    break;
-                case 126: // requiem of spirit
-                    CustomModel_EditOcarinaOfTimeToRequiemOfSpirit(cmb);
-                    break;
-                case 127: // nocturne of shadow
-                    CustomModel_EditOcarinaOfTimeToNocturneOfShadow(cmb);
-                    break;
-                case 128: // prelude of light
-                    CustomModel_EditOcarinaOfTimeToPreludeOfLight(cmb);
-                    break;
-            }
+            CustomModel_SetOcarinaToRGBA565(cmb);
+            break;
+    }
+}
+
+void ItemOverride_EditDrawGetItemAfterModelSpawn(GlModel* model) {
+    void* cmabMan;
+
+    switch (rActiveItemGraphicId) {
+        case GID_CUSTOM_CHILD_SONGS:
+            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
+            TexAnim_Spawn(model->unk_0C, cmabMan);
+            model->unk_0C->animSpeed = 0.0f;
+            model->unk_0C->animMode = 0;
+            model->unk_0C->curFrame = rActiveItemRow->objectMeshId;
+            break;
+        case GID_CUSTOM_ADULT_SONGS:
+            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
+            TexAnim_Spawn(model->unk_0C, cmabMan);
+            model->unk_0C->animSpeed = 0.0f;
+            model->unk_0C->animMode = 0;
+            model->unk_0C->curFrame = rActiveItemRow->objectMeshId;
+            break;
     }
 }
 

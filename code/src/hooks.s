@@ -128,12 +128,20 @@ returnGraphicID_354BB8:
     pop {lr}
     bx lr
 
-.global hook_EditDrawGetItem
-hook_EditDrawGetItem:
+.global hook_EditDrawGetItemBeforeModelSpawn
+hook_EditDrawGetItemBeforeModelSpawn:
     push {r0-r12, lr}
-    bl ItemOverride_EditDrawGetItem
+    bl ItemOverride_EditDrawGetItemBeforeModelSpawn
     pop {r0-r12, lr}
     mov r7,#0x0
+    bx lr
+
+.global hook_EditDrawDetItemAfterModelSpawn
+hook_EditDrawDetItemAfterModelSpawn:
+    push {r0-r12, lr}
+    bl ItemOverride_EditDrawGetItemAfterModelSpawn
+    pop {r0-r12, lr}
+    str r0,[r6,#0x78]
     bx lr
 
 # TODO: Text ID in game gets messed up,

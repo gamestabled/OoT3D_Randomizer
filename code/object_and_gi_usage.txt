@@ -1,17 +1,7 @@
 The following custom objectIds are currently being used:
 4: Double Defense
-5: Zeldas Lullaby
-16: Sarias Song
-17: Suns Song
-58: Eponas Song
-120: Song of Storms
-121: Song of Time
-122: Minuet of Forest
-123: Bolero of Fire
-125: Serenade of Water
-126: Requiem of Spirit
-127: Nocturne of Shadow
-128: Prelude of Light
+5: Child Songs
+16: Adult Songs
 
 The following custom graphicIds are currently being used:
 4: Double Defense
