@@ -460,6 +460,22 @@ hook_TalonGetCastleTextbox:
     pop {r0, r2-r12, lr}
     bx lr
 
+.global hook_CheckDekuTreeClear
+hook_CheckDekuTreeClear:
+    push {r0-r12, lr}
+    bl Dungeon_CheckDekuTreeClear
+    tst r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_CheckCurrentDungeonMode
+hook_CheckCurrentDungeonMode:
+    push {r0-r12, lr}
+    bl Dungeon_GetCurrentDungeonMode
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

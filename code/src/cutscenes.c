@@ -194,6 +194,7 @@ void Cutscene_OverrideDekuTree(void) {
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex = 0x0;
     ItemOverride_PushDungeonReward(DUNGEON_DEKU_TREE);
+    gSaveContext.eventChkInf[0x1] |= 0x1000; //spoke to Mido after Deku Tree's death
 }
 
 void Custcene_OverrideDodongosCavern(void) {

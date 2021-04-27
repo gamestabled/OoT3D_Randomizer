@@ -504,7 +504,7 @@ std::vector<Item> ShopItems; //Vector of all shop items, initialized to vanilla 
 //Set vanilla shop item locations before potentially shuffling
 void SetVanillaShopItems() {
   ShopItems = {
-    //Vanilla KF 
+    //Vanilla KF
     BuyDekuShield,
     BuyDekuNut5,
     BuyDekuNut10,
@@ -915,7 +915,7 @@ void GenerateItemPool() {
     PlaceShopItems(); //Place now-shuffled shop items
     if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
       AddItemsToPool(ItemPool, normalRupees);
-    } 
+    }
     else { //Shopsanity 1-4, random
       //Overwrite appropriate number of shop items
       const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR

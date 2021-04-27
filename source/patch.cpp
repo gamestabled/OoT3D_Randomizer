@@ -14,11 +14,42 @@
 
 using FILEPtr = std::unique_ptr<FILE, decltype(&std::fclose)>;
 
+bool CopyFile(FS_Archive sdmcArchive, const char* dst, const char* src) {
+  Result res = 0;
+  Handle outFile;
+  u32 bytesWritten = 0;
+  // Delete dst if it exists
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, dst));
+
+  // Open dst destination
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&outFile, sdmcArchive, fsMakePath(PATH_ASCII, dst), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+    return false;
+  }
+
+  if (auto file = FILEPtr{std::fopen(src, "r"), std::fclose}) {
+    // obtain file size
+    fseek(file.get(), 0, SEEK_END);
+    const auto lSize = static_cast<size_t>(ftell(file.get()));
+    rewind(file.get());
+
+    // copy file into the buffer
+    std::vector<char> buffer(lSize);
+    fread(buffer.data(), 1, buffer.size(), file.get());
+
+    // Write the buffer to final destination
+    if (!R_SUCCEEDED(res = FSFILE_Write(outFile, &bytesWritten, 0, buffer.data(), buffer.size(), FS_WRITE_FLUSH))) {
+      return false;
+    }
+  }
+
+  FSFILE_Close(outFile);
+  return true;
+}
+
 bool WritePatch() {
   Result res = 0;
   FS_Archive sdmcArchive = 0;
   Handle code;
-  Handle finalExheader;
   u32 bytesWritten = 0;
   u32 totalRW = 0;
   char buf[512];
@@ -35,6 +66,10 @@ bool WritePatch() {
   FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles"), FS_ATTRIBUTE_DIRECTORY);
   //Create the 0004000000033500 directory if it doesn't exist (oot3d game id)
   FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the romfs directory if it doesn't exist (for LayeredFS)
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/romfs"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the actor directory if it doesn't exist
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/romfs/actor"), FS_ATTRIBUTE_DIRECTORY);
 
   /*romfs is used to get files from the romfs folder. This allows us to copy
   from basecode and write the exheader without the user needing to worry about
@@ -394,17 +429,11 @@ bool WritePatch() {
     return false;
   }
 
+  FSFILE_Close(code);
+
   /*-------------------------
   |       exheader.bin      |
   --------------------------*/
-  // Delete exheader.bin if it exists
-  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/exheader.bin"));
-
-  // Open final exheader.bin destination
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&finalExheader, sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/exheader.bin"), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
-    return false;
-  }
-
   // Get exheader for proper playOption
   const char * filePath;
   if (Settings::PlayOption == PATCH_CONSOLE) {
@@ -413,25 +442,13 @@ bool WritePatch() {
     filePath = "romfs:/exheader_citra.bin";
   }
 
-  // Copy exheader.bin from romfs to final destination
-  if (auto exheader = FILEPtr{std::fopen(filePath, "r"), std::fclose}) {
-    // obtain exheader file size
-    fseek(exheader.get(), 0, SEEK_END);
-    const auto lSize = static_cast<size_t>(ftell(exheader.get()));
-    rewind(exheader.get());
+  CopyFile(sdmcArchive, "/luma/titles/0004000000033500/exheader.bin", filePath);
 
-    // copy exheader into the buffer
-    std::vector<char> buffer(lSize);
-    fread(buffer.data(), 1, buffer.size(), exheader.get());
+  /*-------------------------
+  |       custom assets      |
+  --------------------------*/
+  CopyFile(sdmcArchive, "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar", "romfs:/zelda_gi_melody.zar");
 
-    // Write the buffer to final exheader.bin destination
-    if (!R_SUCCEEDED(res = FSFILE_Write(finalExheader, &bytesWritten, 0, buffer.data(), buffer.size(), FS_WRITE_FLUSH))) {
-      return false;
-    }
-  }
-
-  FSFILE_Close(code);
-  FSFILE_Close(finalExheader);
   FSUSER_CloseArchive(sdmcArchive);
 
   return true;
