@@ -45,14 +45,18 @@ bool ItemLocationPairing::CanBuy() const {
     SufficientWallet = Logic::ProgressiveWallet >= 1;
   }
 
-  //Need bottle to buy bottle items, only logically relevant bottle items included here
-  bool HasOrDoesntNeedBottle = true;
+  bool OtherCondition = true;
   const Item& placed = location->GetPlacedItem();
+  //Need bottle to buy bottle items, only logically relevant bottle items included here
   if (placed == BuyBlueFire || placed == BuyBottleBug || placed == BuyFish || placed == BuyFairysSpirit) {
-    HasOrDoesntNeedBottle = Logic::HasBottle;
+    OtherCondition = Logic::HasBottle;
+  }
+  //Need explosives to be able to buy bombchus
+  else if (placed == BuyBombchu5 || placed == BuyBombchu10 || placed == BuyBombchu20) {
+    OtherCondition = Logic::HasExplosives;
   }
 
-  return SufficientWallet && HasOrDoesntNeedBottle;
+  return SufficientWallet && OtherCondition;
 }
 
 Exit::Exit(std::string regionName_, std::string scene_, std::string hint_,
@@ -928,14 +932,14 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit MK_BombchuShop = Exit("Market Bombchu Shop", "", "", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(&MK_BombchuShopItem1, []{return HasExplosives;}),
-                  ItemLocationPairing(&MK_BombchuShopItem2, []{return HasExplosives;}),
-                  ItemLocationPairing(&MK_BombchuShopItem3, []{return HasExplosives;}),
-                  ItemLocationPairing(&MK_BombchuShopItem4, []{return HasExplosives;}),
-                  ItemLocationPairing(&MK_BombchuShopItem5, []{return HasExplosives;}),
-                  ItemLocationPairing(&MK_BombchuShopItem6, []{return HasExplosives;}),
-                  ItemLocationPairing(&MK_BombchuShopItem7, []{return HasExplosives;}),
-                  ItemLocationPairing(&MK_BombchuShopItem8, []{return HasExplosives;}),
+                  ItemLocationPairing(&MK_BombchuShopItem1, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem2, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem3, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem4, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem5, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem6, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem7, []{return true;}),
+                  ItemLocationPairing(&MK_BombchuShopItem8, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})
