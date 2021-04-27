@@ -142,6 +142,8 @@ extern string_view skipTowerEscapeDesc;
 
 extern string_view skipEponaRaceDesc;
 
+extern string_view skipDampeRaceDesc;
+
 extern string_view fourPoesDesc;
 
 extern string_view templeOfTimeIntroDesc;

@@ -210,12 +210,19 @@ static void PushSlotIntoInventoryMenu(u8 itemSlot) {
             break;
         }
     }
-    
     gSaveContext.itemMenuChild[currentSlot] = itemSlot;
 
     currentSlot = 0;
-    while(gSaveContext.itemMenuAdult[currentSlot] != 0xFF) {
+    while((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuAdult[currentSlot] != 0xFF) {
         currentSlot++;
+        if(currentSlot == 24){
+            for(currentSlot = 5; currentSlot < 24; currentSlot += 6){
+                if(gSaveContext.itemMenuAdult[currentSlot] == 0xFF){
+                    break;
+                }
+            }
+            break;
+        }
     }
     gSaveContext.itemMenuAdult[currentSlot] = itemSlot;
 }
