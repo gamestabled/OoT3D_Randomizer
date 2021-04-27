@@ -1072,7 +1072,7 @@ DoorOfTimeOpenCutscene_patch:
 
 .section .patch_DungeonCheckJabuMQBox
 .global DungeonCheckJabuMQBox_patch
-    DungeonCheckJabuMQBox_patch:
+DungeonCheckJabuMQBox_patch:
     bl Dungeon_GetJabuJabusBellyDungeonMode
 
 .section .patch_TalonGetCastleTextbox
@@ -1080,6 +1080,40 @@ DoorOfTimeOpenCutscene_patch:
 TalonGetCastleTextbox_patch:
     bl hook_TalonGetCastleTextbox
 
+.section .patch_MidoCheckDekuTreeClearOne
+.global MidoCheckDekuTreeClearOne_patch
+MidoCheckDekuTreeClearOne_patch:
+    nop
+    nop
+    bl hook_CheckDekuTreeClear
+
+.section .patch_MidoCheckDekuTreeClearTwo
+.global MidoCheckDekuTreeClearTwo_patch
+MidoCheckDekuTreeClearTwo_patch:
+    nop
+    nop
+    bl hook_CheckDekuTreeClear
+
+.section .patch_MidoCheckDekuTreeClearThree
+.global MidoCheckDekuTreeClearThree_patch
+MidoCheckDekuTreeClearThree_patch:
+    nop
+    nop
+    bl hook_CheckDekuTreeClear
+
+.section .patch_MidoCheckDekuTreeClearFour
+.global MidoCheckDekuTreeClearFour_patch
+MidoCheckDekuTreeClearFour_patch:
+    nop
+    nop
+    bl hook_CheckDekuTreeClear
+
+.section .patch_MidoCheckDekuTreeClearFive
+.global MidoCheckDekuTreeClearFive_patch
+MidoCheckDekuTreeClearFive_patch:
+    nop
+    nop
+    bl hook_CheckDekuTreeClear
 
 .section .patch_loader
 .global loader_patch

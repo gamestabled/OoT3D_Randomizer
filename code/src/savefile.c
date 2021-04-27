@@ -45,7 +45,7 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
-    
+
     gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
@@ -110,6 +110,7 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0xB] |= (gSettingsContext.shadowTrialSkip) ? 0x2000 : 0;
     gSaveContext.eventChkInf[0xB] |= (gSettingsContext.lightTrialSkip)  ? 0x8000 : 0;
 
+    //If all trials are skipped
     if (gSettingsContext.forestTrialSkip && gSettingsContext.fireTrialSkip && gSettingsContext.waterTrialSkip &&
         gSettingsContext.spiritTrialSkip && gSettingsContext.shadowTrialSkip && gSettingsContext.lightTrialSkip) {
             gSaveContext.eventChkInf[0xC] |= 0x0008; //dispel Ganon's Tower Barrier
@@ -167,7 +168,12 @@ void SaveFile_Init() {
         gSaveContext.questItems |= 0x00400000;
     }
 
-    gSaveContext.eventChkInf[0x0] |= 0x14;   //spoke to mido and moved him
+    //Move mido away from the path to the Deku Tree in Open Forest
+    if (gSettingsContext.openForest == OPENFOREST_OPEN) {
+      gSaveContext.eventChkInf[0x0] |= 0x0010;
+    }
+
+    gSaveContext.eventChkInf[0x0] |= 0x0004; //spoke to mido
     gSaveContext.eventChkInf[0x0] |= 0x1020; //met deku tree and opened mouth
 
     gSaveContext.eventChkInf[0x4] |= 0x8020; //entered MS chamber, Pulled MS from pedestal
