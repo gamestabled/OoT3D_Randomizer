@@ -21,6 +21,14 @@ typedef void (*Object_Clear_proc)(GlobalContext* globalCtx, ObjectContext* objec
 #define Object_Clear_addr 0x45FDA0
 #define Object_Clear ((Object_Clear_proc)Object_Clear_addr)
 
+typedef void* (*ZAR_Get_proc)(ZARInfo* zarInfo, u32 index);
+#define ZAR_GetCMABByIndex_addr 0x372F0C
+#define ZAR_GetCMABByIndex ((ZAR_Get_proc)ZAR_GetCMABByIndex_addr)
+
+typedef void (*TexAnim_Spawn_proc)(void*, void*);
+#define TexAnim_Spawn_addr 0x372D94
+#define TexAnim_Spawn ((TexAnim_Spawn_proc)TexAnim_Spawn_addr)
+
 typedef ObjectContext ExtendedObjectContext;
 
 extern ExtendedObjectContext rExtendedObjectCtx;
@@ -29,3 +37,4 @@ s32 ExtendedObject_Spawn(ObjectContext* objectCtx, s16 objectId);
 s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId);
 s32 ExtendedObject_IsLoaded(ObjectContext* objectCtx, s16 bankIndex);
 void ExtendedObject_Clear(GlobalContext* globalCtx, ObjectContext* objectCtx);
+void* ExtendedObject_GetCMABByIndex(s16 objectId, u32 objectAnimIdx);

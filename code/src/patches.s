@@ -66,10 +66,15 @@ OverrideGraphicID_patch_4BC604:
 OverrideGraphicID_patch_4BD5D0:
     bl hook_OverrideGraphicID_351B94
 
-.section .patch_EditDrawGetItem
-.global EditDrawGetItem_patch
-EditDrawGetItem_patch:
-    bl hook_EditDrawGetItem
+.section .patch_EditDrawGetItemBeforeModelSpawn
+.global EditDrawGetItemBeforeModelSpawn_patch
+EditDrawGetItemBeforeModelSpawn_patch:
+    bl hook_EditDrawGetItemBeforeModelSpawn
+
+.section .patch_EditDrawGetItemAfterModelSpawn
+.global EditDrawGetItemAfterModelSpawn_patch
+EditDrawGetItemAfterModelSpawn_patch:
+    bl hook_EditDrawDetItemAfterModelSpawn
 
 .section .patch_NoLensOfTruthNaviText
     nop
