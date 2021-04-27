@@ -8,6 +8,10 @@ SECTIONS
 		*(.patch_loader)
 	}
 
+	.patch_MidoCheckDekuTreeClearTwo 0x105CD4 : {
+		*(.patch_MidoCheckDekuTreeClearTwo)
+	}
+
 	.patch_BombchuPurchaseableCheck 0x112ED0 : {
 		*(.patch_BombchuPurchaseableCheck)
 	}
@@ -84,6 +88,10 @@ SECTIONS
 		*(.patch_KingZoraCheckMovedFlag)
 	}
 
+	.patch_MidoCheckDekuTreeClearOne 0x16623C : {
+		*(.patch_MidoCheckDekuTreeClearOne)
+	}
+
 	.patch_SariasSongCheckFlag 0x1686A0 : {
 		*(.patch_SariasSongCheckFlag)
 	}
@@ -94,6 +102,10 @@ SECTIONS
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
 		*(.patch_KingZoraIgnoreSapphire)
+	}
+
+	.patch_MidoCheckDekuTreeClearFive 0x173944 : {
+		*(.patch_MidoCheckDekuTreeClearFive)
 	}
 
 	.patch_AnjuCheckCuccoAmount 0x179420 : {
@@ -202,6 +214,10 @@ SECTIONS
 
 	.patch_KingZoraGiveTunic 0x1B6A64 : {
 		*(.patch_KingZoraGiveTunic)
+	}
+
+	.patch_MidoCheckDekuTreeClearThree 0x1B7414 : {
+		*(.patch_MidoCheckDekuTreeClearThree)
 	}
 
 	.patch_DemoEffectStoneDraw 0x1D209C : {
@@ -436,6 +452,10 @@ SECTIONS
 		*(.patch_SceneInitAfterCopyScenes)
 	}
 
+	.patch_CorrectCompassChests 0x2F161C : {
+		*(.patch_CorrectCompassChests)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}
@@ -602,6 +622,10 @@ SECTIONS
 
 	.patch_MalonNextAction 0x3C6210 : {
 		*(.patch_MalonNextAction)
+	}
+
+	.patch_MidoCheckDekuTreeClearFour 0x3D2C18 : {
+		*(.patch_MidoCheckDekuTreeClearFour)
 	}
 
 	.patch_FireBlockCooldownTimer 0x3E0A2C : {
