@@ -452,6 +452,10 @@ SECTIONS
 		*(.patch_SceneInitAfterCopyScenes)
 	}
 
+	.patch_CorrectCompassChests 0x2F161C : {
+		*(.patch_CorrectCompassChests)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}

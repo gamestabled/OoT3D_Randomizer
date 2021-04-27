@@ -1078,7 +1078,7 @@ DoorOfTimeOpenCutscene_patch:
 .section .patch_DungeonCheckJabuMQBox
 .global DungeonCheckJabuMQBox_patch
 DungeonCheckJabuMQBox_patch:
-    bl Dungeon_GetJabuJabusBellyDungeonMode
+    bl hook_CheckCurrentDungeonMode
 
 .section .patch_TalonGetCastleTextbox
 .global TalonGetCastleTextbox_patch
@@ -1119,6 +1119,11 @@ MidoCheckDekuTreeClearFive_patch:
     nop
     nop
     bl hook_CheckDekuTreeClear
+
+.section .patch_CorrectCompassChests
+.global CorrectCompassChests_patch
+CorrectCompassChests_patch:
+    bl hook_CheckCurrentDungeonMode
 
 .section .patch_loader
 .global loader_patch
