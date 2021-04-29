@@ -183,6 +183,7 @@ namespace Settings {
   std::vector<Option *> excludeLocationsOptions = {};
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
+  Option StartingItemsToggle      = Option::Bool("All Items Toggle",     {"None", "All"},                                                        {"Toggle all items at once."}, OptionCategory::Toggle);
   Option StartingStickCapacity    = Option::U8("Deku Stick Capacity",    {"10 (default)", "20 Deku Sticks", "30 Deku Sticks"},                   {""});
   Option StartingNutCapacity      = Option::U8("Deku Nut Capacity",      {"20 (default)", "30 Deku Nuts", "40 Deku Nuts"},                       {""});
   Option StartingBombBag          = Option::U8("Bomb Bag",               {"None", "Bomb Bag 20", "Bomb Bag 30", "Bomb Bag 40"},                  {""});
@@ -233,6 +234,7 @@ namespace Settings {
   Option StartingShardOfAgony     = Option::U8("Shard of Agony",         {"None", "Shard of Agony"},                                             {""});
   Option StartingDoubleDefense    = Option::U8("Double Defense",         {"None", "Double Defense"},                                             {""});
   std::vector<Option *> startingInventoryOptions = {
+    &StartingItemsToggle,
     &StartingStickCapacity,
     &StartingNutCapacity,
     &StartingBombBag,
@@ -1030,6 +1032,13 @@ namespace Settings {
     if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
       for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
         detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+      }
+    }
+
+    //Set toggle for all items
+    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Items Toggle")  {
+      for (u16 i = 0; i < Settings::startingInventoryOptions.size(); i++) {
+        startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
       }
     }
 
