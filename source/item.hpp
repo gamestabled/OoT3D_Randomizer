@@ -61,6 +61,12 @@ public:
         return playthrough;
     }
 
+    bool IsBottleItem() const {
+        return getItemId == 0x0F || //Empty Bottle
+               getItemId == 0X14 || //Bottle with Milk
+              (getItemId >= 0x8C && getItemId <= 0x94); //Rest of bottled contents
+    }
+
     bool operator== (const Item& right) const {
         return type == right.GetItemType() && getItemId == right.GetItemID();
     }

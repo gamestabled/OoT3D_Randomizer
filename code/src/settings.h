@@ -169,6 +169,10 @@ typedef enum {
 } ExcludeLocationSetting;
 
 typedef enum {
+  STARTINGINVENTORY_NONE,
+} StartingInventorySetting;
+
+typedef enum {
   TRICK_DISABLED,
   TRICK_ENABLED,
 } LogicTrickSetting;
@@ -200,6 +204,22 @@ typedef enum {
   ICETRAPS_MAYHEM,
   ICETRAPS_ONSLAUGHT,
 } IceTrapSetting;
+
+typedef enum {
+  STARTINGBOTTLE_NONE,
+  STARTINGBOTTLE_EMPTY_BOTTLE,
+  STARTINGBOTTLE_RED_POTION,
+  STARTINGBOTTLE_GREEN_POTION,
+  STARTINGBOTTLE_BLUE_POTION,
+  STARTINGBOTTLE_FAIRY,
+  STARTINGBOTTLE_FISH,
+  STARTINGBOTTLE_MILK,
+  STARTINGBOTTLE_BLUE_FIRE,
+  STARTINGBOTTLE_BUGS,
+  STARTINGBOTTLE_BIG_POE,
+  STARTINGBOTTLE_HALF_MILK,
+  STARTINGBOTTLE_POE,
+} StartingBottleSetting;
 
 typedef struct {
   u8 hashIndexes[5];
@@ -292,6 +312,38 @@ typedef struct {
   u8 lightTrialSkip;
 
   u32 linksPocketRewardBitMask;
+
+  u8 startingStickCapacity;
+  u8 startingNutCapacity;
+  u8 startingBombBag;
+  u8 startingBombchus;
+  u8 startingBow;
+  u8 startingFireArrows;
+  u8 startingIceArrows;
+  u8 startingLightArrows;
+  u8 startingDinsFire;
+  u8 startingFaroresWind;
+  u8 startingNayrusLove;
+  u8 startingSlingshot;
+  u8 startingBoomerang;
+  u8 startingLensOfTruth;
+  u8 startingMagicBean;
+  u8 startingMegatonHammer;
+  u8 startingHookshot;
+  u8 startingIronBoots;
+  u8 startingHoverBoots;
+  u8 startingBottle1;
+  u8 startingBottle2;
+  u8 startingBottle3;
+  u8 startingRutoBottle;
+  u8 startingOcarina;
+  u8 startingBiggoronSword;
+  u8 startingMagicMeter;
+  u8 startingDoubleDefense;
+
+  u32 startingQuestItems;
+  u32 startingEquipment;
+  u32 startingUpgrades;
 
   u8 detailedLogic[100];
   u8 excludeLocations[700];

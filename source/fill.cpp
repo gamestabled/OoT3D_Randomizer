@@ -17,7 +17,7 @@ using namespace Settings;
 static void RemoveStartingItemsFromPool() {
   for (Item& startingItem : StartingInventory) {
     for (u16 i = 0; i < ItemPool.size(); i++) {
-      if (startingItem == ItemPool[i]) {
+      if (startingItem == ItemPool[i] || (startingItem.IsBottleItem() && ItemPool[i].IsBottleItem())) {
         ItemPool[i] = GetJunkItem();
         break;
       }

@@ -322,6 +322,57 @@ namespace Settings {
   extern bool ShadowTrialSkip;
   extern bool LightTrialSkip;
 
+  //Starting Inventory
+  extern Option StartingStickCapacity;
+  extern Option StartingNutCapacity;
+  extern Option StartingBombBag;
+  extern Option StartingBombchus;
+  extern Option StartingBow;
+  extern Option StartingFireArrows;
+  extern Option StartingIceArrows;
+  extern Option StartingLightArrows;
+  extern Option StartingDinsFire;
+  extern Option StartingFaroresWind;
+  extern Option StartingNayrusLove;
+  extern Option StartingSlingshot;
+  extern Option StartingBoomerang;
+  extern Option StartingLensOfTruth;
+  extern Option StartingMagicBean;
+  extern Option StartingMegatonHammer;
+  extern Option StartingHookshot;
+  extern Option StartingIronBoots;
+  extern Option StartingHoverBoots;
+  extern Option StartingBottle1;
+  extern Option StartingBottle2;
+  extern Option StartingBottle3;
+  extern Option StartingRutoBottle;
+  extern Option StartingOcarina;
+  extern Option StartingZeldasLullaby;
+  extern Option StartingEponasSong;
+  extern Option StartingSariasSong;
+  extern Option StartingSunsSong;
+  extern Option StartingSongOfTime;
+  extern Option StartingSongOfStorms;
+  extern Option StartingMinuetOfForest;
+  extern Option StartingBoleroOfFire;
+  extern Option StartingSerenadeOfWater;
+  extern Option StartingRequiemOfSpirit;
+  extern Option StartingNocturneOfShadow;
+  extern Option StartingPreludeOfLight;
+  extern Option StartingKokiriSword;
+  extern Option StartingBiggoronSword;
+  extern Option StartingDekuShield;
+  extern Option StartingHylianShield;
+  extern Option StartingMirrorShield;
+  extern Option StartingGoronTunic;
+  extern Option StartingZoraTunic;
+  extern Option StartingMagicMeter;
+  extern Option StartingStrength;
+  extern Option StartingScale;
+  extern Option StartingWallet;
+  extern Option StartingShardOfAgony;
+  extern Option StartingDoubleDefense;
+
   //Logic Settings
   extern Option ToggleAllDetailedLogic;
   extern Option LogicGrottosWithoutAgony;
@@ -419,6 +470,7 @@ namespace Settings {
   extern u8 PlayOption;
 
   extern std::vector<Option *> excludeLocationsOptions;
+  extern std::vector<Option *> startingInventoryOptions;
   extern std::vector<Option *> detailedLogicOptions;
 
   extern std::vector<MenuItem *> mainMenu;
