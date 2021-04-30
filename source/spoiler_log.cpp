@@ -121,8 +121,8 @@ static void WriteSettings() {
   //List Settings
   logtxt += "Settings:\n";
   for (MenuItem* menu : Settings::mainMenu) {
-    //don't log the detailed logic or exclude location menus yet
-    if (menu->name == "Detailed Logic Settings" || menu->name == "Exclude Locations" || menu->mode != OPTION_SUB_MENU) {
+    //don't log the detailed logic, starting inventory, or exclude location menus yet
+    if (menu->name == "Detailed Logic Settings" || menu->name == "Starting Inventory" || menu->name == "Exclude Locations" || menu->mode != OPTION_SUB_MENU) {
       continue;
     }
 
@@ -150,6 +150,18 @@ static void WriteSettings() {
 
       logtxt += "\t";
       logtxt += name;
+      logtxt += "\n";
+    }
+  }
+
+  //List Starting Inventory
+  logtxt += "\nStarting Inventory:\n";
+  for (auto& i : Settings::startingInventoryOptions) {
+    if (i->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
+      std::string item = i->GetSelectedOptionText();
+
+      logtxt += "\t";
+      logtxt += item;
       logtxt += "\n";
     }
   }
