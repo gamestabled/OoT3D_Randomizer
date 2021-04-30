@@ -15,6 +15,7 @@
 #include "twinrova.h"
 #include "nabooru.h"
 #include "custom_models.h"
+#include "obj_switch.h"
 
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
@@ -46,6 +47,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x10F].initInfo->init = ItemEtcetera_rInit;
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
+
+    gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
     gActorOverlayTable[0x11B].initInfo->update = NULL;
 
