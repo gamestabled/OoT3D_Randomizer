@@ -1,22 +1,30 @@
 #include "z3D/z3D.h"
 #include "custom_models.h"
+#include "objects.h"
+#include "title_screen.h"
 
 #define EnMag_Init_addr 0x18CBB8
 #define EnMag_Init ((ActorFunc)EnMag_Init_addr)
 
-typedef void (*ZarSetup_Func)(ZARInfo* zarInfo, void* buf, s32 size, s8 param_4);
-
 void EnMag_rInit(Actor* thisx, GlobalContext* globalCtx) {
-    s8 objBankIdx = thisx->objBankIndex;
-    void* titleScreenZAR = globalCtx->objectCtx.status[objBankIdx].zarInfo.buf;
+    EnMag* this = (EnMag*)thisx;
 
+    s8 objBankIdx = this->actor.objBankIndex;
+    void* titleScreenZAR = globalCtx->objectCtx.status[objBankIdx].zarInfo.buf;
+    void* cmabMan;
+
+    s32 extendedObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
     CustomModel_EditTitleScreenLogo(titleScreenZAR);
 
-    // Whoops, those edits went and invalidated the CSAB and CMAB managers!
-    // For now, we can just re-run the ZARInfo init function to recreate them. TODO: This might 
-    // leak the old managers? Worth looking into that once the CSAB/CMAB managers are better
-    // understood, but its unlikely to be a big deal since they are small and this should be infrequent
-    ((ZarSetup_Func)0x31B124)(&globalCtx->objectCtx.status[objBankIdx].zarInfo, titleScreenZAR, 0xA5CAC, 0);
-
     EnMag_Init(thisx, globalCtx);
+
+    cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[extendedObjectBankIdx].zarInfo, TEXANIM_TITLE_LOGO_US);
+    TexAnim_Spawn(this->logoModel->unk_0C, cmabMan);
+    this->logoModel->unk_0C->animSpeed = 0.0f;
+    this->logoModel->unk_0C->animMode = 0;
+
+    cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[extendedObjectBankIdx].zarInfo, TEXANIM_COPY_NINTENDO);
+    TexAnim_Spawn(this->copyrightModel->unk_0C, cmabMan);
+    this->copyrightModel->unk_0C->animSpeed = 0.0f;
+    this->copyrightModel->unk_0C->animMode = 0;
 }

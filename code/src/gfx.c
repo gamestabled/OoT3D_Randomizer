@@ -98,7 +98,6 @@ void Gfx_Init(void) {
     Draw_SetupFramebuffer();
 
     // Setup the title screen logo edits
-    gObjectTable[330].size = 0xA5CB0;
     gActorOverlayTable[0x171].initInfo->init = EnMag_rInit;
 
     if(gSettingsContext.menuOpeningButton == 0)         closingButton = BUTTON_B | BUTTON_SELECT;
