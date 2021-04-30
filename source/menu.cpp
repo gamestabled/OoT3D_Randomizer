@@ -315,13 +315,13 @@ void UpdatePresetsMenu(u32 kDown) {
   consoleSelect(&topScreen);
   //clear any potential message
   ClearDescription();
-  if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET) {
+  if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET && !presetEntries.empty()) {
     if (LoadPreset(presetEntries[presetIdx], OptionCategory::Setting)) {
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
     }
-  } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET) {
+  } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET && !presetEntries.empty()) {
     if (DeletePreset(presetEntries[presetIdx], OptionCategory::Setting)) {
       presetEntries.erase(presetEntries.begin() + presetIdx);
       if(presetIdx == presetEntries.size()) { //Catch when last preset is deleted
@@ -356,7 +356,7 @@ void UpdateGenerateMenu(u32 kDown) {
 void PrintMainMenu() {
   printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
 
-  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i < MAX_MAINMENU_SETTINGS_ON_SCREEN; i++) {
     if (i + menuBound >= Settings::mainMenu.size()) break;
 
     MenuItem* menu = Settings::mainMenu[i + menuBound];
@@ -377,7 +377,7 @@ void PrintOptionSubMenu() {
   //this is complicated to account for hidden settings and there's probably a better way to do it
   u16 hiddenSettings = 0;
   u16 visibleSettings = 0;
-  for (u16 i = settingBound; visibleSettings < MAX_SETTINGS_ON_SCREEN; i++) {
+  for (u16 i = settingBound; visibleSettings < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     if (i >= currentMenuItem->settingsList->size()) {
       break;
     }
@@ -387,11 +387,11 @@ void PrintOptionSubMenu() {
       visibleSettings++;
     }
   }
-  if (settingIdx >= settingBound + MAX_SETTINGS_ON_SCREEN + hiddenSettings) {
+  if (settingIdx >= settingBound + MAX_SUBMENU_SETTINGS_ON_SCREEN + hiddenSettings) {
     settingBound = settingIdx;
     u8 offset = 0;
     //skip over hidden settings
-    while (offset < MAX_SETTINGS_ON_SCREEN - 1) {
+    while (offset < MAX_SUBMENU_SETTINGS_ON_SCREEN - 1) {
       settingBound--;
       if (settingBound == 0) {
         break;
@@ -408,7 +408,7 @@ void PrintOptionSubMenu() {
   //keep count of hidden settings to not make blank spaces appear in the list
   hiddenSettings = 0;
 
-  for (u8 i = 0; i - hiddenSettings < MAX_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i - hiddenSettings < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
     if (i + settingBound >= currentMenuItem->settingsList->size()) break;
 
@@ -440,7 +440,7 @@ void PrintOptionSubMenu() {
 void PrintSubMenu() {
   printf("\x1b[0;%dH%s Menu", (BOTTOM_WIDTH/2) - 9, currentMenuItem->name.c_str());
 
-  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     if (i + menuBound >= currentMenuItem->itemsList->size()) break;
 
     u8 row = 3 + i;
@@ -468,7 +468,7 @@ void PrintPresetsMenu() {
     printf("\x1b[0;%dHSelect a Preset to Delete", (BOTTOM_WIDTH/2) - 7);
   }
 
-  for (u8 i = 0; i < MAX_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     if (i + presetBound >= presetEntries.size()) break;
 
     std::string preset = presetEntries[i];

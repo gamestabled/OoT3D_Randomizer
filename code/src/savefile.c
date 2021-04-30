@@ -1,5 +1,6 @@
 #include "z3D/z3D.h"
 #include "settings.h"
+#include "item_effect.h"
 #include "savefile.h"
 
 void SaveFile_Init() {
@@ -131,47 +132,6 @@ void SaveFile_Init() {
         gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
     }
 
-    //give maps and compasses
-    if (gSettingsContext.mapsAndCompasses == MAPSANDCOMPASSES_START_WITH) {
-        for (u8 i = 0; i < 0xA; i++) {
-            gSaveContext.dungeonItems[i] |= 0x6;
-        }
-    }
-
-    //give small keys
-    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {                     //check if MQ dungeon               MQ : Vanilla key count
-        gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE]            = gSettingsContext.forestTempleDungeonMode          ? 6 : 5;
-        gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE]              = gSettingsContext.fireTempleDungeonMode            ? 5 : 8;
-        gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE]             = gSettingsContext.waterTempleDungeonMode           ? 2 : 6;
-        gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE]            = gSettingsContext.spiritTempleDungeonMode          ? 7 : 5;
-        gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE]            = gSettingsContext.shadowTempleDungeonMode          ? 6 : 5;
-        gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL]       = gSettingsContext.bottomOfTheWellDungeonMode       ? 2 : 3;
-        gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS]  = gSettingsContext.gerudoTrainingGroundsDungeonMode ? 3 : 9;
-        gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = gSettingsContext.ganonsCastleDungeonMode          ? 3 : 2;
-        //give starting spirit keys for vanilla key locations
-    } else if (gSettingsContext.keysanity == KEYSANITY_VANILLA) {
-        if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
-            gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 3;
-        }
-    }
-
-    //give boss keys
-    if (gSettingsContext.bossKeysanity == BOSSKEYSANITY_START_WITH) {
-        for (u8 i = 3; i < 8; i++) {
-            gSaveContext.dungeonItems[i] |= 0x1;
-        }
-    }
-
-    //give Ganon's Castle Boss Key
-    if (gSettingsContext.ganonsBossKey == GANONSBOSSKEY_START_WITH) {
-        gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
-    }
-
-    //give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
-    if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN && gSettingsContext.shuffleGerudoToken == OFF) {
-        gSaveContext.questItems |= 0x00400000;
-    }
-
     //Move mido away from the path to the Deku Tree in Open Forest
     if (gSettingsContext.openForest == OPENFOREST_OPEN) {
       gSaveContext.eventChkInf[0x0] |= 0x0010;
@@ -183,6 +143,8 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x4] |= 0x8020; //entered MS chamber, Pulled MS from pedestal
 
     gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
+
+    SaveFile_SetStartingInventory();
 }
 
 void SaveFile_SaveChildBButton(void) {
@@ -252,4 +214,174 @@ u8 SaveFile_GetDungeonCount(void) {
     count += (gSaveContext.eventChkInf[3] >> 7) & 0x1; //Jabu Jabu's Belly
 
     return count;
+}
+
+//Resolve the item ID for the starting bottle
+static void SaveFile_GiveStartingBottle(u8 startingBottle, InventorySlot bottleSlot) {
+    if (startingBottle > STARTINGBOTTLE_NONE) {
+        if (startingBottle < STARTINGBOTTLE_BLUE_FIRE) {
+            gSaveContext.items[bottleSlot] = ITEM_BOTTLE + (startingBottle - 1);
+        //stop subtracting 1 at Blue Fire to skip over Ruto's Letter Item ID
+        } else if (startingBottle >= STARTINGBOTTLE_BLUE_FIRE) {
+            gSaveContext.items[bottleSlot] = ITEM_BOTTLE + (startingBottle);
+        }
+    }
+}
+
+void SaveFile_SetStartingInventory(void) {
+    //give maps and compasses
+    if (gSettingsContext.mapsAndCompasses == MAPSANDCOMPASSES_START_WITH) {
+        for (u8 i = 0; i < 0xA; i++) {
+            gSaveContext.dungeonItems[i] |= 0x6;
+        }
+    }
+
+    //give small keys
+    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) {                       //check if MQ dungeon               MQ : Vanilla key count
+        gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE]            = gSettingsContext.forestTempleDungeonMode          ? 6 : 5;
+        gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE]              = gSettingsContext.fireTempleDungeonMode            ? 5 : 8;
+        gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE]             = gSettingsContext.waterTempleDungeonMode           ? 2 : 6;
+        gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE]            = gSettingsContext.spiritTempleDungeonMode          ? 7 : 5;
+        gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE]            = gSettingsContext.shadowTempleDungeonMode          ? 6 : 5;
+        gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL]       = gSettingsContext.bottomOfTheWellDungeonMode       ? 2 : 3;
+        gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS]  = gSettingsContext.gerudoTrainingGroundsDungeonMode ? 3 : 9;
+        gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = gSettingsContext.ganonsCastleDungeonMode          ? 3 : 2;
+        //give starting spirit keys for vanilla key locations
+    } else if (gSettingsContext.keysanity == KEYSANITY_VANILLA) {
+        if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
+            gSaveContext.dungeonKeys[DUNGEON_SPIRIT_TEMPLE] = 3;
+        }
+    }
+
+    //give boss keys
+    if (gSettingsContext.bossKeysanity == BOSSKEYSANITY_START_WITH) {
+        for (u8 i = 3; i < 8; i++) {
+            gSaveContext.dungeonItems[i] |= 0x1;
+        }
+    }
+
+    //give Ganon's Castle Boss Key
+    if (gSettingsContext.ganonsBossKey == GANONSBOSSKEY_START_WITH) {
+        gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
+    }
+
+    //main inventory
+    if (gSettingsContext.startingStickCapacity > 0) {
+        gSaveContext.upgrades |= ((gSettingsContext.startingStickCapacity + 1) << 17);
+        gSaveContext.items[SLOT_STICK] = ITEM_STICK;
+        gSaveContext.ammo[SLOT_STICK] = (gSettingsContext.startingStickCapacity + 1) * 10;
+    }
+
+    if (gSettingsContext.startingNutCapacity > 0) {
+        gSaveContext.upgrades |= ((gSettingsContext.startingNutCapacity + 1) << 20);
+        gSaveContext.items[SLOT_NUT] = ITEM_NUT;
+        gSaveContext.ammo[SLOT_NUT] = (gSettingsContext.startingNutCapacity + 2) * 10;
+    }
+
+    if (gSettingsContext.startingBombBag > 0) {
+        gSaveContext.upgrades |= (gSettingsContext.startingBombBag << 3);
+        gSaveContext.items[SLOT_BOMB] = ITEM_BOMB;
+        gSaveContext.ammo[SLOT_BOMB] = (gSettingsContext.startingBombBag + 1) * 10;
+    }
+
+    if (gSettingsContext.startingBombchus > 0) {
+        gSaveContext.items[SLOT_BOMBCHU] = ITEM_BOMBCHU;
+        gSaveContext.ammo[SLOT_BOMBCHU] = 20;
+    }
+
+    if (gSettingsContext.startingBow > 0) {
+        gSaveContext.upgrades |= (gSettingsContext.startingBow);
+        gSaveContext.items[SLOT_BOW] = ITEM_BOW;
+        gSaveContext.ammo[SLOT_BOW] = (gSettingsContext.startingBow + 2) * 10;
+    }
+
+    if (gSettingsContext.startingFireArrows) {
+        gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+    }
+
+    if (gSettingsContext.startingIceArrows) {
+        gSaveContext.items[SLOT_ARROW_ICE] = ITEM_ARROW_ICE;
+    }
+
+    if (gSettingsContext.startingLightArrows) {
+        gSaveContext.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+    }
+
+    if (gSettingsContext.startingDinsFire) {
+        gSaveContext.items[SLOT_DINS_FIRE] = ITEM_DINS_FIRE;
+    }
+
+    if (gSettingsContext.startingFaroresWind) {
+        gSaveContext.items[SLOT_FARORES_WIND] = ITEM_FARORES_WIND;
+    }
+
+    if (gSettingsContext.startingNayrusLove) {
+        gSaveContext.items[SLOT_NAYRUS_LOVE] = ITEM_NAYRUS_LOVE;
+    }
+
+    if (gSettingsContext.startingSlingshot > 0) {
+        gSaveContext.upgrades |= (gSettingsContext.startingSlingshot << 14);
+        gSaveContext.items[SLOT_SLINGSHOT] = ITEM_SLINGSHOT;
+        gSaveContext.ammo[SLOT_SLINGSHOT] = (gSettingsContext.startingSlingshot + 2) * 10;
+    }
+
+    if (gSettingsContext.startingBoomerang) {
+        gSaveContext.items[SLOT_BOOMERANG] = ITEM_BOOMERANG;
+    }
+
+    if (gSettingsContext.startingLensOfTruth) {
+        gSaveContext.items[SLOT_LENS] = ITEM_LENS;
+    }
+
+    if (gSettingsContext.startingMagicBean) {
+        ItemEffect_BeanPack(&gSaveContext, 0, 0);
+    }
+
+    if (gSettingsContext.startingMegatonHammer) {
+        gSaveContext.items[SLOT_HAMMER] = ITEM_HAMMER;
+    }
+
+    if (gSettingsContext.startingHookshot > 0) {
+        gSaveContext.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT + (gSettingsContext.startingHookshot - 1);
+    }
+
+    if (gSettingsContext.startingIronBoots) {
+        gSaveContext.items[SLOT_IRON_BOOTS] = ITEM_BOOTS_IRON;
+    }
+
+    if (gSettingsContext.startingHoverBoots) {
+        gSaveContext.items[SLOT_HOVER_BOOTS] = ITEM_BOOTS_HOVER;
+    }
+
+    SaveFile_GiveStartingBottle(gSettingsContext.startingBottle1, SLOT_BOTTLE_1);
+    SaveFile_GiveStartingBottle(gSettingsContext.startingBottle2, SLOT_BOTTLE_2);
+    SaveFile_GiveStartingBottle(gSettingsContext.startingBottle3, SLOT_BOTTLE_3);
+
+    if (gSettingsContext.startingRutoBottle) {
+        gSaveContext.items[SLOT_BOTTLE_4] = gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN ? ITEM_BOTTLE : ITEM_LETTER_RUTO;
+    }
+
+    if (gSettingsContext.startingOcarina > 0) {
+        gSaveContext.items[SLOT_OCARINA] = ITEM_OCARINA_FAIRY + (gSettingsContext.startingOcarina - 1);
+    }
+
+    if (gSettingsContext.startingBiggoronSword) {
+        gSaveContext.bgsFlag = 1;
+        gSaveContext.bgsHitsLeft = 1;
+    }
+
+    if (gSettingsContext.startingMagicMeter == 1) {
+        ItemEffect_GiveMagic(&gSaveContext, 0, 0);
+    } else if (gSettingsContext.startingMagicMeter == 2) {
+        ItemEffect_GiveDoubleMagic(&gSaveContext, 0, 0);
+    }
+
+    if (gSettingsContext.startingDoubleDefense) {
+        ItemEffect_GiveDefense(&gSaveContext, 0, 0);
+    }
+
+    gSaveContext.questItems |= gSettingsContext.startingQuestItems;
+    gSaveContext.equipment |= gSettingsContext.startingEquipment;
+    gSaveContext.upgrades |= gSettingsContext.startingUpgrades;
+
 }

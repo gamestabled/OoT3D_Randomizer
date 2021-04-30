@@ -62,7 +62,7 @@ void DungeonInfo::PlaceVanillaCompass() {
 }
 
 void DungeonInfo::PlaceVanillaBossKey() {
-  if (*bossKey == NoItem) {
+  if (*bossKey == NoItem || *bossKey == GanonsCastle_BossKey) {
     return;
   }
 
