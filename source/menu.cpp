@@ -315,13 +315,13 @@ void UpdatePresetsMenu(u32 kDown) {
   consoleSelect(&topScreen);
   //clear any potential message
   ClearDescription();
-  if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET) {
+  if ((kDown & KEY_A) != 0 && mode == LOAD_PRESET && !presetEntries.empty()) {
     if (LoadPreset(presetEntries[presetIdx], OptionCategory::Setting)) {
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
     }
-  } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET) {
+  } else if ((kDown & KEY_A) != 0 && mode == DELETE_PRESET && !presetEntries.empty()) {
     if (DeletePreset(presetEntries[presetIdx], OptionCategory::Setting)) {
       presetEntries.erase(presetEntries.begin() + presetIdx);
       if(presetIdx == presetEntries.size()) { //Catch when last preset is deleted
