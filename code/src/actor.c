@@ -48,9 +48,9 @@ void Actor_Init() {
     gActorOverlayTable[0x10F].initInfo->init = ItemEtcetera_rInit;
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
 
-    gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
-
     gActorOverlayTable[0x11B].initInfo->update = NULL;
+
+    gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 
