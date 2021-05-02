@@ -452,6 +452,18 @@ string_view menuButtonDesc            = "Choose which button will bring up the D
                                         "buffer frame perfect inputs if you choose D-Pad"; //
                                                                                            //
 /*------------------------------                                                           //
+|     START WITH CONSUMABLES   |                                                           //
+------------------------------*/                                                           //
+string_view startWithConsumablesDesc  = "Start the game with maxed out Deku Sticks and Deku"
+                                        "Nuts.";                                           //
+                                                                                           //
+/*------------------------------                                                           //
+|     START WITH MAX RUPEES    |                                                           //
+------------------------------*/                                                           //
+string_view startWithMaxRupeesDesc    = "Start the game with a full wallet.\n"             //
+                                        "Wallet upgrades will also fill the wallet.";      //
+                                                                                           //
+/*------------------------------                                                           //
 |          ITEM POOL           |                                                           //
 ------------------------------*/                                                           //
 string_view itemPoolPlentiful         = "Extra major items are added to the pool.";        //

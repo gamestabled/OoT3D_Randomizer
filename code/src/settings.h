@@ -314,6 +314,8 @@ typedef struct {
 
   u32 linksPocketRewardBitMask;
 
+  u8 startingConsumables;
+  u8 startingMaxRupees;
   u8 startingStickCapacity;
   u8 startingNutCapacity;
   u8 startingBombBag;
