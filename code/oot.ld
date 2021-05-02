@@ -220,6 +220,18 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearThree)
 	}
 
+	.patch_FishingNewRecord 0x1C3AA4 : {
+		*(.patch_FishingNewRecord)
+	}
+
+	.patch_FishingSizeIgnoreChild 0x1C3DFC : {
+		*(.patch_FishingSizeIgnoreChild)
+	}
+
+	.patch_FishingSizeIgnoreAdult 0x1C3E40 : {
+		*(.patch_FishingSizeIgnoreAdult)
+	}
+
 	.patch_DemoEffectStoneDraw 0x1D209C : {
 		*(.patch_DemoEffectStoneDraw)
 	}

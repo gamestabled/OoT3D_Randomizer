@@ -1125,6 +1125,22 @@ MidoCheckDekuTreeClearFive_patch:
 CorrectCompassChests_patch:
     bl hook_CheckCurrentDungeonMode
 
+.section .patch_FishingNewRecord
+.global FishingNewRecord_patch
+FishingNewRecord_patch:
+    mov r0,#0x0
+    cmp r0,#0x1
+
+.section .patch_FishingSizeIgnoreChild
+.global FishingSizeIgnoreChild_patch
+FishingSizeIgnoreChild_patch:
+    nop
+
+.section .patch_FishingSizeIgnoreAdult
+.global FishingSizeIgnoreAdult_patch
+FishingSizeIgnoreAdult_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 
