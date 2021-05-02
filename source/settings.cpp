@@ -217,7 +217,7 @@ namespace Settings {
   Option StartingMinuetOfForest   = Option::U8("Minuet of Forest",       {"None", "Minuet"},                                                     {""});
   Option StartingBoleroOfFire     = Option::U8("Bolero of Fire",         {"None", "Bolero"},                                                     {""});
   Option StartingSerenadeOfWater  = Option::U8("Serenade of Water",      {"None", "Serenade"},                                                   {""});
-  Option StartingRequiemOfSpirit  = Option::U8("Spirit of Requiem",      {"None", "Requiem"},                                                    {""});
+  Option StartingRequiemOfSpirit  = Option::U8("Requiem of Spirit",      {"None", "Requiem"},                                                    {""});
   Option StartingNocturneOfShadow = Option::U8("Nocturne of Shadow",     {"None", "Nocturne"},                                                   {""});
   Option StartingPreludeOfLight   = Option::U8("Prelude of Light",       {"None", "Prelude"},                                                    {""});
   Option StartingKokiriSword      = Option::U8("Kokiri Sword",           {"None", "Kokiri Sword"},                                               {""});
