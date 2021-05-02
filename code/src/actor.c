@@ -16,6 +16,7 @@
 #include "nabooru.h"
 #include "custom_models.h"
 #include "obj_switch.h"
+#include "gerudo_archery_manager.h"
 
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
@@ -51,6 +52,8 @@ void Actor_Init() {
     gActorOverlayTable[0x11B].initInfo->update = NULL;
 
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
+
+    gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 

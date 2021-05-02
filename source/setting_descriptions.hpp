@@ -142,7 +142,7 @@ extern string_view skipTowerEscapeDesc;
 
 extern string_view skipEponaRaceDesc;
 
-extern string_view skipDampeRaceDesc;
+extern string_view skipMinigamePhasesDesc;
 
 extern string_view fourPoesDesc;
 
