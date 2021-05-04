@@ -1141,6 +1141,13 @@ FishingSizeIgnoreChild_patch:
 FishingSizeIgnoreAdult_patch:
     nop
 
+.section .patch_ReadGossipStoneHints
+.global ReadGossipStoneHints_patch
+ReadGossipStoneHints_patch:
+    bl hook_CanReadHints
+    nop
+    nop
+
 .section .patch_loader
 .global loader_patch
 

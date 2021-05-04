@@ -208,6 +208,10 @@ SECTIONS
 		*(.patch_JabuJabuCutsceneOverride)
 	}
 
+	.patch_ReadGossipStoneHints 0x1B3A44 : {
+		*(.patch_ReadGossipStoneHints)
+	}
+
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
 		*(.patch_KingZoraSecondTunic)
 	}
