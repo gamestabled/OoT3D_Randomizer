@@ -39,11 +39,11 @@ void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 //     }
 // }
 
-// void give_tycoon_wallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-//     save->wallet = 3;
-//     if(gSettingsContext.startingMaxRupees)
-//         save->rupees = rupee_cap[arg1];
-// }
+void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    saveCtx->upgrades |= 3 << 12;
+    if(gSettingsContext.startingMaxRupees)
+        saveCtx->rupees = 999;
+}
 
 void ItemEffect_GiveBiggoronSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->bgsFlag = 1; // Set flag to make the sword durable
