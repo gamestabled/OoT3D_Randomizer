@@ -206,7 +206,7 @@ namespace Settings {
   Option StartingBottle1          = Option::U8("Bottle Slot 1",          bottleOptions,                                                          {""});
   Option StartingBottle2          = Option::U8("Bottle Slot 2",          bottleOptions,                                                          {""});
   Option StartingBottle3          = Option::U8("Bottle Slot 3",          bottleOptions,                                                          {""});
-  Option StartingRutoBottle       = Option::U8("Ruto's Letter'",         {"None", "Ruto's Letter"},                                              {""});
+  Option StartingRutoBottle       = Option::U8("Ruto's Letter",          {"None", "Ruto's Letter"},                                              {""});
   Option StartingOcarina          = Option::U8("Ocarina",                {"None", "Fairy Ocarina", "Ocarina of Time"},                           {""});
   Option StartingZeldasLullaby    = Option::U8("Zelda's Lullaby",        {"None", "Zelda's Lullaby"},                                            {""});
   Option StartingEponasSong       = Option::U8("Epona's Song",           {"None", "Epona's Song"},                                               {""});
