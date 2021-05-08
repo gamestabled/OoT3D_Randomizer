@@ -1141,6 +1141,9 @@ FishingSizeIgnoreChild_patch:
 FishingSizeIgnoreAdult_patch:
     nop
 
+.section .patch_TycoonWalletSize
+    .word 0x03E701F4
+
 .section .patch_ReadGossipStoneHints
 .global ReadGossipStoneHints_patch
 ReadGossipStoneHints_patch:

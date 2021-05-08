@@ -854,6 +854,10 @@ SECTIONS
 		*(.patch_OcarinaMinigameRewardsOrder)
 	}
 
+	.patch_TycoonWalletSize 0x53CC08 : {
+		*(.patch_TycoonWalletSize)
+	}
+
 	. = 0x005C7000;
     .text : {
         __text_start = . ;
