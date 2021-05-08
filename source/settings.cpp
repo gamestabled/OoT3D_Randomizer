@@ -130,7 +130,7 @@ namespace Settings {
   Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                                 {childStealthDesc});
   Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {skipTowerEscapeDesc});
   Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                                 {skipEponaRaceDesc});
-  Option SkipDampeRace       = Option::Bool("Skip second Dampe Race", {"Don't Skip", "Skip"},                                                 {skipDampeRaceDesc});
+  Option SkipMinigamePhases  = Option::Bool("Minigames repetitions",  {"Don't Skip", "Skip"},                                                 {skipMinigamePhasesDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc});
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
@@ -139,7 +139,7 @@ namespace Settings {
     &SkipChildStealth,
     &SkipTowerEscape,
     &SkipEponaRace,
-    &SkipDampeRace,
+    &SkipMinigamePhases,
     &FourPoesCutscene,
     &TempleOfTimeIntro,
     &BigPoeTargetCount,
@@ -210,7 +210,7 @@ namespace Settings {
   Option StartingBottle1          = Option::U8  ("Bottle Slot 1",          bottleOptions,                                                          {""});
   Option StartingBottle2          = Option::U8  ("Bottle Slot 2",          bottleOptions,                                                          {""});
   Option StartingBottle3          = Option::U8  ("Bottle Slot 3",          bottleOptions,                                                          {""});
-  Option StartingRutoBottle       = Option::U8  ("Ruto's Letter'",         {"None", "Ruto's Letter"},                                              {""});
+  Option StartingRutoBottle       = Option::U8  ("Ruto's Letter",          {"None", "Ruto's Letter"},                                              {""});
   Option StartingOcarina          = Option::U8  ("Ocarina",                {"None", "Fairy Ocarina", "Ocarina of Time"},                           {""});
   Option StartingZeldasLullaby    = Option::U8  ("Zelda's Lullaby",        {"None", "Zelda's Lullaby"},                                            {""});
   Option StartingEponasSong       = Option::U8  ("Epona's Song",           {"None", "Epona's Song"},                                               {""});
@@ -234,7 +234,7 @@ namespace Settings {
   Option StartingMagicMeter       = Option::U8  ("Magic Meter",            {"None", "Single Magic", "Double Magic"},                               {""});
   Option StartingStrength         = Option::U8  ("Strength",               {"None", "Goron Bracelet", "Silver Gauntlets", "Gold Gauntlets"},       {""});
   Option StartingScale            = Option::U8  ("Scale",                  {"None", "Silver Scale", "Gold Scale"},                                 {""});
-  Option StartingWallet           = Option::U8  ("Wallet",                 {"None", "Adult's Wallet", "Giant's Wallet", "Tycoon's Wallet"},        {""});
+  Option StartingWallet           = Option::U8  ("Wallet",                 {"None", "Adult's Wallet", "Giant's Wallet"},                           {""});
   Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",         {"None", "Shard of Agony"},                                             {""});
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",         {"None", "Double Defense"},                                             {""});
   std::vector<Option *> startingInventoryOptions = {
@@ -589,7 +589,7 @@ namespace Settings {
     ctx.skipChildStealth     = (SkipChildStealth) ? 1 : 0;
     ctx.skipTowerEscape      = (SkipTowerEscape) ? 1 : 0;
     ctx.skipEponaRace        = (SkipEponaRace) ? 1 : 0;
-    ctx.skipDampeRace        = (SkipDampeRace) ? 1 : 0;
+    ctx.skipMinigamePhases   = (SkipMinigamePhases) ? 1 : 0;
     ctx.fourPoesCutscene     = (FourPoesCutscene) ? 1 : 0;
     ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;

@@ -397,11 +397,11 @@ string_view skipTowerEscapeDesc       = "The tower escape sequence between Ganon
 string_view skipEponaRaceDesc         = "Epona can be summoned with Epona's Song without\n"//
                                         "needing to race Ingo.";                           //
 /*------------------------------                                                           //
-|       SKIP DAMPE RACE        |                                                           //
+|     SKIP MINIGAME PHASES     |                                                           //
 ------------------------------*/                                                           //
-string_view skipDampeRaceDesc         = "Dampe will start with the second race so you can\n"
-                                        "finish the race in under a minute and get both\n" //
-                                        "rewards at once";                                 //
+string_view skipMinigamePhasesDesc    = "Completing the second objective in the Dampe Race\n"
+                                        "and Gerudo Archery on the first attempt will give\n"
+                                        "both rewards at once for that minigame";          //
 /*------------------------------                                                           //
 |      FOUR POES CUTSCENE      |                                                           //
 ------------------------------*/                                                           //
