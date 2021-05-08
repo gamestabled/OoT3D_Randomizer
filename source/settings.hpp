@@ -297,6 +297,8 @@ namespace Settings {
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
 
+  extern Option GossipStoneHints;
+  extern Option ClearerHints;
   extern Option DamageMultiplier;
   extern Option StartingTime;
   extern Option NightGSExpectSuns;

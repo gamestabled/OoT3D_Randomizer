@@ -292,6 +292,38 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"Habla con Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
     }
 
+    std::string ProperLocationHintMessage(std::string location, std::string item) {
+        constexpr size_t lineLength = 44;
+
+        std::string hint = location+" #"+item+"#.";
+
+        //insert newlines
+        size_t lastSpaceOfLine = 0;
+        while (lastSpaceOfLine + lineLength < hint.length()) {
+          lastSpaceOfLine = hint.rfind(' ', lastSpaceOfLine + lineLength);
+          hint.replace(lastSpaceOfLine, 1, NEWLINE());
+          lastSpaceOfLine += NEWLINE().length();
+        }
+
+        //location color
+        size_t firstHashtag = hint.find('#');
+        if (firstHashtag != std::string::npos) {
+            hint.replace(firstHashtag, 1, COLOR(QM_GREEN));
+            size_t secondHashtag = hint.find('#');
+            hint.replace(secondHashtag, 1, COLOR(QM_WHITE));
+        }
+
+        //item color
+        firstHashtag = hint.find('#');
+        if (firstHashtag != std::string::npos) {
+            hint.replace(firstHashtag, 1, COLOR(QM_RED));
+            size_t secondHashtag = hint.find('#');
+            hint.replace(secondHashtag, 1, COLOR(QM_WHITE));
+        }
+
+        return UNSKIPPABLE()+INSTANT_TEXT_ON()+hint+INSTANT_TEXT_OFF()+MESSAGE_END();
+    }
+
     std::string MESSAGE_END()          { return  "\x7F\x00"s; }
     std::string WAIT_FOR_INPUT()       { return  "\x7F\x01"s; }
     std::string HORIZONTAL_SPACE(u8 x) { return  "\x7F\x02"s + char(x); }

@@ -14,6 +14,7 @@ namespace CustomMessages {
     std::pair<const char*, u32> RawMessageData();
 
     void CreateAlwaysIncludedMessages();
+    std::string ProperLocationHintMessage(std::string location, std::string item);
 
     std::string MESSAGE_END();
     std::string WAIT_FOR_INPUT();

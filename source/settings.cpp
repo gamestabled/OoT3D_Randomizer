@@ -147,17 +147,19 @@ namespace Settings {
   };
 
   //Misc Settings
+  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {""});
+  Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {""});
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
-  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {""});
   Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""});
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
+    &GossipStoneHints,
+    &ClearerHints,
     &DamageMultiplier,
     &StartingTime,
-    //&GossipStoneHints,
     &NightGSExpectSuns,
     &GenerateSpoilerLog,
     &MenuOpeningButton,
@@ -595,9 +597,9 @@ namespace Settings {
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
 
+    ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
     ctx.startingTime         = StartingTime.Value<u8>();
-    ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
 

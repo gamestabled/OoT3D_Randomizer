@@ -7,6 +7,7 @@
 #include "logic.hpp"
 #include "settings.hpp"
 #include "spoiler_log.hpp"
+#include "hint_List.hpp"
 
 #include <unistd.h>
 #include <vector>
@@ -118,18 +119,18 @@ bool Exit::AllAccountedFor() const {
   return AllAccess();
 }
 
-namespace Exits { //name, scene, hint, events, locations, exits
+namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit Root = Exit("Root", "", "Link's Pocket", NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&LinksPocket, []{return true;})
                 }, {
-                  //Exits      Age
+                  //Exits      ToD
                   ExitPairing::Both(&RootExits, []{return true;})
   });
 
   Exit RootExits = Exit("Root Exits", "", "", NO_DAY_NIGHT_CYCLE, {}, {}, {
-                  //Exits      Age
+                  //Exits      ToD
                   ExitPairing::Both(&KF_LinksHouse,    []{return IsChild;}),
                   ExitPairing::Both(&ToT_Main,         []{return (CanPlay(PreludeOfLight)   && CanLeaveForest) || IsAdult;}),
                   ExitPairing::Both(&SFM_Main,         []{return  CanPlay(MinuetOfForest);}),
@@ -150,6 +151,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&KF_GS_KnowItAllHouse, []{return IsChild && CanChildAttack && AtNight && (HasNightStart || CanLeaveForest || CanPlay(SunsSong)) && CanGetNightTimeGS;}),
                   ItemLocationPairing(&KF_GS_BeanPatch,      []{return CanPlantBugs && CanChildAttack;}),
                   ItemLocationPairing(&KF_GS_HouseOfTwins,   []{return IsAdult && AtNight && CanUse(CanUseItem::Hookshot) && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&KF_GossipStone,       []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&KF_LinksHouse,       []{return true;}),
@@ -170,8 +172,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || ((IsAdult && !ShuffleDungeonEntrances) || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(CanUseItem::Dins_Fire));}),
                 }, {
                   //Locations
-                  // ItemLocationPairing(&KF_DekuTreeGossipStoneLeft,  []{return true;}),
-                  // ItemLocationPairing(&KF_DekuTreeGossipStoneRight, []{return true;})
+                  ItemLocationPairing(&KF_DekuTreeLeftGossipStone,  []{return true;}),
+                  ItemLocationPairing(&KF_DekuTreeRightGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DekuTree_Lobby,    []{return Dungeon::DekuTree.IsVanilla() && (IsChild || (ShuffleDungeonEntrances && ShowedMidoSwordAndShield));}),
@@ -230,8 +232,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit KF_StormsGrotto = Exit("KF Storms Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&KF_StormsGrottoChest,       []{return true;})
-                  // ItemLocationPairing(&KF_StormsGrottoGossipStone, []{return true;}),
+                  ItemLocationPairing(&KF_StormsGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&KF_StormsGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&KF_Main, []{return true;})
@@ -256,7 +258,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&LW_TargetInWoods,          []{return CanUse(CanUseItem::Slingshot);}),
                   ItemLocationPairing(&LW_DekuScrubNearBridge,    []{return IsChild && CanStunDeku;}),
                   ItemLocationPairing(&LW_GS_BeanPatchNearBridge, []{return CanPlantBugs && CanChildAttack;}),
-                  //LW Gossip Stone
+                  ItemLocationPairing(&LW_GossipStone,            []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LW_ForestExit,          []{return true;}),
@@ -287,8 +289,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit LW_NearShortcutsGrotto = Exit("LW Near Shortcuts Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&LW_NearShortcutsGrottoChest, []{return true;})
-                  //LW Near Shortcuts Grotto Gossip Stone
+                  ItemLocationPairing(&LW_NearShortcutsGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&LW_NearShortcutsGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LW_Main, []{return true;})
@@ -324,12 +326,12 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairyWithoutSuns;})
                 }, {
                   //Locations
-                  ItemLocationPairing(&SongFromSaria, []{return IsChild && ZeldasLetter;}),
-                  ItemLocationPairing(&SheikInForest, []{return IsAdult;}),
-                  ItemLocationPairing(&SFM_GS,        []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  //SFM Maze Gossip Stone (Lower)
-                  //SFM Maze Gossip Stone (Upper)
-                  //SFM Saria Gossip Stone
+                  ItemLocationPairing(&SongFromSaria,            []{return IsChild && ZeldasLetter;}),
+                  ItemLocationPairing(&SheikInForest,            []{return IsAdult;}),
+                  ItemLocationPairing(&SFM_GS,                   []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&SFM_MazeLowerGossipStone, []{return true;}),
+                  ItemLocationPairing(&SFM_MazeLowerGossipStone, []{return true;}),
+                  ItemLocationPairing(&SFM_SariaGossipStone,     []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&SFM_Entryway,          []{return true;}),
@@ -407,8 +409,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit HF_SoutheastGrotto = Exit("HF Southeast Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&HF_SoutheastGrottoChest, []{return true;})
-                  //HF Open Grotto Gossip Stone
+                  ItemLocationPairing(&HF_SoutheastGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&HF_SoutheastGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main, []{return true;})
@@ -416,8 +418,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit HF_OpenGrotto = Exit("HF Open Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&HF_OpenGrottoChest, []{return true;})
-                  //HF Open Grotto Gossip Stone
+                  ItemLocationPairing(&HF_OpenGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&HF_OpenGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main, []{return true;})
@@ -433,9 +435,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit HF_CowGrotto = Exit("HF Cow Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&HF_GS_CowGrotto, []{return HasFireSource && HookshotOrBoomerang;}),
-                  ItemLocationPairing(&HF_CowGrottoCow, []{return HasFireSource && CanPlay(EponasSong);}),
-                  //HF Open Grotto Gossip Stone
+                  ItemLocationPairing(&HF_GS_CowGrotto,         []{return HasFireSource && HookshotOrBoomerang;}),
+                  ItemLocationPairing(&HF_CowGrottoCow,         []{return HasFireSource && CanPlay(EponasSong);}),
+                  ItemLocationPairing(&HF_CowGrottoGossipStone, []{return HasFireSource;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main, []{return true;})
@@ -443,8 +445,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit HF_NearMarketGrotto = Exit("HF Near Market Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&HF_NearMarketGrottoChest, []{return true;})
-                  //HF Open Grotto Gossip Stone
+                  ItemLocationPairing(&HF_NearMarketGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&HF_NearMarketGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main, []{return true;})
@@ -490,8 +492,9 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&LH_GS_LabWall,      []{return IsChild && (Boomerang || (LogicLabWallGS && (Sticks || KokiriSword))) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(&LH_GS_SmallIsland,  []{return IsChild && CanChildAttack && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(&LH_GS_Tree,         []{return CanUse(CanUseItem::Longshot) && AtNight && CanGetNightTimeGS;}),
-                  //LH Gossip Stone (Southeast)
-                  //LH Gossip Stone (Southwest)
+                  ItemLocationPairing(&LH_LabGossipStone,  []{return true;}),
+                  ItemLocationPairing(&LH_SoutheastGossipStone, []{return true;}),
+                  ItemLocationPairing(&LH_SouthwestGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HF_Main,              []{return true;}),
@@ -564,7 +567,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&GV_WaterfallFreestandingPoH, []{return true;}),
                   ItemLocationPairing(&GV_GS_BeanPatch,             []{return CanPlantBugs && CanChildAttack;}),
                   ItemLocationPairing(&GV_Cow,                      []{return IsChild && CanPlay(EponasSong);}),
-                  //GV Gossip Stone
+                  ItemLocationPairing(&GV_GossipStone,              []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LH_Main, []{return true;})
@@ -692,8 +695,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&SheikAtColossus,          []{return true;}),
                   ItemLocationPairing(&Colossus_GS_BeanPatch,    []{return CanPlantBugs && CanChildAttack;}),
                   ItemLocationPairing(&Colossus_GS_Tree,         []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(&Colossus_GS_Hill,         []{return IsAdult && AtNight && (Colossus_Main.CanPlantBean() || CanUse(CanUseItem::Longshot) || (LogicColossusGS && CanUse(CanUseItem::Hookshot))) && CanGetNightTimeGS;})
-                  //Colossus Gossip Stone
+                  ItemLocationPairing(&Colossus_GS_Hill,         []{return IsAdult && AtNight && (Colossus_Main.CanPlantBean() || CanUse(CanUseItem::Longshot) || (LogicColossusGS && CanUse(CanUseItem::Hookshot))) && CanGetNightTimeGS;}),
+                  ItemLocationPairing(&Colossus_GossipStone,     []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Colossus_GreatFairyFountain, []{return HasExplosives;}),
@@ -748,10 +751,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairyWithoutSuns;}),
                 }, {
                   //Locations
-                  //ToT Gossip Stone (Left)
-                  //ToT Gossip Stone (Left-Center)
-                  //ToT Gossip Stone (Right)
-                  //ToT Gossip Stone (Right-Center)
+                  ItemLocationPairing(&ToT_LeftGossipStone,        []{return true;}),
+                  ItemLocationPairing(&ToT_LeftCenterGossipStone,  []{return true;}),
+                  ItemLocationPairing(&ToT_RightCenterGossipStone, []{return true;}),
+                  ItemLocationPairing(&ToT_RightGossipStone,       []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main,  []{return true;}),
@@ -792,10 +795,10 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&BugRock,          []{return true;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&HC_MalonEgg, []{return true;}),
-                  ItemLocationPairing(&HC_GS_Tree,  []{return CanChildAttack;}),
-                  //HC Malon Gossip Stone
-                  //HC HC Rock Wall Gossip Stone
+                  ItemLocationPairing(&HC_MalonEgg,            []{return true;}),
+                  ItemLocationPairing(&HC_GS_Tree,             []{return CanChildAttack;}),
+                  ItemLocationPairing(&HC_MalonGossipStone,    []{return true;}),
+                  ItemLocationPairing(&HC_RockWallGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&CastleGrounds,         []{return true;}),
@@ -830,8 +833,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&WanderingBugs,    []{return WanderingBugs    || CanBlastOrSmash;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&HC_GS_StormsGrotto, []{return CanBlastOrSmash && HookshotOrBoomerang;}),
-                  //HC Storms Grotto Gossip Stone
+                  ItemLocationPairing(&HC_GS_StormsGrotto,         []{return CanBlastOrSmash && HookshotOrBoomerang;}),
+                  ItemLocationPairing(&HC_StormsGrottoGossipStone, []{return CanBlastOrSmash;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HC_Grounds, []{return true;})
@@ -1138,8 +1141,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit Kak_OpenGrotto = Exit("Kak Open Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&Kak_OpenGrottoChest, []{return true;})
-                  //Kak Open Grotto Gossip Stone
+                  ItemLocationPairing(&Kak_OpenGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&Kak_OpenGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Backyard, []{return true;})
@@ -1218,7 +1221,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairyWithoutSuns;}),
                 }, {
                   //Locations
-                  //GY Gossip Stone
+                  ItemLocationPairing(&GY_GossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&GY_Main,                  []{return true;}),
@@ -1260,7 +1263,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&DMT_Biggoron,            []{return IsAdult && (ClaimCheck || (GuaranteeTradePath && (EyedropsAccess || (Eyedrops && DisableTradeRevert))));}),
                   ItemLocationPairing(&DMT_GS_FallingRocksPath, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;}),
-                  //DMT Gossip Stone
+                  ItemLocationPairing(&DMT_GossipStone,         []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMT_Main,               []{return true;}),
@@ -1293,8 +1296,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit DMT_StormsGrotto = Exit("DMT Storms Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&DMT_StormsGrottoChest, []{return true;}),
-                  //DMT Storms Grotto Gossip Stone
+                  ItemLocationPairing(&DMT_StormsGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&DMT_StormsGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMT_Main, []{return true;})
@@ -1318,16 +1321,16 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   EventPairing(&StopGCRollingGoronAsAdult, []{return StopGCRollingGoronAsAdult || (IsAdult && (GoronBracelet || HasExplosives || Bow || (LogicLinkGoronDins && CanUse(CanUseItem::Dins_Fire))));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(&GC_MazeLeftChest,       []{return CanUse(CanUseItem::Hammer) || CanUse(CanUseItem::Silver_Gauntlets) || (LogicGoronCityLeftMost && HasExplosives && CanUse(CanUseItem::Hover_Boots));}),
-                  ItemLocationPairing(&GC_MazeCenterChest,     []{return CanBlastOrSmash  || CanUse(CanUseItem::Silver_Gauntlets);}),
-                  ItemLocationPairing(&GC_MazeRightChest,      []{return CanBlastOrSmash  || CanUse(CanUseItem::Silver_Gauntlets);}),
-                  ItemLocationPairing(&GC_PotFreestandingPoH,  []{return IsChild && GoronCityChildFire && (Bombs || (GoronBracelet && LogicGoronCityPotWithStrength) || (HasBombchus && LogicGoronCityPot));}),
-                  ItemLocationPairing(&GC_RollingGoronAsChild, []{return IsChild && (HasExplosives || (GoronBracelet && LogicChildRollingWithStrength));}),
-                  ItemLocationPairing(&GC_RollingGoronAsAdult, []{return StopGCRollingGoronAsAdult;}),
-                  ItemLocationPairing(&GC_GS_BoulderMaze,      []{return IsChild && HasExplosives;}),
-                  ItemLocationPairing(&GC_GS_CenterPlatform,   []{return IsAdult;}),
-                  //GC Maze Gossip Stone
-                  //GC MediGoron Gossip Stone
+                  ItemLocationPairing(&GC_MazeLeftChest,        []{return CanUse(CanUseItem::Hammer) || CanUse(CanUseItem::Silver_Gauntlets) || (LogicGoronCityLeftMost && HasExplosives && CanUse(CanUseItem::Hover_Boots));}),
+                  ItemLocationPairing(&GC_MazeCenterChest,      []{return CanBlastOrSmash  || CanUse(CanUseItem::Silver_Gauntlets);}),
+                  ItemLocationPairing(&GC_MazeRightChest,       []{return CanBlastOrSmash  || CanUse(CanUseItem::Silver_Gauntlets);}),
+                  ItemLocationPairing(&GC_PotFreestandingPoH,   []{return IsChild && GoronCityChildFire && (Bombs || (GoronBracelet && LogicGoronCityPotWithStrength) || (HasBombchus && LogicGoronCityPot));}),
+                  ItemLocationPairing(&GC_RollingGoronAsChild,  []{return IsChild && (HasExplosives || (GoronBracelet && LogicChildRollingWithStrength));}),
+                  ItemLocationPairing(&GC_RollingGoronAsAdult,  []{return StopGCRollingGoronAsAdult;}),
+                  ItemLocationPairing(&GC_GS_BoulderMaze,       []{return IsChild && HasExplosives;}),
+                  ItemLocationPairing(&GC_GS_CenterPlatform,    []{return IsAdult;}),
+                  ItemLocationPairing(&GC_MazeGossipStone,      []{return CanBlastOrSmash || CanUse(CanUseItem::Silver_Gauntlets);}),
+                  ItemLocationPairing(&GC_MedigoronGossipStone, []{return CanBlastOrSmash || GoronBracelet;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMT_Main,           []{return true;}),
@@ -1397,7 +1400,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   //Locations
                   ItemLocationPairing(&DMC_WallFreestandingPoH, []{return true;}),
                   ItemLocationPairing(&DMC_GS_Crate,            []{return IsChild && CanChildAttack;}),
-                  //DMC Gossip Stone
+                  ItemLocationPairing(&DMC_GossipStone,         []{return HasExplosives;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMC_UpperNearby,      []{return true;}),
@@ -1469,8 +1472,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit DMC_UpperGrotto = Exit("DMC Upper Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&DMC_UpperGrottoChest, []{return true;})
-                  //DMC Upper Grotto Gossip Stone
+                  ItemLocationPairing(&DMC_UpperGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&DMC_UpperGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMC_UpperLocal, []{return true;})
@@ -1511,8 +1514,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ZR_GS_Ladder,                     []{return IsChild && AtNight && CanChildAttack && CanGetNightTimeGS;}),
                   ItemLocationPairing(&ZR_GS_NearRaisedGrottos,          []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(&ZR_GS_AboveBridge,                []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  //ZR Near Grottos Gossip Stone
-                  //ZR Near Domain Gossip Stone
+                  ItemLocationPairing(&ZR_NearGrottosGossipStone,        []{return true;}),
+                  ItemLocationPairing(&ZR_NearDomainGossipStone,         []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ZR_Front,           []{return true;}),
@@ -1531,8 +1534,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
 
   Exit ZR_OpenGrotto = Exit("ZR Open Grotto", "", "", NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(&ZR_OpenGrottoChest, []{return true;})
-                  //ZR Open Grotto Gossip Stone
+                  ItemLocationPairing(&ZR_OpenGrottoChest,       []{return true;}),
+                  ItemLocationPairing(&ZR_OpenGrottoGossipStone, []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ZR_Main, []{return true;})
@@ -1570,7 +1573,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ZD_Chest,              []{return CanUse(CanUseItem::Sticks);}),
                   ItemLocationPairing(&ZD_KingZoraThawed,     []{return KingZoraThawed;}),
                   ItemLocationPairing(&ZD_GS_FrozenWaterfall, []{return IsAdult && AtNight && (Hookshot || Bow || MagicMeter) && CanGetNightTimeGS;}),
-                  //ZD Gossip Stone
+                  ItemLocationPairing(&ZD_GossipStone,        []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ZR_BehindWaterfall, []{return true;}),
@@ -1620,8 +1623,8 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&ZF_GS_Tree,                []{return IsChild;}),
                   ItemLocationPairing(&ZF_GS_AboveTheLog,         []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(&ZF_GS_HiddenCave,          []{return CanUse(CanUseItem::Silver_Gauntlets) && CanBlastOrSmash && CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  //ZF Fairy Gossip Stone
-                  //ZF Jabu Gossip Stone
+                  ItemLocationPairing(&ZF_FairyGossipStone,       []{return true;}),
+                  ItemLocationPairing(&ZF_JabuGossipStone,        []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ZD_BehindKingZora,           []{return true;}),
@@ -1774,7 +1777,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&DodongosCavern_GS_Scarecrow,                  []{return CanUse(CanUseItem::Scarecrow) || CanUse(CanUseItem::Longshot) || (LogicDCScarecrowGS && (IsAdult || CanChildAttack));}),
                   ItemLocationPairing(&DodongosCavern_DekuScrubSideRoomNearDodongos, []{return IsAdult || Slingshot || Sticks || HasExplosives || KokiriSword;}),
                   ItemLocationPairing(&DodongosCavern_DekuScrubLobby,                []{return true;}),
-                  //Dodongos Cavern Gossip Stone
+                  ItemLocationPairing(&DodongosCavern_GossipStone,                   []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_Beginning, []{return true;}),
@@ -2652,7 +2655,7 @@ namespace Exits { //name, scene, hint, events, locations, exits
                   ItemLocationPairing(&DodongosCavern_MQ_DekuScrubLobbyRear,     []{return CanStunDeku;}),
                   ItemLocationPairing(&DodongosCavern_MQ_DekuScrubLobbyFront,    []{return CanStunDeku;}),
                   ItemLocationPairing(&DodongosCavern_MQ_DekuScrubStaircase,     []{return CanStunDeku;}),
-                  //Dodongos Cavern Gossip Stone
+                  ItemLocationPairing(&DodongosCavern_GossipStone,               []{return true;}),
   }, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_MQ_LowerRightSide,  []{return DodongosCavern_MQ_Lobby.Here([]{return CanBlastOrSmash || ((CanUse(CanUseItem::Sticks) || CanUse(CanUseItem::Dins_Fire)) && CanTakeDamage);});}),

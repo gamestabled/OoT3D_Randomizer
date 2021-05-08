@@ -4,6 +4,8 @@
 #include <string>
 #include <variant>
 
+#include "hints.hpp"
+
 union ItemOverride_Value;
 
 enum ItemType {
@@ -24,8 +26,8 @@ enum ItemType {
 
 class Item {
 public:
-    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, u16 price_ = 0);
-    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, u16 price_ = 0);
+    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintText* hintText_, u16 price_ = 0);
+    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintText* hintText_, u16 price_ = 0);
     ~Item();
 
     void ApplyEffect();
@@ -67,6 +69,10 @@ public:
               (getItemId >= 0x8C && getItemId <= 0x94); //Rest of bottled contents
     }
 
+    HintText GetHintText() const {
+        return *hintText;
+    }
+
     bool operator== (const Item& right) const {
         return type == right.GetItemType() && getItemId == right.GetItemID();
     }
@@ -81,6 +87,7 @@ private:
     int  getItemId;
     bool advancement;
     std::variant<bool*, u8*> logicVar;
+    HintText* hintText;
     u16  price;
     bool playthrough = false;
 };

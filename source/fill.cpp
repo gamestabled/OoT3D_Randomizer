@@ -9,6 +9,8 @@
 #include "random.hpp"
 #include "spoiler_log.hpp"
 #include "starting_inventory.hpp"
+#include "hints.hpp"
+#include "hint_list.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -584,6 +586,43 @@ static void RandomizeLinksPocket() {
  }
 }
 
+static void CreateHints() {
+  for (auto hintLocation : gossipStoneLocations) {
+
+    auto randomLocation = RandomElement(allLocations, false);
+    Text locationHintText = Text{"","",""};
+    Text itemHintText = Text{"","",""};
+    Text prefix = Text{"","",""};
+
+    //Get hint text based on clearer hints
+    if (ClearerHints) {
+      locationHintText = randomLocation->GetHintText().GetClear();
+      itemHintText = randomLocation->GetPlacedItem().GetHintText().GetClear();
+      prefix = Hints::Prefix.GetClear();
+    } else {
+      locationHintText = randomLocation->GetHintText().GetObscure();
+      itemHintText = randomLocation->GetPlacedItem().GetHintText().GetObscure();
+      prefix = Hints::Prefix.GetObscure();
+    }
+
+    std::string englishLoc = prefix.GetEnglish() + locationHintText.GetEnglish();
+    std::string frenchLoc  = prefix.GetFrench()  + locationHintText.GetFrench();
+    std::string spanishLoc = prefix.GetSpanish() + locationHintText.GetSpanish();
+
+    std::string englishItem = itemHintText.GetEnglish();
+    std::string frenchItem  = itemHintText.GetFrench();
+    std::string spanishItem = itemHintText.GetSpanish();
+
+    //save hints as dummy items to gossip stone locations for writing to the spoiler log
+    bool none = false;
+    hintLocation->SetPlacedItem(Item{englishLoc+" "+englishItem, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &none, &Hints::NoHintText});
+
+    //create the in game message
+    u32 messageId = 0x400 + hintLocation->GetFlag();
+    CreateMessage(messageId, 0, 2, 3, ProperLocationHintMessage(englishLoc, englishItem), ProperLocationHintMessage(frenchLoc, frenchItem), ProperLocationHintMessage(spanishLoc, spanishItem));
+  }
+}
+
 int Fill() {
   int retries = 0;
   while(retries < 5) {
@@ -637,6 +676,9 @@ int Fill() {
       printf("Done");
       CreateOverrides();
       CreateAlwaysIncludedMessages();
+      if (GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
+        CreateHints();
+      }
       return 1;
     }
     //Unsuccessful placement

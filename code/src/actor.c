@@ -15,6 +15,7 @@
 #include "twinrova.h"
 #include "nabooru.h"
 #include "custom_models.h"
+#include "gossip_stone.h"
 
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
@@ -62,6 +63,8 @@ void Actor_Init() {
     gActorOverlayTable[0x19C].initInfo->destroy = EnSi_rDestroy;
     gActorOverlayTable[0x19C].initInfo->draw = EnSi_rDraw;
 
+    gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
+
     gActorOverlayTable[0x1C6].initInfo->init = EnCow_rInit;
     gActorOverlayTable[0x1C6].initInfo->destroy = EnCow_rDestroy;
 
@@ -73,7 +76,7 @@ void Actor_Init() {
 
     // Define object 16 to be by default the same as object 222
     strncpy(gObjectTable[OBJECT_CUSTOM_ADULT_SONGS].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
-    
+
     // Define draw item 3 (corresponding to gid 4) to be double defense custom model
     gDrawItemTable[3].objectId = OBJECT_CUSTOM_DOUBLE_DEFENSE;
     gDrawItemTable[3].objectModelIdx = 0;
