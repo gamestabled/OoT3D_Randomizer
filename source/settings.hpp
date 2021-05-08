@@ -324,6 +324,8 @@ namespace Settings {
   extern bool LightTrialSkip;
 
   //Starting Inventory
+  extern Option StartingConsumables;
+  extern Option StartingMaxRupees;
   extern Option StartingStickCapacity;
   extern Option StartingNutCapacity;
   extern Option StartingBombBag;

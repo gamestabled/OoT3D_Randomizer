@@ -160,6 +160,10 @@ extern string_view nightGSDesc;
 
 extern string_view menuButtonDesc;
 
+extern string_view startWithConsumablesDesc;
+
+extern string_view startWithMaxRupeesDesc;
+
 extern string_view itemPoolPlentiful;
 extern string_view itemPoolBalanced;
 extern string_view itemPoolScarce;

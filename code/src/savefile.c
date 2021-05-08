@@ -265,6 +265,20 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
     }
 
+    //consumables
+    if (gSettingsContext.startingConsumables) {
+        gSaveContext.items[SLOT_NUT] = ITEM_NUT;
+        gSaveContext.items[SLOT_STICK] = ITEM_STICK;
+        gSaveContext.upgrades |= 1 << 17;
+        gSaveContext.upgrades |= 1 << 20;
+        gSaveContext.ammo[SLOT_NUT] = 20;
+        gSaveContext.ammo[SLOT_STICK] = 10;
+    }
+
+    if (gSettingsContext.startingMaxRupees) {
+        gSaveContext.rupeeAccumulator = 999;
+    }
+
     //main inventory
     if (gSettingsContext.startingStickCapacity > 0) {
         gSaveContext.upgrades |= ((gSettingsContext.startingStickCapacity + 1) << 17);
