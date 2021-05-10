@@ -384,6 +384,11 @@ NocturneLocation_patch:
     bl Cutscene_OverrideNocturne
     b 0x44F180
 
+.section .patch_FreeScarecrow
+.global FreeScarecrow_patch
+FreeScarecrow_patch:
+    bl hook_ScarecrowCheckToBeActivated
+
 .section .patch_MasterSwordAlwaysDrop
 .global MasterSwordAlwaysDrop_patch
 MasterSwordAlwaysDrop_patch:

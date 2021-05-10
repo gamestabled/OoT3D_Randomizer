@@ -277,6 +277,14 @@ hook_SerenadeCheckChestFlag:
     cpy r0,r5
     bx lr
 
+.global hook_ScarecrowCheckToBeActivated
+hook_ScarecrowCheckToBeActivated:
+    push {r0-r12, lr}
+    bl Scarecrow_CheckToBeActivated
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_EponasSongCheckFlag
 hook_EponasSongCheckFlag:
     push {r0-r12, lr}

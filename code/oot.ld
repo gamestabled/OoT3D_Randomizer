@@ -648,6 +648,10 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeTwo)
 	}
 
+	.patch_FreeScarecrow 0x3E55A8 : {
+		*(.patch_FreeScarecrow)
+	}
+
 	.patch_MasterSwordAlwaysDrop 0x3E5E98 : {
 		*(.patch_MasterSwordAlwaysDrop)
 	}

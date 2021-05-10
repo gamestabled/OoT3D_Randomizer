@@ -144,6 +144,8 @@ void SaveFile_Init() {
 
     gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
 
+    gSaveContext.eventChkInf[0x9] |= 0x1000;
+
     SaveFile_SetStartingInventory();
 }
 
