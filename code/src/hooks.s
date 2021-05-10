@@ -484,6 +484,14 @@ hook_CheckCurrentDungeonMode:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_CanReadHints
+hook_CanReadHints:
+    push {r0-r12, lr}
+    bl Hints_CanReadHints
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

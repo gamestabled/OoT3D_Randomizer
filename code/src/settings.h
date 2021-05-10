@@ -191,6 +191,13 @@ typedef enum {
 } StartingTimeSetting;
 
 typedef enum {
+  HINTS_NO_HINTS,
+  HINTS_NEED_NOTHING,
+  HINTS_MASK_OF_TRUTH,
+  HINTS_SHARD_OF_AGONY,
+} GossipStoneHintsSetting;
+
+typedef enum {
   ITEMPOOL_PLENTIFUL,
   ITEMPOOL_BALANCED,
   ITEMPOOL_SCARCE,
@@ -274,7 +281,7 @@ typedef struct {
   u8 skipChildStealth;
   u8 skipTowerEscape;
   u8 skipEponaRace;
-  u8 skipDampeRace;
+  u8 skipMinigamePhases;
   u8 fourPoesCutscene;
   u8 templeOfTimeIntro;
   u8 bigPoeTargetCount;
@@ -282,6 +289,7 @@ typedef struct {
 
   u8 damageMultiplier;
   u8 startingTime;
+  u8 gossipStoneHints;
   u8 generateSpoilerLog;
   u8 menuOpeningButton;
 
@@ -314,6 +322,8 @@ typedef struct {
 
   u32 linksPocketRewardBitMask;
 
+  u8 startingConsumables;
+  u8 startingMaxRupees;
   u8 startingStickCapacity;
   u8 startingNutCapacity;
   u8 startingBombBag;

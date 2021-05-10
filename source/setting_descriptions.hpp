@@ -142,7 +142,7 @@ extern string_view skipTowerEscapeDesc;
 
 extern string_view skipEponaRaceDesc;
 
-extern string_view skipDampeRaceDesc;
+extern string_view skipMinigamePhasesDesc;
 
 extern string_view fourPoesDesc;
 
@@ -159,6 +159,10 @@ extern string_view startingTimeDesc;
 extern string_view nightGSDesc;
 
 extern string_view menuButtonDesc;
+
+extern string_view startWithConsumablesDesc;
+
+extern string_view startWithMaxRupeesDesc;
 
 extern string_view itemPoolPlentiful;
 extern string_view itemPoolBalanced;

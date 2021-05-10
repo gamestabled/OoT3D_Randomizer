@@ -119,8 +119,8 @@ void SaveFile_Init() {
 
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
     gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
-    
-    if(gSettingsContext.skipDampeRace == SKIP){
+
+    if(gSettingsContext.skipMinigamePhases == SKIP){
         gSaveContext.sceneFlags[0x48].clear |= 0x00000010; //Remove first Dampe race
     }
 
@@ -265,6 +265,20 @@ void SaveFile_SetStartingInventory(void) {
     //give Ganon's Castle Boss Key
     if (gSettingsContext.ganonsBossKey == GANONSBOSSKEY_START_WITH) {
         gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
+    }
+
+    //consumables
+    if (gSettingsContext.startingConsumables) {
+        gSaveContext.items[SLOT_NUT] = ITEM_NUT;
+        gSaveContext.items[SLOT_STICK] = ITEM_STICK;
+        gSaveContext.upgrades |= 1 << 17;
+        gSaveContext.upgrades |= 1 << 20;
+        gSaveContext.ammo[SLOT_NUT] = 20;
+        gSaveContext.ammo[SLOT_STICK] = 10;
+    }
+
+    if (gSettingsContext.startingMaxRupees) {
+        gSaveContext.rupeeAccumulator = 999;
     }
 
     //main inventory

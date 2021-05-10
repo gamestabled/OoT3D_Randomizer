@@ -3,7 +3,6 @@
 #include "z3D/z3D.h"
 
 // #define rupee_cap ((us16*)0x800F8CEC)
-volatile uint8_t MAX_RUPEES = 0;
 
 // typedef void (*commit_scene_flags_fn)(z64_game_t* game_ctxt);
 // #define commit_scene_flags ((commit_scene_flags_fn)0x8009D894)
@@ -40,11 +39,11 @@ void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 //     }
 // }
 
-// void give_tycoon_wallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-//     save->wallet = 3;
-//     if(MAX_RUPEES)
-//         save->rupees = rupee_cap[arg1];
-// }
+void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    saveCtx->upgrades |= 3 << 12;
+    if(gSettingsContext.startingMaxRupees)
+        saveCtx->rupees = 999;
+}
 
 void ItemEffect_GiveBiggoronSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->bgsFlag = 1; // Set flag to make the sword durable
@@ -115,7 +114,7 @@ void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    if(MAX_RUPEES) {
+    if(gSettingsContext.startingMaxRupees) {
         if (arg1 == 1) {
             saveCtx->rupeeAccumulator = 200;
         } else if (arg1 == 2) {
@@ -157,7 +156,7 @@ static u8 MakeSpaceInItemMenu(u8 itemMenu[]){
     u8 currentSlot = 5;
     u8 emptyButton = 0xFF;
     u8 slotToFree = 0xFF;
-    
+
     //find an empty button
     for(currentSlot = 5; currentSlot < 24; currentSlot += 6){
         if(itemMenu[currentSlot] == 0xFF){
@@ -165,19 +164,19 @@ static u8 MakeSpaceInItemMenu(u8 itemMenu[]){
                 break;
         }
     }
-    
+
     if(emptyButton == 0xFF){
         return 0xFF;
     }
-    
+
     //search the inventory for an equippable item
     for(currentSlot = 0; currentSlot < 24; currentSlot++){
-        
+
         //ignore the button slots
         if((currentSlot + 1) % 6 == 0){
             currentSlot++;
         }
-        
+
         if(itemMenu[currentSlot] == 2){ //Bomb slot
             slotToFree = currentSlot;
         }
@@ -190,7 +189,7 @@ static u8 MakeSpaceInItemMenu(u8 itemMenu[]){
         else if(itemMenu[currentSlot] == 5){//Din's Fire slot
             slotToFree = currentSlot;
         }
-        
+
         //equip the item and free up the slot it occupied
         if(slotToFree != 0xFF){
             itemMenu[emptyButton] = itemMenu[slotToFree];

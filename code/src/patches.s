@@ -1130,6 +1130,32 @@ MidoCheckDekuTreeClearFive_patch:
 CorrectCompassChests_patch:
     bl hook_CheckCurrentDungeonMode
 
+.section .patch_FishingNewRecord
+.global FishingNewRecord_patch
+FishingNewRecord_patch:
+    mov r0,#0x0
+    cmp r0,#0x1
+
+.section .patch_FishingSizeIgnoreChild
+.global FishingSizeIgnoreChild_patch
+FishingSizeIgnoreChild_patch:
+    nop
+
+.section .patch_FishingSizeIgnoreAdult
+.global FishingSizeIgnoreAdult_patch
+FishingSizeIgnoreAdult_patch:
+    nop
+
+.section .patch_TycoonWalletSize
+    .word 0x03E701F4
+
+.section .patch_ReadGossipStoneHints
+.global ReadGossipStoneHints_patch
+ReadGossipStoneHints_patch:
+    bl hook_CanReadHints
+    nop
+    nop
+
 .section .patch_loader
 .global loader_patch
 

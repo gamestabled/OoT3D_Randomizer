@@ -8,7 +8,7 @@
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2);
 // void give_triforce_piece(SaveContext* saveCtx, s16 arg1, s16 arg2);
-// void give_tycoon_wallet(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveBiggoronSword(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveBottle(SaveContext* saveCtx, s16 bottleItemId, s16 arg2);
 void ItemEffect_GiveDungeonItem(SaveContext* saveCtx, s16 mask, s16 dungeonId);

@@ -235,6 +235,12 @@ constexpr std::array DungeonColors = {
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(DungeonColors[dungeon])+"petite clé"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Es una "+COLOR(DungeonColors[dungeon])+"llave pequeña "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
+        //Tycoon's Wallet
+        CreateMessage(0x09F7, 0, 2, 3,
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"You got a "+COLOR(QM_RED)+"Tycoon's Wallet"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"It's gigantic! Now you can carry"+NEWLINE()+"up to "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"Rupees"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"Vous obtenez la "+COLOR(QM_RED)+"poche de magnat"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Vous pouvez contenir jusqu'à "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+"C'est gigantesque!"+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"¡Conseguiste una "+COLOR(QM_RED)+"bolsa de un magnate"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"¡Es gigantesco! Ahora puedes llevar"+NEWLINE()+"hasta "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"rupias"+COLOR(QM_WHITE)+"!"+MESSAGE_END());
+
         //Poe Collector (when enough has been sold)
         CreateMessage(0x70F8, 0, 0, 0,
             UNSKIPPABLE()+"Wait a minute! WOW!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"You have earned enough points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Young man, you are a genuine "+COLOR(QM_RED)+"ghost hunter"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
@@ -278,7 +284,7 @@ constexpr std::array DungeonColors = {
                     +"Te daré "+COLOR(QM_RED)+"50 rupias "+COLOR(QM_WHITE)+"por él."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Y además agregaré "+COLOR(QM_RED)+"100 puntos "+COLOR(QM_WHITE)+"en tu"+NEWLINE()+"tarjeta."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"¡Si llegas a "+COLOR(QM_RED)+std::to_string(poes * 100)+" puntos"+COLOR(QM_WHITE)+", serás muy feliz!"+NEWLINE()+"Je, je, je..."+MESSAGE_END());
         }
-        
+
         //Talon (this is to prevent accidentally skipping Malon in HC)
         CreateMessage(0x9100, 0, 2, 0,
             UNSKIPPABLE()+"You should go talk to my daughter Malon,"+NEWLINE()+"she has an item for you."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"I have to think about some stuff now,"+NEWLINE()+"please don't distract me."+MESSAGE_END(),
