@@ -680,7 +680,7 @@ namespace Settings {
     ctx.startingQuestItems |= StartingShardOfAgony.Value<u8>()     << 21;
 
     //Give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
-    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && ShuffleGerudoToken.Is(OFF)) {
+    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && !ShuffleGerudoToken) {
         ctx.startingQuestItems |= 0x00400000;
     }
 
