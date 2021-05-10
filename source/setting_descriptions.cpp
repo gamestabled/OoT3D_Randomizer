@@ -403,6 +403,12 @@ string_view skipMinigamePhasesDesc    = "Completing the second objective in the 
                                         "and Gerudo Archery on the first attempt will give\n"
                                         "both rewards at once for that minigame";          //
 /*------------------------------                                                           //
+|        FREE SCARECROW        |                                                           //
+------------------------------*/                                                           //
+string_view freeScarecrowDesc         = "Pulling out the Ocarina near a spot at which\n"   //
+                                        "Pierre can spawn will do so, without needing\n"   //
+                                        "the song.";                                       //
+/*------------------------------                                                           //
 |      FOUR POES CUTSCENE      |                                                           //
 ------------------------------*/                                                           //
 string_view fourPoesDesc              = "The cutscene with the 4 poes in Forest Temple will"

@@ -120,8 +120,12 @@ void SaveFile_Init() {
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
     gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
 
-    if(gSettingsContext.skipMinigamePhases == SKIP){
+    if (gSettingsContext.skipMinigamePhases == SKIP) {
         gSaveContext.sceneFlags[0x48].clear |= 0x00000010; //Remove first Dampe race
+    }
+
+    if (gSettingsContext.freeScarecrow == ON) {
+        gSaveContext.eventChkInf[0x9] |= 0x1000;
     }
 
     if (gSettingsContext.fourPoesCutscene == SKIP) {
@@ -143,8 +147,6 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x4] |= 0x8020; //entered MS chamber, Pulled MS from pedestal
 
     gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
-
-    gSaveContext.eventChkInf[0x9] |= 0x1000;
 
     SaveFile_SetStartingInventory();
 }
