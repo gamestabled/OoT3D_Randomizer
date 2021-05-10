@@ -125,7 +125,7 @@ void SaveFile_Init() {
     }
 
     if (gSettingsContext.freeScarecrow == ON) {
-        gSaveContext.eventChkInf[0x9] |= 0x1000;
+        gSaveContext.eventChkInf[0x9] |= 0x1000; //Shown scarecrow's song to bonooru as adult
     }
 
     if (gSettingsContext.fourPoesCutscene == SKIP) {
