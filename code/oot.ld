@@ -116,6 +116,10 @@ SECTIONS
 		*(.patch_BombchuShopInfinitePurchases)
 	}
 
+        .patch_DecoratedChest 0x189E88 : {
+                *(patch_DecoratedChest)
+        }
+
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
 	}
@@ -504,7 +508,7 @@ SECTIONS
 		*(.patch_OverrideGraphicID_354BB8)
 	}
 
-	.patch_FastChests 0x354CD8 : {
+	.patch_FastChests 0x354CD4 : {
 		*(.patch_FastChests)
 	}
 

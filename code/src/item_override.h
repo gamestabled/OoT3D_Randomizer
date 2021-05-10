@@ -3,6 +3,9 @@
 
 #include "../include/z3D/z3D.h"
 
+extern u32 rActiveItemActionId;
+extern u32 rActiveItemFastChest;
+
 void ItemOverride_Init(void);
 void ItemOverride_Update(void);
 

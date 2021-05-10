@@ -401,7 +401,7 @@ string_view skipEponaRaceDesc         = "Epona can be summoned with Epona's Song
 ------------------------------*/                                                           //
 string_view skipMinigamePhasesDesc    = "Completing the second objective in the Dampe Race\n"
                                         "and Gerudo Archery on the first attempt will give\n"
-                                        "both rewards at once for that minigame";          //
+                                        "both rewards at once for that minigame.";          //
 /*------------------------------                                                           //
 |      FOUR POES CUTSCENE      |                                                           //
 ------------------------------*/                                                           //
@@ -443,6 +443,22 @@ string_view nightGSDesc               = "GS Tokens that can only be obtained dur
                                         "night expect you to have Sun's Song to collect\n" //
                                         "them. This prevents needing to wait until night\n"//
                                         "for some locations.";                             //
+                                                                                           //
+/*------------------------------                                                           //
+|       CHEST ANIMATIONS       |                                                           //
+------------------------------*/                                                           //
+string_view chestAnimDesc             = "\"Match Contents\" will make the slow animation\n"//
+                                        "play if a chest contains a major item.\n"          //
+                                        "The animation will always be fast anyway if a\n"  //
+                                        "chest is not randomized.";                        //
+                                                                                           //
+/*------------------------------                                                           //
+|     CHEST SIZE AND COLOR     |                                                           //
+------------------------------*/                                                           //
+string_view chestSizeDesc             = "This option will change the appearance of all\n"  //
+                                        "regular chests depending on their contents:\n"    //
+                                        "Major Items = Big          Lesser Items = Small\n"//
+                                        "Boss Keys = Fancy   Small Keys = Fancy(Shrinked)";//
                                                                                            //
 /*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //

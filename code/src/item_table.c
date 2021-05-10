@@ -250,6 +250,10 @@ ItemRow* ItemTable_GetItemRow(u16 itemId) {
     return itemRow;
 }
 
+ItemRow* ItemTable_GetItemRowFromIndex(u8 rowIndex) {
+    return &rItemTable[rowIndex];
+}
+
 u16 ItemTable_ResolveUpgrades(u16 itemId) {
     for (;;) {
         ItemRow* itemRow = ItemTable_GetItemRow(itemId);

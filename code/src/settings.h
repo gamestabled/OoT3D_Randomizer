@@ -290,6 +290,8 @@ typedef struct {
   u8 damageMultiplier;
   u8 startingTime;
   u8 gossipStoneHints;
+  u8 chestAnimations;
+  u8 chestSize;
   u8 generateSpoilerLog;
   u8 menuOpeningButton;
 

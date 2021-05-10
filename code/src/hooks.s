@@ -484,6 +484,22 @@ hook_CanReadHints:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_FastChests
+hook_FastChests:
+    push {r0-r12, lr}
+    bl Chest_OverrideAnimation
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_DecoratedChest
+hook_DecoratedChest:
+    push {r0-r12, lr}
+    bl Chest_OverrideDecoration
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
