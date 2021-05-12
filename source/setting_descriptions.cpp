@@ -447,18 +447,18 @@ string_view nightGSDesc               = "GS Tokens that can only be obtained dur
 /*------------------------------                                                           //
 |       CHEST ANIMATIONS       |                                                           //
 ------------------------------*/                                                           //
-string_view chestAnimDesc             = "\"Match Contents\" will make the slow animation\n"//
-                                        "play if a chest contains a major item.\n"          //
-                                        "The animation will always be fast anyway if a\n"  //
-                                        "chest is not randomized.";                        //
+string_view chestAnimDesc             = "Choose if you want the slow animation to play\n"  //
+                                        "if a chest contains a major item.\n";             //
                                                                                            //
 /*------------------------------                                                           //
 |     CHEST SIZE AND COLOR     |                                                           //
 ------------------------------*/                                                           //
 string_view chestSizeDesc             = "This option will change the appearance of all\n"  //
                                         "regular chests depending on their contents:\n"    //
-                                        "Major Items = Big          Lesser Items = Small\n"//
-                                        "Boss Keys = Fancy   Small Keys = Fancy(Shrinked)";//
+                                        "Major Items    =    Big Wooden Chests\n"          //
+                                        "Lesser Items   =    Small Wooden Chests\n"        //
+                                        "Boss Keys      =    Big Fancy Chests\n"           //
+                                        "Small Keys     =    Small Fancy Chests";          //
                                                                                            //
 /*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
