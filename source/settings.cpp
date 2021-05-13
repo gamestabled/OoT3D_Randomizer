@@ -131,6 +131,7 @@ namespace Settings {
   Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {skipTowerEscapeDesc});
   Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                                 {skipEponaRaceDesc});
   Option SkipMinigamePhases  = Option::Bool("Minigames repetitions",  {"Don't Skip", "Skip"},                                                 {skipMinigamePhasesDesc});
+  Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {freeScarecrowDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc});
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
@@ -140,6 +141,7 @@ namespace Settings {
     &SkipTowerEscape,
     &SkipEponaRace,
     &SkipMinigamePhases,
+    &FreeScarecrow,
     &FourPoesCutscene,
     &TempleOfTimeIntro,
     &BigPoeTargetCount,
@@ -594,6 +596,7 @@ namespace Settings {
     ctx.skipTowerEscape      = (SkipTowerEscape) ? 1 : 0;
     ctx.skipEponaRace        = (SkipEponaRace) ? 1 : 0;
     ctx.skipMinigamePhases   = (SkipMinigamePhases) ? 1 : 0;
+    ctx.freeScarecrow        = (FreeScarecrow) ? 1 : 0;
     ctx.fourPoesCutscene     = (FourPoesCutscene) ? 1 : 0;
     ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
@@ -683,7 +686,7 @@ namespace Settings {
     ctx.startingQuestItems |= StartingShardOfAgony.Value<u8>()     << 21;
 
     //Give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
-    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && ShuffleGerudoToken.Is(OFF)) {
+    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && !ShuffleGerudoToken) {
         ctx.startingQuestItems |= 0x00400000;
     }
 

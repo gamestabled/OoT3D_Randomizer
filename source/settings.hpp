@@ -292,6 +292,7 @@ namespace Settings {
   extern Option SkipTowerEscape;
   extern Option SkipEponaRace;
   extern Option SkipMinigamePhases;
+  extern Option FreeScarecrow;
   extern Option FourPoesCutscene;
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
