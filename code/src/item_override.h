@@ -50,4 +50,4 @@ void ItemOverride_CheckZeldasLetter();
 void ItemOverride_PushDungeonReward(u8 dungeon);
 void ItemOverride_CheckStartingItem();
 
-#endif
+#endif //_ITEM_OVERRIDES_H_

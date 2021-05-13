@@ -5,7 +5,7 @@
 #include <utility>
 
 namespace CustomMessages {
-    void CreateMessage(u32 textId, u32 unk_04, u32 unk_08, u32 unk_0C,
+    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
                        std::string englishText, std::string frenchText, std::string spanishText);
 
     u32 NumMessages();
