@@ -80,6 +80,9 @@ void SaveFile_Init() {
     if (gSettingsContext.mirrorWorld == ON) {
         gSaveContext.masterQuestFlag = 1;
     }
+    else{
+        gSaveContext.masterQuestFlag = 0;
+    }
 
     if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
         gSaveContext.dayTime = 0x1400; //Set night time

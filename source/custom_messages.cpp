@@ -290,6 +290,16 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"You should go talk to my daughter Malon,"+NEWLINE()+"she has an item for you."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"I have to think about some stuff now,"+NEWLINE()+"please don't distract me."+MESSAGE_END(),
             UNSKIPPABLE()+"Parle avec Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END(),
             UNSKIPPABLE()+"Habla con Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
+
+        //easter egg
+        CreateMessage(0x96F, 0, 2, 2,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Oh hey, you watched all the credits!"+NEWLINE()+CENTER_TEXT()+"Here's a prize for your patience."+NEWLINE()+CENTER_TEXT()+"Unlocking MQ and saving..."+NEWLINE()+NEWLINE()+CENTER_TEXT()+COLOR(QM_RED)+"Do not remove the Game Card"+NEWLINE()+CENTER_TEXT()+"or turn the power off."+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"The Legend of Zelda Ocarina of Time 3D"+NEWLINE()+CENTER_TEXT()+"Master Quest va être déverrouillé."+NEWLINE()+CENTER_TEXT()+"Sauvegarde... Veuillez patienter."+NEWLINE()+NEWLINE()+CENTER_TEXT()+COLOR(QM_RED)+"N'éteignez pas la console et"+NEWLINE()+CENTER_TEXT()+"ne retirez pas la carte de jeu"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Desbloqueando The Legend of Zelda"+NEWLINE()+CENTER_TEXT()+"Ocarina of Time 3D Master Quest."+NEWLINE()+CENTER_TEXT()+"Guardando. Espera un momento..."+NEWLINE()+NEWLINE()+CENTER_TEXT()+COLOR(QM_RED)+"No saques la tarjeta de juego"+NEWLINE()+CENTER_TEXT()+"ni apagues la consola."+INSTANT_TEXT_OFF()+MESSAGE_END());
+        CreateMessage(0x970, 0, 2, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Master Quest doesn't affect the Randomizer,"+NEWLINE()+CENTER_TEXT()+"so you can use 3 more save slots now."+NEWLINE()+NEWLINE()+CENTER_TEXT()+"Thanks for playing!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Vous pouvez désormais jouer à"+NEWLINE()+CENTER_TEXT()+"The Legend of Zelda Ocarina of Time 3D"+NEWLINE()+CENTER_TEXT()+"Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Ya puedes jugar The Legend of Zelda"+NEWLINE()+CENTER_TEXT()+"Ocarina of Time 3D Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END());
     }
 
     std::string MESSAGE_END()          { return  "\x7F\x00"s; }
