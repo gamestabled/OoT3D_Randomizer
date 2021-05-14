@@ -163,6 +163,7 @@ extern Item TreasureGameGreenRupee;
 extern Item Bombs5;
 extern Item Bombs10;
 extern Item Bombs20;
+extern Item Bombs30;
 extern Item Bombchu5;
 extern Item Bombchu10;
 extern Item Bombchu20;

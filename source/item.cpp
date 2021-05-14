@@ -63,5 +63,11 @@ ItemOverride_Value Item::Value() const {
     if (getItemId == GI_ICE_TRAP) {
         val.looksLikeItemId = RandomElement(items);
     }
+    if (type == ITEMTYPE_SHOP) {
+        // With the current shopsanity implementation, we need a way to detect
+        // regular shop items. This method should have no unintended side effects
+        // unless there was a multiworld with 256 players... so, it should be fine.
+        val.player = 0xFF;
+    }
     return val;
 }

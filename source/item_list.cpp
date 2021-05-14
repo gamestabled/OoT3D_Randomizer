@@ -168,6 +168,7 @@ Item Milk                       = Item("Milk",             ITEMTYPE_ITEM, GI_MIL
 Item Bombs5                     = Item("Bombs (5)",           ITEMTYPE_ITEM, GI_BOMBS_5,        false, &none);
 Item Bombs10                    = Item("Bombs (10)",          ITEMTYPE_ITEM, GI_BOMBS_10,       false, &none);
 Item Bombs20                    = Item("Bombs (20)",          ITEMTYPE_ITEM, GI_BOMBS_20,       false, &none);
+Item Bombs30                    = Item("Bombs (30)",          ITEMTYPE_ITEM, GI_BOMBS_30,       false, &none);
 Item Bombchu5                   = Item("Bombchu (5)",         ITEMTYPE_ITEM, GI_BOMBCHUS_5,     true,  &Bombchus5);
 Item Bombchu10                  = Item("Bombchu (10)",        ITEMTYPE_ITEM, GI_BOMBCHUS_10,    true,  &Bombchus10);
 Item Bombchu20                  = Item("Bombchu (20)",        ITEMTYPE_ITEM, GI_BOMBCHUS_20,    true,  &Bombchus20);

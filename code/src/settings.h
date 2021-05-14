@@ -259,6 +259,7 @@ typedef struct {
   u8 shuffleSongs;
   u8 tokensanity;
   u8 scrubsanity;
+  u8 shopsanity;
   u8 shuffleCows;
   u8 shuffleKokiriSword;
   u8 shuffleOcarinas;

@@ -17,17 +17,21 @@
 #include "custom_models.h"
 #include "obj_switch.h"
 #include "gerudo_archery_manager.h"
+#include "shops.h"
 
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
-    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
+    gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
+    gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
 
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
     gActorOverlayTable[0x15].initInfo->draw = EnItem00_rDraw;
+
+    gActorOverlayTable[0x3D].initInfo->destroy = EnOssan_rDestroy;
 
     gActorOverlayTable[0x5F].initInfo->init = ItemBHeart_rInit;
     gActorOverlayTable[0x5F].initInfo->destroy = ItemBHeart_rDestroy;
@@ -54,6 +58,8 @@ void Actor_Init() {
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
+
+    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 

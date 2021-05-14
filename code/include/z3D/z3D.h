@@ -365,13 +365,13 @@ typedef struct {
     /* 0x40 */ u32 size;
 } ObjectFile;
 
-struct GlModel;
-typedef void (*GlModelFunc)(struct GlModel*);
+struct SkeletonAnimationModel;
+typedef void (*SkeletonAnimationModelFunc)(struct SkeletonAnimationModel*);
 
 typedef struct {
     /* 0x00 */ char unk_00[0x4];
-    /* 0x04 */ GlModelFunc destroy;
-} GlModel_VTable;
+    /* 0x04 */ SkeletonAnimationModelFunc destroy;
+} SkeletonAnimationModel_VTable;
 
 typedef struct {
     /* 0x00 */ char unk_00[0x08];
@@ -379,17 +379,17 @@ typedef struct {
     /* 0x0C */ f32  animSpeed;
     /* 0x10 */ s8   animMode;
     /* 0x11 */ char unk_11[0x87];
-} GlModel_unk_0C; // size = 0x98
+} SkeletonAnimationModel_unk_0C; // size = 0x98
 
-typedef struct GlModel {
-    /* 0x00 */ GlModel_VTable* vtbl;
+typedef struct SkeletonAnimationModel {
+    /* 0x00 */ SkeletonAnimationModel_VTable* vtbl;
     /* 0x04 */ char            unk_04[0x08];
-    /* 0x0C */ GlModel_unk_0C* unk_0C;
+    /* 0x0C */ SkeletonAnimationModel_unk_0C* unk_0C;
     /* 0x10 */ char            unk_10[0x6C];
     /* 0x7C */ nn_math_MTX34   mtx;
     /* 0xAC */ s8              unk_AC;
     /* 0xAD */ char            unk_AD[0x03];
-} GlModel; // size = 0xB0
+} SkeletonAnimationModel; // size = 0xB0
 
 typedef struct GameState {
     /* 0x00 */ GraphicsContext* gfxCtx;

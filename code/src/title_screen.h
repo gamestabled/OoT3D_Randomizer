@@ -5,9 +5,9 @@
 
 typedef struct {
     Actor actor;
-    GlModel* logoModel;
-    GlModel* fireModel;
-    GlModel* copyrightModel;
+    SkeletonAnimationModel* logoModel;
+    SkeletonAnimationModel* fireModel;
+    SkeletonAnimationModel* copyrightModel;
     char unk_1B0[0x30];
 } EnMag; //size 0x1E0;
 
