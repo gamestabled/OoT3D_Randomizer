@@ -5874,74 +5874,74 @@ namespace Hints {
 
   HintText QueenGohma = HintText::Boss({
                      //obscure text
-                     Text{"One inside an #ancient tree#...", "", ""},
+                     Text{"An #ancient tree# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in the #Deku Tree#...", "", ""}
+                     Text{"the #Deku Tree# rewards", "", ""}
   );
 
   HintText KingDodongo = HintText::Boss({
                      //obscure text
-                     Text{"One within an #immense cavern#...", "", ""},
+                     Text{"An #immense cavern# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in #Dodongo's Cavern#...", "", ""}
+                     Text{"#Dodongo's Cavern# rewards", "", ""}
   );
 
   HintText Barinade = HintText::Boss({
                      //obscure text
-                     Text{"One in the #belly of a deity#...", "", ""},
+                     Text{"the #belly of a deity# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in #Jabu Jabu's Belly#...", "", ""}
+                     Text{"#Jabu Jabu's Belly# rewards", "", ""}
   );
 
   HintText PhantomGanon = HintText::Boss({
                      //obscure text
-                     Text{"One in a #deep forest#...", "", ""},
+                     Text{"a #deep forest# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in the #Forest Temple#...", "", ""}
+                     Text{"the #Forest Temple# rewards", "", ""}
   );
 
   HintText Volvagia = HintText::Boss({
                      //obscure text
-                     Text{"One on a #high mountain#...", "", ""},
+                     Text{"a #high mountain# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in the #Fire Temple#...", "", ""}
+                     Text{"the #Fire Temple# rewards", "", ""}
   );
 
   HintText Morpha = HintText::Boss({
                      //obscure text
-                     Text{"One under a #vast lake#...", "", ""},
+                     Text{"a #vast lake# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in the #Water Temple#...", "", ""}
+                     Text{"the #Water Temple# rewards", "", ""}
   );
 
   HintText BongoBongo = HintText::Boss({
                      //obscure text
-                     Text{"One within the #house of the dead#...", "", ""},
+                     Text{"the #house of the dead# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in the #Shadow Temple#...", "", ""}
+                     Text{"the #Shadow Temple# rewards", "", ""}
   );
 
   HintText Twinrova = HintText::Boss({
                      //obscure text
-                     Text{"One inside a #goddess of the sand#...", "", ""},
+                     Text{"a #goddess of the sand# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One in the #Spirit Temple#...", "", ""}
+                     Text{ "the #Spirit Temple# rewards", "", ""}
   );
 
   HintText LinksPocketBoss = HintText::Boss({
                      //obscure text
-                     Text{"One in #@'s pocket#...", "", ""},
+                     Text{"#@'s pocket# rewards", "", ""},
                    },
                      //clear text
-                     Text{ "One #@ already has#...", "", ""}
+                     Text{"#@ already has#", "", ""}
   );
 
   /*--------------------------
