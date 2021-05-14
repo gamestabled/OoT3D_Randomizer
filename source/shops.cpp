@@ -1,18 +1,13 @@
-#include "fill.hpp"
-
-#include "custom_messages.hpp"
-#include "dungeon.hpp"
 #include "item_location.hpp"
 #include "item_pool.hpp"
 #include "location_access.hpp"
-#include "logic.hpp"
 #include "random.hpp"
-#include "spoiler_log.hpp"
-#include "starting_inventory.hpp"
+#include "item.hpp"
 
 using namespace Settings;
 
 std::vector<Item> ShopItems = {};
+//Shop items we don't want to overwrite
 const std::array<Item, 28> minShopItems = {
   BuyDekuShield,
   BuyHylianShield,
@@ -127,6 +122,7 @@ int GetRandomShopPrice() {
   return Random(0, 61) * 5;
 }
 
+//Place each shop item from the shop item array into the appropriate location
 void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
@@ -136,6 +132,7 @@ void PlaceShopItems() {
   }
 }
 
+//Get 1 to 4, or a random number from 1-4 depending on shopsanity setting
 int GetShopsanityReplaceAmount() {
   if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
     return 1;
@@ -154,8 +151,19 @@ int GetShopsanityReplaceAmount() {
 void ShuffleShop(std::vector<Item>& ShopItems, std::vector<int> indicesToExclude) {
     for (std::size_t i = 0; i + 1 < ShopItems.size(); i++)
     {
-        size_t swapInto = Random(i, ShopItems.size());
+        size_t swapInto = Random(i, ShopItems.size()); //Get index to swap item into
         size_t shopIndex = swapInto % 8; //Get index within shop
-        std::swap(ShopItems[i], ShopItems[Random(i, ShopItems.size())]);
+        //If this item is within minShopItems, and it is about to be swapped in an index which may be overwritten, do not swap
+        bool sourceItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[i]) != minShopItems.end();
+        bool targetIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), shopIndex+1) != indicesToExclude.end();
+        bool sourceToTargetGood = !(sourceItemInMin && targetIndexToExcludeMinFrom);
+        //Vice versa, want to check that the target item being swapped is not being swapped into a bad index
+        bool targetItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[swapInto]) != minShopItems.end();
+        bool sourceIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), (i % 8)+1) != indicesToExclude.end();
+        bool targetToSourceGood = !(targetItemInMin && sourceIndexToExcludeMinFrom);
+        //If a min shop item is not being swapped into a bad index, then do the swap
+        if (sourceToTargetGood && targetToSourceGood) {
+          std::swap(ShopItems[i], ShopItems[swapInto]);
+        }
     }
 }
