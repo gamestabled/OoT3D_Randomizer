@@ -1,0 +1,161 @@
+#include "fill.hpp"
+
+#include "custom_messages.hpp"
+#include "dungeon.hpp"
+#include "item_location.hpp"
+#include "item_pool.hpp"
+#include "location_access.hpp"
+#include "logic.hpp"
+#include "random.hpp"
+#include "spoiler_log.hpp"
+#include "starting_inventory.hpp"
+
+using namespace Settings;
+
+std::vector<Item> ShopItems = {};
+const std::array<Item, 28> minShopItems = {
+  BuyDekuShield,
+  BuyHylianShield,
+  BuyGoronTunic,
+  BuyZoraTunic,
+  BuyDekuNut5,
+  BuyDekuNut5,
+  BuyDekuNut10,
+  BuyDekuStick1,
+  BuyDekuStick1,
+  BuyDekuSeeds30,
+  BuyArrows10,
+  BuyArrows10,
+  BuyArrows30,
+  BuyArrows50,
+  BuyBombchu5,
+  BuyBombchu10,
+  BuyBombchu10,
+  BuyBombchu20,
+  BuyBombs525,
+  BuyBombs535,
+  BuyBombs10,
+  BuyBombs20,
+  BuyGreenPotion,
+  BuyRedPotion30,
+  BuyBlueFire,
+  BuyFairysSpirit,
+  BuyBottleBug,
+  BuyFish,
+};
+
+//Set vanilla shop item locations before potentially shuffling
+void SetVanillaShopItems() {
+  ShopItems = {
+    //Vanilla KF
+    BuyDekuShield,
+    BuyDekuNut5,
+    BuyDekuNut10,
+    BuyDekuStick1,
+    BuyDekuSeeds30,
+    BuyArrows10,
+    BuyArrows30,
+    BuyHeart,
+    //Vanilla Kak Potion
+    BuyDekuNut5,
+    BuyFish,
+    BuyRedPotion30,
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFairysSpirit,
+    //Vanilla Bombchu
+    BuyBombchu5,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    //Vanilla MK Potion
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyRedPotion30,
+    BuyFairysSpirit,
+    BuyDekuNut5,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFish,
+    //Vanilla MK Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla Kak Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla ZD
+    BuyZoraTunic,
+    BuyArrows10,
+    BuyHeart,
+    BuyArrows30,
+    BuyDekuNut5,
+    BuyArrows50,
+    BuyFish,
+    BuyRedPotion50,
+    //Vanilla GC Shop
+    BuyBombs525,
+    BuyBombs10,
+    BuyBombs20,
+    BuyBombs30,
+    BuyGoronTunic,
+    BuyHeart,
+    BuyRedPotion40,
+    BuyHeart,
+  };
+}
+
+//OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
+int GetRandomShopPrice() {
+  return Random(0, 61) * 5;
+}
+
+void PlaceShopItems() {
+  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
+      //Multiply i by 8 to get the correct shop
+      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
+    }
+  }
+}
+
+int GetShopsanityReplaceAmount() {
+  if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
+    return 1;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_TWO)) {
+    return 2;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_THREE)) {
+    return 3;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_FOUR)) {
+    return 4;
+  } else { //Random
+    return Random(1, 5);
+  }
+}
+
+//Specialized shuffle function for shop items
+void ShuffleShop(std::vector<Item>& ShopItems, std::vector<int> indicesToExclude) {
+    for (std::size_t i = 0; i + 1 < ShopItems.size(); i++)
+    {
+        size_t swapInto = Random(i, ShopItems.size());
+        size_t shopIndex = swapInto % 8; //Get index within shop
+        std::swap(ShopItems[i], ShopItems[Random(i, ShopItems.size())]);
+    }
+}

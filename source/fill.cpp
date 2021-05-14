@@ -9,6 +9,7 @@
 #include "random.hpp"
 #include "spoiler_log.hpp"
 #include "starting_inventory.hpp"
+#include "shops.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -581,114 +582,6 @@ static void RandomizeLinksPocket() {
  }
 }
 
-//Shop related functions
-
-//Set vanilla shop item locations before potentially shuffling
-void SetVanillaShopItems() {
-  ShopItems = {
-    //Vanilla KF
-    BuyDekuShield,
-    BuyDekuNut5,
-    BuyDekuNut10,
-    BuyDekuStick1,
-    BuyDekuSeeds30,
-    BuyArrows10,
-    BuyArrows30,
-    BuyHeart,
-    //Vanilla Kak Potion
-    BuyDekuNut5,
-    BuyFish,
-    BuyRedPotion30,
-    BuyGreenPotion,
-    BuyBlueFire,
-    BuyBottleBug,
-    BuyPoe,
-    BuyFairysSpirit,
-    //Vanilla Bombchu
-    BuyBombchu5,
-    BuyBombchu10,
-    BuyBombchu10,
-    BuyBombchu10,
-    BuyBombchu20,
-    BuyBombchu20,
-    BuyBombchu20,
-    BuyBombchu20,
-    //Vanilla MK Potion
-    BuyGreenPotion,
-    BuyBlueFire,
-    BuyRedPotion30,
-    BuyFairysSpirit,
-    BuyDekuNut5,
-    BuyBottleBug,
-    BuyPoe,
-    BuyFish,
-    //Vanilla MK Bazaar
-    BuyHylianShield,
-    BuyBombs535,
-    BuyDekuNut5,
-    BuyHeart,
-    BuyArrows10,
-    BuyArrows50,
-    BuyDekuStick1,
-    BuyArrows30,
-    //Vanilla Kak Bazaar
-    BuyHylianShield,
-    BuyBombs535,
-    BuyDekuNut5,
-    BuyHeart,
-    BuyArrows10,
-    BuyArrows50,
-    BuyDekuStick1,
-    BuyArrows30,
-    //Vanilla ZD
-    BuyZoraTunic,
-    BuyArrows10,
-    BuyHeart,
-    BuyArrows30,
-    BuyDekuNut5,
-    BuyArrows50,
-    BuyFish,
-    BuyRedPotion50,
-    //Vanilla GC Shop
-    BuyBombs525,
-    BuyBombs10,
-    BuyBombs20,
-    BuyBombs30,
-    BuyGoronTunic,
-    BuyHeart,
-    BuyRedPotion40,
-    BuyHeart,
-  };
-}
-
-//OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
-static int GetRandomShopPrice() {
-  return Random(0, 61) * 5;
-}
-
-static void PlaceShopItems() {
-  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
-    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
-      //Multiply i by 8 to get the correct shop
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
-    }
-  }
-}
-
-static int GetShopsanityReplaceAmount() {
-  if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
-    return 1;
-  } else if (Settings::Shopsanity.Is(SHOPSANITY_TWO)) {
-    return 2;
-  } else if (Settings::Shopsanity.Is(SHOPSANITY_THREE)) {
-    return 3;
-  } else if (Settings::Shopsanity.Is(SHOPSANITY_FOUR)) {
-    return 4;
-  } else { //Random
-    return Random(1, 5);
-  }
-}
-
 int Fill() {
   int retries = 0;
   while(retries < 5) {
@@ -700,16 +593,25 @@ int Fill() {
 
     //Place shop items first, since a buy shield is needed for gohma access
     SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
-    if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
+    if (Shopsanity.Is(SHOPSANITY_OFF)) {
       PlaceShopItems(); //Just place vanilla items
     } else {
-      Shuffle(ShopItems); //Shuffle shop items amongst themselves
-      if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
+      if (Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
+        Shuffle(ShopItems); //Shuffle shop items amongst themselves
         PlaceShopItems(); //Just place the shuffled shop items
       }
       else { //Shopsanity 1-4, random
+        const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
+
+        //Shuffle shop items making sure to not place minShopItems in shop slots which can be overwritten
+        std::vector<int> indicesToExclude;
+        int max = Shopsanity.Is(SHOPSANITY_RANDOM) ? 4 : GetShopsanityReplaceAmount(); //With random it's up to 4 so to be safe we exclude all 4, otherwise exclude amount from settings
+        for(int i = 0; i < max; i++) {
+          indicesToExclude.push_back(indices[i]);
+        }
+        ShuffleShop(ShopItems, indicesToExclude); //Shuffle shop items, making sure some will not be overwritten
+
         //Overwrite appropriate number of shop items
-        const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR
         for (size_t i = 0; i < ShopLocationLists.size(); i++) {
           int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
           for(int j = 0; j < num_to_replace; j++) {

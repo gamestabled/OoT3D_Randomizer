@@ -14,7 +14,6 @@ using namespace Dungeon;
 
 std::vector<Item> ItemPool = {};
 std::vector<Item> PendingJunkPool = {};
-std::vector<Item> ShopItems = {};
 std::vector<Item> dungeonRewards = {
   I_KokiriEmerald,
   I_GoronRuby,
@@ -361,36 +360,6 @@ const std::array<Item, 28> shopsanityRupees = {
   HugeRupee,
   HugeRupee,
   I_ProgressiveWallet,
-};
-const std::array<Item, 28> minShopItems = {
-  BuyDekuShield,
-  BuyHylianShield,
-  BuyGoronTunic,
-  BuyZoraTunic,
-  BuyDekuNut5,
-  BuyDekuNut5,
-  BuyDekuNut10,
-  BuyDekuStick1,
-  BuyDekuStick1,
-  BuyDekuSeeds30,
-  BuyArrows10,
-  BuyArrows10,
-  BuyArrows30,
-  BuyArrows50,
-  BuyBombchu5,
-  BuyBombchu10,
-  BuyBombchu10,
-  BuyBombchu20,
-  BuyBombs525,
-  BuyBombs535,
-  BuyBombs10,
-  BuyBombs20,
-  BuyGreenPotion,
-  BuyRedPotion30,
-  BuyBlueFire,
-  BuyFairysSpirit,
-  BuyBottleBug,
-  BuyFish,
 };
 const std::array<Item, 19> dekuScrubItems = {
   DekuNuts5,

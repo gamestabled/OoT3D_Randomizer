@@ -2,7 +2,7 @@
 
 #include "cosmetics.hpp"
 #include "custom_messages.hpp"
-#include "item_pool.hpp"
+#include "shops.hpp"
 
 #include <array>
 #include <cstring>
