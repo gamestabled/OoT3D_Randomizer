@@ -359,7 +359,6 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
 
     //shuffle the order of items to place
     Shuffle(itemsToPlace);
-
     while (!itemsToPlace.empty()) {
       Item item = std::move(itemsToPlace.back());
       item.SetAsPlaythrough();
@@ -422,12 +421,10 @@ static void RandomizeDungeonRewards() {
     0x00000020,
   };
   int baseOffset = I_KokiriEmerald.GetItemID();
-
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
     std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
     AssumedFill(rewards, dungeonRewardLocations);
-
     for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
       const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
@@ -584,6 +581,114 @@ static void RandomizeLinksPocket() {
  }
 }
 
+//Shop related functions
+
+//Set vanilla shop item locations before potentially shuffling
+void SetVanillaShopItems() {
+  ShopItems = {
+    //Vanilla KF
+    BuyDekuShield,
+    BuyDekuNut5,
+    BuyDekuNut10,
+    BuyDekuStick1,
+    BuyDekuSeeds30,
+    BuyArrows10,
+    BuyArrows30,
+    BuyHeart,
+    //Vanilla Kak Potion
+    BuyDekuNut5,
+    BuyFish,
+    BuyRedPotion30,
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFairysSpirit,
+    //Vanilla Bombchu
+    BuyBombchu5,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu10,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    BuyBombchu20,
+    //Vanilla MK Potion
+    BuyGreenPotion,
+    BuyBlueFire,
+    BuyRedPotion30,
+    BuyFairysSpirit,
+    BuyDekuNut5,
+    BuyBottleBug,
+    BuyPoe,
+    BuyFish,
+    //Vanilla MK Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla Kak Bazaar
+    BuyHylianShield,
+    BuyBombs535,
+    BuyDekuNut5,
+    BuyHeart,
+    BuyArrows10,
+    BuyArrows50,
+    BuyDekuStick1,
+    BuyArrows30,
+    //Vanilla ZD
+    BuyZoraTunic,
+    BuyArrows10,
+    BuyHeart,
+    BuyArrows30,
+    BuyDekuNut5,
+    BuyArrows50,
+    BuyFish,
+    BuyRedPotion50,
+    //Vanilla GC Shop
+    BuyBombs525,
+    BuyBombs10,
+    BuyBombs20,
+    BuyBombs30,
+    BuyGoronTunic,
+    BuyHeart,
+    BuyRedPotion40,
+    BuyHeart,
+  };
+}
+
+//OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
+static int GetRandomShopPrice() {
+  return Random(0, 61) * 5;
+}
+
+static void PlaceShopItems() {
+  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
+      //Multiply i by 8 to get the correct shop
+      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
+    }
+  }
+}
+
+static int GetShopsanityReplaceAmount() {
+  if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
+    return 1;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_TWO)) {
+    return 2;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_THREE)) {
+    return 3;
+  } else if (Settings::Shopsanity.Is(SHOPSANITY_FOUR)) {
+    return 4;
+  } else { //Random
+    return Random(1, 5);
+  }
+}
+
 int Fill() {
   int retries = 0;
   while(retries < 5) {
@@ -592,6 +697,32 @@ int Fill() {
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
+
+    //Place shop items first, since a buy shield is needed for gohma access
+    SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
+    if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
+      PlaceShopItems(); //Just place vanilla items
+    } else {
+      Shuffle(ShopItems); //Shuffle shop items amongst themselves
+      if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
+        PlaceShopItems(); //Just place the shuffled shop items
+      }
+      else { //Shopsanity 1-4, random
+        //Overwrite appropriate number of shop items
+        const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR
+        for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+          int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
+          for(int j = 0; j < num_to_replace; j++) {
+            int itemindex = indices[j];
+            ShopItems[i*8+itemindex-1] = NoItem; //Clear item so it can be filled during the general fill algo
+            ShopItems[i*8+itemindex-1].SetPrice(GetRandomShopPrice()); //Set price in ShopItems vector so it can be retrieved later by the patch
+          }
+        }
+      }
+      PlaceShopItems(); //Place shop items with some cleared for placement
+    }
+
+    //Place dungeon rewards
     RandomizeDungeonRewards();
 
     //Place songs first if song shuffle is set to specific locations
@@ -611,13 +742,11 @@ int Fill() {
 
       AssumedFill(songs, songLocations);
     }
-
     //Then place dungeon items that are assigned to restrictive pools
     RandomizeDungeonItems();
 
     //Then place Link's Pocket Item if it has to be an advancement item
     RandomizeLinksPocket();
-
     //Then place the rest of the advancement items
     std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});
     AssumedFill(remainingAdvancementItems, allLocations);

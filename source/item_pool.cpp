@@ -14,6 +14,7 @@ using namespace Dungeon;
 
 std::vector<Item> ItemPool = {};
 std::vector<Item> PendingJunkPool = {};
+std::vector<Item> ShopItems = {};
 std::vector<Item> dungeonRewards = {
   I_KokiriEmerald,
   I_GoronRuby,
@@ -500,113 +501,6 @@ void PlaceJunkInExcludedLocation(ItemLocation * il) {
   printf("ERROR: No Junk to Place!!!\n");
 }
 
-std::vector<Item> ShopItems; //Vector of all shop items, initialized to vanilla items in specific order but can be shuffled and items replaced
-//Set vanilla shop item locations before potentially shuffling
-void SetVanillaShopItems() {
-  ShopItems = {
-    //Vanilla KF
-    BuyDekuShield,
-    BuyDekuNut5,
-    BuyDekuNut10,
-    BuyDekuStick1,
-    BuyDekuSeeds30,
-    BuyArrows10,
-    BuyArrows30,
-    BuyHeart,
-    //Vanilla Kak Potion
-    BuyDekuNut5,
-    BuyFish,
-    BuyRedPotion30,
-    BuyGreenPotion,
-    BuyBlueFire,
-    BuyBottleBug,
-    BuyPoe,
-    BuyFairysSpirit,
-    //Vanilla Bombchu
-    BuyBombchu5,
-    BuyBombchu10,
-    BuyBombchu10,
-    BuyBombchu10,
-    BuyBombchu20,
-    BuyBombchu20,
-    BuyBombchu20,
-    BuyBombchu20,
-    //Vanilla MK Potion
-    BuyGreenPotion,
-    BuyBlueFire,
-    BuyRedPotion30,
-    BuyFairysSpirit,
-    BuyDekuNut5,
-    BuyBottleBug,
-    BuyPoe,
-    BuyFish,
-    //Vanilla MK Bazaar
-    BuyHylianShield,
-    BuyBombs535,
-    BuyDekuNut5,
-    BuyHeart,
-    BuyArrows10,
-    BuyArrows50,
-    BuyDekuStick1,
-    BuyArrows30,
-    //Vanilla Kak Bazaar
-    BuyHylianShield,
-    BuyBombs535,
-    BuyDekuNut5,
-    BuyHeart,
-    BuyArrows10,
-    BuyArrows50,
-    BuyDekuStick1,
-    BuyArrows30,
-    //Vanilla ZD
-    BuyZoraTunic,
-    BuyArrows10,
-    BuyHeart,
-    BuyArrows30,
-    BuyDekuNut5,
-    BuyArrows50,
-    BuyFish,
-    BuyRedPotion50,
-    //Vanilla GC Shop
-    BuyBombs525,
-    BuyBombs10,
-    BuyBombs20,
-    BuyBombs30,
-    BuyGoronTunic,
-    BuyHeart,
-    BuyRedPotion40,
-    BuyHeart,
-  };
-}
-
-static void PlaceShopItems() {
-  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
-    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
-      //Multiply i by 8 to get the correct shop
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
-    }
-  }
-}
-
-static int GetShopsanityReplaceAmount() {
-  if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
-    return 1;
-  } else if (Settings::Shopsanity.Is(SHOPSANITY_TWO)) {
-    return 2;
-  } else if (Settings::Shopsanity.Is(SHOPSANITY_THREE)) {
-    return 3;
-  } else if (Settings::Shopsanity.Is(SHOPSANITY_FOUR)) {
-    return 4;
-  } else { //Random
-    return Random(1, 5);
-  }
-}
-
-//OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
-static int GetRandomShopPrice() {
-  return Random(0, 61) * 5;
-}
-
 static void PlaceVanillaDekuScrubItems() {
     PlaceItemInLocation(&ZR_DekuScrubGrottoRear,           RedPotionRefill);
     PlaceItemInLocation(&ZR_DekuScrubGrottoFront,          GreenPotionRefill);
@@ -900,36 +794,11 @@ void GenerateItemPool() {
     }
   }
 
-  SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
   //Shopsanity
-  if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
-    PlaceShopItems();
-    if (BombchusInLogic) {
-      // PlaceItemInLocation(&KF_ShopItem8,    &BuyBombchu5);
-      // PlaceItemInLocation(&MK_BazaarItem4,  &BuyBombchu5);
-      // PlaceItemInLocation(&Kak_BazaarItem4, &BuyBombchu5);
-    }
+  if (Settings::Shopsanity.Is(SHOPSANITY_OFF) || Settings::Shopsanity.Is(SHOPSANITY_ZERO)) {
     AddItemsToPool(ItemPool, normalRupees);
-  } else {
-    Shuffle(ShopItems); //Shuffle shop items amongst themselves
-    PlaceShopItems(); //Place now-shuffled shop items
-    if (Settings::Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
-      AddItemsToPool(ItemPool, normalRupees);
-    }
-    else { //Shopsanity 1-4, random
-      //Overwrite appropriate number of shop items
-      const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR
-      for (size_t i = 0; i < ShopLocationLists.size(); i++) {
-        int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
-        for(int j = 0; j < num_to_replace; j++) {
-          int price = GetRandomShopPrice();
-          int itemindex = indices[j];
-          ShopLocationLists[i][itemindex-1]->SetPlacedShopItem(NoItem, price); //Clear item and put a random price
-          ShopItems[i*8+itemindex-1].SetPrice(price); //Set price in ShopItems vector so it can be retrieved later by the patch
-        }
-      }
-      AddItemsToPool(ItemPool, shopsanityRupees); //Shopsanity gets extra large rupees
-    }
+  } else { //Shopsanity 1-4, random
+    AddItemsToPool(ItemPool, shopsanityRupees); //Shopsanity gets extra large rupees
   }
 
   //scrubsanity
@@ -1053,8 +922,6 @@ void GenerateItemPool() {
   if (ShuffleSongs.Is(SONGSHUFFLE_ANYWHERE) && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
     AddItemsToPool(PendingJunkPool, songList);
   }
-
-  //TODO: free scarecrow
 
   /*For item pool generation, dungeon items are either placed in their vanilla
   | location, or added to the pool now and filtered out later depending on when
