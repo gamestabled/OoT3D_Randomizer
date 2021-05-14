@@ -4,6 +4,8 @@
 #include "random.hpp"
 #include "item.hpp"
 
+#include <math.h>
+
 using namespace Settings;
 
 std::vector<Item> ShopItems = {};
@@ -119,7 +121,11 @@ void SetVanillaShopItems() {
 
 //OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
 int GetRandomShopPrice() {
-  return Random(0, 61) * 5;
+  double random = RandomDouble();
+  double rawprice = (1 + .5 * (pow(random, 1.5) * (3 * random - 5)));
+  int adjustedprice = static_cast<int>(rawprice * 60) * 5;
+  CitraPrint(std::to_string(adjustedprice));
+  return adjustedprice;
 }
 
 //Place each shop item from the shop item array into the appropriate location
