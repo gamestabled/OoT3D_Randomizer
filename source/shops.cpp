@@ -119,12 +119,13 @@ void SetVanillaShopItems() {
   };
 }
 
-//OoTR uses a fancy betavariate function for a weighted distribution in [0, 300] in increments of 5... For now each price is just equally likely
+//Get random price using a beta distribution
+//Average price = 126
+//~45% chance of needing no wallet, ~25% chance of needing 1, ~30% chance of needing 2
 int GetRandomShopPrice() {
   double random = RandomDouble();
-  double rawprice = (1 + .5 * (pow(random, 1.5) * (3 * random - 5)));
-  int adjustedprice = static_cast<int>(rawprice * 60) * 5;
-  CitraPrint(std::to_string(adjustedprice));
+  double rawprice = (1 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
+  int adjustedprice = static_cast<int>(rawprice * 60) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 300]
   return adjustedprice;
 }
 
@@ -148,28 +149,32 @@ int GetShopsanityReplaceAmount() {
     return 3;
   } else if (Settings::Shopsanity.Is(SHOPSANITY_FOUR)) {
     return 4;
-  } else { //Random
+  } else { //Random, get number in [1, 4]
     return Random(1, 5);
   }
 }
 
 //Specialized shuffle function for shop items
 void ShuffleShop(std::vector<Item>& ShopItems, std::vector<int> indicesToExclude) {
-    for (std::size_t i = 0; i + 1 < ShopItems.size(); i++)
-    {
-        size_t swapInto = Random(i, ShopItems.size()); //Get index to swap item into
-        size_t shopIndex = swapInto % 8; //Get index within shop
-        //If this item is within minShopItems, and it is about to be swapped in an index which may be overwritten, do not swap
-        bool sourceItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[i]) != minShopItems.end();
-        bool targetIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), shopIndex+1) != indicesToExclude.end();
-        bool sourceToTargetGood = !(sourceItemInMin && targetIndexToExcludeMinFrom);
-        //Vice versa, want to check that the target item being swapped is not being swapped into a bad index
-        bool targetItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[swapInto]) != minShopItems.end();
-        bool sourceIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), (i % 8)+1) != indicesToExclude.end();
-        bool targetToSourceGood = !(targetItemInMin && sourceIndexToExcludeMinFrom);
-        //If a min shop item is not being swapped into a bad index, then do the swap
-        if (sourceToTargetGood && targetToSourceGood) {
-          std::swap(ShopItems[i], ShopItems[swapInto]);
-        }
+  for (std::size_t i = 0; i + 1 < ShopItems.size(); i++) {
+    int retries = 5;
+    while (retries > 0) { //Retry a few times until item is eventually shuffled somewhere, so we don't end up with a bunch of unshuffled items
+      size_t swapInto = Random(i, ShopItems.size()); //Get index to swap item into
+      size_t shopIndex = swapInto % 8; //Get index within shop
+      //If this item is within minShopItems, and it is about to be swapped in an index which may be overwritten, do not swap
+      bool sourceItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[i]) != minShopItems.end();
+      bool targetIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), shopIndex+1) != indicesToExclude.end();
+      bool sourceToTargetGood = !(sourceItemInMin && targetIndexToExcludeMinFrom);
+      //Vice versa, want to check that the target item being swapped is not being swapped into a bad index
+      bool targetItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[swapInto]) != minShopItems.end();
+      bool sourceIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), (i % 8)+1) != indicesToExclude.end();
+      bool targetToSourceGood = !(targetItemInMin && sourceIndexToExcludeMinFrom);
+      //If a min shop item is not being swapped into a bad index, then do the swap
+      if (sourceToTargetGood && targetToSourceGood) {
+        std::swap(ShopItems[i], ShopItems[swapInto]);
+        break;
+      }
+      retries--;
     }
+  }
 }
