@@ -22,13 +22,28 @@ public:
     }
 
     std::string GetSpanish() const {
-      if (spanish.length() > 0) {
-          return spanish;
-      }
-      return english;
+        if (spanish.length() > 0) {
+            return spanish;
+        }
+        return english;
     }
 
-private:
+    Text operator+ (const Text& right) const {
+        return Text{english + right.GetEnglish(), french + right.GetFrench(), spanish + right.GetSpanish()};
+    }
+
+    Text operator+ (const std::string& right) const {
+        return Text{english + right, french + right, spanish + right};
+    }
+
+    bool operator==(const Text& right) const {
+        return english == right.english;
+    }
+
+    bool operator!=(const Text& right) const {
+        return !operator==(right);
+    }
+
     std::string english;
     std::string french;
     std::string spanish;

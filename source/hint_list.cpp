@@ -4,8 +4,19 @@ namespace Hints {
 
   //Text is {english, french, spanish}
 
-  HintText NoHintText = HintText::Exclude({Text{"","",""}});
-  HintText Prefix = HintText::Exclude({Text{"They say that ", "", ""}});
+  // there are special characters that are read for certain in game commands:
+  // ^ is a box break
+  // & is a new line
+  // @ will print the player name
+  // surrounding text with '#' will make it a different color
+  // - OoT Randomizer
+
+  HintText NoHintText   = HintText::Exclude({Text{"","",""}});
+  HintText Prefix       = HintText::Exclude({Text{"They say that ", "", ""}});
+  HintText WayOfTheHero = HintText::Exclude({Text{" is on the way of the hero.",  "", ""}});
+  HintText Plundering   = HintText::Exclude({Text{"plundering ", "", ""}});
+  HintText Foolish      = HintText::Exclude({Text{" is a foolish choice.", "", ""}});
+
   /*--------------------------
   |      ITEM HINT TEXT      |
   ---------------------------*/
@@ -920,7 +931,7 @@ namespace Hints {
   HintText ShadowMedallion = HintText::Item({
                        //obscure text
                        Text{"a purple coin", "", ""},
-                       Text{"Impa's Power",  "", ""},
+                       Text{"Impa's power",  "", ""},
                      },
                        //clear text
                        Text{"the Shadow Medallion", "", ""}
@@ -4909,6 +4920,127 @@ namespace Hints {
   });
 
   /*--------------------------
+  |      EXIT HINT TEXT      |
+  ---------------------------*/
+  //maybe make a new type for this? I'm not sure if it really matters
+
+  HintText LinksPocket = HintText::Exclude({
+                     //obscure text
+                     Text{"Link's Pocket", "", ""},
+  });
+
+  HintText KokiriForest = HintText::Exclude({
+                     //obscure text
+                     Text{"Kokiri Forest", "", ""},
+  });
+
+  HintText TheLostWoods = HintText::Exclude({
+                     //obscure text
+                     Text{"the Lost Woods", "", ""},
+  });
+
+  HintText SacredForestMeadow = HintText::Exclude({
+                     //obscure text
+                     Text{"Sacred Forest Meadow", "", ""},
+  });
+
+  HintText HyruleField = HintText::Exclude({
+                     //obscure text
+                     Text{"Hyrule Field", "", ""},
+  });
+
+  HintText LakeHylia = HintText::Exclude({
+                     //obscure text
+                     Text{"Lake Hylia", "", ""},
+  });
+
+  HintText GerudoValley = HintText::Exclude({
+                     //obscure text
+                     Text{"Gerudo Valley", "", ""},
+  });
+
+  HintText GerudosFortress = HintText::Exclude({
+                     //obscure text
+                     Text{"Gerudo's Fortress", "", ""},
+  });
+
+  HintText HauntedWasteland = HintText::Exclude({
+                     //obscure text
+                     Text{"Haunted Wasteland", "", ""},
+  });
+
+  HintText DesertColossus = HintText::Exclude({
+                     //obscure text
+                     Text{"Desert Colossus", "", ""},
+  });
+
+  HintText TheMarket = HintText::Exclude({
+                     //obscure text
+                     Text{"the Market", "", ""},
+  });
+
+  HintText TempleOfTime = HintText::Exclude({
+                     //obscure text
+                     Text{"Temple of Time", "", ""},
+  });
+
+  HintText HyruleCastle = HintText::Exclude({
+                     //obscure text
+                     Text{"Hyrule Castle", "", ""},
+  });
+
+  HintText OutsideGanonsCastle = HintText::Exclude({
+                     //obscure text
+                     Text{"outside Ganon's Castle", "", ""},
+  });
+
+  HintText KakarikoVillage = HintText::Exclude({
+                     //obscure text
+                     Text{"Kakariko Village", "", ""},
+  });
+
+  HintText TheGraveyard = HintText::Exclude({
+                     //obscure text
+                     Text{"the Graveyard", "", ""},
+  });
+
+  HintText DeathMountainTrail = HintText::Exclude({
+                     //obscure text
+                     Text{"Death Mountain Trail", "", ""},
+  });
+
+  HintText GoronCity = HintText::Exclude({
+                     //obscure text
+                     Text{"Goron City", "", ""},
+  });
+
+  HintText DeathMountainCrater = HintText::Exclude({
+                     //obscure text
+                     Text{"Death Mountain Crater", "", ""},
+  });
+
+  HintText ZorasRiver = HintText::Exclude({
+                     //obscure text
+                     Text{"Zora's River", "", ""},
+  });
+
+  HintText ZorasDomain = HintText::Exclude({
+                     //obscure text
+                     Text{"Zora's Domain", "", ""},
+  });
+
+  HintText ZorasFountain = HintText::Exclude({
+                     //obscure text
+                     Text{"Zora's Fountain", "", ""},
+  });
+
+  HintText LonLonRanch = HintText::Exclude({
+                     //obscure text
+                     Text{"Lon Lon Ranch", "", ""},
+  });
+
+
+  /*--------------------------
   |     REGION HINT TEXT     |
   ---------------------------*/
 
@@ -4917,7 +5049,7 @@ namespace Hints {
                      Text{"Link's House", "", ""},
   });
 
-  HintText TempleOfTime = HintText::Region({
+  HintText ToT_Main = HintText::Region({
                      //obscure text
                      Text{"the #Temple of Time#", "", ""},
   });
@@ -5583,7 +5715,7 @@ namespace Hints {
 
   HintText Junk61 = HintText::Junk({
                      //obscure text
-                     Text{"They say that the stick is mightier than the sword.", "", ""},
+                     Text{"They say that the stick is mightier than the sword...^At least, it used to be...", "", ""},
   });
 
   HintText Junk62 = HintText::Junk({
@@ -5804,7 +5936,7 @@ namespace Hints {
                      Text{ "One in the #Spirit Temple#...", "", ""}
   );
 
-  HintText LinksPocket = HintText::Boss({
+  HintText LinksPocketBoss = HintText::Boss({
                      //obscure text
                      Text{"One in #@'s pocket#...", "", ""},
                    },
@@ -6010,6 +6142,79 @@ namespace Hints {
                      Text{"Today, let's begin down&'The Hero is Defeated' timeline.", "", ""},
   });
 
+  std::array<HintText*, 66> junkHints = {
+    &Junk01,
+    &Junk02,
+    &Junk03,
+    &Junk04,
+    //&Junk05,
+    &Junk06,
+    //&Junk07,
+    &Junk08,
+    &Junk09,
+    &Junk10,
+    //&Junk11,
+    &Junk12,
+    &Junk13,
+    &Junk14,
+    &Junk15,
+    &Junk16,
+    &Junk17,
+    &Junk18,
+    //&Junk19,
+    //&Junk20,
+    &Junk21,
+    &Junk22,
+    &Junk23,
+    &Junk24,
+    &Junk25,
+    &Junk26,
+    &Junk27,
+    &Junk28,
+    &Junk29,
+    &Junk30,
+    &Junk31,
+    &Junk32,
+    &Junk33,
+    &Junk34,
+    &Junk35,
+    &Junk36,
+    &Junk37,
+    &Junk38,
+    &Junk39,
+    &Junk40,
+    &Junk41,
+    &Junk42,
+    &Junk43,
+    &Junk44,
+    &Junk45,
+    &Junk46,
+    &Junk47,
+    &Junk48,
+    &Junk49,
+    &Junk50,
+    &Junk51,
+    &Junk52,
+    &Junk53,
+    &Junk54,
+    &Junk55,
+    &Junk56,
+    &Junk57,
+    &Junk58,
+    &Junk59,
+    &Junk60,
+    &Junk61,
+    &Junk62,
+    &Junk63,
+    &Junk64,
+    &Junk65,
+    &Junk66,
+    &Junk67,
+    &Junk68,
+    &Junk69,
+    &Junk70,
+    &Junk71,
+  };
 
 } //namespace Hints
 

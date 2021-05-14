@@ -299,6 +299,7 @@ namespace Settings {
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
+  extern Option HintDistribution;
   extern Option DamageMultiplier;
   extern Option StartingTime;
   extern Option NightGSExpectSuns;

@@ -1,11 +1,13 @@
 #include "custom_messages.hpp"
 #include "patch_symbols.hpp"
+#include "debug.hpp"
 #include "../code/src/message.h"
 
 #include <array>
 #include <set>
 #include <sstream>
-#include <vector>
+
+#include <unistd.h>
 
 namespace CustomMessages {
 
@@ -17,15 +19,6 @@ public:
         return lhs.id < rhs.id;
     }
 };
-
-constexpr u8 QM_WHITE  = 0x00;
-constexpr u8 QM_RED    = 0x41;
-constexpr u8 QM_GREEN  = 0x42;
-constexpr u8 QM_BLUE   = 0x43;
-constexpr u8 QM_LBLUE  = 0x44;
-constexpr u8 QM_PINK   = 0x45;
-constexpr u8 QM_YELLOW = 0x46;
-constexpr u8 QM_BLACK  = 0x47;
 
 constexpr std::array EnglishDungeonNames = {
     "Deku Tree",
@@ -113,20 +106,20 @@ constexpr std::array SpanishDungeonArticles = {
 };
 
 constexpr std::array DungeonColors = {
-    CustomMessages::QM_GREEN,
-    CustomMessages::QM_RED,
-    CustomMessages::QM_BLUE,
-    CustomMessages::QM_GREEN,
-    CustomMessages::QM_RED,
-    CustomMessages::QM_BLUE,
-    CustomMessages::QM_YELLOW,
-    CustomMessages::QM_PINK,
-    CustomMessages::QM_PINK,
-    CustomMessages::QM_LBLUE,
-    CustomMessages::QM_BLACK,
-    CustomMessages::QM_YELLOW,
-    CustomMessages::QM_YELLOW,
-    CustomMessages::QM_RED,
+    QM_GREEN,
+    QM_RED,
+    QM_BLUE,
+    QM_GREEN,
+    QM_RED,
+    QM_BLUE,
+    QM_YELLOW,
+    QM_PINK,
+    QM_PINK,
+    QM_LBLUE,
+    QM_BLACK,
+    QM_YELLOW,
+    QM_YELLOW,
+    QM_RED,
 };
 
     std::set<MessageEntry, MessageEntryComp> messageEntries;
@@ -158,6 +151,10 @@ constexpr std::array DungeonColors = {
             messageData << spanishText;
 
             messageEntries.insert(newEntry);
+    }
+
+    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, Text text) {
+        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetEnglish(), text.GetFrench(), text.GetSpanish());
     }
 
     u32 NumMessages() {
@@ -292,36 +289,58 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"Habla con Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
     }
 
-    std::string ProperLocationHintMessage(std::string location, std::string item) {
+    Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
+
+      //for each language
+      for (std::string* textStr : {&text.english, &text.french, &text.spanish}) {
+
+        //insert playername
+        size_t atSymbol = textStr->find('@');
+        while (atSymbol != std::string::npos) {
+          textStr->replace(atSymbol, 1, PLAYER_NAME());
+          atSymbol = textStr->find('@');
+        }
+        //insert newlines either manually or when encountering a '&'
         constexpr size_t lineLength = 44;
-
-        std::string hint = location+" #"+item+"#.";
-
-        //insert newlines
-        size_t lastSpaceOfLine = 0;
-        while (lastSpaceOfLine + lineLength < hint.length()) {
-          lastSpaceOfLine = hint.rfind(' ', lastSpaceOfLine + lineLength);
-          hint.replace(lastSpaceOfLine, 1, NEWLINE());
-          lastSpaceOfLine += NEWLINE().length();
+        size_t lastNewline = 0;
+        while (lastNewline + lineLength < textStr->length()) {
+          size_t carrot     = textStr->find('^', lastNewline);
+          size_t ampersand  = textStr->find('&', lastNewline);
+          size_t lastSpace  = textStr->rfind(' ', lastNewline + lineLength);
+          size_t lastPeriod = textStr->rfind('.', lastNewline + lineLength);
+          //replace '&' first if it's within the newline range
+          if (ampersand < lastNewline + lineLength) {
+            textStr->replace(ampersand, 1, NEWLINE());
+            lastNewline = ampersand + NEWLINE().length();
+          //or move the lastNewline cursor to the next line if a '^' is encountered
+          } else if (carrot < lastNewline + lineLength) {
+            lastNewline = carrot + 1;
+          //some lines need to be split but don't have spaces, look for periods instead
+          } else if (lastSpace == std::string::npos) {
+            textStr->replace(lastPeriod, 1, "."+NEWLINE());
+            lastNewline = lastPeriod + NEWLINE().length() + 1;
+          } else {
+            textStr->replace(lastSpace, 1, NEWLINE());
+            lastNewline = lastSpace + NEWLINE().length();
+          }
         }
-
-        //location color
-        size_t firstHashtag = hint.find('#');
-        if (firstHashtag != std::string::npos) {
-            hint.replace(firstHashtag, 1, COLOR(QM_GREEN));
-            size_t secondHashtag = hint.find('#');
-            hint.replace(secondHashtag, 1, COLOR(QM_WHITE));
+        //insert box break
+        size_t carrotSymbol = textStr->find('^');
+        while (carrotSymbol != std::string::npos) {
+          textStr->replace(carrotSymbol, 1, WAIT_FOR_INPUT());
+          carrotSymbol = textStr->find('^');
         }
-
-        //item color
-        firstHashtag = hint.find('#');
-        if (firstHashtag != std::string::npos) {
-            hint.replace(firstHashtag, 1, COLOR(QM_RED));
-            size_t secondHashtag = hint.find('#');
-            hint.replace(secondHashtag, 1, COLOR(QM_WHITE));
+        //add colors
+        for (auto color : colors) {
+          size_t firstHashtag = textStr->find('#');
+          if (firstHashtag != std::string::npos) {
+              textStr->replace(firstHashtag, 1, COLOR(color));
+              size_t secondHashtag = textStr->find('#');
+              textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
+          }
         }
-
-        return UNSKIPPABLE()+INSTANT_TEXT_ON()+hint+INSTANT_TEXT_OFF()+MESSAGE_END();
+      }
+      return Text{"","",""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
     }
 
     std::string MESSAGE_END()          { return  "\x7F\x00"s; }

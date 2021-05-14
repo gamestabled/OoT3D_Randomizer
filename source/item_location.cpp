@@ -1473,6 +1473,10 @@ void LocationReset() {
   for (ItemLocation * il : dungeonRewardLocations) {
     il->RemoveFromPool();
   }
+
+  for (ItemLocation * il : gossipStoneLocations) {
+    il->RemoveFromPool();
+  }
 }
 
 void ItemReset() {
@@ -1485,6 +1489,12 @@ void ItemReset() {
   }
 
   itemsPlaced = 0;
+}
+
+void HintReset() {
+  for (ItemLocation* il : gossipStoneLocations) {
+    il->ResetVariables();
+  }
 }
 
 //Fills everyPossibleLocation and creates an exclusion option for each location.

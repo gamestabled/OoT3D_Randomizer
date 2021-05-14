@@ -16,6 +16,8 @@
 #include "settings.hpp"
 #include "hint_list.hpp"
 
+class Exit;
+
 enum class ItemLocationType {
     Base,
     Chest,
@@ -125,11 +127,11 @@ public:
     }
 
     bool IsDungeon() const {
-      return scene < 0x0A;
+      return (type != ItemLocationType::GSToken && (scene < 0x0E || (scene > 0x10 && scene < 0x1A))) || (type == ItemLocationType::GSToken && scene < 0x10);
     }
 
     bool IsOverworld() const {
-      return scene >= 0x0A;
+      return !IsDungeon();
     }
 
     Option * GetExcludedOption() {
@@ -138,6 +140,34 @@ public:
 
     HintText GetHintText() {
       return *hintText;
+    }
+
+    HintCategory GetHintCategory() const {
+      return hintText->GetType();
+    }
+
+    bool IsHintedAt() const {
+      return hintedAt;
+    }
+
+    void SetAsHinted() {
+      hintedAt = true;
+    }
+
+    bool IsHintable() const {
+      return isHintable;
+    }
+
+    void SetAsHintable() {
+      isHintable = true;
+    }
+
+    void SetParentRegion(Exit* region) {
+      parentRegion = region;
+    }
+
+    Exit* GetParentRegion() const {
+      return parentRegion;
     }
 
     void AddExcludeOption() {
@@ -195,9 +225,7 @@ public:
     }
 
     static auto HintStone(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        auto hintLocation = ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), &Hints::NoHintText, std::move(categories)};
-        hintLocation.SetPlacedItem(NoHint);
-        return hintLocation;
+        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), &Hints::NoHintText, std::move(categories)};
     }
 
     void ResetVariables() {
@@ -206,6 +234,8 @@ public:
       addedToPool = false;
       placedItem = NoItem;
       delayedItem = NoItem;
+      hintedAt = false;
+      isHintable = false;
       price = 0;
     }
 
@@ -218,13 +248,15 @@ private:
 
     std::string name;
     HintText* hintText = nullptr;
+    bool hintedAt = false;
     std::vector<Category> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
     Item delayedItem = NoItem;
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
     u16 price = 0;
-
+    bool isHintable = false;
+    Exit* parentRegion = nullptr;
 };
 
 class ItemOverride_Compare {
@@ -1137,5 +1169,6 @@ void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool apply
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category);
 void LocationReset();
 void ItemReset();
+void HintReset();
 void AddExcludedOptions();
 void CreateOverrides();

@@ -147,8 +147,9 @@ namespace Settings {
   };
 
   //Misc Settings
-  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {""});
-  Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {""});
+  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc});
+  Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {clearerHintsDesc});
+  Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc});
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
@@ -158,6 +159,7 @@ namespace Settings {
   std::vector<Option *> miscOptions = {
     &GossipStoneHints,
     &ClearerHints,
+    &HintDistribution,
     &DamageMultiplier,
     &StartingTime,
     &NightGSExpectSuns,
@@ -679,7 +681,7 @@ namespace Settings {
     ctx.startingQuestItems |= StartingShardOfAgony.Value<u8>()     << 21;
 
     //Give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
-    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && ShuffleGerudoToken.Is(OFF)) {
+    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && ShuffleGerudoToken) {
         ctx.startingQuestItems |= 0x00400000;
     }
 
@@ -747,6 +749,9 @@ namespace Settings {
     HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users exclude these locations
     MK_BombchuBowlingBombchus.GetExcludedOption()->Hide();
     Ganon.GetExcludedOption()->Hide();
+
+    GossipStoneHints.SetSelectedIndex(HINTS_NEED_NOTHING);
+    HintDistribution.SetSelectedIndex(1); //balanced
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
@@ -1037,6 +1042,15 @@ namespace Settings {
     } else {
       LACSTokenCount.SetSelectedIndex(100);
       LACSTokenCount.Hide();
+    }
+
+    //Only show hint options if hints are enabled
+    if (GossipStoneHints.Is(HINTS_NO_HINTS)) {
+      ClearerHints.Hide();
+      HintDistribution.Hide();
+    } else {
+      ClearerHints.Unhide();
+      HintDistribution.Unhide();
     }
 
     //Set toggle for all tricks

@@ -12,6 +12,8 @@
 #include "hints.hpp"
 #include "hint_list.hpp"
 
+#include <vector>
+
 using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
@@ -93,9 +95,7 @@ static int GetMaxGSCount() {
   return std::max(maxUseful, maxBridge);
 }
 
-enum SearchMode {REACHABILITY_SEARCH, GENERATE_PLAYTHROUGH, CHECK_BEATABLE};
-
-static std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, SearchMode mode = REACHABILITY_SEARCH) {
+std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, SearchMode mode /*= REACHABILITY_SEARCH*/) {
 
   std::vector<ItemLocation*> accessibleLocations = {};
 
@@ -328,7 +328,9 @@ static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locatio
   //Place everything randomly
   while (!locations.empty()) {
 
-    PlaceItemInLocation(RandomElement(locations, true), RandomElement(items, true));
+    ItemLocation* location = RandomElement(locations, true);
+    location->SetAsHintable();
+    PlaceItemInLocation(location, RandomElement(items, true));
 
     if (items.empty()) {
       items.push_back(GetJunkItem());
@@ -343,7 +345,7 @@ static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locatio
 | This method helps distribution of items locked behind many requirements.
 | - OoT Randomizer
 */
-static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allowedLocations) {
+static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allowedLocations, bool setLocationsAsHintable = false) {
 
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[H1;1ERROR: MORE ITEMS THAN LOCATIONS");
@@ -406,6 +408,12 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       PlaceItemInLocation(selectedLocation, item);
       attemptedLocations.push_back(selectedLocation);
 
+      //This tells us the location went through the randomization algorithm
+      //to distinguish it from locations which did not or that the player already
+      //knows
+      if (setLocationsAsHintable) {
+        selectedLocation->SetAsHintable();
+      }
     }
   } while (unsuccessfulPlacement);
 }
@@ -556,17 +564,17 @@ static void RandomizeDungeonItems() {
   }
 
   //Randomize Any Dungeon and Overworld pools
-  AssumedFill(anyDungeonItems, anyDungeonLocations);
-  AssumedFill(overworldItems, overworldLocations);
+  AssumedFill(anyDungeonItems, anyDungeonLocations, true);
+  AssumedFill(overworldItems, overworldLocations, true);
 
   //Randomize maps and compasses after since they're not advancement items
   for (auto dungeon : dungeonList) {
     if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON)) {
       auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
-      AssumedFill(mapAndCompassItems, anyDungeonLocations);
+      AssumedFill(mapAndCompassItems, anyDungeonLocations, true);
     } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OVERWORLD)) {
       auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
-      AssumedFill(mapAndCompassItems, overworldLocations);
+      AssumedFill(mapAndCompassItems, overworldLocations, true);
     }
   }
 }
@@ -584,43 +592,6 @@ static void RandomizeLinksPocket() {
  } else if (LinksPocketItem.Is(LINKSPOCKETITEM_NOTHING)) {
    PlaceItemInLocation(&LinksPocket, GreenRupee);
  }
-}
-
-static void CreateHints() {
-  for (auto hintLocation : gossipStoneLocations) {
-
-    auto randomLocation = RandomElement(allLocations, false);
-    Text locationHintText = Text{"","",""};
-    Text itemHintText = Text{"","",""};
-    Text prefix = Text{"","",""};
-
-    //Get hint text based on clearer hints
-    if (ClearerHints) {
-      locationHintText = randomLocation->GetHintText().GetClear();
-      itemHintText = randomLocation->GetPlacedItem().GetHintText().GetClear();
-      prefix = Hints::Prefix.GetClear();
-    } else {
-      locationHintText = randomLocation->GetHintText().GetObscure();
-      itemHintText = randomLocation->GetPlacedItem().GetHintText().GetObscure();
-      prefix = Hints::Prefix.GetObscure();
-    }
-
-    std::string englishLoc = prefix.GetEnglish() + locationHintText.GetEnglish();
-    std::string frenchLoc  = prefix.GetFrench()  + locationHintText.GetFrench();
-    std::string spanishLoc = prefix.GetSpanish() + locationHintText.GetSpanish();
-
-    std::string englishItem = itemHintText.GetEnglish();
-    std::string frenchItem  = itemHintText.GetFrench();
-    std::string spanishItem = itemHintText.GetSpanish();
-
-    //save hints as dummy items to gossip stone locations for writing to the spoiler log
-    bool none = false;
-    hintLocation->SetPlacedItem(Item{englishLoc+" "+englishItem, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &none, &Hints::NoHintText});
-
-    //create the in game message
-    u32 messageId = 0x400 + hintLocation->GetFlag();
-    CreateMessage(messageId, 0, 2, 3, ProperLocationHintMessage(englishLoc, englishItem), ProperLocationHintMessage(frenchLoc, frenchItem), ProperLocationHintMessage(spanishLoc, spanishItem));
-  }
 }
 
 int Fill() {
@@ -648,7 +619,7 @@ int Fill() {
         songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory(Category::cSongDungeonReward);});
       }
 
-      AssumedFill(songs, songLocations);
+      AssumedFill(songs, songLocations, true);
     }
 
     //Then place dungeon items that are assigned to restrictive pools
@@ -659,7 +630,7 @@ int Fill() {
 
     //Then place the rest of the advancement items
     std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});
-    AssumedFill(remainingAdvancementItems, allLocations);
+    AssumedFill(remainingAdvancementItems, allLocations, true);
 
     //Fast fill for the rest of the pool
     std::vector<Item> remainingPool = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return true;});
@@ -677,7 +648,9 @@ int Fill() {
       CreateOverrides();
       CreateAlwaysIncludedMessages();
       if (GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
-        CreateHints();
+        printf("\x1b[10;10HCreating Hints...");
+        CreateAllHints();
+        printf("Done");
       }
       return 1;
     }

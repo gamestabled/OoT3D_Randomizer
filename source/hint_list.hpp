@@ -5,6 +5,9 @@
 namespace Hints {
   extern HintText NoHintText; //used as a dummy
   extern HintText Prefix;
+  extern HintText WayOfTheHero;
+  extern HintText Plundering;
+  extern HintText Foolish;
   //items
   extern HintText KokiriSword;
   extern HintText MasterSword;
@@ -915,9 +918,34 @@ namespace Hints {
   extern HintText ZorasFountain_To_JabuJabusBellyBeginning;
   extern HintText KakarikoVillage_To_BottomOfTheWell;
 
+  //Exits
+  extern HintText LinksPocket;
+  extern HintText KokiriForest;
+  extern HintText TheLostWoods;
+  extern HintText SacredForestMeadow;
+  extern HintText HyruleField;
+  extern HintText LakeHylia;
+  extern HintText GerudoValley;
+  extern HintText GerudosFortress;
+  extern HintText HauntedWasteland;
+  extern HintText DesertColossus;
+  extern HintText TheMarket;
+  extern HintText TempleOfTime;
+  extern HintText HyruleCastle;
+  extern HintText OutsideGanonsCastle;
+  extern HintText KakarikoVillage;
+  extern HintText TheGraveyard;
+  extern HintText DeathMountainTrail;
+  extern HintText GoronCity;
+  extern HintText DeathMountainCrater;
+  extern HintText ZorasRiver;
+  extern HintText ZorasDomain;
+  extern HintText ZorasFountain;
+  extern HintText LonLonRanch;
+
   //Regions
   extern HintText KF_LinksHouse;
-  extern HintText TempleOfTime;
+  extern HintText ToT_Main;
   extern HintText KF_MidosHouse;
   extern HintText KF_SariasHouse;
   extern HintText KF_HouseOfTwins;
@@ -999,13 +1027,13 @@ namespace Hints {
   extern HintText Junk02;
   extern HintText Junk03;
   extern HintText Junk04;
-  extern HintText Junk05;
+  //extern HintText Junk05;
   extern HintText Junk06;
-  extern HintText Junk07;
+  //extern HintText Junk07;
   extern HintText Junk08;
   extern HintText Junk09;
   extern HintText Junk10;
-  extern HintText Junk11;
+  //extern HintText Junk11;
   extern HintText Junk12;
   extern HintText Junk13;
   extern HintText Junk14;
@@ -1013,8 +1041,8 @@ namespace Hints {
   extern HintText Junk16;
   extern HintText Junk17;
   extern HintText Junk18;
-  extern HintText Junk19;
-  extern HintText Junk20;
+  //extern HintText Junk19;
+  //extern HintText Junk20;
   extern HintText Junk21;
   extern HintText Junk22;
   extern HintText Junk23;
@@ -1090,7 +1118,7 @@ namespace Hints {
   extern HintText Morpha;
   extern HintText BongoBongo;
   extern HintText Twinrova;
-  extern HintText LinksPocket;
+  extern HintText LinksPocketBoss;
 
   //Bridge Hint
   extern HintText BridgeVanilla;
@@ -1140,4 +1168,5 @@ namespace Hints {
   extern HintText GanonLine10;
   extern HintText GanonLine11;
 
+  extern std::array<HintText*, 66> junkHints;
 } //namespace Hints
