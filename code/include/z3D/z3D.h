@@ -548,6 +548,6 @@ typedef u32 (*Inventory_HasEmptyBottle_proc)(void);
 
 typedef void (*PlaySound_proc)(u32);
 #define PlaySound_addr 0x35C528
-#define PlaySound ((PlaySound_proc)PlaySound_addr) //this function plays sound effects and music tracks
+#define PlaySound ((PlaySound_proc)PlaySound_addr) //this function plays sound effects and music tracks, overlaid on top of the current BGM
 
 #endif //_Z3D_H_

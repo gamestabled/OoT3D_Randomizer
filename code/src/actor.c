@@ -41,6 +41,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 
+    gActorOverlayTable[0xDC].initInfo->init = Boss_Tw_rInit;
     gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;
     gActorOverlayTable[0xDC].initInfo->draw = Boss_Tw_rDraw;
     gActorOverlayTable[0xDC].initInfo->destroy = Boss_Tw_rDestroy;
