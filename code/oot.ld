@@ -664,6 +664,10 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeTwo)
 	}
 
+	.patch_FreeScarecrow 0x3E55A8 : {
+		*(.patch_FreeScarecrow)
+	}
+
 	.patch_MasterSwordAlwaysDrop 0x3E5E98 : {
 		*(.patch_MasterSwordAlwaysDrop)
 	}
@@ -852,6 +856,10 @@ SECTIONS
 
 	.patch_OcarinaMinigameRewardsOrder 0x52ED10 : {
 		*(.patch_OcarinaMinigameRewardsOrder)
+	}
+
+	.patch_TycoonWalletSize 0x53CC08 : {
+		*(.patch_TycoonWalletSize)
 	}
 
 	. = 0x005C7000;

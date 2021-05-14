@@ -291,7 +291,8 @@ namespace Settings {
   extern Option SkipChildStealth;
   extern Option SkipTowerEscape;
   extern Option SkipEponaRace;
-  extern Option SkipDampeRace;
+  extern Option SkipMinigamePhases;
+  extern Option FreeScarecrow;
   extern Option FourPoesCutscene;
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;

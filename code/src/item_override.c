@@ -332,6 +332,8 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
 
+    ItemTable_CallEffect(itemRow);
+
     tokenActor->draw = NULL;
     if (resolvedItemId == GI_SKULL_TOKEN) {
         Item_Give(gGlobalContext, itemRow->actionId);
@@ -340,8 +342,6 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
         DisplayTextbox(gGlobalContext, itemRow->textId, 0);
         Item_Give(gGlobalContext, itemRow->actionId);
     }
-
-    ItemTable_CallEffect(itemRow);
 }
 
 void ItemOverride_EditDrawGetItemBeforeModelSpawn(void) {

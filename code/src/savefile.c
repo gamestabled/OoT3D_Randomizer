@@ -120,8 +120,12 @@ void SaveFile_Init() {
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
     gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
 
-    if(gSettingsContext.skipDampeRace == SKIP){
+    if (gSettingsContext.skipMinigamePhases == SKIP) {
         gSaveContext.sceneFlags[0x48].clear |= 0x00000010; //Remove first Dampe race
+    }
+
+    if (gSettingsContext.freeScarecrow == ON) {
+        gSaveContext.eventChkInf[0x9] |= 0x1000; //Shown scarecrow's song to bonooru as adult
     }
 
     if (gSettingsContext.fourPoesCutscene == SKIP) {

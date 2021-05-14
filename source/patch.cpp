@@ -420,36 +420,6 @@ bool WritePatch() {
   }
   totalRW += sizeof(rGauntletColors);
 
-  /*--------------------------------
-  |     Tycoon Wallet Capacity     |
-  ---------------------------------*/
-  const u32 TYCOONWALLETCAPACITY_ADDR = 0x0053CC0A;
-  const s16 tycoonWalletCapacity = 999;
-
-  //Write Tycoon Wallet Capacity address to code
-  patchOffset = V_TO_P(TYCOONWALLETCAPACITY_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 3;
-
-  // Write Tycoon Wallet Capacity size to code
-  const u32 tycoonWalletCapacitySize = sizeof(tycoonWalletCapacity);
-  buf[0] = (tycoonWalletCapacitySize >> 8) & 0xFF;
-  buf[1] = (tycoonWalletCapacitySize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  // Write Tycoon Wallet Capacity to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &tycoonWalletCapacity, sizeof(tycoonWalletCapacity), FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += sizeof(tycoonWalletCapacity);
   /*-------------------------
   |           EOF           |
   --------------------------*/

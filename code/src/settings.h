@@ -281,7 +281,8 @@ typedef struct {
   u8 skipChildStealth;
   u8 skipTowerEscape;
   u8 skipEponaRace;
-  u8 skipDampeRace;
+  u8 skipMinigamePhases;
+  u8 freeScarecrow;
   u8 fourPoesCutscene;
   u8 templeOfTimeIntro;
   u8 bigPoeTargetCount;
