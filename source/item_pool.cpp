@@ -922,7 +922,10 @@ void GenerateItemPool() {
       for (size_t i = 0; i < ShopLocationLists.size(); i++) {
         int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
         for(int j = 0; j < num_to_replace; j++) {
-          ShopLocationLists[i][indices[j]-1]->SetPlacedShopItem(NoItem, GetRandomShopPrice()); //Clear item and put a random price
+          int price = GetRandomShopPrice();
+          int itemindex = indices[j];
+          ShopLocationLists[i][itemindex-1]->SetPlacedShopItem(NoItem, price); //Clear item and put a random price
+          ShopItems[i*8+itemindex-1].SetPrice(price); //Set price in ShopItems vector so it can be retrieved later by the patch
         }
       }
       AddItemsToPool(ItemPool, shopsanityRupees); //Shopsanity gets extra large rupees

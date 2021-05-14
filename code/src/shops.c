@@ -7,6 +7,8 @@
 #include "models.h"
 #include <stddef.h>
 
+static s32 rShopsanityPrices[64] = { 0 };
+
 s32 Shop_CheckCanBuyBombchus(void) {
     const u32 slot = ItemSlots[ITEM_BOMBCHU];
 
@@ -54,8 +56,16 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
     }
 }
 
+//Transfer order of scene indices to order of indices defined elsewhere in the code
+const u16 shopNumToIndex[8] = {4, 0, 7, 6, 1, 3, 2, 5};
 s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
-    return 1; // TODO more
+    //Get scene index
+    u16 shopNum = gGlobalContext->sceneNum - SCENE_BAZAAR;
+    if (gSaveContext.entranceIndex == 0x00B7) {
+        shopNum = SHOP_KAKARIKO_BAZAAR;
+    }
+    shopNum = shopNumToIndex[shopNum]; //Transfer to the proper shop index
+    return rShopsanityPrices[shopNum*8 + item->shopItemPosition]; //Get price from table indexed first by shop then by shop item
 }
 
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {

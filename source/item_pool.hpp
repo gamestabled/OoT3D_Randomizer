@@ -15,3 +15,4 @@ void AddJunk();
 extern std::vector<Item> AdvancementItemPool;
 extern std::vector<Item> ItemPool;
 extern std::vector<Item> dungeonRewards;
+extern std::vector<Item> ShopItems;
