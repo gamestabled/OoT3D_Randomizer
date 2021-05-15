@@ -569,7 +569,7 @@ static void RandomizeDungeonItems() {
 
   //Randomize maps and compasses after since they're not advancement items
   for (auto dungeon : dungeonList) {
-    if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON)) {
+    if (MapsAndCompasses.Is(MAPSANDCOMPASSES_ANY_DUNGEON)) {
       auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
       AssumedFill(mapAndCompassItems, anyDungeonLocations, true);
     } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OVERWORLD)) {
