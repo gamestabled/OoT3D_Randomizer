@@ -3,6 +3,9 @@
 
 #include "../include/z3D/z3D.h"
 
+extern u32 rActiveItemActionId;
+extern u32 rActiveItemFastChest;
+
 void ItemOverride_Init(void);
 void ItemOverride_Update(void);
 
@@ -47,4 +50,4 @@ void ItemOverride_CheckZeldasLetter();
 void ItemOverride_PushDungeonReward(u8 dungeon);
 void ItemOverride_CheckStartingItem();
 
-#endif
+#endif //_ITEM_OVERRIDES_H_

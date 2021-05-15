@@ -401,7 +401,7 @@ string_view skipEponaRaceDesc         = "Epona can be summoned with Epona's Song
 ------------------------------*/                                                           //
 string_view skipMinigamePhasesDesc    = "Completing the second objective in the Dampe Race\n"
                                         "and Gerudo Archery on the first attempt will give\n"
-                                        "both rewards at once for that minigame";          //
+                                        "both rewards at once for that minigame.";          //
 /*------------------------------                                                           //
 |        FREE SCARECROW        |                                                           //
 ------------------------------*/                                                           //
@@ -475,6 +475,22 @@ string_view nightGSDesc               = "GS Tokens that can only be obtained dur
                                         "night expect you to have Sun's Song to collect\n" //
                                         "them. This prevents needing to wait until night\n"//
                                         "for some locations.";                             //
+                                                                                           //
+/*------------------------------                                                           //
+|       CHEST ANIMATIONS       |                                                           //
+------------------------------*/                                                           //
+string_view chestAnimDesc             = "Choose if you want the slow animation to play\n"  //
+                                        "if a chest contains a major item.\n";             //
+                                                                                           //
+/*------------------------------                                                           //
+|     CHEST SIZE AND COLOR     |                                                           //
+------------------------------*/                                                           //
+string_view chestSizeDesc             = "This option will change the appearance of all\n"  //
+                                        "regular chests depending on their contents:\n"    //
+                                        "Major Items    =    Big Wooden Chests\n"          //
+                                        "Lesser Items   =    Small Wooden Chests\n"        //
+                                        "Boss Keys      =    Big Fancy Chests\n"           //
+                                        "Small Keys     =    Small Fancy Chests";          //
                                                                                            //
 /*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //

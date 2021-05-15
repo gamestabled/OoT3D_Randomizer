@@ -17,6 +17,7 @@
 #include "custom_models.h"
 #include "obj_switch.h"
 #include "gerudo_archery_manager.h"
+#include "chest.h"
 #include "gossip_stone.h"
 
 #define OBJECT_GI_HEARTS 189
@@ -25,6 +26,8 @@
 
 void Actor_Init() {
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
+
+    gActorOverlayTable[0xA].initInfo->init = EnBox_rInit;
 
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
@@ -39,6 +42,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 
+    gActorOverlayTable[0xDC].initInfo->init = Boss_Tw_rInit;
     gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;
     gActorOverlayTable[0xDC].initInfo->draw = Boss_Tw_rDraw;
     gActorOverlayTable[0xDC].initInfo->destroy = Boss_Tw_rDestroy;
