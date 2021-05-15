@@ -5,7 +5,9 @@
 extern Item NoItem;
 extern Item I_Triforce;
 
-extern Item GenericSmallKey;
+//Used as placements for hint locations
+extern Item NoHint;
+extern Item HasHint;
 
 //specific advancement items
 extern Item I_KokiriSword;
