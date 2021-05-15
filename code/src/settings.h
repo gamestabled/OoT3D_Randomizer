@@ -283,6 +283,7 @@ typedef struct {
   u8 skipTowerEscape;
   u8 skipEponaRace;
   u8 skipMinigamePhases;
+  u8 freeScarecrow;
   u8 fourPoesCutscene;
   u8 templeOfTimeIntro;
   u8 bigPoeTargetCount;
@@ -291,6 +292,8 @@ typedef struct {
   u8 damageMultiplier;
   u8 startingTime;
   u8 gossipStoneHints;
+  u8 chestAnimations;
+  u8 chestSize;
   u8 generateSpoilerLog;
   u8 menuOpeningButton;
 

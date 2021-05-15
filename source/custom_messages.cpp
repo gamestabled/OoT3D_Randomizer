@@ -1,11 +1,13 @@
 #include "custom_messages.hpp"
 #include "patch_symbols.hpp"
+#include "debug.hpp"
 #include "../code/src/message.h"
 
 #include <array>
 #include <set>
 #include <sstream>
-#include <vector>
+
+#include <unistd.h>
 
 namespace CustomMessages {
 
@@ -17,15 +19,6 @@ public:
         return lhs.id < rhs.id;
     }
 };
-
-constexpr u8 QM_WHITE  = 0x00;
-constexpr u8 QM_RED    = 0x41;
-constexpr u8 QM_GREEN  = 0x42;
-constexpr u8 QM_BLUE   = 0x43;
-constexpr u8 QM_LBLUE  = 0x44;
-constexpr u8 QM_PINK   = 0x45;
-constexpr u8 QM_YELLOW = 0x46;
-constexpr u8 QM_BLACK  = 0x47;
 
 constexpr std::array EnglishDungeonNames = {
     "Deku Tree",
@@ -113,20 +106,20 @@ constexpr std::array SpanishDungeonArticles = {
 };
 
 constexpr std::array DungeonColors = {
-    CustomMessages::QM_GREEN,
-    CustomMessages::QM_RED,
-    CustomMessages::QM_BLUE,
-    CustomMessages::QM_GREEN,
-    CustomMessages::QM_RED,
-    CustomMessages::QM_BLUE,
-    CustomMessages::QM_YELLOW,
-    CustomMessages::QM_PINK,
-    CustomMessages::QM_PINK,
-    CustomMessages::QM_LBLUE,
-    CustomMessages::QM_BLACK,
-    CustomMessages::QM_YELLOW,
-    CustomMessages::QM_YELLOW,
-    CustomMessages::QM_RED,
+    QM_GREEN,
+    QM_RED,
+    QM_BLUE,
+    QM_GREEN,
+    QM_RED,
+    QM_BLUE,
+    QM_YELLOW,
+    QM_PINK,
+    QM_PINK,
+    QM_LBLUE,
+    QM_BLACK,
+    QM_YELLOW,
+    QM_YELLOW,
+    QM_RED,
 };
 
     std::set<MessageEntry, MessageEntryComp> messageEntries;
@@ -158,6 +151,10 @@ constexpr std::array DungeonColors = {
             messageData << spanishText;
 
             messageEntries.insert(newEntry);
+    }
+
+    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, Text text) {
+        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetEnglish(), text.GetFrench(), text.GetSpanish());
     }
 
     u32 NumMessages() {
@@ -290,6 +287,70 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"You should go talk to my daughter Malon,"+NEWLINE()+"she has an item for you."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"I have to think about some stuff now,"+NEWLINE()+"please don't distract me."+MESSAGE_END(),
             UNSKIPPABLE()+"Parle avec Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END(),
             UNSKIPPABLE()+"Habla con Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
+
+        //easter egg
+        CreateMessage(0x96F, 0, 2, 2,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Oh hey, you watched all the credits!"+NEWLINE()+CENTER_TEXT()+"Here's a prize for your patience."+NEWLINE()+CENTER_TEXT()+"Unlocking MQ and saving..."+NEWLINE()+NEWLINE()+CENTER_TEXT()+COLOR(QM_RED)+"Do not remove the Game Card"+NEWLINE()+CENTER_TEXT()+"or turn the power off."+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"The Legend of Zelda Ocarina of Time 3D"+NEWLINE()+CENTER_TEXT()+"Master Quest va être déverrouillé."+NEWLINE()+CENTER_TEXT()+"Sauvegarde... Veuillez patienter."+NEWLINE()+NEWLINE()+CENTER_TEXT()+COLOR(QM_RED)+"N'éteignez pas la console et"+NEWLINE()+CENTER_TEXT()+"ne retirez pas la carte de jeu"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Desbloqueando The Legend of Zelda"+NEWLINE()+CENTER_TEXT()+"Ocarina of Time 3D Master Quest."+NEWLINE()+CENTER_TEXT()+"Guardando. Espera un momento..."+NEWLINE()+NEWLINE()+CENTER_TEXT()+COLOR(QM_RED)+"No saques la tarjeta de juego"+NEWLINE()+CENTER_TEXT()+"ni apagues la consola."+INSTANT_TEXT_OFF()+MESSAGE_END());
+        CreateMessage(0x970, 0, 2, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Master Quest doesn't affect the Randomizer,"+NEWLINE()+CENTER_TEXT()+"so you can use 3 more save slots now."+NEWLINE()+NEWLINE()+CENTER_TEXT()+"Thanks for playing!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Vous pouvez désormais jouer à"+NEWLINE()+CENTER_TEXT()+"The Legend of Zelda Ocarina of Time 3D"+NEWLINE()+CENTER_TEXT()+"Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Ya puedes jugar The Legend of Zelda"+NEWLINE()+CENTER_TEXT()+"Ocarina of Time 3D Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+    }
+
+    Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
+
+      //for each language
+      for (std::string* textStr : {&text.english, &text.french, &text.spanish}) {
+
+        //insert playername
+        size_t atSymbol = textStr->find('@');
+        while (atSymbol != std::string::npos) {
+          textStr->replace(atSymbol, 1, PLAYER_NAME());
+          atSymbol = textStr->find('@');
+        }
+        //insert newlines either manually or when encountering a '&'
+        constexpr size_t lineLength = 44;
+        size_t lastNewline = 0;
+        while (lastNewline + lineLength < textStr->length()) {
+          size_t carrot     = textStr->find('^', lastNewline);
+          size_t ampersand  = textStr->find('&', lastNewline);
+          size_t lastSpace  = textStr->rfind(' ', lastNewline + lineLength);
+          size_t lastPeriod = textStr->rfind('.', lastNewline + lineLength);
+          //replace '&' first if it's within the newline range
+          if (ampersand < lastNewline + lineLength) {
+            textStr->replace(ampersand, 1, NEWLINE());
+            lastNewline = ampersand + NEWLINE().length();
+          //or move the lastNewline cursor to the next line if a '^' is encountered
+          } else if (carrot < lastNewline + lineLength) {
+            lastNewline = carrot + 1;
+          //some lines need to be split but don't have spaces, look for periods instead
+          } else if (lastSpace == std::string::npos) {
+            textStr->replace(lastPeriod, 1, "."+NEWLINE());
+            lastNewline = lastPeriod + NEWLINE().length() + 1;
+          } else {
+            textStr->replace(lastSpace, 1, NEWLINE());
+            lastNewline = lastSpace + NEWLINE().length();
+          }
+        }
+        //insert box break
+        size_t carrotSymbol = textStr->find('^');
+        while (carrotSymbol != std::string::npos) {
+          textStr->replace(carrotSymbol, 1, WAIT_FOR_INPUT());
+          carrotSymbol = textStr->find('^');
+        }
+        //add colors
+        for (auto color : colors) {
+          size_t firstHashtag = textStr->find('#');
+          if (firstHashtag != std::string::npos) {
+              textStr->replace(firstHashtag, 1, COLOR(color));
+              size_t secondHashtag = textStr->find('#');
+              textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
+          }
+        }
+      }
+      return Text{"","",""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
     }
 
     std::string MESSAGE_END()          { return  "\x7F\x00"s; }

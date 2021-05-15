@@ -116,6 +116,10 @@ SECTIONS
 		*(.patch_BombchuShopInfinitePurchases)
 	}
 
+	.patch_DecoratedChest 0x189E88 : {
+		*(patch_DecoratedChest)
+	}
+
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
 	}
@@ -504,7 +508,7 @@ SECTIONS
 		*(.patch_OverrideGraphicID_354BB8)
 	}
 
-	.patch_FastChests 0x354CD8 : {
+	.patch_FastChests 0x354CD4 : {
 		*(.patch_FastChests)
 	}
 
@@ -580,9 +584,9 @@ SECTIONS
 		*(.patch_GetToken1)
 	}
 
-        .patch_TalonGetCastleTextbox 0x3AE6E8 : {
-                *(.patch_TalonGetCastleTextbox)
-        }
+	.patch_TalonGetCastleTextbox 0x3AE6E8 : {
+		*(.patch_TalonGetCastleTextbox)
+	}
 
 	.patch_GerudoArcheryOne 0x3AFA34 : {
 		*(.patch_GerudoArcheryOne)
@@ -662,6 +666,10 @@ SECTIONS
 
 	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
 		*(.patch_ScrubNutUpgradeTwo)
+	}
+
+	.patch_FreeScarecrow 0x3E55A8 : {
+		*(.patch_FreeScarecrow)
 	}
 
 	.patch_MasterSwordAlwaysDrop 0x3E5E98 : {

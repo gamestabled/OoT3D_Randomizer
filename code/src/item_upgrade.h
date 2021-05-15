@@ -1,5 +1,5 @@
-#ifndef ITEM_UPGRADES_H
-#define ITEM_UPGRADES_H
+#ifndef _ITEM_UPGRADES_H
+#define _ITEM_UPGRADES_H
 
 #include "z3D/z3D.h"
 
@@ -21,4 +21,4 @@ u16 ItemUpgrade_BombsToRupee(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_SeedsToRupee(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_LetterToBottle(SaveContext* saveCtx, u16 itemId);
 
-#endif
+#endif //_ITEM_UPGRADES_H

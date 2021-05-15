@@ -220,6 +220,15 @@ bool SpoilerLog_Write() {
   playthroughLocations.clear();
   playthroughBeatable = false;
 
+  //Write Hints
+  if (Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
+    logtxt += "\nHints:\n";
+    for (ItemLocation* location : gossipStoneLocations) {
+      logtxt += "\t";
+      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+    }
+  }
+
   logtxt += "\nAll Locations:\n";
   for (ItemLocation* location : allLocations) {
     logtxt += "\t";

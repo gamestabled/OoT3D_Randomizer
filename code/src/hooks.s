@@ -277,6 +277,14 @@ hook_SerenadeCheckChestFlag:
     cpy r0,r5
     bx lr
 
+.global hook_ScarecrowCheckToBeActivated
+hook_ScarecrowCheckToBeActivated:
+    push {r0-r12, lr}
+    bl Scarecrow_CheckToBeActivated
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_EponasSongCheckFlag
 hook_EponasSongCheckFlag:
     push {r0-r12, lr}
@@ -480,6 +488,22 @@ hook_CheckCurrentDungeonMode:
 hook_CanReadHints:
     push {r0-r12, lr}
     bl Hints_CanReadHints
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_FastChests
+hook_FastChests:
+    push {r0-r12, lr}
+    bl Chest_OverrideAnimation
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_DecoratedChest
+hook_DecoratedChest:
+    push {r0-r12, lr}
+    bl Chest_OverrideDecoration
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr

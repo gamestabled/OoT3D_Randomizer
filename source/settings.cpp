@@ -131,6 +131,7 @@ namespace Settings {
   Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {skipTowerEscapeDesc});
   Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                                 {skipEponaRaceDesc});
   Option SkipMinigamePhases  = Option::Bool("Minigames repetitions",  {"Don't Skip", "Skip"},                                                 {skipMinigamePhasesDesc});
+  Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {freeScarecrowDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc});
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
@@ -140,6 +141,7 @@ namespace Settings {
     &SkipTowerEscape,
     &SkipEponaRace,
     &SkipMinigamePhases,
+    &FreeScarecrow,
     &FourPoesCutscene,
     &TempleOfTimeIntro,
     &BigPoeTargetCount,
@@ -147,18 +149,26 @@ namespace Settings {
   };
 
   //Misc Settings
+  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc});
+  Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {clearerHintsDesc});
+  Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc});
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
-  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {""});
   Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
+  Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
+  Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""});
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
+    &GossipStoneHints,
+    &ClearerHints,
+    &HintDistribution,
     &DamageMultiplier,
     &StartingTime,
-    //&GossipStoneHints,
     &NightGSExpectSuns,
+    &ChestAnimations,
+    &ChestSize,
     &GenerateSpoilerLog,
     &MenuOpeningButton,
   };
@@ -234,7 +244,7 @@ namespace Settings {
   Option StartingMagicMeter       = Option::U8  ("Magic Meter",            {"None", "Single Magic", "Double Magic"},                               {""});
   Option StartingStrength         = Option::U8  ("Strength",               {"None", "Goron Bracelet", "Silver Gauntlets", "Gold Gauntlets"},       {""});
   Option StartingScale            = Option::U8  ("Scale",                  {"None", "Silver Scale", "Gold Scale"},                                 {""});
-  Option StartingWallet           = Option::U8  ("Wallet",                 {"None", "Adult's Wallet", "Giant's Wallet"},                           {""});
+  Option StartingWallet           = Option::U8  ("Wallet",                 {"None", "Adult's Wallet", "Giant's Wallet", "Tycoon's Wallet"},        {""});
   Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",         {"None", "Shard of Agony"},                                             {""});
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",         {"None", "Double Defense"},                                             {""});
   std::vector<Option *> startingInventoryOptions = {
@@ -590,14 +600,17 @@ namespace Settings {
     ctx.skipTowerEscape      = (SkipTowerEscape) ? 1 : 0;
     ctx.skipEponaRace        = (SkipEponaRace) ? 1 : 0;
     ctx.skipMinigamePhases   = (SkipMinigamePhases) ? 1 : 0;
+    ctx.freeScarecrow        = (FreeScarecrow) ? 1 : 0;
     ctx.fourPoesCutscene     = (FourPoesCutscene) ? 1 : 0;
     ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
 
+    ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
     ctx.startingTime         = StartingTime.Value<u8>();
-    ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
+    ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
+    ctx.chestSize            = (ChestSize) ? 1 : 0;
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
 
@@ -677,7 +690,7 @@ namespace Settings {
     ctx.startingQuestItems |= StartingShardOfAgony.Value<u8>()     << 21;
 
     //Give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
-    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && ShuffleGerudoToken.Is(OFF)) {
+    if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && !ShuffleGerudoToken) {
         ctx.startingQuestItems |= 0x00400000;
     }
 
@@ -745,6 +758,9 @@ namespace Settings {
     HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users exclude these locations
     MK_BombchuBowlingBombchus.GetExcludedOption()->Hide();
     Ganon.GetExcludedOption()->Hide();
+
+    GossipStoneHints.SetSelectedIndex(HINTS_NEED_NOTHING);
+    HintDistribution.SetSelectedIndex(1); //balanced
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
@@ -1035,6 +1051,15 @@ namespace Settings {
     } else {
       LACSTokenCount.SetSelectedIndex(100);
       LACSTokenCount.Hide();
+    }
+
+    //Only show hint options if hints are enabled
+    if (GossipStoneHints.Is(HINTS_NO_HINTS)) {
+      ClearerHints.Hide();
+      HintDistribution.Hide();
+    } else {
+      ClearerHints.Unhide();
+      HintDistribution.Unhide();
     }
 
     //Set toggle for all tricks

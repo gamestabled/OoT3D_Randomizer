@@ -14,6 +14,9 @@
 #include "category.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
+#include "hint_list.hpp"
+
+class Exit;
 
 enum class ItemLocationType {
     Base,
@@ -23,12 +26,14 @@ enum class ItemLocationType {
     GrottoScrub,
     Delayed,
     TempleReward,
+    Hint,
+    HintStone,
 };
 
 class ItemLocation {
 public:
-    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, std::vector<Category> categories_, u16 price_ = 0)
-        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), categories(std::move(categories_)), price(price_) {}
+    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, HintText* hintText_, std::vector<Category> categories_, u16 price_ = 0)
+        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), hintText(hintText_), categories(std::move(categories_)), price(price_) {}
 
     ItemOverride_Key Key() const {
         ItemOverride_Key key;
@@ -42,6 +47,10 @@ public:
 
     u8 GetScene() const {
       return scene;
+    }
+
+    u8 GetFlag() const {
+      return flag;
     }
 
     void Use() {
@@ -118,15 +127,47 @@ public:
     }
 
     bool IsDungeon() const {
-      return scene < 0x0A;
+      return (type != ItemLocationType::GSToken && (scene < 0x0E || (scene > 0x10 && scene < 0x1A))) || (type == ItemLocationType::GSToken && scene < 0x10);
     }
 
     bool IsOverworld() const {
-      return scene >= 0x0A;
+      return !IsDungeon();
     }
 
     Option * GetExcludedOption() {
       return &excludedOption;
+    }
+
+    HintText GetHintText() {
+      return *hintText;
+    }
+
+    HintCategory GetHintCategory() const {
+      return hintText->GetType();
+    }
+
+    bool IsHintedAt() const {
+      return hintedAt;
+    }
+
+    void SetAsHinted() {
+      hintedAt = true;
+    }
+
+    bool IsHintable() const {
+      return isHintable;
+    }
+
+    void SetAsHintable() {
+      isHintable = true;
+    }
+
+    void SetParentRegion(Exit* region) {
+      parentRegion = region;
+    }
+
+    Exit* GetParentRegion() const {
+      return parentRegion;
     }
 
     void AddExcludeOption() {
@@ -155,32 +196,36 @@ public:
       Settings::excludeLocationsOptions.push_back(&excludedOption);
     }
 
-    static auto Base(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), std::move(categories)};
+    static auto Base(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), hintText, std::move(categories)};
     }
 
-    static auto Chest(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), std::move(categories)};
+    static auto Chest(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), hintText, std::move(categories)};
     }
 
-    static auto Collectable(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), std::move(categories)};
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintText, std::move(categories)};
     }
 
-    static auto GSToken(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), std::move(categories)};
+    static auto GSToken(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), hintText, std::move(categories)};
     }
 
-    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), std::move(categories)};
+    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), hintText, std::move(categories)};
     }
 
-    static auto Delayed(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), std::move(categories)};
+    static auto Delayed(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), hintText, std::move(categories)};
     }
 
-    static auto Reward(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), std::move(categories)};
+    static auto Reward(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintText, std::move(categories)};
+    }
+
+    static auto HintStone(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), &Hints::NoHintText, std::move(categories)};
     }
 
     void ResetVariables() {
@@ -189,6 +234,8 @@ public:
       addedToPool = false;
       placedItem = NoItem;
       delayedItem = NoItem;
+      hintedAt = false;
+      isHintable = false;
       price = 0;
     }
 
@@ -200,13 +247,16 @@ private:
     bool checked = false;
 
     std::string name;
+    HintText* hintText = nullptr;
+    bool hintedAt = false;
     std::vector<Category> categories;
     bool addedToPool = false;
     Item placedItem = NoItem;
     Item delayedItem = NoItem;
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
     u16 price = 0;
-
+    bool isHintable = false;
+    Exit* parentRegion = nullptr;
 };
 
 class ItemOverride_Compare {
@@ -1052,7 +1102,53 @@ extern ItemLocation GC_ShopItem6;
 extern ItemLocation GC_ShopItem7;
 extern ItemLocation GC_ShopItem8;
 
+/*-------------------------------
+      --- GOSSIP STONES ---
+ -------------------------------*/
+extern ItemLocation DMC_GossipStone;
+extern ItemLocation DMT_GossipStone;
+extern ItemLocation Colossus_GossipStone;
+extern ItemLocation DodongosCavern_GossipStone;
+extern ItemLocation GV_GossipStone;
+extern ItemLocation GC_MazeGossipStone;
+extern ItemLocation GC_MedigoronGossipStone;
+extern ItemLocation GY_GossipStone;
+extern ItemLocation HC_MalonGossipStone;
+extern ItemLocation HC_RockWallGossipStone;
+extern ItemLocation HC_StormsGrottoGossipStone;
+extern ItemLocation HF_CowGrottoGossipStone;
+extern ItemLocation KF_DekuTreeLeftGossipStone;
+extern ItemLocation KF_DekuTreeRightGossipStone;
+extern ItemLocation KF_GossipStone;
+extern ItemLocation LH_LabGossipStone;
+extern ItemLocation LH_SoutheastGossipStone;
+extern ItemLocation LH_SouthwestGossipStone;
+extern ItemLocation LW_GossipStone;
+extern ItemLocation SFM_MazeLowerGossipStone;
+extern ItemLocation SFM_MazeUpperGossipStone;
+extern ItemLocation SFM_SariaGossipStone;
+extern ItemLocation ToT_LeftGossipStone;
+extern ItemLocation ToT_LeftCenterGossipStone;
+extern ItemLocation ToT_RightCenterGossipStone;
+extern ItemLocation ToT_RightGossipStone;
+extern ItemLocation ZD_GossipStone;
+extern ItemLocation ZF_FairyGossipStone;
+extern ItemLocation ZF_JabuGossipStone;
+extern ItemLocation ZR_NearGrottosGossipStone;
+extern ItemLocation ZR_NearDomainGossipStone;
+extern ItemLocation HF_NearMarketGrottoGossipStone;
+extern ItemLocation HF_SoutheastGrottoGossipStone;
+extern ItemLocation HF_OpenGrottoGossipStone;
+extern ItemLocation Kak_OpenGrottoGossipStone;
+extern ItemLocation ZR_OpenGrottoGossipStone;
+extern ItemLocation KF_StormsGrottoGossipStone;
+extern ItemLocation LW_NearShortcutsGrottoGossipStone;
+extern ItemLocation DMT_StormsGrottoGossipStone;
+extern ItemLocation DMC_UpperGrottoGossipStone;
+
 extern std::vector<std::vector<ItemLocation *>> ShopLocationLists;
+
+extern std::vector<ItemLocation *> gossipStoneLocations;
 
 extern std::vector<ItemLocation *> dungeonRewardLocations;
 extern std::vector<ItemLocation *> overworldLocations;
@@ -1073,5 +1169,6 @@ void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool apply
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category);
 void LocationReset();
 void ItemReset();
+void HintReset();
 void AddExcludedOptions();
 void CreateOverrides();

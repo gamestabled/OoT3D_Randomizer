@@ -38,7 +38,7 @@ void SaveFile_Init() {
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
-    gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles (except Ganondorf)
+    gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
     gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
@@ -80,6 +80,9 @@ void SaveFile_Init() {
     if (gSettingsContext.mirrorWorld == ON) {
         gSaveContext.masterQuestFlag = 1;
     }
+    else{
+        gSaveContext.masterQuestFlag = 0;
+    }
 
     if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
         gSaveContext.dayTime = 0x1400; //Set night time
@@ -120,8 +123,12 @@ void SaveFile_Init() {
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
     gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
 
-    if(gSettingsContext.skipMinigamePhases == SKIP){
+    if (gSettingsContext.skipMinigamePhases == SKIP) {
         gSaveContext.sceneFlags[0x48].clear |= 0x00000010; //Remove first Dampe race
+    }
+
+    if (gSettingsContext.freeScarecrow == ON) {
+        gSaveContext.eventChkInf[0x9] |= 0x1000; //Shown scarecrow's song to bonooru as adult
     }
 
     if (gSettingsContext.fourPoesCutscene == SKIP) {

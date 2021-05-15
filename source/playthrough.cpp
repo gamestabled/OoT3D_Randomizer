@@ -17,6 +17,7 @@ namespace Playthrough {
 
       overrides.clear();
       ItemReset();
+      HintReset();
       Exits::AccessReset();
 
       Settings::UpdateSettings();
@@ -31,14 +32,14 @@ namespace Playthrough {
 
       if (Settings::GenerateSpoilerLog) {
         //write logs
-        printf("\x1b[10;10HWriting Spoiler Log...");
+        printf("\x1b[11;10HWriting Spoiler Log...");
         if (SpoilerLog_Write()) {
           printf("Done");
         } else {
           printf("Failed");
         }
         #ifdef ENABLE_DEBUG
-          printf("\x1b[10;10HWriting Placement Log...");
+          printf("\x1b[11;10HWriting Placement Log...");
           if (PlacementLog_Write()) {
             printf("Done\n");
           } else {

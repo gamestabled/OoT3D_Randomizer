@@ -1,3 +1,6 @@
+#ifndef _OBJECTS_H_
+#define _OBJECTS_H_
+
 #include "z3D/z3D.h"
 
 typedef s32 (*Object_proc)(ObjectContext* objectCtx, s16 objectId);
@@ -38,3 +41,5 @@ s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId);
 s32 ExtendedObject_IsLoaded(ObjectContext* objectCtx, s16 bankIndex);
 void ExtendedObject_Clear(GlobalContext* globalCtx, ObjectContext* objectCtx);
 void* ExtendedObject_GetCMABByIndex(s16 objectId, u32 objectAnimIdx);
+
+#endif //_OBJECTS_H_

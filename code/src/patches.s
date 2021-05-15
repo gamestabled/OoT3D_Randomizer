@@ -280,7 +280,7 @@ GetCustomMessageTextTwo_patch:
 .section .patch_FastChests
 .global FastChests_patch
 FastChests_patch:
-    b 0x354D98
+    bl hook_FastChests
 
 .section .patch_DampeChest
 .global DampeChest_patch
@@ -383,6 +383,11 @@ RequiemLocation_patch:
 NocturneLocation_patch:
     bl Cutscene_OverrideNocturne
     b 0x44F180
+
+.section .patch_FreeScarecrow
+.global FreeScarecrow_patch
+FreeScarecrow_patch:
+    bl hook_ScarecrowCheckToBeActivated
 
 .section .patch_MasterSwordAlwaysDrop
 .global MasterSwordAlwaysDrop_patch
@@ -1150,6 +1155,11 @@ ReadGossipStoneHints_patch:
     bl hook_CanReadHints
     nop
     nop
+
+.section .patch_DecoratedChest
+.global DecoratedChest_patch
+DecoratedChest_patch:
+    bl hook_DecoratedChest
 
 .section .patch_loader
 .global loader_patch

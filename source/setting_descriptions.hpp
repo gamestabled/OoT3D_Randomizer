@@ -144,6 +144,8 @@ extern string_view skipEponaRaceDesc;
 
 extern string_view skipMinigamePhasesDesc;
 
+extern string_view freeScarecrowDesc;
+
 extern string_view fourPoesDesc;
 
 extern string_view templeOfTimeIntroDesc;
@@ -152,11 +154,24 @@ extern string_view bigPoeTargetCountDesc;
 
 extern string_view numRequiredCuccosDesc;
 
+extern string_view gossipStonesHintsDesc;
+
+extern string_view clearerHintsDesc;
+
+extern string_view uselessHintsDesc;
+extern string_view balancedHintsDesc;
+extern string_view strongHintsDesc;
+extern string_view veryStrongHintsDesc;
+
 extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;
 
 extern string_view nightGSDesc;
+
+extern string_view chestAnimDesc;
+
+extern string_view chestSizeDesc;
 
 extern string_view menuButtonDesc;
 

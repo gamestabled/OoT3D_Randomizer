@@ -292,14 +292,20 @@ namespace Settings {
   extern Option SkipTowerEscape;
   extern Option SkipEponaRace;
   extern Option SkipMinigamePhases;
+  extern Option FreeScarecrow;
   extern Option FourPoesCutscene;
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
 
+  extern Option GossipStoneHints;
+  extern Option ClearerHints;
+  extern Option HintDistribution;
   extern Option DamageMultiplier;
   extern Option StartingTime;
   extern Option NightGSExpectSuns;
+  extern Option ChestAnimations;
+  extern Option ChestSize;
   extern Option GenerateSpoilerLog;
   extern Option MenuOpeningButton;
   extern bool HasNightStart;

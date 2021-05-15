@@ -401,7 +401,13 @@ string_view skipEponaRaceDesc         = "Epona can be summoned with Epona's Song
 ------------------------------*/                                                           //
 string_view skipMinigamePhasesDesc    = "Completing the second objective in the Dampe Race\n"
                                         "and Gerudo Archery on the first attempt will give\n"
-                                        "both rewards at once for that minigame";          //
+                                        "both rewards at once for that minigame.";          //
+/*------------------------------                                                           //
+|        FREE SCARECROW        |                                                           //
+------------------------------*/                                                           //
+string_view freeScarecrowDesc         = "Pulling out the Ocarina near a spot at which\n"   //
+                                        "Pierre can spawn will do so, without needing\n"   //
+                                        "the song.";                                       //
 /*------------------------------                                                           //
 |      FOUR POES CUTSCENE      |                                                           //
 ------------------------------*/                                                           //
@@ -426,6 +432,32 @@ string_view bigPoeTargetCountDesc     = "The Poe buyer will give a reward for tu
 string_view numRequiredCuccosDesc     = "The cucco lady will give a reward for returning\n"//
                                         "this many of her cuccos to the pen.";             //
 /*------------------------------                                                           //
+|     GOSSIP STONE HINTS       |                                                           //
+------------------------------*/                                                           //
+string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //
+                                        "where items can be found.\n"                      //
+                                        "Different settings can be chosen to decide which\n"
+                                        "item is needed to speak to Gossip Stones. Choosing"
+                                        "to stick with the Mask of Truth will make the\n"  //
+                                        "hints very difficult to obtain.\n"                //
+                                        "Hints for 'on the way of the hero' are locations\n"
+                                        "that contain items that are required to beat the\n"
+                                        "game.";                                           //
+                                                                                           //
+/*------------------------------                                                           //
+|        CLEARER HINTS         |                                                           //
+------------------------------*/                                                           //
+string_view clearerHintsDesc          = "The hints provided by Gossip Stones will be very\n"
+                                        "direct if this option is enabled.";               //
+/*------------------------------                                                           //
+|      HINT DISTRIBUTION       |                                                           //
+------------------------------*/                                                           //
+string_view uselessHintsDesc          = "Only junk hints.";                                //
+string_view balancedHintsDesc         = "Recommended hint spread.";                        //
+string_view strongHintsDesc           = "More useful hints.";                              //
+string_view veryStrongHintsDesc       = "Many powerful hints.";                            //
+                                                                                           //
+/*------------------------------                                                           //
 |       DAMAGE MULTIPLIER      |                                                           //
 ------------------------------*/                                                           //
 string_view damageMultiDesc           = "Changes the amount of damage taken.\n"            //
@@ -443,6 +475,22 @@ string_view nightGSDesc               = "GS Tokens that can only be obtained dur
                                         "night expect you to have Sun's Song to collect\n" //
                                         "them. This prevents needing to wait until night\n"//
                                         "for some locations.";                             //
+                                                                                           //
+/*------------------------------                                                           //
+|       CHEST ANIMATIONS       |                                                           //
+------------------------------*/                                                           //
+string_view chestAnimDesc             = "Choose if you want the slow animation to play\n"  //
+                                        "if a chest contains a major item.\n";             //
+                                                                                           //
+/*------------------------------                                                           //
+|     CHEST SIZE AND COLOR     |                                                           //
+------------------------------*/                                                           //
+string_view chestSizeDesc             = "This option will change the appearance of all\n"  //
+                                        "regular chests depending on their contents:\n"    //
+                                        "Major Items    =    Big Wooden Chests\n"          //
+                                        "Lesser Items   =    Small Wooden Chests\n"        //
+                                        "Boss Keys      =    Big Fancy Chests\n"           //
+                                        "Small Keys     =    Small Fancy Chests";          //
                                                                                            //
 /*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
