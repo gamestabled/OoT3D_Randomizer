@@ -84,7 +84,7 @@ u16 ItemUpgrade_Magic(SaveContext* saveCtx, u16 itemId) {
 }
 
 u16 ItemUpgrade_Bombchu(SaveContext* saveCtx, u16 itemId) {
-    if (saveCtx->items[SLOT_BOMBCHU] == -1) {
+    if (saveCtx->items[SLOT_BOMBCHU] == 0xFF) {
         return GI_BOMBCHUS_20; // Bombchu 20 pack
     }
     if (saveCtx->ammo[SLOT_BOMBCHU] <= 5) {

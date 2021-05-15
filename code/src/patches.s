@@ -280,7 +280,7 @@ GetCustomMessageTextTwo_patch:
 .section .patch_FastChests
 .global FastChests_patch
 FastChests_patch:
-    b 0x354D98
+    bl hook_FastChests
 
 .section .patch_DampeChest
 .global DampeChest_patch
@@ -1155,6 +1155,11 @@ ReadGossipStoneHints_patch:
     bl hook_CanReadHints
     nop
     nop
+
+.section .patch_DecoratedChest
+.global DecoratedChest_patch
+DecoratedChest_patch:
+    bl hook_DecoratedChest
 
 .section .patch_loader
 .global loader_patch
