@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "logic.hpp"
+#include "hint_list.hpp"
 
 class Exit;
 class ItemLocation;
@@ -127,7 +128,7 @@ class Exit {
 public:
     using ConditionFn = bool (*)();
 
-    Exit(std::string regionName_, std::string scene_, std::string hint_,
+    Exit(std::string regionName_, std::string scene_, HintText* hintText_,
          bool timePass_,
          std::vector<EventPairing> events_,
          std::vector<ItemLocationPairing> locations_,
@@ -136,7 +137,7 @@ public:
 
     std::string regionName;
     std::string scene;
-    std::string hint;
+    HintText*   hintText;
     bool        timePass;
     std::vector<EventPairing> events;
     std::vector<ItemLocationPairing> locations;
@@ -209,6 +210,8 @@ public:
 };
 
 namespace Exits {
+
+  extern Exit NoExit;
 
   //Starting Locations
   extern Exit Root;

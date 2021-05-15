@@ -154,6 +154,15 @@ extern string_view bigPoeTargetCountDesc;
 
 extern string_view numRequiredCuccosDesc;
 
+extern string_view gossipStonesHintsDesc;
+
+extern string_view clearerHintsDesc;
+
+extern string_view uselessHintsDesc;
+extern string_view balancedHintsDesc;
+extern string_view strongHintsDesc;
+extern string_view veryStrongHintsDesc;
+
 extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;

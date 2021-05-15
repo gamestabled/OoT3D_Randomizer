@@ -149,9 +149,11 @@ namespace Settings {
   };
 
   //Misc Settings
+  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc});
+  Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {clearerHintsDesc});
+  Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc});
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
-  Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {""});
   Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
   Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
@@ -159,9 +161,11 @@ namespace Settings {
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
+    &GossipStoneHints,
+    &ClearerHints,
+    &HintDistribution,
     &DamageMultiplier,
     &StartingTime,
-    //&GossipStoneHints,
     &NightGSExpectSuns,
     &ChestAnimations,
     &ChestSize,
@@ -602,9 +606,9 @@ namespace Settings {
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
 
+    ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
     ctx.startingTime         = StartingTime.Value<u8>();
-    ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
     ctx.chestSize            = (ChestSize) ? 1 : 0;
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
@@ -754,6 +758,9 @@ namespace Settings {
     HC_ZeldasLetter.GetExcludedOption()->Hide(); //don't let users exclude these locations
     MK_BombchuBowlingBombchus.GetExcludedOption()->Hide();
     Ganon.GetExcludedOption()->Hide();
+
+    GossipStoneHints.SetSelectedIndex(HINTS_NEED_NOTHING);
+    HintDistribution.SetSelectedIndex(1); //balanced
 
     DamageMultiplier.SetSelectedIndex(DAMAGEMULTIPLIER_DEFAULT);
     GenerateSpoilerLog.SetSelectedIndex(1); //true
@@ -1044,6 +1051,15 @@ namespace Settings {
     } else {
       LACSTokenCount.SetSelectedIndex(100);
       LACSTokenCount.Hide();
+    }
+
+    //Only show hint options if hints are enabled
+    if (GossipStoneHints.Is(HINTS_NO_HINTS)) {
+      ClearerHints.Hide();
+      HintDistribution.Hide();
+    } else {
+      ClearerHints.Unhide();
+      HintDistribution.Unhide();
     }
 
     //Set toggle for all tricks
