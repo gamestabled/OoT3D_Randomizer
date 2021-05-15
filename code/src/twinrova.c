@@ -13,7 +13,7 @@
 #define Boss_Tw_Destroy_addr 0x1A88E8
 #define Boss_Tw_Destroy ((ActorFunc)Boss_Tw_Destroy_addr)
 
-#define SomeMusicFunction ((void(*)(u8 unk, u32 music)) 0x36ec40)
+#define SomeMusicFunction ((void(*)(u8 unk, u32 music)) 0x36EC40)
 
 #define BOSS_BATTLE_BGM 0x1000589
 #define SPIRIT_TEMPLE_BGM 0x10005AC
@@ -36,7 +36,6 @@ void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx){
     if(!fightStarted && pos.x > -100 && pos.x < 100 && pos.y > 200 && pos.z > -100 && pos.z < 100){
         fightStarted = 1;
         SomeMusicFunction(0, BOSS_BATTLE_BGM);
-        PlaySound(0);
     }
     
     if(fightStarted){
@@ -52,7 +51,8 @@ void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx){
         }
     }
     else if(!musicSet){
-        PlaySound(SPIRIT_TEMPLE_BGM);
+        SomeMusicFunction(0, SPIRIT_TEMPLE_BGM);
+        SomeMusicFunction(0, SPIRIT_TEMPLE_BGM); //one doesn't work for some reason
         musicSet = 1;
     }
 }
