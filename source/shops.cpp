@@ -10,35 +10,21 @@ using namespace Settings;
 
 std::vector<Item> ShopItems = {};
 //Shop items we don't want to overwrite
-const std::array<Item, 28> minShopItems = {
-  BuyDekuShield,
-  BuyHylianShield,
-  BuyGoronTunic,
-  BuyZoraTunic,
-  BuyDekuNut5,
-  BuyDekuNut5,
-  BuyDekuNut10,
-  BuyDekuStick1,
-  BuyDekuStick1,
-  BuyDekuSeeds30,
-  BuyArrows10,
-  BuyArrows10,
-  BuyArrows30,
-  BuyArrows50,
-  BuyBombchu5,
-  BuyBombchu10,
-  BuyBombchu10,
-  BuyBombchu20,
-  BuyBombs525,
-  BuyBombs535,
-  BuyBombs10,
-  BuyBombs20,
-  BuyGreenPotion,
-  BuyRedPotion30,
-  BuyBlueFire,
-  BuyFairysSpirit,
-  BuyBottleBug,
-  BuyFish,
+const std::array<Item, 14> minShopItems = {
+  BuyDekuShield, //1 in vanilla shop pool
+  BuyHylianShield, //2
+  BuyGoronTunic, //1
+  BuyZoraTunic, //1
+  BuyDekuNut5, //6
+  BuyDekuStick1, //3
+  BuyArrows10, //4
+  BuyBombchu10, //3
+  BuyBombs525, //1
+  BuyBombs10, //1
+  BuyBlueFire, //2
+  BuyFairysSpirit, //2
+  BuyBottleBug, //2
+  BuyFish, //3
 };
 
 //Set vanilla shop item locations before potentially shuffling
@@ -124,7 +110,7 @@ void SetVanillaShopItems() {
 //~45% chance of needing no wallet, ~25% chance of needing 1, ~30% chance of needing 2
 int GetRandomShopPrice() {
   double random = RandomDouble();
-  double rawprice = (1 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
+  double rawprice = (1.01 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
   int adjustedprice = static_cast<int>(rawprice * 60) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 300]
   return adjustedprice;
 }
