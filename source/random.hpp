@@ -8,6 +8,7 @@
 
 void Random_Init(uint32_t seed);
 uint32_t Random(int min, int max);
+double RandomDouble();
 
 //Get a random element from a vector or array
 template <typename T>

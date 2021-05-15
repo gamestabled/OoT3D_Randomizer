@@ -9,6 +9,7 @@
 #include "random.hpp"
 #include "spoiler_log.hpp"
 #include "starting_inventory.hpp"
+#include "shops.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -359,7 +360,6 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
 
     //shuffle the order of items to place
     Shuffle(itemsToPlace);
-
     while (!itemsToPlace.empty()) {
       Item item = std::move(itemsToPlace.back());
       item.SetAsPlaythrough();
@@ -422,12 +422,10 @@ static void RandomizeDungeonRewards() {
     0x00000020,
   };
   int baseOffset = I_KokiriEmerald.GetItemID();
-
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
     std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
     AssumedFill(rewards, dungeonRewardLocations);
-
     for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
       const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
@@ -592,6 +590,41 @@ int Fill() {
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
+
+    //Place shop items first, since a buy shield is needed for gohma access
+    SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
+    if (Shopsanity.Is(SHOPSANITY_OFF)) {
+      PlaceShopItems(); //Just place vanilla items
+    } else {
+      if (Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
+        Shuffle(ShopItems); //Shuffle shop items amongst themselves
+        PlaceShopItems(); //Just place the shuffled shop items
+      }
+      else { //Shopsanity 1-4, random
+        const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
+
+        //Shuffle shop items making sure to not place minShopItems in shop slots which can be overwritten
+        std::vector<int> indicesToExclude;
+        int max = Shopsanity.Is(SHOPSANITY_RANDOM) ? 4 : GetShopsanityReplaceAmount(); //With random it's up to 4 so to be safe we exclude all 4, otherwise exclude amount from settings
+        for(int i = 0; i < max; i++) {
+          indicesToExclude.push_back(indices[i]);
+        }
+        ShuffleShop(ShopItems, indicesToExclude); //Shuffle shop items, making sure some will not be overwritten
+
+        //Overwrite appropriate number of shop items
+        for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+          int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
+          for(int j = 0; j < num_to_replace; j++) {
+            int itemindex = indices[j];
+            ShopItems[i*8+itemindex-1] = NoItem; //Clear item so it can be filled during the general fill algo
+            ShopItems[i*8+itemindex-1].SetPrice(GetRandomShopPrice()); //Set price in ShopItems vector so it can be retrieved later by the patch
+          }
+        }
+      }
+      PlaceShopItems(); //Place shop items with some cleared for placement
+    }
+
+    //Place dungeon rewards
     RandomizeDungeonRewards();
 
     //Place songs first if song shuffle is set to specific locations
@@ -611,13 +644,11 @@ int Fill() {
 
       AssumedFill(songs, songLocations);
     }
-
     //Then place dungeon items that are assigned to restrictive pools
     RandomizeDungeonItems();
 
     //Then place Link's Pocket Item if it has to be an advancement item
     RandomizeLinksPocket();
-
     //Then place the rest of the advancement items
     std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});
     AssumedFill(remainingAdvancementItems, allLocations);
