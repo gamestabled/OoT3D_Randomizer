@@ -58,14 +58,18 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
 
 //Transfer order of scene indices to order of indices defined elsewhere in the code
 const u16 shopNumToIndex[8] = {4, 0, 7, 6, 1, 3, 2, 5};
-s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
+u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
     //Get scene index
     u16 shopNum = gGlobalContext->sceneNum - SCENE_BAZAAR;
     if (gSaveContext.entranceIndex == 0x00B7) {
         shopNum = SHOP_KAKARIKO_BAZAAR;
     }
     shopNum = shopNumToIndex[shopNum]; //Transfer to the proper shop index
-    return rShopsanityPrices[shopNum*8 + item->shopItemPosition]; //Get price from table indexed first by shop then by shop item
+    return shopNum*8 + item->shopItemPosition;
+}
+
+s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
+    return rShopsanityPrices[ShopsanityItem_GetIndex(item)]; //Get price from table indexed first by shop then by shop item
 }
 
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
@@ -109,8 +113,9 @@ void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
         item->buyEventFunc = ShopsanityItem_BuyEventFunc;
         item->basePrice = ShopsanityItem_GetPrice(shopItem);
         item->itemCount = 1;
-        item->actor.textId = 0x9200;
-        item->itemBuyPromptTextId = 0x9201;
+        u16 index = ShopsanityItem_GetIndex(shopItem);
+        item->actor.textId = 0x9200 + index*2;
+        item->itemBuyPromptTextId = 0x9200 + index*2+1;
     }
 }
 

@@ -291,17 +291,16 @@ constexpr std::array DungeonColors = {
 
 
         //Shopsanity items
-        //Maximum 32 textboxes
+        //Maximum 128 textboxes
         for(u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
-            CitraPrint(NonShopItems[shopitems].GetName());
             //Message to display when hovering over the item
             CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                COLOR(QM_RED)+std::basic_string(NonShopItems[shopitems].GetName())+": "+std::to_string(NonShopItems[shopitems].GetPrice())+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                COLOR(QM_RED)+std::basic_string(NonShopItems[shopitems].Name)+": "+std::to_string(NonShopItems[shopitems].Price)+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
                 "",
                 "");
             //Message to display when going to buy the item
             CreateMessage(0x9200+shopitems*2+1, 0, 0, 0,
-                INSTANT_TEXT_ON()+std::basic_string(NonShopItems[shopitems].GetName())+": "+std::to_string(NonShopItems[shopitems].GetPrice())+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
+                INSTANT_TEXT_ON()+std::basic_string(NonShopItems[shopitems].Name)+": "+std::to_string(NonShopItems[shopitems].Price)+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
                 "",
                 "");  
         }

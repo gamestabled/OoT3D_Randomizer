@@ -3,13 +3,15 @@
 #include "location_access.hpp"
 #include "random.hpp"
 #include "item.hpp"
+#include "shops.hpp"
 
 #include <math.h>
+#include <map>
 
 using namespace Settings;
 
 std::vector<Item> ShopItems = {};
-std::vector<Item> NonShopItems = {};
+std::vector<ItemAndPrice> NonShopItems = {};
 //Shop items we don't want to overwrite
 const std::array<Item, 15> minShopItems = {
   BuyDekuShield, //1 in vanilla shop pool
@@ -105,6 +107,10 @@ void SetVanillaShopItems() {
     BuyRedPotion40,
     BuyHeart,
   };
+  ItemAndPrice init;
+  init.Name = "No Item";
+  init.Price = -1;
+  NonShopItems.assign(64, init);
 }
 
 //Get random price using a beta distribution with alpha = 1.5, beta = 2
@@ -150,6 +156,17 @@ int GetShopsanityReplaceAmount() {
   } else { //Random, get number in [1, 4]
     return Random(1, 5);
   }
+}
+
+std::map<std::string, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"GC Shop", 6},{"ZD Shop", 7}}; 
+int GetShopIndex(ItemLocation* loc) {
+  //Kind of hacky, but extract the shop and item position from the name
+  std::string name = std::basic_string(loc->GetName());
+  int split = name.find(" Item ");
+  std::string shop = name.substr(0, split);
+  int pos = std::stoi(name.substr(split+6, 1)) - 1;
+  int shopnum = ShopNameToNum[shop];
+  return shopnum*8 + pos;
 }
 
 //Specialized shuffle function for shop items
