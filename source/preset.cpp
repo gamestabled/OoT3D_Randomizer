@@ -79,7 +79,13 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
   XMLDocument preset = XMLDocument();
-  preset.NewDeclaration();
+
+  // Create and insert the XML declaration
+  preset.InsertEndChild(preset.NewDeclaration());
+
+  // Create the root node
+  XMLElement* rootNode = preset.NewElement("settings");
+  preset.InsertEndChild(rootNode);
 
   for (MenuItem* menu : Settings::mainMenu) {
     if (menu->mode != OPTION_SUB_MENU) {
@@ -90,24 +96,13 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
         continue;
       }
 
-      //Create all necessary elements
+      // Create the <setting> element
       XMLElement* newSetting = preset.NewElement("setting");
-      XMLElement* settingName = preset.NewElement("settingName");
-      XMLElement* valueName = preset.NewElement("valueName");
-      XMLText* settingText = preset.NewText(std::string(setting->GetName()).c_str());
-      XMLText* valueText = preset.NewText(setting->GetSelectedOptionText().c_str());
+      newSetting->SetAttribute("name", std::string(setting->GetName()).c_str());
+      newSetting->SetText(setting->GetSelectedOptionText().c_str());
 
-      //Some setting names have punctuation in them. Set all values as CDATA so
-      //there are no conflicts with XML
-      settingText->SetCData(true);
-      valueText->SetCData(true);
-
-      //add elements to the document
-      settingName->InsertEndChild(settingText);
-      valueName->InsertEndChild(valueText);
-      newSetting->InsertEndChild(settingName);
-      newSetting->InsertEndChild(valueName);
-      preset.InsertEndChild(newSetting);
+      // Append it to the root node
+      rootNode->InsertEndChild(newSetting);
     }
   }
 
