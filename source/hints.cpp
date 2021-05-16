@@ -17,6 +17,10 @@ using namespace Logic;
 using namespace Settings;
 
 static Exit* GetHintRegion(Exit* exit) {
+  if (exit == nullptr) {
+    CitraPrint("AHHHH");
+    return &Exits::NoExit;
+  }
   std::vector<Exit*> alreadyChecked = {};
   std::vector<Exit*> spotQueue = {exit};
 
@@ -50,14 +54,12 @@ static Exit* GetHintRegion(Exit* exit) {
   return &Exits::NoExit;
 }
 
-static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation** hintedLocation) {
+static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation) {
   //temporarily remove the hinted location's item, and then perform a
-  //reachability search for gossip stone locations. Also for some reason
-  //the address of the hinted location reference is necessary for this
-  //code to work correctly
-  Item originalItem = (*hintedLocation)->GetPlacedItem();
-  (*hintedLocation)->SetPlacedItem(NoItem);
-  (*hintedLocation)->SetDelayedItem(originalItem);
+  //reachability search for gossip stone locations. 
+  Item originalItem = hintedLocation->GetPlacedItem();
+  hintedLocation->SetPlacedItem(NoItem);
+  hintedLocation->SetDelayedItem(originalItem);
 
   LogicReset();
   std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleLocations(gossipStoneLocations);
@@ -67,8 +69,7 @@ static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation** hinte
 
 static void AddHint(Text hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items to gossip stone locations for writing to the spoiler log
-  bool none = false;
-  gossipStone->SetPlacedItem(Item{hint.GetEnglish(), ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &none, &Hints::NoHintText});
+  gossipStone->SetPlacedItem(Item{hint.GetEnglish(), ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, &Hints::NoHintText});
 
   //create the in game message
   u32 messageId = 0x400 + gossipStone->GetFlag();
@@ -83,7 +84,7 @@ static void CreateLocationHint(std::vector<ItemLocation*> possibleHintLocations)
   }
 
   ItemLocation* hintedLocation = RandomElement(possibleHintLocations, false);
-  std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleGossipStones(&hintedLocation);
+  std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleGossipStones(hintedLocation);
   hintedLocation->SaveDelayedItem();
 
   PlacementLog_Msg("\tLocation: ");
@@ -143,7 +144,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
-  std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(&hintedLocation);
+  std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
   hintedLocation->SaveDelayedItem();
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
@@ -188,7 +189,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLo
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
-  std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(&hintedLocation);
+  std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
   hintedLocation->SaveDelayedItem();
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
@@ -236,7 +237,7 @@ static void CreateRandomLocationHint(bool goodItem = false){
   PlacementLog_Msg("\n");
 
   //get an acessible gossip stone
-  std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(&hintedLocation);
+  std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
   hintedLocation->SaveDelayedItem();
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
