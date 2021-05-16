@@ -19,6 +19,8 @@
 #include "gerudo_archery_manager.h"
 #include "chest.h"
 #include "gossip_stone.h"
+#include "drawbridge.h"
+
 
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
@@ -30,6 +32,8 @@ void Actor_Init() {
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
     gActorOverlayTable[0x15].initInfo->draw = EnItem00_rDraw;
+
+    gActorOverlayTable[0x4A].initInfo->update = BgSpot00Hanebasi_rUpdate;
 
     gActorOverlayTable[0x5F].initInfo->init = ItemBHeart_rInit;
     gActorOverlayTable[0x5F].initInfo->destroy = ItemBHeart_rDestroy;
