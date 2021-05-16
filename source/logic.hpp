@@ -4,6 +4,8 @@
 
 namespace Logic {
 
+  extern bool noVariable;
+
   //Child item logic
   extern bool KokiriSword;
   extern bool Slingshot;

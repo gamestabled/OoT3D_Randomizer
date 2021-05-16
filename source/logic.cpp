@@ -13,6 +13,8 @@ using namespace Settings;
 
 namespace Logic {
 
+  bool noVariable    = false;
+
   //Child item logic
   bool KokiriSword   = false;
   bool ZeldasLetter  = false;
