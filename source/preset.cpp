@@ -146,10 +146,8 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
       // we loop through the settings to find most of the matching elements.
       std::string settingToFind = std::string{setting->GetName()};
       std::string curSettingName = curNode->Attribute("name");
-      std::string curSettingValue = curNode->GetText();
-
       if (curSettingName == settingToFind) {
-        setting->SetSelectedIndexByString(curSettingValue);
+        setting->SetSelectedIndexByString(curNode->GetText());
         curNode = curNode->NextSiblingElement();
       } else {
         // If the current setting and element don't match, then search
@@ -159,10 +157,8 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
         bool settingFound = false;
         while (curNode != nullptr) {
           curSettingName = curNode->Attribute("name");
-          curSettingValue = curNode->GetText();
-
           if (curSettingName == settingToFind) {
-            setting->SetSelectedIndexByString(curSettingValue);
+            setting->SetSelectedIndexByString(curNode->GetText());
             curNode = curNode->NextSiblingElement();
             settingFound = true;
             break;
