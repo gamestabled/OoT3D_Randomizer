@@ -10,7 +10,7 @@ using namespace Settings;
 
 std::vector<Item> ShopItems = {};
 //Shop items we don't want to overwrite
-const std::array<Item, 14> minShopItems = {
+const std::array<Item, 15> minShopItems = {
   BuyDekuShield, //1 in vanilla shop pool
   BuyHylianShield, //2
   BuyGoronTunic, //1
@@ -21,11 +21,12 @@ const std::array<Item, 14> minShopItems = {
   BuyBombchu10, //3
   BuyBombs525, //1
   BuyBombs10, //1
+  BuyBombs20, //1
+  BuyBombs30, //1
   BuyBlueFire, //2
-  BuyFairysSpirit, //2
   BuyBottleBug, //2
   BuyFish, //3
-};
+}; //Total: 32 items
 
 //Set vanilla shop item locations before potentially shuffling
 void SetVanillaShopItems() {
@@ -105,13 +106,23 @@ void SetVanillaShopItems() {
   };
 }
 
-//Get random price using a beta distribution
+//Get random price using a beta distribution with alpha = 1.5, beta = 2
 //Average price = 126
 //~45% chance of needing no wallet, ~25% chance of needing 1, ~30% chance of needing 2
 int GetRandomShopPrice() {
   double random = RandomDouble();
-  double rawprice = (1.01 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
+  double rawprice = (1.001 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
   int adjustedprice = static_cast<int>(rawprice * 60) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 300]
+  return adjustedprice;
+}
+
+//Similar to above, beta distribution with alpha = 1, beta = 2
+//Average price = 29
+//^ Slightly different from OoTR where average is 32, due to using increments of 5
+s16 GetRandomScrubPrice() {
+  double random = RandomDouble();
+  double rawprice = (1.001-(1-(pow(1-random, 2)))); //Approximate CDF of a beta distribution
+  int adjustedprice = static_cast<int>(rawprice * 19) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 95]
   return adjustedprice;
 }
 

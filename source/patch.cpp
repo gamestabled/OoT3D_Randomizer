@@ -188,7 +188,7 @@ bool WritePatch() {
     // Create array of random prices
     std::array<s16, 11> rScrubRandomItemPrices{};
     for (size_t i = 0; i < rScrubRandomItemPrices.size(); i++) {
-      const s16 price = Playthrough::GetRandomPrice();
+      const s16 price = GetRandomScrubPrice();
       rScrubRandomItemPrices[i] = price;
       rScrubTextIdTable[i] = static_cast<u16>(0x9000 + static_cast<u16>(price));
     }
