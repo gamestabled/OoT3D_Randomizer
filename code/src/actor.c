@@ -25,8 +25,6 @@
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
-    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
-
     gActorOverlayTable[0xA].initInfo->init = EnBox_rInit;
 
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
@@ -59,6 +57,9 @@ void Actor_Init() {
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
+
+    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
+    gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 
