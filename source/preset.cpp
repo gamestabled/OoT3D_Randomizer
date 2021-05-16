@@ -130,7 +130,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
       return false;
   }
 
-  XMLElement* curNode = rootNode->FirstChildElement("setting");
+  XMLElement* curNode = rootNode->FirstChildElement();
 
   for (MenuItem* menu : Settings::mainMenu) {
     if (menu->mode != OPTION_SUB_MENU) {
@@ -150,7 +150,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
       if (curSettingName == settingToFind) {
         setting->SetSelectedIndexByString(curSettingValue);
-        curNode = curNode->NextSiblingElement("setting");
+        curNode = curNode->NextSiblingElement();
       } else {
         // If the current setting and element don't match, then search
         // linearly from the beginning. This will get us back on track if the
@@ -167,11 +167,11 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
             settingFound = true;
             break;
           }
-          curNode = curNode->NextSiblingElement("setting");
+          curNode = curNode->NextSiblingElement();
         }
         //reset to the beginning if the setting wasn't found
         if (!settingFound) {
-          curNode = rootNode->FirstChildElement("setting");
+          curNode = rootNode->FirstChildElement();
         }
       }
     }
