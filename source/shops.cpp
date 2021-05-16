@@ -110,7 +110,7 @@ void SetVanillaShopItems() {
   ItemAndPrice init;
   init.Name = "No Item";
   init.Price = -1;
-  NonShopItems.assign(64, init);
+  NonShopItems.assign(32, init);
 }
 
 //Get random price using a beta distribution with alpha = 1.5, beta = 2
