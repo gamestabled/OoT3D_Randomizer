@@ -124,7 +124,13 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
     return false;
   }
 
-  XMLNode* curNode = preset.FirstChild();
+  XMLElement* rootNode = preset.RootElement();
+  if (strcmp(rootNode->Name(), "settings") != 0) {
+      // We do not have our <settings> root node, so it may be the old structure. We don't support that one anymore.
+      return false;
+  }
+
+  XMLElement* curNode = rootNode->FirstChildElement("setting");
 
   for (MenuItem* menu : Settings::mainMenu) {
     if (menu->mode != OPTION_SUB_MENU) {
@@ -139,33 +145,33 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
       // Since presets are saved linearly, we can simply loop through the nodes as
       // we loop through the settings to find most of the matching elements.
       std::string settingToFind = std::string{setting->GetName()};
-      std::string curSettingName = curNode->FirstChildElement("settingName")->GetText();
-      std::string curSettingValue = curNode->FirstChildElement("valueName")->GetText();
+      std::string curSettingName = curNode->Attribute("name");
+      std::string curSettingValue = curNode->GetText();
 
       if (curSettingName == settingToFind) {
         setting->SetSelectedIndexByString(curSettingValue);
-        curNode = curNode->NextSibling();
+        curNode = curNode->NextSiblingElement("setting");
       } else {
         // If the current setting and element don't match, then search
         // linearly from the beginning. This will get us back on track if the
         // next setting and element line up with each other*/
-        curNode = preset.FirstChild();
+        curNode = rootNode->FirstChildElement();
         bool settingFound = false;
         while (curNode != nullptr) {
-          curSettingName = curNode->FirstChildElement("settingName")->GetText();
-          curSettingValue = curNode->FirstChildElement("valueName")->GetText();
+          curSettingName = curNode->Attribute("name");
+          curSettingValue = curNode->GetText();
 
           if (curSettingName == settingToFind) {
             setting->SetSelectedIndexByString(curSettingValue);
-            curNode = curNode->NextSibling();
+            curNode = curNode->NextSiblingElement();
             settingFound = true;
             break;
           }
-          curNode = curNode->NextSibling();
+          curNode = curNode->NextSiblingElement("setting");
         }
         //reset to the beginning if the setting wasn't found
         if (!settingFound) {
-          curNode = preset.FirstChild();
+          curNode = rootNode->FirstChildElement("setting");
         }
       }
     }
