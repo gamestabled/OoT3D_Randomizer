@@ -160,6 +160,14 @@ SECTIONS
 		*(.patch_PoeCollectorCheckPoints)
 	}
 
+	.patch_PlayerEditAndRetrieveCMB 0x191970 : {
+		*(.patch_PlayerEditAndRetrieveCMB)
+	}
+
+	.patch_PlayerGetCustomTunicCMAB 0x191DD4 : {
+		*(.patch_PlayerGetCustomTunicCMAB)
+	}
+
 	.patch_ChildRollingGoron 0x194B18 : {
 		*(.patch_ChildRollingGoron)
 	}

@@ -5,6 +5,30 @@
 
 #define EDIT_BYTE(offset_, val_) (BASE_[offset_] = val_)
 
+void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
+    char* BASE_ = (char*)linkCMB;
+    
+    // Edit combinerIndices
+    EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+    EDIT_BYTE(0x6CC, 0x0B); EDIT_BYTE(0x6CD, 0x00);// Add new combiner index (Replacing one of the combiners used by unused deku stick)
+
+    //TextureCombiner0
+    EDIT_BYTE(0x3588, 0x04); EDIT_BYTE(0x3589, 0x01);// CombinerMode to "Add"
+    EDIT_BYTE(0x3594, 0x76);// SourceColor0 to "ConstantColor"
+    EDIT_BYTE(0x359C, 0x03);// Color1Operand to OneMinusAlpha
+
+    //TextureCombiner1
+    EDIT_BYTE(0x35B0, 0x00); EDIT_BYTE(0x35B1, 0x21);// CombinerMode to "Modulate"
+    EDIT_BYTE(0x35BE, 0xC0); EDIT_BYTE(0x35BF, 0x84);// SourceColor1 to "Texture0"
+    EDIT_BYTE(0x35C4, 0x00);// Color1Operand to Color
+    EDIT_BYTE(0x36FC, 0x78);// SourceColor0 to "Previous" (aka return the output of "TextureCombiner0")
+    EDIT_BYTE(0x36FE, 0x77); EDIT_BYTE(0x36FF, 0x85);// SourceColor1 to "PrimaryColor"
+
+    //Edit Texture Entry
+    EDIT_BYTE(0x44E1, 0x40);// Update texture data length to "16384" bytes
+    EDIT_BYTE(0x44EC, 0x5B);// Set texture to ETC1a4
+}
+
 void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
     char* BASE_ = (char*)heartContainerCMB;
 
