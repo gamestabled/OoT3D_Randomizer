@@ -291,7 +291,7 @@ constexpr std::array DungeonColors = {
 
 
         //Shopsanity items
-        //Maximum 128 textboxes
+        //64 textboxes, 2 for each of 32 potential shopsanity items
         for(u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
             //Message to display when hovering over the item
             CreateMessage(0x9200+shopitems*2, 0, 0, 0,

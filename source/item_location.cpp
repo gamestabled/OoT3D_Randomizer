@@ -1436,7 +1436,15 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     newpair.Name = item.GetName();
     int index = GetShopIndex(loc);
     newpair.Price = ShopItems[index].GetPrice();
-    NonShopItems[index] = newpair;
+    //Without this transformed index, NonShopItems would have 64 entries and 128 custom messages- But only half of that is needed for shopsanity
+    //So we use this transformation to map only important indices to an array with 32 entries in the following manner:
+    //Shop index:  5  6  7  8 12 13 14 15 20 21 22 23...
+    //Transformed: 0  1  2  3  4  5  6  7  8  9 10 11...
+    //So we first divide the shop index by 4, then by 2 which basically tells us the index of the shop it's in,
+    //then multiply by 4 since there are 4 items per shop
+    //And finally we use a modulo by 4 to get the index within the "shop" of 4 items, and add
+    int transformed = 4*((index / 4) / 2) + index % 4; //Transform index so only replacable shop items are stored
+    NonShopItems[transformed] = newpair;
   }
 
   loc->SetPlacedItem(item);

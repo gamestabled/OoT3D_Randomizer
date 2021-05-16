@@ -114,6 +114,7 @@ void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
         item->basePrice = ShopsanityItem_GetPrice(shopItem);
         item->itemCount = 1;
         u16 index = ShopsanityItem_GetIndex(shopItem);
+        index = 4*((index / 4) / 2) + index % 4; //Transform index- For more explanation see item_location.cpp PlaceItemInLocation()
         item->actor.textId = 0x9200 + index*2;
         item->itemBuyPromptTextId = 0x9200 + index*2+1;
     }
