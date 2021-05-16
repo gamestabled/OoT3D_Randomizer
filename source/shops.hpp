@@ -11,3 +11,4 @@ extern int GetShopsanityReplaceAmount();
 extern void ShuffleShop(std::vector<Item>& ShopItems, std::vector<int> indicesToExclude);
 
 extern std::vector<Item> ShopItems;
+extern std::vector<Item> NonShopItems;

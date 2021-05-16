@@ -109,7 +109,8 @@ void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
         item->buyEventFunc = ShopsanityItem_BuyEventFunc;
         item->basePrice = ShopsanityItem_GetPrice(shopItem);
         item->itemCount = 1;
-        //TODO: the text boxes
+        item->actor.textId = 0x9200;
+        item->itemBuyPromptTextId = 0x9201;
     }
 }
 

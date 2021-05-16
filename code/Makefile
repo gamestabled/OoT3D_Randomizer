@@ -151,7 +151,7 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@python3 patch.py $(OUTPUT).elf
+	@python patch.py $(OUTPUT).elf
 
 #---------------------------------------------------------------------------------
 clean:

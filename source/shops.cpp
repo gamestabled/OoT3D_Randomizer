@@ -9,6 +9,7 @@
 using namespace Settings;
 
 std::vector<Item> ShopItems = {};
+std::vector<Item> NonShopItems = {};
 //Shop items we don't want to overwrite
 const std::array<Item, 15> minShopItems = {
   BuyDekuShield, //1 in vanilla shop pool
