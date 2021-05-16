@@ -539,7 +539,9 @@ namespace Settings {
   //declared here, set in menu.cpp
   u8 PlayOption;
 
-  //Fills a SettingsContext struct which is sent to the patch
+  //Fills and returns a SettingsContext struct.
+  //This struct is written to the code.ips patch and allows the game
+  //to read what settings the player selected to make in game decisions.
   SettingsContext FillContext() {
     SettingsContext ctx = {};
     ctx.hashIndexes[0] = hashIconIndexes[0];
@@ -786,7 +788,9 @@ namespace Settings {
     }
   }
 
-  //Lock required locations based on current settings
+  //This function will hide certain locations from the Excluded Locations
+  //menu if the player's current settings would require non-junk to be placed
+  //at those locations. Excluded locations will have junk placed at them.
   void ResolveExcludedLocationConflicts() {
 
     //Force include shops if shopsanity is off
@@ -930,7 +934,9 @@ namespace Settings {
     }
   }
 
-  //Make any forcible setting changes when certain settings change
+  //Hide certain settings if they aren't relevant or Lock settings if they
+  //can't be changed due to another setting that was chosen. (i.e. Closed Forest
+  //will force Starting Age to Child).
   void ForceChange(u32 kDown, Option* currentSetting) {
 
     //Adult is not compatible with Closed Forest
