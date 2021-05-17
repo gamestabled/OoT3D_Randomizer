@@ -21,6 +21,7 @@
 #include "gossip_stone.h"
 #include "drawbridge.h"
 #include "king_zora.h"
+#include "collapsing_castle.h"
 
 
 #define OBJECT_GI_HEARTS 189
@@ -72,6 +73,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
+
+    gActorOverlayTable[0x174].initInfo->update = DemoGt_rUpdate;
 
     gActorOverlayTable[0x185].initInfo->update = EnWonderTalk2_rUpdate;
 
