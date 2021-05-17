@@ -9,7 +9,6 @@
 #include "random.hpp"
 #include "spoiler_log.hpp"
 #include "fill.hpp"
-#include "hints.hpp"
 #include "hint_list.hpp"
 
 using namespace CustomMessages;
@@ -56,7 +55,7 @@ static Exit* GetHintRegion(Exit* exit) {
 
 static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation) {
   //temporarily remove the hinted location's item, and then perform a
-  //reachability search for gossip stone locations. 
+  //reachability search for gossip stone locations.
   Item originalItem = hintedLocation->GetPlacedItem();
   hintedLocation->SetPlacedItem(NoItem);
   hintedLocation->SetDelayedItem(originalItem);
