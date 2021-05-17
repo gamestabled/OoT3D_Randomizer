@@ -20,6 +20,7 @@
 #include "chest.h"
 #include "gossip_stone.h"
 #include "drawbridge.h"
+#include "king_zora.h"
 
 
 #define OBJECT_GI_HEARTS 189
@@ -66,6 +67,8 @@ void Actor_Init() {
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
+
+    gActorOverlayTable[0x164].initInfo->update = EnKz_rUpdate;
 
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
