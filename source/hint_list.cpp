@@ -97,7 +97,7 @@ namespace Hints {
 
   HintText ProgressiveHookshot = HintText::Item({
                        //obscure text
-                       Text{"Dampe's keepsake", /*french*/"", /*spanish*/"un recuerdo de Dampé"},
+                       Text{"Dampé's keepsake", /*french*/"", /*spanish*/"un recuerdo de Dampé"},
                        Text{"the Grapple Beam", /*french*/"", /*spanish*/"una liana de agarre"},
                        Text{"the BOING! chain", /*french*/"", /*spanish*/"una cadena retráctil"},
                      },
@@ -1686,7 +1686,7 @@ namespace Hints {
                        Text{"a chest hidden by a #speedy spectre# holds", /*french*/"", /*spanish*/"un cofre custodiado por un #espectro veloz# otorga"},
                      },
                        //clear text
-                       Text{"#dead Dampe's first prize# is", /*french*/"", /*spanish*/"el primer premio de #Dampe fallecido# se trata de"}
+                       Text{"#dead Dampé's first prize# is", /*french*/"", /*spanish*/"el primer premio de #Dampé fallecido# se trata de"}
   );
 
   HintText GF_Chest = HintText::Exclude({
@@ -1983,7 +1983,7 @@ namespace Hints {
                        Text{"#racing a ghost# leads to", /*french*/"", /*spanish*/"#perseguir a un fantasma# conduce a"},
                      },
                        //clear text
-                       Text{"#dead Dampe's second# prize is", /*french*/"", /*spanish*/"el segundo premio de #Dampe fallecido# se trata de"}
+                       Text{"#dead Dampé's second# prize is", /*french*/"", /*spanish*/"el segundo premio de #Dampé fallecido# se trata de"}
   );
 
   HintText LLR_FreestandingPoH = HintText::Exclude({
@@ -5167,7 +5167,7 @@ namespace Hints {
 
   HintText GY_DampesHouse = HintText::Region({
                      //obscure text
-                     Text{"Dampe's Hut", /*french*/"", /*spanish*/"la cabaña de Dampé"},
+                     Text{"Dampé's Hut", /*french*/"", /*spanish*/"la cabaña de Dampé"},
   });
 
   HintText GC_Shop = HintText::Region({
@@ -5272,7 +5272,7 @@ namespace Hints {
 
   HintText GY_DampesGrave = HintText::Region({
                      //obscure text
-                     Text{"Dampe's Grave", /*french*/"", /*spanish*/"la #tumba de Dampé"},
+                     Text{"Dampé's Grave", /*french*/"", /*spanish*/"la #tumba de Dampé"},
   });
 
   HintText DMT_CowGrotto = HintText::Region({
