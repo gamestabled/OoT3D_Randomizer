@@ -601,7 +601,7 @@ int Fill() {
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
 
-    //Place shop items first, since a buy shield is needed for gohma access
+    //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
       PlaceShopItems(); //Just place vanilla items

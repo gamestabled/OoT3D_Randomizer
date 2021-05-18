@@ -3,14 +3,17 @@
 #include "location_access.hpp"
 #include "random.hpp"
 #include "item.hpp"
+#include "shops.hpp"
 
 #include <math.h>
+#include <map>
 
 using namespace Settings;
 
 std::vector<Item> ShopItems = {};
+std::vector<ItemAndPrice> NonShopItems = {};
 //Shop items we don't want to overwrite
-const std::array<Item, 14> minShopItems = {
+const std::array<Item, 15> minShopItems = {
   BuyDekuShield, //1 in vanilla shop pool
   BuyHylianShield, //2
   BuyGoronTunic, //1
@@ -21,11 +24,12 @@ const std::array<Item, 14> minShopItems = {
   BuyBombchu10, //3
   BuyBombs525, //1
   BuyBombs10, //1
+  BuyBombs20, //1
+  BuyBombs30, //1
   BuyBlueFire, //2
-  BuyFairysSpirit, //2
   BuyBottleBug, //2
   BuyFish, //3
-};
+}; //Total: 32 items
 
 //Set vanilla shop item locations before potentially shuffling
 void SetVanillaShopItems() {
@@ -103,15 +107,29 @@ void SetVanillaShopItems() {
     BuyRedPotion40,
     BuyHeart,
   };
+  ItemAndPrice init;
+  init.Name = "No Item";
+  init.Price = -1;
+  NonShopItems.assign(32, init);
 }
 
-//Get random price using a beta distribution
+//Get random price using a beta distribution with alpha = 1.5, beta = 2
 //Average price = 126
 //~45% chance of needing no wallet, ~25% chance of needing 1, ~30% chance of needing 2
 int GetRandomShopPrice() {
   double random = RandomDouble();
-  double rawprice = (1.01 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
+  double rawprice = (1.001 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
   int adjustedprice = static_cast<int>(rawprice * 60) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 300]
+  return adjustedprice;
+}
+
+//Similar to above, beta distribution with alpha = 1, beta = 2
+//Average price = 29
+//^ Slightly different from OoTR where average is 32, due to using increments of 5
+s16 GetRandomScrubPrice() {
+  double random = RandomDouble();
+  double rawprice = (1.001-(1-(pow(1-random, 2)))); //Approximate CDF of a beta distribution
+  int adjustedprice = static_cast<int>(rawprice * 19) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 95]
   return adjustedprice;
 }
 
@@ -138,6 +156,17 @@ int GetShopsanityReplaceAmount() {
   } else { //Random, get number in [1, 4]
     return Random(1, 5);
   }
+}
+
+std::map<std::string, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"GC Shop", 6},{"ZD Shop", 7}}; 
+int GetShopIndex(ItemLocation* loc) {
+  //Kind of hacky, but extract the shop and item position from the name
+  std::string name = std::basic_string(loc->GetName());
+  int split = name.find(" Item ");
+  std::string shop = name.substr(0, split);
+  int pos = std::stoi(name.substr(split+6, 1)) - 1;
+  int shopnum = ShopNameToNum[shop];
+  return shopnum*8 + pos;
 }
 
 //Specialized shuffle function for shop items

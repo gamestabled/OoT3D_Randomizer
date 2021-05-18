@@ -8,5 +8,4 @@
 namespace Playthrough {
     int Playthrough_Init(u32 seed);
     int Playthrough_Repeat(int count = 1);
-    s16 GetRandomPrice();
 }

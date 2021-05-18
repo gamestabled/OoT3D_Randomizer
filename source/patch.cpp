@@ -188,7 +188,7 @@ bool WritePatch() {
     // Create array of random prices
     std::array<s16, 11> rScrubRandomItemPrices{};
     for (size_t i = 0; i < rScrubRandomItemPrices.size(); i++) {
-      const s16 price = Playthrough::GetRandomPrice();
+      const s16 price = GetRandomScrubPrice();
       rScrubRandomItemPrices[i] = price;
       rScrubTextIdTable[i] = static_cast<u16>(0x9000 + static_cast<u16>(price));
     }
@@ -252,36 +252,38 @@ bool WritePatch() {
   |     rShopsanityPrices         |
   --------------------------------*/
 
-  //Get prices from shop item vector
-  std::array<s32, 64> rShopsanityPrices{};
-  for (size_t i = 0; i < rShopsanityPrices.size(); i++) {
-    rShopsanityPrices[i] = ShopItems[i].GetPrice();
-  }
+  if (Settings::Shopsanity.IsNot(SHOPSANITY_OFF) && Settings::Shopsanity.IsNot(SHOPSANITY_ZERO)) {
+    //Get prices from shop item vector
+    std::array<s32, 64> rShopsanityPrices{};
+    for (size_t i = 0; i < rShopsanityPrices.size(); i++) {
+      rShopsanityPrices[i] = ShopItems[i].GetPrice();
+    }
 
-  // Write shopsanity item prices address to code
-  patchOffset = V_TO_P(RSHOPSANITYPRICES_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 3;
+    // Write shopsanity item prices address to code
+    patchOffset = V_TO_P(RSHOPSANITYPRICES_ADDR);
+    buf[0] = (patchOffset >> 16) & 0xFF;
+    buf[1] = (patchOffset >> 8) & 0xFF;
+    buf[2] = (patchOffset) & 0xFF;
+    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+      return false;
+    }
+    totalRW += 3;
 
-  // Write shopsanity item prices size to code
-  const u32 shopsanityPricesSize = sizeof(rShopsanityPrices);
-  buf[0] = (shopsanityPricesSize >> 8) & 0xFF;
-  buf[1] = (shopsanityPricesSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
+    // Write shopsanity item prices size to code
+    const u32 shopsanityPricesSize = sizeof(rShopsanityPrices);
+    buf[0] = (shopsanityPricesSize >> 8) & 0xFF;
+    buf[1] = (shopsanityPricesSize) & 0xFF;
+    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+      return false;
+    }
+    totalRW += 2;
 
-  // Write shopsanity item prices to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &rShopsanityPrices, sizeof(rShopsanityPrices), FS_WRITE_FLUSH))) {
-    return false;
+    // Write shopsanity item prices to code
+    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &rShopsanityPrices, sizeof(rShopsanityPrices), FS_WRITE_FLUSH))) {
+      return false;
+    }
+    totalRW += sizeof(rShopsanityPrices);
   }
-  totalRW += sizeof(rShopsanityPrices);
 
   /*--------------------------------
   |     rDungeonRewardOverrides    |

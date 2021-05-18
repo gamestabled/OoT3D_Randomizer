@@ -4,6 +4,7 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 #include "hint_list.hpp"
+#include "shops.hpp"
 
 //Location definitions
 //Kokiri Forest                                                          scene  flag  name                                     hint text (hint_list.cpp)                 categories
@@ -1412,47 +1413,64 @@ void GenerateLocationPool() {
 
 void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
 
-    PlacementLog_Msg("\n");
-    PlacementLog_Msg(item.GetName());
-    PlacementLog_Msg(" placed at ");
-    PlacementLog_Msg(loc->GetName());
-    PlacementLog_Msg("\n\n");
+  PlacementLog_Msg("\n");
+  PlacementLog_Msg(item.GetName());
+  PlacementLog_Msg(" placed at ");
+  PlacementLog_Msg(loc->GetName());
+  PlacementLog_Msg("\n\n");
 
-    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-      item.ApplyEffect();
-      loc->Use();
-    }
+  if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+    item.ApplyEffect();
+    loc->Use();
+  }
 
-    itemsPlaced++;
-    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-    printf("\x1b[8;10HPlacing Items.");
-    if (completion > 0.25) printf(".");
-    if (completion > 0.50) printf(".");
+  itemsPlaced++;
+  double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+  printf("\x1b[8;10HPlacing Items.");
+  if (completion > 0.25) printf(".");
+  if (completion > 0.50) printf(".");
 
-    loc->SetPlacedItem(item);
+  //If we're placing a non-shop item in a shop location, we want to record it for custom messages
+  if (item.GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
+    ItemAndPrice newpair;
+    newpair.Name = item.GetName();
+    int index = GetShopIndex(loc);
+    newpair.Price = ShopItems[index].GetPrice();
+    //Without this transformed index, NonShopItems would have 64 entries and 128 custom messages- But only half of that is needed for shopsanity
+    //So we use this transformation to map only important indices to an array with 32 entries in the following manner:
+    //Shop index:  4  5  6  7 12 13 14 15 20 21 22 23...
+    //Transformed: 0  1  2  3  4  5  6  7  8  9 10 11...
+    //So we first divide the shop index by 4, then by 2 which basically tells us the index of the shop it's in,
+    //then multiply by 4 since there are 4 items per shop
+    //And finally we use a modulo by 4 to get the index within the "shop" of 4 items, and add
+    int transformed = 4*((index / 4) / 2) + index % 4; //Transform index so only replacable shop items are stored
+    NonShopItems[transformed] = newpair;
+  }
+
+  loc->SetPlacedItem(item);
 }
 
 //Same as PlaceItemInLocation, except a price is set as well as the item
 void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately /*= false*/) {
 
-    PlacementLog_Msg("\n");
-    PlacementLog_Msg(item.GetName());
-    PlacementLog_Msg(" placed at ");
-    PlacementLog_Msg(loc->GetName());
-    PlacementLog_Msg("\n\n");
+  PlacementLog_Msg("\n");
+  PlacementLog_Msg(item.GetName());
+  PlacementLog_Msg(" placed at ");
+  PlacementLog_Msg(loc->GetName());
+  PlacementLog_Msg("\n\n");
 
-    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-      item.ApplyEffect();
-      loc->Use();
-    }
+  if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+    item.ApplyEffect();
+    loc->Use();
+  }
 
-    itemsPlaced++;
-    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-    printf("\x1b[8;10HPlacing Items.");
-    if (completion > 0.25) printf(".");
-    if (completion > 0.50) printf(".");
+  itemsPlaced++;
+  double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+  printf("\x1b[8;10HPlacing Items.");
+  if (completion > 0.25) printf(".");
+  if (completion > 0.50) printf(".");
 
-    loc->SetPlacedShopItem(item, price);
+  loc->SetPlacedShopItem(item, price);
 }
 
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category) {
