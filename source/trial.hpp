@@ -13,6 +13,10 @@ public:
     TrialInfo(const Text name_);
     ~TrialInfo();
 
+    Text GetName() const {
+        return name;
+    }
+
     bool IsSkipped() const {
         return skipped;
     }

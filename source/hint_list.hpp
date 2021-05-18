@@ -1143,6 +1143,12 @@ namespace Hints {
   extern HintText LACSRewards;
   extern HintText LACSTokens;
 
+  //Trial Text
+  extern HintText SixTrials;
+  extern HintText ZeroTrials;
+  extern HintText FourToFiveTrials;
+  extern HintText OneToThreeTrials;
+
   //Altar Text
   extern HintText SpiritualStoneTextStart;
   extern HintText ChildAltarTextEnd;

@@ -11,10 +11,12 @@
 #include "fill.hpp"
 #include "hints.hpp"
 #include "hint_list.hpp"
+#include "trial.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
+using namespace Trial;
 
 static Exit* GetHintRegion(Exit* exit) {
   if (exit == nullptr) {
@@ -54,15 +56,15 @@ static Exit* GetHintRegion(Exit* exit) {
   return &Exits::NoExit;
 }
 
-static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation) {
+static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation = &Ganon) {
   //temporarily remove the hinted location's item, and then perform a
-  //reachability search for gossip stone locations. 
+  //reachability search for gossip stone locations.
   Item originalItem = hintedLocation->GetPlacedItem();
   hintedLocation->SetPlacedItem(NoItem);
-  hintedLocation->SetDelayedItem(originalItem);
 
   LogicReset();
   std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleLocations(gossipStoneLocations);
+  hintedLocation->SetPlacedItem(originalItem);
 
   return accessibleGossipStones;
 }
@@ -85,7 +87,6 @@ static void CreateLocationHint(std::vector<ItemLocation*> possibleHintLocations)
 
   ItemLocation* hintedLocation = RandomElement(possibleHintLocations, false);
   std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
 
   PlacementLog_Msg("\tLocation: ");
   PlacementLog_Msg(hintedLocation->GetName());
@@ -145,7 +146,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
 
   //get an accessible gossip stone
   std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
+
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
@@ -190,7 +191,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLo
 
   //get an accessible gossip stone
   std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
+
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
@@ -238,7 +239,7 @@ static void CreateRandomLocationHint(bool goodItem = false){
 
   //get an acessible gossip stone
   std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
+
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
@@ -318,6 +319,67 @@ static std::vector<ItemLocation*> CalculateBarrenRegions() {
   return finalBarrenLocations;
 }
 
+static void CreateTrialHints() {
+    //six trials
+  if (RandomGanonsTrials && GanonsTrialsCount.Is(6)) {
+
+    //get a random gossip stone
+    auto gossipStones = GetAccessibleGossipStones();
+    auto gossipStone = RandomElement(gossipStones, false);
+
+    //make hint
+    auto hintText = Hints::Prefix.GetText() + Hints::SixTrials.GetText();
+    AddHint(hintText, gossipStone, {QM_PINK});
+
+    //zero trials
+  } else if (RandomGanonsTrials && GanonsTrialsCount.Is(0)) {
+
+    //get a random gossip stone
+    auto gossipStones = GetAccessibleGossipStones();
+    auto gossipStone = RandomElement(gossipStones, false);
+
+    //make hint
+    auto hintText = Hints::Prefix.GetText() + Hints::ZeroTrials.GetText();
+    AddHint(hintText, gossipStone, {QM_YELLOW});
+
+    //4 or 5 required trials
+  } else if (GanonsTrialsCount.Is(5) || GanonsTrialsCount.Is(4)) {
+
+    //get skipped trials
+    std::vector<TrialInfo*> trials = {};
+    trials.assign(trialList.begin(), trialList.end());
+    auto skippedTrials = FilterFromPool(trials, [](TrialInfo* trial){return trial->IsSkipped();});
+
+    //create a hint for each skipped trial
+    for (auto& trial : skippedTrials) {
+      //get a random gossip stone
+      auto gossipStones = GetAccessibleGossipStones();
+      auto gossipStone = RandomElement(gossipStones, false);
+
+      //make hint
+      auto hintText = Hints::Prefix.GetText()+"#"+trial->GetName()+"#"+Hints::FourToFiveTrials.GetText();
+      AddHint(hintText, gossipStone, {QM_YELLOW});
+    }
+    //1 to 3 trials
+  } else if (GanonsTrialsCount.Value<u8>() >= 1 && GanonsTrialsCount.Value<u8>() <= 3) {
+    //get requried trials
+    std::vector<TrialInfo*> trials = {};
+    trials.assign(trialList.begin(), trialList.end());
+    auto requiredTrials = FilterFromPool(trials, [](TrialInfo* trial){return trial->IsRequired();});
+
+    //create a hint for each required trial
+    for (auto& trial : requiredTrials) {
+      //get a random gossip stone
+      auto gossipStones = GetAccessibleGossipStones();
+      auto gossipStone = RandomElement(gossipStones, false);
+
+      //make hint
+      auto hintText = Hints::Prefix.GetText()+"#"+trial->GetName()+"#"+Hints::OneToThreeTrials.GetText();
+      AddHint(hintText, gossipStone, {QM_PINK});
+    }
+  }
+}
+
 void CreateAllHints() {
   PlacementLog_Msg("\nNOW CREATING HINTS\n");
   HintSetting hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];
@@ -336,7 +398,10 @@ void CreateAllHints() {
     }
   }
 
-  //TODO: Trial Hint locations
+  //Add 'trial' location hints
+  if (hintSetting.distTable[static_cast<int>(HintType::Trial)].copies > 0) {
+    CreateTrialHints();
+  }
 
   //create a vector with each hint type proportional to it's weight in the distribution setting.
   //ootr uses a weighted probability function to decide hint types, but selecting randomly from

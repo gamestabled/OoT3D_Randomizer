@@ -6048,6 +6048,30 @@ namespace Hints {
   });
 
   /*--------------------------
+  |     TRIAL HINT TEXT      |
+  ---------------------------*/
+
+  HintText SixTrials = HintText::Exclude({
+                     //obscure text
+                     Text{"#Ganon's Tower# is protected by a powerful barrier.", /*french*/"", /*spanish*/""},
+  });
+
+  HintText ZeroTrials = HintText::Exclude({
+                     //obscure text
+                     Text{"Sheik dispelled the barrier around #Ganon's Tower#.", /*french*/"", /*spanish*/""},
+  });
+
+  HintText FourToFiveTrials = HintText::Exclude({
+                     //obscure text
+                     Text{" was dispelled by Sheik.", /*french*/"", /*spanish*/""},
+  });
+
+  HintText OneToThreeTrials = HintText::Exclude({
+                     //obscure text
+                     Text{" protects Ganons Tower.", /*french*/"", /*spanish*/""},
+  });
+
+  /*--------------------------
   |        ALTAR TEXT        |
   ---------------------------*/
 
