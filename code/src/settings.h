@@ -291,6 +291,8 @@ typedef struct {
   u8 damageMultiplier;
   u8 startingTime;
   u8 gossipStoneHints;
+  u8 chestAnimations;
+  u8 chestSize;
   u8 generateSpoilerLog;
   u8 menuOpeningButton;
 
@@ -349,6 +351,7 @@ typedef struct {
   u8 startingBottle3;
   u8 startingRutoBottle;
   u8 startingOcarina;
+  u8 startingKokiriSword;
   u8 startingBiggoronSword;
   u8 startingMagicMeter;
   u8 startingDoubleDefense;

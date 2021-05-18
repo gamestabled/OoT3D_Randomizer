@@ -250,6 +250,14 @@ ItemRow* ItemTable_GetItemRow(u16 itemId) {
     return itemRow;
 }
 
+ItemRow* ItemTable_GetItemRowFromIndex(u8 rowIndex) {
+    return &rItemTable[rowIndex];
+}
+
+void ItemTable_SetBombchusChestType(u8 type){
+    rItemTable[0x6B].chestType = type;
+}
+
 u16 ItemTable_ResolveUpgrades(u16 itemId) {
     for (;;) {
         ItemRow* itemRow = ItemTable_GetItemRow(itemId);
