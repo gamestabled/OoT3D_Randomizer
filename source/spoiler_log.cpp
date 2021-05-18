@@ -5,6 +5,7 @@
 #include "item_location.hpp"
 #include "random.hpp"
 #include "settings.hpp"
+#include "trial.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -183,14 +184,26 @@ static void WriteSettings() {
   }
 
   //Master Quest Dungeons
-  logtxt += "\nMaster Quest Dungeons:\n";
-  for (const auto* dungeon : Dungeon::dungeonList) {
-    if (dungeon->IsMQ()) {
-      logtxt += std::string("\t").append(dungeon->GetName()).append("\n");
+  if (Settings::MQDungeonCount.IsNot(0)) {
+    logtxt += "\nMaster Quest Dungeons:\n";
+    for (const auto* dungeon : Dungeon::dungeonList) {
+      if (dungeon->IsMQ()) {
+        logtxt += std::string("\t").append(dungeon->GetName()).append("\n");
+      }
     }
+    logtxt += '\n';
   }
-  logtxt += '\n';
 
+  //Required Trials
+  if (Settings::GanonsTrialsCount.IsNot(0)) {
+    logtxt += "\nRequired Trials:\n";
+    for (const auto* trial : Trial::trialList) {
+      if (trial->IsRequired()) {
+        logtxt += std::string("\t").append(trial->GetName().english).append("\n");
+      }
+    }
+    logtxt += '\n';
+  }
 }
 
 bool SpoilerLog_Write() {
