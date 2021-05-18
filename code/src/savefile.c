@@ -382,6 +382,10 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.items[SLOT_OCARINA] = ITEM_OCARINA_FAIRY + (gSettingsContext.startingOcarina - 1);
     }
 
+    if (gSettingsContext.startingKokiriSword) {
+        gSaveContext.childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
+    }
+
     if (gSettingsContext.startingBiggoronSword) {
         gSaveContext.bgsFlag = 1;
         gSaveContext.bgsHitsLeft = 1;

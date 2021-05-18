@@ -672,6 +672,7 @@ namespace Settings {
     ctx.startingBottle3       = StartingBottle3.Value<u8>();
     ctx.startingRutoBottle    = StartingRutoBottle.Value<u8>();
     ctx.startingOcarina       = StartingOcarina.Value<u8>();
+    ctx.startingKokiriSword   = StartingKokiriSword.Value<u8>();
     ctx.startingBiggoronSword = StartingBiggoronSword.Value<u8>();
     ctx.startingMagicMeter    = StartingMagicMeter.Value<u8>();
     ctx.startingDoubleDefense = StartingDoubleDefense.Value<u8>();

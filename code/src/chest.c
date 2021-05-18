@@ -50,6 +50,10 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
         if((thisx->params & 0xF000) == 0x8000 && globalCtx->sceneNum==13 && thisx->room==9){
             thisx->world.pos.z = -962.0f;
         }
+        //Move MQ Deku Tree SoT chest so it is reachable
+        if(thisx->params==0x5AA0 && globalCtx->sceneNum==0 && thisx->room==5){
+            thisx->world.pos.x = -1380.0f;
+        }
     }
     else{
         //Make chest small
