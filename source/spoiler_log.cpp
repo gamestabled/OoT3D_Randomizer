@@ -156,9 +156,11 @@ static void WriteSettings() {
 
   //List Starting Inventory
   logtxt += "\nStarting Inventory:\n";
-  for (auto& i : Settings::startingInventoryOptions) {
-    if (i->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
-      std::string item = i->GetSelectedOptionText();
+  //start i at 3 to skip over the toggle, 'Start with Consumables', and 'Start with Max Rupees'
+  for (size_t i = 3; i < Settings::startingInventoryOptions.size(); i++) {
+    auto setting = Settings::startingInventoryOptions[i];
+    if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
+      std::string item = setting->GetSelectedOptionText();
 
       logtxt += "\t";
       logtxt += item;
