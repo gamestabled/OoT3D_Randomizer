@@ -283,7 +283,7 @@ namespace Hints {
                        //obscure text
                        Text{"a lie detector",     /*french*/"", /*spanish*/"el detector de ilusiones"},
                        Text{"a ghost tracker",    /*french*/"", /*spanish*/"el rastreador paranormal"},
-                       Text{"true sight", "       ", "el ojo que todo ve"},
+                       Text{"true sight",         /*french*/"", /*spanish*/"el ojo que todo ve"},
                        Text{"a detective's tool", /*french*/"", /*spanish*/"la revelación verdadera"},
                      },
                        //clear text
