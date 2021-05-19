@@ -7,7 +7,7 @@
 #include "models.h"
 #include <stddef.h>
 
-static s32 rShopsanityPrices[64] = { 0 };
+static s32 rShopsanityPrices[32] = { 0 };
 
 s32 Shop_CheckCanBuyBombchus(void) {
     const u32 slot = ItemSlots[ITEM_BOMBCHU];
@@ -65,11 +65,12 @@ u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
         shopNum = SHOP_KAKARIKO_BAZAAR;
     }
     shopNum = shopNumToIndex[shopNum]; //Transfer to the proper shop index
-    return shopNum*8 + item->shopItemPosition;
+    u16 index = shopNum*8 + item->shopItemPosition; //Index first by shop num then by item within shop
+    return 4*((index / 4) / 2) + index % 4; //Transform index- For more explanation see shops.cpp TransformShopIndex
 }
 
 s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
-    return rShopsanityPrices[ShopsanityItem_GetIndex(item)]; //Get price from table indexed first by shop then by shop item
+    return rShopsanityPrices[ShopsanityItem_GetIndex(item)]; //Get price from table 
 }
 
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
@@ -114,7 +115,6 @@ void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
         item->basePrice = ShopsanityItem_GetPrice(shopItem);
         item->itemCount = 1;
         u16 index = ShopsanityItem_GetIndex(shopItem);
-        index = 4*((index / 4) / 2) + index % 4; //Transform index- For more explanation see item_location.cpp PlaceItemInLocation()
         item->actor.textId = 0x9200 + index*2;
         item->itemBuyPromptTextId = 0x9200 + index*2+1;
     }

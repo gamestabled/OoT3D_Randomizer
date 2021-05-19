@@ -88,7 +88,7 @@ void SetVanillaShopItems() {
     BuyArrows50,
     BuyDekuStick1,
     BuyArrows30,
-    //Vanilla ZD
+    //Vanilla ZD Shop
     BuyZoraTunic,
     BuyArrows10,
     BuyHeart,
@@ -158,7 +158,7 @@ int GetShopsanityReplaceAmount() {
   }
 }
 
-std::map<std::string, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"GC Shop", 6},{"ZD Shop", 7}}; 
+std::map<std::string, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}}; 
 int GetShopIndex(ItemLocation* loc) {
   //Kind of hacky, but extract the shop and item position from the name
   std::string name = std::basic_string(loc->GetName());
@@ -167,6 +167,17 @@ int GetShopIndex(ItemLocation* loc) {
   int pos = std::stoi(name.substr(split+6, 1)) - 1;
   int shopnum = ShopNameToNum[shop];
   return shopnum*8 + pos;
+}
+
+//Without this transformed index, shop-related tables and arrays would need 64 entries- But only half of that is needed for shopsanity
+//So we use this transformation to map only important indices to an array with 32 entries in the following manner:
+//Shop index:  4  5  6  7 12 13 14 15 20 21 22 23...
+//Transformed: 0  1  2  3  4  5  6  7  8  9 10 11...
+//So we first divide the shop index by 4, then by 2 which basically tells us the index of the shop it's in,
+//then multiply by 4 since there are 4 items per shop
+//And finally we use a modulo by 4 to get the index within the "shop" of 4 items, and add
+int TransformShopIndex(int index) {
+  return 4*((index / 4) / 2) + index % 4; 
 }
 
 //Specialized shuffle function for shop items

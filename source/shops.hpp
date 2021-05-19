@@ -16,6 +16,7 @@ extern s16 GetRandomScrubPrice();
 extern void PlaceShopItems();
 extern int GetShopsanityReplaceAmount();
 extern int GetShopIndex(ItemLocation* loc);
+extern int TransformShopIndex(int index);
 extern void ShuffleShop(std::vector<Item>& ShopItems, std::vector<int> indicesToExclude);
 
 extern std::vector<Item> ShopItems;
