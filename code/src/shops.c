@@ -34,20 +34,6 @@ s32 numShopItemsLoaded = 0; // Used to determine params. Reset this to 0 in ossa
 
 #define EnGirlA_InitializeItemAction ((EnGirlAActionFunc)0x14D5C8)
 
-void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
-    ShopsanityItem* shopItem = (ShopsanityItem*)item;
-
-    u32 itemBit = 1 << shopItem->shopItemPosition;
-
-    if (gSaveContext.entranceIndex == 0x00B7) {
-        gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
-    } else {
-        gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk |= itemBit;
-    }
-
-    Rupees_ChangeBy(-item->basePrice);
-}
-
 //Action IDs for respective items defined in item_table.c
 
 u8 ShopsanityItem_IsBombs(u8 id) {
@@ -66,6 +52,24 @@ u8 ShopsanityItem_IsBombchus(u8 id) {
     return id == 0x09 || id == 0x96 || id == 0x97;
 }
 
+
+void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
+    ShopsanityItem* shopItem = (ShopsanityItem*)item;
+
+    u32 itemBit = 1 << shopItem->shopItemPosition;
+
+    u8 id = shopItem->itemRow->actionId;
+    //Make it so ammo does not sell out
+    if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) || ShopsanityItem_IsBombchus(id))) {
+        if (gSaveContext.entranceIndex == 0x00B7) {
+            gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
+        } else {
+            gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk |= itemBit;
+        }
+    }
+
+    Rupees_ChangeBy(-item->basePrice);
+}
 
 s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
     if (item->basePrice <= gSaveContext.rupees) { //Has enough rupees
