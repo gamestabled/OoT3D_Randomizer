@@ -868,10 +868,10 @@ ItemLocation Kak_BazaarItem1                              = ItemLocation::Base(0
 ItemLocation Kak_BazaarItem2                              = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                &Hints::Kak_BazaarItem2,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem3                              = ItemLocation::Base(0x2C, 0x3A, "Kak Bazaar Item 3",                                &Hints::Kak_BazaarItem3,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem4                              = ItemLocation::Base(0x2C, 0x3B, "Kak Bazaar Item 4",                                &Hints::Kak_BazaarItem4,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem5                              = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 5",                                &Hints::Kak_BazaarItem5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem6                              = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 6",                                &Hints::Kak_BazaarItem6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem7                              = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 7",                                &Hints::Kak_BazaarItem7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem8                              = ItemLocation::Base(0x2C, 0x40, "Kak Bazaar Item 8",                                &Hints::Kak_BazaarItem8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem5                              = ItemLocation::Base(0x2C, 0x3C, "Kak Bazaar Item 5",                                &Hints::Kak_BazaarItem5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem6                              = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 6",                                &Hints::Kak_BazaarItem6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem7                              = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 7",                                &Hints::Kak_BazaarItem7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem8                              = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 8",                                &Hints::Kak_BazaarItem8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 std::vector<ItemLocation*> Kak_BazaarLocations = {
   &Kak_BazaarItem1,
   &Kak_BazaarItem2,
