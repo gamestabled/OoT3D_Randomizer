@@ -48,8 +48,49 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     Rupees_ChangeBy(-item->basePrice);
 }
 
+//Action IDs for respective items defined in item_table.c
+
+u8 ShopsanityItem_IsBombs(u8 id) {
+    return id == 0x8E || id == 0x02 || id == 0x8F || id == 0x90 || id == 0x91;
+}
+
+u8 ShopsanityItem_IsArrows(u8 id) {
+    return id == 0x92 || id == 0x93 || id == 0x94;
+}
+
+u8 ShopsanityItem_IsSeeds(u8 id) {
+    return id == 0x58 || id == 0x95;
+}
+
+u8 ShopsanityItem_IsBombchus(u8 id) {
+    return id == 0x09 || id == 0x96 || id == 0x97;
+}
+
+
 s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
     if (item->basePrice <= gSaveContext.rupees) { //Has enough rupees
+        u8 id = ((ShopsanityItem*)item)->itemRow->actionId;
+        if (ShopsanityItem_IsBombs(id)) {
+            if ((gSaveContext.upgrades >> 3) & 0x7) { //Has bomb bag
+                return CANBUY_RESULT_0;
+            }
+            return CANBUY_RESULT_CANT_GET_NOW;
+        }
+        else if (ShopsanityItem_IsArrows(id)) {
+            if (gSaveContext.upgrades & 0x7) { //Has bow
+                return CANBUY_RESULT_0;
+            }
+            return CANBUY_RESULT_CANT_GET_NOW;
+        }
+        else if (ShopsanityItem_IsSeeds(id)) {
+            if ((gSaveContext.upgrades >> 14) & 0x7) { //Has slingshot
+                return CANBUY_RESULT_0;
+            }
+            return CANBUY_RESULT_CANT_GET_NOW;
+        }
+        else if (ShopsanityItem_IsBombchus(id)) {
+            return Shop_CheckCanBuyBombchus();
+        }
         return CANBUY_RESULT_0;
     } else { //Not enough rupees
         return CANBUY_RESULT_NEED_RUPEES;
@@ -181,7 +222,12 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
         item->super.unk_1FC = 1.0f;
 
         item->super.actionFunc2 = ShopsanityItem_InitializeItem;
-        item->itemRow = ItemTable_GetItemRow(ItemTable_ResolveUpgrades(override.value.itemId));
+        u16 id = override.value.itemId;
+        //For shop ammo items, we don't want to make them turn into blupees without the appropriate capacity, instead just disallow purchase in the canbuy check
+        if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20 || id == GI_ARROWS_SMALL || id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
+            id = ItemTable_ResolveUpgrades(override.value.itemId);
+        }
+        item->itemRow = ItemTable_GetItemRow(id);
         
         objBankIndex = ExtendedObject_GetIndex(&globalCtx->objectCtx, item->itemRow->objectId);
         if (objBankIndex < 0) {
