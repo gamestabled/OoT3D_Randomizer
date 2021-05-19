@@ -49,9 +49,9 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
 }
 
 s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
-    if (item->basePrice <= gSaveContext.rupees) {
+    if (item->basePrice <= gSaveContext.rupees) { //Has enough rupees
         return CANBUY_RESULT_0;
-    } else {
+    } else { //Not enough rupees
         return CANBUY_RESULT_NEED_RUPEES;
     }
 }
@@ -136,6 +136,9 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
         item->canBuyFunc = shopItemEntry->canBuyFunc;
         item->itemGiveFunc = shopItemEntry->itemGiveFunc;
         item->buyEventFunc = shopItemEntry->buyEventFunc;
+        if (item->getItemId == GI_TUNIC_GORON || item->getItemId == GI_TUNIC_ZORA) { //Override buyable functions for tunics
+            item->canBuyFunc = ShopsanityItem_CanBuy;
+        }
         item->basePrice = shopItemEntry->price;
         item->itemCount = shopItemEntry->count;
         item->actor.textId = shopItemEntry->itemDescTextId;
