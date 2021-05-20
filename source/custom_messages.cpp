@@ -129,22 +129,28 @@ constexpr std::array DungeonColors = {
 
     //textBoxType and textBoxPosition are defined here: https://wiki.cloudmodding.com/oot/Text_Format#Message_Id
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-        std::string englishText, std::string frenchText, std::string spanishText) {
+                       std::string englishText, std::string frenchText, std::string spanishText) {
             MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
-            while ((englishText.size() % 4) != 0) englishText += "\0"s;
+            while ((englishText.size() % 4) != 0) {
+              englishText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[ENGLISH_U].length = englishText.size();
             messageData << englishText;
 
-            while ((frenchText.size() % 4) != 0) frenchText += "\0"s;
+            while ((frenchText.size() % 4) != 0) {
+              frenchText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[FRENCH_U].length = frenchText.size();
             messageData << frenchText;
 
-            while ((spanishText.size() % 4) != 0) spanishText += "\0"s;
+            while ((spanishText.size() % 4) != 0) {
+              spanishText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[SPANISH_U].length = spanishText.size();
@@ -153,7 +159,7 @@ constexpr std::array DungeonColors = {
             messageEntries.insert(newEntry);
     }
 
-    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, Text text) {
+    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text) {
         CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetEnglish(), text.GetFrench(), text.GetSpanish());
     }
 

@@ -138,18 +138,22 @@ public:
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::GanonLine};
     }
 
-    Text GetObscure() {
-        return RandomElement(obscureText, false);
+    Text& GetObscure() {
+        return RandomElement(obscureText);
     }
 
-    Text GetClear() {
+    const Text& GetObscure() const {
+        return RandomElement(obscureText);
+    }
+
+    const Text& GetClear() const {
         if (clearText.GetEnglish() == NONE) {
             return GetObscure();
         }
         return clearText;
     }
 
-    Text GetText() {
+    const Text& GetText() const {
         if (Settings::ClearerHints) {
             return GetClear();
         }

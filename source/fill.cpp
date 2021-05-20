@@ -100,8 +100,8 @@ static int GetMaxGSCount() {
 //This function will return a vector of ItemLocations that are accessible with
 //where items have been placed so far within the world. The allowedLocations argument
 //specifies the pool of locations that we're trying to search for an accessible location in
-std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, SearchMode mode /*= REACHABILITY_SEARCH*/) {
-
+std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation*>& allowedLocations,
+                                                  SearchMode mode /*= REACHABILITY_SEARCH*/) {
   std::vector<ItemLocation*> accessibleLocations = {};
 
   //Reset all access to begin a new search
@@ -264,7 +264,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
     }
 
   }
-  erase_if(accessibleLocations, [allowedLocations](ItemLocation* loc){
+  erase_if(accessibleLocations, [&allowedLocations](ItemLocation* loc){
     for (ItemLocation* allowedLocation : allowedLocations) {
       if (loc == allowedLocation) {
         return false;
@@ -350,8 +350,7 @@ static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locatio
 | This method helps distribution of items locked behind many requirements.
 | - OoT Randomizer
 */
-static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allowedLocations, bool setLocationsAsHintable = false) {
-
+static void AssumedFill(const std::vector<Item>& items, const std::vector<ItemLocation*>& allowedLocations, bool setLocationsAsHintable = false) {
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[H1;1ERROR: MORE ITEMS THAN LOCATIONS");
   }
@@ -384,7 +383,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       }
 
       //get all accessible locations that are allowed
-      std::vector<ItemLocation*> accessibleLocations = GetAccessibleLocations(allowedLocations);
+      const std::vector<ItemLocation*> accessibleLocations = GetAccessibleLocations(allowedLocations);
 
       //retry if there are no more locations to place items
       if (accessibleLocations.empty()) {
@@ -409,7 +408,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       }
 
       //place the item within one of the allowed locations
-      ItemLocation* selectedLocation = RandomElement(accessibleLocations, false);
+      ItemLocation* selectedLocation = RandomElement(accessibleLocations);
       PlaceItemInLocation(selectedLocation, item);
       attemptedLocations.push_back(selectedLocation);
 
