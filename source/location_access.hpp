@@ -588,4 +588,5 @@ namespace Exits {
 
   extern void AccessReset();
   extern void ResetAllLocations();
+  extern void SetParentRegions();
 } //namespace Exits
