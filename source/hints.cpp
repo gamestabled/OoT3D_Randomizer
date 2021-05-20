@@ -107,10 +107,7 @@ std::array<HintSetting, 4> hintSettingTable = {
 };
 
 static Exit* GetHintRegion(Exit* exit) {
-  if (exit == nullptr) {
-    CitraPrint("AHHHH");
-    return &Exits::NoExit;
-  }
+
   std::vector<Exit*> alreadyChecked = {};
   std::vector<Exit*> spotQueue = {exit};
 
