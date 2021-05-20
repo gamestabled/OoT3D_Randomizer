@@ -165,16 +165,11 @@ public:
     }
 
     bool operator==(const HintText& right) const {
-        if (obscureText.size() != right.obscureText.size()) {
-          return false;
-        }
-        for (size_t i = 0; i < obscureText.size(); i++) {
-          if (obscureText[i] != right.obscureText[i]) {
-            return false;
-          }
-        }
-
-        return clearText == right.clearText;
+        return obscureText == right.obscureText &&
+               clearText == right.clearText;
+    }
+    bool operator!=(const HintText& right) const {
+        return !operator==(right);
     }
 
 private:
