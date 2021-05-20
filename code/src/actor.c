@@ -22,6 +22,7 @@
 #include "drawbridge.h"
 #include "king_zora.h"
 #include "collapsing_castle.h"
+#include "demo_kankyo.h"
 
 
 #define OBJECT_GI_HEARTS 189
@@ -43,6 +44,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
+
+    gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 
