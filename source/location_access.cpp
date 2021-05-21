@@ -2553,8 +2553,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit GanonsCastle_Tower = Exit("Ganon's Castle Tower", "Ganons Castle", &Hints::GanonsCastle, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(&GanonsCastle_BossKeyChest, []{return true;}),
-                  //Ganondorf Hint
-                  ItemLocationPairing(&Ganon, []{return BossKeyGanonsCastle && CanUse(CanUseItem::Light_Arrows);}),
+                  ItemLocationPairing(&GanondorfHint,             []{return BossKeyGanonsCastle;}),
+                  ItemLocationPairing(&Ganon,                     []{return BossKeyGanonsCastle && CanUse(CanUseItem::Light_Arrows);}),
   }, {});
 
   /*---------------------------

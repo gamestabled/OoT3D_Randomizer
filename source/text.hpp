@@ -4,6 +4,7 @@
 
 class Text {
 public:
+    Text() = default;
     Text(std::string english_, std::string french_, std::string spanish_)
       : english(std::move(english_)),
         french(std::move(french_)),

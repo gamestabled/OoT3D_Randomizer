@@ -380,7 +380,31 @@ static void CreateTrialHints() {
   }
 }
 
+static void CreateGanonText() {
+
+  //funny ganon line
+  auto ganonText = RandomElement(Hints::ganonLines)->GetText();
+  CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
+
+  //Get the location of the light arrows
+  auto lightArrowLocation = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == I_LightArrows;});
+
+  Text text;
+  //If there is no light arrow location, it was in the player's inventory at the start
+  if (lightArrowLocation.empty()) {
+    text = Hints::LightArrowLocation.GetText()+Hints::YourPocket.GetText();
+  } else {
+    text = Hints::LightArrowLocation.GetText()+GetHintRegion(lightArrowLocation[0]->GetParentRegion())->hintText->GetText();
+  }
+  text = text + "!";
+
+  CreateMessageFromTextObject(0x70CC, 0, 2, 3, AddColorsAndFormat(text));
+}
+
 void CreateAllHints() {
+
+  CreateGanonText();
+
   PlacementLog_Msg("\nNOW CREATING HINTS\n");
   HintSetting hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];
 

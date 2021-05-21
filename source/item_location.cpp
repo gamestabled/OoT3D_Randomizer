@@ -967,6 +967,8 @@ ItemLocation LW_NearShortcutsGrottoGossipStone            = ItemLocation::HintSt
 ItemLocation DMT_StormsGrottoGossipStone                  = ItemLocation::HintStone(0x00, 0x37, "DMT Storms Grotto Gossip Stone",              {});
 ItemLocation DMC_UpperGrottoGossipStone                   = ItemLocation::HintStone(0x00, 0x3A, "DMC Upper Grotto Gossip Stone",               {});
 
+ItemLocation GanondorfHint                                = ItemLocation::Hint     (0x00, 0x00, "Ganondorf Hint",                              {});
+
 //List of shop location lists, used for shop shuffle
 std::vector<std::vector<ItemLocation*>> ShopLocationLists = {
   KF_ShopLocations,
@@ -1477,6 +1479,8 @@ void LocationReset() {
   for (ItemLocation * il : gossipStoneLocations) {
     il->RemoveFromPool();
   }
+
+  (&GanondorfHint)->RemoveFromPool();
 }
 
 void ItemReset() {

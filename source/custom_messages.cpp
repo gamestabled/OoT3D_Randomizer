@@ -334,6 +334,13 @@ constexpr std::array DungeonColors = {
             lastNewline = lastSpace + NEWLINE().length();
           }
         }
+        //clean up any remaining '&' characters
+        size_t ampersand = textStr->find('&');
+        while (ampersand != std::string::npos) {
+          textStr->replace(ampersand, 1, NEWLINE());
+          ampersand = textStr->find('&');
+        }
+
         //insert box break
         size_t carrotSymbol = textStr->find('^');
         while (carrotSymbol != std::string::npos) {

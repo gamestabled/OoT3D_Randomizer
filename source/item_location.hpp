@@ -224,6 +224,10 @@ public:
         return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintText, std::move(categories)};
     }
 
+    static auto Hint(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), &Hints::NoHintText, std::move(categories)};
+    }
+
     static auto HintStone(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), &Hints::NoHintText, std::move(categories)};
     }
@@ -1145,6 +1149,8 @@ extern ItemLocation KF_StormsGrottoGossipStone;
 extern ItemLocation LW_NearShortcutsGrottoGossipStone;
 extern ItemLocation DMT_StormsGrottoGossipStone;
 extern ItemLocation DMC_UpperGrottoGossipStone;
+
+extern ItemLocation GanondorfHint;
 
 extern std::vector<std::vector<ItemLocation *>> ShopLocationLists;
 
