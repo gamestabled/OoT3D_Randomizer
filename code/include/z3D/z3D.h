@@ -550,4 +550,8 @@ typedef void (*PlaySound_proc)(u32);
 #define PlaySound_addr 0x35C528
 #define PlaySound ((PlaySound_proc)PlaySound_addr) //this function plays sound effects and music tracks, overlaid on top of the current BGM
 
+typedef Actor* (*Actor_Spawn_proc)(ActorContext *actorCtx,GlobalContext *globalCtx,s16 actorId,float posX,float posY,float posZ,s16 rotX,s16 rotY,s16 rotZ,s16 params);
+#define Actor_Spawn_addr 0x3738D0
+#define Actor_Spawn ((Actor_Spawn_proc)Actor_Spawn_addr)
+
 #endif //_Z3D_H_

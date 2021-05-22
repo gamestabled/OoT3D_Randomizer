@@ -9,18 +9,107 @@
 #include "random.hpp"
 #include "spoiler_log.hpp"
 #include "fill.hpp"
-#include "hints.hpp"
 #include "hint_list.hpp"
+#include "trial.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
+using namespace Trial;
+
+const HintSetting uselessHints =  {
+  .dungeonsWothLimit = 2,
+  .dungeonsBarrenLimit = 1,
+  .namedItemsRequired = false,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Woth,      .order =  3, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Barren,    .order =  4, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Entrance,  .order =  5, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Random,    .order =  7, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Item,      .order =  8, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Song,      .order =  9, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Overworld, .order = 10, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Junk,      .order = 12, .weight = 99, .fixed = 0, .copies = 0},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 0},
+  },
+};
+
+const HintSetting balancedHints = {
+  .dungeonsWothLimit = 2,
+  .dungeonsBarrenLimit = 1,
+  .namedItemsRequired = true,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Woth,      .order =  3, .weight =  7, .fixed = 0, .copies = 1},
+    {.type = HintType::Barren,    .order =  4, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Entrance,  .order =  5, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Random,    .order =  7, .weight = 12, .fixed = 0, .copies = 1},
+    {.type = HintType::Item,      .order =  8, .weight = 10, .fixed = 0, .copies = 1},
+    {.type = HintType::Song,      .order =  9, .weight =  2, .fixed = 0, .copies = 1},
+    {.type = HintType::Overworld, .order = 10, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  3, .fixed = 0, .copies = 1},
+    {.type = HintType::Junk,      .order = 12, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 1},
+  },
+};
+
+const HintSetting strongHints = {
+  .dungeonsWothLimit = 2,
+  .dungeonsBarrenLimit = 1,
+  .namedItemsRequired = true,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 2},
+    {.type = HintType::Woth,      .order =  3, .weight = 12, .fixed = 0, .copies = 2},
+    {.type = HintType::Barren,    .order =  4, .weight = 12, .fixed = 0, .copies = 1},
+    {.type = HintType::Entrance,  .order =  5, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Random,    .order =  7, .weight =  8, .fixed = 0, .copies = 1},
+    {.type = HintType::Item,      .order =  8, .weight =  8, .fixed = 0, .copies = 1},
+    {.type = HintType::Song,      .order =  9, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Overworld, .order = 10, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::Junk,      .order = 12, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 1},
+  },
+};
+
+const HintSetting veryStrongHints = {
+  .dungeonsWothLimit = 40,
+  .dungeonsBarrenLimit = 40,
+  .namedItemsRequired = true,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 2},
+    {.type = HintType::Woth,      .order =  3, .weight = 15, .fixed = 0, .copies = 2},
+    {.type = HintType::Barren,    .order =  4, .weight = 15, .fixed = 0, .copies = 1},
+    {.type = HintType::Entrance,  .order =  5, .weight = 10, .fixed = 0, .copies = 1},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Random,    .order =  7, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Item,      .order =  8, .weight =  5, .fixed = 0, .copies = 1},
+    {.type = HintType::Song,      .order =  9, .weight =  2, .fixed = 0, .copies = 1},
+    {.type = HintType::Overworld, .order = 10, .weight =  7, .fixed = 0, .copies = 1},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  7, .fixed = 0, .copies = 1},
+    {.type = HintType::Junk,      .order = 12, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 1},
+  },
+};
+
+std::array<HintSetting, 4> hintSettingTable = {
+ uselessHints,
+ balancedHints,
+ strongHints,
+ veryStrongHints,
+};
 
 static Exit* GetHintRegion(Exit* exit) {
-  if (exit == nullptr) {
-    CitraPrint("AHHHH");
-    return &Exits::NoExit;
-  }
+
   std::vector<Exit*> alreadyChecked = {};
   std::vector<Exit*> spotQueue = {exit};
 
@@ -54,15 +143,15 @@ static Exit* GetHintRegion(Exit* exit) {
   return &Exits::NoExit;
 }
 
-static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation) {
+static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation = &Ganon) {
   //temporarily remove the hinted location's item, and then perform a
-  //reachability search for gossip stone locations. 
+  //reachability search for gossip stone locations.
   Item originalItem = hintedLocation->GetPlacedItem();
   hintedLocation->SetPlacedItem(NoItem);
-  hintedLocation->SetDelayedItem(originalItem);
 
   LogicReset();
   std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleLocations(gossipStoneLocations);
+  hintedLocation->SetPlacedItem(originalItem);
 
   return accessibleGossipStones;
 }
@@ -85,7 +174,6 @@ static void CreateLocationHint(std::vector<ItemLocation*> possibleHintLocations)
 
   ItemLocation* hintedLocation = RandomElement(possibleHintLocations, false);
   std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
 
   PlacementLog_Msg("\tLocation: ");
   PlacementLog_Msg(hintedLocation->GetName());
@@ -145,7 +233,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
 
   //get an accessible gossip stone
   std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
+
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
@@ -190,7 +278,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLo
 
   //get an accessible gossip stone
   std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
+
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
@@ -238,7 +326,7 @@ static void CreateRandomLocationHint(bool goodItem = false){
 
   //get an acessible gossip stone
   std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
-  hintedLocation->SaveDelayedItem();
+
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
@@ -318,6 +406,67 @@ static std::vector<ItemLocation*> CalculateBarrenRegions() {
   return finalBarrenLocations;
 }
 
+static void CreateTrialHints() {
+    //six trials
+  if (RandomGanonsTrials && GanonsTrialsCount.Is(6)) {
+
+    //get a random gossip stone
+    auto gossipStones = GetAccessibleGossipStones();
+    auto gossipStone = RandomElement(gossipStones, false);
+
+    //make hint
+    auto hintText = Hints::Prefix.GetText() + Hints::SixTrials.GetText();
+    AddHint(hintText, gossipStone, {QM_PINK});
+
+    //zero trials
+  } else if (RandomGanonsTrials && GanonsTrialsCount.Is(0)) {
+
+    //get a random gossip stone
+    auto gossipStones = GetAccessibleGossipStones();
+    auto gossipStone = RandomElement(gossipStones, false);
+
+    //make hint
+    auto hintText = Hints::Prefix.GetText() + Hints::ZeroTrials.GetText();
+    AddHint(hintText, gossipStone, {QM_YELLOW});
+
+    //4 or 5 required trials
+  } else if (GanonsTrialsCount.Is(5) || GanonsTrialsCount.Is(4)) {
+
+    //get skipped trials
+    std::vector<TrialInfo*> trials = {};
+    trials.assign(trialList.begin(), trialList.end());
+    auto skippedTrials = FilterFromPool(trials, [](TrialInfo* trial){return trial->IsSkipped();});
+
+    //create a hint for each skipped trial
+    for (auto& trial : skippedTrials) {
+      //get a random gossip stone
+      auto gossipStones = GetAccessibleGossipStones();
+      auto gossipStone = RandomElement(gossipStones, false);
+
+      //make hint
+      auto hintText = Hints::Prefix.GetText()+"#"+trial->GetName()+"#"+Hints::FourToFiveTrials.GetText();
+      AddHint(hintText, gossipStone, {QM_YELLOW});
+    }
+    //1 to 3 trials
+  } else if (GanonsTrialsCount.Value<u8>() >= 1 && GanonsTrialsCount.Value<u8>() <= 3) {
+    //get requried trials
+    std::vector<TrialInfo*> trials = {};
+    trials.assign(trialList.begin(), trialList.end());
+    auto requiredTrials = FilterFromPool(trials, [](TrialInfo* trial){return trial->IsRequired();});
+
+    //create a hint for each required trial
+    for (auto& trial : requiredTrials) {
+      //get a random gossip stone
+      auto gossipStones = GetAccessibleGossipStones();
+      auto gossipStone = RandomElement(gossipStones, false);
+
+      //make hint
+      auto hintText = Hints::Prefix.GetText()+"#"+trial->GetName()+"#"+Hints::OneToThreeTrials.GetText();
+      AddHint(hintText, gossipStone, {QM_PINK});
+    }
+  }
+}
+
 void CreateAllHints() {
   PlacementLog_Msg("\nNOW CREATING HINTS\n");
   HintSetting hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];
@@ -336,7 +485,10 @@ void CreateAllHints() {
     }
   }
 
-  //TODO: Trial Hint locations
+  //Add 'trial' location hints
+  if (hintSetting.distTable[static_cast<int>(HintType::Trial)].copies > 0) {
+    CreateTrialHints();
+  }
 
   //create a vector with each hint type proportional to it's weight in the distribution setting.
   //ootr uses a weighted probability function to decide hint types, but selecting randomly from

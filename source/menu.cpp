@@ -14,6 +14,7 @@
 #include "randomizer.hpp"
 #include "settings.hpp"
 #include "spoiler_log.hpp"
+#include "location_access.hpp"
 
 namespace {
   bool seedChanged;
@@ -49,6 +50,8 @@ void PrintTopScreen() {
 }
 
 void MenuInit() {
+
+  Exits::SetParentRegions();
 
   Settings::SetDefaultSettings();
 
