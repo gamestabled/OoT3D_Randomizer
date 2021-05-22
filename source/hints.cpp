@@ -9,18 +9,105 @@
 #include "random.hpp"
 #include "spoiler_log.hpp"
 #include "fill.hpp"
-#include "hints.hpp"
 #include "hint_list.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
 
+const HintSetting uselessHints =  {
+  .dungeonsWothLimit = 2,
+  .dungeonsBarrenLimit = 1,
+  .namedItemsRequired = false,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Woth,      .order =  3, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Barren,    .order =  4, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Entrance,  .order =  5, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Random,    .order =  7, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Item,      .order =  8, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Song,      .order =  9, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Overworld, .order = 10, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  0, .fixed = 0, .copies = 0},
+    {.type = HintType::Junk,      .order = 12, .weight = 99, .fixed = 0, .copies = 0},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 0},
+  },
+};
+
+const HintSetting balancedHints = {
+  .dungeonsWothLimit = 2,
+  .dungeonsBarrenLimit = 1,
+  .namedItemsRequired = true,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Woth,      .order =  3, .weight =  7, .fixed = 0, .copies = 1},
+    {.type = HintType::Barren,    .order =  4, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Entrance,  .order =  5, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Random,    .order =  7, .weight = 12, .fixed = 0, .copies = 1},
+    {.type = HintType::Item,      .order =  8, .weight = 10, .fixed = 0, .copies = 1},
+    {.type = HintType::Song,      .order =  9, .weight =  2, .fixed = 0, .copies = 1},
+    {.type = HintType::Overworld, .order = 10, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  3, .fixed = 0, .copies = 1},
+    {.type = HintType::Junk,      .order = 12, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 1},
+  },
+};
+
+const HintSetting strongHints = {
+  .dungeonsWothLimit = 2,
+  .dungeonsBarrenLimit = 1,
+  .namedItemsRequired = true,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 2},
+    {.type = HintType::Woth,      .order =  3, .weight = 12, .fixed = 0, .copies = 2},
+    {.type = HintType::Barren,    .order =  4, .weight = 12, .fixed = 0, .copies = 1},
+    {.type = HintType::Entrance,  .order =  5, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Random,    .order =  7, .weight =  8, .fixed = 0, .copies = 1},
+    {.type = HintType::Item,      .order =  8, .weight =  8, .fixed = 0, .copies = 1},
+    {.type = HintType::Song,      .order =  9, .weight =  4, .fixed = 0, .copies = 1},
+    {.type = HintType::Overworld, .order = 10, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  6, .fixed = 0, .copies = 1},
+    {.type = HintType::Junk,      .order = 12, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 1},
+  },
+};
+
+const HintSetting veryStrongHints = {
+  .dungeonsWothLimit = 40,
+  .dungeonsBarrenLimit = 40,
+  .namedItemsRequired = true,
+  .distTable = {
+    {.type = HintType::Trial,     .order =  1, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Always,    .order =  2, .weight =  0, .fixed = 0, .copies = 2},
+    {.type = HintType::Woth,      .order =  3, .weight = 15, .fixed = 0, .copies = 2},
+    {.type = HintType::Barren,    .order =  4, .weight = 15, .fixed = 0, .copies = 1},
+    {.type = HintType::Entrance,  .order =  5, .weight = 10, .fixed = 0, .copies = 1},
+    {.type = HintType::Sometimes, .order =  6, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Random,    .order =  7, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::Item,      .order =  8, .weight =  5, .fixed = 0, .copies = 1},
+    {.type = HintType::Song,      .order =  9, .weight =  2, .fixed = 0, .copies = 1},
+    {.type = HintType::Overworld, .order = 10, .weight =  7, .fixed = 0, .copies = 1},
+    {.type = HintType::Dungeon,   .order = 11, .weight =  7, .fixed = 0, .copies = 1},
+    {.type = HintType::Junk,      .order = 12, .weight =  0, .fixed = 0, .copies = 1},
+    {.type = HintType::NamedItem, .order = 13, .weight =  0, .fixed = 0, .copies = 1},
+  },
+};
+
+std::array<HintSetting, 4> hintSettingTable = {
+ uselessHints,
+ balancedHints,
+ strongHints,
+ veryStrongHints,
+};
+
 static Exit* GetHintRegion(Exit* exit) {
-  if (exit == nullptr) {
-    CitraPrint("AHHHH");
-    return &Exits::NoExit;
-  }
+
   std::vector<Exit*> alreadyChecked = {};
   std::vector<Exit*> spotQueue = {exit};
 
@@ -56,7 +143,7 @@ static Exit* GetHintRegion(Exit* exit) {
 
 static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation) {
   //temporarily remove the hinted location's item, and then perform a
-  //reachability search for gossip stone locations. 
+  //reachability search for gossip stone locations.
   Item originalItem = hintedLocation->GetPlacedItem();
   hintedLocation->SetPlacedItem(NoItem);
   hintedLocation->SetDelayedItem(originalItem);

@@ -272,7 +272,7 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
     }
 
-    //consumables
+    //starting Nuts and Sticks
     if (gSettingsContext.startingConsumables) {
         gSaveContext.items[SLOT_NUT] = ITEM_NUT;
         gSaveContext.items[SLOT_STICK] = ITEM_STICK;
@@ -280,10 +280,6 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.upgrades |= 1 << 20;
         gSaveContext.ammo[SLOT_NUT] = 20;
         gSaveContext.ammo[SLOT_STICK] = 10;
-    }
-
-    if (gSettingsContext.startingMaxRupees) {
-        gSaveContext.rupeeAccumulator = 999;
     }
 
     //main inventory
@@ -408,5 +404,20 @@ void SaveFile_SetStartingInventory(void) {
     gSaveContext.questItems |= gSettingsContext.startingQuestItems;
     gSaveContext.equipment |= gSettingsContext.startingEquipment;
     gSaveContext.upgrades |= gSettingsContext.startingUpgrades;
+
+    //max rupees
+    if (gSettingsContext.startingMaxRupees) {
+        u8 wallet = (gSaveContext.upgrades >> 12) & 0x3;
+        if (wallet == 0) {
+            gSaveContext.rupees = 99;
+        } else if (wallet == 1) {
+            gSaveContext.rupees = 200;
+        } else if (wallet == 2) {
+            gSaveContext.rupees = 500;
+        } else {
+            gSaveContext.rupees = 999;
+        }
+
+    }
 
 }
