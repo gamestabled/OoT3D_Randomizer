@@ -8,6 +8,7 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 #include "hint_list.hpp"
+#include "trial.hpp"
 
 #include <unistd.h>
 #include <vector>
@@ -2466,12 +2467,12 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ExitPairing::Both(&GanonsCastle_ShadowTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_SpiritTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_LightTrial,  []{return CanUse(CanUseItem::Golden_Gauntlets);}),
-                  ExitPairing::Both(&GanonsCastle_Tower,       []{return (ForestTrialClear || ForestTrialSkip) &&
-                                                                         (FireTrialClear   || FireTrialSkip)   &&
-                                                                         (WaterTrialClear  || WaterTrialSkip)  &&
-                                                                         (ShadowTrialClear || ShadowTrialSkip) &&
-                                                                         (SpiritTrialClear || SpiritTrialSkip) &&
-                                                                         (LightTrialClear  || LightTrialSkip);}),
+                  ExitPairing::Both(&GanonsCastle_Tower,       []{return (ForestTrialClear || Trial::ForestTrial.IsSkipped()) &&
+                                                                         (FireTrialClear   || Trial::FireTrial.IsSkipped())   &&
+                                                                         (WaterTrialClear  || Trial::WaterTrial.IsSkipped())  &&
+                                                                         (ShadowTrialClear || Trial::ShadowTrial.IsSkipped()) &&
+                                                                         (SpiritTrialClear || Trial::SpiritTrial.IsSkipped()) &&
+                                                                         (LightTrialClear  || Trial::LightTrial.IsSkipped());}),
                   ExitPairing::Both(&GanonsCastle_DekuScrubs,  []{return LogicLensCastle || CanUse(CanUseItem::Lens_of_Truth);}),
   });
 
@@ -3359,12 +3360,12 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ExitPairing::Both(&GanonsCastle_MQ_ShadowTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_MQ_SpiritTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_MQ_LightTrial,  []{return CanUse(CanUseItem::Golden_Gauntlets);}),
-                  ExitPairing::Both(&GanonsCastle_Tower,          []{return (ForestTrialClear || ForestTrialSkip) &&
-                                                                            (FireTrialClear   || FireTrialSkip)   &&
-                                                                            (WaterTrialClear  || WaterTrialSkip)  &&
-                                                                            (ShadowTrialClear || ShadowTrialSkip) &&
-                                                                            (SpiritTrialClear || SpiritTrialSkip) &&
-                                                                            (LightTrialClear  || LightTrialSkip);}),
+                  ExitPairing::Both(&GanonsCastle_Tower,          []{return (ForestTrialClear || Trial::ForestTrial.IsSkipped()) &&
+                                                                            (FireTrialClear   || Trial::FireTrial.IsSkipped())   &&
+                                                                            (WaterTrialClear  || Trial::WaterTrial.IsSkipped())  &&
+                                                                            (ShadowTrialClear || Trial::ShadowTrial.IsSkipped()) &&
+                                                                            (SpiritTrialClear || Trial::SpiritTrial.IsSkipped()) &&
+                                                                            (LightTrialClear  || Trial::LightTrial.IsSkipped());}),
                   ExitPairing::Both(&GanonsCastle_MQ_DekuScrubs,  []{return LogicLensCastleMQ || CanUse(CanUseItem::Lens_of_Truth);}),
   });
 
