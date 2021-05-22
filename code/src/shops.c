@@ -34,22 +34,20 @@ s32 numShopItemsLoaded = 0; // Used to determine params. Reset this to 0 in ossa
 
 #define EnGirlA_InitializeItemAction ((EnGirlAActionFunc)0x14D5C8)
 
-//Action IDs for respective items defined in item_table.c
-
 u8 ShopsanityItem_IsBombs(u8 id) {
-    return id == 0x8E || id == 0x02 || id == 0x8F || id == 0x90 || id == 0x91;
+    return id == ITEM_BOMB || id == ITEM_BOMBS_5 || id == ITEM_BOMBS_10 || id == ITEM_BOMBS_20 || id == ITEM_BOMBS_30;
 }
 
 u8 ShopsanityItem_IsArrows(u8 id) {
-    return id == 0x92 || id == 0x93 || id == 0x94;
+    return id == ITEM_ARROWS_SMALL || id == ITEM_ARROWS_MEDIUM || id == ITEM_ARROWS_LARGE;
 }
 
 u8 ShopsanityItem_IsSeeds(u8 id) {
-    return id == 0x58 || id == 0x95;
+    return id == ITEM_SEEDS || id == ITEM_SEEDS_30;
 }
 
 u8 ShopsanityItem_IsBombchus(u8 id) {
-    return id == 0x09 || id == 0x96 || id == 0x97;
+    return id == ITEM_BOMBCHU || id == ITEM_BOMBCHUS_5 || id == ITEM_BOMBCHUS_20;
 }
 
 
@@ -227,8 +225,12 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
 
         item->super.actionFunc2 = ShopsanityItem_InitializeItem;
         u16 id = override.value.itemId;
+        //Ice trap models
+        if (override.value.looksLikeItemId) {
+            id = override.value.looksLikeItemId;
+        }
         //For shop ammo items, we don't want to make them turn into blupees without the appropriate capacity, instead just disallow purchase in the canbuy check
-        if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20 || id == GI_ARROWS_SMALL || id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
+        else if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20 || id == GI_ARROWS_SMALL || id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
             id = ItemTable_ResolveUpgrades(override.value.itemId);
         }
         item->itemRow = ItemTable_GetItemRow(id);

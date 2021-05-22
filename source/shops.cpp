@@ -133,16 +133,6 @@ s16 GetRandomScrubPrice() {
   return adjustedprice;
 }
 
-//Place each shop item from the shop item array into the appropriate location
-void PlaceShopItems() {
-  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
-    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
-      //Multiply i by 8 to get the correct shop
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
-    }
-  }
-}
-
 //Get 1 to 4, or a random number from 1-4 depending on shopsanity setting
 int GetShopsanityReplaceAmount() {
   if (Settings::Shopsanity.Is(SHOPSANITY_ONE)) {
@@ -156,6 +146,11 @@ int GetShopsanityReplaceAmount() {
   } else { //Random, get number in [1, 4]
     return Random(1, 5);
   }
+}
+
+//Generate a fake name for the ice trap based on the item it's written as
+std::string GetIceTrapName(u8 id) {
+  return "Totally not an ice trap";
 }
 
 //Get shop index based on a given location
@@ -179,6 +174,16 @@ int GetShopIndex(ItemLocation* loc) {
 //And finally we use a modulo by 4 to get the index within the "shop" of 4 items, and add
 int TransformShopIndex(int index) {
   return 4*((index / 4) / 2) + index % 4; 
+}
+
+//Place each shop item from the shop item array into the appropriate location
+void PlaceShopItems() {
+  for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+    for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
+      //Multiply i by 8 to get the correct shop
+      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
+    }
+  }
 }
 
 //Specialized shuffle function for shop items

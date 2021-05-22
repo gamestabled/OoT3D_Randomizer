@@ -1524,9 +1524,14 @@ void AddExcludedOptions() {
 void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
   for (ItemLocation* loc : allLocations) {
+    ItemOverride_Value val = loc->GetPlacedItem().Value();
+    //If this is an ice trap in a shop, change the name based on what the model will look like
+    if (loc->GetPlacedItem() == IceTrap && loc->IsCategory(Category::cShop)) {
+      NonShopItems[TransformShopIndex(GetShopIndex(loc))].Name = GetIceTrapName(val.looksLikeItemId);
+    }
     overrides.insert({
       .key = loc->Key(),
-      .value = loc->GetPlacedItem().Value(),
+      .value = val,
     });
     PlacementLog_Msg("\tScene: ");
     PlacementLog_Msg(std::to_string(loc->Key().scene));
