@@ -15,7 +15,8 @@ static u8 type = 0;
 static u8 checkedForBombchus = 0;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
-    u8 vanilla = 0;
+                                                                 // treasure box shop chests
+    u8 vanilla = (gSettingsContext.chestSize == VANILLA_SIZE) || (globalCtx->sceneNum == 16 && thisx->room != 6);
     
     if(!checkedForBombchus && gSettingsContext.bombchusInLogic && gSaveContext.items[8] == 0xFF){
         ItemTable_SetBombchusChestType(0);
@@ -25,10 +26,6 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
         ItemTable_SetBombchusChestType(1);
         checkedForBombchus = 0;
     }
-                                                                   // treasure box shop chests
-    if ((gSettingsContext.chestSize == VANILLA_SIZE) || (globalCtx->sceneNum == 16 && thisx->room != 6)){
-        vanilla = 1;
-    } 
     
     ItemOverride thisOverride = ItemOverride_Lookup(thisx, globalCtx->sceneNum, 0);
     ItemRow* thisItemRow;
@@ -43,6 +40,7 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
     EnBox_Init(thisx, globalCtx);
     
     if(vanilla){
+        type = 0;
         return;
     } 
     
