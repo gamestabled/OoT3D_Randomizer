@@ -72,12 +72,7 @@ Exit::Exit(std::string regionName_, std::string scene_, HintText* hintText_,
     timePass(timePass_),
     events(std::move(events_)),
     locations(std::move(locations_)),
-    exits(std::move(exits_)) {
-      //set parent region of ItemLocations
-      for (auto locPair : locations) {
-        locPair.GetLocation()->SetParentRegion(this);
-      }
-    }
+    exits(std::move(exits_)) {}
 
 Exit::~Exit() = default;
 
@@ -3791,6 +3786,19 @@ namespace Exits { //name, scene, hint text, events, locations, exits
         } else {
           Exits::Root.dayAdult = true;
         }
+    }
+  }
+
+  //We initially tried setting parent regions in the constructor of each exit.
+  //For some reason this was causing bad builds of the application on linux systems,
+  //so for now we're putting it into this function which runs when the app starts up
+  void SetParentRegions() {
+    for (Exit* exit : allExits) {
+      //Set parent region for every exit's locations
+      for (ItemLocationPairing& locPair : exit->locations) {
+          ItemLocation* location = locPair.GetLocation();
+          location->SetParentRegion(exit);
+      }
     }
   }
 }

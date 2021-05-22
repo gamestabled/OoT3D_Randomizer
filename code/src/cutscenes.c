@@ -189,28 +189,47 @@ void Cutscene_OverrideFairyReward(BgDyYoseizo* fairy) {
 
 //skip dungeon exit cutscenes
 void Cutscene_OverrideDekuTree(void) {
+    ItemOverride_PushDungeonReward(DUNGEON_DEKU_TREE);
+    gSaveContext.eventChkInf[0x1] |= 0x1000; //spoke to Mido after Deku Tree's death
+
+    //If warping with FW, let the wrong warp work
+    if (gSaveContext.respawnFlag == 3) {
+        gSaveContext.nextCutsceneIndex = 0xFFF1;
+        return;
+    }
     gGlobalContext->nextEntranceIndex = 0x457;
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex = 0x0;
-    ItemOverride_PushDungeonReward(DUNGEON_DEKU_TREE);
-    gSaveContext.eventChkInf[0x1] |= 0x1000; //spoke to Mido after Deku Tree's death
 }
 
 void Custcene_OverrideDodongosCavern(void) {
+    ItemOverride_PushDungeonReward(DUNGEON_DODONGOS_CAVERN);
+
+    //If warping with FW, let the wrong warp work
+    if (gSaveContext.respawnFlag == 3) {
+        gSaveContext.nextCutsceneIndex = 0xFFF1;
+        return;
+    }
     gGlobalContext->nextEntranceIndex = 0x47A;
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex = 0x0;
-    ItemOverride_PushDungeonReward(DUNGEON_DODONGOS_CAVERN);
 }
 
 void Custcene_OverrideJabuJabusBelly(void) {
+    ItemOverride_PushDungeonReward(DUNGEON_JABUJABUS_BELLY);
+
+    //If warping with FW, let the wrong warp work
+    //(this code will never be executed lol)
+    if (gSaveContext.respawnFlag == 3) {
+        gSaveContext.nextCutsceneIndex = 0xFFF0;
+        return;
+    }
     gGlobalContext->nextEntranceIndex = 0x221;
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex = 0x0;
-    ItemOverride_PushDungeonReward(DUNGEON_JABUJABUS_BELLY);
 }
 
 void Custcene_OverrideForestTemple(void) {
@@ -222,11 +241,17 @@ void Custcene_OverrideForestTemple(void) {
 }
 
 void Cutscene_OverrideFireTemple(void) {
+    ItemOverride_PushDungeonReward(DUNGEON_FIRE_TEMPLE);
+
+    //If warping with FW, let the wrong warp work
+    if (gSaveContext.respawnFlag == 3) {
+        gSaveContext.nextCutsceneIndex = 0xFFF3;
+        return;
+    }
     gGlobalContext->nextEntranceIndex = 0x564;
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
-    ItemOverride_PushDungeonReward(DUNGEON_FIRE_TEMPLE);
 }
 
 void Custcene_OverrideWaterTemple(void) {

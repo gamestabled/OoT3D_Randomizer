@@ -15,7 +15,9 @@ static u8 type = 0;
 static u8 checkedForBombchus = 0;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
-
+                                                                 // treasure box shop chests
+    u8 vanilla = (gSettingsContext.chestSize == VANILLA_SIZE) || (globalCtx->sceneNum == 16 && thisx->room != 6);
+    
     if(!checkedForBombchus && gSettingsContext.bombchusInLogic && gSaveContext.items[8] == 0xFF){
         ItemTable_SetBombchusChestType(0);
         checkedForBombchus = 1;
@@ -24,15 +26,11 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
         ItemTable_SetBombchusChestType(1);
         checkedForBombchus = 0;
     }
-                                                                   // treasure box shop chests
-    if((gSettingsContext.chestSize == VANILLA_SIZE) || (globalCtx->sceneNum == 16 && thisx->room != 6)){
-        return EnBox_Init(thisx, globalCtx);
-    }
     
     ItemOverride thisOverride = ItemOverride_Lookup(thisx, globalCtx->sceneNum, 0);
     ItemRow* thisItemRow;
-    if (thisOverride.key.all == 0){
-        thisItemRow = ItemTable_GetItemRowFromIndex((thisx->params & 0x0FE0) >> 5); //for unused chests that aren't randomized
+    if(vanilla || thisOverride.key.all == 0){
+        thisItemRow = ItemTable_GetItemRowFromIndex((thisx->params & 0x0FE0) >> 5); //get type from vanilla item table
     }       
     else{
         thisItemRow = ItemTable_GetItemRow(ItemTable_ResolveUpgrades(thisOverride.value.itemId));
@@ -40,6 +38,11 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
     type = thisItemRow->chestType;
     
     EnBox_Init(thisx, globalCtx);
+    
+    if(vanilla){
+        type = 0;
+        return;
+    } 
     
     if(type == WOODEN_BIG || type == DECORATED_BIG){
         //Make chest BIG
@@ -70,6 +73,7 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
             thisx->world.pos.x = 400.0f;
         }
     }
+    type = 0;
 }
 
 u8 Chest_OverrideAnimation(){

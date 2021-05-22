@@ -112,6 +112,10 @@ SECTIONS
 		*(.patch_AnjuCheckCuccoAmount)
 	}
 
+	.patch_FastOwlCutscenes 0x188584 : {
+		*(.patch_FastOwlCutscenes)
+	}
+
 	.patch_BombchuShopInfinitePurchases 0x188D4C : {
 		*(.patch_BombchuShopInfinitePurchases)
 	}

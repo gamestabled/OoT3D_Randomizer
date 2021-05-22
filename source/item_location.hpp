@@ -127,7 +127,7 @@ public:
     }
 
     bool IsDungeon() const {
-      return (type != ItemLocationType::GSToken && (scene < 0x0E || (scene > 0x10 && scene < 0x1A))) || (type == ItemLocationType::GSToken && scene < 0x10);
+      return (type != ItemLocationType::GSToken && (scene < 0x0E || (scene > 0x10 && scene < 0x1A))) || (type == ItemLocationType::GSToken && scene < 0x0A);
     }
 
     bool IsOverworld() const {
