@@ -6082,7 +6082,7 @@ namespace Hints {
 
   HintText ChildAltarTextEnd = HintText::Altar({
                      //obscure text
-                     Text{"\x13\x07Ye who may become a Hero...&Stand with the Ocarina and play the Song of Time.", /*french*/"", /*spanish*/"Aquel que se convierta en el héroe... Tomad la ocarina y entonad la Canción del Tiempo."},
+                     Text{"Ye who may become a Hero...&Stand with the Ocarina and play the Song of Time.", /*french*/"", /*spanish*/"Aquel que se convierta en el héroe... Tomad la ocarina y entonad la Canción del Tiempo."},
   });
 
   HintText AdultAltarTextStart = HintText::Altar({
