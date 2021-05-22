@@ -1161,6 +1161,11 @@ ReadGossipStoneHints_patch:
 DecoratedChest_patch:
     bl hook_DecoratedChest
 
+.section .patch_FastOwlCutscenes
+.global FastOwlCutscenes_patch
+FastOwlCutscenes_patch:
+    bl hook_FastOwlCutscenes
+
 .section .patch_loader
 .global loader_patch
 

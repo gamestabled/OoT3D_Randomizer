@@ -111,6 +111,11 @@ void Entrance_Init(void) {
     for (index = 0x594; index < 0x598; ++index) {
         gEntranceTable[index].field = 0x0102;
     }
+
+    // Delete the title card and add a fade in for Hyrule Field from Ocarina of Time cutscene
+    for (index = 0x50F; index < 0x513; ++index) {
+        gEntranceTable[index].field = 0x010B;
+    }
 }
 
 void Entrance_DeathInGanonBattle(void) {
