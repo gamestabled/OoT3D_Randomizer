@@ -19,6 +19,7 @@
 #include "gerudo_archery_manager.h"
 #include "chest.h"
 #include "gossip_stone.h"
+#include "lake_hylia_objects.h"
 
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
@@ -41,6 +42,9 @@ void Actor_Init() {
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
+
+    gActorOverlayTable[0xD5].initInfo->update = BgSpot06Objects_rUpdate;
+    gActorOverlayTable[0xD5].initInfo->destroy = BgSpot06Objects_rDestroy;
 
     gActorOverlayTable[0xDC].initInfo->init = Boss_Tw_rInit;
     gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;

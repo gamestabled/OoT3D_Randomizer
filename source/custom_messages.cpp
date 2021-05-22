@@ -297,6 +297,16 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Master Quest doesn't affect the Randomizer,"+NEWLINE()+CENTER_TEXT()+"so you can use 3 more save slots now."+NEWLINE()+NEWLINE()+CENTER_TEXT()+"Thanks for playing!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Vous pouvez désormais jouer à"+NEWLINE()+CENTER_TEXT()+"The Legend of Zelda Ocarina of Time 3D"+NEWLINE()+CENTER_TEXT()+"Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Ya puedes jugar The Legend of Zelda"+NEWLINE()+CENTER_TEXT()+"Ocarina of Time 3D Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        
+        //messages for the new Lake Hylia switch
+        CreateMessage(0x346, 0, 1, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Water level control system."+NEWLINE()+CENTER_TEXT()+"Keep away!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Water level control system."+NEWLINE()+CENTER_TEXT()+"Keep away!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Water level control system."+NEWLINE()+CENTER_TEXT()+"Keep away!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        CreateMessage(0x1B2, 0, 0, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+"This switch is rustier than you think."+WAIT_FOR_INPUT()+"Something must be wrong with the pipe"+NEWLINE()+"system in the Water Temple."+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+"This switch is rustier than you think."+WAIT_FOR_INPUT()+"Something must be wrong with the pipe"+NEWLINE()+"system in the Water Temple."+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+"This switch is rustier than you think."+WAIT_FOR_INPUT()+"Something must be wrong with the pipe"+NEWLINE()+"system in the Water Temple."+INSTANT_TEXT_OFF()+MESSAGE_END());
     }
 
     Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
