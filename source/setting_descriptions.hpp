@@ -3,6 +3,8 @@
 
 using string_view = std::string_view;
 
+extern string_view openRandomize;
+
 extern string_view logicGlitchless;
 extern string_view logicNoLogic;
 

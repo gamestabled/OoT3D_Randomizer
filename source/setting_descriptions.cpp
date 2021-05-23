@@ -3,6 +3,11 @@
 //Setting descriptions are mostly copied from OoT Randomizer tooltips with minor edits
 
 /*------------------------------
+|      RANDOMIZE SETTINGS      |
+------------------------------*/
+string_view openRandomize             = "Randomize all Open Settings.";
+
+/*------------------------------
 |            LOGIC             |                           *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
 string_view logicGlitchless           = "No glitches are required, but may require some\n" //
