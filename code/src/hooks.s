@@ -508,6 +508,14 @@ hook_DecoratedChest:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_FastOwlCutscenes
+hook_FastOwlCutscenes:
+    push {r0-r12, lr}
+    bl EnOwl_FastCutscene
+    pop {r0-r12, lr}
+    mov r1,#0xa
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

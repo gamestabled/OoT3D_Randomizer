@@ -1171,6 +1171,11 @@ PlayerEditAndRetrieveCMB_patch:
 PlayerGetCustomTunicCMAB_patch:
     bl Player_GetCustomTunicCMAB
 
+.section .patch_FastOwlCutscenes
+.global FastOwlCutscenes_patch
+FastOwlCutscenes_patch:
+    bl hook_FastOwlCutscenes
+
 .section .patch_loader
 .global loader_patch
 

@@ -1,27 +1,27 @@
 #pragma once
 
-#include <3ds.h>
 #include <string>
 
 class Text {
 public:
+    Text() = default;
     Text(std::string english_, std::string french_, std::string spanish_)
       : english(std::move(english_)),
         french(std::move(french_)),
         spanish(std::move(spanish_)) {}
 
-    std::string GetEnglish() const {
+    const std::string& GetEnglish() const {
         return english;
     }
 
-    std::string GetFrench() const {
+    const std::string& GetFrench() const {
         if (french.length() > 0) {
             return french;
         }
         return english;
     }
 
-    std::string GetSpanish() const {
+    const std::string& GetSpanish() const {
         if (spanish.length() > 0) {
             return spanish;
         }

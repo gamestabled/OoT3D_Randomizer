@@ -9,9 +9,11 @@
 #include "random.hpp"
 #include "randomizer.hpp"
 #include "setting_descriptions.hpp"
+#include "trial.hpp"
 
 using namespace Cosmetics;
 using namespace Dungeon;
+using namespace Trial;
 
 namespace Settings {
   std::string seed;
@@ -638,12 +640,12 @@ namespace Settings {
     ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
     ctx.ganonsCastleDungeonMode          = GanonsCastle.IsMQ()          ? 1 : 0;
 
-    ctx.forestTrialSkip = (ForestTrialSkip) ? 1 : 0;
-    ctx.fireTrialSkip   = (FireTrialSkip)   ? 1 : 0;
-    ctx.waterTrialSkip  = (WaterTrialSkip)  ? 1 : 0;
-    ctx.spiritTrialSkip = (SpiritTrialSkip) ? 1 : 0;
-    ctx.shadowTrialSkip = (ShadowTrialSkip) ? 1 : 0;
-    ctx.lightTrialSkip  = (LightTrialSkip)  ? 1 : 0;
+    ctx.forestTrialSkip = (ForestTrial.IsSkipped()) ? 1 : 0;
+    ctx.fireTrialSkip   = (FireTrial.IsSkipped())   ? 1 : 0;
+    ctx.waterTrialSkip  = (WaterTrial.IsSkipped())  ? 1 : 0;
+    ctx.spiritTrialSkip = (SpiritTrial.IsSkipped()) ? 1 : 0;
+    ctx.shadowTrialSkip = (ShadowTrial.IsSkipped()) ? 1 : 0;
+    ctx.lightTrialSkip  = (LightTrial.IsSkipped())  ? 1 : 0;
 
     //Starting Inventory
     ctx.startingConsumables   = (StartingConsumables) ? 1 : 0;
@@ -672,6 +674,7 @@ namespace Settings {
     ctx.startingBottle3       = StartingBottle3.Value<u8>();
     ctx.startingRutoBottle    = StartingRutoBottle.Value<u8>();
     ctx.startingOcarina       = StartingOcarina.Value<u8>();
+    ctx.startingKokiriSword   = StartingKokiriSword.Value<u8>();
     ctx.startingBiggoronSword = StartingBiggoronSword.Value<u8>();
     ctx.startingMagicMeter    = StartingMagicMeter.Value<u8>();
     ctx.startingDoubleDefense = StartingDoubleDefense.Value<u8>();
@@ -1091,14 +1094,6 @@ namespace Settings {
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
 
-  //Skipped Trials (initially set to true, then false ones filtered out)
-  bool ForestTrialSkip                  = true;
-  bool FireTrialSkip                    = true;
-  bool WaterTrialSkip                   = true;
-  bool SpiritTrialSkip                  = true;
-  bool ShadowTrialSkip                  = true;
-  bool LightTrialSkip                   = true;
-
   //Function to update cosmetics options depending on choices
   void UpdateCosmetics() {
     if (SilverGauntletsColor.Is(CUSTOM_COLOR)) {
@@ -1143,14 +1138,20 @@ namespace Settings {
     }
 
     //shuffle the trials then require the amount set in GanonsTrialsCount
-    std::array<bool*, 6> trialsSkipped = {&ForestTrialSkip, &FireTrialSkip, &WaterTrialSkip, &SpiritTrialSkip, &ShadowTrialSkip, &LightTrialSkip};
-    Shuffle(trialsSkipped);
+    auto trials = trialList;
+    Shuffle(trials);
 
+    //clear required trials
+    for (auto& trial : trials) {
+      trial->SetAsSkipped();
+    }
+
+    //Set appropriate amount of required trials
     if (RandomGanonsTrials) {
       GanonsTrialsCount.SetSelectedIndex(Random(0, GanonsTrialsCount.GetOptionCount()));
     }
     for (u8 i = 0; i < GanonsTrialsCount.Value<u8>(); i++) {
-      *trialsSkipped[i] = false; //the selected trial is not skipped
+      trials[i]->SetAsRequired();
     }
 
     if (StartingAge.Is(AGE_RANDOM)) {
