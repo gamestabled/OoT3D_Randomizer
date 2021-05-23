@@ -117,7 +117,7 @@ SECTIONS
 	}
 
 	.patch_DecoratedChest 0x189E88 : {
-		*(patch_DecoratedChest)
+		*(.patch_DecoratedChest)
 	}
 
 	.patch_BusinessScrubTable 0x18A634 : {
