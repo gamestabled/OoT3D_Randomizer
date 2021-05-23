@@ -154,12 +154,12 @@ std::string GetIceTrapName(u8 id) {
 }
 
 //Get shop index based on a given location
-std::map<std::string, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}}; 
+static std::map<std::string_view, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}};
 int GetShopIndex(ItemLocation* loc) {
   //Kind of hacky, but extract the shop and item position from the name
   const std::string& name(loc->GetName());
   int split = name.find(" Item ");
-  std::string shop = name.substr(0, split);
+  std::string_view shop(name.c_str(), split);
   int pos = std::stoi(name.substr(split+6, 1)) - 1;
   int shopnum = ShopNameToNum[shop];
   return shopnum*8 + pos;
