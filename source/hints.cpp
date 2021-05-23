@@ -150,11 +150,14 @@ static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hinted
   hintedLocation->SetPlacedItem(NoItem);
 
   LogicReset();
+  auto accessibleGossipStones = GetAccessibleLocations(gossipStoneLocations);
+  //Give the item back to the location
+  hintedLocation->SetPlacedItem(originalItem);
 
-  return GetAccessibleLocations(gossipStoneLocations);
+  return accessibleGossipStones;
 }
 
-static void AddHint(const Text& hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
+static void AddHint(Text hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items to gossip stone locations for writing to the spoiler log
   gossipStone->SetPlacedItem(Item{hint.GetEnglish(), ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, &Hints::NoHintText});
 
@@ -190,9 +193,9 @@ static void CreateLocationHint(const std::vector<ItemLocation*>& possibleHintLoc
   hintedLocation->SetAsHinted();
 
   //make hint text
-  const Text& locationHintText = hintedLocation->GetHintText().GetText();
-  const Text& itemHintText = hintedLocation->GetPlacedItem().GetHintText().GetText();
-  const Text& prefix = Hints::Prefix.GetText();
+  Text locationHintText = hintedLocation->GetHintText().GetText();
+  Text itemHintText = hintedLocation->GetPlacedItem().GetHintText().GetText();
+  Text prefix = Hints::Prefix.GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
   PlacementLog_Msg("\tMessage: ");
@@ -333,16 +336,16 @@ static void CreateRandomLocationHint(bool goodItem = false) {
   ItemLocation* gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
-  const Text& itemText = hintedLocation->GetPlacedItem().GetHintText().GetText();
+  Text itemText = hintedLocation->GetPlacedItem().GetHintText().GetText();
   if (hintedLocation->IsDungeon()) {
-    const Text& locationText = hintedLocation->GetParentRegion()->hintText->GetText();
+    Text locationText = hintedLocation->GetParentRegion()->hintText->GetText();
     Text finalHint = Hints::Prefix.GetText()+"#"+locationText+"# hoards #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
   } else {
-    const Text& locationText = GetHintRegion(hintedLocation->GetParentRegion())->hintText->GetText();
+    Text locationText = GetHintRegion(hintedLocation->GetParentRegion())->hintText->GetText();
     Text finalHint = Hints::Prefix.GetText()+"#"+itemText+"# can be found at #"+locationText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
@@ -365,7 +368,7 @@ static void CreateJunkHint() {
     return;
   }
   ItemLocation* gossipStone = RandomElement(gossipStones);
-  const Text& hintText = junkHint->GetText();
+  Text hintText = junkHint->GetText();
 
   PlacementLog_Msg("\tMessage: ");
   PlacementLog_Msg(hintText.english);
@@ -464,7 +467,31 @@ static void CreateTrialHints() {
   }
 }
 
+static void CreateGanonText() {
+
+  //funny ganon line
+  auto ganonText = RandomElement(Hints::ganonLines)->GetText();
+  CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
+
+  //Get the location of the light arrows
+  auto lightArrowLocation = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == I_LightArrows;});
+
+  Text text;
+  //If there is no light arrow location, it was in the player's inventory at the start
+  if (lightArrowLocation.empty()) {
+    text = Hints::LightArrowLocation.GetText()+Hints::YourPocket.GetText();
+  } else {
+    text = Hints::LightArrowLocation.GetText()+GetHintRegion(lightArrowLocation[0]->GetParentRegion())->hintText->GetText();
+  }
+  text = text + "!";
+
+  CreateMessageFromTextObject(0x70CC, 0, 2, 3, AddColorsAndFormat(text));
+}
+
 void CreateAllHints() {
+
+  CreateGanonText();
+
   PlacementLog_Msg("\nNOW CREATING HINTS\n");
   const HintSetting& hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];
 

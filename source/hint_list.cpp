@@ -6082,17 +6082,17 @@ namespace Hints {
 
   HintText ChildAltarTextEnd = HintText::Altar({
                      //obscure text
-                     Text{"\x13\x07Ye who may become a Hero...&Stand with the Ocarina and&play the Song of Time.", /*french*/"", /*spanish*/"Aquel que se convierta en el héroe...&Tomad la ocarina y&entonad la Canción del Tiempo."},
+                     Text{"Ye who may become a Hero...&Stand with the Ocarina and play the Song of Time.", /*french*/"", /*spanish*/"Aquel que se convierta en el héroe... Tomad la ocarina y entonad la Canción del Tiempo."},
   });
 
   HintText AdultAltarTextStart = HintText::Altar({
                      //obscure text
-                     Text{"When evil rules all, an awakening&voice from the Sacred Realm will&call those destined to be Sages,&who dwell in the #five temples#.", /*french*/"", /*spanish*/"Cuando el mal lo impregne todo, desde el&Reino Sagrado surgirá unz voz que hará&despertar a los sabios que moran en los&#cinco templos#."},
+                     Text{"When evil rules all, an awakening voice from the Sacred Realm will call those destined to be Sages, who dwell in the #five temples#.", /*french*/"", /*spanish*/"Cuando el mal lo impregne todo, desde el Reino Sagrado surgirá unz voz que hará despertar a los sabios que moran en los #cinco templos#."},
   });
 
   HintText AdultAltarTextEnd = HintText::Altar({
                      //obscure text
-                     Text{"Together with the Hero of Time,&the awakened ones will bind the&evil and return the light of peace&to the world...", /*french*/"", /*spanish*/"Con el héroe del Tiempo, aquellos que&despierten detendrán el mal y volverán&al mundo de luz la paz..."},
+                     Text{"Together with the Hero of Time, the awakened ones will bind the evil and return the light of peace to the world...", /*french*/"", /*spanish*/"Con el héroe del Tiempo, aquellos que despierten detendrán el mal y volverán al mundo de luz la paz..."},
   });
 
   /*--------------------------
@@ -6101,7 +6101,7 @@ namespace Hints {
 
   HintText ValidationLine = HintText::Validation({
                      //obscure text
-                     Text{"Hmph... Since you made it this far,&I'll let you know what glorious&prize of Ganon's you likely&missed out on in my tower.^Behold...^", /*french*/"", /*spanish*/"Mmm... Ya que has llegado hasta aquí,&te diré qué preciado objeto&de Ganon puedes haberte&dejado en mi torre.^He aquí..."},
+                     Text{"Hmph... Since you made it this far, I'll let you know what glorious prize of Ganon's you likely missed out on in my tower.^Behold...^", /*french*/"", /*spanish*/"Mmm... Ya que has llegado hasta aquí, te diré qué preciado objeto de Ganon puedes haberte dejado en mi torre.^He aquí..."},
   });
 
   /*--------------------------
@@ -6110,7 +6110,12 @@ namespace Hints {
 
   HintText LightArrowLocation = HintText::LightArrow({
                      //obscure text
-                     Text{"Ha ha ha... You'll never beat me by&reflecting my lightning bolts&and unleashing the arrows from&", /*french*/"", /*spanish*/"Ja, ja, ja... Nunca me derrotarás&reflejando mis esferas de energía y&desplegando las flechas de luz de&"},
+                     Text{"Ha ha ha... You'll never beat me by reflecting my lightning bolts and unleashing the arrows from ", /*french*/"", /*spanish*/"Ja, ja, ja... Nunca me derrotarás reflejando mis esferas de energía y desplegando las flechas de luz de "},
+  });
+
+  HintText YourPocket = HintText::Exclude({
+                     //obscure text
+                     Text{"your pocket", /*french*/"", /*spanish*/""},
   });
 
   /*--------------------------
@@ -6119,37 +6124,37 @@ namespace Hints {
 
   HintText GanonLine01 = HintText::GanonLine({
                      //obscure text
-                     Text{"Oh! It's @.&I was expecting someone called&Sheik. Do you know what&happened to them?", /*french*/"", /*spanish*/"¡Oh! Pero si es @.&Estaba esperando a alguien llamado&Sheik. ¿Sabes qué puede&haberle pasado?"},
+                     Text{"Oh! It's @.&I was expecting someone called Sheik. Do you know what happened to them?", /*french*/"", /*spanish*/"¡Oh! Pero si es @.&Estaba esperando a alguien llamado Sheik. ¿Sabes qué puede haberle pasado?"},
   });
 
   HintText GanonLine02 = HintText::GanonLine({
                      //obscure text
-                     Text{"I knew I shouldn't have put the key&on the other side of my door.", /*french*/"", /*spanish*/"Sabía que no tendría que haber&dejado la llave al otro lado de la puerta."},
+                     Text{"I knew I shouldn't have put the key on the other side of my door.", /*french*/"", /*spanish*/"Sabía que no tendría que haber dejado la llave al otro lado de la puerta."},
   });
 
   HintText GanonLine03 = HintText::GanonLine({
                      //obscure text
-                     Text{"Looks like it's time for a&round of tennis.", /*french*/"", /*spanish*/"Parece que es hora de&una partidita de tenis."},
+                     Text{"Looks like it's time for a round of tennis.", /*french*/"", /*spanish*/"Parece que es hora de una partidita de tenis."},
   });
 
   HintText GanonLine04 = HintText::GanonLine({
                      //obscure text
-                     Text{"You'll never deflect my bolts of&energy with your sword,&then shoot me with those Light&Arrows you happen to have.", /*french*/"", /*spanish*/"Nunca reflejarás mis esferas de&energía con tu espada, para después&dispararme con las flechas de luz que tendrás."},
+                     Text{"You'll never deflect my bolts of energy with your sword, then shoot me with those Light Arrows you happen to have.", /*french*/"", /*spanish*/"Nunca reflejarás mis esferas de energía con tu espada, para después dispararme con las flechas de luz que tendrás."},
   });
 
   HintText GanonLine05 = HintText::GanonLine({
                      //obscure text
-                     Text{"Why did I leave my trident&back in the desert?", /*french*/"", /*spanish*/"¿Por qué me habré dejado el&tridente en el desierto?"},
+                     Text{"Why did I leave my trident back in the desert?", /*french*/"", /*spanish*/"¿Por qué me habré dejado el tridente en el desierto?"},
   });
 
   HintText GanonLine06 = HintText::GanonLine({
                      //obscure text
-                     Text{"Zelda is probably going to do&something stupid, like send you&back to your own timeline.^So this is quite meaningless.&Do you really want&to save this moron?", /*french*/"", /*spanish*/"Seguro que Zelda trata de hacer&alguna tontería, como enviarte de&vuelta a tu línea temporal.^No tiene ningún sentido alguno.&¿De verdad quieres salvar a esa tonta?"},
+                     Text{"Zelda is probably going to do something stupid, like send you back to your own timeline.^So this is quite meaningless. Do you really want to save this moron?", /*french*/"", /*spanish*/"Seguro que Zelda trata de hacer alguna tontería, como enviarte de vuelta a tu línea temporal.^No tiene ningún sentido alguno. ¿De verdad quieres salvar a esa tonta?"},
   });
 
   HintText GanonLine07 = HintText::GanonLine({
                      //obscure text
-                     Text{"What about Zelda makes you think&she'd be a better ruler than I?^I saved Lon Lon Ranch,&fed the hungry,&and my castle floats.", /*french*/"", /*spanish*/"¿Qué te hace pensar que Zelda&gobierna mejor que yo?^Yo he salvado el Rancho Lon Lon,&he alimentado a los hambrientos&y hasta hago que mi castillo flote."},
+                     Text{"What about Zelda makes you think she'd be a better ruler than I?^I saved Lon Lon Ranch,&fed the hungry,&and my castle floats.", /*french*/"", /*spanish*/"¿Qué te hace pensar que Zelda gobierna mejor que yo?^Yo he salvado el Rancho Lon Lon,&he alimentado a los hambrientos&y hasta hago que mi castillo flote."},
   });
 
   HintText GanonLine08 = HintText::GanonLine({
@@ -6164,7 +6169,7 @@ namespace Hints {
 
   HintText GanonLine10 = HintText::GanonLine({
                      //obscure text
-                     Text{"After what you did to&Koholint Island, how can&you call me the bad guy?", /*french*/"", /*spanish*/"Después de lo que le hiciste&a la Isla Koholint, ¿cómo te&atreves a llamarme malvado?"},
+                     Text{"After what you did to Koholint Island, how can you call me the bad guy?", /*french*/"", /*spanish*/"Después de lo que le hiciste a la Isla Koholint, ¿cómo te atreves a llamarme malvado?"},
   });
 
   HintText GanonLine11 = HintText::GanonLine({
@@ -6245,5 +6250,17 @@ namespace Hints {
     &Junk70,
     &Junk71,
   };
-
+  std::array<HintText*, 12> ganonLines = {
+    &GanonLine01,
+    &GanonLine02,
+    &GanonLine03,
+    &GanonLine04,
+    &GanonLine05,
+    &GanonLine06,
+    &GanonLine07,
+    &GanonLine08,
+    &GanonLine09,
+    &GanonLine10,
+    &GanonLine11,
+  };
 } //namespace Hints
