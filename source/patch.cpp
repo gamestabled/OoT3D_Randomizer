@@ -254,9 +254,16 @@ bool WritePatch() {
 
   if (Settings::Shopsanity.IsNot(SHOPSANITY_OFF) && Settings::Shopsanity.IsNot(SHOPSANITY_ZERO)) {
     //Get prices from shop item vector
-    std::array<s32, 64> rShopsanityPrices{};
-    for (size_t i = 0; i < rShopsanityPrices.size(); i++) {
-      rShopsanityPrices[i] = ShopItems[i].GetPrice();
+    std::array<s32, 32> rShopsanityPrices{};
+    int i = 4;
+    while (i < 64) {
+      rShopsanityPrices[TransformShopIndex(i)] = ShopItems[i].GetPrice();
+      if (i % 8 == 7) { //Last index for this shop, skip ahead to relevant index of next shop
+        i += 5;
+      }
+      else { //Go to next item within shop
+        i++;
+      }
     }
 
     // Write shopsanity item prices address to code

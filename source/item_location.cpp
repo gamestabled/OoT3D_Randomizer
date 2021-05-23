@@ -868,10 +868,10 @@ ItemLocation Kak_BazaarItem1                              = ItemLocation::Base(0
 ItemLocation Kak_BazaarItem2                              = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                &Hints::Kak_BazaarItem2,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem3                              = ItemLocation::Base(0x2C, 0x3A, "Kak Bazaar Item 3",                                &Hints::Kak_BazaarItem3,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem4                              = ItemLocation::Base(0x2C, 0x3B, "Kak Bazaar Item 4",                                &Hints::Kak_BazaarItem4,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem5                              = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 5",                                &Hints::Kak_BazaarItem5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem6                              = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 6",                                &Hints::Kak_BazaarItem6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem7                              = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 7",                                &Hints::Kak_BazaarItem7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem8                              = ItemLocation::Base(0x2C, 0x40, "Kak Bazaar Item 8",                                &Hints::Kak_BazaarItem8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem5                              = ItemLocation::Base(0x2C, 0x3C, "Kak Bazaar Item 5",                                &Hints::Kak_BazaarItem5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem6                              = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 6",                                &Hints::Kak_BazaarItem6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem7                              = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 7",                                &Hints::Kak_BazaarItem7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem8                              = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 8",                                &Hints::Kak_BazaarItem8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 std::vector<ItemLocation*> Kak_BazaarLocations = {
   &Kak_BazaarItem1,
   &Kak_BazaarItem2,
@@ -1436,15 +1436,7 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
     newpair.Name = item.GetName();
     int index = GetShopIndex(loc);
     newpair.Price = ShopItems[index].GetPrice();
-    //Without this transformed index, NonShopItems would have 64 entries and 128 custom messages- But only half of that is needed for shopsanity
-    //So we use this transformation to map only important indices to an array with 32 entries in the following manner:
-    //Shop index:  4  5  6  7 12 13 14 15 20 21 22 23...
-    //Transformed: 0  1  2  3  4  5  6  7  8  9 10 11...
-    //So we first divide the shop index by 4, then by 2 which basically tells us the index of the shop it's in,
-    //then multiply by 4 since there are 4 items per shop
-    //And finally we use a modulo by 4 to get the index within the "shop" of 4 items, and add
-    int transformed = 4*((index / 4) / 2) + index % 4; //Transform index so only replacable shop items are stored
-    NonShopItems[transformed] = newpair;
+    NonShopItems[TransformShopIndex(index)] = newpair;
   }
 
   loc->SetPlacedItem(item);
@@ -1532,9 +1524,14 @@ void AddExcludedOptions() {
 void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
   for (ItemLocation* loc : allLocations) {
+    ItemOverride_Value val = loc->GetPlacedItem().Value();
+    //If this is an ice trap in a shop, change the name based on what the model will look like
+    if (loc->GetPlacedItem() == IceTrap && loc->IsCategory(Category::cShop)) {
+      NonShopItems[TransformShopIndex(GetShopIndex(loc))].Name = GetIceTrapName(val.looksLikeItemId);
+    }
     overrides.insert({
       .key = loc->Key(),
-      .value = loc->GetPlacedItem().Value(),
+      .value = val,
     });
     PlacementLog_Msg("\tScene: ");
     PlacementLog_Msg(std::to_string(loc->Key().scene));
