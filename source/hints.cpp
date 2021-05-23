@@ -150,11 +150,14 @@ static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hinted
   hintedLocation->SetPlacedItem(NoItem);
 
   LogicReset();
+  auto accessibleGossipStones = GetAccessibleLocations(gossipStoneLocations);
+  //Give the item back to the location
+  hintedLocation->SetPlacedItem(originalItem);
 
-  return GetAccessibleLocations(gossipStoneLocations);
+  return accessibleGossipStones;
 }
 
-static void AddHint(const Text& hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
+static void AddHint(Text hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items to gossip stone locations for writing to the spoiler log
   gossipStone->SetPlacedItem(Item{hint.GetEnglish(), ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, &Hints::NoHintText});
 
@@ -190,9 +193,9 @@ static void CreateLocationHint(const std::vector<ItemLocation*>& possibleHintLoc
   hintedLocation->SetAsHinted();
 
   //make hint text
-  const Text& locationHintText = hintedLocation->GetHintText().GetText();
-  const Text& itemHintText = hintedLocation->GetPlacedItem().GetHintText().GetText();
-  const Text& prefix = Hints::Prefix.GetText();
+  Text locationHintText = hintedLocation->GetHintText().GetText();
+  Text itemHintText = hintedLocation->GetPlacedItem().GetHintText().GetText();
+  Text prefix = Hints::Prefix.GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
   PlacementLog_Msg("\tMessage: ");
@@ -333,16 +336,16 @@ static void CreateRandomLocationHint(bool goodItem = false) {
   ItemLocation* gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
-  const Text& itemText = hintedLocation->GetPlacedItem().GetHintText().GetText();
+  Text itemText = hintedLocation->GetPlacedItem().GetHintText().GetText();
   if (hintedLocation->IsDungeon()) {
-    const Text& locationText = hintedLocation->GetParentRegion()->hintText->GetText();
+    Text locationText = hintedLocation->GetParentRegion()->hintText->GetText();
     Text finalHint = Hints::Prefix.GetText()+"#"+locationText+"# hoards #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
   } else {
-    const Text& locationText = GetHintRegion(hintedLocation->GetParentRegion())->hintText->GetText();
+    Text locationText = GetHintRegion(hintedLocation->GetParentRegion())->hintText->GetText();
     Text finalHint = Hints::Prefix.GetText()+"#"+itemText+"# can be found at #"+locationText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
@@ -365,7 +368,7 @@ static void CreateJunkHint() {
     return;
   }
   ItemLocation* gossipStone = RandomElement(gossipStones);
-  const Text& hintText = junkHint->GetText();
+  Text hintText = junkHint->GetText();
 
   PlacementLog_Msg("\tMessage: ");
   PlacementLog_Msg(hintText.english);
