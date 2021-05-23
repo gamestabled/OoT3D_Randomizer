@@ -138,18 +138,22 @@ public:
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::GanonLine};
     }
 
-    Text GetObscure() {
-        return RandomElement(obscureText, false);
+    Text& GetObscure() {
+        return RandomElement(obscureText);
     }
 
-    Text GetClear() {
+    const Text& GetObscure() const {
+        return RandomElement(obscureText);
+    }
+
+    const Text& GetClear() const {
         if (clearText.GetEnglish() == NONE) {
             return GetObscure();
         }
         return clearText;
     }
 
-    Text GetText() {
+    const Text& GetText() const {
         if (Settings::ClearerHints) {
             return GetClear();
         }
@@ -161,16 +165,11 @@ public:
     }
 
     bool operator==(const HintText& right) const {
-        if (obscureText.size() != right.obscureText.size()) {
-          return false;
-        }
-        for (size_t i = 0; i < obscureText.size(); i++) {
-          if (obscureText[i] != right.obscureText[i]) {
-            return false;
-          }
-        }
-
-        return clearText == right.clearText;
+        return obscureText == right.obscureText &&
+               clearText == right.clearText;
+    }
+    bool operator!=(const HintText& right) const {
+        return !operator==(right);
     }
 
 private:

@@ -7,25 +7,21 @@
 #include "custom_models.h"
 #include <stddef.h>
 
-typedef void (*GlModel_MatrixCopy_proc)(GlModel* glModel, nn_math_MTX34* mtx);
-#define GlModel_MatrixCopy_addr 0x3721E0
-#define GlModel_MatrixCopy ((GlModel_MatrixCopy_proc)GlModel_MatrixCopy_addr)
+typedef void (*SkeletonAnimationModel_MatrixCopy_proc)(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
+#define SkeletonAnimationModel_MatrixCopy_addr 0x3721E0
+#define SkeletonAnimationModel_MatrixCopy ((SkeletonAnimationModel_MatrixCopy_proc)SkeletonAnimationModel_MatrixCopy_addr)
 
-typedef void (*GlModel_Draw_proc)(GlModel* glModel, s32 param_2);
-#define GlModel_Draw_addr 0x372170
-#define GlModel_Draw ((GlModel_Draw_proc)GlModel_Draw_addr)
+typedef void (*SkeletonAnimationModel_Draw_proc)(SkeletonAnimationModel* glModel, s32 param_2);
+#define SkeletonAnimationModel_Draw_addr 0x372170
+#define SkeletonAnimationModel_Draw ((SkeletonAnimationModel_Draw_proc)SkeletonAnimationModel_Draw_addr)
 
-typedef void (*GlModel_SpawnAt_proc)(Actor* actor, GlobalContext* globalCtx, GlModel** glModel, s32 objModelIdx);
-#define GlModel_SpawnAt_addr 0x372F38
-#define GlModel_SpawnAt ((GlModel_SpawnAt_proc)GlModel_SpawnAt_addr)
+typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext* globalCtx, SkeletonAnimationModel** glModel, s32 objModelIdx);
+#define SkeletonAnimationModel_SpawnAt_addr 0x372F38
+#define SkeletonAnimationModel_SpawnAt ((SkeletonAnimationModel_SpawnAt_proc)SkeletonAnimationModel_SpawnAt_addr)
 
-typedef GlModel* (*GlModel_Spawn_proc)(Actor* actor, GlobalContext* globalCtx, s16 objId, s32 objModelIdX);
-#define GlModel_Spawn_addr 0x36A924
-#define GlModel_Spawn ((GlModel_Spawn_proc)GlModel_Spawn_addr)
-
-typedef void (*GlModel_SetMesh_proc)(GlModel* glModel, s32 mesh);
-#define GlModel_SetMesh_addr 0x369178
-#define GlModel_SetMesh ((GlModel_SetMesh_proc)GlModel_SetMesh_addr)
+typedef void (*SkeletonAnimationModel_SetMesh_proc)(SkeletonAnimationModel* glModel, s32 mesh);
+#define SkeletonAnimationModel_SetMesh_addr 0x369178
+#define SkeletonAnimationModel_SetMesh ((SkeletonAnimationModel_SetMesh_proc)SkeletonAnimationModel_SetMesh_addr)
 
 typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
 #define Actor_SetModelMatrix_addr 0x3679D0
@@ -54,11 +50,11 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
         CustomModel_EditHeartContainerToDoubleDefense(cmb);
     }
 
-    model->glModel = GlModel_Spawn(model->actor, globalCtx, model->info.objectId, model->info.objectModelIdx);
+    model->glModel = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->info.objectId, model->info.objectModelIdx);
 
     // need to set mesh for rupees
     if (model->info.objectId == 0x017F) {
-        GlModel_SetMesh(model->glModel, model->info.objectMeshId);
+        SkeletonAnimationModel_SetMesh(model->glModel, model->info.objectMeshId);
     }
     // spawn the skulltula token animation
     if ((model->info.objectId == 0x0024) && (model->info.objectModelIdx == 0x03)) {
@@ -187,7 +183,7 @@ void Model_Draw(Model* model) {
     if ((model->loaded) && (model->glModel != NULL)) {
         model->glModel->unk_AC = 1;
         Model_UpdateMatrix(model);
-        GlModel_Draw(model->glModel, 0); //TODO is 0 always okay?
+        SkeletonAnimationModel_Draw(model->glModel, 0); //TODO is 0 always okay?
     }
 }
 

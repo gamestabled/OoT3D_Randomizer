@@ -1,6 +1,7 @@
 #ifndef _CUSTOM_MODELS_H_
 #define _CUSTOM_MODELS_H_
 
+void CustomModel_EditLinkToCustomTunic(void* linkCMB);
 void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB);
 void CustomModel_EditTitleScreenLogo(void* titleScreenZAR);
 void CustomModel_SetOcarinaToRGBA565(void* fairyOcarinaCMB);

@@ -17,6 +17,7 @@
 #include "custom_models.h"
 #include "obj_switch.h"
 #include "gerudo_archery_manager.h"
+#include "shops.h"
 #include "chest.h"
 #include "gossip_stone.h"
 #include "drawbridge.h"
@@ -30,11 +31,16 @@
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
+    gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
+    gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
+
     gActorOverlayTable[0xA].initInfo->init = EnBox_rInit;
 
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
     gActorOverlayTable[0x15].initInfo->draw = EnItem00_rDraw;
+
+    gActorOverlayTable[0x3D].initInfo->destroy = EnOssan_rDestroy;
 
     gActorOverlayTable[0x4A].initInfo->update = BgSpot00Hanebasi_rUpdate;
 

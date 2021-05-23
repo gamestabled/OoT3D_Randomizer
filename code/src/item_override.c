@@ -363,7 +363,7 @@ void ItemOverride_EditDrawGetItemBeforeModelSpawn(void) {
     }
 }
 
-void ItemOverride_EditDrawGetItemAfterModelSpawn(GlModel* model) {
+void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) {
     void* cmabMan;
 
     switch (rActiveItemGraphicId) {

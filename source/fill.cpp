@@ -11,6 +11,7 @@
 #include "starting_inventory.hpp"
 #include "hints.hpp"
 #include "hint_list.hpp"
+#include "shops.hpp"
 
 #include <vector>
 
@@ -100,8 +101,8 @@ static int GetMaxGSCount() {
 //This function will return a vector of ItemLocations that are accessible with
 //where items have been placed so far within the world. The allowedLocations argument
 //specifies the pool of locations that we're trying to search for an accessible location in
-std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, SearchMode mode /*= REACHABILITY_SEARCH*/) {
-
+std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation*>& allowedLocations,
+                                                  SearchMode mode) {
   std::vector<ItemLocation*> accessibleLocations = {};
 
   //Reset all access to begin a new search
@@ -113,7 +114,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 
   //Variables for playthrough
   int gsCount = 0;
-  const int maxGsCount = GENERATE_PLAYTHROUGH ? GetMaxGSCount() : 0; //If generating playthrough want the max that's possibly useful, else doesn't matter
+  const int maxGsCount = mode == SearchMode::GeneratePlaythrough ? GetMaxGSCount() : 0; //If generating playthrough want the max that's possibly useful, else doesn't matter
   bool bombchusFound = false;
   std::vector<std::string> buyIgnores;
   //Variables for search
@@ -193,7 +194,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 
             //Playthrough stuff
             //Generate the playthrough, so we want to add advancement items, unless we know to ignore them
-            if (mode == GENERATE_PLAYTHROUGH) {
+            if (mode == SearchMode::GeneratePlaythrough) {
               //Item is an advancement item, figure out if it should be added to this sphere
               if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
                 ItemType type = location->GetPlacedItem().GetItemType();
@@ -248,7 +249,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
               }
             }
             //All we care about is if the game is beatable, used to pare down playthrough
-            else if (mode == CHECK_BEATABLE && location->GetPlacedItem() == I_Triforce) {
+            else if (mode == SearchMode::CheckBeatable && location->GetPlacedItem() == I_Triforce) {
               playthroughBeatable = true;
               return {}; //Return early for efficiency
             }
@@ -259,12 +260,12 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 
     erase_if(exitPool, [](Exit* e){ return e->AllAccountedFor();});
 
-    if (mode == GENERATE_PLAYTHROUGH && sphere.size() > 0) {
+    if (mode == SearchMode::GeneratePlaythrough && sphere.size() > 0) {
       playthroughLocations.push_back(sphere);
     }
 
   }
-  erase_if(accessibleLocations, [allowedLocations](ItemLocation* loc){
+  erase_if(accessibleLocations, [&allowedLocations](ItemLocation* loc){
     for (ItemLocation* allowedLocation : allowedLocations) {
       if (loc == allowedLocation) {
         return false;
@@ -277,7 +278,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 }
 
 static void GeneratePlaythrough() {
-  GetAccessibleLocations(allLocations, GENERATE_PLAYTHROUGH);
+  GetAccessibleLocations(allLocations, SearchMode::GeneratePlaythrough);
 }
 
 //Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
@@ -295,7 +296,7 @@ static void PareDownPlaythrough() {
       location->SetPlacedItem(NoItem); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable
+      GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
@@ -350,8 +351,7 @@ static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locatio
 | This method helps distribution of items locked behind many requirements.
 | - OoT Randomizer
 */
-static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allowedLocations, bool setLocationsAsHintable = false) {
-
+static void AssumedFill(const std::vector<Item>& items, const std::vector<ItemLocation*>& allowedLocations, bool setLocationsAsHintable = false) {
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[H1;1ERROR: MORE ITEMS THAN LOCATIONS");
   }
@@ -368,7 +368,6 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
 
     //shuffle the order of items to place
     Shuffle(itemsToPlace);
-
     while (!itemsToPlace.empty()) {
       Item item = std::move(itemsToPlace.back());
       item.SetAsPlaythrough();
@@ -384,7 +383,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       }
 
       //get all accessible locations that are allowed
-      std::vector<ItemLocation*> accessibleLocations = GetAccessibleLocations(allowedLocations);
+      const std::vector<ItemLocation*> accessibleLocations = GetAccessibleLocations(allowedLocations);
 
       //retry if there are no more locations to place items
       if (accessibleLocations.empty()) {
@@ -409,7 +408,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       }
 
       //place the item within one of the allowed locations
-      ItemLocation* selectedLocation = RandomElement(accessibleLocations, false);
+      ItemLocation* selectedLocation = RandomElement(accessibleLocations);
       PlaceItemInLocation(selectedLocation, item);
       attemptedLocations.push_back(selectedLocation);
 
@@ -446,7 +445,6 @@ static void RandomizeDungeonRewards() {
     //get stones and medallions
     std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
     AssumedFill(rewards, dungeonRewardLocations);
-
     for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
       const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
@@ -615,6 +613,41 @@ int Fill() {
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
+
+    //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
+    SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
+    if (Shopsanity.Is(SHOPSANITY_OFF)) {
+      PlaceShopItems(); //Just place vanilla items
+    } else {
+      if (Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
+        Shuffle(ShopItems); //Shuffle shop items amongst themselves
+        PlaceShopItems(); //Just place the shuffled shop items
+      }
+      else { //Shopsanity 1-4, random
+        const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
+
+        //Shuffle shop items making sure to not place minShopItems in shop slots which can be overwritten
+        std::vector<int> indicesToExclude;
+        int max = Shopsanity.Is(SHOPSANITY_RANDOM) ? 4 : GetShopsanityReplaceAmount(); //With random it's up to 4 so to be safe we exclude all 4, otherwise exclude amount from settings
+        for(int i = 0; i < max; i++) {
+          indicesToExclude.push_back(indices[i]);
+        }
+        ShuffleShop(ShopItems, indicesToExclude); //Shuffle shop items, making sure some will not be overwritten
+
+        //Overwrite appropriate number of shop items
+        for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+          int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
+          for(int j = 0; j < num_to_replace; j++) {
+            int itemindex = indices[j];
+            ShopItems[i*8+itemindex-1] = NoItem; //Clear item so it can be filled during the general fill algo
+            ShopItems[i*8+itemindex-1].SetPrice(GetRandomShopPrice()); //Set price in ShopItems vector so it can be retrieved later by the patch
+          }
+        }
+      }
+      PlaceShopItems(); //Place shop items with some cleared for placement
+    }
+
+    //Place dungeon rewards
     RandomizeDungeonRewards();
 
     //Place songs first if song shuffle is set to specific locations
@@ -640,7 +673,6 @@ int Fill() {
 
     //Then place Link's Pocket Item if it has to be an advancement item
     RandomizeLinksPocket();
-
     //Then place the rest of the advancement items
     std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});
     AssumedFill(remainingAdvancementItems, allLocations, true);

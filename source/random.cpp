@@ -21,3 +21,9 @@ uint32_t Random(int min, int max) {
     std::uniform_int_distribution<uint32_t> distribution(min, max-1);
     return distribution(generator);
 }
+
+//Returns a random floating point number in [0.0, 1.0]
+double RandomDouble() {
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    return distribution(generator);
+}

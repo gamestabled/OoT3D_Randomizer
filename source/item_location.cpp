@@ -4,6 +4,7 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 #include "hint_list.hpp"
+#include "shops.hpp"
 
 //Location definitions
 //Kokiri Forest                                                          scene  flag  name                                     hint text (hint_list.cpp)                 categories
@@ -867,10 +868,10 @@ ItemLocation Kak_BazaarItem1                              = ItemLocation::Base(0
 ItemLocation Kak_BazaarItem2                              = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                &Hints::Kak_BazaarItem2,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem3                              = ItemLocation::Base(0x2C, 0x3A, "Kak Bazaar Item 3",                                &Hints::Kak_BazaarItem3,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 ItemLocation Kak_BazaarItem4                              = ItemLocation::Base(0x2C, 0x3B, "Kak Bazaar Item 4",                                &Hints::Kak_BazaarItem4,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem5                              = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 5",                                &Hints::Kak_BazaarItem5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem6                              = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 6",                                &Hints::Kak_BazaarItem6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem7                              = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 7",                                &Hints::Kak_BazaarItem7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-ItemLocation Kak_BazaarItem8                              = ItemLocation::Base(0x2C, 0x40, "Kak Bazaar Item 8",                                &Hints::Kak_BazaarItem8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem5                              = ItemLocation::Base(0x2C, 0x3C, "Kak Bazaar Item 5",                                &Hints::Kak_BazaarItem5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem6                              = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 6",                                &Hints::Kak_BazaarItem6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem7                              = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 7",                                &Hints::Kak_BazaarItem7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+ItemLocation Kak_BazaarItem8                              = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 8",                                &Hints::Kak_BazaarItem8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 std::vector<ItemLocation*> Kak_BazaarLocations = {
   &Kak_BazaarItem1,
   &Kak_BazaarItem2,
@@ -1414,47 +1415,56 @@ void GenerateLocationPool() {
 
 void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
 
-    PlacementLog_Msg("\n");
-    PlacementLog_Msg(item.GetName());
-    PlacementLog_Msg(" placed at ");
-    PlacementLog_Msg(loc->GetName());
-    PlacementLog_Msg("\n\n");
+  PlacementLog_Msg("\n");
+  PlacementLog_Msg(item.GetName());
+  PlacementLog_Msg(" placed at ");
+  PlacementLog_Msg(loc->GetName());
+  PlacementLog_Msg("\n\n");
 
-    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-      item.ApplyEffect();
-      loc->Use();
-    }
+  if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+    item.ApplyEffect();
+    loc->Use();
+  }
 
-    itemsPlaced++;
-    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-    printf("\x1b[8;10HPlacing Items.");
-    if (completion > 0.25) printf(".");
-    if (completion > 0.50) printf(".");
+  itemsPlaced++;
+  double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+  printf("\x1b[8;10HPlacing Items.");
+  if (completion > 0.25) printf(".");
+  if (completion > 0.50) printf(".");
 
-    loc->SetPlacedItem(item);
+  //If we're placing a non-shop item in a shop location, we want to record it for custom messages
+  if (item.GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
+    ItemAndPrice newpair;
+    newpair.Name = item.GetName();
+    int index = GetShopIndex(loc);
+    newpair.Price = ShopItems[index].GetPrice();
+    NonShopItems[TransformShopIndex(index)] = newpair;
+  }
+
+  loc->SetPlacedItem(item);
 }
 
 //Same as PlaceItemInLocation, except a price is set as well as the item
 void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately /*= false*/) {
 
-    PlacementLog_Msg("\n");
-    PlacementLog_Msg(item.GetName());
-    PlacementLog_Msg(" placed at ");
-    PlacementLog_Msg(loc->GetName());
-    PlacementLog_Msg("\n\n");
+  PlacementLog_Msg("\n");
+  PlacementLog_Msg(item.GetName());
+  PlacementLog_Msg(" placed at ");
+  PlacementLog_Msg(loc->GetName());
+  PlacementLog_Msg("\n\n");
 
-    if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-      item.ApplyEffect();
-      loc->Use();
-    }
+  if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+    item.ApplyEffect();
+    loc->Use();
+  }
 
-    itemsPlaced++;
-    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-    printf("\x1b[8;10HPlacing Items.");
-    if (completion > 0.25) printf(".");
-    if (completion > 0.50) printf(".");
+  itemsPlaced++;
+  double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+  printf("\x1b[8;10HPlacing Items.");
+  if (completion > 0.25) printf(".");
+  if (completion > 0.50) printf(".");
 
-    loc->SetPlacedShopItem(item, price);
+  loc->SetPlacedShopItem(item, price);
 }
 
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category) {
@@ -1518,9 +1528,14 @@ void AddExcludedOptions() {
 void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
   for (ItemLocation* loc : allLocations) {
+    ItemOverride_Value val = loc->GetPlacedItem().Value();
+    //If this is an ice trap in a shop, change the name based on what the model will look like
+    if (loc->GetPlacedItem() == IceTrap && loc->IsCategory(Category::cShop)) {
+      NonShopItems[TransformShopIndex(GetShopIndex(loc))].Name = GetIceTrapName(val.looksLikeItemId);
+    }
     overrides.insert({
       .key = loc->Key(),
-      .value = loc->GetPlacedItem().Value(),
+      .value = val,
     });
     PlacementLog_Msg("\tScene: ");
     PlacementLog_Msg(std::to_string(loc->Key().scene));

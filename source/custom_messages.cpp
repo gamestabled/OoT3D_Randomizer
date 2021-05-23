@@ -1,6 +1,7 @@
 #include "custom_messages.hpp"
 #include "patch_symbols.hpp"
 #include "debug.hpp"
+#include "shops.hpp"
 #include "../code/src/message.h"
 
 #include <array>
@@ -129,22 +130,28 @@ constexpr std::array DungeonColors = {
 
     //textBoxType and textBoxPosition are defined here: https://wiki.cloudmodding.com/oot/Text_Format#Message_Id
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-        std::string englishText, std::string frenchText, std::string spanishText) {
+                       std::string englishText, std::string frenchText, std::string spanishText) {
             MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
-            while ((englishText.size() % 4) != 0) englishText += "\0"s;
+            while ((englishText.size() % 4) != 0) {
+              englishText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[ENGLISH_U].length = englishText.size();
             messageData << englishText;
 
-            while ((frenchText.size() % 4) != 0) frenchText += "\0"s;
+            while ((frenchText.size() % 4) != 0) {
+              frenchText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[FRENCH_U].length = frenchText.size();
             messageData << frenchText;
 
-            while ((spanishText.size() % 4) != 0) spanishText += "\0"s;
+            while ((spanishText.size() % 4) != 0) {
+              spanishText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[SPANISH_U].length = spanishText.size();
@@ -153,7 +160,7 @@ constexpr std::array DungeonColors = {
             messageEntries.insert(newEntry);
     }
 
-    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, Text text) {
+    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text) {
         CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetEnglish(), text.GetFrench(), text.GetSpanish());
     }
 
@@ -288,6 +295,26 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"Parle avec Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END(),
             UNSKIPPABLE()+"Habla con Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
 
+
+        //Shopsanity items
+        //64 textboxes, 2 for each of 32 potential shopsanity items
+        for(u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
+            std::string name = NonShopItems[shopitems].Name;
+            std::string price = std::to_string(NonShopItems[shopitems].Price);
+            if (name == "Piece of Heart (Treasure Chest Minigame)") {
+                name = "Piece of Heart"; //Prevent name from being too long and overflowing textbox
+            }
+            //Message to display when hovering over the item
+            CreateMessage(0x9200+shopitems*2, 0, 0, 0,
+                COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡UNO RESTANTE!"+NEWLINE()+"¡Obtiene mientras dure!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+            //Message to display when going to buy the item
+            CreateMessage(0x9200+shopitems*2+1, 0, 0, 0,
+                INSTANT_TEXT_ON()+name+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+MESSAGE_END());  
+        }
         //easter egg
         CreateMessage(0x96F, 0, 2, 2,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Oh hey, you watched all the credits!"+NEWLINE()+CENTER_TEXT()+"Here's a prize for your patience."+NEWLINE()+CENTER_TEXT()+"Unlocking MQ and saving..."+NEWLINE()+NEWLINE()+CENTER_TEXT()+COLOR(QM_RED)+"Do not remove the Game Card"+NEWLINE()+CENTER_TEXT()+"or turn the power off."+INSTANT_TEXT_OFF()+MESSAGE_END(),

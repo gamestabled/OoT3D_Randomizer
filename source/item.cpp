@@ -46,18 +46,18 @@ void Item::UndoEffect() {
 }
 
 ItemOverride_Value Item::Value() const {
-    //just a random list of progression items
+    //Random list of major items for ice trap models
     static constexpr std::array<u16, 10> items = {
         GI_BOOMERANG,
         GI_HAMMER,
         GI_ARROW_LIGHT,
-        0x80,
-        0x81,
-        0x82,
-        0x83,
-        0x84,
-        0x85,
-        0x8A,
+        0x80, //Progressive hookshot
+        0x81, //Progressive strength
+        0x82, //Progressive bomb bag
+        0x83, //Progressive bow
+        0x84, //Progressive slingshot
+        0x85, //Progressive wallet
+        0x8A, //Progressive magic
     };
 
     ItemOverride_Value val;
@@ -65,6 +65,12 @@ ItemOverride_Value Item::Value() const {
     val.itemId = getItemId;
     if (getItemId == GI_ICE_TRAP) {
         val.looksLikeItemId = RandomElement(items);
+    }
+    if (type == ITEMTYPE_SHOP) {
+        // With the current shopsanity implementation, we need a way to detect
+        // regular shop items. This method should have no unintended side effects
+        // unless there was a multiworld with 256 players... so, it should be fine.
+        val.player = 0xFF;
     }
     return val;
 }

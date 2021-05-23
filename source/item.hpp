@@ -56,6 +56,10 @@ public:
         return price;
     }
 
+    void SetPrice(u16 price_) {
+        price = price_;
+    }
+
     void SetAsPlaythrough() {
         playthrough = true;
     }

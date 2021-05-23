@@ -2,8 +2,15 @@
 
 #include <vector>
 
-extern int Fill();
-
 class ItemLocation;
-enum SearchMode {REACHABILITY_SEARCH, GENERATE_PLAYTHROUGH, CHECK_BEATABLE};
-extern std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, SearchMode mode = REACHABILITY_SEARCH);
+
+enum class SearchMode {
+    ReachabilitySearch,
+    GeneratePlaythrough,
+    CheckBeatable,
+};
+
+int Fill();
+
+std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation*>& allowedLocations,
+                                                  SearchMode mode = SearchMode::ReachabilitySearch);
