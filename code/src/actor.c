@@ -20,6 +20,11 @@
 #include "shops.h"
 #include "chest.h"
 #include "gossip_stone.h"
+#include "drawbridge.h"
+#include "king_zora.h"
+#include "collapsing_castle.h"
+#include "demo_kankyo.h"
+#include "lake_hylia_objects.h"
 
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
@@ -37,6 +42,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x3D].initInfo->destroy = EnOssan_rDestroy;
 
+    gActorOverlayTable[0x4A].initInfo->update = BgSpot00Hanebasi_rUpdate;
+
     gActorOverlayTable[0x5F].initInfo->init = ItemBHeart_rInit;
     gActorOverlayTable[0x5F].initInfo->destroy = ItemBHeart_rDestroy;
     gActorOverlayTable[0x5F].initInfo->draw = ItemBHeart_rDraw;
@@ -44,7 +51,12 @@ void Actor_Init() {
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
 
+    gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
+
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
+
+    gActorOverlayTable[0xD5].initInfo->update = BgSpot06Objects_rUpdate;
+    gActorOverlayTable[0xD5].initInfo->destroy = BgSpot06Objects_rDestroy;
 
     gActorOverlayTable[0xDC].initInfo->init = Boss_Tw_rInit;
     gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;
@@ -65,11 +77,16 @@ void Actor_Init() {
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
 
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
+    gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 
+    gActorOverlayTable[0x164].initInfo->update = EnKz_rUpdate;
+
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
+
+    gActorOverlayTable[0x174].initInfo->update = DemoGt_rUpdate;
 
     gActorOverlayTable[0x185].initInfo->update = EnWonderTalk2_rUpdate;
 

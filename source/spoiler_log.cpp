@@ -5,6 +5,7 @@
 #include "item_location.hpp"
 #include "random.hpp"
 #include "settings.hpp"
+#include "trial.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -156,9 +157,11 @@ static void WriteSettings() {
 
   //List Starting Inventory
   logtxt += "\nStarting Inventory:\n";
-  for (auto& i : Settings::startingInventoryOptions) {
-    if (i->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
-      std::string item = i->GetSelectedOptionText();
+  //start i at 3 to skip over the toggle, 'Start with Consumables', and 'Start with Max Rupees'
+  for (size_t i = 3; i < Settings::startingInventoryOptions.size(); i++) {
+    auto setting = Settings::startingInventoryOptions[i];
+    if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
+      std::string item = setting->GetSelectedOptionText();
 
       logtxt += "\t";
       logtxt += item;
@@ -183,14 +186,26 @@ static void WriteSettings() {
   }
 
   //Master Quest Dungeons
-  logtxt += "\nMaster Quest Dungeons:\n";
-  for (const auto* dungeon : Dungeon::dungeonList) {
-    if (dungeon->IsMQ()) {
-      logtxt += std::string("\t").append(dungeon->GetName()).append("\n");
+  if (Settings::MQDungeonCount.IsNot(0)) {
+    logtxt += "\nMaster Quest Dungeons:\n";
+    for (const auto* dungeon : Dungeon::dungeonList) {
+      if (dungeon->IsMQ()) {
+        logtxt += std::string("\t").append(dungeon->GetName()).append("\n");
+      }
     }
+    logtxt += '\n';
   }
-  logtxt += '\n';
 
+  //Required Trials
+  if (Settings::GanonsTrialsCount.IsNot(0)) {
+    logtxt += "\nRequired Trials:\n";
+    for (const auto* trial : Trial::trialList) {
+      if (trial->IsRequired()) {
+        logtxt += std::string("\t").append(trial->GetName().english).append("\n");
+      }
+    }
+    logtxt += '\n';
+  }
 }
 
 bool SpoilerLog_Write() {

@@ -130,22 +130,28 @@ constexpr std::array DungeonColors = {
 
     //textBoxType and textBoxPosition are defined here: https://wiki.cloudmodding.com/oot/Text_Format#Message_Id
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-        std::string englishText, std::string frenchText, std::string spanishText) {
+                       std::string englishText, std::string frenchText, std::string spanishText) {
             MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
-            while ((englishText.size() % 4) != 0) englishText += "\0"s;
+            while ((englishText.size() % 4) != 0) {
+              englishText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[ENGLISH_U].length = englishText.size();
             messageData << englishText;
 
-            while ((frenchText.size() % 4) != 0) frenchText += "\0"s;
+            while ((frenchText.size() % 4) != 0) {
+              frenchText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[FRENCH_U].length = frenchText.size();
             messageData << frenchText;
 
-            while ((spanishText.size() % 4) != 0) spanishText += "\0"s;
+            while ((spanishText.size() % 4) != 0) {
+              spanishText += "\0"s;
+            }
             messageData.seekg(0, messageData.end);
             newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
             newEntry.info[SPANISH_U].length = spanishText.size();
@@ -154,7 +160,7 @@ constexpr std::array DungeonColors = {
             messageEntries.insert(newEntry);
     }
 
-    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, Text text) {
+    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text) {
         CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetEnglish(), text.GetFrench(), text.GetSpanish());
     }
 
@@ -197,12 +203,12 @@ constexpr std::array DungeonColors = {
             u32 dungeon = DUNGEON_FOREST_TEMPLE + bossKey;
             CreateMessage(0x9D4 + bossKey, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[dungeon])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[dungeon])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[dungeon]+" "+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[dungeon])+"gran llave "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         CreateMessage(0x9D9, 0, 2, 3,
             UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+EnglishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+FrenchDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+" "+FrenchDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"gran llave "+SpanishDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+SpanishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Compasses
         for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
@@ -318,6 +324,16 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Master Quest doesn't affect the Randomizer,"+NEWLINE()+CENTER_TEXT()+"so you can use 3 more save slots now."+NEWLINE()+NEWLINE()+CENTER_TEXT()+"Thanks for playing!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Vous pouvez désormais jouer à"+NEWLINE()+CENTER_TEXT()+"The Legend of Zelda Ocarina of Time 3D"+NEWLINE()+CENTER_TEXT()+"Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Ya puedes jugar The Legend of Zelda"+NEWLINE()+CENTER_TEXT()+"Ocarina of Time 3D Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        
+        //Messages for the new Lake Hylia switch
+        CreateMessage(0x346, 0, 1, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Water level control system."+NEWLINE()+CENTER_TEXT()+"Keep away!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Contrôle du niveau d'eau."+NEWLINE()+CENTER_TEXT()+"Ne pas toucher!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Control del nivel del agua."+NEWLINE()+CENTER_TEXT()+"¡No te acerques!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        CreateMessage(0x1B2, 0, 0, 3,
+            UNSKIPPABLE()+"This switch is rustier than you think."+WAIT_FOR_INPUT()+"Something must be wrong with the pipe"+NEWLINE()+"system in the Water Temple."+MESSAGE_END(),
+            UNSKIPPABLE()+"Cet interrupteur est très rouillé."+WAIT_FOR_INPUT()+"Quelque chose ne va pas avec"+NEWLINE()+"la tuyauterie du Temple de l'Eau."+MESSAGE_END(),
+            UNSKIPPABLE()+"El interruptor está más oxidado de lo que"+NEWLINE()+"aparenta."+WAIT_FOR_INPUT()+"Algo debe andar mal en el sistema de"+NEWLINE()+"cañerías del Templo del Agua."+MESSAGE_END());
     }
 
     Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {

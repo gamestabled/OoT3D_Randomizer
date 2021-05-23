@@ -8,6 +8,7 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 #include "hint_list.hpp"
+#include "trial.hpp"
 
 #include <unistd.h>
 #include <vector>
@@ -71,12 +72,7 @@ Exit::Exit(std::string regionName_, std::string scene_, HintText* hintText_,
     timePass(timePass_),
     events(std::move(events_)),
     locations(std::move(locations_)),
-    exits(std::move(exits_)) {
-      //set parent region of ItemLocations
-      for (auto locPair : locations) {
-        locPair.GetLocation()->SetParentRegion(this);
-      }
-    }
+    exits(std::move(exits_)) {}
 
 Exit::~Exit() = default;
 
@@ -2471,12 +2467,12 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ExitPairing::Both(&GanonsCastle_ShadowTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_SpiritTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_LightTrial,  []{return CanUse(CanUseItem::Golden_Gauntlets);}),
-                  ExitPairing::Both(&GanonsCastle_Tower,       []{return (ForestTrialClear || ForestTrialSkip) &&
-                                                                         (FireTrialClear   || FireTrialSkip)   &&
-                                                                         (WaterTrialClear  || WaterTrialSkip)  &&
-                                                                         (ShadowTrialClear || ShadowTrialSkip) &&
-                                                                         (SpiritTrialClear || SpiritTrialSkip) &&
-                                                                         (LightTrialClear  || LightTrialSkip);}),
+                  ExitPairing::Both(&GanonsCastle_Tower,       []{return (ForestTrialClear || Trial::ForestTrial.IsSkipped()) &&
+                                                                         (FireTrialClear   || Trial::FireTrial.IsSkipped())   &&
+                                                                         (WaterTrialClear  || Trial::WaterTrial.IsSkipped())  &&
+                                                                         (ShadowTrialClear || Trial::ShadowTrial.IsSkipped()) &&
+                                                                         (SpiritTrialClear || Trial::SpiritTrial.IsSkipped()) &&
+                                                                         (LightTrialClear  || Trial::LightTrial.IsSkipped());}),
                   ExitPairing::Both(&GanonsCastle_DekuScrubs,  []{return LogicLensCastle || CanUse(CanUseItem::Lens_of_Truth);}),
   });
 
@@ -3364,12 +3360,12 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ExitPairing::Both(&GanonsCastle_MQ_ShadowTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_MQ_SpiritTrial, []{return true;}),
                   ExitPairing::Both(&GanonsCastle_MQ_LightTrial,  []{return CanUse(CanUseItem::Golden_Gauntlets);}),
-                  ExitPairing::Both(&GanonsCastle_Tower,          []{return (ForestTrialClear || ForestTrialSkip) &&
-                                                                            (FireTrialClear   || FireTrialSkip)   &&
-                                                                            (WaterTrialClear  || WaterTrialSkip)  &&
-                                                                            (ShadowTrialClear || ShadowTrialSkip) &&
-                                                                            (SpiritTrialClear || SpiritTrialSkip) &&
-                                                                            (LightTrialClear  || LightTrialSkip);}),
+                  ExitPairing::Both(&GanonsCastle_Tower,          []{return (ForestTrialClear || Trial::ForestTrial.IsSkipped()) &&
+                                                                            (FireTrialClear   || Trial::FireTrial.IsSkipped())   &&
+                                                                            (WaterTrialClear  || Trial::WaterTrial.IsSkipped())  &&
+                                                                            (ShadowTrialClear || Trial::ShadowTrial.IsSkipped()) &&
+                                                                            (SpiritTrialClear || Trial::SpiritTrial.IsSkipped()) &&
+                                                                            (LightTrialClear  || Trial::LightTrial.IsSkipped());}),
                   ExitPairing::Both(&GanonsCastle_MQ_DekuScrubs,  []{return LogicLensCastleMQ || CanUse(CanUseItem::Lens_of_Truth);}),
   });
 
@@ -3790,6 +3786,19 @@ namespace Exits { //name, scene, hint text, events, locations, exits
         } else {
           Exits::Root.dayAdult = true;
         }
+    }
+  }
+
+  //We initially tried setting parent regions in the constructor of each exit.
+  //For some reason this was causing bad builds of the application on linux systems,
+  //so for now we're putting it into this function which runs when the app starts up
+  void SetParentRegions() {
+    for (Exit* exit : allExits) {
+      //Set parent region for every exit's locations
+      for (ItemLocationPairing& locPair : exit->locations) {
+          ItemLocation* location = locPair.GetLocation();
+          location->SetParentRegion(exit);
+      }
     }
   }
 }

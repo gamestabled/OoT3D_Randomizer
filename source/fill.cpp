@@ -30,6 +30,8 @@ static void RemoveStartingItemsFromPool() {
   }
 }
 
+//This function will propogate Time of Day access as the specified age to the
+//new exit through the world.
 static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
   if (ToD == ExitPairing::Time::Day) {
     if (age == AGE_CHILD) {
@@ -96,8 +98,11 @@ static int GetMaxGSCount() {
   return std::max(maxUseful, maxBridge);
 }
 
-std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> allowedLocations, SearchMode mode /*= REACHABILITY_SEARCH*/) {
-
+//This function will return a vector of ItemLocations that are accessible with
+//where items have been placed so far within the world. The allowedLocations argument
+//specifies the pool of locations that we're trying to search for an accessible location in
+std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation*>& allowedLocations,
+                                                  SearchMode mode) {
   std::vector<ItemLocation*> accessibleLocations = {};
 
   //Reset all access to begin a new search
@@ -109,7 +114,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 
   //Variables for playthrough
   int gsCount = 0;
-  const int maxGsCount = GENERATE_PLAYTHROUGH ? GetMaxGSCount() : 0; //If generating playthrough want the max that's possibly useful, else doesn't matter
+  const int maxGsCount = mode == SearchMode::GeneratePlaythrough ? GetMaxGSCount() : 0; //If generating playthrough want the max that's possibly useful, else doesn't matter
   bool bombchusFound = false;
   std::vector<std::string> buyIgnores;
   //Variables for search
@@ -189,7 +194,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 
             //Playthrough stuff
             //Generate the playthrough, so we want to add advancement items, unless we know to ignore them
-            if (mode == GENERATE_PLAYTHROUGH) {
+            if (mode == SearchMode::GeneratePlaythrough) {
               //Item is an advancement item, figure out if it should be added to this sphere
               if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
                 ItemType type = location->GetPlacedItem().GetItemType();
@@ -244,7 +249,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
               }
             }
             //All we care about is if the game is beatable, used to pare down playthrough
-            else if (mode == CHECK_BEATABLE && location->GetPlacedItem() == I_Triforce) {
+            else if (mode == SearchMode::CheckBeatable && location->GetPlacedItem() == I_Triforce) {
               playthroughBeatable = true;
               return {}; //Return early for efficiency
             }
@@ -255,12 +260,12 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 
     erase_if(exitPool, [](Exit* e){ return e->AllAccountedFor();});
 
-    if (mode == GENERATE_PLAYTHROUGH && sphere.size() > 0) {
+    if (mode == SearchMode::GeneratePlaythrough && sphere.size() > 0) {
       playthroughLocations.push_back(sphere);
     }
 
   }
-  erase_if(accessibleLocations, [allowedLocations](ItemLocation* loc){
+  erase_if(accessibleLocations, [&allowedLocations](ItemLocation* loc){
     for (ItemLocation* allowedLocation : allowedLocations) {
       if (loc == allowedLocation) {
         return false;
@@ -273,7 +278,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(std::vector<ItemLocation*> all
 }
 
 static void GeneratePlaythrough() {
-  GetAccessibleLocations(allLocations, GENERATE_PLAYTHROUGH);
+  GetAccessibleLocations(allLocations, SearchMode::GeneratePlaythrough);
 }
 
 //Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
@@ -291,7 +296,7 @@ static void PareDownPlaythrough() {
       location->SetPlacedItem(NoItem); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      GetAccessibleLocations(allLocations, CHECK_BEATABLE); //Check if game is still beatable
+      GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
@@ -324,9 +329,9 @@ static void PareDownPlaythrough() {
   GetAccessibleLocations(allLocations);
 }
 
+//Will place things completely randomly, no logic checks are performed
 static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
 
-  //Place everything randomly
   while (!locations.empty()) {
 
     ItemLocation* location = RandomElement(locations, true);
@@ -346,8 +351,7 @@ static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locatio
 | This method helps distribution of items locked behind many requirements.
 | - OoT Randomizer
 */
-static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allowedLocations, bool setLocationsAsHintable = false) {
-
+static void AssumedFill(const std::vector<Item>& items, const std::vector<ItemLocation*>& allowedLocations, bool setLocationsAsHintable = false) {
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[H1;1ERROR: MORE ITEMS THAN LOCATIONS");
   }
@@ -379,7 +383,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       }
 
       //get all accessible locations that are allowed
-      std::vector<ItemLocation*> accessibleLocations = GetAccessibleLocations(allowedLocations);
+      const std::vector<ItemLocation*> accessibleLocations = GetAccessibleLocations(allowedLocations);
 
       //retry if there are no more locations to place items
       if (accessibleLocations.empty()) {
@@ -404,7 +408,7 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
       }
 
       //place the item within one of the allowed locations
-      ItemLocation* selectedLocation = RandomElement(accessibleLocations, false);
+      ItemLocation* selectedLocation = RandomElement(accessibleLocations);
       PlaceItemInLocation(selectedLocation, item);
       attemptedLocations.push_back(selectedLocation);
 
@@ -418,20 +422,25 @@ static void AssumedFill(std::vector<Item> items, std::vector<ItemLocation*> allo
   } while (unsuccessfulPlacement);
 }
 
+//This function will specifically randomize dungeon rewards for the End of Dungeons
+//setting, or randomize one dungeon reward to Link's Pocket if that setting is on
 static void RandomizeDungeonRewards() {
 
+  //quest item bit mask of each stone/medallion for the savefile
   static constexpr std::array<u32, 9> bitMaskTable = {
-    0x00040000,
-    0x00080000,
-    0x00100000,
-    0x00000001,
-    0x00000002,
-    0x00000004,
-    0x00000008,
-    0x00000010,
-    0x00000020,
+    0x00040000, //Kokiri Emerald
+    0x00080000, //Goron Ruby
+    0x00100000, //Zora Sapphire
+    0x00000001, //Forest Medallion
+    0x00000002, //Fire Medallion
+    0x00000004, //Water Medallion
+    0x00000008, //Spirit Medallion
+    0x00000010, //Shadow Medallion
+    0x00000020, //Light Medallion
   };
   int baseOffset = I_KokiriEmerald.GetItemID();
+
+  //End of Dungeons includes Link's Pocket
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
     std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
@@ -440,7 +449,9 @@ static void RandomizeDungeonRewards() {
       const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
 
-      //set the player's dungeon reward on file creation instead of pushing it to them at the start
+      //set the player's dungeon reward on file creation instead of pushing it to them at the start.
+      //This is done mainly because players are already familiar with seeing their dungeon reward
+      //before opening up their file
       if (i == dungeonRewardLocations.size()-1) {
         LinksPocketRewardBitMask = bitMaskTable[index];
       }
@@ -457,6 +468,8 @@ static void RandomizeDungeonRewards() {
   }
 }
 
+//Fills any locations excluded by the player with junk items so that advancement items
+//can't be placed there.
 static void FillExcludedLocations() {
   //Only fill in excluded locations that don't already have something and are forbidden
   std::vector<ItemLocation*> excludedLocations = FilterFromPool(allLocations, [](ItemLocation* loc){
@@ -500,9 +513,9 @@ static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
     - Own Dungeon
     - Any Dungeon
     - Overworld
-  Small Keys, Gerudo Keys, Boss Keys, and/or Ganon's Boss Key will be randomized
-  together if they have the same setting. Maps and Compasses are randomized
-  separately once the dungeon advancement items have all been placed.*/
+  Small Keys, Gerudo Keys, Boss Keys, Ganon's Boss Key, and/or dungeon rewards
+  will be randomized together if they have the same setting. Maps and Compasses
+  are randomized separately once the dungeon advancement items have all been placed.*/
 static void RandomizeDungeonItems() {
   using namespace Dungeon;
 
@@ -567,7 +580,7 @@ static void RandomizeDungeonItems() {
 
   //Randomize maps and compasses after since they're not advancement items
   for (auto dungeon : dungeonList) {
-    if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON)) {
+    if (MapsAndCompasses.Is(MAPSANDCOMPASSES_ANY_DUNGEON)) {
       auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
       AssumedFill(mapAndCompassItems, anyDungeonLocations, true);
     } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OVERWORLD)) {
@@ -654,7 +667,8 @@ int Fill() {
 
       AssumedFill(songs, songLocations, true);
     }
-    //Then place dungeon items that are assigned to restrictive pools
+
+    //Then place dungeon items that are assigned to restrictive location pools
     RandomizeDungeonItems();
 
     //Then place Link's Pocket Item if it has to be an advancement item

@@ -79,7 +79,13 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
   XMLDocument preset = XMLDocument();
-  preset.NewDeclaration();
+
+  // Create and insert the XML declaration
+  preset.InsertEndChild(preset.NewDeclaration());
+
+  // Create the root node
+  XMLElement* rootNode = preset.NewElement("settings");
+  preset.InsertEndChild(rootNode);
 
   for (MenuItem* menu : Settings::mainMenu) {
     if (menu->mode != OPTION_SUB_MENU) {
@@ -90,24 +96,13 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
         continue;
       }
 
-      //Create all necessary elements
+      // Create the <setting> element
       XMLElement* newSetting = preset.NewElement("setting");
-      XMLElement* settingName = preset.NewElement("settingName");
-      XMLElement* valueName = preset.NewElement("valueName");
-      XMLText* settingText = preset.NewText(std::string(setting->GetName()).c_str());
-      XMLText* valueText = preset.NewText(setting->GetSelectedOptionText().c_str());
+      newSetting->SetAttribute("name", std::string(setting->GetName()).c_str());
+      newSetting->SetText(setting->GetSelectedOptionText().c_str());
 
-      //Some setting names have punctuation in them. Set all values as CDATA so
-      //there are no conflicts with XML
-      settingText->SetCData(true);
-      valueText->SetCData(true);
-
-      //add elements to the document
-      settingName->InsertEndChild(settingText);
-      valueName->InsertEndChild(valueText);
-      newSetting->InsertEndChild(settingName);
-      newSetting->InsertEndChild(valueName);
-      preset.InsertEndChild(newSetting);
+      // Append it to the root node
+      rootNode->InsertEndChild(newSetting);
     }
   }
 
@@ -129,7 +124,13 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
     return false;
   }
 
-  XMLNode* curNode = preset.FirstChild();
+  XMLElement* rootNode = preset.RootElement();
+  if (strcmp(rootNode->Name(), "settings") != 0) {
+      // We do not have our <settings> root node, so it may be the old structure. We don't support that one anymore.
+      return false;
+  }
+
+  XMLElement* curNode = rootNode->FirstChildElement();
 
   for (MenuItem* menu : Settings::mainMenu) {
     if (menu->mode != OPTION_SUB_MENU) {
@@ -144,33 +145,29 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
       // Since presets are saved linearly, we can simply loop through the nodes as
       // we loop through the settings to find most of the matching elements.
       std::string settingToFind = std::string{setting->GetName()};
-      std::string curSettingName = curNode->FirstChildElement("settingName")->GetText();
-      std::string curSettingValue = curNode->FirstChildElement("valueName")->GetText();
-
+      std::string curSettingName = curNode->Attribute("name");
       if (curSettingName == settingToFind) {
-        setting->SetSelectedIndexByString(curSettingValue);
-        curNode = curNode->NextSibling();
+        setting->SetSelectedIndexByString(curNode->GetText());
+        curNode = curNode->NextSiblingElement();
       } else {
         // If the current setting and element don't match, then search
         // linearly from the beginning. This will get us back on track if the
         // next setting and element line up with each other*/
-        curNode = preset.FirstChild();
+        curNode = rootNode->FirstChildElement();
         bool settingFound = false;
         while (curNode != nullptr) {
-          curSettingName = curNode->FirstChildElement("settingName")->GetText();
-          curSettingValue = curNode->FirstChildElement("valueName")->GetText();
-
+          curSettingName = curNode->Attribute("name");
           if (curSettingName == settingToFind) {
-            setting->SetSelectedIndexByString(curSettingValue);
-            curNode = curNode->NextSibling();
+            setting->SetSelectedIndexByString(curNode->GetText());
+            curNode = curNode->NextSiblingElement();
             settingFound = true;
             break;
           }
-          curNode = curNode->NextSibling();
+          curNode = curNode->NextSiblingElement();
         }
         //reset to the beginning if the setting wasn't found
         if (!settingFound) {
-          curNode = preset.FirstChild();
+          curNode = rootNode->FirstChildElement();
         }
       }
     }

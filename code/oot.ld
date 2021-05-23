@@ -112,12 +112,16 @@ SECTIONS
 		*(.patch_AnjuCheckCuccoAmount)
 	}
 
+	.patch_FastOwlCutscenes 0x188584 : {
+		*(.patch_FastOwlCutscenes)
+	}
+
 	.patch_BombchuShopInfinitePurchases 0x188D4C : {
 		*(.patch_BombchuShopInfinitePurchases)
 	}
 
 	.patch_DecoratedChest 0x189E88 : {
-		*(patch_DecoratedChest)
+		*(.patch_DecoratedChest)
 	}
 
 	.patch_BusinessScrubTable 0x18A634 : {
@@ -158,6 +162,14 @@ SECTIONS
 
 	.patch_PoeCollectorCheckPoints 0x19091C : {
 		*(.patch_PoeCollectorCheckPoints)
+	}
+
+	.patch_PlayerEditAndRetrieveCMB 0x191970 : {
+		*(.patch_PlayerEditAndRetrieveCMB)
+	}
+
+	.patch_PlayerGetCustomTunicCMAB 0x191DD4 : {
+		*(.patch_PlayerGetCustomTunicCMAB)
 	}
 
 	.patch_ChildRollingGoron 0x194B18 : {

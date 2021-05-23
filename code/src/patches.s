@@ -1161,6 +1161,21 @@ ReadGossipStoneHints_patch:
 DecoratedChest_patch:
     bl hook_DecoratedChest
 
+.section .patch_PlayerEditAndRetrieveCMB
+.global PlayerEditAndRetrieveCMB_patch
+PlayerEditAndRetrieveCMB_patch:
+    bl Player_EditAndRetrieveCMB
+
+.section .patch_PlayerGetCustomTunicCMAB
+.global PlayerGetCustomTunicCMAB_patch
+PlayerGetCustomTunicCMAB_patch:
+    bl Player_GetCustomTunicCMAB
+
+.section .patch_FastOwlCutscenes
+.global FastOwlCutscenes_patch
+FastOwlCutscenes_patch:
+    bl hook_FastOwlCutscenes
+
 .section .patch_loader
 .global loader_patch
 

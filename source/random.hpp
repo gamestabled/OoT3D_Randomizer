@@ -20,9 +20,13 @@ T RandomElement(std::vector<T>& vector, bool erase) {
     }
     return selected;
 }
-template <typename T, std::size_t size>
-T RandomElement(const std::array<T, size>& arr) {
-    return arr[Random(0, arr.size())];
+template <typename Container>
+auto& RandomElement(Container& container) {
+    return container[Random(0, std::size(container))];
+}
+template <typename Container>
+const auto& RandomElement(const Container& container) {
+    return container[Random(0, std::size(container))];
 }
 
 //Shuffle items within a vector or array

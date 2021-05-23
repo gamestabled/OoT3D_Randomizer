@@ -352,6 +352,7 @@ typedef struct {
   u8 startingBottle3;
   u8 startingRutoBottle;
   u8 startingOcarina;
+  u8 startingKokiriSword;
   u8 startingBiggoronSword;
   u8 startingMagicMeter;
   u8 startingDoubleDefense;

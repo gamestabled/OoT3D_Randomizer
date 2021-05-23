@@ -40,7 +40,7 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
+    gSaveContext.eventChkInf[0xA] |= 0x037B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
     gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
@@ -272,7 +272,7 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
     }
 
-    //consumables
+    //starting Nuts and Sticks
     if (gSettingsContext.startingConsumables) {
         gSaveContext.items[SLOT_NUT] = ITEM_NUT;
         gSaveContext.items[SLOT_STICK] = ITEM_STICK;
@@ -280,10 +280,6 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.upgrades |= 1 << 20;
         gSaveContext.ammo[SLOT_NUT] = 20;
         gSaveContext.ammo[SLOT_STICK] = 10;
-    }
-
-    if (gSettingsContext.startingMaxRupees) {
-        gSaveContext.rupeeAccumulator = 999;
     }
 
     //main inventory
@@ -386,6 +382,10 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.items[SLOT_OCARINA] = ITEM_OCARINA_FAIRY + (gSettingsContext.startingOcarina - 1);
     }
 
+    if (gSettingsContext.startingKokiriSword) {
+        gSaveContext.childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
+    }
+
     if (gSettingsContext.startingBiggoronSword) {
         gSaveContext.bgsFlag = 1;
         gSaveContext.bgsHitsLeft = 1;
@@ -404,5 +404,20 @@ void SaveFile_SetStartingInventory(void) {
     gSaveContext.questItems |= gSettingsContext.startingQuestItems;
     gSaveContext.equipment |= gSettingsContext.startingEquipment;
     gSaveContext.upgrades |= gSettingsContext.startingUpgrades;
+
+    //max rupees
+    if (gSettingsContext.startingMaxRupees) {
+        u8 wallet = (gSaveContext.upgrades >> 12) & 0x3;
+        if (wallet == 0) {
+            gSaveContext.rupees = 99;
+        } else if (wallet == 1) {
+            gSaveContext.rupees = 200;
+        } else if (wallet == 2) {
+            gSaveContext.rupees = 500;
+        } else {
+            gSaveContext.rupees = 999;
+        }
+
+    }
 
 }
