@@ -1161,6 +1161,10 @@ namespace Settings {
         shuffleOptions[i]->Hide();
         shuffleOptions[i]->SetSelectedIndex(Random(0, shuffleOptions[i]->GetOptionCount()));
       }
+      // Double check that this is the case in case of randomization on init
+      if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
+        LinksPocketItem.SetSelectedIndex(LINKSPOCKETITEM_DUNGEON_REWARD);
+      }
     }
     else {
       for (u8 i=1; i < shuffleOptions.size(); i++) {
