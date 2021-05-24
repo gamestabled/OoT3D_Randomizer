@@ -128,7 +128,7 @@ public:
 
       //Special case for custom cosmetic settings
       if (options.size() > CUSTOM_COLOR) {
-        if (newSetting.substr(0, 8) == CUSTOM_COLOR_PREFIX && options[CUSTOM_COLOR].substr(0, 8) == CUSTOM_COLOR_PREFIX) {
+        if (newSetting.compare(0, 8, CUSTOM_COLOR_PREFIX) == 0 && options[CUSTOM_COLOR].compare(0, 8, CUSTOM_COLOR_PREFIX) == 0) {
           SetSelectedIndex(CUSTOM_COLOR);
           SetSelectedOptionText(newSetting);
           return;

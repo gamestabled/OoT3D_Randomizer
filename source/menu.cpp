@@ -235,7 +235,7 @@ void UpdateMainMenu(u32 kDown) {
 
 void UpdateCustomCosmeticColors(u32 kDown) {
   if (kDown & KEY_A) {
-    if (currentSetting->GetSelectedOptionText().substr(0, 8) == Cosmetics::CUSTOM_COLOR_PREFIX) {
+    if (currentSetting->GetSelectedOptionText().compare(0, 8, Cosmetics::CUSTOM_COLOR_PREFIX) == 0) {
       std::string newColor = GetInput("Enter a 6 digit hex color").substr(0, 6);
       if (Cosmetics::ValidHexString(newColor)) {
         currentSetting->SetSelectedOptionText(Cosmetics::CustomColorOptionText(newColor));
