@@ -35,6 +35,6 @@ namespace Cosmetics {
   bool ValidHexString(std::string_view hexStr);
   Color_RGB HexStrToColorRGB(const std::string& hexStr);
   std::string CustomColorOptionText(std::string_view color);
-  std::string GetCustomColor(std::string_view str);
+  std::string GetCustomColor(const std::string& str);
   std::string RandomColor();
 } //namespace Cosmetics
