@@ -22,7 +22,7 @@ namespace Settings {
 
   //                                        Setting name,              Options,                                                                     Setting Descriptions (assigned in setting_descriptions.cpp)
   //Open Settings                                                                                                                                   Any option index past the last description will use the last description
-  Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"Yes","No"},                                                                 {openRandomize});
+  Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {openRandomize});
   Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                                                   {logicGlitchless, logicNoLogic});
   Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                                           {forestClosed, forestOpen});
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
@@ -56,6 +56,7 @@ namespace Settings {
   };
 
   //World Settings
+  Option RandomizeWorld      = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {worldRandomize});
   Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                      {ageDesc});
   u8 ResolvedStartingAge;
   Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
@@ -63,6 +64,7 @@ namespace Settings {
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                                     {randomMQDungeonsDesc});
   Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
+    &RandomizeWorld,
     &StartingAge,
     &BombchusInLogic,
     &BombchuDrops,
@@ -71,6 +73,7 @@ namespace Settings {
   };
 
   //Shuffle Settings
+  Option RandomizeShuffle    = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {shuffleRandomize});
   Option ShuffleRewards      = Option::U8  ("Shuffle Dungeon Rewards",{"End of Dungeons", "Any Dungeon", "Overworld", "Anywhere"},       {shuffleRewardsEndOfDungeon, shuffleRewardsAnyDungeon, shuffleRewardsOverworld, shuffleRewardsAnywhere});
   Option LinksPocketItem     = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
   Option ShuffleSongs        = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {songsSongLocations, songsDungeonRewards, songsAllLocations});
@@ -85,6 +88,7 @@ namespace Settings {
   Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   //TODO: Medigoron and Carpet Salesman
   std::vector<Option *> shuffleOptions = {
+    &RandomizeShuffle,
     &ShuffleRewards,
     &LinksPocketItem,
     &ShuffleSongs,
@@ -101,6 +105,7 @@ namespace Settings {
   };
 
   //Shuffle Dungeon Items
+  Option RandomizeDungeon    = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {dungeonRandomize});
   Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
                                                                       {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere});
   Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
@@ -118,6 +123,7 @@ namespace Settings {
   Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8"},                          {lacsDungeonCountDesc});
   Option LACSTokenCount      = Option::U8  ("  Token Count",          {/*Options 0-100 defined in SetDefaultSettings()*/},                    {lacsTokenCountDesc});
   std::vector<Option *> shuffleDungeonItemOptions = {
+    &RandomizeDungeon,
     &MapsAndCompasses,
     &Keysanity,
     &GerudoKeys,
@@ -944,68 +950,76 @@ namespace Settings {
   //will force Starting Age to Child).
   void ForceChange(u32 kDown, Option* currentSetting) {
 
-    //Adult is not compatible with Closed Forest
-    if (OpenForest.Is(OPENFOREST_CLOSED)) {
-      StartingAge.SetSelectedIndex(AGE_CHILD);
-      StartingAge.Lock();
-    } else {
-      StartingAge.Unlock();
+    RandomizeAllSettings();
+
+    //Only go through options if all settings are not randomized
+    if (!RandomizeOpen) {
+      //Adult is not compatible with Closed Forest
+      if (OpenForest.Is(OPENFOREST_CLOSED)) {
+        StartingAge.SetSelectedIndex(AGE_CHILD);
+        StartingAge.Lock();
+      } else {
+        StartingAge.Unlock();
+      }
+
+      //Only show stone count option if Stones is selected
+      if (Bridge.Is(RAINBOWBRIDGE_STONES)) {
+        BridgeStoneCount.Unhide();
+      } else {
+        BridgeStoneCount.SetSelectedIndex(3);
+        BridgeStoneCount.Hide();
+      }
+
+      //Only show medallion count option if Medallions is selected
+      if (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS)) {
+        BridgeMedallionCount.Unhide();
+      } else {
+        BridgeMedallionCount.Hide();
+        BridgeMedallionCount.SetSelectedIndex(6);
+      }
+
+      //Only show reward count option if Rewards is selected
+      if (Bridge.Is(RAINBOWBRIDGE_REWARDS)) {
+        BridgeRewardCount.Unhide();
+      } else {
+        BridgeRewardCount.SetSelectedIndex(9);
+        BridgeRewardCount.Hide();
+      }
+
+      //Only show reward count option if Rewards is selected
+      if (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) {
+        BridgeDungeonCount.Unhide();
+      } else {
+        BridgeDungeonCount.SetSelectedIndex(8);
+        BridgeDungeonCount.Hide();
+      }
+
+      //Only show token count option if Tokens is selected
+      if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
+        BridgeTokenCount.Unhide();
+      } else {
+        BridgeTokenCount.SetSelectedIndex(1);
+        BridgeTokenCount.Hide();
+      }
+
+      //Only show Trial Count option if Random Trial Count is off
+      if (RandomGanonsTrials) {
+        GanonsTrialsCount.SetSelectedIndex(6);
+        GanonsTrialsCount.Hide();
+      } else {
+        GanonsTrialsCount.Unhide();
+      }
     }
 
-    //Only show stone count option if Stones is selected
-    if (Bridge.Is(RAINBOWBRIDGE_STONES)) {
-      BridgeStoneCount.Unhide();
-    } else {
-      BridgeStoneCount.SetSelectedIndex(3);
-      BridgeStoneCount.Hide();
-    }
-
-    //Only show medallion count option if Medallions is selected
-    if (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS)) {
-      BridgeMedallionCount.Unhide();
-    } else {
-      BridgeMedallionCount.Hide();
-      BridgeMedallionCount.SetSelectedIndex(6);
-    }
-
-    //Only show reward count option if Rewards is selected
-    if (Bridge.Is(RAINBOWBRIDGE_REWARDS)) {
-      BridgeRewardCount.Unhide();
-    } else {
-      BridgeRewardCount.SetSelectedIndex(9);
-      BridgeRewardCount.Hide();
-    }
-
-    //Only show reward count option if Rewards is selected
-    if (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) {
-      BridgeDungeonCount.Unhide();
-    } else {
-      BridgeDungeonCount.SetSelectedIndex(8);
-      BridgeDungeonCount.Hide();
-    }
-
-    //Only show token count option if Tokens is selected
-    if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
-      BridgeTokenCount.Unhide();
-    } else {
-      BridgeTokenCount.SetSelectedIndex(1);
-      BridgeTokenCount.Hide();
-    }
-
-    //Only show Trial Count option if Random Trial Count is off
-    if (RandomGanonsTrials) {
-      GanonsTrialsCount.SetSelectedIndex(6);
-      GanonsTrialsCount.Hide();
-    } else {
-      GanonsTrialsCount.Unhide();
-    }
-
-    //Bombchus in Logic forces Bombchu Drops
-    if (BombchusInLogic) {
-      BombchuDrops.SetSelectedIndex(ON);
-      BombchuDrops.Lock();
-    } else {
-      BombchuDrops.Unlock();
+    //Only go through options if all settings are not randomized
+    if (!RandomizeWorld) {
+      //Bombchus in Logic forces Bombchu Drops
+      if (BombchusInLogic) {
+        BombchuDrops.SetSelectedIndex(ON);
+        BombchuDrops.Lock();
+      } else {
+        BombchuDrops.Unlock();
+      }
     }
 
     //Only show MQ Dungeon Count if Random MQ Dungeons is off
@@ -1020,48 +1034,55 @@ namespace Settings {
     if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
       LinksPocketItem.Lock();
       LinksPocketItem.SetSelectedIndex(LINKSPOCKETITEM_DUNGEON_REWARD);
+      if (RandomizeShuffle) {
+        //Even if it is supposed to be locked, still hide it to keep the surprise
+        LinksPocketItem.Unlock();
+        LinksPocketItem.Hide();
+      }
     } else {
       LinksPocketItem.Unlock();
     }
 
-    //Only show Medallion Count if setting Ganons Boss Key to LACS Medallions
-    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
-      LACSMedallionCount.Unhide();
-    } else {
-      LACSMedallionCount.SetSelectedIndex(6);
-      LACSMedallionCount.Hide();
-    }
+    if (!RandomizeDungeon) {
+      //Only show Medallion Count if setting Ganons Boss Key to LACS Medallions
+      if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
+        LACSMedallionCount.Unhide();
+      } else {
+        LACSMedallionCount.SetSelectedIndex(6);
+        LACSMedallionCount.Hide();
+      }
 
-    //Only show Stone Count if setting Ganons Boss Key to LACS Stones
-    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES)) {
-      LACSStoneCount.Unhide();
-    } else {
-      LACSStoneCount.SetSelectedIndex(3);
-      LACSStoneCount.Hide();
-    }
+      //Only show Stone Count if setting Ganons Boss Key to LACS Stones
+      if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES)) {
+        LACSStoneCount.Unhide();
+      } else {
+        LACSStoneCount.SetSelectedIndex(3);
+        LACSStoneCount.Hide();
+      }
 
-    //Only show Reward Count if setting Ganons Boss Key to LACS Rewards
-    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS)) {
-      LACSRewardCount.Unhide();
-    } else {
-      LACSRewardCount.SetSelectedIndex(9);
-      LACSRewardCount.Hide();
-    }
+      //Only show Reward Count if setting Ganons Boss Key to LACS Rewards
+      if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS)) {
+        LACSRewardCount.Unhide();
+      } else {
+        LACSRewardCount.SetSelectedIndex(9);
+        LACSRewardCount.Hide();
+      }
 
-    //Only show Dungeon Count if setting Ganons Boss Key to LACS Dungeons
-    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
-      LACSDungeonCount.Unhide();
-    } else {
-      LACSDungeonCount.SetSelectedIndex(8);
-      LACSDungeonCount.Hide();
-    }
+      //Only show Dungeon Count if setting Ganons Boss Key to LACS Dungeons
+      if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
+        LACSDungeonCount.Unhide();
+      } else {
+        LACSDungeonCount.SetSelectedIndex(8);
+        LACSDungeonCount.Hide();
+      }
 
-    //Only show Token Count if setting Ganons Boss Key to LACS Tokens
-    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
-      LACSTokenCount.Unhide();
-    } else {
-      LACSTokenCount.SetSelectedIndex(100);
-      LACSTokenCount.Hide();
+      //Only show Token Count if setting Ganons Boss Key to LACS Tokens
+      if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+        LACSTokenCount.Unhide();
+      } else {
+        LACSTokenCount.SetSelectedIndex(100);
+        LACSTokenCount.Hide();
+      }
     }
 
     //Only show hint options if hints are enabled
@@ -1088,6 +1109,78 @@ namespace Settings {
     }
 
     ResolveExcludedLocationConflicts();
+  }
+
+  // Randomizes all settings in a category if chosen
+  // Hides all relevant options
+  void RandomizeAllSettings() {
+    // Open Settings
+    if (RandomizeOpen) {
+      // Skip Logic and RandomizeOpen Options to ensure proper logic
+      for (u8 i=2; i < openOptions.size(); i++) {
+        openOptions[i]->Hide();
+        // Randomize the option
+        openOptions[i]->SetSelectedIndex(Random(0, openOptions[i]->GetOptionCount()));
+      }
+      // Randomize Ganon Trials
+      RandomGanonsTrials.SetSelectedIndex(ON);
+    }
+    else {
+      for (u8 i=2; i < openOptions.size(); i++) {
+        openOptions[i]->Unhide();
+      }
+    }
+
+    // World Settings
+    if (RandomizeWorld) {
+      // Skip RandomizeWorld Option
+      for (u8 i=1; i < worldOptions.size(); i++) {
+        // skip MQ options
+        if ((i == 4) || (i==5)) {
+          continue;
+        }
+        worldOptions[i]->Hide();
+        worldOptions[i]->SetSelectedIndex(Random(0, worldOptions[i]->GetOptionCount()));
+      }
+    }
+    else {
+      for (u8 i=1; i < worldOptions.size(); i++) {
+        if ((i == 4) || (i==5)) {
+          continue;
+        }
+        worldOptions[i]->Unhide();
+      }
+    }
+
+    // Shuffle Settings
+    if (RandomizeShuffle) {
+      // Still displays if previously locked
+      LinksPocketItem.Unlock();
+      // Skip RandomizeShuffle Option
+      for (u8 i=1; i < shuffleOptions.size(); i++) {
+        shuffleOptions[i]->Hide();
+        shuffleOptions[i]->SetSelectedIndex(Random(0, shuffleOptions[i]->GetOptionCount()));
+      }
+    }
+    else {
+      for (u8 i=1; i < shuffleOptions.size(); i++) {
+        shuffleOptions[i]->Unhide();
+      }
+    }
+
+    // Dungeon Shuffle Settings
+    if (RandomizeDungeon) {
+      // Skip RandomizeDungeon Option
+      for (u8 i=1; i < shuffleDungeonItemOptions.size(); i++) {
+        shuffleDungeonItemOptions[i]->Hide();
+        shuffleDungeonItemOptions[i]->SetSelectedIndex(Random(0, shuffleDungeonItemOptions[i]->GetOptionCount()));
+      }
+    }
+    else {
+      for (u8 i=1; i < shuffleDungeonItemOptions.size(); i++) {
+        shuffleDungeonItemOptions[i]->Unhide();
+      }
+    }
   }
 
   //eventual settings
