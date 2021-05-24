@@ -17,7 +17,7 @@ using namespace Trial;
 
 namespace Settings {
   std::string seed;
-  std::string version = RANDOMIZER_VERSION "-COMMITNUM";
+  std::string version = RANDOMIZER_VERSION "-";
   std::array<u8, 5> hashIconIndexes;
 
   //                                        Setting name,              Options,                                                                     Setting Descriptions (assigned in setting_descriptions.cpp)

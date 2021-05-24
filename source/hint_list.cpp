@@ -1,4 +1,7 @@
 #include "hint_list.hpp"
+#include "keys.hpp"
+
+#include <unordered_map>
 
 namespace Hints {
 
@@ -12,6 +15,113 @@ namespace Hints {
   // @ will print the player name
   // surrounding text with '#' will make it a different color
   // - OoT Randomizer
+
+  static std::unordered_map<Key, HintText> hints = {
+    {NONE,               HintText::Exclude({Text{"","",""}})},
+    {KOKIRI_SWORD,       HintText::Item({
+                         //obscure text
+                         Text{"a butter knife",    /*french*/"", /*spanish*/"un ágil puñal"},
+                         Text{"a starter slasher", /*french*/"", /*spanish*/"una hoja de principiantes"},
+                         Text{"a switchblade",     /*french*/"", /*spanish*/"un raudo cortador"},
+                       },
+                         //clear text
+                         Text{"the Kokiri Sword", /*french*/"", /*spanish*/"la Espada Kokiri"}
+    )},
+
+    {MASTER_SWORD,           HintText::Item({
+                         //obscure text
+                         Text{"evil's bane",        /*french*/"", /*spanish*/"la destructora del mal"},
+                         Text{"a seven year limbo", /*french*/"", /*spanish*/"unos siete años de espera"},
+                       },
+                         //clear text
+                         Text{"the Master Sword", /*french*/"", /*spanish*/"la Espada Maestra"}
+    );
+
+    {GIANTS_KNIFE,           HintText::Item({
+                         //obscure text
+                         Text{"a fragile blade",     /*french*/"", /*spanish*/"una frágil hoja"},
+                         Text{"a breakable cleaver", /*french*/"", /*spanish*/"un rompible acero"},
+                       },
+                         //clear text
+                         Text{"the Giant's Knife", /*french*/"", /*spanish*/"la daga gigante"}
+    );
+
+    HintText BiggoronSword = HintText::Item({
+                         //obscure text
+                         Text{"the biggest blade",  /*french*/"", /*spanish*/"el mayor mandoble"},
+                         Text{"a colossal cleaver", /*french*/"", /*spanish*/"un estoque colosal"},
+                       },
+                         //clear text
+                         Text{"the Biggoron Sword", /*french*/"", /*spanish*/"la Espada de Biggoron"}
+    );
+
+    HintText DekuShield = HintText::Item({
+                         //obscure text
+                         Text{"a wooden ward",      /*french*/"", /*spanish*/"una protección forestal"},
+                         Text{"a burnable barrier", /*french*/"", /*spanish*/"una barrera quemable"},
+                       },
+                         //clear text
+                         Text{"a Deku Shield", /*french*/"", /*spanish*/"un escudo deku"}
+    );
+
+    HintText HylianShield = HintText::Item({
+                         //obscure text
+                         Text{"a steel safeguard",      /*french*/"", /*spanish*/"un protección de acero"},
+                         Text{"Like Like's metal meal", /*french*/"", /*spanish*/"un metálico plato de Like Like"},
+                       },
+                         //clear text
+                         Text{"a Hylian Shield", /*french*/"", /*spanish*/"un escudo hyliano"}
+    );
+
+    HintText MirrorShield = HintText::Item({
+                         //obscure text
+                         Text{"a reflective rampart", /*french*/"", /*spanish*/"una muralla reflectora"},
+                         Text{"Medusa's weakness",    /*french*/"", /*spanish*/"la debilidad de Medusa"},
+                         Text{"a silvered surface",   /*french*/"", /*spanish*/"una superficie plateada"},
+                       },
+                         //clear text
+                         Text{"the Mirror Shield", /*french*/"", /*spanish*/"el escudo espejo"}
+    );
+
+    HintText GoronTunic = HintText::Item({
+                         //obscure text
+                         Text{"ruby robes",       /*french*/"", /*spanish*/"una vestimenta rubí"},
+                         Text{"fireproof fabric", /*french*/"", /*spanish*/"una ignífuga prenda"},
+                         Text{"cooking clothes",  /*french*/"", /*spanish*/"unos abrasantes ropajes"},
+                       },
+                         //clear text
+                         Text{"a Goron Tunic", /*french*/"", /*spanish*/"un sayo goron"}
+    );
+
+    HintText ZoraTunic = HintText::Item({
+                         //obscure text
+                         Text{"a sapphire suit", /*french*/"", /*spanish*/"una vestidura zafiro"},
+                         Text{"scuba gear",      /*french*/"", /*spanish*/"un traje de buceo"},
+                         Text{"a swimsuit",      /*french*/"", /*spanish*/"un bañador"},
+                       },
+                         //clear text
+                         Text{"a Zora Tunic", /*french*/"", /*spanish*/"un sayo zora"}
+    );
+
+    HintText IronBoots = HintText::Item({
+                         //obscure text
+                         Text{"sink shoes",   /*french*/"", /*spanish*/"un calzado de las profundidades"},
+                         Text{"clank cleats", /*french*/"", /*spanish*/"unas botas férreas"},
+                       },
+                         //clear text
+                         Text{"the Iron Boots", /*french*/"", /*spanish*/"las botas de hierro"}
+    );
+
+    HintText HoverBoots = HintText::Item({
+                         //obscure text
+                         Text{"butter boots",    /*french*/"", /*spanish*/"unas suelas resvaladizas"},
+                         Text{"sacred slippers", /*french*/"", /*spanish*/"unos escurridizos botines"},
+                         Text{"spacewalkers",    /*french*/"", /*spanish*/"un calzado antigravitatorio"},
+                       },
+                         //clear text
+                         Text{"the Hover Boots", /*french*/"", /*spanish*/"las botas voladoras"}
+    );
+  };
 
   /*--------------------------
   |       GENERAL TEXT       |
@@ -27,14 +137,136 @@ namespace Hints {
   |      ITEM HINT TEXT      |
   ---------------------------*/
 
-  HintText TriforcePiece = HintText::Item({
+  HintText KokiriSword = HintText::Item({
                        //obscure text
-                       Text{"a triumph fork",  /*french*/"", /*spanish*/"un trígono del triunfo"},
-                       Text{"cheese",          /*french*/"", /*spanish*/"un queso"},
-                       Text{"a gold fragment", /*french*/"", /*spanish*/"un fragmento dorado"},
+                       Text{"a butter knife",    /*french*/"", /*spanish*/"un ágil puñal"},
+                       Text{"a starter slasher", /*french*/"", /*spanish*/"una hoja de principiantes"},
+                       Text{"a switchblade",     /*french*/"", /*spanish*/"un raudo cortador"},
                      },
                        //clear text
-                       Text{"a Piece of the Triforce", /*french*/"", /*spanish*/"una Pieza de la Trifuerza"}
+                       Text{"the Kokiri Sword", /*french*/"", /*spanish*/"la Espada Kokiri"}
+  );
+
+  HintText MasterSword = HintText::Item({
+                       //obscure text
+                       Text{"evil's bane",        /*french*/"", /*spanish*/"la destructora del mal"},
+                       Text{"a seven year limbo", /*french*/"", /*spanish*/"unos siete años de espera"},
+                     },
+                       //clear text
+                       Text{"the Master Sword", /*french*/"", /*spanish*/"la Espada Maestra"}
+  );
+
+  HintText GiantsKnife = HintText::Item({
+                       //obscure text
+                       Text{"a fragile blade",     /*french*/"", /*spanish*/"una frágil hoja"},
+                       Text{"a breakable cleaver", /*french*/"", /*spanish*/"un rompible acero"},
+                     },
+                       //clear text
+                       Text{"the Giant's Knife", /*french*/"", /*spanish*/"la daga gigante"}
+  );
+
+  HintText BiggoronSword = HintText::Item({
+                       //obscure text
+                       Text{"the biggest blade",  /*french*/"", /*spanish*/"el mayor mandoble"},
+                       Text{"a colossal cleaver", /*french*/"", /*spanish*/"un estoque colosal"},
+                     },
+                       //clear text
+                       Text{"the Biggoron Sword", /*french*/"", /*spanish*/"la Espada de Biggoron"}
+  );
+
+  HintText DekuShield = HintText::Item({
+                       //obscure text
+                       Text{"a wooden ward",      /*french*/"", /*spanish*/"una protección forestal"},
+                       Text{"a burnable barrier", /*french*/"", /*spanish*/"una barrera quemable"},
+                     },
+                       //clear text
+                       Text{"a Deku Shield", /*french*/"", /*spanish*/"un escudo deku"}
+  );
+
+  HintText HylianShield = HintText::Item({
+                       //obscure text
+                       Text{"a steel safeguard",      /*french*/"", /*spanish*/"un protección de acero"},
+                       Text{"Like Like's metal meal", /*french*/"", /*spanish*/"un metálico plato de Like Like"},
+                     },
+                       //clear text
+                       Text{"a Hylian Shield", /*french*/"", /*spanish*/"un escudo hyliano"}
+  );
+
+  HintText MirrorShield = HintText::Item({
+                       //obscure text
+                       Text{"a reflective rampart", /*french*/"", /*spanish*/"una muralla reflectora"},
+                       Text{"Medusa's weakness",    /*french*/"", /*spanish*/"la debilidad de Medusa"},
+                       Text{"a silvered surface",   /*french*/"", /*spanish*/"una superficie plateada"},
+                     },
+                       //clear text
+                       Text{"the Mirror Shield", /*french*/"", /*spanish*/"el escudo espejo"}
+  );
+
+  HintText GoronTunic = HintText::Item({
+                       //obscure text
+                       Text{"ruby robes",       /*french*/"", /*spanish*/"una vestimenta rubí"},
+                       Text{"fireproof fabric", /*french*/"", /*spanish*/"una ignífuga prenda"},
+                       Text{"cooking clothes",  /*french*/"", /*spanish*/"unos abrasantes ropajes"},
+                     },
+                       //clear text
+                       Text{"a Goron Tunic", /*french*/"", /*spanish*/"un sayo goron"}
+  );
+
+  HintText ZoraTunic = HintText::Item({
+                       //obscure text
+                       Text{"a sapphire suit", /*french*/"", /*spanish*/"una vestidura zafiro"},
+                       Text{"scuba gear",      /*french*/"", /*spanish*/"un traje de buceo"},
+                       Text{"a swimsuit",      /*french*/"", /*spanish*/"un bañador"},
+                     },
+                       //clear text
+                       Text{"a Zora Tunic", /*french*/"", /*spanish*/"un sayo zora"}
+  );
+
+  HintText IronBoots = HintText::Item({
+                       //obscure text
+                       Text{"sink shoes",   /*french*/"", /*spanish*/"un calzado de las profundidades"},
+                       Text{"clank cleats", /*french*/"", /*spanish*/"unas botas férreas"},
+                     },
+                       //clear text
+                       Text{"the Iron Boots", /*french*/"", /*spanish*/"las botas de hierro"}
+  );
+
+  HintText HoverBoots = HintText::Item({
+                       //obscure text
+                       Text{"butter boots",    /*french*/"", /*spanish*/"unas suelas resvaladizas"},
+                       Text{"sacred slippers", /*french*/"", /*spanish*/"unos escurridizos botines"},
+                       Text{"spacewalkers",    /*french*/"", /*spanish*/"un calzado antigravitatorio"},
+                     },
+                       //clear text
+                       Text{"the Hover Boots", /*french*/"", /*spanish*/"las botas voladoras"}
+  );
+
+  HintText ZeldasLetter = HintText::Item({
+                       //obscure text
+                       Text{"an autograph",     /*french*/"", /*spanish*/"un autógrafo"},
+                       Text{"royal stationery", /*french*/"", /*spanish*/"un escrito real"},
+                       Text{"royal snail mail", /*french*/"", /*spanish*/"correo de la realeza"},
+                     },
+                       //clear text
+                       Text{"Zelda's Letter", /*french*/"", /*spanish*/"la carta de Zelda"}
+  );
+
+  HintText WeirdEgg = HintText::Item({
+                       //obscure text
+                       Text{"a chicken dilemma", /*french*/"", /*spanish*/"el dilema de la gallina"},
+                     },
+                       //clear text
+                       Text{"the Weird Egg", /*french*/"", /*spanish*/"el huevo extraño"}
+  );
+
+  HintText Boomerang = HintText::Item({
+                       //obscure text
+                       Text{"a banana",       /*french*/"", /*spanish*/"un plátano"},
+                       Text{"a stun stick",   /*french*/"", /*spanish*/"un palo aturdidor"},
+                       Text{"a yellow angle", /*french*/"", /*spanish*/"un ángulo amarillo"},
+                     },
+                       //clear text
+                       Text{"the Boomerang", /*french*/"", /*spanish*/"el bumerán"}
   );
 
   HintText ProgressiveMagic = HintText::Item({
@@ -65,16 +297,6 @@ namespace Hints {
                      },
                        //clear text
                        Text{"a Slingshot", /*french*/"", /*spanish*/"un tirachinas"}
-  );
-
-  HintText Boomerang = HintText::Item({
-                       //obscure text
-                       Text{"a banana",       /*french*/"", /*spanish*/"un plátano"},
-                       Text{"a stun stick",   /*french*/"", /*spanish*/"un palo aturdidor"},
-                       Text{"a yellow angle", /*french*/"", /*spanish*/"un ángulo amarillo"},
-                     },
-                       //clear text
-                       Text{"the Boomerang", /*french*/"", /*spanish*/"el bumerán"}
   );
 
   HintText ProgressiveBow = HintText::Item({
@@ -134,89 +356,6 @@ namespace Hints {
                        Text{"the Megaton Hammer", /*french*/"", /*spanish*/"el martillo Megatón"}
   );
 
-  HintText IronBoots = HintText::Item({
-                       //obscure text
-                       Text{"sink shoes",   /*french*/"", /*spanish*/"un calzado de las profundidades"},
-                       Text{"clank cleats", /*french*/"", /*spanish*/"unas botas férreas"},
-                     },
-                       //clear text
-                       Text{"the Iron Boots", /*french*/"", /*spanish*/"las botas de hierro"}
-  );
-
-  HintText HoverBoots = HintText::Item({
-                       //obscure text
-                       Text{"butter boots",    /*french*/"", /*spanish*/"unas suelas resvaladizas"},
-                       Text{"sacred slippers", /*french*/"", /*spanish*/"unos escurridizos botines"},
-                       Text{"spacewalkers",    /*french*/"", /*spanish*/"un calzado antigravitatorio"},
-                     },
-                       //clear text
-                       Text{"the Hover Boots", /*french*/"", /*spanish*/"las botas voladoras"}
-  );
-
-  HintText KokiriSword = HintText::Item({
-                       //obscure text
-                       Text{"a butter knife",    /*french*/"", /*spanish*/"un ágil puñal"},
-                       Text{"a starter slasher", /*french*/"", /*spanish*/"una hoja de principiantes"},
-                       Text{"a switchblade",     /*french*/"", /*spanish*/"un raudo cortador"},
-                     },
-                       //clear text
-                       Text{"the Kokiri Sword", /*french*/"", /*spanish*/"la Espada Kokiri"}
-  );
-
-  HintText GiantsKnife = HintText::Item({
-                       //obscure text
-                       Text{"a fragile blade",     /*french*/"", /*spanish*/"una frágil hoja"},
-                       Text{"a breakable cleaver", /*french*/"", /*spanish*/"un rompible acero"},
-                     },
-                       //clear text
-                       Text{"the Giant's Knife", /*french*/"", /*spanish*/"la daga gigante"}
-  );
-
-  HintText BiggoronSword = HintText::Item({
-                       //obscure text
-                       Text{"the biggest blade",  /*french*/"", /*spanish*/"el mayor mandoble"},
-                       Text{"a colossal cleaver", /*french*/"", /*spanish*/"un estoque colosal"},
-                     },
-                       //clear text
-                       Text{"the Biggoron Sword", /*french*/"", /*spanish*/"la Espada de Biggoron"}
-  );
-
-  HintText MasterSword = HintText::Item({
-                       //obscure text
-                       Text{"evil's bane",        /*french*/"", /*spanish*/"la destructora del mal"},
-                       Text{"a seven year limbo", /*french*/"", /*spanish*/"unos siete años de espera"},
-                     },
-                       //clear text
-                       Text{"the Master Sword", /*french*/"", /*spanish*/"la Espada Maestra"}
-  );
-
-  HintText DekuShield = HintText::Item({
-                       //obscure text
-                       Text{"a wooden ward",      /*french*/"", /*spanish*/"una protección forestal"},
-                       Text{"a burnable barrier", /*french*/"", /*spanish*/"una barrera quemable"},
-                     },
-                       //clear text
-                       Text{"a Deku Shield", /*french*/"", /*spanish*/"un escudo deku"}
-  );
-
-  HintText HylianShield = HintText::Item({
-                       //obscure text
-                       Text{"a steel safeguard",      /*french*/"", /*spanish*/"un protección de acero"},
-                       Text{"Like Like's metal meal", /*french*/"", /*spanish*/"un metálico plato de Like Like"},
-                     },
-                       //clear text
-                       Text{"a Hylian Shield", /*french*/"", /*spanish*/"un escudo hyliano"}
-  );
-
-  HintText MirrorShield = HintText::Item({
-                       //obscure text
-                       Text{"a reflective rampart", /*french*/"", /*spanish*/"una muralla reflectora"},
-                       Text{"Medusa's weakness",    /*french*/"", /*spanish*/"la debilidad de Medusa"},
-                       Text{"a silvered surface",   /*french*/"", /*spanish*/"una superficie plateada"},
-                     },
-                       //clear text
-                       Text{"the Mirror Shield", /*french*/"", /*spanish*/"el escudo espejo"}
-  );
 
   HintText FaroresWind = HintText::Item({
                        //obscure text
@@ -299,25 +438,17 @@ namespace Hints {
                        Text{"an Ocarina", /*french*/"", /*spanish*/"una ocarina"}
   );
 
-  HintText GoronTunic = HintText::Item({
+
+  HintText TriforcePiece = HintText::Item({
                        //obscure text
-                       Text{"ruby robes",       /*french*/"", /*spanish*/"una vestimenta rubí"},
-                       Text{"fireproof fabric", /*french*/"", /*spanish*/"una ignífuga prenda"},
-                       Text{"cooking clothes",  /*french*/"", /*spanish*/"unos abrasantes ropajes"},
+                       Text{"a triumph fork",  /*french*/"", /*spanish*/"un trígono del triunfo"},
+                       Text{"cheese",          /*french*/"", /*spanish*/"un queso"},
+                       Text{"a gold fragment", /*french*/"", /*spanish*/"un fragmento dorado"},
                      },
                        //clear text
-                       Text{"a Goron Tunic", /*french*/"", /*spanish*/"un sayo goron"}
+                       Text{"a Piece of the Triforce", /*french*/"", /*spanish*/"una Pieza de la Trifuerza"}
   );
 
-  HintText ZoraTunic = HintText::Item({
-                       //obscure text
-                       Text{"a sapphire suit", /*french*/"", /*spanish*/"una vestidura zafiro"},
-                       Text{"scuba gear",      /*french*/"", /*spanish*/"un traje de buceo"},
-                       Text{"a swimsuit",      /*french*/"", /*spanish*/"un bañador"},
-                     },
-                       //clear text
-                       Text{"a Zora Tunic", /*french*/"", /*spanish*/"un sayo zora"}
-  );
 
   HintText Epona = HintText::Item({
                        //obscure text
@@ -707,23 +838,6 @@ namespace Hints {
                        Text{"a Huge Rupee", /*french*/"", /*spanish*/"una rupia gigante"}
   );
 
-  HintText WeirdEgg = HintText::Item({
-                       //obscure text
-                       Text{"a chicken dilemma", /*french*/"", /*spanish*/"el dilema de la gallina"},
-                     },
-                       //clear text
-                       Text{"the Weird Egg", /*french*/"", /*spanish*/"el huevo extraño"}
-  );
-
-  HintText ZeldasLetter = HintText::Item({
-                       //obscure text
-                       Text{"an autograph",     /*french*/"", /*spanish*/"un autógrafo"},
-                       Text{"royal stationery", /*french*/"", /*spanish*/"un escrito real"},
-                       Text{"royal snail mail", /*french*/"", /*spanish*/"correo de la realeza"},
-                     },
-                       //clear text
-                       Text{"Zelda's Letter", /*french*/"", /*spanish*/"la carta de Zelda"}
-  );
 
   HintText PocketEgg = HintText::Item({
                        //obscure text

@@ -1,30 +1,63 @@
 #include "item_list.hpp"
 
 #include "logic.hpp"
+#include "keys.hpp"
 #include "settings.hpp"
 #include "hint_list.hpp"
 #include "../code/include/z3D/z3Ditem.h"
 #include <vector>
+#include <unordered_map>
 
 using namespace Logic;
 using namespace Settings;
+
+static std::unordered_map<Key, Item> items = {
+  {NONE,                   Item("No Item",              ITEMTYPE_EVENT, GI_RUPEE_GREEN,    false,      &noVariable,    &Hints::NoHintText)},
+  {KOKIRI_SWORD,           Item("Kokiri Sword",         ITEMTYPE_ITEM,  GI_SWORD_KOKIRI,   true,       &KokiriSword,   &Hints::NoHintText)},
+  //[MASTER_SWORD]
+  //[GIANTS_KNIFE]
+  {BIGGORON_SWORD,         Item("Biggoron Sword",       ITEMTYPE_ITEM,  GI_SWORD_BGS,      true,       &noVariable,    &Hints::BiggoronSword)},
+  {DEKU_SHIELD,            Item("Deku Shield",          ITEMTYPE_ITEM,  GI_SHIELD_DEKU,    false,      &noVariable,    &Hints::DekuShield)},
+  {HYLIAN_SHIELD,          Item("Hylian Shield",        ITEMTYPE_ITEM,  GI_SHIELD_HYLIAN,  false,      &noVariable,    &Hints::HylianShield)},
+  {MIRROR_SHIELD,          Item("Mirror Shield",        ITEMTYPE_ITEM,  GI_SHIELD_MIRROR,  true,       &MirrorShield,  &Hints::MirrorShield)},
+  {GORON_TUNIC,            Item("Goron Tunic",          ITEMTYPE_ITEM,  GI_TUNIC_GORON,    true,       &GoronTunic,    &Hints::GoronTunic)},
+  {ZORA_TUNIC,             Item("Zora Tunic",           ITEMTYPE_ITEM,  GI_TUNIC_ZORA,     true,       &ZoraTunic,     &Hints::ZoraTunic)},
+  {IRON_BOOTS,             Item("Iron Boots",           ITEMTYPE_ITEM,  GI_BOOTS_IRON,     true,       &IronBoots,     &Hints::IronBoots)},
+  {HOVER_BOOTS,            Item("Hover Boots",          ITEMTYPE_ITEM,  GI_BOOTS_HOVER,    true,       &HoverBoots,    &Hints::HoverBoots)},
+  {WEIRD_EGG,              Item("Zelda's Letter",       ITEMTYPE_ITEM,  GI_LETTER_ZELDA,   true,       &ZeldasLetter,  &Hints::ZeldasLetter)},
+  {ZELDAS_LETTER,          Item("Weird Egg",            ITEMTYPE_ITEM,  GI_WEIRD_EGG,      true,       &WeirdEgg,      &Hints::WeirdEgg)},
+  {BOOMERANG,              Item("Boomerang",            ITEMTYPE_ITEM,  GI_BOOMERANG,      true,       &Boomerang,     &Hints::Boomerang)},
+  {LENS_OF_TRUTH,          Item("Lens of Truth",        ITEMTYPE_ITEM,  GI_LENS,           true,       &LensOfTruth,   &Hints::LensOfTruth)},
+  {MEGATON_HAMMER,         Item("Megaton Hammer",       ITEMTYPE_ITEM,  GI_HAMMER,         true,       &Hammer,        &Hints::MegatonHammer)},
+  {SHARD_OF_AGONY,         Item("Shard of Agony",       ITEMTYPE_ITEM,  GI_STONE_OF_AGONY, true,       &ShardOfAgony,  &Hints::ShardOfAgony)},
+  {DINS_FIRE,              Item("Din's Fire",           ITEMTYPE_ITEM,  GI_DINS_FIRE,      true,       &DinsFire,      &Hints::DinsFire)},
+  {FARORES_WIND,           Item("Farore's Wind",        ITEMTYPE_ITEM,  GI_FARORES_WIND,   true,       &FaroresWind,   &Hints::FaroresWind)},
+  {NAYRUS_LOVE,            Item("Nayru's Love",         ITEMTYPE_ITEM,  GI_NAYRUS_LOVE,    true,       &NayrusLove,    &Hints::NayrusLove)},
+  {FIRE_ARROWS,            Item("Fire Arrows",          ITEMTYPE_ITEM,  GI_ARROW_FIRE,     true,       &FireArrows,    &Hints::FireArrows)},
+  {ICE_ARROWS,             Item("Ice Arrows",           ITEMTYPE_ITEM,  GI_ARROW_ICE,      true,       &IceArrows,     &Hints::IceArrows)},
+  {LIGHT_ARROWS,           Item("Light Arrows",         ITEMTYPE_ITEM,  GI_ARROW_LIGHT,    true,       &LightArrows,   &Hints::LightArrows)},
+};
 
 Item NoItem     = Item("No Item",  ITEMTYPE_EVENT, GI_RUPEE_GREEN,    false, &noVariable, &Hints::NoHintText);
 Item I_Triforce = Item("Triforce", ITEMTYPE_EVENT, GI_RUPEE_RED_LOSE, false, &noVariable, &Hints::NoHintText);
 
 //Specific Advancement Items         // name                   type            getItemId          advancement logic variable  hint text (hint_list.cpp)
 Item I_KokiriSword              = Item("Kokiri Sword",         ITEMTYPE_ITEM,  GI_SWORD_KOKIRI,   true,       &KokiriSword,   &Hints::KokiriSword);
+//Master Sword
+//Giant's Knife
 Item I_BiggoronSword            = Item("Biggoron Sword",       ITEMTYPE_ITEM,  GI_SWORD_BGS,      true,       &noVariable,    &Hints::BiggoronSword);
 Item I_DekuShield               = Item("Deku Shield",          ITEMTYPE_ITEM,  GI_SHIELD_DEKU,    false,      &noVariable,    &Hints::DekuShield);
 Item I_HylianShield             = Item("Hylian Shield",        ITEMTYPE_ITEM,  GI_SHIELD_HYLIAN,  false,      &noVariable,    &Hints::HylianShield);
 Item I_MirrorShield             = Item("Mirror Shield",        ITEMTYPE_ITEM,  GI_SHIELD_MIRROR,  true,       &MirrorShield,  &Hints::MirrorShield);
-Item I_Boomerang                = Item("Boomerang",            ITEMTYPE_ITEM,  GI_BOOMERANG,      true,       &Boomerang,     &Hints::Boomerang);
-Item I_ZeldasLetter             = Item("Zelda's Letter",       ITEMTYPE_ITEM,  GI_LETTER_ZELDA,   true,       &ZeldasLetter,  &Hints::ZeldasLetter);
-Item I_WeirdEgg                 = Item("Weird Egg",            ITEMTYPE_ITEM,  GI_WEIRD_EGG,      true,       &WeirdEgg,      &Hints::WeirdEgg);
-Item I_LensOfTruth              = Item("Lens of Truth",        ITEMTYPE_ITEM,  GI_LENS,           true,       &LensOfTruth,   &Hints::LensOfTruth);
-Item I_MegatonHammer            = Item("Megaton Hammer",       ITEMTYPE_ITEM,  GI_HAMMER,         true,       &Hammer,        &Hints::MegatonHammer);
+Item I_GoronTunic               = Item("Goron Tunic",          ITEMTYPE_ITEM,  GI_TUNIC_GORON,    true,       &GoronTunic,    &Hints::GoronTunic);
+Item I_ZoraTunic                = Item("Zora Tunic",           ITEMTYPE_ITEM,  GI_TUNIC_ZORA,     true,       &ZoraTunic,     &Hints::ZoraTunic);
 Item I_IronBoots                = Item("Iron Boots",           ITEMTYPE_ITEM,  GI_BOOTS_IRON,     true,       &IronBoots,     &Hints::IronBoots);
 Item I_HoverBoots               = Item("Hover Boots",          ITEMTYPE_ITEM,  GI_BOOTS_HOVER,    true,       &HoverBoots,    &Hints::HoverBoots);
+Item I_ZeldasLetter             = Item("Zelda's Letter",       ITEMTYPE_ITEM,  GI_LETTER_ZELDA,   true,       &ZeldasLetter,  &Hints::ZeldasLetter);
+Item I_WeirdEgg                 = Item("Weird Egg",            ITEMTYPE_ITEM,  GI_WEIRD_EGG,      true,       &WeirdEgg,      &Hints::WeirdEgg);
+Item I_Boomerang                = Item("Boomerang",            ITEMTYPE_ITEM,  GI_BOOMERANG,      true,       &Boomerang,     &Hints::Boomerang);
+Item I_LensOfTruth              = Item("Lens of Truth",        ITEMTYPE_ITEM,  GI_LENS,           true,       &LensOfTruth,   &Hints::LensOfTruth);
+Item I_MegatonHammer            = Item("Megaton Hammer",       ITEMTYPE_ITEM,  GI_HAMMER,         true,       &Hammer,        &Hints::MegatonHammer);
 Item I_ShardOfAgony             = Item("Shard of Agony",       ITEMTYPE_ITEM,  GI_STONE_OF_AGONY, true,       &ShardOfAgony,  &Hints::ShardOfAgony);
 Item I_DinsFire                 = Item("Din's Fire",           ITEMTYPE_ITEM,  GI_DINS_FIRE,      true,       &DinsFire,      &Hints::DinsFire);
 Item I_FaroresWind              = Item("Farore's Wind",        ITEMTYPE_ITEM,  GI_FARORES_WIND,   true,       &FaroresWind,   &Hints::FaroresWind);
@@ -32,8 +65,7 @@ Item I_NayrusLove               = Item("Nayru's Love",         ITEMTYPE_ITEM,  G
 Item I_FireArrows               = Item("Fire Arrows",          ITEMTYPE_ITEM,  GI_ARROW_FIRE,     true,       &FireArrows,    &Hints::FireArrows);
 Item I_IceArrows                = Item("Ice Arrows",           ITEMTYPE_ITEM,  GI_ARROW_ICE,      true,       &IceArrows,     &Hints::IceArrows);
 Item I_LightArrows              = Item("Light Arrows",         ITEMTYPE_ITEM,  GI_ARROW_LIGHT,    true,       &LightArrows,   &Hints::LightArrows);
-Item I_GoronTunic               = Item("Goron Tunic",          ITEMTYPE_ITEM,  GI_TUNIC_GORON,    true,       &GoronTunic,    &Hints::GoronTunic);
-Item I_ZoraTunic                = Item("Zora Tunic",           ITEMTYPE_ITEM,  GI_TUNIC_ZORA,     true,       &ZoraTunic,     &Hints::ZoraTunic);
+
 Item I_GerudoToken              = Item("Gerudo Token",         ITEMTYPE_ITEM,  GI_GERUDO_CARD,    true,       &GerudoToken,   &Hints::GerudoToken);
 Item I_MagicBean                = Item("Magic Bean",           ITEMTYPE_ITEM,  GI_BEAN,           true,       &MagicBean,     &Hints::MagicBean);
 Item I_MagicBeanPack            = Item("Magic Bean Pack",      ITEMTYPE_ITEM,  0xC9,              true,       &MagicBeanPack, &Hints::MagicBeanPack);
