@@ -69,7 +69,7 @@ public:
         return name;
     }
 
-    std::string GetSelectedOptionText() const {
+    const std::string& GetSelectedOptionText() const {
         return options[selectedOption];
     }
 
