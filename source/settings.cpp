@@ -1117,7 +1117,7 @@ namespace Settings {
     // Open Settings
     if (RandomizeOpen) {
       // Skip Logic and RandomizeOpen Options to ensure proper logic
-      for (u8 i=2; i < openOptions.size(); i++) {
+      for (size_t i = 2; i < openOptions.size(); i++) {
         //hide options
         openOptions[i]->Hide();
 
