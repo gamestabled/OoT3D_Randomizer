@@ -468,8 +468,14 @@ namespace Settings {
   extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
 
+  extern Option KokiriTunicColor;
+  extern Option GoronTunicColor;
+  extern Option ZoraTunicColor;
   extern Option SilverGauntletsColor;
   extern Option GoldGauntletsColor;
+  extern std::string finalKokiriTunicColor;
+  extern std::string finalGoronTunicColor;
+  extern std::string finalZoraTunicColor;
   extern std::string finalSilverGauntletsColor;
   extern std::string finalGoldGauntletsColor;
 
