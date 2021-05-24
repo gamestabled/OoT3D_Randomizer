@@ -127,8 +127,7 @@ static void WriteSettings() {
       continue;
     }
 
-    for (size_t i = 0; i < menu->settingsList->size(); i++) {
-      Option* setting = menu->settingsList->at(i);
+    for (Option* setting : *menu->settingsList) {
       if (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting)) {
         logtxt += "\t";
         logtxt += setting->GetName();
