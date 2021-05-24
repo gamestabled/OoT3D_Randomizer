@@ -1128,7 +1128,7 @@ namespace Settings {
       RandomGanonsTrials.SetSelectedIndex(ON);
     }
     else {
-      for (u8 i=2; i < openOptions.size(); i++) {
+      for (size_t i = 2; i < openOptions.size(); i++) {
         openOptions[i]->Unhide();
       }
     }
