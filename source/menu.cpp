@@ -85,6 +85,9 @@ void MenuInit() {
   //If cached presets exist, load them
   LoadCachedSettings();
   LoadCachedCosmetics();
+  //If Randomize all settings in a category is selected
+  //Re-randomize them
+  Settings::RandomizeAllSettings();
 
   PrintTopScreen();
 
