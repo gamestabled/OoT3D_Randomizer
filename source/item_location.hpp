@@ -73,11 +73,11 @@ public:
       addedToPool = false;
     }
 
-    std::string_view GetName() const {
+    const std::string& GetName() const {
       return name;
     }
 
-    std::string_view GetPlacedItemName() const {
+    const std::string& GetPlacedItemName() const {
       return placedItem.GetName();
     }
 

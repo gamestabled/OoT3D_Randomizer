@@ -65,7 +65,7 @@ public:
         return options.size();
     }
 
-    std::string_view GetName() const {
+    const std::string& GetName() const {
         return name;
     }
 
