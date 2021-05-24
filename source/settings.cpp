@@ -1118,9 +1118,11 @@ namespace Settings {
     if (RandomizeOpen) {
       // Skip Logic and RandomizeOpen Options to ensure proper logic
       for (u8 i=2; i < openOptions.size(); i++) {
+        //hide options
         openOptions[i]->Hide();
-        // Randomize the option
-        openOptions[i]->SetSelectedIndex(Random(0, openOptions[i]->GetOptionCount()));
+
+        //randomize options
+        openOptions[i]->SetSelectedIndex(rand() % openOptions[i]->GetOptionCount());
       }
       // Randomize Ganon Trials
       RandomGanonsTrials.SetSelectedIndex(ON);
@@ -1140,7 +1142,8 @@ namespace Settings {
           continue;
         }
         worldOptions[i]->Hide();
-        worldOptions[i]->SetSelectedIndex(Random(0, worldOptions[i]->GetOptionCount()));
+        //randomize options
+        worldOptions[i]->SetSelectedIndex(rand() % worldOptions[i]->GetOptionCount());
       }
     }
     else {
@@ -1159,7 +1162,8 @@ namespace Settings {
       // Skip RandomizeShuffle Option
       for (u8 i=1; i < shuffleOptions.size(); i++) {
         shuffleOptions[i]->Hide();
-        shuffleOptions[i]->SetSelectedIndex(Random(0, shuffleOptions[i]->GetOptionCount()));
+        //randomize options
+        shuffleOptions[i]->SetSelectedIndex(rand() % shuffleOptions[i]->GetOptionCount());
       }
       // Double check that this is the case in case of randomization on init
       if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
@@ -1177,7 +1181,8 @@ namespace Settings {
       // Skip RandomizeDungeon Option
       for (u8 i=1; i < shuffleDungeonItemOptions.size(); i++) {
         shuffleDungeonItemOptions[i]->Hide();
-        shuffleDungeonItemOptions[i]->SetSelectedIndex(Random(0, shuffleDungeonItemOptions[i]->GetOptionCount()));
+        //randomize options
+        shuffleDungeonItemOptions[i]->SetSelectedIndex(rand() % shuffleDungeonItemOptions[i]->GetOptionCount());
       }
     }
     else {
