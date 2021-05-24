@@ -73,33 +73,29 @@ const RandomizerHash& GetRandomizerHash() {
   return randomizerHash;
 }
 
-static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
-  logtxt += loc;
+static inline void SpoilerLog_AddFormatted(std::string_view header, std::string_view value) {
+  logtxt += header;
   logtxt += ": ";
 
   // Formatting for spoiler log
   constexpr u32 LONGEST_LINE = 56;
-  const auto remainingSpaces = LONGEST_LINE - loc.size();
+  const auto remainingSpaces = LONGEST_LINE - header.size();
   logtxt.append(remainingSpaces, ' ');
 
-  logtxt += item;
+  logtxt += value;
   logtxt += '\n';
+}
+
+static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
+  SpoilerLog_AddFormatted(loc, item);
 }
 
 static void SpoilerLog_SaveShopLocation(std::string_view loc, std::string_view item, const u16 price) {
   std::string locandprice = "";
   locandprice += loc;
   locandprice += " (Price: " + std::to_string(price) + ")";
-  logtxt += locandprice;
-  logtxt += ": ";
 
-  // Formatting for spoiler log
-  constexpr u32 LONGEST_LINE = 56;
-  const auto remainingSpaces = LONGEST_LINE - locandprice.size();
-  logtxt.append(remainingSpaces, ' ');
-
-  logtxt += item;
-  logtxt += '\n';
+  SpoilerLog_AddFormatted(locandprice, item);
 }
 
 static auto GetGeneralPath() {
