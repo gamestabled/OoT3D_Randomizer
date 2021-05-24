@@ -145,8 +145,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
       // Since presets are saved linearly, we can simply loop through the nodes as
       // we loop through the settings to find most of the matching elements.
       const std::string& settingToFind = setting->GetName();
-      std::string curSettingName = curNode->Attribute("name");
-      if (curSettingName == settingToFind) {
+      if (settingToFind == curNode->Attribute("name")) {
         setting->SetSelectedIndexByString(curNode->GetText());
         curNode = curNode->NextSiblingElement();
       } else {
@@ -156,8 +155,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
         curNode = rootNode->FirstChildElement();
         bool settingFound = false;
         while (curNode != nullptr) {
-          curSettingName = curNode->Attribute("name");
-          if (curSettingName == settingToFind) {
+          if (settingToFind == curNode->Attribute("name")) {
             setting->SetSelectedIndexByString(curNode->GetText());
             curNode = curNode->NextSiblingElement();
             settingFound = true;
