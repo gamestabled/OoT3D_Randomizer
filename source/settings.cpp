@@ -1136,7 +1136,7 @@ namespace Settings {
     // World Settings
     if (RandomizeWorld) {
       // Skip RandomizeWorld Option
-      for (u8 i=1; i < worldOptions.size(); i++) {
+      for (size_t i=1; i < worldOptions.size(); i++) {
         // skip MQ options
         if (i == 4 || i == 5) {
           continue;
@@ -1147,7 +1147,7 @@ namespace Settings {
       }
     }
     else {
-      for (u8 i=1; i < worldOptions.size(); i++) {
+      for (size_t i=1; i < worldOptions.size(); i++) {
         if ((i == 4) || (i==5)) {
           continue;
         }
@@ -1171,7 +1171,7 @@ namespace Settings {
       }
     }
     else {
-      for (u8 i=1; i < shuffleOptions.size(); i++) {
+      for (size_t i=1; i < shuffleOptions.size(); i++) {
         shuffleOptions[i]->Unhide();
       }
     }
@@ -1179,14 +1179,14 @@ namespace Settings {
     // Dungeon Shuffle Settings
     if (RandomizeDungeon) {
       // Skip RandomizeDungeon Option
-      for (u8 i=1; i < shuffleDungeonItemOptions.size(); i++) {
+      for (size_t i=1; i < shuffleDungeonItemOptions.size(); i++) {
         shuffleDungeonItemOptions[i]->Hide();
         //randomize options
         shuffleDungeonItemOptions[i]->SetSelectedIndex(rand() % shuffleDungeonItemOptions[i]->GetOptionCount());
       }
     }
     else {
-      for (u8 i=1; i < shuffleDungeonItemOptions.size(); i++) {
+      for (size_t i=1; i < shuffleDungeonItemOptions.size(); i++) {
         shuffleDungeonItemOptions[i]->Unhide();
       }
     }
