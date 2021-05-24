@@ -1160,6 +1160,7 @@ namespace Hints {
 
   //Light Arrow Location Text
   extern HintText LightArrowLocation;
+  extern HintText YourPocket;
 
   //Ganon Line
   extern HintText GanonLine01;
@@ -1175,4 +1176,5 @@ namespace Hints {
   extern HintText GanonLine11;
 
   extern std::array<HintText*, 66> junkHints;
+  extern std::array<HintText*, 12> ganonLines;
 } //namespace Hints
