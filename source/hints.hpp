@@ -1,6 +1,7 @@
 #pragma once
 
 #include <3ds.h>
+#include <array>
 #include <string>
 #include <vector>
 
@@ -36,17 +37,13 @@ struct HintDistributionSetting {
 };
 
 struct HintSetting {
+  using DistributionTable = std::array<HintDistributionSetting, static_cast<int>(HintType::MaxCount)>;
+
   u8 dungeonsWothLimit;
   u8 dungeonsBarrenLimit;
   bool namedItemsRequired;
-  HintDistributionSetting distTable[static_cast<int>(HintType::MaxCount)];
+  DistributionTable distTable;
 };
-
-extern const HintSetting uselessHints;
-extern const HintSetting balancedHints;
-extern const HintSetting strongHints;
-extern const HintSetting veryStrongHints;
-extern std::array<HintSetting, 4> hintSettingTable;
 
 enum class HintCategory {
   Item,
