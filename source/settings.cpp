@@ -1138,7 +1138,7 @@ namespace Settings {
       // Skip RandomizeWorld Option
       for (u8 i=1; i < worldOptions.size(); i++) {
         // skip MQ options
-        if ((i == 4) || (i==5)) {
+        if (i == 4 || i == 5) {
           continue;
         }
         worldOptions[i]->Hide();
