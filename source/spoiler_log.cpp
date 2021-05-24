@@ -161,10 +161,8 @@ static void WriteSettings() {
   for (size_t i = 3; i < Settings::startingInventoryOptions.size(); i++) {
     auto setting = Settings::startingInventoryOptions[i];
     if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
-      std::string item = setting->GetSelectedOptionText();
-
       logtxt += "\t";
-      logtxt += item;
+      logtxt += setting->GetSelectedOptionText();
       logtxt += "\n";
     }
   }
