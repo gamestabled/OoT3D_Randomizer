@@ -1,11 +1,13 @@
 #include <3ds.h>
 
 #include "menu.hpp"
+#include "hint_list.hpp"
 
 #define TICKS_PER_SEC 268123480.0
 
 int main() {
   gfxInitDefault();
+  HintTable_Init();
   MenuInit();
 
   u64 initialHoldTime = svcGetSystemTick();

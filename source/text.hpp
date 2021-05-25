@@ -44,7 +44,7 @@ public:
         return !operator==(right);
     }
 
-    std::string english;
-    std::string french;
-    std::string spanish;
+    std::string english = "";
+    std::string french = "";
+    std::string spanish = "";
 };

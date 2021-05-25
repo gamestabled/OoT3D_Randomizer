@@ -118,7 +118,7 @@ static Exit* GetHintRegion(Exit* exit) {
     alreadyChecked.push_back(region);
     spotQueue.pop_back();
 
-    if (region->hintText != &Hints::NoHintText) {
+    if (region->hintKey != NONE) {
       return region;
     }
 
@@ -159,7 +159,7 @@ static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hinted
 
 static void AddHint(Text hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items to gossip stone locations for writing to the spoiler log
-  gossipStone->SetPlacedItem(Item{hint.GetEnglish(), ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, &Hints::NoHintText});
+  gossipStone->SetPlacedItem(Item{hint.GetEnglish(), ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
 
   //create the in game message
   u32 messageId = 0x400 + gossipStone->GetFlag();
@@ -193,9 +193,9 @@ static void CreateLocationHint(const std::vector<ItemLocation*>& possibleHintLoc
   hintedLocation->SetAsHinted();
 
   //make hint text
-  Text locationHintText = hintedLocation->GetHintText().GetText();
-  Text itemHintText = hintedLocation->GetPlacedItem().GetHintText().GetText();
-  Text prefix = Hints::Prefix.GetText();
+  Text locationHintText = Hint(hintedLocation->GetHintKey()).GetText();
+  Text itemHintText = Hint(hintedLocation->GetPlacedItem().GetHintKey()).GetText();
+  Text prefix = Hint(PREFIX).GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
   PlacementLog_Msg("\tMessage: ");
@@ -246,11 +246,11 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   Text locationText;
   if (hintedLocation->IsDungeon()) {
     *remainingDungeonWothHints -= 1;
-    locationText = hintedLocation->GetParentRegion()->hintText->GetText();
+    locationText = Hint(hintedLocation->GetParentRegion()->hintKey).GetText();
   } else {
-    locationText = GetHintRegion(hintedLocation->GetParentRegion())->hintText->GetText();
+    locationText = Hint(GetHintRegion(hintedLocation->GetParentRegion())->hintKey).GetText();
   }
-  Text finalWothHint = Hints::Prefix.GetText()+"#"+locationText+"#"+Hints::WayOfTheHero.GetText();
+  Text finalWothHint = Hint(PREFIX).GetText()+"#"+locationText+"#"+Hint(WAY_OF_THE_HERO).GetText();
   PlacementLog_Msg("\tMessage: ");
   PlacementLog_Msg(finalWothHint.english);
   PlacementLog_Msg("\n\n");
@@ -290,11 +290,11 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLo
   Text locationText;
   if (hintedLocation->IsDungeon()) {
     *remainingDungeonBarrenHints -= 1;
-    locationText = hintedLocation->GetParentRegion()->hintText->GetText();
+    locationText = Hint(hintedLocation->GetParentRegion()->hintKey).GetText();
   } else {
-    locationText = GetHintRegion(hintedLocation->GetParentRegion())->hintText->GetText();
+    locationText = Hint(GetHintRegion(hintedLocation->GetParentRegion())->hintKey).GetText();
   }
-  Text finalBarrenHint = Hints::Prefix.GetText()+Hints::Plundering.GetText()+"#"+locationText+"#"+Hints::Foolish.GetText();
+  Text finalBarrenHint = Hint(PREFIX).GetText()+Hint(PLUNDERING).GetText()+"#"+locationText+"#"+Hint(FOOLISH).GetText();
   PlacementLog_Msg("\tMessage: ");
   PlacementLog_Msg(finalBarrenHint.english);
   PlacementLog_Msg("\n\n");
@@ -302,7 +302,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLo
 
   //get rid of all other locations in this same barren region
   barrenLocations = FilterFromPool(barrenLocations, [hintedLocation](ItemLocation* loc){
-    return GetHintRegion(loc->GetParentRegion())->hintText != GetHintRegion(hintedLocation->GetParentRegion())->hintText;
+    return GetHintRegion(loc->GetParentRegion())->hintKey != GetHintRegion(hintedLocation->GetParentRegion())->hintKey;
   });
 
 }
@@ -336,17 +336,17 @@ static void CreateRandomLocationHint(bool goodItem = false) {
   ItemLocation* gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
-  Text itemText = hintedLocation->GetPlacedItem().GetHintText().GetText();
+  Text itemText = Hint(hintedLocation->GetPlacedItem().GetHintKey()).GetText();
   if (hintedLocation->IsDungeon()) {
-    Text locationText = hintedLocation->GetParentRegion()->hintText->GetText();
-    Text finalHint = Hints::Prefix.GetText()+"#"+locationText+"# hoards #"+itemText+"#.";
+    Text locationText = Hint(hintedLocation->GetParentRegion()->hintKey).GetText();
+    Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# hoards #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
   } else {
-    Text locationText = GetHintRegion(hintedLocation->GetParentRegion())->hintText->GetText();
-    Text finalHint = Hints::Prefix.GetText()+"#"+itemText+"# can be found at #"+locationText+"#.";
+    Text locationText = Hint(GetHintRegion(hintedLocation->GetParentRegion())->hintKey).GetText();
+    Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# can be found at #"+locationText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");
@@ -360,7 +360,7 @@ static void CreateGoodItemHint() {
 
 static void CreateJunkHint() {
   //duplicate junk hints are possible for now
-  const HintText* junkHint = RandomElement(Hints::junkHints);
+  const HintText junkHint = RandomElement(GetHintCategory(HintCategory::Junk));
   LogicReset();
   const std::vector<ItemLocation*> gossipStones = GetAccessibleLocations(gossipStoneLocations);
   if (gossipStones.empty()) {
@@ -368,13 +368,13 @@ static void CreateJunkHint() {
     return;
   }
   ItemLocation* gossipStone = RandomElement(gossipStones);
-  Text hintText = junkHint->GetText();
+  Text hint = junkHint.GetText();
 
   PlacementLog_Msg("\tMessage: ");
-  PlacementLog_Msg(hintText.english);
+  PlacementLog_Msg(hint.english);
   PlacementLog_Msg("\n\n");
 
-  AddHint(hintText, gossipStone);
+  AddHint(hint, gossipStone);
 }
 
 static std::vector<ItemLocation*> CalculateBarrenRegions() {
@@ -394,9 +394,9 @@ static std::vector<ItemLocation*> CalculateBarrenRegions() {
   //leave only locations at barren regions in the list
   auto finalBarrenLocations = FilterFromPool(barrenLocations, [&potentiallyUsefulLocations](ItemLocation* loc){
     for (ItemLocation* usefulLoc : potentiallyUsefulLocations) {
-      const HintText* barren = GetHintRegion(loc->GetParentRegion())->hintText;
-      const HintText* useful = GetHintRegion(usefulLoc->GetParentRegion())->hintText;
-      if (barren == useful) {
+      u32 barrenKey = GetHintRegion(loc->GetParentRegion())->hintKey;
+      u32 usefulKey = GetHintRegion(usefulLoc->GetParentRegion())->hintKey;
+      if (barrenKey == usefulKey) {
         return false;
       }
     }
@@ -415,8 +415,8 @@ static void CreateTrialHints() {
     auto gossipStone = RandomElement(gossipStones, false);
 
     //make hint
-    auto hintText = Hints::Prefix.GetText() + Hints::SixTrials.GetText();
-    AddHint(hintText, gossipStone, {QM_PINK});
+    auto hint = Hint(PREFIX).GetText() + Hint(SIX_TRIALS).GetText();
+    AddHint(hint, gossipStone, {QM_PINK});
 
     //zero trials
   } else if (RandomGanonsTrials && GanonsTrialsCount.Is(0)) {
@@ -426,8 +426,8 @@ static void CreateTrialHints() {
     auto gossipStone = RandomElement(gossipStones, false);
 
     //make hint
-    auto hintText = Hints::Prefix.GetText() + Hints::ZeroTrials.GetText();
-    AddHint(hintText, gossipStone, {QM_YELLOW});
+    auto hint = Hint(PREFIX).GetText() + Hint(ZERO_TRIALS).GetText();
+    AddHint(hint, gossipStone, {QM_YELLOW});
 
     //4 or 5 required trials
   } else if (GanonsTrialsCount.Is(5) || GanonsTrialsCount.Is(4)) {
@@ -444,8 +444,8 @@ static void CreateTrialHints() {
       auto gossipStone = RandomElement(gossipStones, false);
 
       //make hint
-      auto hintText = Hints::Prefix.GetText()+"#"+trial->GetName()+"#"+Hints::FourToFiveTrials.GetText();
-      AddHint(hintText, gossipStone, {QM_YELLOW});
+      auto hint = Hint(PREFIX).GetText()+"#"+trial->GetName()+"#"+Hint(FOUR_TO_FIVE_TRIALS).GetText();
+      AddHint(hint, gossipStone, {QM_YELLOW});
     }
     //1 to 3 trials
   } else if (GanonsTrialsCount.Value<u8>() >= 1 && GanonsTrialsCount.Value<u8>() <= 3) {
@@ -461,8 +461,8 @@ static void CreateTrialHints() {
       auto gossipStone = RandomElement(gossipStones, false);
 
       //make hint
-      auto hintText = Hints::Prefix.GetText()+"#"+trial->GetName()+"#"+Hints::OneToThreeTrials.GetText();
-      AddHint(hintText, gossipStone, {QM_PINK});
+      auto hint = Hint(PREFIX).GetText()+"#"+trial->GetName()+"#"+Hint(ONE_TO_THREE_TRIALS).GetText();
+      AddHint(hint, gossipStone, {QM_PINK});
     }
   }
 }
@@ -470,7 +470,7 @@ static void CreateTrialHints() {
 static void CreateGanonText() {
 
   //funny ganon line
-  auto ganonText = RandomElement(Hints::ganonLines)->GetText();
+  auto ganonText = RandomElement(GetHintCategory(HintCategory::GanonLine)).GetText();
   CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
 
   //Get the location of the light arrows
@@ -479,9 +479,9 @@ static void CreateGanonText() {
   Text text;
   //If there is no light arrow location, it was in the player's inventory at the start
   if (lightArrowLocation.empty()) {
-    text = Hints::LightArrowLocation.GetText()+Hints::YourPocket.GetText();
+    text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+Hint(YOUR_POCKET).GetText();
   } else {
-    text = Hints::LightArrowLocation.GetText()+GetHintRegion(lightArrowLocation[0]->GetParentRegion())->hintText->GetText();
+    text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+Hint(GetHintRegion(lightArrowLocation[0]->GetParentRegion())->hintKey).GetText();
   }
   text = text + "!";
 
@@ -502,7 +502,7 @@ void CreateAllHints() {
   if (hintSetting.distTable[static_cast<int>(HintType::Always)].copies > 0) {
     // Only filter locations that had a random item placed at them (e.g. don't get cow locations if shuffle cows is off)
     const auto alwaysHintLocations = FilterFromPool(allLocations, [](const ItemLocation* loc){
-        return loc->GetHintCategory() == HintCategory::Always &&
+        return Hint(loc->GetHintKey()).GetType() == HintCategory::Always &&
                loc->IsHintable()      && !loc->IsHintedAt();
     });
     for (ItemLocation* location : alwaysHintLocations) {
@@ -550,7 +550,7 @@ void CreateAllHints() {
       CreateBarrenHint(&remainingDungeonBarrenHints, barrenLocations);
 
     } else if (type == HintType::Sometimes){
-      std::vector<ItemLocation*> sometimesHintLocations = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->GetHintCategory() == HintCategory::Sometimes && loc->IsHintable() && !loc->IsHintedAt();});
+      std::vector<ItemLocation*> sometimesHintLocations = FilterFromPool(allLocations, [](ItemLocation* loc){return Hint(loc->GetHintKey()).GetType() == HintCategory::Sometimes && loc->IsHintable() && !loc->IsHintedAt();});
       CreateLocationHint(sometimesHintLocations);
 
     } else if (type == HintType::Random) {
