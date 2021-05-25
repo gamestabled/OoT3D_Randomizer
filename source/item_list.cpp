@@ -3,7 +3,6 @@
 #include "logic.hpp"
 #include "keys.hpp"
 #include "settings.hpp"
-#include "hint_list.hpp"
 #include "../code/include/z3D/z3Ditem.h"
 #include <vector>
 #include <unordered_map>

@@ -7,7 +7,6 @@
 #include "logic.hpp"
 #include "settings.hpp"
 #include "spoiler_log.hpp"
-#include "hint_list.hpp"
 #include "trial.hpp"
 
 #include <unistd.h>

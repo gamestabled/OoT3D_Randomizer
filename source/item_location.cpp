@@ -3,7 +3,6 @@
 #include "dungeon.hpp"
 #include "settings.hpp"
 #include "spoiler_log.hpp"
-#include "hint_list.hpp"
 #include "shops.hpp"
 
 //Location definitions
