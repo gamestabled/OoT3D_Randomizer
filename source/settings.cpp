@@ -1114,6 +1114,9 @@ namespace Settings {
   // Randomizes all settings in a category if chosen
   // Hides all relevant options
   void RandomizeAllSettings() {
+    //Init Random_ interface for consistency in racing
+    Random_Init(seed);
+
     // Open Settings
     if (RandomizeOpen) {
       // Skip Logic and RandomizeOpen Options to ensure proper logic
@@ -1122,7 +1125,7 @@ namespace Settings {
         openOptions[i]->Hide();
 
         //randomize options
-        openOptions[i]->SetSelectedIndex(rand() % openOptions[i]->GetOptionCount());
+        openOptions[i]->SetSelectedIndex(Random(0,openOptions[i]->GetOptionCount()));
       }
       // Randomize Ganon Trials
       RandomGanonsTrials.SetSelectedIndex(ON);
@@ -1143,7 +1146,7 @@ namespace Settings {
         }
         worldOptions[i]->Hide();
         //randomize options
-        worldOptions[i]->SetSelectedIndex(rand() % worldOptions[i]->GetOptionCount());
+        worldOptions[i]->SetSelectedIndex(Random(0,worldOptions[i]->GetOptionCount()));
       }
     }
     else {
@@ -1163,7 +1166,7 @@ namespace Settings {
       for (u8 i=1; i < shuffleOptions.size(); i++) {
         shuffleOptions[i]->Hide();
         //randomize options
-        shuffleOptions[i]->SetSelectedIndex(rand() % shuffleOptions[i]->GetOptionCount());
+        shuffleOptions[i]->SetSelectedIndex(Random(0,shuffleOptions[i]->GetOptionCount()));
       }
       // Double check that this is the case in case of randomization on init
       if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
@@ -1182,7 +1185,7 @@ namespace Settings {
       for (size_t i=1; i < shuffleDungeonItemOptions.size(); i++) {
         shuffleDungeonItemOptions[i]->Hide();
         //randomize options
-        shuffleDungeonItemOptions[i]->SetSelectedIndex(rand() % shuffleDungeonItemOptions[i]->GetOptionCount());
+        shuffleDungeonItemOptions[i]->SetSelectedIndex(Random(0,shuffleDungeonItemOptions[i]->GetOptionCount()));
       }
     }
     else {
