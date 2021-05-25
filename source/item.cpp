@@ -4,25 +4,24 @@
 
 #include "logic.hpp"
 #include "random.hpp"
-#include "hints.hpp"
 #include "../code/src/item_override.h"
 
-Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintText* hintText_, u16 price_)
+Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, u32 hintKey_, u16 price_)
     : name(std::move(name_)),
       type(type_),
       getItemId(getItemId_),
       advancement(advancement_),
       logicVar(logicVar_),
-      hintText(hintText_),
+      hintKey(hintKey_),
       price(price_) {}
 
-Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintText* hintText_, u16 price_)
+Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, u32 hintKey_, u16 price_)
     : name(std::move(name_)),
       type(type_),
       getItemId(getItemId_),
       advancement(advancement_),
       logicVar(logicVar_),
-      hintText(hintText_),
+      hintKey(hintKey_),
       price(price_) {}
 
 Item::~Item() = default;

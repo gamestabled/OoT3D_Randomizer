@@ -8,8 +8,6 @@
 #include "random.hpp"
 #include "settings.hpp"
 
-const std::string EMPTY = "";
-
 enum class HintType {
   Trial,
   Always,
@@ -69,72 +67,73 @@ enum class HintCategory {
 
 class HintText {
 public:
-    explicit HintText(std::vector<Text> obscureText_, Text clearText_, HintCategory type_)
+    HintText() = default;
+    HintText(std::vector<Text> obscureText_, Text clearText_, HintCategory type_)
     : obscureText(std::move(obscureText_)),
       clearText(std::move(clearText_)),
       type(type_) {}
 
-    static auto Item(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Item(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Item};
     }
 
-    static auto Always(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Always(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Always};
     }
 
-    static auto Sometimes(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Sometimes(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Sometimes};
     }
 
-    static auto Exclude(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Exclude(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Exclude};
     }
 
-    static auto Entrance(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Entrance(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Entrance};
     }
 
-    static auto Region(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Region(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Region};
     }
 
-    static auto Junk(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Junk(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Junk};
     }
 
-    static auto DungeonName(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto DungeonName(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::DungeonName};
     }
 
-    static auto Boss(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Boss(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Boss};
     }
 
-    static auto Bridge(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Bridge(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Bridge};
     }
 
-    static auto GanonsBossKey(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto GanonsBossKey(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::GanonsBossKey};
     }
 
-    static auto LACS(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto LACS(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::LACS};
     }
 
-    static auto Altar(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Altar(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Altar};
     }
 
-    static auto Validation(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto Validation(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Validation};
     }
 
-    static auto LightArrow(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto LightArrow(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::LightArrow};
     }
 
-    static auto GanonLine(std::vector<Text>&& obscureText, Text&& clearText = Text{EMPTY, EMPTY, EMPTY}) {
+    static auto GanonLine(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::GanonLine};
     }
 
@@ -147,7 +146,7 @@ public:
     }
 
     const Text& GetClear() const {
-        if (clearText.GetEnglish() == EMPTY) {
+        if (clearText.GetEnglish().empty()) {
             return GetObscure();
         }
         return clearText;
@@ -173,7 +172,7 @@ public:
     }
 
 private:
-    std::vector<Text> obscureText;
+    std::vector<Text> obscureText = {};
     Text clearText;
     HintCategory type;
 };

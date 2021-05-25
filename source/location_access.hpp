@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "logic.hpp"
-#include "hint_list.hpp"
+#include "keys.hpp"
 
 class Exit;
 class ItemLocation;
@@ -128,7 +128,7 @@ class Exit {
 public:
     using ConditionFn = bool (*)();
 
-    Exit(std::string regionName_, std::string scene_, HintText* hintText_,
+    Exit(std::string regionName_, std::string scene_, u32 hintKey_,
          bool timePass_,
          std::vector<EventPairing> events_,
          std::vector<ItemLocationPairing> locations_,
@@ -137,7 +137,7 @@ public:
 
     std::string regionName;
     std::string scene;
-    HintText*   hintText;
+    u32         hintKey;
     bool        timePass;
     std::vector<EventPairing> events;
     std::vector<ItemLocationPairing> locations;

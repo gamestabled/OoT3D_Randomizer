@@ -14,7 +14,7 @@
 #include "category.hpp"
 #include "item_list.hpp"
 #include "settings.hpp"
-#include "hint_list.hpp"
+#include "keys.hpp"
 
 class Exit;
 
@@ -32,8 +32,8 @@ enum class ItemLocationType {
 
 class ItemLocation {
 public:
-    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, HintText* hintText_, std::vector<Category> categories_, u16 price_ = 0)
-        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), hintText(hintText_), categories(std::move(categories_)), price(price_) {}
+    explicit ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, u32 hintKey_, std::vector<Category> categories_, u16 price_ = 0)
+        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), hintKey(hintKey_), categories(std::move(categories_)), price(price_) {}
 
     ItemOverride_Key Key() const {
         ItemOverride_Key key;
@@ -138,12 +138,8 @@ public:
       return &excludedOption;
     }
 
-    HintText GetHintText() {
-      return *hintText;
-    }
-
-    HintCategory GetHintCategory() const {
-      return hintText->GetType();
+    u32 GetHintKey() const {
+      return hintKey;
     }
 
     bool IsHintedAt() const {
@@ -196,40 +192,40 @@ public:
       Settings::excludeLocationsOptions.push_back(&excludedOption);
     }
 
-    static auto Base(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), hintText, std::move(categories)};
+    static auto Base(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Chest(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), hintText, std::move(categories)};
+    static auto Chest(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Collectable(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintText, std::move(categories)};
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto GSToken(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), hintText, std::move(categories)};
+    static auto GSToken(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), hintText, std::move(categories)};
+    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Delayed(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), hintText, std::move(categories)};
+    static auto Delayed(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Reward(u8 scene, u8 flag, std::string&& name, HintText* hintText, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintText, std::move(categories)};
+    static auto Reward(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintKey, std::move(categories)};
     }
 
     static auto Hint(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), &Hints::NoHintText, std::move(categories)};
+        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), NONE, std::move(categories)};
     }
 
     static auto HintStone(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), &Hints::NoHintText, std::move(categories)};
+        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), NONE, std::move(categories)};
     }
 
     void ResetVariables() {
@@ -251,7 +247,7 @@ private:
     bool checked = false;
 
     std::string name;
-    HintText* hintText = nullptr;
+    u32 hintKey;
     bool hintedAt = false;
     std::vector<Category> categories;
     bool addedToPool = false;
@@ -910,7 +906,7 @@ extern ItemLocation KF_GS_HouseOfTwins;
 extern ItemLocation LW_GS_BeanPatchNearBridge;
 extern ItemLocation LW_GS_BeanPatchNearTheater;
 extern ItemLocation LW_GS_AboveTheater;
-extern ItemLocation SFM_GS;
+extern ItemLocation Meadow_GS;
 
 extern ItemLocation HF_GS_CowGrotto;
 extern ItemLocation HF_GS_NearKakGrotto;
@@ -934,7 +930,7 @@ extern ItemLocation Colossus_GS_BeanPatch;
 extern ItemLocation Colossus_GS_Hill;
 extern ItemLocation Colossus_GS_Tree;
 
-extern ItemLocation OGC_GS;
+extern ItemLocation outsideGanonsCastle_GS;
 extern ItemLocation HC_GS_StormsGrotto;
 extern ItemLocation HC_GS_Tree;
 extern ItemLocation MK_GS_GuardHouse;
