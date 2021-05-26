@@ -103,7 +103,7 @@ static int GetMaxGSCount() {
 //specifies the pool of locations that we're trying to search for an accessible location in
 std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation*>& allowedLocations,
                                                   SearchMode mode) {
-  std::vector<ItemLocation*> accessibleLocations = {};
+  std::vector<ItemLocation*> accessibleLocations;
 
   //Reset all access to begin a new search
   ApplyStartingInventory();
@@ -118,7 +118,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
   bool bombchusFound = false;
   std::vector<std::string> buyIgnores;
   //Variables for search
-  std::vector<ItemLocation *> newItemLocations = {};
+  std::vector<ItemLocation *> newItemLocations;
   bool firstIteration = true;
 
 
@@ -377,7 +377,7 @@ static void AssumedFill(const std::vector<u32>& items, const std::vector<ItemLoc
 
   //keep retrying to place everything until it works
   bool unsuccessfulPlacement = false;
-  std::vector<ItemLocation*> attemptedLocations = {};
+  std::vector<ItemLocation*> attemptedLocations;
   do {
     unsuccessfulPlacement = false;
     std::vector<u32> itemsToPlace = items;
@@ -503,7 +503,7 @@ static void FillExcludedLocations() {
 //Function to handle the Own Dungeon setting
 static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
   std::vector<ItemLocation*> dungeonLocations = dungeon->GetDungeonLocations();
-  std::vector<u32> dungeonItems = {};
+  std::vector<u32> dungeonItems;
 
   //Add specific items that need be randomized within this dungeon
   if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && dungeon->GetSmallKey() != NONE) {
@@ -548,8 +548,8 @@ static void RandomizeDungeonItems() {
   //overworldLocations defined in item_location.cpp
 
   //Create Any Dungeon and Overworld item pools
-  std::vector<u32> anyDungeonItems = {};
-  std::vector<u32> overworldItems = {};
+  std::vector<u32> anyDungeonItems;
+  std::vector<u32> overworldItems;
 
   for (auto dungeon : dungeonList) {
     if (Keysanity.Is(KEYSANITY_ANY_DUNGEON)) {
@@ -677,7 +677,7 @@ int Fill() {
       std::vector<u32> songs = FilterAndEraseFromPool(ItemPool, [](u32 i) { return ItemTable(i).GetItemType() == ITEMTYPE_SONG;});
 
       //Get each song location
-      std::vector<ItemLocation*> songLocations = {};
+      std::vector<ItemLocation*> songLocations;
       if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
         songLocations = FilterFromPool(allLocations, [](ItemLocation * loc){ return loc->IsCategory(Category::cSong);});
 

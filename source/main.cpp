@@ -7,8 +7,11 @@
 #define TICKS_PER_SEC 268123480.0
 
 int main() {
+  CitraPrint("Begin");
   gfxInitDefault();
+  CitraPrint("Hint Table Init");
   HintTable_Init();
+  CitraPrint("Item Table Init");
   ItemTable_Init();
   MenuInit();
 

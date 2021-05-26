@@ -10,7 +10,7 @@
 using namespace Logic;
 using namespace Settings;
 
-static std::array<Item, KEY_ENUM_MAX> itemTable = {};
+static std::array<Item, KEY_ENUM_MAX> itemTable;
 
 void ItemTable_Init() {                               //Name                    Item Type       getItemID          advancement logic           hint key
     itemTable[NONE]                              = Item("No Item",              ITEMTYPE_EVENT, GI_RUPEE_GREEN,    false,      &noVariable,    NONE);
