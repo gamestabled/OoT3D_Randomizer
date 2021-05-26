@@ -47,13 +47,13 @@ bool ItemLocationPairing::CanBuy() const {
   }
 
   bool OtherCondition = true;
-  const Item& placed = location->GetPlacedItem();
+  u32 placed = location->GetPlacedItem();
   //Need bottle to buy bottle items, only logically relevant bottle items included here
-  if (placed == BuyBlueFire || placed == BuyBottleBug || placed == BuyFish || placed == BuyFairysSpirit) {
+  if (placed == BUY_BLUE_FIRE || placed == BUY_BOTTLE_BUG || placed == BUY_FISH || placed == BUY_FAIRYS_SPIRIT) {
     OtherCondition = Logic::HasBottle;
   }
   //Need explosives to be able to buy bombchus
-  else if (placed == BuyBombchu5 || placed == BuyBombchu10 || placed == BuyBombchu20) {
+  else if (placed == BUY_BOMBCHU_5 || placed == BUY_BOMBCHU_10 || placed == BUY_BOMBCHU_20) {
     OtherCondition = Logic::HasExplosives;
   }
 

@@ -20,9 +20,9 @@ using namespace Logic;
 using namespace Settings;
 
 static void RemoveStartingItemsFromPool() {
-  for (Item& startingItem : StartingInventory) {
+  for (u32 startingItem : StartingInventory) {
     for (u16 i = 0; i < ItemPool.size(); i++) {
-      if (startingItem == ItemPool[i] || (startingItem.IsBottleItem() && ItemPool[i].IsBottleItem())) {
+      if (startingItem == ItemPool[i] || (ItemTable(startingItem).IsBottleItem() && ItemTable(ItemPool[i]).IsBottleItem())) {
         ItemPool[i] = GetJunkItem();
         break;
       }
@@ -79,19 +79,19 @@ static int GetMaxGSCount() {
   //Get the max amount of GS which could be useful from token reward locations
   int maxUseful = 0;
   //If the highest advancement item is a token, we know it is useless since it won't lead to an otherwise useful item
-  if (Kak_50GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_50GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+  if (ItemTable(Kak_50GoldSkulltulaReward.GetPlacedItem()).IsAdvancement() && ItemTable(Kak_50GoldSkulltulaReward.GetPlacedItem()).GetItemType() != ITEMTYPE_TOKEN) {
     maxUseful = 50;
   }
-  else if (Kak_40GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_40GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+  else if (ItemTable(Kak_40GoldSkulltulaReward.GetPlacedItem()).IsAdvancement() && ItemTable(Kak_40GoldSkulltulaReward.GetPlacedItem()).GetItemType() != ITEMTYPE_TOKEN) {
     maxUseful = 40;
   }
-  else if (Kak_30GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_30GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+  else if (ItemTable(Kak_30GoldSkulltulaReward.GetPlacedItem()).IsAdvancement() && ItemTable(Kak_30GoldSkulltulaReward.GetPlacedItem()).GetItemType() != ITEMTYPE_TOKEN) {
     maxUseful = 30;
   }
-  else if (Kak_20GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_20GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+  else if (ItemTable(Kak_20GoldSkulltulaReward.GetPlacedItem()).IsAdvancement() && ItemTable(Kak_20GoldSkulltulaReward.GetPlacedItem()).GetItemType() != ITEMTYPE_TOKEN) {
     maxUseful = 20;
   }
-  else if (Kak_10GoldSkulltulaReward.GetPlacedItem().IsAdvancement() && Kak_10GoldSkulltulaReward.GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
+  else if (ItemTable(Kak_10GoldSkulltulaReward.GetPlacedItem()).IsAdvancement() && ItemTable(Kak_10GoldSkulltulaReward.GetPlacedItem()).GetItemType() != ITEMTYPE_TOKEN) {
     maxUseful = 10;
   }
   //Return max of the two possible reasons tokens could be important
@@ -118,8 +118,10 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
   bool bombchusFound = false;
   std::vector<std::string> buyIgnores;
   //Variables for search
-  std::vector<ItemLocation *> newItemLocations;
+  std::vector<ItemLocation *> newItemLocations = {};
   bool firstIteration = true;
+
+
   //If no new items are found and no events are updated, then the next iteration won't provide any new location
   while (newItemLocations.size() > 0 || EventsUpdated() || firstIteration) {
     firstIteration = false;
@@ -128,6 +130,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
     for (ItemLocation* location : newItemLocations) {
       location->ApplyPlacedItemEffect();
     }
+
     newItemLocations.clear();
 
     std::vector<ItemLocation *> sphere;
@@ -186,7 +189,7 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
 
             location->AddToPool();
 
-            if (location->GetPlacedItem() == NoItem) {
+            if (location->GetPlacedItem() == NONE) {
               accessibleLocations.push_back(location); //Empty location, consider for placement
             } else {
               newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
@@ -196,9 +199,9 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
             //Generate the playthrough, so we want to add advancement items, unless we know to ignore them
             if (mode == SearchMode::GeneratePlaythrough) {
               //Item is an advancement item, figure out if it should be added to this sphere
-              if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
-                ItemType type = location->GetPlacedItem().GetItemType();
-                std::string itemName(location->GetPlacedItem().GetName());
+              if (!playthroughBeatable && ItemTable(location->GetPlacedItem()).IsAdvancement()) {
+                ItemType type = ItemTable(location->GetPlacedItem()).GetItemType();
+                std::string itemName(location->GetPlacedItemName());
                 bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
 
                 //Decide whether to exclude this location
@@ -242,14 +245,16 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
                 }
               }
               //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
-              else if (location->GetPlacedItem() == I_Triforce) {
+              else if (location->GetPlacedItem() == TRIFORCE) {
                 sphere.clear();
                 sphere.push_back(location);
                 playthroughBeatable = true;
               }
             }
             //All we care about is if the game is beatable, used to pare down playthrough
-            else if (mode == SearchMode::CheckBeatable && location->GetPlacedItem() == I_Triforce) {
+            else if (mode == SearchMode::CheckBeatable && location->GetPlacedItem() == TRIFORCE) {
+              CitraPrint("Search Mode Check beatable");
+              sleep(0.1);
               playthroughBeatable = true;
               return {}; //Return early for efficiency
             }
@@ -273,7 +278,6 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
     }
     return true;
   });
-
   return accessibleLocations;
 }
 
@@ -284,6 +288,8 @@ static void GeneratePlaythrough() {
 //Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
 //To reduce searches, some preprocessing is done in playthrough generation to avoid adding obviously unnecessary items
 static void PareDownPlaythrough() {
+  CitraPrint("Pare Down Playthrough");
+  sleep(0.1);
   std::vector<ItemLocation*> toAddBackItem;
   //Start at sphere before Ganon's and count down
   for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
@@ -292,13 +298,18 @@ static void PareDownPlaythrough() {
     std::vector<ItemLocation*> sphere = playthroughLocations.at(i);
     for (int j = sphere.size() - 1; j >= 0; j--) {
       ItemLocation* location = sphere.at(j);
-      Item copy = location->GetPlacedItem(); //Copy out item
-      location->SetPlacedItem(NoItem); //Write in empty item
+      u32 copy = location->GetPlacedItem(); //Copy out item
+      location->SetPlacedItem(NONE); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
+      CitraPrint("WITHIN 4");
+      sleep(0.1);
       GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
+      CitraPrint("WITHIN 5");
+      sleep(0.1);
       if (playthroughBeatable) {
+
         //Uncomment to print playthrough deletion log in citra
         // std::string locationname(copy.GetName());
         // std::string itemname(location->GetName());
@@ -313,24 +324,32 @@ static void PareDownPlaythrough() {
       }
     }
   }
+  CitraPrint("Loop End");
+  sleep(0.1);
   //Some spheres may now be empty, remove these
   for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
     if (playthroughLocations.at(i).size() == 0) {
       playthroughLocations.erase(playthroughLocations.begin() + i);
     }
   }
+  CitraPrint("3");
+  sleep(0.1);
   //Now we can add back items which were removed previously
   for (ItemLocation* location : toAddBackItem) {
     location->SaveDelayedItem();
   }
+  CitraPrint("4");
+  sleep(0.1);
   playthroughBeatable = true;
   //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
   LogicReset();
   GetAccessibleLocations(allLocations);
+  CitraPrint("Pare Down Playthrough End");
+  sleep(0.1);
 }
 
 //Will place things completely randomly, no logic checks are performed
-static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locations) {
+static void FastFill(std::vector<u32> items, std::vector<ItemLocation*> locations) {
 
   while (!locations.empty()) {
 
@@ -351,7 +370,7 @@ static void FastFill(std::vector<Item> items, std::vector<ItemLocation*> locatio
 | This method helps distribution of items locked behind many requirements.
 | - OoT Randomizer
 */
-static void AssumedFill(const std::vector<Item>& items, const std::vector<ItemLocation*>& allowedLocations, bool setLocationsAsHintable = false) {
+static void AssumedFill(const std::vector<u32>& items, const std::vector<ItemLocation*>& allowedLocations, bool setLocationsAsHintable = false) {
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[H1;1ERROR: MORE ITEMS THAN LOCATIONS");
   }
@@ -361,25 +380,25 @@ static void AssumedFill(const std::vector<Item>& items, const std::vector<ItemLo
   std::vector<ItemLocation*> attemptedLocations = {};
   do {
     unsuccessfulPlacement = false;
-    std::vector<Item> itemsToPlace = items;
+    std::vector<u32> itemsToPlace = items;
 
     //copy all not yet placed advancement items so that we can apply their effects for the fill algorithm
-    std::vector<Item> itemsToNotPlace = FilterFromPool(ItemPool, [](const Item& i){ return i .IsAdvancement();});
+    std::vector<u32> itemsToNotPlace = FilterFromPool(ItemPool, [](u32 i){ return ItemTable(i).IsAdvancement();});
 
     //shuffle the order of items to place
     Shuffle(itemsToPlace);
     while (!itemsToPlace.empty()) {
-      Item item = std::move(itemsToPlace.back());
-      item.SetAsPlaythrough();
+      u32 item = std::move(itemsToPlace.back());
+      ItemTable(item).SetAsPlaythrough();
       itemsToPlace.pop_back();
 
       //assume we have all unplaced items
       LogicReset();
-      for (Item& unplacedItem : itemsToPlace) {
-        unplacedItem.ApplyEffect();
+      for (u32 unplacedItem : itemsToPlace) {
+        ItemTable(unplacedItem).ApplyEffect();
       }
-      for (Item& unplacedItem : itemsToNotPlace) {
-        unplacedItem.ApplyEffect();
+      for (u32 unplacedItem : itemsToNotPlace) {
+      ItemTable(unplacedItem).ApplyEffect();
       }
 
       //get all accessible locations that are allowed
@@ -389,7 +408,7 @@ static void AssumedFill(const std::vector<Item>& items, const std::vector<ItemLo
       if (accessibleLocations.empty()) {
 
         PlacementLog_Msg("\nCANNOT PLACE ");
-        PlacementLog_Msg(item.GetName());
+        PlacementLog_Msg(ItemTable(item).GetName());
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
         #ifdef ENABLE_DEBUG
@@ -398,7 +417,7 @@ static void AssumedFill(const std::vector<Item>& items, const std::vector<ItemLo
 
         //reset any locations that got an item
         for (ItemLocation* loc : attemptedLocations) {
-          loc->SetPlacedItem(NoItem);
+          loc->SetPlacedItem(NONE);
           itemsPlaced--;
         }
         attemptedLocations.clear();
@@ -438,15 +457,15 @@ static void RandomizeDungeonRewards() {
     0x00000010, //Shadow Medallion
     0x00000020, //Light Medallion
   };
-  int baseOffset = I_KokiriEmerald.GetItemID();
+  int baseOffset = ItemTable(KOKIRI_EMERALD).GetItemID();
 
   //End of Dungeons includes Link's Pocket
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
-    std::vector<Item> rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    std::vector<u32> rewards = FilterAndEraseFromPool(ItemPool, [](u32 i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
     AssumedFill(rewards, dungeonRewardLocations);
     for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
-      const auto index = dungeonRewardLocations[i]->GetPlacedItem().GetItemID() - baseOffset;
+      const auto index = ItemTable(dungeonRewardLocations[i]->GetPlacedItem()).GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
 
       //set the player's dungeon reward on file creation instead of pushing it to them at the start.
@@ -458,13 +477,13 @@ static void RandomizeDungeonRewards() {
     }
   } else if (LinksPocketItem.Is(LINKSPOCKETITEM_DUNGEON_REWARD)) {
     //get 1 stone/medallion
-    std::vector<Item> rewards = FilterFromPool(ItemPool, [](const Item& i) {return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
-    Item startingReward = RandomElement(rewards, true);
+    std::vector<u32> rewards = FilterFromPool(ItemPool, [](u32 i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    u32 startingReward = RandomElement(rewards, true);
 
-    LinksPocketRewardBitMask = bitMaskTable[startingReward.GetItemID() - baseOffset];
+    LinksPocketRewardBitMask = bitMaskTable[ItemTable(startingReward).GetItemID() - baseOffset];
     PlaceItemInLocation(&LinksPocket, startingReward);
     //erase the stone/medallion from the Item Pool
-    FilterAndEraseFromPool(ItemPool, [startingReward](const Item& i) {return i == startingReward;});
+    FilterAndEraseFromPool(ItemPool, [startingReward](u32 i) {return i == startingReward;});
   }
 }
 
@@ -484,17 +503,17 @@ static void FillExcludedLocations() {
 //Function to handle the Own Dungeon setting
 static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
   std::vector<ItemLocation*> dungeonLocations = dungeon->GetDungeonLocations();
-  std::vector<Item> dungeonItems = {};
+  std::vector<u32> dungeonItems = {};
 
   //Add specific items that need be randomized within this dungeon
-  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && dungeon->GetSmallKey() != NoItem) {
-    std::vector<Item> dungeonSmallKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){ return i == dungeon->GetSmallKey();});
+  if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && dungeon->GetSmallKey() != NONE) {
+    std::vector<u32> dungeonSmallKeys = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){ return i == dungeon->GetSmallKey();});
     AddElementsToPool(dungeonItems, dungeonSmallKeys);
   }
 
-  if ((BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) && dungeon->GetBossKey() != GanonsCastle_BossKey) ||
-      (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) && dungeon->GetBossKey() == GanonsCastle_BossKey)) {
-        auto dungeonBossKey = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){ return i == dungeon->GetBossKey();});
+  if ((BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON) && dungeon->GetBossKey() != GANONS_CASTLE_BOSS_KEY) ||
+      (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON) && dungeon->GetBossKey() == GANONS_CASTLE_BOSS_KEY)) {
+        auto dungeonBossKey = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){ return i == dungeon->GetBossKey();});
         AddElementsToPool(dungeonItems, dungeonBossKey);
   }
 
@@ -502,8 +521,8 @@ static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
   AssumedFill(dungeonItems, dungeonLocations);
 
   //randomize map and compass separately since they're not progressive
-  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) && dungeon->GetMap() != NoItem && dungeon->GetCompass() != NoItem) {
-    auto dungeonMapAndCompass = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){ return i == dungeon->GetMap() || i == dungeon->GetCompass();});
+  if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OWN_DUNGEON) && dungeon->GetMap() != NONE && dungeon->GetCompass() != NONE) {
+    auto dungeonMapAndCompass = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){ return i == dungeon->GetMap() || i == dungeon->GetCompass();});
     AssumedFill(dungeonMapAndCompass, dungeonLocations);
   }
 }
@@ -529,48 +548,48 @@ static void RandomizeDungeonItems() {
   //overworldLocations defined in item_location.cpp
 
   //Create Any Dungeon and Overworld item pools
-  std::vector<Item> anyDungeonItems = {};
-  std::vector<Item> overworldItems = {};
+  std::vector<u32> anyDungeonItems = {};
+  std::vector<u32> overworldItems = {};
 
   for (auto dungeon : dungeonList) {
     if (Keysanity.Is(KEYSANITY_ANY_DUNGEON)) {
-      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetSmallKey();});
+      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){return i == dungeon->GetSmallKey();});
       AddElementsToPool(anyDungeonItems, dungeonKeys);
     } else if (Keysanity.Is(KEYSANITY_OVERWORLD)) {
-      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetSmallKey();});
+      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){return i == dungeon->GetSmallKey();});
       AddElementsToPool(overworldItems, dungeonKeys);
     }
 
-    if (BossKeysanity.Is(BOSSKEYSANITY_ANY_DUNGEON) && dungeon->GetBossKey() != GanonsCastle_BossKey) {
-      auto bossKey = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetBossKey();});
+    if (BossKeysanity.Is(BOSSKEYSANITY_ANY_DUNGEON) && dungeon->GetBossKey() != GANONS_CASTLE_BOSS_KEY) {
+      auto bossKey = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){return i == dungeon->GetBossKey();});
       AddElementsToPool(anyDungeonItems, bossKey);
-    } else if (BossKeysanity.Is(BOSSKEYSANITY_OVERWORLD) && dungeon->GetBossKey() != GanonsCastle_BossKey) {
-      auto bossKey = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetBossKey();});
+    } else if (BossKeysanity.Is(BOSSKEYSANITY_OVERWORLD) && dungeon->GetBossKey() != GANONS_CASTLE_BOSS_KEY) {
+      auto bossKey = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){return i == dungeon->GetBossKey();});
       AddElementsToPool(overworldItems, bossKey);
     }
 
     if (GanonsBossKey.Is(GANONSBOSSKEY_ANY_DUNGEON)) {
-      auto ganonBossKey = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GanonsCastle_BossKey;});
+      auto ganonBossKey = FilterAndEraseFromPool(ItemPool, [](u32 i){return i == GANONS_CASTLE_BOSS_KEY;});
       AddElementsToPool(anyDungeonItems, ganonBossKey);
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_OVERWORLD)) {
-      auto ganonBossKey = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GanonsCastle_BossKey;});
+      auto ganonBossKey = FilterAndEraseFromPool(ItemPool, [](u32 i){return i == GANONS_CASTLE_BOSS_KEY;});
       AddElementsToPool(overworldItems, ganonBossKey);
     }
   }
 
   if (GerudoKeys.Is(GERUDOKEYS_ANY_DUNGEON)) {
-    auto gerudoKeys = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GerudoFortress_SmallKey;});
+    auto gerudoKeys = FilterAndEraseFromPool(ItemPool, [](u32 i){return i == GERUDO_FORTRESS_SMALL_KEY;});
     AddElementsToPool(anyDungeonItems, gerudoKeys);
   } else if (GerudoKeys.Is(GERUDOKEYS_OVERWORLD)) {
-    auto gerudoKeys = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i == GerudoFortress_SmallKey;});
+    auto gerudoKeys = FilterAndEraseFromPool(ItemPool, [](u32 i){return i == GERUDO_FORTRESS_SMALL_KEY;});
     AddElementsToPool(overworldItems, gerudoKeys);
   }
 
   if (ShuffleRewards.Is(REWARDSHUFFLE_ANY_DUNGEON)) {
-    auto rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    auto rewards = FilterAndEraseFromPool(ItemPool, [](u32 i){return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
     AddElementsToPool(anyDungeonItems, rewards);
   } else if (ShuffleRewards.Is(REWARDSHUFFLE_OVERWORLD)) {
-    auto rewards = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i.GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    auto rewards = FilterAndEraseFromPool(ItemPool, [](u32 i){return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
     AddElementsToPool(overworldItems, rewards);
   }
 
@@ -581,10 +600,10 @@ static void RandomizeDungeonItems() {
   //Randomize maps and compasses after since they're not advancement items
   for (auto dungeon : dungeonList) {
     if (MapsAndCompasses.Is(MAPSANDCOMPASSES_ANY_DUNGEON)) {
-      auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
+      auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
       AssumedFill(mapAndCompassItems, anyDungeonLocations, true);
     } else if (MapsAndCompasses.Is(MAPSANDCOMPASSES_OVERWORLD)) {
-      auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](const Item& i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
+      auto mapAndCompassItems = FilterAndEraseFromPool(ItemPool, [dungeon](u32 i){return i == dungeon->GetMap() || i == dungeon->GetCompass();});
       AssumedFill(mapAndCompassItems, overworldLocations, true);
     }
   }
@@ -593,15 +612,15 @@ static void RandomizeDungeonItems() {
 static void RandomizeLinksPocket() {
   if (LinksPocketItem.Is(LINKSPOCKETITEM_ADVANCEMENT)) {
    //Get all the advancement items                                                                                     don't include tokens
-   std::vector<Item> advancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i){return i.IsAdvancement() && i.GetItemType() != ITEMTYPE_TOKEN;});
+   std::vector<u32> advancementItems = FilterAndEraseFromPool(ItemPool, [](u32 i){return ItemTable(i).IsAdvancement() && ItemTable(i).GetItemType() != ITEMTYPE_TOKEN;});
    //select a random one
-   Item startingItem = RandomElement(advancementItems, true);
+   u32 startingItem = RandomElement(advancementItems, true);
    //add the others back
    AddElementsToPool(ItemPool, advancementItems);
 
    PlaceItemInLocation(&LinksPocket, startingItem);
  } else if (LinksPocketItem.Is(LINKSPOCKETITEM_NOTHING)) {
-   PlaceItemInLocation(&LinksPocket, GreenRupee);
+   PlaceItemInLocation(&LinksPocket, GREEN_RUPEE);
  }
 }
 
@@ -613,6 +632,7 @@ int Fill() {
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
+
 
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
@@ -639,8 +659,8 @@ int Fill() {
           int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
           for(int j = 0; j < num_to_replace; j++) {
             int itemindex = indices[j];
-            ShopItems[i*8+itemindex-1] = NoItem; //Clear item so it can be filled during the general fill algo
-            ShopItems[i*8+itemindex-1].SetPrice(GetRandomShopPrice()); //Set price in ShopItems vector so it can be retrieved later by the patch
+            ShopItems[i*8+itemindex-1] = NONE; //Clear item so it can be filled during the general fill algo
+            ItemTable(ShopItems[i*8+itemindex-1]).SetPrice(GetRandomShopPrice()); //Set price in ShopItems vector so it can be retrieved later by the patch
           }
         }
       }
@@ -654,7 +674,7 @@ int Fill() {
     if (ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
 
       //Get each song
-      std::vector<Item> songs = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.GetItemType() == ITEMTYPE_SONG;});
+      std::vector<u32> songs = FilterAndEraseFromPool(ItemPool, [](u32 i) { return ItemTable(i).GetItemType() == ITEMTYPE_SONG;});
 
       //Get each song location
       std::vector<ItemLocation*> songLocations = {};
@@ -674,11 +694,11 @@ int Fill() {
     //Then place Link's Pocket Item if it has to be an advancement item
     RandomizeLinksPocket();
     //Then place the rest of the advancement items
-    std::vector<Item> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const Item& i) { return i.IsAdvancement();});
+    std::vector<u32> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](u32 i) { return ItemTable(i).IsAdvancement();});
     AssumedFill(remainingAdvancementItems, allLocations, true);
 
     //Fast fill for the rest of the pool
-    std::vector<Item> remainingPool = FilterAndEraseFromPool(ItemPool, [](const Item& i) {return true;});
+    std::vector<u32> remainingPool = FilterAndEraseFromPool(ItemPool, [](u32 i) {return true;});
     LogicReset();
     FastFill(remainingPool, GetAccessibleLocations(allLocations));
 
@@ -694,6 +714,8 @@ int Fill() {
       CreateAlwaysIncludedMessages();
       if (GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
         printf("\x1b[10;10HCreating Hints...");
+        CitraPrint("HINTS");
+        sleep(0.1);
         CreateAllHints();
         printf("Done");
       }

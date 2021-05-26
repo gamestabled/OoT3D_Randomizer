@@ -15,6 +15,7 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 #include "location_access.hpp"
+#include "debug.hpp"
 
 namespace {
   bool seedChanged;
@@ -52,8 +53,8 @@ void PrintTopScreen() {
 void MenuInit() {
 
   Exits::SetParentRegions();
-
   Settings::SetDefaultSettings();
+
 
   seedChanged = false;
   mode = MAIN_MENU;
@@ -90,7 +91,6 @@ void MenuInit() {
 
   consoleSelect(&bottomScreen);
   PrintMainMenu();
-
 }
 
 void MenuUpdate(u32 kDown) {

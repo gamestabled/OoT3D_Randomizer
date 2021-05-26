@@ -257,7 +257,7 @@ bool WritePatch() {
     std::array<s32, 32> rShopsanityPrices{};
     int i = 4;
     while (i < 64) {
-      rShopsanityPrices[TransformShopIndex(i)] = ShopItems[i].GetPrice();
+      rShopsanityPrices[TransformShopIndex(i)] = ItemTable(ShopItems[i]).GetPrice();
       if (i % 8 == 7) { //Last index for this shop, skip ahead to relevant index of next shop
         i += 5;
       }

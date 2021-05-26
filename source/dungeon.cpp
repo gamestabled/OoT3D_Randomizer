@@ -1,14 +1,14 @@
 #include "dungeon.hpp"
 
 #include "category.hpp"
-#include "item_list.hpp"
 #include "item_location.hpp"
 #include "pool_functions.hpp"
+#include "keys.hpp"
 
 namespace Dungeon {
 
-DungeonInfo::DungeonInfo(std::string name_, Item* map_, Item* compass_,
-                         Item* smallKey_, Item* bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
+DungeonInfo::DungeonInfo(std::string name_, u32 map_, u32 compass_,
+                         u32 smallKey_, u32 bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
                          std::vector<ItemLocation*> vanillaLocations_,
                          std::vector<ItemLocation*> mqLocations_,
                          std::vector<ItemLocation*> sharedLocations_)
@@ -25,61 +25,61 @@ DungeonInfo::DungeonInfo(std::string name_, Item* map_, Item* compass_,
 
 DungeonInfo::~DungeonInfo() = default;
 
-const Item& DungeonInfo::GetSmallKey() const {
-  return *smallKey;
+u32 DungeonInfo::GetSmallKey() const {
+  return smallKey;
 }
 
-const Item& DungeonInfo::GetMap() const {
-  return *map;
+u32 DungeonInfo::GetMap() const {
+  return map;
 }
 
-const Item& DungeonInfo::GetCompass() const {
-  return *compass;
+u32 DungeonInfo::GetCompass() const {
+  return compass;
 }
 
-const Item& DungeonInfo::GetBossKey() const {
-  return *bossKey;
+u32 DungeonInfo::GetBossKey() const {
+  return bossKey;
 }
 
 void DungeonInfo::PlaceVanillaMap() {
-  if (*map == NoItem) {
+  if (map == NONE) {
     return;
   }
 
   auto dungeonLocations = GetDungeonLocations();
   auto mapLocation = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaMap); })[0];
-  PlaceItemInLocation(mapLocation, *map);
+  PlaceItemInLocation(mapLocation, map);
 }
 
 void DungeonInfo::PlaceVanillaCompass() {
-  if (*compass == NoItem) {
+  if (compass == NONE) {
     return;
   }
 
   auto dungeonLocations = GetDungeonLocations();
   auto compassLocation = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaCompass); })[0];
-  PlaceItemInLocation(compassLocation, *compass);
+  PlaceItemInLocation(compassLocation, compass);
 }
 
 void DungeonInfo::PlaceVanillaBossKey() {
-  if (*bossKey == NoItem || *bossKey == GanonsCastle_BossKey) {
+  if (bossKey == NONE || bossKey == GANONS_CASTLE_BOSS_KEY) {
     return;
   }
 
   auto dungeonLocations = GetDungeonLocations();
   auto bossKeyLocation = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaBossKey); })[0];
-  PlaceItemInLocation(bossKeyLocation, *bossKey);
+  PlaceItemInLocation(bossKeyLocation, bossKey);
 }
 
 void DungeonInfo::PlaceVanillaSmallKeys() {
-  if (*smallKey == NoItem) {
+  if (smallKey == NONE) {
     return;
   }
 
   auto dungeonLocations = GetDungeonLocations();
   auto smallKeyLocations = FilterFromPool(dungeonLocations, [](const ItemLocation* loc){ return loc->IsCategory(Category::cVanillaSmallKey); });
   for (auto location : smallKeyLocations) {
-      PlaceItemInLocation(location, *smallKey);
+      PlaceItemInLocation(location, smallKey);
   }
 }
 
@@ -98,7 +98,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
   return locations;
 }
 
-  DungeonInfo DekuTree = DungeonInfo("Deku Tree", &DekuTree_Map, &DekuTree_Compass, &NoItem, &NoItem, 0, 0, {
+  DungeonInfo DekuTree = DungeonInfo("Deku Tree", DEKU_TREE_MAP, DEKU_TREE_COMPASS, NONE, NONE, 0, 0, {
                             //Vanilla Locations
                             &DekuTree_MapChest,
                             &DekuTree_CompassChest,
@@ -130,7 +130,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &QueenGohma,
                           });
 
-  DungeonInfo DodongosCavern = DungeonInfo("Dodongo's Cavern", &DodongosCavern_Map, &DodongosCavern_Compass, &NoItem, &NoItem, 0, 0, {
+  DungeonInfo DodongosCavern = DungeonInfo("Dodongo's Cavern", DODONGOS_CAVERN_MAP, DODONGOS_CAVERN_COMPASS, NONE, NONE, 0, 0, {
                             //Vanilla Locations
                             &DodongosCavern_MapChest,
                             &DodongosCavern_CompassChest,
@@ -170,7 +170,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &KingDodongo,
                           });
 
-  DungeonInfo JabuJabusBelly = DungeonInfo("Jabu Jabu's Belly", &JabuJabusBelly_Map, &JabuJabusBelly_Compass, &NoItem, &NoItem, 0, 0, {
+  DungeonInfo JabuJabusBelly = DungeonInfo("Jabu Jabu's Belly", JABU_JABUS_BELLY_MAP, JABU_JABUS_BELLY_COMPASS, NONE, NONE, 0, 0, {
                             //Vanilla Locations
                             &JabuJabusBelly_MapChest,
                             &JabuJabusBelly_CompassChest,
@@ -204,7 +204,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &Barinade,
                           });
 
-  DungeonInfo ForestTemple = DungeonInfo("Forest Temple", &ForestTemple_Map, &ForestTemple_Compass, &ForestTemple_SmallKey, &ForestTemple_BossKey, 5, 6, {
+  DungeonInfo ForestTemple = DungeonInfo("Forest Temple", FOREST_TEMPLE_MAP, FOREST_TEMPLE_COMPASS, FOREST_TEMPLE_SMALL_KEY, FOREST_TEMPLE_BOSS_KEY, 5, 6, {
                             //Vanilla Locations
                             &ForestTemple_FirstRoomChest,
                             &ForestTemple_FirstStalfosChest,
@@ -249,7 +249,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &PhantomGanon,
                           });
 
-  DungeonInfo FireTemple = DungeonInfo("Fire Temple", &FireTemple_Map, &FireTemple_Compass, &FireTemple_SmallKey, &FireTemple_BossKey, 8, 5, {
+  DungeonInfo FireTemple = DungeonInfo("Fire Temple", FIRE_TEMPLE_MAP, FIRE_TEMPLE_COMPASS, FIRE_TEMPLE_SMALL_KEY, FIRE_TEMPLE_BOSS_KEY, 8, 5, {
                             //Vanilla Locations
                             &FireTemple_NearBossChest,
                             &FireTemple_FlareDancerChest,
@@ -295,7 +295,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &Volvagia,
                           });
 
-  DungeonInfo WaterTemple = DungeonInfo("Water Temple", &WaterTemple_Map, &WaterTemple_Compass, &WaterTemple_SmallKey, &WaterTemple_BossKey, 6, 2, {
+  DungeonInfo WaterTemple = DungeonInfo("Water Temple", WATER_TEMPLE_MAP, WATER_TEMPLE_COMPASS, WATER_TEMPLE_SMALL_KEY, WATER_TEMPLE_BOSS_KEY, 6, 2, {
                             //Vanilla Locations
                             &WaterTemple_MapChest,
                             &WaterTemple_CompassChest,
@@ -331,7 +331,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &Morpha,
                           });
 
-  DungeonInfo SpiritTemple = DungeonInfo("Spirit Temple", &SpiritTemple_Map, &SpiritTemple_Compass, &SpiritTemple_SmallKey, &SpiritTemple_BossKey, 5, 7, {
+  DungeonInfo SpiritTemple = DungeonInfo("Spirit Temple", SPIRIT_TEMPLE_MAP, SPIRIT_TEMPLE_COMPASS, SPIRIT_TEMPLE_SMALL_KEY, SPIRIT_TEMPLE_BOSS_KEY, 5, 7, {
                             //Vanilla Locations
                             &SpiritTemple_ChildBridgeChest,
                             &SpiritTemple_ChildEarlyTorchesChest,
@@ -390,7 +390,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &Twinrova,
                           });
 
-  DungeonInfo ShadowTemple = DungeonInfo("Shadow Temple", &ShadowTemple_Map, &ShadowTemple_Compass, &ShadowTemple_SmallKey, &ShadowTemple_BossKey, 5, 6, {
+  DungeonInfo ShadowTemple = DungeonInfo("Shadow Temple", SHADOW_TEMPLE_MAP, SHADOW_TEMPLE_COMPASS, SHADOW_TEMPLE_SMALL_KEY, SHADOW_TEMPLE_BOSS_KEY, 5, 6, {
                             //Vanilla Locations
                             &ShadowTemple_MapChest,
                             &ShadowTemple_HoverBootsChest,
@@ -447,7 +447,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &BongoBongo,
                           });
 
-  DungeonInfo BottomOfTheWell = DungeonInfo("Bottom of the Well", &BottomOfTheWell_Map, &BottomOfTheWell_Compass, &BottomOfTheWell_SmallKey, &NoItem, 3, 2, {
+  DungeonInfo BottomOfTheWell = DungeonInfo("Bottom of the Well", BOTTOM_OF_THE_WELL_MAP, BOTTOM_OF_THE_WELL_COMPASS, BOTTOM_OF_THE_WELL_SMALL_KEY, NONE, 3, 2, {
                             //Vanilla Locations
                             &BottomOfTheWell_FrontLeftFakeWallChest,
                             &BottomOfTheWell_FrontCenterBombableChest,
@@ -478,7 +478,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &BottomOfTheWell_MQ_GS_WestInnerRoom,
                           }, {});
 
-  DungeonInfo IceCavern = DungeonInfo("Ice Cavern", &IceCavern_Map, &IceCavern_Compass, &NoItem, &NoItem, 0, 0, {
+  DungeonInfo IceCavern = DungeonInfo("Ice Cavern", ICE_CAVERN_MAP, ICE_CAVERN_COMPASS, NONE, NONE, 0, 0, {
                             //Vanilla Locations
                             &IceCavern_MapChest,
                             &IceCavern_CompassChest,
@@ -501,7 +501,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &SheikInIceCavern,
                           });
 
-  DungeonInfo GerudoTrainingGrounds = DungeonInfo("Gerudo Training Grounds", &NoItem, &NoItem, &GerudoTrainingGrounds_SmallKey, &NoItem, 9, 3, {
+  DungeonInfo GerudoTrainingGrounds = DungeonInfo("Gerudo Training Grounds", NONE, NONE, GERUDO_TRAINING_GROUNDS_SMALL_KEY, NONE, 9, 3, {
                             //Vanilla Locations
                             &GerudoTrainingGrounds_LobbyLeftChest,
                             &GerudoTrainingGrounds_LobbyRightChest,
@@ -546,7 +546,7 @@ std::vector<ItemLocation*> DungeonInfo::GetEveryLocation() const {
                             &GerudoTrainingGrounds_MQ_HeavyBlockChest,
                           }, {});
 
-  DungeonInfo GanonsCastle = DungeonInfo("Ganon's Castle", &NoItem, &NoItem, &GanonsCastle_SmallKey, &GanonsCastle_BossKey, 2, 3, {
+  DungeonInfo GanonsCastle = DungeonInfo("Ganon's Castle", NONE, NONE, GANONS_CASTLE_SMALL_KEY, GANONS_CASTLE_BOSS_KEY, 2, 3, {
                             //Vanilla Locations
                             &GanonsCastle_ForestTrialChest,
                             &GanonsCastle_WaterTrialLeftChest,

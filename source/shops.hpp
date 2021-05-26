@@ -18,7 +18,7 @@ extern std::string GetIceTrapName(u8 id);
 extern int GetShopIndex(ItemLocation* loc);
 extern int TransformShopIndex(int index);
 extern void PlaceShopItems();
-extern void ShuffleShop(std::vector<Item>& ShopItems, std::vector<int> indicesToExclude);
+extern void ShuffleShop(std::vector<u32>& ShopItems, std::vector<int> indicesToExclude);
 
-extern std::vector<Item> ShopItems;
+extern std::vector<u32> ShopItems;
 extern std::vector<ItemAndPrice> NonShopItems;

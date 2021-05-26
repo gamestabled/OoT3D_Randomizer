@@ -27,6 +27,7 @@ enum ItemType {
 
 class Item {
 public:
+    Item() = default;
     Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, u32 hintKey_, u16 price_ = 0);
     Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, u32 hintKey_, u16 price_ = 0);
     ~Item();
