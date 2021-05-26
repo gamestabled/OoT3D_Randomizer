@@ -2,6 +2,7 @@
 #define _CUSTOM_MODELS_H_
 
 void CustomModel_EditLinkToCustomTunic(void* linkCMB);
+void CustomModel_EditChildLinkToCustomTunic(void* linkCMB);
 void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB);
 void CustomModel_EditTitleScreenLogo(void* titleScreenZAR);
 void CustomModel_SetOcarinaToRGBA565(void* fairyOcarinaCMB);
@@ -21,7 +22,8 @@ typedef enum {
     TEXANIM_LINK_BODY,
     TEXANIM_TITLE_LOGO_US,
     TEXANIM_ADULT_SONG,
-    TEXANIM_CHILD_SONG
+    TEXANIM_CHILD_SONG,
+    TEXANIM_CHILD_LINK_BODY
 } CustomGeneralAssetsTexAnims;
 
 typedef enum {
