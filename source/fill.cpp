@@ -253,8 +253,6 @@ std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation
             }
             //All we care about is if the game is beatable, used to pare down playthrough
             else if (mode == SearchMode::CheckBeatable && location->GetPlacedItem() == TRIFORCE) {
-              CitraPrint("Search Mode Check beatable");
-              sleep(0.1);
               playthroughBeatable = true;
               return {}; //Return early for efficiency
             }
@@ -288,8 +286,6 @@ static void GeneratePlaythrough() {
 //Remove unnecessary items from playthrough by removing their location, and checking if game is still beatable
 //To reduce searches, some preprocessing is done in playthrough generation to avoid adding obviously unnecessary items
 static void PareDownPlaythrough() {
-  CitraPrint("Pare Down Playthrough");
-  sleep(0.1);
   std::vector<ItemLocation*> toAddBackItem;
   //Start at sphere before Ganon's and count down
   for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
@@ -302,14 +298,10 @@ static void PareDownPlaythrough() {
       location->SetPlacedItem(NONE); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      CitraPrint("WITHIN 4");
-      sleep(0.1);
       GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
-      //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
-      CitraPrint("WITHIN 5");
-      sleep(0.1);
-      if (playthroughBeatable) {
 
+      //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
+      if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
         // std::string locationname(copy.GetName());
         // std::string itemname(location->GetName());
@@ -324,28 +316,23 @@ static void PareDownPlaythrough() {
       }
     }
   }
-  CitraPrint("Loop End");
-  sleep(0.1);
+
   //Some spheres may now be empty, remove these
   for (int i = playthroughLocations.size() - 2; i >= 0; i--) {
     if (playthroughLocations.at(i).size() == 0) {
       playthroughLocations.erase(playthroughLocations.begin() + i);
     }
   }
-  CitraPrint("3");
-  sleep(0.1);
+
   //Now we can add back items which were removed previously
   for (ItemLocation* location : toAddBackItem) {
     location->SaveDelayedItem();
   }
-  CitraPrint("4");
-  sleep(0.1);
+
   playthroughBeatable = true;
   //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
   LogicReset();
   GetAccessibleLocations(allLocations);
-  CitraPrint("Pare Down Playthrough End");
-  sleep(0.1);
 }
 
 //Will place things completely randomly, no logic checks are performed
@@ -714,8 +701,6 @@ int Fill() {
       CreateAlwaysIncludedMessages();
       if (GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
         printf("\x1b[10;10HCreating Hints...");
-        CitraPrint("HINTS");
-        sleep(0.1);
         CreateAllHints();
         printf("Done");
       }
