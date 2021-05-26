@@ -97,6 +97,7 @@ bool WritePatch() {
     // obtain basecode.ips file size
     fseek(basecode.get(), 0, SEEK_END);
     const auto lSize = static_cast<size_t>(ftell(basecode.get()));
+
     rewind(basecode.get());
 
     // copy basecode.ips into the buffer
@@ -109,6 +110,7 @@ bool WritePatch() {
     }
 
     totalRW += bytesWritten - 3; // -3 to overwrite EOF
+    printf("\nbasecode size: %lx\n", totalRW);
   }
 
   /*-------------------------
@@ -141,7 +143,8 @@ bool WritePatch() {
     }
     totalRW += sizeof(override);
   }
-
+  printf("\nAfter Overrides: %lx\n", totalRW);
+  sleep(1);
   /*-------------------------
   |     gSettingsContext    |
   --------------------------*/
@@ -173,7 +176,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(SettingsContext);
-
+  printf("\nAfter SettingsContext: %lx\n", totalRW);
+  sleep(1);
   /*-------------------------------
   |     rScrubRandomItemPrices    |
   |     rScrubTextIdTable         |
@@ -220,7 +224,8 @@ bool WritePatch() {
   } else if (ctx.scrubsanity == SCRUBSANITY_AFFORDABLE) {
     rScrubTextIdTable.fill(0x900A);
   }
-
+  printf("\nAfter Scrubs1: %lx\n", totalRW);
+  sleep(1);
   if (ctx.scrubsanity != SCRUBSANITY_OFF) {
     // Write scrub text table address to code
     patchOffset = V_TO_P(0x52236C); //this is the address of the base game's scrub textId table
@@ -247,7 +252,8 @@ bool WritePatch() {
     }
     totalRW += sizeof(rScrubTextIdTable);
   }
-
+  printf("\nAfter Scrubs 2: %lx\n", totalRW);
+  sleep(1);
   /*-------------------------------
   |     rShopsanityPrices         |
   --------------------------------*/
@@ -291,7 +297,8 @@ bool WritePatch() {
     }
     totalRW += sizeof(rShopsanityPrices);
   }
-
+  printf("\nAfter Shopsanity: %lx\n", totalRW);
+  sleep(1);
   /*--------------------------------
   |     rDungeonRewardOverrides    |
   ---------------------------------*/
@@ -320,7 +327,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(Settings::rDungeonRewardOverrides);
-
+  printf("\nAfter DungeonRewards: %lx\n", totalRW);
+  sleep(1);
   /*--------------------------------
   |     rCustomMessageEntries      |
   ---------------------------------*/
@@ -429,7 +437,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += 4;
-
+  printf("\nAfter CustomMessageEntries: %lx\n", totalRW);
+  sleep(1);
   /*--------------------------------
   |         Gauntlet Colors        |
   ---------------------------------*/
@@ -464,7 +473,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(rGauntletColors);
-
+  printf("\nAfter Gauntlet Colors: %lx\n", totalRW);
+  sleep(1);
   /*-------------------------
   |           EOF           |
   --------------------------*/
@@ -493,9 +503,9 @@ bool WritePatch() {
   |       custom assets      |
   --------------------------*/
 
-  Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
-  Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
-  Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
+  // Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
+  // Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
+  // Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
 
   CopyFile(sdmcArchive, "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar", "romfs:/zelda_gi_melody.zar");
 
