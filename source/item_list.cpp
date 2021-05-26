@@ -2,13 +2,11 @@
 
 #include "logic.hpp"
 #include "keys.hpp"
-#include "settings.hpp"
 #include "../code/include/z3D/z3Ditem.h"
 #include <vector>
 #include <array>
 
 using namespace Logic;
-using namespace Settings;
 
 static std::array<Item, KEY_ENUM_MAX> itemTable;
 
