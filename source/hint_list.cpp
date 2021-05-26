@@ -6250,7 +6250,7 @@ namespace Hints {
     &Junk70,
     &Junk71,
   };
-  std::array<HintText*, 12> ganonLines = {
+  std::array<HintText*, 11> ganonLines = {
     &GanonLine01,
     &GanonLine02,
     &GanonLine03,
