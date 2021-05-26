@@ -52,10 +52,12 @@ void PrintTopScreen() {
 
 void MenuInit() {
 
+  CitraPrint("Set Parent Regions");
   Exits::SetParentRegions();
+  CitraPrint("Set Default Settings");
   Settings::SetDefaultSettings();
 
-
+  CitraPrint("Menu Init variables");
   seedChanged = false;
   mode = MAIN_MENU;
   subMode = -1;
@@ -70,6 +72,7 @@ void MenuInit() {
   pastSeedLength = Settings::seed.length();
   currentMenuItem = Settings::mainMenu[menuIdx];
   currentSetting = Settings::mainMenu[menuIdx]->settingsList->at(settingIdx);
+  CitraPrint("Force Change");
   Settings::ForceChange(0, currentSetting);
 
   srand(time(NULL));
