@@ -78,35 +78,35 @@ public:
     }
 
     std::string_view GetPlacedItemName() const {
-      return placedItem.GetName();
+      return ItemTable(placedItem).GetName();
     }
 
-    const Item& GetPlacedItem() const {
+    u32 GetPlacedItem() const {
       return placedItem;
     }
 
-    void SetPlacedItem(Item item) {
-      placedItem = std::move(item);
+    void SetPlacedItem(u32 item) {
+      placedItem = item;
     }
 
-    void SetPlacedShopItem(Item item, u16 price_) {
-      placedItem = std::move(item);
+    void SetPlacedShopItem(u32 item, u16 price_) {
+      placedItem = item;
       price = price_;
     }
 
     //Saves an item to be set as placedItem later
-    void SetDelayedItem(Item item) {
-      delayedItem = std::move(item);
+    void SetDelayedItem(u32 item) {
+      delayedItem = item;
     }
 
     void ApplyPlacedItemEffect() {
-      placedItem.ApplyEffect();
+      ItemTable(placedItem).ApplyEffect();
     }
 
     //Set placedItem as item saved in SetDelayedItem
     void SaveDelayedItem() {
       placedItem = delayedItem;
-      delayedItem = NoItem;
+      delayedItem = NONE;
     }
 
     u16 GetPrice() const {
@@ -232,8 +232,8 @@ public:
       used = false;
       checked = false;
       addedToPool = false;
-      placedItem = NoItem;
-      delayedItem = NoItem;
+      placedItem = NONE;
+      delayedItem = NONE;
       hintedAt = false;
       isHintable = false;
       price = 0;
@@ -251,8 +251,8 @@ private:
     bool hintedAt = false;
     std::vector<Category> categories;
     bool addedToPool = false;
-    Item placedItem = NoItem;
-    Item delayedItem = NoItem;
+    u32 placedItem = NONE;
+    u32 delayedItem = NONE;
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
     u16 price = 0;
     bool isHintable = false;
@@ -1166,8 +1166,8 @@ extern bool playthroughBeatable;
 extern u16 itemsPlaced;
 
 void GenerateLocationPool();
-void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately = false);
-void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately = false);
+void PlaceItemInLocation(ItemLocation* loc, u32 item, bool applyEffectImmediately = false);
+void PlaceShopItemInLocation(ItemLocation* loc, u32 item, u16 price, bool applyEffectImmediately = false);
 std::vector<ItemLocation*> GetLocations(const std::vector<ItemLocation*>& locationPool, Category category);
 void LocationReset();
 void ItemReset();

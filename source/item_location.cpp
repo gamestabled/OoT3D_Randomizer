@@ -4,6 +4,7 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 #include "shops.hpp"
+#include "debug.hpp"
 
 //Location definitions
 //Kokiri Forest                                                          scene  flag  name                                    hint key (hint_list.cpp)            categories
@@ -1412,16 +1413,15 @@ void GenerateLocationPool() {
   }
 }
 
-void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediately /*= false*/) {
-
+void PlaceItemInLocation(ItemLocation* loc, u32 item, bool applyEffectImmediately /*= false*/) {
   PlacementLog_Msg("\n");
-  PlacementLog_Msg(item.GetName());
+  PlacementLog_Msg(ItemTable(item).GetName());
   PlacementLog_Msg(" placed at ");
   PlacementLog_Msg(loc->GetName());
   PlacementLog_Msg("\n\n");
 
   if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-    item.ApplyEffect();
+    ItemTable(item).ApplyEffect();
     loc->Use();
   }
 
@@ -1432,11 +1432,11 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
   if (completion > 0.50) printf(".");
 
   //If we're placing a non-shop item in a shop location, we want to record it for custom messages
-  if (item.GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
+  if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
     ItemAndPrice newpair;
-    newpair.Name = item.GetName();
+    newpair.Name = ItemTable(item).GetName();
     int index = GetShopIndex(loc);
-    newpair.Price = ShopItems[index].GetPrice();
+    newpair.Price = ItemTable(ShopItems[index]).GetPrice();
     NonShopItems[TransformShopIndex(index)] = newpair;
   }
 
@@ -1444,16 +1444,16 @@ void PlaceItemInLocation(ItemLocation* loc, Item item, bool applyEffectImmediate
 }
 
 //Same as PlaceItemInLocation, except a price is set as well as the item
-void PlaceShopItemInLocation(ItemLocation* loc, Item item, u16 price, bool applyEffectImmediately /*= false*/) {
+void PlaceShopItemInLocation(ItemLocation* loc, u32 item, u16 price, bool applyEffectImmediately /*= false*/) {
 
   PlacementLog_Msg("\n");
-  PlacementLog_Msg(item.GetName());
+  PlacementLog_Msg(ItemTable(item).GetName());
   PlacementLog_Msg(" placed at ");
   PlacementLog_Msg(loc->GetName());
   PlacementLog_Msg("\n\n");
 
   if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-    item.ApplyEffect();
+    ItemTable(item).ApplyEffect();
     loc->Use();
   }
 
@@ -1527,9 +1527,9 @@ void AddExcludedOptions() {
 void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
   for (ItemLocation* loc : allLocations) {
-    ItemOverride_Value val = loc->GetPlacedItem().Value();
+    ItemOverride_Value val = ItemTable(loc->GetPlacedItem()).Value();
     //If this is an ice trap in a shop, change the name based on what the model will look like
-    if (loc->GetPlacedItem() == IceTrap && loc->IsCategory(Category::cShop)) {
+    if (loc->GetPlacedItem() == ICE_TRAP && loc->IsCategory(Category::cShop)) {
       NonShopItems[TransformShopIndex(GetShopIndex(loc))].Name = GetIceTrapName(val.looksLikeItemId);
     }
     overrides.insert({

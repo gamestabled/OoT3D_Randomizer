@@ -11,8 +11,8 @@ class ItemLocation;
 namespace Dungeon {
 class DungeonInfo {
 public:
-    DungeonInfo(std::string name_, Item* map_, Item* compass_,
-                Item* smallKey_, Item* bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
+    DungeonInfo(std::string name_, u32 map_, u32 compass_,
+                u32 smallKey_, u32 bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
                 std::vector<ItemLocation*> vanillaLocations_,
                 std::vector<ItemLocation*> mqLocations_,
                 std::vector<ItemLocation*> sharedLocations_);
@@ -42,10 +42,10 @@ public:
         return (masterQuest) ? mqKeyCount : vanillaKeyCount;
     }
 
-    const Item& GetSmallKey() const;
-    const Item& GetMap() const;
-    const Item& GetCompass() const;
-    const Item& GetBossKey() const;
+    u32 GetSmallKey() const;
+    u32 GetMap() const;
+    u32 GetCompass() const;
+    u32 GetBossKey() const;
 
     void PlaceVanillaMap();
     void PlaceVanillaCompass();
@@ -60,10 +60,10 @@ public:
 
 private:
     std::string name;
-    Item* map;
-    Item* compass;
-    Item* smallKey;
-    Item* bossKey;
+    u32 map;
+    u32 compass;
+    u32 smallKey;
+    u32 bossKey;
     u8 vanillaKeyCount;
     u8 mqKeyCount;
     bool masterQuest = false;

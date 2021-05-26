@@ -146,8 +146,8 @@ static Exit* GetHintRegion(Exit* exit) {
 static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation = &Ganon) {
   //temporarily remove the hinted location's item, and then perform a
   //reachability search for gossip stone locations.
-  Item originalItem = hintedLocation->GetPlacedItem();
-  hintedLocation->SetPlacedItem(NoItem);
+  u32 originalItem = hintedLocation->GetPlacedItem();
+  hintedLocation->SetPlacedItem(NONE);
 
   LogicReset();
   auto accessibleGossipStones = GetAccessibleLocations(gossipStoneLocations);
@@ -158,8 +158,8 @@ static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hinted
 }
 
 static void AddHint(Text hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
-  //save hints as dummy items to gossip stone locations for writing to the spoiler log
-  gossipStone->SetPlacedItem(Item{hint.GetEnglish(), ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
+  //save hints as dummy items to gossip stone locations for writing to the spoiler log (figure this out later aftre refactor)
+  gossipStone->SetPlacedItem(HINT);
 
   //create the in game message
   u32 messageId = 0x400 + gossipStone->GetFlag();
@@ -194,7 +194,7 @@ static void CreateLocationHint(const std::vector<ItemLocation*>& possibleHintLoc
 
   //make hint text
   Text locationHintText = Hint(hintedLocation->GetHintKey()).GetText();
-  Text itemHintText = Hint(hintedLocation->GetPlacedItem().GetHintKey()).GetText();
+  Text itemHintText = Hint(ItemTable(hintedLocation->GetPlacedItem()).GetHintKey()).GetText();
   Text prefix = Hint(PREFIX).GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
@@ -309,7 +309,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLo
 
 static void CreateRandomLocationHint(bool goodItem = false) {
   const std::vector<ItemLocation*> possibleHintLocations = FilterFromPool(allLocations, [goodItem](const ItemLocation* loc) {
-    return loc->IsHintable() && !loc->IsHintedAt() && (!goodItem || loc->GetPlacedItem().IsMajorItem());
+    return loc->IsHintable() && !loc->IsHintedAt() && (!goodItem || ItemTable(loc->GetPlacedItem()).IsMajorItem());
   });
   //If no more locations can be hinted at, then just try to get another hint
   if (possibleHintLocations.empty()) {
@@ -336,7 +336,7 @@ static void CreateRandomLocationHint(bool goodItem = false) {
   ItemLocation* gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
-  Text itemText = Hint(hintedLocation->GetPlacedItem().GetHintKey()).GetText();
+  Text itemText = Hint(ItemTable(hintedLocation->GetPlacedItem()).GetHintKey()).GetText();
   if (hintedLocation->IsDungeon()) {
     Text locationText = Hint(hintedLocation->GetParentRegion()->hintKey).GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# hoards #"+itemText+"#.";
@@ -382,7 +382,7 @@ static std::vector<ItemLocation*> CalculateBarrenRegions() {
   std::vector<ItemLocation*> potentiallyUsefulLocations = {};
 
   for (ItemLocation* location : allLocations) {
-    if (location->GetPlacedItem().IsMajorItem()) {
+    if (ItemTable(location->GetPlacedItem()).IsMajorItem()) {
       AddElementsToPool(potentiallyUsefulLocations, std::vector{location});
     } else {
       if (location != &LinksPocket) { //Nobody cares to know if Link's Pocket is barren
@@ -474,7 +474,7 @@ static void CreateGanonText() {
   CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
 
   //Get the location of the light arrows
-  auto lightArrowLocation = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == I_LightArrows;});
+  auto lightArrowLocation = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == LIGHT_ARROWS;});
 
   Text text;
   //If there is no light arrow location, it was in the player's inventory at the start
@@ -528,7 +528,7 @@ void CreateAllHints() {
   auto barrenLocations = CalculateBarrenRegions();
 
   //while there are still gossip stones remaining
-  while (FilterFromPool(gossipStoneLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == NoItem;}).size() != 0) {
+  while (FilterFromPool(gossipStoneLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == NONE;}).size() != 0) {
     //TODO: fixed hint types
 
     if (remainingHintTypes.empty()) {

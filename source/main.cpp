@@ -2,12 +2,14 @@
 
 #include "menu.hpp"
 #include "hint_list.hpp"
+#include "item_list.hpp"
 
 #define TICKS_PER_SEC 268123480.0
 
 int main() {
   gfxInitDefault();
   HintTable_Init();
+  ItemTable_Init();
   MenuInit();
 
   u64 initialHoldTime = svcGetSystemTick();

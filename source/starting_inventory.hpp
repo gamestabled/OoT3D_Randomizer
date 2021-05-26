@@ -1,9 +1,10 @@
 #pragma once
 
+#include <3ds.h>
+
 #include <vector>
 
-class Item;
-extern std::vector<Item> StartingInventory;
+extern std::vector<u32> StartingInventory;
 
 void GenerateStartingInventory();
 void ApplyStartingInventory();
