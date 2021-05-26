@@ -576,18 +576,18 @@ void GenerateRandomizer() {
   if (WritePatch()) {
     printf("Done");
     if (Settings::PlayOption == PATCH_CONSOLE) {
-      // printf("\x1b[14;10HQuit out using the home menu. Then\n");
-      // printf("\x1b[15;10Henable game patching and launch OoT3D!\n");
+      printf("\x1b[14;10HQuit out using the home menu. Then\n");
+      printf("\x1b[15;10Henable game patching and launch OoT3D!\n");
     } else if (Settings::PlayOption == PATCH_CITRA) {
       printf("\x1b[14;10HCopy code.ips and exheader.bin to the\n");
       printf("\x1b[15;10HOoT3D mods folder, then launch OoT3D!\n");
     }
 
     const auto& randomizerHash = GetRandomizerHash();
-    // printf("\x1b[17;10HHash:");
-    // for (size_t i = 0; i < randomizerHash.size(); i++) {
-    //   printf("\x1b[%zu;11H- %s", i + 18, randomizerHash[i].c_str());
-    // }
+    printf("\x1b[17;10HHash:");
+    for (size_t i = 0; i < randomizerHash.size(); i++) {
+      printf("\x1b[%zu;11H- %s", i + 18, randomizerHash[i].c_str());
+    }
   } else {
     printf("Failed\nPress Select to exit.\n");
   }
