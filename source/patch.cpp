@@ -492,6 +492,11 @@ bool WritePatch() {
   /*-------------------------
   |       custom assets      |
   --------------------------*/
+
+  Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
+  Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
+  Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
+
   CopyFile(sdmcArchive, "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar", "romfs:/zelda_gi_melody.zar");
 
   FSUSER_CloseArchive(sdmcArchive);

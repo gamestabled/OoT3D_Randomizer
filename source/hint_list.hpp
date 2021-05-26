@@ -1176,5 +1176,5 @@ namespace Hints {
   extern HintText GanonLine11;
 
   extern std::array<HintText*, 66> junkHints;
-  extern std::array<HintText*, 12> ganonLines;
+  extern std::array<HintText*, 11> ganonLines;
 } //namespace Hints
