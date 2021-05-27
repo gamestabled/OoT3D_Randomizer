@@ -110,7 +110,6 @@ bool WritePatch() {
     }
 
     totalRW += bytesWritten - 3; // -3 to overwrite EOF
-    // printf("\nbasecode size: %lx\n", totalRW);
   }
 
   /*-------------------------
@@ -143,8 +142,7 @@ bool WritePatch() {
     }
     totalRW += sizeof(override);
   }
-  // printf("\nAfter Overrides: %lx\n", totalRW);
-  // sleep(1);
+
   /*-------------------------
   |     gSettingsContext    |
   --------------------------*/
@@ -176,8 +174,7 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(SettingsContext);
-  // printf("\nAfter SettingsContext: %lx\n", totalRW);
-  // sleep(1);
+
   /*-------------------------------
   |     rScrubRandomItemPrices    |
   |     rScrubTextIdTable         |
@@ -252,8 +249,7 @@ bool WritePatch() {
     }
     totalRW += sizeof(rScrubTextIdTable);
   }
-  // printf("\nAfter Scrubs 2: %lx\n", totalRW);
-  // sleep(1);
+
   /*-------------------------------
   |     rShopsanityPrices         |
   --------------------------------*/
@@ -297,8 +293,7 @@ bool WritePatch() {
     }
     totalRW += sizeof(rShopsanityPrices);
   }
-  // printf("\nAfter Shopsanity: %lx\n", totalRW);
-  // sleep(1);
+
   /*--------------------------------
   |     rDungeonRewardOverrides    |
   ---------------------------------*/
@@ -327,8 +322,7 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(Settings::rDungeonRewardOverrides);
-  // printf("\nAfter DungeonRewards: %lx\n", totalRW);
-  // sleep(1);
+
   /*--------------------------------
   |     rCustomMessageEntries      |
   ---------------------------------*/
@@ -437,8 +431,6 @@ bool WritePatch() {
     return false;
   }
   totalRW += 4;
-  // printf("\nAfter CustomMessageEntries: %lx\n", totalRW);
-  // sleep(1);
   /*--------------------------------
   |         Gauntlet Colors        |
   ---------------------------------*/
@@ -473,8 +465,6 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(rGauntletColors);
-  // printf("\nAfter Gauntlet Colors: %lx\n", totalRW);
-  // sleep(1);
   /*-------------------------
   |           EOF           |
   --------------------------*/
