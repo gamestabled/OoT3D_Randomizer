@@ -82,6 +82,9 @@ public:
     }
 
     const Item& GetPlacedItem() const {
+      // @fixme Working around faulty initialization of placedItem. Should already be NoItem, but isn't.
+      if (placedItem.GetName() == "") { return NoItem; }
+
       return placedItem;
     }
 
