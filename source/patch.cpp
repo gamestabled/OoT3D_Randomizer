@@ -97,7 +97,6 @@ bool WritePatch() {
     // obtain basecode.ips file size
     fseek(basecode.get(), 0, SEEK_END);
     const auto lSize = static_cast<size_t>(ftell(basecode.get()));
-
     rewind(basecode.get());
 
     // copy basecode.ips into the buffer
@@ -110,6 +109,8 @@ bool WritePatch() {
     }
 
     totalRW += bytesWritten - 3; // -3 to overwrite EOF
+    printf("\nbasecode size: %lx\n", totalRW);
+    sleep(1);
   }
 
   /*-------------------------
@@ -142,6 +143,8 @@ bool WritePatch() {
     }
     totalRW += sizeof(override);
   }
+  printf("after overrides: %lx\n", totalRW);
+  sleep(1);
 
   /*-------------------------
   |     gSettingsContext    |
@@ -174,6 +177,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(SettingsContext);
+  printf("after settingsContext: %lx\n", totalRW);
+  sleep(1);
 
   /*-------------------------------
   |     rScrubRandomItemPrices    |
@@ -221,8 +226,8 @@ bool WritePatch() {
   } else if (ctx.scrubsanity == SCRUBSANITY_AFFORDABLE) {
     rScrubTextIdTable.fill(0x900A);
   }
-  // printf("\nAfter Scrubs1: %lx\n", totalRW);
-  // sleep(1);
+  printf("\nAfter Scrubs1: %lx\n", totalRW);
+  sleep(1);
   if (ctx.scrubsanity != SCRUBSANITY_OFF) {
     // Write scrub text table address to code
     patchOffset = V_TO_P(0x52236C); //this is the address of the base game's scrub textId table
@@ -248,6 +253,8 @@ bool WritePatch() {
       return false;
     }
     totalRW += sizeof(rScrubTextIdTable);
+    printf("after scrubs2: %lx\n", totalRW);
+    sleep(1);
   }
 
   /*-------------------------------
@@ -292,6 +299,8 @@ bool WritePatch() {
       return false;
     }
     totalRW += sizeof(rShopsanityPrices);
+    printf("after shopsanity prices: %lx\n", totalRW);
+    sleep(1);
   }
 
   /*--------------------------------
@@ -322,6 +331,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(Settings::rDungeonRewardOverrides);
+  printf("after dungeon rewards: %lx\n", totalRW);
+  sleep(1);
 
   /*--------------------------------
   |     rCustomMessageEntries      |
@@ -431,6 +442,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += 4;
+  printf("after custom message entries: %lx\n", totalRW);
+  sleep(1);
   /*--------------------------------
   |         Gauntlet Colors        |
   ---------------------------------*/
@@ -465,6 +478,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(rGauntletColors);
+  printf("after gauntlet colors: %lx\n", totalRW);
+  sleep(1);
   /*-------------------------
   |           EOF           |
   --------------------------*/
