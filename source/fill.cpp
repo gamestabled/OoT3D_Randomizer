@@ -647,7 +647,7 @@ int Fill() {
           for(int j = 0; j < num_to_replace; j++) {
             int itemindex = indices[j];
             ShopItems[i*8+itemindex-1] = NONE; //Clear item so it can be filled during the general fill algo
-            ItemTable(ShopItems[i*8+itemindex-1]).SetPrice(GetRandomShopPrice()); //Set price in ShopItems vector so it can be retrieved later by the patch
+            ShopItemsPrices[i*8+itemindex-1] = GetRandomShopPrice(); //Set price in ShopItemsPrices vector so it can be retrieved later by the patch
           }
         }
       }

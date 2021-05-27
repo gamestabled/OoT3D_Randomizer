@@ -1436,7 +1436,7 @@ void PlaceItemInLocation(ItemLocation* loc, u32 item, bool applyEffectImmediatel
     ItemAndPrice newpair;
     newpair.Name = ItemTable(item).GetName();
     int index = GetShopIndex(loc);
-    newpair.Price = ItemTable(ShopItems[index]).GetPrice();
+    newpair.Price = ShopItemsPrices[index];
     NonShopItems[TransformShopIndex(index)] = newpair;
   }
 
