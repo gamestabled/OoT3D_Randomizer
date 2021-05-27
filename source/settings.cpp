@@ -481,21 +481,6 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
-  static std::array<std::string_view, 13> gauntletColors = {
-    "FFFFFF", //Silver
-    "FECF0F", //Gold
-    "000006", //Black
-    "025918", //Green
-    "06025A", //Blue
-    "600602", //Bronze
-    "FF0000", //Red
-    "025DB0", //Sky Blue
-    "FA6A90", //Pink
-    "FF00FF", //Magenta
-    "D83A00", //Orange
-    "5B8A06", //Lime
-    "800080", //Purple
-  };
   static std::vector<std::string> gauntletOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
@@ -513,39 +498,6 @@ namespace Settings {
     "Orange",
     "Lime",
     "Purple",
-  };
-  static std::array<std::string_view, 31> tunicColors = {
-    "1E691B", //Kokiri Green
-    "641400", //Goron Red
-    "003C64", //Zora Blue
-    "303030", //Black
-    "F0F0FF", //White
-    "139ED8", //Azure Blue
-    "13E9D8", //Vivid Cyan
-    "F87C6D", //Light Red
-    "FF00FF", //Fuchsia
-    "953080", //Purple
-    "400040", //Majora Purple
-    "6441A5", //Twitch Purple
-    "8A2BE2", //Purple Heart
-    "FF1493", //Persian Rose
-    "E0D860", //Dirty Yellow
-    "F86CF8", //Blush Pink
-    "FF69B4", //Hot Pink
-    "FF90B3", //Rose Pink
-    "E07940", //Orange
-    "A0A0B0", //Gray
-    "D8B060", //Gold
-    "D0F0FF", //Silver
-    "C0A0A0", //Beige
-    "30D0B0", //Teal
-    "830303", //Blood Red
-    "FE4B03", //Blood Orange
-    "400090", //Royal Blue
-    "5090E0", //Sonic Blue
-    "00D000", //NES Green
-    "002518", //Dark Green
-    "508CF0", //Lumen
   };
   static std::vector<std::string> tunicOptions = {
     std::string(RANDOM_CHOICE_STR),
@@ -991,9 +943,9 @@ namespace Settings {
 
     //Force include Malon if Shuffle Weird Egg is Off
     if (ShuffleWeirdEgg) {
-      Unhide({&HC_MalonEgg});
+      Unhide({HC_MALON_EGG});
     } else {
-      IncludeAndHide({&HC_MalonEgg});
+      IncludeAndHide({HC_MALON_EGG});
     }
 
     //Force include Gerudo Token Location if it's not shuffled
@@ -1005,9 +957,9 @@ namespace Settings {
 
     //Force include Magic Bean salesman if Shuffle Magic Beans is off
     if (ShuffleMagicBeans) {
-      Unhide({&ZR_MagicBeanSalesman});
+      Unhide({ZR_MAGIC_BEAN_SALESMAN});
     } else {
-      IncludeAndHide({&ZR_MagicBeanSalesman});
+      IncludeAndHide({ZR_MAGIC_BEAN_SALESMAN});
     }
 
     //Force include Map and Compass Chests when Vanilla
@@ -1054,9 +1006,9 @@ namespace Settings {
 
     //Force include Light Arrow item if ganons boss key has to be there
     if (GanonsBossKey.Value<u8>() >= GANONSBOSSKEY_LACS_VANILLA) {
-      IncludeAndHide({&ToT_LightArrowCutscene});
+      IncludeAndHide({TOT_LIGHT_ARROW_CUTSCENE});
     } else {
-      Unhide({&ToT_LightArrowCutscene});
+      Unhide({TOT_LIGHT_ARROW_CUTSCENE});
     }
   }
 

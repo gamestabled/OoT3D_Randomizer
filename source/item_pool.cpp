@@ -472,8 +472,8 @@ void PlaceJunkInExcludedLocation(ItemLocation * il) {
 }
 
 static void PlaceVanillaDekuScrubItems() {
-    PlaceItemInLocation(&ZR_DekuScrubGrottoRear,           RED_POTION_REFILL);
-    PlaceItemInLocation(&ZR_DekuScrubGrottoFront,          GREEN_POTION_REFILL);
+    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_REAR,           RED_POTION_REFILL);
+    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_FRONT,          GREEN_POTION_REFILL);
     PlaceItemInLocation(&SFM_DekuScrubGrottoRear,          RED_POTION_REFILL);
     PlaceItemInLocation(&SFM_DekuScrubGrottoFront,         GREEN_POTION_REFILL);
     PlaceItemInLocation(&LH_DekuScrubGrottoLeft,           DEKU_NUTS_5);
@@ -486,16 +486,16 @@ static void PlaceVanillaDekuScrubItems() {
     PlaceItemInLocation(&LW_DekuScrubGrottoRear,           ARROWS_30);
     PlaceItemInLocation(&Colossus_DekuScrubGrottoRear,     RED_POTION_REFILL);
     PlaceItemInLocation(&Colossus_DekuScrubGrottoFront,    GREEN_POTION_REFILL);
-    PlaceItemInLocation(&DMC_DekuScrub,                    BOMBS_5);
-    PlaceItemInLocation(&DMC_DekuScrubGrottoLeft,          DEKU_NUTS_5);
-    PlaceItemInLocation(&DMC_DekuScrubGrottoRight,         BOMBS_5);
-    PlaceItemInLocation(&DMC_DekuScrubGrottoCenter,        ARROWS_30);
-    PlaceItemInLocation(&GC_DekuScrubGrottoLeft,           DEKU_NUTS_5);
-    PlaceItemInLocation(&GC_DekuScrubGrottoRight,          BOMBS_5);
-    PlaceItemInLocation(&GC_DekuScrubGrottoCenter,         ARROWS_30);
-    PlaceItemInLocation(&LLR_DekuScrubGrottoLeft,          DEKU_NUTS_5);
-    PlaceItemInLocation(&LLR_DekuScrubGrottoRight,         BOMBS_5);
-    PlaceItemInLocation(&LLR_DekuScrubGrottoCenter,        ARROWS_30);
+    PlaceItemInLocation(DMC_DEKU_SCRUB,                    BOMBS_5);
+    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_LEFT,          DEKU_NUTS_5);
+    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_RIGHT,         BOMBS_5);
+    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_CENTER,        ARROWS_30);
+    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_LEFT,           DEKU_NUTS_5);
+    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_RIGHT,          BOMBS_5);
+    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_CENTER,         ARROWS_30);
+    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_LEFT,          DEKU_NUTS_5);
+    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_RIGHT,         BOMBS_5);
+    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_CENTER,        ARROWS_30);
 
     //Dungeon Scrubs
     if (DekuTree.IsMQ()) {
@@ -553,13 +553,13 @@ static void PlaceVanillaBossKeys() {
 static void PlaceVanillaCowMilk() {
   PlaceItemInLocation(&KF_LinksHouseCow,    MILK);
   PlaceItemInLocation(&HF_CowGrottoCow,     MILK);
-  PlaceItemInLocation(&GV_Cow,              MILK);
-  PlaceItemInLocation(&Kak_ImpasHouseCow,   MILK);
-  PlaceItemInLocation(&DMT_CowGrottoCow,    MILK);
-  PlaceItemInLocation(&LLR_StablesLeftCow,  MILK);
-  PlaceItemInLocation(&LLR_StablesRightCow, MILK);
-  PlaceItemInLocation(&LLR_TowerLeftCow,    MILK);
-  PlaceItemInLocation(&LLR_TowerRightCow,   MILK);
+  PlaceItemInLocation(GV_COW,              MILK);
+  PlaceItemInLocation(KAK_IMPAS_HOUSE_COW,   MILK);
+  PlaceItemInLocation(DMT_COW_GROTTO_COW,    MILK);
+  PlaceItemInLocation(LLR_STABLES_LEFT_COW,  MILK);
+  PlaceItemInLocation(LLR_STABLES_RIGHT_COW, MILK);
+  PlaceItemInLocation(LLR_TOWER_LEFT_COW,    MILK);
+  PlaceItemInLocation(LLR_TOWER_RIGHT_COW,   MILK);
 
   if (JabuJabusBelly.IsMQ()) {
     PlaceItemInLocation(&JabuJabusBelly_MQ_Cow, MILK);
@@ -603,9 +603,9 @@ void GenerateItemPool() {
   ItemPool.clear();
 
   //Fixed item locations
-  PlaceItemInLocation(&HC_ZeldasLetter, ZELDAS_LETTER);
+  PlaceItemInLocation(HC_ZELDAS_LETTER, ZELDAS_LETTER);
   PlaceItemInLocation(&Ganon, TRIFORCE); //The Triforce is only used to make sure Ganon is accessible
-  PlaceItemInLocation(&MK_BombchuBowlingBombchus, BOMBCHU_DROP);
+  PlaceItemInLocation(MARKET_BOMBCHU_BOWLING_BOMBCHUS, BOMBCHU_DROP);
 
   if (ShuffleKokiriSword) {
     AddItemToMainPool(KOKIRI_SWORD);
@@ -616,7 +616,7 @@ void GenerateItemPool() {
   if (ShuffleWeirdEgg) {
     AddItemToMainPool(WEIRD_EGG);
   } else {
-    PlaceItemInLocation(&HC_MalonEgg, WEIRD_EGG);
+    PlaceItemInLocation(HC_MALON_EGG, WEIRD_EGG);
   }
 
   if (ShuffleOcarinas) {
@@ -648,7 +648,7 @@ void GenerateItemPool() {
       AddItemToPool(PendingJunkPool, MAGIC_BEAN_PACK);
     }
   } else {
-    PlaceItemInLocation(&ZR_MagicBeanSalesman, MAGIC_BEAN);
+    PlaceItemInLocation(ZR_MAGIC_BEAN_SALESMAN, MAGIC_BEAN);
   }
 
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
@@ -935,7 +935,7 @@ void GenerateItemPool() {
   }
 
   if (GanonsBossKey.Value<u8>() >= GANONSBOSSKEY_LACS_VANILLA) {
-    PlaceItemInLocation(&ToT_LightArrowCutscene, GANONS_CASTLE_BOSS_KEY);
+    PlaceItemInLocation(TOT_LIGHT_ARROW_CUTSCENE, GANONS_CASTLE_BOSS_KEY);
   } else if (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA)) {
     PlaceItemInLocation(&GanonsCastle_BossKeyChest, GANONS_CASTLE_BOSS_KEY);
   } else {

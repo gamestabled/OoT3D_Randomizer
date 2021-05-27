@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <vector>
 
+#include <3ds.h>
+
 #include "../code/include/z3D/z3D.h"
 #include "../code/src/item_override.h"
 #include "category.hpp"
