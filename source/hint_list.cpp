@@ -1941,7 +1941,7 @@ void HintTable_Init() {
 
     hintTable[KAK_ANJU_AS_ADULT] = HintText::Exclude({
                        //obscure text
-                       Text{"a #chicken caretaker# offers adults", /*french*/"devenir un éleveur de Cocottes# donne", /*spanish*/"una #cuidadora de emplumados# le ofrece a los mayores"},
+                       Text{"a #chicken caretaker# offers adults", /*french*/"#devenir un éleveur de Cocottes# donne", /*spanish*/"una #cuidadora de emplumados# le ofrece a los mayores"},
     });
 
     hintTable[LLR_TALONS_CHICKENS] = HintText::Exclude({
@@ -2582,7 +2582,7 @@ void HintTable_Init() {
 
     hintTable[WATER_TEMPLE_CENTRAL_PILLAR_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"in the #depths of the Water Temple# lies", /*french*/"le #coeur du temple de l'eau# cache", /*spanish*/"en las #profundidades del Templo del Agua yace"},
+                       Text{"in the #depths of the Water Temple# lies", /*french*/"le #coeur du temple de l'eau# cache", /*spanish*/"en las #profundidades del Templo del Agua# yace"},
     });
 
     hintTable[WATER_TEMPLE_CRACKED_WALL_CHEST] = HintText::Exclude({
@@ -2774,7 +2774,7 @@ void HintTable_Init() {
 
     hintTable[SPIRIT_TEMPLE_MQ_SUN_BLOCK_ROOM_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#sunlight in a maze of fire# hides", /*french*/"la lumière dans le labyrinthe de feu# du colosse révèle", /*spanish*/"la #luz solar de un ígneo laberinto# esconde"},
+                       Text{"#sunlight in a maze of fire# hides", /*french*/"#la lumière dans le labyrinthe de feu# du colosse révèle", /*spanish*/"la #luz solar de un ígneo laberinto# esconde"},
     });
 
     hintTable[SPIRIT_TEMPLE_MQ_LEEVER_ROOM_CHEST] = HintText::Exclude({
@@ -3085,7 +3085,7 @@ void HintTable_Init() {
 
     hintTable[ICE_CAVERN_FREESTANDING_POH] = HintText::Exclude({
                        //obscure text
-                       Text{"a #wall of ice# protects", /*french*/"un mur de glace rouge# cache", /*spanish*/"una #gélida pared# protege"},
+                       Text{"a #wall of ice# protects", /*french*/"#un mur de glace rouge# cache", /*spanish*/"una #gélida pared# protege"},
     });
 
 
@@ -5176,12 +5176,12 @@ void HintTable_Init() {
 
     hintTable[GC_SHOP] = HintText::Region({
                      //obscure text
-                     Text{"the #Goron Shop#", /*french*/"la #boutique Goron#", /*spanish*/"la #tienda goron"},
+                     Text{"the #Goron Shop#", /*french*/"la #boutique Goron#", /*spanish*/"la #tienda goron#"},
     });
 
     hintTable[ZD_SHOP] = HintText::Region({
                      //obscure text
-                     Text{"the #Zora Shop#", /*french*/"la #boutique Zora#", /*spanish*/"la #tienda zora"},
+                     Text{"the #Zora Shop#", /*french*/"la #boutique Zora#", /*spanish*/"la #tienda zora#"},
     });
 
     hintTable[LLR_TALONS_HOUSE] = HintText::Region({
@@ -5276,7 +5276,7 @@ void HintTable_Init() {
 
     hintTable[GRAVEYARD_DAMPES_GRAVE] = HintText::Region({
                      //obscure text
-                     Text{"Dampé's Grave", /*french*/"la #tombe d'Igor#", /*spanish*/"la #tumba de Dampé"},
+                     Text{"Dampé's Grave", /*french*/"la #tombe d'Igor#", /*spanish*/"la #tumba de Dampé#"},
     });
 
     hintTable[DMT_COW_GROTTO] = HintText::Region({
@@ -5321,7 +5321,7 @@ void HintTable_Init() {
 
     hintTable[DEKU_THEATER] = HintText::Region({
                      //obscure text
-                     Text{"the #Lost Woods Stage#", /*french*/"le théâtre sylvestre#", /*spanish*/"el #escenario del Bosque Perdido#"},
+                     Text{"the #Lost Woods Stage#", /*french*/"le #théâtre sylvestre#", /*spanish*/"el #escenario del Bosque Perdido#"},
     });
 
     hintTable[ZR_OPEN_GROTTO] = HintText::Region({
@@ -5935,7 +5935,7 @@ void HintTable_Init() {
                      Text{"the #house of the dead# rewards", /*french*/"la #maison des morts# octroie", /*spanish*/"la #casa de la muerte# premia con"},
                    },
                      //clear text
-                     Text{"the #Shadow Temple# rewards", /*french*/"le #temple de l'ombre# octroie", /*spanish*/"el #Templo de las Sombras"}
+                     Text{"the #Shadow Temple# rewards", /*french*/"le #temple de l'ombre# octroie", /*spanish*/"el #Templo de las Sombras#"}
     );
 
     hintTable[TWINROVA] = HintText::Boss({

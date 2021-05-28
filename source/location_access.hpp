@@ -39,7 +39,7 @@ class ItemLocationPairing {
 public:
     using ConditionFn = bool (*)();
 
-    explicit ItemLocationPairing(ItemLocation* location_, ConditionFn conditions_met_)
+    explicit ItemLocationPairing(u32 location_, ConditionFn conditions_met_)
          : location(location_),
            conditions_met(conditions_met_) {}
 
@@ -47,18 +47,14 @@ public:
         return conditions_met() && CanBuy();
     }
 
-    ItemLocation* GetLocation() {
-        return location;
-    }
-
-    const ItemLocation* GetLocation() const {
+    u32 GetLocation() const {
         return location;
     }
 
     bool IsLocationUsed() const;
 
 private:
-    ItemLocation* location;
+    u32 location;
     ConditionFn conditions_met;
 
     //Makes sure shop locations are buyable

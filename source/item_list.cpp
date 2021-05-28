@@ -219,10 +219,21 @@ void ItemTable_Init() {                               //Name                    
     itemTable[BUY_RED_POTION_40]                 = Item("Buy Red Potion [40]", ITEMTYPE_SHOP, 0x30, false, &noVariable,     NONE,                   40);
     itemTable[BUY_RED_POTION_50]                 = Item("Buy Red Potion [50]", ITEMTYPE_SHOP, 0x31, false, &noVariable,     NONE,                   50);
 
-    itemTable[TRIFORCE]                          = Item("Triforce", ITEMTYPE_EVENT, GI_RUPEE_RED_LOSE, false, &noVariable, NONE);
+    itemTable[TRIFORCE]                          = Item("Triforce", ITEMTYPE_EVENT, GI_RUPEE_RED_LOSE,  false, &noVariable, NONE);
     itemTable[HINT]                              = Item("Hint",     ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE);
 }
 
 Item& ItemTable(u32 itemKey) {
     return itemTable[itemKey];
+}
+
+//This function should only be used to place items containing hint text
+//at gossip stone locations.
+void NewItem(u32 itemKey, Item item) {
+    if (itemKey <= BUY_RED_POTION_50) {
+      printf("\x1b[25;0HWARNING: ATTEMPTED TO OVERWRITE ITEM %lu\n", itemKey);
+      return;
+    }
+
+    itemTable[itemKey] = item;
 }

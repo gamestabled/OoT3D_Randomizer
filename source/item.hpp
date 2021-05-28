@@ -125,7 +125,7 @@ public:
     }
 
 private:
-    std::string name;
+    std::string name = "Invalid Item";
     ItemType type;
     int  getItemId;
     bool advancement;
