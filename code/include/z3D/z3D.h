@@ -337,7 +337,7 @@ typedef struct {
 #define OBJECT_EXCHANGE_BANK_MAX 19
 #define OBJECT_ID_MAX 417
 
-typedef struct {
+typedef struct ZARInfo {
     /* 0x00 */ void* buf;
     /* 0x04 */ char unk_04[0x48];
     /* 0x4C */ void*** cmbPtrs;  /* Really, this is a pointer to an array of pointers to CMB managers,
