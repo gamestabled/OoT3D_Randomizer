@@ -7,6 +7,7 @@ struct Actor;
 struct GlobalContext;
 
 struct LightMapper;
+struct ZARInfo;
 
 typedef struct {
     Vec3f pos;
@@ -18,6 +19,46 @@ typedef struct {
     /* 0x08 */ Vec3s  norm;  // Normal vector
     /* 0x0E */ s16    dist;  // Plane distance from origin
 } CollisionPoly; // size = 0x10
+
+struct SkeletonAnimationModel;
+typedef void (*SkeletonAnimationModelFunc)(struct SkeletonAnimationModel*);
+
+typedef struct {
+    /* 0x00 */ char unk_00[0x4];
+    /* 0x04 */ SkeletonAnimationModelFunc destroy;
+} SkeletonAnimationModel_VTable;
+
+typedef struct SkeletonAnimationModel_unk_10 {
+    /* 0x00 */ char unk_00[0x14];
+} SkeletonAnimationModel_unk_10; // size = 0x14
+
+typedef struct SkeletonAnimationModel_unk_0C {
+    /* 0x00 */ SkeletonAnimationModel_unk_10* unk_00;
+    /* 0x04 */ char unk_04[0x04];
+    /* 0x08 */ f32  curFrame;
+    /* 0x0C */ f32  animSpeed;
+    /* 0x10 */ s8   animMode;
+    /* 0x11 */ char unk_11[0x87];
+} SkeletonAnimationModel_unk_0C; // size = 0x98
+
+typedef struct SkeletonAnimationModel {
+    /* 0x00 */ SkeletonAnimationModel_VTable* vtbl;
+    /* 0x04 */ char            unk_04[0x08];
+    /* 0x0C */ SkeletonAnimationModel_unk_0C* unk_0C;
+    /* 0x10 */ SkeletonAnimationModel_unk_10* unk_10;
+    /* 0x14 */ char            unk_14[0x68];
+    /* 0x7C */ nn_math_MTX34   mtx;
+    /* 0xAC */ s8              unk_AC;
+    /* 0xAD */ char            unk_AD[0x03];
+} SkeletonAnimationModel; // size = 0xB0
+
+typedef struct SkelAnime {
+    /* 0x00 */ char unk_00[0x04];
+    /* 0x04 */ struct ZARInfo* zarInfo;
+    /* 0x08 */ char unk_08[0x20];
+    /* 0x28 */ SkeletonAnimationModel* unk_28;
+    /* 0x2C */ char unk_2C[0x58];
+} SkelAnime; // size = 0x84
 
 typedef void (*ActorFunc)(struct Actor*, struct GlobalContext*);
 
@@ -170,7 +211,9 @@ typedef struct {
     /* 0x0000 */ Actor  actor;
     /* 0x01A4 */ char   unk_148[0x00A8];
     /* 0x024C */ void*  giDrawSpace;
-    /* 0x0250 */ char   unk_250[0x105C];
+    /* 0x0250 */ char   unk_250[0x0004];
+    /* 0x0254 */ struct SkelAnime skelAnime;
+    /* 0x02D8 */ char   unk_2D8[0x0FD4];
     /* 0x12AC */ u8     getItemId;
     /* 0x12AD */ char   unk_12AD[0x0001];
     /* 0x12AE */ u16    getItemDirection;
@@ -182,6 +225,8 @@ typedef struct {
     /* 0x221C */ float  xzSpeed; //probably
     /* 0x2220 */ char   unk_2220[0x0007];
     /* 0x2227 */ u8     isg;
+    /* 0x2228 */ char   unk_2228[0x4DC];
+    /* 0x2704 */ struct SkeletonAnimationModel_unk_0C* bodyTexAnim;
 } Player; //total size (from init vars): 2A4C
 
 typedef enum {

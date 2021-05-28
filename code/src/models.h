@@ -2,19 +2,23 @@
 #define _MODELS_H_
 
 #include "z3D/z3D.h"
-
-typedef struct {
-    s16 objectId;
-    s8 objectBankIdx;
-    s8 objectModelIdx;
-    s32 objectMeshId; //or anim frame
-} ObjectInfo;
+#include "item_table.h"
+// typedef struct {
+//     s16 objectId;
+//     s8 objectBankIdx;
+//     s8 objectModelIdx;
+//     s8 cmabIndex;
+//     s32 objectMeshId; //or anim frame
+// } ObjectInfo;
 
 typedef struct {
     Actor* actor;
-    ObjectInfo info;
-    u32 loaded;
-    SkeletonAnimationModel* glModel;
+    // ObjectInfo info;
+    ItemRow* itemRow;
+    s8 objectBankIdx;
+    u8 loaded;
+    SkeletonAnimationModel* saModel;
+    SkeletonAnimationModel* saModel2;
     f32 scale;
 } Model;
 
@@ -28,6 +32,10 @@ s32 Model_DrawByActor(Actor* actor);
 typedef SkeletonAnimationModel* (*SkeletonAnimationModel_Spawn_proc)(Actor* actor, GlobalContext* globalCtx, s16 objId, s32 objModelIdX);
 #define SkeletonAnimationModel_Spawn_addr 0x36A924
 #define SkeletonAnimationModel_Spawn ((SkeletonAnimationModel_Spawn_proc)SkeletonAnimationModel_Spawn_addr)
+
+typedef void (*SkeletonAnimationModel_SetMesh_proc)(SkeletonAnimationModel* glModel, s32 mesh);
+#define SkeletonAnimationModel_SetMesh_addr 0x369178
+#define SkeletonAnimationModel_SetMesh ((SkeletonAnimationModel_SetMesh_proc)SkeletonAnimationModel_SetMesh_addr)
 
 typedef void (*DeleteModel_At_proc)(SkeletonAnimationModel** model);
 #define DeleteModel_At_addr 0x357248

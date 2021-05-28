@@ -168,6 +168,10 @@ SECTIONS
 		*(.patch_PlayerEditAndRetrieveCMB)
 	}
 
+	.patch_SetChildCustomTunic 0x191DB0 : {
+		*(.patch_SetChildCustomTunic)
+	}
+
 	.patch_PlayerGetCustomTunicCMAB 0x191DD4 : {
 		*(.patch_PlayerGetCustomTunicCMAB)
 	}

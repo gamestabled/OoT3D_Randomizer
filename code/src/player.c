@@ -27,3 +27,13 @@ void* Player_GetCustomTunicCMAB(void) {
         return ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
     }
 }
+
+void Player_SetChildCustomTunicCMAB(void) {
+    s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
+    void* cmabMan;
+    if (exObjectBankIdx < 0) {
+        exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
+    }
+    cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
+    TexAnim_Spawn(PLAYER->skelAnime.unk_28->unk_0C, cmabMan);
+}

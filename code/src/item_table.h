@@ -13,9 +13,11 @@ typedef struct {
 
     u16 objectId;
     s8 objectModelIdx;
+    s8 cmabIndex; // 0xFF if none
+    s8 objectModelIdx2; // 0xFF if none
     u8 chestType;
     s16 graphicId;
-    s32 objectMeshId;
+    s32 objectMeshId; // 0xFF if none. Also used as animation frame for songs
 
     upgradeFunc upgrade;
 

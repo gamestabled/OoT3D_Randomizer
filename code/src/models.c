@@ -19,10 +19,6 @@ typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext*
 #define SkeletonAnimationModel_SpawnAt_addr 0x372F38
 #define SkeletonAnimationModel_SpawnAt ((SkeletonAnimationModel_SpawnAt_proc)SkeletonAnimationModel_SpawnAt_addr)
 
-typedef void (*SkeletonAnimationModel_SetMesh_proc)(SkeletonAnimationModel* glModel, s32 mesh);
-#define SkeletonAnimationModel_SetMesh_addr 0x369178
-#define SkeletonAnimationModel_SetMesh ((SkeletonAnimationModel_SetMesh_proc)SkeletonAnimationModel_SetMesh_addr)
-
 typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
 #define Actor_SetModelMatrix_addr 0x3679D0
 #define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)Actor_SetModelMatrix_addr)
@@ -34,86 +30,115 @@ typedef void (*Matrix_Multiply_proc)(nn_math_MTX34* dst, nn_math_MTX34* lhs, nn_
 #define LOADEDMODELS_MAX 16
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
-void Model_SetAnim(Model* model, u32 objectAnimIdx) {
-    void* cmabMan = ExtendedObject_GetCMABByIndex(model->info.objectId, objectAnimIdx);
-    TexAnim_Spawn(model->glModel->unk_0C, cmabMan);
+void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimIdx) {
+    void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, objectAnimIdx);
+    TexAnim_Spawn(model->unk_0C, cmabMan);
 }
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
     // Should probably parse the ZAR to find the CMBs correctly,
     // but this is fine for now
-    void* ZARBuf = rExtendedObjectCtx.status[model->info.objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.buf;
+    void* ZARBuf = rExtendedObjectCtx.status[model->objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.buf;
     
     // edit the cmb for double defense
-    if (model->info.objectId == OBJECT_CUSTOM_DOUBLE_DEFENSE) {
+    if (model->itemRow->objectId == OBJECT_CUSTOM_DOUBLE_DEFENSE) {
         void* cmb = (void*)(((char*)ZARBuf) + 0xA4);
         CustomModel_EditHeartContainerToDoubleDefense(cmb);
     }
 
-    model->glModel = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->info.objectId, model->info.objectModelIdx);
+    model->saModel = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx);
 
-    // need to set mesh for rupees
-    if (model->info.objectId == 0x017F) {
-        SkeletonAnimationModel_SetMesh(model->glModel, model->info.objectMeshId);
+    if (model->itemRow->objectId == 0x017F) { //Set the mesh for rupees
+        SkeletonAnimationModel_SetMesh(model->saModel, model->itemRow->objectMeshId);
     }
-    // spawn the skulltula token animation
-    if ((model->info.objectId == 0x0024) && (model->info.objectModelIdx == 0x03)) {
-        Model_SetAnim(model, 0);
-        model->glModel->unk_0C->animSpeed = 2.0f;
-        model->glModel->unk_0C->animMode = 1;
-    }
-    // spawn the blue fire animation
-    if ((model->info.objectId == 0x0173) && (model->info.objectModelIdx == 0x01)) {
-        Model_SetAnim(model, 0);
-        model->glModel->unk_0C->animSpeed = 2.0f;
-        model->glModel->unk_0C->animMode = 1;
-    }
-    // spawn the poe animation
-    if ((model->info.objectId == 0x0176) && (model->info.objectModelIdx == 0x00)) {
-        Model_SetAnim(model, 0);
-        model->glModel->unk_0C->animSpeed = 2.0f;
-        model->glModel->unk_0C->animMode = 1;
-    }
-    // spawn the big poe animation
-    if ((model->info.objectId == 0x019A) && (model->info.objectModelIdx == 0x01)) {
-        Model_SetAnim(model, 0);
-        model->glModel->unk_0C->animSpeed = 2.0f;
-        model->glModel->unk_0C->animMode = 1;
-    }
-    // spawn the cmab on child song items
-    if (model->info.objectId == OBJECT_CUSTOM_CHILD_SONGS) {
+
+    if (model->itemRow->objectId == OBJECT_CUSTOM_CHILD_SONGS) {
         void* cmb = (void*)(((char*)ZARBuf) + 0x2E60);
         CustomModel_SetOcarinaToRGBA565(cmb);
-        model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
-        Model_SetAnim(model, TEXANIM_CHILD_SONG);
-        model->glModel->unk_0C->animSpeed = 0.0f;
-        model->glModel->unk_0C->animMode = 0;
-        model->glModel->unk_0C->curFrame = model->info.objectMeshId;
-    }
-    // spawn the cmab on adult song items
-    if (model->info.objectId == OBJECT_CUSTOM_ADULT_SONGS) {
+        Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
+        model->saModel->unk_0C->animSpeed = 0.0f;
+        model->saModel->unk_0C->animMode = 0;
+        model->saModel->unk_0C->curFrame = model->itemRow->objectMeshId;
+    } else if (model->itemRow->objectId == OBJECT_CUSTOM_ADULT_SONGS) {
         void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
         CustomModel_SetOcarinaToRGBA565(cmb);
-        model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
-        Model_SetAnim(model, TEXANIM_ADULT_SONG);
-        model->glModel->unk_0C->animSpeed = 0.0f;
-        model->glModel->unk_0C->animMode = 0;
-        model->glModel->unk_0C->curFrame = model->info.objectMeshId;
+        Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
+        model->saModel->unk_0C->animSpeed = 0.0f;
+        model->saModel->unk_0C->animMode = 0;
+        model->saModel->unk_0C->curFrame = model->itemRow->objectMeshId;
+    } else if (model->itemRow->cmabIndex >= 0) {
+        Model_SetAnim(model->saModel, model->itemRow->objectId, model->itemRow->cmabIndex);
+        model->saModel->unk_0C->animSpeed = 2.0f;
+        model->saModel->unk_0C->animMode = 1;
     }
+
+    if (model->itemRow->objectModelIdx2 >= 0) {
+        model->saModel2 = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx2);
+    }
+
+    // // need to set mesh for rupees
+    // if (model->info.objectId == 0x017F) {
+    //     SkeletonAnimationModel_SetMesh(model->glModel, model->info.objectMeshId);
+    // }
+    // spawn the skulltula token animation
+    // if ((model->info.objectId == 0x0024) && (model->info.objectModelIdx == 0x03)) {
+    //     Model_SetAnim(model, 0);
+    //     model->glModel->unk_0C->animSpeed = 2.0f;
+    //     model->glModel->unk_0C->animMode = 1;
+    // }
+    // // spawn the blue fire animation
+    // if ((model->info.objectId == 0x0173) && (model->info.objectModelIdx == 0x01)) {
+    //     Model_SetAnim(model, 0);
+    //     model->glModel->unk_0C->animSpeed = 2.0f;
+    //     model->glModel->unk_0C->animMode = 1;
+    // }
+    // // spawn the poe animation
+    // if ((model->info.objectId == 0x0176) && (model->info.objectModelIdx == 0x00)) {
+    //     Model_SetAnim(model, 0);
+    //     model->glModel->unk_0C->animSpeed = 2.0f;
+    //     model->glModel->unk_0C->animMode = 1;
+    // }
+    // // spawn the big poe animation
+    // if ((model->info.objectId == 0x019A) && (model->info.objectModelIdx == 0x01)) {
+    //     Model_SetAnim(model, 0);
+    //     model->glModel->unk_0C->animSpeed = 2.0f;
+    //     model->glModel->unk_0C->animMode = 1;
+    // }
+    // spawn the cmab on child song items
+    // if (model->info.objectId == OBJECT_CUSTOM_CHILD_SONGS) {
+    //     void* cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+    //     CustomModel_SetOcarinaToRGBA565(cmb);
+    //     model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
+    //     Model_SetAnim(model, TEXANIM_CHILD_SONG);
+    //     model->glModel->unk_0C->animSpeed = 0.0f;
+    //     model->glModel->unk_0C->animMode = 0;
+    //     model->glModel->unk_0C->curFrame = model->info.objectMeshId;
+    // }
+    // // spawn the cmab on adult song items
+    // if (model->info.objectId == OBJECT_CUSTOM_ADULT_SONGS) {
+    //     void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
+    //     CustomModel_SetOcarinaToRGBA565(cmb);
+    //     model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
+    //     Model_SetAnim(model, TEXANIM_ADULT_SONG);
+    //     model->glModel->unk_0C->animSpeed = 0.0f;
+    //     model->glModel->unk_0C->animMode = 0;
+    //     model->glModel->unk_0C->curFrame = model->info.objectMeshId;
+    // }
     model->loaded = 1;
 }
 
 void Model_Destroy(Model* model) {
-    if (model->glModel != NULL) {
-        model->glModel->vtbl->destroy(model->glModel);
-        model->glModel = NULL;
+    if (model->saModel != NULL) {
+        model->saModel->vtbl->destroy(model->saModel);
+        model->saModel = NULL;
+    }
+    if (model->saModel2 != NULL) {
+        model->saModel2->vtbl->destroy(model->saModel2);
+        model->saModel2 = NULL;
     }
 
     model->actor = NULL;
-    model->info.objectId = 0;
-    model->info.objectBankIdx = 0;
-    model->info.objectModelIdx = 0;
-    model->info.objectMeshId = 0;
+    model->itemRow = NULL;
     model->loaded = 0;
 }
 
@@ -138,7 +163,7 @@ void Model_UpdateAll(GlobalContext* globalCtx) {
 
         // Actor is alive, model has not been loaded yet
         if ((model->actor != NULL) && (!model->loaded)) {
-            if (ExtendedObject_IsLoaded(&globalCtx->objectCtx, model->info.objectBankIdx)) {
+            if (ExtendedObject_IsLoaded(&globalCtx->objectCtx, model->objectBankIdx)) {
                 Model_Init(model, globalCtx);
             }
         }
@@ -165,7 +190,10 @@ void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
 
 void Model_UpdateMatrix(Model* model) {
     nn_math_MTX44 scaleMtx;
-    Actor_SetModelMatrixWrapper(model->actor, &model->glModel->mtx);
+    Actor_SetModelMatrixWrapper(model->actor, &model->saModel->mtx);
+    if (model->saModel2 != NULL) {
+        Actor_SetModelMatrixWrapper(model->actor, &model->saModel2->mtx);
+    }
 
     for (s32 i = 0; i < 4; ++i) {
         for (s32 j = 0; j < 4; ++j) {
@@ -176,14 +204,24 @@ void Model_UpdateMatrix(Model* model) {
             }
         }
     }
-    Matrix_Multiply(&model->glModel->mtx, &model->glModel->mtx, &scaleMtx);
+    Matrix_Multiply(&model->saModel->mtx, &model->saModel->mtx, &scaleMtx);
+    if (model->saModel2 != NULL) {
+        Matrix_Multiply(&model->saModel2->mtx, &model->saModel2->mtx, &scaleMtx);
+    }
 }
 
 void Model_Draw(Model* model) {
-    if ((model->loaded) && (model->glModel != NULL)) {
-        model->glModel->unk_AC = 1;
-        Model_UpdateMatrix(model);
-        SkeletonAnimationModel_Draw(model->glModel, 0); //TODO is 0 always okay?
+    if (model->loaded) {
+        if (model->saModel != NULL) {
+            model->saModel->unk_AC = 1;
+            Model_UpdateMatrix(model);
+            SkeletonAnimationModel_Draw(model->saModel, 0); //TODO is 0 always okay?
+        }
+        if (model->saModel2 != NULL) {
+            model->saModel2->unk_AC = 1;
+            Model_UpdateMatrix(model);
+            SkeletonAnimationModel_Draw(model->saModel2, 0);
+        }
     }
 }
 
@@ -193,46 +231,44 @@ void Model_LookupByOverride(Model* model, ItemOverride override) {
             override.value.looksLikeItemId :
             override.value.itemId;
         u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
-        ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
-        model->info.objectId = itemRow->objectId;
-        model->info.objectModelIdx = itemRow->objectModelIdx;
-        model->info.objectMeshId = itemRow->objectMeshId;
+        model->itemRow = ItemTable_GetItemRow(resolvedItemId);
     }
 }
 
-s32 Model_LookupByDungeonReward(Model* model, Actor* reward) {
-    const DungeonRewardInfo* rewardInfo = DungeonReward_GetInfoByActor(reward);
-    if (rewardInfo != NULL) {
-        model->info.objectId = rewardInfo->objectId;
-        model->info.objectModelIdx = rewardInfo->objectModelIdx;
-        return 1;
-    }
-    return 0;
-}
+// s32 Model_LookupByDungeonReward(Model* model, Actor* reward) {
+//     const DungeonRewardInfo* rewardInfo = DungeonReward_GetInfoByActor(reward);
+//     if (rewardInfo != NULL) {
+//         model->info.objectId = rewardInfo->objectId;
+//         model->info.objectModelIdx = rewardInfo->objectModelIdx;
+//         return 1;
+//     }
+//     return 0;
+// }
 
 void Model_GetObjectBankIndex(Model* model, Actor* actor, GlobalContext* globalCtx) {
-    s32 objectBankIdx = ExtendedObject_GetIndex(&globalCtx->objectCtx, model->info.objectId);
+    s32 objectBankIdx = ExtendedObject_GetIndex(&globalCtx->objectCtx, model->itemRow->objectId);
     if (objectBankIdx < 0) {
-        objectBankIdx = ExtendedObject_Spawn(&globalCtx->objectCtx, model->info.objectId);
+        objectBankIdx = ExtendedObject_Spawn(&globalCtx->objectCtx, model->itemRow->objectId);
     }
-    model->info.objectBankIdx = objectBankIdx;
+    model->objectBankIdx = objectBankIdx;
 }
 
 void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 baseItemId) {
     // Special lookup for dungeon rewards outside of Temple of Time
-    if ((actor->id == 0x8B) && (globalCtx->sceneNum != 0x43)) {
-        if(Model_LookupByDungeonReward(model, actor)) {
-            //Unrotate the Spiritual Stones
-            actor->shape.rot.x = 0;
-            Model_GetObjectBankIndex(model, actor, globalCtx);
-        }
-        return;
-    }
+    // if ((actor->id == 0x8B) && (globalCtx->sceneNum != 0x43)) {
+    //     if(Model_LookupByDungeonReward(model, actor)) {
+    //         //Unrotate the Spiritual Stones
+    //         actor->shape.rot.x = 0;
+    //         Model_GetObjectBankIndex(model, actor, globalCtx);
+    //     }
+    //     return;
+    // }
 
     // Special case for bombchu drops
     if ((actor->id == 0x15) && (actor->params == 5)) {
-        model->info.objectId = 0x00D9;
-        model->info.objectModelIdx = 0x00;
+        // model->info.objectId = 0x00D9;
+        // model->info.objectModelIdx = 0x00;
+        model->itemRow = ItemTable_GetItemRow(GI_BOMBCHUS_5);
         Model_GetObjectBankIndex(model, actor, globalCtx);
         return;
     }
@@ -248,7 +284,7 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
     Model* newModel = NULL;
 
     for (s32 i = 0; i < LOADEDMODELS_MAX; ++i) {
-        if ((ModelContext[i].actor == NULL) && (ModelContext[i].glModel == NULL)) {
+        if ((ModelContext[i].actor == NULL) && (ModelContext[i].saModel == NULL)) {
             newModel = &ModelContext[i];
             break;
         }
@@ -256,10 +292,11 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
 
     if (newModel != NULL) {
         newModel->actor = model->actor;
-        newModel->info = model->info;
+        newModel->itemRow = model->itemRow;
         newModel->loaded = 0;
-        newModel->glModel = NULL;
-        switch(newModel->info.objectId) {
+        newModel->saModel = NULL;
+        newModel->saModel2 = NULL;
+        switch(newModel->itemRow->objectId) {
             case 0x0024 : //Skulltula token
                 newModel->scale = 0.25f;
                 break;
@@ -279,28 +316,28 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
 }
 
 void Model_SpawnByActor(Actor* actor, GlobalContext* globalCtx, u16 baseItemId) {
-    Model model = { NULL, { 0, 0, 0 }, 0, NULL };
+    Model model = { NULL, NULL, 0, 0, NULL, NULL };
 
     Model_InfoLookup(&model, actor, globalCtx, baseItemId);
-    if (model.info.objectId != 0) {
+    if (model.itemRow != NULL) {
         model.actor = actor;
         Model_Create(&model, globalCtx);
-        if ((model.info.objectId == 0x0024) && (model.info.objectModelIdx == 0x02)) { //Special case for Token's second model
-            model.info.objectModelIdx = 0x03;
-            Model_Create(&model, globalCtx);
-        }
-        if ((model.info.objectId == 0x0173) && (model.info.objectModelIdx == 0x00)) { //Special case for Blue Fire's second model
-            model.info.objectModelIdx = 0x01;
-            Model_Create(&model, globalCtx);
-        }
-        if ((model.info.objectId == 0x0176) && (model.info.objectModelIdx == 0x00)) { //Special case for Poe's second model
-            model.info.objectModelIdx = 0x01;
-            Model_Create(&model, globalCtx);
-        }
-        if ((model.info.objectId == 0x019A) && (model.info.objectModelIdx == 0x00)) { //Special case for Big Poe's second model
-            model.info.objectModelIdx = 0x01;
-            Model_Create(&model, globalCtx);
-        }
+        // if ((model.info.objectId == 0x0024) && (model.info.objectModelIdx == 0x02)) { //Special case for Token's second model
+        //     model.info.objectModelIdx = 0x03;
+        //     Model_Create(&model, globalCtx);
+        // }
+        // if ((model.info.objectId == 0x0173) && (model.info.objectModelIdx == 0x00)) { //Special case for Blue Fire's second model
+        //     model.info.objectModelIdx = 0x01;
+        //     Model_Create(&model, globalCtx);
+        // }
+        // if ((model.info.objectId == 0x0176) && (model.info.objectModelIdx == 0x00)) { //Special case for Poe's second model
+        //     model.info.objectModelIdx = 0x01;
+        //     Model_Create(&model, globalCtx);
+        // }
+        // if ((model.info.objectId == 0x019A) && (model.info.objectModelIdx == 0x00)) { //Special case for Big Poe's second model
+        //     model.info.objectModelIdx = 0x01;
+        //     Model_Create(&model, globalCtx);
+        // }
     }
 }
 
