@@ -12,6 +12,7 @@
 using namespace Settings;
 
 std::vector<u32> ShopItems = {};
+std::vector<u16> ShopItemsPrices = {};
 std::vector<ItemAndPrice> NonShopItems = {};
 //Shop items we don't want to overwrite
 const std::array<u32, 15> minShopItems = {
@@ -108,6 +109,7 @@ void SetVanillaShopItems() {
     BUY_RED_POTION_40,
     BUY_HEART,
   };
+  ShopItemsPrices.assign(32, 0);
   ItemAndPrice init;
   init.Name = "No Item";
   init.Price = -1;
@@ -182,7 +184,7 @@ void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
       //Multiply i by 8 to get the correct shop
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ItemTable(ShopItems[i*8 + j]).GetPrice());
+      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItemsPrices[i*8 + j]);
     }
   }
 }
