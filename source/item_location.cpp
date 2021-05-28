@@ -1,4 +1,4 @@
-u32#include "item_location.hpp"
+#include "item_location.hpp"
 
 #include "dungeon.hpp"
 #include "settings.hpp"
@@ -10,7 +10,8 @@ u32#include "item_location.hpp"
 //Location definitions
 static std::array<ItemLocation, KEY_ENUM_MAX> locationTable;
 
-void Location_Init() {
+void LocationTable_Init() {
+    locationTable[NONE]                                  = ItemLocation::Base       (0xFF, 0xFF, "Invalid Location",                     NONE,                                  {});
     //Kokiri Forest                                                                 scene  flag  name                                    hint key (hint_list.cpp)               categories
     locationTable[KF_KOKIRI_SWORD_CHEST]                 = ItemLocation::Chest      (0x55, 0x00, "KF Kokiri Sword Chest",                KF_KOKIRI_SWORD_CHEST,                 {Category::cKokiriForest, Category::cForest,});
     locationTable[KF_MIDOS_TOP_LEFT_CHEST]               = ItemLocation::Chest      (0x28, 0x00, "KF Mido Top Left Chest",               KF_MIDOS_TOP_LEFT_CHEST,               {Category::cKokiriForest, Category::cForest,});
@@ -773,138 +774,68 @@ void Location_Init() {
       7     5               1     3
       -------------------------------*/
 
-    locationTable[KF_SHOP_ITEM_1]                                 = ItemLocation::Base(0x2D, 0x30, "KF Shop Item 1",                                   KF_SHOP_ITEM_1,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    locationTable[KF_SHOP_ITEM_2]                                 = ItemLocation::Base(0x2D, 0x31, "KF Shop Item 2",                                   KF_SHOP_ITEM_2,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    locationTable[KF_SHOP_ITEM_3]                                 = ItemLocation::Base(0x2D, 0x32, "KF Shop Item 3",                                   KF_SHOP_ITEM_3,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    locationTable[KF_SHOP_ITEM_4]                                 = ItemLocation::Base(0x2D, 0x33, "KF Shop Item 4",                                   KF_SHOP_ITEM_4,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    locationTable[KF_SHOP_ITEM_5]                                 = ItemLocation::Base(0x2D, 0x34, "KF Shop Item 5",                                   KF_SHOP_ITEM_5,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    locationTable[KF_SHOP_ITEM_6]                                 = ItemLocation::Base(0x2D, 0x35, "KF Shop Item 6",                                   KF_SHOP_ITEM_6,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    locationTable[KF_SHOP_ITEM_7]                                 = ItemLocation::Base(0x2D, 0x36, "KF Shop Item 7",                                   KF_SHOP_ITEM_7,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    locationTable[KF_SHOP_ITEM_8]                                 = ItemLocation::Base(0x2D, 0x37, "KF Shop Item 8",                                   KF_SHOP_ITEM_8,        {Category::cKokiriForest, Category::cForest, Category::cShop});
-    std::vector<u32> KF_ShopLocations = {
-      KF_SHOP_ITEM_1,
-      KF_SHOP_ITEM_2,
-      KF_SHOP_ITEM_3,
-      KF_SHOP_ITEM_4,
-      KF_SHOP_ITEM_5,
-      KF_SHOP_ITEM_6,
-      KF_SHOP_ITEM_7,
-      KF_SHOP_ITEM_8,
-    };
+    locationTable[KF_SHOP_ITEM_1]                                = ItemLocation::Base(0x2D, 0x30, "KF Shop Item 1",                                   KF_SHOP_ITEM_1,        {Category::cKokiriForest, Category::cForest, Category::cShop});
+    locationTable[KF_SHOP_ITEM_2]                                = ItemLocation::Base(0x2D, 0x31, "KF Shop Item 2",                                   KF_SHOP_ITEM_2,        {Category::cKokiriForest, Category::cForest, Category::cShop});
+    locationTable[KF_SHOP_ITEM_3]                                = ItemLocation::Base(0x2D, 0x32, "KF Shop Item 3",                                   KF_SHOP_ITEM_3,        {Category::cKokiriForest, Category::cForest, Category::cShop});
+    locationTable[KF_SHOP_ITEM_4]                                = ItemLocation::Base(0x2D, 0x33, "KF Shop Item 4",                                   KF_SHOP_ITEM_4,        {Category::cKokiriForest, Category::cForest, Category::cShop});
+    locationTable[KF_SHOP_ITEM_5]                                = ItemLocation::Base(0x2D, 0x34, "KF Shop Item 5",                                   KF_SHOP_ITEM_5,        {Category::cKokiriForest, Category::cForest, Category::cShop});
+    locationTable[KF_SHOP_ITEM_6]                                = ItemLocation::Base(0x2D, 0x35, "KF Shop Item 6",                                   KF_SHOP_ITEM_6,        {Category::cKokiriForest, Category::cForest, Category::cShop});
+    locationTable[KF_SHOP_ITEM_7]                                = ItemLocation::Base(0x2D, 0x36, "KF Shop Item 7",                                   KF_SHOP_ITEM_7,        {Category::cKokiriForest, Category::cForest, Category::cShop});
+    locationTable[KF_SHOP_ITEM_8]                                = ItemLocation::Base(0x2D, 0x37, "KF Shop Item 8",                                   KF_SHOP_ITEM_8,        {Category::cKokiriForest, Category::cForest, Category::cShop});
 
-    locationTable[KAK_POTION_SHOP_ITEM_1]                          = ItemLocation::Base(0x30, 0x30, "Kak Potion Shop Item 1",                           KAK_POTION_SHOP_ITEM_1, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_POTION_SHOP_ITEM_2]                          = ItemLocation::Base(0x30, 0x31, "Kak Potion Shop Item 2",                           KAK_POTION_SHOP_ITEM_2, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_POTION_SHOP_ITEM_3]                          = ItemLocation::Base(0x30, 0x32, "Kak Potion Shop Item 3",                           KAK_POTION_SHOP_ITEM_3, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_POTION_SHOP_ITEM_4]                          = ItemLocation::Base(0x30, 0x33, "Kak Potion Shop Item 4",                           KAK_POTION_SHOP_ITEM_4, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_POTION_SHOP_ITEM_5]                          = ItemLocation::Base(0x30, 0x34, "Kak Potion Shop Item 5",                           KAK_POTION_SHOP_ITEM_5, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_POTION_SHOP_ITEM_6]                          = ItemLocation::Base(0x30, 0x35, "Kak Potion Shop Item 6",                           KAK_POTION_SHOP_ITEM_6, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_POTION_SHOP_ITEM_7]                          = ItemLocation::Base(0x30, 0x36, "Kak Potion Shop Item 7",                           KAK_POTION_SHOP_ITEM_7, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_POTION_SHOP_ITEM_8]                          = ItemLocation::Base(0x30, 0x37, "Kak Potion Shop Item 8",                           KAK_POTION_SHOP_ITEM_8, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    std::vector<u32> Kak_PotionShopLocations = {
-      KAK_POTION_SHOP_ITEM_1,
-      KAK_POTION_SHOP_ITEM_2,
-      KAK_POTION_SHOP_ITEM_3,
-      KAK_POTION_SHOP_ITEM_4,
-      KAK_POTION_SHOP_ITEM_5,
-      KAK_POTION_SHOP_ITEM_6,
-      KAK_POTION_SHOP_ITEM_7,
-      KAK_POTION_SHOP_ITEM_8,
-    };
+    locationTable[KAK_POTION_SHOP_ITEM_1]                        = ItemLocation::Base(0x30, 0x30, "Kak Potion Shop Item 1",                           KAK_POTION_SHOP_ITEM_1, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_POTION_SHOP_ITEM_2]                        = ItemLocation::Base(0x30, 0x31, "Kak Potion Shop Item 2",                           KAK_POTION_SHOP_ITEM_2, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_POTION_SHOP_ITEM_3]                        = ItemLocation::Base(0x30, 0x32, "Kak Potion Shop Item 3",                           KAK_POTION_SHOP_ITEM_3, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_POTION_SHOP_ITEM_4]                        = ItemLocation::Base(0x30, 0x33, "Kak Potion Shop Item 4",                           KAK_POTION_SHOP_ITEM_4, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_POTION_SHOP_ITEM_5]                        = ItemLocation::Base(0x30, 0x34, "Kak Potion Shop Item 5",                           KAK_POTION_SHOP_ITEM_5, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_POTION_SHOP_ITEM_6]                        = ItemLocation::Base(0x30, 0x35, "Kak Potion Shop Item 6",                           KAK_POTION_SHOP_ITEM_6, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_POTION_SHOP_ITEM_7]                        = ItemLocation::Base(0x30, 0x36, "Kak Potion Shop Item 7",                           KAK_POTION_SHOP_ITEM_7, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_POTION_SHOP_ITEM_8]                        = ItemLocation::Base(0x30, 0x37, "Kak Potion Shop Item 8",                           KAK_POTION_SHOP_ITEM_8, {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_1]                          = ItemLocation::Base(0x32, 0x30, "MK Bombchu Shop Item 1",                           MARKET_BOMBCHU_SHOP_ITEM_1, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_2]                          = ItemLocation::Base(0x32, 0x31, "MK Bombchu Shop Item 2",                           MARKET_BOMBCHU_SHOP_ITEM_2, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_3]                          = ItemLocation::Base(0x32, 0x32, "MK Bombchu Shop Item 3",                           MARKET_BOMBCHU_SHOP_ITEM_3, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_4]                          = ItemLocation::Base(0x32, 0x33, "MK Bombchu Shop Item 4",                           MARKET_BOMBCHU_SHOP_ITEM_4, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_5]                          = ItemLocation::Base(0x32, 0x34, "MK Bombchu Shop Item 5",                           MARKET_BOMBCHU_SHOP_ITEM_5, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_6]                          = ItemLocation::Base(0x32, 0x35, "MK Bombchu Shop Item 6",                           MARKET_BOMBCHU_SHOP_ITEM_6, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_7]                          = ItemLocation::Base(0x32, 0x36, "MK Bombchu Shop Item 7",                           MARKET_BOMBCHU_SHOP_ITEM_7, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BOMBCHU_SHOP_ITEM_8]                          = ItemLocation::Base(0x32, 0x37, "MK Bombchu Shop Item 8",                           MARKET_BOMBCHU_SHOP_ITEM_8, {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    std::vector<u32> MK_BombchuShopLocations = {
-      MARKET_BOMBCHU_SHOP_ITEM_1,
-      MARKET_BOMBCHU_SHOP_ITEM_2,
-      MARKET_BOMBCHU_SHOP_ITEM_3,
-      MARKET_BOMBCHU_SHOP_ITEM_4,
-      MARKET_BOMBCHU_SHOP_ITEM_5,
-      MARKET_BOMBCHU_SHOP_ITEM_6,
-      MARKET_BOMBCHU_SHOP_ITEM_7,
-      MARKET_BOMBCHU_SHOP_ITEM_8,
-    };
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_1]                    = ItemLocation::Base(0x32, 0x30, "MK Bombchu Shop Item 1",                           MARKET_BOMBCHU_SHOP_ITEM_1, {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_2]                    = ItemLocation::Base(0x32, 0x31, "MK Bombchu Shop Item 2",                           MARKET_BOMBCHU_SHOP_ITEM_2, {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_3]                    = ItemLocation::Base(0x32, 0x32, "MK Bombchu Shop Item 3",                           MARKET_BOMBCHU_SHOP_ITEM_3, {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_4]                    = ItemLocation::Base(0x32, 0x33, "MK Bombchu Shop Item 4",                           MARKET_BOMBCHU_SHOP_ITEM_4, {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_5]                    = ItemLocation::Base(0x32, 0x34, "MK Bombchu Shop Item 5",                           MARKET_BOMBCHU_SHOP_ITEM_5, {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_6]                    = ItemLocation::Base(0x32, 0x35, "MK Bombchu Shop Item 6",                           MARKET_BOMBCHU_SHOP_ITEM_6, {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_7]                    = ItemLocation::Base(0x32, 0x36, "MK Bombchu Shop Item 7",                           MARKET_BOMBCHU_SHOP_ITEM_7, {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BOMBCHU_SHOP_ITEM_8]                    = ItemLocation::Base(0x32, 0x37, "MK Bombchu Shop Item 8",                           MARKET_BOMBCHU_SHOP_ITEM_8, {Category::cInnerMarket, Category::cMarket, Category::cShop});
 
-    locationTable[MARKET_POTION_SHOP_ITEM_1]                          = ItemLocation::Base(0x31, 0x30, "MK Potion Shop Item 1",                            MARKET_POTION_SHOP_ITEM_1,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_POTION_SHOP_ITEM_2]                          = ItemLocation::Base(0x31, 0x31, "MK Potion Shop Item 2",                            MARKET_POTION_SHOP_ITEM_2,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_POTION_SHOP_ITEM_3]                          = ItemLocation::Base(0x31, 0x32, "MK Potion Shop Item 3",                            MARKET_POTION_SHOP_ITEM_3,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_POTION_SHOP_ITEM_4]                          = ItemLocation::Base(0x31, 0x33, "MK Potion Shop Item 4",                            MARKET_POTION_SHOP_ITEM_4,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_POTION_SHOP_ITEM_5]                          = ItemLocation::Base(0x31, 0x34, "MK Potion Shop Item 5",                            MARKET_POTION_SHOP_ITEM_5,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_POTION_SHOP_ITEM_6]                          = ItemLocation::Base(0x31, 0x35, "MK Potion Shop Item 6",                            MARKET_POTION_SHOP_ITEM_6,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_POTION_SHOP_ITEM_7]                          = ItemLocation::Base(0x31, 0x36, "MK Potion Shop Item 7",                            MARKET_POTION_SHOP_ITEM_7,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_POTION_SHOP_ITEM_8]                          = ItemLocation::Base(0x31, 0x37, "MK Potion Shop Item 8",                            MARKET_POTION_SHOP_ITEM_8,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    std::vector<u32> MK_PotionShopLocations = {
-      MARKET_POTION_SHOP_ITEM_1,
-      MARKET_POTION_SHOP_ITEM_2,
-      MARKET_POTION_SHOP_ITEM_3,
-      MARKET_POTION_SHOP_ITEM_4,
-      MARKET_POTION_SHOP_ITEM_5,
-      MARKET_POTION_SHOP_ITEM_6,
-      MARKET_POTION_SHOP_ITEM_7,
-      MARKET_POTION_SHOP_ITEM_8,
-    };
+    locationTable[MARKET_POTION_SHOP_ITEM_1]                     = ItemLocation::Base(0x31, 0x30, "MK Potion Shop Item 1",                            MARKET_POTION_SHOP_ITEM_1,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_POTION_SHOP_ITEM_2]                     = ItemLocation::Base(0x31, 0x31, "MK Potion Shop Item 2",                            MARKET_POTION_SHOP_ITEM_2,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_POTION_SHOP_ITEM_3]                     = ItemLocation::Base(0x31, 0x32, "MK Potion Shop Item 3",                            MARKET_POTION_SHOP_ITEM_3,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_POTION_SHOP_ITEM_4]                     = ItemLocation::Base(0x31, 0x33, "MK Potion Shop Item 4",                            MARKET_POTION_SHOP_ITEM_4,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_POTION_SHOP_ITEM_5]                     = ItemLocation::Base(0x31, 0x34, "MK Potion Shop Item 5",                            MARKET_POTION_SHOP_ITEM_5,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_POTION_SHOP_ITEM_6]                     = ItemLocation::Base(0x31, 0x35, "MK Potion Shop Item 6",                            MARKET_POTION_SHOP_ITEM_6,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_POTION_SHOP_ITEM_7]                     = ItemLocation::Base(0x31, 0x36, "MK Potion Shop Item 7",                            MARKET_POTION_SHOP_ITEM_7,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_POTION_SHOP_ITEM_8]                     = ItemLocation::Base(0x31, 0x37, "MK Potion Shop Item 8",                            MARKET_POTION_SHOP_ITEM_8,  {Category::cInnerMarket, Category::cMarket, Category::cShop});
 
-    locationTable[MARKET_BAZAAR_ITEM_1]                              = ItemLocation::Base(0x2C, 0x30, "MK Bazaar Item 1",                                 MARKET_BAZAAR_ITEM_1,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BAZAAR_ITEM_2]                              = ItemLocation::Base(0x2C, 0x31, "MK Bazaar Item 2",                                 MARKET_BAZAAR_ITEM_2,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BAZAAR_ITEM_3]                              = ItemLocation::Base(0x2C, 0x32, "MK Bazaar Item 3",                                 MARKET_BAZAAR_ITEM_3,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BAZAAR_ITEM_4]                              = ItemLocation::Base(0x2C, 0x33, "MK Bazaar Item 4",                                 MARKET_BAZAAR_ITEM_4,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BAZAAR_ITEM_5]                              = ItemLocation::Base(0x2C, 0x34, "MK Bazaar Item 5",                                 MARKET_BAZAAR_ITEM_5,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BAZAAR_ITEM_6]                              = ItemLocation::Base(0x2C, 0x35, "MK Bazaar Item 6",                                 MARKET_BAZAAR_ITEM_6,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BAZAAR_ITEM_7]                              = ItemLocation::Base(0x2C, 0x36, "MK Bazaar Item 7",                                 MARKET_BAZAAR_ITEM_7,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    locationTable[MARKET_BAZAAR_ITEM_8]                              = ItemLocation::Base(0x2C, 0x37, "MK Bazaar Item 8",                                 MARKET_BAZAAR_ITEM_8,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
-    std::vector<u32> MK_BazaarLocations = {
-      MARKET_BAZAAR_ITEM_1,
-      MARKET_BAZAAR_ITEM_2,
-      MARKET_BAZAAR_ITEM_3,
-      MARKET_BAZAAR_ITEM_4,
-      MARKET_BAZAAR_ITEM_5,
-      MARKET_BAZAAR_ITEM_6,
-      MARKET_BAZAAR_ITEM_7,
-      MARKET_BAZAAR_ITEM_8,
-    };
+    locationTable[MARKET_BAZAAR_ITEM_1]                          = ItemLocation::Base(0x2C, 0x30, "MK Bazaar Item 1",                                 MARKET_BAZAAR_ITEM_1,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BAZAAR_ITEM_2]                          = ItemLocation::Base(0x2C, 0x31, "MK Bazaar Item 2",                                 MARKET_BAZAAR_ITEM_2,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BAZAAR_ITEM_3]                          = ItemLocation::Base(0x2C, 0x32, "MK Bazaar Item 3",                                 MARKET_BAZAAR_ITEM_3,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BAZAAR_ITEM_4]                          = ItemLocation::Base(0x2C, 0x33, "MK Bazaar Item 4",                                 MARKET_BAZAAR_ITEM_4,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BAZAAR_ITEM_5]                          = ItemLocation::Base(0x2C, 0x34, "MK Bazaar Item 5",                                 MARKET_BAZAAR_ITEM_5,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BAZAAR_ITEM_6]                          = ItemLocation::Base(0x2C, 0x35, "MK Bazaar Item 6",                                 MARKET_BAZAAR_ITEM_6,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BAZAAR_ITEM_7]                          = ItemLocation::Base(0x2C, 0x36, "MK Bazaar Item 7",                                 MARKET_BAZAAR_ITEM_7,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
+    locationTable[MARKET_BAZAAR_ITEM_8]                          = ItemLocation::Base(0x2C, 0x37, "MK Bazaar Item 8",                                 MARKET_BAZAAR_ITEM_8,      {Category::cInnerMarket, Category::cMarket, Category::cShop});
 
-    locationTable[KAK_BAZAAR_ITEM_1]                                = ItemLocation::Base(0x2C, 0x38, "Kak Bazaar Item 1",                                KAK_BAZAAR_ITEM_1,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_BAZAAR_ITEM_2]                                = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                KAK_BAZAAR_ITEM_2,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_BAZAAR_ITEM_3]                                = ItemLocation::Base(0x2C, 0x3A, "Kak Bazaar Item 3",                                KAK_BAZAAR_ITEM_3,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_BAZAAR_ITEM_4]                                = ItemLocation::Base(0x2C, 0x3B, "Kak Bazaar Item 4",                                KAK_BAZAAR_ITEM_4,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_BAZAAR_ITEM_5]                                = ItemLocation::Base(0x2C, 0x3C, "Kak Bazaar Item 5",                                KAK_BAZAAR_ITEM_5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_BAZAAR_ITEM_6]                                = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 6",                                KAK_BAZAAR_ITEM_6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_BAZAAR_ITEM_7]                                = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 7",                                KAK_BAZAAR_ITEM_7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    locationTable[KAK_BAZAAR_ITEM_8]                                = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 8",                                KAK_BAZAAR_ITEM_8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
-    std::vector<u32> Kak_BazaarLocations = {
-      KAK_BAZAAR_ITEM_1,
-      KAK_BAZAAR_ITEM_2,
-      KAK_BAZAAR_ITEM_3,
-      KAK_BAZAAR_ITEM_4,
-      KAK_BAZAAR_ITEM_5,
-      KAK_BAZAAR_ITEM_6,
-      KAK_BAZAAR_ITEM_7,
-      KAK_BAZAAR_ITEM_8,
-    };
+    locationTable[KAK_BAZAAR_ITEM_1]                             = ItemLocation::Base(0x2C, 0x38, "Kak Bazaar Item 1",                                KAK_BAZAAR_ITEM_1,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_BAZAAR_ITEM_2]                             = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                KAK_BAZAAR_ITEM_2,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_BAZAAR_ITEM_3]                             = ItemLocation::Base(0x2C, 0x3A, "Kak Bazaar Item 3",                                KAK_BAZAAR_ITEM_3,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_BAZAAR_ITEM_4]                             = ItemLocation::Base(0x2C, 0x3B, "Kak Bazaar Item 4",                                KAK_BAZAAR_ITEM_4,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_BAZAAR_ITEM_5]                             = ItemLocation::Base(0x2C, 0x3C, "Kak Bazaar Item 5",                                KAK_BAZAAR_ITEM_5,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_BAZAAR_ITEM_6]                             = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 6",                                KAK_BAZAAR_ITEM_6,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_BAZAAR_ITEM_7]                             = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 7",                                KAK_BAZAAR_ITEM_7,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
+    locationTable[KAK_BAZAAR_ITEM_8]                             = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 8",                                KAK_BAZAAR_ITEM_8,     {Category::cKakarikoVillage, Category::cKakariko, Category::cShop});
 
-    locationTable[ZD_SHOP_ITEM_1]                                 = ItemLocation::Base(0x2F, 0x30, "ZD Shop Item 1",                                   ZD_SHOP_ITEM_1,        {Category::cZorasDomain, Category::cShop});
-    locationTable[ZD_SHOP_ITEM_2]                                 = ItemLocation::Base(0x2F, 0x31, "ZD Shop Item 2",                                   ZD_SHOP_ITEM_2,        {Category::cZorasDomain, Category::cShop});
-    locationTable[ZD_SHOP_ITEM_3]                                 = ItemLocation::Base(0x2F, 0x32, "ZD Shop Item 3",                                   ZD_SHOP_ITEM_3,        {Category::cZorasDomain, Category::cShop});
-    locationTable[ZD_SHOP_ITEM_4]                                 = ItemLocation::Base(0x2F, 0x33, "ZD Shop Item 4",                                   ZD_SHOP_ITEM_4,        {Category::cZorasDomain, Category::cShop});
-    locationTable[ZD_SHOP_ITEM_5]                                 = ItemLocation::Base(0x2F, 0x34, "ZD Shop Item 5",                                   ZD_SHOP_ITEM_5,        {Category::cZorasDomain, Category::cShop});
-    locationTable[ZD_SHOP_ITEM_6]                                 = ItemLocation::Base(0x2F, 0x35, "ZD Shop Item 6",                                   ZD_SHOP_ITEM_6,        {Category::cZorasDomain, Category::cShop});
-    locationTable[ZD_SHOP_ITEM_7]                                 = ItemLocation::Base(0x2F, 0x36, "ZD Shop Item 7",                                   ZD_SHOP_ITEM_7,        {Category::cZorasDomain, Category::cShop});
-    locationTable[ZD_SHOP_ITEM_8]                                 = ItemLocation::Base(0x2F, 0x37, "ZD Shop Item 8",                                   ZD_SHOP_ITEM_8,        {Category::cZorasDomain, Category::cShop});
-    std::vector<u32> ZD_ShopLocations = {
-      ZD_SHOP_ITEM_1,
-      ZD_SHOP_ITEM_2,
-      ZD_SHOP_ITEM_3,
-      ZD_SHOP_ITEM_4,
-      ZD_SHOP_ITEM_5,
-      ZD_SHOP_ITEM_6,
-      ZD_SHOP_ITEM_7,
-      ZD_SHOP_ITEM_8,
-    };
+    locationTable[ZD_SHOP_ITEM_1]                                = ItemLocation::Base(0x2F, 0x30, "ZD Shop Item 1",                                   ZD_SHOP_ITEM_1,        {Category::cZorasDomain, Category::cShop});
+    locationTable[ZD_SHOP_ITEM_2]                                = ItemLocation::Base(0x2F, 0x31, "ZD Shop Item 2",                                   ZD_SHOP_ITEM_2,        {Category::cZorasDomain, Category::cShop});
+    locationTable[ZD_SHOP_ITEM_3]                                = ItemLocation::Base(0x2F, 0x32, "ZD Shop Item 3",                                   ZD_SHOP_ITEM_3,        {Category::cZorasDomain, Category::cShop});
+    locationTable[ZD_SHOP_ITEM_4]                                = ItemLocation::Base(0x2F, 0x33, "ZD Shop Item 4",                                   ZD_SHOP_ITEM_4,        {Category::cZorasDomain, Category::cShop});
+    locationTable[ZD_SHOP_ITEM_5]                                = ItemLocation::Base(0x2F, 0x34, "ZD Shop Item 5",                                   ZD_SHOP_ITEM_5,        {Category::cZorasDomain, Category::cShop});
+    locationTable[ZD_SHOP_ITEM_6]                                = ItemLocation::Base(0x2F, 0x35, "ZD Shop Item 6",                                   ZD_SHOP_ITEM_6,        {Category::cZorasDomain, Category::cShop});
+    locationTable[ZD_SHOP_ITEM_7]                                = ItemLocation::Base(0x2F, 0x36, "ZD Shop Item 7",                                   ZD_SHOP_ITEM_7,        {Category::cZorasDomain, Category::cShop});
+    locationTable[ZD_SHOP_ITEM_8]                                = ItemLocation::Base(0x2F, 0x37, "ZD Shop Item 8",                                   ZD_SHOP_ITEM_8,        {Category::cZorasDomain, Category::cShop});
 
     locationTable[GC_SHOP_ITEM_1]                                = ItemLocation::Base(0x2E, 0x30, "GC Shop Item 1",                                   GC_SHOP_ITEM_1,        {Category::cGoronCity, Category::cShop});
     locationTable[GC_SHOP_ITEM_2]                                = ItemLocation::Base(0x2E, 0x31, "GC Shop Item 2",                                   GC_SHOP_ITEM_2,        {Category::cGoronCity, Category::cShop});
@@ -914,16 +845,6 @@ void Location_Init() {
     locationTable[GC_SHOP_ITEM_6]                                = ItemLocation::Base(0x2E, 0x35, "GC Shop Item 6",                                   GC_SHOP_ITEM_6,        {Category::cGoronCity, Category::cShop});
     locationTable[GC_SHOP_ITEM_7]                                = ItemLocation::Base(0x2E, 0x36, "GC Shop Item 7",                                   GC_SHOP_ITEM_7,        {Category::cGoronCity, Category::cShop});
     locationTable[GC_SHOP_ITEM_8]                                = ItemLocation::Base(0x2E, 0x37, "GC Shop Item 8",                                   GC_SHOP_ITEM_8,        {Category::cGoronCity, Category::cShop});
-    std::vector<u32> GC_ShopLocations = {
-      GC_SHOP_ITEM_1,
-      GC_SHOP_ITEM_2,
-      GC_SHOP_ITEM_3,
-      GC_SHOP_ITEM_4,
-      GC_SHOP_ITEM_5,
-      GC_SHOP_ITEM_6,
-      GC_SHOP_ITEM_7,
-      GC_SHOP_ITEM_8,
-    };
 
     /*-------------------------------
           --- GOSSIP STONES ---
@@ -937,7 +858,7 @@ void Location_Init() {
     locationTable[GV_GOSSIP_STONE]                               = ItemLocation::HintStone(0x00, 0x11, "GV Gossip Stone",                             {});
     locationTable[GC_MAZE_GOSSIP_STONE]                          = ItemLocation::HintStone(0x00, 0x15, "GC Maze Gossip Stone",                        {});
     locationTable[GC_MEDIGORON_GOSSIP_STONE]                     = ItemLocation::HintStone(0x00, 0x19, "GC Medigoron Gossip Stone",                   {});
-    locationTable[GY_GOSSIP_STONE]                               = ItemLocation::HintStone(0x00, 0x0A, "GY Gossip Stone",                             {});
+    locationTable[GRAVEYARD_GOSSIP_STONE]                        = ItemLocation::HintStone(0x00, 0x0A, "GY Gossip Stone",                             {});
     locationTable[HC_MALON_GOSSIP_STONE]                         = ItemLocation::HintStone(0x00, 0x12, "HC Malon Gossip Stone",                       {});
     locationTable[HC_ROCK_WALL_GOSSIP_STONE]                     = ItemLocation::HintStone(0x00, 0x0B, "HC Rock Wall Gossip Stone",                   {});
     locationTable[HC_STORMS_GROTTO_GOSSIP_STONE]                 = ItemLocation::HintStone(0x00, 0x13, "HC Storms Grotto Gossip Stone",               {});
@@ -972,9 +893,89 @@ void Location_Init() {
     locationTable[DMT_STORMS_GROTTO_GOSSIP_STONE]                = ItemLocation::HintStone(0x00, 0x37, "DMT Storms Grotto Gossip Stone",              {});
     locationTable[DMC_UPPER_GROTTO_GOSSIP_STONE]                 = ItemLocation::HintStone(0x00, 0x3A, "DMC Upper Grotto Gossip Stone",               {});
 
-    locationTable[GanondorfHint                                  = ItemLocation::Hint     (0x00, 0x00, "Ganondorf Hint",                              {});
+    locationTable[GANONDORF_HINT]                                = ItemLocation::Hint     (0x00, 0x00, "Ganondorf Hint",                              {});
 
 }
+std::vector<u32> KF_ShopLocations = {
+  KF_SHOP_ITEM_1,
+  KF_SHOP_ITEM_2,
+  KF_SHOP_ITEM_3,
+  KF_SHOP_ITEM_4,
+  KF_SHOP_ITEM_5,
+  KF_SHOP_ITEM_6,
+  KF_SHOP_ITEM_7,
+  KF_SHOP_ITEM_8,
+};
+std::vector<u32> Kak_PotionShopLocations = {
+  KAK_POTION_SHOP_ITEM_1,
+  KAK_POTION_SHOP_ITEM_2,
+  KAK_POTION_SHOP_ITEM_3,
+  KAK_POTION_SHOP_ITEM_4,
+  KAK_POTION_SHOP_ITEM_5,
+  KAK_POTION_SHOP_ITEM_6,
+  KAK_POTION_SHOP_ITEM_7,
+  KAK_POTION_SHOP_ITEM_8,
+};
+std::vector<u32> MK_BombchuShopLocations = {
+  MARKET_BOMBCHU_SHOP_ITEM_1,
+  MARKET_BOMBCHU_SHOP_ITEM_2,
+  MARKET_BOMBCHU_SHOP_ITEM_3,
+  MARKET_BOMBCHU_SHOP_ITEM_4,
+  MARKET_BOMBCHU_SHOP_ITEM_5,
+  MARKET_BOMBCHU_SHOP_ITEM_6,
+  MARKET_BOMBCHU_SHOP_ITEM_7,
+  MARKET_BOMBCHU_SHOP_ITEM_8,
+};
+std::vector<u32> MK_PotionShopLocations = {
+  MARKET_POTION_SHOP_ITEM_1,
+  MARKET_POTION_SHOP_ITEM_2,
+  MARKET_POTION_SHOP_ITEM_3,
+  MARKET_POTION_SHOP_ITEM_4,
+  MARKET_POTION_SHOP_ITEM_5,
+  MARKET_POTION_SHOP_ITEM_6,
+  MARKET_POTION_SHOP_ITEM_7,
+  MARKET_POTION_SHOP_ITEM_8,
+};
+std::vector<u32> MK_BazaarLocations = {
+  MARKET_BAZAAR_ITEM_1,
+  MARKET_BAZAAR_ITEM_2,
+  MARKET_BAZAAR_ITEM_3,
+  MARKET_BAZAAR_ITEM_4,
+  MARKET_BAZAAR_ITEM_5,
+  MARKET_BAZAAR_ITEM_6,
+  MARKET_BAZAAR_ITEM_7,
+  MARKET_BAZAAR_ITEM_8,
+};
+std::vector<u32> Kak_BazaarLocations = {
+  KAK_BAZAAR_ITEM_1,
+  KAK_BAZAAR_ITEM_2,
+  KAK_BAZAAR_ITEM_3,
+  KAK_BAZAAR_ITEM_4,
+  KAK_BAZAAR_ITEM_5,
+  KAK_BAZAAR_ITEM_6,
+  KAK_BAZAAR_ITEM_7,
+  KAK_BAZAAR_ITEM_8,
+};
+std::vector<u32> ZD_ShopLocations = {
+  ZD_SHOP_ITEM_1,
+  ZD_SHOP_ITEM_2,
+  ZD_SHOP_ITEM_3,
+  ZD_SHOP_ITEM_4,
+  ZD_SHOP_ITEM_5,
+  ZD_SHOP_ITEM_6,
+  ZD_SHOP_ITEM_7,
+  ZD_SHOP_ITEM_8,
+};
+std::vector<u32> GC_ShopLocations = {
+  GC_SHOP_ITEM_1,
+  GC_SHOP_ITEM_2,
+  GC_SHOP_ITEM_3,
+  GC_SHOP_ITEM_4,
+  GC_SHOP_ITEM_5,
+  GC_SHOP_ITEM_6,
+  GC_SHOP_ITEM_7,
+  GC_SHOP_ITEM_8,
+};
 //List of shop location lists, used for shop shuffle
 std::vector<std::vector<u32>> ShopLocationLists = {
   KF_ShopLocations,
@@ -989,401 +990,405 @@ std::vector<std::vector<u32>> ShopLocationLists = {
 
 //List of gossip stone locations for hints
 std::vector<u32> gossipStoneLocations = {
-  &DMC_GossipStone,
-  &DMT_GossipStone,
-  &Colossus_GossipStone,
-  &DodongosCavern_GossipStone,
-  &GV_GossipStone,
-  &GC_MazeGossipStone,
-  &GC_MedigoronGossipStone,
-  &GY_GossipStone,
-  &HC_MalonGossipStone,
-  &HC_RockWallGossipStone,
-  &HC_StormsGrottoGossipStone,
-  &KF_DekuTreeLeftGossipStone,
-  &KF_DekuTreeRightGossipStone,
-  &KF_GossipStone,
-  &LH_LabGossipStone,
-  &LH_SoutheastGossipStone,
-  &LH_SouthwestGossipStone,
-  &LW_GossipStone,
-  &SFM_MazeLowerGossipStone,
-  &SFM_MazeUpperGossipStone,
-  &SFM_SariaGossipStone,
-  &ToT_LeftGossipStone,
-  &ToT_LeftCenterGossipStone,
-  &ToT_RightCenterGossipStone,
-  &ToT_RightGossipStone,
-  &ZD_GossipStone,
-  &ZF_FairyGossipStone,
-  &ZF_JabuGossipStone,
-  &ZR_NearGrottosGossipStone,
-  &ZR_NearDomainGossipStone,
-  &HF_CowGrottoGossipStone,
-  &HF_NearMarketGrottoGossipStone,
-  &HF_SoutheastGrottoGossipStone,
-  &HF_OpenGrottoGossipStone,
-  &Kak_OpenGrottoGossipStone,
-  &ZR_OpenGrottoGossipStone,
-  &KF_StormsGrottoGossipStone,
-  &LW_NearShortcutsGrottoGossipStone,
-  &DMT_StormsGrottoGossipStone,
-  &DMC_UpperGrottoGossipStone,
+  DMC_GOSSIP_STONE,
+  DMT_GOSSIP_STONE,
+  COLOSSUS_GOSSIP_STONE,
+  DODONGOS_CAVERN_GOSSIP_STONE,
+  GV_GOSSIP_STONE,
+  GC_MAZE_GOSSIP_STONE,
+  GC_MEDIGORON_GOSSIP_STONE,
+  GRAVEYARD_GOSSIP_STONE,
+  HC_MALON_GOSSIP_STONE,
+  HC_ROCK_WALL_GOSSIP_STONE,
+  HC_STORMS_GROTTO_GOSSIP_STONE,
+  KF_DEKU_TREE_GOSSIP_STONE_LEFT,
+  KF_DEKU_TREE_GOSSIP_STONE_RIGHT,
+  KF_GOSSIP_STONE,
+  LH_LAB_GOSSIP_STONE,
+  LH_GOSSIP_STONE_SOUTHEAST,
+  LH_GOSSIP_STONE_SOUTHWEST,
+  LW_GOSSIP_STONE,
+  SFM_MAZE_GOSSIP_STONE_LOWER,
+  SFM_MAZE_GOSSIP_STONE_UPPER,
+  SFM_SARIA_GOSSIP_STONE,
+  TOT_GOSSIP_STONE_LEFT,
+  TOT_GOSSIP_STONE_RIGHT,
+  TOT_GOSSIP_STONE_RIGHT_CENTER,
+  TOT_GOSSIP_STONE_LEFT_CENTER,
+  ZD_GOSSIP_STONE,
+  ZF_FAIRY_GOSSIP_STONE,
+  ZF_JABU_GOSSIP_STONE,
+  ZR_NEAR_GROTTOS_GOSSIP_STONE,
+  ZR_NEAR_DOMAIN_GOSSIP_STONE,
+  HF_COW_GROTTO_GOSSIP_STONE,
+  HF_NEAR_MARKET_GROTTO_GOSSIP_STONE,
+  HF_SOUTHEAST_GROTTO_GOSSIP_STONE,
+  HF_OPEN_GROTTO_GOSSIP_STONE,
+  KAK_OPEN_GROTTO_GOSSIP_STONE,
+  ZR_OPEN_GROTTO_GOSSIP_STONE,
+  KF_STORMS_GROTTO_GOSSIP_STONE,
+  LW_NEAR_SHORTCUTS_GROTTO_GOSSIP_STONE,
+  DMT_STORMS_GROTTO_GOSSIP_STONE,
+  DMC_UPPER_GROTTO_GOSSIP_STONE,
 };
 
 std::vector<u32> dungeonRewardLocations = {
   //Bosses
-  &QueenGohma,
-  &KingDodongo,
-  &Barinade,
-  &PhantomGanon,
-  &Volvagia,
-  &Morpha,
-  &Twinrova,
-  &BongoBongo,
-  &LinksPocket,
+  QUEEN_GOHMA,
+  KING_DODONGO,
+  BARINADE,
+  PHANTOM_GANON,
+  VOLVAGIA,
+  MORPHA,
+  TWINROVA,
+  BONGO_BONGO,
+  LINKS_POCKET,
 };
 std::vector<u32> overworldLocations = {
   //Kokiri Forest
-  &KF_KokiriSwordChest,
-  &KF_MidoTopLeftChest,
-  &KF_MidoTopRightChest,
-  &KF_MidoBottomLeftChest,
-  &KF_MidoBottomRightChest,
-  &KF_StormsGrottoChest,
-  &KF_LinksHouseCow,
+  KF_KOKIRI_SWORD_CHEST,
+  KF_MIDOS_TOP_LEFT_CHEST,
+  KF_MIDOS_TOP_RIGHT_CHEST,
+  KF_MIDOS_BOTTOM_LEFT_CHEST,
+  KF_MIDOS_BOTTOM_RIGHT_CHEST,
+  KF_STORMS_GROTTO_CHEST,
+  KF_LINKS_HOUSE_COW,
 
   //Shop
-  &KF_ShopItem1,
-  &KF_ShopItem2,
-  &KF_ShopItem3,
-  &KF_ShopItem4,
-  &KF_ShopItem5,
-  &KF_ShopItem6,
-  &KF_ShopItem7,
-  &KF_ShopItem8,
+  KF_SHOP_ITEM_1,
+  KF_SHOP_ITEM_2,
+  KF_SHOP_ITEM_3,
+  KF_SHOP_ITEM_4,
+  KF_SHOP_ITEM_5,
+  KF_SHOP_ITEM_6,
+  KF_SHOP_ITEM_7,
+  KF_SHOP_ITEM_8,
 
   //Lost Woods
-  &LW_GiftFromSaria,
-  &LW_SkullKid,
-  &LW_OcarinaMemoryGame,
-  &LW_TargetInWoods,
-  &LW_DekuScrubNearDekuTheaterRight,
-  &LW_DekuScrubNearDekuTheaterLeft,
-  &LW_DekuScrubNearBridge,
-  &LW_NearShortcutsGrottoChest,
-  &LW_DekuScrubGrottoRear,
-  &LW_DekuScrubGrottoFront,
-  &DekuTheater_SkullMask,
-  &DekuTheater_MaskOfTruth,
+  LW_GIFT_FROM_SARIA,
+  LW_SKULL_KID,
+  LW_OCARINA_MEMORY_GAME,
+  LW_TARGET_IN_WOODS,
+  LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT,
+  LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT,
+  LW_DEKU_SCRUB_NEAR_BRIDGE,
+  LW_NEAR_SHORTCUTS_GROTTO_CHEST,
+  LW_DEKU_SCRUB_GROTTO_REAR,
+  LW_DEKU_SCRUB_GROTTO_FRONT,
+  DEKU_THEATER_SKULL_MASK,
+  DEKU_THEATER_MASK_OF_TRUTH,
 
   //Sacred Forest Meadow
-  &SongFromSaria,
-  &SheikInForest,
-  &SFM_WolfosGrottoChest,
-  &SFM_DekuScrubGrottoRear,
-  &SFM_DekuScrubGrottoFront,
+  SONG_FROM_SARIA,
+  SHEIK_IN_FOREST,
+  SFM_WOLFOS_GROTTO_CHEST,
+  SFM_DEKU_SCRUB_GROTTO_REAR,
+  SFM_DEKU_SCRUB_GROTTO_FRONT,
 
   //Hyrule Field
-  &HF_SoutheastGrottoChest,
-  &HF_OpenGrottoChest,
-  &HF_NearMarketGrottoChest,
-  &HF_OcarinaOfTimeItem,
-  &SongFromOcarinaOfTime,
-  &HF_TektiteGrottoFreestandingPoH,
-  &HF_DekuScrubGrotto,
-  &HF_CowGrottoCow,
+  HF_SOUTHEAST_GROTTO_CHEST,
+  HF_OPEN_GROTTO_CHEST,
+  HF_NEAR_MARKET_GROTTO_CHEST,
+  HF_OCARINA_OF_TIME_ITEM,
+  SONG_FROM_OCARINA_OF_TIME,
+  HF_TEKTITE_GROTTO_FREESTANDING_POH,
+  HF_DEKU_SCRUB_GROTTO,
+  HF_COW_GROTTO_COW,
 
   //Lake Hylia
-  &LH_ChildFishing,
-  &LH_AdultFishing,
-  &LH_LabDive,
-  &LH_UnderwaterItem,
-  &LH_Sun,
-  &LH_FreestandingPoH,
-  &LH_DekuScrubGrottoLeft,
-  &LH_DekuScrubGrottoRight,
-  &LH_DekuScrubGrottoCenter,
+  LH_CHILD_FISHING,
+  LH_ADULT_FISHING,
+  LH_LAB_DIVE,
+  LH_UNDERWATER_ITEM,
+  LH_SUN,
+  LH_FREESTANDING_POH,
+  LH_DEKU_SCRUB_GROTTO_LEFT,
+  LH_DEKU_SCRUB_GROTTO_RIGHT,
+  LH_DEKU_SCRUB_GROTTO_CENTER,
 
   //Gerudo Valley
-  &GV_Chest,
-  &GV_WaterfallFreestandingPoH,
-  &GV_CrateFreestandingPoH,
-  &GV_DekuScrubGrottoRear,
-  &GV_DekuScrubGrottoFront,
-  &GV_Cow,
+  GV_CHEST,
+  GV_WATERFALL_FREESTANDING_POH,
+  GV_CRATE_FREESTANDING_POH,
+  GV_DEKU_SCRUB_GROTTO_REAR,
+  GV_DEKU_SCRUB_GROTTO_FRONT,
+  GV_COW,
 
   //Gerudo Fortress
-  &GF_Chest,
-  &GF_HBA1000Points,
-  &GF_HBA1500Points,
-  &GF_NorthF1Carpenter,
-  &GF_NorthF2Carpenter,
-  &GF_SouthF1Carpenter,
-  &GF_SouthF2Carpenter,
-  &GF_GerudoToken,
+  GF_CHEST,
+  GF_HBA_1000_POINTS,
+  GF_HBA_1500_POINTS,
+  GF_NORTH_F1_CARPENTER,
+  GF_NORTH_F2_CARPENTER,
+  GF_SOUTH_F1_CARPENTER,
+  GF_SOUTH_F2_CARPENTER,
+  GF_GERUDO_TOKEN,
 
   //Haunted Wasteland
-  &HW_Chest,
+  WASTELAND_CHEST,
 
   //Desert Colossus
-  &SheikAtColossus,
-  &Colossus_FreestandingPoH,
-  &Colossus_GreatFairyReward,
-  &Colossus_DekuScrubGrottoRear,
-  &Colossus_DekuScrubGrottoFront,
+  SHEIK_AT_COLOSSUS,
+  COLOSSUS_FREESTANDING_POH,
+  COLOSSUS_GREAT_FAIRY_REWARD,
+  COLOSSUS_DEKU_SCRUB_GROTTO_REAR,
+  COLOSSUS_DEKU_SCRUB_GROTTO_FRONT,
 
   //Market
-  &MK_TreasureChestGameReward,
-  &MK_BombchuBowlingFirstPrize,
-  &MK_BombchuBowlingSecondPrize,
-  &MK_BombchuBowlingBombchus,
-  &MK_LostDog,
-  &MK_ShootingGalleryReward,
-  &MK_10BigPoes,
+  MARKET_TREASURE_CHEST_GAME_REWARD,
+  MARKET_BOMBCHU_BOWLING_FIRST_PRIZE,
+  MARKET_BOMBCHU_BOWLING_SECOND_PRIZE,
+  MARKET_BOMBCHU_BOWLING_BOMBCHUS,
+  MARKET_LOST_DOG,
+  MARKET_SHOOTING_GALLERY_REWARD,
+  MARKET_10_BIG_POES,
 
   //Market Shops
-  &MK_BombchuShopItem1,
-  &MK_BombchuShopItem2,
-  &MK_BombchuShopItem3,
-  &MK_BombchuShopItem4,
-  &MK_BombchuShopItem5,
-  &MK_BombchuShopItem6,
-  &MK_BombchuShopItem7,
-  &MK_BombchuShopItem8,
-  &MK_PotionShopItem1,
-  &MK_PotionShopItem2,
-  &MK_PotionShopItem3,
-  &MK_PotionShopItem4,
-  &MK_PotionShopItem5,
-  &MK_PotionShopItem6,
-  &MK_PotionShopItem7,
-  &MK_PotionShopItem8,
-  &MK_BazaarItem1,
-  &MK_BazaarItem2,
-  &MK_BazaarItem3,
-  &MK_BazaarItem4,
-  &MK_BazaarItem5,
-  &MK_BazaarItem6,
-  &MK_BazaarItem7,
-  &MK_BazaarItem8,
+  MARKET_BOMBCHU_SHOP_ITEM_1,
+  MARKET_BOMBCHU_SHOP_ITEM_2,
+  MARKET_BOMBCHU_SHOP_ITEM_3,
+  MARKET_BOMBCHU_SHOP_ITEM_4,
+  MARKET_BOMBCHU_SHOP_ITEM_5,
+  MARKET_BOMBCHU_SHOP_ITEM_6,
+  MARKET_BOMBCHU_SHOP_ITEM_7,
+  MARKET_BOMBCHU_SHOP_ITEM_8,
+  MARKET_POTION_SHOP_ITEM_1,
+  MARKET_POTION_SHOP_ITEM_2,
+  MARKET_POTION_SHOP_ITEM_3,
+  MARKET_POTION_SHOP_ITEM_4,
+  MARKET_POTION_SHOP_ITEM_5,
+  MARKET_POTION_SHOP_ITEM_6,
+  MARKET_POTION_SHOP_ITEM_7,
+  MARKET_POTION_SHOP_ITEM_8,
+  MARKET_BAZAAR_ITEM_1,
+  MARKET_BAZAAR_ITEM_2,
+  MARKET_BAZAAR_ITEM_3,
+  MARKET_BAZAAR_ITEM_4,
+  MARKET_BAZAAR_ITEM_5,
+  MARKET_BAZAAR_ITEM_6,
+  MARKET_BAZAAR_ITEM_7,
+  MARKET_BAZAAR_ITEM_8,
 
   //Hyrule Castle
-  &HC_MalonEgg,
-  &HC_ZeldasLetter,
-  &SongFromImpa,
-  &HC_GreatFairyReward,
-  &OGC_GreatFairyReward,
+  HC_MALON_EGG,
+  HC_ZELDAS_LETTER,
+  SONG_FROM_IMPA,
+  HC_GREAT_FAIRY_REWARD,
+  OGC_GREAT_FAIRY_REWARD,
 
   //Temple of Time
-  &SheikAtTemple,
-  &ToT_LightArrowCutscene,
+  SHEIK_AT_TEMPLE,
+  TOT_LIGHT_ARROWS_CUTSCENE,
 
   //Kakariko
-  &SheikInKakariko,
-  &Kak_RedeadGrottoChest,
-  &Kak_OpenGrottoChest,
-  &Kak_10GoldSkulltulaReward,
-  &Kak_20GoldSkulltulaReward,
-  &Kak_30GoldSkulltulaReward,
-  &Kak_40GoldSkulltulaReward,
-  &Kak_50GoldSkulltulaReward,
-  &Kak_ManOnRoof,
-  &Kak_ShootingGalleryReward,
-  &Kak_AnjuAsChild,
-  &Kak_AnjuAsAdult,
-  &Kak_ImpasHouseFreestandingPoH,
-  &Kak_WindmillFreestandingPoH,
-  &SongFromWindmill,
-  &Kak_ImpasHouseCow,
+  SHEIK_IN_KAKARIKO,
+  KAK_REDEAD_GROTTO_CHEST,
+  KAK_OPEN_GROTTO_CHEST,
+  KAK_10_GOLD_SKULLTULA_REWARD,
+  KAK_20_GOLD_SKULLTULA_REWARD,
+  KAK_30_GOLD_SKULLTULA_REWARD,
+  KAK_40_GOLD_SKULLTULA_REWARD,
+  KAK_50_GOLD_SKULLTULA_REWARD,
+  KAK_MAN_ON_ROOF,
+  KAK_SHOOTING_GALLERY_REWARD,
+  KAK_ANJU_AS_CHILD,
+  KAK_ANJU_AS_ADULT,
+  KAK_IMPAS_HOUSE_FREESTANDING_POH,
+  KAK_WINDMILL_FREESTANDING_POH,
+  SONG_FROM_WINDMILL,
+  KAK_IMPAS_HOUSE_COW,
 
   //Kakariko Shops
-  &Kak_PotionShopItem1,
-  &Kak_PotionShopItem2,
-  &Kak_PotionShopItem3,
-  &Kak_PotionShopItem4,
-  &Kak_PotionShopItem5,
-  &Kak_PotionShopItem6,
-  &Kak_PotionShopItem7,
-  &Kak_PotionShopItem8,
-  &Kak_BazaarItem1,
-  &Kak_BazaarItem2,
-  &Kak_BazaarItem3,
-  &Kak_BazaarItem4,
-  &Kak_BazaarItem5,
-  &Kak_BazaarItem6,
-  &Kak_BazaarItem7,
-  &Kak_BazaarItem8,
+  KAK_POTION_SHOP_ITEM_1,
+  KAK_POTION_SHOP_ITEM_2,
+  KAK_POTION_SHOP_ITEM_3,
+  KAK_POTION_SHOP_ITEM_4,
+  KAK_POTION_SHOP_ITEM_5,
+  KAK_POTION_SHOP_ITEM_6,
+  KAK_POTION_SHOP_ITEM_7,
+  KAK_POTION_SHOP_ITEM_8,
+  KAK_BAZAAR_ITEM_1,
+  KAK_BAZAAR_ITEM_2,
+  KAK_BAZAAR_ITEM_3,
+  KAK_BAZAAR_ITEM_4,
+  KAK_BAZAAR_ITEM_5,
+  KAK_BAZAAR_ITEM_6,
+  KAK_BAZAAR_ITEM_7,
+  KAK_BAZAAR_ITEM_8,
 
   //Graveyard
-  &GY_HookshotChest,
-  &GY_ShieldGraveChest,
-  &GY_HeartPieceGraveChest,
-  &GY_ComposersGraveChest,
-  &SongFromComposersGrave,
-  &GY_FreestandingPoH,
-  &GY_DampeRaceFreestandingPoH,
-  &GY_DampeGravediggingTour,
+  GRAVEYARD_HOOKSHOT_CHEST,
+  GRAVEYARD_SHIELD_GRAVE_CHEST,
+  GRAVEYARD_HEART_PIECE_GRAVE_CHEST,
+  GRAVEYARD_COMPOSERS_GRAVE_CHEST,
+  SONG_FROM_COMPOSERS_GRAVE,
+  GRAVEYARD_FREESTANDING_POH,
+  GRAVEYARD_DAMPE_RACE_FREESTANDING_POH,
+  GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR,
 
   //Death Mountain Trail
-  &DMT_Chest,
-  &DMT_StormsGrottoChest,
-  &DMT_Biggoron,
-  &DMT_GreatFairyReward,
-  &DMT_FreestandingPoH,
-  &DMT_CowGrottoCow,
+  DMT_CHEST,
+  DMT_STORMS_GROTTO_CHEST,
+  DMT_BIGGORON,
+  DMT_GREAT_FAIRY_REWARD,
+  DMT_FREESTANDING_POH,
+  DMT_COW_GROTTO_COW,
 
   //Goron City
-  &GC_MazeLeftChest,
-  &GC_MazeCenterChest,
-  &GC_MazeRightChest,
-  &GC_RollingGoronAsChild,
-  &GC_RollingGoronAsAdult,
-  &GC_DaruniasJoy,
-  &GC_PotFreestandingPoH,
-  &GC_DekuScrubGrottoLeft,
-  &GC_DekuScrubGrottoRight,
-  &GC_DekuScrubGrottoCenter,
+  GC_MAZE_LEFT_CHEST,
+  GC_MAZE_CENTER_CHEST,
+  GC_MAZE_RIGHT_CHEST,
+  GC_ROLLING_GORON_AS_CHILD,
+  GC_ROLLING_GORON_AS_ADULT,
+  GC_DARUNIAS_JOY,
+  GC_POT_FREESTANDING_POH,
+  GC_DEKU_SCRUB_GROTTO_LEFT,
+  GC_DEKU_SCRUB_GROTTO_RIGHT,
+  GC_DEKU_SCRUB_GROTTO_CENTER,
 
   //Goron City Shop
-  &GC_ShopItem1,
-  &GC_ShopItem2,
-  &GC_ShopItem3,
-  &GC_ShopItem4,
-  &GC_ShopItem5,
-  &GC_ShopItem6,
-  &GC_ShopItem7,
-  &GC_ShopItem8,
+  GC_SHOP_ITEM_1,
+  GC_SHOP_ITEM_2,
+  GC_SHOP_ITEM_3,
+  GC_SHOP_ITEM_4,
+  GC_SHOP_ITEM_5,
+  GC_SHOP_ITEM_6,
+  GC_SHOP_ITEM_7,
+  GC_SHOP_ITEM_8,
 
   //Death Mountain
-  &DMC_UpperGrottoChest,
-  &DMC_WallFreestandingPoH,
-  &DMC_VolcanoFreestandingPoH,
-  &SheikInCrater,
-  &DMC_DekuScrub,
-  &DMC_GreatFairyReward,
-  &DMC_DekuScrubGrottoLeft,
-  &DMC_DekuScrubGrottoRight,
-  &DMC_DekuScrubGrottoCenter,
+  DMC_UPPER_GROTTO_CHEST,
+  DMC_WALL_FREESTANDING_POH,
+  DMC_VOLCANO_FREESTANDING_POH,
+  SHEIK_IN_CRATER,
+  DMC_DEKU_SCRUB,
+  DMC_GREAT_FAIRY_REWARD,
+  DMC_DEKU_SCRUB_GROTTO_LEFT,
+  DMC_DEKU_SCRUB_GROTTO_RIGHT,
+  DMC_DEKU_SCRUB_GROTTO_CENTER,
 
   //Zoras River
-  &ZR_OpenGrottoChest,
-  &ZR_MagicBeanSalesman,
-  &ZR_FrogsOcarinaGame,
-  &ZR_FrogsInTheRain,
-  &ZR_NearOpenGrottoFreestandingPoH,
-  &ZR_NearDomainFreestandingPoH,
-  &ZR_DekuScrubGrottoRear,
-  &ZR_DekuScrubGrottoFront,
+  ZR_OPEN_GROTTO_CHEST,
+  ZR_MAGIC_BEAN_SALESMAN,
+  ZR_FROGS_OCARINA_GAME,
+  ZR_FROGS_IN_THE_RAIN,
+  ZR_NEAR_OPEN_GROTTO_FREESTANDING_POH,
+  ZR_NEAR_DOMAIN_FREESTANDING_POH,
+  ZR_DEKU_SCRUB_GROTTO_REAR,
+  ZR_DEKU_SCRUB_GROTTO_FRONT,
 
   //Zoras Domain
-  &ZD_Chest,
-  &ZD_DivingMinigame,
-  &ZD_KingZoraThawed,
+  ZD_CHEST,
+  ZD_DIVING_MINIGAME,
+  ZD_KING_ZORA_THAWED,
 
   //Zora's Domain Shop
-  &ZD_ShopItem1,
-  &ZD_ShopItem2,
-  &ZD_ShopItem3,
-  &ZD_ShopItem4,
-  &ZD_ShopItem5,
-  &ZD_ShopItem6,
-  &ZD_ShopItem7,
-  &ZD_ShopItem8,
+  ZD_SHOP_ITEM_1,
+  ZD_SHOP_ITEM_2,
+  ZD_SHOP_ITEM_3,
+  ZD_SHOP_ITEM_4,
+  ZD_SHOP_ITEM_5,
+  ZD_SHOP_ITEM_6,
+  ZD_SHOP_ITEM_7,
+  ZD_SHOP_ITEM_8,
 
   //Zoras Fountain
-  &ZF_IcebergFreestandingPoH,
-  &ZF_BottomFreestandingPoH,
-  &ZF_GreatFairyReward,
+  ZF_ICEBERG_FREESTANDING_POH,
+  ZF_BOTTOM_FREESTANDING_POH,
+  ZF_GREAT_FAIRY_REWARD,
 
   //Lon Lon Ranch
-  &SongFromMalon,
-  &LLR_TalonsChickens,
-  &LLR_FreestandingPoH,
-  &LLR_DekuScrubGrottoLeft,
-  &LLR_DekuScrubGrottoRight,
-  &LLR_DekuScrubGrottoCenter,
-  &LLR_StablesLeftCow,
-  &LLR_StablesRightCow,
-  &LLR_TowerLeftCow,
-  &LLR_TowerRightCow,
+  SONG_FROM_MALON,
+  LLR_TALONS_CHICKENS,
+  LLR_FREESTANDING_POH,
+  LLR_DEKU_SCRUB_GROTTO_LEFT,
+  LLR_DEKU_SCRUB_GROTTO_RIGHT,
+  LLR_DEKU_SCRUB_GROTTO_CENTER,
+  LLR_STABLES_LEFT_COW,
+  LLR_STABLES_RIGHT_COW,
+  LLR_TOWER_LEFT_COW,
+  LLR_TOWER_RIGHT_COW,
 
   /*-------------------------------
      --- GOLD SKULLTULA TOKENS ---
     -------------------------------*/
 
   //Overworld
-  &KF_GS_BeanPatch,
-  &KF_GS_KnowItAllHouse,
-  &KF_GS_HouseOfTwins,
+  KF_GS_BEAN_PATCH,
+  KF_GS_KNOW_IT_ALL_HOUSE,
+  KF_GS_HOUSE_OF_TWINS,
 
-  &LW_GS_BeanPatchNearBridge,
-  &LW_GS_BeanPatchNearTheater,
-  &LW_GS_AboveTheater,
-  &Meadow_GS,
+  LW_GS_BEAN_PATCH_NEAR_BRIDGE,
+  LW_GS_BEAN_PATCH_NEAR_THEATER,
+  LW_GS_ABOVE_THEATER,
+  SFM_GS,
 
-  &HF_GS_CowGrotto,
-  &HF_GS_NearKakGrotto,
+  HF_GS_COW_GROTTO,
+  HF_GS_NEAR_KAK_GROTTO,
 
-  &LH_GS_BeanPatch,
-  &LH_GS_SmallIsland,
-  &LH_GS_LabWall,
-  &LH_GS_LabCrate,
-  &LH_GS_Tree,
+  LH_GS_BEAN_PATCH,
+  LH_GS_SMALL_ISLAND,
+  LH_GS_LAB_WALL,
+  LH_GS_LAB_CRATE,
+  LH_GS_TREE,
 
-  &GV_GS_BeanPatch,
-  &GV_GS_SmallBridge,
-  &GV_GS_Pillar,
-  &GV_GS_BehindTent,
+  GV_GS_BEAN_PATCH,
+  GV_GS_SMALL_BRIDGE,
+  GV_GS_PILLAR,
+  GV_GS_BEHIND_TENT,
 
-  &GF_GS_ArcheryRange,
-  &GF_GS_TopFloor,
+  GF_GS_ARCHERY_RANGE,
+  GF_GS_TOP_FLOOR,
 
-  &HW_GS,
-  &Colossus_GS_BeanPatch,
-  &Colossus_GS_Hill,
-  &Colossus_GS_Tree,
+  WASTELAND_GS,
+  COLOSSUS_GS_BEAN_PATCH,
+  COLOSSUS_GS_HILL,
+  COLOSSUS_GS_TREE,
 
-  &outsideGanonsCastle_GS,
-  &HC_GS_StormsGrotto,
-  &HC_GS_Tree,
-  &MK_GS_GuardHouse,
+  OGC_GS,
+  HC_GS_STORMS_GROTTO,
+  HC_GS_TREE,
+  MARKET_GS_GUARD_HOUSE,
 
-  &Kak_GS_HouseUnderConstruction,
-  &Kak_GS_SkulltulaHouse,
-  &Kak_GS_GuardsHouse,
-  &Kak_GS_Tree,
-  &Kak_GS_Watchtower,
-  &Kak_GS_AboveImpasHouse,
+  KAK_GS_HOUSE_UNDER_CONSTRUCTION,
+  KAK_GS_SKULLTULA_HOUSE,
+  KAK_GS_GUARDS_HOUSE,
+  KAK_GS_TREE,
+  KAK_GS_WATCHTOWER,
+  KAK_GS_ABOVE_IMPAS_HOUSE,
 
-  &DMC_GS_BeanPatch,
-  &DMC_GS_Crate,
+  DMC_GS_BEAN_PATCH,
+  DMC_GS_CRATE,
 
-  &DMT_GS_BeanPatch,
-  &DMT_GS_NearKak,
-  &DMT_GS_AboveDodongosCavern,
-  &DMT_GS_FallingRocksPath,
+  DMT_GS_BEAN_PATCH,
+  DMT_GS_NEAR_KAK,
+  DMT_GS_ABOVE_DODONGOS_CAVERN,
+  DMT_GS_FALLING_ROCKS_PATH,
 
-  &GC_GS_CenterPlatform,
-  &GC_GS_BoulderMaze,
-  &GY_GS_Wall,
-  &GY_GS_BeanPatch,
+  GC_GS_CENTER_PLATFORM,
+  GC_GS_BOULDER_MAZE,
+  GRAVEYARD_GS_WALL,
+  GRAVEYARD_GS_BEAN_PATCH,
 
-  &ZR_GS_Ladder,
-  &ZR_GS_Tree,
-  &ZR_GS_AboveBridge,
-  &ZR_GS_NearRaisedGrottos,
+  ZR_GS_LADDER,
+  ZR_GS_TREE,
+  ZR_GS_ABOVE_BRIDGE,
+  ZR_GS_NEAR_RAISED_GROTTOS,
 
-  &ZD_GS_FrozenWaterfall,
-  &ZF_GS_AboveTheLog,
-  &ZF_GS_HiddenCave,
-  &ZF_GS_Tree,
+  ZD_GS_FROZEN_WATERFALL,
+  ZF_GS_ABOVE_THE_LOG,
+  ZF_GS_HIDDEN_CAVE,
+  ZF_GS_TREE,
 
-  &LLR_GS_BackWall,
-  &LLR_GS_RainShed,
-  &LLR_GS_HouseWindow,
-  &LLR_GS_Tree,
+  LLR_GS_BACK_WALL,
+  LLR_GS_RAIN_SHED,
+  LLR_GS_HOUSE_WINDOW,
+  LLR_GS_TREE,
 };
+
+ItemLocation* Location(u32 locKey) {
+    return &(locationTable[locKey]);
+}
 
 std::vector<u32> allLocations = {};
 std::vector<u32> everyPossibleLocation = {};
@@ -1407,10 +1412,9 @@ void AddLocations(const Container& locations, std::vector<u32>* destination = &a
 
 //sort through Vanilla and MQ dungeon locations
 void GenerateLocationPool() {
-  using namespace Settings;
 
   allLocations.clear();
-  AddLocation(&LinksPocket);
+  AddLocation(LINKS_POCKET);
   AddLocations(overworldLocations);
 
   for (auto dungeon : Dungeon::dungeonList) {
@@ -1418,7 +1422,8 @@ void GenerateLocationPool() {
   }
 }
 
-void PlaceItemInLocation(u32 loc, u32 item, bool applyEffectImmediately /*= false*/) {
+void PlaceItemInLocation(u32 locKey, u32 item, bool applyEffectImmediately /*= false*/) {
+  auto loc = Location(locKey);
   PlacementLog_Msg("\n");
   PlacementLog_Msg(ItemTable(item).GetName());
   PlacementLog_Msg(" placed at ");
@@ -1440,7 +1445,7 @@ void PlaceItemInLocation(u32 loc, u32 item, bool applyEffectImmediately /*= fals
   if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
     ItemAndPrice newpair;
     newpair.Name = ItemTable(item).GetName();
-    int index = GetShopIndex(loc);
+    int index = GetShopIndex(locKey);
     newpair.Price = ItemTable(ShopItems[index]).GetPrice();
     NonShopItems[TransformShopIndex(index)] = newpair;
   }
@@ -1449,8 +1454,8 @@ void PlaceItemInLocation(u32 loc, u32 item, bool applyEffectImmediately /*= fals
 }
 
 //Same as PlaceItemInLocation, except a price is set as well as the item
-void PlaceShopItemInLocation(u32 loc, u32 item, u16 price, bool applyEffectImmediately /*= false*/) {
-
+void PlaceShopItemInLocation(u32 locKey, u32 item, u16 price, bool applyEffectImmediately /*= false*/) {
+  auto loc = Location(locKey);
   PlacementLog_Msg("\n");
   PlacementLog_Msg(ItemTable(item).GetName());
   PlacementLog_Msg(" placed at ");
@@ -1473,9 +1478,9 @@ void PlaceShopItemInLocation(u32 loc, u32 item, u16 price, bool applyEffectImmed
 
 std::vector<u32> GetLocations(const std::vector<u32>& locationPool, Category category) {
   std::vector<u32> locationsInCategory;
-  for (auto* loc : locationPool) {
-    if (loc->IsCategory(category)) {
-      locationsInCategory.push_back(loc);
+  for (u32 locKey : locationPool) {
+    if (Location(locKey)->IsCategory(category)) {
+      locationsInCategory.push_back(locKey);
     }
   }
   return locationsInCategory;
@@ -1483,27 +1488,27 @@ std::vector<u32> GetLocations(const std::vector<u32>& locationPool, Category cat
 
 void LocationReset() {
   for (u32 il : allLocations) {
-    il->RemoveFromPool();
+    Location(il)->RemoveFromPool();
   }
 
-  for (ItemLocation * il : dungeonRewardLocations) {
-    il->RemoveFromPool();
+  for (u32 il : dungeonRewardLocations) {
+    Location(il)->RemoveFromPool();
   }
 
-  for (ItemLocation * il : gossipStoneLocations) {
-    il->RemoveFromPool();
+  for (u32 il : gossipStoneLocations) {
+    Location(il)->RemoveFromPool();
   }
 
-  (&GanondorfHint)->RemoveFromPool();
+  Location(GANONDORF_HINT)->RemoveFromPool();
 }
 
 void ItemReset() {
   for (u32 il : allLocations) {
-    il->ResetVariables();
+    Location(il)->ResetVariables();
   }
 
   for (u32 il : dungeonRewardLocations) {
-    il->ResetVariables();
+    Location(il)->ResetVariables();
   }
 
   itemsPlaced = 0;
@@ -1511,7 +1516,7 @@ void ItemReset() {
 
 void HintReset() {
   for (u32 il : gossipStoneLocations) {
-    il->ResetVariables();
+    Location(il)->ResetVariables();
   }
 }
 
@@ -1536,7 +1541,7 @@ void CreateOverrides() {
     ItemOverride_Value val = ItemTable(loc->GetPlacedItem()).Value();
     //If this is an ice trap in a shop, change the name based on what the model will look like
     if (loc->GetPlacedItem() == ICE_TRAP && loc->IsCategory(Category::cShop)) {
-      NonShopItems[TransformShopIndex(GetShopIndex(loc))].Name = GetIceTrapName(val.looksLikeItemId);
+      NonShopItems[TransformShopIndex(GetShopIndex(locKey))].Name = GetIceTrapName(val.looksLikeItemId);
     }
     overrides.insert({
       .key = loc->Key(),

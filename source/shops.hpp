@@ -15,7 +15,7 @@ extern int GetRandomShopPrice();
 extern s16 GetRandomScrubPrice();
 extern int GetShopsanityReplaceAmount();
 extern std::string GetIceTrapName(u8 id);
-extern int GetShopIndex(ItemLocation* loc);
+extern int GetShopIndex(u32 loc);
 extern int TransformShopIndex(int index);
 extern void PlaceShopItems();
 extern void ShuffleShop(std::vector<u32>& ShopItems, std::vector<int> indicesToExclude);

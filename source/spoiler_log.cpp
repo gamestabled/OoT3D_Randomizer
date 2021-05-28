@@ -140,9 +140,13 @@ static void WriteSettings() {
   }
 
   //List Excluded Locations
-  logtxt += "\nExcluded Locations:\n";
+  bool excludedHeader = false;
   for (auto& l : Settings::excludeLocationsOptions) {
     if (l->GetSelectedOptionIndex() == EXCLUDE) {
+      if (!excludedHeader) {
+        logtxt += "\nExcluded Locations:\n";
+        excludedHeader = true;
+      }
       std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary
@@ -156,11 +160,16 @@ static void WriteSettings() {
   }
 
   //List Starting Inventory
-  logtxt += "\nStarting Inventory:\n";
+  bool inventoryHeader = false;
   //start i at 3 to skip over the toggle, 'Start with Consumables', and 'Start with Max Rupees'
   for (size_t i = 3; i < Settings::startingInventoryOptions.size(); i++) {
     auto setting = Settings::startingInventoryOptions[i];
     if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
+      //only print the header if there's at least 1 starting item
+      if (!inventoryHeader) {
+        logtxt += "\nStarting Inventory:\n";
+        inventoryHeader = true;
+      }
       std::string item = setting->GetSelectedOptionText();
 
       logtxt += "\t";
@@ -170,9 +179,15 @@ static void WriteSettings() {
   }
 
   //List Enabled Tricks
-  logtxt += "\nEnabled Tricks:\n";
+  bool trickHeader = false;
   for (auto& l : Settings::detailedLogicOptions) {
     if (l->GetSelectedOptionIndex() == TRICK_ENABLED && l->IsCategory(OptionCategory::Setting)) {
+      //only print the header if at least one trick is enabled
+      if (!trickHeader) {
+        logtxt += "\nEnabled Tricks:\n";
+        trickHeader = true;
+      }
+
       std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary
@@ -226,9 +241,9 @@ bool SpoilerLog_Write() {
   for (uint i = 0; i < playthroughLocations.size(); i++) {
     logtxt += "Sphere " + std::to_string(i+1) + ":\n";
     //Print all item locations in this sphere
-    for (ItemLocation* location : playthroughLocations[i]) {
+    for (u32 location : playthroughLocations[i]) {
       logtxt += "\t";
-      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
       logtxt += '\n';
     }
   }
@@ -238,22 +253,22 @@ bool SpoilerLog_Write() {
   //Write Hints
   if (Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
     logtxt += "\nHints:\n";
-    for (ItemLocation* location : gossipStoneLocations) {
+    for (u32 location : gossipStoneLocations) {
       logtxt += "\t";
-      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), ItemTable(location).GetName());
     }
   }
 
   logtxt += "\nAll Locations:\n";
-  for (ItemLocation* location : allLocations) {
+  for (u32 location : allLocations) {
     logtxt += "\t";
-    if (location->IsCategory(Category::cShop)) { //Shop item
-      SpoilerLog_SaveShopLocation(location->GetName(), location->GetPlacedItemName(), location->GetPrice());
+    if (Location(location)->IsCategory(Category::cShop)) { //Shop item
+      SpoilerLog_SaveShopLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName(), Location(location)->GetPrice());
     }
     else { //Normal item
-      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
     }
-    logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
+    logtxt += Location(location)->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
 
   Result res = 0;

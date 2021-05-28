@@ -13,9 +13,9 @@ class DungeonInfo {
 public:
     DungeonInfo(std::string name_, u32 map_, u32 compass_,
                 u32 smallKey_, u32 bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
-                std::vector<ItemLocation*> vanillaLocations_,
-                std::vector<ItemLocation*> mqLocations_,
-                std::vector<ItemLocation*> sharedLocations_);
+                std::vector<u32> vanillaLocations_,
+                std::vector<u32> mqLocations_,
+                std::vector<u32> sharedLocations_);
     ~DungeonInfo();
 
     std::string_view GetName() const {
@@ -53,10 +53,10 @@ public:
     void PlaceVanillaSmallKeys();
 
     // Gets the chosen dungeon locations for a playthrough (so either MQ or Vanilla)
-    std::vector<ItemLocation*> GetDungeonLocations() const;
+    std::vector<u32> GetDungeonLocations() const;
 
     // Gets all dungeon locations (MQ + Vanilla)
-    std::vector<ItemLocation*> GetEveryLocation() const;
+    std::vector<u32> GetEveryLocation() const;
 
 private:
     std::string name;
@@ -67,9 +67,9 @@ private:
     u8 vanillaKeyCount;
     u8 mqKeyCount;
     bool masterQuest = false;
-    std::vector<ItemLocation*> vanillaLocations;
-    std::vector<ItemLocation*> mqLocations;
-    std::vector<ItemLocation*> sharedLocations;
+    std::vector<u32> vanillaLocations;
+    std::vector<u32> mqLocations;
+    std::vector<u32> sharedLocations;
 };
 
 extern DungeonInfo DekuTree;

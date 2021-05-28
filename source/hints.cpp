@@ -142,45 +142,46 @@ static Exit* GetHintRegion(Exit* exit) {
   return &Exits::NoExit;
 }
 
-static std::vector<ItemLocation*> GetAccessibleGossipStones(ItemLocation* hintedLocation = &Ganon) {
+static std::vector<u32> GetAccessibleGossipStones(u32 hintedLocation = GANON) {
   //temporarily remove the hinted location's item, and then perform a
   //reachability search for gossip stone locations.
-  u32 originalItem = hintedLocation->GetPlacedItem();
-  hintedLocation->SetPlacedItem(NONE);
+  u32 originalItem = Location(hintedLocation)->GetPlacedItem();
+  Location(hintedLocation)->SetPlacedItem(NONE);
 
   LogicReset();
   auto accessibleGossipStones = GetAccessibleLocations(gossipStoneLocations);
   //Give the item back to the location
-  hintedLocation->SetPlacedItem(originalItem);
+  Location(hintedLocation)->SetPlacedItem(originalItem);
 
   return accessibleGossipStones;
 }
 
-static void AddHint(Text hint, ItemLocation* gossipStone, const std::vector<u8>& colors = {}) {
-  //save hints as dummy items to gossip stone locations for writing to the spoiler log (figure this out later aftre refactor)
-  gossipStone->SetPlacedItem(HINT);
+static void AddHint(Text hint, u32 gossipStone, const std::vector<u8>& colors = {}) {
+  //save hints as dummy items for writing to the spoiler log
+  NewItem(gossipStone, Item{hint.english, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
+  Location(gossipStone)->SetPlacedItem(gossipStone);
 
   //create the in game message
-  u32 messageId = 0x400 + gossipStone->GetFlag();
+  u32 messageId = 0x400 + Location(gossipStone)->GetFlag();
   CreateMessageFromTextObject(messageId, 0, 2, 3, AddColorsAndFormat(hint, colors));
 }
 
-static void CreateLocationHint(const std::vector<ItemLocation*>& possibleHintLocations) {
+static void CreateLocationHint(const std::vector<u32>& possibleHintLocations) {
   //return if there aren't any hintable locations or gossip stones available
   if (possibleHintLocations.empty()) {
     PlacementLog_Msg("\tNO LOCATIONS TO HINT\n\n");
     return;
   }
 
-  ItemLocation* hintedLocation = RandomElement(possibleHintLocations);
-  const std::vector<ItemLocation*> accessibleGossipStones = GetAccessibleGossipStones(hintedLocation);
+  u32 hintedLocation = RandomElement(possibleHintLocations);
+  const std::vector<u32> accessibleGossipStones = GetAccessibleGossipStones(hintedLocation);
 
   PlacementLog_Msg("\tLocation: ");
-  PlacementLog_Msg(hintedLocation->GetName());
+  PlacementLog_Msg(Location(hintedLocation)->GetName());
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(hintedLocation->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
   PlacementLog_Msg("\n");
 
   if (accessibleGossipStones.empty()) {
@@ -188,30 +189,31 @@ static void CreateLocationHint(const std::vector<ItemLocation*>& possibleHintLoc
     return;
   }
 
-  ItemLocation* gossipStone = RandomElement(accessibleGossipStones);
-  hintedLocation->SetAsHinted();
+  u32 gossipStone = RandomElement(accessibleGossipStones);
+  Location(hintedLocation)->SetAsHinted();
 
   //make hint text
-  Text locationHintText = Hint(hintedLocation->GetHintKey()).GetText();
-  Text itemHintText = Hint(ItemTable(hintedLocation->GetPlacedItem()).GetHintKey()).GetText();
+  Text locationHintText = Hint(Location(hintedLocation)->GetHintKey()).GetText();
+  Text itemHintText = Hint(ItemTable(Location(hintedLocation)->GetPlacedItem()).GetHintKey()).GetText();
   Text prefix = Hint(PREFIX).GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
   PlacementLog_Msg("\tMessage: ");
   PlacementLog_Msg(finalHint.english);
   PlacementLog_Msg("\n\n");
+
   AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
 }
 
 static void CreateWothHint(u8* remainingDungeonWothHints) {
   //get locations that are in the current playthrough
-  std::vector<ItemLocation*> possibleHintLocations = {};
+  std::vector<u32> possibleHintLocations = {};
   //iterate through playthrough locations by sphere
-  for (std::vector<ItemLocation*> sphere : playthroughLocations) {
-    std::vector<ItemLocation*> sphereHintLocations = FilterFromPool(sphere, [remainingDungeonWothHints](ItemLocation* loc){
-      return loc->IsHintable()  && //only filter hintable locations
-            !loc->IsHintedAt()  && //only filter locations that haven't been hinted at
-            (loc->IsOverworld() || (loc->IsDungeon() && (*remainingDungeonWothHints) > 0)); //make sure we haven't surpassed the woth dungeon limit
+  for (std::vector<u32> sphere : playthroughLocations) {
+    std::vector<u32> sphereHintLocations = FilterFromPool(sphere, [remainingDungeonWothHints](u32 loc){
+      return Location(loc)->IsHintable()    && //only filter hintable locations
+            !(Location(loc)->IsHintedAt())  && //only filter locations that haven't been hinted at
+            (Location(loc)->IsOverworld() || (Location(loc)->IsDungeon() && (*remainingDungeonWothHints) > 0)); //make sure we haven't surpassed the woth dungeon limit
     });
     AddElementsToPool(possibleHintLocations, sphereHintLocations);
   }
@@ -221,33 +223,33 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
     PlacementLog_Msg("\tNO LOCATIONS TO HINT\n\n");
     return;
   }
-  ItemLocation* hintedLocation = RandomElement(possibleHintLocations);
+  u32 hintedLocation = RandomElement(possibleHintLocations);
 
   PlacementLog_Msg("\tLocation: ");
-  PlacementLog_Msg(hintedLocation->GetName());
+  PlacementLog_Msg(Location(hintedLocation)->GetName());
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(hintedLocation->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
-  const std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
+  const std::vector<u32> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
 
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
   }
-  hintedLocation->SetAsHinted();
-  ItemLocation* gossipStone = RandomElement(gossipStoneLocations);
+  Location(hintedLocation)->SetAsHinted();
+  u32 gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
   Text locationText;
-  if (hintedLocation->IsDungeon()) {
+  if (Location(hintedLocation)->IsDungeon()) {
     *remainingDungeonWothHints -= 1;
-    locationText = Hint(hintedLocation->GetParentRegion()->hintKey).GetText();
+    locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
   } else {
-    locationText = Hint(GetHintRegion(hintedLocation->GetParentRegion())->hintKey).GetText();
+    locationText = Hint(GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey).GetText();
   }
   Text finalWothHint = Hint(PREFIX).GetText()+"#"+locationText+"#"+Hint(WAY_OF_THE_HERO).GetText();
   PlacementLog_Msg("\tMessage: ");
@@ -256,42 +258,42 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   AddHint(finalWothHint, gossipStone, {QM_LBLUE});
 }
 
-static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLocation*>& barrenLocations) {
+static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<u32>& barrenLocations) {
   //remove dungeon locations if necessary
   if (*remainingDungeonBarrenHints < 1) {
-    barrenLocations = FilterFromPool(barrenLocations, [](ItemLocation* loc){return !loc->IsDungeon();});
+    barrenLocations = FilterFromPool(barrenLocations, [](u32 loc){return !(Location(loc)->IsDungeon());});
   }
 
   if (barrenLocations.empty()) {
     return;
   }
 
-  ItemLocation* hintedLocation = RandomElement(barrenLocations, true);
+  u32 hintedLocation = RandomElement(barrenLocations, true);
 
   PlacementLog_Msg("\tLocation: ");
-  PlacementLog_Msg(hintedLocation->GetName());
+  PlacementLog_Msg(Location(hintedLocation)->GetName());
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(hintedLocation->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
-  const std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
+  const std::vector<u32> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
   }
-  hintedLocation->SetAsHinted();
-  ItemLocation* gossipStone = RandomElement(gossipStoneLocations);
+  Location(hintedLocation)->SetAsHinted();
+  u32 gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
   Text locationText;
-  if (hintedLocation->IsDungeon()) {
+  if (Location(hintedLocation)->IsDungeon()) {
     *remainingDungeonBarrenHints -= 1;
-    locationText = Hint(hintedLocation->GetParentRegion()->hintKey).GetText();
+    locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
   } else {
-    locationText = Hint(GetHintRegion(hintedLocation->GetParentRegion())->hintKey).GetText();
+    locationText = Hint(GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey).GetText();
   }
   Text finalBarrenHint = Hint(PREFIX).GetText()+Hint(PLUNDERING).GetText()+"#"+locationText+"#"+Hint(FOOLISH).GetText();
   PlacementLog_Msg("\tMessage: ");
@@ -300,51 +302,51 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<ItemLo
   AddHint(finalBarrenHint, gossipStone, {QM_PINK});
 
   //get rid of all other locations in this same barren region
-  barrenLocations = FilterFromPool(barrenLocations, [hintedLocation](ItemLocation* loc){
-    return GetHintRegion(loc->GetParentRegion())->hintKey != GetHintRegion(hintedLocation->GetParentRegion())->hintKey;
+  barrenLocations = FilterFromPool(barrenLocations, [hintedLocation](u32 loc){
+    return GetHintRegion(Location(loc)->GetParentRegion())->hintKey != GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey;
   });
 
 }
 
 static void CreateRandomLocationHint(bool goodItem = false) {
-  const std::vector<ItemLocation*> possibleHintLocations = FilterFromPool(allLocations, [goodItem](const ItemLocation* loc) {
-    return loc->IsHintable() && !loc->IsHintedAt() && (!goodItem || ItemTable(loc->GetPlacedItem()).IsMajorItem());
+  const std::vector<u32> possibleHintLocations = FilterFromPool(allLocations, [goodItem](u32 loc) {
+    return Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt()) && (!goodItem || ItemTable(Location(loc)->GetPlacedItem()).IsMajorItem());
   });
   //If no more locations can be hinted at, then just try to get another hint
   if (possibleHintLocations.empty()) {
     PlacementLog_Msg("\tNO LOCATIONS TO HINT\n\n");
     return;
   }
-  ItemLocation* hintedLocation = RandomElement(possibleHintLocations);
+  u32 hintedLocation = RandomElement(possibleHintLocations);
 
   PlacementLog_Msg("\tLocation: ");
-  PlacementLog_Msg(hintedLocation->GetName());
+  PlacementLog_Msg(Location(hintedLocation)->GetName());
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(hintedLocation->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
   PlacementLog_Msg("\n");
 
   //get an acessible gossip stone
-  const std::vector<ItemLocation*> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
+  const std::vector<u32> gossipStoneLocations = GetAccessibleGossipStones(hintedLocation);
   if (gossipStoneLocations.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
   }
-  hintedLocation->SetAsHinted();
-  ItemLocation* gossipStone = RandomElement(gossipStoneLocations);
+  Location(hintedLocation)->SetAsHinted();
+  u32 gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
-  Text itemText = Hint(ItemTable(hintedLocation->GetPlacedItem()).GetHintKey()).GetText();
-  if (hintedLocation->IsDungeon()) {
-    Text locationText = Hint(hintedLocation->GetParentRegion()->hintKey).GetText();
+  Text itemText = Hint(ItemTable(Location(hintedLocation)->GetPlacedItem()).GetHintKey()).GetText();
+  if (Location(hintedLocation)->IsDungeon()) {
+    Text locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# hoards #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
   } else {
-    Text locationText = Hint(GetHintRegion(hintedLocation->GetParentRegion())->hintKey).GetText();
+    Text locationText = Hint(GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey).GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# can be found at #"+locationText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
@@ -361,12 +363,12 @@ static void CreateJunkHint() {
   //duplicate junk hints are possible for now
   const HintText junkHint = RandomElement(GetHintCategory(HintCategory::Junk));
   LogicReset();
-  const std::vector<ItemLocation*> gossipStones = GetAccessibleLocations(gossipStoneLocations);
+  const std::vector<u32> gossipStones = GetAccessibleLocations(gossipStoneLocations);
   if (gossipStones.empty()) {
     PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
     return;
   }
-  ItemLocation* gossipStone = RandomElement(gossipStones);
+  u32 gossipStone = RandomElement(gossipStones);
   Text hint = junkHint.GetText();
 
   PlacementLog_Msg("\tMessage: ");
@@ -376,25 +378,25 @@ static void CreateJunkHint() {
   AddHint(hint, gossipStone);
 }
 
-static std::vector<ItemLocation*> CalculateBarrenRegions() {
-  std::vector<ItemLocation*> barrenLocations = {};
-  std::vector<ItemLocation*> potentiallyUsefulLocations = {};
+static std::vector<u32> CalculateBarrenRegions() {
+  std::vector<u32> barrenLocations = {};
+  std::vector<u32> potentiallyUsefulLocations = {};
 
-  for (ItemLocation* location : allLocations) {
-    if (ItemTable(location->GetPlacedItem()).IsMajorItem()) {
-      AddElementsToPool(potentiallyUsefulLocations, std::vector{location});
+  for (u32 loc : allLocations) {
+    if (ItemTable(Location(loc)->GetPlacedItem()).IsMajorItem()) {
+      AddElementsToPool(potentiallyUsefulLocations, std::vector{loc});
     } else {
-      if (location != &LinksPocket) { //Nobody cares to know if Link's Pocket is barren
-        AddElementsToPool(barrenLocations, std::vector{location});
+      if (loc != LINKS_POCKET) { //Nobody cares to know if Link's Pocket is barren
+        AddElementsToPool(barrenLocations, std::vector{loc});
       }
     }
   }
 
   //leave only locations at barren regions in the list
-  auto finalBarrenLocations = FilterFromPool(barrenLocations, [&potentiallyUsefulLocations](ItemLocation* loc){
-    for (ItemLocation* usefulLoc : potentiallyUsefulLocations) {
-      u32 barrenKey = GetHintRegion(loc->GetParentRegion())->hintKey;
-      u32 usefulKey = GetHintRegion(usefulLoc->GetParentRegion())->hintKey;
+  auto finalBarrenLocations = FilterFromPool(barrenLocations, [&potentiallyUsefulLocations](u32 loc){
+    for (u32 usefulLoc : potentiallyUsefulLocations) {
+      u32 barrenKey = GetHintRegion(Location(loc)->GetParentRegion())->hintKey;
+      u32 usefulKey = GetHintRegion(Location(usefulLoc)->GetParentRegion())->hintKey;
       if (barrenKey == usefulKey) {
         return false;
       }
@@ -468,19 +470,20 @@ static void CreateTrialHints() {
 
 static void CreateGanonText() {
 
+
   //funny ganon line
   auto ganonText = RandomElement(GetHintCategory(HintCategory::GanonLine)).GetText();
   CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
 
   //Get the location of the light arrows
-  auto lightArrowLocation = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == LIGHT_ARROWS;});
+  auto lightArrowLocation = FilterFromPool(allLocations, [](u32 loc){return Location(loc)->GetPlacedItem() == LIGHT_ARROWS;});
 
   Text text;
   //If there is no light arrow location, it was in the player's inventory at the start
   if (lightArrowLocation.empty()) {
     text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+Hint(YOUR_POCKET).GetText();
   } else {
-    text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+Hint(GetHintRegion(lightArrowLocation[0]->GetParentRegion())->hintKey).GetText();
+    text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+Hint(GetHintRegion(Location(lightArrowLocation[0])->GetParentRegion())->hintKey).GetText();
   }
   text = text + "!";
 
@@ -500,11 +503,11 @@ void CreateAllHints() {
   // Add 'always' location hints
   if (hintSetting.distTable[static_cast<int>(HintType::Always)].copies > 0) {
     // Only filter locations that had a random item placed at them (e.g. don't get cow locations if shuffle cows is off)
-    const auto alwaysHintLocations = FilterFromPool(allLocations, [](const ItemLocation* loc){
-        return Hint(loc->GetHintKey()).GetType() == HintCategory::Always &&
-               loc->IsHintable()      && !loc->IsHintedAt();
+    const auto alwaysHintLocations = FilterFromPool(allLocations, [](u32 loc){
+        return Hint(Location(loc)->GetHintKey()).GetType() == HintCategory::Always &&
+               Location(loc)->IsHintable()      && !(Location(loc)->IsHintedAt());
     });
-    for (ItemLocation* location : alwaysHintLocations) {
+    for (u32 location : alwaysHintLocations) {
       CreateLocationHint({location});
     }
   }
@@ -527,7 +530,7 @@ void CreateAllHints() {
   auto barrenLocations = CalculateBarrenRegions();
 
   //while there are still gossip stones remaining
-  while (FilterFromPool(gossipStoneLocations, [](ItemLocation* loc){return loc->GetPlacedItem() == NONE;}).size() != 0) {
+  while (FilterFromPool(gossipStoneLocations, [](u32 loc){return Location(loc)->GetPlacedItem() == NONE;}).size() != 0) {
     //TODO: fixed hint types
 
     if (remainingHintTypes.empty()) {
@@ -549,7 +552,7 @@ void CreateAllHints() {
       CreateBarrenHint(&remainingDungeonBarrenHints, barrenLocations);
 
     } else if (type == HintType::Sometimes){
-      std::vector<ItemLocation*> sometimesHintLocations = FilterFromPool(allLocations, [](ItemLocation* loc){return Hint(loc->GetHintKey()).GetType() == HintCategory::Sometimes && loc->IsHintable() && !loc->IsHintedAt();});
+      std::vector<u32> sometimesHintLocations = FilterFromPool(allLocations, [](u32 loc){return Hint(Location(loc)->GetHintKey()).GetType() == HintCategory::Sometimes && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(sometimesHintLocations);
 
     } else if (type == HintType::Random) {
@@ -559,15 +562,15 @@ void CreateAllHints() {
       CreateGoodItemHint();
 
     } else if (type == HintType::Song){
-      std::vector<ItemLocation*> songHintLocations = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->IsCategory(Category::cSong) && loc->IsHintable() && !loc->IsHintedAt();});
+      std::vector<u32> songHintLocations = FilterFromPool(allLocations, [](u32 loc){return Location(loc)->IsCategory(Category::cSong) && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(songHintLocations);
 
     } else if (type == HintType::Overworld){
-      std::vector<ItemLocation*> overworldHintLocations = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->IsOverworld() && loc->IsHintable() && !loc->IsHintedAt();});
+      std::vector<u32> overworldHintLocations = FilterFromPool(allLocations, [](u32 loc){return Location(loc)->IsOverworld() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(overworldHintLocations);
 
     } else if (type == HintType::Dungeon){
-      std::vector<ItemLocation*> dungeonHintLocations = FilterFromPool(allLocations, [](ItemLocation* loc){return loc->IsDungeon() && loc->IsHintable() && !loc->IsHintedAt();});
+      std::vector<u32> dungeonHintLocations = FilterFromPool(allLocations, [](u32 loc){return Location(loc)->IsDungeon() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(dungeonHintLocations);
 
     } else if (type == HintType::Junk) {

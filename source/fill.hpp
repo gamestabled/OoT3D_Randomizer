@@ -2,7 +2,7 @@
 
 #include <vector>
 
-class ItemLocation;
+#include <3ds.h>
 
 enum class SearchMode {
     ReachabilitySearch,
@@ -12,5 +12,5 @@ enum class SearchMode {
 
 int Fill();
 
-std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation*>& allowedLocations,
+std::vector<u32> GetAccessibleLocations(const std::vector<u32>& allowedLocations,
                                                   SearchMode mode = SearchMode::ReachabilitySearch);

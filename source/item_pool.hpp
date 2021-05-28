@@ -9,7 +9,7 @@ class ItemLocation;
 
 void AddItemToPool(std::vector<u32>& pool, u32 item, size_t count = 1);
 u32 GetJunkItem();
-void PlaceJunkInExcludedLocation(ItemLocation* il);
+void PlaceJunkInExcludedLocation(u32 il);
 void GenerateItemPool();
 void AddJunk();
 
