@@ -6133,7 +6133,7 @@ void HintTable_Init() {
 
     hintTable[YOUR_POCKET] = HintText::Exclude({
                      //obscure text
-                     Text{"your pocket", /*french*/"tes poches", /*spanish*/""},
+                     Text{"your pocket", /*french*/"tes poches", /*spanish*/"tu bolsillo"},
     });
 
     /*--------------------------
