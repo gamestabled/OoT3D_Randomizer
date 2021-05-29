@@ -340,14 +340,14 @@ static void CreateRandomLocationHint(bool goodItem = false) {
   Text itemText = Hint(ItemTable(Location(hintedLocation)->GetPlacedItem()).GetHintKey()).GetText();
   if (Location(hintedLocation)->IsDungeon()) {
     Text locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
-    Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# hoards #"+itemText+"#.";
+    Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# "+Hint(HOARDS).GetText()+" #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
   } else {
     Text locationText = Hint(GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey).GetText();
-    Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# can be found at #"+locationText+"#.";
+    Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# "+Hint(CAN_BE_FOUND_AT).GetText()+" #"+locationText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");

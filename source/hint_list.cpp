@@ -24,6 +24,8 @@ void HintTable_Init() {
     hintTable[WAY_OF_THE_HERO] = HintText::Exclude({Text{" is on the way of the hero.", /*french*/"est sur le chemin du héros.", /*spanish*/" aguarda en la senda del héroe."}});
     hintTable[PLUNDERING]      = HintText::Exclude({Text{"plundering ",                 /*french*/"piller ",                     /*spanish*/"vagar por "}});
     hintTable[FOOLISH]         = HintText::Exclude({Text{" is a foolish choice.",       /*french*/" est futile.",                /*spanish*/" no es una sabia decisión."}});
+    hintTable[CAN_BE_FOUND_AT] = HintText::Exclude({Text{"can be found at",             /*french*/"",                            /*spanish*/"se puede hallar en"}});
+    hintTable[HOARDS]          = HintText::Exclude({Text{"hoards",                      /*french*/"",                            /*spanish*/"acapara"}});
 
 
     /*--------------------------
@@ -435,7 +437,7 @@ void HintTable_Init() {
                        Text{"a child's catapult", /*french*/"un jouet d'enfant", /*spanish*/"una catapulta infantil"},
                      },
                        //clear text
-                       Text{"a Slingshot", /*french*/"un lance-pierre", /*spanish*/"un tirachinas"}
+                       Text{"a Slingshot", /*french*/"un lance-pierre", /*spanish*/"una resortera"}
     );
 
     hintTable[PROGRESSIVE_WALLET] = HintText::Item({
@@ -6059,22 +6061,22 @@ void HintTable_Init() {
 
     hintTable[SIX_TRIALS] = HintText::Exclude({
                      //obscure text
-                     Text{"#Ganon's Tower# is protected by a powerful barrier.", /*french*/"#la tour de Ganon# est protégée par une puissante barrière", /*spanish*/""},
+                     Text{"#Ganon's Tower# is protected by a powerful barrier.", /*french*/"#la tour de Ganon# est protégée par une puissante barrière", /*spanish*/"la #torre de Ganon# está protegida por una poderosa barrera"},
     });
 
     hintTable[ZERO_TRIALS] = HintText::Exclude({
                      //obscure text
-                     Text{"Sheik dispelled the barrier around #Ganon's Tower#.", /*french*/"Sheik a dissipé la barrière autour de #la tour de Ganon#", /*spanish*/""},
+                     Text{"Sheik dispelled the barrier around #Ganon's Tower#.", /*french*/"Sheik a dissipé la barrière autour de #la tour de Ganon#", /*spanish*/"Sheik disipó la barrera alrededor de la #torre de Ganon#."},
     });
 
     hintTable[FOUR_TO_FIVE_TRIALS] = HintText::Exclude({
                      //obscure text
-                     Text{" was dispelled by Sheik.", /*french*/" a été dissipée par Sheik.", /*spanish*/""},
+                     Text{" was dispelled by Sheik.", /*french*/" a été dissipée par Sheik.", /*spanish*/" se disipó gracias a Sheik."},
     });
 
     hintTable[ONE_TO_THREE_TRIALS] = HintText::Exclude({
                      //obscure text
-                     Text{" protects Ganons Tower.", /*french*/" protège la tour de Ganon.", /*spanish*/""},
+                     Text{" protects Ganons Tower.", /*french*/" protège la tour de Ganon.", /*spanish*/" protege la torre de Ganon"},
     });
 
     /*--------------------------
