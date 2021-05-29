@@ -1151,6 +1151,8 @@ typedef enum {
   WAY_OF_THE_HERO,
   PLUNDERING,
   FOOLISH,
+  CAN_BE_FOUND_AT,
+  HOARDS,
 
   JUNK01,
   JUNK02,

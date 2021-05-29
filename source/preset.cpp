@@ -98,7 +98,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
 
       // Create the <setting> element
       XMLElement* newSetting = preset.NewElement("setting");
-      newSetting->SetAttribute("name", std::string(setting->GetName()).c_str());
+      newSetting->SetAttribute("name", setting->GetName().data());
       newSetting->SetText(setting->GetSelectedOptionText().c_str());
 
       // Append it to the root node
