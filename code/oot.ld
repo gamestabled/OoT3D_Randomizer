@@ -12,6 +12,10 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearTwo)
 	}
 
+	.patch_ShortenRainbowBridgeCS 0x10b904 : {
+		*(.patch_ShortenRainbowBridgeCS)
+	}
+
 	.patch_BombchuPurchaseableCheck 0x112ED0 : {
 		*(.patch_BombchuPurchaseableCheck)
 	}
