@@ -10,22 +10,36 @@
 void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx){
     DemoKankyo_Update(thisx, globalCtx);
 
-/*  //Warp Song particles. This is meant to skip the warping animations, but it works only in ToT for now, because the
-    //animations use different cutscene data in that scene specifically. To avoid confusion, this is commented out for now
+    //Warp Song particles
     if(thisx->params == 0x000F){
-        u8* warpTimer = (((u8*)thisx)+0x01A6);
-        //Make camera-panning cutscene start immediately
-        if(*warpTimer > 2){
-            *warpTimer = 2;
+        globalCtx->sceneLoadFlag = 0x14;
+        switch (globalCtx->unk_2304[0x0878]){ //text related variable
+            case 0:
+                globalCtx->nextEntranceIndex = 0x0600; //Minuet
+                break;
+            case 1:
+                globalCtx->nextEntranceIndex = 0x04F6; //Bolero
+                break;
+            case 2:
+                globalCtx->nextEntranceIndex = 0x0604; //Serenade
+                break;
+            case 3:
+                globalCtx->nextEntranceIndex = 0x01F1; //Requiem
+                break;
+            case 4:
+                globalCtx->nextEntranceIndex = 0x0568; //Nocturne
+                break;
+            case 5:
+                globalCtx->nextEntranceIndex = 0x05F4; //Prelude
+                break;
+            default:
+                globalCtx->sceneLoadFlag = 0; //if something goes wrong, the animation plays normally
         }
-        //Make camera-panning cutscene end immediately
-        if(CsTimer < 37){
-            CsTimer = 37;
+        //Unset Zoneout Type -3 to avoid cutscene at destination (technically it's not needed)
+        if(gSaveContext.respawnFlag == -3){
+            gSaveContext.respawnFlag = 0;
         }
-        //Unset Zoneout Type -3 to avoid cutscene at destination
-        gSaveContext.respawnFlag = 0;
     }
-*/
 
     //Door of Time, the opening cutscene is playing (only regular one, not beta CS #03)
     if(thisx->params == 0x000D && globalCtx->csCtx.segment == DoT_Opening_Cutscene_Pointer){
