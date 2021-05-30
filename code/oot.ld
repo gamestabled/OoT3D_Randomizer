@@ -340,6 +340,10 @@ SECTIONS
 		*(.patch_CourtyardCheckForVisitedZeldaTwo)
 	}
 
+	.patch_BugsRecatchable 0x212090 : {
+		*(.patch_BugsRecatchable)
+	}
+
 	.patch_DekuSproutCheckForest 0x2153A4 : {
 		*(.patch_DekuSproutCheckForest)
 	}

@@ -1176,6 +1176,11 @@ PlayerGetCustomTunicCMAB_patch:
 FastOwlCutscenes_patch:
     bl hook_FastOwlCutscenes
 
+.section .patch_BugsRecatchable
+.global BugsRecatchable_patch
+BugsRecatchable_patch:
+    nop
+    
 .section .patch_loader
 .global loader_patch
 
