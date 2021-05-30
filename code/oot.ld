@@ -172,6 +172,14 @@ SECTIONS
 		*(.patch_PlayerGetCustomTunicCMAB)
 	}
 
+	.patch_SkipDaruniaDanceOne 0x19493C : {
+		*(.patch_SkipDaruniaDanceOne)
+	}
+
+	.patch_SkipDaruniaDanceTwo 0x194944 : {
+		*(.patch_SkipDaruniaDanceTwo)
+	}
+
 	.patch_ChildRollingGoron 0x194B18 : {
 		*(.patch_ChildRollingGoron)
 	}
@@ -374,6 +382,10 @@ SECTIONS
 
 	.patch_SpiritTempleItemGiveTwo 0x24CF4C : {
 		*(.patch_SpiritTempleItemGiveTwo)
+	}
+
+	.patch_SkipDaruniaDanceThree 0x257f00 : {
+		*(.patch_SkipDaruniaDanceThree)
 	}
 
 	.patch_LostWoodsShootingGame 0x259E4C : {

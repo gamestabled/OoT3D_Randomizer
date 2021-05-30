@@ -1181,6 +1181,21 @@ FastOwlCutscenes_patch:
 BugsRecatchable_patch:
     nop
     
+.section .patch_SkipDaruniaDanceOne
+.global SkipDaruniaDanceOne_patch
+SkipDaruniaDanceOne_patch:
+    nop
+    
+.section .patch_SkipDaruniaDanceTwo
+.global SkipDaruniaDanceTwo_patch
+SkipDaruniaDanceTwo_patch:
+    nop
+
+.section .patch_SkipDaruniaDanceThree
+.global SkipDaruniaDanceThree_patch
+SkipDaruniaDanceThree_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 
