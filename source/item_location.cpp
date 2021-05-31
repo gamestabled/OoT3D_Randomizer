@@ -896,7 +896,7 @@ void LocationTable_Init() {
     locationTable[GANONDORF_HINT]                                = ItemLocation::Hint     (0x00, 0x00, "Ganondorf Hint",                              {});
 
 }
-std::vector<u32> KF_ShopLocations = {
+std::vector<LocationKey> KF_ShopLocations = {
   KF_SHOP_ITEM_1,
   KF_SHOP_ITEM_2,
   KF_SHOP_ITEM_3,
@@ -906,7 +906,7 @@ std::vector<u32> KF_ShopLocations = {
   KF_SHOP_ITEM_7,
   KF_SHOP_ITEM_8,
 };
-std::vector<u32> Kak_PotionShopLocations = {
+std::vector<LocationKey> Kak_PotionShopLocations = {
   KAK_POTION_SHOP_ITEM_1,
   KAK_POTION_SHOP_ITEM_2,
   KAK_POTION_SHOP_ITEM_3,
@@ -916,7 +916,7 @@ std::vector<u32> Kak_PotionShopLocations = {
   KAK_POTION_SHOP_ITEM_7,
   KAK_POTION_SHOP_ITEM_8,
 };
-std::vector<u32> MK_BombchuShopLocations = {
+std::vector<LocationKey> MK_BombchuShopLocations = {
   MARKET_BOMBCHU_SHOP_ITEM_1,
   MARKET_BOMBCHU_SHOP_ITEM_2,
   MARKET_BOMBCHU_SHOP_ITEM_3,
@@ -926,7 +926,7 @@ std::vector<u32> MK_BombchuShopLocations = {
   MARKET_BOMBCHU_SHOP_ITEM_7,
   MARKET_BOMBCHU_SHOP_ITEM_8,
 };
-std::vector<u32> MK_PotionShopLocations = {
+std::vector<LocationKey> MK_PotionShopLocations = {
   MARKET_POTION_SHOP_ITEM_1,
   MARKET_POTION_SHOP_ITEM_2,
   MARKET_POTION_SHOP_ITEM_3,
@@ -936,7 +936,7 @@ std::vector<u32> MK_PotionShopLocations = {
   MARKET_POTION_SHOP_ITEM_7,
   MARKET_POTION_SHOP_ITEM_8,
 };
-std::vector<u32> MK_BazaarLocations = {
+std::vector<LocationKey> MK_BazaarLocations = {
   MARKET_BAZAAR_ITEM_1,
   MARKET_BAZAAR_ITEM_2,
   MARKET_BAZAAR_ITEM_3,
@@ -946,7 +946,7 @@ std::vector<u32> MK_BazaarLocations = {
   MARKET_BAZAAR_ITEM_7,
   MARKET_BAZAAR_ITEM_8,
 };
-std::vector<u32> Kak_BazaarLocations = {
+std::vector<LocationKey> Kak_BazaarLocations = {
   KAK_BAZAAR_ITEM_1,
   KAK_BAZAAR_ITEM_2,
   KAK_BAZAAR_ITEM_3,
@@ -956,7 +956,7 @@ std::vector<u32> Kak_BazaarLocations = {
   KAK_BAZAAR_ITEM_7,
   KAK_BAZAAR_ITEM_8,
 };
-std::vector<u32> ZD_ShopLocations = {
+std::vector<LocationKey> ZD_ShopLocations = {
   ZD_SHOP_ITEM_1,
   ZD_SHOP_ITEM_2,
   ZD_SHOP_ITEM_3,
@@ -966,7 +966,7 @@ std::vector<u32> ZD_ShopLocations = {
   ZD_SHOP_ITEM_7,
   ZD_SHOP_ITEM_8,
 };
-std::vector<u32> GC_ShopLocations = {
+std::vector<LocationKey> GC_ShopLocations = {
   GC_SHOP_ITEM_1,
   GC_SHOP_ITEM_2,
   GC_SHOP_ITEM_3,
@@ -977,7 +977,7 @@ std::vector<u32> GC_ShopLocations = {
   GC_SHOP_ITEM_8,
 };
 //List of shop location lists, used for shop shuffle
-std::vector<std::vector<u32>> ShopLocationLists = {
+std::vector<std::vector<LocationKey>> ShopLocationLists = {
   KF_ShopLocations,
   Kak_PotionShopLocations,
   MK_BombchuShopLocations,
@@ -989,7 +989,7 @@ std::vector<std::vector<u32>> ShopLocationLists = {
 };
 
 //List of gossip stone locations for hints
-std::vector<u32> gossipStoneLocations = {
+std::vector<LocationKey> gossipStoneLocations = {
   DMC_GOSSIP_STONE,
   DMT_GOSSIP_STONE,
   COLOSSUS_GOSSIP_STONE,
@@ -1032,7 +1032,7 @@ std::vector<u32> gossipStoneLocations = {
   DMC_UPPER_GROTTO_GOSSIP_STONE,
 };
 
-std::vector<u32> dungeonRewardLocations = {
+std::vector<LocationKey> dungeonRewardLocations = {
   //Bosses
   QUEEN_GOHMA,
   KING_DODONGO,
@@ -1044,7 +1044,7 @@ std::vector<u32> dungeonRewardLocations = {
   BONGO_BONGO,
   LINKS_POCKET,
 };
-std::vector<u32> overworldLocations = {
+std::vector<LocationKey> overworldLocations = {
   //Kokiri Forest
   KF_KOKIRI_SWORD_CHEST,
   KF_MIDOS_TOP_LEFT_CHEST,
@@ -1386,27 +1386,27 @@ std::vector<u32> overworldLocations = {
   LLR_GS_TREE,
 };
 
-ItemLocation* Location(u32 locKey) {
+ItemLocation* Location(LocationKey locKey) {
     return &(locationTable[locKey]);
 }
 
-std::vector<u32> allLocations = {};
-std::vector<u32> everyPossibleLocation = {};
+std::vector<LocationKey> allLocations = {};
+std::vector<LocationKey> everyPossibleLocation = {};
 
 //set of overrides to write to the patch
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 
-std::vector<std::vector<u32>> playthroughLocations;
+std::vector<std::vector<LocationKey>> playthroughLocations;
 bool playthroughBeatable = false;
 
 u16 itemsPlaced = 0;
 
-void AddLocation(u32 loc, std::vector<u32>* destination = &allLocations) {
+void AddLocation(LocationKey loc, std::vector<LocationKey>* destination = &allLocations) {
   destination->push_back(loc);
 }
 
 template <typename Container>
-void AddLocations(const Container& locations, std::vector<u32>* destination = &allLocations) {
+void AddLocations(const Container& locations, std::vector<LocationKey>* destination = &allLocations) {
   destination->insert(destination->end(), std::cbegin(locations), std::cend(locations));
 }
 
@@ -1422,7 +1422,7 @@ void GenerateLocationPool() {
   }
 }
 
-void PlaceItemInLocation(u32 locKey, u32 item, bool applyEffectImmediately /*= false*/) {
+void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmediately /*= false*/) {
   auto loc = Location(locKey);
   PlacementLog_Msg("\n");
   PlacementLog_Msg(ItemTable(item).GetName());
@@ -1454,7 +1454,7 @@ void PlaceItemInLocation(u32 locKey, u32 item, bool applyEffectImmediately /*= f
 }
 
 //Same as PlaceItemInLocation, except a price is set as well as the item
-void PlaceShopItemInLocation(u32 locKey, u32 item, u16 price, bool applyEffectImmediately /*= false*/) {
+void PlaceShopItemInLocation(LocationKey locKey, ItemKey item, u16 price, bool applyEffectImmediately /*= false*/) {
   auto loc = Location(locKey);
   PlacementLog_Msg("\n");
   PlacementLog_Msg(ItemTable(item).GetName());
@@ -1476,9 +1476,9 @@ void PlaceShopItemInLocation(u32 locKey, u32 item, u16 price, bool applyEffectIm
   loc->SetPlacedShopItem(item, price);
 }
 
-std::vector<u32> GetLocations(const std::vector<u32>& locationPool, Category category) {
-  std::vector<u32> locationsInCategory;
-  for (u32 locKey : locationPool) {
+std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category) {
+  std::vector<LocationKey> locationsInCategory;
+  for (LocationKey locKey : locationPool) {
     if (Location(locKey)->IsCategory(category)) {
       locationsInCategory.push_back(locKey);
     }
@@ -1487,15 +1487,15 @@ std::vector<u32> GetLocations(const std::vector<u32>& locationPool, Category cat
 }
 
 void LocationReset() {
-  for (u32 il : allLocations) {
+  for (LocationKey il : allLocations) {
     Location(il)->RemoveFromPool();
   }
 
-  for (u32 il : dungeonRewardLocations) {
+  for (LocationKey il : dungeonRewardLocations) {
     Location(il)->RemoveFromPool();
   }
 
-  for (u32 il : gossipStoneLocations) {
+  for (LocationKey il : gossipStoneLocations) {
     Location(il)->RemoveFromPool();
   }
 
@@ -1503,11 +1503,11 @@ void LocationReset() {
 }
 
 void ItemReset() {
-  for (u32 il : allLocations) {
+  for (LocationKey il : allLocations) {
     Location(il)->ResetVariables();
   }
 
-  for (u32 il : dungeonRewardLocations) {
+  for (LocationKey il : dungeonRewardLocations) {
     Location(il)->ResetVariables();
   }
 
@@ -1515,7 +1515,7 @@ void ItemReset() {
 }
 
 void HintReset() {
-  for (u32 il : gossipStoneLocations) {
+  for (LocationKey il : gossipStoneLocations) {
     Location(il)->ResetVariables();
   }
 }
@@ -1529,18 +1529,18 @@ void AddExcludedOptions() {
     AddLocations(dungeon->GetEveryLocation(), &everyPossibleLocation);
   }
 
-  for (u32 il: everyPossibleLocation) {
+  for (LocationKey il: everyPossibleLocation) {
     Location(il)->AddExcludeOption();
   }
 }
 
 void CreateOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
-  for (u32 locKey : allLocations) {
+  for (LocationKey locKey : allLocations) {
     auto loc = Location(locKey);
-    ItemOverride_Value val = ItemTable(loc->GetPlacedItem()).Value();
+    ItemOverride_Value val = ItemTable(loc->GetPlacedItemKey()).Value();
     //If this is an ice trap in a shop, change the name based on what the model will look like
-    if (loc->GetPlacedItem() == ICE_TRAP && loc->IsCategory(Category::cShop)) {
+    if (loc->GetPlacedItemKey() == ICE_TRAP && loc->IsCategory(Category::cShop)) {
       NonShopItems[TransformShopIndex(GetShopIndex(locKey))].Name = GetIceTrapName(val.looksLikeItemId);
     }
     overrides.insert({

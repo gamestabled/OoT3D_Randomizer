@@ -6,7 +6,7 @@
 #include "random.hpp"
 #include "../code/src/item_override.h"
 
-Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, u32 hintKey_, u16 price_)
+Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_)
     : name(std::move(name_)),
       type(type_),
       getItemId(getItemId_),
@@ -15,7 +15,7 @@ Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_,
       hintKey(hintKey_),
       price(price_) {}
 
-Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, u32 hintKey_, u16 price_)
+Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_)
     : name(std::move(name_)),
       type(type_),
       getItemId(getItemId_),

@@ -853,16 +853,16 @@ namespace Settings {
   }
 
   //Include and Lock the desired locations
-  void IncludeAndHide(std::vector<u32> locations) {
-    for (u32 loc : locations) {
+  void IncludeAndHide(std::vector<LocationKey> locations) {
+    for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->SetSelectedIndex(INCLUDE);
       Location(loc)->GetExcludedOption()->Hide();
     }
   }
 
   //Unlock the desired locations
-  void Unhide(std::vector<u32> locations) {
-    for (u32 loc : locations) {
+  void Unhide(std::vector<LocationKey> locations) {
+    for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->Unhide();
     }
   }
@@ -873,7 +873,7 @@ namespace Settings {
   void ResolveExcludedLocationConflicts() {
 
     //Force include shops if shopsanity is off
-    std::vector<u32> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
+    std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
     if (Shopsanity.IsNot(SHOPSANITY_OFF)) {
       Unhide(shopLocations);
     } else {
@@ -884,8 +884,8 @@ namespace Settings {
     // IncludeAndHide(shopLocations);
 
     //Force include song locations
-    std::vector<u32> songLocations = GetLocations(everyPossibleLocation, Category::cSong);
-    std::vector<u32> songDungeonRewards = GetLocations(everyPossibleLocation, Category::cSongDungeonReward);
+    std::vector<LocationKey> songLocations = GetLocations(everyPossibleLocation, Category::cSong);
+    std::vector<LocationKey> songDungeonRewards = GetLocations(everyPossibleLocation, Category::cSongDungeonReward);
 
     //Unhide all song locations, then lock necessary ones
     Unhide(songLocations);
@@ -898,21 +898,21 @@ namespace Settings {
     }
 
     //Force Include Vanilla Skulltula locations
-    std::vector<u32> skulltulaLocations = GetLocations(everyPossibleLocation, Category::cSkulltula);
+    std::vector<LocationKey> skulltulaLocations = GetLocations(everyPossibleLocation, Category::cSkulltula);
     Unhide(skulltulaLocations);
     if (Tokensanity.IsNot(TOKENSANITY_ALL_TOKENS)) {
       if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
         //filter overworld skulls so we're just left with dungeons
-        FilterAndEraseFromPool(skulltulaLocations, [](u32 loc){return Location(loc)->GetScene() >= 0x0A;});
+        FilterAndEraseFromPool(skulltulaLocations, [](LocationKey loc){return Location(loc)->GetScene() >= 0x0A;});
       } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
         //filter dungeon skulls so we're just left with overworld
-        FilterAndEraseFromPool(skulltulaLocations, [](u32 loc){return Location(loc)->GetScene() < 0x0A;});
+        FilterAndEraseFromPool(skulltulaLocations, [](LocationKey loc){return Location(loc)->GetScene() < 0x0A;});
       }
       IncludeAndHide(skulltulaLocations);
     }
 
     //Force Include scrubs if Scrubsanity is Off
-    std::vector<u32> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub);
+    std::vector<LocationKey> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub);
     if (Scrubsanity.Is(OFF)) {
       IncludeAndHide(scrubLocations);
     } else {
@@ -920,7 +920,7 @@ namespace Settings {
     }
 
     //Force include Cows if Shuffle Cows is Off
-    std::vector<u32> cowLocations = GetLocations(everyPossibleLocation, Category::cCow);
+    std::vector<LocationKey> cowLocations = GetLocations(everyPossibleLocation, Category::cCow);
     if (ShuffleCows) {
       Unhide(cowLocations);
     } else {
@@ -935,7 +935,7 @@ namespace Settings {
     }
 
     //Force include the ocarina locations if Shuffle Ocarinas is Off
-    std::vector<u32> ocarinaLocations = {LW_GIFT_FROM_SARIA, HF_OCARINA_OF_TIME_ITEM};
+    std::vector<LocationKey> ocarinaLocations = {LW_GIFT_FROM_SARIA, HF_OCARINA_OF_TIME_ITEM};
     if (ShuffleOcarinas) {
       Unhide(ocarinaLocations);
     } else {
@@ -964,8 +964,8 @@ namespace Settings {
     }
 
     //Force include Map and Compass Chests when Vanilla
-    std::vector<u32> mapChests = GetLocations(everyPossibleLocation, Category::cVanillaMap);
-    std::vector<u32> compassChests = GetLocations(everyPossibleLocation, Category::cVanillaCompass);
+    std::vector<LocationKey> mapChests = GetLocations(everyPossibleLocation, Category::cVanillaMap);
+    std::vector<LocationKey> compassChests = GetLocations(everyPossibleLocation, Category::cVanillaCompass);
     if (MapsAndCompasses.Is(MAPSANDCOMPASSES_VANILLA)) {
       IncludeAndHide(mapChests);
       IncludeAndHide(compassChests);
@@ -975,7 +975,7 @@ namespace Settings {
     }
 
     //Force include Vanilla Small Key Locations (except gerudo Fortress) on Vanilla Keys
-    std::vector<u32> smallKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaSmallKey);
+    std::vector<LocationKey> smallKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaSmallKey);
     if (Keysanity.Is(KEYSANITY_VANILLA)) {
       IncludeAndHide(smallKeyChests);
     } else {
@@ -983,7 +983,7 @@ namespace Settings {
     }
 
     //Force include Gerudo Fortress carpenter fights if GF Small Keys are Vanilla
-    std::vector<u32> vanillaGFKeyLocations = GetLocations(everyPossibleLocation, Category::cVanillaGFSmallKey);
+    std::vector<LocationKey> vanillaGFKeyLocations = GetLocations(everyPossibleLocation, Category::cVanillaGFSmallKey);
     if (GerudoKeys.Is(GERUDOKEYS_VANILLA)) {
       IncludeAndHide(vanillaGFKeyLocations);
     } else {
@@ -991,7 +991,7 @@ namespace Settings {
     }
 
     //Force include Boss Key Chests if Boss Keys are Vanilla
-    std::vector<u32> bossKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaBossKey);
+    std::vector<LocationKey> bossKeyChests = GetLocations(everyPossibleLocation, Category::cVanillaBossKey);
     if (BossKeysanity.Is(BOSSKEYSANITY_VANILLA)) {
       IncludeAndHide(bossKeyChests);
     } else {

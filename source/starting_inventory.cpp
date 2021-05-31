@@ -10,9 +10,9 @@
 using namespace Settings;
 using namespace Dungeon;
 
-std::vector<u32> StartingInventory;
+std::vector<ItemKey> StartingInventory;
 
-static void AddItemToInventory(u32 item, size_t count = 1) {
+static void AddItemToInventory(ItemKey item, size_t count = 1) {
   StartingInventory.insert(StartingInventory.end(), count, item);
 }
 
@@ -116,7 +116,7 @@ void GenerateStartingInventory() {
 }
 
 void ApplyStartingInventory() {
-  for (u32 item : StartingInventory) {
+  for (ItemKey item : StartingInventory) {
     ItemTable(item).ApplyEffect();
   }
 }

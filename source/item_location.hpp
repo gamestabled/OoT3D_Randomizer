@@ -35,7 +35,7 @@ enum class ItemLocationType {
 class ItemLocation {
 public:
     ItemLocation() = default;
-    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, u32 hintKey_, std::vector<Category> categories_, u16 price_ = 0)
+    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, HintKey hintKey_, std::vector<Category> categories_, u16 price_ = 0)
         : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), hintKey(hintKey_), categories(std::move(categories_)), price(price_) {}
 
     ItemOverride_Key Key() const {
@@ -84,21 +84,25 @@ public:
       return ItemTable(placedItem).GetName();
     }
 
-    u32 GetPlacedItem() const {
+    Item& GetPlacedItem() const {
+      return ItemTable(placedItem);
+    }
+
+    ItemKey GetPlacedItemKey() const {
       return placedItem;
     }
 
-    void SetPlacedItem(u32 item) {
+    void SetPlacedItem(ItemKey item) {
       placedItem = item;
     }
 
-    void SetPlacedShopItem(u32 item, u16 price_) {
+    void SetPlacedShopItem(ItemKey item, u16 price_) {
       placedItem = item;
       price = price_;
     }
 
     //Saves an item to be set as placedItem later
-    void SetDelayedItem(u32 item) {
+    void SetDelayedItem(ItemKey item) {
       delayedItem = item;
     }
 
@@ -141,7 +145,7 @@ public:
       return &excludedOption;
     }
 
-    u32 GetHintKey() const {
+    HintKey GetHintKey() const {
       return hintKey;
     }
 
@@ -195,31 +199,31 @@ public:
       Settings::excludeLocationsOptions.push_back(&excludedOption);
     }
 
-    static auto Base(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+    static auto Base(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Chest(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+    static auto Chest(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Collectable(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto GSToken(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+    static auto GSToken(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Delayed(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+    static auto Delayed(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Reward(u8 scene, u8 flag, std::string&& name, u32 hintKey, std::vector<Category>&& categories) {
+    static auto Reward(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintKey, std::move(categories)};
     }
 
@@ -250,12 +254,12 @@ private:
     bool checked = false;
 
     std::string name;
-    u32 hintKey = NONE;
+    HintKey hintKey = NONE;
     bool hintedAt = false;
     std::vector<Category> categories;
     bool addedToPool = false;
-    u32 placedItem = NONE;
-    u32 delayedItem = NONE;
+    ItemKey placedItem = NONE;
+    ItemKey delayedItem = NONE;
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
     u16 price = 0;
     bool isHintable = false;
@@ -271,29 +275,29 @@ public:
 
 void LocationTable_Init();
 
-ItemLocation* Location(u32 locKey);
+ItemLocation* Location(LocationKey locKey);
 
-extern std::vector<std::vector<u32>> ShopLocationLists;
+extern std::vector<std::vector<LocationKey>> ShopLocationLists;
 
-extern std::vector<u32> gossipStoneLocations;
+extern std::vector<LocationKey> gossipStoneLocations;
 
-extern std::vector<u32> dungeonRewardLocations;
-extern std::vector<u32> overworldLocations;
-extern std::vector<u32> allLocations;
-extern std::vector<u32> everyPossibleLocation;
+extern std::vector<LocationKey> dungeonRewardLocations;
+extern std::vector<LocationKey> overworldLocations;
+extern std::vector<LocationKey> allLocations;
+extern std::vector<LocationKey> everyPossibleLocation;
 
 //set of overrides to write to the patch
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
 
-extern std::vector<std::vector<u32>> playthroughLocations;
+extern std::vector<std::vector<LocationKey>> playthroughLocations;
 extern bool playthroughBeatable;
 
 extern u16 itemsPlaced;
 
 void GenerateLocationPool();
-void PlaceItemInLocation(u32 loc, u32 item, bool applyEffectImmediately = false);
-void PlaceShopItemInLocation(u32 loc, u32 item, u16 price, bool applyEffectImmediately = false);
-std::vector<u32> GetLocations(const std::vector<u32>& locationPool, Category category);
+void PlaceItemInLocation(LocationKey loc, ItemKey item, bool applyEffectImmediately = false);
+void PlaceShopItemInLocation(LocationKey loc, ItemKey item, u16 price, bool applyEffectImmediately = false);
+std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category);
 void LocationReset();
 void ItemReset();
 void HintReset();

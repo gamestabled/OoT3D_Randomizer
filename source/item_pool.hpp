@@ -2,16 +2,18 @@
 
 #include <3ds.h>
 
+#include "keys.hpp"
+
 #include <cstddef>
 #include <vector>
 
 class ItemLocation;
 
-void AddItemToPool(std::vector<u32>& pool, u32 item, size_t count = 1);
-u32 GetJunkItem();
-void PlaceJunkInExcludedLocation(u32 il);
+void AddItemToPool(std::vector<ItemKey>& pool, ItemKey item, size_t count = 1);
+ItemKey GetJunkItem();
+void PlaceJunkInExcludedLocation(LocationKey il);
 void GenerateItemPool();
 void AddJunk();
 
-extern std::vector<u32> ItemPool;
-extern std::vector<u32> dungeonRewards;
+extern std::vector<ItemKey> ItemPool;
+extern std::vector<ItemKey> dungeonRewards;

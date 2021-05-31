@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <array>
 
 struct ItemAndPrice {
     std::string Name;
@@ -15,11 +16,11 @@ extern int GetRandomShopPrice();
 extern s16 GetRandomScrubPrice();
 extern int GetShopsanityReplaceAmount();
 extern std::string GetIceTrapName(u8 id);
-extern int GetShopIndex(u32 loc);
+extern int GetShopIndex(LocationKey loc);
 extern int TransformShopIndex(int index);
 extern void PlaceShopItems();
-extern void ShuffleShop(std::vector<u32>& ShopItems, std::vector<int> indicesToExclude);
+extern void ShuffleShop(std::vector<ItemKey>& ShopItems, std::vector<int> indicesToExclude);
 
-extern std::vector<u32> ShopItems;
-extern std::vector<u16> ShopItemsPrices;
+extern std::vector<ItemKey> ShopItems;
+extern std::array<int, 64> ShopItemsPrices;
 extern std::vector<ItemAndPrice> NonShopItems;
