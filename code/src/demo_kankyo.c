@@ -35,8 +35,13 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx){
             default:
                 globalCtx->sceneLoadFlag = 0; //if something goes wrong, the animation plays normally
         }
-        //Unset Zoneout Type -3 to avoid cutscene at destination (technically it's not needed)
-        if(gSaveContext.respawnFlag == -3){
+
+        if(gSaveContext.gameMode != 0){
+            //During DHWW the cutscene must play at the destination
+            gSaveContext.respawnFlag = -3;
+        }
+        else if(gSaveContext.respawnFlag == -3){
+            //Unset Zoneout Type -3 to avoid cutscene at destination (technically it's not needed)
             gSaveContext.respawnFlag = 0;
         }
     }
