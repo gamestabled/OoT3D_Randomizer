@@ -242,6 +242,7 @@ void Custcene_OverrideForestTemple(void) {
 
 void Cutscene_OverrideFireTemple(void) {
     ItemOverride_PushDungeonReward(DUNGEON_FIRE_TEMPLE);
+    gSaveContext.eventChkInf[2] |= 0x8000; //Death Mountain cloud is normal again
 
     //If warping with FW, let the wrong warp work
     if (gSaveContext.respawnFlag == 3) {
