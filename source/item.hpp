@@ -5,6 +5,7 @@
 #include <variant>
 
 #include "keys.hpp"
+#include "hint_list.hpp"
 #include "settings.hpp"
 
 union ItemOverride_Value;
@@ -114,6 +115,10 @@ public:
 
     HintKey GetHintKey() const {
         return hintKey;
+    }
+
+    const HintText& GetHint() const {
+        return Hint(hintKey);
     }
 
     bool operator== (const Item& right) const {

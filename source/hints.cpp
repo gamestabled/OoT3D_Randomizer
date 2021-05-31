@@ -193,8 +193,8 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
   Location(hintedLocation)->SetAsHinted();
 
   //make hint text
-  Text locationHintText = Hint(Location(hintedLocation)->GetHintKey()).GetText();
-  Text itemHintText = Hint(Location(hintedLocation)->GetPlacedItem().GetHintKey()).GetText();
+  Text locationHintText = Location(hintedLocation)->GetHint().GetText();
+  Text itemHintText = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
   Text prefix = Hint(PREFIX).GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
@@ -337,7 +337,7 @@ static void CreateRandomLocationHint(bool goodItem = false) {
   LocationKey gossipStone = RandomElement(gossipStoneLocations);
 
   //form hint text
-  Text itemText = Hint(Location(hintedLocation)->GetPlacedItem().GetHintKey()).GetText();
+  Text itemText = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
   if (Location(hintedLocation)->IsDungeon()) {
     Text locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# "+Hint(HOARDS).GetText()+" #"+itemText+"#.";
@@ -504,8 +504,8 @@ void CreateAllHints() {
   if (hintSetting.distTable[static_cast<int>(HintType::Always)].copies > 0) {
     // Only filter locations that had a random item placed at them (e.g. don't get cow locations if shuffle cows is off)
     const auto alwaysHintLocations = FilterFromPool(allLocations, [](LocationKey loc){
-        return Hint(Location(loc)->GetHintKey()).GetType() == HintCategory::Always &&
-               Location(loc)->IsHintable()      && !(Location(loc)->IsHintedAt());
+        return Location(loc)->GetHint().GetType() == HintCategory::Always &&
+               Location(loc)->IsHintable()        && !(Location(loc)->IsHintedAt());
     });
     for (LocationKey location : alwaysHintLocations) {
       CreateLocationHint({location});
@@ -552,7 +552,7 @@ void CreateAllHints() {
       CreateBarrenHint(&remainingDungeonBarrenHints, barrenLocations);
 
     } else if (type == HintType::Sometimes){
-      std::vector<LocationKey> sometimesHintLocations = FilterFromPool(allLocations, [](LocationKey loc){return Hint(Location(loc)->GetHintKey()).GetType() == HintCategory::Sometimes && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
+      std::vector<LocationKey> sometimesHintLocations = FilterFromPool(allLocations, [](LocationKey loc){return Location(loc)->GetHint().GetType() == HintCategory::Sometimes && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(sometimesHintLocations);
 
     } else if (type == HintType::Random) {

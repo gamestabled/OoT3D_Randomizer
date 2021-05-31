@@ -893,7 +893,7 @@ void LocationTable_Init() {
     locationTable[DMT_STORMS_GROTTO_GOSSIP_STONE]                = ItemLocation::HintStone(0x00, 0x37, "DMT Storms Grotto Gossip Stone",              {});
     locationTable[DMC_UPPER_GROTTO_GOSSIP_STONE]                 = ItemLocation::HintStone(0x00, 0x3A, "DMC Upper Grotto Gossip Stone",               {});
 
-    locationTable[GANONDORF_HINT]                                = ItemLocation::Hint     (0x00, 0x00, "Ganondorf Hint",                              {});
+    locationTable[GANONDORF_HINT]                                = ItemLocation::OtherHint(0x00, 0x00, "Ganondorf Hint",                              {});
 
 }
 std::vector<LocationKey> KF_ShopLocations = {

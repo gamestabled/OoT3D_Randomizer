@@ -15,6 +15,7 @@
 #include "../code/src/item_override.h"
 #include "category.hpp"
 #include "item_list.hpp"
+#include "hint_list.hpp"
 #include "settings.hpp"
 #include "keys.hpp"
 
@@ -28,8 +29,8 @@ enum class ItemLocationType {
     GrottoScrub,
     Delayed,
     TempleReward,
-    Hint,
     HintStone,
+    OtherHint,
 };
 
 class ItemLocation {
@@ -149,6 +150,10 @@ public:
       return hintKey;
     }
 
+    const HintText& GetHint() const {
+      return Hint(hintKey);
+    }
+
     bool IsHintedAt() const {
       return hintedAt;
     }
@@ -227,8 +232,8 @@ public:
         return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Hint(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), NONE, std::move(categories)};
+    static auto OtherHint(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::OtherHint, flag, std::move(name), NONE, std::move(categories)};
     }
 
     static auto HintStone(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
