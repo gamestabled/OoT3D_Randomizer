@@ -1129,7 +1129,8 @@ namespace Settings {
   // Hides all relevant options
   void RandomizeAllSettings() {
     //Init Random_ interface for consistency in racing
-    Random_Init(seed);
+
+    Random_Init(static_cast<uint32_t>(std::stoul(seed)));
 
     // Open Settings
     if (RandomizeOpen) {
