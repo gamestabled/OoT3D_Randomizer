@@ -47,7 +47,7 @@ bool ItemLocationPairing::CanBuy() const {
   }
 
   bool OtherCondition = true;
-  u32 placed = Location(location)->GetPlacedItem();
+  u32 placed = Location(location)->GetPlacedItemKey();
   //Need bottle to buy bottle items, only logically relevant bottle items included here
   if (placed == BUY_BLUE_FIRE || placed == BUY_BOTTLE_BUG || placed == BUY_FISH || placed == BUY_FAIRYS_SPIRIT) {
     OtherCondition = Logic::HasBottle;
@@ -149,11 +149,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&ShowedMidoSwordAndShield, []{return OpenForest.Is(OPENFOREST_OPEN) || (IsChild && KokiriSword && DekuShield);}),
                 }, {
                   //Locations
-                  ItemLocationPairing(KF_KOKIRI_SWORD_CHEST,  []{return IsChild;}),
+                  ItemLocationPairing(KF_KOKIRI_SWORD_CHEST,   []{return IsChild;}),
                   ItemLocationPairing(KF_GS_KNOW_IT_ALL_HOUSE, []{return IsChild && CanChildAttack && AtNight && (HasNightStart || CanLeaveForest || CanPlay(SunsSong)) && CanGetNightTimeGS;}),
-                  ItemLocationPairing(KF_GS_BEAN_PATCH,      []{return CanPlantBugs && CanChildAttack;}),
-                  ItemLocationPairing(KF_GS_HOUSE_OF_TWINS,   []{return IsAdult && AtNight && CanUse(CanUseItem::Hookshot) && CanGetNightTimeGS;}),
-                  ItemLocationPairing(KF_GOSSIP_STONE,       []{return true;}),
+                  ItemLocationPairing(KF_GS_BEAN_PATCH,        []{return CanPlantBugs && CanChildAttack;}),
+                  ItemLocationPairing(KF_GS_HOUSE_OF_TWINS,    []{return IsAdult && AtNight && CanUse(CanUseItem::Hookshot) && CanGetNightTimeGS;}),
+                  ItemLocationPairing(KF_GOSSIP_STONE,         []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&KF_LinksHouse,       []{return true;}),
@@ -255,12 +255,12 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BugShrub,          []{return IsChild && CanCutShrubs;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(LW_SKULL_KID,               []{return IsChild && CanPlay(SariasSong);}),
-                  ItemLocationPairing(LW_OCARINA_MEMORY_GAME,      []{return IsChild && Ocarina;}),
-                  ItemLocationPairing(LW_TARGET_IN_WOODS,          []{return CanUse(CanUseItem::Slingshot);}),
+                  ItemLocationPairing(LW_SKULL_KID,                 []{return IsChild && CanPlay(SariasSong);}),
+                  ItemLocationPairing(LW_OCARINA_MEMORY_GAME,       []{return IsChild && Ocarina;}),
+                  ItemLocationPairing(LW_TARGET_IN_WOODS,           []{return CanUse(CanUseItem::Slingshot);}),
                   ItemLocationPairing(LW_DEKU_SCRUB_NEAR_BRIDGE,    []{return IsChild && CanStunDeku;}),
                   ItemLocationPairing(LW_GS_BEAN_PATCH_NEAR_BRIDGE, []{return CanPlantBugs && CanChildAttack;}),
-                  ItemLocationPairing(LW_GOSSIP_STONE,            []{return true;}),
+                  ItemLocationPairing(LW_GOSSIP_STONE,              []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LW_ForestExit,          []{return true;}),
@@ -300,7 +300,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit LW_DekuTheater = Exit("Deku Theater", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(DEKU_THEATER_SKULL_MASK,   []{return IsChild && SkullMask;}),
+                  ItemLocationPairing(DEKU_THEATER_SKULL_MASK,    []{return IsChild && SkullMask;}),
                   ItemLocationPairing(DEKU_THEATER_MASK_OF_TRUTH, []{return IsChild && MaskOfTruth;}),
                 }, {
                   //Exits
@@ -333,7 +333,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(SFM_GS,                      []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(SFM_MAZE_GOSSIP_STONE_LOWER, []{return true;}),
                   ItemLocationPairing(SFM_MAZE_GOSSIP_STONE_UPPER, []{return true;}),
-                  ItemLocationPairing(SFM_SARIA_GOSSIP_STONE,     []{return true;}),
+                  ItemLocationPairing(SFM_SARIA_GOSSIP_STONE,      []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&SFM_Entryway,          []{return true;}),
@@ -388,7 +388,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BigPoeKill, []{return CanUse(CanUseItem::Bow) && CanRideEpona && HasBottle;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(HF_OCARINA_OF_TIME_ITEM,  []{return IsChild && HasAllStones;}),
+                  ItemLocationPairing(HF_OCARINA_OF_TIME_ITEM,   []{return IsChild && HasAllStones;}),
                   ItemLocationPairing(SONG_FROM_OCARINA_OF_TIME, []{return IsChild && HasAllStones;}),
                 }, {
                   //Exits
@@ -567,9 +567,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(GV_WATERFALL_FREESTANDING_POH, []{return true;}),
-                  ItemLocationPairing(GV_GS_BEAN_PATCH,             []{return CanPlantBugs && CanChildAttack;}),
-                  ItemLocationPairing(GV_COW,                      []{return IsChild && CanPlay(EponasSong);}),
-                  ItemLocationPairing(GV_GOSSIP_STONE,              []{return true;}),
+                  ItemLocationPairing(GV_GS_BEAN_PATCH,              []{return CanPlantBugs && CanChildAttack;}),
+                  ItemLocationPairing(GV_COW,                        []{return IsChild && CanPlay(EponasSong);}),
+                  ItemLocationPairing(GV_GOSSIP_STONE,               []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LH_Main, []{return true;})
@@ -587,9 +587,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BrokenSwordAccess, []{return IsAdult && (PoachersSawAccess || PoachersSaw);}),
                 }, {
                   //Locations
-                  ItemLocationPairing(GV_CHEST,         []{return CanUse(CanUseItem::Hammer);}),
+                  ItemLocationPairing(GV_CHEST,          []{return CanUse(CanUseItem::Hammer);}),
                   ItemLocationPairing(GV_GS_BEHIND_TENT, []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(GV_GS_PILLAR,     []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(GV_GS_PILLAR,      []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&GF_Main,          []{return true;}),
@@ -624,16 +624,16 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&GF_GateOpen,     []{return IsAdult && GerudoToken;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(GF_CHEST,            []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Scarecrow) || CanUse(CanUseItem::Longshot);}),
+                  ItemLocationPairing(GF_CHEST,              []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Scarecrow) || CanUse(CanUseItem::Longshot);}),
                   ItemLocationPairing(GF_HBA_1000_POINTS,    []{return GerudoToken && CanRideEpona && Bow && AtDay;}),
                   ItemLocationPairing(GF_HBA_1500_POINTS,    []{return GerudoToken && CanRideEpona && Bow && AtDay;}),
                   ItemLocationPairing(GF_NORTH_F1_CARPENTER, []{return  IsAdult || KokiriSword;}),
                   ItemLocationPairing(GF_NORTH_F2_CARPENTER, []{return (IsAdult || KokiriSword) && (GerudoToken || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots) || LogicGerudoKitchen);}),
                   ItemLocationPairing(GF_SOUTH_F1_CARPENTER, []{return  IsAdult || KokiriSword;}),
                   ItemLocationPairing(GF_SOUTH_F2_CARPENTER, []{return  IsAdult || KokiriSword;}),
-                  ItemLocationPairing(GF_GERUDO_TOKEN,      []{return CanFinishGerudoFortress;}),
-                  ItemLocationPairing(GF_GS_ARCHERY_RANGE,  []{return CanUse(CanUseItem::Hookshot) && GerudoToken && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(GF_GS_TOP_FLOOR,      []{return IsAdult && AtNight && (GerudoToken || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots) || LogicGerudoKitchen) && CanGetNightTimeGS;})
+                  ItemLocationPairing(GF_GERUDO_TOKEN,       []{return CanFinishGerudoFortress;}),
+                  ItemLocationPairing(GF_GS_ARCHERY_RANGE,   []{return CanUse(CanUseItem::Hookshot) && GerudoToken && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(GF_GS_TOP_FLOOR,       []{return IsAdult && AtNight && (GerudoToken || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots) || LogicGerudoKitchen) && CanGetNightTimeGS;})
                 }, {
                   //Exits
                   ExitPairing::Both(&GV_FortressSide,                []{return true;}),
@@ -673,7 +673,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(WASTELAND_CHEST, []{return HasFireSource;}),
-                  //Wasteland Bombchu Salesman
+                  //TODO: Wasteland Bombchu Salesman
                   ItemLocationPairing(WASTELAND_GS,    []{return HookshotOrBoomerang;}),
                 }, {
                   //Exits
@@ -694,10 +694,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(COLOSSUS_FREESTANDING_POH, []{return IsAdult && Colossus_Main.CanPlantBean();}),
-                  ItemLocationPairing(SHEIK_AT_COLOSSUS,          []{return true;}),
+                  ItemLocationPairing(SHEIK_AT_COLOSSUS,         []{return true;}),
                   ItemLocationPairing(COLOSSUS_GS_BEAN_PATCH,    []{return CanPlantBugs && CanChildAttack;}),
-                  ItemLocationPairing(COLOSSUS_GS_TREE,         []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(COLOSSUS_GS_HILL,         []{return IsAdult && AtNight && (Colossus_Main.CanPlantBean() || CanUse(CanUseItem::Longshot) || (LogicColossusGS && CanUse(CanUseItem::Hookshot))) && CanGetNightTimeGS;}),
+                  ItemLocationPairing(COLOSSUS_GS_TREE,          []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(COLOSSUS_GS_HILL,          []{return IsAdult && AtNight && (Colossus_Main.CanPlantBean() || CanUse(CanUseItem::Longshot) || (LogicColossusGS && CanUse(CanUseItem::Hookshot))) && CanGetNightTimeGS;}),
                   ItemLocationPairing(COLOSSUS_GOSSIP_STONE,     []{return true;}),
                 }, {
                   //Exits
@@ -797,9 +797,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BugRock,          []{return true;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(HC_MALON_EGG,            []{return true;}),
-                  ItemLocationPairing(HC_GS_TREE,             []{return CanChildAttack;}),
-                  ItemLocationPairing(HC_MALON_GOSSIP_STONE,    []{return true;}),
+                  ItemLocationPairing(HC_MALON_EGG,              []{return true;}),
+                  ItemLocationPairing(HC_GS_TREE,                []{return CanChildAttack;}),
+                  ItemLocationPairing(HC_MALON_GOSSIP_STONE,     []{return true;}),
                   ItemLocationPairing(HC_ROCK_WALL_GOSSIP_STONE, []{return true;}),
                 }, {
                   //Exits
@@ -814,7 +814,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(HC_ZELDAS_LETTER, []{return true;}),
-                  ItemLocationPairing(SONG_FROM_IMPA,    []{return true;}),
+                  ItemLocationPairing(SONG_FROM_IMPA,   []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&HC_Grounds, []{return true;})
@@ -835,7 +835,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&WanderingBugs,    []{return WanderingBugs    || CanBlastOrSmash;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(HC_GS_STORMS_GROTTO,         []{return CanBlastOrSmash && HookshotOrBoomerang;}),
+                  ItemLocationPairing(HC_GS_STORMS_GROTTO,           []{return CanBlastOrSmash && HookshotOrBoomerang;}),
                   ItemLocationPairing(HC_STORMS_GROTTO_GOSSIP_STONE, []{return CanBlastOrSmash;}),
                 }, {
                   //Exits
@@ -863,7 +863,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit MK_GuardHouse = Exit("Market Guard House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(MARKET_10_BIG_POES,     []{return IsAdult && BigPoeKill;}),
+                  ItemLocationPairing(MARKET_10_BIG_POES,    []{return IsAdult && BigPoeKill;}),
                   ItemLocationPairing(MARKET_GS_GUARD_HOUSE, []{return IsChild;}),
                 }, {
                   //Exits
@@ -906,7 +906,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(MARKET_BOMBCHU_BOWLING_FIRST_PRIZE,  []{return FoundBombchus;}),
                   ItemLocationPairing(MARKET_BOMBCHU_BOWLING_SECOND_PRIZE, []{return FoundBombchus;}),
-                  ItemLocationPairing(MARKET_BOMBCHU_BOWLING_BOMBCHUS,    []{return FoundBombchus;}),
+                  ItemLocationPairing(MARKET_BOMBCHU_BOWLING_BOMBCHUS,     []{return FoundBombchus;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&MK_Main, []{return true;})
@@ -976,10 +976,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(KAK_ANJU_AS_CHILD,               []{return IsChild && AtDay;}),
                   ItemLocationPairing(KAK_ANJU_AS_ADULT,               []{return IsAdult && AtDay;}),
                   ItemLocationPairing(KAK_GS_HOUSE_UNDER_CONSTRUCTION, []{return IsChild && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(KAK_GS_SKULLTULA_HOUSE,         []{return IsChild && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(KAK_GS_GUARDS_HOUSE,            []{return IsChild && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(KAK_GS_TREE,                   []{return IsChild && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(KAK_GS_WATCHTOWER,             []{return IsChild && (Slingshot || HasBombchus) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(KAK_GS_SKULLTULA_HOUSE,          []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(KAK_GS_GUARDS_HOUSE,             []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(KAK_GS_TREE,                     []{return IsChild && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(KAK_GS_WATCHTOWER,               []{return IsChild && (Slingshot || HasBombchus) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(KAK_GS_ABOVE_IMPAS_HOUSE,        []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                 }, {
                   //Exits
@@ -1143,7 +1143,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit Kak_OpenGrotto = Exit("Kak Open Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(KAK_OPEN_GROTTO_CHEST,       []{return true;}),
+                  ItemLocationPairing(KAK_OPEN_GROTTO_CHEST,        []{return true;}),
                   ItemLocationPairing(KAK_OPEN_GROTTO_GOSSIP_STONE, []{return true;}),
                 }, {
                   //Exits
@@ -1159,8 +1159,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(GRAVEYARD_FREESTANDING_POH,        []{return (IsAdult && (GY_Main.CanPlantBean() || CanUse(CanUseItem::Longshot))) || (LogicGraveyardPoH && CanUse(CanUseItem::Boomerang));}),
                   ItemLocationPairing(GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR, []{return IsChild && AtNight;}), //This needs to change
-                  ItemLocationPairing(GRAVEYARD_GS_WALL,                []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(GRAVEYARD_GS_BEAN_PATCH,          []{return CanPlantBugs && CanChildAttack;}),
+                  ItemLocationPairing(GRAVEYARD_GS_WALL,                 []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(GRAVEYARD_GS_BEAN_PATCH,           []{return CanPlantBugs && CanChildAttack;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&GY_ShieldGrave,      []{return IsAdult;}),
@@ -1193,7 +1193,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit GY_ComposersGrave = Exit("GY Composers Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(GRAVEYARD_COMPOSERS_GRAVE_CHEST, []{return HasFireSource;}),
-                  ItemLocationPairing(SONG_FROM_COMPOSERS_GRAVE, []{return IsAdult || (Slingshot || Boomerang || Sticks || HasExplosives || KokiriSword);}),
+                  ItemLocationPairing(SONG_FROM_COMPOSERS_GRAVE,       []{return IsAdult || (Slingshot || Boomerang || Sticks || HasExplosives || KokiriSword);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&GY_Main, []{return true;}),
@@ -1205,7 +1205,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&DampesWindmillAccess, []{return DampesWindmillAccess || (IsAdult && CanPlay(SongOfTime));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(GRAVEYARD_HOOKSHOT_CHEST,            []{return true;}),
+                  ItemLocationPairing(GRAVEYARD_HOOKSHOT_CHEST,              []{return true;}),
                   ItemLocationPairing(GRAVEYARD_DAMPE_RACE_FREESTANDING_POH, []{return IsAdult || LogicChildDampeRacePoH;}),
                 }, {
                   //Exits
@@ -1242,10 +1242,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BeanPlantFairy, []{return BeanPlantFairy || (DMT_Main.CanPlantBean() && CanPlay(SongOfStorms) && (HasExplosives || GoronBracelet));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(DMT_CHEST,                  []{return CanBlastOrSmash || (LogicDMTBombable && IsChild && GoronBracelet);}),
-                  ItemLocationPairing(DMT_FREESTANDING_POH,        []{return CanTakeDamage || CanUse(CanUseItem::Hover_Boots) || (IsAdult && DMT_Main.CanPlantBean() && (HasExplosives || GoronBracelet));}),
-                  ItemLocationPairing(DMT_GS_BEAN_PATCH,           []{return CanPlantBugs && (HasExplosives || GoronBracelet || (LogicDMTSoilGS && CanUse(CanUseItem::Boomerang)));}),
-                  ItemLocationPairing(DMT_GS_NEAR_KAK,             []{return CanBlastOrSmash;}),
+                  ItemLocationPairing(DMT_CHEST,                    []{return CanBlastOrSmash || (LogicDMTBombable && IsChild && GoronBracelet);}),
+                  ItemLocationPairing(DMT_FREESTANDING_POH,         []{return CanTakeDamage || CanUse(CanUseItem::Hover_Boots) || (IsAdult && DMT_Main.CanPlantBean() && (HasExplosives || GoronBracelet));}),
+                  ItemLocationPairing(DMT_GS_BEAN_PATCH,            []{return CanPlantBugs && (HasExplosives || GoronBracelet || (LogicDMTSoilGS && CanUse(CanUseItem::Boomerang)));}),
+                  ItemLocationPairing(DMT_GS_NEAR_KAK,              []{return CanBlastOrSmash;}),
                   ItemLocationPairing(DMT_GS_ABOVE_DODONGOS_CAVERN, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;})
                 }, {
                   //Exits
@@ -1263,9 +1263,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BugRock,            []{return true;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(DMT_BIGGORON,            []{return IsAdult && (ClaimCheck || (GuaranteeTradePath && (EyedropsAccess || (Eyedrops && DisableTradeRevert))));}),
+                  ItemLocationPairing(DMT_BIGGORON,              []{return IsAdult && (ClaimCheck || (GuaranteeTradePath && (EyedropsAccess || (Eyedrops && DisableTradeRevert))));}),
                   ItemLocationPairing(DMT_GS_FALLING_ROCKS_PATH, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;}),
-                  ItemLocationPairing(DMT_GOSSIP_STONE,         []{return true;}),
+                  ItemLocationPairing(DMT_GOSSIP_STONE,          []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMT_Main,               []{return true;}),
@@ -1298,7 +1298,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit DMT_StormsGrotto = Exit("DMT Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(DMT_STORMS_GROTTO_CHEST,       []{return true;}),
+                  ItemLocationPairing(DMT_STORMS_GROTTO_CHEST,        []{return true;}),
                   ItemLocationPairing(DMT_STORMS_GROTTO_GOSSIP_STONE, []{return true;}),
                 }, {
                   //Exits
@@ -1327,10 +1327,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(GC_MAZE_CENTER_CHEST,      []{return CanBlastOrSmash  || CanUse(CanUseItem::Silver_Gauntlets);}),
                   ItemLocationPairing(GC_MAZE_RIGHT_CHEST,       []{return CanBlastOrSmash  || CanUse(CanUseItem::Silver_Gauntlets);}),
                   ItemLocationPairing(GC_POT_FREESTANDING_POH,   []{return IsChild && GoronCityChildFire && (Bombs || (GoronBracelet && LogicGoronCityPotWithStrength) || (HasBombchus && LogicGoronCityPot));}),
-                  ItemLocationPairing(GC_ROLLING_GORON_AS_CHILD,  []{return IsChild && (HasExplosives || (GoronBracelet && LogicChildRollingWithStrength));}),
-                  ItemLocationPairing(GC_ROLLING_GORON_AS_ADULT,  []{return StopGCRollingGoronAsAdult;}),
-                  ItemLocationPairing(GC_GS_BOULDER_MAZE,       []{return IsChild && HasExplosives;}),
-                  ItemLocationPairing(GC_GS_CENTER_PLATFORM,    []{return IsAdult;}),
+                  ItemLocationPairing(GC_ROLLING_GORON_AS_CHILD, []{return IsChild && (HasExplosives || (GoronBracelet && LogicChildRollingWithStrength));}),
+                  ItemLocationPairing(GC_ROLLING_GORON_AS_ADULT, []{return StopGCRollingGoronAsAdult;}),
+                  ItemLocationPairing(GC_GS_BOULDER_MAZE,        []{return IsChild && HasExplosives;}),
+                  ItemLocationPairing(GC_GS_CENTER_PLATFORM,     []{return IsAdult;}),
                   ItemLocationPairing(GC_MAZE_GOSSIP_STONE,      []{return CanBlastOrSmash || CanUse(CanUseItem::Silver_Gauntlets);}),
                   ItemLocationPairing(GC_MEDIGORON_GOSSIP_STONE, []{return CanBlastOrSmash || GoronBracelet;}),
                 }, {
@@ -1401,8 +1401,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(DMC_WALL_FREESTANDING_POH, []{return true;}),
-                  ItemLocationPairing(DMC_GS_CRATE,            []{return IsChild && CanChildAttack;}),
-                  ItemLocationPairing(DMC_GOSSIP_STONE,         []{return HasExplosives;}),
+                  ItemLocationPairing(DMC_GS_CRATE,              []{return IsChild && CanChildAttack;}),
+                  ItemLocationPairing(DMC_GOSSIP_STONE,          []{return HasExplosives;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DMC_UpperNearby,      []{return true;}),
@@ -1474,7 +1474,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit DMC_UpperGrotto = Exit("DMC Upper Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(DMC_UPPER_GROTTO_CHEST,       []{return true;}),
+                  ItemLocationPairing(DMC_UPPER_GROTTO_CHEST,        []{return true;}),
                   ItemLocationPairing(DMC_UPPER_GROTTO_GOSSIP_STONE, []{return true;}),
                 }, {
                   //Exits
@@ -1508,16 +1508,16 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BugShrub,         []{return BugShrub         || CanCutShrubs;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(ZR_MAGIC_BEAN_SALESMAN,             []{return IsChild;}),
-                  ItemLocationPairing(ZR_FROGS_OCARINA_GAME,              []{return IsChild && CanPlay(ZeldasLullaby) && CanPlay(SariasSong) && CanPlay(SunsSong) && CanPlay(EponasSong) && CanPlay(SongOfTime) && CanPlay(SongOfStorms);}),
-                  ItemLocationPairing(ZR_FROGS_IN_THE_RAIN,                []{return IsChild && CanPlay(SongOfStorms);}),
+                  ItemLocationPairing(ZR_MAGIC_BEAN_SALESMAN,               []{return IsChild;}),
+                  ItemLocationPairing(ZR_FROGS_OCARINA_GAME,                []{return IsChild && CanPlay(ZeldasLullaby) && CanPlay(SariasSong) && CanPlay(SunsSong) && CanPlay(EponasSong) && CanPlay(SongOfTime) && CanPlay(SongOfStorms);}),
+                  ItemLocationPairing(ZR_FROGS_IN_THE_RAIN,                 []{return IsChild && CanPlay(SongOfStorms);}),
                   ItemLocationPairing(ZR_NEAR_OPEN_GROTTO_FREESTANDING_POH, []{return IsChild || CanUse(CanUseItem::Hover_Boots) || (IsAdult && LogicZoraRiverLower);}),
-                  ItemLocationPairing(ZR_NEAR_DOMAIN_FREESTANDING_POH,     []{return IsChild || CanUse(CanUseItem::Hover_Boots) || (IsAdult && LogicZoraRiverUpper);}),
-                  ItemLocationPairing(ZR_GS_LADDER,                     []{return IsChild && AtNight && CanChildAttack && CanGetNightTimeGS;}),
-                  ItemLocationPairing(ZR_GS_NEAR_RAISED_GROTTOS,          []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(ZR_GS_ABOVE_BRIDGE,                []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(ZR_NEAR_GROTTOS_GOSSIP_STONE,        []{return true;}),
-                  ItemLocationPairing(ZR_NEAR_DOMAIN_GOSSIP_STONE,         []{return true;}),
+                  ItemLocationPairing(ZR_NEAR_DOMAIN_FREESTANDING_POH,      []{return IsChild || CanUse(CanUseItem::Hover_Boots) || (IsAdult && LogicZoraRiverUpper);}),
+                  ItemLocationPairing(ZR_GS_LADDER,                         []{return IsChild && AtNight && CanChildAttack && CanGetNightTimeGS;}),
+                  ItemLocationPairing(ZR_GS_NEAR_RAISED_GROTTOS,            []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(ZR_GS_ABOVE_BRIDGE,                   []{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(ZR_NEAR_GROTTOS_GOSSIP_STONE,         []{return true;}),
+                  ItemLocationPairing(ZR_NEAR_DOMAIN_GOSSIP_STONE,          []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ZR_Front,           []{return true;}),
@@ -1536,7 +1536,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit ZR_OpenGrotto = Exit("ZR Open Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents, {
                   //Locations
-                  ItemLocationPairing(ZR_OPEN_GROTTO_CHEST,       []{return true;}),
+                  ItemLocationPairing(ZR_OPEN_GROTTO_CHEST,        []{return true;}),
                   ItemLocationPairing(ZR_OPEN_GROTTO_GOSSIP_STONE, []{return true;}),
                 }, {
                   //Exits
@@ -1572,8 +1572,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(ZD_DIVING_MINIGAME,     []{return IsChild;}),
-                  ItemLocationPairing(ZD_CHEST,              []{return CanUse(CanUseItem::Sticks);}),
-                  ItemLocationPairing(ZD_KING_ZORA_THAWED,     []{return KingZoraThawed;}),
+                  ItemLocationPairing(ZD_CHEST,               []{return CanUse(CanUseItem::Sticks);}),
+                  ItemLocationPairing(ZD_KING_ZORA_THAWED,    []{return KingZoraThawed;}),
                   ItemLocationPairing(ZD_GS_FROZEN_WATERFALL, []{return IsAdult && AtNight && (Hookshot || Bow || MagicMeter) && CanGetNightTimeGS;}),
                   ItemLocationPairing(ZD_GOSSIP_STONE,        []{return true;}),
                 }, {
@@ -1622,9 +1622,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(ZF_ICEBERG_FREESTANDING_POH, []{return IsAdult;}),
                   ItemLocationPairing(ZF_BOTTOM_FREESTANDING_POH,  []{return IsAdult && IronBoots && (LogicFewerTunicRequirements || CanUse(CanUseItem::Zora_Tunic));}),
-                  ItemLocationPairing(ZF_GS_TREE,                []{return IsChild;}),
+                  ItemLocationPairing(ZF_GS_TREE,                  []{return IsChild;}),
                   ItemLocationPairing(ZF_GS_ABOVE_THE_LOG,         []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
-                  ItemLocationPairing(ZF_GS_HIDDEN_CAVE,          []{return CanUse(CanUseItem::Silver_Gauntlets) && CanBlastOrSmash && CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
+                  ItemLocationPairing(ZF_GS_HIDDEN_CAVE,           []{return CanUse(CanUseItem::Silver_Gauntlets) && CanBlastOrSmash && CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(ZF_FAIRY_GOSSIP_STONE,       []{return true;}),
                   ItemLocationPairing(ZF_JABU_GOSSIP_STONE,        []{return true;}),
                 }, {
@@ -1651,8 +1651,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&LinksCow, []{return LinksCow || (CanPlay(EponasSong) && IsAdult && AtDay);}),
                 }, {
                   //Locations
-                  ItemLocationPairing(SONG_FROM_MALON,      []{return IsChild && ZeldasLetter && Ocarina && AtDay;}),
-                  ItemLocationPairing(LLR_GS_TREE,        []{return IsChild;}),
+                  ItemLocationPairing(SONG_FROM_MALON,     []{return IsChild && ZeldasLetter && Ocarina && AtDay;}),
+                  ItemLocationPairing(LLR_GS_TREE,         []{return IsChild;}),
                   ItemLocationPairing(LLR_GS_RAIN_SHED,    []{return IsChild && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(LLR_GS_HOUSE_WINDOW, []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
                   ItemLocationPairing(LLR_GS_BACK_WALL,    []{return CanUse(CanUseItem::Boomerang) && AtNight && CanGetNightTimeGS;}),
@@ -1685,8 +1685,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit LLR_Tower = Exit("LLR Tower", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(LLR_FREESTANDING_POH, []{return IsChild;}),
-                  ItemLocationPairing(LLR_TOWER_LEFT_COW,  []{return CanPlay(EponasSong);}),
-                  ItemLocationPairing(LLR_TOWER_RIGHT_COW, []{return CanPlay(EponasSong);}),
+                  ItemLocationPairing(LLR_TOWER_LEFT_COW,   []{return CanPlay(EponasSong);}),
+                  ItemLocationPairing(LLR_TOWER_RIGHT_COW,  []{return CanPlay(EponasSong);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&LLR_Main, []{return true;}),
@@ -1712,13 +1712,13 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(CanUseItem::Dins_Fire));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(DEKU_TREE_MAP_CHEST,             []{return true;}),
-                  ItemLocationPairing(DEKU_TREE_COMPASS_CHEST,         []{return true;}),
+                  ItemLocationPairing(DEKU_TREE_MAP_CHEST,               []{return true;}),
+                  ItemLocationPairing(DEKU_TREE_COMPASS_CHEST,           []{return true;}),
                   ItemLocationPairing(DEKU_TREE_COMPASS_ROOM_SIDE_CHEST, []{return true;}),
-                  ItemLocationPairing(DEKU_TREE_BASEMENT_CHEST,        []{return IsAdult || CanChildAttack || Nuts;}),
-                  ItemLocationPairing(DEKU_TREE_GS_COMPASS_ROOM,       []{return IsAdult || CanChildAttack;}),
-                  ItemLocationPairing(DEKU_TREE_GS_BASEMENT_VINES,     []{return CanUseProjectile || CanUse(CanUseItem::Dins_Fire) || (LogicDekuBasementGS && (IsAdult || Sticks || KokiriSword));}),
-                  ItemLocationPairing(DEKU_TREE_GS_BASEMENT_GATE,      []{return IsAdult || CanChildAttack;}),
+                  ItemLocationPairing(DEKU_TREE_BASEMENT_CHEST,          []{return IsAdult || CanChildAttack || Nuts;}),
+                  ItemLocationPairing(DEKU_TREE_GS_COMPASS_ROOM,         []{return IsAdult || CanChildAttack;}),
+                  ItemLocationPairing(DEKU_TREE_GS_BASEMENT_VINES,       []{return CanUseProjectile || CanUse(CanUseItem::Dins_Fire) || (LogicDekuBasementGS && (IsAdult || Sticks || KokiriSword));}),
+                  ItemLocationPairing(DEKU_TREE_GS_BASEMENT_GATE,        []{return IsAdult || CanChildAttack;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&KF_OutsideDekuTree,        []{return true;}),
@@ -1732,7 +1732,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit DekuTree_SlingshotRoom = Exit("Deku Tree Slingshot Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(DEKU_TREE_SLINGSHOT_CHEST,         []{return true;}),
+                  ItemLocationPairing(DEKU_TREE_SLINGSHOT_CHEST,           []{return true;}),
                   ItemLocationPairing(DEKU_TREE_SLINGSHOT_ROOM_SIDE_CHEST, []{return true;})
                 }, {
                   //Exits
@@ -1755,7 +1755,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&DekuTreeClear, []{return DekuTreeClear || (DekuTree_BossRoom.Here([]{return HasShield;}) && (IsAdult || KokiriSword || Sticks));})
                 }, {
                   //Locations
-                  ItemLocationPairing(QUEEN_GOHMA,               []{return DekuTree_BossRoom.Here([]{return HasShield;}) && (IsAdult || KokiriSword || Sticks);}),
+                  ItemLocationPairing(QUEEN_GOHMA,                 []{return DekuTree_BossRoom.Here([]{return HasShield;}) && (IsAdult || KokiriSword || Sticks);}),
                   ItemLocationPairing(DEKU_TREE_QUEEN_GOHMA_HEART, []{return DekuTree_BossRoom.Here([]{return HasShield;}) && (IsAdult || KokiriSword || Sticks);}),
                 }, {
                   //Exits
@@ -1773,13 +1773,13 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairy;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(DODONGOS_CAVERN_MAP_CHEST,                      []{return true;}),
-                  ItemLocationPairing(DODONGOS_CAVERN_COMPASS_CHEST,                  []{return IsAdult || Sticks || (CanUse(CanUseItem::Dins_Fire) && (Slingshot || HasExplosives || KokiriSword));}),
-                  ItemLocationPairing(DODONGOS_CAVERN_GS_SIDE_ROOM_NEAR_LOWER_LIZALFOS,  []{return HasExplosives || IsAdult || Slingshot || Boomerang || Sticks || KokiriSword;}),
-                  ItemLocationPairing(DODONGOS_CAVERN_GS_SCARECROW,                  []{return CanUse(CanUseItem::Scarecrow) || CanUse(CanUseItem::Longshot) || (LogicDCScarecrowGS && (IsAdult || CanChildAttack));}),
+                  ItemLocationPairing(DODONGOS_CAVERN_MAP_CHEST,                          []{return true;}),
+                  ItemLocationPairing(DODONGOS_CAVERN_COMPASS_CHEST,                      []{return IsAdult || Sticks || (CanUse(CanUseItem::Dins_Fire) && (Slingshot || HasExplosives || KokiriSword));}),
+                  ItemLocationPairing(DODONGOS_CAVERN_GS_SIDE_ROOM_NEAR_LOWER_LIZALFOS,   []{return HasExplosives || IsAdult || Slingshot || Boomerang || Sticks || KokiriSword;}),
+                  ItemLocationPairing(DODONGOS_CAVERN_GS_SCARECROW,                       []{return CanUse(CanUseItem::Scarecrow) || CanUse(CanUseItem::Longshot) || (LogicDCScarecrowGS && (IsAdult || CanChildAttack));}),
                   ItemLocationPairing(DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS, []{return IsAdult || Slingshot || Sticks || HasExplosives || KokiriSword;}),
-                  ItemLocationPairing(DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,                []{return true;}),
-                  ItemLocationPairing(DODONGOS_CAVERN_GOSSIP_STONE,                   []{return true;}),
+                  ItemLocationPairing(DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,                   []{return true;}),
+                  ItemLocationPairing(DODONGOS_CAVERN_GOSSIP_STONE,                       []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_Beginning, []{return true;}),
@@ -1789,8 +1789,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit DodongosCavern_Climb = Exit("Dodongos Cavern Climb", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(DODONGOS_CAVERN_BOMB_FLOWER_PLATFORM_CHEST,   []{return true;}),
-                  ItemLocationPairing(DODONGOS_CAVERN_GS_VINES_ABOVE_STAIRS,       []{return true;}),
+                  ItemLocationPairing(DODONGOS_CAVERN_BOMB_FLOWER_PLATFORM_CHEST,     []{return true;}),
+                  ItemLocationPairing(DODONGOS_CAVERN_GS_VINES_ABOVE_STAIRS,          []{return true;}),
                   ItemLocationPairing(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT, []{return CanBlastOrSmash;}),
                   ItemLocationPairing(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT,  []{return CanBlastOrSmash;}),
                 }, {
@@ -1802,7 +1802,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit DodongosCavern_FarBridge = Exit("Dodongos Cavern Far Bridge", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(DODONGOS_CAVERN_BOMB_BAG_CHEST,         []{return true;}),
-                  ItemLocationPairing(DODONGOS_CAVERN_END_OF_BRIDGE_CHEST,     []{return CanBlastOrSmash;}),
+                  ItemLocationPairing(DODONGOS_CAVERN_END_OF_BRIDGE_CHEST,    []{return CanBlastOrSmash;}),
                   ItemLocationPairing(DODONGOS_CAVERN_GS_ALCOVE_ABOVE_STAIRS, []{return HookshotOrBoomerang;}),
                 }, {
                   //Exits
@@ -1818,8 +1818,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(DODONGOS_CAVERN_BOSS_ROOM_CHEST,    []{return true;}),
                   ItemLocationPairing(DODONGOS_CAVERN_KING_DODONGO_HEART, []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
-                  ItemLocationPairing(KING_DODONGO,                     []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
-                  ItemLocationPairing(DODONGOS_CAVERN_GS_BACK_ROOM,      []{return true;}),
+                  ItemLocationPairing(KING_DODONGO,                       []{return (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
+                  ItemLocationPairing(DODONGOS_CAVERN_GS_BACK_ROOM,       []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_Lobby, []{return true;})
@@ -1836,11 +1836,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&FairyPot, []{return true;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(JABU_JABUS_BELLY_BOOMERANG_CHEST,        []{return true;}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_BOOMERANG_CHEST,         []{return true;}),
                   ItemLocationPairing(JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM,    []{return true;}),
                   ItemLocationPairing(JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER, []{return HookshotOrBoomerang;}),
                   ItemLocationPairing(JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER, []{return HookshotOrBoomerang;}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_DEKU_SCRUB,             []{return CanDive || IsChild || LogicJabuScrubJumpDive || CanUse(CanUseItem::Iron_Boots);}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_DEKU_SCRUB,              []{return CanDive || IsChild || LogicJabuScrubJumpDive || CanUse(CanUseItem::Iron_Boots);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&JabuJabusBelly_Beginning, []{return true;}),
@@ -1865,7 +1865,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(JABU_JABUS_BELLY_BARINADE_HEART, []{return CanUse(CanUseItem::Boomerang);}),
-                  ItemLocationPairing(BARINADE,                     []{return CanUse(CanUseItem::Boomerang);}),
+                  ItemLocationPairing(BARINADE,                        []{return CanUse(CanUseItem::Boomerang);}),
                   ItemLocationPairing(JABU_JABUS_BELLY_GS_NEAR_BOSS,   []{return true;}),
                 }, {
                   //Exits
@@ -1876,8 +1876,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(FOREST_TEMPLE_FIRST_ROOM_CHEST,    []{return true;}),
                   ItemLocationPairing(FOREST_TEMPLE_FIRST_STALFOS_CHEST, []{return IsAdult || KokiriSword;}),
-                  ItemLocationPairing(FOREST_TEMPLE_GS_FIRST_ROOM,      []{return (IsAdult && (Hookshot || Bow || Bombs)) || (IsChild && (Boomerang || Slingshot)) || HasBombchus || CanUse(CanUseItem::Dins_Fire);}),
-                  ItemLocationPairing(FOREST_TEMPLE_GS_LOBBY,          []{return HookshotOrBoomerang;}),
+                  ItemLocationPairing(FOREST_TEMPLE_GS_FIRST_ROOM,       []{return (IsAdult && (Hookshot || Bow || Bombs)) || (IsChild && (Boomerang || Slingshot)) || HasBombchus || CanUse(CanUseItem::Dins_Fire);}),
+                  ItemLocationPairing(FOREST_TEMPLE_GS_LOBBY,            []{return HookshotOrBoomerang;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&SFM_Main,                   []{return true;}),
@@ -1907,7 +1907,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(FOREST_TEMPLE_RAISED_ISLAND_COURTYARD_CHEST, []{return CanUse(CanUseItem::Hookshot) || ForestTemple_FallingRoom.HasAccess();}),
-                  ItemLocationPairing(FOREST_TEMPLE_GS_RAISED_ISLAND_COURTYARD,   []{return CanUse(CanUseItem::Hookshot) ||
+                  ItemLocationPairing(FOREST_TEMPLE_GS_RAISED_ISLAND_COURTYARD,    []{return CanUse(CanUseItem::Hookshot) ||
                                                                                           (LogicForestOutdoorEastGS && CanUse(CanUseItem::Boomerang)) ||
                                                                                           ForestTemple_FallingRoom.Here([]{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire) || HasExplosives;});}),
                 }, {
@@ -1970,7 +1970,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&ForestTempleJoAndBeth, []{return ForestTempleJoAndBeth || CanUse(CanUseItem::Bow);}),
                 }, {
                   //Locations
-                  ItemLocationPairing(FOREST_TEMPLE_BOW_CHEST,     []{return true;}),
+                  ItemLocationPairing(FOREST_TEMPLE_BOW_CHEST,      []{return true;}),
                   ItemLocationPairing(FOREST_TEMPLE_RED_POE_CHEST,  []{return CanUse(CanUseItem::Bow);}),
                   ItemLocationPairing(FOREST_TEMPLE_BLUE_POE_CHEST, []{return CanUse(CanUseItem::Bow);})
                 }, {
@@ -1983,10 +1983,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&ForestTempleClear, []{return ForestTempleClear || (BossKeyForestTemple);}),
   }, {
                   //Locations
-                  ItemLocationPairing(FOREST_TEMPLE_BASEMENT_CHEST,     []{return true;}),
+                  ItemLocationPairing(FOREST_TEMPLE_BASEMENT_CHEST,      []{return true;}),
                   ItemLocationPairing(FOREST_TEMPLE_PHANTOM_GANON_HEART, []{return BossKeyForestTemple;}),
-                  ItemLocationPairing(PHANTOM_GANON,                   []{return BossKeyForestTemple;}),
-                  ItemLocationPairing(FOREST_TEMPLE_GS_BASEMENT,       []{return HookshotOrBoomerang;}),
+                  ItemLocationPairing(PHANTOM_GANON,                     []{return BossKeyForestTemple;}),
+                  ItemLocationPairing(FOREST_TEMPLE_GS_BASEMENT,         []{return HookshotOrBoomerang;}),
   }, {});
 
   //Fire Temple logic currently assumes that the lowest locked door is unlocked from the start
@@ -2001,10 +2001,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(FIRE_TEMPLE_NEAR_BOSS_CHEST,    []{return LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic);}),
                   ItemLocationPairing(FIRE_TEMPLE_FLARE_DANCER_CHEST, []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse(CanUseItem::Hammer);}),
                   ItemLocationPairing(FIRE_TEMPLE_BOSS_KEY_CHEST,     []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse(CanUseItem::Hammer);}),
-                  ItemLocationPairing(FIRE_TEMPLE_VOLVAGIA_HEART,    []{return CanUse(CanUseItem::Goron_Tunic) && CanUse(CanUseItem::Hammer) && BossKeyFireTemple &&
+                  ItemLocationPairing(FIRE_TEMPLE_VOLVAGIA_HEART,     []{return CanUse(CanUseItem::Goron_Tunic) && CanUse(CanUseItem::Hammer) && BossKeyFireTemple &&
                                                                                 (LogicFireBossDoorJump || HoverBoots ||
                                                                                   (FireTemple_Upper.Adult() && (CanPlay(SongOfTime) || HasExplosives)));}),
-                  ItemLocationPairing(VOLVAGIA,                    []{return CanUse(CanUseItem::Goron_Tunic) && CanUse(CanUseItem::Hammer) && BossKeyFireTemple &&
+                  ItemLocationPairing(VOLVAGIA,                       []{return CanUse(CanUseItem::Goron_Tunic) && CanUse(CanUseItem::Hammer) && BossKeyFireTemple &&
                                                                                 (LogicFireBossDoorJump || HoverBoots ||
                                                                                   (FireTemple_Upper.Adult() && (CanPlay(SongOfTime) || HasExplosives)));}),
                   ItemLocationPairing(FIRE_TEMPLE_GS_BOSS_KEY_LOOP,   []{return /*SmallKeys(FireTempleKeys, 8) &&*/ CanUse(CanUseItem::Hammer);}),
@@ -2017,8 +2017,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit FireTemple_BigLavaRoom = Exit("Fire Temple Big Lava Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(FIRE_TEMPLE_BIG_LAVA_ROOM_LOWER_OPEN_DOOR_CHEST, []{return true;}),
-                  ItemLocationPairing(FIRE_TEMPLE_BIG_LAVA_ROOM_BLOCKED_DOOR_CHEST,   []{return IsAdult && HasExplosives;}),
-                  ItemLocationPairing(FIRE_TEMPLE_GS_SONG_OF_TIME_ROOM,             []{return IsAdult && (CanPlay(SongOfTime) || LogicFireSongOfTime);}),
+                  ItemLocationPairing(FIRE_TEMPLE_BIG_LAVA_ROOM_BLOCKED_DOOR_CHEST,    []{return IsAdult && HasExplosives;}),
+                  ItemLocationPairing(FIRE_TEMPLE_GS_SONG_OF_TIME_ROOM,                []{return IsAdult && (CanPlay(SongOfTime) || LogicFireSongOfTime);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&FireTemple_Lower,  []{return true;}),
@@ -2027,16 +2027,16 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit FireTemple_Middle = Exit("Fire Temple Middle", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(FIRE_TEMPLE_BOULDER_MAZE_LOWER_CHEST,    []{return true;}),
-                  ItemLocationPairing(FIRE_TEMPLE_BOULDER_MAZE_UPPER_CHEST,    []{return SmallKeys(FireTempleKeys, 5);}),
+                  ItemLocationPairing(FIRE_TEMPLE_BOULDER_MAZE_LOWER_CHEST,     []{return true;}),
+                  ItemLocationPairing(FIRE_TEMPLE_BOULDER_MAZE_UPPER_CHEST,     []{return SmallKeys(FireTempleKeys, 5);}),
                   ItemLocationPairing(FIRE_TEMPLE_BOULDER_MAZE_SIDE_ROOM_CHEST, []{return true;}),
-                  ItemLocationPairing(FIRE_TEMPLE_BOULDER_MAZE_SHORTCUT_CHEST, []{return SmallKeys(FireTempleKeys, 5) && HasExplosives;}),
-                  ItemLocationPairing(FIRE_TEMPLE_SCARECROW_CHEST,           []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
-                  ItemLocationPairing(FIRE_TEMPLE_MAP_CHEST,                 []{return SmallKeys(FireTempleKeys, 5) || (SmallKeys(FireTempleKeys, 4) && CanUse(CanUseItem::Bow));}),
-                  ItemLocationPairing(FIRE_TEMPLE_COMPASS_CHEST,             []{return SmallKeys(FireTempleKeys, 6);}),
-                  ItemLocationPairing(FIRE_TEMPLE_GS_BOULDER_MAZE,           []{return SmallKeys(FireTempleKeys, 4) && HasExplosives;}),
-                  ItemLocationPairing(FIRE_TEMPLE_GS_SCARECROW_CLIMB,        []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
-                  ItemLocationPairing(FIRE_TEMPLE_GS_SCARECROW_TOP,          []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
+                  ItemLocationPairing(FIRE_TEMPLE_BOULDER_MAZE_SHORTCUT_CHEST,  []{return SmallKeys(FireTempleKeys, 5) && HasExplosives;}),
+                  ItemLocationPairing(FIRE_TEMPLE_SCARECROW_CHEST,              []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
+                  ItemLocationPairing(FIRE_TEMPLE_MAP_CHEST,                    []{return SmallKeys(FireTempleKeys, 5) || (SmallKeys(FireTempleKeys, 4) && CanUse(CanUseItem::Bow));}),
+                  ItemLocationPairing(FIRE_TEMPLE_COMPASS_CHEST,                []{return SmallKeys(FireTempleKeys, 6);}),
+                  ItemLocationPairing(FIRE_TEMPLE_GS_BOULDER_MAZE,              []{return SmallKeys(FireTempleKeys, 4) && HasExplosives;}),
+                  ItemLocationPairing(FIRE_TEMPLE_GS_SCARECROW_CLIMB,           []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
+                  ItemLocationPairing(FIRE_TEMPLE_GS_SCARECROW_TOP,             []{return SmallKeys(FireTempleKeys, 5) && (CanUse(CanUseItem::Scarecrow) || (LogicFireScarecrow && CanUse(CanUseItem::Longshot)));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&FireTemple_Upper, []{return SmallKeys(FireTempleKeys, 7) || (SmallKeys(FireTempleKeys, 6) && ((CanUse(CanUseItem::Hover_Boots) && CanUse(CanUseItem::Hammer)) || LogicFireFlameMaze));})
@@ -2066,7 +2066,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&WaterTempleClear, []{return WaterTempleClear || (BossKeyWaterTemple && CanUse(CanUseItem::Longshot));})
                 }, {
                   //Locations
-                  ItemLocationPairing(MORPHA,                  []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);}),
+                  ItemLocationPairing(MORPHA,                    []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);}),
                   ItemLocationPairing(WATER_TEMPLE_MORPHA_HEART, []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);}),
                 }, {
                   //Exits
@@ -2076,16 +2076,16 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit WaterTemple_Dive = Exit("Water Temple Dive", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(WATER_TEMPLE_MAP_CHEST,              []{return RaiseWaterLevel;}),
-                  ItemLocationPairing(WATER_TEMPLE_COMPASS_CHEST,          []{return (CanPlay(ZeldasLullaby) || IronBoots) && CanUse(CanUseItem::Hookshot);}),
-                  ItemLocationPairing(WATER_TEMPLE_TORCHES_CHEST,          []{return (Bow || CanUse(CanUseItem::Dins_Fire) || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(WATER_TEMPLE_MAP_CHEST,                []{return RaiseWaterLevel;}),
+                  ItemLocationPairing(WATER_TEMPLE_COMPASS_CHEST,            []{return (CanPlay(ZeldasLullaby) || IronBoots) && CanUse(CanUseItem::Hookshot);}),
+                  ItemLocationPairing(WATER_TEMPLE_TORCHES_CHEST,            []{return (Bow || CanUse(CanUseItem::Dins_Fire) || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}),
                   ItemLocationPairing(WATER_TEMPLE_CENTRAL_BOW_TARGET_CHEST, []{return GoronBracelet && CanPlay(ZeldasLullaby) &&
                                                                                     ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse(CanUseItem::Longshot))) ||
                                                                                       (LogicWaterCentralBow && ChildWaterTemple && Slingshot && WaterTemple_MiddleWaterLevel.HasAccess()));}),
-                  ItemLocationPairing(WATER_TEMPLE_GS_BEHIND_GATE,         []{return (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots)) &&
+                  ItemLocationPairing(WATER_TEMPLE_GS_BEHIND_GATE,           []{return (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Hover_Boots)) &&
                                                                                     (HasExplosives && CanPlay(ZeldasLullaby)) &&
                                                                                     (CanUse(CanUseItem::Iron_Boots) || CanDive);}),
-                  ItemLocationPairing(WATER_TEMPLE_GS_CENTRAL_PILLAR,      []{return CanPlay(ZeldasLullaby) &&
+                  ItemLocationPairing(WATER_TEMPLE_GS_CENTRAL_PILLAR,        []{return CanPlay(ZeldasLullaby) &&
                                                                                       (((CanUse(CanUseItem::Longshot) || (LogicWaterCentralGSFW && CanUse(CanUseItem::Hookshot) && CanUse(CanUseItem::Farores_Wind))) &&
                                                                                         (SmallKeys(WaterTempleKeys, 5) || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire))) ||
                                                                                       (LogicWaterCentralGSFW && ChildWaterTemple && Boomerang && CanUse(CanUseItem::Farores_Wind) &&
@@ -2106,7 +2106,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse(CanUseItem::Iron_Boots)) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(WATER_TEMPLE_BOSS_KEY_CHEST,        []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse(CanUseItem::Iron_Boots)) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
+                  ItemLocationPairing(WATER_TEMPLE_BOSS_KEY_CHEST,         []{return SmallKeys(WaterTempleKeys, 5) && (LogicWaterBKJumpDive || CanUse(CanUseItem::Iron_Boots)) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}),
                   ItemLocationPairing(WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST, []{return true;}),
   }, {});
 
@@ -2141,9 +2141,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&FairyPot, []{return FairyPot || (SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(WATER_TEMPLE_LONGSHOT_CHEST,          []{return SmallKeys(WaterTempleKeys, 5);}),
-                  ItemLocationPairing(WATER_TEMPLE_RIVER_CHEST,             []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow;}),
-                  ItemLocationPairing(WATER_TEMPLE_GS_RIVER,               []{return CanPlay(SongOfTime) && SmallKeys(WaterTempleKeys, 5) && (IronBoots || (LogicWaterRiverGS && CanUse(CanUseItem::Longshot) && (Bow || HasBombchus)));}),
+                  ItemLocationPairing(WATER_TEMPLE_LONGSHOT_CHEST, []{return SmallKeys(WaterTempleKeys, 5);}),
+                  ItemLocationPairing(WATER_TEMPLE_RIVER_CHEST,    []{return SmallKeys(WaterTempleKeys, 5) && CanPlay(SongOfTime) && Bow;}),
+                  ItemLocationPairing(WATER_TEMPLE_GS_RIVER,       []{return CanPlay(SongOfTime) && SmallKeys(WaterTempleKeys, 5) && (IronBoots || (LogicWaterRiverGS && CanUse(CanUseItem::Longshot) && (Bow || HasBombchus)));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&WaterTemple_DragonStatue, []{return (CanUse(CanUseItem::Zora_Tunic) || LogicFewerTunicRequirements) &&
@@ -2163,9 +2163,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&NutCrate, []{return true;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(SPIRIT_TEMPLE_CHILD_BRIDGE_CHEST,       []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_CHILD_BRIDGE_CHEST,        []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
                   ItemLocationPairing(SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST, []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot))) && (Sticks || CanUse(CanUseItem::Dins_Fire));}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_GS_METAL_FENCE,          []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_GS_METAL_FENCE,            []{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&SpiritTemple_ChildClimb, []{return SmallKeys(SpiritTempleKeys, 1);}),
@@ -2186,11 +2186,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit SpiritTemple_EarlyAdult = Exit("Early Adult Spirit Temple", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(SPIRIT_TEMPLE_COMPASS_CHEST,          []{return CanUse(CanUseItem::Hookshot) && CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_COMPASS_CHEST,            []{return CanUse(CanUseItem::Hookshot) && CanPlay(ZeldasLullaby);}),
                   ItemLocationPairing(SPIRIT_TEMPLE_EARLY_ADULT_RIGHT_CHEST,  []{return Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch);}),
                   ItemLocationPairing(SPIRIT_TEMPLE_FIRST_MIRROR_LEFT_CHEST,  []{return SmallKeys(SpiritTempleKeys, 3);}),
                   ItemLocationPairing(SPIRIT_TEMPLE_FIRST_MIRROR_RIGHT_CHEST, []{return SmallKeys(SpiritTempleKeys, 3);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_GS_BOULDER_ROOM,        []{return CanPlay(SongOfTime) && (Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch));}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_GS_BOULDER_ROOM,          []{return CanPlay(SongOfTime) && (Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&SpiritTemple_CentralChamber, []{return SmallKeys(SpiritTempleKeys, 1);}),
@@ -2198,12 +2198,33 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit SpiritTemple_CentralChamber = Exit("Spirit Temple Central Chamber", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(SPIRIT_TEMPLE_MAP_CHEST,                 []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && (CanUse(CanUseItem::Dins_Fire) || (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) || (SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse(CanUseItem::Sticks)) || (SmallKeys(SpiritTempleKeys, 3) && (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMapChest && Bow)) && CanUse(CanUseItem::Silver_Gauntlets));}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST,        []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && (CanUse(CanUseItem::Dins_Fire) || (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) || (SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse(CanUseItem::Sticks)) || (SmallKeys(SpiritTempleKeys, 3) && (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMapChest && Bow)) && CanUse(CanUseItem::Silver_Gauntlets));}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_STATUE_ROOM_HAND_CHEST,      []{return SmallKeys(SpiritTempleKeys, 3) && CanUse(CanUseItem::Silver_Gauntlets) && CanPlay(ZeldasLullaby);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_STATUE_ROOM_NORTHEAST_CHEST, []{return SmallKeys(SpiritTempleKeys, 3) && CanUse(CanUseItem::Silver_Gauntlets) && CanPlay(ZeldasLullaby) && (Hookshot || HoverBoots);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_GS_HALL_AFTER_SUN_BLOCK_ROOM, []{return (HasExplosives && Boomerang && Hookshot) || (CanUse(CanUseItem::Boomerang) && SmallKeys(SpiritTempleKeys, 5) && HasExplosives) || (Hookshot && CanUse(CanUseItem::Silver_Gauntlets) && (SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && Boomerang && BombchusInLogic && !ShuffleDungeonEntrances)));}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_GS_LOBBY,                 []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && LogicSpiritLobbyGS && Boomerang && (Hookshot || HoverBoots)) || (LogicSpiritLobbyGS && SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse(CanUseItem::Boomerang)) || (SmallKeys(SpiritTempleKeys, 3) && CanUse(CanUseItem::Silver_Gauntlets) && (Hookshot || HoverBoots));}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MAP_CHEST,                    []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) &&
+                                                                                                (CanUse(CanUseItem::Dins_Fire) ||
+                                                                                                    (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) ||
+                                                                                            (SmallKeys(SpiritTempleKeys, 5) && HasExplosives &&
+                                                                                                CanUse(CanUseItem::Sticks)) ||
+                                                                                            (SmallKeys(SpiritTempleKeys, 3) &&
+                                                                                                (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMapChest && Bow)) &&
+                                                                                                CanUse(CanUseItem::Silver_Gauntlets));}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST,         []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) &&
+                                                                                                (CanUse(CanUseItem::Dins_Fire) ||
+                                                                                                    (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) ||
+                                                                                            (SmallKeys(SpiritTempleKeys, 5) && HasExplosives &&
+                                                                                                CanUse(CanUseItem::Sticks)) ||
+                                                                                            (SmallKeys(SpiritTempleKeys, 3) &&
+                                                                                                (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMapChest && Bow)) &&
+                                                                                                CanUse(CanUseItem::Silver_Gauntlets));}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_STATUE_ROOM_HAND_CHEST,       []{return SmallKeys(SpiritTempleKeys, 3) && CanUse(CanUseItem::Silver_Gauntlets) && CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_STATUE_ROOM_NORTHEAST_CHEST,  []{return SmallKeys(SpiritTempleKeys, 3) && CanUse(CanUseItem::Silver_Gauntlets) && CanPlay(ZeldasLullaby) && (Hookshot || HoverBoots);}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_GS_HALL_AFTER_SUN_BLOCK_ROOM, []{return (HasExplosives && Boomerang && Hookshot) ||
+                                                                                            (CanUse(CanUseItem::Boomerang) && SmallKeys(SpiritTempleKeys, 5) && HasExplosives) ||
+                                                                                            (Hookshot && CanUse(CanUseItem::Silver_Gauntlets) &&
+                                                                                                (SmallKeys(SpiritTempleKeys, 3) ||
+                                                                                                    (SmallKeys(SpiritTempleKeys, 2) && Boomerang && BombchusInLogic && !ShuffleDungeonEntrances)));}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_GS_LOBBY,                     []{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) &&
+                                                                                                LogicSpiritLobbyGS && Boomerang && (Hookshot || HoverBoots)) ||
+                                                                                            (LogicSpiritLobbyGS && SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse(CanUseItem::Boomerang)) ||
+                                                                                            (SmallKeys(SpiritTempleKeys, 3) && CanUse(CanUseItem::Silver_Gauntlets) && (Hookshot || HoverBoots));}),
                 }, {
                   //Exits
                   ExitPairing::Both(&SpiritTemple_OutdoorHands,            []{return true;}),
@@ -2235,10 +2256,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&SpiritTempleClear, []{return SpiritTempleClear || (MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple);}),
   }, {
                   //Locations
-                  ItemLocationPairing(SPIRIT_TEMPLE_BOSS_KEY_CHEST,  []{return CanPlay(ZeldasLullaby) && Bow && Hookshot;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_BOSS_KEY_CHEST, []{return CanPlay(ZeldasLullaby) && Bow && Hookshot;}),
                   ItemLocationPairing(SPIRIT_TEMPLE_TOPMOST_CHEST,  []{return MirrorShield;}),
                   ItemLocationPairing(SPIRIT_TEMPLE_TWINROVA_HEART, []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
-                  ItemLocationPairing(TWINROVA,                   []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
+                  ItemLocationPairing(TWINROVA,                     []{return MirrorShield && HasExplosives && Hookshot && BossKeySpiritTemple;}),
   }, {});
 
   Exit ShadowTemple_Entryway = Exit("Shadow Temple Entryway", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2252,7 +2273,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&NutPot, []{return true;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(SHADOW_TEMPLE_MAP_CHEST,        []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MAP_CHEST,         []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_HOVER_BOOTS_CHEST, []{return true;}),
                 }, {
                   //Exits
@@ -2265,7 +2286,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&FairyPot, []{return true;}), //This fairy pot is only on 3DS
                 }, {
                   //Locations
-                  ItemLocationPairing(SHADOW_TEMPLE_COMPASS_CHEST,          []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_COMPASS_CHEST,            []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_EARLY_SILVER_RUPEE_CHEST, []{return true;}),
                 }, {
                   //Exits
@@ -2279,11 +2300,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(SHADOW_TEMPLE_FALLING_SPIKES_LOWER_CHEST,       []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_FALLING_SPIKES_UPPER_CHEST,       []{return LogicShadowUmbrella || GoronBracelet;}),
                   ItemLocationPairing(SHADOW_TEMPLE_FALLING_SPIKES_SWITCH_CHEST,      []{return LogicShadowUmbrella || GoronBracelet;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_INVISIBLE_SPIKES_CHEST,          []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse(CanUseItem::Lens_of_Truth));}),
-                  ItemLocationPairing(SHADOW_TEMPLE_FREESTANDING_KEY,               []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse(CanUseItem::Lens_of_Truth)) && Hookshot && (Bombs || GoronBracelet || (LogicShadowFreestandingKey && HasBombchus));}),
-                  ItemLocationPairing(SHADOW_TEMPLE_GS_LIKE_LIKE_ROOM,               []{return true;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_GS_FALLING_SPIKES_ROOM,          []{return Hookshot;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_GS_SINGLE_GIANT_POT,             []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse(CanUseItem::Lens_of_Truth)) && Hookshot;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_INVISIBLE_SPIKES_CHEST,           []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(SHADOW_TEMPLE_FREESTANDING_KEY,                 []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse(CanUseItem::Lens_of_Truth)) && Hookshot && (Bombs || GoronBracelet || (LogicShadowFreestandingKey && HasBombchus));}),
+                  ItemLocationPairing(SHADOW_TEMPLE_GS_LIKE_LIKE_ROOM,                []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_GS_FALLING_SPIKES_ROOM,           []{return Hookshot;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_GS_SINGLE_GIANT_POT,              []{return SmallKeys(ShadowTempleKeys, 2) && (LogicLensShadowBack || CanUse(CanUseItem::Lens_of_Truth)) && Hookshot;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ShadowTemple_WindTunnel, []{return (LogicLensShadowBack || CanUse(CanUseItem::Lens_of_Truth)) && Hookshot && SmallKeys(ShadowTempleKeys, 3);}),
@@ -2291,10 +2312,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit ShadowTemple_WindTunnel = Exit("Shadow Temple Wind Tunnel", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(SHADOW_TEMPLE_WIND_HINT_CHEST,        []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_WIND_HINT_CHEST,         []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_AFTER_WIND_ENEMY_CHEST,  []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST, []{return true;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_GS_NEAR_SHIP,          []{return CanUse(CanUseItem::Longshot) && SmallKeys(ShadowTempleKeys, 4);}),
+                  ItemLocationPairing(SHADOW_TEMPLE_GS_NEAR_SHIP,            []{return CanUse(CanUseItem::Longshot) && SmallKeys(ShadowTempleKeys, 4);}),
                 }, {
                   //Exits
                   ExitPairing::Both(&ShadowTemple_BeyondBoat, []{return CanPlay(ZeldasLullaby) && SmallKeys(ShadowTempleKeys, 4);}),
@@ -2305,11 +2326,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&ShadowTempleClear, []{return ShadowTempleClear || (SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse(CanUseItem::Distant_Scarecrow) || (LogicShadowStatue && HasBombchus)));}),
   }, {
                   //Locations
-                  ItemLocationPairing(SHADOW_TEMPLE_SPIKE_WALLS_LEFT_CHEST,       []{return CanUse(CanUseItem::Dins_Fire);}),
+                  ItemLocationPairing(SHADOW_TEMPLE_SPIKE_WALLS_LEFT_CHEST,      []{return CanUse(CanUseItem::Dins_Fire);}),
                   ItemLocationPairing(SHADOW_TEMPLE_BOSS_KEY_CHEST,              []{return CanUse(CanUseItem::Dins_Fire);}),
                   ItemLocationPairing(SHADOW_TEMPLE_INVISIBLE_FLOORMASTER_CHEST, []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_BONGO_BONGO_HEART,           []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse(CanUseItem::Distant_Scarecrow) || (LogicShadowStatue && HasBombchus));}),
-                  ItemLocationPairing(BONGO_BONGO,                             []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse(CanUseItem::Distant_Scarecrow) || (LogicShadowStatue && HasBombchus));}),
+                  ItemLocationPairing(BONGO_BONGO,                               []{return SmallKeys(ShadowTempleKeys, 5) && BossKeyShadowTemple && (Bow || CanUse(CanUseItem::Distant_Scarecrow) || (LogicShadowStatue && HasBombchus));}),
                   ItemLocationPairing(SHADOW_TEMPLE_GS_TRIPLE_GIANT_POT,         []{return true;}),
   }, {});
 
@@ -2326,22 +2347,22 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                 }, {
                   //Locations
                   ItemLocationPairing(BOTTOM_OF_THE_WELL_FRONT_LEFT_FAKE_WALL_CHEST,   []{return LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_FRONT_CENTER_BOMBABLE_CHEST, []{return HasExplosives;}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_FRONT_CENTER_BOMBABLE_CHEST,  []{return HasExplosives;}),
                   ItemLocationPairing(BOTTOM_OF_THE_WELL_RIGHT_BOTTOM_FAKE_WALL_CHEST, []{return LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_COMPASS_CHEST,             []{return LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_CENTER_SKULLTULA_CHEST,     []{return LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_BACK_LEFT_BOMBABLE_CHEST,    []{return (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && HasExplosives;}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_FREESTANDING_KEY,          []{return Sticks || CanUse(CanUseItem::Dins_Fire);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_LENS_OF_TRUTH_CHEST,         []{return CanPlay(ZeldasLullaby) && (KokiriSword || (Sticks && LogicChildDeadhand));}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_INVISIBLE_CHEST,           []{return CanPlay(ZeldasLullaby) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth));}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_UNDERWATER_FRONT_CHEST,     []{return CanPlay(ZeldasLullaby);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_UNDERWATER_LEFT_CHEST,      []{return CanPlay(ZeldasLullaby);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MAP_CHEST,                 []{return HasExplosives || (((SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth))) || CanUse(CanUseItem::Dins_Fire)) && GoronBracelet);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_FIRE_KEESE_CHEST,           []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth));}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_LIKE_LIKE_CHEST,            []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth));}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_GS_WEST_INNER_ROOM,         []{return Boomerang && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && SmallKeys(BottomOfTheWellKeys, 3);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_GS_EAST_INNER_ROOM,         []{return Boomerang && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && SmallKeys(BottomOfTheWellKeys, 3);}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_GS_LIKE_LIKE_CAGE,          []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && Boomerang;}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_COMPASS_CHEST,                []{return LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_CENTER_SKULLTULA_CHEST,       []{return LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_BACK_LEFT_BOMBABLE_CHEST,     []{return (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && HasExplosives;}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_FREESTANDING_KEY,             []{return Sticks || CanUse(CanUseItem::Dins_Fire);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_LENS_OF_TRUTH_CHEST,          []{return CanPlay(ZeldasLullaby) && (KokiriSword || (Sticks && LogicChildDeadhand));}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_INVISIBLE_CHEST,              []{return CanPlay(ZeldasLullaby) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_UNDERWATER_FRONT_CHEST,       []{return CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_UNDERWATER_LEFT_CHEST,        []{return CanPlay(ZeldasLullaby);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MAP_CHEST,                    []{return HasExplosives || (((SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth))) || CanUse(CanUseItem::Dins_Fire)) && GoronBracelet);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_FIRE_KEESE_CHEST,             []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_LIKE_LIKE_CHEST,              []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_GS_WEST_INNER_ROOM,           []{return Boomerang && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && SmallKeys(BottomOfTheWellKeys, 3);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_GS_EAST_INNER_ROOM,           []{return Boomerang && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && SmallKeys(BottomOfTheWellKeys, 3);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_GS_LIKE_LIKE_CAGE,            []{return SmallKeys(BottomOfTheWellKeys, 3) && (LogicLensBotw || CanUse(CanUseItem::Lens_of_Truth)) && Boomerang;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&BottomOfTheWell, []{return true;}),
@@ -2358,11 +2379,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&BlueFireAccess, []{return BlueFireAccess || (IsAdult && HasBottle);}),
                 }, {
                   //Locations
-                  ItemLocationPairing(ICE_CAVERN_MAP_CHEST,              []{return BlueFire && IsAdult;}),
-                  ItemLocationPairing(ICE_CAVERN_COMPASS_CHEST,          []{return BlueFire;}),
+                  ItemLocationPairing(ICE_CAVERN_MAP_CHEST,               []{return BlueFire && IsAdult;}),
+                  ItemLocationPairing(ICE_CAVERN_COMPASS_CHEST,           []{return BlueFire;}),
                   ItemLocationPairing(ICE_CAVERN_IRON_BOOTS_CHEST,        []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse(CanUseItem::Dins_Fire));}),
                   ItemLocationPairing(SHEIK_IN_ICE_CAVERN,                []{return BlueFire && (IsAdult || Slingshot || Sticks || KokiriSword || CanUse(CanUseItem::Dins_Fire));}),
-                  ItemLocationPairing(ICE_CAVERN_FREESTANDING_POH,       []{return BlueFire;}),
+                  ItemLocationPairing(ICE_CAVERN_FREESTANDING_POH,        []{return BlueFire;}),
                   ItemLocationPairing(ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM, []{return HookshotOrBoomerang;}),
                   ItemLocationPairing(ICE_CAVERN_GS_HEART_PIECE_ROOM,     []{return BlueFire && HookshotOrBoomerang;}),
                   ItemLocationPairing(ICE_CAVERN_GS_PUSH_BLOCK_ROOM,      []{return BlueFire && HookshotOrBoomerang;}),
@@ -2384,7 +2405,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit GerudoTrainingGrounds_CentralMaze = Exit ("Gerudo Training Grounds Central Maze", "Gerudo Training Grounds", GERUDO_TRAINING_GROUNDS, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_HIDDEN_CEILING_CHEST,  []{return SmallKeys(GerudoTrainingGroundsKeys, 3) && (LogicLensGtg || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_HIDDEN_CEILING_CHEST,   []{return SmallKeys(GerudoTrainingGroundsKeys, 3) && (LogicLensGtg || CanUse(CanUseItem::Lens_of_Truth));}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MAZE_PATH_FIRST_CHEST,  []{return SmallKeys(GerudoTrainingGroundsKeys, 4);}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MAZE_PATH_SECOND_CHEST, []{return SmallKeys(GerudoTrainingGroundsKeys, 6);}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MAZE_PATH_THIRD_CHEST,  []{return SmallKeys(GerudoTrainingGroundsKeys, 7);}),
@@ -2398,7 +2419,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MAZE_RIGHT_CENTRAL_CHEST, []{return true;}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MAZE_RIGHT_SIDE_CHEST,    []{return true;}),
-                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_FREESTANDING_KEY,       []{return true;}),
+                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_FREESTANDING_KEY,         []{return true;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&GerudoTrainingGrounds_HammerRoom, []{return CanUse(CanUseItem::Hookshot);}),
@@ -2480,10 +2501,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&FreeFairies, []{return true;}),
                 }, {
                   //Locations
-                  ItemLocationPairing(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT, []{return true;}),
+                  ItemLocationPairing(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,  []{return true;}),
                   ItemLocationPairing(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, []{return true;}),
-                  ItemLocationPairing(GANONS_CASTLE_DEKU_SCRUB_RIGHT, []{return true;}),
-                  ItemLocationPairing(GANONS_CASTLE_DEKU_SCRUB_LEFT, []{return true;}),
+                  ItemLocationPairing(GANONS_CASTLE_DEKU_SCRUB_RIGHT,        []{return true;}),
+                  ItemLocationPairing(GANONS_CASTLE_DEKU_SCRUB_LEFT,         []{return true;}),
   }, {});
 
   Exit GanonsCastle_ForestTrial = Exit("Ganon's Castle Forest Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -2515,7 +2536,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&ShadowTrialClear, []{return CanUse(CanUseItem::Light_Arrows) && Hammer && ((FireArrows && (LogicLensCastle || CanUse(CanUseItem::Lens_of_Truth))) || (CanUse(CanUseItem::Longshot) && (HoverBoots || (DinsFire && (LogicLensCastle || CanUse(CanUseItem::Lens_of_Truth))))));}),
                 }, {
                   //Locations
-                  ItemLocationPairing(GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST,           []{return CanUse(CanUseItem::Fire_Arrows) || Hookshot || HoverBoots || CanPlay(SongOfTime);}),
+                  ItemLocationPairing(GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST,            []{return CanUse(CanUseItem::Fire_Arrows) || Hookshot || HoverBoots || CanPlay(SongOfTime);}),
                   ItemLocationPairing(GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST, []{return CanUse(CanUseItem::Fire_Arrows) || (CanUse(CanUseItem::Longshot) && (HoverBoots || CanUse(CanUseItem::Dins_Fire)));}),
   }, {});
 
@@ -2680,7 +2701,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit DodongosCavern_MQ_BombBagArea = Exit("Dodongos Cavern MQ Bomb Bag Area", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(DODONGOS_CAVERN_MQ_BOMB_BAG_CHEST, []{return true;}),
-                  ItemLocationPairing(DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM, []{return (DodongosCavern_MQ_BombBagArea.Here([]{return CanUse(CanUseItem::Bow);}) ||  GoronBracelet || CanUse(CanUseItem::Dins_Fire) || HasExplosives) && (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang));}),
+                  ItemLocationPairing(DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM,  []{return (DodongosCavern_MQ_BombBagArea.Here([]{return CanUse(CanUseItem::Bow);}) ||  GoronBracelet || CanUse(CanUseItem::Dins_Fire) || HasExplosives) && (CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang));}),
   }, {
                   //Exits
                   ExitPairing::Both(&DodongosCavern_MQ_LowerRightSide, []{return true;}),
@@ -2695,8 +2716,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(DODONGOS_CAVERN_MQ_UNDER_GRAVE_CHEST, []{return true;}),
                   ItemLocationPairing(DODONGOS_CAVERN_BOSS_ROOM_CHEST,      []{return true;}),
                   ItemLocationPairing(DODONGOS_CAVERN_KING_DODONGO_HEART,   []{return CanBlastOrSmash && (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
-                  ItemLocationPairing(KING_DODONGO,                       []{return CanBlastOrSmash && (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
-                  ItemLocationPairing(DODONGOS_CAVERN_MQ_GS_BACK_AREA,     []{return true;}),
+                  ItemLocationPairing(KING_DODONGO,                         []{return CanBlastOrSmash && (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword);}),
+                  ItemLocationPairing(DODONGOS_CAVERN_MQ_GS_BACK_AREA,      []{return true;}),
   }, {});
 
   Exit JabuJabusBelly_MQ_Beginning = Exit("Jabu Jabus Belly MQ Beginning", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {
@@ -2716,12 +2737,12 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(JABU_JABUS_BELLY_MQ_SECOND_ROOM_LOWER_CHEST,      []{return true;}),
                   ItemLocationPairing(JABU_JABUS_BELLY_MQ_SECOND_ROOM_UPPER_CHEST,      []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot) || JabuJabusBelly_MQ_BossArea.Child();}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_COMPASS_CHEST,              []{return true;}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_COMPASS_CHEST,                []{return true;}),
                   ItemLocationPairing(JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_VINES_CHEST,    []{return true;}),
                   ItemLocationPairing(JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_SWITCHES_CHEST, []{return true;}),
                   ItemLocationPairing(JABU_JABUS_BELLY_MQ_BOOMERANG_ROOM_SMALL_CHEST,   []{return true;}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST,            []{return true;}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,     []{return CanPlay(SongOfTime);}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST,              []{return true;}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,      []{return CanPlay(SongOfTime);}),
                     //Trick: CanPlay(SongOfTime) || (LogicJabuMQSoTGS && CanUse(CanUseItem::Boomerang))
   }, {
                   //Exits
@@ -2732,8 +2753,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit JabuJabusBelly_MQ_Depths = Exit("Jabu Jabus Belly MQ Depths", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(JABU_JABUS_BELLY_MQ_FALLING_LIKE_LIKE_ROOM_CHEST, []{return true;}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,       []{return Sticks || CanUse(CanUseItem::Dins_Fire);}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,  []{return (LogicLensJabuMQ || CanUse(CanUseItem::Lens_of_Truth)) || JabuJabusBelly_MQ_Main.Here([]{return CanUse(CanUseItem::Hover_Boots) && CanUse(CanUseItem::Hookshot);});}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,          []{return Sticks || CanUse(CanUseItem::Dins_Fire);}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,    []{return (LogicLensJabuMQ || CanUse(CanUseItem::Lens_of_Truth)) || JabuJabusBelly_MQ_Main.Here([]{return CanUse(CanUseItem::Hover_Boots) && CanUse(CanUseItem::Hookshot);});}),
   }, {
                   //Exits
                   ExitPairing::Both(&JabuJabusBelly_MQ_Main,     []{return true;}),
@@ -2746,11 +2767,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&JabuJabusBellyClear, []{return true;}),
   }, {
                   //Locations
-                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_COW,           []{return CanPlay(EponasSong);}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_COW,             []{return CanPlay(EponasSong);}),
                   ItemLocationPairing(JABU_JABUS_BELLY_MQ_NEAR_BOSS_CHEST, []{return true;}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_BARINADE_HEART,    []{return true;}),
-                  ItemLocationPairing(BARINADE,                        []{return true;}),
-                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS,   []{return true;}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_BARINADE_HEART,     []{return true;}),
+                  ItemLocationPairing(BARINADE,                            []{return true;}),
+                  ItemLocationPairing(JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS,    []{return true;}),
   }, {
                   //Exits
                   ExitPairing::Both(&JabuJabusBelly_MQ_Main, []{return true;}),
@@ -2758,7 +2779,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit ForestTemple_MQ_Lobby = Exit("Forest Temple MQ Lobby", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(FOREST_TEMPLE_MQ_FIRST_ROOM_CHEST,  []{return IsAdult || Bombs || CanUse(CanUseItem::Sticks) || Nuts || CanUse(CanUseItem::Boomerang) || CanUse(CanUseItem::Dins_Fire) || KokiriSword || CanUse(CanUseItem::Slingshot);}),
+                  ItemLocationPairing(FOREST_TEMPLE_MQ_FIRST_ROOM_CHEST, []{return IsAdult || Bombs || CanUse(CanUseItem::Sticks) || Nuts || CanUse(CanUseItem::Boomerang) || CanUse(CanUseItem::Dins_Fire) || KokiriSword || CanUse(CanUseItem::Slingshot);}),
                   ItemLocationPairing(FOREST_TEMPLE_MQ_GS_FIRST_HALLWAY, []{return CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang);}),
   }, {
                   //Exits
@@ -2771,7 +2792,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&FairyPot, []{return true;}),
   }, {
                   //Locations
-                  ItemLocationPairing(FOREST_TEMPLE_MQ_WOLFOS_CHEST,      []{return (CanPlay(SongOfTime) || IsChild) && (IsAdult || CanUse(CanUseItem::Dins_Fire) || CanUse(CanUseItem::Sticks) || CanUse(CanUseItem::Slingshot) || KokiriSword);}),
+                  ItemLocationPairing(FOREST_TEMPLE_MQ_WOLFOS_CHEST,       []{return (CanPlay(SongOfTime) || IsChild) && (IsAdult || CanUse(CanUseItem::Dins_Fire) || CanUse(CanUseItem::Sticks) || CanUse(CanUseItem::Slingshot) || KokiriSword);}),
                   ItemLocationPairing(FOREST_TEMPLE_MQ_GS_BLOCK_PUSH_ROOM, []{return IsAdult || KokiriSword;}),
   }, {
                   //Exits
@@ -2819,9 +2840,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&DekuBabaNuts,   []{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(CanUseItem::Dins_Fire));}),
   }, {
                   //Locations
-                  ItemLocationPairing(FOREST_TEMPLE_MQ_WELL_CHEST,                []{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Slingshot);}),
+                  ItemLocationPairing(FOREST_TEMPLE_MQ_WELL_CHEST,                 []{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Slingshot);}),
                   ItemLocationPairing(FOREST_TEMPLE_MQ_GS_RAISED_ISLAND_COURTYARD, []{return CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang) || (CanUse(CanUseItem::Fire_Arrows) && (CanPlay(SongOfTime) || (CanUse(CanUseItem::Hover_Boots) && LogicForestDoorFrame)));}),
-                  ItemLocationPairing(FOREST_TEMPLE_MQ_GS_WELL,                  []{return (CanUse(CanUseItem::Iron_Boots) && CanUse(CanUseItem::Hookshot)) || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Slingshot);}),
+                  ItemLocationPairing(FOREST_TEMPLE_MQ_GS_WELL,                    []{return (CanUse(CanUseItem::Iron_Boots) && CanUse(CanUseItem::Hookshot)) || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Slingshot);}),
   }, {
                   //Exits
                   ExitPairing::Both(&ForestTemple_MQ_OutdoorsTopLedges, []{return CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Longshot) || CanUse(CanUseItem::Hover_Boots) || CanPlay(SongOfTime));}),
@@ -2876,15 +2897,15 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&ForestTempleClear, []{return ForestTempleClear || BossKeyForestTemple;}),
   }, {
                   //Locations
-                  ItemLocationPairing(FOREST_TEMPLE_MQ_BASEMENT_CHEST,  []{return true;}),
+                  ItemLocationPairing(FOREST_TEMPLE_MQ_BASEMENT_CHEST,   []{return true;}),
                   ItemLocationPairing(FOREST_TEMPLE_PHANTOM_GANON_HEART, []{return BossKeyForestTemple;}),
-                  ItemLocationPairing(PHANTOM_GANON,                   []{return BossKeyForestTemple;}),
+                  ItemLocationPairing(PHANTOM_GANON,                     []{return BossKeyForestTemple;}),
   }, {});
 
   Exit FireTemple_MQ_Lower = Exit("Fire Temple MQ Lower", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(FIRE_TEMPLE_MQ_MAP_ROOM_SIDE_CHEST, []{return IsAdult || KokiriSword || Sticks || Slingshot || Bombs || CanUse(CanUseItem::Dins_Fire);}),
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,    []{return (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic)) && (CanUse(CanUseItem::Hover_Boots) || (CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Fire_Arrows) || (CanUse(CanUseItem::Dins_Fire) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE)) || CanUse(CanUseItem::Goron_Tunic) || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Longshot))))));}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,     []{return (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic)) && (CanUse(CanUseItem::Hover_Boots) || (CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Fire_Arrows) || (CanUse(CanUseItem::Dins_Fire) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE)) || CanUse(CanUseItem::Goron_Tunic) || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Longshot))))));}),
                     //Trick: (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic)) && (((CanUse(CanUseItem::Hover_Boots) || (LogicFireMQNearBoss && CanUse(CanUseItem::Bow))) && HasFireSource) || (CanUse(CanUseItem::Hookshot) && CanUse(CanUseItem::Fire_Arrows) || (CanUse(CanUseItem::Dins_Fire) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE)) || CanUse(CanUseItem::Goron_Tunic) || CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Longshot)))))
   }, {
                   //Exits
@@ -2900,7 +2921,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   }, {
                   //Locations
                   ItemLocationPairing(FIRE_TEMPLE_MQ_MEGATON_HAMMER_CHEST, []{return IsAdult && (HasExplosives || Hammer || Hookshot);}),
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_MAP_CHEST,           []{return CanUse(CanUseItem::Hammer);}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_MAP_CHEST,            []{return CanUse(CanUseItem::Hammer);}),
   }, {});
 
   Exit FireTemple_MQ_BigLavaRoom = Exit("Fire Temple MQ Big Lava Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
@@ -2909,11 +2930,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                     //Trick: HasFireSource && (Bow || LogicFireMQBKChest) && (CanUse(CanUseItem::Hookshot) || LogicFireSongOfTime)
   }, {
                   //Locations
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_BOSS_KEY_CHEST,                []{return HasFireSource && Bow && CanUse(CanUseItem::Hookshot);}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_BOSS_KEY_CHEST,                   []{return HasFireSource && Bow && CanUse(CanUseItem::Hookshot);}),
                     //Trick: HasFireSource && (Bow || LogicFireMQBKChest) && CanUse(CanUseItem::Hookshot)
                   ItemLocationPairing(FIRE_TEMPLE_MQ_BIG_LAVA_ROOM_BLOCKED_DOOR_CHEST, []{return HasFireSource && HasExplosives && CanUse(CanUseItem::Hookshot);}),
                     //Trick: HasFireSource && HasExplosives && (CanUse(CanUseItem::Hookshot) || LogicFireMQBlockedChest)
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_BIG_LAVA_ROOM_OPEN_DOOR,      []{return true;}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_BIG_LAVA_ROOM_OPEN_DOOR,       []{return true;}),
   }, {
                   //Exits
                   ExitPairing::Both(&FireTemple_MQ_LowerMaze, []{return CanUse(CanUseItem::Goron_Tunic) && SmallKeys(FireTempleKeys, 2) && HasFireSource;}),
@@ -2922,7 +2943,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit FireTemple_MQ_LowerMaze = Exit("Fire Temple MQ Lower Maze", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_LIZALFOS_MAZE_LOWER_CHEST,    []{return true;}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_LIZALFOS_MAZE_LOWER_CHEST,     []{return true;}),
                   ItemLocationPairing(FIRE_TEMPLE_MQ_LIZALFOS_MAZE_SIDE_ROOM_CHEST, []{return HasExplosives && FireTemple_MQ_UpperMaze.HasAccess();}),
                     //Trick: HasExplosives && (LogicFireMQMazeSideRoom || FireTemple_MQ_UpperMaze.Adult())
    }, {
@@ -2938,8 +2959,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   }, {
                   //Locations
                   ItemLocationPairing(FIRE_TEMPLE_MQ_LIZALFOS_MAZE_UPPER_CHEST, []{return true;}),
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_COMPASS_CHEST,           []{return HasExplosives;}),
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_SKULL_ON_FIRE,         []{return (CanPlay(SongOfTime) && CanUse(CanUseItem::Hookshot) && HasExplosives) || CanUse(CanUseItem::Longshot);}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_COMPASS_CHEST,             []{return HasExplosives;}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_SKULL_ON_FIRE,          []{return (CanPlay(SongOfTime) && CanUse(CanUseItem::Hookshot) && HasExplosives) || CanUse(CanUseItem::Longshot);}),
   }, {
                   //Exits
                   ExitPairing::Both(&FireTemple_MQ_Upper, []{return SmallKeys(FireTempleKeys, 3) && ((CanUse(CanUseItem::Bow) && CanUse(CanUseItem::Hookshot)) || CanUse(CanUseItem::Fire_Arrows));}),
@@ -2947,14 +2968,14 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit FireTemple_MQ_Upper = Exit("Fire Temple MQ Upper", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_FREESTANDING_KEY,         []{return CanUse(CanUseItem::Hookshot);}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_FREESTANDING_KEY,            []{return CanUse(CanUseItem::Hookshot);}),
                     //Trick: CanUse(CanUseItem::Hookshot) || LogicFireMQFlameMaze
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_CHEST_ON_FIRE,             []{return CanUse(CanUseItem::Hookshot) && SmallKeys(FireTempleKeys, 4);}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_CHEST_ON_FIRE,               []{return CanUse(CanUseItem::Hookshot) && SmallKeys(FireTempleKeys, 4);}),
                     //Trick: (CanUse(CanUseItem::Hookshot) || LogicFireMQFlameMaze) && SmallKeys(FireTempleKeys, 4)
                   ItemLocationPairing(FIRE_TEMPLE_MQ_GS_FIRE_WALL_MAZE_SIDE_ROOM, []{return CanPlay(SongOfTime) || HoverBoots;}),
                     //Trick: CanPlay(SongOfTime) || HoverBoots || LogicFireMQFlameMaze
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_FIRE_WALL_MAZE_CENTER,   []{return HasExplosives;}),
-                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_ABOVE_FIRE_WALL_MAZE,    []{return CanUse(CanUseItem::Hookshot) && SmallKeys(FireTempleKeys, 5);}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_FIRE_WALL_MAZE_CENTER,    []{return HasExplosives;}),
+                  ItemLocationPairing(FIRE_TEMPLE_MQ_GS_ABOVE_FIRE_WALL_MAZE,     []{return CanUse(CanUseItem::Hookshot) && SmallKeys(FireTempleKeys, 5);}),
                     //Trick: (CanUse(CanUseItem::Hookshot) && SmallKeys(FireTempleKeys, 5)) || (LogicFireMQAboveMazeGS && CanUse(CanUseItem::Longshot))
   }, {});
 
@@ -2973,7 +2994,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   }, {
                   //Locations
                   ItemLocationPairing(WATER_TEMPLE_MORPHA_HEART, []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);}),
-                  ItemLocationPairing(MORPHA,                  []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);}),
+                  ItemLocationPairing(MORPHA,                    []{return BossKeyWaterTemple && CanUse(CanUseItem::Longshot);}),
   }, {
                   //Exits
                   ExitPairing::Both(&LH_Main,                       []{return true;}),
@@ -2983,7 +3004,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit WaterTemple_MQ_Dive = Exit("Water Temple MQ Dive", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(WATER_TEMPLE_MQ_MAP_CHEST,           []{return HasFireSource && CanUse(CanUseItem::Hookshot);}),
+                  ItemLocationPairing(WATER_TEMPLE_MQ_MAP_CHEST,            []{return HasFireSource && CanUse(CanUseItem::Hookshot);}),
                   ItemLocationPairing(WATER_TEMPLE_MQ_CENTRAL_PILLAR_CHEST, []{return CanUse(CanUseItem::Zora_Tunic) && CanUse(CanUseItem::Hookshot) && (CanUse(CanUseItem::Dins_Fire) && CanPlay(SongOfTime));}),
                     //Trick: CanUse(CanUseItem::Zora_Tunic) && CanUse(CanUseItem::Hookshot) && ((LogicWaterMQCentralPillar && CanUse(CanUseItem::Fire_Arrows)) || (CanUse(CanUseItem::Dins_Fire) && CanPlay(SongOfTime)))
   }, {
@@ -2993,9 +3014,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit WaterTemple_MQ_LoweredWaterLevels = Exit("Water Temple MQ Lowered Water Levels", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(WATER_TEMPLE_MQ_COMPASS_CHEST,              []{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire) || WaterTemple_MQ_Lobby.Here([]{return CanUse(CanUseItem::Sticks) && HasExplosives;});}),
-                  ItemLocationPairing(WATER_TEMPLE_MQ_LONGSHOT_CHEST,             []{return CanUse(CanUseItem::Hookshot);}),
-                  ItemLocationPairing(WATER_TEMPLE_MQ_GS_LIZALFOS_HALLWAY,        []{return CanUse(CanUseItem::Dins_Fire);}),
+                  ItemLocationPairing(WATER_TEMPLE_MQ_COMPASS_CHEST,                []{return CanUse(CanUseItem::Bow) || CanUse(CanUseItem::Dins_Fire) || WaterTemple_MQ_Lobby.Here([]{return CanUse(CanUseItem::Sticks) && HasExplosives;});}),
+                  ItemLocationPairing(WATER_TEMPLE_MQ_LONGSHOT_CHEST,               []{return CanUse(CanUseItem::Hookshot);}),
+                  ItemLocationPairing(WATER_TEMPLE_MQ_GS_LIZALFOS_HALLWAY,          []{return CanUse(CanUseItem::Dins_Fire);}),
                   ItemLocationPairing(WATER_TEMPLE_MQ_GS_BEFORE_UPPER_WATER_SWITCH, []{return CanUse(CanUseItem::Longshot);}),
   }, {});
 
@@ -3006,7 +3027,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   }, {
                   //Locations
                   ItemLocationPairing(WATER_TEMPLE_MQ_BOSS_KEY_CHEST, []{return (CanUse(CanUseItem::Zora_Tunic) || LogicFewerTunicRequirements) && CanUse(CanUseItem::Dins_Fire) && (LogicWaterDragonJumpDive || CanDive || CanUse(CanUseItem::Iron_Boots));}),
-                  ItemLocationPairing(WATER_TEMPLE_MQ_GS_RIVER,     []{return true;}),
+                  ItemLocationPairing(WATER_TEMPLE_MQ_GS_RIVER,       []{return true;}),
   }, {
                   //Exits
                   ExitPairing::Both(&WaterTemple_MQ_BasementGatedAreas, []{return (CanUse(CanUseItem::Zora_Tunic) || LogicFewerTunicRequirements) && CanUse(CanUseItem::Dins_Fire) && CanUse(CanUseItem::Iron_Boots);}),
@@ -3014,7 +3035,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit WaterTemple_MQ_BasementGatedAreas = Exit("Water Temple MQ Basement Gated Areas", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(WATER_TEMPLE_MQ_FREESTANDING_KEY,        []{return HoverBoots || CanUse(CanUseItem::Scarecrow) || LogicWaterNorthBasementLedgeJump;}),
+                  ItemLocationPairing(WATER_TEMPLE_MQ_FREESTANDING_KEY,         []{return HoverBoots || CanUse(CanUseItem::Scarecrow) || LogicWaterNorthBasementLedgeJump;}),
                   ItemLocationPairing(WATER_TEMPLE_MQ_GS_TRIPLE_WALL_TORCH,     []{return CanUse(CanUseItem::Fire_Arrows) && (HoverBoots || CanUse(CanUseItem::Scarecrow));}),
                   ItemLocationPairing(WATER_TEMPLE_MQ_GS_FREESTANDING_KEY_AREA, []{return SmallKeys(WaterTempleKeys, 2) && (HoverBoots || CanUse(CanUseItem::Scarecrow) || LogicWaterNorthBasementLedgeJump);}),
                     //Trick: LogicWaterMQLockedGS || (SmallKeys(WaterTempleKeys, 2) && (HoverBoots || CanUse(CanUseItem::Scarecrow) || LogicWaterNorthBasementLedgeJump))
@@ -3039,7 +3060,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_CHILD_HAMMER_SWITCH_CHEST,  []{return SpiritTemple_MQ_Adult.Here([]{return SmallKeys(SpiritTempleKeys, 7) && Hammer;});}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_MAP_ROOM_ENEMY_CHEST,       []{return (Sticks || KokiriSword) && HasBombchus && Slingshot && CanUse(CanUseItem::Dins_Fire);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_MAP_CHEST,                []{return Sticks || KokiriSword || Bombs;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_MAP_CHEST,                  []{return Sticks || KokiriSword || Bombs;}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_SILVER_BLOCK_HALLWAY_CHEST, []{return HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SpiritTemple_MQ_Adult.Here([]{return CanUse(CanUseItem::Fire_Arrows);})));}),
                     //Trick: HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SpiritTemple_MQ_Adult.Adult() && (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMQFrozenEye && CanUse(CanUseItem::Bow) && CanPlay(SongOfTime)))))
   }, {
@@ -3052,9 +3073,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_CHILD_CLIMB_SOUTH_CHEST,     []{return SmallKeys(SpiritTempleKeys, 7);}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_STATUE_ROOM_LULLABY_CHEST,   []{return CanPlay(ZeldasLullaby);}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_STATUE_ROOM_INVISIBLE_CHEST, []{return (LogicLensSpiritMQ || CanUse(CanUseItem::Lens_of_Truth));}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_BEAMOS_ROOM_CHEST,          []{return SmallKeys(SpiritTempleKeys, 5);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_CHEST_SWITCH_CHEST,         []{return SmallKeys(SpiritTempleKeys, 5) && CanPlay(SongOfTime);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_BOSS_KEY_CHEST,             []{return SmallKeys(SpiritTempleKeys, 5) && CanPlay(SongOfTime) && MirrorShield;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_BEAMOS_ROOM_CHEST,           []{return SmallKeys(SpiritTempleKeys, 5);}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_CHEST_SWITCH_CHEST,          []{return SmallKeys(SpiritTempleKeys, 5) && CanPlay(SongOfTime);}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_BOSS_KEY_CHEST,              []{return SmallKeys(SpiritTempleKeys, 5) && CanPlay(SongOfTime) && MirrorShield;}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_NINE_THRONES_ROOM_WEST,   []{return SmallKeys(SpiritTempleKeys, 7);}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_NINE_THRONES_ROOM_NORTH,  []{return SmallKeys(SpiritTempleKeys, 7);}),
   }, {
@@ -3069,10 +3090,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit SpiritTemple_MQ_Shared = Exit("Spirit Temple MQ Shared", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_CHILD_CLIMB_NORTH_CHEST, []{return SmallKeys(SpiritTempleKeys, 6);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_COMPASS_CHEST,         []{return (CanUse(CanUseItem::Slingshot) && SmallKeys(SpiritTempleKeys, 7)) || CanUse(CanUseItem::Bow) || (Bow && Slingshot);}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_COMPASS_CHEST,           []{return (CanUse(CanUseItem::Slingshot) && SmallKeys(SpiritTempleKeys, 7)) || CanUse(CanUseItem::Bow) || (Bow && Slingshot);}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_SUN_BLOCK_ROOM_CHEST,    []{return CanPlay(SongOfTime) || IsAdult;}),
                     //Trick: CanPlay(SongOfTime) || LogicSpiritMQSunBlockSoT || IsAdult
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_SUN_BLOCK_ROOM,      []{return IsAdult;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_SUN_BLOCK_ROOM,       []{return IsAdult;}),
                     //Trick: (LogicSpiritMQSunBlockGS && Boomerange && (CanPlay(SongOfTime) || LogicSpiritMQSunBlockSoT)) || IsAdult
    }, {
                   //Exits
@@ -3084,11 +3105,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit SpiritTemple_MQ_LowerAdult = Exit("Spirit Temple MQ Lower Adult", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_LEEVER_ROOM_CHEST,         []{return true;}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_SYMPHONY_ROOM_CHEST,       []{return SmallKeys(SpiritTempleKeys, 7) && Hammer && Ocarina && SongOfTime && EponasSong && SunsSong && SongOfStorms && ZeldasLullaby;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_LEEVER_ROOM_CHEST,          []{return true;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_SYMPHONY_ROOM_CHEST,        []{return SmallKeys(SpiritTempleKeys, 7) && Hammer && Ocarina && SongOfTime && EponasSong && SunsSong && SongOfStorms && ZeldasLullaby;}),
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_ENTRANCE_FRONT_RIGHT_CHEST, []{return Hammer;}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_LEEVER_ROOM,           []{return true;}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_SYMPHONY_ROOM,         []{return SmallKeys(SpiritTempleKeys, 7) && Hammer && Ocarina && SongOfTime && EponasSong && SunsSong && SongOfStorms && ZeldasLullaby;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_LEEVER_ROOM,             []{return true;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_MQ_GS_SYMPHONY_ROOM,           []{return SmallKeys(SpiritTempleKeys, 7) && Hammer && Ocarina && SongOfTime && EponasSong && SunsSong && SongOfStorms && ZeldasLullaby;}),
   }, {});
 
   Exit SpiritTemple_MQ_BossArea = Exit("Spirit Temple MQ Boss Area", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {
@@ -3097,8 +3118,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   }, {
                   //Locations
                   ItemLocationPairing(SPIRIT_TEMPLE_MQ_MIRROR_PUZZLE_INVISIBLE_CHEST, []{return LogicLensSpiritMQ || CanUse(CanUseItem::Lens_of_Truth);}),
-                  ItemLocationPairing(SPIRIT_TEMPLE_TWINROVA_HEART,                 []{return MirrorShield && BossKeySpiritTemple;}),
-                  ItemLocationPairing(TWINROVA,                                   []{return MirrorShield && BossKeySpiritTemple;}),
+                  ItemLocationPairing(SPIRIT_TEMPLE_TWINROVA_HEART,                   []{return MirrorShield && BossKeySpiritTemple;}),
+                  ItemLocationPairing(TWINROVA,                                       []{return MirrorShield && BossKeySpiritTemple;}),
   }, {});
 
   Exit SpiritTemple_MQ_MirrorShieldHand = Exit("Spirit Temple MQ Mirror Shield Hand", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -3127,14 +3148,14 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit ShadowTemple_MQ_DeadHandArea = Exit("Shadow Temple MQ Dead Hand Area", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_COMPASS_CHEST,    []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_COMPASS_CHEST,     []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_HOVER_BOOTS_CHEST, []{return CanPlay(SongOfTime) && Bow;}),
   }, {});
 
   Exit ShadowTemple_MQ_FirstBeamos = Exit("Shadow Temple MQ First Beamos", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_MAP_CHEST,               []{return true;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_EARLY_GIBDOS_CHEST,       []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_MAP_CHEST,                 []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_EARLY_GIBDOS_CHEST,        []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_NEAR_SHIP_INVISIBLE_CHEST, []{return true;}),
   }, {
                   //Exits
@@ -3159,9 +3180,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_FALLING_SPIKES_LOWER_CHEST,  []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_FALLING_SPIKES_UPPER_CHEST,  []{return (LogicShadowUmbrella && HoverBoots) || GoronBracelet;}),
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_FALLING_SPIKES_SWITCH_CHEST, []{return (LogicShadowUmbrella && HoverBoots) || GoronBracelet;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_INVISIBLE_SPIKES_CHEST,     []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && (LogicLensShadowMQBack || CanUse(CanUseItem::Lens_of_Truth));}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_STALFOS_ROOM_CHEST,         []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && Hookshot && (LogicLensShadowMQBack || CanUse(CanUseItem::Lens_of_Truth));}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_FALLING_SPIKES_ROOM,     []{return Hookshot;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_INVISIBLE_SPIKES_CHEST,      []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && (LogicLensShadowMQBack || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_STALFOS_ROOM_CHEST,          []{return HoverBoots && SmallKeys(ShadowTempleKeys, 3) && Hookshot && (LogicLensShadowMQBack || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_FALLING_SPIKES_ROOM,      []{return Hookshot;}),
   }, {
                   //Exits
                   ExitPairing::Both(&ShadowTemple_MQ_WindTunnel, []{return HoverBoots && (LogicLensShadowMQBack || CanUse(CanUseItem::Lens_of_Truth)) && Hookshot && SmallKeys(ShadowTempleKeys, 4);}),
@@ -3172,11 +3193,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&NutPot, []{return true;}),
   }, {
                   //Locations
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_WIND_HINT_CHEST,        []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_WIND_HINT_CHEST,         []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_AFTER_WIND_ENEMY_CHEST,  []{return true;}),
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_AFTER_WIND_HIDDEN_CHEST, []{return true;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_WIND_HINT_ROOM,      []{return true;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_AFTER_WIND,         []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_WIND_HINT_ROOM,       []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_AFTER_WIND,           []{return true;}),
   }, {
                   //Exits
                   ExitPairing::Both(&ShadowTemple_MQ_BeyondBoat, []{return CanPlay(ZeldasLullaby) && SmallKeys(ShadowTempleKeys, 5);}),
@@ -3188,9 +3209,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   }, {
                   //Locations
                   ItemLocationPairing(SHADOW_TEMPLE_BONGO_BONGO_HEART, []{return (Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple;}),
-                  ItemLocationPairing(BONGO_BONGO,                   []{return (Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_AFTER_SHIP, []{return true;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_NEAR_BOSS,  []{return Bow || (LogicShadowStatue && HasBombchus);}),
+                  ItemLocationPairing(BONGO_BONGO,                     []{return (Bow || (LogicShadowStatue && HasBombchus)) && BossKeyShadowTemple;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_AFTER_SHIP,  []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_GS_NEAR_BOSS,   []{return Bow || (LogicShadowStatue && HasBombchus);}),
   }, {
                   //Exits
                   ExitPairing::Both(&ShadowTemple_MQ_InvisibleMaze, []{return Bow && CanPlay(SongOfTime) && CanUse(CanUseItem::Longshot);}),
@@ -3199,9 +3220,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   Exit ShadowTemple_MQ_InvisibleMaze = Exit("Shadow Temple MQ Invisible Maze", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   ItemLocationPairing(SHADOW_TEMPLE_MQ_SPIKE_WALLS_LEFT_CHEST, []{return CanUse(CanUseItem::Dins_Fire) && SmallKeys(ShadowTempleKeys, 6);}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_BOSS_KEY_CHEST,        []{return CanUse(CanUseItem::Dins_Fire) && SmallKeys(ShadowTempleKeys, 6);}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_BOMB_FLOWER_CHEST,     []{return true;}),
-                  ItemLocationPairing(SHADOW_TEMPLE_MQ_FREESTANDING_KEY,     []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_BOSS_KEY_CHEST,         []{return CanUse(CanUseItem::Dins_Fire) && SmallKeys(ShadowTempleKeys, 6);}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_BOMB_FLOWER_CHEST,      []{return true;}),
+                  ItemLocationPairing(SHADOW_TEMPLE_MQ_FREESTANDING_KEY,       []{return true;}),
   }, {});
 
   Exit BottomOfTheWell_MQ = Exit("Bottom of the Well MQ", "Bottom of the Well", BOTTOM_OF_THE_WELL, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3215,11 +3236,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //EventPairing(&WallFairy, []{return WallFairy || Slingshot;}),
   }, {
                   //Locations
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_COMPASS_CHEST,            []{return KokiriSword || (Sticks && LogicChildDeadhand);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_COMPASS_CHEST,              []{return KokiriSword || (Sticks && LogicChildDeadhand);}),
                   ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_DEAD_HAND_FREESTANDING_KEY, []{return HasExplosives;}),
                     //Trick: HasExplosives || (LogicBotWMQDeadHandKey && Boomerang)
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_GS_BASEMENT,             []{return CanChildAttack;}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_GS_COFFIN_ROOM,           []{return CanChildAttack && SmallKeys(BottomOfTheWellKeys, 2);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_GS_BASEMENT,                []{return CanChildAttack;}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_GS_COFFIN_ROOM,             []{return CanChildAttack && SmallKeys(BottomOfTheWellKeys, 2);}),
   }, {
                   //Exits
                   ExitPairing::Both(&BottomOfTheWell_MQ,        []{return true;}),
@@ -3229,10 +3250,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit BottomOfTheWell_MQ_Middle = Exit("Bottom of the Well MQ Middle", "Bottom of the Well", BOTTOM_OF_THE_WELL, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_MAP_CHEST,                     []{return true;}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_LENS_OF_TRUTH_CHEST,             []{return HasExplosives && SmallKeys(BottomOfTheWellKeys, 2);}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_MAP_CHEST,                        []{return true;}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_LENS_OF_TRUTH_CHEST,              []{return HasExplosives && SmallKeys(BottomOfTheWellKeys, 2);}),
                   ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_EAST_INNER_ROOM_FREESTANDING_KEY, []{return true;}),
-                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_GS_WEST_INNER_ROOM,             []{return CanChildAttack && HasExplosives;}),
+                  ItemLocationPairing(BOTTOM_OF_THE_WELL_MQ_GS_WEST_INNER_ROOM,               []{return CanChildAttack && HasExplosives;}),
                     //Trick: CanChildAttack && (LogicBotWMQPits || HasExplosives)
   }, {
                   //Exits
@@ -3262,8 +3283,8 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(ICE_CAVERN_MQ_IRON_BOOTS_CHEST, []{return IsAdult;}),
                   ItemLocationPairing(SHEIK_IN_ICE_CAVERN,            []{return IsAdult;}),
-                  ItemLocationPairing(ICE_CAVERN_MQ_GS_ICE_BLOCK,    []{return IsAdult || CanChildAttack;}),
-                  ItemLocationPairing(ICE_CAVERN_MQ_GS_SCARECROW,   []{return CanUse(CanUseItem::Scarecrow) || (HoverBoots && CanUse(CanUseItem::Longshot));}),
+                  ItemLocationPairing(ICE_CAVERN_MQ_GS_ICE_BLOCK,     []{return IsAdult || CanChildAttack;}),
+                  ItemLocationPairing(ICE_CAVERN_MQ_GS_SCARECROW,     []{return CanUse(CanUseItem::Scarecrow) || (HoverBoots && CanUse(CanUseItem::Longshot));}),
                     //Tricks: CanUse(CanUseItem::Scarecrow) || (HoverBoots && CanUse(CanUseItem::Longshot)) || (LogicIceMQScarecrow && IsAdult)
   }, {});
 
@@ -3277,9 +3298,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit GerudoTrainingGrounds_MQ_Lobby = Exit("Gerudo Training Grounds MQ Lobby", "Gerudo Training Grounds", GERUDO_TRAINING_GROUNDS, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_LOBBY_LEFT_CHEST,      []{return true;}),
-                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_LOBBY_RIGHT_CHEST,     []{return true;}),
-                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_HIDDEN_CEILING_CHEST,  []{return LogicLensGtgMQ || CanUse(CanUseItem::Lens_of_Truth);}),
+                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_LOBBY_LEFT_CHEST,       []{return true;}),
+                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_LOBBY_RIGHT_CHEST,      []{return true;}),
+                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_HIDDEN_CEILING_CHEST,   []{return LogicLensGtgMQ || CanUse(CanUseItem::Lens_of_Truth);}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_MAZE_PATH_FIRST_CHEST,  []{return true;}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_MAZE_PATH_SECOND_CHEST, []{return true;}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_MAZE_PATH_THIRD_CHEST,  []{return SmallKeys(GerudoTrainingGroundsKeys, 1);}),
@@ -3343,7 +3364,7 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   //Locations
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_MAZE_RIGHT_CENTRAL_CHEST, []{return true;}),
                   ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_MAZE_RIGHT_SIDE_CHEST,    []{return true;}),
-                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_ICE_ARROWS_CHEST,        []{return SmallKeys(GerudoTrainingGroundsKeys, 3);}),
+                  ItemLocationPairing(GERUDO_TRAINING_GROUNDS_MQ_ICE_ARROWS_CHEST,         []{return SmallKeys(GerudoTrainingGroundsKeys, 3);}),
   }, {
                   //Exits
                   ExitPairing::Both(&GerudoTrainingGrounds_MQ_Underwater, []{return CanUse(CanUseItem::Longshot) || (CanUse(CanUseItem::Hookshot) && Bow);}),
@@ -3374,10 +3395,10 @@ namespace Exits { //name, scene, hint text, events, locations, exits
   }, {
                   //Locations
                   ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,  []{return true;}),
-                  ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,      []{return true;}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,       []{return true;}),
                   ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT, []{return true;}),
-                  ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,        []{return true;}),
-                  ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,       []{return true;}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,         []{return true;}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,        []{return true;}),
   }, {});
 
   Exit GanonsCastle_MQ_ForestTrial = Exit("Ganon's Castle MQ Forest Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -3385,9 +3406,9 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&ForestTrialClear, []{return CanUse(CanUseItem::Light_Arrows) && CanPlay(SongOfTime);}),
   }, {
                   //Locations
-                  ItemLocationPairing(GANONS_CASTLE_MQ_FOREST_TRIAL_EYE_SWITCH_CHEST,       []{return Bow;}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_FOREST_TRIAL_EYE_SWITCH_CHEST,        []{return Bow;}),
                   ItemLocationPairing(GANONS_CASTLE_MQ_FOREST_TRIAL_FROZEN_EYE_SWITCH_CHEST, []{return HasFireSource;}),
-                  ItemLocationPairing(GANONS_CASTLE_MQ_FOREST_TRIAL_FREESTANDING_KEY,      []{return Hookshot;}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_FOREST_TRIAL_FREESTANDING_KEY,        []{return Hookshot;}),
   }, {});
 
   Exit GanonsCastle_MQ_FireTrial = Exit("Ganon's Castle MQ Fire Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -3422,11 +3443,11 @@ namespace Exits { //name, scene, hint text, events, locations, exits
                   EventPairing(&NutPot,           []{return NutPot || (Hammer && HasBombchus && CanUse(CanUseItem::Fire_Arrows) && MirrorShield);}),
   }, {
                   //Locations
-                  ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,           []{return Bow && Hammer;}),
-                  ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,       []{return Bow && Hammer && HasBombchus && (LogicLensCastleMQ || CanUse(CanUseItem::Lens_of_Truth));}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,             []{return Bow && Hammer;}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,         []{return Bow && Hammer && HasBombchus && (LogicLensCastleMQ || CanUse(CanUseItem::Lens_of_Truth));}),
                   ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST,    []{return Hammer && HasBombchus && CanUse(CanUseItem::Fire_Arrows) && MirrorShield;}),
                   ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST,     []{return Hammer && HasBombchus && CanUse(CanUseItem::Fire_Arrows) && MirrorShield;}),
-                  ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST, []{return Hammer && HasBombchus && CanUse(CanUseItem::Fire_Arrows) && MirrorShield;}),
+                  ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST,  []{return Hammer && HasBombchus && CanUse(CanUseItem::Fire_Arrows) && MirrorShield;}),
                   ItemLocationPairing(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST,    []{return Hammer && HasBombchus && CanUse(CanUseItem::Fire_Arrows) && MirrorShield;}),
   }, {});
 

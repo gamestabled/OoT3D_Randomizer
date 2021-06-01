@@ -11,11 +11,11 @@
 
 using namespace Settings;
 
-std::vector<u32> ShopItems = {};
-std::vector<u16> ShopItemsPrices = {};
+std::vector<ItemKey> ShopItems = {};
+std::array<int, 64> ShopItemsPrices;
 std::vector<ItemAndPrice> NonShopItems = {};
 //Shop items we don't want to overwrite
-const std::array<u32, 15> minShopItems = {
+const std::array<ItemKey, 15> minShopItems = {
   BUY_DEKU_SHIELD, //1 in vanilla shop pool
   BUY_HYLIAN_SHIELD, //2
   BUY_GORON_TUNIC, //1
@@ -109,7 +109,6 @@ void SetVanillaShopItems() {
     BUY_RED_POTION_40,
     BUY_HEART,
   };
-  ShopItemsPrices.assign(32, 0);
   ItemAndPrice init;
   init.Name = "No Item";
   init.Price = -1;
@@ -158,7 +157,7 @@ std::string GetIceTrapName(u8 id) {
 
 //Get shop index based on a given location
 std::map<std::string, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}};
-int GetShopIndex(u32 loc) {
+int GetShopIndex(LocationKey loc) {
   //Kind of hacky, but extract the shop and item position from the name
   std::string name = std::basic_string(Location(loc)->GetName());
   int split = name.find(" Item ");
@@ -184,13 +183,13 @@ void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
       //Multiply i by 8 to get the correct shop
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItemsPrices[i*8 + j]);
+      PlaceItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j]);
     }
   }
 }
 
 //Specialized shuffle function for shop items
-void ShuffleShop(std::vector<u32>& ShopItems, std::vector<int> indicesToExclude) {
+void ShuffleShop(std::vector<ItemKey>& ShopItems, std::vector<int> indicesToExclude) {
   for (std::size_t i = 0; i + 1 < ShopItems.size(); i++) {
     int retries = 5;
     while (retries > 0) { //Retry a few times until item is eventually shuffled somewhere, so we don't end up with a bunch of unshuffled items

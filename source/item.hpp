@@ -5,6 +5,7 @@
 #include <variant>
 
 #include "keys.hpp"
+#include "hint_list.hpp"
 #include "settings.hpp"
 
 union ItemOverride_Value;
@@ -28,8 +29,8 @@ enum ItemType {
 class Item {
 public:
     Item() = default;
-    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, u32 hintKey_, u16 price_ = 0);
-    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, u32 hintKey_, u16 price_ = 0);
+    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_ = 0);
+    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_ = 0);
     ~Item();
 
     void ApplyEffect();
@@ -112,8 +113,12 @@ public:
         return IsAdvancement();
     }
 
-    u32 GetHintKey() const {
+    HintKey GetHintKey() const {
         return hintKey;
+    }
+
+    const HintText& GetHint() const {
+        return Hint(hintKey);
     }
 
     bool operator== (const Item& right) const {
@@ -130,7 +135,7 @@ private:
     int  getItemId;
     bool advancement;
     std::variant<bool*, u8*> logicVar;
-    u32 hintKey;
+    HintKey hintKey;
     u16  price;
     bool playthrough = false;
 };

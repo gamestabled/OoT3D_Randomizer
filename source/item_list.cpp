@@ -1,9 +1,7 @@
 #include "item_list.hpp"
 
 #include "logic.hpp"
-#include "keys.hpp"
 #include "../code/include/z3D/z3Ditem.h"
-#include <vector>
 #include <array>
 
 using namespace Logic;
@@ -223,13 +221,13 @@ void ItemTable_Init() {                               //Name                    
     itemTable[HINT]                              = Item("Hint",     ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE);
 }
 
-Item& ItemTable(u32 itemKey) {
+Item& ItemTable(ItemKey itemKey) {
     return itemTable[itemKey];
 }
 
 //This function should only be used to place items containing hint text
 //at gossip stone locations.
-void NewItem(u32 itemKey, Item item) {
+void NewItem(ItemKey itemKey, Item item) {
     if (itemKey <= BUY_RED_POTION_50) {
       printf("\x1b[25;0HWARNING: ATTEMPTED TO OVERWRITE ITEM %lu\n", itemKey);
       return;

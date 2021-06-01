@@ -8,14 +8,13 @@
 #include "random.hpp"
 #include "settings.hpp"
 #include "spoiler_log.hpp"
-#include "keys.hpp"
 
 using namespace Settings;
 using namespace Dungeon;
 
-std::vector<u32> ItemPool = {};
-std::vector<u32> PendingJunkPool = {};
-std::vector<u32> dungeonRewards = {
+std::vector<ItemKey> ItemPool = {};
+std::vector<ItemKey> PendingJunkPool = {};
+std::vector<ItemKey> dungeonRewards = {
   KOKIRI_EMERALD,
   GORON_RUBY,
   ZORA_SAPPHIRE,
@@ -26,7 +25,7 @@ std::vector<u32> dungeonRewards = {
   SHADOW_MEDALLION,
   LIGHT_MEDALLION,
 };
-const std::array<u32, 16> JunkPoolItems = {
+const std::array<ItemKey, 16> JunkPoolItems = {
   BOMBS_5,
   BOMBS_10,
   BOMBS_20,
@@ -44,7 +43,7 @@ const std::array<u32, 16> JunkPoolItems = {
   DEKU_NUTS_10,
   ICE_TRAP,
 };
-const std::array<u32, 59> alwaysItems = {
+const std::array<ItemKey, 59> alwaysItems = {
   BIGGORON_SWORD,
   BOOMERANG,
   LENS_OF_TRUTH,
@@ -105,7 +104,7 @@ const std::array<u32, 59> alwaysItems = {
   ARROWS_10,
   TREASURE_GAME_HEART,
 };
-const std::array<u32, 43> easyItems = {
+const std::array<ItemKey, 43> easyItems = {
   BIGGORON_SWORD,
   KOKIRI_SWORD,
   BOOMERANG,
@@ -150,7 +149,7 @@ const std::array<u32, 43> easyItems = {
   PIECE_OF_HEART,
   PIECE_OF_HEART,
 };
-const std::array<u32, 43> normalItems = {
+const std::array<ItemKey, 43> normalItems = {
   PIECE_OF_HEART,   //35 pieces of heart
   PIECE_OF_HEART,
   PIECE_OF_HEART,
@@ -195,23 +194,23 @@ const std::array<u32, 43> normalItems = {
   HEART_CONTAINER,
   HEART_CONTAINER,
 };
-const std::array<u32, 2> DT_Vanilla = {
+const std::array<ItemKey, 2> DT_Vanilla = {
   RECOVERY_HEART,
   RECOVERY_HEART,
 };
-const std::array<u32, 3> DT_MQ = {
+const std::array<ItemKey, 3> DT_MQ = {
   DEKU_SHIELD,
   DEKU_SHIELD,
   PURPLE_RUPEE,
 };
-const std::array<u32, 1> DC_Vanilla = {
+const std::array<ItemKey, 1> DC_Vanilla = {
   RED_RUPEE,
 };
-const std::array<u32, 2> DC_MQ = {
+const std::array<ItemKey, 2> DC_MQ = {
   HYLIAN_SHIELD,
   BLUE_RUPEE,
 };
-const std::array<u32, 7> JB_MQ = {
+const std::array<ItemKey, 7> JB_MQ = {
   DEKU_NUTS_5,
   DEKU_NUTS_5,
   DEKU_NUTS_5,
@@ -220,41 +219,41 @@ const std::array<u32, 7> JB_MQ = {
   DEKU_SHIELD,
   DEKU_STICK_1,
 };
-const std::array<u32, 3> FoT_Vanilla = {
+const std::array<ItemKey, 3> FoT_Vanilla = {
   RECOVERY_HEART,
   ARROWS_10,
   ARROWS_30,
 };
-const std::array<u32, 1> FoT_MQ = {
+const std::array<ItemKey, 1> FoT_MQ = {
   ARROWS_5,
 };
-const std::array<u32, 1> FiT_Vanilla = {
+const std::array<ItemKey, 1> FiT_Vanilla = {
   HUGE_RUPEE,
 };
-const std::array<u32, 2> FiT_MQ = {
+const std::array<ItemKey, 2> FiT_MQ = {
   BOMBS_20,
   HYLIAN_SHIELD,
 };
-const std::array<u32, 4> SpT_Vanilla = {
+const std::array<ItemKey, 4> SpT_Vanilla = {
   DEKU_SHIELD,
   DEKU_SHIELD,
   RECOVERY_HEART,
   BOMBS_20,
 };
-const std::array<u32, 3> SpT_MQ = {
+const std::array<ItemKey, 3> SpT_MQ = {
   PURPLE_RUPEE,
   PURPLE_RUPEE,
   ARROWS_30,
 };
-const std::array<u32, 1> ShT_Vanilla = {
+const std::array<ItemKey, 1> ShT_Vanilla = {
   ARROWS_30,
 };
-const std::array<u32, 3> ShT_MQ = {
+const std::array<ItemKey, 3> ShT_MQ = {
   ARROWS_5,
   ARROWS_5,
   RED_RUPEE,
 };
-const std::array<u32, 7> BW_Vanilla = {
+const std::array<ItemKey, 7> BW_Vanilla = {
   RECOVERY_HEART,
   BOMBS_10,
   HUGE_RUPEE,
@@ -263,33 +262,33 @@ const std::array<u32, 7> BW_Vanilla = {
   DEKU_SHIELD,
   HYLIAN_SHIELD,
 };
-const std::array<u32, 4> GTG_Vanilla = {
+const std::array<ItemKey, 4> GTG_Vanilla = {
   ARROWS_30,
   ARROWS_30,
   ARROWS_30,
   HUGE_RUPEE,
 };
-const std::array<u32, 5> GTG_MQ = {
+const std::array<ItemKey, 5> GTG_MQ = {
   TREASURE_GAME_GREEN_RUPEE,
   TREASURE_GAME_GREEN_RUPEE,
   ARROWS_10,
   GREEN_RUPEE,
   PURPLE_RUPEE,
 };
-const std::array<u32, 4> GC_Vanilla = {
+const std::array<ItemKey, 4> GC_Vanilla = {
   BLUE_RUPEE,
   BLUE_RUPEE,
   BLUE_RUPEE,
   ARROWS_30,
 };
-const std::array<u32, 5> GC_MQ = {
+const std::array<ItemKey, 5> GC_MQ = {
   ARROWS_10,
   ARROWS_10,
   BOMBS_5,
   RED_RUPEE,
   RECOVERY_HEART,
 };
-const std::array<u32, 11> normalBottles = {
+const std::array<ItemKey, 11> normalBottles = {
   EMPTY_BOTTLE,
   BOTTLE_WITH_MILK,
   BOTTLE_WITH_RED_POTION,
@@ -302,7 +301,7 @@ const std::array<u32, 11> normalBottles = {
   BOTTLE_WITH_BIG_POE,
   BOTTLE_WITH_BLUE_FIRE,
 };
-const std::array<u32, 28> normalRupees = {
+const std::array<ItemKey, 28> normalRupees = {
   BLUE_RUPEE,
   BLUE_RUPEE,
   BLUE_RUPEE,
@@ -332,7 +331,7 @@ const std::array<u32, 28> normalRupees = {
   HUGE_RUPEE,
   HUGE_RUPEE,
 };
-const std::array<u32, 28> shopsanityRupees = {
+const std::array<ItemKey, 28> shopsanityRupees = {
   BLUE_RUPEE,
   BLUE_RUPEE,
   RED_RUPEE,
@@ -362,7 +361,7 @@ const std::array<u32, 28> shopsanityRupees = {
   HUGE_RUPEE,
   PROGRESSIVE_WALLET,
 };
-const std::array<u32, 19> dekuScrubItems = {
+const std::array<ItemKey, 19> dekuScrubItems = {
   DEKU_NUTS_5,
   DEKU_NUTS_5,
   DEKU_NUTS_5,
@@ -383,7 +382,7 @@ const std::array<u32, 19> dekuScrubItems = {
   BLUE_RUPEE,
   BLUE_RUPEE,
 };
-const std::array<u32, 12> songList = {
+const std::array<ItemKey, 12> songList = {
   ZELDAS_LULLABY,
   EPONAS_SONG,
   SUNS_SONG,
@@ -397,7 +396,7 @@ const std::array<u32, 12> songList = {
   NOCTURNE_OF_SHADOW,
   REQUIEM_OF_SPIRIT,
 };
-const std::array<u32, 10> tradeItems = {
+const std::array<ItemKey, 10> tradeItems = {
   POCKET_EGG,
   POCKET_CUCCO,
   COJIRO,
@@ -410,24 +409,24 @@ const std::array<u32, 10> tradeItems = {
   CLAIM_CHECK,
 };
 
-void AddItemToPool(std::vector<u32>& pool, u32 item, size_t count /*= 1*/) {
+void AddItemToPool(std::vector<ItemKey>& pool, ItemKey item, size_t count /*= 1*/) {
   pool.insert(pool.end(), count, item);
 }
 
 template <typename FromPool>
-static void AddItemsToPool(std::vector<u32>& toPool, const FromPool& fromPool) {
+static void AddItemsToPool(std::vector<ItemKey>& toPool, const FromPool& fromPool) {
   AddElementsToPool(toPool, fromPool);
 }
 
-static void AddItemToMainPool(u32 item, size_t count = 1) {
+static void AddItemToMainPool(ItemKey item, size_t count = 1) {
   ItemPool.insert(ItemPool.end(), count, item);
 }
 
-static void AddRandomBottle(std::vector<u32>& bottlePool) {
+static void AddRandomBottle(std::vector<ItemKey>& bottlePool) {
   AddItemToMainPool(RandomElement(bottlePool, true));
 }
 
-u32 GetJunkItem() {
+ItemKey GetJunkItem() {
   if (IceTrapValue.Is(ICETRAPS_MAYHEM) || IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
     return ICE_TRAP;
   } else if (IceTrapValue.Is(ICETRAPS_EXTRA)) {
@@ -438,7 +437,7 @@ u32 GetJunkItem() {
   return JunkPoolItems[idx];
 }
 
-static u32 GetPendingJunkItem() {
+static ItemKey GetPendingJunkItem() {
   if (PendingJunkPool.empty()) {
     return GetJunkItem();
   }
@@ -447,9 +446,9 @@ static u32 GetPendingJunkItem() {
 }
 
 //Replace junk items in the pool with pending junk
-static void ReplaceMaxItem(u32 itemToReplace, int max) {
+static void ReplaceMaxItem(ItemKey itemToReplace, int max) {
   int itemCount = 0;
-  for (u32 item : ItemPool) {
+  for (ItemKey item : ItemPool) {
     if (item == itemToReplace) {
       if (itemCount >= max) {
         item = GetJunkItem();
@@ -459,7 +458,7 @@ static void ReplaceMaxItem(u32 itemToReplace, int max) {
   }
 }
 
-void PlaceJunkInExcludedLocation(u32 il) {
+void PlaceJunkInExcludedLocation(LocationKey il) {
   //place a non-advancement item in this location
   for (size_t i = 0; i < ItemPool.size(); i++) {
     if (!ItemTable(ItemPool[i]).IsAdvancement()) {
@@ -652,11 +651,11 @@ void GenerateItemPool() {
   }
 
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
-    for (u32 loc : GetLocations(allLocations, Category::cSkulltula)) {
+    for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
       PlaceItemInLocation(loc, GOLD_SKULLTULA_TOKEN);
     }
   } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
-    for (u32 loc : GetLocations(allLocations, Category::cSkulltula)) {
+    for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
       if (Location(loc)->IsOverworld()) {
         PlaceItemInLocation(loc, GOLD_SKULLTULA_TOKEN);
       } else {
@@ -664,7 +663,7 @@ void GenerateItemPool() {
       }
     }
   } else if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
-    for (u32 loc : GetLocations(allLocations, Category::cSkulltula)) {
+    for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
       if (Location(loc)->IsDungeon()) {
         PlaceItemInLocation(loc, GOLD_SKULLTULA_TOKEN);
       } else {
@@ -873,7 +872,7 @@ void GenerateItemPool() {
 
   //Add 4 total bottles
   u8 bottleCount = 4;
-  std::vector<u32> bottles;
+  std::vector<ItemKey> bottles;
   bottles.assign(normalBottles.begin(), normalBottles.end());
 
   for (u8 i = 0; i < bottleCount; i++) {
@@ -972,10 +971,10 @@ void GenerateItemPool() {
   //this feels ugly and there's probably a better way, but
   //it replaces random junk with pending junk.
   bool junkSet;
-  for (u32 pendingJunk : PendingJunkPool) {
+  for (ItemKey pendingJunk : PendingJunkPool) {
     junkSet = false;
-    for (u32 item : ItemPool) {
-      for (u32 junk : JunkPoolItems) {
+    for (ItemKey item : ItemPool) {
+      for (ItemKey junk : JunkPoolItems) {
         if (item == junk && item != HUGE_RUPEE && item != DEKU_NUTS_10) {
           item = pendingJunk;
           junkSet = true;

@@ -39,7 +39,7 @@ class ItemLocationPairing {
 public:
     using ConditionFn = bool (*)();
 
-    explicit ItemLocationPairing(u32 location_, ConditionFn conditions_met_)
+    explicit ItemLocationPairing(LocationKey location_, ConditionFn conditions_met_)
          : location(location_),
            conditions_met(conditions_met_) {}
 
@@ -47,14 +47,14 @@ public:
         return conditions_met() && CanBuy();
     }
 
-    u32 GetLocation() const {
+    LocationKey GetLocation() const {
         return location;
     }
 
     bool IsLocationUsed() const;
 
 private:
-    u32 location;
+    LocationKey location;
     ConditionFn conditions_met;
 
     //Makes sure shop locations are buyable
@@ -124,7 +124,7 @@ class Exit {
 public:
     using ConditionFn = bool (*)();
 
-    Exit(std::string regionName_, std::string scene_, u32 hintKey_,
+    Exit(std::string regionName_, std::string scene_, HintKey hintKey_,
          bool timePass_,
          std::vector<EventPairing> events_,
          std::vector<ItemLocationPairing> locations_,
@@ -133,7 +133,7 @@ public:
 
     std::string regionName;
     std::string scene;
-    u32         hintKey;
+    HintKey     hintKey;
     bool        timePass;
     std::vector<EventPairing> events;
     std::vector<ItemLocationPairing> locations;

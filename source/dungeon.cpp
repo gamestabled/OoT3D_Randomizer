@@ -7,11 +7,11 @@
 
 namespace Dungeon {
 
-DungeonInfo::DungeonInfo(std::string name_, u32 map_, u32 compass_,
-                         u32 smallKey_, u32 bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
-                         std::vector<u32> vanillaLocations_,
-                         std::vector<u32> mqLocations_,
-                         std::vector<u32> sharedLocations_)
+DungeonInfo::DungeonInfo(std::string name_, ItemKey map_, ItemKey compass_,
+                         ItemKey smallKey_, ItemKey bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
+                         std::vector<LocationKey> vanillaLocations_,
+                         std::vector<LocationKey> mqLocations_,
+                         std::vector<LocationKey> sharedLocations_)
   : name(std::move(name_)),
     map(map_),
     compass(compass_),
@@ -25,19 +25,19 @@ DungeonInfo::DungeonInfo(std::string name_, u32 map_, u32 compass_,
 
 DungeonInfo::~DungeonInfo() = default;
 
-u32 DungeonInfo::GetSmallKey() const {
+ItemKey DungeonInfo::GetSmallKey() const {
   return smallKey;
 }
 
-u32 DungeonInfo::GetMap() const {
+ItemKey DungeonInfo::GetMap() const {
   return map;
 }
 
-u32 DungeonInfo::GetCompass() const {
+ItemKey DungeonInfo::GetCompass() const {
   return compass;
 }
 
-u32 DungeonInfo::GetBossKey() const {
+ItemKey DungeonInfo::GetBossKey() const {
   return bossKey;
 }
 
@@ -47,7 +47,7 @@ void DungeonInfo::PlaceVanillaMap() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto mapLocation = FilterFromPool(dungeonLocations, [](u32 loc){ return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
+  auto mapLocation = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
   PlaceItemInLocation(mapLocation, map);
 }
 
@@ -57,7 +57,7 @@ void DungeonInfo::PlaceVanillaCompass() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto compassLocation = FilterFromPool(dungeonLocations, [](u32 loc){ return Location(loc)->IsCategory(Category::cVanillaCompass); })[0];
+  auto compassLocation = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaCompass); })[0];
   PlaceItemInLocation(compassLocation, compass);
 }
 
@@ -67,7 +67,7 @@ void DungeonInfo::PlaceVanillaBossKey() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto bossKeyLocation = FilterFromPool(dungeonLocations, [](u32 loc){ return Location(loc)->IsCategory(Category::cVanillaBossKey); })[0];
+  auto bossKeyLocation = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaBossKey); })[0];
   PlaceItemInLocation(bossKeyLocation, bossKey);
 }
 
@@ -77,21 +77,21 @@ void DungeonInfo::PlaceVanillaSmallKeys() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto smallKeyLocations = FilterFromPool(dungeonLocations, [](const u32 loc){ return Location(loc)->IsCategory(Category::cVanillaSmallKey); });
+  auto smallKeyLocations = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaSmallKey); });
   for (auto location : smallKeyLocations) {
       PlaceItemInLocation(location, smallKey);
   }
 }
 
 //Gets the chosen dungeon locations for a playthrough (so either MQ or Vanilla)
-std::vector<u32> DungeonInfo::GetDungeonLocations() const {
+std::vector<LocationKey> DungeonInfo::GetDungeonLocations() const {
   auto locations = masterQuest ? mqLocations : vanillaLocations;
   AddElementsToPool(locations, sharedLocations);
   return locations;
 }
 
 //Gets all dungeon locations (MQ + Vanilla)
-std::vector<u32> DungeonInfo::GetEveryLocation() const {
+std::vector<LocationKey> DungeonInfo::GetEveryLocation() const {
   auto locations = vanillaLocations;
   AddElementsToPool(locations, mqLocations);
   AddElementsToPool(locations, sharedLocations);
