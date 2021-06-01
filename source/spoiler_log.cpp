@@ -23,7 +23,7 @@ namespace {
   std::string logtxt;
   std::string placementtxt;
 
-  std::array<std::string_view, 32> hashIcons = {
+  constexpr std::array<std::string_view, 32> hashIcons = {
     "Deku Stick",
     "Deku Nut",
     "Bow",
@@ -73,38 +73,34 @@ const RandomizerHash& GetRandomizerHash() {
   return randomizerHash;
 }
 
-static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
-  logtxt += loc;
+static inline void SpoilerLog_AddFormatted(std::string_view header, std::string_view value) {
+  logtxt += header;
   logtxt += ": ";
 
   // Formatting for spoiler log
   constexpr u32 LONGEST_LINE = 56;
-  const auto remainingSpaces = LONGEST_LINE - loc.size();
+  const auto remainingSpaces = LONGEST_LINE - header.size();
   logtxt.append(remainingSpaces, ' ');
 
-  logtxt += item;
+  logtxt += value;
   logtxt += '\n';
 }
 
-static void SpoilerLog_SaveShopLocation(std::string_view loc, std::string_view item, u16 price) {
+static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
+  SpoilerLog_AddFormatted(loc, item);
+}
+
+static void SpoilerLog_SaveShopLocation(std::string_view loc, std::string_view item, const u16 price) {
   std::string locandprice = "";
   locandprice += loc;
   locandprice += " (Price: " + std::to_string(price) + ")";
-  logtxt += locandprice;
-  logtxt += ": ";
 
-  // Formatting for spoiler log
-  constexpr u32 LONGEST_LINE = 56;
-  const auto remainingSpaces = LONGEST_LINE - locandprice.size();
-  logtxt.append(remainingSpaces, ' ');
-
-  logtxt += item;
-  logtxt += '\n';
+  SpoilerLog_AddFormatted(locandprice, item);
 }
 
 static auto GetGeneralPath() {
   std::string path = "/3ds/" + Settings::seed;
-  for (auto& str : randomizerHash)
+  for (const auto& str : randomizerHash)
     path += str;
   return path;
 }
@@ -121,14 +117,13 @@ static auto GetPlacementLogPath() {
 static void WriteSettings() {
   //List Settings
   logtxt += "Settings:\n";
-  for (MenuItem* menu : Settings::mainMenu) {
+  for (const MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic, starting inventory, or exclude location menus yet
     if (menu->name == "Detailed Logic Settings" || menu->name == "Starting Inventory" || menu->name == "Exclude Locations" || menu->mode != OPTION_SUB_MENU) {
       continue;
     }
 
-    for (size_t i = 0; i < menu->settingsList->size(); i++) {
-      Option* setting = menu->settingsList->at(i);
+    for (const Option* setting : *menu->settingsList) {
       if (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting)) {
         logtxt += "\t";
         logtxt += setting->GetName();
@@ -141,7 +136,7 @@ static void WriteSettings() {
 
   //List Excluded Locations
   logtxt += "\nExcluded Locations:\n";
-  for (auto& l : Settings::excludeLocationsOptions) {
+  for (const auto& l : Settings::excludeLocationsOptions) {
     if (l->GetSelectedOptionIndex() == EXCLUDE) {
       std::string name = l->GetName();
 
@@ -159,7 +154,7 @@ static void WriteSettings() {
   logtxt += "\nStarting Inventory:\n";
   //start i at 3 to skip over the toggle, 'Start with Consumables', and 'Start with Max Rupees'
   for (size_t i = 3; i < Settings::startingInventoryOptions.size(); i++) {
-    auto setting = Settings::startingInventoryOptions[i];
+    const auto setting = Settings::startingInventoryOptions[i];
     if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
       logtxt += "\t";
       logtxt += setting->GetSelectedOptionText();
@@ -169,7 +164,7 @@ static void WriteSettings() {
 
   //List Enabled Tricks
   logtxt += "\nEnabled Tricks:\n";
-  for (auto& l : Settings::detailedLogicOptions) {
+  for (const auto& l : Settings::detailedLogicOptions) {
     if (l->GetSelectedOptionIndex() == TRICK_ENABLED && l->IsCategory(OptionCategory::Setting)) {
       std::string name = l->GetName();
 
@@ -211,7 +206,7 @@ bool SpoilerLog_Write() {
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
   logtxt += "Hash: ";
-  for (std::string& str : randomizerHash) {
+  for (const std::string& str : randomizerHash) {
     logtxt += str + ", ";
   }
   logtxt.erase(logtxt.length() - 2); //Erase last comma
@@ -224,7 +219,7 @@ bool SpoilerLog_Write() {
   for (uint i = 0; i < playthroughLocations.size(); i++) {
     logtxt += "Sphere " + std::to_string(i+1) + ":\n";
     //Print all item locations in this sphere
-    for (ItemLocation* location : playthroughLocations[i]) {
+    for (const ItemLocation* location : playthroughLocations[i]) {
       logtxt += "\t";
       SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
       logtxt += '\n';
@@ -236,14 +231,14 @@ bool SpoilerLog_Write() {
   //Write Hints
   if (Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
     logtxt += "\nHints:\n";
-    for (ItemLocation* location : gossipStoneLocations) {
+    for (const ItemLocation* location : gossipStoneLocations) {
       logtxt += "\t";
       SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
     }
   }
 
   logtxt += "\nAll Locations:\n";
-  for (ItemLocation* location : allLocations) {
+  for (const ItemLocation* location : allLocations) {
     logtxt += "\t";
     if (location->IsCategory(Category::cShop)) { //Shop item
       SpoilerLog_SaveShopLocation(location->GetName(), location->GetPlacedItemName(), location->GetPrice());
