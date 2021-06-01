@@ -234,6 +234,7 @@ namespace Settings {
   void UpdateSettings();
   SettingsContext FillContext();
   void SetDefaultSettings();
+  void RandomizeAllSettings();
   void ForceChange(u32 kDown, Option* currentSetting);
 
   extern std::string seed;

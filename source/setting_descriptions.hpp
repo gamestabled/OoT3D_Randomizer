@@ -3,6 +3,11 @@
 
 using string_view = std::string_view;
 
+extern string_view openRandomize;
+extern string_view worldRandomize;
+extern string_view shuffleRandomize;
+extern string_view dungeonRandomize;
+
 extern string_view logicGlitchless;
 extern string_view logicNoLogic;
 
