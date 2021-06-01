@@ -95,11 +95,7 @@ public:
 
     void SetPlacedItem(ItemKey item) {
       placedItem = item;
-    }
-
-    void SetPlacedShopItem(ItemKey item, u16 price_) {
-      placedItem = item;
-      price = price_;
+      SetPrice(ItemTable(placedItem).GetPrice());
     }
 
     //Saves an item to be set as placedItem later
@@ -122,7 +118,20 @@ public:
     }
 
     void SetPrice(u16 price_) {
+      //don't override price if the price was set for shopsanity
+      if (hasShopsanityPrice) {
+        return;
+      }
       price = price_;
+    }
+
+    void SetShopsanityPrice(u16 price_) {
+      price = price_;
+      hasShopsanityPrice = true;
+    }
+
+    bool HasShopsanityPrice() const {
+      return hasShopsanityPrice;
     }
 
     bool IsExcluded() const {
@@ -269,6 +278,7 @@ private:
     u16 price = 0;
     bool isHintable = false;
     Exit* parentRegion = nullptr;
+    bool hasShopsanityPrice = false;
 };
 
 class ItemOverride_Compare {
@@ -301,7 +311,6 @@ extern u16 itemsPlaced;
 
 void GenerateLocationPool();
 void PlaceItemInLocation(LocationKey loc, ItemKey item, bool applyEffectImmediately = false);
-void PlaceShopItemInLocation(LocationKey loc, ItemKey item, u16 price, bool applyEffectImmediately = false);
 std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category);
 void LocationReset();
 void ItemReset();

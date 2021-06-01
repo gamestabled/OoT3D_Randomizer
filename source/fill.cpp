@@ -12,6 +12,7 @@
 #include "hints.hpp"
 #include "hint_list.hpp"
 #include "shops.hpp"
+#include "debug.hpp"
 
 #include <vector>
 
@@ -620,7 +621,6 @@ int Fill() {
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
 
-
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
@@ -628,7 +628,6 @@ int Fill() {
     } else {
       if (Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
         Shuffle(ShopItems); //Shuffle shop items amongst themselves
-        PlaceShopItems(); //Just place the shuffled shop items
       }
       else { //Shopsanity 1-4, random
         const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
@@ -647,11 +646,26 @@ int Fill() {
           for(int j = 0; j < num_to_replace; j++) {
             int itemindex = indices[j];
             ShopItems[i*8+itemindex-1] = NONE; //Clear item so it can be filled during the general fill algo
-            ShopItemsPrices[i*8+itemindex-1] = GetRandomShopPrice(); //Set price in ShopItemsPrices vector so it can be retrieved later by the patch
+            int shopsanityPrice = GetRandomShopPrice();
+            ShopItemsPrices[i*8+itemindex-1] = shopsanityPrice; //Set price in ShopItemsPrices vector so it can be retrieved later by the patch
+            Location(ShopLocationLists[i][itemindex - 1])->SetShopsanityPrice(shopsanityPrice);
           }
         }
       }
-      PlaceShopItems(); //Place shop items with some cleared for placement
+      //Get all locations and items that don't have a shopsanity price attached
+      std::vector<LocationKey> shopLocations = {};
+      std::vector<ItemKey> shopItems = FilterFromPool(ShopItems, [](ItemKey i){return i != NONE;});
+
+      for (size_t i = 0; i < ShopLocationLists.size(); i++) {
+        for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
+          LocationKey loc = ShopLocationLists[i][j];
+          if (!(Location(loc)->HasShopsanityPrice())) {
+            shopLocations.push_back(loc);
+          }
+        }
+      }
+      //Place the shop items which will still be at shop locations
+      AssumedFill(shopItems, shopLocations);
     }
 
     //Place dungeon rewards

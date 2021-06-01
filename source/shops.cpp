@@ -183,7 +183,7 @@ void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
       //Multiply i by 8 to get the correct shop
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItemsPrices[i*8 + j]);
+      PlaceItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j]);
     }
   }
 }

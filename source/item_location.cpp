@@ -1453,29 +1453,6 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   loc->SetPlacedItem(item);
 }
 
-//Same as PlaceItemInLocation, except a price is set as well as the item
-void PlaceShopItemInLocation(LocationKey locKey, ItemKey item, u16 price, bool applyEffectImmediately /*= false*/) {
-  auto loc = Location(locKey);
-  PlacementLog_Msg("\n");
-  PlacementLog_Msg(ItemTable(item).GetName());
-  PlacementLog_Msg(" placed at ");
-  PlacementLog_Msg(loc->GetName());
-  PlacementLog_Msg("\n\n");
-
-  if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
-    ItemTable(item).ApplyEffect();
-    loc->Use();
-  }
-
-  itemsPlaced++;
-  double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-  printf("\x1b[8;10HPlacing Items.");
-  if (completion > 0.25) printf(".");
-  if (completion > 0.50) printf(".");
-
-  loc->SetPlacedShopItem(item, price);
-}
-
 std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category) {
   std::vector<LocationKey> locationsInCategory;
   for (LocationKey locKey : locationPool) {
