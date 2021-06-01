@@ -39,37 +39,37 @@ constexpr std::array EnglishDungeonNames = {
 };
 
 constexpr std::array FrenchDungeonNames = {
-    "Arbre Mojo",
-    "Caverne Dodongo",
-    "Ventre de Jabu-Jabu",
-    "Temple de la Forêt",
-    "Temple du Feu",
-    "Temple de l'Eau",
-    "Temple de l'Esprit",
-    "Temple de l'Ombre",
-    "Puits",
-    "Caverne de glace",
+    "vénérable arbre Mojo",
+    "caverne Dodongo",
+    "ventre de Jabu-Jabu",
+    "temple de la forêt",
+    "temple du feu",
+    "temple de l'eau",
+    "temple de l'esprit",
+    "temple de l'ombre",
+    "puits",
+    "caverne de glace",
     "",
-    "Gymnase Gerudo",
-    "Forteresse Gerudo",
-    "Château de Ganon",
+    "gymnase Gerudo",
+    "forteresse Gerudo",
+    "château de Ganon",
 };
 
 constexpr std::array FrenchDungeonArticles = {
-    "de l'",
-    "de la",
-    "du",
-    "du",
-    "du",
-    "du",
-    "du",
-    "du",
-    "du",
-    "de la",
+    "du ",
+    "de la ",
+    "du ",
+    "du ",
+    "du ",
+    "du ",
+    "du ",
+    "du ",
+    "du ",
+    "de la ",
     "",
-    "du",
-    "de la",
-    "du",
+    "du ",
+    "de la ",
+    "du ",
 };
 
 constexpr std::array SpanishDungeonNames = {
@@ -191,7 +191,7 @@ constexpr std::array DungeonColors = {
         //Gold Skulltula Tokens
         CreateMessage(0xB4, 0, 2, 3,
             INSTANT_TEXT_ON()+"You destroyed a "+COLOR(QM_RED)+"Gold Skulltula"+COLOR(QM_WHITE)+". You got a"+NEWLINE()+"token proving you destroyed it!"+NEWLINE()+NEWLINE()+"You have "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" tokens!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            INSTANT_TEXT_ON()+"Vous venez de détruire une "+COLOR(QM_RED)+"Skulltula dorée"+COLOR(QM_WHITE)+"!"+NEWLINE()+"Ce jeton prouve votre prouesse!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            INSTANT_TEXT_ON()+"Vous venez de détruire une "+COLOR(QM_RED)+"Skulltula d'or"+COLOR(QM_WHITE)+"!"+NEWLINE()+"Ce symbole prouve votre prouesse!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             INSTANT_TEXT_ON()+"¡Has eliminado una "+COLOR(QM_RED)+"skulltula dorada"+COLOR(QM_WHITE)+" y has"+NEWLINE()+"conseguido un símbolo para probarlo!"+NEWLINE()+NEWLINE()+"¡Tienes "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" símbolos!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Bombchu (10) Description
         CreateMessage(0xBC, 0, 2, 3,
@@ -203,12 +203,12 @@ constexpr std::array DungeonColors = {
             u32 dungeon = DUNGEON_FOREST_TEMPLE + bossKey;
             CreateMessage(0x9D4 + bossKey, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[dungeon])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[dungeon]+" "+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[dungeon])+"clé d'or "+NEWLINE()+FrenchDungeonArticles[dungeon]+" "+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[dungeon])+"gran llave "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         CreateMessage(0x9D9, 0, 2, 3,
             UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+EnglishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"grande clé du boss "+NEWLINE()+FrenchDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+" "+FrenchDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"clé d'or "+NEWLINE()+FrenchDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+" "+FrenchDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"gran llave "+SpanishDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+SpanishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Compasses
         for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
@@ -242,7 +242,7 @@ constexpr std::array DungeonColors = {
         //Tycoon's Wallet
         CreateMessage(0x09F7, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"You got a "+COLOR(QM_RED)+"Tycoon's Wallet"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"It's gigantic! Now you can carry"+NEWLINE()+"up to "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"Rupees"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"Vous obtenez la "+COLOR(QM_RED)+"poche de magnat"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Vous pouvez contenir jusqu'à "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+"C'est gigantesque!"+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"Vous obtenez la "+COLOR(QM_RED)+"bourse de star"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Elle peut contenir jusqu'à "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+"C'est gigantesque!"+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"¡Conseguiste una "+COLOR(QM_RED)+"bolsa de un magnate"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"¡Es gigantesco! Ahora puedes llevar"+NEWLINE()+"hasta "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"rupias"+COLOR(QM_WHITE)+"!"+MESSAGE_END());
 
         //Poe Collector (when enough has been sold)
@@ -251,10 +251,10 @@ constexpr std::array DungeonColors = {
                 +"Is that what you expected me to say?"+NEWLINE()+"Heh heh heh!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Because of you, I have extra inventory of"+NEWLINE()+COLOR(QM_RED)+"Big Poes"+COLOR(QM_WHITE)+", so this will be the last time I can"+NEWLINE()
                 +"buy one of these ghosts."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"You're thinking about what I promised would"+NEWLINE()+"happen when you earned enough points."+NEWLINE()+"Heh heh."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                 +"Don't worry. I didn't forget. Just take this."+MESSAGE_END(),
-            UNSKIPPABLE()+"Attends une minute! HOU LA LA!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu as gagné suffisamment de points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Jeune homme, tu es un véritable "+COLOR(QM_RED)+"chasseur de fantômes"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                +"C'est ce que tu attendais de moi ?"+NEWLINE()+"Heh heh heh!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Grâce à toi, j'ai un stock supplémentaire de"+NEWLINE()+COLOR(QM_RED)+"grand esprits"+COLOR(QM_WHITE)+", donc ce sera la dernière fois que je peux"+NEWLINE()
-                +"achetez un de ces esprits."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu penses à ce que j'ai promis"+NEWLINE()+"lorsque tu as gagné suffisamment de points."+NEWLINE()+"Heh heh."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                +"Ne t'inquiète pas. Je n'ai pas oublié. Prends ça."+MESSAGE_END(),
+            UNSKIPPABLE()+"Ooooh! WHOA!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu as obtenu suffisamment de points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu es un véritable "+COLOR(QM_RED)+"chasseur de fantômes"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                +"Il est content, hein?"+NEWLINE()+"Il est content le monsieur?"+NEWLINE()+"Hé hé hé!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Grâce à toi, mon stock d'Âmes est"+NEWLINE()+COLOR(QM_RED)+"plein! C'est donc la dernière fois"+COLOR(QM_WHITE)+"que nous faisons affaire."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                +"Je sais, je sais..."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Nous avions passé un pacte..."+NEWLINE()+"Tu as eu tes points et je t'en"+NEWLINE()+"félicite... Hé hé hé!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                +"Alors prends donc ceci,"+NEWLINE()+"mon bon ami!"+MESSAGE_END(),
             UNSKIPPABLE()+"¡Un momento! ¡OYE!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Has ganado suficientes puntos!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Amigo, eres un auténtico "+COLOR(QM_RED)+"cazador de"+NEWLINE()+"fantasmas"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                 +"¿Es eso lo que esperabas que dijera?"+NEWLINE()+"¡Je, je je!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Gracias a ti, tengo existencias de sobra"+NEWLINE()+"de "+COLOR(QM_RED)+"grandes poes"+COLOR(QM_WHITE)+", así que esta será la"+NEWLINE()
                 +"última vez que te compre uno de ese tipo."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¿Recuerdas lo que te dije que ocurriría"+NEWLINE()+"cuando tuvieses suficientes puntos?"+NEWLINE()+"Je, je, je."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
@@ -269,7 +269,7 @@ constexpr std::array DungeonColors = {
         for (u32 price = 5; price <= 95; price += 5) {
             CreateMessage(0x9000 + price, 0, 0, 0,
                 INSTANT_TEXT_ON()+"I'll sell you something good for "+COLOR(QM_RED)+std::to_string(price)+" Rupees"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"OK"+NEWLINE()+"No way"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+"Je te vendrai quelque chose de bien pour "+NEWLINE()+COLOR(QM_RED)+std::to_string(price)+" Rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"D'accord"+NEWLINE()+"Hors de question"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+"Je te vends un truc super pour "+COLOR(QM_RED)+std::to_string(price)+" Rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"D'accord"+NEWLINE()+"Hors de question"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 INSTANT_TEXT_ON()+"¡Te vendo algo bueno por "+COLOR(QM_RED)+std::to_string(price)+" rupias"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"Bueno"+NEWLINE()+"Ni loco"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //Poe Collector
@@ -280,9 +280,9 @@ constexpr std::array DungeonColors = {
                     +"I'll buy it for "+COLOR(QM_RED)+"50 Rupees"+COLOR(QM_WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"On top of that, I'll put "+COLOR(QM_RED)+"100 points "+COLOR(QM_WHITE)+"on"+NEWLINE()+"your card."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"If you earn "+COLOR(QM_RED)+std::to_string(poes * 100)+" points"+COLOR(QM_WHITE)+", you'll be a"+NEWLINE()+"happy man! Heh heh."+MESSAGE_END(),
 
-                UNSKIPPABLE()+"Oh, tu as amené un esprit aujourd'hui!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Très intéressant! C'est un "+COLOR(QM_RED)+"Grand esprit"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                    +"Je te l'achète pour "+COLOR(QM_RED)+"50 Rubis"+COLOR(QM_WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"En plus de ça, je vais mettre "+COLOR(QM_RED)+"100 points "+COLOR(QM_WHITE)+"sur"+NEWLINE()+"ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                    +"Si tu gagnes "+COLOR(QM_RED)+std::to_string(poes * 100)+" points"+COLOR(QM_WHITE)+", tu seras un"+NEWLINE()+"homme heureux! Heh heh."+MESSAGE_END(),
+                UNSKIPPABLE()+"Oh! Tu as apporté un fantôme!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Hmmmm!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Magnifique!"+NEWLINE()+"C'est une "+COLOR(QM_RED)+"Âme"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                    +"Je t'en donne "+COLOR(QM_RED)+"50 Rubis"+COLOR(QM_WHITE)+"."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Et en plus, j'inscris "+COLOR(QM_RED)+"100 points "+COLOR(QM_WHITE)+NEWLINE()+"sur ta carte."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                    +"Obtiens "+COLOR(QM_RED)+std::to_string(poes * 100)+" points"+COLOR(QM_WHITE)+" et tu ne"+NEWLINE()+"seras pas déçu..."+NEWLINE()+"Hé hé hé."+MESSAGE_END(),
 
                 UNSKIPPABLE()+"¡Vaya! ¡Traes un poe!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Mmm! ¿A ver?"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Qué interesante! ¡Es un "+COLOR(QM_RED)+"gran poe"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                     +"Te daré "+COLOR(QM_RED)+"50 rupias "+COLOR(QM_WHITE)+"por él."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Y además agregaré "+COLOR(QM_RED)+"100 puntos "+COLOR(QM_WHITE)+"en tu"+NEWLINE()+"tarjeta."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
@@ -292,7 +292,7 @@ constexpr std::array DungeonColors = {
         //Talon (this is to prevent accidentally skipping Malon in HC)
         CreateMessage(0x9100, 0, 2, 0,
             UNSKIPPABLE()+"You should go talk to my daughter Malon,"+NEWLINE()+"she has an item for you."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"I have to think about some stuff now,"+NEWLINE()+"please don't distract me."+MESSAGE_END(),
-            UNSKIPPABLE()+"Parle avec Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END(),
+            UNSKIPPABLE()+"Zzzz... Muh... Malon..."+NEWLINE()+"Parler avec... Malon..."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"Si fatigué..."+NEWLINE()+"Quelle vie..."+MESSAGE_END(),
             UNSKIPPABLE()+"Habla con Malon"+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
 
 

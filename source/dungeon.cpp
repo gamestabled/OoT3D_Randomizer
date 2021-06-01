@@ -47,7 +47,7 @@ void DungeonInfo::PlaceVanillaMap() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto mapLocation = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
+  auto mapLocation = FilterFromPool(dungeonLocations, [](const LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
   PlaceItemInLocation(mapLocation, map);
 }
 
@@ -57,7 +57,7 @@ void DungeonInfo::PlaceVanillaCompass() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto compassLocation = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaCompass); })[0];
+  auto compassLocation = FilterFromPool(dungeonLocations, [](const LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaCompass); })[0];
   PlaceItemInLocation(compassLocation, compass);
 }
 
@@ -67,7 +67,7 @@ void DungeonInfo::PlaceVanillaBossKey() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto bossKeyLocation = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaBossKey); })[0];
+  auto bossKeyLocation = FilterFromPool(dungeonLocations, [](const LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaBossKey); })[0];
   PlaceItemInLocation(bossKeyLocation, bossKey);
 }
 
@@ -77,7 +77,7 @@ void DungeonInfo::PlaceVanillaSmallKeys() {
   }
 
   auto dungeonLocations = GetDungeonLocations();
-  auto smallKeyLocations = FilterFromPool(dungeonLocations, [](LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaSmallKey); });
+  auto smallKeyLocations = FilterFromPool(dungeonLocations, [](const LocationKey loc){ return Location(loc)->IsCategory(Category::cVanillaSmallKey); });
   for (auto location : smallKeyLocations) {
       PlaceItemInLocation(location, smallKey);
   }

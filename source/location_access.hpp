@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "logic.hpp"
+#include "hint_list.hpp"
 #include "keys.hpp"
 
 class Exit;
@@ -165,6 +166,10 @@ public:
 
     bool AllAccess() const {
       return dayChild && nightChild && dayAdult && nightAdult;
+    }
+
+    const HintText& GetHint() const {
+      return Hint(hintKey);
     }
 
     //Here checks conditional access based on whether or not both ages have

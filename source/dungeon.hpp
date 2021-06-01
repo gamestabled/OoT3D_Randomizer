@@ -17,7 +17,7 @@ public:
                 std::vector<LocationKey> sharedLocations_);
     ~DungeonInfo();
 
-    std::string_view GetName() const {
+    const std::string& GetName() const {
         return name;
     }
 

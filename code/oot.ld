@@ -12,6 +12,10 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearTwo)
 	}
 
+	.patch_ShortenRainbowBridgeCS 0x10b904 : {
+		*(.patch_ShortenRainbowBridgeCS)
+	}
+
 	.patch_BombchuPurchaseableCheck 0x112ED0 : {
 		*(.patch_BombchuPurchaseableCheck)
 	}
@@ -170,6 +174,14 @@ SECTIONS
 
 	.patch_PlayerGetCustomTunicCMAB 0x191DD4 : {
 		*(.patch_PlayerGetCustomTunicCMAB)
+	}
+
+	.patch_SkipDaruniaDanceOne 0x19493C : {
+		*(.patch_SkipDaruniaDanceOne)
+	}
+
+	.patch_SkipDaruniaDanceTwo 0x194944 : {
+		*(.patch_SkipDaruniaDanceTwo)
 	}
 
 	.patch_ChildRollingGoron 0x194B18 : {
@@ -340,6 +352,10 @@ SECTIONS
 		*(.patch_CourtyardCheckForVisitedZeldaTwo)
 	}
 
+	.patch_BugsRecatchable 0x212090 : {
+		*(.patch_BugsRecatchable)
+	}
+
 	.patch_DekuSproutCheckForest 0x2153A4 : {
 		*(.patch_DekuSproutCheckForest)
 	}
@@ -370,6 +386,10 @@ SECTIONS
 
 	.patch_SpiritTempleItemGiveTwo 0x24CF4C : {
 		*(.patch_SpiritTempleItemGiveTwo)
+	}
+
+	.patch_SkipDaruniaDanceThree 0x257f00 : {
+		*(.patch_SkipDaruniaDanceThree)
 	}
 
 	.patch_LostWoodsShootingGame 0x259E4C : {

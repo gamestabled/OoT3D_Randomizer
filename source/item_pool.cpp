@@ -14,7 +14,7 @@ using namespace Dungeon;
 
 std::vector<ItemKey> ItemPool = {};
 std::vector<ItemKey> PendingJunkPool = {};
-std::vector<ItemKey> dungeonRewards = {
+const std::array<ItemKey, 9> dungeonRewards = {
   KOKIRI_EMERALD,
   GORON_RUBY,
   ZORA_SAPPHIRE,
@@ -418,7 +418,7 @@ static void AddItemsToPool(std::vector<ItemKey>& toPool, const FromPool& fromPoo
   AddElementsToPool(toPool, fromPool);
 }
 
-static void AddItemToMainPool(ItemKey item, size_t count = 1) {
+static void AddItemToMainPool(const ItemKey item, size_t count = 1) {
   ItemPool.insert(ItemPool.end(), count, item);
 }
 
@@ -446,7 +446,7 @@ static ItemKey GetPendingJunkItem() {
 }
 
 //Replace junk items in the pool with pending junk
-static void ReplaceMaxItem(ItemKey itemToReplace, int max) {
+static void ReplaceMaxItem(const ItemKey itemToReplace, int max) {
   int itemCount = 0;
   for (ItemKey item : ItemPool) {
     if (item == itemToReplace) {
@@ -458,7 +458,7 @@ static void ReplaceMaxItem(ItemKey itemToReplace, int max) {
   }
 }
 
-void PlaceJunkInExcludedLocation(LocationKey il) {
+void PlaceJunkInExcludedLocation(const LocationKey il) {
   //place a non-advancement item in this location
   for (size_t i = 0; i < ItemPool.size(); i++) {
     if (!ItemTable(ItemPool[i]).IsAdvancement()) {

@@ -23,7 +23,7 @@ namespace Playthrough {
       Exits::AccessReset();
 
       Settings::UpdateSettings();
-
+      PlacementLog_WriteSettings();
       //once the settings have been finalized turn them into a string for hashing
       std::string settingsStr;
       for (MenuItem* menu : Settings::mainMenu) {
