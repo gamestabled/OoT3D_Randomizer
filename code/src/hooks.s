@@ -516,6 +516,14 @@ hook_FastOwlCutscenes:
     mov r1,#0xa
     bx lr
 
+.global hook_ShortenRainbowBridgeCS
+hook_ShortenRainbowBridgeCS:
+    push {r0-r12, lr}
+    bl ShortenRainbowBridgeCS
+    pop {r0-r12, lr}
+    cpy r4,r0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

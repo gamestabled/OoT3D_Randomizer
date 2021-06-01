@@ -38,7 +38,7 @@ public:
 
     ItemOverride_Value Value() const;
 
-    std::string_view GetName() const {
+    const std::string& GetName() const {
         return name;
     }
 

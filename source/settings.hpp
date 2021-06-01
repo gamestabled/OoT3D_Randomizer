@@ -65,11 +65,11 @@ public:
         return options.size();
     }
 
-    std::string_view GetName() const {
+    const std::string& GetName() const {
         return name;
     }
 
-    std::string GetSelectedOptionText() const {
+    const std::string& GetSelectedOptionText() const {
         return options[selectedOption];
     }
 
@@ -128,7 +128,7 @@ public:
 
       //Special case for custom cosmetic settings
       if (options.size() > CUSTOM_COLOR) {
-        if (newSetting.substr(0, 8) == CUSTOM_COLOR_PREFIX && options[CUSTOM_COLOR].substr(0, 8) == CUSTOM_COLOR_PREFIX) {
+        if (newSetting.compare(0, 8, CUSTOM_COLOR_PREFIX) == 0 && options[CUSTOM_COLOR].compare(0, 8, CUSTOM_COLOR_PREFIX) == 0) {
           SetSelectedIndex(CUSTOM_COLOR);
           SetSelectedOptionText(newSetting);
           return;
@@ -234,6 +234,7 @@ namespace Settings {
   void UpdateSettings();
   SettingsContext FillContext();
   void SetDefaultSettings();
+  void RandomizeAllSettings();
   void ForceChange(u32 kDown, Option* currentSetting);
 
   extern std::string seed;

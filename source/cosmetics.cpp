@@ -24,8 +24,8 @@ namespace Cosmetics {
     return std::string(CUSTOM_COLOR_STR.substr(0, CUSTOM_COLOR_STR.length() - 6)).append(color);
   }
 
-  std::string GetCustomColor(std::string_view str) {
-    return std::string(str.substr(str.length() - 6));
+  std::string GetCustomColor(const std::string& str) {
+    return str.substr(str.length() - 6);
   }
 
   const std::array<std::string_view, 13> gauntletColors = {
