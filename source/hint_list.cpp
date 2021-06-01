@@ -6158,7 +6158,9 @@ void HintTable_Init() {
 
     hintTable[GANON_LINE03] = HintText::GanonLine({
                      //obscure text
-                     Text{"Looks like it's time for a round of tennis.", /*french*/"C'est l'heure de jouer au tennis.", /*spanish*/"Parece que es hora de una partidita de tenis."},
+                     Text{"Looks like it's time for a round of tennis.",
+                /*french*/"C'est l'heure de jouer au tennis.",
+               /*spanish*/"Parece que es hora de una partidita de tenis."},
     });
 
     hintTable[GANON_LINE04] = HintText::GanonLine({
@@ -6170,7 +6172,9 @@ void HintTable_Init() {
 
     hintTable[GANON_LINE05] = HintText::GanonLine({
                      //obscure text
-                     Text{"Why did I leave my trident back in the desert?", /*french*/"Sale bêtise... Et j'ai oublié mon trident dans le désert!", /*spanish*/"¿Por qué me habré dejado el tridente en el desierto?"},
+                     Text{"Why did I leave my trident back in the desert?",
+                /*french*/"Sale bêtise... Et j'ai oublié mon trident dans le désert!",
+               /*spanish*/"¿Por qué me habré dejado el tridente en el desierto?"},
     });
 
     hintTable[GANON_LINE06] = HintText::GanonLine({
@@ -6216,7 +6220,7 @@ void HintTable_Init() {
     });
 }
 
-const HintText& Hint(u32 hintKey) {
+const HintText& Hint(const HintKey hintKey) {
     return hintTable[hintKey];
 }
 

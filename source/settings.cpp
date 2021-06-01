@@ -911,10 +911,10 @@ namespace Settings {
     if (Tokensanity.IsNot(TOKENSANITY_ALL_TOKENS)) {
       if (Tokensanity.Is(TOKENSANITY_OVERWORLD)) {
         //filter overworld skulls so we're just left with dungeons
-        FilterAndEraseFromPool(skulltulaLocations, [](LocationKey loc){return Location(loc)->GetScene() >= 0x0A;});
+        FilterAndEraseFromPool(skulltulaLocations, [](const LocationKey loc){return Location(loc)->GetScene() >= 0x0A;});
       } else if (Tokensanity.Is(TOKENSANITY_DUNGEONS)) {
         //filter dungeon skulls so we're just left with overworld
-        FilterAndEraseFromPool(skulltulaLocations, [](LocationKey loc){return Location(loc)->GetScene() < 0x0A;});
+        FilterAndEraseFromPool(skulltulaLocations, [](const LocationKey loc){return Location(loc)->GetScene() < 0x0A;});
       }
       IncludeAndHide(skulltulaLocations);
     }

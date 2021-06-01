@@ -113,7 +113,7 @@ public:
         return IsAdvancement();
     }
 
-    HintKey GetHintKey() const {
+    const HintKey GetHintKey() const {
         return hintKey;
     }
 

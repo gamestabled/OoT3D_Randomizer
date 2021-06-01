@@ -85,7 +85,7 @@ public:
       return ItemTable(placedItem).GetName();
     }
 
-    Item& GetPlacedItem() const {
+    const Item& GetPlacedItem() const {
       return ItemTable(placedItem);
     }
 
@@ -93,13 +93,13 @@ public:
       return placedItem;
     }
 
-    void SetPlacedItem(ItemKey item) {
+    void SetPlacedItem(const ItemKey item) {
       placedItem = item;
       SetPrice(ItemTable(placedItem).GetPrice());
     }
 
     //Saves an item to be set as placedItem later
-    void SetDelayedItem(ItemKey item) {
+    void SetDelayedItem(const ItemKey item) {
       delayedItem = item;
     }
 
@@ -155,7 +155,7 @@ public:
       return &excludedOption;
     }
 
-    HintKey GetHintKey() const {
+    const HintKey GetHintKey() const {
       return hintKey;
     }
 
@@ -213,31 +213,31 @@ public:
       Settings::excludeLocationsOptions.push_back(&excludedOption);
     }
 
-    static auto Base(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
+    static auto Base(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Chest(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
+    static auto Chest(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Collectable(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto GSToken(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
+    static auto GSToken(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
+    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Delayed(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
+    static auto Delayed(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), hintKey, std::move(categories)};
     }
 
-    static auto Reward(u8 scene, u8 flag, std::string&& name, HintKey hintKey, std::vector<Category>&& categories) {
+    static auto Reward(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
         return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintKey, std::move(categories)};
     }
 

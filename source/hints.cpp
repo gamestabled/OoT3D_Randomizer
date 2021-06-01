@@ -142,7 +142,7 @@ static Exit* GetHintRegion(Exit* exit) {
   return &Exits::NoExit;
 }
 
-static std::vector<LocationKey> GetAccessibleGossipStones(LocationKey hintedLocation = GANON) {
+static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hintedLocation = GANON) {
   //temporarily remove the hinted location's item, and then perform a
   //reachability search for gossip stone locations.
   ItemKey originalItem = Location(hintedLocation)->GetPlacedItemKey();
@@ -156,7 +156,7 @@ static std::vector<LocationKey> GetAccessibleGossipStones(LocationKey hintedLoca
   return accessibleGossipStones;
 }
 
-static void AddHint(Text hint, LocationKey gossipStone, const std::vector<u8>& colors = {}) {
+static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items for writing to the spoiler log
   NewItem(gossipStone, Item{hint.english, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
   Location(gossipStone)->SetPlacedItem(gossipStone);
@@ -261,7 +261,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
 static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<LocationKey>& barrenLocations) {
   //remove dungeon locations if necessary
   if (*remainingDungeonBarrenHints < 1) {
-    barrenLocations = FilterFromPool(barrenLocations, [](LocationKey loc){return !(Location(loc)->IsDungeon());});
+    barrenLocations = FilterFromPool(barrenLocations, [](const LocationKey loc){return !(Location(loc)->IsDungeon());});
   }
 
   if (barrenLocations.empty()) {
@@ -308,8 +308,8 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<Locati
 
 }
 
-static void CreateRandomLocationHint(bool goodItem = false) {
-  const std::vector<LocationKey> possibleHintLocations = FilterFromPool(allLocations, [goodItem](LocationKey loc) {
+static void CreateRandomLocationHint(const bool goodItem = false) {
+  const std::vector<LocationKey> possibleHintLocations = FilterFromPool(allLocations, [goodItem](const LocationKey loc) {
     return Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt()) && (!goodItem || Location(loc)->GetPlacedItem().IsMajorItem());
   });
   //If no more locations can be hinted at, then just try to get another hint
@@ -476,7 +476,7 @@ static void CreateGanonText() {
   CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
 
   //Get the location of the light arrows
-  auto lightArrowLocation = FilterFromPool(allLocations, [](LocationKey loc){return Location(loc)->GetPlacedItemKey() == LIGHT_ARROWS;});
+  auto lightArrowLocation = FilterFromPool(allLocations, [](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == LIGHT_ARROWS;});
 
   Text text;
   //If there is no light arrow location, it was in the player's inventory at the start
@@ -503,7 +503,7 @@ void CreateAllHints() {
   // Add 'always' location hints
   if (hintSetting.distTable[static_cast<int>(HintType::Always)].copies > 0) {
     // Only filter locations that had a random item placed at them (e.g. don't get cow locations if shuffle cows is off)
-    const auto alwaysHintLocations = FilterFromPool(allLocations, [](LocationKey loc){
+    const auto alwaysHintLocations = FilterFromPool(allLocations, [](const LocationKey loc){
         return Location(loc)->GetHint().GetType() == HintCategory::Always &&
                Location(loc)->IsHintable()        && !(Location(loc)->IsHintedAt());
     });
@@ -530,7 +530,7 @@ void CreateAllHints() {
   auto barrenLocations = CalculateBarrenRegions();
 
   //while there are still gossip stones remaining
-  while (FilterFromPool(gossipStoneLocations, [](LocationKey loc){return Location(loc)->GetPlacedItemKey() == NONE;}).size() != 0) {
+  while (FilterFromPool(gossipStoneLocations, [](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == NONE;}).size() != 0) {
     //TODO: fixed hint types
 
     if (remainingHintTypes.empty()) {
@@ -552,7 +552,7 @@ void CreateAllHints() {
       CreateBarrenHint(&remainingDungeonBarrenHints, barrenLocations);
 
     } else if (type == HintType::Sometimes){
-      std::vector<LocationKey> sometimesHintLocations = FilterFromPool(allLocations, [](LocationKey loc){return Location(loc)->GetHint().GetType() == HintCategory::Sometimes && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
+      std::vector<LocationKey> sometimesHintLocations = FilterFromPool(allLocations, [](const LocationKey loc){return Location(loc)->GetHint().GetType() == HintCategory::Sometimes && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(sometimesHintLocations);
 
     } else if (type == HintType::Random) {
@@ -562,15 +562,15 @@ void CreateAllHints() {
       CreateGoodItemHint();
 
     } else if (type == HintType::Song){
-      std::vector<LocationKey> songHintLocations = FilterFromPool(allLocations, [](LocationKey loc){return Location(loc)->IsCategory(Category::cSong) && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
+      std::vector<LocationKey> songHintLocations = FilterFromPool(allLocations, [](const LocationKey loc){return Location(loc)->IsCategory(Category::cSong) && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(songHintLocations);
 
     } else if (type == HintType::Overworld){
-      std::vector<LocationKey> overworldHintLocations = FilterFromPool(allLocations, [](LocationKey loc){return Location(loc)->IsOverworld() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
+      std::vector<LocationKey> overworldHintLocations = FilterFromPool(allLocations, [](const LocationKey loc){return Location(loc)->IsOverworld() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(overworldHintLocations);
 
     } else if (type == HintType::Dungeon){
-      std::vector<LocationKey> dungeonHintLocations = FilterFromPool(allLocations, [](LocationKey loc){return Location(loc)->IsDungeon() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
+      std::vector<LocationKey> dungeonHintLocations = FilterFromPool(allLocations, [](const LocationKey loc){return Location(loc)->IsDungeon() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());});
       CreateLocationHint(dungeonHintLocations);
 
     } else if (type == HintType::Junk) {

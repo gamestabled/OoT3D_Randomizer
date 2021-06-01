@@ -221,13 +221,13 @@ void ItemTable_Init() {                               //Name                    
     itemTable[HINT]                              = Item("Hint",     ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE);
 }
 
-Item& ItemTable(ItemKey itemKey) {
+Item& ItemTable(const ItemKey itemKey) {
     return itemTable[itemKey];
 }
 
 //This function should only be used to place items containing hint text
 //at gossip stone locations.
-void NewItem(ItemKey itemKey, Item item) {
+void NewItem(const ItemKey itemKey, const Item item) {
     if (itemKey <= BUY_RED_POTION_50) {
       printf("\x1b[25;0HWARNING: ATTEMPTED TO OVERWRITE ITEM %lu\n", itemKey);
       return;
