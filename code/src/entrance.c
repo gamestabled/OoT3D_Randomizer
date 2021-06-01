@@ -62,6 +62,16 @@ void Entrance_Init(void) {
         gEntranceTable[index].field = 0x0102;
     }
 
+    // Delete the title card for Sacred Forest Meadow from Minuet
+    for (index = 0x600; index < 0x604; ++index) {
+        gEntranceTable[index].field &= ~0x4000;
+    }
+
+    // Delete the title card for Temple of Time from Prelude/Savewarp
+    for (index = 0x5F4; index < 0x5F8; ++index) {
+        gEntranceTable[index].field &= ~0x4000;
+    }
+
     // Delete the title card for Sacred Forest Meadow from Forest Temple Blue Warp
     for (index = 0x608; index < 0x60C; ++index) {
         gEntranceTable[index].field = 0x0102;
