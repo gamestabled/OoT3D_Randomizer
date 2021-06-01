@@ -143,7 +143,7 @@ static void WriteSettings() {
   logtxt += "\nExcluded Locations:\n";
   for (auto& l : Settings::excludeLocationsOptions) {
     if (l->GetSelectedOptionIndex() == EXCLUDE) {
-      std::string name = l->GetName().data();
+      std::string name = l->GetName();
 
       //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
@@ -161,10 +161,8 @@ static void WriteSettings() {
   for (size_t i = 3; i < Settings::startingInventoryOptions.size(); i++) {
     auto setting = Settings::startingInventoryOptions[i];
     if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
-      std::string item = setting->GetSelectedOptionText();
-
       logtxt += "\t";
-      logtxt += item;
+      logtxt += setting->GetSelectedOptionText();
       logtxt += "\n";
     }
   }
@@ -173,7 +171,7 @@ static void WriteSettings() {
   logtxt += "\nEnabled Tricks:\n";
   for (auto& l : Settings::detailedLogicOptions) {
     if (l->GetSelectedOptionIndex() == TRICK_ENABLED && l->IsCategory(OptionCategory::Setting)) {
-      std::string name = l->GetName().data();
+      std::string name = l->GetName();
 
       //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
