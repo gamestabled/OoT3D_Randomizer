@@ -23,7 +23,7 @@ namespace {
   std::string logtxt;
   std::string placementtxt;
 
-  const std::array<std::string_view, 32> hashIcons = {
+  constexpr std::array<std::string_view, 32> hashIcons = {
     "Deku Stick",
     "Deku Nut",
     "Bow",
