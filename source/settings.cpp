@@ -1026,6 +1026,7 @@ namespace Settings {
   //will force Starting Age to Child).
   void ForceChange(u32 kDown, Option* currentSetting) {
 
+    //Only hide the options for now, select them later in UpdateSettings()
     RandomizeAllSettings();
 
     //Only go through options if all settings are not randomized
@@ -1170,17 +1171,19 @@ namespace Settings {
       HintDistribution.Unhide();
     }
 
-    //Set toggle for all tricks
-    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
-      for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
-        detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+    if (currentSetting != nullptr) {
+      //Set toggle for all tricks
+      if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
+        for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
+          detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+        }
       }
-    }
 
-    //Set toggle for all items
-    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Items Toggle")  {
-      for (u16 i = 0; i < Settings::startingInventoryOptions.size(); i++) {
-        startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+      //Set toggle for all items
+      if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Items Toggle")  {
+        for (u16 i = 0; i < Settings::startingInventoryOptions.size(); i++) {
+          startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+        }
       }
     }
 
@@ -1189,9 +1192,7 @@ namespace Settings {
 
   // Randomizes all settings in a category if chosen
   // Hides all relevant options
-  void RandomizeAllSettings() {
-    //Init Random_ interface for consistency in racing
-    Random_Init(std::hash<std::string>{}(seed));
+  void RandomizeAllSettings(const bool selectOptions /*= false*/) {
 
     // Open Settings
     if (RandomizeOpen) {
@@ -1201,7 +1202,9 @@ namespace Settings {
         openOptions[i]->Hide();
 
         //randomize options
-        openOptions[i]->SetSelectedIndex(Random(0,openOptions[i]->GetOptionCount()));
+        if (selectOptions) {
+          openOptions[i]->SetSelectedIndex(Random(0,openOptions[i]->GetOptionCount()));
+        }
       }
       // Randomize Ganon Trials
       RandomGanonsTrials.SetSelectedIndex(ON);
@@ -1222,7 +1225,9 @@ namespace Settings {
         }
         worldOptions[i]->Hide();
         //randomize options
-        worldOptions[i]->SetSelectedIndex(Random(0,worldOptions[i]->GetOptionCount()));
+        if (selectOptions) {
+          worldOptions[i]->SetSelectedIndex(Random(0,worldOptions[i]->GetOptionCount()));
+        }
       }
     }
     else {
@@ -1242,7 +1247,9 @@ namespace Settings {
       for (u8 i=1; i < shuffleOptions.size(); i++) {
         shuffleOptions[i]->Hide();
         //randomize options
-        shuffleOptions[i]->SetSelectedIndex(Random(0,shuffleOptions[i]->GetOptionCount()));
+        if (selectOptions) {
+          shuffleOptions[i]->SetSelectedIndex(Random(0,shuffleOptions[i]->GetOptionCount()));
+        }
       }
       // Double check that this is the case in case of randomization on init
       if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
@@ -1261,13 +1268,20 @@ namespace Settings {
       for (size_t i=1; i < shuffleDungeonItemOptions.size(); i++) {
         shuffleDungeonItemOptions[i]->Hide();
         //randomize options
-        shuffleDungeonItemOptions[i]->SetSelectedIndex(Random(0,shuffleDungeonItemOptions[i]->GetOptionCount()));
+        if (selectOptions) {
+          shuffleDungeonItemOptions[i]->SetSelectedIndex(Random(0,shuffleDungeonItemOptions[i]->GetOptionCount()));
+        }
       }
     }
     else {
       for (size_t i=1; i < shuffleDungeonItemOptions.size(); i++) {
         shuffleDungeonItemOptions[i]->Unhide();
       }
+    }
+
+    //resolve any settings that need to change
+    if (selectOptions) {
+      ForceChange(0, nullptr);
     }
   }
 
@@ -1332,6 +1346,8 @@ namespace Settings {
 
   //Function to set flags depending on settings
   void UpdateSettings() {
+
+    RandomizeAllSettings(true); //select any random options instead of just hiding them
 
     //shuffle the dungeons and then set MQ for as many as necessary
     auto dungeons = dungeonList;
