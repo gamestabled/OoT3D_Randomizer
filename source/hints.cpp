@@ -247,9 +247,9 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   Text locationText;
   if (Location(hintedLocation)->IsDungeon()) {
     *remainingDungeonWothHints -= 1;
-    locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
+    locationText = Location(hintedLocation)->GetParentRegion()->GetHint().GetText();
   } else {
-    locationText = Hint(GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey).GetText();
+    locationText = GetHintRegion(Location(hintedLocation)->GetParentRegion())->GetHint().GetText();
   }
   Text finalWothHint = Hint(PREFIX).GetText()+"#"+locationText+"#"+Hint(WAY_OF_THE_HERO).GetText();
   PlacementLog_Msg("\tMessage: ");
@@ -339,14 +339,14 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
   //form hint text
   Text itemText = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
   if (Location(hintedLocation)->IsDungeon()) {
-    Text locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
+    Text locationText = Location(hintedLocation)->GetParentRegion()->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# "+Hint(HOARDS).GetText()+" #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
   } else {
-    Text locationText = Hint(GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey).GetText();
+    Text locationText = GetHintRegion(Location(hintedLocation)->GetParentRegion())->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# "+Hint(CAN_BE_FOUND_AT).GetText()+" #"+locationText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);
@@ -483,7 +483,7 @@ static void CreateGanonText() {
   if (lightArrowLocation.empty()) {
     text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+Hint(YOUR_POCKET).GetText();
   } else {
-    text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+Hint(GetHintRegion(Location(lightArrowLocation[0])->GetParentRegion())->hintKey).GetText();
+    text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+GetHintRegion(Location(lightArrowLocation[0])->GetParentRegion())->GetHint().GetText();
   }
   text = text + "!";
 
