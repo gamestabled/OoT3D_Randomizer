@@ -30,11 +30,13 @@ namespace Cosmetics {
 
   extern const std::array<std::string_view, 13> gauntletColors;
   extern const std::vector<std::string> gauntletOptions;
+  extern const std::array<std::string_view, 31> tunicColors;
+  extern const std::vector<std::string> tunicOptions;
   extern const std::vector<std::string_view> cosmeticDescriptions;
 
   bool ValidHexString(std::string_view hexStr);
   Color_RGB HexStrToColorRGB(const std::string& hexStr);
   std::string CustomColorOptionText(std::string_view color);
-  std::string GetCustomColor(std::string_view str);
+  std::string GetCustomColor(const std::string& str);
   std::string RandomColor();
 } //namespace Cosmetics

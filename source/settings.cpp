@@ -489,12 +489,23 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
+  Option KokiriTunicColor           = Option::U8("Kokiri Tunic Color",     tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option GoronTunicColor            = Option::U8("Goron Tunic Color",      tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option ZoraTunicColor             = Option::U8("Zora Tunic Color",       tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
   Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
   Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
+  std::string finalKokiriTunicColor     = KokiriTunicColor.GetSelectedOptionText();
+  std::string finalGoronTunicColor      = GoronTunicColor.GetSelectedOptionText();
+  std::string finalZoraTunicColor       = ZoraTunicColor.GetSelectedOptionText();
   std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOptionText();
-  std::string finalGoldGauntletsColor  = GoldGauntletsColor.GetSelectedOptionText();
-  Option MirrorWorld                = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc}, OptionCategory::Cosmetic);
+  std::string finalGoldGauntletsColor   = GoldGauntletsColor.GetSelectedOptionText();
+
+  Option MirrorWorld = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc}, OptionCategory::Cosmetic);
+
   std::vector<Option *> cosmeticOptions = {
+    &KokiriTunicColor,
+    &GoronTunicColor,
+    &ZoraTunicColor,
     &SilverGauntletsColor,
     &GoldGauntletsColor,
     &MirrorWorld,
@@ -737,6 +748,9 @@ namespace Settings {
   void SetDefaultCosmetics() {
     SilverGauntletsColor.SetSelectedIndex(3); //Silver
     GoldGauntletsColor.SetSelectedIndex(4);   //Gold
+    KokiriTunicColor.SetSelectedIndex(3);     //Kokiri Green
+    GoronTunicColor.SetSelectedIndex(4);      //Goron Red
+    ZoraTunicColor.SetSelectedIndex(5);       //Zora Blue
   }
 
   //Set default settings for all settings where the default is not the first option
@@ -1204,6 +1218,36 @@ namespace Settings {
 
   //Function to update cosmetics options depending on choices
   void UpdateCosmetics() {
+    if (KokiriTunicColor.Is(CUSTOM_COLOR)) {
+      finalKokiriTunicColor = GetCustomColor(KokiriTunicColor.GetSelectedOptionText());
+    } else if (KokiriTunicColor.Is(RANDOM_CHOICE)) {
+      finalKokiriTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
+    } else if (KokiriTunicColor.Is(RANDOM_COLOR)) {
+      finalKokiriTunicColor = RandomColor();
+    } else {
+      finalKokiriTunicColor = tunicColors[KokiriTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    }
+
+    if (GoronTunicColor.Is(CUSTOM_COLOR)) {
+      finalGoronTunicColor = GetCustomColor(GoronTunicColor.GetSelectedOptionText());
+    } else if (GoronTunicColor.Is(RANDOM_CHOICE)) {
+      finalGoronTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
+    } else if (GoronTunicColor.Is(RANDOM_COLOR)) {
+      finalGoronTunicColor = RandomColor();
+    } else {
+      finalGoronTunicColor = tunicColors[GoronTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    }
+
+    if (ZoraTunicColor.Is(CUSTOM_COLOR)) {
+      finalZoraTunicColor = GetCustomColor(ZoraTunicColor.GetSelectedOptionText());
+    } else if (ZoraTunicColor.Is(RANDOM_CHOICE)) {
+      finalZoraTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
+    } else if (ZoraTunicColor.Is(RANDOM_COLOR)) {
+      finalZoraTunicColor = RandomColor();
+    } else {
+      finalZoraTunicColor = tunicColors[ZoraTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    }
+
     if (SilverGauntletsColor.Is(CUSTOM_COLOR)) {
       finalSilverGauntletsColor = GetCustomColor(SilverGauntletsColor.GetSelectedOptionText());
     } else if (SilverGauntletsColor.Is(RANDOM_CHOICE)) {
