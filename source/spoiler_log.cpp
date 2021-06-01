@@ -114,9 +114,9 @@ static auto GetPlacementLogPath() {
   return GetGeneralPath() + "-placementlog.txt";
 }
 
-static void WriteSettings() {
+static void WriteSettings(std::string& log, const bool printAll = false) {
   //List Settings
-  logtxt += "Settings:\n";
+  log += "Settings:\n";
   for (const MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic, starting inventory, or exclude location menus yet
     if (menu->name == "Detailed Logic Settings" || menu->name == "Starting Inventory" || menu->name == "Exclude Locations" || menu->mode != OPTION_SUB_MENU) {
@@ -124,12 +124,12 @@ static void WriteSettings() {
     }
 
     for (const Option* setting : *menu->settingsList) {
-      if (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting)) {
-        logtxt += "\t";
-        logtxt += setting->GetName();
-        logtxt += ": ";
-        logtxt += setting->GetSelectedOptionText();
-        logtxt += "\n";
+      if ((!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting)) || printAll) {
+        log += "\t";
+        log += setting->GetName();
+        log += ": ";
+        log += setting->GetSelectedOptionText();
+        log += "\n";
       }
     }
   }
@@ -139,7 +139,7 @@ static void WriteSettings() {
   for (const auto& l : Settings::excludeLocationsOptions) {
     if (l->GetSelectedOptionIndex() == EXCLUDE) {
       if (!excludedHeader) {
-        logtxt += "\nExcluded Locations:\n";
+        log += "\nExcluded Locations:\n";
         excludedHeader = true;
       }
       std::string name = l->GetName().data();
@@ -148,9 +148,9 @@ static void WriteSettings() {
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
-      logtxt += "\t";
-      logtxt += name;
-      logtxt += "\n";
+      log += "\t";
+      log += name;
+      log += "\n";
     }
   }
 
@@ -162,14 +162,14 @@ static void WriteSettings() {
     if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
       //only print the header if there's at least 1 starting item
       if (!inventoryHeader) {
-        logtxt += "\nStarting Inventory:\n";
+        log += "\nStarting Inventory:\n";
         inventoryHeader = true;
       }
       std::string item = setting->GetSelectedOptionText();
 
-      logtxt += "\t";
-      logtxt += setting->GetSelectedOptionText();
-      logtxt += "\n";
+      log += "\t";
+      log += setting->GetSelectedOptionText();
+      log += "\n";
     }
   }
 
@@ -179,7 +179,7 @@ static void WriteSettings() {
     if (l->GetSelectedOptionIndex() == TRICK_ENABLED && l->IsCategory(OptionCategory::Setting)) {
       //only print the header if at least one trick is enabled
       if (!trickHeader) {
-        logtxt += "\nEnabled Tricks:\n";
+        log += "\nEnabled Tricks:\n";
         trickHeader = true;
       }
 
@@ -189,32 +189,32 @@ static void WriteSettings() {
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
-      logtxt += "\t";
-      logtxt += name;
-      logtxt += "\n";
+      log += "\t";
+      log += name;
+      log += "\n";
     }
   }
 
   //Master Quest Dungeons
   if (Settings::MQDungeonCount.IsNot(0)) {
-    logtxt += "\nMaster Quest Dungeons:\n";
+    log += "\nMaster Quest Dungeons:\n";
     for (const auto* dungeon : Dungeon::dungeonList) {
       if (dungeon->IsMQ()) {
-        logtxt += std::string("\t").append(dungeon->GetName()).append("\n");
+        log += std::string("\t").append(dungeon->GetName()).append("\n");
       }
     }
-    logtxt += '\n';
+    log += '\n';
   }
 
   //Required Trials
   if (Settings::GanonsTrialsCount.IsNot(0)) {
-    logtxt += "\nRequired Trials:\n";
+    log += "\nRequired Trials:\n";
     for (const auto* trial : Trial::trialList) {
       if (trial->IsRequired()) {
-        logtxt += std::string("\t").append(trial->GetName().english).append("\n");
+        log += std::string("\t").append(trial->GetName().english).append("\n");
       }
     }
-    logtxt += '\n';
+    log += '\n';
   }
 }
 
@@ -229,7 +229,7 @@ bool SpoilerLog_Write() {
   logtxt.erase(logtxt.length() - 2); //Erase last comma
   logtxt += "\n\n";
 
-  WriteSettings();
+  WriteSettings(logtxt);
 
   //Write playthrough to spoiler, by accessibility sphere
   logtxt += "Playthrough:\n";
@@ -292,6 +292,10 @@ bool SpoilerLog_Write() {
 
 void PlacementLog_Msg(std::string_view msg) {
   placementtxt += msg;
+}
+
+void PlacementLog_WriteSettings() {
+  WriteSettings(placementtxt, true); //write settings even if they're hidden
 }
 
 void PlacementLog_Clear() {

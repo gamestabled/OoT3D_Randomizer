@@ -258,6 +258,7 @@ public:
       hintedAt = false;
       isHintable = false;
       price = 0;
+      hasShopsanityPrice =  false;
     }
 
 private:

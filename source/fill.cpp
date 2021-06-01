@@ -360,7 +360,19 @@ static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locati
 */
 static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<LocationKey>& allowedLocations, bool setLocationsAsHintable = false) {
   if (items.size() > allowedLocations.size()) {
-    printf("\x1b[H1;1ERROR: MORE ITEMS THAN LOCATIONS");
+    printf("\x1b[2;2HERROR: MORE ITEMS THAN LOCATIONS IN GIVEN LISTS");
+    PlacementLog_Msg("Items:\n");
+    for (const ItemKey item: items) {
+      PlacementLog_Msg("\t");
+      PlacementLog_Msg(ItemTable(item).GetName());
+      PlacementLog_Msg("\n");
+    }
+    PlacementLog_Msg("\nAllowed Locations:\n");
+    for (const LocationKey loc: allowedLocations) {
+      PlacementLog_Msg("\t");
+      PlacementLog_Msg(Location(loc)->GetName());
+      PlacementLog_Msg("\n");
+    }
   }
 
   //keep retrying to place everything until it works
@@ -667,7 +679,7 @@ int Fill() {
       //Place the shop items which will still be at shop locations
       AssumedFill(shopItems, shopLocations);
     }
-
+    
     //Place dungeon rewards
     RandomizeDungeonRewards();
 
