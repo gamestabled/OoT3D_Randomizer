@@ -3,16 +3,17 @@
 //Setting descriptions are mostly copied from OoT Randomizer tooltips with minor edits
 
 /*------------------------------
-|      RANDOMIZE SETTINGS      |
-------------------------------*/
-string_view openRandomize             = "Randomize all Open Settings except for Logic rules.";
-string_view worldRandomize            = "Randomize all World Settings except for MQ dungeons";
-string_view shuffleRandomize          = "Randomize all Shuffle Settings";
-string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings";
-
-/*------------------------------
-|            LOGIC             |                           *SCREEN WIDTH*
+|      RANDOMIZE SETTINGS      |                            *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
+string_view openRandomize             = "Randomize all Open Settings except for Logic rules";
+string_view worldRandomize            = "Randomize all World Settings except for MQ\n"     //
+                                        "dungeons";                                        //
+string_view shuffleRandomize          = "Randomize all Shuffle Settings";                  //
+string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings";          //
+                                                                                           //
+/*------------------------------                                                           //
+|            LOGIC             |                                                           //
+------------------------------*/                                                           //
 string_view logicGlitchless           = "No glitches are required, but may require some\n" //
                                         "minor tricks. Add minor tricks to consider for\n" //
                                         "logic in Detailed Logic Settings.";               //
@@ -561,6 +562,16 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //
+/*------------------------------                                                           //
+|         COLORED KEYS         |                                                           //
+------------------------------*/                                                           //
+string_view coloredKeysDesc           = "If set, small key models will be colored\n"       //
+                                        "differently depending on which dungeon they can be"
+                                        "used in. Forest Temple keys are green. Fire Temple"
+                                        "keys are red. etc.\n"                             //
+                                        "\n"                                               //
+                                        "It may be hard to tell some colors apart if you\n"//
+                                        "are colorblind.";                                 //
 /*------------------------------                                                           //
 |         MIRROR WORLD         |                                                           //
 ------------------------------*/                                                           //

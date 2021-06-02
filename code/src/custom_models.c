@@ -2,6 +2,7 @@
 #include "string.h"
 #include "custom_models.h"
 #include "objects.h"
+#include "settings.h"
 
 #define EDIT_BYTE(offset_, val_) (BASE_[offset_] = val_)
 
@@ -19,7 +20,7 @@ u8 SmallKeyData[][7] = {
 
 void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
-    
+
     // Edit combinerIndices
     EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
     EDIT_BYTE(0x6CC, 0x0B); EDIT_BYTE(0x6CD, 0x00);// Add new combiner index (Replacing one of the combiners used by unused deku stick)
@@ -67,7 +68,7 @@ void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
 
     EDIT_BYTE(0xDB, 0x01);
     EDIT_BYTE(0xE8, 0x01);
-    EDIT_BYTE(0x17C, 0x19); EDIT_BYTE(0x17D, 0x19); EDIT_BYTE(0x17E, 0x19); 
+    EDIT_BYTE(0x17C, 0x19); EDIT_BYTE(0x17D, 0x19); EDIT_BYTE(0x17E, 0x19);
     EDIT_BYTE(0x180, 0x00); EDIT_BYTE(0x181, 0x00); EDIT_BYTE(0x182, 0x00); EDIT_BYTE(0x183, 0xB2);
     EDIT_BYTE(0x1FC, 0x01);
     EDIT_BYTE(0x20D, 0x00);
@@ -79,10 +80,12 @@ void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
 }
 
 void CustomModel_ApplyColorEditsToSmallKey(void* smallKeyCMB, s32 keyType) {
-    char* BASE_ = (char*)smallKeyCMB;
+    if (gSettingsContext.coloredKeys == ON) {
+        char* BASE_ = (char*)smallKeyCMB;
 
-    for (s32 i = 0; i < 7; i++) {
-        EDIT_BYTE(0x12C + i, SmallKeyData[keyType][i]);
+        for (s32 i = 0; i < 7; i++) {
+            EDIT_BYTE(0x12C + i, SmallKeyData[keyType][i]);
+        }
     }
 }
 
@@ -111,7 +114,7 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
     EDIT_BYTE(0x37FF3, 0x40); EDIT_BYTE(0x38133, 0x40); EDIT_BYTE(0x38273, 0x40); EDIT_BYTE(0x383B3, 0x40);
     EDIT_BYTE(0x384F3, 0x40); EDIT_BYTE(0x38633, 0x40);
 
-    // g_title_fire.cmab 
+    // g_title_fire.cmab
     EDIT_BYTE(0x5E570, 0x01);// Change keyframe count to 1 so we only have to change one keyframe
     EDIT_BYTE(0x5E580, 0x0A); EDIT_BYTE(0x5E581, 0xD7); EDIT_BYTE(0x5E582, 0x23); EDIT_BYTE(0x5E583, 0x3D);// Red to 0.04
     EDIT_BYTE(0x5E660, 0x01);
