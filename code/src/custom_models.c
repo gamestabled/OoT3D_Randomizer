@@ -46,7 +46,7 @@ void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
 
     //TextureCombiner0
     EDIT_BYTE(0x2974, 0x02); EDIT_BYTE(0x2975, 0x64);// CombinerMode to "AddMult"
-    EDIT_BYTE(0x2978, 0x01);// ColorScale to "One"
+    EDIT_BYTE(0x2978, 0x02);// ColorScale to "Two"
     EDIT_BYTE(0x2980, 0x76);// SourceColor0 to "ConstantColor"
     EDIT_BYTE(0x2984, 0xC0); EDIT_BYTE(0x2985, 0x84);// SourceColor2 to "Texture0"
     EDIT_BYTE(0x2988, 0x03);// Color1Operand to OneMinusAlpha
