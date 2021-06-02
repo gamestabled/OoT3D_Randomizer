@@ -301,8 +301,11 @@ constexpr std::array DungeonColors = {
         for(u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
             std::string name = NonShopItems[shopitems].Name;
             std::string price = std::to_string(NonShopItems[shopitems].Price);
+            //Prevent names from being too long and overflowing textbox
             if (name == "Piece of Heart (Treasure Chest Minigame)") {
-                name = "Piece of Heart"; //Prevent name from being too long and overflowing textbox
+                name = "Piece of Heart";
+            } else if (name == "Green Rupee (Treasure Chest Minigame)") {
+                name = "Green Rupee"; //^
             }
             //Message to display when hovering over the item
             CreateMessage(0x9200+shopitems*2, 0, 0, 0,
