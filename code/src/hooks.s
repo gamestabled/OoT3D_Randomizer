@@ -516,6 +516,13 @@ hook_FastOwlCutscenes:
     mov r1,#0xa
     bx lr
 
+.global hook_SetChildCustomTunic
+hook_SetChildCustomTunic:
+    push {r0-r12, lr}
+    bl Player_SetChildCustomTunicCMAB
+    pop {r0-r12, lr}
+    b 0x191E60
+
 .global hook_ShortenRainbowBridgeCS
 hook_ShortenRainbowBridgeCS:
     push {r0-r12, lr}

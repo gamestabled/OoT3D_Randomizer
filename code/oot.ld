@@ -172,6 +172,10 @@ SECTIONS
 		*(.patch_PlayerEditAndRetrieveCMB)
 	}
 
+	.patch_SetChildCustomTunic 0x191DB0 : {
+		*(.patch_SetChildCustomTunic)
+	}
+
 	.patch_PlayerGetCustomTunicCMAB 0x191DD4 : {
 		*(.patch_PlayerGetCustomTunicCMAB)
 	}
@@ -342,6 +346,14 @@ SECTIONS
 
 	.patch_BombchuBowlingStaticReward 0x206150 : {
 		*(.patch_BombchuBowlingStaticReward)
+	}
+
+	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
+		*(.patch_ShopItemDontSetAnimSpeedOne)
+	}
+
+	.patch_ShopItemDontSetAnimSpeedTwo 0x2101CC : {
+		*(.patch_ShopItemDontSetAnimSpeedTwo)
 	}
 
 	.patch_CourtyardCheckForVisitedZeldaOne 0x210C4C : {

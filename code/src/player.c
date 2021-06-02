@@ -8,6 +8,9 @@ void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     if (gSaveContext.linkAge == 0) {
         void* cmb = (void*)(((char*)zarInfo->buf) + 0xDAE8);
         CustomModel_EditLinkToCustomTunic(cmb);
+    } else {
+        void* cmb = (void*)(((char*)zarInfo->buf) + 0xDACC);
+        CustomModel_EditChildLinkToCustomTunic(cmb);
     }
 
     return cmbMan;
@@ -18,5 +21,19 @@ void* Player_GetCustomTunicCMAB(void) {
     if (exObjectBankIdx < 0) {
         exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
     }
-    return ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_LINK_BODY);
+    if (gSaveContext.linkAge == 0) {
+        return ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_LINK_BODY);
+    } else {
+        return ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
+    }
+}
+
+void Player_SetChildCustomTunicCMAB(void) {
+    s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
+    void* cmabMan;
+    if (exObjectBankIdx < 0) {
+        exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
+    }
+    cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
+    TexAnim_Spawn(PLAYER->skelAnime.unk_28->unk_0C, cmabMan);
 }
