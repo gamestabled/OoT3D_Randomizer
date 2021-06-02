@@ -114,6 +114,9 @@ public:
     }
 
     u16 GetPrice() const {
+      if (ItemTable(placedItem).GetItemType() == ITEMTYPE_SHOP) {
+        return ItemTable(placedItem).GetPrice();
+      }
       return price;
     }
 
