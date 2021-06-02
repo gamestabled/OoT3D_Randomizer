@@ -322,13 +322,6 @@ namespace Settings {
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
 
-  extern bool ForestTrialSkip;
-  extern bool FireTrialSkip;
-  extern bool WaterTrialSkip;
-  extern bool SpiritTrialSkip;
-  extern bool ShadowTrialSkip;
-  extern bool LightTrialSkip;
-
   //Starting Inventory
   extern Option StartingConsumables;
   extern Option StartingMaxRupees;
