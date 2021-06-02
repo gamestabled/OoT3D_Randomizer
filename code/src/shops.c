@@ -72,27 +72,30 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
 
 s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
     if (item->basePrice <= gSaveContext.rupees) { //Has enough rupees
-        u8 id = ((ShopsanityItem*)item)->itemRow->actionId;
-        if (ShopsanityItem_IsBombs(id)) {
-            if ((gSaveContext.upgrades >> 3) & 0x7) { //Has bomb bag
-                return CANBUY_RESULT_0;
+        //Tunics are non-ShopsanityItem objects passed to this function, so don't check those
+        if (!(item->getItemId == GI_TUNIC_GORON || item->getItemId == GI_TUNIC_ZORA)) {
+            u8 id = ((ShopsanityItem*)item)->itemRow->actionId;
+            if (ShopsanityItem_IsBombs(id)) {
+                if ((gSaveContext.upgrades >> 3) & 0x7) { //Has bomb bag
+                    return CANBUY_RESULT_0;
+                }
+                return CANBUY_RESULT_CANT_GET_NOW;
             }
-            return CANBUY_RESULT_CANT_GET_NOW;
-        }
-        else if (ShopsanityItem_IsArrows(id)) {
-            if (gSaveContext.upgrades & 0x7) { //Has bow
-                return CANBUY_RESULT_0;
+            else if (ShopsanityItem_IsArrows(id)) {
+                if (gSaveContext.upgrades & 0x7) { //Has bow
+                    return CANBUY_RESULT_0;
+                }
+                return CANBUY_RESULT_CANT_GET_NOW;
             }
-            return CANBUY_RESULT_CANT_GET_NOW;
-        }
-        else if (ShopsanityItem_IsSeeds(id)) {
-            if ((gSaveContext.upgrades >> 14) & 0x7) { //Has slingshot
-                return CANBUY_RESULT_0;
+            else if (ShopsanityItem_IsSeeds(id)) {
+                if ((gSaveContext.upgrades >> 14) & 0x7) { //Has slingshot
+                    return CANBUY_RESULT_0;
+                }
+                return CANBUY_RESULT_CANT_GET_NOW;
             }
-            return CANBUY_RESULT_CANT_GET_NOW;
-        }
-        else if (ShopsanityItem_IsBombchus(id)) {
-            return Shop_CheckCanBuyBombchus();
+            else if (ShopsanityItem_IsBombchus(id)) {
+                return Shop_CheckCanBuyBombchus();
+            }
         }
         return CANBUY_RESULT_0;
     } else { //Not enough rupees
