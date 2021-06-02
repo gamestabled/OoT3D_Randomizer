@@ -12,7 +12,6 @@
 using namespace Settings;
 
 std::vector<ItemKey> ShopItems = {};
-std::array<int, 64> ShopItemsPrices;
 std::vector<ItemAndPrice> NonShopItems = {};
 //Shop items we don't want to overwrite
 const std::array<ItemKey, 15> minShopItems = {

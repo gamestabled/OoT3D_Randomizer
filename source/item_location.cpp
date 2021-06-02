@@ -1443,11 +1443,8 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
 
   //If we're placing a non-shop item in a shop location, we want to record it for custom messages
   if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
-    ItemAndPrice newpair;
-    newpair.Name = ItemTable(item).GetName();
     int index = GetShopIndex(locKey);
-    newpair.Price = ShopItemsPrices[index];
-    NonShopItems[TransformShopIndex(index)] = newpair;
+    NonShopItems[TransformShopIndex(index)].Name = ItemTable(item).GetName();
   }
 
   loc->SetPlacedItem(item);

@@ -674,7 +674,7 @@ int Fill() {
             int itemindex = indices[j];
             ShopItems[i*8+itemindex-1] = NONE; //Clear item so it can be filled during the general fill algo
             int shopsanityPrice = GetRandomShopPrice();
-            ShopItemsPrices[i*8+itemindex-1] = shopsanityPrice; //Set price in ShopItemsPrices vector so it can be retrieved later by the patch
+            NonShopItems[TransformShopIndex(i*8+itemindex-1)].Price = shopsanityPrice; //Set price to be retrieved by the patch and textboxes
             Location(ShopLocationLists[i][itemindex - 1])->SetShopsanityPrice(shopsanityPrice);
           }
         }

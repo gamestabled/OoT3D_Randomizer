@@ -22,5 +22,4 @@ extern void PlaceShopItems();
 extern void ShuffleShop(std::vector<ItemKey>& ShopItems, std::vector<int> indicesToExclude);
 
 extern std::vector<ItemKey> ShopItems;
-extern std::array<int, 64> ShopItemsPrices;
 extern std::vector<ItemAndPrice> NonShopItems;
