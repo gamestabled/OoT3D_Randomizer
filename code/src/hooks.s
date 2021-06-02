@@ -523,6 +523,14 @@ hook_SetChildCustomTunic:
     pop {r0-r12, lr}
     b 0x191E60
 
+.global hook_ShortenRainbowBridgeCS
+hook_ShortenRainbowBridgeCS:
+    push {r0-r12, lr}
+    bl ShortenRainbowBridgeCS
+    pop {r0-r12, lr}
+    cpy r4,r0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

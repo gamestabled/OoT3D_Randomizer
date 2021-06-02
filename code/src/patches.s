@@ -1187,6 +1187,31 @@ FastOwlCutscenes_patch:
 .section .patch_ShopItemDontSetAnimSpeedTwo
     nop
 
+.section .patch_BugsRecatchable
+.global BugsRecatchable_patch
+BugsRecatchable_patch:
+    nop
+    
+.section .patch_SkipDaruniaDanceOne
+.global SkipDaruniaDanceOne_patch
+SkipDaruniaDanceOne_patch:
+    nop
+    
+.section .patch_SkipDaruniaDanceTwo
+.global SkipDaruniaDanceTwo_patch
+SkipDaruniaDanceTwo_patch:
+    nop
+
+.section .patch_SkipDaruniaDanceThree
+.global SkipDaruniaDanceThree_patch
+SkipDaruniaDanceThree_patch:
+    nop
+
+.section .patch_ShortenRainbowBridgeCS
+.global ShortenRainbowBridgeCS_patch
+ShortenRainbowBridgeCS_patch:
+    bl hook_ShortenRainbowBridgeCS
+
 .section .patch_loader
 .global loader_patch
 
