@@ -6,7 +6,7 @@
 namespace Cosmetics {
 
   bool ValidHexString(std::string_view hexStr) {
-    return hexStr.find_first_not_of("0123456789ABCDEFabcdef") == std::string_view::npos;
+    return hexStr.find_first_not_of("0123456789ABCDEFabcdef") == std::string_view::npos && hexStr.length() == 6;
   }
 
   Color_RGB HexStrToColorRGB(const std::string& hexStr) {
