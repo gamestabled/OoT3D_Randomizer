@@ -51,6 +51,10 @@ u8 ShopsanityItem_IsBombchus(u8 id) {
     return id == ITEM_BOMBCHU || id == ITEM_BOMBCHUS_5 || id == ITEM_BOMBCHUS_20;
 }
 
+u8 ShopsanityItem_IsNuts(u8 id) {
+    return id == ITEM_NUT || id == ITEM_NUTS_5 || id == ITEM_NUTS_10;
+}
+
 
 void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     ShopsanityItem* shopItem = (ShopsanityItem*)item;
@@ -59,7 +63,7 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
 
     u8 id = shopItem->itemRow->actionId;
     //Make it so ammo does not sell out
-    if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) || ShopsanityItem_IsBombchus(id))) {
+    if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) || ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id))) {
         if (gSaveContext.entranceIndex == 0x00B7) {
             gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
         } else {
@@ -92,9 +96,6 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
                     return CANBUY_RESULT_0;
                 }
                 return CANBUY_RESULT_CANT_GET_NOW;
-            }
-            else if (ShopsanityItem_IsBombchus(id)) {
-                return Shop_CheckCanBuyBombchus();
             }
         }
         return CANBUY_RESULT_0;
