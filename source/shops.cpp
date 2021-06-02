@@ -14,23 +14,6 @@ using namespace Settings;
 std::vector<ItemKey> ShopItems = {};
 std::vector<ItemAndPrice> NonShopItems = {};
 //Shop items we don't want to overwrite
-const std::array<ItemKey, 15> minShopItems = {
-  BUY_DEKU_SHIELD, //1 in vanilla shop pool
-  BUY_HYLIAN_SHIELD, //2
-  BUY_GORON_TUNIC, //1
-  BUY_ZORA_TUNIC, //1
-  BUY_DEKU_NUT_5, //6
-  BUY_DEKU_STICK_1, //3
-  BUY_ARROWS_10, //4
-  BUY_BOMBCHU_10, //3
-  BUY_BOMBS_525, //1
-  BUY_BOMBS_10, //1
-  BUY_BOMBS_20, //1
-  BUY_BOMBS_30, //1
-  BUY_BLUE_FIRE, //2
-  BUY_BOTTLE_BUG, //2
-  BUY_FISH, //3
-}; //Total: 32 items
 
 //Set vanilla shop item locations before potentially shuffling
 void SetVanillaShopItems() {
@@ -108,10 +91,91 @@ void SetVanillaShopItems() {
     BUY_RED_POTION_40,
     BUY_HEART,
   };
-  ItemAndPrice init;
-  init.Name = "No Item";
-  init.Price = -1;
-  NonShopItems.assign(32, init);
+}
+
+//These are the same items as SetVanillaShopItems, but in a priority order of importance
+//However many shop item slots were cleared, this will return 64 minus that number of vanilla shop items to be placed with assumed fill
+//The first 32 items here will always be present in shops
+//Shopsanity 4 will only have the first 32, shopsanity 1 will have the first 56, etc.
+//Shopsanity random will have anywhere from the first 32 to the first 56, so the order of items after 32 is relevant
+std::vector<ItemKey> GetMinVanillaShopItems(int total_replaced) {
+  std::vector<ItemKey> minShopItems = {
+    BUY_DEKU_SHIELD,
+    BUY_HYLIAN_SHIELD,
+    BUY_GORON_TUNIC,
+    BUY_ZORA_TUNIC,
+    BUY_DEKU_NUT_5,
+    BUY_DEKU_NUT_5,
+    BUY_DEKU_NUT_10,
+    BUY_DEKU_STICK_1,
+    BUY_DEKU_STICK_1,
+    BUY_DEKU_SEEDS_30,
+    BUY_ARROWS_10,
+    BUY_ARROWS_10,
+    BUY_ARROWS_30,
+    BUY_ARROWS_50,
+    BUY_BOMBCHU_5,
+    BUY_BOMBCHU_10,
+    BUY_BOMBCHU_10,
+    BUY_BOMBCHU_20,
+    BUY_BOMBS_525,
+    BUY_BOMBS_535,
+    BUY_BOMBS_10,
+    BUY_BOMBS_20,
+    BUY_GREEN_POTION,
+    BUY_RED_POTION_30,
+    BUY_BLUE_FIRE,
+    BUY_FAIRYS_SPIRIT,
+    BUY_BOTTLE_BUG,
+    BUY_FISH,
+    //^First 28 items from OoTR
+    BUY_HYLIAN_SHIELD,
+    BUY_BOTTLE_BUG,
+    BUY_DEKU_STICK_1,
+    BUY_FAIRYS_SPIRIT,
+    //^First 32 items: Always guaranteed
+    BUY_BLUE_FIRE,
+    BUY_FISH,
+    BUY_BOMBCHU_10,
+    BUY_DEKU_NUT_5,
+    BUY_ARROWS_10,
+    BUY_BOMBCHU_20,
+    BUY_BOMBS_535,
+    BUY_RED_POTION_30,
+    //^First 40 items: Exist on shopsanity 3 or less
+    BUY_BOMBS_30,
+    BUY_BOMBCHU_20,
+    BUY_DEKU_NUT_5,
+    BUY_ARROWS_10,
+    BUY_DEKU_NUT_5,
+    BUY_ARROWS_30,
+    BUY_RED_POTION_40,
+    BUY_FISH,
+    //First 48 items: Exist on shopsanity 2 or less
+    BUY_BOMBCHU_20,
+    BUY_ARROWS_30,
+    BUY_RED_POTION_50,
+    BUY_ARROWS_30,
+    BUY_DEKU_NUT_5,
+    BUY_ARROWS_50,
+    BUY_ARROWS_50,
+    BUY_GREEN_POTION,
+    //First 56 items: Exist on shopsanity 1 or less
+    BUY_POE,
+    BUY_POE,
+    BUY_HEART,
+    BUY_HEART,
+    BUY_HEART,
+    BUY_HEART,
+    BUY_HEART,
+    BUY_HEART,
+    //All 64 items: Only exist with shopsanity 0
+  };
+  //Now delete however many items there are to replace
+  for (int i = 0; i < total_replaced; i++) {
+    minShopItems.pop_back();
+  }
+  return minShopItems;
 }
 
 //Get random price using a beta distribution with alpha = 1.5, beta = 2
@@ -183,31 +247,6 @@ void PlaceShopItems() {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
       //Multiply i by 8 to get the correct shop
       PlaceItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j]);
-    }
-  }
-}
-
-//Specialized shuffle function for shop items
-void ShuffleShop(std::vector<ItemKey>& ShopItems, std::vector<int> indicesToExclude) {
-  for (std::size_t i = 0; i + 1 < ShopItems.size(); i++) {
-    int retries = 5;
-    while (retries > 0) { //Retry a few times until item is eventually shuffled somewhere, so we don't end up with a bunch of unshuffled items
-      size_t swapInto = Random(i, ShopItems.size()); //Get index to swap item into
-      size_t shopIndex = swapInto % 8; //Get index within shop
-      //If this item is within minShopItems, and it is about to be swapped in an index which may be overwritten, do not swap
-      bool sourceItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[i]) != minShopItems.end();
-      bool targetIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), shopIndex+1) != indicesToExclude.end();
-      bool sourceToTargetGood = !(sourceItemInMin && targetIndexToExcludeMinFrom);
-      //Vice versa, want to check that the target item being swapped is not being swapped into a bad index
-      bool targetItemInMin = std::find(minShopItems.begin(), minShopItems.end(), ShopItems[swapInto]) != minShopItems.end();
-      bool sourceIndexToExcludeMinFrom = std::find(indicesToExclude.begin(), indicesToExclude.end(), (i % 8)+1) != indicesToExclude.end();
-      bool targetToSourceGood = !(targetItemInMin && sourceIndexToExcludeMinFrom);
-      //If a min shop item is not being swapped into a bad index, then do the swap
-      if (sourceToTargetGood && targetToSourceGood) {
-        std::swap(ShopItems[i], ShopItems[swapInto]);
-        break;
-      }
-      retries--;
     }
   }
 }
