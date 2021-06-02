@@ -35,6 +35,8 @@ s32 numShopItemsLoaded = 0; // Used to determine params. Reset this to 0 in ossa
 
 #define EnGirlA_InitializeItemAction ((EnGirlAActionFunc)0x14D5C8)
 
+//Checks for if item is of a certain type
+
 u8 ShopsanityItem_IsBombs(u8 id) {
     return id == ITEM_BOMB || id == ITEM_BOMBS_5 || id == ITEM_BOMBS_10 || id == ITEM_BOMBS_20 || id == ITEM_BOMBS_30;
 }
@@ -55,6 +57,10 @@ u8 ShopsanityItem_IsNuts(u8 id) {
     return id == ITEM_NUT || id == ITEM_NUTS_5 || id == ITEM_NUTS_10;
 }
 
+u8 ShopsanityItem_IsSticks(u8 id) {
+    return id == ITEM_STICK || id == ITEM_STICKS_5 || id == ITEM_STICKS_10;
+}
+
 
 void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     ShopsanityItem* shopItem = (ShopsanityItem*)item;
@@ -63,7 +69,8 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
 
     u8 id = shopItem->itemRow->actionId;
     //Make it so ammo does not sell out
-    if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) || ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id))) {
+    if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) || 
+        ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id) || ShopsanityItem_IsSticks(id))) {
         if (gSaveContext.entranceIndex == 0x00B7) {
             gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
         } else {

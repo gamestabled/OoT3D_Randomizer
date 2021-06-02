@@ -9,6 +9,7 @@
 struct ItemAndPrice {
     std::string Name;
     int Price;
+    bool Repurchaseable;
 };
 
 extern void SetVanillaShopItems();
@@ -19,7 +20,6 @@ extern int GetShopsanityReplaceAmount();
 extern std::string GetIceTrapName(u8 id);
 extern int GetShopIndex(LocationKey loc);
 extern int TransformShopIndex(int index);
-extern bool IsRepurchaseable(std::string name);
 extern void PlaceShopItems();
 
 extern std::vector<ItemKey> ShopItems;

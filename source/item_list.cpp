@@ -162,23 +162,23 @@ void ItemTable_Init() {                               //Name                    
     itemTable[MILK]                              = Item("Milk",             ITEMTYPE_ITEM, GI_MILK,              false, &noVariable, NONE);
 
     //Refills
-    itemTable[BOMBS_5]                           = Item("Bombs (5)",           ITEMTYPE_ITEM, GI_BOMBS_5,        false, &noVariable,  BOMBS_5);
-    itemTable[BOMBS_10]                          = Item("Bombs (10)",          ITEMTYPE_ITEM, GI_BOMBS_10,       false, &noVariable,  BOMBS_10);
-    itemTable[BOMBS_20]                          = Item("Bombs (20)",          ITEMTYPE_ITEM, GI_BOMBS_20,       false, &noVariable,  BOMBS_20);
-    itemTable[BOMBCHU_5]                         = Item("Bombchu (5)",         ITEMTYPE_ITEM, GI_BOMBCHUS_5,     true,  &Bombchus5,   BOMBCHU_5);
-    itemTable[BOMBCHU_10]                        = Item("Bombchu (10)",        ITEMTYPE_ITEM, GI_BOMBCHUS_10,    true,  &Bombchus10,  BOMBCHU_10);
-    itemTable[BOMBCHU_20]                        = Item("Bombchu (20)",        ITEMTYPE_ITEM, GI_BOMBCHUS_20,    true,  &Bombchus20,  BOMBCHU_20);
-    itemTable[BOMBCHU_DROP]                      = Item("Bombchu Drop",        ITEMTYPE_DROP, GI_BOMBCHUS_10,    true,  &BombchuDrop, NONE);
-    itemTable[ARROWS_5]                          = Item("Arrows (5)",          ITEMTYPE_ITEM, GI_ARROWS_SMALL,   false, &noVariable,  ARROWS_5);
-    itemTable[ARROWS_10]                         = Item("Arrows (10)",         ITEMTYPE_ITEM, GI_ARROWS_MEDIUM,  false, &noVariable,  ARROWS_10);
-    itemTable[ARROWS_30]                         = Item("Arrows (30)",         ITEMTYPE_ITEM, GI_ARROWS_LARGE,   false, &noVariable,  ARROWS_30);
-    itemTable[DEKU_NUTS_5]                       = Item("Deku Nuts (5)",       ITEMTYPE_ITEM, GI_NUTS_5,         false, &noVariable,  DEKU_NUTS_5);
-    itemTable[DEKU_NUTS_10]                      = Item("Deku Nuts (10)",      ITEMTYPE_ITEM, GI_NUTS_10,        false, &noVariable,  DEKU_NUTS_10);
-    itemTable[DEKU_SEEDS_30]                     = Item("Deku Seeds (30)",     ITEMTYPE_ITEM, GI_SEEDS_30,       false, &noVariable,  DEKU_SEEDS_30);
-    itemTable[DEKU_STICK_1]                      = Item("Deku Stick (1)",      ITEMTYPE_ITEM, GI_STICKS_1,       false, &noVariable,  DEKU_STICK_1);
-    itemTable[RED_POTION_REFILL]                 = Item("Red Potion Refill",   ITEMTYPE_ITEM, GI_POTION_RED,     false, &noVariable,  NONE);
-    itemTable[GREEN_POTION_REFILL]               = Item("Green Potion Refill", ITEMTYPE_ITEM, GI_POTION_GREEN,   false, &noVariable,  NONE);
-    itemTable[BLUE_POTION_REFILL]                = Item("Blue Potion Refill",  ITEMTYPE_ITEM, GI_POTION_BLUE,    false, &noVariable,  NONE);
+    itemTable[BOMBS_5]                           = Item("Bombs (5)",           ITEMTYPE_REFILL, GI_BOMBS_5,        false, &noVariable,  BOMBS_5);
+    itemTable[BOMBS_10]                          = Item("Bombs (10)",          ITEMTYPE_REFILL, GI_BOMBS_10,       false, &noVariable,  BOMBS_10);
+    itemTable[BOMBS_20]                          = Item("Bombs (20)",          ITEMTYPE_REFILL, GI_BOMBS_20,       false, &noVariable,  BOMBS_20);
+    itemTable[BOMBCHU_5]                         = Item("Bombchu (5)",         ITEMTYPE_REFILL, GI_BOMBCHUS_5,     true,  &Bombchus5,   BOMBCHU_5);
+    itemTable[BOMBCHU_10]                        = Item("Bombchu (10)",        ITEMTYPE_REFILL, GI_BOMBCHUS_10,    true,  &Bombchus10,  BOMBCHU_10);
+    itemTable[BOMBCHU_20]                        = Item("Bombchu (20)",        ITEMTYPE_REFILL, GI_BOMBCHUS_20,    true,  &Bombchus20,  BOMBCHU_20);
+    itemTable[BOMBCHU_DROP]                      = Item("Bombchu Drop",        ITEMTYPE_DROP,   GI_BOMBCHUS_10,    true,  &BombchuDrop, NONE);
+    itemTable[ARROWS_5]                          = Item("Arrows (5)",          ITEMTYPE_REFILL, GI_ARROWS_SMALL,   false, &noVariable,  ARROWS_5);
+    itemTable[ARROWS_10]                         = Item("Arrows (10)",         ITEMTYPE_REFILL, GI_ARROWS_MEDIUM,  false, &noVariable,  ARROWS_10);
+    itemTable[ARROWS_30]                         = Item("Arrows (30)",         ITEMTYPE_REFILL, GI_ARROWS_LARGE,   false, &noVariable,  ARROWS_30);
+    itemTable[DEKU_NUTS_5]                       = Item("Deku Nuts (5)",       ITEMTYPE_REFILL, GI_NUTS_5,         false, &noVariable,  DEKU_NUTS_5);
+    itemTable[DEKU_NUTS_10]                      = Item("Deku Nuts (10)",      ITEMTYPE_REFILL, GI_NUTS_10,        false, &noVariable,  DEKU_NUTS_10);
+    itemTable[DEKU_SEEDS_30]                     = Item("Deku Seeds (30)",     ITEMTYPE_REFILL, GI_SEEDS_30,       false, &noVariable,  DEKU_SEEDS_30);
+    itemTable[DEKU_STICK_1]                      = Item("Deku Stick (1)",      ITEMTYPE_REFILL, GI_STICKS_1,       false, &noVariable,  DEKU_STICK_1);
+    itemTable[RED_POTION_REFILL]                 = Item("Red Potion Refill",   ITEMTYPE_REFILL, GI_POTION_RED,     false, &noVariable,  NONE);
+    itemTable[GREEN_POTION_REFILL]               = Item("Green Potion Refill", ITEMTYPE_REFILL, GI_POTION_GREEN,   false, &noVariable,  NONE);
+    itemTable[BLUE_POTION_REFILL]                = Item("Blue Potion Refill",  ITEMTYPE_REFILL, GI_POTION_BLUE,    false, &noVariable,  NONE);
 
     //Treasure Game
     itemTable[TREASURE_GAME_HEART]               = Item("Piece of Heart (Treasure Chest Minigame)", ITEMTYPE_ITEM, GI_HEART_PIECE_WIN,  false, &noVariable, TREASURE_GAME_HEART);

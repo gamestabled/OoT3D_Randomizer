@@ -659,6 +659,7 @@ int Fill() {
         ItemAndPrice init;
         init.Name = "No Item";
         init.Price = -1;
+        init.Repurchaseable = false;
         NonShopItems.assign(32, init);
         //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
         const std::array<int, 4> indices = {7, 5, 8, 6}; 
