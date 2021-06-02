@@ -26,6 +26,7 @@
 #include "demo_kankyo.h"
 #include "lake_hylia_objects.h"
 
+#define OBJECT_GI_KEY 170
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
@@ -110,6 +111,17 @@ void Actor_Init() {
     // Define object 16 to be by default the same as object 222
     strncpy(gObjectTable[OBJECT_CUSTOM_ADULT_SONGS].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
 
+    // Define all the small key objects to be by default the same as object 170
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_FOREST].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_FIRE].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_WATER].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_SHADOW].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_BOTW].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_SPIRIT].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_FORTRESS].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GTG].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GANON].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
+
     // Define draw item 3 (corresponding to gid 4) to be double defense custom model
     gDrawItemTable[3].objectId = OBJECT_CUSTOM_DOUBLE_DEFENSE;
     gDrawItemTable[3].objectModelIdx = 0;
@@ -121,4 +133,8 @@ void Actor_Init() {
     // Define draw item 5 (corresponding to gid 6) to be an adult song custom model
     gDrawItemTable[5].objectId = OBJECT_CUSTOM_ADULT_SONGS;
     gDrawItemTable[5].objectModelIdx = 0;
+
+    // Define draw item 6 (corresponding to gid 7) to be small key custom model
+    gDrawItemTable[6].objectId = OBJECT_CUSTOM_SMALL_KEY_FOREST;
+    gDrawItemTable[6].objectModelIdx = 0;
 }

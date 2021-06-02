@@ -143,44 +143,61 @@ void ShopsanityItem_1C4Func(GlobalContext* globalCtx, EnGirlA* item) {
     }
 }
 
-void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalCtx, s16 objectId, s16 objModelIdx, s16 objModelIdx2, s16 cmabIdx, s16 cmabIdx2, s16 objMeshIdx) {
+void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalCtx, s16 objectId, s16 objModelIdx, s16 objModelIdx2, s16 cmabIdx, s16 cmabIdx2, s16 special) {
     EnGirlA* item = &shopItem->super;
-    
+    void* ZARBuf;
+    void* cmb;
+
     DeleteModel_At(&item->model);
     DeleteModel_At(&item->model2);
 
-    // edit the cmb for double defense
-    if (objectId == OBJECT_CUSTOM_DOUBLE_DEFENSE) {
-        void* ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_DOUBLE_DEFENSE)->zarInfo.buf;
-        void* cmb = (void*)(((char*)ZARBuf) + 0xA4);
-        CustomModel_EditHeartContainerToDoubleDefense(cmb);
+    // edit the cmbs for custom models
+    switch (objectId) {
+        case OBJECT_CUSTOM_ADULT_SONGS:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_ADULT_SONGS)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_SetOcarinaToRGBA565(cmb);
+            break;
+        case OBJECT_CUSTOM_CHILD_SONGS:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_CHILD_SONGS)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_SetOcarinaToRGBA565(cmb);
+            break;
+        case OBJECT_CUSTOM_SMALL_KEY_FOREST:
+        case OBJECT_CUSTOM_SMALL_KEY_FIRE:
+        case OBJECT_CUSTOM_SMALL_KEY_WATER:
+        case OBJECT_CUSTOM_SMALL_KEY_SHADOW:
+        case OBJECT_CUSTOM_SMALL_KEY_BOTW:
+        case OBJECT_CUSTOM_SMALL_KEY_SPIRIT:
+        case OBJECT_CUSTOM_SMALL_KEY_FORTRESS:
+        case OBJECT_CUSTOM_SMALL_KEY_GTG:
+        case OBJECT_CUSTOM_SMALL_KEY_GANON:
+            ZARBuf = ExtendedObject_GetStatus(objectId)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0x74);
+            CustomModel_ApplyColorEditsToSmallKey(cmb, special);
+            break;
+        case OBJECT_CUSTOM_DOUBLE_DEFENSE:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_DOUBLE_DEFENSE)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0xA4);
+            CustomModel_EditHeartContainerToDoubleDefense(cmb);
+            break;
     }
 
     item->model = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx);
     if (objectId == 0x017F) { //Set the mesh for rupees
-        SkeletonAnimationModel_SetMesh(item->model, objMeshIdx);
+        SkeletonAnimationModel_SetMesh(item->model, special);
     }
 
     if (objectId == OBJECT_CUSTOM_CHILD_SONGS) {
-        void* ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_CHILD_SONGS)->zarInfo.buf;
-        void* cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-        void* cmabMan;
-        CustomModel_SetOcarinaToRGBA565(cmb);
-        cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx);
-        TexAnim_Spawn(item->model->unk_0C, cmabMan);
+        Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
         item->model->unk_0C->animSpeed = 0.0f;
         item->model->unk_0C->animMode = 0;
-        item->model->unk_0C->curFrame = objMeshIdx;
+        item->model->unk_0C->curFrame = special;
     } else if (objectId == OBJECT_CUSTOM_ADULT_SONGS) {
-        void* ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_ADULT_SONGS)->zarInfo.buf;
-        void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
-        void* cmabMan;
-        CustomModel_SetOcarinaToRGBA565(cmb);
-        cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx);
-        TexAnim_Spawn(item->model->unk_0C, cmabMan);
+        Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
         item->model->unk_0C->animSpeed = 0.0f;
         item->model->unk_0C->animMode = 0;
-        item->model->unk_0C->curFrame = objMeshIdx;
+        item->model->unk_0C->curFrame = special;
     } else if (cmabIdx >= 0) {
         void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx);
         TexAnim_Spawn(item->model->unk_0C, cmabMan);
@@ -192,9 +209,9 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
         item->model2 = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx2);
         if (cmabIdx2 >= 0) {
             void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx2);
-            TexAnim_Spawn(item->model->unk_0C, cmabMan);
-            item->model->unk_0C->animSpeed = 2.0f;
-            item->model->unk_0C->animMode = 1;
+            TexAnim_Spawn(item->model2->unk_0C, cmabMan);
+            item->model2->unk_0C->animSpeed = 2.0f;
+            item->model2->unk_0C->animMode = 1;
         }
     }
 }
@@ -204,14 +221,8 @@ void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
 
     if (Object_IsLoaded(&globalCtx->objectCtx, item->objBankIndex) && ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
         EnGirlA_InitializeItemAction(item, globalCtx);
-        // DeleteModel_At(&item->model);
-        // DeleteModel_At(&item->model2);
-        // item->model = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, shopItem->itemRow->objectId, shopItem->itemRow->objectModelIdx);
-        // if (shopItem->itemRow->objectMeshId >= 0) {
-        //     SkeletonAnimationModel_SetMesh(item->model, shopItem->itemRow->objectMeshId);
-        // }
         ShopsanityItem_ResetModels(shopItem, globalCtx, shopItem->itemRow->objectId, shopItem->itemRow->objectModelIdx, shopItem->itemRow->objectModelIdx2,
-                                   shopItem->itemRow->cmabIndex, 0xFF, shopItem->itemRow->objectMeshId);
+                                   shopItem->itemRow->cmabIndex, shopItem->itemRow->cmabIndex2, shopItem->itemRow->special);
         item->unk_1C4 = ShopsanityItem_1C4Func;
         item->getItemId = shopItem->getItemId;
         item->canBuyFunc = ShopsanityItem_CanBuy;
@@ -231,12 +242,6 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
 
     if (Object_IsLoaded(&globalCtx->objectCtx, item->objBankIndex) && ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
         EnGirlA_InitializeItemAction(item, globalCtx);
-        // DeleteModel_At(&item->model);
-        // DeleteModel_At(&item->model2);
-        // item->model = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx);
-        // if (shopItemEntry->objModelIdx2 >= 0) {
-        //     item->model2 = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx2);
-        // }
         ShopsanityItem_ResetModels(shopItem, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx, shopItemEntry->objModelIdx2,
                                    shopItemEntry->cmabIndex, shopItemEntry->cmabIndex2, 0xFF);
         item->getItemId = shopItemEntry->getItemId;

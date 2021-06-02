@@ -336,6 +336,14 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
+		*(.patch_ShopItemDontSetAnimSpeedOne)
+	}
+
+	.patch_ShopItemDontSetAnimSpeedTwo 0x2101CC : {
+		*(.patch_ShopItemDontSetAnimSpeedTwo)
+	}
+
 	.patch_CourtyardCheckForVisitedZeldaOne 0x210C4C : {
 		*(.patch_CourtyardCheckForVisitedZeldaOne)
 	}

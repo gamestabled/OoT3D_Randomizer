@@ -39,17 +39,32 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
     // Should probably parse the ZAR to find the CMBs correctly,
     // but this is fine for now
     void* ZARBuf = rExtendedObjectCtx.status[model->objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.buf;
-    
-    // edit the cmb for double defense
-    if (model->itemRow->objectId == OBJECT_CUSTOM_DOUBLE_DEFENSE) {
-        void* cmb = (void*)(((char*)ZARBuf) + 0xA4);
-        CustomModel_EditHeartContainerToDoubleDefense(cmb);
+    void* cmb;
+
+    // edit the cmbs for custom models
+    switch (model->itemRow->objectId) {
+        case OBJECT_CUSTOM_SMALL_KEY_FOREST:
+        case OBJECT_CUSTOM_SMALL_KEY_FIRE:
+        case OBJECT_CUSTOM_SMALL_KEY_WATER:
+        case OBJECT_CUSTOM_SMALL_KEY_SHADOW:
+        case OBJECT_CUSTOM_SMALL_KEY_BOTW:
+        case OBJECT_CUSTOM_SMALL_KEY_SPIRIT:
+        case OBJECT_CUSTOM_SMALL_KEY_FORTRESS:
+        case OBJECT_CUSTOM_SMALL_KEY_GTG:
+        case OBJECT_CUSTOM_SMALL_KEY_GANON:
+            cmb = (void*)(((char*)ZARBuf) + 0x74);
+            CustomModel_ApplyColorEditsToSmallKey(cmb, model->itemRow->special);
+            break;
+        case OBJECT_CUSTOM_DOUBLE_DEFENSE:
+            cmb = (void*)(((char*)ZARBuf) + 0xA4);
+            CustomModel_EditHeartContainerToDoubleDefense(cmb);
+            break;
     }
 
     model->saModel = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx);
 
     if (model->itemRow->objectId == 0x017F) { //Set the mesh for rupees
-        SkeletonAnimationModel_SetMesh(model->saModel, model->itemRow->objectMeshId);
+        SkeletonAnimationModel_SetMesh(model->saModel, model->itemRow->special);
     }
 
     if (model->itemRow->objectId == OBJECT_CUSTOM_CHILD_SONGS) {
@@ -58,14 +73,14 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
         Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
         model->saModel->unk_0C->animSpeed = 0.0f;
         model->saModel->unk_0C->animMode = 0;
-        model->saModel->unk_0C->curFrame = model->itemRow->objectMeshId;
+        model->saModel->unk_0C->curFrame = model->itemRow->special;
     } else if (model->itemRow->objectId == OBJECT_CUSTOM_ADULT_SONGS) {
         void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
         CustomModel_SetOcarinaToRGBA565(cmb);
         Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
         model->saModel->unk_0C->animSpeed = 0.0f;
         model->saModel->unk_0C->animMode = 0;
-        model->saModel->unk_0C->curFrame = model->itemRow->objectMeshId;
+        model->saModel->unk_0C->curFrame = model->itemRow->special;
     } else if (model->itemRow->cmabIndex >= 0) {
         Model_SetAnim(model->saModel, model->itemRow->objectId, model->itemRow->cmabIndex);
         model->saModel->unk_0C->animSpeed = 2.0f;
@@ -74,56 +89,13 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
 
     if (model->itemRow->objectModelIdx2 >= 0) {
         model->saModel2 = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx2);
+        if (model->itemRow->cmabIndex2 >= 0) {
+            Model_SetAnim(model->saModel2, model->itemRow->objectId, model->itemRow->cmabIndex2);
+            model->saModel2->unk_0C->animSpeed = 2.0f;
+            model->saModel2->unk_0C->animMode = 1;
+        }
     }
 
-    // // need to set mesh for rupees
-    // if (model->info.objectId == 0x017F) {
-    //     SkeletonAnimationModel_SetMesh(model->glModel, model->info.objectMeshId);
-    // }
-    // spawn the skulltula token animation
-    // if ((model->info.objectId == 0x0024) && (model->info.objectModelIdx == 0x03)) {
-    //     Model_SetAnim(model, 0);
-    //     model->glModel->unk_0C->animSpeed = 2.0f;
-    //     model->glModel->unk_0C->animMode = 1;
-    // }
-    // // spawn the blue fire animation
-    // if ((model->info.objectId == 0x0173) && (model->info.objectModelIdx == 0x01)) {
-    //     Model_SetAnim(model, 0);
-    //     model->glModel->unk_0C->animSpeed = 2.0f;
-    //     model->glModel->unk_0C->animMode = 1;
-    // }
-    // // spawn the poe animation
-    // if ((model->info.objectId == 0x0176) && (model->info.objectModelIdx == 0x00)) {
-    //     Model_SetAnim(model, 0);
-    //     model->glModel->unk_0C->animSpeed = 2.0f;
-    //     model->glModel->unk_0C->animMode = 1;
-    // }
-    // // spawn the big poe animation
-    // if ((model->info.objectId == 0x019A) && (model->info.objectModelIdx == 0x01)) {
-    //     Model_SetAnim(model, 0);
-    //     model->glModel->unk_0C->animSpeed = 2.0f;
-    //     model->glModel->unk_0C->animMode = 1;
-    // }
-    // spawn the cmab on child song items
-    // if (model->info.objectId == OBJECT_CUSTOM_CHILD_SONGS) {
-    //     void* cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-    //     CustomModel_SetOcarinaToRGBA565(cmb);
-    //     model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
-    //     Model_SetAnim(model, TEXANIM_CHILD_SONG);
-    //     model->glModel->unk_0C->animSpeed = 0.0f;
-    //     model->glModel->unk_0C->animMode = 0;
-    //     model->glModel->unk_0C->curFrame = model->info.objectMeshId;
-    // }
-    // // spawn the cmab on adult song items
-    // if (model->info.objectId == OBJECT_CUSTOM_ADULT_SONGS) {
-    //     void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
-    //     CustomModel_SetOcarinaToRGBA565(cmb);
-    //     model->info.objectId = OBJECT_CUSTOM_GENERAL_ASSETS;
-    //     Model_SetAnim(model, TEXANIM_ADULT_SONG);
-    //     model->glModel->unk_0C->animSpeed = 0.0f;
-    //     model->glModel->unk_0C->animMode = 0;
-    //     model->glModel->unk_0C->curFrame = model->info.objectMeshId;
-    // }
     model->loaded = 1;
 }
 
@@ -266,8 +238,6 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
 
     // Special case for bombchu drops
     if ((actor->id == 0x15) && (actor->params == 5)) {
-        // model->info.objectId = 0x00D9;
-        // model->info.objectModelIdx = 0x00;
         model->itemRow = ItemTable_GetItemRow(GI_BOMBCHUS_5);
         Model_GetObjectBankIndex(model, actor, globalCtx);
         return;
@@ -293,6 +263,7 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
     if (newModel != NULL) {
         newModel->actor = model->actor;
         newModel->itemRow = model->itemRow;
+        newModel->objectBankIdx = model->objectBankIdx;
         newModel->loaded = 0;
         newModel->saModel = NULL;
         newModel->saModel2 = NULL;
@@ -322,22 +293,6 @@ void Model_SpawnByActor(Actor* actor, GlobalContext* globalCtx, u16 baseItemId) 
     if (model.itemRow != NULL) {
         model.actor = actor;
         Model_Create(&model, globalCtx);
-        // if ((model.info.objectId == 0x0024) && (model.info.objectModelIdx == 0x02)) { //Special case for Token's second model
-        //     model.info.objectModelIdx = 0x03;
-        //     Model_Create(&model, globalCtx);
-        // }
-        // if ((model.info.objectId == 0x0173) && (model.info.objectModelIdx == 0x00)) { //Special case for Blue Fire's second model
-        //     model.info.objectModelIdx = 0x01;
-        //     Model_Create(&model, globalCtx);
-        // }
-        // if ((model.info.objectId == 0x0176) && (model.info.objectModelIdx == 0x00)) { //Special case for Poe's second model
-        //     model.info.objectModelIdx = 0x01;
-        //     Model_Create(&model, globalCtx);
-        // }
-        // if ((model.info.objectId == 0x019A) && (model.info.objectModelIdx == 0x00)) { //Special case for Big Poe's second model
-        //     model.info.objectModelIdx = 0x01;
-        //     Model_Create(&model, globalCtx);
-        // }
     }
 }
 

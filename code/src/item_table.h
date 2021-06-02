@@ -15,9 +15,12 @@ typedef struct {
     s8 objectModelIdx;
     s8 cmabIndex; // 0xFF if none
     s8 objectModelIdx2; // 0xFF if none
+    s8 cmabIndex2; // 0xFF if none
+    s8 special; /* 0xFF if none. objectMeshIdx for rupees
+                                 TexAnim frame for songs
+                                 key ID for small keys */
     u8 chestType;
     s16 graphicId;
-    s32 objectMeshId; // 0xFF if none. Also used as animation frame for songs
 
     upgradeFunc upgrade;
 

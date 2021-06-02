@@ -1181,6 +1181,12 @@ SetChildCustomTunic_patch:
 FastOwlCutscenes_patch:
     bl hook_FastOwlCutscenes
 
+.section .patch_ShopItemDontSetAnimSpeedOne
+    nop
+
+.section .patch_ShopItemDontSetAnimSpeedTwo
+    nop
+
 .section .patch_loader
 .global loader_patch
 
