@@ -42,7 +42,7 @@ void PrintTopScreen() {
   consoleSelect(&topScreen);
   consoleClear();
   printf("\x1b[2;11H%sOcarina of Time 3D Randomizer%s", CYAN, RESET);
-  printf("\x1b[3;18H%s%s%s", CYAN, RANDOMIZER_VERSION, RESET);
+  printf("\x1b[3;18H%s%s-COMMITNUM%s", CYAN, RANDOMIZER_VERSION, RESET);
   printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
   printf("            Select: Exit to Homebrew Menu\n");
   printf("                 Y: New Random Seed\n");
