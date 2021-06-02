@@ -5836,18 +5836,19 @@ void HintTable_Init() {
 
     hintTable[SPIRIT_TEMPLE] = HintText::DungeonName({
                      //obscure text
-                     Text{"the house of the dead", /*french*/"que la maison des morts", /*spanish*/"la casa de la muerte"},
-                   },
-                     //clear text
-                     Text{ "Shadow Temple", /*french*/"que le temple de l'ombre", /*spanish*/"el Templo de las Sombras"}
-  );
-
-    hintTable[SHADOW_TEMPLE] = HintText::DungeonName({
-                     //obscure text
                      Text{"the goddess of the sand", /*french*/"que la déesse des sables", /*spanish*/"la diosa de la arena"},
                    },
                      //clear text
                      Text{ "Spirit Temple", /*french*/"que le temple de l'esprit", /*spanish*/"el Templo del Espíritu"}
+
+  );
+
+    hintTable[SHADOW_TEMPLE] = HintText::DungeonName({
+                     //obscure text
+                     Text{"the house of the dead", /*french*/"que la maison des morts", /*spanish*/"la casa de la muerte"},
+                   },
+                     //clear text
+                     Text{ "Shadow Temple", /*french*/"que le temple de l'ombre", /*spanish*/"el Templo de las Sombras"}
   );
 
     hintTable[ICE_CAVERN] = HintText::DungeonName({
