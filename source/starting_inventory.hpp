@@ -1,9 +1,12 @@
 #pragma once
 
+#include <3ds.h>
+
+#include "keys.hpp"
+
 #include <vector>
 
-class Item;
-extern std::vector<Item> StartingInventory;
+extern std::vector<ItemKey> StartingInventory;
 
 void GenerateStartingInventory();
 void ApplyStartingInventory();

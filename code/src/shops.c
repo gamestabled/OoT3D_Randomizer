@@ -113,7 +113,7 @@ u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
 }
 
 s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
-    return rShopsanityPrices[ShopsanityItem_GetIndex(item)]; //Get price from table 
+    return rShopsanityPrices[ShopsanityItem_GetIndex(item)]; //Get price from table
 }
 
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
@@ -122,7 +122,7 @@ s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
     if ((gSaveContext.entranceIndex == 0x00B7) && (gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit)) {
         item->super.actor.params = SI_SOLD_OUT;
         return 1;
-    } else if (gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk & itemBit) {
+    } else if ((gSaveContext.entranceIndex != 0x00B7) && gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk & itemBit) {
         item->super.actor.params = SI_SOLD_OUT;
         return 1;
     } else {
@@ -234,7 +234,7 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
             id = ItemTable_ResolveUpgrades(override.value.itemId);
         }
         item->itemRow = ItemTable_GetItemRow(id);
-        
+
         objBankIndex = ExtendedObject_GetIndex(&globalCtx->objectCtx, item->itemRow->objectId);
         if (objBankIndex < 0) {
             objBankIndex = ExtendedObject_Spawn(&globalCtx->objectCtx, item->itemRow->objectId);

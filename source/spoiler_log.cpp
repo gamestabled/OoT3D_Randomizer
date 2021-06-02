@@ -114,9 +114,9 @@ static auto GetPlacementLogPath() {
   return GetGeneralPath() + "-placementlog.txt";
 }
 
-static void WriteSettings() {
+static void WriteSettings(std::string& log, const bool printAll = false) {
   //List Settings
-  logtxt += "Settings:\n";
+  log += "Settings:\n";
   for (const MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic, starting inventory, or exclude location menus yet
     if (menu->name == "Detailed Logic Settings" || menu->name == "Starting Inventory" || menu->name == "Exclude Locations" || menu->mode != OPTION_SUB_MENU) {
@@ -124,80 +124,97 @@ static void WriteSettings() {
     }
 
     for (const Option* setting : *menu->settingsList) {
-      if (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting)) {
-        logtxt += "\t";
-        logtxt += setting->GetName();
-        logtxt += ": ";
-        logtxt += setting->GetSelectedOptionText();
-        logtxt += "\n";
+      if ((!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting)) || printAll) {
+        log += "\t";
+        log += setting->GetName();
+        log += ": ";
+        log += setting->GetSelectedOptionText();
+        log += "\n";
       }
     }
   }
 
   //List Excluded Locations
-  logtxt += "\nExcluded Locations:\n";
+  bool excludedHeader = false;
   for (const auto& l : Settings::excludeLocationsOptions) {
     if (l->GetSelectedOptionIndex() == EXCLUDE) {
-      std::string name = l->GetName();
+      if (!excludedHeader) {
+        log += "\nExcluded Locations:\n";
+        excludedHeader = true;
+      }
+      std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
-      logtxt += "\t";
-      logtxt += name;
-      logtxt += "\n";
+      log += "\t";
+      log += name;
+      log += "\n";
     }
   }
 
   //List Starting Inventory
-  logtxt += "\nStarting Inventory:\n";
+  bool inventoryHeader = false;
   //start i at 3 to skip over the toggle, 'Start with Consumables', and 'Start with Max Rupees'
   for (size_t i = 3; i < Settings::startingInventoryOptions.size(); i++) {
     const auto setting = Settings::startingInventoryOptions[i];
     if (setting->GetSelectedOptionIndex() != STARTINGINVENTORY_NONE) {
-      logtxt += "\t";
-      logtxt += setting->GetSelectedOptionText();
-      logtxt += "\n";
+      //only print the header if there's at least 1 starting item
+      if (!inventoryHeader) {
+        log += "\nStarting Inventory:\n";
+        inventoryHeader = true;
+      }
+      std::string item = setting->GetSelectedOptionText();
+
+      log += "\t";
+      log += setting->GetSelectedOptionText();
+      log += "\n";
     }
   }
 
   //List Enabled Tricks
-  logtxt += "\nEnabled Tricks:\n";
+  bool trickHeader = false;
   for (const auto& l : Settings::detailedLogicOptions) {
     if (l->GetSelectedOptionIndex() == TRICK_ENABLED && l->IsCategory(OptionCategory::Setting)) {
-      std::string name = l->GetName();
+      //only print the header if at least one trick is enabled
+      if (!trickHeader) {
+        log += "\nEnabled Tricks:\n";
+        trickHeader = true;
+      }
+
+      std::string name = l->GetName().data();
 
       //get rid of newline characters if necessary
       if (name.find('\n') != std::string::npos)
         name.replace(name.find('\n'), 1, "");
 
-      logtxt += "\t";
-      logtxt += name;
-      logtxt += "\n";
+      log += "\t";
+      log += name;
+      log += "\n";
     }
   }
 
   //Master Quest Dungeons
   if (Settings::MQDungeonCount.IsNot(0)) {
-    logtxt += "\nMaster Quest Dungeons:\n";
+    log += "\nMaster Quest Dungeons:\n";
     for (const auto* dungeon : Dungeon::dungeonList) {
       if (dungeon->IsMQ()) {
-        logtxt += std::string("\t").append(dungeon->GetName()).append("\n");
+        log += std::string("\t").append(dungeon->GetName()).append("\n");
       }
     }
-    logtxt += '\n';
+    log += '\n';
   }
 
   //Required Trials
   if (Settings::GanonsTrialsCount.IsNot(0)) {
-    logtxt += "\nRequired Trials:\n";
+    log += "\nRequired Trials:\n";
     for (const auto* trial : Trial::trialList) {
       if (trial->IsRequired()) {
-        logtxt += std::string("\t").append(trial->GetName().english).append("\n");
+        log += std::string("\t").append(trial->GetName().english).append("\n");
       }
     }
-    logtxt += '\n';
+    log += '\n';
   }
 }
 
@@ -212,16 +229,16 @@ bool SpoilerLog_Write() {
   logtxt.erase(logtxt.length() - 2); //Erase last comma
   logtxt += "\n\n";
 
-  WriteSettings();
+  WriteSettings(logtxt);
 
   //Write playthrough to spoiler, by accessibility sphere
   logtxt += "Playthrough:\n";
   for (uint i = 0; i < playthroughLocations.size(); i++) {
     logtxt += "Sphere " + std::to_string(i+1) + ":\n";
     //Print all item locations in this sphere
-    for (const ItemLocation* location : playthroughLocations[i]) {
+    for (const LocationKey location : playthroughLocations[i]) {
       logtxt += "\t";
-      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
       logtxt += '\n';
     }
   }
@@ -231,22 +248,22 @@ bool SpoilerLog_Write() {
   //Write Hints
   if (Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
     logtxt += "\nHints:\n";
-    for (const ItemLocation* location : gossipStoneLocations) {
+    for (const LocationKey location : gossipStoneLocations) {
       logtxt += "\t";
-      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), ItemTable(location).GetName());
     }
   }
 
   logtxt += "\nAll Locations:\n";
-  for (const ItemLocation* location : allLocations) {
+  for (const LocationKey location : allLocations) {
     logtxt += "\t";
-    if (location->IsCategory(Category::cShop)) { //Shop item
-      SpoilerLog_SaveShopLocation(location->GetName(), location->GetPlacedItemName(), location->GetPrice());
+    if (Location(location)->IsCategory(Category::cShop)) { //Shop item
+      SpoilerLog_SaveShopLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName(), Location(location)->GetPrice());
     }
     else { //Normal item
-      SpoilerLog_SaveLocation(location->GetName(), location->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
     }
-    logtxt += location->IsAddedToPool() ? "" : " NOT ADDED\n";
+    logtxt += Location(location)->IsAddedToPool() ? "" : " NOT ADDED\n";
   }
 
   Result res = 0;
@@ -275,6 +292,10 @@ bool SpoilerLog_Write() {
 
 void PlacementLog_Msg(std::string_view msg) {
   placementtxt += msg;
+}
+
+void PlacementLog_WriteSettings() {
+  WriteSettings(placementtxt, true); //write settings even if they're hidden
 }
 
 void PlacementLog_Clear() {

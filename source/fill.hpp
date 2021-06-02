@@ -1,8 +1,10 @@
 #pragma once
 
-#include <vector>
+#include <3ds.h>
 
-class ItemLocation;
+#include "keys.hpp"
+
+#include <vector>
 
 enum class SearchMode {
     ReachabilitySearch,
@@ -12,5 +14,5 @@ enum class SearchMode {
 
 int Fill();
 
-std::vector<ItemLocation*> GetAccessibleLocations(const std::vector<ItemLocation*>& allowedLocations,
+std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations,
                                                   SearchMode mode = SearchMode::ReachabilitySearch);

@@ -64,7 +64,8 @@ enum class HintCategory {
 
 class HintText {
 public:
-    explicit HintText(std::vector<Text> obscureText_, Text clearText_, HintCategory type_)
+    HintText() = default;
+    HintText(std::vector<Text> obscureText_, Text clearText_, HintCategory type_)
     : obscureText(std::move(obscureText_)),
       clearText(std::move(clearText_)),
       type(type_) {}
@@ -168,7 +169,7 @@ public:
     }
 
 private:
-    std::vector<Text> obscureText;
+    std::vector<Text> obscureText = {};
     Text clearText;
     HintCategory type;
 };

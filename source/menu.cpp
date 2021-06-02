@@ -15,6 +15,7 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 #include "location_access.hpp"
+#include "debug.hpp"
 
 namespace {
   bool seedChanged;
@@ -52,7 +53,6 @@ void PrintTopScreen() {
 void MenuInit() {
 
   Exits::SetParentRegions();
-
   Settings::SetDefaultSettings();
 
   seedChanged = false;
@@ -93,7 +93,6 @@ void MenuInit() {
 
   consoleSelect(&bottomScreen);
   PrintMainMenu();
-
 }
 
 void MenuUpdate(u32 kDown) {
@@ -547,25 +546,7 @@ void GenerateRandomizer() {
     return;
   }
 
-  //turn the settings into a string for hashing
-  std::string settingsStr;
-  for (MenuItem* menu : Settings::mainMenu) {
-    //don't go through non-menus
-    if (menu->mode != OPTION_SUB_MENU) {
-      continue;
-    }
-
-    for (size_t i = 0; i < menu->settingsList->size(); i++) {
-      Option* setting = menu->settingsList->at(i);
-      if (setting->IsCategory(OptionCategory::Setting)) {
-        settingsStr += setting->GetSelectedOptionText();
-      }
-    }
-  }
-
-  unsigned int finalHash = std::hash<std::string>{}(Settings::seed + settingsStr);
-
-  int ret = Playthrough::Playthrough_Init(finalHash);
+  int ret = Playthrough::Playthrough_Init(std::hash<std::string>{}(Settings::seed));
   if (ret < 0) {
     if(ret == -1) { //Failed to generate after 5 tries
       printf("\n\nFailed to generate after 5 tries.\nPress Select to exit or B to go back to the menu.\n");

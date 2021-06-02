@@ -5,17 +5,16 @@
 #include <string>
 #include <vector>
 
-class Item;
-class ItemLocation;
+#include "keys.hpp"
 
 namespace Dungeon {
 class DungeonInfo {
 public:
-    DungeonInfo(std::string name_, Item* map_, Item* compass_,
-                Item* smallKey_, Item* bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
-                std::vector<ItemLocation*> vanillaLocations_,
-                std::vector<ItemLocation*> mqLocations_,
-                std::vector<ItemLocation*> sharedLocations_);
+    DungeonInfo(std::string name_, ItemKey map_, ItemKey compass_,
+                ItemKey smallKey_, ItemKey bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
+                std::vector<LocationKey> vanillaLocations_,
+                std::vector<LocationKey> mqLocations_,
+                std::vector<LocationKey> sharedLocations_);
     ~DungeonInfo();
 
     const std::string& GetName() const {
@@ -42,10 +41,10 @@ public:
         return (masterQuest) ? mqKeyCount : vanillaKeyCount;
     }
 
-    const Item& GetSmallKey() const;
-    const Item& GetMap() const;
-    const Item& GetCompass() const;
-    const Item& GetBossKey() const;
+    ItemKey GetSmallKey() const;
+    ItemKey GetMap() const;
+    ItemKey GetCompass() const;
+    ItemKey GetBossKey() const;
 
     void PlaceVanillaMap();
     void PlaceVanillaCompass();
@@ -53,23 +52,23 @@ public:
     void PlaceVanillaSmallKeys();
 
     // Gets the chosen dungeon locations for a playthrough (so either MQ or Vanilla)
-    std::vector<ItemLocation*> GetDungeonLocations() const;
+    std::vector<LocationKey> GetDungeonLocations() const;
 
     // Gets all dungeon locations (MQ + Vanilla)
-    std::vector<ItemLocation*> GetEveryLocation() const;
+    std::vector<LocationKey> GetEveryLocation() const;
 
 private:
     std::string name;
-    Item* map;
-    Item* compass;
-    Item* smallKey;
-    Item* bossKey;
+    ItemKey map;
+    ItemKey compass;
+    ItemKey smallKey;
+    ItemKey bossKey;
     u8 vanillaKeyCount;
     u8 mqKeyCount;
     bool masterQuest = false;
-    std::vector<ItemLocation*> vanillaLocations;
-    std::vector<ItemLocation*> mqLocations;
-    std::vector<ItemLocation*> sharedLocations;
+    std::vector<LocationKey> vanillaLocations;
+    std::vector<LocationKey> mqLocations;
+    std::vector<LocationKey> sharedLocations;
 };
 
 extern DungeonInfo DekuTree;

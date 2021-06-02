@@ -5,6 +5,7 @@
 
 #include "logic.hpp"
 #include "hint_list.hpp"
+#include "keys.hpp"
 
 class Exit;
 class ItemLocation;
@@ -39,7 +40,7 @@ class ItemLocationPairing {
 public:
     using ConditionFn = bool (*)();
 
-    explicit ItemLocationPairing(ItemLocation* location_, ConditionFn conditions_met_)
+    explicit ItemLocationPairing(LocationKey location_, ConditionFn conditions_met_)
          : location(location_),
            conditions_met(conditions_met_) {}
 
@@ -47,18 +48,14 @@ public:
         return conditions_met() && CanBuy();
     }
 
-    ItemLocation* GetLocation() {
-        return location;
-    }
-
-    const ItemLocation* GetLocation() const {
+    LocationKey GetLocation() const {
         return location;
     }
 
     bool IsLocationUsed() const;
 
 private:
-    ItemLocation* location;
+    LocationKey location;
     ConditionFn conditions_met;
 
     //Makes sure shop locations are buyable
@@ -128,7 +125,7 @@ class Exit {
 public:
     using ConditionFn = bool (*)();
 
-    Exit(std::string regionName_, std::string scene_, HintText* hintText_,
+    Exit(std::string regionName_, std::string scene_, HintKey hintKey_,
          bool timePass_,
          std::vector<EventPairing> events_,
          std::vector<ItemLocationPairing> locations_,
@@ -137,7 +134,7 @@ public:
 
     std::string regionName;
     std::string scene;
-    HintText*   hintText;
+    HintKey     hintKey;
     bool        timePass;
     std::vector<EventPairing> events;
     std::vector<ItemLocationPairing> locations;
@@ -169,6 +166,10 @@ public:
 
     bool AllAccess() const {
       return dayChild && nightChild && dayAdult && nightAdult;
+    }
+
+    const HintText& GetHint() const {
+      return Hint(hintKey);
     }
 
     //Here checks conditional access based on whether or not both ages have

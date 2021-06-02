@@ -217,6 +217,12 @@ bool SaveCachedCosmetics() {
   return SavePreset("CACHED_COSMETICS", OptionCategory::Cosmetic);
 }
 
-bool LoadCachedCosmetics() {
-  return LoadPreset("CACHED_COSMETICS", OptionCategory::Cosmetic);
+void LoadCachedCosmetics() {
+  //If cache file exists, load it
+  for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Cosmetic))) {
+    if(entry.path().stem().string() == "CACHED_COSMETICS") {
+      //File exists, open
+      LoadPreset("CACHED_COSMETICS", OptionCategory::Cosmetic);
+    }
+  }
 }

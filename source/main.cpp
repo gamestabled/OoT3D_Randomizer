@@ -1,11 +1,17 @@
 #include <3ds.h>
 
 #include "menu.hpp"
+#include "hint_list.hpp"
+#include "item_list.hpp"
+#include "item_location.hpp"
 
 #define TICKS_PER_SEC 268123480.0
 
 int main() {
   gfxInitDefault();
+  HintTable_Init();
+  ItemTable_Init();
+  LocationTable_Init();
   MenuInit();
 
   u64 initialHoldTime = svcGetSystemTick();

@@ -4,108 +4,110 @@
 #include "random.hpp"
 #include "item.hpp"
 #include "shops.hpp"
+#include "debug.hpp"
 
 #include <math.h>
 #include <map>
 
 using namespace Settings;
 
-std::vector<Item> ShopItems = {};
+std::vector<ItemKey> ShopItems = {};
+std::array<int, 64> ShopItemsPrices;
 std::vector<ItemAndPrice> NonShopItems = {};
 //Shop items we don't want to overwrite
-const std::array<Item, 15> minShopItems = {
-  BuyDekuShield, //1 in vanilla shop pool
-  BuyHylianShield, //2
-  BuyGoronTunic, //1
-  BuyZoraTunic, //1
-  BuyDekuNut5, //6
-  BuyDekuStick1, //3
-  BuyArrows10, //4
-  BuyBombchu10, //3
-  BuyBombs525, //1
-  BuyBombs10, //1
-  BuyBombs20, //1
-  BuyBombs30, //1
-  BuyBlueFire, //2
-  BuyBottleBug, //2
-  BuyFish, //3
+const std::array<ItemKey, 15> minShopItems = {
+  BUY_DEKU_SHIELD, //1 in vanilla shop pool
+  BUY_HYLIAN_SHIELD, //2
+  BUY_GORON_TUNIC, //1
+  BUY_ZORA_TUNIC, //1
+  BUY_DEKU_NUT_5, //6
+  BUY_DEKU_STICK_1, //3
+  BUY_ARROWS_10, //4
+  BUY_BOMBCHU_10, //3
+  BUY_BOMBS_525, //1
+  BUY_BOMBS_10, //1
+  BUY_BOMBS_20, //1
+  BUY_BOMBS_30, //1
+  BUY_BLUE_FIRE, //2
+  BUY_BOTTLE_BUG, //2
+  BUY_FISH, //3
 }; //Total: 32 items
 
 //Set vanilla shop item locations before potentially shuffling
 void SetVanillaShopItems() {
   ShopItems = {
     //Vanilla KF
-    BuyDekuShield,
-    BuyDekuNut5,
-    BuyDekuNut10,
-    BuyDekuStick1,
-    BuyDekuSeeds30,
-    BuyArrows10,
-    BuyArrows30,
-    BuyHeart,
+    BUY_DEKU_SHIELD,
+    BUY_DEKU_NUT_5,
+    BUY_DEKU_NUT_10,
+    BUY_DEKU_STICK_1,
+    BUY_DEKU_SEEDS_30,
+    BUY_ARROWS_10,
+    BUY_ARROWS_30,
+    BUY_HEART,
     //Vanilla Kak Potion
-    BuyDekuNut5,
-    BuyFish,
-    BuyRedPotion30,
-    BuyGreenPotion,
-    BuyBlueFire,
-    BuyBottleBug,
-    BuyPoe,
-    BuyFairysSpirit,
+    BUY_DEKU_NUT_5,
+    BUY_FISH,
+    BUY_RED_POTION_30,
+    BUY_GREEN_POTION,
+    BUY_BLUE_FIRE,
+    BUY_BOTTLE_BUG,
+    BUY_POE,
+    BUY_FAIRYS_SPIRIT,
     //Vanilla Bombchu
-    BuyBombchu5,
-    BuyBombchu10,
-    BuyBombchu10,
-    BuyBombchu10,
-    BuyBombchu20,
-    BuyBombchu20,
-    BuyBombchu20,
-    BuyBombchu20,
+    BUY_BOMBCHU_5,
+    BUY_BOMBCHU_10,
+    BUY_BOMBCHU_10,
+    BUY_BOMBCHU_10,
+    BUY_BOMBCHU_20,
+    BUY_BOMBCHU_20,
+    BUY_BOMBCHU_20,
+    BUY_BOMBCHU_20,
     //Vanilla MK Potion
-    BuyGreenPotion,
-    BuyBlueFire,
-    BuyRedPotion30,
-    BuyFairysSpirit,
-    BuyDekuNut5,
-    BuyBottleBug,
-    BuyPoe,
-    BuyFish,
+    BUY_GREEN_POTION,
+    BUY_BLUE_FIRE,
+    BUY_RED_POTION_30,
+    BUY_FAIRYS_SPIRIT,
+    BUY_DEKU_NUT_5,
+    BUY_BOTTLE_BUG,
+    BUY_POE,
+    BUY_FISH,
     //Vanilla MK Bazaar
-    BuyHylianShield,
-    BuyBombs535,
-    BuyDekuNut5,
-    BuyHeart,
-    BuyArrows10,
-    BuyArrows50,
-    BuyDekuStick1,
-    BuyArrows30,
+    BUY_HYLIAN_SHIELD,
+    BUY_BOMBS_535,
+    BUY_DEKU_NUT_5,
+    BUY_HEART,
+    BUY_ARROWS_10,
+    BUY_ARROWS_50,
+    BUY_DEKU_STICK_1,
+    BUY_ARROWS_30,
     //Vanilla Kak Bazaar
-    BuyHylianShield,
-    BuyBombs535,
-    BuyDekuNut5,
-    BuyHeart,
-    BuyArrows10,
-    BuyArrows50,
-    BuyDekuStick1,
-    BuyArrows30,
+    BUY_HYLIAN_SHIELD,
+    BUY_BOMBS_535,
+    BUY_DEKU_NUT_5,
+    BUY_HEART,
+    BUY_ARROWS_10,
+    BUY_ARROWS_50,
+    BUY_DEKU_STICK_1,
+    BUY_ARROWS_30,
     //Vanilla ZD Shop
-    BuyZoraTunic,
-    BuyArrows10,
-    BuyHeart,
-    BuyArrows30,
-    BuyDekuNut5,
-    BuyArrows50,
-    BuyFish,
-    BuyRedPotion50,
+    BUY_ZORA_TUNIC,
+    BUY_ARROWS_10,
+    BUY_HEART,
+    BUY_ARROWS_30,
+    BUY_DEKU_NUT_5,
+    BUY_ARROWS_50,
+    BUY_FISH,
+    BUY_RED_POTION_50,
     //Vanilla GC Shop
-    BuyBombs525,
-    BuyBombs10,
-    BuyBombs20,
-    BuyBombs30,
-    BuyGoronTunic,
-    BuyHeart,
-    BuyRedPotion40,
-    BuyHeart,
+    BUY_BOMBS_525,
+    BUY_BOMBS_10,
+    BUY_BOMBS_20,
+    BUY_BOMBS_30,
+    BUY_GORON_TUNIC,
+    BUY_HEART,
+    BUY_RED_POTION_40,
+    BUY_HEART,
   };
   ItemAndPrice init;
   init.Name = "No Item";
@@ -155,9 +157,9 @@ std::string GetIceTrapName(u8 id) {
 
 //Get shop index based on a given location
 static std::map<std::string_view, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}};
-int GetShopIndex(ItemLocation* loc) {
+int GetShopIndex(LocationKey loc) {
   //Kind of hacky, but extract the shop and item position from the name
-  const std::string& name(loc->GetName());
+  const std::string& name(Location(loc)->GetName());
   int split = name.find(" Item ");
   std::string_view shop(name.c_str(), split);
   int pos = std::stoi(name.substr(split+6, 1)) - 1;
@@ -173,7 +175,7 @@ int GetShopIndex(ItemLocation* loc) {
 //then multiply by 4 since there are 4 items per shop
 //And finally we use a modulo by 4 to get the index within the "shop" of 4 items, and add
 int TransformShopIndex(int index) {
-  return 4*((index / 4) / 2) + index % 4; 
+  return 4*((index / 4) / 2) + index % 4;
 }
 
 //Place each shop item from the shop item array into the appropriate location
@@ -181,13 +183,13 @@ void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
       //Multiply i by 8 to get the correct shop
-      PlaceShopItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j], ShopItems[i*8 + j].GetPrice());
+      PlaceItemInLocation(ShopLocationLists[i][j], ShopItems[i*8 + j]);
     }
   }
 }
 
 //Specialized shuffle function for shop items
-void ShuffleShop(std::vector<Item>& ShopItems, std::vector<int> indicesToExclude) {
+void ShuffleShop(std::vector<ItemKey>& ShopItems, std::vector<int> indicesToExclude) {
   for (std::size_t i = 0; i + 1 < ShopItems.size(); i++) {
     int retries = 5;
     while (retries > 0) { //Retry a few times until item is eventually shuffled somewhere, so we don't end up with a bunch of unshuffled items

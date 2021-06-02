@@ -109,6 +109,8 @@ bool WritePatch() {
     }
 
     totalRW += bytesWritten - 3; // -3 to overwrite EOF
+    CitraPrint(std::to_string(totalRW));
+    sleep(0.1);
   }
 
   /*-------------------------
@@ -141,6 +143,8 @@ bool WritePatch() {
     }
     totalRW += sizeof(override);
   }
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
 
   /*-------------------------
   |     gSettingsContext    |
@@ -173,6 +177,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(SettingsContext);
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
 
   /*-------------------------------
   |     rScrubRandomItemPrices    |
@@ -220,7 +226,8 @@ bool WritePatch() {
   } else if (ctx.scrubsanity == SCRUBSANITY_AFFORDABLE) {
     rScrubTextIdTable.fill(0x900A);
   }
-
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
   if (ctx.scrubsanity != SCRUBSANITY_OFF) {
     // Write scrub text table address to code
     patchOffset = V_TO_P(0x52236C); //this is the address of the base game's scrub textId table
@@ -246,6 +253,8 @@ bool WritePatch() {
       return false;
     }
     totalRW += sizeof(rScrubTextIdTable);
+    CitraPrint(std::to_string(totalRW));
+    sleep(0.1);
   }
 
   /*-------------------------------
@@ -257,7 +266,7 @@ bool WritePatch() {
     std::array<s32, 32> rShopsanityPrices{};
     int i = 4;
     while (i < 64) {
-      rShopsanityPrices[TransformShopIndex(i)] = ShopItems[i].GetPrice();
+      rShopsanityPrices[TransformShopIndex(i)] = ShopItemsPrices[i];
       if (i % 8 == 7) { //Last index for this shop, skip ahead to relevant index of next shop
         i += 5;
       }
@@ -290,6 +299,8 @@ bool WritePatch() {
       return false;
     }
     totalRW += sizeof(rShopsanityPrices);
+    CitraPrint(std::to_string(totalRW));
+    sleep(0.1);
   }
 
   /*--------------------------------
@@ -320,6 +331,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(Settings::rDungeonRewardOverrides);
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
 
   /*--------------------------------
   |     rCustomMessageEntries      |
@@ -429,7 +442,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += 4;
-
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
   /*--------------------------------
   |         Gauntlet Colors        |
   ---------------------------------*/
@@ -464,7 +478,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(rGauntletColors);
-
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
   /*-------------------------
   |           EOF           |
   --------------------------*/
@@ -493,9 +508,9 @@ bool WritePatch() {
   |       custom assets      |
   --------------------------*/
 
-  Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
-  Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
-  Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
+  // Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
+  // Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
+  // Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
 
   CopyFile(sdmcArchive, "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar", "romfs:/zelda_gi_melody.zar");
 

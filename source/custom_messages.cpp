@@ -301,19 +301,22 @@ constexpr std::array DungeonColors = {
         for(u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
             std::string name = NonShopItems[shopitems].Name;
             std::string price = std::to_string(NonShopItems[shopitems].Price);
+            //Prevent names from being too long and overflowing textbox
             if (name == "Piece of Heart (Treasure Chest Minigame)") {
-                name = "Piece of Heart"; //Prevent name from being too long and overflowing textbox
+                name = "Piece of Heart";
+            } else if (name == "Green Rupee (Treasure Chest Minigame)") {
+                name = "Green Rupee"; //^
             }
             //Message to display when hovering over the item
             CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡UNO RESTANTE!"+NEWLINE()+"¡Obtiene mientras dure!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+                INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡UNO RESTANTE!"+NEWLINE()+"¡Obtiene mientras dure!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
             //Message to display when going to buy the item
             CreateMessage(0x9200+shopitems*2+1, 0, 0, 0,
-                INSTANT_TEXT_ON()+name+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+MESSAGE_END());  
+                INSTANT_TEXT_ON()+name+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //easter egg
         CreateMessage(0x96F, 0, 2, 2,
@@ -324,7 +327,7 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Master Quest doesn't affect the Randomizer,"+NEWLINE()+CENTER_TEXT()+"so you can use 3 more save slots now."+NEWLINE()+NEWLINE()+CENTER_TEXT()+"Thanks for playing!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Vous pouvez désormais jouer à"+NEWLINE()+CENTER_TEXT()+"The Legend of Zelda Ocarina of Time 3D"+NEWLINE()+CENTER_TEXT()+"Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Ya puedes jugar The Legend of Zelda"+NEWLINE()+CENTER_TEXT()+"Ocarina of Time 3D Master Quest!"+INSTANT_TEXT_OFF()+MESSAGE_END());
-        
+
         //Messages for the new Lake Hylia switch
         CreateMessage(0x346, 0, 1, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Water level control system."+NEWLINE()+CENTER_TEXT()+"Keep away!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
@@ -390,6 +393,9 @@ constexpr std::array DungeonColors = {
           if (firstHashtag != std::string::npos) {
               textStr->replace(firstHashtag, 1, COLOR(color));
               size_t secondHashtag = textStr->find('#');
+              if (secondHashtag == std::string::npos) {
+                CitraPrint("ERROR: Couldn't find second '#' in " + (*textStr));
+              }
               textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
           }
         }
