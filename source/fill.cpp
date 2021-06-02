@@ -269,7 +269,9 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     }
 
   }
+  //CitraPrint("Accessible Locations: ");
   erase_if(accessibleLocations, [&allowedLocations](LocationKey loc){
+    //CitraPrint(Location(loc)->GetName());
     for (LocationKey allowedLocation : allowedLocations) {
       if (loc == allowedLocation) {
         return false;
@@ -404,6 +406,13 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       //get all accessible locations that are allowed
       const std::vector<LocationKey> accessibleLocations = GetAccessibleLocations(allowedLocations);
 
+      // CitraPrint("\nPLACING ITEM: ");
+      // CitraPrint(ItemTable(item).GetName());
+      // CitraPrint("Allowed Locations: ");
+      // for (const LocationKey loc : accessibleLocations) {
+      //   CitraPrint(Location(loc)->GetName());
+      // }
+
       //retry if there are no more locations to place items
       if (accessibleLocations.empty()) {
 
@@ -505,6 +514,17 @@ static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
   std::vector<LocationKey> dungeonLocations = dungeon->GetDungeonLocations();
   std::vector<ItemKey> dungeonItems;
 
+  //filter out locations that may be required to have songs placed at them
+  dungeonLocations = FilterFromPool(dungeonLocations, [](const LocationKey loc){
+    if (ShuffleSongs.Is(SONGSHUFFLE_SONG_LOCATIONS)) {
+      return !(Location(loc)->IsCategory(Category::cSong));
+    }
+    if (ShuffleSongs.Is(SONGSHUFFLE_DUNGEON_REWARDS)) {
+      return !(Location(loc)->IsCategory(Category::cSongDungeonReward));
+    }
+    return true;
+  });
+
   //Add specific items that need be randomized within this dungeon
   if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && dungeon->GetSmallKey() != NONE) {
     std::vector<ItemKey> dungeonSmallKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const ItemKey i){ return i == dungeon->GetSmallKey();});
@@ -537,11 +557,6 @@ static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
   are randomized separately once the dungeon advancement items have all been placed.*/
 static void RandomizeDungeonItems() {
   using namespace Dungeon;
-
-  //Own Dungeon
-  for (auto dungeon : dungeonList) {
-    RandomizeOwnDungeon(dungeon);
-  }
 
   //Get Any Dungeon and Overworld group locations
   std::vector<LocationKey> anyDungeonLocations = FilterFromPool(allLocations, [](const LocationKey loc){return Location(loc)->IsDungeon();});
@@ -679,11 +694,16 @@ int Fill() {
       //Place the shop items which will still be at shop locations
       AssumedFill(shopItems, shopLocations);
     }
-    
+
     //Place dungeon rewards
     RandomizeDungeonRewards();
 
-    //Place songs first if song shuffle is set to specific locations
+    //Place dungeon items restricted to their Own Dungeon
+    for (auto dungeon : Dungeon::dungeonList) {
+      RandomizeOwnDungeon(dungeon);
+    }
+
+    //Then Place songs if song shuffle is set to specific locations
     if (ShuffleSongs.IsNot(SONGSHUFFLE_ANYWHERE)) {
 
       //Get each song
