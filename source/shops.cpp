@@ -241,6 +241,14 @@ int TransformShopIndex(int index) {
   return 4*((index / 4) / 2) + index % 4;
 }
 
+bool IsRepurchaseable(std::string name) {
+  return name == "Bombs (5)" || name == "Bombs (10)" || name == "Bombs (20)" ||
+         name == "Arrows (5)" || name == "Arrows (10)" || name == "Arrows (30)" ||
+         name == "Bombchu (5)" || name == "Bombchu (10)" || name == "Bombchu (20)" ||
+         name == "Deku Nuts (5)" || name == "Deku Nuts (10)" ||
+         name == "Deku Seeds (30)";
+}
+
 //Place each shop item from the shop item array into the appropriate location
 void PlaceShopItems() {
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {

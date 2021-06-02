@@ -308,10 +308,18 @@ constexpr std::array DungeonColors = {
                 name = "Green Rupee"; //^
             }
             //Message to display when hovering over the item
-            CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡UNO RESTANTE!"+NEWLINE()+"¡Obtiene mientras dure!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+            if (IsRepurchaseable(name)) { //Different checkbox for repurchaseable items
+                CreateMessage(0x9200+shopitems*2, 0, 0, 0,
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial!"+NEWLINE()+"¡Compra tantos como quieras!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+            }
+            else { //Normal textbox
+                CreateMessage(0x9200+shopitems*2, 0, 0, 0,
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡SOLO QUEDA UNA UNIDAD!"+NEWLINE()+"¡Hazte con ella antes de que se agote!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+            }
             //Message to display when going to buy the item
             CreateMessage(0x9200+shopitems*2+1, 0, 0, 0,
                 INSTANT_TEXT_ON()+name+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
