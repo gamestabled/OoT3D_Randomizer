@@ -184,14 +184,30 @@ std::vector<ItemKey> GetMinVanillaShopItems(int total_replaced) {
   return minShopItems;
 }
 
-//Get random price using a beta distribution with alpha = 1.5, beta = 2
-//Average price = 126
-//~45% chance of needing no wallet, ~25% chance of needing 1, ~30% chance of needing 2
+//This table contains a cumulative probability for each possible shop price based on
+// a beta distribution with alpha = 1.5, beta = 2, and the result of the distribution, a float in [0.0, 1.0),
+// being mutliplied by 60, casted to an integer, then multiplied by 5 to give a value in range [0, 295] in increments of 5.
+// Meaning the first value is the probability of 0, the next value is the probability of 0 plus the probability of 5, etc.
+//Probabilities generated using a python script with 1 billion trials, so should hopefully be pretty good
+//Average price ~126
+//~38% chance of needing no wallet, ~45% chance of needing 1, ~17% chance of needing 2
+std::array<double, 60> ShopPriceProbability= {
+  0.005326994, 0.014908518, 0.027114719, 0.041315285, 0.057136304, 0.074325887, 0.092667151, 0.112002061, 0.132198214, 0.153125390,
+  0.174696150, 0.196810540, 0.219388148, 0.242361379, 0.265657012, 0.289205134, 0.312970402, 0.336877590, 0.360881110, 0.384932772,
+  0.408976198, 0.432982176, 0.456902494, 0.480686053, 0.504313389, 0.527746488, 0.550938554, 0.573856910, 0.596465330, 0.618736235,
+  0.640646600, 0.662162782, 0.683240432, 0.703859801, 0.724001242, 0.743631336, 0.762722631, 0.781259986, 0.799198449, 0.816521905,
+  0.833208595, 0.849243398, 0.864579161, 0.879211177, 0.893112051, 0.906263928, 0.918639420, 0.930222611, 0.940985829, 0.950914731,
+  0.959992180, 0.968187000, 0.975495390, 0.981884488, 0.987344345, 0.991851853, 0.995389113, 0.997937921, 0.999481947, 0.999999998,
+};
 int GetRandomShopPrice() {
-  double random = RandomDouble();
-  double rawprice = (1.001 + .5 * (pow(random, 1.5) * (3 * random - 5))); //Approximate CDF of a beta distribution
-  int adjustedprice = static_cast<int>(rawprice * 60) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 300]
-  return adjustedprice;
+  double random = RandomDouble(); //Randomly generated probability value
+  for (size_t i = 0; i < ShopPriceProbability.size(); i++) {
+    if (random < ShopPriceProbability[i]) {
+      //The randomly generated value has surpassed the total probability up to this point, so this is the generated price
+      return i * 5; //i in range [0, 59], output in range [0, 295] in increments of 5
+    }
+  }
+  return -1; //Shouldn't happen
 }
 
 //Similar to above, beta distribution with alpha = 1, beta = 2
