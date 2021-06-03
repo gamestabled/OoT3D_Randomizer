@@ -101,6 +101,7 @@ void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2) {
     //give epona for Skip Epona Race setting
     if (questBit == 13 && gSettingsContext.skipEponaRace == SKIP) {
       saveCtx->eventChkInf[0x1] |= 0x0100;
+      gSaveContext.horseData.pos.y = 0xF000; //place Epona OoB, so you can't reach her without playing the song
     }
 }
 
