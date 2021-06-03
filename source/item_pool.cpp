@@ -605,8 +605,6 @@ void GenerateItemPool() {
   //Initialize ice trap models to always major items
   IceTrapModels = {
     GI_SWORD_BGS,
-    GI_SHIELD_DEKU,
-    GI_SHIELD_HYLIAN,
     GI_SHIELD_MIRROR,
     GI_BOOMERANG,
     GI_LENS,

@@ -213,13 +213,81 @@ int GetShopsanityReplaceAmount() {
   }
 }
 
+//A dictionary that maps a u16 to an array of 3 strings, which contain the easy, medium, and hard trick names respectively
+static std::map<u16, std::array<std::string, 3>> IceTrapNames = {
+  {GI_SWORD_KOKIRI, {"Butter Knife", "Kokiri Knife", "Kokiri's Sword"}},
+  {GI_SWORD_BGS, {"Goron's Not-Broken Sword", "Big Goron Sword", "Biggoron's Sword"}},
+  {GI_SHIELD_MIRROR, {"Not the 1.0 OoT Shield", "Red Shield", "Mirror Sheild"}},
+  {GI_BOOMERANG, {"Prank Fetch Toy", "Magic Boomerang", "Fairy Boomerang"}},
+  {GI_WEIRD_EGG, {"D.I.Y. Alarm Clock", "Lon Lon Egg", "Egg"}},
+  {GI_LENS, {"Sheikah-leidoscope", "Eye of Truth", "Lens Of Truth"}},
+  {GI_HAMMER, {"Goron Gavel", "Magic Hammer", "Metagon Hammer"}},
+  {GI_BOOTS_IRON, {"Toe Shields", "Steel Boots", "Hover Boots"}},
+  {GI_BOOTS_HOVER, {"Rito Slippers", "Pegasus Boots", "Iron Boots"}},
+  {GI_STONE_OF_AGONY, {"Itemfinder", "Crystal Shard", "Stone of Agony"}},
+  {GI_DINS_FIRE, {"Hylia's Grace", "Crystal of Power", "Din's Fire (Magic-Free)"}},
+  {GI_FARORES_WIND, {"Farore's Escape Dust", "Crystal of Courage", "Farore's Wind (Magic-Free)"}},
+  {GI_NAYRUS_LOVE, {"Zelda's Neutral Special", "Crystal of Wisdom", "Nayru's Love (Magic-Free)"}},
+  {GI_ARROW_FIRE, {"Candy Apple on a Stick", "Ire Arrow", "Fire Arrows"}},
+  {GI_ARROW_ICE, {"Ice Trap Arrow", "Lice Arrow", "Ice Arrows"}},
+  {GI_ARROW_LIGHT, {"Shock Arrows (10)", "Fight Arrow", "Light Arrows"}},
+  {GI_GERUDO_CARD, {"Gym Membership Card", "Goron Token", "Gerudo Card"}},
+  {0xC9, {"Lots of Funky Beans", "Mystic Beans", "Magic Bean"}},
+  {0xB8, {"Diamond Hearts", "Quadruple Defense", "Defense Upgrade"}},
+  {GI_CLAIM_CHECK, {"Goron Parchment", "Biggoron's Check", "Progressive Adult Item"}},
+  {0x80, {"Hookshot, no strings attached", "Progressive Grappling Hook", "Hookshot Upgrade"}},
+  {0x81, {"Bracelet of Friendship", "Progressive Power Glove", "Strength Upgrade"}},
+  {0x82, {"Bob-Omb Sleeping Bag", "Progressive Bomb Box", "Bomb Bag Upgrade"}},
+  {0x83, {"Regressive Quiver", "Progressive Arrow Holder", "Quiver Upgrade"}},
+  {0x84, {"Popcorn Bag", "Progressive Seed Pouch", "Bullet Bag Upgrade"}},
+  {0x85, {"500 Rupees", "Progressive Rupee Bag", "Wallet Upgrade"}},
+  {0x86, {"Bowling Ball Upgrade", "Progressive Diving Scale", "Scale Upgrade"}},
+  {0x8A, {"Green Fuel", "Progressive Magic Oil", "Magic Upgrade"}},
+  {0x8B, {"Duck Flute", "Progressive Memento", "Ocarina Upgrade"}},
+  {0x0F, {"Transparent Canteen (7)", "Glass Bottle", "Bottle"}},
+  {0x14, {"Bottle with 30% Cream", "Bottle with Cow Milk", "Bottle of Milk"}},
+  {0x8C, {"Bottle with 2nd Potion", "Bottle with Red Medicine", "Bottle of Red Potion"}},
+  {0x8D, {"Bottle with Vegetable Juice", "Bottle with Green Medicine", "Bottle of Green Potion"}},
+  {0x8E, {"Bottle with Water", "Bottle with Blue Medicine", "Bottle of Blue Potion"}},
+  {0x8F, {"Bottle with Forest Firefly", "Bottle with Faerie", "Bottled Fairy"}},
+  {0x90, {"Bottle with Small Jabu-Jabu", "Bottle with Tasty Fish", "Bottled Fish"}},
+  {0x91, {"Blue Fire in a Glass Cup", "Bottle with Blue Flame", "Bottled Blue Fire"}},
+  {0x92, {"Bottle with Baby Tektites", "Bottle with Beetles", "Bottled Bugs"}},
+  {0x94, {"Bottle with Sad Ghoul", "Bottle with Ghost", "Bottled Poe"}},
+  {0x15, {"Bottle with Letter to Mama", "Bottle with Note", "Bottled Ruto's Letter"}},
+  {0x93, {"Bottle with Smelly Ghost", "Bottle with Big Ghost", "Bottled Big Poe"}},
+  {0xC1, {"Zelda's Best Hits", "Zelda's Song", "Nocturne of Shadow"}},
+  {0xC2, {"Song of Cows", "Epona's Ballad", "Requiem of Spirit"}},
+  {0xC3, {"Saria's Remix Album", "Saria's Fugue", "Minuet of Forest"}},
+  {0xC4, {"Salute the Sun's Song", "Sun's Chimes", "Prelude of Light"}},
+  {0xC5, {"Song of Passing Time", "Canon of Time", "Serenade of Water"}},
+  {0xC6, {"Song of Happy Frogs", "Sonata of Storms", "Bolero of Fire"}},
+  {0xBB, {"Saria's Karaoke", "Mazurka of Forest", "Saria's Song"}},
+  {0xBC, {"Darunia's Tango", "Barcarolle of Fire", "Epona's Song"}},
+  {0xBD, {"Ruto's Blues", "Sonatina of Water", "Song of Storms"}},
+  {0xBE, {"Nabooru's Reggae", "Rhapsody of Spirit", "Epona's Song"}},
+  {0xBF, {"Impa's Death Metal", "Nuptials of Shadow", "Zelda's Lullaby"}},
+  {0xC0, {"Rauru's Sing-Along", "Etude of Light", "Sun's Song"}},
+  {0xCB, {"Farore's Crystal Ball", "Deku Tree's Emerald", "Kokiri's Emerald"}},
+  {0xCC, {"Din's Candied Rock", "Gerudo's Ruby", "Goron's Ruby"}},
+  {0xCD, {"Nayru's Mood Ring", "Ruto's Sapphire", "Zora's Sapphire"}},
+  {0xCE, {"Red Medallion of Fire", "Saria's Medallion", "Medallion of Forest"}},
+  {0xCF, {"Fire Emblem", "Darunia's Medallion", "Medallion of Fire"}},
+  {0xD0, {"Water Gym Badge", "Ruto's Medallion", "Medallion of Water"}},
+  {0xD1, {"Gerudo Doubloon", "Nabooru's Medallion", "Medallion of Spirit"}},
+  {0xD2, {"Hyrule Purple Coin", "Impa's Medallion", "Medallion of Shadow"}},
+  {0xD3, {"Coins (50)", "Rauru's Medallion", "Medallion of Light"}},
+};
+
 //Generate a fake name for the ice trap based on the item it's written as
 std::string GetIceTrapName(u8 id) {
-  return "Totally not an ice trap";
+  //Randomly get the easy, medium, or hard name for the given item id
+  return RandomElement(IceTrapNames[id]);
 }
 
 //Get shop index based on a given location
-static std::map<std::string_view, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},{"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}};
+static std::map<std::string_view, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},
+                                                        {"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}};
 int GetShopIndex(LocationKey loc) {
   //Kind of hacky, but extract the shop and item position from the name
   const std::string& name(Location(loc)->GetName());
