@@ -25,6 +25,7 @@
 #include "collapsing_castle.h"
 #include "demo_kankyo.h"
 #include "lake_hylia_objects.h"
+#include "graveyard_objects.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_HEARTS 189
@@ -53,6 +54,8 @@ void Actor_Init() {
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
+
+    gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 
