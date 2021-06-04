@@ -191,7 +191,7 @@ std::vector<ItemKey> GetMinVanillaShopItems(int total_replaced) {
 //Probabilities generated using a python script with 1 billion trials, so should hopefully be pretty good
 //Average price ~126
 //~38% chance of needing no wallet, ~45% chance of needing 1, ~17% chance of needing 2
-std::array<double, 60> ShopPriceProbability= {
+static constexpr std::array<double, 60> ShopPriceProbability= {
   0.005326994, 0.014908518, 0.027114719, 0.041315285, 0.057136304, 0.074325887, 0.092667151, 0.112002061, 0.132198214, 0.153125390,
   0.174696150, 0.196810540, 0.219388148, 0.242361379, 0.265657012, 0.289205134, 0.312970402, 0.336877590, 0.360881110, 0.384932772,
   0.408976198, 0.432982176, 0.456902494, 0.480686053, 0.504313389, 0.527746488, 0.550938554, 0.573856910, 0.596465330, 0.618736235,
@@ -213,7 +213,7 @@ int GetRandomShopPrice() {
 //Similar to above, beta distribution with alpha = 1, beta = 2,
 // multiplied by 20 instead of 60 to give values in rage [0, 95] in increments of 5
 //Average price ~31
-std::array<double, 20> ScrubPriceProbability = {
+static constexpr std::array<double, 20> ScrubPriceProbability = {
   0.097500187, 0.190002748, 0.277509301, 0.360018376, 0.437522571, 0.510021715, 0.577520272, 0.640029304, 0.697527584, 0.750024535,
   0.797518749, 0.840011707, 0.877508776, 0.910010904, 0.937504342, 0.960004661, 0.977502132, 0.989998967, 0.997500116, 1.000000000,
 };
@@ -243,7 +243,7 @@ int GetShopsanityReplaceAmount() {
 }
 
 //A dictionary that maps a u16 to an array of 3 strings, which contain the easy, medium, and hard trick names respectively
-static std::map<u16, std::array<std::string, 3>> IceTrapNames = {
+static constexpr std::map<u8, std::array<std::string, 3>> IceTrapNames = {
   {GI_SWORD_KOKIRI, {"Butter Knife", "Kokiri Knife", "Kokiri's Sword"}},
   {GI_SWORD_BGS, {"Goron's Not-Broken Sword", "Big Goron Sword", "Biggoron's Sword"}},
   {GI_SHIELD_MIRROR, {"Not the 1.0 OoT Shield", "Magic Shield", "Mirror Sheild"}},
@@ -307,8 +307,7 @@ static std::map<u16, std::array<std::string, 3>> IceTrapNames = {
   {0xD2, {"Hyrule Purple Coin", "Impa's Medallion", "Medallion of Shadow"}},
   {0xD3, {"Coins (50)", "Rauru's Medallion", "Medallion of Light"}},
 };
-
-//Generate a fake name for the ice trap based on the item it's written as
+//Generate a fake name for the ice trap based on the item it's displayed as
 std::string GetIceTrapName(u8 id) {
   //Randomly get the easy, medium, or hard name for the given item id
   return RandomElement(IceTrapNames[id]);
