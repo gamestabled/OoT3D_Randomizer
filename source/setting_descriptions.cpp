@@ -128,7 +128,7 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //
-                                        "bombchu drops are forced on to guarentee a\n"     //
+                                        "bombchu drops are forced on to guarantee a\n"     //
                                         "replenishable source.\n"                          //
                                         "\n"                                               //
                                         "Bombchu Bowling is opened by bombchus.";          //
