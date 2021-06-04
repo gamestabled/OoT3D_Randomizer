@@ -157,7 +157,7 @@ std::vector<ItemKey> GetMinVanillaShopItems(int total_replaced) {
     BUY_ARROWS_30,
     BUY_RED_POTION_40,
     BUY_FISH,
-    //First 48 items: Exist on shopsanity 2 or less
+    //^First 48 items: Exist on shopsanity 2 or less
     BUY_BOMBCHU_20,
     BUY_ARROWS_30,
     BUY_RED_POTION_50,
@@ -166,7 +166,7 @@ std::vector<ItemKey> GetMinVanillaShopItems(int total_replaced) {
     BUY_ARROWS_50,
     BUY_ARROWS_50,
     BUY_GREEN_POTION,
-    //First 56 items: Exist on shopsanity 1 or less
+    //^First 56 items: Exist on shopsanity 1 or less
     BUY_POE,
     BUY_POE,
     BUY_HEART,
@@ -175,7 +175,7 @@ std::vector<ItemKey> GetMinVanillaShopItems(int total_replaced) {
     BUY_HEART,
     BUY_HEART,
     BUY_HEART,
-    //All 64 items: Only exist with shopsanity 0
+    //^All 64 items: Only exist with shopsanity 0
   };
   //Now delete however many items there are to replace
   for (int i = 0; i < total_replaced; i++) {
@@ -197,7 +197,7 @@ std::array<double, 60> ShopPriceProbability= {
   0.408976198, 0.432982176, 0.456902494, 0.480686053, 0.504313389, 0.527746488, 0.550938554, 0.573856910, 0.596465330, 0.618736235,
   0.640646600, 0.662162782, 0.683240432, 0.703859801, 0.724001242, 0.743631336, 0.762722631, 0.781259986, 0.799198449, 0.816521905,
   0.833208595, 0.849243398, 0.864579161, 0.879211177, 0.893112051, 0.906263928, 0.918639420, 0.930222611, 0.940985829, 0.950914731,
-  0.959992180, 0.968187000, 0.975495390, 0.981884488, 0.987344345, 0.991851853, 0.995389113, 0.997937921, 0.999481947, 0.999999998,
+  0.959992180, 0.968187000, 0.975495390, 0.981884488, 0.987344345, 0.991851853, 0.995389113, 0.997937921, 0.999481947, 1.000000000,
 };
 int GetRandomShopPrice() {
   double random = RandomDouble(); //Randomly generated probability value
@@ -210,14 +210,21 @@ int GetRandomShopPrice() {
   return -1; //Shouldn't happen
 }
 
-//Similar to above, beta distribution with alpha = 1, beta = 2
-//Average price = 29
-//^ Slightly different from OoTR where average is 32, due to using increments of 5
+//Similar to above, beta distribution with alpha = 1, beta = 2,
+// multiplied by 20 instead of 60 to give values in rage [0, 95] in increments of 5
+//Average price ~31
+std::array<double, 20> ScrubPriceProbability = {
+  0.097500187, 0.190002748, 0.277509301, 0.360018376, 0.437522571, 0.510021715, 0.577520272, 0.640029304, 0.697527584, 0.750024535,
+  0.797518749, 0.840011707, 0.877508776, 0.910010904, 0.937504342, 0.960004661, 0.977502132, 0.989998967, 0.997500116, 1.000000000,
+};
 s16 GetRandomScrubPrice() {
   double random = RandomDouble();
-  double rawprice = (1.001-(1-(pow(1-random, 2)))); //Approximate CDF of a beta distribution
-  int adjustedprice = static_cast<int>(rawprice * 19) * 5; //rawprice in range [0.0, 1.0], this gives range [0, 95]
-  return adjustedprice;
+  for (size_t i = 0; i < ScrubPriceProbability.size(); i++) {
+    if (random < ScrubPriceProbability[i]) {
+      return i * 5; //i in range [0, 19], output in range [0, 95] in increments of 5
+    }
+  }
+  return -1;
 }
 
 //Get 1 to 4, or a random number from 1-4 depending on shopsanity setting

@@ -230,7 +230,7 @@ string_view scrubsAffordable          = "All Scrub prices will be reduced to 10 
 string_view scrubsExpensive           = "All Scrub prices will be their vanilla prices.\n" //
                                         "This will require spending over 1000 rupees on\n" //
                                         "Scrubs.";                                         //
-string_view scrubsRandomPrices        = "All Scrub prices will be between 0-99 rupees. This"
+string_view scrubsRandomPrices        = "All Scrub prices will be between 0-95 rupees. This"
                                         "will on average be very, very expensive overall.";//
 /*------------------------------                                                           //
 |         SHUFFLE COWS         |                                                           //
