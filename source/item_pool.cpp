@@ -449,10 +449,10 @@ static ItemKey GetPendingJunkItem() {
 //Replace junk items in the pool with pending junk
 static void ReplaceMaxItem(const ItemKey itemToReplace, int max) {
   int itemCount = 0;
-  for (ItemKey item : ItemPool) {
-    if (item == itemToReplace) {
+  for (size_t i = 0; i < ItemPool.size(); i++) {
+    if (ItemPool[i] == itemToReplace) {
       if (itemCount >= max) {
-        item = GetJunkItem();
+        ItemPool[i] = GetJunkItem();
       }
       itemCount++;
     }
