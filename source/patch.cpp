@@ -362,6 +362,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += messageDataSize;
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
 
   // Write message entries address to code
   u32 messageEntriesOffset = (messageDataOffset + messageDataSize + 3) & ~3; //round up and align with u32
@@ -387,6 +389,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += messageEntriesSize;
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
 
   // Write ptrCustomMessageEntries address to code
   patchOffset = V_TO_P(PTRCUSTOMMESSAGEENTRIES_ADDR);

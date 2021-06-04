@@ -1,5 +1,6 @@
 #include "playthrough.hpp"
 
+#include "custom_messages.hpp"
 #include "fill.hpp"
 #include "location_access.hpp"
 #include "logic.hpp"
@@ -18,6 +19,7 @@ namespace Playthrough {
       Random_Init(seed);
 
       overrides.clear();
+      CustomMessages::ClearMessages();
       ItemReset();
       HintReset();
       Exits::AccessReset();

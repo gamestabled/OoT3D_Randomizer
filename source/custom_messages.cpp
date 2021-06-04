@@ -411,6 +411,13 @@ constexpr std::array DungeonColors = {
       return Text{"","",""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
     }
 
+    void ClearMessages() {
+        messageEntries.clear();
+        arrangedMessageEntries.clear();
+        messageData.str("");
+        arrangedMessageData = "";
+    }
+
     std::string MESSAGE_END()          { return  "\x7F\x00"s; }
     std::string WAIT_FOR_INPUT()       { return  "\x7F\x01"s; }
     std::string HORIZONTAL_SPACE(u8 x) { return  "\x7F\x02"s + char(x); }
