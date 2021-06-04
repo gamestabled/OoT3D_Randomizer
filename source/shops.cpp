@@ -243,7 +243,7 @@ int GetShopsanityReplaceAmount() {
 }
 
 //A dictionary that maps a u16 to an array of 3 strings, which contain the easy, medium, and hard trick names respectively
-static constexpr std::map<u8, std::array<std::string, 3>> IceTrapNames = {
+static std::map<u8, std::array<std::string, 3>> IceTrapNames = {
   {GI_SWORD_KOKIRI, {"Butter Knife", "Kokiri Knife", "Kokiri's Sword"}},
   {GI_SWORD_BGS, {"Goron's Not-Broken Sword", "Big Goron Sword", "Biggoron's Sword"}},
   {GI_SHIELD_MIRROR, {"Not the 1.0 OoT Shield", "Magic Shield", "Mirror Sheild"}},
