@@ -20,7 +20,7 @@ void HintTable_Init() {
     |       GENERAL TEXT       |
     ---------------------------*/
     hintTable[NONE]            = HintText::Exclude({Text{"No Hint","",""}});
-    hintTable[PREFIX]          = HintText::Exclude({Text{"They say that ",              /*french*/"On dit ",                      /*spanish*/"Según dicen, /*french*/"}});
+    hintTable[PREFIX]          = HintText::Exclude({Text{"They say that ",              /*french*/"On dit ",                      /*spanish*/"Según dicen, "}});
     hintTable[WAY_OF_THE_HERO] = HintText::Exclude({Text{" is on the way of the hero.", /*french*/" est sur le chemin du héros.", /*spanish*/" aguarda en la senda del héroe."}});
     hintTable[PLUNDERING]      = HintText::Exclude({Text{"plundering ",                 /*french*/"que piller ",                  /*spanish*/"vagar por "}});
     hintTable[FOOLISH]         = HintText::Exclude({Text{" is a foolish choice.",       /*french*/" est futile.",                 /*spanish*/" no es una sabia decisión."}});

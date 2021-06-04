@@ -562,6 +562,7 @@ namespace Settings {
   std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOptionText();
   std::string finalGoldGauntletsColor   = GoldGauntletsColor.GetSelectedOptionText();
 
+  Option ColoredKeys = Option::Bool("Colored Keys",         {"Off", "On"},   {coloredKeysDesc}, OptionCategory::Cosmetic);
   Option MirrorWorld = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc}, OptionCategory::Cosmetic);
 
   std::vector<Option *> cosmeticOptions = {
@@ -570,6 +571,7 @@ namespace Settings {
     &ZoraTunicColor,
     &SilverGauntletsColor,
     &GoldGauntletsColor,
+    &ColoredKeys,
     &MirrorWorld,
   };
 
@@ -655,7 +657,6 @@ namespace Settings {
     ctx.bombchuDrops         = (BombchuDrops) ? 1 : 0;
     ctx.randomMQDungeons     = (RandomMQDungeons) ? 1 : 0;
     ctx.mqDungeonCount       = MQDungeonCount.Value<u8>();
-    ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
 
     ctx.shuffleRewards       = ShuffleRewards.Value<u8>();
     ctx.linksPocketItem      = LinksPocketItem.Value<u8>();
@@ -705,6 +706,9 @@ namespace Settings {
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();
+
+    ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
+    ctx.coloredKeys          = (ColoredKeys) ? 1 : 0;
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 

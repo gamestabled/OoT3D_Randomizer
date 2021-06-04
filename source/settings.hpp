@@ -262,7 +262,6 @@ namespace Settings {
   extern Option BombchuDrops;
   extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
-  extern Option MirrorWorld;
 
   extern Option ShuffleRewards;
   extern Option LinksPocketItem;
@@ -322,13 +321,6 @@ namespace Settings {
   extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
-
-  extern bool ForestTrialSkip;
-  extern bool FireTrialSkip;
-  extern bool WaterTrialSkip;
-  extern bool SpiritTrialSkip;
-  extern bool ShadowTrialSkip;
-  extern bool LightTrialSkip;
 
   //Starting Inventory
   extern Option StartingConsumables;
@@ -479,6 +471,9 @@ namespace Settings {
   extern std::string finalZoraTunicColor;
   extern std::string finalSilverGauntletsColor;
   extern std::string finalGoldGauntletsColor;
+
+  extern Option ColoredKeys;
+  extern Option MirrorWorld;
 
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;

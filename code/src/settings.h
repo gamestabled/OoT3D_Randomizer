@@ -252,7 +252,6 @@ typedef struct {
   u8 bombchuDrops;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
-  u8 mirrorWorld;
 
   u8 shuffleRewards;
   u8 linksPocketItem;
@@ -303,6 +302,9 @@ typedef struct {
 
   u8 itemPoolValue;
   u8 iceTrapValue;
+
+  u8 coloredKeys;
+  u8 mirrorWorld;
 
   u8 dekuTreeDungeonMode;
   u8 dodongosCavernDungeonMode;
