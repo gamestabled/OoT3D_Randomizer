@@ -811,7 +811,7 @@ namespace Settings {
   }
 
   //set default cosmetics where the default is not the first option
-  void SetDefaultCosmetics() {
+  static void SetDefaultCosmetics() {
     SilverGauntletsColor.SetSelectedIndex(3); //Silver
     GoldGauntletsColor.SetSelectedIndex(4);   //Gold
     KokiriTunicColor.SetSelectedIndex(3);     //Kokiri Green
@@ -865,7 +865,7 @@ namespace Settings {
   }
 
   //Include and Lock the desired locations
-  void IncludeAndHide(std::vector<LocationKey> locations) {
+  static void IncludeAndHide(std::vector<LocationKey> locations) {
     for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->SetSelectedIndex(INCLUDE);
       Location(loc)->GetExcludedOption()->Hide();
@@ -873,7 +873,7 @@ namespace Settings {
   }
 
   //Unlock the desired locations
-  void Unhide(std::vector<LocationKey> locations) {
+  static void Unhide(std::vector<LocationKey> locations) {
     for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->Unhide();
     }
@@ -882,7 +882,7 @@ namespace Settings {
   //This function will hide certain locations from the Excluded Locations
   //menu if the player's current settings would require non-junk to be placed
   //at those locations. Excluded locations will have junk placed at them.
-  void ResolveExcludedLocationConflicts() {
+  static void ResolveExcludedLocationConflicts() {
 
     //Force include shops if shopsanity is off
     std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
@@ -1296,7 +1296,7 @@ namespace Settings {
   bool ShuffleSpecialIndoorEntrances    = false;
 
   //Function to update cosmetics options depending on choices
-  void UpdateCosmetics() {
+  static void UpdateCosmetics() {
     if (KokiriTunicColor.Is(CUSTOM_COLOR)) {
       finalKokiriTunicColor = GetCustomColor(KokiriTunicColor.GetSelectedOptionText());
     } else if (KokiriTunicColor.Is(RANDOM_CHOICE)) {
