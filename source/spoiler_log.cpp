@@ -60,6 +60,7 @@ namespace {
 }
 
 static RandomizerHash randomizerHash;
+static SpoilerData spoilerData;
 
 void GenerateHash() {
   for (size_t i = 0; i < randomizerHash.size(); i++) {
@@ -71,6 +72,10 @@ void GenerateHash() {
 
 const RandomizerHash& GetRandomizerHash() {
   return randomizerHash;
+}
+
+const SpoilerData& GetSpoilerData() {
+  return spoilerData;
 }
 
 static inline void SpoilerLog_AddFormatted(std::string_view header, std::string_view value) {
@@ -219,6 +224,7 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
 }
 
 bool SpoilerLog_Write() {
+  spoilerData = { 0 };
   logtxt += "Version: " + Settings::version + "\n";
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
@@ -240,6 +246,30 @@ bool SpoilerLog_Write() {
       logtxt += "\t";
       SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
       logtxt += '\n';
+    }
+
+    // Write to in-game spoiler data, if we have space left
+    if (i < SPOILER_SPHERES_MAX)
+    {
+      for (uint loc = 0; loc < playthroughLocations[i].size() && loc < SPOILER_ITEMS_MAX; ++loc) {
+        const auto location = Location(playthroughLocations[i][loc]);
+        auto locName = location->GetName().c_str();
+        auto locItem = location->GetPlacedItemName().c_str();
+
+        char *locNameStr = spoilerData.Spheres[i].ItemLocations[loc].Location;
+        char *itemNameStr = spoilerData.Spheres[i].ItemLocations[loc].Item;
+
+        // Copy up to SPOILER_LINE_LENGTH characters from the location and item names
+        // There is almost certainly a better way to do this
+        for (uint c = 0; c < SPOILER_LINE_LENGTH; ++c) {
+          if (locName[c] && c < SPOILER_LINE_LENGTH - 1) { locNameStr[c] = locName[c]; }
+          else { locNameStr[c] = 0; }
+          if (locItem[c] && c < SPOILER_LINE_LENGTH - 1) { itemNameStr[c] = locItem[c]; }
+          else { itemNameStr[c] = 0; }
+        }
+        ++spoilerData.Spheres[i].ItemCount;
+      }
+      ++spoilerData.SphereCount;
     }
   }
   playthroughLocations.clear();
