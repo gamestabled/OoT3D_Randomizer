@@ -649,39 +649,38 @@ int Fill() {
     FillExcludedLocations();
 
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
-    SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
-      PlaceShopItems(); //Just place vanilla items
+      SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
+      PlaceShopItems(); //Just place these vanilla items
     } else {
-      if (Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
-        Shuffle(ShopItems); //Shuffle shop items amongst themselves
-      }
-      else { //Shopsanity 1-4, random
-        const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
-
-        //Shuffle shop items making sure to not place minShopItems in shop slots which can be overwritten
-        std::vector<int> indicesToExclude;
-        int max = Shopsanity.Is(SHOPSANITY_RANDOM) ? 4 : GetShopsanityReplaceAmount(); //With random it's up to 4 so to be safe we exclude all 4, otherwise exclude amount from settings
-        for(int i = 0; i < max; i++) {
-          indicesToExclude.push_back(indices[i]);
-        }
-        ShuffleShop(ShopItems, indicesToExclude); //Shuffle shop items, making sure some will not be overwritten
-
+      int total_replaced = 0;
+      if (Shopsanity.IsNot(SHOPSANITY_ZERO)) { //Shopsanity 1-4, random
+        //Initialize NonShopItems
+        ItemAndPrice init;
+        init.Name = "No Item";
+        init.Price = -1;
+        init.Repurchaseable = false;
+        NonShopItems.assign(32, init);
+        //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
+        const std::array<int, 4> indices = {7, 5, 8, 6}; 
         //Overwrite appropriate number of shop items
         for (size_t i = 0; i < ShopLocationLists.size(); i++) {
           int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
-          for(int j = 0; j < num_to_replace; j++) {
+          total_replaced += num_to_replace;
+          for (int j = 0; j < num_to_replace; j++) {
             int itemindex = indices[j];
             ShopItems[i*8+itemindex-1] = NONE; //Clear item so it can be filled during the general fill algo
             int shopsanityPrice = GetRandomShopPrice();
-            ShopItemsPrices[i*8+itemindex-1] = shopsanityPrice; //Set price in ShopItemsPrices vector so it can be retrieved later by the patch
+            NonShopItems[TransformShopIndex(i*8+itemindex-1)].Price = shopsanityPrice; //Set price to be retrieved by the patch and textboxes
             Location(ShopLocationLists[i][itemindex - 1])->SetShopsanityPrice(shopsanityPrice);
           }
         }
       }
       //Get all locations and items that don't have a shopsanity price attached
       std::vector<LocationKey> shopLocations = {};
-      std::vector<ItemKey> shopItems = FilterFromPool(ShopItems, [](const ItemKey i){return i != NONE;});
+      //Get as many vanilla shop items as the total number of shop items minus the number of replaced items
+      //So shopsanity 0 will get all 64 vanilla items, shopsanity 4 will get 32, etc.
+      std::vector<ItemKey> shopItems = GetMinVanillaShopItems(total_replaced);
 
       for (size_t i = 0; i < ShopLocationLists.size(); i++) {
         for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
