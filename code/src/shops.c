@@ -257,11 +257,11 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
                                    shopItemEntry->cmabIndex, shopItemEntry->cmabIndex2, 0xFF);
         item->getItemId = shopItemEntry->getItemId;
         item->canBuyFunc = shopItemEntry->canBuyFunc;
-        item->itemGiveFunc = shopItemEntry->itemGiveFunc;
-        item->buyEventFunc = shopItemEntry->buyEventFunc;
         if (item->getItemId == GI_TUNIC_GORON || item->getItemId == GI_TUNIC_ZORA) { //Override buyable functions for tunics
             item->canBuyFunc = ShopsanityItem_CanBuy;
         }
+        item->itemGiveFunc = shopItemEntry->itemGiveFunc;
+        item->buyEventFunc = shopItemEntry->buyEventFunc;
         item->basePrice = shopItemEntry->price;
         item->itemCount = shopItemEntry->count;
         item->actor.textId = shopItemEntry->itemDescTextId;

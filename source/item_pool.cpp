@@ -14,7 +14,7 @@ using namespace Dungeon;
 
 std::vector<ItemKey> ItemPool = {};
 std::vector<ItemKey> PendingJunkPool = {};
-std::vector<u16> IceTrapModels = {};
+std::vector<u8> IceTrapModels = {};
 const std::array<ItemKey, 9> dungeonRewards = {
   KOKIRI_EMERALD,
   GORON_RUBY,
