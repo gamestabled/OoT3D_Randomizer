@@ -14,6 +14,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 namespace {
   FS_Archive sdmcArchive = 0;
@@ -240,6 +241,8 @@ bool SpoilerLog_Write() {
   u8 spoilerItemIndex = 0;
   u16 spoilerStringOffset = 0;
   bool spoilerOutOfSpace = false;
+  std::unordered_map<std::string, u16> stringOffsetMap;
+  stringOffsetMap.reserve(SPOILER_ITEMS_MAX);
 
   //Write playthrough to spoiler, by accessibility sphere
   logtxt += "Playthrough:\n";
@@ -263,15 +266,25 @@ bool SpoilerLog_Write() {
         auto locName = location->GetName();
         auto locItem = location->GetPlacedItemName();
 
-        if (spoilerStringOffset + locName.size() + 1 < SPOILER_STRING_DATA_SIZE) {
+        // Use the map to only save new string data if it's unique
+        // Some items, like gold skulltula tokens, can appear many times in a playthrough
+        auto foundLocString = stringOffsetMap.find(locName);
+        if (foundLocString != stringOffsetMap.end()) {
+          spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = foundLocString->second;
+        } else if (spoilerStringOffset + locName.size() + 1 < SPOILER_STRING_DATA_SIZE) {
+          stringOffsetMap[locName] = spoilerStringOffset;
           spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = spoilerStringOffset;
           spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locName.c_str()) + 1;
         } else {
           spoilerOutOfSpace = true;
         }
 
-        if (spoilerStringOffset + locItem.size() + 1 < SPOILER_STRING_DATA_SIZE) {
+        auto foundItemString = stringOffsetMap.find(locItem);
+        if (foundItemString != stringOffsetMap.end()) {
+          spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = foundItemString->second;
+        } else if (spoilerStringOffset + locItem.size() + 1 < SPOILER_STRING_DATA_SIZE) {
           spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = spoilerStringOffset;
+          stringOffsetMap[locItem] = spoilerStringOffset;
           spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locItem.c_str()) + 1;
         } else {
           spoilerOutOfSpace = true;
