@@ -650,8 +650,7 @@ int Fill() {
 
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
-      SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
-      PlaceShopItems(); //Just place these vanilla items
+      PlaceVanillaShopItems(); //Place vanilla shop items in vanilla location
     } else {
       int total_replaced = 0;
       if (Shopsanity.IsNot(SHOPSANITY_ZERO)) { //Shopsanity 1-4, random
@@ -669,7 +668,6 @@ int Fill() {
           total_replaced += num_to_replace;
           for (int j = 0; j < num_to_replace; j++) {
             int itemindex = indices[j];
-            ShopItems[i*8+itemindex-1] = NONE; //Clear item so it can be filled during the general fill algo
             int shopsanityPrice = GetRandomShopPrice();
             NonShopItems[TransformShopIndex(i*8+itemindex-1)].Price = shopsanityPrice; //Set price to be retrieved by the patch and textboxes
             Location(ShopLocationLists[i][itemindex - 1])->SetShopsanityPrice(shopsanityPrice);

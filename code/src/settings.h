@@ -303,6 +303,7 @@ typedef struct {
   u8 itemPoolValue;
   u8 iceTrapValue;
 
+  u8 customTunicColors;
   u8 coloredKeys;
   u8 mirrorWorld;
 

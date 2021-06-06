@@ -128,7 +128,7 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //
-                                        "bombchu drops are forced on to guarentee a\n"     //
+                                        "bombchu drops are forced on to guarantee a\n"     //
                                         "replenishable source.\n"                          //
                                         "\n"                                               //
                                         "Bombchu Bowling is opened by bombchus.";          //
@@ -231,7 +231,7 @@ string_view scrubsAffordable          = "All Scrub prices will be reduced to 10 
 string_view scrubsExpensive           = "All Scrub prices will be their vanilla prices.\n" //
                                         "This will require spending over 1000 rupees on\n" //
                                         "Scrubs.";                                         //
-string_view scrubsRandomPrices        = "All Scrub prices will be between 0-99 rupees. This"
+string_view scrubsRandomPrices        = "All Scrub prices will be between 0-95 rupees. This"
                                         "will on average be very, very expensive overall.";//
 /*------------------------------                                                           //
 |         SHUFFLE COWS         |                                                           //

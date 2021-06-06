@@ -564,8 +564,8 @@ void GenerateRandomizer() {
       printf("\x1b[14;10HQuit out using the home menu. Then\n");
       printf("\x1b[15;10Henable game patching and launch OoT3D!\n");
     } else if (Settings::PlayOption == PATCH_CITRA) {
-      printf("\x1b[14;10HCopy code.ips and exheader.bin to the\n");
-      printf("\x1b[15;10HOoT3D mods folder, then launch OoT3D!\n");
+      printf("\x1b[14;10HCopy code.ips, exheader.bin and romfs to\n");
+      printf("\x1b[15;10Hthe OoT3D mods folder, then launch OoT3D!\n");
     }
 
     const auto& randomizerHash = GetRandomizerHash();
