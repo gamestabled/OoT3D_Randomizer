@@ -551,11 +551,14 @@ namespace Settings {
     "This will only affect the color on Link's model.",
   };
 
-  Option KokiriTunicColor           = Option::U8("Kokiri Tunic Color",     tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
-  Option GoronTunicColor            = Option::U8("Goron Tunic Color",      tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
-  Option ZoraTunicColor             = Option::U8("Zora Tunic Color",       tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
-  Option SilverGauntletsColor       = Option::U8("Silver Gauntlets Color", gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
-  Option GoldGauntletsColor         = Option::U8("Gold Gauntlets Color",   gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option CustomTunicColors          = Option::Bool("Custom Tunic Colors",    {"Off", "On"},   {""},                 OptionCategory::Cosmetic);
+  Option ChildTunicColor            = Option::U8  ("  Child Tunic Color",    tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option KokiriTunicColor           = Option::U8  ("  Kokiri Tunic Color",   tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option GoronTunicColor            = Option::U8  ("  Goron Tunic Color",    tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option ZoraTunicColor             = Option::U8  ("  Zora Tunic Color",     tunicOptions,    cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option SilverGauntletsColor       = Option::U8  ("Silver Gauntlets Color", gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
+  Option GoldGauntletsColor         = Option::U8  ("Gold Gauntlets Color",   gauntletOptions, cosmeticDescriptions, OptionCategory::Cosmetic);
+  std::string finalChildTunicColor      = ChildTunicColor.GetSelectedOptionText();
   std::string finalKokiriTunicColor     = KokiriTunicColor.GetSelectedOptionText();
   std::string finalGoronTunicColor      = GoronTunicColor.GetSelectedOptionText();
   std::string finalZoraTunicColor       = ZoraTunicColor.GetSelectedOptionText();
@@ -566,6 +569,8 @@ namespace Settings {
   Option MirrorWorld = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc}, OptionCategory::Cosmetic);
 
   std::vector<Option *> cosmeticOptions = {
+    &CustomTunicColors,
+    &ChildTunicColor,
     &KokiriTunicColor,
     &GoronTunicColor,
     &ZoraTunicColor,
@@ -707,6 +712,7 @@ namespace Settings {
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();
 
+    ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
     ctx.coloredKeys          = (ColoredKeys) ? 1 : 0;
 
@@ -811,9 +817,10 @@ namespace Settings {
   }
 
   //set default cosmetics where the default is not the first option
-  void SetDefaultCosmetics() {
+  static void SetDefaultCosmetics() {
     SilverGauntletsColor.SetSelectedIndex(3); //Silver
     GoldGauntletsColor.SetSelectedIndex(4);   //Gold
+    ChildTunicColor.SetSelectedIndex(3);      //Kokiri Green
     KokiriTunicColor.SetSelectedIndex(3);     //Kokiri Green
     GoronTunicColor.SetSelectedIndex(4);      //Goron Red
     ZoraTunicColor.SetSelectedIndex(5);       //Zora Blue
@@ -865,7 +872,7 @@ namespace Settings {
   }
 
   //Include and Lock the desired locations
-  void IncludeAndHide(std::vector<LocationKey> locations) {
+  static void IncludeAndHide(std::vector<LocationKey> locations) {
     for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->SetSelectedIndex(INCLUDE);
       Location(loc)->GetExcludedOption()->Hide();
@@ -873,7 +880,7 @@ namespace Settings {
   }
 
   //Unlock the desired locations
-  void Unhide(std::vector<LocationKey> locations) {
+  static void Unhide(std::vector<LocationKey> locations) {
     for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->Unhide();
     }
@@ -882,7 +889,7 @@ namespace Settings {
   //This function will hide certain locations from the Excluded Locations
   //menu if the player's current settings would require non-junk to be placed
   //at those locations. Excluded locations will have junk placed at them.
-  void ResolveExcludedLocationConflicts() {
+  static void ResolveExcludedLocationConflicts() {
 
     //Force include shops if shopsanity is off
     std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
@@ -1191,6 +1198,19 @@ namespace Settings {
       }
     }
 
+    //Tunic Colors
+    if (CustomTunicColors) {
+      ChildTunicColor.Unhide();
+      KokiriTunicColor.Unhide();
+      GoronTunicColor.Unhide();
+      ZoraTunicColor.Unhide();
+    } else {
+      ChildTunicColor.Hide();
+      KokiriTunicColor.Hide();
+      GoronTunicColor.Hide();
+      ZoraTunicColor.Hide();
+    }
+
     ResolveExcludedLocationConflicts();
   }
 
@@ -1295,57 +1315,88 @@ namespace Settings {
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
 
+  template <typename colorsArray>
+  static void ChooseFinalColor(const Option& cosmeticOption, std::string& colorStr, const colorsArray& colors) {
+    if (cosmeticOption.Is(CUSTOM_COLOR)) {
+      colorStr = GetCustomColor(cosmeticOption.GetSelectedOptionText());
+    } else if (cosmeticOption.Is(RANDOM_CHOICE)) {
+      colorStr = colors[rand() % colors.size()]; //use default rand to not interfere with seed
+    } else if (cosmeticOption.Is(RANDOM_COLOR)) {
+      colorStr = RandomColor();
+    } else {
+      colorStr = colors[cosmeticOption.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    }
+  }
+
   //Function to update cosmetics options depending on choices
-  void UpdateCosmetics() {
-    if (KokiriTunicColor.Is(CUSTOM_COLOR)) {
-      finalKokiriTunicColor = GetCustomColor(KokiriTunicColor.GetSelectedOptionText());
-    } else if (KokiriTunicColor.Is(RANDOM_CHOICE)) {
-      finalKokiriTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
-    } else if (KokiriTunicColor.Is(RANDOM_COLOR)) {
-      finalKokiriTunicColor = RandomColor();
-    } else {
-      finalKokiriTunicColor = tunicColors[KokiriTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
-    }
+  static void UpdateCosmetics() {
 
-    if (GoronTunicColor.Is(CUSTOM_COLOR)) {
-      finalGoronTunicColor = GetCustomColor(GoronTunicColor.GetSelectedOptionText());
-    } else if (GoronTunicColor.Is(RANDOM_CHOICE)) {
-      finalGoronTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
-    } else if (GoronTunicColor.Is(RANDOM_COLOR)) {
-      finalGoronTunicColor = RandomColor();
-    } else {
-      finalGoronTunicColor = tunicColors[GoronTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
-    }
+    ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
+    ChooseFinalColor(KokiriTunicColor, finalKokiriTunicColor, tunicColors);
+    ChooseFinalColor(GoronTunicColor, finalGoronTunicColor, tunicColors);
+    ChooseFinalColor(ZoraTunicColor, finalZoraTunicColor, tunicColors);
+    ChooseFinalColor(SilverGauntletsColor, finalSilverGauntletsColor, gauntletColors);
+    ChooseFinalColor(GoldGauntletsColor, finalGoldGauntletsColor, gauntletColors);
 
-    if (ZoraTunicColor.Is(CUSTOM_COLOR)) {
-      finalZoraTunicColor = GetCustomColor(ZoraTunicColor.GetSelectedOptionText());
-    } else if (ZoraTunicColor.Is(RANDOM_CHOICE)) {
-      finalZoraTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
-    } else if (ZoraTunicColor.Is(RANDOM_COLOR)) {
-      finalZoraTunicColor = RandomColor();
-    } else {
-      finalZoraTunicColor = tunicColors[ZoraTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
-    }
-
-    if (SilverGauntletsColor.Is(CUSTOM_COLOR)) {
-      finalSilverGauntletsColor = GetCustomColor(SilverGauntletsColor.GetSelectedOptionText());
-    } else if (SilverGauntletsColor.Is(RANDOM_CHOICE)) {
-      finalSilverGauntletsColor = gauntletColors[rand() % gauntletColors.size()]; //use default rand to not interfere with seed
-    } else if (SilverGauntletsColor.Is(RANDOM_COLOR)) {
-      finalSilverGauntletsColor = RandomColor();
-    } else {
-      finalSilverGauntletsColor = gauntletColors[SilverGauntletsColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
-    }
-
-    if (GoldGauntletsColor.Is(CUSTOM_COLOR)) {
-      finalGoldGauntletsColor = GetCustomColor(GoldGauntletsColor.GetSelectedOptionText());
-    } else if (GoldGauntletsColor.Is(RANDOM_CHOICE)) {
-      finalGoldGauntletsColor = gauntletColors[rand() % gauntletColors.size()]; //use default rand to not interfere with seed
-    } else if (GoldGauntletsColor.Is(RANDOM_COLOR)) {
-      finalGoldGauntletsColor = RandomColor();
-    } else {
-      finalGoldGauntletsColor = gauntletColors[GoldGauntletsColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
-    }
+    // if (KokiriTunicColor.Is(CUSTOM_COLOR)) {
+    //   finalKokiriTunicColor = GetCustomColor(KokiriTunicColor.GetSelectedOptionText());
+    // } else if (KokiriTunicColor.Is(RANDOM_CHOICE)) {
+    //   finalKokiriTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
+    // } else if (KokiriTunicColor.Is(RANDOM_COLOR)) {
+    //   finalKokiriTunicColor = RandomColor();
+    // } else {
+    //   finalKokiriTunicColor = tunicColors[KokiriTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    // }
+    //
+    // if (KokiriTunicColor.Is(CUSTOM_COLOR)) {
+    //   finalKokiriTunicColor = GetCustomColor(KokiriTunicColor.GetSelectedOptionText());
+    // } else if (KokiriTunicColor.Is(RANDOM_CHOICE)) {
+    //   finalKokiriTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
+    // } else if (KokiriTunicColor.Is(RANDOM_COLOR)) {
+    //   finalKokiriTunicColor = RandomColor();
+    // } else {
+    //   finalKokiriTunicColor = tunicColors[KokiriTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    // }
+    //
+    // if (GoronTunicColor.Is(CUSTOM_COLOR)) {
+    //   finalGoronTunicColor = GetCustomColor(GoronTunicColor.GetSelectedOptionText());
+    // } else if (GoronTunicColor.Is(RANDOM_CHOICE)) {
+    //   finalGoronTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
+    // } else if (GoronTunicColor.Is(RANDOM_COLOR)) {
+    //   finalGoronTunicColor = RandomColor();
+    // } else {
+    //   finalGoronTunicColor = tunicColors[GoronTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    // }
+    //
+    // if (ZoraTunicColor.Is(CUSTOM_COLOR)) {
+    //   finalZoraTunicColor = GetCustomColor(ZoraTunicColor.GetSelectedOptionText());
+    // } else if (ZoraTunicColor.Is(RANDOM_CHOICE)) {
+    //   finalZoraTunicColor = tunicColors[rand() % tunicColors.size()]; //use default rand to not interfere with seed
+    // } else if (ZoraTunicColor.Is(RANDOM_COLOR)) {
+    //   finalZoraTunicColor = RandomColor();
+    // } else {
+    //   finalZoraTunicColor = tunicColors[ZoraTunicColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    // }
+    //
+    // if (SilverGauntletsColor.Is(CUSTOM_COLOR)) {
+    //   finalSilverGauntletsColor = GetCustomColor(SilverGauntletsColor.GetSelectedOptionText());
+    // } else if (SilverGauntletsColor.Is(RANDOM_CHOICE)) {
+    //   finalSilverGauntletsColor = gauntletColors[rand() % gauntletColors.size()]; //use default rand to not interfere with seed
+    // } else if (SilverGauntletsColor.Is(RANDOM_COLOR)) {
+    //   finalSilverGauntletsColor = RandomColor();
+    // } else {
+    //   finalSilverGauntletsColor = gauntletColors[SilverGauntletsColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    // }
+    //
+    // if (GoldGauntletsColor.Is(CUSTOM_COLOR)) {
+    //   finalGoldGauntletsColor = GetCustomColor(GoldGauntletsColor.GetSelectedOptionText());
+    // } else if (GoldGauntletsColor.Is(RANDOM_CHOICE)) {
+    //   finalGoldGauntletsColor = gauntletColors[rand() % gauntletColors.size()]; //use default rand to not interfere with seed
+    // } else if (GoldGauntletsColor.Is(RANDOM_COLOR)) {
+    //   finalGoldGauntletsColor = RandomColor();
+    // } else {
+    //   finalGoldGauntletsColor = gauntletColors[GoldGauntletsColor.GetSelectedOptionIndex() - NON_COLOR_COUNT];
+    // }
   }
 
   //Function to set flags depending on settings

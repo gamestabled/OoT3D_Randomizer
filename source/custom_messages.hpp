@@ -28,6 +28,7 @@ namespace CustomMessages {
 
     void CreateAlwaysIncludedMessages();
     Text AddColorsAndFormat(Text text, const std::vector<u8>& colors = {});
+    void ClearMessages();
 
     std::string MESSAGE_END();
     std::string WAIT_FOR_INPUT();

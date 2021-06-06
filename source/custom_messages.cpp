@@ -308,7 +308,7 @@ constexpr std::array DungeonColors = {
                 name = "Green Rupee"; //^
             }
             //Message to display when hovering over the item
-            if (NonShopItems[shopitems].Repurchaseable) { //Different checkbox for repurchaseable items
+            if (NonShopItems[shopitems].Repurchaseable) { //Different textbox for repurchaseable items
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
                     INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
                     INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
@@ -409,6 +409,13 @@ constexpr std::array DungeonColors = {
         }
       }
       return Text{"","",""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
+    }
+
+    void ClearMessages() {
+        messageEntries.clear();
+        arrangedMessageEntries.clear();
+        messageData.str("");
+        arrangedMessageData = "";
     }
 
     std::string MESSAGE_END()          { return  "\x7F\x00"s; }

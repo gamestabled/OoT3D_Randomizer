@@ -25,6 +25,8 @@
 #include "collapsing_castle.h"
 #include "demo_kankyo.h"
 #include "lake_hylia_objects.h"
+#include "graveyard_objects.h"
+#include "windmill_man.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_HEARTS 189
@@ -54,6 +56,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
+    gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
+
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 
     gActorOverlayTable[0xD5].initInfo->update = BgSpot06Objects_rUpdate;
@@ -79,6 +83,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
+
+    gActorOverlayTable[0x153].initInfo->update = EnFu_rUpdate;
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 
