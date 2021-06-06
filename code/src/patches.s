@@ -1164,7 +1164,7 @@ DecoratedChest_patch:
 .section .patch_GoronShopPurchaseableCheck
 .global GoronShopPurchaseableCheck_patch
 GoronShopPurchaseableCheck_patch:
-    b 0x19133C
+    nop
 
 .section .patch_PlayerEditAndRetrieveCMB
 .global PlayerEditAndRetrieveCMB_patch

@@ -168,7 +168,7 @@ SECTIONS
 		*(.patch_PoeCollectorCheckPoints)
 	}
 
-	.patch_GoronShopPurchaseableCheck 0x1912EC : {
+	.patch_GoronShopPurchaseableCheck 0x19120C : {
 		*(.patch_GoronShopPurchaseableCheck)
 	}
 
