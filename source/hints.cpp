@@ -158,7 +158,7 @@ static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hint
 
 static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items for writing to the spoiler log
-  NewItem(gossipStone, Item{hint.english, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
+  NewItem(gossipStone, Item{hint, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
   Location(gossipStone)->SetPlacedItem(gossipStone);
 
   //create the in game message
@@ -181,7 +181,7 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   if (accessibleGossipStones.empty()) {
@@ -230,7 +230,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
@@ -275,7 +275,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<Locati
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
@@ -324,7 +324,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   //get an acessible gossip stone

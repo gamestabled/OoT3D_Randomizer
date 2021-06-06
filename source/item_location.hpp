@@ -81,7 +81,7 @@ public:
       return name;
     }
 
-    const std::string& GetPlacedItemName() const {
+    const Text& GetPlacedItemName() const {
       return ItemTable(placedItem).GetName();
     }
 
