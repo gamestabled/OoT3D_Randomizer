@@ -3,27 +3,31 @@
 
 #include "../include/z3D/z3D.h"
 
-#define SPOILER_SPHERES_MAX 22
-#define SPOILER_ITEMS_MAX 20
-
-// One line of text in the menu can be 50 chars max
-#define SPOILER_LINE_LENGTH 50
+#define SPOILER_SPHERES_MAX                 32
+#define SPOILER_SPHERE_ITEM_LOCATIONS_MAX   40
+#define SPOILER_ITEMS_MAX                   256
+#define SPOILER_STRING_DATA_SIZE            8192
 
 typedef struct {
-    char Location[SPOILER_LINE_LENGTH];
-    char Item[SPOILER_LINE_LENGTH];
+    u16 LocationOffset;
+    u16 ItemOffset;
 } SpoilerItemLocation;
 
 typedef struct {
     u8 ItemCount;
-    SpoilerItemLocation ItemLocations[SPOILER_ITEMS_MAX];
+    u8 ItemLocations[SPOILER_SPHERE_ITEM_LOCATIONS_MAX];
 } Sphere;
 
 typedef struct {
     u8 SphereCount;
     Sphere Spheres[SPOILER_SPHERES_MAX];
+    SpoilerItemLocation ItemLocations[SPOILER_ITEMS_MAX];
+    char StringData[SPOILER_STRING_DATA_SIZE];
 } SpoilerData;
 
 extern SpoilerData gSpoilerData;
+
+char *SpoilerData_GetItemLocationString(u8 itemIndex);
+char *SpoilerData_GetItemNameString(u8 itemIndex);
 
 #endif // _SPOILER_DATA_H_

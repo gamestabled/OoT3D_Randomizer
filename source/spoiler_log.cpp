@@ -237,6 +237,10 @@ bool SpoilerLog_Write() {
 
   WriteSettings(logtxt);
 
+  u8 spoilerItemIndex = 0;
+  u16 spoilerStringOffset = 0;
+  bool spoilerOutOfSpace = false;
+
   //Write playthrough to spoiler, by accessibility sphere
   logtxt += "Playthrough:\n";
   for (uint i = 0; i < playthroughLocations.size(); i++) {
@@ -248,26 +252,35 @@ bool SpoilerLog_Write() {
       logtxt += '\n';
     }
 
+    if (i >= SPOILER_SPHERES_MAX || spoilerItemIndex >= SPOILER_ITEMS_MAX) {
+      spoilerOutOfSpace = true;
+    }
+
     // Write to in-game spoiler data, if we have space left
-    if (i < SPOILER_SPHERES_MAX)
-    {
-      for (uint loc = 0; loc < playthroughLocations[i].size() && loc < SPOILER_ITEMS_MAX; ++loc) {
+    if (!spoilerOutOfSpace) {
+      for (uint loc = 0; loc < playthroughLocations[i].size(); ++loc) {
         const auto location = Location(playthroughLocations[i][loc]);
-        auto locName = location->GetName().c_str();
-        auto locItem = location->GetPlacedItemName().c_str();
+        auto locName = location->GetName();
+        auto locItem = location->GetPlacedItemName();
 
-        char *locNameStr = spoilerData.Spheres[i].ItemLocations[loc].Location;
-        char *itemNameStr = spoilerData.Spheres[i].ItemLocations[loc].Item;
-
-        // Copy up to SPOILER_LINE_LENGTH characters from the location and item names
-        // There is almost certainly a better way to do this
-        for (uint c = 0; c < SPOILER_LINE_LENGTH; ++c) {
-          if (locName[c] && c < SPOILER_LINE_LENGTH - 1) { locNameStr[c] = locName[c]; }
-          else { locNameStr[c] = 0; }
-          if (locItem[c] && c < SPOILER_LINE_LENGTH - 1) { itemNameStr[c] = locItem[c]; }
-          else { itemNameStr[c] = 0; }
+        if (spoilerStringOffset + locName.size() + 1 < SPOILER_STRING_DATA_SIZE) {
+          spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = spoilerStringOffset;
+          spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locName.c_str()) + 1;
+        } else {
+          spoilerOutOfSpace = true;
         }
-        ++spoilerData.Spheres[i].ItemCount;
+
+        if (spoilerStringOffset + locItem.size() + 1 < SPOILER_STRING_DATA_SIZE) {
+          spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = spoilerStringOffset;
+          spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locItem.c_str()) + 1;
+        } else {
+          spoilerOutOfSpace = true;
+        }
+
+        if (!spoilerOutOfSpace) {
+          spoilerData.Spheres[i].ItemLocations[loc] = spoilerItemIndex++;
+          ++spoilerData.Spheres[i].ItemCount;
+        }
       }
       ++spoilerData.SphereCount;
     }
