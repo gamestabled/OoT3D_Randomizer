@@ -12,7 +12,7 @@ struct ItemAndPrice {
     bool Repurchaseable;
 };
 
-extern void SetVanillaShopItems();
+extern void PlaceVanillaShopItems();
 extern std::vector<ItemKey> GetMinVanillaShopItems(int total_replaced);
 extern int GetRandomShopPrice();
 extern s16 GetRandomScrubPrice();
@@ -20,7 +20,5 @@ extern int GetShopsanityReplaceAmount();
 extern std::string GetIceTrapName(u8 id);
 extern int GetShopIndex(LocationKey loc);
 extern int TransformShopIndex(int index);
-extern void PlaceShopItems();
 
-extern std::vector<ItemKey> ShopItems;
 extern std::vector<ItemAndPrice> NonShopItems;
