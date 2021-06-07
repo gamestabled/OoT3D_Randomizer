@@ -48,7 +48,7 @@ void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
 	
 	// Edit combinerIndices
 	EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
-	EDIT_BYTE(0x6CC, 0x0B); EDIT_BYTE(0x6CD, 0x00);
+	EDIT_BYTE(0x6CC, 0x0D); EDIT_BYTE(0x6CD, 0x00);
 
     //TextureCombiner0
     EDIT_BYTE(0x2974, 0x02); EDIT_BYTE(0x2975, 0x64);// CombinerMode to "AddMult"
