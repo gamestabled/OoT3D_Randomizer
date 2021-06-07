@@ -44,36 +44,36 @@ namespace Cosmetics {
     "800080", //Purple
   };
   const std::array<std::string_view, 31> tunicColors = {
-    "1E691B", //Kokiri Green
-    "FF0000", //Goron Red
-    "1818FF", //Zora Blue
+    "168A0E", //Kokiri Green
+    "96000E", //Goron Red
+    "002A8E", //Zora Blue
     "303030", //Black
     "FFFFFF", //White
     "139ED8", //Azure Blue
     "13E9D8", //Vivid Cyan
-    "FF3333", //Light Red
-    "FF0044", //Fuchsia
-    "FF00FF", //Purple
+    "C23333", //Light Red
+    "D10044", //Fuchsia
+    "8C008C", //Purple
     "400040", //Majora Purple
     "641E7F", //Twitch Purple
-    "FF0033", //Magenta
-    "953080", //Violet
+    "AA0565", //Magenta
+    "710093", //Violet
     "E9144A", //Persian Rose
     "E5DA32", //Dirty Yellow
-    "F23BF2", //Blush Pink
-    "FF2994", //Hot Pink
+    "FF7FED", //Blush Pink
+    "D92994", //Hot Pink
     "DB557F", //Rose Pink
-    "FF3E00", //Orange
-    "484848", //Gray
-    "FF7B00", //Yellow
-    "56E4FF", //Silver
+    "DD3E00", //Orange
+    "808080", //Gray
+    "CECE00", //Yellow
+    "A3C0C0", //Silver
     "FF794E", //Beige
     "00CA65", //Teal
     "400000", //Blood Red
-    "FF2F00", //Blood Orange
+    "CE2500", //Blood Orange
     "000070", //Royal Blue
     "00D000", //NES Green
-    "002518", //Dark Green
+    "005218", //Dark Green
     "0F50BC", //Lumen
   };
 
