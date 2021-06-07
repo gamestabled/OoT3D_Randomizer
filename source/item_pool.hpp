@@ -16,4 +16,4 @@ void GenerateItemPool();
 void AddJunk();
 
 extern std::vector<ItemKey> ItemPool;
-extern std::vector<u16> IceTrapModels;
+extern std::vector<u8> IceTrapModels;
