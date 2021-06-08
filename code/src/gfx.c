@@ -89,7 +89,7 @@ static void Gfx_DrawSpoilerData(void) {
             Draw_DrawFormattedString(148, SCREEN_BOT_HEIGHT - 74, COLOR_WHITE, "%c%c%c", DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR);
         }
 
-        Draw_DrawFormattedString(74, 10, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1, gSpoilerData.SphereCount);
+        Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1, gSpoilerData.SphereCount);
 
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + spoilerScroll;
@@ -131,7 +131,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
         u16 firstItem = allItemsScroll + 1;
         u16 lastItem = allItemsScroll + MAX_ITEM_LINES;
         if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
-        Draw_DrawFormattedString(32, 10, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
+        Draw_DrawFormattedString(10, 10, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
             firstItem, lastItem, gSpoilerData.ItemLocationsCount);
 
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
