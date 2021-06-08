@@ -20,6 +20,7 @@ typedef struct {
 
 typedef struct {
     u8 SphereCount;
+    u16 ItemLocationsCount;
     SpoilerSphere Spheres[SPOILER_SPHERES_MAX];
     SpoilerItemLocation ItemLocations[SPOILER_ITEMS_MAX];
     char StringData[SPOILER_STRING_DATA_SIZE];

@@ -14,8 +14,16 @@
 static u8 GfxInit = 0;
 static u32 closingButton = 0;
 static u8 currentSphere = 0;
-static u8 spoilerScroll = 0;
+static s16 spoilerScroll = 0;
+static s16 allItemsScroll = 0;
 static s32 curMenuIdx = 0;
+
+#define UP_ARROW_CHR 24
+#define DOWN_ARROW_CHR 25
+#define LEFT_ARROW_CHR 27
+#define RIGHT_ARROW_CHR 26
+#define UP_SOLID_ARROW_CHR 30
+#define DOWN_SOLID_ARROW_CHR 31
 
 #define MAX_ITEM_LINES 6
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
@@ -23,8 +31,9 @@ static s32 curMenuIdx = 0;
 static void Gfx_DrawChangeMenuPrompt(void) {
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 58, COLOR_WARN, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 32, COLOR_TITLE, "Press B to close menu, L/R to change menu");
-    if (curMenuIdx == 3) {
-        Draw_DrawString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press Left/right/up/down to browse spoiler log");
+    if (curMenuIdx == 3 || curMenuIdx == 4) {
+        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press %c/%c/%c/%c to browse spoiler log",
+            LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
     }
 }
 
@@ -65,16 +74,22 @@ static void Gfx_DrawDungeonRewards(void) {
 
 static void Gfx_DrawSpoilerData(void) {
     if (gSpoilerData.SphereCount > 0) {
-        Draw_DrawFormattedString(74, 10, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1, gSpoilerData.SphereCount);
+        u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
 
         bool canScrollUp = spoilerScroll > 0;
-        bool canScrollDown = spoilerScroll < gSpoilerData.Spheres[currentSphere].ItemCount
-            && gSpoilerData.Spheres[currentSphere].ItemCount - spoilerScroll > MAX_ITEM_LINES;
+        bool canScrollDown = itemCount - spoilerScroll > MAX_ITEM_LINES;
 
         if (canScrollUp)
         {
-            Draw_DrawString(148, 24, COLOR_WHITE, "^^^");
+            Draw_DrawFormattedString(148, 24, COLOR_WHITE, "%c%c%c", UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR);
         }
+
+        if (canScrollDown)
+        {
+            Draw_DrawFormattedString(148, SCREEN_BOT_HEIGHT - 74, COLOR_WHITE, "%c%c%c", DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR);
+        }
+
+        Draw_DrawFormattedString(74, 10, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1, gSpoilerData.SphereCount);
 
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + spoilerScroll;
@@ -87,15 +102,53 @@ static void Gfx_DrawSpoilerData(void) {
             Draw_DrawString(10 + SPACING_X, itemPosY, COLOR_WHITE,
                 SpoilerData_GetItemNameString(gSpoilerData.Spheres[currentSphere].ItemLocations[locIndex]));
         }
-
-        if (canScrollDown)
-        {
-            Draw_DrawString(148, SCREEN_BOT_HEIGHT - 74, COLOR_WHITE, "vvv");
-        }
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Spoiler Log");
-        Draw_DrawString(10, 40, COLOR_RED, "No spoiler data generated!");
+        Draw_DrawString(10, 40, COLOR_WHITE, "No spoiler log generated!");
+    }
+    Gfx_DrawChangeMenuPrompt();
+    Draw_FlushFramebuffer();
+}
+
+static void Gfx_DrawSpoilerAllItems(void) {
+    if (gSpoilerData.ItemLocationsCount > 0) {
+        u16 itemCount = gSpoilerData.ItemLocationsCount;
+
+        bool canScrollUp = allItemsScroll > 0;
+        bool canScrollDown = itemCount - allItemsScroll > MAX_ITEM_LINES;
+
+        if (canScrollUp)
+        {
+            Draw_DrawFormattedString(148, 24, COLOR_WHITE, "%c%c%c", UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR);
+        }
+
+        if (canScrollDown)
+        {
+            Draw_DrawFormattedString(148, SCREEN_BOT_HEIGHT - 74, COLOR_WHITE, "%c%c%c", DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR);
+        }
+
+        u16 firstItem = allItemsScroll + 1;
+        u16 lastItem = allItemsScroll + MAX_ITEM_LINES;
+        if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
+        Draw_DrawFormattedString(32, 10, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
+            firstItem, lastItem, gSpoilerData.ItemLocationsCount);
+
+        for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
+            u32 locIndex = item + allItemsScroll;
+            if (locIndex >= gSpoilerData.ItemLocationsCount) { break; }
+
+            u32 locPosY = 34 + (SPACING_Y * item * 2);
+            u32 itemPosY = locPosY + SPACING_Y;
+            Draw_DrawString(10, locPosY, COLOR_WHITE,
+                SpoilerData_GetItemLocationString(locIndex));
+            Draw_DrawString(10 + SPACING_X, itemPosY, COLOR_WHITE,
+                SpoilerData_GetItemNameString(locIndex));
+        }
+    }
+    else {
+        Draw_DrawString(10, 10, COLOR_TITLE, "All Item Locations");
+        Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
     Gfx_DrawChangeMenuPrompt();
     Draw_FlushFramebuffer();
@@ -106,7 +159,16 @@ static const void (*menu_draw_funcs[])(void) = {
     Gfx_DrawDungeonItems,
     Gfx_DrawDungeonRewards,
     Gfx_DrawSpoilerData,
+    Gfx_DrawSpoilerAllItems,
 };
+
+static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
+    s16 maxScroll = itemCount > MAX_ITEM_LINES ? itemCount - MAX_ITEM_LINES : 0;
+    current += scrollDelta;
+    if (current < 0) { current = 0; }
+    else if (current > maxScroll) { current = maxScroll; }
+    return current;
+}
 
 static void Gfx_ShowMenu(void) {
     u32 pressed = 0;
@@ -115,55 +177,70 @@ static void Gfx_ShowMenu(void) {
     Draw_FlushFramebuffer();
 
     do {
-        if (pressed & closingButton) {
-            Draw_ClearFramebuffer();
-            Draw_FlushFramebuffer();
-            break;
-        } else if (pressed & BUTTON_R1) {
-            curMenuIdx++;
-            Draw_ClearFramebuffer();
-            Draw_FlushFramebuffer();
-        } else if (pressed & BUTTON_L1) {
-            curMenuIdx--;
-            Draw_ClearFramebuffer();
-            Draw_FlushFramebuffer();
-        }
-
-        // Controls for spoiler log page
+        bool handledInput = false;
+        // Controls for spoiler log and all-items pages come first, as the user may have chosen
+        // one of the directional buttons as their menu open/close button and we need to use them
         if (curMenuIdx == 3 && gSpoilerData.SphereCount > 0) {
+            // Spoiler log
+            u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
             if (pressed & BUTTON_LEFT) {
                 if (currentSphere == 0) {
                     currentSphere = gSpoilerData.SphereCount - 1;
-                    spoilerScroll = 0;
                 } else {
                     currentSphere--;
-                    spoilerScroll = 0;
                 }
-                Draw_ClearFramebuffer();
-                Draw_FlushFramebuffer();
+                spoilerScroll = 0;
+                handledInput = true;
             } else if (pressed & BUTTON_RIGHT) {
-                if (currentSphere == gSpoilerData.SphereCount - 1) {
-                    currentSphere = 0;
-                    spoilerScroll = 0;
-                } else {
+                if (currentSphere < gSpoilerData.SphereCount - 1) {
                     currentSphere++;
-                    spoilerScroll = 0;
+                } else {
+                    currentSphere = 0;
                 }
-                Draw_ClearFramebuffer();
-                Draw_FlushFramebuffer();
+                spoilerScroll = 0;
+                handledInput = true;
             } else if (pressed & BUTTON_UP) {
-                if (spoilerScroll > 0) { spoilerScroll--; }
-                Draw_ClearFramebuffer();
-                Draw_FlushFramebuffer();
+                spoilerScroll = Gfx_Scroll(spoilerScroll, -1, itemCount);
+                handledInput = true;
             } else if (pressed & BUTTON_DOWN) {
-                if (spoilerScroll < UINT8_MAX
-                    && spoilerScroll < gSpoilerData.Spheres[currentSphere].ItemCount
-                    && gSpoilerData.Spheres[currentSphere].ItemCount - spoilerScroll > MAX_ITEM_LINES) {
-                    spoilerScroll++;
-                }
+                spoilerScroll = Gfx_Scroll(spoilerScroll, 1, itemCount);
+                handledInput = true;
+            }
+        } else if (curMenuIdx == 4 && gSpoilerData.ItemLocationsCount > 0) {
+            // All Items list
+            u16 itemCount = gSpoilerData.ItemLocationsCount;
+            if (pressed & BUTTON_LEFT) {
+                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ITEM_LINES * 10, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_RIGHT) {
+                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ITEM_LINES * 10, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_UP) {
+                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ITEM_LINES, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_DOWN) {
+                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ITEM_LINES, itemCount);
+                handledInput = true;
+            }
+        }
+
+        if (!handledInput) {
+            if (pressed & closingButton) {
                 Draw_ClearFramebuffer();
                 Draw_FlushFramebuffer();
+                break;
+            } else if (pressed & BUTTON_R1) {
+                curMenuIdx++;
+                handledInput = true;
+            } else if (pressed & BUTTON_L1) {
+                curMenuIdx--;
+                handledInput = true;
             }
+        }
+
+        if (handledInput) {
+            Draw_ClearFramebuffer();
+            Draw_FlushFramebuffer();
         }
 
         if (curMenuIdx < 0) {

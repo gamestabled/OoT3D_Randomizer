@@ -69,6 +69,8 @@ void GenerateHash() {
     Settings::hashIconIndexes[i] = iconIndex;
     randomizerHash[i] = hashIcons[iconIndex];
   }
+  // Clear out spoiler log data here, in case we aren't going to re-generate it
+  spoilerData = { 0 };
 }
 
 const RandomizerHash& GetRandomizerHash() {
@@ -225,7 +227,78 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
 }
 
 bool SpoilerLog_Write() {
-  spoilerData = { 0 };
+  // Write in-game spoiler log data
+  u16 spoilerItemIndex = 0;
+  u32 spoilerStringOffset = 0;
+  bool spoilerOutOfSpace = false;
+
+  // Create map of string data offsets for all _unique_ item locations and names in the playthrough
+  // Some item names, like gold skulltula tokens, can appear many times in a playthrough
+  std::unordered_map<LocationKey, u16> itemLocationsMap; // Map of LocationKey to an index into spoiler data item locations
+  itemLocationsMap.reserve(allLocations.size());
+  std::unordered_map<std::string, u16> stringOffsetMap; // Map of strings to their offset into spoiler string data array
+  stringOffsetMap.reserve(allLocations.size() * 2);
+
+  for (const LocationKey key : allLocations) {
+    auto loc = Location(key);
+
+    auto locName = loc->GetName();
+    if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
+      if (spoilerStringOffset + locName.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
+        spoilerOutOfSpace = true;
+        break;
+      } else {
+        stringOffsetMap[locName] = spoilerStringOffset;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locName.c_str()) + 1;
+      }
+    }
+
+    auto locItem = loc->GetPlacedItemName();
+    if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
+      if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
+        spoilerOutOfSpace = true;
+        break;
+      } else {
+        stringOffsetMap[locItem] = spoilerStringOffset;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locItem.c_str()) + 1;
+      }
+    }
+
+    spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = stringOffsetMap[locName];
+    spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = stringOffsetMap[locItem];
+    itemLocationsMap[key] = spoilerItemIndex++;
+  }
+  spoilerData.ItemLocationsCount = spoilerItemIndex;
+
+  bool playthroughItemNotFound = false;
+  // Write playthrough data to in-game spoiler log
+  if (!spoilerOutOfSpace) {
+    for (uint i = 0; i < playthroughLocations.size(); i++) {
+      if (i >= SPOILER_SPHERES_MAX) {
+        spoilerOutOfSpace = true;
+        break;
+      }
+      for (uint loc = 0; loc < playthroughLocations[i].size(); ++loc) {
+        if (loc >= SPOILER_SPHERE_ITEM_LOCATIONS_MAX) {
+          spoilerOutOfSpace = true;
+          break;
+        }
+
+        const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
+        if (foundItemLoc != itemLocationsMap.end()) {
+          spoilerData.Spheres[i].ItemLocations[loc] = foundItemLoc->second;
+        } else {
+          playthroughItemNotFound = true;
+        }
+        ++spoilerData.Spheres[i].ItemCount;
+      }
+      ++spoilerData.SphereCount;
+    }
+  }
+
+  if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
+
+  // Write spoiler log txt file
   logtxt += "Version: " + Settings::version + "\n";
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
@@ -238,12 +311,6 @@ bool SpoilerLog_Write() {
 
   WriteSettings(logtxt);
 
-  u8 spoilerItemIndex = 0;
-  u16 spoilerStringOffset = 0;
-  bool spoilerOutOfSpace = false;
-  std::unordered_map<std::string, u16> stringOffsetMap;
-  stringOffsetMap.reserve(SPOILER_ITEMS_MAX);
-
   //Write playthrough to spoiler, by accessibility sphere
   logtxt += "Playthrough:\n";
   for (uint i = 0; i < playthroughLocations.size(); i++) {
@@ -253,49 +320,6 @@ bool SpoilerLog_Write() {
       logtxt += "\t";
       SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
       logtxt += '\n';
-    }
-
-    if (i >= SPOILER_SPHERES_MAX || spoilerItemIndex >= SPOILER_ITEMS_MAX) {
-      spoilerOutOfSpace = true;
-    }
-
-    // Write to in-game spoiler data, if we have space left
-    if (!spoilerOutOfSpace) {
-      for (uint loc = 0; loc < playthroughLocations[i].size(); ++loc) {
-        const auto location = Location(playthroughLocations[i][loc]);
-        auto locName = location->GetName();
-        auto locItem = location->GetPlacedItemName();
-
-        // Use the map to only save new string data if it's unique
-        // Some items, like gold skulltula tokens, can appear many times in a playthrough
-        auto foundLocString = stringOffsetMap.find(locName);
-        if (foundLocString != stringOffsetMap.end()) {
-          spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = foundLocString->second;
-        } else if (spoilerStringOffset + locName.size() + 1 < SPOILER_STRING_DATA_SIZE) {
-          stringOffsetMap[locName] = spoilerStringOffset;
-          spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = spoilerStringOffset;
-          spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locName.c_str()) + 1;
-        } else {
-          spoilerOutOfSpace = true;
-        }
-
-        auto foundItemString = stringOffsetMap.find(locItem);
-        if (foundItemString != stringOffsetMap.end()) {
-          spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = foundItemString->second;
-        } else if (spoilerStringOffset + locItem.size() + 1 < SPOILER_STRING_DATA_SIZE) {
-          spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = spoilerStringOffset;
-          stringOffsetMap[locItem] = spoilerStringOffset;
-          spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locItem.c_str()) + 1;
-        } else {
-          spoilerOutOfSpace = true;
-        }
-
-        if (!spoilerOutOfSpace) {
-          spoilerData.Spheres[i].ItemLocations[loc] = spoilerItemIndex++;
-          ++spoilerData.Spheres[i].ItemCount;
-        }
-      }
-      ++spoilerData.SphereCount;
     }
   }
   playthroughLocations.clear();
