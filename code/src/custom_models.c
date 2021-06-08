@@ -22,8 +22,9 @@ void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
 
     // Edit combinerIndices
-    EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+    EDIT_BYTE(0x6C4, 0x04);// Update combinerCount
     EDIT_BYTE(0x6CC, 0x0B); EDIT_BYTE(0x6CD, 0x00);// Add new combiner index (Replacing one of the combiners used by unused deku stick)
+	EDIT_BYTE(0x6CE, 0x11); EDIT_BYTE(0x6CF, 0x00);
 
     //TextureCombiner0
     EDIT_BYTE(0x3588, 0x04); EDIT_BYTE(0x3589, 0x01);// CombinerMode to "Add"
@@ -44,17 +45,21 @@ void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
 
 void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
+	
+	// Edit combinerIndices
+	EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+	EDIT_BYTE(0x6CC, 0x0D); EDIT_BYTE(0x6CD, 0x00);
 
     //TextureCombiner0
     EDIT_BYTE(0x2974, 0x02); EDIT_BYTE(0x2975, 0x64);// CombinerMode to "AddMult"
-    EDIT_BYTE(0x2978, 0x02);// ColorScale to "Two"
+    EDIT_BYTE(0x2978, 0x01);// ColorScale to "One"
     EDIT_BYTE(0x2980, 0x76);// SourceColor0 to "ConstantColor"
     EDIT_BYTE(0x2984, 0xC0); EDIT_BYTE(0x2985, 0x84);// SourceColor2 to "Texture0"
     EDIT_BYTE(0x2988, 0x03);// Color1Operand to OneMinusAlpha
 
     //TextureCombiner1
     EDIT_BYTE(0x299C, 0x00); EDIT_BYTE(0x299D, 0x21);// CombinerMode to "Modulate"
-    EDIT_BYTE(0x29A0, 0x02);// ColorScale to "Two"
+    EDIT_BYTE(0x29A0, 0x04);// ColorScale to "Four"
     EDIT_BYTE(0x29AA, 0x77);// SourceColor1 to "PrimaryColor"
     EDIT_BYTE(0x29B0, 0x00);// Color1Operand to Color
 

@@ -168,6 +168,10 @@ SECTIONS
 		*(.patch_PoeCollectorCheckPoints)
 	}
 
+	.patch_GoronShopPurchaseableCheck 0x19120C : {
+		*(.patch_GoronShopPurchaseableCheck)
+	}
+
 	.patch_PlayerEditAndRetrieveCMB 0x191970 : {
 		*(.patch_PlayerEditAndRetrieveCMB)
 	}
