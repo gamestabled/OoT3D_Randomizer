@@ -335,7 +335,66 @@ static void WriteRequiredTrials(tinyxml2::XMLDocument& spoilerLog) {
   }
 }
 
+// Writes the intended playthrough to the spoiler log, separated into spheres.
+static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
+  auto playthroughNode = spoilerLog.NewElement("playthrough");
 
+  for (uint i = 0; i < playthroughLocations.size(); ++i) {
+    auto sphereNode = playthroughNode->InsertNewChildElement("sphere");
+    sphereNode->SetAttribute("level", i + 1);
+
+    for (const LocationKey key : playthroughLocations[i]) {
+      auto node = sphereNode->InsertNewChildElement("location");
+      ItemLocation* location = Location(key);
+      node->SetAttribute("name", location->GetName().c_str());
+      node->SetText(location->GetPlacedItemName().c_str());
+    }
+  }
+
+  spoilerLog.RootElement()->InsertEndChild(playthroughNode);
+
+  playthroughLocations.clear();
+  playthroughBeatable = false;
+}
+
+// Writes the hints to the spoiler log, if they are enabled.
+static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
+  if (Settings::GossipStoneHints.Is(HINTS_NO_HINTS)) {
+    return;
+  }
+
+  auto parentNode = spoilerLog.NewElement("hints");
+
+  for (const LocationKey key : gossipStoneLocations) {
+    ItemLocation* location = Location(key);
+
+    auto node = parentNode->InsertNewChildElement("hint");
+    node->SetAttribute("location", location->GetName().c_str());
+    node->SetText(location->GetPlacedItemName().c_str());
+  }
+
+  spoilerLog.RootElement()->InsertEndChild(parentNode);
+}
+
+static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("all-locations");
+
+  for (const LocationKey key : allLocations) {
+    ItemLocation* location = Location(key);
+
+    auto node = parentNode->InsertNewChildElement("location");
+    node->SetAttribute("name", location->GetName().c_str());
+    node->SetText(location->GetPlacedItemName().c_str());
+    if (location->IsCategory(Category::cShop)) {
+      node->SetAttribute("price", location->GetPrice());
+    }
+    if (!location->IsAddedToPool()) {
+      node->SetAttribute("not-added", true);
+    }
+  }
+
+  spoilerLog.RootElement()->InsertEndChild(parentNode);
+}
 
 
 bool SpoilerLog_Write() {
@@ -362,6 +421,9 @@ bool SpoilerLog_Write() {
   WriteEnabledTricks(spoilerLog);
   WriteMasterQuestDungeons(spoilerLog);
   WriteRequiredTrials(spoilerLog);
+  WritePlaythrough(spoilerLog);
+  WriteHints(spoilerLog);
+  WriteAllLocations(spoilerLog);
 
   const std::string filePath = GetGeneralPath() + "-spoilerlog.xml";
   XMLError e = spoilerLog.SaveFile(filePath.c_str());
