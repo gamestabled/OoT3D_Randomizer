@@ -6,6 +6,7 @@
 #include "random.hpp"
 #include "settings.hpp"
 #include "trial.hpp"
+#include "tinyxml2.h"
 
 #include <3ds.h>
 #include <cstdio>
@@ -218,7 +219,160 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
   }
 }
 
+// Writes the settings (without excluded locations, starting inventory and tricks) to the spoilerLog document.
+static void WriteSettingsXML(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("settings");
+
+  for (const MenuItem* menu : Settings::mainMenu) {
+    //don't log the detailed logic, starting inventory, or exclude location menus yet
+    if (menu->name == "Detailed Logic Settings"
+      || menu->name == "Starting Inventory"
+      || menu->name == "Exclude Locations"
+      || menu->mode != OPTION_SUB_MENU
+    ) {
+      continue;
+    }
+
+    for (const Option* setting : *menu->settingsList) {
+      auto node = parentNode->InsertNewChildElement("setting");
+      node->SetAttribute("name", setting->GetName().c_str()); // Remove potential linebreaks
+      node->SetText(setting->GetSelectedOptionText().c_str());
+    }
+  }
+  spoilerLog.RootElement()->InsertEndChild(parentNode);
+}
+
+// Writes the excluded locations to the spoiler log, if there are any.
+static void WriteExcludedLocations(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("excluded-locations");
+
+  for (const auto& location : Settings::excludeLocationsOptions) {
+    if (location->GetSelectedOptionIndex() == INCLUDE) {
+      continue;
+    }
+
+    tinyxml2::XMLElement* node = spoilerLog.NewElement("location");
+    node->SetAttribute("name", location->GetName().c_str()); // @todo Remove Linebreaks.
+    parentNode->InsertEndChild(node);
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
+}
+
+// Writes the starting inventory to the spoiler log, if there is any.
+static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("starting-inventory");
+
+  // Start at index 3 to skip over the toggle, "Start with Consumables", and "Start with Max Rupees".
+  for (size_t i = 3; i < Settings::startingInventoryOptions.size(); ++i) {
+    const auto setting = Settings::startingInventoryOptions[i];
+    if (setting->GetSelectedOptionIndex() == STARTINGBOTTLE_NONE) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("item");
+    node->SetAttribute("name", setting->GetSelectedOptionText().c_str());
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
+}
+
+// Writes the enabled tricks to the spoiler log, if there are any.
+static void WriteEnabledTricks(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("enabled-tricks");
+
+  for (const auto& setting : Settings::detailedLogicOptions) {
+    if (setting->GetSelectedOptionIndex() != TRICK_ENABLED || !setting->IsCategory(OptionCategory::Setting)) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("trick");
+    node->SetAttribute("name", setting->GetName().c_str()); // @todo remove linebreaks
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
+}
+
+// Writes the Master Quest dungeons to the spoiler log, if there are any.
+static void WriteMasterQuestDungeons(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("master-quest-dungeons");
+
+  for (const auto* dungeon : Dungeon::dungeonList) {
+    if (dungeon->IsVanilla()) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("dungeon");
+    node->SetAttribute("name", dungeon->GetName().c_str());
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
+}
+
+// Writes the required trails to the spoiler log, if there are any.
+static void WriteRequiredTrials(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("required-trials");
+
+  for (const auto* trial : Trial::trialList) {
+    if (trial->IsSkipped()) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("trial");
+    node->SetAttribute("name", trial->GetName().GetEnglish().c_str());
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
+}
+
+
+
+
 bool SpoilerLog_Write() {
+  using namespace tinyxml2;
+
+  XMLDocument spoilerLog = XMLDocument();
+  spoilerLog.InsertEndChild(spoilerLog.NewDeclaration());
+
+  XMLElement* rootNode = spoilerLog.NewElement("spoiler-log");
+  spoilerLog.InsertEndChild(rootNode);
+
+  rootNode->SetAttribute("version", Settings::version.c_str());
+  rootNode->SetAttribute("seed", Settings::seed.c_str());
+  std::string hash = "";
+  for (const std::string& str : randomizerHash) {
+    hash += str + ", ";
+  }
+  hash.erase(hash.length() - 2); // Erase last comma
+  rootNode->SetAttribute("hash", hash.c_str());
+
+  WriteSettingsXML(spoilerLog);
+  WriteExcludedLocations(spoilerLog);
+  WriteStartingInventory(spoilerLog);
+  WriteEnabledTricks(spoilerLog);
+  WriteMasterQuestDungeons(spoilerLog);
+  WriteRequiredTrials(spoilerLog);
+
+  const std::string filePath = GetGeneralPath() + "-spoilerlog.xml";
+  XMLError e = spoilerLog.SaveFile(filePath.c_str());
+//  return e == XML_SUCCESS;
+
+
+
+
+
+
+
   logtxt += "Version: " + Settings::version + "\n";
   logtxt += "Seed: " + Settings::seed + "\n\n";
 
