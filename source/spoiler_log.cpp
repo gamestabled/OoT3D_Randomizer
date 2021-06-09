@@ -18,10 +18,8 @@
 
 namespace {
   FS_Archive sdmcArchive = 0;
-  Handle spoilerlog;
   Handle placementlog;
 
-  std::string logtxt;
   std::string placementtxt;
 
   constexpr std::array<std::string_view, 32> hashIcons = {
@@ -74,31 +72,6 @@ const RandomizerHash& GetRandomizerHash() {
   return randomizerHash;
 }
 
-static inline void SpoilerLog_AddFormatted(std::string_view header, std::string_view value) {
-  logtxt += header;
-  logtxt += ": ";
-
-  // Formatting for spoiler log
-  constexpr u32 LONGEST_LINE = 56;
-  const auto remainingSpaces = LONGEST_LINE - header.size();
-  logtxt.append(remainingSpaces, ' ');
-
-  logtxt += value;
-  logtxt += '\n';
-}
-
-static void SpoilerLog_SaveLocation(std::string_view loc, std::string_view item) {
-  SpoilerLog_AddFormatted(loc, item);
-}
-
-static void SpoilerLog_SaveShopLocation(std::string_view loc, std::string_view item, const u16 price) {
-  std::string locandprice = "";
-  locandprice += loc;
-  locandprice += " (Price: " + std::to_string(price) + ")";
-
-  SpoilerLog_AddFormatted(locandprice, item);
-}
-
 static auto GetGeneralPath() {
   std::string path = "/3ds/" + Settings::seed;
   for (const auto& str : randomizerHash)
@@ -108,7 +81,7 @@ static auto GetGeneralPath() {
 
 
 static auto GetSpoilerLogPath() {
-  return GetGeneralPath() + "-spoilerlog.txt";
+  return GetGeneralPath() + "-spoilerlog.xml";
 }
 
 static auto GetPlacementLogPath() {
@@ -219,8 +192,29 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
   }
 }
 
+// Removes any line breaks from s.
+static std::string RemoveLineBreaks(std::string s) {
+  s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
+  return s;
+}
+
+// Writes the location to the specified node.
+static void WriteLocation(tinyxml2::XMLElement* parentNode, const LocationKey locationKey) {
+  ItemLocation* location = Location(locationKey);
+
+  auto node = parentNode->InsertNewChildElement("location");
+  node->SetAttribute("name", location->GetName().c_str());
+  node->SetText(location->GetPlacedItemName().c_str());
+  if (location->IsCategory(Category::cShop)) {
+    node->SetAttribute("price", location->GetPrice());
+  }
+  if (!location->IsAddedToPool()) {
+    node->SetAttribute("not-added", true);
+  }
+}
+
 // Writes the settings (without excluded locations, starting inventory and tricks) to the spoilerLog document.
-static void WriteSettingsXML(tinyxml2::XMLDocument& spoilerLog) {
+static void WriteSettingsXML(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
   auto parentNode = spoilerLog.NewElement("settings");
 
   for (const MenuItem* menu : Settings::mainMenu) {
@@ -234,9 +228,11 @@ static void WriteSettingsXML(tinyxml2::XMLDocument& spoilerLog) {
     }
 
     for (const Option* setting : *menu->settingsList) {
-      auto node = parentNode->InsertNewChildElement("setting");
-      node->SetAttribute("name", setting->GetName().c_str()); // Remove potential linebreaks
-      node->SetText(setting->GetSelectedOptionText().c_str());
+      if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
+        auto node = parentNode->InsertNewChildElement("setting");
+        node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
+        node->SetText(setting->GetSelectedOptionText().c_str());
+      }
     }
   }
   spoilerLog.RootElement()->InsertEndChild(parentNode);
@@ -252,7 +248,7 @@ static void WriteExcludedLocations(tinyxml2::XMLDocument& spoilerLog) {
     }
 
     tinyxml2::XMLElement* node = spoilerLog.NewElement("location");
-    node->SetAttribute("name", location->GetName().c_str()); // @todo Remove Linebreaks.
+    node->SetAttribute("name", RemoveLineBreaks(location->GetName()).c_str());
     parentNode->InsertEndChild(node);
   }
 
@@ -291,7 +287,7 @@ static void WriteEnabledTricks(tinyxml2::XMLDocument& spoilerLog) {
     }
 
     auto node = parentNode->InsertNewChildElement("trick");
-    node->SetAttribute("name", setting->GetName().c_str()); // @todo remove linebreaks
+    node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
   }
 
   if (!parentNode->NoChildren()) {
@@ -344,10 +340,7 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
     sphereNode->SetAttribute("level", i + 1);
 
     for (const LocationKey key : playthroughLocations[i]) {
-      auto node = sphereNode->InsertNewChildElement("location");
-      ItemLocation* location = Location(key);
-      node->SetAttribute("name", location->GetName().c_str());
-      node->SetText(location->GetPlacedItemName().c_str());
+      WriteLocation(sphereNode, key);
     }
   }
 
@@ -380,17 +373,7 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("all-locations");
 
   for (const LocationKey key : allLocations) {
-    ItemLocation* location = Location(key);
-
-    auto node = parentNode->InsertNewChildElement("location");
-    node->SetAttribute("name", location->GetName().c_str());
-    node->SetText(location->GetPlacedItemName().c_str());
-    if (location->IsCategory(Category::cShop)) {
-      node->SetAttribute("price", location->GetPrice());
-    }
-    if (!location->IsAddedToPool()) {
-      node->SetAttribute("not-added", true);
-    }
+    WriteLocation(parentNode, key);
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);
@@ -425,85 +408,8 @@ bool SpoilerLog_Write() {
   WriteHints(spoilerLog);
   WriteAllLocations(spoilerLog);
 
-  const std::string filePath = GetGeneralPath() + "-spoilerlog.xml";
-  XMLError e = spoilerLog.SaveFile(filePath.c_str());
-//  return e == XML_SUCCESS;
-
-
-
-
-
-
-
-  logtxt += "Version: " + Settings::version + "\n";
-  logtxt += "Seed: " + Settings::seed + "\n\n";
-
-  logtxt += "Hash: ";
-  for (const std::string& str : randomizerHash) {
-    logtxt += str + ", ";
-  }
-  logtxt.erase(logtxt.length() - 2); //Erase last comma
-  logtxt += "\n\n";
-
-  WriteSettings(logtxt);
-
-  //Write playthrough to spoiler, by accessibility sphere
-  logtxt += "Playthrough:\n";
-  for (uint i = 0; i < playthroughLocations.size(); i++) {
-    logtxt += "Sphere " + std::to_string(i+1) + ":\n";
-    //Print all item locations in this sphere
-    for (const LocationKey location : playthroughLocations[i]) {
-      logtxt += "\t";
-      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
-      logtxt += '\n';
-    }
-  }
-  playthroughLocations.clear();
-  playthroughBeatable = false;
-
-  //Write Hints
-  if (Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
-    logtxt += "\nHints:\n";
-    for (const LocationKey location : gossipStoneLocations) {
-      logtxt += "\t";
-      SpoilerLog_SaveLocation(Location(location)->GetName(), ItemTable(location).GetName());
-    }
-  }
-
-  logtxt += "\nAll Locations:\n";
-  for (const LocationKey location : allLocations) {
-    logtxt += "\t";
-    if (Location(location)->IsCategory(Category::cShop)) { //Shop item
-      SpoilerLog_SaveShopLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName(), Location(location)->GetPrice());
-    }
-    else { //Normal item
-      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
-    }
-    logtxt += Location(location)->IsAddedToPool() ? "" : " NOT ADDED\n";
-  }
-
-  Result res = 0;
-  u32 bytesWritten = 0;
-  // Open SD archive
-  if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-    return false;
-  }
-
-  // Open spoilerlog.txt
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&spoilerlog, sdmcArchive, fsMakePath(PATH_ASCII, GetSpoilerLogPath().c_str()), FS_OPEN_CREATE | FS_OPEN_WRITE, 0))) {
-    return false;
-  }
-
-  // Write to spoilerlog.txt
-  if (!R_SUCCEEDED(res = FSFILE_Write(spoilerlog, &bytesWritten, 0, logtxt.c_str(), strlen(logtxt.c_str()), FS_WRITE_FLUSH))) {
-    return false;
-  }
-
-  FSFILE_Close(spoilerlog);
-  FSUSER_CloseArchive(sdmcArchive);
-
-  logtxt = "";
-  return true;
+  XMLError e = spoilerLog.SaveFile(GetSpoilerLogPath().c_str());
+  return e == XML_SUCCESS;
 }
 
 void PlacementLog_Msg(std::string_view msg) {
