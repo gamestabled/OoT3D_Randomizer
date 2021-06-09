@@ -302,11 +302,11 @@ constexpr std::array DungeonColors = {
             Text name = NonShopItems[shopitems].Name;
             std::string price = std::to_string(NonShopItems[shopitems].Price);
             //Prevent names from being too long and overflowing textbox
-            // if (name == "Piece of Heart (Treasure Chest Minigame)") {
-            //     name = "Piece of Heart";
-            // } else if (name == "Green Rupee (Treasure Chest Minigame)") {
-            //     name = "Green Rupee"; //^
-            // }
+            if (name.GetEnglish() == "Piece of Heart (Treasure Chest Minigame)") {
+                name = Text{"Piece of Heart", "Quart de coeur", "Pieza de corazón"};
+            } else if (name.GetEnglish() == "Green Rupee (Treasure Chest Minigame)") {
+                name = Text{"Green Rupee", "Rubis vert", "Rupia verde"};
+            }
             //Message to display when hovering over the item
             if (NonShopItems[shopitems].Repurchaseable) { //Different textbox for repurchaseable items
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
