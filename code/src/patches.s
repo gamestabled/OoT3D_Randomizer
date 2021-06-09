@@ -1161,6 +1161,11 @@ ReadGossipStoneHints_patch:
 DecoratedChest_patch:
     bl hook_DecoratedChest
 
+.section .patch_GoronShopPurchaseableCheck
+.global GoronShopPurchaseableCheck_patch
+GoronShopPurchaseableCheck_patch:
+    nop
+
 .section .patch_PlayerEditAndRetrieveCMB
 .global PlayerEditAndRetrieveCMB_patch
 PlayerEditAndRetrieveCMB_patch:

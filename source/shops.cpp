@@ -16,7 +16,7 @@ std::vector<ItemAndPrice> NonShopItems = {};
 
 //Set vanilla shop item locations before potentially shuffling
 void PlaceVanillaShopItems() {
-  std::vector<ItemKey> VanillaShopItems = {
+  const std::vector<ItemKey> VanillaShopItems = {
     //Vanilla KF
     BUY_DEKU_SHIELD,
     BUY_DEKU_NUT_5,
@@ -242,7 +242,7 @@ int GetShopsanityReplaceAmount() {
   }
 }
 
-//A dictionary that maps a u16 to an array of 3 Text objects, which contain the easy, medium, and hard trick names respectively
+//A dictionary that maps a u8 to an array of 3 Text objects, which contain the easy, medium, and hard trick names respectively
 static std::map<u8, std::array<Text, 3>> IceTrapNames = {
   {GI_SWORD_KOKIRI,
          //English          French                      Spanish
