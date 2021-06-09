@@ -56,6 +56,9 @@ ItemOverride_Value Item::Value() const {
     if (!Settings::ColoredBossKeys && (getItemId >= 0x95 && getItemId <= 0x9A)) { //Boss keys
         val.looksLikeItemId = GI_KEY_BOSS;
     }
+    if (!Settings::ColoredKeys && (getItemId >= 0xAF && getItemId <= 0xB7)) { //Small keys
+        val.looksLikeItemId = GI_KEY_SMALL;
+    }
     if (type == ITEMTYPE_SHOP) {
         // With the current shopsanity implementation, we need a way to detect
         // regular shop items. This method should have no unintended side effects
