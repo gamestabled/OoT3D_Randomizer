@@ -392,7 +392,7 @@ constexpr std::array DungeonColors = {
         //insert box break
         size_t carrotSymbol = textStr->find('^');
         while (carrotSymbol != std::string::npos) {
-          textStr->replace(carrotSymbol, 1, WAIT_FOR_INPUT());
+          textStr->replace(carrotSymbol, 1, INSTANT_TEXT_OFF()+WAIT_FOR_INPUT()+INSTANT_TEXT_ON());
           carrotSymbol = textStr->find('^');
         }
         //add colors
