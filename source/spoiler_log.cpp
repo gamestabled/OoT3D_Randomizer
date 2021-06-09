@@ -7,6 +7,7 @@
 #include "settings.hpp"
 #include "trial.hpp"
 #include "tinyxml2.h"
+#include "utils.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -192,12 +193,6 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
   }
 }
 
-// Removes any line breaks from s.
-static std::string RemoveLineBreaks(std::string s) {
-  s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
-  return s;
-}
-
 // Writes the location to the specified node.
 static void WriteLocation(tinyxml2::XMLElement* parentNode, const LocationKey locationKey) {
   ItemLocation* location = Location(locationKey);
@@ -379,14 +374,11 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
   spoilerLog.RootElement()->InsertEndChild(parentNode);
 }
 
-
 bool SpoilerLog_Write() {
-  using namespace tinyxml2;
-
-  XMLDocument spoilerLog = XMLDocument();
+  auto spoilerLog = tinyxml2::XMLDocument();
   spoilerLog.InsertEndChild(spoilerLog.NewDeclaration());
 
-  XMLElement* rootNode = spoilerLog.NewElement("spoiler-log");
+  auto rootNode = spoilerLog.NewElement("spoiler-log");
   spoilerLog.InsertEndChild(rootNode);
 
   rootNode->SetAttribute("version", Settings::version.c_str());
@@ -408,8 +400,8 @@ bool SpoilerLog_Write() {
   WriteHints(spoilerLog);
   WriteAllLocations(spoilerLog);
 
-  XMLError e = spoilerLog.SaveFile(GetSpoilerLogPath().c_str());
-  return e == XML_SUCCESS;
+  auto e = spoilerLog.SaveFile(GetSpoilerLogPath().c_str());
+  return e == tinyxml2::XML_SUCCESS;
 }
 
 void PlacementLog_Msg(std::string_view msg) {

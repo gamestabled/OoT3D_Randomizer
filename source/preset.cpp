@@ -13,6 +13,7 @@
 #include "category.hpp"
 #include "settings.hpp"
 #include "tinyxml2.h"
+#include "utils.hpp"
 
 namespace fs = std::filesystem;
 
@@ -71,12 +72,6 @@ std::vector<std::string> GetSettingsPresets() {
 
 static std::string PresetPath(std::string_view presetName, OptionCategory category) {
   return std::string(GetBasePath(category)).append(presetName).append(".xml");
-}
-
-// Removes any line breaks from s.
-static std::string RemoveLineBreaks(std::string s) {
-  s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
-  return s;
 }
 
 // Presets are now saved as XML files using the tinyxml2 library.
