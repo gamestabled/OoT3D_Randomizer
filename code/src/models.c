@@ -55,6 +55,10 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
             cmb = (void*)(((char*)ZARBuf) + 0x74);
             CustomModel_ApplyColorEditsToSmallKey(cmb, model->itemRow->special);
             break;
+        case OBJECT_CUSTOM_BOSS_KEYS:
+            cmb = (void*)(((char*)ZARBuf) + 0x78);
+            CustomModel_SetBossKeyToRGBA565(cmb);
+            break;
         case OBJECT_CUSTOM_DOUBLE_DEFENSE:
             cmb = (void*)(((char*)ZARBuf) + 0xA4);
             CustomModel_EditHeartContainerToDoubleDefense(cmb);
@@ -78,6 +82,11 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
         void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
         CustomModel_SetOcarinaToRGBA565(cmb);
         Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
+        model->saModel->unk_0C->animSpeed = 0.0f;
+        model->saModel->unk_0C->animMode = 0;
+        model->saModel->unk_0C->curFrame = model->itemRow->special;
+    } else if (model->itemRow->objectId == OBJECT_CUSTOM_BOSS_KEYS) {
+        Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
         model->saModel->unk_0C->animSpeed = 0.0f;
         model->saModel->unk_0C->animMode = 0;
         model->saModel->unk_0C->curFrame = model->itemRow->special;

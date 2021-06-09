@@ -140,6 +140,14 @@ void CustomModel_SetOcarinaToRGBA565(void* ocarinaCMB) {
     EDIT_BYTE(0x3F2, 0x01); EDIT_BYTE(0x3F8, 0x5A);
 }
 
+void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB) {
+    char* BASE_ = (char*)bossKeyCMB;
+
+    EDIT_BYTE(0x43D, 0x10);
+    EDIT_BYTE(0x442, 0x01); EDIT_BYTE(0x448, 0x5B);
+    EDIT_BYTE(0x44A, 0x00); EDIT_BYTE(0x44B, 0x00);
+}
+
 void CustomModel_Update(void) {
     // Make sure custom_assets is loaded
     if (ExtendedObject_GetIndex(&gGlobalContext->objectCtx, OBJECT_CUSTOM_GENERAL_ASSETS) < 0) {

@@ -537,8 +537,8 @@ bool WritePatch() {
       fread(buffer.data(), 1, buffer.size(), file.get());
 
       // edit assets as needed
-      const size_t adultTunicOffsetInZAR = 0x101F8;
-      const size_t childTunicOffsetInZAR = 0x1E7D8;
+      const size_t adultTunicOffsetInZAR = 0x1021C;
+      const size_t childTunicOffsetInZAR = 0x1E7FC;
 
       WriteFloatToBuffer(buffer, kokiriTunicColor.r, adultTunicOffsetInZAR + 0x70);
       WriteFloatToBuffer(buffer, kokiriTunicColor.g, adultTunicOffsetInZAR + 0x98);
