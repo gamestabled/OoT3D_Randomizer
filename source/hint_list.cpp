@@ -13,6 +13,8 @@
 // surrounding text with '#' will make it a different color
 // - OoT Randomizer
 
+// '%d' indicates a number will be placed there.
+
 static std::array<HintText, KEY_ENUM_MAX> hintTable;
 
 void HintTable_Init() {
@@ -5963,70 +5965,106 @@ void HintTable_Init() {
     |     BRIDGE HINT TEXT     |
     ---------------------------*/
 
+    hintTable[BRIDGE_OPEN_HINT] = HintText::Bridge({
+                     //obscure text
+                     Text{"The awakened ones will have #already&created a bridge# to the castle where&the evil dwells.",
+                /*french*/"",
+               /*spanish*/""},
+    });
+
     hintTable[BRIDGE_VANILLA_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"the #Shadow and Spirit Medallions# as well as the #Light Arrows#",
+                     Text{"The awakened ones will await for the&Hero to collect the #Shadow and Spirit&Medallions as well as the Light Arrows#.",
                 /*french*/"les #médaillons de l'ombre et de l'esprit#, ainsi que les #flèches de lumière#",
                /*spanish*/"tanto el #Medallón de las Sombras y el del Espíritu# junto a la #flecha de luz#"},
     });
 
     hintTable[BRIDGE_STONES_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"Spiritual Stones", /*french*/"pierres spirituelles", /*spanish*/"las piedras espirituales"},
+                     Text{"The awakened ones will await for the&Hero to collect #%d Spiritual Stones#.",
+                /*french*/"pierres spirituelles",
+               /*spanish*/"las piedras espirituales"},
     });
 
     hintTable[BRIDGE_MEDALLIONS_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"Medallions", /*french*/"médaillons", /*spanish*/"los medallones"},
+                     Text{"The awakened ones will await for the&Hero to collect #%d Medallions#.",
+                /*french*/"médaillons",
+               /*spanish*/"los medallones"},
     });
 
     hintTable[BRIDGE_REWARDS_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"Spiritual Stones and Medallions", /*french*/"pierres spirituelles et médaillons", /*spanish*/"las piedras espirituales y los medallones"},
+                     Text{"The awakened ones will await for the&Hero to collect #%d Spiritual Stones&and Medallions#.",
+                /*french*/"pierres spirituelles et médaillons",
+               /*spanish*/"las piedras espirituales y los medallones"},
     });
 
     hintTable[BRIDGE_DUNGEONS_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"Completed Dungeons", /*french*/"donjons complétés", /*spanish*/"completar las mazmorras"},
+                     Text{"The awakened ones will await for the&Hero to conquer #%d Dungeons#.",
+                /*french*/"donjons complétés",
+               /*spanish*/"completar las mazmorras"},
     });
 
     hintTable[BRIDGE_TOKENS_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"Gold Skulltula Tokens", /*french*/"symboles de Skulltula d'or", /*spanish*/"obtener los símbolos de Skulltulas doradas"},
+                     Text{"The awakened ones will await for the&Hero to collect #%d Gold Skulltula&Tokens#.",
+                /*french*/"symboles de Skulltula d'or",
+               /*spanish*/"obtener los símbolos de Skulltulas doradas"},
     });
 
     /*--------------------------
     | GANON BOSS KEY HINT TEXT |
     ---------------------------*/
 
+    hintTable[GANON_BK_START_WITH_HINT] = HintText::GanonsBossKey({
+                     //obscure text
+                     Text{"And the #evil one#'s key will be #given from the start#.",
+                /*french*/"dans un grand coffre #dans sa tour#",
+               /*spanish*/"en un gran cofre #de su torre#"},
+    });
+
     hintTable[GANON_BK_VANILLA_HINT] = HintText::GanonsBossKey({
                      //obscure text
-                     Text{"kept in a big chest #inside its tower#", /*french*/"dans un grand coffre #dans sa tour#", /*spanish*/"en un gran cofre #de su torre#"},
+                     Text{"And the #evil one#'s key will be kept in a big chest #inside its tower#.",
+                /*french*/"dans un grand coffre #dans sa tour#",
+               /*spanish*/"en un gran cofre #de su torre#"},
     });
 
     hintTable[GANON_BK_OWN_DUNGEON_HINT] = HintText::GanonsBossKey({
                      //obscure text
-                     Text{"hidden somewhere #inside its castle#", /*french*/"quelque part #dans son château#", /*spanish*/"escondida en #algún lugar de su castillo#"},
+                     Text{"And the #evil one#'s key will be hidden somewhere #inside its castle#.",
+                /*french*/"quelque part #dans son château#",
+               /*spanish*/"escondida en #algún lugar de su castillo#"},
     });
 
     hintTable[GANON_BK_OVERWORLD_HINT] = HintText::GanonsBossKey({
                      //obscure text
-                     Text{"hidden #outside of dungeons# in Hyrule", /*french*/"quelque part dans Hyrule, #hors des donjons#", /*spanish*/"escondida #fuera de las mazmorras# de Hyrule"},
+                     Text{"And the #evil one#'s key will be hidden #outside of dungeons# in Hyrule.",
+                /*french*/"quelque part dans Hyrule, #hors des donjons#",
+               /*spanish*/"escondida #fuera de las mazmorras# de Hyrule"},
     });
 
     hintTable[GANON_BK_ANY_DUNGEON_HINT] = HintText::GanonsBossKey({
                      //obscure text
-                     Text{"hidden #inside a dungeon# in Hyrule", /*french*/"#dans un des donjons# d'Hyrule", /*spanish*/"escondida #en una mazmorra# de Hyrule"},
+                     Text{"And the #evil one#'s key will be hidden #inside a dungeon# in Hyrule.",
+                /*french*/"#dans un des donjons# d'Hyrule",
+               /*spanish*/"escondida #en una mazmorra# de Hyrule"},
     });
 
-    hintTable[GANON_BK_KEYSANITY_HINT] = HintText::GanonsBossKey({
+    hintTable[GANON_BK_ANYWHERE_HINT] = HintText::GanonsBossKey({
                      //obscure text
-                     Text{"hidden somewhere #in Hyrule#", /*french*/"quelque part #dans Hyrule#", /*spanish*/"escondida en #cualquier lugar de Hyrule#"},
+                     Text{"And the #evil one#'s key will be hidden somewhere #in Hyrule#.",
+                /*french*/"quelque part #dans Hyrule#",
+               /*spanish*/"escondida en #cualquier lugar de Hyrule#"},
     });
 
     hintTable[GANON_BK_TRIFORCE_HINT] = HintText::GanonsBossKey({
                      //obscure text
-                     Text{"given to the Hero once the #Triforce# is completed", /*french*/"dans la #Triforce#, quand celle-ci sera complétée", /*spanish*/"recibida por el héroe cuando haya completado la #Trifuerza#"},
+                     Text{"And the #evil one#'s key will be given to the Hero once the #Triforce# is completed.",
+                /*french*/"dans la #Triforce#, quand celle-ci sera complétée",
+               /*spanish*/"recibida por el héroe cuando haya completado la #Trifuerza#"},
     });
 
     /*--------------------------
@@ -6035,27 +6073,44 @@ void HintTable_Init() {
 
     hintTable[LACS_VANILLA_HINT] = HintText::LACS({
                      //obscure text
-                     Text{"the #Shadow and Spirit Medallions#", /*french*/"les #médaillons de l'ombre et de l'esprit#", /*spanish*/"el #Medallón de las Sombras y el Espíritu#"},
+                     Text{"And the #evil one#'s key will be&provided by Zelda once the #Shadow&and Spirit Medallions# are retrieved.",
+                /*french*/"les #médaillons de l'ombre et de l'esprit#",
+                /*spanish*/"el #Medallón de las Sombras y el Espíritu#"},
     });
 
     hintTable[LACS_MEDALLIONS_HINT] = HintText::LACS({
                      //obscure text
-                     Text{"Medallions", /*french*/"les médaillons", /*spanish*/"los #medallones#"},
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d&Medallions# are retrieved.",
+                /*french*/"les médaillons",
+               /*spanish*/"los #medallones#"},
     });
 
     hintTable[LACS_STONES_HINT] = HintText::LACS({
                      //obscure text
-                     Text{"Spiritual Stones", /*french*/"les pierres spirituelles", /*spanish*/"las #piedras espirituales#"},
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Spiritual&Stones# are retrieved.",
+                /*french*/"les pierres spirituelles",
+               /*spanish*/"las #piedras espirituales#"},
     });
 
     hintTable[LACS_REWARDS_HINT] = HintText::LACS({
                      //obscure text
-                     Text{"Spiritual Stones and Medallions", /*french*/"les pierres spirituelles et les médaillons", /*spanish*/"las #piedras espirituales y los medallones#"},
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Spiritual&Stones and Medallions# are retrieved.",
+                /*french*/"les pierres spirituelles et les médaillons",
+               /*spanish*/"las #piedras espirituales y los medallones#"},
+    });
+
+    hintTable[LACS_DUNGEONS_HINT] = HintText::LACS({
+                     //obscure text
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Dungeons#&are conquered.",
+                /*french*/"les pierres spirituelles et les médaillons",
+               /*spanish*/"las #piedras espirituales y los medallones#"},
     });
 
     hintTable[LACS_TOKENS_HINT] = HintText::LACS({
                      //obscure text
-                     Text{"Gold Skulltula Tokens", /*french*/"les symboles de Skulltula d'or", /*spanish*/"los #símbolos de Skulltulas doradas#"},
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Gold&Skulltula Tokens# are retrieved.",
+                /*french*/"les symboles de Skulltula d'or",
+               /*spanish*/"los #símbolos de Skulltulas doradas#"},
     });
 
     /*--------------------------
@@ -6088,14 +6143,16 @@ void HintTable_Init() {
 
     hintTable[SPIRITUAL_STONE_TEXT_START] = HintText::Altar({
                      //obscure text
-                     Text{"3 Spiritual Stones found in Hyrule...", /*french*/"Les trois pierres spirituelles cachées dans Hyrule...", /*spanish*/"Tres piedras espirituales encontradas en Hyrule..."},
+                     Text{"3 Spiritual Stones found in Hyrule...",
+                /*french*/"Les trois pierres spirituelles cachées dans Hyrule...",
+               /*spanish*/"Tres piedras espirituales encontradas en Hyrule..."},
     });
 
     hintTable[CHILD_ALTAR_TEXT_END] = HintText::Altar({
                      //obscure text
-                     Text{"Ye who may become a Hero...&Stand with the Ocarina and play the Song of Time.",
-                /*french*/"À celui qui a quête de devenir héros...&Portez l'Ocarina et jouez le chant du temps.",
-               /*spanish*/"Aquel que se convierta en el héroe...&Tomad la ocarina y entonad la Canción del Tiempo."},
+                     Text{"Ye who may become a Hero...&Stand with the Ocarina and&play the Song of Time.",
+                /*french*/"À celui qui a quête de devenir héros...&Portez l'Ocarina et&jouez le chant du temps.",
+               /*spanish*/"Aquel que se convierta en el héroe...&Tomad la ocarina y&entonad la Canción del Tiempo."},
     });
 
     hintTable[ADULT_ALTAR_TEXT_START] = HintText::Altar({
@@ -6107,9 +6164,9 @@ void HintTable_Init() {
 
     hintTable[ADULT_ALTAR_TEXT_END] = HintText::Altar({
                      //obscure text
-                     Text{"Together with the Hero of Time, the awakened ones will bind the evil and return the light of peace to the world...",
-                /*french*/"Ensemble avec le Héros du Temps, ces Sages emprisonneront le mal et réinstaureront la lumière de paix dans le monde...",
-               /*spanish*/"Con el Héroe del Tiempo, aquellos que despierten detendrán el mal y volverán al mundo de luz la paz..."},
+                     Text{"Together with the Hero of Time, the&awakened ones will bind the evil and&return the light of peace to the world...",
+                /*french*/"Ensemble avec le Héros du Temps,&ces Sages emprisonneront le mal et&réinstaureront la lumière de paix dans&le monde...",
+               /*spanish*/"Con el Héroe del Tiempo, aquellos&que despierten detendrán el mal y&volverán al mundo de luz la paz..."},
     });
 
     /*--------------------------

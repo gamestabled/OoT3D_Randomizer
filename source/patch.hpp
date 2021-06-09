@@ -6,6 +6,7 @@
 #include "patch_symbols.hpp"
 #include "../code/src/settings.h"
 #include "../code/src/item_override.h"
+#include "../code/src/spoiler_data.h"
 
 #define V_TO_P(addr) (addr - 0x100000)
 #define P_TO_V(offset) (offset + 0x100000)

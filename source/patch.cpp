@@ -3,6 +3,7 @@
 #include "cosmetics.hpp"
 #include "custom_messages.hpp"
 #include "shops.hpp"
+#include "spoiler_log.hpp"
 
 #include <array>
 #include <cstring>
@@ -181,6 +182,40 @@ bool WritePatch() {
     return false;
   }
   totalRW += sizeof(SettingsContext);
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
+
+  /*-------------------------
+  |       gSpoilerData      |
+  --------------------------*/
+
+  //get the spoiler data
+  const SpoilerData &spoilerData = GetSpoilerData();
+
+  //write spoiler data address to code
+  patchOffset = V_TO_P(GSPOILERDATA_ADDR);
+  buf[0] = (patchOffset >> 16) & 0xFF;
+  buf[1] = (patchOffset >> 8) & 0xFF;
+  buf[2] = (patchOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  //Write spoiler data size to code
+  const u32 spoilerSize = sizeof(SpoilerData);
+  buf[0] = (spoilerSize >> 8) & 0xFF;
+  buf[1] = (spoilerSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  //write spoiler data to code
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &spoilerData, sizeof(spoilerData), FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += sizeof(SpoilerData);
   CitraPrint(std::to_string(totalRW));
   sleep(0.1);
 
@@ -537,8 +572,8 @@ bool WritePatch() {
       fread(buffer.data(), 1, buffer.size(), file.get());
 
       // edit assets as needed
-      const size_t adultTunicOffsetInZAR = 0x101F8;
-      const size_t childTunicOffsetInZAR = 0x1E7D8;
+      const size_t adultTunicOffsetInZAR = 0x1021C;
+      const size_t childTunicOffsetInZAR = 0x1E7FC;
 
       WriteFloatToBuffer(buffer, kokiriTunicColor.r, adultTunicOffsetInZAR + 0x70);
       WriteFloatToBuffer(buffer, kokiriTunicColor.g, adultTunicOffsetInZAR + 0x98);
