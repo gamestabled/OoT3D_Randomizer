@@ -128,13 +128,14 @@ ItemOverride ItemOverride_Lookup(Actor* actor, u8 scene, u8 itemId) {
 static void ItemOverride_Activate(ItemOverride override) {
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
+    u8 looksLikeItemId = override.value.looksLikeItemId;
 
     rActiveItemOverride = override;
     rActiveItemRow = itemRow;
     rActiveItemActionId = itemRow->actionId;
     rActiveItemTextId = itemRow->textId;
     rActiveItemObjectId = itemRow->objectId;
-    rActiveItemGraphicId = itemRow->graphicId;
+    rActiveItemGraphicId = looksLikeItemId ? ItemTable_GetItemRow(looksLikeItemId)->graphicId : itemRow->graphicId;
     rActiveItemFastChest = itemRow->chestType & 0x01;
 }
 

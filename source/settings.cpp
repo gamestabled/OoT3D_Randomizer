@@ -565,8 +565,9 @@ namespace Settings {
   std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOptionText();
   std::string finalGoldGauntletsColor   = GoldGauntletsColor.GetSelectedOptionText();
 
-  Option ColoredKeys = Option::Bool("Colored Keys",         {"Off", "On"},   {coloredKeysDesc}, OptionCategory::Cosmetic);
-  Option MirrorWorld = Option::Bool("Mirror World",         {"Off", "On"},   {mirrorWorldDesc}, OptionCategory::Cosmetic);
+  Option ColoredKeys =     Option::Bool("Colored Small Keys", {"Off", "On"}, {coloredKeysDesc},     OptionCategory::Cosmetic);
+  Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc}, OptionCategory::Cosmetic);
+  Option MirrorWorld =     Option::Bool("Mirror World",       {"Off", "On"}, {mirrorWorldDesc},     OptionCategory::Cosmetic);
 
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
@@ -577,6 +578,7 @@ namespace Settings {
     &SilverGauntletsColor,
     &GoldGauntletsColor,
     &ColoredKeys,
+    &ColoredBossKeys,
     &MirrorWorld,
   };
 
@@ -715,6 +717,7 @@ namespace Settings {
     ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
     ctx.coloredKeys          = (ColoredKeys) ? 1 : 0;
+    ctx.coloredBossKeys      = (ColoredBossKeys) ? 1 : 0;
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 

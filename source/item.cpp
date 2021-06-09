@@ -5,6 +5,7 @@
 #include "logic.hpp"
 #include "random.hpp"
 #include "item_pool.hpp"
+#include "settings.hpp"
 #include "../code/src/item_override.h"
 
 Item::Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_)
@@ -51,6 +52,9 @@ ItemOverride_Value Item::Value() const {
     val.itemId = getItemId;
     if (getItemId == GI_ICE_TRAP) {
         val.looksLikeItemId = RandomElement(IceTrapModels);
+    }
+    if (!Settings::ColoredBossKeys && (getItemId >= 0x95 && getItemId <= 0x9A)) { //Boss keys
+        val.looksLikeItemId = GI_KEY_BOSS;
     }
     if (type == ITEMTYPE_SHOP) {
         // With the current shopsanity implementation, we need a way to detect

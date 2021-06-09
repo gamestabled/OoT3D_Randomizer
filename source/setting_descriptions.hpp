@@ -200,6 +200,7 @@ extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
 
 extern string_view coloredKeysDesc;
+extern string_view coloredBossKeysDesc;
 
 extern string_view mirrorWorldDesc;
 
