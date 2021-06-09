@@ -44,6 +44,23 @@ public:
         return !operator==(right);
     }
 
+    Text Replace(std::string oldStr, std::string newStr) {
+
+        std::string newEnglish = english;
+        std::string newFrench = french;
+        std::string newSpanish = spanish;
+
+        for (std::string* str : {&newEnglish, &newFrench, &newSpanish}) {
+            size_t position = str->find(oldStr);
+            while (position != std::string::npos) {
+              str->replace(position, oldStr.length(), newStr);
+              position = str->find(oldStr);
+            }
+        }
+
+        return Text(newEnglish, newFrench, newSpanish);
+    }
+
     std::string english = "";
     std::string french = "";
     std::string spanish = "";
