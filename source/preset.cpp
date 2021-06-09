@@ -97,22 +97,14 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
         continue;
       }
 
-      // Create the <setting> element
-      XMLElement* newSetting = preset.NewElement("setting");
+      XMLElement* newSetting = rootNode->InsertNewChildElement("setting");
       newSetting->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
       newSetting->SetText(setting->GetSelectedOptionText().c_str());
-
-      // Append it to the root node
-      rootNode->InsertEndChild(newSetting);
     }
   }
 
-  const std::string filepath = PresetPath(presetName, category);
-  XMLError e = preset.SaveFile(filepath.c_str());
-  if (e != XML_SUCCESS) {
-    return false;
-  }
-  return true;
+  XMLError e = preset.SaveFile(PresetPath(presetName, category).c_str());
+  return e == XML_SUCCESS;
 }
 
 //Read the preset XML file
