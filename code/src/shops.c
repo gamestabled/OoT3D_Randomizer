@@ -187,6 +187,11 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
             cmb = (void*)(((char*)ZARBuf) + 0x74);
             CustomModel_ApplyColorEditsToSmallKey(cmb, special);
             break;
+        case OBJECT_CUSTOM_BOSS_KEYS:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_BOSS_KEYS)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0x78);
+            CustomModel_SetBossKeyToRGBA565(cmb);
+            break;
         case OBJECT_CUSTOM_DOUBLE_DEFENSE:
             ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_DOUBLE_DEFENSE)->zarInfo.buf;
             cmb = (void*)(((char*)ZARBuf) + 0xA4);
@@ -206,6 +211,11 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
         item->model->unk_0C->curFrame = special;
     } else if (objectId == OBJECT_CUSTOM_ADULT_SONGS) {
         Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
+        item->model->unk_0C->animSpeed = 0.0f;
+        item->model->unk_0C->animMode = 0;
+        item->model->unk_0C->curFrame = special;
+    } else if (objectId == OBJECT_CUSTOM_BOSS_KEYS) {
+        Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
         item->model->unk_0C->animSpeed = 0.0f;
         item->model->unk_0C->animMode = 0;
         item->model->unk_0C->curFrame = special;

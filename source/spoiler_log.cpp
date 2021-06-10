@@ -15,48 +15,50 @@
 #include <cstring>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace {
   std::string placementtxt;
 
   constexpr std::array<std::string_view, 32> hashIcons = {
-    "Deku Stick",
-    "Deku Nut",
-    "Bow",
-    "Slingshot",
-    "Fairy Ocarina",
-    "Bombchu",
-    "Longshot",
-    "Boomerang",
-    "Lens of Truth",
-    "Beans",
-    "Megaton Hammer",
-    "Bottled Fish",
-    "Bottled Milk",
-    "Mask of Truth",
-    "SOLD OUT",
-    "Cucco",
-    "Mushroom",
-    "Saw",
-    "Frog",
-    "Master Sword",
-    "Mirror Shield",
-    "Kokiri Tunic",
-    "Hover Boots",
-    "Silver Gauntlets",
-    "Gold Scale",
-    "Shard of Agony",
-    "Skull Token",
-    "Heart Container",
-    "Boss Key",
-    "Compass",
-    "Map",
-    "Big Magic",
+      "Deku Stick",
+      "Deku Nut",
+      "Bow",
+      "Slingshot",
+      "Fairy Ocarina",
+      "Bombchu",
+      "Longshot",
+      "Boomerang",
+      "Lens of Truth",
+      "Beans",
+      "Megaton Hammer",
+      "Bottled Fish",
+      "Bottled Milk",
+      "Mask of Truth",
+      "SOLD OUT",
+      "Cucco",
+      "Mushroom",
+      "Saw",
+      "Frog",
+      "Master Sword",
+      "Mirror Shield",
+      "Kokiri Tunic",
+      "Hover Boots",
+      "Silver Gauntlets",
+      "Gold Scale",
+      "Shard of Agony",
+      "Skull Token",
+      "Heart Container",
+      "Boss Key",
+      "Compass",
+      "Map",
+      "Big Magic",
   };
 }
 
 static RandomizerHash randomizerHash;
+static SpoilerData spoilerData;
 
 void GenerateHash() {
   for (size_t i = 0; i < randomizerHash.size(); i++) {
@@ -64,6 +66,9 @@ void GenerateHash() {
     Settings::hashIconIndexes[i] = iconIndex;
     randomizerHash[i] = hashIcons[iconIndex];
   }
+
+  // Clear out spoiler log data here, in case we aren't going to re-generate it
+  spoilerData = { 0 };
 }
 
 const RandomizerHash& GetRandomizerHash() {
@@ -80,6 +85,10 @@ const std::string GetRandomizerHashAsString() {
   return hash;
 }
 
+const SpoilerData& GetSpoilerData() {
+  return spoilerData;
+}
+
 static auto GetGeneralPath() {
   return "/3ds/" + Settings::seed + " (" + GetRandomizerHashAsString() + ")";
 }
@@ -90,6 +99,78 @@ static auto GetSpoilerLogPath() {
 
 static auto GetPlacementLogPath() {
   return GetGeneralPath() + "-placementlog.xml";
+}
+
+static void WriteIngameSpoilerLog() {
+  u16 spoilerItemIndex = 0;
+  u32 spoilerStringOffset = 0;
+  bool spoilerOutOfSpace = false;
+
+  // Create map of string data offsets for all _unique_ item locations and names in the playthrough
+  // Some item names, like gold skulltula tokens, can appear many times in a playthrough
+  std::unordered_map<LocationKey, u16> itemLocationsMap; // Map of LocationKey to an index into spoiler data item locations
+  itemLocationsMap.reserve(allLocations.size());
+  std::unordered_map<std::string, u16> stringOffsetMap; // Map of strings to their offset into spoiler string data array
+  stringOffsetMap.reserve(allLocations.size() * 2);
+
+  for (const LocationKey key : allLocations) {
+    auto loc = Location(key);
+
+    auto locName = loc->GetName();
+    if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
+      if (spoilerStringOffset + locName.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
+        spoilerOutOfSpace = true;
+        break;
+      } else {
+        stringOffsetMap[locName] = spoilerStringOffset;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locName.c_str()) + 1;
+      }
+    }
+
+    auto locItem = loc->GetPlacedItemName();
+    if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
+      if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
+        spoilerOutOfSpace = true;
+        break;
+      } else {
+        stringOffsetMap[locItem] = spoilerStringOffset;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locItem.c_str()) + 1;
+      }
+    }
+
+    spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = stringOffsetMap[locName];
+    spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = stringOffsetMap[locItem];
+    itemLocationsMap[key] = spoilerItemIndex++;
+  }
+  spoilerData.ItemLocationsCount = spoilerItemIndex;
+
+  bool playthroughItemNotFound = false;
+  // Write playthrough data to in-game spoiler log
+  if (!spoilerOutOfSpace) {
+    for (uint i = 0; i < playthroughLocations.size(); i++) {
+      if (i >= SPOILER_SPHERES_MAX) {
+        spoilerOutOfSpace = true;
+        break;
+      }
+      for (uint loc = 0; loc < playthroughLocations[i].size(); ++loc) {
+        if (loc >= SPOILER_SPHERE_ITEM_LOCATIONS_MAX) {
+          spoilerOutOfSpace = true;
+          break;
+        }
+
+        const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
+        if (foundItemLoc != itemLocationsMap.end()) {
+          spoilerData.Spheres[i].ItemLocations[loc] = foundItemLoc->second;
+        } else {
+          playthroughItemNotFound = true;
+        }
+        ++spoilerData.Spheres[i].ItemCount;
+      }
+      ++spoilerData.SphereCount;
+    }
+  }
+
+  if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
 }
 
 // Writes the location to the specified node.
@@ -136,10 +217,10 @@ static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll
   for (const MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic, starting inventory, or exclude location menus yet
     if (menu->name == "Detailed Logic Settings"
-      || menu->name == "Starting Inventory"
-      || menu->name == "Exclude Locations"
-      || menu->mode != OPTION_SUB_MENU
-    ) {
+        || menu->name == "Starting Inventory"
+        || menu->name == "Exclude Locations"
+        || menu->mode != OPTION_SUB_MENU
+        ) {
       continue;
     }
 
@@ -296,6 +377,8 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
 }
 
 bool SpoilerLog_Write() {
+  WriteIngameSpoilerLog();
+
   auto spoilerLog = tinyxml2::XMLDocument();
   spoilerLog.InsertEndChild(spoilerLog.NewDeclaration());
 
