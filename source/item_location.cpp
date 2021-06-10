@@ -1397,6 +1397,7 @@ std::vector<LocationKey> everyPossibleLocation = {};
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 
 std::vector<std::vector<LocationKey>> playthroughLocations;
+std::vector<LocationKey> wothLocations;
 bool playthroughBeatable = false;
 
 u16 itemsPlaced = 0;

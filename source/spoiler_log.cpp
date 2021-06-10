@@ -322,7 +322,15 @@ bool SpoilerLog_Write() {
       logtxt += '\n';
     }
   }
+  //Write list of woth locations
+  logtxt += "Way of the Hero Locations:\n";
+  for (const LocationKey location : wothLocations) {
+    logtxt += "\t";
+    SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
+    logtxt += '\n';
+  }
   playthroughLocations.clear();
+  wothLocations.clear();
   playthroughBeatable = false;
 
   //Write Hints

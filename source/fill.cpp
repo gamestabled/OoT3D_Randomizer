@@ -331,6 +331,35 @@ static void PareDownPlaythrough() {
   for (LocationKey loc : toAddBackItem) {
     Location(loc)->SaveDelayedItem();
   }
+}
+
+//Very similar to PareDownPlaythrough except it creates the list of Way of the Hero items
+//Way of the Hero items are more specific than playthrough items in that they are items which *must*
+// be obtained to logically be able to complete the seed, rather than playthrough items which 
+// are just possible items you *can* collect to complete the seed.
+static void CalculateWotH() {
+  //First copy locations from the 2-dimensional playthroughLocations into the 1-dimensional wothLocations
+  for (size_t i = 0; i < playthroughLocations.size(); i++) {
+    for (size_t j = 0; j < playthroughLocations[i].size(); j++) {
+      wothLocations.push_back(playthroughLocations[i][j]);
+    }
+  }
+
+  //Now go through and check each location, seeing if it is strictly necessary for game completion
+  for (size_t i = 0; i < wothLocations.size(); i++) {
+    LocationKey loc = wothLocations[i];
+    ItemKey copy = Location(loc)->GetPlacedItemKey(); //Copy out item
+    Location(loc)->SetPlacedItem(NONE); //Write in empty item
+    playthroughBeatable = false;
+    LogicReset();
+    GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
+    Location(loc)->SetPlacedItem(copy); //Immediately put item back
+    //If removing this item and no other item caused the game to become unbeatable, then it is strictly necessary, so keep it
+    //Else, delete from wothLocations
+    if (playthroughBeatable) {
+      wothLocations.erase(wothLocations.begin() + i);
+    }
+  }
 
   playthroughBeatable = true;
   //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
@@ -739,6 +768,7 @@ int Fill() {
       printf("Done");
       printf("\x1b[9;10HCalculating Playthrough...");
       PareDownPlaythrough();
+      CalculateWotH();
       printf("Done");
       CreateOverrides();
       CreateAlwaysIncludedMessages();
@@ -755,6 +785,7 @@ int Fill() {
       Exits::ResetAllLocations();
       LogicReset();
       playthroughLocations.clear();
+      wothLocations.clear();
     }
     retries++;
   }
