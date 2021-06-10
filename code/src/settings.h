@@ -305,6 +305,7 @@ typedef struct {
 
   u8 customTunicColors;
   u8 coloredKeys;
+  u8 coloredBossKeys;
   u8 mirrorWorld;
 
   u8 dekuTreeDungeonMode;

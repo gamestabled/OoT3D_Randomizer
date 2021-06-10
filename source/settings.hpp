@@ -476,6 +476,7 @@ namespace Settings {
   extern std::string finalGoldGauntletsColor;
 
   extern Option ColoredKeys;
+  extern Option ColoredBossKeys;
   extern Option MirrorWorld;
 
   extern u32 LinksPocketRewardBitMask;

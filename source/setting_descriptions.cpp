@@ -568,10 +568,11 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
 string_view coloredKeysDesc           = "If set, small key models will be colored\n"       //
                                         "differently depending on which dungeon they can be"
                                         "used in. Forest Temple keys are green. Fire Temple"
-                                        "keys are red. etc.\n"                             //
-                                        "\n"                                               //
-                                        "It may be hard to tell some colors apart if you\n"//
-                                        "are colorblind.";                                 //
+                                        "keys are red. etc.";                              //
+string_view coloredBossKeysDesc       = "If set, boss key models will be colored\n"        //
+                                        "differently depending on which dungeon they can be"
+                                        "used in. The Forest Temple boss key is green. The "
+                                        "Fire Temple boss key is red. etc.";               //
 /*------------------------------                                                           //
 |         MIRROR WORLD         |                                                           //
 ------------------------------*/                                                           //

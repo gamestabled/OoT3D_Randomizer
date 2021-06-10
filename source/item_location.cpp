@@ -89,7 +89,7 @@ void LocationTable_Init() {
     locationTable[MARKET_BOMBCHU_BOWLING_BOMBCHUS]       = ItemLocation::Base       (0x4B, 0xFF, "MK Bombchu Bowling Bombchus",          NONE,                                  {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
     locationTable[MARKET_LOST_DOG]                       = ItemLocation::Base       (0x35, 0x3E, "MK Lost Dog",                          MARKET_LOST_DOG,                       {Category::cInnerMarket, Category::cMarket,});
     locationTable[MARKET_SHOOTING_GALLERY_REWARD]        = ItemLocation::Base       (0x42, 0x60, "MK Shooting Gallery",                  MARKET_SHOOTING_GALLERY_REWARD,        {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
-    locationTable[MARKET_10_BIG_POES]                    = ItemLocation::Base       (0x4D, 0x0F, "MK 10 Big Poes",                       MARKET_10_BIG_POES,                    {Category::cInnerMarket, Category::cHyruleCastle,});
+    locationTable[MARKET_10_BIG_POES]                    = ItemLocation::Base       (0x4D, 0x0F, "MK 10 Big Poes",                       MARKET_10_BIG_POES,                    {Category::cInnerMarket, Category::cMarket,});
 
     //Hyrule Castle
     locationTable[HC_MALON_EGG]                          = ItemLocation::Base       (0x5F, 0x47, "HC Malon Egg",                         HC_MALON_EGG,                          {Category::cHyruleCastle, Category::cMarket,});

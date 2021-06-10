@@ -85,12 +85,10 @@ void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
 }
 
 void CustomModel_ApplyColorEditsToSmallKey(void* smallKeyCMB, s32 keyType) {
-    if (gSettingsContext.coloredKeys == ON) {
-        char* BASE_ = (char*)smallKeyCMB;
+    char* BASE_ = (char*)smallKeyCMB;
 
-        for (s32 i = 0; i < 7; i++) {
-            EDIT_BYTE(0x12C + i, SmallKeyData[keyType][i]);
-        }
+    for (s32 i = 0; i < 7; i++) {
+        EDIT_BYTE(0x12C + i, SmallKeyData[keyType][i]);
     }
 }
 
@@ -138,6 +136,14 @@ void CustomModel_SetOcarinaToRGBA565(void* ocarinaCMB) {
     char* BASE_ = (char*)ocarinaCMB;
 
     EDIT_BYTE(0x3F2, 0x01); EDIT_BYTE(0x3F8, 0x5A);
+}
+
+void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB) {
+    char* BASE_ = (char*)bossKeyCMB;
+
+    EDIT_BYTE(0x43D, 0x10);
+    EDIT_BYTE(0x442, 0x01); EDIT_BYTE(0x448, 0x5B);
+    EDIT_BYTE(0x44A, 0x00); EDIT_BYTE(0x44B, 0x00);
 }
 
 void CustomModel_Update(void) {

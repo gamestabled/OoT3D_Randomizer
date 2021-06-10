@@ -128,13 +128,14 @@ ItemOverride ItemOverride_Lookup(Actor* actor, u8 scene, u8 itemId) {
 static void ItemOverride_Activate(ItemOverride override) {
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
+    u8 looksLikeItemId = override.value.looksLikeItemId;
 
     rActiveItemOverride = override;
     rActiveItemRow = itemRow;
     rActiveItemActionId = itemRow->actionId;
     rActiveItemTextId = itemRow->textId;
     rActiveItemObjectId = itemRow->objectId;
-    rActiveItemGraphicId = itemRow->graphicId;
+    rActiveItemGraphicId = looksLikeItemId ? ItemTable_GetItemRow(looksLikeItemId)->graphicId : itemRow->graphicId;
     rActiveItemFastChest = itemRow->chestType & 0x01;
 }
 
@@ -364,6 +365,10 @@ void ItemOverride_EditDrawGetItemBeforeModelSpawn(void) {
             cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0x74);
             CustomModel_ApplyColorEditsToSmallKey(cmb, rActiveItemRow->special);
             break;
+        case GID_CUSTOM_BOSS_KEYS:
+            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0x78);
+            CustomModel_SetBossKeyToRGBA565(cmb);
+            break;
     }
 }
 
@@ -380,6 +385,13 @@ void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) 
             break;
         case GID_CUSTOM_ADULT_SONGS:
             cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
+            TexAnim_Spawn(model->unk_0C, cmabMan);
+            model->unk_0C->animSpeed = 0.0f;
+            model->unk_0C->animMode = 0;
+            model->unk_0C->curFrame = rActiveItemRow->special;
+            break;
+        case GID_CUSTOM_BOSS_KEYS:
+            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
             TexAnim_Spawn(model->unk_0C, cmabMan);
             model->unk_0C->animSpeed = 0.0f;
             model->unk_0C->animMode = 0;
