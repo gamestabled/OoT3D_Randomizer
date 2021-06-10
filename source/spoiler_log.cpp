@@ -196,14 +196,36 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
 }
 
 // Writes the location to the specified node.
-static void WriteLocation(tinyxml2::XMLElement* parentNode, const LocationKey locationKey) {
+static void WriteLocation(
+    tinyxml2::XMLElement* parentNode,
+    const LocationKey locationKey,
+    const bool withPadding = false
+) {
+  constexpr int16_t LONGEST_NAME = 56; // The longest name of a location.
+  constexpr int16_t PRICE_ATTRIBUTE = 12; // Length of a 3-digit price attribute.
   ItemLocation* location = Location(locationKey);
 
   auto node = parentNode->InsertNewChildElement("location");
   node->SetAttribute("name", location->GetName().c_str());
   node->SetText(location->GetPlacedItemName().c_str());
+
+  if (withPadding) {
+    // Insert a padding so we get a kind of table in the XML document.
+    int16_t requiredPadding = LONGEST_NAME - location->GetName().length();
+    if (location->IsCategory(Category::cShop)) {
+      // Shop items have short location names, but come with an additional price attribute.
+      requiredPadding -= PRICE_ATTRIBUTE;
+    }
+    if (requiredPadding >= 0) {
+      std::string padding(requiredPadding, ' ');
+      node->SetAttribute("_", padding.c_str());
+    }
+  }
+
   if (location->IsCategory(Category::cShop)) {
-    node->SetAttribute("price", location->GetPrice());
+    char price[6];
+    sprintf(price, "%03d", location->GetPrice());
+    node->SetAttribute("price", price);
   }
   if (!location->IsAddedToPool()) {
     node->SetAttribute("not-added", true);
@@ -337,7 +359,7 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
     sphereNode->SetAttribute("level", i + 1);
 
     for (const LocationKey key : playthroughLocations[i]) {
-      WriteLocation(sphereNode, key);
+      WriteLocation(sphereNode, key, true);
     }
   }
 
@@ -370,7 +392,7 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("all-locations");
 
   for (const LocationKey key : allLocations) {
-    WriteLocation(parentNode, key);
+    WriteLocation(parentNode, key, true);
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);
