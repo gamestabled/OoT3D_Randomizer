@@ -74,10 +74,12 @@ const RandomizerHash& GetRandomizerHash() {
 }
 
 static auto GetGeneralPath() {
-  std::string path = "/3ds/" + Settings::seed;
-  for (const auto& str : randomizerHash)
-    path += str;
-  return path;
+  std::string path = "/3ds/" + Settings::seed + " (";
+  for (const auto& str : randomizerHash) {
+    path += str + ", ";
+  }
+  path.erase(path.length() - 2); // Erase last comma
+  return path + ")";
 }
 
 
