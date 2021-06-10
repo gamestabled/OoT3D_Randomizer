@@ -33,7 +33,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[FIRE_ARROWS]                       = Item(Text{"Fire Arrows",     "Flèche de feu",          "Flecha de fuego"},       ITEMTYPE_ITEM,  GI_ARROW_FIRE,     true,       &FireArrows,    FIRE_ARROWS);
     itemTable[ICE_ARROWS]                        = Item(Text{"Ice Arrows",      "Flèche de glace",        "Flecha de hielo"},       ITEMTYPE_ITEM,  GI_ARROW_ICE,      true,       &IceArrows,     ICE_ARROWS);
     itemTable[LIGHT_ARROWS]                      = Item(Text{"Light Arrows",    "Flèche de lumière",      "Flecha de luz"},         ITEMTYPE_ITEM,  GI_ARROW_LIGHT,    true,       &LightArrows,   LIGHT_ARROWS);
-    itemTable[GERUDO_TOKEN]                      = Item(Text{"Gerudo Token",    "Carte Gerudo",           ""},  ITEMTYPE_ITEM,  GI_GERUDO_CARD,    true,       &GerudoToken,   GERUDO_TOKEN);
+    itemTable[GERUDO_TOKEN]                      = Item(Text{"Gerudo Token",    "Carte Gerudo",           "Pase de socio gerudo"},  ITEMTYPE_ITEM,  GI_GERUDO_CARD,    true,       &GerudoToken,   GERUDO_TOKEN);
     itemTable[MAGIC_BEAN]                        = Item(Text{"Magic Bean",      "Haricot magique",        "Habichuelas mágicas"},   ITEMTYPE_ITEM,  GI_BEAN,           true,       &MagicBean,     MAGIC_BEAN);
     itemTable[MAGIC_BEAN_PACK]                   = Item(Text{"Magic Bean Pack", "Haricot magique",        "Habichuelas mágicas"},   ITEMTYPE_ITEM,  0xC9,              true,       &MagicBeanPack, MAGIC_BEAN_PACK);
     itemTable[DOUBLE_DEFENSE]                    = Item(Text{"Double Defense",  "Double défence",         "Doble poder defensivo"}, ITEMTYPE_ITEM,  0xB8,              true,       &noVariable,    DOUBLE_DEFENSE);
@@ -75,7 +75,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[BOTTLE_WITH_FAIRY]                 = Item(Text{"Bottle with Fairy",        "Flacon avec une fée",    "Hada en una botella"},     ITEMTYPE_ITEM,     0x8F, true, &HasBottle, BOTTLE_WITH_FAIRY);
     itemTable[BOTTLE_WITH_FISH]                  = Item(Text{"Bottle with Fish",         "Flacon avec un poisson", "Pez en una botella"},      ITEMTYPE_ITEM,     0x90, true, &HasBottle, BOTTLE_WITH_FISH);
     itemTable[BOTTLE_WITH_BLUE_FIRE]             = Item(Text{"Bottle with Blue Fire",    "Flacon de flamme bleue", "Botella de fuego azul"},   ITEMTYPE_ITEM,     0x91, true, &HasBottle, BOTTLE_WITH_BLUE_FIRE);
-    itemTable[BOTTLE_WITH_BUGS]                  = Item(Text{"Bottle with Bugs",         "Flacon d’insectes",      "Insectos en una botella"}, ITEMTYPE_ITEM,     0x92, true, &HasBottle, BOTTLE_WITH_BUGS);
+    itemTable[BOTTLE_WITH_BUGS]                  = Item(Text{"Bottle with Bugs",         "Flacon d'insectes",      "Insectos en una botella"}, ITEMTYPE_ITEM,     0x92, true, &HasBottle, BOTTLE_WITH_BUGS);
     itemTable[BOTTLE_WITH_POE]                   = Item(Text{"Bottle with Poe",          "Flacon avec un Esprit",  "Poe en una botella"},      ITEMTYPE_ITEM,     0x94, true, &HasBottle, BOTTLE_WITH_POE);
 
     //Special bottles that can't immediately dump contents
@@ -84,55 +84,55 @@ void ItemTable_Init() {                                   //English name      Fr
 
     //Songs
     itemTable[ZELDAS_LULLABY]                    = Item(Text{"Zelda's Lullaby",    "Berceuse de Zelda",     "Nana de Zelda"},          ITEMTYPE_SONG,     0xC1, true, &ZeldasLullaby,    ZELDAS_LULLABY);
-    itemTable[EPONAS_SONG]                       = Item(Text{"Epona's Song",       "Chant d’Épona",         "Canción de Epona"},       ITEMTYPE_SONG,     0xC2, true, &EponasSong,       EPONAS_SONG);
+    itemTable[EPONAS_SONG]                       = Item(Text{"Epona's Song",       "Chant d'Épona",         "Canción de Epona"},       ITEMTYPE_SONG,     0xC2, true, &EponasSong,       EPONAS_SONG);
     itemTable[SARIAS_SONG]                       = Item(Text{"Saria's Song",       "Chant de Saria",        "Canción de Saria"},       ITEMTYPE_SONG,     0xC3, true, &SariasSong,       SARIAS_SONG);
     itemTable[SUNS_SONG]                         = Item(Text{"Sun's Song",         "Chant du soleil",       "Canción del Sol"},        ITEMTYPE_SONG,     0xC4, true, &SunsSong,         SUNS_SONG);
     itemTable[SONG_OF_TIME]                      = Item(Text{"Song of Time",       "Chant du temps",        "Canción del tiempo"},     ITEMTYPE_SONG,     0xC5, true, &SongOfTime,       SONG_OF_TIME);
     itemTable[SONG_OF_STORMS]                    = Item(Text{"Song of Storms",     "Chant des tempêtes",    "Canción de la tormenta"}, ITEMTYPE_SONG,     0xC6, true, &SongOfStorms,     SONG_OF_STORMS);
     itemTable[MINUET_OF_FOREST]                  = Item(Text{"Minuet of Forest",   "Menuet de la forêt",    "Minueto del bosque"},     ITEMTYPE_SONG,     0xBB, true, &MinuetOfForest,   MINUET_OF_FOREST);
     itemTable[BOLERO_OF_FIRE]                    = Item(Text{"Bolero of Fire",     "Boléro du feu",         "Bolero del fuego"},       ITEMTYPE_SONG,     0xBC, true, &BoleroOfFire,     BOLERO_OF_FIRE);
-    itemTable[SERENADE_OF_WATER]                 = Item(Text{"Serenade of Water",  "Sérénade de l’eau",     "Serenata del agua"},      ITEMTYPE_SONG,     0xBD, true, &SerenadeOfWater,  SERENADE_OF_WATER);
+    itemTable[SERENADE_OF_WATER]                 = Item(Text{"Serenade of Water",  "Sérénade de l'eau",     "Serenata del agua"},      ITEMTYPE_SONG,     0xBD, true, &SerenadeOfWater,  SERENADE_OF_WATER);
     itemTable[REQUIEM_OF_SPIRIT]                 = Item(Text{"Requiem of Spirit",  "Requiem des esprits",   "Réquiem del espíritu"},   ITEMTYPE_SONG,     0xBE, true, &RequiemOfSpirit,  REQUIEM_OF_SPIRIT);
-    itemTable[NOCTURNE_OF_SHADOW]                = Item(Text{"Nocturne of Shadow", "Nocturne de l’ombre",   "Nocturno de la sombra"},  ITEMTYPE_SONG,     0xBF, true, &NocturneOfShadow, NOCTURNE_OF_SHADOW);
+    itemTable[NOCTURNE_OF_SHADOW]                = Item(Text{"Nocturne of Shadow", "Nocturne de l'ombre",   "Nocturno de la sombra"},  ITEMTYPE_SONG,     0xBF, true, &NocturneOfShadow, NOCTURNE_OF_SHADOW);
     itemTable[PRELUDE_OF_LIGHT]                  = Item(Text{"Prelude of Light",   "Prélude de la lumière", "Preludio de la luz"},     ITEMTYPE_SONG,     0xC0, true, &PreludeOfLight,   PRELUDE_OF_LIGHT);
 
     //Maps and Compasses
-    itemTable[DEKU_TREE_MAP]                     = Item(Text{"Deku Tree Map",          "Carte de l’arbre Mojo",        "Mapa del Gran Árbol Deku"},         ITEMTYPE_MAP,      0xA5, false, &noVariable, MAP);
+    itemTable[DEKU_TREE_MAP]                     = Item(Text{"Deku Tree Map",          "Carte de l'arbre Mojo",        "Mapa del Gran Árbol Deku"},         ITEMTYPE_MAP,      0xA5, false, &noVariable, MAP);
     itemTable[DODONGOS_CAVERN_MAP]               = Item(Text{"Dodongo's Cavern Map",   "Carte de la caverne Dodongo",  "Mapa de la cueva de los Dodongos"}, ITEMTYPE_MAP,      0xA6, false, &noVariable, MAP);
     itemTable[JABU_JABUS_BELLY_MAP]              = Item(Text{"Jabu Jabu's Belly Map",  "Carte du ventre de Jabu-Jabu", "Mapa de la tripa de Jabu-Jabu"},    ITEMTYPE_MAP,      0xA7, false, &noVariable, MAP);
     itemTable[FOREST_TEMPLE_MAP]                 = Item(Text{"Forest Temple Map",      "Carte du temple de la forêt",  "Mapa del Templo del Bosque"},       ITEMTYPE_MAP,      0xA8, false, &noVariable, MAP);
     itemTable[FIRE_TEMPLE_MAP]                   = Item(Text{"Fire Temple Map",        "Carte du temple du feu",       "Mapa del Templo del Fuego"},        ITEMTYPE_MAP,      0xA9, false, &noVariable, MAP);
-    itemTable[WATER_TEMPLE_MAP]                  = Item(Text{"Water Temple Map",       "Carte du temple de l’eau",     "Mapa del Templo del Agua"},         ITEMTYPE_MAP,      0xAA, false, &noVariable, MAP);
-    itemTable[SPIRIT_TEMPLE_MAP]                 = Item(Text{"Spirit Temple Map",      "Carte du temple de l’esprit",  "Mapa del Templo del Espíritu"},     ITEMTYPE_MAP,      0xAB, false, &noVariable, MAP);
-    itemTable[SHADOW_TEMPLE_MAP]                 = Item(Text{"Shadow Temple Map",      "Carte du temple de l’ombre",   "Mapa del Templo de las Sombras"},   ITEMTYPE_MAP,      0xAC, false, &noVariable, MAP);
+    itemTable[WATER_TEMPLE_MAP]                  = Item(Text{"Water Temple Map",       "Carte du temple de l'eau",     "Mapa del Templo del Agua"},         ITEMTYPE_MAP,      0xAA, false, &noVariable, MAP);
+    itemTable[SPIRIT_TEMPLE_MAP]                 = Item(Text{"Spirit Temple Map",      "Carte du temple de l'esprit",  "Mapa del Templo del Espíritu"},     ITEMTYPE_MAP,      0xAB, false, &noVariable, MAP);
+    itemTable[SHADOW_TEMPLE_MAP]                 = Item(Text{"Shadow Temple Map",      "Carte du temple de l'ombre",   "Mapa del Templo de las Sombras"},   ITEMTYPE_MAP,      0xAC, false, &noVariable, MAP);
     itemTable[BOTTOM_OF_THE_WELL_MAP]            = Item(Text{"Bottom of the Well Map", "Carte du fond du puits",       "Mapa del fondo del pozo"},          ITEMTYPE_MAP,      0xAD, false, &noVariable, MAP);
     itemTable[ICE_CAVERN_MAP]                    = Item(Text{"Ice Cavern Map",         "Carte de la caverne polaire",  "Mapa de la caverna de hielo"},      ITEMTYPE_MAP,      0xAE, false, &noVariable, MAP);
 
-    itemTable[DEKU_TREE_COMPASS]                 = Item(Text{"Deku Tree Compass",          "Boussole de l’arbre Mojo",        "Brújula del Gran Árbol Deku"},         ITEMTYPE_COMPASS,  0x9B, false, &noVariable, COMPASS);
+    itemTable[DEKU_TREE_COMPASS]                 = Item(Text{"Deku Tree Compass",          "Boussole de l'arbre Mojo",        "Brújula del Gran Árbol Deku"},         ITEMTYPE_COMPASS,  0x9B, false, &noVariable, COMPASS);
     itemTable[DODONGOS_CAVERN_COMPASS]           = Item(Text{"Dodongo's Cavern Compass",   "Boussole de la caverne Dodongo",  "Brújula de la cueva de los Dodongos"}, ITEMTYPE_COMPASS,  0x9C, false, &noVariable, COMPASS);
     itemTable[JABU_JABUS_BELLY_COMPASS]          = Item(Text{"Jabu Jabu's Belly Compass",  "Boussole du ventre de Jabu-Jabu", "Brújula de la tripa de Jabu-Jabu"},    ITEMTYPE_COMPASS,  0x9D, false, &noVariable, COMPASS);
     itemTable[FOREST_TEMPLE_COMPASS]             = Item(Text{"Forest Temple Compass",      "Boussole du temple de la forêt",  "Brújula del Templo del Bosque"},       ITEMTYPE_COMPASS,  0x9E, false, &noVariable, COMPASS);
     itemTable[FIRE_TEMPLE_COMPASS]               = Item(Text{"Fire Temple Compass",        "Boussole du temple du feu",       "Brújula del Templo del Fuego"},        ITEMTYPE_COMPASS,  0x9F, false, &noVariable, COMPASS);
-    itemTable[WATER_TEMPLE_COMPASS]              = Item(Text{"Water Temple Compass",       "Boussole du temple de l’eau",     "Brújula del Templo del Agua"},         ITEMTYPE_COMPASS,  0xA0, false, &noVariable, COMPASS);
-    itemTable[SPIRIT_TEMPLE_COMPASS]             = Item(Text{"Spirit Temple Compass",      "Boussole du temple de l’esprit",  "Brújula del Templo del Espíritu"},     ITEMTYPE_COMPASS,  0xA1, false, &noVariable, COMPASS);
-    itemTable[SHADOW_TEMPLE_COMPASS]             = Item(Text{"Shadow Temple Compass",      "Boussole du temple de l’ombre",   "Brújula del Templo de las Sombras"},   ITEMTYPE_COMPASS,  0xA2, false, &noVariable, COMPASS);
+    itemTable[WATER_TEMPLE_COMPASS]              = Item(Text{"Water Temple Compass",       "Boussole du temple de l'eau",     "Brújula del Templo del Agua"},         ITEMTYPE_COMPASS,  0xA0, false, &noVariable, COMPASS);
+    itemTable[SPIRIT_TEMPLE_COMPASS]             = Item(Text{"Spirit Temple Compass",      "Boussole du temple de l'esprit",  "Brújula del Templo del Espíritu"},     ITEMTYPE_COMPASS,  0xA1, false, &noVariable, COMPASS);
+    itemTable[SHADOW_TEMPLE_COMPASS]             = Item(Text{"Shadow Temple Compass",      "Boussole du temple de l'ombre",   "Brújula del Templo de las Sombras"},   ITEMTYPE_COMPASS,  0xA2, false, &noVariable, COMPASS);
     itemTable[BOTTOM_OF_THE_WELL_COMPASS]        = Item(Text{"Bottom of the Well Compass", "Boussole du fond du puits",       "Brújula del fondo del pozo"},          ITEMTYPE_COMPASS,  0xA3, false, &noVariable, COMPASS);
     itemTable[ICE_CAVERN_COMPASS]                = Item(Text{"Ice Cavern Compass",         "Boussole de la caverne polaire",  "Brújula de la caverna de hielo"},      ITEMTYPE_COMPASS,  0xA4, false, &noVariable, COMPASS);
 
     //Boss Keys
     itemTable[FOREST_TEMPLE_BOSS_KEY]            = Item(Text{"Forest Temple Boss Key",  "Clé d'or du temple de la forêt", "Gran llave del Templo del Bosque"},     ITEMTYPE_BOSSKEY,  0x95, true, &BossKeyForestTemple, BOSS_KEY);
     itemTable[FIRE_TEMPLE_BOSS_KEY]              = Item(Text{"Fire Temple Boss Key",    "Clé d'or du temple du feu",      "Gran llave del Templo del Fuego"},      ITEMTYPE_BOSSKEY,  0x96, true, &BossKeyFireTemple,   BOSS_KEY);
-    itemTable[WATER_TEMPLE_BOSS_KEY]             = Item(Text{"Water Temple Boss Key",   "Clé d'or du temple de l’eau",    "Gran llave del Templo del Agua"},       ITEMTYPE_BOSSKEY,  0x97, true, &BossKeyWaterTemple,  BOSS_KEY);
-    itemTable[SPIRIT_TEMPLE_BOSS_KEY]            = Item(Text{"Spirit Temple Boss Key",  "Clé d'or du temple de l’esprit", "Gran llave del Templo del Espíritu"},   ITEMTYPE_BOSSKEY,  0x98, true, &BossKeySpiritTemple, BOSS_KEY);
-    itemTable[SHADOW_TEMPLE_BOSS_KEY]            = Item(Text{"Shadow Temple Boss Key",  "Clé d'or du temple de l’ombre",  "Gran llave del Templo de las Sombras"}, ITEMTYPE_BOSSKEY,  0x99, true, &BossKeyShadowTemple, BOSS_KEY);
+    itemTable[WATER_TEMPLE_BOSS_KEY]             = Item(Text{"Water Temple Boss Key",   "Clé d'or du temple de l'eau",    "Gran llave del Templo del Agua"},       ITEMTYPE_BOSSKEY,  0x97, true, &BossKeyWaterTemple,  BOSS_KEY);
+    itemTable[SPIRIT_TEMPLE_BOSS_KEY]            = Item(Text{"Spirit Temple Boss Key",  "Clé d'or du temple de l'esprit", "Gran llave del Templo del Espíritu"},   ITEMTYPE_BOSSKEY,  0x98, true, &BossKeySpiritTemple, BOSS_KEY);
+    itemTable[SHADOW_TEMPLE_BOSS_KEY]            = Item(Text{"Shadow Temple Boss Key",  "Clé d'or du temple de l'ombre",  "Gran llave del Templo de las Sombras"}, ITEMTYPE_BOSSKEY,  0x99, true, &BossKeyShadowTemple, BOSS_KEY);
     itemTable[GANONS_CASTLE_BOSS_KEY]            = Item(Text{"Ganon's Castle Boss Key", "Clé d'or du château de Ganon",   "Gran llave del Castillo de Ganon"},     ITEMTYPE_BOSSKEY,  0x9A, true, &BossKeyGanonsCastle, GANONS_CASTLE_BOSS_KEY);
 
     //Small Keys
     itemTable[FOREST_TEMPLE_SMALL_KEY]           = Item(Text{"Forest Temple Small Key",           "Petite clé du temple de la forêt",   "Llave pequeña del Templo del Bosque"},            ITEMTYPE_SMALLKEY,          0xAF, true, &ForestTempleKeys,          SMALL_KEY);
     itemTable[FIRE_TEMPLE_SMALL_KEY]             = Item(Text{"Fire Temple Small Key",             "Petite clé du temple du feu",        "Llave pequeña del Templo del Fuego"},             ITEMTYPE_SMALLKEY,          0xB0, true, &FireTempleKeys,            SMALL_KEY);
-    itemTable[WATER_TEMPLE_SMALL_KEY]            = Item(Text{"Water Temple Small Key",            "Petite clé du temple de l’eau",      "Llave pequeña del Templo del Agua"},              ITEMTYPE_SMALLKEY,          0xB1, true, &WaterTempleKeys,           SMALL_KEY);
-    itemTable[SPIRIT_TEMPLE_SMALL_KEY]           = Item(Text{"Spirit Temple Small Key",           "Petite clé du temple de l’esprit",   "Llave pequeña del Templo del Espíritu"},          ITEMTYPE_SMALLKEY,          0xB2, true, &SpiritTempleKeys,          SMALL_KEY);
-    itemTable[SHADOW_TEMPLE_SMALL_KEY]           = Item(Text{"Shadow Temple Small Key",           "Petite clé du temple de l’ombre",    "Llave pequeña del Templo de la Sombras"},         ITEMTYPE_SMALLKEY,          0xB3, true, &ShadowTempleKeys,          SMALL_KEY);
+    itemTable[WATER_TEMPLE_SMALL_KEY]            = Item(Text{"Water Temple Small Key",            "Petite clé du temple de l'eau",      "Llave pequeña del Templo del Agua"},              ITEMTYPE_SMALLKEY,          0xB1, true, &WaterTempleKeys,           SMALL_KEY);
+    itemTable[SPIRIT_TEMPLE_SMALL_KEY]           = Item(Text{"Spirit Temple Small Key",           "Petite clé du temple de l'esprit",   "Llave pequeña del Templo del Espíritu"},          ITEMTYPE_SMALLKEY,          0xB2, true, &SpiritTempleKeys,          SMALL_KEY);
+    itemTable[SHADOW_TEMPLE_SMALL_KEY]           = Item(Text{"Shadow Temple Small Key",           "Petite clé du temple de l'ombre",    "Llave pequeña del Templo de la Sombras"},         ITEMTYPE_SMALLKEY,          0xB3, true, &ShadowTempleKeys,          SMALL_KEY);
     itemTable[BOTTOM_OF_THE_WELL_SMALL_KEY]      = Item(Text{"Bottom of the Well Small Key",      "Petite clé du fond du puits",        "Llave pequeña del fondo del pozo"},               ITEMTYPE_SMALLKEY,          0xB4, true, &BottomOfTheWellKeys,       SMALL_KEY);
     itemTable[GERUDO_TRAINING_GROUNDS_SMALL_KEY] = Item(Text{"Gerudo Training Grounds Small Key", "Petite clé du gymnase Gerudo",       "Llave pequeña del Centro de Instrucción Gerudo"}, ITEMTYPE_SMALLKEY,          0xB5, true, &GerudoTrainingGroundsKeys, SMALL_KEY);
     itemTable[GERUDO_FORTRESS_SMALL_KEY]         = Item(Text{"Gerudo Fortress Small Key",         "Petite clé de la forteresse Gerudo", "Llave pequeña de la Fortaleza Gerudo"},           ITEMTYPE_FORTRESS_SMALLKEY, 0xB6, true, &GerudoFortressKeys,        GERUDO_FORTRESS_SMALL_KEY);
@@ -144,13 +144,13 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[ZORA_SAPPHIRE]                     = Item(Text{"Zora Sapphire",    "Saphir Zora",             "Zafiro de los Zora"},      ITEMTYPE_DUNGEONREWARD, 0xCD,  true, &ZoraSapphire,    ZORA_SAPPHIRE);
     itemTable[FOREST_MEDALLION]                  = Item(Text{"Forest Medallion", "Médaillon de la forêt",   "Medallón del Bosque"},     ITEMTYPE_DUNGEONREWARD, 0xCE,  true, &ForestMedallion, FOREST_MEDALLION);
     itemTable[FIRE_MEDALLION]                    = Item(Text{"Fire Medallion",   "Médaillon du feu",        "Medallón del Fuego"},      ITEMTYPE_DUNGEONREWARD, 0xCF,  true, &FireMedallion,   FIRE_MEDALLION);
-    itemTable[WATER_MEDALLION]                   = Item(Text{"Water Medallion",  "Médaillon de l’eau",      "Medallón del Agua"},       ITEMTYPE_DUNGEONREWARD, 0xD0,  true, &WaterMedallion,  WATER_MEDALLION);
-    itemTable[SPIRIT_MEDALLION]                  = Item(Text{"Spirit Medallion", "Médaillon de l’esprit",   "Medallón del Espíritu"},   ITEMTYPE_DUNGEONREWARD, 0xD1,  true, &SpiritMedallion, SPIRIT_MEDALLION);
-    itemTable[SHADOW_MEDALLION]                  = Item(Text{"Shadow Medallion", "Médaillon de l’ombre",    "Medallón de la Sombra"},   ITEMTYPE_DUNGEONREWARD, 0xD2,  true, &ShadowMedallion, SHADOW_MEDALLION);
+    itemTable[WATER_MEDALLION]                   = Item(Text{"Water Medallion",  "Médaillon de l'eau",      "Medallón del Agua"},       ITEMTYPE_DUNGEONREWARD, 0xD0,  true, &WaterMedallion,  WATER_MEDALLION);
+    itemTable[SPIRIT_MEDALLION]                  = Item(Text{"Spirit Medallion", "Médaillon de l'esprit",   "Medallón del Espíritu"},   ITEMTYPE_DUNGEONREWARD, 0xD1,  true, &SpiritMedallion, SPIRIT_MEDALLION);
+    itemTable[SHADOW_MEDALLION]                  = Item(Text{"Shadow Medallion", "Médaillon de l'ombre",    "Medallón de la Sombra"},   ITEMTYPE_DUNGEONREWARD, 0xD2,  true, &ShadowMedallion, SHADOW_MEDALLION);
     itemTable[LIGHT_MEDALLION]                   = Item(Text{"Light Medallion",  "Médaillon de la lumière", "Medallón de la Luz"},      ITEMTYPE_DUNGEONREWARD, 0xD3,  true, &LightMedallion,  LIGHT_MEDALLION);
 
     //Generic Items
-    itemTable[RECOVERY_HEART]                    = Item(Text{"Recovery Heart",  "Cœur d’énergie",      "Corazón"},               ITEMTYPE_ITEM, GI_HEART,             false, &noVariable, RECOVERY_HEART);
+    itemTable[RECOVERY_HEART]                    = Item(Text{"Recovery Heart",  "Cœur d'énergie",      "Corazón"},               ITEMTYPE_ITEM, GI_HEART,             false, &noVariable, RECOVERY_HEART);
     itemTable[GREEN_RUPEE]                       = Item(Text{"Green Rupee",     "Rubis vert",          "Rupia verde"},           ITEMTYPE_ITEM, GI_RUPEE_GREEN,       false, &noVariable, GREEN_RUPEE);
     itemTable[BLUE_RUPEE]                        = Item(Text{"Blue Rupee",      "Rubis bleu",          "Rupia azul"},            ITEMTYPE_ITEM, GI_RUPEE_BLUE,        false, &noVariable, BLUE_RUPEE);
     itemTable[RED_RUPEE]                         = Item(Text{"Red Rupee",       "Rubis rouge",         "Rupia roja"},            ITEMTYPE_ITEM, GI_RUPEE_RED,         false, &noVariable, RED_RUPEE);
@@ -200,7 +200,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[BUY_DEKU_SHIELD]                   = Item(Text{"Buy Deku Shield",     "Acheter: Bouclier Mojo",      "Comprar escudo deku"},        ITEMTYPE_SHOP, 0x0D, true,  &DekuShield,     DEKU_SHIELD,            40);
     itemTable[BUY_GORON_TUNIC]                   = Item(Text{"Buy Goron Tunic",     "Acheter: Tunique Goron",      "Comprar sayo goron"},         ITEMTYPE_SHOP, 0x0E, true,  &GoronTunic,     GORON_TUNIC,           200);
     itemTable[BUY_ZORA_TUNIC]                    = Item(Text{"Buy Zora Tunic",      "Acheter: Tunique Zora",       "Comprar sayo zora"},          ITEMTYPE_SHOP, 0x0F, true,  &ZoraTunic,      ZORA_TUNIC,            300);
-    itemTable[BUY_HEART]                         = Item(Text{"Buy Heart",           "Acheter: Coeur d’énergie",    "Comprar corazón"},            ITEMTYPE_SHOP, 0x10, false, &noVariable,     RECOVERY_HEART,         10);
+    itemTable[BUY_HEART]                         = Item(Text{"Buy Heart",           "Acheter: Coeur d'énergie",    "Comprar corazón"},            ITEMTYPE_SHOP, 0x10, false, &noVariable,     RECOVERY_HEART,         10);
     itemTable[BUY_BOMBCHU_10]                    = Item(Text{"Buy Bombchu (10)",    "Acheter: Bombchus (10)",      "Comprar bombchus (10)"},      ITEMTYPE_SHOP, 0x15, true,  &BuyBombchus10,  BOMBCHU_10,             99);
     itemTable[BUY_BOMBCHU_20]                    = Item(Text{"Buy Bombchu (20)",    "Acheter: Bombchus (20)",      "Comprar bombchus (20)"},      ITEMTYPE_SHOP, 0x16, true,  &BuyBombchus20,  BOMBCHU_20,            180);
     itemTable[BUY_BOMBCHU_5]                     = Item(Text{"Buy Bombchu (5)",     "Acheter: Bombchus (5)",       "Comprar bombchus (5)"},       ITEMTYPE_SHOP, 0x18, true,  &BuyBombchus5,   BOMBCHU_5,              60);
