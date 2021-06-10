@@ -219,7 +219,9 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
     log += "\nRequired Trials:\n";
     for (const auto* trial : Trial::trialList) {
       if (trial->IsRequired()) {
-        log += std::string("\t").append(trial->GetName().english).append("\n");
+        std::string name = trial->GetName().GetEnglish();
+        name[0] = toupper(name[0]); //Capitalize T in "The"
+        log += std::string("\t").append(name).append("\n");
       }
     }
     log += '\n';

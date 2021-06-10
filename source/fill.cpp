@@ -339,14 +339,46 @@ static void PareDownPlaythrough() {
 // are just possible items you *can* collect to complete the seed.
 static void CalculateWotH() {
   //First copy locations from the 2-dimensional playthroughLocations into the 1-dimensional wothLocations
-  for (size_t i = 0; i < playthroughLocations.size(); i++) {
+  //size - 1 so Triforce is not counted
+  for (size_t i = 0; i < playthroughLocations.size() - 1; i++) {
     for (size_t j = 0; j < playthroughLocations[i].size(); j++) {
       wothLocations.push_back(playthroughLocations[i][j]);
     }
   }
 
+  //For hint purposes, we want to exclude unshuffled items from WotH
+  //Also helps so less reachability searches will be required
+  for (int i = wothLocations.size() - 1; i >= 0; i--) {
+    ItemKey item = Location(wothLocations[i])->GetPlacedItemKey();
+    if (item == GOLD_SKULLTULA_TOKEN && Tokensanity.Is(TOKENSANITY_OFF)) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (item == KOKIRI_SWORD && !ShuffleKokiriSword) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (item == WEIRD_EGG && !ShuffleWeirdEgg) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (item == PROGRESSIVE_OCARINA && !ShuffleOcarinas) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (item == GERUDO_TOKEN && !ShuffleGerudoToken) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (ItemTable(item).GetItemType() == ITEMTYPE_DUNGEONREWARD && ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
+      wothLocations.erase(wothLocations.begin() + i);
+    //Keys only count if their respective -sanity is enabled, including overworld or any dungeon only
+    } else if (ItemTable(item).GetItemType() == ITEMTYPE_SMALLKEY && (Keysanity.Is(KEYSANITY_START_WITH) || Keysanity.Is(KEYSANITY_VANILLA) || Keysanity.Is(KEYSANITY_OWN_DUNGEON))) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (item == GANONS_CASTLE_BOSS_KEY && !(GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE) || GanonsBossKey.Is(GANONSBOSSKEY_OVERWORLD) || GanonsBossKey.Is(GANONSBOSSKEY_ANY_DUNGEON))) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (ItemTable(item).GetItemType() == ITEMTYPE_BOSSKEY && (BossKeysanity.Is(KEYSANITY_START_WITH) || BossKeysanity.Is(KEYSANITY_VANILLA) || BossKeysanity.Is(KEYSANITY_OWN_DUNGEON))) {
+      wothLocations.erase(wothLocations.begin() + i);
+    } else if (item == GERUDO_FORTRESS_SMALL_KEY && GerudoKeys.Is(GERUDOKEYS_VANILLA)) {
+      wothLocations.erase(wothLocations.begin() + i);
+    //Should be erased regardless of settings
+    } else if (item == MAGIC_BEAN || item == ZELDAS_LETTER) {
+      wothLocations.erase(wothLocations.begin() + i);
+    }
+  }
+
   //Now go through and check each location, seeing if it is strictly necessary for game completion
-  for (size_t i = 0; i < wothLocations.size(); i++) {
+  for (int i = wothLocations.size() - 1; i >= 0; i--) {
     LocationKey loc = wothLocations[i];
     ItemKey copy = Location(loc)->GetPlacedItemKey(); //Copy out item
     Location(loc)->SetPlacedItem(NONE); //Write in empty item
