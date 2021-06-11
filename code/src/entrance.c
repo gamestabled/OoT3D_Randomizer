@@ -28,6 +28,17 @@ void Scene_Init(void) {
 
     gRestrictionFlags[72].flags3 = 0; // Allows farore's wind in GTG
     gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
+    
+    //Allow Farore's Wind anywhere if given by settings
+    if (gSettingsContext.faroresWindAnywhere){
+        for (int i = 0; i < 99; i++){
+			gRestrictionFlags[i].flags3 &= ~0x30;
+			gRestrictionFlags[i].flags3 &= ~0x03;
+		}
+    }
+/*	for (int i = 0; i < 99; i++){
+		gRestrictionFlags[i].flags1 |= 0x03;
+	}*/
 }
 
 void Entrance_Init(void) {

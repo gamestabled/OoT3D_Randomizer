@@ -66,6 +66,13 @@ typedef enum {
 } AgeSetting;
 
 typedef enum {
+  NODROPS_VANILLA,
+  NODROPS_NOAMMO,
+  NODROPS_NOHEALTH,
+  NODROPS_NOAMMOORHEALTH,
+} NoDropsSetting;
+
+typedef enum {
   DUNGEONMODE_VANILLA,
   DUNGEONMODE_MQ,
 } DungeonMode;
@@ -250,6 +257,7 @@ typedef struct {
   u8 resolvedStartingAge;
   u8 bombchusInLogic;
   u8 bombchuDrops;
+  u8 noDrops;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
 
@@ -296,6 +304,7 @@ typedef struct {
   u8 generateSpoilerLog;
   u8 menuOpeningButton;
 
+  u8 faroresWindAnywhere;
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
