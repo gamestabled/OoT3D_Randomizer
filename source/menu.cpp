@@ -42,7 +42,7 @@ void PrintTopScreen() {
   consoleSelect(&topScreen);
   consoleClear();
   printf("\x1b[2;11H%sOcarina of Time 3D Randomizer%s", CYAN, RESET);
-  printf("\x1b[3;18H%s%s%s", CYAN, RANDOMIZER_VERSION, RESET);
+  printf("\x1b[3;18H%s%s-%s%s", CYAN, RANDOMIZER_VERSION, COMMIT_NUMBER, RESET);
   printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
   printf("            Select: Exit to Homebrew Menu\n");
   printf("                 Y: New Random Seed\n");
@@ -564,8 +564,8 @@ void GenerateRandomizer() {
       printf("\x1b[14;10HQuit out using the home menu. Then\n");
       printf("\x1b[15;10Henable game patching and launch OoT3D!\n");
     } else if (Settings::PlayOption == PATCH_CITRA) {
-      printf("\x1b[14;10HCopy code.ips and exheader.bin to the\n");
-      printf("\x1b[15;10HOoT3D mods folder, then launch OoT3D!\n");
+      printf("\x1b[14;10HCopy code.ips, exheader.bin and romfs to\n");
+      printf("\x1b[15;10Hthe OoT3D mods folder, then launch OoT3D!\n");
     }
 
     const auto& randomizerHash = GetRandomizerHash();

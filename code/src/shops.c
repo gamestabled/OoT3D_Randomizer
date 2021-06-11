@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "shops.h"
 #include "objects.h"
+#include "custom_models.h"
 #include "item_override.h"
 #include "item_table.h"
 #include "models.h"
@@ -34,6 +35,8 @@ s32 numShopItemsLoaded = 0; // Used to determine params. Reset this to 0 in ossa
 
 #define EnGirlA_InitializeItemAction ((EnGirlAActionFunc)0x14D5C8)
 
+//Checks for if item is of a certain type
+
 u8 ShopsanityItem_IsBombs(u8 id) {
     return id == ITEM_BOMB || id == ITEM_BOMBS_5 || id == ITEM_BOMBS_10 || id == ITEM_BOMBS_20 || id == ITEM_BOMBS_30;
 }
@@ -50,6 +53,14 @@ u8 ShopsanityItem_IsBombchus(u8 id) {
     return id == ITEM_BOMBCHU || id == ITEM_BOMBCHUS_5 || id == ITEM_BOMBCHUS_20;
 }
 
+u8 ShopsanityItem_IsNuts(u8 id) {
+    return id == ITEM_NUT || id == ITEM_NUTS_5 || id == ITEM_NUTS_10;
+}
+
+u8 ShopsanityItem_IsSticks(u8 id) {
+    return id == ITEM_STICK || id == ITEM_STICKS_5 || id == ITEM_STICKS_10;
+}
+
 
 void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     ShopsanityItem* shopItem = (ShopsanityItem*)item;
@@ -58,7 +69,8 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
 
     u8 id = shopItem->itemRow->actionId;
     //Make it so ammo does not sell out
-    if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) || ShopsanityItem_IsBombchus(id))) {
+    if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) || 
+        ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id) || ShopsanityItem_IsSticks(id))) {
         if (gSaveContext.entranceIndex == 0x00B7) {
             gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
         } else {
@@ -71,27 +83,27 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
 
 s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
     if (item->basePrice <= gSaveContext.rupees) { //Has enough rupees
-        u8 id = ((ShopsanityItem*)item)->itemRow->actionId;
-        if (ShopsanityItem_IsBombs(id)) {
-            if ((gSaveContext.upgrades >> 3) & 0x7) { //Has bomb bag
-                return CANBUY_RESULT_0;
+        //Tunics are non-ShopsanityItem objects passed to this function, so don't check those
+        if (!(item->getItemId == GI_TUNIC_GORON || item->getItemId == GI_TUNIC_ZORA)) {
+            u8 id = ((ShopsanityItem*)item)->itemRow->actionId;
+            if (ShopsanityItem_IsBombs(id)) {
+                if ((gSaveContext.upgrades >> 3) & 0x7) { //Has bomb bag
+                    return CANBUY_RESULT_0;
+                }
+                return CANBUY_RESULT_CANT_GET_NOW;
             }
-            return CANBUY_RESULT_CANT_GET_NOW;
-        }
-        else if (ShopsanityItem_IsArrows(id)) {
-            if (gSaveContext.upgrades & 0x7) { //Has bow
-                return CANBUY_RESULT_0;
+            else if (ShopsanityItem_IsArrows(id)) {
+                if (gSaveContext.upgrades & 0x7) { //Has bow
+                    return CANBUY_RESULT_0;
+                }
+                return CANBUY_RESULT_CANT_GET_NOW;
             }
-            return CANBUY_RESULT_CANT_GET_NOW;
-        }
-        else if (ShopsanityItem_IsSeeds(id)) {
-            if ((gSaveContext.upgrades >> 14) & 0x7) { //Has slingshot
-                return CANBUY_RESULT_0;
+            else if (ShopsanityItem_IsSeeds(id)) {
+                if ((gSaveContext.upgrades >> 14) & 0x7) { //Has slingshot
+                    return CANBUY_RESULT_0;
+                }
+                return CANBUY_RESULT_CANT_GET_NOW;
             }
-            return CANBUY_RESULT_CANT_GET_NOW;
-        }
-        else if (ShopsanityItem_IsBombchus(id)) {
-            return Shop_CheckCanBuyBombchus();
         }
         return CANBUY_RESULT_0;
     } else { //Not enough rupees
@@ -142,14 +154,96 @@ void ShopsanityItem_1C4Func(GlobalContext* globalCtx, EnGirlA* item) {
     }
 }
 
+void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalCtx, s16 objectId, s16 objModelIdx, s16 objModelIdx2, s16 cmabIdx, s16 cmabIdx2, s16 special) {
+    EnGirlA* item = &shopItem->super;
+    void* ZARBuf;
+    void* cmb;
+
+    DeleteModel_At(&item->model);
+    DeleteModel_At(&item->model2);
+
+    // edit the cmbs for custom models
+    switch (objectId) {
+        case OBJECT_CUSTOM_ADULT_SONGS:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_ADULT_SONGS)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            CustomModel_SetOcarinaToRGBA565(cmb);
+            break;
+        case OBJECT_CUSTOM_CHILD_SONGS:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_CHILD_SONGS)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            CustomModel_SetOcarinaToRGBA565(cmb);
+            break;
+        case OBJECT_CUSTOM_SMALL_KEY_FOREST:
+        case OBJECT_CUSTOM_SMALL_KEY_FIRE:
+        case OBJECT_CUSTOM_SMALL_KEY_WATER:
+        case OBJECT_CUSTOM_SMALL_KEY_SHADOW:
+        case OBJECT_CUSTOM_SMALL_KEY_BOTW:
+        case OBJECT_CUSTOM_SMALL_KEY_SPIRIT:
+        case OBJECT_CUSTOM_SMALL_KEY_FORTRESS:
+        case OBJECT_CUSTOM_SMALL_KEY_GTG:
+        case OBJECT_CUSTOM_SMALL_KEY_GANON:
+            ZARBuf = ExtendedObject_GetStatus(objectId)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0x74);
+            CustomModel_ApplyColorEditsToSmallKey(cmb, special);
+            break;
+        case OBJECT_CUSTOM_BOSS_KEYS:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_BOSS_KEYS)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0x78);
+            CustomModel_SetBossKeyToRGBA565(cmb);
+            break;
+        case OBJECT_CUSTOM_DOUBLE_DEFENSE:
+            ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_DOUBLE_DEFENSE)->zarInfo.buf;
+            cmb = (void*)(((char*)ZARBuf) + 0xA4);
+            CustomModel_EditHeartContainerToDoubleDefense(cmb);
+            break;
+    }
+
+    item->model = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx);
+    if (objectId == 0x017F) { //Set the mesh for rupees
+        SkeletonAnimationModel_SetMesh(item->model, special);
+    }
+
+    if (objectId == OBJECT_CUSTOM_CHILD_SONGS) {
+        Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
+        item->model->unk_0C->animSpeed = 0.0f;
+        item->model->unk_0C->animMode = 0;
+        item->model->unk_0C->curFrame = special;
+    } else if (objectId == OBJECT_CUSTOM_ADULT_SONGS) {
+        Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
+        item->model->unk_0C->animSpeed = 0.0f;
+        item->model->unk_0C->animMode = 0;
+        item->model->unk_0C->curFrame = special;
+    } else if (objectId == OBJECT_CUSTOM_BOSS_KEYS) {
+        Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
+        item->model->unk_0C->animSpeed = 0.0f;
+        item->model->unk_0C->animMode = 0;
+        item->model->unk_0C->curFrame = special;
+    } else if (cmabIdx >= 0) {
+        void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx);
+        TexAnim_Spawn(item->model->unk_0C, cmabMan);
+        item->model->unk_0C->animSpeed = 2.0f;
+        item->model->unk_0C->animMode = 1;
+    }
+
+    if (objModelIdx2 >= 0) {
+        item->model2 = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx2);
+        if (cmabIdx2 >= 0) {
+            void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx2);
+            TexAnim_Spawn(item->model2->unk_0C, cmabMan);
+            item->model2->unk_0C->animSpeed = 2.0f;
+            item->model2->unk_0C->animMode = 1;
+        }
+    }
+}
+
 void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
     ShopsanityItem* shopItem = (ShopsanityItem*)item;
 
     if (Object_IsLoaded(&globalCtx->objectCtx, item->objBankIndex) && ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
         EnGirlA_InitializeItemAction(item, globalCtx);
-        DeleteModel_At(&item->model);
-        DeleteModel_At(&item->model2);
-        item->model = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, shopItem->itemRow->objectId, shopItem->itemRow->objectModelIdx);
+        ShopsanityItem_ResetModels(shopItem, globalCtx, shopItem->itemRow->objectId, shopItem->itemRow->objectModelIdx, shopItem->itemRow->objectModelIdx2,
+                                   shopItem->itemRow->cmabIndex, shopItem->itemRow->cmabIndex2, shopItem->itemRow->special);
         item->unk_1C4 = ShopsanityItem_1C4Func;
         item->getItemId = shopItem->getItemId;
         item->canBuyFunc = ShopsanityItem_CanBuy;
@@ -169,19 +263,15 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
 
     if (Object_IsLoaded(&globalCtx->objectCtx, item->objBankIndex) && ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
         EnGirlA_InitializeItemAction(item, globalCtx);
-        DeleteModel_At(&item->model);
-        DeleteModel_At(&item->model2);
-        item->model = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx);
-        if (shopItemEntry->objModelIdx2 >= 0) {
-            item->model2 = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx2);
-        }
+        ShopsanityItem_ResetModels(shopItem, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx, shopItemEntry->objModelIdx2,
+                                   shopItemEntry->cmabIndex, shopItemEntry->cmabIndex2, 0xFF);
         item->getItemId = shopItemEntry->getItemId;
         item->canBuyFunc = shopItemEntry->canBuyFunc;
-        item->itemGiveFunc = shopItemEntry->itemGiveFunc;
-        item->buyEventFunc = shopItemEntry->buyEventFunc;
         if (item->getItemId == GI_TUNIC_GORON || item->getItemId == GI_TUNIC_ZORA) { //Override buyable functions for tunics
             item->canBuyFunc = ShopsanityItem_CanBuy;
         }
+        item->itemGiveFunc = shopItemEntry->itemGiveFunc;
+        item->buyEventFunc = shopItemEntry->buyEventFunc;
         item->basePrice = shopItemEntry->price;
         item->itemCount = shopItemEntry->count;
         item->actor.textId = shopItemEntry->itemDescTextId;
@@ -229,8 +319,11 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
         if (override.value.looksLikeItemId) {
             id = override.value.looksLikeItemId;
         }
-        //For shop ammo items, we don't want to make them turn into blupees without the appropriate capacity, instead just disallow purchase in the canbuy check
-        else if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20 || id == GI_ARROWS_SMALL || id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
+        //For shop ammo items, we don't want to make them turn into blupees without the appropriate capacity,
+        //instead just disallow purchase in the canbuy check
+        else if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20
+                || id == GI_ARROWS_SMALL || id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE
+                || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
             id = ItemTable_ResolveUpgrades(override.value.itemId);
         }
         item->itemRow = ItemTable_GetItemRow(id);

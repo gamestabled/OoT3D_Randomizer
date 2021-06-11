@@ -3,6 +3,7 @@
 #include "cosmetics.hpp"
 #include "custom_messages.hpp"
 #include "shops.hpp"
+#include "spoiler_log.hpp"
 
 #include <array>
 #include <cstring>
@@ -45,6 +46,10 @@ bool CopyFile(FS_Archive sdmcArchive, const char* dst, const char* src) {
 
   FSFILE_Close(outFile);
   return true;
+}
+
+void WriteFloatToBuffer(std::vector<char>& buffer, float f, size_t offset) {
+  memcpy(buffer.data() + offset, &f, sizeof(float));
 }
 
 bool WritePatch() {
@@ -180,6 +185,40 @@ bool WritePatch() {
   CitraPrint(std::to_string(totalRW));
   sleep(0.1);
 
+  /*-------------------------
+  |       gSpoilerData      |
+  --------------------------*/
+
+  //get the spoiler data
+  const SpoilerData &spoilerData = GetSpoilerData();
+
+  //write spoiler data address to code
+  patchOffset = V_TO_P(GSPOILERDATA_ADDR);
+  buf[0] = (patchOffset >> 16) & 0xFF;
+  buf[1] = (patchOffset >> 8) & 0xFF;
+  buf[2] = (patchOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  //Write spoiler data size to code
+  const u32 spoilerSize = sizeof(SpoilerData);
+  buf[0] = (spoilerSize >> 8) & 0xFF;
+  buf[1] = (spoilerSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  //write spoiler data to code
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &spoilerData, sizeof(spoilerData), FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += sizeof(SpoilerData);
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
+
   /*-------------------------------
   |     rScrubRandomItemPrices    |
   |     rScrubTextIdTable         |
@@ -264,15 +303,8 @@ bool WritePatch() {
   if (Settings::Shopsanity.IsNot(SHOPSANITY_OFF) && Settings::Shopsanity.IsNot(SHOPSANITY_ZERO)) {
     //Get prices from shop item vector
     std::array<s32, 32> rShopsanityPrices{};
-    int i = 4;
-    while (i < 64) {
-      rShopsanityPrices[TransformShopIndex(i)] = ShopItemsPrices[i];
-      if (i % 8 == 7) { //Last index for this shop, skip ahead to relevant index of next shop
-        i += 5;
-      }
-      else { //Go to next item within shop
-        i++;
-      }
+    for (int i = 0; i < 32; i++) {
+      rShopsanityPrices[i] = NonShopItems[i].Price;
     }
 
     // Write shopsanity item prices address to code
@@ -365,6 +397,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += messageDataSize;
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
 
   // Write message entries address to code
   u32 messageEntriesOffset = (messageDataOffset + messageDataSize + 3) & ~3; //round up and align with u32
@@ -390,6 +424,8 @@ bool WritePatch() {
     return false;
   }
   totalRW += messageEntriesSize;
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
 
   // Write ptrCustomMessageEntries address to code
   patchOffset = V_TO_P(PTRCUSTOMMESSAGEENTRIES_ADDR);
@@ -508,11 +544,58 @@ bool WritePatch() {
   |       custom assets      |
   --------------------------*/
 
-  // Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
-  // Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
-  // Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
+  Cosmetics::Color_RGB childTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalChildTunicColor);
+  Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
+  Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
+  Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
 
-  CopyFile(sdmcArchive, "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar", "romfs:/zelda_gi_melody.zar");
+  // Delete assets if it exists
+  Handle assetsOut;
+  const char* assetsOutPath = "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar";
+  const char* assetsInPath = "romfs:/zelda_gi_melody.zar";
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath));
+
+  // Open assets destination
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&assetsOut, sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+    return false;
+  }
+
+  if (auto file = FILEPtr{std::fopen(assetsInPath, "r"), std::fclose}) {
+    // obtain assets size
+    fseek(file.get(), 0, SEEK_END);
+    const auto lSize = static_cast<size_t>(ftell(file.get()));
+    rewind(file.get());
+
+    // copy assets into the buffer
+    std::vector<char> buffer(lSize);
+    fread(buffer.data(), 1, buffer.size(), file.get());
+
+    // edit assets as needed
+    const size_t adultTunicOffsetInZAR = 0x1021C;
+    const size_t childTunicOffsetInZAR = 0x1E7FC;
+
+    WriteFloatToBuffer(buffer, kokiriTunicColor.r, adultTunicOffsetInZAR + 0x70);
+    WriteFloatToBuffer(buffer, kokiriTunicColor.g, adultTunicOffsetInZAR + 0x98);
+    WriteFloatToBuffer(buffer, kokiriTunicColor.b, adultTunicOffsetInZAR + 0xC0);
+
+    WriteFloatToBuffer(buffer, goronTunicColor.r, adultTunicOffsetInZAR + 0x78);
+    WriteFloatToBuffer(buffer, goronTunicColor.g, adultTunicOffsetInZAR + 0xA0);
+    WriteFloatToBuffer(buffer, goronTunicColor.b, adultTunicOffsetInZAR + 0xC8);
+
+    WriteFloatToBuffer(buffer, zoraTunicColor.r, adultTunicOffsetInZAR + 0x80);
+    WriteFloatToBuffer(buffer, zoraTunicColor.g, adultTunicOffsetInZAR + 0xA8);
+    WriteFloatToBuffer(buffer, zoraTunicColor.b, adultTunicOffsetInZAR + 0xD0);
+
+    WriteFloatToBuffer(buffer, childTunicColor.r, childTunicOffsetInZAR + 0x70);
+    WriteFloatToBuffer(buffer, childTunicColor.g, childTunicOffsetInZAR + 0x88);
+    WriteFloatToBuffer(buffer, childTunicColor.b, childTunicOffsetInZAR + 0xA0);
+
+    // Write the assets to final destination
+    if (!R_SUCCEEDED(res = FSFILE_Write(assetsOut, &bytesWritten, 0, buffer.data(), buffer.size(), FS_WRITE_FLUSH))) {
+      return false;
+    }
+  }
+  FSFILE_Close(assetsOut);
 
   FSUSER_CloseArchive(sdmcArchive);
 

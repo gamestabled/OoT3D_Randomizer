@@ -44,37 +44,37 @@ namespace Cosmetics {
     "800080", //Purple
   };
   const std::array<std::string_view, 31> tunicColors = {
-    "1E691B", //Kokiri Green
-    "641400", //Goron Red
-    "003C64", //Zora Blue
+    "168A0E", //Kokiri Green
+    "96000E", //Goron Red
+    "002A8E", //Zora Blue
     "303030", //Black
-    "F0F0FF", //White
+    "FFFFFF", //White
     "139ED8", //Azure Blue
     "13E9D8", //Vivid Cyan
-    "F87C6D", //Light Red
-    "FF00FF", //Fuchsia
-    "953080", //Purple
+    "C23333", //Light Red
+    "D10044", //Fuchsia
+    "8C008C", //Purple
     "400040", //Majora Purple
-    "6441A5", //Twitch Purple
-    "8A2BE2", //Purple Heart
-    "FF1493", //Persian Rose
-    "E0D860", //Dirty Yellow
-    "F86CF8", //Blush Pink
-    "FF69B4", //Hot Pink
-    "FF90B3", //Rose Pink
-    "E07940", //Orange
-    "A0A0B0", //Gray
-    "D8B060", //Gold
-    "D0F0FF", //Silver
-    "C0A0A0", //Beige
-    "30D0B0", //Teal
-    "830303", //Blood Red
-    "FE4B03", //Blood Orange
-    "400090", //Royal Blue
-    "5090E0", //Sonic Blue
+    "641E7F", //Twitch Purple
+    "AA0565", //Magenta
+    "710093", //Violet
+    "E9144A", //Persian Rose
+    "E5DA32", //Dirty Yellow
+    "FF7FED", //Blush Pink
+    "D92994", //Hot Pink
+    "DB557F", //Rose Pink
+    "DD3E00", //Orange
+    "808080", //Gray
+    "CECE00", //Yellow
+    "A3C0C0", //Silver
+    "FF794E", //Beige
+    "00CA65", //Teal
+    "400000", //Blood Red
+    "CE2500", //Blood Orange
+    "000070", //Royal Blue
     "00D000", //NES Green
-    "002518", //Dark Green
-    "508CF0", //Lumen
+    "005218", //Dark Green
+    "0F50BC", //Lumen
   };
 
   //Generate random hex color

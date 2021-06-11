@@ -29,8 +29,8 @@ enum ItemType {
 class Item {
 public:
     Item() = default;
-    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_ = 0);
-    Item(std::string name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_ = 0);
+    Item(Text name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_ = 0);
+    Item(Text name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_ = 0);
     ~Item();
 
     void ApplyEffect();
@@ -38,7 +38,7 @@ public:
 
     ItemOverride_Value Value() const;
 
-    const std::string& GetName() const {
+    const Text& GetName() const {
         return name;
     }
 
@@ -90,7 +90,7 @@ public:
             return false;
         }
 
-        if (name.find("Bombchus") != std::string::npos && !BombchusInLogic) {
+        if (name.GetEnglish().find("Bombchus") != std::string::npos && !BombchusInLogic) {
             return false;
         }
 
@@ -130,7 +130,7 @@ public:
     }
 
 private:
-    std::string name = "Invalid Item";
+    Text name;
     ItemType type;
     int  getItemId;
     bool advancement;

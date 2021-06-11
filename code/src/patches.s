@@ -1130,6 +1130,11 @@ MidoCheckDekuTreeClearFive_patch:
 CorrectCompassChests_patch:
     bl hook_CheckCurrentDungeonMode
 
+.section .patch_CorrectCompassChestsTwo
+.global CorrectCompassChestsTwo_patch
+CorrectCompassChestsTwo_patch:
+    bl hook_CheckCurrentDungeonMode
+
 .section .patch_FishingNewRecord
 .global FishingNewRecord_patch
 FishingNewRecord_patch:
@@ -1161,6 +1166,11 @@ ReadGossipStoneHints_patch:
 DecoratedChest_patch:
     bl hook_DecoratedChest
 
+.section .patch_GoronShopPurchaseableCheck
+.global GoronShopPurchaseableCheck_patch
+GoronShopPurchaseableCheck_patch:
+    nop
+
 .section .patch_PlayerEditAndRetrieveCMB
 .global PlayerEditAndRetrieveCMB_patch
 PlayerEditAndRetrieveCMB_patch:
@@ -1171,21 +1181,32 @@ PlayerEditAndRetrieveCMB_patch:
 PlayerGetCustomTunicCMAB_patch:
     bl Player_GetCustomTunicCMAB
 
+.section .patch_SetChildCustomTunic
+.global SetChildCustomTunic_patch
+SetChildCustomTunic_patch:
+    bne hook_SetChildCustomTunic
+
 .section .patch_FastOwlCutscenes
 .global FastOwlCutscenes_patch
 FastOwlCutscenes_patch:
     bl hook_FastOwlCutscenes
 
+.section .patch_ShopItemDontSetAnimSpeedOne
+    nop
+
+.section .patch_ShopItemDontSetAnimSpeedTwo
+    nop
+
 .section .patch_BugsRecatchable
 .global BugsRecatchable_patch
 BugsRecatchable_patch:
     nop
-    
+
 .section .patch_SkipDaruniaDanceOne
 .global SkipDaruniaDanceOne_patch
 SkipDaruniaDanceOne_patch:
     nop
-    
+
 .section .patch_SkipDaruniaDanceTwo
 .global SkipDaruniaDanceTwo_patch
 SkipDaruniaDanceTwo_patch:

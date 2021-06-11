@@ -444,7 +444,7 @@ namespace Logic {
     CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(CanUseItem::Dins_Fire));
     CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(CanUseItem::Dins_Fire));
     CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(CanUseItem::Dins_Fire) || Nuts || DekuShield);
-    CanCutShrubs    = IsAdult || Sticks || KokiriSword || Boomerang || HasExplosives;
+    CanCutShrubs    = IsAdult /*|| Sticks*/ || KokiriSword || Boomerang || HasExplosives;
     CanDive         = ProgressiveScale >= 1;
     CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear;
     CanPlantBugs    = IsChild && Bugs;

@@ -2,15 +2,29 @@
 #include "string.h"
 #include "custom_models.h"
 #include "objects.h"
+#include "settings.h"
 
 #define EDIT_BYTE(offset_, val_) (BASE_[offset_] = val_)
 
+u8 SmallKeyData[][7] = {
+    { 0x00, 0x80, 0x00, 0x00, 0x00, 0xCC, 0x00 }, //Forest
+    { 0x54, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00 }, //Fire
+    { 0x00, 0x00, 0xDA, 0x00, 0x00, 0x00, 0xFF }, //Water
+    { 0x25, 0x00, 0x40, 0x00, 0x64, 0x00, 0xAD }, //Shadow
+    { 0x80, 0x00, 0x82, 0x00, 0xAD, 0x00, 0xB0 }, //BotW
+    { 0x80, 0x55, 0x00, 0x00, 0xFF, 0xAA, 0x00 }, //Spirit
+    { 0x44, 0x1E, 0x00, 0x00, 0x86, 0x3B, 0x00 }, //Fortress
+    { 0xC4, 0x57, 0x00, 0x00, 0xFF, 0xD1, 0xAD }, //GTG
+    { 0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F }, //Ganon
+};
+
 void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
-    
+
     // Edit combinerIndices
-    EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+    EDIT_BYTE(0x6C4, 0x04);// Update combinerCount
     EDIT_BYTE(0x6CC, 0x0B); EDIT_BYTE(0x6CD, 0x00);// Add new combiner index (Replacing one of the combiners used by unused deku stick)
+	EDIT_BYTE(0x6CE, 0x11); EDIT_BYTE(0x6CF, 0x00);
 
     //TextureCombiner0
     EDIT_BYTE(0x3588, 0x04); EDIT_BYTE(0x3589, 0x01);// CombinerMode to "Add"
@@ -29,12 +43,37 @@ void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
     EDIT_BYTE(0x44EC, 0x5B);// Set texture to ETC1a4
 }
 
+void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
+    char* BASE_ = (char*)linkCMB;
+	
+	// Edit combinerIndices
+	EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+	EDIT_BYTE(0x6CC, 0x0D); EDIT_BYTE(0x6CD, 0x00);
+
+    //TextureCombiner0
+    EDIT_BYTE(0x2974, 0x02); EDIT_BYTE(0x2975, 0x64);// CombinerMode to "AddMult"
+    EDIT_BYTE(0x2978, 0x01);// ColorScale to "One"
+    EDIT_BYTE(0x2980, 0x76);// SourceColor0 to "ConstantColor"
+    EDIT_BYTE(0x2984, 0xC0); EDIT_BYTE(0x2985, 0x84);// SourceColor2 to "Texture0"
+    EDIT_BYTE(0x2988, 0x03);// Color1Operand to OneMinusAlpha
+
+    //TextureCombiner1
+    EDIT_BYTE(0x299C, 0x00); EDIT_BYTE(0x299D, 0x21);// CombinerMode to "Modulate"
+    EDIT_BYTE(0x29A0, 0x04);// ColorScale to "Four"
+    EDIT_BYTE(0x29AA, 0x77);// SourceColor1 to "PrimaryColor"
+    EDIT_BYTE(0x29B0, 0x00);// Color1Operand to Color
+
+    //Edit Texture Entry
+    EDIT_BYTE(0x3441, 0x40);// Update texture data length to "16384" bytes
+    EDIT_BYTE(0x344C, 0x5B);// Set texture to ETC1a4
+}
+
 void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
     char* BASE_ = (char*)heartContainerCMB;
 
     EDIT_BYTE(0xDB, 0x01);
     EDIT_BYTE(0xE8, 0x01);
-    EDIT_BYTE(0x17C, 0x19); EDIT_BYTE(0x17D, 0x19); EDIT_BYTE(0x17E, 0x19); 
+    EDIT_BYTE(0x17C, 0x19); EDIT_BYTE(0x17D, 0x19); EDIT_BYTE(0x17E, 0x19);
     EDIT_BYTE(0x180, 0x00); EDIT_BYTE(0x181, 0x00); EDIT_BYTE(0x182, 0x00); EDIT_BYTE(0x183, 0xB2);
     EDIT_BYTE(0x1FC, 0x01);
     EDIT_BYTE(0x20D, 0x00);
@@ -43,6 +82,14 @@ void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
     EDIT_BYTE(0x244, 0x02);
     EDIT_BYTE(0x2DC, 0xFF); EDIT_BYTE(0x2DD, 0xFF);
     EDIT_BYTE(0x358, 0x00);
+}
+
+void CustomModel_ApplyColorEditsToSmallKey(void* smallKeyCMB, s32 keyType) {
+    char* BASE_ = (char*)smallKeyCMB;
+
+    for (s32 i = 0; i < 7; i++) {
+        EDIT_BYTE(0x12C + i, SmallKeyData[keyType][i]);
+    }
 }
 
 void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
@@ -70,7 +117,7 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
     EDIT_BYTE(0x37FF3, 0x40); EDIT_BYTE(0x38133, 0x40); EDIT_BYTE(0x38273, 0x40); EDIT_BYTE(0x383B3, 0x40);
     EDIT_BYTE(0x384F3, 0x40); EDIT_BYTE(0x38633, 0x40);
 
-    // g_title_fire.cmab 
+    // g_title_fire.cmab
     EDIT_BYTE(0x5E570, 0x01);// Change keyframe count to 1 so we only have to change one keyframe
     EDIT_BYTE(0x5E580, 0x0A); EDIT_BYTE(0x5E581, 0xD7); EDIT_BYTE(0x5E582, 0x23); EDIT_BYTE(0x5E583, 0x3D);// Red to 0.04
     EDIT_BYTE(0x5E660, 0x01);
@@ -89,6 +136,14 @@ void CustomModel_SetOcarinaToRGBA565(void* ocarinaCMB) {
     char* BASE_ = (char*)ocarinaCMB;
 
     EDIT_BYTE(0x3F2, 0x01); EDIT_BYTE(0x3F8, 0x5A);
+}
+
+void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB) {
+    char* BASE_ = (char*)bossKeyCMB;
+
+    EDIT_BYTE(0x43D, 0x10);
+    EDIT_BYTE(0x442, 0x01); EDIT_BYTE(0x448, 0x5B);
+    EDIT_BYTE(0x44A, 0x00); EDIT_BYTE(0x44B, 0x00);
 }
 
 void CustomModel_Update(void) {

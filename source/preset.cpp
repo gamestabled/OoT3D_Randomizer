@@ -73,6 +73,12 @@ static std::string PresetPath(std::string_view presetName, OptionCategory catego
   return std::string(GetBasePath(category)).append(presetName).append(".xml");
 }
 
+// Removes any line breaks from s.
+static std::string RemoveLineBreaks(std::string s) {
+  s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
+  return s;
+}
+
 // Presets are now saved as XML files using the tinyxml2 library.
 // Documentation: https://leethomason.github.io/tinyxml2/index.html
 bool SavePreset(std::string_view presetName, OptionCategory category) {
@@ -98,7 +104,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
 
       // Create the <setting> element
       XMLElement* newSetting = preset.NewElement("setting");
-      newSetting->SetAttribute("name", setting->GetName().c_str());
+      newSetting->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
       newSetting->SetText(setting->GetSelectedOptionText().c_str());
 
       // Append it to the root node
@@ -144,8 +150,8 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
       // Since presets are saved linearly, we can simply loop through the nodes as
       // we loop through the settings to find most of the matching elements.
-      const std::string& settingToFind = setting->GetName();
-      if (settingToFind == curNode->Attribute("name")) {
+      const std::string& settingToFind = RemoveLineBreaks(setting->GetName());
+      if (settingToFind == RemoveLineBreaks(curNode->Attribute("name"))) {
         setting->SetSelectedIndexByString(curNode->GetText());
         curNode = curNode->NextSiblingElement();
       } else {
@@ -155,7 +161,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
         curNode = rootNode->FirstChildElement();
         bool settingFound = false;
         while (curNode != nullptr) {
-          if (settingToFind == curNode->Attribute("name")) {
+          if (settingToFind == RemoveLineBreaks(curNode->Attribute("name"))) {
             setting->SetSelectedIndexByString(curNode->GetText());
             curNode = curNode->NextSiblingElement();
             settingFound = true;

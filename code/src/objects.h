@@ -39,6 +39,7 @@ extern ExtendedObjectContext rExtendedObjectCtx;
 
 s32 ExtendedObject_Spawn(ObjectContext* objectCtx, s16 objectId);
 s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId);
+ObjectStatus* ExtendedObject_GetStatus(s16 objectId);
 s32 ExtendedObject_IsLoaded(ObjectContext* objectCtx, s16 bankIndex);
 void ExtendedObject_Clear(GlobalContext* globalCtx, ObjectContext* objectCtx);
 void* ExtendedObject_GetCMABByIndex(s16 objectId, u32 objectAnimIdx);

@@ -55,8 +55,6 @@ extern string_view randomMQDungeonsDesc;
 
 extern string_view mqDungeonCountDesc;
 
-extern string_view mirrorWorldDesc;
-
 extern string_view shuffleRewardsEndOfDungeon;
 extern string_view shuffleRewardsAnyDungeon;
 extern string_view shuffleRewardsOverworld;
@@ -200,6 +198,11 @@ extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 
 extern string_view childHammerDesc;
+
+extern string_view coloredKeysDesc;
+extern string_view coloredBossKeysDesc;
+
+extern string_view mirrorWorldDesc;
 
 extern string_view ToggleAllDetailedLogicDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;

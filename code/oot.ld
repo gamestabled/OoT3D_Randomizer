@@ -168,8 +168,16 @@ SECTIONS
 		*(.patch_PoeCollectorCheckPoints)
 	}
 
+	.patch_GoronShopPurchaseableCheck 0x19120C : {
+		*(.patch_GoronShopPurchaseableCheck)
+	}
+
 	.patch_PlayerEditAndRetrieveCMB 0x191970 : {
 		*(.patch_PlayerEditAndRetrieveCMB)
+	}
+
+	.patch_SetChildCustomTunic 0x191DB0 : {
+		*(.patch_SetChildCustomTunic)
 	}
 
 	.patch_PlayerGetCustomTunicCMAB 0x191DD4 : {
@@ -344,6 +352,14 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
+		*(.patch_ShopItemDontSetAnimSpeedOne)
+	}
+
+	.patch_ShopItemDontSetAnimSpeedTwo 0x2101CC : {
+		*(.patch_ShopItemDontSetAnimSpeedTwo)
+	}
+
 	.patch_CourtyardCheckForVisitedZeldaOne 0x210C4C : {
 		*(.patch_CourtyardCheckForVisitedZeldaOne)
 	}
@@ -506,6 +522,10 @@ SECTIONS
 
 	.patch_CorrectCompassChests 0x2F161C : {
 		*(.patch_CorrectCompassChests)
+	}
+
+	.patch_CorrectCompassChestsTwo 0x2F1770 : {
+		*(.patch_CorrectCompassChestsTwo)
 	}
 
 	.patch_Gfx_Update 0x310254 : {
