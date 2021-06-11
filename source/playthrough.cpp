@@ -72,6 +72,7 @@ namespace Playthrough {
       }
 
       playthroughLocations.clear();
+      wothLocations.clear();
       playthroughBeatable = false;
 
       return 1;

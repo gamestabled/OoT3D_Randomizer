@@ -320,7 +320,9 @@ static void WriteRequiredTrials(tinyxml2::XMLDocument& spoilerLog) {
     }
 
     auto node = parentNode->InsertNewChildElement("trial");
-    node->SetAttribute("name", trial->GetName().GetEnglish().c_str());
+    std::string name = trial->GetName().GetEnglish();
+    name[0] = toupper(name[0]); // Capitalize T in "The"
+    node->SetAttribute("name", name.c_str());
   }
 
   if (!parentNode->NoChildren()) {
@@ -342,9 +344,19 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
   }
 
   spoilerLog.RootElement()->InsertEndChild(playthroughNode);
+}
 
-  playthroughLocations.clear();
-  playthroughBeatable = false;
+// Writes the WOTH locations to the spoiler log, if there are any.
+static void WriteWayOfTheHeroLocation(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("way-of-the-hero-locations");
+
+  for (const LocationKey key : wothLocations) {
+    WriteLocation(parentNode, key, true);
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
 }
 
 // Writes the hints to the spoiler log, if they are enabled.
@@ -396,6 +408,12 @@ bool SpoilerLog_Write() {
   WriteMasterQuestDungeons(spoilerLog);
   WriteRequiredTrials(spoilerLog);
   WritePlaythrough(spoilerLog);
+  WriteWayOfTheHeroLocation(spoilerLog);
+
+  playthroughLocations.clear();
+  playthroughBeatable = false;
+  wothLocations.clear();
+
   WriteHints(spoilerLog);
   WriteAllLocations(spoilerLog);
 

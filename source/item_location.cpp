@@ -1397,6 +1397,7 @@ std::vector<LocationKey> everyPossibleLocation = {};
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 
 std::vector<std::vector<LocationKey>> playthroughLocations;
+std::vector<LocationKey> wothLocations;
 bool playthroughBeatable = false;
 
 u16 itemsPlaced = 0;
@@ -1425,7 +1426,7 @@ void GenerateLocationPool() {
 void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmediately /*= false*/) {
   auto loc = Location(locKey);
   PlacementLog_Msg("\n");
-  PlacementLog_Msg(ItemTable(item).GetName());
+  PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
   PlacementLog_Msg(" placed at ");
   PlacementLog_Msg(loc->GetName());
   PlacementLog_Msg("\n\n");
@@ -1531,7 +1532,7 @@ void CreateOverrides() {
     PlacementLog_Msg("\t");
     PlacementLog_Msg(loc->GetName());
     PlacementLog_Msg(": ");
-    PlacementLog_Msg(loc->GetPlacedItemName());
+    PlacementLog_Msg(loc->GetPlacedItemName().GetEnglish());
     PlacementLog_Msg("\n");
   }
   PlacementLog_Msg("Overrides Created: ");
