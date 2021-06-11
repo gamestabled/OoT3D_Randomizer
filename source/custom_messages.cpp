@@ -299,32 +299,32 @@ constexpr std::array DungeonColors = {
         //Shopsanity items
         //64 textboxes, 2 for each of 32 potential shopsanity items
         for(u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
-            std::string name = NonShopItems[shopitems].Name;
+            Text name = NonShopItems[shopitems].Name;
             std::string price = std::to_string(NonShopItems[shopitems].Price);
             //Prevent names from being too long and overflowing textbox
-            if (name == "Piece of Heart (Treasure Chest Minigame)") {
-                name = "Piece of Heart";
-            } else if (name == "Green Rupee (Treasure Chest Minigame)") {
-                name = "Green Rupee"; //^
+            if (name.GetEnglish() == "Piece of Heart (Treasure Chest Minigame)") {
+                name = Text{"Piece of Heart", "Quart de coeur", "Pieza de corazón"};
+            } else if (name.GetEnglish() == "Green Rupee (Treasure Chest Minigame)") {
+                name = Text{"Green Rupee", "Rubis vert", "Rupia verde"};
             }
             //Message to display when hovering over the item
             if (NonShopItems[shopitems].Repurchaseable) { //Different checkbox for repurchaseable items
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial!"+NEWLINE()+"¡Compra todo lo que quieras!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetSpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial!"+NEWLINE()+"¡Compra todo lo que quieras!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
             }
             else { //Normal textbox
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡Solo queda una unidad!"+NEWLINE()+"¡Hazte con ella antes de que se agote!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetSpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡SOLO QUEDA UNA UNIDAD!"+NEWLINE()+"¡Hazte con ella antes de que se agote!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
             }
             //Message to display when going to buy the item
             CreateMessage(0x9200+shopitems*2+1, 0, 0, 0,
-                INSTANT_TEXT_ON()+name+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
+                INSTANT_TEXT_ON()+name.GetEnglish()+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetFrench()+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetSpanish()+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //easter egg
         CreateMessage(0x96F, 0, 2, 2,

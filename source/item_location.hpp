@@ -81,7 +81,7 @@ public:
       return name;
     }
 
-    const std::string& GetPlacedItemName() const {
+    const Text& GetPlacedItemName() const {
       return ItemTable(placedItem).GetName();
     }
 
@@ -309,6 +309,7 @@ extern std::vector<LocationKey> everyPossibleLocation;
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
 
 extern std::vector<std::vector<LocationKey>> playthroughLocations;
+extern std::vector<LocationKey> wothLocations;
 extern bool playthroughBeatable;
 
 extern u16 itemsPlaced;
