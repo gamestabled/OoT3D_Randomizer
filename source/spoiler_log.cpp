@@ -219,7 +219,9 @@ static void WriteSettings(std::string& log, const bool printAll = false) {
     log += "\nRequired Trials:\n";
     for (const auto* trial : Trial::trialList) {
       if (trial->IsRequired()) {
-        log += std::string("\t").append(trial->GetName().english).append("\n");
+        std::string name = trial->GetName().GetEnglish();
+        name[0] = toupper(name[0]); //Capitalize T in "The"
+        log += std::string("\t").append(name).append("\n");
       }
     }
     log += '\n';
@@ -253,7 +255,7 @@ bool SpoilerLog_Write() {
       }
     }
 
-    auto locItem = loc->GetPlacedItemName();
+    auto locItem = loc->GetPlacedItemName().GetEnglish();
     if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
       if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
         spoilerOutOfSpace = true;
@@ -318,11 +320,19 @@ bool SpoilerLog_Write() {
     //Print all item locations in this sphere
     for (const LocationKey location : playthroughLocations[i]) {
       logtxt += "\t";
-      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName().GetEnglish());
       logtxt += '\n';
     }
   }
+  //Write list of woth locations
+  logtxt += "Way of the Hero Locations:\n";
+  for (const LocationKey location : wothLocations) {
+    logtxt += "\t";
+    SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName().GetEnglish());
+    logtxt += '\n';
+  }
   playthroughLocations.clear();
+  wothLocations.clear();
   playthroughBeatable = false;
 
   //Write Hints
@@ -330,7 +340,7 @@ bool SpoilerLog_Write() {
     logtxt += "\nHints:\n";
     for (const LocationKey location : gossipStoneLocations) {
       logtxt += "\t";
-      SpoilerLog_SaveLocation(Location(location)->GetName(), ItemTable(location).GetName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), ItemTable(location).GetName().GetEnglish());
     }
   }
 
@@ -338,10 +348,10 @@ bool SpoilerLog_Write() {
   for (const LocationKey location : allLocations) {
     logtxt += "\t";
     if (Location(location)->IsCategory(Category::cShop)) { //Shop item
-      SpoilerLog_SaveShopLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName(), Location(location)->GetPrice());
+      SpoilerLog_SaveShopLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName().GetEnglish(), Location(location)->GetPrice());
     }
     else { //Normal item
-      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
+      SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName().GetEnglish());
     }
     logtxt += Location(location)->IsAddedToPool() ? "" : " NOT ADDED\n";
   }

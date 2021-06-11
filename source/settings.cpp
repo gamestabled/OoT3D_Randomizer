@@ -894,16 +894,11 @@ namespace Settings {
   //at those locations. Excluded locations will have junk placed at them.
   static void ResolveExcludedLocationConflicts() {
 
-    //Force include shops if shopsanity is off
     std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
-    if (Shopsanity.IsNot(SHOPSANITY_OFF)) {
-      Unhide(shopLocations);
-    } else {
-      IncludeAndHide(shopLocations);
-    }
     //For now, just always hide shop locations, as not sure how to handle hiding them-
     //1-4 should always be hidden, while the others should be settings dependent, but random shopsanity makes that more complicated...
-    // IncludeAndHide(shopLocations);
+    //Excluded shop locations are also wonky
+    IncludeAndHide(shopLocations);
 
     //Force include song locations
     std::vector<LocationKey> songLocations = GetLocations(everyPossibleLocation, Category::cSong);
