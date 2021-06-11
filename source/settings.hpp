@@ -260,6 +260,7 @@ namespace Settings {
   extern u8 ResolvedStartingAge;
   extern Option BombchusInLogic;
   extern Option BombchuDrops;
+  extern Option NoDrops;
   extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
 
@@ -310,6 +311,7 @@ namespace Settings {
   extern Option MenuOpeningButton;
   extern bool HasNightStart;
 
+  extern Option FaroresWindAnywhere;
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;

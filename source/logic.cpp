@@ -175,10 +175,17 @@ namespace Logic {
   bool FreeFairies      = false;
   bool FairyPond        = false;
   bool BombchuDrop      = false;
+  bool AmmoDrops        = false;
 
   bool BuyBombchus5     = false;
   bool BuyBombchus10    = false;
   bool BuyBombchus20    = false;
+  bool BuySeed          = false;
+  bool BuyArrow         = false;
+  bool BuyBomb          = false;
+  bool BuyGPotion       = false;
+  bool BuyBPotion       = false;
+  bool MagicRefill      = false;
 
   /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
   /* These are used to simplify reading the logic, but need to be updated
@@ -398,13 +405,13 @@ namespace Logic {
 
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
-    Slingshot       = ProgressiveBulletBag >= 1;
+    Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoDrops);
     Ocarina         = ProgressiveOcarina   >= 1;
-    MagicMeter      = ProgressiveMagic     >= 1;
-    BombBag         = ProgressiveBombBag   >= 1;
+    MagicMeter      = (ProgressiveMagic     >= 1) && (AmmoDrops || (HasBottle && (BuyGPotion || BuyBPotion)));
+    BombBag         = (ProgressiveBombBag   >= 1) && (BuyBomb || AmmoDrops);
     Hookshot        = ProgressiveHookshot  >= 1;
     Longshot        = ProgressiveHookshot  >= 2;
-    Bow             = ProgressiveBow       >= 1;
+    Bow             = (ProgressiveBow       >= 1) && (BuyArrow || AmmoDrops);
     GoronBracelet   = ProgressiveStrength  >= 1;
     SilverGauntlets = ProgressiveStrength  >= 2;
     GoldenGauntlets = ProgressiveStrength  >= 3;
@@ -416,7 +423,7 @@ namespace Logic {
 
     //Drop Access
     DekuStickDrop = StickPot || DekuBabaSticks;
-    DekuNutDrop   = NutPot   || NutCrate         || DekuBabaNuts;
+    DekuNutDrop   = (NutPot  || NutCrate         || DekuBabaNuts) && AmmoDrops;
     BugsAccess    = BugShrub || WanderingBugs    || BugRock;
     FishAccess    = LoneFish || FishGroup;
     FairyAccess   = FairyPot || GossipStoneFairy || BeanPlantFairy || ButterflyFairy || FreeFairies || FairyPond;
@@ -430,6 +437,7 @@ namespace Logic {
     BlueFire     = HasBottle && BlueFireAccess;
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
+	AmmoDrops    = NoDrops.IsNot(NODROPS_NOAMMO) && NoDrops.IsNot(NODROPS_NOAMMOORHEALTH);
 
     HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 /*|| BombchuDrop*/) && (BombchusInLogic || BombBag);
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
@@ -695,10 +703,17 @@ namespace Logic {
      FreeFairies      = false;
      FairyPond        = false;
      BombchuDrop      = false;
+	 AmmoDrops        = false;
 
      BuyBombchus5     = false;
      BuyBombchus10    = false;
      BuyBombchus20    = false;
+     BuyArrow         = false;
+     BuyBomb          = false;
+     BuyGPotion       = false;
+     BuyBPotion       = false;
+     BuySeed          = false;
+	 MagicRefill      = false;
 
      /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
      /* These are used to simplify reading the logic, but need to be updated

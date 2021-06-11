@@ -138,6 +138,16 @@ string_view bombchuLogicDesc          = "Bombchus are properly considered in log
 string_view bombchuDropDesc           = "Bombchu drops can appear from cutting grass and\n"//
                                         "breaking rocks just like bomb drops can.\n";      //
 /*------------------------------                                                           //
+|    AMMO AND HEALTH DROPS     |                                                           //
+------------------------------*/                                                           //
+string_view normalDropsDesc           = "Ammo, magic and health will drop as normal.";     //
+string_view noAmmoDesc                = "Ammo and magic drops become blue rupees.\n"       //
+                                        "Deku Sticks are unchanged.";                      //
+string_view noHealthDesc              = "Health drops become green rupees.";               //
+string_view noAmmoOrHealthDesc        = "Ammo and magic drops become blue rupees.\n"       //
+                                        "Health drops become green rupees.\n"              //
+                                        "Deku Sticks are unchanged.";                      //
+/*------------------------------                                                           //
 |      RANDOM MQ DUNGEONS      |                                                           //
 ------------------------------*/                                                           //
 string_view randomMQDungeonsDesc      = "If set, a random number of dungeons will have\n"  //
@@ -539,6 +549,13 @@ string_view iceTrapsExtra             = "Chance to add extra Ice Traps when junk
 string_view iceTrapsMayhem            = "All added junk items will be Ice Traps.";         //
 string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice Traps, even"
                                         "those in the base pool.";                         //
+/*------------------------------                                                           //
+|  USE FARORE'S WIND ANYWHERE  |                                                           //
+------------------------------*/                                                           //
+string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
 /*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //

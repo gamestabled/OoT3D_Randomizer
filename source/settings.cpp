@@ -62,6 +62,7 @@ namespace Settings {
   u8 ResolvedStartingAge;
   Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
   Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                                     {bombchuDropDesc});
+  Option NoDrops             = Option::U8  ("Ammo and Health Drops",  {"Vanilla", "Ammo Off", "Hearts Off", "All Off"},                  {normalDropsDesc, noAmmoDesc, noHealthDesc, noAmmoOrHealthDesc});
   Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                                     {randomMQDungeonsDesc});
   Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
@@ -69,6 +70,7 @@ namespace Settings {
     &StartingAge,
     &BombchusInLogic,
     &BombchuDrops,
+    &NoDrops,
     &RandomMQDungeons,
     &MQDungeonCount,
   };
@@ -185,10 +187,12 @@ namespace Settings {
   };
 
   //Item Usability Settings
+  Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere", {"Disabled", "Enabled"},                                                {faroresWindAnywhereDesc});
   Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                                {adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                                {childHammerDesc});
   std::vector<Option *> itemUsabilityOptions = {
+    &FaroresWindAnywhere,
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
@@ -662,6 +666,7 @@ namespace Settings {
 
     ctx.bombchusInLogic      = (BombchusInLogic) ? 1 : 0;
     ctx.bombchuDrops         = (BombchuDrops) ? 1 : 0;
+    ctx.noDrops              = NoDrops.Value<u8>();
     ctx.randomMQDungeons     = (RandomMQDungeons) ? 1 : 0;
     ctx.mqDungeonCount       = MQDungeonCount.Value<u8>();
 
@@ -707,6 +712,7 @@ namespace Settings {
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
 
+    ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
     ctx.boomerangAsAdult     = (BoomerangAsAdult) ? 1 : 0;
     ctx.hammerAsChild        = (HammerAsChild) ? 1 : 0;
@@ -851,6 +857,8 @@ namespace Settings {
     }
 
     StartingAge.SetSelectedIndex(AGE_CHILD);
+	
+    NoDrops.SetSelectedIndex(NODROPS_VANILLA);
 
     MapsAndCompasses.SetSelectedIndex(MAPSANDCOMPASSES_VANILLA);
     Keysanity.SetSelectedIndex(KEYSANITY_VANILLA);
@@ -894,7 +902,13 @@ namespace Settings {
   //at those locations. Excluded locations will have junk placed at them.
   static void ResolveExcludedLocationConflicts() {
 
+											  
     std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
+										   
+							
+			
+									
+	 
     //For now, just always hide shop locations, as not sure how to handle hiding them-
     //1-4 should always be hidden, while the others should be settings dependent, but random shopsanity makes that more complicated...
     //Excluded shop locations are also wonky
@@ -1332,6 +1346,13 @@ namespace Settings {
 
   //Function to update cosmetics options depending on choices
   static void UpdateCosmetics() {
+												   
+																													
+												  
+										   
+			
+																									 
+	 
 
     ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
     ChooseFinalColor(KokiriTunicColor, finalKokiriTunicColor, tunicColors);
@@ -1339,6 +1360,29 @@ namespace Settings {
     ChooseFinalColor(ZoraTunicColor, finalZoraTunicColor, tunicColors);
     ChooseFinalColor(SilverGauntletsColor, finalSilverGauntletsColor, gauntletColors);
     ChooseFinalColor(GoldGauntletsColor, finalGoldGauntletsColor, gauntletColors);
+			
+																								   
+	 
+
+												
+																							   
+														
+																															   
+													   
+												
+			
+																												  
+	 
+
+											  
+																						   
+													  
+																															 
+													 
+											  
+			
+																											  
+	 
   }
 
   //Function to set flags depending on settings

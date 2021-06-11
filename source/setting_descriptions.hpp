@@ -51,6 +51,11 @@ extern string_view bombchuLogicDesc;
 
 extern string_view bombchuDropDesc;
 
+extern string_view normalDropsDesc;
+extern string_view noAmmoDesc;
+extern string_view noHealthDesc;
+extern string_view noAmmoOrHealthDesc;
+
 extern string_view randomMQDungeonsDesc;
 
 extern string_view mqDungeonCountDesc;
@@ -192,6 +197,8 @@ extern string_view iceTrapsNormal;
 extern string_view iceTrapsExtra;
 extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
+
+extern string_view faroresWindAnywhereDesc;
 
 extern string_view adultStickDesc;
 
