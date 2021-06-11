@@ -209,14 +209,12 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   //get locations that are in the current playthrough
   std::vector<LocationKey> possibleHintLocations = {};
   //iterate through playthrough locations by sphere
-  for (std::vector<LocationKey> sphere : playthroughLocations) {
-    std::vector<LocationKey> sphereHintLocations = FilterFromPool(sphere, [remainingDungeonWothHints](LocationKey loc){
-      return Location(loc)->IsHintable()    && //only filter hintable locations
-            !(Location(loc)->IsHintedAt())  && //only filter locations that haven't been hinted at
-            (Location(loc)->IsOverworld() || (Location(loc)->IsDungeon() && (*remainingDungeonWothHints) > 0)); //make sure we haven't surpassed the woth dungeon limit
-    });
-    AddElementsToPool(possibleHintLocations, sphereHintLocations);
-  }
+  std::vector<LocationKey> wothHintLocations = FilterFromPool(wothLocations, [remainingDungeonWothHints](LocationKey loc){
+    return Location(loc)->IsHintable()    && //only filter hintable locations
+          !(Location(loc)->IsHintedAt())  && //only filter locations that haven't been hinted at
+          (Location(loc)->IsOverworld() || (Location(loc)->IsDungeon() && (*remainingDungeonWothHints) > 0)); //make sure we haven't surpassed the woth dungeon limit
+  });
+  AddElementsToPool(possibleHintLocations, wothHintLocations);
 
   //If no more locations can be hinted at for woth, then just try to get another hint
   if (possibleHintLocations.empty()) {
