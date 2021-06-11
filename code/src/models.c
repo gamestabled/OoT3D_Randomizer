@@ -216,16 +216,6 @@ void Model_LookupByOverride(Model* model, ItemOverride override) {
     }
 }
 
-// s32 Model_LookupByDungeonReward(Model* model, Actor* reward) {
-//     const DungeonRewardInfo* rewardInfo = DungeonReward_GetInfoByActor(reward);
-//     if (rewardInfo != NULL) {
-//         model->info.objectId = rewardInfo->objectId;
-//         model->info.objectModelIdx = rewardInfo->objectModelIdx;
-//         return 1;
-//     }
-//     return 0;
-// }
-
 void Model_GetObjectBankIndex(Model* model, Actor* actor, GlobalContext* globalCtx) {
     s32 objectBankIdx = ExtendedObject_GetIndex(&globalCtx->objectCtx, model->itemRow->objectId);
     if (objectBankIdx < 0) {
@@ -235,15 +225,7 @@ void Model_GetObjectBankIndex(Model* model, Actor* actor, GlobalContext* globalC
 }
 
 void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 baseItemId) {
-    // Special lookup for dungeon rewards outside of Temple of Time
-    // if ((actor->id == 0x8B) && (globalCtx->sceneNum != 0x43)) {
-    //     if(Model_LookupByDungeonReward(model, actor)) {
-    //         //Unrotate the Spiritual Stones
-    //         actor->shape.rot.x = 0;
-    //         Model_GetObjectBankIndex(model, actor, globalCtx);
-    //     }
-    //     return;
-    // }
+    ItemOverride override;
 
     // Special case for bombchu drops
     if ((actor->id == 0x15) && (actor->params == 5)) {
@@ -252,7 +234,22 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
         return;
     }
 
-    ItemOverride override = ItemOverride_Lookup(actor, globalCtx->sceneNum, baseItemId);
+    // Special lookup for the Zora's Sapphire in the Big Octo room
+    if ((actor->id == 0x8B) && (globalCtx->sceneNum == 0x02)) {
+        ItemOverride_Key key = { .all = 0 };
+        key.scene = 0xFF;
+        key.type = OVR_DELAYED;
+        key.flag = DUNGEON_JABUJABUS_BELLY;
+        override = ItemOverride_LookupByKey(key);
+        if(override.key.all != 0) {
+            //Unrotate the Spiritual Stones
+            actor->shape.rot.x = 0;
+            Model_GetObjectBankIndex(model, actor, globalCtx);
+        }
+    } else {
+        override = ItemOverride_Lookup(actor, globalCtx->sceneNum, baseItemId);
+    }
+
     if (override.key.all != 0) {
         Model_LookupByOverride(model, override);
         Model_GetObjectBankIndex(model, actor, globalCtx);
