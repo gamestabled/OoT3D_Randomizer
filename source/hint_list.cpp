@@ -5980,36 +5980,36 @@ void HintTable_Init() {
     });
 
     hintTable[BRIDGE_STONES_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Spiritual Stones#.",
+                     //obscure text                                                  singular        plural
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone|Spiritual Stones|#.",
                 /*french*/"pierres spirituelles",
                /*spanish*/"las piedras espirituales"},
     });
 
     hintTable[BRIDGE_MEDALLIONS_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Medallions#.",
+                     //obscure text                                                  singular  plural
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Medallion|Medallions|#.",
                 /*french*/"médaillons",
                /*spanish*/"los medallones"},
     });
 
     hintTable[BRIDGE_REWARDS_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Spiritual Stones&and Medallions#.",
+                     //obscure text                                                  singular                     plural
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone&or Medallion|Spiritual Stones&and Medallions|#.",
                 /*french*/"pierres spirituelles et médaillons",
                /*spanish*/"las piedras espirituales y los medallones"},
     });
 
     hintTable[BRIDGE_DUNGEONS_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to conquer #%d Dungeons#.",
+                     //obscure text                                                  singular plural
+                     Text{"The awakened ones will await for the&Hero to conquer #%d |Dungeon|Dungeons|#.",
                 /*french*/"donjons complétés",
                /*spanish*/"completar las mazmorras"},
     });
 
     hintTable[BRIDGE_TOKENS_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Gold Skulltula&Tokens#.",
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Gold Skulltula&Token|Gold Skulltula&Tokens|#.",
                 /*french*/"symboles de Skulltula d'or",
                /*spanish*/"obtener los símbolos de Skulltulas doradas"},
     });
@@ -6079,36 +6079,36 @@ void HintTable_Init() {
     });
 
     hintTable[LACS_MEDALLIONS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d&Medallions# are retrieved.",
+                     //obscure text                                                     singular      plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d&|Medallion# is|Medallions# are| retrieved.",
                 /*french*/"les médaillons",
                /*spanish*/"los #medallones#"},
     });
 
     hintTable[LACS_STONES_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Spiritual&Stones# are retrieved.",
+                     //obscure text                                                     singular            plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone# is|Spiritual&Stones# are| retrieved.",
                 /*french*/"les pierres spirituelles",
                /*spanish*/"las #piedras espirituales#"},
     });
 
     hintTable[LACS_REWARDS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Spiritual&Stones and Medallions# are retrieved.",
+                     //obscure text                                                     singular                         plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone or Medallion# is|Spiritual&Stones and Medallions# are| retrieved.",
                 /*french*/"les pierres spirituelles et les médaillons",
                /*spanish*/"las #piedras espirituales y los medallones#"},
     });
 
     hintTable[LACS_DUNGEONS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Dungeons#&are conquered.",
+                     //obscure text                                                     singular    plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Dungeon#&is|Dungeons#&are| conquered.",
                 /*french*/"les pierres spirituelles et les médaillons",
                /*spanish*/"las #piedras espirituales y los medallones#"},
     });
 
     hintTable[LACS_TOKENS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Gold&Skulltula Tokens# are retrieved.",
+                     //obscure text                                                     singular                 plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Gold&Skulltula Token# is|Gold&Skulltula Tokens# are| retrieved.",
                 /*french*/"les symboles de Skulltula d'or",
                /*spanish*/"los #símbolos de Skulltulas doradas#"},
     });
