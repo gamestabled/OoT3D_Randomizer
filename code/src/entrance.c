@@ -36,9 +36,6 @@ void Scene_Init(void) {
 			gRestrictionFlags[i].flags3 &= ~0x03;
 		}
     }
-/*	for (int i = 0; i < 99; i++){
-		gRestrictionFlags[i].flags1 |= 0x03;
-	}*/
 }
 
 void Entrance_Init(void) {
