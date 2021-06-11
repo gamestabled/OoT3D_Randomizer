@@ -328,7 +328,7 @@ bool SpoilerLog_Write() {
   logtxt += "Way of the Hero Locations:\n";
   for (const LocationKey location : wothLocations) {
     logtxt += "\t";
-    SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName());
+    SpoilerLog_SaveLocation(Location(location)->GetName(), Location(location)->GetPlacedItemName().GetEnglish());
     logtxt += '\n';
   }
   playthroughLocations.clear();
