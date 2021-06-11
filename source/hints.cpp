@@ -158,7 +158,7 @@ static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hint
 
 static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items for writing to the spoiler log
-  NewItem(gossipStone, Item{hint.english, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
+  NewItem(gossipStone, Item{hint, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
   Location(gossipStone)->SetPlacedItem(gossipStone);
 
   //create the in game message
@@ -181,7 +181,7 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   if (accessibleGossipStones.empty()) {
@@ -209,14 +209,12 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   //get locations that are in the current playthrough
   std::vector<LocationKey> possibleHintLocations = {};
   //iterate through playthrough locations by sphere
-  for (std::vector<LocationKey> sphere : playthroughLocations) {
-    std::vector<LocationKey> sphereHintLocations = FilterFromPool(sphere, [remainingDungeonWothHints](LocationKey loc){
-      return Location(loc)->IsHintable()    && //only filter hintable locations
-            !(Location(loc)->IsHintedAt())  && //only filter locations that haven't been hinted at
-            (Location(loc)->IsOverworld() || (Location(loc)->IsDungeon() && (*remainingDungeonWothHints) > 0)); //make sure we haven't surpassed the woth dungeon limit
-    });
-    AddElementsToPool(possibleHintLocations, sphereHintLocations);
-  }
+  std::vector<LocationKey> wothHintLocations = FilterFromPool(wothLocations, [remainingDungeonWothHints](LocationKey loc){
+    return Location(loc)->IsHintable()    && //only filter hintable locations
+          !(Location(loc)->IsHintedAt())  && //only filter locations that haven't been hinted at
+          (Location(loc)->IsOverworld() || (Location(loc)->IsDungeon() && (*remainingDungeonWothHints) > 0)); //make sure we haven't surpassed the woth dungeon limit
+  });
+  AddElementsToPool(possibleHintLocations, wothHintLocations);
 
   //If no more locations can be hinted at for woth, then just try to get another hint
   if (possibleHintLocations.empty()) {
@@ -230,7 +228,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
@@ -275,7 +273,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<Locati
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
@@ -324,7 +322,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
   PlacementLog_Msg("\n");
 
   //get an acessible gossip stone
@@ -375,7 +373,7 @@ static void CreateJunkHint() {
   PlacementLog_Msg(hint.english);
   PlacementLog_Msg("\n\n");
 
-  AddHint(hint, gossipStone);
+  AddHint(hint, gossipStone, {QM_PINK});
 }
 
 static std::vector<LocationKey> CalculateBarrenRegions() {
@@ -470,7 +468,6 @@ static void CreateTrialHints() {
 
 static void CreateGanonText() {
 
-
   //funny ganon line
   auto ganonText = RandomElement(GetHintCategory(HintCategory::GanonLine)).GetText();
   CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
@@ -490,9 +487,133 @@ static void CreateGanonText() {
   CreateMessageFromTextObject(0x70CC, 0, 2, 3, AddColorsAndFormat(text));
 }
 
+//Find the location which has the given itemKey and create the generic altar text for the reward
+static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
+  LocationKey location = FilterFromPool(allLocations, [itemKey](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == itemKey;})[0];
+  //Calling ITEM_OBTAINED draws the passed in itemID to the left side of the textbox
+  return Text()+ITEM_OBTAINED(itemID)+"#"+GetHintRegion(Location(location)->GetParentRegion())->GetHint().GetText()+"#...^";
+}
+
+//insert the required number into the hint and set the singular/plural form
+static Text BuildCountReq(const HintKey req, const Option& count) {
+  Text requirement = Hint(req).GetTextCopy();
+  if (count.Value<u8>() == 1) {
+    requirement.SetForm(SINGULAR);
+  } else {
+    requirement.SetForm(PLURAL);
+  }
+  requirement.Replace("%d", std::to_string(count.Value<u8>()));
+  return requirement;
+}
+
+static Text BuildBridgeReqsText() {
+  Text bridgeText;
+
+  if (Bridge.Is(RAINBOWBRIDGE_OPEN)) {
+    bridgeText = Hint(BRIDGE_OPEN_HINT).GetText();
+
+  } else if (Bridge.Is(RAINBOWBRIDGE_VANILLA)) {
+    bridgeText = Hint(BRIDGE_VANILLA_HINT).GetText();
+
+  } else if (Bridge.Is(RAINBOWBRIDGE_STONES)) {
+    bridgeText = BuildCountReq(BRIDGE_STONES_HINT, BridgeStoneCount);
+
+  } else if (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS)) {
+    bridgeText = BuildCountReq(BRIDGE_MEDALLIONS_HINT, BridgeMedallionCount);
+
+  } else if (Bridge.Is(RAINBOWBRIDGE_REWARDS)) {
+    bridgeText = BuildCountReq(BRIDGE_REWARDS_HINT, BridgeRewardCount);
+
+  } else if (Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) {
+    bridgeText = BuildCountReq(BRIDGE_DUNGEONS_HINT, BridgeDungeonCount);
+
+  } else if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
+    bridgeText = BuildCountReq(BRIDGE_TOKENS_HINT, BridgeTokenCount);
+  }
+
+  return Text()+ITEM_OBTAINED(ITEM_ARROW_LIGHT)+bridgeText+"^";
+}
+
+static Text BuildGanonBossKeyText() {
+  Text ganonBossKeyText;
+
+  if (GanonsBossKey.Is(GANONSBOSSKEY_START_WITH)) {
+    ganonBossKeyText = Hint(GANON_BK_START_WITH_HINT).GetText();
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA)) {
+    ganonBossKeyText = Hint(GANON_BK_VANILLA_HINT).GetText();
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON)) {
+    ganonBossKeyText = Hint(GANON_BK_OWN_DUNGEON_HINT).GetText();
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_ANY_DUNGEON)) {
+    ganonBossKeyText = Hint(GANON_BK_ANY_DUNGEON_HINT).GetText();
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_OVERWORLD)) {
+    ganonBossKeyText = Hint(GANON_BK_OVERWORLD_HINT).GetText();
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE)) {
+    ganonBossKeyText = Hint(GANON_BK_ANYWHERE_HINT).GetText();
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA)) {
+    ganonBossKeyText = Hint(LACS_VANILLA_HINT).GetText();
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES)) {
+    ganonBossKeyText = BuildCountReq(LACS_STONES_HINT, LACSStoneCount);
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
+    ganonBossKeyText = BuildCountReq(LACS_MEDALLIONS_HINT, LACSMedallionCount);
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS)) {
+    ganonBossKeyText = BuildCountReq(LACS_REWARDS_HINT, LACSRewardCount);
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
+    ganonBossKeyText = BuildCountReq(LACS_DUNGEONS_HINT, LACSDungeonCount);
+
+  } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+    ganonBossKeyText = BuildCountReq(LACS_TOKENS_HINT, LACSTokenCount);
+  }
+
+  return Text()+ITEM_OBTAINED(ITEM_KEY_BOSS)+ganonBossKeyText+"^";
+}
+
+static void CreateAltarText() {
+
+  //Child Altar Text
+  Text childText = Hint(SPIRITUAL_STONE_TEXT_START).GetText()+"^"+
+  //Spiritual Stones
+  BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD)+
+  BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY)+
+  BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE)+
+  //How to open Door of Time, the event trigger is necessary to read the altar multiple times
+  ITEM_OBTAINED(ITEM_OCARINA_FAIRY)+Hint(CHILD_ALTAR_TEXT_END).GetText()+EVENT_TRIGGER();
+  CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, {QM_GREEN, QM_RED, QM_BLUE}));
+
+  //Adult Altar Text
+  Text adultText = Hint(ADULT_ALTAR_TEXT_START).GetText()+"^"+
+  //Medallion Areas
+  BuildDungeonRewardText(ITEM_MEDALLION_LIGHT,  LIGHT_MEDALLION)+
+  BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION)+
+  BuildDungeonRewardText(ITEM_MEDALLION_FIRE,   FIRE_MEDALLION)+
+  BuildDungeonRewardText(ITEM_MEDALLION_WATER,  WATER_MEDALLION)+
+  BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION)+
+  BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION)+
+
+  //Bridge requirement
+  BuildBridgeReqsText()+
+
+  //Ganons Boss Key requirement
+  BuildGanonBossKeyText()+
+
+  //End
+  Hint(ADULT_ALTAR_TEXT_END).GetText()+EVENT_TRIGGER();
+  CreateMessageFromTextObject(0x7088, 0, 2, 3, AddColorsAndFormat(adultText, {QM_RED, QM_YELLOW, QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW, QM_PINK, QM_RED, QM_RED, QM_RED}));
+}
+
 void CreateAllHints() {
 
   CreateGanonText();
+  CreateAltarText();
 
   PlacementLog_Msg("\nNOW CREATING HINTS\n");
   const HintSetting& hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];

@@ -25,8 +25,11 @@
 #include "collapsing_castle.h"
 #include "demo_kankyo.h"
 #include "lake_hylia_objects.h"
+#include "graveyard_objects.h"
+#include "windmill_man.h"
 
 #define OBJECT_GI_KEY 170
+#define OBJECT_GI_BOSSKEY 185
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
@@ -54,6 +57,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
+    gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
+
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 
     gActorOverlayTable[0xD5].initInfo->update = BgSpot06Objects_rUpdate;
@@ -79,6 +84,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
+
+    gActorOverlayTable[0x153].initInfo->update = EnFu_rUpdate;
 
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 
@@ -122,6 +129,9 @@ void Actor_Init() {
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GTG].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GANON].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
 
+    // Define object 128 to be by default the same as object 
+    strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
+
     // Define draw item 3 (corresponding to gid 4) to be double defense custom model
     gDrawItemTable[3].objectId = OBJECT_CUSTOM_DOUBLE_DEFENSE;
     gDrawItemTable[3].objectModelIdx = 0;
@@ -137,4 +147,8 @@ void Actor_Init() {
     // Define draw item 6 (corresponding to gid 7) to be small key custom model
     gDrawItemTable[6].objectId = OBJECT_CUSTOM_SMALL_KEY_FOREST;
     gDrawItemTable[6].objectModelIdx = 0;
+
+    // Define draw item 7 (corresponding to gid 8) to be boss key custom model
+    gDrawItemTable[7].objectId = OBJECT_CUSTOM_BOSS_KEYS;
+    gDrawItemTable[7].objectModelIdx = 0;
 }

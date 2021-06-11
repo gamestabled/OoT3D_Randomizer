@@ -168,6 +168,10 @@ SECTIONS
 		*(.patch_PoeCollectorCheckPoints)
 	}
 
+	.patch_GoronShopPurchaseableCheck 0x19120C : {
+		*(.patch_GoronShopPurchaseableCheck)
+	}
+
 	.patch_PlayerEditAndRetrieveCMB 0x191970 : {
 		*(.patch_PlayerEditAndRetrieveCMB)
 	}
@@ -518,6 +522,10 @@ SECTIONS
 
 	.patch_CorrectCompassChests 0x2F161C : {
 		*(.patch_CorrectCompassChests)
+	}
+
+	.patch_CorrectCompassChestsTwo 0x2F1770 : {
+		*(.patch_CorrectCompassChestsTwo)
 	}
 
 	.patch_Gfx_Update 0x310254 : {

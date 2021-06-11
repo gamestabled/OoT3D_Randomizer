@@ -11,12 +11,14 @@ The following custom objectIds are currently being used:
 125: Fortress Small Key
 126: GTG Small Key
 127: Ganon Small Key
+128: Boss Keys
 
 The following custom graphicIds are currently being used:
 4: Double Defense
 5: Child Songs
 6: Adult Songs
 7: Small Keys
+8: Boss Keys
 
 To use a custom asset, currently:
     -make an editing function in custom_models.c

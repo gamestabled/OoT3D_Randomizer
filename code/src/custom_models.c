@@ -2,6 +2,7 @@
 #include "string.h"
 #include "custom_models.h"
 #include "objects.h"
+#include "settings.h"
 
 #define EDIT_BYTE(offset_, val_) (BASE_[offset_] = val_)
 
@@ -19,10 +20,11 @@ u8 SmallKeyData[][7] = {
 
 void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
-    
+
     // Edit combinerIndices
-    EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+    EDIT_BYTE(0x6C4, 0x04);// Update combinerCount
     EDIT_BYTE(0x6CC, 0x0B); EDIT_BYTE(0x6CD, 0x00);// Add new combiner index (Replacing one of the combiners used by unused deku stick)
+	EDIT_BYTE(0x6CE, 0x11); EDIT_BYTE(0x6CF, 0x00);
 
     //TextureCombiner0
     EDIT_BYTE(0x3588, 0x04); EDIT_BYTE(0x3589, 0x01);// CombinerMode to "Add"
@@ -43,6 +45,10 @@ void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
 
 void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
+	
+	// Edit combinerIndices
+	EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+	EDIT_BYTE(0x6CC, 0x0D); EDIT_BYTE(0x6CD, 0x00);
 
     //TextureCombiner0
     EDIT_BYTE(0x2974, 0x02); EDIT_BYTE(0x2975, 0x64);// CombinerMode to "AddMult"
@@ -53,7 +59,7 @@ void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
 
     //TextureCombiner1
     EDIT_BYTE(0x299C, 0x00); EDIT_BYTE(0x299D, 0x21);// CombinerMode to "Modulate"
-    EDIT_BYTE(0x29A0, 0x02);// ColorScale to "Two"
+    EDIT_BYTE(0x29A0, 0x04);// ColorScale to "Four"
     EDIT_BYTE(0x29AA, 0x77);// SourceColor1 to "PrimaryColor"
     EDIT_BYTE(0x29B0, 0x00);// Color1Operand to Color
 
@@ -67,7 +73,7 @@ void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
 
     EDIT_BYTE(0xDB, 0x01);
     EDIT_BYTE(0xE8, 0x01);
-    EDIT_BYTE(0x17C, 0x19); EDIT_BYTE(0x17D, 0x19); EDIT_BYTE(0x17E, 0x19); 
+    EDIT_BYTE(0x17C, 0x19); EDIT_BYTE(0x17D, 0x19); EDIT_BYTE(0x17E, 0x19);
     EDIT_BYTE(0x180, 0x00); EDIT_BYTE(0x181, 0x00); EDIT_BYTE(0x182, 0x00); EDIT_BYTE(0x183, 0xB2);
     EDIT_BYTE(0x1FC, 0x01);
     EDIT_BYTE(0x20D, 0x00);
@@ -111,7 +117,7 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
     EDIT_BYTE(0x37FF3, 0x40); EDIT_BYTE(0x38133, 0x40); EDIT_BYTE(0x38273, 0x40); EDIT_BYTE(0x383B3, 0x40);
     EDIT_BYTE(0x384F3, 0x40); EDIT_BYTE(0x38633, 0x40);
 
-    // g_title_fire.cmab 
+    // g_title_fire.cmab
     EDIT_BYTE(0x5E570, 0x01);// Change keyframe count to 1 so we only have to change one keyframe
     EDIT_BYTE(0x5E580, 0x0A); EDIT_BYTE(0x5E581, 0xD7); EDIT_BYTE(0x5E582, 0x23); EDIT_BYTE(0x5E583, 0x3D);// Red to 0.04
     EDIT_BYTE(0x5E660, 0x01);
@@ -130,6 +136,14 @@ void CustomModel_SetOcarinaToRGBA565(void* ocarinaCMB) {
     char* BASE_ = (char*)ocarinaCMB;
 
     EDIT_BYTE(0x3F2, 0x01); EDIT_BYTE(0x3F8, 0x5A);
+}
+
+void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB) {
+    char* BASE_ = (char*)bossKeyCMB;
+
+    EDIT_BYTE(0x43D, 0x10);
+    EDIT_BYTE(0x442, 0x01); EDIT_BYTE(0x448, 0x5B);
+    EDIT_BYTE(0x44A, 0x00); EDIT_BYTE(0x44B, 0x00);
 }
 
 void CustomModel_Update(void) {

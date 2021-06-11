@@ -3,16 +3,17 @@
 //Setting descriptions are mostly copied from OoT Randomizer tooltips with minor edits
 
 /*------------------------------
-|      RANDOMIZE SETTINGS      |
-------------------------------*/
-string_view openRandomize             = "Randomize all Open Settings except for Logic rules.";
-string_view worldRandomize            = "Randomize all World Settings except for MQ dungeons";
-string_view shuffleRandomize          = "Randomize all Shuffle Settings";
-string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings";
-
-/*------------------------------
-|            LOGIC             |                           *SCREEN WIDTH*
+|      RANDOMIZE SETTINGS      |                            *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
+string_view openRandomize             = "Randomize all Open Settings except for Logic rules";
+string_view worldRandomize            = "Randomize all World Settings except for MQ\n"     //
+                                        "dungeons";                                        //
+string_view shuffleRandomize          = "Randomize all Shuffle Settings";                  //
+string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings";          //
+                                                                                           //
+/*------------------------------                                                           //
+|            LOGIC             |                                                           //
+------------------------------*/                                                           //
 string_view logicGlitchless           = "No glitches are required, but may require some\n" //
                                         "minor tricks. Add minor tricks to consider for\n" //
                                         "logic in Detailed Logic Settings.";               //
@@ -127,7 +128,7 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //
-                                        "bombchu drops are forced on to guarentee a\n"     //
+                                        "bombchu drops are forced on to guarantee a\n"     //
                                         "replenishable source.\n"                          //
                                         "\n"                                               //
                                         "Bombchu Bowling is opened by bombchus.";          //
@@ -230,7 +231,7 @@ string_view scrubsAffordable          = "All Scrub prices will be reduced to 10 
 string_view scrubsExpensive           = "All Scrub prices will be their vanilla prices.\n" //
                                         "This will require spending over 1000 rupees on\n" //
                                         "Scrubs.";                                         //
-string_view scrubsRandomPrices        = "All Scrub prices will be between 0-99 rupees. This"
+string_view scrubsRandomPrices        = "All Scrub prices will be between 0-95 rupees. This"
                                         "will on average be very, very expensive overall.";//
 /*------------------------------                                                           //
 |         SHUFFLE COWS         |                                                           //
@@ -561,6 +562,17 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //
+/*------------------------------                                                           //
+|         COLORED KEYS         |                                                           //
+------------------------------*/                                                           //
+string_view coloredKeysDesc           = "If set, small key models will be colored\n"       //
+                                        "differently depending on which dungeon they can be"
+                                        "used in. Forest Temple keys are green. Fire Temple"
+                                        "keys are red. etc.";                              //
+string_view coloredBossKeysDesc       = "If set, boss key models will be colored\n"        //
+                                        "differently depending on which dungeon they can be"
+                                        "used in. The Forest Temple boss key is green. The "
+                                        "Fire Temple boss key is red. etc.";               //
 /*------------------------------                                                           //
 |         MIRROR WORLD         |                                                           //
 ------------------------------*/                                                           //

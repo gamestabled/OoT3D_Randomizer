@@ -202,7 +202,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
               //Item is an advancement item, figure out if it should be added to this sphere
               if (!playthroughBeatable && Location(loc)->GetPlacedItem().IsAdvancement()) {
                 ItemType type = Location(loc)->GetPlacedItem().GetItemType();
-                std::string itemName(Location(loc)->GetPlacedItemName());
+                std::string itemName(Location(loc)->GetPlacedItemName().GetEnglish());
                 bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
 
                 //Decide whether to exclude this location
@@ -331,6 +331,38 @@ static void PareDownPlaythrough() {
   for (LocationKey loc : toAddBackItem) {
     Location(loc)->SaveDelayedItem();
   }
+}
+
+//Very similar to PareDownPlaythrough except it creates the list of Way of the Hero items
+//Way of the Hero items are more specific than playthrough items in that they are items which *must*
+// be obtained to logically be able to complete the seed, rather than playthrough items which
+// are just possible items you *can* collect to complete the seed.
+static void CalculateWotH() {
+  //First copy locations from the 2-dimensional playthroughLocations into the 1-dimensional wothLocations
+  //size - 1 so Triforce is not counted
+  for (size_t i = 0; i < playthroughLocations.size() - 1; i++) {
+    for (size_t j = 0; j < playthroughLocations[i].size(); j++) {
+      if (Location(playthroughLocations[i][j])->IsHintable()) {
+        wothLocations.push_back(playthroughLocations[i][j]);
+      }
+    }
+  }
+
+  //Now go through and check each location, seeing if it is strictly necessary for game completion
+  for (int i = wothLocations.size() - 1; i >= 0; i--) {
+    LocationKey loc = wothLocations[i];
+    ItemKey copy = Location(loc)->GetPlacedItemKey(); //Copy out item
+    Location(loc)->SetPlacedItem(NONE); //Write in empty item
+    playthroughBeatable = false;
+    LogicReset();
+    GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
+    Location(loc)->SetPlacedItem(copy); //Immediately put item back
+    //If removing this item and no other item caused the game to become unbeatable, then it is strictly necessary, so keep it
+    //Else, delete from wothLocations
+    if (playthroughBeatable) {
+      wothLocations.erase(wothLocations.begin() + i);
+    }
+  }
 
   playthroughBeatable = true;
   //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
@@ -366,7 +398,7 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
     PlacementLog_Msg("Items:\n");
     for (const ItemKey item: items) {
       PlacementLog_Msg("\t");
-      PlacementLog_Msg(ItemTable(item).GetName());
+      PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
       PlacementLog_Msg("\n");
     }
     PlacementLog_Msg("\nAllowed Locations:\n");
@@ -417,7 +449,7 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       if (accessibleLocations.empty()) {
 
         PlacementLog_Msg("\nCANNOT PLACE ");
-        PlacementLog_Msg(ItemTable(item).GetName());
+        PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
         #ifdef ENABLE_DEBUG
@@ -649,39 +681,36 @@ int Fill() {
     FillExcludedLocations();
 
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
-    SetVanillaShopItems(); //Set ShopItems vector to default, vanilla values
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
-      PlaceShopItems(); //Just place vanilla items
+      PlaceVanillaShopItems(); //Place vanilla shop items in vanilla location
     } else {
-      if (Shopsanity.Is(SHOPSANITY_ZERO)) { //Shopsanity 0
-        Shuffle(ShopItems); //Shuffle shop items amongst themselves
-      }
-      else { //Shopsanity 1-4, random
-        const std::array<int, 4> indices = {7, 5, 8, 6}; //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
-
-        //Shuffle shop items making sure to not place minShopItems in shop slots which can be overwritten
-        std::vector<int> indicesToExclude;
-        int max = Shopsanity.Is(SHOPSANITY_RANDOM) ? 4 : GetShopsanityReplaceAmount(); //With random it's up to 4 so to be safe we exclude all 4, otherwise exclude amount from settings
-        for(int i = 0; i < max; i++) {
-          indicesToExclude.push_back(indices[i]);
-        }
-        ShuffleShop(ShopItems, indicesToExclude); //Shuffle shop items, making sure some will not be overwritten
-
+      int total_replaced = 0;
+      if (Shopsanity.IsNot(SHOPSANITY_ZERO)) { //Shopsanity 1-4, random
+        //Initialize NonShopItems
+        ItemAndPrice init;
+        init.Name = Text{"No Item", "Sin objeto", "Pas d'objet"};
+        init.Price = -1;
+        init.Repurchaseable = false;
+        NonShopItems.assign(32, init);
+        //Indices from OoTR. So shopsanity one will overwrite 7, three will overwrite 7, 5, 8, etc.
+        const std::array<int, 4> indices = {7, 5, 8, 6};
         //Overwrite appropriate number of shop items
         for (size_t i = 0; i < ShopLocationLists.size(); i++) {
           int num_to_replace = GetShopsanityReplaceAmount(); //1-4 shop items will be overwritten, depending on settings
-          for(int j = 0; j < num_to_replace; j++) {
+          total_replaced += num_to_replace;
+          for (int j = 0; j < num_to_replace; j++) {
             int itemindex = indices[j];
-            ShopItems[i*8+itemindex-1] = NONE; //Clear item so it can be filled during the general fill algo
             int shopsanityPrice = GetRandomShopPrice();
-            ShopItemsPrices[i*8+itemindex-1] = shopsanityPrice; //Set price in ShopItemsPrices vector so it can be retrieved later by the patch
+            NonShopItems[TransformShopIndex(i*8+itemindex-1)].Price = shopsanityPrice; //Set price to be retrieved by the patch and textboxes
             Location(ShopLocationLists[i][itemindex - 1])->SetShopsanityPrice(shopsanityPrice);
           }
         }
       }
       //Get all locations and items that don't have a shopsanity price attached
       std::vector<LocationKey> shopLocations = {};
-      std::vector<ItemKey> shopItems = FilterFromPool(ShopItems, [](const ItemKey i){return i != NONE;});
+      //Get as many vanilla shop items as the total number of shop items minus the number of replaced items
+      //So shopsanity 0 will get all 64 vanilla items, shopsanity 4 will get 32, etc.
+      std::vector<ItemKey> shopItems = GetMinVanillaShopItems(total_replaced);
 
       for (size_t i = 0; i < ShopLocationLists.size(); i++) {
         for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
@@ -742,6 +771,7 @@ int Fill() {
       printf("Done");
       printf("\x1b[9;10HCalculating Playthrough...");
       PareDownPlaythrough();
+      CalculateWotH();
       printf("Done");
       CreateOverrides();
       CreateAlwaysIncludedMessages();
@@ -758,6 +788,7 @@ int Fill() {
       Exits::ResetAllLocations();
       LogicReset();
       playthroughLocations.clear();
+      wothLocations.clear();
     }
     retries++;
   }

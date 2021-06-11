@@ -156,6 +156,13 @@ public:
         return GetObscure();
     }
 
+    const Text GetTextCopy() const {
+        if (Settings::ClearerHints) {
+            return GetClear();
+        }
+        return GetObscure();
+    }
+
     HintCategory GetType() const {
         return type;
     }

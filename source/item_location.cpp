@@ -89,7 +89,7 @@ void LocationTable_Init() {
     locationTable[MARKET_BOMBCHU_BOWLING_BOMBCHUS]       = ItemLocation::Base       (0x4B, 0xFF, "MK Bombchu Bowling Bombchus",          NONE,                                  {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
     locationTable[MARKET_LOST_DOG]                       = ItemLocation::Base       (0x35, 0x3E, "MK Lost Dog",                          MARKET_LOST_DOG,                       {Category::cInnerMarket, Category::cMarket,});
     locationTable[MARKET_SHOOTING_GALLERY_REWARD]        = ItemLocation::Base       (0x42, 0x60, "MK Shooting Gallery",                  MARKET_SHOOTING_GALLERY_REWARD,        {Category::cInnerMarket, Category::cMarket, Category::cMinigame});
-    locationTable[MARKET_10_BIG_POES]                    = ItemLocation::Base       (0x4D, 0x0F, "MK 10 Big Poes",                       MARKET_10_BIG_POES,                    {Category::cInnerMarket, Category::cHyruleCastle,});
+    locationTable[MARKET_10_BIG_POES]                    = ItemLocation::Base       (0x4D, 0x0F, "MK 10 Big Poes",                       MARKET_10_BIG_POES,                    {Category::cInnerMarket, Category::cMarket,});
 
     //Hyrule Castle
     locationTable[HC_MALON_EGG]                          = ItemLocation::Base       (0x5F, 0x47, "HC Malon Egg",                         HC_MALON_EGG,                          {Category::cHyruleCastle, Category::cMarket,});
@@ -1397,6 +1397,7 @@ std::vector<LocationKey> everyPossibleLocation = {};
 std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 
 std::vector<std::vector<LocationKey>> playthroughLocations;
+std::vector<LocationKey> wothLocations;
 bool playthroughBeatable = false;
 
 u16 itemsPlaced = 0;
@@ -1425,7 +1426,7 @@ void GenerateLocationPool() {
 void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmediately /*= false*/) {
   auto loc = Location(locKey);
   PlacementLog_Msg("\n");
-  PlacementLog_Msg(ItemTable(item).GetName());
+  PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
   PlacementLog_Msg(" placed at ");
   PlacementLog_Msg(loc->GetName());
   PlacementLog_Msg("\n\n");
@@ -1443,11 +1444,9 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
 
   //If we're placing a non-shop item in a shop location, we want to record it for custom messages
   if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
-    ItemAndPrice newpair;
-    newpair.Name = ItemTable(item).GetName();
-    int index = GetShopIndex(locKey);
-    newpair.Price = ShopItemsPrices[index];
-    NonShopItems[TransformShopIndex(index)] = newpair;
+    int index = TransformShopIndex(GetShopIndex(locKey));
+    NonShopItems[index].Name = ItemTable(item).GetName();
+    NonShopItems[index].Repurchaseable = ItemTable(item).GetItemType() == ITEMTYPE_REFILL;
   }
 
   loc->SetPlacedItem(item);
@@ -1533,7 +1532,7 @@ void CreateOverrides() {
     PlacementLog_Msg("\t");
     PlacementLog_Msg(loc->GetName());
     PlacementLog_Msg(": ");
-    PlacementLog_Msg(loc->GetPlacedItemName());
+    PlacementLog_Msg(loc->GetPlacedItemName().GetEnglish());
     PlacementLog_Msg("\n");
   }
   PlacementLog_Msg("Overrides Created: ");

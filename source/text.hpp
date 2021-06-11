@@ -2,6 +2,9 @@
 
 #include <string>
 
+#define PLURAL 0
+#define SINGULAR 1
+
 class Text {
 public:
     Text() = default;
@@ -42,6 +45,43 @@ public:
 
     bool operator!=(const Text& right) const {
         return !operator==(right);
+    }
+
+    void Replace(std::string oldStr, std::string newStr) {
+
+        for (std::string* str : {&english, &french, &spanish}) {
+            size_t position = str->find(oldStr);
+            while (position != std::string::npos) {
+              str->replace(position, oldStr.length(), newStr);
+              position = str->find(oldStr);
+            }
+        }
+    }
+
+    //find the appropriate bars that separate singular from plural
+    void SetForm(int form) {
+        for (std::string* str : {&english, &french, &spanish}) {
+
+            size_t firstBar = str->find('|');
+            if (firstBar != std::string::npos) {
+
+                size_t secondBar = str->find('|', firstBar + 1);
+                if (secondBar != std::string::npos) {
+
+                    size_t thirdBar = str->find('|', secondBar + 1);
+                    if (thirdBar != std::string::npos) {
+
+                        if (form == SINGULAR) {
+                            str->erase(secondBar, thirdBar - secondBar);
+                        } else {
+                            str->erase(firstBar, secondBar - firstBar);
+                        }
+                    }
+                }
+            }
+        }
+        //remove the remaining bar
+        this->Replace("|", "");
     }
 
     std::string english = "";

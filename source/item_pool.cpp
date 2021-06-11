@@ -14,6 +14,7 @@ using namespace Dungeon;
 
 std::vector<ItemKey> ItemPool = {};
 std::vector<ItemKey> PendingJunkPool = {};
+std::vector<u8> IceTrapModels = {};
 const std::array<ItemKey, 9> dungeonRewards = {
   KOKIRI_EMERALD,
   GORON_RUBY,
@@ -448,10 +449,10 @@ static ItemKey GetPendingJunkItem() {
 //Replace junk items in the pool with pending junk
 static void ReplaceMaxItem(const ItemKey itemToReplace, int max) {
   int itemCount = 0;
-  for (ItemKey item : ItemPool) {
-    if (item == itemToReplace) {
+  for (size_t i = 0; i < ItemPool.size(); i++) {
+    if (ItemPool[i] == itemToReplace) {
       if (itemCount >= max) {
-        item = GetJunkItem();
+        ItemPool[i] = GetJunkItem();
       }
       itemCount++;
     }
@@ -600,6 +601,62 @@ static void SetMinimalItemPool() {
 void GenerateItemPool() {
 
   ItemPool.clear();
+  
+  //Initialize ice trap models to always major items
+  IceTrapModels = {
+    GI_SWORD_BGS,
+    GI_SHIELD_MIRROR,
+    GI_BOOMERANG,
+    GI_LENS,
+    GI_HAMMER,
+    GI_BOOTS_IRON,
+    GI_BOOTS_HOVER,
+    GI_STONE_OF_AGONY,
+    GI_DINS_FIRE,
+    GI_FARORES_WIND,
+    GI_NAYRUS_LOVE,
+    GI_ARROW_FIRE,
+    GI_ARROW_ICE,
+    GI_ARROW_LIGHT,
+    0xB8, //Double defense
+    GI_CLAIM_CHECK,
+    0x80, //Progressive hookshot
+    0x81, //Progressive strength
+    0x82, //Progressive bomb bag
+    0x83, //Progressive bow
+    0x84, //Progressive slingshot
+    0x85, //Progressive wallet
+    0x86, //Progressive scale
+    0x8A, //Progressive magic
+  };
+  //Check song shuffle and dungeon reward shuffle just for ice traps
+  if (ShuffleSongs.Is(SONGSHUFFLE_ANYWHERE)) {
+    //Push item ids for songs
+    IceTrapModels.push_back(0xC1);
+    IceTrapModels.push_back(0xC2);
+    IceTrapModels.push_back(0xC3);
+    IceTrapModels.push_back(0xC4);
+    IceTrapModels.push_back(0xC5);
+    IceTrapModels.push_back(0xC6);
+    IceTrapModels.push_back(0xBB);
+    IceTrapModels.push_back(0xBC);
+    IceTrapModels.push_back(0xBD);
+    IceTrapModels.push_back(0xBE);
+    IceTrapModels.push_back(0xBF);
+    IceTrapModels.push_back(0xC0);
+  }
+  if (ShuffleRewards.Is(REWARDSHUFFLE_ANYWHERE)) {
+    //Push item ids for dungeon rewards
+    IceTrapModels.push_back(0xCB);
+    IceTrapModels.push_back(0xCC);
+    IceTrapModels.push_back(0xCD);
+    IceTrapModels.push_back(0xCE);
+    IceTrapModels.push_back(0xCF);
+    IceTrapModels.push_back(0xD0);
+    IceTrapModels.push_back(0xD1);
+    IceTrapModels.push_back(0xD2);
+    IceTrapModels.push_back(0xD3);
+  }
 
   //Fixed item locations
   PlaceItemInLocation(HC_ZELDAS_LETTER, ZELDAS_LETTER);
@@ -608,12 +665,14 @@ void GenerateItemPool() {
 
   if (ShuffleKokiriSword) {
     AddItemToMainPool(KOKIRI_SWORD);
+    IceTrapModels.push_back(GI_SWORD_KOKIRI);
   } else {
     PlaceItemInLocation(KF_KOKIRI_SWORD_CHEST, KOKIRI_SWORD);
   }
 
   if (ShuffleWeirdEgg) {
     AddItemToMainPool(WEIRD_EGG);
+    IceTrapModels.push_back(GI_WEIRD_EGG);
   } else {
     PlaceItemInLocation(HC_MALON_EGG, WEIRD_EGG);
   }
@@ -623,6 +682,7 @@ void GenerateItemPool() {
     if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
       AddItemToPool(PendingJunkPool, PROGRESSIVE_OCARINA);
     }
+    IceTrapModels.push_back(0x8B); //Progressive ocarina
   } else {
     PlaceItemInLocation(LW_GIFT_FROM_SARIA, PROGRESSIVE_OCARINA);
     PlaceItemInLocation(HF_OCARINA_OF_TIME_ITEM, PROGRESSIVE_OCARINA);
@@ -646,6 +706,7 @@ void GenerateItemPool() {
     if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
       AddItemToPool(PendingJunkPool, MAGIC_BEAN_PACK);
     }
+    IceTrapModels.push_back(0xC9); //Magic bean pack
   } else {
     PlaceItemInLocation(ZR_MAGIC_BEAN_SALESMAN, MAGIC_BEAN);
   }
@@ -726,6 +787,7 @@ void GenerateItemPool() {
   //Gerudo Token
   if (ShuffleGerudoToken && GerudoFortress.IsNot(GERUDOFORTRESS_OPEN)) {
     AddItemToMainPool(GERUDO_TOKEN);
+    IceTrapModels.push_back(GI_GERUDO_CARD);
   } else if (ShuffleGerudoToken) {
     AddItemToPool(PendingJunkPool, GERUDO_TOKEN);
     PlaceItemInLocation(GF_GERUDO_TOKEN, ICE_TRAP);
@@ -738,7 +800,7 @@ void GenerateItemPool() {
       AddItemToPool(PendingJunkPool, GERUDO_TOKEN);
     }
 
-    // Plentiful small keys
+    //Plentiful small keys
     if (Keysanity.Is(KEYSANITY_ANYWHERE)) {
       AddItemToPool(PendingJunkPool, BOTTOM_OF_THE_WELL_SMALL_KEY);
       AddItemToPool(PendingJunkPool, FOREST_TEMPLE_SMALL_KEY);
@@ -770,7 +832,7 @@ void GenerateItemPool() {
     AddItemsToPool(ItemPool, shopsanityRupees); //Shopsanity gets extra large rupees
   }
 
-  //scrubsanity
+  //Scrubsanity
   if (Settings::Scrubsanity.IsNot(SCRUBSANITY_OFF)) {
     //Deku Tree
     if (DekuTree.IsMQ()) {
@@ -817,7 +879,7 @@ void GenerateItemPool() {
   AddItemsToPool(ItemPool, alwaysItems);
   AddItemsToPool(ItemPool, dungeonRewards);
 
-  //dungeon pools
+  //Dungeon pools
   if (DekuTree.IsMQ()) {
     AddItemsToPool(ItemPool, DT_MQ);
   } else {
@@ -874,7 +936,7 @@ void GenerateItemPool() {
   u8 bottleCount = 4;
   std::vector<ItemKey> bottles;
   bottles.assign(normalBottles.begin(), normalBottles.end());
-
+  IceTrapModels.push_back(ItemTable(RandomElement(bottles)).GetItemID()); //Get one random bottle type for ice traps
   for (u8 i = 0; i < bottleCount; i++) {
     if (i >= rutoBottles) {
       AddRandomBottle(bottles);
