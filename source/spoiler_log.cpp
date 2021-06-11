@@ -123,18 +123,18 @@ static void WriteIngameSpoilerLog() {
         break;
       } else {
         stringOffsetMap[locName] = spoilerStringOffset;
-        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locName.c_str()) + 1;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], "%s", locName.c_str()) + 1;
       }
     }
 
-    auto locItem = loc->GetPlacedItemName();
+    auto locItem = loc->GetPlacedItemName().GetEnglish();
     if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
       if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
         spoilerOutOfSpace = true;
         break;
       } else {
         stringOffsetMap[locItem] = spoilerStringOffset;
-        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], locItem.c_str()) + 1;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], "%s", locItem.c_str()) + 1;
       }
     }
 
@@ -185,7 +185,7 @@ static void WriteLocation(
 
   auto node = parentNode->InsertNewChildElement("location");
   node->SetAttribute("name", location->GetName().c_str());
-  node->SetText(location->GetPlacedItemName().c_str());
+  node->SetText(location->GetPlacedItemName().GetEnglish().c_str());
 
   if (withPadding) {
     // Insert a padding so we get a kind of table in the XML document.
@@ -372,7 +372,7 @@ static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
 
     auto node = parentNode->InsertNewChildElement("hint");
     node->SetAttribute("location", location->GetName().c_str());
-    node->SetText(location->GetPlacedItemName().c_str());
+    node->SetText(location->GetPlacedItemName().GetEnglish().c_str());
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);
