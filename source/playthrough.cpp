@@ -22,7 +22,7 @@ namespace Playthrough {
       CustomMessages::ClearMessages();
       ItemReset();
       HintReset();
-      Exits::AccessReset();
+      Areas::AccessReset();
 
       Settings::UpdateSettings();
       PlacementLog_WriteSettings();

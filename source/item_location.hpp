@@ -182,11 +182,11 @@ public:
       isHintable = true;
     }
 
-    void SetParentRegion(Exit* region) {
+    void SetParentRegion(AreaKey region) {
       parentRegion = region;
     }
 
-    Exit* GetParentRegion() const {
+    AreaKey GetParentRegion() const {
       return parentRegion;
     }
 
@@ -281,7 +281,7 @@ private:
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
     u16 price = 0;
     bool isHintable = false;
-    Exit* parentRegion = nullptr;
+    AreaKey parentRegion = NONE;
     bool hasShopsanityPrice = false;
 };
 

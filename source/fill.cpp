@@ -33,40 +33,40 @@ static void RemoveStartingItemsFromPool() {
 
 //This function will propogate Time of Day access as the specified age to the
 //new exit through the world.
-static void UpdateToDAccess(Exit* exit, u8 age, ExitPairing::Time ToD) {
-  if (ToD == ExitPairing::Time::Day) {
+static void UpdateToDAccess(const AreaKey area, u8 age, Exit::Time ToD) {
+  if (ToD == Exit::Time::Day) {
     if (age == AGE_CHILD) {
-      exit->dayChild = true;
+      AreaTable(area)->dayChild = true;
     }
     if (age == AGE_ADULT) {
-      exit->dayAdult = true;
+      AreaTable(area)->dayAdult = true;
     }
-  } else if (ToD == ExitPairing::Time::Night) {
+  } else if (ToD == Exit::Time::Night) {
     if (age == AGE_CHILD) {
-      exit->nightChild = true;
+      AreaTable(area)->nightChild = true;
     }
     if (age == AGE_ADULT) {
-      exit->nightAdult = true;
+      AreaTable(area)->nightAdult = true;
     }
   } else {
     //only update from false -> true, never true -> false
     if (age == AGE_CHILD) {
-      exit->dayChild   = Logic::AtDay   || exit->dayChild;
-      exit->nightChild = Logic::AtNight || exit->nightChild;
+      AreaTable(area)->dayChild   = Logic::AtDay   || AreaTable(area)->dayChild;
+      AreaTable(area)->nightChild = Logic::AtNight || AreaTable(area)->nightChild;
     }
     if (age == AGE_ADULT) {
-      exit->dayAdult   = Logic::AtDay   || exit->dayAdult;
-      exit->nightAdult = Logic::AtNight || exit->nightAdult;
+      AreaTable(area)->dayAdult   = Logic::AtDay   || AreaTable(area)->dayAdult;
+      AreaTable(area)->nightAdult = Logic::AtNight || AreaTable(area)->nightAdult;
     }
   }
 
   //special check for temple of time
-  if (Exits::ToT_BeyondDoorOfTime.Child() && !Exits::ToT_BeyondDoorOfTime.Adult()) {
-    Exits::Root.dayAdult   = Exits::ToT_BeyondDoorOfTime.dayChild;
-    Exits::Root.nightAdult = Exits::ToT_BeyondDoorOfTime.nightChild;
-  } else if (!Exits::ToT_BeyondDoorOfTime.Child() && Exits::ToT_BeyondDoorOfTime.Adult()){
-    Exits::Root.dayChild   = Exits::ToT_BeyondDoorOfTime.dayAdult;
-    Exits::Root.nightChild = Exits::ToT_BeyondDoorOfTime.nightAdult;
+  if (AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child() && !AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult()) {
+    AreaTable(ROOT)->dayAdult   = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->dayChild;
+    AreaTable(ROOT)->nightAdult = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->nightChild;
+  } else if (!AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult()){
+    AreaTable(ROOT)->dayChild   = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->dayAdult;
+    AreaTable(ROOT)->nightChild = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->nightAdult;
   }
 }
 
@@ -108,10 +108,10 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 
   //Reset all access to begin a new search
   ApplyStartingInventory();
-  Exits::AccessReset();
+  Areas::AccessReset();
   LocationReset();
   Logic::UpdateHelpers();
-  std::vector<Exit *> exitPool = {&Exits::Root};
+  std::vector<AreaKey> areaPool = {ROOT};
 
   //Variables for playthrough
   int gsCount = 0;
@@ -136,8 +136,8 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 
     std::vector<LocationKey> sphere;
 
-    for (size_t i = 0; i < exitPool.size(); i++) {
-      Exit* area = exitPool[i];
+    for (size_t i = 0; i < areaPool.size(); i++) {
+      Area* area = AreaTable(areaPool[i]);
 
       //iterate twice on each area for different ages
       for (u8 age : {AGE_CHILD, AGE_ADULT}) {
@@ -166,24 +166,24 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 
         //for each exit in this area
         for (size_t j = 0; j < area->exits.size(); j++) {
-          ExitPairing& exitPair = area->exits[j];
-          Exit* exit = exitPair.GetExit();
+          Exit& exit = area->exits[j];
+          Area* exitArea = AreaTable(exit.GetAreaKey());
 
-          if (exitPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) {
-            UpdateToDAccess(exit, age, exitPair.TimeOfDay());
+          if (exit.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) {
+            UpdateToDAccess(exit.GetAreaKey(), age, exit.TimeOfDay());
 
             //If the exit is accessible, try adding it
-            if (exit->HasAccess() && !exit->addedToPool) {
+            if (exitArea->HasAccess() && !exitArea->addedToPool) {
 
-              exit->addedToPool = true;
-              exitPool.push_back(exit);
+              exitArea->addedToPool = true;
+              areaPool.push_back(exit.GetAreaKey());
             }
           }
         }
 
         //for each ItemLocation in this area
         for (size_t k = 0; k < area->locations.size(); k++) {
-          ItemLocationPairing& locPair = area->locations[k];
+          LocationAccess& locPair = area->locations[k];
           LocationKey loc = locPair.GetLocation();
 
           if ((locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) && !(Location(loc)->IsAddedToPool())) {
@@ -262,16 +262,15 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
       }
     }
 
-    erase_if(exitPool, [](Exit* e){ return e->AllAccountedFor();});
+    erase_if(areaPool, [](const AreaKey e){ return AreaTable(e)->AllAccountedFor();});
 
     if (mode == SearchMode::GeneratePlaythrough && sphere.size() > 0) {
       playthroughLocations.push_back(sphere);
     }
 
   }
-  //CitraPrint("Accessible Locations: ");
+
   erase_if(accessibleLocations, [&allowedLocations](LocationKey loc){
-    //CitraPrint(Location(loc)->GetName());
     for (LocationKey allowedLocation : allowedLocations) {
       if (loc == allowedLocation) {
         return false;
@@ -785,7 +784,7 @@ int Fill() {
     //Unsuccessful placement
     if(retries < 4) {
       printf("\x1b[9;10HFailed. Retrying... %d", retries+2);
-      Exits::ResetAllLocations();
+      Areas::ResetAllLocations();
       LogicReset();
       playthroughLocations.clear();
       wothLocations.clear();

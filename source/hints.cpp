@@ -107,39 +107,37 @@ constexpr std::array<HintSetting, 4> hintSettingTable{{
   },
 }};
 
-static Exit* GetHintRegion(Exit* exit) {
+static Area* GetHintRegion(const AreaKey area) {
 
-  std::vector<Exit*> alreadyChecked = {};
-  std::vector<Exit*> spotQueue = {exit};
+  std::vector<AreaKey> alreadyChecked = {};
+  std::vector<AreaKey> spotQueue = {area};
 
   while (!spotQueue.empty()) {
-    Exit* region = spotQueue.back();
+    AreaKey region = spotQueue.back();
     alreadyChecked.push_back(region);
     spotQueue.pop_back();
 
-    if (region->hintKey != NONE) {
-      return region;
+    if (AreaTable(region)->hintKey != NONE) {
+      return AreaTable(region);
     }
 
     //add unchecked exits to spot queue
     bool checked = false;
-    for (auto exitPair : region->exits) {
-      Exit* e = exitPair.GetExit();
-
-      for (Exit* checkedExit : alreadyChecked) {
-        if (e == checkedExit) {
+    for (auto exit : AreaTable(region)->exits) {
+      for (AreaKey checkedExit : alreadyChecked) {
+        if (exit.GetAreaKey() == checkedExit) {
           checked = true;
           break;
         }
       }
 
       if (!checked) {
-        spotQueue.insert(spotQueue.begin(), e);
+        spotQueue.insert(spotQueue.begin(), exit.GetAreaKey());
       }
     }
   }
 
-  return &Exits::NoExit;
+  return AreaTable(NONE);
 }
 
 static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hintedLocation = GANON) {
@@ -245,9 +243,12 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   Text locationText;
   if (Location(hintedLocation)->IsDungeon()) {
     *remainingDungeonWothHints -= 1;
-    locationText = Location(hintedLocation)->GetParentRegion()->GetHint().GetText();
+    AreaKey parentRegion = Location(hintedLocation)->GetParentRegion();
+    locationText = AreaTable(parentRegion)->GetHint().GetText();
+
   } else {
-    locationText = GetHintRegion(Location(hintedLocation)->GetParentRegion())->GetHint().GetText();
+    AreaKey parentRegion = Location(hintedLocation)->GetParentRegion();
+    locationText = GetHintRegion(parentRegion)->GetHint().GetText();
   }
   Text finalWothHint = Hint(PREFIX).GetText()+"#"+locationText+"#"+Hint(WAY_OF_THE_HERO).GetText();
   PlacementLog_Msg("\tMessage: ");
@@ -289,9 +290,11 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<Locati
   Text locationText;
   if (Location(hintedLocation)->IsDungeon()) {
     *remainingDungeonBarrenHints -= 1;
-    locationText = Hint(Location(hintedLocation)->GetParentRegion()->hintKey).GetText();
+    AreaKey parentRegion = Location(hintedLocation)->GetParentRegion();
+    locationText = Hint(AreaTable(parentRegion)->hintKey).GetText();
   } else {
-    locationText = Hint(GetHintRegion(Location(hintedLocation)->GetParentRegion())->hintKey).GetText();
+    AreaKey parentRegion = Location(hintedLocation)->GetParentRegion();
+    locationText = Hint(GetHintRegion(parentRegion)->hintKey).GetText();
   }
   Text finalBarrenHint = Hint(PREFIX).GetText()+Hint(PLUNDERING).GetText()+"#"+locationText+"#"+Hint(FOOLISH).GetText();
   PlacementLog_Msg("\tMessage: ");
@@ -337,7 +340,8 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
   //form hint text
   Text itemText = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
   if (Location(hintedLocation)->IsDungeon()) {
-    Text locationText = Location(hintedLocation)->GetParentRegion()->GetHint().GetText();
+    AreaKey parentRegion = Location(hintedLocation)->GetParentRegion();
+    Text locationText = AreaTable(parentRegion)->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# "+Hint(HOARDS).GetText()+" #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.english);

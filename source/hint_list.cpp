@@ -5065,11 +5065,6 @@ void HintTable_Init() {
                      Text{"Link's House", /*french*/"que la #maison de @#", /*spanish*/"la casa de @"},
   });
 
-    hintTable[TOT_MAIN] = HintText::Region({
-                     //obscure text
-                     Text{"the #Temple of Time#", /*french*/"que le #temple du temps#", /*spanish*/"el Templo del Tiempo"},
-  });
-
     hintTable[KF_MIDOS_HOUSE] = HintText::Region({
                      //obscure text
                      Text{"Mido's house", /*french*/"que la #cabane du Grand Mido#", /*spanish*/"la casa de Mido"},

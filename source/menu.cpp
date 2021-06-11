@@ -52,7 +52,6 @@ void PrintTopScreen() {
 
 void MenuInit() {
 
-  Exits::SetParentRegions();
   Settings::SetDefaultSettings();
 
   seedChanged = false;

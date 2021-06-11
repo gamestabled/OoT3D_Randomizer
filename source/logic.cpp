@@ -230,7 +230,7 @@ namespace Logic {
   bool CanSummonGossipFairy = false;
   bool CanSummonGossipFairyWithoutSuns = false;
   bool CanTakeDamage       = false;
-  bool CanPlantBean        = false;
+  //bool CanPlantBean        = false;
   bool CanOpenBombGrotto   = false;
   bool CanOpenStormGrotto  = false;
   bool BigPoeKill          = false;
@@ -452,7 +452,7 @@ namespace Logic {
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
     CanTakeDamage       = DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || Fairy || CanUse(CanUseItem::Nayrus_Love);
-    CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
+    //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
     HookshotOrBoomerang = CanUse(CanUseItem::Hookshot) || CanUse(CanUseItem::Boomerang);
@@ -749,7 +749,7 @@ namespace Logic {
      CanStunDeku      = false;
      CanSummonGossipFairy = false;
      CanSummonGossipFairyWithoutSuns = false;
-     CanPlantBean        = false;
+     //CanPlantBean        = false;
      CanOpenBombGrotto   = false;
      CanOpenStormGrotto  = false;
      BigPoeKill          = false;
