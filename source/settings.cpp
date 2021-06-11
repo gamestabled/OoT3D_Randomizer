@@ -902,13 +902,7 @@ namespace Settings {
   //at those locations. Excluded locations will have junk placed at them.
   static void ResolveExcludedLocationConflicts() {
 
-											  
-    std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
-										   
-							
-			
-									
-	 
+    std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);								   
     //For now, just always hide shop locations, as not sure how to handle hiding them-
     //1-4 should always be hidden, while the others should be settings dependent, but random shopsanity makes that more complicated...
     //Excluded shop locations are also wonky
@@ -1346,13 +1340,6 @@ namespace Settings {
 
   //Function to update cosmetics options depending on choices
   static void UpdateCosmetics() {
-												   
-																													
-												  
-										   
-			
-																									 
-	 
 
     ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
     ChooseFinalColor(KokiriTunicColor, finalKokiriTunicColor, tunicColors);
@@ -1360,29 +1347,6 @@ namespace Settings {
     ChooseFinalColor(ZoraTunicColor, finalZoraTunicColor, tunicColors);
     ChooseFinalColor(SilverGauntletsColor, finalSilverGauntletsColor, gauntletColors);
     ChooseFinalColor(GoldGauntletsColor, finalGoldGauntletsColor, gauntletColors);
-			
-																								   
-	 
-
-												
-																							   
-														
-																															   
-													   
-												
-			
-																												  
-	 
-
-											  
-																						   
-													  
-																															 
-													 
-											  
-			
-																											  
-	 
   }
 
   //Function to set flags depending on settings
