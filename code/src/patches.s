@@ -1130,6 +1130,11 @@ MidoCheckDekuTreeClearFive_patch:
 CorrectCompassChests_patch:
     bl hook_CheckCurrentDungeonMode
 
+.section .patch_CorrectCompassChestsTwo
+.global CorrectCompassChestsTwo_patch
+CorrectCompassChestsTwo_patch:
+    bl hook_CheckCurrentDungeonMode
+
 .section .patch_FishingNewRecord
 .global FishingNewRecord_patch
 FishingNewRecord_patch:
@@ -1196,12 +1201,12 @@ FastOwlCutscenes_patch:
 .global BugsRecatchable_patch
 BugsRecatchable_patch:
     nop
-    
+
 .section .patch_SkipDaruniaDanceOne
 .global SkipDaruniaDanceOne_patch
 SkipDaruniaDanceOne_patch:
     nop
-    
+
 .section .patch_SkipDaruniaDanceTwo
 .global SkipDaruniaDanceTwo_patch
 SkipDaruniaDanceTwo_patch:
