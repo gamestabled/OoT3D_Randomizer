@@ -12,7 +12,9 @@
 using namespace Settings;
 
 std::vector<ItemAndPrice> NonShopItems = {};
-//Shop items we don't want to overwrite
+
+static std::array<std::array<Text, 3>, 0xD3> trickNameTable; //Table of trick names for ice traps
+bool initTrickNames = false; //Indicates if trick ice trap names have been initialized yet
 
 //Set vanilla shop item locations before potentially shuffling
 void PlaceVanillaShopItems() {
@@ -242,75 +244,268 @@ int GetShopsanityReplaceAmount() {
   }
 }
 
-//A dictionary that maps a u8 to an array of 3 strings, which contain the easy, medium, and hard trick names respectively
-static std::map<u8, std::array<std::string, 3>> IceTrapNames = {
-  {GI_SWORD_KOKIRI, {"Butter Knife", "Kokiri Knife", "Kokiri's Sword"}},
-  {GI_SWORD_BGS, {"Goron's Not-Broken Sword", "Big Goron Sword", "Biggoron's Sword"}},
-  {GI_SHIELD_MIRROR, {"Not the 1.0 OoT Shield", "Magic Shield", "Mirror Sheild"}},
-  {GI_BOOMERANG, {"Prank Fetch Toy", "Magic Boomerang", "Fairy Boomerang"}},
-  {GI_WEIRD_EGG, {"D.I.Y. Alarm Clock", "Lon Lon Egg", "Egg"}},
-  {GI_LENS, {"Sheikah-leidoscope", "Eye of Truth", "Lens o’ Truth"}},
-  {GI_HAMMER, {"Goron Gavel", "Magic Hammer", "Metagon Hammer"}},
-  {GI_BOOTS_IRON, {"Toe Shields", "Steel Boots", "Hover Boots"}},
-  {GI_BOOTS_HOVER, {"Rito Slippers", "Pegasus Boots", "Iron Boots"}},
-  {GI_STONE_OF_AGONY, {"Itemfinder", "Crystal Shard", "Stone of Agony"}},
-  {GI_DINS_FIRE, {"Hylia's Grace", "Crystal of Power", "Eldin’s Fire"}},
-  {GI_FARORES_WIND, {"Farore's Escape Dust", "Crystal of Courage", "Faron’s Wind"}},
-  {GI_NAYRUS_LOVE, {"Zelda's Neutral Special", "Crystal of Wisdom", "Lanayru’s Love"}},
-  {GI_ARROW_FIRE, {"Candy Apple on a Stick", "Ire Arrow", "Fire Arrows"}},
-  {GI_ARROW_ICE, {"Ice Trap Arrow", "Lice Arrow", "Ice Arrows"}},
-  {GI_ARROW_LIGHT, {"Shock Arrows (10)", "Fight Arrow", "Light Arrows"}},
-  {GI_GERUDO_CARD, {"Gym Membership Card", "Goron Token", "Gerudo Card"}},
-  {0xC9, {"Lots of Funky Beans", "Mystic Beans", "Magic Bean"}},
-  {0xB8, {"Diamond Hearts", "Quadruple Defense", "Defense Upgrade"}},
-  {GI_CLAIM_CHECK, {"Goron Parchment", "Goron Diploma", "Biggoron’s Claim Check"}},
-  {0x80, {"Hookshot, no strings attached", "Progressive Grappling Hook", "Hookshot Upgrade"}},
-  {0x81, {"Bracelet of Friendship", "Progressive Power Glove", "Strength Upgrade"}},
-  {0x82, {"Bob-Omb Sleeping Bag", "Progressive Bomb Box", "Bomb Bag Upgrade"}},
-  {0x83, {"Regressive Quiver", "Progressive Arrow Holder", "Quiver Upgrade"}},
-  {0x84, {"Popcorn Bag", "Progressive Seed Pouch", "Bullet Bag Upgrade"}},
-  {0x85, {"500 Rupees", "Progressive Rupee Bag", "Wallet Upgrade"}},
-  {0x86, {"Bowling Ball Upgrade", "Progressive Diving Scale", "Scale Upgrade"}},
-  {0x8A, {"Green Fuel", "Progressive Magic Oil", "Magic Upgrade"}},
-  {0x8B, {"Duck Flute", "Progressive Memento", "Ocarina Upgrade"}},
-  {0x0F, {"Empty fishbowl", "Glass Bottle", "Bottle"}},
-  {0x14, {"Bottle with Cooking Cream", "Bottle with Cow Milk", "Bottle of Milk"}},
-  {0x8C, {"Bottle with 2nd Potion", "Bottle with Red Medicine", "Bottle of Red Potion"}},
-  {0x8D, {"Bottle with Vegetable Juice", "Bottle with Green Medicine", "Bottle of Green Potion"}},
-  {0x8E, {"Bottle with Water", "Bottle with Blue Medicine", "Bottle of Blue Potion"}},
-  {0x8F, {"Bottle with Forest Firefly", "Bottle with Faerie", "Bottled Fairy"}},
-  {0x90, {"Bottle with Small Jabu-Jabu", "Bottle with Tasty Fish", "Bottled Fish"}},
-  {0x91, {"Bottle with Will-O-Wisp", "Bottle with Blue Flame", "Bottled Blue Fire"}},
-  {0x92, {"Bottle with Baby Tektites", "Bottle with Beetles", "Bottled Bugs"}},
-  {0x94, {"Bottle with Sad Ghoul", "Bottle with Ghost", "Bottled Poe"}},
-  {0x15, {"Bottle with Letter to Mama", "Bottle with Note", "Bottled Ruto's Letter"}},
-  {0x93, {"Bottle with Smelly Ghost", "Bottle with Big Ghost", "Bottled Big Poe"}},
-  {0xC1, {"Zelda's Best Hits", "Zelda's Song", "Nocturne of Shadow"}},
-  {0xC2, {"Song of Cows", "Epona's Ballad", "Requiem of Spirit"}},
-  {0xC3, {"Saria's Remix Album", "Saria's Fugue", "Minuet of Forest"}},
-  {0xC4, {"Salute the Sun's Song", "Sun's Chimes", "Prelude of Light"}},
-  {0xC5, {"Song of Passing Time", "Canon of Time", "Serenade of Water"}},
-  {0xC6, {"Song of Happy Frogs", "Sonata of Storms", "Bolero of Fire"}},
-  {0xBB, {"Saria's Karaoke", "Minuet of the Meadow", "Saria's Song"}},
-  {0xBC, {"Darunia's Tango", "Bolero of the Crater", "Epona's Song"}},
-  {0xBD, {"Ruto's Blues", "Serenade of the Lake", "Song of Storms"}},
-  {0xBE, {"Nabooru's Reggae", "Requiem of the Colossus", "Epona's Song"}},
-  {0xBF, {"Impa's Death Metal", "Nocturme of the Graveyard", "Zelda's Lullaby"}},
-  {0xC0, {"Rauru's Sing-Along", "Prelude of Time", "Sun's Song"}},
-  {0xCB, {"Farore's Brooch", "Deku Tree's Emerald", "Kokiri's Emerald"}},
-  {0xCC, {"Din's Candied Rock", "Gerudo's Ruby", "Goron's Ruby"}},
-  {0xCD, {"Nayru's Mood Ring", "Zola's Sapphire", "Zora's Sapphire"}},
-  {0xCE, {"Bombos", "Saria's Medallion", "Medallion of Forest"}},
-  {0xCF, {"Fire Emblem", "Darunia's Medallion", "Medallion of Fire"}},
-  {0xD0, {"Water Gym Badge", "Ruto's Medallion", "Medallion of Water"}},
-  {0xD1, {"Gerudo Doubloon", "Nabooru's Medallion", "Medallion of Spirit"}},
-  {0xD2, {"Hyrule Purple Coin", "Impa's Medallion", "Medallion of Shadow"}},
-  {0xD3, {"Coins (50)", "Rauru's Medallion", "Medallion of Light"}},
-};
+//Initialize the table of trick names with an easy, medium, and hard name for each language
+void InitTrickNames() {
+  trickNameTable[GI_SWORD_KOKIRI] = {
+         //English          French                      Spanish
+    Text{"Butter Knife",   "Couteau à fromage Kokiri", "Cuchillo de untar"},      //Easy
+    Text{"Kokiri Knife",   "Épée Mojo",                "Espada Koquiri"},         //Medium
+    Text{"Kokiri's Sword", "Épée de Kokiri",           "Espada de los Kokiri"}}; //Hard
+  trickNameTable[GI_SWORD_BGS] = {
+    Text{"Goron's Not-Broken Sword", "Épée pas brisée de Goron", "Espada irrompible goron"}, 
+    Text{"Big Goron Sword",          "Épée de gros Goron",       "Espada de Big Goron"}, 
+    Text{"Biggoron's Sword",         "Épée Grogoron",            "Espada Biggoron"}};
+  trickNameTable[GI_SHIELD_MIRROR] = {
+    Text{"Not the 1.0 OoT Shield", "Miroir magique",   "Escudo de la 1.0"}, 
+    Text{"Magic Shield",           "Bouclier magique", "Escudo gerudo"}, 
+    Text{"Mirror Sheild",          "Bouclier-miroir",  "Escudo reflector"}};
+  trickNameTable[GI_BOOMERANG] = {
+    Text{"Prank Fetch Toy", "Inséparable bâtonnet", "Plátano volador"}, 
+    Text{"Magic Boomerang", "Boomerang magique",    "Bumerán de las hadas"}, 
+    Text{"Fairy Boomerang", "Boomerang des fées",   "Bumerang"}};
+  trickNameTable[GI_WEIRD_EGG] = {
+    Text{"D.I.Y. Alarm Clock", "Réveille-matin improvisé", "Despertador Lon Lon"}, 
+    Text{"Lon Lon Egg",        "Oeuf Lon Lon",             "Huevo Lon Lon"}, 
+    Text{"Egg",                "Oeuf",                     "Huevo de bolsillo"}};
+  trickNameTable[GI_LENS] = {
+    Text{"Sheikah-leidoscope", "Sheikah-léidoscope", "Monóculo de la Verdad"}, 
+    Text{"Eye of Truth",       "Oeil de vérité",     "Ojo de la Verdad"}, 
+    Text{"Lens o' Truth",      "Loupe de la vérité", "Lentes de la Verdad"}};
+  trickNameTable[GI_HAMMER] = {
+    Text{"Goron Gavel",    "Marteau de juge",    "Martillo Goron"}, 
+    Text{"Magic Hammer",   "Marteau des titans", "Mazo Megatón"}, 
+    Text{"Metagon Hammer", "Masse de titan",     "Martillo Megaton"}};
+  trickNameTable[GI_BOOTS_IRON] = {
+    Text{"Toe Shields", "Couvre-orteils",  "Botas voladoras"}, 
+    Text{"Steel Boots", "Bottes plombées", "Botas de plomo"}, 
+    Text{"Hover Boots", "Bottes de fer",   "Botas pesadas"}};
+  trickNameTable[GI_BOOTS_HOVER] = {
+    Text{"Rito Slippers", "Pantoufles Rito", "Botas de hierro"}, 
+    Text{"Pegasus Boots", "Bottes pégase",   "Botas de Pegaso"}, 
+    Text{"Iron Boots",    "Bottes de l'air", "Botas resbaladizas"}};
+  trickNameTable[GI_STONE_OF_AGONY] = {
+    Text{"Itemfinder",     "Cherch'Objet",         "Trozo de la Agonía"}, 
+    Text{"Crystal Shard",  "Fragment de cristal",  "Fragmento de la Agonía"}, 
+    Text{"Stone of Agony", "Pierre de souffrance", "Piedra de la Agonia"}};
+  trickNameTable[GI_DINS_FIRE] = {
+    Text{"Hylia's Grace",    "Grâce d'Hylia",  "Orbe de Din"}, 
+    Text{"Crystal of Power", "Cristal de Din", "Llamas de Din"}, 
+    Text{"Eldin's Fire",     "Feu d'Eldin",    "Fuego de Din (Magia infinita)"}};
+  trickNameTable[GI_FARORES_WIND] = {
+    Text{"Farore's Escape Dust", "Poudre d'escampette Farore", "Orbe de Farore"}, 
+    Text{"Crystal of Courage",   "Cristal de Farore",          "Teletransporte de Farore"}, 
+    Text{"Faron's Wind",         "Vent de Firone",             "Viento de Farore (Magia infinita)"}};
+  trickNameTable[GI_NAYRUS_LOVE] = {
+    Text{"Zelda's Neutral Special", "Spécial neutre de Zelda", "Orbe de Nayru"}, 
+    Text{"Crystal of Wisdom",       "Cristal de Nayru",        "Bendición de Nayru"}, 
+    Text{"Lanayru's Love",          "Amour de Lanelle",        "Amor de Nayru (Magia infinita)"}};
+  trickNameTable[GI_ARROW_FIRE] = {
+    Text{"Candy Apple on a Stick", "Pomme confite",      "Rupia roja voladora"}, 
+    Text{"Ire Arrow",              "Flèche des flammes", "Flechas ígneas"}, 
+    Text{"Fire Arrows",            "Flèches de feu",     "Flechas de Fuego"}};
+  trickNameTable[GI_ARROW_ICE] = {
+    Text{"Ice Trap Arrow", "Flèche de piège de glace", "Rupia azul voladora"}, 
+    Text{"Lice Arrow",     "Flèche des glaces",        "Flechas gélidas"}, 
+    Text{"Ice Arrows",     "Flèches de glace",         "Flechas de Hielo"}};
+  trickNameTable[GI_ARROW_LIGHT] = {
+    Text{"Shock Arrows (10)", "Flèche électrique (10)", "Rupia amarilla voladora"}, 
+    Text{"Fight Arrow",       "Flèche des cieux",       "Arco de la Luz"}, 
+    Text{"Light Arrows",      "Flèches de lumière",     "Flechas de Luz"}};
+  trickNameTable[GI_GERUDO_CARD] = {
+    Text{"Gym Membership Card", "Abonnement Gerudo", "Pase de socio goron"}, 
+    Text{"Goron Token",         "Carte Goron",       "Tóken Gerudo"}, 
+    Text{"Gerudo Card",         "Carte de Gerudo",   "Pase Gerudo"}};
+  trickNameTable[0xC9] = {
+    Text{"Lots of Funky Beans", "Hari-clowns magiques", "Frijoles mágicos"}, 
+    Text{"Mystic Beans",        "Haricot mystique",     "Habichuelas místicas"}, 
+    Text{"Magic Bean",          "Haricot de magie",     "Judías Mágicas"}};
+  trickNameTable[0xB8] = {
+    Text{"Diamond Hearts",       "Coeurs de diamant",   "Contenedor de corazón (2x1)"}, 
+    Text{"Quadruple Defense",    "Défence quadruple",   "Defensa cuádruple"}, 
+    Text{"Defense Upgrade",      "Défence progressive", "Mejora de Defensa"}};
+  trickNameTable[GI_CLAIM_CHECK] = {
+    Text{"Goron Parchment",        "Parchemin rigide",    "Molde goron"}, 
+    Text{"Goron Diploma",          "Diplôme Goron",       "Albarán goron"}, 
+    Text{"Biggoron's Claim Check", "Certificat Grogoron", "Recibo goron"}};
+  trickNameTable[0x80] = {
+    Text{"Hookshot, no strings attached", "Grappin sans attrape",      "Gancho garra"}, 
+    Text{"Progressive Grappling Hook",    "Grappin-griffe progressif", "Gancho de Dampé"}, 
+    Text{"Hookshot Upgrade",              "Grappin (progressif)",      "Gancho (mayor longitud)"}};
+  trickNameTable[0x81] = {
+    Text{"Bracelet of Friendship",  "Bracelet d'amitié",              "Brazalete de la amistad"}, 
+    Text{"Progressive Power Glove", "Mitaine de force progressive",   "Guanteletes de fuerza"}, 
+    Text{"Strength Upgrade",        "Bracelet de force (progressif)", "Mejora de Fuerza"}};
+  trickNameTable[0x82] = {
+    Text{"Bob-Omb Sleeping Bag", "Sac à bonbons",              "Saco de dormir explosivo"}, 
+    Text{"Progressive Bomb Box", "Sac de grenades progressif", "Zurrón de bombas"}, 
+    Text{"Bomb Bag Upgrade",     "Sac de bombes (progressif)", "Saco de bombas descomunal"}};
+  trickNameTable[0x83] = {
+    Text{"Regressive Quiver",        "Carquois régressif",       "Arco Kokiri (Carcaj de 20 flechas)"}, 
+    Text{"Progressive Arrow Holder", "Truc à flèche progressif", "Arco (Carcag enorme)"},
+    Text{"Quiver Upgrade",           "Carquois (progressif)",    "Arco de las hadas (Más flechas)"}};
+  trickNameTable[0x84] = {
+    Text{"Popcorn Bag",            "Sac à collation",             "Tirachinas (Bolsa de 20 nueces)"}, 
+    Text{"Progressive Seed Pouch", "Sac de noisettes progressif", "Resortera (Bolsa enorme de semillas)"}, 
+    Text{"Bullet Bag Upgrade",     "Sac de graines (progressif)", "Resortera de las hadas (Más semillas)"}};
+  trickNameTable[0x85] = {
+    Text{"500 Rupees",            "Plein, plein de fric", "Bolsa de rupias (400)"}, 
+    Text{"Progressive Rupee Bag", "Sacoche progressive",  "Saco de rupias enorme"}, 
+    Text{"Wallet Upgrade",        "Bourse (progressive)", "Bolsa de rupias descomunal"}};
+  trickNameTable[0x86] = {
+    Text{"Bowling Ball Upgrade",     "Boule de bowling progressive", "Bola de bolos zora"}, 
+    Text{"Progressive Diving Scale", "Bulle progressive",            "Fragmento zora"}, 
+    Text{"Scale Upgrade",            "Écaille (progressive)",        "Escama zora (más profundidad)"}};
+  trickNameTable[0x8A] = {
+    Text{"Green Fuel",            "Carburant vert",                 "Barra de estámina"}, 
+    Text{"Progressive Magic Oil", "Huile magique progressive",      "Barra de maná"}, 
+    Text{"Magic Upgrade",         "Capacité magique (progressive)", "Barra de energía mágica"}};
+  trickNameTable[0x8B] = {
+    Text{"Duck Flute",          "Flûte à canard",         "Flauta del Tiempo"}, 
+    Text{"Progressive Memento", "Clarinette progressive", "Ocarani del Tiempo"}, 
+    Text{"Ocarina Upgrade",     "Ocarina (progressif)",   "Mejora de la ocarina"}};
+  trickNameTable[0x0F] = {
+    Text{"Empty fishbowl", "Bocal de verre", "Cantina transparente"}, 
+    Text{"Glass Bottle",   "Bouteille",      "Frasco vacío"}, 
+    Text{"Bottle",         "Flacon",         "Botella"}};
+  trickNameTable[0x14] = {
+    Text{"Bottle with Cooking Cream", "Flacon de crème à cuisson", "Botella de jugo Lon Lon"}, 
+    Text{"Bottle with Cow Milk",      "Flacon de lait de vache",   "Botella de leche de vaca"}, 
+    Text{"Bottle of Milk",            "Lait en flacon",            "Leche"}};
+  trickNameTable[0x8C] = {
+    Text{"Bottle with 2nd Potion",   "Flacon de 2e potion",    "Botella con sangre de Ganon"}, 
+    Text{"Bottle with Red Medicine", "Flacon d'élixir rouge",  "Botella de medicina roja"}, 
+    Text{"Bottle of Red Potion",     "Potion rouge en flacon", "Poción roja"}};
+  trickNameTable[0x8D] = {
+    Text{"Bottle with Vegetable Juice", "Flacon de jus de légumes", "Botella de jugo vegetal"}, 
+    Text{"Bottle with Green Medicine",  "Flacon d'élixir vert",     "Botella de medicina verde"}, 
+    Text{"Bottle of Green Potion",      "Potion verte en flacon",   "Poción verde"}};
+  trickNameTable[0x8E] = {
+    Text{"Bottle with Water",         "Flacon d'eau",           "Botella de agua fresca"}, 
+    Text{"Bottle with Blue Medicine", "Flacon d'élixir bleu",   "Botella de medicina azul"}, 
+    Text{"Bottle of Blue Potion",     "Potion bleue en flacon", "Poción azul"}};
+  trickNameTable[0x8F] = {
+    Text{"Bottle with Forest Firefly", "Flacon avec une luciole",   "Hada de las rupias"}, 
+    Text{"Bottle with Faerie",         "Flacon de poudre féérique", "Botella de la hada"}, 
+    Text{"Bottled Fairy",              "Fée en flacon",             "Hada"}};
+  trickNameTable[0x90] = {
+    Text{"Bottle with Small Jabu-Jabu", "Flacon de mini Jabu-Jabu", "Mini Jabu-Jabu"}, 
+    Text{"Bottle with Tasty Fish",      "Flacon aquarium",          "Botella con un pez"}, 
+    Text{"Bottled Fish",                "Poisson en flacon",        "Pez"}};
+  trickNameTable[0x91] = {
+    Text{"Bottle with Will-O-Wisp", "Chauffe-eau portable",   "Botella de fuego zora"}, 
+    Text{"Bottle with Blue Flame",  "Lanterne bleue",         "Botella de llamas azules"}, 
+    Text{"Bottled Blue Fire",       "Flamme bleue en flacon", "Fuego azul"}};
+  trickNameTable[0x92] = {
+    Text{"Bottle with Baby Tektites", "Flacon de bébé Araknon", "Bebés Tektites"}, 
+    Text{"Bottle with Beetles",       "Flacon insectarium",     "Botella con skulltulas"}, 
+    Text{"Bottled Bugs",              "Insectes en flacon",     "Insectos"}};
+  trickNameTable[0x94] = {
+    Text{"Bottle with Sad Ghoul", "Flacon de souvenirs", "Botella con un fantasma"}, 
+    Text{"Bottle with Ghost",     "Urne d'Esprit",       "Botella con poe"}, 
+    Text{"Bottled Poe",           "Esprit en flacon",    "Gran Poe"}};
+  trickNameTable[0x15] = {
+    Text{"Bottle with Letter to Mama", "Lettre pour maman en flacon", "Mensaje naufragado"}, 
+    Text{"Bottle with Note",           "Flacon avec une envelope",    "Nota de Ruto"}, 
+    Text{"Bottled Ruto's Letter",      "Lettre de Ruto en flacon",    "Carta de Ruto embotellada"}};
+  trickNameTable[0x93] = {
+    Text{"Bottle with Smelly Ghost", "Flacon avec chose puante", "Botella con espectro apesotoso"}, 
+    Text{"Bottle with Big Ghost",    "Urne d'Âme",               "Botella con gran poe"}, 
+    Text{"Bottled Big Poe",          "Âme en flacon",            "Poe"}};
+  trickNameTable[0xC1] = {
+    Text{"Zelda's Best Hits",  "Réveille-matin de Zelda", "Temazo de Zelda"}, 
+    Text{"Zelda's Song",       "Chant de Zelda",          "Canción de Zelda"}, 
+    Text{"Nocturne of Shadow", "Nocturne de l'ombre",     "Nocturno de la sombra"}};
+  trickNameTable[0xC2] = {
+    Text{"Song of Cows",      "Chant des vaches",    "Aullido de las vacas"}, 
+    Text{"Epona's Ballad",    "Ballade d'Épona",     "Nana de Epona"}, 
+    Text{"Requiem of Spirit", "Requiem des esprits", "Réquiem del espíritu"}};
+  trickNameTable[0xC3] = {
+    Text{"Saria's Remix Album", "Album medley de Saria", "Remezclas del Bosque Perdido"}, 
+    Text{"Saria's Fugue",       "Fugue de Saria",        "Salsa de Saria"}, 
+    Text{"Minuet of Forest",    "Menuet de la forêt",    "Minueto del bosque"}};
+  trickNameTable[0xC4] = {
+    Text{"Salute the Sun's Song", "Chant des oreilles",    "Himno al Sol"}, 
+    Text{"Sun's Chimes",          "Matines du soleil",     "Elegía al Sol"}, 
+    Text{"Prelude of Light",      "Prélude de la lumière", "Preludio de la luz"}};
+  trickNameTable[0xC5] = {
+    Text{"Song of Passing Time", "Chant des horloges", "Canción del despertar"}, 
+    Text{"Canon of Time",        "Canons du temps",    "Canon del Tiempo"}, 
+    Text{"Serenade of Water",    "Sérénade de l'eau",  "Serenata del agua"}};
+  trickNameTable[0xC6] = {
+    Text{"Song of Happy Frogs", "Chant des crapauds",  "Croar de las ranas"}, 
+    Text{"Sonata of Storms",    "Sonate des tempêtes", "Serenata de la Tormenta"}, 
+    Text{"Bolero of Fire",      "Boléro du feu",       "Bolero del fuego"}};
+  trickNameTable[0xBB] = {
+    Text{"Saria's Karaoke",      "Karaoke de Saria",       "Karaoke de Saria"}, 
+    Text{"Minuet of the Meadow", "Menuet de la clairière", "Cuarteto del Bosque"}, 
+    Text{"Saria's Song",         "Chant de Saria",         "Canción de Saria"}};
+  trickNameTable[0xBC] = {
+    Text{"Darunia's Tango",      "Tango de Darunia",   "Cumbiá de Darunia"}, 
+    Text{"Bolero of the Crater", "Boléro du cratère",  "Coro del Fuego"}, 
+    Text{"Epona's Song",         "Chant des tempêtes", "Canción de Epona"}};
+  trickNameTable[0xBD] = {
+    Text{"Ruto's Blues",         "Blues de Ruto",   "Vals de Ruto"}, 
+    Text{"Serenade of the Lake", "Sérénade du lac", "Sonata del Agua"}, 
+    Text{"Song of Storms",       "Chant du temps",  "Canción de la tormenta"}};
+  trickNameTable[0xBE] = {
+    Text{"Nabooru's Reggae",        "Reggae de Nabooru",  "Reggae de Nabooru"}, 
+    Text{"Requiem of the Colossus", "Requiem du colosse", "Réquiem del Coloso"}, 
+    Text{"Epona's Song",            "Chant d'Épona",      "Canción de Epona"}};
+  trickNameTable[0xBF] = {
+    Text{"Impa's Death Metal",        "Death métal d'Impa",    "Death Metal de Impa"}, 
+    Text{"Nocturme of the Graveyard", "Nocturne du cimetière", "Diurno de la Sombra"}, 
+    Text{"Zelda's Lullaby",           "Berceuse de Zelda",     "Nana de Zelda"}};
+  trickNameTable[0xC0] = {
+    Text{"Rauru's Sing-Along", "Chansonette de Rauru", "Balada de Rauru"}, 
+    Text{"Prelude of Time",    "Prélude du temps",     "Predulio de la Luz"}, 
+    Text{"Sun's Song",         "Chant du soleil",      "Canción del Sol"}};
+  trickNameTable[0xCB] = {
+    Text{"Farore's Brooch",     "Bijou de Farore",      "Gema de Farore"}, 
+    Text{"Deku Tree's Emerald", "Émeraude Mojo",        "Esmeralda del Gran Árbol Deku"}, 
+    Text{"Kokiri's Emerald",    "Émeraude des Kokiris", "Esmeralda Kokiri"}};
+  trickNameTable[0xCC] = {
+    Text{"Din's Candied Rock", "Bonbon de Din",    "Gema de Din"}, 
+    Text{"Gerudo's Ruby",      "Rubis Gerudo",     "Rubí de los Dodongos"}, 
+    Text{"Goron's Ruby",       "Rubis des Gorons", "Rubí Goron"}};
+  trickNameTable[0xCD] = {
+    Text{"Nayru's Mood Ring", "Épingle de Nayru", "Gema de Nayru"}, 
+    Text{"Zola's Sapphire",   "Saphir Zola",      "Zafiro de Ruto"}, 
+    Text{"Zora's Sapphire",   "Saphir des Zoras", "Zafiro Zora"}};
+  trickNameTable[0xCE] = {
+    Text{"Bombos",              "Bombos",             "Medallón del Temblor"}, 
+    Text{"Saria's Medallion",   "Médaillon de Saria", "Medallón de Saria"}, 
+    Text{"Medallion of Forest", "Médaillon de forêt", "Medallon del Bosque"}};
+  trickNameTable[0xCF] = {
+    Text{"Fire Emblem",         "La Fire Emblem",       "Emblema de Fuego"}, 
+    Text{"Darunia's Medallion", "Médaillon de Darunia", "Medallón de Darunia"}, 
+    Text{"Medallion of Fire",   "Médaillon de feu",     "Medallon del Fuego"}};
+  trickNameTable[0xD0] = {
+    Text{"Water Gym Badge",    "Badge du gym d'eau", "Medalla de Gimnasio Tipo Agua"}, 
+    Text{"Ruto's Medallion",   "Médaillon de Ruto",  "Medallón de Ruto"}, 
+    Text{"Medallion of Water", "Médaillon d'eau",    "Medallon del Agua"}};
+  trickNameTable[0xD1] = {
+    Text{"Gerudo Doubloon",     "Doublon Gerudo",       "Doblón Gerudo"}, 
+    Text{"Nabooru's Medallion", "Médaillon de Nabooru", "Medallón de Nabooru"}, 
+    Text{"Medallion of Spirit", "Médaillon d'esprit",   "Medallon del Espíritu"}};
+  trickNameTable[0xD2] = {
+    Text{"Hyrule Purple Coin",  "Pièce mauve d'Hyrule", "Moneda morada del Galaxy"}, 
+    Text{"Impa's Medallion",    "Médaillon d'Impa",     "Medallón de Impa"}, 
+    Text{"Medallion of Shadow", "Médaillon d'ombre",    "Medallon de la Sombra"}};
+  trickNameTable[0xD3] = {
+    Text{"Coins (50)",         "Pièces (50)",          "Dogecoin"}, 
+    Text{"Rauru's Medallion",  "Médaillon de Rauru",   "Medallón de Rauru"}, 
+    Text{"Medallion of Light", "Médaillon de lumière", "Medallon de la Luz"}};
+}
+
 //Generate a fake name for the ice trap based on the item it's displayed as
-std::string GetIceTrapName(u8 id) {
+Text GetIceTrapName(u8 id) {
+  //If the trick names table has not been initialized, do so
+  if (!initTrickNames) {
+    InitTrickNames();
+    initTrickNames = true;
+  }
   //Randomly get the easy, medium, or hard name for the given item id
-  return RandomElement(IceTrapNames[id]);
+  return RandomElement(trickNameTable[id]);
 }
 
 //Get shop index based on a given location
