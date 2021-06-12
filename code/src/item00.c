@@ -16,30 +16,30 @@
 
 void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
-	s16 item00Type = item->actor.params & 0x00FF;
-	//overrides the incoming ammo or magic drop with a blue rupee
+        s16 item00Type = item->actor.params & 0x00FF;
+        //overrides the incoming ammo or magic drop with a blue rupee
     if(gSettingsContext.noDrops == NODROPS_NOAMMO || gSettingsContext.noDrops == NODROPS_NOAMMOORHEALTH){		
-		if (item00Type == 0x04 ||
-		item00Type == 0x05 ||
-		item00Type == 0x08 ||
-		item00Type == 0x09 ||
-		item00Type == 0x0A ||
-		item00Type == 0x0B ||
-		item00Type == 0x0C ||
-		item00Type == 0x0E ||
-		item00Type == 0x0F ||
-		item00Type == 0x10 ||
-		item00Type == 0x12 ||
-		item00Type == 0x19) {
-			item->actor.params = (item->actor.params & 0xFF00) | 0x01;
-		}
-	}
-	//overrides the incoming health drop with a green rupee
-	if(gSettingsContext.noDrops == NODROPS_NOHEALTH || gSettingsContext.noDrops == NODROPS_NOAMMOORHEALTH){	
-		if (item00Type == 0x03){
-			item->actor.params = (item->actor.params & 0xFF00) | 0x00;
-		}
-	}
+        if (item00Type == 0x04 ||
+        item00Type == 0x05 ||
+        item00Type == 0x08 ||
+        item00Type == 0x09 ||
+        item00Type == 0x0A ||
+        item00Type == 0x0B ||
+        item00Type == 0x0C ||
+        item00Type == 0x0E ||
+        item00Type == 0x0F ||
+        item00Type == 0x10 ||
+        item00Type == 0x12 ||
+        item00Type == 0x19) {
+            item->actor.params = (item->actor.params & 0xFF00) | 0x01;
+        }
+    }
+    //overrides the incoming health drop with a green rupee
+    if(gSettingsContext.noDrops == NODROPS_NOHEALTH || gSettingsContext.noDrops == NODROPS_NOAMMOORHEALTH){	
+        if (item00Type == 0x03){
+            item->actor.params = (item->actor.params & 0xFF00) | 0x00;
+        }
+    }
     EnItem00_Init(&item->actor, globalCtx);
     Model_SpawnByActor(&item->actor, globalCtx, 0);
 }
