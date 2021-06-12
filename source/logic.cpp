@@ -437,7 +437,7 @@ namespace Logic {
     BlueFire     = HasBottle && BlueFireAccess;
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
-	AmmoDrops    = NoDrops.IsNot(NODROPS_NOAMMO) && NoDrops.IsNot(NODROPS_NOAMMOORHEALTH);
+    AmmoDrops    = NoDrops.IsNot(NODROPS_NOAMMO) && NoDrops.IsNot(NODROPS_NOAMMOORHEALTH);
 
     HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 /*|| BombchuDrop*/) && (BombchusInLogic || BombBag);
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
@@ -703,7 +703,7 @@ namespace Logic {
      FreeFairies      = false;
      FairyPond        = false;
      BombchuDrop      = false;
-	 AmmoDrops        = false;
+     AmmoDrops        = false;
 
      BuyBombchus5     = false;
      BuyBombchus10    = false;
@@ -713,7 +713,7 @@ namespace Logic {
      BuyGPotion       = false;
      BuyBPotion       = false;
      BuySeed          = false;
-	 MagicRefill      = false;
+     MagicRefill      = false;
 
      /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
      /* These are used to simplify reading the logic, but need to be updated
