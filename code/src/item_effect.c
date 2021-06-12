@@ -256,3 +256,7 @@ void ItemEffect_GiveStone(SaveContext* saveCtx, s16 mask, s16 arg2) {
 void ItemEffect_GiveMedallion(SaveContext* saveCtx, s16 mask, s16 arg2) {
     saveCtx->questItems |= mask;
 }
+
+void ItemEffect_MoveNabooru(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    gSaveContext.eventChkInf[9] |= 0x0020;
+}
