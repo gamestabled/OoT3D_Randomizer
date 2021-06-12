@@ -32,15 +32,18 @@ u8 SpoilerData_CollectableCheck(SpoilerItemLocation itemLoc)
 
 u8 SpoilerData_ItemGetInfCheck(u8 slot)
 {
-    u8 offset = slot / 16;
+    u16 inf = gSaveContext.itemGetInf[slot / 16];
+    u16 swapped = ((inf & 0xFF00) >> 8) | ((inf & 0x00FF) << 8); // Swap low and high byte
     u16 flag = 1 << (slot % 16);
-    return (gSaveContext.itemGetInf[offset] & flag) != 0;
+    return (swapped & flag) != 0;
 }
 
 u8 SpoilerData_InfTableCheck(u8 offset, u8 bit)
 {
+    u16 inf = gSaveContext.infTable[offset];
+    u16 swapped = ((inf & 0xFF00) >> 8) | ((inf & 0x00FF) << 8); // Swap low and high byte
     u16 flag = 1 << bit;
-    return (gSaveContext.infTable[offset] & flag) != 0;
+    return (swapped & flag) != 0;
 }
 
 u8 SpoilerData_QuestItemCheck(u8 slot)
@@ -64,7 +67,7 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         case SPOILER_CHK_NONE: { // Not ever 'collectable' (Ganon, or any item that didn't have a type set)
             return 0;
         }
-        case SPOILER_CHK_ALWAYS_COLLECTED: { // Always that are considered always collected, like Link's Pocket
+        case SPOILER_CHK_ALWAYS_COLLECTED: { // Items that are considered always collected, like Link's Pocket
             return 1;
         }
         case SPOILER_CHK_CHEST: { // Chest
@@ -86,7 +89,7 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
             return SpoilerData_InfTableCheck(itemLoc.LocationScene, itemLoc.LocationFlag);
         }
         case SPOILER_CHK_QUEST_ITEM: { // Check a flag set in questItems
-            SpoilerData_QuestItemCheck(itemLoc.LocationFlag);
+            return SpoilerData_QuestItemCheck(itemLoc.LocationFlag);
         }
         default: {
             return 0;

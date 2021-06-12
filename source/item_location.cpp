@@ -117,7 +117,7 @@ void LocationTable_Init() {
     locationTable[GRAVEYARD_HOOKSHOT_CHEST]              = ItemLocation::Chest      (0x48, 0x00, "GY Hookshot Chest",                    GRAVEYARD_HOOKSHOT_CHEST,              {Category::cGraveyard, Category::cKakariko,});
     locationTable[GRAVEYARD_DAMPE_RACE_FREESTANDING_POH] = ItemLocation::Collectable(0x48, 0x07, "GY Dampe Race Freestanding PoH",       GRAVEYARD_DAMPE_RACE_FREESTANDING_POH, {Category::cGraveyard, Category::cKakariko, Category::cMinigame});
     locationTable[GRAVEYARD_FREESTANDING_POH]            = ItemLocation::Collectable(0x53, 0x04, "GY Freestanding PoH",                  GRAVEYARD_FREESTANDING_POH,            {Category::cGraveyard, Category::cKakariko,});
-    locationTable[GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR]     = ItemLocation::Collectable(0x53, 0x08, "GY Dampe Gravedigging Tour",           GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR,     {Category::cGraveyard, Category::cKakariko,},                                     SpoilerCollectionCheck::ItemGetInf(28));
+    locationTable[GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR]     = ItemLocation::Collectable(0x53, 0x08, "GY Dampe Gravedigging Tour",           GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR,     {Category::cGraveyard, Category::cKakariko,},                                     SpoilerCollectionCheck::ItemGetInf(20));
 
     //Death Mountain
     locationTable[DMT_CHEST]                             = ItemLocation::Chest      (0x60, 0x01, "DMT Chest",                            DMT_CHEST,                             {Category::cDeathMountainTrail, Category::cDeathMountain,});
