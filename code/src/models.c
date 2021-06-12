@@ -238,7 +238,7 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
     if ((actor->id == 0x8B) && (globalCtx->sceneNum == 0x02)) {
         ItemOverride_Key key = { .all = 0 };
         key.scene = 0xFF;
-        key.type = OVR_DELAYED;
+        key.type = OVR_TEMPLE;
         key.flag = DUNGEON_JABUJABUS_BELLY;
         override = ItemOverride_LookupByKey(key);
         if(override.key.all != 0) {
