@@ -8,9 +8,25 @@
 #define SPOILER_ITEMS_MAX                   512
 #define SPOILER_STRING_DATA_SIZE            16384
 
+typedef enum {
+    SPOILER_CHK_NONE,
+    SPOILER_CHK_ALWAYS_COLLECTED,
+    SPOILER_CHK_CHEST,
+    SPOILER_CHK_COLLECTABLE,
+    SPOILER_CHK_GOLD_SKULLTULA,
+    SPOILER_CHK_ITEM_GET_INF,
+    SPOILER_CHK_EVENT_CHK_INF,
+    SPOILER_CHK_INF_TABLE,
+    SPOILER_CHK_QUEST_ITEM,
+    SPOILER_CHK_UPGRADE,
+} SpoilerCollectionCheckType;
+
 typedef struct {
-    u16 LocationOffset;
-    u16 ItemOffset;
+    u16 LocationStrOffset;
+    u16 ItemStrOffset;
+    SpoilerCollectionCheckType CollectionCheckType;
+    u8 LocationScene;
+    u8 LocationFlag;
 } SpoilerItemLocation;
 
 typedef struct {
@@ -30,5 +46,12 @@ extern SpoilerData gSpoilerData;
 
 char *SpoilerData_GetItemLocationString(u16 itemIndex);
 char *SpoilerData_GetItemNameString(u16 itemIndex);
+u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex);
+u8 SpoilerData_ChestCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_CollectableCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_ItemGetInfCheck(u8 slot);
+u8 SpoilerData_InfTableCheck(u8 offset, u8 bit);
+u8 SpoilerData_QuestItemCheck(u8 slot);
+u8 SpoilerData_UpgradeCheck(u8 bit);
 
 #endif // _SPOILER_DATA_H_

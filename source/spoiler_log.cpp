@@ -264,8 +264,11 @@ bool SpoilerLog_Write() {
       }
     }
 
-    spoilerData.ItemLocations[spoilerItemIndex].LocationOffset = stringOffsetMap[locName];
-    spoilerData.ItemLocations[spoilerItemIndex].ItemOffset = stringOffsetMap[locItem];
+    spoilerData.ItemLocations[spoilerItemIndex].LocationStrOffset = stringOffsetMap[locName];
+    spoilerData.ItemLocations[spoilerItemIndex].ItemStrOffset = stringOffsetMap[locItem];
+    spoilerData.ItemLocations[spoilerItemIndex].CollectionCheckType = loc->GetCollectionCheck().type;
+    spoilerData.ItemLocations[spoilerItemIndex].LocationScene = loc->GetCollectionCheck().scene;
+    spoilerData.ItemLocations[spoilerItemIndex].LocationFlag = loc->GetCollectionCheck().flag;
     itemLocationsMap[key] = spoilerItemIndex++;
   }
   spoilerData.ItemLocationsCount = spoilerItemIndex;
@@ -273,12 +276,12 @@ bool SpoilerLog_Write() {
   bool playthroughItemNotFound = false;
   // Write playthrough data to in-game spoiler log
   if (!spoilerOutOfSpace) {
-    for (uint i = 0; i < playthroughLocations.size(); i++) {
+    for (u32 i = 0; i < playthroughLocations.size(); i++) {
       if (i >= SPOILER_SPHERES_MAX) {
         spoilerOutOfSpace = true;
         break;
       }
-      for (uint loc = 0; loc < playthroughLocations[i].size(); ++loc) {
+      for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
         if (loc >= SPOILER_SPHERE_ITEM_LOCATIONS_MAX) {
           spoilerOutOfSpace = true;
           break;
@@ -313,7 +316,7 @@ bool SpoilerLog_Write() {
 
   //Write playthrough to spoiler, by accessibility sphere
   logtxt += "Playthrough:\n";
-  for (uint i = 0; i < playthroughLocations.size(); i++) {
+  for (u32 i = 0; i < playthroughLocations.size(); i++) {
     logtxt += "Sphere " + std::to_string(i+1) + ":\n";
     //Print all item locations in this sphere
     for (const LocationKey location : playthroughLocations[i]) {
