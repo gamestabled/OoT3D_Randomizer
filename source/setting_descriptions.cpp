@@ -552,7 +552,9 @@ string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice 
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //
-string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
+string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons,\n" //
+                                        "except places where general item restrictions\n"  //
+                                        "apply.\n"                                         //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //
