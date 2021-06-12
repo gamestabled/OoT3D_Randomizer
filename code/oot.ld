@@ -524,6 +524,10 @@ SECTIONS
 		*(.patch_CorrectCompassChests)
 	}
 
+	.patch_CorrectCompassChestsTwo 0x2F1770 : {
+		*(.patch_CorrectCompassChestsTwo)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}

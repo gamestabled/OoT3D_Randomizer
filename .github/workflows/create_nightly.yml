@@ -19,6 +19,10 @@ jobs:
           chmod +x linux_build_rando.sh
           ./linux_build_rando.sh
           
+      - name: Get shorthand commit for release titles.
+        id: vars
+        run: echo "::set-output name=sha_short::$(echo ${{ github.sha }} | cut -c1-6)"
+
       - name: Create Pre-release
         uses: ncipollo/release-action@v1.8.3
         with:
@@ -26,12 +30,12 @@ jobs:
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
           prerelease: true
           commit: "${{ github.sha }}"
-          tag: "Nightly-${{ github.sha }}"
-          name: "Nightly-${{ github.sha }}"
+          tag: "Nightly-${{ steps.vars.outputs.sha_short }}"
+          name: "Nightly-${{ steps.vars.outputs.sha_short }}"
           body: |
             Please note that these are DEVELOPMENT builds and may not be entirely stable.
             When reporting issues, please mention the six character commit listed in the randomizer menu.
             CIA QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ github.sha }}/cia.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
             3DSX QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ github.sha }}/3dsx.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)

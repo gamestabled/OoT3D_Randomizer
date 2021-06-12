@@ -1105,14 +1105,14 @@ namespace Exits { //name, scene, hint text, events, locations, exits
 
   Exit Kak_PotionShopFront = Exit("Kak Potion Shop Front", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_1, []{return true;}),
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_2, []{return true;}),
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_3, []{return true;}),
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_4, []{return true;}),
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_5, []{return true;}),
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_6, []{return true;}),
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_7, []{return true;}),
-                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_8, []{return true;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_1, []{return IsAdult;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_2, []{return IsAdult;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_3, []{return IsAdult;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_4, []{return IsAdult;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_5, []{return IsAdult;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_6, []{return IsAdult;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_7, []{return IsAdult;}),
+                  ItemLocationPairing(KAK_POTION_SHOP_ITEM_8, []{return IsAdult;}),
                 }, {
                   //Exits
                   ExitPairing::Both(&Kak_Main,           []{return true;}),

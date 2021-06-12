@@ -544,60 +544,58 @@ bool WritePatch() {
   |       custom assets      |
   --------------------------*/
 
-  if (Settings::CustomTunicColors) {
-    Cosmetics::Color_RGB childTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalChildTunicColor);
-    Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
-    Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
-    Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
+  Cosmetics::Color_RGB childTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalChildTunicColor);
+  Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
+  Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
+  Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
 
-    // Delete assets if it exists
-    Handle assetsOut;
-    const char* assetsOutPath = "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar";
-    const char* assetsInPath = "romfs:/zelda_gi_melody.zar";
-    FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath));
+  // Delete assets if it exists
+  Handle assetsOut;
+  const char* assetsOutPath = "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar";
+  const char* assetsInPath = "romfs:/zelda_gi_melody.zar";
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath));
 
-    // Open assets destination
-    if (!R_SUCCEEDED(res = FSUSER_OpenFile(&assetsOut, sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  // Open assets destination
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&assetsOut, sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+    return false;
+  }
+
+  if (auto file = FILEPtr{std::fopen(assetsInPath, "r"), std::fclose}) {
+    // obtain assets size
+    fseek(file.get(), 0, SEEK_END);
+    const auto lSize = static_cast<size_t>(ftell(file.get()));
+    rewind(file.get());
+
+    // copy assets into the buffer
+    std::vector<char> buffer(lSize);
+    fread(buffer.data(), 1, buffer.size(), file.get());
+
+    // edit assets as needed
+    const size_t adultTunicOffsetInZAR = 0x1021C;
+    const size_t childTunicOffsetInZAR = 0x1E7FC;
+
+    WriteFloatToBuffer(buffer, kokiriTunicColor.r, adultTunicOffsetInZAR + 0x70);
+    WriteFloatToBuffer(buffer, kokiriTunicColor.g, adultTunicOffsetInZAR + 0x98);
+    WriteFloatToBuffer(buffer, kokiriTunicColor.b, adultTunicOffsetInZAR + 0xC0);
+
+    WriteFloatToBuffer(buffer, goronTunicColor.r, adultTunicOffsetInZAR + 0x78);
+    WriteFloatToBuffer(buffer, goronTunicColor.g, adultTunicOffsetInZAR + 0xA0);
+    WriteFloatToBuffer(buffer, goronTunicColor.b, adultTunicOffsetInZAR + 0xC8);
+
+    WriteFloatToBuffer(buffer, zoraTunicColor.r, adultTunicOffsetInZAR + 0x80);
+    WriteFloatToBuffer(buffer, zoraTunicColor.g, adultTunicOffsetInZAR + 0xA8);
+    WriteFloatToBuffer(buffer, zoraTunicColor.b, adultTunicOffsetInZAR + 0xD0);
+
+    WriteFloatToBuffer(buffer, childTunicColor.r, childTunicOffsetInZAR + 0x70);
+    WriteFloatToBuffer(buffer, childTunicColor.g, childTunicOffsetInZAR + 0x88);
+    WriteFloatToBuffer(buffer, childTunicColor.b, childTunicOffsetInZAR + 0xA0);
+
+    // Write the assets to final destination
+    if (!R_SUCCEEDED(res = FSFILE_Write(assetsOut, &bytesWritten, 0, buffer.data(), buffer.size(), FS_WRITE_FLUSH))) {
       return false;
     }
-
-    if (auto file = FILEPtr{std::fopen(assetsInPath, "r"), std::fclose}) {
-      // obtain assets size
-      fseek(file.get(), 0, SEEK_END);
-      const auto lSize = static_cast<size_t>(ftell(file.get()));
-      rewind(file.get());
-
-      // copy assets into the buffer
-      std::vector<char> buffer(lSize);
-      fread(buffer.data(), 1, buffer.size(), file.get());
-
-      // edit assets as needed
-      const size_t adultTunicOffsetInZAR = 0x101F8;
-      const size_t childTunicOffsetInZAR = 0x1E7D8;
-
-      WriteFloatToBuffer(buffer, kokiriTunicColor.r, adultTunicOffsetInZAR + 0x70);
-      WriteFloatToBuffer(buffer, kokiriTunicColor.g, adultTunicOffsetInZAR + 0x98);
-      WriteFloatToBuffer(buffer, kokiriTunicColor.b, adultTunicOffsetInZAR + 0xC0);
-
-      WriteFloatToBuffer(buffer, goronTunicColor.r, adultTunicOffsetInZAR + 0x78);
-      WriteFloatToBuffer(buffer, goronTunicColor.g, adultTunicOffsetInZAR + 0xA0);
-      WriteFloatToBuffer(buffer, goronTunicColor.b, adultTunicOffsetInZAR + 0xC8);
-
-      WriteFloatToBuffer(buffer, zoraTunicColor.r, adultTunicOffsetInZAR + 0x80);
-      WriteFloatToBuffer(buffer, zoraTunicColor.g, adultTunicOffsetInZAR + 0xA8);
-      WriteFloatToBuffer(buffer, zoraTunicColor.b, adultTunicOffsetInZAR + 0xD0);
-
-      WriteFloatToBuffer(buffer, childTunicColor.r, childTunicOffsetInZAR + 0x70);
-      WriteFloatToBuffer(buffer, childTunicColor.g, childTunicOffsetInZAR + 0x88);
-      WriteFloatToBuffer(buffer, childTunicColor.b, childTunicOffsetInZAR + 0xA0);
-
-      // Write the assets to final destination
-      if (!R_SUCCEEDED(res = FSFILE_Write(assetsOut, &bytesWritten, 0, buffer.data(), buffer.size(), FS_WRITE_FLUSH))) {
-        return false;
-      }
-    }
-    FSFILE_Close(assetsOut);
   }
+  FSFILE_Close(assetsOut);
 
   FSUSER_CloseArchive(sdmcArchive);
 
