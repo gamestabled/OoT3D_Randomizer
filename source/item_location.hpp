@@ -70,6 +70,14 @@ public:
   static auto QuestItem(u8 slot) {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_QUEST_ITEM, 0xFF, slot);
   }
+
+  static auto Cow(u8 scene, u8 flag) {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_COW, scene, flag);
+  }
+
+  static auto Minigame(u8 offset, u8 bit) {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MINIGAME, offset, bit);
+  }
 };
 
 class ItemLocation {

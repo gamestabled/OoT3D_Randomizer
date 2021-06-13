@@ -112,7 +112,7 @@ typedef struct {
     /* 0x0EB4 */ u8           gsFlags[22]; //due to reordering, array is smaller
     /* 0x0ECA */ char         unk_ECA[0x0006]; //the extra two bytes move here
     /* 0x0ED0 */ u32          unk_ED0; //horseback archery highscore?
-    /* 0x0ED4 */ char         unk_ED4[0x0008];
+    /* 0x0ED4 */ char         unk_ED4[0x0008]; //fishing rewards, other minigames?
     /* 0x0EDC */ u32          unk_EDC; //horse race record time?
     /* 0x0EE0 */ u32          unk_EE0; //marathon race record time?
     /* 0x0EE4 */ char         unk_EE4[0x0008];

@@ -56,6 +56,20 @@ u8 SpoilerData_UpgradeCheck(u8 bit)
     return (gSaveContext.upgrades & (1 << bit)) != 0;
 }
 
+u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc)
+{
+    if (gGlobalContext->sceneNum == itemLoc.LocationScene) {
+        return (gGlobalContext->actorCtx.flags.collect & (itemLoc.LocationFlag << 0x18)) != 0;
+    } else {
+      return (gSaveContext.sceneFlags[itemLoc.LocationScene].collect & (itemLoc.LocationFlag << 0x18)) != 0;
+    }
+}
+
+u8 SpoilerData_MinigameCheck(SpoilerItemLocation itemLoc)
+{
+    return gSaveContext.unk_ED4[itemLoc.LocationScene] & (1 << itemLoc.LocationFlag);
+}
+
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
 {
     if (itemIndex >= gSpoilerData.ItemLocationsCount) {
@@ -90,6 +104,12 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_QUEST_ITEM: { // Check a flag set in questItems
             return SpoilerData_QuestItemCheck(itemLoc.LocationFlag);
+        }
+        case SPOILER_CHK_COW: {
+            return SpoilerData_CowCheck(itemLoc);
+        }
+        case SPOILER_CHK_MINIGAME: {
+            return SpoilerData_MinigameCheck(itemLoc);
         }
         default: {
             return 0;

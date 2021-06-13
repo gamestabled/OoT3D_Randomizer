@@ -19,6 +19,8 @@ typedef enum {
     SPOILER_CHK_INF_TABLE,
     SPOILER_CHK_QUEST_ITEM,
     SPOILER_CHK_UPGRADE,
+    SPOILER_CHK_COW,
+    SPOILER_CHK_MINIGAME,
 } SpoilerCollectionCheckType;
 
 typedef struct {
@@ -53,5 +55,7 @@ u8 SpoilerData_ItemGetInfCheck(u8 slot);
 u8 SpoilerData_InfTableCheck(u8 offset, u8 bit);
 u8 SpoilerData_QuestItemCheck(u8 slot);
 u8 SpoilerData_UpgradeCheck(u8 bit);
+u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_MinigameCheck(SpoilerItemLocation itemLoc);
 
 #endif // _SPOILER_DATA_H_
