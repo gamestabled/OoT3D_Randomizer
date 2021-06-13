@@ -47,79 +47,30 @@ void Entrance_Init(void) {
         gEntranceTable[0x43F].field = 0x4183;
     }
 
-    // Delete the title card for Kokiri Forest from Deku Tree Death Cutscene
-    for (index = 0x457; index < 0x45B; ++index) {
-        gEntranceTable[index].field = 0x0202;
-    }
+    const s32 deleteTitleCards[] = {
+        0x1ED, // Desert Colossus from Requiem
+        0x221, // Zora's Fountain from Inside Jabu Jabu's Belly
+        0x2CA, // Temple of Time from Pulling/Placing Master Sword
+        0x457, // Kokiri Forest from Deku Tree Death Cutscene
+        0x47A, // Death Mountain Trail from Goron Ruby Cutscene
+        0x513, // Kakariko Village from Nocturne
+        0x564, // Death Mountain Crater from Fire Temple Blue Warp
+        0x580, // Graveyard from Shadow Temple Blue Warp
+        0x58C, // Temple of Time from LACS
+        0x594, // Hyrule Field from Impa's first escort
+        0x5F4, // Temple of Time from Prelude/Savewarp
+        0x600, // Sacred Forest Meadow from Minuet
+        0x608, // Sacred Forest Meadow from Forest Temple Blue Warp
+        0x60C, // Lake Hylia from Water Temple Blue Warp
+        0x610, // Desert Colossus from Spirit Temple Blue Warp
+    };
 
-    // Delete the title card for Death Mountain Trail from Goron Ruby Cutscene
-    for (index = 0x47A; index < 0x47E; ++index) {
-        gEntranceTable[index].field = 0x0202;
-    }
-
-    // Delete the title card for Zora's Fountain from Inside Jabu Jabu's Belly
-    for (index = 0x221; index < 0x225; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Sacred Forest Meadow from Minuet
-    for (index = 0x600; index < 0x604; ++index) {
-        gEntranceTable[index].field &= ~0x4000;
-    }
-
-    // Delete the title card for Temple of Time from Prelude/Savewarp
-    for (index = 0x5F4; index < 0x5F8; ++index) {
-        gEntranceTable[index].field &= ~0x4000;
-    }
-
-    // Delete the title card for Sacred Forest Meadow from Forest Temple Blue Warp
-    for (index = 0x608; index < 0x60C; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Death Mountain Crater from Fire Temple Blue Warp
-    for (index = 0x564; index < 0x568; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Lake Hylia from Water Temple Blue Warp
-    for (index = 0x60C; index < 0x610; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Desert Colossus from Spirit Temple Blue Warp
-    for (index = 0x610; index < 0x614; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Graveyard from Shadow Temple Blue Warp
-    for (index = 0x580; index < 0x584; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Desert Colossus from Requiem
-    for (index = 0x1ED; index < 0x1F1; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Temple of Time from Pulling/Placing Master Sword
-    for (index = 0x2CA; index < 0x2CE; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Kakariko Village from Nocturne
-    for (index = 0x513; index < 0x517; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Temple of Time from LACS
-    for (index = 0x58C; index < 0x590; ++index) {
-        gEntranceTable[index].field = 0x0102;
-    }
-
-    // Delete the title card for Hyrule Field from Impa's first escort
-    for (index = 0x594; index < 0x598; ++index) {
-        gEntranceTable[index].field = 0x0102;
+    //Delete title cards from the following entrance indexes in the above table
+    for (size_t i = 0; i < sizeof(deleteTitleCards) / sizeof(s32); i++) {
+        index = deleteTitleCards[i];
+        for (size_t j = 0; j < 4; j++) {
+            gEntranceTable[index + j].field &= ~0x4000;
+        }
     }
 
     // Delete the title card and add a fade in for Hyrule Field from Ocarina of Time cutscene
