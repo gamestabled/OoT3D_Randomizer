@@ -365,9 +365,6 @@ typedef struct {
   u32 startingEquipment;
   u32 startingUpgrades;
 
-  u8 detailedLogic[100];
-  u8 excludeLocations[700];
-
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;

@@ -807,15 +807,6 @@ namespace Settings {
     ctx.startingUpgrades |= StartingScale.Value<u8>() << 9;
     ctx.startingUpgrades |= StartingWallet.Value<u8>() << 12;
 
-    //Filling detailed logic
-    for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
-      ctx.detailedLogic[i] = detailedLogicOptions[i]->GetSelectedOptionIndex();
-    }
-
-    //Filling excluded locations
-    for (u16 i = 0; i < excludeLocationsOptions.size(); i++) {
-      ctx.excludeLocations[i] = excludeLocationsOptions[i]->GetSelectedOptionIndex();
-    }
     return ctx;
   }
 
