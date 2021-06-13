@@ -8,6 +8,8 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
+static EntranceOverride rEntranceOverrides[128] = {0};
+
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
     memcpy(&gSceneTable[1],  gSettingsContext.dodongosCavernDungeonMode        == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[1]  : &gDungeonSceneTable[1],  sizeof(Scene));
@@ -76,6 +78,28 @@ void Entrance_Init(void) {
     // Delete the title card and add a fade in for Hyrule Field from Ocarina of Time cutscene
     for (index = 0x50F; index < 0x513; ++index) {
         gEntranceTable[index].field = 0x010B;
+    }
+
+    //copy the entrance table to use for overwriting the original one
+    EntranceInfo copyOfEntranceTable[0x613] = {0};
+    memcpy(copyOfEntranceTable, gEntranceTable, sizeof(EntranceInfo) * 0x613);
+
+    //rewrite the entrance table for entrance randomizer
+    size_t numberOfEntranceOverrides = sizeof(rEntranceOverrides) / sizeof(EntranceOverride);
+    for (size_t i = 0; i < numberOfEntranceOverrides; i++) {
+
+        s16 originalIndex = rEntranceOverrides[i].index;
+        s16 overrideIndex = rEntranceOverrides[i].override;
+
+        if (originalIndex == overrideIndex) {
+            continue;
+        }
+
+        for (s16 j = 0; j < 4; j++) {
+            gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
+            gEntranceTable[originalIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
+            gEntranceTable[originalIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
+        }
     }
 }
 
