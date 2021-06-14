@@ -472,30 +472,30 @@ void PlaceJunkInExcludedLocation(const LocationKey il) {
 }
 
 static void PlaceVanillaDekuScrubItems() {
-    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_REAR,           RED_POTION_REFILL);
-    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_FRONT,          GREEN_POTION_REFILL);
-    PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_REAR,          RED_POTION_REFILL);
-    PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_FRONT,         GREEN_POTION_REFILL);
-    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_LEFT,           DEKU_NUTS_5);
-    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_RIGHT,          BOMBS_5);
-    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_CENTER,         ARROWS_30);
-    PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_REAR,           RED_POTION_REFILL);
-    PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_FRONT,          GREEN_POTION_REFILL);
+    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_REAR,             RED_POTION_REFILL);
+    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_FRONT,            GREEN_POTION_REFILL);
+    PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_REAR,            RED_POTION_REFILL);
+    PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_FRONT,           GREEN_POTION_REFILL);
+    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_LEFT,             DEKU_NUTS_5);
+    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_RIGHT,            BOMBS_5);
+    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_CENTER,           DEKU_SEEDS_30);
+    PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_REAR,             RED_POTION_REFILL);
+    PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_FRONT,            GREEN_POTION_REFILL);
     PlaceItemInLocation(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, DEKU_NUTS_5);
     PlaceItemInLocation(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT,  DEKU_STICK_1);
-    PlaceItemInLocation(LW_DEKU_SCRUB_GROTTO_REAR,           ARROWS_30);
-    PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_REAR,     RED_POTION_REFILL);
-    PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_FRONT,    GREEN_POTION_REFILL);
-    PlaceItemInLocation(DMC_DEKU_SCRUB,                      BOMBS_5);
-    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_LEFT,          DEKU_NUTS_5);
-    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_RIGHT,         BOMBS_5);
-    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_CENTER,        ARROWS_30);
-    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_LEFT,           DEKU_NUTS_5);
-    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_RIGHT,          BOMBS_5);
-    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_CENTER,         ARROWS_30);
-    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_LEFT,          DEKU_NUTS_5);
-    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_RIGHT,         BOMBS_5);
-    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_CENTER,        ARROWS_30);
+    PlaceItemInLocation(LW_DEKU_SCRUB_GROTTO_REAR,             DEKU_SEEDS_30);
+    PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_REAR,       RED_POTION_REFILL);
+    PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_FRONT,      GREEN_POTION_REFILL);
+    PlaceItemInLocation(DMC_DEKU_SCRUB,                        BOMBS_5);
+    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_LEFT,            DEKU_NUTS_5);
+    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_RIGHT,           BOMBS_5);
+    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_CENTER,          DEKU_SEEDS_30);
+    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_LEFT,             DEKU_NUTS_5);
+    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_RIGHT,            BOMBS_5);
+    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_CENTER,           DEKU_SEEDS_30);
+    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_LEFT,            DEKU_NUTS_5);
+    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_RIGHT,           BOMBS_5);
+    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_CENTER,          DEKU_SEEDS_30);
 
     //Dungeon Scrubs
     if (DekuTree.IsMQ()) {
@@ -523,7 +523,7 @@ static void PlaceVanillaDekuScrubItems() {
       PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,        DEKU_NUTS_5);
     } else {
       PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,  BOMBS_5);
-      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, ARROWS_30);
+      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, DEKU_SEEDS_30);
       PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_RIGHT,       RED_POTION_REFILL);
       PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_LEFT,        GREEN_POTION_REFILL);
     }
@@ -601,7 +601,7 @@ static void SetMinimalItemPool() {
 void GenerateItemPool() {
 
   ItemPool.clear();
-  
+
   //Initialize ice trap models to always major items
   IceTrapModels = {
     GI_SWORD_BGS,
