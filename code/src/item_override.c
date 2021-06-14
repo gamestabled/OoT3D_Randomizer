@@ -275,16 +275,20 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
     }
 
     if (override.key.all == 0) {
-        // No override, use base game's item code
-        ItemOverride_Clear();
-        player->getItemId = incomingItemId;
-        return;
-    }
-
-    // Hack for scrubsanity off
-    if ((gSettingsContext.scrubsanity == SCRUBSANITY_OFF) && (override.key.type == OVR_GROTTO_SCRUB)) {
-        if (override.value.itemId == GI_ARROWS_LARGE) {
-            override.value.itemId = GI_SEEDS_30;
+        //Hack for Scrubsanity Off
+        //The game will spawn different scrub actors in grottos depending on if
+        //Link is child or adult (one for deku seeds and another for arrows
+        //respectively). Since we only override the child deku scrubs when
+        //scrubsanity is off, the adult ones will return the Gold Scale getItemID
+        //and not find an override in the overrid table. This is where we fix that
+        //so adult Link will receive arrows properly.
+        if (incomingItemId == GI_SCALE_GOLD && gSettingsContext.scrubsanity == SCRUBSANITY_OFF) {
+            override.value.itemId = GI_ARROWS_LARGE;
+        } else {
+            // No override, use base game's item code
+            ItemOverride_Clear();
+            player->getItemId = incomingItemId;
+            return;
         }
     }
 
