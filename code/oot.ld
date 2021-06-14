@@ -56,6 +56,10 @@ SECTIONS
 		*(.patch_SongOfStormsLocation)
 	}
 
+	.patch_OwlMagicCheck 0x144B44 : {
+		*(.patch_OwlMagicCheck)
+	}
+
 	.patch_BeanDaddyPurchase 0x14EDA8 : {
 		*(.patch_BeanDaddyPurchase)
 	}
