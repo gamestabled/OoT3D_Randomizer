@@ -19,10 +19,6 @@ must not be misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
-
-
-Modifications:
- - Line 2535f.: Do not escape apostrophes in attribute values.
 */
 
 #include "tinyxml2.h"
@@ -2531,10 +2527,6 @@ XMLPrinter::XMLPrinter( FILE* file, bool compact, int depth ) :
     }
     for( int i=0; i<NUM_ENTITIES; ++i ) {
         const char entityValue = entities[i].value;
-
-        // Modification: Actually do not escape the apostrophe in attribute values.
-        if (entityValue == SINGLE_QUOTE) continue;
-
         const unsigned char flagIndex = static_cast<unsigned char>(entityValue);
         TIXMLASSERT( flagIndex < ENTITY_RANGE );
         _entityFlag[flagIndex] = true;
