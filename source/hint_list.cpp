@@ -5456,12 +5456,12 @@ void HintTable_Init() {
 
     hintTable[JUNK01] = HintText::Junk({
                      //obscure text
-                     Text{"Ganondorf 2022!", /*french*/"", /*spanish*/"¡Ganondorf para el 2022!"},
+                     Text{"Remember to check your 3DS battery level and save often.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK02] = HintText::Junk({
                      //obscure text
-                     Text{"They say that monarchy is a terrible system of governance.", /*french*/"", /*spanish*/"Según dicen, la monarquía es una pésima forma de gobierno."},
+                     Text{"They say you must read the names of \"Special Deal\" shop items carefully.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK03] = HintText::Junk({
@@ -5474,9 +5474,19 @@ void HintTable_Init() {
                      Text{"These hints can be quite useful. This is an exception.", /*french*/"", /*spanish*/"Las pistas suelen servir de ayuda. En cambio, esta no."},
     });
 
+    hintTable[JUNK05] = HintText::Junk({
+                     //obscure text
+                     Text{"They say that the Lizalfos in Dodongo's Cavern like to play in lava.", /*french*/"", /*spanish*/""},
+    });
+
     hintTable[JUNK06] = HintText::Junk({
                      //obscure text
                      Text{"They say that all the Zora drowned in Wind Waker.", /*french*/"", /*spanish*/"Según dicen, en Wind Waker todos los zora se ahogaron."},
+    });
+
+    hintTable[JUNK07] = HintText::Junk({
+                     //obscure text
+                     Text{"If Gorons eat rocks, does that mean I'm in danger?", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK08] = HintText::Junk({
@@ -5492,6 +5502,11 @@ void HintTable_Init() {
     hintTable[JUNK10] = HintText::Junk({
                      //obscure text
                      Text{"Save your future, end the Happy Mask Salesman.", /*french*/"", /*spanish*/"Salva tu futuro, acaba con el dueño de La Máscara Feliz."},
+    });
+
+    hintTable[JUNK11] = HintText::Junk({
+                     //obscure text
+                     Text{"Glitches are a pathway to many abilities some consider to be... Unnatural.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK12] = HintText::Junk({
@@ -5529,6 +5544,16 @@ void HintTable_Init() {
                      Text{"Use bombs wisely.", /*french*/"", /*spanish*/"No desperdicies las bombas."},
     });
 
+    hintTable[JUNK19] = HintText::Junk({
+                     //obscure text
+                     Text{"They say that Volvagia hates splinters", /*french*/"", /*spanish*/""},
+    });
+
+    hintTable[JUNK20] = HintText::Junk({
+                     //obscure text
+                     Text{"They say that funky monkeys can be spotted on Friday.", /*french*/"", /*spanish*/""},
+    });
+
     hintTable[JUNK21] = HintText::Junk({
                      //obscure text
                      Text{"I found you, faker!", /*french*/"", /*spanish*/"¡Ahí estás, impostor!"},
@@ -5536,12 +5561,12 @@ void HintTable_Init() {
 
     hintTable[JUNK22] = HintText::Junk({
                      //obscure text
-                     Text{"You're comparing yourself to me?^Ha! You're not even good enough to be my fake.", /*french*/"", /*spanish*/"¿Me estás comparando contigo?^¡Ja! No me llegas ni a la suela para ser un impostor mío."},
+                     Text{"They say the Groose is loose.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK23] = HintText::Junk({
                      //obscure text
-                     Text{"I'll make you eat those words.", /*french*/"", /*spanish*/"Te tragarás tus propias palabras."},
+                     Text{"They say that players who select the \"ON\" option for \"MOTION CONTROL\" are the real \"Zelda players!\"", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK24] = HintText::Junk({
@@ -5556,7 +5581,7 @@ void HintTable_Init() {
 
     hintTable[JUNK26] = HintText::Junk({
                      //obscure text
-                     Text{"I've heard Sploosh Kaboom is a tricky game.", /*french*/"", /*spanish*/"He oído que el Splosh Kaboom es un minijuego difícil."},
+                     Text{"I've heard you can cheat at Sploosh Kaboom.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK27] = HintText::Junk({
@@ -5606,7 +5631,7 @@ void HintTable_Init() {
 
     hintTable[JUNK36] = HintText::Junk({
                      //obscure text
-                     Text{"Tingle Tingle Kooloo Limpah", /*french*/"", /*spanish*/"Tingle, Tingle, Kurulín... ¡PA!"},
+                     Text{"Tingle Tingle Kooloo Limpah!", /*french*/"", /*spanish*/"Tingle, Tingle, Kurulín... ¡PA!"},
     });
 
     hintTable[JUNK37] = HintText::Junk({
@@ -5626,12 +5651,12 @@ void HintTable_Init() {
 
     hintTable[JUNK40] = HintText::Junk({
                      //obscure text
-                     Text{"There's a reason why I am special inquisitor!", /*french*/"", /*spanish*/"¡Por algo soy una inquisidora especial!"},
+                     Text{"Can you move me? I don't get great service here.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK41] = HintText::Junk({
                      //obscure text
-                     Text{"You were almost a @ sandwich.", /*french*/"", /*spanish*/"Por poco te conviertes en emparedado de @."},
+                     Text{"They say if you use Strength on the truck, you can find Mew.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK42] = HintText::Junk({
@@ -5641,7 +5666,7 @@ void HintTable_Init() {
 
     hintTable[JUNK43] = HintText::Junk({
                      //obscure text
-                     Text{"Dear @, please come to the castle. I've baked a cake for you.&Yours truly, princess Zelda.", /*french*/"", /*spanish*/"Querido @: Por favor, ven al castillo. He hecho una tarta para ti.&Sinceramente tuya: Princesa Zelda."},
+                     Text{"Dear @, please come to the castle. I've baked a cake for you.&Yours truly, Princess Zelda.", /*french*/"", /*spanish*/"Querido @: Por favor, ven al castillo. He hecho una tarta para ti.&Sinceramente tuya: Princesa Zelda."},
     });
 
     hintTable[JUNK44] = HintText::Junk({
@@ -5651,7 +5676,7 @@ void HintTable_Init() {
 
     hintTable[JUNK45] = HintText::Junk({
                      //obscure text
-                     Text{"They say that Okami is the best Zelda game.", /*french*/"", /*spanish*/"Según dicen, Okami es el mejor juego de Zelda."},
+                     Text{"You thought it would be a useful hint, but it was me, junk hint!", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK46] = HintText::Junk({
@@ -5721,7 +5746,7 @@ void HintTable_Init() {
 
     hintTable[JUNK59] = HintText::Junk({
                      //obscure text
-                     Text{"They say that looking into darkness may find darkness looking back into you.", /*french*/"", /*spanish*/"Según dicen, contemplar la oscuridad puede hacer que ella te contemple a ti."},
+                     Text{"They say Ingo is not very good at planning ahead.", /*french*/"", /*spanish*/"Según dicen, contemplar la oscuridad puede hacer que ella te contemple a ti."},
     });
 
     hintTable[JUNK60] = HintText::Junk({
@@ -5731,7 +5756,7 @@ void HintTable_Init() {
 
     hintTable[JUNK61] = HintText::Junk({
                      //obscure text
-                     Text{"They say that the stick is mightier than the sword...^At least, it used to be...", /*french*/"", /*spanish*/"Según dicen, los palos son más poderosos que las espadas...^O así solía ser..."},
+                     Text{"They say that a flying strike with a Deku Stick is no stronger than a grounded one.", /*french*/"", /*spanish*/""},
     });
 
     hintTable[JUNK62] = HintText::Junk({
@@ -5782,6 +5807,31 @@ void HintTable_Init() {
     hintTable[JUNK71] = HintText::Junk({
                      //obscure text
                      Text{"I heard @ is pretty good at Zelda.", /*french*/"", /*spanish*/"He oído que a @ se le dan muy bien los Zelda."},
+    });
+
+    hintTable[JUNK72] = HintText::Junk({
+                     //obscure text
+                     Text{"Hi @, we've been trying to reach you about your car's extended warranty. ", /*french*/"", /*spanish*/""},
+    });
+
+    hintTable[JUNK73] = HintText::Junk({
+                     //obscure text
+                     Text{"They say that the best weapon against Iron Knuckles is item #176.", /*french*/"", /*spanish*/""},
+    });
+
+    hintTable[JUNK74] = HintText::Junk({
+                     //obscure text
+                     Text{"They say that it's actually possible to beat the running man.", /*french*/"", /*spanish*/""},
+    });
+
+    hintTable[JUNK75] = HintText::Junk({
+                     //obscure text
+                     Text{"They say that the stone-cold guardian of the Well is only present during work hours.", /*french*/"", /*spanish*/""},
+    });
+
+    hintTable[JUNK76] = HintText::Junk({
+                     //obscure text
+                     Text{"They say this hint makes more sense in other languages.", /*french*/"", /*spanish*/""},
     });
 
     /*--------------------------
@@ -5980,36 +6030,36 @@ void HintTable_Init() {
     });
 
     hintTable[BRIDGE_STONES_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Spiritual Stones#.",
+                     //obscure text                                                  singular        plural
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone|Spiritual Stones|#.",
                 /*french*/"pierres spirituelles",
                /*spanish*/"las piedras espirituales"},
     });
 
     hintTable[BRIDGE_MEDALLIONS_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Medallions#.",
+                     //obscure text                                                  singular  plural
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Medallion|Medallions|#.",
                 /*french*/"médaillons",
                /*spanish*/"los medallones"},
     });
 
     hintTable[BRIDGE_REWARDS_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Spiritual Stones&and Medallions#.",
+                     //obscure text                                                  singular                     plural
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone&or Medallion|Spiritual Stones&and Medallions|#.",
                 /*french*/"pierres spirituelles et médaillons",
                /*spanish*/"las piedras espirituales y los medallones"},
     });
 
     hintTable[BRIDGE_DUNGEONS_HINT] = HintText::Bridge({
-                     //obscure text
-                     Text{"The awakened ones will await for the&Hero to conquer #%d Dungeons#.",
+                     //obscure text                                                  singular plural
+                     Text{"The awakened ones will await for the&Hero to conquer #%d |Dungeon|Dungeons|#.",
                 /*french*/"donjons complétés",
                /*spanish*/"completar las mazmorras"},
     });
 
     hintTable[BRIDGE_TOKENS_HINT] = HintText::Bridge({
                      //obscure text
-                     Text{"The awakened ones will await for the&Hero to collect #%d Gold Skulltula&Tokens#.",
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Gold Skulltula&Token|Gold Skulltula&Tokens|#.",
                 /*french*/"symboles de Skulltula d'or",
                /*spanish*/"obtener los símbolos de Skulltulas doradas"},
     });
@@ -6079,36 +6129,36 @@ void HintTable_Init() {
     });
 
     hintTable[LACS_MEDALLIONS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d&Medallions# are retrieved.",
+                     //obscure text                                                     singular      plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d&|Medallion# is|Medallions# are| retrieved.",
                 /*french*/"les médaillons",
                /*spanish*/"los #medallones#"},
     });
 
     hintTable[LACS_STONES_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Spiritual&Stones# are retrieved.",
+                     //obscure text                                                     singular            plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone# is|Spiritual&Stones# are| retrieved.",
                 /*french*/"les pierres spirituelles",
                /*spanish*/"las #piedras espirituales#"},
     });
 
     hintTable[LACS_REWARDS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Spiritual&Stones and Medallions# are retrieved.",
+                     //obscure text                                                     singular                         plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone or Medallion# is|Spiritual&Stones and Medallions# are| retrieved.",
                 /*french*/"les pierres spirituelles et les médaillons",
                /*spanish*/"las #piedras espirituales y los medallones#"},
     });
 
     hintTable[LACS_DUNGEONS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Dungeons#&are conquered.",
+                     //obscure text                                                     singular    plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Dungeon#&is|Dungeons#&are| conquered.",
                 /*french*/"les pierres spirituelles et les médaillons",
                /*spanish*/"las #piedras espirituales y los medallones#"},
     });
 
     hintTable[LACS_TOKENS_HINT] = HintText::LACS({
-                     //obscure text
-                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d Gold&Skulltula Tokens# are retrieved.",
+                     //obscure text                                                     singular                 plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Gold&Skulltula Token# is|Gold&Skulltula Tokens# are| retrieved.",
                 /*french*/"les symboles de Skulltula d'or",
                /*spanish*/"los #símbolos de Skulltulas doradas#"},
     });
