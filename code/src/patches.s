@@ -1222,6 +1222,11 @@ SkipDaruniaDanceThree_patch:
 ShortenRainbowBridgeCS_patch:
     bl hook_ShortenRainbowBridgeCS
 
+.section .patch_OwlMagicCheck
+.global OwlMagicCheck_patch
+OwlMagicCheck_patch:
+    mov r0,#0x1
+
 .section .patch_loader
 .global loader_patch
 
