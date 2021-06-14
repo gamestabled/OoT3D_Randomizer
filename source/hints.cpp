@@ -373,7 +373,7 @@ static void CreateJunkHint() {
   PlacementLog_Msg(hint.english);
   PlacementLog_Msg("\n\n");
 
-  AddHint(hint, gossipStone);
+  AddHint(hint, gossipStone, {QM_PINK});
 }
 
 static std::vector<LocationKey> CalculateBarrenRegions() {
@@ -468,7 +468,6 @@ static void CreateTrialHints() {
 
 static void CreateGanonText() {
 
-
   //funny ganon line
   auto ganonText = RandomElement(GetHintCategory(HintCategory::GanonLine)).GetText();
   CreateMessageFromTextObject(0x70CB, 0, 2, 3, AddColorsAndFormat(ganonText));
@@ -495,10 +494,16 @@ static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
   return Text()+ITEM_OBTAINED(itemID)+"#"+GetHintRegion(Location(location)->GetParentRegion())->GetHint().GetText()+"#...^";
 }
 
-//insert the required number into the hint
+//insert the required number into the hint and set the singular/plural form
 static Text BuildCountReq(const HintKey req, const Option& count) {
-  Text requirement = Hint(req).GetText();
-  return requirement.Replace("%d", std::to_string(count.Value<u8>()));
+  Text requirement = Hint(req).GetTextCopy();
+  if (count.Value<u8>() == 1) {
+    requirement.SetForm(SINGULAR);
+  } else {
+    requirement.SetForm(PLURAL);
+  }
+  requirement.Replace("%d", std::to_string(count.Value<u8>()));
+  return requirement;
 }
 
 static Text BuildBridgeReqsText() {

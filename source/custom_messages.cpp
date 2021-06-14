@@ -403,8 +403,9 @@ constexpr std::array DungeonColors = {
               size_t secondHashtag = textStr->find('#');
               if (secondHashtag == std::string::npos) {
                 CitraPrint("ERROR: Couldn't find second '#' in " + (*textStr));
+              } else {
+                textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
               }
-              textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
           }
         }
       }
