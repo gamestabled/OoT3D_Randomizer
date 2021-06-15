@@ -13,30 +13,30 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[KOKIRI_SWORD]                      = Item(Text{"Kokiri Sword", "Épée Kokiri", "Espada Kokiri"}, ITEMTYPE_ITEM,  GI_SWORD_KOKIRI,   true,     &KokiriSword, KOKIRI_SWORD);
   //[MASTER_SWORD]
   //[GIANTS_KNIFE]
-    itemTable[BIGGORON_SWORD]                    = Item(Text{"Biggoron Sword",  "Épée de Grogoron",       "Espada de Biggoron"},    ITEMTYPE_ITEM,  GI_SWORD_BGS,      true,       &noVariable,    BIGGORON_SWORD);
-    itemTable[DEKU_SHIELD]                       = Item(Text{"Deku Shield",     "Bouclier Mojo",          "Escudo deku"},           ITEMTYPE_ITEM,  GI_SHIELD_DEKU,    false,      &noVariable,    DEKU_SHIELD);
-    itemTable[HYLIAN_SHIELD]                     = Item(Text{"Hylian Shield",   "Bouclier Hylien",        "Escudo hyliano"},        ITEMTYPE_ITEM,  GI_SHIELD_HYLIAN,  false,      &noVariable,    HYLIAN_SHIELD);
-    itemTable[MIRROR_SHIELD]                     = Item(Text{"Mirror Shield",   "Bouclier miroir",        "Escudo espejo"},         ITEMTYPE_ITEM,  GI_SHIELD_MIRROR,  true,       &MirrorShield,  MIRROR_SHIELD);
-    itemTable[GORON_TUNIC]                       = Item(Text{"Goron Tunic",     "Tunique Goron",          "Sayo goron"},            ITEMTYPE_ITEM,  GI_TUNIC_GORON,    true,       &GoronTunic,    GORON_TUNIC);
-    itemTable[ZORA_TUNIC]                        = Item(Text{"Zora Tunic",      "Tunique Zora",           "Sayo zora"},             ITEMTYPE_ITEM,  GI_TUNIC_ZORA,     true,       &ZoraTunic,     ZORA_TUNIC);
-    itemTable[IRON_BOOTS]                        = Item(Text{"Iron Boots",      "Bottes de plomb",        "Botas de hierro"},       ITEMTYPE_ITEM,  GI_BOOTS_IRON,     true,       &IronBoots,     IRON_BOOTS);
-    itemTable[HOVER_BOOTS]                       = Item(Text{"Hover Boots",     "Bottes des airs",        "Botas voladoras"},       ITEMTYPE_ITEM,  GI_BOOTS_HOVER,    true,       &HoverBoots,    HOVER_BOOTS);
-    itemTable[WEIRD_EGG]                         = Item(Text{"Weird Egg",       "Oeuf curieux",           "Huevo extraño"},         ITEMTYPE_ITEM,  GI_WEIRD_EGG,      true,       &WeirdEgg,      WEIRD_EGG);
-    itemTable[ZELDAS_LETTER]                     = Item(Text{"Zelda's Letter",  "",                       "Carta de Zelda"},        ITEMTYPE_ITEM,  GI_LETTER_ZELDA,   true,       &ZeldasLetter,  ZELDAS_LETTER);
-    itemTable[BOOMERANG]                         = Item(Text{"Boomerang",       "Boomerang",              "Bumerán"},               ITEMTYPE_ITEM,  GI_BOOMERANG,      true,       &Boomerang,     BOOMERANG);
-    itemTable[LENS_OF_TRUTH]                     = Item(Text{"Lens of Truth",   "Loupe de vérité",        "Lupa de la Verdad"},     ITEMTYPE_ITEM,  GI_LENS,           true,       &LensOfTruth,   LENS_OF_TRUTH);
-    itemTable[MEGATON_HAMMER]                    = Item(Text{"Megaton Hammer",  "Masse des titans",       "Martillo Megatón"},      ITEMTYPE_ITEM,  GI_HAMMER,         true,       &Hammer,        MEGATON_HAMMER);
-    itemTable[SHARD_OF_AGONY]                    = Item(Text{"Shard of Agony",  "Fragment de souffrance", "Piedra de la Agonía"},   ITEMTYPE_ITEM,  GI_STONE_OF_AGONY, true,       &ShardOfAgony,  SHARD_OF_AGONY);
-    itemTable[DINS_FIRE]                         = Item(Text{"Din's Fire",      "Feu de Din",             "Fuego de Din"},          ITEMTYPE_ITEM,  GI_DINS_FIRE,      true,       &DinsFire,      DINS_FIRE);
-    itemTable[FARORES_WIND]                      = Item(Text{"Farore's Wind",   "Vent de Farore",         "Viento de Farore"},      ITEMTYPE_ITEM,  GI_FARORES_WIND,   true,       &FaroresWind,   FARORES_WIND);
-    itemTable[NAYRUS_LOVE]                       = Item(Text{"Nayru's Love",    "Amour de Nayru",         "Amor de Nayru"},         ITEMTYPE_ITEM,  GI_NAYRUS_LOVE,    true,       &NayrusLove,    NAYRUS_LOVE);
-    itemTable[FIRE_ARROWS]                       = Item(Text{"Fire Arrows",     "Flèche de feu",          "Flecha de fuego"},       ITEMTYPE_ITEM,  GI_ARROW_FIRE,     true,       &FireArrows,    FIRE_ARROWS);
-    itemTable[ICE_ARROWS]                        = Item(Text{"Ice Arrows",      "Flèche de glace",        "Flecha de hielo"},       ITEMTYPE_ITEM,  GI_ARROW_ICE,      true,       &IceArrows,     ICE_ARROWS);
-    itemTable[LIGHT_ARROWS]                      = Item(Text{"Light Arrows",    "Flèche de lumière",      "Flecha de luz"},         ITEMTYPE_ITEM,  GI_ARROW_LIGHT,    true,       &LightArrows,   LIGHT_ARROWS);
-    itemTable[GERUDO_TOKEN]                      = Item(Text{"Gerudo Token",    "Carte Gerudo",           "Pase de socio gerudo"},  ITEMTYPE_ITEM,  GI_GERUDO_CARD,    true,       &GerudoToken,   GERUDO_TOKEN);
-    itemTable[MAGIC_BEAN]                        = Item(Text{"Magic Bean",      "Haricot magique",        "Habichuelas mágicas"},   ITEMTYPE_ITEM,  GI_BEAN,           true,       &MagicBean,     MAGIC_BEAN);
-    itemTable[MAGIC_BEAN_PACK]                   = Item(Text{"Magic Bean Pack", "Haricot magique",        "Habichuelas mágicas"},   ITEMTYPE_ITEM,  0xC9,              true,       &MagicBeanPack, MAGIC_BEAN_PACK);
-    itemTable[DOUBLE_DEFENSE]                    = Item(Text{"Double Defense",  "Double défence",         "Doble poder defensivo"}, ITEMTYPE_ITEM,  0xB8,              true,       &noVariable,    DOUBLE_DEFENSE);
+    itemTable[BIGGORON_SWORD]                    = Item(Text{"Biggoron's Sword", "Épée de Grogoron",       "Espada de Biggoron"},    ITEMTYPE_ITEM,  GI_SWORD_BGS,      true,       &noVariable,    BIGGORON_SWORD);
+    itemTable[DEKU_SHIELD]                       = Item(Text{"Deku Shield",      "Bouclier Mojo",          "Escudo deku"},           ITEMTYPE_ITEM,  GI_SHIELD_DEKU,    false,      &noVariable,    DEKU_SHIELD);
+    itemTable[HYLIAN_SHIELD]                     = Item(Text{"Hylian Shield",    "Bouclier Hylien",        "Escudo hyliano"},        ITEMTYPE_ITEM,  GI_SHIELD_HYLIAN,  false,      &noVariable,    HYLIAN_SHIELD);
+    itemTable[MIRROR_SHIELD]                     = Item(Text{"Mirror Shield",    "Bouclier miroir",        "Escudo espejo"},         ITEMTYPE_ITEM,  GI_SHIELD_MIRROR,  true,       &MirrorShield,  MIRROR_SHIELD);
+    itemTable[GORON_TUNIC]                       = Item(Text{"Goron Tunic",      "Tunique Goron",          "Sayo goron"},            ITEMTYPE_ITEM,  GI_TUNIC_GORON,    true,       &GoronTunic,    GORON_TUNIC);
+    itemTable[ZORA_TUNIC]                        = Item(Text{"Zora Tunic",       "Tunique Zora",           "Sayo zora"},             ITEMTYPE_ITEM,  GI_TUNIC_ZORA,     true,       &ZoraTunic,     ZORA_TUNIC);
+    itemTable[IRON_BOOTS]                        = Item(Text{"Iron Boots",       "Bottes de plomb",        "Botas de hierro"},       ITEMTYPE_ITEM,  GI_BOOTS_IRON,     true,       &IronBoots,     IRON_BOOTS);
+    itemTable[HOVER_BOOTS]                       = Item(Text{"Hover Boots",      "Bottes des airs",        "Botas voladoras"},       ITEMTYPE_ITEM,  GI_BOOTS_HOVER,    true,       &HoverBoots,    HOVER_BOOTS);
+    itemTable[WEIRD_EGG]                         = Item(Text{"Weird Egg",        "Oeuf curieux",           "Huevo extraño"},         ITEMTYPE_ITEM,  GI_WEIRD_EGG,      true,       &WeirdEgg,      WEIRD_EGG);
+    itemTable[ZELDAS_LETTER]                     = Item(Text{"Zelda's Letter",   "",                       "Carta de Zelda"},        ITEMTYPE_ITEM,  GI_LETTER_ZELDA,   true,       &ZeldasLetter,  ZELDAS_LETTER);
+    itemTable[BOOMERANG]                         = Item(Text{"Boomerang",        "Boomerang",              "Bumerán"},               ITEMTYPE_ITEM,  GI_BOOMERANG,      true,       &Boomerang,     BOOMERANG);
+    itemTable[LENS_OF_TRUTH]                     = Item(Text{"Lens of Truth",    "Loupe de vérité",        "Lupa de la Verdad"},     ITEMTYPE_ITEM,  GI_LENS,           true,       &LensOfTruth,   LENS_OF_TRUTH);
+    itemTable[MEGATON_HAMMER]                    = Item(Text{"Megaton Hammer",   "Masse des titans",       "Martillo Megatón"},      ITEMTYPE_ITEM,  GI_HAMMER,         true,       &Hammer,        MEGATON_HAMMER);
+    itemTable[SHARD_OF_AGONY]                    = Item(Text{"Shard of Agony",   "Fragment de souffrance", "Piedra de la Agonía"},   ITEMTYPE_ITEM,  GI_STONE_OF_AGONY, true,       &ShardOfAgony,  SHARD_OF_AGONY);
+    itemTable[DINS_FIRE]                         = Item(Text{"Din's Fire",       "Feu de Din",             "Fuego de Din"},          ITEMTYPE_ITEM,  GI_DINS_FIRE,      true,       &DinsFire,      DINS_FIRE);
+    itemTable[FARORES_WIND]                      = Item(Text{"Farore's Wind",    "Vent de Farore",         "Viento de Farore"},      ITEMTYPE_ITEM,  GI_FARORES_WIND,   true,       &FaroresWind,   FARORES_WIND);
+    itemTable[NAYRUS_LOVE]                       = Item(Text{"Nayru's Love",     "Amour de Nayru",         "Amor de Nayru"},         ITEMTYPE_ITEM,  GI_NAYRUS_LOVE,    true,       &NayrusLove,    NAYRUS_LOVE);
+    itemTable[FIRE_ARROWS]                       = Item(Text{"Fire Arrows",      "Flèche de feu",          "Flecha de fuego"},       ITEMTYPE_ITEM,  GI_ARROW_FIRE,     true,       &FireArrows,    FIRE_ARROWS);
+    itemTable[ICE_ARROWS]                        = Item(Text{"Ice Arrows",       "Flèche de glace",        "Flecha de hielo"},       ITEMTYPE_ITEM,  GI_ARROW_ICE,      true,       &IceArrows,     ICE_ARROWS);
+    itemTable[LIGHT_ARROWS]                      = Item(Text{"Light Arrows",     "Flèche de lumière",      "Flecha de luz"},         ITEMTYPE_ITEM,  GI_ARROW_LIGHT,    true,       &LightArrows,   LIGHT_ARROWS);
+    itemTable[GERUDO_TOKEN]                      = Item(Text{"Gerudo Token",     "Carte Gerudo",           "Pase de socio gerudo"},  ITEMTYPE_ITEM,  GI_GERUDO_CARD,    true,       &GerudoToken,   GERUDO_TOKEN);
+    itemTable[MAGIC_BEAN]                        = Item(Text{"Magic Bean",       "Haricot magique",        "Habichuelas mágicas"},   ITEMTYPE_ITEM,  GI_BEAN,           true,       &MagicBean,     MAGIC_BEAN);
+    itemTable[MAGIC_BEAN_PACK]                   = Item(Text{"Magic Bean Pack",  "Haricot magique",        "Habichuelas mágicas"},   ITEMTYPE_ITEM,  0xC9,              true,       &MagicBeanPack, MAGIC_BEAN_PACK);
+    itemTable[DOUBLE_DEFENSE]                    = Item(Text{"Double Defense",   "Double défence",         "Doble poder defensivo"}, ITEMTYPE_ITEM,  0xB8,              true,       &noVariable,    DOUBLE_DEFENSE);
 
     itemTable[POCKET_EGG]                        = Item(Text{"Pocket Egg",   "",           "Huevo de bolsillo"},     ITEMTYPE_ITEM,  GI_POCKET_EGG,     true,       &PocketEgg,     POCKET_EGG);
     itemTable[POCKET_CUCCO]                      = Item(Text{"Pocket Cucco", "",           "Cuco de bolsillo"},      ITEMTYPE_ITEM,  GI_POCKET_CUCCO,   true,       &PocketCucco,   POCKET_CUCCO);
@@ -79,7 +79,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[BOTTLE_WITH_POE]                   = Item(Text{"Bottle with Poe",          "Flacon avec un Esprit",  "Poe en una botella"},      ITEMTYPE_ITEM,     0x94, true, &HasBottle, BOTTLE_WITH_POE);
 
     //Special bottles that can't immediately dump contents
-    itemTable[RUTOS_LETTER]                      = Item(Text{"Rutos Letter",        "Flacon avec une lettre", "Carta de Ruto"},           ITEMTYPE_ITEM,     0x15, true, &RutosLetter,      RUTOS_LETTER);
+    itemTable[RUTOS_LETTER]                      = Item(Text{"Ruto's Letter",       "Flacon avec une lettre", "Carta de Ruto"},           ITEMTYPE_ITEM,     0x15, true, &RutosLetter,      RUTOS_LETTER);
     itemTable[BOTTLE_WITH_BIG_POE]               = Item(Text{"Bottle with Big Poe", "Flacon avec une Âme",    "Gran Poe en una botella"}, ITEMTYPE_ITEM,     0x93, true, &BottleWithBigPoe, BOTTLE_WITH_BIG_POE);
 
     //Songs
@@ -134,14 +134,14 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[SPIRIT_TEMPLE_SMALL_KEY]           = Item(Text{"Spirit Temple Small Key",           "Petite clé du temple de l'esprit",   "Llave pequeña del Templo del Espíritu"},          ITEMTYPE_SMALLKEY,          0xB2, true, &SpiritTempleKeys,          SMALL_KEY);
     itemTable[SHADOW_TEMPLE_SMALL_KEY]           = Item(Text{"Shadow Temple Small Key",           "Petite clé du temple de l'ombre",    "Llave pequeña del Templo de la Sombras"},         ITEMTYPE_SMALLKEY,          0xB3, true, &ShadowTempleKeys,          SMALL_KEY);
     itemTable[BOTTOM_OF_THE_WELL_SMALL_KEY]      = Item(Text{"Bottom of the Well Small Key",      "Petite clé du fond du puits",        "Llave pequeña del fondo del pozo"},               ITEMTYPE_SMALLKEY,          0xB4, true, &BottomOfTheWellKeys,       SMALL_KEY);
-    itemTable[GERUDO_TRAINING_GROUNDS_SMALL_KEY] = Item(Text{"Gerudo Training Grounds Small Key", "Petite clé du gymnase Gerudo",       "Llave pequeña del Centro de Instrucción Gerudo"}, ITEMTYPE_SMALLKEY,          0xB5, true, &GerudoTrainingGroundsKeys, SMALL_KEY);
+    itemTable[GERUDO_TRAINING_GROUNDS_SMALL_KEY] = Item(Text{"Gerudo Training Grounds Small Key", "Petite clé du gymnase Gerudo",       "Llave del Centro de Instrucción Gerudo"}, ITEMTYPE_SMALLKEY,          0xB5, true, &GerudoTrainingGroundsKeys, SMALL_KEY);
     itemTable[GERUDO_FORTRESS_SMALL_KEY]         = Item(Text{"Gerudo Fortress Small Key",         "Petite clé de la forteresse Gerudo", "Llave pequeña de la Fortaleza Gerudo"},           ITEMTYPE_FORTRESS_SMALLKEY, 0xB6, true, &GerudoFortressKeys,        GERUDO_FORTRESS_SMALL_KEY);
     itemTable[GANONS_CASTLE_SMALL_KEY]           = Item(Text{"Ganon's Castle Small Key",          "Petite clé du château de Ganon",     "Llave pequeña del Castillo de Ganon"},            ITEMTYPE_SMALLKEY,          0xB7, true, &GanonsCastleKeys,          SMALL_KEY);
 
     //Stones and Medallions
-    itemTable[KOKIRI_EMERALD]                    = Item(Text{"Kokiri Emerald",   "Émeraude Kokiri",         "Esmeralda de los Kokiri"}, ITEMTYPE_DUNGEONREWARD, 0xCB,  true, &KokiriEmerald,   KOKIRI_EMERALD);
-    itemTable[GORON_RUBY]                        = Item(Text{"Goron Ruby",       "Rubis Goron",             "Rubí de los Goron"},       ITEMTYPE_DUNGEONREWARD, 0xCC,  true, &GoronRuby,       GORON_RUBY);
-    itemTable[ZORA_SAPPHIRE]                     = Item(Text{"Zora Sapphire",    "Saphir Zora",             "Zafiro de los Zora"},      ITEMTYPE_DUNGEONREWARD, 0xCD,  true, &ZoraSapphire,    ZORA_SAPPHIRE);
+    itemTable[KOKIRI_EMERALD]                    = Item(Text{"Kokiri's Emerald", "Émeraude Kokiri",         "Esmeralda de los Kokiri"}, ITEMTYPE_DUNGEONREWARD, 0xCB,  true, &KokiriEmerald,   KOKIRI_EMERALD);
+    itemTable[GORON_RUBY]                        = Item(Text{"Goron's Ruby",     "Rubis Goron",             "Rubí de los Goron"},       ITEMTYPE_DUNGEONREWARD, 0xCC,  true, &GoronRuby,       GORON_RUBY);
+    itemTable[ZORA_SAPPHIRE]                     = Item(Text{"Zora's Sapphire",  "Saphir Zora",             "Zafiro de los Zora"},      ITEMTYPE_DUNGEONREWARD, 0xCD,  true, &ZoraSapphire,    ZORA_SAPPHIRE);
     itemTable[FOREST_MEDALLION]                  = Item(Text{"Forest Medallion", "Médaillon de la forêt",   "Medallón del Bosque"},     ITEMTYPE_DUNGEONREWARD, 0xCE,  true, &ForestMedallion, FOREST_MEDALLION);
     itemTable[FIRE_MEDALLION]                    = Item(Text{"Fire Medallion",   "Médaillon du feu",        "Medallón del Fuego"},      ITEMTYPE_DUNGEONREWARD, 0xCF,  true, &FireMedallion,   FIRE_MEDALLION);
     itemTable[WATER_MEDALLION]                   = Item(Text{"Water Medallion",  "Médaillon de l'eau",      "Medallón del Agua"},       ITEMTYPE_DUNGEONREWARD, 0xD0,  true, &WaterMedallion,  WATER_MEDALLION);
