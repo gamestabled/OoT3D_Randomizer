@@ -79,7 +79,7 @@ static std::string PresetPath(std::string_view presetName, OptionCategory catego
 bool SavePreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
-  XMLDocument preset = XMLDocument();
+  XMLDocument preset = XMLDocument(false);
 
   // Create and insert the XML declaration
   preset.InsertEndChild(preset.NewDeclaration());
