@@ -254,7 +254,7 @@ void InitTrickNames() {
   trickNameTable[GI_SWORD_BGS] = {
     Text{"Goron's Not-Broken Sword", "Épée pas brisée de Goron", "Espada irrompible goron"},
     Text{"Big Goron Sword",          "Épée de gros Goron",       "Espada de Big Goron"},
-    Text{"Biggoron's Sword",         "Épée Grogoron",            "Espada Biggoron"}};
+    Text{"Biggoron Sword",           "Épée Grogoron",            "Espada Biggoron"}};
   trickNameTable[GI_SHIELD_MIRROR] = {
     Text{"Not the 1.0 OoT Shield", "Miroir magique",   "Escudo de la 1.0"},
     Text{"Magic Shield",           "Bouclier magique", "Escudo gerudo"},
