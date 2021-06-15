@@ -22,12 +22,12 @@ void HintTable_Init() {
     |       GENERAL TEXT       |
     ---------------------------*/
     hintTable[NONE]            = HintText::Exclude({Text{"No Hint","",""}});
-    hintTable[PREFIX]          = HintText::Exclude({Text{"They say that ",              /*french*/"Selon moi, ",                      /*spanish*/"Según dicen, "}});
+    hintTable[PREFIX]          = HintText::Exclude({Text{"They say that ",              /*french*/"Selon moi, ",                  /*spanish*/"Según dicen, "}});
     hintTable[WAY_OF_THE_HERO] = HintText::Exclude({Text{" is on the way of the hero.", /*french*/" est sur le chemin du héros.", /*spanish*/" conduce a la senda del héroe."}});
-    hintTable[PLUNDERING]      = HintText::Exclude({Text{"plundering ",                 /*french*/"explorer ",                  /*spanish*/"saquear "}});
+    hintTable[PLUNDERING]      = HintText::Exclude({Text{"plundering ",                 /*french*/"explorer ",                    /*spanish*/"inspeccionar "}});
     hintTable[FOOLISH]         = HintText::Exclude({Text{" is a foolish choice.",       /*french*/" est futile.",                 /*spanish*/" no es una sabia decisión."}});
-    hintTable[CAN_BE_FOUND_AT] = HintText::Exclude({Text{"can be found at",             /*french*/"se trouve dans",                             /*spanish*/"se puede hallar en"}});
-    hintTable[HOARDS]          = HintText::Exclude({Text{"hoards",                      /*french*/"recèle",                             /*spanish*/"acapara"}});
+    hintTable[CAN_BE_FOUND_AT] = HintText::Exclude({Text{"can be found at",             /*french*/"se trouve dans",               /*spanish*/"aguarda en"}});
+    hintTable[HOARDS]          = HintText::Exclude({Text{"hoards",                      /*french*/"recèle",                       /*spanish*/"acapara"}});
 
 
     /*--------------------------
@@ -297,7 +297,7 @@ void HintTable_Init() {
                        Text{"proof of destruction",   /*french*/"un certificat d'élimination", /*spanish*/"una prueba de la destrucción"},
                        Text{"an arachnid chip",       /*french*/"un symbole cranien",            /*spanish*/"una figura arácnida"},
                        Text{"spider remains",         /*french*/"une dépouille dorée",         /*spanish*/"unos restos dorados"},
-                       Text{"one percent of a curse", /*french*/"un centième de malédiction",  /*spanish*/"una cebtésima de una maldición"},
+                       Text{"one percent of a curse", /*french*/"un centième de malédiction",  /*spanish*/"una centésima de una maldición"},
                      },
                        //clear text
                        Text{"a Gold Skulltula Token", /*french*/"un jeton de Skulltula d'or", /*spanish*/"un símbolo de skulltula dorada"}
@@ -334,7 +334,7 @@ void HintTable_Init() {
                        Text{"a powder ingredient", /*french*/"un ingrédient à poudre", /*spanish*/"un oloroso ingrediente"},
                      },
                        //clear text
-                       Text{"an Odd Mushroom", /*french*/"un champignon suspect", /*spanish*/"una seta rara"}
+                       Text{"an Odd Mushroom", /*french*/"un champignon suspect", /*spanish*/"un champiñón extraño"}
     );
 
     hintTable[ODD_POULTICE] = HintText::Item({
@@ -391,7 +391,7 @@ void HintTable_Init() {
                        Text{"a three day wait", /*french*/"un rendez-vous dans trois jours", /*spanish*/"unos tres días de espera"},
                      },
                        //clear text
-                       Text{"the Claim Check", /*french*/"un certificat", /*spanish*/"el albarán"}
+                       Text{"the Claim Check", /*french*/"un certificat", /*spanish*/"el recibo"}
     );
 
     hintTable[PROGRESSIVE_HOOKSHOT] = HintText::Item({
@@ -486,7 +486,7 @@ void HintTable_Init() {
                        Text{"a green rectangle",  /*french*/"un rectangle vert",    /*spanish*/"una verduzca barra"},
                      },
                        //clear text
-                       Text{"a Magic Meter", /*french*/"une jauge de magie", /*spanish*/"una barra de magia"}
+                       Text{"a Magic Meter", /*french*/"une jauge de magie", /*spanish*/"un aumento de poder mágico"}
     );
 
     hintTable[PROGRESSIVE_OCARINA] = HintText::Item({
@@ -563,7 +563,7 @@ void HintTable_Init() {
                        Text{"Navi's cousin",       /*french*/"le cousin de Navi",  /*spanish*/"una prima de Navi"},
                      },
                        //clear text
-                       Text{"a Fairy Bottle", /*french*/"une fée en flacon", /*spanish*/"un hada embotellada"}
+                       Text{"a Fairy Bottle", /*french*/"une fée en flacon", /*spanish*/"un hada en una botella"}
     );
 
     hintTable[BOTTLE_WITH_FISH] = HintText::Item({
@@ -572,7 +572,7 @@ void HintTable_Init() {
                        Text{"a deity's snack", /*french*/"le repas d'un dieu marin", /*spanish*/"un tentempié de cierta deidad"},
                      },
                        //clear text
-                       Text{"a Fish Bottle", /*french*/"un poisson en flacon", /*spanish*/"un pez embotellado"}
+                       Text{"a Fish Bottle", /*french*/"un poisson en flacon", /*spanish*/"un pez en una botella"}
     );
 
     hintTable[BOTTLE_WITH_BLUE_FIRE] = HintText::Item({
@@ -590,7 +590,7 @@ void HintTable_Init() {
                        Text{"Skulltula finders", /*french*/"une poignée de trouve-Skulltula", /*spanish*/"unos rastreadores de skulltulas"},
                      },
                        //clear text
-                       Text{"a Bug Bottle", /*french*/"un insecte en flacon", /*spanish*/"una botella con insectos"}
+                       Text{"a Bug Bottle", /*french*/"un insecte en flacon", /*spanish*/"unos insectos en una botella"}
     );
 
     hintTable[BOTTLE_WITH_POE] = HintText::Item({
@@ -599,7 +599,7 @@ void HintTable_Init() {
                        Text{"a face in the jar", /*french*/"un visage dans un bocal", /*spanish*/"una expresión enfrascada"},
                      },
                        //clear text
-                       Text{"a Poe Bottle", /*french*/"un Esprit en flacon", /*spanish*/"un Poe embotellado"}
+                       Text{"a Poe Bottle", /*french*/"un Esprit en flacon", /*spanish*/"un Poe en una botella"}
     );
 
     hintTable[BOTTLE_WITH_BIG_POE] = HintText::Item({
@@ -608,7 +608,7 @@ void HintTable_Init() {
                        Text{"a sidequest spirit",  /*french*/"un précieux esprit",      /*spanish*/"un buen valorado espíritu"},
                      },
                        //clear text
-                       Text{"a Big Poe Bottle", /*french*/"une Ame en flacon", /*spanish*/"un Gran Poe embotellado"}
+                       Text{"a Big Poe Bottle", /*french*/"une Ame en flacon", /*spanish*/"un Gran Poe en una botella"}
     );
 
     hintTable[RUTOS_LETTER] = HintText::Item({
@@ -1097,7 +1097,7 @@ void HintTable_Init() {
                        Text{"a victory valentine", /*french*/"un amour gagnant", /*spanish*/"el amor victorioso"},
                      },
                        //clear text
-                       Text{"a Piece of Heart", /*french*/"un quart de cœur", /*spanish*/"una pieza de corazón"}
+                       Text{"a Piece of Heart", /*french*/"un quart de cœur", /*spanish*/"el amor de la victoria"}
     );
 
     hintTable[TREASURE_GAME_GREEN_RUPEE] = HintText::Item({
@@ -1416,7 +1416,7 @@ void HintTable_Init() {
                        Text{"a #temporal stone within a tree# contains", /*french*/"la #pierre bleue dans un arbre# mène à", /*spanish*/"un #bloque temporal de un árbol# contiene"},
                      },
                        //clear text
-                       Text{"a #temporal stone within the Deku Tree# contains", /*french*/"la #pierre temporelle dans l'arbre Mojo# cache", /*spanish*/"un #bloque temporal del Árbol Deku# contiene"}
+                       Text{"a #temporal stone within the Deku Tree# contains", /*french*/"la #pierre temporelle dans l'arbre Mojo# cache", /*spanish*/"un #bloque temporal del Gran Árbol Deku# contiene"}
   );
 
     hintTable[DEKU_TREE_MQ_GS_BASEMENT_GRAVES_ROOM] = HintText::Sometimes({
@@ -1424,7 +1424,7 @@ void HintTable_Init() {
                        Text{"a #spider on a ceiling in a tree# holds", /*french*/"l'#araignée haut-perchée dans un arbre# a", /*spanish*/"una #Skulltula en el techo de un árbol# otorga"},
                      },
                        //clear text
-                       Text{"a #spider on a ceiling in the Deku Tree# holds", /*french*/"la#Skulltula dans le cimetière de l'arbre Mojo# a", /*spanish*/"una #Skulltula en el techo del Árbol Deku# otorga"}
+                       Text{"a #spider on a ceiling in the Deku Tree# holds", /*french*/"la#Skulltula dans le cimetière de l'arbre Mojo# a", /*spanish*/"una #Skulltula en el techo del Gran Árbol Deku# otorga"}
   );
 
     hintTable[DODONGOS_CAVERN_MQ_GS_SONG_OF_TIME_BLOCK_ROOM] = HintText::Sometimes({
@@ -1440,7 +1440,7 @@ void HintTable_Init() {
                        Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies dans un gardien# protègent", /*spanish*/"unos de #stingers engullidos por cierta deidad# guardan"},
                      },
                        //clear text
-                       Text{"a school of #stingers swallowed by Jabu Jabu# guard", /*french*/"les #raies dans Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu Jabu# guardan"}
+                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies dans Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan"}
   );
 
     hintTable[JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM] = HintText::Sometimes({
@@ -1448,7 +1448,7 @@ void HintTable_Init() {
                        Text{"a spider surrounded by #shadows in the belly of a deity# holds", /*french*/"l'araignée entourée d'#ombres dans le ventre du gardien# possède", /*spanish*/"una Skulltula rodeada de #sombras en la tripa de cierta diedad# otorga"},
                      },
                        //clear text
-                       Text{"a spider surrounded by #shadows in Jabu Jabu's Belly# holds", /*french*/"la Skulltula entourée d'#ombres dans Jabu-Jabu# possède", /*spanish*/"una Skulltula rodeada de #sombras en la Tripa de Jabu Jabu# otorga"}
+                       Text{"a spider surrounded by #shadows in Jabu-Jabu's Belly# holds", /*french*/"la Skulltula entourée d'#ombres dans Jabu-Jabu# possède", /*spanish*/"una Skulltula rodeada de #sombras en la Tripa de Jabu-Jabu# otorga"}
   );
 
     hintTable[JABU_JABUS_BELLY_MQ_COW] = HintText::Sometimes({
@@ -1456,7 +1456,7 @@ void HintTable_Init() {
                        Text{"a #cow swallowed by a deity# gifts", /*french*/"la #vache dans le gardien# donne", /*spanish*/"una #vaca engullida por cierta deidad# brinda"},
                      },
                        //clear text
-                       Text{"a #cow swallowed by Jabu Jabu# gifts", /*french*/"la #vache avallée par Jabu-Jabu# donne", /*spanish*/"una #vaca engullida por Jabu Jabu# brinda"}
+                       Text{"a #cow swallowed by Jabu-Jabu# gifts", /*french*/"la #vache avallée par Jabu-Jabu# donne", /*spanish*/"una #vaca engullida por Jabu-Jabu# brinda"}
   );
 
     hintTable[FIRE_TEMPLE_SCARECROW_CHEST] = HintText::Sometimes({
@@ -2085,63 +2085,63 @@ void HintTable_Init() {
 
     hintTable[DEKU_TREE_MAP_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"in the #center of the Deku Tree# lies", /*french*/"#le cœur de l'arbre Mojo# recèle", /*spanish*/"al #centro del Árbol Deku# yace"},
+                       Text{"in the #center of the Deku Tree# lies", /*french*/"#le cœur de l'arbre Mojo# recèle", /*spanish*/"al #centro del Gran Árbol Deku# yace"},
   });
 
     hintTable[DEKU_TREE_SLINGSHOT_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"the #treasure guarded by a scrub# in the Deku Tree is", /*french*/"le #trésor protégé par une peste# dans l'arbre Mojo est", /*spanish*/"un #deku del Árbol Deku# esconde"},
+                       Text{"the #treasure guarded by a scrub# in the Deku Tree is", /*french*/"le #trésor protégé par une peste# dans l'arbre Mojo est", /*spanish*/"un #deku del Gran Árbol Deku# esconde"},
   });
 
     hintTable[DEKU_TREE_SLINGSHOT_ROOM_SIDE_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"the #treasure guarded by a scrub# in the Deku Tree is", /*french*/"le #trésor protégé par une peste# dans l'arbre Mojo est", /*spanish*/"un #deku del Árbol Deku# esconde"},
+                       Text{"the #treasure guarded by a scrub# in the Deku Tree is", /*french*/"le #trésor protégé par une peste# dans l'arbre Mojo est", /*spanish*/"un #deku del Gran Árbol Deku# esconde"},
   });
 
     hintTable[DEKU_TREE_COMPASS_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Árbol Deku# conducen a"},
+                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Gran Árbol Deku# conducen a"},
   });
 
     hintTable[DEKU_TREE_COMPASS_ROOM_SIDE_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Árbol Deku# conducen a"},
+                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Gran Árbol Deku# conducen a"},
   });
 
     hintTable[DEKU_TREE_BASEMENT_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#webs in the Deku Tree# hide", /*french*/"les #toiles dans l'arbre Mojo# cachent", /*spanish*/"entre #telarañas del Árbol Deku# yace"},
+                       Text{"#webs in the Deku Tree# hide", /*french*/"les #toiles dans l'arbre Mojo# cachent", /*spanish*/"entre #telarañas del Gran Árbol Deku# yace"},
   });
 
 
     hintTable[DEKU_TREE_MQ_MAP_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"in the #center of the Deku Tree# lies", /*french*/"#le cœur de l'arbre Mojo# recèle", /*spanish*/"al #centro del Árbol Deku# yace"},
+                       Text{"in the #center of the Deku Tree# lies", /*french*/"#le cœur de l'arbre Mojo# recèle", /*spanish*/"al #centro del Gran Árbol Deku# yace"},
   });
 
     hintTable[DEKU_TREE_MQ_COMPASS_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"a #treasure guarded by a large spider# in the Deku Tree is", /*french*/"le #trésor protégé par une grosse araignée# dans l'arbre Mojo est", /*spanish*/"una #gran araña del Árbol Deku# esconde"},
+                       Text{"a #treasure guarded by a large spider# in the Deku Tree is", /*french*/"le #trésor protégé par une grosse araignée# dans l'arbre Mojo est", /*spanish*/"una #gran araña del Gran Árbol Deku# esconde"},
   });
 
     hintTable[DEKU_TREE_MQ_SLINGSHOT_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Árbol Deku# conducen a"},
+                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Gran Árbol Deku# conducen a"},
   });
 
     hintTable[DEKU_TREE_MQ_SLINGSHOT_ROOM_BACK_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Árbol Deku# conducen a"},
+                       Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Gran Árbol Deku# conducen a"},
   });
 
     hintTable[DEKU_TREE_MQ_BASEMENT_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#webs in the Deku Tree# hide", /*french*/"les #toiles dans l'arbre Mojo# cachent", /*spanish*/"entre #telarañas del Árbol Deku# yace"},
+                       Text{"#webs in the Deku Tree# hide", /*french*/"les #toiles dans l'arbre Mojo# cachent", /*spanish*/"entre #telarañas del Gran Árbol Deku# yace"},
   });
 
     hintTable[DEKU_TREE_MQ_BEFORE_SPINNING_LOG_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#magical fire in the Deku Tree# leads to", /*french*/"le #feu magique dans l'arbre Mojo# éclaire", /*spanish*/"el #fuego mágico en el Árbol Deku# conduce a"},
+                       Text{"#magical fire in the Deku Tree# leads to", /*french*/"le #feu magique dans l'arbre Mojo# éclaire", /*spanish*/"el #fuego mágico en el Gran Árbol Deku# conduce a"},
   });
 
 
@@ -2184,7 +2184,7 @@ void HintTable_Init() {
 
     hintTable[DODONGOS_CAVERN_MQ_BOMB_BAG_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"an #elevated alcove# in Dodongo's Cavern holds", /*french*/"l'#alcove haut perchée# dans la caverne Dodongo cache", /*spanish*/"una #elevada alcoba# en la Caverna de los Dodongos brinda"},
+                       Text{"an #elevated alcove# in Dodongo's Cavern holds", /*french*/"l'#alcove haut perchée# dans la caverne Dodongo cache", /*spanish*/"una #elevada alcoba# en la Cueva de los Dodongos brinda"},
   });
 
     hintTable[DODONGOS_CAVERN_MQ_COMPASS_CHEST] = HintText::Exclude({
@@ -2279,7 +2279,7 @@ void HintTable_Init() {
                        Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies avallées par le gardien# protègent", /*spanish*/"unos #stingers engullidos por cierta deidad# guardan"},
                      },
                        //clear text
-                       Text{"a school of #stingers swallowed by Jabu Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu Jabu# guardan"}
+                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan"}
   );
 
     hintTable[JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST] = HintText::Exclude({
@@ -2287,7 +2287,7 @@ void HintTable_Init() {
                        Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies avallées par le gardien# protègent", /*spanish*/"unos #stingers engullidos por cierta deidad# guardan"},
                      },
                        //clear text
-                       Text{"a school of #stingers swallowed by Jabu Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu Jabu# guardan"}
+                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan"}
   );
 
 
@@ -3591,12 +3591,12 @@ void HintTable_Init() {
 
     hintTable[JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER] = HintText::Exclude({
                        //obscure text
-                       Text{"a #spider resting near a princess# in Jabu Jabu's Belly holds", /*french*/"une #Skulltula près de la princesse dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula junto a una princesa# en la Tripa de Jabu Jabu otorga"},
+                       Text{"a #spider resting near a princess# in Jabu-Jabu's Belly holds", /*french*/"une #Skulltula près de la princesse dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula junto a una princesa# en la Tripa de Jabu-Jabu otorga"},
   });
 
     hintTable[JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER] = HintText::Exclude({
                        //obscure text
-                       Text{"a #spider resting near a princess# in Jabu Jabu's Belly holds", /*french*/"une #Skulltula près de la princesse dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula junto a una princesa# en la Tripa de Jabu Jabu otorga"},
+                       Text{"a #spider resting near a princess# in Jabu-Jabu's Belly holds", /*french*/"une #Skulltula près de la princesse dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula junto a una princesa# en la Tripa de Jabu-Jabu otorga"},
   });
 
     hintTable[JABU_JABUS_BELLY_GS_NEAR_BOSS] = HintText::Exclude({
@@ -3606,23 +3606,23 @@ void HintTable_Init() {
 
     hintTable[JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM] = HintText::Exclude({
                        //obscure text
-                       Text{"a #spider guarded by a school of stingers# in Jabu Jabu's Belly holds", /*french*/"une #Skulltula protégée par des raies dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula rodeada por unos stingers# en la Tripa de Jabu Jabu otorga"},
+                       Text{"a #spider guarded by a school of stingers# in Jabu-Jabu's Belly holds", /*french*/"une #Skulltula protégée par des raies dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula rodeada por unos stingers# en la Tripa de Jabu-Jabu otorga"},
   });
 
 
     hintTable[JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM] = HintText::Exclude({
                        //obscure text
-                       Text{"a #spider surrounded by electricity# in Jabu Jabu's Belly holds", /*french*/"une #Skulltula entourée d'électricité dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula rodeada de electricidad# en la Tripa de Jabu Jabu otorga"},
+                       Text{"a #spider surrounded by electricity# in Jabu-Jabu's Belly holds", /*french*/"une #Skulltula entourée d'électricité dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula rodeada de electricidad# en la Tripa de Jabu-Jabu otorga"},
   });
 
     hintTable[JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM] = HintText::Exclude({
                        //obscure text
-                       Text{"a #spider guarded by a school of stingers# in Jabu Jabu's Belly holds", /*french*/"une #Skulltula protégée par des raies dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula protegida por unos stingers# en la Tripa de Jabu Jabu otorga"},
+                       Text{"a #spider guarded by a school of stingers# in Jabu-Jabu's Belly holds", /*french*/"une #Skulltula protégée par des raies dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula protegida por unos stingers# en la Tripa de Jabu-Jabu otorga"},
   });
 
     hintTable[JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS] = HintText::Exclude({
                        //obscure text
-                       Text{"a #spider in a web within Jabu Jabu's Belly# holds", /*french*/"une #Skulltula sur une toile dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula sobre una red# en la Tripa de Jabu Jabu otorga"},
+                       Text{"a #spider in a web within Jabu-Jabu's Belly# holds", /*french*/"une #Skulltula sur une toile dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula sobre una red# en la Tripa de Jabu-Jabu otorga"},
   });
 
 
@@ -4583,7 +4583,7 @@ void HintTable_Init() {
 
     hintTable[DEKU_TREE_MQ_DEKU_SCRUB] = HintText::Exclude({
                        //obscure text
-                       Text{"a #scrub in the Deku Tree# sells", /*french*/"la #peste Mojo dans l'arbre Mojo# vend", /*spanish*/"un #deku del Árbol Deku# vende"},
+                       Text{"a #scrub in the Deku Tree# sells", /*french*/"la #peste Mojo dans l'arbre Mojo# vend", /*spanish*/"un #deku del Gran Árbol Deku# vende"},
   });
 
 
@@ -4927,7 +4927,7 @@ void HintTable_Init() {
 
     hintTable[ZORAS_FOUNTAIN_TO_JABU_JABUS_BELLY_BEGINNING] = HintText::Entrance({
                      //obscure text
-                     Text{"inside #Jabu Jabu#, one can find", /*french*/"#dans Jabu-Jabu# se trouve", /*spanish*/"dentro de #Jabu Jabu# se halla"},
+                     Text{"inside #Jabu-Jabu#, one can find", /*french*/"#dans Jabu-Jabu# se trouve", /*spanish*/"dentro de #Jabu-Jabu# se halla"},
   });
 
     hintTable[KAKARIKO_VILLAGE_TO_BOTTOM_OF_THE_WELL] = HintText::Entrance({
@@ -4977,7 +4977,7 @@ void HintTable_Init() {
 
     hintTable[GERUDO_FORTRESS] = HintText::Exclude({
                      //obscure text
-                     Text{"Gerudo's Fortress", /*french*/"la forteresse Gerudo", /*spanish*/"la fortaleza gerudo"},
+                     Text{"Gerudo's Fortress", /*french*/"la forteresse Gerudo", /*spanish*/"la Fortaleza Gerudo"},
   });
 
     hintTable[HAUNTED_WASTELAND] = HintText::Exclude({
@@ -5007,7 +5007,7 @@ void HintTable_Init() {
 
     hintTable[OUTSIDE_GANONS_CASTLE] = HintText::Exclude({
                      //obscure text
-                     Text{"outside Ganon's Castle", /*french*/"le château de Ganon", /*spanish*/"las afueras del Castillo de Ganon"},
+                     Text{"outside Ganon's Castle", /*french*/"le château de Ganon", /*spanish*/"el exterior del Castillo de Ganon"},
   });
 
     hintTable[KAKARIKO_VILLAGE] = HintText::Exclude({
@@ -5456,12 +5456,12 @@ void HintTable_Init() {
 
     hintTable[JUNK01] = HintText::Junk({
                      //obscure text
-                     Text{"Remember to check your 3DS battery level and save often.", /*french*/"Surveillez votre batterie 3DS et sauvegardez souvent!", /*spanish*/""},
+                     Text{"Remember to check your 3DS battery level and save often.", /*french*/"Surveillez votre batterie 3DS et sauvegardez souvent!", /*spanish*/"No te olvides de revisar la batería de la 3DS y guarda partida de vez en cuando."},
     });
 
     hintTable[JUNK02] = HintText::Junk({
                      //obscure text
-                     Text{"They say you must read the names of \"Special Deal\" shop items carefully.", /*french*/"Selon moi, les « Offres spéciales » sont parfois trompeuses... Lisez attentivement!", /*spanish*/""},
+                     Text{"They say you must read the names of \"Special Deal\" shop items carefully.", /*french*/"Selon moi, les « Offres spéciales » sont parfois trompeuses... Lisez attentivement!", /*spanish*/"Según dicen, se debería prestar atención a los nombres de las ofertas especiales."},
     });
 
     hintTable[JUNK03] = HintText::Junk({
@@ -5476,7 +5476,7 @@ void HintTable_Init() {
 
     hintTable[JUNK05] = HintText::Junk({
                      //obscure text
-                     Text{"They say that the Lizalfos in Dodongo's Cavern like to play in lava.", /*french*/"Selon moi, les Lézalfos de la caverne Dodongo aiment patauger dans la lave.", /*spanish*/""},
+                     Text{"They say that the Lizalfos in Dodongo's Cavern like to play in lava.", /*french*/"Selon moi, les Lézalfos de la caverne Dodongo aiment patauger dans la lave.", /*spanish*/"Según dicen, a los Lizalfos de la Cueva de los Dodongos les gusta jugar en la lava."},
     });
 
     hintTable[JUNK06] = HintText::Junk({
@@ -5486,12 +5486,12 @@ void HintTable_Init() {
 
     hintTable[JUNK07] = HintText::Junk({
                      //obscure text
-                     Text{"If Gorons eat rocks, does that mean I'm in danger?", /*french*/"Ne dis pas au Gorons que je suis ici. Ils mangent des roches, tu sais!", /*spanish*/""},
+                     Text{"If Gorons eat rocks, does that mean I'm in danger?", /*french*/"Ne dis pas au Gorons que je suis ici. Ils mangent des roches, tu sais!", /*spanish*/"Si los Goron se tragan las piedras, ¿no me hace ser una especia vulnarable o algo así"},
     });
 
     hintTable[JUNK08] = HintText::Junk({
                      //obscure text
-                     Text{"'Member when Ganon was a blue pig?^I 'member.", /*french*/"Dans mon temps, Ganon était un cochon bleu...^Pff! Les jeunes de nos jours, et leur Ganondorf!", /*spanish*/"¿T'acuerdas cuando Ganon era un cerdo azul?^Qué tiempos."},
+                     Text{"'Member when Ganon was a blue pig?^I 'member.", /*french*/"Dans mon temps, Ganon était un cochon bleu...^Pff! Les jeunes de nos jours, et leur Ganondorf!", /*spanish*/"¿T'acuerdas cuando Ganon era un cerdo azul?^Qué tiempos, chico."},
     });
 
     hintTable[JUNK09] = HintText::Junk({
@@ -5506,7 +5506,7 @@ void HintTable_Init() {
 
     hintTable[JUNK11] = HintText::Junk({
                      //obscure text
-                     Text{"Glitches are a pathway to many abilities some consider to be... Unnatural.", /*french*/"Les glitchs sont un moyen d'acquérir de nombreuses facultés considérées par certains comme... contraire à la nature.", /*spanish*/""},
+                     Text{"Glitches are a pathway to many abilities some consider to be... Unnatural.", /*french*/"Les glitchs sont un moyen d'acquérir de nombreuses facultés considérées par certains comme... contraire à la nature.", /*spanish*/"Los glitches son el camino a muchas habilidades que varios consideran... nada natural."},
     });
 
     hintTable[JUNK12] = HintText::Junk({
@@ -5526,7 +5526,7 @@ void HintTable_Init() {
 
     hintTable[JUNK15] = HintText::Junk({
                      //obscure text
-                     Text{"They say that Lon Lon Ranch prospered under Ingo.", /*french*/"Selon moi, le ranch Lon Lon était plus prospère sous Ingo.", /*spanish*/"Dicen que el Rancho Lon Lon prosperó gracias a Ingo."},
+                     Text{"They say that Lon Lon Ranch prospered under Ingo.", /*french*/"Selon moi, le ranch Lon Lon était plus prospère sous Ingo.", /*spanish*/"Según dicen, el Rancho Lon Lon prosperó gracias a Ingo."},
     });
 
     hintTable[JUNK16] = HintText::Junk({
@@ -5546,12 +5546,12 @@ void HintTable_Init() {
 
     hintTable[JUNK19] = HintText::Junk({
                      //obscure text
-                     Text{"They say that Volvagia hates splinters", /*french*/"Selon moi, Volvagia déteste les échardes.", /*spanish*/""},
+                     Text{"They say that Volvagia hates splinters", /*french*/"Selon moi, Volvagia déteste les échardes.", /*spanish*/"Según dicen, Volvagia le teme a las astillas."},
     });
 
     hintTable[JUNK20] = HintText::Junk({
                      //obscure text
-                     Text{"They say that funky monkeys can be spotted on Friday.", /*french*/"Selon moi, des capucins coquins sortent le vendredi.", /*spanish*/""},
+                     Text{"They say that funky monkeys can be spotted on Friday.", /*french*/"Selon moi, des capucins coquins sortent le vendredi.", /*spanish*/"Según dicen, en los viernes puedes hallar monos marchosos."},
     });
 
     hintTable[JUNK21] = HintText::Junk({
@@ -5561,12 +5561,12 @@ void HintTable_Init() {
 
     hintTable[JUNK22] = HintText::Junk({
                      //obscure text
-                     Text{"They say the Groose is loose.", /*french*/"Selon moi, Hergo est le vrai héros.", /*spanish*/""},
+                     Text{"They say the Groose is loose.", /*french*/"Selon moi, Hergo est le vrai héros.", /*spanish*/"Según dicen, Malton es un espanto."},
     });
 
     hintTable[JUNK23] = HintText::Junk({
                      //obscure text
-                     Text{"They say that players who select the \"ON\" option for \"MOTION CONTROL\" are the real \"Zelda players!\"", /*french*/"Selon moi, ceux qui utilisent les contrôles gyroscopiques sont les VRAIS joueurs.", /*spanish*/""},
+                     Text{"They say that players who select the \"ON\" option for \"MOTION CONTROL\" are the real \"Zelda players!\"", /*french*/"Selon moi, ceux qui utilisent les contrôles gyroscopiques sont les VRAIS joueurs.", /*spanish*/"Según dicen, aquellos que juegan usando el control por movimiento son los verdaderos jugadores de Zelda."},
     });
 
     hintTable[JUNK24] = HintText::Junk({
@@ -5581,7 +5581,7 @@ void HintTable_Init() {
 
     hintTable[JUNK26] = HintText::Junk({
                      //obscure text
-                     Text{"I've heard you can cheat at Sploosh Kaboom.", /*french*/"Selon moi, il y a une carte aux trésors à Mercantîle... Duh!", /*spanish*/""},
+                     Text{"I've heard you can cheat at Sploosh Kaboom.", /*french*/"Selon moi, il y a une carte aux trésors à Mercantîle... Duh!", /*spanish*/"He oído por ahí que puedes hacer trampa en el Sploosh Kaboom."},
     });
 
     hintTable[JUNK27] = HintText::Junk({
@@ -5651,12 +5651,12 @@ void HintTable_Init() {
 
     hintTable[JUNK40] = HintText::Junk({
                      //obscure text
-                     Text{"Can you move me? I don't get great service here.", /*french*/"Peux-tu me déplacer? J'ai pas une bonne réception ici.", /*spanish*/""},
+                     Text{"Can you move me? I don't get great service here.", /*french*/"Peux-tu me déplacer? J'ai pas une bonne réception ici.", /*spanish*/"¿Puedes llevarme a otro lado? Aquí nadie me presta atención."},
     });
 
     hintTable[JUNK41] = HintText::Junk({
                      //obscure text
-                     Text{"They say if you use Strength on the truck, you can find Mew.", /*french*/"Selon moi, #Mew# se trouve dessous le camion... Duh!", /*spanish*/""},
+                     Text{"They say if you use Strength on the truck, you can find Mew.", /*french*/"Selon moi, #Mew# se trouve dessous le camion... Duh!", /*spanish*/"Según dicen, puedes hallar un Mew usando Fuerza contra el camión de Ciudad Carmín."},
     });
 
     hintTable[JUNK42] = HintText::Junk({
@@ -5671,12 +5671,12 @@ void HintTable_Init() {
 
     hintTable[JUNK44] = HintText::Junk({
                      //obscure text
-                     Text{"They say all toasters toast toast.", /*french*/"Selon moi, les grille-pains grillent du pain.", /*spanish*/"Según dicen, todas las tostadoras tostan tostadas."},
+                     Text{"They say all toasters toast toast.", /*french*/"Selon moi, les grille-pains grillent du pain.", /*spanish*/"Según dicen, todas las tostadoras tostan tostadas tostadas."},
     });
 
     hintTable[JUNK45] = HintText::Junk({
                      //obscure text
-                     Text{"You thought it would be a useful hint, but it was me, junk hint!", /*french*/"Tu t'attendais à un bon indice... Mais c'était moi, un mauvais indice!", /*spanish*/""},
+                     Text{"You thought it would be a useful hint, but it was me, junk hint!", /*french*/"Tu t'attendais à un bon indice... Mais c'était moi, un mauvais indice!", /*spanish*/"Je... Creeías que iba a ser una piedra de utilidad, ¡pero no, era yo, la piedra de la agonía!"},
     });
 
     hintTable[JUNK46] = HintText::Junk({
@@ -5686,7 +5686,7 @@ void HintTable_Init() {
 
     hintTable[JUNK47] = HintText::Junk({
                      //obscure text
-                     Text{"They say that the final item you're looking for can be found somewhere in Hyrule.", /*french*/"Selon moi, le #dernier objet# se trouve quelque part dans Hyrule... Duh!", /*spanish*/"Según dicen, el último objeto que te falte puede estar en cualquier parte de Hyrule."},
+                     Text{"They say that the final item you're looking for can be found somewhere in Hyrule.", /*french*/"Selon moi, le #dernier objet# se trouve quelque part dans Hyrule... Duh!", /*spanish*/"Según dicen, el último objeto que te falte puede estar en cualquier rincón de Hyrule."},
     });
 
     hintTable[JUNK48] = HintText::Junk({
@@ -5746,7 +5746,7 @@ void HintTable_Init() {
 
     hintTable[JUNK59] = HintText::Junk({
                      //obscure text
-                     Text{"They say Ingo is not very good at planning ahead.", /*french*/"Selon moi, Ingo ne fait pas un très bon geôlier.", /*spanish*/"Según dicen, contemplar la oscuridad puede hacer que ella te contemple a ti."},
+                     Text{"They say Ingo is not very good at planning ahead.", /*french*/"Selon moi, Ingo ne fait pas un très bon geôlier.", /*spanish*/"Según dicen, a Ingo no se le da especialmente bien planificar con antelación."},
     });
 
     hintTable[JUNK60] = HintText::Junk({
@@ -5756,7 +5756,7 @@ void HintTable_Init() {
 
     hintTable[JUNK61] = HintText::Junk({
                      //obscure text
-                     Text{"They say that a flying strike with a Deku Stick is no stronger than a grounded one.", /*french*/"Selon moi, un coup de bâton sauté n'est pas meilleur qu'au sol.", /*spanish*/""},
+                     Text{"They say that a flying strike with a Deku Stick is no stronger than a grounded one.", /*french*/"Selon moi, un coup de bâton sauté n'est pas meilleur qu'au sol.", /*spanish*/"Según dicen, los golpes aéreos con palos deku son tan fuertes como los normales."},
     });
 
     hintTable[JUNK62] = HintText::Junk({
@@ -5771,17 +5771,17 @@ void HintTable_Init() {
 
     hintTable[JUNK64] = HintText::Junk({
                      //obscure text
-                     Text{"They say that Twinrova always casts the same spell the first three times.", /*french*/"Selon moi, Twinrova lance toujours les mêmes trois premiers sorts.", /*spanish*/"Según dicen, Birova siempre lanza el mismo hechizo tres veces."},
+                     Text{"They say that Twinrova always casts the same spell the first three times.", /*french*/"Selon moi, Twinrova lance toujours les mêmes trois premiers sorts.", /*spanish*/"Según dicen, Birova siempre lanza el mismo hechizo las tres primeras veces."},
     });
 
     hintTable[JUNK65] = HintText::Junk({
                      //obscure text
-                     Text{"They say that the nightly builds may be unstable.", /*french*/"Selon moi, les « nightly builds » peuvent être instables.", /*spanish*/"Según dicen, las últimas nightlies pueden ser algo inestables."},
+                     Text{"They say that the nightly builds may be unstable.", /*french*/"Selon moi, les « nightly builds » peuvent être instables.", /*spanish*/"Según dicen, las últimas nightlies pueden llegar a ser algo inestables."},
     });
 
     hintTable[JUNK66] = HintText::Junk({
                      //obscure text
-                     Text{"You're playing a Randomizer. I'm randomized!^Here's a random number:  #4#.&Enjoy your Randomizer!", /*french*/"Tu joues à un randomizer. Je suis aléatoire!^Voici un nombre aléatoire: #4#.&Bonne partie!", /*spanish*/"¡Estás jugando un Randomizer! ¡Yo también estoy aleatorizada!^Aquí tienes un número aleatorio:  #8#.&¡Disfruta el Randomizer!"},
+                     Text{"You're playing a Randomizer. I'm randomized!^Here's a random number:  #4#.&Enjoy your Randomizer!", /*french*/"Tu joues à un randomizer. Je suis aléatoire!^Voici un nombre aléatoire: #4#.&Bonne partie!", /*spanish*/"¡Estás jugando un Randomizer! ¡Yo también estoy aleatorizada!^Aquí tienes un número aleatorio:  #8#.&¡Diviértete!"},
     });
 
     hintTable[JUNK67] = HintText::Junk({
@@ -5811,27 +5811,27 @@ void HintTable_Init() {
 
     hintTable[JUNK72] = HintText::Junk({
                      //obscure text
-                     Text{"Hi @, we've been trying to reach you about your car's extended warranty. ", /*french*/"Bonjour, @. Vous avez une voiture? Vous savez, nous offrons des assurances abordables...", /*spanish*/""},
+                     Text{"Hi @, we've been trying to reach you about your car's extended warranty. ", /*french*/"Bonjour, @. Vous avez une voiture? Vous savez, nous offrons des assurances abordables...", /*spanish*/"Buenas, @. Le llamamos para ofrecerle un nuevo seguro de hogar que puede pagar en cómodos plazos, sin intereses ni comisiones."},
     });
 
     hintTable[JUNK73] = HintText::Junk({
                      //obscure text
-                     Text{"They say that the best weapon against Iron Knuckles is item #176.", /*french*/"Selon moi, les hache-viandes sont vulnérables contre l'objet #176.", /*spanish*/""},
+                     Text{"They say that the best weapon against Iron Knuckles is item #176.", /*french*/"Selon moi, les hache-viandes sont vulnérables contre l'objet #176.", /*spanish*/"Según dicen, la mejor arma para enfrentarse a los Nudillos de hierro es el objeto #176."},
     });
 
     hintTable[JUNK74] = HintText::Junk({
                      //obscure text
-                     Text{"They say that it's actually possible to beat the running man.", /*french*/"Selon moi, il est possible de battre le coureur.&Donc, tu prends ton arc, et...", /*spanish*/""},
+                     Text{"They say that it's actually possible to beat the running man.", /*french*/"Selon moi, il est possible de battre le coureur.&Donc, tu prends ton arc, et...", /*spanish*/"Según dicen, con mucha perseverancia puedes ganarle al corredor con la capucha de conejo."},
     });
 
     hintTable[JUNK75] = HintText::Junk({
                      //obscure text
-                     Text{"They say that the stone-cold guardian of the Well is only present during work hours.", /*french*/"Selon moi, le gardien de pierre du puits quitte le soir pour aller se coucher.", /*spanish*/""},
+                     Text{"They say that the stone-cold guardian of the Well is only present during work hours.", /*french*/"Selon moi, le gardien de pierre du puits quitte le soir pour aller se coucher.", /*spanish*/"Según dicen, la inmensa roca que bloquea el pozo solo trabaja en horas laborales."},
     });
 
     hintTable[JUNK76] = HintText::Junk({
                      //obscure text
-                     Text{"They say this hint makes more sense in other languages.", /*french*/"Selon moi, ces indices auraient pu être mieux traduits... Duh!", /*spanish*/""},
+                     Text{"They say this hint makes more sense in other languages.", /*french*/"Selon moi, ces indices auraient pu être mieux traduits... Duh!", /*spanish*/"Según dicen, esta pista revela algo de vital importancia si cambias el idioma del juego..."},
     });
 
     /*--------------------------
@@ -5840,100 +5840,100 @@ void HintTable_Init() {
 
     hintTable[DEKU_TREE] = HintText::DungeonName({
                      //obscure text
-                     Text{"an ancient tree", /*french*/"le vieil arbre", /*spanish*/"en un ancestral árbol"},
+                     Text{"an ancient tree", /*french*/"le vieil arbre", /*spanish*/"un ancestral árbol"},
                    },
                      //clear text
-                     Text{"Deku Tree", /*french*/"l'arbre Mojo", /*spanish*/"en el Gran Árbol Deku"}
+                     Text{"Deku Tree", /*french*/"l'arbre Mojo", /*spanish*/"el Gran Árbol Deku"}
   );
 
     hintTable[DODONGOS_CAVERN] = HintText::DungeonName({
                      //obscure text
-                     Text{"an immense cavern", /*french*/"l'immense caverne", /*spanish*/"en una descomunal cueva"},
+                     Text{"an immense cavern", /*french*/"l'immense caverne", /*spanish*/"una descomunal cueva"},
                    },
                      //clear text
-                     Text{ "Dodongo's Cavern", /*french*/"la caverne Dodongo", /*spanish*/"en la Cueva de los Dodongos"}
+                     Text{ "Dodongo's Cavern", /*french*/"la caverne Dodongo", /*spanish*/"la Cueva de los Dodongos"}
   );
 
     hintTable[JABU_JABUS_BELLY] = HintText::DungeonName({
                      //obscure text
-                     Text{"the belly of a deity", /*french*/"le ventre d'un gardien", /*spanish*/"en la tripa de cierta deidad"},
+                     Text{"the belly of a deity", /*french*/"le ventre d'un gardien", /*spanish*/"la tripa de cierta deidad"},
                    },
                      //clear text
-                     Text{ "Jabu Jabu's Belly", /*french*/"le ventre de Jabu-Jabu", /*spanish*/"la tripa de Jabu Jabu"}
-  );
+                     Text{"Jabu-Jabu's Belly", /*french*/"le ventre de Jabu-Jabu", /*spanish*/"tripa de Jabu-Jabu"}
+    );
 
     hintTable[FOREST_TEMPLE] = HintText::DungeonName({
                      //obscure text
-                     Text{"a deep forest", /*french*/"la profonde forêt", /*spanish*/"en las profundidades del bosque"},
+                     Text{"a deep forest", /*french*/"la profonde forêt", /*spanish*/"las profundidades del bosque"},
                    },
                      //clear text
-                     Text{ "Forest Temple", /*french*/"le temple de la forêt", /*spanish*/"en el Templo del Bosque"}
-  );
+                     Text{"Forest Temple", /*french*/"le temple de la forêt", /*spanish*/"el Templo del Bosque"}
+    );
 
     hintTable[FIRE_TEMPLE] = HintText::DungeonName({
                      //obscure text
-                     Text{"a high mountain", /*french*/"la grande montagne", /*spanish*/"en una alta montaña"},
+                     Text{"a high mountain", /*french*/"la grande montagne", /*spanish*/"una alta montaña"},
                    },
                      //clear text
-                     Text{ "Fire Temple", /*french*/"le temple du feu", /*spanish*/"en el Templo del Fuego"}
-  );
+                     Text{"Fire Temple", /*french*/"le temple du feu", /*spanish*/"el Templo del Fuego"}
+    );
 
     hintTable[WATER_TEMPLE] = HintText::DungeonName({
                      //obscure text
-                     Text{"a vast lake", /*french*/"le vaste lac", /*spanish*/"en un lago inmenso"},
+                     Text{"a vast lake", /*french*/"le vaste lac", /*spanish*/"un lago inmenso"},
                    },
                      //clear text
-                     Text{ "Water Temple", /*french*/"le temple de l'eau", /*spanish*/"en el Templo del Agua"}
-  );
+                     Text{"Water Temple", /*french*/"le temple de l'eau", /*spanish*/"el Templo del Agua"}
+    );
 
     hintTable[SPIRIT_TEMPLE] = HintText::DungeonName({
                      //obscure text
-                     Text{"the goddess of the sand", /*french*/"la déesse des sables", /*spanish*/"en la diosa de la arena"},
+                     Text{"the goddess of the sand", /*french*/"la déesse des sables", /*spanish*/"la diosa de las arenas"},
                    },
                      //clear text
-                     Text{ "Spirit Temple", /*french*/"le temple de l'esprit", /*spanish*/"en el Templo del Espíritu"}
+                     Text{"Spirit Temple", /*french*/"le temple de l'esprit", /*spanish*/"el Templo del Espíritu"}
 
-  );
+    );
 
     hintTable[SHADOW_TEMPLE] = HintText::DungeonName({
                      //obscure text
-                     Text{"the house of the dead", /*french*/"la maison des morts", /*spanish*/"en la casa de la muerte"},
+                     Text{"the house of the dead", /*french*/"la maison des morts", /*spanish*/"la casa de la muerte"},
                    },
                      //clear text
-                     Text{ "Shadow Temple", /*french*/"le temple de l'ombre", /*spanish*/"en el Templo de las Sombras"}
-  );
+                     Text{"Shadow Temple", /*french*/"le temple de l'ombre", /*spanish*/"el Templo de las Sombras"}
+    );
 
     hintTable[ICE_CAVERN] = HintText::DungeonName({
                      //obscure text
-                     Text{"a frozen maze", /*french*/"le dédale glacé", /*spanish*/"en un gélido laberinto"},
+                     Text{"a frozen maze", /*french*/"le dédale glacé", /*spanish*/"un gélido laberinto"},
                    },
                      //clear text
-                     Text{ "Ice Cavern", /*french*/"la caverne de glace", /*spanish*/"en la caverna de hielo"}
-  );
+                     Text{"Ice Cavern", /*french*/"la caverne de glace", /*spanish*/"la caverna de hielo"}
+    );
 
     hintTable[BOTTOM_OF_THE_WELL] = HintText::DungeonName({
                      //obscure text
-                     Text{"a shadow\'s prison", /*french*/"la prison d'une ombre", /*spanish*/"en la prisión de las sombras"},
+                     Text{"a shadow\'s prison", /*french*/"la prison d'une ombre", /*spanish*/"la prisión de las sombras"},
                    },
                      //clear text
-                     Text{ "Bottom of the Well", /*french*/"le fonds du puits", /*spanish*/"en el fondo del pozo"}
-  );
+                     Text{"Bottom of the Well", /*french*/"le fonds du puits", /*spanish*/"el fondo del pozo"}
+    );
 
     hintTable[GERUDO_TRAINING_GROUNDS] = HintText::DungeonName({
                      //obscure text
-                     Text{"the test of thieves", /*french*/"l'épreuve des voleurs", /*spanish*/"en la prueba de las bandidas"},
+                     Text{"the test of thieves", /*french*/"l'épreuve des voleurs", /*spanish*/"la prueba de las bandidas"},
                    },
                      //clear text
-                     Text{ "Gerudo Training Grounds", /*french*/"le gymnase Gerudo", /*spanish*/"en el Centro de Instrucción Gerudo"}
-  );
+                     Text{"Gerudo Training Grounds", /*french*/"le gymnase Gerudo", /*spanish*/"el Centro de Instrucción Gerudo"}
+    );
 
     hintTable[GANONS_CASTLE] = HintText::DungeonName({
                      //obscure text
-                     Text{"a conquered citadel", /*french*/"la citadelle assiégée", /*spanish*/"en una conquistada ciudadela"},
+                     Text{"a conquered citadel", /*french*/"la citadelle assiégée", /*spanish*/"una conquistada ciudadela"},
                    },
                      //clear text
-                     Text{ "Inside Ganon's Castle", /*french*/"l'intérieur du château de Ganon", /*spanish*/"en el interior del Castillo de Ganon"}
-  );
+                     Text{"Inside Ganon's Castle", /*french*/"l'intérieur du château de Ganon", /*spanish*/"el interior del Castillo de Ganon"}
+    );
 
     /*--------------------------
     |      BOSS HINT TEXT      |
@@ -5945,7 +5945,7 @@ void HintTable_Init() {
                    },
                      //clear text
                      Text{"the #Deku Tree# rewards", /*french*/"l'#arbre Mojo# octroie", /*spanish*/"el #Gran Árbol Deku# premia con"}
-  );
+    );
 
     hintTable[KING_DODONGO] = HintText::Boss({
                      //obscure text
@@ -5953,15 +5953,15 @@ void HintTable_Init() {
                    },
                      //clear text
                      Text{"#Dodongo's Cavern# rewards", /*french*/"la #caverne Dodongo# octroie", /*spanish*/"la #Cueva de los Dodongos# premia con"}
-  );
+    );
 
     hintTable[BARINADE] = HintText::Boss({
                      //obscure text
                      Text{"the #belly of a deity# rewards", /*french*/"le #ventre du gardien# octroie", /*spanish*/"la #tripa de cierta deidad# premia con"},
                    },
                      //clear text
-                     Text{"#Jabu Jabu's Belly# rewards", /*french*/"le #ventre de Jabu-Jabu# octroie", /*spanish*/"la #tripa de Jabu Jabu# premia con"}
-  );
+                     Text{"#Jabu-Jabu's Belly# rewards", /*french*/"le #ventre de Jabu-Jabu# octroie", /*spanish*/"la #tripa de Jabu-Jabu# premia con"}
+    );
 
     hintTable[PHANTOM_GANON] = HintText::Boss({
                      //obscure text
@@ -5969,7 +5969,7 @@ void HintTable_Init() {
                    },
                      //clear text
                      Text{"the #Forest Temple# rewards", /*french*/"le #temple de la forêt# octroie", /*spanish*/"el #Templo del Bosque# premia con"}
-  );
+    );
 
     hintTable[VOLVAGIA] = HintText::Boss({
                      //obscure text
@@ -5977,7 +5977,7 @@ void HintTable_Init() {
                    },
                      //clear text
                      Text{"the #Fire Temple# rewards", /*french*/"le #temple du feu# octroie", /*spanish*/"el #Templo del Fuego# premia con"}
-  );
+    );
 
     hintTable[MORPHA] = HintText::Boss({
                      //obscure text
@@ -5985,7 +5985,7 @@ void HintTable_Init() {
                    },
                      //clear text
                      Text{"the #Water Temple# rewards", /*french*/"le #temple de l'eau# octroie", /*spanish*/"el #Templo del Agua# premia con"}
-  );
+    );
 
     hintTable[BONGO_BONGO] = HintText::Boss({
                      //obscure text
@@ -5993,14 +5993,14 @@ void HintTable_Init() {
                    },
                      //clear text
                      Text{"the #Shadow Temple# rewards", /*french*/"le #temple de l'ombre# octroie", /*spanish*/"el #Templo de las Sombras#"}
-  );
+    );
 
     hintTable[TWINROVA] = HintText::Boss({
                      //obscure text
                      Text{"a #goddess of the sand# rewards", /*french*/"la #déesse des sables# octroie", /*spanish*/"la #diosa de la arena# premia con"},
                    },
                      //clear text
-                     Text{ "the #Spirit Temple# rewards", /*french*/"le #temple de l'esprit# octroie", /*spanish*/"el #Templo del Espíritu# premia con"}
+                     Text{"the #Spirit Temple# rewards", /*french*/"le #temple de l'esprit# octroie", /*spanish*/"el #Templo del Espíritu# premia con"}
     );
     //
     // [LINKS_POCKET_BOSS] = HintText::Boss({
@@ -6008,7 +6008,7 @@ void HintTable_Init() {
     //                    Text{"#@'s pocket# rewards", /*french*/"#@ débute avec#", /*spanish*/"el #bolsillo de @# premia con"},
     //                  },
     //                    //clear text
-    //                    Text{"#@ already has#", /*french*/"#@ a déjà#", /*spanish*/"el #bolsillo de @ ya tiene#"}
+    //                           Text{"#@ already has#", /*french*/"#@ a déjà#", /*spanish*/"el #bolsillo de @ ya tiene#"}
     // );
 
     /*--------------------------
@@ -6019,49 +6019,49 @@ void HintTable_Init() {
                      //obscure text
                      Text{"The awakened ones will have #already&created a bridge# to the castle where&the evil dwells.",
                 /*french*/"Les êtres de sagesse ont#déjà créé&un pont# vers le repaire du mal.",
-               /*spanish*/""},
+               /*spanish*/"Los sabios #ya habrán creado un puente#&al castillo, de donde emana el mal."},
     });
 
     hintTable[BRIDGE_VANILLA_HINT] = HintText::Bridge({
                      //obscure text
                      Text{"The awakened ones will await for the&Hero to collect the #Shadow and Spirit&Medallions as well as the Light Arrows#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni des #médaillons de l'ombre et&l'esprit et des flèches de lumière#.",
-               /*spanish*/"tanto el #Medallón de las Sombras y el del Espíritu# junto a la #flecha de luz#"},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga tanto el #Medallón de las&Sombras y el del Espíritu# junto a la #flecha de luz#."},
     });
 
     hintTable[BRIDGE_STONES_HINT] = HintText::Bridge({
                      //obscure text                                                  singular        plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone|Spiritual Stones|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |pierre spirituelle|pierres spirituelles|#.",
-               /*spanish*/"las piedras espirituales"},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |una piedra espiritual|unas piedras espirituales|#."},
     });
 
     hintTable[BRIDGE_MEDALLIONS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular  plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Medallion|Medallions|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |médaillon|médaillons|#.",
-               /*spanish*/"los medallones"},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |un medallón|unos medallones|#."},
     });
 
     hintTable[BRIDGE_REWARDS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular                     plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone&or Medallion|Spiritual Stones&and Medallions|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |pierre spirituelle&ou médaillon|pierres spirituelles&et médaillons|#.",
-               /*spanish*/"las piedras espirituales y los medallones"},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |una piedra espiritual o medallón|unas piedras espirtuales y unos medallones|#."},
     });
 
     hintTable[BRIDGE_DUNGEONS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular plural
                      Text{"The awakened ones will await for the&Hero to conquer #%d |Dungeon|Dungeons|#.",
                 /*french*/"Les êtres de sagesse attendront la&conquête de #%d |donjon|donjons|#.",
-               /*spanish*/"completar las mazmorras"},
+               /*spanish*/"Los sabios aguardarán a que el héroe& complete #%d |una mazmorra|unas mazmorras|#."},
     });
 
     hintTable[BRIDGE_TOKENS_HINT] = HintText::Bridge({
                      //obscure text
                      Text{"The awakened ones will await for the&Hero to collect #%d |Gold Skulltula&Token|Gold Skulltula&Tokens|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |symbole|symboles| de&Skulltula d'or#.",
-               /*spanish*/"obtener los símbolos de Skulltulas doradas"},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |un símbolo|unos símbolos| de&skulltula dorada#."},
     });
 
     /*--------------------------
@@ -6072,49 +6072,49 @@ void HintTable_Init() {
                      //obscure text
                      Text{"And the #evil one#'s key will be #given from the start#.",
                 /*french*/"Aussi, la clé du #Malin# sera #possession même du héros#.",
-               /*spanish*/"en un gran cofre #de su torre#"},
+               /*spanish*/"Y obtendrás la llave del #señor del mal# desde el #inicio#."},
     });
 
     hintTable[GANON_BK_VANILLA_HINT] = HintText::GanonsBossKey({
                      //obscure text
                      Text{"And the #evil one#'s key will be kept in a big chest #inside its tower#.",
                 /*french*/"Aussi, la clé du #Malin# sera encoffrée #dans sa tour#.",
-               /*spanish*/"en un gran cofre #de su torre#"},
+               /*spanish*/"Y la llave del #señor del mal# aguardará en un gran cofre de #su torre#."},
     });
 
     hintTable[GANON_BK_OWN_DUNGEON_HINT] = HintText::GanonsBossKey({
                      //obscure text
                      Text{"And the #evil one#'s key will be hidden somewhere #inside its castle#.",
                 /*french*/"Aussi, la clé du #Malin# sera cachée #dans son vaste château#.",
-               /*spanish*/"escondida en #algún lugar de su castillo#"},
+               /*spanish*/"Y la llave del #señor del mal# aguardará en #algún lugar de su castillo#."},
     });
 
     hintTable[GANON_BK_OVERWORLD_HINT] = HintText::GanonsBossKey({
                      //obscure text
                      Text{"And the #evil one#'s key will be hidden #outside of dungeons# in Hyrule.",
                 /*french*/"Aussi, la clé du #Malin# se trouve #hors des donjons# d'Hyrule.",
-               /*spanish*/"escondida #fuera de las mazmorras# de Hyrule"},
+               /*spanish*/"Y la llave del #señor del mal# aguardará #fuera de las mazmorras# de Hyrule."},
     });
 
     hintTable[GANON_BK_ANY_DUNGEON_HINT] = HintText::GanonsBossKey({
                      //obscure text
                      Text{"And the #evil one#'s key will be hidden #inside a dungeon# in Hyrule.",
                 /*french*/"Aussi, la clé du #Malin# se trouve #dans un donjon# d'Hyrule.",
-               /*spanish*/"escondida #en una mazmorra# de Hyrule"},
+               /*spanish*/"Y la llave del #señor del mal# aguardará #en una mazmorra# de Hyrule."},
     });
 
     hintTable[GANON_BK_ANYWHERE_HINT] = HintText::GanonsBossKey({
                      //obscure text
                      Text{"And the #evil one#'s key will be hidden somewhere #in Hyrule#.",
                 /*french*/"Aussi, la clé du #Malin# se trouve quelque part #dans Hyrule#.",
-               /*spanish*/"escondida en #cualquier lugar de Hyrule#"},
+               /*spanish*/"Y la llave del #señor del mal# aguardará en #cualquier lugar de Hyrule#."},
     });
 
     hintTable[GANON_BK_TRIFORCE_HINT] = HintText::GanonsBossKey({
                      //obscure text
                      Text{"And the #evil one#'s key will be given to the Hero once the #Triforce# is completed.",
                 /*french*/"Aussi, la clé du #Malin# se révèlera une fois la #Triforce# assemblée.",
-               /*spanish*/"recibida por el héroe cuando haya completado la #Trifuerza#"},
+               /*spanish*/"Y el héroe recibirá la llave del #señor del mal# cuando haya completado la #Trifuerza#."},
     });
 
     /*--------------------------
@@ -6125,28 +6125,28 @@ void HintTable_Init() {
                      //obscure text
                      Text{"And the #evil one#'s key will be&provided by Zelda once the #Shadow&and Spirit Medallions# are retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec les #médaillons de&l'ombre et de l'esprit#.",
-                /*spanish*/"el #Medallón de las Sombras y el Espíritu#"},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#el medallón de las sombras y del espíritu#."},
     });
 
     hintTable[LACS_MEDALLIONS_HINT] = HintText::LACS({
                      //obscure text                                                     singular      plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d&|Medallion# is|Medallions# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |médaillon|médaillons|#.",
-               /*spanish*/"los #medallones#"},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |un medallón|unos medallones|#."},
     });
 
     hintTable[LACS_STONES_HINT] = HintText::LACS({
                      //obscure text                                                     singular            plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone# is|Spiritual&Stones# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d des |pierre&spirituelle|pierres&spirituelles|#.",
-               /*spanish*/"las #piedras espirituales#"},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |una piedra espiritual|unas piedras espirituales|#."},
     });
 
     hintTable[LACS_REWARDS_HINT] = HintText::LACS({
                      //obscure text                                                     singular                         plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone or Medallion# is|Spiritual&Stones and Medallions# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |pierre spirituelle&et des médaillon|pierres spirituelles&et des médaillons|#.",
-               /*spanish*/"las #piedras espirituales y los medallones#"},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |una piedra espiritual o medallón|unas piedras espirituales o unos medallones|#."},
     });
 
     hintTable[LACS_DUNGEONS_HINT] = HintText::LACS({
@@ -6160,7 +6160,7 @@ void HintTable_Init() {
                      //obscure text                                                     singular                 plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Gold&Skulltula Token# is|Gold&Skulltula Tokens# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |symbole|symboles| de&Skulltula d'or#.",
-               /*spanish*/"los #símbolos de Skulltulas doradas#"},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |un símbolo|unos símbolos| de&skulltula dorada#."},
     });
     /*--------------------------
     |     TRIAL HINT TEXT      |
@@ -6194,14 +6194,14 @@ void HintTable_Init() {
                      //obscure text
                      Text{"3 Spiritual Stones found in Hyrule...",
                 /*french*/"Les trois pierres spirituelles cachées dans Hyrule...",
-               /*spanish*/"Tres piedras espirituales encontradas en Hyrule..."},
+               /*spanish*/"Tres piedras espirituales halladas por Hyrule..."},
     });
 
     hintTable[CHILD_ALTAR_TEXT_END] = HintText::Altar({
                      //obscure text
                      Text{"Ye who may become a Hero...&Stand with the Ocarina and&play the Song of Time.",
                 /*french*/"À celui qui a quête de devenir héros...&Portez l'Ocarina et&jouez le chant du temps.",
-               /*spanish*/"Aquel que se convierta en el héroe...&Tomad la ocarina y&entonad la Canción del Tiempo."},
+               /*spanish*/"Aquel que se convierta en el héroe...&Tome la ocarina y&entone la Canción del Tiempo."},
     });
 
     hintTable[ADULT_ALTAR_TEXT_START] = HintText::Altar({
@@ -6226,7 +6226,7 @@ void HintTable_Init() {
                      //obscure text
                      Text{"Hmph... Since you made it this far, I'll let you know what glorious prize of Ganon's you likely missed out on in my tower.^Behold...^",
                 /*french*/"Pah! Puisque tu t'es rendu ici, je te dirai quel trésor tu as manqué dans ma tour.^Et c'est...^",
-               /*spanish*/"Mmm... Ya que has llegado hasta aquí, te diré qué preciado objeto de Ganon puedes haberte dejado en mi torre.^He aquí...^"},
+               /*spanish*/"Mmm... Ya que has llegado hasta aquí, te diré qué preciado objeto de mi propiedad puedes haberte dejado en mi torre.^He aquí...^"},
     });
 
     /*--------------------------
@@ -6267,7 +6267,7 @@ void HintTable_Init() {
                      //obscure text
                      Text{"Looks like it's time for a round of tennis.",
                 /*french*/"C'est l'heure de jouer au tennis.",
-               /*spanish*/"Parece que es hora de una pachangua de tenis."},
+               /*spanish*/"Parece que es hora de una pachanga de tenis."},
     });
 
     hintTable[GANON_LINE04] = HintText::GanonLine({
@@ -6281,7 +6281,7 @@ void HintTable_Init() {
                      //obscure text
                      Text{"Why did I leave my trident back in the desert?",
                 /*french*/"Sale bêtise... Et j'ai oublié mon trident dans le désert!",
-               /*spanish*/"¿Por qué me habré dejado el tridente en el desierto?"},
+               /*spanish*/"Santa Hylia... ¿Por qué me habré dejado el tridente en el desierto?"},
     });
 
     hintTable[GANON_LINE06] = HintText::GanonLine({
