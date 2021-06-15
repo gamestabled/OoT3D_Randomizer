@@ -187,17 +187,11 @@ static void WriteLocation(
   node->SetText(location->GetPlacedItemName().GetEnglish().c_str());
 
   if (withPadding) {
-    constexpr int16_t LONGEST_NAME = 59; // The longest name of a location, with escaped XML entities.
+    constexpr int16_t LONGEST_NAME = 56; // The longest name of a location.
     constexpr int16_t PRICE_ATTRIBUTE = 12; // Length of a 3-digit price attribute.
-
-    // Map of XML entities and the additional characters they use when escaped.
-    const std::map<char, int> entities = {{'\'', 5}, {'"', 5}, {'&', 4}, {'<', 3}, {'>', 3}};
 
     // Insert a padding so we get a kind of table in the XML document.
     int16_t requiredPadding = LONGEST_NAME - location->GetName().length();
-    for (auto& [c, n] : entities) {
-      requiredPadding -= std::count(location->GetName().begin(), location->GetName().end(), c) * n;
-    }
     if (location->IsCategory(Category::cShop)) {
       // Shop items have short location names, but come with an additional price attribute.
       requiredPadding -= PRICE_ATTRIBUTE;
@@ -399,7 +393,7 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
 bool SpoilerLog_Write() {
   WriteIngameSpoilerLog();
 
-  auto spoilerLog = tinyxml2::XMLDocument();
+  auto spoilerLog = tinyxml2::XMLDocument(false);
   spoilerLog.InsertEndChild(spoilerLog.NewDeclaration());
 
   auto rootNode = spoilerLog.NewElement("spoiler-log");
@@ -438,7 +432,7 @@ void PlacementLog_Clear() {
 }
 
 bool PlacementLog_Write() {
-  auto placementLog = tinyxml2::XMLDocument();
+  auto placementLog = tinyxml2::XMLDocument(false);
   placementLog.InsertEndChild(placementLog.NewDeclaration());
 
   auto rootNode = placementLog.NewElement("placement-log");
