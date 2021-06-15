@@ -5636,7 +5636,7 @@ void HintTable_Init() {
 
     hintTable[JUNK37] = HintText::Junk({
                      //obscure text
-                     Text{"L is real 2041", /*french*/"L is real 2041", /*spanish*/"L es real 2041."},
+                     Text{"L is real 2401", /*french*/"L is real 2401", /*spanish*/"L es real 2401."},
     });
 
     hintTable[JUNK38] = HintText::Junk({
@@ -6040,7 +6040,6 @@ void HintTable_Init() {
                      //obscure text                                                  singular  plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Medallion|Medallions|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |médaillon|médaillons|#.",
-                /*french*/"médaillons",
                /*spanish*/"los medallones"},
     });
 
