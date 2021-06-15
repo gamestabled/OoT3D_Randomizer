@@ -14,6 +14,5 @@ bool SpoilerLog_Write();
 const SpoilerData& GetSpoilerData();
 
 void PlacementLog_Msg(std::string_view msg);
-void PlacementLog_WriteSettings();
 void PlacementLog_Clear();
 bool PlacementLog_Write();
