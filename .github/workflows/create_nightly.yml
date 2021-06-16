@@ -35,6 +35,7 @@ jobs:
           body: |
             Please note that these are DEVELOPMENT builds and may not be entirely stable.
             When reporting issues, please mention the six character commit listed in the randomizer menu.
+            You can use the FBI homebrew application to install the randomizer using either of these QR codes.
             CIA QR Code:
             ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
             3DSX QR Code:
