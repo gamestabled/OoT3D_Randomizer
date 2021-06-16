@@ -69,42 +69,62 @@ public:
       Both,
     };
 
-    constexpr Exit(AreaKey exit_, ConditionFn conditions_met_, Time time_of_day_ = Time::Both)
-        : exit(exit_), conditions_met(conditions_met_), time_of_day(time_of_day_) {}
+    Exit(AreaKey exit_, ConditionFn conditions_met_, Time time_of_day_ = Time::Both)
+        : exit(exit_), conditions_met(conditions_met_), time_of_day(time_of_day_), originalExit(exit_) {}
 
-    constexpr bool IsBoth() const {
+    bool IsBoth() const {
         return time_of_day == Exit::Time::Both;
     }
 
-    constexpr bool IsDay() const {
+    bool IsDay() const {
         return time_of_day == Exit::Time::Day;
     }
 
-    constexpr bool IsNight() const {
+    bool IsNight() const {
         return time_of_day == Exit::Time::Night;
     }
 
-    constexpr Time TimeOfDay() const {
+    Time TimeOfDay() const {
         return time_of_day;
     }
 
-    constexpr bool ConditionsMet() const {
-        return conditions_met();
+    void SetOriginalIndex(s16 index_) {
+        originalIndex = index_;
     }
 
-    constexpr AreaKey GetAreaKey() const {
+    bool ConditionsMet() const {
+        return conditions_met() && connected;
+    }
+
+    AreaKey GetAreaKey() const {
         return exit;
     }
 
-    static constexpr Exit Both(AreaKey exit, ConditionFn condition) {
+    void SetNewExit(AreaKey newExit) {
+        exit = newExit;
+    }
+
+    void Disconnect() {
+        connected = false;
+    }
+
+    void SetAsPrimary() {
+        primary = true;
+    }
+
+    void RevertToOriginalExit() {
+        exit = originalExit;
+    }
+
+    static Exit Both(AreaKey exit, ConditionFn condition) {
         return Exit{exit, condition, Time::Both};
     }
 
-    static constexpr Exit Day(AreaKey exit, ConditionFn condition) {
+    static Exit Day(AreaKey exit, ConditionFn condition) {
         return Exit{exit, condition, Time::Day};
     }
 
-    static constexpr Exit Night(AreaKey exit, ConditionFn condition) {
+    static Exit Night(AreaKey exit, ConditionFn condition) {
         return Exit{exit, condition, Time::Night};
     }
 
@@ -112,6 +132,14 @@ private:
     AreaKey exit;
     ConditionFn conditions_met;
     Time time_of_day;
+
+    //Entrance Randomizer stuff
+    s16 originalIndex = 0xFFFF;
+    s16 replacedIndex = 0xFFFF;
+    bool shuffled = false;
+    bool primary = false;
+    bool connected = true;
+    AreaKey originalExit;
 };
 
 class Area {
@@ -139,6 +167,16 @@ public:
     bool addedToPool = false;
 
     void UpdateEvents();
+
+    void AddExit(AreaKey newExit, ConditionFn condition, Exit::Time timeOfDay = Exit::Time::Both);
+
+    void RemoveExit(AreaKey exitToRemove);
+
+    void DisconnectExit(AreaKey exitToDisconnect);
+
+    void SetAsPrimary(AreaKey exitToBePrimary);
+
+    void SetOriginalExitIndex(AreaKey exitToSetIndex, s16 originalIndex_);
 
     bool Child() const {
       return dayChild || nightChild;

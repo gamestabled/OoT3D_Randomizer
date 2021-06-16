@@ -601,7 +601,7 @@ static void SetMinimalItemPool() {
 void GenerateItemPool() {
 
   ItemPool.clear();
-  
+
   //Initialize ice trap models to always major items
   IceTrapModels = {
     GI_SWORD_BGS,

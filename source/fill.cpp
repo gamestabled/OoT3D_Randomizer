@@ -11,6 +11,7 @@
 #include "starting_inventory.hpp"
 #include "hints.hpp"
 #include "hint_list.hpp"
+#include "entrance.hpp"
 #include "shops.hpp"
 #include "debug.hpp"
 
@@ -270,6 +271,12 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 
   }
 
+  if (mode == SearchMode::AllLocationsReachable) {
+    //all locations are reachable when the size of allLocations is equal to accessibleLocations
+    allLocationsReachable = allLocations.size() == accessibleLocations.size() ? true : false;
+    return {};
+  }
+
   erase_if(accessibleLocations, [&allowedLocations](LocationKey loc){
     for (LocationKey allowedLocation : allowedLocations) {
       if (loc == allowedLocation) {
@@ -436,13 +443,6 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
 
       //get all accessible locations that are allowed
       const std::vector<LocationKey> accessibleLocations = GetAccessibleLocations(allowedLocations);
-
-      // CitraPrint("\nPLACING ITEM: ");
-      // CitraPrint(ItemTable(item).GetName());
-      // CitraPrint("Allowed Locations: ");
-      // for (const LocationKey loc : accessibleLocations) {
-      //   CitraPrint(Location(loc)->GetName());
-      // }
 
       //retry if there are no more locations to place items
       if (accessibleLocations.empty()) {
@@ -678,6 +678,13 @@ int Fill() {
     GenerateStartingInventory();
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
+
+    //If entrance shuffle is enabled, shuffle all entrances now before placing other items
+    if (ShuffleEntrances) {
+      CitraPrint("About to set entrances");
+      sleep(0.1);
+      ShuffleAllEntrances();
+    }
 
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
