@@ -248,13 +248,13 @@ int GetShopsanityReplaceAmount() {
 void InitTrickNames() {
   trickNameTable[GI_SWORD_KOKIRI] = {
          //English          French                      Spanish
-    Text{"Butter Knife",   "Couteau à fromage Kokiri", "Cuchillo de untar"},      //Easy
-    Text{"Kokiri Knife",   "Épée Mojo",                "Espada Koquiri"},         //Medium
+    Text{"Butter Knife",   "Couteau à fromage Kokiri", "Cuchillo de untar"},     //Easy
+    Text{"Kokiri Knife",   "Épée Mojo",                "Espada Koquiri"},        //Medium
     Text{"Kokiri's Sword", "Épée de Kokiri",           "Espada de los Kokiri"}}; //Hard
   trickNameTable[GI_SWORD_BGS] = {
     Text{"Goron's Not-Broken Sword", "Épée pas brisée de Goron", "Espada irrompible goron"},
     Text{"Big Goron Sword",          "Épée de gros Goron",       "Espada de Big Goron"},
-    Text{"Biggoron's Sword",         "Épée Grogoron",            "Espada Biggoron"}};
+    Text{"Biggoron Sword",           "Épée Grogoron",            "Espada Biggoron"}};
   trickNameTable[GI_SHIELD_MIRROR] = {
     Text{"Not the 1.0 OoT Shield", "Miroir magique",   "Escudo de la 1.0"},
     Text{"Magic Shield",           "Bouclier magique", "Escudo gerudo"},
@@ -462,15 +462,15 @@ void InitTrickNames() {
   trickNameTable[0xCB] = {
     Text{"Farore's Brooch",     "Bijou de Farore",      "Gema de Farore"},
     Text{"Deku Tree's Emerald", "Émeraude Mojo",        "Esmeralda del Gran Árbol Deku"},
-    Text{"Kokiri's Emerald",    "Émeraude des Kokiris", "Esmeralda Kokiri"}};
+    Text{"Kokiri Emerald",    "Émeraude des Kokiris", "Esmeralda Kokiri"}};
   trickNameTable[0xCC] = {
     Text{"Din's Candied Rock", "Bonbon de Din",    "Gema de Din"},
     Text{"Gerudo's Ruby",      "Rubis Gerudo",     "Rubí de los Dodongos"},
-    Text{"Goron's Ruby",       "Rubis des Gorons", "Rubí Goron"}};
+    Text{"Goron Ruby",       "Rubis des Gorons", "Rubí Goron"}};
   trickNameTable[0xCD] = {
     Text{"Nayru's Mood Ring", "Épingle de Nayru", "Gema de Nayru"},
     Text{"Zola's Sapphire",   "Saphir Zola",      "Zafiro de Ruto"},
-    Text{"Zora's Sapphire",   "Saphir des Zoras", "Zafiro Zora"}};
+    Text{"Zora Sapphire",   "Saphir des Zoras", "Zafiro Zora"}};
   trickNameTable[0xCE] = {
     Text{"Bombos",              "Bombos",             "Medallón del Temblor"},
     Text{"Saria's Medallion",   "Médaillon de Saria", "Medallón de Saria"},
@@ -509,8 +509,8 @@ Text GetIceTrapName(u8 id) {
 }
 
 //Get shop index based on a given location
-static std::map<std::string_view, int> ShopNameToNum = {{"KF Shop", 0},{"Kak Potion Shop", 1},{"MK Bombchu Shop", 2},{"MK Potion Shop", 3},
-                                                        {"MK Bazaar", 4},{"Kak Bazaar", 5},{"ZD Shop", 6},{"GC Shop", 7}};
+static std::map<std::string_view, int> ShopNameToNum = {{"KF Shop", 0},   {"Kak Potion Shop", 1}, {"MK Bombchu Shop", 2}, {"MK Potion Shop", 3},
+                                                        {"MK Bazaar", 4}, {"Kak Bazaar", 5},      {"ZD Shop", 6},         {"GC Shop", 7}};
 int GetShopIndex(LocationKey loc) {
   //Kind of hacky, but extract the shop and item position from the name
   const std::string& name(Location(loc)->GetName());

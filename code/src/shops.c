@@ -321,10 +321,10 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
         }
         //For shop ammo items, we don't want to make them turn into blupees without the appropriate capacity,
         //instead just disallow purchase in the canbuy check
-        else if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20
+        if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20
                 || id == GI_ARROWS_SMALL || id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE
                 || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
-            id = ItemTable_ResolveUpgrades(override.value.itemId);
+            id = ItemTable_ResolveUpgrades(id);
         }
         item->itemRow = ItemTable_GetItemRow(id);
 
