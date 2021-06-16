@@ -53,7 +53,7 @@ jobs:
             "storeContent": [
               {
                 "info": {
-                  "title": "OoT3D Randomizer Current Version",
+                  "title": "OoT3D Randomizer <VERSION_STABLE>",
                   "author": "OoT3DR Team",
                   "description": "A randomizer patch for OoT3D to be used with Luma for Nintendo 3DS",
                   "category": [
@@ -97,7 +97,7 @@ jobs:
               },
               {
                 "info": {
-                  "title": "OoT3D Randomizer Current Version",
+                  "title": "OoT3D Randomizer Niightly <NIGHTLY_1>",
                   "author": "OoT3DR Team",
                   "description": "A randomizer patch for OoT3D to be used with Luma for Nintendo 3DS",
                   "category": [
@@ -106,7 +106,7 @@ jobs:
                   "console": [
                     "3DS"
                   ],
-                  "icon_index": 2,
+                  "icon_index": 1,
                   "sheet_index": 0,
                   "last_updated": "<NIGHTLY_1_CREATED> at <NIGHTLY_1_TIME> (UTC)",
                   "license": "MIT",
@@ -141,7 +141,7 @@ jobs:
               },
               {
                 "info": {
-                  "title": "OoT3D Randomizer Current Version",
+                  "title": "OoT3D Randomizer Niightly <NIGHTLY_2>",
                   "author": "OoT3DR Team",
                   "description": "A randomizer patch for OoT3D to be used with Luma for Nintendo 3DS",
                   "category": [
@@ -150,7 +150,7 @@ jobs:
                   "console": [
                     "3DS"
                   ],
-                  "icon_index": 2,
+                  "icon_index": 1,
                   "sheet_index": 0,
                   "last_updated": "<NIGHTLY_2_CREATED> at <NIGHTLY_2_TIME> (UTC)",
                   "license": "MIT",
@@ -185,7 +185,7 @@ jobs:
               },
               {
                 "info": {
-                  "title": "OoT3D Randomizer Current Version",
+                  "title": "OoT3D Randomizer Niightly <NIGHTLY_3>",
                   "author": "OoT3DR Team",
                   "description": "A randomizer patch for OoT3D to be used with Luma for Nintendo 3DS",
                   "category": [
@@ -194,7 +194,7 @@ jobs:
                   "console": [
                     "3DS"
                   ],
-                  "icon_index": 2,
+                  "icon_index": 1,
                   "sheet_index": 0,
                   "last_updated": "<NIGHTLY_3_CREATED> at <NIGHTLY_3_TIME> (UTC)",
                   "license": "MIT",
@@ -229,7 +229,7 @@ jobs:
               },
               {
                 "info": {
-                  "title": "OoT3D Randomizer Current Version",
+                  "title": "OoT3D Randomizer Niightly <NIGHTLY_4>",
                   "author": "OoT3DR Team",
                   "description": "A randomizer patch for OoT3D to be used with Luma for Nintendo 3DS",
                   "category": [
@@ -238,7 +238,7 @@ jobs:
                   "console": [
                     "3DS"
                   ],
-                  "icon_index": 2,
+                  "icon_index": 1,
                   "sheet_index": 0,
                   "last_updated": "<NIGHTLY_4_CREATED> at <NIGHTLY_4_TIME> (UTC)",
                   "license": "MIT",
@@ -273,7 +273,7 @@ jobs:
               },
               {
                 "info": {
-                  "title": "OoT3D Randomizer Current Version",
+                  "title": "OoT3D Randomizer Niightly <NIGHTLY_5>",
                   "author": "OoT3DR Team",
                   "description": "A randomizer patch for OoT3D to be used with Luma for Nintendo 3DS",
                   "category": [
@@ -282,7 +282,7 @@ jobs:
                   "console": [
                     "3DS"
                   ],
-                  "icon_index": 2,
+                  "icon_index": 1,
                   "sheet_index": 0,
                   "last_updated": "<NIGHTLY_5_CREATED> at <NIGHTLY_5_TIME> (UTC)",
                   "license": "MIT",
