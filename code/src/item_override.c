@@ -301,7 +301,7 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
 
     if (fromActor->id == 0x0A) {
         // Update chest contents
-        if (override.value.itemId == 0x7C) {
+        if (override.value.itemId == 0x7C && gSettingsContext.randomTrapDmg == OFF) {
             // Use ice trap base item ID
             baseItemId = 0x7C;
         }

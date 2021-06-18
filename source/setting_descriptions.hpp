@@ -204,6 +204,8 @@ extern string_view coloredBossKeysDesc;
 
 extern string_view mirrorWorldDesc;
 
+extern string_view randomTrapDmgDesc;
+
 extern string_view ToggleAllDetailedLogicDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;
 extern string_view LogicVisibleCollisionDesc;
