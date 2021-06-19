@@ -26,7 +26,15 @@ void IceTrap_Give(void) {
         PLAYER->actor.colChkInfo.damage = 0;
         // Applying damage normally sometimes wouldn't work when multiple traps were queued due to i-frames so manually setting health
         if (damageType != 3 && gSaveContext.nayrusLoveTimer == 0) {
-            gSaveContext.health += Settings_ApplyDamageMultiplier(gGlobalContext, (gSaveContext.doubleDefense)? -4 : -8);
+            u8 damageValue = 8;
+            if (gSaveContext.doubleDefense) {
+                damageValue /= 2;
+            }
+            if (gSaveContext.masterQuestFlag) {
+                damageValue *= 2;
+            }
+
+            gSaveContext.health += Settings_ApplyDamageMultiplier(gGlobalContext, -damageValue);
 
             if (gSaveContext.health < 0) {
                 gSaveContext.health = 0;
