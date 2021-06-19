@@ -29,8 +29,8 @@ void Scene_Init(void) {
     gRestrictionFlags[72].flags3 = 0; // Allows farore's wind in GTG
     gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
     
-    //Allow Farore's Wind anywhere* if the option is enabled
-	//*Cannot be used in areas affected by a general item restriction
+    //Allow Farore's Wind anywhere if the option is enabled
+    //Cannot be used in areas affected by a general item restriction
     if (gSettingsContext.faroresWindAnywhere){
         for (int i = 0; i < 99; i++){
 			gRestrictionFlags[i].flags3 &= ~0x30;
