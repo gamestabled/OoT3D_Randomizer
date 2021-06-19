@@ -62,7 +62,7 @@ Before reporting an issue, please make sure to check out the [the Logic wiki for
 
 Install the 3DS packages from [devkitPro](https://devkitpro.org/wiki/Getting_Started)
 
-Python is necessary to build the randomizer. If you're using the Msys2 console, you can install python by using `pacman -S python`.
+Python is necessary to build the randomizer. If you're using the Msys2 console provided by devkitpro, you can install python by using `pacman -S python`.
 
 In the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```. Use ```make debug=1``` for extra debugging features, including extra items when starting a new file. In the case of problems, try using a ```make clean```.
 
