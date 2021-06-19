@@ -296,6 +296,7 @@ typedef struct {
   u8 generateSpoilerLog;
   u8 menuOpeningButton;
 
+  u8 faroresWindAnywhere;
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
