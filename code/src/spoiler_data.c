@@ -67,12 +67,17 @@ u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc)
 
 u8 SpoilerData_MinigameCheck(SpoilerItemLocation itemLoc)
 {
-    return gSaveContext.unk_ED4[itemLoc.LocationScene] & (1 << itemLoc.LocationFlag);
+    return (gSaveContext.unk_ED4[itemLoc.LocationScene] & (1 << itemLoc.LocationFlag)) != 0;
 }
 
 u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
 {
     return (gSaveContext.sceneFlags[itemLoc.LocationScene].unk & (1 << itemLoc.LocationFlag)) != 0;
+}
+
+u8 SpoilerData_BiggoronCheck()
+{
+    return gSaveContext.unk_4F != 0;
 }
 
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
@@ -102,7 +107,7 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
             return SpoilerData_ItemGetInfCheck(itemLoc.LocationFlag);
         }
         case SPOILER_CHK_EVENT_CHK_INF: { // Check a flag set in event_check_inf
-            return EventCheck(itemLoc.LocationFlag);
+            return EventCheck(itemLoc.LocationFlag) != 0;
         }
         case SPOILER_CHK_INF_TABLE: { // Check a flag set in event_check_inf
             return SpoilerData_InfTableCheck(itemLoc.LocationScene, itemLoc.LocationFlag);
@@ -118,6 +123,9 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_SCRUB: {
             return SpoilerData_ScrubCheck(itemLoc);
+        }
+        case SPOILER_CHK_BIGGORON: {
+            return SpoilerData_BiggoronCheck();
         }
         default: {
             return 0;

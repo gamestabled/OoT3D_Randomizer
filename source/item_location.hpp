@@ -67,6 +67,10 @@ public:
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_EVENT_CHK_INF, scene, flag);
   }
 
+  static auto Chest(u8 scene, u8 flag) {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_CHEST, scene, flag);
+  }
+
   static auto QuestItem(u8 slot) {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_QUEST_ITEM, 0xFF, slot);
   }
@@ -81,6 +85,10 @@ public:
 
   static auto Scrub(u8 scene, u8 bit) {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_SCRUB, scene, bit);
+  }
+
+  static auto Biggoron() {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_BIGGORON, 0x00, 0x00);
   }
 };
 

@@ -22,6 +22,7 @@ typedef enum {
     SPOILER_CHK_COW,
     SPOILER_CHK_MINIGAME,
     SPOILER_CHK_SCRUB,
+    SPOILER_CHK_BIGGORON,
 } SpoilerCollectionCheckType;
 
 typedef struct {
@@ -59,5 +60,6 @@ u8 SpoilerData_UpgradeCheck(u8 bit);
 u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_MinigameCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_BiggoronCheck();
 
 #endif // _SPOILER_DATA_H_
