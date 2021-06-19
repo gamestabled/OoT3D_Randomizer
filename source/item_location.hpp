@@ -78,6 +78,10 @@ public:
   static auto Minigame(u8 offset, u8 bit) {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MINIGAME, offset, bit);
   }
+
+  static auto Scrub(u8 scene, u8 bit) {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_SCRUB, scene, bit);
+  }
 };
 
 class ItemLocation {

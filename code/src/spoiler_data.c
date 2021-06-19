@@ -70,6 +70,11 @@ u8 SpoilerData_MinigameCheck(SpoilerItemLocation itemLoc)
     return gSaveContext.unk_ED4[itemLoc.LocationScene] & (1 << itemLoc.LocationFlag);
 }
 
+u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
+{
+    return (gSaveContext.sceneFlags[itemLoc.LocationScene].unk & (1 << itemLoc.LocationFlag)) != 0;
+}
+
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
 {
     if (itemIndex >= gSpoilerData.ItemLocationsCount) {
@@ -110,6 +115,9 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_MINIGAME: {
             return SpoilerData_MinigameCheck(itemLoc);
+        }
+        case SPOILER_CHK_SCRUB: {
+            return SpoilerData_ScrubCheck(itemLoc);
         }
         default: {
             return 0;
