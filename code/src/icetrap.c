@@ -14,7 +14,7 @@ void IceTrap_Push(void) {
     pendingFreezes++;
 }
 
-void IceTrap_Give(void) {    
+void IceTrap_Give(void) {
     if (cooldown == 0 && pendingFreezes && ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
         u8 damageType = 3; // Default to ice trap
         if (gSettingsContext.randomTrapDmg == ON) {
@@ -23,17 +23,17 @@ void IceTrap_Give(void) {
 
         pendingFreezes--;
         PLAYER->stateFlags1 &= ~0xC00;
-        PLAYER->actor.colChkInfo.damage = 0;
-        // Applying damage normally sometimes wouldn't work when multiple traps were queued due to i-frames so manually setting health
-        if (damageType != 3 && gSaveContext.nayrusLoveTimer == 0) {
-            gSaveContext.health += Settings_ApplyDamageMultiplier(gGlobalContext, (gSaveContext.doubleDefense)? -4 : -8);
-
-            if (gSaveContext.health < 0) {
-                gSaveContext.health = 0;
-            }
+        if(damageType == 3){
+            PLAYER->actor.colChkInfo.damage = 0;
+        }
+        else{
+            PLAYER->actor.colChkInfo.damage = Settings_ApplyDamageMultiplier(gGlobalContext, (gSettingsContext.mirrorWorld)? 16 : 8);
         }
 
-        // LinkInvincibility(player, 0x14); //TODO
+        if(PLAYER->invincibilityTimer > 0){
+            PLAYER->invincibilityTimer = 0;
+        }
+
         LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20); //TODO
         cooldown = 30;
     }
