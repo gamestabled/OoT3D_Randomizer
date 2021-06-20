@@ -60,8 +60,8 @@ namespace Settings {
   Option RandomizeWorld          = Option::Bool("Randomize Settings", {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
   Option StartingAge             = Option::U8  ("Starting Age",       {"Adult", "Child", "Random"},                                      {ageDesc});
   u8 ResolvedStartingAge;
-  Option ShuffleEntrances        = Option::Bool("Shuffle Entrances",  {"Off", "On"},                                                     {""});
-  Option ShuffleDungeonEntrances = Option::Bool("  Dungeon Entrances",{"Off", "On"},                                                     {""});
+  Option ShuffleEntrances        = Option::Bool("Shuffle Entrances",  {"Off", "On"},                                                     {shuffleEntrancesDesc});
+  Option ShuffleDungeonEntrances = Option::Bool("  Dungeon Entrances",{"Off", "On"},                                                     {dungeonEntrancesDesc});
   Option BombchusInLogic         = Option::Bool("Bombchus in Logic",  {"Off", "On"},                                                     {bombchuLogicDesc});
   Option BombchuDrops            = Option::Bool("Bombchu Drops",      {"Off", "On"},                                                     {bombchuDropDesc});
   Option RandomMQDungeons        = Option::Bool("Random MQ Dungeons", {"Off", "On"},                                                     {randomMQDungeonsDesc});
@@ -1100,6 +1100,14 @@ namespace Settings {
         BombchuDrops.Lock();
       } else {
         BombchuDrops.Unlock();
+      }
+
+      //Show Shuffle options when Shuffle Entrances is On
+      if (ShuffleEntrances) {
+        ShuffleDungeonEntrances.Unhide();
+      } else {
+        ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+        ShuffleDungeonEntrances.Hide();
       }
     }
 

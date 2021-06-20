@@ -3,8 +3,8 @@
 
 typedef struct {
     s16 index;
-    s16 override;
     s16 blueWarp;
+    s16 override;
 } EntranceOverride;
 
 void Entrance_Init(void);

@@ -8,7 +8,7 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
-static EntranceOverride rEntranceOverrides[128] = {0};
+static EntranceOverride rEntranceOverrides[250] = {0};
 
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
@@ -89,6 +89,7 @@ void Entrance_Init(void) {
     for (size_t i = 0; i < numberOfEntranceOverrides; i++) {
 
         s16 originalIndex = rEntranceOverrides[i].index;
+        s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
         s16 overrideIndex = rEntranceOverrides[i].override;
 
         if (originalIndex == overrideIndex) {
@@ -99,6 +100,14 @@ void Entrance_Init(void) {
             gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
             gEntranceTable[originalIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
             gEntranceTable[originalIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
+
+            if (blueWarpIndex != 0) {
+              gEntranceTable[blueWarpIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
+              gEntranceTable[blueWarpIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
+              gEntranceTable[blueWarpIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
+              //delete title cards coming from blue warps so that delayed overrides don't have to wait for them
+              gEntranceTable[blueWarpIndex+j].field & ~0x4000;
+            }
         }
     }
 }

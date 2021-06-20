@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 
 #include "logic.hpp"
 #include "hint_list.hpp"
@@ -60,87 +61,8 @@ private:
     bool CanBuy() const;
 };
 
-class Exit {
-public:
-
-    enum class Time {
-      Day,
-      Night,
-      Both,
-    };
-
-    Exit(AreaKey exit_, ConditionFn conditions_met_, Time time_of_day_ = Time::Both)
-        : exit(exit_), conditions_met(conditions_met_), time_of_day(time_of_day_), originalExit(exit_) {}
-
-    bool IsBoth() const {
-        return time_of_day == Exit::Time::Both;
-    }
-
-    bool IsDay() const {
-        return time_of_day == Exit::Time::Day;
-    }
-
-    bool IsNight() const {
-        return time_of_day == Exit::Time::Night;
-    }
-
-    Time TimeOfDay() const {
-        return time_of_day;
-    }
-
-    void SetOriginalIndex(s16 index_) {
-        originalIndex = index_;
-    }
-
-    bool ConditionsMet() const {
-        return conditions_met() && connected;
-    }
-
-    AreaKey GetAreaKey() const {
-        return exit;
-    }
-
-    void SetNewExit(AreaKey newExit) {
-        exit = newExit;
-    }
-
-    void Disconnect() {
-        connected = false;
-    }
-
-    void SetAsPrimary() {
-        primary = true;
-    }
-
-    void RevertToOriginalExit() {
-        exit = originalExit;
-    }
-
-    static Exit Both(AreaKey exit, ConditionFn condition) {
-        return Exit{exit, condition, Time::Both};
-    }
-
-    static Exit Day(AreaKey exit, ConditionFn condition) {
-        return Exit{exit, condition, Time::Day};
-    }
-
-    static Exit Night(AreaKey exit, ConditionFn condition) {
-        return Exit{exit, condition, Time::Night};
-    }
-
-private:
-    AreaKey exit;
-    ConditionFn conditions_met;
-    Time time_of_day;
-
-    //Entrance Randomizer stuff
-    s16 originalIndex = 0xFFFF;
-    s16 replacedIndex = 0xFFFF;
-    bool shuffled = false;
-    bool primary = false;
-    bool connected = true;
-    AreaKey originalExit;
-};
+class Entrance;
+enum class EntranceType;
 
 class Area {
 public:
@@ -149,7 +71,7 @@ public:
          bool timePass_,
          std::vector<EventAccess> events_,
          std::vector<LocationAccess> locations_,
-         std::vector<Exit> exits_);
+         std::list<Entrance> exits_);
     ~Area();
 
     std::string regionName;
@@ -158,7 +80,12 @@ public:
     bool        timePass;
     std::vector<EventAccess> events;
     std::vector<LocationAccess> locations;
-    std::vector<Exit> exits;
+    std::list<Entrance> exits;
+    //^ The above exits are now stored in a list instead of a vector because
+    //the entrance randomization algorithm plays around with pointers to these
+    //entrances a lot. By putting the entrances in a list, we don't have to
+    //worry about a vector potentially reallocating itself and invalidating all our
+    //previous pointers.
 
     bool dayChild = false;
     bool nightChild = false;
@@ -168,15 +95,15 @@ public:
 
     void UpdateEvents();
 
-    void AddExit(AreaKey newExit, ConditionFn condition, Exit::Time timeOfDay = Exit::Time::Both);
+    void AddExit(AreaKey parentKey, AreaKey newExitKey, ConditionFn condition);
 
-    void RemoveExit(AreaKey exitToRemove);
+    void RemoveExit(Entrance* exitToRemove);
 
     void DisconnectExit(AreaKey exitToDisconnect);
 
     void SetAsPrimary(AreaKey exitToBePrimary);
 
-    void SetOriginalExitIndex(AreaKey exitToSetIndex, s16 originalIndex_);
+    Entrance* GetExit(AreaKey exit);
 
     bool Child() const {
       return dayChild || nightChild;
@@ -198,12 +125,15 @@ public:
       return dayChild && nightChild && dayAdult && nightAdult;
     }
 
+    //Check to see if an exit can be access as both ages at both times of day
+    bool CheckAllAccess(AreaKey exitKey);
+
     const HintText& GetHint() const {
       return Hint(hintKey);
     }
 
     //Here checks conditional access based on whether or not both ages have
-    //access to this exit. For example: if there are rocks that block a path
+    //access to this area. For example: if there are rocks that block a path
     //which both child and adult can access, adult having hammer can give
     //both child and adult access to the path.
     bool HereCheck(ConditionFn condition) {
@@ -212,7 +142,7 @@ public:
       bool pastAdult = Logic::IsAdult;
       bool pastChild = Logic::IsChild;
 
-      //set age access as this exits ages
+      //set age access as this areas ages
       Logic::IsChild = Child();
       Logic::IsAdult = Adult();
 
@@ -248,3 +178,4 @@ namespace Areas {
 
 void  AreaTable_Init();
 Area* AreaTable(const AreaKey areaKey);
+std::vector<Entrance*> GetShuffleableEntrances(EntranceType type, bool onlyPrimary = true);

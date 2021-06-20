@@ -19,7 +19,7 @@
 #include "settings.hpp"
 #include "keys.hpp"
 
-class Exit;
+class Entrance;
 
 enum class ItemLocationType {
     Base,
@@ -322,4 +322,4 @@ void LocationReset();
 void ItemReset();
 void HintReset();
 void AddExcludedOptions();
-void CreateOverrides();
+void CreateItemOverrides();

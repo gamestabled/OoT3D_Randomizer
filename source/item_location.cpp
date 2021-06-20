@@ -1511,7 +1511,7 @@ void AddExcludedOptions() {
   }
 }
 
-void CreateOverrides() {
+void CreateItemOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
   for (LocationKey locKey : allLocations) {
     auto loc = Location(locKey);

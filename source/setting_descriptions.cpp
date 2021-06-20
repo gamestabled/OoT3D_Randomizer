@@ -125,6 +125,24 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
                                         "Only the child option is compatible with Closed\n"//
                                         "Forest.";                                         //
 /*------------------------------                                                           //
+|      SHUFFLE ENTRANCES       |                                                           //
+------------------------------*/                                                           //
+string_view shuffleEntrancesDesc      = "Shuffle where the entrances between areas lead to."
+                                        "If turned on, select which kinds of entrances you\n"
+                                        "want shuffled in the options below.";             //
+                                                                                           //
+/*------------------------------                                                           //
+|       DUNGEON ENTRANCES      |                                                           //
+------------------------------*/                                                           //
+string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, including\n"
+                                        "Bottom of the Well, Ice Cavern, and Gerudo\n"     //
+                                        "Training Grounds. However, Ganon's Castle is not\n"
+                                        "shuffled.\n"                                      //
+                                        "\n"                                               //
+                                        "Additionally, the entrances of Deku Tree, Fire\n" //
+                                        "Temple and Bottom of the Well are opened for both\n"
+                                        "adult and child.";                                //
+/*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //

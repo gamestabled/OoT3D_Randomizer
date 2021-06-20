@@ -16,6 +16,7 @@
 #include "debug.hpp"
 
 #include <vector>
+#include <unistd.h>
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -32,32 +33,31 @@ static void RemoveStartingItemsFromPool() {
   }
 }
 
-//This function will propogate Time of Day access as the specified age to the
-//new exit through the world.
-static void UpdateToDAccess(const AreaKey area, u8 age, Exit::Time ToD) {
-  if (ToD == Exit::Time::Day) {
-    if (age == AGE_CHILD) {
-      AreaTable(area)->dayChild = true;
+//This function will propogate Time of Day access through the entrance
+static void UpdateToDAccess(Entrance* entrance) {
+
+  //propogate dayChild, nightChild, dayAdult, and nightAdult separately
+  Area* parent = AreaTable(entrance->GetParentRegion());
+  Area* connection = AreaTable(entrance->GetConnectedRegion());
+
+  if (parent->dayChild) {
+    if (entrance->CheckConditionAtAgeTime(IsChild, AtDay)) {
+      connection->dayChild = true;
     }
-    if (age == AGE_ADULT) {
-      AreaTable(area)->dayAdult = true;
+  }
+  if (parent->nightChild) {
+    if (entrance->CheckConditionAtAgeTime(IsChild, AtNight)) {
+      connection->nightChild = true;
     }
-  } else if (ToD == Exit::Time::Night) {
-    if (age == AGE_CHILD) {
-      AreaTable(area)->nightChild = true;
+  }
+  if (parent->dayAdult) {
+    if (entrance->CheckConditionAtAgeTime(IsAdult, AtDay)) {
+      connection->dayAdult = true;
     }
-    if (age == AGE_ADULT) {
-      AreaTable(area)->nightAdult = true;
-    }
-  } else {
-    //only update from false -> true, never true -> false
-    if (age == AGE_CHILD) {
-      AreaTable(area)->dayChild   = Logic::AtDay   || AreaTable(area)->dayChild;
-      AreaTable(area)->nightChild = Logic::AtNight || AreaTable(area)->nightChild;
-    }
-    if (age == AGE_ADULT) {
-      AreaTable(area)->dayAdult   = Logic::AtDay   || AreaTable(area)->dayAdult;
-      AreaTable(area)->nightAdult = Logic::AtNight || AreaTable(area)->nightAdult;
+  }
+  if (parent->nightAdult) {
+    if (entrance->CheckConditionAtAgeTime(IsAdult, AtNight)) {
+      connection->nightAdult = true;
     }
   }
 
@@ -69,6 +69,7 @@ static void UpdateToDAccess(const AreaKey area, u8 age, Exit::Time ToD) {
     AreaTable(ROOT)->dayChild   = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->dayAdult;
     AreaTable(ROOT)->nightChild = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->nightAdult;
   }
+
 }
 
 //Get the max number of tokens that can possibly be useful
@@ -166,12 +167,11 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
         area->UpdateEvents();
 
         //for each exit in this area
-        for (size_t j = 0; j < area->exits.size(); j++) {
-          Exit& exit = area->exits[j];
+        for (auto& exit : area->exits) {
           Area* exitArea = AreaTable(exit.GetAreaKey());
 
           if (exit.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) {
-            UpdateToDAccess(exit.GetAreaKey(), age, exit.TimeOfDay());
+            UpdateToDAccess(&exit);
 
             //If the exit is accessible, try adding it
             if (exitArea->HasAccess() && !exitArea->addedToPool) {
@@ -272,8 +272,15 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
   }
 
   if (mode == SearchMode::AllLocationsReachable) {
-    //all locations are reachable when the size of allLocations is equal to accessibleLocations
-    allLocationsReachable = allLocations.size() == accessibleLocations.size() ? true : false;
+    for (LocationKey loc : allLocations) {
+      if (!Location(loc)->IsAddedToPool()) {
+        std::string message = "Location " + Location(loc)->GetName() + " was not added to the pool.";
+        CitraPrint(message);
+        allLocationsReachable = false;
+        return {};
+      }
+    }
+    allLocationsReachable = true;
     return {};
   }
 
@@ -399,6 +406,7 @@ static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locati
 | - OoT Randomizer
 */
 static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<LocationKey>& allowedLocations, bool setLocationsAsHintable = false) {
+
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[2;2HERROR: MORE ITEMS THAN LOCATIONS IN GIVEN LISTS");
     PlacementLog_Msg("Items:\n");
@@ -679,12 +687,20 @@ int Fill() {
     RemoveStartingItemsFromPool();
     FillExcludedLocations();
 
-    //If entrance shuffle is enabled, shuffle all entrances now before placing other items
+    //If entrance shuffle is enabled, shuffle all entrances now before placing other items.
+    //Temporarily add shop items to the ItemPool so that entrance randomization has
+    //replenishable shields to validate the world with.
+    AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); //assume worst case shopsanity 4
     if (ShuffleEntrances) {
+      AreaTable_Init(); //Reset the world graph in case of retrying
       CitraPrint("About to set entrances");
       sleep(0.1);
       ShuffleAllEntrances();
+      CitraPrint("Done setting entrances");
+      sleep(0.1);
     }
+    //erase temporary shop items
+    FilterAndEraseFromPool(ItemPool, [](const ItemKey item){return ItemTable(item).GetItemType() == ITEMTYPE_SHOP;});
 
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
@@ -779,7 +795,8 @@ int Fill() {
       PareDownPlaythrough();
       CalculateWotH();
       printf("Done");
-      CreateOverrides();
+      CreateItemOverrides();
+      CreateEntranceOverrides();
       CreateAlwaysIncludedMessages();
       if (GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
         printf("\x1b[10;10HCreating Hints...");

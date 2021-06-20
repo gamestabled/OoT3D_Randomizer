@@ -4,7 +4,15 @@
 #include "location_access.hpp"
 #include "debug.hpp"
 
+#include <string>
+#include <list>
+
+#include "../code/src/entrance.h"
+
+extern std::list<EntranceOverride> entranceOverrides;
+
 enum class EntranceType {
+    None,
     Dungeon,
     Interior,
     SpecialInterior,
@@ -15,128 +23,176 @@ enum class EntranceType {
     Spawn,
     WarpSong,
     Extra,
-    None,
+    All,
 };
 
 class Entrance {
 public:
 
-    Entrance();
-    Entrance(EntranceType type_, AreaKey parentRegion_, AreaKey connectedRegion_, s16 index_, s16 blueWarp_);
-    ~Entrance();
+    Entrance(AreaKey connectedRegion_, ConditionFn conditionsMet_)
+        : connectedRegion(connectedRegion_), conditionsMet(conditionsMet_) {}
 
-    std::string GetName() {
+    std::string to_string() const {
         return AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
+    }
+
+    bool ConditionsMet() const {
+        return conditionsMet() && connected;
+    }
+
+    AreaKey GetAreaKey() const {
+        return connectedRegion;
+    }
+
+    //set the logic to be a specific age and time of day and see if the condition still holds
+    bool CheckConditionAtAgeTime(bool& age, bool& time) {
+        bool prevIsChild = Logic::IsChild;
+        bool prevIsAdult = Logic::IsAdult;
+        bool prevAtDay   = Logic::AtDay;
+        bool prevAtNight = Logic::AtNight;
+
+        Logic::IsChild = false;
+        Logic::IsAdult = false;
+        Logic::AtDay   = false;
+        Logic::AtNight = false;
+
+        time = true;
+        age = true;
+
+        bool checkCondition = ConditionsMet();
+
+        Logic::IsChild = prevIsChild;
+        Logic::IsAdult = prevIsAdult;
+        Logic::AtDay   = prevAtDay;
+        Logic::AtNight = prevAtNight;
+
+        return checkCondition;
+    }
+
+    //Yes this is the exact same function as above, trust me on this
+    AreaKey GetConnectedRegion() const {
+        return connectedRegion;
+    }
+
+    void SetParentRegion(AreaKey newParent) {
+        parentRegion = newParent;
     }
 
     AreaKey GetParentRegion() const {
         return parentRegion;
     }
 
-    AreaKey GetConnectedRegion() const {
-        return connectedRegion;
-    }
-
-    s16 GetIndex() const {
-        return index;
-    }
-
-    EntranceType GetType() const {
-        return type;
-    }
-
-    void SetAsPrimary() {
-        primary = true;
-        AreaTable(parentRegion)->SetAsPrimary(connectedRegion);
-    }
-
-    bool IsPrimary() const {
-        return primary;
+    void SetNewEntrance(AreaKey newRegion) {
+        connectedRegion = newRegion;
     }
 
     void SetAsShuffled() {
         shuffled = true;
     }
 
-    void SetTarget(Entrance* newTarget) {
-        target = newTarget;
+    void SetAsPrimary() {
+        primary = true;
     }
 
-    Entrance* GetTarget() const {
-      if (target == nullptr) {
-        CitraPrint("Target is nullptr");
-      }
-      return target;
+    bool IsPrimary() const {
+        return primary;
     }
 
-    void SetReverse(Entrance* newReverse) {
-        reverse = newReverse;
+    s16 GetIndex() const {
+        return index;
+    }
+
+    void SetIndex(s16 newIndex) {
+        index = newIndex;
+    }
+
+    s16 GetBlueWarp() const {
+        return blueWarp;
+    }
+
+    void SetBlueWarp(s16 newBlueWarp) {
+        blueWarp = newBlueWarp;
+    }
+
+    Entrance* GetAssumed() const {
+        return assumed;
+    }
+
+    void SetReplacement(Entrance* newReplacement) {
+        replacement = newReplacement;
+    }
+
+    Entrance* GetReplacement() const {
+        return replacement;
+    }
+
+    EntranceType GetType() const {
+        return type;
+    }
+
+    void SetType(EntranceType newType) {
+        type = newType;
     }
 
     Entrance* GetReverse() const {
         return reverse;
     }
 
-    void SetReplacement(Entrance* newReplacement) {
-        replaces = newReplacement;
+    void Connect(AreaKey newConnectedRegion) {
+        connectedRegion = newConnectedRegion;
     }
 
     AreaKey Disconnect() {
-        AreaTable(parentRegion)->DisconnectExit(connectedRegion);
-        AreaTable(connectedRegion)->DisconnectExit(parentRegion);
         AreaKey previouslyConnected = connectedRegion;
         connectedRegion = NONE;
         return previouslyConnected;
     }
 
-    void BindTwoWay(Entrance otherEntrance) {
-        otherEntrance.SetReverse(this);
-        reverse = &otherEntrance;
+    void BindTwoWay(Entrance* otherEntrance) {
+        reverse = otherEntrance;
+        otherEntrance->reverse = this;
     }
 
     Entrance* GetNewTarget() {
-        auto targetEntrance = Entrance{type, ROOT, connectedRegion, index, blueWarp};
-        targetEntrance.SetReplacement(this);
-        AreaTable(ROOT)->AddExit(connectedRegion, []{return true;});
-        return &targetEntrance;
+        AreaTable(ROOT)->AddExit(ROOT, connectedRegion, []{return true;});
+        Entrance* targetEntrance = AreaTable(ROOT)->GetExit(connectedRegion);
+        targetEntrance->SetReplacement(this);
+        return targetEntrance;
     }
 
-    Entrance AssumeReachable() {
+    Entrance* AssumeReachable() {
         if (assumed == nullptr) {
             assumed = GetNewTarget();
-            this->Disconnect();
+            Disconnect();
         }
-        return *assumed;
+        return assumed;
     }
 
-    static auto Dungeon(AreaKey parentRegion_, AreaKey connectedRegion_, s16 index_, s16 blueWarp_ = 0x0000) {
-        return Entrance{EntranceType::Dungeon, parentRegion_, connectedRegion_, index_, blueWarp_};
+    void TempDisconnect() {
+        connected = false;
     }
 
-    static auto Overworld(AreaKey parentRegion_, AreaKey connectedRegion_, s16 index_) {
-        return Entrance{EntranceType::Overworld, parentRegion_, connectedRegion_, index_, 0x0000};
-    }
-
-    bool operator==(const Entrance& right) {
-        return this->parentRegion == right.GetParentRegion() && this->connectedRegion == right.GetConnectedRegion() && this->index == right.GetIndex();
-    }
-
-    bool operator!=(const Entrance& right) {
-        return !operator==(right);
+    void Reconnect() {
+        connected = true;
     }
 
 private:
-    EntranceType type;
     AreaKey parentRegion;
     AreaKey connectedRegion;
-    Entrance* target   = nullptr;
-    Entrance* reverse  = nullptr;
-    Entrance* assumed  = nullptr;
-    Entrance* replaces = nullptr;
-    s16 index;
-    s16 blueWarp;
-    bool primary = false;
+    ConditionFn conditionsMet;
+
+    //Entrance Randomizer stuff
+    EntranceType type = EntranceType::None;
+    Entrance* target = nullptr;
+    Entrance* reverse = nullptr;
+    Entrance* assumed = nullptr;
+    Entrance* replacement = nullptr;
+    s16 index = 0xFFFF;
+    s16 blueWarp = 0;
     bool shuffled = false;
+    bool primary = false;
+    bool connected = true;
 };
 
 void ShuffleAllEntrances();
+void CreateEntranceOverrides();

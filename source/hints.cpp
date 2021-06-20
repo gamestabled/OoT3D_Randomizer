@@ -11,6 +11,7 @@
 #include "fill.hpp"
 #include "hint_list.hpp"
 #include "trial.hpp"
+#include "entrance.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -123,7 +124,7 @@ static Area* GetHintRegion(const AreaKey area) {
 
     //add unchecked exits to spot queue
     bool checked = false;
-    for (auto exit : AreaTable(region)->exits) {
+    for (auto& exit : AreaTable(region)->exits) {
       for (AreaKey checkedExit : alreadyChecked) {
         if (exit.GetAreaKey() == checkedExit) {
           checked = true;
