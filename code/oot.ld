@@ -832,6 +832,10 @@ SECTIONS
 		*(.patch_LACSConditionTwo)
 	}
 
+	.patch_SetSavewarpEntrance 0x44FBE4 : {
+		*(.patch_SetSavewarpEntrance)
+	}
+
 	.patch_LullabyCheckFlag 0x44FD54 : {
 		*(.patch_LullabyCheckFlag)
 	}

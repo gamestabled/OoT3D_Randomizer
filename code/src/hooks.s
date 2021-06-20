@@ -531,6 +531,13 @@ hook_ShortenRainbowBridgeCS:
     cpy r4,r0
     bx lr
 
+.global hook_SetSavewarpEntrance
+hook_SetSavewarpEntrance:
+    push {r0-r12, lr}
+    bl Entrance_SetOnSavewarp
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

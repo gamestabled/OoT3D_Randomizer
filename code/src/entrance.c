@@ -12,8 +12,61 @@ static EntranceOverride rEntranceOverrides[256] = {0};
 
 //This variable is used to store whatever new entrance should lead to
 //the Requiem of Spirit check. Otherwise, leaving the Spirit Temple
-//will take players to the Requiem cutscene if it is shuffled.
+//will take players to the Requiem cutscene even if it is shuffled.
 static s16 newRequiemEntrance = 0x01E1;
+
+//These variables store the new entrance indices for dungeons so that
+//savewarping and game overs respawn players at the proper entrance.
+//By default, these will be their vanilla values.
+static s16 newDekuTreeEntrance              = DEKU_TREE_ENTRANCE;
+static s16 newDodongosCavernEntrance        = DODONGOS_CAVERN_ENTRANCE;
+static s16 newJabuJabusBellyEntrance        = JABU_JABUS_BELLY_ENTRANCE;
+static s16 newForestTempleEntrance          = FOREST_TEMPLE_ENTRANCE;
+static s16 newFireTempleEntrance            = FIRE_TEMPLE_ENTRANCE;
+static s16 newWaterTempleEntrance           = WATER_TEMPLE_ENTRANCE;
+static s16 newSpiritTempleEntrance          = SPIRIT_TEMPLE_ENTRANCE;
+static s16 newShadowTempleEntrance          = SHADOW_TEMPLE_ENTRANCE;
+static s16 newBottomOfTheWellEntrance       = BOTTOM_OF_THE_WELL_ENTRANCE;
+static s16 newGerudoTrainingGroundsEntrance = GERUDO_TRAINING_GROUNDS_ENTRANCE;
+static s16 newIceCavernEntrance             = ICE_CAVERN_ENTRANCE;
+
+static void Entrance_SetNewDungeonEntrances(s16 originalIndex, s16 replacementIndex) {
+    switch (replacementIndex) {
+        case DEKU_TREE_ENTRANCE :
+            newDekuTreeEntrance = originalIndex;
+            break;
+        case DODONGOS_CAVERN_ENTRANCE :
+            newDodongosCavernEntrance = originalIndex;
+            break;
+        case JABU_JABUS_BELLY_ENTRANCE :
+            newJabuJabusBellyEntrance = originalIndex;
+            break;
+        case FOREST_TEMPLE_ENTRANCE :
+            newForestTempleEntrance = originalIndex;
+            break;
+        case FIRE_TEMPLE_ENTRANCE :
+            newFireTempleEntrance = originalIndex;
+            break;
+        case WATER_TEMPLE_ENTRANCE :
+            newWaterTempleEntrance = originalIndex;
+            break;
+        case SPIRIT_TEMPLE_ENTRANCE :
+            newSpiritTempleEntrance = originalIndex;
+            break;
+        case SHADOW_TEMPLE_ENTRANCE :
+            newShadowTempleEntrance = originalIndex;
+            break;
+        case BOTTOM_OF_THE_WELL_ENTRANCE :
+            newBottomOfTheWellEntrance = originalIndex;
+            break;
+        case ICE_CAVERN_ENTRANCE :
+            newIceCavernEntrance = originalIndex;
+            break;
+        case GERUDO_TRAINING_GROUNDS_ENTRANCE :
+            newGerudoTrainingGroundsEntrance = originalIndex;
+            break;
+    }
+}
 
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
@@ -102,9 +155,12 @@ void Entrance_Init(void) {
         }
 
         //check to see if this is the new requiem entrance
-        if (originalIndex == 0x1E1) {
-            newRequiemEntrance = overrideIndex;
+        if (overrideIndex == 0x1E1) {
+            newRequiemEntrance = originalIndex;
         }
+
+        //check to see if this is a new dungeon entrance
+        Entrance_SetNewDungeonEntrances(originalIndex, overrideIndex);
 
         for (s16 j = 0; j < 4; j++) {
             gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
@@ -130,6 +186,54 @@ void Entrance_DeathInGanonBattle(void) {
     }
 }
 
-s16 GetRequiemEntrance(void) {
+s16 Entrance_GetRequiemEntrance(void) {
     return newRequiemEntrance;
+}
+
+//Properly respawn the player if entrance randomizer is on
+void Entrance_SetOnGameOver(void) {
+
+}
+
+//Properly savewarp the player accounting for dungeon entrance randomizer
+//It's easier to rewrite this entirely compared to performing an ASM
+//dance for just the boss rooms. This removes the behavior where savewarping
+//as adult Link in Link's House respawns you in Link's House.
+void Entrance_SetOnSavewarp(void) {
+
+    s16 scene = gSaveContext.sceneIndex;
+
+    if (scene == DUNGEON_DEKU_TREE || scene == DUNGEON_DEKU_TREE_BOSS_ROOM) {
+        gSaveContext.entranceIndex = newDekuTreeEntrance;
+    } else if (scene == DUNGEON_DODONGOS_CAVERN || scene == DUNGEON_DODONGOS_CAVERN_BOSS_ROOM) {
+        gSaveContext.entranceIndex = newDodongosCavernEntrance;
+    } else if (scene == DUNGEON_JABUJABUS_BELLY || scene == DUNGEON_JABUJABUS_BELLY_BOSS_ROOM) {
+        gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
+    } else if (scene == DUNGEON_FOREST_TEMPLE || scene == 0x14) { //Forest Temple Boss Room
+        gSaveContext.entranceIndex = newForestTempleEntrance;
+    } else if (scene == DUNGEON_FIRE_TEMPLE || scene == 0x15) { //Fire Temple Boss Room
+        gSaveContext.entranceIndex = newFireTempleEntrance;
+    } else if (scene == DUNGEON_WATER_TEMPLE || scene == 0x16) { //Water Temple Boss Room
+        gSaveContext.entranceIndex = newWaterTempleEntrance;
+    } else if (scene == DUNGEON_SPIRIT_TEMPLE || scene == 0x17) { //Spirit Temple Boss Room
+        gSaveContext.entranceIndex = newSpiritTempleEntrance;
+    } else if (scene == DUNGEON_SHADOW_TEMPLE || scene == 0x18) { //Shadow Temple Boss Room
+        gSaveContext.entranceIndex = newShadowTempleEntrance;
+    } else if (scene == DUNGEON_BOTTOM_OF_THE_WELL) {
+        gSaveContext.entranceIndex = newBottomOfTheWellEntrance;
+    } else if (scene == DUNGEON_GERUDO_TRAINING_GROUNDS) {
+        gSaveContext.entranceIndex = newGerudoTrainingGroundsEntrance;
+    } else if (scene == DUNGEON_ICE_CAVERN) {
+        gSaveContext.entranceIndex = newIceCavernEntrance;
+    } else if (scene == DUNGEON_GANONS_CASTLE_FIRST_PART) {
+        gSaveContext.entranceIndex = GANONS_CASTLE_ENTRANCE;
+    } else if (scene == DUNGEON_GANONS_CASTLE_SECOND_PART || scene == DUNGEON_GANONS_CASTLE_CRUMBLING || scene == DUNGEON_GANONS_CASTLE_FLOOR_BENEATH_BOSS_CHAMBER || scene == 0x4F || scene == 0x1A) {
+        gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower
+    } else if (scene == DUNGEON_GERUDO_FORTRESS) {
+        gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout room 0?
+    } else if (gSaveContext.linkAge == AGE_CHILD) {
+        gSaveContext.entranceIndex = 0x00BB; // Link's House Child Spawn
+    } else {
+        gSaveContext.entranceIndex = 0x05F4; // Temple of Time Adult Spawn
+    }
 }

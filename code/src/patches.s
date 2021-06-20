@@ -1234,6 +1234,12 @@ DekuTreeOpenMouth_patch:
 DekuTreeOpenMouthTwo_patch:
     bl BgTreemouth_ShouldOpen
 
+.section .patch_SetSavewarpEntrance
+.global SetSavewarpEntrance_patch
+SetSavewarpEntrance_patch:
+    bl hook_SetSavewarpEntrance
+    b  0x44FCE0
+
 .section .patch_loader
 .global loader_patch
 
