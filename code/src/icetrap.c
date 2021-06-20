@@ -5,6 +5,17 @@
 
 static u8 pendingFreezes = 0;
 static u8 cooldown = 0;
+static u8 modifyScale = 0;
+
+// LUT for 1 - 0.5sin(0.5x) * 1.1^-x where x = 30 - INDEX
+const f32 SCALE_TRAP[] = {
+    1.000f, 0.971f, 0.966f, 0.969f, 0.982f,
+    1.003f, 1.027f, 1.049f, 1.061f, 1.059f,
+    1.040f, 1.006f, 0.963f, 0.921f, 0.892f,
+    0.888f, 0.914f, 0.969f, 1.045f, 1.124f,
+    1.185f, 1.207f, 1.177f, 1.090f, 0.960f,
+    0.814f, 0.690f, 0.625f, 0.652f, 0.782f
+};
 
 u32 IceTrap_IsPending(void) {
     return pendingFreezes > 0;
@@ -24,6 +35,7 @@ void IceTrap_Give(void) {
         else if (gSettingsContext.randomTrapDmg == 2) { //Advanced
             damageType = gRandInt % 5; // 0 will be used for the fire trap
         }
+        modifyScale = (damageType == 0);
 
         pendingFreezes--;
         PLAYER->stateFlags1 &= ~0xC00;
@@ -53,5 +65,9 @@ void IceTrap_Update(void) {
 
     if (cooldown != 0) {
         cooldown--;
+
+        if (modifyScale) {
+            PLAYER->actor.scale.y = 0.01f * SCALE_TRAP[cooldown];
+        }
     }
 }
