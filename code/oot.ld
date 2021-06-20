@@ -804,7 +804,7 @@ SECTIONS
 		*(.patch_ExtendedObjectClear)
 	}
 
-	.patch_RequiemLocation 0x44F10C : {
+	.patch_RequiemLocation 0x44F104 : {
 		*(.patch_RequiemLocation)
 	}
 

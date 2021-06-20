@@ -529,7 +529,7 @@ void GenerateRandomizer() {
 
   consoleSelect(&topScreen);
   consoleClear();
-  printf("\x1b[7;10HCaching Settings...");
+  printf("\x1b[6;10HCaching Settings...");
 
   //After choosing to generate, cache chosen settings for later
   SaveCachedSettings();

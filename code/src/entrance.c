@@ -10,6 +10,11 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 
 static EntranceOverride rEntranceOverrides[250] = {0};
 
+//This variable is used to store whatever new entrance should lead to
+//the Requiem of Spirit check. Otherwise, leaving the Spirit Temple
+//will take players to the Requiem cutscene if it is shuffled.
+static s16 newRequiemEntrance = 0x01E1;
+
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
     memcpy(&gSceneTable[1],  gSettingsContext.dodongosCavernDungeonMode        == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[1]  : &gDungeonSceneTable[1],  sizeof(Scene));
@@ -96,6 +101,11 @@ void Entrance_Init(void) {
             continue;
         }
 
+        //check to see if this is the new requiem entrance
+        if (originalIndex == 0x1E1) {
+            newRequiemEntrance = overrideIndex;
+        }
+
         for (s16 j = 0; j < 4; j++) {
             gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
             gEntranceTable[originalIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
@@ -106,7 +116,7 @@ void Entrance_Init(void) {
               gEntranceTable[blueWarpIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
               gEntranceTable[blueWarpIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
               //delete title cards coming from blue warps so that delayed overrides don't have to wait for them
-              gEntranceTable[blueWarpIndex+j].field & ~0x4000;
+              gEntranceTable[blueWarpIndex+j].field &= ~0x4000;
             }
         }
     }
@@ -118,4 +128,8 @@ void Entrance_DeathInGanonBattle(void) {
     } else {
         SetNextEntrance(gGlobalContext, 0x43F, 0x14, 2);
     }
+}
+
+s16 GetRequiemEntrance(void) {
+    return newRequiemEntrance;
 }

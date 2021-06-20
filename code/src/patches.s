@@ -376,6 +376,8 @@ SerenadeLocation_patch:
 .section .patch_RequiemLocation
 .global RequiemLocation_patch
 RequiemLocation_patch:
+    nop
+    nop
     bl Cutscene_OverrideRequiem
 
 .section .patch_NocturneLocation

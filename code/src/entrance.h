@@ -8,5 +8,6 @@ typedef struct {
 } EntranceOverride;
 
 void Entrance_Init(void);
+s16 GetRequiemEntrance(void);
 
 #endif //_ENTRANCE_H_

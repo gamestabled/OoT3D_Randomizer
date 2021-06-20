@@ -693,11 +693,9 @@ int Fill() {
     AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); //assume worst case shopsanity 4
     if (ShuffleEntrances) {
       AreaTable_Init(); //Reset the world graph in case of retrying
-      CitraPrint("About to set entrances");
-      sleep(0.1);
+      printf("\x1b[7;10HShuffling Entrances...");
       ShuffleAllEntrances();
-      CitraPrint("Done setting entrances");
-      sleep(0.1);
+      printf("Done");
     }
     //erase temporary shop items
     FilterAndEraseFromPool(ItemPool, [](const ItemKey item){return ItemTable(item).GetItemType() == ITEMTYPE_SHOP;});
