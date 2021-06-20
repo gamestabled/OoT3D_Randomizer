@@ -8,7 +8,7 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
-static EntranceOverride rEntranceOverrides[250] = {0};
+static EntranceOverride rEntranceOverrides[256] = {0};
 
 //This variable is used to store whatever new entrance should lead to
 //the Requiem of Spirit check. Otherwise, leaving the Spirit Temple
@@ -97,7 +97,7 @@ void Entrance_Init(void) {
         s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
         s16 overrideIndex = rEntranceOverrides[i].override;
 
-        if (originalIndex == overrideIndex) {
+        if (originalIndex == 0 && overrideIndex == 0) {
             continue;
         }
 

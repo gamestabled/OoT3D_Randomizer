@@ -248,6 +248,7 @@ typedef struct {
 
   u8 startingAge;
   u8 resolvedStartingAge;
+  u8 shuffleDungeonEntrances;
   u8 bombchusInLogic;
   u8 bombchuDrops;
   u8 randomMQDungeons;

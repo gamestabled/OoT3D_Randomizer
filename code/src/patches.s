@@ -1224,6 +1224,16 @@ SkipDaruniaDanceThree_patch:
 ShortenRainbowBridgeCS_patch:
     bl hook_ShortenRainbowBridgeCS
 
+.section .patch_DekuTreeOpenMouth
+.global DekuTreeOpenMouth_patch
+DekuTreeOpenMouth_patch:
+    bl BgTreemouth_ShouldOpen
+
+.section .patch_DekuTreeOpenMouthTwo
+.global DekuTreeOpenMouthTwo_patch
+DekuTreeOpenMouthTwo_patch:
+    bl BgTreemouth_ShouldOpen
+
 .section .patch_loader
 .global loader_patch
 
