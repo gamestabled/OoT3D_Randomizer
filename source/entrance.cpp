@@ -329,10 +329,10 @@ void ShuffleAllEntrances() {
     AddElementsToPool(entrancePool, GetShuffleableEntrances(EntranceType::Dungeon));
 
     //If forest is closed don't allow a forest escape via spirit temple hands
-    // if (Settings::OpenForest.Is(OPENFOREST_CLOSED)) {
-    //   FilterAndEraseFromPool(entrancePool, [](const Entrance* entrance){return entrance->GetParentRegion()    == KF_OUTSIDE_DEKU_TREE &&
-    //                                                                            entrance->GetConnectedRegion() == DEKU_TREE_ENTRYWAY;});
-    // }
+    if (Settings::OpenForest.Is(OPENFOREST_CLOSED)) {
+      FilterAndEraseFromPool(entrancePool, [](const Entrance* entrance){return entrance->GetParentRegion()    == KF_OUTSIDE_DEKU_TREE &&
+                                                                               entrance->GetConnectedRegion() == DEKU_TREE_ENTRYWAY;});
+    }
 
     //decoupled entrances stuff
   }

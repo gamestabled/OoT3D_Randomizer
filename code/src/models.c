@@ -238,13 +238,12 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
     if ((actor->id == 0x8B) && (globalCtx->sceneNum == 0x02)) {
         ItemOverride_Key key = { .all = 0 };
         key.scene = 0xFF;
-        key.type = OVR_DELAYED;
+        key.type = OVR_TEMPLE;
         key.flag = DUNGEON_JABUJABUS_BELLY;
         override = ItemOverride_LookupByKey(key);
-        if(override.key.all != 0) {
+        if (override.key.all != 0) {
             //Unrotate the Spiritual Stones
             actor->shape.rot.x = 0;
-            Model_GetObjectBankIndex(model, actor, globalCtx);
         }
     } else {
         override = ItemOverride_Lookup(actor, globalCtx->sceneNum, baseItemId);
