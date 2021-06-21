@@ -3,6 +3,7 @@
 #include "dungeon.hpp"
 #include "item_list.hpp"
 #include "item_location.hpp"
+#include "entrance.hpp"
 #include "random.hpp"
 #include "settings.hpp"
 #include "trial.hpp"
@@ -380,6 +381,23 @@ static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
   spoilerLog.RootElement()->InsertEndChild(parentNode);
 }
 
+//Write the randomized entrances to the spoiler log, if there are any
+static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
+  if (!Settings::ShuffleEntrances) {
+    return;
+  }
+
+  auto parentNode = spoilerLog.NewElement("shuffled-entrances");
+  auto shuffledEntrances = GetShuffleableEntrances(EntranceType::All);
+
+  for (Entrance* entrance : shuffledEntrances) {
+    auto node = parentNode->InsertNewChildElement("entrance");
+    node->SetText(entrance->to_string().c_str());
+  }
+
+  spoilerLog.RootElement()->InsertEndChild(parentNode);
+}
+
 static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("all-locations");
 
@@ -417,6 +435,7 @@ bool SpoilerLog_Write() {
   wothLocations.clear();
 
   WriteHints(spoilerLog);
+  WriteShuffledEntrances(spoilerLog);
   WriteAllLocations(spoilerLog);
 
   auto e = spoilerLog.SaveFile(GetSpoilerLogPath().c_str());

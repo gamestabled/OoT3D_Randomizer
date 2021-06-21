@@ -1842,7 +1842,7 @@ void AreaTable_Init() {
                   Entrance(SACRED_FOREST_MEADOW,   []{return true;}),
   });
 
-  areaTable[FIRE_TEMPLE_ENTRYWAY] = Area("Fire Temple Entrance", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+  areaTable[FIRE_TEMPLE_ENTRYWAY] = Area("Fire Temple Entryway", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(FIRE_TEMPLE_LOWER,    []{return Dungeon::FireTemple.IsVanilla();}),
                   Entrance(FIRE_TEMPLE_MQ_LOWER, []{return Dungeon::FireTemple.IsMQ();}),
