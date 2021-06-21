@@ -25,6 +25,17 @@ void IceTrap_Push(void) {
     pendingFreezes++;
 }
 
+void LinkDamageNoKnockback(void) {
+    if (gSaveContext.nayrusLoveTimer == 0) {
+        gSaveContext.health -= PLAYER->actor.colChkInfo.damage / ((gSaveContext.doubleDefense)? 2 : 1);
+    }
+    if (gSaveContext.health < 0) {
+        gSaveContext.health = 0;
+    }
+    PLAYER->actor.colChkInfo.damage = 0;
+    LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
+}
+
 void IceTrap_Give(void) {
     if (cooldown == 0 && pendingFreezes &&
         ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
@@ -53,6 +64,11 @@ void IceTrap_Give(void) {
             FireDamage(&(PLAYER->actor), gGlobalContext, 0);
         }
         LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20); // TODO
+        if (damageType == 0) {
+            LinkDamageNoKnockback();
+        } else {
+            LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20);
+        }
         cooldown = 30;
     }
 }
