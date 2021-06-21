@@ -392,7 +392,7 @@ static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
 
   for (Entrance* entrance : shuffledEntrances) {
     auto node = parentNode->InsertNewChildElement("entrance");
-    node->SetText(entrance->to_string().c_str());
+    node->SetText((entrance->GetName() + " Leads to " + AreaTable(entrance->GetConnectedRegion())->regionName).c_str());
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);

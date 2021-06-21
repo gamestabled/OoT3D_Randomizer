@@ -158,10 +158,10 @@ public:
     }
 
     void SaveFinalState() {
-      finalChildDay   = childDay;
-      finalChildNight = childNight;
-      finalAdultDay   = adultDay;
-      finalAdultNight = adultNight;
+      // finalChildDay   = childDay;
+      // finalChildNight = childNight;
+      // finalAdultDay   = adultDay;
+      // finalAdultNight = adultNight;
     }
 
     bool ReachedFinalState() const {

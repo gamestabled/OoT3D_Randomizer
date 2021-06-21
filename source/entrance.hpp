@@ -36,6 +36,14 @@ public:
         return AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
     }
 
+    void SetName() {
+        name = AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
+    }
+
+    std::string GetName() const {
+        return name;
+    }
+
     bool ConditionsMet(bool allAgeTimes = false) const {
 
         Area* parent = AreaTable(parentRegion);
@@ -208,6 +216,7 @@ private:
     bool shuffled = false;
     bool primary = false;
     bool connected = true;
+    std::string name = "";
 };
 
 void ShuffleAllEntrances();
