@@ -1434,7 +1434,6 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
 
   if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
     ItemTable(item).ApplyEffect();
-    loc->Use();
   }
 
   itemsPlaced++;

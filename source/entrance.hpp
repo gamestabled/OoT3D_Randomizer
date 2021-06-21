@@ -36,8 +36,23 @@ public:
         return AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
     }
 
-    bool ConditionsMet() const {
-        return conditionsMet() && connected;
+    bool ConditionsMet(bool allAgeTimes = false) const {
+
+        Area* parent = AreaTable(parentRegion);
+        bool conditionsMet = false;
+
+        if (allAgeTimes && !parent->AllAccess()) {
+            return false;
+        }
+
+        if ((parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   ||
+            (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) ||
+            (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   ||
+            (parent->adultNight && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight))) {
+              conditionsMet = true;
+        }
+
+        return conditionsMet && connected;
     }
 
     AreaKey GetAreaKey() const {
@@ -45,7 +60,7 @@ public:
     }
 
     //set the logic to be a specific age and time of day and see if the condition still holds
-    bool CheckConditionAtAgeTime(bool& age, bool& time) {
+    bool CheckConditionAtAgeTime(bool& age, bool& time) const {
         bool prevIsChild = Logic::IsChild;
         bool prevIsAdult = Logic::IsAdult;
         bool prevAtDay   = Logic::AtDay;
@@ -59,7 +74,8 @@ public:
         time = true;
         age = true;
 
-        bool checkCondition = ConditionsMet();
+        Logic::UpdateHelpers();
+        bool checkCondition = conditionsMet();
 
         Logic::IsChild = prevIsChild;
         Logic::IsAdult = prevIsAdult;

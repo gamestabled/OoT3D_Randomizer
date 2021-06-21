@@ -191,7 +191,7 @@ s16 Entrance_GetRequiemEntrance(void) {
 }
 
 //Properly respawn the player if entrance randomizer is on
-void Entrance_SetOnGameOver(void) {
+void Entrance_SetGameOverEntrance(void) {
 
 }
 
@@ -199,7 +199,7 @@ void Entrance_SetOnGameOver(void) {
 //It's easier to rewrite this entirely compared to performing an ASM
 //dance for just the boss rooms. This removes the behavior where savewarping
 //as adult Link in Link's House respawns you in Link's House.
-void Entrance_SetOnSavewarp(void) {
+void Entrance_SetSavewarpEntrance(void) {
 
     s16 scene = gSaveContext.sceneIndex;
 
@@ -230,7 +230,7 @@ void Entrance_SetOnSavewarp(void) {
     } else if (scene == DUNGEON_GANONS_CASTLE_SECOND_PART || scene == DUNGEON_GANONS_CASTLE_CRUMBLING || scene == DUNGEON_GANONS_CASTLE_FLOOR_BENEATH_BOSS_CHAMBER || scene == 0x4F || scene == 0x1A) {
         gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower
     } else if (scene == DUNGEON_GERUDO_FORTRESS) {
-        gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout room 0?
+        gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
     } else if (gSaveContext.linkAge == AGE_CHILD) {
         gSaveContext.entranceIndex = 0x00BB; // Link's House Child Spawn
     } else {

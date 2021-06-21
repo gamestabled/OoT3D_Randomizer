@@ -435,10 +435,10 @@ namespace Logic {
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
-    IsChild = Age == AGE_CHILD;
-    IsAdult = Age == AGE_ADULT;
+    // IsChild = Age == AGE_CHILD;
+    // IsAdult = Age == AGE_ADULT;
 
-  //IsGlitched = false;
+    //IsGlitched = false;
 
     CanBlastOrSmash = HasExplosives || CanUse(CanUseItem::Hammer);
     CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(CanUseItem::Dins_Fire));

@@ -166,11 +166,9 @@ static void DeleteTargetEntrance(Entrance* targetEntrance) {
 
 static void ConfirmReplacement(Entrance* entrance, Entrance* targetEntrance) {
   DeleteTargetEntrance(targetEntrance);
-  CitraPrint("Connected " + entrance->to_string());
   if (entrance->GetReverse() != nullptr /*&& entrances are not decoupled*/) {
     auto replacedReverse = targetEntrance->GetReplacement()->GetReverse();
     DeleteTargetEntrance(replacedReverse->GetReverse()->GetAssumed());
-    CitraPrint("Connected " + replacedReverse->to_string());
   }
 }
 
@@ -228,10 +226,7 @@ static bool ShuffleEntrances(std::vector<Entrance*>& entrances, std::vector<Entr
         continue;
       }
 
-      std::string message = "Attempting to connect " + entrance->to_string() + " and " + target->to_string();
-      CitraPrint(message);
       if (ReplaceEntrance(entrance, target, rollbacks)) {
-        CitraPrint("success");
         break;
       } else if (entrance->GetConnectedRegion() != NONE) {
         RestoreConnections(entrance, target);
@@ -239,8 +234,6 @@ static bool ShuffleEntrances(std::vector<Entrance*>& entrances, std::vector<Entr
     }
 
     if (entrance->GetConnectedRegion() == NONE) {
-      std::string message = "No more valid entrances for " + entrance->to_string();
-      CitraPrint(message);
       return false;
     }
   }

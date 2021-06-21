@@ -57,14 +57,6 @@ public:
       return flag;
     }
 
-    void Use() {
-      used = true;
-    }
-
-    bool IsUsed() const {
-      return used;
-    }
-
     bool IsAddedToPool() const {
       return addedToPool;
     }
@@ -253,7 +245,6 @@ public:
     }
 
     void ResetVariables() {
-      used = false;
       checked = false;
       addedToPool = false;
       placedItem = NONE;
@@ -268,7 +259,6 @@ private:
     u8 scene;
     ItemLocationType type;
     u8 flag;
-    bool used = false;
     bool checked = false;
 
     std::string name;
