@@ -213,6 +213,28 @@ static void WriteLocation(
   }
 }
 
+//Writes a shuffled entrance to the specified node
+static void WriteShuffledEntrance(
+  tinyxml2::XMLElement* parentNode,
+  Entrance* entrance,
+  const bool withPadding = false
+) {
+  auto node = parentNode->InsertNewChildElement("entrance");
+  node->SetAttribute("name", entrance->GetName().c_str());
+  node->SetText(AreaTable(entrance->GetConnectedRegion())->regionName.c_str());
+
+  if (withPadding) {
+    constexpr int16_t LONGEST_NAME = 56; //The longest name of a vanilla entrance
+
+    //Insert padding so we get a kind of table in the XML document
+    int16_t requiredPadding = LONGEST_NAME - entrance->GetName().length();
+    if (requiredPadding > 0) {
+      std::string padding(requiredPadding, ' ');
+      node->SetAttribute("_", padding.c_str());
+    }
+  }
+}
+
 // Writes the settings (without excluded locations, starting inventory and tricks) to the spoilerLog document.
 static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
   auto parentNode = spoilerLog.NewElement("settings");
@@ -391,8 +413,7 @@ static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
   auto shuffledEntrances = GetShuffleableEntrances(EntranceType::All);
 
   for (Entrance* entrance : shuffledEntrances) {
-    auto node = parentNode->InsertNewChildElement("entrance");
-    node->SetText((entrance->GetName() + " Leads to " + AreaTable(entrance->GetConnectedRegion())->regionName).c_str());
+    WriteShuffledEntrance(parentNode, entrance, true);
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);
