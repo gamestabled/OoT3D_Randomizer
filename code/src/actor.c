@@ -28,6 +28,8 @@
 #include "graveyard_objects.h"
 #include "windmill_man.h"
 #include "deku_tree_mouth.h"
+#include "well_stone.h"
+#include "well_water.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -76,6 +78,8 @@ void Actor_Init() {
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
     gActorOverlayTable[0xF1].initInfo->draw = ItemOcarina_rDraw;
 
+    gActorOverlayTable[0x104].initInfo->init = BgSpot01Idomizu_rInit;
+
     gActorOverlayTable[0x10F].initInfo->init = ItemEtcetera_rInit;
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
 
@@ -84,6 +88,8 @@ void Actor_Init() {
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
+
+    gActorOverlayTable[0x145].initInfo->init = BgSpot01Idosoko_rInit;
 
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
