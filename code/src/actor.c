@@ -30,6 +30,7 @@
 #include "deku_tree_mouth.h"
 #include "well_stone.h"
 #include "well_water.h"
+#include "liftable_rock.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -93,6 +94,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
+
+    gActorOverlayTable[0x14E].initInfo->init = EnIshi_rInit;
 
     gActorOverlayTable[0x153].initInfo->update = EnFu_rUpdate;
 
