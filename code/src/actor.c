@@ -27,6 +27,7 @@
 #include "lake_hylia_objects.h"
 #include "graveyard_objects.h"
 #include "windmill_man.h"
+#include "player.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -35,6 +36,8 @@
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
+    gActorOverlayTable[0x0].initInfo->update = PlayerActor_rUpdate;
+
     gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
     gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
 
@@ -130,7 +133,7 @@ void Actor_Init() {
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GTG].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GANON].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
 
-    // Define object 128 to be by default the same as object 
+    // Define object 128 to be by default the same as object
     strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
 
     // Define draw item 3 (corresponding to gid 4) to be double defense custom model

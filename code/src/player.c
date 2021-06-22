@@ -1,10 +1,16 @@
 #include "z3D/z3D.h"
 #include "objects.h"
 #include "custom_models.h"
+#include "player.h"
+
+#define PlayerActor_Update_addr 0x1E1B54
+#define PlayerActor_Update ((ActorFunc)PlayerActor_Update_addr)
+
+u8 healthDecrement = 0;
 
 void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void* cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
-    
+
     if (gSaveContext.linkAge == 0) {
         void* cmb = (void*)(((char*)zarInfo->buf) + 0xDAE8);
         CustomModel_EditLinkToCustomTunic(cmb);
@@ -37,3 +43,16 @@ void Player_SetChildCustomTunicCMAB(void) {
     cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
     TexAnim_Spawn(PLAYER->skelAnime.unk_28->unk_0C, cmabMan);
 }
+
+void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx){
+    PlayerActor_Update(thisx, globalCtx);
+
+    if(healthDecrement > 0 && gSaveContext.health > 4){
+        gSaveContext.health--;
+        healthDecrement--;
+    }
+    else{
+        healthDecrement = 0;
+    }
+}
+

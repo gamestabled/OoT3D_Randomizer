@@ -3,6 +3,7 @@
 #include "item_override.h"
 #include "item_table.h"
 #include "settings.h"
+#include "player.h"
 
 #define EnBox_Init_addr 0x1899EC
 #define EnBox_Init ((ActorFunc)EnBox_Init_addr)
@@ -18,6 +19,7 @@ static u8 type = 0;
 static u8 checkedForBombchus = 0;
 Actor* lastTrapChest = 0;
 Actor* bomb = 0;
+Actor* fairy = 0;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx){
     lastTrapChest = 0;
@@ -89,6 +91,15 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx){
         bomb = 0;
     }
 
+    if (fairy!=0 && thisx->xzDistToPlayer < 50.0f){
+        for(int i = 0x928; i < 0x934; i++){
+            *(((u8*)(fairy)) + i) = 0; //evil dark fairy (inner color)
+        }
+        healthDecrement = 128; //8 Hearts
+        PlaySound(0x100035C); //Poe laugh SFX
+        fairy = 0;
+    }
+
     EnBox_Update(thisx, globalCtx);
 }
 
@@ -118,7 +129,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx){
 
     if(thisx != lastTrapChest && thisx->xzDistToPlayer < 50.0f){
         lastTrapChest = thisx;
-        u8 damageType = gRandInt % 6;
+        u8 damageType = gRandInt % 8;
         if(damageType == 3){
             return 0;
         }
@@ -131,6 +142,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx){
         if(PLAYER->invincibilityTimer > 0){
             PLAYER->invincibilityTimer = 0;
         }
+
         //Big knockback, small knockback or shock
         if(damageType == 0 || damageType == 2 || damageType == 4){
             LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20);
@@ -141,6 +153,27 @@ u8 Chest_OverrideIceSmoke(Actor* thisx){
             bomb = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x10, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
             bomb->world.pos = thisx->world.pos;
         }
+        //Unhealing fairy
+        else if(damageType == 6){
+            fairy = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x18, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
+            fairy->world.pos = thisx->world.pos;
+            fairy->params = 0x5;
+            PLAYER->actor.home.pos.y = -5000; //Make Link airborne for a frame to cancel the get item event
+        }
+        //Explosive Rupee Trap (No damage)
+        else if(damageType == 7){
+            Actor* ruppy = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x131, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
+            ruppy->world.pos = thisx->world.pos;
+            ruppy->world.pos.y += 100;
+            ruppy->params = 0x2;
+            PLAYER->actor.home.pos.y = -5000; //Make Link airborne for a frame to cancel the get item event
+        }
+        /*//Fire Trap, crashes outside of dungeons even though IceTrap_Update loads the right Object???
+        else if(damageType == 8){
+            Actor* flame = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x11C, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
+            flame->world.pos = PLAYER->actor.world.pos;
+            flame->params = 0x2;
+        }*/
     }
 
     return 1;
