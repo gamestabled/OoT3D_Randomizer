@@ -123,6 +123,10 @@ public:
         shuffled = true;
     }
 
+    bool IsShuffled() const {
+        return shuffled;
+    }
+
     void SetAsPrimary() {
         primary = true;
     }

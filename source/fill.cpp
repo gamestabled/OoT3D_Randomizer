@@ -23,9 +23,6 @@ using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
 
-static u32 searchIterations = 0;
-static u32 areaPoolIterations = 0;
-
 static void RemoveStartingItemsFromPool() {
   for (ItemKey startingItem : StartingInventory) {
     for (size_t i = 0; i < ItemPool.size(); i++) {
@@ -786,8 +783,6 @@ int Fill() {
         CreateAllHints();
         printf("Done");
       }
-      CitraPrint(std::to_string(searchIterations));
-      CitraPrint(std::to_string(areaPoolIterations));
       return 1;
     }
     //Unsuccessful placement

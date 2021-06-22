@@ -413,7 +413,10 @@ static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
   auto shuffledEntrances = GetShuffleableEntrances(EntranceType::All);
 
   for (Entrance* entrance : shuffledEntrances) {
-    WriteShuffledEntrance(parentNode, entrance, true);
+    //Double-check that the entrance was actually shuffled
+    if (entrance->IsShuffled()) {
+      WriteShuffledEntrance(parentNode, entrance, true);
+    }
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);

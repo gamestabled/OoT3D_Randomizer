@@ -382,6 +382,12 @@ void CreateEntranceOverrides() {
   auto allShuffleableEntrances = GetShuffleableEntrances(EntranceType::All, false);
 
   for (Entrance* entrance : allShuffleableEntrances) {
+
+    //Double-check to make sure the entrance is actually shuffled
+    if (!entrance->IsShuffled()) {
+      continue;
+    }
+
     auto message = "Setting " + entrance->to_string();
     PlacementLog_Msg(message);
 
