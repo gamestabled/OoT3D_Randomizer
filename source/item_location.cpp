@@ -1399,6 +1399,7 @@ std::set<ItemOverride, ItemOverride_Compare> overrides = {};
 std::vector<std::vector<LocationKey>> playthroughLocations;
 std::vector<LocationKey> wothLocations;
 bool playthroughBeatable = false;
+bool allLocationsReachable = false;
 
 u16 itemsPlaced = 0;
 
@@ -1433,7 +1434,6 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
 
   if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
     ItemTable(item).ApplyEffect();
-    loc->Use();
   }
 
   itemsPlaced++;
@@ -1510,7 +1510,7 @@ void AddExcludedOptions() {
   }
 }
 
-void CreateOverrides() {
+void CreateItemOverrides() {
   PlacementLog_Msg("NOW CREATING OVERRIDES\n\n");
   for (LocationKey locKey : allLocations) {
     auto loc = Location(locKey);

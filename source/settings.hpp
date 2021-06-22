@@ -258,6 +258,8 @@ namespace Settings {
 
   extern Option StartingAge;
   extern u8 ResolvedStartingAge;
+  extern Option ShuffleEntrances;
+  extern Option ShuffleDungeonEntrances;
   extern Option BombchusInLogic;
   extern Option BombchuDrops;
   extern Option RandomMQDungeons;
@@ -317,7 +319,6 @@ namespace Settings {
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
 
-  extern bool ShuffleDungeonEntrances;
   extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;

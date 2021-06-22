@@ -13,6 +13,7 @@
 #include "category.hpp"
 #include "settings.hpp"
 #include "tinyxml2.h"
+#include "utils.hpp"
 
 namespace fs = std::filesystem;
 
@@ -73,18 +74,12 @@ static std::string PresetPath(std::string_view presetName, OptionCategory catego
   return std::string(GetBasePath(category)).append(presetName).append(".xml");
 }
 
-// Removes any line breaks from s.
-static std::string RemoveLineBreaks(std::string s) {
-  s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
-  return s;
-}
-
 // Presets are now saved as XML files using the tinyxml2 library.
 // Documentation: https://leethomason.github.io/tinyxml2/index.html
 bool SavePreset(std::string_view presetName, OptionCategory category) {
   using namespace tinyxml2;
 
-  XMLDocument preset = XMLDocument();
+  XMLDocument preset = XMLDocument(false);
 
   // Create and insert the XML declaration
   preset.InsertEndChild(preset.NewDeclaration());
@@ -102,22 +97,14 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
         continue;
       }
 
-      // Create the <setting> element
-      XMLElement* newSetting = preset.NewElement("setting");
+      XMLElement* newSetting = rootNode->InsertNewChildElement("setting");
       newSetting->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
       newSetting->SetText(setting->GetSelectedOptionText().c_str());
-
-      // Append it to the root node
-      rootNode->InsertEndChild(newSetting);
     }
   }
 
-  const std::string filepath = PresetPath(presetName, category);
-  XMLError e = preset.SaveFile(filepath.c_str());
-  if (e != XML_SUCCESS) {
-    return false;
-  }
-  return true;
+  XMLError e = preset.SaveFile(PresetPath(presetName, category).c_str());
+  return e == XML_SUCCESS;
 }
 
 //Read the preset XML file

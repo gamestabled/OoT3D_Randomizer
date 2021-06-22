@@ -248,6 +248,7 @@ typedef struct {
 
   u8 startingAge;
   u8 resolvedStartingAge;
+  u8 shuffleDungeonEntrances;
   u8 bombchusInLogic;
   u8 bombchuDrops;
   u8 randomMQDungeons;
@@ -364,9 +365,6 @@ typedef struct {
   u32 startingQuestItems;
   u32 startingEquipment;
   u32 startingUpgrades;
-
-  u8 detailedLogic[100];
-  u8 excludeLocations[700];
 
 } SettingsContext;
 

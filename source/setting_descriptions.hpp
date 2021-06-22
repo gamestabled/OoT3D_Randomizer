@@ -47,6 +47,10 @@ extern string_view ganonsTrialCountDesc;
 
 extern string_view ageDesc;
 
+extern string_view shuffleEntrancesDesc;
+
+extern string_view dungeonEntrancesDesc;
+
 extern string_view bombchuLogicDesc;
 
 extern string_view bombchuDropDesc;

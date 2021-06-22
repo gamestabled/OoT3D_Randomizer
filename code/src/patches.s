@@ -376,6 +376,8 @@ SerenadeLocation_patch:
 .section .patch_RequiemLocation
 .global RequiemLocation_patch
 RequiemLocation_patch:
+    nop
+    nop
     bl Cutscene_OverrideRequiem
 
 .section .patch_NocturneLocation
@@ -1221,6 +1223,23 @@ SkipDaruniaDanceThree_patch:
 .global ShortenRainbowBridgeCS_patch
 ShortenRainbowBridgeCS_patch:
     bl hook_ShortenRainbowBridgeCS
+
+.section .patch_OwlMagicCheck
+.global OwlMagicCheck_patch
+OwlMagicCheck_patch:
+    mov r0,#0x1
+
+.section .patch_SetSavewarpEntrance
+.global SetSavewarpEntrance_patch
+SetSavewarpEntrance_patch:
+    bl hook_SetSavewarpEntrance
+    b  0x44FCE0
+
+.section .patch_SetGameOverEntrance
+.global SetGameOverEntrance_patch
+SetGameOverEntrance_patch:
+    bl hook_SetGameOverEntrance
+    b  0x458EC8
 
 .section .patch_loader
 .global loader_patch

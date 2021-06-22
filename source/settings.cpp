@@ -57,16 +57,20 @@ namespace Settings {
   };
 
   //World Settings
-  Option RandomizeWorld      = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
-  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                      {ageDesc});
+  Option RandomizeWorld          = Option::Bool("Randomize Settings", {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
+  Option StartingAge             = Option::U8  ("Starting Age",       {"Adult", "Child", "Random"},                                      {ageDesc});
   u8 ResolvedStartingAge;
-  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
-  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                                     {bombchuDropDesc});
-  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                                     {randomMQDungeonsDesc});
-  Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
+  Option ShuffleEntrances        = Option::Bool("Shuffle Entrances",  {"Off", "On"},                                                     {shuffleEntrancesDesc});
+  Option ShuffleDungeonEntrances = Option::Bool("  Dungeon Entrances",{"Off", "On"},                                                     {dungeonEntrancesDesc});
+  Option BombchusInLogic         = Option::Bool("Bombchus in Logic",  {"Off", "On"},                                                     {bombchuLogicDesc});
+  Option BombchuDrops            = Option::Bool("Bombchu Drops",      {"Off", "On"},                                                     {bombchuDropDesc});
+  Option RandomMQDungeons        = Option::Bool("Random MQ Dungeons", {"Off", "On"},                                                     {randomMQDungeonsDesc});
+  Option MQDungeonCount          = Option::U8  ("  MQ Dungeon Count", {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
+    &ShuffleEntrances,
+    &ShuffleDungeonEntrances,
     &BombchusInLogic,
     &BombchuDrops,
     &RandomMQDungeons,
@@ -642,82 +646,82 @@ namespace Settings {
     ctx.hashIndexes[3] = hashIconIndexes[3];
     ctx.hashIndexes[4] = hashIconIndexes[4];
 
-    ctx.logic                = Logic.Value<u8>();
-    ctx.openForest           = OpenForest.Value<u8>();
-    ctx.openKakariko         = OpenKakariko.Value<u8>();
-    ctx.openDoorOfTime       = (OpenDoorOfTime) ? 1 : 0;
-    ctx.zorasFountain        = ZorasFountain.Value<u8>();
-    ctx.gerudoFortress       = GerudoFortress.Value<u8>();
-    ctx.rainbowBridge        = Bridge.Value<u8>();
-    ctx.bridgeStoneCount     = BridgeStoneCount.Value<u8>();
-    ctx.bridgeMedallionCount = BridgeMedallionCount.Value<u8>();
-    ctx.bridgeRewardCount    = BridgeRewardCount.Value<u8>();
-    ctx.bridgeDungeonCount   = BridgeDungeonCount.Value<u8>();
-    ctx.bridgeTokenCount     = BridgeTokenCount.Value<u8>();
-    ctx.randomGanonsTrials   = (RandomGanonsTrials) ? 1 : 0;
-    ctx.ganonsTrialsCount    = GanonsTrialsCount.Value<u8>();
+    ctx.logic                   = Logic.Value<u8>();
+    ctx.openForest              = OpenForest.Value<u8>();
+    ctx.openKakariko            = OpenKakariko.Value<u8>();
+    ctx.openDoorOfTime          = (OpenDoorOfTime) ? 1 : 0;
+    ctx.zorasFountain           = ZorasFountain.Value<u8>();
+    ctx.gerudoFortress          = GerudoFortress.Value<u8>();
+    ctx.rainbowBridge           = Bridge.Value<u8>();
+    ctx.bridgeStoneCount        = BridgeStoneCount.Value<u8>();
+    ctx.bridgeMedallionCount    = BridgeMedallionCount.Value<u8>();
+    ctx.bridgeRewardCount       = BridgeRewardCount.Value<u8>();
+    ctx.bridgeDungeonCount      = BridgeDungeonCount.Value<u8>();
+    ctx.bridgeTokenCount        = BridgeTokenCount.Value<u8>();
+    ctx.randomGanonsTrials      = (RandomGanonsTrials) ? 1 : 0;
+    ctx.ganonsTrialsCount       = GanonsTrialsCount.Value<u8>();
 
-    ctx.startingAge          = StartingAge.Value<u8>();
-    ctx.resolvedStartingAge  = ResolvedStartingAge;
+    ctx.startingAge             = StartingAge.Value<u8>();
+    ctx.resolvedStartingAge     = ResolvedStartingAge;
+    ctx.shuffleDungeonEntrances = (ShuffleDungeonEntrances) ? 1 : 0;
+    ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
+    ctx.bombchuDrops            = (BombchuDrops) ? 1 : 0;
+    ctx.randomMQDungeons        = (RandomMQDungeons) ? 1 : 0;
+    ctx.mqDungeonCount          = MQDungeonCount.Value<u8>();
 
-    ctx.bombchusInLogic      = (BombchusInLogic) ? 1 : 0;
-    ctx.bombchuDrops         = (BombchuDrops) ? 1 : 0;
-    ctx.randomMQDungeons     = (RandomMQDungeons) ? 1 : 0;
-    ctx.mqDungeonCount       = MQDungeonCount.Value<u8>();
+    ctx.shuffleRewards          = ShuffleRewards.Value<u8>();
+    ctx.linksPocketItem         = LinksPocketItem.Value<u8>();
+    ctx.shuffleSongs            = ShuffleSongs.Value<u8>();
+    ctx.tokensanity             = Tokensanity.Value<u8>();
+    ctx.scrubsanity             = Scrubsanity.Value<u8>();
+    ctx.shuffleCows             = (ShuffleCows) ? 1 : 0;
+    ctx.shuffleKokiriSword      = (ShuffleKokiriSword) ? 1 : 0;
+    ctx.shuffleOcarinas         = (ShuffleOcarinas) ? 1 : 0;
+    ctx.shuffleWeirdEgg         = (ShuffleWeirdEgg) ? 1 : 0;
+    ctx.shuffleGerudoToken      = (ShuffleGerudoToken) ? 1 : 0;
+    ctx.shuffleMagicBeans       = (ShuffleMagicBeans) ? 1 : 0;
 
-    ctx.shuffleRewards       = ShuffleRewards.Value<u8>();
-    ctx.linksPocketItem      = LinksPocketItem.Value<u8>();
-    ctx.shuffleSongs         = ShuffleSongs.Value<u8>();
-    ctx.tokensanity          = Tokensanity.Value<u8>();
-    ctx.scrubsanity          = Scrubsanity.Value<u8>();
-    ctx.shuffleCows          = (ShuffleCows) ? 1 : 0;
-    ctx.shuffleKokiriSword   = (ShuffleKokiriSword) ? 1 : 0;
-    ctx.shuffleOcarinas      = (ShuffleOcarinas) ? 1 : 0;
-    ctx.shuffleWeirdEgg      = (ShuffleWeirdEgg) ? 1 : 0;
-    ctx.shuffleGerudoToken   = (ShuffleGerudoToken) ? 1 : 0;
-    ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
+    ctx.mapsAndCompasses        = MapsAndCompasses.Value<u8>();
+    ctx.keysanity               = Keysanity.Value<u8>();
+    ctx.gerudoKeys              = GerudoKeys.Value<u8>();
+    ctx.bossKeysanity           = BossKeysanity.Value<u8>();
+    ctx.ganonsBossKey           = GanonsBossKey.Value<u8>();
+    ctx.lacsCondition           = LACSCondition;
+    ctx.lacsMedallionCount      = LACSMedallionCount.Value<u8>();
+    ctx.lacsStoneCount          = LACSStoneCount.Value<u8>();
+    ctx.lacsRewardCount         = LACSRewardCount.Value<u8>();
+    ctx.lacsDungeonCount        = LACSDungeonCount.Value<u8>();
+    ctx.lacsTokenCount          = LACSTokenCount.Value<u8>();
 
-    ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
-    ctx.keysanity            = Keysanity.Value<u8>();
-    ctx.gerudoKeys           = GerudoKeys.Value<u8>();
-    ctx.bossKeysanity        = BossKeysanity.Value<u8>();
-    ctx.ganonsBossKey        = GanonsBossKey.Value<u8>();
-    ctx.lacsCondition        = LACSCondition;
-    ctx.lacsMedallionCount   = LACSMedallionCount.Value<u8>();
-    ctx.lacsStoneCount       = LACSStoneCount.Value<u8>();
-    ctx.lacsRewardCount      = LACSRewardCount.Value<u8>();
-    ctx.lacsDungeonCount     = LACSDungeonCount.Value<u8>();
-    ctx.lacsTokenCount       = LACSTokenCount.Value<u8>();
+    ctx.skipChildStealth        = (SkipChildStealth) ? 1 : 0;
+    ctx.skipTowerEscape         = (SkipTowerEscape) ? 1 : 0;
+    ctx.skipEponaRace           = (SkipEponaRace) ? 1 : 0;
+    ctx.skipMinigamePhases      = (SkipMinigamePhases) ? 1 : 0;
+    ctx.freeScarecrow           = (FreeScarecrow) ? 1 : 0;
+    ctx.fourPoesCutscene        = (FourPoesCutscene) ? 1 : 0;
+    ctx.templeOfTimeIntro       = (TempleOfTimeIntro) ? 1 : 0;
+    ctx.bigPoeTargetCount       = BigPoeTargetCount.Value<u8>() + 1;
+    ctx.numRequiredCuccos       = NumRequiredCuccos.Value<u8>();
 
-    ctx.skipChildStealth     = (SkipChildStealth) ? 1 : 0;
-    ctx.skipTowerEscape      = (SkipTowerEscape) ? 1 : 0;
-    ctx.skipEponaRace        = (SkipEponaRace) ? 1 : 0;
-    ctx.skipMinigamePhases   = (SkipMinigamePhases) ? 1 : 0;
-    ctx.freeScarecrow        = (FreeScarecrow) ? 1 : 0;
-    ctx.fourPoesCutscene     = (FourPoesCutscene) ? 1 : 0;
-    ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
-    ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
-    ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
+    ctx.gossipStoneHints        = GossipStoneHints.Value<u8>();
+    ctx.damageMultiplier        = DamageMultiplier.Value<u8>();
+    ctx.startingTime            = StartingTime.Value<u8>();
+    ctx.chestAnimations         = (ChestAnimations) ? 1 : 0;
+    ctx.chestSize               = (ChestSize) ? 1 : 0;
+    ctx.generateSpoilerLog      = (GenerateSpoilerLog) ? 1 : 0;
+    ctx.menuOpeningButton       = MenuOpeningButton.Value<u8>();
 
-    ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
-    ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
-    ctx.startingTime         = StartingTime.Value<u8>();
-    ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
-    ctx.chestSize            = (ChestSize) ? 1 : 0;
-    ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
-    ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
+    ctx.stickAsAdult            = (StickAsAdult) ? 1 : 0;
+    ctx.boomerangAsAdult        = (BoomerangAsAdult) ? 1 : 0;
+    ctx.hammerAsChild           = (HammerAsChild) ? 1 : 0;
 
-    ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
-    ctx.boomerangAsAdult     = (BoomerangAsAdult) ? 1 : 0;
-    ctx.hammerAsChild        = (HammerAsChild) ? 1 : 0;
+    ctx.itemPoolValue           = ItemPoolValue.Value<u8>();
+    ctx.iceTrapValue            = IceTrapValue.Value<u8>();
 
-    ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
-    ctx.iceTrapValue         = IceTrapValue.Value<u8>();
-
-    ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
-    ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
-    ctx.coloredKeys          = (ColoredKeys) ? 1 : 0;
-    ctx.coloredBossKeys      = (ColoredBossKeys) ? 1 : 0;
+    ctx.customTunicColors       = (CustomTunicColors) ? 1 : 0;
+    ctx.mirrorWorld             = (MirrorWorld) ? 1 : 0;
+    ctx.coloredKeys             = (ColoredKeys) ? 1 : 0;
+    ctx.coloredBossKeys         = (ColoredBossKeys) ? 1 : 0;
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
@@ -807,15 +811,6 @@ namespace Settings {
     ctx.startingUpgrades |= StartingScale.Value<u8>() << 9;
     ctx.startingUpgrades |= StartingWallet.Value<u8>() << 12;
 
-    //Filling detailed logic
-    for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
-      ctx.detailedLogic[i] = detailedLogicOptions[i]->GetSelectedOptionIndex();
-    }
-
-    //Filling excluded locations
-    for (u16 i = 0; i < excludeLocationsOptions.size(); i++) {
-      ctx.excludeLocations[i] = excludeLocationsOptions[i]->GetSelectedOptionIndex();
-    }
     return ctx;
   }
 
@@ -1106,6 +1101,14 @@ namespace Settings {
       } else {
         BombchuDrops.Unlock();
       }
+
+      //Show Shuffle options when Shuffle Entrances is On
+      if (ShuffleEntrances) {
+        ShuffleDungeonEntrances.Unhide();
+      } else {
+        ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+        ShuffleDungeonEntrances.Hide();
+      }
     }
 
     //Only show MQ Dungeon Count if Random MQ Dungeons is off
@@ -1312,7 +1315,6 @@ namespace Settings {
   }
 
   //eventual settings
-  bool ShuffleDungeonEntrances          = false;
   bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;

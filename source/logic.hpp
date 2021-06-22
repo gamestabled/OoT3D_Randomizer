@@ -222,7 +222,7 @@ namespace Logic {
   extern bool CanSummonGossipFairy;
   extern bool CanSummonGossipFairyWithoutSuns;
   extern bool CanTakeDamage;
-  extern bool CanPlantBean;
+  //extern bool CanPlantBean;
   extern bool CanOpenBombGrotto;
   extern bool CanOpenStormGrotto;
   extern bool HookshotOrBoomerang;
