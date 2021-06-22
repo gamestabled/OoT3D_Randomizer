@@ -54,7 +54,7 @@ bool LocationAccess::CheckConditionAtAgeTime(bool& age, bool& time) const {
 
 bool LocationAccess::ConditionsMet() const {
 
-  Area* parentRegion = AreaTable(Location(location)->GetParentRegion());
+  Area* parentRegion = AreaTable(Location(location)->GetParentRegionKey());
   bool conditionsMet = false;
 
   if ((parentRegion->childDay   && CheckConditionAtAgeTime(IsChild, AtDay))   ||
@@ -207,12 +207,12 @@ bool Area::AllAccountedFor() const {
   }
 
   for (const auto& exit : exits) {
-    if (!exit.ConditionsMet() || !(AreaTable(exit.GetAreaKey())->ReachedFinalState())) {
+    if (!exit.GetConnectedRegion()->AllAccess()) {
       return false;
     }
   }
 
-  return ReachedFinalState();
+  return AllAccess();
 }
 
 bool Area::CheckAllAccess(const AreaKey exitKey) {
@@ -4070,10 +4070,4 @@ std::vector<Entrance*> GetShuffleableEntrances(EntranceType type, bool onlyPrima
     }
   }
   return entrancesToShuffle;
-}
-
-void SaveAreaStates() {
-  for (AreaKey areaKey : Areas::allAreas) {
-    AreaTable(areaKey)->SaveFinalState();
-  }
 }

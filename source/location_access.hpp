@@ -116,15 +116,6 @@ public:
     bool adultNight = false;
     bool addedToPool = false;
 
-    //These variables are used to keep track of an areas final reachable state
-    //within the world graph. By default everything is true, because this state
-    //is used to determine if we don't need to check an area anymore in the
-    //search algorithm. In the worst case, all of these will be true.
-    bool finalChildDay = true;
-    bool finalChildNight = true;
-    bool finalAdultDay = true;
-    bool finalAdultNight = true;
-
     bool UpdateEvents();
 
     void AddExit(AreaKey parentKey, AreaKey newExitKey, ConditionFn condition);
@@ -155,20 +146,6 @@ public:
 
     bool AllAccess() const {
       return childDay && childNight && adultDay && adultNight;
-    }
-
-    void SaveFinalState() {
-      // finalChildDay   = childDay;
-      // finalChildNight = childNight;
-      // finalAdultDay   = adultDay;
-      // finalAdultNight = adultNight;
-    }
-
-    bool ReachedFinalState() const {
-      return childDay   == finalChildDay   &&
-             childNight == finalChildNight &&
-             adultDay   == finalAdultDay   &&
-             adultNight == finalAdultNight;
     }
 
     //Check to see if an exit can be access as both ages at both times of day
@@ -225,4 +202,3 @@ namespace Areas {
 void  AreaTable_Init();
 Area* AreaTable(const AreaKey areaKey);
 std::vector<Entrance*> GetShuffleableEntrances(EntranceType type, bool onlyPrimary = true);
-void SaveAreaStates();

@@ -17,10 +17,14 @@
 
 #include <vector>
 #include <unistd.h>
+#include <list>
 
 using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
+
+static u32 searchIterations = 0;
+static u32 areaPoolIterations = 0;
 
 static void RemoveStartingItemsFromPool() {
   for (ItemKey startingItem : StartingInventory) {
@@ -38,32 +42,24 @@ static bool UpdateToDAccess(Entrance* entrance) {
   bool ageTimePropogated = false;
 
   //propogate childDay, childNight, adultDay, and adultNight separately
-  Area* parent = AreaTable(entrance->GetParentRegion());
-  Area* connection = AreaTable(entrance->GetConnectedRegion());
+  Area* parent = entrance->GetParentRegion();
+  Area* connection = entrance->GetConnectedRegion();
 
-  if (parent->childDay && entrance->CheckConditionAtAgeTime(IsChild, AtDay)) {
-    if (!connection->childDay) {
-      connection->childDay = true;
-      ageTimePropogated = true;
-    }
+  if (!connection->childDay && parent->childDay && entrance->CheckConditionAtAgeTime(IsChild, AtDay)) {
+    connection->childDay = true;
+    ageTimePropogated = true;
   }
-  if (parent->childNight && entrance->CheckConditionAtAgeTime(IsChild, AtNight)) {
-    if (!connection->childNight) {
-      connection->childNight = true;
-      ageTimePropogated = true;
-    }
+  if (!connection->childNight && parent->childNight && entrance->CheckConditionAtAgeTime(IsChild, AtNight)) {
+    connection->childNight = true;
+    ageTimePropogated = true;
   }
-  if (parent->adultDay && entrance->CheckConditionAtAgeTime(IsAdult, AtDay)) {
-    if (!connection->adultDay) {
-      connection->adultDay = true;
-      ageTimePropogated = true;
-    }
+  if (!connection->adultDay && parent->adultDay && entrance->CheckConditionAtAgeTime(IsAdult, AtDay)) {
+    connection->adultDay = true;
+    ageTimePropogated = true;
   }
-  if (parent->adultNight && entrance->CheckConditionAtAgeTime(IsAdult, AtNight)) {
-    if (!connection->adultNight) {
-      connection->adultNight = true;
-      ageTimePropogated = true;
-    }
+  if (!connection->adultNight && parent->adultNight && entrance->CheckConditionAtAgeTime(IsAdult, AtNight)) {
+    connection->adultNight = true;
+    ageTimePropogated = true;
   }
 
   //special check for temple of time
@@ -119,7 +115,6 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
   ApplyStartingInventory();
   Areas::AccessReset();
   LocationReset();
-  Logic::UpdateHelpers();
   std::vector<AreaKey> areaPool = {ROOT};
 
   //Variables for playthrough
@@ -160,18 +155,16 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
       //for each exit in this area
       for (auto& exit : area->exits) {
 
-        if (exit.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) {
+        //Update Time of Day Access for the exit
+        if (UpdateToDAccess(&exit)) {
+          ageTimePropogated = true;
+        }
 
-          if (UpdateToDAccess(&exit)) {
-            ageTimePropogated = true;
-          }
-
-          Area* exitArea = AreaTable(exit.GetAreaKey());
-          //If the exit is accessible, try adding it
-          if (exitArea->HasAccess() && !exitArea->addedToPool) {
-            exitArea->addedToPool = true;
-            areaPool.push_back(exit.GetAreaKey());
-          }
+        //If the exit is accessible and hasn't been added yet, add it to the pool
+        Area* exitArea = exit.GetConnectedRegion();
+        if (!exitArea->addedToPool && (exit.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE))) {
+          exitArea->addedToPool = true;
+          areaPool.push_back(exit.GetAreaKey());
         }
       }
 
@@ -180,7 +173,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
         LocationAccess& locPair = area->locations[k];
         LocationKey loc = locPair.GetLocation();
 
-        if ((locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE)) && !(Location(loc)->IsAddedToPool())) {
+        if (!Location(loc)->IsAddedToPool() && (locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE))) {
 
           Location(loc)->AddToPool();
 
@@ -249,7 +242,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
             }
           }
           //All we care about is if the game is beatable, used to pare down playthrough
-          else if (mode == SearchMode::CheckBeatable && Location(loc)->GetPlacedItemKey() == TRIFORCE) {
+          else if (Location(loc)->GetPlacedItemKey() == TRIFORCE && mode == SearchMode::CheckBeatable) {
             playthroughBeatable = true;
             return {}; //Return early for efficiency
           }
@@ -257,29 +250,19 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
       }
     }
 
-    erase_if(areaPool, [](const AreaKey e){ return AreaTable(e)->AllAccountedFor();});
+    //this actually seems to slow down the search algorithm, will leave commented out for now
+    //erase_if(areaPool, [](const AreaKey e){ return AreaTable(e)->AllAccountedFor();});
 
     if (mode == SearchMode::GeneratePlaythrough && sphere.size() > 0) {
       playthroughLocations.push_back(sphere);
     }
-
-    // auto message = "size: " + std::to_string(newItemLocations.size()) + "\teventsUpdated: " + std::to_string(eventsUpdated) + "\tTime propogation: " + std::to_string(ageTimePropogated);
-    // CitraPrint(message);
-
   }
 
+  //Check to see if all locations were reached
   if (mode == SearchMode::AllLocationsReachable) {
     allLocationsReachable = true;
-    for (LocationKey loc : allLocations) {
+    for (const LocationKey loc : allLocations) {
       if (!Location(loc)->IsAddedToPool()) {
-        // Area* parentRegion = AreaTable(Location(loc)->GetParentRegion());
-        // std::string message = "Location " + Location(loc)->GetName() + " was not added to the pool.\n"
-        //                       "parent region: " + parentRegion->regionName + "\n"
-        //                       "childDay: " + std::to_string(parentRegion->childDay) + "\n"
-        //                       "childNight: " + std::to_string(parentRegion->childNight) + "\n"
-        //                       "adultDay: " + std::to_string(parentRegion->adultDay) + "\n"
-        //                       "adultNight: " + std::to_string(parentRegion->adultNight);
-        // CitraPrint(message);
         allLocationsReachable = false;
         break;
       }
@@ -681,18 +664,6 @@ static void RandomizeLinksPocket() {
  }
 }
 
-//Save the time and age variables of each area to what they'll be in a fully
-//searched world graph, this will allow us to know when
-static void CalculateFinalState() {
-  Logic::LogicReset();
-  std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
-  for (ItemKey unplacedItem : itemsToPlace) {
-    ItemTable(unplacedItem).ApplyEffect();
-  }
-  GetAccessibleLocations(allLocations);
-  SaveAreaStates();
-}
-
 int Fill() {
   int retries = 0;
   while(retries < 5) {
@@ -703,7 +674,7 @@ int Fill() {
     FillExcludedLocations();
 
     //Temporarily add shop items to the ItemPool so that entrance randomization
-    //and calculating the final state of the world graph can access everything
+    //can validate the world using deku/hylian shields
     AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); //assume worst case shopsanity 4
     if (ShuffleEntrances) {
       AreaTable_Init(); //Reset the world graph in case of retrying
@@ -711,8 +682,6 @@ int Fill() {
       ShuffleAllEntrances();
       printf("Done");
     }
-
-    CalculateFinalState();
     //erase temporary shop items
     FilterAndEraseFromPool(ItemPool, [](const ItemKey item){return ItemTable(item).GetItemType() == ITEMTYPE_SHOP;});
 
@@ -817,6 +786,8 @@ int Fill() {
         CreateAllHints();
         printf("Done");
       }
+      CitraPrint(std::to_string(searchIterations));
+      CitraPrint(std::to_string(areaPoolIterations));
       return 1;
     }
     //Unsuccessful placement

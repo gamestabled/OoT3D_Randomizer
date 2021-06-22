@@ -1,6 +1,8 @@
 #ifndef _ENTRANCE_H_
 #define _ENTRANCE_H_
 
+//Entrance Table Data: https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
+
 #define DEKU_TREE_ENTRANCE 0x0000
 #define DODONGOS_CAVERN_ENTRANCE 0x0004
 #define JABU_JABUS_BELLY_ENTRANCE 0x0028

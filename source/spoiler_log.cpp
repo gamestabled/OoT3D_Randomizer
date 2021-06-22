@@ -221,7 +221,7 @@ static void WriteShuffledEntrance(
 ) {
   auto node = parentNode->InsertNewChildElement("entrance");
   node->SetAttribute("name", entrance->GetName().c_str());
-  node->SetText(AreaTable(entrance->GetConnectedRegion())->regionName.c_str());
+  node->SetText(entrance->GetConnectedRegion()->regionName.c_str());
 
   if (withPadding) {
     constexpr int16_t LONGEST_NAME = 56; //The longest name of a vanilla entrance

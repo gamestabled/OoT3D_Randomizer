@@ -1245,6 +1245,12 @@ SetSavewarpEntrance_patch:
     bl hook_SetSavewarpEntrance
     b  0x44FCE0
 
+.section .patch_SetGameOverEntrance
+.global SetGameOverEntrance_patch
+SetGameOverEntrance_patch:
+    bl hook_SetGameOverEntrance
+    b  0x458EC8
+
 .section .patch_loader
 .global loader_patch
 

@@ -88,7 +88,7 @@ static std::array<std::vector<Entrance*>, 2> SplitEntrancesByRequirements(std::v
   //soft entrances are ones that can be accessed by both ages (child/adult) at both times of day (day/night)
   //restrictive entrances are ones that do not meet this criteria
   for (Entrance* entrance : entrancesToDisconnect) {
-    if (entrance->GetConnectedRegion() != NONE) {
+    if (entrance->GetConnectedRegionKey() != NONE) {
       entrance->TempDisconnect();
     }
   }
@@ -107,7 +107,7 @@ static std::array<std::vector<Entrance*>, 2> SplitEntrancesByRequirements(std::v
     GetAccessibleLocations(allLocations);
 
     // if an entrance is accessible at all times of day by both ages, it's a soft entrance with no restrictions
-    if (AreaTable(entrance->GetParentRegion())->CheckAllAccess(entrance->GetConnectedRegion())) {
+    if (entrance->GetParentRegion()->CheckAllAccess(entrance->GetConnectedRegionKey())) {
       softEntrances.push_back(entrance);
     } else {
       restrictiveEntrances.push_back(entrance);
@@ -125,7 +125,7 @@ static std::array<std::vector<Entrance*>, 2> SplitEntrancesByRequirements(std::v
 static bool AreEntrancesCompatible(Entrance* entrance, Entrance* target, std::vector<EntrancePair>& rollbacks) {
 
   //Entrances shouldn't connect to their own scene, fail in this situation
-  if (AreaTable(entrance->GetParentRegion())->regionName != "" && AreaTable(entrance->GetParentRegion())->regionName == AreaTable(target->GetConnectedRegion())->regionName) {
+  if (entrance->GetParentRegion()->regionName != "" && entrance->GetParentRegion()->regionName == target->GetConnectedRegion()->regionName) {
     CitraPrint("Entrance attempted to connect with own scene. Connection failed.");
     return false;
   }
@@ -155,11 +155,11 @@ static void RestoreConnections(Entrance* entrance, Entrance* targetEntrance) {
 }
 
 static void DeleteTargetEntrance(Entrance* targetEntrance) {
-  if (targetEntrance->GetConnectedRegion() != NONE) {
+  if (targetEntrance->GetConnectedRegionKey() != NONE) {
     targetEntrance->Disconnect();
   }
-  if (targetEntrance->GetParentRegion() != NONE) {
-    AreaTable(targetEntrance->GetParentRegion())->RemoveExit(targetEntrance);
+  if (targetEntrance->GetParentRegionKey() != NONE) {
+    targetEntrance->GetParentRegion()->RemoveExit(targetEntrance);
     targetEntrance->SetParentRegion(NONE);
   }
 }
@@ -216,24 +216,24 @@ static bool ShuffleEntrances(std::vector<Entrance*>& entrances, std::vector<Entr
 
   //place all entrances in the pool, validating after every placement
   for (Entrance* entrance : entrances) {
-    if (entrance->GetConnectedRegion() != NONE) {
+    if (entrance->GetConnectedRegionKey() != NONE) {
       continue;
     }
 
     Shuffle(targetEntrances);
     for (Entrance* target : targetEntrances) {
-      if (target->GetConnectedRegion() == NONE) {
+      if (target->GetConnectedRegionKey() == NONE) {
         continue;
       }
 
       if (ReplaceEntrance(entrance, target, rollbacks)) {
         break;
-      } else if (entrance->GetConnectedRegion() != NONE) {
+      } else if (entrance->GetConnectedRegionKey() != NONE) {
         RestoreConnections(entrance, target);
       }
     }
 
-    if (entrance->GetConnectedRegion() == NONE) {
+    if (entrance->GetConnectedRegionKey() == NONE) {
       return false;
     }
   }
@@ -330,8 +330,8 @@ void ShuffleAllEntrances() {
 
     //If forest is closed don't allow a forest escape via spirit temple hands
     if (Settings::OpenForest.Is(OPENFOREST_CLOSED)) {
-      FilterAndEraseFromPool(entrancePool, [](const Entrance* entrance){return entrance->GetParentRegion()    == KF_OUTSIDE_DEKU_TREE &&
-                                                                               entrance->GetConnectedRegion() == DEKU_TREE_ENTRYWAY;});
+      FilterAndEraseFromPool(entrancePool, [](const Entrance* entrance){return entrance->GetParentRegionKey()    == KF_OUTSIDE_DEKU_TREE &&
+                                                                               entrance->GetConnectedRegionKey() == DEKU_TREE_ENTRYWAY;});
     }
 
     //decoupled entrances stuff

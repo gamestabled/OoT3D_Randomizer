@@ -178,7 +178,7 @@ public:
       parentRegion = region;
     }
 
-    AreaKey GetParentRegion() const {
+    AreaKey GetParentRegionKey() const {
       return parentRegion;
     }
 

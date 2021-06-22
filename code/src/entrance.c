@@ -190,15 +190,49 @@ s16 Entrance_GetRequiemEntrance(void) {
     return newRequiemEntrance;
 }
 
-//Properly respawn the player if entrance randomizer is on
+//Properly respawn the player after a game over, accounding for dungeon entrance
+//randomizer. It's easier to rewrite this entirely compared to performing an ASM
+//dance for just the boss rooms. Entrance Indexes can be found here:
+//https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetGameOverEntrance(void) {
 
+    //Set the current entrance depending on which entrance the player last came through
+    switch (gSaveContext.entranceIndex) {
+        case 0x040F : //Deku Tree Boss Room
+            gSaveContext.entranceIndex = newDekuTreeEntrance;
+            return;
+        case 0x040B : //Dodongos Cavern Boss Room
+            gSaveContext.entranceIndex = newDodongosCavernEntrance;
+            return;
+        case 0x0301 : //Jabu Jabus Belly Boss Room
+            gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
+            return;
+        case 0x000C : //Fores Temple Boss Room
+            gSaveContext.entranceIndex = newForestTempleEntrance;
+            return;
+        case 0x0305 : //Fire Temple Boss Room
+            gSaveContext.entranceIndex = newFireTempleEntrance;
+            return;
+        case 0x0417 : //Water Temple Boss Room
+            gSaveContext.entranceIndex = newWaterTempleEntrance;
+            return;
+        case 0x008D : //Spirit Temple Boss Room
+            gSaveContext.entranceIndex = newSpiritTempleEntrance;
+            return;
+        case 0x0413 : //Shadow Temple Boss Room
+            gSaveContext.entranceIndex = newShadowTempleEntrance;
+            return;
+        case 0x041F : //Ganondorf Boss Room
+            gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower Climb
+            return;
+    }
 }
 
-//Properly savewarp the player accounting for dungeon entrance randomizer
+//Properly savewarp the player accounting for dungeon entrance randomizer.
 //It's easier to rewrite this entirely compared to performing an ASM
 //dance for just the boss rooms. This removes the behavior where savewarping
-//as adult Link in Link's House respawns you in Link's House.
+//as adult Link in Link's House respawns adult Link in Link's House.
+//https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetSavewarpEntrance(void) {
 
     s16 scene = gSaveContext.sceneIndex;
@@ -228,7 +262,7 @@ void Entrance_SetSavewarpEntrance(void) {
     } else if (scene == DUNGEON_GANONS_CASTLE_FIRST_PART) {
         gSaveContext.entranceIndex = GANONS_CASTLE_ENTRANCE;
     } else if (scene == DUNGEON_GANONS_CASTLE_SECOND_PART || scene == DUNGEON_GANONS_CASTLE_CRUMBLING || scene == DUNGEON_GANONS_CASTLE_FLOOR_BENEATH_BOSS_CHAMBER || scene == 0x4F || scene == 0x1A) {
-        gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower
+        gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower Climb
     } else if (scene == DUNGEON_GERUDO_FORTRESS) {
         gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
     } else if (gSaveContext.linkAge == AGE_CHILD) {

@@ -53,6 +53,7 @@ public:
             return false;
         }
 
+        //check all possible day/night condition combinations
         if ((parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   ||
             (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) ||
             (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   ||
@@ -94,16 +95,24 @@ public:
     }
 
     //Yes this is the exact same function as above, trust me on this
-    AreaKey GetConnectedRegion() const {
+    AreaKey GetConnectedRegionKey() const {
         return connectedRegion;
+    }
+
+    Area* GetConnectedRegion() const {
+        return AreaTable(connectedRegion);
     }
 
     void SetParentRegion(AreaKey newParent) {
         parentRegion = newParent;
     }
 
-    AreaKey GetParentRegion() const {
+    AreaKey GetParentRegionKey() const {
         return parentRegion;
+    }
+
+    Area* GetParentRegion() const {
+        return AreaTable(parentRegion);
     }
 
     void SetNewEntrance(AreaKey newRegion) {

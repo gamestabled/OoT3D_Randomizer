@@ -772,7 +772,7 @@ SECTIONS
 		*(.patch_FireArrowCheckChestFlagTwo)
 	}
 
-	.patch_DekuTreeOpenMouthTwo 0x3F48E8 : {
+	.patch_DekuTreeOpenMouthTwo 0x3F48E0 : {
 		*(.patch_DekuTreeOpenMouthTwo)
 	}
 
@@ -850,6 +850,10 @@ SECTIONS
 
 	.patch_after_GlobalContext_Update 0x452434 : {
 		*(.patch_after_GlobalContext_Update)
+	}
+
+	.patch_SetGameOverEntrance 0x458E3C : {
+		*(.patch_SetGameOverEntrance)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {
