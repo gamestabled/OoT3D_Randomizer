@@ -400,10 +400,6 @@ SECTIONS
 		*(.patch_BusinessScrubCheckFlags)
 	}
 
-	.patch_DekuTreeOpenMouth 0x2413A4 : {
-		*(.patch_DekuTreeOpenMouth)
-	}
-
 	.patch_EnExItemModelDraw 0x249C94 : {
 		*(.patch_EnExItemModelDraw)
 	}
@@ -770,10 +766,6 @@ SECTIONS
 
 	.patch_FireArrowCheckChestFlagTwo 0x3F2448 : {
 		*(.patch_FireArrowCheckChestFlagTwo)
-	}
-
-	.patch_DekuTreeOpenMouthTwo 0x3F48E0 : {
-		*(.patch_DekuTreeOpenMouthTwo)
 	}
 
 	.patch_SlidingDoorDestroyCustomModels 0x3F4A70 : {

@@ -1229,16 +1229,6 @@ ShortenRainbowBridgeCS_patch:
 OwlMagicCheck_patch:
     mov r0,#0x1
 
-.section .patch_DekuTreeOpenMouth
-.global DekuTreeOpenMouth_patch
-DekuTreeOpenMouth_patch:
-    bl BgTreemouth_ShouldOpen
-
-.section .patch_DekuTreeOpenMouthTwo
-.global DekuTreeOpenMouthTwo_patch
-DekuTreeOpenMouthTwo_patch:
-    bl BgTreemouth_ShouldOpen
-
 .section .patch_SetSavewarpEntrance
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:
