@@ -1161,6 +1161,11 @@ ReadGossipStoneHints_patch:
     nop
     nop
 
+.section .patch_GossipStoneAddSariaHint
+.global GossipStoneAddSariaHint_patch
+GossipStoneAddSariaHint_patch:
+    bl hook_GossipStoneAddSariaHint
+
 .section .patch_DecoratedChest
 .global DecoratedChest_patch
 DecoratedChest_patch:
@@ -1231,6 +1236,16 @@ OwlMagicCheck_patch:
 .global ChestIceSmoke_patch
 ChestIceSmoke_patch:
     b hook_Chest_OverrideIceSmoke
+
+.section .patch_SariasSongHintsOne
+.global SariasSongHintsOne_patch
+SariasSongHintsOne_patch:
+    bl Hints_GetNextSariasSongHint
+
+.section .patch_SariasSongHintsTwo
+.global SariasSongHintsTwo_patch
+SariasSongHintsTwo_patch:
+    bl Hints_GetNextSariasSongHint
 
 .section .patch_loader
 .global loader_patch

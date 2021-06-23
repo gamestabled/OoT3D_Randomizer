@@ -163,7 +163,9 @@ static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<
 
   //create the in game message
   u32 messageId = 0x400 + Location(gossipStone)->GetFlag();
+  u32 sariaMessageId = 0xA00 + Location(gossipStone)->GetFlag();
   CreateMessageFromTextObject(messageId, 0, 2, 3, AddColorsAndFormat(hint, colors));
+  CreateMessageFromTextObject(sariaMessageId, 0, 2, 3, AddColorsAndFormat(hint + EVENT_TRIGGER(), colors));
 }
 
 static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocations) {

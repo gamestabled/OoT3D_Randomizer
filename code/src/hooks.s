@@ -542,6 +542,15 @@ hook_Chest_OverrideIceSmoke:
     bne 0x1D5E64
     b 0x1D5E60
 
+.global hook_GossipStoneAddSariaHint
+hook_GossipStoneAddSariaHint:
+    strh r1,[r5,#0x16]
+    push {r0-r12, lr}
+    add r0,r1,#0x600
+    bl Hints_AddSariasSongHint
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
