@@ -90,6 +90,10 @@ public:
   static auto Biggoron() {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_BIGGORON, 0x00, 0x00);
   }
+
+  static auto GerudoToken() {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_GERUDO_TOKEN, 0x00, 0x00);
+  }
 };
 
 class ItemLocation {

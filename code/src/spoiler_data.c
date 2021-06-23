@@ -1,5 +1,7 @@
 #include "spoiler_data.h"
 
+#include "settings.h"
+
 SpoilerData gSpoilerData = {0};
 
 char *SpoilerData_GetItemLocationString(u16 itemIndex)
@@ -80,6 +82,20 @@ u8 SpoilerData_BiggoronCheck()
     return gSaveContext.unk_4F != 0;
 }
 
+u8 SpoilerData_GerudoTokenCheck()
+{
+    if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) {
+        // Gerudo token check shouldn't be in the playthrough if the fortress is open, but just in case
+        return 1;
+    } else {
+        // Check all four carpenter rescue flags
+        return EventCheck(0x90) != 0 &&
+               EventCheck(0x91) != 0 &&
+               EventCheck(0x92) != 0 &&
+               EventCheck(0x93) != 0;
+    }
+}
+
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
 {
     if (itemIndex >= gSpoilerData.ItemLocationsCount) {
@@ -126,6 +142,9 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_BIGGORON: {
             return SpoilerData_BiggoronCheck();
+        }
+        case SPOILER_CHK_GERUDO_TOKEN: {
+            return SpoilerData_GerudoTokenCheck();
         }
         default: {
             return 0;
