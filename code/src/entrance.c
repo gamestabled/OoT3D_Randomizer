@@ -29,8 +29,8 @@ void Scene_Init(void) {
     gRestrictionFlags[72].flags3 = 0; // Allows farore's wind in GTG
     gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
     
-    //Allow Farore's Wind anywhere if the option is enabled
-    //Cannot be used in areas affected by a general item restriction
+    // Allow Farore's Wind anywhere if the option is enabled
+    // Cannot be used in areas affected by a general item restriction
     if (gSettingsContext.faroresWindAnywhere){
         for (int i = 0; i < 99; i++){
 			gRestrictionFlags[i].flags3 &= ~0x30;
@@ -48,7 +48,7 @@ void Entrance_Init(void) {
         gEntranceTable[0x07A].field = 0x0183;
     }
 
-    //Skip Tower Escape Sequence if given by settings
+    // Skip Tower Escape Sequence if given by settings
     if (gSettingsContext.skipTowerEscape == SKIP) {
         gEntranceTable[0x43F].scene = 0x4F;
         gEntranceTable[0x43F].spawn = 0x01;

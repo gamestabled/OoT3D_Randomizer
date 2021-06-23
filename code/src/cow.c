@@ -11,9 +11,7 @@
 static s32 sNumCows = 0;
 
 void EnCow_rInit(Actor* thisx, GlobalContext* globalCtx) {
-    static PosRot LLR_TowerRightCow_PosRot = {
-        { -283.13f, 0.0f, 110.46f }, { 0x0000, 0x5044, 0x0000 }
-    };
+    static PosRot LLR_TowerRightCow_PosRot = { { -283.13f, 0.0f, 110.46f }, { 0x0000, 0x5044, 0x0000 } };
 
     if (gSaveContext.entranceIndex == 0x05FC) { // DMT grotto
         thisx->home.rot.x = 1;

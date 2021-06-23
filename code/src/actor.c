@@ -83,7 +83,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
 
-    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
+    gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; // Despawns unnecessary owls
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
 
     gActorOverlayTable[0x153].initInfo->update = EnFu_rUpdate;
@@ -130,7 +130,7 @@ void Actor_Init() {
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GTG].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GANON].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
 
-    // Define object 128 to be by default the same as object 
+    // Define object 128 to be by default the same as object
     strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
 
     // Define draw item 3 (corresponding to gid 4) to be double defense custom model
