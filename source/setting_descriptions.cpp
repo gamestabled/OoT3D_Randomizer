@@ -602,6 +602,13 @@ string_view coloredBossKeysDesc       = "If set, boss key models will be colored
 |         MIRROR WORLD         |                                                           //
 ------------------------------*/                                                           //
 string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
+                                                                                           //
+/*------------------------------                                                           //
+|    RANDOM TRAP DAMAGE TYPE   |                                                           //
+------------------------------*/                                                           //
+string_view randomTrapDmgDesc         = "If set, ice traps will sometimes damage Link and\n"
+                                        "knock him back or electrocute him instead of\n"   //
+                                        "freezing him.";                                   //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

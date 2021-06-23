@@ -1229,6 +1229,11 @@ ShortenRainbowBridgeCS_patch:
 OwlMagicCheck_patch:
     mov r0,#0x1
 
+.section .patch_ChestIceSmoke
+.global ChestIceSmoke_patch
+ChestIceSmoke_patch:
+    b hook_Chest_OverrideIceSmoke
+
 .section .patch_SetSavewarpEntrance
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:

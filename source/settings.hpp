@@ -310,6 +310,7 @@ namespace Settings {
   extern Option ChestSize;
   extern Option GenerateSpoilerLog;
   extern Option MenuOpeningButton;
+  extern Option RandomTrapDmg;
   extern bool HasNightStart;
 
   extern Option StickAsAdult;

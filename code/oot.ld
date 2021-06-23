@@ -280,6 +280,10 @@ SECTIONS
 		*(.patch_DemoEffectStoneDraw)
 	}
 
+	.patch_ChestIceSmoke 0x1D5E5C : {
+		*(.patch_ChestIceSmoke)
+	}
+
 	.patch_CheckGerudoToken_1D7AD4 0x1D7AD4 : {
 		*(.patch_CheckGerudoToken_1D7AD4)
 	}

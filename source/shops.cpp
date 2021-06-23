@@ -453,7 +453,7 @@ void InitTrickNames() {
     Text{"Epona's Song",            "Chant d'Épona",      "Canción de Epona"}};
   trickNameTable[0xBF] = {
     Text{"Impa's Death Metal",        "Death métal d'Impa",    "Death Metal de Impa"},
-    Text{"Nocturme of the Graveyard", "Nocturne du cimetière", "Diurno de la Sombra"},
+    Text{"Nocturne of the Graveyard", "Nocturne du cimetière", "Diurno de la Sombra"},
     Text{"Zelda's Lullaby",           "Berceuse de Zelda",     "Nana de Zelda"}};
   trickNameTable[0xC0] = {
     Text{"Rauru's Sing-Along", "Chansonette de Rauru", "Balada de Rauru"},
