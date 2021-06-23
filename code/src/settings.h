@@ -295,6 +295,7 @@ typedef struct {
   u8 chestSize;
   u8 generateSpoilerLog;
   u8 menuOpeningButton;
+  u8 randomTrapDmg;
 
   u8 faroresWindAnywhere;
   u8 stickAsAdult;
@@ -373,5 +374,7 @@ typedef struct {
 
 extern SettingsContext gSettingsContext;
 extern const char hashIconNames[32][25];
+
+s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
 
 #endif

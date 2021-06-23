@@ -129,7 +129,7 @@ static void ItemOverride_Activate(ItemOverride override) {
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
     u8 looksLikeItemId = override.value.looksLikeItemId;
-    
+
     if (override.value.itemId == 0x7C) { //Ice trap
         looksLikeItemId = 0;
     }
