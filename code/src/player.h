@@ -3,7 +3,7 @@
 
 #include "z3D/z3D.h"
 
-extern u8 healthDecrement;
+extern u16 healthDecrement;
 
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 

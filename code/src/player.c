@@ -6,7 +6,7 @@
 #define PlayerActor_Update_addr 0x1E1B54
 #define PlayerActor_Update ((ActorFunc)PlayerActor_Update_addr)
 
-u8 healthDecrement = 0;
+u16 healthDecrement = 0;
 
 void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void* cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
@@ -46,8 +46,11 @@ void Player_SetChildCustomTunicCMAB(void) {
 
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx){
     PlayerActor_Update(thisx, globalCtx);
+    if (healthDecrement <= 0){
+        return;
+    }
 
-    if(healthDecrement > 0 && gSaveContext.health > 4){
+    if(gSaveContext.health > 4){
         gSaveContext.health--;
         healthDecrement--;
     }
