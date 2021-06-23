@@ -542,6 +542,14 @@ hook_Chest_OverrideIceSmoke:
     bne 0x1D5E64
     b 0x1D5E60
 
+.global hook_EnableFW
+hook_EnableFW:
+    push {r0-r12, lr}
+    bl EnableFW
+    pop {r0-r12, lr}
+    add sp,sp,#0x14
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
