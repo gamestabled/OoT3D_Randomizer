@@ -188,11 +188,14 @@ constexpr std::array DungeonColors = {
             INSTANT_TEXT_ON()+"Bombchu (10): 99 Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+MESSAGE_END(),
             INSTANT_TEXT_ON()+"Bombchus (10): 99 rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+MESSAGE_END(),
             INSTANT_TEXT_ON()+"Bombchus (10): 99 rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+MESSAGE_END());
-        //Gold Skulltula Tokens
-        CreateMessage(0xB4, 0, 2, 3,
-            INSTANT_TEXT_ON()+"You destroyed a "+COLOR(QM_RED)+"Gold Skulltula"+COLOR(QM_WHITE)+". You got a"+NEWLINE()+"token proving you destroyed it!"+NEWLINE()+NEWLINE()+"You have "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" tokens!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            INSTANT_TEXT_ON()+"Vous venez de détruire une "+COLOR(QM_RED)+"Skulltula d'or"+COLOR(QM_WHITE)+"!"+NEWLINE()+"Ce symbole prouve votre prouesse!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            INSTANT_TEXT_ON()+"¡Has eliminado una "+COLOR(QM_RED)+"skulltula dorada"+COLOR(QM_WHITE)+" y has"+NEWLINE()+"conseguido un símbolo para probarlo!"+NEWLINE()+NEWLINE()+"¡Tienes "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" símbolos!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        //Gold Skulltula Tokens (there are two text IDs the game uses)
+        for (const u32 textId : {0xB4, 0xB5}) {
+            CreateMessage(textId, 0, 2, 3,
+                INSTANT_TEXT_ON()+"You destroyed a "+COLOR(QM_RED)+"Gold Skulltula"+COLOR(QM_WHITE)+". You got a"+NEWLINE()+"token proving you destroyed it!"+NEWLINE()+NEWLINE()+"You have "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" tokens!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+"Vous venez de détruire une "+COLOR(QM_RED)+"Skulltula d'or"+COLOR(QM_WHITE)+"!"+NEWLINE()+"Ce symbole prouve votre prouesse!"+NEWLINE()+NEWLINE()+"Vous avez "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" jetons!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+"¡Has eliminado una "+COLOR(QM_RED)+"skulltula dorada"+COLOR(QM_WHITE)+" y has"+NEWLINE()+"conseguido un símbolo para probarlo!"+NEWLINE()+NEWLINE()+"¡Tienes "+COLOR(QM_RED)+SKULLTULAS_DESTROYED()+COLOR(QM_WHITE)+" símbolos!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        }
+
         //Bombchu (10) Description
         CreateMessage(0xBC, 0, 2, 3,
             INSTANT_TEXT_ON()+COLOR(QM_RED)+"Bombchu (10): 99 Rupees"+NEWLINE()+COLOR(QM_WHITE)+"These look like toy mice, but they're"+NEWLINE()+"actually self-propelled time bombs!"+INSTANT_TEXT_OFF()+SHOP_MESSAGE_BOX()+MESSAGE_END(),
@@ -266,7 +269,7 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"¡TONTO!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Business Scrubs
         //The less significant byte represents the price of the item
-        for (u32 price = 5; price <= 95; price += 5) {
+        for (u32 price = 0; price <= 95; price += 5) {
             CreateMessage(0x9000 + price, 0, 0, 0,
                 INSTANT_TEXT_ON()+"I'll sell you something good for "+COLOR(QM_RED)+std::to_string(price)+" Rupees"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"OK"+NEWLINE()+"No way"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 INSTANT_TEXT_ON()+"Je te vends un truc super pour "+COLOR(QM_RED)+std::to_string(price)+" Rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"D'accord"+NEWLINE()+"Hors de question"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
