@@ -19,7 +19,7 @@ You can download the latest stable version of the randomizer [here](https://gith
 Please ensure that you are playing on the USA version of Ocarina of Time 3D, as it is the only version supported by the randomizer. You can use either the cartridge version or the installed digital version. In all instructions below, if a directory doesn't exist, just create it.
 
 ### On 3DS Console with Luma3DS
-On your SD card, copy ```OoT3D_Randomizer.3dsx``` to ```SD:/3ds/``` or copy ```OoT3D_Randomizer.cia``` to ```SD:/cias/```. When using the ```.3dsx``` file, you will need to launch the randomzier app through the homebrew menu every time you wish to launch it. When using the ```.cia``` file, you will need to install the file using the ```FBI``` app so that the app appears directly on the 3DS home menu.
+On your SD card, copy ```OoT3D_Randomizer.3dsx``` to ```SD:/3ds/``` or copy ```OoT3D_Randomizer.cia``` to ```SD:/cias/```. When using the ```.3dsx``` file, you will need to launch the randomzier app through the homebrew menu every time you wish to launch it. When using the ```.cia``` file, you will need to install the file using the FBI app, so that the randomizer app appears directly on the 3DS home menu. Alternatively, if your 3DS is connected to the internet, you can use FBI to scan the QR code for either the ```.3dsx``` file or the ```.cia``` file, and the randomizer will be downloaded and installed automatically.
 
 Power on your 3DS while holding the SELECT key to launch the Luma3DS menu. Make sure that ```Enable game patching``` is turned on, then press START to save and launch the home menu. You only have to do this once.
 
@@ -28,10 +28,7 @@ To generate a playthrough, run Ocarina of Time 3D Randomizer from the homebrew l
 If the 3DS crashes when you launch the game, you probably need to update Luma3DS.
 
 ### On Citra
-Use Citra to launch ```OoT3D_Randomizer.3dsx```. Navigate the menus to choose the settings for your playthrough, and finish by selecting ```Generate Randomizer```. When prompted, make sure to select that you are playing on Citra emulator. After the app has finished, on the Citra window, click on ```File->Open Citra Folder```. From this folder, navigate to ```\sdmc\luma\titles\0004000000033500```, and you should find files called ```code.ips``` and ```exheader.bin```. In the Citra window, right-click on the installed copy Ocarina of Time 3D, and choose ```Open Mods Location```. (If you haven't installed OoT3D, you can go to ```File->Open Citra Folder``` and then open up ```\load\mods\0004000000033500```.) Copy both ```code.ips``` and ```exheader.bin``` into this folder. Now, launch Ocarina of Time 3D and enjoy your playthrough!
-
-### On Citra for recent Nightly Pre-releases
-The same as above, but in ```\sdmc\luma\titles\0004000000033500``` you should also find a folder called ```romfs```. Make sure to also copy this entire folder into ```\load\mods\0004000000033500```. This will become standard for future releases.
+Use Citra to launch ```OoT3D_Randomizer.3dsx```. Navigate the menus to choose the settings for your playthrough, and finish by selecting ```Generate Randomizer```. When prompted, make sure to select that you are playing on Citra emulator. After the app has finished, on the Citra window, click on ```File->Open Citra Folder```. From this folder, navigate to ```\sdmc\luma\titles\0004000000033500```, and you should find files called ```code.ips```, ```exheader.bin```, and a folder called ```romfs```. In the Citra window, right-click on the installed copy of Ocarina of Time 3D, and choose ```Open Mods Location```. (If you haven't installed OoT3D, you can go to ```File->Open Citra Folder``` and then open up ```\load\mods\0004000000033500```.) Copy ```code.ips```, ```exheader.bin```, and ```romfs``` into this folder. Now, launch Ocarina of Time 3D and enjoy your playthrough!
 
 ### Save Files
 Right now, save files are shared between any playthroughs you create and the base game. This means that you are responsible for managing your own save files. If you are playing on a 3DS, check out [Checkpoint](https://github.com/FlagBrew/Checkpoint/releases), an easy-to-use homebrew save manager.

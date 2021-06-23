@@ -531,6 +531,17 @@ hook_ShortenRainbowBridgeCS:
     cpy r4,r0
     bx lr
 
+.global hook_Chest_OverrideIceSmoke
+hook_Chest_OverrideIceSmoke:
+    push {r0-r12, lr}
+    mov r0,r4
+    bl Chest_OverrideIceSmoke
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    cpy r0,r6
+    bne 0x1D5E64
+    b 0x1D5E60
+
 .global hook_SetSavewarpEntrance
 hook_SetSavewarpEntrance:
     push {r0-r12, lr}

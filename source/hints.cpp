@@ -612,7 +612,7 @@ static void CreateAltarText() {
 
   //End
   Hint(ADULT_ALTAR_TEXT_END).GetText()+EVENT_TRIGGER();
-  CreateMessageFromTextObject(0x7088, 0, 2, 3, AddColorsAndFormat(adultText, {QM_RED, QM_YELLOW, QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW, QM_PINK, QM_RED, QM_RED, QM_RED}));
+  CreateMessageFromTextObject(0x7088, 0, 2, 3, AddColorsAndFormat(adultText, {QM_RED, QM_YELLOW, QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW, QM_PINK, QM_RED, QM_RED, QM_RED, QM_RED}));
 }
 
 void CreateAllHints() {
