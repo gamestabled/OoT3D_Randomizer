@@ -197,6 +197,8 @@ extern string_view iceTrapsExtra;
 extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
 
+extern string_view faroresWindAnywhereDesc;
+
 extern string_view adultStickDesc;
 
 extern string_view adultBoomerangDesc;
