@@ -71,16 +71,12 @@ public:
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_CHEST, scene, flag);
   }
 
-  static auto QuestItem(u8 slot) {
-    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_QUEST_ITEM, 0xFF, slot);
-  }
-
   static auto Cow(u8 scene, u8 flag) {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_COW, scene, flag);
   }
 
-  static auto Minigame(u8 offset, u8 bit) {
-    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MINIGAME, offset, bit);
+  static auto Fishing(u8 bit) {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MINIGAME, 0x00, bit);
   }
 
   static auto Scrub(u8 scene, u8 bit) {
@@ -93,6 +89,10 @@ public:
 
   static auto GerudoToken() {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_GERUDO_TOKEN, 0x00, 0x00);
+  }
+
+  static auto BigPoePoints() {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_POE_POINTS, 0x00, 0x00);
   }
 };
 

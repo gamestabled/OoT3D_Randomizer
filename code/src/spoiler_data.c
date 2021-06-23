@@ -67,9 +67,9 @@ u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc)
     }
 }
 
-u8 SpoilerData_MinigameCheck(SpoilerItemLocation itemLoc)
+u8 SpoilerData_FishingCheck(SpoilerItemLocation itemLoc)
 {
-    return (gSaveContext.unk_ED4[itemLoc.LocationScene] & (1 << itemLoc.LocationFlag)) != 0;
+    return (gSaveContext.fishingStats.flags & (1 << itemLoc.LocationFlag)) != 0;
 }
 
 u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
@@ -79,7 +79,7 @@ u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
 
 u8 SpoilerData_BiggoronCheck()
 {
-    return gSaveContext.unk_4F != 0;
+    return gSaveContext.biggoronSword != 0;
 }
 
 u8 SpoilerData_GerudoTokenCheck()
@@ -94,6 +94,11 @@ u8 SpoilerData_GerudoTokenCheck()
                EventCheck(0x92) != 0 &&
                EventCheck(0x93) != 0;
     }
+}
+
+u8 SpoilerData_BigPoePoints()
+{
+    return gSaveContext.bigPoePoints >= (gSettingsContext.bigPoeTargetCount * 100);
 }
 
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
@@ -128,14 +133,11 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         case SPOILER_CHK_INF_TABLE: { // Check a flag set in event_check_inf
             return SpoilerData_InfTableCheck(itemLoc.LocationScene, itemLoc.LocationFlag);
         }
-        case SPOILER_CHK_QUEST_ITEM: { // Check a flag set in questItems
-            return SpoilerData_QuestItemCheck(itemLoc.LocationFlag);
-        }
         case SPOILER_CHK_COW: {
             return SpoilerData_CowCheck(itemLoc);
         }
         case SPOILER_CHK_MINIGAME: {
-            return SpoilerData_MinigameCheck(itemLoc);
+            return SpoilerData_FishingCheck(itemLoc);
         }
         case SPOILER_CHK_SCRUB: {
             return SpoilerData_ScrubCheck(itemLoc);
@@ -145,6 +147,9 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_GERUDO_TOKEN: {
             return SpoilerData_GerudoTokenCheck();
+        }
+        case SPOILER_CHK_POE_POINTS: {
+            return SpoilerData_BigPoePoints();
         }
         default: {
             return 0;

@@ -79,7 +79,7 @@ typedef struct {
     /* 0x004A */ u16          bgsHitsLeft;
     /* 0x004C */ u16          naviTimer;
     /* 0x004E */ u8           magicAcquired;
-    /* 0x004F */ char         unk_4F;
+    /* 0x004F */ u8           biggoronSword;
     /* 0x0050 */ u8           doubleMagic;
     /* 0x0051 */ u8           doubleDefense;
     /* 0x0052 */ s8           bgsFlag;
@@ -112,7 +112,13 @@ typedef struct {
     /* 0x0EB4 */ u8           gsFlags[22]; //due to reordering, array is smaller
     /* 0x0ECA */ char         unk_ECA[0x0006]; //the extra two bytes move here
     /* 0x0ED0 */ u32          unk_ED0; //horseback archery highscore?
-    /* 0x0ED4 */ char         unk_ED4[0x0008]; //fishing rewards, other minigames?
+    /* 0x0ED4 */ u32          bigPoePoints; //number of big poes sold * 100
+    struct {
+        /* 0x0ED4 */ u8 recordFishChild; //seems to be unique ID of fish, this is copied into adult value if player has not yet fished as adult
+        /* 0x0ED5 */ u8 flags; //bits: 0 - ever fished as child, 1 - ever fished as adult, 2 - caught record as child, 3 - caught record as adult
+        /* 0x0ED6 */ u8 timesPaidToFish;
+        /* 0x0ED7 */ u8 recordFishAdult; //seems to be unique ID of fish
+    }                         fishingStats;
     /* 0x0EDC */ u32          unk_EDC; //horse race record time?
     /* 0x0EE0 */ u32          unk_EE0; //marathon race record time?
     /* 0x0EE4 */ char         unk_EE4[0x0008];

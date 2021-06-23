@@ -17,13 +17,12 @@ typedef enum {
     SPOILER_CHK_ITEM_GET_INF,
     SPOILER_CHK_EVENT_CHK_INF,
     SPOILER_CHK_INF_TABLE,
-    SPOILER_CHK_QUEST_ITEM,
-    SPOILER_CHK_UPGRADE,
     SPOILER_CHK_COW,
     SPOILER_CHK_MINIGAME,
     SPOILER_CHK_SCRUB,
     SPOILER_CHK_BIGGORON,
     SPOILER_CHK_GERUDO_TOKEN,
+    SPOILER_CHK_POE_POINTS,
 } SpoilerCollectionCheckType;
 
 typedef struct {
@@ -56,12 +55,12 @@ u8 SpoilerData_ChestCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_CollectableCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_ItemGetInfCheck(u8 slot);
 u8 SpoilerData_InfTableCheck(u8 offset, u8 bit);
-u8 SpoilerData_QuestItemCheck(u8 slot);
 u8 SpoilerData_UpgradeCheck(u8 bit);
 u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc);
-u8 SpoilerData_MinigameCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_FishingCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_BiggoronCheck();
 u8 SpoilerData_GerudoTokenCheck();
+u8 SpoilerData_BigPoePoints();
 
 #endif // _SPOILER_DATA_H_
