@@ -89,31 +89,31 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         bomb = 0;
     }
 
-    if (fairy != 0 && thisx == lastTrapChest){
-        for (int i = 0x928; i < 0x934; i++){
-            *(((u8*)(fairy)) + i) = 0; //evil dark fairy (inner color)
+    if (fairy != 0 && thisx == lastTrapChest) {
+        for (int i = 0x928; i < 0x934; i++) {
+            *(((u8*)(fairy)) + i) = 0; // evil dark fairy (inner color)
         }
 
-        if (gSaveContext.health <= 16 || gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO){
+        if (gSaveContext.health <= 16 || gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO) {
             gSaveContext.health = 0;
         }
         else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_HALF) {
-            healthDecrement = 64; //4 Hearts
+            healthDecrement = 64; // 4 Hearts
         }
         else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DEFAULT) {
-            healthDecrement = 128; //8 Hearts
+            healthDecrement = 128; // 8 Hearts
         }
         else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DOUBLE) {
-            healthDecrement = 256; //16 Hearts
+            healthDecrement = 256; // 16 Hearts
         }
         else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_QUADRUPLE) {
-            healthDecrement = 512; //32 Hearts
+            healthDecrement = 512; // 32 Hearts
         }
 
         if (gSaveContext.doubleDefense) {
             healthDecrement /= 2;
         }
-        PlaySound(0x100035C); //Poe laugh SFX
+        PlaySound(0x100035C); // Poe laugh SFX
         fairy = 0;
     }
 
@@ -177,23 +177,23 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
             bomb = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x10, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
             bomb->world.pos = thisx->world.pos;
         }
-        //Unhealing fairy
-        else if(damageType == 6){
+        // Unhealing fairy
+        else if (damageType == 6) {
             fairy = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x18, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
             fairy->world.pos = thisx->world.pos;
             fairy->params = 0x5;
-            PLAYER->actor.home.pos.y = -5000; //Make Link airborne for a frame to cancel the get item event
+            PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
-        //Explosive Rupee Trap
-        else if(damageType == 7){
+        // Explosive Rupee Trap
+        else if(damageType == 7) {
             Actor* ruppy = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x131, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
             ruppy->world.pos = thisx->world.pos;
             ruppy->world.pos.y += 30;
             ruppy->params = 0x2;
-            PLAYER->actor.home.pos.y = -5000; //Make Link airborne for a frame to cancel the get item event
+            PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
-        //Fire Trap
-        else if(damageType == 8){
+        // Fire Trap
+        else if(damageType == 8) {
             FireDamage(&(PLAYER->actor), gGlobalContext, gRandInt % 2);
             LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
             return 1;

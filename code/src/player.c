@@ -44,17 +44,16 @@ void Player_SetChildCustomTunicCMAB(void) {
     TexAnim_Spawn(PLAYER->skelAnime.unk_28->unk_0C, cmabMan);
 }
 
-void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx){
+void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     PlayerActor_Update(thisx, globalCtx);
-    if (healthDecrement <= 0){
+    if (healthDecrement <= 0) {
         return;
     }
 
-    if(gSaveContext.health > 4){
+    if(gSaveContext.health > 4) {
         gSaveContext.health--;
         healthDecrement--;
-    }
-    else{
+    } else {
         healthDecrement = 0;
     }
 }
