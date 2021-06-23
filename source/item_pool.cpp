@@ -502,30 +502,30 @@ static void PlaceVanillaDekuScrubItems() {
       PlaceItemInLocation(DEKU_TREE_MQ_DEKU_SCRUB, DEKU_SHIELD);
     }
     if (DodongosCavern.IsMQ()) {
-      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR,                 DEKU_STICK_1);
-      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_FRONT,                DEKU_SEEDS_30);
-      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_STAIRCASE,                 DEKU_SHIELD);
+      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR,                    DEKU_STICK_1);
+      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_FRONT,                   DEKU_SEEDS_30);
+      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_STAIRCASE,                     DEKU_SHIELD);
       PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_SIDE_ROOM_NEAR_LOWER_LIZALFOS, RED_POTION_REFILL);
     } else {
       PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT,      DEKU_NUTS_5);
       PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS, DEKU_STICK_1);
       PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT,     DEKU_SEEDS_30);
-      PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,                DEKU_SHIELD);
+      PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,                   DEKU_SHIELD);
     }
     if (JabuJabusBelly.IsVanilla()) {
       PlaceItemInLocation(JABU_JABUS_BELLY_DEKU_SCRUB, DEKU_NUTS_5);
     }
     if (GanonsCastle.IsMQ()) {
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,       DEKU_NUTS_5);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,  DEKU_NUTS_5);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,      DEKU_NUTS_5);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT, DEKU_NUTS_5);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,        DEKU_NUTS_5);
+      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,         GREEN_POTION_REFILL);
+      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,  BOMBS_5);
+      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,       ARROWS_30);
+      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT, RED_POTION_REFILL);
+      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,        DEKU_NUTS_5);
     } else {
       PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,  BOMBS_5);
       PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, DEKU_SEEDS_30);
-      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_RIGHT,       RED_POTION_REFILL);
-      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_LEFT,        GREEN_POTION_REFILL);
+      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_RIGHT,        RED_POTION_REFILL);
+      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_LEFT,         GREEN_POTION_REFILL);
     }
 
 
@@ -553,7 +553,7 @@ static void PlaceVanillaBossKeys() {
 static void PlaceVanillaCowMilk() {
   PlaceItemInLocation(KF_LINKS_HOUSE_COW,    MILK);
   PlaceItemInLocation(HF_COW_GROTTO_COW,     MILK);
-  PlaceItemInLocation(GV_COW,              MILK);
+  PlaceItemInLocation(GV_COW,                MILK);
   PlaceItemInLocation(KAK_IMPAS_HOUSE_COW,   MILK);
   PlaceItemInLocation(DMT_COW_GROTTO_COW,    MILK);
   PlaceItemInLocation(LLR_STABLES_LEFT_COW,  MILK);
