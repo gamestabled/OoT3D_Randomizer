@@ -6,9 +6,9 @@
 
 void EnGs_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
-    //if this is a generic grotto gossip stone then assign it a message ID
-    //based off of the current respawn data. This allows these stones to all have
-    //unique hints.
+    // if this is a generic grotto gossip stone then assign it a message ID
+    // based off of the current respawn data. This allows these stones to all have
+    // unique hints.
     if ((thisx->params & 0xFF) == 0x18) {
 
         u8 id = (gSaveContext.respawn[RESPAWN_MODE_RETURN].data & 0xF) + 0x30;

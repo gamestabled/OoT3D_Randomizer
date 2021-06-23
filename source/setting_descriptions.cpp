@@ -540,6 +540,13 @@ string_view iceTrapsMayhem            = "All added junk items will be Ice Traps.
 string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice Traps, even"
                                         "those in the base pool.";                         //
 /*------------------------------                                                           //
+|  USE FARORE'S WIND ANYWHERE  |                                                           //
+------------------------------*/                                                           //
+string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
 string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"

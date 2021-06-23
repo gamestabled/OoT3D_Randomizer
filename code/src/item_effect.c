@@ -41,7 +41,7 @@ void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->upgrades |= 3 << 12;
-    if(gSettingsContext.startingMaxRupees)
+    if (gSettingsContext.startingMaxRupees)
         saveCtx->rupees = 999;
 }
 
@@ -77,18 +77,18 @@ void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    saveCtx->magicLevel = 1; // Set meter level
-    saveCtx->magicAcquired = 1; // Required for meter to persist on save load
+    saveCtx->magicLevel = 1;        // Set meter level
+    saveCtx->magicAcquired = 1;     // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x30; // Set meter size
-    saveCtx->magic = 0x30; // Fill meter
+    saveCtx->magic = 0x30;          // Fill meter
 }
 
 void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    saveCtx->magicLevel = 2; // Set meter level
-    saveCtx->magicAcquired = 1; // Required for meter to persist on save load
-    saveCtx->doubleMagic = 1; // Required for meter to persist on save load
+    saveCtx->magicLevel = 2;        // Set meter level
+    saveCtx->magicAcquired = 1;     // Required for meter to persist on save load
+    saveCtx->doubleMagic = 1;       // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x60; // Set meter size
-    saveCtx->magic = 0x60; // Fill meter
+    saveCtx->magic = 0x60;          // Fill meter
 }
 
 void ItemEffect_GiveFairyOcarina(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -98,10 +98,10 @@ void ItemEffect_GiveFairyOcarina(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2) {
     saveCtx->questItems |= 1 << questBit;
 
-    //give epona for Skip Epona Race setting
+    // give epona for Skip Epona Race setting
     if (questBit == 13 && gSettingsContext.skipEponaRace == SKIP) {
-      saveCtx->eventChkInf[0x1] |= 0x0100;
-      gSaveContext.horseData.pos.y = 0xF000; //place Epona OoB, so you can't reach her without playing the song
+        saveCtx->eventChkInf[0x1] |= 0x0100;
+        gSaveContext.horseData.pos.y = 0xF000; // place Epona OoB, so you can't reach her without playing the song
     }
 }
 
@@ -115,7 +115,7 @@ void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    if(gSettingsContext.startingMaxRupees) {
+    if (gSettingsContext.startingMaxRupees) {
         if (arg1 == 1) {
             saveCtx->rupeeAccumulator = 200;
         } else if (arg1 == 2) {
@@ -131,13 +131,14 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     // if (OPEN_KAKARIKO) {
     //     save->inf_table[7] = save->inf_table[7] | 0x40; // "Spoke to Gate Guard About Mask Shop"
     //     if (!COMPLETE_MASK_QUEST) {
-    //         save->item_get_inf[2] = save->item_get_inf[2] & 0xFB87; // Unset "Obtained Mask" flags just in case of savewarp before Impa.
+    //         save->item_get_inf[2] = save->item_get_inf[2] & 0xFB87; // Unset "Obtained Mask" flags just in case of
+    //         savewarp before Impa.
     //     }
     // }
     // if (COMPLETE_MASK_QUEST) {
     //     save->inf_table[7] = save->inf_table[7] | 0x80; // "Soldier Wears Keaton Mask"
-    //     save->item_get_inf[3] = save->item_get_inf[3] | 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth"
-    //     save->event_chk_inf[8] = save->event_chk_inf[8] | 0xF000; // "Paid Back Mask Fees"
+    //     save->item_get_inf[3] = save->item_get_inf[3] | 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of
+    //     Truth" save->event_chk_inf[8] = save->event_chk_inf[8] | 0xF000; // "Paid Back Mask Fees"
     // }
 }
 
@@ -153,46 +154,43 @@ static void ResetItemSlotsIfMatchesID(u8 itemSlot) {
     }
 }
 
-static u8 MakeSpaceInItemMenu(u8 itemMenu[]){
+static u8 MakeSpaceInItemMenu(u8 itemMenu[]) {
     u8 currentSlot = 5;
     u8 emptyButton = 0xFF;
     u8 slotToFree = 0xFF;
 
-    //find an empty button
-    for(currentSlot = 5; currentSlot < 24; currentSlot += 6){
-        if(itemMenu[currentSlot] == 0xFF){
-                emptyButton = currentSlot;
-                break;
+    // find an empty button
+    for (currentSlot = 5; currentSlot < 24; currentSlot += 6) {
+        if (itemMenu[currentSlot] == 0xFF) {
+            emptyButton = currentSlot;
+            break;
         }
     }
 
-    if(emptyButton == 0xFF){
+    if (emptyButton == 0xFF) {
         return 0xFF;
     }
 
-    //search the inventory for an equippable item
-    for(currentSlot = 0; currentSlot < 24; currentSlot++){
+    // search the inventory for an equippable item
+    for (currentSlot = 0; currentSlot < 24; currentSlot++) {
 
-        //ignore the button slots
-        if((currentSlot + 1) % 6 == 0){
+        // ignore the button slots
+        if ((currentSlot + 1) % 6 == 0) {
             currentSlot++;
         }
 
-        if(itemMenu[currentSlot] == 2){ //Bomb slot
+        if (itemMenu[currentSlot] == 2) { // Bomb slot
             slotToFree = currentSlot;
-        }
-        else if(itemMenu[currentSlot] == 8){//Bombchu slot
+        } else if (itemMenu[currentSlot] == 8) { // Bombchu slot
             slotToFree = currentSlot;
-        }
-        else if(itemMenu[currentSlot] == 1){//Deku Nuts slot
+        } else if (itemMenu[currentSlot] == 1) { // Deku Nuts slot
             slotToFree = currentSlot;
-        }
-        else if(itemMenu[currentSlot] == 5){//Din's Fire slot
+        } else if (itemMenu[currentSlot] == 5) { // Din's Fire slot
             slotToFree = currentSlot;
         }
 
-        //equip the item and free up the slot it occupied
-        if(slotToFree != 0xFF){
+        // equip the item and free up the slot it occupied
+        if (slotToFree != 0xFF) {
             itemMenu[emptyButton] = itemMenu[slotToFree];
             itemMenu[slotToFree] = 0xFF;
             return slotToFree;
@@ -203,9 +201,9 @@ static u8 MakeSpaceInItemMenu(u8 itemMenu[]){
 
 static void PushSlotIntoInventoryMenu(u8 itemSlot) {
     u8 currentSlot = 0;
-    while((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuChild[currentSlot] != 0xFF) {
+    while ((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuChild[currentSlot] != 0xFF) {
         currentSlot++;
-        if(currentSlot == 24){
+        if (currentSlot == 24) {
             currentSlot = MakeSpaceInItemMenu(gSaveContext.itemMenuChild);
             break;
         }
@@ -213,11 +211,11 @@ static void PushSlotIntoInventoryMenu(u8 itemSlot) {
     gSaveContext.itemMenuChild[currentSlot] = itemSlot;
 
     currentSlot = 0;
-    while((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuAdult[currentSlot] != 0xFF) {
+    while ((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuAdult[currentSlot] != 0xFF) {
         currentSlot++;
-        if(currentSlot == 24){
-            for(currentSlot = 5; currentSlot < 24; currentSlot += 6){
-                if(gSaveContext.itemMenuAdult[currentSlot] == 0xFF){
+        if (currentSlot == 24) {
+            for (currentSlot = 5; currentSlot < 24; currentSlot += 6) {
+                if (gSaveContext.itemMenuAdult[currentSlot] == 0xFF) {
                     break;
                 }
             }
@@ -244,7 +242,7 @@ void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 
 }
 
 void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    //Put the Kokiri Sword on Child B button when Link goes back child
+    // Put the Kokiri Sword on Child B button when Link goes back child
     saveCtx->childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
 }
 

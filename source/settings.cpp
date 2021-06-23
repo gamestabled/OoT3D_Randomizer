@@ -187,10 +187,12 @@ namespace Settings {
   };
 
   //Item Usability Settings
+  Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere", {"Disabled", "Enabled"},                                                {faroresWindAnywhereDesc});
   Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                                {adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                                {childHammerDesc});
   std::vector<Option *> itemUsabilityOptions = {
+    &FaroresWindAnywhere,
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
@@ -710,6 +712,7 @@ namespace Settings {
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
 
+    ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
     ctx.boomerangAsAdult     = (BoomerangAsAdult) ? 1 : 0;
     ctx.hammerAsChild        = (HammerAsChild) ? 1 : 0;
