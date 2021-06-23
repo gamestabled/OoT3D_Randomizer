@@ -138,9 +138,9 @@ void Entrance_DeathInGanonBattle(void) {
 
 void EnableFW() {
     // Leave restriction in Tower Collapse Interior, Castle Collapse, Tower Collapse Exterior, Grottos area, Fishing Pond, Ganon Battle
-    if (!gSettingsContext.faroresWindAnywhere || globalCtx->sceneNum == 14
-        || globalCtx->sceneNum == 15 || globalCtx->sceneNum == 26 || globalCtx->sceneNum == 62
-        || globalCtx->sceneNum == 73 || globalCtx->sceneNum == 79) {
+    if (!gSettingsContext.faroresWindAnywhere || gGlobalContext->sceneNum == 14
+        || gGlobalContext->sceneNum == 15 || gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62
+        || gGlobalContext->sceneNum == 73 || gGlobalContext->sceneNum == 79) {
         return;
     }
 
