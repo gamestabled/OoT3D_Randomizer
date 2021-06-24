@@ -27,7 +27,8 @@ void IceTrap_Push(void) {
 
 void LinkDamageNoKnockback(void) {
     if (gSaveContext.nayrusLoveTimer == 0) {
-        gSaveContext.health -= PLAYER->actor.colChkInfo.damage / ((gSaveContext.doubleDefense)? 2 : 1);
+        s32 changeHealth = Settings_ApplyDamageMultiplier(gGlobalContext, -(PLAYER->actor.colChkInfo.damage));
+        gSaveContext.health += changeHealth / ((gSaveContext.doubleDefense)? 2 : 1);
     }
     if (gSaveContext.health < 0) {
         gSaveContext.health = 0;
@@ -41,12 +42,12 @@ void IceTrap_Give(void) {
         ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
         u8 damageType = 3; // Default to ice trap
         if (gSettingsContext.randomTrapDmg == 1) { //Basic
-            damageType = gRandInt % 4 + 1; // From testing 0-4 are all the unique damage types and 0 is boring
+            damageType = gRandInt % 5 + 1; // From testing 0-4 are all the unique damage types and 0 is boring (5 is custom)
         }
         else if (gSettingsContext.randomTrapDmg == 2) { //Advanced
-            damageType = gRandInt % 5; // 0 will be used for the fire trap
+            damageType = gRandInt % 6; // 0 will be used for the fire trap
         }
-        modifyScale = (damageType == 0);
+        modifyScale = (damageType == 5);
 
         pendingFreezes--;
         PLAYER->stateFlags1 &= ~0xC00;
@@ -63,8 +64,7 @@ void IceTrap_Give(void) {
         if (damageType == 0) {
             FireDamage(&(PLAYER->actor), gGlobalContext, 0);
         }
-        LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20); // TODO
-        if (damageType == 0) {
+        if (damageType == 5) {
             LinkDamageNoKnockback();
         } else {
             LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20);
