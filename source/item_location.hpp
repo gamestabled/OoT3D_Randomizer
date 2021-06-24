@@ -64,7 +64,7 @@ public:
   }
 
   static auto Collectable(u8 scene, u8 flag) {
-    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_EVENT_CHK_INF, scene, flag);
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_COLLECTABLE, scene, flag);
   }
 
   static auto Chest(u8 scene, u8 flag) {
