@@ -26,7 +26,7 @@ void IceTrap_Push(void) {
 }
 
 void LinkDamageNoKnockback(void) {
-    if (gSaveContext.nayrusLoveTimer == 0) {
+    if (PLAYER->invincibilityTimer >= 0) {
         s32 changeHealth = Settings_ApplyDamageMultiplier(gGlobalContext, -(PLAYER->actor.colChkInfo.damage));
         gSaveContext.health += changeHealth / ((gSaveContext.doubleDefense)? 2 : 1);
     }
