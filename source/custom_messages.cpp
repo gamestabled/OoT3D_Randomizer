@@ -247,7 +247,7 @@ constexpr std::array DungeonColors = {
         //Saria's Song Default Hint
         CreateMessage(0x0A00, 0, 2, 3,
             UNSKIPPABLE()+"Have you tried talking to the gossip"+NEWLINE()+ "stones around Hyrule? They might have"+NEWLINE()+"some good advice... Hee hee!"+WAIT_FOR_INPUT()+"If you learn something from the gossip stones,"+NEWLINE()+"I will remember it!"+EVENT_TRIGGER()+MESSAGE_END(),
-            "",
+            UNSKIPPABLE()+"As-tu parlé aux pierres à potins"+NEWLINE()+ "dans Hyrule? Elles sont de bons conseils..."+NEWLINE()+"Hi hi!"+WAIT_FOR_INPUT()+"Si elles te révèlent quelque chose,"+NEWLINE()+"je m'en souviendrai!"+EVENT_TRIGGER()+MESSAGE_END(),
             "");
         //Poe Collector (when enough has been sold)
         CreateMessage(0x70F8, 0, 0, 0,
