@@ -155,6 +155,7 @@ void Cutscene_OverrideSunsSong(void) {
 }
 
 void Cutscene_OverrideSongOfTime(Actor* ocarina) {
+    gSaveContext.eventChkInf[10] |= 0x200;
     ItemOverride_PushDelayedOverride(0x2A);
     gGlobalContext->nextEntranceIndex = 0x50F;
     gGlobalContext->sceneLoadFlag = 0x14;
