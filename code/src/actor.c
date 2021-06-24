@@ -31,6 +31,8 @@
 #include "well_stone.h"
 #include "well_water.h"
 #include "liftable_rock.h"
+#include "player.h"
+#include "rupee_trap.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -39,6 +41,8 @@
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
+    gActorOverlayTable[0x0].initInfo->update = PlayerActor_rUpdate;
+
     gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
     gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
 
@@ -88,6 +92,8 @@ void Actor_Init() {
     gActorOverlayTable[0x11B].initInfo->update = NULL;
 
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
+
+    gActorOverlayTable[0x131].initInfo->update = EnExRuppy_rUpdate;
 
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
 

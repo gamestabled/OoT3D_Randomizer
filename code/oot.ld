@@ -248,6 +248,10 @@ SECTIONS
 		*(.patch_JabuJabuCutsceneOverride)
 	}
 
+	.patch_GossipStoneAddSariaHint 0x1B398C : {
+		*(.patch_GossipStoneAddSariaHint)
+	}
+
 	.patch_ReadGossipStoneHints 0x1B3A44 : {
 		*(.patch_ReadGossipStoneHints)
 	}
@@ -614,6 +618,14 @@ SECTIONS
 
 	.patch_AdultShootingGallery 0x38AB9C : {
 		*(.patch_AdultShootingGallery)
+	}
+
+	.patch_SariasSongHintsOne 0x390620 : {
+		*(.patch_SariasSongHintsOne)
+	}
+
+	.patch_SariasSongHintsTwo 0x39073C : {
+		*(.patch_SariasSongHintsTwo)
 	}
 
 	.patch_OcarinaMinigameEndAfterWin 0x39DF38 : {
