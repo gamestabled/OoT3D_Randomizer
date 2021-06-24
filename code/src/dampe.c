@@ -2,14 +2,13 @@
 
 typedef struct {
     /* 0x000 */ char unk_00[0xBA8];
-    /* 0xBA8 */ u32  currentReward;
+    /* 0xBA8 */ u32 currentReward;
 } EnTk;
 
 typedef struct {
     /* 0x000 */ char unk_00[0xB1C];
-    /* 0xB1C */ u8   unk_B1C;
+    /* 0xB1C */ u8 unk_B1C;
 } EnPoRelay;
-
 
 // Sets the flag for having received the reward from Dampe
 // Upgrades the current reward to 4, the highest

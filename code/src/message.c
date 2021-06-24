@@ -1,6 +1,5 @@
 #include "z3D/z3D.h"
 #include "message.h"
-#include "dungeon_rewards.h"
 #include <stddef.h>
 
 // These consts are filled in by the app
@@ -15,11 +14,10 @@ typedef const char* (*Message_GetText_proc)(void* param_1, u32 offset);
 #define Message_GetText_addr 0x2DF4B0
 #define Message_GetText ((Message_GetText_proc)Message_GetText_addr)
 
-const MessageEntry* Message_GetCustomEntry(void* param_1, u32 textId_) {
+const MessageEntry* Message_GetCustomEntry(void* param_1, u32 textId) {
     s32 start;
     s32 end;
 
-    u32 textId = DungeonReward_GetOverrideText(textId_);
     start = 0;
     end = numCustomMessageEntries - 1;
     while ((end >= 0) && (start <= end)) {

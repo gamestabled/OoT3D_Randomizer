@@ -7,14 +7,14 @@
 #define EnGe1_TalkAfterGame_Archery_addr 0x12A5C8
 #define EnGe1_TalkAfterGame_Archery ((ActorFunc)EnGe1_TalkAfterGame_Archery_addr)
 
-void EnGe1_rUpdate(Actor* thisx, GlobalContext* globalCtx){
+void EnGe1_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnGe1_Update(thisx, globalCtx);
 
-    if(gSettingsContext.skipMinigamePhases == SKIP
-       && !(gSaveContext.eventChkInf[6] & 0x0040)//custom flag to execute this code only once per savefile
-       && (gSaveContext.infTable[25] & 1)        //obtained Piece of Heart reward
-      ){
+    if (gSettingsContext.skipMinigamePhases == SKIP &&
+        !(gSaveContext.eventChkInf[6] & 0x0040) // custom flag to execute this code only once per savefile
+        && (gSaveContext.infTable[25] & 1)      // obtained Piece of Heart reward
+    ) {
         EnGe1_TalkAfterGame_Archery(thisx, globalCtx);
         gSaveContext.eventChkInf[6] |= 0x0040;
     }

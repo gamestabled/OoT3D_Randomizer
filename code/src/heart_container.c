@@ -29,7 +29,7 @@ void ItemBHeart_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 
 void ItemBHeart_rDraw(Actor* thisx, GlobalContext* globalCtX) {
     ItemBHeart* container = THIS;
-    
+
     if (!Model_DrawByActor(&container->actor)) {
         ItemBHeart_Draw(&container->actor, globalCtX);
     }

@@ -16,17 +16,6 @@ typedef enum {
     /* 0x08 */ LIGHT_MEDALLION,
 } DungeonReward;
 
-typedef struct {
-    u32 textId;
-    u32 bitMask;
-    s16 objectId;
-    s8 objectModelIdx;
-    u8 itemId;
-    u8 actorParam;
-} DungeonRewardInfo;
-
-u32 DungeonReward_GetOverrideText(u32 incomingTextId);
 const char* DungeonReward_GetName(u32 dungeonReward);
-const DungeonRewardInfo* DungeonReward_GetInfoByActor(Actor* reward);
 
 #endif //_DUNGEON_REWARDS_H_
