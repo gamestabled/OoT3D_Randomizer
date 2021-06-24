@@ -57,16 +57,20 @@ namespace Settings {
   };
 
   //World Settings
-  Option RandomizeWorld      = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
-  Option StartingAge         = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                      {ageDesc});
+  Option RandomizeWorld          = Option::Bool("Randomize Settings", {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
+  Option StartingAge             = Option::U8  ("Starting Age",       {"Adult", "Child", "Random"},                                      {ageDesc});
   u8 ResolvedStartingAge;
-  Option BombchusInLogic     = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
-  Option BombchuDrops        = Option::Bool("Bombchu Drops",          {"Off", "On"},                                                     {bombchuDropDesc});
-  Option RandomMQDungeons    = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                                     {randomMQDungeonsDesc});
-  Option MQDungeonCount      = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
+  Option ShuffleEntrances        = Option::Bool("Shuffle Entrances",  {"Off", "On"},                                                     {shuffleEntrancesDesc});
+  Option ShuffleDungeonEntrances = Option::Bool("  Dungeon Entrances",{"Off", "On"},                                                     {dungeonEntrancesDesc});
+  Option BombchusInLogic         = Option::Bool("Bombchus in Logic",  {"Off", "On"},                                                     {bombchuLogicDesc});
+  Option BombchuDrops            = Option::Bool("Bombchu Drops",      {"Off", "On"},                                                     {bombchuDropDesc});
+  Option RandomMQDungeons        = Option::Bool("Random MQ Dungeons", {"Off", "On"},                                                     {randomMQDungeonsDesc});
+  Option MQDungeonCount          = Option::U8  ("  MQ Dungeon Count", {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
+    &ShuffleEntrances,
+    &ShuffleDungeonEntrances,
     &BombchusInLogic,
     &BombchuDrops,
     &RandomMQDungeons,
@@ -663,11 +667,11 @@ namespace Settings {
 
     ctx.startingAge          = StartingAge.Value<u8>();
     ctx.resolvedStartingAge  = ResolvedStartingAge;
-
-    ctx.bombchusInLogic      = (BombchusInLogic) ? 1 : 0;
-    ctx.bombchuDrops         = (BombchuDrops) ? 1 : 0;
-    ctx.randomMQDungeons     = (RandomMQDungeons) ? 1 : 0;
-    ctx.mqDungeonCount       = MQDungeonCount.Value<u8>();
+    ctx.shuffleDungeonEntrances = (ShuffleDungeonEntrances) ? 1 : 0;
+    ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
+    ctx.bombchuDrops            = (BombchuDrops) ? 1 : 0;
+    ctx.randomMQDungeons        = (RandomMQDungeons) ? 1 : 0;
+    ctx.mqDungeonCount          = MQDungeonCount.Value<u8>();
 
     ctx.shuffleRewards       = ShuffleRewards.Value<u8>();
     ctx.linksPocketItem      = LinksPocketItem.Value<u8>();
@@ -813,15 +817,6 @@ namespace Settings {
     ctx.startingUpgrades |= StartingScale.Value<u8>() << 9;
     ctx.startingUpgrades |= StartingWallet.Value<u8>() << 12;
 
-    //Filling detailed logic
-    for (u16 i = 0; i < detailedLogicOptions.size(); i++) {
-      ctx.detailedLogic[i] = detailedLogicOptions[i]->GetSelectedOptionIndex();
-    }
-
-    //Filling excluded locations
-    for (u16 i = 0; i < excludeLocationsOptions.size(); i++) {
-      ctx.excludeLocations[i] = excludeLocationsOptions[i]->GetSelectedOptionIndex();
-    }
     return ctx;
   }
 
@@ -1112,6 +1107,14 @@ namespace Settings {
       } else {
         BombchuDrops.Unlock();
       }
+
+      //Show Shuffle options when Shuffle Entrances is On
+      if (ShuffleEntrances) {
+        ShuffleDungeonEntrances.Unhide();
+      } else {
+        ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+        ShuffleDungeonEntrances.Hide();
+      }
     }
 
     //Only show MQ Dungeon Count if Random MQ Dungeons is off
@@ -1318,7 +1321,6 @@ namespace Settings {
   }
 
   //eventual settings
-  bool ShuffleDungeonEntrances          = false;
   bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;

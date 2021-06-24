@@ -2,6 +2,7 @@
 #include "item_override.h"
 #include "settings.h"
 #include "savefile.h"
+#include "entrance.h"
 #include "z3D/actors/z_bg_dy_yoseizo.h"
 #include <stddef.h>
 
@@ -84,7 +85,7 @@ void Cutscene_OverrideSerenade(void) {
 }
 
 u32 Cutscene_OverrideRequiem(void) {
-    if (!EventCheck(0xAC)) {
+    if (!EventCheck(0xAC) && (gSaveContext.entranceIndex == Entrance_GetRequiemEntrance())) {
         ItemOverride_PushDelayedOverride(0x23);
         EventSet(0xAC);
         gSaveContext.entranceIndex = 0x1ED;

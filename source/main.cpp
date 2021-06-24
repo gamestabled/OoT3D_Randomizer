@@ -4,6 +4,7 @@
 #include "hint_list.hpp"
 #include "item_list.hpp"
 #include "item_location.hpp"
+#include "location_access.hpp"
 
 #define TICKS_PER_SEC 268123480.0
 

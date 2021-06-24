@@ -4,6 +4,7 @@
 #include "custom_messages.hpp"
 #include "shops.hpp"
 #include "spoiler_log.hpp"
+#include "entrance.hpp"
 
 #include <array>
 #include <cstring>
@@ -147,6 +148,39 @@ bool WritePatch() {
       return false;
     }
     totalRW += sizeof(override);
+  }
+  CitraPrint(std::to_string(totalRW));
+  sleep(0.1);
+
+  /*-------------------------
+  |    rEntranceOverrides   |
+  --------------------------*/
+
+  // Write entrance override table address to code
+  patchOffset = V_TO_P(RENTRANCEOVERRIDES_ADDR);
+  buf[0] = (patchOffset >> 16) & 0xFF;
+  buf[1] = (patchOffset >> 8) & 0xFF;
+  buf[2] = (patchOffset) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 3;
+
+  // Write entrance override table size to code
+  const u32 eOvrTableSize = sizeof(EntranceOverride) * entranceOverrides.size();
+  buf[0] = (eOvrTableSize >> 8) & 0xFF;
+  buf[1] = (eOvrTableSize) & 0xFF;
+  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+    return false;
+  }
+  totalRW += 2;
+
+  // Write entrance override table to code
+  for (const auto& entranceOverride : entranceOverrides) {
+    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &entranceOverride, sizeof(entranceOverride), FS_WRITE_FLUSH))) {
+      return false;
+    }
+    totalRW += sizeof(entranceOverride);
   }
   CitraPrint(std::to_string(totalRW));
   sleep(0.1);

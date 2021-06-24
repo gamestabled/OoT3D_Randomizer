@@ -47,6 +47,10 @@ extern string_view ganonsTrialCountDesc;
 
 extern string_view ageDesc;
 
+extern string_view shuffleEntrancesDesc;
+
+extern string_view dungeonEntrancesDesc;
+
 extern string_view bombchuLogicDesc;
 
 extern string_view bombchuDropDesc;
@@ -194,6 +198,7 @@ extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
 
 extern string_view faroresWindAnywhereDesc;
+
 extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
