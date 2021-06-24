@@ -2,7 +2,7 @@
 #include "settings.h"
 
 #define MASK_OF_TRUTH_ID 8
-#define MAX_SARIAS_SONG_HINTS 20
+#define MAX_SARIAS_SONG_HINTS 64
 
 #define SCENE_YDAN_BOSS 17
 
@@ -28,6 +28,10 @@ void Hints_AddSariasSongHint(u16 textId) {
     u8 textIdSceneOffset = (textId & 0xF0) >> 4;
     u8 textIdLookupBit = textId & 0xF;
 
+    if (gSaveContext.sceneFlags[SCENE_YDAN_BOSS + textIdSceneOffset].unk & (1 << textIdLookupBit)) {
+        return;
+    }
+
     gSaveContext.sceneFlags[SCENE_YDAN_BOSS + textIdSceneOffset].unk |= (1 << textIdLookupBit);
 
     if (sNumSariasSongHints >= MAX_SARIAS_SONG_HINTS) {
@@ -44,7 +48,8 @@ void Hints_LoadSariasSongHints(void) {
         u8 textIdLookupBit = i & 0xF;
 
         if (gSaveContext.sceneFlags[SCENE_YDAN_BOSS + textIdSceneOffset].unk & (1 << textIdLookupBit)) {
-            Hints_AddSariasSongHint(0x0A00 + i);
+            sSariasSongHintTextIds[sNumSariasSongHints] = 0xA00 + i;
+            sNumSariasSongHints++;
         }
     }
 
