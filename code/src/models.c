@@ -3,19 +3,20 @@
 #include "item_override.h"
 #include "item_table.h"
 #include "objects.h"
-#include "dungeon_rewards.h"
 #include "custom_models.h"
 #include <stddef.h>
 
 typedef void (*SkeletonAnimationModel_MatrixCopy_proc)(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
 #define SkeletonAnimationModel_MatrixCopy_addr 0x3721E0
-#define SkeletonAnimationModel_MatrixCopy ((SkeletonAnimationModel_MatrixCopy_proc)SkeletonAnimationModel_MatrixCopy_addr)
+#define SkeletonAnimationModel_MatrixCopy \
+    ((SkeletonAnimationModel_MatrixCopy_proc)SkeletonAnimationModel_MatrixCopy_addr)
 
 typedef void (*SkeletonAnimationModel_Draw_proc)(SkeletonAnimationModel* glModel, s32 param_2);
 #define SkeletonAnimationModel_Draw_addr 0x372170
 #define SkeletonAnimationModel_Draw ((SkeletonAnimationModel_Draw_proc)SkeletonAnimationModel_Draw_addr)
 
-typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext* globalCtx, SkeletonAnimationModel** glModel, s32 objModelIdx);
+typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext* globalCtx,
+                                                    SkeletonAnimationModel** glModel, s32 objModelIdx);
 #define SkeletonAnimationModel_SpawnAt_addr 0x372F38
 #define SkeletonAnimationModel_SpawnAt ((SkeletonAnimationModel_SpawnAt_proc)SkeletonAnimationModel_SpawnAt_addr)
 
@@ -23,7 +24,8 @@ typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mt
 #define Actor_SetModelMatrix_addr 0x3679D0
 #define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)Actor_SetModelMatrix_addr)
 
-typedef void (*Matrix_Multiply_proc)(nn_math_MTX34* dst, nn_math_MTX34* lhs, nn_math_MTX44* rhs) __attribute__((pcs("aapcs-vfp")));
+typedef void (*Matrix_Multiply_proc)(nn_math_MTX34* dst, nn_math_MTX34* lhs, nn_math_MTX44* rhs)
+    __attribute__((pcs("aapcs-vfp")));
 #define Matrix_Multiply_addr 0x36C174
 #define Matrix_Multiply ((Matrix_Multiply_proc)Matrix_Multiply_addr)
 
@@ -65,9 +67,10 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
             break;
     }
 
-    model->saModel = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx);
+    model->saModel =
+        SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx);
 
-    if (model->itemRow->objectId == 0x017F) { //Set the mesh for rupees
+    if (model->itemRow->objectId == 0x017F) { // Set the mesh for rupees
         SkeletonAnimationModel_SetMesh(model->saModel, model->itemRow->special);
     }
 
@@ -97,7 +100,8 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
     }
 
     if (model->itemRow->objectModelIdx2 >= 0) {
-        model->saModel2 = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx2);
+        model->saModel2 = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId,
+                                                       model->itemRow->objectModelIdx2);
         if (model->itemRow->cmabIndex2 >= 0) {
             Model_SetAnim(model->saModel2, model->itemRow->objectId, model->itemRow->cmabIndex2);
             model->saModel2->unk_0C->animSpeed = 2.0f;
@@ -156,7 +160,7 @@ void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
                  "vldr s1,[r0,#0x2C]\n"
                  "vldr s0,[r0,#0xC4]\n"
                  "vldr s2,[r0,#0x58]\n"
-                 "vmla.f32 s1,s0,s2\n" // y coord calc
+                 "vmla.f32 s1,s0,s2\n"  // y coord calc
                  "vldr s0,[r0,#0x28]\n" // x coord
                  "vldr s2,[r0,#0x30]\n" // z coord
                  "add r2,r0,#0xBC\n"
@@ -165,8 +169,7 @@ void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
                  "push {r0-r12, lr}\n"
                  "bl 0x3679D0\n"
                  "pop {r0-r12, lr}\n"
-                 "pop {r0-r12, lr}\n"
-                );
+                 "pop {r0-r12, lr}\n");
 }
 
 void Model_UpdateMatrix(Model* model) {
@@ -196,7 +199,7 @@ void Model_Draw(Model* model) {
         if (model->saModel != NULL) {
             model->saModel->unk_AC = 1;
             Model_UpdateMatrix(model);
-            SkeletonAnimationModel_Draw(model->saModel, 0); //TODO is 0 always okay?
+            SkeletonAnimationModel_Draw(model->saModel, 0); // TODO is 0 always okay?
         }
         if (model->saModel2 != NULL) {
             model->saModel2->unk_AC = 1;
@@ -208,9 +211,7 @@ void Model_Draw(Model* model) {
 
 void Model_LookupByOverride(Model* model, ItemOverride override) {
     if (override.key.all != 0) {
-        u16 itemId = override.value.looksLikeItemId ?
-            override.value.looksLikeItemId :
-            override.value.itemId;
+        u16 itemId = override.value.looksLikeItemId ? override.value.looksLikeItemId : override.value.itemId;
         u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
         model->itemRow = ItemTable_GetItemRow(resolvedItemId);
     }
@@ -242,7 +243,7 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
         key.flag = DUNGEON_JABUJABUS_BELLY;
         override = ItemOverride_LookupByKey(key);
         if (override.key.all != 0) {
-            //Unrotate the Spiritual Stones
+            // Unrotate the Spiritual Stones
             actor->shape.rot.x = 0;
         }
     } else {
@@ -272,16 +273,16 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
         newModel->loaded = 0;
         newModel->saModel = NULL;
         newModel->saModel2 = NULL;
-        switch(newModel->itemRow->objectId) {
-            case 0x0024 : //Skulltula token
+        switch (newModel->itemRow->objectId) {
+            case 0x0024: // Skulltula token
                 newModel->scale = 0.25f;
                 break;
-            case 0x00BA : //Medallions
-                // newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
-                // break;
-            case 0x019C : //Kokiri Emerald
-            case 0x019D : //Goron Ruby
-            case 0x019E : //Zora Sapphire
+            case 0x00BA: // Medallions
+                         // newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
+                         // break;
+            case 0x019C: // Kokiri Emerald
+            case 0x019D: // Goron Ruby
+            case 0x019E: // Zora Sapphire
                 newModel->scale = 0.2f;
                 break;
             default:

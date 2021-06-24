@@ -540,6 +540,13 @@ string_view iceTrapsMayhem            = "All added junk items will be Ice Traps.
 string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice Traps, even"
                                         "those in the base pool.";                         //
 /*------------------------------                                                           //
+|  USE FARORE'S WIND ANYWHERE  |                                                           //
+------------------------------*/                                                           //
+string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
 string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"
@@ -584,6 +591,12 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 string_view randomTrapDmgDesc         = "If set, ice traps will sometimes damage Link and\n"
                                         "knock him back or electrocute him instead of\n"   //
                                         "freezing him.";                                   //
+                                                                                           //
+string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"
+                                        "and no other negative effects\n";                 //
+                                                                                           //
+string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
+                                        "cause a lot of damage (with one-hit protection)"; //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

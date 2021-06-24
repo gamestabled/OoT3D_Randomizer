@@ -10,22 +10,20 @@ u32 EnDns_rPurchaseableCheck(EnDns* scrub);
 void EnDns_rSetRupeesAndFlags(EnDns* scrub);
 void EnDns_rSetRupeesAndFlagsIfScrubsanity(EnDns* scrub);
 
-static const DnsItemEntry Scrub_0 = { 20, 5,  0x30, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
-static const DnsItemEntry Scrub_1 = { 15, 1,  0x31, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
-static const DnsItemEntry Scrub_2 = { 10, 1,  0x3E, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlags };
+static const DnsItemEntry Scrub_0 = { 20, 5, 0x30, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
+static const DnsItemEntry Scrub_1 = { 15, 1, 0x31, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
+static const DnsItemEntry Scrub_2 = { 10, 1, 0x3E, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlags };
 static const DnsItemEntry Scrub_3 = { 40, 30, 0x33, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
-static const DnsItemEntry Scrub_4 = { 50, 1,  0x34, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
-static const DnsItemEntry Scrub_5 = { 40, 5,  0x37, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
+static const DnsItemEntry Scrub_4 = { 50, 1, 0x34, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
+static const DnsItemEntry Scrub_5 = { 40, 5, 0x37, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
 static const DnsItemEntry Scrub_6 = { 70, 20, 0x38, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
-static const DnsItemEntry Scrub_7 = { 40, 1,  0x39, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
-static const DnsItemEntry Scrub_8 = { 40, 1,  0x3A, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
-static const DnsItemEntry Scrub_9 = { 40, 1,  0x77, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlags };
-static const DnsItemEntry Scrub_A = { 40, 1,  0x79, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlags };
+static const DnsItemEntry Scrub_7 = { 40, 1, 0x39, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
+static const DnsItemEntry Scrub_8 = { 40, 1, 0x3A, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlagsIfScrubsanity };
+static const DnsItemEntry Scrub_9 = { 40, 1, 0x77, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlags };
+static const DnsItemEntry Scrub_A = { 40, 1, 0x79, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlags };
 
-const DnsItemEntry* rScrubTable[] = {
-    &Scrub_0, &Scrub_1, &Scrub_2, &Scrub_3, &Scrub_4, &Scrub_5,
-    &Scrub_6, &Scrub_7, &Scrub_8, &Scrub_9, &Scrub_A,
-};
+const DnsItemEntry* rScrubTable[] = { &Scrub_0, &Scrub_1, &Scrub_2, &Scrub_3, &Scrub_4, &Scrub_5,
+                                      &Scrub_6, &Scrub_7, &Scrub_8, &Scrub_9, &Scrub_A };
 
 #define Vanilla_DnsItemEntries_addr 0x522384
 #define VanillaScrubTable ((DnsItemEntry**)Vanilla_DnsItemEntries_addr)

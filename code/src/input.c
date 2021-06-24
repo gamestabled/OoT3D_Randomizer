@@ -7,9 +7,9 @@
 
 u32 GetCurrentPadState(void) {
     u32 hid_shared_mem = *(u32*)(0x005AEC5C);
-    return *(volatile u32 *)(hid_shared_mem + 0x1C);
+    return *(volatile u32*)(hid_shared_mem + 0x1C);
 }
-#define HID_PAD           (GetCurrentPadState())
+#define HID_PAD (GetCurrentPadState())
 
 InputContext rInputCtx;
 
@@ -20,11 +20,12 @@ void Input_Update(void) {
     rInputCtx.old.val = rInputCtx.cur.val;
 }
 
-u32 buttonCheck(u32 key){
-        for (u32 i = 0x26000; i > 0; i--) {
-            if (key != real_hid.pad.pads[real_hid.pad.index].curr.val) return 0;
-        }
-        return 1;
+u32 buttonCheck(u32 key) {
+    for (u32 i = 0x26000; i > 0; i--) {
+        if (key != real_hid.pad.pads[real_hid.pad.index].curr.val)
+            return 0;
+    }
+    return 1;
 }
 
 u32 Input_WaitWithTimeout(u32 msec, u32 closingButton) {
@@ -37,15 +38,15 @@ u32 Input_WaitWithTimeout(u32 msec, u32 closingButton) {
     while (HID_PAD && (msec == 0 || n <= msec)) {
         svcSleepThread(1 * 1000 * 1000LL);
         n++;
-        
-        // If the player presses the closing button while still holding other buttons, the menu closes (useful for buffering);
+
+        // If the player presses the closing button while still holding other buttons, the menu closes (useful for
+        // buffering);
         u32 tempButtons = HID_PAD;
-        if(tempButtons != startingButtonState && buttonCheck(tempButtons)){
-            
-            if(tempButtons & closingButton){
+        if (tempButtons != startingButtonState && buttonCheck(tempButtons)) {
+
+            if (tempButtons & closingButton) {
                 break;
-            }
-            else{
+            } else {
                 startingButtonState = tempButtons;
             }
         }
@@ -62,15 +63,15 @@ u32 Input_WaitWithTimeout(u32 msec, u32 closingButton) {
             n++;
         }
 
-        if(msec != 0 && n >= msec) {
+        if (msec != 0 && n >= msec) {
             return 0;
         }
 
         key = HID_PAD;
 
-        //Make sure it's pressed
+        // Make sure it's pressed
         pressedKey = buttonCheck(key);
-    } while(!pressedKey);
+    } while (!pressedKey);
 
     return key;
 }

@@ -22,14 +22,13 @@ void EnOwl_DespawnInit(Actor* owl, GlobalContext* globalCtx) {
 
 void EnOwl_rUpdate(Actor* owl, GlobalContext* globalCtx) {
     EnOwl_Update(owl, globalCtx);
-    //repeat this for some frames to be sure the cutscene timer
-    //isn't reset to 0 by the cutscene
-    if(shortcutActivated < 5){
-        if(globalCtx->sceneNum==96){//DMT
+    // repeat this for some frames to be sure the cutscene timer
+    // isn't reset to 0 by the cutscene
+    if (shortcutActivated < 5) {
+        if (globalCtx->sceneNum == 96) { // DMT
             globalCtx->csCtx.frames = 600;
             shortcutActivated++;
-        }
-        else if(globalCtx->sceneNum==87){//Lake Hylia
+        } else if (globalCtx->sceneNum == 87) { // Lake Hylia
             globalCtx->csCtx.frames = 500;
             shortcutActivated++;
         }

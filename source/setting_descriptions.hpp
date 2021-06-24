@@ -193,10 +193,9 @@ extern string_view iceTrapsExtra;
 extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
 
+extern string_view faroresWindAnywhereDesc;
 extern string_view adultStickDesc;
-
 extern string_view adultBoomerangDesc;
-
 extern string_view childHammerDesc;
 
 extern string_view coloredKeysDesc;
@@ -205,6 +204,8 @@ extern string_view coloredBossKeysDesc;
 extern string_view mirrorWorldDesc;
 
 extern string_view randomTrapDmgDesc;
+extern string_view basicTrapDmgDesc;
+extern string_view advancedTrapDmgDesc;
 
 extern string_view ToggleAllDetailedLogicDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;
