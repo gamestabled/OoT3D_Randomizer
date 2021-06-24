@@ -70,10 +70,6 @@ public:
 
     //set the logic to be a specific age and time of day and see if the condition still holds
     bool CheckConditionAtAgeTime(bool& age, bool& time) const {
-        bool prevIsChild = Logic::IsChild;
-        bool prevIsAdult = Logic::IsAdult;
-        bool prevAtDay   = Logic::AtDay;
-        bool prevAtNight = Logic::AtNight;
 
         Logic::IsChild = false;
         Logic::IsAdult = false;
@@ -84,14 +80,7 @@ public:
         age = true;
 
         Logic::UpdateHelpers();
-        bool checkCondition = conditionsMet();
-
-        Logic::IsChild = prevIsChild;
-        Logic::IsAdult = prevIsAdult;
-        Logic::AtDay   = prevAtDay;
-        Logic::AtNight = prevAtNight;
-
-        return checkCondition;
+        return conditionsMet() || Settings::Logic.Is(LOGIC_NONE);
     }
 
     //Yes this is the exact same function as above, trust me on this

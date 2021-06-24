@@ -1035,7 +1035,7 @@ void GenerateItemPool() {
   bool junkSet;
   for (ItemKey pendingJunk : PendingJunkPool) {
     junkSet = false;
-    for (ItemKey item : ItemPool) {
+    for (ItemKey& item : ItemPool) {
       for (ItemKey junk : JunkPoolItems) {
         if (item == junk && item != HUGE_RUPEE && item != DEKU_NUTS_10) {
           item = pendingJunk;

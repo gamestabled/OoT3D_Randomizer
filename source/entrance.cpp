@@ -15,6 +15,7 @@
 #include <set>
 
 std::list<EntranceOverride> entranceOverrides = {};
+static bool noRandomEntrances = false;
 
 typedef struct {
     EntranceType type;
@@ -173,7 +174,7 @@ static void ConfirmReplacement(Entrance* entrance, Entrance* targetEntrance) {
 }
 
 static bool ValidateWorld(Entrance* entrancePlaced) {
-
+  
   //Ensure some areas can't be reached as the wrong age
 
   // Check to make sure all locations are still reachable
@@ -281,6 +282,11 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
     }
     break;
   }
+
+  if (retries <= 0) {
+    printf("\x1b[29;0HEntrance Shuffle failed. Entrances will not be\nshuffled");
+    noRandomEntrances = true;
+  }
 }
 
 //Process for setting up the shuffling of all entrances to be shuffled
@@ -378,6 +384,9 @@ void ShuffleAllEntrances() {
 //Create the set of entrances that will be overridden
 void CreateEntranceOverrides() {
   entranceOverrides.clear();
+  if (noRandomEntrances) {
+    return;
+  }
   PlacementLog_Msg("Creating entrance overrides");
   auto allShuffleableEntrances = GetShuffleableEntrances(EntranceType::All, false);
 
