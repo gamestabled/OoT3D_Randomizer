@@ -94,6 +94,10 @@ public:
   static auto BigPoePoints() {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_POE_POINTS, 0x00, 0x00);
   }
+
+  static auto ShopItem(u8 scene, u8 itemSlot) {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_SHOP_ITEM, scene, itemSlot);
+  }
 };
 
 class ItemLocation {

@@ -96,9 +96,15 @@ u8 SpoilerData_GerudoTokenCheck()
     }
 }
 
-u8 SpoilerData_BigPoePoints()
+u8 SpoilerData_BigPoePointsCheck()
 {
     return gSaveContext.bigPoePoints >= (gSettingsContext.bigPoeTargetCount * 100);
+}
+
+u8 SpoilerData_ShopItemCheck(SpoilerItemLocation itemLoc)
+{
+    u32 itemBit = 1 << itemLoc.LocationFlag;
+    return (gSaveContext.sceneFlags[itemLoc.LocationScene].unk & itemBit) != 0;
 }
 
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
@@ -149,7 +155,10 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
             return SpoilerData_GerudoTokenCheck();
         }
         case SPOILER_CHK_POE_POINTS: {
-            return SpoilerData_BigPoePoints();
+            return SpoilerData_BigPoePointsCheck();
+        }
+        case SPOILER_CHK_SHOP_ITEM: {
+            return SpoilerData_ShopItemCheck(itemLoc);
         }
         default: {
             return 0;
