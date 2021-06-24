@@ -376,6 +376,8 @@ SerenadeLocation_patch:
 .section .patch_RequiemLocation
 .global RequiemLocation_patch
 RequiemLocation_patch:
+    nop
+    nop
     bl Cutscene_OverrideRequiem
 
 .section .patch_NocturneLocation
@@ -1161,6 +1163,11 @@ ReadGossipStoneHints_patch:
     nop
     nop
 
+.section .patch_GossipStoneAddSariaHint
+.global GossipStoneAddSariaHint_patch
+GossipStoneAddSariaHint_patch:
+    bl hook_GossipStoneAddSariaHint
+
 .section .patch_DecoratedChest
 .global DecoratedChest_patch
 DecoratedChest_patch:
@@ -1231,6 +1238,28 @@ OwlMagicCheck_patch:
 .global ChestIceSmoke_patch
 ChestIceSmoke_patch:
     b hook_Chest_OverrideIceSmoke
+
+.section .patch_SetSavewarpEntrance
+.global SetSavewarpEntrance_patch
+SetSavewarpEntrance_patch:
+    bl hook_SetSavewarpEntrance
+    b  0x44FCE0
+
+.section .patch_SetGameOverEntrance
+.global SetGameOverEntrance_patch
+SetGameOverEntrance_patch:
+    bl hook_SetGameOverEntrance
+    b  0x458EC8
+
+.section .patch_SariasSongHintsOne
+.global SariasSongHintsOne_patch
+SariasSongHintsOne_patch:
+    bl Hints_GetNextSariasSongHint
+
+.section .patch_SariasSongHintsTwo
+.global SariasSongHintsTwo_patch
+SariasSongHintsTwo_patch:
+    bl Hints_GetNextSariasSongHint
 
 .section .patch_loader
 .global loader_patch

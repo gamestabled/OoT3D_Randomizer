@@ -29,7 +29,7 @@ void ItemOcarina_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 
 void ItemOcarina_rDraw(Actor* thisx, GlobalContext* globalCtX) {
     ItemOcarina* ocarina = THIS;
-    
+
     if (!Model_DrawByActor(&ocarina->actor)) {
         ItemOcarina_Draw(&ocarina->actor, globalCtX);
     }

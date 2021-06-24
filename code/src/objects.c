@@ -20,7 +20,8 @@ s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId) {
         for (i = 0; i < OBJECT_EXCHANGE_BANK_MAX; ++i) {
             s32 id = rExtendedObjectCtx.status[i].id;
             id = (id < 0 ? -id : id);
-            if (id == objectId) return i + OBJECT_EXCHANGE_BANK_MAX;
+            if (id == objectId)
+                return i + OBJECT_EXCHANGE_BANK_MAX;
         }
     }
     return index;
@@ -29,7 +30,8 @@ s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId) {
 s32 ExtendedObject_IsLoaded(ObjectContext* objectCtx, s16 bankIndex) {
     if (bankIndex < OBJECT_EXCHANGE_BANK_MAX) {
         return Object_IsLoaded(objectCtx, bankIndex);
-    } else return (rExtendedObjectCtx.status[bankIndex - OBJECT_EXCHANGE_BANK_MAX].id >= 0);
+    } else
+        return (rExtendedObjectCtx.status[bankIndex - OBJECT_EXCHANGE_BANK_MAX].id >= 0);
 }
 
 ObjectStatus* ExtendedObject_GetStatus(s16 objectId) {
@@ -37,7 +39,8 @@ ObjectStatus* ExtendedObject_GetStatus(s16 objectId) {
     for (i = 0; i < rExtendedObjectCtx.num; ++i) {
         s32 id = rExtendedObjectCtx.status[i].id;
         id = (id < 0 ? -id : id);
-        if (id == objectId) return &rExtendedObjectCtx.status[i];
+        if (id == objectId)
+            return &rExtendedObjectCtx.status[i];
     }
     return NULL;
 }
@@ -49,7 +52,8 @@ void* ExtendedObject_GetCMABByIndex(s16 objectId, u32 objectAnimIdx) {
     if (objectBankIdx < OBJECT_EXCHANGE_BANK_MAX) {
         cmabMan = ZAR_GetCMABByIndex(&gGlobalContext->objectCtx.status[objectBankIdx].zarInfo, objectAnimIdx);
     } else {
-        cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo, objectAnimIdx);
+        cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo,
+                                     objectAnimIdx);
     }
 
     return cmabMan;

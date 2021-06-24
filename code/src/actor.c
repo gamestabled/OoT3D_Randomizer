@@ -27,6 +27,12 @@
 #include "lake_hylia_objects.h"
 #include "graveyard_objects.h"
 #include "windmill_man.h"
+#include "deku_tree_mouth.h"
+#include "well_stone.h"
+#include "well_water.h"
+#include "liftable_rock.h"
+#include "player.h"
+#include "rupee_trap.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -35,6 +41,8 @@
 #define OBJECT_GI_OCARINA_0 270
 
 void Actor_Init() {
+    gActorOverlayTable[0x0].initInfo->update = PlayerActor_rUpdate;
+
     gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
     gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
 
@@ -46,6 +54,8 @@ void Actor_Init() {
     gActorOverlayTable[0x15].initInfo->draw = EnItem00_rDraw;
 
     gActorOverlayTable[0x3D].initInfo->destroy = EnOssan_rDestroy;
+
+    gActorOverlayTable[0x3E].initInfo->init = BgTreemouth_rInit;
 
     gActorOverlayTable[0x4A].initInfo->update = BgSpot00Hanebasi_rUpdate;
 
@@ -74,6 +84,8 @@ void Actor_Init() {
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
     gActorOverlayTable[0xF1].initInfo->draw = ItemOcarina_rDraw;
 
+    gActorOverlayTable[0x104].initInfo->init = BgSpot01Idomizu_rInit;
+
     gActorOverlayTable[0x10F].initInfo->init = ItemEtcetera_rInit;
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
 
@@ -81,10 +93,16 @@ void Actor_Init() {
 
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
+    gActorOverlayTable[0x131].initInfo->update = EnExRuppy_rUpdate;
+
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
+
+    gActorOverlayTable[0x145].initInfo->init = BgSpot01Idosoko_rInit;
 
     gActorOverlayTable[0x14D].initInfo->init = EnOwl_DespawnInit; //Despawns unnecessary owls
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
+
+    gActorOverlayTable[0x14E].initInfo->init = EnIshi_rInit;
 
     gActorOverlayTable[0x153].initInfo->update = EnFu_rUpdate;
 
@@ -130,7 +148,7 @@ void Actor_Init() {
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GTG].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GANON].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
 
-    // Define object 128 to be by default the same as object 
+    // Define object 128 to be by default the same as object
     strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
 
     // Define draw item 3 (corresponding to gid 4) to be double defense custom model

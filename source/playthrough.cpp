@@ -22,7 +22,7 @@ namespace Playthrough {
       CustomMessages::ClearMessages();
       ItemReset();
       HintReset();
-      Exits::AccessReset();
+      Areas::AccessReset();
 
       Settings::UpdateSettings();
       //once the settings have been finalized turn them into a string for hashing
