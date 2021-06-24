@@ -248,7 +248,7 @@ constexpr std::array DungeonColors = {
         CreateMessage(0x0A00, 0, 2, 3,
             UNSKIPPABLE()+"Have you tried talking to the gossip"+NEWLINE()+ "stones around Hyrule? They might have"+NEWLINE()+"some good advice... Hee hee!"+WAIT_FOR_INPUT()+"If you learn something from the gossip stones,"+NEWLINE()+"I will remember it!"+EVENT_TRIGGER()+MESSAGE_END(),
             UNSKIPPABLE()+"As-tu parlé aux pierres à potins"+NEWLINE()+ "dans Hyrule? Elles sont de bons conseils..."+NEWLINE()+"Hi hi!"+WAIT_FOR_INPUT()+"Si elles te révèlent quelque chose,"+NEWLINE()+"je m'en souviendrai!"+EVENT_TRIGGER()+MESSAGE_END(),
-            "");
+            UNSKIPPABLE()+"¿Has probado a consultarle a las"+NEWLINE()+ "piedras chismosas esparcidas por Hyrule? Puede"+NEWLINE()+"que sean de ayuda a tu empresa... ¡Ji, ji!"+WAIT_FOR_INPUT()+"¡Puedo recordarte todo lo que aprendas de ellas,"+NEWLINE()+"si así lo deseas!"+EVENT_TRIGGER()+MESSAGE_END());
         //Poe Collector (when enough has been sold)
         CreateMessage(0x70F8, 0, 0, 0,
             UNSKIPPABLE()+"Wait a minute! WOW!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"You have earned enough points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Young man, you are a genuine "+COLOR(QM_RED)+"ghost hunter"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
