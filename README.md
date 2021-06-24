@@ -61,6 +61,7 @@ Install the 3DS packages from [devkitPro](https://devkitpro.org/wiki/Getting_Sta
 
 A small portion of this project is done in python. If you decide to use the Msys2 console from devkitpro, you can install python using the command `pacman -S python` within Msys2.
 
+
 In the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```. Use ```make debug=1``` for extra debugging features, including extra items when starting a new file. In the case of problems, try using a ```make clean```.
 When making changes to any code in the `code` directory, you must use `make clean` before recompiling if you want your changes to be picked up.
 For faster compilation using multiple threads, you can use `make -j4` (in this example, the `4` is the number of threads being used).
