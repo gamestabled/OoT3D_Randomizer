@@ -79,8 +79,7 @@ void SaveFile_Init() {
     //set master quest flag for mirror world
     if (gSettingsContext.mirrorWorld == ON) {
         gSaveContext.masterQuestFlag = 1;
-    }
-    else{
+    } else {
         gSaveContext.masterQuestFlag = 0;
     }
 

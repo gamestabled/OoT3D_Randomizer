@@ -28,10 +28,6 @@ static std::vector<EventAccess> grottoEvents = {
 
 //set the logic to be a specific age and time of day and see if the condition still holds
 bool LocationAccess::CheckConditionAtAgeTime(bool& age, bool& time) const {
-  bool prevIsChild = IsChild;
-  bool prevIsAdult = IsAdult;
-  bool prevAtDay   = AtDay;
-  bool prevAtNight = AtNight;
 
   IsChild = false;
   IsAdult = false;
@@ -42,14 +38,7 @@ bool LocationAccess::CheckConditionAtAgeTime(bool& age, bool& time) const {
   age = true;
 
   UpdateHelpers();
-  bool checkCondition = conditions_met();
-
-  IsChild = prevIsChild;
-  IsAdult = prevIsAdult;
-  AtDay   = prevAtDay;
-  AtNight = prevAtNight;
-
-  return checkCondition;
+  return conditions_met() || Settings::Logic.Is(LOGIC_NONE);
 }
 
 bool LocationAccess::ConditionsMet() const {
@@ -256,9 +245,11 @@ bool HasAccessTo(const AreaKey area) {
 
 
 void AreaTable_Init() {
-                       //name,           scene,          hint text,                events, locations, exits
-  areaTable[NONE] = Area("Invalid Area", "Invalid Area", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {});
+  //Clear the array from any previous playthrough attempts. This is important so that
+  //locations which appear in both MQ and Vanilla dungeons don't get set in both areas.
+  areaTable.fill(Area("Invalid Area", "Invalid Area", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {}));
 
+                       //name, scene, hint text,                       events, locations, exits
   areaTable[ROOT] = Area("Root", "", LINKS_POCKET, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(LINKS_POCKET, []{return true;})
@@ -1277,7 +1268,7 @@ void AreaTable_Init() {
                   Entrance(KAK_BACKYARD, []{return true;})
   });
 
-  areaTable[THE_GRAVEYARD] = Area("Graveyard", "Graveyard", THE_GRAVEYARD, NO_DAY_NIGHT_CYCLE, {
+  areaTable[THE_GRAVEYARD] = Area("The Graveyard", "The Graveyard", THE_GRAVEYARD, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&ButterflyFairy, []{return ButterflyFairy || (CanUse(CanUseItem::Sticks) && AtDay);}),
                   EventAccess(&BeanPlantFairy, []{return BeanPlantFairy || (CanPlantBean(THE_GRAVEYARD) && CanPlay(SongOfStorms));}),
@@ -1298,7 +1289,7 @@ void AreaTable_Init() {
                   Entrance(KAKARIKO_VILLAGE,             []{return true;})
   });
 
-  areaTable[GRAVEYARD_SHIELD_GRAVE] = Area("GY Shield Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
+  areaTable[GRAVEYARD_SHIELD_GRAVE] = Area("Graveyard Shield Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(GRAVEYARD_SHIELD_GRAVE_CHEST, []{return true;})
                   //Free Fairies
@@ -1307,7 +1298,7 @@ void AreaTable_Init() {
                   Entrance(THE_GRAVEYARD, []{return true;})
   });
 
-  areaTable[GRAVEYARD_HEART_PIECE_GRAVE] = Area("GY Heart Piece Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
+  areaTable[GRAVEYARD_HEART_PIECE_GRAVE] = Area("Graveyard Heart Piece Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(GRAVEYARD_HEART_PIECE_GRAVE_CHEST, []{return CanPlay(SunsSong);})
                 }, {
@@ -1315,7 +1306,7 @@ void AreaTable_Init() {
                   Entrance(THE_GRAVEYARD, []{return true;})
   });
 
-  areaTable[GRAVEYARD_COMPOSERS_GRAVE] = Area("GY Composers Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
+  areaTable[GRAVEYARD_COMPOSERS_GRAVE] = Area("Graveyard Composers Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(GRAVEYARD_COMPOSERS_GRAVE_CHEST, []{return HasFireSource;}),
                   LocationAccess(SONG_FROM_COMPOSERS_GRAVE,       []{return IsAdult || (Slingshot || Boomerang || Sticks || HasExplosives || KokiriSword);}),
@@ -1324,9 +1315,9 @@ void AreaTable_Init() {
                   Entrance(THE_GRAVEYARD, []{return true;}),
   });
 
-  areaTable[GRAVEYARD_DAMPES_GRAVE] = Area("GY Dampes Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {
+  areaTable[GRAVEYARD_DAMPES_GRAVE] = Area("Graveyard Dampes Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuNutDrop,          []{return true;}),
+                  EventAccess(&NutPot,               []{return true;}),
                   EventAccess(&DampesWindmillAccess, []{return DampesWindmillAccess || (IsAdult && CanPlay(SongOfTime));}),
                 }, {
                   //Locations
@@ -1338,12 +1329,12 @@ void AreaTable_Init() {
                   Entrance(KAK_WINDMILL,  []{return IsAdult && CanPlay(SongOfTime);})
   });
 
-  areaTable[GRAVEYARD_DAMPES_HOUSE] = Area("GY Dampes House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+  areaTable[GRAVEYARD_DAMPES_HOUSE] = Area("Graveyard Dampes House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(THE_GRAVEYARD, []{return true;})
   });
 
-  areaTable[GRAVEYARD_WARP_PAD_REGION] = Area("GY Warp Pad Region", "Graveyard", THE_GRAVEYARD, NO_DAY_NIGHT_CYCLE, {
+  areaTable[GRAVEYARD_WARP_PAD_REGION] = Area("Graveyard Warp Pad Region", "Graveyard", THE_GRAVEYARD, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&GossipStoneFairy, []{return GossipStoneFairy || CanSummonGossipFairyWithoutSuns;}),
                 }, {

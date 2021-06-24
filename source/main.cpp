@@ -13,7 +13,6 @@ int main() {
   HintTable_Init();
   ItemTable_Init();
   LocationTable_Init();
-  AreaTable_Init();
   MenuInit();
 
   u64 initialHoldTime = svcGetSystemTick();

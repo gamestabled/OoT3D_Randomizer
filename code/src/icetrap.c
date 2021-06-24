@@ -15,7 +15,8 @@ void IceTrap_Push(void) {
 }
 
 void IceTrap_Give(void) {
-    if (cooldown == 0 && pendingFreezes && ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
+    if (cooldown == 0 && pendingFreezes &&
+        ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
         u8 damageType = 3; // Default to ice trap
         if (gSettingsContext.randomTrapDmg == ON) {
             damageType = gRandInt % 4 + 1; // From testing 0-4 are all the unique damage types and 0 is boring
@@ -23,18 +24,18 @@ void IceTrap_Give(void) {
 
         pendingFreezes--;
         PLAYER->stateFlags1 &= ~0xC00;
-        if(damageType == 3){
+        if (damageType == 3) {
             PLAYER->actor.colChkInfo.damage = 0;
-        }
-        else{
-            PLAYER->actor.colChkInfo.damage = Settings_ApplyDamageMultiplier(gGlobalContext, (gSettingsContext.mirrorWorld)? 16 : 8);
+        } else {
+            PLAYER->actor.colChkInfo.damage =
+                Settings_ApplyDamageMultiplier(gGlobalContext, (gSettingsContext.mirrorWorld) ? 16 : 8);
         }
 
-        if(PLAYER->invincibilityTimer > 0){
+        if (PLAYER->invincibilityTimer > 0) {
             PLAYER->invincibilityTimer = 0;
         }
 
-        LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20); //TODO
+        LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20); // TODO
         cooldown = 30;
     }
 }

@@ -4,7 +4,7 @@
 
 void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void* cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
-    
+
     if (gSaveContext.linkAge == 0) {
         void* cmb = (void*)(((char*)zarInfo->buf) + 0xDAE8);
         CustomModel_EditLinkToCustomTunic(cmb);

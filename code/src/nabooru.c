@@ -4,14 +4,14 @@
 #define EnNb_Draw_addr 0x1B7FBC
 #define EnNb_Draw ((ActorFunc)EnNb_Draw_addr)
 
-void EnNb_rDraw(Actor* thisx, GlobalContext* globalCtx){
+void EnNb_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 
-    //if the scene is Spirit Boss, Nabooru Knuckle is defeated and Nabooru is on the ground, reload scene
+    // if the scene is Spirit Boss, Nabooru Knuckle is defeated and Nabooru is on the ground, reload scene
     //(Nabooru is teleported to ground level when the cutscene starts, her actor is initially loaded elsewhere)
-    if(globalCtx->sceneNum == 23 && (globalCtx->actorCtx.flags.swch & 0x00000020) && thisx->prevPos.y==0){
+    if (globalCtx->sceneNum == 23 && (globalCtx->actorCtx.flags.swch & 0x00000020) && thisx->prevPos.y == 0) {
         globalCtx->nextEntranceIndex = 0x008D;
         globalCtx->sceneLoadFlag = 0x14;
     }
-    
+
     EnNb_Draw(thisx, globalCtx);
 }

@@ -36,6 +36,7 @@ static void RemoveStartingItemsFromPool() {
 
 //This function will propogate Time of Day access through the entrance
 static bool UpdateToDAccess(Entrance* entrance) {
+
   bool ageTimePropogated = false;
 
   //propogate childDay, childNight, adultDay, and adultNight separately
@@ -60,14 +61,12 @@ static bool UpdateToDAccess(Entrance* entrance) {
   }
 
   //special check for temple of time
-  if (AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child() && !AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult()) {
+  if (!AreaTable(ROOT)->Adult() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child()) {
     AreaTable(ROOT)->adultDay   = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->childDay;
     AreaTable(ROOT)->adultNight = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->childNight;
-    ageTimePropogated  = true;
-  } else if (!AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult()){
+  } else if (!AreaTable(ROOT)->Child() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult()){
     AreaTable(ROOT)->childDay   = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->adultDay;
     AreaTable(ROOT)->childNight = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->adultNight;
-    ageTimePropogated = true;
   }
 
   return ageTimePropogated;
@@ -75,11 +74,16 @@ static bool UpdateToDAccess(Entrance* entrance) {
 
 //Get the max number of tokens that can possibly be useful
 static int GetMaxGSCount() {
-  //If bridge is set to tokens, get how many are required
+  //If bridge or LACS is set to tokens, get how many are required
   int maxBridge = 0;
+  int maxLACS = 0;
   if (Settings::Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
     maxBridge = Settings::BridgeTokenCount.Value<u8>();
   }
+  if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+    maxLACS = Settings::LACSTokenCount.Value<u8>();
+  }
+  maxBridge = std::max(maxBridge, maxLACS);
   //Get the max amount of GS which could be useful from token reward locations
   int maxUseful = 0;
   //If the highest advancement item is a token, we know it is useless since it won't lead to an otherwise useful item
@@ -120,24 +124,19 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
   bool bombchusFound = false;
   std::vector<std::string> buyIgnores;
   //Variables for search
-  std::vector<LocationKey> newItemLocations;
-  bool firstIteration = true;
+  std::vector<ItemLocation*> newItemLocations;
+  bool updatedEvents = false;
   bool ageTimePropogated = false;
-  bool eventsUpdated = false;
+  bool firstIteration = true;
 
-
-  //If no new items are found, no events are updated, and age/time didn't propogate
-  //to any new region, then the next iteration won't provide any new location
-  while (newItemLocations.size() > 0 || eventsUpdated || ageTimePropogated || firstIteration) {
+  while (newItemLocations.size() > 0 || updatedEvents || ageTimePropogated || firstIteration) {
     firstIteration = false;
     ageTimePropogated = false;
-    eventsUpdated = false;
+    updatedEvents = false;
 
-    //Add items found during previous search iteration to logic
-    for (LocationKey loc : newItemLocations) {
-      Location(loc)->ApplyPlacedItemEffect();
+    for (ItemLocation* location : newItemLocations) {
+      location->ApplyPlacedItemEffect();
     }
-
     newItemLocations.clear();
 
     std::vector<LocationKey> sphere;
@@ -145,8 +144,8 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     for (size_t i = 0; i < areaPool.size(); i++) {
       Area* area = AreaTable(areaPool[i]);
 
-      if (area->UpdateEvents()) {
-        eventsUpdated = true;
+      if(area->UpdateEvents()){
+        updatedEvents = true;
       }
 
       //for each exit in this area
@@ -159,7 +158,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 
         //If the exit is accessible and hasn't been added yet, add it to the pool
         Area* exitArea = exit.GetConnectedRegion();
-        if (!exitArea->addedToPool && (exit.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE))) {
+        if (!exitArea->addedToPool && exit.ConditionsMet()) {
           exitArea->addedToPool = true;
           areaPool.push_back(exit.GetAreaKey());
         }
@@ -169,24 +168,25 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
       for (size_t k = 0; k < area->locations.size(); k++) {
         LocationAccess& locPair = area->locations[k];
         LocationKey loc = locPair.GetLocation();
+        ItemLocation* location = Location(loc);
 
-        if (!Location(loc)->IsAddedToPool() && (locPair.ConditionsMet() || Settings::Logic.Is(LOGIC_NONE))) {
+        if (!location->IsAddedToPool() && locPair.ConditionsMet()) {
 
-          Location(loc)->AddToPool();
+          location->AddToPool();
 
-          if (Location(loc)->GetPlacedItemKey() == NONE) {
+          if (location->GetPlacedItemKey() == NONE) {
             accessibleLocations.push_back(loc); //Empty location, consider for placement
           } else {
-            newItemLocations.push_back(loc); //Add item to cache to be considered in logic next iteration
+            newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
           }
 
           //Playthrough stuff
           //Generate the playthrough, so we want to add advancement items, unless we know to ignore them
           if (mode == SearchMode::GeneratePlaythrough) {
             //Item is an advancement item, figure out if it should be added to this sphere
-            if (!playthroughBeatable && Location(loc)->GetPlacedItem().IsAdvancement()) {
-              ItemType type = Location(loc)->GetPlacedItem().GetItemType();
-              std::string itemName(Location(loc)->GetPlacedItemName().GetEnglish());
+            if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
+              ItemType type = location->GetPlacedItem().GetItemType();
+              std::string itemName(location->GetPlacedItemName().GetEnglish());
               bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
 
               //Decide whether to exclude this location
@@ -230,16 +230,14 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
               }
             }
             //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
-            else if (Location(loc)->GetPlacedItemKey() == TRIFORCE) {
+            else if (location->GetPlacedItemKey() == TRIFORCE) {
               sphere.clear();
               sphere.push_back(loc);
-              playthroughLocations.push_back(sphere);
               playthroughBeatable = true;
-              return {};
             }
           }
           //All we care about is if the game is beatable, used to pare down playthrough
-          else if (Location(loc)->GetPlacedItemKey() == TRIFORCE && mode == SearchMode::CheckBeatable) {
+          else if (location->GetPlacedItemKey() == TRIFORCE && mode == SearchMode::CheckBeatable) {
             playthroughBeatable = true;
             return {}; //Return early for efficiency
           }
@@ -269,7 +267,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 
   erase_if(accessibleLocations, [&allowedLocations](LocationKey loc){
     for (LocationKey allowedLocation : allowedLocations) {
-      if (loc == allowedLocation) {
+      if (loc == allowedLocation || Location(loc)->GetPlacedItemKey() != NONE) {
         return false;
       }
     }
@@ -279,6 +277,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 }
 
 static void GeneratePlaythrough() {
+  LogicReset();
   GetAccessibleLocations(allLocations, SearchMode::GeneratePlaythrough);
 }
 
@@ -298,7 +297,6 @@ static void PareDownPlaythrough() {
       playthroughBeatable = false;
       LogicReset();
       GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
-
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
@@ -664,6 +662,7 @@ static void RandomizeLinksPocket() {
 int Fill() {
   int retries = 0;
   while(retries < 5) {
+    AreaTable_Init(); //Reset the world graph to intialize the proper locations
     GenerateLocationPool();
     GenerateItemPool();
     GenerateStartingInventory();
@@ -674,10 +673,9 @@ int Fill() {
     //can validate the world using deku/hylian shields
     AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); //assume worst case shopsanity 4
     if (ShuffleEntrances) {
-      AreaTable_Init(); //Reset the world graph in case of retrying
       printf("\x1b[7;10HShuffling Entrances...");
       ShuffleAllEntrances();
-      printf("Done");
+      printf("\x1b[7;32HDone");
     }
     //erase temporary shop items
     FilterAndEraseFromPool(ItemPool, [](const ItemKey item){return ItemTable(item).GetItemType() == ITEMTYPE_SHOP;});
@@ -787,6 +785,7 @@ int Fill() {
     }
     //Unsuccessful placement
     if(retries < 4) {
+      GetAccessibleLocations(allLocations, SearchMode::AllLocationsReachable);
       printf("\x1b[9;10HFailed. Retrying... %d", retries+2);
       Areas::ResetAllLocations();
       LogicReset();

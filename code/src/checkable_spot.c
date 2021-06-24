@@ -7,11 +7,10 @@
 //#define EnWonderTalk2_Destroy_addr 0x298D84
 //#define EnWonderTalk2_Destroy ((ActorFunc)EnWonderTalk2_Destroy_addr)
 
-void EnWonderTalk2_rUpdate(Actor* thisx, GlobalContext* globalCtx){
-    if((thisx->params & 0xC000) == 0x4000){ //automatic text boxes (GtG, Shadow Temple) despawn immediately so they don't appear
+void EnWonderTalk2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    if ((thisx->params & 0xC000) == 0x4000) { // automatic text boxes (GtG, Shadow Temple) despawn immediately so they don't appear
         Actor_Kill(thisx);
-    }
-    else{
+    } else {
         EnWonderTalk2_Update(thisx, globalCtx);
     }
 }

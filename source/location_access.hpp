@@ -23,10 +23,6 @@ public:
     }
 
     bool CheckConditionAtAgeTime(bool& age, bool& time) {
-      bool prevIsChild = Logic::IsChild;
-      bool prevIsAdult = Logic::IsAdult;
-      bool prevAtDay   = Logic::AtDay;
-      bool prevAtNight = Logic::AtNight;
 
       Logic::IsChild = false;
       Logic::IsAdult = false;
@@ -37,14 +33,7 @@ public:
       age = true;
 
       Logic::UpdateHelpers();
-      bool checkCondition = conditions_met();
-
-      Logic::IsChild = prevIsChild;
-      Logic::IsAdult = prevIsAdult;
-      Logic::AtDay   = prevAtDay;
-      Logic::AtNight = prevAtNight;
-
-      return checkCondition;
+      return conditions_met() || Settings::Logic.Is(LOGIC_NONE);
     }
 
     void EventOccurred() {

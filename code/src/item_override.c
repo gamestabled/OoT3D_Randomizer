@@ -6,7 +6,7 @@
 #include "custom_models.h"
 #include "objects.h"
 #include <stddef.h>
-void svcBreak(u32 breakReason); //TODO: remove
+void svcBreak(u32 breakReason); // TODO: remove
 
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
@@ -30,7 +30,7 @@ u32 rActiveItemFastChest = 0;
 static u8 rSatisfiedPendingFrames = 0;
 
 void ItemOverride_Init(void) {
-    while(rItemOverrides[rItemOverrides_Count].key.all != 0) {
+    while (rItemOverrides[rItemOverrides_Count].key.all != 0) {
         rItemOverrides_Count++;
     }
 
@@ -130,7 +130,7 @@ static void ItemOverride_Activate(ItemOverride override) {
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
     u8 looksLikeItemId = override.value.looksLikeItemId;
 
-    if (override.value.itemId == 0x7C) { //Ice trap
+    if (override.value.itemId == 0x7C) { // Ice trap
         looksLikeItemId = 0;
     }
 
@@ -215,19 +215,15 @@ void ItemOverride_AfterItemReceived(void) {
 }
 
 static u32 ItemOverride_PlayerIsReady(void) {
-    if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 &&
-        (PLAYER->actor.bgCheckFlags & 0x0001) &&
-        (PLAYER->stateFlags2 & 0x000C0000) == 0 &&
-        PLAYER->actor.draw != NULL &&
-        gGlobalContext->actorCtx.titleCtx.delayB == 0 &&
-        gGlobalContext->actorCtx.titleCtx.delayA == 0 &&
+    if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 && (PLAYER->actor.bgCheckFlags & 0x0001) &&
+        (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
+        gGlobalContext->actorCtx.titleCtx.delayB == 0 && gGlobalContext->actorCtx.titleCtx.delayA == 0 &&
         gGlobalContext->actorCtx.titleCtx.unk_12 == 0
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
-        ) {
+    ) {
         rSatisfiedPendingFrames++;
-    }
-    else {
+    } else {
         rSatisfiedPendingFrames = 0;
     }
     if (rSatisfiedPendingFrames >= 2) {
@@ -279,13 +275,13 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
     }
 
     if (override.key.all == 0) {
-        //Hack for Scrubsanity Off
-        //The game will spawn different scrub actors in grottos depending on if
-        //Link is child or adult (one for deku seeds and another for arrows
-        //respectively). Since we only override the child deku scrubs when
-        //scrubsanity is off, the adult ones will return the Gold Scale getItemID
-        //and not find an override in the overrid table. This is where we fix that
-        //so adult Link will receive arrows properly.
+        // Hack for Scrubsanity Off
+        // The game will spawn different scrub actors in grottos depending on if
+        // Link is child or adult (one for deku seeds and another for arrows
+        // respectively). Since we only override the child deku scrubs when
+        // scrubsanity is off, the adult ones will return the Gold Scale getItemID
+        // and not find an override in the overrid table. This is where we fix that
+        // so adult Link will receive arrows properly.
         if (incomingItemId == GI_SCALE_GOLD && gSettingsContext.scrubsanity == SCRUBSANITY_OFF) {
             override.value.itemId = GI_ARROWS_LARGE;
         } else {
@@ -419,17 +415,17 @@ s32 ItemOverride_GiveSariasGift(void) {
     return 1;
 }
 
-//If we haven't obtained Zelda's Letter and are in the castle courtyard, push it
+// If we haven't obtained Zelda's Letter and are in the castle courtyard, push it
 void ItemOverride_CheckZeldasLetter() {
-  if (EventCheck(0x40) == 0 && gGlobalContext->sceneNum == 0x4A) {
-      ItemOverride_Key key = { .all = 0 };
-      key.scene = 0x4A;
-      key.type = OVR_BASE_ITEM;
-      key.flag = 0x0B;
-      ItemOverride override = ItemOverride_LookupByKey(key);
-      ItemOverride_PushPendingOverride(override);
-      EventSet(0x40);
-  }
+    if (EventCheck(0x40) == 0 && gGlobalContext->sceneNum == 0x4A) {
+        ItemOverride_Key key = { .all = 0 };
+        key.scene = 0x4A;
+        key.type = OVR_BASE_ITEM;
+        key.flag = 0x0B;
+        ItemOverride override = ItemOverride_LookupByKey(key);
+        ItemOverride_PushPendingOverride(override);
+        EventSet(0x40);
+    }
 }
 
 void ItemOverride_PushDungeonReward(u8 dungeon) {
@@ -442,10 +438,10 @@ void ItemOverride_PushDungeonReward(u8 dungeon) {
 }
 
 void ItemOverride_CheckStartingItem() {
-    //use eventChkInf[0] |= 0x0001 as the check for this
+    // use eventChkInf[0] |= 0x0001 as the check for this
     if (EventCheck(0x00) == 0) {
         if (gSettingsContext.linksPocketItem != LINKSPOCKETITEM_DUNGEON_REWARD) {
-            ItemOverride_PushDungeonReward(0xFF); //Push Link's Pocket Reward
+            ItemOverride_PushDungeonReward(0xFF); // Push Link's Pocket Reward
         }
         EventSet(0x00);
     }
