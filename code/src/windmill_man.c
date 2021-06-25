@@ -11,6 +11,7 @@ void EnFu_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     if (CsTimer > 80 && CsTimer < 480) {
         CsTimer = 480;
+        gGlobalContext->csCtx.state = 3;
         gSaveContext.eventChkInf[6] |= 0x0080;
     }
 }
