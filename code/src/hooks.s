@@ -548,6 +548,7 @@ hook_EnableFW:
     bl EnableFW
     pop {r0-r12, lr}
     add sp,sp,#0x14
+    bx lr
 
 .global hook_SetSavewarpEntrance
 hook_SetSavewarpEntrance:
