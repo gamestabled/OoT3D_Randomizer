@@ -273,10 +273,17 @@ void Entrance_SetSavewarpEntrance(void) {
 }
 
 void EnableFW() {
-    // Leave restriction in Tower Collapse Interior, Castle Collapse, Tower Collapse Exterior, Grottos area, Fishing Pond, Ganon Battle
-    if (!gSettingsContext.faroresWindAnywhere || gGlobalContext->sceneNum == 14
-        || gGlobalContext->sceneNum == 15 || gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62
-        || gGlobalContext->sceneNum == 73 || gGlobalContext->sceneNum == 79) {
+    // Leave restriction in Tower Collapse Interior, Castle Collapse, Tower Collapse Exterior, Treasure Box Shop,
+    // Grottos area, Fishing Pond, Ganon Battle and for states that disable buttons.
+    if (!gSettingsContext.faroresWindAnywhere ||
+        gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 || gGlobalContext->sceneNum == 16 ||
+        gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62 || gGlobalContext->sceneNum == 73 ||
+        gGlobalContext->sceneNum == 79 ||
+        gSaveContext.unk_1586[4] & 0x1 ||   // Ingo's Minigame state
+        PLAYER->stateFlags1 & 0x08A02000 || // Swimming, riding horse, Down A, hanging from a ledge
+        PLAYER->stateFlags2 & 0x00040000    // Blank A
+        // Shielding, spinning and getting skull tokens still disable buttons automatically
+        ) {
         return;
     }
 
