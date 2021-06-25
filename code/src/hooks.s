@@ -560,6 +560,8 @@ hook_SetSavewarpEntrance:
 hook_SetGameOverEntrance:
     push {r0-r12, lr}
     bl Entrance_SetGameOverEntrance
+    pop {r0-r12, lr}
+    bx lr
 
 .global hook_GossipStoneAddSariaHint
 hook_GossipStoneAddSariaHint:
