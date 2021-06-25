@@ -542,6 +542,14 @@ hook_Chest_OverrideIceSmoke:
     bne 0x1D5E64
     b 0x1D5E60
 
+.global hook_EnableFW
+hook_EnableFW:
+    push {r0-r12, lr}
+    bl EnableFW
+    pop {r0-r12, lr}
+    add sp,sp,#0x14
+    bx lr
+
 .global hook_SetSavewarpEntrance
 hook_SetSavewarpEntrance:
     push {r0-r12, lr}
@@ -553,6 +561,8 @@ hook_SetSavewarpEntrance:
 hook_SetGameOverEntrance:
     push {r0-r12, lr}
     bl Entrance_SetGameOverEntrance
+    pop {r0-r12, lr}
+    bx lr
 
 .global hook_GossipStoneAddSariaHint
 hook_GossipStoneAddSariaHint:
