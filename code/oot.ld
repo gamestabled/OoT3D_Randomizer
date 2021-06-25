@@ -248,6 +248,10 @@ SECTIONS
 		*(.patch_JabuJabuCutsceneOverride)
 	}
 
+	.patch_GossipStoneAddSariaHint 0x1B398C : {
+		*(.patch_GossipStoneAddSariaHint)
+	}
+
 	.patch_ReadGossipStoneHints 0x1B3A44 : {
 		*(.patch_ReadGossipStoneHints)
 	}
@@ -616,6 +620,14 @@ SECTIONS
 		*(.patch_AdultShootingGallery)
 	}
 
+	.patch_SariasSongHintsOne 0x390620 : {
+		*(.patch_SariasSongHintsOne)
+	}
+
+	.patch_SariasSongHintsTwo 0x39073C : {
+		*(.patch_SariasSongHintsTwo)
+	}
+
 	.patch_OcarinaMinigameEndAfterWin 0x39DF38 : {
 		*(.patch_OcarinaMinigameEndAfterWin)
 	}
@@ -812,7 +824,7 @@ SECTIONS
 		*(.patch_ExtendedObjectClear)
 	}
 
-	.patch_RequiemLocation 0x44F10C : {
+	.patch_RequiemLocation 0x44F104 : {
 		*(.patch_RequiemLocation)
 	}
 
@@ -832,6 +844,10 @@ SECTIONS
 		*(.patch_LACSConditionTwo)
 	}
 
+	.patch_SetSavewarpEntrance 0x44FBE4 : {
+		*(.patch_SetSavewarpEntrance)
+	}
+
 	.patch_LullabyCheckFlag 0x44FD54 : {
 		*(.patch_LullabyCheckFlag)
 	}
@@ -842,6 +858,10 @@ SECTIONS
 
 	.patch_after_GlobalContext_Update 0x452434 : {
 		*(.patch_after_GlobalContext_Update)
+	}
+
+	.patch_SetGameOverEntrance 0x458E3C : {
+		*(.patch_SetGameOverEntrance)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {

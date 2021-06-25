@@ -60,6 +60,10 @@ void GenerateStartingInventory() {
     AddItemToInventory(GANONS_CASTLE_BOSS_KEY);
   }
 
+  if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && !ShuffleGerudoToken) {
+    AddItemToInventory(GERUDO_TOKEN);
+  }
+
   //Starting Inventory Menu
   //Values are associated so that the count of items matches the index of
   //the option selected. If None is selected, the value will be zero and

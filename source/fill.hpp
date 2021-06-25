@@ -10,6 +10,7 @@ enum class SearchMode {
     ReachabilitySearch,
     GeneratePlaythrough,
     CheckBeatable,
+    AllLocationsReachable,
 };
 
 int Fill();

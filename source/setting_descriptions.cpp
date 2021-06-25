@@ -125,6 +125,24 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
                                         "Only the child option is compatible with Closed\n"//
                                         "Forest.";                                         //
 /*------------------------------                                                           //
+|      SHUFFLE ENTRANCES       |                                                           //
+------------------------------*/                                                           //
+string_view shuffleEntrancesDesc      = "Shuffle where the entrances between areas lead to."
+                                        "If turned on, select which kinds of entrances you\n"
+                                        "want shuffled in the options below.";             //
+                                                                                           //
+/*------------------------------                                                           //
+|       DUNGEON ENTRANCES      |                                                           //
+------------------------------*/                                                           //
+string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, including\n"
+                                        "Bottom of the Well, Ice Cavern, and Gerudo\n"     //
+                                        "Training Grounds. However, Ganon's Castle is not\n"
+                                        "shuffled.\n"                                      //
+                                        "\n"                                               //
+                                        "Additionally, the entrances of Deku Tree, Fire\n" //
+                                        "Temple and Bottom of the Well are opened for both\n"
+                                        "adult and child.";                                //
+/*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //
@@ -591,6 +609,12 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 string_view randomTrapDmgDesc         = "If set, ice traps will sometimes damage Link and\n"
                                         "knock him back or electrocute him instead of\n"   //
                                         "freezing him.";                                   //
+                                                                                           //
+string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"
+                                        "and no other negative effects\n";                 //
+                                                                                           //
+string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
+                                        "cause a lot of damage (with one-hit protection)"; //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

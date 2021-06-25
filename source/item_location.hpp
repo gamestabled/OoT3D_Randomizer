@@ -19,7 +19,7 @@
 #include "settings.hpp"
 #include "keys.hpp"
 
-class Exit;
+class Entrance;
 
 enum class ItemLocationType {
     Base,
@@ -55,14 +55,6 @@ public:
 
     u8 GetFlag() const {
       return flag;
-    }
-
-    void Use() {
-      used = true;
-    }
-
-    bool IsUsed() const {
-      return used;
     }
 
     bool IsAddedToPool() const {
@@ -182,11 +174,11 @@ public:
       isHintable = true;
     }
 
-    void SetParentRegion(Exit* region) {
+    void SetParentRegion(AreaKey region) {
       parentRegion = region;
     }
 
-    Exit* GetParentRegion() const {
+    AreaKey GetParentRegionKey() const {
       return parentRegion;
     }
 
@@ -253,7 +245,6 @@ public:
     }
 
     void ResetVariables() {
-      used = false;
       checked = false;
       addedToPool = false;
       placedItem = NONE;
@@ -268,7 +259,6 @@ private:
     u8 scene;
     ItemLocationType type;
     u8 flag;
-    bool used = false;
     bool checked = false;
 
     std::string name;
@@ -281,7 +271,7 @@ private:
     Option excludedOption = Option::Bool(name, {"Include", "Exclude"}, {"", ""});
     u16 price = 0;
     bool isHintable = false;
-    Exit* parentRegion = nullptr;
+    AreaKey parentRegion = NONE;
     bool hasShopsanityPrice = false;
 };
 
@@ -311,6 +301,7 @@ extern std::set<ItemOverride, ItemOverride_Compare> overrides;
 extern std::vector<std::vector<LocationKey>> playthroughLocations;
 extern std::vector<LocationKey> wothLocations;
 extern bool playthroughBeatable;
+extern bool allLocationsReachable;
 
 extern u16 itemsPlaced;
 
@@ -321,4 +312,4 @@ void LocationReset();
 void ItemReset();
 void HintReset();
 void AddExcludedOptions();
-void CreateOverrides();
+void CreateItemOverrides();
