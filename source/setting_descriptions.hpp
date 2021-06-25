@@ -47,6 +47,10 @@ extern string_view ganonsTrialCountDesc;
 
 extern string_view ageDesc;
 
+extern string_view shuffleEntrancesDesc;
+
+extern string_view dungeonEntrancesDesc;
+
 extern string_view bombchuLogicDesc;
 
 extern string_view bombchuDropDesc;
@@ -193,10 +197,10 @@ extern string_view iceTrapsExtra;
 extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
 
+extern string_view faroresWindAnywhereDesc;
+
 extern string_view adultStickDesc;
-
 extern string_view adultBoomerangDesc;
-
 extern string_view childHammerDesc;
 
 extern string_view coloredKeysDesc;
@@ -205,6 +209,8 @@ extern string_view coloredBossKeysDesc;
 extern string_view mirrorWorldDesc;
 
 extern string_view randomTrapDmgDesc;
+extern string_view basicTrapDmgDesc;
+extern string_view advancedTrapDmgDesc;
 
 extern string_view ToggleAllDetailedLogicDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;

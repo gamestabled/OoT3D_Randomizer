@@ -534,4 +534,8 @@ typedef Actor* (*Actor_Spawn_proc)(ActorContext *actorCtx,GlobalContext *globalC
 #define Actor_Spawn_addr 0x3738D0
 #define Actor_Spawn ((Actor_Spawn_proc)Actor_Spawn_addr)
 
+typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int flamesColor);
+#define FireDamage_addr 0x35D8D8
+#define FireDamage ((FireDamage_proc)FireDamage_addr)
+
 #endif //_Z3D_H_

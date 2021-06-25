@@ -3,6 +3,7 @@
 #include "dungeon.hpp"
 #include "item_list.hpp"
 #include "item_location.hpp"
+#include "entrance.hpp"
 #include "random.hpp"
 #include "settings.hpp"
 #include "trial.hpp"
@@ -215,6 +216,28 @@ static void WriteLocation(
   }
 }
 
+//Writes a shuffled entrance to the specified node
+static void WriteShuffledEntrance(
+  tinyxml2::XMLElement* parentNode,
+  Entrance* entrance,
+  const bool withPadding = false
+) {
+  auto node = parentNode->InsertNewChildElement("entrance");
+  node->SetAttribute("name", entrance->GetName().c_str());
+  node->SetText(entrance->GetConnectedRegion()->regionName.c_str());
+
+  if (withPadding) {
+    constexpr int16_t LONGEST_NAME = 56; //The longest name of a vanilla entrance
+
+    //Insert padding so we get a kind of table in the XML document
+    int16_t requiredPadding = LONGEST_NAME - entrance->GetName().length();
+    if (requiredPadding > 0) {
+      std::string padding(requiredPadding, ' ');
+      node->SetAttribute("_", padding.c_str());
+    }
+  }
+}
+
 // Writes the settings (without excluded locations, starting inventory and tricks) to the spoilerLog document.
 static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
   auto parentNode = spoilerLog.NewElement("settings");
@@ -383,6 +406,25 @@ static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
   spoilerLog.RootElement()->InsertEndChild(parentNode);
 }
 
+//Write the randomized entrances to the spoiler log, if there are any
+static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
+  if (!Settings::ShuffleEntrances) {
+    return;
+  }
+
+  auto parentNode = spoilerLog.NewElement("shuffled-entrances");
+  auto shuffledEntrances = GetShuffleableEntrances(EntranceType::All);
+
+  for (Entrance* entrance : shuffledEntrances) {
+    //Double-check that the entrance was actually shuffled
+    if (entrance->IsShuffled()) {
+      WriteShuffledEntrance(parentNode, entrance, true);
+    }
+  }
+
+  spoilerLog.RootElement()->InsertEndChild(parentNode);
+}
+
 static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("all-locations");
 
@@ -420,6 +462,7 @@ bool SpoilerLog_Write() {
   wothLocations.clear();
 
   WriteHints(spoilerLog);
+  WriteShuffledEntrances(spoilerLog);
   WriteAllLocations(spoilerLog);
 
   auto e = spoilerLog.SaveFile(GetSpoilerLogPath().c_str());
