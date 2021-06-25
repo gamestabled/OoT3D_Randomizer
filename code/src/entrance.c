@@ -273,7 +273,7 @@ void Entrance_SetSavewarpEntrance(void) {
 }
 
 void EnableFW() {
-    // Leave restriction in Tower Collapse Interior, Castle Collapse, Tower Collapse Exterior, Treasure Box Shop,
+    // Leave restriction in Tower Collapse Interior, Castle Collapse, Treasure Box Shop, Tower Collapse Exterior,
     // Grottos area, Fishing Pond, Ganon Battle and for states that disable buttons.
     if (!gSettingsContext.faroresWindAnywhere ||
         gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 || gGlobalContext->sceneNum == 16 ||
