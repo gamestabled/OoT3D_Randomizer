@@ -97,10 +97,12 @@ static void Gfx_DrawSpoilerData(void) {
 
             u32 locPosY = 34 + (SPACING_Y * item * 2);
             u32 itemPosY = locPosY + SPACING_Y;
-            Draw_DrawString(10, locPosY, COLOR_WHITE,
-                SpoilerData_GetItemLocationString(gSpoilerData.Spheres[currentSphere].ItemLocations[locIndex]));
-            Draw_DrawString(10 + SPACING_X, itemPosY, COLOR_WHITE,
-                SpoilerData_GetItemNameString(gSpoilerData.Spheres[currentSphere].ItemLocations[locIndex]));
+            u16 itemIndex = gSpoilerData.Spheres[currentSphere].ItemLocations[locIndex];
+            u32 color = SpoilerData_GetIsItemLocationCollected(itemIndex) ? COLOR_GREEN : COLOR_WHITE;
+            Draw_DrawString(10, locPosY, color,
+                SpoilerData_GetItemLocationString(itemIndex));
+            Draw_DrawString(10 + SPACING_X, itemPosY, color,
+                SpoilerData_GetItemNameString(itemIndex));
         }
     }
     else {
@@ -140,9 +142,10 @@ static void Gfx_DrawSpoilerAllItems(void) {
 
             u32 locPosY = 34 + (SPACING_Y * item * 2);
             u32 itemPosY = locPosY + SPACING_Y;
-            Draw_DrawString(10, locPosY, COLOR_WHITE,
+            u32 color = SpoilerData_GetIsItemLocationCollected(locIndex) ? COLOR_GREEN : COLOR_WHITE;
+            Draw_DrawString(10, locPosY, color,
                 SpoilerData_GetItemLocationString(locIndex));
-            Draw_DrawString(10 + SPACING_X, itemPosY, COLOR_WHITE,
+            Draw_DrawString(10 + SPACING_X, itemPosY, color,
                 SpoilerData_GetItemNameString(locIndex));
         }
     }
