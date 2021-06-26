@@ -166,8 +166,8 @@ bool WritePatch() {
   }
   totalRW += 3;
 
-  // Write entrance override table size to code
-  const u32 eOvrTableSize = sizeof(EntranceOverride) * entranceOverrides.size();
+  // Write entrance override table size to code, or the length of one entry if the table is empty
+  const u32 eOvrTableSize = entranceOverrides.size() > 0 ? sizeof(EntranceOverride) * entranceOverrides.size() : sizeof(EntranceOverride);
   buf[0] = (eOvrTableSize >> 8) & 0xFF;
   buf[1] = (eOvrTableSize) & 0xFF;
   if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
@@ -175,12 +175,21 @@ bool WritePatch() {
   }
   totalRW += 2;
 
-  // Write entrance override table to code
-  for (const auto& entranceOverride : entranceOverrides) {
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &entranceOverride, sizeof(entranceOverride), FS_WRITE_FLUSH))) {
+  if (entranceOverrides.size() > 0) {
+    // Write entrance override table to code
+    for (const auto& entranceOverride : entranceOverrides) {
+      if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &entranceOverride, sizeof(entranceOverride), FS_WRITE_FLUSH))) {
+        return false;
+      }
+      totalRW += sizeof(entranceOverride);
+    }
+  } else {
+    // No items, write a single blank entry to prevent startup crash
+    EntranceOverride blank;
+    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &blank, sizeof(blank), FS_WRITE_FLUSH))) {
       return false;
     }
-    totalRW += sizeof(entranceOverride);
+    totalRW += sizeof(blank);
   }
   CitraPrint(std::to_string(totalRW));
   sleep(0.1);

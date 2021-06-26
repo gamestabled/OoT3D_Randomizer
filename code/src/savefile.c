@@ -40,7 +40,7 @@ void SaveFile_Init() {
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x037B; //entrance cutscenes (minus temple of time)
+    gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
     gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)

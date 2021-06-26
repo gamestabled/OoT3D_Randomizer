@@ -884,6 +884,10 @@ SECTIONS
 		*(.patch_FishingRestoreTempB)
 	}
 
+	.patch_EnableFW 0x476D1C : {
+		*(.patch_EnableFW)
+	}
+
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
 	}
