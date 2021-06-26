@@ -1239,6 +1239,11 @@ OwlMagicCheck_patch:
 ChestIceSmoke_patch:
     b hook_Chest_OverrideIceSmoke
 
+.section .patch_EnableFW
+.global EnableFW_patch
+EnableFW_patch:
+    bl hook_EnableFW
+
 .section .patch_SetSavewarpEntrance
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:

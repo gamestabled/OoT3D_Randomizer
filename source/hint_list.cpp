@@ -5456,7 +5456,7 @@ void HintTable_Init() {
 
     hintTable[JUNK01] = HintText::Junk({
                      //obscure text
-                     Text{"Remember to check your 3DS battery level and save often.", /*french*/"Surveillez votre batterie 3DS et sauvegardez souvent!", /*spanish*/"No te olvides de revisar la batería de la 3DS y guarda partida de vez en cuando."},
+                     Text{"Remember to check your 3DS battery level&and save often.", /*french*/"Surveillez votre batterie 3DS et sauvegardez souvent!", /*spanish*/"No te olvides de revisar la batería de la 3DS y guarda partida de vez en cuando."},
     });
 
     hintTable[JUNK02] = HintText::Junk({
