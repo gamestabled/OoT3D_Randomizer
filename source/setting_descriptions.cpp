@@ -157,9 +157,10 @@ string_view defaultAmmoDropsDesc      = "Bombs, arrows, seeds, nuts, sticks and\
                                         "magic jars appear as normal.\n";                  //
 string_view bombchuDropsDesc          = "Bombs, arrows, seeds, nuts, sticks and\n"         //
                                         "magic jars appear as normal.\n"                   //
-										"Bombchus can sometimes replace bomb drops.";      //
+                                        "Bombchus can sometimes replace bomb drops.";      //
 string_view noAmmoDropsDesc           = "All ammo drops will be replaced by blue rupees,\n"//
-                                        "except for Deku Sticks.\n";                       //
+                                        "except for Deku Sticks.\n"                        //
+                                        "Ammo upgrades will only refill ammo by 10 units." //
 /*------------------------------                                                           //
 |    HEART DROPS AND REFILLS   |                                                           //
 ------------------------------*/                                                           //
