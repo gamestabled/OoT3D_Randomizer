@@ -876,6 +876,10 @@ SECTIONS
 		*(.patch_ChildDontEquipSwordSlotByDefault)
 	}
 
+	.patch_TitleCardUpdate 0x4618B8 : {
+		*(.patch_TitleCardUpdate)
+	}
+
 	.patch_FishingStoreTempB 0x475F8C : {
 		*(.patch_FishingStoreTempB)
 	}

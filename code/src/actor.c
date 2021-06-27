@@ -33,12 +33,17 @@
 #include "liftable_rock.h"
 #include "player.h"
 #include "rupee_trap.h"
+#include "item_override.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
+
+typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
+#define TitleCard_Update_addr 0x47953C
+#define TitleCard_Update ((TitleCard_Update_proc)TitleCard_Update_addr)
 
 void Actor_Init() {
     gActorOverlayTable[0x0].initInfo->update = PlayerActor_rUpdate;
@@ -170,4 +175,15 @@ void Actor_Init() {
     // Define draw item 7 (corresponding to gid 8) to be boss key custom model
     gDrawItemTable[7].objectId = OBJECT_CUSTOM_BOSS_KEYS;
     gDrawItemTable[7].objectModelIdx = 0;
+}
+
+void TitleCard_rUpdate(GlobalContext* globalCtx, TitleCardContext* titleCtx) {
+    if (ItemOverride_IsAPendingOverride()) {
+        titleCtx->delayTimer = 0;
+        titleCtx->durationTimer = 0;
+        titleCtx->alpha = 0;
+        titleCtx->intensity = 0;
+    }
+
+    TitleCard_Update(globalCtx, titleCtx);
 }

@@ -166,6 +166,10 @@ static void ItemOverride_PushPendingOverride(ItemOverride override) {
     }
 }
 
+s32 ItemOverride_IsAPendingOverride(void) {
+    return (rPendingOverrideQueue[0].key.all != 0);
+}
+
 void ItemOverride_PushDelayedOverride(u8 flag) {
     ItemOverride_Key key = { .all = 0 };
     key.scene = 0xFF;
@@ -217,8 +221,8 @@ void ItemOverride_AfterItemReceived(void) {
 static u32 ItemOverride_PlayerIsReady(void) {
     if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 && (PLAYER->actor.bgCheckFlags & 0x0001) &&
         (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
-        gGlobalContext->actorCtx.titleCtx.delayB == 0 && gGlobalContext->actorCtx.titleCtx.delayA == 0 &&
-        gGlobalContext->actorCtx.titleCtx.unk_12 == 0
+        gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
+        gGlobalContext->actorCtx.titleCtx.alpha == 0
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
     ) {
