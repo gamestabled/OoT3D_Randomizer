@@ -4,8 +4,12 @@ SettingsContext gSettingsContext = {0};
 u8 Damage32 = 0;
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
+    // Fairy healing also gets sent to this function and should be ignored
+    if (changeHealth >= 0) {
+        return changeHealth;
+    }
     // If supposed to take damage on OHKO ignore everything else
-    if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO && changeHealth < 0) {
+    if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO) {
         return -1000;
     }
 
@@ -15,13 +19,11 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
         modifiedChangeHealth /= 2;
     }
 
-    if (changeHealth < 0) {
-        // MQ damage is applied after this function so changeHealth can be -1
-        // In this case modifiedChangeHealth would always be 0 which is wrong
-        if (modifiedChangeHealth == 0) {
-            modifiedChangeHealth = -(Damage32 >> 2);
-            Damage32 ^= 4;
-        }
+    // MQ damage is applied after this function so changeHealth can be -1
+    // In this case modifiedChangeHealth would always be 0 which is wrong
+    if (modifiedChangeHealth == 0) {
+        modifiedChangeHealth = -(Damage32 >> 2);
+        Damage32 ^= 4;
     }
 
     if (modifiedChangeHealth < 0) {
