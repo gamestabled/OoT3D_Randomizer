@@ -261,7 +261,8 @@ namespace Settings {
   extern Option ShuffleEntrances;
   extern Option ShuffleDungeonEntrances;
   extern Option BombchusInLogic;
-  extern Option BombchuDrops;
+  extern Option AmmoDrops;
+  extern Option HeartDropRefill;
   extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
 
