@@ -1271,6 +1271,31 @@ SariasSongHintsTwo_patch:
 TitleCardUpdate_patch:
     bl TitleCard_rUpdate
 
+.section .patch_NoHealFromHealthUpgrades
+.global NoHealFromHealthUpgrades
+NoHealFromHealthUpgrades_patch:
+    bl NoHealFromHealthUpgrades
+
+.section .patch_NoHealFromBombchuBowlingPrize
+.global NoHealFromBombchuBowlingPrize
+NoHealFromBombchuBowlingPrize_patch:
+    bl NoHealFromBombchuBowlingPrize
+
+.section .patch_FairyPickupHealAmount
+.global FairyPickupHealAmount
+FairyPickupHealAmount_patch:
+    bl FairyPickupHealAmount
+			   
+.section .patch_FairyReviveHealAmount
+.global FairyReviveHealAmount
+FairyReviveHealAmount_patch:
+    bl FairyReviveHealAmount
+			   
+.section .patch_FairyUseHealAmount
+.global FairyUseHealAmount
+FairyUseHealAmount_patch:
+    bl FairyUseHealAmount
+
 .section .patch_loader
 .global loader_patch
 
