@@ -1540,7 +1540,7 @@ void AreaTable_Init() {
                   Entrance(DMC_LOWER_NEARBY,       []{return true;}),
                   Entrance(DMC_LADDER_AREA_NEARBY, []{return true;}),
                   Entrance(DMC_CENTRAL_NEARBY,     []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot);}),
-                  Entrance(FIRE_TEMPLE_ENTRYWAY,   []{return (CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot)) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic));}),
+                  Entrance(DMC_CENTRAL_LOCAL,      []{return (CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot)) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic));}),
   });
 
   areaTable[DMC_CENTRAL_NEARBY] = Area("DMC Central Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {

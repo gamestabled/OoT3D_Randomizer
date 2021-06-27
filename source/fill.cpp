@@ -681,6 +681,7 @@ int Fill() {
     FilterAndEraseFromPool(ItemPool, [](const ItemKey item){return ItemTable(item).GetItemType() == ITEMTYPE_SHOP;});
 
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
+    NonShopItems = {};
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
       PlaceVanillaShopItems(); //Place vanilla shop items in vanilla location
     } else {

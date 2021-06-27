@@ -162,11 +162,15 @@ void Entrance_Init(void) {
         //check to see if this is a new dungeon entrance
         Entrance_SetNewDungeonEntrances(originalIndex, overrideIndex);
 
+        //Overwrite the original entrance index data with the data from the override index.
+        //Using the copy ensures that we don't overwrite data from an index before it needs
+        //to be copied somewhere else.
         for (s16 j = 0; j < 4; j++) {
             gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
             gEntranceTable[originalIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
             gEntranceTable[originalIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
 
+            //If there's a blue warp entrance, overwrite that one as well
             if (blueWarpIndex != 0) {
               gEntranceTable[blueWarpIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
               gEntranceTable[blueWarpIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
