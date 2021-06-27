@@ -63,7 +63,8 @@ namespace Settings {
   Option ShuffleEntrances        = Option::Bool("Shuffle Entrances",  {"Off", "On"},                                                     {shuffleEntrancesDesc});
   Option ShuffleDungeonEntrances = Option::Bool("  Dungeon Entrances",{"Off", "On"},                                                     {dungeonEntrancesDesc});
   Option BombchusInLogic         = Option::Bool("Bombchus in Logic",  {"Off", "On"},                                                     {bombchuLogicDesc});
-  Option BombchuDrops            = Option::Bool("Bombchu Drops",      {"Off", "On"},                                                     {bombchuDropDesc});
+  Option AmmoDrops               = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                 {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc});
+  Option HeartDropRefill         = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                         {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc});
   Option RandomMQDungeons        = Option::Bool("Random MQ Dungeons", {"Off", "On"},                                                     {randomMQDungeonsDesc});
   Option MQDungeonCount          = Option::U8  ("  MQ Dungeon Count", {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
@@ -72,7 +73,8 @@ namespace Settings {
     &ShuffleEntrances,
     &ShuffleDungeonEntrances,
     &BombchusInLogic,
-    &BombchuDrops,
+    &AmmoDrops,
+    &HeartDropRefill,
     &RandomMQDungeons,
     &MQDungeonCount,
   };
@@ -669,7 +671,8 @@ namespace Settings {
     ctx.resolvedStartingAge  = ResolvedStartingAge;
     ctx.shuffleDungeonEntrances = (ShuffleDungeonEntrances) ? 1 : 0;
     ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
-    ctx.bombchuDrops            = (BombchuDrops) ? 1 : 0;
+    ctx.ammoDrops            = AmmoDrops.Value<u8>();
+    ctx.heartDropRefill      = HeartDropRefill.Value<u8>();
     ctx.randomMQDungeons        = (RandomMQDungeons) ? 1 : 0;
     ctx.mqDungeonCount          = MQDungeonCount.Value<u8>();
 
@@ -852,7 +855,8 @@ namespace Settings {
     }
 
     StartingAge.SetSelectedIndex(AGE_CHILD);
-
+    AmmoDrops.SetSelectedIndex(AMMODROPS_VANILLA);
+    HeartDropRefill.SetSelectedIndex(HEARTDROPREFILL_VANILLA);
     MapsAndCompasses.SetSelectedIndex(MAPSANDCOMPASSES_VANILLA);
     Keysanity.SetSelectedIndex(KEYSANITY_VANILLA);
     BossKeysanity.SetSelectedIndex(BOSSKEYSANITY_VANILLA);
@@ -1100,14 +1104,6 @@ namespace Settings {
 
     //Only go through options if all settings are not randomized
     if (!RandomizeWorld) {
-      //Bombchus in Logic forces Bombchu Drops
-      if (BombchusInLogic) {
-        BombchuDrops.SetSelectedIndex(ON);
-        BombchuDrops.Lock();
-      } else {
-        BombchuDrops.Unlock();
-      }
-
       //Show Shuffle options when Shuffle Entrances is On
       if (ShuffleEntrances) {
         ShuffleDungeonEntrances.Unhide();
