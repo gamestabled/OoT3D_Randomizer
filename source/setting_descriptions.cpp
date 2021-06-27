@@ -145,16 +145,36 @@ string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, 
 /*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
-string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //
-                                        "bombchu drops are forced on to guarantee a\n"     //
-                                        "replenishable source.\n"                          //
+string_view bombchuLogicDesc          = "Bombchus are properly considered in logic.\n"     //
+                                        "They can be replenished in shops, or through\n"   //
+                                        "bombchu drops, if those are enabled.\n"           //
                                         "\n"                                               //
                                         "Bombchu Bowling is opened by bombchus.";          //
 /*------------------------------                                                           //
-|        BOMBCHU DROPS         |                                                           //
+|          AMMO DROPS          |                                                           //
 ------------------------------*/                                                           //
-string_view bombchuDropDesc           = "Bombchu drops can appear from cutting grass and\n"//
-                                        "breaking rocks just like bomb drops can.\n";      //
+string_view defaultAmmoDropsDesc      = "Bombs, arrows, seeds, nuts, sticks and\n"         //
+                                        "magic jars appear as normal.\n";                  //
+string_view bombchuDropsDesc          = "Bombs, arrows, seeds, nuts, sticks and\n"         //
+                                        "magic jars appear as normal.\n"                   //
+										"Bombchus can sometimes replace bomb drops.";      //
+string_view noAmmoDropsDesc           = "All ammo drops will be replaced by blue rupees,\n"//
+                                        "except for Deku Sticks.\n";                       //
+/*------------------------------                                                           //
+|    HEART DROPS AND REFILLS   |                                                           //
+------------------------------*/                                                           //
+string_view defaultHeartDropsDesc     = "Heart drops will appear as normal.\n"             //
+                                        "Health upgrades fully heal Link when picked up.\n"//
+                                        "Fairies heal Link as normal.";                    //
+string_view noHeartDropsDesc          = "Heart drops will be replaced by green rupees.\n"  //
+                                        "Health upgrades fully heal Link when picked up.\n"//
+                                        "Fairies heal Link as normal.";                    //
+string_view noHeartRefillDesc         = "Heart drops will appear as normal.\n"             //
+                                        "Health upgrades don't heal Link when picked up.\n"//
+                                        "Fairies heal Link by only 3 hearts.";             //
+string_view scarceHeartsDesc          = "Heart drops will be replaced by green rupees.\n"  //
+                                        "Health upgrades don't heal Link when picked up.\n"//
+                                        "Fairies heal Link by only 3 hearts.";             //
 /*------------------------------                                                           //
 |      RANDOM MQ DUNGEONS      |                                                           //
 ------------------------------*/                                                           //
