@@ -44,6 +44,14 @@ SECTIONS
 		*(.patch_SkulltulaRewardTwo)
 	}
 
+	.patch_MedigoronCheckFlagOne 0x13024C : {
+		*(.patch_MedigoronCheckFlagOne)
+	}
+
+	.patch_MedigoronCheckFlagTwo 0x1302C4 : {
+		*(.patch_MedigoronCheckFlagTwo)
+	}
+
 	.patch_BeanDaddyModifyBeansBought 0x130CEC : {
 		*(.patch_BeanDaddyModifyBeansBought)
 	}
@@ -106,6 +114,10 @@ SECTIONS
 
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
+	}
+
+	.patch_MedigoronSetFlag 0x14D950 : {
+		*(.patch_MedigoronSetFlag)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {

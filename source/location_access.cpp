@@ -1439,6 +1439,7 @@ void AreaTable_Init() {
                   LocationAccess(GC_ROLLING_GORON_AS_ADULT, []{return StopGCRollingGoronAsAdult;}),
                   LocationAccess(GC_GS_BOULDER_MAZE,        []{return IsChild && HasExplosives;}),
                   LocationAccess(GC_GS_CENTER_PLATFORM,     []{return IsAdult;}),
+                  LocationAccess(GC_MEDIGORON,              []{return IsAdult && AdultsWallet && (CanBlastOrSmash || GoronBracelet);}),
                   LocationAccess(GC_MAZE_GOSSIP_STONE,      []{return CanBlastOrSmash || CanUse(CanUseItem::Silver_Gauntlets);}),
                   LocationAccess(GC_MEDIGORON_GOSSIP_STONE, []{return CanBlastOrSmash || GoronBracelet;}),
                 }, {

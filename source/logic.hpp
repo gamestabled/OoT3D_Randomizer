@@ -187,6 +187,7 @@ namespace Logic {
   extern bool GoldenGauntlets;
   extern bool SilverScale;
   extern bool GoldScale;
+  extern bool AdultsWallet;
 
   extern bool ScarecrowSong;
   extern bool Scarecrow;

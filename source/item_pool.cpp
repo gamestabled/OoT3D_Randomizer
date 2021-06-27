@@ -711,6 +711,12 @@ void GenerateItemPool() {
     PlaceItemInLocation(ZR_MAGIC_BEAN_SALESMAN, MAGIC_BEAN);
   }
 
+  if (ShuffleMerchants){
+    AddItemToMainPool(GIANTS_KNIFE);
+  } else {
+    PlaceItemInLocation(GC_MEDIGORON, GIANTS_KNIFE);
+  }
+
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
     for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
       PlaceItemInLocation(loc, GOLD_SKULLTULA_TOKEN);

@@ -1266,6 +1266,21 @@ SariasSongHintsOne_patch:
 SariasSongHintsTwo_patch:
     bl Hints_GetNextSariasSongHint
 
+.section .patch_MedigoronCheckFlagOne
+.global MedigoronCheckFlagOne_patch
+MedigoronCheckFlagOne_patch:
+    b hook_MedigoronCheckFlagOne
+
+.section .patch_MedigoronCheckFlagTwo
+.global MedigoronCheckFlagTwo_patch
+MedigoronCheckFlagTwo_patch:
+    b hook_MedigoronCheckFlagTwo
+
+.section .patch_MedigoronSetFlag
+.global MedigoronSetFlag_patch
+MedigoronSetFlag_patch:
+    bl hook_MedigoronSetFlag
+
 .section .patch_loader
 .global loader_patch
 

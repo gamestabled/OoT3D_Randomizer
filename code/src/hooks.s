@@ -573,6 +573,37 @@ hook_GossipStoneAddSariaHint:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_MedigoronCheckFlagOne
+hook_MedigoronCheckFlagOne:
+    push {r0-r12, lr}
+    bl EnGm_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    beq 0x13026C
+    blt 0x130254
+    tst r12,r3
+    b 0x130250
+
+.global hook_MedigoronCheckFlagTwo
+hook_MedigoronCheckFlagTwo:
+    bne childLink
+    push {r0-r12, lr}
+    bl EnGm_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    blt 0x1302F8
+    bne 0x1302C8
+childLink:
+    b 0x1302F0
+
+.global hook_MedigoronSetFlag
+hook_MedigoronSetFlag:
+    push {r0-r12, lr}
+    bl EnGm_SetRewardFlag
+    pop {r0-r12, lr}
+    cpy r1,r5
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

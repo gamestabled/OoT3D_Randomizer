@@ -266,6 +266,7 @@ typedef struct {
   u8 shuffleWeirdEgg;
   u8 shuffleGerudoToken;
   u8 shuffleMagicBeans;
+  u8 shuffleMerchants;
 
   u8 mapsAndCompasses;
   u8 keysanity;
