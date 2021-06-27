@@ -13,7 +13,10 @@ void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    saveCtx->healthAccumulator = 20 * 0x10;
+    //With the No Health Refills option on, store-bought health upgrades do not heal the player
+    if(!gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL && !gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+        saveCtx->healthAccumulator = 20 * 0x10;
+    }
 }
 
 // void give_triforce_piece(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -73,7 +76,10 @@ void ItemEffect_GiveSmallKey(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
 void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleDefense = 1;
     // saveCtx->defense_hearts = 20; //TODO? is this needed?
-    saveCtx->healthAccumulator = 20 * 0x10;
+    //With the No Health Refills option on, store-bought health upgrades do not heal the player
+    if(!gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL && !gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+        saveCtx->healthAccumulator = 20 * 0x10;
+    }
 }
 
 void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -114,6 +120,32 @@ void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->ammo[SLOT_BEAN] += 10; // 10 Magic Beans
 }
 
+//With the No Ammo Drops option on, when the player gets an ammo upgrade,
+//the ammo count increases by 10 instead of being set to the maximum
+typedef void (*Inventory_ChangeUpgrade_proc)(u32 upgrade, u32 value);
+#define Inventory_ChangeUpgrade_addr 0x33C730
+#define Inventory_ChangeUpgrade ((Inventory_ChangeUpgrade_proc)Inventory_ChangeUpgrade_addr)
+
+void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    Inventory_ChangeUpgrade(arg2, arg1);
+    if(gSettingsContext.ammoDrops == AMMODROPS_NONE){
+        switch (arg2){
+            case 0: saveCtx->ammo[SLOT_BOW] += 10; break;
+            case 1: saveCtx->ammo[SLOT_BOMB] += 10; break;
+            case 5: saveCtx->ammo[SLOT_SLINGSHOT] += 10; break;
+            case 6: saveCtx->items[SLOT_STICK] = ITEM_STICK; saveCtx->ammo[SLOT_STICK] += 10; break;
+            case 7: saveCtx->items[SLOT_NUT] = ITEM_NUT; saveCtx->ammo[SLOT_NUT] += 10; break;
+		}
+    } else {
+        switch (arg2){
+            case 0: saveCtx->ammo[SLOT_BOW] = (20 + 10 * arg1); break;
+            case 1: saveCtx->ammo[SLOT_BOMB] = (10 + 10 * arg1); break;
+            case 5: saveCtx->ammo[SLOT_SLINGSHOT] = (20 + 10 * arg1); break;
+            case 6: saveCtx->items[SLOT_STICK] = ITEM_STICK; saveCtx->ammo[SLOT_STICK] = (10 * arg1); break;
+            case 7: saveCtx->items[SLOT_NUT] = ITEM_NUT; saveCtx->ammo[SLOT_NUT] = (10 + 10 * arg1); break;
+		}
+    }
+}
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     if (gSettingsContext.startingMaxRupees) {
         if (arg1 == 1) {
