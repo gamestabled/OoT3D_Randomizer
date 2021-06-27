@@ -557,7 +557,7 @@ void GenerateRandomizer() {
     }
   }
   printf("\x1b[12;10HWriting Patch...");
-  if (WritePatch()) {
+  if (WriteAllPatches()) {
     printf("Done");
     if (Settings::PlayOption == PATCH_CONSOLE) {
       printf("\x1b[14;10HQuit out using the home menu. Then\n");

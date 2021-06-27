@@ -50,7 +50,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[EYEDROPS]                          = Item(Text{"Eyedrops",     "",           "Supergotas oculares"},   ITEMTYPE_ITEM,  GI_EYEDROPS,       true,       &Eyedrops,      EYEDROPS);
     itemTable[CLAIM_CHECK]                       = Item(Text{"Claim Check",  "Certificat", "Recibo"},                ITEMTYPE_ITEM,  GI_CLAIM_CHECK,    true,       &ClaimCheck,    CLAIM_CHECK);
 
-    itemTable[GOLD_SKULLTULA_TOKEN]              = Item(Text{"Gold Skulltula Token", "", "Símbolo de skulltula dorada"}, ITEMTYPE_TOKEN, GI_SKULL_TOKEN,    true,       &GoldSkulltulaTokens, GOLD_SKULLTULA_TOKEN);
+    itemTable[GOLD_SKULLTULA_TOKEN]              = Item(Text{"Gold Skulltula Token", "Jeton de Skulltula dorée", "Símbolo de skulltula dorada"}, ITEMTYPE_TOKEN, GI_SKULL_TOKEN,    true,       &GoldSkulltulaTokens, GOLD_SKULLTULA_TOKEN);
 
     //Progression Items
     itemTable[PROGRESSIVE_HOOKSHOT]              = Item(Text{"Progressive Hookshot",      "Grappin progressif",            "Gancho progresivo"},                   ITEMTYPE_ITEM,     0x80, true,  &ProgressiveHookshot,  PROGRESSIVE_HOOKSHOT);

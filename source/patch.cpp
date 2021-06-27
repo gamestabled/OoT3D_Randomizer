@@ -49,11 +49,47 @@ bool CopyFile(FS_Archive sdmcArchive, const char* dst, const char* src) {
   return true;
 }
 
+bool WritePatch(u32 patchOffset, s32 patchSize, char* patchDataPtr, Handle& code, u32& bytesWritten, u32& totalRW, char* buf) {
+
+  //patch sizes greater than PATCH_SIZE_MAX have to be split up due to IPS patching specifications
+  while (patchSize > 0) {
+    // Write patch offset address to code
+    buf[0] = (patchOffset >> 16) & 0xFF;
+    buf[1] = (patchOffset >> 8) & 0xFF;
+    buf[2] = (patchOffset) & 0xFF;
+    if (!R_SUCCEEDED(FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+      return false;
+    }
+    totalRW += 3;
+
+    // Write patch size to code
+    u32 newPatchSize = (patchSize > PATCH_SIZE_MAX) ? PATCH_SIZE_MAX : patchSize;
+    buf[0] = (newPatchSize >> 8) & 0xFF;
+    buf[1] = (newPatchSize) & 0xFF;
+    if (!R_SUCCEEDED(FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
+      return false;
+    }
+    totalRW += 2;
+
+    // Write patch data to code
+    if (!R_SUCCEEDED(FSFILE_Write(code, &bytesWritten, totalRW, patchDataPtr, newPatchSize, FS_WRITE_FLUSH))) {
+      return false;
+    }
+    totalRW += newPatchSize;
+
+    patchDataPtr += PATCH_SIZE_MAX;
+    patchOffset += PATCH_SIZE_MAX;
+    patchSize -= PATCH_SIZE_MAX;
+  }
+  CitraPrint(std::to_string(totalRW));
+  return true;
+}
+
 void WriteFloatToBuffer(std::vector<char>& buffer, float f, size_t offset) {
   memcpy(buffer.data() + offset, &f, sizeof(float));
 }
 
-bool WritePatch() {
+bool WriteAllPatches() {
   Result res = 0;
   FS_Archive sdmcArchive = 0;
   Handle code;
@@ -116,151 +152,65 @@ bool WritePatch() {
 
     totalRW += bytesWritten - 3; // -3 to overwrite EOF
     CitraPrint(std::to_string(totalRW));
-    sleep(0.1);
   }
 
   /*-------------------------
   |      rItemOverrides     |
   --------------------------*/
 
-  // Write override table address to code
   u32 patchOffset = V_TO_P(RITEMOVERRIDES_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 3;
-
-  // Write override table size to code
-  const u32 ovrTableSize = sizeof(ItemOverride) * overrides.size();
-  buf[0] = (ovrTableSize >> 8) & 0xFF;
-  buf[1] = (ovrTableSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  // Write override table to code
+  s32 patchSize = sizeof(ItemOverride) * overrides.size();
+  ItemOverride ovrPatchData[overrides.size()] = {};
+  //generate override data
+  size_t i = 0;
   for (const auto& override : overrides) {
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &override, sizeof(override), FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += sizeof(override);
+    ovrPatchData[i] = override;
+    i++;
   }
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
+  if (!WritePatch(patchOffset, patchSize, (char*)ovrPatchData, code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
 
   /*-------------------------
   |    rEntranceOverrides   |
   --------------------------*/
 
-  // Write entrance override table address to code
   patchOffset = V_TO_P(RENTRANCEOVERRIDES_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  patchSize = sizeof(EntranceOverride) * entranceOverrides.size();
+  EntranceOverride eOvrPatchData[entranceOverrides.size()] = {};
+  //generate entrance override patch data
+  i = 0;
+  for (const auto& entranceOverride : entranceOverrides) {
+    eOvrPatchData[i] = entranceOverride;
+    i++;
+  }
+  if (!WritePatch(patchOffset, patchSize, (char*)eOvrPatchData, code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
-
-  // Write entrance override table size to code, or the length of one entry if the table is empty
-  const u32 eOvrTableSize = entranceOverrides.size() > 0 ? sizeof(EntranceOverride) * entranceOverrides.size() : sizeof(EntranceOverride);
-  buf[0] = (eOvrTableSize >> 8) & 0xFF;
-  buf[1] = (eOvrTableSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  if (entranceOverrides.size() > 0) {
-    // Write entrance override table to code
-    for (const auto& entranceOverride : entranceOverrides) {
-      if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &entranceOverride, sizeof(entranceOverride), FS_WRITE_FLUSH))) {
-        return false;
-      }
-      totalRW += sizeof(entranceOverride);
-    }
-  } else {
-    // No items, write a single blank entry to prevent startup crash
-    EntranceOverride blank;
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &blank, sizeof(blank), FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += sizeof(blank);
-  }
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
 
   /*-------------------------
   |     gSettingsContext    |
   --------------------------*/
 
+  patchOffset = V_TO_P(GSETTINGSCONTEXT_ADDR);
+  patchSize = sizeof(SettingsContext);
   //get the settings context
   SettingsContext ctx = Settings::FillContext();
-
-  //write settings context address to code
-  patchOffset = V_TO_P(GSETTINGSCONTEXT_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  if (!WritePatch(patchOffset, patchSize, (char*)(&ctx), code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
-
-  //Write settings context size to code
-  const u32 ctxSize = sizeof(SettingsContext);
-  buf[0] = (ctxSize >> 8) & 0xFF;
-  buf[1] = (ctxSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  //write settings context to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &ctx, sizeof(ctx), FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += sizeof(SettingsContext);
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
 
   /*-------------------------
   |       gSpoilerData      |
   --------------------------*/
 
-  //get the spoiler data
-  const SpoilerData &spoilerData = GetSpoilerData();
-
-  //write spoiler data address to code
   patchOffset = V_TO_P(GSPOILERDATA_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  patchSize = sizeof(SpoilerData);
+  //Get the spoiler data
+  SpoilerData spoilerData = GetSpoilerData();
+  if (!WritePatch(patchOffset, patchSize, (char*)(&spoilerData), code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
-
-  //Write spoiler data size to code
-  const u32 spoilerSize = sizeof(SpoilerData);
-  buf[0] = (spoilerSize >> 8) & 0xFF;
-  buf[1] = (spoilerSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  //write spoiler data to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &spoilerData, sizeof(spoilerData), FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += sizeof(SpoilerData);
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
 
   /*-------------------------------
   |     rScrubRandomItemPrices    |
@@ -275,68 +225,30 @@ bool WritePatch() {
   if (ctx.scrubsanity == SCRUBSANITY_RANDOM_PRICES) {
     // Create array of random prices
     std::array<s16, 11> rScrubRandomItemPrices{};
-    for (size_t i = 0; i < rScrubRandomItemPrices.size(); i++) {
+    for (i = 0; i < rScrubRandomItemPrices.size(); i++) {
       const s16 price = GetRandomScrubPrice();
       rScrubRandomItemPrices[i] = price;
       rScrubTextIdTable[i] = static_cast<u16>(0x9000 + static_cast<u16>(price));
     }
 
-    // Write scrub random prices address to code
+    // Write the patch for random scrub prices
     patchOffset = V_TO_P(RSCRUBRANDOMITEMPRICES_ADDR);
-    buf[0] = (patchOffset >> 16) & 0xFF;
-    buf[1] = (patchOffset >> 8) & 0xFF;
-    buf[2] = (patchOffset) & 0xFF;
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    patchSize = sizeof(rScrubRandomItemPrices);
+    if (!WritePatch(patchOffset, patchSize, (char*)(&rScrubRandomItemPrices), code, bytesWritten, totalRW, buf)) {
       return false;
     }
-    totalRW += 3;
 
-    // Write scrub random prices size to code
-    const u32 scrubRandomPricesSize = sizeof(rScrubRandomItemPrices);
-    buf[0] = (scrubRandomPricesSize >> 8) & 0xFF;
-    buf[1] = (scrubRandomPricesSize) & 0xFF;
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += 2;
-
-    // Write scrub random prices to code
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &rScrubRandomItemPrices, sizeof(rScrubRandomItemPrices), FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += sizeof(rScrubRandomItemPrices);
   } else if (ctx.scrubsanity == SCRUBSANITY_AFFORDABLE) {
+    //If affordable is set, write all text IDs as the 10 rupee price ID
     rScrubTextIdTable.fill(0x900A);
   }
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
   if (ctx.scrubsanity != SCRUBSANITY_OFF) {
-    // Write scrub text table address to code
+    //Write the patch for the scrub text ID table
     patchOffset = V_TO_P(0x52236C); //this is the address of the base game's scrub textId table
-    buf[0] = (patchOffset >> 16) & 0xFF;
-    buf[1] = (patchOffset >> 8) & 0xFF;
-    buf[2] = (patchOffset) & 0xFF;
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    patchSize = sizeof(rScrubTextIdTable);
+    if (!WritePatch(patchOffset, patchSize, (char*)(&rScrubTextIdTable), code, bytesWritten, totalRW, buf)) {
       return false;
     }
-    totalRW += 3;
-
-    // Write scrub text table size to code
-    const u32 scrubTextIdTableSize = sizeof(rScrubTextIdTable);
-    buf[0] = (scrubTextIdTableSize >> 8) & 0xFF;
-    buf[1] = (scrubTextIdTableSize) & 0xFF;
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += 2;
-
-    // Write scrub text table to code
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &rScrubTextIdTable, sizeof(rScrubTextIdTable), FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += sizeof(rScrubTextIdTable);
-    CitraPrint(std::to_string(totalRW));
-    sleep(0.1);
   }
 
   /*-------------------------------
@@ -346,68 +258,27 @@ bool WritePatch() {
   if (Settings::Shopsanity.IsNot(SHOPSANITY_OFF) && Settings::Shopsanity.IsNot(SHOPSANITY_ZERO)) {
     //Get prices from shop item vector
     std::array<s32, 32> rShopsanityPrices{};
-    for (int i = 0; i < 32; i++) {
+    for (i = 0; i < 32; i++) {
       rShopsanityPrices[i] = NonShopItems[i].Price;
     }
 
-    // Write shopsanity item prices address to code
+    // Write shopsanity item prices to the patch
     patchOffset = V_TO_P(RSHOPSANITYPRICES_ADDR);
-    buf[0] = (patchOffset >> 16) & 0xFF;
-    buf[1] = (patchOffset >> 8) & 0xFF;
-    buf[2] = (patchOffset) & 0xFF;
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+    patchSize = sizeof(rShopsanityPrices);
+    if (!WritePatch(patchOffset, patchSize, (char*)(&rShopsanityPrices), code, bytesWritten, totalRW, buf)) {
       return false;
     }
-    totalRW += 3;
-
-    // Write shopsanity item prices size to code
-    const u32 shopsanityPricesSize = sizeof(rShopsanityPrices);
-    buf[0] = (shopsanityPricesSize >> 8) & 0xFF;
-    buf[1] = (shopsanityPricesSize) & 0xFF;
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += 2;
-
-    // Write shopsanity item prices to code
-    if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &rShopsanityPrices, sizeof(rShopsanityPrices), FS_WRITE_FLUSH))) {
-      return false;
-    }
-    totalRW += sizeof(rShopsanityPrices);
-    CitraPrint(std::to_string(totalRW));
-    sleep(0.1);
   }
 
   /*--------------------------------
   |     rDungeonRewardOverrides    |
   ---------------------------------*/
-
-  // Write rDungeonRewardOverrides address to code
+  // Write rDungeonRewardOverrides to the patch
   patchOffset = V_TO_P(RDUNGEONREWARDOVERRIDES_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  patchSize = sizeof(Settings::rDungeonRewardOverrides);
+  if (!WritePatch(patchOffset, patchSize, (char*)(&Settings::rDungeonRewardOverrides), code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
-
-  // Write rDungeonRewardOverrides size to code
-  const u32 rDungeonRewardOverridesSize = sizeof(Settings::rDungeonRewardOverrides);
-  buf[0] = (rDungeonRewardOverridesSize >> 8) & 0xFF;
-  buf[1] = (rDungeonRewardOverridesSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  // Write rDungeonRewardOverrides to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, Settings::rDungeonRewardOverrides.data(), sizeof(Settings::rDungeonRewardOverrides), FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += sizeof(Settings::rDungeonRewardOverrides);
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
 
   /*--------------------------------
   |     rCustomMessageEntries      |
@@ -416,113 +287,36 @@ bool WritePatch() {
   std::pair<const char*, u32> messageDataInfo = CustomMessages::RawMessageData();
   std::pair<const char*, u32> messageEntriesInfo = CustomMessages::RawMessageEntryData();
 
-  // Write message data address to code
+  // Write message data to patch
   u32 messageDataOffset = V_TO_P(RCUSTOMMESSAGES_ADDR);
-  buf[0] = (messageDataOffset >> 16) & 0xFF;
-  buf[1] = (messageDataOffset >> 8) & 0xFF;
-  buf[2] = (messageDataOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  s32 messageDataSize = messageDataInfo.second;
+  if (!WritePatch(messageDataOffset, messageDataSize, (char*)messageDataInfo.first, code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
 
-  // Write message data size to code
-  const u32 messageDataSize = messageDataInfo.second;
-  buf[0] = (messageDataSize >> 8) & 0xFF;
-  buf[1] = (messageDataSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  // Write message data to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, messageDataInfo.first, messageDataSize, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += messageDataSize;
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
-
-  // Write message entries address to code
+  // Write message entries to patch
   u32 messageEntriesOffset = (messageDataOffset + messageDataSize + 3) & ~3; //round up and align with u32
-  buf[0] = (messageEntriesOffset >> 16) & 0xFF;
-  buf[1] = (messageEntriesOffset >> 8) & 0xFF;
-  buf[2] = (messageEntriesOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  s32 messageEntriesSize = messageEntriesInfo.second;
+  if (!WritePatch(messageEntriesOffset, messageEntriesSize, (char*)messageEntriesInfo.first, code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
 
-  // Write message entries size to code
-  const u32 messageEntriesSize = messageEntriesInfo.second;
-  buf[0] = (messageEntriesSize >> 8) & 0xFF;
-  buf[1] = (messageEntriesSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  // Write message entries to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, messageEntriesInfo.first, messageEntriesSize, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += messageEntriesSize;
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
-
-  // Write ptrCustomMessageEntries address to code
+  // Write ptrCustomMessageEntries to patch
   patchOffset = V_TO_P(PTRCUSTOMMESSAGEENTRIES_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  patchSize = 4;
+  u32 ptrCustomMessageEntriesData = P_TO_V(messageEntriesOffset);
+  if (!WritePatch(patchOffset, patchSize, (char*)(&ptrCustomMessageEntriesData), code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
-
-  // Write ptrCustomMessageEntries size to code
-  const u32 ptrCustomMessageEntriesSize = 4;
-  buf[0] = (ptrCustomMessageEntriesSize >> 8) & 0xFF;
-  buf[1] = (ptrCustomMessageEntriesSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  // Write ptrCustomMessageEntries to code
-  const u32 ptrCustomMessageEntriesData = P_TO_V(messageEntriesOffset);
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &ptrCustomMessageEntriesData, 4, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 4;
-
-  // Write numCustomMessageEntries address to code
-  patchOffset = V_TO_P(NUMCUSTOMMESSAGEENTRIES_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 3;
-
-  // Write numCustomMessageEntries size to code
-  const u32 numCustomMessageEntriesSize = 4;
-  buf[0] = (numCustomMessageEntriesSize >> 8) & 0xFF;
-  buf[1] = (numCustomMessageEntriesSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
 
   // Write numCustomMessageEntries to code
-  const u32 numCustomMessageEntriesData = CustomMessages::NumMessages();
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, &numCustomMessageEntriesData, 4, FS_WRITE_FLUSH))) {
+  patchOffset = V_TO_P(NUMCUSTOMMESSAGEENTRIES_ADDR);
+  patchSize = 4;
+  u32 numCustomMessageEntriesData = CustomMessages::NumMessages();
+  if (!WritePatch(patchOffset, patchSize, (char*)(&numCustomMessageEntriesData), code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 4;
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
+
   /*--------------------------------
   |         Gauntlet Colors        |
   ---------------------------------*/
@@ -535,30 +329,11 @@ bool WritePatch() {
 
   // Write Gauntlet Colors address to code
   patchOffset = V_TO_P(GAUNTLETCOLORSARRAY_ADDR);
-  buf[0] = (patchOffset >> 16) & 0xFF;
-  buf[1] = (patchOffset >> 8) & 0xFF;
-  buf[2] = (patchOffset) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 3, FS_WRITE_FLUSH))) {
+  patchSize = sizeof(rGauntletColors);
+  if (!WritePatch(patchOffset, patchSize, (char*)rGauntletColors.data(), code, bytesWritten, totalRW, buf)) {
     return false;
   }
-  totalRW += 3;
 
-  // Write gauntletColors size to code
-  const u32 rGauntletColorsSize = sizeof(rGauntletColors);
-  buf[0] = (rGauntletColorsSize >> 8) & 0xFF;
-  buf[1] = (rGauntletColorsSize) & 0xFF;
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, buf, 2, FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += 2;
-
-  // Write gauntletColors to code
-  if (!R_SUCCEEDED(res = FSFILE_Write(code, &bytesWritten, totalRW, rGauntletColors.data(), sizeof(rGauntletColors), FS_WRITE_FLUSH))) {
-    return false;
-  }
-  totalRW += sizeof(rGauntletColors);
-  CitraPrint(std::to_string(totalRW));
-  sleep(0.1);
   /*-------------------------
   |           EOF           |
   --------------------------*/
