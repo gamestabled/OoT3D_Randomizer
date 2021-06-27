@@ -16,7 +16,30 @@
 
 void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
-
+    s16 item00Type = item->actor.params & 0x00FF;
+    //If no ammo drops is chosen as an option, overrides the incoming ammo or magic drop with a blue rupee
+    if(gSettingsContext.ammoDrops == AMMODROPS_NONE){		
+        if (item00Type == 0x04 ||
+        item00Type == 0x05 ||
+        item00Type == 0x08 ||
+        item00Type == 0x09 ||
+        item00Type == 0x0A ||
+        item00Type == 0x0B ||
+        item00Type == 0x0C ||
+        item00Type == 0x0E ||
+        item00Type == 0x0F ||
+        item00Type == 0x10 ||
+        item00Type == 0x12 ||
+        item00Type == 0x19) {
+            item->actor.params = (item->actor.params & 0xFF00) | 0x01;
+        }
+    }
+    //If no health drops is chosen as an option, overrides the incoming health drop with a green rupee
+    if(gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROP || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){	
+        if (item00Type == 0x03){
+            item->actor.params = (item->actor.params & 0xFF00) | 0x00;
+        }
+    }
     EnItem00_Init(&item->actor, globalCtx);
     Model_SpawnByActor(&item->actor, globalCtx, 0);
 }
@@ -46,7 +69,7 @@ u32 Item_ConvertBombDrop(u32 dropId) {
     u8 bombCount = gSaveContext.ammo[ItemSlots[ITEM_BOMB]];
     u8 chuCount = gSaveContext.ammo[ItemSlots[ITEM_BOMBCHU]];
 
-    if (!gSettingsContext.bombchuDrops) {
+    if (gSettingsContext.ammoDrops != AMMODROPS_BOMBCHU) {
         if (hasBombs) {
             return dropId;
         } else {
