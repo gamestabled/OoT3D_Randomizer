@@ -954,6 +954,25 @@ SECTIONS
 		*(.patch_TycoonWalletSize)
 	}
 
+	.patch_NoHealFromHealthUpgrades 0x2cd07c : {
+		*(.patch_NoHealFromHealthUpgrades)
+	}
+	
+	.patch_NoHealFromBombchuBowlingPrize 0x21d170 : {
+		*(.patch_NoHealFromBombchuBowlingPrize)
+	}
+
+	.patch_FairyPickupHealAmount 0x15ca4c : {
+		*(.patch_FairyPickupHealAmount)
+	}
+
+	.patch_FairyReviveHealAmount 0x34af48 : {
+		*(.patch_FairyReviveHealAmount)
+	}
+
+	.patch_FairyUseHealAmount 0x4968b4 : {
+		*(.patch_FairyUseHealAmount)
+	}
 	. = 0x005C7000;
     .text : {
         __text_start = . ;
