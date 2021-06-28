@@ -107,32 +107,6 @@ void Entrance_Init(void) {
         gEntranceTable[0x43F].field = 0x4183;
     }
 
-    const s32 deleteTitleCards[] = {
-        0x1ED, // Desert Colossus from Requiem
-        0x221, // Zora's Fountain from Inside Jabu Jabu's Belly
-        0x2CA, // Temple of Time from Pulling/Placing Master Sword
-        0x457, // Kokiri Forest from Deku Tree Death Cutscene
-        0x47A, // Death Mountain Trail from Goron Ruby Cutscene
-        0x513, // Kakariko Village from Nocturne
-        0x564, // Death Mountain Crater from Fire Temple Blue Warp
-        0x580, // Graveyard from Shadow Temple Blue Warp
-        0x58C, // Temple of Time from LACS
-        0x594, // Hyrule Field from Impa's first escort
-        0x5F4, // Temple of Time from Prelude/Savewarp
-        0x600, // Sacred Forest Meadow from Minuet
-        0x608, // Sacred Forest Meadow from Forest Temple Blue Warp
-        0x60C, // Lake Hylia from Water Temple Blue Warp
-        0x610, // Desert Colossus from Spirit Temple Blue Warp
-    };
-
-    //Delete title cards from the following entrance indexes in the above table
-    for (size_t i = 0; i < sizeof(deleteTitleCards) / sizeof(s32); i++) {
-        index = deleteTitleCards[i];
-        for (size_t j = 0; j < 4; j++) {
-            gEntranceTable[index + j].field &= ~0x4000;
-        }
-    }
-
     // Delete the title card and add a fade in for Hyrule Field from Ocarina of Time cutscene
     for (index = 0x50F; index < 0x513; ++index) {
         gEntranceTable[index].field = 0x010B;

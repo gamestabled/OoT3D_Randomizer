@@ -1266,6 +1266,11 @@ SariasSongHintsOne_patch:
 SariasSongHintsTwo_patch:
     bl Hints_GetNextSariasSongHint
 
+.section .patch_TitleCardUpdate
+.global TitleCardUpdate_patch
+TitleCardUpdate_patch:
+    bl TitleCard_rUpdate
+
 .section .patch_MedigoronCheckFlagOne
 .global MedigoronCheckFlagOne_patch
 MedigoronCheckFlagOne_patch:

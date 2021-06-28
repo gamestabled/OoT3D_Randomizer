@@ -250,15 +250,15 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ u8*  texture;
-    /* 0x04 */ s16  unk_04;
-    /* 0x06 */ s16  unk_06;
-    /* 0x08 */ s16  unk_08;
-    /* 0x0A */ s16  unk_0A;
+    /* 0x04 */ s16  x;
+    /* 0x06 */ s16  y;
+    /* 0x08 */ s16  width;
+    /* 0x0A */ s16  height;
     /* 0x0C */ s32  unk_0C;
-    /* 0x10 */ u8   delayA;
-    /* 0x11 */ u8   delayB;
-    /* 0x12 */ s16  unk_12;
-    /* 0x14 */ s16  unk_14;
+    /* 0x10 */ u8   durationTimer;
+    /* 0x11 */ u8   delayTimer;
+    /* 0x12 */ s16  alpha;
+    /* 0x14 */ s16  intensity;
     /* 0x16 */ s16  unk_16;
 } TitleCardContext; // size = 0x18
 
