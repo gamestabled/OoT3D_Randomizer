@@ -160,7 +160,7 @@ string_view bombchuDropsDesc          = "Bombs, arrows, seeds, nuts, sticks and\
                                         "Bombchus can sometimes replace bomb drops.";      //
 string_view noAmmoDropsDesc           = "All ammo drops will be replaced by blue rupees,\n"//
                                         "except for Deku Sticks.\n"                        //
-                                        "Ammo upgrades will only refill ammo by 10 units." //
+                                        "Ammo upgrades will only refill ammo by 10 units.";//
 /*------------------------------                                                           //
 |    HEART DROPS AND REFILLS   |                                                           //
 ------------------------------*/                                                           //
