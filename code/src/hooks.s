@@ -604,6 +604,33 @@ hook_MedigoronSetFlag:
     cpy r1,r5
     bx lr
 
+.global hook_CarpetSalesmanCheckFlagOne
+hook_CarpetSalesmanCheckFlagOne:
+    push {r0-r12, lr}
+    bl EnJs_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    cmpne r0,#0
+    bx lr
+
+.global hook_CarpetSalesmanCheckFlagTwo
+hook_CarpetSalesmanCheckFlagTwo:
+    push {r0-r12, lr}
+    bl EnJs_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    addeq r1,r1,#1
+    strh r1,[r0,r4]
+    bx lr
+
+.global hook_CarpetSalesmanSetFlag
+hook_CarpetSalesmanSetFlag:
+    push {r0-r12, lr}
+    bl EnJs_SetRewardFlag
+    pop {r0-r12, lr}
+    mvn r0,#0xC7
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

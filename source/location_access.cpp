@@ -795,9 +795,9 @@ void AreaTable_Init() {
                   EventAccess(&NutPot,   []{return true;}),
                 }, {
                   //Locations
-                  LocationAccess(WASTELAND_CHEST, []{return HasFireSource;}),
-                  //TODO: Wasteland Bombchu Salesman
-                  LocationAccess(WASTELAND_GS,    []{return HookshotOrBoomerang;}),
+                  LocationAccess(WASTELAND_CHEST,            []{return HasFireSource;}),
+                  LocationAccess(WASTELAND_BOMBCHU_SALESMAN, []{return IsAdult && AdultsWallet && HoverBoots;}),
+                  LocationAccess(WASTELAND_GS,               []{return HookshotOrBoomerang;}),
                 }, {
                   //Exits
                   Entrance(HW_NEAR_COLOSSUS, []{return LogicLensWasteland || CanUse(CanUseItem::Lens_of_Truth);}),

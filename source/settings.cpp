@@ -982,11 +982,13 @@ namespace Settings {
       IncludeAndHide({ZR_MAGIC_BEAN_SALESMAN});
     }
 
-    //Force include Medigoron if Shuffle Merchants is off
+    //Force include Medigoron and Carpet salesman if Shuffle Merchants is off
     if (ShuffleMerchants) {
       Unhide({GC_MEDIGORON});
+      Unhide({WASTELAND_BOMBCHU_SALESMAN});
     } else {
       IncludeAndHide({GC_MEDIGORON});
+      IncludeAndHide({WASTELAND_BOMBCHU_SALESMAN});
     }
 
     //Force include Map and Compass Chests when Vanilla

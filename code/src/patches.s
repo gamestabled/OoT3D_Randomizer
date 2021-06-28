@@ -1281,6 +1281,21 @@ MedigoronCheckFlagTwo_patch:
 MedigoronSetFlag_patch:
     bl hook_MedigoronSetFlag
 
+.section .patch_CarpetSalesmanCheckFlagOne
+.global CarpetSalesmanCheckFlagOne_patch
+CarpetSalesmanCheckFlagOne_patch:
+    bl hook_CarpetSalesmanCheckFlagOne
+
+.section .patch_CarpetSalesmanCheckFlagTwo
+.global CarpetSalesmanCheckFlagTwo_patch
+CarpetSalesmanCheckFlagTwo_patch:
+    bl hook_CarpetSalesmanCheckFlagTwo
+
+.section .patch_CarpetSalesmanSetFlag
+.global CarpetSalesmanSetFlag_patch
+CarpetSalesmanSetFlag_patch:
+    bl hook_CarpetSalesmanSetFlag
+
 .section .patch_loader
 .global loader_patch
 

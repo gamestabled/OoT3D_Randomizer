@@ -76,6 +76,7 @@ void LocationTable_Init() {
 
     //Haunted Wasteland
     locationTable[WASTELAND_CHEST]                       = ItemLocation::Chest      (0x5E, 0x00, "Wasteland Chest",                      WASTELAND_CHEST,                       {Category::cHauntedWasteland,});
+    locationTable[WASTELAND_BOMBCHU_SALESMAN]            = ItemLocation::Base       (0x5E, 0x03, "Wasteland Carpet Salesman",            WASTELAND_BOMBCHU_SALESMAN,            {Category::cHauntedWasteland,},                                                                                       SpoilerCollectionCheck::EventChkInf(0x34));
 
     //Desert Colossus
     locationTable[COLOSSUS_FREESTANDING_POH]             = ItemLocation::Collectable(0x5C, 0x0D, "Colossus Freestanding PoH",            COLOSSUS_FREESTANDING_POH,             {Category::cDesertColossus,});
@@ -1127,6 +1128,7 @@ std::vector<LocationKey> overworldLocations = {
 
   //Haunted Wasteland
   WASTELAND_CHEST,
+  WASTELAND_BOMBCHU_SALESMAN,
 
   //Desert Colossus
   SHEIK_AT_COLOSSUS,

@@ -780,6 +780,14 @@ SECTIONS
 		*(.patch_CowBottleCheck)
 	}
 
+	.patch_CarpetSalesmanCheckFlagOne 0x3F0A18 : {
+		*(.patch_CarpetSalesmanCheckFlagOne)
+	}
+
+	.patch_CarpetSalesmanCheckFlagTwo 0x3F0A64 : {
+		*(.patch_CarpetSalesmanCheckFlagTwo)
+	}
+
 	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
 		*(.patch_HandleDoorDestroyCustomModels)
 	}
@@ -814,6 +822,10 @@ SECTIONS
 
 	.patch_DekuTreeCutsceneOverride 0x3F5840 : {
 		*(.patch_DekuTreeCutsceneOverride)
+	}
+
+	.patch_CarpetSalesmanSetFlag 0x3F9550 : {
+		*(.patch_CarpetSalesmanSetFlag)
 	}
 
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
