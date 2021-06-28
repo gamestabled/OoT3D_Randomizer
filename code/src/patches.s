@@ -1274,27 +1274,27 @@ TitleCardUpdate_patch:
 .section .patch_NoHealFromHealthUpgrades
 .global NoHealFromHealthUpgrades_patch
 NoHealFromHealthUpgrades_patch:
-    bl NoHealFromHealthUpgrades
+    bl hook_NoHealFromHealthUpgrades
 
 .section .patch_NoHealFromBombchuBowlingPrize
 .global NoHealFromBombchuBowlingPrize_patch
 NoHealFromBombchuBowlingPrize_patch:
-    bl NoHealFromBombchuBowlingPrize
+    bl hook_NoHealFromBombchuBowlingPrize
 
 .section .patch_FairyPickupHealAmount
 .global FairyPickupHealAmount_patch
 FairyPickupHealAmount_patch:
-    bl FairyPickupHealAmount
-			   
+    bl hook_FairyPickupHealAmount
+
 .section .patch_FairyReviveHealAmount
 .global FairyReviveHealAmount_patch
 FairyReviveHealAmount_patch:
-    bl FairyReviveHealAmount
-			   
+    bl hook_FairyReviveHealAmount
+
 .section .patch_FairyUseHealAmount
 .global FairyUseHealAmount_patch
 FairyUseHealAmount_patch:
-    bl FairyUseHealAmount
+    bl hook_FairyUseHealAmount
 
 .section .patch_loader
 .global loader_patch
