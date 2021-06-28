@@ -104,6 +104,7 @@ extern string_view gerudoTokenDesc;
 extern string_view magicBeansDesc;
 
 extern string_view merchantsDesc;
+extern string_view merchantsHintsDesc;
 
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;

@@ -782,6 +782,9 @@ int Fill() {
         CreateAllHints();
         printf("Done");
       }
+      if (ShuffleMerchants.Is(SHUFFLEMERCHANTS_HINTS)) {
+        CreateMerchantsHints();
+      }
       return 1;
     }
     //Unsuccessful placement

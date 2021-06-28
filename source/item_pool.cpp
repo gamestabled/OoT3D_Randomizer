@@ -711,7 +711,7 @@ void GenerateItemPool() {
     PlaceItemInLocation(ZR_MAGIC_BEAN_SALESMAN, MAGIC_BEAN);
   }
 
-  if (ShuffleMerchants) {
+  if (ShuffleMerchants.IsNot(SHUFFLEMERCHANTS_OFF)) {
     AddItemToMainPool(GIANTS_KNIFE);
     if (BombchusInLogic) {
       AddItemToMainPool(PROGRESSIVE_BOMBCHUS);

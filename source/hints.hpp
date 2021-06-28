@@ -60,6 +60,7 @@ enum class HintCategory {
   Validation,
   LightArrow,
   GanonLine,
+  MerchantsDialogs,
 };
 
 class HintText {
@@ -134,6 +135,10 @@ public:
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::GanonLine};
     }
 
+    static auto MerchantsDialogs(std::vector<Text>&& obscureText, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(clearText), HintCategory::MerchantsDialogs};
+    }
+
     Text& GetObscure() {
         return RandomElement(obscureText);
     }
@@ -182,3 +187,4 @@ private:
 };
 
 extern void CreateAllHints();
+extern void CreateMerchantsHints();

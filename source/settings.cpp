@@ -91,7 +91,7 @@ namespace Settings {
   Option ShuffleWeirdEgg     = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {weirdEggDesc});
   Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
   Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
-  Option ShuffleMerchants    = Option::Bool("Shuffle Merchants",      {"Off", "On"},                                                     {merchantsDesc});
+  Option ShuffleMerchants    = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
   std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -684,7 +684,7 @@ namespace Settings {
     ctx.shuffleWeirdEgg      = (ShuffleWeirdEgg) ? 1 : 0;
     ctx.shuffleGerudoToken   = (ShuffleGerudoToken) ? 1 : 0;
     ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
-    ctx.shuffleMerchants     = (ShuffleMerchants) ? 1 : 0;
+    ctx.shuffleMerchants     = ShuffleMerchants.Value<u8>();
 
     ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
     ctx.keysanity            = Keysanity.Value<u8>();
@@ -983,7 +983,7 @@ namespace Settings {
     }
 
     //Force include Medigoron and Carpet salesman if Shuffle Merchants is off
-    if (ShuffleMerchants) {
+    if (ShuffleMerchants.IsNot(SHUFFLEMERCHANTS_OFF)) {
       Unhide({GC_MEDIGORON});
       Unhide({WASTELAND_BOMBCHU_SALESMAN});
     } else {

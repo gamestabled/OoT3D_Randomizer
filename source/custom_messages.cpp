@@ -447,4 +447,7 @@ constexpr std::array DungeonColors = {
     std::string NEWLINE()              { return  "\x7F\x1C"s; }
     std::string COLOR(u8 x)            { return  "\x7F\x1D"s + char(x); }
     std::string CENTER_TEXT()          { return  "\x7F\x1E"s; }
+    std::string IF_NOT_MQ()            { return  "\x7F\x29"s; }
+    std::string MQ_ELSE()              { return  "\x7F\x2A"s; }
+    std::string MQ_END()               { return  "\x7F\x2B"s; }
 }
