@@ -14,7 +14,7 @@ void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     //With the No Health Refills option on, store-bought health upgrades do not heal the player
-    if(!gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL && !gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+    if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
         saveCtx->healthAccumulator = 20 * 0x10;
     }
 }
@@ -77,7 +77,7 @@ void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleDefense = 1;
     // saveCtx->defense_hearts = 20; //TODO? is this needed?
     //With the No Health Refills option on, store-bought health upgrades do not heal the player
-    if(!gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL && !gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+    if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
         saveCtx->healthAccumulator = 20 * 0x10;
     }
 }
