@@ -573,6 +573,41 @@ hook_GossipStoneAddSariaHint:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_NoHealFromHealthUpgrades
+hook_NoHealFromHealthUpgrades:
+    push {r1-r12, lr}
+    bl NoHealFromHealthUpgrades
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_NoHealFromBombchuBowlingPrize
+hook_NoHealFromBombchuBowlingPrize:
+    push {r1-r12, lr}
+    bl NoHealFromBombchuBowlingPrize
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_FairyPickupHealAmount
+hook_FairyPickupHealAmount:
+    push {r1-r12, lr}
+    bl FairyPickupHealAmount
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_FairyReviveHealAmount
+hook_FairyReviveHealAmount:
+    push {r1-r12, lr}
+    bl FairyReviveHealAmount
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_FairyUseHealAmount
+hook_FairyUseHealAmount:
+    push {r1-r12, lr}
+    bl FairyUseHealAmount
+    pop {r1-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
