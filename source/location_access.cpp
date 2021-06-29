@@ -796,7 +796,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(WASTELAND_CHEST,            []{return HasFireSource;}),
-                  LocationAccess(WASTELAND_BOMBCHU_SALESMAN, []{return IsAdult && AdultsWallet && HoverBoots;}),
+                  LocationAccess(WASTELAND_BOMBCHU_SALESMAN, []{return AdultsWallet && (IsAdult || Sticks || KokiriSword);}),
                   LocationAccess(WASTELAND_GS,               []{return HookshotOrBoomerang;}),
                 }, {
                   //Exits
