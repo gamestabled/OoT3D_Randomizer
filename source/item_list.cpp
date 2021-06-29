@@ -12,7 +12,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[NONE]                              = Item(Text{"No Item",      "Sin objeto",  "Pas d'objet"},   ITEMTYPE_EVENT, GI_RUPEE_GREEN,    false,    &noVariable,  NONE);
     itemTable[KOKIRI_SWORD]                      = Item(Text{"Kokiri Sword", "Épée Kokiri", "Espada Kokiri"}, ITEMTYPE_ITEM,  GI_SWORD_KOKIRI,   true,     &KokiriSword, KOKIRI_SWORD);
   //[MASTER_SWORD]
-  //[GIANTS_KNIFE]
+    itemTable[GIANTS_KNIFE]                      = Item(Text{"Giant's Knife",    "Lame des géants",        "Daga gigante"},          ITEMTYPE_ITEM,  GI_SWORD_KNIFE,    false,      &noVariable,    GIANTS_KNIFE);
     itemTable[BIGGORON_SWORD]                    = Item(Text{"Biggoron's Sword", "Épée de Grogoron",       "Espada de Biggoron"},    ITEMTYPE_ITEM,  GI_SWORD_BGS,      true,       &noVariable,    BIGGORON_SWORD);
     itemTable[DEKU_SHIELD]                       = Item(Text{"Deku Shield",      "Bouclier Mojo",          "Escudo deku"},           ITEMTYPE_ITEM,  GI_SHIELD_DEKU,    false,      &noVariable,    DEKU_SHIELD);
     itemTable[HYLIAN_SHIELD]                     = Item(Text{"Hylian Shield",    "Bouclier Hylien",        "Escudo hyliano"},        ITEMTYPE_ITEM,  GI_SHIELD_HYLIAN,  false,      &noVariable,    HYLIAN_SHIELD);

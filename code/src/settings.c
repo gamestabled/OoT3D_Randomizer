@@ -88,6 +88,25 @@ u8 FairyPickupHealAmount(void) {
     }
 }
 
+// From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
+u32 Hash(u32 state) {
+    // Added salt based on the seed hash so traps in the same location in different seeds can have different effects
+    u32 salt = 0;
+    for (int i = 0; i < 5; i++) {
+        salt |= gSettingsContext.hashIndexes[i] << (i * 6);
+    }
+    state ^= salt;
+
+    state ^= 0xDC3A653D;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+
+    return state;
+}
+
   const char hashIconNames[32][25] = {
     "Deku Stick",
     "Deku Nut",

@@ -322,6 +322,19 @@ string_view magicBeansDesc            = "Enabling this adds a pack of 10 beans t
                                         "pool and changes the Magic Bean Salesman to sell a"
                                         "random item at a price of 60 rupees.";            //
 /*------------------------------                                                           //
+|       SHUFFLE MERCHANTS      |                                                           //
+------------------------------*/                                                           //
+string_view merchantsDesc             = "Enabling this adds a Giant's Knife and a pack\n"  //
+                                        "of Bombchus to the item pool and changes both\n"  //
+                                        "Medigoron and the Haunted Wasteland Carpet\n"     //
+                                        "Salesman to sell a random item once at the price\n"
+                                        "of 200 rupees.";                                  //
+string_view merchantsHintsDesc        = "These hints will make Medigoron and the Carpet\n" //
+                                        "Salesman tell you which item they're selling.\n"  //
+                                        "\n"                                               //
+                                        "The Clearer Hints setting will affect how they\n" //
+                                        "refer to the item.";                              //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //

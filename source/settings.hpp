@@ -278,6 +278,7 @@ namespace Settings {
   extern Option ShuffleWeirdEgg;
   extern Option ShuffleGerudoToken;
   extern Option ShuffleMagicBeans;
+  extern Option ShuffleMerchants;
 
   extern Option MapsAndCompasses;
   extern Option Keysanity;

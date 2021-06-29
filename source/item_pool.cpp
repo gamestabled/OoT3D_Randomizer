@@ -711,6 +711,18 @@ void GenerateItemPool() {
     PlaceItemInLocation(ZR_MAGIC_BEAN_SALESMAN, MAGIC_BEAN);
   }
 
+  if (ShuffleMerchants.IsNot(SHUFFLEMERCHANTS_OFF)) {
+    AddItemToMainPool(GIANTS_KNIFE);
+    if (BombchusInLogic) {
+      AddItemToMainPool(PROGRESSIVE_BOMBCHUS);
+    } else {
+      AddItemToMainPool(BOMBCHU_10);
+    }
+  } else {
+    PlaceItemInLocation(GC_MEDIGORON, GIANTS_KNIFE);
+    PlaceItemInLocation(WASTELAND_BOMBCHU_SALESMAN, BOMBCHU_10);
+  }
+
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
     for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
       PlaceItemInLocation(loc, GOLD_SKULLTULA_TOKEN);

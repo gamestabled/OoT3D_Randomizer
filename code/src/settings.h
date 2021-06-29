@@ -128,6 +128,12 @@ typedef enum {
 } ScrubsanitySetting;
 
 typedef enum {
+  SHUFFLEMERCHANTS_OFF,
+  SHUFFLEMERCHANTS_NO_HINTS,
+  SHUFFLEMERCHANTS_HINTS,
+} ShuffleMerchantsSetting;
+
+typedef enum {
   MAPSANDCOMPASSES_START_WITH,
   MAPSANDCOMPASSES_VANILLA,
   MAPSANDCOMPASSES_OWN_DUNGEON,
@@ -280,6 +286,7 @@ typedef struct {
   u8 shuffleWeirdEgg;
   u8 shuffleGerudoToken;
   u8 shuffleMagicBeans;
+  u8 shuffleMerchants;
 
   u8 mapsAndCompasses;
   u8 keysanity;
@@ -388,5 +395,6 @@ extern SettingsContext gSettingsContext;
 extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
+u32 Hash(u32 state);
 
 #endif
