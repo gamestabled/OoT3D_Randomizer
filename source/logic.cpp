@@ -196,6 +196,7 @@ namespace Logic {
   bool GoldenGauntlets  = false;
   bool SilverScale      = false;
   bool GoldScale        = false;
+  bool AdultsWallet     = false;
 
   bool ScarecrowSong    = false;
   bool Scarecrow        = false;
@@ -410,6 +411,7 @@ namespace Logic {
     GoldenGauntlets = ProgressiveStrength  >= 3;
     SilverScale     = ProgressiveScale     >= 1;
     GoldScale       = ProgressiveScale     >= 2;
+    AdultsWallet    = ProgressiveWallet    >= 1;
 
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
     DistantScarecrow = Longshot && CanPlay(ScarecrowSong);
@@ -716,6 +718,7 @@ namespace Logic {
      GoldenGauntlets  = false;
      SilverScale      = false;
      GoldScale        = false;
+     AdultsWallet     = false;
 
      ScarecrowSong    = false;
      Scarecrow        = false;

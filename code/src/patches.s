@@ -1271,6 +1271,36 @@ SariasSongHintsTwo_patch:
 TitleCardUpdate_patch:
     bl TitleCard_rUpdate
 
+.section .patch_MedigoronCheckFlagOne
+.global MedigoronCheckFlagOne_patch
+MedigoronCheckFlagOne_patch:
+    b hook_MedigoronCheckFlagOne
+
+.section .patch_MedigoronCheckFlagTwo
+.global MedigoronCheckFlagTwo_patch
+MedigoronCheckFlagTwo_patch:
+    b hook_MedigoronCheckFlagTwo
+
+.section .patch_MedigoronSetFlag
+.global MedigoronSetFlag_patch
+MedigoronSetFlag_patch:
+    bl hook_MedigoronSetFlag
+
+.section .patch_CarpetSalesmanCheckFlagOne
+.global CarpetSalesmanCheckFlagOne_patch
+CarpetSalesmanCheckFlagOne_patch:
+    bl hook_CarpetSalesmanCheckFlagOne
+
+.section .patch_CarpetSalesmanCheckFlagTwo
+.global CarpetSalesmanCheckFlagTwo_patch
+CarpetSalesmanCheckFlagTwo_patch:
+    bl hook_CarpetSalesmanCheckFlagTwo
+
+.section .patch_CarpetSalesmanSetFlag
+.global CarpetSalesmanSetFlag_patch
+CarpetSalesmanSetFlag_patch:
+    bl hook_CarpetSalesmanSetFlag
+
 .section .patch_loader
 .global loader_patch
 
