@@ -24,13 +24,6 @@ u32 IceTrap_IsPending(void) {
 }
 
 void IceTrap_Push(u32 key) {
-    // TODO: Remove this once testing is finished
-    gSaveContext.ammo[SLOT_STICK]   = ((key >> 30) & 3) * 10 + ((key >> 27) & 7);
-    gSaveContext.ammo[SLOT_NUT]     = ((key >> 24) & 7) * 10 + ((key >> 21) & 7);
-    gSaveContext.ammo[SLOT_BOMB]    = ((key >> 18) & 7) * 10 + ((key >> 15) & 7);
-    gSaveContext.ammo[SLOT_BOMBCHU] = ((key >> 12) & 7) * 10 + ((key >>  9) & 7);
-    gSaveContext.rupees = ((key >> 6) & 7) * 100 + ((key >> 3) & 7) * 10 + (key & 7);
-
     source[pendingFreezes++] = key;
 }
 

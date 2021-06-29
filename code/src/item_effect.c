@@ -106,7 +106,7 @@ void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2) {
 }
 
 void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    IceTrap_Push(0); // TODO: Find a unique identifier for traps coming from this function, args seem to always be 0x7FFF and 0x8000
+    IceTrap_Push((u16)arg1 << 16 | (u16)arg2);
 }
 
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
