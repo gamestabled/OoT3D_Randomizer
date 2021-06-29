@@ -147,18 +147,13 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
 
     if (thisx != lastTrapChest && thisx->xzDistToPlayer < 50.0f) {
         lastTrapChest = thisx;
-
-        u32 salt = 0;
-        for (int i = 0; i < 4; i++) {
-            salt |= gSettingsContext.hashIndexes[i] << (i * 8);
-        }
-        u32 saltedHash = Hash(thisx->params ^ salt);
+        u32 pRandInt = Hash(thisx->params);
 
         u8 damageType = 0;
         if (gSettingsContext.randomTrapDmg == 1) { //basic
-            damageType = saltedHash % 6;
+            damageType = pRandInt % 6;
         } else if (gSettingsContext.randomTrapDmg == 2) { //advanced
-            damageType = saltedHash % 9;
+            damageType = pRandInt % 9;
         }
 
         if (damageType == 3) {
@@ -167,7 +162,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         PLAYER->getItemId = 0;
         PLAYER->stateFlags1 &= ~0x20000C00;
         PLAYER->actor.colChkInfo.damage = (gSettingsContext.mirrorWorld) ? 16 : 8;
-        if (damageType == 0 || ((damageType == 1 || damageType == 5) && saltedHash % 2)) { // For knockback
+        if (damageType == 0 || ((damageType == 1 || damageType == 5) && pRandInt % 2)) { // For knockback
             PLAYER->stateFlags1 |= 0x4000;                                               // Ledge Cancel
         }
         if (PLAYER->invincibilityTimer > 0) {
@@ -201,7 +196,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         }
         // Fire Trap
         else if(damageType == 8) {
-            FireDamage(&(PLAYER->actor), gGlobalContext, saltedHash % 2);
+            FireDamage(&(PLAYER->actor), gGlobalContext, pRandInt % 2);
             LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
             return 1;
         }

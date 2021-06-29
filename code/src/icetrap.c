@@ -25,11 +25,11 @@ u32 IceTrap_IsPending(void) {
 
 void IceTrap_Push(u32 key) {
     // TODO: Remove this once testing is finished
-    gSaveContext.ammo[SLOT_STICK] = (key / 1000000000) % 100;
-    gSaveContext.ammo[SLOT_NUT] = (key / 10000000) % 100;
-    gSaveContext.ammo[SLOT_BOMB] = (key / 100000) % 100;
-    gSaveContext.ammo[SLOT_BOMBCHU] = (key / 1000) % 100;
-    gSaveContext.rupees = key % 1000;
+    gSaveContext.ammo[SLOT_STICK]   = ((key >> 30) & 3) * 10 + ((key >> 27) & 7);
+    gSaveContext.ammo[SLOT_NUT]     = ((key >> 24) & 7) * 10 + ((key >> 21) & 7);
+    gSaveContext.ammo[SLOT_BOMB]    = ((key >> 18) & 7) * 10 + ((key >> 15) & 7);
+    gSaveContext.ammo[SLOT_BOMBCHU] = ((key >> 12) & 7) * 10 + ((key >>  9) & 7);
+    gSaveContext.rupees = ((key >> 6) & 7) * 100 + ((key >> 3) & 7) * 10 + (key & 7);
 
     source[pendingFreezes++] = key;
 }
@@ -49,18 +49,14 @@ void LinkDamageNoKnockback(void) {
 void IceTrap_Give(void) {
     if (cooldown == 0 && pendingFreezes &&
         ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
-        u32 salt = 0;
-        for (int i = 0; i < 4; i++) {
-            salt |= gSettingsContext.hashIndexes[i] << (i * 8);
-        }
-        u32 saltedHash = Hash(source[0] ^ salt);
+        u32 pRandInt = Hash(source[0]);
 
         u8 damageType = 3; // Default to ice trap
         if (gSettingsContext.randomTrapDmg == 1) { //Basic
-            damageType = saltedHash % 5 + 1; // From testing 0-4 are all the unique damage types and 0 is boring (5 is custom)
+            damageType = pRandInt % 5 + 1; // From testing 0-4 are all the unique damage types and 0 is boring (5 is custom)
         }
         else if (gSettingsContext.randomTrapDmg == 2) { //Advanced
-            damageType = saltedHash % 6; // 0 will be used for the fire trap
+            damageType = pRandInt % 6; // 0 will be used for the fire trap
         }
         modifyScale = (damageType == 5);
 
