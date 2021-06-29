@@ -106,7 +106,7 @@ void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2) {
 }
 
 void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    IceTrap_Push();
+    IceTrap_Push((u16)arg1 << 16 | (u16)arg2);
 }
 
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {

@@ -203,7 +203,7 @@ static void ItemOverride_PopIceTrap(void) {
     ItemOverride_Key key = rPendingOverrideQueue[0].key;
     ItemOverride_Value value = rPendingOverrideQueue[0].value;
     if (value.itemId == 0x7C) {
-        IceTrap_Push();
+        IceTrap_Push(key.all);
         ItemOverride_PopPendingOverride();
         ItemOverride_AfterKeyReceived(key);
     }
@@ -306,6 +306,9 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
             baseItemId = 0x7C;
         }
         fromActor->params = (fromActor->params & 0xF01F) | (baseItemId << 5);
+    } else if (override.value.itemId == 0x7C) {
+        rActiveItemRow->effectArg1 = override.key.all >> 16;
+        rActiveItemRow->effectArg2 = override.key.all & 0xFFFF;
     }
 
     player->getItemId = incomingNegative ? -baseItemId : baseItemId;
@@ -340,6 +343,10 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
+    if (override.value.itemId == 0x7C) {
+        itemRow->effectArg1 = override.key.all >> 16;
+        itemRow->effectArg2 = override.key.all & 0xFFFF;
+    }
 
     ItemTable_CallEffect(itemRow);
 
