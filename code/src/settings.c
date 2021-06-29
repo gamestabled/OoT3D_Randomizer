@@ -57,6 +57,18 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
     return modifiedChangeHealth;
 }
 
+// From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
+u32 Hash(u32 state) {
+    state ^= 0xDC3A653D;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+
+    return state;
+}
+
   const char hashIconNames[32][25] = {
     "Deku Stick",
     "Deku Nut",

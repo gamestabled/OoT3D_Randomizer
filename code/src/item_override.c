@@ -199,7 +199,7 @@ static void ItemOverride_PopIceTrap(void) {
     ItemOverride_Key key = rPendingOverrideQueue[0].key;
     ItemOverride_Value value = rPendingOverrideQueue[0].value;
     if (value.itemId == 0x7C) {
-        IceTrap_Push();
+        IceTrap_Push(key.all);
         ItemOverride_PopPendingOverride();
         ItemOverride_AfterKeyReceived(key);
     }

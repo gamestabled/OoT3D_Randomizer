@@ -7,6 +7,8 @@ static u8 pendingFreezes = 0;
 static u8 cooldown = 0;
 static u8 modifyScale = 0;
 
+static u32 source[16];
+
 // LUT for 1 - 0.5sin(0.5x) * 1.1^-x where x = 30 - INDEX
 const f32 SCALE_TRAP[] = {
     1.000f, 0.971f, 0.966f, 0.969f, 0.982f,
@@ -21,8 +23,15 @@ u32 IceTrap_IsPending(void) {
     return pendingFreezes > 0;
 }
 
-void IceTrap_Push(void) {
-    pendingFreezes++;
+void IceTrap_Push(u32 key) {
+    // TODO: Remove this once testing is finished
+    gSaveContext.ammo[SLOT_STICK] = (key / 1000000000) % 100;
+    gSaveContext.ammo[SLOT_NUT] = (key / 10000000) % 100;
+    gSaveContext.ammo[SLOT_BOMB] = (key / 100000) % 100;
+    gSaveContext.ammo[SLOT_BOMBCHU] = (key / 1000) % 100;
+    gSaveContext.rupees = key % 1000;
+
+    source[pendingFreezes++] = key;
 }
 
 void LinkDamageNoKnockback(void) {
@@ -40,16 +49,26 @@ void LinkDamageNoKnockback(void) {
 void IceTrap_Give(void) {
     if (cooldown == 0 && pendingFreezes &&
         ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
+        u32 salt = 0;
+        for (int i = 0; i < 4; i++) {
+            salt |= gSettingsContext.hashIndexes[i] << (i * 8);
+        }
+        u32 saltedHash = Hash(source[0] ^ salt);
+
         u8 damageType = 3; // Default to ice trap
         if (gSettingsContext.randomTrapDmg == 1) { //Basic
-            damageType = gRandInt % 5 + 1; // From testing 0-4 are all the unique damage types and 0 is boring (5 is custom)
+            damageType = saltedHash % 5 + 1; // From testing 0-4 are all the unique damage types and 0 is boring (5 is custom)
         }
         else if (gSettingsContext.randomTrapDmg == 2) { //Advanced
-            damageType = gRandInt % 6; // 0 will be used for the fire trap
+            damageType = saltedHash % 6; // 0 will be used for the fire trap
         }
         modifyScale = (damageType == 5);
 
         pendingFreezes--;
+        for (int i = 0; i < 15; i++) {
+            source[i] = source[i + 1];
+        }
+
         PLAYER->stateFlags1 &= ~0xC00;
         if (damageType == 3 || damageType == 0) {
             PLAYER->actor.colChkInfo.damage = 0;
