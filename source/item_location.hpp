@@ -217,6 +217,10 @@ public:
       return !IsDungeon();
     }
 
+    bool IsShop() const {
+        return (scene >= 0x2C && scene <= 0x32);
+    }
+
     Option * GetExcludedOption() {
       return &excludedOption;
     }

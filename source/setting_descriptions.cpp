@@ -554,6 +554,13 @@ string_view chestSizeDesc             = "This option will change the appearance 
                                         "Small Keys     =    Small Fancy Chests";          //
                                                                                            //
 /*------------------------------                                                           //
+|        INGAME SPOILERS       |                                                           //
+------------------------------*/                                                           //
+string_view ingameSpoilersShowDesc    = "Every spoiler is shown.";                         //
+string_view ingameSpoilersHideDesc    = "Hides the spheres page and only shows a\n"        //
+                                        "location's item after it has been found.";        //
+                                                                                           //
+/*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
 ------------------------------*/                                                           //
 string_view menuButtonDesc            = "Choose which button will bring up the Dungeon\n"  //

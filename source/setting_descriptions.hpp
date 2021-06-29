@@ -189,6 +189,9 @@ extern string_view chestAnimDesc;
 
 extern string_view chestSizeDesc;
 
+extern string_view ingameSpoilersShowDesc;
+extern string_view ingameSpoilersHideDesc;
+
 extern string_view menuButtonDesc;
 
 extern string_view startWithConsumablesDesc;
