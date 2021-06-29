@@ -702,11 +702,17 @@ namespace Logic {
      FairyPot         = false;
      FreeFairies      = false;
      FairyPond        = false;
-     BombchuDrop      = false;
+     AmmoCanDrop      = false;
 
      BuyBombchus5     = false;
      BuyBombchus10    = false;
      BuyBombchus20    = false;
+     BuySeed          = false;
+     BuyArrow         = false;
+     BuyBomb          = false;
+     BuyGPotion       = false;
+     BuyBPotion       = false;
+     MagicRefill      = false;
 
      /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
      /* These are used to simplify reading the logic, but need to be updated
