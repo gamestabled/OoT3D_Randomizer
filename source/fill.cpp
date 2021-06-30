@@ -207,7 +207,8 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
                 exclude = false;
               }
               //Handle buy items
-              else if (!(bombchus && bombchusFound) && type == ITEMTYPE_SHOP) {
+              //If ammo drops are off, don't do this step, since buyable ammo becomes logically important
+              else if (AmmoDrops.IsNot(AMMODROPS_NONE) && !(bombchus && bombchusFound) && type == ITEMTYPE_SHOP) {
                 //Only check each buy item once
                 std::string buyItem = itemName.erase(0, 4); //Delete "Buy "
                 //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
@@ -221,7 +222,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
                 }
               }
               //Add all other advancement items
-              else if (!bombchus && type != ITEMTYPE_TOKEN && type != ITEMTYPE_SHOP) {
+              else if (!bombchus && type != ITEMTYPE_TOKEN && (AmmoDrops.Is(AMMODROPS_NONE) || type != ITEMTYPE_SHOP)) {
                 exclude = false;
               }
               //Has not been excluded, add to playthrough
@@ -300,10 +301,10 @@ static void PareDownPlaythrough() {
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
-        // std::string locationname(copy.GetName());
-        // std::string itemname(Location(loc)->GetName());
-        // std::string removallog = locationname + " at " + itemname + " removed from playthrough";
-        // svcOutputDebugString(removallog.c_str(), removallog.length());
+        // std::string itemname(ItemTable(copy).GetName().GetEnglish());
+        // std::string locationname(Location(loc)->GetName());
+        // std::string removallog = itemname + " at " + locationname + " removed from playthrough";
+        // CitraPrint(removallog);
         playthroughLocations[i].erase(playthroughLocations[i].begin() + j);
         Location(loc)->SetDelayedItem(copy); //Game is still beatable, don't add back until later
         toAddBackItem.push_back(loc);
