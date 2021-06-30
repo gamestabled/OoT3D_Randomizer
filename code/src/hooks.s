@@ -573,6 +573,99 @@ hook_GossipStoneAddSariaHint:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_NoHealFromHealthUpgrades
+hook_NoHealFromHealthUpgrades:
+    push {r1-r12, lr}
+    bl NoHealFromHealthUpgrades
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_NoHealFromBombchuBowlingPrize
+hook_NoHealFromBombchuBowlingPrize:
+    push {r1-r12, lr}
+    bl NoHealFromBombchuBowlingPrize
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_FairyPickupHealAmount
+hook_FairyPickupHealAmount:
+    push {r1-r12, lr}
+    bl FairyPickupHealAmount
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_FairyReviveHealAmount
+hook_FairyReviveHealAmount:
+    push {r1-r12, lr}
+    bl FairyReviveHealAmount
+    pop {r1-r12, lr}
+    bx lr
+	
+.global hook_FairyUseHealAmount
+hook_FairyUseHealAmount:
+    push {r1-r12, lr}
+    bl FairyUseHealAmount
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_MedigoronCheckFlagOne
+hook_MedigoronCheckFlagOne:
+    push {r0-r12, lr}
+    bl EnGm_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    beq 0x13026C
+    blt 0x130254
+    tst r12,r3
+    b 0x130250
+
+.global hook_MedigoronCheckFlagTwo
+hook_MedigoronCheckFlagTwo:
+    bne childLink
+    push {r0-r12, lr}
+    bl EnGm_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    blt 0x1302F8
+    bne 0x1302C8
+childLink:
+    b 0x1302F0
+
+.global hook_MedigoronSetFlag
+hook_MedigoronSetFlag:
+    push {r0-r12, lr}
+    bl EnGm_SetRewardFlag
+    pop {r0-r12, lr}
+    cpy r1,r5
+    bx lr
+
+.global hook_CarpetSalesmanCheckFlagOne
+hook_CarpetSalesmanCheckFlagOne:
+    push {r0-r12, lr}
+    bl EnJs_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    cmpne r0,#0
+    bx lr
+
+.global hook_CarpetSalesmanCheckFlagTwo
+hook_CarpetSalesmanCheckFlagTwo:
+    push {r0-r12, lr}
+    bl EnJs_CheckRewardFlag
+    cmp r0,#1
+    pop {r0-r12, lr}
+    addeq r1,r1,#1
+    strh r1,[r0,r4]
+    bx lr
+
+.global hook_CarpetSalesmanSetFlag
+hook_CarpetSalesmanSetFlag:
+    push {r0-r12, lr}
+    bl EnJs_SetRewardFlag
+    pop {r0-r12, lr}
+    mvn r0,#0xC7
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

@@ -12,7 +12,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[NONE]                              = Item(Text{"No Item",      "Sin objeto",  "Pas d'objet"},   ITEMTYPE_EVENT, GI_RUPEE_GREEN,    false,    &noVariable,  NONE);
     itemTable[KOKIRI_SWORD]                      = Item(Text{"Kokiri Sword", "Épée Kokiri", "Espada Kokiri"}, ITEMTYPE_ITEM,  GI_SWORD_KOKIRI,   true,     &KokiriSword, KOKIRI_SWORD);
   //[MASTER_SWORD]
-  //[GIANTS_KNIFE]
+    itemTable[GIANTS_KNIFE]                      = Item(Text{"Giant's Knife",    "Lame des géants",        "Daga gigante"},          ITEMTYPE_ITEM,  GI_SWORD_KNIFE,    false,      &noVariable,    GIANTS_KNIFE);
     itemTable[BIGGORON_SWORD]                    = Item(Text{"Biggoron's Sword", "Épée de Grogoron",       "Espada de Biggoron"},    ITEMTYPE_ITEM,  GI_SWORD_BGS,      true,       &noVariable,    BIGGORON_SWORD);
     itemTable[DEKU_SHIELD]                       = Item(Text{"Deku Shield",      "Bouclier Mojo",          "Escudo deku"},           ITEMTYPE_ITEM,  GI_SHIELD_DEKU,    false,      &noVariable,    DEKU_SHIELD);
     itemTable[HYLIAN_SHIELD]                     = Item(Text{"Hylian Shield",    "Bouclier Hylien",        "Escudo hyliano"},        ITEMTYPE_ITEM,  GI_SHIELD_HYLIAN,  false,      &noVariable,    HYLIAN_SHIELD);
@@ -186,16 +186,16 @@ void ItemTable_Init() {                                   //English name      Fr
 
     //Shop Items                                                                                                                                                                                                       price
     itemTable[BUY_DEKU_NUT_5]                    = Item(Text{"Buy Deku Nut (5)",    "Acheter: Noix Mojo (5)",      "Comprar nueces deku (5)"},    ITEMTYPE_SHOP, 0x00, true,  &Nuts,           DEKU_NUTS_5,            15);
-    itemTable[BUY_ARROWS_30]                     = Item(Text{"Buy Arrows (30)",     "Acheter: Flèches (30)",       "Comprar flechas (30)"},       ITEMTYPE_SHOP, 0x01, false, &noVariable,     ARROWS_30,              60);
-    itemTable[BUY_ARROWS_50]                     = Item(Text{"Buy Arrows (50)",     "Acheter: Flèches (50)",       "Comprar flechas (50)"},       ITEMTYPE_SHOP, 0x02, false, &noVariable,     ARROWS_30,              90);
-    itemTable[BUY_BOMBS_525]                     = Item(Text{"Buy Bombs (5) [25]",  "Acheter: Bombes (5) [25]",    "Comprar bombas (5) [25]"},    ITEMTYPE_SHOP, 0x03, false, &noVariable,     BOMBS_5,                25);
+    itemTable[BUY_ARROWS_30]                     = Item(Text{"Buy Arrows (30)",     "Acheter: Flèches (30)",       "Comprar flechas (30)"},       ITEMTYPE_SHOP, 0x01, true,  &BuyArrow,       ARROWS_30,              60);
+    itemTable[BUY_ARROWS_50]                     = Item(Text{"Buy Arrows (50)",     "Acheter: Flèches (50)",       "Comprar flechas (50)"},       ITEMTYPE_SHOP, 0x02, true,  &BuyArrow,       ARROWS_30,              90);
+    itemTable[BUY_BOMBS_525]                     = Item(Text{"Buy Bombs (5) [25]",  "Acheter: Bombes (5) [25]",    "Comprar bombas (5) [25]"},    ITEMTYPE_SHOP, 0x03, true,  &BuyBomb,        BOMBS_5,                25);
     itemTable[BUY_DEKU_NUT_10]                   = Item(Text{"Buy Deku Nut (10)",   "Acheter: Noix Mojo (10)",     "Comprar Nueces deku (10)"},   ITEMTYPE_SHOP, 0x04, true,  &Nuts,           DEKU_NUTS_10,           30);
     itemTable[BUY_DEKU_STICK_1]                  = Item(Text{"Buy Deku Stick (1)",  "Acheter: Bâton Mojo (1)",     "Comprar palos deku (1)"},     ITEMTYPE_SHOP, 0x05, true,  &Sticks,         DEKU_STICK_1,           10);
-    itemTable[BUY_BOMBS_10]                      = Item(Text{"Buy Bombs (10)",      "Acheter: Bombes (10)",        "Comprar Bombas (10)"},        ITEMTYPE_SHOP, 0x06, false, &noVariable,     BOMBS_10,               50);
+    itemTable[BUY_BOMBS_10]                      = Item(Text{"Buy Bombs (10)",      "Acheter: Bombes (10)",        "Comprar Bombas (10)"},        ITEMTYPE_SHOP, 0x06, true,  &BuyBomb,        BOMBS_10,               50);
     itemTable[BUY_FISH]                          = Item(Text{"Buy Fish",            "Acheter: Poisson",            "Comprar pez"},                ITEMTYPE_SHOP, 0x07, true,  &FishAccess,     BOTTLE_WITH_FISH,      200);
     itemTable[BUY_RED_POTION_30]                 = Item(Text{"Buy Red Potion [30]", "Acheter: Potion rouge [30]",  "Comprar poción roja [30]"},   ITEMTYPE_SHOP, 0x08, false, &noVariable,     NONE,                   30);
-    itemTable[BUY_GREEN_POTION]                  = Item(Text{"Buy Green Potion",    "Acheter: Potion verte",       "Comprar poción verde"},       ITEMTYPE_SHOP, 0x09, false, &noVariable,     NONE,                   30);
-    itemTable[BUY_BLUE_POTION]                   = Item(Text{"Buy Blue Potion",     "Acheter: Potion bleue",       "Comprar poción azul"},        ITEMTYPE_SHOP, 0x0A, false, &noVariable,     NONE,                  100);
+    itemTable[BUY_GREEN_POTION]                  = Item(Text{"Buy Green Potion",    "Acheter: Potion verte",       "Comprar poción verde"},       ITEMTYPE_SHOP, 0x09, true,  &BuyGPotion,     NONE,                   30);
+    itemTable[BUY_BLUE_POTION]                   = Item(Text{"Buy Blue Potion",     "Acheter: Potion bleue",       "Comprar poción azul"},        ITEMTYPE_SHOP, 0x0A, true,  &BuyBPotion,     NONE,                  100);
     itemTable[BUY_HYLIAN_SHIELD]                 = Item(Text{"Buy Hylian Shield",   "Acheter: Bouclier Hylien",    "Comprar escudo hyliano"},     ITEMTYPE_SHOP, 0x0C, true,  &HylianShield,   HYLIAN_SHIELD,          80);
     itemTable[BUY_DEKU_SHIELD]                   = Item(Text{"Buy Deku Shield",     "Acheter: Bouclier Mojo",      "Comprar escudo deku"},        ITEMTYPE_SHOP, 0x0D, true,  &DekuShield,     DEKU_SHIELD,            40);
     itemTable[BUY_GORON_TUNIC]                   = Item(Text{"Buy Goron Tunic",     "Acheter: Tunique Goron",      "Comprar sayo goron"},         ITEMTYPE_SHOP, 0x0E, true,  &GoronTunic,     GORON_TUNIC,           200);
@@ -204,16 +204,16 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[BUY_BOMBCHU_10]                    = Item(Text{"Buy Bombchu (10)",    "Acheter: Bombchus (10)",      "Comprar bombchus (10)"},      ITEMTYPE_SHOP, 0x15, true,  &BuyBombchus10,  BOMBCHU_10,             99);
     itemTable[BUY_BOMBCHU_20]                    = Item(Text{"Buy Bombchu (20)",    "Acheter: Bombchus (20)",      "Comprar bombchus (20)"},      ITEMTYPE_SHOP, 0x16, true,  &BuyBombchus20,  BOMBCHU_20,            180);
     itemTable[BUY_BOMBCHU_5]                     = Item(Text{"Buy Bombchu (5)",     "Acheter: Bombchus (5)",       "Comprar bombchus (5)"},       ITEMTYPE_SHOP, 0x18, true,  &BuyBombchus5,   BOMBCHU_5,              60);
-    itemTable[BUY_DEKU_SEEDS_30]                 = Item(Text{"Buy Deku Seeds (30)", "Acheter: Graines Mojo (30)",  "Comprar semillas deku (30)"}, ITEMTYPE_SHOP, 0x1D, false, &noVariable,     DEKU_SEEDS_30,          30);
+    itemTable[BUY_DEKU_SEEDS_30]                 = Item(Text{"Buy Deku Seeds (30)", "Acheter: Graines Mojo (30)",  "Comprar semillas deku (30)"}, ITEMTYPE_SHOP, 0x1D, true,  &BuySeed,        DEKU_SEEDS_30,          30);
     itemTable[SOLD_OUT]                          = Item(Text{"Sold Out",            "Vendu",                       "Vendido"},                    ITEMTYPE_SHOP, 0x26, false, &noVariable,     NONE,                    0);
     itemTable[BUY_BLUE_FIRE]                     = Item(Text{"Buy Blue Fire",       "Acheter: Flamme bleue",       "Comprar fuego azul"},         ITEMTYPE_SHOP, 0x27, true,  &BlueFireAccess, BOTTLE_WITH_BLUE_FIRE, 300);
     itemTable[BUY_BOTTLE_BUG]                    = Item(Text{"Buy Bottle Bug",      "Acheter: Insectes en flacon", "Comprar bichos"},             ITEMTYPE_SHOP, 0x28, true,  &BugsAccess,     BOTTLE_WITH_BUGS,       50);
     itemTable[BUY_POE]                           = Item(Text{"Buy Poe",             "Acheter: Esprit",             "Comprar Poe"},                ITEMTYPE_SHOP, 0x2A, false, &noVariable,     BOTTLE_WITH_BIG_POE,    30);
     itemTable[BUY_FAIRYS_SPIRIT]                 = Item(Text{"Buy Fairy's Spirit",  "Acheter: Fée",                "Comprar hada"},               ITEMTYPE_SHOP, 0x2B, true,  &FairyAccess,    BOTTLE_WITH_FAIRY,      50);
-    itemTable[BUY_ARROWS_10]                     = Item(Text{"Buy Arrows (10)",     "Acheter: Flèches (10)",       "Comprar flechas (10)"},       ITEMTYPE_SHOP, 0x2C, false, &noVariable,     ARROWS_10,              20);
-    itemTable[BUY_BOMBS_20]                      = Item(Text{"Buy Bombs (20)",      "Acheter: Flèches (20)",       "Comprar bombas (20)"},        ITEMTYPE_SHOP, 0x2D, false, &noVariable,     BOMBS_20,               80);
-    itemTable[BUY_BOMBS_30]                      = Item(Text{"Buy Bombs (30)",      "Acheter: Flèches (30)",       "Comprar bombas (30)"},        ITEMTYPE_SHOP, 0x2E, false, &noVariable,     BOMBS_20,              120);
-    itemTable[BUY_BOMBS_535]                     = Item(Text{"Buy Bombs (5) [35]",  "Acheter: Bombes (5) [35]",    "Comprar bombas (5) [35]"},    ITEMTYPE_SHOP, 0x2F, false, &noVariable,     BOMBS_5,                35);
+    itemTable[BUY_ARROWS_10]                     = Item(Text{"Buy Arrows (10)",     "Acheter: Flèches (10)",       "Comprar flechas (10)"},       ITEMTYPE_SHOP, 0x2C, true,  &BuyArrow,       ARROWS_10,              20);
+    itemTable[BUY_BOMBS_20]                      = Item(Text{"Buy Bombs (20)",      "Acheter: Flèches (20)",       "Comprar bombas (20)"},        ITEMTYPE_SHOP, 0x2D, true,  &BuyBomb,        BOMBS_20,               80);
+    itemTable[BUY_BOMBS_30]                      = Item(Text{"Buy Bombs (30)",      "Acheter: Flèches (30)",       "Comprar bombas (30)"},        ITEMTYPE_SHOP, 0x2E, true,  &BuyBomb,        BOMBS_20,              120);
+    itemTable[BUY_BOMBS_535]                     = Item(Text{"Buy Bombs (5) [35]",  "Acheter: Bombes (5) [35]",    "Comprar bombas (5) [35]"},    ITEMTYPE_SHOP, 0x2F, true,  &BuyBomb,        BOMBS_5,                35);
     itemTable[BUY_RED_POTION_40]                 = Item(Text{"Buy Red Potion [40]", "Acheter: Potion rouge [40]",  "Comprar poción roja [40]"},   ITEMTYPE_SHOP, 0x30, false, &noVariable,     NONE,                   40);
     itemTable[BUY_RED_POTION_50]                 = Item(Text{"Buy Red Potion [50]", "Acheter: Potion rouge [50]",  "Comprar poción roja [50]"},   ITEMTYPE_SHOP, 0x31, false, &noVariable,     NONE,                   50);
 
