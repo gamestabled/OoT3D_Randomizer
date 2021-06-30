@@ -76,6 +76,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyPrice)
 	}
 
+	.patch_FairyPickupHealAmount 0x15CA4C : {
+		*(.patch_FairyPickupHealAmount)
+	}
+
 	.patch_ScrubStickUpgradeOne 0x161898 : {
 		*(.patch_ScrubStickUpgradeOne)
 	}
@@ -412,6 +416,10 @@ SECTIONS
 		*(.patch_BombchuBowlingPrizeOrder)
 	}
 
+	.patch_NoHealFromBombchuBowlingPrize 0x21D170 : {
+		*(.patch_NoHealFromBombchuBowlingPrize)
+	}
+
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {
 		*(.patch_ItemGiveBombchuDropTwo)
 	}
@@ -532,6 +540,10 @@ SECTIONS
 		*(.patch_DoorOfTimeOpenCutscene)
 	}
 
+	.patch_NoHealFromHealthUpgrades 0x2CD07C : {
+		*(.patch_NoHealFromHealthUpgrades)
+	}
+	
 	.patch_GetCustomMessageEntryOne 0x2CD3A4 : {
 		*(.patch_GetCustomMessageEntryOne)
 	}
@@ -566,6 +578,10 @@ SECTIONS
 
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
+	}
+
+	.patch_FairyReviveHealAmount 0x34AF48 : {
+		*(.patch_FairyReviveHealAmount)
 	}
 
 	.patch_OverrideGraphicID_351B94 0x351B94 : {
@@ -924,6 +940,10 @@ SECTIONS
 		*(.patch_FireTempleItemGiveTwo)
 	}
 
+	.patch_FairyUseHealAmount 0x4968B4 : {
+		*(.patch_FairyUseHealAmount)
+	}
+	
 	.patch_GanonBattleDeathWarp 0x496C98 : {
 		*(.patch_GanonBattleDeathWarp)
 	}
@@ -977,7 +997,6 @@ SECTIONS
 	.patch_TycoonWalletSize 0x53CC08 : {
 		*(.patch_TycoonWalletSize)
 	}
-
 	. = 0x005C7000;
     .text : {
         __text_start = . ;

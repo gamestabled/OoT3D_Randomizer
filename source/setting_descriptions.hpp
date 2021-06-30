@@ -53,8 +53,14 @@ extern string_view dungeonEntrancesDesc;
 
 extern string_view bombchuLogicDesc;
 
-extern string_view bombchuDropDesc;
+extern string_view defaultAmmoDropsDesc;
+extern string_view bombchuDropsDesc;
+extern string_view noAmmoDropsDesc;
 
+extern string_view defaultHeartDropsDesc;
+extern string_view noHeartDropsDesc;
+extern string_view noHeartRefillDesc;
+extern string_view scarceHeartsDesc;
 extern string_view randomMQDungeonsDesc;
 
 extern string_view mqDungeonCountDesc;

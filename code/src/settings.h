@@ -66,6 +66,19 @@ typedef enum {
 } AgeSetting;
 
 typedef enum {
+  AMMODROPS_VANILLA,
+  AMMODROPS_BOMBCHU,
+  AMMODROPS_NONE,
+} AmmoDropsSetting;
+
+typedef enum {
+  HEARTDROPREFILL_VANILLA,
+  HEARTDROPREFILL_NODROP,
+  HEARTDROPREFILL_NOREFILL,
+  HEARTDROPREFILL_NODROPREFILL,
+} HeartDropRefillSetting;
+
+typedef enum {
   DUNGEONMODE_VANILLA,
   DUNGEONMODE_MQ,
 } DungeonMode;
@@ -256,7 +269,8 @@ typedef struct {
   u8 resolvedStartingAge;
   u8 shuffleDungeonEntrances;
   u8 bombchusInLogic;
-  u8 bombchuDrops;
+  u8 ammoDrops;
+  u8 heartDropRefill;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
 
