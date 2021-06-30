@@ -589,9 +589,9 @@ hook_NoHealFromBombchuBowlingPrize:
 	
 .global hook_FairyPickupHealAmount
 hook_FairyPickupHealAmount:
-    push {r1-r12, lr}
+    push {r0-r12, lr}
     bl FairyPickupHealAmount
-    pop {r1-r12, lr}
+    pop {r0-r12, lr}
     bx lr
 	
 .global hook_FairyReviveHealAmount
