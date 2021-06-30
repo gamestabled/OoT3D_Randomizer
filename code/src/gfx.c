@@ -64,9 +64,11 @@ static void Gfx_DrawDungeonItems(void) {
 }
 
 static void Gfx_DrawDungeonRewards(void) {
+    Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Dungeon Rewards:");
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
+        Draw_DrawFormattedString(10, 10 + SPACING_Y + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", DungeonNames[dungeonId], gSaveContext.dungeonItems[dungeonId] & (1 << 1) ? DungeonReward_GetName(dungeonId) : "???");
     }
+    Draw_DrawFormattedString(10, 10 + (SPACING_Y * 10), COLOR_WHITE, "Find the dungeon's compass to reveal it's reward!");
     Gfx_DrawChangeMenuPrompt();
     Draw_FlushFramebuffer();
 }
