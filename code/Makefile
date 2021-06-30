@@ -151,7 +151,12 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@python3 patch.py $(OUTPUT).elf
+	# Try python3, if it doesn't work try just python
+	@if python3 patch.py $(OUTPUT).elf; then \
+		target: ; \
+	else \
+		python patch.py $(OUTPUT).elf; \
+	fi
 
 #---------------------------------------------------------------------------------
 clean:
