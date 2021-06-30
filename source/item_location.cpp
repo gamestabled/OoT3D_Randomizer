@@ -151,8 +151,8 @@ void LocationTable_Init() {
     //Zoras River
     locationTable[ZR_OPEN_GROTTO_CHEST]                  = ItemLocation::Chest      (0x3E, 0x09, "ZR Open Grotto Chest",                 ZR_OPEN_GROTTO_CHEST,                  {Category::cZorasRiver, Category::cGrotto,});
     locationTable[ZR_MAGIC_BEAN_SALESMAN]                = ItemLocation::Base       (0x54, 0x16, "ZR Magic Bean Salesman",               ZR_MAGIC_BEAN_SALESMAN,                {Category::cZorasRiver,},                                                                                             SpoilerCollectionCheck::Collectable(0x54, 0x01));
-    locationTable[ZR_FROGS_OCARINA_GAME]                 = ItemLocation::Base       (0x54, 0x76, "ZR Frogs Ocarina Game",                ZR_FROGS_OCARINA_GAME,                 {Category::cZorasRiver,},                                                                                             SpoilerCollectionCheck::EventChkInf(0xD6));
-    locationTable[ZR_FROGS_IN_THE_RAIN]                  = ItemLocation::Base       (0x54, 0x3E, "ZR Frogs in the Rain",                 ZR_FROGS_IN_THE_RAIN,                  {Category::cZorasRiver, Category::cMinigame,},                                                                        SpoilerCollectionCheck::EventChkInf(0xD0));
+    locationTable[ZR_FROGS_IN_THE_RAIN]                  = ItemLocation::Base       (0x54, 0x3E, "ZR Frogs in the Rain",                 ZR_FROGS_IN_THE_RAIN,                  {Category::cZorasRiver,},                                                                                             SpoilerCollectionCheck::EventChkInf(0xD6));
+    locationTable[ZR_FROGS_OCARINA_GAME]                 = ItemLocation::Base       (0x54, 0x76, "ZR Frogs Ocarina Game",                ZR_FROGS_OCARINA_GAME,                 {Category::cZorasRiver, Category::cMinigame,},                                                                        SpoilerCollectionCheck::EventChkInf(0xD0));
     locationTable[ZR_NEAR_OPEN_GROTTO_FREESTANDING_POH]  = ItemLocation::Collectable(0x54, 0x04, "ZR Near Open Grotto Freestanding PoH", ZR_NEAR_OPEN_GROTTO_FREESTANDING_POH,  {Category::cZorasRiver,});
     locationTable[ZR_NEAR_DOMAIN_FREESTANDING_POH]       = ItemLocation::Collectable(0x54, 0x0B, "ZR Near Domain Freestanding PoH",      ZR_NEAR_DOMAIN_FREESTANDING_POH,       {Category::cZorasRiver,});
     locationTable[ZR_DEKU_SCRUB_GROTTO_REAR]             = ItemLocation::GrottoScrub(0xEB, 0x39, "ZR Deku Scrub Grotto Rear",            ZR_DEKU_SCRUB_GROTTO_REAR,             {Category::cZorasRiver, Category::cDekuScrub, Category::cGrotto},                                                     SpoilerCollectionCheck::Scrub(0x15, 0x08));
@@ -1274,8 +1274,8 @@ std::vector<LocationKey> overworldLocations = {
   //Zoras River
   ZR_OPEN_GROTTO_CHEST,
   ZR_MAGIC_BEAN_SALESMAN,
-  ZR_FROGS_OCARINA_GAME,
   ZR_FROGS_IN_THE_RAIN,
+  ZR_FROGS_OCARINA_GAME,
   ZR_NEAR_OPEN_GROTTO_FREESTANDING_POH,
   ZR_NEAR_DOMAIN_FREESTANDING_POH,
   ZR_DEKU_SCRUB_GROTTO_REAR,
