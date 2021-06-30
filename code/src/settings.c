@@ -58,29 +58,29 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
 }
 //With the No Health Refill option on, full health refills from health upgrades and Bombchu Bowling are turned off, and fairies restore 3 hearts
 //Otherwise, they grant a full heal, and the default effect applies (full heal from bottle, 8 hearts on contact)
-u8 Settings_SetFullHealthRestore(u8 setAmount) {
+u32 Settings_SetFullHealthRestore(u8 setAmount) {
     if((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)){
         return setAmount;
     } else {
         return 0x140;
     }
 }
-u8 NoHealFromHealthUpgrades(void) {
+u32 NoHealFromHealthUpgrades(void) {
     return Settings_SetFullHealthRestore(0);
 }
-u8 NoHealFromBombchuBowlingPrize(void) {
+u32 NoHealFromBombchuBowlingPrize(void) {
     return Settings_SetFullHealthRestore(0);
 }
-u8 FairyReviveHealAmount(void) {
+u32 FairyReviveHealAmount(void) {
     return Settings_SetFullHealthRestore(0x30);
 }
-u8 FairyUseHealAmount(void) {
+u32 FairyUseHealAmount(void) {
     return Settings_SetFullHealthRestore(0x30);
 }
-typedef void (*Health_ChangeBy_proc)(u32 arg1, u32 arg2);
+typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
 #define Health_ChangeBy_addr 0x352dbc
 #define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
-u8 FairyPickupHealAmount(void) {
+void FairyPickupHealAmount(void) {
     if(gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
         Health_ChangeBy(gGlobalContext, 0x30);
     } else {
