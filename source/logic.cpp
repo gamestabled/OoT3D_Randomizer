@@ -406,6 +406,8 @@ namespace Logic {
 
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
+    AmmoCanDrop  = AmmoDrops.IsNot(AMMODROPS_NONE);
+
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
     Ocarina         = ProgressiveOcarina   >= 1;
     MagicMeter      = (ProgressiveMagic     >= 1) && (AmmoCanDrop || (HasBottle && (BuyGPotion || BuyBPotion)));
@@ -439,7 +441,6 @@ namespace Logic {
     BlueFire     = HasBottle && BlueFireAccess;
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
-	AmmoCanDrop  = AmmoDrops.IsNot(AMMODROPS_NONE);
 
     HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || AmmoDrops.Is(AMMODROPS_BOMBCHU)) && FoundBombchus;
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
