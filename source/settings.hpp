@@ -311,6 +311,7 @@ namespace Settings {
   extern Option ChestAnimations;
   extern Option ChestSize;
   extern Option GenerateSpoilerLog;
+  extern Option IngameSpoilers;
   extern Option MenuOpeningButton;
   extern Option RandomTrapDmg;
   extern bool HasNightStart;

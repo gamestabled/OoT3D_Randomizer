@@ -118,6 +118,8 @@ static void WriteIngameSpoilerLog() {
   for (const LocationKey key : allLocations) {
     auto loc = Location(key);
 
+    if (!Settings::IngameSpoilers && ((loc->IsShop() && loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL) || (loc->IsShop() && loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP))) { continue; }
+
     auto locName = loc->GetName();
     if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
       if (spoilerStringOffset + locName.size() + 1 >= SPOILER_STRING_DATA_SIZE) {

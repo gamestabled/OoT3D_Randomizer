@@ -316,6 +316,7 @@ typedef struct {
   u8 chestAnimations;
   u8 chestSize;
   u8 generateSpoilerLog;
+  u8 ingameSpoilers;
   u8 menuOpeningButton;
   u8 randomTrapDmg;
 
