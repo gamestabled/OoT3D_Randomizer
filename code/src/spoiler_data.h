@@ -3,8 +3,7 @@
 
 #include "../include/z3D/z3D.h"
 
-#define SPOILER_SPHERES_MAX                 40
-#define SPOILER_SPHERE_ITEM_LOCATIONS_MAX   40
+#define SPOILER_SPHERES_MAX                 50
 #define SPOILER_ITEMS_MAX                   512
 #define SPOILER_STRING_DATA_SIZE            16384
 
@@ -36,7 +35,7 @@ typedef struct {
 
 typedef struct {
     u8 ItemCount;
-    u16 ItemLocations[SPOILER_SPHERE_ITEM_LOCATIONS_MAX];
+    u16 ItemLocationsOffset;
 } SpoilerSphere;
 
 typedef struct {
@@ -44,6 +43,7 @@ typedef struct {
     u16 ItemLocationsCount;
     SpoilerSphere Spheres[SPOILER_SPHERES_MAX];
     SpoilerItemLocation ItemLocations[SPOILER_ITEMS_MAX];
+    u16 SphereItemLocations[SPOILER_ITEMS_MAX];
     char StringData[SPOILER_STRING_DATA_SIZE];
 } SpoilerData;
 
@@ -51,6 +51,7 @@ extern SpoilerData gSpoilerData;
 
 char *SpoilerData_GetItemLocationString(u16 itemIndex);
 char *SpoilerData_GetItemNameString(u16 itemIndex);
+SpoilerItemLocation GetSpoilerItemLocation(u8 sphere, u16 itemIndex);
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex);
 u8 SpoilerData_ChestCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_CollectableCheck(SpoilerItemLocation itemLoc);

@@ -106,6 +106,7 @@ static auto GetPlacementLogPath() {
 static void WriteIngameSpoilerLog() {
   u16 spoilerItemIndex = 0;
   u32 spoilerStringOffset = 0;
+  u16 spoilerSphereItemoffset = 0;
   bool spoilerOutOfSpace = false;
 
   // Create map of string data offsets for all _unique_ item locations and names in the playthrough
@@ -159,15 +160,16 @@ static void WriteIngameSpoilerLog() {
         spoilerOutOfSpace = true;
         break;
       }
+      spoilerData.Spheres[i].ItemLocationsOffset = spoilerSphereItemoffset;
       for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
-        if (loc >= SPOILER_SPHERE_ITEM_LOCATIONS_MAX) {
+        if (spoilerSphereItemoffset >= SPOILER_ITEMS_MAX) {
           spoilerOutOfSpace = true;
           break;
         }
 
         const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
         if (foundItemLoc != itemLocationsMap.end()) {
-          spoilerData.Spheres[i].ItemLocations[loc] = foundItemLoc->second;
+          spoilerData.SphereItemLocations[spoilerSphereItemoffset++] = foundItemLoc->second;
         } else {
           playthroughItemNotFound = true;
         }

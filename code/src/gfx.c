@@ -90,13 +90,14 @@ static void Gfx_DrawSpoilerData(void) {
 
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1, gSpoilerData.SphereCount);
 
+        u16 sphereItemLocOffset = gSpoilerData.Spheres[currentSphere].ItemLocationsOffset;
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + spoilerScroll;
             if (locIndex >= gSpoilerData.Spheres[currentSphere].ItemCount) { break; }
 
             u32 locPosY = 34 + (SPACING_Y * item * 2);
             u32 itemPosY = locPosY + SPACING_Y;
-            u16 itemIndex = gSpoilerData.Spheres[currentSphere].ItemLocations[locIndex];
+            u16 itemIndex = gSpoilerData.SphereItemLocations[sphereItemLocOffset + locIndex];
             u32 color = SpoilerData_GetIsItemLocationCollected(itemIndex) ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString(10, locPosY, color,
                 SpoilerData_GetItemLocationString(itemIndex));
