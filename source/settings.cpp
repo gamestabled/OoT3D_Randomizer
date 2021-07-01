@@ -175,6 +175,7 @@ namespace Settings {
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
   Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""});
+  Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc});
   bool HasNightStart         = false;
@@ -188,6 +189,7 @@ namespace Settings {
     &ChestAnimations,
     &ChestSize,
     &GenerateSpoilerLog,
+    &IngameSpoilers,
     &MenuOpeningButton,
     &RandomTrapDmg,
   };
@@ -717,6 +719,7 @@ namespace Settings {
     ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
     ctx.chestSize            = (ChestSize) ? 1 : 0;
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
+    ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
 
