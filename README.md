@@ -5,7 +5,6 @@ This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the
 * [Installation](#installation)
   * [On 3DS Console with Luma3DS](#On-3DS-Console-with-Luma3DS)
   * [On Citra](#On-Citra)
-  * [On Citra for Recent Nightly Pre-releases](#On-Citra-for-Recent-Nightly-Pre-releases)
   * [Save Files](#Save-Files)
 * [General Description](#general-description)
   * [Getting Stuck](#getting-stuck)
@@ -51,7 +50,9 @@ Want to discuss the randomizer with others? Join our [Discord server](https://di
 ### Getting Stuck
 
 With a game the size of _Ocarina of Time 3D_, it's quite easy for players to get stuck in certain situations with no apparent path to progressing.
-Before reporting an issue, please make sure to check out the [the Logic wiki for the original OoTRandomizer](https://wiki.ootrandomizer.com/index.php?title=Logic), the information there will apply to OoT3D in nearly every situation.
+Before reporting an issue, please make sure to check out the [the Logic wiki for the original OoT Randomizer](https://wiki.ootrandomizer.com/index.php?title=Logic), the information there will apply to OoT3D in nearly every situation. 
+
+You may also find a map tracker helpful, as these allow you to see all checks which are available with your current items, and check which ones you've gotten already. Some recommended trackers are [track-oot](https://track-oot.net/) and Hamsda's pack for EmoTracker, although keep in mind these were designed for the original OoT Randomizer so there may be some slight discrepancies.
 
 ## Building
 

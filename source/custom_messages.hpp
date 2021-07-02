@@ -51,4 +51,7 @@ namespace CustomMessages {
     std::string NEWLINE();
     std::string COLOR(u8 x);
     std::string CENTER_TEXT();
+    std::string IF_NOT_MQ();
+    std::string MQ_ELSE();
+    std::string MQ_END();
 }

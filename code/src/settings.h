@@ -66,6 +66,19 @@ typedef enum {
 } AgeSetting;
 
 typedef enum {
+  AMMODROPS_VANILLA,
+  AMMODROPS_BOMBCHU,
+  AMMODROPS_NONE,
+} AmmoDropsSetting;
+
+typedef enum {
+  HEARTDROPREFILL_VANILLA,
+  HEARTDROPREFILL_NODROP,
+  HEARTDROPREFILL_NOREFILL,
+  HEARTDROPREFILL_NODROPREFILL,
+} HeartDropRefillSetting;
+
+typedef enum {
   DUNGEONMODE_VANILLA,
   DUNGEONMODE_MQ,
 } DungeonMode;
@@ -113,6 +126,12 @@ typedef enum {
   SCRUBSANITY_EXPENSIVE,
   SCRUBSANITY_RANDOM_PRICES,
 } ScrubsanitySetting;
+
+typedef enum {
+  SHUFFLEMERCHANTS_OFF,
+  SHUFFLEMERCHANTS_NO_HINTS,
+  SHUFFLEMERCHANTS_HINTS,
+} ShuffleMerchantsSetting;
 
 typedef enum {
   MAPSANDCOMPASSES_START_WITH,
@@ -250,7 +269,8 @@ typedef struct {
   u8 resolvedStartingAge;
   u8 shuffleDungeonEntrances;
   u8 bombchusInLogic;
-  u8 bombchuDrops;
+  u8 ammoDrops;
+  u8 heartDropRefill;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
 
@@ -266,6 +286,7 @@ typedef struct {
   u8 shuffleWeirdEgg;
   u8 shuffleGerudoToken;
   u8 shuffleMagicBeans;
+  u8 shuffleMerchants;
 
   u8 mapsAndCompasses;
   u8 keysanity;
@@ -295,6 +316,7 @@ typedef struct {
   u8 chestAnimations;
   u8 chestSize;
   u8 generateSpoilerLog;
+  u8 ingameSpoilers;
   u8 menuOpeningButton;
   u8 randomTrapDmg;
 
@@ -374,5 +396,6 @@ extern SettingsContext gSettingsContext;
 extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
+u32 Hash(u32 state);
 
 #endif

@@ -55,8 +55,14 @@ extern string_view overworldEntrancesDesc;
 
 extern string_view bombchuLogicDesc;
 
-extern string_view bombchuDropDesc;
+extern string_view defaultAmmoDropsDesc;
+extern string_view bombchuDropsDesc;
+extern string_view noAmmoDropsDesc;
 
+extern string_view defaultHeartDropsDesc;
+extern string_view noHeartDropsDesc;
+extern string_view noHeartRefillDesc;
+extern string_view scarceHeartsDesc;
 extern string_view randomMQDungeonsDesc;
 
 extern string_view mqDungeonCountDesc;
@@ -104,6 +110,9 @@ extern string_view weirdEggDesc;
 extern string_view gerudoTokenDesc;
 
 extern string_view magicBeansDesc;
+
+extern string_view merchantsDesc;
+extern string_view merchantsHintsDesc;
 
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
@@ -181,6 +190,9 @@ extern string_view nightGSDesc;
 extern string_view chestAnimDesc;
 
 extern string_view chestSizeDesc;
+
+extern string_view ingameSpoilersShowDesc;
+extern string_view ingameSpoilersHideDesc;
 
 extern string_view menuButtonDesc;
 

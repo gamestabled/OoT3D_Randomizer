@@ -14,6 +14,11 @@ char *SpoilerData_GetItemNameString(u16 itemIndex)
     return &gSpoilerData.StringData[gSpoilerData.ItemLocations[itemIndex].ItemStrOffset];
 }
 
+SpoilerItemLocation GetSpoilerItemLocation(u8 sphere, u16 itemIndex)
+{
+    return gSpoilerData.ItemLocations[gSpoilerData.SphereItemLocations[gSpoilerData.Spheres[sphere].ItemLocationsOffset]];
+}
+
 u8 SpoilerData_ChestCheck(SpoilerItemLocation itemLoc)
 {
     if (gGlobalContext->sceneNum == itemLoc.LocationScene) {

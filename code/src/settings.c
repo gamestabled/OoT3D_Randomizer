@@ -56,6 +56,56 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
 
     return modifiedChangeHealth;
 }
+//With the No Health Refill option on, full health refills from health upgrades and Bombchu Bowling are turned off, and fairies restore 3 hearts
+//Otherwise, they grant a full heal, and the default effect applies (full heal from bottle, 8 hearts on contact)
+u32 Settings_SetFullHealthRestore(u8 setAmount) {
+    if((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)){
+        return setAmount;
+    } else {
+        return 0x140;
+    }
+}
+u32 NoHealFromHealthUpgrades(void) {
+    return Settings_SetFullHealthRestore(0);
+}
+u32 NoHealFromBombchuBowlingPrize(void) {
+    return Settings_SetFullHealthRestore(0);
+}
+u32 FairyReviveHealAmount(void) {
+    return Settings_SetFullHealthRestore(0x30);
+}
+u32 FairyUseHealAmount(void) {
+    return Settings_SetFullHealthRestore(0x30);
+}
+typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
+#define Health_ChangeBy_addr 0x352dbc
+#define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
+void FairyPickupHealAmount(void) {
+    if(gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+        Health_ChangeBy(gGlobalContext, 0x30);
+    } else {
+        Health_ChangeBy(gGlobalContext, 0x80);
+    }
+}
+
+// From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
+u32 Hash(u32 state) {
+    // Added salt based on the seed hash so traps in the same location in different seeds can have different effects
+    u32 salt = 0;
+    for (int i = 0; i < 5; i++) {
+        salt |= gSettingsContext.hashIndexes[i] << (i * 6);
+    }
+    state ^= salt;
+
+    state ^= 0xDC3A653D;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+
+    return state;
+}
 
   const char hashIconNames[32][25] = {
     "Deku Stick",
