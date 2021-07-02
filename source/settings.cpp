@@ -57,8 +57,8 @@ namespace Settings {
   };
 
   //World Settings
-  Option RandomizeWorld            = Option::Bool("Randomize Settings",   {"No","Yes"},                                                  {worldRandomize}, OptionCategory::Toggle);
-  Option StartingAge               = Option::U8  ("Starting Age",         {"Adult", "Child", "Random"},                                  {ageDesc});
+  Option RandomizeWorld            = Option::Bool("Randomize Settings",     {"No","Yes"},                                                {worldRandomize}, OptionCategory::Toggle);
+  Option StartingAge               = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                {ageDesc});
   u8 ResolvedStartingAge;
   Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",      {"Off", "On"},                                               {shuffleEntrancesDesc});
   Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                               {dungeonEntrancesDesc});

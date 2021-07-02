@@ -63,9 +63,6 @@ public:
             return false;
         }
 
-        // if (allAgeTimes) {
-        //   printAgeTimeAccess();
-        // }
         //check all possible day/night condition combinations
         conditionsMet = (parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   +
                         (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) +
@@ -125,6 +122,18 @@ public:
 
     bool IsShuffled() const {
         return shuffled;
+    }
+
+    bool IsAddedToPool() const {
+        return addedToPool;
+    }
+
+    void AddToPool() {
+        addedToPool = true;
+    }
+
+    void RemoveFromPool() {
+        addedToPool = false;
     }
 
     void SetAsPrimary() {
@@ -220,8 +229,11 @@ private:
     s16 blueWarp = 0;
     bool shuffled = false;
     bool primary = false;
+    bool addedToPool = false;
     std::string name = "";
 };
 
 void ShuffleAllEntrances();
 void CreateEntranceOverrides();
+
+extern std::vector<std::list<Entrance*>> playthroughEntrances;

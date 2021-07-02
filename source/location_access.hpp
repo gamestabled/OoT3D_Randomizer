@@ -173,13 +173,7 @@ public:
     bool CanPlantBeanCheck() const;
     bool AllAccountedFor() const;
 
-    void ResetVariables() {
-      childDay = false;
-      childNight = false;
-      adultDay = false;
-      adultNight = false;
-      addedToPool = false;
-    }
+    void ResetVariables();
 
     void printAgeTimeAccess() const {
       auto message = "Child Day:   " + std::to_string(childDay)   + "\t"

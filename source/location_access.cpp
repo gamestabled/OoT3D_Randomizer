@@ -221,6 +221,17 @@ bool Area::CheckAllAccess(const AreaKey exitKey) {
   return false;
 }
 
+void Area::ResetVariables() {
+  childDay = false;
+  childNight = false;
+  adultDay = false;
+  adultNight = false;
+  addedToPool = false;
+  for (auto& exit : exits) {
+    exit.RemoveFromPool();
+  }
+}
+
 static std::array<Area, KEY_ENUM_MAX> areaTable;
 
 bool Here(const AreaKey area, ConditionFn condition) {

@@ -156,7 +156,8 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     }
     newItemLocations.clear();
 
-    std::vector<LocationKey> sphere;
+    std::vector<LocationKey> itemSphere;
+    std::list<Entrance*> entranceSphere;
 
     for (size_t i = 0; i < areaPool.size(); i++) {
       Area* area = AreaTable(areaPool[i]);
@@ -178,6 +179,16 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
         if (!exitArea->addedToPool && exit.ConditionsMet()) {
           exitArea->addedToPool = true;
           areaPool.push_back(exit.GetAreaKey());
+        }
+
+        //add shuffled entrances to the entrance playthrough
+        if (mode == SearchMode::GeneratePlaythrough && exit.IsShuffled() && !exit.IsAddedToPool()) {
+          entranceSphere.push_back(&exit);
+          exit.AddToPool();
+          //don't list a coupled entrance from both directions
+          if (exit.GetReplacement()->GetReverse() != nullptr /*&& not decoupled_entrances*/) {
+            exit.GetReplacement()->GetReverse()->AddToPool();
+          }
         }
       }
 
@@ -246,13 +257,13 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
               }
               //Has not been excluded, add to playthrough
               if (!exclude) {
-                sphere.push_back(loc);
+                itemSphere.push_back(loc);
               }
             }
             //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
             else if (location->GetPlacedItemKey() == TRIFORCE) {
-              sphere.clear();
-              sphere.push_back(loc);
+              itemSphere.clear();
+              itemSphere.push_back(loc);
               playthroughBeatable = true;
             }
           }
@@ -268,8 +279,11 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     //this actually seems to slow down the search algorithm, will leave commented out for now
     //erase_if(areaPool, [](const AreaKey e){ return AreaTable(e)->AllAccountedFor();});
 
-    if (mode == SearchMode::GeneratePlaythrough && sphere.size() > 0) {
-      playthroughLocations.push_back(sphere);
+    if (mode == SearchMode::GeneratePlaythrough && itemSphere.size() > 0) {
+      playthroughLocations.push_back(itemSphere);
+    }
+    if (mode == SearchMode::GeneratePlaythrough && entranceSphere.size() > 0) {
+      playthroughEntrances.push_back(entranceSphere);
     }
   }
 
@@ -696,6 +710,10 @@ int Fill() {
   int retries = 0;
   while(retries < 5) {
     placementFailure = false;
+    showItemProgress = false;
+    playthroughLocations.clear();
+    playthroughEntrances.clear();
+    wothLocations.clear();
     AreaTable_Init(); //Reset the world graph to intialize the proper locations
     ItemReset(); //Reset shops incase of shopsanity random
     GenerateLocationPool();
@@ -715,6 +733,7 @@ int Fill() {
     //erase temporary shop items
     FilterAndEraseFromPool(ItemPool, [](const ItemKey item){return ItemTable(item).GetItemType() == ITEMTYPE_SHOP;});
 
+    showItemProgress = true;
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     NonShopItems = {};
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
@@ -828,8 +847,6 @@ int Fill() {
       printf("\x1b[9;10HFailed. Retrying... %d", retries+2);
       Areas::ResetAllLocations();
       LogicReset();
-      playthroughLocations.clear();
-      wothLocations.clear();
     }
     retries++;
   }
