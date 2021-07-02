@@ -44,24 +44,35 @@ public:
         return name;
     }
 
+    void printAgeTimeAccess() {
+      CitraPrint("Name: ");
+      CitraPrint(name);
+      auto message = "Child Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   + "\t"
+                     "Child Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) + "\t"
+                     "Adult Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   + "\t"
+                     "Adult Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight));
+      CitraPrint(message);
+    }
+
     bool ConditionsMet(bool allAgeTimes = false) const {
 
         Area* parent = AreaTable(parentRegion);
-        bool conditionsMet = false;
+        int conditionsMet = 0;
 
         if (allAgeTimes && !parent->AllAccess()) {
             return false;
         }
 
+        // if (allAgeTimes) {
+        //   printAgeTimeAccess();
+        // }
         //check all possible day/night condition combinations
-        if ((parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   ||
-            (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) ||
-            (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   ||
-            (parent->adultNight && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight))) {
-              conditionsMet = true;
-        }
+        conditionsMet = (parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   +
+                        (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) +
+                        (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   +
+                        (parent->adultNight && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight));
 
-        return conditionsMet && connected;
+        return conditionsMet && (!allAgeTimes || conditionsMet == 4);
     }
 
     AreaKey GetAreaKey() const {
@@ -194,14 +205,6 @@ public:
         return assumed;
     }
 
-    void TempDisconnect() {
-        connected = false;
-    }
-
-    void Reconnect() {
-        connected = true;
-    }
-
 private:
     AreaKey parentRegion;
     AreaKey connectedRegion;
@@ -217,7 +220,6 @@ private:
     s16 blueWarp = 0;
     bool shuffled = false;
     bool primary = false;
-    bool connected = true;
     std::string name = "";
 };
 

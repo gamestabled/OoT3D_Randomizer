@@ -5,6 +5,7 @@
 #include "settings.h"
 #include "custom_models.h"
 #include "objects.h"
+#include "entrance.h"
 #include <stddef.h>
 void svcBreak(u32 breakReason); // TODO: remove
 
@@ -410,7 +411,7 @@ void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) 
 
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
-    if (receivedGift == 0) {
+    if (receivedGift == 0 && (gSaveContext.entranceIndex == Entrance_GetLWBridgeEntrance())) {
         ItemOverride_PushDelayedOverride(0x02);
         EventSet(0xC1);
     }

@@ -15,6 +15,9 @@ static EntranceOverride rEntranceOverrides[256] = {0};
 //will take players to the Requiem cutscene even if it is shuffled.
 static s16 newRequiemEntrance = 0x01E1;
 
+//Same concept as above, except for Saria's Gift check
+static s16 newLWBridgeEntrance = 0x05E0;
+
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
 //By default, these will be their vanilla values.
@@ -133,6 +136,11 @@ void Entrance_Init(void) {
             newRequiemEntrance = originalIndex;
         }
 
+        //check to see if this is the new LW Bridge exit
+        if (overrideIndex == 0x5E0) {
+            newLWBridgeEntrance = originalIndex;
+        }
+
         //check to see if this is a new dungeon entrance
         Entrance_SetNewDungeonEntrances(originalIndex, overrideIndex);
 
@@ -149,8 +157,6 @@ void Entrance_Init(void) {
               gEntranceTable[blueWarpIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
               gEntranceTable[blueWarpIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
               gEntranceTable[blueWarpIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
-              //delete title cards coming from blue warps so that delayed overrides don't have to wait for them
-              gEntranceTable[blueWarpIndex+j].field &= ~0x4000;
             }
         }
     }
@@ -166,6 +172,10 @@ void Entrance_DeathInGanonBattle(void) {
 
 s16 Entrance_GetRequiemEntrance(void) {
     return newRequiemEntrance;
+}
+
+s16 Entrance_GetLWBridgeEntrance(void) {
+    return newLWBridgeEntrance;
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance

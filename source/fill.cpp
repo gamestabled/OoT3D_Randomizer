@@ -23,6 +23,8 @@ using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
 
+static bool placementFailure = false;
+
 static void RemoveStartingItemsFromPool() {
   for (ItemKey startingItem : StartingInventory) {
     for (size_t i = 0; i < ItemPool.size(); i++) {
@@ -113,9 +115,24 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
                                                   SearchMode mode) {
   std::vector<LocationKey> accessibleLocations;
   //Reset all access to begin a new search
-  ApplyStartingInventory();
+  if (mode != SearchMode::BothAgesNoItems) {
+      ApplyStartingInventory();
+  }
   Areas::AccessReset();
   LocationReset();
+  if (mode >= SearchMode::BothAgesNoItems) {
+    if (Settings::HasNightStart) {
+      AreaTable(ROOT)->childNight = true;
+      AreaTable(ROOT)->adultNight = true;
+    } else {
+      AreaTable(ROOT)->childDay = true;
+      AreaTable(ROOT)->adultDay = true;
+    }
+  }
+  //checking if poe collector is reachable without using bottle contents
+  if (mode == SearchMode::PoeCollectorAccess) {
+      Logic::HasBottle = false;
+  }
   std::vector<AreaKey> areaPool = {ROOT};
 
   //Variables for playthrough
@@ -177,7 +194,9 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
           if (location->GetPlacedItemKey() == NONE) {
             accessibleLocations.push_back(loc); //Empty location, consider for placement
           } else {
-            newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
+            if (mode < SearchMode::BothAgesNoItems) {
+              newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
+            }
           }
 
           //Playthrough stuff
@@ -259,7 +278,11 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     for (const LocationKey loc : allLocations) {
       if (!Location(loc)->IsAddedToPool()) {
         allLocationsReachable = false;
-        break;
+        auto message = "Location " + Location(loc)->GetName() + " not reachable\n";
+        PlacementLog_Msg(message);
+        #ifndef ENABLE_DEBUG
+          break;
+        #endif
       }
     }
     return {};
@@ -402,12 +425,21 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       PlacementLog_Msg(Location(loc)->GetName());
       PlacementLog_Msg("\n");
     }
+    PlacementLog_Write();
+    placementFailure = true;
+    return;
   }
 
-  //keep retrying to place everything until it works
+  //keep retrying to place everything until it works or takes too long
+  int retries = 10;
   bool unsuccessfulPlacement = false;
   std::vector<LocationKey> attemptedLocations;
   do {
+    retries--;
+    if (retries <= 0) {
+      placementFailure = true;
+      return;
+    }
     unsuccessfulPlacement = false;
     std::vector<ItemKey> itemsToPlace = items;
 
@@ -662,7 +694,9 @@ static void RandomizeLinksPocket() {
 int Fill() {
   int retries = 0;
   while(retries < 5) {
+    placementFailure = false;
     AreaTable_Init(); //Reset the world graph to intialize the proper locations
+    ItemReset(); //Reset shops incase of shopsanity random
     GenerateLocationPool();
     GenerateItemPool();
     GenerateStartingInventory();
@@ -768,7 +802,7 @@ int Fill() {
     LogicReset();
     GeneratePlaythrough();
     //Successful placement, produced beatable result
-    if(playthroughBeatable) {
+    if(playthroughBeatable && !placementFailure) {
       printf("Done");
       printf("\x1b[9;10HCalculating Playthrough...");
       PareDownPlaythrough();
