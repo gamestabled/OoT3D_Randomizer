@@ -23,6 +23,8 @@ using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
 
+static bool placementFailure = false;
+
 static void RemoveStartingItemsFromPool() {
   for (ItemKey startingItem : StartingInventory) {
     for (size_t i = 0; i < ItemPool.size(); i++) {
@@ -113,9 +115,24 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
                                                   SearchMode mode) {
   std::vector<LocationKey> accessibleLocations;
   //Reset all access to begin a new search
-  ApplyStartingInventory();
+  if (mode != SearchMode::BothAgesNoItems) {
+      ApplyStartingInventory();
+  }
   Areas::AccessReset();
   LocationReset();
+  if (mode >= SearchMode::BothAgesNoItems) {
+    if (Settings::HasNightStart) {
+      AreaTable(ROOT)->childNight = true;
+      AreaTable(ROOT)->adultNight = true;
+    } else {
+      AreaTable(ROOT)->childDay = true;
+      AreaTable(ROOT)->adultDay = true;
+    }
+  }
+  //checking if poe collector is reachable without using bottle contents
+  if (mode == SearchMode::PoeCollectorAccess) {
+      Logic::HasBottle = false;
+  }
   std::vector<AreaKey> areaPool = {ROOT};
 
   //Variables for playthrough
@@ -139,7 +156,8 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     }
     newItemLocations.clear();
 
-    std::vector<LocationKey> sphere;
+    std::vector<LocationKey> itemSphere;
+    std::list<Entrance*> entranceSphere;
 
     for (size_t i = 0; i < areaPool.size(); i++) {
       Area* area = AreaTable(areaPool[i]);
@@ -162,6 +180,16 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
           exitArea->addedToPool = true;
           areaPool.push_back(exit.GetAreaKey());
         }
+
+        //add shuffled entrances to the entrance playthrough
+        if (mode == SearchMode::GeneratePlaythrough && exit.IsShuffled() && !exit.IsAddedToPool()) {
+          entranceSphere.push_back(&exit);
+          exit.AddToPool();
+          //don't list a coupled entrance from both directions
+          if (exit.GetReplacement()->GetReverse() != nullptr /*&& not decoupled_entrances*/) {
+            exit.GetReplacement()->GetReverse()->AddToPool();
+          }
+        }
       }
 
       //for each ItemLocation in this area
@@ -177,7 +205,9 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
           if (location->GetPlacedItemKey() == NONE) {
             accessibleLocations.push_back(loc); //Empty location, consider for placement
           } else {
-            newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
+            if (mode < SearchMode::BothAgesNoItems) {
+              newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
+            }
           }
 
           //Playthrough stuff
@@ -227,13 +257,13 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
               }
               //Has not been excluded, add to playthrough
               if (!exclude) {
-                sphere.push_back(loc);
+                itemSphere.push_back(loc);
               }
             }
             //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
             else if (location->GetPlacedItemKey() == TRIFORCE) {
-              sphere.clear();
-              sphere.push_back(loc);
+              itemSphere.clear();
+              itemSphere.push_back(loc);
               playthroughBeatable = true;
             }
           }
@@ -249,8 +279,11 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     //this actually seems to slow down the search algorithm, will leave commented out for now
     //erase_if(areaPool, [](const AreaKey e){ return AreaTable(e)->AllAccountedFor();});
 
-    if (mode == SearchMode::GeneratePlaythrough && sphere.size() > 0) {
-      playthroughLocations.push_back(sphere);
+    if (mode == SearchMode::GeneratePlaythrough && itemSphere.size() > 0) {
+      playthroughLocations.push_back(itemSphere);
+    }
+    if (mode == SearchMode::GeneratePlaythrough && entranceSphere.size() > 0) {
+      playthroughEntrances.push_back(entranceSphere);
     }
   }
 
@@ -260,7 +293,11 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     for (const LocationKey loc : allLocations) {
       if (!Location(loc)->IsAddedToPool()) {
         allLocationsReachable = false;
-        break;
+        auto message = "Location " + Location(loc)->GetName() + " not reachable\n";
+        PlacementLog_Msg(message);
+        #ifndef ENABLE_DEBUG
+          break;
+        #endif
       }
     }
     return {};
@@ -403,12 +440,21 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       PlacementLog_Msg(Location(loc)->GetName());
       PlacementLog_Msg("\n");
     }
+    PlacementLog_Write();
+    placementFailure = true;
+    return;
   }
 
-  //keep retrying to place everything until it works
+  //keep retrying to place everything until it works or takes too long
+  int retries = 10;
   bool unsuccessfulPlacement = false;
   std::vector<LocationKey> attemptedLocations;
   do {
+    retries--;
+    if (retries <= 0) {
+      placementFailure = true;
+      return;
+    }
     unsuccessfulPlacement = false;
     std::vector<ItemKey> itemsToPlace = items;
 
@@ -663,7 +709,13 @@ static void RandomizeLinksPocket() {
 int Fill() {
   int retries = 0;
   while(retries < 5) {
+    placementFailure = false;
+    showItemProgress = false;
+    playthroughLocations.clear();
+    playthroughEntrances.clear();
+    wothLocations.clear();
     AreaTable_Init(); //Reset the world graph to intialize the proper locations
+    ItemReset(); //Reset shops incase of shopsanity random
     GenerateLocationPool();
     GenerateItemPool();
     GenerateStartingInventory();
@@ -681,6 +733,7 @@ int Fill() {
     //erase temporary shop items
     FilterAndEraseFromPool(ItemPool, [](const ItemKey item){return ItemTable(item).GetItemType() == ITEMTYPE_SHOP;});
 
+    showItemProgress = true;
     //Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due to access
     NonShopItems = {};
     if (Shopsanity.Is(SHOPSANITY_OFF)) {
@@ -769,7 +822,7 @@ int Fill() {
     LogicReset();
     GeneratePlaythrough();
     //Successful placement, produced beatable result
-    if(playthroughBeatable) {
+    if(playthroughBeatable && !placementFailure) {
       printf("Done");
       printf("\x1b[9;10HCalculating Playthrough...");
       PareDownPlaythrough();
@@ -794,8 +847,6 @@ int Fill() {
       printf("\x1b[9;10HFailed. Retrying... %d", retries+2);
       Areas::ResetAllLocations();
       LogicReset();
-      playthroughLocations.clear();
-      wothLocations.clear();
     }
     retries++;
   }

@@ -872,7 +872,7 @@ SECTIONS
 		*(.patch_NocturneLocation)
 	}
 
-	.patch_SariasGift 0x44F190 : {
+	.patch_SariasGift 0x44F188 : {
 		*(.patch_SariasGift)
 	}
 

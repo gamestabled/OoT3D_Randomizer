@@ -152,34 +152,35 @@ static void WriteIngameSpoilerLog() {
   }
   spoilerData.ItemLocationsCount = spoilerItemIndex;
 
-  bool playthroughItemNotFound = false;
-  // Write playthrough data to in-game spoiler log
-  if (!spoilerOutOfSpace) {
-    for (u32 i = 0; i < playthroughLocations.size(); i++) {
-      if (i >= SPOILER_SPHERES_MAX) {
-        spoilerOutOfSpace = true;
-        break;
-      }
-      spoilerData.Spheres[i].ItemLocationsOffset = spoilerSphereItemoffset;
-      for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
-        if (spoilerSphereItemoffset >= SPOILER_ITEMS_MAX) {
+  if (Settings::IngameSpoilers) {
+    bool playthroughItemNotFound = false;
+    // Write playthrough data to in-game spoiler log
+    if (!spoilerOutOfSpace) {
+      for (u32 i = 0; i < playthroughLocations.size(); i++) {
+        if (i >= SPOILER_SPHERES_MAX) {
           spoilerOutOfSpace = true;
           break;
         }
+        spoilerData.Spheres[i].ItemLocationsOffset = spoilerSphereItemoffset;
+        for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
+          if (spoilerSphereItemoffset >= SPOILER_ITEMS_MAX) {
+            spoilerOutOfSpace = true;
+            break;
+          }
 
-        const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
-        if (foundItemLoc != itemLocationsMap.end()) {
-          spoilerData.SphereItemLocations[spoilerSphereItemoffset++] = foundItemLoc->second;
-        } else {
-          playthroughItemNotFound = true;
+          const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
+          if (foundItemLoc != itemLocationsMap.end()) {
+            spoilerData.SphereItemLocations[spoilerSphereItemoffset++] = foundItemLoc->second;
+          } else {
+            playthroughItemNotFound = true;
+          }
+          ++spoilerData.Spheres[i].ItemCount;
         }
-        ++spoilerData.Spheres[i].ItemCount;
+        ++spoilerData.SphereCount;
       }
-      ++spoilerData.SphereCount;
     }
+    if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
   }
-
-  if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
 }
 
 // Writes the location to the specified node.
@@ -228,7 +229,8 @@ static void WriteShuffledEntrance(
 ) {
   auto node = parentNode->InsertNewChildElement("entrance");
   node->SetAttribute("name", entrance->GetName().c_str());
-  node->SetText(entrance->GetConnectedRegion()->regionName.c_str());
+  auto text = entrance->GetConnectedRegion()->regionName + " from " + entrance->GetReplacement()->GetParentRegion()->regionName;
+  node->SetText(text.c_str());
 
   if (withPadding) {
     constexpr int16_t LONGEST_NAME = 56; //The longest name of a vanilla entrance
@@ -378,6 +380,26 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
   spoilerLog.RootElement()->InsertEndChild(playthroughNode);
 }
 
+//Write the randomized entrance playthrough to the spoiler log, if applicable
+static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
+  if (!Settings::ShuffleEntrances) {
+    return;
+  }
+
+  auto playthroughNode = spoilerLog.NewElement("entrance-playthrough");
+
+  for (uint i = 0; i < playthroughEntrances.size(); ++i) {
+    auto sphereNode = playthroughNode->InsertNewChildElement("sphere");
+    sphereNode->SetAttribute("level", i + 1);
+
+    for (Entrance* entrance : playthroughEntrances[i]) {
+      WriteShuffledEntrance(sphereNode, entrance, true);
+    }
+  }
+
+  spoilerLog.RootElement()->InsertEndChild(playthroughNode);
+}
+
 // Writes the WOTH locations to the spoiler log, if there are any.
 static void WriteWayOfTheHeroLocation(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("way-of-the-hero-locations");
@@ -405,25 +427,6 @@ static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
     auto node = parentNode->InsertNewChildElement("hint");
     node->SetAttribute("location", location->GetName().c_str());
     node->SetText(location->GetPlacedItemName().GetEnglish().c_str());
-  }
-
-  spoilerLog.RootElement()->InsertEndChild(parentNode);
-}
-
-//Write the randomized entrances to the spoiler log, if there are any
-static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
-  if (!Settings::ShuffleEntrances) {
-    return;
-  }
-
-  auto parentNode = spoilerLog.NewElement("shuffled-entrances");
-  auto shuffledEntrances = GetShuffleableEntrances(EntranceType::All);
-
-  for (Entrance* entrance : shuffledEntrances) {
-    //Double-check that the entrance was actually shuffled
-    if (entrance->IsShuffled()) {
-      WriteShuffledEntrance(parentNode, entrance, true);
-    }
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);

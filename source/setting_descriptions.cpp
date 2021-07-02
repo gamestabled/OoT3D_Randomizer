@@ -143,6 +143,18 @@ string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, 
                                         "Temple and Bottom of the Well are opened for both\n"
                                         "adult and child.";                                //
 /*------------------------------                                                           //
+|      OVERWORLD ENTRANCES     |                                                           //
+------------------------------*/                                                           //
+string_view overworldEntrancesDesc    = "Shuffle the pool of Overworld entrances, which\n" //
+                                        "corresponds to almost all loading zones between\n"//
+                                        "Overworld areas.\n"                               //
+                                        "\n"                                               //
+                                        "Some entrances are unshuffled to avoid issues:\n" //
+                                        "- Hyrule Castle Courtyard and Garden entrance\n"  //
+                                        "- Both Market Back Alley entrances\n"             //
+                                        "- Gerudo Valley to Lake Hylia (unless entrances\n"//
+                                        "  are decoupled)";                               //
+/*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic.\n"     //
