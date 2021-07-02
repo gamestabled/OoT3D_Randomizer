@@ -173,6 +173,12 @@ namespace Logic {
   extern bool BuyBombchus5;
   extern bool BuyBombchus10;
   extern bool BuyBombchus20;
+  extern bool BuyArrow;
+  extern bool BuyBomb;
+  extern bool BuyGPotion;
+  extern bool BuyBPotion;
+  extern bool BuySeed;
+  extern bool MagicRefill;
 
   /* --- HELPERS --- */
   /* These are used to simplify reading the logic, but need to be updated
@@ -187,6 +193,7 @@ namespace Logic {
   extern bool GoldenGauntlets;
   extern bool SilverScale;
   extern bool GoldScale;
+  extern bool AdultsWallet;
 
   extern bool ScarecrowSong;
   extern bool Scarecrow;

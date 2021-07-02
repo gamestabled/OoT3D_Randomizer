@@ -31,6 +31,9 @@
 #include "well_stone.h"
 #include "well_water.h"
 #include "liftable_rock.h"
+#include "player.h"
+#include "rupee_trap.h"
+#include "item_override.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -38,7 +41,13 @@
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
 
+typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
+#define TitleCard_Update_addr 0x47953C
+#define TitleCard_Update ((TitleCard_Update_proc)TitleCard_Update_addr)
+
 void Actor_Init() {
+    gActorOverlayTable[0x0].initInfo->update = PlayerActor_rUpdate;
+
     gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
     gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
 
@@ -88,6 +97,8 @@ void Actor_Init() {
     gActorOverlayTable[0x11B].initInfo->update = NULL;
 
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
+
+    gActorOverlayTable[0x131].initInfo->update = EnExRuppy_rUpdate;
 
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
 
@@ -164,4 +175,15 @@ void Actor_Init() {
     // Define draw item 7 (corresponding to gid 8) to be boss key custom model
     gDrawItemTable[7].objectId = OBJECT_CUSTOM_BOSS_KEYS;
     gDrawItemTable[7].objectModelIdx = 0;
+}
+
+void TitleCard_rUpdate(GlobalContext* globalCtx, TitleCardContext* titleCtx) {
+    if (ItemOverride_IsAPendingOverride()) {
+        titleCtx->delayTimer = 0;
+        titleCtx->durationTimer = 0;
+        titleCtx->alpha = 0;
+        titleCtx->intensity = 0;
+    }
+
+    TitleCard_Update(globalCtx, titleCtx);
 }

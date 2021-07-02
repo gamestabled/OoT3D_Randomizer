@@ -260,8 +260,10 @@ namespace Settings {
   extern u8 ResolvedStartingAge;
   extern Option ShuffleEntrances;
   extern Option ShuffleDungeonEntrances;
+  extern Option ShuffleOverworldEntrances;
   extern Option BombchusInLogic;
-  extern Option BombchuDrops;
+  extern Option AmmoDrops;
+  extern Option HeartDropRefill;
   extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
 
@@ -277,6 +279,7 @@ namespace Settings {
   extern Option ShuffleWeirdEgg;
   extern Option ShuffleGerudoToken;
   extern Option ShuffleMagicBeans;
+  extern Option ShuffleMerchants;
 
   extern Option MapsAndCompasses;
   extern Option Keysanity;
@@ -309,6 +312,7 @@ namespace Settings {
   extern Option ChestAnimations;
   extern Option ChestSize;
   extern Option GenerateSpoilerLog;
+  extern Option IngameSpoilers;
   extern Option MenuOpeningButton;
   extern Option RandomTrapDmg;
   extern bool HasNightStart;
@@ -320,7 +324,6 @@ namespace Settings {
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
 
-  extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
 

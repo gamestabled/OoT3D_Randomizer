@@ -173,19 +173,22 @@ public:
     bool CanPlantBeanCheck() const;
     bool AllAccountedFor() const;
 
-    void ResetVariables() {
-      childDay = false;
-      childNight = false;
-      adultDay = false;
-      adultNight = false;
-      addedToPool = false;
+    void ResetVariables();
+
+    void printAgeTimeAccess() const {
+      auto message = "Child Day:   " + std::to_string(childDay)   + "\t"
+                     "Child Night: " + std::to_string(childNight) + "\t"
+                     "Adult Day:   " + std::to_string(adultDay)   + "\t"
+                     "Adult Night: " + std::to_string(adultNight);
+      CitraPrint(message);
     }
 };
 
 namespace Areas {
 
-  extern void  AccessReset();
-  extern void  ResetAllLocations();
+  extern void AccessReset();
+  extern void ResetAllLocations();
+  extern bool HasTimePassAccess(u8 age);
 } //namespace Exits
 
 void  AreaTable_Init();

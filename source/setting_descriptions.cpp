@@ -143,18 +143,51 @@ string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, 
                                         "Temple and Bottom of the Well are opened for both\n"
                                         "adult and child.";                                //
 /*------------------------------                                                           //
+|      OVERWORLD ENTRANCES     |                                                           //
+------------------------------*/                                                           //
+string_view overworldEntrancesDesc    = "Shuffle the pool of Overworld entrances, which\n" //
+                                        "corresponds to almost all loading zones between\n"//
+                                        "Overworld areas.\n"                               //
+                                        "\n"                                               //
+                                        "Some entrances are unshuffled to avoid issues:\n" //
+                                        "- Hyrule Castle Courtyard and Garden entrance\n"  //
+                                        "- Both Market Back Alley entrances\n"             //
+                                        "- Gerudo Valley to Lake Hylia (unless entrances\n"//
+                                        "  are decoupled)";                               //
+/*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
-string_view bombchuLogicDesc          = "Bombchus are properly considered in logic and\n"  //
-                                        "bombchu drops are forced on to guarantee a\n"     //
-                                        "replenishable source.\n"                          //
+string_view bombchuLogicDesc          = "Bombchus are properly considered in logic.\n"     //
+                                        "They can be replenished in shops, or through\n"   //
+                                        "bombchu drops, if those are enabled.\n"           //
                                         "\n"                                               //
                                         "Bombchu Bowling is opened by bombchus.";          //
 /*------------------------------                                                           //
-|        BOMBCHU DROPS         |                                                           //
+|          AMMO DROPS          |                                                           //
 ------------------------------*/                                                           //
-string_view bombchuDropDesc           = "Bombchu drops can appear from cutting grass and\n"//
-                                        "breaking rocks just like bomb drops can.\n";      //
+string_view defaultAmmoDropsDesc      = "Bombs, arrows, seeds, nuts, sticks and\n"         //
+                                        "magic jars appear as normal.\n";                  //
+string_view bombchuDropsDesc          = "Bombs, arrows, seeds, nuts, sticks and\n"         //
+                                        "magic jars appear as normal.\n"                   //
+                                        "Bombchus can sometimes replace bomb drops.";      //
+string_view noAmmoDropsDesc           = "All ammo drops will be replaced by blue rupees,\n"//
+                                        "except for Deku Sticks.\n"                        //
+                                        "Ammo upgrades will only refill ammo by 10 units.";//
+/*------------------------------                                                           //
+|    HEART DROPS AND REFILLS   |                                                           //
+------------------------------*/                                                           //
+string_view defaultHeartDropsDesc     = "Heart drops will appear as normal.\n"             //
+                                        "Health upgrades fully heal Link when picked up.\n"//
+                                        "Fairies heal Link as normal.";                    //
+string_view noHeartDropsDesc          = "Heart drops will be replaced by green rupees.\n"  //
+                                        "Health upgrades fully heal Link when picked up.\n"//
+                                        "Fairies heal Link as normal.";                    //
+string_view noHeartRefillDesc         = "Heart drops will appear as normal.\n"             //
+                                        "Health upgrades don't heal Link when picked up.\n"//
+                                        "Fairies heal Link by only 3 hearts.";             //
+string_view scarceHeartsDesc          = "Heart drops will be replaced by green rupees.\n"  //
+                                        "Health upgrades don't heal Link when picked up.\n"//
+                                        "Fairies heal Link by only 3 hearts.";             //
 /*------------------------------                                                           //
 |      RANDOM MQ DUNGEONS      |                                                           //
 ------------------------------*/                                                           //
@@ -300,6 +333,19 @@ string_view gerudoTokenDesc           = "Enabling this shuffles the Gerudo Token
 string_view magicBeansDesc            = "Enabling this adds a pack of 10 beans to the item\n"
                                         "pool and changes the Magic Bean Salesman to sell a"
                                         "random item at a price of 60 rupees.";            //
+/*------------------------------                                                           //
+|       SHUFFLE MERCHANTS      |                                                           //
+------------------------------*/                                                           //
+string_view merchantsDesc             = "Enabling this adds a Giant's Knife and a pack\n"  //
+                                        "of Bombchus to the item pool and changes both\n"  //
+                                        "Medigoron and the Haunted Wasteland Carpet\n"     //
+                                        "Salesman to sell a random item once at the price\n"
+                                        "of 200 rupees.";                                  //
+string_view merchantsHintsDesc        = "These hints will make Medigoron and the Carpet\n" //
+                                        "Salesman tell you which item they're selling.\n"  //
+                                        "\n"                                               //
+                                        "The Clearer Hints setting will affect how they\n" //
+                                        "refer to the item.";                              //
 /*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
@@ -520,6 +566,13 @@ string_view chestSizeDesc             = "This option will change the appearance 
                                         "Small Keys     =    Small Fancy Chests";          //
                                                                                            //
 /*------------------------------                                                           //
+|        INGAME SPOILERS       |                                                           //
+------------------------------*/                                                           //
+string_view ingameSpoilersShowDesc    = "Every spoiler is shown.";                         //
+string_view ingameSpoilersHideDesc    = "Hides the spheres page and only shows a\n"        //
+                                        "location's item after it has been found.";        //
+                                                                                           //
+/*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
 ------------------------------*/                                                           //
 string_view menuButtonDesc            = "Choose which button will bring up the Dungeon\n"  //
@@ -609,6 +662,12 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 string_view randomTrapDmgDesc         = "If set, ice traps will sometimes damage Link and\n"
                                         "knock him back or electrocute him instead of\n"   //
                                         "freezing him.";                                   //
+                                                                                           //
+string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"
+                                        "and no other negative effects\n";                 //
+                                                                                           //
+string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
+                                        "cause a lot of damage (with one-hit protection)"; //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

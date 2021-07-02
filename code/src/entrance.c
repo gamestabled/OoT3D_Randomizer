@@ -15,6 +15,9 @@ static EntranceOverride rEntranceOverrides[256] = {0};
 //will take players to the Requiem cutscene even if it is shuffled.
 static s16 newRequiemEntrance = 0x01E1;
 
+//Same concept as above, except for Saria's Gift check
+static s16 newLWBridgeEntrance = 0x05E0;
+
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
 //By default, these will be their vanilla values.
@@ -88,14 +91,6 @@ void Scene_Init(void) {
 
     gRestrictionFlags[72].flags3 = 0; // Allows farore's wind in GTG
     gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
-    
-    // Allow Farore's Wind anywhere if the option is enabled
-    // Cannot be used in areas affected by a general item restriction
-    if (gSettingsContext.faroresWindAnywhere){
-        for (int i = 0; i < 99; i++){
-			gRestrictionFlags[i].flags3 &= ~0x30;
-		}
-    }
 }
 
 void Entrance_Init(void) {
@@ -113,32 +108,6 @@ void Entrance_Init(void) {
         gEntranceTable[0x43F].scene = 0x4F;
         gEntranceTable[0x43F].spawn = 0x01;
         gEntranceTable[0x43F].field = 0x4183;
-    }
-
-    const s32 deleteTitleCards[] = {
-        0x1ED, // Desert Colossus from Requiem
-        0x221, // Zora's Fountain from Inside Jabu Jabu's Belly
-        0x2CA, // Temple of Time from Pulling/Placing Master Sword
-        0x457, // Kokiri Forest from Deku Tree Death Cutscene
-        0x47A, // Death Mountain Trail from Goron Ruby Cutscene
-        0x513, // Kakariko Village from Nocturne
-        0x564, // Death Mountain Crater from Fire Temple Blue Warp
-        0x580, // Graveyard from Shadow Temple Blue Warp
-        0x58C, // Temple of Time from LACS
-        0x594, // Hyrule Field from Impa's first escort
-        0x5F4, // Temple of Time from Prelude/Savewarp
-        0x600, // Sacred Forest Meadow from Minuet
-        0x608, // Sacred Forest Meadow from Forest Temple Blue Warp
-        0x60C, // Lake Hylia from Water Temple Blue Warp
-        0x610, // Desert Colossus from Spirit Temple Blue Warp
-    };
-
-    //Delete title cards from the following entrance indexes in the above table
-    for (size_t i = 0; i < sizeof(deleteTitleCards) / sizeof(s32); i++) {
-        index = deleteTitleCards[i];
-        for (size_t j = 0; j < 4; j++) {
-            gEntranceTable[index + j].field &= ~0x4000;
-        }
     }
 
     // Delete the title card and add a fade in for Hyrule Field from Ocarina of Time cutscene
@@ -167,20 +136,27 @@ void Entrance_Init(void) {
             newRequiemEntrance = originalIndex;
         }
 
+        //check to see if this is the new LW Bridge exit
+        if (overrideIndex == 0x5E0) {
+            newLWBridgeEntrance = originalIndex;
+        }
+
         //check to see if this is a new dungeon entrance
         Entrance_SetNewDungeonEntrances(originalIndex, overrideIndex);
 
+        //Overwrite the original entrance index data with the data from the override index.
+        //Using the copy ensures that we don't overwrite data from an index before it needs
+        //to be copied somewhere else.
         for (s16 j = 0; j < 4; j++) {
             gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
             gEntranceTable[originalIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
             gEntranceTable[originalIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
 
+            //If there's a blue warp entrance, overwrite that one as well
             if (blueWarpIndex != 0) {
               gEntranceTable[blueWarpIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
               gEntranceTable[blueWarpIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
               gEntranceTable[blueWarpIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
-              //delete title cards coming from blue warps so that delayed overrides don't have to wait for them
-              gEntranceTable[blueWarpIndex+j].field &= ~0x4000;
             }
         }
     }
@@ -196,6 +172,10 @@ void Entrance_DeathInGanonBattle(void) {
 
 s16 Entrance_GetRequiemEntrance(void) {
     return newRequiemEntrance;
+}
+
+s16 Entrance_GetLWBridgeEntrance(void) {
+    return newLWBridgeEntrance;
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance
@@ -277,5 +257,27 @@ void Entrance_SetSavewarpEntrance(void) {
         gSaveContext.entranceIndex = 0x00BB; // Link's House Child Spawn
     } else {
         gSaveContext.entranceIndex = 0x05F4; // Temple of Time Adult Spawn
+    }
+}
+
+void EnableFW() {
+    // Leave restriction in Tower Collapse Interior, Castle Collapse, Treasure Box Shop, Tower Collapse Exterior,
+    // Grottos area, Fishing Pond, Ganon Battle and for states that disable buttons.
+    if (!gSettingsContext.faroresWindAnywhere ||
+        gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 || gGlobalContext->sceneNum == 16 ||
+        gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62 || gGlobalContext->sceneNum == 73 ||
+        gGlobalContext->sceneNum == 79 ||
+        gSaveContext.unk_1586[4] & 0x1 ||   // Ingo's Minigame state
+        PLAYER->stateFlags1 & 0x08A02000 || // Swimming, riding horse, Down A, hanging from a ledge
+        PLAYER->stateFlags2 & 0x00040000    // Blank A
+        // Shielding, spinning and getting skull tokens still disable buttons automatically
+        ) {
+        return;
+    }
+
+    for (int i = 1; i < 5; i++) {
+        if (gSaveContext.equips.buttonItems[i] == 13) {
+            gSaveContext.buttonStatus[i] = 0;
+        }
     }
 }

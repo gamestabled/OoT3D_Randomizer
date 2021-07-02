@@ -162,7 +162,9 @@ static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<
 
   //create the in game message
   u32 messageId = 0x400 + Location(gossipStone)->GetFlag();
+  u32 sariaMessageId = 0xA00 + Location(gossipStone)->GetFlag();
   CreateMessageFromTextObject(messageId, 0, 2, 3, AddColorsAndFormat(hint, colors));
+  CreateMessageFromTextObject(sariaMessageId, 0, 2, 3, AddColorsAndFormat(hint + EVENT_TRIGGER(), colors));
 }
 
 static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocations) {
@@ -613,6 +615,21 @@ static void CreateAltarText() {
   //End
   Hint(ADULT_ALTAR_TEXT_END).GetText()+EVENT_TRIGGER();
   CreateMessageFromTextObject(0x7088, 0, 2, 3, AddColorsAndFormat(adultText, {QM_RED, QM_YELLOW, QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW, QM_PINK, QM_RED, QM_RED, QM_RED, QM_RED}));
+}
+
+void CreateMerchantsHints() {
+
+  Text medigoronItemText = Location(GC_MEDIGORON)->GetPlacedItem().GetHint().GetText();
+  Text carpetSalesmanItemText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetText();
+  Text carpetSalesmanItemClearText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetClear();
+
+  Text medigoronText = Hint(MEDIGORON_DIALOG_FIRST).GetText()+medigoronItemText+Hint(MEDIGORON_DIALOG_SECOND).GetText();
+  Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText()+carpetSalesmanItemText+Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
+  Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_THIRD).GetText()+carpetSalesmanItemClearText+Hint(CARPET_SALESMAN_DIALOG_FOURTH).GetText();
+
+  CreateMessageFromTextObject(0x304F, 0, 2, 3, AddColorsAndFormat(medigoronText, {QM_RED, QM_GREEN}));
+  CreateMessageFromTextObject(0x6077, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextOne, {QM_RED, QM_GREEN}));
+  CreateMessageFromTextObject(0x6078, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextTwo, {QM_RED, QM_YELLOW, QM_RED}));
 }
 
 void CreateAllHints() {

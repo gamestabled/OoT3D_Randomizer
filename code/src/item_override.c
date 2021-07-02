@@ -5,6 +5,7 @@
 #include "settings.h"
 #include "custom_models.h"
 #include "objects.h"
+#include "entrance.h"
 #include <stddef.h>
 void svcBreak(u32 breakReason); // TODO: remove
 
@@ -166,6 +167,10 @@ static void ItemOverride_PushPendingOverride(ItemOverride override) {
     }
 }
 
+s32 ItemOverride_IsAPendingOverride(void) {
+    return (rPendingOverrideQueue[0].key.all != 0);
+}
+
 void ItemOverride_PushDelayedOverride(u8 flag) {
     ItemOverride_Key key = { .all = 0 };
     key.scene = 0xFF;
@@ -199,7 +204,7 @@ static void ItemOverride_PopIceTrap(void) {
     ItemOverride_Key key = rPendingOverrideQueue[0].key;
     ItemOverride_Value value = rPendingOverrideQueue[0].value;
     if (value.itemId == 0x7C) {
-        IceTrap_Push();
+        IceTrap_Push(key.all);
         ItemOverride_PopPendingOverride();
         ItemOverride_AfterKeyReceived(key);
     }
@@ -217,8 +222,8 @@ void ItemOverride_AfterItemReceived(void) {
 static u32 ItemOverride_PlayerIsReady(void) {
     if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 && (PLAYER->actor.bgCheckFlags & 0x0001) &&
         (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
-        gGlobalContext->actorCtx.titleCtx.delayB == 0 && gGlobalContext->actorCtx.titleCtx.delayA == 0 &&
-        gGlobalContext->actorCtx.titleCtx.unk_12 == 0
+        gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
+        gGlobalContext->actorCtx.titleCtx.alpha == 0
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
     ) {
@@ -302,6 +307,9 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
             baseItemId = 0x7C;
         }
         fromActor->params = (fromActor->params & 0xF01F) | (baseItemId << 5);
+    } else if (override.value.itemId == 0x7C) {
+        rActiveItemRow->effectArg1 = override.key.all >> 16;
+        rActiveItemRow->effectArg2 = override.key.all & 0xFFFF;
     }
 
     player->getItemId = incomingNegative ? -baseItemId : baseItemId;
@@ -336,6 +344,10 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
+    if (override.value.itemId == 0x7C) {
+        itemRow->effectArg1 = override.key.all >> 16;
+        itemRow->effectArg2 = override.key.all & 0xFFFF;
+    }
 
     ItemTable_CallEffect(itemRow);
 
@@ -406,7 +418,7 @@ void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) 
 
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
-    if (receivedGift == 0) {
+    if (receivedGift == 0 && (gSaveContext.entranceIndex == Entrance_GetLWBridgeEntrance())) {
         ItemOverride_PushDelayedOverride(0x02);
         EventSet(0xC1);
     }

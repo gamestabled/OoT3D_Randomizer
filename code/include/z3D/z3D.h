@@ -79,7 +79,7 @@ typedef struct {
     /* 0x004A */ u16          bgsHitsLeft;
     /* 0x004C */ u16          naviTimer;
     /* 0x004E */ u8           magicAcquired;
-    /* 0x004F */ char         unk_4F;
+    /* 0x004F */ u8           biggoronSword;
     /* 0x0050 */ u8           doubleMagic;
     /* 0x0051 */ u8           doubleDefense;
     /* 0x0052 */ s8           bgsFlag;
@@ -112,7 +112,13 @@ typedef struct {
     /* 0x0EB4 */ u8           gsFlags[22]; //due to reordering, array is smaller
     /* 0x0ECA */ char         unk_ECA[0x0006]; //the extra two bytes move here
     /* 0x0ED0 */ u32          unk_ED0; //horseback archery highscore?
-    /* 0x0ED4 */ char         unk_ED4[0x0008];
+    /* 0x0ED4 */ u32          bigPoePoints; //number of big poes sold * 100
+    struct {
+        /* 0x0ED4 */ u8 recordFishChild; //seems to be unique ID of fish, this is copied into adult value if player has not yet fished as adult
+        /* 0x0ED5 */ u8 flags; //bits: 0 - ever fished as child, 1 - ever fished as adult, 2 - caught record as child, 3 - caught record as adult
+        /* 0x0ED6 */ u8 timesPaidToFish;
+        /* 0x0ED7 */ u8 recordFishAdult; //seems to be unique ID of fish
+    }                         fishingStats;
     /* 0x0EDC */ u32          unk_EDC; //horse race record time?
     /* 0x0EE0 */ u32          unk_EE0; //marathon race record time?
     /* 0x0EE4 */ char         unk_EE4[0x0008];
@@ -244,15 +250,15 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ u8*  texture;
-    /* 0x04 */ s16  unk_04;
-    /* 0x06 */ s16  unk_06;
-    /* 0x08 */ s16  unk_08;
-    /* 0x0A */ s16  unk_0A;
+    /* 0x04 */ s16  x;
+    /* 0x06 */ s16  y;
+    /* 0x08 */ s16  width;
+    /* 0x0A */ s16  height;
     /* 0x0C */ s32  unk_0C;
-    /* 0x10 */ u8   delayA;
-    /* 0x11 */ u8   delayB;
-    /* 0x12 */ s16  unk_12;
-    /* 0x14 */ s16  unk_14;
+    /* 0x10 */ u8   durationTimer;
+    /* 0x11 */ u8   delayTimer;
+    /* 0x12 */ s16  alpha;
+    /* 0x14 */ s16  intensity;
     /* 0x16 */ s16  unk_16;
 } TitleCardContext; // size = 0x18
 
@@ -527,5 +533,9 @@ typedef void (*PlaySound_proc)(u32);
 typedef Actor* (*Actor_Spawn_proc)(ActorContext *actorCtx,GlobalContext *globalCtx,s16 actorId,float posX,float posY,float posZ,s16 rotX,s16 rotY,s16 rotZ,s16 params);
 #define Actor_Spawn_addr 0x3738D0
 #define Actor_Spawn ((Actor_Spawn_proc)Actor_Spawn_addr)
+
+typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int flamesColor);
+#define FireDamage_addr 0x35D8D8
+#define FireDamage ((FireDamage_proc)FireDamage_addr)
 
 #endif //_Z3D_H_

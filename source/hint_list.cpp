@@ -1,6 +1,9 @@
 #include "hint_list.hpp"
+#include "custom_messages.hpp"
 
 #include <array>
+
+using namespace CustomMessages;
 
 //Big thanks to Lioncache, Gabyelnuevo, Danius88, and Charade for their translations!
 
@@ -5456,7 +5459,7 @@ void HintTable_Init() {
 
     hintTable[JUNK01] = HintText::Junk({
                      //obscure text
-                     Text{"Remember to check your 3DS battery level and save often.", /*french*/"Surveillez votre batterie 3DS et sauvegardez souvent!", /*spanish*/"No te olvides de revisar la batería de la 3DS y guarda partida de vez en cuando."},
+                     Text{"Remember to check your 3DS battery level&and save often.", /*french*/"Surveillez votre batterie 3DS et sauvegardez souvent!", /*spanish*/"No te olvides de revisar la batería de la 3DS y guarda partida de vez en cuando."},
     });
 
     hintTable[JUNK02] = HintText::Junk({
@@ -6324,6 +6327,52 @@ void HintTable_Init() {
                      Text{"Today, let's begin down&'The Hero is Defeated' timeline.",
                 /*french*/"Si tu me vaincs, Hyrule sera englouti... mais si tu meurs, on aura A Link to the Past, le meilleur opus de la série!",
                /*spanish*/"Hoy daremos lugar a la línea temporal del Héroe Derrotado.&¡Prepárate para el culmen de esta saga!"},
+    });
+
+    /*--------------------------
+    |      MERCHANTS' ITEMS     |
+    ---------------------------*/
+
+    hintTable[MEDIGORON_DIALOG_FIRST] = HintText::MerchantsDialogs({
+                     //obscure text
+                     Text{"How about buying ",
+                /*french*/"Veux-tu acheter ",
+               /*spanish*/"¿Me compras "},
+    });
+
+    hintTable[MEDIGORON_DIALOG_SECOND] = HintText::MerchantsDialogs({
+                     //obscure text
+                     Text{" for #200 Rupees#?&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
+                /*french*/" pour #200 rubis#?&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
+               /*spanish*/" por #200 rupias#?&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#"},
+    });
+
+    hintTable[CARPET_SALESMAN_DIALOG_FIRST] = HintText::MerchantsDialogs({
+                     //obscure text
+                     Text{"Welcome!^I am selling stuff, strange and rare, from&all over the world to everybody. Today's&special is...^",
+                /*french*/"Bienvenue!^Je vends des objets rares et merveilleux du&monde entier. En spécial aujourd'hui...^",
+               /*spanish*/"¡Acércate!^Vendo productos extraños y difíciles de&encontrar... De todo el mundo a todo el&mundo. La oferta de hoy es...^¡"},
+    });
+
+    hintTable[CARPET_SALESMAN_DIALOG_SECOND] = HintText::MerchantsDialogs({
+                     //obscure text
+                     Text{"! Terrifying!&I won't tell you what it is until I see the&money...^How about #200 Rupees#?&&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
+                /*french*/"! Un&concentré de puissance! Mais montre tes&rubis avant que je te dise ce que c'est...^Disons #200 rubis#?&&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
+               /*spanish*/"! ¡Terrorífico!&No te revelaré su nombre hasta que&vea el dinero...^#200 rupias#, ¿qué te parece?&&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#"},
+    });
+
+    hintTable[CARPET_SALESMAN_DIALOG_THIRD] = HintText::MerchantsDialogs({
+                     //obscure text
+                     Text{"Thank you very much!^What I'm selling is... #",
+                /*french*/"Merci beaucoup!^Cet objet extraordinaire est... #",
+               /*spanish*/"¡Muchas gracias!^Lo que vendo es... #¡"},
+    });
+
+    hintTable[CARPET_SALESMAN_DIALOG_FOURTH] = HintText::MerchantsDialogs({
+                     //obscure text
+                     Text{"!#^The mark that will lead you to the #Spirit&Temple# is the #flag on the "+IF_NOT_MQ()+"left"+MQ_ELSE()+"right"+MQ_END()+"# outside the shop. Be seeing you!",
+                /*french*/"!#^La marque qui te mènera au #Temple de l'esprit# est le #drapeau "+IF_NOT_MQ()+"gauche"+MQ_ELSE()+"droite"+MQ_END()+"# en sortant d'ici. À la prochaine!",
+               /*spanish*/"!#^La marca que te guiará al #Templo del&Espíritu# es la #bandera que está a la&"+IF_NOT_MQ()+"izquierda"+MQ_ELSE()+"derecha"+MQ_END()+"# al salir de aquí. ¡Nos vemos!"},
     });
 }
 

@@ -318,6 +318,8 @@ ExtendedObjectClear_patch:
 .global SariasGift_patch
 SariasGift_patch:
     bl ItemOverride_GiveSariasGift
+    nop
+    nop
 
 .section .patch_DekuTheaterSkullMask
 .global DekuTheaterSkullMask_patch
@@ -1163,6 +1165,11 @@ ReadGossipStoneHints_patch:
     nop
     nop
 
+.section .patch_GossipStoneAddSariaHint
+.global GossipStoneAddSariaHint_patch
+GossipStoneAddSariaHint_patch:
+    bl hook_GossipStoneAddSariaHint
+
 .section .patch_DecoratedChest
 .global DecoratedChest_patch
 DecoratedChest_patch:
@@ -1234,6 +1241,11 @@ OwlMagicCheck_patch:
 ChestIceSmoke_patch:
     b hook_Chest_OverrideIceSmoke
 
+.section .patch_EnableFW
+.global EnableFW_patch
+EnableFW_patch:
+    bl hook_EnableFW
+
 .section .patch_SetSavewarpEntrance
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:
@@ -1245,6 +1257,76 @@ SetSavewarpEntrance_patch:
 SetGameOverEntrance_patch:
     bl hook_SetGameOverEntrance
     b  0x458EC8
+
+.section .patch_SariasSongHintsOne
+.global SariasSongHintsOne_patch
+SariasSongHintsOne_patch:
+    bl Hints_GetNextSariasSongHint
+
+.section .patch_SariasSongHintsTwo
+.global SariasSongHintsTwo_patch
+SariasSongHintsTwo_patch:
+    bl Hints_GetNextSariasSongHint
+
+.section .patch_TitleCardUpdate
+.global TitleCardUpdate_patch
+TitleCardUpdate_patch:
+    bl TitleCard_rUpdate
+
+.section .patch_NoHealFromHealthUpgrades
+.global NoHealFromHealthUpgrades_patch
+NoHealFromHealthUpgrades_patch:
+    bl hook_NoHealFromHealthUpgrades
+
+.section .patch_NoHealFromBombchuBowlingPrize
+.global NoHealFromBombchuBowlingPrize_patch
+NoHealFromBombchuBowlingPrize_patch:
+    bl hook_NoHealFromBombchuBowlingPrize
+
+.section .patch_FairyPickupHealAmount
+.global FairyPickupHealAmount_patch
+FairyPickupHealAmount_patch:
+    bl hook_FairyPickupHealAmount
+
+.section .patch_FairyReviveHealAmount
+.global FairyReviveHealAmount_patch
+FairyReviveHealAmount_patch:
+    bl hook_FairyReviveHealAmount
+
+.section .patch_FairyUseHealAmount
+.global FairyUseHealAmount_patch
+FairyUseHealAmount_patch:
+    bl hook_FairyUseHealAmount
+
+.section .patch_MedigoronCheckFlagOne
+.global MedigoronCheckFlagOne_patch
+MedigoronCheckFlagOne_patch:
+    b hook_MedigoronCheckFlagOne
+
+.section .patch_MedigoronCheckFlagTwo
+.global MedigoronCheckFlagTwo_patch
+MedigoronCheckFlagTwo_patch:
+    b hook_MedigoronCheckFlagTwo
+
+.section .patch_MedigoronSetFlag
+.global MedigoronSetFlag_patch
+MedigoronSetFlag_patch:
+    bl hook_MedigoronSetFlag
+
+.section .patch_CarpetSalesmanCheckFlagOne
+.global CarpetSalesmanCheckFlagOne_patch
+CarpetSalesmanCheckFlagOne_patch:
+    bl hook_CarpetSalesmanCheckFlagOne
+
+.section .patch_CarpetSalesmanCheckFlagTwo
+.global CarpetSalesmanCheckFlagTwo_patch
+CarpetSalesmanCheckFlagTwo_patch:
+    bl hook_CarpetSalesmanCheckFlagTwo
+
+.section .patch_CarpetSalesmanSetFlag
+.global CarpetSalesmanSetFlag_patch
+CarpetSalesmanSetFlag_patch:
+    bl hook_CarpetSalesmanSetFlag
 
 .section .patch_loader
 .global loader_patch

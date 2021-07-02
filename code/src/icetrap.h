@@ -3,7 +3,7 @@
 
 #include "z3D/z3D.h"
 
-void IceTrap_Push(void);
+void IceTrap_Push(u32 key);
 void IceTrap_Give(void);
 u32 IceTrap_IsPending(void);
 void IceTrap_Update(void);

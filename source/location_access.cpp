@@ -174,7 +174,8 @@ Entrance* Area::GetExit(AreaKey exitToReturn) {
       return &exit;
     }
   }
-  CitraPrint("WARNING: EXIT DOES NOT EXIST IN THIS AREA");
+  auto message = "ERROR: EXIT " + AreaTable(exitToReturn)->regionName + " DOES NOT EXIST IN " + this->regionName;
+  CitraPrint(message);
   return nullptr;
 }
 
@@ -218,6 +219,17 @@ bool Area::CheckAllAccess(const AreaKey exitKey) {
     }
   }
   return false;
+}
+
+void Area::ResetVariables() {
+  childDay = false;
+  childNight = false;
+  adultDay = false;
+  adultNight = false;
+  addedToPool = false;
+  for (auto& exit : exits) {
+    exit.RemoveFromPool();
+  }
 }
 
 static std::array<Area, KEY_ENUM_MAX> areaTable;
@@ -771,8 +783,8 @@ void AreaTable_Init() {
                   //EventAccess(&GF_GateOpen, []{return IsAdult && GerudoToken && (ShuffleGerudoToken || ShuffleOverworldEntrances || ShuffleSpecialIndoorEntrances);}),
                 }, {}, {
                   //Exits
-                  Entrance(GERUDO_FORTRESS,  []{return IsAdult || (ShuffleOverworldEntrances && GF_GateOpen);}),
-                  Entrance(HW_NEAR_FORTRESS, []{return true;})
+                  Entrance(GERUDO_FORTRESS,         []{return IsAdult || (ShuffleOverworldEntrances && GF_GateOpen);}),
+                  Entrance(WASTELAND_NEAR_FORTRESS, []{return true;})
   });
 
   areaTable[GF_STORMS_GROTTO] = Area("GF Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {
@@ -783,10 +795,10 @@ void AreaTable_Init() {
                   Entrance(GERUDO_FORTRESS, []{return true;})
   });
 
-  areaTable[HW_NEAR_FORTRESS] = Area("Wasteland Near Fortress", "Haunted Wasteland", HAUNTED_WASTELAND, NO_DAY_NIGHT_CYCLE, {}, {}, {
+  areaTable[WASTELAND_NEAR_FORTRESS] = Area("Wasteland Near Fortress", "Haunted Wasteland", HAUNTED_WASTELAND, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(GF_OUTSIDE_GATE, []{return true;}),
-                  Entrance(HAUNTED_WASTELAND,        []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Longshot);}),
+                  Entrance(GF_OUTSIDE_GATE,   []{return true;}),
+                  Entrance(HAUNTED_WASTELAND, []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Longshot);}),
   });
 
   areaTable[HAUNTED_WASTELAND] = Area("Haunted Wasteland", "Haunted Wasteland", HAUNTED_WASTELAND, NO_DAY_NIGHT_CYCLE, {
@@ -795,16 +807,16 @@ void AreaTable_Init() {
                   EventAccess(&NutPot,   []{return true;}),
                 }, {
                   //Locations
-                  LocationAccess(WASTELAND_CHEST, []{return HasFireSource;}),
-                  //TODO: Wasteland Bombchu Salesman
-                  LocationAccess(WASTELAND_GS,    []{return HookshotOrBoomerang;}),
+                  LocationAccess(WASTELAND_CHEST,            []{return HasFireSource;}),
+                  LocationAccess(WASTELAND_BOMBCHU_SALESMAN, []{return AdultsWallet && (IsAdult || Sticks || KokiriSword);}),
+                  LocationAccess(WASTELAND_GS,               []{return HookshotOrBoomerang;}),
                 }, {
                   //Exits
-                  Entrance(HW_NEAR_COLOSSUS, []{return LogicLensWasteland || CanUse(CanUseItem::Lens_of_Truth);}),
-                  Entrance(HW_NEAR_FORTRESS, []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Longshot);}),
+                  Entrance(WASTELAND_NEAR_COLOSSUS, []{return LogicLensWasteland || CanUse(CanUseItem::Lens_of_Truth);}),
+                  Entrance(WASTELAND_NEAR_FORTRESS, []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Longshot);}),
   });
 
-  areaTable[HW_NEAR_COLOSSUS] = Area("Wasteland Near Colossus", "Haunted Wasteland", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+  areaTable[WASTELAND_NEAR_COLOSSUS] = Area("Wasteland Near Colossus", "Haunted Wasteland", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(DESERT_COLOSSUS,   []{return true;}),
                   Entrance(HAUNTED_WASTELAND, []{return LogicReverseWasteland || false;})
@@ -826,7 +838,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(COLOSSUS_GREAT_FAIRY_FOUNTAIN, []{return HasExplosives;}),
                   Entrance(SPIRIT_TEMPLE_ENTRYWAY,        []{return true;}),
-                  Entrance(HW_NEAR_COLOSSUS,              []{return true;}),
+                  Entrance(WASTELAND_NEAR_COLOSSUS,       []{return true;}),
                   Entrance(COLOSSUS_GROTTO,               []{return CanUse(CanUseItem::Silver_Gauntlets);})
   });
 
@@ -849,24 +861,24 @@ void AreaTable_Init() {
 
   areaTable[MARKET_ENTRANCE] = Area("Market Entrance", "Market Entrance", THE_MARKET, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(HYRULE_FIELD, []{return IsAdult || AtDay;}),
-                  Entrance(THE_MARKET, []{return true;}),
+                  Entrance(HYRULE_FIELD,       []{return IsAdult || AtDay;}),
+                  Entrance(THE_MARKET,         []{return true;}),
                   Entrance(MARKET_GUARD_HOUSE, []{return true;})
   });
 
   areaTable[THE_MARKET] = Area("Market", "Market", THE_MARKET, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(MARKET_ENTRANCE,             []{return true;}),
-                  Entrance(TOT_ENTRANCE,                []{return true;}),
-                  Entrance(CASTLE_GROUNDS,              []{return true;}),
-                  Entrance(MARKET_BAZAAR,                []{return IsChild && AtDay;}),
-                  Entrance(MARKET_MASK_SHOP,             []{return IsChild && AtDay;}),
-                  Entrance(MARKET_SHOOTING_GALLERY,      []{return IsChild && AtDay;}),
-                  Entrance(MARKET_BOMBCHU_BOWLING,      []{return IsChild;}),
+                  Entrance(MARKET_ENTRANCE,            []{return true;}),
+                  Entrance(TOT_ENTRANCE,               []{return true;}),
+                  Entrance(CASTLE_GROUNDS,             []{return true;}),
+                  Entrance(MARKET_BAZAAR,              []{return IsChild && AtDay;}),
+                  Entrance(MARKET_MASK_SHOP,           []{return IsChild && AtDay;}),
+                  Entrance(MARKET_SHOOTING_GALLERY,    []{return IsChild && AtDay;}),
+                  Entrance(MARKET_BOMBCHU_BOWLING,     []{return IsChild;}),
                   Entrance(MARKET_TREASURE_CHEST_GAME, []{return IsChild && AtNight;}),
-                  Entrance(MARKET_POTION_SHOP,           []{return IsChild && AtDay;}),
+                  Entrance(MARKET_POTION_SHOP,         []{return IsChild && AtDay;}),
                   Entrance(MARKET_BOMBCHU_SHOP,        []{return IsChild && AtNight;}),
-                  Entrance(MARKET_DOG_LADY_HOUSE,       []{return IsChild;}),
+                  Entrance(MARKET_DOG_LADY_HOUSE,      []{return IsChild;}),
                   Entrance(MARKET_MAN_IN_GREEN_HOUSE,  []{return IsChild && AtNight;})
   });
 
@@ -1348,7 +1360,7 @@ void AreaTable_Init() {
 
   areaTable[KAK_BEHIND_GATE] = Area("Kak Behind Gate", "Kakariko Village", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(KAKARIKO_VILLAGE, []{return IsAdult || LogicVisibleCollision || KakarikoVillageGateOpen || OpenKakariko.Is(OPENKAKARIKO_OPEN);}),
+                  Entrance(KAKARIKO_VILLAGE,     []{return IsAdult || LogicVisibleCollision || KakarikoVillageGateOpen || OpenKakariko.Is(OPENKAKARIKO_OPEN);}),
                   Entrance(DEATH_MOUNTAIN_TRAIL, []{return true;})
   });
 
@@ -1439,6 +1451,7 @@ void AreaTable_Init() {
                   LocationAccess(GC_ROLLING_GORON_AS_ADULT, []{return StopGCRollingGoronAsAdult;}),
                   LocationAccess(GC_GS_BOULDER_MAZE,        []{return IsChild && HasExplosives;}),
                   LocationAccess(GC_GS_CENTER_PLATFORM,     []{return IsAdult;}),
+                  LocationAccess(GC_MEDIGORON,              []{return IsAdult && AdultsWallet && (CanBlastOrSmash || GoronBracelet);}),
                   LocationAccess(GC_MAZE_GOSSIP_STONE,      []{return CanBlastOrSmash || CanUse(CanUseItem::Silver_Gauntlets);}),
                   LocationAccess(GC_MEDIGORON_GOSSIP_STONE, []{return CanBlastOrSmash || GoronBracelet;}),
                 }, {
@@ -1540,7 +1553,7 @@ void AreaTable_Init() {
                   Entrance(DMC_LOWER_NEARBY,       []{return true;}),
                   Entrance(DMC_LADDER_AREA_NEARBY, []{return true;}),
                   Entrance(DMC_CENTRAL_NEARBY,     []{return CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot);}),
-                  Entrance(FIRE_TEMPLE_ENTRYWAY,   []{return (CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot)) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic));}),
+                  Entrance(DMC_CENTRAL_LOCAL,      []{return (CanUse(CanUseItem::Hover_Boots) || CanUse(CanUseItem::Hookshot)) && (LogicFewerTunicRequirements || CanUse(CanUseItem::Goron_Tunic));}),
   });
 
   areaTable[DMC_CENTRAL_NEARBY] = Area("DMC Central Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {
@@ -3741,9 +3754,9 @@ namespace Areas {
     GERUDO_FORTRESS,
     GF_OUTSIDE_GATE,
     GF_STORMS_GROTTO,
-    HW_NEAR_FORTRESS,
+    WASTELAND_NEAR_FORTRESS,
     HAUNTED_WASTELAND,
-    HW_NEAR_COLOSSUS,
+    WASTELAND_NEAR_COLOSSUS,
     DESERT_COLOSSUS,
     COLOSSUS_GREAT_FAIRY_FOUNTAIN,
     COLOSSUS_GROTTO,
@@ -4041,6 +4054,17 @@ namespace Areas {
         }
     }
   }
+
+  bool HasTimePassAccess(u8 age) {
+    for (const AreaKey areaKey : allAreas) {
+      auto area = AreaTable(areaKey);
+      if (area->timePass && ((age == AGE_CHILD && area->Child()) || (age == AGE_ADULT && area->Adult()))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 } //namespace Areas
 
 Area* AreaTable(const AreaKey areaKey) {

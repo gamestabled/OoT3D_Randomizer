@@ -44,6 +44,14 @@ SECTIONS
 		*(.patch_SkulltulaRewardTwo)
 	}
 
+	.patch_MedigoronCheckFlagOne 0x13024C : {
+		*(.patch_MedigoronCheckFlagOne)
+	}
+
+	.patch_MedigoronCheckFlagTwo 0x1302C4 : {
+		*(.patch_MedigoronCheckFlagTwo)
+	}
+
 	.patch_BeanDaddyModifyBeansBought 0x130CEC : {
 		*(.patch_BeanDaddyModifyBeansBought)
 	}
@@ -66,6 +74,10 @@ SECTIONS
 
 	.patch_BeanDaddyModifyPrice 0x14EE98 : {
 		*(.patch_BeanDaddyModifyPrice)
+	}
+
+	.patch_FairyPickupHealAmount 0x15CA4C : {
+		*(.patch_FairyPickupHealAmount)
 	}
 
 	.patch_ScrubStickUpgradeOne 0x161898 : {
@@ -106,6 +118,10 @@ SECTIONS
 
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
+	}
+
+	.patch_MedigoronSetFlag 0x14D950 : {
+		*(.patch_MedigoronSetFlag)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
@@ -246,6 +262,10 @@ SECTIONS
 
 	.patch_JabuJabuCutsceneOverride 0x1A192C : {
 		*(.patch_JabuJabuCutsceneOverride)
+	}
+
+	.patch_GossipStoneAddSariaHint 0x1B398C : {
+		*(.patch_GossipStoneAddSariaHint)
 	}
 
 	.patch_ReadGossipStoneHints 0x1B3A44 : {
@@ -396,6 +416,10 @@ SECTIONS
 		*(.patch_BombchuBowlingPrizeOrder)
 	}
 
+	.patch_NoHealFromBombchuBowlingPrize 0x21D170 : {
+		*(.patch_NoHealFromBombchuBowlingPrize)
+	}
+
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {
 		*(.patch_ItemGiveBombchuDropTwo)
 	}
@@ -516,6 +540,10 @@ SECTIONS
 		*(.patch_DoorOfTimeOpenCutscene)
 	}
 
+	.patch_NoHealFromHealthUpgrades 0x2CD07C : {
+		*(.patch_NoHealFromHealthUpgrades)
+	}
+	
 	.patch_GetCustomMessageEntryOne 0x2CD3A4 : {
 		*(.patch_GetCustomMessageEntryOne)
 	}
@@ -550,6 +578,10 @@ SECTIONS
 
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
+	}
+
+	.patch_FairyReviveHealAmount 0x34AF48 : {
+		*(.patch_FairyReviveHealAmount)
 	}
 
 	.patch_OverrideGraphicID_351B94 0x351B94 : {
@@ -614,6 +646,14 @@ SECTIONS
 
 	.patch_AdultShootingGallery 0x38AB9C : {
 		*(.patch_AdultShootingGallery)
+	}
+
+	.patch_SariasSongHintsOne 0x390620 : {
+		*(.patch_SariasSongHintsOne)
+	}
+
+	.patch_SariasSongHintsTwo 0x39073C : {
+		*(.patch_SariasSongHintsTwo)
 	}
 
 	.patch_OcarinaMinigameEndAfterWin 0x39DF38 : {
@@ -756,6 +796,14 @@ SECTIONS
 		*(.patch_CowBottleCheck)
 	}
 
+	.patch_CarpetSalesmanCheckFlagOne 0x3F0A18 : {
+		*(.patch_CarpetSalesmanCheckFlagOne)
+	}
+
+	.patch_CarpetSalesmanCheckFlagTwo 0x3F0A64 : {
+		*(.patch_CarpetSalesmanCheckFlagTwo)
+	}
+
 	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
 		*(.patch_HandleDoorDestroyCustomModels)
 	}
@@ -792,6 +840,10 @@ SECTIONS
 		*(.patch_DekuTreeCutsceneOverride)
 	}
 
+	.patch_CarpetSalesmanSetFlag 0x3F9550 : {
+		*(.patch_CarpetSalesmanSetFlag)
+	}
+
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}
@@ -820,7 +872,7 @@ SECTIONS
 		*(.patch_NocturneLocation)
 	}
 
-	.patch_SariasGift 0x44F190 : {
+	.patch_SariasGift 0x44F188 : {
 		*(.patch_SariasGift)
 	}
 
@@ -864,12 +916,20 @@ SECTIONS
 		*(.patch_ChildDontEquipSwordSlotByDefault)
 	}
 
+	.patch_TitleCardUpdate 0x4618B8 : {
+		*(.patch_TitleCardUpdate)
+	}
+
 	.patch_FishingStoreTempB 0x475F8C : {
 		*(.patch_FishingStoreTempB)
 	}
 
 	.patch_FishingRestoreTempB 0x475FC0 : {
 		*(.patch_FishingRestoreTempB)
+	}
+
+	.patch_EnableFW 0x476D1C : {
+		*(.patch_EnableFW)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {
@@ -880,6 +940,10 @@ SECTIONS
 		*(.patch_FireTempleItemGiveTwo)
 	}
 
+	.patch_FairyUseHealAmount 0x4968B4 : {
+		*(.patch_FairyUseHealAmount)
+	}
+	
 	.patch_GanonBattleDeathWarp 0x496C98 : {
 		*(.patch_GanonBattleDeathWarp)
 	}
@@ -933,7 +997,6 @@ SECTIONS
 	.patch_TycoonWalletSize 0x53CC08 : {
 		*(.patch_TycoonWalletSize)
 	}
-
 	. = 0x005C7000;
     .text : {
         __text_start = . ;
