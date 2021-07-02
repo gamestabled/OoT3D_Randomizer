@@ -1404,6 +1404,7 @@ std::vector<std::vector<LocationKey>> playthroughLocations;
 std::vector<LocationKey> wothLocations;
 bool playthroughBeatable = false;
 bool allLocationsReachable = false;
+bool showItemProgress = false;
 
 u16 itemsPlaced = 0;
 
@@ -1441,10 +1442,12 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   }
 
   itemsPlaced++;
-  double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-  printf("\x1b[8;10HPlacing Items.");
-  if (completion > 0.25) printf(".");
-  if (completion > 0.50) printf(".");
+  if (showItemProgress) {
+    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+    printf("\x1b[8;10HPlacing Items.");
+    if (completion > 0.25) printf(".");
+    if (completion > 0.50) printf(".");
+  }
 
   //If we're placing a non-shop item in a shop location, we want to record it for custom messages
   if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {

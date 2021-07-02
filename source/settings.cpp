@@ -57,21 +57,23 @@ namespace Settings {
   };
 
   //World Settings
-  Option RandomizeWorld          = Option::Bool("Randomize Settings", {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
-  Option StartingAge             = Option::U8  ("Starting Age",       {"Adult", "Child", "Random"},                                      {ageDesc});
+  Option RandomizeWorld            = Option::Bool("Randomize Settings",     {"No","Yes"},                                                {worldRandomize}, OptionCategory::Toggle);
+  Option StartingAge               = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                {ageDesc});
   u8 ResolvedStartingAge;
-  Option ShuffleEntrances        = Option::Bool("Shuffle Entrances",  {"Off", "On"},                                                     {shuffleEntrancesDesc});
-  Option ShuffleDungeonEntrances = Option::Bool("  Dungeon Entrances",{"Off", "On"},                                                     {dungeonEntrancesDesc});
-  Option BombchusInLogic         = Option::Bool("Bombchus in Logic",  {"Off", "On"},                                                     {bombchuLogicDesc});
-  Option AmmoDrops               = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                 {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc});
-  Option HeartDropRefill         = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                         {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc});
-  Option RandomMQDungeons        = Option::Bool("Random MQ Dungeons", {"Off", "On"},                                                     {randomMQDungeonsDesc});
-  Option MQDungeonCount          = Option::U8  ("  MQ Dungeon Count", {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
+  Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",      {"Off", "On"},                                               {shuffleEntrancesDesc});
+  Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                               {dungeonEntrancesDesc});
+  Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                               {overworldEntrancesDesc});
+  Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                               {bombchuLogicDesc});
+  Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                               {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc});
+  Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                       {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc});
+  Option RandomMQDungeons          = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                               {randomMQDungeonsDesc});
+  Option MQDungeonCount            = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},    {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
     &ShuffleEntrances,
     &ShuffleDungeonEntrances,
+    &ShuffleOverworldEntrances,
     &BombchusInLogic,
     &AmmoDrops,
     &HeartDropRefill,
@@ -1120,9 +1122,12 @@ namespace Settings {
       //Show Shuffle options when Shuffle Entrances is On
       if (ShuffleEntrances) {
         ShuffleDungeonEntrances.Unhide();
+        ShuffleOverworldEntrances.Unhide();
       } else {
         ShuffleDungeonEntrances.SetSelectedIndex(OFF);
         ShuffleDungeonEntrances.Hide();
+        ShuffleOverworldEntrances.SetSelectedIndex(OFF);
+        ShuffleOverworldEntrances.Hide();
       }
     }
 
@@ -1330,7 +1335,6 @@ namespace Settings {
   }
 
   //eventual settings
-  bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
 

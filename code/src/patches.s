@@ -318,6 +318,8 @@ ExtendedObjectClear_patch:
 .global SariasGift_patch
 SariasGift_patch:
     bl ItemOverride_GiveSariasGift
+    nop
+    nop
 
 .section .patch_DekuTheaterSkullMask
 .global DekuTheaterSkullMask_patch

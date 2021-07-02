@@ -382,6 +382,7 @@ extern std::vector<std::vector<LocationKey>> playthroughLocations;
 extern std::vector<LocationKey> wothLocations;
 extern bool playthroughBeatable;
 extern bool allLocationsReachable;
+extern bool showItemProgress;
 
 extern u16 itemsPlaced;
 
