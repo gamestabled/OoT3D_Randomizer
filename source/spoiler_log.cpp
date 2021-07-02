@@ -152,34 +152,35 @@ static void WriteIngameSpoilerLog() {
   }
   spoilerData.ItemLocationsCount = spoilerItemIndex;
 
-  bool playthroughItemNotFound = false;
-  // Write playthrough data to in-game spoiler log
-  if (!spoilerOutOfSpace) {
-    for (u32 i = 0; i < playthroughLocations.size(); i++) {
-      if (i >= SPOILER_SPHERES_MAX) {
-        spoilerOutOfSpace = true;
-        break;
-      }
-      spoilerData.Spheres[i].ItemLocationsOffset = spoilerSphereItemoffset;
-      for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
-        if (spoilerSphereItemoffset >= SPOILER_ITEMS_MAX) {
+  if (Settings::IngameSpoilers) {
+    bool playthroughItemNotFound = false;
+    // Write playthrough data to in-game spoiler log
+    if (!spoilerOutOfSpace) {
+      for (u32 i = 0; i < playthroughLocations.size(); i++) {
+        if (i >= SPOILER_SPHERES_MAX) {
           spoilerOutOfSpace = true;
           break;
         }
+        spoilerData.Spheres[i].ItemLocationsOffset = spoilerSphereItemoffset;
+        for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
+          if (spoilerSphereItemoffset >= SPOILER_ITEMS_MAX) {
+            spoilerOutOfSpace = true;
+            break;
+          }
 
-        const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
-        if (foundItemLoc != itemLocationsMap.end()) {
-          spoilerData.SphereItemLocations[spoilerSphereItemoffset++] = foundItemLoc->second;
-        } else {
-          playthroughItemNotFound = true;
+          const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
+          if (foundItemLoc != itemLocationsMap.end()) {
+            spoilerData.SphereItemLocations[spoilerSphereItemoffset++] = foundItemLoc->second;
+          } else {
+            playthroughItemNotFound = true;
+          }
+          ++spoilerData.Spheres[i].ItemCount;
         }
-        ++spoilerData.Spheres[i].ItemCount;
+        ++spoilerData.SphereCount;
       }
-      ++spoilerData.SphereCount;
     }
+    if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
   }
-
-  if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
 }
 
 // Writes the location to the specified node.
