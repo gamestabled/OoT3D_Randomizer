@@ -1453,7 +1453,7 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
     int index = TransformShopIndex(GetShopIndex(locKey));
     NonShopItems[index].Name = ItemTable(item).GetName();
-    NonShopItems[index].Repurchaseable = ItemTable(item).GetItemType() == ITEMTYPE_REFILL;
+    NonShopItems[index].Repurchaseable = ItemTable(item).GetItemType() == ITEMTYPE_REFILL || ItemTable(item).GetHintKey() == PROGRESSIVE_BOMBCHUS;
   }
 
   loc->SetPlacedItem(item);

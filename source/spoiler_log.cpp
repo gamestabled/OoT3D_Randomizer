@@ -119,7 +119,12 @@ static void WriteIngameSpoilerLog() {
   for (const LocationKey key : allLocations) {
     auto loc = Location(key);
 
-    if (!Settings::IngameSpoilers && ((loc->IsShop() && loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL) || (loc->IsShop() && loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP))) { continue; }
+    if (!Settings::IngameSpoilers && (loc->IsExcluded() || loc->GetPlacedItem().GetItemType() == ITEMTYPE_DROP ||
+        (loc->IsShop() && (loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
+            loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
+            loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS)))) {
+        continue;
+    }
 
     auto locName = loc->GetName();
     if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
