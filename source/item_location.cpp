@@ -1459,10 +1459,10 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   loc->SetPlacedItem(item);
 }
 
-std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category) {
+std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category categoryInclude, Category categoryExclude /*= Category::cNull*/) {
   std::vector<LocationKey> locationsInCategory;
   for (LocationKey locKey : locationPool) {
-    if (Location(locKey)->IsCategory(category)) {
+    if (Location(locKey)->IsCategory(categoryInclude) && !Location(locKey)->IsCategory(categoryExclude)) {
       locationsInCategory.push_back(locKey);
     }
   }

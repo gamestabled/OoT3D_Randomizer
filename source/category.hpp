@@ -1,6 +1,7 @@
 #pragma once
 
 enum class Category {
+    cNull,
     cKokiriForest,
     cForest,
     cGrotto,

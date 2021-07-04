@@ -940,7 +940,7 @@ namespace Settings {
     }
 
     //Force Include scrubs if Scrubsanity is Off
-    std::vector<LocationKey> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub);
+    std::vector<LocationKey> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub, Category::cDekuScrubUpgrades);
     if (Scrubsanity.Is(OFF)) {
       IncludeAndHide(scrubLocations);
     } else {
