@@ -302,6 +302,7 @@ namespace Settings {
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
+  extern Option KingZoraSpeed;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;

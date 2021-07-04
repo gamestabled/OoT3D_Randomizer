@@ -172,6 +172,10 @@ extern string_view bigPoeTargetCountDesc;
 
 extern string_view numRequiredCuccosDesc;
 
+extern string_view kingZoraSpeedFast;
+extern string_view kingZoraSpeedVanilla;
+extern string_view kingZoraSpeedRandom;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view clearerHintsDesc;
