@@ -222,6 +222,8 @@ namespace Settings {
   std::vector<Option *> excludeLocationsOptions = {};
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
+  std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
+                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts"};//,  "1 heart",   "2 hearts"}; //TODO
   Option StartingItemsToggle      = Option::Bool("All Items Toggle",       {"None", "All"},                                                        {"Toggle all items at once."}, OptionCategory::Toggle);
   Option StartingConsumables      = Option::Bool("Start with Consumables", {"No", "Yes"},                                                          {startWithConsumablesDesc});
   Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No", "Yes"},                                                          {startWithMaxRupeesDesc});
@@ -274,6 +276,7 @@ namespace Settings {
   Option StartingWallet           = Option::U8  ("Wallet",                 {"None", "Adult's Wallet", "Giant's Wallet", "Tycoon's Wallet"},        {""});
   Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",         {"None", "Shard of Agony"},                                             {""});
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",         {"None", "Double Defense"},                                             {""});
+  Option StartingHealth           = Option::U8  ("Health",                 healthOptions,                                                          {""});
   std::vector<Option *> startingInventoryOptions = {
     &StartingItemsToggle,
     &StartingConsumables,
@@ -327,6 +330,7 @@ namespace Settings {
     &StartingWallet,
     &StartingShardOfAgony,
     &StartingDoubleDefense,
+    &StartingHealth,
   };
 
   //Function to make defining logic tricks easier to read
@@ -794,6 +798,7 @@ namespace Settings {
     ctx.startingBiggoronSword = StartingBiggoronSword.Value<u8>();
     ctx.startingMagicMeter    = StartingMagicMeter.Value<u8>();
     ctx.startingDoubleDefense = StartingDoubleDefense.Value<u8>();
+    ctx.startingHealth        = (StartingHealth.Value<u8>() + 2) % 20 + 1;
 
     //Starting Quest Items
     ctx.startingQuestItems |= StartingMinuetOfForest.Value<u8>()   << 6;

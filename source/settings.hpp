@@ -380,6 +380,7 @@ namespace Settings {
   extern Option StartingWallet;
   extern Option StartingShardOfAgony;
   extern Option StartingDoubleDefense;
+  extern Option StartingHealth;
 
   //Logic Settings
   extern Option ToggleAllDetailedLogic;

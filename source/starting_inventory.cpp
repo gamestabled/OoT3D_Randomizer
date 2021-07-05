@@ -117,6 +117,30 @@ void GenerateStartingInventory() {
   AddItemToInventory(PROGRESSIVE_WALLET,        StartingWallet.Value<u8>());
   AddItemToInventory(SHARD_OF_AGONY,            StartingShardOfAgony.Value<u8>());
   AddItemToInventory(DOUBLE_DEFENSE,            StartingDoubleDefense.Value<u8>());
+
+  s8 hearts = (StartingHealth.Value<u8>() + 2) % 20 - 2;
+  if (hearts < 0) {
+    // TODO
+  } else if (hearts > 0) {
+    u8 maxContainers = 0;
+    if (ItemPoolValue.Value<u8>() == 0) {
+      maxContainers = 16;
+    }
+    if(ItemPoolValue.Value<u8>() == 1) {
+      maxContainers = 8;
+    }
+
+    if (hearts <= maxContainers) {
+      AddItemToInventory(HEART_CONTAINER, hearts);
+    } else {
+      AddItemToInventory(HEART_CONTAINER, maxContainers);
+      AddItemToInventory(PIECE_OF_HEART, (hearts - maxContainers) * 4);
+    }
+
+    if (hearts == 17) {
+      AddItemToInventory(TREASURE_GAME_HEART);
+    }
+  }
 }
 
 void ApplyStartingInventory() {
