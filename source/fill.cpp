@@ -29,7 +29,12 @@ static void RemoveStartingItemsFromPool() {
   for (ItemKey startingItem : StartingInventory) {
     for (size_t i = 0; i < ItemPool.size(); i++) {
       if (startingItem == ItemPool[i] || (ItemTable(startingItem).IsBottleItem() && ItemTable(ItemPool[i]).IsBottleItem())) {
-        ItemPool[i] = GetJunkItem();
+        if (AdditionalHeartContainers > 0 && (startingItem == PIECE_OF_HEART || startingItem == TREASURE_GAME_HEART)) {
+          ItemPool[i] = HEART_CONTAINER;
+          AdditionalHeartContainers--;
+        } else {
+          ItemPool[i] = GetJunkItem();
+        }
         break;
       }
     }

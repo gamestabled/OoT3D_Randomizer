@@ -223,7 +223,7 @@ namespace Settings {
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
   std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
-                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts"};//,  "1 heart",   "2 hearts"}; //TODO
+                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts",  "1 heart",   "2 hearts"};
   Option StartingItemsToggle      = Option::Bool("All Items Toggle",       {"None", "All"},                                                        {"Toggle all items at once."}, OptionCategory::Toggle);
   Option StartingConsumables      = Option::Bool("Start with Consumables", {"No", "Yes"},                                                          {startWithConsumablesDesc});
   Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No", "Yes"},                                                          {startWithMaxRupeesDesc});
@@ -1200,6 +1200,12 @@ namespace Settings {
         LACSTokenCount.SetSelectedIndex(100);
         LACSTokenCount.Hide();
       }
+    }
+
+    if (LogicFewerTunicRequirements) {
+      StartingHealth.HideOptions(2);
+    } else {
+      StartingHealth.UnhideOptions();
     }
 
     //Only show hint options if hints are enabled

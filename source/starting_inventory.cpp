@@ -11,6 +11,7 @@ using namespace Settings;
 using namespace Dungeon;
 
 std::vector<ItemKey> StartingInventory;
+u8 AdditionalHeartContainers;
 
 static void AddItemToInventory(ItemKey item, size_t count = 1) {
   StartingInventory.insert(StartingInventory.end(), count, item);
@@ -119,16 +120,18 @@ void GenerateStartingInventory() {
   AddItemToInventory(DOUBLE_DEFENSE,            StartingDoubleDefense.Value<u8>());
 
   s8 hearts = (StartingHealth.Value<u8>() + 2) % 20 - 2;
+  AdditionalHeartContainers = 0;
   if (hearts < 0) {
-    // TODO
+    AddItemToInventory(PIECE_OF_HEART, 4);
+    // Plentiful and minimal have less than 4 standard pieces of heart so also replace the winner heart
+    if (ItemPoolValue.Value<u8>() == 0 || ItemPoolValue.Value<u8>() == 3) {
+        AddItemToInventory(TREASURE_GAME_HEART);
+    }
+
+    AdditionalHeartContainers = 1 - hearts;
   } else if (hearts > 0) {
-    u8 maxContainers = 0;
-    if (ItemPoolValue.Value<u8>() == 0) {
-      maxContainers = 16;
-    }
-    if(ItemPoolValue.Value<u8>() == 1) {
-      maxContainers = 8;
-    }
+    // 16 containers in plentiful, 8 in balanced and 0 in the others
+    u8 maxContainers = 8 * std::max(0, 2 - ItemPoolValue.Value<u8>());
 
     if (hearts <= maxContainers) {
       AddItemToInventory(HEART_CONTAINER, hearts);

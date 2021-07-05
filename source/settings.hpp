@@ -98,10 +98,10 @@ public:
     }
 
     void SanitizeSelectedOptionIndex() {
-        if (selectedOption == options.size()) {
+        if (selectedOption == options.size() - hiddenOptions) {
             selectedOption = 0;
         } else if (selectedOption == 0xFF) {
-            selectedOption = static_cast<u8>(options.size() - 1);
+            selectedOption = static_cast<u8>(options.size() - 1 - hiddenOptions);
         }
     }
 
@@ -168,6 +168,18 @@ public:
       return hidden;
     }
 
+    void HideOptions(u8 numOptions) {
+      hiddenOptions = std::min((u8)(options.size() - 2), numOptions);
+      if (selectedOption >= options.size() - hiddenOptions) {
+        selectedOption = 0;
+        SetVariable();
+      }
+    }
+
+    void UnhideOptions() {
+      hiddenOptions = 0;
+    }
+
     bool IsCategory(OptionCategory category) const {
       return category == this->category;
     }
@@ -190,6 +202,7 @@ private:
   u8 selectedOption = 0;
   bool locked = false;
   bool hidden = false;
+  u8 hiddenOptions = 0;
   OptionCategory category;
 };
 
