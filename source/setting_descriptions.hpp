@@ -187,6 +187,8 @@ extern string_view veryStrongHintsDesc;
 
 extern string_view damageMultiDesc;
 
+extern string_view removeDDDesc;
+
 extern string_view startingTimeDesc;
 
 extern string_view nightGSDesc;

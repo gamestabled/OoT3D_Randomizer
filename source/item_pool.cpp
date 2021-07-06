@@ -1041,6 +1041,8 @@ void GenerateItemPool() {
     SetScarceItemPool();
   } else if (ItemPoolValue.Is(ITEMPOOL_MINIMAL)) {
     SetMinimalItemPool();
+  } else if (RemoveDoubleDefense) {
+    ReplaceMaxItem(DOUBLE_DEFENSE, 0);
   }
 
   //this feels ugly and there's probably a better way, but

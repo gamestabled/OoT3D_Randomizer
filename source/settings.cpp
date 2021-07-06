@@ -174,6 +174,7 @@ namespace Settings {
   Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {clearerHintsDesc});
   Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc});
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
+  Option RemoveDoubleDefense = Option::Bool("Remove Double Defense",  {"No", "Yes"},                                                          {removeDDDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
@@ -188,6 +189,7 @@ namespace Settings {
     &ClearerHints,
     &HintDistribution,
     &DamageMultiplier,
+    &RemoveDoubleDefense,
     &StartingTime,
     &NightGSExpectSuns,
     &ChestAnimations,
@@ -1211,6 +1213,13 @@ namespace Settings {
       HintDistribution.Unhide();
     }
 
+    if (RemoveDoubleDefense) {
+      StartingDoubleDefense.SetSelectedIndex(0);
+      StartingDoubleDefense.Lock();
+    } else {
+      StartingDoubleDefense.Unlock();
+    }
+
     if (currentSetting != nullptr) {
       //Set toggle for all tricks
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
@@ -1222,7 +1231,9 @@ namespace Settings {
       //Set toggle for all items
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Items Toggle")  {
         for (u16 i = 0; i < Settings::startingInventoryOptions.size(); i++) {
-          startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+          if (!startingInventoryOptions[i]->IsLocked()) {
+            startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+          }
         }
       }
     }

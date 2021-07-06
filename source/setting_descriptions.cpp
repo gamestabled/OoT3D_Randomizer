@@ -546,6 +546,11 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
                                         "\n"                                               //
                                         "If set to OHKO, Link will die in one hit.";       //
 /*------------------------------                                                           //
+|    REMOVE DOUBLE DEFENSE     |                                                           //
+------------------------------*/                                                           //
+string_view removeDDDesc              = "If set the double defense item will be removed\n" //
+                                        "from the item pool for balanced and plentiful";   //
+/*------------------------------                                                           //
 |        STARTING TIME         |                                                           //
 ------------------------------*/                                                           //
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //
