@@ -32,6 +32,10 @@ string_view forestClosed              = "Beating Deku Tree is logically required
                                         "Tree. Items needed for this will be guaranteed\n" //
                                         "inside the forest area. This setting is\n"        //
                                         "incompatible with starting as adult.";            //
+string_view forestClosedDeku          = "The Kokiri boy no longer blocks the path out of\n"//
+                                        "the forest, but Mido still blocks the path to the\n"
+                                        "Deku Tree, requiring Kokiri Sword and Deku Shield\n"
+                                        "to access the Deku Tree.";                        //
 /*------------------------------                                                           //
 |        KAKARIKO GATE         |                                                           //
 ------------------------------*/                                                           //

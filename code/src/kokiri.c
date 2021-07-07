@@ -2,7 +2,7 @@
 #include "settings.h"
 
 u32 EnKo_CheckOpenForest(void) {
-    if ((gSettingsContext.openForest == OPENFOREST_OPEN) || (gSaveContext.eventChkInf[0] & 0x80)) {
+    if ((gSettingsContext.openForest == OPENFOREST_OPEN) || (gSettingsContext.openForest == OPENFOREST_CLOSED_DEKU) || (gSaveContext.eventChkInf[0] & 0x80)) {
         return 1;
     } else {
         return 0;
