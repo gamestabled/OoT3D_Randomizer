@@ -42,7 +42,7 @@ namespace Settings {
     &RandomizeOpen,
     &Logic,
     &OpenForest,
-    //&OpenKakariko,
+    &OpenKakariko,
     &OpenDoorOfTime,
     &ZorasFountain,
     &GerudoFortress,

@@ -492,7 +492,7 @@ SECTIONS
 		*(.patch_SunsSongLocation)
 	}
 
-	.patch_KakarikoGateCheck 0x28A67C : {
+	.patch_KakarikoGateCheck 0x28A678 : {
 		*(.patch_KakarikoGateCheck)
 	}
 
