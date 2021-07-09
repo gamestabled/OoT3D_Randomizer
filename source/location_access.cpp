@@ -1021,8 +1021,8 @@ void AreaTable_Init() {
 
   areaTable[MARKET_MASK_SHOP] = Area("Market Mask Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&SkullMask,   []{return SkullMask   || (ZeldasLetter && ChildCanAccess(KAKARIKO_VILLAGE));}),
-                  EventAccess(&MaskOfTruth, []{return MaskOfTruth || (SkullMask && (ChildCanAccess(THE_LOST_WOODS) && CanPlay(SariasSong) && AreaTable(THE_GRAVEYARD)->childDay && ChildCanAccess(HYRULE_FIELD) && HasAllStones));}),
+                  EventAccess(&SkullMask,   []{return SkullMask   || (ZeldasLetter && (CompleteMaskQuest ||  ChildCanAccess(KAKARIKO_VILLAGE)));}),
+                  EventAccess(&MaskOfTruth, []{return MaskOfTruth || (SkullMask && (CompleteMaskQuest || (ChildCanAccess(THE_LOST_WOODS) && CanPlay(SariasSong) && AreaTable(THE_GRAVEYARD)->childDay && ChildCanAccess(HYRULE_FIELD) && HasAllStones)));}),
                 }, {}, {
                   //Exits
                   Entrance(THE_MARKET, []{return true;})
