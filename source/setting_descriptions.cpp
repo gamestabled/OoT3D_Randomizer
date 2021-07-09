@@ -671,7 +671,7 @@ string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Sh
 /*------------------------------                                                           //
 |      COMPLETE MASK QUEST     |                                                           //
 ------------------------------*/                                                           //
-string_view completeMaskDesc          = "Once the happey mask shop is opened, all masks\n" //
+string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
                                         "will be available to be borrowed.";               //
                                                                                            //--------------//
 /*------------------------------                                                                           //
