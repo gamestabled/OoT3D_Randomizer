@@ -455,7 +455,11 @@ static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
 
     auto node = parentNode->InsertNewChildElement("hint");
     node->SetAttribute("location", location->GetName().c_str());
-    node->SetText(location->GetPlacedItemName().GetEnglish().c_str());
+
+    auto text = location->GetPlacedItemName().GetEnglish();
+    std::replace(text.begin(), text.end(), '&', ' ');
+    std::replace(text.begin(), text.end(), '^', ' ');
+    node->SetText(text.c_str());
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);
