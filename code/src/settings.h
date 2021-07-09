@@ -319,6 +319,7 @@ typedef struct {
   u8 ingameSpoilers;
   u8 menuOpeningButton;
   u8 randomTrapDmg;
+  u8 completeMaskQuest;
 
   u8 faroresWindAnywhere;
   u8 stickAsAdult;

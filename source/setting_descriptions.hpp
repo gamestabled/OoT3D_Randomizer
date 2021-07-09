@@ -226,6 +226,8 @@ extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
 extern string_view advancedTrapDmgDesc;
 
+extern string_view completeMaskDesc;
+
 extern string_view ToggleAllDetailedLogicDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;
 extern string_view LogicVisibleCollisionDesc;
