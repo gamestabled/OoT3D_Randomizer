@@ -680,6 +680,11 @@ string_view basicTrapDmgDesc          = "All alternative traps will cause a smal
                                                                                            //
 string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
                                         "cause a lot of damage (with one-hit protection)"; //
+/*------------------------------                                                           //
+|      COMPLETE MASK QUEST     |                                                           //
+------------------------------*/                                                           //
+string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
+                                        "will be available to be borrowed.";               //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

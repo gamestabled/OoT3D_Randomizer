@@ -751,7 +751,7 @@ BusinessScrubTable_patch:
 .section .patch_KakarikoGateCheck
 .global KakarikoGateCheck_patch
 KakarikoGateCheck_patch:
-    b 0x28A6A0
+    bl hook_KakarikoGateCheck
 
 .section .patch_FairyReward
 .global FairyReward_patch

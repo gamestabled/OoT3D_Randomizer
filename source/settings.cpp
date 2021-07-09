@@ -42,7 +42,7 @@ namespace Settings {
     &RandomizeOpen,
     &Logic,
     &OpenForest,
-    //&OpenKakariko,
+    &OpenKakariko,
     &OpenDoorOfTime,
     &ZorasFountain,
     &GerudoFortress,
@@ -182,6 +182,7 @@ namespace Settings {
   Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc});
+  Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &GossipStoneHints,
@@ -196,6 +197,7 @@ namespace Settings {
     &IngameSpoilers,
     &MenuOpeningButton,
     &RandomTrapDmg,
+    &CompleteMaskQuest,
   };
 
   //Item Usability Settings
@@ -733,6 +735,7 @@ namespace Settings {
     ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
+    ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;

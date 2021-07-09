@@ -317,6 +317,7 @@ namespace Settings {
   extern Option MenuOpeningButton;
   extern Option RandomTrapDmg;
   extern bool HasNightStart;
+  extern Option CompleteMaskQuest;
 
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;

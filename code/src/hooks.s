@@ -666,6 +666,14 @@ hook_CarpetSalesmanSetFlag:
     mvn r0,#0xC7
     bx lr
 
+.global hook_KakarikoGateCheck
+hook_KakarikoGateCheck:
+    push {r0-r12, lr}
+    bl KakGate_CheckToFixBug
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
