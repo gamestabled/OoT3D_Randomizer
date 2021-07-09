@@ -187,8 +187,6 @@ extern string_view veryStrongHintsDesc;
 
 extern string_view damageMultiDesc;
 
-extern string_view removeDDDesc;
-
 extern string_view startingTimeDesc;
 
 extern string_view nightGSDesc;
@@ -216,6 +214,8 @@ extern string_view iceTrapsNormal;
 extern string_view iceTrapsExtra;
 extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
+
+extern string_view removeDDDesc;
 
 extern string_view faroresWindAnywhereDesc;
 

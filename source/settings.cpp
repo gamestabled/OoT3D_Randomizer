@@ -174,7 +174,6 @@ namespace Settings {
   Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {clearerHintsDesc});
   Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc});
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
-  Option RemoveDoubleDefense = Option::Bool("Remove Double Defense",  {"No", "Yes"},                                                          {removeDDDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
@@ -189,7 +188,6 @@ namespace Settings {
     &ClearerHints,
     &HintDistribution,
     &DamageMultiplier,
-    &RemoveDoubleDefense,
     &StartingTime,
     &NightGSExpectSuns,
     &ChestAnimations,
@@ -215,9 +213,11 @@ namespace Settings {
   //Item Pool Settings
   Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},                         {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
   Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                      {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
+  Option RemoveDoubleDefense = Option::Bool("Remove Double Defense",  {"No", "Yes"},                                                          {removeDDDesc});
   std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
     &IceTrapValue,
+    &RemoveDoubleDefense,
   };
 
   //Excluded Locations (Individual definitions made in ItemLocation class)

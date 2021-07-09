@@ -546,11 +546,6 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
                                         "\n"                                               //
                                         "If set to OHKO, Link will die in one hit.";       //
 /*------------------------------                                                           //
-|    REMOVE DOUBLE DEFENSE     |                                                           //
-------------------------------*/                                                           //
-string_view removeDDDesc              = "If set the double defense item will be removed\n" //
-                                        "from the item pool for balanced and plentiful";   //
-/*------------------------------                                                           //
 |        STARTING TIME         |                                                           //
 ------------------------------*/                                                           //
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //
@@ -624,6 +619,11 @@ string_view iceTrapsExtra             = "Chance to add extra Ice Traps when junk
 string_view iceTrapsMayhem            = "All added junk items will be Ice Traps.";         //
 string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice Traps, even"
                                         "those in the base pool.";                         //
+/*------------------------------                                                           //
+|    REMOVE DOUBLE DEFENSE     |                                                           //
+------------------------------*/                                                           //
+string_view removeDDDesc              = "If set the double defense item will be removed\n" //
+                                        "from the item pool for balanced and plentiful";   //
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //

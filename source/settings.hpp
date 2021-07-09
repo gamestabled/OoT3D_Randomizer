@@ -308,7 +308,6 @@ namespace Settings {
   extern Option ClearerHints;
   extern Option HintDistribution;
   extern Option DamageMultiplier;
-  extern Option RemoveDoubleDefense;
   extern Option StartingTime;
   extern Option NightGSExpectSuns;
   extern Option ChestAnimations;
@@ -325,6 +324,7 @@ namespace Settings {
 
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
+  extern Option RemoveDoubleDefense;
 
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
