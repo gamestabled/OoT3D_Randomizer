@@ -1094,6 +1094,13 @@ DungeonCheckJabuMQBox_patch:
 TalonGetCastleTextbox_patch:
     bl hook_TalonGetCastleTextbox
 
+.section .patch_MidoCheckSpawn
+.global MidoCheckSpawn_patch
+MidoCheckSpawn_patch:
+    bl hook_MidoCheckSpawn
+    beq 0x1661B8
+    b 0x1661A8
+
 .section .patch_MidoCheckDekuTreeClearOne
 .global MidoCheckDekuTreeClearOne_patch
 MidoCheckDekuTreeClearOne_patch:

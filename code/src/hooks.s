@@ -468,6 +468,14 @@ hook_TalonGetCastleTextbox:
     pop {r0, r2-r12, lr}
     bx lr
 
+.global hook_MidoCheckSpawn
+hook_MidoCheckSpawn:
+    push {r0-r12, lr}
+    bl EnMd_ShouldSpawn
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_CheckDekuTreeClear
 hook_CheckDekuTreeClear:
     push {r0-r12, lr}

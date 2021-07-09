@@ -108,6 +108,10 @@ SECTIONS
 		*(.patch_KingZoraCheckMovedFlag)
 	}
 
+	.patch_MidoCheckSpawn 0x16614C : {
+		*(.patch_MidoCheckSpawn)
+	}
+
 	.patch_MidoCheckDekuTreeClearOne 0x16623C : {
 		*(.patch_MidoCheckDekuTreeClearOne)
 	}
