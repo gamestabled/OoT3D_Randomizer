@@ -400,6 +400,9 @@ void SaveFile_SetStartingInventory(void) {
         ItemEffect_GiveDefense(&gSaveContext, 0, 0);
     }
 
+    gSaveContext.healthCapacity = gSettingsContext.startingHealth << 4;
+    gSaveContext.health         = gSettingsContext.startingHealth << 4;
+
     gSaveContext.questItems |= gSettingsContext.startingQuestItems;
     gSaveContext.equipment |= gSettingsContext.startingEquipment;
     gSaveContext.upgrades |= gSettingsContext.startingUpgrades;

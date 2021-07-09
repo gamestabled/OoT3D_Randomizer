@@ -505,6 +505,15 @@ string_view bigPoeTargetCountDesc     = "The Poe buyer will give a reward for tu
 string_view numRequiredCuccosDesc     = "The cucco lady will give a reward for returning\n"//
                                         "this many of her cuccos to the pen.";             //
 /*------------------------------                                                           //
+|        KING ZORA SPEED        |                                                          //
+-------------------------------*/                                                          //
+string_view kingZoraSpeedFast         = "King Zora will move out of the way in 1 shuffle"; //
+                                                                                           //
+string_view kingZoraSpeedVanilla      = "King Zora will move out of the way in 26 shuffles";
+                                                                                           //
+string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1 to 128\n" //
+                                        "shuffles, with lower numbers being more common";  //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //
@@ -611,6 +620,11 @@ string_view iceTrapsMayhem            = "All added junk items will be Ice Traps.
 string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice Traps, even"
                                         "those in the base pool.";                         //
 /*------------------------------                                                           //
+|    REMOVE DOUBLE DEFENSE     |                                                           //
+------------------------------*/                                                           //
+string_view removeDDDesc              = "If set the double defense item will be removed\n" //
+                                        "from the item pool for balanced and plentiful";   //
+/*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //
 string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
@@ -659,12 +673,10 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 /*------------------------------                                                           //
 |    RANDOM TRAP DAMAGE TYPE   |                                                           //
 ------------------------------*/                                                           //
-string_view randomTrapDmgDesc         = "If set, ice traps will sometimes damage Link and\n"
-                                        "knock him back or electrocute him instead of\n"   //
-                                        "freezing him.";                                   //
+string_view randomTrapDmgDesc         = "All traps will be the base game ice trap";        //
                                                                                            //
-string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"
-                                        "and no other negative effects\n";                 //
+string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"//
+                                        "and no other negative effects";                   //
                                                                                            //
 string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
                                         "cause a lot of damage (with one-hit protection)"; //

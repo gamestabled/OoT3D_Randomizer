@@ -172,6 +172,10 @@ extern string_view bigPoeTargetCountDesc;
 
 extern string_view numRequiredCuccosDesc;
 
+extern string_view kingZoraSpeedFast;
+extern string_view kingZoraSpeedVanilla;
+extern string_view kingZoraSpeedRandom;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view clearerHintsDesc;
@@ -210,6 +214,8 @@ extern string_view iceTrapsNormal;
 extern string_view iceTrapsExtra;
 extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
+
+extern string_view removeDDDesc;
 
 extern string_view faroresWindAnywhereDesc;
 

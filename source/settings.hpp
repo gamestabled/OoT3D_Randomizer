@@ -302,6 +302,7 @@ namespace Settings {
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
+  extern Option KingZoraSpeed;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
@@ -323,6 +324,7 @@ namespace Settings {
 
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
+  extern Option RemoveDoubleDefense;
 
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
@@ -379,6 +381,7 @@ namespace Settings {
   extern Option StartingWallet;
   extern Option StartingShardOfAgony;
   extern Option StartingDoubleDefense;
+  extern Option StartingHealth;
 
   //Logic Settings
   extern Option ToggleAllDetailedLogic;

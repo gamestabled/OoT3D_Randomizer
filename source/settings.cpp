@@ -155,6 +155,7 @@ namespace Settings {
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
+  Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -165,6 +166,7 @@ namespace Settings {
     &TempleOfTimeIntro,
     &BigPoeTargetCount,
     &NumRequiredCuccos,
+    &KingZoraSpeed,
   };
 
   //Misc Settings
@@ -211,15 +213,19 @@ namespace Settings {
   //Item Pool Settings
   Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},                         {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
   Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                      {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
+  Option RemoveDoubleDefense = Option::Bool("Remove Double Defense",  {"No", "Yes"},                                                          {removeDDDesc});
   std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
     &IceTrapValue,
+    &RemoveDoubleDefense,
   };
 
   //Excluded Locations (Individual definitions made in ItemLocation class)
   std::vector<Option *> excludeLocationsOptions = {};
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
+  std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
+                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts"};//,  "1 heart",   "2 hearts"}; // TODO: logic for lower health
   Option StartingItemsToggle      = Option::Bool("All Items Toggle",       {"None", "All"},                                                        {"Toggle all items at once."}, OptionCategory::Toggle);
   Option StartingConsumables      = Option::Bool("Start with Consumables", {"No", "Yes"},                                                          {startWithConsumablesDesc});
   Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No", "Yes"},                                                          {startWithMaxRupeesDesc});
@@ -272,6 +278,7 @@ namespace Settings {
   Option StartingWallet           = Option::U8  ("Wallet",                 {"None", "Adult's Wallet", "Giant's Wallet", "Tycoon's Wallet"},        {""});
   Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",         {"None", "Shard of Agony"},                                             {""});
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",         {"None", "Double Defense"},                                             {""});
+  Option StartingHealth           = Option::U8  ("Health",                 healthOptions,                                                          {""});
   std::vector<Option *> startingInventoryOptions = {
     &StartingItemsToggle,
     &StartingConsumables,
@@ -325,6 +332,7 @@ namespace Settings {
     &StartingWallet,
     &StartingShardOfAgony,
     &StartingDoubleDefense,
+    &StartingHealth,
   };
 
   //Function to make defining logic tricks easier to read
@@ -714,6 +722,7 @@ namespace Settings {
     ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
+    ctx.kingZoraSpeed        = KingZoraSpeed.Value<u8>();
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
@@ -791,6 +800,7 @@ namespace Settings {
     ctx.startingBiggoronSword = StartingBiggoronSword.Value<u8>();
     ctx.startingMagicMeter    = StartingMagicMeter.Value<u8>();
     ctx.startingDoubleDefense = StartingDoubleDefense.Value<u8>();
+    ctx.startingHealth        = (StartingHealth.Value<u8>() + 2) % 20 + 1;
 
     //Starting Quest Items
     ctx.startingQuestItems |= StartingMinuetOfForest.Value<u8>()   << 6;
@@ -1203,6 +1213,13 @@ namespace Settings {
       HintDistribution.Unhide();
     }
 
+    if (RemoveDoubleDefense) {
+      StartingDoubleDefense.SetSelectedIndex(0);
+      StartingDoubleDefense.Lock();
+    } else {
+      StartingDoubleDefense.Unlock();
+    }
+
     if (currentSetting != nullptr) {
       //Set toggle for all tricks
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
@@ -1214,7 +1231,9 @@ namespace Settings {
       //Set toggle for all items
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Items Toggle")  {
         for (u16 i = 0; i < Settings::startingInventoryOptions.size(); i++) {
-          startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+          if (!startingInventoryOptions[i]->IsLocked()) {
+            startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+          }
         }
       }
     }

@@ -309,6 +309,7 @@ typedef struct {
   u8 templeOfTimeIntro;
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
+  u8 kingZoraSpeed;
 
   u8 damageMultiplier;
   u8 startingTime;
@@ -385,6 +386,7 @@ typedef struct {
   u8 startingBiggoronSword;
   u8 startingMagicMeter;
   u8 startingDoubleDefense;
+  u8 startingHealth;
 
   u32 startingQuestItems;
   u32 startingEquipment;
