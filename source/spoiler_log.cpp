@@ -119,7 +119,36 @@ static void WriteIngameSpoilerLog() {
   for (const LocationKey key : allLocations) {
     auto loc = Location(key);
 
-    if (!Settings::IngameSpoilers && ((loc->IsShop() && loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL) || (loc->IsShop() && loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP))) { continue; }
+    // Exclude uncheckable/repeatable locations from ingame tracker
+    if (!Settings::IngameSpoilers) {
+        // General
+        if (loc->IsExcluded() || loc->GetPlacedItem().GetItemType() == ITEMTYPE_DROP) {
+            continue;
+        }
+        // Shops
+        else if (loc->IsShop() && (
+            loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
+            loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
+            loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS)) {
+            continue;
+        }
+        // Deku Scrubs
+        else if (Settings::Scrubsanity.Is(SCRUBSANITY_OFF) && loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades)) {
+            continue;
+        }
+        // Cows
+        else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
+            continue;
+        }
+        // Magic Bean Salesman, TODO: Remove when it checks after buying all 10
+        else if (!Settings::ShuffleMagicBeans && loc->GetHintKey() == ZR_MAGIC_BEAN_SALESMAN) {
+            continue;
+        }
+        // Merchants
+        else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
+            continue;
+        }
+    }
 
     auto locName = loc->GetName();
     if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
