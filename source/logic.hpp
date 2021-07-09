@@ -123,6 +123,9 @@ namespace Logic {
   extern u8 ProgressiveMagic;
   extern u8 ProgressiveOcarina;
 
+  //Keysanity
+  extern bool IsKeysanity;
+
   //Keys
   extern u8 ForestTempleKeys;
   extern u8 FireTempleKeys;

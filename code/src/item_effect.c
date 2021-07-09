@@ -156,22 +156,18 @@ void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
 }
 
-// uint8_t OPEN_KAKARIKO = 0;
-// uint8_t COMPLETE_MASK_QUEST = 0;
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    // TODO
-    // if (OPEN_KAKARIKO) {
-    //     save->inf_table[7] = save->inf_table[7] | 0x40; // "Spoke to Gate Guard About Mask Shop"
-    //     if (!COMPLETE_MASK_QUEST) {
-    //         save->item_get_inf[2] = save->item_get_inf[2] & 0xFB87; // Unset "Obtained Mask" flags just in case of
-    //         savewarp before Impa.
-    //     }
-    // }
-    // if (COMPLETE_MASK_QUEST) {
-    //     save->inf_table[7] = save->inf_table[7] | 0x80; // "Soldier Wears Keaton Mask"
-    //     save->item_get_inf[3] = save->item_get_inf[3] | 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of
-    //     Truth" save->event_chk_inf[8] = save->event_chk_inf[8] | 0xF000; // "Paid Back Mask Fees"
-    // }
+    if (gSettingsContext.openKakariko == OPENKAKARIKO_OPEN) {
+        gSaveContext.infTable[7] |= 0x40; // "Spoke to Gate Guard About Mask Shop"
+        if (!gSettingsContext.completeMaskQuest) {
+            gSaveContext.itemGetInf[2] &= 0xFB87; // Unset "Obtained Mask" flags just in case of savewarp before Impa.
+        }
+    }
+    if (gSettingsContext.completeMaskQuest) {
+        gSaveContext.infTable[7] |= 0x80; // "Soldier Wears Keaton Mask"
+        gSaveContext.itemGetInf[3] |= 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth" 
+        gSaveContext.eventChkInf[8] |= 0xF000; // "Paid Back Mask Fees"
+    }
 }
 
 static void ResetItemSlotsIfMatchesID(u8 itemSlot) {

@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "item_effect.h"
 #include "savefile.h"
+#include "3ds/types.h"
 
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
@@ -50,7 +51,9 @@ void SaveFile_Init() {
     gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
-    if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA) {
+    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple 
+    bool keysanity = gSettingsContext.keysanity == KEYSANITY_ANYWHERE || gSettingsContext.keysanity == KEYSANITY_OVERWORLD || gSettingsContext.keysanity == KEYSANITY_ANY_DUNGEON;
+    if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA && !keysanity) {
         gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
     }
     //open middle locked door in Vanilla Water Temple (to prevent key logic lockouts)
@@ -399,6 +402,9 @@ void SaveFile_SetStartingInventory(void) {
     if (gSettingsContext.startingDoubleDefense) {
         ItemEffect_GiveDefense(&gSaveContext, 0, 0);
     }
+
+    gSaveContext.healthCapacity = gSettingsContext.startingHealth << 4;
+    gSaveContext.health         = gSettingsContext.startingHealth << 4;
 
     gSaveContext.questItems |= gSettingsContext.startingQuestItems;
     gSaveContext.equipment |= gSettingsContext.startingEquipment;

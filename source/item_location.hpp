@@ -388,7 +388,7 @@ extern u16 itemsPlaced;
 
 void GenerateLocationPool();
 void PlaceItemInLocation(LocationKey loc, ItemKey item, bool applyEffectImmediately = false);
-std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category);
+std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category categoryInclude, Category categoryExclude = Category::cNull);
 void LocationReset();
 void ItemReset();
 void HintReset();

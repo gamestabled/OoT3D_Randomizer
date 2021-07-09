@@ -76,7 +76,7 @@ void LocationTable_Init() {
 
     //Haunted Wasteland
     locationTable[WASTELAND_CHEST]                       = ItemLocation::Chest      (0x5E, 0x00, "Wasteland Chest",                      WASTELAND_CHEST,                       {Category::cHauntedWasteland,});
-    locationTable[WASTELAND_BOMBCHU_SALESMAN]            = ItemLocation::Base       (0x5E, 0x03, "Wasteland Carpet Salesman",            WASTELAND_BOMBCHU_SALESMAN,            {Category::cHauntedWasteland,},                                                                                       SpoilerCollectionCheck::EventChkInf(0x34));
+    locationTable[WASTELAND_BOMBCHU_SALESMAN]            = ItemLocation::Base       (0x5E, 0x03, "Wasteland Carpet Salesman",            WASTELAND_BOMBCHU_SALESMAN,            {Category::cHauntedWasteland, Category::cMerchant,},                                                                  SpoilerCollectionCheck::EventChkInf(0x34));
 
     //Desert Colossus
     locationTable[COLOSSUS_FREESTANDING_POH]             = ItemLocation::Collectable(0x5C, 0x0D, "Colossus Freestanding PoH",            COLOSSUS_FREESTANDING_POH,             {Category::cDesertColossus,});
@@ -137,7 +137,7 @@ void LocationTable_Init() {
     locationTable[GC_DEKU_SCRUB_GROTTO_LEFT]             = ItemLocation::GrottoScrub(0xFB, 0x30, "GC Deku Scrub Grotto Left",            GC_DEKU_SCRUB_GROTTO_LEFT,             {Category::cGoronCity, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x25, 0x01));
     locationTable[GC_DEKU_SCRUB_GROTTO_RIGHT]            = ItemLocation::GrottoScrub(0xFB, 0x37, "GC Deku Scrub Grotto Right",           GC_DEKU_SCRUB_GROTTO_RIGHT,            {Category::cGoronCity, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x25, 0x06));
     locationTable[GC_DEKU_SCRUB_GROTTO_CENTER]           = ItemLocation::GrottoScrub(0xFB, 0x33, "GC Deku Scrub Grotto Center",          GC_DEKU_SCRUB_GROTTO_CENTER,           {Category::cGoronCity, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x25, 0x04));
-    locationTable[GC_MEDIGORON]                          = ItemLocation::Base       (0x62, 0x28, "GC Medigoron",                         GC_MEDIGORON,                          {Category::cGoronCity,},                                                                                              SpoilerCollectionCheck::EventChkInf(0x35));
+    locationTable[GC_MEDIGORON]                          = ItemLocation::Base       (0x62, 0x28, "GC Medigoron",                         GC_MEDIGORON,                          {Category::cGoronCity, Category::cMerchant,},                                                                         SpoilerCollectionCheck::EventChkInf(0x35));
 
     //Death Mountain Crater
     locationTable[DMC_UPPER_GROTTO_CHEST]                = ItemLocation::Chest      (0x3E, 0x1A, "DMC Upper Grotto Chest",               DMC_UPPER_GROTTO_CHEST,                {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cGrotto});
@@ -1453,16 +1453,16 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
     int index = TransformShopIndex(GetShopIndex(locKey));
     NonShopItems[index].Name = ItemTable(item).GetName();
-    NonShopItems[index].Repurchaseable = ItemTable(item).GetItemType() == ITEMTYPE_REFILL;
+    NonShopItems[index].Repurchaseable = ItemTable(item).GetItemType() == ITEMTYPE_REFILL || ItemTable(item).GetHintKey() == PROGRESSIVE_BOMBCHUS;
   }
 
   loc->SetPlacedItem(item);
 }
 
-std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category) {
+std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category categoryInclude, Category categoryExclude /*= Category::cNull*/) {
   std::vector<LocationKey> locationsInCategory;
   for (LocationKey locKey : locationPool) {
-    if (Location(locKey)->IsCategory(category)) {
+    if (Location(locKey)->IsCategory(categoryInclude) && !Location(locKey)->IsCategory(categoryExclude)) {
       locationsInCategory.push_back(locKey);
     }
   }
