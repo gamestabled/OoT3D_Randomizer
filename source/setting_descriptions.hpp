@@ -218,6 +218,8 @@ extern string_view iceTrapsOnslaught;
 
 extern string_view removeDDDesc;
 
+extern string_view progGoronSword;
+
 extern string_view faroresWindAnywhereDesc;
 
 extern string_view adultStickDesc;

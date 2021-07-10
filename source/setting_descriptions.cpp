@@ -631,7 +631,14 @@ string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice 
 |    REMOVE DOUBLE DEFENSE     |                                                           //
 ------------------------------*/                                                           //
 string_view removeDDDesc              = "If set the double defense item will be removed\n" //
-                                        "from the item pool for balanced and plentiful";   //
+                                        "from the item pool for balanced and plentiful.";  //
+/*------------------------------                                                           //
+|   PROGRESSSIVE GORON SOWRD   |                                                           //
+------------------------------*/                                                           //
+string_view progGoronSword            = "Giant's Knife will always be found\n"             //
+                                        "before Biggoron's Sword. Medigoron only starts\n" //
+                                        "selling new knives once the Giant's Knife has been\n"
+                                        "found and broken.";                               //
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //

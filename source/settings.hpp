@@ -333,6 +333,7 @@ namespace Settings {
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
   extern Option RemoveDoubleDefense;
+  extern Option ProgressiveGoronSword;
 
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;

@@ -94,7 +94,7 @@ typedef struct {
     /* 0x00B6 */ u16          equipment; //bits: swords 0-3, shields 4-6, tunics 8-10, boots 12-14
     /* 0x00B8 */ u32          upgrades; //bits: quiver 0-2, bombs 3-5, strength 6-8, dive 9-11, wallet 12-13, seeds 14-16, sticks 17-19, nuts 20-22
     /* 0x00BC */ u32          questItems; //bits: medallions 0-5, warp songs 6-11, songs 12-17, stones 18-20, shard 21, token 22, skull 23, heart pieces 24-31
-    /* 0x00C0 */ u8           dungeonItems[20];
+    /* 0x00C0 */ u8           dungeonItems[20]; //bits: boss key 0, compass 1, map 2
     /* 0x00D4 */ s8           dungeonKeys[19];
     /* 0x00E7 */ char         unk_E7[0x0001]; //in oot: defenseHearts. seems not here.
     /* 0x00E8 */ s16          gsTokens;

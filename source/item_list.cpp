@@ -76,6 +76,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[PROGRESSIVE_BOMBCHUS]              = Item(Text{"Progressive Bombchu",             "Bombchus (prog.)",                 "Bombchus progresivos"},                    ITEMTYPE_ITEM,     0x89, true,  &Bombchus,             PROGRESSIVE_BOMBCHUS);
     itemTable[PROGRESSIVE_MAGIC_METER]           = Item(Text{"Progressive Magic Meter",         "Jauge de magie (prog.)",           "Poder mágico progresivo"},                 ITEMTYPE_ITEM,     0x8A, true,  &ProgressiveMagic,     PROGRESSIVE_MAGIC_METER);
     itemTable[PROGRESSIVE_OCARINA]               = Item(Text{"Progressive Ocarina",             "Ocarina (prog.)",                  "Ocarina progresiva"},                      ITEMTYPE_ITEM,     0x8B, true,  &ProgressiveOcarina,   PROGRESSIVE_OCARINA);
+    itemTable[PROGRESSIVE_GORONSWORD]            = Item(Text{"Progressive Goron Sword",         "Épée Goron (prog.)",               "Espada Goron progresiva"},                 ITEMTYPE_ITEM,     0xD4, true,  &noVariable,           PROGRESSIVE_GORONSWORD);
 
     //Bottles
     itemTable[EMPTY_BOTTLE]                      = Item(Text{"Empty Bottle",                    "Flacon vide",                      "Botella vacía"},                           ITEMTYPE_ITEM,     0x0F, true, &HasBottle, EMPTY_BOTTLE);

@@ -1317,10 +1317,16 @@ MedigoronCheckFlagOne_patch:
 MedigoronCheckFlagTwo_patch:
     b hook_MedigoronCheckFlagTwo
 
-.section .patch_MedigoronSetFlag
-.global MedigoronSetFlag_patch
-MedigoronSetFlag_patch:
-    bl hook_MedigoronSetFlag
+.section .patch_MedigoronGetCustomText
+.global MedigoronGetCustomText_patch
+MedigoronGetCustomText_patch:
+    b hook_MedigoronGetCustomText
+    nop
+
+.section .patch_MedigoronItemOverride
+.global MedigoronItemOverride_patch
+MedigoronItemOverride_patch:
+    b hook_MedigoronItemOverride
 
 .section .patch_CarpetSalesmanCheckFlagOne
 .global CarpetSalesmanCheckFlagOne_patch

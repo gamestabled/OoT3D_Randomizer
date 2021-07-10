@@ -512,6 +512,15 @@ void HintTable_Init() {
                        Text{"Bombchus", /*french*/"un paquet de Bombchus", /*spanish*/"unos bombchus"}
     );
 
+    hintTable[PROGRESSIVE_GORONSWORD] = HintText::Item({
+                       //obscure text
+                       Text{"a long blade",   /*french*/"une longue lame", /*spanish*/"una gran hoja"},
+                       Text{"a Goron weapon", /*french*/"une arme Goron",  /*spanish*/"un arma goron"},
+                     },
+                       //clear text
+                       Text{"a Goron Sword", /*french*/"une épée Goron", /*spanish*/"una espada goron"}
+    );
+
     hintTable[EMPTY_BOTTLE] = HintText::Item({
                        //obscure text
                        Text{"a glass container", /*french*/"un cylindre de cristal", /*spanish*/"un recipiente de cristal"},

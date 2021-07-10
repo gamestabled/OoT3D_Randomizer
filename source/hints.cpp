@@ -627,7 +627,7 @@ void CreateMerchantsHints() {
   Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText()+carpetSalesmanItemText+Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
   Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_THIRD).GetText()+carpetSalesmanItemClearText+Hint(CARPET_SALESMAN_DIALOG_FOURTH).GetText();
 
-  CreateMessageFromTextObject(0x304F, 0, 2, 3, AddColorsAndFormat(medigoronText, {QM_RED, QM_GREEN}));
+  CreateMessageFromTextObject(0x9120, 0, 2, 3, AddColorsAndFormat(medigoronText, {QM_RED, QM_GREEN}));
   CreateMessageFromTextObject(0x6077, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextOne, {QM_RED, QM_GREEN}));
   CreateMessageFromTextObject(0x6078, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextTwo, {QM_RED, QM_YELLOW, QM_RED}));
 }
