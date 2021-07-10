@@ -20,6 +20,7 @@ void BgSpot01Idomizu_rInit(Actor* thisx, GlobalContext* globalCtx) {
           *waterHeight = -550.0f;
         } else {
           *waterHeight = 52.0f;
+          thisx->world.pos.y = 52.0f; // without this, the water spawns low and rises up
         }
     }
 }
