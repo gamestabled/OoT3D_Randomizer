@@ -107,6 +107,25 @@ u32 Hash(u32 state) {
     return state;
 }
 
+u8 And(u32 seed, u8 start, u8 end) {
+    u8 value = 1;
+
+    for (u8 i = start; i < end && value; i++) {
+        value &= seed >> i;
+    }
+
+    return value;
+}
+
+u8 Bias(u32 seed) {
+    u8 value = (seed & 0x00000007);
+    value |= And(seed,  3,  5) << 3;
+    value |= And(seed,  5,  7) << 4;
+    value |= And(seed,  7, 11) << 5;
+    value |= And(seed, 11, 16) << 6;
+    return value;
+}
+
   const char hashIconNames[32][25] = {
     "Deku Stick",
     "Deku Nut",

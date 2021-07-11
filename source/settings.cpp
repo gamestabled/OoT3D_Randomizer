@@ -1288,7 +1288,7 @@ namespace Settings {
       // Skip RandomizeWorld Option
       for (size_t i=1; i < worldOptions.size(); i++) {
         // skip MQ options
-        if (i == 4 || i == 5) {
+        if (worldOptions[i] == &RandomMQDungeons || worldOptions[i] == &MQDungeonCount) {
           continue;
         }
         worldOptions[i]->Hide();
@@ -1300,7 +1300,7 @@ namespace Settings {
     }
     else {
       for (size_t i=1; i < worldOptions.size(); i++) {
-        if ((i == 4) || (i==5)) {
+        if (worldOptions[i] == &RandomMQDungeons || worldOptions[i] == &MQDungeonCount) {
           continue;
         }
         worldOptions[i]->Unhide();
@@ -1312,7 +1312,7 @@ namespace Settings {
       // Still displays if previously locked
       LinksPocketItem.Unlock();
       // Skip RandomizeShuffle Option
-      for (u8 i=1; i < shuffleOptions.size(); i++) {
+      for (size_t i=1; i < shuffleOptions.size(); i++) {
         shuffleOptions[i]->Hide();
         //randomize options
         if (selectOptions) {
