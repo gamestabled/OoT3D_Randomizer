@@ -148,6 +148,10 @@ static void WriteIngameSpoilerLog() {
         else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
             continue;
         }
+        // Gerudo Fortress
+        else if (Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) {
+            continue;
+        }
     }
 
     auto locName = loc->GetName();

@@ -137,7 +137,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
             firstItem, lastItem, gSpoilerData.ItemLocationsCount);
         if (!gSettingsContext.ingameSpoilers) {
-            Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%.1f%%", itemPercent);
+            Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
         }
 
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
@@ -180,13 +180,15 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 static void Gfx_ShowMenu(void) {
     u32 pressed = 0;
 
-    float itemsChecked = 0;
-    for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
-        if (SpoilerData_GetIsItemLocationCollected(i)) {
-            itemsChecked++;
+    if (!gSettingsContext.ingameSpoilers) {
+        float itemsChecked = 0;
+        for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
+            if (SpoilerData_GetIsItemLocationCollected(i)) {
+                itemsChecked++;
+            }
         }
+        itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100;
     }
-    itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100;
 
     Draw_ClearFramebuffer();
     Draw_FlushFramebuffer();
