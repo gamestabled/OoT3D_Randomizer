@@ -476,6 +476,13 @@ hook_MidoCheckSpawn:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_MidoForestDialog
+hook_MidoForestDialog:
+    push {r1-r12, lr}
+    bl EnMd_GetTextKokiriForest
+    pop {r1-r12, lr}
+    bx lr
+
 .global hook_CheckDekuTreeClear
 hook_CheckDekuTreeClear:
     push {r0-r12, lr}

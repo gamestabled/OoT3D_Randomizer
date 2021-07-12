@@ -1101,6 +1101,15 @@ MidoCheckSpawn_patch:
     beq 0x1661B8
     b 0x1661A8
 
+.section .patch_MidoForestDialog
+.global MidoForestDialog_patch
+MidoForestDialog_patch:
+    nop
+    nop
+    nop
+    nop
+    bl hook_MidoForestDialog
+
 .section .patch_MidoCheckDekuTreeClearOne
 .global MidoCheckDekuTreeClearOne_patch
 MidoCheckDekuTreeClearOne_patch:
@@ -1125,13 +1134,6 @@ MidoCheckDekuTreeClearThree_patch:
 .section .patch_MidoCheckDekuTreeClearFour
 .global MidoCheckDekuTreeClearFour_patch
 MidoCheckDekuTreeClearFour_patch:
-    nop
-    nop
-    bl hook_CheckDekuTreeClear
-
-.section .patch_MidoCheckDekuTreeClearFive
-.global MidoCheckDekuTreeClearFive_patch
-MidoCheckDekuTreeClearFive_patch:
     nop
     nop
     bl hook_CheckDekuTreeClear
