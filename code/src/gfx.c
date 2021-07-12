@@ -17,6 +17,7 @@ static u8 currentSphere = 0;
 static s16 spoilerScroll = 0;
 static s16 allItemsScroll = 0;
 static s32 curMenuIdx = 0;
+static float itemPercent = 0;
 
 #define UP_ARROW_CHR 24
 #define DOWN_ARROW_CHR 25
@@ -135,6 +136,9 @@ static void Gfx_DrawSpoilerAllItems(void) {
         if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
             firstItem, lastItem, gSpoilerData.ItemLocationsCount);
+        if (!gSettingsContext.ingameSpoilers) {
+            Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
+        }
 
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + allItemsScroll;
@@ -175,6 +179,16 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 
 static void Gfx_ShowMenu(void) {
     u32 pressed = 0;
+
+    if (!gSettingsContext.ingameSpoilers) {
+        float itemsChecked = 0;
+        for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
+            if (SpoilerData_GetIsItemLocationCollected(i)) {
+                itemsChecked++;
+            }
+        }
+        itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100;
+    }
 
     Draw_ClearFramebuffer();
     Draw_FlushFramebuffer();
