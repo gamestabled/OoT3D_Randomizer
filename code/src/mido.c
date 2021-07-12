@@ -19,8 +19,10 @@ u32 EnMd_ShouldSpawn(void) {
         }
     }
 
-    if (gGlobalContext->sceneNum == 0x5B) { //Lost woods, always spawn
-        return 1;
+    if (gGlobalContext->sceneNum == 0x5B) { //Lost woods, spawn if not yet played Saria's
+        if(!EventCheck(0x0A)) {
+            return 1;
+        }
     }
 
     return 0;
