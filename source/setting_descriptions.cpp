@@ -518,6 +518,11 @@ string_view kingZoraSpeedVanilla      = "King Zora will move out of the way in 2
 string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1 to 128\n" //
                                         "shuffles, with lower numbers being more common";  //
 /*------------------------------                                                           //
+|      COMPLETE MASK QUEST     |                                                           //
+------------------------------*/                                                           //
+string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
+                                        "will be available to be borrowed.";               //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //
@@ -684,11 +689,6 @@ string_view basicTrapDmgDesc          = "All alternative traps will cause a smal
                                                                                            //
 string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
                                         "cause a lot of damage (with one-hit protection)"; //
-/*------------------------------                                                           //
-|      COMPLETE MASK QUEST     |                                                           //
-------------------------------*/                                                           //
-string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
-                                        "will be available to be borrowed.";               //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

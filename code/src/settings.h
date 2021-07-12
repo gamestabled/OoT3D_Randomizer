@@ -311,6 +311,7 @@ typedef struct {
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
   u8 kingZoraSpeed;
+  u8 completeMaskQuest;
 
   u8 damageMultiplier;
   u8 startingTime;
@@ -321,7 +322,6 @@ typedef struct {
   u8 ingameSpoilers;
   u8 menuOpeningButton;
   u8 randomTrapDmg;
-  u8 completeMaskQuest;
 
   u8 faroresWindAnywhere;
   u8 stickAsAdult;
