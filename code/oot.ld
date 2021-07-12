@@ -108,6 +108,10 @@ SECTIONS
 		*(.patch_KingZoraCheckMovedFlag)
 	}
 
+	.patch_MidoCheckSpawn 0x16614C : {
+		*(.patch_MidoCheckSpawn)
+	}
+
 	.patch_MidoCheckDekuTreeClearOne 0x16623C : {
 		*(.patch_MidoCheckDekuTreeClearOne)
 	}
@@ -128,8 +132,8 @@ SECTIONS
 		*(.patch_KingZoraIgnoreSapphire)
 	}
 
-	.patch_MidoCheckDekuTreeClearFive 0x173944 : {
-		*(.patch_MidoCheckDekuTreeClearFive)
+	.patch_MidoForestDialog 0x173944 : {
+		*(.patch_MidoForestDialog)
 	}
 
 	.patch_AnjuCheckCuccoAmount 0x179420 : {

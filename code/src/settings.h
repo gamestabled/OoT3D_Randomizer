@@ -21,6 +21,7 @@ typedef enum {
 typedef enum {
   OPENFOREST_CLOSED,
   OPENFOREST_OPEN,
+  OPENFOREST_CLOSED_DEKU,
 } OpenForestSetting;
 
 typedef enum {

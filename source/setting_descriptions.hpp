@@ -13,6 +13,7 @@ extern string_view logicNoLogic;
 
 extern string_view forestOpen;
 extern string_view forestClosed;
+extern string_view forestClosedDeku;
 
 extern string_view kakGateOpen;
 extern string_view kakGateClosed;
