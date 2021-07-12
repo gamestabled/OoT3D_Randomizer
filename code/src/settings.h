@@ -21,6 +21,7 @@ typedef enum {
 typedef enum {
   OPENFOREST_CLOSED,
   OPENFOREST_OPEN,
+  OPENFOREST_CLOSED_DEKU,
 } OpenForestSetting;
 
 typedef enum {
@@ -309,6 +310,7 @@ typedef struct {
   u8 templeOfTimeIntro;
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
+  u8 kingZoraSpeed;
 
   u8 damageMultiplier;
   u8 startingTime;
@@ -319,6 +321,7 @@ typedef struct {
   u8 ingameSpoilers;
   u8 menuOpeningButton;
   u8 randomTrapDmg;
+  u8 completeMaskQuest;
 
   u8 faroresWindAnywhere;
   u8 stickAsAdult;
@@ -385,6 +388,7 @@ typedef struct {
   u8 startingBiggoronSword;
   u8 startingMagicMeter;
   u8 startingDoubleDefense;
+  u8 startingHealth;
 
   u32 startingQuestItems;
   u32 startingEquipment;
@@ -396,6 +400,7 @@ extern SettingsContext gSettingsContext;
 extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
-u32 Hash(u32 state);
+u32 Hash(u32);
+u8  Bias(u32);
 
 #endif
