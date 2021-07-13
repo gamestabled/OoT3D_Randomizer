@@ -693,7 +693,7 @@ string_view completeMaskDesc          = "Once the happy mask shop is opened, all
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
 ------------------------------*/                                                                           //
-string_view ToggleAllDetailedLogicDesc                = "Enable or Disable all Detailed Logic tricks at\n" //
+string_view ToggleAllTricksDesc                       = "Enable or Disable all Detailed Logic tricks at\n" //
                                                         "once.";                                           //
 string_view LogicGrottosWithoutAgonyDesc              = "Allows entering hidden grottos without the Shard\n"
                                                         "of Agony.";                                       //

@@ -6,11 +6,13 @@
 #define MAIN_MENU 0
 #define OPTION_SUB_MENU 1
 #define SUB_MENU 2
-#define GENERATE_MODE 3
-#define LOAD_PRESET 4
-#define SAVE_PRESET 5
-#define DELETE_PRESET 6
-#define POST_GENERATE 7
+#define OPTION_SUB_SUB_MENU 3
+#define SUB_SUB_MENU 4
+#define GENERATE_MODE 5
+#define LOAD_PRESET 6
+#define SAVE_PRESET 7
+#define DELETE_PRESET 8
+#define POST_GENERATE 9
 #define MAX_MAINMENU_SETTINGS_ON_SCREEN 20
 #define MAX_SUBMENU_SETTINGS_ON_SCREEN 13
 #define TOP_WIDTH 50
@@ -41,7 +43,7 @@ void PrintSubMenu();
 void PrintPresetsMenu();
 void PrintGenerateMenu();
 void ClearDescription();
-void PrintOptionDescrption();
+void PrintOptionDescription();
 void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 
