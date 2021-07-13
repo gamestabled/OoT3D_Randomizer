@@ -221,6 +221,15 @@ extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
 extern string_view advancedTrapDmgDesc;
 
+<<<<<<< Updated upstream
+=======
+extern string_view completeMaskDesc;
+
+extern string_view ToggleLogicNoneDesc;
+extern string_view ToggleLogicNoviceDesc;
+extern string_view ToggleLogicIntermediateDesc;
+extern string_view ToggleLogicExpertDesc;
+>>>>>>> Stashed changes
 extern string_view ToggleAllDetailedLogicDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;
 extern string_view LogicVisibleCollisionDesc;

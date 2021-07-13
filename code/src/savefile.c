@@ -120,7 +120,10 @@ void SaveFile_Init() {
     }
 
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
-    gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
+	//If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
+    if(gSettingsContext.startingDungeonReward == 0){
+        gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
+    }
 
     if (gSettingsContext.skipMinigamePhases == SKIP) {
         gSaveContext.sceneFlags[0x48].clear |= 0x00000010; //Remove first Dampe race
@@ -385,9 +388,13 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
     }
 
-    if (gSettingsContext.startingBiggoronSword) {
-        gSaveContext.bgsFlag = 1;
-        gSaveContext.bgsHitsLeft = 1;
+    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_BIGGORON_SWORD) {
+		gSaveContext.bgsFlag = 1;
+		gSaveContext.bgsHitsLeft = 1;
+	}
+	if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
+		gSaveContext.bgsFlag = 0;
+		gSaveContext.bgsHitsLeft = 8; 
     }
 
     if (gSettingsContext.startingMagicMeter == 1) {
@@ -401,6 +408,7 @@ void SaveFile_SetStartingInventory(void) {
     }
 
     gSaveContext.questItems |= gSettingsContext.startingQuestItems;
+    gSaveContext.questItems |= gSettingsContext.startingDungeonReward;
     gSaveContext.equipment |= gSettingsContext.startingEquipment;
     gSaveContext.upgrades |= gSettingsContext.startingUpgrades;
 
@@ -418,5 +426,16 @@ void SaveFile_SetStartingInventory(void) {
         }
 
     }
+<<<<<<< Updated upstream
 
+=======
+    
+	//set token count
+	gSaveContext.gsTokens = gSettingsContext.startingTokens;
+	
+    //Set Epona as freed if Skip Epona Race is enabled and Epona's Song is in the starting inventory
+    if (gSettingsContext.skipEponaRace == SKIP && (gSaveContext.questItems >> 13) & 0x1) {
+      EventSet(0x18);
+    }
+>>>>>>> Stashed changes
 }

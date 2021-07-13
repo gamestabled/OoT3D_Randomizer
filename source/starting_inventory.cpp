@@ -117,6 +117,45 @@ void GenerateStartingInventory() {
   AddItemToInventory(PROGRESSIVE_WALLET,        StartingWallet.Value<u8>());
   AddItemToInventory(SHARD_OF_AGONY,            StartingShardOfAgony.Value<u8>());
   AddItemToInventory(DOUBLE_DEFENSE,            StartingDoubleDefense.Value<u8>());
+<<<<<<< Updated upstream
+=======
+  AddItemToInventory(KOKIRI_EMERALD,            StartingKokiriEmerald.Value<u8>());
+  AddItemToInventory(GORON_RUBY,                StartingGoronRuby.Value<u8>());
+  AddItemToInventory(ZORA_SAPPHIRE,             StartingZoraSapphire.Value<u8>());
+  AddItemToInventory(FOREST_MEDALLION,          StartingForestMedallion.Value<u8>());
+  AddItemToInventory(FIRE_MEDALLION,            StartingFireMedallion.Value<u8>());
+  AddItemToInventory(WATER_MEDALLION,           StartingWaterMedallion.Value<u8>());
+  AddItemToInventory(SPIRIT_MEDALLION,          StartingSpiritMedallion.Value<u8>());
+  AddItemToInventory(SHADOW_MEDALLION,          StartingShadowMedallion.Value<u8>());
+  AddItemToInventory(LIGHT_MEDALLION,           StartingLightMedallion.Value<u8>());
+  AddItemToInventory(GOLD_SKULLTULA_TOKEN,      StartingSkulltulaToken.Value<u8>());
+
+  s8 hearts = (StartingHealth.Value<u8>() + 2) % 20 - 2;
+  AdditionalHeartContainers = 0;
+  if (hearts < 0) {
+    AddItemToInventory(PIECE_OF_HEART, 4);
+    // Plentiful and minimal have less than 4 standard pieces of heart so also replace the winner heart
+    if (ItemPoolValue.Value<u8>() == 0 || ItemPoolValue.Value<u8>() == 3) {
+        AddItemToInventory(TREASURE_GAME_HEART);
+    }
+
+    AdditionalHeartContainers = 1 - hearts;
+  } else if (hearts > 0) {
+    // 16 containers in plentiful, 8 in balanced and 0 in the others
+    u8 maxContainers = 8 * std::max(0, 2 - ItemPoolValue.Value<u8>());
+
+    if (hearts <= maxContainers) {
+      AddItemToInventory(HEART_CONTAINER, hearts);
+    } else {
+      AddItemToInventory(HEART_CONTAINER, maxContainers);
+      AddItemToInventory(PIECE_OF_HEART, (hearts - maxContainers) * 4);
+    }
+
+    if (hearts == 17) {
+      AddItemToInventory(TREASURE_GAME_HEART);
+    }
+  }
+>>>>>>> Stashed changes
 }
 
 void ApplyStartingInventory() {
