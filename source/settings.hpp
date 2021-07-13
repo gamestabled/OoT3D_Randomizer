@@ -303,6 +303,7 @@ namespace Settings {
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
   extern Option KingZoraSpeed;
+  extern Option CompleteMaskQuest;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
@@ -317,7 +318,6 @@ namespace Settings {
   extern Option MenuOpeningButton;
   extern Option RandomTrapDmg;
   extern bool HasNightStart;
-  extern Option CompleteMaskQuest;
 
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
