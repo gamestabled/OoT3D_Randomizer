@@ -393,12 +393,12 @@ void SaveFile_SetStartingInventory(void) {
     }
 
     if (gSettingsContext.startingBiggoronSword == STARTINGBGS_BIGGORON_SWORD) {
-		gSaveContext.bgsFlag = 1;
-		gSaveContext.bgsHitsLeft = 1;
-	}
-	if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
-		gSaveContext.bgsFlag = 0;
-		gSaveContext.bgsHitsLeft = 8; 
+        gSaveContext.bgsFlag = 1;
+        gSaveContext.bgsHitsLeft = 1;
+    }
+    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
+        gSaveContext.bgsFlag = 0;
+        gSaveContext.bgsHitsLeft = 8; 
     }
 
     if (gSettingsContext.startingMagicMeter == 1) {
