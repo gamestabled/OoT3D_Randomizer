@@ -464,7 +464,7 @@ namespace Logic {
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
-    CanTakeDamage       = DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || Fairy || CanUse(CanUseItem::Nayrus_Love);
+    CanTakeDamage       = DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE) || Fairy || CanUse(CanUseItem::Nayrus_Love);
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);

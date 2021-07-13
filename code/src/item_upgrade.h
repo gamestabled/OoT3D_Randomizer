@@ -19,6 +19,7 @@ u16 ItemUpgrade_Ocarina(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_ArrowsToRupee(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_BombsToRupee(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_SeedsToRupee(SaveContext* saveCtx, u16 itemId);
+u16 ItemUpgrade_TokenToRupee(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_LetterToBottle(SaveContext* saveCtx, u16 itemId);
 
 #endif //_ITEM_UPGRADES_H

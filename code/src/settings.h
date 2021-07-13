@@ -202,6 +202,8 @@ typedef enum {
   DAMAGEMULTIPLIER_DEFAULT,
   DAMAGEMULTIPLIER_DOUBLE,
   DAMAGEMULTIPLIER_QUADRUPLE,
+  DAMAGEMULTIPLIER_OCTUPLE,
+  DAMAGEMULTIPLIER_SEXDECUPLE,
   DAMAGEMULTIPLIER_OHKO,
 } DamageMultiplierSetting;
 
@@ -248,6 +250,11 @@ typedef enum {
   STARTINGBOTTLE_POE,
 } StartingBottleSetting;
 
+typedef enum {
+  STARTINGBGS_NONE,
+  STARTINGBGS_GIANTS_KNIFE,
+  STARTINGBGS_BIGGORON_SWORD,
+} StartingBiggoronSwordSetting;
 typedef struct {
   u8 hashIndexes[5];
 
@@ -391,8 +398,11 @@ typedef struct {
   u8 startingHealth;
 
   u32 startingQuestItems;
+  u32 startingDungeonReward;
   u32 startingEquipment;
   u32 startingUpgrades;
+  
+  u8 startingTokens;
 
 } SettingsContext;
 
