@@ -149,7 +149,8 @@ static void WriteIngameSpoilerLog() {
             continue;
         }
         // Gerudo Fortress
-        else if (Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) {
+        else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
+            (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
             continue;
         }
     }

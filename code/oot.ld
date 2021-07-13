@@ -108,7 +108,7 @@ SECTIONS
 		*(.patch_KingZoraCheckMovedFlag)
 	}
 
-	.patch_MidoCheckSpawn 0x16614C : {
+	.patch_MidoCheckSpawn 0x166154 : {
 		*(.patch_MidoCheckSpawn)
 	}
 

@@ -156,6 +156,7 @@ namespace Settings {
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
   Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
+  Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -167,6 +168,7 @@ namespace Settings {
     &BigPoeTargetCount,
     &NumRequiredCuccos,
     &KingZoraSpeed,
+    &CompleteMaskQuest,
   };
 
   //Misc Settings
@@ -182,7 +184,6 @@ namespace Settings {
   Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc});
-  Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &GossipStoneHints,
@@ -197,7 +198,6 @@ namespace Settings {
     &IngameSpoilers,
     &MenuOpeningButton,
     &RandomTrapDmg,
-    &CompleteMaskQuest,
   };
 
   //Item Usability Settings
@@ -725,6 +725,7 @@ namespace Settings {
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
     ctx.kingZoraSpeed        = KingZoraSpeed.Value<u8>();
+    ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
@@ -735,7 +736,6 @@ namespace Settings {
     ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
-    ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
