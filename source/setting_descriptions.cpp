@@ -703,8 +703,8 @@ string_view LogicGrottosWithoutAgonyDesc              = "Difficulty: Novice\n"  
                                                         "simply by knowing where they are located.";       //
 string_view LogicVisibleCollisionDesc                 = "Difficulty: Novice\n"                             //
                                                         "The closed Kakariko Village Gate can be crossed\n"//
-														"when coming from Death Mountain Trail.\n"         //
-														"Useful for Entrance Randomiser.";                 //
+                                                        "when coming from Death Mountain Trail.\n"         //
+                                                        "Useful for Entrance Randomiser.";                 //
 string_view LogicFewerTunicRequirementsDesc           = "Difficulty: Novice\n"                             //
                                                         "Allows the following possible without Tunics:\n"  //
                                                         "- Enter Water Temple.\n"                          //
@@ -1018,13 +1018,13 @@ string_view LogicChildDeadhandDesc                    = "Difficulty: Novice\n"  
                                                         "Requires 9 sticks or 5 jump slashes.";            //
 string_view LogicGtgWithoutHookshotDesc               = "Difficulty: Expert\n"                             //
                                                         "The final silver rupee on the ceiling can be\n"   //
-														"reached by being pulled up into it by the\n"      //
-														"Wallmaster.\n"                                    //
-														"Then, you must also reach the exit of the room\n" //
-														"without the use of the Hookshot. If you move\n"   //
-														"quickly, you can sneak past the edge of a\n"      //
-														"flame wall before it can rise up to block you.\n" //
-														"To do so without taking damage is more precise";  //
+                                                        "reached by being pulled up into it by the\n"      //
+                                                        "Wallmaster.\n"                                    //
+                                                        "Then, you must also reach the exit of the room\n" //
+                                                        "without the use of the Hookshot. If you move\n"   //
+                                                        "quickly, you can sneak past the edge of a\n"      //
+                                                        "flame wall before it can rise up to block you.\n" //
+                                                        "To do so without taking damage is more precise";  //
 string_view LogicGtgFakeWallDesc                      = "Difficulty: Novice\n"                             //
                                                         "A precise Hover Boots use from the top of the\n"  //
                                                         "chest can allow you to grab the ledge without\n"  //
