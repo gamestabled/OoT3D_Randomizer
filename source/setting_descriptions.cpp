@@ -32,6 +32,10 @@ string_view forestClosed              = "Beating Deku Tree is logically required
                                         "Tree. Items needed for this will be guaranteed\n" //
                                         "inside the forest area. This setting is\n"        //
                                         "incompatible with starting as adult.";            //
+string_view forestClosedDeku          = "The Kokiri boy no longer blocks the path out of\n"//
+                                        "the forest, but Mido still blocks the path to the\n"
+                                        "Deku Tree, requiring Kokiri Sword and Deku Shield\n"
+                                        "to access the Deku Tree.";                        //
 /*------------------------------                                                           //
 |        KAKARIKO GATE         |                                                           //
 ------------------------------*/                                                           //
@@ -142,6 +146,18 @@ string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, 
                                         "Additionally, the entrances of Deku Tree, Fire\n" //
                                         "Temple and Bottom of the Well are opened for both\n"
                                         "adult and child.";                                //
+/*------------------------------                                                           //
+|      OVERWORLD ENTRANCES     |                                                           //
+------------------------------*/                                                           //
+string_view overworldEntrancesDesc    = "Shuffle the pool of Overworld entrances, which\n" //
+                                        "corresponds to almost all loading zones between\n"//
+                                        "Overworld areas.\n"                               //
+                                        "\n"                                               //
+                                        "Some entrances are unshuffled to avoid issues:\n" //
+                                        "- Hyrule Castle Courtyard and Garden entrance\n"  //
+                                        "- Both Market Back Alley entrances\n"             //
+                                        "- Gerudo Valley to Lake Hylia (unless entrances\n"//
+                                        "  are decoupled)";                               //
 /*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
@@ -493,6 +509,20 @@ string_view bigPoeTargetCountDesc     = "The Poe buyer will give a reward for tu
 string_view numRequiredCuccosDesc     = "The cucco lady will give a reward for returning\n"//
                                         "this many of her cuccos to the pen.";             //
 /*------------------------------                                                           //
+|        KING ZORA SPEED        |                                                          //
+-------------------------------*/                                                          //
+string_view kingZoraSpeedFast         = "King Zora will move out of the way in 1 shuffle"; //
+                                                                                           //
+string_view kingZoraSpeedVanilla      = "King Zora will move out of the way in 26 shuffles";
+                                                                                           //
+string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1 to 128\n" //
+                                        "shuffles, with lower numbers being more common";  //
+/*------------------------------                                                           //
+|      COMPLETE MASK QUEST     |                                                           //
+------------------------------*/                                                           //
+string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
+                                        "will be available to be borrowed.";               //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //
@@ -554,6 +584,13 @@ string_view chestSizeDesc             = "This option will change the appearance 
                                         "Small Keys     =    Small Fancy Chests";          //
                                                                                            //
 /*------------------------------                                                           //
+|        INGAME SPOILERS       |                                                           //
+------------------------------*/                                                           //
+string_view ingameSpoilersShowDesc    = "Every spoiler is shown.";                         //
+string_view ingameSpoilersHideDesc    = "Hides the spheres page and only shows a\n"        //
+                                        "location's item after it has been found.";        //
+                                                                                           //
+/*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
 ------------------------------*/                                                           //
 string_view menuButtonDesc            = "Choose which button will bring up the Dungeon\n"  //
@@ -591,6 +628,11 @@ string_view iceTrapsExtra             = "Chance to add extra Ice Traps when junk
 string_view iceTrapsMayhem            = "All added junk items will be Ice Traps.";         //
 string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice Traps, even"
                                         "those in the base pool.";                         //
+/*------------------------------                                                           //
+|    REMOVE DOUBLE DEFENSE     |                                                           //
+------------------------------*/                                                           //
+string_view removeDDDesc              = "If set the double defense item will be removed\n" //
+                                        "from the item pool for balanced and plentiful";   //
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //
@@ -640,12 +682,10 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 /*------------------------------                                                           //
 |    RANDOM TRAP DAMAGE TYPE   |                                                           //
 ------------------------------*/                                                           //
-string_view randomTrapDmgDesc         = "If set, ice traps will sometimes damage Link and\n"
-                                        "knock him back or electrocute him instead of\n"   //
-                                        "freezing him.";                                   //
+string_view randomTrapDmgDesc         = "All traps will be the base game ice trap";        //
                                                                                            //
-string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"
-                                        "and no other negative effects\n";                 //
+string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"//
+                                        "and no other negative effects";                   //
                                                                                            //
 string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
                                         "cause a lot of damage (with one-hit protection)"; //

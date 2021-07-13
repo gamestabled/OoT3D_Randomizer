@@ -51,7 +51,7 @@ void LocationTable_Init() {
     locationTable[LH_ADULT_FISHING]                      = ItemLocation::Base       (0x49, 0x38, "LH Adult Fishing",                     LH_ADULT_FISHING,                      {Category::cLakeHylia, Category::cMinigame,},                                                                         SpoilerCollectionCheck::Fishing(0x03));
     locationTable[LH_LAB_DIVE]                           = ItemLocation::Base       (0x38, 0x3E, "LH Lab Dive",                          LH_LAB_DIVE,                           {Category::cLakeHylia,},                                                                                              SpoilerCollectionCheck::ItemGetInf(24));
     locationTable[LH_UNDERWATER_ITEM]                    = ItemLocation::Base       (0x57, 0x15, "LH Underwater Item",                   LH_UNDERWATER_ITEM,                    {Category::cLakeHylia,},                                                                                              SpoilerCollectionCheck::EventChkInf(0x31));
-    locationTable[LH_SUN]                                = ItemLocation::Base       (0x57, 0x58, "LH Sun",                               LH_SUN,                                {Category::cLakeHylia,});
+    locationTable[LH_SUN]                                = ItemLocation::Base       (0x57, 0x58, "LH Sun",                               LH_SUN,                                {Category::cLakeHylia,},                                                                                              SpoilerCollectionCheck::Chest(0x57, 0x00));
     locationTable[LH_FREESTANDING_POH]                   = ItemLocation::Collectable(0x57, 0x1E, "LH Freestanding PoH",                  LH_FREESTANDING_POH,                   {Category::cLakeHylia,});
     locationTable[LH_DEKU_SCRUB_GROTTO_LEFT]             = ItemLocation::GrottoScrub(0xEF, 0x30, "LH Deku Scrub Grotto Left",            LH_DEKU_SCRUB_GROTTO_LEFT,             {Category::cLakeHylia, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x19, 0x01));
     locationTable[LH_DEKU_SCRUB_GROTTO_RIGHT]            = ItemLocation::GrottoScrub(0xEF, 0x37, "LH Deku Scrub Grotto Right",           LH_DEKU_SCRUB_GROTTO_RIGHT,            {Category::cLakeHylia, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x19, 0x06));
@@ -69,14 +69,14 @@ void LocationTable_Init() {
     locationTable[GF_HBA_1000_POINTS]                    = ItemLocation::Base       (0x5D, 0x3E, "GF HBA 1000 Points",                   GF_HBA_1000_POINTS,                    {Category::cGerudoFortress, Category::cGerudo, Category::cMinigame},                                                  SpoilerCollectionCheck::InfTable(0x19, 0x08));
     locationTable[GF_HBA_1500_POINTS]                    = ItemLocation::Base       (0x5D, 0x30, "GF HBA 1500 Points",                   GF_HBA_1500_POINTS,                    {Category::cGerudoFortress, Category::cGerudo, Category::cMinigame},                                                  SpoilerCollectionCheck::ItemGetInf(7));
     locationTable[GF_GERUDO_TOKEN]                       = ItemLocation::Base       (0x0C, 0x3A, "GF Gerudo Token",                      GF_GERUDO_TOKEN,                       {Category::cGerudoFortress, Category::cGerudo,},                                                                      SpoilerCollectionCheck::GerudoToken());
-    locationTable[GF_NORTH_F1_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0C, "GF North F1 Carpenter",                GF_NORTH_F1_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey},                                         SpoilerCollectionCheck::EventChkInf(0x90));
-    locationTable[GF_NORTH_F2_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0A, "GF North F2 Carpenter",                GF_NORTH_F2_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey},                                         SpoilerCollectionCheck::EventChkInf(0x91));
-    locationTable[GF_SOUTH_F1_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0E, "GF South F1 Carpenter",                GF_SOUTH_F1_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey},                                         SpoilerCollectionCheck::EventChkInf(0x92));
-    locationTable[GF_SOUTH_F2_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0F, "GF South F2 Carpenter",                GF_SOUTH_F2_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey},                                         SpoilerCollectionCheck::EventChkInf(0x93));
+    locationTable[GF_NORTH_F1_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0C, "GF North F1 Carpenter",                GF_NORTH_F1_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
+    locationTable[GF_NORTH_F2_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0A, "GF North F2 Carpenter",                GF_NORTH_F2_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
+    locationTable[GF_SOUTH_F1_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0E, "GF South F1 Carpenter",                GF_SOUTH_F1_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
+    locationTable[GF_SOUTH_F2_CARPENTER]                 = ItemLocation::Collectable(0x0C, 0x0F, "GF South F2 Carpenter",                GF_SOUTH_F2_CARPENTER,                 {Category::cGerudoFortress, Category::cGerudo, Category::cVanillaGFSmallKey});
 
     //Haunted Wasteland
     locationTable[WASTELAND_CHEST]                       = ItemLocation::Chest      (0x5E, 0x00, "Wasteland Chest",                      WASTELAND_CHEST,                       {Category::cHauntedWasteland,});
-    locationTable[WASTELAND_BOMBCHU_SALESMAN]            = ItemLocation::Base       (0x5E, 0x03, "Wasteland Carpet Salesman",            WASTELAND_BOMBCHU_SALESMAN,            {Category::cHauntedWasteland,},                                                                                       SpoilerCollectionCheck::EventChkInf(0x34));
+    locationTable[WASTELAND_BOMBCHU_SALESMAN]            = ItemLocation::Base       (0x5E, 0x03, "Wasteland Carpet Salesman",            WASTELAND_BOMBCHU_SALESMAN,            {Category::cHauntedWasteland, Category::cMerchant,},                                                                  SpoilerCollectionCheck::EventChkInf(0x34));
 
     //Desert Colossus
     locationTable[COLOSSUS_FREESTANDING_POH]             = ItemLocation::Collectable(0x5C, 0x0D, "Colossus Freestanding PoH",            COLOSSUS_FREESTANDING_POH,             {Category::cDesertColossus,});
@@ -137,7 +137,7 @@ void LocationTable_Init() {
     locationTable[GC_DEKU_SCRUB_GROTTO_LEFT]             = ItemLocation::GrottoScrub(0xFB, 0x30, "GC Deku Scrub Grotto Left",            GC_DEKU_SCRUB_GROTTO_LEFT,             {Category::cGoronCity, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x25, 0x01));
     locationTable[GC_DEKU_SCRUB_GROTTO_RIGHT]            = ItemLocation::GrottoScrub(0xFB, 0x37, "GC Deku Scrub Grotto Right",           GC_DEKU_SCRUB_GROTTO_RIGHT,            {Category::cGoronCity, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x25, 0x06));
     locationTable[GC_DEKU_SCRUB_GROTTO_CENTER]           = ItemLocation::GrottoScrub(0xFB, 0x33, "GC Deku Scrub Grotto Center",          GC_DEKU_SCRUB_GROTTO_CENTER,           {Category::cGoronCity, Category::cDekuScrub, Category::cGrotto},                                                      SpoilerCollectionCheck::Scrub(0x25, 0x04));
-    locationTable[GC_MEDIGORON]                          = ItemLocation::Base       (0x62, 0x28, "GC Medigoron",                         GC_MEDIGORON,                          {Category::cGoronCity,},                                                                                              SpoilerCollectionCheck::EventChkInf(0x35));
+    locationTable[GC_MEDIGORON]                          = ItemLocation::Base       (0x62, 0x28, "GC Medigoron",                         GC_MEDIGORON,                          {Category::cGoronCity, Category::cMerchant,},                                                                         SpoilerCollectionCheck::EventChkInf(0x35));
 
     //Death Mountain Crater
     locationTable[DMC_UPPER_GROTTO_CHEST]                = ItemLocation::Chest      (0x3E, 0x1A, "DMC Upper Grotto Chest",               DMC_UPPER_GROTTO_CHEST,                {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cGrotto});
@@ -745,7 +745,7 @@ void LocationTable_Init() {
     locationTable[SHEIK_IN_CRATER]                               = ItemLocation::Delayed(0xFF, 0x21, "Sheik in Crater",                                SHEIK_IN_CRATER,                   {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cSong,},                               SpoilerCollectionCheck::EventChkInf(0x51));
     locationTable[SHEIK_IN_ICE_CAVERN]                           = ItemLocation::Delayed(0xFF, 0x22, "Sheik in Ice Cavern",                            SHEIK_IN_ICE_CAVERN,               {Category::cIceCavern, Category::cSong, Category::cSongDungeonReward},                                      SpoilerCollectionCheck::EventChkInf(0x52));
     locationTable[SHEIK_AT_COLOSSUS]                             = ItemLocation::Delayed(0xFF, 0x23, "Sheik at Colossus",                              SHEIK_AT_COLOSSUS,                 {Category::cDesertColossus, Category::cSong,},                                                              SpoilerCollectionCheck::EventChkInf(0xAC));
-    locationTable[SHEIK_IN_KAKARIKO]                             = ItemLocation::Delayed(0xFF, 0x24, "Sheik in Kakariko",                              SHEIK_IN_KAKARIKO,                 {Category::cKakarikoVillage, Category::cKakariko, Category::cSong,},                                        SpoilerCollectionCheck::EventChkInf(0x54));
+    locationTable[SHEIK_IN_KAKARIKO]                             = ItemLocation::Delayed(0xFF, 0x24, "Sheik in Kakariko",                              SHEIK_IN_KAKARIKO,                 {Category::cKakarikoVillage, Category::cKakariko, Category::cSong,},                                        SpoilerCollectionCheck::EventChkInf(0xAA));
     locationTable[SHEIK_AT_TEMPLE]                               = ItemLocation::Delayed(0xFF, 0x25, "Sheik at Temple",                                SHEIK_AT_TEMPLE,                   {Category::cTempleOfTime, Category::cMarket, Category::cSong,},                                             SpoilerCollectionCheck::EventChkInf(0x55));
     locationTable[SONG_FROM_IMPA]                                = ItemLocation::Delayed(0xFF, 0x26, "Song from Impa",                                 SONG_FROM_IMPA,                    {Category::cHyruleCastle, Category::cMarket, Category::cSong, Category::cSongDungeonReward},                SpoilerCollectionCheck::EventChkInf(0x59));
     locationTable[SONG_FROM_MALON]                               = ItemLocation::Delayed(0xFF, 0x27, "Song from Malon",                                SONG_FROM_MALON,                   {Category::cLonLonRanch, Category::cSong,},                                                                 SpoilerCollectionCheck::EventChkInf(0x58));
@@ -821,14 +821,14 @@ void LocationTable_Init() {
     locationTable[MARKET_BAZAAR_ITEM_7]                          = ItemLocation::Base(0x2C, 0x36, "MK Bazaar Item 7",                                 MARKET_BAZAAR_ITEM_7,       {Category::cInnerMarket, Category::cMarket, Category::cShop},                                                       SpoilerCollectionCheck::ShopItem(0x2C, 6));
     locationTable[MARKET_BAZAAR_ITEM_8]                          = ItemLocation::Base(0x2C, 0x37, "MK Bazaar Item 8",                                 MARKET_BAZAAR_ITEM_8,       {Category::cInnerMarket, Category::cMarket, Category::cShop},                                                       SpoilerCollectionCheck::ShopItem(0x2C, 7));
 
-    locationTable[KAK_BAZAAR_ITEM_1]                             = ItemLocation::Base(0x2C, 0x38, "Kak Bazaar Item 1",                                KAK_BAZAAR_ITEM_1,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 8));
-    locationTable[KAK_BAZAAR_ITEM_2]                             = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                KAK_BAZAAR_ITEM_2,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 9));
-    locationTable[KAK_BAZAAR_ITEM_3]                             = ItemLocation::Base(0x2C, 0x3A, "Kak Bazaar Item 3",                                KAK_BAZAAR_ITEM_3,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 10));
-    locationTable[KAK_BAZAAR_ITEM_4]                             = ItemLocation::Base(0x2C, 0x3B, "Kak Bazaar Item 4",                                KAK_BAZAAR_ITEM_4,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 11));
-    locationTable[KAK_BAZAAR_ITEM_5]                             = ItemLocation::Base(0x2C, 0x3C, "Kak Bazaar Item 5",                                KAK_BAZAAR_ITEM_5,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 12));
-    locationTable[KAK_BAZAAR_ITEM_6]                             = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 6",                                KAK_BAZAAR_ITEM_6,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 13));
-    locationTable[KAK_BAZAAR_ITEM_7]                             = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 7",                                KAK_BAZAAR_ITEM_7,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 14));
-    locationTable[KAK_BAZAAR_ITEM_8]                             = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 8",                                KAK_BAZAAR_ITEM_8,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x2C, 15));
+    locationTable[KAK_BAZAAR_ITEM_1]                             = ItemLocation::Base(0x2C, 0x38, "Kak Bazaar Item 1",                                KAK_BAZAAR_ITEM_1,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 0));
+    locationTable[KAK_BAZAAR_ITEM_2]                             = ItemLocation::Base(0x2C, 0x39, "Kak Bazaar Item 2",                                KAK_BAZAAR_ITEM_2,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 1));
+    locationTable[KAK_BAZAAR_ITEM_3]                             = ItemLocation::Base(0x2C, 0x3A, "Kak Bazaar Item 3",                                KAK_BAZAAR_ITEM_3,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 2));
+    locationTable[KAK_BAZAAR_ITEM_4]                             = ItemLocation::Base(0x2C, 0x3B, "Kak Bazaar Item 4",                                KAK_BAZAAR_ITEM_4,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 3));
+    locationTable[KAK_BAZAAR_ITEM_5]                             = ItemLocation::Base(0x2C, 0x3C, "Kak Bazaar Item 5",                                KAK_BAZAAR_ITEM_5,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 4));
+    locationTable[KAK_BAZAAR_ITEM_6]                             = ItemLocation::Base(0x2C, 0x3D, "Kak Bazaar Item 6",                                KAK_BAZAAR_ITEM_6,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 5));
+    locationTable[KAK_BAZAAR_ITEM_7]                             = ItemLocation::Base(0x2C, 0x3E, "Kak Bazaar Item 7",                                KAK_BAZAAR_ITEM_7,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 6));
+    locationTable[KAK_BAZAAR_ITEM_8]                             = ItemLocation::Base(0x2C, 0x3F, "Kak Bazaar Item 8",                                KAK_BAZAAR_ITEM_8,          {Category::cKakarikoVillage, Category::cKakariko, Category::cShop},                                                 SpoilerCollectionCheck::ShopItem(0x33, 7));
 
     locationTable[ZD_SHOP_ITEM_1]                                = ItemLocation::Base(0x2F, 0x30, "ZD Shop Item 1",                                   ZD_SHOP_ITEM_1,             {Category::cZorasDomain, Category::cShop},                                                                          SpoilerCollectionCheck::ShopItem(0x2F, 0));
     locationTable[ZD_SHOP_ITEM_2]                                = ItemLocation::Base(0x2F, 0x31, "ZD Shop Item 2",                                   ZD_SHOP_ITEM_2,             {Category::cZorasDomain, Category::cShop},                                                                          SpoilerCollectionCheck::ShopItem(0x2F, 1));
@@ -1404,6 +1404,7 @@ std::vector<std::vector<LocationKey>> playthroughLocations;
 std::vector<LocationKey> wothLocations;
 bool playthroughBeatable = false;
 bool allLocationsReachable = false;
+bool showItemProgress = false;
 
 u16 itemsPlaced = 0;
 
@@ -1441,25 +1442,27 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   }
 
   itemsPlaced++;
-  double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-  printf("\x1b[8;10HPlacing Items.");
-  if (completion > 0.25) printf(".");
-  if (completion > 0.50) printf(".");
+  if (showItemProgress) {
+    double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
+    printf("\x1b[8;10HPlacing Items.");
+    if (completion > 0.25) printf(".");
+    if (completion > 0.50) printf(".");
+  }
 
   //If we're placing a non-shop item in a shop location, we want to record it for custom messages
   if (ItemTable(item).GetItemType() != ITEMTYPE_SHOP && loc->IsCategory(Category::cShop)) {
     int index = TransformShopIndex(GetShopIndex(locKey));
     NonShopItems[index].Name = ItemTable(item).GetName();
-    NonShopItems[index].Repurchaseable = ItemTable(item).GetItemType() == ITEMTYPE_REFILL;
+    NonShopItems[index].Repurchaseable = ItemTable(item).GetItemType() == ITEMTYPE_REFILL || ItemTable(item).GetHintKey() == PROGRESSIVE_BOMBCHUS;
   }
 
   loc->SetPlacedItem(item);
 }
 
-std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category category) {
+std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category categoryInclude, Category categoryExclude /*= Category::cNull*/) {
   std::vector<LocationKey> locationsInCategory;
   for (LocationKey locKey : locationPool) {
-    if (Location(locKey)->IsCategory(category)) {
+    if (Location(locKey)->IsCategory(categoryInclude) && !Location(locKey)->IsCategory(categoryExclude)) {
       locationsInCategory.push_back(locKey);
     }
   }

@@ -13,6 +13,7 @@ extern string_view logicNoLogic;
 
 extern string_view forestOpen;
 extern string_view forestClosed;
+extern string_view forestClosedDeku;
 
 extern string_view kakGateOpen;
 extern string_view kakGateClosed;
@@ -50,6 +51,8 @@ extern string_view ageDesc;
 extern string_view shuffleEntrancesDesc;
 
 extern string_view dungeonEntrancesDesc;
+
+extern string_view overworldEntrancesDesc;
 
 extern string_view bombchuLogicDesc;
 
@@ -170,6 +173,10 @@ extern string_view bigPoeTargetCountDesc;
 
 extern string_view numRequiredCuccosDesc;
 
+extern string_view kingZoraSpeedFast;
+extern string_view kingZoraSpeedVanilla;
+extern string_view kingZoraSpeedRandom;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view clearerHintsDesc;
@@ -189,6 +196,9 @@ extern string_view chestAnimDesc;
 
 extern string_view chestSizeDesc;
 
+extern string_view ingameSpoilersShowDesc;
+extern string_view ingameSpoilersHideDesc;
+
 extern string_view menuButtonDesc;
 
 extern string_view startWithConsumablesDesc;
@@ -206,6 +216,8 @@ extern string_view iceTrapsExtra;
 extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
 
+extern string_view removeDDDesc;
+
 extern string_view faroresWindAnywhereDesc;
 
 extern string_view adultStickDesc;
@@ -221,15 +233,14 @@ extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
 extern string_view advancedTrapDmgDesc;
 
-<<<<<<< Updated upstream
-=======
 extern string_view completeMaskDesc;
 
 extern string_view ToggleLogicNoneDesc;
 extern string_view ToggleLogicNoviceDesc;
 extern string_view ToggleLogicIntermediateDesc;
 extern string_view ToggleLogicExpertDesc;
->>>>>>> Stashed changes
+extern string_view completeMaskDesc;
+
 extern string_view ToggleAllDetailedLogicDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;
 extern string_view LogicVisibleCollisionDesc;

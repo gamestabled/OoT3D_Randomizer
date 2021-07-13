@@ -17,6 +17,7 @@ static u8 currentSphere = 0;
 static s16 spoilerScroll = 0;
 static s16 allItemsScroll = 0;
 static s32 curMenuIdx = 0;
+static float itemPercent = 0;
 
 #define UP_ARROW_CHR 24
 #define DOWN_ARROW_CHR 25
@@ -65,8 +66,7 @@ static void Gfx_DrawDungeonItems(void) {
 
 static void Gfx_DrawDungeonRewards(void) {
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s",
-            DungeonNames[dungeonId], (gSettingsContext.shuffleRewards == REWARDSHUFFLE_END_OF_DUNGEON) ? DungeonReward_GetName(dungeonId) : "???");
+        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
     }
     Gfx_DrawChangeMenuPrompt();
     Draw_FlushFramebuffer();
@@ -91,13 +91,14 @@ static void Gfx_DrawSpoilerData(void) {
 
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1, gSpoilerData.SphereCount);
 
+        u16 sphereItemLocOffset = gSpoilerData.Spheres[currentSphere].ItemLocationsOffset;
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + spoilerScroll;
             if (locIndex >= gSpoilerData.Spheres[currentSphere].ItemCount) { break; }
 
             u32 locPosY = 34 + (SPACING_Y * item * 2);
             u32 itemPosY = locPosY + SPACING_Y;
-            u16 itemIndex = gSpoilerData.Spheres[currentSphere].ItemLocations[locIndex];
+            u16 itemIndex = gSpoilerData.SphereItemLocations[sphereItemLocOffset + locIndex];
             u32 color = SpoilerData_GetIsItemLocationCollected(itemIndex) ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString(10, locPosY, color,
                 SpoilerData_GetItemLocationString(itemIndex));
@@ -135,6 +136,9 @@ static void Gfx_DrawSpoilerAllItems(void) {
         if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
             firstItem, lastItem, gSpoilerData.ItemLocationsCount);
+        if (!gSettingsContext.ingameSpoilers) {
+            Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
+        }
 
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + allItemsScroll;
@@ -145,8 +149,8 @@ static void Gfx_DrawSpoilerAllItems(void) {
             u32 color = SpoilerData_GetIsItemLocationCollected(locIndex) ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString(10, locPosY, color,
                 SpoilerData_GetItemLocationString(locIndex));
-            Draw_DrawString(10 + SPACING_X, itemPosY, color,
-                SpoilerData_GetItemNameString(locIndex));
+            const char* itemText = (!gSettingsContext.ingameSpoilers && !SpoilerData_GetIsItemLocationCollected(locIndex)) ? "???" : SpoilerData_GetItemNameString(locIndex);
+            Draw_DrawString(10 + SPACING_X, itemPosY, color, itemText);
         }
     }
     else {
@@ -157,7 +161,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
     Draw_FlushFramebuffer();
 }
 
-static const void (*menu_draw_funcs[])(void) = {
+static void (*menu_draw_funcs[])(void) = {
     Gfx_DrawSeedHash,
     Gfx_DrawDungeonItems,
     Gfx_DrawDungeonRewards,
@@ -175,6 +179,16 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 
 static void Gfx_ShowMenu(void) {
     u32 pressed = 0;
+
+    if (!gSettingsContext.ingameSpoilers) {
+        float itemsChecked = 0;
+        for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
+            if (SpoilerData_GetIsItemLocationCollected(i)) {
+                itemsChecked++;
+            }
+        }
+        itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100;
+    }
 
     Draw_ClearFramebuffer();
     Draw_FlushFramebuffer();
@@ -233,10 +247,20 @@ static void Gfx_ShowMenu(void) {
                 Draw_FlushFramebuffer();
                 break;
             } else if (pressed & BUTTON_R1) {
-                curMenuIdx++;
+                do {
+                    curMenuIdx++;
+                    if (curMenuIdx >= ARR_SIZE(menu_draw_funcs)) {
+                        curMenuIdx = 0;
+                    }
+                } while (menu_draw_funcs[curMenuIdx] == NULL);
                 handledInput = true;
             } else if (pressed & BUTTON_L1) {
-                curMenuIdx--;
+                do {
+                    curMenuIdx--;
+                    if (curMenuIdx < 0) {
+                        curMenuIdx = (ARR_SIZE(menu_draw_funcs) - 1);
+                    }
+                } while (menu_draw_funcs[curMenuIdx] == NULL);
                 handledInput = true;
             }
         }
@@ -244,12 +268,6 @@ static void Gfx_ShowMenu(void) {
         if (handledInput) {
             Draw_ClearFramebuffer();
             Draw_FlushFramebuffer();
-        }
-
-        if (curMenuIdx < 0) {
-            curMenuIdx = (ARR_SIZE(menu_draw_funcs) - 1);
-        } else if (curMenuIdx >= ARR_SIZE(menu_draw_funcs)) {
-            curMenuIdx = 0;
         }
 
         menu_draw_funcs[curMenuIdx]();
@@ -270,6 +288,13 @@ void Gfx_Init(void) {
     else if(gSettingsContext.menuOpeningButton == 3)    closingButton = BUTTON_B | BUTTON_DOWN;
     else if(gSettingsContext.menuOpeningButton == 4)    closingButton = BUTTON_B | BUTTON_RIGHT;
     else if(gSettingsContext.menuOpeningButton == 5)    closingButton = BUTTON_B | BUTTON_LEFT;
+
+    if (gSettingsContext.shuffleRewards != REWARDSHUFFLE_END_OF_DUNGEON) {
+        menu_draw_funcs[2] = NULL;
+    }
+    if (!gSettingsContext.ingameSpoilers) {
+        menu_draw_funcs[3] = NULL;
+    }
 
     GfxInit = 1;
 }

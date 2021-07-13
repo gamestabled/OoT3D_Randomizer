@@ -25,7 +25,7 @@ namespace Settings {
   //Open Settings                                                                                                                                   Any option index past the last description will use the last description
   Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {openRandomize}, OptionCategory::Toggle);
   Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                                                   {logicGlitchless, logicNoLogic});
-  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open"},                                                           {forestClosed, forestOpen});
+  Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open", "Closed Deku"},                                            {forestClosed, forestOpen, forestClosedDeku});
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
   Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                                           {doorOfTimeDesc});
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
@@ -42,7 +42,7 @@ namespace Settings {
     &RandomizeOpen,
     &Logic,
     &OpenForest,
-    //&OpenKakariko,
+    &OpenKakariko,
     &OpenDoorOfTime,
     &ZorasFountain,
     &GerudoFortress,
@@ -57,21 +57,23 @@ namespace Settings {
   };
 
   //World Settings
-  Option RandomizeWorld          = Option::Bool("Randomize Settings", {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
-  Option StartingAge             = Option::U8  ("Starting Age",       {"Adult", "Child", "Random"},                                      {ageDesc});
+  Option RandomizeWorld            = Option::Bool("Randomize Settings",     {"No","Yes"},                                                {worldRandomize}, OptionCategory::Toggle);
+  Option StartingAge               = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                {ageDesc});
   u8 ResolvedStartingAge;
-  Option ShuffleEntrances        = Option::Bool("Shuffle Entrances",  {"Off", "On"},                                                     {shuffleEntrancesDesc});
-  Option ShuffleDungeonEntrances = Option::Bool("  Dungeon Entrances",{"Off", "On"},                                                     {dungeonEntrancesDesc});
-  Option BombchusInLogic         = Option::Bool("Bombchus in Logic",  {"Off", "On"},                                                     {bombchuLogicDesc});
-  Option AmmoDrops               = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                 {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc});
-  Option HeartDropRefill         = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                         {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc});
-  Option RandomMQDungeons        = Option::Bool("Random MQ Dungeons", {"Off", "On"},                                                     {randomMQDungeonsDesc});
-  Option MQDungeonCount          = Option::U8  ("  MQ Dungeon Count", {"0","1","2","3","4","5","6","7","8","9","10","11","12"},          {mqDungeonCountDesc});
+  Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",      {"Off", "On"},                                               {shuffleEntrancesDesc});
+  Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                               {dungeonEntrancesDesc});
+  Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                               {overworldEntrancesDesc});
+  Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                               {bombchuLogicDesc});
+  Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                               {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc});
+  Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                       {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc});
+  Option RandomMQDungeons          = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                               {randomMQDungeonsDesc});
+  Option MQDungeonCount            = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},    {mqDungeonCountDesc});
   std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
     &ShuffleEntrances,
     &ShuffleDungeonEntrances,
+    &ShuffleOverworldEntrances,
     &BombchusInLogic,
     &AmmoDrops,
     &HeartDropRefill,
@@ -153,6 +155,8 @@ namespace Settings {
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
+  Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
+  Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -163,6 +167,8 @@ namespace Settings {
     &TempleOfTimeIntro,
     &BigPoeTargetCount,
     &NumRequiredCuccos,
+    &KingZoraSpeed,
+    &CompleteMaskQuest,
   };
 
   //Misc Settings
@@ -175,6 +181,7 @@ namespace Settings {
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
   Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""});
+  Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc});
   bool HasNightStart         = false;
@@ -188,6 +195,7 @@ namespace Settings {
     &ChestAnimations,
     &ChestSize,
     &GenerateSpoilerLog,
+    &IngameSpoilers,
     &MenuOpeningButton,
     &RandomTrapDmg,
   };
@@ -207,69 +215,17 @@ namespace Settings {
   //Item Pool Settings
   Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},                         {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
   Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                      {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
+  Option RemoveDoubleDefense = Option::Bool("Remove Double Defense",  {"No", "Yes"},                                                          {removeDDDesc});
   std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
     &IceTrapValue,
+    &RemoveDoubleDefense,
   };
 
   //Excluded Locations (Individual definitions made in ItemLocation class)
   std::vector<Option *> excludeLocationsOptions = {};
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
-<<<<<<< Updated upstream
-  Option StartingItemsToggle      = Option::Bool("All Items Toggle",       {"None", "All"},                                                        {"Toggle all items at once."}, OptionCategory::Toggle);
-  Option StartingConsumables      = Option::Bool("Start with Consumables", {"No", "Yes"},                                                          {startWithConsumablesDesc});
-  Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No", "Yes"},                                                          {startWithMaxRupeesDesc});
-  Option StartingStickCapacity    = Option::U8  ("Deku Stick Capacity",    {"10 (default)", "20 Deku Sticks", "30 Deku Sticks"},                   {""});
-  Option StartingNutCapacity      = Option::U8  ("Deku Nut Capacity",      {"20 (default)", "30 Deku Nuts", "40 Deku Nuts"},                       {""});
-  Option StartingBombBag          = Option::U8  ("Bomb Bag",               {"None", "Bomb Bag 20", "Bomb Bag 30", "Bomb Bag 40"},                  {""});
-  Option StartingBombchus         = Option::U8  ("Bombchus",               {"None", "Bombchus"},                                                   {""});
-  Option StartingBow              = Option::U8  ("Bow",                    {"None", "Bow + Quiver 30", "Bow + Quiver 40", "Bow + Quiver 50"},      {""});
-  Option StartingFireArrows       = Option::U8  ("Fire Arrows",            {"None", "Fire Arrows"},                                                {""});
-  Option StartingIceArrows        = Option::U8  ("Ice Arrows",             {"None", "Ice Arrows"},                                                 {""});
-  Option StartingLightArrows      = Option::U8  ("Light Arrows",           {"None", "Light Arrows"},                                               {""});
-  Option StartingDinsFire         = Option::U8  ("Din's Fire",             {"None", "Din's Fire"},                                                 {""});
-  Option StartingFaroresWind      = Option::U8  ("Farore's Wind",          {"None", "Farore's Wind"},                                              {""});
-  Option StartingNayrusLove       = Option::U8  ("Nayru's Love",           {"None", "Nayru's Love"},                                               {""});
-  Option StartingSlingshot        = Option::U8  ("Slingshot",              {"None", "Slingshot 30", "Slingshot 40", "Slingshot 50"},               {""});
-  Option StartingBoomerang        = Option::U8  ("Boomerang",              {"None", "Boomerang"},                                                  {""});
-  Option StartingLensOfTruth      = Option::U8  ("Lens of Truth",          {"None", "Lens of Truth"},                                              {""});
-  Option StartingMagicBean        = Option::U8  ("Magic Beans",            {"None", "Magic Beans"},                                                {""});
-  Option StartingMegatonHammer    = Option::U8  ("Megaton Hammer",         {"None", "Megaton Hammer"},                                             {""});
-  Option StartingHookshot         = Option::U8  ("Hookshot",               {"None", "Hookshot", "Longshot"},                                       {""});
-  Option StartingIronBoots        = Option::U8  ("Iron Boots",             {"None", "Iron Boots"},                                                 {""});
-  Option StartingHoverBoots       = Option::U8  ("Hover Boots",            {"None", "Hover Boots"},                                                {""});
-  Option StartingBottle1          = Option::U8  ("Bottle Slot 1",          bottleOptions,                                                          {""});
-  Option StartingBottle2          = Option::U8  ("Bottle Slot 2",          bottleOptions,                                                          {""});
-  Option StartingBottle3          = Option::U8  ("Bottle Slot 3",          bottleOptions,                                                          {""});
-  Option StartingRutoBottle       = Option::U8  ("Ruto's Letter",          {"None", "Ruto's Letter"},                                              {""});
-  Option StartingOcarina          = Option::U8  ("Ocarina",                {"None", "Fairy Ocarina", "Ocarina of Time"},                           {""});
-  Option StartingZeldasLullaby    = Option::U8  ("Zelda's Lullaby",        {"None", "Zelda's Lullaby"},                                            {""});
-  Option StartingEponasSong       = Option::U8  ("Epona's Song",           {"None", "Epona's Song"},                                               {""});
-  Option StartingSariasSong       = Option::U8  ("Saria's Song",           {"None", "Saria's Song"},                                               {""});
-  Option StartingSunsSong         = Option::U8  ("Sun's Song",             {"None", "Sun's Song"},                                                 {""});
-  Option StartingSongOfTime       = Option::U8  ("Song of Time",           {"None", "Song of Time"},                                               {""});
-  Option StartingSongOfStorms     = Option::U8  ("Song of Storms",         {"None", "Song of Storms"},                                             {""});
-  Option StartingMinuetOfForest   = Option::U8  ("Minuet of Forest",       {"None", "Minuet"},                                                     {""});
-  Option StartingBoleroOfFire     = Option::U8  ("Bolero of Fire",         {"None", "Bolero"},                                                     {""});
-  Option StartingSerenadeOfWater  = Option::U8  ("Serenade of Water",      {"None", "Serenade"},                                                   {""});
-  Option StartingRequiemOfSpirit  = Option::U8  ("Requiem of Spirit",      {"None", "Requiem"},                                                    {""});
-  Option StartingNocturneOfShadow = Option::U8  ("Nocturne of Shadow",     {"None", "Nocturne"},                                                   {""});
-  Option StartingPreludeOfLight   = Option::U8  ("Prelude of Light",       {"None", "Prelude"},                                                    {""});
-  Option StartingKokiriSword      = Option::U8  ("Kokiri Sword",           {"None", "Kokiri Sword"},                                               {""});
-  Option StartingBiggoronSword    = Option::U8  ("Biggoron Sword",         {"None", "Biggoron Sword"},                                             {""});
-  Option StartingDekuShield       = Option::U8  ("Deku Shield",            {"None", "Deku Shield"},                                                {""});
-  Option StartingHylianShield     = Option::U8  ("Hylian Shield",          {"None", "Hylian Shield"},                                              {""});
-  Option StartingMirrorShield     = Option::U8  ("Mirror Shield",          {"None", "Mirror Shield"},                                              {""});
-  Option StartingGoronTunic       = Option::U8  ("Goron Tunic",            {"None", "Goron Tunic"},                                                {""});
-  Option StartingZoraTunic        = Option::U8  ("Zora Tunic",             {"None", "Zora Tunic"},                                                 {""});
-  Option StartingMagicMeter       = Option::U8  ("Magic Meter",            {"None", "Single Magic", "Double Magic"},                               {""});
-  Option StartingStrength         = Option::U8  ("Strength",               {"None", "Goron Bracelet", "Silver Gauntlets", "Gold Gauntlets"},       {""});
-  Option StartingScale            = Option::U8  ("Scale",                  {"None", "Silver Scale", "Gold Scale"},                                 {""});
-  Option StartingWallet           = Option::U8  ("Wallet",                 {"None", "Adult's Wallet", "Giant's Wallet", "Tycoon's Wallet"},        {""});
-  Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",         {"None", "Shard of Agony"},                                             {""});
-  Option StartingDoubleDefense    = Option::U8  ("Double Defense",         {"None", "Double Defense"},                                             {""});
-=======
   std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
                                             "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts"};//,  "1 heart",   "2 hearts"}; // TODO: logic for lower health
   Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
@@ -338,7 +294,6 @@ namespace Settings {
   Option StartingSpiritMedallion  = Option::U8  ("  Spirit Medallion",     {"None",             "Spirit Medall."},                                          {""});
   Option StartingShadowMedallion  = Option::U8  ("  Shadow Medallion",     {"None",             "Shadow Medall."},                                          {""});
   Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {/*Options 0-100 defined in SetDefaultSettings()*/},                             {""});
->>>>>>> Stashed changes
   std::vector<Option *> startingInventoryOptions = {
     &StartingConsumables,
     &StartingMaxRupees,
@@ -392,9 +347,6 @@ namespace Settings {
     &StartingScale,
     &StartingWallet,
     &StartingShardOfAgony,
-<<<<<<< Updated upstream
-    &StartingDoubleDefense,
-=======
     &StartingHealth,
     &StartingMagicMeter,
     &StartingDoubleDefense,
@@ -409,7 +361,6 @@ namespace Settings {
     &StartingSpiritMedallion,
     &StartingShadowMedallion,
     &StartingSkulltulaToken,
->>>>>>> Stashed changes
   };
 
   //Function to make defining logic tricks easier to read
@@ -799,6 +750,8 @@ namespace Settings {
     ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
+    ctx.kingZoraSpeed        = KingZoraSpeed.Value<u8>();
+    ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
@@ -806,6 +759,7 @@ namespace Settings {
     ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
     ctx.chestSize            = (ChestSize) ? 1 : 0;
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
+    ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
 
@@ -1057,7 +1011,7 @@ namespace Settings {
     }
 
     //Force Include scrubs if Scrubsanity is Off
-    std::vector<LocationKey> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub);
+    std::vector<LocationKey> scrubLocations = GetLocations(everyPossibleLocation, Category::cDekuScrub, Category::cDekuScrubUpgrades);
     if (Scrubsanity.Is(OFF)) {
       IncludeAndHide(scrubLocations);
     } else {
@@ -1173,7 +1127,7 @@ namespace Settings {
   void ForceChange(u32 kDown, Option* currentSetting) {
 
     //Groups the item categories; bottles are handled separately because the proper item is Empty Bottle (1)
-    CollapseCategory(StartingInventoryToggle, 3, 27);
+    CollapseCategory(StartingInventoryToggle, 3, 23);
     CollapseCategory(StartingSongsToggle, 28, 40);
     CollapseCategory(StartingUpgradesToggle, 41, 55);
     CollapseCategory(StartingQuestToggle, 56, 65);
@@ -1192,6 +1146,7 @@ namespace Settings {
         break;
       }
     }
+
     //Only hide the options for now, select them later in UpdateSettings()
     RandomizeAllSettings();
 
@@ -1259,9 +1214,12 @@ namespace Settings {
       //Show Shuffle options when Shuffle Entrances is On
       if (ShuffleEntrances) {
         ShuffleDungeonEntrances.Unhide();
+        ShuffleOverworldEntrances.Unhide();
       } else {
         ShuffleDungeonEntrances.SetSelectedIndex(OFF);
         ShuffleDungeonEntrances.Hide();
+        ShuffleOverworldEntrances.SetSelectedIndex(OFF);
+        ShuffleOverworldEntrances.Hide();
       }
     }
 
@@ -1337,8 +1295,6 @@ namespace Settings {
       HintDistribution.Unhide();
     }
 
-<<<<<<< Updated upstream
-=======
     if (RemoveDoubleDefense) {
       StartingDoubleDefense.SetSelectedIndex(0);
       StartingDoubleDefense.Lock();
@@ -1347,20 +1303,11 @@ namespace Settings {
     }
 
     //Set toggle for all tricks. 3 is Expert, 2 is Intermediate, 1 is Novice, and 0 disables all.
->>>>>>> Stashed changes
     if (currentSetting != nullptr) {
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
         for (u16 i = 1; i < Settings::detailedLogicOptions.size(); i++) {
           detailedLogicOptions[i]->SetSelectedIndex(0);
         }
-<<<<<<< Updated upstream
-      }
-
-      //Set toggle for all items
-      if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Items Toggle")  {
-        for (u16 i = 0; i < Settings::startingInventoryOptions.size(); i++) {
-          startingInventoryOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
-=======
         if(currentSetting->GetSelectedOptionIndex() >= 1){ //novice options
           LogicGrottosWithoutAgony.SetSelectedIndex(1);
           LogicVisibleCollision.SetSelectedIndex(1);
@@ -1449,7 +1396,6 @@ namespace Settings {
           LogicSpiritSunChest.SetSelectedIndex(1);
           LogicShadowFireArrowEntry.SetSelectedIndex(1);
           LogicShadowUmbrella.SetSelectedIndex(1);
->>>>>>> Stashed changes
         }
       }
     }
@@ -1504,7 +1450,7 @@ namespace Settings {
       // Skip RandomizeWorld Option
       for (size_t i=1; i < worldOptions.size(); i++) {
         // skip MQ options
-        if (i == 4 || i == 5) {
+        if (worldOptions[i] == &RandomMQDungeons || worldOptions[i] == &MQDungeonCount) {
           continue;
         }
         worldOptions[i]->Hide();
@@ -1516,7 +1462,7 @@ namespace Settings {
     }
     else {
       for (size_t i=1; i < worldOptions.size(); i++) {
-        if ((i == 4) || (i==5)) {
+        if (worldOptions[i] == &RandomMQDungeons || worldOptions[i] == &MQDungeonCount) {
           continue;
         }
         worldOptions[i]->Unhide();
@@ -1528,7 +1474,7 @@ namespace Settings {
       // Still displays if previously locked
       LinksPocketItem.Unlock();
       // Skip RandomizeShuffle Option
-      for (u8 i=1; i < shuffleOptions.size(); i++) {
+      for (size_t i=1; i < shuffleOptions.size(); i++) {
         shuffleOptions[i]->Hide();
         //randomize options
         if (selectOptions) {
@@ -1570,7 +1516,6 @@ namespace Settings {
   }
 
   //eventual settings
-  bool ShuffleOverworldEntrances        = false;
   bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
 

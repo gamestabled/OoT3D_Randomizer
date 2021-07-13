@@ -13,6 +13,7 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     // Warp Song particles
     if (thisx->params == 0x000F) {
         globalCtx->sceneLoadFlag = 0x14;
+        gGlobalContext->fadeOutTransition = 5;
         switch (globalCtx->unk_2304[0x0878]) { // text related variable
             case 0:
                 globalCtx->nextEntranceIndex = 0x0600; // Minuet

@@ -318,6 +318,8 @@ ExtendedObjectClear_patch:
 .global SariasGift_patch
 SariasGift_patch:
     bl ItemOverride_GiveSariasGift
+    nop
+    nop
 
 .section .patch_DekuTheaterSkullMask
 .global DekuTheaterSkullMask_patch
@@ -749,7 +751,7 @@ BusinessScrubTable_patch:
 .section .patch_KakarikoGateCheck
 .global KakarikoGateCheck_patch
 KakarikoGateCheck_patch:
-    b 0x28A6A0
+    bl hook_KakarikoGateCheck
 
 .section .patch_FairyReward
 .global FairyReward_patch
@@ -1092,6 +1094,22 @@ DungeonCheckJabuMQBox_patch:
 TalonGetCastleTextbox_patch:
     bl hook_TalonGetCastleTextbox
 
+.section .patch_MidoCheckSpawn
+.global MidoCheckSpawn_patch
+MidoCheckSpawn_patch:
+    bl hook_MidoCheckSpawn
+    beq 0x1661B8
+    b 0x1661A8
+
+.section .patch_MidoForestDialog
+.global MidoForestDialog_patch
+MidoForestDialog_patch:
+    nop
+    nop
+    nop
+    nop
+    bl hook_MidoForestDialog
+
 .section .patch_MidoCheckDekuTreeClearOne
 .global MidoCheckDekuTreeClearOne_patch
 MidoCheckDekuTreeClearOne_patch:
@@ -1116,13 +1134,6 @@ MidoCheckDekuTreeClearThree_patch:
 .section .patch_MidoCheckDekuTreeClearFour
 .global MidoCheckDekuTreeClearFour_patch
 MidoCheckDekuTreeClearFour_patch:
-    nop
-    nop
-    bl hook_CheckDekuTreeClear
-
-.section .patch_MidoCheckDekuTreeClearFive
-.global MidoCheckDekuTreeClearFive_patch
-MidoCheckDekuTreeClearFive_patch:
     nop
     nop
     bl hook_CheckDekuTreeClear

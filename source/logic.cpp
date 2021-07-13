@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "settings.hpp"
+#include "dungeon.hpp"
 
 using namespace Settings;
 
@@ -128,6 +129,9 @@ namespace Logic {
   u8 ProgressiveWallet    = 0;
   u8 ProgressiveStrength  = 0;
   u8 ProgressiveOcarina   = 0;
+
+  //Logical keysanity
+  bool IsKeysanity = false;
 
   //Keys
   u8 ForestTempleKeys          = 0;
@@ -406,8 +410,6 @@ namespace Logic {
 
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
-    AmmoCanDrop  = AmmoDrops.IsNot(AMMODROPS_NONE);
-
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
     Ocarina         = ProgressiveOcarina   >= 1;
     MagicMeter      = (ProgressiveMagic     >= 1) && (AmmoCanDrop || (HasBottle && (BuyGPotion || BuyBPotion)));
@@ -544,6 +546,10 @@ namespace Logic {
 
    //Reset All Logic to false
    void LogicReset() {
+     //Settings-dependent variables
+     IsKeysanity = Keysanity.Is(KEYSANITY_ANYWHERE) || Keysanity.Is(KEYSANITY_OVERWORLD) || Keysanity.Is(KEYSANITY_ANY_DUNGEON);
+     AmmoCanDrop = AmmoDrops.IsNot(AMMODROPS_NONE);
+
      //Child item logic
      KokiriSword   = false;
      ZeldasLetter  = false;
@@ -660,7 +666,8 @@ namespace Logic {
 
      //Keys
      ForestTempleKeys          = 0;
-     FireTempleKeys            = 0;
+     //If not keysanity, start with 1 logical key to account for automatically unlocking the basement door in vanilla FiT
+     FireTempleKeys            = IsKeysanity || Dungeon::FireTemple.IsMQ() ? 0 : 1;
      WaterTempleKeys           = 0;
      SpiritTempleKeys          = 0;
      ShadowTempleKeys          = 0;
@@ -705,7 +712,6 @@ namespace Logic {
      FairyPot         = false;
      FreeFairies      = false;
      FairyPond        = false;
-     AmmoCanDrop      = false;
 
      BuyBombchus5     = false;
      BuyBombchus10    = false;

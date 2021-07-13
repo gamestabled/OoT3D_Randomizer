@@ -106,6 +106,7 @@ static auto GetPlacementLogPath() {
 static void WriteIngameSpoilerLog() {
   u16 spoilerItemIndex = 0;
   u32 spoilerStringOffset = 0;
+  u16 spoilerSphereItemoffset = 0;
   bool spoilerOutOfSpace = false;
 
   // Create map of string data offsets for all _unique_ item locations and names in the playthrough
@@ -117,6 +118,42 @@ static void WriteIngameSpoilerLog() {
 
   for (const LocationKey key : allLocations) {
     auto loc = Location(key);
+
+    // Exclude uncheckable/repeatable locations from ingame tracker
+    if (!Settings::IngameSpoilers) {
+        // General
+        if (loc->IsExcluded() || loc->GetHintKey() == NONE) {
+            continue;
+        }
+        // Shops
+        else if (loc->IsShop() && (
+            loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
+            loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
+            loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS)) {
+            continue;
+        }
+        // Deku Scrubs
+        else if (Settings::Scrubsanity.Is(SCRUBSANITY_OFF) && loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades)) {
+            continue;
+        }
+        // Cows
+        else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
+            continue;
+        }
+        // Magic Bean Salesman, TODO: Remove when it checks after buying all 10
+        else if (!Settings::ShuffleMagicBeans && loc->GetHintKey() == ZR_MAGIC_BEAN_SALESMAN) {
+            continue;
+        }
+        // Merchants
+        else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
+            continue;
+        }
+        // Gerudo Fortress
+        else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
+            (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
+            continue;
+        }
+    }
 
     auto locName = loc->GetName();
     if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
@@ -149,33 +186,35 @@ static void WriteIngameSpoilerLog() {
   }
   spoilerData.ItemLocationsCount = spoilerItemIndex;
 
-  bool playthroughItemNotFound = false;
-  // Write playthrough data to in-game spoiler log
-  if (!spoilerOutOfSpace) {
-    for (u32 i = 0; i < playthroughLocations.size(); i++) {
-      if (i >= SPOILER_SPHERES_MAX) {
-        spoilerOutOfSpace = true;
-        break;
-      }
-      for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
-        if (loc >= SPOILER_SPHERE_ITEM_LOCATIONS_MAX) {
+  if (Settings::IngameSpoilers) {
+    bool playthroughItemNotFound = false;
+    // Write playthrough data to in-game spoiler log
+    if (!spoilerOutOfSpace) {
+      for (u32 i = 0; i < playthroughLocations.size(); i++) {
+        if (i >= SPOILER_SPHERES_MAX) {
           spoilerOutOfSpace = true;
           break;
         }
+        spoilerData.Spheres[i].ItemLocationsOffset = spoilerSphereItemoffset;
+        for (u32 loc = 0; loc < playthroughLocations[i].size(); ++loc) {
+          if (spoilerSphereItemoffset >= SPOILER_ITEMS_MAX) {
+            spoilerOutOfSpace = true;
+            break;
+          }
 
-        const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
-        if (foundItemLoc != itemLocationsMap.end()) {
-          spoilerData.Spheres[i].ItemLocations[loc] = foundItemLoc->second;
-        } else {
-          playthroughItemNotFound = true;
+          const auto foundItemLoc = itemLocationsMap.find(playthroughLocations[i][loc]);
+          if (foundItemLoc != itemLocationsMap.end()) {
+            spoilerData.SphereItemLocations[spoilerSphereItemoffset++] = foundItemLoc->second;
+          } else {
+            playthroughItemNotFound = true;
+          }
+          ++spoilerData.Spheres[i].ItemCount;
         }
-        ++spoilerData.Spheres[i].ItemCount;
+        ++spoilerData.SphereCount;
       }
-      ++spoilerData.SphereCount;
     }
+    if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
   }
-
-  if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
 }
 
 // Writes the location to the specified node.
@@ -224,7 +263,8 @@ static void WriteShuffledEntrance(
 ) {
   auto node = parentNode->InsertNewChildElement("entrance");
   node->SetAttribute("name", entrance->GetName().c_str());
-  node->SetText(entrance->GetConnectedRegion()->regionName.c_str());
+  auto text = entrance->GetConnectedRegion()->regionName + " from " + entrance->GetReplacement()->GetParentRegion()->regionName;
+  node->SetText(text.c_str());
 
   if (withPadding) {
     constexpr int16_t LONGEST_NAME = 56; //The longest name of a vanilla entrance
@@ -374,6 +414,26 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
   spoilerLog.RootElement()->InsertEndChild(playthroughNode);
 }
 
+//Write the randomized entrance playthrough to the spoiler log, if applicable
+static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
+  if (!Settings::ShuffleEntrances) {
+    return;
+  }
+
+  auto playthroughNode = spoilerLog.NewElement("entrance-playthrough");
+
+  for (uint i = 0; i < playthroughEntrances.size(); ++i) {
+    auto sphereNode = playthroughNode->InsertNewChildElement("sphere");
+    sphereNode->SetAttribute("level", i + 1);
+
+    for (Entrance* entrance : playthroughEntrances[i]) {
+      WriteShuffledEntrance(sphereNode, entrance, true);
+    }
+  }
+
+  spoilerLog.RootElement()->InsertEndChild(playthroughNode);
+}
+
 // Writes the WOTH locations to the spoiler log, if there are any.
 static void WriteWayOfTheHeroLocation(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("way-of-the-hero-locations");
@@ -400,26 +460,11 @@ static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
 
     auto node = parentNode->InsertNewChildElement("hint");
     node->SetAttribute("location", location->GetName().c_str());
-    node->SetText(location->GetPlacedItemName().GetEnglish().c_str());
-  }
 
-  spoilerLog.RootElement()->InsertEndChild(parentNode);
-}
-
-//Write the randomized entrances to the spoiler log, if there are any
-static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
-  if (!Settings::ShuffleEntrances) {
-    return;
-  }
-
-  auto parentNode = spoilerLog.NewElement("shuffled-entrances");
-  auto shuffledEntrances = GetShuffleableEntrances(EntranceType::All);
-
-  for (Entrance* entrance : shuffledEntrances) {
-    //Double-check that the entrance was actually shuffled
-    if (entrance->IsShuffled()) {
-      WriteShuffledEntrance(parentNode, entrance, true);
-    }
+    auto text = location->GetPlacedItemName().GetEnglish();
+    std::replace(text.begin(), text.end(), '&', ' ');
+    std::replace(text.begin(), text.end(), '^', ' ');
+    node->SetText(text.c_str());
   }
 
   spoilerLog.RootElement()->InsertEndChild(parentNode);

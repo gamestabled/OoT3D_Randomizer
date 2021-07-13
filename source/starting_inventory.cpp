@@ -11,6 +11,7 @@ using namespace Settings;
 using namespace Dungeon;
 
 std::vector<ItemKey> StartingInventory;
+u8 AdditionalHeartContainers;
 
 static void AddItemToInventory(ItemKey item, size_t count = 1) {
   StartingInventory.insert(StartingInventory.end(), count, item);
@@ -117,8 +118,6 @@ void GenerateStartingInventory() {
   AddItemToInventory(PROGRESSIVE_WALLET,        StartingWallet.Value<u8>());
   AddItemToInventory(SHARD_OF_AGONY,            StartingShardOfAgony.Value<u8>());
   AddItemToInventory(DOUBLE_DEFENSE,            StartingDoubleDefense.Value<u8>());
-<<<<<<< Updated upstream
-=======
   AddItemToInventory(KOKIRI_EMERALD,            StartingKokiriEmerald.Value<u8>());
   AddItemToInventory(GORON_RUBY,                StartingGoronRuby.Value<u8>());
   AddItemToInventory(ZORA_SAPPHIRE,             StartingZoraSapphire.Value<u8>());
@@ -155,7 +154,6 @@ void GenerateStartingInventory() {
       AddItemToInventory(TREASURE_GAME_HEART);
     }
   }
->>>>>>> Stashed changes
 }
 
 void ApplyStartingInventory() {

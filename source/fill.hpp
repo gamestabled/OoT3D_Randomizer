@@ -11,6 +11,8 @@ enum class SearchMode {
     GeneratePlaythrough,
     CheckBeatable,
     AllLocationsReachable,
+    BothAgesNoItems,
+    PoeCollectorAccess,
 };
 
 int Fill();

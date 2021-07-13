@@ -260,6 +260,7 @@ namespace Settings {
   extern u8 ResolvedStartingAge;
   extern Option ShuffleEntrances;
   extern Option ShuffleDungeonEntrances;
+  extern Option ShuffleOverworldEntrances;
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;
@@ -301,6 +302,8 @@ namespace Settings {
   extern Option TempleOfTimeIntro;
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
+  extern Option KingZoraSpeed;
+  extern Option CompleteMaskQuest;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
@@ -311,6 +314,7 @@ namespace Settings {
   extern Option ChestAnimations;
   extern Option ChestSize;
   extern Option GenerateSpoilerLog;
+  extern Option IngameSpoilers;
   extern Option MenuOpeningButton;
   extern Option RandomTrapDmg;
   extern bool HasNightStart;
@@ -321,8 +325,8 @@ namespace Settings {
 
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
+  extern Option RemoveDoubleDefense;
 
-  extern bool ShuffleOverworldEntrances;
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
 
@@ -378,8 +382,6 @@ namespace Settings {
   extern Option StartingWallet;
   extern Option StartingShardOfAgony;
   extern Option StartingDoubleDefense;
-<<<<<<< Updated upstream
-=======
   extern Option StartingHealth;
   extern Option StartingKokiriEmerald;
   extern Option StartingGoronRuby;
@@ -391,7 +393,7 @@ namespace Settings {
   extern Option StartingShadowMedallion;
   extern Option StartingLightMedallion;
   extern Option StartingSkulltulaToken;
->>>>>>> Stashed changes
+  extern Option StartingHealth;
 
   //Logic Settings
   extern Option ToggleAllDetailedLogic;

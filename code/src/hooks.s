@@ -468,6 +468,21 @@ hook_TalonGetCastleTextbox:
     pop {r0, r2-r12, lr}
     bx lr
 
+.global hook_MidoCheckSpawn
+hook_MidoCheckSpawn:
+    push {r0-r12, lr}
+    bl EnMd_ShouldSpawn
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_MidoForestDialog
+hook_MidoForestDialog:
+    push {r1-r12, lr}
+    bl EnMd_GetTextKokiriForest
+    pop {r1-r12, lr}
+    bx lr
+
 .global hook_CheckDekuTreeClear
 hook_CheckDekuTreeClear:
     push {r0-r12, lr}
@@ -664,6 +679,14 @@ hook_CarpetSalesmanSetFlag:
     bl EnJs_SetRewardFlag
     pop {r0-r12, lr}
     mvn r0,#0xC7
+    bx lr
+
+.global hook_KakarikoGateCheck
+hook_KakarikoGateCheck:
+    push {r0-r12, lr}
+    bl KakGate_CheckToFixBug
+    cmp r0,#0x1
+    pop {r0-r12, lr}
     bx lr
 
 .section .loader
