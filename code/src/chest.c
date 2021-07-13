@@ -109,7 +109,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_QUADRUPLE) {
             healthDecrement = 512; // 32 Hearts
         } else {
-			healthDecrement = 640; // 40 Hearts
+            healthDecrement = 640; // 40 Hearts
         }
 
         if (gSaveContext.doubleDefense) {
