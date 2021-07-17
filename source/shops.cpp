@@ -248,28 +248,28 @@ int GetShopsanityReplaceAmount() {
 void InitTrickNames() {
   trickNameTable[GI_SWORD_KOKIRI] = {
      Text{"Korok Sword", "Épée Korok", "Espada Korok"},
-     Text{"Hero’s Sword", "Épée du héros", "Espada del héroe"},
+     Text{"Hero's Sword", "Épée du héros", "Espada del héroe"},
      Text{"Razor Sword", "Lame rasoir", "Espada de esmeril"}};
 /*  trickNameTable[GI_SWORD_MASTER] = {
      Text{"Goddess Sword", "Épée de la déesse", "Espada Divina"},
      Text{"Gilded Sword", "Excalibur", "Espada de los Sabios"},
      Text{"Magical Sword", "Lame dorée", "Fay"}};*/
   trickNameTable[GI_SWORD_KNIFE] = {
-     Text{"Big Goron’s Sword", "Épée de gros Goron", "Espada de Big Goron"},
-     Text{"Fierce Deity’s Sword", "Épée du dieu démon", "Espada de la Fiera Deidad"},
-     Text{"Biggoron’s Knife", "Lame de Grogoron", "Daga de Biggoron"}};
+     Text{"Big Goron's Sword", "Épée de gros Goron", "Espada de Big Goron"},
+     Text{"Fierce Deity's Sword", "Épée du dieu démon", "Espada de la Fiera Deidad"},
+     Text{"Biggoron's Knife", "Lame de Grogoron", "Daga de Biggoron"}};
   trickNameTable[GI_SWORD_BGS] = {
-     Text{"Big Goron’s Sword", "Épée de gros Goron", "Espada de Big Goron"},
-     Text{"Fierce Deity’s Sword", "Épée du dieu démon", "Espada de la Fiera Deidad"},
-     Text{"Biggoron’s Knife", "Lame de Grogoron", "Daga de Biggoron"}};
+     Text{"Big Goron's Sword", "Épée de gros Goron", "Espada de Big Goron"},
+     Text{"Fierce Deity's Sword", "Épée du dieu démon", "Espada de la Fiera Deidad"},
+     Text{"Biggoron's Knife", "Lame de Grogoron", "Daga de Biggoron"}};
   trickNameTable[GI_SHIELD_DEKU] = {
      Text{"Boko Shield", "Bouclier Boko", "Escudo Boko"},
      Text{"Ordon Shield", "Bouclier de Toal", "Escudo de Ordon"},
      Text{"Wooden Shield", "Bouclier de bois", "Escudo de madera"}};
   trickNameTable[GI_SHIELD_HYLIAN] = {
-     Text{"Hyrule Shield", "Bouclier d’Hyrule", "Escudo Hylian"},
+     Text{"Hyrule Shield", "Bouclier d'Hyrule", "Escudo Hylian"},
      Text{"Goddess Shield", "Bouclier sacré", "Escudo Divino"},
-     Text{"Hero’s Shield", "Bouclier du héros", "Escudo del héroe"}};
+     Text{"Hero's Shield", "Bouclier du héros", "Escudo del héroe"}};
   trickNameTable[GI_SHIELD_MIRROR] = {
      Text{"Magic Mirror", "Miroir magique", "Escudo mágico"},
      Text{"Magical Shield", "Bouclier magique", "Escudo arcano"},
@@ -295,9 +295,9 @@ void InitTrickNames() {
      Text{"Lon Lon Egg", "Œuf Lon Lon", "Huevo Lon Lon"},
      Text{"Zora Egg", "Œuf Zora", "Huevo Zora"}};
   trickNameTable[GI_LETTER_ZELDA] = {
-     Text{"Ruto’s Letter", "Lettre de Ruto", "Carta de Ruto"},
+     Text{"Ruto's Letter", "Lettre de Ruto", "Carta de Ruto"},
      Text{"Royal Letter", "Lettre royale", "Carta para Kafei"},
-     Text{"Zelda’s Business Card", "Carte d'affaires de Zelda", "Carta"}};
+     Text{"Zelda's Business Card", "Carte d'affaires de Zelda", "Carta"}};
   trickNameTable[GI_BOOMERANG] = {
      Text{"Prank Fetch Toy", "Inséparable bâtonnet", "Bumerang"},
      Text{"Gale Boomerang", "Boomerang tornade", "Bumerán tornado"},
@@ -311,37 +311,37 @@ void InitTrickNames() {
      Text{"Magic Hammer", "Marteau magique", "Martillo mágico"},
      Text{"Skull Hammer", "Maillet ressort", "Martillo de hierro"}};
   trickNameTable[GI_STONE_OF_AGONY] = {
-     Text{"Shard of Agahnim", "Fragment d’agonie", "Piedra de Agahnim"},
+     Text{"Shard of Agahnim", "Fragment d'agonie", "Piedra de Agahnim"},
      Text{"Stone of Agony", "Fragment de cristal", "Fragmento de la Agonía"},
-     Text{"Pirate’s Charm", "Pierre de souffrance", "Amuleto Pirata"}};
+     Text{"Pirate's Charm", "Pierre de souffrance", "Amuleto Pirata"}};
   trickNameTable[GI_DINS_FIRE] = {
-     Text{"Eldin’s Fire", "Feu d’Eldin", "Fuego de Eldin"},
-     Text{"Din’s Blaze", "Flamme de Din", "Poder de Din"},
-     Text{"Din’s Pearl", "Perle de Din", "Orbe de Din"}};
+     Text{"Eldin's Fire", "Feu d'Eldin", "Fuego de Eldin"},
+     Text{"Din's Blaze", "Flamme de Din", "Poder de Din"},
+     Text{"Din's Pearl", "Perle de Din", "Orbe de Din"}};
   trickNameTable[GI_FARORES_WIND] = {
-     Text{"Faron’s Wind", "Vent de Firone", "Viento de Farone"},
-     Text{"Farore’s Windfall", "Zéphyr de Farore", "Valor de Farore"},
-     Text{"Farore’s Pearl", "Perle de Farore", "Orbe de Farore"}};
+     Text{"Faron's Wind", "Vent de Firone", "Viento de Farone"},
+     Text{"Farore's Windfall", "Zéphyr de Farore", "Valor de Farore"},
+     Text{"Farore's Pearl", "Perle de Farore", "Orbe de Farore"}};
   trickNameTable[GI_NAYRUS_LOVE] = {
-     Text{"Lanayru’s Love", "Amour de Lanelle", "Amor de Lanayru"},
-     Text{"Nayru’s Passion", "Passion de Nayru", "Sabiduría de Nayru"},
-     Text{"Nayru’s Pearl", "Perle de Nayru", "Orbe de Nayru"}};
+     Text{"Lanayru's Love", "Amour de Lanelle", "Amor de Lanayru"},
+     Text{"Nayru's Passion", "Passion de Nayru", "Sabiduría de Nayru"},
+     Text{"Nayru's Pearl", "Perle de Nayru", "Orbe de Nayru"}};
   trickNameTable[GI_ARROW_FIRE] = {
      Text{"Soul Arrow", "Flèche des esprits", "Flecha del Espíritu"},
      Text{"Bomb Arrow", "Flèche-bombe", "Flecha bomba"},
      Text{"Fire Candy", "Bonbon de feu", "Cetro de fuego"}};
   trickNameTable[GI_ARROW_ICE] = {
-     Text{"Shadow Arrow", "Flèche d’ombre", "Flecha de las Sombras"},
+     Text{"Shadow Arrow", "Flèche d'ombre", "Flecha de las Sombras"},
      Text{"Ancient Arrow", "Flèche archéonique", "Flecha ancestral"},
      Text{"Ice Trap Arrow", "Flèche de piège de glace", "Cetro de hielo"}};
   trickNameTable[GI_ARROW_LIGHT] = {
      Text{"Wind Arrow", "Flèche de vent", "Flecha del Viento"},
      Text{"Shock Arrow", "Flèches électriques", "Flecha eléctrica"},
-     Text{"Silver Arrow", "Flèches d’argent", "Flecha de plata"}};
+     Text{"Silver Arrow", "Flèches d'argent", "Flecha de plata"}};
   trickNameTable[GI_GERUDO_CARD] = {
      Text{"Desert Title Deed", "Abonnement Gerudo", "Escritura del desierto"},
-     Text{"Gerudo’s Card", "Carte Goron", "Tóken Gerudo"},
-     Text{"Gerudo’s Membership Card", "Autographe de Nabooru", "Tarjeta Gerudo"}};
+     Text{"Gerudo's Card", "Carte Goron", "Tóken Gerudo"},
+     Text{"Gerudo's Membership Card", "Autographe de Nabooru", "Tarjeta Gerudo"}};
 
   trickNameTable[0xC9] = {
      Text{"Funky Bean Pack", "Paquet de fèves magiques", "Lote de frijoles mágicos"},
@@ -362,7 +362,7 @@ void InitTrickNames() {
      Text{"Hatched Cucco", "Cocotte éclose", "Pollo de bolsillo"}};
   trickNameTable[GI_COJIRO] = {
      Text{"Blucco", "Chair-Qui-Poule", "Cucazul"},
-     Text{"Grog’s Cucco", "Cocotte de Grog", "Cuco de Grog"},
+     Text{"Grog's Cucco", "Cocotte de Grog", "Cuco de Grog"},
      Text{"Corijo", "Cojiro", "Corijo"}};
   trickNameTable[GI_ODD_MUSHROOM] = {
      Text{"Magic Mushroom", "Champignon magique", "Champiñón mágico"},
@@ -370,18 +370,18 @@ void InitTrickNames() {
      Text{"Mushroom", "Champignon", "Seta"}};
   trickNameTable[GI_ODD_POTION] = {
      Text{"Odd Medicine", "Élixir suspect", "Poción rara"},
-     Text{"Granny’s Poultice", "Mixture de Granny", "Medicina de la abuela"},
+     Text{"Granny's Poultice", "Mixture de Granny", "Medicina de la abuela"},
      Text{"Mushroom Poultice", "Mixture de champignon", "Medicina de champiñones"}};
   trickNameTable[GI_SAW] = {
-     Text{"Carpenter’s Saw", "Scie du charpentier", "Sierra del carpintero"},
-     Text{"Poacher’s Sword", "Hache du chasseur", "Espada del capataz"},
-     Text{"Grog’s Saw", "Scie de Grog", "Sierra del Cazador Furtivo"}};
+     Text{"Carpenter's Saw", "Scie du charpentier", "Sierra del carpintero"},
+     Text{"Poacher's Sword", "Hache du chasseur", "Espada del capataz"},
+     Text{"Grog's Saw", "Scie de Grog", "Sierra del Cazador Furtivo"}};
   trickNameTable[GI_SWORD_BROKEN] = {
-     Text{"Broken Biggoron’s Sword", "Épée brisée de Grogoron", "Espada de Biggoron rota"},
-     Text{"Broken Giant’s Knife", "Lame des géants brisée", "Daga gigante rota"},
-     Text{"Biggoron’s Sword", "Épée de Grogoron", "Espada de Biggoron"}};
+     Text{"Broken Biggoron's Sword", "Épée brisée de Grogoron", "Espada de Biggoron rota"},
+     Text{"Broken Giant's Knife", "Lame des géants brisée", "Daga gigante rota"},
+     Text{"Biggoron's Sword", "Épée de Grogoron", "Espada de Biggoron"}};
   trickNameTable[GI_PERSCRIPTION] = {
-     Text{"Biggoron’s Prescription", "Ordonnance de Grogoron", "Receta de Biggoron"},
+     Text{"Biggoron's Prescription", "Ordonnance de Grogoron", "Receta de Biggoron"},
      Text{"Eyedrop Prescription", "Ordonnance de gouttes", "Receta ocular"},
      Text{"Urgent Prescription", "Ordonnance urgente", "Prescripción"}};
   trickNameTable[GI_FROG] = {
@@ -389,8 +389,8 @@ void InitTrickNames() {
      Text{"Eyedrop Frog", "Grenouille-qui-louche", "Globo Ocular de Rana"},
      Text{"Frog", "Crapaud", "Rana"}};
   trickNameTable[GI_EYEDROPS] = {
-     Text{"Biggoron’s Eyedrops", "Gouttes de Grogoron", "Gotas de Biggoron"},
-     Text{"Hyrule’s Finest Eyedrops", "Eau du lac Hylia", "Gotas oculares"},
+     Text{"Biggoron's Eyedrops", "Gouttes de Grogoron", "Gotas de Biggoron"},
+     Text{"Hyrule's Finest Eyedrops", "Eau du lac Hylia", "Gotas oculares"},
      Text{"Zora Perfume", "Parfum Zora", "Perfume Zora"}};
   trickNameTable[GI_CLAIM_CHECK] = {
      Text{"Clay Check", "Certificat Grogoron", "Comprobante de Reclamación"},
@@ -416,7 +416,7 @@ void InitTrickNames() {
      Text{"Progressive Bomb Box", "Boîte à bombes (prog.)", "Bolsa de bombas progresiva"}};
   trickNameTable[0x83] = {
      Text{"Progressive Arrow Capacity", "Capacité de flèches (prog.)", "Mayor capacidad de flechas"},
-     Text{"Progressive Hero’s Bow", "Arc du héros (prog.)", "Arco del héroe progresivo"},
+     Text{"Progressive Hero's Bow", "Arc du héros (prog.)", "Arco del héroe progresivo"},
      Text{"Progressive Arrow Holder", "Arbalète (prog.)", "Ballesta progresiva"}};
   trickNameTable[0x84] = {
      Text{"Progressive Seed Capacity", "Capacité de graines (prog.)", "Mayor capacidad de semillas"},
@@ -443,8 +443,8 @@ void InitTrickNames() {
      Text{"Progressive Missiles", "Missiles (prog.)", "Misiles progresivos"},
      Text{"Progressive Bombchu Bag", "Sac à Bombchu (prog.)", "Bombachus progresivos"}};
   trickNameTable[0x8A] = {
-     Text{"Progressive Stamina Meter", "Jauge d’endurance (prog.)", "Medidor de vigor progresivo"},
-     Text{"Progressive Energy Meter", "Jauge d’énergie (prog.)", "Medidor de energía progresivo"},
+     Text{"Progressive Stamina Meter", "Jauge d'endurance (prog.)", "Medidor de vigor progresivo"},
+     Text{"Progressive Energy Meter", "Jauge d'énergie (prog.)", "Medidor de energía progresivo"},
      Text{"Progressive Magic Powder", "Poudre magique (prog.)", "Medidor de carga progresivo"}};
   trickNameTable[0x8B] = {
      Text{"Progressive Memento", "Souvenir (prog.)", "Silbato progresivo"},
@@ -454,31 +454,31 @@ void InitTrickNames() {
   trickNameTable[0x0F] = {
      Text{"Magic Bottle", "Flacon magique", "Frasco feérico"},
      Text{"Glass Bottle", "Flacon de verre", "Botella de cristal"},
-     Text{"Bottle with Water", "Flacon d’eau", "Botella Tingle"}};
+     Text{"Bottle with Water", "Flacon d'eau", "Botella Tingle"}};
   trickNameTable[0x14] = {
      Text{"Bottle with Chateau Romani", "Flacon de cuvée Romani", "Botella de Reserva Romani"},
      Text{"Bottle with Fresh Milk", "Flacon de lait frais", "Botella de leche fresca"},
      Text{"Bottle with Mystery Milk", "Flacon de lait grand cru", "Botella de leche extra"}};
   trickNameTable[0x8C] = {
      Text{"Bottle with Red Chu Jelly", "Flacon de gelée Chuchu rouge", "Jugo de Chuchu Rojo"},
-     Text{"Bottle with Medicine of Life", "Flacon d’élixir rouge", "Botella de medicina de la vida"},
+     Text{"Bottle with Medicine of Life", "Flacon d'élixir rouge", "Botella de medicina de la vida"},
      Text{"Bottle with Heart Potion", "Flacon de potion de soin", "Botella de poción de salud"}};
   trickNameTable[0x8D] = {
      Text{"Bottle with Green Chu Jelly", "Flacon de gelée Chuchu verte", "Jugo de Chuchu Verde"},
-     Text{"Bottle with Medicine of Magic", "Flacon d’élixir vert", "Botella de medicina mágica"},
-     Text{"Bottle with Stamina Potion", "Flacon d’Endurol", "Botella de elixir vigorizante"}};
+     Text{"Bottle with Medicine of Magic", "Flacon d'élixir vert", "Botella de medicina mágica"},
+     Text{"Bottle with Stamina Potion", "Flacon d'Endurol", "Botella de elixir vigorizante"}};
   trickNameTable[0x8E] = {
      Text{"Bottle with Blue Chu Jelly", "Flacon de gelée Chuchu bleue", "Jugo de Chuchu Azul"},
-     Text{"Bottle with Water of Life", "Flacon d’élixir bleu", "Botella de agua de la vida"},
-     Text{"Bottle with Air Potion", "Flacon de potion d’oxygène", "Botella de oxígeno"}};
+     Text{"Bottle with Water of Life", "Flacon d'élixir bleu", "Botella de agua de la vida"},
+     Text{"Bottle with Air Potion", "Flacon de potion d'oxygène", "Botella de oxígeno"}};
   trickNameTable[0x8F] = {
      Text{"Bottle with Forest Firefly", "Flacon avec une luciole", "Luciérnaga del bosque"},
      Text{"Bottle with Faerie", "Flacon de poudre féérique", "Gran Hada embotellada"},
      Text{"Bottle with Stray Fairy", "Flacon avec une fée perdue", "Hada perdida en una botella"}};
   trickNameTable[0x90] = {
      Text{"Bottle with Small Jabu-Jabu", "Flacon avec mini Jabu-Jabu", "Lord Chapu-Chapu embotellado"},
-     Text{"Bottle with Hyrule Bass", "Flacon avec perche d’Hyrule", "Locha de Hyrule embotellada"},
-     Text{"Bottle with Hyrule Loach", "Flacon avec loche d’Hyrule", "Perca de Términa embotellada"}};
+     Text{"Bottle with Hyrule Bass", "Flacon avec perche d'Hyrule", "Locha de Hyrule embotellada"},
+     Text{"Bottle with Hyrule Loach", "Flacon avec loche d'Hyrule", "Perca de Términa embotellada"}};
   trickNameTable[0x91] = {
      Text{"Bottle with Will-O-Wisp", "Flacon avec feu follet", "Botella de llama azul"},
      Text{"Bottle with Ancient Flame", "Flacon de flamme ancienne", "Botella de fuego ancestral"},
@@ -493,9 +493,9 @@ void InitTrickNames() {
      Text{"Bottle with Anti-Fairy", "Flacon avec Tetdoss", "Whisp en una botella"}};
 
   trickNameTable[0x15] = {
-     Text{"Bottle with Maggie’s Letter", "Flacon avec lettre de Maggy", "Carta de Dolores"},
+     Text{"Bottle with Maggie's Letter", "Flacon avec lettre de Maggy", "Carta de Dolores"},
      Text{"Bottle with Letter to Kafei", "Flacon avec lettre pour Kafei", "Carta para Kafei"},
-     Text{"Bottle with Zelda’s Letter", "Flacon avec lettre de Zelda", "Carta náutica"}};
+     Text{"Bottle with Zelda's Letter", "Flacon avec lettre de Zelda", "Carta náutica"}};
   trickNameTable[0x93] = {
      Text{"Bottle with Composer Brother", "Flacon avec un compositeur", "Hermana Poe embotellada"},
      Text{"Bottle with Jalhalla", "Flacon avec Jalhalla", "Yaihalla embotellado"},
@@ -503,15 +503,15 @@ void InitTrickNames() {
 
   trickNameTable[0xC1] = {
      Text{"Ballad of the Goddess", "Chant de la déesse", "Cántico de la Diosa"},
-     Text{"Song of Healing", "Chant de l’apaisement", "Canción de curación"},
+     Text{"Song of Healing", "Chant de l'apaisement", "Canción de curación"},
      Text{"Bolero of Fire", "Boléro du feu", "Bolero del fuego"}};
   trickNameTable[0xC2] = {
-     Text{"Earth God’s Lyric", "Hymne du dieu de la terre", "Melodía del Espíritu de la Tierra"},
-     Text{"Song of Soaring", "Chant de l’envol", "Canción del viento"},
+     Text{"Earth God's Lyric", "Hymne du dieu de la terre", "Melodía del Espíritu de la Tierra"},
+     Text{"Song of Soaring", "Chant de l'envol", "Canción del viento"},
      Text{"Requiem of Spirit", "Requiem des esprits", "Réquiem del espíritu"}};
   trickNameTable[0xC3] = {
-     Text{"Wind God’s Aria", "Hymne du dieu du vent", "Melodía del Espíritu del Viento"},
-     Text{"Wind’s Requiem", "Mélodie du vent", "Melodía del Viento"},
+     Text{"Wind God's Aria", "Hymne du dieu du vent", "Melodía del Espíritu del Viento"},
+     Text{"Wind's Requiem", "Mélodie du vent", "Melodía del Viento"},
      Text{"Minuet of Forest", "Menuet de la forêt", "Minueto del bosque"}};
   trickNameTable[0xC4] = {
      Text{"Song of Passing", "Mambo de Manbo", "Melodía del transcurrir"},
@@ -520,14 +520,14 @@ void InitTrickNames() {
   trickNameTable[0xC5] = {
      Text{"Song of Double Time", "Chant accéléré", "Canción del doble tiempo"},
      Text{"Inverted Song of Time", "Chant du temps inversé", "Canción del tiempo invertida"},
-     Text{"Serenade of Water", "Sérénade de l’eau", "Serenata del agua"}};
+     Text{"Serenade of Water", "Sérénade de l'eau", "Serenata del agua"}};
   trickNameTable[0xC6] = {
      Text{"Ballad of Gales", "Requiem de la tornade", "Melodía del Tornado"},
-     Text{"Frog’s Song of Soul", "Rap des grenouilles", "Canción del alma de la rana"},
-     Text{"Nocturne of Shadow", "Nocturne de l’ombre", "Nocturno de la sombra"}};
+     Text{"Frog's Song of Soul", "Rap des grenouilles", "Canción del alma de la rana"},
+     Text{"Nocturne of Shadow", "Nocturne de l'ombre", "Nocturno de la sombra"}};
   trickNameTable[0xBB] = {
      Text{"Saria's Karaoke", "Karaoké de Saria", "Dueto del bosque"},
-     Text{"Sonata of Awakening", "Sonate de l’éveil", "Sonata del despertar"},
+     Text{"Sonata of Awakening", "Sonate de l'éveil", "Sonata del despertar"},
      Text{"Saria's Song", "Chant de Saria", "Canción de Saria"}};
   trickNameTable[0xBC] = {
      Text{"Darunia's Tango", "Tango de Darunia", "Coro del fuego"},
@@ -540,10 +540,10 @@ void InitTrickNames() {
   trickNameTable[0xBE] = {
      Text{"Nabooru's Reggae", "Reggae de Nabooru", "Reggae del espíritu"},
      Text{"Elegy of Emptiness", "Hymne du vide", "Elegía al vacío"},
-     Text{"Epona's Song", "Chant d’Épona", "Canción de Epona"}};
+     Text{"Epona's Song", "Chant d'Épona", "Canción de Epona"}};
   trickNameTable[0xBF] = {
-     Text{"Impa's Death Metal", "Death métal d’Impa", "Diurno de la sombra"},
-     Text{"Oath to Order", "Ode de l’appel", "Oda al orden"},
+     Text{"Impa's Death Metal", "Death métal d'Impa", "Diurno de la sombra"},
+     Text{"Oath to Order", "Ode de l'appel", "Oda al orden"},
      Text{"Song of Storms", "Chant des tempêtes", "Canción de la tormenta"}};
   trickNameTable[0xC0] = {
      Text{"Rauru's Sing-Along", "Chansonnette de Rauru", "Predulio de luz"},
@@ -552,16 +552,16 @@ void InitTrickNames() {
 
   trickNameTable[0xCB] = {
      Text{"Pendant of Courage", "Pendentif du courage", "Colgante del valor"},
-     Text{"Farore’s Emerald", "Émeraude de Farore", "Esmeralda de Farore"},
-     Text{"Kokiri’s Peridot", "Péridot Kokiri", "Ágata de los Kokiri"}};
+     Text{"Farore's Emerald", "Émeraude de Farore", "Esmeralda de Farore"},
+     Text{"Kokiri's Peridot", "Péridot Kokiri", "Ágata de los Kokiri"}};
   trickNameTable[0xCC] = {
      Text{"Pendant of Power", "Pendentif de la force", "Colgante del poder"},
-     Text{"Din’s Ruby", "Rubis de Din", "Rubí de Din"},
-     Text{"Goron’s Garnet", "Grenat Goron", "Topacio de los Goron"}};
+     Text{"Din's Ruby", "Rubis de Din", "Rubí de Din"},
+     Text{"Goron's Garnet", "Grenat Goron", "Topacio de los Goron"}};
   trickNameTable[0xCD] = {
      Text{"Pendant of Wisdom", "Pendentif de la sagesse", "Colgante de la sabiduría"},
-     Text{"Nayru’s Sapphire", "Saphir de Nayru", "Zafiro de Nayru"},
-     Text{"Zora’s Aquamarine", "Aquamarine Zora", "Lapislázuli de los Zora"}};
+     Text{"Nayru's Sapphire", "Saphir de Nayru", "Zafiro de Nayru"},
+     Text{"Zora's Aquamarine", "Aquamarine Zora", "Lapislázuli de los Zora"}};
   trickNameTable[0xCE] = {
      Text{"Wind Medallion", "Médaillon du vent", "Medallón del Viento"},
      Text{"Saria's Medallion", "Médaillon de Saria", "Medallón de Saria"},
@@ -573,17 +573,17 @@ void InitTrickNames() {
   trickNameTable[0xD0] = {
      Text{"Ice Medallion", "Médaillon de glace", "Medallón Helado"},
      Text{"Ruto's Medallion", "Médaillon de Ruto", "Medallón de Ruto"},
-     Text{"Medallion of Water", "Médaillon du temple de l’eau", "Medalla del Agua"}};
+     Text{"Medallion of Water", "Médaillon du temple de l'eau", "Medalla del Agua"}};
   trickNameTable[0xD1] = {
      Text{"Quake Medallion", "Médaillon des secousses", "Medallón Llamarada"},
      Text{"Nabooru's Medallion", "Médaillon de Nabooru", "Medallón de Nabooru"},
-     Text{"Medallion of Spirit", "Médaillon du temple de l’esprit", "Medalla del Espíritu"}};
+     Text{"Medallion of Spirit", "Médaillon du temple de l'esprit", "Medalla del Espíritu"}};
   trickNameTable[0xD2] = {
      Text{"Travel Medallion", "Amulette de téléportation", "Medallón Maligno"},
-     Text{"Impa's Medallion", "Médaillon d’Impa", "Medallón de Impa"},
-     Text{"Medallion of Shadow", "Médaillon du temple de l’ombre", "Medalla de la Sombra"}};
+     Text{"Impa's Medallion", "Médaillon d'Impa", "Medallón de Impa"},
+     Text{"Medallion of Shadow", "Médaillon du temple de l'ombre", "Medalla de la Sombra"}};
   trickNameTable[0xD3] = {
-     Text{"Ether Medallion", "Médaillon d’éther", "Medallón de Tesoro"},
+     Text{"Ether Medallion", "Médaillon d'éther", "Medallón de Tesoro"},
      Text{"Rauru's Medallion", "Médaillon de Rauru", "Medallón de Rauru"},
      Text{"Medallion of Light", "Médaillon du temple de lumière", "Medalla de la Luz"}};
 
@@ -612,13 +612,13 @@ void InitTrickNames() {
      Text{"Two Hundred Rupees", "Deux cent rubis", "Euro hyliano"},
      Text{"Rupee (200)", "Rubis (200)", "Dólar hyliano"}};
   trickNameTable[GI_HEART_PIECE] = {
-     Text{"Piece of Health", "Quart d’énergie", "Pieza de amor"},
-     Text{"Recovery Heart", "Cœur d’énergie", "Corazón"},
+     Text{"Piece of Health", "Quart d'énergie", "Pieza de amor"},
+     Text{"Recovery Heart", "Cœur d'énergie", "Corazón"},
      Text{"Heart Container", "Réceptacle de cœur", "Contenedor de corazón"}};
   trickNameTable[GI_HEART_CONTAINER_2] = {
-     Text{"Health Container", "Réceptacle d’énergie", "Contenedor de amor"},
+     Text{"Health Container", "Réceptacle d'énergie", "Contenedor de amor"},
      Text{"Recovery Heart", "Quart de cœur", "Corazón"},
-     Text{"Piece of Heart", "Cœur d’énergie", "Pieza de corazón"}};
+     Text{"Piece of Heart", "Cœur d'énergie", "Pieza de corazón"}};
 
 /*
   //Names for individual upgrades, in case progressive names are replaced
@@ -636,23 +636,23 @@ void InitTrickNames() {
      Text{"Small Bomb Bag", "Petit sac de bombes", "Zurrón de bombas pequeño"}};
   trickNameTable[GI_BOMB_BAG_2] = {
 	 Text{"Bomb Capacity (30)", "Capacité de bombes (30)", "Bolsa de bombas (contiene 30)"},
-     Text{"Silver Bomb Bag", "Sac de bombes d’argent", "Saco plateado de bombas"},
+     Text{"Silver Bomb Bag", "Sac de bombes d'argent", "Saco plateado de bombas"},
      Text{"Medium Bomb Bag", "Sac de bombes moyen", "Zurrón de bombas mediano"}};
   trickNameTable[GI_BOMB_BAG_3] = {
 	 Text{"Bomb Capacity (40)", "Capacité de bombes (40)", "Bolsa de bombas (contiene 40)"},
-     Text{"Golden Bomb Bag", "Sac de bombes d’or", "Saco dorado de bombas"},
+     Text{"Golden Bomb Bag", "Sac de bombes d'or", "Saco dorado de bombas"},
      Text{"Large Bomb Bag", "Gros sac de bombes", "Zurrón de bombas grande"}};
   trickNameTable[GI_BOW_1] = {
 	 Text{"Bow", "Arc", "Arco del Hada"},
-     Text{"Hero’s Bow", "Arc du héros", "Arco del héroe"},
+     Text{"Hero's Bow", "Arc du héros", "Arco del héroe"},
      Text{"Small Quiver", "Petit carquois", "Saco de flechas pequeño"}};
   trickNameTable[GI_BOW_2] = {
 	 Text{"Arrow Capacity (40)", "Capacité de flèches (40)", "Capacidad de flechas (40)"},
-     Text{"Silver Quiver", "Carquois d’argent", "Carcaj plateado"},
+     Text{"Silver Quiver", "Carquois d'argent", "Carcaj plateado"},
      Text{"Medium Quiver", "Carquois moyen", "Saco de flechas mediano"}};
   trickNameTable[GI_BOW_3] = {
 	 Text{"Arrow Capacity (50)", "Capacité de flèches (50)", "Capacidad de flechas (50)"},
-     Text{"Golden Quiver", "Carquois d’or", "Carcaj dorado"},
+     Text{"Golden Quiver", "Carquois d'or", "Carcaj dorado"},
      Text{"Large Quiver", "Gros carquois", "Saco de flechas grande"}};
   trickNameTable[GI_SLINGSHOT_1] = {
 	 Text{"Slingshot", "Lance-pierre", "Tirachinas del Hada"},
@@ -660,43 +660,43 @@ void InitTrickNames() {
      Text{"Small Seed Satchel", "Petit sac de graines", "Bolsa de semillas pequeña"}};
   trickNameTable[GI_SLINGSHOT_2] = {
 	 Text{"Deku Seed Capacity (40)", "Capacité de graines (40)", "Capacidad de semillas (40)"},
-     Text{"Silver Deku Seed Bullet Bag", "Sac de graines d’argent", "Bolsa de balas (contiene 40)"},
+     Text{"Silver Deku Seed Bullet Bag", "Sac de graines d'argent", "Bolsa de balas (contiene 40)"},
      Text{"Medium Seed Satchel", "Sac de graines moyen", "Bolsa de semillas mediana"}};
   trickNameTable[GI_SLINGSHOT_3] = {
 	 Text{"Deku Seed Capacity (50)", "Capacité de graines (50)", "Capacidad de semillas (50)"},
-     Text{"Golden Deku Seed Bullet Bag", "Sac de graines d’or", "Bolsa de balas (contiene 50)"},
+     Text{"Golden Deku Seed Bullet Bag", "Sac de graines d'or", "Bolsa de balas (contiene 50)"},
      Text{"Large Seed Satchel", "Gros sac de graines", "Bolsa de semillas grande"}};
   trickNameTable[GI_STRENGTH_1] = {
-	 Text{"Goron’s Gauntlet", "Gantelet Goron", "Brazalete amarillo"},
+	 Text{"Goron's Gauntlet", "Gantelet Goron", "Brazalete amarillo"},
      Text{"Power Bracelet", "Bracelet de force", "Brazalete de fuerza"},
      Text{"Magic Bracelet", "Bracelet de Lavio", "Brazalete de Ravio"}};
   trickNameTable[GI_STRENGTH_2] = {
-	 Text{"Silver Bracelets", "Bracelets d’argent", "Guantes Moguma"},
+	 Text{"Silver Bracelets", "Bracelets d'argent", "Guantes Moguma"},
      Text{"Power Gloves", "Gant de puissance", "Guante del Poder"},
      Text{"Magic Gauntlets", "Gantelet magique", "Guante mágico"}};
   trickNameTable[GI_STRENGTH_3] = {
-	 Text{"Golden Bracelets", "Bracelets d’or", "Guantelete de Thanos"},
-     Text{"Titan’s Mitts", "Moufle de titan", "Guantes de Titán"},
+	 Text{"Golden Bracelets", "Bracelets d'or", "Guantelete de Thanos"},
+     Text{"Titan's Mitts", "Moufle de titan", "Guantes de Titán"},
      Text{"Magnetic Gloves", "Magnéto-gants", "Guantes de fuego"}};
   trickNameTable[GI_SCALE_1] = {
-	 Text{"Silver Pearl", "Perle d’argent", "Perla de Plata progresiva"},
-     Text{"Adult Scale", "Écaille d’adulte", "Bola de bolos zora"},
+	 Text{"Silver Pearl", "Perle d'argent", "Perla de Plata progresiva"},
+     Text{"Adult Scale", "Écaille d'adulte", "Bola de bolos zora"},
      Text{"Zora Scale", "Écaille Zora", "Escama de Zora"}};
   trickNameTable[GI_SCALE_2] = {
-	 Text{"Golden Pearl", "Perle d’or", "Perla de Oro progresiva"},
+	 Text{"Golden Pearl", "Perle d'or", "Perla de Oro progresiva"},
      Text{"Giant Scale", "Écaille de géant", "Escama de Faren"},
-     Text{"Water Dragon Scale", "Écaille du dragon de l’eau", "Escama de dragón acuático"}};
+     Text{"Water Dragon Scale", "Écaille du dragon de l'eau", "Escama de dragón acuático"}};
   trickNameTable[GI_WALLET_1] = {
 	 Text{"Rupee Capacity (200)", "Capacité de rubis (200)", "Capacidad de rupias (200)"},
-     Text{"Silver Wallet", "Bourse d’argent", "Cartera de rupias de adulto"},
+     Text{"Silver Wallet", "Bourse d'argent", "Cartera de rupias de adulto"},
      Text{"Medium Wallet", "Bourse moyenne", "Zurrón de rupias mediano"}};
   trickNameTable[GI_WALLET_2] = {
 	 Text{"Rupee Capacity (500)", "Capacité de rubis (500)", "Capacidad de rupias (500)"},
-     Text{"Golden Wallet", "Bourse d’or", "Cartera de rupias gigante"},
+     Text{"Golden Wallet", "Bourse d'or", "Cartera de rupias gigante"},
      Text{"Large Wallet", "Grosse bourse", "Zurrón de rupias grande"}};
   trickNameTable[GI_WALLET_3] = {
 	 Text{"Rupee Capacity (999)", "Capacité de rubis (999)", "Capacidad de rupias (999)"},
-     Text{"Golden Wallet", "Bourse d’or", "Cartera de ricachón"},
+     Text{"Golden Wallet", "Bourse d'or", "Cartera de ricachón"},
      Text{"Large Wallet", "Grosse bourse", "Zurrón de rupias gigante"}};
   trickNameTable[GI_DEKU_NUT_UPGRADE_1] = {
 	 Text{"Deku Bomb Capacity (30)", "Capacité de bombes Mojo (30)", "Capacidad de semillas deku (40)"},
@@ -715,20 +715,20 @@ void InitTrickNames() {
      Text{"Boko Stick Capacity (30)", "Capacité de bâtons Boko (30)", "Capacidad de palos boko (30)"},
      Text{"Deku Stick Pack (30)", "Paquet de bâtons Mojo (30)", "Capacidad de bastones deku (30)"}};
   trickNameTable[GI_MAGIC_1] = {
-	 Text{"Stamina Meter", "Jauge d’endurance", "Medidor de vigor"},
-     Text{"Energy Meter", "Jauge d’énergie", "Medidor de energía"},
+	 Text{"Stamina Meter", "Jauge d'endurance", "Medidor de vigor"},
+     Text{"Energy Meter", "Jauge d'énergie", "Medidor de energía"},
      Text{"Magic Powder", "Poudre magique", "Medidor de carga"}};
   trickNameTable[GI_MAGIC_2] = {
-	 Text{"Enhanced Stamina Meter", "Jauge d’endurance améliorée", "Medidor de vigor mejorado"},
-     Text{"Enhanced Energy Meter", "Jauge d’énergie améliorée", "Medidor de energía mejorado"},
+	 Text{"Enhanced Stamina Meter", "Jauge d'endurance améliorée", "Medidor de vigor mejorado"},
+     Text{"Enhanced Energy Meter", "Jauge d'énergie améliorée", "Medidor de energía mejorado"},
      Text{"Enhanced Magic Powder", "Poudre magique améliorée", "Medidor de carga mejorado"}};
   trickNameTable[GI_OCARINA_1] = {
 	 Text{"Ocarina", "Ocarina", "Ocarina"},
-     Text{"Saria’s Ocarina", "Ocarina de Saria", "Ocarina de Saria"},
+     Text{"Saria's Ocarina", "Ocarina de Saria", "Ocarina de Saria"},
      Text{"Wood Ocarina", "Ocarina de bois", "Ocarina del Hada"}};
   trickNameTable[GI_OCARINA_2] = {
 	 Text{"Flute", "Flûte", "Flauta"},
-     Text{"Zelda’s Ocarina", "Ocarina de Zelda", "Ocarina de Zelda"},
+     Text{"Zelda's Ocarina", "Ocarina de Zelda", "Ocarina de Zelda"},
      Text{"Ocarina of Winds", "Ocarina des vents", "Ocarina del Viento"}};
   trickNameTable[GI_CUCCO] = {
 	 Text{"D.I.Y. Alarm Clock", "Réveille-matin improvisé", "Alarma emplumada"},
@@ -737,11 +737,11 @@ void InitTrickNames() {
   trickNameTable[GI_MASK_KEATON] = {
 	 Text{"Kee... Something Mask", "Masque de Quiche", "Máscara Kealgo"},
      Text{"Kitsune Mask", "Masque de Kitsune", "Máscara Kitsune"},
-     Text{"Kafei’s Mask", "Masque de Kafei", "Máscara de Kafei"}};
+     Text{"Kafei's Mask", "Masque de Kafei", "Máscara de Kafei"}};
   trickNameTable[GI_MASK_SKULL] = {
-	 Text{"Skull Kid’s Mask", "Masque de Skull Kid", "Máscara de Skull Kid"},
+	 Text{"Skull Kid's Mask", "Masque de Skull Kid", "Máscara de Skull Kid"},
      Text{"Stalfos Mask", "Masque de squelette", "Máscara de Stalfos"},
-     Text{"Captain’s Hat", "Heaume du capitaine", "Casco del capitán"}};
+     Text{"Captain's Hat", "Heaume du capitaine", "Casco del capitán"}};
   trickNameTable[GI_MASK_SPOOKY] = {
 	 Text{"Skrik Mask", "Masque Skrik", "Máscara Escalofriante"},
      Text{"ReDead Mask", "Masque de Remort", "Máscara de ReDead"},
@@ -749,7 +749,7 @@ void InitTrickNames() {
   trickNameTable[GI_MASK_BUNNY] = {
 	 Text{"Peppy Mask", "Masque de Peppy", "Capucha de Pascua"},
      Text{"Bunny Ears", "Oreilles de lapin", "Orejas de conejo"},
-     Text{"Postman’s Hat", "Casquette du facteur", "Gorra de cartero"}};
+     Text{"Postman's Hat", "Casquette du facteur", "Gorra de cartero"}};
   trickNameTable[GI_MASK_GORON] = {
 	 Text{"Goro Mask", "Masque Goro", "Máscara Goro"},
      Text{"Mask of Goron", "Masque des Gorons", "Máscara de los Goron"},
