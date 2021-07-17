@@ -1,4 +1,5 @@
 #include "z3D/z3D.h"
+#include "settings.h"
 #include "demo_kankyo.h"
 
 #define DemoKankyo_Update_addr 0x262EA4
@@ -57,4 +58,8 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             CsTimer = 1180;
         }
     }
+}
+
+u32 DoorOfTime_RequirementCheck() {
+    return gSettingsContext.openDoorOfTime == OPENDOOROFTIME_CLOSED || (((gSaveContext.questItems >> 18) & 0x7) == 0x7 && gSaveContext.items[SLOT_OCARINA] == ITEM_OCARINA_TIME);
 }

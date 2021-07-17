@@ -26,7 +26,7 @@ namespace Settings {
   Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {openRandomize}, OptionCategory::Toggle);
   Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open", "Closed Deku"},                                            {forestClosed, forestOpen, forestClosedDeku});
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
-  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                                           {doorOfTimeDesc});
+  Option OpenDoorOfTime      = Option::U8  ("Door of Time",           {"Open", "Closed", "Intended"},                                               {doorOfTimeOpen, doorOfTimeClosed, doorOfTimeIntended});
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {gerudoNormal, gerudoFast, gerudoOpen});
   Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens});
@@ -747,7 +747,7 @@ namespace Settings {
     ctx.logic                = Logic.Value<u8>();
     ctx.openForest           = OpenForest.Value<u8>();
     ctx.openKakariko         = OpenKakariko.Value<u8>();
-    ctx.openDoorOfTime       = (OpenDoorOfTime) ? 1 : 0;
+    ctx.openDoorOfTime       = OpenDoorOfTime.Value<u8>();
     ctx.zorasFountain        = ZorasFountain.Value<u8>();
     ctx.gerudoFortress       = GerudoFortress.Value<u8>();
     ctx.rainbowBridge        = Bridge.Value<u8>();
@@ -945,7 +945,6 @@ namespace Settings {
   //Set default settings for all settings where the default is not the first option
   void SetDefaultSettings() {
     OpenForest.SetSelectedIndex(OPENFOREST_OPEN);
-    OpenDoorOfTime.SetSelectedIndex(1); //1 is Open, 0 is Closed
     Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
     BridgeTokenCount.Hide();
     RandomGanonsTrials.SetSelectedIndex(ON);

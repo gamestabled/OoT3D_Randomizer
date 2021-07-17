@@ -30,6 +30,12 @@ typedef enum {
 } OpenKakarikoSetting;
 
 typedef enum {
+  OPENDOOROFTIME_OPEN,
+  OPENDOOROFTIME_CLOSED,
+  OPENDOOROFTIME_INTENDED,
+} OpenDoorOfTimeSetting;
+
+typedef enum {
   ZORASFOUNTAIN_NORMAL,
   ZORASFOUNTAIN_ADULT,
   ZORASFOUNTAIN_OPEN,

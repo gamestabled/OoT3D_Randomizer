@@ -689,6 +689,16 @@ hook_KakarikoGateCheck:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_DoorOfTimeCheck
+hook_DoorOfTimeCheck:
+    cmp r0,#0x4
+    bne 0x274B70
+    push {r0-r12, lr}
+    bl DoorOfTime_RequirementCheck
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_GKSetDurability
 hook_GKSetDurability:
     push {r0-r12, lr}

@@ -472,6 +472,10 @@ SECTIONS
 		*(.patch_WaterTempleItemGiveTwo)
 	}
 
+	.patch_DoorOfTimeCheck 0x274B68 : {
+		*(.patch_DoorOfTimeCheck)
+	}
+
 	.patch_FireTempleItemGiveThree 0x27D060 : {
 		*(.patch_FireTempleItemGiveThree)
 	}

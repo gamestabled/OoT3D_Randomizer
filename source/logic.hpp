@@ -188,6 +188,7 @@ namespace Logic {
   /  every time a base value is updated.                       */
 
   extern bool Ocarina;
+  extern bool OcarinaOfTime;
   extern bool MagicMeter;
   extern bool Hookshot;
   extern bool Longshot;
