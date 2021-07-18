@@ -3279,12 +3279,12 @@ void AreaTable_Init() {
 
   areaTable[SPIRIT_TEMPLE_MQ_CHILD] = Area("Spirit Temple MQ Child", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&FairyPot, []{return FairyPot || ((Sticks || KokiriSword) && HasBombchus && Slingshot);}),
+                  EventAccess(&FairyPot, []{return FairyPot || (KokiriSword && HasBombchus && Slingshot);}),
   }, {
                   //Locations
                   LocationAccess(SPIRIT_TEMPLE_MQ_CHILD_HAMMER_SWITCH_CHEST,  []{return Here(SPIRIT_TEMPLE_MQ_ADULT, []{return SmallKeys(SpiritTempleKeys, 7) && Hammer;});}),
-                  LocationAccess(SPIRIT_TEMPLE_MQ_MAP_ROOM_ENEMY_CHEST,       []{return (Sticks || KokiriSword) && HasBombchus && Slingshot && CanUse(CanUseItem::Dins_Fire);}),
-                  LocationAccess(SPIRIT_TEMPLE_MQ_MAP_CHEST,                  []{return Sticks || KokiriSword || Bombs;}),
+                  LocationAccess(SPIRIT_TEMPLE_MQ_MAP_ROOM_ENEMY_CHEST,       []{return KokiriSword && HasBombchus && Slingshot && CanUse(CanUseItem::Dins_Fire);}),
+                  LocationAccess(SPIRIT_TEMPLE_MQ_MAP_CHEST,                  []{return KokiriSword || Bombs;}),
                   LocationAccess(SPIRIT_TEMPLE_MQ_SILVER_BLOCK_HALLWAY_CHEST, []{return HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (Here(SPIRIT_TEMPLE_MQ_ADULT, []{return CanUse(CanUseItem::Fire_Arrows);})));}),
                     //Trick: HasBombchus && SmallKeys(SpiritTempleKeys, 7) && Slingshot && (CanUse(CanUseItem::Dins_Fire) || (SPIRIT_TEMPLE_MQ_ADULT.Adult() && (CanUse(CanUseItem::Fire_Arrows) || (LogicSpiritMQFrozenEye && CanUse(CanUseItem::Bow) && CanPlay(SongOfTime)))))
   }, {
