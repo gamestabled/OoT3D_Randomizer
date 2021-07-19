@@ -140,10 +140,6 @@ static void WriteIngameSpoilerLog() {
         else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
             continue;
         }
-        // Magic Bean Salesman, TODO: Remove when it checks after buying all 10
-        else if (!Settings::ShuffleMagicBeans && loc->GetHintKey() == ZR_MAGIC_BEAN_SALESMAN) {
-            continue;
-        }
         // Merchants
         else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
             continue;
