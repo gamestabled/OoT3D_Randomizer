@@ -4935,7 +4935,7 @@ void HintTable_Init() {
 
     hintTable[KAKARIKO_VILLAGE_TO_BOTTOM_OF_THE_WELL] = HintText::Entrance({
                      //obscure text
-                     Text{"a #village well# leads to", /*french*/"dans le fonds du #puits du village# gît", /*spanish*/"el #pozo de un pueblo# conduce a"},
+                     Text{"a #village well# leads to", /*french*/"dans le fond du #puits du village# gît", /*spanish*/"el #pozo de un pueblo# conduce a"},
   });
 
     /*--------------------------
@@ -5040,7 +5040,7 @@ void HintTable_Init() {
 
     hintTable[ZORAS_RIVER] = HintText::Exclude({
                      //obscure text
-                     Text{"Zora's River", /*french*/"le fleuve zora", /*spanish*/"el Río Zora"},
+                     Text{"Zora's River", /*french*/"le fleuve Zora", /*spanish*/"el Río Zora"},
   });
 
     hintTable[ZORAS_DOMAIN] = HintText::Exclude({
@@ -5140,7 +5140,7 @@ void HintTable_Init() {
 
     hintTable[MARKET_BOMBCHU_SHOP] = HintText::Region({
                      //obscure text
-                     Text{"the #Bombchu Shop#", /*french*/"le #magasin de missiles#", /*spanish*/"la Tienda Bombchu"},
+                     Text{"the #Bombchu Shop#", /*french*/"le #magasin de Bombchus#", /*spanish*/"la Tienda Bombchu"},
   });
 
     hintTable[MARKET_MAN_IN_GREEN_HOUSE] = HintText::Region({
