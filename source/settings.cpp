@@ -24,7 +24,6 @@ namespace Settings {
   //                                        Setting name,              Options,                                                                     Setting Descriptions (assigned in setting_descriptions.cpp)
   //Open Settings                                                                                                                                   Any option index past the last description will use the last description
   Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {openRandomize}, OptionCategory::Toggle);
-  Option Logic               = Option::U8  ("Logic",                  {"Glitchless", "No Logic"},                                                   {logicGlitchless, logicNoLogic});
   Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open", "Closed Deku"},                                            {forestClosed, forestOpen, forestClosedDeku});
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
   Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                                           {doorOfTimeDesc});
@@ -40,7 +39,6 @@ namespace Settings {
   Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                                          {ganonsTrialCountDesc});
   std::vector<Option *> openOptions = {
     &RandomizeOpen,
-    &Logic,
     &OpenForest,
     &OpenKakariko,
     &OpenDoorOfTime,
@@ -177,7 +175,6 @@ namespace Settings {
   Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc});
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"Half", "Default", "Double", "Quadruple", "OHKO"},                     {damageMultiDesc});
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
-  Option NightGSExpectSuns   = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                                          {nightGSDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
   Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""});
@@ -191,7 +188,6 @@ namespace Settings {
     &HintDistribution,
     &DamageMultiplier,
     &StartingTime,
-    &NightGSExpectSuns,
     &ChestAnimations,
     &ChestSize,
     &GenerateSpoilerLog,
@@ -337,13 +333,20 @@ namespace Settings {
     &StartingHealth,
   };
 
+  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "No Logic"}, {logicGlitchless, logicNoLogic});
+  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},              {nightGSDesc});
+  std::vector<Option *> logicOptions = {
+    &Logic,
+    &NightGSExpectSuns,
+  };
+
   //Function to make defining logic tricks easier to read
   Option LogicTrick(std::string setting, std::string_view description) {
     return Option::Bool(setting, {"Disabled", "Enabled"}, {description});
   }
 
   //Detailed Logic Tricks                               ---------------------
-  Option ToggleAllDetailedLogic           = Option::Bool("All Tricks", {"Disabled", "Enabled"},              {"Toggle all tricks at once."}, OptionCategory::Toggle);
+  Option ToggleAllTricks                  = Option::Bool("All Tricks", {"Disabled", "Enabled"},              {"Toggle all tricks at once."}, OptionCategory::Toggle);
   Option LogicGrottosWithoutAgony         = LogicTrick("Grottos Without Agony",                              LogicGrottosWithoutAgonyDesc);
   Option LogicVisibleCollision            = LogicTrick("Pass Through Visible\n One-Way Collisions",          LogicVisibleCollisionDesc);
   Option LogicFewerTunicRequirements      = LogicTrick("Fewer Tunic\n Requirements",                         LogicFewerTunicRequirementsDesc);
@@ -427,8 +430,8 @@ namespace Settings {
   Option LogicLensGtgMQ                   = LogicTrick("GTG MQ without Lens of\n Truth",                     LogicLensGtgMQDesc);
   Option LogicLensCastleMQ                = LogicTrick("Ganon's Castle MQ w/o\n Lens of Truth",              LogicLensCastleMQDesc);
   Option LogicSpiritTrialHookshot         = LogicTrick("Spirit Trial without\n Hookshot",                    LogicSpiritTrialHookshotDesc);
-  std::vector<Option *> detailedLogicOptions = {
-    &ToggleAllDetailedLogic,
+  std::vector<Option *> trickOptions = {
+    &ToggleAllTricks,
     &LogicGrottosWithoutAgony,
     &LogicVisibleCollision,
     &LogicFewerTunicRequirements,
@@ -606,20 +609,29 @@ namespace Settings {
     &MirrorWorld,
   };
 
-  MenuItem loadSettingsPreset       = MenuItem::Action ("Load Settings Preset",       LOAD_PRESET);
-  MenuItem saveSettingsPreset       = MenuItem::Action ("Save Settings Preset",       SAVE_PRESET);
-  MenuItem deleteSettingsPreset     = MenuItem::Action ("Delete Settings Preset",     DELETE_PRESET);
+  MenuItem loadSettingsPreset       = MenuItem::Action("Load Settings Preset",       LOAD_PRESET);
+  MenuItem saveSettingsPreset       = MenuItem::Action("Save Settings Preset",       SAVE_PRESET);
+  MenuItem deleteSettingsPreset     = MenuItem::Action("Delete Settings Preset",     DELETE_PRESET);
   std::vector<MenuItem *> settingsPresetItems = {
     &loadSettingsPreset,
     &saveSettingsPreset,
     &deleteSettingsPreset,
   };
 
+  //Detailed Logic Options Submenu
+  MenuItem logicSettings    = MenuItem::SubSubMenu("Logic Options",     &logicOptions);
+  MenuItem excludeLocations = MenuItem::SubSubMenu("Exclude Locations", &excludeLocationsOptions);
+  MenuItem tricks           = MenuItem::SubSubMenu("Logical Tricks",    &trickOptions);
+  std::vector<MenuItem *> detailedLogicOptions = {
+    &logicSettings,
+    &excludeLocations,
+    &tricks,
+  };
+
   MenuItem open                     = MenuItem::SubMenu("Open Settings",              &openOptions);
   MenuItem world                    = MenuItem::SubMenu("World Settings",             &worldOptions);
   MenuItem shuffle                  = MenuItem::SubMenu("Shuffle Settings",           &shuffleOptions);
   MenuItem shuffleDungeonItems      = MenuItem::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
-  MenuItem excludeLocations         = MenuItem::SubMenu("Exclude Locations",          &excludeLocationsOptions);
   MenuItem detailedLogic            = MenuItem::SubMenu("Detailed Logic Settings",    &detailedLogicOptions);
   MenuItem startingInventory        = MenuItem::SubMenu("Starting Inventory",         &startingInventoryOptions);
   MenuItem timesaverSettings        = MenuItem::SubMenu("Timesaver Settings",         &timesaverOptions);
@@ -637,7 +649,6 @@ namespace Settings {
     &shuffle,
     &shuffleDungeonItems,
     &timesaverSettings,
-    &excludeLocations,
     &detailedLogic,
     &startingInventory,
     &miscSettings,
@@ -1226,8 +1237,8 @@ namespace Settings {
     if (currentSetting != nullptr) {
       //Set toggle for all tricks
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
-        for (u16 i = 0; i < Settings::detailedLogicOptions.size(); i++) {
-          detailedLogicOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+        for (u16 i = 0; i < Settings::trickOptions.size(); i++) {
+          trickOptions[i]->SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
         }
       }
 

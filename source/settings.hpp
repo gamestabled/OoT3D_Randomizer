@@ -201,6 +201,14 @@ enum class MenuItemType {
 class MenuItem {
   public:
 
+    static MenuItem SubSubMenu(std::string name_, std::vector<Option *>* settingsList_) {
+      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_SUB_MENU};
+    }
+
+    static MenuItem SubSubMenu(std::string name_, std::vector<MenuItem *>* itemsList_) {
+      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(itemsList_), SUB_SUB_MENU};
+    }
+
     static MenuItem SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
       return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
     }
@@ -241,7 +249,6 @@ namespace Settings {
   extern std::string version;
   extern std::array<u8, 5> hashIconIndexes;
 
-  extern Option Logic;
   extern Option OpenForest;
   extern Option OpenKakariko;
   extern Option OpenDoorOfTime;
@@ -310,7 +317,6 @@ namespace Settings {
   extern Option HintDistribution;
   extern Option DamageMultiplier;
   extern Option StartingTime;
-  extern Option NightGSExpectSuns;
   extern Option ChestAnimations;
   extern Option ChestSize;
   extern Option GenerateSpoilerLog;
@@ -385,7 +391,11 @@ namespace Settings {
   extern Option StartingHealth;
 
   //Logic Settings
-  extern Option ToggleAllDetailedLogic;
+  extern Option Logic;
+  extern Option NightGSExpectSuns;
+
+  //Trick Settings
+  extern Option ToggleAllTricks;
   extern Option LogicGrottosWithoutAgony;
   extern Option LogicVisibleCollision;
   extern Option LogicFewerTunicRequirements;
@@ -495,7 +505,9 @@ namespace Settings {
 
   extern std::vector<Option *> excludeLocationsOptions;
   extern std::vector<Option *> startingInventoryOptions;
-  extern std::vector<Option *> detailedLogicOptions;
+  extern std::vector<Option *> trickOptions;
+
+  extern std::vector<MenuItem *> detailedLogicOptions;
 
   extern std::vector<MenuItem *> mainMenu;
 }

@@ -33,6 +33,7 @@ namespace {
   u16 pastSeedLength;
   MenuItem* currentMenuItem;
   MenuItem* currentSubMenuItem;
+  MenuItem* previousMenuItem;
   Option* currentSetting;
   PrintConsole topScreen, bottomScreen;
   std::vector<std::string> presetEntries;
@@ -116,6 +117,13 @@ void MenuUpdate(u32 kDown) {
     subMode = SUB_MENU;
     ModeChangeInit();
     kDown = 0;
+  } else if ((kDown & KEY_B && mode == OPTION_SUB_SUB_MENU)) {
+    ClearDescription();
+    currentMenuItem = previousMenuItem;
+    mode = currentMenuItem->mode;
+    subMode = -1;
+    ModeChangeInit();
+    kDown = 0;
   } else if ((kDown & KEY_B && mode != MAIN_MENU)) {
     ClearDescription();
     mode = currentMenuItem->mode;
@@ -157,7 +165,7 @@ void MenuUpdate(u32 kDown) {
     UpdateMainMenu(kDown);
     PrintMainMenu();
     ClearDescription();
-  } else if (mode == OPTION_SUB_MENU) {
+  } else if (mode == OPTION_SUB_MENU || mode == OPTION_SUB_SUB_MENU) {
     UpdateOptionSubMenu(kDown);
     PrintOptionSubMenu();
   } else if (mode == LOAD_PRESET) {
@@ -183,12 +191,10 @@ void ModeChangeInit() {
   }
   if (mode == OPTION_SUB_MENU) {
     settingIdx = 0;
-
     //loop through until we reach an unlocked setting
     while(currentMenuItem->settingsList->at(settingIdx)->IsLocked() || currentMenuItem->settingsList->at(settingIdx)->IsHidden()) {
       settingIdx++;
     }
-
     currentSetting = currentMenuItem->settingsList->at(settingIdx);
 
   } else if (mode == SUB_MENU) {
@@ -196,6 +202,17 @@ void ModeChangeInit() {
     subItemIdx = 0;
     presetIdx = 0;
     currentSubMenuItem = currentMenuItem->itemsList->at(itemIdx);
+  } else if (mode == OPTION_SUB_SUB_MENU) {
+    settingIdx = 0;
+    previousMenuItem = currentMenuItem;
+    currentMenuItem = currentSubMenuItem;
+    //loop through until we reach an unlocked setting
+    while(currentMenuItem->settingsList->at(settingIdx)->IsLocked() || currentMenuItem->settingsList->at(settingIdx)->IsHidden()) {
+      settingIdx++;
+    }
+    currentSetting = currentMenuItem->settingsList->at(settingIdx);
+  } else if (mode == SUB_SUB_MENU) {
+    //If necessary to make a sub sub menu of menu items, add code here
   } else if (mode == SAVE_PRESET) {
     ClearDescription();
     if (SaveSpecifiedPreset(GetInput("Preset Name").substr(0, 19), OptionCategory::Setting)) {
@@ -438,7 +455,7 @@ void PrintOptionSubMenu() {
     }
   }
 
-  PrintOptionDescrption();
+  PrintOptionDescription();
 }
 
 void PrintSubMenu() {
@@ -518,7 +535,7 @@ void ClearDescription() {
   printf("\x1b[22;0H%s", spaces.c_str());
 }
 
-void PrintOptionDescrption() {
+void PrintOptionDescription() {
   ClearDescription();
   std::string_view description = currentSetting->GetSelectedOptionDescription();
 

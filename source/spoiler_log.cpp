@@ -284,7 +284,7 @@ static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll
 
   for (const MenuItem* menu : Settings::mainMenu) {
     //don't log the detailed logic, starting inventory, or exclude location menus yet
-    if (menu->name == "Detailed Logic Settings"
+    if (menu->name == "Logic Tricks"
         || menu->name == "Starting Inventory"
         || menu->name == "Exclude Locations"
         || menu->mode != OPTION_SUB_MENU
@@ -346,7 +346,7 @@ static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
 static void WriteEnabledTricks(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("enabled-tricks");
 
-  for (const auto& setting : Settings::detailedLogicOptions) {
+  for (const auto& setting : Settings::trickOptions) {
     if (setting->GetSelectedOptionIndex() != TRICK_ENABLED || !setting->IsCategory(OptionCategory::Setting)) {
       continue;
     }
