@@ -23,6 +23,7 @@ typedef enum {
     SPOILER_CHK_GERUDO_TOKEN,
     SPOILER_CHK_POE_POINTS,
     SPOILER_CHK_SHOP_ITEM,
+    SPOILER_CHK_MAGIC_BEANS,
 } SpoilerCollectionCheckType;
 
 typedef struct {
@@ -65,5 +66,6 @@ u8 SpoilerData_BiggoronCheck();
 u8 SpoilerData_GerudoTokenCheck();
 u8 SpoilerData_BigPoePointsCheck();
 u8 SpoilerData_ShopItemCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation itemLoc);
 
 #endif // _SPOILER_DATA_H_

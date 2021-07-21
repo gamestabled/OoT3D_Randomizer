@@ -98,6 +98,10 @@ public:
   static auto ShopItem(u8 scene, u8 itemSlot) {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_SHOP_ITEM, scene, itemSlot);
   }
+
+  static auto MagicBeans(u8 scene, u8 flag) {
+      return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MAGIC_BEANS, scene, flag);
+  }
 };
 
 class ItemLocation {

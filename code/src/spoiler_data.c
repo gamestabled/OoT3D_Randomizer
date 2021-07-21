@@ -112,6 +112,15 @@ u8 SpoilerData_ShopItemCheck(SpoilerItemLocation itemLoc)
     return (gSaveContext.sceneFlags[itemLoc.LocationScene].unk & itemBit) != 0;
 }
 
+u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation itemLoc)
+{
+    if (gSettingsContext.shuffleMagicBeans) {
+        return SpoilerData_CollectableCheck(itemLoc);
+    } else {
+        return gSaveContext.magic_beans_available == 10;
+    }
+}
+
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
 {
     if (itemIndex >= gSpoilerData.ItemLocationsCount) {
@@ -164,6 +173,9 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_SHOP_ITEM: {
             return SpoilerData_ShopItemCheck(itemLoc);
+        }
+        case SPOILER_CHK_MAGIC_BEANS: {
+            return SpoilerData_MagicBeansCheck(itemLoc);
         }
         default: {
             return 0;
