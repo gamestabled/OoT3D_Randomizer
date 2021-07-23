@@ -472,6 +472,10 @@ SECTIONS
 		*(.patch_WaterTempleItemGiveTwo)
 	}
 
+	.patch_SongOfTimeJingle 0x274B1C : {
+		*(.patch_SongOfTimeJingle)
+	}
+
 	.patch_DoorOfTimeCheck 0x274B68 : {
 		*(.patch_DoorOfTimeCheck)
 	}
@@ -551,7 +555,7 @@ SECTIONS
 	.patch_NoHealFromHealthUpgrades 0x2CD07C : {
 		*(.patch_NoHealFromHealthUpgrades)
 	}
-	
+
 	.patch_GetCustomMessageEntryOne 0x2CD3A4 : {
 		*(.patch_GetCustomMessageEntryOne)
 	}
@@ -955,7 +959,7 @@ SECTIONS
 	.patch_FairyUseHealAmount 0x4968B4 : {
 		*(.patch_FairyUseHealAmount)
 	}
-	
+
 	.patch_GanonBattleDeathWarp 0x496C98 : {
 		*(.patch_GanonBattleDeathWarp)
 	}

@@ -61,5 +61,7 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 u32 DoorOfTime_RequirementCheck() {
-    return gSettingsContext.openDoorOfTime == OPENDOOROFTIME_CLOSED || (((gSaveContext.questItems >> 18) & 0x7) == 0x7 && gSaveContext.items[SLOT_OCARINA] == ITEM_OCARINA_TIME);
+    return gGlobalContext->sceneNum != 0x43 ||
+           gSettingsContext.openDoorOfTime == OPENDOOROFTIME_CLOSED ||
+           (((gSaveContext.questItems >> 18) & 0x7) == 0x7 && gSaveContext.items[SLOT_OCARINA] == ITEM_OCARINA_TIME);
 }
