@@ -6,5 +6,6 @@
 
 void DemoEffect_rInit(Actor* thisx, GlobalContext* globalCtx);
 void DemoEffect_rDestroy(Actor* thisx, GlobalContext* globalCtx);
+void DemoEffect_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 
 #endif //_DEMO_EFFECT_H_
