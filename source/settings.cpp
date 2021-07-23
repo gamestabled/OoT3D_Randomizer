@@ -457,7 +457,7 @@ namespace Settings {
   Option LogicLensGtgMQ                   = LogicTrick(" GTG MQ Navigate\n   w/o Lens of Truth",      LogicLensGtgMQDesc);
   Option LogicLensCastleMQ                = LogicTrick(" GaC MQ Navigate\n   w/o Lens of Truth",      LogicLensCastleMQDesc);
   Option LogicSpiritTrialHookshot         = LogicTrick(" Spirit Trial\n   w/o Hookshot",              LogicSpiritTrialHookshotDesc);
-  std::vector<Option *> detailedLogicOptions = {
+  std::vector<Option *> trickOptions = {
     &ToggleAllTricks,
     &LogicGrottosWithoutAgony,
     &LogicVisibleCollision,
@@ -1141,8 +1141,8 @@ namespace Settings {
     //Groups the item categories; bottles are handled separately because the proper item is Empty Bottle (1)
     CollapseCategory(StartingInventoryToggle, 3, 23);
     CollapseCategory(StartingSongsToggle, 28, 40);
-    CollapseCategory(StartingUpgradesToggle, 41, 55);
-    CollapseCategory(StartingQuestToggle, 56, 65);
+    CollapseCategory(StartingUpgradesToggle, 41, 56);
+    CollapseCategory(StartingQuestToggle, 57, 66);
     for(int i = 23; i < 27 ;++i){ 
       switch(StartingInventoryToggle.Value<u8>()) {
         case 0: 
@@ -1313,10 +1313,9 @@ namespace Settings {
       StartingDoubleDefense.Unlock();
     }
 
-    //Set toggle for all tricks. 3 is Expert, 2 is Intermediate, 1 is Novice, and 0 disables all.
     if (currentSetting != nullptr) {
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
-        for (u16 i = 0; i < Settings::trickOptions.size(); i++) {
+        for (u16 i = 1; i < Settings::trickOptions.size(); i++) {
           trickOptions[i]->SetSelectedIndex(0);
         }
         if(currentSetting->GetSelectedOptionIndex() >= 1){ //novice options

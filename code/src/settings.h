@@ -255,6 +255,7 @@ typedef enum {
   STARTINGBGS_GIANTS_KNIFE,
   STARTINGBGS_BIGGORON_SWORD,
 } StartingBiggoronSwordSetting;
+
 typedef struct {
   u8 hashIndexes[5];
 
