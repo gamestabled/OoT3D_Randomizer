@@ -343,7 +343,6 @@ namespace Settings {
     &StartingScale,
     &StartingWallet,
     &StartingShardOfAgony,
-    &StartingDoubleDefense,
     &StartingHealth,
     &StartingMagicMeter,
     &StartingDoubleDefense,
@@ -1141,8 +1140,8 @@ namespace Settings {
     //Groups the item categories; bottles are handled separately because the proper item is Empty Bottle (1)
     CollapseCategory(StartingInventoryToggle, 3, 23);
     CollapseCategory(StartingSongsToggle, 28, 40);
-    CollapseCategory(StartingUpgradesToggle, 41, 56);
-    CollapseCategory(StartingQuestToggle, 57, 66);
+    CollapseCategory(StartingUpgradesToggle, 41, 55);
+    CollapseCategory(StartingQuestToggle, 56, 65);
     for(int i = 23; i < 27 ;++i){ 
       switch(StartingInventoryToggle.Value<u8>()) {
         case 0: 
