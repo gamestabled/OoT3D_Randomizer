@@ -355,6 +355,7 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingMagicBean) {
         ItemEffect_BeanPack(&gSaveContext, 0, 0);
+        gSaveContext.magic_beans_available = 10;
     }
 
     if (gSettingsContext.startingMegatonHammer) {
