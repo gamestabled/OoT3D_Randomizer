@@ -233,6 +233,12 @@ typedef enum {
 } IceTrapSetting;
 
 typedef enum {
+  GKDURABILITY_VANILLA,
+  GKDURABILITY_RANDOMRISK,
+  GKDURABILITY_RANDOMSAFE,
+} GkDurabilitySetting;
+
+typedef enum {
   STARTINGBOTTLE_NONE,
   STARTINGBOTTLE_EMPTY_BOTTLE,
   STARTINGBOTTLE_RED_POTION,
@@ -327,6 +333,7 @@ typedef struct {
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+  u8 gkDurability;
 
   u8 itemPoolValue;
   u8 iceTrapValue;

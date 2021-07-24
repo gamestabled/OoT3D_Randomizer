@@ -636,6 +636,10 @@ SECTIONS
 		*(.patch_ConvertBombDropTwo)
 	}
 
+	.patch_GKSetDurability 0x376BDC : {
+		*(.patch_GKSetDurability)
+	}
+
 	.patch_NoLensOfTruthNaviText 0x37798C : {
 		*(.patch_NoLensOfTruthNaviText)
 	}
