@@ -193,17 +193,16 @@ string_view scarceHeartsDesc          = "Heart drops will be replaced by green r
                                         "Health upgrades don't heal Link when picked up.\n"//
                                         "Fairies heal Link by only 3 hearts.";             //
 /*------------------------------                                                           //
-|      RANDOM MQ DUNGEONS      |                                                           //
-------------------------------*/                                                           //
-string_view randomMQDungeonsDesc      = "If set, a random number of dungeons will have\n"  //
-                                        "Master Quest designs.";                           //
-                                                                                           //
-/*------------------------------                                                           //
 |       MQ DUNGEON COUNT       |                                                           //
 ------------------------------*/                                                           //
-string_view mqDungeonCountDesc        = "Specify the number of Master Quest dungeons to\n"
+string_view mqDungeonCountDesc        = "Specify the number of Master Quest dungeons to\n" //
                                         "appear in the game. Which dungeons become Master\n"
                                         "Quest will be chosen at random.";                 //
+/*------------------------------                                                           //
+|        SET MQ DUNGEONS       |                                                           //
+------------------------------*/                                                           //
+string_view setDungeonTypesDesc       = "If set, you can choose specific dungeons to be\n" //
+                                        "vanilla, MQ, or random";                          //
 /*------------------------------                                                           //
 |   SHUFFLE DUNGEON REWARDS    |                                                           //
 ------------------------------*/                                                           //
