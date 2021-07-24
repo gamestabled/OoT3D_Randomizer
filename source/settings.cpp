@@ -1497,7 +1497,6 @@ namespace Settings {
           case 2:
             // Track indexes of dungeons set to random
             randMQOption.push_back(i);
-            dungeons[i]->ClearMQ();
             break;
         }
       }
