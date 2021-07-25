@@ -74,6 +74,24 @@ static std::string PresetPath(std::string_view presetName, OptionCategory catego
   return std::string(GetBasePath(category)).append(presetName).append(".xml");
 }
 
+const std::vector<MenuItem*> GetAllMenus() {
+  std::vector<MenuItem*> allMenus;
+  for (MenuItem* menu : Settings::mainMenu) {
+    if (menu->mode == OPTION_SUB_MENU) {
+      allMenus.push_back(menu);
+      continue;
+    } else if (menu->mode == SUB_MENU) {
+      for (MenuItem* subMenu : menu->itemsList[0]) {
+        if (subMenu->mode == OPTION_SUB_SUB_MENU) {
+          allMenus.push_back(subMenu);
+          continue;
+        }
+      }
+    }
+  }
+  return allMenus;
+}
+
 // Presets are now saved as XML files using the tinyxml2 library.
 // Documentation: https://leethomason.github.io/tinyxml2/index.html
 bool SavePreset(std::string_view presetName, OptionCategory category) {
@@ -88,8 +106,8 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   XMLElement* rootNode = preset.NewElement("settings");
   preset.InsertEndChild(rootNode);
 
-  for (MenuItem* menu : Settings::mainMenu) {
-    if (menu->mode != OPTION_SUB_MENU) {
+  for (MenuItem* menu : GetAllMenus()) {
+    if (menu->mode != OPTION_SUB_MENU && menu->mode != OPTION_SUB_SUB_MENU) {
       continue;
     }
     for (const Option* setting : *menu->settingsList) {
@@ -125,8 +143,8 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
   XMLElement* curNode = rootNode->FirstChildElement();
 
-  for (MenuItem* menu : Settings::mainMenu) {
-    if (menu->mode != OPTION_SUB_MENU) {
+  for (MenuItem* menu : GetAllMenus()) {
+    if (menu->mode != OPTION_SUB_MENU && menu->mode != OPTION_SUB_SUB_MENU) {
       continue;
     }
 
