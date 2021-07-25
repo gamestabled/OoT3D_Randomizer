@@ -1,4 +1,6 @@
 #include "settings.h"
+#include "hid.h"
+#include "input.h"
 
 SettingsContext gSettingsContext = {0};
 u8 Damage32 = 0;
@@ -86,6 +88,14 @@ void FairyPickupHealAmount(void) {
     } else {
         Health_ChangeBy(gGlobalContext, 0x80);
     }
+}
+
+u32 Settings_GetQuickTextOption() {
+    return gSettingsContext.quickText;
+}
+
+u32 Settings_IsTurboText() {
+    return (gSettingsContext.quickText >= QUICKTEXT_TURBO && buttonCheck(BUTTON_B));
 }
 
 // From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf

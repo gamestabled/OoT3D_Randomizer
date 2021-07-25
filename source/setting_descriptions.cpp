@@ -523,6 +523,17 @@ string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1
 string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
                                         "will be available to be borrowed.";               //
 /*------------------------------                                                           //
+|          QUICK TEXT          |                                                           //
+------------------------------*/                                                           //
+string_view quickTextDesc0            = "Quick text will be unchanged, requiring\n"        //
+                                        "frame-perfect inputs like in the vanilla game.";  //
+string_view quickTextDesc1            = "Every text box will be completable by pressing B\n"
+                                        "at any point while it's scrolling.";              //
+string_view quickTextDesc2            = "Every text box will auto-complete instantly.\n\n" //
+                                        "(some skippable texts may still scroll for a bit)";
+string_view quickTextDesc3            = "Holding B will advance text boxes automatically.\n\n"
+                                        "(some skippable texts may still scroll for a bit)";
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //

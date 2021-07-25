@@ -1337,6 +1337,26 @@ CarpetSalesmanCheckFlagTwo_patch:
 CarpetSalesmanSetFlag_patch:
     bl hook_CarpetSalesmanSetFlag
 
+.section .patch_SkippableText
+.global SkippableText_patch
+SkippableText_patch:
+    b hook_SkippableText
+
+.section .patch_InstantText
+.global InstantText_patch
+InstantText_patch:
+    bl hook_InstantText
+
+.section .patch_InstantTextRemoveOff
+.global InstantTextRemoveOff_patch
+InstantTextRemoveOff_patch:
+    b hook_InstantTextRemoveOff
+
+.section .patch_TurboText
+.global TurboText_patch
+TurboText_patch:
+    bl hook_TurboText
+
 .section .patch_loader
 .global loader_patch
 

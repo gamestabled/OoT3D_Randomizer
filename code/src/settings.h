@@ -184,6 +184,13 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+  QUICKTEXT_VANILLA,
+  QUICKTEXT_SKIPPABLE,
+  QUICKTEXT_INSTANT,
+  QUICKTEXT_TURBO,
+} QuickTextSetting;
+
+typedef enum {
   INCLUDE,
   EXCLUDE,
 } ExcludeLocationSetting;
@@ -312,6 +319,7 @@ typedef struct {
   u8 numRequiredCuccos;
   u8 kingZoraSpeed;
   u8 completeMaskQuest;
+  u8 quickText;
 
   u8 damageMultiplier;
   u8 startingTime;

@@ -177,6 +177,11 @@ extern string_view kingZoraSpeedFast;
 extern string_view kingZoraSpeedVanilla;
 extern string_view kingZoraSpeedRandom;
 
+extern string_view quickTextDesc0;
+extern string_view quickTextDesc1;
+extern string_view quickTextDesc2;
+extern string_view quickTextDesc3;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view clearerHintsDesc;
