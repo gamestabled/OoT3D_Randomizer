@@ -55,17 +55,30 @@ namespace Settings {
   };
 
   //World Settings
-  Option RandomizeWorld            = Option::Bool("Randomize Settings",     {"No","Yes"},                                                {worldRandomize}, OptionCategory::Toggle);
-  Option StartingAge               = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                {ageDesc});
+  Option RandomizeWorld            = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {worldRandomize}, OptionCategory::Toggle);
+  Option StartingAge               = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                      {ageDesc});
   u8 ResolvedStartingAge;
-  Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",      {"Off", "On"},                                               {shuffleEntrancesDesc});
-  Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                               {dungeonEntrancesDesc});
-  Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                               {overworldEntrancesDesc});
-  Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                               {bombchuLogicDesc});
-  Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                               {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc});
-  Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                       {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc});
-  Option RandomMQDungeons          = Option::Bool("Random MQ Dungeons",     {"Off", "On"},                                               {randomMQDungeonsDesc});
-  Option MQDungeonCount            = Option::U8  ("  MQ Dungeon Count",     {"0","1","2","3","4","5","6","7","8","9","10","11","12"},    {mqDungeonCountDesc});
+  Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",      {"Off", "On"},                                                     {shuffleEntrancesDesc});
+  Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                                     {dungeonEntrancesDesc});
+  Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                                     {overworldEntrancesDesc});
+  Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
+  Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc});
+  Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc});
+  Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {"0","1","2","3","4","5","6","7","8","9","10","11","12", "Random"},{mqDungeonCountDesc});
+  u8 MQSet;
+  Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {setDungeonTypesDesc});
+  Option MQDeku                    = Option::U8  ("  Deku Tree",            {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQDodongo                 = Option::U8  ("  Dodongo's Cavern",     {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQJabu                    = Option::U8  ("  Jabu-Jabu's Belly",    {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQForest                  = Option::U8  ("  Forest Temple",        {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQFire                    = Option::U8  ("  Fire Temple",          {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQWater                   = Option::U8  ("  Water Temple",         {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQSpirit                  = Option::U8  ("  Spirit Temple",        {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQShadow                  = Option::U8  ("  Shadow Temple",        {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQBotW                    = Option::U8  ("  Bottom of the Well",   {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQIceCavern               = Option::U8  ("  Ice Cavern",           {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQGTG                     = Option::U8  ("  Training Grounds",     {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+  Option MQCastle                  = Option::U8  ("  Ganon's Castle",       {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
   std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
@@ -75,8 +88,34 @@ namespace Settings {
     &BombchusInLogic,
     &AmmoDrops,
     &HeartDropRefill,
-    &RandomMQDungeons,
     &MQDungeonCount,
+    &SetDungeonTypes,
+    &MQDeku,
+    &MQDodongo,
+    &MQJabu,
+    &MQForest,
+    &MQFire,
+    &MQWater,
+    &MQSpirit,
+    &MQShadow,
+    &MQBotW,
+    &MQIceCavern,
+    &MQGTG,
+    &MQCastle,
+  };
+  std::vector<Option *> dungeonOptions = {
+    &MQDeku,
+    &MQDodongo,
+    &MQJabu,
+    &MQForest,
+    &MQFire,
+    &MQWater,
+    &MQSpirit,
+    &MQShadow,
+    &MQBotW,
+    &MQIceCavern,
+    &MQGTG,
+    &MQCastle,
   };
 
   //Shuffle Settings
@@ -726,8 +765,8 @@ namespace Settings {
     ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
     ctx.ammoDrops            = AmmoDrops.Value<u8>();
     ctx.heartDropRefill      = HeartDropRefill.Value<u8>();
-    ctx.randomMQDungeons        = (RandomMQDungeons) ? 1 : 0;
-    ctx.mqDungeonCount          = MQDungeonCount.Value<u8>();
+    ctx.randomMQDungeons        = (MQDungeonCount.Value<u8>() == 13) ? 1 : 0;
+    ctx.mqDungeonCount          = MQSet;
 
     ctx.shuffleRewards       = ShuffleRewards.Value<u8>();
     ctx.linksPocketItem      = LinksPocketItem.Value<u8>();
@@ -1135,6 +1174,16 @@ namespace Settings {
     }
   }
 
+  u8 DungeonsOfType(u8 type) {
+    u8 count = 0;
+
+    for (Option *option : dungeonOptions) {
+      count += (option->Value<u8>() == type) ? 1 : 0;
+    }
+
+    return count;
+  }
+
   //Hide certain settings if they aren't relevant or Lock settings if they
   //can't be changed due to another setting that was chosen. (i.e. Closed Forest
   //will force Starting Age to Child).
@@ -1236,12 +1285,24 @@ namespace Settings {
       }
     }
 
-    //Only show MQ Dungeon Count if Random MQ Dungeons is off
-    if (RandomMQDungeons) {
-      MQDungeonCount.SetSelectedIndex(0);
-      MQDungeonCount.Hide();
+    if (SetDungeonTypes) {
+      for (Option *option : dungeonOptions) {
+        option->Unhide();
+      }
+
+      // Restrict MQDungeonCount options so they can't be less than the number of dungeons set to MQ and can't be more
+      // than the number of dungeons set to MQ plus the number of dungeons set to random
+      u8 MQ = DungeonsOfType(1), R = DungeonsOfType(2);
+      if (MQDungeonCount.Value<u8>() < MQ) {
+        MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_DLEFT )) ? 13 : MQ);
+      } else if (MQDungeonCount.Value<u8>() != 13 && MQDungeonCount.Value<u8>() > MQ + R) {
+        MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_DRIGHT)) ? 13 : MQ + R);
+      }
     } else {
-      MQDungeonCount.Unhide();
+      for (Option *option : dungeonOptions) {
+        option->SetSelectedIndex(2);
+        option->Hide();
+      }
     }
 
     //Force Link's Pocket Item to be a dungeon reward if Shuffle Rewards is end of dungeons
@@ -1432,6 +1493,23 @@ namespace Settings {
     ResolveExcludedLocationConflicts();
   }
 
+  bool IsMQOption(Option *option) {
+    return option == &MQDungeonCount  ||
+           option == &SetDungeonTypes ||
+           option == &MQDeku          ||
+           option == &MQDodongo       ||
+           option == &MQJabu          ||
+           option == &MQForest        ||
+           option == &MQFire          ||
+           option == &MQWater         ||
+           option == &MQSpirit        ||
+           option == &MQShadow        ||
+           option == &MQBotW          ||
+           option == &MQIceCavern     ||
+           option == &MQGTG           ||
+           option == &MQCastle;
+  }
+
   // Randomizes all settings in a category if chosen
   // Hides all relevant options
   void RandomizeAllSettings(const bool selectOptions /*= false*/) {
@@ -1462,7 +1540,7 @@ namespace Settings {
       // Skip RandomizeWorld Option
       for (size_t i=1; i < worldOptions.size(); i++) {
         // skip MQ options
-        if (worldOptions[i] == &RandomMQDungeons || worldOptions[i] == &MQDungeonCount) {
+        if (IsMQOption(worldOptions[i])) {
           continue;
         }
         worldOptions[i]->Hide();
@@ -1474,7 +1552,7 @@ namespace Settings {
     }
     else {
       for (size_t i=1; i < worldOptions.size(); i++) {
-        if (worldOptions[i] == &RandomMQDungeons || worldOptions[i] == &MQDungeonCount) {
+        if (IsMQOption(worldOptions[i])) {
           continue;
         }
         worldOptions[i]->Unhide();
@@ -1562,19 +1640,54 @@ namespace Settings {
 
     //shuffle the dungeons and then set MQ for as many as necessary
     auto dungeons = dungeonList;
-    Shuffle(dungeons);
+    if (SetDungeonTypes) {
+      MQSet = MQDungeonCount.Value<u8>();
+      u8 dungeonCount = 0;
+      std::vector<u8> randMQOption = {};
 
-    //Clear MQ dungeons
-    for (u8 i = 0; i < dungeons.size(); i++) {
-      dungeons[i]->ClearMQ();
-    }
+      for (size_t i = 0; i < dungeons.size(); i++) {
+        dungeons[i]->ClearMQ();
 
-    //Set appropriate amount of MQ dungeons
-    if (RandomMQDungeons) {
-      MQDungeonCount.SetSelectedIndex(Random(0, MQDungeonCount.GetOptionCount()));
-    }
-    for (u8 i = 0; i < MQDungeonCount.Value<u8>(); i++) {
-      dungeons[i]->SetMQ();
+        switch (dungeonOptions[i]->Value<u8>()) {
+          case 1:
+            // Set MQ dungeons and track how many have been set
+            dungeons[i]->SetMQ();
+            dungeonCount++;
+            break;
+          case 2:
+            // Track indexes of dungeons set to random
+            randMQOption.push_back(i);
+            break;
+        }
+      }
+
+      // Add more MQ dungeons from the pool set to random until the MQ dungeon count is reached
+      Shuffle(randMQOption);
+
+      if (MQSet == 13) {
+        MQSet = dungeonCount + Random(0, randMQOption.size() + 1);
+      }
+
+      for (u8 i = 0; dungeonCount < MQSet; i++) {
+        dungeons[randMQOption[i]]->SetMQ();
+        dungeonCount++;
+      }
+    } else {
+      Shuffle(dungeons);
+      MQSet = MQDungeonCount.Value<u8>();
+
+      //Clear MQ dungeons
+      for (size_t i = 0; i < dungeons.size(); i++) {
+        dungeons[i]->ClearMQ();
+      }
+
+      //Set appropriate amount of MQ dungeons
+      if (MQSet == 13) {
+        MQSet = Random(0, 13);
+      }
+      for (u8 i = 0; i < MQSet; i++) {
+        dungeons[i]->SetMQ();
+      }
     }
 
     //shuffle the trials then require the amount set in GanonsTrialsCount

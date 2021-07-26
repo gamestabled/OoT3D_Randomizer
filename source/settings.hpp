@@ -271,8 +271,8 @@ namespace Settings {
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;
-  extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
+  extern Option SetDungeonTypes;
 
   extern Option ShuffleRewards;
   extern Option LinksPocketItem;

@@ -64,9 +64,9 @@ extern string_view defaultHeartDropsDesc;
 extern string_view noHeartDropsDesc;
 extern string_view noHeartRefillDesc;
 extern string_view scarceHeartsDesc;
-extern string_view randomMQDungeonsDesc;
 
 extern string_view mqDungeonCountDesc;
+extern string_view setDungeonTypesDesc;
 
 extern string_view shuffleRewardsEndOfDungeon;
 extern string_view shuffleRewardsAnyDungeon;
