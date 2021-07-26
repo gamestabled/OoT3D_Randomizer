@@ -224,6 +224,10 @@ extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
 
+extern string_view gkDurabilityVanilla;
+extern string_view gkDurabilityRandomRisk;
+extern string_view gkDurabilityRandomSafe;
+
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
 

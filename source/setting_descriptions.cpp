@@ -664,6 +664,15 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
                                         "This setting will not change the logic.";         //
                                                                                            //
 /*------------------------------                                                           //
+|         GK DURABILITY        |                                                           //
+------------------------------*/                                                           //
+string_view gkDurabilityVanilla       = "The durability will always be set to 8.";         //
+string_view gkDurabilityRandomRisk    = "Each Giant's Knife will get a random durability\n"//
+                                        "between 1 and 128, with low being more common.";  //
+string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random durability\n"//
+                                        "between 10 and 50.";                              //
+                                                                                           //
+/*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
 ------------------------------*/                                                           //
 string_view coloredKeysDesc           = "If set, small key models will be colored\n"       //
