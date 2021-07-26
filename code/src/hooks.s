@@ -699,8 +699,10 @@ hook_SkippableText:
     ldr r0,[r5,#0x0]
     b 0x2E09C0
 
-.global hook_InstantText
-hook_InstantText:
+.global hook_InstantTextFirstLine
+hook_InstantTextFirstLine:
+    cmp r9,#0x0
+    bgt NoInstantText
     push {r0-r12, lr}
     bl Settings_GetQuickTextOption
     cmp r0,#0x2
@@ -714,8 +716,24 @@ hook_InstantText:
     strb r11,[r4,#0x24]
     pop {r0-r12, lr}
 NoInstantText:
-    cmp r0,#0x30
+    cmp r10,#0xFF
     bx lr
+
+.global hook_InstantTextBoxBreak
+hook_InstantTextBoxBreak:
+    push {r0-r12, lr}
+    bl Settings_GetQuickTextOption
+    cmp r0,#0x2
+    pop {r0-r12, lr}
+    blt 0x2E0EE0
+    push {r0-r12, lr}
+    ldr r0,[r5,#0x0]
+    ldr r1,[r0,#0x20]
+    cpy r0,r5
+    blx r1
+    strb r11,[r4,#0x24]
+    pop {r0-r12, lr}
+    b 0x2E0EE0
 
 .global hook_InstantTextRemoveOff
 hook_InstantTextRemoveOff:
@@ -723,7 +741,7 @@ hook_InstantTextRemoveOff:
     bl Settings_GetQuickTextOption
     cmp r0,#0x2
     pop {r0-r12, lr}
-    blt 0x2E0ED4
+    bge 0x2E0ED4
     ldr r0,[r5,#0x0]
     b 0x2E06CC
 

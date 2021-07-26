@@ -1342,10 +1342,15 @@ CarpetSalesmanSetFlag_patch:
 SkippableText_patch:
     b hook_SkippableText
 
-.section .patch_InstantText
-.global InstantText_patch
-InstantText_patch:
-    bl hook_InstantText
+.section .patch_InstantTextFirstLine
+.global InstantTextFirstLine_patch
+InstantTextFirstLine_patch:
+    bl hook_InstantTextFirstLine
+
+.section .patch_InstantTextBoxBreak
+.global InstantTextBoxBreak_patch
+InstantTextBoxBreak_patch:
+    b hook_InstantTextBoxBreak
 
 .section .patch_InstantTextRemoveOff
 .global InstantTextRemoveOff_patch

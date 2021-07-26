@@ -556,8 +556,12 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
-	.patch_InstantText 0x2E0580 : {
-		*(.patch_InstantText)
+	.patch_InstantTextFirstLine 0x2E049C : {
+		*(.patch_InstantTextFirstLine)
+	}
+
+	.patch_InstantTextBoxBreak 0x2E0664 : {
+		*(.patch_InstantTextBoxBreak)
 	}
 
 	.patch_InstantTextRemoveOff 0x2E06C8 : {
