@@ -236,6 +236,11 @@ extern string_view advancedTrapDmgDesc;
 extern string_view completeMaskDesc;
 
 extern string_view ToggleAllTricksDesc;
+
+extern string_view ToggleLogicNoneDesc;
+extern string_view ToggleLogicNoviceDesc;
+extern string_view ToggleLogicIntermediateDesc;
+extern string_view ToggleLogicExpertDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;
 extern string_view LogicVisibleCollisionDesc;
 extern string_view LogicFewerTunicRequirementsDesc;
