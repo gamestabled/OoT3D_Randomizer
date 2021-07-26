@@ -1337,6 +1337,11 @@ CarpetSalesmanCheckFlagTwo_patch:
 CarpetSalesmanSetFlag_patch:
     bl hook_CarpetSalesmanSetFlag
 
+.section .patch_GKSetDurability
+.global GKSetDurability_patch
+GKSetDurability_patch:
+    b hook_GKSetDurability
+
 .section .patch_SkippableText
 .global SkippableText_patch
 SkippableText_patch:

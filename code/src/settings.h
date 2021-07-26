@@ -215,6 +215,8 @@ typedef enum {
   DAMAGEMULTIPLIER_DEFAULT,
   DAMAGEMULTIPLIER_DOUBLE,
   DAMAGEMULTIPLIER_QUADRUPLE,
+  DAMAGEMULTIPLIER_OCTUPLE,
+  DAMAGEMULTIPLIER_SEXDECUPLE,
   DAMAGEMULTIPLIER_OHKO,
 } DamageMultiplierSetting;
 
@@ -246,6 +248,12 @@ typedef enum {
 } IceTrapSetting;
 
 typedef enum {
+  GKDURABILITY_VANILLA,
+  GKDURABILITY_RANDOMRISK,
+  GKDURABILITY_RANDOMSAFE,
+} GkDurabilitySetting;
+
+typedef enum {
   STARTINGBOTTLE_NONE,
   STARTINGBOTTLE_EMPTY_BOTTLE,
   STARTINGBOTTLE_RED_POTION,
@@ -260,6 +268,12 @@ typedef enum {
   STARTINGBOTTLE_HALF_MILK,
   STARTINGBOTTLE_POE,
 } StartingBottleSetting;
+
+typedef enum {
+  STARTINGBGS_NONE,
+  STARTINGBGS_GIANTS_KNIFE,
+  STARTINGBGS_BIGGORON_SWORD,
+} StartingBiggoronSwordSetting;
 
 typedef struct {
   u8 hashIndexes[5];
@@ -342,6 +356,7 @@ typedef struct {
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+  u8 gkDurability;
 
   u8 itemPoolValue;
   u8 iceTrapValue;
@@ -406,8 +421,11 @@ typedef struct {
   u8 startingHealth;
 
   u32 startingQuestItems;
+  u32 startingDungeonReward;
   u32 startingEquipment;
   u32 startingUpgrades;
+  
+  u8 startingTokens;
 
 } SettingsContext;
 

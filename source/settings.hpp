@@ -271,8 +271,8 @@ namespace Settings {
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;
-  extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
+  extern Option SetDungeonTypes;
 
   extern Option ShuffleRewards;
   extern Option LinksPocketItem;
@@ -330,6 +330,7 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option GkDurability;
 
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
@@ -391,6 +392,16 @@ namespace Settings {
   extern Option StartingShardOfAgony;
   extern Option StartingDoubleDefense;
   extern Option StartingHealth;
+  extern Option StartingKokiriEmerald;
+  extern Option StartingGoronRuby;
+  extern Option StartingZoraSapphire;
+  extern Option StartingForestMedallion;
+  extern Option StartingFireMedallion;
+  extern Option StartingWaterMedallion;
+  extern Option StartingSpiritMedallion;
+  extern Option StartingShadowMedallion;
+  extern Option StartingLightMedallion;
+  extern Option StartingSkulltulaToken;
 
   //Logic Settings
   extern Option Logic;

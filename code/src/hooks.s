@@ -594,28 +594,28 @@ hook_NoHealFromHealthUpgrades:
     bl NoHealFromHealthUpgrades
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_NoHealFromBombchuBowlingPrize
 hook_NoHealFromBombchuBowlingPrize:
     push {r1-r12, lr}
     bl NoHealFromBombchuBowlingPrize
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_FairyPickupHealAmount
 hook_FairyPickupHealAmount:
     push {r0-r12, lr}
     bl FairyPickupHealAmount
     pop {r0-r12, lr}
     bx lr
-	
+
 .global hook_FairyReviveHealAmount
 hook_FairyReviveHealAmount:
     push {r1-r12, lr}
     bl FairyReviveHealAmount
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_FairyUseHealAmount
 hook_FairyUseHealAmount:
     push {r1-r12, lr}
@@ -688,6 +688,14 @@ hook_KakarikoGateCheck:
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
+
+.global hook_GKSetDurability
+hook_GKSetDurability:
+    push {r0-r12, lr}
+    bl GK_SetDurability
+    strh r0,[r8,#0x4a]
+    pop {r0-r12, lr}
+    b 0x376BE0
 
 .global hook_SkippableText
 hook_SkippableText:
