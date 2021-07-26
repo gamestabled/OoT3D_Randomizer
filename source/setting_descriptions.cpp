@@ -637,8 +637,8 @@ string_view removeDDDesc              = "If set the double defense item will be 
 ------------------------------*/                                                           //
 string_view progGoronSword            = "Giant's Knife will always be found\n"             //
                                         "before Biggoron's Sword. Medigoron only starts\n" //
-                                        "selling new knives once the Giant's Knife has been\n"
-                                        "found and broken.";                               //
+                                        "selling new knives once the Giant's Knife\n"      //
+                                        "has been found and broken.";                      //
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //
