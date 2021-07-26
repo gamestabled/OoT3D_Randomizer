@@ -98,6 +98,16 @@ u32 Settings_IsTurboText() {
     return (gSettingsContext.quickText >= QUICKTEXT_TURBO && buttonCheck(BUTTON_B));
 }
 
+void Settings_SkipSongReplays() {
+    // msgModes 18 to 23 are used to manage the song replays. Skipping to mode 23 ends the replay.
+    // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns Pierre.
+    if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 && gGlobalContext->unk_2A91[0xEB] != 12) ||
+        (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
+       ) {
+        gGlobalContext->msgMode = 23;
+    }
+}
+
 // From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
 u32 Hash(u32 state) {
     // Added salt based on the seed hash so traps in the same location in different seeds can have different effects

@@ -534,6 +534,14 @@ string_view quickTextDesc2            = "Every text box will auto-complete insta
 string_view quickTextDesc3            = "Holding B will advance text boxes automatically\n"//
                                         "(but it won't close them).";                      //
 /*------------------------------                                                           //
+|       SKIP SONG REPLAYS      |                                                           //
+------------------------------*/                                                           //
+string_view skipSongReplaysDesc       = "The automatic replay after you play a song will\n"//
+                                        "be skipped.\n"                                    //
+                                        "You can choose to keep the sfx anyway, but you\n" //
+                                        "will have control of Link during it.\n\n"         //
+                                        "SONG OF STORMS GROTTOS OPEN UP AFTER 5 SECONDS!"; //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //

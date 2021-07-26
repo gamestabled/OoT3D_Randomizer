@@ -156,6 +156,7 @@ namespace Settings {
   Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3});
+  Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -169,6 +170,7 @@ namespace Settings {
     &KingZoraSpeed,
     &CompleteMaskQuest,
     &QuickText,
+    &SkipSongReplays,
   };
 
   //Misc Settings
@@ -740,6 +742,7 @@ namespace Settings {
     ctx.kingZoraSpeed        = KingZoraSpeed.Value<u8>();
     ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
     ctx.quickText            = QuickText.Value<u8>();
+    ctx.skipSongReplays      = SkipSongReplays.Value<u8>();
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
@@ -1221,6 +1224,14 @@ namespace Settings {
         LACSTokenCount.SetSelectedIndex(100);
         LACSTokenCount.Hide();
       }
+    }
+
+    //Only show Skip Song Replays if Quick Text is enabled
+    if (QuickText.Is(QUICKTEXT_VANILLA)) {
+      SkipSongReplays.SetSelectedIndex(DONT_SKIP);
+      SkipSongReplays.Hide();
+    } else {
+      SkipSongReplays.Unhide();
     }
 
     //Only show hint options if hints are enabled

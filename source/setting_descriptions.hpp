@@ -181,6 +181,7 @@ extern string_view quickTextDesc0;
 extern string_view quickTextDesc1;
 extern string_view quickTextDesc2;
 extern string_view quickTextDesc3;
+extern string_view skipSongReplaysDesc;
 
 extern string_view gossipStonesHintsDesc;
 
