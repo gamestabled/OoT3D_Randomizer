@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <variant>
 #include <vector>
@@ -489,6 +490,17 @@ namespace Settings {
   extern Option LogicLensGtgMQ;
   extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
+
+  //Glitch Settings
+  const std::vector<std::string> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"};
+  extern Option GlitchISG;
+  extern Option GlitchHover;
+  extern Option GlitchMegaflip;
+  extern Option GlitchHookshotClip;
+  extern Option GlitchHookshotJump_Bonk;
+  extern Option GlitchHookshotJump_Boots;
+  extern Option GlitchLedgeClip;
+  extern Option GlitchTripleSlashClip;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

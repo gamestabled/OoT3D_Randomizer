@@ -406,8 +406,8 @@ namespace Settings {
     &StartingSkulltulaToken,
   };
 
-  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "No Logic", "Vanilla"}, {logicGlitchless, logicNoLogic, logicVanilla});
-  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                         {nightGSDesc});
+  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicGlitched, logicNoLogic, logicVanilla});
+  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                                     {nightGSDesc});
   std::vector<Option *> logicOptions = {
     &Logic,
     &NightGSExpectSuns,
@@ -590,6 +590,49 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
+  //Function to make defining glitch tricks easier to read
+  Option GlitchTrick(std::string setting, u8 enabledDifficulties, std::vector<std::string_view> description) {
+    //enabledDifficulties bits
+    //0: Novice
+    //1: Intermediate
+    //2: Advanced
+    //3: Expert
+    //4: Hero
+
+    std::vector<std::string> selectableDifficulties;
+    std::vector<std::string_view> includedDescriptions;
+
+    selectableDifficulties.push_back("Disabled");
+    includedDescriptions.push_back(description[0]);
+    for (size_t i = 0; i < GlitchDifficulties.size(); i++) {
+      if ((enabledDifficulties >> i) & 1) {
+        selectableDifficulties.push_back(GlitchDifficulties[i]);
+        includedDescriptions.push_back(description[i + 1]);
+      }
+    }
+
+    return Option::U8(setting, selectableDifficulties, includedDescriptions);
+  }
+
+  Option GlitchISG                = GlitchTrick("Infinite Sword Glitch", 0b00001, GlitchISGDesc);
+  Option GlitchHover              = GlitchTrick("Bomb Hover",            0b00111, GlitchHoverDesc);
+  Option GlitchMegaflip           = GlitchTrick("Megaflip",              0b00011, GlitchMegaflipDesc);
+  Option GlitchHookshotClip       = GlitchTrick("Hookshot Clip",         0b00001, GlitchHookshotClipDesc);
+  Option GlitchHookshotJump_Bonk  = GlitchTrick("Hookshot Jump (Bonk)",  0b00010, GlitchHookshotJump_BonkDesc);
+  Option GlitchHookshotJump_Boots = GlitchTrick("Hookshot Jump (Boots)", 0b00011, GlitchHookshotJump_BootsDesc);
+  Option GlitchLedgeClip          = GlitchTrick("Ledge Clip",            0b00011, GlitchLedgeClipDesc);
+  Option GlitchTripleSlashClip    = GlitchTrick("Triple Slash Clip",     0b00001, GlitchTripleSlashClipDesc);
+  std::vector<Option*> glitchOptions = {
+    &GlitchISG,
+    &GlitchHover,
+    &GlitchMegaflip,
+    &GlitchHookshotClip,
+    &GlitchHookshotJump_Bonk,
+    &GlitchHookshotJump_Boots,
+    &GlitchLedgeClip,
+    &GlitchTripleSlashClip,
+  };
+
   static std::vector<std::string> gauntletOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
@@ -695,10 +738,12 @@ namespace Settings {
   Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
   Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsOptions);
   Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions);
+  Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions);
   std::vector<Menu *> detailedLogicOptions = {
     &logicSettings,
     &excludeLocations,
     &tricks,
+    &glitchSettings,
   };
 
   Menu open                     = Menu::SubMenu("Open Settings",              &openOptions);
