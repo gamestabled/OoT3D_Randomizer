@@ -689,6 +689,14 @@ hook_KakarikoGateCheck:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_GKSetDurability
+hook_GKSetDurability:
+    push {r0-r12, lr}
+    bl GK_SetDurability
+    strh r0,[r8,#0x4a]
+    pop {r0-r12, lr}
+    b 0x376BE0
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

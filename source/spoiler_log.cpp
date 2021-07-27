@@ -140,16 +140,13 @@ static void WriteIngameSpoilerLog() {
         else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
             continue;
         }
-        // Magic Bean Salesman, TODO: Remove when it checks after buying all 10
-        else if (!Settings::ShuffleMagicBeans && loc->GetHintKey() == ZR_MAGIC_BEAN_SALESMAN) {
-            continue;
-        }
         // Merchants
         else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
             continue;
         }
         // Gerudo Fortress
-        else if (Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) {
+        else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
+            (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
             continue;
         }
     }

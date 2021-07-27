@@ -108,7 +108,7 @@ SECTIONS
 		*(.patch_KingZoraCheckMovedFlag)
 	}
 
-	.patch_MidoCheckSpawn 0x16614C : {
+	.patch_MidoCheckSpawn 0x166154 : {
 		*(.patch_MidoCheckSpawn)
 	}
 
@@ -634,6 +634,10 @@ SECTIONS
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
 		*(.patch_ConvertBombDropTwo)
+	}
+
+	.patch_GKSetDurability 0x376BDC : {
+		*(.patch_GKSetDurability)
 	}
 
 	.patch_NoLensOfTruthNaviText 0x37798C : {

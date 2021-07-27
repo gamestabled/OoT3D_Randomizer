@@ -118,6 +118,16 @@ void GenerateStartingInventory() {
   AddItemToInventory(PROGRESSIVE_WALLET,        StartingWallet.Value<u8>());
   AddItemToInventory(SHARD_OF_AGONY,            StartingShardOfAgony.Value<u8>());
   AddItemToInventory(DOUBLE_DEFENSE,            StartingDoubleDefense.Value<u8>());
+  AddItemToInventory(KOKIRI_EMERALD,            StartingKokiriEmerald.Value<u8>());
+  AddItemToInventory(GORON_RUBY,                StartingGoronRuby.Value<u8>());
+  AddItemToInventory(ZORA_SAPPHIRE,             StartingZoraSapphire.Value<u8>());
+  AddItemToInventory(FOREST_MEDALLION,          StartingForestMedallion.Value<u8>());
+  AddItemToInventory(FIRE_MEDALLION,            StartingFireMedallion.Value<u8>());
+  AddItemToInventory(WATER_MEDALLION,           StartingWaterMedallion.Value<u8>());
+  AddItemToInventory(SPIRIT_MEDALLION,          StartingSpiritMedallion.Value<u8>());
+  AddItemToInventory(SHADOW_MEDALLION,          StartingShadowMedallion.Value<u8>());
+  AddItemToInventory(LIGHT_MEDALLION,           StartingLightMedallion.Value<u8>());
+  AddItemToInventory(GOLD_SKULLTULA_TOKEN,      StartingSkulltulaToken.Value<u8>());
 
   s8 hearts = (StartingHealth.Value<u8>() + 2) % 20 - 2;
   AdditionalHeartContainers = 0;

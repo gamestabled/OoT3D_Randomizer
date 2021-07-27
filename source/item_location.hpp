@@ -98,6 +98,10 @@ public:
   static auto ShopItem(u8 scene, u8 itemSlot) {
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_SHOP_ITEM, scene, itemSlot);
   }
+
+  static auto MagicBeans(u8 scene, u8 flag) {
+      return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MAGIC_BEANS, scene, flag);
+  }
 };
 
 class ItemLocation {
@@ -265,8 +269,8 @@ public:
                               "settings cannot be excluded and won't be shown\n"
                               "unless you change your settings.\n"
                               "\n"
-                              "If you exclude to many locations, it might not be\n"
-                              "possible to fill the world.";
+                              "If you exclude too many locations, it might not\n"
+                              "be possible to fill the world.";
 
       //add option to forbid any location from progress items
       if (name.length() < 23) {
