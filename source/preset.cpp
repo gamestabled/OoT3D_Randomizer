@@ -88,7 +88,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   XMLElement* rootNode = preset.NewElement("settings");
   preset.InsertEndChild(rootNode);
 
-  for (MenuItem* menu : Settings::mainMenu) {
+  for (Menu* menu : Settings::mainMenu) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
@@ -125,7 +125,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
   XMLElement* curNode = rootNode->FirstChildElement();
 
-  for (MenuItem* menu : Settings::mainMenu) {
+  for (Menu* menu : Settings::mainMenu) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }

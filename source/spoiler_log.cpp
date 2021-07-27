@@ -281,7 +281,7 @@ static void WriteShuffledEntrance(
 static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
   auto parentNode = spoilerLog.NewElement("settings");
 
-  for (const MenuItem* menu : Settings::mainMenu) {
+  for (const Menu* menu : Settings::mainMenu) {
     //don't log the detailed logic, starting inventory, or exclude location menus yet
     if (menu->name == "Logic Tricks"
         || menu->name == "Starting Inventory"
