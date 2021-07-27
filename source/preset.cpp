@@ -74,20 +74,27 @@ static std::string PresetPath(std::string_view presetName, OptionCategory catego
   return std::string(GetBasePath(category)).append(presetName).append(".xml");
 }
 
-const std::vector<MenuItem*> GetAllMenus() {
-  std::vector<MenuItem*> allMenus;
-  for (MenuItem* menu : Settings::mainMenu) {
-    if (menu->mode == OPTION_SUB_MENU) {
-      allMenus.push_back(menu);
-      continue;
-    } else if (menu->mode == SUB_MENU) {
-      for (MenuItem* subMenu : menu->itemsList[0]) {
-        if (subMenu->mode == OPTION_SUB_SUB_MENU) {
-          allMenus.push_back(subMenu);
-          continue;
-        }
+//If this is an option menu, return th options
+//Else, recursively call each sub menu of this sub menu
+const std::vector<Menu*> GetMenusRecursive(Menu* menu) {
+  std::vector<Menu*> menus;
+  if (menu->mode == OPTION_SUB_MENU) {
+    menus.push_back(menu);
+  } else if (menu->mode == SUB_MENU) {
+      for (Menu* subMenu : *menu->itemsList) {
+        std::vector<Menu*> foundMenus = GetMenusRecursive(subMenu);
+        menus.insert(menus.end(), foundMenus.begin(), foundMenus.end());
       }
-    }
+  }
+  return menus;
+}
+
+//Recursively look through each menu from the main menu to get all settings
+const std::vector<Menu*> GetAllMenus() {
+  std::vector<Menu*> allMenus;
+  for (Menu* menu : Settings::mainMenu) {
+    std::vector<Menu*> foundMenus = GetMenusRecursive(menu);
+    allMenus.insert(allMenus.end(), foundMenus.begin(), foundMenus.end());
   }
   return allMenus;
 }
@@ -106,7 +113,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   XMLElement* rootNode = preset.NewElement("settings");
   preset.InsertEndChild(rootNode);
 
-  for (MenuItem* menu : GetAllMenus()) {
+  for (Menu* menu : GetAllMenus()) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
@@ -143,7 +150,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
   XMLElement* curNode = rootNode->FirstChildElement();
 
-  for (MenuItem* menu : GetAllMenus()) {
+  for (Menu* menu : GetAllMenus()) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
