@@ -291,7 +291,7 @@ void UpdateGenerateMenu(u32 kDown) {
 }
 
 void PrintMainMenu() {
-  printf("\x1b[0;%dHMain Settings Menu", (BOTTOM_WIDTH/2) - 9);
+  printf("\x1b[0;%dHMain Settings", 1+(BOTTOM_WIDTH-13)/2);
 
   for (u8 i = 0; i < MAX_MAINMENU_SETTINGS_ON_SCREEN; i++) {
     if (i >= Settings::mainMenu.size()) break;
@@ -340,7 +340,7 @@ void PrintOptionSubMenu() {
   }
 
   //print menu name
-  printf("\x1b[0;%dH%s", (BOTTOM_WIDTH/2) - (currentMenu->name.length()/2), currentMenu->name.c_str());
+  printf("\x1b[0;%dH%s", 1+(BOTTOM_WIDTH-currentMenu->name.length())/2, currentMenu->name.c_str());
 
   //keep count of hidden settings to not make blank spaces appear in the list
   hiddenSettings = 0;
@@ -375,7 +375,7 @@ void PrintOptionSubMenu() {
 }
 
 void PrintSubMenu() {
-  printf("\x1b[0;%dH%s Menu", (BOTTOM_WIDTH/2) - 9, currentMenu->name.c_str());
+  printf("\x1b[0;%dH%s", 1+(BOTTOM_WIDTH-currentMenu->name.length())/2, currentMenu->name.c_str());
 
   for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     if (i >= currentMenu->itemsList->size()) break;
@@ -400,9 +400,9 @@ void PrintPresetsMenu() {
   }
 
   if(currentMenu->mode == LOAD_PRESET) {
-    printf("\x1b[0;%dHSelect a Preset to Load", (BOTTOM_WIDTH/2) - 7);
+    printf("\x1b[0;%dHSelect a Preset to Load", 1+(BOTTOM_WIDTH-23)/2);
   } else if (currentMenu->mode == DELETE_PRESET) {
-    printf("\x1b[0;%dHSelect a Preset to Delete", (BOTTOM_WIDTH/2) - 7);
+    printf("\x1b[0;%dHSelect a Preset to Delete", 1+(BOTTOM_WIDTH-25)/2);
   }
 
   for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
@@ -425,7 +425,7 @@ void PrintGenerateMenu() {
 
   consoleSelect(&bottomScreen);
 
-  printf("\x1b[3;%dHHow will you play?", (BOTTOM_WIDTH/2) - 8);
+  printf("\x1b[3;%dHHow will you play?", 1+(BOTTOM_WIDTH-18)/2);
   std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
 
   for (u8 i = 0; i < playOptions.size(); i++) {
