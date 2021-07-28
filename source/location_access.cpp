@@ -38,7 +38,7 @@ bool LocationAccess::CheckConditionAtAgeTime(bool& age, bool& time) const {
   age = true;
 
   UpdateHelpers();
-  return conditions_met() || Settings::Logic.Is(LOGIC_NONE);
+  return conditions_met() || Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA);
 }
 
 bool LocationAccess::ConditionsMet() const {

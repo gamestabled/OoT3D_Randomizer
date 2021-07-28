@@ -720,6 +720,16 @@ void VanillaFill() {
   for (LocationKey loc : allLocations) {
     Location(loc)->SetVanillaItem();
   }
+  //If necessary, handle ER stuff
+  if (ShuffleEntrances) {
+    printf("\x1b[7;10HShuffling Entrances...");
+    ShuffleAllEntrances();
+    printf("\x1b[7;32HDone");
+  }
+  //Finish up
+  CreateItemOverrides();
+  CreateEntranceOverrides();
+  CreateAlwaysIncludedMessages();
 }
 
 int Fill() {

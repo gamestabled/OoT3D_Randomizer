@@ -1437,7 +1437,7 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   PlacementLog_Msg(loc->GetName());
   PlacementLog_Msg("\n\n");
 
-  if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE)) {
+  if (applyEffectImmediately || Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA)) {
     ItemTable(item).ApplyEffect();
   }
 
