@@ -48,6 +48,10 @@ SECTIONS
 		*(.patch_MedigoronCheckFlagOne)
 	}
 
+	.patch_MedigoronGetCustomText 0x130258 : {
+		*(.patch_MedigoronGetCustomText)
+	}
+
 	.patch_MedigoronCheckFlagTwo 0x1302C4 : {
 		*(.patch_MedigoronCheckFlagTwo)
 	}
@@ -66,6 +70,10 @@ SECTIONS
 
 	.patch_OwlMagicCheck 0x144B44 : {
 		*(.patch_OwlMagicCheck)
+	}
+
+	.patch_MedigoronItemOverride 0x14D95C : {
+		*(.patch_MedigoronItemOverride)
 	}
 
 	.patch_BeanDaddyPurchase 0x14EDA8 : {
@@ -122,10 +130,6 @@ SECTIONS
 
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
-	}
-
-	.patch_MedigoronSetFlag 0x14D950 : {
-		*(.patch_MedigoronSetFlag)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
@@ -472,6 +476,14 @@ SECTIONS
 		*(.patch_WaterTempleItemGiveTwo)
 	}
 
+	.patch_SongOfTimeJingle 0x274B1C : {
+		*(.patch_SongOfTimeJingle)
+	}
+
+	.patch_DoorOfTimeCheck 0x274B68 : {
+		*(.patch_DoorOfTimeCheck)
+	}
+
 	.patch_FireTempleItemGiveThree 0x27D060 : {
 		*(.patch_FireTempleItemGiveThree)
 	}
@@ -547,7 +559,7 @@ SECTIONS
 	.patch_NoHealFromHealthUpgrades 0x2CD07C : {
 		*(.patch_NoHealFromHealthUpgrades)
 	}
-	
+
 	.patch_GetCustomMessageEntryOne 0x2CD3A4 : {
 		*(.patch_GetCustomMessageEntryOne)
 	}
@@ -634,6 +646,10 @@ SECTIONS
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
 		*(.patch_ConvertBombDropTwo)
+	}
+
+	.patch_GKSetDurability 0x376BDC : {
+		*(.patch_GKSetDurability)
 	}
 
 	.patch_NoLensOfTruthNaviText 0x37798C : {
@@ -947,7 +963,7 @@ SECTIONS
 	.patch_FairyUseHealAmount 0x4968B4 : {
 		*(.patch_FairyUseHealAmount)
 	}
-	
+
 	.patch_GanonBattleDeathWarp 0x496C98 : {
 		*(.patch_GanonBattleDeathWarp)
 	}

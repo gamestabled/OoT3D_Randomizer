@@ -501,6 +501,26 @@ static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
   return Text()+ITEM_OBTAINED(itemID)+"#"+GetHintRegion(Location(location)->GetParentRegionKey())->GetHint().GetText()+"#...^";
 }
 
+static Text BuildDoorOfTimeText() {
+  std::string itemObtained;
+  Text doorOfTimeText;
+
+  if (OpenDoorOfTime.Is(OPENDOOROFTIME_OPEN)) {
+    itemObtained = ITEM_OBTAINED(ITEM_SWORD_MASTER);
+    doorOfTimeText = Hint(CHILD_ALTAR_TEXT_END_DOTOPEN).GetText();
+
+  } else if (OpenDoorOfTime.Is(OPENDOOROFTIME_CLOSED)) {
+    itemObtained = ITEM_OBTAINED(ITEM_OCARINA_FAIRY);
+    doorOfTimeText = Hint(CHILD_ALTAR_TEXT_END_DOTCLOSED).GetText();
+
+  } else if (OpenDoorOfTime.Is(OPENDOOROFTIME_INTENDED)) {
+    itemObtained = ITEM_OBTAINED(ITEM_OCARINA_TIME);
+    doorOfTimeText = Hint(CHILD_ALTAR_TEXT_END_DOTINTENDED).GetText();
+  }
+
+  return Text()+itemObtained+doorOfTimeText;
+}
+
 //insert the required number into the hint and set the singular/plural form
 static Text BuildCountReq(const HintKey req, const Option& count) {
   Text requirement = Hint(req).GetTextCopy();
@@ -593,7 +613,7 @@ static void CreateAltarText() {
   BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY)+
   BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE)+
   //How to open Door of Time, the event trigger is necessary to read the altar multiple times
-  ITEM_OBTAINED(ITEM_OCARINA_FAIRY)+Hint(CHILD_ALTAR_TEXT_END).GetText()+EVENT_TRIGGER();
+  BuildDoorOfTimeText()+EVENT_TRIGGER();
   CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, {QM_GREEN, QM_RED, QM_BLUE}));
 
   //Adult Altar Text
@@ -627,7 +647,7 @@ void CreateMerchantsHints() {
   Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText()+carpetSalesmanItemText+Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
   Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_THIRD).GetText()+carpetSalesmanItemClearText+Hint(CARPET_SALESMAN_DIALOG_FOURTH).GetText();
 
-  CreateMessageFromTextObject(0x304F, 0, 2, 3, AddColorsAndFormat(medigoronText, {QM_RED, QM_GREEN}));
+  CreateMessageFromTextObject(0x9120, 0, 2, 3, AddColorsAndFormat(medigoronText, {QM_RED, QM_GREEN}));
   CreateMessageFromTextObject(0x6077, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextOne, {QM_RED, QM_GREEN}));
   CreateMessageFromTextObject(0x6078, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextTwo, {QM_RED, QM_YELLOW, QM_RED}));
 }

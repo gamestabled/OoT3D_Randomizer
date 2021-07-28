@@ -39,6 +39,12 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
             case DAMAGEMULTIPLIER_QUADRUPLE:
                 modifiedChangeHealth *= 4;
                 break;
+            case DAMAGEMULTIPLIER_OCTUPLE:
+                modifiedChangeHealth *= 8;
+                break;
+            case DAMAGEMULTIPLIER_SEXDECUPLE:
+                modifiedChangeHealth *= 16;
+                break;
         }
 
         // Can only be 0 if supposed to be -0.5: alternate -1 and 0

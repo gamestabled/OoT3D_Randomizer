@@ -18,7 +18,9 @@ extern string_view forestClosedDeku;
 extern string_view kakGateOpen;
 extern string_view kakGateClosed;
 
-extern string_view doorOfTimeDesc;
+extern string_view doorOfTimeOpen;
+extern string_view doorOfTimeClosed;
+extern string_view doorOfTimeIntended;
 
 extern string_view fountainNormal;
 extern string_view fountainAdult;
@@ -64,9 +66,9 @@ extern string_view defaultHeartDropsDesc;
 extern string_view noHeartDropsDesc;
 extern string_view noHeartRefillDesc;
 extern string_view scarceHeartsDesc;
-extern string_view randomMQDungeonsDesc;
 
 extern string_view mqDungeonCountDesc;
+extern string_view setDungeonTypesDesc;
 
 extern string_view shuffleRewardsEndOfDungeon;
 extern string_view shuffleRewardsAnyDungeon;
@@ -218,11 +220,17 @@ extern string_view iceTrapsOnslaught;
 
 extern string_view removeDDDesc;
 
+extern string_view progGoronSword;
+
 extern string_view faroresWindAnywhereDesc;
 
 extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
+
+extern string_view gkDurabilityVanilla;
+extern string_view gkDurabilityRandomRisk;
+extern string_view gkDurabilityRandomSafe;
 
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
@@ -236,6 +244,11 @@ extern string_view advancedTrapDmgDesc;
 extern string_view completeMaskDesc;
 
 extern string_view ToggleAllTricksDesc;
+
+extern string_view ToggleLogicNoneDesc;
+extern string_view ToggleLogicNoviceDesc;
+extern string_view ToggleLogicIntermediateDesc;
+extern string_view ToggleLogicExpertDesc;
 extern string_view LogicGrottosWithoutAgonyDesc;
 extern string_view LogicVisibleCollisionDesc;
 extern string_view LogicFewerTunicRequirementsDesc;
