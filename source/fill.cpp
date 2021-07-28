@@ -716,7 +716,6 @@ void VanillaFill() {
   AreaTable_Init();
   GenerateLocationPool();
   GenerateStartingInventory();
-  PlaceItemInLocation(LINKS_POCKET, LightMedallion);
   //Place vanilla item in each location
   for (LocationKey loc : allLocations) {
     Location(loc)->SetVanillaItem();
