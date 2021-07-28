@@ -11,6 +11,5 @@ typedef struct {
 void Input_Update(void);
 u32 Input_WaitWithTimeout(u32 msec, u32 closingButton);
 u32 Input_Wait(void);
-u32 buttonCheck(u32 key);
 
 extern InputContext rInputCtx;

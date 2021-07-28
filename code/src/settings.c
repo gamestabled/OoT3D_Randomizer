@@ -101,7 +101,7 @@ u32 Settings_GetQuickTextOption() {
 }
 
 u32 Settings_IsTurboText() {
-    return (gSettingsContext.quickText >= QUICKTEXT_TURBO && buttonCheck(BUTTON_B));
+    return (gSettingsContext.quickText >= QUICKTEXT_TURBO && rInputCtx.cur.b);
 }
 
 void Settings_SkipSongReplays() {
