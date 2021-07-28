@@ -594,28 +594,28 @@ hook_NoHealFromHealthUpgrades:
     bl NoHealFromHealthUpgrades
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_NoHealFromBombchuBowlingPrize
 hook_NoHealFromBombchuBowlingPrize:
     push {r1-r12, lr}
     bl NoHealFromBombchuBowlingPrize
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_FairyPickupHealAmount
 hook_FairyPickupHealAmount:
     push {r0-r12, lr}
     bl FairyPickupHealAmount
     pop {r0-r12, lr}
     bx lr
-	
+
 .global hook_FairyReviveHealAmount
 hook_FairyReviveHealAmount:
     push {r1-r12, lr}
     bl FairyReviveHealAmount
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_FairyUseHealAmount
 hook_FairyUseHealAmount:
     push {r1-r12, lr}
@@ -687,6 +687,26 @@ hook_KakarikoGateCheck:
     bl KakGate_CheckToFixBug
     cmp r0,#0x1
     pop {r0-r12, lr}
+    bx lr
+
+.global hook_DoorOfTimeCheck
+hook_DoorOfTimeCheck:
+    cmp r0,#0x4
+    bne 0x274B70
+    push {r0-r12, lr}
+    bl DoorOfTime_RequirementCheck
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_SongOfTimeJingle
+hook_SongOfTimeJingle:
+    mov r1,#0x0
+    push {r0-r12, lr}
+    bl DoorOfTime_RequirementCheck
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    addne r0,r0,#0x4
     bx lr
 
 .global hook_GKSetDurability

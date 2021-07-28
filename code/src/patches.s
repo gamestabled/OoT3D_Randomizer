@@ -1337,6 +1337,16 @@ CarpetSalesmanCheckFlagTwo_patch:
 CarpetSalesmanSetFlag_patch:
     bl hook_CarpetSalesmanSetFlag
 
+.section .patch_DoorOfTimeCheck
+.global DoorOfTimeCheck_patch
+DoorOfTimeCheck_patch:
+    bl hook_DoorOfTimeCheck
+
+.section .patch_SongOfTimeJingle
+.global SongOfTimeJingle_patch
+SongOfTimeJingle_patch:
+    bl hook_SongOfTimeJingle
+
 .section .patch_GKSetDurability
 .global GKSetDurability_patch
 GKSetDurability_patch:

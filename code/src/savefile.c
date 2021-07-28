@@ -91,7 +91,7 @@ void SaveFile_Init() {
         gSaveContext.dayTime = 0x1400; //Set night time
     }
 
-    if (gSettingsContext.openDoorOfTime) {
+    if (gSettingsContext.openDoorOfTime == OPENDOOROFTIME_OPEN) {
         gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
     }
 

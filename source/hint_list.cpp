@@ -6200,11 +6200,25 @@ void HintTable_Init() {
                /*spanish*/"Tres piedras espirituales halladas por Hyrule..."},
     });
 
-    hintTable[CHILD_ALTAR_TEXT_END] = HintText::Altar({
+    hintTable[CHILD_ALTAR_TEXT_END_DOTOPEN] = HintText::Altar({
+                     //obscure text
+                     Text{"Ye who may become a Hero...&The path to the future is open...",
+                /*french*/"À celui qui a quête de devenir héros...&Le futur vous accueille béant...",
+               /*spanish*/"Para aquel que se convierta en el héroe...&La puerta al futuro está a su disposición..."},
+    });
+
+    hintTable[CHILD_ALTAR_TEXT_END_DOTCLOSED] = HintText::Altar({
                      //obscure text
                      Text{"Ye who may become a Hero...&Stand with the Ocarina and&play the Song of Time.",
                 /*french*/"À celui qui a quête de devenir héros...&Portez l'Ocarina et&jouez le chant du temps.",
-               /*spanish*/"Aquel que se convierta en el héroe...&Tome la ocarina y&entone la Canción del Tiempo."},
+               /*spanish*/"Para aquel que se convierta en el héroe...&Tome la ocarina y&entone la Canción del Tiempo."},
+    });
+
+    hintTable[CHILD_ALTAR_TEXT_END_DOTINTENDED] = HintText::Altar({
+                     //obscure text
+                     Text{"Ye who may become a Hero...&Offer the spiritual stones and&play the Song of Time.",
+                /*french*/"À celui qui a quête de devenir héros...&Présentez les pierres spirituelles et&jouez le chant du temps.",
+               /*spanish*/"Para aquel que se convierta en el héroe...&Tome las piedras espirituales y&entone la Canción del Tiempo."},
     });
 
     hintTable[ADULT_ALTAR_TEXT_START] = HintText::Altar({
