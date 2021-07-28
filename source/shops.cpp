@@ -18,90 +18,15 @@ bool initTrickNames = false; //Indicates if trick ice trap names have been initi
 
 //Set vanilla shop item locations before potentially shuffling
 void PlaceVanillaShopItems() {
-  const std::vector<ItemKey> VanillaShopItems = {
-    //Vanilla KF
-    BUY_DEKU_SHIELD,
-    BUY_DEKU_NUT_5,
-    BUY_DEKU_NUT_10,
-    BUY_DEKU_STICK_1,
-    BUY_DEKU_SEEDS_30,
-    BUY_ARROWS_10,
-    BUY_ARROWS_30,
-    BUY_HEART,
-    //Vanilla Kak Potion
-    BUY_DEKU_NUT_5,
-    BUY_FISH,
-    BUY_RED_POTION_30,
-    BUY_GREEN_POTION,
-    BUY_BLUE_FIRE,
-    BUY_BOTTLE_BUG,
-    BUY_POE,
-    BUY_FAIRYS_SPIRIT,
-    //Vanilla Bombchu
-    BUY_BOMBCHU_5,
-    BUY_BOMBCHU_10,
-    BUY_BOMBCHU_10,
-    BUY_BOMBCHU_10,
-    BUY_BOMBCHU_20,
-    BUY_BOMBCHU_20,
-    BUY_BOMBCHU_20,
-    BUY_BOMBCHU_20,
-    //Vanilla MK Potion
-    BUY_GREEN_POTION,
-    BUY_BLUE_FIRE,
-    BUY_RED_POTION_30,
-    BUY_FAIRYS_SPIRIT,
-    BUY_DEKU_NUT_5,
-    BUY_BOTTLE_BUG,
-    BUY_POE,
-    BUY_FISH,
-    //Vanilla MK Bazaar
-    BUY_HYLIAN_SHIELD,
-    BUY_BOMBS_535,
-    BUY_DEKU_NUT_5,
-    BUY_HEART,
-    BUY_ARROWS_10,
-    BUY_ARROWS_50,
-    BUY_DEKU_STICK_1,
-    BUY_ARROWS_30,
-    //Vanilla Kak Bazaar
-    BUY_HYLIAN_SHIELD,
-    BUY_BOMBS_535,
-    BUY_DEKU_NUT_5,
-    BUY_HEART,
-    BUY_ARROWS_10,
-    BUY_ARROWS_50,
-    BUY_DEKU_STICK_1,
-    BUY_ARROWS_30,
-    //Vanilla ZD Shop
-    BUY_ZORA_TUNIC,
-    BUY_ARROWS_10,
-    BUY_HEART,
-    BUY_ARROWS_30,
-    BUY_DEKU_NUT_5,
-    BUY_ARROWS_50,
-    BUY_FISH,
-    BUY_RED_POTION_50,
-    //Vanilla GC Shop
-    BUY_BOMBS_525,
-    BUY_BOMBS_10,
-    BUY_BOMBS_20,
-    BUY_BOMBS_30,
-    BUY_GORON_TUNIC,
-    BUY_HEART,
-    BUY_RED_POTION_40,
-    BUY_HEART,
-  };
   //Loop to place vanilla items in each location
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
-      //Multiply i by 8 to get the correct shop
-      PlaceItemInLocation(ShopLocationLists[i][j], VanillaShopItems[i*8 + j]);
+      Location(ShopLocationLists[i][j])->SetVanillaItem();
     }
   }
 }
 
-//These are the same items as SetVanillaShopItems, but in a priority order of importance
+//These are the vanilla shop items, but in a priority order of importance
 //However many shop item slots were cleared, this will return 64 minus that number of vanilla shop items to be placed with assumed fill
 //The first 32 items here will always be present in shops
 //Shopsanity 4 will only have the first 32, shopsanity 1 will have the first 56, etc.
