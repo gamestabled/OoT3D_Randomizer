@@ -375,6 +375,10 @@ void InitTrickNames() {
      Text{"Progressive Memento", "Souvenir (prog.)", "Silbato progresivo"},
      Text{"Progressive Flute", "Flûte (prog.)", "Flauta progresiva"},
      Text{"Progressive Recorder", "Harmonica (prog.)", "Armónica progresiva"}};
+  trickNameTable[0xD4] = {
+     Text{"Progressive Titan Blade", "Lame des Titans (prog.)", "Hoja del Titán progresiva"},
+     Text{"Progressive Goron Knife", "Lame Goron (prog.)", "Daga Goron progresiva"},
+     Text{"Progressive Giant Sword", "Épée géante (prog.)", "Espada gigante progresiva"}};
 
   trickNameTable[0x0F] = {
      Text{"Magic Bottle", "Flacon magique", "Frasco feérico"},

@@ -19,7 +19,9 @@ extern string_view forestClosedDeku;
 extern string_view kakGateOpen;
 extern string_view kakGateClosed;
 
-extern string_view doorOfTimeDesc;
+extern string_view doorOfTimeOpen;
+extern string_view doorOfTimeClosed;
+extern string_view doorOfTimeIntended;
 
 extern string_view fountainNormal;
 extern string_view fountainAdult;
@@ -218,6 +220,8 @@ extern string_view iceTrapsMayhem;
 extern string_view iceTrapsOnslaught;
 
 extern string_view removeDDDesc;
+
+extern string_view progGoronSword;
 
 extern string_view faroresWindAnywhereDesc;
 

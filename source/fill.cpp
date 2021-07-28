@@ -28,7 +28,12 @@ static bool placementFailure = false;
 static void RemoveStartingItemsFromPool() {
   for (ItemKey startingItem : StartingInventory) {
     for (size_t i = 0; i < ItemPool.size(); i++) {
-      if (startingItem == ItemPool[i] || (ItemTable(startingItem).IsBottleItem() && ItemTable(ItemPool[i]).IsBottleItem())) {
+      if (startingItem == BIGGORON_SWORD) {
+        if (ItemPool[i] == GIANTS_KNIFE || ItemPool[i] == BIGGORON_SWORD) {
+          ItemPool[i] = GetJunkItem();
+        }
+        continue;
+      } else if (startingItem == ItemPool[i] || (ItemTable(startingItem).IsBottleItem() && ItemTable(ItemPool[i]).IsBottleItem())) {
         if (AdditionalHeartContainers > 0 && (startingItem == PIECE_OF_HEART || startingItem == TREASURE_GAME_HEART)) {
           ItemPool[i] = HEART_CONTAINER;
           AdditionalHeartContainers--;

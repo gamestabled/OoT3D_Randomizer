@@ -903,7 +903,7 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(TOT_ENTRANCE,            []{return true;}),
-                  Entrance(TOT_BEYOND_DOOR_OF_TIME, []{return CanPlay(SongOfTime) || OpenDoorOfTime;}),
+                  Entrance(TOT_BEYOND_DOOR_OF_TIME, []{return OpenDoorOfTime.Is(OPENDOOROFTIME_OPEN) || (CanPlay(SongOfTime) && (OpenDoorOfTime.Is(OPENDOOROFTIME_CLOSED) || (HasAllStones && OcarinaOfTime)));})
   });
 
   areaTable[TOT_BEYOND_DOOR_OF_TIME] = Area("Beyond Door of Time", "", TEMPLE_OF_TIME, NO_DAY_NIGHT_CYCLE, {

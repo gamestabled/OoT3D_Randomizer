@@ -197,6 +197,7 @@ namespace Logic {
 
   bool Slingshot        = false;
   bool Ocarina          = false;
+  bool OcarinaOfTime    = false;
   bool BombBag          = false;
   bool MagicMeter       = false;
   bool Hookshot         = false;
@@ -412,6 +413,7 @@ namespace Logic {
   void UpdateHelpers() {
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
     Ocarina         = ProgressiveOcarina   >= 1;
+    OcarinaOfTime   = ProgressiveOcarina   >= 2;
     MagicMeter      = (ProgressiveMagic     >= 1) && (AmmoCanDrop || (HasBottle && (BuyGPotion || BuyBPotion)));
     BombBag         = (ProgressiveBombBag   >= 1) && (BuyBomb || AmmoCanDrop);
     Hookshot        = ProgressiveHookshot  >= 1;
@@ -729,6 +731,7 @@ namespace Logic {
 
      Slingshot        = false;
      Ocarina          = false;
+     OcarinaOfTime    = false;
      BombBag          = false;
      MagicMeter       = false;
      Hookshot         = false;

@@ -54,9 +54,12 @@ string_view kakGateClosed             = "The gate and the Happy Mask Shop both r
 /*------------------------------                                                           //
 |        DOOR OF TIME          |                                                           //
 ------------------------------*/                                                           //
-string_view doorOfTimeDesc            = "The Door of Time starts opened instead of needing\n"
-                                        "to play the Song of Time. If closed, only an\n"   //
-                                        "Ocarina and the Song of Time need to be found to\n"
+string_view doorOfTimeOpen            = "The Door of Time starts opened instead of needing\n"
+                                        "to play the Song of Time.";                       //
+string_view doorOfTimeClosed          = "Only an Ocarina and the Song of Time need to be\n"//
+                                        "found to open the Door of Time.";                 //
+string_view doorOfTimeIntended        = "The Ocarina of Time, the Song of Time, and\n"     //
+                                        "all Spiritual Stones need to be found to\n"       //
                                         "open the Door of Time.";                          //
 /*------------------------------                                                           //
 |       ZORA'S FOUNTAIN        |                                                           //
@@ -636,7 +639,14 @@ string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice 
 |    REMOVE DOUBLE DEFENSE     |                                                           //
 ------------------------------*/                                                           //
 string_view removeDDDesc              = "If set the double defense item will be removed\n" //
-                                        "from the item pool for balanced and plentiful";   //
+                                        "from the item pool for balanced and plentiful.";  //
+/*------------------------------                                                           //
+|   PROGRESSSIVE GORON SOWRD   |                                                           //
+------------------------------*/                                                           //
+string_view progGoronSword            = "Giant's Knife will always be found\n"             //
+                                        "before Biggoron's Sword. Medigoron only starts\n" //
+                                        "selling new knives once the Giant's Knife\n"      //
+                                        "has been found and broken.";                      //
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //

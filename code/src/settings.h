@@ -31,6 +31,12 @@ typedef enum {
 } OpenKakarikoSetting;
 
 typedef enum {
+  OPENDOOROFTIME_OPEN,
+  OPENDOOROFTIME_CLOSED,
+  OPENDOOROFTIME_INTENDED,
+} OpenDoorOfTimeSetting;
+
+typedef enum {
   ZORASFOUNTAIN_NORMAL,
   ZORASFOUNTAIN_ADULT,
   ZORASFOUNTAIN_OPEN,
@@ -346,6 +352,7 @@ typedef struct {
 
   u8 itemPoolValue;
   u8 iceTrapValue;
+  u8 progressiveGoronSword;
 
   u8 customTunicColors;
   u8 coloredKeys;
