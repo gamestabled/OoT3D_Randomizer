@@ -170,6 +170,11 @@ public:
       delayedItem = item;
     }
 
+    //Place the vanilla item in this location
+    void SetVanillaItem() {
+      placedItem = vanillaItem;
+    }
+
     void ApplyPlacedItemEffect() {
       ItemTable(placedItem).ApplyEffect();
     }

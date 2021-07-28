@@ -19,6 +19,11 @@ string_view logicGlitchless           = "No glitches are required, but may requi
                                         "logic in Detailed Logic Settings.";               //
 string_view logicNoLogic              = "Maximize randomization, All locations are\n"      //
                                         "considered available. MAY BE IMPOSSIBLE TO BEAT.";//
+string_view logicVanilla              = "For those who want to play the game normally but\n"
+                                        "with the improvements of the randomizer. All\n"   //
+                                        "locations will contain their vanilla items. This\n"
+                                        "supercedes all item shuffle, logic, hint, and\n"  //
+                                        "item pool settings.";                             //
 /*------------------------------                                                           //
 |           FOREST             |                                                           //
 ------------------------------*/                                                           //

@@ -713,7 +713,7 @@ void LocationTable_Init() {
     locationTable[MORPHA]                                        = ItemLocation::Reward (0xFF, DUNGEON_WATER_TEMPLE,    "Morpha",        MORPHA,        WATER_MEDALLION,   {},                                                                                                          SpoilerCollectionCheck::EventChkInf(0x4A));
     locationTable[TWINROVA]                                      = ItemLocation::Reward (0xFF, DUNGEON_SPIRIT_TEMPLE,   "Twinrova",      TWINROVA,      SPIRIT_MEDALLION,  {},                                                                                                          SpoilerCollectionCheck::EventChkInf(0x47));
     locationTable[BONGO_BONGO]                                   = ItemLocation::Reward (0xFF, DUNGEON_SHADOW_TEMPLE,   "Bongo Bongo",   BONGO_BONGO,   SHADOW_MEDALLION,  {},                                                                                                          SpoilerCollectionCheck::EventChkInf(0x46));
-    locationTable[GANON]                                         = ItemLocation::Reward (0xFF, 0xF0,                    "Ganon",         NONE,          NONE,              {},                                                                                                          SpoilerCollectionCheck::None());
+    locationTable[GANON]                                         = ItemLocation::Reward (0xFF, 0xF0,                    "Ganon",         NONE,          TRIFORCE,          {},                                                                                                          SpoilerCollectionCheck::None());
 
     /*-------------------------------
           ---HEART CONTAINERS ---

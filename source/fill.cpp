@@ -711,6 +711,18 @@ static void RandomizeLinksPocket() {
  }
 }
 
+void VanillaFill() {
+  //Perform minimum needed initialization
+  AreaTable_Init();
+  GenerateLocationPool();
+  GenerateStartingInventory();
+  PlaceItemInLocation(LINKS_POCKET, LightMedallion);
+  //Place vanilla item in each location
+  for (LocationKey loc : allLocations) {
+    Location(loc)->SetVanillaItem();
+  }
+}
+
 int Fill() {
   int retries = 0;
   while(retries < 5) {
