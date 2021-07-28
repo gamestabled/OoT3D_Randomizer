@@ -48,6 +48,10 @@ SECTIONS
 		*(.patch_MedigoronCheckFlagOne)
 	}
 
+	.patch_MedigoronGetCustomText 0x130258 : {
+		*(.patch_MedigoronGetCustomText)
+	}
+
 	.patch_MedigoronCheckFlagTwo 0x1302C4 : {
 		*(.patch_MedigoronCheckFlagTwo)
 	}
@@ -66,6 +70,10 @@ SECTIONS
 
 	.patch_OwlMagicCheck 0x144B44 : {
 		*(.patch_OwlMagicCheck)
+	}
+
+	.patch_MedigoronItemOverride 0x14D95C : {
+		*(.patch_MedigoronItemOverride)
 	}
 
 	.patch_BeanDaddyPurchase 0x14EDA8 : {
@@ -122,10 +130,6 @@ SECTIONS
 
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
-	}
-
-	.patch_MedigoronSetFlag 0x14D950 : {
-		*(.patch_MedigoronSetFlag)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {

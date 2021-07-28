@@ -100,6 +100,13 @@ u16 ItemUpgrade_Ocarina(SaveContext* saveCtx, u16 itemId) {
     }
 }
 
+u16 ItemUpgrade_GoronSword(SaveContext* saveCtx, u16 itemId) {
+    if (((saveCtx->equipment >> 2) & 0x3) == 0) {
+        return GI_SWORD_KNIFE;
+    }
+    return GI_SWORD_BGS;
+}
+
 u16 ItemUpgrade_ArrowsToRupee(SaveContext* saveCtx, u16 itemId) {
     return (saveCtx->upgrades & 0x7) ? itemId : GI_RUPEE_BLUE; // Blue Rupee
 }

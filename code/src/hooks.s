@@ -629,8 +629,8 @@ hook_MedigoronCheckFlagOne:
     bl EnGm_CheckRewardFlag
     cmp r0,#1
     pop {r0-r12, lr}
-    beq 0x13026C
     blt 0x130254
+    beq 0x13026C
     tst r12,r3
     b 0x130250
 
@@ -646,13 +646,25 @@ hook_MedigoronCheckFlagTwo:
 childLink:
     b 0x1302F0
 
-.global hook_MedigoronSetFlag
-hook_MedigoronSetFlag:
+.global hook_MedigoronItemOverride
+hook_MedigoronItemOverride:
+    push {r0-r1, r3-r12, lr}
+    bl EnGm_ItemOverride
+    cpy r2,r0
+    pop {r0-r1, r3-r12, lr}
+    b 0x14D960
+
+.global hook_MedigoronGetCustomText
+hook_MedigoronGetCustomText:
     push {r0-r12, lr}
-    bl EnGm_SetRewardFlag
+    bl EnGm_UseCustomText
+    cmp r0,#1
     pop {r0-r12, lr}
-    cpy r1,r5
-    bx lr
+    moveq r2,#0x9100
+    addeq r2,r2,#0x20
+    movne r2,#0x3000
+    addne r2,r2,#0x4F
+    b 0x130260
 
 .global hook_CarpetSalesmanCheckFlagOne
 hook_CarpetSalesmanCheckFlagOne:

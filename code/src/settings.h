@@ -351,6 +351,7 @@ typedef struct {
 
   u8 itemPoolValue;
   u8 iceTrapValue;
+  u8 progressiveGoronSword;
 
   u8 customTunicColors;
   u8 coloredKeys;
