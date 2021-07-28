@@ -541,4 +541,8 @@ typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int fla
 #define FireDamage_addr 0x35D8D8
 #define FireDamage ((FireDamage_proc)FireDamage_addr)
 
+typedef void (*Flags_SetEnv_proc)(GlobalContext* globalCtx, s16 flag);
+#define Flags_SetEnv_addr 0x366704
+#define Flags_SetEnv ((Flags_SetEnv_proc)Flags_SetEnv_addr)
+
 #endif //_Z3D_H_

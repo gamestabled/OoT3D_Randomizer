@@ -538,8 +538,7 @@ string_view quickTextDesc3            = "Holding B will advance text boxes autom
 string_view skipSongReplaysDesc       = "The automatic replay after you play a song will\n"//
                                         "be skipped.\n"                                    //
                                         "You can choose to keep the sfx anyway, but you\n" //
-                                        "will have control of Link during it.\n\n"         //
-                                        "SONG OF STORMS GROTTOS OPEN UP AFTER 5 SECONDS!"; //
+                                        "will have control of Link during it.";            //
 /*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
@@ -719,7 +718,7 @@ string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Sh
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
-------------------------------*/                          
+------------------------------*/
 string_view ToggleLogicNoneDesc                       = "Disables all the Detailed Logic tricks.";         //
 string_view ToggleLogicNoviceDesc                     = "Enables only the easier Detailed Logic tricks";   //
 string_view ToggleLogicIntermediateDesc               = "Enables all but the harder Detailed Logic tricks.";

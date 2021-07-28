@@ -23,9 +23,6 @@
 #define OceffStorm_Update_addr 0x27112C
 #define OceffStorm_Update ((ActorFunc)OceffStorm_Update_addr)
 
-#define EnOkarinaEffect_Update_addr 0x3871A8
-#define EnOkarinaEffect_Update ((ActorFunc)EnOkarinaEffect_Update_addr)
-
 // Zelda's Lullaby, Song of Time
 void OceffWipe_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
@@ -75,14 +72,7 @@ void OceffStorm_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffStorm_Update(thisx, globalCtx);
     } else {
+        Flags_SetEnv(globalCtx, 5);
         Actor_Kill(thisx);
-    }
-}
-
-// Rain
-void EnOkarinaEffect_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    EnOkarinaEffect_Update(thisx, globalCtx);
-    if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP) {
-        /*TO DO: FIX DELAY FOR GROTTOS*/
     }
 }

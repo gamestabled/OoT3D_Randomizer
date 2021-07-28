@@ -121,7 +121,6 @@ void Actor_Init() {
 
     gActorOverlayTable[0x174].initInfo->update = DemoGt_rUpdate;
 
-  //gActorOverlayTable[0x170].initInfo->update = EnOkarinaEffect_rUpdate; // TODO: fix SoS grotto delay when skipping song replays
     gActorOverlayTable[0x17E].initInfo->update = OceffSpot_rUpdate;
 
     gActorOverlayTable[0x185].initInfo->update = EnWonderTalk2_rUpdate;
