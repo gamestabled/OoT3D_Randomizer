@@ -274,16 +274,14 @@ static void WriteShuffledEntrance(
   }
 }
 
-static void WriteSettingsRecursive(const Menu* menu, tinyxml2::XMLElement* parentNode, const bool printAll) {
-    //don't log the detailed logic, starting inventory, or exclude location menus yet
-    if (menu->name == "Logic Tricks"
-        || menu->name == "Starting Inventory"
-        || menu->name == "Exclude Locations"
-        ) {
-      return;
-    }
+// Writes the settings (without excluded locations, starting inventory and tricks) to the spoilerLog document.
+static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
+  auto parentNode = spoilerLog.NewElement("settings");
 
-    //This is a menu of settings, write then
+  std::vector<Menu*> allMenus = Settings::GetAllMenus();
+
+  for (const Menu* menu : allMenus) {
+    //This is a menu of settings, write them
     if (menu->mode == OPTION_SUB_MENU) {
       for (const Option* setting : *menu->settingsList) {
         if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
@@ -293,20 +291,6 @@ static void WriteSettingsRecursive(const Menu* menu, tinyxml2::XMLElement* paren
         }
       }
     }
-    //Menu of menus- Recursively check submenus 
-    else {
-      for (const Menu* subMenu : *menu->itemsList) {
-        WriteSettingsRecursive(subMenu, parentNode, printAll);
-      } 
-    }
-}
-
-// Writes the settings (without excluded locations, starting inventory and tricks) to the spoilerLog document.
-static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
-  auto parentNode = spoilerLog.NewElement("settings");
-
-  for (const Menu* menu : Settings::mainMenu) {
-    WriteSettingsRecursive(menu, parentNode, printAll);
   }
   spoilerLog.RootElement()->InsertEndChild(parentNode);
 }

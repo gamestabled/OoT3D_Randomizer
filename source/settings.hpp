@@ -238,6 +238,8 @@ namespace Settings {
   void SetDefaultSettings();
   void RandomizeAllSettings(const bool selectOptions = false);
   void ForceChange(u32 kDown, Option* currentSetting);
+  const std::vector<Menu*> GetAllMenus();
+
 
   extern std::string seed;
   extern std::string version;

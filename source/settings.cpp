@@ -1739,4 +1739,29 @@ namespace Settings {
     UpdateCosmetics();
   }
 
+  //If this is an option menu, return th options
+  //Else, recursively call each sub menu of this sub menu
+  const std::vector<Menu*> GetMenusRecursive(Menu* menu) {
+    std::vector<Menu*> menus;
+    if (menu->mode == OPTION_SUB_MENU) {
+      menus.push_back(menu);
+    } else if (menu->mode == SUB_MENU) {
+        for (Menu* subMenu : *menu->itemsList) {
+          std::vector<Menu*> foundMenus = GetMenusRecursive(subMenu);
+          menus.insert(menus.end(), foundMenus.begin(), foundMenus.end());
+        }
+    }
+    return menus;
+  }
+
+  //Recursively look through each menu from the main menu to get all settings
+  const std::vector<Menu*> GetAllMenus() {
+    std::vector<Menu*> allMenus;
+    for (Menu* menu : Settings::mainMenu) {
+      std::vector<Menu*> foundMenus = GetMenusRecursive(menu);
+      allMenus.insert(allMenus.end(), foundMenus.begin(), foundMenus.end());
+    }
+    return allMenus;
+  }
+
 } // namespace Settings
