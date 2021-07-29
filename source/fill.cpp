@@ -723,7 +723,7 @@ void VanillaFill() {
   GenerateStartingInventory();
   //Place vanilla item in each location
   for (LocationKey loc : allLocations) {
-    Location(loc)->SetVanillaItem();
+    Location(loc)->PlaceVanillaItem();
   }
   //If necessary, handle ER stuff
   if (ShuffleEntrances) {

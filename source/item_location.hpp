@@ -171,7 +171,7 @@ public:
     }
 
     //Place the vanilla item in this location
-    void SetVanillaItem() {
+    void PlaceVanillaItem() {
       placedItem = vanillaItem;
     }
 

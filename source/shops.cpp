@@ -21,7 +21,7 @@ void PlaceVanillaShopItems() {
   //Loop to place vanilla items in each location
   for (size_t i = 0; i < ShopLocationLists.size(); i++) {
     for (size_t j = 0; j < ShopLocationLists[i].size(); j++) {
-      Location(ShopLocationLists[i][j])->SetVanillaItem();
+      Location(ShopLocationLists[i][j])->PlaceVanillaItem();
     }
   }
 }
