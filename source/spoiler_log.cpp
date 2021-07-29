@@ -274,27 +274,39 @@ static void WriteShuffledEntrance(
   }
 }
 
+static void WriteSettingsRecursive(const Menu* menu, tinyxml2::XMLElement* parentNode, const bool printAll) {
+    //don't log the detailed logic, starting inventory, or exclude location menus yet
+    if (menu->name == "Logic Tricks"
+        || menu->name == "Starting Inventory"
+        || menu->name == "Exclude Locations"
+        ) {
+      return;
+    }
+
+    //This is a menu of settings, write then
+    if (menu->mode == OPTION_SUB_MENU) {
+      for (const Option* setting : *menu->settingsList) {
+        if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
+          auto node = parentNode->InsertNewChildElement("setting");
+          node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
+          node->SetText(setting->GetSelectedOptionText().c_str());
+        }
+      }
+    }
+    //Menu of menus- Recursively check submenus 
+    else {
+      for (const Menu* subMenu : *menu->itemsList) {
+        WriteSettingsRecursive(subMenu, parentNode, printAll);
+      } 
+    }
+}
+
 // Writes the settings (without excluded locations, starting inventory and tricks) to the spoilerLog document.
 static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
   auto parentNode = spoilerLog.NewElement("settings");
 
   for (const Menu* menu : Settings::mainMenu) {
-    //don't log the detailed logic, starting inventory, or exclude location menus yet
-    if (menu->name == "Logic Tricks"
-        || menu->name == "Starting Inventory"
-        || menu->name == "Exclude Locations"
-        || menu->mode != OPTION_SUB_MENU
-        ) {
-      continue;
-    }
-
-    for (const Option* setting : *menu->settingsList) {
-      if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
-        auto node = parentNode->InsertNewChildElement("setting");
-        node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
-        node->SetText(setting->GetSelectedOptionText().c_str());
-      }
-    }
+    WriteSettingsRecursive(menu, parentNode, printAll);
   }
   spoilerLog.RootElement()->InsertEndChild(parentNode);
 }
