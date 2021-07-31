@@ -4,6 +4,7 @@
 #include "input.h"
 #include "models.h"
 #include "entrance.h"
+#include "settings.h"
 
 #include "z3D/z3D.h"
 
@@ -30,6 +31,8 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     ItemOverride_Update();
     Model_UpdateAll(globalCtx);
     Input_Update();
+
+    Settings_SkipSongReplays();
 }
 
 void after_GlobalContext_Update() {

@@ -568,6 +568,22 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
+	.patch_InstantTextFirstLine 0x2E049C : {
+		*(.patch_InstantTextFirstLine)
+	}
+
+	.patch_InstantTextBoxBreak 0x2E0664 : {
+		*(.patch_InstantTextBoxBreak)
+	}
+
+	.patch_InstantTextRemoveOff 0x2E06C8 : {
+		*(.patch_InstantTextRemoveOff)
+	}
+
+	.patch_SkippableText 0x2E09BC : {
+		*(.patch_SkippableText)
+	}
+
 	.patch_SceneInitAfterCopyScenes 0x2EAFDC : {
 		*(.patch_SceneInitAfterCopyScenes)
 	}
@@ -950,6 +966,10 @@ SECTIONS
 
 	.patch_EnableFW 0x476D1C : {
 		*(.patch_EnableFW)
+	}
+
+	.patch_TurboText 0x480928 : {
+		*(.patch_TurboText)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {

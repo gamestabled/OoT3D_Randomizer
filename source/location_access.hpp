@@ -33,7 +33,7 @@ public:
       age = true;
 
       Logic::UpdateHelpers();
-      return conditions_met() || Settings::Logic.Is(LOGIC_NONE);
+      return conditions_met() || Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA);
     }
 
     void EventOccurred() {
