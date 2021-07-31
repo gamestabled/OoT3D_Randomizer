@@ -1,6 +1,6 @@
 #include "music.hpp"
-#include "random.hpp"
 #include <3ds.h>
+#include <cstdlib>
 
 namespace Music {
     const std::array<SeqType, SEQ_COUNT> seqTypes = {
@@ -109,8 +109,13 @@ namespace Music {
             if (seqTypes[i] & type)
                 seqs.push_back(seqOverrides[i]);
 
-        // Shuffle the vector and feed it back into the overrides array
-        Shuffle(seqs);
+        // Shuffle the vector...
+        for (int i = 0; i <= seqs.size(); i++)
+        {
+            std::swap(seqs[i], seqs[rand() %  (seqs.size() - i + 1) + i]);
+        }
+
+        // ...and feed it back into the overrides array
         for (int i = 0; i < SEQ_COUNT; i++)
             if (seqTypes[i] & type)
             {

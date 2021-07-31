@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <string>
 #include <vector>
 
 #include <3ds.h>
