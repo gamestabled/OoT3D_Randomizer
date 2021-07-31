@@ -311,6 +311,8 @@ namespace Settings {
   extern Option NumRequiredCuccos;
   extern Option KingZoraSpeed;
   extern Option CompleteMaskQuest;
+  extern Option QuickText;
+  extern Option SkipSongReplays;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;

@@ -194,6 +194,8 @@ namespace Settings {
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
   Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
+  Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3});
+  Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -206,6 +208,8 @@ namespace Settings {
     &NumRequiredCuccos,
     &KingZoraSpeed,
     &CompleteMaskQuest,
+    &QuickText,
+    &SkipSongReplays,
   };
 
   //Misc Settings
@@ -806,6 +810,8 @@ namespace Settings {
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
     ctx.kingZoraSpeed        = KingZoraSpeed.Value<u8>();
     ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
+    ctx.quickText            = QuickText.Value<u8>();
+    ctx.skipSongReplays      = SkipSongReplays.Value<u8>();
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
@@ -978,6 +984,8 @@ namespace Settings {
     Location(HC_ZELDAS_LETTER)->GetExcludedOption()->Hide(); //don't let users exclude these locations
     Location(MARKET_BOMBCHU_BOWLING_BOMBCHUS)->GetExcludedOption()->Hide();
     Location(GANON)->GetExcludedOption()->Hide();
+
+    QuickText.SetSelectedIndex(QUICKTEXT_SKIPPABLE);
 
     GossipStoneHints.SetSelectedIndex(HINTS_NEED_NOTHING);
     HintDistribution.SetSelectedIndex(1); //balanced
@@ -1360,6 +1368,14 @@ namespace Settings {
         LACSTokenCount.SetSelectedIndex(100);
         LACSTokenCount.Hide();
       }
+    }
+
+    //Only show Skip Song Replays if Quick Text is enabled
+    if (QuickText.Is(QUICKTEXT_VANILLA)) {
+      SkipSongReplays.SetSelectedIndex(DONT_SKIP);
+      SkipSongReplays.Hide();
+    } else {
+      SkipSongReplays.Unhide();
     }
 
     //Only show hint options if hints are enabled

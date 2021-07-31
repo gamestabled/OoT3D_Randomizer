@@ -525,6 +525,24 @@ string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1
 string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
                                         "will be available to be borrowed.";               //
 /*------------------------------                                                           //
+|          QUICK TEXT          |                                                           //
+------------------------------*/                                                           //
+string_view quickTextDesc0            = "Quick text will be unchanged, requiring\n"        //
+                                        "frame-perfect inputs like in the vanilla game.";  //
+string_view quickTextDesc1            = "Every text box will be completable by pressing B\n"
+                                        "at any point while it's scrolling.";              //
+string_view quickTextDesc2            = "Every text box will auto-complete instantly.\n"   //
+                                        "No scrolling allowed!";                           //
+string_view quickTextDesc3            = "Holding B will advance text boxes automatically\n"//
+                                        "(but it won't close them).";                      //
+/*------------------------------                                                           //
+|       SKIP SONG REPLAYS      |                                                           //
+------------------------------*/                                                           //
+string_view skipSongReplaysDesc       = "The automatic replay after you play a song will\n"//
+                                        "be skipped.\n"                                    //
+                                        "You can choose to keep the sfx anyway, but you\n" //
+                                        "will have control of Link during it.";            //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //
@@ -710,7 +728,7 @@ string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Sh
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
-------------------------------*/                          
+------------------------------*/
 string_view ToggleLogicNoneDesc                       = "Disables all the Detailed Logic tricks.";         //
 string_view ToggleLogicNoviceDesc                     = "Enables only the easier Detailed Logic tricks";   //
 string_view ToggleLogicIntermediateDesc               = "Enables all but the harder Detailed Logic tricks.";

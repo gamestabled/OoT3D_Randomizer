@@ -395,7 +395,9 @@ typedef struct GlobalContext {
     /* 0x208C */ ActorContext          actorCtx;
     /* 0x2264 */ char                  unk_2264[0x0034];
     /* 0x2298 */ CutsceneContext       csCtx; // "demo_play"
-    /* 0x2304 */ char                  unk_2304[0x087A];
+    /* 0x2304 */ char                  unk_2304[0x078C];
+    /* 0x2A90 */ u8                    msgMode; //seems to be used primarily for the ocarina
+    /* 0x2A91 */ char                  unk_2A91[0xED];
     /* 0x2B7E */ s16                   unk_2B7E; // msgCtx.unk_E3EE in OoT
     /* 0x2B80 */ char                  unk_2B80[0x0ED8];
     /* 0x3A58 */ ObjectContext         objectCtx;
@@ -538,5 +540,9 @@ typedef Actor* (*Actor_Spawn_proc)(ActorContext *actorCtx,GlobalContext *globalC
 typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int flamesColor);
 #define FireDamage_addr 0x35D8D8
 #define FireDamage ((FireDamage_proc)FireDamage_addr)
+
+typedef void (*Flags_SetEnv_proc)(GlobalContext* globalCtx, s16 flag);
+#define Flags_SetEnv_addr 0x366704
+#define Flags_SetEnv ((Flags_SetEnv_proc)Flags_SetEnv_addr)
 
 #endif //_Z3D_H_

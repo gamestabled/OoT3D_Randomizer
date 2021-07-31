@@ -1,4 +1,6 @@
 #include "settings.h"
+#include "hid.h"
+#include "input.h"
 
 SettingsContext gSettingsContext = {0};
 u8 Damage32 = 0;
@@ -91,6 +93,24 @@ void FairyPickupHealAmount(void) {
         Health_ChangeBy(gGlobalContext, 0x30);
     } else {
         Health_ChangeBy(gGlobalContext, 0x80);
+    }
+}
+
+u32 Settings_GetQuickTextOption() {
+    return gSettingsContext.quickText;
+}
+
+u32 Settings_IsTurboText() {
+    return (gSettingsContext.quickText >= QUICKTEXT_TURBO && rInputCtx.cur.b);
+}
+
+void Settings_SkipSongReplays() {
+    // msgModes 18 to 23 are used to manage the song replays. Skipping to mode 23 ends the replay.
+    // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns Pierre.
+    if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 && gGlobalContext->unk_2A91[0xEB] != 12) ||
+        (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
+       ) {
+        gGlobalContext->msgMode = 23;
     }
 }
 
