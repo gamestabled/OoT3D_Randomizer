@@ -193,48 +193,42 @@ private:
   OptionCategory category;
 };
 
-enum class MenuItemType {
+enum class MenuType {
+  MainMenu,
   SubMenu,
   Action,
 };
 
-class MenuItem {
+class Menu {
   public:
 
-    static MenuItem SubSubMenu(std::string name_, std::vector<Option *>* settingsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_SUB_MENU};
+    static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
     }
 
-    static MenuItem SubSubMenu(std::string name_, std::vector<MenuItem *>* itemsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(itemsList_), SUB_SUB_MENU};
+    static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(itemsList_), SUB_MENU};
     }
 
-    static MenuItem SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
+    static Menu Action(std::string name_, u8 mode_) {
+      return Menu{std::move(name_), MenuType::Action, std::move(mode_)};
     }
 
-    static MenuItem SubMenu(std::string name_, std::vector<MenuItem *>* itemsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(itemsList_), SUB_MENU};
-    }
-
-    static MenuItem Action(std::string name_, u8 mode_) {
-      return MenuItem{std::move(name_), MenuItemType::Action, std::move(mode_)};
-    }
-
-    MenuItem(std::string name_, MenuItemType type_, std::vector<Option *>* settingsList_, u8 mode_)
+    Menu(std::string name_, MenuType type_, std::vector<Option *>* settingsList_, u8 mode_)
         : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_) {}
 
-    MenuItem(std::string name_, MenuItemType type_, std::vector<MenuItem *>* itemsList_, u8 mode_)
+    Menu(std::string name_, MenuType type_, std::vector<Menu *>* itemsList_, u8 mode_)
         : name(std::move(name_)), type(type_), itemsList(std::move(itemsList_)), mode(mode_) {}
 
-    MenuItem(std::string name_, MenuItemType type_, u8 mode_)
+    Menu(std::string name_, MenuType type_, u8 mode_)
         : name(std::move(name_)), type(type_), mode(mode_) {}
 
     std::string name;
-    MenuItemType type;
+    MenuType type;
     std::vector<Option *>* settingsList;
-    std::vector<MenuItem *>* itemsList;
+    std::vector<Menu *>* itemsList;
     u8 mode;
+    u16 menuIdx = 0;
     int selectedSetting = 0;
 };
 
@@ -244,6 +238,8 @@ namespace Settings {
   void SetDefaultSettings();
   void RandomizeAllSettings(const bool selectOptions = false);
   void ForceChange(u32 kDown, Option* currentSetting);
+  const std::vector<Menu*> GetAllMenus();
+
 
   extern std::string seed;
   extern std::string version;
@@ -521,7 +517,7 @@ namespace Settings {
   extern std::vector<Option *> startingInventoryOptions;
   extern std::vector<Option *> trickOptions;
 
-  extern std::vector<MenuItem *> detailedLogicOptions;
+  extern std::vector<Menu *> detailedLogicOptions;
 
-  extern std::vector<MenuItem *> mainMenu;
+  extern std::vector<Menu *> mainMenu;
 }
