@@ -393,13 +393,13 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
     }
 
-    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_BIGGORON_SWORD) {
+    if (gSettingsContext.startingBiggoronSword == 2) {
         gSaveContext.bgsFlag = 1;
         gSaveContext.bgsHitsLeft = 1;
     }
-    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
+    if (gSettingsContext.startingBiggoronSword == 1){
         gSaveContext.bgsFlag = 0;
-        gSaveContext.bgsHitsLeft = 8; 
+        gSaveContext.bgsHitsLeft = GK_SetDurability();
     }
 
     if (gSettingsContext.startingMagicMeter == 1) {
