@@ -406,10 +406,12 @@ namespace Settings {
     &StartingSkulltulaToken,
   };
 
-  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "No Logic", "Vanilla"}, {logicGlitchless, logicNoLogic, logicVanilla});
-  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                         {nightGSDesc});
+  Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "No Logic", "Vanilla"}, {logicGlitchless, logicNoLogic, logicVanilla});
+  Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                         {locationsReachableDesc}); 
+  Option NightGSExpectSuns  = Option::Bool("Night GSs Expect Sun's",  {"Off", "On"},                         {nightGSDesc});
   std::vector<Option *> logicOptions = {
     &Logic,
+    &LocationsReachable,
     &NightGSExpectSuns,
   };
 
@@ -995,6 +997,8 @@ namespace Settings {
 
     ItemPoolValue.SetSelectedIndex(ITEMPOOL_BALANCED);
     IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
+
+    LocationsReachable.SetSelectedIndex(1); //All Locations Reachable On
 
     SetDefaultCosmetics();
   }
