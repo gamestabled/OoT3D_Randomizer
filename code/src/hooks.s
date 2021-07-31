@@ -729,6 +729,30 @@ hook_GKSetDurability:
     pop {r0-r12, lr}
     b 0x376BE0
 
+.global hook_PlaySound
+hook_PlaySound:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r3-r7, lr}
+    b 0x35C52C
+
+.global hook_SetBGMEntrance
+hook_SetBGMEntrance:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x33104C
+
+.global hook_SetBGMDayNight
+hook_SetBGMDayNight:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x483C8C
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

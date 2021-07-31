@@ -1358,6 +1358,21 @@ SongOfTimeJingle_patch:
 GKSetDurability_patch:
     b hook_GKSetDurability
 
+.section .patch_PlaySound
+.global PlaySound_patch
+PlaySound_patch:
+    b hook_PlaySound
+
+.section .patch_SetBGMEntrance
+.global SetBGMEntrance_patch
+SetBGMEntrance_patch:
+    b hook_SetBGMEntrance
+
+.section .patch_SetBGMDayNight
+.global SetBGMDayNight_patch
+SetBGMDayNight_patch:
+    b hook_SetBGMDayNight
+
 .section .patch_loader
 .global loader_patch
 
