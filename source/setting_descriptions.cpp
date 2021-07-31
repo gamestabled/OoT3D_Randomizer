@@ -16,9 +16,17 @@ string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings"
 ------------------------------*/                                                           //
 string_view logicGlitchless           = "No glitches are required, but may require some\n" //
                                         "minor tricks. Add minor tricks to consider for\n" //
-                                        "logic in Detailed Logic Settings.";               //
+                                        "logic in Logical Tricks.";                        //
 string_view logicNoLogic              = "Maximize randomization, All locations are\n"      //
                                         "considered available. MAY BE IMPOSSIBLE TO BEAT.";//
+string_view logicVanilla              = "For those who want to play the game normally but\n"
+                                        "with the improvements of the randomizer. All\n"   //
+                                        "locations will contain their vanilla items. This\n"
+                                        "supercedes all item shuffle, logic, hint, and\n"  //
+                                        "item pool settings. You can still use non-vanilla\n"
+                                        "world settings such as adult start or entrance\n" //
+                                        "shuffle, but the game may require glitches to\n"  //
+                                        "complete if you do.";                             //
 /*------------------------------                                                           //
 |           FOREST             |                                                           //
 ------------------------------*/                                                           //
@@ -525,6 +533,24 @@ string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1
 string_view completeMaskDesc          = "Once the happy mask shop is opened, all masks\n"  //
                                         "will be available to be borrowed.";               //
 /*------------------------------                                                           //
+|          QUICK TEXT          |                                                           //
+------------------------------*/                                                           //
+string_view quickTextDesc0            = "Quick text will be unchanged, requiring\n"        //
+                                        "frame-perfect inputs like in the vanilla game.";  //
+string_view quickTextDesc1            = "Every text box will be completable by pressing B\n"
+                                        "at any point while it's scrolling.";              //
+string_view quickTextDesc2            = "Every text box will auto-complete instantly.\n"   //
+                                        "No scrolling allowed!";                           //
+string_view quickTextDesc3            = "Holding B will advance text boxes automatically\n"//
+                                        "(but it won't close them).";                      //
+/*------------------------------                                                           //
+|       SKIP SONG REPLAYS      |                                                           //
+------------------------------*/                                                           //
+string_view skipSongReplaysDesc       = "The automatic replay after you play a song will\n"//
+                                        "be skipped.\n"                                    //
+                                        "You can choose to keep the sfx anyway, but you\n" //
+                                        "will have control of Link during it.";            //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //
@@ -677,9 +703,10 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
 ------------------------------*/                                                           //
 string_view gkDurabilityVanilla       = "The durability will always be set to 8.";         //
 string_view gkDurabilityRandomRisk    = "Each Giant's Knife will get a random durability\n"//
-                                        "between 1 and 128, with low being more common.";  //
+                                        "between 1 and 128, with low being more common,\n" //
+                                        "and with an average of 15.";                      //
 string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random durability\n"//
-                                        "between 10 and 50.";                              //
+                                        "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
@@ -719,7 +746,7 @@ string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Sh
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
-------------------------------*/                          
+------------------------------*/
 string_view ToggleLogicNoneDesc                       = "Disables all the Detailed Logic tricks.";         //
 string_view ToggleLogicNoviceDesc                     = "Enables only the easier Detailed Logic tricks";   //
 string_view ToggleLogicIntermediateDesc               = "Enables all but the harder Detailed Logic tricks.";

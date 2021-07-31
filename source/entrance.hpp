@@ -88,7 +88,7 @@ public:
         age = true;
 
         Logic::UpdateHelpers();
-        return conditionsMet() || Settings::Logic.Is(LOGIC_NONE);
+        return conditionsMet() || Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA);
     }
 
     //Yes this is the exact same function as above, trust me on this

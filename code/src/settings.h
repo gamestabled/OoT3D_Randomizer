@@ -16,6 +16,7 @@ typedef enum {
 typedef enum {
   LOGIC_GLITCHLESS,
   LOGIC_NONE,
+  LOGIC_VANILLA,
 } LogicSetting;
 
 typedef enum {
@@ -190,6 +191,19 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+  QUICKTEXT_VANILLA,
+  QUICKTEXT_SKIPPABLE,
+  QUICKTEXT_INSTANT,
+  QUICKTEXT_TURBO,
+} QuickTextSetting;
+
+typedef enum {
+  SONGREPLAYS_DONT_SKIP,
+  SONGREPLAYS_SKIP_NO_SFX,
+  SONGREPLAYS_SKIP_KEEP_SFX,
+} SkipSongReplaysSetting;
+
+typedef enum {
   INCLUDE,
   EXCLUDE,
 } ExcludeLocationSetting;
@@ -332,6 +346,8 @@ typedef struct {
   u8 numRequiredCuccos;
   u8 kingZoraSpeed;
   u8 completeMaskQuest;
+  u8 quickText;
+  u8 skipSongReplays;
 
   u8 damageMultiplier;
   u8 startingTime;
@@ -425,6 +441,7 @@ extern SettingsContext gSettingsContext;
 extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
+void Settings_SkipSongReplays();
 u32 Hash(u32);
 u8  Bias(u32);
 

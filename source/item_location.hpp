@@ -107,8 +107,8 @@ public:
 class ItemLocation {
 public:
     ItemLocation() = default;
-    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, HintKey hintKey_, std::vector<Category> categories_, u16 price_ = 0, SpoilerCollectionCheck collectionCheck_ = SpoilerCollectionCheck())
-        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), hintKey(hintKey_), categories(std::move(categories_)), price(price_), collectionCheck(collectionCheck_) {}
+    ItemLocation(u8 scene_, ItemLocationType type_, u8 flag_, std::string name_, HintKey hintKey_, ItemKey vanillaItem_, std::vector<Category> categories_, u16 price_ = 0, SpoilerCollectionCheck collectionCheck_ = SpoilerCollectionCheck())
+        : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), hintKey(hintKey_), vanillaItem(vanillaItem_), categories(std::move(categories_)), price(price_), collectionCheck(collectionCheck_) {}
 
     ItemOverride_Key Key() const {
         ItemOverride_Key key;
@@ -168,6 +168,11 @@ public:
     //Saves an item to be set as placedItem later
     void SetDelayedItem(const ItemKey item) {
       delayedItem = item;
+    }
+
+    //Place the vanilla item in this location
+    void PlaceVanillaItem() {
+      placedItem = vanillaItem;
     }
 
     void ApplyPlacedItemEffect() {
@@ -287,44 +292,44 @@ public:
       Settings::excludeLocationsOptions.push_back(&excludedOption);
     }
 
-    static auto Base(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
-        return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), hintKey, std::move(categories), 0, collectionCheck};
+    static auto Base(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
+        return ItemLocation{scene, ItemLocationType::Base, flag, std::move(name), hintKey, vanillaItem, std::move(categories), 0, collectionCheck};
     }
 
-    static auto Chest(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), hintKey, std::move(categories), 0, SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_CHEST, scene, flag)};
+    static auto Chest(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Chest, flag, std::move(name), hintKey, vanillaItem, std::move(categories), 0, SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_CHEST, scene, flag)};
     }
 
-    static auto Collectable(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintKey, std::move(categories), 0, SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_COLLECTABLE, scene, flag)};
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories) {
+        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintKey, vanillaItem, std::move(categories), 0, SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_COLLECTABLE, scene, flag)};
     }
 
-    static auto Collectable(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck) {
-        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintKey, std::move(categories), 0, collectionCheck};
+    static auto Collectable(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck) {
+        return ItemLocation{scene, ItemLocationType::Collectable, flag, std::move(name), hintKey, vanillaItem, std::move(categories), 0, collectionCheck};
     }
 
     static auto GSToken(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), hintKey, std::move(categories), 0, SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_GOLD_SKULLTULA, scene, flag)};
+        return ItemLocation{scene, ItemLocationType::GSToken, flag, std::move(name), hintKey, GOLD_SKULLTULA_TOKEN, std::move(categories), 0, SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_GOLD_SKULLTULA, scene, flag)};
     }
 
-    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
-        return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), hintKey, std::move(categories), 0, collectionCheck};
+    static auto GrottoScrub(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
+        return ItemLocation{scene, ItemLocationType::GrottoScrub, flag, std::move(name), hintKey, vanillaItem, std::move(categories), 0, collectionCheck};
     }
 
-    static auto Delayed(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
-        return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), hintKey, std::move(categories), 0, collectionCheck};
+    static auto Delayed(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
+        return ItemLocation{scene, ItemLocationType::Delayed, flag, std::move(name), hintKey, vanillaItem, std::move(categories), 0, collectionCheck};
     }
 
-    static auto Reward(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
-        return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintKey, std::move(categories), 0, collectionCheck};
+    static auto Reward(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck()) {
+        return ItemLocation{scene, ItemLocationType::TempleReward, flag, std::move(name), hintKey, vanillaItem, std::move(categories), 0, collectionCheck};
     }
 
     static auto OtherHint(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::OtherHint, flag, std::move(name), NONE, std::move(categories)};
+        return ItemLocation{scene, ItemLocationType::OtherHint, flag, std::move(name), NONE, NONE, std::move(categories)};
     }
 
     static auto HintStone(u8 scene, u8 flag, std::string&& name, std::vector<Category>&& categories) {
-        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), NONE, std::move(categories)};
+        return ItemLocation{scene, ItemLocationType::HintStone, flag, std::move(name), NONE, NONE, std::move(categories)};
     }
 
     void ResetVariables() {
@@ -346,6 +351,7 @@ private:
 
     std::string name;
     HintKey hintKey = NONE;
+    ItemKey vanillaItem = NONE;
     bool hintedAt = false;
     std::vector<Category> categories;
     bool addedToPool = false;

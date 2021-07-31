@@ -15,6 +15,7 @@ enum class SearchMode {
     PoeCollectorAccess,
 };
 
+void VanillaFill();
 int Fill();
 
 std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations,
