@@ -109,11 +109,13 @@ void MoveCursor(u32 kDown) {
     }
 
     //Bounds checking
-    u16 max = currentMenu->itemsList->size(); //Default max: Number of items in menu
+    u16 max = -1;
     if (currentMenu->mode == LOAD_PRESET || currentMenu->mode == DELETE_PRESET) { //Number of presets if applicable
       max = presetEntries.size();
     } else if (currentMenu->mode == GENERATE_MODE) { //Generate menu: 2 options
       max = 2;
+    } else {
+      max = currentMenu->itemsList->size(); //Default max: Number of items in menu
     }
     if (currentMenu->menuIdx == max) {
       currentMenu->menuIdx = 0;
