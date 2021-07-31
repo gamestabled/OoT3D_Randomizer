@@ -16,9 +16,17 @@ string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings"
 ------------------------------*/                                                           //
 string_view logicGlitchless           = "No glitches are required, but may require some\n" //
                                         "minor tricks. Add minor tricks to consider for\n" //
-                                        "logic in Detailed Logic Settings.";               //
+                                        "logic in Logical Tricks.";                        //
 string_view logicNoLogic              = "Maximize randomization, All locations are\n"      //
                                         "considered available. MAY BE IMPOSSIBLE TO BEAT.";//
+string_view logicVanilla              = "For those who want to play the game normally but\n"
+                                        "with the improvements of the randomizer. All\n"   //
+                                        "locations will contain their vanilla items. This\n"
+                                        "supercedes all item shuffle, logic, hint, and\n"  //
+                                        "item pool settings. You can still use non-vanilla\n"
+                                        "world settings such as adult start or entrance\n" //
+                                        "shuffle, but the game may require glitches to\n"  //
+                                        "complete if you do.";                             //
 /*------------------------------                                                           //
 |           FOREST             |                                                           //
 ------------------------------*/                                                           //

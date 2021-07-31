@@ -10,6 +10,7 @@ extern string_view dungeonRandomize;
 
 extern string_view logicGlitchless;
 extern string_view logicNoLogic;
+extern string_view logicVanilla;
 
 extern string_view forestOpen;
 extern string_view forestClosed;

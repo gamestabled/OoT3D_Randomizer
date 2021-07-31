@@ -406,8 +406,8 @@ namespace Settings {
     &StartingSkulltulaToken,
   };
 
-  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "No Logic"}, {logicGlitchless, logicNoLogic});
-  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},              {nightGSDesc});
+  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "No Logic", "Vanilla"}, {logicGlitchless, logicNoLogic, logicVanilla});
+  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                         {nightGSDesc});
   std::vector<Option *> logicOptions = {
     &Logic,
     &NightGSExpectSuns,
@@ -1755,6 +1755,20 @@ namespace Settings {
     }
 
     UpdateCosmetics();
+
+    //If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
+    if (Logic.Is(LOGIC_VANILLA)) {
+      ShuffleRewards.SetSelectedIndex(0);
+      LinksPocketItem.SetSelectedIndex(0);
+      LinksPocketRewardBitMask = 0x20; //Set bitmask for light medallion in Link's pocket
+      ShuffleSongs.SetSelectedIndex(0);
+      Scrubsanity.SetSelectedIndex(0);
+      ShuffleCows.SetSelectedIndex(0);
+      ShuffleMagicBeans.SetSelectedIndex(0);
+      ShuffleMerchants.SetSelectedIndex(0);
+      Keysanity.SetSelectedIndex(3); //Set small keys to any dungeon so FiT basement door will be locked
+      GossipStoneHints.SetSelectedIndex(0);
+    }
   }
 
   //If this is an option menu, return th options

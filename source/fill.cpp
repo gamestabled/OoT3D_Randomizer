@@ -716,6 +716,27 @@ static void RandomizeLinksPocket() {
  }
 }
 
+void VanillaFill() {
+  //Perform minimum needed initialization
+  AreaTable_Init();
+  GenerateLocationPool();
+  GenerateStartingInventory();
+  //Place vanilla item in each location
+  for (LocationKey loc : allLocations) {
+    Location(loc)->PlaceVanillaItem();
+  }
+  //If necessary, handle ER stuff
+  if (ShuffleEntrances) {
+    printf("\x1b[7;10HShuffling Entrances...");
+    ShuffleAllEntrances();
+    printf("\x1b[7;32HDone");
+  }
+  //Finish up
+  CreateItemOverrides();
+  CreateEntranceOverrides();
+  CreateAlwaysIncludedMessages();
+}
+
 int Fill() {
   int retries = 0;
   while(retries < 5) {

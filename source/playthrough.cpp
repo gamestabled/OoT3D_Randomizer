@@ -45,9 +45,14 @@ namespace Playthrough {
 
       Logic::UpdateHelpers();
 
-      int ret = Fill();
-      if (ret < 0) {
-        return ret;
+      if (Settings::Logic.Is(LOGIC_VANILLA)) {
+        VanillaFill(); //Just place items in their vanilla locations
+      }
+      else { //Fill locations with logic
+        int ret = Fill(); 
+        if (ret < 0) {
+          return ret;
+        }
       }
 
       GenerateHash();
