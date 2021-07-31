@@ -926,7 +926,7 @@ namespace Settings {
 
     //Starting Equipment
     ctx.startingEquipment |= StartingKokiriSword.Value<u8>();
-    ctx.startingEquipment |= StartingBiggoronSword.Value<u8>() << 2;
+    ctx.startingEquipment |= (StartingBiggoronSword.Value<u8>() ? 1: 0) << 2;
     ctx.startingEquipment |= StartingDekuShield.Value<u8>()    << 4;
     ctx.startingEquipment |= StartingHylianShield.Value<u8>()  << 5;
     ctx.startingEquipment |= StartingMirrorShield.Value<u8>()  << 6;
