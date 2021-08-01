@@ -608,6 +608,10 @@ SECTIONS
 		*(.patch_BiggoronDayCheck)
 	}
 
+	.patch_TurboTextSignalNPC 0x3469F4 : {
+		*(.patch_TurboTextSignalNPC)
+	}
+
 	.patch_FairyReviveHealAmount 0x34AF48 : {
 		*(.patch_FairyReviveHealAmount)
 	}
@@ -964,8 +968,12 @@ SECTIONS
 		*(.patch_EnableFW)
 	}
 
-	.patch_TurboText 0x480928 : {
-		*(.patch_TurboText)
+	.patch_TurboTextAdvance 0x480928 : {
+		*(.patch_TurboTextAdvance)
+	}
+
+	.patch_TurboTextClose 0x488214 : {
+		*(.patch_TurboTextClose)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {

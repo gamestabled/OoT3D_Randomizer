@@ -1362,10 +1362,20 @@ InstantTextBoxBreak_patch:
 InstantTextRemoveOff_patch:
     b hook_InstantTextRemoveOff
 
-.section .patch_TurboText
-.global TurboText_patch
-TurboText_patch:
-    bl hook_TurboText
+.section .patch_TurboTextAdvance
+.global TurboTextAdvance_patch
+TurboTextAdvance_patch:
+    bl hook_TurboTextAdvance
+
+.section .patch_TurboTextClose
+.global TurboTextClose_patch
+TurboTextClose_patch:
+    bl hook_TurboTextClose
+
+.section .patch_TurboTextSignalNPC
+.global TurboTextSignalNPC_patch
+TurboTextSignalNPC_patch:
+    bl hook_TurboTextSignalNPC
 
 .section .patch_SkipSongReplayForTimeBlocksOne
 .global SkipSongReplayForTimeBlocksOne_patch

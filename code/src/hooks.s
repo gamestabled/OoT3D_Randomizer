@@ -753,13 +753,32 @@ hook_InstantTextRemoveOff:
     ldr r0,[r5,#0x0]
     b 0x2E06CC
 
-.global hook_TurboText
-hook_TurboText:
+.global hook_TurboTextAdvance
+hook_TurboTextAdvance:
     push {r0-r12, lr}
     bl Settings_IsTurboText
     cmp r0,#0x0
     pop {r0-r12, lr}
     cmpeq r0,#0x0
+    bx lr
+
+.global hook_TurboTextClose
+hook_TurboTextClose:
+    push {r0-r12, lr}
+    bl Settings_IsTurboText
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    cmpeq r0,#0x0
+    bx lr
+
+.global hook_TurboTextSignalNPC
+hook_TurboTextSignalNPC:
+    movne r4,#0x1
+    push {r0-r12, lr}
+    bl Settings_IsTurboText
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    movne r4,#0x1
     bx lr
 
 .global hook_SkipSongReplayForTimeBlocksOne
