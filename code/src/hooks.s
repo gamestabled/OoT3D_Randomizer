@@ -762,6 +762,32 @@ hook_TurboText:
     cmpeq r0,#0x0
     bx lr
 
+.global hook_SkipSongReplayForTimeBlocksOne
+hook_SkipSongReplayForTimeBlocksOne:
+    add r1,r1,#0x2B00
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x207FDC
+    push {r0,r1}
+    sub r1,r1,#0x70
+    ldrb r0,[r1]
+    cmp r0,#23
+    pop {r0,r1}
+    bne 0x208030
+    b 0x207FDC
+
+.global hook_SkipSongReplayForTimeBlocksTwo
+hook_SkipSongReplayForTimeBlocksTwo:
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x208028
+    add r0,r0,#0x100
+    b 0x207FFC
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

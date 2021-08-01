@@ -1367,6 +1367,16 @@ InstantTextRemoveOff_patch:
 TurboText_patch:
     bl hook_TurboText
 
+.section .patch_SkipSongReplayForTimeBlocksOne
+.global SkipSongReplayForTimeBlocksOne_patch
+SkipSongReplayForTimeBlocksOne_patch:
+    b hook_SkipSongReplayForTimeBlocksOne
+
+.section .patch_SkipSongReplayForTimeBlocksTwo
+.global SkipSongReplayForTimeBlocksTwo_patch
+SkipSongReplayForTimeBlocksTwo_patch:
+    b hook_SkipSongReplayForTimeBlocksTwo
+
 .section .patch_loader
 .global loader_patch
 

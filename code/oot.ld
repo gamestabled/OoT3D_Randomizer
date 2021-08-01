@@ -384,6 +384,14 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_SkipSongReplayForTimeBlocksOne 0x207FD8 : {
+		*(.patch_SkipSongReplayForTimeBlocksOne)
+	}
+
+	.patch_SkipSongReplayForTimeBlocksTwo 0x207FF8 : {
+		*(.patch_SkipSongReplayForTimeBlocksTwo)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
