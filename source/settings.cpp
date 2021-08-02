@@ -674,10 +674,10 @@ namespace Settings {
   static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares + Ocarina Music"};
   static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
 
-  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},    {""},                  OptionCategory::Cosmetic);
-  Option ShuffleBGM =      Option::Bool("  Shuffle BGM",           {"Off", "On"},    {""},                  OptionCategory::Cosmetic);
+  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},    {musicRandoDesc},      OptionCategory::Cosmetic);
+  Option ShuffleBGM =      Option::Bool("  Shuffle BGM",           {"Off", "On"},    {shuffleBGMDesc},      OptionCategory::Cosmetic);
   Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions}, {fanfareDescriptions}, OptionCategory::Cosmetic);
-  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {""},                  OptionCategory::Cosmetic);
+  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {shuffleOcaMusicDesc}, OptionCategory::Cosmetic);
 
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
