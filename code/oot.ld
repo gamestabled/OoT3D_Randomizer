@@ -975,7 +975,7 @@ SECTIONS
 	.patch_EnableFW 0x476D1C : {
 		*(.patch_EnableFW)
 	}
-	
+
 	.patch_TurboText 0x480928 : {
 		*(.patch_TurboText)
 	}

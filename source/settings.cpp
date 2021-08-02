@@ -671,7 +671,7 @@ namespace Settings {
   Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc}, OptionCategory::Cosmetic);
   Option MirrorWorld =     Option::Bool("Mirror World",       {"Off", "On"}, {mirrorWorldDesc},     OptionCategory::Cosmetic);
 
-  static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares + Ocarina Music"};
+  static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares +\n                         Ocarina Music"};
   static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
 
   Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},    {musicRandoDesc},      OptionCategory::Cosmetic);
@@ -749,8 +749,6 @@ namespace Settings {
   //declared here, set in fill.cpp
   u32 LinksPocketRewardBitMask = 0;
   std::array<u32, 9> rDungeonRewardOverrides{};
-
-  std::array<u32, 84> rBGMOverrides{};
 
   //declared here, set in menu.cpp
   u8 PlayOption;

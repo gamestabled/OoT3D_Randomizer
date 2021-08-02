@@ -105,9 +105,11 @@ namespace Music {
         std::vector<u32> seqs;
 
         // Get all sequences of the desired type(s) into a vector
-        for (int i = 0; i < SEQ_COUNT; i++)
-            if (seqTypes[i] & type)
+        for (int i = 0; i < SEQ_COUNT; i++) {
+            if (seqTypes[i] & type) {
                 seqs.push_back(seqOverrides[i]);
+            }
+        }
 
         // Shuffle the vector...
         for (std::size_t i = 0; i <= seqs.size(); i++)
@@ -116,11 +118,12 @@ namespace Music {
         }
 
         // ...and feed it back into the overrides array
-        for (int i = 0; i < SEQ_COUNT; i++)
+        for (int i = 0; i < SEQ_COUNT; i++) {
             if (seqTypes[i] & type)
             {
                 seqOverrides[i] = seqs.back();
                 seqs.pop_back();
             }
+        }
     }
 } // namespace Music
