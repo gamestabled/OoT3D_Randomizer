@@ -110,7 +110,7 @@ namespace Music {
                 seqs.push_back(seqOverrides[i]);
 
         // Shuffle the vector...
-        for (int i = 0; i <= seqs.size(); i++)
+        for (std::size_t i = 0; i <= seqs.size(); i++)
         {
             std::swap(seqs[i], seqs[rand() %  (seqs.size() - i + 1) + i]);
         }
