@@ -1760,7 +1760,6 @@ namespace Settings {
     if (Logic.Is(LOGIC_VANILLA)) {
       ShuffleRewards.SetSelectedIndex(0);
       LinksPocketItem.SetSelectedIndex(0);
-      LinksPocketRewardBitMask = 0x20; //Set bitmask for light medallion in Link's pocket
       ShuffleSongs.SetSelectedIndex(0);
       Scrubsanity.SetSelectedIndex(0);
       ShuffleCows.SetSelectedIndex(0);
