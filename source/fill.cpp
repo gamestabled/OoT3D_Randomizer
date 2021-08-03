@@ -550,7 +550,14 @@ static void RandomizeDungeonRewards() {
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
     std::vector<ItemKey> rewards = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
-    AssumedFill(rewards, dungeonRewardLocations);
+    if (Settings::Logic.Is(LOGIC_VANILLA)) { //Place dungeon rewards in vanilla locations
+      for (LocationKey loc : dungeonRewardLocations) {
+        Location(loc)->PlaceVanillaItem();
+      }
+    } else { //Randomize dungeon rewards with assumed fill
+      AssumedFill(rewards, dungeonRewardLocations);
+    }
+    
     for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
       const auto index = Location(dungeonRewardLocations[i])->GetPlacedItem().GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
@@ -721,8 +728,10 @@ void VanillaFill() {
   //Perform minimum needed initialization
   AreaTable_Init();
   GenerateLocationPool();
+  GenerateItemPool();
   GenerateStartingInventory();
   //Place vanilla item in each location
+  RandomizeDungeonRewards();
   for (LocationKey loc : allLocations) {
     Location(loc)->PlaceVanillaItem();
   }

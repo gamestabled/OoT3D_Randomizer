@@ -551,8 +551,8 @@ string_view quickTextDesc1            = "Every text box will be completable by p
                                         "at any point while it's scrolling.";              //
 string_view quickTextDesc2            = "Every text box will auto-complete instantly.\n"   //
                                         "No scrolling allowed!";                           //
-string_view quickTextDesc3            = "Holding B will advance text boxes automatically\n"//
-                                        "(but it won't close them).";                      //
+string_view quickTextDesc3            = "Holding B will advance and close text boxes\n"    //
+                                        "automatically, except for choice selections.";    //
 /*------------------------------                                                           //
 |       SKIP SONG REPLAYS      |                                                           //
 ------------------------------*/                                                           //
