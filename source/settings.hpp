@@ -402,6 +402,7 @@ namespace Settings {
 
   //Logic Settings
   extern Option Logic;
+  extern Option LocationsReachable;
   extern Option NightGSExpectSuns;
 
   //Trick Settings
