@@ -18,6 +18,7 @@
 #include <vector>
 #include <unistd.h>
 #include <list>
+#include <algorithm>
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -116,6 +117,10 @@ static int GetMaxGSCount() {
   }
   //Return max of the two possible reasons tokens could be important
   return std::max(maxUseful, maxBridge);
+}
+
+std::vector<LocationKey> GetAllEmptyLocations() {
+  return FilterFromPool(allLocations, [](const LocationKey loc){ return Location(loc)->GetPlacedItemKey() == NONE;});
 }
 
 //This function will return a vector of ItemLocations that are accessible with
@@ -373,6 +378,9 @@ static void PareDownPlaythrough() {
   for (LocationKey loc : toAddBackItem) {
     Location(loc)->SaveDelayedItem();
   }
+
+  LogicReset();
+  GetAccessibleLocations(allLocations, SearchMode::CheckBeatable);
 }
 
 //Very similar to PareDownPlaythrough except it creates the list of Way of the Hero items
@@ -434,7 +442,7 @@ static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locati
 | This method helps distribution of items locked behind many requirements.
 | - OoT Randomizer
 */
-static std::vector<ItemKey> AssumedFill(const std::vector<ItemKey>& items, const std::vector<LocationKey>& allowedLocations, bool setLocationsAsHintable = false) {
+static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<LocationKey>& allowedLocations, bool setLocationsAsHintable = false) {
 
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[2;2HERROR: MORE ITEMS THAN LOCATIONS IN GIVEN LISTS");
@@ -452,7 +460,7 @@ static std::vector<ItemKey> AssumedFill(const std::vector<ItemKey>& items, const
     }
     PlacementLog_Write();
     placementFailure = true;
-    return {};
+    return;
   }
 
   //keep retrying to place everything until it works or takes too long
@@ -463,10 +471,9 @@ static std::vector<ItemKey> AssumedFill(const std::vector<ItemKey>& items, const
     retries--;
     if (retries <= 0) {
       placementFailure = true;
-      return {};
+      return;
     }
     unsuccessfulPlacement = false;
-    playthroughBeatable = false;
     std::vector<ItemKey> itemsToPlace = items;
 
     //copy all not yet placed advancement items so that we can apply their effects for the fill algorithm
@@ -474,7 +481,7 @@ static std::vector<ItemKey> AssumedFill(const std::vector<ItemKey>& items, const
 
     //shuffle the order of items to place
     Shuffle(itemsToPlace);
-    while (!itemsToPlace.empty() && (LocationsReachable.Is(ON) || !playthroughBeatable)) {
+    while (!itemsToPlace.empty()) {
       ItemKey item = std::move(itemsToPlace.back());
       ItemTable(item).SetAsPlaythrough();
       itemsToPlace.pop_back();
@@ -518,6 +525,7 @@ static std::vector<ItemKey> AssumedFill(const std::vector<ItemKey>& items, const
       PlaceItemInLocation(selectedLocation, item);
       attemptedLocations.push_back(selectedLocation);
 
+
       //This tells us the location went through the randomization algorithm
       //to distinguish it from locations which did not or that the player already
       //knows
@@ -527,19 +535,23 @@ static std::vector<ItemKey> AssumedFill(const std::vector<ItemKey>& items, const
 
       //If ALR is off, then we check beatability after placing the item.
       //If the game is beatable, then we can stop placing items with logic.
-      if (LocationsReachable.Is(OFF)) {
+      if (!LocationsReachable) {
+        playthroughBeatable = false;
+        LogicReset();
         GetAccessibleLocations(allLocations, SearchMode::CheckBeatable);
+        if (playthroughBeatable) {
+          CitraPrint("Pog leave early");
+          for (ItemKey item : itemsToPlace) {
+            CitraPrint(ItemTable(item).GetName().english);
+          }
+          CitraPrint(std::to_string(GetAllEmptyLocations().size()));
+          FastFill(itemsToPlace, GetAllEmptyLocations());
+          break;
+        }
       }
     }
-
-    //If ALR off, want to return whatever items weren't placed with logic
-    //so they may be placed randomly
-    if (LocationsReachable.Is(OFF)) {
-      return itemsToPlace;
-    }
   } while (unsuccessfulPlacement);
-
-  return {};
+  return;
 }
 
 //This function will specifically randomize dungeon rewards for the End of Dungeons
@@ -858,15 +870,14 @@ int Fill() {
     RandomizeLinksPocket();
     //Then place the rest of the advancement items
     std::vector<ItemKey> remainingAdvancementItems = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) { return ItemTable(i).IsAdvancement();});
-    remainingAdvancementItems = AssumedFill(remainingAdvancementItems, allLocations, true);
-    CitraPrint(std::to_string(remainingAdvancementItems.size()));
+    AssumedFill(remainingAdvancementItems, allLocations, true);
 
     //Fast fill for the rest of the pool
     std::vector<ItemKey> remainingPool = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) {return true;});
     //Any advancement items not placed by assumed fill will be placed randomly- Only applies with ALR off
     remainingPool.insert(remainingPool.end(), remainingAdvancementItems.begin(), remainingAdvancementItems.end());
     LogicReset();
-    FastFill(remainingPool, GetAccessibleLocations(allLocations));
+    FastFill(remainingPool, GetAllEmptyLocations());
 
     LogicReset();
     GeneratePlaythrough();
