@@ -388,6 +388,14 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_SkipSongReplayForTimeBlocksOne 0x207FD8 : {
+		*(.patch_SkipSongReplayForTimeBlocksOne)
+	}
+
+	.patch_SkipSongReplayForTimeBlocksTwo 0x207FF8 : {
+		*(.patch_SkipSongReplayForTimeBlocksTwo)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
@@ -610,6 +618,10 @@ SECTIONS
 
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
+	}
+
+	.patch_TurboTextSignalNPC 0x3469F4 : {
+		*(.patch_TurboTextSignalNPC)
 	}
 
 	.patch_FairyReviveHealAmount 0x34AF48 : {
@@ -968,8 +980,12 @@ SECTIONS
 		*(.patch_EnableFW)
 	}
 
-	.patch_TurboText 0x480928 : {
-		*(.patch_TurboText)
+	.patch_TurboTextAdvance 0x480928 : {
+		*(.patch_TurboTextAdvance)
+	}
+
+	.patch_TurboTextClose 0x488214 : {
+		*(.patch_TurboTextClose)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {

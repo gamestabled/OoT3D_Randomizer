@@ -1534,8 +1534,8 @@ namespace Settings {
 
     // Open Settings
     if (RandomizeOpen) {
-      // Skip Logic and RandomizeOpen Options to ensure proper logic
-      for (size_t i = 2; i < openOptions.size(); i++) {
+      // Skip RandomizeOpen Option
+      for (size_t i = 1; i < openOptions.size(); i++) {
         //hide options
         openOptions[i]->Hide();
 
@@ -1548,7 +1548,7 @@ namespace Settings {
       RandomGanonsTrials.SetSelectedIndex(ON);
     }
     else {
-      for (size_t i = 2; i < openOptions.size(); i++) {
+      for (size_t i = 1; i < openOptions.size(); i++) {
         openOptions[i]->Unhide();
       }
     }
@@ -1760,7 +1760,6 @@ namespace Settings {
     if (Logic.Is(LOGIC_VANILLA)) {
       ShuffleRewards.SetSelectedIndex(0);
       LinksPocketItem.SetSelectedIndex(0);
-      LinksPocketRewardBitMask = 0x20; //Set bitmask for light medallion in Link's pocket
       ShuffleSongs.SetSelectedIndex(0);
       Scrubsanity.SetSelectedIndex(0);
       ShuffleCows.SetSelectedIndex(0);
