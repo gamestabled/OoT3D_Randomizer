@@ -100,6 +100,10 @@ u32 Settings_GetQuickTextOption() {
     return gSettingsContext.quickText;
 }
 
+u32 Settings_GetSongReplaysOption() {
+    return gSettingsContext.skipSongReplays;
+}
+
 u32 Settings_IsTurboText() {
     return (gSettingsContext.quickText >= QUICKTEXT_TURBO && rInputCtx.cur.b);
 }
