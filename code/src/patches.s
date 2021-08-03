@@ -473,27 +473,32 @@ SongOfStormsLocation_patch:
 BiggoronDayCheck_patch:
     mov r0,#0x3
 
-# Save context + 0x4F is normally unused
-# We will use it to denote Biggoron's reward
-.section .patch_BiggoronCheckGivenRewardOne
-.global BiggoronCheckGivenRewardOne_patch
-BiggoronCheckGivenRewardOne_patch:
-    ldrb r0,[r0,#0x4F]
+.section .patch_BiggoronGetTextId
+.global BiggoronGetTextId_patch
+BiggoronGetTextId_patch:
+    bl EnGo2_rGetTextIdGoronDmtBiggoron
+    b 0x195524
 
-.section .patch_BiggoronCheckGivenRewardTwo
-.global BiggoronCheckGivenRewardTwo_patch
-BiggoronCheckGivenRewardTwo_patch:
-    ldrb r1,[r1,#0x4F]
+.section .patch_BiggoronCheckBGSFlag
+.global BiggoronCheckBGSFlag_patch
+BiggoronCheckBGSFlag_patch:
+    nop
+    nop
+    nop
 
-.section .patch_BiggoronCheckGivenRewardThree
-.global BiggoronCheckGivenRewardThree_patch
-BiggoronCheckGivenRewardThree_patch:
-    ldreqb r0,[r0,#0x4F]
+.section .patch_BiggoronSetTextId
+.global BiggoronSetTextId_patch
+BiggoronSetTextId_patch:
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl EnGo2_rBiggoronSetTextId
+    pop {r0-r12, lr}
+    b 0x1D8B80
 
-.section .patch_BiggoronSetGivenReward
-.global BiggoronSetGivenReward_patch
-BiggoronSetGivenReward_patch:
-    streqb r5,[r0,#0x4F]
+.section .patch_BiggoronAfterGiveItem
+.global BiggoronAfterGiveItem_patch
+BiggoronAfterGiveItem_patch:
+    .word EnGo2_AfterGiveItem
 
 .section .patch_ItemEtceteraModelDraw
 .global ItemEtceteraModelDraw_patch
@@ -1382,6 +1387,60 @@ InstantTextRemoveOff_patch:
 .global TurboText_patch
 TurboText_patch:
     bl hook_TurboText
+
+.section .patch_ItemsMenuNumSprites
+.global ItemsMenuNumSprites_patch
+ItemsMenuNumSprites_patch:
+    mov r1,#0x19
+
+.section .patch_ItemsMenuDraw
+.global ItemsMenuDraw_patch
+ItemsMenuDraw_patch:
+    bl hook_ItemsMenuDraw
+
+.section .patch_AnjuGiveCojiro
+.global AnjuGiveCojiro_patch
+AnjuGiveCojiro_patch:
+    .word EnNiwLady_rGiveCojiro
+
+.section .patch_GrogCheckForShouldDespawn
+.global GrogCheckForShouldDespawn_patch
+GrogCheckForShouldDespawn_patch:
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl EnHs_CheckForShouldDespawn
+    pop {r0-r12, lr}
+    nop
+
+.section .patch_GrogSetTradedCojiroFlag
+.global GrogSetTradedCojiroFlag_patch
+GrogSetTradedCojiroFlag_patch:
+    .word EnHs_SetTradedCojiroFlag
+
+.section .patch_CheckFadoCanSpawnInLostWoods
+.global CheckFadoCanSpawnInLostWoods_patch
+CheckFadoCanSpawnInLostWoods_patch:
+    push {r1-r12, lr}
+    bl EnKo_CheckFadoCanSpawnInLostWoods
+    pop {r1-r12, lr}
+
+.section .patch_LabScientistDontStartTimer
+.global LabScientistDontStartTimer_patch
+LabScientistDontStartTimer_patch:
+    nop
+    nop
+    nop
+    nop
+    nop
+
+.section .patch_KingZoraDontStartTimer
+.global KingZoraDontStartTimer_patch
+KingZoraDontStartTimer_patch:
+    nop
+    nop
+    nop
+    nop
+    nop
 
 .section .patch_loader
 .global loader_patch

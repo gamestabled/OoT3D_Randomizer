@@ -361,6 +361,16 @@ string_view merchantsHintsDesc        = "These hints will make Medigoron and the
                                         "The Clearer Hints setting will affect how they\n" //
                                         "refer to the item.";                              //
 /*------------------------------                                                           //
+|     SHUFFLE ADULT TRADE      |                                                           //
+------------------------------*/                                                           //
+string_view adultTradeDesc            = "Enabling this adds all of the adult trade quest\n"//
+                                        "items to the pool, each of which can be traded\n" //
+                                        "for a unique reward. You will be able to choose\n"//
+                                        "which of your owned adult trade items is visible\n"
+                                        "in the inventory by selecting the item and using\n"
+                                        "the L and R buttons. If disabled, only the Claim\n"
+                                        "Check will be found in the pool.";                //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //

@@ -133,6 +133,7 @@ namespace Settings {
   Option ShuffleGerudoToken  = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
   Option ShuffleMagicBeans   = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   Option ShuffleMerchants    = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
+  Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade", {"Off", "On"},                                               {adultTradeDesc});
   std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -148,6 +149,7 @@ namespace Settings {
     &ShuffleGerudoToken,
     &ShuffleMagicBeans,
     &ShuffleMerchants,
+    &ShuffleAdultTradeQuest,
   };
 
   //Shuffle Dungeon Items
@@ -786,6 +788,7 @@ namespace Settings {
     ctx.shuffleGerudoToken   = (ShuffleGerudoToken) ? 1 : 0;
     ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleMerchants     = ShuffleMerchants.Value<u8>();
+    ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
 
     ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
     ctx.keysanity            = Keysanity.Value<u8>();

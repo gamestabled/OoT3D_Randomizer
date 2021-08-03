@@ -794,6 +794,13 @@ hook_TurboText:
     cmpeq r0,#0x0
     bx lr
 
+.global hook_ItemsMenuDraw
+hook_ItemsMenuDraw:
+    push {r0-r12, lr}
+    bl ItemsMenu_Draw
+    pop {r0-r12, lr}
+    b 0x2F8160
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
