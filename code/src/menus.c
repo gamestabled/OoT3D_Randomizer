@@ -1,6 +1,7 @@
 #include "menus.h"
 #include "z3D/z3D.h"
 #include "input.h"
+#include "savefile.h"
 
 #define gItemsMenuSpritesManager (*(MenuSpriteManager**)0x506734)
 #define gBowMenuSpritesManager (*(MenuSpriteManager**)0x506738)
@@ -30,12 +31,29 @@ void ItemsMenu_Draw(void) {
         }
 
         if (selectedItemSlot == SLOT_TRADE_ADULT) {
+            u8 startingItem = gSaveContext.items[selectedItemSlot];
+            u8 potentialItem = startingItem;
+        
             if (rInputCtx.pressed.l) {
-                gSaveContext.items[selectedItemSlot]--;
-                MenuSpritesManager_RegisterItemSprite(gItemsMenuSpritesManager, gItemsMenuSelectedSlot, gSaveContext.items[selectedItemSlot]);
-                MenuSpritesManager_RegisterItemSprite(gItemsMenuGlowSpritesManager, 0, gSaveContext.items[selectedItemSlot]);
+                potentialItem = startingItem - 1;
+                while ((potentialItem != startingItem) && !SaveFile_TradeItemIsOwned(potentialItem)) {
+                    potentialItem--;
+                    if (potentialItem < ITEM_POCKET_EGG) {
+                        potentialItem = ITEM_CLAIM_CHECK;
+                    }
+                }
             } else if (rInputCtx.pressed.r) {
-                gSaveContext.items[selectedItemSlot]++;
+                potentialItem = startingItem + 1;
+                while ((potentialItem != startingItem) && !SaveFile_TradeItemIsOwned(potentialItem)) {
+                    potentialItem++;
+                    if (potentialItem > ITEM_CLAIM_CHECK) {
+                        potentialItem = ITEM_POCKET_EGG;
+                    }
+                }
+            }
+
+            if (potentialItem != startingItem) {
+                gSaveContext.items[selectedItemSlot] = potentialItem;
                 MenuSpritesManager_RegisterItemSprite(gItemsMenuSpritesManager, gItemsMenuSelectedSlot, gSaveContext.items[selectedItemSlot]);
                 MenuSpritesManager_RegisterItemSprite(gItemsMenuGlowSpritesManager, 0, gSaveContext.items[selectedItemSlot]);
             }

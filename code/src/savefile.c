@@ -444,3 +444,22 @@ void SaveFile_SetStartingInventory(void) {
       EventSet(0x18);
     }
 }
+
+//We will use the "unk" flags in DMT to represent adult trade ownership
+void SaveFile_SetTradeItemAsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    gSaveContext.sceneFlags[0x60].unk |= (0x1 << tradeItemNum);
+}
+
+void SaveFile_UnsetTradeItemAsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    gSaveContext.sceneFlags[0x60].unk &= ~(0x1 << tradeItemNum);
+}
+
+u32 SaveFile_TradeItemIsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    return (gSaveContext.sceneFlags[0x60].unk & (0x1 << tradeItemNum)) != 0;
+}
