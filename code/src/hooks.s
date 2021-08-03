@@ -794,6 +794,14 @@ hook_TurboText:
     cmpeq r0,#0x0
     bx lr
 
+.global hook_LostWoodsBridgeMusic
+hook_LostWoodsBridgeMusic:
+    push {r0-r12, lr}
+    bl Entrance_IsLostWoodsBridge
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

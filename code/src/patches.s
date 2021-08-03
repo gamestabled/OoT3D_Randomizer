@@ -1383,6 +1383,11 @@ InstantTextRemoveOff_patch:
 TurboText_patch:
     bl hook_TurboText
 
+.section .patch_LostWoodsBridgeMusic
+.global LostWoodsBridgeMusic_patch
+LostWoodsBridgeMusic_patch:
+    bl hook_LostWoodsBridgeMusic
+
 .section .patch_loader
 .global loader_patch
 
