@@ -192,7 +192,7 @@ void SaveFile_SwapFaroresWind(void) {
         *storedFWData = tempCur;
 
         curFWData++;
-        storedFWData += sizeof(SaveSceneFlags);
+        storedFWData += (sizeof(SaveSceneFlags) / sizeof(u32));
     }
 }
 
