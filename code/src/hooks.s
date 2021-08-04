@@ -807,6 +807,32 @@ hook_SkipSongReplayForTimeBlocksTwo:
     add r0,r0,#0x100
     b 0x207FFC
 
+.global hook_SkipSongReplayForTimeWarpBlocksOne
+hook_SkipSongReplayForTimeWarpBlocksOne:
+    add r1,r1,#0x2B00
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x208040
+    push {r0,r1}
+    sub r1,r1,#0x70
+    ldrb r0,[r1]
+    cmp r0,#23
+    pop {r0,r1}
+    bne 0x208094
+    b 0x208040
+
+.global hook_SkipSongReplayForTimeWarpBlocksTwo
+hook_SkipSongReplayForTimeWarpBlocksTwo:
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x20808C
+    add r0,r0,#0x100
+    b 0x208060
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
