@@ -330,6 +330,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 }
 
 static void GeneratePlaythrough() {
+  playthroughBeatable = false;
   LogicReset();
   GetAccessibleLocations(allLocations, SearchMode::GeneratePlaythrough);
 }
@@ -378,9 +379,6 @@ static void PareDownPlaythrough() {
   for (LocationKey loc : toAddBackItem) {
     Location(loc)->SaveDelayedItem();
   }
-
-  LogicReset();
-  GetAccessibleLocations(allLocations, SearchMode::CheckBeatable);
 }
 
 //Very similar to PareDownPlaythrough except it creates the list of Way of the Hero items
@@ -415,21 +413,18 @@ static void CalculateWotH() {
   }
 
   playthroughBeatable = true;
-  //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
   LogicReset();
   GetAccessibleLocations(allLocations);
 }
 
 //Will place things completely randomly, no logic checks are performed
-static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locations) {
-
-  while (!locations.empty()) {
-
+static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locations, bool endOnItemsEmpty = false) {
+  while (!locations.empty() && (!endOnItemsEmpty || !items.empty())) {
     LocationKey loc = RandomElement(locations, true);
     Location(loc)->SetAsHintable();
     PlaceItemInLocation(loc, RandomElement(items, true));
 
-    if (items.empty()) {
+    if (items.empty() && !endOnItemsEmpty) {
       items.push_back(GetJunkItem());
     }
   }
@@ -540,13 +535,8 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
         LogicReset();
         GetAccessibleLocations(allLocations, SearchMode::CheckBeatable);
         if (playthroughBeatable) {
-          CitraPrint("Pog leave early");
-          for (ItemKey item : itemsToPlace) {
-            CitraPrint(ItemTable(item).GetName().english);
-          }
-          CitraPrint(std::to_string(GetAllEmptyLocations().size()));
-          FastFill(itemsToPlace, GetAllEmptyLocations());
-          break;
+          FastFill(itemsToPlace, GetAllEmptyLocations(), true);
+          return;
         }
       }
     }
@@ -874,12 +864,7 @@ int Fill() {
 
     //Fast fill for the rest of the pool
     std::vector<ItemKey> remainingPool = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) {return true;});
-    //Any advancement items not placed by assumed fill will be placed randomly- Only applies with ALR off
-    remainingPool.insert(remainingPool.end(), remainingAdvancementItems.begin(), remainingAdvancementItems.end());
-    LogicReset();
-    FastFill(remainingPool, GetAllEmptyLocations());
-
-    LogicReset();
+    FastFill(remainingPool, GetAllEmptyLocations(), false);
     GeneratePlaythrough();
     //Successful placement, produced beatable result
     if(playthroughBeatable && !placementFailure) {
