@@ -741,6 +741,12 @@ void CreateAllHints() {
     }
   }
 
+  //If any gossip stones failed to have a hint placed on them for some reason, place a junk hint as a failsafe.
+  for (LocationKey gossipStone : FilterFromPool(gossipStoneLocations, [](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == NONE;})) {
+    const HintText junkHint = RandomElement(GetHintCategory(HintCategory::Junk));
+    AddHint(junkHint.GetText(), gossipStone, {QM_PINK});
+  }
+
   //Getting gossip stone locations temporarily sets one location to not be reachable.
   //Call the function one last time to get rid of false positives on locations not
   //being reachable.
