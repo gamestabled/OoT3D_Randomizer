@@ -14,7 +14,7 @@ s32 EnGm_CheckRewardFlag(void) {
     return 2;
 }
 
-s32 EnGm_SetRewardFlag(void) {
+void EnGm_SetRewardFlag(void) {
     gSaveContext.eventChkInf[3] |= 0x20;
 }
 
