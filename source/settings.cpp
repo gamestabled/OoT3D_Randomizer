@@ -1804,14 +1804,21 @@ namespace Settings {
 
     InitMusicRandomizer();
     if (ShuffleMusic) {
-      if (ShuffleBGM)
+      if (ShuffleBGM) {
         ShuffleSequences(SeqType::SEQ_BGM);
-      if (ShuffleFanfares.Is(1)) {
-        ShuffleSequences(SeqType::SEQ_FANFARE);
-        if (ShuffleOcaMusic)
-          ShuffleSequences(SeqType::SEQ_OCARINA);
-      } else if (ShuffleFanfares.Is(2))
+      }
+      
+      if (ShuffleFanfares.Is(2)) {
         ShuffleSequences(SeqType::SEQ_FANFARE | SeqType::SEQ_OCARINA);
+      } else {
+        if (ShuffleFanfares.Is(1)) {
+          ShuffleSequences(SeqType::SEQ_FANFARE);
+        }
+        
+        if (ShuffleOcaMusic) {
+          ShuffleSequences(SeqType::SEQ_OCARINA);
+        }
+      }
     }
   }
 

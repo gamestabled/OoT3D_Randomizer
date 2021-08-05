@@ -112,9 +112,9 @@ namespace Music {
         }
 
         // Shuffle the vector...
-        for (std::size_t i = 0; i <= seqs.size(); i++)
+        for (std::size_t i = 0; i < seqs.size(); i++)
         {
-            std::swap(seqs[i], seqs[rand() %  (seqs.size() - i + 1) + i]);
+            std::swap(seqs[i], seqs[rand() %  seqs.size()]);
         }
 
         // ...and feed it back into the overrides array
