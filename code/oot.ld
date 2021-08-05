@@ -612,6 +612,10 @@ SECTIONS
 		*(.patch_ISGPutaway)
 	}
 
+	.patch_SetBGMEntrance 0x331048 : {
+		*(.patch_SetBGMEntrance)
+	}
+
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
@@ -650,6 +654,10 @@ SECTIONS
 
 	.patch_LikeLikeNeverEatTunic 0x355C2C : {
 		*(.patch_LikeLikeNeverEatTunic)
+	}
+
+	.patch_PlaySound 0x35C528 : {
+		*(.patch_PlaySound)
 	}
 
 	.patch_ConvertBombDropOne 0x35E46C : {
@@ -986,6 +994,10 @@ SECTIONS
 
 	.patch_TurboTextClose 0x488214 : {
 		*(.patch_TurboTextClose)
+	}
+
+	.patch_SetBGMDayNight 0x483C88 : {
+		*(.patch_SetBGMDayNight)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {

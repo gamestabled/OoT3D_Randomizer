@@ -729,6 +729,19 @@ string_view coloredBossKeysDesc       = "If set, boss key models will be colored
 string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
                                                                                            //
 /*------------------------------                                                           //
+|        SHUFFLE MUSIC         |                                                           //
+------------------------------*/                                                           //
+string_view musicRandoDesc           = "Randomize the music in the game";                  //
+string_view shuffleBGMDesc           = "Randomize area background music";                  //
+string_view fanfaresOffDesc          = "Fanfares are not shuffled.";                       //
+string_view onlyFanfaresDesc         = "Fanfares and ocarina songs are shuffled in\n"      //
+                                       "separate pools.";                                  //
+string_view fanfaresOcarinaDesc      = "Fanfares and ocarina songs are shuffled together\n"//
+                                       "in the same pool.";                                //
+string_view shuffleOcaMusicDesc      = "The music that plays back after you play an ocarina"
+                                       "song is randomized";                               //
+                                                                                           //
+/*------------------------------                                                           //
 |    RANDOM TRAP DAMAGE TYPE   |                                                           //
 ------------------------------*/                                                           //
 string_view randomTrapDmgDesc         = "All traps will be the base game ice trap";        //

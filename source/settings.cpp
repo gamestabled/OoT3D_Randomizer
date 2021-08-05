@@ -6,6 +6,7 @@
 #include "dungeon.hpp"
 #include "fill.hpp"
 #include "item_location.hpp"
+#include "music.hpp"
 #include "random.hpp"
 #include "randomizer.hpp"
 #include "setting_descriptions.hpp"
@@ -15,6 +16,7 @@
 using namespace Cosmetics;
 using namespace Dungeon;
 using namespace Trial;
+using namespace Music;
 
 namespace Settings {
   std::string seed;
@@ -712,6 +714,14 @@ namespace Settings {
   Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc}, OptionCategory::Cosmetic);
   Option MirrorWorld =     Option::Bool("Mirror World",       {"Off", "On"}, {mirrorWorldDesc},     OptionCategory::Cosmetic);
 
+  static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares +\n                         Ocarina Music"};
+  static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
+
+  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},    {musicRandoDesc},      OptionCategory::Cosmetic);
+  Option ShuffleBGM =      Option::Bool("  Shuffle BGM",           {"Off", "On"},    {shuffleBGMDesc},      OptionCategory::Cosmetic);
+  Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions}, {fanfareDescriptions}, OptionCategory::Cosmetic);
+  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {shuffleOcaMusicDesc}, OptionCategory::Cosmetic);
+
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
     &ChildTunicColor,
@@ -723,6 +733,10 @@ namespace Settings {
     &ColoredKeys,
     &ColoredBossKeys,
     &MirrorWorld,
+    &ShuffleMusic,
+    &ShuffleBGM,
+    &ShuffleFanfares,
+    &ShuffleOcaMusic,
   };
 
   Menu loadSettingsPreset       = Menu::Action("Load Settings Preset",       LOAD_PRESET);
@@ -994,6 +1008,11 @@ namespace Settings {
     KokiriTunicColor.SetSelectedIndex(3);     //Kokiri Green
     GoronTunicColor.SetSelectedIndex(4);      //Goron Red
     ZoraTunicColor.SetSelectedIndex(5);       //Zora Blue
+
+    ShuffleMusic.SetSelectedIndex(0);         // Off
+    ShuffleBGM.SetSelectedIndex(1);           // On
+    ShuffleFanfares.SetSelectedIndex(1);      // Fanfares only
+    ShuffleOcaMusic.SetSelectedIndex(1);      // On
   }
 
   //Set default settings for all settings where the default is not the first option
@@ -1553,6 +1572,20 @@ namespace Settings {
       ZoraTunicColor.SetSelectedIndex(5);   //Zora Blue
     }
 
+    // Music
+    if (ShuffleMusic) {
+      ShuffleBGM.Unhide();
+      ShuffleFanfares.Unhide();
+      if(ShuffleFanfares.Is(2)) // Fanfares + ocarina
+        ShuffleOcaMusic.Hide();
+      else
+        ShuffleOcaMusic.Unhide();
+    } else {
+      ShuffleBGM.Hide();
+      ShuffleFanfares.Hide();
+      ShuffleOcaMusic.Hide();
+    }
+
     ResolveExcludedLocationConflicts();
   }
 
@@ -1812,6 +1845,25 @@ namespace Settings {
       ShuffleMerchants.SetSelectedIndex(0);
       Keysanity.SetSelectedIndex(3); //Set small keys to any dungeon so FiT basement door will be locked
       GossipStoneHints.SetSelectedIndex(0);
+    }
+
+    InitMusicRandomizer();
+    if (ShuffleMusic) {
+      if (ShuffleBGM) {
+        ShuffleSequences(SeqType::SEQ_BGM);
+      }
+      
+      if (ShuffleFanfares.Is(2)) {
+        ShuffleSequences(SeqType::SEQ_FANFARE | SeqType::SEQ_OCARINA);
+      } else {
+        if (ShuffleFanfares.Is(1)) {
+          ShuffleSequences(SeqType::SEQ_FANFARE);
+        }
+        
+        if (ShuffleOcaMusic) {
+          ShuffleSequences(SeqType::SEQ_OCARINA);
+        }
+      }
     }
   }
 

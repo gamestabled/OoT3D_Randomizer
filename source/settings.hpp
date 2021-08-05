@@ -520,6 +520,11 @@ namespace Settings {
   extern Option ColoredBossKeys;
   extern Option MirrorWorld;
 
+  extern Option ShuffleMusic;
+  extern Option ShuffleBGM;
+  extern Option ShuffleFanfares;
+  extern Option ShuffleOcaMusic;
+
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
 

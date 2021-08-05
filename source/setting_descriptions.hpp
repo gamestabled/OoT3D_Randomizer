@@ -246,6 +246,13 @@ extern string_view coloredBossKeysDesc;
 
 extern string_view mirrorWorldDesc;
 
+extern string_view musicRandoDesc;
+extern string_view shuffleBGMDesc;
+extern string_view fanfaresOffDesc;
+extern string_view onlyFanfaresDesc;
+extern string_view fanfaresOcarinaDesc;
+extern string_view shuffleOcaMusicDesc;
+
 extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
 extern string_view advancedTrapDmgDesc;

@@ -794,6 +794,30 @@ hook_TurboTextAdvance:
     cmpeq r0,#0x0
     bx lr
 
+.global hook_PlaySound
+hook_PlaySound:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r3-r7, lr}
+    b 0x35C52C
+
+.global hook_SetBGMEntrance
+hook_SetBGMEntrance:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x33104C
+
+.global hook_SetBGMDayNight
+hook_SetBGMDayNight:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x483C8C
+
 .global hook_TurboTextClose
 hook_TurboTextClose:
     push {r0-r12, lr}
