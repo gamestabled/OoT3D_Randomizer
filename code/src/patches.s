@@ -1413,6 +1413,16 @@ SkipSongReplayForTimeBlocksOne_patch:
 SkipSongReplayForTimeBlocksTwo_patch:
     b hook_SkipSongReplayForTimeBlocksTwo
 
+.section .patch_SkipSongReplayForTimeWarpBlocksOne
+.global SkipSongReplayForTimeWarpBlocksOne_patch
+SkipSongReplayForTimeWarpBlocksOne_patch:
+    b hook_SkipSongReplayForTimeWarpBlocksOne
+
+.section .patch_SkipSongReplayForTimeWarpBlocksTwo
+.global SkipSongReplayForTimeWarpBlocksTwo_patch
+SkipSongReplayForTimeWarpBlocksTwo_patch:
+    b hook_SkipSongReplayForTimeWarpBlocksTwo
+
 .section .patch_PlaySound
 .global PlaySound_patch
 PlaySound_patch:
