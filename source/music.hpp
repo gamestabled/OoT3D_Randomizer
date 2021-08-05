@@ -10,10 +10,10 @@ namespace Music {
     const int SEQ_COUNT = 85;
 
     enum SeqType {
-        SEQ_NOSHUFFLE = 0
+        SEQ_NOSHUFFLE = 0,
         SEQ_BGM       = 1 << 0,
         SEQ_OCARINA   = 1 << 1,
-        SEQ_FANFARE   = 1 << 2
+        SEQ_FANFARE   = 1 << 2,
     };
 
     struct Sequence {
