@@ -713,7 +713,9 @@ void GenerateItemPool() {
   }
 
   if (ShuffleMerchants.IsNot(SHUFFLEMERCHANTS_OFF)) {
-    AddItemToMainPool(GIANTS_KNIFE);
+    if (!ProgressiveGoronSword) {
+      AddItemToMainPool(GIANTS_KNIFE);
+    }
     if (BombchusInLogic) {
       AddItemToMainPool(PROGRESSIVE_BOMBCHUS);
     } else {
@@ -1024,6 +1026,12 @@ void GenerateItemPool() {
 
   if (!ShuffleKokiriSword) {
     ReplaceMaxItem(KOKIRI_SWORD, 0);
+  }
+
+  if (ProgressiveGoronSword) {
+    ReplaceMaxItem(BIGGORON_SWORD, 0);
+    AddItemToMainPool(PROGRESSIVE_GORONSWORD, 2);
+    IceTrapModels.push_back(0xD4);
   }
 
   //Replace ice traps with junk from the pending junk pool if necessary

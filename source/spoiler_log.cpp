@@ -247,7 +247,9 @@ static void WriteLocation(
     node->SetAttribute("price", price);
   }
   if (!location->IsAddedToPool()) {
-    node->SetAttribute("not-added", true);
+    #ifdef ENABLE_DEBUG  
+      node->SetAttribute("not-added", true);
+    #endif
   }
 }
 
@@ -278,21 +280,17 @@ static void WriteShuffledEntrance(
 static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
   auto parentNode = spoilerLog.NewElement("settings");
 
-  for (const MenuItem* menu : Settings::mainMenu) {
-    //don't log the detailed logic, starting inventory, or exclude location menus yet
-    if (menu->name == "Logic Tricks"
-        || menu->name == "Starting Inventory"
-        || menu->name == "Exclude Locations"
-        || menu->mode != OPTION_SUB_MENU
-        ) {
-      continue;
-    }
+  std::vector<Menu*> allMenus = Settings::GetAllMenus();
 
-    for (const Option* setting : *menu->settingsList) {
-      if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
-        auto node = parentNode->InsertNewChildElement("setting");
-        node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
-        node->SetText(setting->GetSelectedOptionText().c_str());
+  for (const Menu* menu : allMenus) {
+    //This is a menu of settings, write them
+    if (menu->mode == OPTION_SUB_MENU) {
+      for (const Option* setting : *menu->settingsList) {
+        if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
+          auto node = parentNode->InsertNewChildElement("setting");
+          node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
+          node->SetText(setting->GetSelectedOptionText().c_str());
+        }
       }
     }
   }

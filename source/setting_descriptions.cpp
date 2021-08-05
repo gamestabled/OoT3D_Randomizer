@@ -16,9 +16,21 @@ string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings"
 ------------------------------*/                                                           //
 string_view logicGlitchless           = "No glitches are required, but may require some\n" //
                                         "minor tricks. Add minor tricks to consider for\n" //
-                                        "logic in Detailed Logic Settings.";               //
+                                        "logic in Logical Tricks.";                        //
+string_view logicGlitched             = "The glitches you enable at the set difficulty\n"  //
+                                        "or below may be required.\n"                      //
+                                        "\n"                                               //
+                                        "In development, but still usable.";               //
 string_view logicNoLogic              = "Maximize randomization, All locations are\n"      //
                                         "considered available. MAY BE IMPOSSIBLE TO BEAT.";//
+string_view logicVanilla              = "For those who want to play the game normally but\n"
+                                        "with the improvements of the randomizer. All\n"   //
+                                        "locations will contain their vanilla items. This\n"
+                                        "supercedes all item shuffle, logic, hint, and\n"  //
+                                        "item pool settings. You can still use non-vanilla\n"
+                                        "world settings such as adult start or entrance\n" //
+                                        "shuffle, but the game may require glitches to\n"  //
+                                        "complete if you do.";                             //
 /*------------------------------                                                           //
 |           FOREST             |                                                           //
 ------------------------------*/                                                           //
@@ -49,9 +61,12 @@ string_view kakGateClosed             = "The gate and the Happy Mask Shop both r
 /*------------------------------                                                           //
 |        DOOR OF TIME          |                                                           //
 ------------------------------*/                                                           //
-string_view doorOfTimeDesc            = "The Door of Time starts opened instead of needing\n"
-                                        "to play the Song of Time. If closed, only an\n"   //
-                                        "Ocarina and the Song of Time need to be found to\n"
+string_view doorOfTimeOpen            = "The Door of Time starts opened instead of needing\n"
+                                        "to play the Song of Time.";                       //
+string_view doorOfTimeClosed          = "Only an Ocarina and the Song of Time need to be\n"//
+                                        "found to open the Door of Time.";                 //
+string_view doorOfTimeIntended        = "The Ocarina of Time, the Song of Time, and\n"     //
+                                        "all Spiritual Stones need to be found to\n"       //
                                         "open the Door of Time.";                          //
 /*------------------------------                                                           //
 |       ZORA'S FOUNTAIN        |                                                           //
@@ -577,6 +592,14 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //
                                                                                            //
 /*------------------------------                                                           //
+|   ALL LOCATIONS REACHABLE    |                                                           //
+------------------------------*/                                                           //
+string_view locationsReachableDesc    = "When this options is enabled, the randomizer will\n"
+                                        "guarantee that every item is obtainable and every\n"
+                                        "location is reachable. When disabled, only\n"     //
+                                        "required items and locations to beat the game\n"  //
+                                        "will be guaranteed reachable.";                   //
+/*------------------------------                                                           //
 |     NIGHT GS EXPECT SUNS     |                                                           //
 ------------------------------*/                                                           //
 string_view nightGSDesc               = "GS Tokens that can only be obtained during the\n" //
@@ -649,7 +672,14 @@ string_view iceTrapsOnslaught         = "All junk items will be replaced by Ice 
 |    REMOVE DOUBLE DEFENSE     |                                                           //
 ------------------------------*/                                                           //
 string_view removeDDDesc              = "If set the double defense item will be removed\n" //
-                                        "from the item pool for balanced and plentiful";   //
+                                        "from the item pool for balanced and plentiful.";  //
+/*------------------------------                                                           //
+|   PROGRESSSIVE GORON SOWRD   |                                                           //
+------------------------------*/                                                           //
+string_view progGoronSword            = "Giant's Knife will always be found\n"             //
+                                        "before Biggoron's Sword. Medigoron only starts\n" //
+                                        "selling new knives once the Giant's Knife\n"      //
+                                        "has been found and broken.";                      //
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //
@@ -685,9 +715,10 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
 ------------------------------*/                                                           //
 string_view gkDurabilityVanilla       = "The durability will always be set to 8.";         //
 string_view gkDurabilityRandomRisk    = "Each Giant's Knife will get a random durability\n"//
-                                        "between 1 and 128, with low being more common.";  //
+                                        "between 1 and 128, with low being more common,\n" //
+                                        "and with an average of 15.";                      //
 string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random durability\n"//
-                                        "between 10 and 50.";                              //
+                                        "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
@@ -704,6 +735,19 @@ string_view coloredBossKeysDesc       = "If set, boss key models will be colored
 |         MIRROR WORLD         |                                                           //
 ------------------------------*/                                                           //
 string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
+                                                                                           //
+/*------------------------------                                                           //
+|        SHUFFLE MUSIC         |                                                           //
+------------------------------*/                                                           //
+string_view musicRandoDesc           = "Randomize the music in the game";                  //
+string_view shuffleBGMDesc           = "Randomize area background music";                  //
+string_view fanfaresOffDesc          = "Fanfares are not shuffled.";                       //
+string_view onlyFanfaresDesc         = "Fanfares and ocarina songs are shuffled in\n"      //
+                                       "separate pools.";                                  //
+string_view fanfaresOcarinaDesc      = "Fanfares and ocarina songs are shuffled together\n"//
+                                       "in the same pool.";                                //
+string_view shuffleOcaMusicDesc      = "The music that plays back after you play an ocarina"
+                                       "song is randomized";                               //
                                                                                            //
 /*------------------------------                                                           //
 |    RANDOM TRAP DAMAGE TYPE   |                                                           //
@@ -1099,3 +1143,92 @@ string_view LogicLensCastleMQDesc                     = "Difficulty: Intermediat
 string_view LogicSpiritTrialHookshotDesc              = "Difficulty: Intermediate\n"                       //
                                                         "A precise jump off of an Armos can collect the\n" //
                                                         "highest rupee.";                                  //
+                                                                                                           //--------//
+/*------------------------------                                                                                     //
+|           GLITCHES           |                                                                                     //
+------------------------------*/                                                                                     //
+std::vector<string_view> GlitchISGDesc                { /*Disabled*/ "Shortened to ISG, allows Link's melee weapon to\n"//
+                                                                     "be in a constant swinging state. Simply touching\n"
+                                                                     "objects with this causes them to get hit.\n"      //
+                                                                     "Putting away the weapon while ISG is on hits\n"   //
+                                                                     "any object with a spherical hitbox,\n"            //
+                                                                     "such as small skulltulas. It is initiated by\n"   //
+                                                                     "interrupting a crouch stab.",                     //
+                                                          /*Novice*/ "ISG may be required to kill certain enemies,\n"   //
+                                                                     "or to Bomb Hover when enabled.",                  //
+                                                    /*Intermediate*/ "",                                                //
+                                                        /*Advanced*/ "",                                                //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //
+std::vector<string_view> GlitchHoverDesc              { /*Disabled*/ "Hovering allows Link to consecutively backflip\n" //
+                                                                     "in the air without falling. By shielding\n"       //
+                                                                     "damage with ISG on, Link will stay in midair.\n"  //
+                                                                     "While bombs aren't always required, this option\n"//
+                                                                     "will always expect them to be used.\n"            //
+                                                                     "\n"                                               //
+                                                                     "Requires ISG to be enabled.",                     //
+                                                          /*Novice*/ "Only bombchus are required for hovering.",        //
+                                                    /*Intermediate*/ "Some hovers may require that you start from flat\n"
+                                                                     "terrain, which requires somewhat precise timing.",//
+                                                        /*Advanced*/ "Usage of regular bombs will now also be expected,\n"
+                                                                     "which may require consecutive precise timings.",  //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //
+std::vector<string_view> GlitchMegaflipDesc           { /*Disabled*/ "A Megaflip is a backflip/sidehop with high speed.\n"
+                                                                     "This can be done with several methods.",          //
+                                                          /*Novice*/ "Only Megaflipping with bombs is required.",       //
+                                                    /*Intermediate*/ "Some Megaflips where you don't have a lot of room\n"
+                                                                     "to work with and positioning is more important\n" //
+                                                                     "may be required.",                                //
+                                                        /*Advanced*/ "",                                                //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //
+std::vector<string_view> GlitchHookshotClipDesc       { /*Disabled*/ "Hookshot Clipping allows Link to hookshot through\n"
+                                                                     "certain walls, which is useful if a valid\n"      //
+                                                                     "target is on the other side.",                    //
+                                                          /*Novice*/ "Basic Hookshot Clipping may be required.",        //
+                                                    /*Intermediate*/ "",                                                //
+                                                        /*Advanced*/ "",                                                //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //
+std::vector<string_view> GlitchHookshotJump_BonkDesc  { /*Disabled*/ "A Hookshot Jump is an umbrella term for techniques"
+                                                                     "that launch Link into the sky using the Hookshot\n"
+                                                                     "in various ways, sometimes together with\n"       //
+                                                                     "other items. The bonk method only requires the\n" //
+                                                                     "Hookshot itself.",                                //
+                                                          /*Novice*/ "",                                                //
+                                                    /*Intermediate*/ "Basic Hookshot-Bonk Jumping may be required.",    //
+                                                        /*Advanced*/ "",                                                //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //
+std::vector<string_view> GlitchHookshotJump_BootsDesc { /*Disabled*/ "This Hookshot Jump technique is one of the easier\n"
+                                                                     "ones, and require any pair of boots.",            //
+                                                          /*Novice*/ "Only relatively short Hookshot-Boot Jumps where\n"//
+                                                                     "you snap upwards may be required.",               //
+                                                    /*Intermediate*/ "Higher Hookshot-Boot Jumps where you look further\n"
+                                                                     "up or snap downwards instead may be required.",   //
+                                                        /*Advanced*/ "",                                                //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //
+std::vector<string_view> GlitchLedgeClipDesc          { /*Disabled*/ "A Ledge Clip allows Link to fall through a floor\n"
+                                                                     "or pass through an object by facing a wall\n"     //
+                                                                     "and dropping down to the left in a various ways.\n"
+                                                                     "These only work as an adult.",                    //
+                                                          /*Novice*/ "Basic Ledge Clips may be required.\n"
+                                                                     "Some require that you let go of the ledge with\n"
+                                                                     "a specific timing.",
+                                                    /*Intermediate*/ "Certain harder clips may also be required.",      //
+                                                        /*Advanced*/ "",                                                //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //
+std::vector<string_view> GlitchTripleSlashClipDesc    { /*Disabled*/ "When doing a three-slash-combo with either the\n" //
+                                                                     "Kokiri Sword or the Master Sword and put it away,\n"
+                                                                     "Link will be placed back a small distance.\n"     //
+                                                                     "If, while slashing, you use the recoil of hitting\n"
+                                                                     "a wall and then put away the sword, Link may clip\n"
+                                                                     "into a wall behind him if angled correctly.",     //
+                                                          /*Novice*/ "Basic Triple Slash Clipping may be required.",    //
+                                                    /*Intermediate*/ "",                                                //
+                                                        /*Advanced*/ "",                                                //
+                                                          /*Expert*/ "",                                                //
+                                                            /*Hero*/ "",};                                              //

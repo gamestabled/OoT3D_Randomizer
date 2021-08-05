@@ -11,7 +11,7 @@ sectionsInfo = [line.split()[1:6] for line in lines if line.split() and line.spl
 sections = ((sec[0], int(sec[2],16), int(sec[4],16), int(sec[1],16)) for sec in sectionsInfo if int(sec[2],16) != 0)
 
 # Put here the symbols from the patch which are needed by the app
-desiredSymbols = ("rItemOverrides", "gSettingsContext", "gSpoilerData", "rScrubRandomItemPrices", "rDungeonRewardOverrides", "rCustomMessages", "numCustomMessageEntries", "ptrCustomMessageEntries", "rShopsanityPrices", "rEntranceOverrides")
+desiredSymbols = ("rItemOverrides", "gSettingsContext", "gSpoilerData", "rScrubRandomItemPrices", "rDungeonRewardOverrides", "rCustomMessages", "numCustomMessageEntries", "ptrCustomMessageEntries", "rShopsanityPrices", "rEntranceOverrides", "rBGMOverrides")
 
 nmResult = subprocess.run([os.environ["DEVKITARM"] + r'/bin/arm-none-eabi-nm', elf], stdout=subprocess.PIPE)
 nmLines = str(nmResult.stdout).split('\\n')

@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "item_effect.h"
+#include "giants_knife.h"
 #include "savefile.h"
 #include "3ds/types.h"
 
@@ -91,7 +92,7 @@ void SaveFile_Init() {
         gSaveContext.dayTime = 0x1400; //Set night time
     }
 
-    if (gSettingsContext.openDoorOfTime) {
+    if (gSettingsContext.openDoorOfTime == OPENDOOROFTIME_OPEN) {
         gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
     }
 
@@ -399,7 +400,7 @@ void SaveFile_SetStartingInventory(void) {
     }
     if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
         gSaveContext.bgsFlag = 0;
-        gSaveContext.bgsHitsLeft = 8; 
+        gSaveContext.bgsHitsLeft = GK_SetDurability();
     }
 
     if (gSettingsContext.startingMagicMeter == 1) {

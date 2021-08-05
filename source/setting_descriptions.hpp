@@ -1,5 +1,6 @@
 #pragma once
 #include <string_view>
+#include <vector>
 
 using string_view = std::string_view;
 
@@ -9,7 +10,9 @@ extern string_view shuffleRandomize;
 extern string_view dungeonRandomize;
 
 extern string_view logicGlitchless;
+extern string_view logicGlitched;
 extern string_view logicNoLogic;
+extern string_view logicVanilla;
 
 extern string_view forestOpen;
 extern string_view forestClosed;
@@ -18,7 +21,9 @@ extern string_view forestClosedDeku;
 extern string_view kakGateOpen;
 extern string_view kakGateClosed;
 
-extern string_view doorOfTimeDesc;
+extern string_view doorOfTimeOpen;
+extern string_view doorOfTimeClosed;
+extern string_view doorOfTimeIntended;
 
 extern string_view fountainNormal;
 extern string_view fountainAdult;
@@ -196,6 +201,7 @@ extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;
 
+extern string_view locationsReachableDesc;
 extern string_view nightGSDesc;
 
 extern string_view chestAnimDesc;
@@ -224,6 +230,8 @@ extern string_view iceTrapsOnslaught;
 
 extern string_view removeDDDesc;
 
+extern string_view progGoronSword;
+
 extern string_view faroresWindAnywhereDesc;
 
 extern string_view adultStickDesc;
@@ -238,6 +246,13 @@ extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
 
 extern string_view mirrorWorldDesc;
+
+extern string_view musicRandoDesc;
+extern string_view shuffleBGMDesc;
+extern string_view fanfaresOffDesc;
+extern string_view onlyFanfaresDesc;
+extern string_view fanfaresOcarinaDesc;
+extern string_view shuffleOcaMusicDesc;
 
 extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
@@ -334,3 +349,12 @@ extern string_view LogicLensBotwMQDesc;
 extern string_view LogicLensGtgMQDesc;
 extern string_view LogicLensCastleMQDesc;
 extern string_view LogicSpiritTrialHookshotDesc;
+
+extern std::vector<string_view> GlitchISGDesc;
+extern std::vector<string_view> GlitchHoverDesc;
+extern std::vector<string_view> GlitchMegaflipDesc;
+extern std::vector<string_view> GlitchHookshotClipDesc;
+extern std::vector<string_view> GlitchHookshotJump_BonkDesc;
+extern std::vector<string_view> GlitchHookshotJump_BootsDesc;
+extern std::vector<string_view> GlitchLedgeClipDesc;
+extern std::vector<string_view> GlitchTripleSlashClipDesc;

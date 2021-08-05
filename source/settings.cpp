@@ -6,6 +6,7 @@
 #include "dungeon.hpp"
 #include "fill.hpp"
 #include "item_location.hpp"
+#include "music.hpp"
 #include "random.hpp"
 #include "randomizer.hpp"
 #include "setting_descriptions.hpp"
@@ -15,6 +16,7 @@
 using namespace Cosmetics;
 using namespace Dungeon;
 using namespace Trial;
+using namespace Music;
 
 namespace Settings {
   std::string seed;
@@ -26,7 +28,7 @@ namespace Settings {
   Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {openRandomize}, OptionCategory::Toggle);
   Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open", "Closed Deku"},                                            {forestClosed, forestOpen, forestClosedDeku});
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
-  Option OpenDoorOfTime      = Option::Bool("Door of Time",           {"Closed", "Open"},                                                           {doorOfTimeDesc});
+  Option OpenDoorOfTime      = Option::U8  ("Door of Time",           {"Open", "Closed", "Intended"},                                               {doorOfTimeOpen, doorOfTimeClosed, doorOfTimeIntended});
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {gerudoNormal, gerudoFast, gerudoOpen});
   Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens});
@@ -254,13 +256,15 @@ namespace Settings {
   };
 
   //Item Pool Settings
-  Option ItemPoolValue       = Option::U8  ("Item Pool",              {"Plentiful", "Balanced", "Scarce", "Minimal"},                         {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
-  Option IceTrapValue        = Option::U8  ("Ice Traps",              {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                      {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
-  Option RemoveDoubleDefense = Option::Bool("Remove Double Defense",  {"No", "Yes"},                                                          {removeDDDesc});
+  Option ItemPoolValue         = Option::U8  ("Item Pool",             {"Plentiful", "Balanced", "Scarce", "Minimal"},                        {itemPoolPlentiful, itemPoolBalanced, itemPoolScarce, itemPoolMinimal});
+  Option IceTrapValue          = Option::U8  ("Ice Traps",             {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                     {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught});
+  Option RemoveDoubleDefense   = Option::Bool("Remove Double Defense", {"No", "Yes"},                                                         {removeDDDesc});
+  Option ProgressiveGoronSword = Option::Bool("Prog Goron Sword",      {"Disabled", "Enabled"},                                               {progGoronSword});
   std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
     &IceTrapValue,
     &RemoveDoubleDefense,
+    &ProgressiveGoronSword,
   };
 
   //Excluded Locations (Individual definitions made in ItemLocation class)
@@ -404,10 +408,12 @@ namespace Settings {
     &StartingSkulltulaToken,
   };
 
-  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "No Logic"}, {logicGlitchless, logicNoLogic});
-  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},              {nightGSDesc});
+  Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicNoLogic, logicVanilla});
+  Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                                     {locationsReachableDesc}); 
+  Option NightGSExpectSuns  = Option::Bool("Night GSs Expect Sun's",  {"Off", "On"},                                     {nightGSDesc});
   std::vector<Option *> logicOptions = {
     &Logic,
+    &LocationsReachable,
     &NightGSExpectSuns,
   };
 
@@ -588,6 +594,49 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
+  //Function to make defining glitch tricks easier to read
+  Option GlitchTrick(std::string setting, u8 enabledDifficulties, std::vector<std::string_view> description) {
+    //enabledDifficulties bits
+    //0: Novice
+    //1: Intermediate
+    //2: Advanced
+    //3: Expert
+    //4: Hero
+
+    std::vector<std::string> selectableDifficulties;
+    std::vector<std::string_view> includedDescriptions;
+
+    selectableDifficulties.push_back("Disabled");
+    includedDescriptions.push_back(description[0]);
+    for (size_t i = 0; i < GlitchDifficulties.size(); i++) {
+      if ((enabledDifficulties >> i) & 1) {
+        selectableDifficulties.push_back(GlitchDifficulties[i]);
+        includedDescriptions.push_back(description[i + 1]);
+      }
+    }
+
+    return Option::U8(setting, selectableDifficulties, includedDescriptions);
+  }
+
+  Option GlitchISG                = GlitchTrick("Infinite Sword Glitch", 0b00001, GlitchISGDesc);
+  Option GlitchHover              = GlitchTrick("Bomb Hover",            0b00111, GlitchHoverDesc);
+  Option GlitchMegaflip           = GlitchTrick("Megaflip",              0b00011, GlitchMegaflipDesc);
+  Option GlitchHookshotClip       = GlitchTrick("Hookshot Clip",         0b00001, GlitchHookshotClipDesc);
+  Option GlitchHookshotJump_Bonk  = GlitchTrick("Hookshot Jump (Bonk)",  0b00010, GlitchHookshotJump_BonkDesc);
+  Option GlitchHookshotJump_Boots = GlitchTrick("Hookshot Jump (Boots)", 0b00011, GlitchHookshotJump_BootsDesc);
+  Option GlitchLedgeClip          = GlitchTrick("Ledge Clip",            0b00011, GlitchLedgeClipDesc);
+  Option GlitchTripleSlashClip    = GlitchTrick("Triple Slash Clip",     0b00001, GlitchTripleSlashClipDesc);
+  std::vector<Option*> glitchOptions = {
+    &GlitchISG,
+    &GlitchHover,
+    &GlitchMegaflip,
+    &GlitchHookshotClip,
+    &GlitchHookshotJump_Bonk,
+    &GlitchHookshotJump_Boots,
+    &GlitchLedgeClip,
+    &GlitchTripleSlashClip,
+  };
+
   static std::vector<std::string> gauntletOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
@@ -667,6 +716,14 @@ namespace Settings {
   Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc}, OptionCategory::Cosmetic);
   Option MirrorWorld =     Option::Bool("Mirror World",       {"Off", "On"}, {mirrorWorldDesc},     OptionCategory::Cosmetic);
 
+  static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares +\n                         Ocarina Music"};
+  static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
+
+  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},    {musicRandoDesc},      OptionCategory::Cosmetic);
+  Option ShuffleBGM =      Option::Bool("  Shuffle BGM",           {"Off", "On"},    {shuffleBGMDesc},      OptionCategory::Cosmetic);
+  Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions}, {fanfareDescriptions}, OptionCategory::Cosmetic);
+  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {shuffleOcaMusicDesc}, OptionCategory::Cosmetic);
+
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
     &ChildTunicColor,
@@ -678,43 +735,49 @@ namespace Settings {
     &ColoredKeys,
     &ColoredBossKeys,
     &MirrorWorld,
+    &ShuffleMusic,
+    &ShuffleBGM,
+    &ShuffleFanfares,
+    &ShuffleOcaMusic,
   };
 
-  MenuItem loadSettingsPreset       = MenuItem::Action("Load Settings Preset",       LOAD_PRESET);
-  MenuItem saveSettingsPreset       = MenuItem::Action("Save Settings Preset",       SAVE_PRESET);
-  MenuItem deleteSettingsPreset     = MenuItem::Action("Delete Settings Preset",     DELETE_PRESET);
-  std::vector<MenuItem *> settingsPresetItems = {
+  Menu loadSettingsPreset       = Menu::Action("Load Settings Preset",       LOAD_PRESET);
+  Menu saveSettingsPreset       = Menu::Action("Save Settings Preset",       SAVE_PRESET);
+  Menu deleteSettingsPreset     = Menu::Action("Delete Settings Preset",     DELETE_PRESET);
+  std::vector<Menu *> settingsPresetItems = {
     &loadSettingsPreset,
     &saveSettingsPreset,
     &deleteSettingsPreset,
   };
 
   //Detailed Logic Options Submenu
-  MenuItem logicSettings    = MenuItem::SubSubMenu("Logic Options",     &logicOptions);
-  MenuItem excludeLocations = MenuItem::SubSubMenu("Exclude Locations", &excludeLocationsOptions);
-  MenuItem tricks           = MenuItem::SubSubMenu("Logical Tricks",    &trickOptions);
-  std::vector<MenuItem *> detailedLogicOptions = {
+  Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
+  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsOptions);
+  Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions);
+  Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions);
+  std::vector<Menu *> detailedLogicOptions = {
     &logicSettings,
     &excludeLocations,
     &tricks,
+    &glitchSettings,
   };
 
-  MenuItem open                     = MenuItem::SubMenu("Open Settings",              &openOptions);
-  MenuItem world                    = MenuItem::SubMenu("World Settings",             &worldOptions);
-  MenuItem shuffle                  = MenuItem::SubMenu("Shuffle Settings",           &shuffleOptions);
-  MenuItem shuffleDungeonItems      = MenuItem::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
-  MenuItem detailedLogic            = MenuItem::SubMenu("Detailed Logic Settings",    &detailedLogicOptions);
-  MenuItem startingInventory        = MenuItem::SubMenu("Starting Inventory",         &startingInventoryOptions);
-  MenuItem timesaverSettings        = MenuItem::SubMenu("Timesaver Settings",         &timesaverOptions);
-  MenuItem miscSettings             = MenuItem::SubMenu("Misc Settings",              &miscOptions);
-  MenuItem itemPoolSettings         = MenuItem::SubMenu("Item Pool Settings",         &itemPoolOptions);
-  MenuItem itemUsabilitySettings    = MenuItem::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
-  MenuItem settingsPresets          = MenuItem::SubMenu("Settings Presets",           &settingsPresetItems);
-  MenuItem cosmetics                = MenuItem::SubMenu("Cosmetic Settings",          &cosmeticOptions);
-  MenuItem generateRandomizer       = MenuItem::Action ("Generate Randomizer",        GENERATE_MODE);
+  Menu open                     = Menu::SubMenu("Open Settings",              &openOptions);
+  Menu world                    = Menu::SubMenu("World Settings",             &worldOptions);
+  Menu shuffle                  = Menu::SubMenu("Shuffle Settings",           &shuffleOptions);
+  Menu shuffleDungeonItems      = Menu::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
+  Menu detailedLogic            = Menu::SubMenu("Detailed Logic Settings",    &detailedLogicOptions);
+  Menu startingInventory        = Menu::SubMenu("Starting Inventory",         &startingInventoryOptions);
+  Menu timesaverSettings        = Menu::SubMenu("Timesaver Settings",         &timesaverOptions);
+  Menu miscSettings             = Menu::SubMenu("Misc Settings",              &miscOptions);
+  Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);
+  Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
+  Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
+  Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
+  Menu generateRandomizer       = Menu::Action ("Generate Randomizer",        GENERATE_MODE);
 
   //adding a menu with no options crashes, might fix later
-  std::vector<MenuItem *> mainMenu = {
+  std::vector<Menu *> mainMenu = {
     &open,
     &world,
     &shuffle,
@@ -751,7 +814,7 @@ namespace Settings {
     ctx.logic                = Logic.Value<u8>();
     ctx.openForest           = OpenForest.Value<u8>();
     ctx.openKakariko         = OpenKakariko.Value<u8>();
-    ctx.openDoorOfTime       = (OpenDoorOfTime) ? 1 : 0;
+    ctx.openDoorOfTime       = OpenDoorOfTime.Value<u8>();
     ctx.zorasFountain        = ZorasFountain.Value<u8>();
     ctx.gerudoFortress       = GerudoFortress.Value<u8>();
     ctx.rainbowBridge        = Bridge.Value<u8>();
@@ -829,6 +892,7 @@ namespace Settings {
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();
+    ctx.progressiveGoronSword = (ProgressiveGoronSword) ? 1 : 0;
 
     ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
@@ -923,7 +987,7 @@ namespace Settings {
 
     //Starting Equipment
     ctx.startingEquipment |= StartingKokiriSword.Value<u8>();
-    ctx.startingEquipment |= StartingBiggoronSword.Value<u8>() << 2;
+    ctx.startingEquipment |= (StartingBiggoronSword.Value<u8>() ? 1: 0) << 2;
     ctx.startingEquipment |= StartingDekuShield.Value<u8>()    << 4;
     ctx.startingEquipment |= StartingHylianShield.Value<u8>()  << 5;
     ctx.startingEquipment |= StartingMirrorShield.Value<u8>()  << 6;
@@ -946,12 +1010,16 @@ namespace Settings {
     KokiriTunicColor.SetSelectedIndex(3);     //Kokiri Green
     GoronTunicColor.SetSelectedIndex(4);      //Goron Red
     ZoraTunicColor.SetSelectedIndex(5);       //Zora Blue
+
+    ShuffleMusic.SetSelectedIndex(0);         // Off
+    ShuffleBGM.SetSelectedIndex(1);           // On
+    ShuffleFanfares.SetSelectedIndex(1);      // Fanfares only
+    ShuffleOcaMusic.SetSelectedIndex(1);      // On
   }
 
   //Set default settings for all settings where the default is not the first option
   void SetDefaultSettings() {
     OpenForest.SetSelectedIndex(OPENFOREST_OPEN);
-    OpenDoorOfTime.SetSelectedIndex(1); //1 is Open, 0 is Closed
     Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
     BridgeTokenCount.Hide();
     RandomGanonsTrials.SetSelectedIndex(ON);
@@ -993,6 +1061,8 @@ namespace Settings {
 
     ItemPoolValue.SetSelectedIndex(ITEMPOOL_BALANCED);
     IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
+
+    LocationsReachable.SetSelectedIndex(1); //All Locations Reachable On
 
     SetDefaultCosmetics();
   }
@@ -1506,6 +1576,20 @@ namespace Settings {
       ZoraTunicColor.SetSelectedIndex(5);   //Zora Blue
     }
 
+    // Music
+    if (ShuffleMusic) {
+      ShuffleBGM.Unhide();
+      ShuffleFanfares.Unhide();
+      if(ShuffleFanfares.Is(2)) // Fanfares + ocarina
+        ShuffleOcaMusic.Hide();
+      else
+        ShuffleOcaMusic.Unhide();
+    } else {
+      ShuffleBGM.Hide();
+      ShuffleFanfares.Hide();
+      ShuffleOcaMusic.Hide();
+    }
+
     ResolveExcludedLocationConflicts();
   }
 
@@ -1532,8 +1616,8 @@ namespace Settings {
 
     // Open Settings
     if (RandomizeOpen) {
-      // Skip Logic and RandomizeOpen Options to ensure proper logic
-      for (size_t i = 2; i < openOptions.size(); i++) {
+      // Skip RandomizeOpen Option
+      for (size_t i = 1; i < openOptions.size(); i++) {
         //hide options
         openOptions[i]->Hide();
 
@@ -1546,7 +1630,7 @@ namespace Settings {
       RandomGanonsTrials.SetSelectedIndex(ON);
     }
     else {
-      for (size_t i = 2; i < openOptions.size(); i++) {
+      for (size_t i = 1; i < openOptions.size(); i++) {
         openOptions[i]->Unhide();
       }
     }
@@ -1753,6 +1837,63 @@ namespace Settings {
     }
 
     UpdateCosmetics();
+
+    //If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
+    if (Logic.Is(LOGIC_VANILLA)) {
+      ShuffleRewards.SetSelectedIndex(0);
+      LinksPocketItem.SetSelectedIndex(0);
+      ShuffleSongs.SetSelectedIndex(0);
+      Scrubsanity.SetSelectedIndex(0);
+      ShuffleCows.SetSelectedIndex(0);
+      ShuffleMagicBeans.SetSelectedIndex(0);
+      ShuffleMerchants.SetSelectedIndex(0);
+      Keysanity.SetSelectedIndex(3); //Set small keys to any dungeon so FiT basement door will be locked
+      GossipStoneHints.SetSelectedIndex(0);
+    }
+
+    InitMusicRandomizer();
+    if (ShuffleMusic) {
+      if (ShuffleBGM) {
+        ShuffleSequences(SeqType::SEQ_BGM);
+      }
+      
+      if (ShuffleFanfares.Is(2)) {
+        ShuffleSequences(SeqType::SEQ_FANFARE | SeqType::SEQ_OCARINA);
+      } else {
+        if (ShuffleFanfares.Is(1)) {
+          ShuffleSequences(SeqType::SEQ_FANFARE);
+        }
+        
+        if (ShuffleOcaMusic) {
+          ShuffleSequences(SeqType::SEQ_OCARINA);
+        }
+      }
+    }
+  }
+
+  //If this is an option menu, return th options
+  //Else, recursively call each sub menu of this sub menu
+  const std::vector<Menu*> GetMenusRecursive(Menu* menu) {
+    std::vector<Menu*> menus;
+    if (menu->mode == OPTION_SUB_MENU) {
+      menus.push_back(menu);
+    } else if (menu->mode == SUB_MENU) {
+        for (Menu* subMenu : *menu->itemsList) {
+          std::vector<Menu*> foundMenus = GetMenusRecursive(subMenu);
+          menus.insert(menus.end(), foundMenus.begin(), foundMenus.end());
+        }
+    }
+    return menus;
+  }
+
+  //Recursively look through each menu from the main menu to get all settings
+  const std::vector<Menu*> GetAllMenus() {
+    std::vector<Menu*> allMenus;
+    for (Menu* menu : Settings::mainMenu) {
+      std::vector<Menu*> foundMenus = GetMenusRecursive(menu);
+      allMenus.insert(allMenus.end(), foundMenus.begin(), foundMenus.end());
+    }
+    return allMenus;
   }
 
 } // namespace Settings

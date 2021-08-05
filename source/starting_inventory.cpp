@@ -106,7 +106,12 @@ void GenerateStartingInventory() {
   AddItemToInventory(NOCTURNE_OF_SHADOW,        StartingNocturneOfShadow.Value<u8>());
   AddItemToInventory(PRELUDE_OF_LIGHT,          StartingPreludeOfLight.Value<u8>());
   AddItemToInventory(KOKIRI_SWORD,              StartingKokiriSword.Value<u8>());
-  AddItemToInventory(BIGGORON_SWORD,            StartingBiggoronSword.Value<u8>());
+  if (ProgressiveGoronSword) {
+    AddItemToInventory(PROGRESSIVE_GORONSWORD,  StartingBiggoronSword.Value<u8>());
+  } else {
+    AddItemToInventory(GIANTS_KNIFE,            (StartingBiggoronSword.Is(STARTINGBGS_GIANTS_KNIFE)) ? 1 : 0);
+    AddItemToInventory(BIGGORON_SWORD,          (StartingBiggoronSword.Is(STARTINGBGS_BIGGORON_SWORD)) ? 1 : 0);
+  }
   AddItemToInventory(DEKU_SHIELD,               StartingDekuShield.Value<u8>());
   AddItemToInventory(HYLIAN_SHIELD,             StartingHylianShield.Value<u8>());
   AddItemToInventory(MIRROR_SHIELD,             StartingMirrorShield.Value<u8>());

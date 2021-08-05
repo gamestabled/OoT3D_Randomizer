@@ -27,7 +27,7 @@ namespace Playthrough {
       Settings::UpdateSettings();
       //once the settings have been finalized turn them into a string for hashing
       std::string settingsStr;
-      for (MenuItem* menu : Settings::mainMenu) {
+      for (Menu* menu : Settings::mainMenu) {
         //don't go through non-menus
         if (menu->mode != OPTION_SUB_MENU) {
           continue;
@@ -45,9 +45,14 @@ namespace Playthrough {
 
       Logic::UpdateHelpers();
 
-      int ret = Fill();
-      if (ret < 0) {
-        return ret;
+      if (Settings::Logic.Is(LOGIC_VANILLA)) {
+        VanillaFill(); //Just place items in their vanilla locations
+      }
+      else { //Fill locations with logic
+        int ret = Fill(); 
+        if (ret < 0) {
+          return ret;
+        }
       }
 
       GenerateHash();

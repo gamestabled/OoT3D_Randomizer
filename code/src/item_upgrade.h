@@ -16,6 +16,7 @@ u16 ItemUpgrade_Sticks(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_Magic(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_Bombchu(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_Ocarina(SaveContext* saveCtx, u16 itemId);
+u16 ItemUpgrade_GoronSword(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_ArrowsToRupee(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_BombsToRupee(SaveContext* saveCtx, u16 itemId);
 u16 ItemUpgrade_SeedsToRupee(SaveContext* saveCtx, u16 itemId);

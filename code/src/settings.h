@@ -15,7 +15,9 @@ typedef enum {
 
 typedef enum {
   LOGIC_GLITCHLESS,
+  LOGIC_GLITCHED,
   LOGIC_NONE,
+  LOGIC_VANILLA,
 } LogicSetting;
 
 typedef enum {
@@ -28,6 +30,12 @@ typedef enum {
   OPENKAKARIKO_CLOSED,
   OPENKAKARIKO_OPEN,
 } OpenKakarikoSetting;
+
+typedef enum {
+  OPENDOOROFTIME_OPEN,
+  OPENDOOROFTIME_CLOSED,
+  OPENDOOROFTIME_INTENDED,
+} OpenDoorOfTimeSetting;
 
 typedef enum {
   ZORASFOUNTAIN_NORMAL,
@@ -360,6 +368,7 @@ typedef struct {
 
   u8 itemPoolValue;
   u8 iceTrapValue;
+  u8 progressiveGoronSword;
 
   u8 customTunicColors;
   u8 coloredKeys;

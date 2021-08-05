@@ -1317,10 +1317,26 @@ MedigoronCheckFlagOne_patch:
 MedigoronCheckFlagTwo_patch:
     b hook_MedigoronCheckFlagTwo
 
-.section .patch_MedigoronSetFlag
-.global MedigoronSetFlag_patch
-MedigoronSetFlag_patch:
-    bl hook_MedigoronSetFlag
+.section .patch_MedigoronSetRewardFlag
+.global MedigoronSetRewardFlag_patch
+MedigoronSetRewardFlag_patch:
+    b hook_MedigoronSetRewardFlag
+
+.section .patch_MedigoronGetCustomText
+.global MedigoronGetCustomText_patch
+MedigoronGetCustomText_patch:
+    b hook_MedigoronGetCustomText
+    nop
+
+.section .patch_MedigoronItemOverrideOne
+.global MedigoronItemOverrideOne_patch
+MedigoronItemOverrideOne_patch:
+    b hook_MedigoronItemOverrideOne
+
+.section .patch_MedigoronItemOverrideTwo
+.global MedigoronItemOverrideTwo_patch
+MedigoronItemOverrideTwo_patch:
+    b hook_MedigoronItemOverrideTwo
 
 .section .patch_CarpetSalesmanCheckFlagOne
 .global CarpetSalesmanCheckFlagOne_patch
@@ -1336,6 +1352,16 @@ CarpetSalesmanCheckFlagTwo_patch:
 .global CarpetSalesmanSetFlag_patch
 CarpetSalesmanSetFlag_patch:
     bl hook_CarpetSalesmanSetFlag
+
+.section .patch_DoorOfTimeCheck
+.global DoorOfTimeCheck_patch
+DoorOfTimeCheck_patch:
+    bl hook_DoorOfTimeCheck
+
+.section .patch_SongOfTimeJingle
+.global SongOfTimeJingle_patch
+SongOfTimeJingle_patch:
+    bl hook_SongOfTimeJingle
 
 .section .patch_GKSetDurability
 .global GKSetDurability_patch
@@ -1396,6 +1422,21 @@ SkipSongReplayForTimeWarpBlocksOne_patch:
 .global SkipSongReplayForTimeWarpBlocksTwo_patch
 SkipSongReplayForTimeWarpBlocksTwo_patch:
     b hook_SkipSongReplayForTimeWarpBlocksTwo
+
+.section .patch_PlaySound
+.global PlaySound_patch
+PlaySound_patch:
+    b hook_PlaySound
+
+.section .patch_SetBGMEntrance
+.global SetBGMEntrance_patch
+SetBGMEntrance_patch:
+    b hook_SetBGMEntrance
+
+.section .patch_SetBGMDayNight
+.global SetBGMDayNight_patch
+SetBGMDayNight_patch:
+    b hook_SetBGMDayNight
 
 .section .patch_loader
 .global loader_patch
