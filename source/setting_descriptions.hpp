@@ -201,6 +201,7 @@ extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;
 
+extern string_view locationsReachableDesc;
 extern string_view nightGSDesc;
 
 extern string_view chestAnimDesc;

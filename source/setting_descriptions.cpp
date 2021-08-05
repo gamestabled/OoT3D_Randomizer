@@ -592,6 +592,14 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //
                                                                                            //
 /*------------------------------                                                           //
+|   ALL LOCATIONS REACHABLE    |                                                           //
+------------------------------*/                                                           //
+string_view locationsReachableDesc    = "When this options is enabled, the randomizer will\n"
+                                        "guarantee that every item is obtainable and every\n"
+                                        "location is reachable. When disabled, only\n"     //
+                                        "required items and locations to beat the game\n"  //
+                                        "will be guaranteed reachable.";                   //
+/*------------------------------                                                           //
 |     NIGHT GS EXPECT SUNS     |                                                           //
 ------------------------------*/                                                           //
 string_view nightGSDesc               = "GS Tokens that can only be obtained during the\n" //
