@@ -404,6 +404,14 @@ SECTIONS
 		*(.patch_SkipSongReplayForTimeBlocksTwo)
 	}
 
+	.patch_SkipSongReplayForTimeWarpBlocksOne 0x20803C : {
+		*(.patch_SkipSongReplayForTimeWarpBlocksOne)
+	}
+
+	.patch_SkipSongReplayForTimeWarpBlocksTwo 0x20805C : {
+		*(.patch_SkipSongReplayForTimeWarpBlocksTwo)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
