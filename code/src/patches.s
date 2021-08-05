@@ -1317,16 +1317,26 @@ MedigoronCheckFlagOne_patch:
 MedigoronCheckFlagTwo_patch:
     b hook_MedigoronCheckFlagTwo
 
+.section .patch_MedigoronSetRewardFlag
+.global MedigoronSetRewardFlag_patch
+MedigoronSetRewardFlag_patch:
+    b hook_MedigoronSetRewardFlag
+
 .section .patch_MedigoronGetCustomText
 .global MedigoronGetCustomText_patch
 MedigoronGetCustomText_patch:
     b hook_MedigoronGetCustomText
     nop
 
-.section .patch_MedigoronItemOverride
-.global MedigoronItemOverride_patch
-MedigoronItemOverride_patch:
-    b hook_MedigoronItemOverride
+.section .patch_MedigoronItemOverrideOne
+.global MedigoronItemOverrideOne_patch
+MedigoronItemOverrideOne_patch:
+    b hook_MedigoronItemOverrideOne
+
+.section .patch_MedigoronItemOverrideTwo
+.global MedigoronItemOverrideTwo_patch
+MedigoronItemOverrideTwo_patch:
+    b hook_MedigoronItemOverrideTwo
 
 .section .patch_CarpetSalesmanCheckFlagOne
 .global CarpetSalesmanCheckFlagOne_patch
@@ -1378,10 +1388,45 @@ InstantTextBoxBreak_patch:
 InstantTextRemoveOff_patch:
     b hook_InstantTextRemoveOff
 
-.section .patch_TurboText
-.global TurboText_patch
-TurboText_patch:
-    bl hook_TurboText
+.section .patch_TurboTextAdvance
+.global TurboTextAdvance_patch
+TurboTextAdvance_patch:
+    bl hook_TurboTextAdvance
+
+.section .patch_TurboTextClose
+.global TurboTextClose_patch
+TurboTextClose_patch:
+    bl hook_TurboTextClose
+
+.section .patch_TurboTextSignalNPC
+.global TurboTextSignalNPC_patch
+TurboTextSignalNPC_patch:
+    bl hook_TurboTextSignalNPC
+
+.section .patch_SkipSongReplayForTimeBlocksOne
+.global SkipSongReplayForTimeBlocksOne_patch
+SkipSongReplayForTimeBlocksOne_patch:
+    b hook_SkipSongReplayForTimeBlocksOne
+
+.section .patch_SkipSongReplayForTimeBlocksTwo
+.global SkipSongReplayForTimeBlocksTwo_patch
+SkipSongReplayForTimeBlocksTwo_patch:
+    b hook_SkipSongReplayForTimeBlocksTwo
+
+.section .patch_PlaySound
+.global PlaySound_patch
+PlaySound_patch:
+    b hook_PlaySound
+
+.section .patch_SetBGMEntrance
+.global SetBGMEntrance_patch
+SetBGMEntrance_patch:
+    b hook_SetBGMEntrance
+
+.section .patch_SetBGMDayNight
+.global SetBGMDayNight_patch
+SetBGMDayNight_patch:
+    b hook_SetBGMDayNight
 
 .section .patch_loader
 .global loader_patch

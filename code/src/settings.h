@@ -15,6 +15,7 @@ typedef enum {
 
 typedef enum {
   LOGIC_GLITCHLESS,
+  LOGIC_GLITCHED,
   LOGIC_NONE,
   LOGIC_VANILLA,
 } LogicSetting;

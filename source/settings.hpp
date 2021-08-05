@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <variant>
 #include <vector>
@@ -491,6 +492,17 @@ namespace Settings {
   extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
 
+  //Glitch Settings
+  const std::vector<std::string> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"};
+  extern Option GlitchISG;
+  extern Option GlitchHover;
+  extern Option GlitchMegaflip;
+  extern Option GlitchHookshotClip;
+  extern Option GlitchHookshotJump_Bonk;
+  extern Option GlitchHookshotJump_Boots;
+  extern Option GlitchLedgeClip;
+  extern Option GlitchTripleSlashClip;
+
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;
   extern Option KokiriTunicColor;
@@ -508,6 +520,11 @@ namespace Settings {
   extern Option ColoredKeys;
   extern Option ColoredBossKeys;
   extern Option MirrorWorld;
+
+  extern Option ShuffleMusic;
+  extern Option ShuffleBGM;
+  extern Option ShuffleFanfares;
+  extern Option ShuffleOcaMusic;
 
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;

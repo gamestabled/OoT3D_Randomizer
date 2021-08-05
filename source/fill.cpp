@@ -18,7 +18,6 @@
 #include <vector>
 #include <unistd.h>
 #include <list>
-#include <algorithm>
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -126,8 +125,7 @@ std::vector<LocationKey> GetAllEmptyLocations() {
 //This function will return a vector of ItemLocations that are accessible with
 //where items have been placed so far within the world. The allowedLocations argument
 //specifies the pool of locations that we're trying to search for an accessible location in
-std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations,
-                                                  SearchMode mode) {
+std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations, SearchMode mode) {
   std::vector<LocationKey> accessibleLocations;
   //Reset all access to begin a new search
   if (mode != SearchMode::BothAgesNoItems) {
@@ -419,6 +417,7 @@ static void CalculateWotH() {
 
 //Will place things completely randomly, no logic checks are performed
 static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locations, bool endOnItemsEmpty = false) {
+  //Loop until locations are empty, or also end if items are empty and the parameters specify to end then
   while (!locations.empty() && (!endOnItemsEmpty || !items.empty())) {
     LocationKey loc = RandomElement(locations, true);
     Location(loc)->SetAsHintable();
@@ -520,7 +519,6 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       PlaceItemInLocation(selectedLocation, item);
       attemptedLocations.push_back(selectedLocation);
 
-
       //This tells us the location went through the randomization algorithm
       //to distinguish it from locations which did not or that the player already
       //knows
@@ -541,7 +539,6 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       }
     }
   } while (unsuccessfulPlacement);
-  return;
 }
 
 //This function will specifically randomize dungeon rewards for the End of Dungeons
@@ -566,7 +563,14 @@ static void RandomizeDungeonRewards() {
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
     std::vector<ItemKey> rewards = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
-    AssumedFill(rewards, dungeonRewardLocations);
+    if (Settings::Logic.Is(LOGIC_VANILLA)) { //Place dungeon rewards in vanilla locations
+      for (LocationKey loc : dungeonRewardLocations) {
+        Location(loc)->PlaceVanillaItem();
+      }
+    } else { //Randomize dungeon rewards with assumed fill
+      AssumedFill(rewards, dungeonRewardLocations);
+    }
+    
     for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
       const auto index = Location(dungeonRewardLocations[i])->GetPlacedItem().GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
@@ -737,8 +741,10 @@ void VanillaFill() {
   //Perform minimum needed initialization
   AreaTable_Init();
   GenerateLocationPool();
+  GenerateItemPool();
   GenerateStartingInventory();
   //Place vanilla item in each location
+  RandomizeDungeonRewards();
   for (LocationKey loc : allLocations) {
     Location(loc)->PlaceVanillaItem();
   }

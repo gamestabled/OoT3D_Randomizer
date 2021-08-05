@@ -72,8 +72,8 @@ SECTIONS
 		*(.patch_OwlMagicCheck)
 	}
 
-	.patch_MedigoronItemOverride 0x14D95C : {
-		*(.patch_MedigoronItemOverride)
+	.patch_MedigoronItemOverrideOne 0x14D95C : {
+		*(.patch_MedigoronItemOverrideOne)
 	}
 
 	.patch_BeanDaddyPurchase 0x14EDA8 : {
@@ -130,6 +130,14 @@ SECTIONS
 
 	.patch_DampeCheckCollectibleFlag 0x169F88 : {
 		*(.patch_DampeCheckCollectibleFlag)
+	}
+
+	.patch_MedigoronSetRewardFlag 0x16C918 : {
+		*(.patch_MedigoronSetRewardFlag)
+	}
+
+	.patch_MedigoronItemOverrideTwo 0x16C9BC : {
+		*(.patch_MedigoronItemOverrideTwo)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
@@ -388,6 +396,14 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_SkipSongReplayForTimeBlocksOne 0x207FD8 : {
+		*(.patch_SkipSongReplayForTimeBlocksOne)
+	}
+
+	.patch_SkipSongReplayForTimeBlocksTwo 0x207FF8 : {
+		*(.patch_SkipSongReplayForTimeBlocksTwo)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
@@ -604,12 +620,20 @@ SECTIONS
 		*(.patch_ISGPutaway)
 	}
 
+	.patch_SetBGMEntrance 0x331048 : {
+		*(.patch_SetBGMEntrance)
+	}
+
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
 
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
+	}
+
+	.patch_TurboTextSignalNPC 0x3469F4 : {
+		*(.patch_TurboTextSignalNPC)
 	}
 
 	.patch_FairyReviveHealAmount 0x34AF48 : {
@@ -638,6 +662,10 @@ SECTIONS
 
 	.patch_LikeLikeNeverEatTunic 0x355C2C : {
 		*(.patch_LikeLikeNeverEatTunic)
+	}
+
+	.patch_PlaySound 0x35C528 : {
+		*(.patch_PlaySound)
 	}
 
 	.patch_ConvertBombDropOne 0x35E46C : {
@@ -968,8 +996,16 @@ SECTIONS
 		*(.patch_EnableFW)
 	}
 
-	.patch_TurboText 0x480928 : {
-		*(.patch_TurboText)
+	.patch_TurboTextAdvance 0x480928 : {
+		*(.patch_TurboTextAdvance)
+	}
+
+	.patch_TurboTextClose 0x488214 : {
+		*(.patch_TurboTextClose)
+	}
+
+	.patch_SetBGMDayNight 0x483C88 : {
+		*(.patch_SetBGMDayNight)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {

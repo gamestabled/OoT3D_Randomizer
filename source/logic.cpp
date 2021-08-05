@@ -230,7 +230,6 @@ namespace Logic {
   bool HasExplosives    = false;
   bool IsChild          = false;
   bool IsAdult          = false;
-//bool IsGlitched       = false;
   bool CanBlastOrSmash  = false;
   bool CanChildAttack   = false;
   bool CanChildDamage   = false;
@@ -409,6 +408,79 @@ namespace Logic {
            (age == HasProjectileAge::Either && (Slingshot || Boomerang   ||  Hookshot || Bow));
   }
 
+  u8 GetDifficultyValueFromString(Option& glitchOption) {
+    for (size_t i = 0; i < GlitchDifficulties.size(); i++) {
+      if (glitchOption.GetSelectedOptionText() == GlitchDifficulties[i]) {
+        return i + 1;
+      }
+    }
+    return 0;
+  }
+
+  bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
+    u8 setDifficulty;
+    switch (glitch) {
+    //Infinite Sword Glitch
+    case GlitchType::ISG:
+      setDifficulty = GetDifficultyValueFromString(GlitchISG);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return HasShield && (IsAdult || (IsChild && (KokiriSword || Sticks)));
+    //Bomb Hover
+    case GlitchType::BombHover:
+      setDifficulty = GetDifficultyValueFromString(GlitchHover);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && (HasBombchus || (Bombs && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
+    //Megaflip
+    case GlitchType::Megaflip:
+      setDifficulty = GetDifficultyValueFromString(GlitchMegaflip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return HasShield && Bombs;
+    //Hookshot Clip
+    case GlitchType::HookshotClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchHookshotClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult && Hookshot;
+    //Hookshot Jump: Bonk
+    case GlitchType::HookshotJump_Bonk:
+      setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Bonk);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult && Hookshot;
+    //Hookshot Jump: Boots
+    case GlitchType::HookshotJump_Boots:
+      setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Boots);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult && Hookshot && (IronBoots || HoverBoots);
+    //Ledge Clip
+    case GlitchType::LedgeClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchLedgeClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult;
+    //Triple Slash Clip
+    case GlitchType::TripleSlashClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchTripleSlashClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult || (IsChild && KokiriSword);
+    }
+    //Shouldn't be reached
+    return false;
+  }
+
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
@@ -514,6 +586,14 @@ namespace Logic {
 
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
     return (dungeonKeyCount >= requiredAmount);
+  }
+
+  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
+    if (Settings::Logic.Is(LOGIC_GLITCHED) && GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE)) {
+      return (dungeonKeyCount >= requiredAmountGlitched);
+    } else {
+      return (dungeonKeyCount >= requiredAmountGlitchless);
+    }
   }
 
   bool EventsUpdated() {
