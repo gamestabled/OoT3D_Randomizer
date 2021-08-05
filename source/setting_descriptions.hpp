@@ -1,5 +1,6 @@
 #pragma once
 #include <string_view>
+#include <vector>
 
 using string_view = std::string_view;
 
@@ -9,6 +10,7 @@ extern string_view shuffleRandomize;
 extern string_view dungeonRandomize;
 
 extern string_view logicGlitchless;
+extern string_view logicGlitched;
 extern string_view logicNoLogic;
 extern string_view logicVanilla;
 
@@ -339,3 +341,12 @@ extern string_view LogicLensBotwMQDesc;
 extern string_view LogicLensGtgMQDesc;
 extern string_view LogicLensCastleMQDesc;
 extern string_view LogicSpiritTrialHookshotDesc;
+
+extern std::vector<string_view> GlitchISGDesc;
+extern std::vector<string_view> GlitchHoverDesc;
+extern std::vector<string_view> GlitchMegaflipDesc;
+extern std::vector<string_view> GlitchHookshotClipDesc;
+extern std::vector<string_view> GlitchHookshotJump_BonkDesc;
+extern std::vector<string_view> GlitchHookshotJump_BootsDesc;
+extern std::vector<string_view> GlitchLedgeClipDesc;
+extern std::vector<string_view> GlitchTripleSlashClipDesc;

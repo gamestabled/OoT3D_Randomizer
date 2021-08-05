@@ -29,8 +29,28 @@ enum class EntranceType {
 class Entrance {
 public:
 
-    Entrance(AreaKey connectedRegion_, ConditionFn conditionsMet_)
-        : connectedRegion(connectedRegion_), conditionsMet(conditionsMet_) {}
+    Entrance(AreaKey connectedRegion_, std::vector<ConditionFn> conditions_met_)
+        : connectedRegion(connectedRegion_) {
+        conditions_met.resize(2);
+        for (size_t i = 0; i < conditions_met_.size(); i++) {
+            conditions_met[i] = conditions_met_[i];
+        }
+    }
+
+    bool GetConditionsMet() const {
+        if (Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA)) {
+            return true;
+        }
+        for (size_t i = 0; i <= Settings::Logic.Value<u8>(); i++) {
+            if (conditions_met[i] == NULL) {
+                continue;
+            }
+            if (conditions_met[i]()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     std::string to_string() const {
         return AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
@@ -88,7 +108,7 @@ public:
         age = true;
 
         Logic::UpdateHelpers();
-        return conditionsMet() || Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA);
+        return GetConditionsMet();
     }
 
     //Yes this is the exact same function as above, trust me on this
@@ -217,7 +237,7 @@ public:
 private:
     AreaKey parentRegion;
     AreaKey connectedRegion;
-    ConditionFn conditionsMet;
+    std::vector<ConditionFn> conditions_met;
 
     //Entrance Randomizer stuff
     EntranceType type = EntranceType::None;
