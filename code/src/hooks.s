@@ -646,13 +646,29 @@ hook_MedigoronCheckFlagTwo:
 childLink:
     b 0x1302F0
 
-.global hook_MedigoronItemOverride
-hook_MedigoronItemOverride:
+.global hook_MedigoronSetRewardFlag
+hook_MedigoronSetRewardFlag:
+    mvn r0,#0xc7
+    push {r0-r12, lr}
+    bl EnGm_SetRewardFlag
+    pop {r0-r12, lr}
+    b 0x16C91C
+
+.global hook_MedigoronItemOverrideOne
+hook_MedigoronItemOverrideOne:
     push {r0-r1, r3-r12, lr}
     bl EnGm_ItemOverride
     cpy r2,r0
     pop {r0-r1, r3-r12, lr}
     b 0x14D960
+
+.global hook_MedigoronItemOverrideTwo
+hook_MedigoronItemOverrideTwo:
+    push {r0-r1, r3-r12, lr}
+    bl EnGm_ItemOverride
+    cpy r2,r0
+    pop {r0-r1, r3-r12, lr}
+    b 0x16C9C0
 
 .global hook_MedigoronGetCustomText
 hook_MedigoronGetCustomText:
