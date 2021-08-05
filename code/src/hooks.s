@@ -646,13 +646,29 @@ hook_MedigoronCheckFlagTwo:
 childLink:
     b 0x1302F0
 
-.global hook_MedigoronItemOverride
-hook_MedigoronItemOverride:
+.global hook_MedigoronSetRewardFlag
+hook_MedigoronSetRewardFlag:
+    mvn r0,#0xc7
+    push {r0-r12, lr}
+    bl EnGm_SetRewardFlag
+    pop {r0-r12, lr}
+    b 0x16C91C
+
+.global hook_MedigoronItemOverrideOne
+hook_MedigoronItemOverrideOne:
     push {r0-r1, r3-r12, lr}
     bl EnGm_ItemOverride
     cpy r2,r0
     pop {r0-r1, r3-r12, lr}
     b 0x14D960
+
+.global hook_MedigoronItemOverrideTwo
+hook_MedigoronItemOverrideTwo:
+    push {r0-r1, r3-r12, lr}
+    bl EnGm_ItemOverride
+    cpy r2,r0
+    pop {r0-r1, r3-r12, lr}
+    b 0x16C9C0
 
 .global hook_MedigoronGetCustomText
 hook_MedigoronGetCustomText:
@@ -794,6 +810,30 @@ hook_TurboTextAdvance:
     cmpeq r0,#0x0
     bx lr
 
+.global hook_PlaySound
+hook_PlaySound:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r3-r7, lr}
+    b 0x35C52C
+
+.global hook_SetBGMEntrance
+hook_SetBGMEntrance:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x33104C
+
+.global hook_SetBGMDayNight
+hook_SetBGMDayNight:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x483C8C
+
 .global hook_TurboTextClose
 hook_TurboTextClose:
     push {r0-r12, lr}
@@ -838,6 +878,32 @@ hook_SkipSongReplayForTimeBlocksTwo:
     bne 0x208028
     add r0,r0,#0x100
     b 0x207FFC
+
+.global hook_SkipSongReplayForTimeWarpBlocksOne
+hook_SkipSongReplayForTimeWarpBlocksOne:
+    add r1,r1,#0x2B00
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x208040
+    push {r0,r1}
+    sub r1,r1,#0x70
+    ldrb r0,[r1]
+    cmp r0,#23
+    pop {r0,r1}
+    bne 0x208094
+    b 0x208040
+
+.global hook_SkipSongReplayForTimeWarpBlocksTwo
+hook_SkipSongReplayForTimeWarpBlocksTwo:
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x20808C
+    add r0,r0,#0x100
+    b 0x208060
 
 .section .loader
 .global hook_into_loader

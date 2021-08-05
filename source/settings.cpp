@@ -6,6 +6,7 @@
 #include "dungeon.hpp"
 #include "fill.hpp"
 #include "item_location.hpp"
+#include "music.hpp"
 #include "random.hpp"
 #include "randomizer.hpp"
 #include "setting_descriptions.hpp"
@@ -15,6 +16,7 @@
 using namespace Cosmetics;
 using namespace Dungeon;
 using namespace Trial;
+using namespace Music;
 
 namespace Settings {
   std::string seed;
@@ -406,10 +408,12 @@ namespace Settings {
     &StartingSkulltulaToken,
   };
 
-  Option Logic             = Option::U8  ("Logic",                  {"Glitchless", "No Logic", "Vanilla"}, {logicGlitchless, logicNoLogic, logicVanilla});
-  Option NightGSExpectSuns = Option::Bool("Night GSs Expect Sun's", {"Off", "On"},                         {nightGSDesc});
+  Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicNoLogic, logicVanilla});
+  Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                                     {locationsReachableDesc}); 
+  Option NightGSExpectSuns  = Option::Bool("Night GSs Expect Sun's",  {"Off", "On"},                                     {nightGSDesc});
   std::vector<Option *> logicOptions = {
     &Logic,
+    &LocationsReachable,
     &NightGSExpectSuns,
   };
 
@@ -590,6 +594,49 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
+  //Function to make defining glitch tricks easier to read
+  Option GlitchTrick(std::string setting, u8 enabledDifficulties, std::vector<std::string_view> description) {
+    //enabledDifficulties bits
+    //0: Novice
+    //1: Intermediate
+    //2: Advanced
+    //3: Expert
+    //4: Hero
+
+    std::vector<std::string> selectableDifficulties;
+    std::vector<std::string_view> includedDescriptions;
+
+    selectableDifficulties.push_back("Disabled");
+    includedDescriptions.push_back(description[0]);
+    for (size_t i = 0; i < GlitchDifficulties.size(); i++) {
+      if ((enabledDifficulties >> i) & 1) {
+        selectableDifficulties.push_back(GlitchDifficulties[i]);
+        includedDescriptions.push_back(description[i + 1]);
+      }
+    }
+
+    return Option::U8(setting, selectableDifficulties, includedDescriptions);
+  }
+
+  Option GlitchISG                = GlitchTrick("Infinite Sword Glitch", 0b00001, GlitchISGDesc);
+  Option GlitchHover              = GlitchTrick("Bomb Hover",            0b00111, GlitchHoverDesc);
+  Option GlitchMegaflip           = GlitchTrick("Megaflip",              0b00011, GlitchMegaflipDesc);
+  Option GlitchHookshotClip       = GlitchTrick("Hookshot Clip",         0b00001, GlitchHookshotClipDesc);
+  Option GlitchHookshotJump_Bonk  = GlitchTrick("Hookshot Jump (Bonk)",  0b00010, GlitchHookshotJump_BonkDesc);
+  Option GlitchHookshotJump_Boots = GlitchTrick("Hookshot Jump (Boots)", 0b00011, GlitchHookshotJump_BootsDesc);
+  Option GlitchLedgeClip          = GlitchTrick("Ledge Clip",            0b00011, GlitchLedgeClipDesc);
+  Option GlitchTripleSlashClip    = GlitchTrick("Triple Slash Clip",     0b00001, GlitchTripleSlashClipDesc);
+  std::vector<Option*> glitchOptions = {
+    &GlitchISG,
+    &GlitchHover,
+    &GlitchMegaflip,
+    &GlitchHookshotClip,
+    &GlitchHookshotJump_Bonk,
+    &GlitchHookshotJump_Boots,
+    &GlitchLedgeClip,
+    &GlitchTripleSlashClip,
+  };
+
   static std::vector<std::string> gauntletOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
@@ -669,6 +716,14 @@ namespace Settings {
   Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc}, OptionCategory::Cosmetic);
   Option MirrorWorld =     Option::Bool("Mirror World",       {"Off", "On"}, {mirrorWorldDesc},     OptionCategory::Cosmetic);
 
+  static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares +\n                         Ocarina Music"};
+  static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
+
+  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},    {musicRandoDesc},      OptionCategory::Cosmetic);
+  Option ShuffleBGM =      Option::Bool("  Shuffle BGM",           {"Off", "On"},    {shuffleBGMDesc},      OptionCategory::Cosmetic);
+  Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions}, {fanfareDescriptions}, OptionCategory::Cosmetic);
+  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {shuffleOcaMusicDesc}, OptionCategory::Cosmetic);
+
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
     &ChildTunicColor,
@@ -680,6 +735,10 @@ namespace Settings {
     &ColoredKeys,
     &ColoredBossKeys,
     &MirrorWorld,
+    &ShuffleMusic,
+    &ShuffleBGM,
+    &ShuffleFanfares,
+    &ShuffleOcaMusic,
   };
 
   Menu loadSettingsPreset       = Menu::Action("Load Settings Preset",       LOAD_PRESET);
@@ -695,10 +754,12 @@ namespace Settings {
   Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
   Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsOptions);
   Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions);
+  Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions);
   std::vector<Menu *> detailedLogicOptions = {
     &logicSettings,
     &excludeLocations,
     &tricks,
+    &glitchSettings,
   };
 
   Menu open                     = Menu::SubMenu("Open Settings",              &openOptions);
@@ -949,6 +1010,11 @@ namespace Settings {
     KokiriTunicColor.SetSelectedIndex(3);     //Kokiri Green
     GoronTunicColor.SetSelectedIndex(4);      //Goron Red
     ZoraTunicColor.SetSelectedIndex(5);       //Zora Blue
+
+    ShuffleMusic.SetSelectedIndex(0);         // Off
+    ShuffleBGM.SetSelectedIndex(1);           // On
+    ShuffleFanfares.SetSelectedIndex(1);      // Fanfares only
+    ShuffleOcaMusic.SetSelectedIndex(1);      // On
   }
 
   //Set default settings for all settings where the default is not the first option
@@ -995,6 +1061,8 @@ namespace Settings {
 
     ItemPoolValue.SetSelectedIndex(ITEMPOOL_BALANCED);
     IceTrapValue.SetSelectedIndex(ICETRAPS_NORMAL);
+
+    LocationsReachable.SetSelectedIndex(1); //All Locations Reachable On
 
     SetDefaultCosmetics();
   }
@@ -1508,6 +1576,20 @@ namespace Settings {
       ZoraTunicColor.SetSelectedIndex(5);   //Zora Blue
     }
 
+    // Music
+    if (ShuffleMusic) {
+      ShuffleBGM.Unhide();
+      ShuffleFanfares.Unhide();
+      if(ShuffleFanfares.Is(2)) // Fanfares + ocarina
+        ShuffleOcaMusic.Hide();
+      else
+        ShuffleOcaMusic.Unhide();
+    } else {
+      ShuffleBGM.Hide();
+      ShuffleFanfares.Hide();
+      ShuffleOcaMusic.Hide();
+    }
+
     ResolveExcludedLocationConflicts();
   }
 
@@ -1767,6 +1849,25 @@ namespace Settings {
       ShuffleMerchants.SetSelectedIndex(0);
       Keysanity.SetSelectedIndex(3); //Set small keys to any dungeon so FiT basement door will be locked
       GossipStoneHints.SetSelectedIndex(0);
+    }
+
+    InitMusicRandomizer();
+    if (ShuffleMusic) {
+      if (ShuffleBGM) {
+        ShuffleSequences(SeqType::SEQ_BGM);
+      }
+      
+      if (ShuffleFanfares.Is(2)) {
+        ShuffleSequences(SeqType::SEQ_FANFARE | SeqType::SEQ_OCARINA);
+      } else {
+        if (ShuffleFanfares.Is(1)) {
+          ShuffleSequences(SeqType::SEQ_FANFARE);
+        }
+        
+        if (ShuffleOcaMusic) {
+          ShuffleSequences(SeqType::SEQ_OCARINA);
+        }
+      }
     }
   }
 

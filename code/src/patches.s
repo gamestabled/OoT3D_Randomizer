@@ -1317,16 +1317,26 @@ MedigoronCheckFlagOne_patch:
 MedigoronCheckFlagTwo_patch:
     b hook_MedigoronCheckFlagTwo
 
+.section .patch_MedigoronSetRewardFlag
+.global MedigoronSetRewardFlag_patch
+MedigoronSetRewardFlag_patch:
+    b hook_MedigoronSetRewardFlag
+
 .section .patch_MedigoronGetCustomText
 .global MedigoronGetCustomText_patch
 MedigoronGetCustomText_patch:
     b hook_MedigoronGetCustomText
     nop
 
-.section .patch_MedigoronItemOverride
-.global MedigoronItemOverride_patch
-MedigoronItemOverride_patch:
-    b hook_MedigoronItemOverride
+.section .patch_MedigoronItemOverrideOne
+.global MedigoronItemOverrideOne_patch
+MedigoronItemOverrideOne_patch:
+    b hook_MedigoronItemOverrideOne
+
+.section .patch_MedigoronItemOverrideTwo
+.global MedigoronItemOverrideTwo_patch
+MedigoronItemOverrideTwo_patch:
+    b hook_MedigoronItemOverrideTwo
 
 .section .patch_CarpetSalesmanCheckFlagOne
 .global CarpetSalesmanCheckFlagOne_patch
@@ -1402,6 +1412,31 @@ SkipSongReplayForTimeBlocksOne_patch:
 .global SkipSongReplayForTimeBlocksTwo_patch
 SkipSongReplayForTimeBlocksTwo_patch:
     b hook_SkipSongReplayForTimeBlocksTwo
+
+.section .patch_SkipSongReplayForTimeWarpBlocksOne
+.global SkipSongReplayForTimeWarpBlocksOne_patch
+SkipSongReplayForTimeWarpBlocksOne_patch:
+    b hook_SkipSongReplayForTimeWarpBlocksOne
+
+.section .patch_SkipSongReplayForTimeWarpBlocksTwo
+.global SkipSongReplayForTimeWarpBlocksTwo_patch
+SkipSongReplayForTimeWarpBlocksTwo_patch:
+    b hook_SkipSongReplayForTimeWarpBlocksTwo
+
+.section .patch_PlaySound
+.global PlaySound_patch
+PlaySound_patch:
+    b hook_PlaySound
+
+.section .patch_SetBGMEntrance
+.global SetBGMEntrance_patch
+SetBGMEntrance_patch:
+    b hook_SetBGMEntrance
+
+.section .patch_SetBGMDayNight
+.global SetBGMDayNight_patch
+SetBGMDayNight_patch:
+    b hook_SetBGMDayNight
 
 .section .patch_loader
 .global loader_patch
