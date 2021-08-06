@@ -20,238 +20,240 @@ bool NO_DAY_NIGHT_CYCLE = false;
 
 //generic grotto event list
 static std::vector<EventAccess> grottoEvents = {
-  EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || CanSummonGossipFairy;}}),
-  EventAccess(&ButterflyFairy,   {[]{return ButterflyFairy   || (CanUse(CanUseItem::Sticks));}}),
-  EventAccess(&BugShrub,         {[]{return CanCutShrubs;}}),
-  EventAccess(&LoneFish,         {[]{return true;}}),
+    EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || CanSummonGossipFairy;}}),
+    EventAccess(&ButterflyFairy,   {[]{return ButterflyFairy   || (CanUse(CanUseItem::Sticks));}}),
+    EventAccess(&BugShrub,         {[]{return CanCutShrubs;}}),
+    EventAccess(&LoneFish,         {[]{return true;}}),
 };
 
 //set the logic to be a specific age and time of day and see if the condition still holds
 bool LocationAccess::CheckConditionAtAgeTime(bool& age, bool& time) const {
 
-  IsChild = false;
-  IsAdult = false;
-  AtDay   = false;
-  AtNight = false;
+    IsChild = false;
+    IsAdult = false;
+    AtDay   = false;
+    AtNight = false;
 
-  time = true;
-  age = true;
+    time = true;
+    age = true;
 
-  UpdateHelpers();
-  return GetConditionsMet();
+    UpdateHelpers();
+    return GetConditionsMet();
 }
 
 bool LocationAccess::ConditionsMet() const {
 
-  Area* parentRegion = AreaTable(Location(location)->GetParentRegionKey());
-  bool conditionsMet = false;
+    Area* parentRegion = AreaTable(Location(location)->GetParentRegionKey());
+    bool conditionsMet = false;
 
-  if ((parentRegion->childDay   && CheckConditionAtAgeTime(IsChild, AtDay))   ||
-      (parentRegion->childNight && CheckConditionAtAgeTime(IsChild, AtNight)) ||
-      (parentRegion->adultDay   && CheckConditionAtAgeTime(IsAdult, AtDay))   ||
-      (parentRegion->adultNight && CheckConditionAtAgeTime(IsAdult, AtNight))) {
+    if ((parentRegion->childDay   && CheckConditionAtAgeTime(IsChild, AtDay))   ||
+            (parentRegion->childNight && CheckConditionAtAgeTime(IsChild, AtNight)) ||
+            (parentRegion->adultDay   && CheckConditionAtAgeTime(IsAdult, AtDay))   ||
+            (parentRegion->adultNight && CheckConditionAtAgeTime(IsAdult, AtNight))) {
         conditionsMet = true;
-  }
+    }
 
-  return conditionsMet && CanBuy();
+    return conditionsMet && CanBuy();
 }
 
 bool LocationAccess::CanBuy() const {
-  //Not a shop location, don't need to check if buyable
-  if (!(Location(location)->IsCategory(Category::cShop))) {
-    return true;
-  }
+    //Not a shop location, don't need to check if buyable
+    if (!(Location(location)->IsCategory(Category::cShop))) {
+        return true;
+    }
 
-  //Check if wallet is large enough to buy item
-  bool SufficientWallet = true;
-  if (Location(location)->GetPrice() > 500) {
-    SufficientWallet = Logic::ProgressiveWallet >= 3;
-  } else if (Location(location)->GetPrice() > 200) {
-    SufficientWallet = Logic::ProgressiveWallet >= 2;
-  } else if (Location(location)->GetPrice() > 99) {
-    SufficientWallet = Logic::ProgressiveWallet >= 1;
-  }
+    //Check if wallet is large enough to buy item
+    bool SufficientWallet = true;
+    if (Location(location)->GetPrice() > 500) {
+        SufficientWallet = Logic::ProgressiveWallet >= 3;
+    } else if (Location(location)->GetPrice() > 200) {
+        SufficientWallet = Logic::ProgressiveWallet >= 2;
+    } else if (Location(location)->GetPrice() > 99) {
+        SufficientWallet = Logic::ProgressiveWallet >= 1;
+    }
 
-  bool OtherCondition = true;
-  u32 placed = Location(location)->GetPlacedItemKey();
-  //Need bottle to buy bottle items, only logically relevant bottle items included here
-  if (placed == BUY_BLUE_FIRE || placed == BUY_BOTTLE_BUG || placed == BUY_FISH || placed == BUY_FAIRYS_SPIRIT) {
-    OtherCondition = Logic::HasBottle;
-  }
-  //Need explosives to be able to buy bombchus
-  else if (placed == BUY_BOMBCHU_5 || placed == BUY_BOMBCHU_10 || placed == BUY_BOMBCHU_20) {
-    OtherCondition = Logic::HasExplosives;
-  }
+    bool OtherCondition = true;
+    u32 placed = Location(location)->GetPlacedItemKey();
+    //Need bottle to buy bottle items, only logically relevant bottle items included here
+    if (placed == BUY_BLUE_FIRE || placed == BUY_BOTTLE_BUG || placed == BUY_FISH || placed == BUY_FAIRYS_SPIRIT) {
+        OtherCondition = Logic::HasBottle;
+    }
+    //Need explosives to be able to buy bombchus
+    else if (placed == BUY_BOMBCHU_5 || placed == BUY_BOMBCHU_10 || placed == BUY_BOMBCHU_20) {
+        OtherCondition = Logic::HasExplosives;
+    }
 
-  return SufficientWallet && OtherCondition;
+    return SufficientWallet && OtherCondition;
 }
 
 Area::Area() = default;
 Area::Area(std::string regionName_, std::string scene_, u32 hintKey_,
-         bool timePass_,
-         std::vector<EventAccess> events_,
-         std::vector<LocationAccess> locations_,
-         std::list<Entrance> exits_)
-  : regionName(std::move(regionName_)),
-    scene(std::move(scene_)),
-    hintKey(hintKey_),
-    timePass(timePass_),
-    events(std::move(events_)),
-    locations(std::move(locations_)),
-    exits(std::move(exits_)) {}
+           bool timePass_,
+           std::vector<EventAccess> events_,
+           std::vector<LocationAccess> locations_,
+           std::list<Entrance> exits_)
+    : regionName(std::move(regionName_)),
+      scene(std::move(scene_)),
+      hintKey(hintKey_),
+      timePass(timePass_),
+      events(std::move(events_)),
+      locations(std::move(locations_)),
+      exits(std::move(exits_)) {}
 
 Area::~Area() = default;
 
 bool Area::UpdateEvents() {
 
-  if (timePass) {
-    if (Child()) {
-      childDay = true;
-      childNight = true;
-      AreaTable(ROOT)->childDay = true;
-      AreaTable(ROOT)->childNight = true;
-    }
-    if (Adult()) {
-      adultDay = true;
-      adultNight = true;
-      AreaTable(ROOT)->adultDay = true;
-      AreaTable(ROOT)->adultNight = true;
-    }
-  }
-
-  bool eventsUpdated =  false;
-
-  for (EventAccess& event : events) {
-    //If the event has already happened, there's no reason to check it
-    if (event.GetEvent()) {
-      continue;
+    if (timePass) {
+        if (Child()) {
+            childDay = true;
+            childNight = true;
+            AreaTable(ROOT)->childDay = true;
+            AreaTable(ROOT)->childNight = true;
+        }
+        if (Adult()) {
+            adultDay = true;
+            adultNight = true;
+            AreaTable(ROOT)->adultDay = true;
+            AreaTable(ROOT)->adultNight = true;
+        }
     }
 
-    if ((childDay   && event.CheckConditionAtAgeTime(IsChild, AtDay))    ||
-        (childNight && event.CheckConditionAtAgeTime(IsChild, AtNight))  ||
-        (adultDay   && event.CheckConditionAtAgeTime(IsAdult, AtDay))    ||
-        (adultNight && event.CheckConditionAtAgeTime(IsAdult, AtNight))) {
-          event.EventOccurred();
-          eventsUpdated = true;
+    bool eventsUpdated =  false;
+
+    for (EventAccess& event : events) {
+        //If the event has already happened, there's no reason to check it
+        if (event.GetEvent()) {
+            continue;
+        }
+
+        if ((childDay   && event.CheckConditionAtAgeTime(IsChild, AtDay))    ||
+                (childNight && event.CheckConditionAtAgeTime(IsChild, AtNight))  ||
+                (adultDay   && event.CheckConditionAtAgeTime(IsAdult, AtDay))    ||
+                (adultNight && event.CheckConditionAtAgeTime(IsAdult, AtNight))) {
+            event.EventOccurred();
+            eventsUpdated = true;
+        }
     }
-  }
-  return eventsUpdated;
+    return eventsUpdated;
 }
 
 void Area::AddExit(AreaKey parentKey, AreaKey newExitKey, ConditionFn condition) {
-  Entrance newExit = Entrance(newExitKey, {condition});
-  newExit.SetParentRegion(parentKey);
-  exits.push_front(newExit);
+    Entrance newExit = Entrance(newExitKey, {condition});
+    newExit.SetParentRegion(parentKey);
+    exits.push_front(newExit);
 }
 
 //The exit will be completely removed from this area
 void Area::RemoveExit(Entrance* exitToRemove) {
-  exits.remove_if([exitToRemove](const auto exit){return &exit == exitToRemove;});
+    exits.remove_if([exitToRemove](const auto exit) {
+        return &exit == exitToRemove;
+    });
 }
 
 //The exit will still exist in the area, but won't be accessible
 void Area::DisconnectExit(AreaKey exitToDisconnect) {
-  for (auto& exit : exits) {
-    if (exit.GetAreaKey() == exitToDisconnect) {
-      exit.Disconnect();
-      return;
+    for (auto& exit : exits) {
+        if (exit.GetAreaKey() == exitToDisconnect) {
+            exit.Disconnect();
+            return;
+        }
     }
-  }
 }
 
 void Area::SetAsPrimary(AreaKey exitToBePrimary) {
-  for (auto& exit : exits) {
-    if (exit.GetAreaKey() == exitToBePrimary) {
-      exit.SetAsPrimary();
-      return;
+    for (auto& exit : exits) {
+        if (exit.GetAreaKey() == exitToBePrimary) {
+            exit.SetAsPrimary();
+            return;
+        }
     }
-  }
 }
 
 Entrance* Area::GetExit(AreaKey exitToReturn) {
-  for (auto& exit : exits) {
-    if (exit.GetAreaKey() == exitToReturn) {
-      return &exit;
+    for (auto& exit : exits) {
+        if (exit.GetAreaKey() == exitToReturn) {
+            return &exit;
+        }
     }
-  }
-  auto message = "ERROR: EXIT " + AreaTable(exitToReturn)->regionName + " DOES NOT EXIST IN " + this->regionName;
-  CitraPrint(message);
-  return nullptr;
+    auto message = "ERROR: EXIT " + AreaTable(exitToReturn)->regionName + " DOES NOT EXIST IN " + this->regionName;
+    CitraPrint(message);
+    return nullptr;
 }
 
 bool Area::CanPlantBeanCheck() const {
-  return (Logic::MagicBean || Logic::MagicBeanPack) && BothAgesCheck();
+    return (Logic::MagicBean || Logic::MagicBeanPack) && BothAgesCheck();
 }
 
 bool Area::AllAccountedFor() const {
-  for (const EventAccess& event : events) {
-    if (!event.GetEvent()) {
-      return false;
+    for (const EventAccess& event : events) {
+        if (!event.GetEvent()) {
+            return false;
+        }
     }
-  }
 
-  for (const LocationAccess& loc : locations) {
-    if (!(Location(loc.GetLocation())->IsAddedToPool())) {
-      return false;
+    for (const LocationAccess& loc : locations) {
+        if (!(Location(loc.GetLocation())->IsAddedToPool())) {
+            return false;
+        }
     }
-  }
 
-  for (const auto& exit : exits) {
-    if (!exit.GetConnectedRegion()->AllAccess()) {
-      return false;
+    for (const auto& exit : exits) {
+        if (!exit.GetConnectedRegion()->AllAccess()) {
+            return false;
+        }
     }
-  }
 
-  return AllAccess();
+    return AllAccess();
 }
 
 bool Area::CheckAllAccess(const AreaKey exitKey) {
-  if (!AllAccess()) {
-    return false;
-  }
-
-  for (Entrance& exit : exits) {
-    if (exit.GetAreaKey() == exitKey) {
-      return exit.CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay)   &&
-             exit.CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight) &&
-             exit.CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay)   &&
-             exit.CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight);
+    if (!AllAccess()) {
+        return false;
     }
-  }
-  return false;
+
+    for (Entrance& exit : exits) {
+        if (exit.GetAreaKey() == exitKey) {
+            return exit.CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay)   &&
+                   exit.CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight) &&
+                   exit.CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay)   &&
+                   exit.CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight);
+        }
+    }
+    return false;
 }
 
 void Area::ResetVariables() {
-  childDay = false;
-  childNight = false;
-  adultDay = false;
-  adultNight = false;
-  addedToPool = false;
-  for (auto& exit : exits) {
-    exit.RemoveFromPool();
-  }
+    childDay = false;
+    childNight = false;
+    adultDay = false;
+    adultNight = false;
+    addedToPool = false;
+    for (auto& exit : exits) {
+        exit.RemoveFromPool();
+    }
 }
 
 static std::array<Area, KEY_ENUM_MAX> areaTable;
 
 bool Here(const AreaKey area, ConditionFn condition) {
-  return areaTable[area].HereCheck(condition);
+    return areaTable[area].HereCheck(condition);
 }
 
 bool CanPlantBean(const AreaKey area) {
-  return areaTable[area].CanPlantBeanCheck();
+    return areaTable[area].CanPlantBeanCheck();
 }
 
 bool BothAges(const AreaKey area) {
-  return areaTable[area].BothAgesCheck();
+    return areaTable[area].BothAgesCheck();
 }
 
 bool ChildCanAccess(const AreaKey area) {
-  return areaTable[area].Child();
+    return areaTable[area].Child();
 }
 
 bool HasAccessTo(const AreaKey area) {
-  return areaTable[area].HasAccess();
+    return areaTable[area].HasAccess();
 }
 
 
@@ -3713,406 +3715,406 @@ void AreaTable_Init() {
   }, {});
   }
 
-  //Set parent regions
-  for (AreaKey i = ROOT; i <= GANONS_CASTLE; i++) {
-    for (LocationAccess& locPair : areaTable[i].locations) {
-      LocationKey location = locPair.GetLocation();
-      Location(location)->SetParentRegion(i);
+    //Set parent regions
+    for (AreaKey i = ROOT; i <= GANONS_CASTLE; i++) {
+        for (LocationAccess& locPair : areaTable[i].locations) {
+            LocationKey location = locPair.GetLocation();
+            Location(location)->SetParentRegion(i);
+        }
+        for (Entrance& exit : areaTable[i].exits) {
+            exit.SetParentRegion(i);
+            exit.SetName();
+        }
     }
-    for (Entrance& exit : areaTable[i].exits) {
-      exit.SetParentRegion(i);
-      exit.SetName();
-    }
-  }
-  /*
-  //Events
-}, {
-  //Locations
-}, {
-  //Exits
-*/
+    /*
+    //Events
+    }, {
+    //Locations
+    }, {
+    //Exits
+    */
 }
 
 namespace Areas {
 
-  static std::array<const AreaKey, 299> allAreas = {
-    ROOT,
-    ROOT_EXITS,
-    KOKIRI_FOREST,
-    KF_LINKS_HOUSE,
-    KF_MIDOS_HOUSE,
-    KF_SARIAS_HOUSE,
-    KF_HOUSE_OF_TWINS,
-    KF_KNOW_IT_ALL_HOUSE,
-    KF_KOKIRI_SHOP,
-    KF_OUTSIDE_DEKU_TREE,
-    KF_STORMS_GROTTO,
-    THE_LOST_WOODS,
-    LW_BRIDGE_FROM_FOREST,
-    LW_BRIDGE,
-    LW_FOREST_EXIT,
-    LW_BEYOND_MIDO,
-    LW_NEAR_SHORTCUTS_GROTTO,
-    DEKU_THEATER,
-    LW_SCRUBS_GROTTO,
-    SFM_ENTRYWAY,
-    SACRED_FOREST_MEADOW,
-    SFM_WOLFOS_GROTTO,
-    SFM_FAIRY_GROTTO,
-    SFM_STORMS_GROTTO,
-    HYRULE_FIELD,
-    HF_SOUTHEAST_GROTTO,
-    HF_OPEN_GROTTO,
-    HF_INSIDE_FENCE_GROTTO,
-    HF_COW_GROTTO,
-    HF_NEAR_MARKET_GROTTO,
-    HF_FAIRY_GROTTO,
-    HF_NEAR_KAK_GROTTO,
-    HF_TEKTITE_GROTTO,
-    LAKE_HYLIA,
-    LH_OWL_FLIGHT,
-    LH_LAB,
-    LH_FISHING_HOLE,
-    LH_GROTTO,
-    GERUDO_VALLEY,
-    GV_STREAM,
-    GV_CRATE_LEDGE,
-    GV_OCTOROK_GROTTO,
-    GV_FORTRESS_SIDE,
-    GV_CARPENTER_TENT,
-    GV_STORMS_GROTTO,
-    GERUDO_FORTRESS,
-    GF_OUTSIDE_GATE,
-    GF_STORMS_GROTTO,
-    WASTELAND_NEAR_FORTRESS,
-    HAUNTED_WASTELAND,
-    WASTELAND_NEAR_COLOSSUS,
-    DESERT_COLOSSUS,
-    COLOSSUS_GREAT_FAIRY_FOUNTAIN,
-    COLOSSUS_GROTTO,
-    MARKET_ENTRANCE,
-    THE_MARKET,
-    MARKET_GUARD_HOUSE,
-    MARKET_BAZAAR,
-    MARKET_MASK_SHOP,
-    MARKET_SHOOTING_GALLERY,
-    MARKET_BOMBCHU_BOWLING,
-    MARKET_TREASURE_CHEST_GAME,
-    MARKET_POTION_SHOP,
-    MARKET_BOMBCHU_SHOP,
-    MARKET_DOG_LADY_HOUSE,
-    MARKET_MAN_IN_GREEN_HOUSE,
-    TOT_ENTRANCE,
-    TEMPLE_OF_TIME,
-    TOT_BEYOND_DOOR_OF_TIME,
-    CASTLE_GROUNDS,
-    HC_GROUNDS,
-    HC_GARDEN,
-    HC_GREAT_FAIRY_FOUNTAIN,
-    HC_STORMS_GROTTO,
-    OGC_GROUNDS,
-    OGC_GREAT_FAIRY_FOUNTAIN,
-    KAKARIKO_VILLAGE,
-    KAK_CARPENTER_BOSS_HOUSE,
-    KAK_HOUSE_OF_SKULLTULA,
-    KAK_IMPAS_HOUSE,
-    KAK_IMPAS_LEDGE,
-    KAK_IMPAS_HOUSE_BACK,
-    KAK_IMPAS_HOUSE_NEAR_COW,
-    KAK_WINDMILL,
-    KAK_BAZAAR,
-    KAK_SHOOTING_GALLERY,
-    KAK_POTION_SHOP_FRONT,
-    KAK_POTION_SHOP_BACK,
-    KAK_ROOFTOP,
-    KAK_BEHIND_GATE,
-    KAK_BACKYARD,
-    KAK_ODD_MEDICINE_BUILDING,
-    KAK_REDEAD_GROTTO,
-    KAK_OPEN_GROTTO,
-    THE_GRAVEYARD,
-    GRAVEYARD_DAMPES_GRAVE,
-    GRAVEYARD_DAMPES_HOUSE,
-    GRAVEYARD_SHIELD_GRAVE,
-    GRAVEYARD_COMPOSERS_GRAVE,
-    GRAVEYARD_HEART_PIECE_GRAVE,
-    GRAVEYARD_WARP_PAD_REGION,
-    DEATH_MOUNTAIN_TRAIL,
-    DMT_SUMMIT,
-    DMT_OWL_FLIGHT,
-    DMT_GREAT_FAIRY_FOUNTAIN,
-    DMT_COW_GROTTO,
-    DMT_STORMS_GROTTO,
-    GORON_CITY,
-    GC_WOODS_WARP,
-    GC_DARUNIAS_CHAMBER,
-    GC_SHOP,
-    GC_GROTTO,
-    DMC_UPPER_LOCAL,
-    DMC_CENTRAL_LOCAL,
-    DMC_LOWER_LOCAL,
-    DMC_LOWER_NEARBY,
-    DMC_UPPER_NEARBY,
-    DMC_CENTRAL_NEARBY,
-    DMC_LADDER_AREA_NEARBY,
-    DMC_UPPER_GROTTO,
-    DMC_HAMMER_GROTTO,
-    DMC_GREAT_FAIRY_FOUNTAIN,
-    ZR_FRONT,
-    ZORAS_RIVER,
-    ZR_BEHIND_WATERFALL,
-    ZR_OPEN_GROTTO,
-    ZR_FAIRY_GROTTO,
-    ZR_STORMS_GROTTO,
-    ZORAS_DOMAIN,
-    ZD_BEHIND_KING_ZORA,
-    ZD_SHOP,
-    ZD_STORMS_GROTTO,
-    ZORAS_FOUNTAIN,
-    ZF_GREAT_FAIRY_FOUNTAIN,
-    LON_LON_RANCH,
-    LLR_TALONS_HOUSE,
-    LLR_STABLES,
-    LLR_TOWER,
-    LLR_GROTTO,
+    static std::array<const AreaKey, 299> allAreas = {
+        ROOT,
+        ROOT_EXITS,
+        KOKIRI_FOREST,
+        KF_LINKS_HOUSE,
+        KF_MIDOS_HOUSE,
+        KF_SARIAS_HOUSE,
+        KF_HOUSE_OF_TWINS,
+        KF_KNOW_IT_ALL_HOUSE,
+        KF_KOKIRI_SHOP,
+        KF_OUTSIDE_DEKU_TREE,
+        KF_STORMS_GROTTO,
+        THE_LOST_WOODS,
+        LW_BRIDGE_FROM_FOREST,
+        LW_BRIDGE,
+        LW_FOREST_EXIT,
+        LW_BEYOND_MIDO,
+        LW_NEAR_SHORTCUTS_GROTTO,
+        DEKU_THEATER,
+        LW_SCRUBS_GROTTO,
+        SFM_ENTRYWAY,
+        SACRED_FOREST_MEADOW,
+        SFM_WOLFOS_GROTTO,
+        SFM_FAIRY_GROTTO,
+        SFM_STORMS_GROTTO,
+        HYRULE_FIELD,
+        HF_SOUTHEAST_GROTTO,
+        HF_OPEN_GROTTO,
+        HF_INSIDE_FENCE_GROTTO,
+        HF_COW_GROTTO,
+        HF_NEAR_MARKET_GROTTO,
+        HF_FAIRY_GROTTO,
+        HF_NEAR_KAK_GROTTO,
+        HF_TEKTITE_GROTTO,
+        LAKE_HYLIA,
+        LH_OWL_FLIGHT,
+        LH_LAB,
+        LH_FISHING_HOLE,
+        LH_GROTTO,
+        GERUDO_VALLEY,
+        GV_STREAM,
+        GV_CRATE_LEDGE,
+        GV_OCTOROK_GROTTO,
+        GV_FORTRESS_SIDE,
+        GV_CARPENTER_TENT,
+        GV_STORMS_GROTTO,
+        GERUDO_FORTRESS,
+        GF_OUTSIDE_GATE,
+        GF_STORMS_GROTTO,
+        WASTELAND_NEAR_FORTRESS,
+        HAUNTED_WASTELAND,
+        WASTELAND_NEAR_COLOSSUS,
+        DESERT_COLOSSUS,
+        COLOSSUS_GREAT_FAIRY_FOUNTAIN,
+        COLOSSUS_GROTTO,
+        MARKET_ENTRANCE,
+        THE_MARKET,
+        MARKET_GUARD_HOUSE,
+        MARKET_BAZAAR,
+        MARKET_MASK_SHOP,
+        MARKET_SHOOTING_GALLERY,
+        MARKET_BOMBCHU_BOWLING,
+        MARKET_TREASURE_CHEST_GAME,
+        MARKET_POTION_SHOP,
+        MARKET_BOMBCHU_SHOP,
+        MARKET_DOG_LADY_HOUSE,
+        MARKET_MAN_IN_GREEN_HOUSE,
+        TOT_ENTRANCE,
+        TEMPLE_OF_TIME,
+        TOT_BEYOND_DOOR_OF_TIME,
+        CASTLE_GROUNDS,
+        HC_GROUNDS,
+        HC_GARDEN,
+        HC_GREAT_FAIRY_FOUNTAIN,
+        HC_STORMS_GROTTO,
+        OGC_GROUNDS,
+        OGC_GREAT_FAIRY_FOUNTAIN,
+        KAKARIKO_VILLAGE,
+        KAK_CARPENTER_BOSS_HOUSE,
+        KAK_HOUSE_OF_SKULLTULA,
+        KAK_IMPAS_HOUSE,
+        KAK_IMPAS_LEDGE,
+        KAK_IMPAS_HOUSE_BACK,
+        KAK_IMPAS_HOUSE_NEAR_COW,
+        KAK_WINDMILL,
+        KAK_BAZAAR,
+        KAK_SHOOTING_GALLERY,
+        KAK_POTION_SHOP_FRONT,
+        KAK_POTION_SHOP_BACK,
+        KAK_ROOFTOP,
+        KAK_BEHIND_GATE,
+        KAK_BACKYARD,
+        KAK_ODD_MEDICINE_BUILDING,
+        KAK_REDEAD_GROTTO,
+        KAK_OPEN_GROTTO,
+        THE_GRAVEYARD,
+        GRAVEYARD_DAMPES_GRAVE,
+        GRAVEYARD_DAMPES_HOUSE,
+        GRAVEYARD_SHIELD_GRAVE,
+        GRAVEYARD_COMPOSERS_GRAVE,
+        GRAVEYARD_HEART_PIECE_GRAVE,
+        GRAVEYARD_WARP_PAD_REGION,
+        DEATH_MOUNTAIN_TRAIL,
+        DMT_SUMMIT,
+        DMT_OWL_FLIGHT,
+        DMT_GREAT_FAIRY_FOUNTAIN,
+        DMT_COW_GROTTO,
+        DMT_STORMS_GROTTO,
+        GORON_CITY,
+        GC_WOODS_WARP,
+        GC_DARUNIAS_CHAMBER,
+        GC_SHOP,
+        GC_GROTTO,
+        DMC_UPPER_LOCAL,
+        DMC_CENTRAL_LOCAL,
+        DMC_LOWER_LOCAL,
+        DMC_LOWER_NEARBY,
+        DMC_UPPER_NEARBY,
+        DMC_CENTRAL_NEARBY,
+        DMC_LADDER_AREA_NEARBY,
+        DMC_UPPER_GROTTO,
+        DMC_HAMMER_GROTTO,
+        DMC_GREAT_FAIRY_FOUNTAIN,
+        ZR_FRONT,
+        ZORAS_RIVER,
+        ZR_BEHIND_WATERFALL,
+        ZR_OPEN_GROTTO,
+        ZR_FAIRY_GROTTO,
+        ZR_STORMS_GROTTO,
+        ZORAS_DOMAIN,
+        ZD_BEHIND_KING_ZORA,
+        ZD_SHOP,
+        ZD_STORMS_GROTTO,
+        ZORAS_FOUNTAIN,
+        ZF_GREAT_FAIRY_FOUNTAIN,
+        LON_LON_RANCH,
+        LLR_TALONS_HOUSE,
+        LLR_STABLES,
+        LLR_TOWER,
+        LLR_GROTTO,
 
-    DEKU_TREE_ENTRYWAY,
-    DODONGOS_CAVERN_ENTRYWAY,
-    JABU_JABUS_BELLY_ENTRYWAY,
-    FOREST_TEMPLE_ENTRYWAY,
-    FIRE_TEMPLE_ENTRYWAY,
-    WATER_TEMPLE_ENTRYWAY,
-    SPIRIT_TEMPLE_ENTRYWAY,
-    SHADOW_TEMPLE_ENTRYWAY,
-    BOTTOM_OF_THE_WELL_ENTRYWAY,
-    ICE_CAVERN_ENTRYWAY,
-    GERUDO_TRAINING_GROUNDS_ENTRYWAY,
-    GANONS_CASTLE_ENTRYWAY,
+        DEKU_TREE_ENTRYWAY,
+        DODONGOS_CAVERN_ENTRYWAY,
+        JABU_JABUS_BELLY_ENTRYWAY,
+        FOREST_TEMPLE_ENTRYWAY,
+        FIRE_TEMPLE_ENTRYWAY,
+        WATER_TEMPLE_ENTRYWAY,
+        SPIRIT_TEMPLE_ENTRYWAY,
+        SHADOW_TEMPLE_ENTRYWAY,
+        BOTTOM_OF_THE_WELL_ENTRYWAY,
+        ICE_CAVERN_ENTRYWAY,
+        GERUDO_TRAINING_GROUNDS_ENTRYWAY,
+        GANONS_CASTLE_ENTRYWAY,
 
-    DEKU_TREE_LOBBY,
-    DEKU_TREE_SLINGSHOT_ROOM,
-    DEKU_TREE_BASEMENT_BACK_ROOM,
-    DEKU_TREE_BOSS_ROOM,
-    DODONGOS_CAVERN_BEGINNING,
-    DODONGOS_CAVERN_LOBBY,
-    DODONGOS_CAVERN_CLIMB,
-    DODONGOS_CAVERN_FAR_BRIDGE,
-    DODONGOS_CAVERN_BOSS_AREA,
-    JABU_JABUS_BELLY_BEGINNING,
-    JABU_JABUS_BELLY_MAIN,
-    JABU_JABUS_BELLY_DEPTHS,
-    JABU_JABUS_BELLY_BOSS_AREA,
-    FOREST_TEMPLE_LOBBY,
-    FOREST_TEMPLE_NW_OUTDOORS,
-    FOREST_TEMPLE_NE_OUTDOORS,
-    FOREST_TEMPLE_OUTDOORS_HIGH_BALCONIES,
-    FOREST_TEMPLE_FALLING_ROOM,
-    FOREST_TEMPLE_BLOCK_PUSH_ROOM,
-    FOREST_TEMPLE_STRAIGHTENED_HALL,
-    FOREST_TEMPLE_OUTSIDE_UPPER_LEDGE,
-    FOREST_TEMPLE_BOW_REGION,
-    FOREST_TEMPLE_BOSS_REGION,
-    FIRE_TEMPLE_LOWER,
-    FIRE_TEMPLE_BIG_LAVA_ROOM,
-    FIRE_TEMPLE_MIDDLE,
-    FIRE_TEMPLE_UPPER,
-    WATER_TEMPLE_LOBBY,
-    WATER_TEMPLE_HIGHEST_WATER_LEVEL,
-    WATER_TEMPLE_DIVE,
-    WATER_TEMPLE_CRACKED_WALL,
-    WATER_TEMPLE_NORTH_BASEMENT,
-    WATER_TEMPLE_DRAGON_STATUE,
-    WATER_TEMPLE_MIDDLE_WATER_LEVEL,
-    WATER_TEMPLE_FALLING_PLATFORM_ROOM,
-    WATER_TEMPLE_DARK_LINK_REGION,
-    SPIRIT_TEMPLE_LOBBY,
-    SPIRIT_TEMPLE_CHILD,
-    SPIRIT_TEMPLE_CHILD_CLIMB,
-    SPIRIT_TEMPLE_EARLY_ADULT,
-    SPIRIT_TEMPLE_CENTRAL_CHAMBER,
-    SPIRIT_TEMPLE_OUTDOOR_HANDS,
-    SPIRIT_TEMPLE_BEYOND_CENTRAL_LOCKED_DOOR,
-    SPIRIT_TEMPLE_BEYOND_FINAL_LOCKED_DOOR,
-    SHADOW_TEMPLE_BEGINNING,
-    SHADOW_TEMPLE_FIRST_BEAMOS,
-    SHADOW_TEMPLE_HUGE_PIT,
-    SHADOW_TEMPLE_WIND_TUNNEL,
-    SHADOW_TEMPLE_BEYOND_BOAT,
-    BOTTOM_OF_THE_WELL,
-    BOTTOM_OF_THE_WELL_MAIN_AREA,
-    ICE_CAVERN_BEGINNING,
-    ICE_CAVERN_MAIN,
-    GERUDO_TRAINING_GROUNDS_LOBBY,
-    GERUDO_TRAINING_GROUNDS_CENTRAL_MAZE,
-    GERUDO_TRAINING_GROUNDS_CENTRAL_MAZE_RIGHT,
-    GERUDO_TRAINING_GROUNDS_LAVA_ROOM,
-    GERUDO_TRAINING_GROUNDS_HAMMER_ROOM,
-    GERUDO_TRAINING_GROUNDS_EYE_STATUE_LOWER,
-    GERUDO_TRAINING_GROUNDS_EYE_STATUE_UPPER,
-    GERUDO_TRAINING_GROUNDS_HEAVY_BLOCK_ROOM,
-    GERUDO_TRAINING_GROUNDS_LIKE_LIKE_ROOM,
-    GANONS_CASTLE_LOBBY,
-    GANONS_CASTLE_DEKU_SCRUBS,
-    GANONS_CASTLE_FOREST_TRIAL,
-    GANONS_CASTLE_FIRE_TRIAL,
-    GANONS_CASTLE_WATER_TRIAL,
-    GANONS_CASTLE_SHADOW_TRIAL,
-    GANONS_CASTLE_SPIRIT_TRIAL,
-    GANONS_CASTLE_LIGHT_TRIAL,
-    GANONS_CASTLE_TOWER,
-    DEKU_TREE_MQ_LOBBY,
-    DEKU_TREE_MQ_COMPASS_ROOM,
-    DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT,
-    DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK,
-    DEKU_TREE_MQ_BASEMENT_BACK_ROOM,
-    DEKU_TREE_MQ_BASEMENT_LEDGE,
-    DODONGOS_CAVERN_MQ_BEGINNING,
-    DODONGOS_CAVERN_MQ_LOBBY,
-    DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE,
-    DODONGOS_CAVERN_MQ_BOMB_BAG_AREA,
-    DODONGOS_CAVERN_MQ_BOSS_AREA,
-    JABU_JABUS_BELLY_MQ_BEGINNING,
-    JABU_JABUS_BELLY_MQ_MAIN,
-    JABU_JABUS_BELLY_MQ_DEPTHS,
-    JABU_JABUS_BELLY_MQ_BOSS_AREA,
-    FOREST_TEMPLE_MQ_LOBBY,
-    FOREST_TEMPLE_MQ_CENTRAL_AREA,
-    FOREST_TEMPLE_MQ_AFTER_BLOCK_PUZZLE,
-    FOREST_TEMPLE_MQ_OUTDOOR_LEDGE,
-    FOREST_TEMPLE_MQ_NW_OUTDOORS,
-    FOREST_TEMPLE_MQ_NE_OUTDOORS,
-    FOREST_TEMPLE_MQ_OUTDOORS_TOP_LEDGES,
-    FOREST_TEMPLE_MQ_NE_OUTDOORS_LEDGE,
-    FOREST_TEMPLE_MQ_BOW_REGION,
-    FOREST_TEMPLE_MQ_FALLING_ROOM,
-    FOREST_TEMPLE_MQ_BOSS_REGION,
-    FIRE_TEMPLE_MQ_LOWER,
-    FIRE_TEMPLE_MQ_LOWER_LOCKED_DOOR,
-    FIRE_TEMPLE_MQ_BIG_LAVA_ROOM,
-    FIRE_TEMPLE_MQ_LOWER_MAZE,
-    FIRE_TEMPLE_MQ_UPPER_MAZE,
-    FIRE_TEMPLE_MQ_UPPER,
-    FIRE_TEMPLE_MQ_BOSS_ROOM,
-    WATER_TEMPLE_MQ_LOBBY,
-    WATER_TEMPLE_MQ_DIVE,
-    WATER_TEMPLE_MQ_LOWERED_WATER_LEVELS,
-    WATER_TEMPLE_MQ_DARK_LINK_REGION,
-    WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS,
-    SPIRIT_TEMPLE_MQ_LOBBY,
-    SPIRIT_TEMPLE_MQ_CHILD,
-    SPIRIT_TEMPLE_MQ_ADULT,
-    SPIRIT_TEMPLE_MQ_SHARED,
-    SPIRIT_TEMPLE_MQ_LOWER_ADULT,
-    SPIRIT_TEMPLE_MQ_BOSS_AREA,
-    SPIRIT_TEMPLE_MQ_MIRROR_SHIELD_HAND,
-    SPIRIT_TEMPLE_MQ_SILVER_GAUNTLETS_HAND,
-    SHADOW_TEMPLE_MQ_ENTRYWAY,
-    SHADOW_TEMPLE_MQ_BEGINNING,
-    SHADOW_TEMPLE_MQ_DEAD_HAND_AREA,
-    SHADOW_TEMPLE_MQ_FIRST_BEAMOS,
-    SHADOW_TEMPLE_MQ_UPPER_HUGE_PIT,
-    SHADOW_TEMPLE_MQ_LOWER_HUGE_PIT,
-    SHADOW_TEMPLE_MQ_WIND_TUNNEL,
-    SHADOW_TEMPLE_MQ_BEYOND_BOAT,
-    SHADOW_TEMPLE_MQ_INVISIBLE_MAZE,
-    BOTTOM_OF_THE_WELL_MQ,
-    BOTTOM_OF_THE_WELL_MQ_PERIMETER,
-    BOTTOM_OF_THE_WELL_MQ_MIDDLE,
-    ICE_CAVERN_MQ_BEGINNING,
-    ICE_CAVERN_MQ_MAP_ROOM,
-    ICE_CAVERN_MQ_IRON_BOOTS_REGION,
-    ICE_CAVERN_MQ_COMPASS_ROOM,
-    GERUDO_TRAINING_GROUNDS_MQ_LOBBY,
-    GERUDO_TRAINING_GROUNDS_MQ_RIGHT_SIDE,
-    GERUDO_TRAINING_GROUNDS_MQ_UNDERWATER,
-    GERUDO_TRAINING_GROUNDS_MQ_LEFT_SIDE,
-    GERUDO_TRAINING_GROUNDS_MQ_STALFOS_ROOM,
-    GERUDO_TRAINING_GROUNDS_MQ_BACK_AREAS,
-    GERUDO_TRAINING_GROUNDS_MQ_CENTRAL_MAZE_RIGHT,
-    GANONS_CASTLE_MQ_LOBBY,
-    GANONS_CASTLE_MQ_DEKU_SCRUBS,
-    GANONS_CASTLE_MQ_FOREST_TRIAL,
-    GANONS_CASTLE_MQ_FIRE_TRIAL,
-    GANONS_CASTLE_MQ_WATER_TRIAL,
-    GANONS_CASTLE_MQ_SHADOW_TRIAL,
-    GANONS_CASTLE_MQ_SPIRIT_TRIAL,
-    GANONS_CASTLE_MQ_LIGHT_TRIAL,
-  };
+        DEKU_TREE_LOBBY,
+        DEKU_TREE_SLINGSHOT_ROOM,
+        DEKU_TREE_BASEMENT_BACK_ROOM,
+        DEKU_TREE_BOSS_ROOM,
+        DODONGOS_CAVERN_BEGINNING,
+        DODONGOS_CAVERN_LOBBY,
+        DODONGOS_CAVERN_CLIMB,
+        DODONGOS_CAVERN_FAR_BRIDGE,
+        DODONGOS_CAVERN_BOSS_AREA,
+        JABU_JABUS_BELLY_BEGINNING,
+        JABU_JABUS_BELLY_MAIN,
+        JABU_JABUS_BELLY_DEPTHS,
+        JABU_JABUS_BELLY_BOSS_AREA,
+        FOREST_TEMPLE_LOBBY,
+        FOREST_TEMPLE_NW_OUTDOORS,
+        FOREST_TEMPLE_NE_OUTDOORS,
+        FOREST_TEMPLE_OUTDOORS_HIGH_BALCONIES,
+        FOREST_TEMPLE_FALLING_ROOM,
+        FOREST_TEMPLE_BLOCK_PUSH_ROOM,
+        FOREST_TEMPLE_STRAIGHTENED_HALL,
+        FOREST_TEMPLE_OUTSIDE_UPPER_LEDGE,
+        FOREST_TEMPLE_BOW_REGION,
+        FOREST_TEMPLE_BOSS_REGION,
+        FIRE_TEMPLE_LOWER,
+        FIRE_TEMPLE_BIG_LAVA_ROOM,
+        FIRE_TEMPLE_MIDDLE,
+        FIRE_TEMPLE_UPPER,
+        WATER_TEMPLE_LOBBY,
+        WATER_TEMPLE_HIGHEST_WATER_LEVEL,
+        WATER_TEMPLE_DIVE,
+        WATER_TEMPLE_CRACKED_WALL,
+        WATER_TEMPLE_NORTH_BASEMENT,
+        WATER_TEMPLE_DRAGON_STATUE,
+        WATER_TEMPLE_MIDDLE_WATER_LEVEL,
+        WATER_TEMPLE_FALLING_PLATFORM_ROOM,
+        WATER_TEMPLE_DARK_LINK_REGION,
+        SPIRIT_TEMPLE_LOBBY,
+        SPIRIT_TEMPLE_CHILD,
+        SPIRIT_TEMPLE_CHILD_CLIMB,
+        SPIRIT_TEMPLE_EARLY_ADULT,
+        SPIRIT_TEMPLE_CENTRAL_CHAMBER,
+        SPIRIT_TEMPLE_OUTDOOR_HANDS,
+        SPIRIT_TEMPLE_BEYOND_CENTRAL_LOCKED_DOOR,
+        SPIRIT_TEMPLE_BEYOND_FINAL_LOCKED_DOOR,
+        SHADOW_TEMPLE_BEGINNING,
+        SHADOW_TEMPLE_FIRST_BEAMOS,
+        SHADOW_TEMPLE_HUGE_PIT,
+        SHADOW_TEMPLE_WIND_TUNNEL,
+        SHADOW_TEMPLE_BEYOND_BOAT,
+        BOTTOM_OF_THE_WELL,
+        BOTTOM_OF_THE_WELL_MAIN_AREA,
+        ICE_CAVERN_BEGINNING,
+        ICE_CAVERN_MAIN,
+        GERUDO_TRAINING_GROUNDS_LOBBY,
+        GERUDO_TRAINING_GROUNDS_CENTRAL_MAZE,
+        GERUDO_TRAINING_GROUNDS_CENTRAL_MAZE_RIGHT,
+        GERUDO_TRAINING_GROUNDS_LAVA_ROOM,
+        GERUDO_TRAINING_GROUNDS_HAMMER_ROOM,
+        GERUDO_TRAINING_GROUNDS_EYE_STATUE_LOWER,
+        GERUDO_TRAINING_GROUNDS_EYE_STATUE_UPPER,
+        GERUDO_TRAINING_GROUNDS_HEAVY_BLOCK_ROOM,
+        GERUDO_TRAINING_GROUNDS_LIKE_LIKE_ROOM,
+        GANONS_CASTLE_LOBBY,
+        GANONS_CASTLE_DEKU_SCRUBS,
+        GANONS_CASTLE_FOREST_TRIAL,
+        GANONS_CASTLE_FIRE_TRIAL,
+        GANONS_CASTLE_WATER_TRIAL,
+        GANONS_CASTLE_SHADOW_TRIAL,
+        GANONS_CASTLE_SPIRIT_TRIAL,
+        GANONS_CASTLE_LIGHT_TRIAL,
+        GANONS_CASTLE_TOWER,
+        DEKU_TREE_MQ_LOBBY,
+        DEKU_TREE_MQ_COMPASS_ROOM,
+        DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT,
+        DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK,
+        DEKU_TREE_MQ_BASEMENT_BACK_ROOM,
+        DEKU_TREE_MQ_BASEMENT_LEDGE,
+        DODONGOS_CAVERN_MQ_BEGINNING,
+        DODONGOS_CAVERN_MQ_LOBBY,
+        DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE,
+        DODONGOS_CAVERN_MQ_BOMB_BAG_AREA,
+        DODONGOS_CAVERN_MQ_BOSS_AREA,
+        JABU_JABUS_BELLY_MQ_BEGINNING,
+        JABU_JABUS_BELLY_MQ_MAIN,
+        JABU_JABUS_BELLY_MQ_DEPTHS,
+        JABU_JABUS_BELLY_MQ_BOSS_AREA,
+        FOREST_TEMPLE_MQ_LOBBY,
+        FOREST_TEMPLE_MQ_CENTRAL_AREA,
+        FOREST_TEMPLE_MQ_AFTER_BLOCK_PUZZLE,
+        FOREST_TEMPLE_MQ_OUTDOOR_LEDGE,
+        FOREST_TEMPLE_MQ_NW_OUTDOORS,
+        FOREST_TEMPLE_MQ_NE_OUTDOORS,
+        FOREST_TEMPLE_MQ_OUTDOORS_TOP_LEDGES,
+        FOREST_TEMPLE_MQ_NE_OUTDOORS_LEDGE,
+        FOREST_TEMPLE_MQ_BOW_REGION,
+        FOREST_TEMPLE_MQ_FALLING_ROOM,
+        FOREST_TEMPLE_MQ_BOSS_REGION,
+        FIRE_TEMPLE_MQ_LOWER,
+        FIRE_TEMPLE_MQ_LOWER_LOCKED_DOOR,
+        FIRE_TEMPLE_MQ_BIG_LAVA_ROOM,
+        FIRE_TEMPLE_MQ_LOWER_MAZE,
+        FIRE_TEMPLE_MQ_UPPER_MAZE,
+        FIRE_TEMPLE_MQ_UPPER,
+        FIRE_TEMPLE_MQ_BOSS_ROOM,
+        WATER_TEMPLE_MQ_LOBBY,
+        WATER_TEMPLE_MQ_DIVE,
+        WATER_TEMPLE_MQ_LOWERED_WATER_LEVELS,
+        WATER_TEMPLE_MQ_DARK_LINK_REGION,
+        WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS,
+        SPIRIT_TEMPLE_MQ_LOBBY,
+        SPIRIT_TEMPLE_MQ_CHILD,
+        SPIRIT_TEMPLE_MQ_ADULT,
+        SPIRIT_TEMPLE_MQ_SHARED,
+        SPIRIT_TEMPLE_MQ_LOWER_ADULT,
+        SPIRIT_TEMPLE_MQ_BOSS_AREA,
+        SPIRIT_TEMPLE_MQ_MIRROR_SHIELD_HAND,
+        SPIRIT_TEMPLE_MQ_SILVER_GAUNTLETS_HAND,
+        SHADOW_TEMPLE_MQ_ENTRYWAY,
+        SHADOW_TEMPLE_MQ_BEGINNING,
+        SHADOW_TEMPLE_MQ_DEAD_HAND_AREA,
+        SHADOW_TEMPLE_MQ_FIRST_BEAMOS,
+        SHADOW_TEMPLE_MQ_UPPER_HUGE_PIT,
+        SHADOW_TEMPLE_MQ_LOWER_HUGE_PIT,
+        SHADOW_TEMPLE_MQ_WIND_TUNNEL,
+        SHADOW_TEMPLE_MQ_BEYOND_BOAT,
+        SHADOW_TEMPLE_MQ_INVISIBLE_MAZE,
+        BOTTOM_OF_THE_WELL_MQ,
+        BOTTOM_OF_THE_WELL_MQ_PERIMETER,
+        BOTTOM_OF_THE_WELL_MQ_MIDDLE,
+        ICE_CAVERN_MQ_BEGINNING,
+        ICE_CAVERN_MQ_MAP_ROOM,
+        ICE_CAVERN_MQ_IRON_BOOTS_REGION,
+        ICE_CAVERN_MQ_COMPASS_ROOM,
+        GERUDO_TRAINING_GROUNDS_MQ_LOBBY,
+        GERUDO_TRAINING_GROUNDS_MQ_RIGHT_SIDE,
+        GERUDO_TRAINING_GROUNDS_MQ_UNDERWATER,
+        GERUDO_TRAINING_GROUNDS_MQ_LEFT_SIDE,
+        GERUDO_TRAINING_GROUNDS_MQ_STALFOS_ROOM,
+        GERUDO_TRAINING_GROUNDS_MQ_BACK_AREAS,
+        GERUDO_TRAINING_GROUNDS_MQ_CENTRAL_MAZE_RIGHT,
+        GANONS_CASTLE_MQ_LOBBY,
+        GANONS_CASTLE_MQ_DEKU_SCRUBS,
+        GANONS_CASTLE_MQ_FOREST_TRIAL,
+        GANONS_CASTLE_MQ_FIRE_TRIAL,
+        GANONS_CASTLE_MQ_WATER_TRIAL,
+        GANONS_CASTLE_MQ_SHADOW_TRIAL,
+        GANONS_CASTLE_MQ_SPIRIT_TRIAL,
+        GANONS_CASTLE_MQ_LIGHT_TRIAL,
+    };
 
-  void AccessReset() {
-    for (const AreaKey area : allAreas) {
-      AreaTable(area)->ResetVariables();
-    }
-
-    if(Settings::HasNightStart) {
-        if(Settings::ResolvedStartingAge == AGE_CHILD) {
-          AreaTable(ROOT)->childNight = true;
-        } else {
-          AreaTable(ROOT)->adultNight = true;
+    void AccessReset() {
+        for (const AreaKey area : allAreas) {
+            AreaTable(area)->ResetVariables();
         }
-      } else {
-        if(Settings::ResolvedStartingAge == AGE_CHILD) {
-          AreaTable(ROOT)->childDay = true;
-        } else {
-          AreaTable(ROOT)->adultDay = true;
-        }
-    }
-  }
 
-  //Reset exits and clear items from locations
-  void ResetAllLocations() {
-    for (const AreaKey area : allAreas) {
-      AreaTable(area)->ResetVariables();
-      //Erase item from every location in this exit
-      for (LocationAccess& locPair : AreaTable(area)->locations) {
-          LocationKey location = locPair.GetLocation();
-          Location(location)->ResetVariables();
-      }
-    }
-
-    if(Settings::HasNightStart) {
-        if(Settings::ResolvedStartingAge == AGE_CHILD) {
-          AreaTable(ROOT)->childNight = true;
+        if (Settings::HasNightStart) {
+            if (Settings::ResolvedStartingAge == AGE_CHILD) {
+                AreaTable(ROOT)->childNight = true;
+            } else {
+                AreaTable(ROOT)->adultNight = true;
+            }
         } else {
-          AreaTable(ROOT)->adultNight = true;
-        }
-      } else {
-        if(Settings::ResolvedStartingAge == AGE_CHILD) {
-          AreaTable(ROOT)->childDay = true;
-        } else {
-          AreaTable(ROOT)->adultDay = true;
+            if (Settings::ResolvedStartingAge == AGE_CHILD) {
+                AreaTable(ROOT)->childDay = true;
+            } else {
+                AreaTable(ROOT)->adultDay = true;
+            }
         }
     }
-  }
 
-  bool HasTimePassAccess(u8 age) {
-    for (const AreaKey areaKey : allAreas) {
-      auto area = AreaTable(areaKey);
-      if (area->timePass && ((age == AGE_CHILD && area->Child()) || (age == AGE_ADULT && area->Adult()))) {
-        return true;
-      }
+    //Reset exits and clear items from locations
+    void ResetAllLocations() {
+        for (const AreaKey area : allAreas) {
+            AreaTable(area)->ResetVariables();
+            //Erase item from every location in this exit
+            for (LocationAccess& locPair : AreaTable(area)->locations) {
+                LocationKey location = locPair.GetLocation();
+                Location(location)->ResetVariables();
+            }
+        }
+
+        if (Settings::HasNightStart) {
+            if (Settings::ResolvedStartingAge == AGE_CHILD) {
+                AreaTable(ROOT)->childNight = true;
+            } else {
+                AreaTable(ROOT)->adultNight = true;
+            }
+        } else {
+            if (Settings::ResolvedStartingAge == AGE_CHILD) {
+                AreaTable(ROOT)->childDay = true;
+            } else {
+                AreaTable(ROOT)->adultDay = true;
+            }
+        }
     }
-    return false;
-  }
+
+    bool HasTimePassAccess(u8 age) {
+        for (const AreaKey areaKey : allAreas) {
+            auto area = AreaTable(areaKey);
+            if (area->timePass && ((age == AGE_CHILD && area->Child()) || (age == AGE_ADULT && area->Adult()))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 } //namespace Areas
 
 Area* AreaTable(const AreaKey areaKey) {
-  if (areaKey > KEY_ENUM_MAX) {
-    printf("\x1b[1;1HERROR: AREAKEY TOO BIG");
-  }
-  return &(areaTable[areaKey]);
+    if (areaKey > KEY_ENUM_MAX) {
+        printf("\x1b[1;1HERROR: AREAKEY TOO BIG");
+    }
+    return &(areaTable[areaKey]);
 }
 
 //Retrieve all the shuffable entrances of a specific type
 std::vector<Entrance*> GetShuffleableEntrances(EntranceType type, bool onlyPrimary /*= true*/) {
-  std::vector<Entrance*> entrancesToShuffle = {};
-  for (AreaKey area: Areas::allAreas) {
-    for (auto& exit: AreaTable(area)->exits) {
-      if ((exit.GetType() == type || type == EntranceType::All) && (exit.IsPrimary() || !onlyPrimary) && exit.GetType() != EntranceType::None) {
-        entrancesToShuffle.push_back(&exit);
-      }
+    std::vector<Entrance*> entrancesToShuffle = {};
+    for (AreaKey area : Areas::allAreas) {
+        for (auto& exit : AreaTable(area)->exits) {
+            if ((exit.GetType() == type || type == EntranceType::All) && (exit.IsPrimary() || !onlyPrimary) && exit.GetType() != EntranceType::None) {
+                entrancesToShuffle.push_back(&exit);
+            }
+        }
     }
-  }
-  return entrancesToShuffle;
+    return entrancesToShuffle;
 }
