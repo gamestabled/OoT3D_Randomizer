@@ -64,14 +64,14 @@ namespace Playthrough {
       } else {
         printf("Failed");
       }
-#ifdef ENABLE_DEBUG
+      #ifdef ENABLE_DEBUG
       printf("\x1b[11;10HWriting Placement Log...");
       if (PlacementLog_Write()) {
         printf("Done\n");
       } else {
         printf("Failed\n");
       }
-#endif
+      #endif
       PlacementLog_Clear();
     }
 

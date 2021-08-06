@@ -306,9 +306,9 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
         allLocationsReachable = false;
         auto message = "Location " + Location(loc)->GetName() + " not reachable\n";
         PlacementLog_Msg(message);
-#ifndef ENABLE_DEBUG
+        #ifndef ENABLE_DEBUG
         break;
-#endif
+        #endif
       }
     }
     return {};
@@ -498,9 +498,9 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
         PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
-#ifdef ENABLE_DEBUG
+        #ifdef ENABLE_DEBUG
         PlacementLog_Write();
-#endif
+        #endif
 
         //reset any locations that got an item
         for (LocationKey loc : attemptedLocations) {

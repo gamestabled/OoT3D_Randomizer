@@ -82,9 +82,9 @@ bool WritePatch(u32 patchOffset, s32 patchSize, char* patchDataPtr, Handle& code
     patchOffset += PATCH_SIZE_MAX;
     patchSize -= PATCH_SIZE_MAX;
   }
-#ifdef ENABLE_DEBUG
+  #ifdef ENABLE_DEBUG
   CitraPrint(std::to_string(totalRW));
-#endif
+  #endif
   return true;
 }
 

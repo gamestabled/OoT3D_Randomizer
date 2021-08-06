@@ -6,7 +6,7 @@
 #include "3ds/types.h"
 
 void SaveFile_Init() {
-#ifdef ENABLE_DEBUG
+    #ifdef ENABLE_DEBUG
     gSaveContext.equipment  |= 0x0FFF;  //Swords, shields, tunics, boots
     gSaveContext.bgsFlag     = 1;
     gSaveContext.bgsHitsLeft = 1;
@@ -30,7 +30,7 @@ void SaveFile_Init() {
     gSaveContext.dungeonKeys[7] = 5;
     gSaveContext.ammo[2] = 20; //bombs
     gSaveContext.ammo[3] = 20; //arrows
-#endif
+    #endif
 
     /*-----------------------------------
     |       THINGS TO ALWAYS SET        |
