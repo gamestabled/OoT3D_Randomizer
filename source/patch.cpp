@@ -2,6 +2,7 @@
 
 #include "cosmetics.hpp"
 #include "custom_messages.hpp"
+#include "music.hpp"
 #include "shops.hpp"
 #include "spoiler_log.hpp"
 #include "entrance.hpp"
@@ -316,6 +317,16 @@ bool WriteAllPatches() {
   patchSize = 4;
   u32 numCustomMessageEntriesData = CustomMessages::NumMessages();
   if (!WritePatch(patchOffset, patchSize, (char*)(&numCustomMessageEntriesData), code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  /*--------------------------------
+  |         rBGMOverrides          |
+  ---------------------------------*/
+
+  patchOffset = V_TO_P(RBGMOVERRIDES_ADDR);
+  patchSize = sizeof(Music::seqOverrides);
+  if (!WritePatch(patchOffset, patchSize, (char*)Music::seqOverrides.data(), code, bytesWritten, totalRW, buf)) {
     return false;
   }
 

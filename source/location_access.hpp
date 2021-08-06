@@ -8,18 +8,33 @@
 #include "hint_list.hpp"
 #include "keys.hpp"
 
-using ConditionFn = bool (*)();
+typedef bool (*ConditionFn)();
 
 class EventAccess {
 public:
 
 
-    explicit EventAccess(bool* event_, ConditionFn conditions_met_)
-        : event(event_),
-          conditions_met(conditions_met_) {}
+    explicit EventAccess(bool* event_, std::vector<ConditionFn> conditions_met_)
+        : event(event_) {
+        conditions_met.resize(2);
+        for (size_t i = 0; i < conditions_met_.size(); i++) {
+            conditions_met[i] = conditions_met_[i];
+        }
+    }
 
     bool ConditionsMet() const {
-        return conditions_met();
+        if (Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA)) {
+            return true;
+        }
+        for (size_t i = 0; i <= Settings::Logic.Value<u8>(); i++) {
+            if (conditions_met[i] == NULL) {
+                continue;
+            }
+            if (conditions_met[i]()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     bool CheckConditionAtAgeTime(bool& age, bool& time) {
@@ -33,7 +48,7 @@ public:
       age = true;
 
       Logic::UpdateHelpers();
-      return conditions_met() || Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA);
+      return ConditionsMet();
     }
 
     void EventOccurred() {
@@ -46,16 +61,35 @@ public:
 
 private:
     bool* event;
-    ConditionFn conditions_met;
+    std::vector<ConditionFn> conditions_met;
 };
 
 //this class is meant to hold an item location with a boolean function to determine its accessibility from a specific area
 class LocationAccess {
 public:
 
-    explicit LocationAccess(LocationKey location_, ConditionFn conditions_met_)
-         : location(location_),
-           conditions_met(conditions_met_) {}
+    explicit LocationAccess(LocationKey location_, std::vector<ConditionFn> conditions_met_)
+        : location(location_) {
+        conditions_met.resize(2);
+        for (size_t i = 0; i < conditions_met_.size(); i++) {
+            conditions_met[i] = conditions_met_[i];
+        }
+    }
+
+    bool GetConditionsMet() const {
+        if (Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA)) {
+            return true;
+        }
+        for (size_t i = 0; i <= Settings::Logic.Value<u8>(); i++) {
+            if (conditions_met[i] == NULL) {
+                continue;
+            }
+            if (conditions_met[i]()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     bool CheckConditionAtAgeTime(bool& age, bool& time) const;
 
@@ -67,7 +101,7 @@ public:
 
 private:
     LocationKey location;
-    ConditionFn conditions_met;
+    std::vector<ConditionFn> conditions_met;
 
     //Makes sure shop locations are buyable
     bool CanBuy() const;

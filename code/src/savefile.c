@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "item_effect.h"
+#include "giants_knife.h"
 #include "savefile.h"
 #include "3ds/types.h"
 
@@ -393,11 +394,11 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
     }
 
-    if (gSettingsContext.startingBiggoronSword == 2) {
+    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_BIGGORON_SWORD) {
         gSaveContext.bgsFlag = 1;
         gSaveContext.bgsHitsLeft = 1;
     }
-    if (gSettingsContext.startingBiggoronSword == 1){
+    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
         gSaveContext.bgsFlag = 0;
         gSaveContext.bgsHitsLeft = GK_SetDurability();
     }

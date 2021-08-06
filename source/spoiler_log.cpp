@@ -247,7 +247,9 @@ static void WriteLocation(
     node->SetAttribute("price", price);
   }
   if (!location->IsAddedToPool()) {
-    node->SetAttribute("not-added", true);
+    #ifdef ENABLE_DEBUG  
+      node->SetAttribute("not-added", true);
+    #endif
   }
 }
 
