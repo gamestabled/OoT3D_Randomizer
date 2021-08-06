@@ -67,6 +67,18 @@ In the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```. Use ```
 When making changes to any code in the `code` directory, you must use `make clean` before recompiling if you want your changes to be picked up.
 For faster compilation using multiple threads, you can use `make -j4` (in this example, the `4` is the number of threads being used).
 
+## Code Style
+
+If you'd like to contribute, please use [Artistic Style](http://astyle.sourceforge.net/) to style your code before committing. The [style-options.ini](style-options.ini) file defines the options for the program. 
+
+After downloading Artistic Style, run the root directory with:
+
+`astyle --options=style-options.ini source/*.hpp code/src/*.c code/src/*.h`
+
+This styles all header and C files. .cpp files use 2 spaces for indent and also have some exclusions, so use this slightly different command:
+
+`astyle --options=style-options-cpp.ini source/*.cpp`
+
 ## Reporting Bugs
 
 Let us know if you believe you have discovered a bug by posting in our Discord server, or by opening an issue. In the [Discord](https://discord.gg/wumv4wWWeB), we have a list of currently known issues and fixes which are pending release, which we try to keep fairly up to date.

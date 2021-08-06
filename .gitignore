@@ -18,3 +18,5 @@ build/*
 *.ips
 *.zar
 source/patch_symbols.hpp
+Astyle.exe
+astyle
