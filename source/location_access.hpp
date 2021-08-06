@@ -39,16 +39,16 @@ public:
 
     bool CheckConditionAtAgeTime(bool& age, bool& time) {
 
-      Logic::IsChild = false;
-      Logic::IsAdult = false;
-      Logic::AtDay   = false;
-      Logic::AtNight = false;
+        Logic::IsChild = false;
+        Logic::IsAdult = false;
+        Logic::AtDay   = false;
+        Logic::AtNight = false;
 
-      time = true;
-      age = true;
+        time = true;
+        age = true;
 
-      Logic::UpdateHelpers();
-      return ConditionsMet();
+        Logic::UpdateHelpers();
+        return ConditionsMet();
     }
 
     void EventOccurred() {
@@ -152,30 +152,30 @@ public:
     Entrance* GetExit(AreaKey exit);
 
     bool Child() const {
-      return childDay || childNight;
+        return childDay || childNight;
     }
 
     bool Adult() const {
-      return adultDay || adultNight;
+        return adultDay || adultNight;
     }
 
     bool BothAgesCheck() const {
-      return Child() && Adult();
+        return Child() && Adult();
     }
 
     bool HasAccess() const {
-      return Child() || Adult();
+        return Child() || Adult();
     }
 
     bool AllAccess() const {
-      return childDay && childNight && adultDay && adultNight;
+        return childDay && childNight && adultDay && adultNight;
     }
 
     //Check to see if an exit can be access as both ages at both times of day
     bool CheckAllAccess(AreaKey exitKey);
 
     const HintText& GetHint() const {
-      return Hint(hintKey);
+        return Hint(hintKey);
     }
 
     //Here checks conditional access based on whether or not both ages have
@@ -184,24 +184,24 @@ public:
     //both child and adult access to the path.
     bool HereCheck(ConditionFn condition) {
 
-      //store current age variables
-      bool pastAdult = Logic::IsAdult;
-      bool pastChild = Logic::IsChild;
+        //store current age variables
+        bool pastAdult = Logic::IsAdult;
+        bool pastChild = Logic::IsChild;
 
-      //set age access as this areas ages
-      Logic::IsChild = Child();
-      Logic::IsAdult = Adult();
+        //set age access as this areas ages
+        Logic::IsChild = Child();
+        Logic::IsAdult = Adult();
 
-      //update helpers and check condition
-      Logic::UpdateHelpers();
-      bool hereVal = condition();
+        //update helpers and check condition
+        Logic::UpdateHelpers();
+        bool hereVal = condition();
 
-      //set back age variables
-      Logic::IsChild = pastChild;
-      Logic::IsAdult = pastAdult;
-      Logic::UpdateHelpers();
+        //set back age variables
+        Logic::IsChild = pastChild;
+        Logic::IsAdult = pastAdult;
+        Logic::UpdateHelpers();
 
-      return hereVal;
+        return hereVal;
     }
 
     bool CanPlantBeanCheck() const;
@@ -210,19 +210,19 @@ public:
     void ResetVariables();
 
     void printAgeTimeAccess() const {
-      auto message = "Child Day:   " + std::to_string(childDay)   + "\t"
-                     "Child Night: " + std::to_string(childNight) + "\t"
-                     "Adult Day:   " + std::to_string(adultDay)   + "\t"
-                     "Adult Night: " + std::to_string(adultNight);
-      CitraPrint(message);
+        auto message = "Child Day:   " + std::to_string(childDay)   + "\t"
+                       "Child Night: " + std::to_string(childNight) + "\t"
+                       "Adult Day:   " + std::to_string(adultDay)   + "\t"
+                       "Adult Night: " + std::to_string(adultNight);
+        CitraPrint(message);
     }
 };
 
 namespace Areas {
 
-  extern void AccessReset();
-  extern void ResetAllLocations();
-  extern bool HasTimePassAccess(u8 age);
+    extern void AccessReset();
+    extern void ResetAllLocations();
+    extern bool HasTimePassAccess(u8 age);
 } //namespace Exits
 
 void  AreaTable_Init();

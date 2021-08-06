@@ -56,8 +56,9 @@ void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void Boss_Tw_rDraw(Actor* thisx, GlobalContext* globalCtx) {
-    if (fightStarted)
+    if (fightStarted) {
         Boss_Tw_Draw(thisx, globalCtx);
+    }
 }
 
 void Boss_Tw_rDestroy(Actor* thisx, GlobalContext* globalCtx) {

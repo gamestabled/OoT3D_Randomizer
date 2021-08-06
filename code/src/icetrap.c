@@ -30,7 +30,7 @@ void IceTrap_Push(u32 key) {
 void LinkDamageNoKnockback(void) {
     if (PLAYER->invincibilityTimer >= 0) {
         s32 changeHealth = Settings_ApplyDamageMultiplier(gGlobalContext, -(PLAYER->actor.colChkInfo.damage));
-        gSaveContext.health += changeHealth / ((gSaveContext.doubleDefense)? 2 : 1);
+        gSaveContext.health += changeHealth / ((gSaveContext.doubleDefense) ? 2 : 1);
     }
     if (gSaveContext.health < 0) {
         gSaveContext.health = 0;
@@ -41,14 +41,13 @@ void LinkDamageNoKnockback(void) {
 
 void IceTrap_Give(void) {
     if (cooldown == 0 && pendingFreezes &&
-        ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
+            ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
         u32 pRandInt = Hash(source[0]);
 
         u8 damageType = 3; // Default to ice trap
         if (gSettingsContext.randomTrapDmg == 1) { //Basic
             damageType = pRandInt % 5 + 1; // From testing 0-4 are all the unique damage types and 0 is boring (5 is custom)
-        }
-        else if (gSettingsContext.randomTrapDmg == 2) { //Advanced
+        } else if (gSettingsContext.randomTrapDmg == 2) { //Advanced
             damageType = pRandInt % 6; // 0 will be used for the fire trap
         }
         modifyScale = (damageType == 5);

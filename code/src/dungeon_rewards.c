@@ -11,7 +11,7 @@ u32 rDungeonRewardOverrides[LIGHT_MEDALLION + 1] = {
     SPIRIT_MEDALLION,
     SHADOW_MEDALLION,
     LIGHT_MEDALLION,
- };
+};
 
 const char DungeonRewardNames[][25] = {
     "Kokiri Emerald",

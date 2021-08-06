@@ -23,7 +23,7 @@ static std::string_view GetBasePath(OptionCategory category) {
     "/3ds/presets/oot3dr/cosmetics/",
   };
 
-  switch(category) {
+  switch (category) {
     case OptionCategory::Setting :
     case OptionCategory::Cosmetic :
       return paths[static_cast<size_t>(category)];
@@ -63,7 +63,7 @@ bool CreatePresetDirectories() {
 std::vector<std::string> GetSettingsPresets() {
   std::vector<std::string> presetEntries = {};
   for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
-    if(entry.path().stem().string() != "CACHED_SETTINGS") {
+    if (entry.path().stem().string() != "CACHED_SETTINGS") {
       presetEntries.push_back(entry.path().stem().string());
     }
   }
@@ -119,8 +119,8 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
   XMLElement* rootNode = preset.RootElement();
   if (strcmp(rootNode->Name(), "settings") != 0) {
-      // We do not have our <settings> root node, so it may be the old structure. We don't support that one anymore.
-      return false;
+    // We do not have our <settings> root node, so it may be the old structure. We don't support that one anymore.
+    return false;
   }
 
   XMLElement* curNode = rootNode->FirstChildElement();
@@ -198,7 +198,7 @@ void SaveCachedSettings() {
 void LoadCachedSettings() {
   //If cache file exists, load it
   for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
-    if(entry.path().stem().string() == "CACHED_SETTINGS") {
+    if (entry.path().stem().string() == "CACHED_SETTINGS") {
       //File exists, open
       LoadPreset("CACHED_SETTINGS", OptionCategory::Setting);
     }
@@ -212,7 +212,7 @@ bool SaveCachedCosmetics() {
 void LoadCachedCosmetics() {
   //If cache file exists, load it
   for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Cosmetic))) {
-    if(entry.path().stem().string() == "CACHED_COSMETICS") {
+    if (entry.path().stem().string() == "CACHED_COSMETICS") {
       //File exists, open
       LoadPreset("CACHED_COSMETICS", OptionCategory::Cosmetic);
     }

@@ -14,8 +14,9 @@ static Actor* floorSwitch;
 
 void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     BgSpot06Objects_Update(thisx, globalCtx);
-    if (gSaveContext.linkAge == 1)
-        return; // don't do anything for child Link
+    if (gSaveContext.linkAge == 1) {
+        return;    // don't do anything for child Link
+    }
 
     if (actionCounter == 0) {
         Object_Spawn(&globalCtx->objectCtx, 0x3); // object containing floor switch data (and ice block data)
@@ -24,14 +25,14 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         floorSwitch = Actor_Spawn((&(globalCtx->actorCtx)), globalCtx, 0x12A, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
         if (gSaveContext.eventChkInf[4] & 0x0400) { // Water Temple blue warp cleared
             floorSwitch->params = 0x3E10; // Toggle-able floor switch, linked to temp_switch 0x1E (room temporary,
-                                          // cleared when room unloads)
+            // cleared when room unloads)
         } else {
             floorSwitch->params =
                 0x3E81; // Frozen rusty switch, same flag as above. It's glitched and can't be pressed, which is perfect
         }
         // Setting some data before the switch is initialized on the next frame
         floorSwitch->world.pos.x = -896.0f; // the focus point of the switch cutscene is copied from here, then the
-                                            // world.pos is reset by the Init function(?)
+        //                                     world.pos is reset by the Init function(?)
         floorSwitch->world.pos.y = -1243.0f;
         floorSwitch->world.pos.z = 6953.0f;
         floorSwitch->home.pos.x = -896.0f; // the ice spawns at the home position

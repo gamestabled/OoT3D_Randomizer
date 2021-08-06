@@ -82,9 +82,9 @@ bool WritePatch(u32 patchOffset, s32 patchSize, char* patchDataPtr, Handle& code
     patchOffset += PATCH_SIZE_MAX;
     patchSize -= PATCH_SIZE_MAX;
   }
-  #ifdef ENABLE_DEBUG
-    CitraPrint(std::to_string(totalRW));
-  #endif
+#ifdef ENABLE_DEBUG
+  CitraPrint(std::to_string(totalRW));
+#endif
   return true;
 }
 
@@ -362,7 +362,7 @@ bool WriteAllPatches() {
   |       exheader.bin      |
   --------------------------*/
   // Get exheader for proper playOption
-  const char * filePath;
+  const char* filePath;
   if (Settings::PlayOption == PATCH_CONSOLE) {
     filePath = "romfs:/exheader.bin";
   } else {

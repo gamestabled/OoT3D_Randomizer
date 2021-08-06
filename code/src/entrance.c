@@ -148,15 +148,15 @@ void Entrance_Init(void) {
         //Using the copy ensures that we don't overwrite data from an index before it needs
         //to be copied somewhere else.
         for (s16 j = 0; j < 4; j++) {
-            gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
-            gEntranceTable[originalIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
-            gEntranceTable[originalIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
+            gEntranceTable[originalIndex + j].scene = copyOfEntranceTable[overrideIndex + j].scene;
+            gEntranceTable[originalIndex + j].spawn = copyOfEntranceTable[overrideIndex + j].spawn;
+            gEntranceTable[originalIndex + j].field = copyOfEntranceTable[overrideIndex + j].field;
 
             //If there's a blue warp entrance, overwrite that one as well
             if (blueWarpIndex != 0) {
-              gEntranceTable[blueWarpIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
-              gEntranceTable[blueWarpIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
-              gEntranceTable[blueWarpIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
+                gEntranceTable[blueWarpIndex + j].scene = copyOfEntranceTable[overrideIndex + j].scene;
+                gEntranceTable[blueWarpIndex + j].spawn = copyOfEntranceTable[overrideIndex + j].spawn;
+                gEntranceTable[blueWarpIndex + j].field = copyOfEntranceTable[overrideIndex + j].field;
             }
         }
     }
@@ -264,14 +264,14 @@ void EnableFW() {
     // Leave restriction in Tower Collapse Interior, Castle Collapse, Treasure Box Shop, Tower Collapse Exterior,
     // Grottos area, Fishing Pond, Ganon Battle and for states that disable buttons.
     if (!gSettingsContext.faroresWindAnywhere ||
-        gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 || gGlobalContext->sceneNum == 16 ||
-        gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62 || gGlobalContext->sceneNum == 73 ||
-        gGlobalContext->sceneNum == 79 ||
-        gSaveContext.unk_1586[4] & 0x1 ||   // Ingo's Minigame state
-        PLAYER->stateFlags1 & 0x08A02000 || // Swimming, riding horse, Down A, hanging from a ledge
-        PLAYER->stateFlags2 & 0x00040000    // Blank A
-        // Shielding, spinning and getting skull tokens still disable buttons automatically
-        ) {
+            gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 || gGlobalContext->sceneNum == 16 ||
+            gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62 || gGlobalContext->sceneNum == 73 ||
+            gGlobalContext->sceneNum == 79 ||
+            gSaveContext.unk_1586[4] & 0x1 ||   // Ingo's Minigame state
+            PLAYER->stateFlags1 & 0x08A02000 || // Swimming, riding horse, Down A, hanging from a ledge
+            PLAYER->stateFlags2 & 0x00040000    // Blank A
+            // Shielding, spinning and getting skull tokens still disable buttons automatically
+       ) {
         return;
     }
 

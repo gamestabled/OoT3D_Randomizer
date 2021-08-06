@@ -20,8 +20,9 @@ s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId) {
         for (i = 0; i < OBJECT_EXCHANGE_BANK_MAX; ++i) {
             s32 id = rExtendedObjectCtx.status[i].id;
             id = (id < 0 ? -id : id);
-            if (id == objectId)
+            if (id == objectId) {
                 return i + OBJECT_EXCHANGE_BANK_MAX;
+            }
         }
     }
     return index;
@@ -30,8 +31,9 @@ s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId) {
 s32 ExtendedObject_IsLoaded(ObjectContext* objectCtx, s16 bankIndex) {
     if (bankIndex < OBJECT_EXCHANGE_BANK_MAX) {
         return Object_IsLoaded(objectCtx, bankIndex);
-    } else
+    } else {
         return (rExtendedObjectCtx.status[bankIndex - OBJECT_EXCHANGE_BANK_MAX].id >= 0);
+    }
 }
 
 ObjectStatus* ExtendedObject_GetStatus(s16 objectId) {
@@ -39,8 +41,9 @@ ObjectStatus* ExtendedObject_GetStatus(s16 objectId) {
     for (i = 0; i < rExtendedObjectCtx.num; ++i) {
         s32 id = rExtendedObjectCtx.status[i].id;
         id = (id < 0 ? -id : id);
-        if (id == objectId)
+        if (id == objectId) {
             return &rExtendedObjectCtx.status[i];
+        }
     }
     return NULL;
 }

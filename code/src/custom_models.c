@@ -23,20 +23,26 @@ void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
 
     // Edit combinerIndices
     EDIT_BYTE(0x6C4, 0x04);// Update combinerCount
-    EDIT_BYTE(0x6CC, 0x0B); EDIT_BYTE(0x6CD, 0x00);// Add new combiner index (Replacing one of the combiners used by unused deku stick)
-	EDIT_BYTE(0x6CE, 0x11); EDIT_BYTE(0x6CF, 0x00);
+    EDIT_BYTE(0x6CC, 0x0B);
+    EDIT_BYTE(0x6CD, 0x00);// Add new combiner index (Replacing one of the combiners used by unused deku stick)
+    EDIT_BYTE(0x6CE, 0x11);
+    EDIT_BYTE(0x6CF, 0x00);
 
     //TextureCombiner0
-    EDIT_BYTE(0x3588, 0x04); EDIT_BYTE(0x3589, 0x01);// CombinerMode to "Add"
+    EDIT_BYTE(0x3588, 0x04);
+    EDIT_BYTE(0x3589, 0x01);// CombinerMode to "Add"
     EDIT_BYTE(0x3594, 0x76);// SourceColor0 to "ConstantColor"
     EDIT_BYTE(0x359C, 0x03);// Color1Operand to OneMinusAlpha
 
     //TextureCombiner1
-    EDIT_BYTE(0x35B0, 0x00); EDIT_BYTE(0x35B1, 0x21);// CombinerMode to "Modulate"
-    EDIT_BYTE(0x35BE, 0xC0); EDIT_BYTE(0x35BF, 0x84);// SourceColor1 to "Texture0"
+    EDIT_BYTE(0x35B0, 0x00);
+    EDIT_BYTE(0x35B1, 0x21);// CombinerMode to "Modulate"
+    EDIT_BYTE(0x35BE, 0xC0);
+    EDIT_BYTE(0x35BF, 0x84);// SourceColor1 to "Texture0"
     EDIT_BYTE(0x35C4, 0x00);// Color1Operand to Color
     EDIT_BYTE(0x36FC, 0x78);// SourceColor0 to "Previous" (aka return the output of "TextureCombiner0")
-    EDIT_BYTE(0x36FE, 0x77); EDIT_BYTE(0x36FF, 0x85);// SourceColor1 to "PrimaryColor"
+    EDIT_BYTE(0x36FE, 0x77);
+    EDIT_BYTE(0x36FF, 0x85);// SourceColor1 to "PrimaryColor"
 
     //Edit Texture Entry
     EDIT_BYTE(0x44E1, 0x40);// Update texture data length to "16384" bytes
@@ -45,20 +51,24 @@ void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
 
 void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
-	
-	// Edit combinerIndices
-	EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
-	EDIT_BYTE(0x6CC, 0x0D); EDIT_BYTE(0x6CD, 0x00);
+
+    // Edit combinerIndices
+    EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
+    EDIT_BYTE(0x6CC, 0x0D);
+    EDIT_BYTE(0x6CD, 0x00);
 
     //TextureCombiner0
-    EDIT_BYTE(0x2974, 0x02); EDIT_BYTE(0x2975, 0x64);// CombinerMode to "AddMult"
+    EDIT_BYTE(0x2974, 0x02);
+    EDIT_BYTE(0x2975, 0x64);// CombinerMode to "AddMult"
     EDIT_BYTE(0x2978, 0x01);// ColorScale to "One"
     EDIT_BYTE(0x2980, 0x76);// SourceColor0 to "ConstantColor"
-    EDIT_BYTE(0x2984, 0xC0); EDIT_BYTE(0x2985, 0x84);// SourceColor2 to "Texture0"
+    EDIT_BYTE(0x2984, 0xC0);
+    EDIT_BYTE(0x2985, 0x84);// SourceColor2 to "Texture0"
     EDIT_BYTE(0x2988, 0x03);// Color1Operand to OneMinusAlpha
 
     //TextureCombiner1
-    EDIT_BYTE(0x299C, 0x00); EDIT_BYTE(0x299D, 0x21);// CombinerMode to "Modulate"
+    EDIT_BYTE(0x299C, 0x00);
+    EDIT_BYTE(0x299D, 0x21);// CombinerMode to "Modulate"
     EDIT_BYTE(0x29A0, 0x04);// ColorScale to "Four"
     EDIT_BYTE(0x29AA, 0x77);// SourceColor1 to "PrimaryColor"
     EDIT_BYTE(0x29B0, 0x00);// Color1Operand to Color
@@ -73,14 +83,20 @@ void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB) {
 
     EDIT_BYTE(0xDB, 0x01);
     EDIT_BYTE(0xE8, 0x01);
-    EDIT_BYTE(0x17C, 0x19); EDIT_BYTE(0x17D, 0x19); EDIT_BYTE(0x17E, 0x19);
-    EDIT_BYTE(0x180, 0x00); EDIT_BYTE(0x181, 0x00); EDIT_BYTE(0x182, 0x00); EDIT_BYTE(0x183, 0xB2);
+    EDIT_BYTE(0x17C, 0x19);
+    EDIT_BYTE(0x17D, 0x19);
+    EDIT_BYTE(0x17E, 0x19);
+    EDIT_BYTE(0x180, 0x00);
+    EDIT_BYTE(0x181, 0x00);
+    EDIT_BYTE(0x182, 0x00);
+    EDIT_BYTE(0x183, 0xB2);
     EDIT_BYTE(0x1FC, 0x01);
     EDIT_BYTE(0x20D, 0x00);
     EDIT_BYTE(0x210, 0x01);
     EDIT_BYTE(0x235, 0x01);
     EDIT_BYTE(0x244, 0x02);
-    EDIT_BYTE(0x2DC, 0xFF); EDIT_BYTE(0x2DD, 0xFF);
+    EDIT_BYTE(0x2DC, 0xFF);
+    EDIT_BYTE(0x2DD, 0xFF);
     EDIT_BYTE(0x358, 0x00);
 }
 
@@ -97,37 +113,76 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
 
     // copy_nintendo.cmb:
     EDIT_BYTE(0x4F3, 0x40);
-    EDIT_BYTE(0x5905, 0x00); EDIT_BYTE(0x5906, 0x01);//Change texture dataLength
+    EDIT_BYTE(0x5905, 0x00);
+    EDIT_BYTE(0x5906, 0x01);//Change texture dataLength
     EDIT_BYTE(0x590A, 0x01);// IsETC1 = true
     EDIT_BYTE(0x590D, 0x02);// Width  = 512
     EDIT_BYTE(0x590E, 0x80);// Height = 128
     EDIT_BYTE(0x5910, 0x5B);// ETC1a4
     //Edit positionOffset of each shape
-    EDIT_BYTE(0x597A, 0x80); EDIT_BYTE(0x597B, 0x3F);
-    EDIT_BYTE(0x597C, 0x33); EDIT_BYTE(0x597D, 0x33); EDIT_BYTE(0x597E, 0x33); EDIT_BYTE(0x597F, 0x40);
+    EDIT_BYTE(0x597A, 0x80);
+    EDIT_BYTE(0x597B, 0x3F);
+    EDIT_BYTE(0x597C, 0x33);
+    EDIT_BYTE(0x597D, 0x33);
+    EDIT_BYTE(0x597E, 0x33);
+    EDIT_BYTE(0x597F, 0x40);
     //Edit vertices/UVs
-    EDIT_BYTE(0x5AFE, 0xA0); EDIT_BYTE(0x5B02, 0xA0); EDIT_BYTE(0x5B0A, 0xA0); EDIT_BYTE(0x5B0E, 0xA0);
-    EDIT_BYTE(0x5B16, 0xA0); EDIT_BYTE(0x5B1A, 0xA0); EDIT_BYTE(0x5B22, 0xA0); EDIT_BYTE(0x5B26, 0xA0);
+    EDIT_BYTE(0x5AFE, 0xA0);
+    EDIT_BYTE(0x5B02, 0xA0);
+    EDIT_BYTE(0x5B0A, 0xA0);
+    EDIT_BYTE(0x5B0E, 0xA0);
+    EDIT_BYTE(0x5B16, 0xA0);
+    EDIT_BYTE(0x5B1A, 0xA0);
+    EDIT_BYTE(0x5B22, 0xA0);
+    EDIT_BYTE(0x5B26, 0xA0);
 
     // title_logo_us.cmb: Edit positionOffset of each shape
-    EDIT_BYTE(0x36BF3, 0x40); EDIT_BYTE(0x36D33, 0x40); EDIT_BYTE(0x36E73, 0x40); EDIT_BYTE(0x36FB3, 0x40);
-    EDIT_BYTE(0x370F3, 0x40); EDIT_BYTE(0x37233, 0x40); EDIT_BYTE(0x37373, 0x40); EDIT_BYTE(0x374B3, 0x40);
-    EDIT_BYTE(0x375F3, 0x40); EDIT_BYTE(0x37733, 0x40); EDIT_BYTE(0x37873, 0x40); EDIT_BYTE(0x379B3, 0x40);
-    EDIT_BYTE(0x37AF3, 0x40); EDIT_BYTE(0x37C33, 0x40); EDIT_BYTE(0x37D73, 0x40); EDIT_BYTE(0x37EB3, 0x40);
-    EDIT_BYTE(0x37FF3, 0x40); EDIT_BYTE(0x38133, 0x40); EDIT_BYTE(0x38273, 0x40); EDIT_BYTE(0x383B3, 0x40);
-    EDIT_BYTE(0x384F3, 0x40); EDIT_BYTE(0x38633, 0x40);
+    EDIT_BYTE(0x36BF3, 0x40);
+    EDIT_BYTE(0x36D33, 0x40);
+    EDIT_BYTE(0x36E73, 0x40);
+    EDIT_BYTE(0x36FB3, 0x40);
+    EDIT_BYTE(0x370F3, 0x40);
+    EDIT_BYTE(0x37233, 0x40);
+    EDIT_BYTE(0x37373, 0x40);
+    EDIT_BYTE(0x374B3, 0x40);
+    EDIT_BYTE(0x375F3, 0x40);
+    EDIT_BYTE(0x37733, 0x40);
+    EDIT_BYTE(0x37873, 0x40);
+    EDIT_BYTE(0x379B3, 0x40);
+    EDIT_BYTE(0x37AF3, 0x40);
+    EDIT_BYTE(0x37C33, 0x40);
+    EDIT_BYTE(0x37D73, 0x40);
+    EDIT_BYTE(0x37EB3, 0x40);
+    EDIT_BYTE(0x37FF3, 0x40);
+    EDIT_BYTE(0x38133, 0x40);
+    EDIT_BYTE(0x38273, 0x40);
+    EDIT_BYTE(0x383B3, 0x40);
+    EDIT_BYTE(0x384F3, 0x40);
+    EDIT_BYTE(0x38633, 0x40);
 
     // g_title_fire.cmab
     EDIT_BYTE(0x5E570, 0x01);// Change keyframe count to 1 so we only have to change one keyframe
-    EDIT_BYTE(0x5E580, 0x0A); EDIT_BYTE(0x5E581, 0xD7); EDIT_BYTE(0x5E582, 0x23); EDIT_BYTE(0x5E583, 0x3D);// Red to 0.04
+    EDIT_BYTE(0x5E580, 0x0A);
+    EDIT_BYTE(0x5E581, 0xD7);
+    EDIT_BYTE(0x5E582, 0x23);
+    EDIT_BYTE(0x5E583, 0x3D);// Red to 0.04
     EDIT_BYTE(0x5E660, 0x01);
-    EDIT_BYTE(0x5E670, 0x91); EDIT_BYTE(0x5E671, 0xED); EDIT_BYTE(0x5E672, 0x5C); EDIT_BYTE(0x5E673, 0x3F);// Green 0.863
+    EDIT_BYTE(0x5E670, 0x91);
+    EDIT_BYTE(0x5E671, 0xED);
+    EDIT_BYTE(0x5E672, 0x5C);
+    EDIT_BYTE(0x5E673, 0x3F);// Green 0.863
 
     // g_title_fire_ura.cmab
     EDIT_BYTE(0x5EA80, 0x01);
-    EDIT_BYTE(0x5EA90, 0x0A); EDIT_BYTE(0x5E581, 0xD7); EDIT_BYTE(0x5E582, 0x23); EDIT_BYTE(0x5E583, 0x3D);
+    EDIT_BYTE(0x5EA90, 0x0A);
+    EDIT_BYTE(0x5E581, 0xD7);
+    EDIT_BYTE(0x5E582, 0x23);
+    EDIT_BYTE(0x5E583, 0x3D);
     EDIT_BYTE(0x5EB70, 0x01);
-    EDIT_BYTE(0x5EB80, 0x91); EDIT_BYTE(0x5EB81, 0xED); EDIT_BYTE(0x5EB82, 0x5C); EDIT_BYTE(0x5EB83, 0x3F);
+    EDIT_BYTE(0x5EB80, 0x91);
+    EDIT_BYTE(0x5EB81, 0xED);
+    EDIT_BYTE(0x5EB82, 0x5C);
+    EDIT_BYTE(0x5EB83, 0x3F);
 }
 
 // The same offsets work for both fairy ocarina and ocarina of time,
@@ -135,15 +190,18 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
 void CustomModel_SetOcarinaToRGBA565(void* ocarinaCMB) {
     char* BASE_ = (char*)ocarinaCMB;
 
-    EDIT_BYTE(0x3F2, 0x01); EDIT_BYTE(0x3F8, 0x5A);
+    EDIT_BYTE(0x3F2, 0x01);
+    EDIT_BYTE(0x3F8, 0x5A);
 }
 
 void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB) {
     char* BASE_ = (char*)bossKeyCMB;
 
     EDIT_BYTE(0x43D, 0x10);
-    EDIT_BYTE(0x442, 0x01); EDIT_BYTE(0x448, 0x5B);
-    EDIT_BYTE(0x44A, 0x00); EDIT_BYTE(0x44B, 0x00);
+    EDIT_BYTE(0x442, 0x01);
+    EDIT_BYTE(0x448, 0x5B);
+    EDIT_BYTE(0x44A, 0x00);
+    EDIT_BYTE(0x44B, 0x00);
 }
 
 void CustomModel_Update(void) {

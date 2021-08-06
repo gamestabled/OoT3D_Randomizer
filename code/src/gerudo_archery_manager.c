@@ -12,9 +12,9 @@ void EnGe1_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnGe1_Update(thisx, globalCtx);
 
     if (gSettingsContext.skipMinigamePhases == SKIP &&
-        !(gSaveContext.eventChkInf[6] & 0x0040) // custom flag to execute this code only once per savefile
-        && (gSaveContext.infTable[25] & 1)      // obtained Piece of Heart reward
-    ) {
+            !(gSaveContext.eventChkInf[6] & 0x0040) // custom flag to execute this code only once per savefile
+            && (gSaveContext.infTable[25] & 1)      // obtained Piece of Heart reward
+       ) {
         EnGe1_TalkAfterGame_Archery(thisx, globalCtx);
         gSaveContext.eventChkInf[6] |= 0x0040;
     }

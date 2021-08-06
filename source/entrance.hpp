@@ -65,13 +65,13 @@ public:
     }
 
     void printAgeTimeAccess() {
-      CitraPrint("Name: ");
-      CitraPrint(name);
-      auto message = "Child Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   + "\t"
-                     "Child Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) + "\t"
-                     "Adult Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   + "\t"
-                     "Adult Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight));
-      CitraPrint(message);
+        CitraPrint("Name: ");
+        CitraPrint(name);
+        auto message = "Child Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   + "\t"
+                       "Child Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) + "\t"
+                       "Adult Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   + "\t"
+                       "Adult Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight));
+        CitraPrint(message);
     }
 
     bool ConditionsMet(bool allAgeTimes = false) const {
@@ -220,7 +220,7 @@ public:
     }
 
     Entrance* GetNewTarget() {
-        AreaTable(ROOT)->AddExit(ROOT, connectedRegion, []{return true;});
+        AreaTable(ROOT)->AddExit(ROOT, connectedRegion, [] {return true;});
         Entrance* targetEntrance = AreaTable(ROOT)->GetExit(connectedRegion);
         targetEntrance->SetReplacement(this);
         return targetEntrance;

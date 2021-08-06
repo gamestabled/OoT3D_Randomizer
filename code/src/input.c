@@ -22,8 +22,9 @@ void Input_Update(void) {
 
 u32 buttonCheck(u32 key) {
     for (u32 i = 0x26000; i > 0; i--) {
-        if (key != real_hid.pad.pads[real_hid.pad.index].curr.val)
+        if (key != real_hid.pad.pads[real_hid.pad.index].curr.val) {
             return 0;
+        }
     }
     return 1;
 }

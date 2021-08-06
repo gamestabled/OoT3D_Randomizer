@@ -24,38 +24,38 @@ namespace {
   std::string placementtxt;
 
   constexpr std::array<std::string_view, 32> hashIcons = {
-      "Deku Stick",
-      "Deku Nut",
-      "Bow",
-      "Slingshot",
-      "Fairy Ocarina",
-      "Bombchu",
-      "Longshot",
-      "Boomerang",
-      "Lens of Truth",
-      "Beans",
-      "Megaton Hammer",
-      "Bottled Fish",
-      "Bottled Milk",
-      "Mask of Truth",
-      "SOLD OUT",
-      "Cucco",
-      "Mushroom",
-      "Saw",
-      "Frog",
-      "Master Sword",
-      "Mirror Shield",
-      "Kokiri Tunic",
-      "Hover Boots",
-      "Silver Gauntlets",
-      "Gold Scale",
-      "Shard of Agony",
-      "Skull Token",
-      "Heart Container",
-      "Boss Key",
-      "Compass",
-      "Map",
-      "Big Magic",
+    "Deku Stick",
+    "Deku Nut",
+    "Bow",
+    "Slingshot",
+    "Fairy Ocarina",
+    "Bombchu",
+    "Longshot",
+    "Boomerang",
+    "Lens of Truth",
+    "Beans",
+    "Megaton Hammer",
+    "Bottled Fish",
+    "Bottled Milk",
+    "Mask of Truth",
+    "SOLD OUT",
+    "Cucco",
+    "Mushroom",
+    "Saw",
+    "Frog",
+    "Master Sword",
+    "Mirror Shield",
+    "Kokiri Tunic",
+    "Hover Boots",
+    "Silver Gauntlets",
+    "Gold Scale",
+    "Shard of Agony",
+    "Skull Token",
+    "Heart Container",
+    "Boss Key",
+    "Compass",
+    "Map",
+    "Big Magic",
   };
 }
 
@@ -121,34 +121,34 @@ static void WriteIngameSpoilerLog() {
 
     // Exclude uncheckable/repeatable locations from ingame tracker
     if (!Settings::IngameSpoilers) {
-        // General
-        if (loc->IsExcluded() || loc->GetHintKey() == NONE) {
-            continue;
-        }
-        // Shops
-        else if (loc->IsShop() && (
-            loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
-            loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
-            loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS)) {
-            continue;
-        }
-        // Deku Scrubs
-        else if (Settings::Scrubsanity.Is(SCRUBSANITY_OFF) && loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades)) {
-            continue;
-        }
-        // Cows
-        else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
-            continue;
-        }
-        // Merchants
-        else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
-            continue;
-        }
-        // Gerudo Fortress
-        else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
-            (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
-            continue;
-        }
+      // General
+      if (loc->IsExcluded() || loc->GetHintKey() == NONE) {
+        continue;
+      }
+      // Shops
+      else if (loc->IsShop() && (
+                 loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
+                 loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
+                 loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS)) {
+        continue;
+      }
+      // Deku Scrubs
+      else if (Settings::Scrubsanity.Is(SCRUBSANITY_OFF) && loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades)) {
+        continue;
+      }
+      // Cows
+      else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
+        continue;
+      }
+      // Merchants
+      else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
+        continue;
+      }
+      // Gerudo Fortress
+      else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
+               (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
+        continue;
+      }
     }
 
     auto locName = loc->GetName();
@@ -209,15 +209,17 @@ static void WriteIngameSpoilerLog() {
         ++spoilerData.SphereCount;
       }
     }
-    if (spoilerOutOfSpace || playthroughItemNotFound) { printf("%sError!%s ", YELLOW, WHITE); }
+    if (spoilerOutOfSpace || playthroughItemNotFound) {
+      printf("%sError!%s ", YELLOW, WHITE);
+    }
   }
 }
 
 // Writes the location to the specified node.
 static void WriteLocation(
-    tinyxml2::XMLElement* parentNode,
-    const LocationKey locationKey,
-    const bool withPadding = false
+  tinyxml2::XMLElement* parentNode,
+  const LocationKey locationKey,
+  const bool withPadding = false
 ) {
   ItemLocation* location = Location(locationKey);
 
@@ -247,9 +249,9 @@ static void WriteLocation(
     node->SetAttribute("price", price);
   }
   if (!location->IsAddedToPool()) {
-    #ifdef ENABLE_DEBUG  
-      node->SetAttribute("not-added", true);
-    #endif
+#ifdef ENABLE_DEBUG
+    node->SetAttribute("not-added", true);
+#endif
   }
 }
 

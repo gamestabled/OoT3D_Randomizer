@@ -2,8 +2,8 @@
 
 namespace Trial {
 
-TrialInfo::TrialInfo(Text name_)
-  : name(std::move(name_)) {}
+  TrialInfo::TrialInfo(Text name_)
+    : name(std::move(name_)) {}
 
   TrialInfo::~TrialInfo() = default;
 

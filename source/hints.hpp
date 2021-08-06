@@ -10,66 +10,66 @@
 #include "settings.hpp"
 
 enum class HintType {
-  Trial,
-  Always,
-  Woth, //Way of the Hero
-  Barren,
-  Entrance,
-  Sometimes,
-  Random,
-  Item,
-  Song,
-  Overworld,
-  Dungeon,
-  Junk,
-  NamedItem,
-  MaxCount,
+    Trial,
+    Always,
+    Woth, //Way of the Hero
+    Barren,
+    Entrance,
+    Sometimes,
+    Random,
+    Item,
+    Song,
+    Overworld,
+    Dungeon,
+    Junk,
+    NamedItem,
+    MaxCount,
 };
 
 struct HintDistributionSetting {
-  HintType type;
-  u8 order;
-  size_t weight;
-  u8 fixed;
-  u8 copies;
+    HintType type;
+    u8 order;
+    size_t weight;
+    u8 fixed;
+    u8 copies;
 };
 
 struct HintSetting {
-  using DistributionTable = std::array<HintDistributionSetting, static_cast<int>(HintType::MaxCount)>;
+    using DistributionTable = std::array<HintDistributionSetting, static_cast<int>(HintType::MaxCount)>;
 
-  u8 dungeonsWothLimit;
-  u8 dungeonsBarrenLimit;
-  bool namedItemsRequired;
-  DistributionTable distTable;
+    u8 dungeonsWothLimit;
+    u8 dungeonsBarrenLimit;
+    bool namedItemsRequired;
+    DistributionTable distTable;
 };
 
 enum class HintCategory {
-  Item,
-  Always,
-  Sometimes,
-  Exclude,
-  Entrance,
-  Region,
-  Junk,
-  DungeonName,
-  Boss,
-  Bridge,
-  GanonsBossKey,
-  LACS,
-  Altar,
-  Validation,
-  LightArrow,
-  GanonLine,
-  MerchantsDialogs,
+    Item,
+    Always,
+    Sometimes,
+    Exclude,
+    Entrance,
+    Region,
+    Junk,
+    DungeonName,
+    Boss,
+    Bridge,
+    GanonsBossKey,
+    LACS,
+    Altar,
+    Validation,
+    LightArrow,
+    GanonLine,
+    MerchantsDialogs,
 };
 
 class HintText {
 public:
     HintText() = default;
     HintText(std::vector<Text> obscureText_, Text clearText_, HintCategory type_)
-    : obscureText(std::move(obscureText_)),
-      clearText(std::move(clearText_)),
-      type(type_) {}
+        : obscureText(std::move(obscureText_)),
+          clearText(std::move(clearText_)),
+          type(type_) {}
 
     static auto Item(std::vector<Text>&& obscureText, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(clearText), HintCategory::Item};

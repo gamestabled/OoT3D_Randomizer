@@ -9,9 +9,9 @@ class Text {
 public:
     Text() = default;
     Text(std::string english_, std::string french_, std::string spanish_)
-      : english(std::move(english_)),
-        french(std::move(french_)),
-        spanish(std::move(spanish_)) {}
+        : english(std::move(english_)),
+          french(std::move(french_)),
+          spanish(std::move(spanish_)) {}
 
     const std::string& GetEnglish() const {
         return english;
@@ -49,18 +49,22 @@ public:
 
     void Replace(std::string oldStr, std::string newStr) {
 
-        for (std::string* str : {&english, &french, &spanish}) {
+        for (std::string* str : {
+                    &english, &french, &spanish
+                }) {
             size_t position = str->find(oldStr);
             while (position != std::string::npos) {
-              str->replace(position, oldStr.length(), newStr);
-              position = str->find(oldStr);
+                str->replace(position, oldStr.length(), newStr);
+                position = str->find(oldStr);
             }
         }
     }
 
     //find the appropriate bars that separate singular from plural
     void SetForm(int form) {
-        for (std::string* str : {&english, &french, &spanish}) {
+        for (std::string* str : {
+                    &english, &french, &spanish
+                }) {
 
             size_t firstBar = str->find('|');
             if (firstBar != std::string::npos) {

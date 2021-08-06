@@ -138,7 +138,7 @@ void MenuUpdate(u32 kDown) {
     currentMenu = menuList.back();
     ModeChangeInit();
     kDown = 0;
-  //If they pressed B on any menu other than main, go backwards to the previous menu
+    //If they pressed B on any menu other than main, go backwards to the previous menu
   } else if (kDown & KEY_B && currentMenu->mode != MAIN_MENU) {
     //Want to reset generate menu when leaving
     if (currentMenu->mode == POST_GENERATE) {
@@ -207,7 +207,7 @@ void MenuUpdate(u32 kDown) {
 void ModeChangeInit() {
   if (currentMenu->mode == OPTION_SUB_MENU) {
     //loop through until we reach an unlocked setting
-    while(currentMenu->settingsList->at(currentMenu->menuIdx)->IsLocked() || currentMenu->settingsList->at(currentMenu->menuIdx)->IsHidden()) {
+    while (currentMenu->settingsList->at(currentMenu->menuIdx)->IsLocked() || currentMenu->settingsList->at(currentMenu->menuIdx)->IsHidden()) {
       currentMenu->menuIdx++;
     }
     currentSetting = currentMenu->settingsList->at(currentMenu->menuIdx);
@@ -271,7 +271,7 @@ void UpdatePresetsMenu(u32 kDown) {
   } else if (kDown & KEY_A && currentMenu->mode == DELETE_PRESET && !presetEntries.empty()) {
     if (DeletePreset(presetEntries[currentMenu->menuIdx], OptionCategory::Setting)) {
       presetEntries.erase(presetEntries.begin() + currentMenu->menuIdx);
-      if(currentMenu->menuIdx == presetEntries.size()) { //Catch when last preset is deleted
+      if (currentMenu->menuIdx == presetEntries.size()) { //Catch when last preset is deleted
         currentMenu->menuIdx--;
       }
       printf("\x1b[24;5HPreset Deleted.");
@@ -293,10 +293,12 @@ void UpdateGenerateMenu(u32 kDown) {
 }
 
 void PrintMainMenu() {
-  printf("\x1b[0;%dHMain Settings", 1+(BOTTOM_WIDTH-13)/2);
+  printf("\x1b[0;%dHMain Settings", 1 + (BOTTOM_WIDTH - 13) / 2);
 
   for (u8 i = 0; i < MAX_MAINMENU_SETTINGS_ON_SCREEN; i++) {
-    if (i >= Settings::mainMenu.size()) break;
+    if (i >= Settings::mainMenu.size()) {
+      break;
+    }
 
     Menu* menu = Settings::mainMenu[i];
 
@@ -342,14 +344,16 @@ void PrintOptionSubMenu() {
   }
 
   //print menu name
-  printf("\x1b[0;%dH%s", 1+(BOTTOM_WIDTH-currentMenu->name.length())/2, currentMenu->name.c_str());
+  printf("\x1b[0;%dH%s", 1 + (BOTTOM_WIDTH - currentMenu->name.length()) / 2, currentMenu->name.c_str());
 
   //keep count of hidden settings to not make blank spaces appear in the list
   hiddenSettings = 0;
 
   for (u8 i = 0; i - hiddenSettings < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
-    if (i + settingBound >= currentMenu->settingsList->size()) break;
+    if (i + settingBound >= currentMenu->settingsList->size()) {
+      break;
+    }
 
     Option* setting = currentMenu->settingsList->at(i + settingBound);
 
@@ -359,11 +363,11 @@ void PrintOptionSubMenu() {
       printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
       printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOptionText().data(), RESET);
-    //dim to make a locked setting grey
+      //dim to make a locked setting grey
     } else if (setting->IsLocked()) {
       printf("\x1b[%d;%dH%s%s:", row,  2, DIM, setting->GetName().data());
       printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOptionText().data(), RESET);
-    //don't display hidden settings
+      //don't display hidden settings
     } else if (setting->IsHidden()) {
       hiddenSettings++;
       continue;
@@ -377,10 +381,12 @@ void PrintOptionSubMenu() {
 }
 
 void PrintSubMenu() {
-  printf("\x1b[0;%dH%s", 1+(BOTTOM_WIDTH-currentMenu->name.length())/2, currentMenu->name.c_str());
+  printf("\x1b[0;%dH%s", 1 + (BOTTOM_WIDTH - currentMenu->name.length()) / 2, currentMenu->name.c_str());
 
   for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
-    if (i >= currentMenu->itemsList->size()) break;
+    if (i >= currentMenu->itemsList->size()) {
+      break;
+    }
 
     u8 row = 3 + i;
     //make the current menu green
@@ -401,14 +407,16 @@ void PrintPresetsMenu() {
     return;
   }
 
-  if(currentMenu->mode == LOAD_PRESET) {
-    printf("\x1b[0;%dHSelect a Preset to Load", 1+(BOTTOM_WIDTH-23)/2);
+  if (currentMenu->mode == LOAD_PRESET) {
+    printf("\x1b[0;%dHSelect a Preset to Load", 1 + (BOTTOM_WIDTH - 23) / 2);
   } else if (currentMenu->mode == DELETE_PRESET) {
-    printf("\x1b[0;%dHSelect a Preset to Delete", 1+(BOTTOM_WIDTH-25)/2);
+    printf("\x1b[0;%dHSelect a Preset to Delete", 1 + (BOTTOM_WIDTH - 25) / 2);
   }
 
   for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
-    if (i >= presetEntries.size()) break;
+    if (i >= presetEntries.size()) {
+      break;
+    }
 
     std::string preset = presetEntries[i];
 
@@ -427,7 +435,7 @@ void PrintGenerateMenu() {
 
   consoleSelect(&bottomScreen);
 
-  printf("\x1b[3;%dHHow will you play?", 1+(BOTTOM_WIDTH-18)/2);
+  printf("\x1b[3;%dHHow will you play?", 1 + (BOTTOM_WIDTH - 18) / 2);
   std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
 
   for (u8 i = 0; i < playOptions.size(); i++) {
@@ -480,13 +488,12 @@ void GenerateRandomizer() {
     return;
   }
 
-  int ret = Playthrough::Playthrough_Init(std::hash<std::string>{}(Settings::seed));
+  int ret = Playthrough::Playthrough_Init(std::hash<std::string> {}(Settings::seed));
   if (ret < 0) {
-    if(ret == -1) { //Failed to generate after 5 tries
+    if (ret == -1) { //Failed to generate after 5 tries
       printf("\n\nFailed to generate after 5 tries.\nPress Select to exit or B to go back to the menu.\n");
       return;
-    }
-    else {
+    } else {
       printf("\n\nError %d with fill.\nPress Select to exit or B to go back to the menu.\n", ret);
       return;
     }

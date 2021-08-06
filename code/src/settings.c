@@ -67,7 +67,7 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
 //With the No Health Refill option on, full health refills from health upgrades and Bombchu Bowling are turned off, and fairies restore 3 hearts
 //Otherwise, they grant a full heal, and the default effect applies (full heal from bottle, 8 hearts on contact)
 u32 Settings_SetFullHealthRestore(u8 setAmount) {
-    if((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)){
+    if ((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)) {
         return setAmount;
     } else {
         return 0x140;
@@ -89,7 +89,7 @@ typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
 #define Health_ChangeBy_addr 0x352dbc
 #define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
 void FairyPickupHealAmount(void) {
-    if(gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+    if (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL) {
         Health_ChangeBy(gGlobalContext, 0x30);
     } else {
         Health_ChangeBy(gGlobalContext, 0x80);
@@ -112,7 +112,7 @@ void Settings_SkipSongReplays() {
     // msgModes 18 to 23 are used to manage the song replays. Skipping to mode 23 ends the replay.
     // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns Pierre.
     if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 && gGlobalContext->unk_2A91[0xEB] != 12) ||
-        (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
+            (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
        ) {
         gGlobalContext->msgMode = 23;
     }
@@ -156,7 +156,7 @@ u8 Bias(u32 seed) {
     return value;
 }
 
-  const char hashIconNames[32][25] = {
+const char hashIconNames[32][25] = {
     "Deku Stick",
     "Deku Nut",
     "Bow",
@@ -189,4 +189,4 @@ u8 Bias(u32 seed) {
     "Compass",
     "Map",
     "Big Magic",
-  };
+};

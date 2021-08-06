@@ -58,11 +58,13 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         if (scene == 0x10) {
             u32 chestItemId = (actor->params >> 5) & 0x7F;
             if (chestItemId == 0x75) {
-                return (ItemOverride_Key){ .all = 0 };
+                return (ItemOverride_Key) {
+                    .all = 0
+                };
             }
         }
 
-        return (ItemOverride_Key){
+        return (ItemOverride_Key) {
             .scene = scene,
             .type = OVR_CHEST,
             .flag = actor->params & 0x1F,
@@ -71,28 +73,30 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         // Only override heart pieces and keys
         u32 collectibleType = actor->params & 0xFF;
         if (collectibleType != 0x06 && collectibleType != 0x11) {
-            return (ItemOverride_Key){ .all = 0 };
+            return (ItemOverride_Key) {
+                .all = 0
+            };
         }
 
-        return (ItemOverride_Key){
+        return (ItemOverride_Key) {
             .scene = scene,
             .type = OVR_COLLECTABLE,
             .flag = ((EnItem00*)actor)->collectibleFlag,
         };
     } else if (actor->id == 0x19C) { // Gold Skulltula Token
-        return (ItemOverride_Key){
+        return (ItemOverride_Key) {
             .scene = (actor->params >> 8) & 0x1F,
             .type = OVR_SKULL,
             .flag = actor->params & 0xFF,
         };
     } else if (scene == 0x3E && actor->id == 0x11A) { // Grotto Salesman
-        return (ItemOverride_Key){
+        return (ItemOverride_Key) {
             .scene = gSaveContext.respawn[RESPAWN_MODE_RETURN].data,
             .type = OVR_GROTTO_SCRUB,
             .flag = itemId,
         };
     } else {
-        return (ItemOverride_Key){
+        return (ItemOverride_Key) {
             .scene = scene,
             .type = OVR_BASE_ITEM,
             .flag = itemId,
@@ -114,13 +118,17 @@ ItemOverride ItemOverride_LookupByKey(ItemOverride_Key key) {
             return midOvr;
         }
     }
-    return (ItemOverride){ 0 };
+    return (ItemOverride) {
+        0
+    };
 }
 
 ItemOverride ItemOverride_Lookup(Actor* actor, u8 scene, u8 itemId) {
     ItemOverride_Key key = ItemOverride_GetSearchKey(actor, scene, itemId);
     if (key.all == 0) {
-        return (ItemOverride){ 0 };
+        return (ItemOverride) {
+            0
+        };
     }
 
     return ItemOverride_LookupByKey(key);
@@ -145,7 +153,9 @@ static void ItemOverride_Activate(ItemOverride override) {
 }
 
 static void ItemOverride_Clear(void) {
-    rActiveItemOverride = (ItemOverride){ 0 };
+    rActiveItemOverride = (ItemOverride) {
+        0
+    };
     rActiveItemRow = NULL;
     rActiveItemActionId = 0;
     rActiveItemTextId = 0;
@@ -221,12 +231,12 @@ void ItemOverride_AfterItemReceived(void) {
 
 static u32 ItemOverride_PlayerIsReady(void) {
     if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 && (PLAYER->actor.bgCheckFlags & 0x0001) &&
-        (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
-        gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
-        gGlobalContext->actorCtx.titleCtx.alpha == 0
-        // && (z64_event_state_1 & 0x20) == 0 //TODO
-        // && (z64_game.camera_2 == 0) //TODO
-    ) {
+            (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
+            gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
+            gGlobalContext->actorCtx.titleCtx.alpha == 0
+            // && (z64_event_state_1 & 0x20) == 0 //TODO
+            // && (z64_game.camera_2 == 0) //TODO
+       ) {
         rSatisfiedPendingFrames++;
     } else {
         rSatisfiedPendingFrames = 0;

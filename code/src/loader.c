@@ -24,15 +24,17 @@ void loader_main(void) {
     res = svcControlProcessMemory(getCurrentProcessHandle(), address, address, neededMemory, MEMOP_PROT,
                                   MEMPERM_READ | MEMPERM_WRITE | MEMPERM_EXECUTE);
 
-    if (res < 0)
+    if (res < 0) {
         svcBreak(1);
+    }
 
     // Hacky solution to be able to edit gDrawItemTable, which is normally in RO data
     res = svcControlProcessMemory(getCurrentProcessHandle(), 0x4D8000, 0x4D8000, 0x1000, MEMOP_PROT,
                                   MEMPERM_READ | MEMPERM_WRITE);
 
-    if (res < 0)
+    if (res < 0) {
         svcBreak(1);
+    }
 }
 
 Handle getCurrentProcessHandle(void) {
@@ -43,8 +45,9 @@ Handle getCurrentProcessHandle(void) {
     svcGetProcessId(&currentPid, 0xffff8001);
     res = svcOpenProcess(&handle, currentPid);
 
-    if (res != 0)
+    if (res != 0) {
         return 0;
+    }
 
     return handle;
 }

@@ -47,8 +47,8 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
     s16 DropType = item->actor.params & 0x00FF;
     //If no ammo drops is chosen as an option, overrides the incoming ammo or magic drop with a blue rupee
-    if(gSettingsContext.ammoDrops == AMMODROPS_NONE){		
-        switch(DropType){
+    if (gSettingsContext.ammoDrops == AMMODROPS_NONE) {
+        switch (DropType) {
             case ITEM00_BOMBS_A:
             case ITEM00_ARROWS_SINGLE:
             case ITEM00_ARROWS_SMALL:
@@ -61,13 +61,13 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
             case ITEM00_SEEDS:
             case ITEM00_FLEXIBLE:
             case ITEM00_BOMBS_SPECIAL:
-            item->actor.params = (item->actor.params & 0xFF00) | 0x01;
-            break;
+                item->actor.params = (item->actor.params & 0xFF00) | 0x01;
+                break;
         }
     }
     //If no health drops is chosen as an option, overrides the incoming health drop with a green rupee
-    if((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROP) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)){	
-        if (DropType == ITEM00_HEART){
+    if ((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROP) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)) {
+        if (DropType == ITEM00_HEART) {
             item->actor.params = (item->actor.params & 0xFF00) | 0x00;
         }
     }

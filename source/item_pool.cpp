@@ -431,7 +431,7 @@ ItemKey GetJunkItem() {
   if (IceTrapValue.Is(ICETRAPS_MAYHEM) || IceTrapValue.Is(ICETRAPS_ONSLAUGHT)) {
     return ICE_TRAP;
   } else if (IceTrapValue.Is(ICETRAPS_EXTRA)) {
-      return RandomElement(JunkPoolItems);
+    return RandomElement(JunkPoolItems);
   }
   //Ice Trap is the last item in JunkPoolItems, so subtract 1 to never hit that index
   u8 idx = Random(0, JunkPoolItems.size() - 1);
@@ -472,61 +472,61 @@ void PlaceJunkInExcludedLocation(const LocationKey il) {
 }
 
 static void PlaceVanillaDekuScrubItems() {
-    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_REAR,             RED_POTION_REFILL);
-    PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_FRONT,            GREEN_POTION_REFILL);
-    PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_REAR,            RED_POTION_REFILL);
-    PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_FRONT,           GREEN_POTION_REFILL);
-    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_LEFT,             DEKU_NUTS_5);
-    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_RIGHT,            BOMBS_5);
-    PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_CENTER,           DEKU_SEEDS_30);
-    PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_REAR,             RED_POTION_REFILL);
-    PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_FRONT,            GREEN_POTION_REFILL);
-    PlaceItemInLocation(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, DEKU_NUTS_5);
-    PlaceItemInLocation(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT,  DEKU_STICK_1);
-    PlaceItemInLocation(LW_DEKU_SCRUB_GROTTO_REAR,             DEKU_SEEDS_30);
-    PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_REAR,       RED_POTION_REFILL);
-    PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_FRONT,      GREEN_POTION_REFILL);
-    PlaceItemInLocation(DMC_DEKU_SCRUB,                        BOMBS_5);
-    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_LEFT,            DEKU_NUTS_5);
-    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_RIGHT,           BOMBS_5);
-    PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_CENTER,          DEKU_SEEDS_30);
-    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_LEFT,             DEKU_NUTS_5);
-    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_RIGHT,            BOMBS_5);
-    PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_CENTER,           DEKU_SEEDS_30);
-    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_LEFT,            DEKU_NUTS_5);
-    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_RIGHT,           BOMBS_5);
-    PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_CENTER,          DEKU_SEEDS_30);
+  PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_REAR,             RED_POTION_REFILL);
+  PlaceItemInLocation(ZR_DEKU_SCRUB_GROTTO_FRONT,            GREEN_POTION_REFILL);
+  PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_REAR,            RED_POTION_REFILL);
+  PlaceItemInLocation(SFM_DEKU_SCRUB_GROTTO_FRONT,           GREEN_POTION_REFILL);
+  PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_LEFT,             DEKU_NUTS_5);
+  PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_RIGHT,            BOMBS_5);
+  PlaceItemInLocation(LH_DEKU_SCRUB_GROTTO_CENTER,           DEKU_SEEDS_30);
+  PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_REAR,             RED_POTION_REFILL);
+  PlaceItemInLocation(GV_DEKU_SCRUB_GROTTO_FRONT,            GREEN_POTION_REFILL);
+  PlaceItemInLocation(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, DEKU_NUTS_5);
+  PlaceItemInLocation(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT,  DEKU_STICK_1);
+  PlaceItemInLocation(LW_DEKU_SCRUB_GROTTO_REAR,             DEKU_SEEDS_30);
+  PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_REAR,       RED_POTION_REFILL);
+  PlaceItemInLocation(COLOSSUS_DEKU_SCRUB_GROTTO_FRONT,      GREEN_POTION_REFILL);
+  PlaceItemInLocation(DMC_DEKU_SCRUB,                        BOMBS_5);
+  PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_LEFT,            DEKU_NUTS_5);
+  PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_RIGHT,           BOMBS_5);
+  PlaceItemInLocation(DMC_DEKU_SCRUB_GROTTO_CENTER,          DEKU_SEEDS_30);
+  PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_LEFT,             DEKU_NUTS_5);
+  PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_RIGHT,            BOMBS_5);
+  PlaceItemInLocation(GC_DEKU_SCRUB_GROTTO_CENTER,           DEKU_SEEDS_30);
+  PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_LEFT,            DEKU_NUTS_5);
+  PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_RIGHT,           BOMBS_5);
+  PlaceItemInLocation(LLR_DEKU_SCRUB_GROTTO_CENTER,          DEKU_SEEDS_30);
 
-    //Dungeon Scrubs
-    if (DekuTree.IsMQ()) {
-      PlaceItemInLocation(DEKU_TREE_MQ_DEKU_SCRUB, DEKU_SHIELD);
-    }
-    if (DodongosCavern.IsMQ()) {
-      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR,                    DEKU_STICK_1);
-      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_FRONT,                   DEKU_SEEDS_30);
-      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_STAIRCASE,                     DEKU_SHIELD);
-      PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_SIDE_ROOM_NEAR_LOWER_LIZALFOS, RED_POTION_REFILL);
-    } else {
-      PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT,      DEKU_NUTS_5);
-      PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS, DEKU_STICK_1);
-      PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT,     DEKU_SEEDS_30);
-      PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,                   DEKU_SHIELD);
-    }
-    if (JabuJabusBelly.IsVanilla()) {
-      PlaceItemInLocation(JABU_JABUS_BELLY_DEKU_SCRUB, DEKU_NUTS_5);
-    }
-    if (GanonsCastle.IsMQ()) {
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,         GREEN_POTION_REFILL);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,  BOMBS_5);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,       ARROWS_30);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT, RED_POTION_REFILL);
-      PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,        DEKU_NUTS_5);
-    } else {
-      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,  BOMBS_5);
-      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, DEKU_SEEDS_30);
-      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_RIGHT,        RED_POTION_REFILL);
-      PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_LEFT,         GREEN_POTION_REFILL);
-    }
+  //Dungeon Scrubs
+  if (DekuTree.IsMQ()) {
+    PlaceItemInLocation(DEKU_TREE_MQ_DEKU_SCRUB, DEKU_SHIELD);
+  }
+  if (DodongosCavern.IsMQ()) {
+    PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR,                    DEKU_STICK_1);
+    PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_FRONT,                   DEKU_SEEDS_30);
+    PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_STAIRCASE,                     DEKU_SHIELD);
+    PlaceItemInLocation(DODONGOS_CAVERN_MQ_DEKU_SCRUB_SIDE_ROOM_NEAR_LOWER_LIZALFOS, RED_POTION_REFILL);
+  } else {
+    PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT,      DEKU_NUTS_5);
+    PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS, DEKU_STICK_1);
+    PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT,     DEKU_SEEDS_30);
+    PlaceItemInLocation(DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,                   DEKU_SHIELD);
+  }
+  if (JabuJabusBelly.IsVanilla()) {
+    PlaceItemInLocation(JABU_JABUS_BELLY_DEKU_SCRUB, DEKU_NUTS_5);
+  }
+  if (GanonsCastle.IsMQ()) {
+    PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,         GREEN_POTION_REFILL);
+    PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,  BOMBS_5);
+    PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,       ARROWS_30);
+    PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT, RED_POTION_REFILL);
+    PlaceItemInLocation(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,        DEKU_NUTS_5);
+  } else {
+    PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,  BOMBS_5);
+    PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, DEKU_SEEDS_30);
+    PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_RIGHT,        RED_POTION_REFILL);
+    PlaceItemInLocation(GANONS_CASTLE_DEKU_SCRUB_LEFT,         GREEN_POTION_REFILL);
+  }
 
 
 }
@@ -596,7 +596,7 @@ static void SetMinimalItemPool() {
   ReplaceMaxItem(PROGRESSIVE_BOMB_BAG, 1);
   ReplaceMaxItem(PIECE_OF_HEART, 0);
   // Need an extra heart container when starting with 1 heart to be able to reach 3 hearts
-  ReplaceMaxItem(HEART_CONTAINER, (StartingHealth.Value<u8>() == 18)? 1 : 0);
+  ReplaceMaxItem(HEART_CONTAINER, (StartingHealth.Value<u8>() == 18) ? 1 : 0);
 }
 
 void GenerateItemPool() {
@@ -1066,7 +1066,9 @@ void GenerateItemPool() {
           break;
         }
       }
-      if (junkSet) break;
+      if (junkSet) {
+        break;
+      }
     }
   }
 }

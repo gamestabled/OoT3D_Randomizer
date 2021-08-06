@@ -23,7 +23,8 @@ static const DnsItemEntry Scrub_9 = { 40, 1, 0x77, EnDns_rPurchaseableCheck, EnD
 static const DnsItemEntry Scrub_A = { 40, 1, 0x79, EnDns_rPurchaseableCheck, EnDns_rSetRupeesAndFlags };
 
 const DnsItemEntry* rScrubTable[] = { &Scrub_0, &Scrub_1, &Scrub_2, &Scrub_3, &Scrub_4, &Scrub_5,
-                                      &Scrub_6, &Scrub_7, &Scrub_8, &Scrub_9, &Scrub_A };
+                                      &Scrub_6, &Scrub_7, &Scrub_8, &Scrub_9, &Scrub_A
+                                    };
 
 #define Vanilla_DnsItemEntries_addr 0x522384
 #define VanillaScrubTable ((DnsItemEntry**)Vanilla_DnsItemEntries_addr)

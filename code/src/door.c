@@ -8,8 +8,8 @@
 // items which don't cause a room transition, so we have to avoid
 // those
 void Door_CheckToDeleteCustomModels(Actor* door) {
-    if ((gGlobalContext->sceneNum != 0x000C) && // Theive's Hideout
-        (gGlobalContext->sceneNum != 0x0001)) { // Dodongo's Cavern
+    if ((gGlobalContext->sceneNum != 0x000C) && // Thieve's Hideout
+            (gGlobalContext->sceneNum != 0x0001)) { // Dodongo's Cavern
         Model_DestroyAll();
     }
 }

@@ -96,17 +96,13 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
         if (gSaveContext.health <= 16 || gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO) {
             gSaveContext.health = 0;
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_HALF) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_HALF) {
             healthDecrement = 64; // 4 Hearts
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DEFAULT) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DEFAULT) {
             healthDecrement = 128; // 8 Hearts
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DOUBLE) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DOUBLE) {
             healthDecrement = 256; // 16 Hearts
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_QUADRUPLE) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_QUADRUPLE) {
             healthDecrement = 512; // 32 Hearts
         } else {
             healthDecrement = 640; // 40 Hearts
@@ -125,8 +121,9 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 u8 Chest_OverrideAnimation() {
 
     if ((gSettingsContext.chestAnimations == ALWAYS_FAST) ||
-        (rActiveItemActionId == 0)) // The animation is always fast for unused chests that aren't randomized
+            (rActiveItemActionId == 0)) { // The animation is always fast for unused chests that aren't randomized
         return 0;
+    }
 
     if (!rActiveItemFastChest) {
         PlaySound(0x1000599); // Play chest opening fanfare
@@ -189,7 +186,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
             PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
         // Explosive Rupee Trap
-        else if(damageType == 7) {
+        else if (damageType == 7) {
             Actor* ruppy = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x131, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
             ruppy->world.pos = thisx->world.pos;
             ruppy->world.pos.y += 30;
@@ -197,7 +194,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
             PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
         // Fire Trap
-        else if(damageType == 8) {
+        else if (damageType == 8) {
             FireDamage(&(PLAYER->actor), gGlobalContext, pRandInt % 2);
             LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
             return 1;

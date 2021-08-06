@@ -50,8 +50,8 @@ typedef struct {
 
 extern SpoilerData gSpoilerData;
 
-char *SpoilerData_GetItemLocationString(u16 itemIndex);
-char *SpoilerData_GetItemNameString(u16 itemIndex);
+char* SpoilerData_GetItemLocationString(u16 itemIndex);
+char* SpoilerData_GetItemNameString(u16 itemIndex);
 SpoilerItemLocation GetSpoilerItemLocation(u8 sphere, u16 itemIndex);
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex);
 u8 SpoilerData_ChestCheck(SpoilerItemLocation itemLoc);

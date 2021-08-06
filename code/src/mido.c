@@ -36,7 +36,7 @@ u16 EnMd_GetTextKokiriForest() {
     if (gSaveContext.eventChkInf[0] & 0x10) {
         return 0x1034;
     }
-       //Has kokiri sword                         Has deku shield
+    //   Has kokiri sword                         Has deku shield
     if ((gSaveContext.equips.equipment & 0x1) && (gSaveContext.equips.equipment & 0x10)) {
         return 0x1033; //Text to tell you you're cool for having a sword
     }

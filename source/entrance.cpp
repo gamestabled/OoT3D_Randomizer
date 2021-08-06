@@ -19,13 +19,13 @@ std::list<EntranceOverride> entranceOverrides = {};
 static bool noRandomEntrances = false;
 
 typedef struct {
-    EntranceType type;
-    AreaKey parentRegion;
-    AreaKey connectedRegion;
-    s16 index;
-    s16 blueWarp;
+  EntranceType type;
+  AreaKey parentRegion;
+  AreaKey connectedRegion;
+  s16 index;
+  s16 blueWarp;
 } EntranceLinkInfo;
-                                 //primary,          secondary
+//primary,          secondary
 using EntranceInfoPair = std::pair<EntranceLinkInfo, EntranceLinkInfo>;
 using EntrancePair = std::pair<Entrance*, Entrance*>;
 
@@ -36,7 +36,7 @@ using EntrancePair = std::pair<Entrance*, Entrance*>;
 // https://github.com/TestRunnerSRL/OoT-Randomizer/blob/Dev/EntranceShuffle.py
 
 void SetAllEntrancesData(std::vector<EntranceInfoPair>& entranceShuffleTable) {
-  for (auto& entrancePair: entranceShuffleTable) {
+  for (auto& entrancePair : entranceShuffleTable) {
 
     auto& forwardEntry = entrancePair.first;
     auto& returnEntry = entrancePair.second;
@@ -101,7 +101,9 @@ static std::array<std::vector<Entrance*>, 2> SplitEntrancesByRequirements(std::v
 
   Logic::LogicReset();
   // //Apply the effects of all advancement items to search for entrance accessibility
-  std::vector<ItemKey> items = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
+  std::vector<ItemKey> items = FilterFromPool(ItemPool, [](const ItemKey i) {
+    return ItemTable(i).IsAdvancement();
+  });
   for (ItemKey unplacedItem : items) {
     ItemTable(unplacedItem).ApplyEffect();
   }
@@ -184,7 +186,9 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
 
   // Check to make sure all locations are still reachable
   Logic::LogicReset();
-  std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
+  std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i) {
+    return ItemTable(i).IsAdvancement();
+  });
   for (ItemKey unplacedItem : itemsToPlace) {
     ItemTable(unplacedItem).ApplyEffect();
   }
@@ -201,7 +205,7 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
     type = entrancePlaced->GetType();
   }
   if ((Settings::ShuffleOverworldEntrances /*|| specialInterior || spawnPositions*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
-  type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
+      type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
     //At least one valid starting region with all basic refills should be reachable without using any items at the beginning of the seed
     Logic::LogicReset();
     GetAccessibleLocations({});
@@ -232,7 +236,7 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
   // The Big Poe shop should always be accessible as adult without the need to use any bottles
   // This is important to ensure that players can never lock their only bottles by filling them with Big Poes they can't sell
   if ((Settings::ShuffleOverworldEntrances /*|| specialInterior*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
-  type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
+      type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
     Logic::LogicReset();
     GetAccessibleLocations({}, SearchMode::PoeCollectorAccess);
     if (!AreaTable(MARKET_GUARD_HOUSE)->Adult()) {
@@ -312,7 +316,7 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
     bool success = ShuffleEntrances(restrictiveEntrances, targetEntrances, rollbacks);
     if (success) {
       success = ShuffleEntrances(softEntrances, targetEntrances, rollbacks);
-      if(!success) {
+      if (!success) {
         for (auto& pair : rollbacks) {
           RestoreConnections(pair.first, pair.second);
         }
@@ -344,81 +348,118 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
 void ShuffleAllEntrances() {
 
   std::vector<EntranceInfoPair> entranceShuffleTable = {
-                             //Parent Region                     Connected Region                  index   blue warp
-    {{EntranceType::Dungeon,   KF_OUTSIDE_DEKU_TREE,             DEKU_TREE_ENTRYWAY,               0x0000},
-     {EntranceType::Dungeon,   DEKU_TREE_ENTRYWAY,               KF_OUTSIDE_DEKU_TREE,             0x0209, 0x0457}},
-    {{EntranceType::Dungeon,   DEATH_MOUNTAIN_TRAIL,             DODONGOS_CAVERN_ENTRYWAY,         0x0004},
-     {EntranceType::Dungeon,   DODONGOS_CAVERN_ENTRYWAY,         DEATH_MOUNTAIN_TRAIL,             0x0242, 0x047A}},
-    {{EntranceType::Dungeon,   ZORAS_FOUNTAIN,                   JABU_JABUS_BELLY_ENTRYWAY,        0x0028},
-     {EntranceType::Dungeon,   JABU_JABUS_BELLY_ENTRYWAY,        ZORAS_FOUNTAIN,                   0x0221, 0x010E}},
-    {{EntranceType::Dungeon,   SACRED_FOREST_MEADOW,             FOREST_TEMPLE_ENTRYWAY,           0x0169},
-     {EntranceType::Dungeon,   FOREST_TEMPLE_ENTRYWAY,           SACRED_FOREST_MEADOW,             0x0215, 0x0608}},
-    {{EntranceType::Dungeon,   DMC_CENTRAL_LOCAL,                FIRE_TEMPLE_ENTRYWAY,             0x0165},
-     {EntranceType::Dungeon,   FIRE_TEMPLE_ENTRYWAY,             DMC_CENTRAL_LOCAL,                0x024A, 0x0564}},
-    {{EntranceType::Dungeon,   LAKE_HYLIA,                       WATER_TEMPLE_ENTRYWAY,            0x0010},
-     {EntranceType::Dungeon,   WATER_TEMPLE_ENTRYWAY,            LAKE_HYLIA,                       0x021D, 0x060C}},
-    {{EntranceType::Dungeon,   DESERT_COLOSSUS,                  SPIRIT_TEMPLE_ENTRYWAY,           0x0082},
-     {EntranceType::Dungeon,   SPIRIT_TEMPLE_ENTRYWAY,           DESERT_COLOSSUS,                  0x01E1, 0x0610}},
-    {{EntranceType::Dungeon,   GRAVEYARD_WARP_PAD_REGION,        SHADOW_TEMPLE_ENTRYWAY,           0x0037},
-     {EntranceType::Dungeon,   SHADOW_TEMPLE_ENTRYWAY,           GRAVEYARD_WARP_PAD_REGION,        0x0205, 0x0580}},
-    {{EntranceType::Dungeon,   KAKARIKO_VILLAGE,                 BOTTOM_OF_THE_WELL_ENTRYWAY,      0x0098},
-     {EntranceType::Dungeon,   BOTTOM_OF_THE_WELL_ENTRYWAY,      KAKARIKO_VILLAGE,                 0x02A6}},
-    {{EntranceType::Dungeon,   ZORAS_FOUNTAIN,                   ICE_CAVERN_ENTRYWAY,              0x0088},
-     {EntranceType::Dungeon,   ICE_CAVERN_ENTRYWAY,              ZORAS_FOUNTAIN,                   0x03D4}},
-    {{EntranceType::Dungeon,   GERUDO_FORTRESS,                  GERUDO_TRAINING_GROUNDS_ENTRYWAY, 0x0008},
-     {EntranceType::Dungeon,   GERUDO_TRAINING_GROUNDS_ENTRYWAY, GERUDO_FORTRESS,                  0x03A8}},
-    {{EntranceType::Overworld, KOKIRI_FOREST,                    LW_BRIDGE_FROM_FOREST,            0x05E0},
-     {EntranceType::Overworld, LW_BRIDGE,                        KOKIRI_FOREST,                    0x020D}},
-    {{EntranceType::Overworld, KOKIRI_FOREST,                    THE_LOST_WOODS,                   0x011E},
-     {EntranceType::Overworld, LW_FOREST_EXIT,                   KOKIRI_FOREST,                    0x0286}},
-    {{EntranceType::Overworld, THE_LOST_WOODS,                   GC_WOODS_WARP,                    0x04E2},
-     {EntranceType::Overworld, GC_WOODS_WARP,                    THE_LOST_WOODS,                   0x04D6}},
-    {{EntranceType::Overworld, THE_LOST_WOODS,                   ZORAS_RIVER,                      0x01DD},
-     {EntranceType::Overworld, ZORAS_RIVER,                      THE_LOST_WOODS,                   0x04DA}},
-    {{EntranceType::Overworld, LW_BEYOND_MIDO,                   SFM_ENTRYWAY,                     0x00FC},
-     {EntranceType::Overworld, SFM_ENTRYWAY,                     LW_BEYOND_MIDO,                   0x01A9}},
-    {{EntranceType::Overworld, LW_BRIDGE,                        HYRULE_FIELD,                     0x0185},
-     {EntranceType::Overworld, HYRULE_FIELD,                     LW_BRIDGE,                        0x04DE}},
-    {{EntranceType::Overworld, HYRULE_FIELD,                     LAKE_HYLIA,                       0x0102},
-     {EntranceType::Overworld, LAKE_HYLIA,                       HYRULE_FIELD,                     0x0189}},
-    {{EntranceType::Overworld, HYRULE_FIELD,                     GERUDO_VALLEY,                    0x0117},
-     {EntranceType::Overworld, GERUDO_VALLEY,                    HYRULE_FIELD,                     0x018D}},
-    {{EntranceType::Overworld, HYRULE_FIELD,                     MARKET_ENTRANCE,                  0x0276},
-     {EntranceType::Overworld, MARKET_ENTRANCE,                  HYRULE_FIELD,                     0x01FD}},
-    {{EntranceType::Overworld, HYRULE_FIELD,                     KAKARIKO_VILLAGE,                 0x00DB},
-     {EntranceType::Overworld, KAKARIKO_VILLAGE,                 HYRULE_FIELD,                     0x017D}},
-    {{EntranceType::Overworld, HYRULE_FIELD,                     ZR_FRONT,                         0x00EA},
-     {EntranceType::Overworld, ZR_FRONT,                         HYRULE_FIELD,                     0x0181}},
-    {{EntranceType::Overworld, HYRULE_FIELD,                     LON_LON_RANCH,                    0x0157},
-     {EntranceType::Overworld, LON_LON_RANCH,                    HYRULE_FIELD,                     0x01F9}},
-    {{EntranceType::Overworld, LAKE_HYLIA,                       ZORAS_DOMAIN,                     0x0328},
-     {EntranceType::Overworld, ZORAS_DOMAIN,                     LAKE_HYLIA,                       0x0560}},
-    {{EntranceType::Overworld, GV_FORTRESS_SIDE,                 GERUDO_FORTRESS,                  0x0129},
-     {EntranceType::Overworld, GERUDO_FORTRESS,                  GV_FORTRESS_SIDE,                 0x022D}},
-    {{EntranceType::Overworld, GF_OUTSIDE_GATE,                  WASTELAND_NEAR_FORTRESS,          0x0130},
-     {EntranceType::Overworld, WASTELAND_NEAR_FORTRESS,          GF_OUTSIDE_GATE,                  0x03AC}},
-    {{EntranceType::Overworld, WASTELAND_NEAR_COLOSSUS,          DESERT_COLOSSUS,                  0x0123},
-     {EntranceType::Overworld, DESERT_COLOSSUS,                  WASTELAND_NEAR_COLOSSUS,          0x0365}},
-    {{EntranceType::Overworld, MARKET_ENTRANCE,                  THE_MARKET,                       0x00B1},
-     {EntranceType::Overworld, THE_MARKET,                       MARKET_ENTRANCE,                  0x0033}},
-    {{EntranceType::Overworld, THE_MARKET,                       CASTLE_GROUNDS,                   0x0138},
-     {EntranceType::Overworld, CASTLE_GROUNDS,                   THE_MARKET,                       0x025A}},
-    {{EntranceType::Overworld, THE_MARKET,                       TOT_ENTRANCE,                     0x0171},
-     {EntranceType::Overworld, TOT_ENTRANCE,                     THE_MARKET,                       0x025E}},
-    {{EntranceType::Overworld, KAKARIKO_VILLAGE,                 THE_GRAVEYARD,                    0x00E4},
-     {EntranceType::Overworld, THE_GRAVEYARD,                    KAKARIKO_VILLAGE,                 0x0195}},
-    {{EntranceType::Overworld, KAK_BEHIND_GATE,                  DEATH_MOUNTAIN_TRAIL,             0x013D},
-     {EntranceType::Overworld, DEATH_MOUNTAIN_TRAIL,             KAK_BEHIND_GATE,                  0x0191}},
-    {{EntranceType::Overworld, DEATH_MOUNTAIN_TRAIL,             GORON_CITY,                       0x014D},
-     {EntranceType::Overworld, GORON_CITY,                       DEATH_MOUNTAIN_TRAIL,             0x01B9}},
-    {{EntranceType::Overworld, GC_DARUNIAS_CHAMBER,              DMC_LOWER_LOCAL,                  0x0246},
-     {EntranceType::Overworld, DMC_LOWER_NEARBY,                 GC_DARUNIAS_CHAMBER,              0x01C1}},
-    {{EntranceType::Overworld, DMT_SUMMIT,                       DMC_UPPER_LOCAL,                  0x0147},
-     {EntranceType::Overworld, DMC_UPPER_NEARBY,                 DMT_SUMMIT,                       0x01BD}},
-    {{EntranceType::Overworld, ZR_BEHIND_WATERFALL,              ZORAS_DOMAIN,                     0x0108},
-     {EntranceType::Overworld, ZORAS_DOMAIN,                     ZR_BEHIND_WATERFALL,              0x019D}},
-    {{EntranceType::Overworld, ZD_BEHIND_KING_ZORA,              ZORAS_FOUNTAIN,                   0x0225},
-     {EntranceType::Overworld, ZORAS_FOUNTAIN,                   ZD_BEHIND_KING_ZORA,              0x01A1}},
+    //Parent Region                     Connected Region                  index   blue warp
+    { {EntranceType::Dungeon,   KF_OUTSIDE_DEKU_TREE,             DEKU_TREE_ENTRYWAY,               0x0000},
+      {EntranceType::Dungeon,   DEKU_TREE_ENTRYWAY,               KF_OUTSIDE_DEKU_TREE,             0x0209, 0x0457}
+    },
+    { {EntranceType::Dungeon,   DEATH_MOUNTAIN_TRAIL,             DODONGOS_CAVERN_ENTRYWAY,         0x0004},
+      {EntranceType::Dungeon,   DODONGOS_CAVERN_ENTRYWAY,         DEATH_MOUNTAIN_TRAIL,             0x0242, 0x047A}
+    },
+    { {EntranceType::Dungeon,   ZORAS_FOUNTAIN,                   JABU_JABUS_BELLY_ENTRYWAY,        0x0028},
+      {EntranceType::Dungeon,   JABU_JABUS_BELLY_ENTRYWAY,        ZORAS_FOUNTAIN,                   0x0221, 0x010E}
+    },
+    { {EntranceType::Dungeon,   SACRED_FOREST_MEADOW,             FOREST_TEMPLE_ENTRYWAY,           0x0169},
+      {EntranceType::Dungeon,   FOREST_TEMPLE_ENTRYWAY,           SACRED_FOREST_MEADOW,             0x0215, 0x0608}
+    },
+    { {EntranceType::Dungeon,   DMC_CENTRAL_LOCAL,                FIRE_TEMPLE_ENTRYWAY,             0x0165},
+      {EntranceType::Dungeon,   FIRE_TEMPLE_ENTRYWAY,             DMC_CENTRAL_LOCAL,                0x024A, 0x0564}
+    },
+    { {EntranceType::Dungeon,   LAKE_HYLIA,                       WATER_TEMPLE_ENTRYWAY,            0x0010},
+      {EntranceType::Dungeon,   WATER_TEMPLE_ENTRYWAY,            LAKE_HYLIA,                       0x021D, 0x060C}
+    },
+    { {EntranceType::Dungeon,   DESERT_COLOSSUS,                  SPIRIT_TEMPLE_ENTRYWAY,           0x0082},
+      {EntranceType::Dungeon,   SPIRIT_TEMPLE_ENTRYWAY,           DESERT_COLOSSUS,                  0x01E1, 0x0610}
+    },
+    { {EntranceType::Dungeon,   GRAVEYARD_WARP_PAD_REGION,        SHADOW_TEMPLE_ENTRYWAY,           0x0037},
+      {EntranceType::Dungeon,   SHADOW_TEMPLE_ENTRYWAY,           GRAVEYARD_WARP_PAD_REGION,        0x0205, 0x0580}
+    },
+    { {EntranceType::Dungeon,   KAKARIKO_VILLAGE,                 BOTTOM_OF_THE_WELL_ENTRYWAY,      0x0098},
+      {EntranceType::Dungeon,   BOTTOM_OF_THE_WELL_ENTRYWAY,      KAKARIKO_VILLAGE,                 0x02A6}
+    },
+    { {EntranceType::Dungeon,   ZORAS_FOUNTAIN,                   ICE_CAVERN_ENTRYWAY,              0x0088},
+      {EntranceType::Dungeon,   ICE_CAVERN_ENTRYWAY,              ZORAS_FOUNTAIN,                   0x03D4}
+    },
+    { {EntranceType::Dungeon,   GERUDO_FORTRESS,                  GERUDO_TRAINING_GROUNDS_ENTRYWAY, 0x0008},
+      {EntranceType::Dungeon,   GERUDO_TRAINING_GROUNDS_ENTRYWAY, GERUDO_FORTRESS,                  0x03A8}
+    },
+    { {EntranceType::Overworld, KOKIRI_FOREST,                    LW_BRIDGE_FROM_FOREST,            0x05E0},
+      {EntranceType::Overworld, LW_BRIDGE,                        KOKIRI_FOREST,                    0x020D}
+    },
+    { {EntranceType::Overworld, KOKIRI_FOREST,                    THE_LOST_WOODS,                   0x011E},
+      {EntranceType::Overworld, LW_FOREST_EXIT,                   KOKIRI_FOREST,                    0x0286}
+    },
+    { {EntranceType::Overworld, THE_LOST_WOODS,                   GC_WOODS_WARP,                    0x04E2},
+      {EntranceType::Overworld, GC_WOODS_WARP,                    THE_LOST_WOODS,                   0x04D6}
+    },
+    { {EntranceType::Overworld, THE_LOST_WOODS,                   ZORAS_RIVER,                      0x01DD},
+      {EntranceType::Overworld, ZORAS_RIVER,                      THE_LOST_WOODS,                   0x04DA}
+    },
+    { {EntranceType::Overworld, LW_BEYOND_MIDO,                   SFM_ENTRYWAY,                     0x00FC},
+      {EntranceType::Overworld, SFM_ENTRYWAY,                     LW_BEYOND_MIDO,                   0x01A9}
+    },
+    { {EntranceType::Overworld, LW_BRIDGE,                        HYRULE_FIELD,                     0x0185},
+      {EntranceType::Overworld, HYRULE_FIELD,                     LW_BRIDGE,                        0x04DE}
+    },
+    { {EntranceType::Overworld, HYRULE_FIELD,                     LAKE_HYLIA,                       0x0102},
+      {EntranceType::Overworld, LAKE_HYLIA,                       HYRULE_FIELD,                     0x0189}
+    },
+    { {EntranceType::Overworld, HYRULE_FIELD,                     GERUDO_VALLEY,                    0x0117},
+      {EntranceType::Overworld, GERUDO_VALLEY,                    HYRULE_FIELD,                     0x018D}
+    },
+    { {EntranceType::Overworld, HYRULE_FIELD,                     MARKET_ENTRANCE,                  0x0276},
+      {EntranceType::Overworld, MARKET_ENTRANCE,                  HYRULE_FIELD,                     0x01FD}
+    },
+    { {EntranceType::Overworld, HYRULE_FIELD,                     KAKARIKO_VILLAGE,                 0x00DB},
+      {EntranceType::Overworld, KAKARIKO_VILLAGE,                 HYRULE_FIELD,                     0x017D}
+    },
+    { {EntranceType::Overworld, HYRULE_FIELD,                     ZR_FRONT,                         0x00EA},
+      {EntranceType::Overworld, ZR_FRONT,                         HYRULE_FIELD,                     0x0181}
+    },
+    { {EntranceType::Overworld, HYRULE_FIELD,                     LON_LON_RANCH,                    0x0157},
+      {EntranceType::Overworld, LON_LON_RANCH,                    HYRULE_FIELD,                     0x01F9}
+    },
+    { {EntranceType::Overworld, LAKE_HYLIA,                       ZORAS_DOMAIN,                     0x0328},
+      {EntranceType::Overworld, ZORAS_DOMAIN,                     LAKE_HYLIA,                       0x0560}
+    },
+    { {EntranceType::Overworld, GV_FORTRESS_SIDE,                 GERUDO_FORTRESS,                  0x0129},
+      {EntranceType::Overworld, GERUDO_FORTRESS,                  GV_FORTRESS_SIDE,                 0x022D}
+    },
+    { {EntranceType::Overworld, GF_OUTSIDE_GATE,                  WASTELAND_NEAR_FORTRESS,          0x0130},
+      {EntranceType::Overworld, WASTELAND_NEAR_FORTRESS,          GF_OUTSIDE_GATE,                  0x03AC}
+    },
+    { {EntranceType::Overworld, WASTELAND_NEAR_COLOSSUS,          DESERT_COLOSSUS,                  0x0123},
+      {EntranceType::Overworld, DESERT_COLOSSUS,                  WASTELAND_NEAR_COLOSSUS,          0x0365}
+    },
+    { {EntranceType::Overworld, MARKET_ENTRANCE,                  THE_MARKET,                       0x00B1},
+      {EntranceType::Overworld, THE_MARKET,                       MARKET_ENTRANCE,                  0x0033}
+    },
+    { {EntranceType::Overworld, THE_MARKET,                       CASTLE_GROUNDS,                   0x0138},
+      {EntranceType::Overworld, CASTLE_GROUNDS,                   THE_MARKET,                       0x025A}
+    },
+    { {EntranceType::Overworld, THE_MARKET,                       TOT_ENTRANCE,                     0x0171},
+      {EntranceType::Overworld, TOT_ENTRANCE,                     THE_MARKET,                       0x025E}
+    },
+    { {EntranceType::Overworld, KAKARIKO_VILLAGE,                 THE_GRAVEYARD,                    0x00E4},
+      {EntranceType::Overworld, THE_GRAVEYARD,                    KAKARIKO_VILLAGE,                 0x0195}
+    },
+    { {EntranceType::Overworld, KAK_BEHIND_GATE,                  DEATH_MOUNTAIN_TRAIL,             0x013D},
+      {EntranceType::Overworld, DEATH_MOUNTAIN_TRAIL,             KAK_BEHIND_GATE,                  0x0191}
+    },
+    { {EntranceType::Overworld, DEATH_MOUNTAIN_TRAIL,             GORON_CITY,                       0x014D},
+      {EntranceType::Overworld, GORON_CITY,                       DEATH_MOUNTAIN_TRAIL,             0x01B9}
+    },
+    { {EntranceType::Overworld, GC_DARUNIAS_CHAMBER,              DMC_LOWER_LOCAL,                  0x0246},
+      {EntranceType::Overworld, DMC_LOWER_NEARBY,                 GC_DARUNIAS_CHAMBER,              0x01C1}
+    },
+    { {EntranceType::Overworld, DMT_SUMMIT,                       DMC_UPPER_LOCAL,                  0x0147},
+      {EntranceType::Overworld, DMC_UPPER_NEARBY,                 DMT_SUMMIT,                       0x01BD}
+    },
+    { {EntranceType::Overworld, ZR_BEHIND_WATERFALL,              ZORAS_DOMAIN,                     0x0108},
+      {EntranceType::Overworld, ZORAS_DOMAIN,                     ZR_BEHIND_WATERFALL,              0x019D}
+    },
+    { {EntranceType::Overworld, ZD_BEHIND_KING_ZORA,              ZORAS_FOUNTAIN,                   0x0225},
+      {EntranceType::Overworld, ZORAS_FOUNTAIN,                   ZD_BEHIND_KING_ZORA,              0x01A1}
+    },
   };
 
   SetAllEntrancesData(entranceShuffleTable);
@@ -439,8 +480,10 @@ void ShuffleAllEntrances() {
 
     //If forest is closed don't allow a forest escape via spirit temple hands
     if (Settings::OpenForest.Is(OPENFOREST_CLOSED)) {
-      FilterAndEraseFromPool(entrancePools[EntranceType::Dungeon], [](const Entrance* entrance){return entrance->GetParentRegionKey()    == KF_OUTSIDE_DEKU_TREE &&
-                                                                                                       entrance->GetConnectedRegionKey() == DEKU_TREE_ENTRYWAY;});
+      FilterAndEraseFromPool(entrancePools[EntranceType::Dungeon], [](const Entrance * entrance) {
+        return entrance->GetParentRegionKey()    == KF_OUTSIDE_DEKU_TREE &&
+               entrance->GetConnectedRegionKey() == DEKU_TREE_ENTRYWAY;
+      });
     }
 
     //decoupled entrances stuff

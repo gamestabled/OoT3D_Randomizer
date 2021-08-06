@@ -140,7 +140,7 @@ void GenerateStartingInventory() {
     AddItemToInventory(PIECE_OF_HEART, 4);
     // Plentiful and minimal have less than 4 standard pieces of heart so also replace the winner heart
     if (ItemPoolValue.Value<u8>() == 0 || ItemPoolValue.Value<u8>() == 3) {
-        AddItemToInventory(TREASURE_GAME_HEART);
+      AddItemToInventory(TREASURE_GAME_HEART);
     }
 
     AdditionalHeartContainers = 1 - hearts;

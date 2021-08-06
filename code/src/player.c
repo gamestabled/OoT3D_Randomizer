@@ -50,7 +50,7 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         return;
     }
 
-    if(gSaveContext.health > 4) {
+    if (gSaveContext.health > 4) {
         gSaveContext.health--;
         healthDecrement--;
     } else {

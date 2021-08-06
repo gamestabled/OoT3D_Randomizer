@@ -14,7 +14,7 @@ void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     //With the No Health Refills option on, store-bought health upgrades do not heal the player
-    if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
+    if ((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)) {
         saveCtx->healthAccumulator = 20 * 0x10;
     }
 }
@@ -44,8 +44,9 @@ void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->upgrades |= 3 << 12;
-    if (gSettingsContext.startingMaxRupees)
+    if (gSettingsContext.startingMaxRupees) {
         saveCtx->rupees = 999;
+    }
 }
 
 void ItemEffect_GiveBiggoronSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -77,7 +78,7 @@ void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleDefense = 1;
     // saveCtx->defense_hearts = 20; //TODO? is this needed?
     //With the No Health Refills option on, store-bought health upgrades do not heal the player
-    if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
+    if ((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)) {
         saveCtx->healthAccumulator = 20 * 0x10;
     }
 }
@@ -128,22 +129,46 @@ typedef void (*Inventory_ChangeUpgrade_proc)(u32 upgrade, u32 value);
 
 void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     Inventory_ChangeUpgrade(arg2, arg1);
-    if(gSettingsContext.ammoDrops == AMMODROPS_NONE){
-        switch (arg2){
-            case 0: saveCtx->ammo[SLOT_BOW] += 10; break;
-            case 1: saveCtx->ammo[SLOT_BOMB] += 10; break;
-            case 5: saveCtx->ammo[SLOT_SLINGSHOT] += 10; break;
-            case 6: saveCtx->items[SLOT_STICK] = ITEM_STICK; saveCtx->ammo[SLOT_STICK] += 10; break;
-            case 7: saveCtx->items[SLOT_NUT] = ITEM_NUT; saveCtx->ammo[SLOT_NUT] += 10; break;
-		}
+    if (gSettingsContext.ammoDrops == AMMODROPS_NONE) {
+        switch (arg2) {
+            case 0:
+                saveCtx->ammo[SLOT_BOW] += 10;
+                break;
+            case 1:
+                saveCtx->ammo[SLOT_BOMB] += 10;
+                break;
+            case 5:
+                saveCtx->ammo[SLOT_SLINGSHOT] += 10;
+                break;
+            case 6:
+                saveCtx->items[SLOT_STICK] = ITEM_STICK;
+                saveCtx->ammo[SLOT_STICK] += 10;
+                break;
+            case 7:
+                saveCtx->items[SLOT_NUT] = ITEM_NUT;
+                saveCtx->ammo[SLOT_NUT] += 10;
+                break;
+        }
     } else {
-        switch (arg2){
-            case 0: saveCtx->ammo[SLOT_BOW] = (20 + 10 * arg1); break;
-            case 1: saveCtx->ammo[SLOT_BOMB] = (10 + 10 * arg1); break;
-            case 5: saveCtx->ammo[SLOT_SLINGSHOT] = (20 + 10 * arg1); break;
-            case 6: saveCtx->items[SLOT_STICK] = ITEM_STICK; saveCtx->ammo[SLOT_STICK] = (10 * arg1); break;
-            case 7: saveCtx->items[SLOT_NUT] = ITEM_NUT; saveCtx->ammo[SLOT_NUT] = (10 + 10 * arg1); break;
-		}
+        switch (arg2) {
+            case 0:
+                saveCtx->ammo[SLOT_BOW] = (20 + 10 * arg1);
+                break;
+            case 1:
+                saveCtx->ammo[SLOT_BOMB] = (10 + 10 * arg1);
+                break;
+            case 5:
+                saveCtx->ammo[SLOT_SLINGSHOT] = (20 + 10 * arg1);
+                break;
+            case 6:
+                saveCtx->items[SLOT_STICK] = ITEM_STICK;
+                saveCtx->ammo[SLOT_STICK] = (10 * arg1);
+                break;
+            case 7:
+                saveCtx->items[SLOT_NUT] = ITEM_NUT;
+                saveCtx->ammo[SLOT_NUT] = (10 + 10 * arg1);
+                break;
+        }
     }
 }
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -165,7 +190,7 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
     if (gSettingsContext.completeMaskQuest) {
         gSaveContext.infTable[7] |= 0x80; // "Soldier Wears Keaton Mask"
-        gSaveContext.itemGetInf[3] |= 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth" 
+        gSaveContext.itemGetInf[3] |= 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth"
         gSaveContext.eventChkInf[8] |= 0xF000; // "Paid Back Mask Fees"
     }
 }

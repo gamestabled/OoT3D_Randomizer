@@ -6,7 +6,7 @@
 
 void EnExRuppy_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (thisx->params == 0x2 && thisx->xzDistToPlayer < 30.0f) {
-        PLAYER->actor.colChkInfo.damage = (gSettingsContext.mirrorWorld)? 16 : 8;
+        PLAYER->actor.colChkInfo.damage = (gSettingsContext.mirrorWorld) ? 16 : 8;
     }
     EnExRuppy_Update(thisx, globalCtx);
 }

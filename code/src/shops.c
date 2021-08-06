@@ -69,7 +69,7 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     u8 id = shopItem->itemRow->actionId;
     // Make it so ammo does not sell out
     if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) ||
-          ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id) || ShopsanityItem_IsSticks(id))) {
+            ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id) || ShopsanityItem_IsSticks(id))) {
         if (gSaveContext.entranceIndex == 0x00B7) {
             gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
         } else {
@@ -129,7 +129,7 @@ s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
     u32 itemBit = 1 << item->shopItemPosition;
 
     if ((gSaveContext.entranceIndex == 0x00B7) &&
-        (gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit)) {
+            (gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit)) {
         item->super.actor.params = SI_SOLD_OUT;
         return 1;
     } else if ((gSaveContext.entranceIndex != 0x00B7) &&
@@ -241,7 +241,7 @@ void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
     ShopsanityItem* shopItem = (ShopsanityItem*)item;
 
     if (Object_IsLoaded(&globalCtx->objectCtx, item->objBankIndex) &&
-        ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
+            ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
         EnGirlA_InitializeItemAction(item, globalCtx);
         ShopsanityItem_ResetModels(shopItem, globalCtx, shopItem->itemRow->objectId, shopItem->itemRow->objectModelIdx,
                                    shopItem->itemRow->objectModelIdx2, shopItem->itemRow->cmabIndex,
@@ -264,7 +264,7 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
     ShopItemEntry* shopItemEntry = &EnGirlA_ShopItemEntries[shopItem->getItemId];
 
     if (Object_IsLoaded(&globalCtx->objectCtx, item->objBankIndex) &&
-        ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
+            ExtendedObject_IsLoaded(&globalCtx->objectCtx, shopItem->rObjBankIndex)) {
         EnGirlA_InitializeItemAction(item, globalCtx);
         ShopsanityItem_ResetModels(shopItem, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx,
                                    shopItemEntry->objModelIdx2, shopItemEntry->cmabIndex, shopItemEntry->cmabIndex2,
@@ -272,7 +272,7 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
         item->getItemId = shopItemEntry->getItemId;
         item->canBuyFunc = shopItemEntry->canBuyFunc;
         if (item->getItemId == GI_TUNIC_GORON ||
-            item->getItemId == GI_TUNIC_ZORA) { // Override buyable functions for tunics
+                item->getItemId == GI_TUNIC_ZORA) { // Override buyable functions for tunics
             item->canBuyFunc = ShopsanityItem_CanBuy;
         }
         item->itemGiveFunc = shopItemEntry->itemGiveFunc;
@@ -330,7 +330,7 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
         // For shop ammo items, we don't want to make them turn into blupees without the appropriate capacity,
         // instead just disallow purchase in the canbuy check
         if (!(id == GI_BOMBS_5 || id == GI_BOMBS_10 || id == GI_BOMBS_20 || id == GI_ARROWS_SMALL ||
-              id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
+                id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
             id = ItemTable_ResolveUpgrades(id);
         }
         item->itemRow = ItemTable_GetItemRow(id);

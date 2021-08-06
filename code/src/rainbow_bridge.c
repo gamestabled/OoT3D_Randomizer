@@ -47,10 +47,11 @@ u32 BgGjyoBridge_CheckCondition(void) {
 }
 
 void ShortenRainbowBridgeCS() {
-    if (CsTimer < 230)
+    if (CsTimer < 230) {
         CsTimer = 230;
-    else if (CsTimer > 405 && CsTimer < 490)
+    } else if (CsTimer > 405 && CsTimer < 490) {
         CsTimer = 490;
-    else if (CsTimer > 535 && CsTimer < 779)
+    } else if (CsTimer > 535 && CsTimer < 779) {
         CsTimer = 779;
+    }
 }

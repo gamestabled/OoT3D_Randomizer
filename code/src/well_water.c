@@ -17,10 +17,10 @@ void BgSpot01Idomizu_rInit(Actor* thisx, GlobalContext* globalCtx) {
     //the well water will be raised as adult Link until it's lowered as child.
     if (gSettingsContext.shuffleDungeonEntrances) {
         if (EventCheck(0x67)) {
-          *waterHeight = -550.0f;
+            *waterHeight = -550.0f;
         } else {
-          *waterHeight = 52.0f;
-          thisx->world.pos.y = 52.0f; // without this, the water spawns low and rises up
+            *waterHeight = 52.0f;
+            thisx->world.pos.y = 52.0f; // without this, the water spawns low and rises up
         }
     }
 }

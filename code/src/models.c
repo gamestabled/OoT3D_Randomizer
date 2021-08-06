@@ -16,7 +16,7 @@ typedef void (*SkeletonAnimationModel_Draw_proc)(SkeletonAnimationModel* glModel
 #define SkeletonAnimationModel_Draw ((SkeletonAnimationModel_Draw_proc)SkeletonAnimationModel_Draw_addr)
 
 typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext* globalCtx,
-                                                    SkeletonAnimationModel** glModel, s32 objModelIdx);
+        SkeletonAnimationModel** glModel, s32 objModelIdx);
 #define SkeletonAnimationModel_SpawnAt_addr 0x372F38
 #define SkeletonAnimationModel_SpawnAt ((SkeletonAnimationModel_SpawnAt_proc)SkeletonAnimationModel_SpawnAt_addr)
 
@@ -25,7 +25,7 @@ typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mt
 #define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)Actor_SetModelMatrix_addr)
 
 typedef void (*Matrix_Multiply_proc)(nn_math_MTX34* dst, nn_math_MTX34* lhs, nn_math_MTX44* rhs)
-    __attribute__((pcs("aapcs-vfp")));
+__attribute__((pcs("aapcs-vfp")));
 #define Matrix_Multiply_addr 0x36C174
 #define Matrix_Multiply ((Matrix_Multiply_proc)Matrix_Multiply_addr)
 
@@ -101,7 +101,7 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
 
     if (model->itemRow->objectModelIdx2 >= 0) {
         model->saModel2 = SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId,
-                                                       model->itemRow->objectModelIdx2);
+                          model->itemRow->objectModelIdx2);
         if (model->itemRow->cmabIndex2 >= 0) {
             Model_SetAnim(model->saModel2, model->itemRow->objectId, model->itemRow->cmabIndex2);
             model->saModel2->unk_0C->animSpeed = 2.0f;
@@ -278,8 +278,8 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
                 newModel->scale = 0.25f;
                 break;
             case 0x00BA: // Medallions
-                         // newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
-                         // break;
+            // newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
+            // break;
             case 0x019C: // Kokiri Emerald
             case 0x019D: // Goron Ruby
             case 0x019E: // Zora Sapphire

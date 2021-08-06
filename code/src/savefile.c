@@ -53,7 +53,7 @@ void SaveFile_Init() {
     gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
-    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple 
+    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple
     bool keysanity = gSettingsContext.keysanity == KEYSANITY_ANYWHERE || gSettingsContext.keysanity == KEYSANITY_OVERWORLD || gSettingsContext.keysanity == KEYSANITY_ANY_DUNGEON;
     if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA && !keysanity) {
         gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
@@ -120,13 +120,13 @@ void SaveFile_Init() {
 
     //If all trials are skipped
     if (gSettingsContext.forestTrialSkip && gSettingsContext.fireTrialSkip && gSettingsContext.waterTrialSkip &&
-        gSettingsContext.spiritTrialSkip && gSettingsContext.shadowTrialSkip && gSettingsContext.lightTrialSkip) {
-            gSaveContext.eventChkInf[0xC] |= 0x0008; //dispel Ganon's Tower Barrier
+            gSettingsContext.spiritTrialSkip && gSettingsContext.shadowTrialSkip && gSettingsContext.lightTrialSkip) {
+        gSaveContext.eventChkInf[0xC] |= 0x0008; //dispel Ganon's Tower Barrier
     }
 
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
-	//If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
-    if(gSettingsContext.startingDungeonReward == 0){
+    //If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
+    if (gSettingsContext.startingDungeonReward == 0) {
         gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
     }
 
@@ -148,7 +148,7 @@ void SaveFile_Init() {
 
     //Move mido away from the path to the Deku Tree in Open Forest
     if (gSettingsContext.openForest == OPENFOREST_OPEN) {
-      gSaveContext.eventChkInf[0x0] |= 0x0010;
+        gSaveContext.eventChkInf[0x0] |= 0x0010;
     }
 
     gSaveContext.eventChkInf[0x0] |= 0x0004; //spoke to mido
@@ -235,7 +235,7 @@ static void SaveFile_GiveStartingBottle(u8 startingBottle, InventorySlot bottleS
     if (startingBottle > STARTINGBOTTLE_NONE) {
         if (startingBottle < STARTINGBOTTLE_BLUE_FIRE) {
             gSaveContext.items[bottleSlot] = ITEM_BOTTLE + (startingBottle - 1);
-        //stop subtracting 1 at Blue Fire to skip over Ruto's Letter Item ID
+            //stop subtracting 1 at Blue Fire to skip over Ruto's Letter Item ID
         } else if (startingBottle >= STARTINGBOTTLE_BLUE_FIRE) {
             gSaveContext.items[bottleSlot] = ITEM_BOTTLE + (startingBottle);
         }
@@ -398,7 +398,7 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.bgsFlag = 1;
         gSaveContext.bgsHitsLeft = 1;
     }
-    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
+    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE) {
         gSaveContext.bgsFlag = 0;
         gSaveContext.bgsHitsLeft = GK_SetDurability();
     }
@@ -436,11 +436,11 @@ void SaveFile_SetStartingInventory(void) {
 
     }
 
-	//set token count
-	gSaveContext.gsTokens = gSettingsContext.startingTokens;
+    //set token count
+    gSaveContext.gsTokens = gSettingsContext.startingTokens;
 
     //Set Epona as freed if Skip Epona Race is enabled and Epona's Song is in the starting inventory
     if (gSettingsContext.skipEponaRace == SKIP && (gSaveContext.questItems >> 13) & 0x1) {
-      EventSet(0x18);
+        EventSet(0x18);
     }
 }

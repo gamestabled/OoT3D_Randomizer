@@ -32,15 +32,13 @@ const auto& RandomElement(const Container& container) {
 //Shuffle items within a vector or array
 template <typename T>
 void Shuffle(std::vector<T>& vector) {
-    for (std::size_t i = 0; i + 1 < vector.size(); i++)
-    {
+    for (std::size_t i = 0; i + 1 < vector.size(); i++) {
         std::swap(vector[i], vector[Random(i, vector.size())]);
     }
 }
 template <typename T, std::size_t size>
 void Shuffle(std::array<T, size>& arr) {
-    for (std::size_t i = 0; i + 1 < arr.size(); i++)
-    {
+    for (std::size_t i = 0; i + 1 < arr.size(); i++) {
         std::swap(arr[i], arr[Random(i, arr.size())]);
     }
 }
