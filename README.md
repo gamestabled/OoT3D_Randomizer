@@ -69,15 +69,7 @@ For faster compilation using multiple threads, you can use `make -j4` (in this e
 
 ## Code Style
 
-If you'd like to contribute, please use [Artistic Style](http://astyle.sourceforge.net/) to style your code before committing. The [style-options.ini](style-options.ini) file defines the options for the program. 
-
-After downloading Artistic Style, run it from the root directory with:
-
-`astyle --options=style-options.ini source/*.hpp code/src/*.c code/src/*.h`
-
-This styles all header and C files; .cpp files use 2 spaces for indent and also have some exclusions, so use this slightly different command:
-
-`astyle --options=style-options-cpp.ini source/*.cpp`
+If you'd like to contribute, please use [Artistic Style](http://astyle.sourceforge.net/) to style your code before committing. A windows .exe and linux binary are included in [format](format), and you can run `format.bat` on Windows or `bash format.sh` on Linux to automatically format all code files with the correct settings.
 
 ## Reporting Bugs
 
