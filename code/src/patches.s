@@ -1438,6 +1438,12 @@ SetBGMEntrance_patch:
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
 
+.section .patch_GiantsKnifeWithoutKokiriSword
+.global GiantsKnifeWithoutKokiriSword_patch
+GiantsKnifeWithoutKokiriSword_patch:
+    cmp r3,#0x8
+    blt 0x376C54
+
 .section .patch_loader
 .global loader_patch
 

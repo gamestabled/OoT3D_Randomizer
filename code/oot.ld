@@ -704,6 +704,10 @@ SECTIONS
 		*(.patch_GKSetDurability)
 	}
 
+	.patch_GiantsKnifeWithoutKokiriSword 0x376BEC : {
+		*(.patch_GiantsKnifeWithoutKokiriSword)
+	}
+
 	.patch_NoLensOfTruthNaviText 0x37798C : {
 		*(.patch_NoLensOfTruthNaviText)
 	}
