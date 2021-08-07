@@ -594,28 +594,28 @@ hook_NoHealFromHealthUpgrades:
     bl NoHealFromHealthUpgrades
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_NoHealFromBombchuBowlingPrize
 hook_NoHealFromBombchuBowlingPrize:
     push {r1-r12, lr}
     bl NoHealFromBombchuBowlingPrize
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_FairyPickupHealAmount
 hook_FairyPickupHealAmount:
     push {r0-r12, lr}
     bl FairyPickupHealAmount
     pop {r0-r12, lr}
     bx lr
-	
+
 .global hook_FairyReviveHealAmount
 hook_FairyReviveHealAmount:
     push {r1-r12, lr}
     bl FairyReviveHealAmount
     pop {r1-r12, lr}
     bx lr
-	
+
 .global hook_FairyUseHealAmount
 hook_FairyUseHealAmount:
     push {r1-r12, lr}
@@ -629,8 +629,8 @@ hook_MedigoronCheckFlagOne:
     bl EnGm_CheckRewardFlag
     cmp r0,#1
     pop {r0-r12, lr}
-    beq 0x13026C
     blt 0x130254
+    beq 0x13026C
     tst r12,r3
     b 0x130250
 
@@ -646,13 +646,41 @@ hook_MedigoronCheckFlagTwo:
 childLink:
     b 0x1302F0
 
-.global hook_MedigoronSetFlag
-hook_MedigoronSetFlag:
+.global hook_MedigoronSetRewardFlag
+hook_MedigoronSetRewardFlag:
+    mvn r0,#0xc7
     push {r0-r12, lr}
     bl EnGm_SetRewardFlag
     pop {r0-r12, lr}
-    cpy r1,r5
-    bx lr
+    b 0x16C91C
+
+.global hook_MedigoronItemOverrideOne
+hook_MedigoronItemOverrideOne:
+    push {r0-r1, r3-r12, lr}
+    bl EnGm_ItemOverride
+    cpy r2,r0
+    pop {r0-r1, r3-r12, lr}
+    b 0x14D960
+
+.global hook_MedigoronItemOverrideTwo
+hook_MedigoronItemOverrideTwo:
+    push {r0-r1, r3-r12, lr}
+    bl EnGm_ItemOverride
+    cpy r2,r0
+    pop {r0-r1, r3-r12, lr}
+    b 0x16C9C0
+
+.global hook_MedigoronGetCustomText
+hook_MedigoronGetCustomText:
+    push {r0-r12, lr}
+    bl EnGm_UseCustomText
+    cmp r0,#1
+    pop {r0-r12, lr}
+    moveq r2,#0x9100
+    addeq r2,r2,#0x20
+    movne r2,#0x3000
+    addne r2,r2,#0x4F
+    b 0x130260
 
 .global hook_CarpetSalesmanCheckFlagOne
 hook_CarpetSalesmanCheckFlagOne:
@@ -688,6 +716,194 @@ hook_KakarikoGateCheck:
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
+
+.global hook_DoorOfTimeCheck
+hook_DoorOfTimeCheck:
+    cmp r0,#0x4
+    bne 0x274B70
+    push {r0-r12, lr}
+    bl DoorOfTime_RequirementCheck
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_SongOfTimeJingle
+hook_SongOfTimeJingle:
+    mov r1,#0x0
+    push {r0-r12, lr}
+    bl DoorOfTime_RequirementCheck
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    addne r0,r0,#0x4
+    bx lr
+
+.global hook_GKSetDurability
+hook_GKSetDurability:
+    push {r0-r12, lr}
+    bl GK_SetDurability
+    strh r0,[r8,#0x4a]
+    pop {r0-r12, lr}
+    b 0x376BE0
+
+.global hook_SkippableText
+hook_SkippableText:
+    push {r0-r12, lr}
+    bl Settings_GetQuickTextOption
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x2E0ED4
+    ldr r0,[r5,#0x0]
+    b 0x2E09C0
+
+.global hook_InstantTextFirstLine
+hook_InstantTextFirstLine:
+    cmp r9,#0x0
+    bgt NoInstantText
+    push {r0-r12, lr}
+    bl Settings_GetQuickTextOption
+    cmp r0,#0x2
+    pop {r0-r12, lr}
+    blt NoInstantText
+    push {r0-r12, lr}
+    ldr r0,[r5,#0x0]
+    ldr r1,[r0,#0x20]
+    cpy r0,r5
+    blx r1
+    strb r11,[r4,#0x24]
+    pop {r0-r12, lr}
+NoInstantText:
+    cmp r10,#0xFF
+    bx lr
+
+.global hook_InstantTextBoxBreak
+hook_InstantTextBoxBreak:
+    push {r0-r12, lr}
+    bl Settings_GetQuickTextOption
+    cmp r0,#0x2
+    pop {r0-r12, lr}
+    blt 0x2E0EE0
+    push {r0-r12, lr}
+    ldr r0,[r5,#0x0]
+    ldr r1,[r0,#0x20]
+    cpy r0,r5
+    blx r1
+    strb r11,[r4,#0x24]
+    pop {r0-r12, lr}
+    b 0x2E0EE0
+
+.global hook_InstantTextRemoveOff
+hook_InstantTextRemoveOff:
+    push {r0-r12, lr}
+    bl Settings_GetQuickTextOption
+    cmp r0,#0x2
+    pop {r0-r12, lr}
+    bge 0x2E0ED4
+    ldr r0,[r5,#0x0]
+    b 0x2E06CC
+
+.global hook_TurboTextAdvance
+hook_TurboTextAdvance:
+    push {r0-r12, lr}
+    bl Settings_IsTurboText
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    cmpeq r0,#0x0
+    bx lr
+
+.global hook_PlaySound
+hook_PlaySound:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r3-r7, lr}
+    b 0x35C52C
+
+.global hook_SetBGMEntrance
+hook_SetBGMEntrance:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x33104C
+
+.global hook_SetBGMDayNight
+hook_SetBGMDayNight:
+    push {r1-r12, lr}
+    bl SetBGM
+    pop {r1-r12, lr}
+    push {r4-r6, lr}
+    b 0x483C8C
+
+.global hook_TurboTextClose
+hook_TurboTextClose:
+    push {r0-r12, lr}
+    bl Settings_IsTurboText
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    cmpeq r0,#0x0
+    bx lr
+
+.global hook_TurboTextSignalNPC
+hook_TurboTextSignalNPC:
+    movne r4,#0x1
+    push {r0-r12, lr}
+    bl Settings_IsTurboText
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    movne r4,#0x1
+    bx lr
+
+.global hook_SkipSongReplayForTimeBlocksOne
+hook_SkipSongReplayForTimeBlocksOne:
+    add r1,r1,#0x2B00
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x207FDC
+    push {r0,r1}
+    sub r1,r1,#0x70
+    ldrb r0,[r1]
+    cmp r0,#23
+    pop {r0,r1}
+    bne 0x208030
+    b 0x207FDC
+
+.global hook_SkipSongReplayForTimeBlocksTwo
+hook_SkipSongReplayForTimeBlocksTwo:
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x208028
+    add r0,r0,#0x100
+    b 0x207FFC
+
+.global hook_SkipSongReplayForTimeWarpBlocksOne
+hook_SkipSongReplayForTimeWarpBlocksOne:
+    add r1,r1,#0x2B00
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x208040
+    push {r0,r1}
+    sub r1,r1,#0x70
+    ldrb r0,[r1]
+    cmp r0,#23
+    pop {r0,r1}
+    bne 0x208094
+    b 0x208040
+
+.global hook_SkipSongReplayForTimeWarpBlocksTwo
+hook_SkipSongReplayForTimeWarpBlocksTwo:
+    push {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x20808C
+    add r0,r0,#0x100
+    b 0x208060
 
 .section .loader
 .global hook_into_loader

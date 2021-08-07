@@ -88,7 +88,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   XMLElement* rootNode = preset.NewElement("settings");
   preset.InsertEndChild(rootNode);
 
-  for (MenuItem* menu : Settings::mainMenu) {
+  for (Menu* menu : Settings::GetAllMenus()) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
@@ -125,7 +125,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
   XMLElement* curNode = rootNode->FirstChildElement();
 
-  for (MenuItem* menu : Settings::mainMenu) {
+  for (Menu* menu : Settings::GetAllMenus()) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
@@ -144,22 +144,21 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
       } else {
         // If the current setting and element don't match, then search
         // linearly from the beginning. This will get us back on track if the
-        // next setting and element line up with each other*/
+        // next setting and element line up with each other.
         curNode = rootNode->FirstChildElement();
-        bool settingFound = false;
         while (curNode != nullptr) {
           if (settingToFind == RemoveLineBreaks(curNode->Attribute("name"))) {
             setting->SetSelectedIndexByString(curNode->GetText());
             curNode = curNode->NextSiblingElement();
-            settingFound = true;
             break;
           }
           curNode = curNode->NextSiblingElement();
         }
-        //reset to the beginning if the setting wasn't found
-        if (!settingFound) {
-          curNode = rootNode->FirstChildElement();
-        }
+      }
+
+      // Reset to the beginning if we reached the end.
+      if (curNode == nullptr) {
+        curNode = rootNode->FirstChildElement();
       }
     }
   }

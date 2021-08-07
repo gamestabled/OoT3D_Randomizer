@@ -48,6 +48,10 @@ SECTIONS
 		*(.patch_MedigoronCheckFlagOne)
 	}
 
+	.patch_MedigoronGetCustomText 0x130258 : {
+		*(.patch_MedigoronGetCustomText)
+	}
+
 	.patch_MedigoronCheckFlagTwo 0x1302C4 : {
 		*(.patch_MedigoronCheckFlagTwo)
 	}
@@ -66,6 +70,10 @@ SECTIONS
 
 	.patch_OwlMagicCheck 0x144B44 : {
 		*(.patch_OwlMagicCheck)
+	}
+
+	.patch_MedigoronItemOverrideOne 0x14D95C : {
+		*(.patch_MedigoronItemOverrideOne)
 	}
 
 	.patch_BeanDaddyPurchase 0x14EDA8 : {
@@ -124,8 +132,12 @@ SECTIONS
 		*(.patch_DampeCheckCollectibleFlag)
 	}
 
-	.patch_MedigoronSetFlag 0x14D950 : {
-		*(.patch_MedigoronSetFlag)
+	.patch_MedigoronSetRewardFlag 0x16C918 : {
+		*(.patch_MedigoronSetRewardFlag)
+	}
+
+	.patch_MedigoronItemOverrideTwo 0x16C9BC : {
+		*(.patch_MedigoronItemOverrideTwo)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
@@ -384,6 +396,22 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
+	.patch_SkipSongReplayForTimeBlocksOne 0x207FD8 : {
+		*(.patch_SkipSongReplayForTimeBlocksOne)
+	}
+
+	.patch_SkipSongReplayForTimeBlocksTwo 0x207FF8 : {
+		*(.patch_SkipSongReplayForTimeBlocksTwo)
+	}
+
+	.patch_SkipSongReplayForTimeWarpBlocksOne 0x20803C : {
+		*(.patch_SkipSongReplayForTimeWarpBlocksOne)
+	}
+
+	.patch_SkipSongReplayForTimeWarpBlocksTwo 0x20805C : {
+		*(.patch_SkipSongReplayForTimeWarpBlocksTwo)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
@@ -472,6 +500,14 @@ SECTIONS
 		*(.patch_WaterTempleItemGiveTwo)
 	}
 
+	.patch_SongOfTimeJingle 0x274B1C : {
+		*(.patch_SongOfTimeJingle)
+	}
+
+	.patch_DoorOfTimeCheck 0x274B68 : {
+		*(.patch_DoorOfTimeCheck)
+	}
+
 	.patch_FireTempleItemGiveThree 0x27D060 : {
 		*(.patch_FireTempleItemGiveThree)
 	}
@@ -547,13 +583,29 @@ SECTIONS
 	.patch_NoHealFromHealthUpgrades 0x2CD07C : {
 		*(.patch_NoHealFromHealthUpgrades)
 	}
-	
+
 	.patch_GetCustomMessageEntryOne 0x2CD3A4 : {
 		*(.patch_GetCustomMessageEntryOne)
 	}
 
 	.patch_GetCustomMessageTextOne 0x2CD3EC : {
 		*(.patch_GetCustomMessageTextOne)
+	}
+
+	.patch_InstantTextFirstLine 0x2E049C : {
+		*(.patch_InstantTextFirstLine)
+	}
+
+	.patch_InstantTextBoxBreak 0x2E0664 : {
+		*(.patch_InstantTextBoxBreak)
+	}
+
+	.patch_InstantTextRemoveOff 0x2E06C8 : {
+		*(.patch_InstantTextRemoveOff)
+	}
+
+	.patch_SkippableText 0x2E09BC : {
+		*(.patch_SkippableText)
 	}
 
 	.patch_SceneInitAfterCopyScenes 0x2EAFDC : {
@@ -576,12 +628,20 @@ SECTIONS
 		*(.patch_ISGPutaway)
 	}
 
+	.patch_SetBGMEntrance 0x331048 : {
+		*(.patch_SetBGMEntrance)
+	}
+
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
 
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
+	}
+
+	.patch_TurboTextSignalNPC 0x3469F4 : {
+		*(.patch_TurboTextSignalNPC)
 	}
 
 	.patch_FairyReviveHealAmount 0x34AF48 : {
@@ -612,6 +672,10 @@ SECTIONS
 		*(.patch_LikeLikeNeverEatTunic)
 	}
 
+	.patch_PlaySound 0x35C528 : {
+		*(.patch_PlaySound)
+	}
+
 	.patch_ConvertBombDropOne 0x35E46C : {
 		*(.patch_ConvertBombDropOne)
 	}
@@ -634,6 +698,10 @@ SECTIONS
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
 		*(.patch_ConvertBombDropTwo)
+	}
+
+	.patch_GKSetDurability 0x376BDC : {
+		*(.patch_GKSetDurability)
 	}
 
 	.patch_NoLensOfTruthNaviText 0x37798C : {
@@ -936,6 +1004,18 @@ SECTIONS
 		*(.patch_EnableFW)
 	}
 
+	.patch_TurboTextAdvance 0x480928 : {
+		*(.patch_TurboTextAdvance)
+	}
+
+	.patch_TurboTextClose 0x488214 : {
+		*(.patch_TurboTextClose)
+	}
+
+	.patch_SetBGMDayNight 0x483C88 : {
+		*(.patch_SetBGMDayNight)
+	}
+
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
 	}
@@ -947,7 +1027,7 @@ SECTIONS
 	.patch_FairyUseHealAmount 0x4968B4 : {
 		*(.patch_FairyUseHealAmount)
 	}
-	
+
 	.patch_GanonBattleDeathWarp 0x496C98 : {
 		*(.patch_GanonBattleDeathWarp)
 	}

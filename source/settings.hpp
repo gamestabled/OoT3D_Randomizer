@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <variant>
 #include <vector>
@@ -193,48 +194,42 @@ private:
   OptionCategory category;
 };
 
-enum class MenuItemType {
+enum class MenuType {
+  MainMenu,
   SubMenu,
   Action,
 };
 
-class MenuItem {
+class Menu {
   public:
 
-    static MenuItem SubSubMenu(std::string name_, std::vector<Option *>* settingsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_SUB_MENU};
+    static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
     }
 
-    static MenuItem SubSubMenu(std::string name_, std::vector<MenuItem *>* itemsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(itemsList_), SUB_SUB_MENU};
+    static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(itemsList_), SUB_MENU};
     }
 
-    static MenuItem SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
+    static Menu Action(std::string name_, u8 mode_) {
+      return Menu{std::move(name_), MenuType::Action, std::move(mode_)};
     }
 
-    static MenuItem SubMenu(std::string name_, std::vector<MenuItem *>* itemsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(itemsList_), SUB_MENU};
-    }
-
-    static MenuItem Action(std::string name_, u8 mode_) {
-      return MenuItem{std::move(name_), MenuItemType::Action, std::move(mode_)};
-    }
-
-    MenuItem(std::string name_, MenuItemType type_, std::vector<Option *>* settingsList_, u8 mode_)
+    Menu(std::string name_, MenuType type_, std::vector<Option *>* settingsList_, u8 mode_)
         : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_) {}
 
-    MenuItem(std::string name_, MenuItemType type_, std::vector<MenuItem *>* itemsList_, u8 mode_)
+    Menu(std::string name_, MenuType type_, std::vector<Menu *>* itemsList_, u8 mode_)
         : name(std::move(name_)), type(type_), itemsList(std::move(itemsList_)), mode(mode_) {}
 
-    MenuItem(std::string name_, MenuItemType type_, u8 mode_)
+    Menu(std::string name_, MenuType type_, u8 mode_)
         : name(std::move(name_)), type(type_), mode(mode_) {}
 
     std::string name;
-    MenuItemType type;
+    MenuType type;
     std::vector<Option *>* settingsList;
-    std::vector<MenuItem *>* itemsList;
+    std::vector<Menu *>* itemsList;
     u8 mode;
+    u16 menuIdx = 0;
     int selectedSetting = 0;
 };
 
@@ -244,6 +239,8 @@ namespace Settings {
   void SetDefaultSettings();
   void RandomizeAllSettings(const bool selectOptions = false);
   void ForceChange(u32 kDown, Option* currentSetting);
+  const std::vector<Menu*> GetAllMenus();
+
 
   extern std::string seed;
   extern std::string version;
@@ -271,8 +268,8 @@ namespace Settings {
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;
-  extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
+  extern Option SetDungeonTypes;
 
   extern Option ShuffleRewards;
   extern Option LinksPocketItem;
@@ -311,6 +308,8 @@ namespace Settings {
   extern Option NumRequiredCuccos;
   extern Option KingZoraSpeed;
   extern Option CompleteMaskQuest;
+  extern Option QuickText;
+  extern Option SkipSongReplays;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
@@ -328,10 +327,12 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option GkDurability;
 
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
   extern Option RemoveDoubleDefense;
+  extern Option ProgressiveGoronSword;
 
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
@@ -389,9 +390,20 @@ namespace Settings {
   extern Option StartingShardOfAgony;
   extern Option StartingDoubleDefense;
   extern Option StartingHealth;
+  extern Option StartingKokiriEmerald;
+  extern Option StartingGoronRuby;
+  extern Option StartingZoraSapphire;
+  extern Option StartingForestMedallion;
+  extern Option StartingFireMedallion;
+  extern Option StartingWaterMedallion;
+  extern Option StartingSpiritMedallion;
+  extern Option StartingShadowMedallion;
+  extern Option StartingLightMedallion;
+  extern Option StartingSkulltulaToken;
 
   //Logic Settings
   extern Option Logic;
+  extern Option LocationsReachable;
   extern Option NightGSExpectSuns;
 
   //Trick Settings
@@ -480,6 +492,16 @@ namespace Settings {
   extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
 
+  //Glitch Settings
+  extern Option GlitchISG;
+  extern Option GlitchHover;
+  extern Option GlitchMegaflip;
+  extern Option GlitchHookshotClip;
+  extern Option GlitchHookshotJump_Bonk;
+  extern Option GlitchHookshotJump_Boots;
+  extern Option GlitchLedgeClip;
+  extern Option GlitchTripleSlashClip;
+
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;
   extern Option KokiriTunicColor;
@@ -498,6 +520,11 @@ namespace Settings {
   extern Option ColoredBossKeys;
   extern Option MirrorWorld;
 
+  extern Option ShuffleMusic;
+  extern Option ShuffleBGM;
+  extern Option ShuffleFanfares;
+  extern Option ShuffleOcaMusic;
+
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
 
@@ -507,7 +534,7 @@ namespace Settings {
   extern std::vector<Option *> startingInventoryOptions;
   extern std::vector<Option *> trickOptions;
 
-  extern std::vector<MenuItem *> detailedLogicOptions;
+  extern std::vector<Menu *> detailedLogicOptions;
 
-  extern std::vector<MenuItem *> mainMenu;
+  extern std::vector<Menu *> mainMenu;
 }

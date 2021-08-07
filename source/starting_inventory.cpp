@@ -106,7 +106,12 @@ void GenerateStartingInventory() {
   AddItemToInventory(NOCTURNE_OF_SHADOW,        StartingNocturneOfShadow.Value<u8>());
   AddItemToInventory(PRELUDE_OF_LIGHT,          StartingPreludeOfLight.Value<u8>());
   AddItemToInventory(KOKIRI_SWORD,              StartingKokiriSword.Value<u8>());
-  AddItemToInventory(BIGGORON_SWORD,            StartingBiggoronSword.Value<u8>());
+  if (ProgressiveGoronSword) {
+    AddItemToInventory(PROGRESSIVE_GORONSWORD,  StartingBiggoronSword.Value<u8>());
+  } else {
+    AddItemToInventory(GIANTS_KNIFE,            (StartingBiggoronSword.Is(STARTINGBGS_GIANTS_KNIFE)) ? 1 : 0);
+    AddItemToInventory(BIGGORON_SWORD,          (StartingBiggoronSword.Is(STARTINGBGS_BIGGORON_SWORD)) ? 1 : 0);
+  }
   AddItemToInventory(DEKU_SHIELD,               StartingDekuShield.Value<u8>());
   AddItemToInventory(HYLIAN_SHIELD,             StartingHylianShield.Value<u8>());
   AddItemToInventory(MIRROR_SHIELD,             StartingMirrorShield.Value<u8>());
@@ -118,6 +123,16 @@ void GenerateStartingInventory() {
   AddItemToInventory(PROGRESSIVE_WALLET,        StartingWallet.Value<u8>());
   AddItemToInventory(SHARD_OF_AGONY,            StartingShardOfAgony.Value<u8>());
   AddItemToInventory(DOUBLE_DEFENSE,            StartingDoubleDefense.Value<u8>());
+  AddItemToInventory(KOKIRI_EMERALD,            StartingKokiriEmerald.Value<u8>());
+  AddItemToInventory(GORON_RUBY,                StartingGoronRuby.Value<u8>());
+  AddItemToInventory(ZORA_SAPPHIRE,             StartingZoraSapphire.Value<u8>());
+  AddItemToInventory(FOREST_MEDALLION,          StartingForestMedallion.Value<u8>());
+  AddItemToInventory(FIRE_MEDALLION,            StartingFireMedallion.Value<u8>());
+  AddItemToInventory(WATER_MEDALLION,           StartingWaterMedallion.Value<u8>());
+  AddItemToInventory(SPIRIT_MEDALLION,          StartingSpiritMedallion.Value<u8>());
+  AddItemToInventory(SHADOW_MEDALLION,          StartingShadowMedallion.Value<u8>());
+  AddItemToInventory(LIGHT_MEDALLION,           StartingLightMedallion.Value<u8>());
+  AddItemToInventory(GOLD_SKULLTULA_TOKEN,      StartingSkulltulaToken.Value<u8>());
 
   s8 hearts = (StartingHealth.Value<u8>() + 2) % 20 - 2;
   AdditionalHeartContainers = 0;

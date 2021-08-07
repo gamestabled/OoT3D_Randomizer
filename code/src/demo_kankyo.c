@@ -1,4 +1,5 @@
 #include "z3D/z3D.h"
+#include "settings.h"
 #include "demo_kankyo.h"
 
 #define DemoKankyo_Update_addr 0x262EA4
@@ -14,7 +15,7 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (thisx->params == 0x000F) {
         globalCtx->sceneLoadFlag = 0x14;
         gGlobalContext->fadeOutTransition = 5;
-        switch (globalCtx->unk_2304[0x0878]) { // text related variable
+        switch (globalCtx->unk_2A91[0xEB]) { // text related variable
             case 0:
                 globalCtx->nextEntranceIndex = 0x0600; // Minuet
                 break;
@@ -57,4 +58,10 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             CsTimer = 1180;
         }
     }
+}
+
+u32 DoorOfTime_RequirementCheck() {
+    return gGlobalContext->sceneNum != 0x43 ||
+           gSettingsContext.openDoorOfTime == OPENDOOROFTIME_CLOSED ||
+           (((gSaveContext.questItems >> 18) & 0x7) == 0x7 && gSaveContext.items[SLOT_OCARINA] == ITEM_OCARINA_TIME);
 }
