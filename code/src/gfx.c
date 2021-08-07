@@ -56,22 +56,41 @@ static char *spoilerCollectionGroupNames[] = {
 #define UP_SOLID_ARROW_CHR 30
 #define DOWN_SOLID_ARROW_CHR 31
 
-#define MAX_ITEM_LINES 6
+#define MAX_ITEM_LINES 8
+#define SCROLL_BAR_THICKNESS 2
+#define SCROLL_BAR_MIN_THUMB_SIZE 4
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
+#define COLOR_SCROLL_BAR_BG RGB8(0x58, 0x58, 0x58)
+
+static void Gfx_DrawScrollBar(u16 barX, u16 barY, u16 barSize, u16 currentScroll, u16 maxScroll, u16 pageSize) {
+    Draw_DrawRect(barX, barY, SCROLL_BAR_THICKNESS, barSize, COLOR_SCROLL_BAR_BG);
+
+    float thumbSizePercent = pageSize / (float)maxScroll;
+    if (thumbSizePercent > 1.0f) {
+        thumbSizePercent = 1.0f;
+    }
+    u16 thumbSize = (u16)(thumbSizePercent * barSize);
+    if (thumbSize < SCROLL_BAR_MIN_THUMB_SIZE) {
+        thumbSize = SCROLL_BAR_MIN_THUMB_SIZE;
+    }
+    float barThumbPosPercent = (float)currentScroll / (float)(maxScroll - pageSize);
+    u16 barThumbPosY = (u16)(barThumbPosPercent * (barSize - thumbSize));
+    Draw_DrawRect(barX, barY + barThumbPosY, SCROLL_BAR_THICKNESS, thumbSize, COLOR_WHITE);
+}
 
 static void Gfx_DrawChangeMenuPrompt(void) {
-    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 58, COLOR_WARN, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
-    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 32, COLOR_TITLE, "Press B to close menu, L/R to change menu");
+    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 54, COLOR_WARN, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
+    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 30, COLOR_TITLE, "Press B to close menu, L/R to change menu");
     if (curMenuIdx == 3) {
-        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press %c/%c/%c/%c to browse spoiler log",
+        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse spoiler log",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
     }
     else if (curMenuIdx == 4) {
-        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press %c/%c/%c/%c to browse items",
+        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse items",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
     }
     else if (curMenuIdx == 5) {
-        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 20, COLOR_TITLE, "Press %c/%c/%c/%c to browse items, A/Y to change group",
+        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse items, A/Y to change group",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
     }
 }
@@ -114,35 +133,25 @@ static void Gfx_DrawSpoilerData(void) {
     if (gSpoilerData.SphereCount > 0) {
         u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
 
-        bool canScrollUp = spoilerScroll > 0;
-        bool canScrollDown = itemCount - spoilerScroll > MAX_ITEM_LINES;
-
-        if (canScrollUp)
-        {
-            Draw_DrawFormattedString(148, 24, COLOR_WHITE, "%c%c%c", UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR);
-        }
-
-        if (canScrollDown)
-        {
-            Draw_DrawFormattedString(148, SCREEN_BOT_HEIGHT - 74, COLOR_WHITE, "%c%c%c", DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR);
-        }
-
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1, gSpoilerData.SphereCount);
 
         u16 sphereItemLocOffset = gSpoilerData.Spheres[currentSphere].ItemLocationsOffset;
+        u16 listTopY = 26;
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + spoilerScroll;
             if (locIndex >= gSpoilerData.Spheres[currentSphere].ItemCount) { break; }
 
-            u32 locPosY = 34 + (SPACING_Y * item * 2);
-            u32 itemPosY = locPosY + SPACING_Y;
+            u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
+            u32 itemPosY = locPosY + SPACING_SMALL_Y;
             u16 itemIndex = gSpoilerData.SphereItemLocations[sphereItemLocOffset + locIndex];
             u32 color = SpoilerData_GetIsItemLocationCollected(itemIndex) ? COLOR_GREEN : COLOR_WHITE;
-            Draw_DrawString(10, locPosY, color,
+            Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(itemIndex));
-            Draw_DrawString(10 + SPACING_X, itemPosY, color,
+            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color,
                 SpoilerData_GetItemNameString(itemIndex));
         }
+
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, spoilerScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Spoiler Log");
@@ -159,16 +168,6 @@ static void Gfx_DrawSpoilerAllItems(void) {
         bool canScrollUp = allItemsScroll > 0;
         bool canScrollDown = itemCount - allItemsScroll > MAX_ITEM_LINES;
 
-        if (canScrollUp)
-        {
-            Draw_DrawFormattedString(148, 24, COLOR_WHITE, "%c%c%c", UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR);
-        }
-
-        if (canScrollDown)
-        {
-            Draw_DrawFormattedString(148, SCREEN_BOT_HEIGHT - 74, COLOR_WHITE, "%c%c%c", DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR);
-        }
-
         u16 firstItem = allItemsScroll + 1;
         u16 lastItem = allItemsScroll + MAX_ITEM_LINES;
         if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
@@ -178,18 +177,21 @@ static void Gfx_DrawSpoilerAllItems(void) {
             Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
         }
 
+        u16 listTopY = 26;
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + allItemsScroll;
             if (locIndex >= gSpoilerData.ItemLocationsCount) { break; }
 
-            u32 locPosY = 34 + (SPACING_Y * item * 2);
-            u32 itemPosY = locPosY + SPACING_Y;
+            u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
+            u32 itemPosY = locPosY + SPACING_SMALL_Y;
             u32 color = SpoilerData_GetIsItemLocationCollected(locIndex) ? COLOR_GREEN : COLOR_WHITE;
-            Draw_DrawString(10, locPosY, color,
+            Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers && !SpoilerData_GetIsItemLocationCollected(locIndex)) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString(10 + SPACING_X, itemPosY, color, itemText);
+            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
+
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "All Item Locations");
@@ -216,18 +218,6 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             float groupPercent = ((float)completeItems / (float)itemCount) * 100.0f;
             Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, completeItems == itemCount ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
         }
-        bool canScrollUp = groupItemsScroll > 0;
-        bool canScrollDown = itemCount - groupItemsScroll > MAX_ITEM_LINES;
-
-        if (canScrollUp)
-        {
-            Draw_DrawFormattedString(148, 24, COLOR_WHITE, "%c%c%c", UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR, UP_SOLID_ARROW_CHR);
-        }
-
-        if (canScrollDown)
-        {
-            Draw_DrawFormattedString(148, SCREEN_BOT_HEIGHT - 74, COLOR_WHITE, "%c%c%c", DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR, DOWN_SOLID_ARROW_CHR);
-        }
 
         u16 firstItem = groupItemsScroll + 1;
         u16 lastItem = groupItemsScroll + MAX_ITEM_LINES;
@@ -235,18 +225,21 @@ static void Gfx_DrawSpoilerItemGroups(void) {
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "%s - (%d - %d) / %d",
             spoilerCollectionGroupNames[currentGroup], firstItem, lastItem, itemCount);
 
+        u16 listTopY = 26;
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + startIndex + groupItemsScroll;
             if (item >= itemCount) { break; }
 
-            u32 locPosY = 34 + (SPACING_Y * item * 2);
-            u32 itemPosY = locPosY + SPACING_Y;
+            u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
+            u32 itemPosY = locPosY + SPACING_SMALL_Y;
             bool isCollected =  SpoilerData_GetIsItemLocationCollected(locIndex);
             u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
-            Draw_DrawString(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
+            Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString(10 + SPACING_X, itemPosY, color, itemText);
+            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
+
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
