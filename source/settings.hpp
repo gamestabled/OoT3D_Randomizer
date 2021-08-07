@@ -493,7 +493,6 @@ namespace Settings {
   extern Option LogicSpiritTrialHookshot;
 
   //Glitch Settings
-  const std::vector<std::string> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"};
   extern Option GlitchISG;
   extern Option GlitchHover;
   extern Option GlitchMegaflip;
