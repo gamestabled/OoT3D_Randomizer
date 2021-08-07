@@ -92,7 +92,6 @@ ChildShootingGallery_patch:
 .global AdultShootingGallery_patch
 AdultShootingGallery_patch:
     nop
-    nop
     mov r0,#0x30
     b 0x38AB78
 

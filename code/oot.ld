@@ -720,7 +720,7 @@ SECTIONS
 		*(.patch_ChildShootingGallery)
 	}
 
-	.patch_AdultShootingGallery 0x38AB9C : {
+	.patch_AdultShootingGallery 0x38ABA0 : {
 		*(.patch_AdultShootingGallery)
 	}
 
