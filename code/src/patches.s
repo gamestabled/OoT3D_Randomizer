@@ -1443,6 +1443,11 @@ GiantsKnifeWithoutKokiriSword_patch:
     cmp r3,#0x8
     blt 0x376C54
 
+.section .patch_SyatekiManReminder
+.global SyatekiManReminder_patch
+SyatekiManReminder_patch:
+    beq hook_SyatekiManReminder
+
 .section .patch_loader
 .global loader_patch
 
