@@ -32,6 +32,7 @@
 #include "3ds/svc.h"
 #include "3ds/synchronization.h"
 #include "fonts/ascii_font.h"
+#include "fonts/ascii_font_small.h"
 #include <string.h>
 #include <z3D/z3D.h>
 
@@ -56,18 +57,48 @@ void Draw_Unlock(void)
     RecursiveLock_Unlock(&lock);
 }
 
-void Draw_DrawCharacter(u32 posX, u32 posY, u32 color, char character)
+void Draw_DrawRect(u32 posX, u32 posY, u32 width, u32 height, u32 color)
 {
     volatile u8 *const fb0 = (volatile u8 *const)FRAMEBUFFER[0];
     volatile u8 *const fb1 = (volatile u8 *const)FRAMEBUFFER[1];
 
-    for(s32 y = 0; y < 10; y++)
-    {
-        const char charPos = ascii_font[character * 10 + y];
+    // Skip drawing entirely if we're off-screen
+    if (posX >= SCREEN_BOT_WIDTH) { return; }
+    if (posY >= SCREEN_BOT_HEIGHT) { return; }
 
-        for(s32 x = 6; x >= 1; x--)
+    // Clamp size to screen bounds
+    if (posX + width > SCREEN_BOT_WIDTH) { width = SCREEN_BOT_WIDTH - posX; }
+    if (posY + height > SCREEN_BOT_HEIGHT) { height = SCREEN_BOT_HEIGHT - posY; }
+
+    for(s32 y = 0; y < height; y++)
+    {
+        for(s32 x = width; x >= 1; x--)
         {
-            const u32 screenPos = (posX * SCREEN_BOT_HEIGHT + (SCREEN_BOT_HEIGHT - y - posY - 1)) + (5 - x) * SCREEN_BOT_HEIGHT;
+            const u32 screenPos = ((posX * SCREEN_BOT_HEIGHT + (SCREEN_BOT_HEIGHT - y - posY - 1)) + (width - x) * SCREEN_BOT_HEIGHT) * 3;
+
+            fb0[screenPos] = (color) & 0xFF;
+            fb0[screenPos + 1] = (color >> 8) & 0xFF;
+            fb0[screenPos + 2] = (color >> 16) & 0xFF;
+            fb1[screenPos] = (color) & 0xFF;
+            fb1[screenPos + 1] = (color >> 8) & 0xFF;
+            fb1[screenPos + 2] = (color >> 16) & 0xFF;
+        }
+    }
+}
+
+void Draw_DrawCharacter_Impl(u32 posX, u32 posY, u32 color, char character, const unsigned char *font, u8 sizeX, u8 sizeY)
+{
+    volatile u8 *const fb0 = (volatile u8 *const)FRAMEBUFFER[0];
+    volatile u8 *const fb1 = (volatile u8 *const)FRAMEBUFFER[1];
+    u8 sizeXMinusOne = sizeX - 1;
+
+    for(s32 y = 0; y < sizeY; y++)
+    {
+        const unsigned char charPos = font[character * sizeY + y];
+
+        for(s32 x = sizeX; x >= 1; x--)
+        {
+            const u32 screenPos = (posX * SCREEN_BOT_HEIGHT + (SCREEN_BOT_HEIGHT - y - posY - 1)) + (sizeXMinusOne - x) * SCREEN_BOT_HEIGHT;
             const u32 pixelColor = ((charPos >> x) & 1) ? color : COLOR_BLACK;
 
             fb0[screenPos * 3] = (pixelColor) & 0xFF;
@@ -78,6 +109,11 @@ void Draw_DrawCharacter(u32 posX, u32 posY, u32 color, char character)
             fb1[screenPos * 3 + 2] = (pixelColor >> 16) & 0xFF;
         }
     }
+}
+
+void Draw_DrawCharacter(u32 posX, u32 posY, u32 color, char character)
+{
+    Draw_DrawCharacter_Impl(posX, posY, color, character, ascii_font, 6, 10);
 }
 
 void Draw_DrawCharacterTop(u32 posX, u32 posY, u32 color, char character)
@@ -144,6 +180,38 @@ u32 Draw_DrawString(u32 posX, u32 posY, u32 color, const char *string)
     return posY;
 }
 
+u32 Draw_DrawString_Small(u32 posX, u32 posY, u32 color, const char *string)
+{
+    for(u32 i = 0, line_i = 0; i < strlen(string); i++)
+        switch(string[i])
+        {
+            case '\n':
+                posY += SPACING_SMALL_Y;
+                line_i = 0;
+                break;
+
+            case '\t':
+                line_i += 2;
+                break;
+
+            default:
+                //Make sure we never get out of the screen
+                if(line_i >= ((SCREEN_BOT_WIDTH) - posX) / SPACING_SMALL_X)
+                {
+                    posY += SPACING_SMALL_Y;
+                    line_i = 1; //Little offset so we know the same string continues
+                    if(string[i] == ' ') break; //Spaces at the start look weird
+                }
+
+                Draw_DrawCharacter_Impl(posX + line_i * SPACING_SMALL_X, posY, color, string[i], ascii_font_small, FONT_WIDTH_SMALL, FONT_HEIGHT_SMALL);
+
+                line_i++;
+                break;
+        }
+
+    return posY;
+}
+
 u32 Draw_DrawStringTop(u32 posX, u32 posY, u32 color, const char *string)
 {
     for(u32 i = 0, line_i = 0; i < strlen(string); i++)
@@ -186,6 +254,18 @@ u32 Draw_DrawFormattedString(u32 posX, u32 posY, u32 color, const char *fmt, ...
     va_end(args);
 
     return Draw_DrawString(posX, posY, color, buf);
+}
+
+u32 Draw_DrawFormattedString_Small(u32 posX, u32 posY, u32 color, const char *fmt, ...)
+{
+    char buf[DRAW_MAX_FORMATTED_STRING_SIZE + 1];
+    va_list args;
+    va_start(args, fmt);
+    // vsprintf(buf, fmt, args);
+    vsnprintf_(buf, DRAW_MAX_FORMATTED_STRING_SIZE, fmt, args);
+    va_end(args);
+
+    return Draw_DrawString_Small(posX, posY, color, buf);
 }
 
 u32 Draw_DrawFormattedStringTop(u32 posX, u32 posY, u32 color, const char *fmt, ...)
