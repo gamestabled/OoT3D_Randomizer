@@ -17,7 +17,7 @@ static u8 currentSphere = 0;
 static s16 spoilerScroll = 0;
 static s16 allItemsScroll = 0;
 static s16 groupItemsScroll = 0;
-static s8 currentGroup = 0;
+static s8 currentGroup = 1;
 static s32 curMenuIdx = 0;
 static float itemPercent = 0;
 
@@ -260,6 +260,7 @@ static void Gfx_DrawSpoilerItemGroups(void) {
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
+        Draw_DrawString(10, 10, COLOR_TITLE, "Item Location Groups");
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
     Gfx_DrawChangeMenuPrompt();
@@ -424,8 +425,9 @@ void Gfx_Init(void) {
         menu_draw_funcs[3] = NULL;
     }
 
-    currentGroup = 0;
-    Gfx_GroupsNextGroup(); // Call this to go to the first non-empty group page
+    if (gSpoilerData.ItemLocationsCount > 0 && gSpoilerData.GroupItemCounts[currentGroup] == 0) {
+        Gfx_GroupsNextGroup(); // Call this to go to the first non-empty group page
+    }
 
     GfxInit = 1;
 }
