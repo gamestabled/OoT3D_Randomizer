@@ -302,6 +302,11 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"Zzzz... Muh... Malon..."+NEWLINE()+"Parler avec... Malon..."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"Si fatigué..."+NEWLINE()+"Quelle vie..."+MESSAGE_END(),
             UNSKIPPABLE()+"Habla con Malon, tiene algo que darte..."+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
 
+        //Bow Shooting Gallery reminder
+        CreateMessage(0x9140, 0, 0, 0,
+            UNSKIPPABLE()+"Wonderful! Bravo! Perfect!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Here's a fantastic present! But I have"+COLOR(QM_RED)+NEWLINE()+"something else "+COLOR(QM_WHITE)+"for you once you have a bow."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
+            UNSKIPPABLE()+"Merveilleux! Bravo! C'est parfait!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Voici un prix fantastique! J'aurai "+COLOR(QM_RED)+"autre chose"+COLOR(QM_WHITE)+NEWLINE()+"pour toi quand tu auras un arc."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
+            UNSKIPPABLE()+"¡Espectacular! ¡Bravo! ¡Perfecto!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Toma este sensacional regalo! Pero te tengo"+NEWLINE()+"guardado "+COLOR(QM_RED)+"algo más "+COLOR(QM_WHITE)+"para cuando traigas tu"+NEWLINE()+"propio arco."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END());
 
         //Shopsanity items
         //64 textboxes, 2 for each of 32 potential shopsanity items

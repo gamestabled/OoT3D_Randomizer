@@ -460,6 +460,10 @@ SECTIONS
 		*(.patch_BusinessScrubCheckFlags)
 	}
 
+	.patch_SyatekiManReminder 0x2391D8 : {
+		*(.patch_SyatekiManReminder)
+	}
+	
 	.patch_EnExItemModelDraw 0x249C94 : {
 		*(.patch_EnExItemModelDraw)
 	}
@@ -704,6 +708,10 @@ SECTIONS
 		*(.patch_GKSetDurability)
 	}
 
+	.patch_GiantsKnifeWithoutKokiriSword 0x376BEC : {
+		*(.patch_GiantsKnifeWithoutKokiriSword)
+	}
+
 	.patch_NoLensOfTruthNaviText 0x37798C : {
 		*(.patch_NoLensOfTruthNaviText)
 	}
@@ -716,7 +724,7 @@ SECTIONS
 		*(.patch_ChildShootingGallery)
 	}
 
-	.patch_AdultShootingGallery 0x38AB9C : {
+	.patch_AdultShootingGallery 0x38ABA0 : {
 		*(.patch_AdultShootingGallery)
 	}
 

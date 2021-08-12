@@ -905,6 +905,18 @@ hook_SkipSongReplayForTimeWarpBlocksTwo:
     add r0,r0,#0x100
     b 0x208060
 
+.global hook_SyatekiManReminder
+hook_SyatekiManReminder:
+    push {r0-r12, lr}
+    bl EnSyatekiMan_UseRemindText
+    cmp r0,#1
+    pop {r0-r12, lr}
+    moveq r1,#0x9100
+    addeq r1,r1,#0x40
+    movne r1,#0x7100
+    addne r1,r1,#0xAF
+    b 0x23920C
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

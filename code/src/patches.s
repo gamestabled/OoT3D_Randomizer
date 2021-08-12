@@ -92,7 +92,6 @@ ChildShootingGallery_patch:
 .global AdultShootingGallery_patch
 AdultShootingGallery_patch:
     nop
-    nop
     mov r0,#0x30
     b 0x38AB78
 
@@ -1437,6 +1436,17 @@ SetBGMEntrance_patch:
 .global SetBGMDayNight_patch
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
+
+.section .patch_GiantsKnifeWithoutKokiriSword
+.global GiantsKnifeWithoutKokiriSword_patch
+GiantsKnifeWithoutKokiriSword_patch:
+    cmp r3,#0x8
+    blt 0x376C54
+
+.section .patch_SyatekiManReminder
+.global SyatekiManReminder_patch
+SyatekiManReminder_patch:
+    beq hook_SyatekiManReminder
 
 .section .patch_loader
 .global loader_patch
