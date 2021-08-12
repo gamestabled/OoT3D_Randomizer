@@ -183,9 +183,6 @@ static void Gfx_DrawSpoilerAllItems(void) {
     if (gSpoilerData.ItemLocationsCount > 0) {
         u16 itemCount = gSpoilerData.ItemLocationsCount;
 
-        bool canScrollUp = allItemsScroll > 0;
-        bool canScrollDown = itemCount - allItemsScroll > MAX_ITEM_LINES;
-
         u16 firstItem = allItemsScroll + 1;
         u16 lastItem = allItemsScroll + MAX_ITEM_LINES;
         if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
