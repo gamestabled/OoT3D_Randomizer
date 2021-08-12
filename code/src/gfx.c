@@ -17,7 +17,7 @@ static u8 currentSphere = 0;
 static s16 spoilerScroll = 0;
 static s16 allItemsScroll = 0;
 static s16 groupItemsScroll = 0;
-static s8 currentGroup = 1;
+static s8 currentGroup = 0;
 static s32 curMenuIdx = 0;
 static float itemPercent = 0;
 
@@ -76,6 +76,24 @@ static void Gfx_DrawScrollBar(u16 barX, u16 barY, u16 barSize, u16 currentScroll
     float barThumbPosPercent = (float)currentScroll / (float)(maxScroll - pageSize);
     u16 barThumbPosY = (u16)(barThumbPosPercent * (barSize - thumbSize));
     Draw_DrawRect(barX, barY + barThumbPosY, SCROLL_BAR_THICKNESS, thumbSize, COLOR_WHITE);
+}
+
+static void Gfx_GroupsNextGroup() {
+    groupItemsScroll = 0;
+    s8 prevGroup = currentGroup;
+    do {
+        ++currentGroup;
+        if (currentGroup >= SPOILER_COLLECTION_GROUP_COUNT) { currentGroup = 1; }
+    } while (gSpoilerData.GroupItemCounts[currentGroup] == 0 && currentGroup != prevGroup);
+}
+
+static void Gfx_GroupsPrevGroup() {
+    groupItemsScroll = 0;
+    s8 prevGroup = currentGroup;
+    do {
+        --currentGroup;
+        if (currentGroup < 1) { currentGroup = SPOILER_COLLECTION_GROUP_COUNT - 1; }
+    } while (gSpoilerData.GroupItemCounts[currentGroup] == 0 && currentGroup != prevGroup);
 }
 
 static void Gfx_DrawChangeMenuPrompt(void) {
@@ -343,14 +361,10 @@ static void Gfx_ShowMenu(void) {
                 groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ITEM_LINES, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_A) {
-                groupItemsScroll = 0;
-                ++currentGroup;
-                if (currentGroup >= SPOILER_COLLECTION_GROUP_COUNT) { currentGroup = 1; }
+                Gfx_GroupsNextGroup();
                 handledInput = true;
             } else if (pressed & BUTTON_Y) {
-                groupItemsScroll = 0;
-                --currentGroup;
-                if (currentGroup < 1) { currentGroup = SPOILER_COLLECTION_GROUP_COUNT - 1; }
+                Gfx_GroupsPrevGroup();
                 handledInput = true;
             }
         }
@@ -409,6 +423,9 @@ void Gfx_Init(void) {
     if (!gSettingsContext.ingameSpoilers) {
         menu_draw_funcs[3] = NULL;
     }
+
+    currentGroup = 0;
+    Gfx_GroupsNextGroup(); // Call this to go to the first non-empty group page
 
     GfxInit = 1;
 }
