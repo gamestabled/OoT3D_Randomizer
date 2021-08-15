@@ -98,8 +98,8 @@ void MoveCursor(u32 kDown) {
       currentSetting = currentMenu->settingsList->at(currentMenu->menuIdx);
     } while (currentSetting->IsLocked() || currentSetting->IsHidden());
   }
-  //All other menus
-  else {
+  //All other menus except reset-to-defaults confirmation
+  else if (currentMenu->mode != RESET_TO_DEFAULTS) {
     if (kDown & KEY_DUP) {
       currentMenu->menuIdx--;
     }
@@ -131,12 +131,14 @@ void MenuUpdate(u32 kDown) {
   //Check for menu change
   //If user pressed A on a non-option, non-action menu, they're navigating to a new menu
   if (kDown & KEY_A && currentMenu->mode != OPTION_SUB_MENU && currentMenu->type != MenuType::Action) {
-    Menu* newMenu;
-    newMenu = currentMenu->itemsList->at(currentMenu->menuIdx);
-    menuList.push_back(newMenu);
-    currentMenu = menuList.back();
-    ModeChangeInit();
-    kDown = 0;
+    if (currentMenu->itemsList->size() > currentMenu->menuIdx) {
+      Menu* newMenu;
+      newMenu = currentMenu->itemsList->at(currentMenu->menuIdx);
+      menuList.push_back(newMenu);
+      currentMenu = menuList.back();
+      ModeChangeInit();
+      kDown = 0;
+    }
   //If they pressed B on any menu other than main, go backwards to the previous menu
   } else if (kDown & KEY_B && currentMenu->mode != MAIN_MENU) {
     //Want to reset generate menu when leaving
@@ -289,8 +291,6 @@ void UpdateResetToDefaultsMenu(u32 kDown) {
   ClearDescription();
   if (kDown & KEY_A) {
     Settings::SetDefaultSettings();
-    SaveCachedSettings();
-    SaveCachedCosmetics();
     printf("\x1b[24;5HSettings have been reset to defaults.");
   }
 }
