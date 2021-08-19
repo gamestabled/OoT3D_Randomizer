@@ -917,6 +917,13 @@ hook_SyatekiManReminder:
     addne r1,r1,#0xAF
     b 0x23920C
 
+.global hook_SkipTimeTravelCutscene
+hook_SkipTimeTravelCutscene:
+    push {r0-r12, lr}
+    bl TimeTravelAdvanceCutsceneTimer
+    pop {r0-r12, lr}
+    ldmia sp!,{r4,r5,r6,pc}
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

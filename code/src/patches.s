@@ -1448,6 +1448,21 @@ GiantsKnifeWithoutKokiriSword_patch:
 SyatekiManReminder_patch:
     beq hook_SyatekiManReminder
 
+.section .patch_SkipTimeTravelCutsceneOne
+.global SkipTimeTravelCutsceneOne_patch
+SkipTimeTravelCutsceneOne_patch:
+    b hook_SkipTimeTravelCutscene
+
+.section .patch_SkipTimeTravelCutsceneTwo
+.global SkipTimeTravelCutsceneTwo_patch
+SkipTimeTravelCutsceneTwo_patch:
+    mov r1,#0x324
+
+.section .patch_SwapAgeIgnoreSceneSetup
+.global SwapAgeIgnoreSceneSetup_patch
+SwapAgeIgnoreSceneSetup_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 
