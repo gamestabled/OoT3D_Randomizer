@@ -594,14 +594,29 @@ namespace Settings {
     &LogicSpiritTrialHookshot,
   };
 
-  Option GlitchISG = Option::U8("Infinite Sword Glitch", {"Disabled", "Novice"}, {GlitchISGDescDisabled, GlitchISGDescNovice});
-  Option GlitchHover = Option::U8("Bomb Hover", {"Disabled", "Novice", "Intermediate", "Advanced"}, {GlitchHoverDescDisabled, GlitchHoverDescNovice, GlitchHoverDescIntermediate, GlitchHoverDescAdvanced});
-  Option GlitchMegaflip = Option::U8("Megaflip", {"Disabled", "Novice", "Intermediate"}, {GlitchMegaflipDescDisabled, GlitchMegaflipDescNovice, GlitchMegaflipDescIntermediate});
-  Option GlitchHookshotClip = Option::U8("Hookshot Clip", {"Disabled", "Novice"}, {GlitchHookshotClipDescDisabled, GlitchHookshotClipDescNovice});
-  Option GlitchHookshotJump_Bonk = Option::U8("Hookshot Jump (Bonk)", {"Disabled", "Intermediate"}, {GlitchHookshotJump_BonkDescDisabled, GlitchHookshotJump_BonkDescIntermediate});
-  Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", {"Disabled", "Novice", "Intermediate"}, {GlitchHookshotJump_BootsDescDisabled, GlitchHookshotJump_BootsDescNovice, GlitchHookshotJump_BootsDescIntermediate});
-  Option GlitchLedgeClip = Option::U8("Ledge Clip", {"Disabled", "Novice", "Intermediate"}, {GlitchLedgeClipDescDisabled, GlitchLedgeClipDescNovice, GlitchLedgeClipDescIntermediate});
-  Option GlitchTripleSlashClip = Option::U8("Triple Slash Clip", {"Disabled", "Novice"}, {GlitchTripleSlashClipDescDisabled, GlitchTripleSlashClipDescNovice});
+  //Function to avoid accidentally naming the options wrong, as logic.cpp requires these exact names
+  std::vector<std::string> GlitchDifficultyOptions(u8 enabledDifficulties) {
+    static constexpr std::array glitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"};
+
+    std::vector<std::string> selectableDifficulties;
+    selectableDifficulties.push_back("Disabled");
+    for (size_t i = 0; i < glitchDifficulties.size(); i++) {
+      if ((enabledDifficulties >> i) & 1) {
+        selectableDifficulties.push_back(glitchDifficulties[i]);
+      }
+    }
+
+    return selectableDifficulties;
+  }
+
+  Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00001), {GlitchISGDescDisabled, GlitchISGDescNovice});
+  Option GlitchHover              = Option::U8("Bomb Hover",            GlitchDifficultyOptions(0b00111), {GlitchHoverDescDisabled, GlitchHoverDescNovice, GlitchHoverDescIntermediate, GlitchHoverDescAdvanced});
+  Option GlitchMegaflip           = Option::U8("Megaflip",              GlitchDifficultyOptions(0b00011), {GlitchMegaflipDescDisabled, GlitchMegaflipDescNovice, GlitchMegaflipDescIntermediate});
+  Option GlitchHookshotClip       = Option::U8("Hookshot Clip",         GlitchDifficultyOptions(0b00001), {GlitchHookshotClipDescDisabled, GlitchHookshotClipDescNovice});
+  Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00010), {GlitchHookshotJump_BonkDescDisabled, GlitchHookshotJump_BonkDescIntermediate});
+  Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", GlitchDifficultyOptions(0b00011), {GlitchHookshotJump_BootsDescDisabled, GlitchHookshotJump_BootsDescNovice, GlitchHookshotJump_BootsDescIntermediate});
+  Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00011), {GlitchLedgeClipDescDisabled, GlitchLedgeClipDescNovice, GlitchLedgeClipDescIntermediate});
+  Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b00001), {GlitchTripleSlashClipDescDisabled, GlitchTripleSlashClipDescNovice});
   std::vector<Option*> glitchOptions = {
     &GlitchISG,
     &GlitchHover,
