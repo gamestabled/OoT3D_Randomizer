@@ -40,13 +40,13 @@ public:
     bool GetConditionsMet() const {
         if (Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA)) {
             return true;
-        }
-        for (size_t i = 0; i <= Settings::Logic.Value<u8>(); i++) {
-            if (conditions_met[i] == NULL) {
-                continue;
-            }
-            if (conditions_met[i]()) {
+        } else if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
+            return conditions_met[0]();
+        } else if (Settings::Logic.Is(LOGIC_GLITCHED)) {
+            if (conditions_met[0]()) {
                 return true;
+            } else if (conditions_met[1] != NULL) {
+                return conditions_met[1]();
             }
         }
         return false;

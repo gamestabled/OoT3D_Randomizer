@@ -7,7 +7,6 @@ enum class OptionCategory;
 
 bool CreatePresetDirectories();
 std::vector<std::string> GetSettingsPresets();
-void LoadCachedSettings();
 bool SavePreset(std::string_view presetName, OptionCategory category);
 bool LoadPreset(std::string_view presetName, OptionCategory category);
 bool DeletePreset(std::string_view presetName, OptionCategory category);
