@@ -513,6 +513,12 @@ string_view templeOfTimeIntroDesc     = "The introduction cutscene to Temple of 
                                         "performing Door of Time Skip should the Door of\n"//
                                         "Time be closed.";                                 //
 /*------------------------------                                                           //
+|        LAKE HYLIA OWL        |                                                           //
+------------------------------*/                                                           //
+string_view lakeHyliaOwlDesc          = "The owl flight cutscene in Lake Hylia will be\n"  //
+                                        "skipped. This cutscene lets you see what item\n"  //
+                                        "is on top of the laboratory roof.";               //
+/*------------------------------                                                           //
 |     BIG POE TARGET COUNT     |                                                           //
 ------------------------------*/                                                           //
 string_view bigPoeTargetCountDesc     = "The Poe buyer will give a reward for turning in\n"//

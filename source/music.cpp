@@ -57,7 +57,7 @@ namespace Music {
         /* NA_BGM_NAVI */               SEQ_BGM,
         /* NA_BGM_DEKUNOKI */           SEQ_BGM,
         /* NA_BGM_FUSHA */              SEQ_BGM,
-        /* NA_BGM_HIRAL_DEMO */         SEQ_BGM,
+        /* NA_BGM_HIRAL_DEMO */         SEQ_NOSHUFFLE,
         /* NA_BGM_MINI_GAME */          SEQ_BGM,
         /* NA_BGM_SEAK */               SEQ_BGM,
         /* NA_BGM_ZORA */               SEQ_BGM,

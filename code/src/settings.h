@@ -343,6 +343,7 @@ typedef struct {
   u8 freeScarecrow;
   u8 fourPoesCutscene;
   u8 templeOfTimeIntro;
+  u8 lakeHyliaOwl;
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
   u8 kingZoraSpeed;
@@ -433,7 +434,7 @@ typedef struct {
   u32 startingDungeonReward;
   u32 startingEquipment;
   u32 startingUpgrades;
-  
+
   u8 startingTokens;
 
 } SettingsContext;
