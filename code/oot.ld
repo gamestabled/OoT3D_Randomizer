@@ -148,6 +148,10 @@ SECTIONS
 		*(.patch_MidoForestDialog)
 	}
 
+	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
+		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
 	.patch_AnjuCheckCuccoAmount 0x179420 : {
 		*(.patch_AnjuCheckCuccoAmount)
 	}
@@ -463,7 +467,7 @@ SECTIONS
 	.patch_SyatekiManReminder 0x2391D8 : {
 		*(.patch_SyatekiManReminder)
 	}
-	
+
 	.patch_EnExItemModelDraw 0x249C94 : {
 		*(.patch_EnExItemModelDraw)
 	}
@@ -1026,6 +1030,14 @@ SECTIONS
 
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
+	}
+
+	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 : {
+		*(.patch_SkipTimeTravelCutsceneTwo)
+	}
+
+	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 : {
+		*(.patch_SwapAgeIgnoreSceneSetup)
 	}
 
 	.patch_FireTempleItemGiveTwo 0x491B60 : {

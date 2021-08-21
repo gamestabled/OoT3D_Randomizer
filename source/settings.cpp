@@ -192,6 +192,7 @@ namespace Settings {
   Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {freeScarecrowDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc});
   Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
+  Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {lakeHyliaOwlDesc},                                                                                               OptionCategory::Setting,    SKIP);
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
   Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
@@ -206,6 +207,7 @@ namespace Settings {
     &FreeScarecrow,
     &FourPoesCutscene,
     &TempleOfTimeIntro,
+    &LakeHyliaOwl,
     &BigPoeTargetCount,
     &NumRequiredCuccos,
     &KingZoraSpeed,
@@ -861,6 +863,7 @@ namespace Settings {
     ctx.freeScarecrow        = (FreeScarecrow) ? 1 : 0;
     ctx.fourPoesCutscene     = (FourPoesCutscene) ? 1 : 0;
     ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
+    ctx.lakeHyliaOwl         = (LakeHyliaOwl) ? 1 : 0;
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
     ctx.kingZoraSpeed        = KingZoraSpeed.Value<u8>();
@@ -1091,12 +1094,12 @@ namespace Settings {
     }
   }
 
-		
+
   //Used for Starting Inventory options, enables/disables the options or expands/collapses each category based on their index number
   void CollapseCategory(Option startingInventorySections, int startNum, int endNum) {
     for(int i = startNum; i < endNum ;++i){
       switch(startingInventorySections.Value<u8>()) {
-        case 0: 
+        case 0:
         startingInventoryOptions[i] -> Hide();
         startingInventoryOptions[i] -> SetSelectedIndex(0);
         break;
@@ -1281,9 +1284,9 @@ namespace Settings {
     CollapseCategory(StartingSongsToggle, 28, 40);
     CollapseCategory(StartingUpgradesToggle, 41, 55);
     CollapseCategory(StartingQuestToggle, 56, 65);
-    for(int i = 23; i < 27 ;++i){ 
+    for(int i = 23; i < 27 ;++i){
       switch(StartingInventoryToggle.Value<u8>()) {
-        case 0: 
+        case 0:
         startingInventoryOptions[i] -> Hide();
         startingInventoryOptions[i] -> SetSelectedIndex(0);
         break;
@@ -1508,7 +1511,7 @@ namespace Settings {
           LogicLensShadowMQ.SetSelectedIndex(1);
           LogicLensBotwMQ.SetSelectedIndex(1);
           LogicLensGtgMQ.SetSelectedIndex(1);
-        } 
+        }
         if(currentSetting->GetSelectedOptionIndex() >= 2){ //intermediate options
           LogicLabWallGS.SetSelectedIndex(1);
           LogicChildDampeRacePoH.SetSelectedIndex(1);
@@ -1865,14 +1868,14 @@ namespace Settings {
       if (ShuffleBGM) {
         ShuffleSequences(SeqType::SEQ_BGM);
       }
-      
+
       if (ShuffleFanfares.Is(2)) {
         ShuffleSequences(SeqType::SEQ_FANFARE | SeqType::SEQ_OCARINA);
       } else {
         if (ShuffleFanfares.Is(1)) {
           ShuffleSequences(SeqType::SEQ_FANFARE);
         }
-        
+
         if (ShuffleOcaMusic) {
           ShuffleSequences(SeqType::SEQ_OCARINA);
         }

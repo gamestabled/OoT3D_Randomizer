@@ -174,6 +174,8 @@ extern string_view fourPoesDesc;
 
 extern string_view templeOfTimeIntroDesc;
 
+extern string_view lakeHyliaOwlDesc;
+
 extern string_view bigPoeTargetCountDesc;
 
 extern string_view numRequiredCuccosDesc;
