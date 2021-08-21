@@ -23,3 +23,7 @@ void EnKz_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         thisx->world.pos.z = -1783.0f; // lock Z position so the increased speed doesn't mess it up
     }
 }
+
+void EnKz_SetTradedPrescriptionFlag(void) {
+    gSaveContext.itemGetInf[3] |= 0x10;
+}

@@ -1444,13 +1444,18 @@ CheckFadoCanSpawnInLostWoods_patch:
     bl EnKo_CheckFadoCanSpawnInLostWoods
     pop {r1-r12, lr}
 
-.section .patch_LabScientistDontStartTimer
-.global LabScientistDontStartTimer_patch
-LabScientistDontStartTimer_patch:
+.section .patch_CarpenterBossSetTradedSawFlag
+.global CarpenterBossSetTradedSawFlag_patch
+CarpenterBossSetTradedSawFlag_patch:
+    bl hook_CarpenterBossSetTradedSawFlag
+
+.section .patch_LabScientistDontStartTimerAndSetFlag
+.global LabScientistDontStartTimerAndSetFlag_patch
+LabScientistDontStartTimerAndSetFlag_patch:
     nop
-    nop
-    nop
-    nop
+    push {r0-r12, lr}
+    bl EnMk_SetTradedEyeballFrogFlag
+    pop {r0-r12, lr}
     nop
 
 .section .patch_KingZoraDontStartTimer
@@ -1461,6 +1466,11 @@ KingZoraDontStartTimer_patch:
     nop
     nop
     nop
+
+.section .patch_KingZoraSetTradedPrescriptionFlag
+.global KingZoraSetTradedPrescriptionFlag_patch
+KingZoraSetTradedPrescriptionFlag_patch:
+    beq hook_KingZoraSetTradedPrescriptionFlag
 
 .section .patch_loader
 .global loader_patch

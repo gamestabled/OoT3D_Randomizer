@@ -6,8 +6,8 @@
 #include "custom_models.h"
 #include "objects.h"
 #include "entrance.h"
+#include "savefile.h"
 #include <stddef.h>
-void svcBreak(u32 breakReason); // TODO: remove
 
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
@@ -197,6 +197,25 @@ static void ItemOverride_AfterKeyReceived(ItemOverride_Key key) {
     };
     if (key.all == fireArrowKey.all) {
         gGlobalContext->actorCtx.flags.chest |= 0x1;
+    }
+
+    // If we override an adult trade item, we should remove the previous item from being owned
+    if ((key.flag == GI_COJIRO) || ((key.flag > GI_POCKET_EGG) && (key.flag <= GI_CLAIM_CHECK))) {
+        u8 itemId;
+        switch (key.flag) {
+            case GI_COJIRO:       itemId = 46; break;
+            case GI_POCKET_CUCCO: itemId = 45; break;
+            case GI_ODD_MUSHROOM: itemId = 47; break;
+            case GI_ODD_POTION:   itemId = 48; break;
+            case GI_SAW:          itemId = 49; break;
+            case GI_SWORD_BROKEN: itemId = 50; break;
+            case GI_PERSCRIPTION: itemId = 51; break;
+            case GI_FROG:         itemId = 52; break;
+            case GI_EYEDROPS:     itemId = 53; break;
+            case GI_CLAIM_CHECK:  itemId = 54; break;
+        }
+        SaveFile_UnsetTradeItemAsOwned(itemId);
+        SaveFile_SetOwnedTradeItemEquipped();
     }
 }
 

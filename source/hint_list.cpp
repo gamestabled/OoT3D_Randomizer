@@ -1242,7 +1242,7 @@ void HintTable_Init() {
                        Text{"the #treasure thrown by Princess Zelda# is", /*french*/"le trésor #laissé par la princesse# est", /*spanish*/"el #tesoro arrojado por la Princesa Zelda# se trata de"},
   });
 
-    hintTable[DMT_BIGGORON] = HintText::Sometimes({
+    hintTable[DMT_TRADE_CLAIM_CHECK] = HintText::Sometimes({
                        //obscure text
                        Text{"#Biggoron# crafts", /*french*/"#Grogoron# fabrique", /*spanish*/"#Biggoron# forja"},
   });

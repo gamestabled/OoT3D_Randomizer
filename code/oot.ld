@@ -20,8 +20,8 @@ SECTIONS
 		*(.patch_ShortenRainbowBridgeCS)
 	}
 
-	.patch_LabScientistDontStartTimer 0x112440 : {
-		*(.patch_LabScientistDontStartTimer)
+	.patch_LabScientistDontStartTimerAndSetFlag 0x112440 : {
+		*(.patch_LabScientistDontStartTimerAndSetFlag)
 	}
 
 	.patch_BombchuPurchaseableCheck 0x112ED0 : {
@@ -158,6 +158,10 @@ SECTIONS
 
 	.patch_MidoForestDialog 0x173944 : {
 		*(.patch_MidoForestDialog)
+	}
+
+	.patch_CarpenterBossSetTradedSawFlag 0x178D58 : {
+		*(.patch_CarpenterBossSetTradedSawFlag)
 	}
 
 	.patch_AnjuCheckCuccoAmount 0x179420 : {
@@ -326,6 +330,10 @@ SECTIONS
 
 	.patch_BiggoronAfterGiveItem 0x1C4E4C : {
 		*(.patch_BiggoronAfterGiveItem)
+	}
+
+	.patch_KingZoraSetTradedPrescriptionFlag 0x1C52A0 : {
+		*(.patch_KingZoraSetTradedPrescriptionFlag)
 	}
 
 	.patch_DemoEffectStoneDraw 0x1D209C : {

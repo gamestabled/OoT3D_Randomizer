@@ -463,3 +463,29 @@ u32 SaveFile_TradeItemIsOwned(u8 itemId) {
 
     return (gSaveContext.sceneFlags[0x60].unk & (0x1 << tradeItemNum)) != 0;
 }
+
+void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot) {
+    // Remove the slot from child/adult grids
+    for (u32 i = 0; i < 0x18; ++i) {
+        if (gSaveContext.itemMenuChild[i] == itemSlot) {
+            gSaveContext.itemMenuChild[i] = 0xFF;
+        }
+        if (gSaveContext.itemMenuAdult[i] == itemSlot) {
+            gSaveContext.itemMenuAdult[i] = 0xFF;
+        }
+    }
+}
+
+void SaveFile_SetOwnedTradeItemEquipped(void) {
+    if (gSaveContext.sceneFlags[0x60].unk == 0) {
+        gSaveContext.items[SLOT_TRADE_ADULT] = 0xFF;
+        SaveFile_ResetItemSlotsIfMatchesID(SLOT_TRADE_ADULT);
+    } else {
+        for (u8 itemId = ITEM_POCKET_EGG; itemId <= ITEM_CLAIM_CHECK; itemId++) {
+            if (SaveFile_TradeItemIsOwned(itemId)) {
+                gSaveContext.items[SLOT_TRADE_ADULT] = itemId;
+                return;
+            }
+        }
+    }
+}

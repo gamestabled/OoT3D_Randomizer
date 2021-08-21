@@ -83,9 +83,9 @@ u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
     return (gSaveContext.sceneFlags[itemLoc.LocationScene].unk & (1 << itemLoc.LocationFlag)) != 0;
 }
 
-u8 SpoilerData_BiggoronCheck()
+u8 SpoilerData_BiggoronCheck(u8 mask)
 {
-    return gSaveContext.biggoronTrades & BIGGORON_TRADED_CLAIM_CHECK;
+    return (gSaveContext.biggoronTrades & mask) != 0;
 }
 
 u8 SpoilerData_GerudoTokenCheck()
@@ -164,7 +164,7 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
             return SpoilerData_ScrubCheck(itemLoc);
         }
         case SPOILER_CHK_BIGGORON: {
-            return SpoilerData_BiggoronCheck();
+            return SpoilerData_BiggoronCheck(itemLoc.LocationFlag);
         }
         case SPOILER_CHK_GERUDO_TOKEN: {
             return SpoilerData_GerudoTokenCheck();

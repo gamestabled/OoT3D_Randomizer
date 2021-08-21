@@ -846,6 +846,22 @@ hook_SkipSongReplayForTimeBlocksTwo:
     add r0,r0,#0x100
     b 0x207FFC
 
+.global hook_CarpenterBossSetTradedSawFlag
+hook_CarpenterBossSetTradedSawFlag:
+    push {r0-r12, lr}
+    bl EnToryo_SetTradedSawFlag
+    pop {r0-r12, lr}
+    str r0,[r4,#0xB10]
+    bx lr
+
+.global hook_KingZoraSetTradedPrescriptionFlag
+hook_KingZoraSetTradedPrescriptionFlag:
+    push {r0-r12, lr}
+    bl EnKz_SetTradedPrescriptionFlag
+    pop {r0-r12, lr}
+    mov r2,#0x24
+    b 0x1C52A4
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

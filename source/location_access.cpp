@@ -1390,7 +1390,7 @@ void AreaTable_Init() {
                   EventAccess(&BugRock,            []{return true;}),
                 }, {
                   //Locations
-                  LocationAccess(DMT_BIGGORON,              []{return IsAdult && (ClaimCheck || (GuaranteeTradePath && (EyedropsAccess || (Eyedrops && DisableTradeRevert))));}),
+                  LocationAccess(DMT_TRADE_CLAIM_CHECK,     []{return IsAdult && (ClaimCheck || (GuaranteeTradePath && (EyedropsAccess || (Eyedrops && DisableTradeRevert))));}),
                   LocationAccess(DMT_GS_FALLING_ROCKS_PATH, []{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;}),
                   LocationAccess(DMT_GOSSIP_STONE,          []{return true;}),
                 }, {

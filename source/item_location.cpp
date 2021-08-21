@@ -23,6 +23,8 @@ void LocationTable_Init() {
     //Lost Woods
     locationTable[LW_NEAR_SHORTCUTS_GROTTO_CHEST]        = ItemLocation::Chest      (0x3E, 0x14, "LW Near Shortcuts Grotto Chest",       LW_NEAR_SHORTCUTS_GROTTO_CHEST,        BLUE_RUPEE,                {Category::cLostWoods, Category::cForest, Category::cGrotto});
     locationTable[LW_SKULL_KID]                          = ItemLocation::Base       (0x5B, 0x3E, "LW Skull Kid",                         LW_SKULL_KID,                          PIECE_OF_HEART,            {Category::cLostWoods, Category::cForest,},                                                                           SpoilerCollectionCheck::ItemGetInf(30));
+    locationTable[LW_TRADE_COJIRO]                       = ItemLocation::Base       (0x5B, 0x1F, "LW Trade Cojiro",                      LW_TRADE_COJIRO,                       ODD_MUSHROOM,              {Category::cLostWoods, Category::cForest, Category::cAdultTrade},                                                     SpoilerCollectionCheck::ItemGetInf(37));
+    locationTable[LW_TRADE_ODD_POULTICE]                 = ItemLocation::Base       (0x5B, 0x21, "LW Trade Odd Poultice",                LW_TRADE_ODD_POULTICE,                 ODD_POULTICE,              {Category::cLostWoods, Category::cForest, Category::cAdultTrade},                                                     SpoilerCollectionCheck::ItemGetInf(57));
     locationTable[LW_OCARINA_MEMORY_GAME]                = ItemLocation::Base       (0x5B, 0x76, "LW Ocarina Memory Game",               LW_OCARINA_MEMORY_GAME,                PIECE_OF_HEART,            {Category::cLostWoods, Category::cForest, Category::cMinigame},                                                       SpoilerCollectionCheck::ItemGetInf(31));
     locationTable[LW_TARGET_IN_WOODS]                    = ItemLocation::Base       (0x5B, 0x60, "LW Target in Woods",                   LW_TARGET_IN_WOODS,                    PROGRESSIVE_SLINGSHOT,     {Category::cLostWoods, Category::cForest,},                                                                           SpoilerCollectionCheck::ItemGetInf(21));
     locationTable[LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT] = ItemLocation::Base       (0x5B, 0x30, "LW Deku Scrub Near Deku Theater Right",LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, BUY_DEKU_NUT_5,            {Category::cLostWoods, Category::cForest, Category::cDekuScrub},                                                      SpoilerCollectionCheck::Scrub(0x5B, 0x01));
@@ -50,6 +52,7 @@ void LocationTable_Init() {
     locationTable[LH_CHILD_FISHING]                      = ItemLocation::Base       (0x49, 0x3E, "LH Child Fishing",                     LH_CHILD_FISHING,                      PIECE_OF_HEART,            {Category::cLakeHylia, Category::cMinigame,},                                                                         SpoilerCollectionCheck::Fishing(0x02));
     locationTable[LH_ADULT_FISHING]                      = ItemLocation::Base       (0x49, 0x38, "LH Adult Fishing",                     LH_ADULT_FISHING,                      PROGRESSIVE_SCALE,         {Category::cLakeHylia, Category::cMinigame,},                                                                         SpoilerCollectionCheck::Fishing(0x03));
     locationTable[LH_LAB_DIVE]                           = ItemLocation::Base       (0x38, 0x3E, "LH Lab Dive",                          LH_LAB_DIVE,                           PIECE_OF_HEART,            {Category::cLakeHylia,},                                                                                              SpoilerCollectionCheck::ItemGetInf(24));
+    locationTable[LH_TRADE_FROG]                         = ItemLocation::Base       (0x38, 0x25, "LH Lab Trade Eyeball Frog",            LH_TRADE_FROG,                         EYEDROPS,                  {Category::cLakeHylia, Category::cAdultTrade},                                                                        SpoilerCollectionCheck::ItemGetInf(61));
     locationTable[LH_UNDERWATER_ITEM]                    = ItemLocation::Base       (0x57, 0x15, "LH Underwater Item",                   LH_UNDERWATER_ITEM,                    RUTOS_LETTER,              {Category::cLakeHylia,},                                                                                              SpoilerCollectionCheck::EventChkInf(0x31));
     locationTable[LH_SUN]                                = ItemLocation::Base       (0x57, 0x58, "LH Sun",                               LH_SUN,                                FIRE_ARROWS,               {Category::cLakeHylia,},                                                                                              SpoilerCollectionCheck::Chest(0x57, 0x00));
     locationTable[LH_FREESTANDING_POH]                   = ItemLocation::Collectable(0x57, 0x1E, "LH Freestanding PoH",                  LH_FREESTANDING_POH,                   PIECE_OF_HEART,            {Category::cLakeHylia,});
@@ -59,6 +62,7 @@ void LocationTable_Init() {
 
     //Gerudo Valley
     locationTable[GV_CHEST]                              = ItemLocation::Chest      (0x5A, 0x00, "GV Chest",                             GV_CHEST,                              PURPLE_RUPEE,              {Category::cGerudoValley, Category::cGerudo,});
+    locationTable[GV_TRADE_SAW]                          = ItemLocation::Base       (0x5A, 0x22, "GV Trade Saw",                         GV_TRADE_SAW,                          BROKEN_SWORD,              {Category::cGerudoValley, Category::cGerudo, Category::cAdultTrade},                                                  SpoilerCollectionCheck::ItemGetInf(58));
     locationTable[GV_WATERFALL_FREESTANDING_POH]         = ItemLocation::Collectable(0x5A, 0x01, "GV Waterfall Freestanding PoH",        GV_WATERFALL_FREESTANDING_POH,         PIECE_OF_HEART,            {Category::cGerudoValley, Category::cGerudo,});
     locationTable[GV_CRATE_FREESTANDING_POH]             = ItemLocation::Collectable(0x5A, 0x02, "GV Crate Freestanding PoH",            GV_CRATE_FREESTANDING_POH,             PIECE_OF_HEART,            {Category::cGerudoValley, Category::cGerudo,});
     locationTable[GV_DEKU_SCRUB_GROTTO_REAR]             = ItemLocation::GrottoScrub(0xF0, 0x39, "GV Deku Scrub Grotto Rear",            GV_DEKU_SCRUB_GROTTO_REAR,             BUY_RED_POTION_30,         {Category::cGerudoValley, Category::cGerudo, Category::cDekuScrub, Category::cGrotto},                                SpoilerCollectionCheck::Scrub(0x1A, 0x08));
@@ -106,8 +110,10 @@ void LocationTable_Init() {
     locationTable[KAK_50_GOLD_SKULLTULA_REWARD]          = ItemLocation::Base       (0x50, 0x3E, "Kak 50 Gold Skulltula Reward",         KAK_50_GOLD_SKULLTULA_REWARD,          PIECE_OF_HEART,            {Category::cKakarikoVillage, Category::cKakariko, Category::cSkulltulaHouse},                                         SpoilerCollectionCheck::EventChkInf(0xDE));
     locationTable[KAK_MAN_ON_ROOF]                       = ItemLocation::Base       (0x52, 0x3E, "Kak Man on Roof",                      KAK_MAN_ON_ROOF,                       PIECE_OF_HEART,            {Category::cKakarikoVillage, Category::cKakariko,},                                                                   SpoilerCollectionCheck::ItemGetInf(29));
     locationTable[KAK_SHOOTING_GALLERY_REWARD]           = ItemLocation::Base       (0x42, 0x30, "Kak Shooting Gallery Reward",          KAK_SHOOTING_GALLERY_REWARD,           PROGRESSIVE_BOW,           {Category::cKakarikoVillage, Category::cKakariko, Category::cMinigame},                                               SpoilerCollectionCheck::ItemGetInf(6));
+    locationTable[KAK_TRADE_ODD_MUSHROOM]                = ItemLocation::Base       (0x4E, 0x20, "Kak Trade Odd Mushroom",               KAK_TRADE_ODD_MUSHROOM,                ODD_POULTICE,              {Category::cKakarikoVillage, Category::cKakariko, Category::cAdultTrade},                                             SpoilerCollectionCheck::ItemGetInf(56));
     locationTable[KAK_ANJU_AS_ADULT]                     = ItemLocation::Base       (0x52, 0x1D, "Kak Anju as Adult",                    KAK_ANJU_AS_ADULT,                     CLAIM_CHECK,               {Category::cKakarikoVillage, Category::cKakariko,},                                                                   SpoilerCollectionCheck::ItemGetInf(36));
     locationTable[KAK_ANJU_AS_CHILD]                     = ItemLocation::Base       (0x52, 0x0F, "Kak Anju as Child",                    KAK_ANJU_AS_CHILD,                     EMPTY_BOTTLE,              {Category::cKakarikoVillage, Category::cKakariko, Category::cMinigame},                                               SpoilerCollectionCheck::ItemGetInf(4));
+    locationTable[KAK_TRADE_POCKET_CUCCO]                = ItemLocation::Base       (0x52, 0x0E, "Kak Trade Pocket Cucco",               KAK_TRADE_POCKET_CUCCO,                COJIRO,                    {Category::cKakarikoVillage, Category::cKakariko, Category::cAdultTrade},                                             SpoilerCollectionCheck::ItemGetInf(38));
     locationTable[KAK_IMPAS_HOUSE_FREESTANDING_POH]      = ItemLocation::Collectable(0x37, 0x01, "Kak Impas House Freestanding PoH",     KAK_IMPAS_HOUSE_FREESTANDING_POH,      PIECE_OF_HEART,            {Category::cKakarikoVillage, Category::cKakariko,});
     locationTable[KAK_WINDMILL_FREESTANDING_POH]         = ItemLocation::Collectable(0x48, 0x01, "Kak Windmill Freestanding PoH",        KAK_WINDMILL_FREESTANDING_POH,         PIECE_OF_HEART,            {Category::cKakarikoVillage, Category::cKakariko,});
 
@@ -123,7 +129,9 @@ void LocationTable_Init() {
     //Death Mountain
     locationTable[DMT_CHEST]                             = ItemLocation::Chest      (0x60, 0x01, "DMT Chest",                            DMT_CHEST,                             PURPLE_RUPEE,              {Category::cDeathMountainTrail, Category::cDeathMountain,});
     locationTable[DMT_STORMS_GROTTO_CHEST]               = ItemLocation::Chest      (0x3E, 0x17, "DMT Storms Grotto Chest",              DMT_STORMS_GROTTO_CHEST,               HUGE_RUPEE,                {Category::cDeathMountainTrail, Category::cDeathMountain, Category::cGrotto});
-    locationTable[DMT_BIGGORON]                          = ItemLocation::Base       (0x60, 0x57, "DMT Biggoron",                         DMT_BIGGORON,                          BIGGORON_SWORD,            {Category::cDeathMountainTrail, Category::cDeathMountain,},                                                           SpoilerCollectionCheck::Biggoron());
+    locationTable[DMT_TRADE_BROKEN_SWORD]                = ItemLocation::Base       (0x60, 0x23, "DMT Trade Broken Sword",               DMT_TRADE_BROKEN_SWORD,                PRESCRIPTION,              {Category::cDeathMountainTrail, Category::cDeathMountain, Category::cAdultTrade},                                     SpoilerCollectionCheck::Biggoron(0x4));
+    locationTable[DMT_TRADE_EYEDROPS]                    = ItemLocation::Base       (0x60, 0x26, "DMT Trade Eyedrops",                   DMT_TRADE_EYEDROPS,                    CLAIM_CHECK,               {Category::cDeathMountainTrail, Category::cDeathMountain, Category::cAdultTrade},                                     SpoilerCollectionCheck::Biggoron(0x2));
+    locationTable[DMT_TRADE_CLAIM_CHECK]                 = ItemLocation::Base       (0x60, 0x57, "DMT Trade Claim Check",                DMT_TRADE_CLAIM_CHECK,                 BIGGORON_SWORD,            {Category::cDeathMountainTrail, Category::cDeathMountain, Category::cAdultTrade},                                     SpoilerCollectionCheck::Biggoron(0x1));
     locationTable[DMT_FREESTANDING_POH]                  = ItemLocation::Collectable(0x60, 0x1E, "DMT Freestanding PoH",                 DMT_FREESTANDING_POH,                  PIECE_OF_HEART,            {Category::cDeathMountainTrail, Category::cDeathMountain,});
 
     //Goron City
@@ -162,6 +170,7 @@ void LocationTable_Init() {
     locationTable[ZD_CHEST]                              = ItemLocation::Chest      (0x58, 0x00, "ZD Chest",                             ZD_CHEST,                              PIECE_OF_HEART,            {Category::cZorasDomain,});
     locationTable[ZD_DIVING_MINIGAME]                    = ItemLocation::Base       (0x58, 0x37, "ZD Diving Minigame",                   ZD_DIVING_MINIGAME,                    PROGRESSIVE_SCALE,         {Category::cZorasDomain, Category::cMinigame,},                                                                       SpoilerCollectionCheck::EventChkInf(0x38));
     locationTable[ZD_KING_ZORA_THAWED]                   = ItemLocation::Base       (0x58, 0x2D, "ZD King Zora Thawed",                  ZD_KING_ZORA_THAWED,                   ZORA_TUNIC,                {Category::cZorasDomain,},                                                                                            SpoilerCollectionCheck::InfTable(0x13, 0x01));
+    locationTable[ZD_TRADE_PRESCRIPTION]                 = ItemLocation::Base       (0x58, 0x24, "ZD Trade Prescription",                ZD_TRADE_PRESCRIPTION,                 EYEBALL_FROG,              {Category::cZorasDomain, Category::cAdultTrade},                                                                      SpoilerCollectionCheck::ItemGetInf(60));
 
     //Zoras Fountain
     locationTable[ZF_ICEBERG_FREESTANDING_POH]           = ItemLocation::Collectable(0x59, 0x01, "ZF Iceberg Freestanding PoH",          ZF_ICEBERG_FREESTANDING_POH,           PIECE_OF_HEART,            {Category::cZorasFountain,});
@@ -1069,6 +1078,8 @@ std::vector<LocationKey> overworldLocations = {
   //Lost Woods
   LW_GIFT_FROM_SARIA,
   LW_SKULL_KID,
+  LW_TRADE_COJIRO,
+  LW_TRADE_ODD_POULTICE,
   LW_OCARINA_MEMORY_GAME,
   LW_TARGET_IN_WOODS,
   LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT,
@@ -1101,6 +1112,7 @@ std::vector<LocationKey> overworldLocations = {
   LH_CHILD_FISHING,
   LH_ADULT_FISHING,
   LH_LAB_DIVE,
+  LH_TRADE_FROG,
   LH_UNDERWATER_ITEM,
   LH_SUN,
   LH_FREESTANDING_POH,
@@ -1110,6 +1122,7 @@ std::vector<LocationKey> overworldLocations = {
 
   //Gerudo Valley
   GV_CHEST,
+  GV_TRADE_SAW,
   GV_WATERFALL_FREESTANDING_POH,
   GV_CRATE_FREESTANDING_POH,
   GV_DEKU_SCRUB_GROTTO_REAR,
@@ -1194,8 +1207,10 @@ std::vector<LocationKey> overworldLocations = {
   KAK_50_GOLD_SKULLTULA_REWARD,
   KAK_MAN_ON_ROOF,
   KAK_SHOOTING_GALLERY_REWARD,
+  KAK_TRADE_ODD_MUSHROOM,
   KAK_ANJU_AS_CHILD,
   KAK_ANJU_AS_ADULT,
+  KAK_TRADE_POCKET_CUCCO,
   KAK_IMPAS_HOUSE_FREESTANDING_POH,
   KAK_WINDMILL_FREESTANDING_POH,
   SONG_FROM_WINDMILL,
@@ -1232,7 +1247,9 @@ std::vector<LocationKey> overworldLocations = {
   //Death Mountain Trail
   DMT_CHEST,
   DMT_STORMS_GROTTO_CHEST,
-  DMT_BIGGORON,
+  DMT_TRADE_BROKEN_SWORD,
+  DMT_TRADE_EYEDROPS,
+  DMT_TRADE_CLAIM_CHECK,
   DMT_GREAT_FAIRY_REWARD,
   DMT_FREESTANDING_POH,
   DMT_COW_GROTTO_COW,
@@ -1285,6 +1302,7 @@ std::vector<LocationKey> overworldLocations = {
   ZD_CHEST,
   ZD_DIVING_MINIGAME,
   ZD_KING_ZORA_THAWED,
+  ZD_TRADE_PRESCRIPTION,
 
   //Zora's Domain Shop
   ZD_SHOP_ITEM_1,
