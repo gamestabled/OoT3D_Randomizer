@@ -5182,7 +5182,7 @@ void HintTable_Init() {
                      Text{"Impa's cow cage", /*french*/"la #cage à vache d'Impa#", /*spanish*/"la jaula de la vaca de Impa"},
   });
 
-    hintTable[KAK_ODD_MEDICINE_BUILDING] = HintText::Region({
+    hintTable[KAK_ODD_POULTICE_BUILDING] = HintText::Region({
                      //obscure text
                      Text{"Granny's Potion Shop", /*french*/"la #maison bleue de Cocorico#", /*spanish*/"la tienda de pociones de la abuela"},
   });

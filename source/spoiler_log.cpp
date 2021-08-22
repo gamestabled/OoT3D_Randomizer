@@ -154,6 +154,10 @@ static void WriteIngameSpoilerLog() {
         else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
             continue;
         }
+        // Adult Trade
+        else if (!Settings::ShuffleAdultTradeQuest && loc->IsCategory(Category::cAdultTrade)) {
+          continue;
+        }
         // Gerudo Fortress
         else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
             (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {

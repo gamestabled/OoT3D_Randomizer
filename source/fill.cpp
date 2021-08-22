@@ -437,8 +437,6 @@ static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locati
 | - OoT Randomizer
 */
 static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<LocationKey>& allowedLocations, bool setLocationsAsHintable = false) {
-  PlaceItemInLocation(KF_MIDOS_BOTTOM_LEFT_CHEST, CLAIM_CHECK);
-  PlaceItemInLocation(KF_MIDOS_TOP_LEFT_CHEST, COJIRO);
 
   if (items.size() > allowedLocations.size()) {
     printf("\x1b[2;2HERROR: MORE ITEMS THAN LOCATIONS IN GIVEN LISTS");

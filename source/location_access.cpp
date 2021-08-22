@@ -394,6 +394,8 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(LW_SKULL_KID,                 {[]{return IsChild && CanPlay(SariasSong);}}),
+                  LocationAccess(LW_TRADE_COJIRO,              {[]{return IsAdult && Cojiro;}}),
+                  LocationAccess(LW_TRADE_ODD_POULTICE,        {[]{return IsAdult && OddPoultice && OddMushroomAccess;}}),
                   LocationAccess(LW_OCARINA_MEMORY_GAME,       {[]{return IsChild && Ocarina;}}),
                   LocationAccess(LW_TARGET_IN_WOODS,           {[]{return CanUse(CanUseItem::Slingshot);}}),
                   LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE,    {[]{return IsChild && CanStunDeku;}}),
@@ -659,6 +661,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(LH_LAB_DIVE,     {[]{return ProgressiveScale >= 2 || (LogicLabDiving && IronBoots && CanUse(CanUseItem::Hookshot));}}),
+                  LocationAccess(LH_TRADE_FROG,   {[]{return IsAdult && EyeballFrog;}}),
                   LocationAccess(LH_GS_LAB_CRATE, {[]{return IronBoots && CanUse(CanUseItem::Hookshot);}}),
                 }, {
                   //Exits
@@ -728,6 +731,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(GV_CHEST,          {[]{return CanUse(CanUseItem::Hammer);}}),
+                  LocationAccess(GV_TRADE_SAW,      {[]{return IsAdult && PoachersSaw;}}),
                   LocationAccess(GV_GS_BEHIND_TENT, {[]{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(GV_GS_PILLAR,      {[]{return CanUse(CanUseItem::Hookshot) && AtNight && CanGetNightTimeGS;}}),
                 }, {
@@ -1113,6 +1117,7 @@ void AreaTable_Init() {
                   LocationAccess(SHEIK_IN_KAKARIKO,               {[]{return IsAdult && ForestMedallion && FireMedallion && WaterMedallion;}}),
                   LocationAccess(KAK_ANJU_AS_CHILD,               {[]{return IsChild && AtDay;}}),
                   LocationAccess(KAK_ANJU_AS_ADULT,               {[]{return IsAdult && AtDay;}}),
+                  LocationAccess(KAK_TRADE_POCKET_CUCCO,          {[]{return IsAdult && AtDay && PocketCucco && WakeUpAdultTalon;}}),
                   LocationAccess(KAK_GS_HOUSE_UNDER_CONSTRUCTION, {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(KAK_GS_SKULLTULA_HOUSE,          {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(KAK_GS_GUARDS_HOUSE,             {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
@@ -1156,7 +1161,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(KAKARIKO_VILLAGE,          {[]{return true;}}),
                   Entrance(KAK_OPEN_GROTTO,           {[]{return true;}}),
-                  Entrance(KAK_ODD_MEDICINE_BUILDING, {[]{return IsAdult;}}),
+                  Entrance(KAK_ODD_POULTICE_BUILDING, {[]{return IsAdult;}}),
                   Entrance(KAK_POTION_SHOP_BACK,      {[]{return IsAdult && AtDay;}}),
   });
 
@@ -1260,10 +1265,12 @@ void AreaTable_Init() {
                   Entrance(KAK_POTION_SHOP_FRONT, {[]{return true;}}),
   });
 
-  areaTable[KAK_ODD_MEDICINE_BUILDING] = Area("Kak Odd Medicine Building", "", NONE, NO_DAY_NIGHT_CYCLE, {
+  areaTable[KAK_ODD_POULTICE_BUILDING] = Area("Kak Granny's Potion Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&OddPoulticeAccess, {[]{return OddPoulticeAccess || (IsAdult && (OddMushroomAccess || (OddMushroom && DisableTradeRevert)));}}),
-                }, {}, {
+                }, {
+                  LocationAccess(KAK_TRADE_ODD_MUSHROOM, {[]{return IsAdult && OddMushroom;}}),
+                }, {
                   //Exits
                   Entrance(KAK_BACKYARD, {[]{return true;}}),
   });
@@ -1399,7 +1406,9 @@ void AreaTable_Init() {
                   EventAccess(&BugRock,            {[]{return true;}}),
                 }, {
                   //Locations
-                  LocationAccess(DMT_TRADE_CLAIM_CHECK,     {[]{return IsAdult && (ClaimCheck || (GuaranteeTradePath && (EyedropsAccess || (Eyedrops && DisableTradeRevert))));}}),
+                  LocationAccess(DMT_TRADE_BROKEN_SWORD,    {[]{return IsAdult && BrokenSword;}}),
+                  LocationAccess(DMT_TRADE_EYEDROPS,        {[]{return IsAdult && Eyedrops;}}),
+                  LocationAccess(DMT_TRADE_CLAIM_CHECK,     {[]{return IsAdult && ClaimCheck;}}),
                   LocationAccess(DMT_GS_FALLING_ROCKS_PATH, {[]{return IsAdult && AtNight && CanUse(CanUseItem::Hammer) && CanGetNightTimeGS;}}),
                   LocationAccess(DMT_GOSSIP_STONE,          {[]{return true;}}),
                 }, {
@@ -1700,6 +1709,7 @@ void AreaTable_Init() {
                   LocationAccess(ZD_DIVING_MINIGAME,     {[]{return IsChild;}}),
                   LocationAccess(ZD_CHEST,               {[]{return CanUse(CanUseItem::Sticks);}}),
                   LocationAccess(ZD_KING_ZORA_THAWED,    {[]{return KingZoraThawed;}}),
+                  LocationAccess(ZD_TRADE_PRESCRIPTION,  {[]{return KingZoraThawed && Prescription;}}),
                   LocationAccess(ZD_GS_FROZEN_WATERFALL, {[]{return IsAdult && AtNight && (Hookshot || Bow || MagicMeter) && CanGetNightTimeGS;}}),
                   LocationAccess(ZD_GOSSIP_STONE,        {[]{return true;}}),
                 }, {
@@ -3827,7 +3837,7 @@ namespace Areas {
     KAK_ROOFTOP,
     KAK_BEHIND_GATE,
     KAK_BACKYARD,
-    KAK_ODD_MEDICINE_BUILDING,
+    KAK_ODD_POULTICE_BUILDING,
     KAK_REDEAD_GROTTO,
     KAK_OPEN_GROTTO,
     THE_GRAVEYARD,
