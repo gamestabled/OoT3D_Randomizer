@@ -13,7 +13,7 @@
 #include "z3D/actors/z_en_box.h"
 #include "z3D/actors/z_en_item00.h"
 
-static ItemOverride rItemOverrides[512] = { 0 };
+static ItemOverride rItemOverrides[640] = { 0 };
 static s32 rItemOverrides_Count = 0;
 
 static ItemOverride rPendingOverrideQueue[3] = { 0 };
