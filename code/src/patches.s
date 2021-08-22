@@ -92,7 +92,6 @@ ChildShootingGallery_patch:
 .global AdultShootingGallery_patch
 AdultShootingGallery_patch:
     nop
-    nop
     mov r0,#0x30
     b 0x38AB78
 
@@ -1322,16 +1321,26 @@ MedigoronCheckFlagOne_patch:
 MedigoronCheckFlagTwo_patch:
     b hook_MedigoronCheckFlagTwo
 
+.section .patch_MedigoronSetRewardFlag
+.global MedigoronSetRewardFlag_patch
+MedigoronSetRewardFlag_patch:
+    b hook_MedigoronSetRewardFlag
+
 .section .patch_MedigoronGetCustomText
 .global MedigoronGetCustomText_patch
 MedigoronGetCustomText_patch:
     b hook_MedigoronGetCustomText
     nop
 
-.section .patch_MedigoronItemOverride
-.global MedigoronItemOverride_patch
-MedigoronItemOverride_patch:
-    b hook_MedigoronItemOverride
+.section .patch_MedigoronItemOverrideOne
+.global MedigoronItemOverrideOne_patch
+MedigoronItemOverrideOne_patch:
+    b hook_MedigoronItemOverrideOne
+
+.section .patch_MedigoronItemOverrideTwo
+.global MedigoronItemOverrideTwo_patch
+MedigoronItemOverrideTwo_patch:
+    b hook_MedigoronItemOverrideTwo
 
 .section .patch_CarpetSalesmanCheckFlagOne
 .global CarpetSalesmanCheckFlagOne_patch
@@ -1481,6 +1490,57 @@ CheckForPocketCuccoHatchGameplayInit_patch:
 .global CheckForPocketCuccoHatchKankyo_patch
 CheckForPocketCuccoHatchKankyo_patch:
     bl SaveFile_CheckForPocketCuccoHatch
+
+.section .patch_SkipSongReplayForTimeWarpBlocksOne
+.global SkipSongReplayForTimeWarpBlocksOne_patch
+SkipSongReplayForTimeWarpBlocksOne_patch:
+    b hook_SkipSongReplayForTimeWarpBlocksOne
+
+.section .patch_SkipSongReplayForTimeWarpBlocksTwo
+.global SkipSongReplayForTimeWarpBlocksTwo_patch
+SkipSongReplayForTimeWarpBlocksTwo_patch:
+    b hook_SkipSongReplayForTimeWarpBlocksTwo
+
+.section .patch_PlaySound
+.global PlaySound_patch
+PlaySound_patch:
+    b hook_PlaySound
+
+.section .patch_SetBGMEntrance
+.global SetBGMEntrance_patch
+SetBGMEntrance_patch:
+    b hook_SetBGMEntrance
+
+.section .patch_SetBGMDayNight
+.global SetBGMDayNight_patch
+SetBGMDayNight_patch:
+    b hook_SetBGMDayNight
+
+.section .patch_GiantsKnifeWithoutKokiriSword
+.global GiantsKnifeWithoutKokiriSword_patch
+GiantsKnifeWithoutKokiriSword_patch:
+    cmp r3,#0x8
+    blt 0x376C54
+
+.section .patch_SyatekiManReminder
+.global SyatekiManReminder_patch
+SyatekiManReminder_patch:
+    beq hook_SyatekiManReminder
+
+.section .patch_SkipTimeTravelCutsceneOne
+.global SkipTimeTravelCutsceneOne_patch
+SkipTimeTravelCutsceneOne_patch:
+    b hook_SkipTimeTravelCutscene
+
+.section .patch_SkipTimeTravelCutsceneTwo
+.global SkipTimeTravelCutsceneTwo_patch
+SkipTimeTravelCutsceneTwo_patch:
+    mov r1,#0x324
+
+.section .patch_SwapAgeIgnoreSceneSetup
+.global SwapAgeIgnoreSceneSetup_patch
+SwapAgeIgnoreSceneSetup_patch:
+    nop
 
 .section .patch_loader
 .global loader_patch

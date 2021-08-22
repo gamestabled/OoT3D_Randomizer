@@ -41,8 +41,7 @@ void PrintTopScreen() {
 }
 
 void MenuInit() {
-
-  Settings::SetDefaultSettings();
+  Settings::InitSettings();
 
   seedChanged = false;
   pastSeedLength = Settings::seed.length();
@@ -99,8 +98,8 @@ void MoveCursor(u32 kDown) {
       currentSetting = currentMenu->settingsList->at(currentMenu->menuIdx);
     } while (currentSetting->IsLocked() || currentSetting->IsHidden());
   }
-  //All other menus
-  else {
+  //All other menus except reset-to-defaults confirmation
+  else if (currentMenu->mode != RESET_TO_DEFAULTS) {
     if (kDown & KEY_DUP) {
       currentMenu->menuIdx--;
     }
@@ -132,12 +131,14 @@ void MenuUpdate(u32 kDown) {
   //Check for menu change
   //If user pressed A on a non-option, non-action menu, they're navigating to a new menu
   if (kDown & KEY_A && currentMenu->mode != OPTION_SUB_MENU && currentMenu->type != MenuType::Action) {
-    Menu* newMenu;
-    newMenu = currentMenu->itemsList->at(currentMenu->menuIdx);
-    menuList.push_back(newMenu);
-    currentMenu = menuList.back();
-    ModeChangeInit();
-    kDown = 0;
+    if (currentMenu->itemsList->size() > currentMenu->menuIdx) {
+      Menu* newMenu;
+      newMenu = currentMenu->itemsList->at(currentMenu->menuIdx);
+      menuList.push_back(newMenu);
+      currentMenu = menuList.back();
+      ModeChangeInit();
+      kDown = 0;
+    }
   //If they pressed B on any menu other than main, go backwards to the previous menu
   } else if (kDown & KEY_B && currentMenu->mode != MAIN_MENU) {
     //Want to reset generate menu when leaving
@@ -194,6 +195,9 @@ void MenuUpdate(u32 kDown) {
   } else if (currentMenu->mode == DELETE_PRESET) {
     UpdatePresetsMenu(kDown);
     PrintPresetsMenu();
+  } else if (currentMenu->mode == RESET_TO_DEFAULTS) {
+    UpdateResetToDefaultsMenu(kDown);
+    PrintResetToDefaultsMenu();
   } else if (currentMenu->mode == GENERATE_MODE) {
     UpdateGenerateMenu(kDown);
     if (currentMenu->mode != POST_GENERATE) {
@@ -278,6 +282,16 @@ void UpdatePresetsMenu(u32 kDown) {
     } else {
       printf("\x1b[24;5HFailed to delete preset.");
     }
+  }
+}
+
+void UpdateResetToDefaultsMenu(u32 kDown) {
+  consoleSelect(&topScreen);
+  //clear any potential message
+  ClearDescription();
+  if (kDown & KEY_A) {
+    Settings::SetDefaultSettings();
+    printf("\x1b[24;5HSettings have been reset to defaults.");
   }
 }
 
@@ -421,6 +435,12 @@ void PrintPresetsMenu() {
       printf("\x1b[%d;%dH%s",   row, 15, preset.c_str());
     }
   }
+}
+
+void PrintResetToDefaultsMenu() {
+  consoleSelect(&bottomScreen);
+  printf("\x1b[10;4HPress A to reset to default settings.");
+  printf("\x1b[12;4HPress B to return to the preset menu.");
 }
 
 void PrintGenerateMenu() {

@@ -1,5 +1,6 @@
 #pragma once
 #include <string_view>
+#include <vector>
 
 using string_view = std::string_view;
 
@@ -9,6 +10,7 @@ extern string_view shuffleRandomize;
 extern string_view dungeonRandomize;
 
 extern string_view logicGlitchless;
+extern string_view logicGlitched;
 extern string_view logicNoLogic;
 extern string_view logicVanilla;
 
@@ -174,6 +176,8 @@ extern string_view fourPoesDesc;
 
 extern string_view templeOfTimeIntroDesc;
 
+extern string_view lakeHyliaOwlDesc;
+
 extern string_view bigPoeTargetCountDesc;
 
 extern string_view numRequiredCuccosDesc;
@@ -201,6 +205,7 @@ extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;
 
+extern string_view locationsReachableDesc;
 extern string_view nightGSDesc;
 
 extern string_view chestAnimDesc;
@@ -245,6 +250,13 @@ extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
 
 extern string_view mirrorWorldDesc;
+
+extern string_view musicRandoDesc;
+extern string_view shuffleBGMDesc;
+extern string_view fanfaresOffDesc;
+extern string_view onlyFanfaresDesc;
+extern string_view fanfaresOcarinaDesc;
+extern string_view shuffleOcaMusicDesc;
 
 extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
@@ -341,3 +353,26 @@ extern string_view LogicLensBotwMQDesc;
 extern string_view LogicLensGtgMQDesc;
 extern string_view LogicLensCastleMQDesc;
 extern string_view LogicSpiritTrialHookshotDesc;
+
+extern const std::vector<string_view> GlitchDifficulties;
+extern string_view GlitchISGDescDisabled;
+extern string_view GlitchISGDescNovice;
+extern string_view GlitchHoverDescDisabled;
+extern string_view GlitchHoverDescNovice;
+extern string_view GlitchHoverDescIntermediate;
+extern string_view GlitchHoverDescAdvanced;
+extern string_view GlitchMegaflipDescDisabled;
+extern string_view GlitchMegaflipDescNovice;
+extern string_view GlitchMegaflipDescIntermediate;
+extern string_view GlitchHookshotClipDescDisabled;
+extern string_view GlitchHookshotClipDescNovice;
+extern string_view GlitchHookshotJump_BonkDescDisabled;
+extern string_view GlitchHookshotJump_BonkDescIntermediate;
+extern string_view GlitchHookshotJump_BootsDescDisabled;
+extern string_view GlitchHookshotJump_BootsDescNovice;
+extern string_view GlitchHookshotJump_BootsDescIntermediate;
+extern string_view GlitchLedgeClipDescDisabled;
+extern string_view GlitchLedgeClipDescNovice;
+extern string_view GlitchLedgeClipDescIntermediate;
+extern string_view GlitchTripleSlashClipDescDisabled;
+extern string_view GlitchTripleSlashClipDescNovice;

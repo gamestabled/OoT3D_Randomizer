@@ -107,6 +107,9 @@ static void WriteIngameSpoilerLog() {
   u16 spoilerItemIndex = 0;
   u32 spoilerStringOffset = 0;
   u16 spoilerSphereItemoffset = 0;
+  u16 spoilerGroupOffset = 0;
+  // Intentionally junk value so we trigger the 'new group, record some stuff' code
+  u8 currentGroup = SpoilerCollectionCheckGroup::SPOILER_COLLECTION_GROUP_COUNT;
   bool spoilerOutOfSpace = false;
 
   // Create map of string data offsets for all _unique_ item locations and names in the playthrough
@@ -115,6 +118,13 @@ static void WriteIngameSpoilerLog() {
   itemLocationsMap.reserve(allLocations.size());
   std::unordered_map<std::string, u16> stringOffsetMap; // Map of strings to their offset into spoiler string data array
   stringOffsetMap.reserve(allLocations.size() * 2);
+
+  // Sort all locations by their group, so the in-game log can show a group of items by simply starting/ending at certain indices
+  std::stable_sort(allLocations.begin(), allLocations.end(), [](const LocationKey &a, const LocationKey &b) {
+    auto groupA = Location(a)->GetCollectionCheckGroup();
+    auto groupB = Location(b)->GetCollectionCheckGroup();
+    return groupA < groupB;
+  });
 
   for (const LocationKey key : allLocations) {
     auto loc = Location(key);
@@ -178,6 +188,18 @@ static void WriteIngameSpoilerLog() {
     spoilerData.ItemLocations[spoilerItemIndex].CollectionCheckType = loc->GetCollectionCheck().type;
     spoilerData.ItemLocations[spoilerItemIndex].LocationScene = loc->GetCollectionCheck().scene;
     spoilerData.ItemLocations[spoilerItemIndex].LocationFlag = loc->GetCollectionCheck().flag;
+
+    auto checkGroup = loc->GetCollectionCheckGroup();
+    spoilerData.ItemLocations[spoilerItemIndex].Group = checkGroup;
+
+    // Group setup
+    if (checkGroup != currentGroup) {
+      currentGroup = checkGroup;
+      spoilerData.GroupOffsets[currentGroup] = spoilerGroupOffset;
+    }
+    ++spoilerData.GroupItemCounts[currentGroup];
+    ++spoilerGroupOffset;
+
     itemLocationsMap[key] = spoilerItemIndex++;
   }
   spoilerData.ItemLocationsCount = spoilerItemIndex;
@@ -247,7 +269,9 @@ static void WriteLocation(
     node->SetAttribute("price", price);
   }
   if (!location->IsAddedToPool()) {
-    node->SetAttribute("not-added", true);
+    #ifdef ENABLE_DEBUG  
+      node->SetAttribute("not-added", true);
+    #endif
   }
 }
 

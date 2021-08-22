@@ -332,11 +332,32 @@ namespace Logic {
     Either,
   };
 
+  enum class GlitchType {
+    ISG,
+    BombHover,
+    Megaflip,
+    HookshotClip,
+    HookshotJump_Bonk,
+    HookshotJump_Boots,
+    LedgeClip,
+    TripleSlashClip,
+  };
+
+  enum class GlitchDifficulty {
+    NOVICE = 1,
+    INTERMEDIATE,
+    ADVANCED,
+    EXPERT,
+    HERO,
+  };
+
   void UpdateHelpers();
   bool CanPlay(bool song);
   bool CanUse(CanUseItem itemName);
   bool HasProjectile(HasProjectileAge age);
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
+  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched);
+  bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty);
   bool EventsUpdated();
   void LogicReset();
 }

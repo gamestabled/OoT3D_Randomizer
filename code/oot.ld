@@ -80,8 +80,8 @@ SECTIONS
 		*(.patch_OwlMagicCheck)
 	}
 
-	.patch_MedigoronItemOverride 0x14D95C : {
-		*(.patch_MedigoronItemOverride)
+	.patch_MedigoronItemOverrideOne 0x14D95C : {
+		*(.patch_MedigoronItemOverrideOne)
 	}
 
 	.patch_BeanDaddyPurchase 0x14EDA8 : {
@@ -152,12 +152,24 @@ SECTIONS
 		*(.patch_CheckFadoCanSpawnInLostWoods)
 	}
 
+	.patch_MedigoronSetRewardFlag 0x16C918 : {
+		*(.patch_MedigoronSetRewardFlag)
+	}
+
+	.patch_MedigoronItemOverrideTwo 0x16C9BC : {
+		*(.patch_MedigoronItemOverrideTwo)
+	}
+
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
 		*(.patch_KingZoraIgnoreSapphire)
 	}
 
 	.patch_MidoForestDialog 0x173944 : {
 		*(.patch_MidoForestDialog)
+	}
+
+	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
+		*(.patch_SkipTimeTravelCutsceneOne)
 	}
 
 	.patch_CarpenterBossSetTradedSawFlag 0x178D58 : {
@@ -428,6 +440,14 @@ SECTIONS
 		*(.patch_SkipSongReplayForTimeBlocksTwo)
 	}
 
+	.patch_SkipSongReplayForTimeWarpBlocksOne 0x20803C : {
+		*(.patch_SkipSongReplayForTimeWarpBlocksOne)
+	}
+
+	.patch_SkipSongReplayForTimeWarpBlocksTwo 0x20805C : {
+		*(.patch_SkipSongReplayForTimeWarpBlocksTwo)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
@@ -474,6 +494,10 @@ SECTIONS
 
 	.patch_BusinessScrubCheckFlags 0x22EE64 : {
 		*(.patch_BusinessScrubCheckFlags)
+	}
+
+	.patch_SyatekiManReminder 0x2391D8 : {
+		*(.patch_SyatekiManReminder)
 	}
 
 	.patch_EnExItemModelDraw 0x249C94 : {
@@ -648,6 +672,10 @@ SECTIONS
 		*(.patch_ISGPutaway)
 	}
 
+	.patch_SetBGMEntrance 0x331048 : {
+		*(.patch_SetBGMEntrance)
+	}
+
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
@@ -688,6 +716,10 @@ SECTIONS
 		*(.patch_LikeLikeNeverEatTunic)
 	}
 
+	.patch_PlaySound 0x35C528 : {
+		*(.patch_PlaySound)
+	}
+
 	.patch_ConvertBombDropOne 0x35E46C : {
 		*(.patch_ConvertBombDropOne)
 	}
@@ -716,6 +748,10 @@ SECTIONS
 		*(.patch_GKSetDurability)
 	}
 
+	.patch_GiantsKnifeWithoutKokiriSword 0x376BEC : {
+		*(.patch_GiantsKnifeWithoutKokiriSword)
+	}
+
 	.patch_NoLensOfTruthNaviText 0x37798C : {
 		*(.patch_NoLensOfTruthNaviText)
 	}
@@ -728,7 +764,7 @@ SECTIONS
 		*(.patch_ChildShootingGallery)
 	}
 
-	.patch_AdultShootingGallery 0x38AB9C : {
+	.patch_AdultShootingGallery 0x38ABA0 : {
 		*(.patch_AdultShootingGallery)
 	}
 
@@ -1040,8 +1076,20 @@ SECTIONS
 		*(.patch_TurboTextClose)
 	}
 
+	.patch_SetBGMDayNight 0x483C88 : {
+		*(.patch_SetBGMDayNight)
+	}
+
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
+	}
+
+	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 : {
+		*(.patch_SkipTimeTravelCutsceneTwo)
+	}
+
+	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 : {
+		*(.patch_SwapAgeIgnoreSceneSetup)
 	}
 
 	.patch_FireTempleItemGiveTwo 0x491B60 : {

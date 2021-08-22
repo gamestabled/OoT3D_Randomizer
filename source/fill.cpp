@@ -118,11 +118,14 @@ static int GetMaxGSCount() {
   return std::max(maxUseful, maxBridge);
 }
 
+std::vector<LocationKey> GetAllEmptyLocations() {
+  return FilterFromPool(allLocations, [](const LocationKey loc){ return Location(loc)->GetPlacedItemKey() == NONE;});
+}
+
 //This function will return a vector of ItemLocations that are accessible with
 //where items have been placed so far within the world. The allowedLocations argument
 //specifies the pool of locations that we're trying to search for an accessible location in
-std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations,
-                                                  SearchMode mode) {
+std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations, SearchMode mode) {
   std::vector<LocationKey> accessibleLocations;
   //Reset all access to begin a new search
   if (mode != SearchMode::BothAgesNoItems) {
@@ -325,6 +328,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
 }
 
 static void GeneratePlaythrough() {
+  playthroughBeatable = false;
   LogicReset();
   GetAccessibleLocations(allLocations, SearchMode::GeneratePlaythrough);
 }
@@ -407,20 +411,19 @@ static void CalculateWotH() {
   }
 
   playthroughBeatable = true;
-  //Do one last GetAccessibleLocations to avoid "NOT ADDED" in spoiler
   LogicReset();
   GetAccessibleLocations(allLocations);
 }
 
 //Will place things completely randomly, no logic checks are performed
-static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locations) {
-  while (!locations.empty()) {
-
+static void FastFill(std::vector<ItemKey> items, std::vector<LocationKey> locations, bool endOnItemsEmpty = false) {
+  //Loop until locations are empty, or also end if items are empty and the parameters specify to end then
+  while (!locations.empty() && (!endOnItemsEmpty || !items.empty())) {
     LocationKey loc = RandomElement(locations, true);
     Location(loc)->SetAsHintable();
     PlaceItemInLocation(loc, RandomElement(items, true));
 
-    if (items.empty()) {
+    if (items.empty() && !endOnItemsEmpty) {
       items.push_back(GetJunkItem());
     }
   }
@@ -523,6 +526,18 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       //knows
       if (setLocationsAsHintable) {
         Location(selectedLocation)->SetAsHintable();
+      }
+
+      //If ALR is off, then we check beatability after placing the item.
+      //If the game is beatable, then we can stop placing items with logic.
+      if (!LocationsReachable) {
+        playthroughBeatable = false;
+        LogicReset();
+        GetAccessibleLocations(allLocations, SearchMode::CheckBeatable);
+        if (playthroughBeatable) {
+          FastFill(itemsToPlace, GetAllEmptyLocations(), true);
+          return;
+        }
       }
     }
   } while (unsuccessfulPlacement);
@@ -857,10 +872,7 @@ int Fill() {
 
     //Fast fill for the rest of the pool
     std::vector<ItemKey> remainingPool = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) {return true;});
-    LogicReset();
-    FastFill(remainingPool, GetAccessibleLocations(allLocations));
-
-    LogicReset();
+    FastFill(remainingPool, GetAllEmptyLocations(), false);
     GeneratePlaythrough();
     //Successful placement, produced beatable result
     if(playthroughBeatable && !placementFailure) {
