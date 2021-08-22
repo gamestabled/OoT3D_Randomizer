@@ -513,6 +513,12 @@ string_view templeOfTimeIntroDesc     = "The introduction cutscene to Temple of 
                                         "performing Door of Time Skip should the Door of\n"//
                                         "Time be closed.";                                 //
 /*------------------------------                                                           //
+|        LAKE HYLIA OWL        |                                                           //
+------------------------------*/                                                           //
+string_view lakeHyliaOwlDesc          = "The owl flight cutscene in Lake Hylia will be\n"  //
+                                        "skipped. This cutscene lets you see what item\n"  //
+                                        "is on top of the laboratory roof.";               //
+/*------------------------------                                                           //
 |     BIG POE TARGET COUNT     |                                                           //
 ------------------------------*/                                                           //
 string_view bigPoeTargetCountDesc     = "The Poe buyer will give a reward for turning in\n"//
@@ -1143,92 +1149,67 @@ string_view LogicLensCastleMQDesc                     = "Difficulty: Intermediat
 string_view LogicSpiritTrialHookshotDesc              = "Difficulty: Intermediate\n"                       //
                                                         "A precise jump off of an Armos can collect the\n" //
                                                         "highest rupee.";                                  //
-                                                                                                           //--------//
-/*------------------------------                                                                                     //
-|           GLITCHES           |                                                                                     //
-------------------------------*/                                                                                     //
-std::vector<string_view> GlitchISGDesc                { /*Disabled*/ "Shortened to ISG, allows Link's melee weapon to\n"//
-                                                                     "be in a constant swinging state. Simply touching\n"
-                                                                     "objects with this causes them to get hit.\n"      //
-                                                                     "Putting away the weapon while ISG is on hits\n"   //
-                                                                     "any object with a spherical hitbox,\n"            //
-                                                                     "such as small skulltulas. It is initiated by\n"   //
-                                                                     "interrupting a crouch stab.",                     //
-                                                          /*Novice*/ "ISG may be required to kill certain enemies,\n"   //
-                                                                     "or to Bomb Hover when enabled.",                  //
-                                                    /*Intermediate*/ "",                                                //
-                                                        /*Advanced*/ "",                                                //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
-std::vector<string_view> GlitchHoverDesc              { /*Disabled*/ "Hovering allows Link to consecutively backflip\n" //
-                                                                     "in the air without falling. By shielding\n"       //
-                                                                     "damage with ISG on, Link will stay in midair.\n"  //
-                                                                     "While bombs aren't always required, this option\n"//
-                                                                     "will always expect them to be used.\n"            //
-                                                                     "\n"                                               //
-                                                                     "Requires ISG to be enabled.",                     //
-                                                          /*Novice*/ "Only bombchus are required for hovering.",        //
-                                                    /*Intermediate*/ "Some hovers may require that you start from flat\n"
-                                                                     "terrain, which requires somewhat precise timing.",//
-                                                        /*Advanced*/ "Usage of regular bombs will now also be expected,\n"
-                                                                     "which may require consecutive precise timings.",  //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
-std::vector<string_view> GlitchMegaflipDesc           { /*Disabled*/ "A Megaflip is a backflip/sidehop with high speed.\n"
-                                                                     "This can be done with several methods.",          //
-                                                          /*Novice*/ "Only Megaflipping with bombs is required.",       //
-                                                    /*Intermediate*/ "Some Megaflips where you don't have a lot of room\n"
-                                                                     "to work with and positioning is more important\n" //
-                                                                     "may be required.",                                //
-                                                        /*Advanced*/ "",                                                //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
-std::vector<string_view> GlitchHookshotClipDesc       { /*Disabled*/ "Hookshot Clipping allows Link to hookshot through\n"
-                                                                     "certain walls, which is useful if a valid\n"      //
-                                                                     "target is on the other side.",                    //
-                                                          /*Novice*/ "Basic Hookshot Clipping may be required.",        //
-                                                    /*Intermediate*/ "",                                                //
-                                                        /*Advanced*/ "",                                                //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
-std::vector<string_view> GlitchHookshotJump_BonkDesc  { /*Disabled*/ "A Hookshot Jump is an umbrella term for techniques"
-                                                                     "that launch Link into the sky using the Hookshot\n"
-                                                                     "in various ways, sometimes together with\n"       //
-                                                                     "other items. The bonk method only requires the\n" //
-                                                                     "Hookshot itself.",                                //
-                                                          /*Novice*/ "",                                                //
-                                                    /*Intermediate*/ "Basic Hookshot-Bonk Jumping may be required.",    //
-                                                        /*Advanced*/ "",                                                //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
-std::vector<string_view> GlitchHookshotJump_BootsDesc { /*Disabled*/ "This Hookshot Jump technique is one of the easier\n"
-                                                                     "ones, and require any pair of boots.",            //
-                                                          /*Novice*/ "Only relatively short Hookshot-Boot Jumps where\n"//
-                                                                     "you snap upwards may be required.",               //
-                                                    /*Intermediate*/ "Higher Hookshot-Boot Jumps where you look further\n"
-                                                                     "up or snap downwards instead may be required.",   //
-                                                        /*Advanced*/ "",                                                //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
-std::vector<string_view> GlitchLedgeClipDesc          { /*Disabled*/ "A Ledge Clip allows Link to fall through a floor\n"
-                                                                     "or pass through an object by facing a wall\n"     //
-                                                                     "and dropping down to the left in a various ways.\n"
-                                                                     "These only work as an adult.",                    //
-                                                          /*Novice*/ "Basic Ledge Clips may be required.\n"
-                                                                     "Some require that you let go of the ledge with\n"
-                                                                     "a specific timing.",
-                                                    /*Intermediate*/ "Certain harder clips may also be required.",      //
-                                                        /*Advanced*/ "",                                                //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
-std::vector<string_view> GlitchTripleSlashClipDesc    { /*Disabled*/ "When doing a three-slash-combo with either the\n" //
-                                                                     "Kokiri Sword or the Master Sword and put it away,\n"
-                                                                     "Link will be placed back a small distance.\n"     //
-                                                                     "If, while slashing, you use the recoil of hitting\n"
-                                                                     "a wall and then put away the sword, Link may clip\n"
-                                                                     "into a wall behind him if angled correctly.",     //
-                                                          /*Novice*/ "Basic Triple Slash Clipping may be required.",    //
-                                                    /*Intermediate*/ "",                                                //
-                                                        /*Advanced*/ "",                                                //
-                                                          /*Expert*/ "",                                                //
-                                                            /*Hero*/ "",};                                              //
+                                                                                                           //
+/*------------------------------                                                                           //
+|           GLITCHES           |                                                                           //
+------------------------------*/                                                                           //
+const std::vector<string_view> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"};
+
+string_view GlitchISGDescDisabled                     = "Shortened to ISG, allows Link's melee weapon to\n"//
+                                                        "be in a constant swinging state. Simply touching\n"
+                                                        "objects with this causes them to get hit.\n"      //
+                                                        "Putting away the weapon while ISG is on hits\n"   //
+                                                        "any object with a spherical hitbox,\n"            //
+                                                        "such as small skulltulas. It is initiated by\n"   //
+                                                        "interrupting a crouch stab.";                     //
+string_view GlitchISGDescNovice                       = "ISG may be required to kill certain enemies,\n"   //
+                                                        "or to Bomb Hover when enabled.";                  //
+string_view GlitchHoverDescDisabled                   = "Hovering allows Link to consecutively backflip\n" //
+                                                        "in the air without falling. By shielding\n"       //
+                                                        "damage with ISG on, Link will stay in midair.\n"  //
+                                                        "While bombs aren't always required, this option\n"//
+                                                        "will always expect them to be used.\n"            //
+                                                        "\n"                                               //
+                                                        "Requires ISG to be enabled.";                     //
+string_view GlitchHoverDescNovice                     = "Only bombchus are required for hovering.";        //
+string_view GlitchHoverDescIntermediate               = "Some hovers may require that you start from flat\n"
+                                                        "terrain, which requires somewhat precise timing.";//
+string_view GlitchHoverDescAdvanced                   = "Usage of regular bombs will now also be expected,\n"
+                                                        "which may require consecutive precise timings.";  //
+string_view GlitchMegaflipDescDisabled                = "A Megaflip is a backflip/sidehop with high speed.\n"
+                                                        "This can be done with several methods.";          //
+string_view GlitchMegaflipDescNovice                  = "Only Megaflipping with bombs is required.";       //
+string_view GlitchMegaflipDescIntermediate            = "Some Megaflips where you don't have a lot of room\n"
+                                                        "to work with and positioning is more important\n" //
+                                                        "may be required.";                                //
+string_view GlitchHookshotClipDescDisabled            = "Hookshot Clipping allows Link to hookshot through\n"
+                                                        "certain walls, which is useful if a valid\n"      //
+                                                        "target is on the other side.";                    //
+string_view GlitchHookshotClipDescNovice              = "Basic Hookshot Clipping may be required.";        //
+string_view GlitchHookshotJump_BonkDescDisabled       = "A Hookshot Jump is an umbrella term for techniques"
+                                                        "that launch Link into the sky using the Hookshot\n"
+                                                        "in various ways, sometimes together with\n"       //
+                                                        "other items. The bonk method only requires the\n" //
+                                                        "Hookshot itself.";                                //
+string_view GlitchHookshotJump_BonkDescIntermediate   = "Basic Hookshot Jumps with a bonk may be required.";
+string_view GlitchHookshotJump_BootsDescDisabled      = "This Hookshot Jump technique is one of the easier\n"
+                                                        "ones, and require any pair of boots.";            //
+string_view GlitchHookshotJump_BootsDescNovice        = "Only relatively short Hookshot Jumps with boots\n"//
+                                                        "may be required.";                                //
+string_view GlitchHookshotJump_BootsDescIntermediate  = "Higher Hookshot Jumps with boots, where you look\n"
+                                                        "further up or downwards may be required.";        //
+string_view GlitchLedgeClipDescDisabled               = "A Ledge Clip allows Link to fall through a floor\n"
+                                                        "or pass through an object by facing a wall\n"     //
+                                                        "and dropping down to the left in a various ways.\n"
+                                                        "These only work as an adult.";                    //
+string_view GlitchLedgeClipDescNovice                 = "Basic Ledge Clips may be required.\n"             //
+                                                        "Some require that you let go of the ledge with\n" //
+                                                        "a specific timing.";                              //
+string_view GlitchLedgeClipDescIntermediate           = "Certain harder clips may also be required.";      //
+string_view GlitchTripleSlashClipDescDisabled         = "When doing a three-slash-combo with either the\n" //
+                                                        "Kokiri Sword or the Master Sword and put it away,\n"
+                                                        "Link will be placed back a small distance.\n"     //
+                                                        "If, while slashing, you use the recoil of hitting\n"
+                                                        "a wall and then put away the sword, Link may clip\n"
+                                                        "into a wall behind him if angled correctly.";     //
+string_view GlitchTripleSlashClipDescNovice           = "Basic Triple Slash Clipping may be required.";    //

@@ -92,7 +92,6 @@ ChildShootingGallery_patch:
 .global AdultShootingGallery_patch
 AdultShootingGallery_patch:
     nop
-    nop
     mov r0,#0x30
     b 0x38AB78
 
@@ -1437,6 +1436,32 @@ SetBGMEntrance_patch:
 .global SetBGMDayNight_patch
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
+
+.section .patch_GiantsKnifeWithoutKokiriSword
+.global GiantsKnifeWithoutKokiriSword_patch
+GiantsKnifeWithoutKokiriSword_patch:
+    cmp r3,#0x8
+    blt 0x376C54
+
+.section .patch_SyatekiManReminder
+.global SyatekiManReminder_patch
+SyatekiManReminder_patch:
+    beq hook_SyatekiManReminder
+
+.section .patch_SkipTimeTravelCutsceneOne
+.global SkipTimeTravelCutsceneOne_patch
+SkipTimeTravelCutsceneOne_patch:
+    b hook_SkipTimeTravelCutscene
+
+.section .patch_SkipTimeTravelCutsceneTwo
+.global SkipTimeTravelCutsceneTwo_patch
+SkipTimeTravelCutsceneTwo_patch:
+    mov r1,#0x324
+
+.section .patch_SwapAgeIgnoreSceneSetup
+.global SwapAgeIgnoreSceneSetup_patch
+SwapAgeIgnoreSceneSetup_patch:
+    nop
 
 .section .patch_LostWoodsBridgeMusic
 .global LostWoodsBridgeMusic_patch

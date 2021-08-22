@@ -148,6 +148,10 @@ SECTIONS
 		*(.patch_MidoForestDialog)
 	}
 
+	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
+		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
 	.patch_AnjuCheckCuccoAmount 0x179420 : {
 		*(.patch_AnjuCheckCuccoAmount)
 	}
@@ -460,6 +464,10 @@ SECTIONS
 		*(.patch_BusinessScrubCheckFlags)
 	}
 
+	.patch_SyatekiManReminder 0x2391D8 : {
+		*(.patch_SyatekiManReminder)
+	}
+
 	.patch_EnExItemModelDraw 0x249C94 : {
 		*(.patch_EnExItemModelDraw)
 	}
@@ -708,6 +716,10 @@ SECTIONS
 		*(.patch_GKSetDurability)
 	}
 
+	.patch_GiantsKnifeWithoutKokiriSword 0x376BEC : {
+		*(.patch_GiantsKnifeWithoutKokiriSword)
+	}
+
 	.patch_NoLensOfTruthNaviText 0x37798C : {
 		*(.patch_NoLensOfTruthNaviText)
 	}
@@ -720,7 +732,7 @@ SECTIONS
 		*(.patch_ChildShootingGallery)
 	}
 
-	.patch_AdultShootingGallery 0x38AB9C : {
+	.patch_AdultShootingGallery 0x38ABA0 : {
 		*(.patch_AdultShootingGallery)
 	}
 
@@ -1022,6 +1034,14 @@ SECTIONS
 
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
+	}
+
+	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 : {
+		*(.patch_SkipTimeTravelCutsceneTwo)
+	}
+
+	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 : {
+		*(.patch_SwapAgeIgnoreSceneSetup)
 	}
 
 	.patch_FireTempleItemGiveTwo 0x491B60 : {

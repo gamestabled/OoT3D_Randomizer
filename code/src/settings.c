@@ -114,7 +114,16 @@ void Settings_SkipSongReplays() {
     if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 && gGlobalContext->unk_2A91[0xEB] != 12) ||
         (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
        ) {
-        gGlobalContext->msgMode = 23;
+        // In Water Temple, playing ZL cycles through the modes to avoid problems with the dimmed bottom screen at the ZL switches
+        if (gGlobalContext->sceneNum == 5 && gGlobalContext->unk_2A91[0xEB] == 8) {
+            gGlobalContext->msgMode = 20;
+        }
+        else {
+            gGlobalContext->msgMode = 23;
+        }
+    }
+    else if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 && gGlobalContext->msgMode < 23) {
+        gGlobalContext->msgMode++;
     }
 }
 

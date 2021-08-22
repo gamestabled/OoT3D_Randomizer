@@ -5846,6 +5846,11 @@ void HintTable_Init() {
                      Text{"They say this hint makes more sense in other languages.", /*french*/"Selon moi, ces indices auraient pu être mieux traduits... Duh!", /*spanish*/"Según dicen, esta pista revela algo de vital importancia si cambias el idioma del juego..."},
     });
 
+    hintTable[JUNK77] = HintText::Junk({
+                     //obscure text
+                     Text{"BOK? No way.", /*french*/"BD'accord? Hors de question.", /*spanish*/"¿BVale? Ni hablar."},
+    });
+
     /*--------------------------
     |     DUNGEON HINT TEXT    |
     ---------------------------*/
