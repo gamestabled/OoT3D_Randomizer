@@ -140,10 +140,6 @@ SECTIONS
 		*(.patch_DampeCheckCollectibleFlag)
 	}
 
-	.patch_MedigoronSetFlag 0x14D950 : {
-		*(.patch_MedigoronSetFlag)
-	}
-
 	.patch_GrogCheckForShouldDespawn 0x16485C : {
 		*(.patch_GrogCheckForShouldDespawn)
 	}
