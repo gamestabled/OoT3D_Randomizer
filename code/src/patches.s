@@ -1472,6 +1472,16 @@ KingZoraDontStartTimer_patch:
 KingZoraSetTradedPrescriptionFlag_patch:
     beq hook_KingZoraSetTradedPrescriptionFlag
 
+.section .patch_CheckForPocketCuccoHatchGameplayInit
+.global CheckForPocketCuccoHatchGameplayInit_patch
+CheckForPocketCuccoHatchGameplayInit_patch:
+    bl SaveFile_CheckForPocketCuccoHatch
+
+.section .patch_CheckForPocketCuccoHatchKankyo
+.global CheckForPocketCuccoHatchKankyo_patch
+CheckForPocketCuccoHatchKankyo_patch:
+    bl SaveFile_CheckForPocketCuccoHatch
+
 .section .patch_loader
 .global loader_patch
 

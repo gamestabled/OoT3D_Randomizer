@@ -932,6 +932,10 @@ SECTIONS
 		*(.patch_ItemsMenuDraw)
 	}
 
+	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 : {
+		*(.patch_CheckForPocketCuccoHatchGameplayInit)
+	}
+
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}
@@ -1010,6 +1014,10 @@ SECTIONS
 
 	.patch_ItemsMenuNumSprites 0x46B758 : {
 		*(.patch_ItemsMenuNumSprites)
+	}
+
+	.patch_CheckForPocketCuccoHatchKankyo 0x470D1C : {
+		*(.patch_CheckForPocketCuccoHatchKankyo)
 	}
 
 	.patch_FishingStoreTempB 0x475F8C : {

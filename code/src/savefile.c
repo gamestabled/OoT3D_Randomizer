@@ -464,6 +464,25 @@ u32 SaveFile_TradeItemIsOwned(u8 itemId) {
     return (gSaveContext.sceneFlags[0x60].unk & (0x1 << tradeItemNum)) != 0;
 }
 
+typedef s32 (*Inventory_ReplaceItem_proc)(GlobalContext* globalCtx, u16 oldItem, u16 newItem);
+#define Inventory_ReplaceItem_addr 0x316CEC
+#define Inventory_ReplaceItem ((Inventory_ReplaceItem_proc)Inventory_ReplaceItem_addr)
+
+u32 SaveFile_CheckForPocketCuccoHatch(void) {
+    // Force the egg into the adult trade slot so that it can hatch
+    if (SaveFile_TradeItemIsOwned(ITEM_POCKET_EGG)) {
+        gSaveContext.items[SLOT_TRADE_ADULT] = ITEM_POCKET_EGG;
+    }
+
+    if (Inventory_ReplaceItem(gGlobalContext, ITEM_POCKET_EGG, ITEM_POCKET_CUCCO)) {
+        SaveFile_SetTradeItemAsOwned(ITEM_POCKET_CUCCO);
+        SaveFile_UnsetTradeItemAsOwned(ITEM_POCKET_EGG);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot) {
     // Remove the slot from child/adult grids
     for (u32 i = 0; i < 0x18; ++i) {
