@@ -1542,6 +1542,21 @@ SkipTimeTravelCutsceneTwo_patch:
 SwapAgeIgnoreSceneSetup_patch:
     nop
 
+.section .patch_GameOverDontSpoilTradeItems
+.global GameOverDontSpoilTradeItems_patch
+GameOverDontSpoilTradeItems_patch:
+    b 0x458CA0
+
+.section .patch_InterfaceDrawDontSpoilTradeItems
+.global InterfaceDrawDontSpoilTradeItems_patch
+InterfaceDrawDontSpoilTradeItems_patch:
+    b 0x45A210
+
+.section .patch_OpenSaveDontSpoilTradeItems
+.global OpenSaveDontSpoilTradeItems_patch
+OpenSaveDontSpoilTradeItems_patch:
+    b 0x44FEB8
+
 .section .patch_loader
 .global loader_patch
 

@@ -1016,6 +1016,10 @@ SECTIONS
 		*(.patch_LullabyCheckFlag)
 	}
 
+	.patch_OpenSaveDontSpoilTradeItems 0x44FDF8 : {
+		*(.patch_OpenSaveDontSpoilTradeItems)
+	}
+
 	.patch_before_GlobalContext_Update 0x452390 : {
 		*(.patch_before_GlobalContext_Update)
 	}
@@ -1024,8 +1028,16 @@ SECTIONS
 		*(.patch_after_GlobalContext_Update)
 	}
 
+	.patch_GameOverDontSpoilTradeItems 0x458BE0 : {
+		*(.patch_GameOverDontSpoilTradeItems)
+	}
+
 	.patch_SetGameOverEntrance 0x458E3C : {
 		*(.patch_SetGameOverEntrance)
+	}
+
+	.patch_InterfaceDrawDontSpoilTradeItems 0x45A17C : {
+		*(.patch_InterfaceDrawDontSpoilTradeItems)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {
