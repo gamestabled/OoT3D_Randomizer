@@ -309,6 +309,7 @@ typedef struct {
   u8 startingAge;
   u8 resolvedStartingAge;
   u8 shuffleDungeonEntrances;
+  u8 shuffleOverworldEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;

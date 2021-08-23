@@ -178,22 +178,16 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         }
         // Bomb surprise
         else if (damageType == 1 || damageType == 5) {
-            bomb = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x10, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
-            bomb->world.pos = thisx->world.pos;
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
         }
         // Unhealing fairy
         else if (damageType == 6) {
-            fairy = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x18, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
-            fairy->world.pos = thisx->world.pos;
-            fairy->params = 0x5;
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
             PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
         // Explosive Rupee Trap
         else if(damageType == 7) {
-            Actor* ruppy = Actor_Spawn((&(gGlobalContext->actorCtx)), gGlobalContext, 0x131, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
-            ruppy->world.pos = thisx->world.pos;
-            ruppy->world.pos.y += 30;
-            ruppy->params = 0x2;
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x, thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2);
             PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
         // Fire Trap
