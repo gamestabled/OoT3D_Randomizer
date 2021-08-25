@@ -512,6 +512,15 @@ void HintTable_Init() {
                        Text{"Bombchus", /*french*/"un paquet de Bombchus", /*spanish*/"unos bombchus"}
     );
 
+    hintTable[PROGRESSIVE_GORONSWORD] = HintText::Item({
+                       //obscure text
+                       Text{"a long blade",   /*french*/"une longue lame", /*spanish*/"una gran hoja"},
+                       Text{"a Goron weapon", /*french*/"une arme Goron",  /*spanish*/"un arma goron"},
+                     },
+                       //clear text
+                       Text{"a Goron Sword", /*french*/"une épée Goron", /*spanish*/"una espada goron"}
+    );
+
     hintTable[EMPTY_BOTTLE] = HintText::Item({
                        //obscure text
                        Text{"a glass container", /*french*/"un cylindre de cristal", /*spanish*/"un recipiente de cristal"},
@@ -1233,7 +1242,17 @@ void HintTable_Init() {
                        Text{"the #treasure thrown by Princess Zelda# is", /*french*/"le trésor #laissé par la princesse# est", /*spanish*/"el #tesoro arrojado por la Princesa Zelda# se trata de"},
   });
 
-    hintTable[DMT_BIGGORON] = HintText::Sometimes({
+    hintTable[DMT_TRADE_BROKEN_SWORD] = HintText::Sometimes({
+                       //obscure text
+                       Text{"a #blinded Biggoron# entrusts", /*french*/"un #Grogoron aveuglé# confie", /*spanish*/"un #miope Biggoron# otorga"},
+  });
+
+    hintTable[DMT_TRADE_EYEDROPS] = HintText::Sometimes({
+                       //obscure text
+                       Text{"while you wait, #Biggoron# gives", /*french*/"pendant que tu attends, #Grogoron# donne", /*spanish*/"#Biggoron# está a la espera de otorgar"},
+  });
+
+    hintTable[DMT_TRADE_CLAIM_CHECK] = HintText::Sometimes({
                        //obscure text
                        Text{"#Biggoron# crafts", /*french*/"#Grogoron# fabrique", /*spanish*/"#Biggoron# forja"},
   });
@@ -1287,6 +1306,16 @@ void HintTable_Init() {
                        Text{"#collecting cuccos# rewards", /*french*/"#rapporter les Cocottes# donne", /*spanish*/"#hacerte con todos los cucos# premia"}
   );
 
+    hintTable[KAK_TRADE_POCKET_CUCCO] = HintText::Sometimes({
+                       //obscure text
+                       Text{"an adult's #happy Cucco# awards", /*french*/"un adulte avec une #poulette joyeuse# obtient", /*spanish*/"un #alegre cuco# en la madurez otorga"},
+  });
+
+    hintTable[KAK_TRADE_ODD_MUSHROOM] = HintText::Sometimes({
+                       //obscure text
+                       Text{"the #potion shop lady# entrusts", /*french*/"la #gribiche du magasin de potion# confie", /*spanish*/"la #señora de la tienda de pociones# otorga"},
+  });
+
     hintTable[GC_DARUNIAS_JOY] = HintText::Sometimes({
                        //obscure text
                        Text{"a #groovin' goron# gifts", /*french*/"#le Goron joyeux# donne", /*spanish*/"#un goron marchoso# otorga"},
@@ -1300,6 +1329,16 @@ void HintTable_Init() {
                        Text{"the #Skull Kid# grants", /*french*/"le #Skull Kid# donne", /*spanish*/"#Skull Kid# otorga"},
   });
 
+    hintTable[LW_TRADE_COJIRO] = HintText::Sometimes({
+                       //obscure text
+                       Text{"returning a #special Cucco# awards", /*french*/"ramener une #poulette précieuse# donne", /*spanish*/"quien devuelva un #cuco especial# encontrará"},
+  });
+
+    hintTable[LW_TRADE_ODD_POULTICE] = HintText::Sometimes({
+                       //obscure text
+                       Text{"a #Kokiri girl in the woods# leaves", /*french*/"la #fillette Kokiri dans les bois# laisse", /*spanish*/"una #chica kokiri del bosque# otorga"},
+  });
+
     hintTable[LH_SUN] = HintText::Sometimes({
                        //obscure text
                        Text{"staring into #the sun# grants", /*french*/"regarder #le soleil# donne", /*spanish*/"#mirar al sol# revela"},
@@ -1307,6 +1346,11 @@ void HintTable_Init() {
                        //clear text
                        Text{"shooting #the sun# grants", /*french*/"tirer une flèche dans #sur le soleil# donne", /*spanish*/"#disparar al sol# revela"}
   );
+
+    hintTable[LH_TRADE_FROG] = HintText::Sometimes({
+                       //obscure text
+                       Text{"#Lake Hylia's scientist# hurriedly entrusts", /*french*/"le #scientifique du lac# confie rapidement", /*spanish*/"el #científico del Lago Hylia# otorga con prisa"},
+  });
 
     hintTable[MARKET_TREASURE_CHEST_GAME_REWARD] = HintText::Sometimes({
                        //obscure text
@@ -1338,6 +1382,11 @@ void HintTable_Init() {
     hintTable[GV_CHEST] = HintText::Sometimes({
                        //obscure text
                        Text{"in #Gerudo Valley# the hammer unlocks", /*french*/"dans la #vallée Gerudo#, le marteau donne accès à", /*spanish*/"en el #Valle Gerudo# el martillo desbloquea"},
+  });
+
+    hintTable[GV_TRADE_SAW] = HintText::Sometimes({
+                       //obscure text
+                       Text{"the #boss of the carpenters# leaves", /*french*/"le #patron des ouvriers# laisse", /*spanish*/"el #capataz de los carpinteros# otorga"},
   });
 
     hintTable[GV_COW] = HintText::Sometimes({
@@ -1402,6 +1451,11 @@ void HintTable_Init() {
                        //clear text
                        Text{"unfreezing #King Zora# grants", /*french*/"dégeler # le Roi Zora# donne", /*spanish*/"#descongelar al Rey Zora# conduce a"}
   );
+
+    hintTable[ZD_TRADE_PRESCRIPTION] = HintText::Sometimes({
+                       //obscure text
+                       Text{"#King Zora# hurriedly entrusts", /*french*/"le #roi Zora# confie rapidement", /*spanish*/"el #Rey Zora# otorga con prisa"},
+  });
 
     hintTable[DMC_DEKU_SCRUB] = HintText::Sometimes({
                        //obscure text
@@ -4935,7 +4989,7 @@ void HintTable_Init() {
 
     hintTable[KAKARIKO_VILLAGE_TO_BOTTOM_OF_THE_WELL] = HintText::Entrance({
                      //obscure text
-                     Text{"a #village well# leads to", /*french*/"dans le fonds du #puits du village# gît", /*spanish*/"el #pozo de un pueblo# conduce a"},
+                     Text{"a #village well# leads to", /*french*/"dans le fond du #puits du village# gît", /*spanish*/"el #pozo de un pueblo# conduce a"},
   });
 
     /*--------------------------
@@ -5010,7 +5064,7 @@ void HintTable_Init() {
 
     hintTable[OUTSIDE_GANONS_CASTLE] = HintText::Exclude({
                      //obscure text
-                     Text{"outside Ganon's Castle", /*french*/"le château de Ganon", /*spanish*/"el exterior del Castillo de Ganon"},
+                     Text{"outside Ganon's Castle", /*french*/"les alentours du château de Ganon", /*spanish*/"el exterior del Castillo de Ganon"},
   });
 
     hintTable[KAKARIKO_VILLAGE] = HintText::Exclude({
@@ -5040,7 +5094,7 @@ void HintTable_Init() {
 
     hintTable[ZORAS_RIVER] = HintText::Exclude({
                      //obscure text
-                     Text{"Zora's River", /*french*/"le fleuve zora", /*spanish*/"el Río Zora"},
+                     Text{"Zora's River", /*french*/"le fleuve Zora", /*spanish*/"el Río Zora"},
   });
 
     hintTable[ZORAS_DOMAIN] = HintText::Exclude({
@@ -5140,7 +5194,7 @@ void HintTable_Init() {
 
     hintTable[MARKET_BOMBCHU_SHOP] = HintText::Region({
                      //obscure text
-                     Text{"the #Bombchu Shop#", /*french*/"le #magasin de missiles#", /*spanish*/"la Tienda Bombchu"},
+                     Text{"the #Bombchu Shop#", /*french*/"le #magasin de Bombchus#", /*spanish*/"la Tienda Bombchu"},
   });
 
     hintTable[MARKET_MAN_IN_GREEN_HOUSE] = HintText::Region({
@@ -5173,7 +5227,7 @@ void HintTable_Init() {
                      Text{"Impa's cow cage", /*french*/"la #cage à vache d'Impa#", /*spanish*/"la jaula de la vaca de Impa"},
   });
 
-    hintTable[KAK_ODD_MEDICINE_BUILDING] = HintText::Region({
+    hintTable[KAK_ODD_POULTICE_BUILDING] = HintText::Region({
                      //obscure text
                      Text{"Granny's Potion Shop", /*french*/"la #maison bleue de Cocorico#", /*spanish*/"la tienda de pociones de la abuela"},
   });
@@ -5837,6 +5891,11 @@ void HintTable_Init() {
                      Text{"They say this hint makes more sense in other languages.", /*french*/"Selon moi, ces indices auraient pu être mieux traduits... Duh!", /*spanish*/"Según dicen, esta pista revela algo de vital importancia si cambias el idioma del juego..."},
     });
 
+    hintTable[JUNK77] = HintText::Junk({
+                     //obscure text
+                     Text{"BOK? No way.", /*french*/"BD'accord? Hors de question.", /*spanish*/"¿BVale? Ni hablar."},
+    });
+
     /*--------------------------
     |     DUNGEON HINT TEXT    |
     ---------------------------*/
@@ -6200,11 +6259,25 @@ void HintTable_Init() {
                /*spanish*/"Tres piedras espirituales halladas por Hyrule..."},
     });
 
-    hintTable[CHILD_ALTAR_TEXT_END] = HintText::Altar({
+    hintTable[CHILD_ALTAR_TEXT_END_DOTOPEN] = HintText::Altar({
+                     //obscure text
+                     Text{"Ye who may become a Hero...&The path to the future is open...",
+                /*french*/"À celui qui a quête de devenir héros...&Le futur vous accueille béant...",
+               /*spanish*/"Para aquel que se convierta en el héroe...&La puerta al futuro está a su disposición..."},
+    });
+
+    hintTable[CHILD_ALTAR_TEXT_END_DOTCLOSED] = HintText::Altar({
                      //obscure text
                      Text{"Ye who may become a Hero...&Stand with the Ocarina and&play the Song of Time.",
                 /*french*/"À celui qui a quête de devenir héros...&Portez l'Ocarina et&jouez le chant du temps.",
-               /*spanish*/"Aquel que se convierta en el héroe...&Tome la ocarina y&entone la Canción del Tiempo."},
+               /*spanish*/"Para aquel que se convierta en el héroe...&Tome la ocarina y&entone la Canción del Tiempo."},
+    });
+
+    hintTable[CHILD_ALTAR_TEXT_END_DOTINTENDED] = HintText::Altar({
+                     //obscure text
+                     Text{"Ye who may become a Hero...&Offer the spiritual stones and&play the Song of Time.",
+                /*french*/"À celui qui a quête de devenir héros...&Présentez les pierres spirituelles et&jouez le chant du temps.",
+               /*spanish*/"Para aquel que se convierta en el héroe...&Tome las piedras espirituales y&entone la Canción del Tiempo."},
     });
 
     hintTable[ADULT_ALTAR_TEXT_START] = HintText::Altar({

@@ -1,4 +1,6 @@
 #include "settings.h"
+#include "hid.h"
+#include "input.h"
 
 SettingsContext gSettingsContext = {0};
 u8 Damage32 = 0;
@@ -38,6 +40,12 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
                 break;
             case DAMAGEMULTIPLIER_QUADRUPLE:
                 modifiedChangeHealth *= 4;
+                break;
+            case DAMAGEMULTIPLIER_OCTUPLE:
+                modifiedChangeHealth *= 8;
+                break;
+            case DAMAGEMULTIPLIER_SEXDECUPLE:
+                modifiedChangeHealth *= 16;
                 break;
         }
 
@@ -88,6 +96,37 @@ void FairyPickupHealAmount(void) {
     }
 }
 
+u32 Settings_GetQuickTextOption() {
+    return gSettingsContext.quickText;
+}
+
+u32 Settings_GetSongReplaysOption() {
+    return gSettingsContext.skipSongReplays;
+}
+
+u32 Settings_IsTurboText() {
+    return (gSettingsContext.quickText >= QUICKTEXT_TURBO && rInputCtx.cur.b);
+}
+
+void Settings_SkipSongReplays() {
+    // msgModes 18 to 23 are used to manage the song replays. Skipping to mode 23 ends the replay.
+    // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns Pierre.
+    if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 && gGlobalContext->unk_2A91[0xEB] != 12) ||
+        (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
+       ) {
+        // In Water Temple, playing ZL cycles through the modes to avoid problems with the dimmed bottom screen at the ZL switches
+        if (gGlobalContext->sceneNum == 5 && gGlobalContext->unk_2A91[0xEB] == 8) {
+            gGlobalContext->msgMode = 20;
+        }
+        else {
+            gGlobalContext->msgMode = 23;
+        }
+    }
+    else if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 && gGlobalContext->msgMode < 23) {
+        gGlobalContext->msgMode++;
+    }
+}
+
 // From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
 u32 Hash(u32 state) {
     // Added salt based on the seed hash so traps in the same location in different seeds can have different effects
@@ -105,6 +144,25 @@ u32 Hash(u32 state) {
     state *= 0xE1C88647;
 
     return state;
+}
+
+u8 And(u32 seed, u8 start, u8 end) {
+    u8 value = 1;
+
+    for (u8 i = start; i < end && value; i++) {
+        value &= seed >> i;
+    }
+
+    return value;
+}
+
+u8 Bias(u32 seed) {
+    u8 value = (seed & 0x00000007);
+    value |= And(seed,  3,  5) << 3;
+    value |= And(seed,  5,  7) << 4;
+    value |= And(seed,  7, 11) << 5;
+    value |= And(seed, 11, 16) << 6;
+    return value;
 }
 
   const char hashIconNames[32][25] = {

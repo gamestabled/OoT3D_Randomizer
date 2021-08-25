@@ -79,7 +79,7 @@ typedef struct {
     /* 0x004A */ u16          bgsHitsLeft;
     /* 0x004C */ u16          naviTimer;
     /* 0x004E */ u8           magicAcquired;
-    /* 0x004F */ u8           biggoronSword;
+    /* 0x004F */ u8           biggoronTrades; // usually unused, repurposed for rando
     /* 0x0050 */ u8           doubleMagic;
     /* 0x0051 */ u8           doubleDefense;
     /* 0x0052 */ s8           bgsFlag;
@@ -89,11 +89,12 @@ typedef struct {
     /* 0x007E */ u16          sceneIndex;
     /* 0x0080 */ ItemEquips   equips;
     /* 0x008C */ u8           items[26];
-    /* 0x00A6 */ s8           ammo[16];
+    /* 0x00A6 */ s8           ammo[15];
+    /* 0x00B5 */ u8           magic_beans_available; //counts bought
     /* 0x00B6 */ u16          equipment; //bits: swords 0-3, shields 4-6, tunics 8-10, boots 12-14
     /* 0x00B8 */ u32          upgrades; //bits: quiver 0-2, bombs 3-5, strength 6-8, dive 9-11, wallet 12-13, seeds 14-16, sticks 17-19, nuts 20-22
     /* 0x00BC */ u32          questItems; //bits: medallions 0-5, warp songs 6-11, songs 12-17, stones 18-20, shard 21, token 22, skull 23, heart pieces 24-31
-    /* 0x00C0 */ u8           dungeonItems[20];
+    /* 0x00C0 */ u8           dungeonItems[20]; //bits: boss key 0, compass 1, map 2
     /* 0x00D4 */ s8           dungeonKeys[19];
     /* 0x00E7 */ char         unk_E7[0x0001]; //in oot: defenseHearts. seems not here.
     /* 0x00E8 */ s16          gsTokens;
@@ -394,7 +395,9 @@ typedef struct GlobalContext {
     /* 0x208C */ ActorContext          actorCtx;
     /* 0x2264 */ char                  unk_2264[0x0034];
     /* 0x2298 */ CutsceneContext       csCtx; // "demo_play"
-    /* 0x2304 */ char                  unk_2304[0x087A];
+    /* 0x2304 */ char                  unk_2304[0x078C];
+    /* 0x2A90 */ u8                    msgMode; //seems to be used primarily for the ocarina
+    /* 0x2A91 */ char                  unk_2A91[0xED];
     /* 0x2B7E */ s16                   unk_2B7E; // msgCtx.unk_E3EE in OoT
     /* 0x2B80 */ char                  unk_2B80[0x0ED8];
     /* 0x3A58 */ ObjectContext         objectCtx;
@@ -530,12 +533,22 @@ typedef void (*PlaySound_proc)(u32);
 #define PlaySound_addr 0x35C528
 #define PlaySound ((PlaySound_proc)PlaySound_addr) //this function plays sound effects and music tracks, overlaid on top of the current BGM
 
-typedef Actor* (*Actor_Spawn_proc)(ActorContext *actorCtx,GlobalContext *globalCtx,s16 actorId,float posX,float posY,float posZ,s16 rotX,s16 rotY,s16 rotZ,s16 params);
+typedef Actor* (*Actor_Spawn_proc)(ActorContext *actorCtx,GlobalContext *globalCtx,s16 actorId,float posX,float posY,float posZ,s16 rotX,s16 rotY,s16 rotZ,s16 params)
+    __attribute__((pcs("aapcs-vfp")));;
 #define Actor_Spawn_addr 0x3738D0
 #define Actor_Spawn ((Actor_Spawn_proc)Actor_Spawn_addr)
 
 typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int flamesColor);
 #define FireDamage_addr 0x35D8D8
 #define FireDamage ((FireDamage_proc)FireDamage_addr)
+
+typedef void (*Flags_SetEnv_proc)(GlobalContext* globalCtx, s16 flag);
+#define Flags_SetEnv_addr 0x366704
+#define Flags_SetEnv ((Flags_SetEnv_proc)Flags_SetEnv_addr)
+
+typedef void (*GiveItem_proc)(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
+    __attribute__((pcs("aapcs-vfp")));
+#define GiveItem_addr 0x3724DC
+#define GiveItem ((GiveItem_proc)0x3724DC)
 
 #endif //_Z3D_H_

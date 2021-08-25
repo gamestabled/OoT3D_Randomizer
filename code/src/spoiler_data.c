@@ -1,6 +1,7 @@
 #include "spoiler_data.h"
 
 #include "settings.h"
+#include "gorons.h"
 
 SpoilerData gSpoilerData = {0};
 
@@ -82,9 +83,9 @@ u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
     return (gSaveContext.sceneFlags[itemLoc.LocationScene].unk & (1 << itemLoc.LocationFlag)) != 0;
 }
 
-u8 SpoilerData_BiggoronCheck()
+u8 SpoilerData_BiggoronCheck(u8 mask)
 {
-    return gSaveContext.biggoronSword != 0;
+    return (gSaveContext.biggoronTrades & mask) != 0;
 }
 
 u8 SpoilerData_GerudoTokenCheck()
@@ -110,6 +111,15 @@ u8 SpoilerData_ShopItemCheck(SpoilerItemLocation itemLoc)
 {
     u32 itemBit = 1 << itemLoc.LocationFlag;
     return (gSaveContext.sceneFlags[itemLoc.LocationScene].unk & itemBit) != 0;
+}
+
+u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation itemLoc)
+{
+    if (gSettingsContext.shuffleMagicBeans) {
+        return SpoilerData_CollectableCheck(itemLoc);
+    } else {
+        return gSaveContext.magic_beans_available == 10;
+    }
 }
 
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
@@ -154,7 +164,7 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
             return SpoilerData_ScrubCheck(itemLoc);
         }
         case SPOILER_CHK_BIGGORON: {
-            return SpoilerData_BiggoronCheck();
+            return SpoilerData_BiggoronCheck(itemLoc.LocationFlag);
         }
         case SPOILER_CHK_GERUDO_TOKEN: {
             return SpoilerData_GerudoTokenCheck();
@@ -164,6 +174,9 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_SHOP_ITEM: {
             return SpoilerData_ShopItemCheck(itemLoc);
+        }
+        case SPOILER_CHK_MAGIC_BEANS: {
+            return SpoilerData_MagicBeansCheck(itemLoc);
         }
         default: {
             return 0;

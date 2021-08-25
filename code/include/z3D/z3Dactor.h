@@ -221,7 +221,9 @@ typedef struct {
     /* 0x12B4 */ char   unk_12B4[0x045C];
     /* 0x1710 */ u32    stateFlags1;
     /* 0x1714 */ u32    stateFlags2;
-    /* 0x1718 */ char   unk_1718[0x0B04];
+    /* 0x1718 */ char   unk_1718[0x0013];
+    /* 0x172B */ s8     exchangeItemId;
+    /* 0x172C */ char   unk_172C[0x0AF0];
     /* 0x221C */ float  xzSpeed; //probably
     /* 0x2220 */ char   unk_2220[0x0007];
     /* 0x2227 */ u8     isg;
@@ -256,5 +258,9 @@ typedef struct ActorHeapNode {
 
 void Actor_Kill(Actor* actor);
 #define gActorOverlayTable ((ActorOverlay*)0x50CD84)
+
+typedef u32 (*Actor_HasParent_proc)(Actor* actor, struct GlobalContext* globalCtx);
+#define Actor_HasParent_addr 0x371E40
+#define Actor_HasParent ((Actor_HasParent_proc)Actor_HasParent_addr)
 
 #endif

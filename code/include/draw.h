@@ -44,6 +44,9 @@
 #define SPACING_Y 11
 #define SPACING_X 6
 
+#define SPACING_SMALL_Y 9
+#define SPACING_SMALL_X 6
+
 #define COLOR_TITLE RGB8(0x33, 0x33, 0xFF)
 #define COLOR_WHITE RGB8(0xFF, 0xFF, 0xFF)
 #define COLOR_RED   RGB8(0xFF, 0x00, 0x00)
@@ -55,9 +58,12 @@
 void Draw_Lock(void);
 void Draw_Unlock(void);
 
+void Draw_DrawRect(u32 posX, u32 posY, u32 width, u32 height, u32 color);
 void Draw_DrawCharacter(u32 posX, u32 posY, u32 color, char character);
 u32 Draw_DrawString(u32 posX, u32 posY, u32 color, const char *string);
+u32 Draw_DrawString_Small(u32 posX, u32 posY, u32 color, const char *string);
 u32 Draw_DrawFormattedString(u32 posX, u32 posY, u32 color, const char *fmt, ...);
+u32 Draw_DrawFormattedString_Small(u32 posX, u32 posY, u32 color, const char *fmt, ...);
 
 void Draw_DrawCharacterTop(u32 posX, u32 posY, u32 color, char character);
 u32 Draw_DrawStringTop(u32 posX, u32 posY, u32 color, const char *string);

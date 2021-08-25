@@ -11,6 +11,7 @@
 #define SAVE_PRESET 5
 #define DELETE_PRESET 6
 #define POST_GENERATE 7
+#define RESET_TO_DEFAULTS 8
 #define MAX_MAINMENU_SETTINGS_ON_SCREEN 20
 #define MAX_SUBMENU_SETTINGS_ON_SCREEN 13
 #define TOP_WIDTH 50
@@ -34,14 +35,16 @@ void UpdateMainMenu(u32 kDown);
 void UpdateOptionSubMenu(u32 kDown);
 void UpdateSubMenu(u32 kDown);
 void UpdatePresetsMenu(u32 kdown);
+void UpdateResetToDefaultsMenu(u32 kdown);
 void UpdateGenerateMenu(u32 kDown);
 void PrintMainMenu();
 void PrintOptionSubMenu();
 void PrintSubMenu();
 void PrintPresetsMenu();
+void PrintResetToDefaultsMenu();
 void PrintGenerateMenu();
 void ClearDescription();
-void PrintOptionDescrption();
+void PrintOptionDescription();
 void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 

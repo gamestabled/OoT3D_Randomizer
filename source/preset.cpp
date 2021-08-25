@@ -17,6 +17,9 @@
 
 namespace fs = std::filesystem;
 
+static const std::string CACHED_SETTINGS_FILENAME = "CACHED_SETTINGS";
+static const std::string CACHED_COSMETICS_FILENAME = "CACHED_COSMETICS";
+
 static std::string_view GetBasePath(OptionCategory category) {
   static constexpr std::array<std::string_view, 2> paths{
     "/3ds/presets/oot3dr/settings/",
@@ -63,7 +66,7 @@ bool CreatePresetDirectories() {
 std::vector<std::string> GetSettingsPresets() {
   std::vector<std::string> presetEntries = {};
   for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
-    if(entry.path().stem().string() != "CACHED_SETTINGS") {
+    if(entry.path().stem().string() != CACHED_SETTINGS_FILENAME) {
       presetEntries.push_back(entry.path().stem().string());
     }
   }
@@ -88,7 +91,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   XMLElement* rootNode = preset.NewElement("settings");
   preset.InsertEndChild(rootNode);
 
-  for (MenuItem* menu : Settings::mainMenu) {
+  for (Menu* menu : Settings::GetAllMenus()) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
@@ -125,7 +128,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
   XMLElement* curNode = rootNode->FirstChildElement();
 
-  for (MenuItem* menu : Settings::mainMenu) {
+  for (Menu* menu : Settings::GetAllMenus()) {
     if (menu->mode != OPTION_SUB_MENU) {
       continue;
     }
@@ -144,22 +147,21 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
       } else {
         // If the current setting and element don't match, then search
         // linearly from the beginning. This will get us back on track if the
-        // next setting and element line up with each other*/
+        // next setting and element line up with each other.
         curNode = rootNode->FirstChildElement();
-        bool settingFound = false;
         while (curNode != nullptr) {
           if (settingToFind == RemoveLineBreaks(curNode->Attribute("name"))) {
             setting->SetSelectedIndexByString(curNode->GetText());
             curNode = curNode->NextSiblingElement();
-            settingFound = true;
             break;
           }
           curNode = curNode->NextSiblingElement();
         }
-        //reset to the beginning if the setting wasn't found
-        if (!settingFound) {
-          curNode = rootNode->FirstChildElement();
-        }
+      }
+
+      // Reset to the beginning if we reached the end.
+      if (curNode == nullptr) {
+        curNode = rootNode->FirstChildElement();
       }
     }
   }
@@ -193,29 +195,29 @@ bool SaveSpecifiedPreset(std::string_view presetName, OptionCategory category) {
 }
 
 void SaveCachedSettings() {
-  SavePreset("CACHED_SETTINGS", OptionCategory::Setting);
+  SavePreset(CACHED_SETTINGS_FILENAME, OptionCategory::Setting);
 }
 
 void LoadCachedSettings() {
   //If cache file exists, load it
   for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Setting))) {
-    if(entry.path().stem().string() == "CACHED_SETTINGS") {
+    if(entry.path().stem().string() == CACHED_SETTINGS_FILENAME) {
       //File exists, open
-      LoadPreset("CACHED_SETTINGS", OptionCategory::Setting);
+      LoadPreset(CACHED_SETTINGS_FILENAME, OptionCategory::Setting);
     }
   }
 }
 
 bool SaveCachedCosmetics() {
-  return SavePreset("CACHED_COSMETICS", OptionCategory::Cosmetic);
+  return SavePreset(CACHED_COSMETICS_FILENAME, OptionCategory::Cosmetic);
 }
 
 void LoadCachedCosmetics() {
   //If cache file exists, load it
   for (const auto& entry : fs::directory_iterator(GetBasePath(OptionCategory::Cosmetic))) {
-    if(entry.path().stem().string() == "CACHED_COSMETICS") {
+    if(entry.path().stem().string() == CACHED_COSMETICS_FILENAME) {
       //File exists, open
-      LoadPreset("CACHED_COSMETICS", OptionCategory::Cosmetic);
+      LoadPreset(CACHED_COSMETICS_FILENAME, OptionCategory::Cosmetic);
     }
   }
 }

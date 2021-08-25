@@ -16,7 +16,7 @@
 #include "nabooru.h"
 #include "custom_models.h"
 #include "obj_switch.h"
-#include "gerudo_archery_manager.h"
+#include "gerudos.h"
 #include "shops.h"
 #include "chest.h"
 #include "gossip_stone.h"
@@ -34,6 +34,7 @@
 #include "player.h"
 #include "rupee_trap.h"
 #include "item_override.h"
+#include "songs_visual_effects.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -70,6 +71,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;
+    gActorOverlayTable[0x8B].initInfo->update = DemoEffect_rUpdate;
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
@@ -100,6 +102,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x131].initInfo->update = EnExRuppy_rUpdate;
 
+    gActorOverlayTable[0x138].initInfo->init = EnGe1_rInit;
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
 
     gActorOverlayTable[0x145].initInfo->init = BgSpot01Idosoko_rInit;
@@ -120,15 +123,25 @@ void Actor_Init() {
 
     gActorOverlayTable[0x174].initInfo->update = DemoGt_rUpdate;
 
+    gActorOverlayTable[0x17E].initInfo->update = OceffSpot_rUpdate;
+
     gActorOverlayTable[0x185].initInfo->update = EnWonderTalk2_rUpdate;
 
+    gActorOverlayTable[0x18A].initInfo->update = OceffWipe_rUpdate;
+    gActorOverlayTable[0x18B].initInfo->update = OceffStorm_rUpdate;
+
     gActorOverlayTable[0x195].initInfo->init = EnShopnuts_rInit;
+
+    gActorOverlayTable[0x198].initInfo->update = OceffWipe2_rUpdate;
+    gActorOverlayTable[0x199].initInfo->update = OceffWipe3_rUpdate;
 
     gActorOverlayTable[0x19C].initInfo->init = EnSi_rInit;
     gActorOverlayTable[0x19C].initInfo->destroy = EnSi_rDestroy;
     gActorOverlayTable[0x19C].initInfo->draw = EnSi_rDraw;
 
     gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
+
+    gActorOverlayTable[0x1CB].initInfo->update = OceffWipe4_rUpdate;
 
     gActorOverlayTable[0x1C6].initInfo->init = EnCow_rInit;
     gActorOverlayTable[0x1C6].initInfo->destroy = EnCow_rDestroy;

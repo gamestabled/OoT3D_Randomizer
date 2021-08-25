@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <variant>
 #include <vector>
@@ -19,12 +20,12 @@
 
 class Option {
 public:
-    static Option Bool(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_ = OptionCategory::Setting) {
-        return Option{false, std::move(name_), std::move(options_), std::move(optionDescriptions_), category_};
+    static Option Bool(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0, bool defaultHidden_ = false) {
+        return Option{false, std::move(name_), std::move(options_), std::move(optionDescriptions_), category_, defaultOption_, defaultHidden_};
     }
 
-    static Option U8(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_  = OptionCategory::Setting) {
-        return Option{u8{0}, std::move(name_), std::move(options_), std::move(optionDescriptions_), category_};
+    static Option U8(std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_  = OptionCategory::Setting, u8 defaultOption_ = 0, bool defaultHidden_ = false) {
+        return Option{u8{0}, std::move(name_), std::move(options_), std::move(optionDescriptions_), category_, defaultOption_, defaultHidden_};
     }
 
     template <typename T>
@@ -59,6 +60,7 @@ public:
 
     void SetOptions(std::vector<std::string> o) {
         options = std::move(o);
+        SetToDefault();
     }
 
     size_t GetOptionCount() const {
@@ -75,6 +77,15 @@ public:
 
     void SetSelectedOptionText(std::string newText) {
         options[selectedOption] = std::move(newText);
+    }
+
+    bool IsDefaultSelected() {
+      return selectedOption == defaultOption;
+    }
+
+    void SetToDefault() {
+      SetSelectedIndex(defaultOption);
+      hidden = defaultHidden;
     }
 
     std::string_view GetSelectedOptionDescription() const {
@@ -173,13 +184,17 @@ public:
     }
 
 private:
-    Option(u8 var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_)
-          : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), category(category_) {
+    Option(u8 var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_, u8 defaultOption_, bool defaultHidden_)
+          : var(var_), name(std::move(name_)), options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), category(category_), defaultOption(defaultOption_), defaultHidden(defaultHidden_) {
+        selectedOption = defaultOption;
+        hidden = defaultHidden;
         SetVariable();
     }
 
-    Option(bool var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_)
-          : var(var_), name(std::move(name_)),  options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), category(category_) {
+    Option(bool var_, std::string name_, std::vector<std::string> options_, std::vector<std::string_view> optionDescriptions_, OptionCategory category_, u8 defaultOption_, bool defaultHidden_)
+          : var(var_), name(std::move(name_)),  options(std::move(options_)), optionDescriptions(std::move(optionDescriptions_)), category(category_), defaultOption(defaultOption_), defaultHidden(defaultHidden_) {
+        selectedOption = defaultOption;
+        hidden = defaultHidden;
         SetVariable();
     }
 
@@ -191,57 +206,63 @@ private:
   bool locked = false;
   bool hidden = false;
   OptionCategory category;
+  u8 defaultOption = 0;
+  bool defaultHidden = false;
 };
 
-enum class MenuItemType {
+enum class MenuType {
+  MainMenu,
   SubMenu,
   Action,
 };
 
-class MenuItem {
+class Menu {
   public:
 
-    static MenuItem SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
+    static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU};
     }
 
-    static MenuItem SubMenu(std::string name_, std::vector<MenuItem *>* itemsList_) {
-      return MenuItem{std::move(name_), MenuItemType::SubMenu, std::move(itemsList_), SUB_MENU};
+    static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(itemsList_), SUB_MENU};
     }
 
-    static MenuItem Action(std::string name_, u8 mode_) {
-      return MenuItem{std::move(name_), MenuItemType::Action, std::move(mode_)};
+    static Menu Action(std::string name_, u8 mode_) {
+      return Menu{std::move(name_), MenuType::Action, std::move(mode_)};
     }
 
-    MenuItem(std::string name_, MenuItemType type_, std::vector<Option *>* settingsList_, u8 mode_)
+    Menu(std::string name_, MenuType type_, std::vector<Option *>* settingsList_, u8 mode_)
         : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_) {}
 
-    MenuItem(std::string name_, MenuItemType type_, std::vector<MenuItem *>* itemsList_, u8 mode_)
+    Menu(std::string name_, MenuType type_, std::vector<Menu *>* itemsList_, u8 mode_)
         : name(std::move(name_)), type(type_), itemsList(std::move(itemsList_)), mode(mode_) {}
 
-    MenuItem(std::string name_, MenuItemType type_, u8 mode_)
+    Menu(std::string name_, MenuType type_, u8 mode_)
         : name(std::move(name_)), type(type_), mode(mode_) {}
 
     std::string name;
-    MenuItemType type;
+    MenuType type;
     std::vector<Option *>* settingsList;
-    std::vector<MenuItem *>* itemsList;
+    std::vector<Menu *>* itemsList;
     u8 mode;
+    u16 menuIdx = 0;
     int selectedSetting = 0;
 };
 
 namespace Settings {
   void UpdateSettings();
   SettingsContext FillContext();
+  void InitSettings();
   void SetDefaultSettings();
   void RandomizeAllSettings(const bool selectOptions = false);
   void ForceChange(u32 kDown, Option* currentSetting);
+  const std::vector<Menu*> GetAllMenus();
+
 
   extern std::string seed;
   extern std::string version;
   extern std::array<u8, 5> hashIconIndexes;
 
-  extern Option Logic;
   extern Option OpenForest;
   extern Option OpenKakariko;
   extern Option OpenDoorOfTime;
@@ -264,8 +285,8 @@ namespace Settings {
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;
-  extern Option RandomMQDungeons;
   extern Option MQDungeonCount;
+  extern Option SetDungeonTypes;
 
   extern Option ShuffleRewards;
   extern Option LinksPocketItem;
@@ -280,6 +301,7 @@ namespace Settings {
   extern Option ShuffleGerudoToken;
   extern Option ShuffleMagicBeans;
   extern Option ShuffleMerchants;
+  extern Option ShuffleAdultTradeQuest;
 
   extern Option MapsAndCompasses;
   extern Option Keysanity;
@@ -300,15 +322,19 @@ namespace Settings {
   extern Option FreeScarecrow;
   extern Option FourPoesCutscene;
   extern Option TempleOfTimeIntro;
+  extern Option LakeHyliaOwl;
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
+  extern Option KingZoraSpeed;
+  extern Option CompleteMaskQuest;
+  extern Option QuickText;
+  extern Option SkipSongReplays;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
   extern Option HintDistribution;
   extern Option DamageMultiplier;
   extern Option StartingTime;
-  extern Option NightGSExpectSuns;
   extern Option ChestAnimations;
   extern Option ChestSize;
   extern Option GenerateSpoilerLog;
@@ -320,9 +346,12 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option GkDurability;
 
   extern Option ItemPoolValue;
   extern Option IceTrapValue;
+  extern Option RemoveDoubleDefense;
+  extern Option ProgressiveGoronSword;
 
   extern bool ShuffleInteriorEntrances;
   extern bool ShuffleSpecialIndoorEntrances;
@@ -379,9 +408,25 @@ namespace Settings {
   extern Option StartingWallet;
   extern Option StartingShardOfAgony;
   extern Option StartingDoubleDefense;
+  extern Option StartingHealth;
+  extern Option StartingKokiriEmerald;
+  extern Option StartingGoronRuby;
+  extern Option StartingZoraSapphire;
+  extern Option StartingForestMedallion;
+  extern Option StartingFireMedallion;
+  extern Option StartingWaterMedallion;
+  extern Option StartingSpiritMedallion;
+  extern Option StartingShadowMedallion;
+  extern Option StartingLightMedallion;
+  extern Option StartingSkulltulaToken;
 
   //Logic Settings
-  extern Option ToggleAllDetailedLogic;
+  extern Option Logic;
+  extern Option LocationsReachable;
+  extern Option NightGSExpectSuns;
+
+  //Trick Settings
+  extern Option ToggleAllTricks;
   extern Option LogicGrottosWithoutAgony;
   extern Option LogicVisibleCollision;
   extern Option LogicFewerTunicRequirements;
@@ -466,6 +511,16 @@ namespace Settings {
   extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
 
+  //Glitch Settings
+  extern Option GlitchISG;
+  extern Option GlitchHover;
+  extern Option GlitchMegaflip;
+  extern Option GlitchHookshotClip;
+  extern Option GlitchHookshotJump_Bonk;
+  extern Option GlitchHookshotJump_Boots;
+  extern Option GlitchLedgeClip;
+  extern Option GlitchTripleSlashClip;
+
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;
   extern Option KokiriTunicColor;
@@ -484,6 +539,11 @@ namespace Settings {
   extern Option ColoredBossKeys;
   extern Option MirrorWorld;
 
+  extern Option ShuffleMusic;
+  extern Option ShuffleBGM;
+  extern Option ShuffleFanfares;
+  extern Option ShuffleOcaMusic;
+
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
 
@@ -491,7 +551,9 @@ namespace Settings {
 
   extern std::vector<Option *> excludeLocationsOptions;
   extern std::vector<Option *> startingInventoryOptions;
-  extern std::vector<Option *> detailedLogicOptions;
+  extern std::vector<Option *> trickOptions;
 
-  extern std::vector<MenuItem *> mainMenu;
+  extern std::vector<Menu *> detailedLogicOptions;
+
+  extern std::vector<Menu *> mainMenu;
 }
