@@ -6,9 +6,9 @@
 #include "z3D/actors/z_bg_dy_yoseizo.h"
 #include <stddef.h>
 
-//Patched over call to Item_Give
+// Patched over call to Item_Give
 void Cutscene_OverrideOcarinaSongs(GlobalContext* GlobalContext, ItemID songId) {
-    ItemOverride_PushDelayedOverride(songId - ITEM_SONG_MINUET + 0x20); //TODO remove the hardcoded constant?
+    ItemOverride_PushDelayedOverride(songId - ITEM_SONG_MINUET + 0x20); // TODO remove the hardcoded constant?
 }
 
 u32 LACS_ConditionVanilla(void) {
@@ -38,7 +38,7 @@ u32 LACS_ConditionTokens(void) {
 void Cutscene_OverrideLACS(void) {
     u32 conditionMet = 0;
 
-    switch(gSettingsContext.lacsCondition) {
+    switch (gSettingsContext.lacsCondition) {
         case LACSCONDITION_VANILLA:
             conditionMet = LACS_ConditionVanilla();
             break;
@@ -95,8 +95,7 @@ u32 Cutscene_OverrideRequiem(void) {
 
 void Cutscene_OverrideNocturne(void) {
     if ((gEntranceTable[gSaveContext.entranceIndex].scene == 0x52) && (gSaveContext.linkAge == AGE_ADULT)) {
-        if ((gSaveContext.questItems & 0x1) && (gSaveContext.questItems & 0x2)
-            && (gSaveContext.questItems & 0x4)) {
+        if ((gSaveContext.questItems & 0x1) && (gSaveContext.questItems & 0x2) && (gSaveContext.questItems & 0x4)) {
             if (!EventCheck(0xAA)) {
                 ItemOverride_PushDelayedOverride(0x24);
                 EventSet(0xAA);
@@ -156,6 +155,7 @@ void Cutscene_OverrideSunsSong(void) {
 }
 
 void Cutscene_OverrideSongOfTime(Actor* ocarina) {
+    gSaveContext.eventChkInf[10] |= 0x200;
     ItemOverride_PushDelayedOverride(0x2A);
     gGlobalContext->nextEntranceIndex = 0x50F;
     gGlobalContext->sceneLoadFlag = 0x14;
@@ -188,12 +188,12 @@ void Cutscene_OverrideFairyReward(BgDyYoseizo* fairy) {
     Actor_Kill(&fairy->actor);
 }
 
-//skip dungeon exit cutscenes
+// skip dungeon exit cutscenes
 void Cutscene_OverrideDekuTree(void) {
     ItemOverride_PushDungeonReward(DUNGEON_DEKU_TREE);
-    gSaveContext.eventChkInf[0x1] |= 0x1000; //spoke to Mido after Deku Tree's death
+    gSaveContext.eventChkInf[0x1] |= 0x1000; // spoke to Mido after Deku Tree's death
 
-    //If warping with FW, let the wrong warp work
+    // If warping with FW, let the wrong warp work
     if (gSaveContext.respawnFlag == 3) {
         gSaveContext.nextCutsceneIndex = 0xFFF1;
         return;
@@ -207,7 +207,7 @@ void Cutscene_OverrideDekuTree(void) {
 void Custcene_OverrideDodongosCavern(void) {
     ItemOverride_PushDungeonReward(DUNGEON_DODONGOS_CAVERN);
 
-    //If warping with FW, let the wrong warp work
+    // If warping with FW, let the wrong warp work
     if (gSaveContext.respawnFlag == 3) {
         gSaveContext.nextCutsceneIndex = 0xFFF1;
         return;
@@ -221,7 +221,7 @@ void Custcene_OverrideDodongosCavern(void) {
 void Custcene_OverrideJabuJabusBelly(void) {
     ItemOverride_PushDungeonReward(DUNGEON_JABUJABUS_BELLY);
 
-    //If warping with FW, let the wrong warp work
+    // If warping with FW, let the wrong warp work
     //(this code will never be executed lol)
     if (gSaveContext.respawnFlag == 3) {
         gSaveContext.nextCutsceneIndex = 0xFFF0;
@@ -243,9 +243,9 @@ void Custcene_OverrideForestTemple(void) {
 
 void Cutscene_OverrideFireTemple(void) {
     ItemOverride_PushDungeonReward(DUNGEON_FIRE_TEMPLE);
-    gSaveContext.eventChkInf[2] |= 0x8000; //Death Mountain cloud is normal again
+    gSaveContext.eventChkInf[2] |= 0x8000; // Death Mountain cloud is normal again
 
-    //If warping with FW, let the wrong warp work
+    // If warping with FW, let the wrong warp work
     if (gSaveContext.respawnFlag == 3) {
         gSaveContext.nextCutsceneIndex = 0xFFF3;
         return;
@@ -262,7 +262,7 @@ void Custcene_OverrideWaterTemple(void) {
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
     ItemOverride_PushDungeonReward(DUNGEON_WATER_TEMPLE);
-    gSaveContext.eventChkInf[6] |= 0x0200; //Raise Lake Hylia's Water
+    gSaveContext.eventChkInf[6] |= 0x0200; // Raise Lake Hylia's Water
 }
 
 void Custcene_OverrideSpiritTemple(void) {

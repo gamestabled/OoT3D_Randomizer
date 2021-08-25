@@ -1,7 +1,9 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "item_effect.h"
+#include "giants_knife.h"
 #include "savefile.h"
+#include "3ds/types.h"
 
 void SaveFile_Init() {
 #ifdef ENABLE_DEBUG
@@ -37,10 +39,11 @@ void SaveFile_Init() {
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
+    gSaveContext.infTable  [0x19] |= 0x0100; //Got Magic Container
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x037B; //entrance cutscenes (minus temple of time)
+    gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
     gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
     gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
     gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
@@ -50,7 +53,9 @@ void SaveFile_Init() {
     gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
-    if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA) {
+    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple 
+    bool keysanity = gSettingsContext.keysanity == KEYSANITY_ANYWHERE || gSettingsContext.keysanity == KEYSANITY_OVERWORLD || gSettingsContext.keysanity == KEYSANITY_ANY_DUNGEON;
+    if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA && !keysanity) {
         gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
     }
     //open middle locked door in Vanilla Water Temple (to prevent key logic lockouts)
@@ -79,8 +84,7 @@ void SaveFile_Init() {
     //set master quest flag for mirror world
     if (gSettingsContext.mirrorWorld == ON) {
         gSaveContext.masterQuestFlag = 1;
-    }
-    else{
+    } else {
         gSaveContext.masterQuestFlag = 0;
     }
 
@@ -88,7 +92,7 @@ void SaveFile_Init() {
         gSaveContext.dayTime = 0x1400; //Set night time
     }
 
-    if (gSettingsContext.openDoorOfTime) {
+    if (gSettingsContext.openDoorOfTime == OPENDOOROFTIME_OPEN) {
         gSaveContext.eventChkInf[0x4] |= 0x0800; //Open Door of Time
     }
 
@@ -121,7 +125,10 @@ void SaveFile_Init() {
     }
 
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
-    gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
+	//If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
+    if(gSettingsContext.startingDungeonReward == 0){
+        gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
+    }
 
     if (gSettingsContext.skipMinigamePhases == SKIP) {
         gSaveContext.sceneFlags[0x48].clear |= 0x00000010; //Remove first Dampe race
@@ -185,7 +192,7 @@ void SaveFile_SwapFaroresWind(void) {
         *storedFWData = tempCur;
 
         curFWData++;
-        storedFWData += sizeof(SaveSceneFlags);
+        storedFWData += (sizeof(SaveSceneFlags) / sizeof(u32));
     }
 }
 
@@ -352,6 +359,7 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingMagicBean) {
         ItemEffect_BeanPack(&gSaveContext, 0, 0);
+        gSaveContext.magic_beans_available = 10;
     }
 
     if (gSettingsContext.startingMegatonHammer) {
@@ -386,9 +394,13 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
     }
 
-    if (gSettingsContext.startingBiggoronSword) {
+    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_BIGGORON_SWORD) {
         gSaveContext.bgsFlag = 1;
         gSaveContext.bgsHitsLeft = 1;
+    }
+    if (gSettingsContext.startingBiggoronSword == STARTINGBGS_GIANTS_KNIFE){
+        gSaveContext.bgsFlag = 0;
+        gSaveContext.bgsHitsLeft = GK_SetDurability();
     }
 
     if (gSettingsContext.startingMagicMeter == 1) {
@@ -401,7 +413,11 @@ void SaveFile_SetStartingInventory(void) {
         ItemEffect_GiveDefense(&gSaveContext, 0, 0);
     }
 
+    gSaveContext.healthCapacity = gSettingsContext.startingHealth << 4;
+    gSaveContext.health         = gSettingsContext.startingHealth << 4;
+
     gSaveContext.questItems |= gSettingsContext.startingQuestItems;
+    gSaveContext.questItems |= gSettingsContext.startingDungeonReward;
     gSaveContext.equipment |= gSettingsContext.startingEquipment;
     gSaveContext.upgrades |= gSettingsContext.startingUpgrades;
 
@@ -420,4 +436,75 @@ void SaveFile_SetStartingInventory(void) {
 
     }
 
+	//set token count
+	gSaveContext.gsTokens = gSettingsContext.startingTokens;
+
+    //Set Epona as freed if Skip Epona Race is enabled and Epona's Song is in the starting inventory
+    if (gSettingsContext.skipEponaRace == SKIP && (gSaveContext.questItems >> 13) & 0x1) {
+      EventSet(0x18);
+    }
+}
+
+//We will use the "unk" flags in DMT to represent adult trade ownership
+void SaveFile_SetTradeItemAsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    gSaveContext.sceneFlags[0x60].unk |= (0x1 << tradeItemNum);
+}
+
+void SaveFile_UnsetTradeItemAsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    gSaveContext.sceneFlags[0x60].unk &= ~(0x1 << tradeItemNum);
+}
+
+u32 SaveFile_TradeItemIsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    return (gSaveContext.sceneFlags[0x60].unk & (0x1 << tradeItemNum)) != 0;
+}
+
+typedef s32 (*Inventory_ReplaceItem_proc)(GlobalContext* globalCtx, u16 oldItem, u16 newItem);
+#define Inventory_ReplaceItem_addr 0x316CEC
+#define Inventory_ReplaceItem ((Inventory_ReplaceItem_proc)Inventory_ReplaceItem_addr)
+
+u32 SaveFile_CheckForPocketCuccoHatch(void) {
+    // Force the egg into the adult trade slot so that it can hatch
+    if (SaveFile_TradeItemIsOwned(ITEM_POCKET_EGG)) {
+        gSaveContext.items[SLOT_TRADE_ADULT] = ITEM_POCKET_EGG;
+    }
+
+    if (Inventory_ReplaceItem(gGlobalContext, ITEM_POCKET_EGG, ITEM_POCKET_CUCCO)) {
+        SaveFile_SetTradeItemAsOwned(ITEM_POCKET_CUCCO);
+        SaveFile_UnsetTradeItemAsOwned(ITEM_POCKET_EGG);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot) {
+    // Remove the slot from child/adult grids
+    for (u32 i = 0; i < 0x18; ++i) {
+        if (gSaveContext.itemMenuChild[i] == itemSlot) {
+            gSaveContext.itemMenuChild[i] = 0xFF;
+        }
+        if (gSaveContext.itemMenuAdult[i] == itemSlot) {
+            gSaveContext.itemMenuAdult[i] = 0xFF;
+        }
+    }
+}
+
+void SaveFile_SetOwnedTradeItemEquipped(void) {
+    if (gSaveContext.sceneFlags[0x60].unk == 0) {
+        gSaveContext.items[SLOT_TRADE_ADULT] = 0xFF;
+        SaveFile_ResetItemSlotsIfMatchesID(SLOT_TRADE_ADULT);
+    } else {
+        for (u8 itemId = ITEM_POCKET_EGG; itemId <= ITEM_CLAIM_CHECK; itemId++) {
+            if (SaveFile_TradeItemIsOwned(itemId)) {
+                gSaveContext.items[SLOT_TRADE_ADULT] = itemId;
+                return;
+            }
+        }
+    }
 }

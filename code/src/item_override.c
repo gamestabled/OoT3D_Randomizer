@@ -5,14 +5,15 @@
 #include "settings.h"
 #include "custom_models.h"
 #include "objects.h"
+#include "entrance.h"
+#include "savefile.h"
 #include <stddef.h>
-void svcBreak(u32 breakReason); //TODO: remove
 
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
 #include "z3D/actors/z_en_item00.h"
 
-static ItemOverride rItemOverrides[512] = { 0 };
+static ItemOverride rItemOverrides[640] = { 0 };
 static s32 rItemOverrides_Count = 0;
 
 static ItemOverride rPendingOverrideQueue[3] = { 0 };
@@ -30,7 +31,7 @@ u32 rActiveItemFastChest = 0;
 static u8 rSatisfiedPendingFrames = 0;
 
 void ItemOverride_Init(void) {
-    while(rItemOverrides[rItemOverrides_Count].key.all != 0) {
+    while (rItemOverrides[rItemOverrides_Count].key.all != 0) {
         rItemOverrides_Count++;
     }
 
@@ -130,7 +131,7 @@ static void ItemOverride_Activate(ItemOverride override) {
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
     u8 looksLikeItemId = override.value.looksLikeItemId;
 
-    if (override.value.itemId == 0x7C) { //Ice trap
+    if (override.value.itemId == 0x7C) { // Ice trap
         looksLikeItemId = 0;
     }
 
@@ -166,6 +167,10 @@ static void ItemOverride_PushPendingOverride(ItemOverride override) {
     }
 }
 
+s32 ItemOverride_IsAPendingOverride(void) {
+    return (rPendingOverrideQueue[0].key.all != 0);
+}
+
 void ItemOverride_PushDelayedOverride(u8 flag) {
     ItemOverride_Key key = { .all = 0 };
     key.scene = 0xFF;
@@ -193,13 +198,32 @@ static void ItemOverride_AfterKeyReceived(ItemOverride_Key key) {
     if (key.all == fireArrowKey.all) {
         gGlobalContext->actorCtx.flags.chest |= 0x1;
     }
+
+    // If we override an adult trade item, we should remove the previous item from being owned
+    if ((key.flag == GI_COJIRO) || ((key.flag > GI_POCKET_EGG) && (key.flag <= GI_CLAIM_CHECK))) {
+        u8 itemId;
+        switch (key.flag) {
+            case GI_COJIRO:       itemId = 46; break;
+            case GI_POCKET_CUCCO: itemId = 45; break;
+            case GI_ODD_MUSHROOM: itemId = 47; break;
+            case GI_ODD_POTION:   itemId = 48; break;
+            case GI_SAW:          itemId = 49; break;
+            case GI_SWORD_BROKEN: itemId = 50; break;
+            case GI_PERSCRIPTION: itemId = 51; break;
+            case GI_FROG:         itemId = 52; break;
+            case GI_EYEDROPS:     itemId = 53; break;
+            case GI_CLAIM_CHECK:  itemId = 54; break;
+        }
+        SaveFile_UnsetTradeItemAsOwned(itemId);
+        SaveFile_SetOwnedTradeItemEquipped();
+    }
 }
 
 static void ItemOverride_PopIceTrap(void) {
     ItemOverride_Key key = rPendingOverrideQueue[0].key;
     ItemOverride_Value value = rPendingOverrideQueue[0].value;
     if (value.itemId == 0x7C) {
-        IceTrap_Push();
+        IceTrap_Push(key.all);
         ItemOverride_PopPendingOverride();
         ItemOverride_AfterKeyReceived(key);
     }
@@ -215,19 +239,15 @@ void ItemOverride_AfterItemReceived(void) {
 }
 
 static u32 ItemOverride_PlayerIsReady(void) {
-    if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 &&
-        (PLAYER->actor.bgCheckFlags & 0x0001) &&
-        (PLAYER->stateFlags2 & 0x000C0000) == 0 &&
-        PLAYER->actor.draw != NULL &&
-        gGlobalContext->actorCtx.titleCtx.delayB == 0 &&
-        gGlobalContext->actorCtx.titleCtx.delayA == 0 &&
-        gGlobalContext->actorCtx.titleCtx.unk_12 == 0
+    if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 && (PLAYER->actor.bgCheckFlags & 0x0001) &&
+        (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
+        gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
+        gGlobalContext->actorCtx.titleCtx.alpha == 0
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
-        ) {
+    ) {
         rSatisfiedPendingFrames++;
-    }
-    else {
+    } else {
         rSatisfiedPendingFrames = 0;
     }
     if (rSatisfiedPendingFrames >= 2) {
@@ -279,13 +299,13 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
     }
 
     if (override.key.all == 0) {
-        //Hack for Scrubsanity Off
-        //The game will spawn different scrub actors in grottos depending on if
-        //Link is child or adult (one for deku seeds and another for arrows
-        //respectively). Since we only override the child deku scrubs when
-        //scrubsanity is off, the adult ones will return the Gold Scale getItemID
-        //and not find an override in the overrid table. This is where we fix that
-        //so adult Link will receive arrows properly.
+        // Hack for Scrubsanity Off
+        // The game will spawn different scrub actors in grottos depending on if
+        // Link is child or adult (one for deku seeds and another for arrows
+        // respectively). Since we only override the child deku scrubs when
+        // scrubsanity is off, the adult ones will return the Gold Scale getItemID
+        // and not find an override in the overrid table. This is where we fix that
+        // so adult Link will receive arrows properly.
         if (incomingItemId == GI_SCALE_GOLD && gSettingsContext.scrubsanity == SCRUBSANITY_OFF) {
             override.value.itemId = GI_ARROWS_LARGE;
         } else {
@@ -306,6 +326,9 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
             baseItemId = 0x7C;
         }
         fromActor->params = (fromActor->params & 0xF01F) | (baseItemId << 5);
+    } else if (override.value.itemId == 0x7C) {
+        rActiveItemRow->effectArg1 = override.key.all >> 16;
+        rActiveItemRow->effectArg2 = override.key.all & 0xFFFF;
     }
 
     player->getItemId = incomingNegative ? -baseItemId : baseItemId;
@@ -340,6 +363,10 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
     ItemRow* itemRow = ItemTable_GetItemRow(resolvedItemId);
+    if (override.value.itemId == 0x7C) {
+        itemRow->effectArg1 = override.key.all >> 16;
+        itemRow->effectArg2 = override.key.all & 0xFFFF;
+    }
 
     ItemTable_CallEffect(itemRow);
 
@@ -410,7 +437,7 @@ void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) 
 
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
-    if (receivedGift == 0) {
+    if (receivedGift == 0 && (gSaveContext.entranceIndex == Entrance_GetLWBridgeEntrance())) {
         ItemOverride_PushDelayedOverride(0x02);
         EventSet(0xC1);
     }
@@ -419,17 +446,17 @@ s32 ItemOverride_GiveSariasGift(void) {
     return 1;
 }
 
-//If we haven't obtained Zelda's Letter and are in the castle courtyard, push it
+// If we haven't obtained Zelda's Letter and are in the castle courtyard, push it
 void ItemOverride_CheckZeldasLetter() {
-  if (EventCheck(0x40) == 0 && gGlobalContext->sceneNum == 0x4A) {
-      ItemOverride_Key key = { .all = 0 };
-      key.scene = 0x4A;
-      key.type = OVR_BASE_ITEM;
-      key.flag = 0x0B;
-      ItemOverride override = ItemOverride_LookupByKey(key);
-      ItemOverride_PushPendingOverride(override);
-      EventSet(0x40);
-  }
+    if (EventCheck(0x40) == 0 && gGlobalContext->sceneNum == 0x4A) {
+        ItemOverride_Key key = { .all = 0 };
+        key.scene = 0x4A;
+        key.type = OVR_BASE_ITEM;
+        key.flag = 0x0B;
+        ItemOverride override = ItemOverride_LookupByKey(key);
+        ItemOverride_PushPendingOverride(override);
+        EventSet(0x40);
+    }
 }
 
 void ItemOverride_PushDungeonReward(u8 dungeon) {
@@ -442,10 +469,10 @@ void ItemOverride_PushDungeonReward(u8 dungeon) {
 }
 
 void ItemOverride_CheckStartingItem() {
-    //use eventChkInf[0] |= 0x0001 as the check for this
+    // use eventChkInf[0] |= 0x0001 as the check for this
     if (EventCheck(0x00) == 0) {
         if (gSettingsContext.linksPocketItem != LINKSPOCKETITEM_DUNGEON_REWARD) {
-            ItemOverride_PushDungeonReward(0xFF); //Push Link's Pocket Reward
+            ItemOverride_PushDungeonReward(0xFF); // Push Link's Pocket Reward
         }
         EventSet(0x00);
     }

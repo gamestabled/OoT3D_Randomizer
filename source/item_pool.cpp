@@ -595,7 +595,8 @@ static void SetMinimalItemPool() {
   ReplaceMaxItem(PROGRESSIVE_SLINGSHOT, 1);
   ReplaceMaxItem(PROGRESSIVE_BOMB_BAG, 1);
   ReplaceMaxItem(PIECE_OF_HEART, 0);
-  ReplaceMaxItem(HEART_CONTAINER, 0);
+  // Need an extra heart container when starting with 1 heart to be able to reach 3 hearts
+  ReplaceMaxItem(HEART_CONTAINER, (StartingHealth.Value<u8>() == 18)? 1 : 0);
 }
 
 void GenerateItemPool() {
@@ -710,6 +711,43 @@ void GenerateItemPool() {
   } else {
     PlaceItemInLocation(ZR_MAGIC_BEAN_SALESMAN, MAGIC_BEAN);
   }
+
+  if (ShuffleMerchants.IsNot(SHUFFLEMERCHANTS_OFF)) {
+    if (!ProgressiveGoronSword) {
+      AddItemToMainPool(GIANTS_KNIFE);
+    }
+    if (BombchusInLogic) {
+      AddItemToMainPool(PROGRESSIVE_BOMBCHUS);
+    } else {
+      AddItemToMainPool(BOMBCHU_10);
+    }
+  } else {
+    PlaceItemInLocation(GC_MEDIGORON, GIANTS_KNIFE);
+    PlaceItemInLocation(WASTELAND_BOMBCHU_SALESMAN, BOMBCHU_10);
+  }
+
+  if (ShuffleAdultTradeQuest) {
+    AddItemToMainPool(POCKET_EGG);
+    AddItemToMainPool(COJIRO);
+    AddItemToMainPool(ODD_MUSHROOM);
+    AddItemToMainPool(ODD_POULTICE);
+    AddItemToMainPool(POACHERS_SAW);
+    AddItemToMainPool(BROKEN_SWORD);
+    AddItemToMainPool(PRESCRIPTION);
+    AddItemToMainPool(EYEBALL_FROG);
+    AddItemToMainPool(EYEDROPS);
+  } else {
+    PlaceItemInLocation(KAK_TRADE_POCKET_CUCCO, COJIRO);
+    PlaceItemInLocation(LW_TRADE_COJIRO, ODD_MUSHROOM);
+    PlaceItemInLocation(KAK_TRADE_ODD_MUSHROOM, ODD_POULTICE);
+    PlaceItemInLocation(LW_TRADE_ODD_POULTICE, POACHERS_SAW);
+    PlaceItemInLocation(GV_TRADE_SAW, BROKEN_SWORD);
+    PlaceItemInLocation(DMT_TRADE_BROKEN_SWORD, PRESCRIPTION);
+    PlaceItemInLocation(ZD_TRADE_PRESCRIPTION, EYEBALL_FROG);
+    PlaceItemInLocation(LH_TRADE_FROG, EYEDROPS);
+    PlaceItemInLocation(DMT_TRADE_EYEDROPS, CLAIM_CHECK);
+  }
+  AddItemToMainPool(CLAIM_CHECK);
 
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
     for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
@@ -945,9 +983,6 @@ void GenerateItemPool() {
     }
   }
 
-  //TODO: trade item logic
-  AddItemToMainPool(CLAIM_CHECK);
-
   //add extra songs only if song shuffle is anywhere
   AddItemsToPool(ItemPool, songList);
   if (ShuffleSongs.Is(SONGSHUFFLE_ANYWHERE) && ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
@@ -1013,6 +1048,12 @@ void GenerateItemPool() {
     ReplaceMaxItem(KOKIRI_SWORD, 0);
   }
 
+  if (ProgressiveGoronSword) {
+    ReplaceMaxItem(BIGGORON_SWORD, 0);
+    AddItemToMainPool(PROGRESSIVE_GORONSWORD, 2);
+    IceTrapModels.push_back(0xD4);
+  }
+
   //Replace ice traps with junk from the pending junk pool if necessary
   if (IceTrapValue.Is(ICETRAPS_OFF)) {
     ReplaceMaxItem(ICE_TRAP, 0);
@@ -1028,6 +1069,8 @@ void GenerateItemPool() {
     SetScarceItemPool();
   } else if (ItemPoolValue.Is(ITEMPOOL_MINIMAL)) {
     SetMinimalItemPool();
+  } else if (RemoveDoubleDefense) {
+    ReplaceMaxItem(DOUBLE_DEFENSE, 0);
   }
 
   //this feels ugly and there's probably a better way, but
@@ -1035,7 +1078,7 @@ void GenerateItemPool() {
   bool junkSet;
   for (ItemKey pendingJunk : PendingJunkPool) {
     junkSet = false;
-    for (ItemKey item : ItemPool) {
+    for (ItemKey& item : ItemPool) {
       for (ItemKey junk : JunkPoolItems) {
         if (item == junk && item != HUGE_RUPEE && item != DEKU_NUTS_10) {
           item = pendingJunk;

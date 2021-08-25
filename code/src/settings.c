@@ -1,11 +1,17 @@
 #include "settings.h"
+#include "hid.h"
+#include "input.h"
 
 SettingsContext gSettingsContext = {0};
 u8 Damage32 = 0;
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
+    // Fairy healing also gets sent to this function and should be ignored
+    if (changeHealth >= 0) {
+        return changeHealth;
+    }
     // If supposed to take damage on OHKO ignore everything else
-    if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO && changeHealth < 0) {
+    if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO) {
         return -1000;
     }
 
@@ -15,13 +21,11 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
         modifiedChangeHealth /= 2;
     }
 
-    if (changeHealth < 0) {
-        // MQ damage is applied after this function so changeHealth can be -1
-        // In this case modifiedChangeHealth would always be 0 which is wrong
-        if (modifiedChangeHealth == 0) {
-            modifiedChangeHealth = -(Damage32 >> 2);
-            Damage32 ^= 4;
-        }
+    // MQ damage is applied after this function so changeHealth can be -1
+    // In this case modifiedChangeHealth would always be 0 which is wrong
+    if (modifiedChangeHealth == 0) {
+        modifiedChangeHealth = -(Damage32 >> 2);
+        Damage32 ^= 4;
     }
 
     if (modifiedChangeHealth < 0) {
@@ -36,6 +40,12 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
                 break;
             case DAMAGEMULTIPLIER_QUADRUPLE:
                 modifiedChangeHealth *= 4;
+                break;
+            case DAMAGEMULTIPLIER_OCTUPLE:
+                modifiedChangeHealth *= 8;
+                break;
+            case DAMAGEMULTIPLIER_SEXDECUPLE:
+                modifiedChangeHealth *= 16;
                 break;
         }
 
@@ -53,6 +63,106 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
     }
 
     return modifiedChangeHealth;
+}
+//With the No Health Refill option on, full health refills from health upgrades and Bombchu Bowling are turned off, and fairies restore 3 hearts
+//Otherwise, they grant a full heal, and the default effect applies (full heal from bottle, 8 hearts on contact)
+u32 Settings_SetFullHealthRestore(u8 setAmount) {
+    if((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)){
+        return setAmount;
+    } else {
+        return 0x140;
+    }
+}
+u32 NoHealFromHealthUpgrades(void) {
+    return Settings_SetFullHealthRestore(0);
+}
+u32 NoHealFromBombchuBowlingPrize(void) {
+    return Settings_SetFullHealthRestore(0);
+}
+u32 FairyReviveHealAmount(void) {
+    return Settings_SetFullHealthRestore(0x30);
+}
+u32 FairyUseHealAmount(void) {
+    return Settings_SetFullHealthRestore(0x30);
+}
+typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
+#define Health_ChangeBy_addr 0x352dbc
+#define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
+void FairyPickupHealAmount(void) {
+    if(gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+        Health_ChangeBy(gGlobalContext, 0x30);
+    } else {
+        Health_ChangeBy(gGlobalContext, 0x80);
+    }
+}
+
+u32 Settings_GetQuickTextOption() {
+    return gSettingsContext.quickText;
+}
+
+u32 Settings_GetSongReplaysOption() {
+    return gSettingsContext.skipSongReplays;
+}
+
+u32 Settings_IsTurboText() {
+    return (gSettingsContext.quickText >= QUICKTEXT_TURBO && rInputCtx.cur.b);
+}
+
+void Settings_SkipSongReplays() {
+    // msgModes 18 to 23 are used to manage the song replays. Skipping to mode 23 ends the replay.
+    // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns Pierre.
+    if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 && gGlobalContext->unk_2A91[0xEB] != 12) ||
+        (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
+       ) {
+        // In Water Temple, playing ZL cycles through the modes to avoid problems with the dimmed bottom screen at the ZL switches
+        if (gGlobalContext->sceneNum == 5 && gGlobalContext->unk_2A91[0xEB] == 8) {
+            gGlobalContext->msgMode = 20;
+        }
+        else {
+            gGlobalContext->msgMode = 23;
+        }
+    }
+    else if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 && gGlobalContext->msgMode < 23) {
+        gGlobalContext->msgMode++;
+    }
+}
+
+// From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
+u32 Hash(u32 state) {
+    // Added salt based on the seed hash so traps in the same location in different seeds can have different effects
+    u32 salt = 0;
+    for (int i = 0; i < 5; i++) {
+        salt |= gSettingsContext.hashIndexes[i] << (i * 6);
+    }
+    state ^= salt;
+
+    state ^= 0xDC3A653D;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+    state ^= state >> 16;
+    state *= 0xE1C88647;
+
+    return state;
+}
+
+u8 And(u32 seed, u8 start, u8 end) {
+    u8 value = 1;
+
+    for (u8 i = start; i < end && value; i++) {
+        value &= seed >> i;
+    }
+
+    return value;
+}
+
+u8 Bias(u32 seed) {
+    u8 value = (seed & 0x00000007);
+    value |= And(seed,  3,  5) << 3;
+    value |= And(seed,  5,  7) << 4;
+    value |= And(seed,  7, 11) << 5;
+    value |= And(seed, 11, 16) << 6;
+    return value;
 }
 
   const char hashIconNames[32][25] = {

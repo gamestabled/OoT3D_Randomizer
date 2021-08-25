@@ -247,7 +247,11 @@ constexpr std::array DungeonColors = {
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"You got a "+COLOR(QM_RED)+"Tycoon's Wallet"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"It's gigantic! Now you can carry"+NEWLINE()+"up to "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"Rupees"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"Vous obtenez la "+COLOR(QM_RED)+"bourse de star"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Elle peut contenir jusqu'à "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+"C'est gigantesque!"+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"¡Has conseguido una "+COLOR(QM_RED)+"bolsa para ricachones"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"¡Qué descomunal! Ya puedes llevar"+NEWLINE()+"hasta "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"rupias"+COLOR(QM_WHITE)+"!"+MESSAGE_END());
-
+        //Saria's Song Default Hint
+        CreateMessage(0x0A00, 0, 2, 3,
+            UNSKIPPABLE()+"Have you tried talking to the gossip"+NEWLINE()+ "stones around Hyrule? They might have"+NEWLINE()+"some good advice... Hee hee!"+WAIT_FOR_INPUT()+"If you learn something from the gossip stones,"+NEWLINE()+"I will remember it!"+EVENT_TRIGGER()+MESSAGE_END(),
+            UNSKIPPABLE()+"As-tu parlé aux pierres à potins"+NEWLINE()+ "dans Hyrule? Elles sont de bons conseils..."+NEWLINE()+"Hi hi!"+WAIT_FOR_INPUT()+"Si elles te révèlent quelque chose,"+NEWLINE()+"je m'en souviendrai!"+EVENT_TRIGGER()+MESSAGE_END(),
+            UNSKIPPABLE()+"¿Has probado a consultarle a las"+NEWLINE()+ "piedras chismosas esparcidas por Hyrule? Puede"+NEWLINE()+"que sean de ayuda a tu empresa... ¡Ji, ji!"+WAIT_FOR_INPUT()+"¡Puedo recordarte todo lo que aprendas de ellas,"+NEWLINE()+"si así lo deseas!"+EVENT_TRIGGER()+MESSAGE_END());
         //Poe Collector (when enough has been sold)
         CreateMessage(0x70F8, 0, 0, 0,
             UNSKIPPABLE()+"Wait a minute! WOW!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"You have earned enough points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Young man, you are a genuine "+COLOR(QM_RED)+"ghost hunter"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
@@ -255,9 +259,9 @@ constexpr std::array DungeonColors = {
                 +"buy one of these ghosts."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"You're thinking about what I promised would"+NEWLINE()+"happen when you earned enough points."+NEWLINE()+"Heh heh."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                 +"Don't worry. I didn't forget. Just take this."+MESSAGE_END(),
             UNSKIPPABLE()+"Ooooh! WHOA!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu as obtenu suffisamment de points!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Tu es un véritable "+COLOR(QM_RED)+"chasseur de fantômes"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                +"Il est content, hein?"+NEWLINE()+"Il est content le monsieur?"+NEWLINE()+"Hé hé hé!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Grâce à toi, mon stock d'Âmes est"+NEWLINE()+COLOR(QM_RED)+"plein! C'est donc la dernière fois"+COLOR(QM_WHITE)+"que nous faisons affaire."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                +"Je sais, je sais..."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Nous avions passé un pacte..."+NEWLINE()+"Tu as eu tes points et je t'en"+NEWLINE()+"félicite... Hé hé hé!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
-                +"Alors prends donc ceci,"+NEWLINE()+"mon bon ami!"+MESSAGE_END(),
+                +"Il est content, hein?"+NEWLINE()+"Il est content le monsieur?"+NEWLINE()+"Hé hé hé!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Grâce à toi, mon stock d'"+COLOR(QM_RED)+"Âmes"+COLOR(QM_WHITE)+" est plein!"+NEWLINE()+"C'est donc la dernière fois que nous"+NEWLINE()+"faisons affaire."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                +"Je sais, je sais..."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Nous avions passé un pacte..."+NEWLINE()+"Tu as eu tes points et je t'en félicite..."+NEWLINE()+"Hé hé hé!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
+                +"Alors prends donc ceci, mon bon ami!"+MESSAGE_END(),
             UNSKIPPABLE()+"¡Un momento! ¡OYE!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Has conseguido los puntos suficientes!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Jovencito, eres un auténtico "+COLOR(QM_RED)+"cazador de"+NEWLINE()+"fantasmas"+COLOR(QM_WHITE)+"!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
                 +"¿Era eso lo que esperabas que dijera?"+NEWLINE()+"¡Je, je je!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Gracias a ti, ya tengo la cantidad necesaria"+NEWLINE()+"de "+COLOR(QM_RED)+"grandes poes"+COLOR(QM_WHITE)+", así que esta será la"+NEWLINE()
                 +"última vez que te compre unos de ese tipo."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¿Recuerdas lo que te dije que ocurriría"+NEWLINE()+"cuando tuvieses suficientes puntos?"+NEWLINE()+"Je, je, je."+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()
@@ -271,9 +275,9 @@ constexpr std::array DungeonColors = {
         //The less significant byte represents the price of the item
         for (u32 price = 0; price <= 95; price += 5) {
             CreateMessage(0x9000 + price, 0, 0, 0,
-                INSTANT_TEXT_ON()+"I'll sell you something good for "+COLOR(QM_RED)+std::to_string(price)+" Rupees"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"OK"+NEWLINE()+"No way"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+"Je te vends un truc super pour "+COLOR(QM_RED)+std::to_string(price)+" Rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"D'accord"+NEWLINE()+"Hors de question"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+"¡Te puedo vender algo bueno por "+COLOR(QM_RED)+std::to_string(price)+" rupias"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+"\x7F\x1A\xFF\xFF"+COLOR(QM_GREEN)+"Vale"+NEWLINE()+"Ni hablar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
+                INSTANT_TEXT_ON()+"I'll sell you something good for "+COLOR(QM_RED)+std::to_string(price)+" Rupees"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"OK"+NEWLINE()+"No way"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+"Je te vends un truc super pour "+COLOR(QM_RED)+std::to_string(price)+" Rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"D'accord"+NEWLINE()+"Hors de question"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+"¡Te puedo vender algo bueno por "+COLOR(QM_RED)+std::to_string(price)+" rupias"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Vale"+NEWLINE()+"Ni hablar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //Poe Collector
         //The last digit represent the number of poes needed to collect
@@ -298,6 +302,11 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"Zzzz... Muh... Malon..."+NEWLINE()+"Parler avec... Malon..."+NEWLINE()+SET_SPEED(3)+"........."+SET_SPEED(0)+WAIT_FOR_INPUT()+"Si fatigué..."+NEWLINE()+"Quelle vie..."+MESSAGE_END(),
             UNSKIPPABLE()+"Habla con Malon, tiene algo que darte..."+SET_SPEED(3)+"........."+SET_SPEED(0)+MESSAGE_END());
 
+        //Bow Shooting Gallery reminder
+        CreateMessage(0x9140, 0, 0, 0,
+            UNSKIPPABLE()+"Wonderful! Bravo! Perfect!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Here's a fantastic present! But I have"+COLOR(QM_RED)+NEWLINE()+"something else "+COLOR(QM_WHITE)+"for you once you have a bow."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
+            UNSKIPPABLE()+"Merveilleux! Bravo! C'est parfait!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Voici un prix fantastique! J'aurai "+COLOR(QM_RED)+"autre chose"+COLOR(QM_WHITE)+NEWLINE()+"pour toi quand tu auras un arc."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
+            UNSKIPPABLE()+"¡Espectacular! ¡Bravo! ¡Perfecto!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Toma este sensacional regalo! Pero te tengo"+NEWLINE()+"guardado "+COLOR(QM_RED)+"algo más "+COLOR(QM_WHITE)+"para cuando traigas tu"+NEWLINE()+"propio arco."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END());
 
         //Shopsanity items
         //64 textboxes, 2 for each of 32 potential shopsanity items
@@ -443,4 +452,7 @@ constexpr std::array DungeonColors = {
     std::string NEWLINE()              { return  "\x7F\x1C"s; }
     std::string COLOR(u8 x)            { return  "\x7F\x1D"s + char(x); }
     std::string CENTER_TEXT()          { return  "\x7F\x1E"s; }
+    std::string IF_NOT_MQ()            { return  "\x7F\x29"s; }
+    std::string MQ_ELSE()              { return  "\x7F\x2A"s; }
+    std::string MQ_END()               { return  "\x7F\x2B"s; }
 }

@@ -151,7 +151,12 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@python3 patch.py $(OUTPUT).elf
+	@if python3 patch.py $(OUTPUT).elf; then \
+		echo "created basecode.ips" ; \
+	else \
+		python patch.py $(OUTPUT).elf; \
+		echo "created basecode.ips" ; \
+	fi
 
 #---------------------------------------------------------------------------------
 clean:

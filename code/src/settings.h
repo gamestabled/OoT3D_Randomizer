@@ -15,18 +15,27 @@ typedef enum {
 
 typedef enum {
   LOGIC_GLITCHLESS,
+  LOGIC_GLITCHED,
   LOGIC_NONE,
+  LOGIC_VANILLA,
 } LogicSetting;
 
 typedef enum {
   OPENFOREST_CLOSED,
   OPENFOREST_OPEN,
+  OPENFOREST_CLOSED_DEKU,
 } OpenForestSetting;
 
 typedef enum {
   OPENKAKARIKO_CLOSED,
   OPENKAKARIKO_OPEN,
 } OpenKakarikoSetting;
+
+typedef enum {
+  OPENDOOROFTIME_OPEN,
+  OPENDOOROFTIME_CLOSED,
+  OPENDOOROFTIME_INTENDED,
+} OpenDoorOfTimeSetting;
 
 typedef enum {
   ZORASFOUNTAIN_NORMAL,
@@ -64,6 +73,19 @@ typedef enum {
   AGE_CHILD,
   AGE_RANDOM,
 } AgeSetting;
+
+typedef enum {
+  AMMODROPS_VANILLA,
+  AMMODROPS_BOMBCHU,
+  AMMODROPS_NONE,
+} AmmoDropsSetting;
+
+typedef enum {
+  HEARTDROPREFILL_VANILLA,
+  HEARTDROPREFILL_NODROP,
+  HEARTDROPREFILL_NOREFILL,
+  HEARTDROPREFILL_NODROPREFILL,
+} HeartDropRefillSetting;
 
 typedef enum {
   DUNGEONMODE_VANILLA,
@@ -115,6 +137,17 @@ typedef enum {
 } ScrubsanitySetting;
 
 typedef enum {
+  SHUFFLEMERCHANTS_OFF,
+  SHUFFLEMERCHANTS_NO_HINTS,
+  SHUFFLEMERCHANTS_HINTS,
+} ShuffleMerchantsSetting;
+
+typedef enum {
+  SHUFFLEADULTTRADEQUEST_OFF,
+  SHUFFLEADULTTRADEQUEST_ON,
+} ShuffleAdultTradeQuestSetting;
+
+typedef enum {
   MAPSANDCOMPASSES_START_WITH,
   MAPSANDCOMPASSES_VANILLA,
   MAPSANDCOMPASSES_OWN_DUNGEON,
@@ -164,6 +197,19 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+  QUICKTEXT_VANILLA,
+  QUICKTEXT_SKIPPABLE,
+  QUICKTEXT_INSTANT,
+  QUICKTEXT_TURBO,
+} QuickTextSetting;
+
+typedef enum {
+  SONGREPLAYS_DONT_SKIP,
+  SONGREPLAYS_SKIP_NO_SFX,
+  SONGREPLAYS_SKIP_KEEP_SFX,
+} SkipSongReplaysSetting;
+
+typedef enum {
   INCLUDE,
   EXCLUDE,
 } ExcludeLocationSetting;
@@ -182,6 +228,8 @@ typedef enum {
   DAMAGEMULTIPLIER_DEFAULT,
   DAMAGEMULTIPLIER_DOUBLE,
   DAMAGEMULTIPLIER_QUADRUPLE,
+  DAMAGEMULTIPLIER_OCTUPLE,
+  DAMAGEMULTIPLIER_SEXDECUPLE,
   DAMAGEMULTIPLIER_OHKO,
 } DamageMultiplierSetting;
 
@@ -213,6 +261,12 @@ typedef enum {
 } IceTrapSetting;
 
 typedef enum {
+  GKDURABILITY_VANILLA,
+  GKDURABILITY_RANDOMRISK,
+  GKDURABILITY_RANDOMSAFE,
+} GkDurabilitySetting;
+
+typedef enum {
   STARTINGBOTTLE_NONE,
   STARTINGBOTTLE_EMPTY_BOTTLE,
   STARTINGBOTTLE_RED_POTION,
@@ -227,6 +281,12 @@ typedef enum {
   STARTINGBOTTLE_HALF_MILK,
   STARTINGBOTTLE_POE,
 } StartingBottleSetting;
+
+typedef enum {
+  STARTINGBGS_NONE,
+  STARTINGBGS_GIANTS_KNIFE,
+  STARTINGBGS_BIGGORON_SWORD,
+} StartingBiggoronSwordSetting;
 
 typedef struct {
   u8 hashIndexes[5];
@@ -249,8 +309,10 @@ typedef struct {
   u8 startingAge;
   u8 resolvedStartingAge;
   u8 shuffleDungeonEntrances;
+  u8 shuffleOverworldEntrances;
   u8 bombchusInLogic;
-  u8 bombchuDrops;
+  u8 ammoDrops;
+  u8 heartDropRefill;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
 
@@ -266,6 +328,8 @@ typedef struct {
   u8 shuffleWeirdEgg;
   u8 shuffleGerudoToken;
   u8 shuffleMagicBeans;
+  u8 shuffleMerchants;
+  u8 shuffleAdultTradeQuest;
 
   u8 mapsAndCompasses;
   u8 keysanity;
@@ -286,8 +350,13 @@ typedef struct {
   u8 freeScarecrow;
   u8 fourPoesCutscene;
   u8 templeOfTimeIntro;
+  u8 lakeHyliaOwl;
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
+  u8 kingZoraSpeed;
+  u8 completeMaskQuest;
+  u8 quickText;
+  u8 skipSongReplays;
 
   u8 damageMultiplier;
   u8 startingTime;
@@ -295,6 +364,7 @@ typedef struct {
   u8 chestAnimations;
   u8 chestSize;
   u8 generateSpoilerLog;
+  u8 ingameSpoilers;
   u8 menuOpeningButton;
   u8 randomTrapDmg;
 
@@ -302,9 +372,11 @@ typedef struct {
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+  u8 gkDurability;
 
   u8 itemPoolValue;
   u8 iceTrapValue;
+  u8 progressiveGoronSword;
 
   u8 customTunicColors;
   u8 coloredKeys;
@@ -363,10 +435,14 @@ typedef struct {
   u8 startingBiggoronSword;
   u8 startingMagicMeter;
   u8 startingDoubleDefense;
+  u8 startingHealth;
 
   u32 startingQuestItems;
+  u32 startingDungeonReward;
   u32 startingEquipment;
   u32 startingUpgrades;
+
+  u8 startingTokens;
 
 } SettingsContext;
 
@@ -374,5 +450,8 @@ extern SettingsContext gSettingsContext;
 extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
+void Settings_SkipSongReplays();
+u32 Hash(u32);
+u8  Bias(u32);
 
 #endif

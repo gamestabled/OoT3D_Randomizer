@@ -125,6 +125,9 @@ namespace Logic {
   extern u8 ProgressiveMagic;
   extern u8 ProgressiveOcarina;
 
+  //Keysanity
+  extern bool IsKeysanity;
+
   //Keys
   extern u8 ForestTempleKeys;
   extern u8 FireTempleKeys;
@@ -175,12 +178,19 @@ namespace Logic {
   extern bool BuyBombchus5;
   extern bool BuyBombchus10;
   extern bool BuyBombchus20;
+  extern bool BuyArrow;
+  extern bool BuyBomb;
+  extern bool BuyGPotion;
+  extern bool BuyBPotion;
+  extern bool BuySeed;
+  extern bool MagicRefill;
 
   /* --- HELPERS --- */
   /* These are used to simplify reading the logic, but need to be updated
   /  every time a base value is updated.                       */
 
   extern bool Ocarina;
+  extern bool OcarinaOfTime;
   extern bool MagicMeter;
   extern bool Hookshot;
   extern bool Longshot;
@@ -189,6 +199,7 @@ namespace Logic {
   extern bool GoldenGauntlets;
   extern bool SilverScale;
   extern bool GoldScale;
+  extern bool AdultsWallet;
 
   extern bool ScarecrowSong;
   extern bool Scarecrow;
@@ -295,11 +306,32 @@ namespace Logic {
     Either,
   };
 
+  enum class GlitchType {
+    ISG,
+    BombHover,
+    Megaflip,
+    HookshotClip,
+    HookshotJump_Bonk,
+    HookshotJump_Boots,
+    LedgeClip,
+    TripleSlashClip,
+  };
+
+  enum class GlitchDifficulty {
+    NOVICE = 1,
+    INTERMEDIATE,
+    ADVANCED,
+    EXPERT,
+    HERO,
+  };
+
   void UpdateHelpers();
   bool CanPlay(bool song);
   bool CanUse(ItemKey itemName);
   bool HasProjectile(HasProjectileAge age);
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
+  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched);
+  bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty);
   bool EventsUpdated();
   void LogicReset();
 }

@@ -5,7 +5,6 @@ This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the
 * [Installation](#installation)
   * [On 3DS Console with Luma3DS](#On-3DS-Console-with-Luma3DS)
   * [On Citra](#On-Citra)
-  * [On Citra for Recent Nightly Pre-releases](#On-Citra-for-Recent-Nightly-Pre-releases)
   * [Save Files](#Save-Files)
 * [General Description](#general-description)
   * [Getting Stuck](#getting-stuck)
@@ -14,7 +13,7 @@ This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the
 
 ## Installation
 
-You can download the latest stable version of the randomizer [here](https://github.com/gamestabled/OoT3D_Randomizer/releases/latest). You can use either the ```OoT3D_Randomizer.3dsx``` or ```OoT3D_Randomizer.cia``` files provided to generate randomizer patches. 
+You can download the latest stable version of the randomizer [here](https://github.com/gamestabled/OoT3D_Randomizer/releases/latest). You can use either the ```OoT3D_Randomizer.3dsx``` or ```OoT3D_Randomizer.cia``` files provided to generate randomizer patches.
 
 Please ensure that you are playing on the USA version of Ocarina of Time 3D, as it is the only version supported by the randomizer. You can use either the cartridge version or the installed digital version. In all instructions below, if a directory doesn't exist, just create it.
 
@@ -50,8 +49,10 @@ Want to discuss the randomizer with others? Join our [Discord server](https://di
 
 ### Getting Stuck
 
-With a game the size of _Ocarina of Time 3D_, it's quite easy for players to get stuck in certain situations with no apparent path to progressing. 
-Before reporting an issue, please make sure to check out the [the Logic wiki for the original OoTRandomizer](https://wiki.ootrandomizer.com/index.php?title=Logic), the information there will apply to OoT3D in nearly every situation.
+With a game the size of _Ocarina of Time 3D_, it's quite easy for players to get stuck in certain situations with no apparent path to progressing.
+Before reporting an issue, please make sure to check out the [the Logic wiki for the original OoT Randomizer](https://wiki.ootrandomizer.com/index.php?title=Logic), the information there will apply to OoT3D in nearly every situation. 
+
+You may also find a map tracker helpful, as these allow you to see all checks which are available with your current items, and check which ones you've gotten already. Some recommended trackers are [track-oot](https://track-oot.net/) and Hamsda's pack for EmoTracker, although keep in mind these were designed for the original OoT Randomizer so there may be some slight discrepancies.
 
 ## Building
 
@@ -59,9 +60,12 @@ Before reporting an issue, please make sure to check out the [the Logic wiki for
 
 Install the 3DS packages from [devkitPro](https://devkitpro.org/wiki/Getting_Started)
 
-Python is necessary to build the randomizer. If you're using the Msys2 console provided by devkitpro, you can install python by using `pacman -S python`.
+A small portion of this project is done in python. If you decide to use the Msys2 console from devkitpro, you can install python using the command `pacman -S python` within Msys2.
+
 
 In the root folder, use ```make``` to build ```OoT3D_Randomizer.3dsx```. Use ```make debug=1``` for extra debugging features, including extra items when starting a new file. In the case of problems, try using a ```make clean```.
+When making changes to any code in the `code` directory, you must use `make clean` before recompiling if you want your changes to be picked up.
+For faster compilation using multiple threads, you can use `make -j4` (in this example, the `4` is the number of threads being used).
 
 ## Reporting Bugs
 

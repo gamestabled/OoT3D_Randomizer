@@ -8,6 +8,8 @@
 #include <vector>
 
 #include "settings.hpp"
+#include "dungeon.hpp"
+#include "setting_descriptions.hpp"
 
 using namespace Settings;
 
@@ -129,6 +131,9 @@ namespace Logic {
   u8 ProgressiveStrength  = 0;
   u8 ProgressiveOcarina   = 0;
 
+  //Logical keysanity
+  bool IsKeysanity = false;
+
   //Keys
   u8 ForestTempleKeys          = 0;
   u8 FireTempleKeys            = 0;
@@ -175,10 +180,17 @@ namespace Logic {
   bool FreeFairies      = false;
   bool FairyPond        = false;
   bool BombchuDrop      = false;
+  bool AmmoCanDrop      = false;
 
   bool BuyBombchus5     = false;
   bool BuyBombchus10    = false;
   bool BuyBombchus20    = false;
+  bool BuySeed          = false;
+  bool BuyArrow         = false;
+  bool BuyBomb          = false;
+  bool BuyGPotion       = false;
+  bool BuyBPotion       = false;
+  bool MagicRefill      = false;
 
   /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
   /* These are used to simplify reading the logic, but need to be updated
@@ -186,6 +198,7 @@ namespace Logic {
 
   bool Slingshot        = false;
   bool Ocarina          = false;
+  bool OcarinaOfTime    = false;
   bool BombBag          = false;
   bool MagicMeter       = false;
   bool Hookshot         = false;
@@ -196,6 +209,7 @@ namespace Logic {
   bool GoldenGauntlets  = false;
   bool SilverScale      = false;
   bool GoldScale        = false;
+  bool AdultsWallet     = false;
 
   bool ScarecrowSong    = false;
   bool Scarecrow        = false;
@@ -217,7 +231,6 @@ namespace Logic {
   bool HasExplosives    = false;
   bool IsChild          = false;
   bool IsAdult          = false;
-//bool IsGlitched       = false;
   bool CanBlastOrSmash  = false;
   bool CanChildAttack   = false;
   bool CanChildDamage   = false;
@@ -396,27 +409,102 @@ namespace Logic {
            (age == HasProjectileAge::Either && (Slingshot || Boomerang   ||  Hookshot || Bow));
   }
 
+  u8 GetDifficultyValueFromString(Option& glitchOption) {
+    for (size_t i = 0; i < GlitchDifficulties.size(); i++) {
+      if (glitchOption.GetSelectedOptionText() == GlitchDifficulties[i]) {
+        return i + 1;
+      }
+    }
+    return 0;
+  }
+
+  bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
+    u8 setDifficulty;
+    switch (glitch) {
+    //Infinite Sword Glitch
+    case GlitchType::ISG:
+      setDifficulty = GetDifficultyValueFromString(GlitchISG);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return HasShield && (IsAdult || (IsChild && (KokiriSword || Sticks)));
+    //Bomb Hover
+    case GlitchType::BombHover:
+      setDifficulty = GetDifficultyValueFromString(GlitchHover);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && (HasBombchus || (Bombs && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
+    //Megaflip
+    case GlitchType::Megaflip:
+      setDifficulty = GetDifficultyValueFromString(GlitchMegaflip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return HasShield && Bombs;
+    //Hookshot Clip
+    case GlitchType::HookshotClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchHookshotClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult && Hookshot;
+    //Hookshot Jump: Bonk
+    case GlitchType::HookshotJump_Bonk:
+      setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Bonk);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult && Hookshot;
+    //Hookshot Jump: Boots
+    case GlitchType::HookshotJump_Boots:
+      setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Boots);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult && Hookshot && (IronBoots || HoverBoots);
+    //Ledge Clip
+    case GlitchType::LedgeClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchLedgeClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult;
+    //Triple Slash Clip
+    case GlitchType::TripleSlashClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchTripleSlashClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult || (IsChild && KokiriSword);
+    }
+    //Shouldn't be reached
+    return false;
+  }
+
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
-    Slingshot       = ProgressiveBulletBag >= 1;
+    Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
     Ocarina         = ProgressiveOcarina   >= 1;
-    MagicMeter      = ProgressiveMagic     >= 1;
-    BombBag         = ProgressiveBombBag   >= 1;
+    OcarinaOfTime   = ProgressiveOcarina   >= 2;
+    MagicMeter      = (ProgressiveMagic     >= 1) && (AmmoCanDrop || (HasBottle && (BuyGPotion || BuyBPotion)));
+    BombBag         = (ProgressiveBombBag   >= 1) && (BuyBomb || AmmoCanDrop);
     Hookshot        = ProgressiveHookshot  >= 1;
     Longshot        = ProgressiveHookshot  >= 2;
-    Bow             = ProgressiveBow       >= 1;
+    Bow             = (ProgressiveBow       >= 1) && (BuyArrow || AmmoCanDrop);
     GoronBracelet   = ProgressiveStrength  >= 1;
     SilverGauntlets = ProgressiveStrength  >= 2;
     GoldenGauntlets = ProgressiveStrength  >= 3;
     SilverScale     = ProgressiveScale     >= 1;
     GoldScale       = ProgressiveScale     >= 2;
+    AdultsWallet    = ProgressiveWallet    >= 1;
 
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
     DistantScarecrow = Longshot && CanPlay(ScarecrowSong);
 
     //Drop Access
     DekuStickDrop = StickPot || DekuBabaSticks;
-    DekuNutDrop   = NutPot   || NutCrate         || DekuBabaNuts;
+    DekuNutDrop   = (NutPot  || NutCrate         || DekuBabaNuts) && AmmoCanDrop;
     BugsAccess    = BugShrub || WanderingBugs    || BugRock;
     FishAccess    = LoneFish || FishGroup;
     FairyAccess   = FairyPot || GossipStoneFairy || BeanPlantFairy || ButterflyFairy || FreeFairies || FairyPond;
@@ -431,7 +519,7 @@ namespace Logic {
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
 
-    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 /*|| BombchuDrop*/) && (BombchusInLogic || BombBag);
+    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || AmmoDrops.Is(AMMODROPS_BOMBCHU)) && FoundBombchus;
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
@@ -451,7 +539,7 @@ namespace Logic {
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
-    CanTakeDamage       = DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || Fairy || CanUse(NAYRUS_LOVE);
+    CanTakeDamage       = DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE) || Fairy || CanUse(CanUseItem::Nayrus_Love);
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
@@ -501,6 +589,14 @@ namespace Logic {
     return (dungeonKeyCount >= requiredAmount);
   }
 
+  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
+    if (Settings::Logic.Is(LOGIC_GLITCHED) && GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE)) {
+      return (dungeonKeyCount >= requiredAmountGlitched);
+    } else {
+      return (dungeonKeyCount >= requiredAmountGlitchless);
+    }
+  }
+
   bool EventsUpdated() {
 
       if (DekuTreeClearPast        != DekuTreeClear        ||
@@ -533,6 +629,10 @@ namespace Logic {
 
    //Reset All Logic to false
    void LogicReset() {
+     //Settings-dependent variables
+     IsKeysanity = Keysanity.Is(KEYSANITY_ANYWHERE) || Keysanity.Is(KEYSANITY_OVERWORLD) || Keysanity.Is(KEYSANITY_ANY_DUNGEON);
+     AmmoCanDrop = AmmoDrops.IsNot(AMMODROPS_NONE);
+
      //Child item logic
      KokiriSword   = false;
      ZeldasLetter  = false;
@@ -649,7 +749,8 @@ namespace Logic {
 
      //Keys
      ForestTempleKeys          = 0;
-     FireTempleKeys            = 0;
+     //If not keysanity, start with 1 logical key to account for automatically unlocking the basement door in vanilla FiT
+     FireTempleKeys            = IsKeysanity || Dungeon::FireTemple.IsMQ() ? 0 : 1;
      WaterTempleKeys           = 0;
      SpiritTempleKeys          = 0;
      ShadowTempleKeys          = 0;
@@ -694,11 +795,16 @@ namespace Logic {
      FairyPot         = false;
      FreeFairies      = false;
      FairyPond        = false;
-     BombchuDrop      = false;
 
      BuyBombchus5     = false;
      BuyBombchus10    = false;
      BuyBombchus20    = false;
+     BuySeed          = false;
+     BuyArrow         = false;
+     BuyBomb          = false;
+     BuyGPotion       = false;
+     BuyBPotion       = false;
+     MagicRefill      = false;
 
      /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
      /* These are used to simplify reading the logic, but need to be updated
@@ -706,6 +812,7 @@ namespace Logic {
 
      Slingshot        = false;
      Ocarina          = false;
+     OcarinaOfTime    = false;
      BombBag          = false;
      MagicMeter       = false;
      Hookshot         = false;
@@ -716,6 +823,7 @@ namespace Logic {
      GoldenGauntlets  = false;
      SilverScale      = false;
      GoldScale        = false;
+     AdultsWallet     = false;
 
      ScarecrowSong    = false;
      Scarecrow        = false;

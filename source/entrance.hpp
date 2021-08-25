@@ -29,8 +29,28 @@ enum class EntranceType {
 class Entrance {
 public:
 
-    Entrance(AreaKey connectedRegion_, ConditionFn conditionsMet_)
-        : connectedRegion(connectedRegion_), conditionsMet(conditionsMet_) {}
+    Entrance(AreaKey connectedRegion_, std::vector<ConditionFn> conditions_met_)
+        : connectedRegion(connectedRegion_) {
+        conditions_met.resize(2);
+        for (size_t i = 0; i < conditions_met_.size(); i++) {
+            conditions_met[i] = conditions_met_[i];
+        }
+    }
+
+    bool GetConditionsMet() const {
+        if (Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA)) {
+            return true;
+        } else if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
+            return conditions_met[0]();
+        } else if (Settings::Logic.Is(LOGIC_GLITCHED)) {
+            if (conditions_met[0]()) {
+                return true;
+            } else if (conditions_met[1] != NULL) {
+                return conditions_met[1]();
+            }
+        }
+        return false;
+    }
 
     std::string to_string() const {
         return AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
@@ -44,24 +64,32 @@ public:
         return name;
     }
 
+    void printAgeTimeAccess() {
+      CitraPrint("Name: ");
+      CitraPrint(name);
+      auto message = "Child Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   + "\t"
+                     "Child Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) + "\t"
+                     "Adult Day:   " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   + "\t"
+                     "Adult Night: " + std::to_string(CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight));
+      CitraPrint(message);
+    }
+
     bool ConditionsMet(bool allAgeTimes = false) const {
 
         Area* parent = AreaTable(parentRegion);
-        bool conditionsMet = false;
+        int conditionsMet = 0;
 
         if (allAgeTimes && !parent->AllAccess()) {
             return false;
         }
 
         //check all possible day/night condition combinations
-        if ((parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   ||
-            (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) ||
-            (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   ||
-            (parent->adultNight && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight))) {
-              conditionsMet = true;
-        }
+        conditionsMet = (parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   +
+                        (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) +
+                        (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   +
+                        (parent->adultNight && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight));
 
-        return conditionsMet && connected;
+        return conditionsMet && (!allAgeTimes || conditionsMet == 4);
     }
 
     AreaKey GetAreaKey() const {
@@ -70,10 +98,6 @@ public:
 
     //set the logic to be a specific age and time of day and see if the condition still holds
     bool CheckConditionAtAgeTime(bool& age, bool& time) const {
-        bool prevIsChild = Logic::IsChild;
-        bool prevIsAdult = Logic::IsAdult;
-        bool prevAtDay   = Logic::AtDay;
-        bool prevAtNight = Logic::AtNight;
 
         Logic::IsChild = false;
         Logic::IsAdult = false;
@@ -84,14 +108,7 @@ public:
         age = true;
 
         Logic::UpdateHelpers();
-        bool checkCondition = conditionsMet();
-
-        Logic::IsChild = prevIsChild;
-        Logic::IsAdult = prevIsAdult;
-        Logic::AtDay   = prevAtDay;
-        Logic::AtNight = prevAtNight;
-
-        return checkCondition;
+        return GetConditionsMet();
     }
 
     //Yes this is the exact same function as above, trust me on this
@@ -125,6 +142,18 @@ public:
 
     bool IsShuffled() const {
         return shuffled;
+    }
+
+    bool IsAddedToPool() const {
+        return addedToPool;
+    }
+
+    void AddToPool() {
+        addedToPool = true;
+    }
+
+    void RemoveFromPool() {
+        addedToPool = false;
     }
 
     void SetAsPrimary() {
@@ -205,18 +234,10 @@ public:
         return assumed;
     }
 
-    void TempDisconnect() {
-        connected = false;
-    }
-
-    void Reconnect() {
-        connected = true;
-    }
-
 private:
     AreaKey parentRegion;
     AreaKey connectedRegion;
-    ConditionFn conditionsMet;
+    std::vector<ConditionFn> conditions_met;
 
     //Entrance Randomizer stuff
     EntranceType type = EntranceType::None;
@@ -228,9 +249,11 @@ private:
     s16 blueWarp = 0;
     bool shuffled = false;
     bool primary = false;
-    bool connected = true;
+    bool addedToPool = false;
     std::string name = "";
 };
 
 void ShuffleAllEntrances();
 void CreateEntranceOverrides();
+
+extern std::vector<std::list<Entrance*>> playthroughEntrances;

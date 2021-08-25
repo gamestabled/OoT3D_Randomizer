@@ -162,7 +162,9 @@ static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<
 
   //create the in game message
   u32 messageId = 0x400 + Location(gossipStone)->GetFlag();
+  u32 sariaMessageId = 0xA00 + Location(gossipStone)->GetFlag();
   CreateMessageFromTextObject(messageId, 0, 2, 3, AddColorsAndFormat(hint, colors));
+  CreateMessageFromTextObject(sariaMessageId, 0, 2, 3, AddColorsAndFormat(hint + EVENT_TRIGGER(), colors));
 }
 
 static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocations) {
@@ -499,6 +501,26 @@ static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
   return Text()+ITEM_OBTAINED(itemID)+"#"+GetHintRegion(Location(location)->GetParentRegionKey())->GetHint().GetText()+"#...^";
 }
 
+static Text BuildDoorOfTimeText() {
+  std::string itemObtained;
+  Text doorOfTimeText;
+
+  if (OpenDoorOfTime.Is(OPENDOOROFTIME_OPEN)) {
+    itemObtained = ITEM_OBTAINED(ITEM_SWORD_MASTER);
+    doorOfTimeText = Hint(CHILD_ALTAR_TEXT_END_DOTOPEN).GetText();
+
+  } else if (OpenDoorOfTime.Is(OPENDOOROFTIME_CLOSED)) {
+    itemObtained = ITEM_OBTAINED(ITEM_OCARINA_FAIRY);
+    doorOfTimeText = Hint(CHILD_ALTAR_TEXT_END_DOTCLOSED).GetText();
+
+  } else if (OpenDoorOfTime.Is(OPENDOOROFTIME_INTENDED)) {
+    itemObtained = ITEM_OBTAINED(ITEM_OCARINA_TIME);
+    doorOfTimeText = Hint(CHILD_ALTAR_TEXT_END_DOTINTENDED).GetText();
+  }
+
+  return Text()+itemObtained+doorOfTimeText;
+}
+
 //insert the required number into the hint and set the singular/plural form
 static Text BuildCountReq(const HintKey req, const Option& count) {
   Text requirement = Hint(req).GetTextCopy();
@@ -591,7 +613,7 @@ static void CreateAltarText() {
   BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY)+
   BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE)+
   //How to open Door of Time, the event trigger is necessary to read the altar multiple times
-  ITEM_OBTAINED(ITEM_OCARINA_FAIRY)+Hint(CHILD_ALTAR_TEXT_END).GetText()+EVENT_TRIGGER();
+  BuildDoorOfTimeText()+EVENT_TRIGGER();
   CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, {QM_GREEN, QM_RED, QM_BLUE}));
 
   //Adult Altar Text
@@ -613,6 +635,21 @@ static void CreateAltarText() {
   //End
   Hint(ADULT_ALTAR_TEXT_END).GetText()+EVENT_TRIGGER();
   CreateMessageFromTextObject(0x7088, 0, 2, 3, AddColorsAndFormat(adultText, {QM_RED, QM_YELLOW, QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW, QM_PINK, QM_RED, QM_RED, QM_RED, QM_RED}));
+}
+
+void CreateMerchantsHints() {
+
+  Text medigoronItemText = Location(GC_MEDIGORON)->GetPlacedItem().GetHint().GetText();
+  Text carpetSalesmanItemText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetText();
+  Text carpetSalesmanItemClearText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetClear();
+
+  Text medigoronText = Hint(MEDIGORON_DIALOG_FIRST).GetText()+medigoronItemText+Hint(MEDIGORON_DIALOG_SECOND).GetText();
+  Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText()+carpetSalesmanItemText+Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
+  Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_THIRD).GetText()+carpetSalesmanItemClearText+Hint(CARPET_SALESMAN_DIALOG_FOURTH).GetText();
+
+  CreateMessageFromTextObject(0x9120, 0, 2, 3, AddColorsAndFormat(medigoronText, {QM_RED, QM_GREEN}));
+  CreateMessageFromTextObject(0x6077, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextOne, {QM_RED, QM_GREEN}));
+  CreateMessageFromTextObject(0x6078, 0, 2, 3, AddColorsAndFormat(carpetSalesmanTextTwo, {QM_RED, QM_YELLOW, QM_RED}));
 }
 
 void CreateAllHints() {
@@ -702,6 +739,12 @@ void CreateAllHints() {
     } else if (type == HintType::Junk) {
       CreateJunkHint();
     }
+  }
+
+  //If any gossip stones failed to have a hint placed on them for some reason, place a junk hint as a failsafe.
+  for (LocationKey gossipStone : FilterFromPool(gossipStoneLocations, [](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == NONE;})) {
+    const HintText junkHint = RandomElement(GetHintCategory(HintCategory::Junk));
+    AddHint(junkHint.GetText(), gossipStone, {QM_PINK});
   }
 
   //Getting gossip stone locations temporarily sets one location to not be reachable.

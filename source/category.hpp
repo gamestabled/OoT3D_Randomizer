@@ -1,6 +1,7 @@
 #pragma once
 
 enum class Category {
+    cNull,
     cKokiriForest,
     cForest,
     cGrotto,
@@ -53,11 +54,13 @@ enum class Category {
     cSongDungeonReward,
     cCow,
     cShop,
+    cMerchant,
     cVanillaSmallKey,
     cVanillaGFSmallKey,
     cVanillaBossKey,
     cVanillaMap,
     cVanillaCompass,
+    cAdultTrade,
 };
 
 enum class OptionCategory {
