@@ -20,54 +20,33 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (actionCounter == 0) {
         Object_Spawn(&globalCtx->objectCtx, 0x3); // object containing floor switch data (and ice block data)
 
-        // Spawn a floor switch
-        floorSwitch = Actor_Spawn((&(globalCtx->actorCtx)), globalCtx, 0x12A, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
+        s16 switchParams;
         if (gSaveContext.eventChkInf[4] & 0x0400) { // Water Temple blue warp cleared
-            floorSwitch->params = 0x3E10; // Toggle-able floor switch, linked to temp_switch 0x1E (room temporary,
-                                          // cleared when room unloads)
+            switchParams = 0x3E10; // Toggle-able floor switch, linked to temp_switch 0x1E (room temporary,
+                                   // cleared when room unloads)
         } else {
-            floorSwitch->params =
-                0x3E81; // Frozen rusty switch, same flag as above. It's glitched and can't be pressed, which is perfect
+            switchParams = 0x3E81; // Frozen rusty switch, same flag as above. It's glitched and can't be pressed, which is perfect
         }
-        // Setting some data before the switch is initialized on the next frame
-        floorSwitch->world.pos.x = -896.0f; // the focus point of the switch cutscene is copied from here, then the
-                                            // world.pos is reset by the Init function(?)
-        floorSwitch->world.pos.y = -1243.0f;
-        floorSwitch->world.pos.z = 6953.0f;
-        floorSwitch->home.pos.x = -896.0f; // the ice spawns at the home position
-        floorSwitch->home.pos.y = -1243.0f;
-        floorSwitch->home.pos.z = 6953.0f;
+
+        // Spawn a floor switch
+        floorSwitch = Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x12A, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, switchParams);
+
         // if Lake Hylia's water is lowered, set the temp_switch flag
         if (!(gSaveContext.eventChkInf[6] & 0x0200)) {
             globalCtx->actorCtx.flags.tempSwch |= (0x40 << 24);
         }
 
         // Spawn a sign
-        Actor* sign = Actor_Spawn((&(globalCtx->actorCtx)), globalCtx, 0x141, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
-        sign->params = 0x0046;
-        sign->world.pos.x = -970.0f;
-        sign->world.pos.y = -1242.0f;
-        sign->world.pos.z = 6954.0f;
+        Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x141, -970.0f, -1242.0f, 6954.0f, 0, 0, 0, 0x0046);
 
         // Spawn a Navi check spot
         if (!(gSaveContext.eventChkInf[4] & 0x0400)) { // Water Temple blue warp not cleared
-            Actor* naviMsg = Actor_Spawn((&(globalCtx->actorCtx)), globalCtx, 0x173, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0);
-            naviMsg->params = 0x3DB2;
-            naviMsg->world.pos.x = -896.0f;
-            naviMsg->world.pos.y = -1243.0f;
-            naviMsg->world.pos.z = 6953.0f;
-            naviMsg->focus.pos.x = -896.0f;
-            naviMsg->focus.pos.y = -1243.0f;
-            naviMsg->focus.pos.z = 6953.0f;
+            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x173, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, 0x3DB2);
         }
 
         actionCounter++;
         return;
     } else if (actionCounter == 1) {
-        // put the switch in the right place after it's been initialized
-        floorSwitch->world.pos.x = -896.0f;
-        floorSwitch->world.pos.y = -1242.0f;
-        floorSwitch->world.pos.z = 6953.0f;
         if (!(gSaveContext.eventChkInf[4] & 0x0400)) { // Water Temple blue warp not cleared
             // remove link to ice block so melting that doesn't set the flag
             floorSwitch->params = 0x3E01;

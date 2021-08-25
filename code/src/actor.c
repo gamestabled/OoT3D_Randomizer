@@ -16,7 +16,7 @@
 #include "nabooru.h"
 #include "custom_models.h"
 #include "obj_switch.h"
-#include "gerudo_archery_manager.h"
+#include "gerudos.h"
 #include "shops.h"
 #include "chest.h"
 #include "gossip_stone.h"
@@ -102,6 +102,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x131].initInfo->update = EnExRuppy_rUpdate;
 
+    gActorOverlayTable[0x138].initInfo->init = EnGe1_rInit;
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
 
     gActorOverlayTable[0x145].initInfo->init = BgSpot01Idosoko_rInit;
