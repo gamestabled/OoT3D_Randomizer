@@ -96,7 +96,7 @@ u8 SpoilerData_UpgradeCheck(u8 bit);
 u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_FishingCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc);
-u8 SpoilerData_BiggoronCheck();
+u8 SpoilerData_BiggoronCheck(u8 mask);
 u8 SpoilerData_GerudoTokenCheck();
 u8 SpoilerData_BigPoePointsCheck();
 u8 SpoilerData_ShopItemCheck(SpoilerItemLocation itemLoc);

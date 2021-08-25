@@ -810,6 +810,13 @@ hook_TurboTextAdvance:
     cmpeq r0,#0x0
     bx lr
 
+.global hook_ItemsMenuDraw
+hook_ItemsMenuDraw:
+    push {r0-r12, lr}
+    bl ItemsMenu_Draw
+    pop {r0-r12, lr}
+    b 0x2F8160
+
 .global hook_PlaySound
 hook_PlaySound:
     push {r1-r12, lr}
@@ -878,6 +885,22 @@ hook_SkipSongReplayForTimeBlocksTwo:
     bne 0x208028
     add r0,r0,#0x100
     b 0x207FFC
+
+.global hook_CarpenterBossSetTradedSawFlag
+hook_CarpenterBossSetTradedSawFlag:
+    push {r0-r12, lr}
+    bl EnToryo_SetTradedSawFlag
+    pop {r0-r12, lr}
+    str r0,[r4,#0xB10]
+    bx lr
+
+.global hook_KingZoraSetTradedPrescriptionFlag
+hook_KingZoraSetTradedPrescriptionFlag:
+    push {r0-r12, lr}
+    bl EnKz_SetTradedPrescriptionFlag
+    pop {r0-r12, lr}
+    mov r2,#0x24
+    b 0x1C52A4
 
 .global hook_SkipSongReplayForTimeWarpBlocksOne
 hook_SkipSongReplayForTimeWarpBlocksOne:

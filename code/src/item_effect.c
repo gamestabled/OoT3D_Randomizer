@@ -1,13 +1,7 @@
 #include "item_effect.h"
 #include "settings.h"
 #include "z3D/z3D.h"
-
-// #define rupee_cap ((us16*)0x800F8CEC)
-
-// typedef void (*commit_scene_flags_fn)(z64_game_t* game_ctxt);
-// #define commit_scene_flags ((commit_scene_flags_fn)0x8009D894)
-// typedef void (*save_game_fn)(void* unk);
-// #define save_game ((save_game_fn)0x800905D4)
+#include "savefile.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
@@ -170,18 +164,6 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
 }
 
-static void ResetItemSlotsIfMatchesID(u8 itemSlot) {
-    // Remove the slot from child/adult grids
-    for (u32 i = 0; i < 0x18; ++i) {
-        if (gSaveContext.itemMenuChild[i] == itemSlot) {
-            gSaveContext.itemMenuChild[i] = 0xFF;
-        }
-        if (gSaveContext.itemMenuAdult[i] == itemSlot) {
-            gSaveContext.itemMenuAdult[i] = 0xFF;
-        }
-    }
-}
-
 static u8 MakeSpaceInItemMenu(u8 itemMenu[]) {
     u8 currentSlot = 5;
     u8 emptyButton = 0xFF;
@@ -255,9 +237,9 @@ static void PushSlotIntoInventoryMenu(u8 itemSlot) {
 
 void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     if (arg1 == 0) { // Fairy Bow
-        ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_FIRE]);
-        ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_ICE]);
-        ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_LIGHT]);
+        SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_FIRE]);
+        SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_ICE]);
+        SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_LIGHT]);
     } else if (saveCtx->items[ItemSlots[ITEM_BOW]] == ITEM_NONE) {
         if (arg1 == 1 && saveCtx->items[ItemSlots[ITEM_ARROW_FIRE]] == ITEM_NONE) { // Fire Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_FIRE]);
@@ -289,4 +271,12 @@ void ItemEffect_MoveNabooru(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_GrannySellsPotions(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     gSaveContext.itemGetInf[3] |= 0x1;
+}
+
+void ItemEffect_OwnAdultTrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    SaveFile_SetTradeItemAsOwned(arg1);
+
+    if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_OFF) && arg1 >= ITEM_ODD_POTION) {
+        ItemEffect_GrannySellsPotions(saveCtx, arg1, arg2);
+    }
 }

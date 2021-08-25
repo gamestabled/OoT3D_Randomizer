@@ -8,12 +8,20 @@ SECTIONS
 		*(.patch_loader)
 	}
 
+	.patch_GrogSetTradedCojiroFlag 0x104C50 : {
+		*(.patch_GrogSetTradedCojiroFlag)
+	}
+
 	.patch_MidoCheckDekuTreeClearTwo 0x105CD4 : {
 		*(.patch_MidoCheckDekuTreeClearTwo)
 	}
 
-	.patch_ShortenRainbowBridgeCS 0x10b904 : {
+	.patch_ShortenRainbowBridgeCS 0x10B904 : {
 		*(.patch_ShortenRainbowBridgeCS)
+	}
+
+	.patch_LabScientistDontStartTimerAndSetFlag 0x112440 : {
+		*(.patch_LabScientistDontStartTimerAndSetFlag)
 	}
 
 	.patch_BombchuPurchaseableCheck 0x112ED0 : {
@@ -60,8 +68,8 @@ SECTIONS
 		*(.patch_BeanDaddyModifyBeansBought)
 	}
 
-	.patch_BiggoronSetGivenReward 0x133F7C :{
-		*(.patch_BiggoronSetGivenReward)
+	.patch_KingZoraDontStartTimer 0x134D7C : {
+		*(.patch_KingZoraDontStartTimer)
 	}
 
 	.patch_SongOfStormsLocation 0x1427E0 : {
@@ -132,6 +140,14 @@ SECTIONS
 		*(.patch_DampeCheckCollectibleFlag)
 	}
 
+	.patch_GrogCheckForShouldDespawn 0x16485C : {
+		*(.patch_GrogCheckForShouldDespawn)
+	}
+
+	.patch_CheckFadoCanSpawnInLostWoods 0x1657EC : {
+		*(.patch_CheckFadoCanSpawnInLostWoods)
+	}
+
 	.patch_MedigoronSetRewardFlag 0x16C918 : {
 		*(.patch_MedigoronSetRewardFlag)
 	}
@@ -150,6 +166,10 @@ SECTIONS
 
 	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
 		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
+	.patch_CarpenterBossSetTradedSawFlag 0x178D58 : {
+		*(.patch_CarpenterBossSetTradedSawFlag)
 	}
 
 	.patch_AnjuCheckCuccoAmount 0x179420 : {
@@ -236,8 +256,8 @@ SECTIONS
 		*(.patch_ChildRollingGoron)
 	}
 
-	.patch_BiggoronCheckGivenRewardThree 0x194DA4 : {
-		*(.patch_BiggoronCheckGivenRewardThree)
+	.patch_BiggoronCheckBGSFlag 0x194DA0 : {
+		*(.patch_BiggoronCheckBGSFlag)
 	}
 
 	.patch_ChildRollingGoronDontCheckBombBag 0x195414 : {
@@ -256,8 +276,8 @@ SECTIONS
 		*(.patch_AdultRollingGoronTwo)
 	}
 
-	.patch_BiggoronCheckGivenRewardTwo 0x1954EC : {
-		*(.patch_BiggoronCheckGivenRewardTwo)
+	.patch_BiggoronGetTextId 0x1954F8 : {
+		*(.patch_BiggoronGetTextId)
 	}
 
 	.patch_EponasSongCheckFlagTwo 0x195CFC : {
@@ -316,6 +336,14 @@ SECTIONS
 		*(.patch_FishingSizeIgnoreAdult)
 	}
 
+	.patch_BiggoronAfterGiveItem 0x1C4E4C : {
+		*(.patch_BiggoronAfterGiveItem)
+	}
+
+	.patch_KingZoraSetTradedPrescriptionFlag 0x1C52A0 : {
+		*(.patch_KingZoraSetTradedPrescriptionFlag)
+	}
+
 	.patch_DemoEffectStoneDraw 0x1D209C : {
 		*(.patch_DemoEffectStoneDraw)
 	}
@@ -328,8 +356,8 @@ SECTIONS
 		*(.patch_CheckGerudoToken_1D7AD4)
 	}
 
-	.patch_BiggoronCheckGivenRewardOne 0x1D8A18 : {
-		*(.patch_BiggoronCheckGivenRewardOne)
+	.patch_BiggoronSetTextId 0x1D8A0C : {
+		*(.patch_BiggoronSetTextId)
 	}
 
 	.patch_BombchuShopAlwaysOpen 0x1DC6B0 : {
@@ -534,6 +562,10 @@ SECTIONS
 
 	.patch_WaterTempleItemGiveThree 0x283CA8 : {
 		*(.patch_WaterTempleItemGiveThree)
+	}
+
+	.patch_AnjuGiveCojiro 0x2884F4 : {
+		*(.patch_AnjuGiveCojiro)
 	}
 
 	.patch_SunsSongLocation 0x2888C8 : {
@@ -928,6 +960,14 @@ SECTIONS
 		*(.patch_CarpetSalesmanSetFlag)
 	}
 
+	.patch_ItemsMenuDraw 0x434C08 : {
+		*(.patch_ItemsMenuDraw)
+	}
+
+	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 : {
+		*(.patch_CheckForPocketCuccoHatchGameplayInit)
+	}
+
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}
@@ -976,6 +1016,10 @@ SECTIONS
 		*(.patch_LullabyCheckFlag)
 	}
 
+	.patch_OpenSaveDontSpoilTradeItems 0x44FDF8 : {
+		*(.patch_OpenSaveDontSpoilTradeItems)
+	}
+
 	.patch_before_GlobalContext_Update 0x452390 : {
 		*(.patch_before_GlobalContext_Update)
 	}
@@ -984,8 +1028,16 @@ SECTIONS
 		*(.patch_after_GlobalContext_Update)
 	}
 
+	.patch_GameOverDontSpoilTradeItems 0x458BE0 : {
+		*(.patch_GameOverDontSpoilTradeItems)
+	}
+
 	.patch_SetGameOverEntrance 0x458E3C : {
 		*(.patch_SetGameOverEntrance)
+	}
+
+	.patch_InterfaceDrawDontSpoilTradeItems 0x45A17C : {
+		*(.patch_InterfaceDrawDontSpoilTradeItems)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {
@@ -1002,6 +1054,14 @@ SECTIONS
 
 	.patch_TitleCardUpdate 0x4618B8 : {
 		*(.patch_TitleCardUpdate)
+	}
+
+	.patch_ItemsMenuNumSprites 0x46B758 : {
+		*(.patch_ItemsMenuNumSprites)
+	}
+
+	.patch_CheckForPocketCuccoHatchKankyo 0x470D1C : {
+		*(.patch_CheckForPocketCuccoHatchKankyo)
 	}
 
 	.patch_FishingStoreTempB 0x475F8C : {

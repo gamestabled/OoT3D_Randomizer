@@ -143,6 +143,11 @@ typedef enum {
 } ShuffleMerchantsSetting;
 
 typedef enum {
+  SHUFFLEADULTTRADEQUEST_OFF,
+  SHUFFLEADULTTRADEQUEST_ON,
+} ShuffleAdultTradeQuestSetting;
+
+typedef enum {
   MAPSANDCOMPASSES_START_WITH,
   MAPSANDCOMPASSES_VANILLA,
   MAPSANDCOMPASSES_OWN_DUNGEON,
@@ -304,6 +309,7 @@ typedef struct {
   u8 startingAge;
   u8 resolvedStartingAge;
   u8 shuffleDungeonEntrances;
+  u8 shuffleOverworldEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;
@@ -323,6 +329,7 @@ typedef struct {
   u8 shuffleGerudoToken;
   u8 shuffleMagicBeans;
   u8 shuffleMerchants;
+  u8 shuffleAdultTradeQuest;
 
   u8 mapsAndCompasses;
   u8 keysanity;
