@@ -301,6 +301,7 @@ namespace Settings {
   extern Option ShuffleGerudoToken;
   extern Option ShuffleMagicBeans;
   extern Option ShuffleMerchants;
+  extern Option ShuffleAdultTradeQuest;
 
   extern Option MapsAndCompasses;
   extern Option Keysanity;

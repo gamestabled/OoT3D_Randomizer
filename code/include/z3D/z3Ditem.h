@@ -323,4 +323,38 @@ typedef enum {
     /* 0x7D */ GI_TEXT_0 // no model appears over Link, shows text id 0 (pocket egg)
 } GetItemID;
 
+typedef enum {
+    /* 0x00 */ EXCH_ITEM_NONE,
+    /* 0x01 */ EXCH_ITEM_LETTER_ZELDA,
+    /* 0x02 */ EXCH_ITEM_WEIRD_EGG,
+    /* 0x03 */ EXCH_ITEM_CHICKEN,
+    /* 0x04 */ EXCH_ITEM_BEAN,
+    /* 0x05 */ EXCH_ITEM_POCKET_EGG,
+    /* 0x06 */ EXCH_ITEM_POCKET_CUCCO,
+    /* 0x07 */ EXCH_ITEM_COJIRO,
+    /* 0x08 */ EXCH_ITEM_ODD_MUSHROOM,
+    /* 0x09 */ EXCH_ITEM_ODD_POTION,
+    /* 0x0A */ EXCH_ITEM_SAW,
+    /* 0x0B */ EXCH_ITEM_SWORD_BROKEN,
+    /* 0x0C */ EXCH_ITEM_PRESCRIPTION,
+    /* 0x0D */ EXCH_ITEM_FROG,
+    /* 0x0E */ EXCH_ITEM_EYEDROPS,
+    /* 0x0F */ EXCH_ITEM_CLAIM_CHECK,
+    /* 0x10 */ EXCH_ITEM_MASK_SKULL,
+    /* 0x11 */ EXCH_ITEM_MASK_SPOOKY,
+    /* 0x12 */ EXCH_ITEM_MASK_KEATON,
+    /* 0x13 */ EXCH_ITEM_MASK_BUNNY,
+    /* 0x14 */ EXCH_ITEM_MASK_TRUTH,
+    /* 0x15 */ EXCH_ITEM_MASK_GORON,
+    /* 0x16 */ EXCH_ITEM_MASK_ZORA,
+    /* 0x17 */ EXCH_ITEM_MASK_GERUDO,
+    /* 0x18 */ EXCH_ITEM_FISH,
+    /* 0x19 */ EXCH_ITEM_BLUE_FIRE,
+    /* 0x1A */ EXCH_ITEM_BUG,
+    /* 0x1B */ EXCH_ITEM_POE,
+    /* 0x1C */ EXCH_ITEM_BIG_POE,
+    /* 0x1D */ EXCH_ITEM_LETTER_RUTO,
+    /* 0x1E */ EXCH_ITEM_MAX
+} ExchangeItemID;
+
 #endif //_Z3D_ITEM_H_

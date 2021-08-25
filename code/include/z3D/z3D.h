@@ -79,7 +79,7 @@ typedef struct {
     /* 0x004A */ u16          bgsHitsLeft;
     /* 0x004C */ u16          naviTimer;
     /* 0x004E */ u8           magicAcquired;
-    /* 0x004F */ u8           biggoronSword;
+    /* 0x004F */ u8           biggoronTrades; // usually unused, repurposed for rando
     /* 0x0050 */ u8           doubleMagic;
     /* 0x0051 */ u8           doubleDefense;
     /* 0x0052 */ s8           bgsFlag;
@@ -545,5 +545,10 @@ typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int fla
 typedef void (*Flags_SetEnv_proc)(GlobalContext* globalCtx, s16 flag);
 #define Flags_SetEnv_addr 0x366704
 #define Flags_SetEnv ((Flags_SetEnv_proc)Flags_SetEnv_addr)
+
+typedef void (*GiveItem_proc)(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
+    __attribute__((pcs("aapcs-vfp")));
+#define GiveItem_addr 0x3724DC
+#define GiveItem ((GiveItem_proc)0x3724DC)
 
 #endif //_Z3D_H_
