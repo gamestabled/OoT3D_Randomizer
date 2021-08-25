@@ -83,8 +83,8 @@ public:
     return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_SCRUB, scene, bit);
   }
 
-  static auto Biggoron() {
-    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_BIGGORON, 0x00, 0x00);
+  static auto Biggoron(u8 mask) {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_BIGGORON, 0x00, mask);
   }
 
   static auto GerudoToken() {

@@ -60,6 +60,7 @@ enum class Category {
     cVanillaBossKey,
     cVanillaMap,
     cVanillaCompass,
+    cAdultTrade,
 };
 
 enum class OptionCategory {

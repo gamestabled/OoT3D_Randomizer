@@ -192,7 +192,7 @@ void SaveFile_SwapFaroresWind(void) {
         *storedFWData = tempCur;
 
         curFWData++;
-        storedFWData += sizeof(SaveSceneFlags);
+        storedFWData += (sizeof(SaveSceneFlags) / sizeof(u32));
     }
 }
 
@@ -442,5 +442,69 @@ void SaveFile_SetStartingInventory(void) {
     //Set Epona as freed if Skip Epona Race is enabled and Epona's Song is in the starting inventory
     if (gSettingsContext.skipEponaRace == SKIP && (gSaveContext.questItems >> 13) & 0x1) {
       EventSet(0x18);
+    }
+}
+
+//We will use the "unk" flags in DMT to represent adult trade ownership
+void SaveFile_SetTradeItemAsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    gSaveContext.sceneFlags[0x60].unk |= (0x1 << tradeItemNum);
+}
+
+void SaveFile_UnsetTradeItemAsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    gSaveContext.sceneFlags[0x60].unk &= ~(0x1 << tradeItemNum);
+}
+
+u32 SaveFile_TradeItemIsOwned(u8 itemId) {
+    u8 tradeItemNum = itemId - ITEM_POCKET_EGG;
+
+    return (gSaveContext.sceneFlags[0x60].unk & (0x1 << tradeItemNum)) != 0;
+}
+
+typedef s32 (*Inventory_ReplaceItem_proc)(GlobalContext* globalCtx, u16 oldItem, u16 newItem);
+#define Inventory_ReplaceItem_addr 0x316CEC
+#define Inventory_ReplaceItem ((Inventory_ReplaceItem_proc)Inventory_ReplaceItem_addr)
+
+u32 SaveFile_CheckForPocketCuccoHatch(void) {
+    // Force the egg into the adult trade slot so that it can hatch
+    if (SaveFile_TradeItemIsOwned(ITEM_POCKET_EGG)) {
+        gSaveContext.items[SLOT_TRADE_ADULT] = ITEM_POCKET_EGG;
+    }
+
+    if (Inventory_ReplaceItem(gGlobalContext, ITEM_POCKET_EGG, ITEM_POCKET_CUCCO)) {
+        SaveFile_SetTradeItemAsOwned(ITEM_POCKET_CUCCO);
+        SaveFile_UnsetTradeItemAsOwned(ITEM_POCKET_EGG);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot) {
+    // Remove the slot from child/adult grids
+    for (u32 i = 0; i < 0x18; ++i) {
+        if (gSaveContext.itemMenuChild[i] == itemSlot) {
+            gSaveContext.itemMenuChild[i] = 0xFF;
+        }
+        if (gSaveContext.itemMenuAdult[i] == itemSlot) {
+            gSaveContext.itemMenuAdult[i] = 0xFF;
+        }
+    }
+}
+
+void SaveFile_SetOwnedTradeItemEquipped(void) {
+    if (gSaveContext.sceneFlags[0x60].unk == 0) {
+        gSaveContext.items[SLOT_TRADE_ADULT] = 0xFF;
+        SaveFile_ResetItemSlotsIfMatchesID(SLOT_TRADE_ADULT);
+    } else {
+        for (u8 itemId = ITEM_POCKET_EGG; itemId <= ITEM_CLAIM_CHECK; itemId++) {
+            if (SaveFile_TradeItemIsOwned(itemId)) {
+                gSaveContext.items[SLOT_TRADE_ADULT] = itemId;
+                return;
+            }
+        }
     }
 }

@@ -726,6 +726,29 @@ void GenerateItemPool() {
     PlaceItemInLocation(WASTELAND_BOMBCHU_SALESMAN, BOMBCHU_10);
   }
 
+  if (ShuffleAdultTradeQuest) {
+    AddItemToMainPool(POCKET_EGG);
+    AddItemToMainPool(COJIRO);
+    AddItemToMainPool(ODD_MUSHROOM);
+    AddItemToMainPool(ODD_POULTICE);
+    AddItemToMainPool(POACHERS_SAW);
+    AddItemToMainPool(BROKEN_SWORD);
+    AddItemToMainPool(PRESCRIPTION);
+    AddItemToMainPool(EYEBALL_FROG);
+    AddItemToMainPool(EYEDROPS);
+  } else {
+    PlaceItemInLocation(KAK_TRADE_POCKET_CUCCO, COJIRO);
+    PlaceItemInLocation(LW_TRADE_COJIRO, ODD_MUSHROOM);
+    PlaceItemInLocation(KAK_TRADE_ODD_MUSHROOM, ODD_POULTICE);
+    PlaceItemInLocation(LW_TRADE_ODD_POULTICE, POACHERS_SAW);
+    PlaceItemInLocation(GV_TRADE_SAW, BROKEN_SWORD);
+    PlaceItemInLocation(DMT_TRADE_BROKEN_SWORD, PRESCRIPTION);
+    PlaceItemInLocation(ZD_TRADE_PRESCRIPTION, EYEBALL_FROG);
+    PlaceItemInLocation(LH_TRADE_FROG, EYEDROPS);
+    PlaceItemInLocation(DMT_TRADE_EYEDROPS, CLAIM_CHECK);
+  }
+  AddItemToMainPool(CLAIM_CHECK);
+
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
     for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
       PlaceItemInLocation(loc, GOLD_SKULLTULA_TOKEN);
@@ -959,9 +982,6 @@ void GenerateItemPool() {
       AddItemToMainPool(RUTOS_LETTER);
     }
   }
-
-  //TODO: trade item logic
-  AddItemToMainPool(CLAIM_CHECK);
 
   //add extra songs only if song shuffle is anywhere
   AddItemsToPool(ItemPool, songList);
