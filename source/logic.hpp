@@ -2,6 +2,8 @@
 
 #include <3ds.h>
 
+#include "keys.hpp"
+
 namespace Logic {
 
   extern bool noVariable;
@@ -286,34 +288,6 @@ namespace Logic {
   extern u8 AddedProgressiveOcarinas;
   extern u8 TokensInPool;
 
-  //Enum values for CanUse() and related functions
-  enum class CanUseItem {
-    Dins_Fire,
-    Farores_Wind,
-    Nayrus_Love,
-    Lens_of_Truth,
-    Bow,
-    Hammer,
-    Iron_Boots,
-    Hover_Boots,
-    Hookshot,
-    Longshot,
-    Silver_Gauntlets,
-    Golden_Gauntlets,
-    Goron_Tunic,
-    Zora_Tunic,
-    Scarecrow,
-    Distant_Scarecrow,
-    Slingshot,
-    Boomerang,
-    Kokiri_Sword,
-    Sticks,
-    Deku_Shield,
-    Fire_Arrows,
-    Ice_Arrows,
-    Light_Arrows,
-  };
-
   enum class HasProjectileAge {
     Adult,
     Child,
@@ -323,7 +297,7 @@ namespace Logic {
 
   void UpdateHelpers();
   bool CanPlay(bool song);
-  bool CanUse(CanUseItem itemName);
+  bool CanUse(ItemKey itemName);
   bool HasProjectile(HasProjectileAge age);
   bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
   bool EventsUpdated();
