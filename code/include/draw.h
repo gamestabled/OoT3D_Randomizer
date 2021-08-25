@@ -72,5 +72,8 @@ u32 Draw_DrawFormattedStringTop(u32 posX, u32 posY, u32 color, const char *fmt, 
 void Draw_FillFramebuffer(u32 value);
 void Draw_ClearFramebuffer(void);
 void Draw_SetupFramebuffer(void);
+void Draw_FillBackbuffer(u32 value);
+void Draw_ClearBackbuffer(void);
+void Draw_CopyBackBuffer(void);
 void Draw_FlushFramebuffer(void);
 void Draw_FlushFramebufferTop(void);

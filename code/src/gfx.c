@@ -20,6 +20,10 @@ static s16 groupItemsScroll = 0;
 static s8 currentGroup = 1;
 static s32 curMenuIdx = 0;
 static float itemPercent = 0;
+static u64 lastTick = 0;
+static u64 ticksElapsed = 0;
+
+#define TICKS_PER_SEC 268123480
 
 static char *spoilerCollectionGroupNames[] = {
     "",
@@ -113,13 +117,31 @@ static void Gfx_DrawChangeMenuPrompt(void) {
     }
 }
 
+static void Gfx_UpdatePlayTime(bool isInGame)
+{
+    u64 currentTick = svcGetSystemTick();
+    if (isInGame) {
+        ticksElapsed += currentTick - lastTick;
+        while (ticksElapsed >= TICKS_PER_SEC) {
+            ticksElapsed -= TICKS_PER_SEC;
+            ++gSaveContext.playtimeSeconds;
+        }
+    }
+    lastTick = currentTick;
+}
+
 static void Gfx_DrawSeedHash(void) {
     Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Seed Hash:");
     for (u32 hashIndex = 0; hashIndex < 5; ++hashIndex) {
-        Draw_DrawFormattedString(10, 10 + SPACING_Y + (hashIndex * SPACING_Y), COLOR_WHITE, "    %s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 10 + SPACING_Y + (hashIndex * SPACING_Y), COLOR_WHITE, "%s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
     }
+
+    Draw_DrawString(10, 80, COLOR_TITLE, "Play time:");
+    u32 hours = gSaveContext.playtimeSeconds / 3600;
+    u32 minutes = (gSaveContext.playtimeSeconds / 60) % 60;
+    u32 seconds = gSaveContext.playtimeSeconds % 60;
+    Draw_DrawFormattedString(10 + (SPACING_X * 4), 80 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawDungeonItems(void) {
@@ -136,7 +158,6 @@ static void Gfx_DrawDungeonItems(void) {
             DungeonNames[dungeonId], "Small Keys", keys, gSaveContext.dungeonItems[dungeonId] & 1 ? "Boss Key" : "");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawDungeonRewards(void) {
@@ -144,7 +165,6 @@ static void Gfx_DrawDungeonRewards(void) {
         Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawSpoilerData(void) {
@@ -176,7 +196,6 @@ static void Gfx_DrawSpoilerData(void) {
         Draw_DrawString(10, 40, COLOR_WHITE, "No spoiler log generated!");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawSpoilerAllItems(void) {
@@ -213,7 +232,6 @@ static void Gfx_DrawSpoilerAllItems(void) {
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawSpoilerItemGroups(void) {
@@ -261,7 +279,6 @@ static void Gfx_DrawSpoilerItemGroups(void) {
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void (*menu_draw_funcs[])(void) = {
@@ -294,8 +311,7 @@ static void Gfx_ShowMenu(void) {
         itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100;
     }
 
-    Draw_ClearFramebuffer();
-    Draw_FlushFramebuffer();
+    Draw_ClearBackbuffer();
 
     do {
         bool handledInput = false;
@@ -369,8 +385,8 @@ static void Gfx_ShowMenu(void) {
 
         if (!handledInput) {
             if (pressed & closingButton) {
-                Draw_ClearFramebuffer();
-                Draw_FlushFramebuffer();
+                Draw_ClearBackbuffer();
+                Draw_CopyBackBuffer();
                 break;
             } else if (pressed & BUTTON_R1) {
                 do {
@@ -391,12 +407,19 @@ static void Gfx_ShowMenu(void) {
             }
         }
 
+        // Only clear the screen if there's been some input
+        // TODO: If there are issues with screens that animate on their own,
+        // it's probably safe to change this to just clear all the time
         if (handledInput) {
-            Draw_ClearFramebuffer();
-            Draw_FlushFramebuffer();
+            Draw_ClearBackbuffer();
         }
 
+        // Continue counting up play time while in the in-game menu
+        Gfx_UpdatePlayTime(true);
+
         menu_draw_funcs[curMenuIdx]();
+        Draw_CopyBackBuffer();
+
         pressed = Input_WaitWithTimeout(1000, closingButton);
 
     } while(true);
@@ -441,16 +464,20 @@ static u8 openingButton(void){
 void Gfx_Update(void) {
     if (!GfxInit) {
         Gfx_Init();
+        lastTick = svcGetSystemTick();
     }
 
     s32 entr = gSaveContext.entranceIndex;
     s32 mode = gSaveContext.gameMode;
-    if(openingButton() &&
-        (mode == 0 ||
-        (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D)
-        )
-      ){
+    bool isInGame = mode == 0 ||
+        (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D);
+
+    Gfx_UpdatePlayTime(isInGame);
+
+    if(openingButton() && isInGame){
         Gfx_ShowMenu();
         svcSleepThread(1000 * 1000 * 300LL);
+        // Update lastTick one more time so we don't count the added 0.3s sleep
+        lastTick = svcGetSystemTick();
     }
 }
