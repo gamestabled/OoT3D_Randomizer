@@ -310,7 +310,7 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingBombchus > 0) {
         gSaveContext.items[SLOT_BOMBCHU] = ITEM_BOMBCHU;
-        gSaveContext.ammo[SLOT_BOMBCHU] = 20;
+        gSaveContext.ammo[SLOT_BOMBCHU] = 30 * gSettingsContext.startingBombchus - 10;
     }
 
     if (gSettingsContext.startingBow > 0) {

@@ -512,14 +512,28 @@ namespace Settings {
   extern Option LogicSpiritTrialHookshot;
 
   //Glitch Settings
+  extern Option GlitchRestrictedItems;
   extern Option GlitchISG;
   extern Option GlitchHover;
+  extern Option GlitchBombOI;
+  extern Option GlitchHoverBoost;
+  extern Option GlitchSuperSlide;
   extern Option GlitchMegaflip;
+  extern Option GlitchASlide;
+  extern Option GlitchLSlide;
+  extern Option GlitchHammerSlide;
+  extern Option GlitchLedgeCancel;
+  extern Option GlitchActionSwap;
+  extern Option GlitchQPA;
   extern Option GlitchHookshotClip;
   extern Option GlitchHookshotJump_Bonk;
   extern Option GlitchHookshotJump_Boots;
-  extern Option GlitchLedgeClip;
+  extern Option GlitchCutsceneGlitches;
+  extern Option GlitchNaviDive_Stick;
   extern Option GlitchTripleSlashClip;
+  extern Option GlitchLedgeClip;
+  extern Option GlitchSeamWalk;
+  extern Option GlitchEntrancePoint;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

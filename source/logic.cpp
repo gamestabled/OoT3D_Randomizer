@@ -242,6 +242,8 @@ namespace Logic {
   bool CanStunDeku      = false;
   bool CanSummonGossipFairy = false;
   bool CanSummonGossipFairyWithoutSuns = false;
+  bool NeedNayrusLove      = false;
+  bool CanSurviveDamage    = false;
   bool CanTakeDamage       = false;
   //bool CanPlantBean        = false;
   bool CanOpenBombGrotto   = false;
@@ -421,6 +423,14 @@ namespace Logic {
   bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
     u8 setDifficulty;
     switch (glitch) {
+    //Restricted Items
+    case GlitchType::RestrictedItems:
+      setDifficulty = GetDifficultyValueFromString(GlitchRestrictedItems);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
     //Infinite Sword Glitch
     case GlitchType::ISG:
       setDifficulty = GetDifficultyValueFromString(GlitchISG);
@@ -428,6 +438,7 @@ namespace Logic {
         return false;
       }
       return HasShield && (IsAdult || (IsChild && (KokiriSword || Sticks)));
+
     //Bomb Hover
     case GlitchType::BombHover:
       setDifficulty = GetDifficultyValueFromString(GlitchHover);
@@ -435,13 +446,99 @@ namespace Logic {
         return false;
       }
       return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && (HasBombchus || (Bombs && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
+
+    //Bomb Ocarina Items
+    case GlitchType::BombOI:
+      setDifficulty = GetDifficultyValueFromString(GlitchBombOI);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return Bombs && CanSurviveDamage;
+
+    //Hover Boost
+    case GlitchType::HoverBoost:
+      setDifficulty = GetDifficultyValueFromString(GlitchHoverBoost);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return Bombs && CanUse(CanUseItem::Hover_Boots) && CanSurviveDamage;
+
+    //Super Slide
+    case GlitchType::SuperSlide:
+      setDifficulty = GetDifficultyValueFromString(GlitchSuperSlide);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
     //Megaflip
     case GlitchType::Megaflip:
       setDifficulty = GetDifficultyValueFromString(GlitchMegaflip);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return HasShield && Bombs;
+      //                             Bombchu megaflips should be considered 2 difficulty levels higher
+      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+
+    //A-Slide
+    case GlitchType::ASlide:
+      setDifficulty = GetDifficultyValueFromString(GlitchASlide);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      //                             Same deal as bombchu megaflips
+      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+
+    //L-Slide
+    case GlitchType::LSlide:
+      setDifficulty = GetDifficultyValueFromString(GlitchLSlide);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
+    //Hammer Slide
+    case GlitchType::HammerSlide:
+      setDifficulty = GetDifficultyValueFromString(GlitchHammerSlide);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return Hammer && CanUse(CanUseItem::Hover_Boots) && CanShield;
+
+    //Ledge Cancel
+    case GlitchType::LedgeCancel:
+      setDifficulty = GetDifficultyValueFromString(GlitchLedgeCancel);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      //                             Same deal as bombchu megaflips / A-slides
+      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+
+    //Action Swap
+    case GlitchType::ActionSwap:
+      setDifficulty = GetDifficultyValueFromString(GlitchActionSwap);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
+    //Quick Put Away
+    //Bomb
+    case GlitchType::BombQPA:
+      setDifficulty = GetDifficultyValueFromString(GlitchQPA);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      //                                    Boot Put Away Delay Method                  Frame Perfect Method
+      return CanTakeDamage && Bombs && ((IsAdult && (IronBoots || HoverBoots)) || setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE));
+    //Ledge Grab
+    case GlitchType::LedgeQPA:
+      setDifficulty = GetDifficultyValueFromString(GlitchQPA);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
+
     //Hookshot Clip
     case GlitchType::HookshotClip:
       setDifficulty = GetDifficultyValueFromString(GlitchHookshotClip);
@@ -449,6 +546,7 @@ namespace Logic {
         return false;
       }
       return IsAdult && Hookshot;
+
     //Hookshot Jump: Bonk
     case GlitchType::HookshotJump_Bonk:
       setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Bonk);
@@ -456,6 +554,7 @@ namespace Logic {
         return false;
       }
       return IsAdult && Hookshot;
+
     //Hookshot Jump: Boots
     case GlitchType::HookshotJump_Boots:
       setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Boots);
@@ -463,13 +562,23 @@ namespace Logic {
         return false;
       }
       return IsAdult && Hookshot && (IronBoots || HoverBoots);
-    //Ledge Clip
-    case GlitchType::LedgeClip:
-      setDifficulty = GetDifficultyValueFromString(GlitchLedgeClip);
+
+    //Misc. Cutscene Item Based Glitches
+    case GlitchType::CutsceneGlitches:
+      setDifficulty = GetDifficultyValueFromString(GlitchCutsceneGlitches);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return IsAdult;
+      return true;
+
+    //Navi Dives without TSC
+    case GlitchType::NaviDive_Stick:
+      setDifficulty = GetDifficultyValueFromString(GlitchNaviDive_Stick);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return CanUse(CanUseItem::Sticks);
+
     //Triple Slash Clip
     case GlitchType::TripleSlashClip:
       setDifficulty = GetDifficultyValueFromString(GlitchTripleSlashClip);
@@ -477,7 +586,32 @@ namespace Logic {
         return false;
       }
       return IsAdult || (IsChild && KokiriSword);
+
+    //Ledge Clip
+    case GlitchType::LedgeClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchLedgeClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult;
+
+    //Seam Walks
+    case GlitchType::SeamWalk:
+      setDifficulty = GetDifficultyValueFromString(GlitchSeamWalk);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
+    //Entrance Point Glitch
+    case GlitchType::EntrancePointGlitch:
+      setDifficulty = GetDifficultyValueFromString(GlitchEntrancePoint);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return Bombs && CanSurviveDamage;
     }
+
     //Shouldn't be reached
     return false;
   }
@@ -485,19 +619,19 @@ namespace Logic {
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
-    Ocarina         = ProgressiveOcarina   >= 1;
-    OcarinaOfTime   = ProgressiveOcarina   >= 2;
+    Ocarina         = ProgressiveOcarina    >= 1;
+    OcarinaOfTime   = ProgressiveOcarina    >= 2;
     MagicMeter      = (ProgressiveMagic     >= 1) && (AmmoCanDrop || (HasBottle && (BuyGPotion || BuyBPotion)));
     BombBag         = (ProgressiveBombBag   >= 1) && (BuyBomb || AmmoCanDrop);
-    Hookshot        = ProgressiveHookshot  >= 1;
-    Longshot        = ProgressiveHookshot  >= 2;
+    Hookshot        = ProgressiveHookshot   >= 1;
+    Longshot        = ProgressiveHookshot   >= 2;
     Bow             = (ProgressiveBow       >= 1) && (BuyArrow || AmmoCanDrop);
-    GoronBracelet   = ProgressiveStrength  >= 1;
-    SilverGauntlets = ProgressiveStrength  >= 2;
-    GoldenGauntlets = ProgressiveStrength  >= 3;
-    SilverScale     = ProgressiveScale     >= 1;
-    GoldScale       = ProgressiveScale     >= 2;
-    AdultsWallet    = ProgressiveWallet    >= 1;
+    GoronBracelet   = ProgressiveStrength   >= 1;
+    SilverGauntlets = ProgressiveStrength   >= 2;
+    GoldenGauntlets = ProgressiveStrength   >= 3;
+    SilverScale     = ProgressiveScale      >= 1;
+    GoldScale       = ProgressiveScale      >= 2;
+    AdultsWallet    = ProgressiveWallet     >= 1;
 
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
     DistantScarecrow = Longshot && CanPlay(ScarecrowSong);
@@ -539,7 +673,9 @@ namespace Logic {
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
-    CanTakeDamage       = DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE) || Fairy || CanUse(CanUseItem::Nayrus_Love);
+    NeedNayrusLove      = DamageMultiplier.Is(DAMAGEMULTIPLIER_OHKO) || DamageMultiplier.Is(DAMAGEMULTIPLIER_OCTUPLE) || DamageMultiplier.Is(DAMAGEMULTIPLIER_SEXDECUPLE);
+    CanSurviveDamage    = !NeedNayrusLove || CanUse(CanUseItem::Nayrus_Love);
+    CanTakeDamage       = Fairy || CanSurviveDamage;
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);

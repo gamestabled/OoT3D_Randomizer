@@ -232,6 +232,8 @@ namespace Logic {
   extern bool CanStunDeku;
   extern bool CanSummonGossipFairy;
   extern bool CanSummonGossipFairyWithoutSuns;
+  extern bool CanSurviveDamage;
+  extern bool NeedNayrusLove;
   extern bool CanTakeDamage;
   //extern bool CanPlantBean;
   extern bool CanOpenBombGrotto;
@@ -333,14 +335,29 @@ namespace Logic {
   };
 
   enum class GlitchType {
+    RestrictedItems,
     ISG,
     BombHover,
+    BombOI,
+    HoverBoost,
+    SuperSlide,
     Megaflip,
+    ASlide,
+    LSlide,
+    HammerSlide,
+    LedgeCancel,
+    ActionSwap,
+    BombQPA,
+    LedgeQPA,
     HookshotClip,
     HookshotJump_Bonk,
     HookshotJump_Boots,
-    LedgeClip,
+    CutsceneGlitches,
+    NaviDive_Stick,
     TripleSlashClip,
+    LedgeClip,
+    SeamWalk,
+    EntrancePointGlitch,
   };
 
   enum class GlitchDifficulty {
