@@ -343,7 +343,7 @@ namespace Settings {
   Option StartingWaterMedallion   = Option::U8  ("  Water Medallion",      {"None",             "Water Medall."},                                           {""});
   Option StartingSpiritMedallion  = Option::U8  ("  Spirit Medallion",     {"None",             "Spirit Medall."},                                          {""});
   Option StartingShadowMedallion  = Option::U8  ("  Shadow Medallion",     {"None",             "Shadow Medall."},                                          {""});
-  Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {/*Options 0-100 defined in InitSettings()*/},                                   {""},                                                                                               OptionCategory::Setting,    1,                          true);
+  Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {/*Options 0-100 defined in InitSettings()*/},                                   {""},                                                                                               OptionCategory::Setting,    0,                          false);
   std::vector<Option *> startingInventoryOptions = {
     &StartingConsumables,
     &StartingMaxRupees,
@@ -1107,15 +1107,15 @@ namespace Settings {
     for(int i = startNum; i < endNum ;++i){
       switch(startingInventorySections.Value<u8>()) {
         case 0:
-          startingInventoryOptions[i] -> Hide();
-          startingInventoryOptions[i] -> SetSelectedIndex(0);
+          startingInventoryOptions[i]->Hide();
+          startingInventoryOptions[i]->SetSelectedIndex(0);
           break;
         case 1:
-          startingInventoryOptions[i] -> Hide();
-          startingInventoryOptions[i] -> SetSelectedIndex((startingInventoryOptions[i]->GetOptionCount())-1);
+          startingInventoryOptions[i]->Hide();
+          startingInventoryOptions[i]->SetSelectedIndex((startingInventoryOptions[i]->GetOptionCount())-1);
           break;
         case 2:
-          startingInventoryOptions[i] -> Unhide();
+          startingInventoryOptions[i]->Unhide();
           break;
       }
     }
@@ -1302,26 +1302,26 @@ namespace Settings {
     for(int i = 23; i < 28 ;++i){
       switch(StartingInventoryToggle.Value<u8>()) {
         case 0:
-          startingInventoryOptions[i] -> Hide();
-          startingInventoryOptions[i] -> SetSelectedIndex(0);
+          startingInventoryOptions[i]->Hide();
+          startingInventoryOptions[i]->SetSelectedIndex(0);
           break;
         case 1:
-          startingInventoryOptions[i] -> Hide();
-          startingInventoryOptions[i] -> SetSelectedIndex(1);
+          startingInventoryOptions[i]->Hide();
+          startingInventoryOptions[i]->SetSelectedIndex(1);
           break;
         case 2:
-          startingInventoryOptions[i] -> Unhide();
+          startingInventoryOptions[i]->Unhide();
           break;
       }
       // If Zora's Fountain is open, hide and un-select Ruto's Letter
       if (ZorasFountain.Is(ZORASFOUNTAIN_OPEN) && i == 27) {
-        startingInventoryOptions[i] -> Hide();
-        startingInventoryOptions[i] -> SetSelectedIndex(0);
+        startingInventoryOptions[i]->Hide();
+        startingInventoryOptions[i]->SetSelectedIndex(0);
       }
       // If not open, hide and un-select bottle 4
       else if (ZorasFountain.IsNot(ZORASFOUNTAIN_OPEN) && i == 26) {
-        startingInventoryOptions[i] -> Hide();
-        startingInventoryOptions[i] -> SetSelectedIndex(0);
+        startingInventoryOptions[i]->Hide();
+        startingInventoryOptions[i]->SetSelectedIndex(0);
       }
     }
 
