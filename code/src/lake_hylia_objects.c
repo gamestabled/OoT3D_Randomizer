@@ -28,13 +28,13 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             switchParams = 0x3E81; // Frozen rusty switch, same flag as above. It's glitched and can't be pressed, which is perfect
         }
 
-        // Spawn a floor switch
-        floorSwitch = Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x12A, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, switchParams);
-
         // if Lake Hylia's water is lowered, set the temp_switch flag
         if (!(gSaveContext.eventChkInf[6] & 0x0200)) {
             globalCtx->actorCtx.flags.tempSwch |= (0x40 << 24);
         }
+
+        // Spawn a floor switch
+        floorSwitch = Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x12A, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, switchParams);
 
         // Spawn a sign
         Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x141, -970.0f, -1242.0f, 6954.0f, 0, 0, 0, 0x0046);
