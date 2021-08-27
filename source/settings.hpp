@@ -382,6 +382,7 @@ namespace Settings {
   extern Option StartingBottle1;
   extern Option StartingBottle2;
   extern Option StartingBottle3;
+  extern Option StartingBottle4;
   extern Option StartingRutoBottle;
   extern Option StartingOcarina;
   extern Option StartingZeldasLullaby;

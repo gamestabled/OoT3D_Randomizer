@@ -91,7 +91,8 @@ void GenerateStartingInventory() {
   AddItemToInventory(EMPTY_BOTTLE,              (StartingBottle1.Value<u8>()) ? 1 : 0);
   AddItemToInventory(EMPTY_BOTTLE,              (StartingBottle2.Value<u8>()) ? 1 : 0);
   AddItemToInventory(EMPTY_BOTTLE,              (StartingBottle3.Value<u8>()) ? 1 : 0);
-  AddItemToInventory((ZorasFountain.Is(ZORASFOUNTAIN_OPEN) ? EMPTY_BOTTLE : RUTOS_LETTER), StartingRutoBottle.Value<u8>()); //Turn Ruto Bottle into an empty bottle if Open Zora's Fountain
+  AddItemToInventory(EMPTY_BOTTLE,              (StartingBottle4.Value<u8>()) ? 1 : 0);
+  AddItemToInventory(RUTOS_LETTER,              StartingRutoBottle.Value<u8>());
   AddItemToInventory(PROGRESSIVE_OCARINA,       StartingOcarina.Value<u8>());
   AddItemToInventory(ZELDAS_LULLABY,            StartingZeldasLullaby.Value<u8>());
   AddItemToInventory(EPONAS_SONG,               StartingEponasSong.Value<u8>());

@@ -303,6 +303,7 @@ namespace Settings {
   Option StartingBottle1          = Option::U8  ("  Bottle Slot 1",        bottleOptions,                                                                   {""});
   Option StartingBottle2          = Option::U8  ("  Bottle Slot 2",        bottleOptions,                                                                   {""});
   Option StartingBottle3          = Option::U8  ("  Bottle Slot 3",        bottleOptions,                                                                   {""});
+  Option StartingBottle4          = Option::U8  ("  Bottle Slot 4",        bottleOptions,                                                                   {""});
   Option StartingRutoBottle       = Option::U8  ("  Ruto's Letter",        {"None",             "Ruto's Letter"},                                           {""});
   Option StartingSongsToggle      = Option::U8  ("Ocarina Songs",          {"All Off",          "All On",           "Choose"},                              {""});
   Option StartingZeldasLullaby    = Option::U8  ("  Zelda's Lullaby",      {"None",             "Zelda's Lull."},                                           {""});
@@ -370,6 +371,7 @@ namespace Settings {
     &StartingBottle1,
     &StartingBottle2,
     &StartingBottle3,
+    &StartingBottle4,
     &StartingRutoBottle,
     &StartingSongsToggle,
     &StartingZeldasLullaby,
@@ -947,6 +949,7 @@ namespace Settings {
     ctx.startingBottle1       = StartingBottle1.Value<u8>();
     ctx.startingBottle2       = StartingBottle2.Value<u8>();
     ctx.startingBottle3       = StartingBottle3.Value<u8>();
+    ctx.startingBottle4       = StartingBottle4.Value<u8>();
     ctx.startingRutoBottle    = StartingRutoBottle.Value<u8>();
     ctx.startingOcarina       = StartingOcarina.Value<u8>();
     ctx.startingKokiriSword   = StartingKokiriSword.Value<u8>();
@@ -1293,10 +1296,10 @@ namespace Settings {
 
     //Groups the item categories; bottles are handled separately because the proper item is Empty Bottle (1)
     CollapseCategory(StartingInventoryToggle, 3, 23);
-    CollapseCategory(StartingSongsToggle, 28, 40);
-    CollapseCategory(StartingUpgradesToggle, 41, 55);
-    CollapseCategory(StartingQuestToggle, 56, 65);
-    for(int i = 23; i < 27 ;++i){
+    CollapseCategory(StartingSongsToggle, 29, 41);
+    CollapseCategory(StartingUpgradesToggle, 42, 56);
+    CollapseCategory(StartingQuestToggle, 57, 66);
+    for(int i = 23; i < 28 ;++i){
       switch(StartingInventoryToggle.Value<u8>()) {
         case 0:
           startingInventoryOptions[i] -> Hide();
@@ -1310,8 +1313,13 @@ namespace Settings {
           startingInventoryOptions[i] -> Unhide();
           break;
       }
-      // If Zora's Fountain is open, shouldn't be able to start with Ruto's letter
-      if (i == 26 && ZorasFountain.Is(ZORASFOUNTAIN_OPEN)) {
+      // If Zora's Fountain is open, hide and un-select Ruto's Letter
+      if (ZorasFountain.Is(ZORASFOUNTAIN_OPEN) && i == 27) {
+        startingInventoryOptions[i] -> Hide();
+        startingInventoryOptions[i] -> SetSelectedIndex(0);
+      }
+      // If not open, hide and un-select bottle 4
+      else if (ZorasFountain.IsNot(ZORASFOUNTAIN_OPEN) && i == 26) {
         startingInventoryOptions[i] -> Hide();
         startingInventoryOptions[i] -> SetSelectedIndex(0);
       }
