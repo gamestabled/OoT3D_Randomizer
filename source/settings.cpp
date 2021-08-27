@@ -1104,16 +1104,16 @@ namespace Settings {
     for(int i = startNum; i < endNum ;++i){
       switch(startingInventorySections.Value<u8>()) {
         case 0:
-        startingInventoryOptions[i] -> Hide();
-        startingInventoryOptions[i] -> SetSelectedIndex(0);
-        break;
+          startingInventoryOptions[i] -> Hide();
+          startingInventoryOptions[i] -> SetSelectedIndex(0);
+          break;
         case 1:
-        startingInventoryOptions[i] -> Hide();
-        startingInventoryOptions[i] -> SetSelectedIndex((startingInventoryOptions[i]->GetOptionCount())-1);
-        break;
+          startingInventoryOptions[i] -> Hide();
+          startingInventoryOptions[i] -> SetSelectedIndex((startingInventoryOptions[i]->GetOptionCount())-1);
+          break;
         case 2:
-        startingInventoryOptions[i] -> Unhide();
-        break;
+          startingInventoryOptions[i] -> Unhide();
+          break;
       }
     }
   }
@@ -1299,18 +1299,24 @@ namespace Settings {
     for(int i = 23; i < 27 ;++i){
       switch(StartingInventoryToggle.Value<u8>()) {
         case 0:
+          startingInventoryOptions[i] -> Hide();
+          startingInventoryOptions[i] -> SetSelectedIndex(0);
+          break;
+        case 1:
+          startingInventoryOptions[i] -> Hide();
+          startingInventoryOptions[i] -> SetSelectedIndex(1);
+          break;
+        case 2:
+          startingInventoryOptions[i] -> Unhide();
+          break;
+      }
+      // If Zora's Fountain is open, shouldn't be able to start with Ruto's letter
+      if (i == 26 && ZorasFountain.Is(ZORASFOUNTAIN_OPEN)) {
         startingInventoryOptions[i] -> Hide();
         startingInventoryOptions[i] -> SetSelectedIndex(0);
-        break;
-        case 1:
-        startingInventoryOptions[i] -> Hide();
-        startingInventoryOptions[i] -> SetSelectedIndex(1);
-        break;
-        case 2:
-        startingInventoryOptions[i] -> Unhide();
-        break;
       }
     }
+
     //Only hide the options for now, select them later in UpdateSettings()
     RandomizeAllSettings();
 
