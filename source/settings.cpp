@@ -750,9 +750,9 @@ namespace Settings {
 
   //Detailed Logic Options Submenu
   Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
-  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsOptions);
-  Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions);
-  Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions);
+  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsOptions, false);
+  Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions, false);
+  Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions, false);
   std::vector<Menu *> detailedLogicOptions = {
     &logicSettings,
     &excludeLocations,
@@ -765,7 +765,7 @@ namespace Settings {
   Menu shuffle                  = Menu::SubMenu("Shuffle Settings",           &shuffleOptions);
   Menu shuffleDungeonItems      = Menu::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
   Menu detailedLogic            = Menu::SubMenu("Detailed Logic Settings",    &detailedLogicOptions);
-  Menu startingInventory        = Menu::SubMenu("Starting Inventory",         &startingInventoryOptions);
+  Menu startingInventory        = Menu::SubMenu("Starting Inventory",         &startingInventoryOptions, false);
   Menu timesaverSettings        = Menu::SubMenu("Timesaver Settings",         &timesaverOptions);
   Menu miscSettings             = Menu::SubMenu("Misc Settings",              &miscOptions);
   Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);

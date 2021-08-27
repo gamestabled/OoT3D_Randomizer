@@ -310,7 +310,7 @@ static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll
 
   for (const Menu* menu : allMenus) {
     //This is a menu of settings, write them
-    if (menu->mode == OPTION_SUB_MENU) {
+    if (menu->mode == OPTION_SUB_MENU && menu->printInSpoiler) {
       for (const Option* setting : *menu->settingsList) {
         if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
           auto node = parentNode->InsertNewChildElement("setting");
