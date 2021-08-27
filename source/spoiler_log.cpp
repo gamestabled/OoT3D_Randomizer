@@ -349,12 +349,14 @@ static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
   // Start at index 3 to skip over the toggle, "Start with Consumables", and "Start with Max Rupees".
   for (size_t i = 3; i < Settings::startingInventoryOptions.size(); ++i) {
     const auto setting = Settings::startingInventoryOptions[i];
-    if (setting->GetSelectedOptionIndex() == STARTINGBOTTLE_NONE) {
+    //Ignore no starting bottles and the Choose/All On toggles
+    if (setting->GetSelectedOptionIndex() == STARTINGBOTTLE_NONE || setting->GetSelectedOptionText() == "Choose" || setting->GetSelectedOptionText() == "All On") {
       continue;
     }
 
     auto node = parentNode->InsertNewChildElement("item");
-    node->SetAttribute("name", setting->GetSelectedOptionText().c_str());
+    node->SetAttribute("name", setting->GetName().c_str());
+    node->SetText(setting->GetSelectedOptionText().c_str());
   }
 
   if (!parentNode->NoChildren()) {
