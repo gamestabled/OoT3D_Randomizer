@@ -24,6 +24,7 @@ static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 
 #define TICKS_PER_SEC 268123480
+#define MAX_TICK_DELTA (TICKS_PER_SEC * 2)
 
 static char *spoilerCollectionGroupNames[] = {
     "",
@@ -122,9 +123,16 @@ static void Gfx_UpdatePlayTime(bool isInGame)
     u64 currentTick = svcGetSystemTick();
     if (isInGame) {
         ticksElapsed += currentTick - lastTick;
-        while (ticksElapsed >= TICKS_PER_SEC) {
-            ticksElapsed -= TICKS_PER_SEC;
-            ++gSaveContext.playtimeSeconds;
+        if (ticksElapsed > MAX_TICK_DELTA) {
+            // Assume that if more ticks than MAX_TICK_DELTA have passed, it has been a long
+            // time since we last checked, which means the the system may have been asleep.
+            // Reset the timer so we don't artificially inflate the play time.
+            ticksElapsed = 0;
+        } else {
+            while (ticksElapsed >= TICKS_PER_SEC) {
+                ticksElapsed -= TICKS_PER_SEC;
+                ++gSaveContext.playtimeSeconds;
+            }
         }
     }
     lastTick = currentTick;
