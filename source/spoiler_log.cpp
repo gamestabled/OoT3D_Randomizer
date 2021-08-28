@@ -438,7 +438,7 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
 
 //Write the randomized entrance playthrough to the spoiler log, if applicable
 static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
-  if (!Settings::ShuffleEntrances) {
+  if (!Settings::ShuffleEntrances || noRandomEntrances) {
     return;
   }
 
