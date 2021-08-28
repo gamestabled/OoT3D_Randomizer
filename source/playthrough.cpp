@@ -27,7 +27,7 @@ namespace Playthrough {
       Settings::UpdateSettings();
       //once the settings have been finalized turn them into a string for hashing
       std::string settingsStr;
-      for (Menu* menu : Settings::mainMenu) {
+      for (Menu* menu : Settings::GetAllMenus()) {
         //don't go through non-menus
         if (menu->mode != OPTION_SUB_MENU) {
           continue;
