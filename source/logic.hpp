@@ -46,7 +46,6 @@ namespace Logic {
 
   //Trade Quest
   extern bool PocketEgg;
-  extern bool PocketCucco;
   extern bool Cojiro;
   extern bool OddMushroom;
   extern bool OddPoultice;

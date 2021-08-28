@@ -54,7 +54,6 @@ namespace Logic {
 
   //Trade Quest
   bool PocketEgg     = false;
-  bool PocketCucco   = false;
   bool Cojiro        = false;
   bool OddMushroom   = false;
   bool OddPoultice   = false;
@@ -670,7 +669,6 @@ namespace Logic {
 
      //Trade Quest
      PocketEgg     = false;
-     PocketCucco   = false;
      Cojiro        = false;
      OddMushroom   = false;
      OddPoultice   = false;
