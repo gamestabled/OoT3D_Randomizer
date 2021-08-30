@@ -457,6 +457,22 @@ namespace Logic {
         return false;
       }
       return Bombs && CanSurviveDamage;
+    case GlitchType::OutdoorBombOI:
+      return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
+              (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
+              (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
+              CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) ||
+              (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
+    case GlitchType::IndoorBombOI:
+      return (((IsAdult && ClaimCheck) && (HasBottle || HasBoots || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((Bugs || Fish || Fairy) && (NumBottles >= 2 || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg) || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((CanUse(FARORES_WIND) && FaroresWindAnywhere) && (HasBottle || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg))) ||
+              (((!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || CanUse(FARORES_WIND)) &&
+               (NumBottles + ((IsChild) ? ((WeirdEgg) ? 1 : 0) : (((IronBoots) ? 1 : 0) + ((HoverBoots) ? 1 : 0) + ((ClaimCheck) ? 1 : 0))) >= 2))) &&
+             CanDoGlitch(GlitchType::BombOI, difficulty) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE);
+    case GlitchType::DungeonBombOI:
+      return ((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND))) && CanDoGlitch(GlitchType::BombOI, difficulty);
 
     //Hover Boost
     case GlitchType::HoverBoost:
@@ -489,8 +505,8 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      //                             Same deal as bombchu megaflips
-      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+      //                                        Same deal as bombchu megaflips
+      return IsChild && CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
 
     //L-Slide
     case GlitchType::LSlide:
