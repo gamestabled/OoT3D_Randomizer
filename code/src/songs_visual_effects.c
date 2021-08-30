@@ -61,10 +61,16 @@ void OceffWipe4_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
 // Sun's Song
 void OceffSpot_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP) {
+    if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
+        OceffSpot_Update(thisx, globalCtx);
+    }
+    // Wait for a bit before calling OceffSpot_End, otherwise Link and the music staff spots could start waiting
+    // for the Sun's Song light after it's been killed already, causing softlocks and non-functional song switches in MQ Spirit
+    else if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_KEEP_SFX && gGlobalContext->msgMode == 0) ||
+             (gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && ((PLAYER->stateFlags1 >> 24) & 0x30) != 0x30)
+            ) {
         OceffSpot_End(thisx, globalCtx);
     }
-    OceffSpot_Update(thisx, globalCtx);
 }
 
 // Song of Storms
