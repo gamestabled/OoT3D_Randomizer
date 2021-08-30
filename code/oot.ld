@@ -356,7 +356,7 @@ SECTIONS
 		*(.patch_CheckGerudoToken_1D7AD4)
 	}
 
-	.patch_BiggoronSetTextId 0x1D8A0C : {
+	.patch_BiggoronSetTextId 0x1D8A10 : {
 		*(.patch_BiggoronSetTextId)
 	}
 
@@ -670,6 +670,10 @@ SECTIONS
 
 	.patch_SetBGMEntrance 0x331048 : {
 		*(.patch_SetBGMEntrance)
+	}
+
+	.patch_LostWoodsBridgeMusic 0x338DD8 : {
+		*(.patch_LostWoodsBridgeMusic)
 	}
 
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {

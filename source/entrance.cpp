@@ -16,7 +16,7 @@
 #include <map>
 
 std::list<EntranceOverride> entranceOverrides = {};
-static bool noRandomEntrances = false;
+bool noRandomEntrances = false;
 
 typedef struct {
     EntranceType type;
@@ -291,7 +291,8 @@ static bool ShuffleEntrances(std::vector<Entrance*>& entrances, std::vector<Entr
 }
 
 static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vector<Entrance*>& targetEntrances) {
-
+  noRandomEntrances = false;
+  
   auto splitEntrances = SplitEntrancesByRequirements(entrancePool, targetEntrances);
 
   auto& restrictiveEntrances = splitEntrances[0];

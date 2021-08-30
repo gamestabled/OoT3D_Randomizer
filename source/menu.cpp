@@ -113,7 +113,7 @@ void MoveCursor(u32 kDown) {
       max = presetEntries.size();
     } else if (currentMenu->mode == GENERATE_MODE) { //Generate menu: 2 options
       max = 2;
-    } else {
+    } else if (currentMenu->itemsList != nullptr) {
       max = currentMenu->itemsList->size(); //Default max: Number of items in menu
     }
     if (currentMenu->menuIdx == max) {
