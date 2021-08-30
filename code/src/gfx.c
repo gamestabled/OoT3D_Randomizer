@@ -22,9 +22,10 @@ static s32 curMenuIdx = 0;
 static float itemPercent = 0;
 static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
+static bool isAsleep = false;
 
 #define TICKS_PER_SEC 268123480
-#define MAX_TICK_DELTA (TICKS_PER_SEC * 2)
+#define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
 
 static char *spoilerCollectionGroupNames[] = {
     "",
@@ -66,6 +67,19 @@ static char *spoilerCollectionGroupNames[] = {
 #define SCROLL_BAR_MIN_THUMB_SIZE 4
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
 #define COLOR_SCROLL_BAR_BG RGB8(0x58, 0x58, 0x58)
+
+void Gfx_SleepQueryCallback(void)
+{
+    ticksElapsed = 0;
+    isAsleep = true;
+}
+
+void Gfx_AwakeCallback(void)
+{
+    ticksElapsed = 0;
+    lastTick = svcGetSystemTick();
+    isAsleep = false;
+}
 
 static void Gfx_DrawScrollBar(u16 barX, u16 barY, u16 barSize, u16 currentScroll, u16 maxScroll, u16 pageSize) {
     Draw_DrawRect(barX, barY, SCROLL_BAR_THICKNESS, barSize, COLOR_SCROLL_BAR_BG);
@@ -121,11 +135,11 @@ static void Gfx_DrawChangeMenuPrompt(void) {
 static void Gfx_UpdatePlayTime(bool isInGame)
 {
     u64 currentTick = svcGetSystemTick();
-    if (isInGame) {
+    if (!isAsleep && isInGame) {
         ticksElapsed += currentTick - lastTick;
         if (ticksElapsed > MAX_TICK_DELTA) {
             // Assume that if more ticks than MAX_TICK_DELTA have passed, it has been a long
-            // time since we last checked, which means the the system may have been asleep.
+            // time since we last checked, which means the the system may have been asleep or the home button pressed.
             // Reset the timer so we don't artificially inflate the play time.
             ticksElapsed = 0;
         } else {
@@ -322,6 +336,11 @@ static void Gfx_ShowMenu(void) {
     Draw_ClearBackbuffer();
 
     do {
+        // End the loop if the system has gone to sleep, so the game can properly respond
+        if (isAsleep) {
+            break;
+        }
+
         bool handledInput = false;
         // Controls for spoiler log and all-items pages come first, as the user may have chosen
         // one of the directional buttons as their menu open/close button and we need to use them
@@ -416,8 +435,6 @@ static void Gfx_ShowMenu(void) {
         }
 
         // Only clear the screen if there's been some input
-        // TODO: If there are issues with screens that animate on their own,
-        // it's probably safe to change this to just clear all the time
         if (handledInput) {
             Draw_ClearBackbuffer();
         }
@@ -482,10 +499,12 @@ void Gfx_Update(void) {
 
     Gfx_UpdatePlayTime(isInGame);
 
-    if(openingButton() && isInGame){
+    if(!isAsleep && openingButton() && isInGame){
         Gfx_ShowMenu();
-        svcSleepThread(1000 * 1000 * 300LL);
-        // Update lastTick one more time so we don't count the added 0.3s sleep
-        lastTick = svcGetSystemTick();
+        if (!isAsleep) {
+            svcSleepThread(1000 * 1000 * 300LL);
+            // Update lastTick one more time so we don't count the added 0.3s sleep
+            lastTick = svcGetSystemTick();
+        }
     }
 }

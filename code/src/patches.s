@@ -1427,6 +1427,16 @@ ItemsMenuNumSprites_patch:
 ItemsMenuDraw_patch:
     bl hook_ItemsMenuDraw
 
+.section .patch_SleepQueryCallback
+.global SleepQueryCallback_patch
+SleepQueryCallback_patch:
+    b hook_Gfx_SleepQueryCallback
+
+.section .patch_AwakeCallback
+.global AwakeCallback_patch
+AwakeCallback_patch:
+    b hook_Gfx_AwakeCallback
+
 .section .patch_AnjuGiveCojiro
 .global AnjuGiveCojiro_patch
 AnjuGiveCojiro_patch:
