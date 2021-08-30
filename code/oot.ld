@@ -356,7 +356,7 @@ SECTIONS
 		*(.patch_CheckGerudoToken_1D7AD4)
 	}
 
-	.patch_BiggoronSetTextId 0x1D8A0C : {
+	.patch_BiggoronSetTextId 0x1D8A10 : {
 		*(.patch_BiggoronSetTextId)
 	}
 
