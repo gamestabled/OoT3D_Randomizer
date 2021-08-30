@@ -672,6 +672,10 @@ SECTIONS
 		*(.patch_SetBGMEntrance)
 	}
 
+	.patch_LostWoodsBridgeMusic 0x338DD8 : {
+		*(.patch_LostWoodsBridgeMusic)
+	}
+
 	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
 		*(.patch_ChestGetIceTrapObjectStatus)
 	}
