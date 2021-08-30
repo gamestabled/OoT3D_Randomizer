@@ -24,6 +24,7 @@ typedef struct {
 
 void Entrance_Init(void);
 s16  Entrance_GetRequiemEntrance(void);
-s16  Entrance_GetLWBridgeEntrance(void);
+s16  Entrance_GetLWBridgeEntranceFromKokiriForest(void);
+u32  Entrance_IsLostWoodsBridge(void);
 
 #endif //_ENTRANCE_H_

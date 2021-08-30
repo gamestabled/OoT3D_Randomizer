@@ -16,7 +16,10 @@ static EntranceOverride rEntranceOverrides[256] = {0};
 static s16 newRequiemEntrance = 0x01E1;
 
 //Same concept as above, except for Saria's Gift check
-static s16 newLWBridgeEntrance = 0x05E0;
+static s16 newLWBridgeEntranceFromKokiriForest = 0x05E0;
+
+//Same as above, except used for handling correct ambient music into this area
+static s16 newLWBridgeEntranceFromHyruleField = 0x04DE;
 
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
@@ -136,9 +139,14 @@ void Entrance_Init(void) {
             newRequiemEntrance = originalIndex;
         }
 
-        //check to see if this is the new LW Bridge exit
+        //check to see if this is the new LW Bridge exit from KF
         if (overrideIndex == 0x5E0) {
-            newLWBridgeEntrance = originalIndex;
+            newLWBridgeEntranceFromKokiriForest = originalIndex;
+        }
+
+        //check to see if this is the new LW Bridge exit from HF
+        if (overrideIndex == 0x4DE) {
+            newLWBridgeEntranceFromHyruleField = originalIndex;
         }
 
         //check to see if this is a new dungeon entrance
@@ -174,8 +182,16 @@ s16 Entrance_GetRequiemEntrance(void) {
     return newRequiemEntrance;
 }
 
-s16 Entrance_GetLWBridgeEntrance(void) {
-    return newLWBridgeEntrance;
+s16 Entrance_GetLWBridgeEntranceFromKokiriForest(void) {
+    return newLWBridgeEntranceFromKokiriForest;
+}
+
+u32 Entrance_IsLostWoodsBridge(void) {
+    if (gSaveContext.entranceIndex == newLWBridgeEntranceFromHyruleField || gSaveContext.entranceIndex == newLWBridgeEntranceFromKokiriForest) {
+      return 1;
+    } else {
+      return 0;
+    }
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance
