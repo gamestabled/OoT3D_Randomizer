@@ -609,9 +609,9 @@ static void CreateAltarText() {
   //Child Altar Text
   Text childText = Hint(SPIRITUAL_STONE_TEXT_START).GetText()+"^"+
   //Spiritual Stones
-  BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD)+
-  BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY)+
-  BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE)+
+  (StartingKokiriEmerald.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD))+
+  (StartingGoronRuby.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY))+
+  (StartingZoraSapphire.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE))+
   //How to open Door of Time, the event trigger is necessary to read the altar multiple times
   BuildDoorOfTimeText()+EVENT_TRIGGER();
   CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, {QM_GREEN, QM_RED, QM_BLUE}));
@@ -619,12 +619,12 @@ static void CreateAltarText() {
   //Adult Altar Text
   Text adultText = Hint(ADULT_ALTAR_TEXT_START).GetText()+"^"+
   //Medallion Areas
-  BuildDungeonRewardText(ITEM_MEDALLION_LIGHT,  LIGHT_MEDALLION)+
-  BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION)+
-  BuildDungeonRewardText(ITEM_MEDALLION_FIRE,   FIRE_MEDALLION)+
-  BuildDungeonRewardText(ITEM_MEDALLION_WATER,  WATER_MEDALLION)+
-  BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION)+
-  BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION)+
+  (StartingLightMedallion.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_MEDALLION_LIGHT,  LIGHT_MEDALLION))+
+  (StartingForestMedallion.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION))+
+  (StartingFireMedallion.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_MEDALLION_FIRE,   FIRE_MEDALLION))+
+  (StartingWaterMedallion.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_MEDALLION_WATER,  WATER_MEDALLION))+
+  (StartingSpiritMedallion.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION))+
+  (StartingShadowMedallion.Value<u8>() ? Text{"","",""} : BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION))+
 
   //Bridge requirement
   BuildBridgeReqsText()+

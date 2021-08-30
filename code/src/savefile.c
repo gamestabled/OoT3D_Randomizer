@@ -381,6 +381,7 @@ void SaveFile_SetStartingInventory(void) {
     SaveFile_GiveStartingBottle(gSettingsContext.startingBottle1, SLOT_BOTTLE_1);
     SaveFile_GiveStartingBottle(gSettingsContext.startingBottle2, SLOT_BOTTLE_2);
     SaveFile_GiveStartingBottle(gSettingsContext.startingBottle3, SLOT_BOTTLE_3);
+    SaveFile_GiveStartingBottle(gSettingsContext.startingBottle4, SLOT_BOTTLE_4);
 
     if (gSettingsContext.startingRutoBottle) {
         gSaveContext.items[SLOT_BOTTLE_4] = gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN ? ITEM_BOTTLE : ITEM_LETTER_RUTO;

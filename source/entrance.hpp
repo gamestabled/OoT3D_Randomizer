@@ -257,3 +257,4 @@ void ShuffleAllEntrances();
 void CreateEntranceOverrides();
 
 extern std::vector<std::list<Entrance*>> playthroughEntrances;
+extern bool noRandomEntrances;

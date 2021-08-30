@@ -5873,7 +5873,7 @@ void HintTable_Init() {
 
     hintTable[JUNK73] = HintText::Junk({
                      //obscure text
-                     Text{"They say that the best weapon against Iron Knuckles is item #176.", /*french*/"Selon moi, les hache-viandes sont vulnérables contre l'objet #176.", /*spanish*/"Según dicen, la mejor arma para enfrentarse a los Nudillos de hierro es el objeto #176."},
+                     Text{"They say that the best weapon against Iron Knuckles is item 176.", /*french*/"Selon moi, les hache-viandes sont vulnérables contre l'objet 176.", /*spanish*/"Según dicen, la mejor arma para enfrentarse a los Nudillos de hierro es el objeto 176."},
     });
 
     hintTable[JUNK74] = HintText::Junk({

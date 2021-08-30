@@ -310,7 +310,7 @@ static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll
 
   for (const Menu* menu : allMenus) {
     //This is a menu of settings, write them
-    if (menu->mode == OPTION_SUB_MENU) {
+    if (menu->mode == OPTION_SUB_MENU && menu->printInSpoiler) {
       for (const Option* setting : *menu->settingsList) {
         if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
           auto node = parentNode->InsertNewChildElement("setting");
@@ -349,12 +349,14 @@ static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
   // Start at index 3 to skip over the toggle, "Start with Consumables", and "Start with Max Rupees".
   for (size_t i = 3; i < Settings::startingInventoryOptions.size(); ++i) {
     const auto setting = Settings::startingInventoryOptions[i];
-    if (setting->GetSelectedOptionIndex() == STARTINGBOTTLE_NONE) {
+    //Ignore no starting bottles and the Choose/All On toggles
+    if (setting->GetSelectedOptionIndex() == STARTINGBOTTLE_NONE || setting->GetSelectedOptionText() == "Choose" || setting->GetSelectedOptionText() == "All On") {
       continue;
     }
 
     auto node = parentNode->InsertNewChildElement("item");
-    node->SetAttribute("name", setting->GetSelectedOptionText().c_str());
+    node->SetAttribute("name", setting->GetName().c_str());
+    node->SetText(setting->GetSelectedOptionText().c_str());
   }
 
   if (!parentNode->NoChildren()) {
@@ -436,7 +438,7 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
 
 //Write the randomized entrance playthrough to the spoiler log, if applicable
 static void WriteShuffledEntrances(tinyxml2::XMLDocument& spoilerLog) {
-  if (!Settings::ShuffleEntrances) {
+  if (!Settings::ShuffleEntrances || noRandomEntrances) {
     return;
   }
 

@@ -154,7 +154,9 @@ bool WriteAllPatches() {
     }
 
     totalRW += bytesWritten - 3; // -3 to overwrite EOF
-    CitraPrint(std::to_string(totalRW));
+    #ifdef ENABLE_DEBUG
+      CitraPrint(std::to_string(totalRW));
+    #endif
   }
 
   /*-------------------------

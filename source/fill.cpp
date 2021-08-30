@@ -195,7 +195,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
         }
 
         //add shuffled entrances to the entrance playthrough
-        if (mode == SearchMode::GeneratePlaythrough && exit.IsShuffled() && !exit.IsAddedToPool()) {
+        if (mode == SearchMode::GeneratePlaythrough && exit.IsShuffled() && !exit.IsAddedToPool() && !noRandomEntrances) {
           entranceSphere.push_back(&exit);
           exit.AddToPool();
           //don't list a coupled entrance from both directions
@@ -295,7 +295,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     if (mode == SearchMode::GeneratePlaythrough && itemSphere.size() > 0) {
       playthroughLocations.push_back(itemSphere);
     }
-    if (mode == SearchMode::GeneratePlaythrough && entranceSphere.size() > 0) {
+    if (mode == SearchMode::GeneratePlaythrough && entranceSphere.size() > 0 && !noRandomEntrances) {
       playthroughEntrances.push_back(entranceSphere);
     }
   }

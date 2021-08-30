@@ -88,10 +88,29 @@ void GenerateStartingInventory() {
   AddItemToInventory(PROGRESSIVE_HOOKSHOT,      StartingHookshot.Value<u8>());
   AddItemToInventory(IRON_BOOTS,                StartingIronBoots.Value<u8>());
   AddItemToInventory(HOVER_BOOTS,               StartingHoverBoots.Value<u8>());
-  AddItemToInventory(EMPTY_BOTTLE,              (StartingBottle1.Value<u8>()) ? 1 : 0);
-  AddItemToInventory(EMPTY_BOTTLE,              (StartingBottle2.Value<u8>()) ? 1 : 0);
-  AddItemToInventory(EMPTY_BOTTLE,              (StartingBottle3.Value<u8>()) ? 1 : 0);
-  AddItemToInventory((ZorasFountain.Is(ZORASFOUNTAIN_OPEN) ? EMPTY_BOTTLE : RUTOS_LETTER), StartingRutoBottle.Value<u8>()); //Turn Ruto Bottle into an empty bottle if Open Zora's Fountain
+  //For starting bottles, we need to check if they are a big poe and add that if so
+  // since a big poe bottle is not logically equivalent to an empty bottle.
+  if (StartingBottle1.Value<u8>() == STARTINGBOTTLE_BIG_POE) {
+    AddItemToInventory(BOTTLE_WITH_BIG_POE, 1);
+  } else if (StartingBottle1.Value<u8>()) {
+    AddItemToInventory(EMPTY_BOTTLE, 1);
+  }
+  if (StartingBottle2.Value<u8>() == STARTINGBOTTLE_BIG_POE) {
+    AddItemToInventory(BOTTLE_WITH_BIG_POE, 1);
+  } else if (StartingBottle2.Value<u8>()) {
+    AddItemToInventory(EMPTY_BOTTLE, 1);
+  }
+  if (StartingBottle3.Value<u8>() == STARTINGBOTTLE_BIG_POE) {
+    AddItemToInventory(BOTTLE_WITH_BIG_POE, 1);
+  } else if (StartingBottle3.Value<u8>()) {
+    AddItemToInventory(EMPTY_BOTTLE, 1);
+  }
+  if (StartingBottle4.Value<u8>() == STARTINGBOTTLE_BIG_POE) {
+    AddItemToInventory(BOTTLE_WITH_BIG_POE, 1);
+  } else if (StartingBottle4.Value<u8>()) {
+    AddItemToInventory(EMPTY_BOTTLE, 1);
+  }
+  AddItemToInventory(RUTOS_LETTER,              StartingRutoBottle.Value<u8>());
   AddItemToInventory(PROGRESSIVE_OCARINA,       StartingOcarina.Value<u8>());
   AddItemToInventory(ZELDAS_LULLABY,            StartingZeldasLullaby.Value<u8>());
   AddItemToInventory(EPONAS_SONG,               StartingEponasSong.Value<u8>());
