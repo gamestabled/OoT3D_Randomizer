@@ -149,6 +149,9 @@ namespace Logic {
   //Gold Skulltula Count
   extern u8 GoldSkulltulaTokens;
 
+  //Bottle Count
+  extern u8 NumBottles;
+
   //item and bottle drops
   extern bool DekuNutDrop;
   extern bool NutPot;
@@ -218,6 +221,7 @@ namespace Logic {
   extern bool Bombs;
   extern bool HasBombchus;
   extern bool FoundBombchus;
+  extern bool HasBoots;
   extern bool HasExplosives;
   extern bool IsChild;
   extern bool IsAdult;
@@ -320,8 +324,7 @@ namespace Logic {
     HammerSlide,
     LedgeCancel,
     ActionSwap,
-    BombQPA,
-    LedgeQPA,
+    QPA,
     HookshotClip,
     HookshotJump_Bonk,
     HookshotJump_Boots,

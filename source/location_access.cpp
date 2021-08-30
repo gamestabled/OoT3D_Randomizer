@@ -273,12 +273,24 @@ void AreaTable_Init() {
   areaTable[ROOT_EXITS] = Area("Root Exits", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(KF_LINKS_HOUSE,            {[]{return IsChild;}}),
-                  Entrance(TEMPLE_OF_TIME,            {[]{return (CanPlay(PreludeOfLight)   && CanLeaveForest) || IsAdult;}}),
-                  Entrance(SACRED_FOREST_MEADOW,      {[]{return  CanPlay(MinuetOfForest);}}),
-                  Entrance(DMC_CENTRAL_LOCAL,         {[]{return  CanPlay(BoleroOfFire)     && CanLeaveForest;}}),
-                  Entrance(LAKE_HYLIA,                {[]{return  CanPlay(SerenadeOfWater)  && CanLeaveForest;}}),
-                  Entrance(GRAVEYARD_WARP_PAD_REGION, {[]{return  CanPlay(NocturneOfShadow) && CanLeaveForest;}}),
-                  Entrance(DESERT_COLOSSUS,           {[]{return  CanPlay(RequiemOfSpirit)  && CanLeaveForest;}}),
+                  Entrance(TEMPLE_OF_TIME,            {[]{return (CanPlay(PreludeOfLight)   && CanLeaveForest) || IsAdult;},
+                                           /*Glitched*/[]{return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables || (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) || (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+                                                                 (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::NOVICE))) && PreludeOfLight && CanLeaveForest;}}),
+                  Entrance(SACRED_FOREST_MEADOW,      {[]{return CanPlay(MinuetOfForest);},
+                                           /*Glitched*/[]{return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables || (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) || (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+                                                                 (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::NOVICE))) && MinuetOfForest;}}),
+                  Entrance(DMC_CENTRAL_LOCAL,         {[]{return CanPlay(BoleroOfFire)     && CanLeaveForest;},
+                                           /*Glitched*/[]{return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables || (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) || (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+                                                                 (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::NOVICE))) && BoleroOfFire && CanLeaveForest;}}),
+                  Entrance(LAKE_HYLIA,                {[]{return CanPlay(SerenadeOfWater)  && CanLeaveForest;},
+                                           /*Glitched*/[]{return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables || (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) || (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+                                                                 (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::NOVICE))) && SerenadeOfWater && CanLeaveForest;}}),
+                  Entrance(GRAVEYARD_WARP_PAD_REGION, {[]{return CanPlay(NocturneOfShadow) && CanLeaveForest;},
+                                           /*Glitched*/[]{return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables || (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) || (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+                                                                 (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::NOVICE))) && NocturneOfShadow && CanLeaveForest;}}),
+                  Entrance(DESERT_COLOSSUS,           {[]{return CanPlay(RequiemOfSpirit)  && CanLeaveForest;},
+                                           /*Glitched*/[]{return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables || (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) || (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+                                                                 (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::NOVICE))) && RequiemOfSpirit && CanLeaveForest;}}),
   });
 
   areaTable[KOKIRI_FOREST] = Area("Kokiri Forest", "Kokiri Forest", KOKIRI_FOREST, NO_DAY_NIGHT_CYCLE, {
@@ -291,7 +303,8 @@ void AreaTable_Init() {
                   LocationAccess(KF_KOKIRI_SWORD_CHEST,   {[]{return IsChild;}}),
                   LocationAccess(KF_GS_KNOW_IT_ALL_HOUSE, {[]{return IsChild && CanChildAttack && AtNight && (HasNightStart || CanLeaveForest || CanPlay(SunsSong)) && CanGetNightTimeGS;}}),
                   LocationAccess(KF_GS_BEAN_PATCH,        {[]{return CanPlantBugs && CanChildAttack;}}),
-                  LocationAccess(KF_GS_HOUSE_OF_TWINS,    {[]{return IsAdult && AtNight && CanUse(HOOKSHOT) && CanGetNightTimeGS;}}),
+                  LocationAccess(KF_GS_HOUSE_OF_TWINS,    {[]{return IsAdult && AtNight && CanUse(HOOKSHOT) && CanGetNightTimeGS;},
+                                               /*Glitched*/[]{return IsAdult && AtNight && CanGetNightTimeGS && (CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE));}}),
                   LocationAccess(KF_GOSSIP_STONE,         {[]{return true;}}),
                 }, {
                   //Exits
@@ -301,10 +314,14 @@ void AreaTable_Init() {
                   Entrance(KF_HOUSE_OF_TWINS,     {[]{return true;}}),
                   Entrance(KF_KNOW_IT_ALL_HOUSE,  {[]{return true;}}),
                   Entrance(KF_KOKIRI_SHOP,        {[]{return true;}}),
-                  Entrance(KF_OUTSIDE_DEKU_TREE,  {[]{return IsAdult || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;}}),
+                  Entrance(KF_OUTSIDE_DEKU_TREE,  {[]{return IsAdult || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;},
+                                       /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(THE_LOST_WOODS,        {[]{return true;}}),
                   Entrance(LW_BRIDGE_FROM_FOREST, {[]{return CanLeaveForest;}}),
-                  Entrance(KF_STORMS_GROTTO,      {[]{return CanOpenStormGrotto;}}),
+                  Entrance(KF_STORMS_GROTTO,      {[]{return CanOpenStormGrotto;},
+                                       /*Glitched*/[]{return ((((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::INTERMEDIATE)) ||
+                                                             (CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables || (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) || (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+                                                             ((Bugs || Fish) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))) && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
   });
 
   areaTable[KF_OUTSIDE_DEKU_TREE] = Area("KF Outside Deku Tree", "Kokiri Forest", KOKIRI_FOREST, NO_DAY_NIGHT_CYCLE, {
@@ -317,13 +334,16 @@ void AreaTable_Init() {
                   LocationAccess(KF_DEKU_TREE_GOSSIP_STONE_RIGHT, {[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(DEKU_TREE_ENTRYWAY, {[]{return IsChild || (ShuffleDungeonEntrances && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));}}),
+                  Entrance(DEKU_TREE_ENTRYWAY, {[]{return IsChild || (ShuffleDungeonEntrances && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));},
+                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(KOKIRI_FOREST,      {[]{return true;}}),
   });
 
   areaTable[KF_LINKS_HOUSE] = Area("KF Link's House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(KF_LINKS_HOUSE_COW, {[]{return IsAdult && CanPlay(EponasSong) && LinksCow;}}),
+                  LocationAccess(KF_LINKS_HOUSE_COW, {[]{return IsAdult && CanPlay(EponasSong) && LinksCow;},
+                                          /*Glitched*/[]{return ((((ClaimCheck && (HasBottle || (FaroresWind && FaroresWindAnywhere) || HasBoots)) || ((Bugs || Fish || Fairy) && (ClaimCheck || NumBottles >= 2 || (FaroresWind && FaroresWindAnywhere) || HasBoots)) || ((CanUse(FARORES_WIND) && FaroresWindAnywhere) && (ClaimCheck || HasBottle || HasBoots)) || ((CanUse(FARORES_WIND) || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE)))) && (NumBottles + ((HoverBoots) ? 1 : 0) + ((IronBoots) ? 1 : 0) + ((ClaimCheck) ? 1 : 0) >= 2))) && CanDoGlitch(GlitchType::BombOI, GlitchDifficulty::EXPERT)) ||
+                                                                ((Bugs || Fish) && (CanSurviveDamage || NumBottles >= 2) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT))) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && Bombs && IsAdult && EponasSong && LinksCow;}}),
                 }, {
                   //Exits
                   Entrance(KOKIRI_FOREST, {[]{return true;}})

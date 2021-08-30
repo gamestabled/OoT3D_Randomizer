@@ -344,6 +344,7 @@ namespace Settings {
   extern Option RandomTrapDmg;
   extern bool HasNightStart;
 
+  extern Option FaroresWindAnywhere;
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
@@ -522,7 +523,7 @@ namespace Settings {
   extern Option GlitchSuperSlide;
   extern Option GlitchMegaflip;
   extern Option GlitchASlide;
-  extern Option GlitchLSlide;
+  extern Option GlitchLSlide; // ( ._.) Not sure on this one tbh
   extern Option GlitchHammerSlide;
   extern Option GlitchLedgeCancel;
   extern Option GlitchActionSwap;

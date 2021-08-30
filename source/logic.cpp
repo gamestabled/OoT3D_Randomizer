@@ -155,6 +155,9 @@ namespace Logic {
   //Gold Skulltula Count
   u8 GoldSkulltulaTokens = 0;
 
+  //Bottle Count
+  u8 NumBottles = 0;
+
   //Drops and Bottle Contents Access
   bool DekuNutDrop      = false;
   bool NutPot           = false;
@@ -228,6 +231,7 @@ namespace Logic {
   bool HasBombchus      = false;
   bool FoundBombchus    = false;
   bool HasExplosives    = false;
+  bool HasBoots         = false;
   bool IsChild          = false;
   bool IsAdult          = false;
   bool CanBlastOrSmash  = false;
@@ -436,7 +440,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return HasShield && (IsAdult || (IsChild && (KokiriSword || Sticks)));
+      return CanShield && (IsAdult || (IsChild && (KokiriSword || Sticks)));
 
     //Bomb Hover
     case GlitchType::BombHover:
@@ -460,7 +464,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return Bombs && CanUse(CanUseItem::Hover_Boots) && CanSurviveDamage;
+      return Bombs && IsAdult && HoverBoots && CanSurviveDamage;
 
     //Super Slide
     case GlitchType::SuperSlide:
@@ -502,7 +506,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return Hammer && CanUse(CanUseItem::Hover_Boots) && CanShield;
+      return Hammer && IsAdult && HoverBoots && CanShield;
 
     //Ledge Cancel
     case GlitchType::LedgeCancel:
@@ -522,21 +526,13 @@ namespace Logic {
       return true;
 
     //Quick Put Away
-    //Bomb
-    case GlitchType::BombQPA:
+    case GlitchType::QPA:
       setDifficulty = GetDifficultyValueFromString(GlitchQPA);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      //                                    Boot Put Away Delay Method                  Frame Perfect Method
-      return CanTakeDamage && Bombs && ((IsAdult && (IronBoots || HoverBoots)) || setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE));
-    //Ledge Grab
-    case GlitchType::LedgeQPA:
-      setDifficulty = GetDifficultyValueFromString(GlitchQPA);
-      if (setDifficulty < static_cast<u8>(difficulty)) {
-        return false;
-      }
-      return setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
+      //                              Boot Put Away Delay Method                  Frame Perfect Method                                                 Ledge Grab Method
+      return (CanTakeDamage && Bombs && ((IsAdult && HasBoots) || setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) || setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
 
     //Hookshot Clip
     case GlitchType::HookshotClip:
@@ -560,7 +556,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return IsAdult && Hookshot && (IronBoots || HoverBoots);
+      return IsAdult && Hookshot && HasBoots;
 
     //Misc. Cutscene Item Based Glitches
     case GlitchType::CutsceneGlitches:
@@ -576,7 +572,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return CanUse(CanUseItem::Sticks);
+      return IsChild && Sticks;
 
     //Triple Slash Clip
     case GlitchType::TripleSlashClip:
@@ -617,6 +613,7 @@ namespace Logic {
 
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
+    HasBottle       = NumBottles >= 1;
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
     Ocarina         = ProgressiveOcarina    >= 1;
     OcarinaOfTime   = ProgressiveOcarina    >= 2;
@@ -655,6 +652,8 @@ namespace Logic {
     HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || AmmoDrops.Is(AMMODROPS_BOMBCHU)) && FoundBombchus;
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
+
+    HasBoots = IronBoots || HoverBoots;
 
     // IsChild = Age == AGE_CHILD;
     // IsAdult = Age == AGE_ADULT;
@@ -904,6 +903,9 @@ namespace Logic {
      //Gold Skulltula Count
      GoldSkulltulaTokens = 0;
 
+     //Bottle Count
+     NumBottles = 0;
+
 
 
      //Drops and Bottle Contents Access
@@ -977,6 +979,7 @@ namespace Logic {
      HasBombchus      = false;
      FoundBombchus    = false;
      HasExplosives    = false;
+     HasBoots         = false;
      IsChild          = false;
      IsAdult          = false;
    //IsGlitched       = false;

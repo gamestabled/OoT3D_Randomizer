@@ -355,24 +355,63 @@ extern string_view LogicLensCastleMQDesc;
 extern string_view LogicSpiritTrialHookshotDesc;
 
 extern const std::vector<string_view> GlitchDifficulties;
+
+extern string_view GlitchRestrictedItemsDescDisabled;
+
 extern string_view GlitchISGDescDisabled;
 extern string_view GlitchISGDescNovice;
+
 extern string_view GlitchHoverDescDisabled;
 extern string_view GlitchHoverDescNovice;
 extern string_view GlitchHoverDescIntermediate;
 extern string_view GlitchHoverDescAdvanced;
+
+extern string_view GlitchBombOIDescDisabled;
+
+extern string_view GlitchHoverBoostDescDisabled;
+
+extern string_view GlitchSuperSlideDescDisabled;
+
 extern string_view GlitchMegaflipDescDisabled;
 extern string_view GlitchMegaflipDescNovice;
 extern string_view GlitchMegaflipDescIntermediate;
+extern string_view GlitchMegaflipDescAdvanced;
+extern string_view GlitchMegaflipDescExpert;
+extern string_view GlitchMegaflipDescHero;
+
+extern string_view GlitchASlideDescDisabled;
+
+extern string_view GlitchLSlideDescDisabled;
+
+extern string_view GlitchHammerSlideDescDisabled;
+
+extern string_view GlitchLedgeCancelDescDisabled;
+
+extern string_view GlitchActionSwapDescDisabled;
+
+extern string_view GlitchQPADescDisabled;
+
 extern string_view GlitchHookshotClipDescDisabled;
 extern string_view GlitchHookshotClipDescNovice;
+
 extern string_view GlitchHookshotJump_BonkDescDisabled;
 extern string_view GlitchHookshotJump_BonkDescIntermediate;
+
 extern string_view GlitchHookshotJump_BootsDescDisabled;
 extern string_view GlitchHookshotJump_BootsDescNovice;
 extern string_view GlitchHookshotJump_BootsDescIntermediate;
+
+extern string_view GlitchCutsceneGlitchesDescDisabled;
+
+extern string_view GlitchNaviDive_StickDescDisabled;
+
+extern string_view GlitchTripleSlashClipDescDisabled;
+extern string_view GlitchTripleSlashClipDescNovice;
+
 extern string_view GlitchLedgeClipDescDisabled;
 extern string_view GlitchLedgeClipDescNovice;
 extern string_view GlitchLedgeClipDescIntermediate;
-extern string_view GlitchTripleSlashClipDescDisabled;
-extern string_view GlitchTripleSlashClipDescNovice;
+
+extern string_view GlitchSeamWalkDescDisabled;
+
+extern string_view GlitchEntrancePointDescDisabled;
