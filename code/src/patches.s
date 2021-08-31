@@ -1567,6 +1567,11 @@ InterfaceDrawDontSpoilTradeItems_patch:
 OpenSaveDontSpoilTradeItems_patch:
     b 0x44FEB8
 
+.section .patch_LostWoodsBridgeMusic
+.global LostWoodsBridgeMusic_patch
+LostWoodsBridgeMusic_patch:
+    bl hook_LostWoodsBridgeMusic
+
 .section .patch_loader
 .global loader_patch
 

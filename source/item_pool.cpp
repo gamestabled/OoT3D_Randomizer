@@ -399,7 +399,7 @@ const std::array<ItemKey, 12> songList = {
 };
 const std::array<ItemKey, 10> tradeItems = {
   POCKET_EGG,
-  POCKET_CUCCO,
+  //POCKET_CUCCO,
   COJIRO,
   ODD_MUSHROOM,
   POACHERS_SAW,

@@ -200,7 +200,7 @@ static void ItemOverride_AfterKeyReceived(ItemOverride_Key key) {
     }
 
     // If we override an adult trade item, we should remove the previous item from being owned
-    if ((key.flag == GI_COJIRO) || ((key.flag > GI_POCKET_EGG) && (key.flag <= GI_CLAIM_CHECK))) {
+    if ((key.type == OVR_BASE_ITEM) && ((key.flag == GI_COJIRO) || ((key.flag > GI_POCKET_EGG) && (key.flag <= GI_CLAIM_CHECK)))) {
         u8 itemId;
         switch (key.flag) {
             case GI_COJIRO:       itemId = 46; break;
@@ -437,7 +437,7 @@ void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) 
 
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
-    if (receivedGift == 0 && (gSaveContext.entranceIndex == Entrance_GetLWBridgeEntrance())) {
+    if (receivedGift == 0 && (gSaveContext.entranceIndex == Entrance_GetLWBridgeEntranceFromKokiriForest())) {
         ItemOverride_PushDelayedOverride(0x02);
         EventSet(0xC1);
     }
