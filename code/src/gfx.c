@@ -210,7 +210,7 @@ static void Gfx_DrawSpoilerData(void) {
                 SpoilerData_GetItemNameString(itemIndex));
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, spoilerScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, spoilerScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Spoiler Log");
@@ -246,7 +246,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "All Item Locations");
@@ -293,7 +293,7 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Item Location Groups");
