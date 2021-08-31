@@ -1467,6 +1467,11 @@ LabScientistDontStartTimerAndSetFlag_patch:
     pop {r0-r12, lr}
     nop
 
+.section .patch_LabScientistIgnoreEyedropsInInventory
+.global LabScientistIgnoreEyedropsInInventory_patch
+LabScientistIgnoreEyedropsInInventory_patch:
+    b 0x3F0B5C
+
 .section .patch_KingZoraDontStartTimer
 .global KingZoraDontStartTimer_patch
 KingZoraDontStartTimer_patch:

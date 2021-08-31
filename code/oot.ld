@@ -924,6 +924,10 @@ SECTIONS
 		*(.patch_CarpetSalesmanCheckFlagTwo)
 	}
 
+	.patch_LabScientistIgnoreEyedropsInInventory 0x3F0B44 : {
+		*(.patch_LabScientistIgnoreEyedropsInInventory)
+	}
+
 	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
 		*(.patch_HandleDoorDestroyCustomModels)
 	}
