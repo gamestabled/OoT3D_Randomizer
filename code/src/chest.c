@@ -178,11 +178,11 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         }
         // Bomb surprise
         else if (damageType == 1 || damageType == 5) {
-            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
+            bomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
         }
         // Unhealing fairy
         else if (damageType == 6) {
-            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
+            fairy = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
             PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
         // Explosive Rupee Trap
