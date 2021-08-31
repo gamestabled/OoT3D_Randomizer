@@ -62,7 +62,7 @@ static char *spoilerCollectionGroupNames[] = {
 #define UP_SOLID_ARROW_CHR 30
 #define DOWN_SOLID_ARROW_CHR 31
 
-#define MAX_ITEM_LINES 8
+#define MAX_ITEM_LINES 9
 #define SCROLL_BAR_THICKNESS 2
 #define SCROLL_BAR_MIN_THUMB_SIZE 4
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
@@ -116,7 +116,6 @@ static void Gfx_GroupsPrevGroup() {
 }
 
 static void Gfx_DrawChangeMenuPrompt(void) {
-    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 54, COLOR_WARN, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 30, COLOR_TITLE, "Press B to close menu, L/R to change menu");
     if (curMenuIdx == 3) {
         Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse spoiler log",
