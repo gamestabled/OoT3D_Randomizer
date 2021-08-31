@@ -330,6 +330,7 @@ namespace Settings {
   extern Option CompleteMaskQuest;
   extern Option QuickText;
   extern Option SkipSongReplays;
+  extern Option KeepFWWarpPoint;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;

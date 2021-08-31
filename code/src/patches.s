@@ -1262,7 +1262,7 @@ EnableFW_patch:
 .section .patch_FWKeepWarpPoint
 .global FWKeepWarpPoint_patch
 FWKeepWarpPoint_patch:
-    nop
+    blmi hook_FWUnset
 
 .section .patch_FWLoadSet
 .global FWLoadSet_patch

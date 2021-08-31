@@ -357,6 +357,7 @@ typedef struct {
   u8 completeMaskQuest;
   u8 quickText;
   u8 skipSongReplays;
+  u8 keepFWWarpPoint;
 
   u8 damageMultiplier;
   u8 startingTime;
