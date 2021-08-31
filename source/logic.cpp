@@ -213,6 +213,8 @@ namespace Logic {
   bool GoldScale        = false;
   bool AdultsWallet     = false;
 
+  bool ChildScarecrow   = false;
+  bool AdultScarecrow   = false;
   bool ScarecrowSong    = false;
   bool Scarecrow        = false;
   bool DistantScarecrow = false;
@@ -508,14 +510,6 @@ namespace Logic {
       //                                        Same deal as bombchu megaflips
       return IsChild && CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
 
-    //L-Slide
-    case GlitchType::LSlide:
-      setDifficulty = GetDifficultyValueFromString(GlitchLSlide);
-      if (setDifficulty < static_cast<u8>(difficulty)) {
-        return false;
-      }
-      return true;
-
     //Hammer Slide
     case GlitchType::HammerSlide:
       setDifficulty = GetDifficultyValueFromString(GlitchHammerSlide);
@@ -574,9 +568,9 @@ namespace Logic {
       }
       return IsAdult && Hookshot && HasBoots;
 
-    //Misc. Cutscene Item Based Glitches
-    case GlitchType::CutsceneGlitches:
-      setDifficulty = GetDifficultyValueFromString(GlitchCutsceneGlitches);
+    //Cutscene Dives
+    case GlitchType::CutsceneDive:
+      setDifficulty = GetDifficultyValueFromString(GlitchCutsceneDive);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
@@ -645,6 +639,7 @@ namespace Logic {
     GoldScale       = ProgressiveScale      >= 2;
     AdultsWallet    = ProgressiveWallet     >= 1;
 
+    ScarecrowSong    = ScarecrowSong || (ChildScarecrow && AdultScarecrow);
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
     DistantScarecrow = Longshot && CanPlay(ScarecrowSong);
 
@@ -977,6 +972,8 @@ namespace Logic {
      GoldScale        = false;
      AdultsWallet     = false;
 
+     ChildScarecrow   = false;
+     AdultScarecrow   = false;
      ScarecrowSong    = false;
      Scarecrow        = false;
      DistantScarecrow = false;

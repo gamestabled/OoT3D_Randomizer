@@ -523,7 +523,6 @@ namespace Settings {
   extern Option GlitchSuperSlide;
   extern Option GlitchMegaflip;
   extern Option GlitchASlide;
-  extern Option GlitchLSlide; // ( ._.) Not sure on this one tbh
   extern Option GlitchHammerSlide;
   extern Option GlitchLedgeCancel;
   extern Option GlitchActionSwap;
@@ -531,7 +530,7 @@ namespace Settings {
   extern Option GlitchHookshotClip;
   extern Option GlitchHookshotJump_Bonk;
   extern Option GlitchHookshotJump_Boots;
-  extern Option GlitchCutsceneGlitches;
+  extern Option GlitchCutsceneDive;
   extern Option GlitchNaviDive_Stick;
   extern Option GlitchTripleSlashClip;
   extern Option GlitchLedgeClip;

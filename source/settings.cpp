@@ -623,18 +623,17 @@ namespace Settings {
   Option GlitchSuperSlide         = Option::U8("Extended Super Slide",  GlitchDifficultyOptions(0b00000), { GlitchSuperSlideDescDisabled                                                                                                                                                                                                        });
   Option GlitchMegaflip           = Option::U8("Megaflip",              GlitchDifficultyOptions(0b11111), { GlitchMegaflipDescDisabled           , GlitchMegaflipDescNovice           , GlitchMegaflipDescIntermediate           , GlitchMegaflipDescAdvanced           , GlitchMegaflipDescExpert           , GlitchMegaflipDescHero           });
   Option GlitchASlide             = Option::U8("A-Slide",               GlitchDifficultyOptions(0b01010), { GlitchASlideDescDisabled                                                                                                                                                                                                            });
-  Option GlitchLSlide             = Option::U8("L-Slide",               GlitchDifficultyOptions(0b00000), { GlitchLSlideDescDisabled                                                                                                                                                                                                            });
   Option GlitchHammerSlide        = Option::U8("Hammer Slide",          GlitchDifficultyOptions(0b00010), { GlitchHammerSlideDescDisabled                                                                                                                                                                                                       });
   Option GlitchLedgeCancel        = Option::U8("Ledge Cancel",          GlitchDifficultyOptions(0b00101), { GlitchLedgeCancelDescDisabled                                                                                                                                                                                                       });
   Option GlitchActionSwap         = Option::U8("Action Swap",           GlitchDifficultyOptions(0b00000), { GlitchActionSwapDescDisabled                                                                                                                                                                                                        });
-  Option GlitchQPA                = Option::U8("Quick Put Away",        GlitchDifficultyOptions(0b01100), { GlitchQPADescDisabled                                                                                                                                                                                                               });
+  Option GlitchQPA                = Option::U8("Quick Put Away",        GlitchDifficultyOptions(0b01111), { GlitchQPADescDisabled                                                                                                                                                                                                               });
   Option GlitchHookshotClip       = Option::U8("Hookshot Clip",         GlitchDifficultyOptions(0b00001), { GlitchHookshotClipDescDisabled       , GlitchHookshotClipDescNovice                                                                                                                                                                 });
-  Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00110), { GlitchHookshotJump_BonkDescDisabled  ,                                      GlitchHookshotJump_BonkDescIntermediate                                                                                                                 });
+  Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00111), { GlitchHookshotJump_BonkDescDisabled  ,                                      GlitchHookshotJump_BonkDescIntermediate                                                                                                                 });
   Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", GlitchDifficultyOptions(0b00011), { GlitchHookshotJump_BootsDescDisabled , GlitchHookshotJump_BootsDescNovice , GlitchHookshotJump_BootsDescIntermediate                                                                                                                });
-  Option GlitchCutsceneGlitches   = Option::U8("Cutscene Glitches",     GlitchDifficultyOptions(0b00000), { GlitchCutsceneGlitchesDescDisabled                                                                                                                                                                                                  });
-  Option GlitchNaviDive_Stick     = Option::U8("Navi Dive (Stick)",     GlitchDifficultyOptions(0b00100), { GlitchNaviDive_StickDescDisabled                                                                                                                                                                                                    });
-  Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b00001), { GlitchTripleSlashClipDescDisabled    , GlitchTripleSlashClipDescNovice                                                                                                                                                              });
-  Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00011), { GlitchLedgeClipDescDisabled          , GlitchLedgeClipDescNovice          , GlitchLedgeClipDescIntermediate                                                                                                                         });
+  Option GlitchCutsceneDive       = Option::U8("Cutscene Dives",        GlitchDifficultyOptions(0b00001), { GlitchCutsceneDiveDescDisabled                                                                                                                                                                                                      });
+  Option GlitchNaviDive_Stick     = Option::U8("Navi Dive (Stick)",     GlitchDifficultyOptions(0b00110), { GlitchNaviDive_StickDescDisabled                                                                                                                                                                                                    });
+  Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b00111), { GlitchTripleSlashClipDescDisabled    , GlitchTripleSlashClipDescNovice                                                                                                                                                              });
+  Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00111), { GlitchLedgeClipDescDisabled          , GlitchLedgeClipDescNovice          , GlitchLedgeClipDescIntermediate                                                                                                                         });
   Option GlitchSeamWalk           = Option::U8("Seam Walk",             GlitchDifficultyOptions(0b00000), { GlitchSeamWalkDescDisabled                                                                                                                                                                                                          });
   Option GlitchEntrancePoint      = Option::U8("Entrance Point Glitch", GlitchDifficultyOptions(0b00000), { GlitchEntrancePointDescDisabled                                                                                                                                                                                                     });
   std::vector<Option*> glitchOptions = {
@@ -646,7 +645,6 @@ namespace Settings {
     &GlitchSuperSlide,
     &GlitchMegaflip,
     &GlitchASlide,
-    &GlitchLSlide,
     &GlitchHammerSlide,
     &GlitchLedgeCancel,
     &GlitchActionSwap,
@@ -654,7 +652,7 @@ namespace Settings {
     &GlitchHookshotClip,
     &GlitchHookshotJump_Bonk,
     &GlitchHookshotJump_Boots,
-    &GlitchCutsceneGlitches,
+    &GlitchCutsceneDive,
     &GlitchNaviDive_Stick,
     &GlitchTripleSlashClip,
     &GlitchLedgeClip,

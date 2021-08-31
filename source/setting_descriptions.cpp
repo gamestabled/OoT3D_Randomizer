@@ -1207,8 +1207,6 @@ string_view GlitchMegaflipDescExpert                  = "";                     
 string_view GlitchMegaflipDescHero                    = "";                                                //
 /* A-Slide */                                                                                              //
 string_view GlitchASlideDescDisabled                  = "";                                                //
-/* L-Slide */                                                                                              //
-string_view GlitchLSlideDescDisabled                  = "";                                                //
 /* Hammer Slide */                                                                                         //
 string_view GlitchHammerSlideDescDisabled             = "";                                                //
 /* Ledge Cancel */                                                                                         //
@@ -1237,7 +1235,7 @@ string_view GlitchHookshotJump_BootsDescNovice        = "Only relatively short H
 string_view GlitchHookshotJump_BootsDescIntermediate  = "Higher Hookshot Jumps with boots, where you look\n"
                                                         "further up or downwards may be required.";        //
 /* CS Item Glitches */                                                                                     //
-string_view GlitchCutsceneGlitchesDescDisabled        = "";                                                //
+string_view GlitchCutsceneDiveDescDisabled            = "";                                                //
 /* Navi Dive: Stick */                                                                                     //
 string_view GlitchNaviDive_StickDescDisabled          = "";                                                //
 /* TSC */                                                                                                  //

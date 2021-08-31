@@ -203,6 +203,8 @@ namespace Logic {
   extern bool GoldScale;
   extern bool AdultsWallet;
 
+  extern bool ChildScarecrow;
+  extern bool AdultScarecrow;
   extern bool ScarecrowSong;
   extern bool Scarecrow;
   extern bool DistantScarecrow;
@@ -323,7 +325,6 @@ namespace Logic {
     SuperSlide,
     Megaflip,
     ASlide,
-    LSlide,
     HammerSlide,
     LedgeCancel,
     ActionSwap,
@@ -331,7 +332,7 @@ namespace Logic {
     HookshotClip,
     HookshotJump_Bonk,
     HookshotJump_Boots,
-    CutsceneGlitches,
+    CutsceneDive,
     NaviDive_Stick,
     TripleSlashClip,
     LedgeClip,

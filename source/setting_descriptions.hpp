@@ -381,8 +381,6 @@ extern string_view GlitchMegaflipDescHero;
 
 extern string_view GlitchASlideDescDisabled;
 
-extern string_view GlitchLSlideDescDisabled;
-
 extern string_view GlitchHammerSlideDescDisabled;
 
 extern string_view GlitchLedgeCancelDescDisabled;
@@ -401,7 +399,7 @@ extern string_view GlitchHookshotJump_BootsDescDisabled;
 extern string_view GlitchHookshotJump_BootsDescNovice;
 extern string_view GlitchHookshotJump_BootsDescIntermediate;
 
-extern string_view GlitchCutsceneGlitchesDescDisabled;
+extern string_view GlitchCutsceneDiveDescDisabled;
 
 extern string_view GlitchNaviDive_StickDescDisabled;
 
