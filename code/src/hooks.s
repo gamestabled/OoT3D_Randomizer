@@ -954,7 +954,16 @@ hook_LostWoodsBridgeMusic:
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
-    
+
+.global hook_SaveMenuIgnoreOpen
+hook_SaveMenuIgnoreOpen:
+    push {r0-r12, lr}
+    bl SaveMenu_IgnoreOpen
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x42F270
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
