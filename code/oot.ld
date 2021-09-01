@@ -8,14 +8,6 @@ SECTIONS
 		*(.patch_loader)
 	}
 
-	.patch_SleepQueryCallback 0x3FD6C4 : {
-		*(.patch_SleepQueryCallback)
-	}
-
-	.patch_AwakeCallback 0x3FD43C : {
-		*(.patch_AwakeCallback)
-	}
-
 	.patch_GrogSetTradedCojiroFlag 0x104C50 : {
 		*(.patch_GrogSetTradedCojiroFlag)
 	}
@@ -970,6 +962,14 @@ SECTIONS
 
 	.patch_CarpetSalesmanSetFlag 0x3F9550 : {
 		*(.patch_CarpetSalesmanSetFlag)
+	}
+
+	.patch_AwakeCallback 0x3FD43C : {
+		*(.patch_AwakeCallback)
+	}
+
+	.patch_SleepQueryCallback 0x3FD6C4 : {
+		*(.patch_SleepQueryCallback)
 	}
 
 	.patch_ItemsMenuDraw 0x434C08 : {
