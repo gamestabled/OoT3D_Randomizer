@@ -45,6 +45,7 @@ namespace Logic {
   extern bool FireArrows;
   extern bool IceArrows;
   extern bool LightArrows;
+  extern bool BiggoronSword;
 
   //Trade Quest
   extern bool PocketEgg;
@@ -123,6 +124,7 @@ namespace Logic {
   extern u8 ProgressiveWallet;
   extern u8 ProgressiveMagic;
   extern u8 ProgressiveOcarina;
+  extern u8 ProgressiveGiantKnife;
 
   //Keysanity
   extern bool IsKeysanity;
@@ -239,9 +241,10 @@ namespace Logic {
   extern bool CanStunDeku;
   extern bool CanSummonGossipFairy;
   extern bool CanSummonGossipFairyWithoutSuns;
-  extern bool CanSurviveDamage;
   extern bool NeedNayrusLove;
+  extern bool CanSurviveDamage;
   extern bool CanTakeDamage;
+  extern bool CanTakeDamageTwice;
   //extern bool CanPlantBean;
   extern bool CanOpenBombGrotto;
   extern bool CanOpenStormGrotto;

@@ -536,6 +536,8 @@ namespace Settings {
   extern Option GlitchLedgeClip;
   extern Option GlitchSeamWalk;
   extern Option GlitchEntrancePoint;
+  //Misc Glitch Settings
+  extern Option GlitchGVTentAsChild;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

@@ -1234,7 +1234,7 @@ string_view GlitchHookshotJump_BootsDescNovice        = "Only relatively short H
                                                         "may be required.";                                //
 string_view GlitchHookshotJump_BootsDescIntermediate  = "Higher Hookshot Jumps with boots, where you look\n"
                                                         "further up or downwards may be required.";        //
-/* CS Item Glitches */                                                                                     //
+/* Cutscene Dives */                                                                                       //
 string_view GlitchCutsceneDiveDescDisabled            = "";                                                //
 /* Navi Dive: Stick */                                                                                     //
 string_view GlitchNaviDive_StickDescDisabled          = "";                                                //
@@ -1259,3 +1259,5 @@ string_view GlitchLedgeClipDescIntermediate           = "Certain harder clips ma
 string_view GlitchSeamWalkDescDisabled                = "";                                                //
 /* EPG */                                                                                                  //
 string_view GlitchEntrancePointDescDisabled           = "";                                                //
+/* Misc Glitches */                                                                                        //
+string_view GlitchGVTentAsChildDesc                   = "";                                                //

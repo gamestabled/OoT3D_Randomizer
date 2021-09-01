@@ -51,6 +51,7 @@ namespace Logic {
   bool FireArrows    = false;
   bool IceArrows     = false;
   bool LightArrows   = false;
+  bool BiggoronSword = false;
 
   //Trade Quest
   bool PocketEgg     = false;
@@ -120,15 +121,16 @@ namespace Logic {
   bool LightTrialClear  = false;
 
   //Progressive Items
-  u8 ProgressiveBulletBag = 0;
-  u8 ProgressiveBombBag   = 0;
-  u8 ProgressiveMagic     = 0;
-  u8 ProgressiveScale     = 0;
-  u8 ProgressiveHookshot  = 0;
-  u8 ProgressiveBow       = 0;
-  u8 ProgressiveWallet    = 0;
-  u8 ProgressiveStrength  = 0;
-  u8 ProgressiveOcarina   = 0;
+  u8 ProgressiveBulletBag  = 0;
+  u8 ProgressiveBombBag    = 0;
+  u8 ProgressiveMagic      = 0;
+  u8 ProgressiveScale      = 0;
+  u8 ProgressiveHookshot   = 0;
+  u8 ProgressiveBow        = 0;
+  u8 ProgressiveWallet     = 0;
+  u8 ProgressiveStrength   = 0;
+  u8 ProgressiveOcarina    = 0;
+  u8 ProgressiveGiantKnife = 0;
 
   //Logical keysanity
   bool IsKeysanity = false;
@@ -250,6 +252,7 @@ namespace Logic {
   bool NeedNayrusLove      = false;
   bool CanSurviveDamage    = false;
   bool CanTakeDamage       = false;
+  bool CanTakeDamageTwice  = false;
   //bool CanPlantBean        = false;
   bool CanOpenBombGrotto   = false;
   bool CanOpenStormGrotto  = false;
@@ -638,6 +641,7 @@ namespace Logic {
     SilverScale     = ProgressiveScale      >= 1;
     GoldScale       = ProgressiveScale      >= 2;
     AdultsWallet    = ProgressiveWallet     >= 1;
+    BiggoronSword   = BiggoronSword || ProgressiveGiantKnife >= 2;
 
     ScarecrowSong    = ScarecrowSong || (ChildScarecrow && AdultScarecrow);
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
@@ -685,6 +689,7 @@ namespace Logic {
     NeedNayrusLove      = DamageMultiplier.Is(DAMAGEMULTIPLIER_OHKO) || DamageMultiplier.Is(DAMAGEMULTIPLIER_OCTUPLE) || DamageMultiplier.Is(DAMAGEMULTIPLIER_SEXDECUPLE);
     CanSurviveDamage    = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
     CanTakeDamage       = Fairy || CanSurviveDamage;
+    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || (DamageMultiplier.Is(DAMAGEMULTIPLIER_QUADRUPLE) && (CanUse(NAYRUS_LOVE) || Fairy)) || (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && CanSurviveDamage);
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
@@ -812,6 +817,7 @@ namespace Logic {
      FireArrows    = false;
      IceArrows     = false;
      LightArrows   = false;
+     BiggoronSword = false;
 
      //Trade Quest
      PocketEgg     = false;
@@ -881,15 +887,16 @@ namespace Logic {
      LightTrialClear  = false;
 
      //Progressive Items
-     ProgressiveBulletBag = 0;
-     ProgressiveBombBag   = 0;
-     ProgressiveMagic     = 0;
-     ProgressiveScale     = 0;
-     ProgressiveHookshot  = 0;
-     ProgressiveBow       = 0;
-     ProgressiveWallet    = 0;
-     ProgressiveStrength  = 0;
-     ProgressiveOcarina   = 0;
+     ProgressiveBulletBag  = 0;
+     ProgressiveBombBag    = 0;
+     ProgressiveMagic      = 0;
+     ProgressiveScale      = 0;
+     ProgressiveHookshot   = 0;
+     ProgressiveBow        = 0;
+     ProgressiveWallet     = 0;
+     ProgressiveStrength   = 0;
+     ProgressiveOcarina    = 0;
+     ProgressiveGiantKnife = 0;
 
      //Keys
      ForestTempleKeys          = 0;
