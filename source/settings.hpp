@@ -538,6 +538,7 @@ namespace Settings {
   extern Option GlitchEntrancePoint;
   //Misc Glitch Settings
   extern Option GlitchGVTentAsChild;
+  extern Option GlitchItemlessWasteland;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

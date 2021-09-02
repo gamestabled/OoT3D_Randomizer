@@ -1260,4 +1260,11 @@ string_view GlitchSeamWalkDescDisabled                = "";                     
 /* EPG */                                                                                                  //
 string_view GlitchEntrancePointDescDisabled           = "";                                                //
 /* Misc Glitches */                                                                                        //
-string_view GlitchGVTentAsChildDesc                   = "";                                                //
+string_view GlitchGVTentAsChildDesc                   = "The loading zone for the carpenters' tent exists\n"
+                                                        "in the child map despite the tent being removed.\n\n"
+                                                        "With this setting enabled you may be expected to\n"
+                                                        "use that loading zone.";                          //
+string_view GlitchItemlessWastelandDesc               = "By starting a backwalk and then targeting every\n"//
+                                                        "other frame Link will maintain backwalk speed\n"  //
+                                                        "over the quicksand in the haunted wasteland which\n"
+                                                        "lets him cross with no items.";                   //

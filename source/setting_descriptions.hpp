@@ -415,3 +415,4 @@ extern string_view GlitchSeamWalkDescDisabled;
 extern string_view GlitchEntrancePointDescDisabled;
 
 extern string_view GlitchGVTentAsChildDesc;
+extern string_view GlitchItemlessWastelandDesc;
