@@ -7,6 +7,7 @@
 #include "fill.hpp"
 #include "item_location.hpp"
 #include "music.hpp"
+#include "sound_effects.hpp"
 #include "random.hpp"
 #include "randomizer.hpp"
 #include "setting_descriptions.hpp"
@@ -17,6 +18,7 @@ using namespace Cosmetics;
 using namespace Dungeon;
 using namespace Trial;
 using namespace Music;
+using namespace SFX;
 
 namespace Settings {
   std::string seed;
@@ -721,6 +723,8 @@ namespace Settings {
   Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions}, {fanfareDescriptions},                                                                                                                                                     OptionCategory::Cosmetic,               1); // Fanfares only
   Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {shuffleOcaMusicDesc},                                                                                                                                                     OptionCategory::Cosmetic,               1); // On
 
+  Option ShuffleSFX = Option::U8("Shuffle SFX", {"Off", "Categorically", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXCategorically, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                  OptionCategory::Cosmetic);
+
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
     &ChildTunicColor,
@@ -736,6 +740,7 @@ namespace Settings {
     &ShuffleBGM,
     &ShuffleFanfares,
     &ShuffleOcaMusic,
+    &ShuffleSFX,
   };
 
   Menu loadSettingsPreset       = Menu::Action("Load Settings Preset",       LOAD_PRESET);
@@ -901,6 +906,7 @@ namespace Settings {
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
     ctx.coloredKeys          = (ColoredKeys) ? 1 : 0;
     ctx.coloredBossKeys      = (ColoredBossKeys) ? 1 : 0;
+    ctx.shuffleSFX           = ShuffleSFX.Value<u8>();
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
@@ -1893,20 +1899,33 @@ namespace Settings {
     InitMusicRandomizer();
     if (ShuffleMusic) {
       if (ShuffleBGM) {
-        ShuffleSequences(SeqType::SEQ_BGM);
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM);
       }
 
       if (ShuffleFanfares.Is(2)) {
-        ShuffleSequences(SeqType::SEQ_FANFARE | SeqType::SEQ_OCARINA);
+        Music::ShuffleSequences(Music::SeqType::SEQ_FANFARE | Music::SeqType::SEQ_OCARINA);
       } else {
         if (ShuffleFanfares.Is(1)) {
-          ShuffleSequences(SeqType::SEQ_FANFARE);
+          Music::ShuffleSequences(Music::SeqType::SEQ_FANFARE);
         }
 
         if (ShuffleOcaMusic) {
-          ShuffleSequences(SeqType::SEQ_OCARINA);
+          Music::ShuffleSequences(Music::SeqType::SEQ_OCARINA);
         }
       }
+    }
+
+    InitSFXRandomizer();
+    if (ShuffleSFX.Is(SHUFFLESFX_CATEGORICALLY)) {
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_PLAYER);
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_ITEM);
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_EVENT);
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_ENEMY);
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_SYSTEM);
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_OCARINA);
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_VOICEOVER);
+    } else if (ShuffleSFX.Is(SHUFFLESFX_ALL) || ShuffleSFX.Is(SHUFFLESFX_SCENESPECIFIC) || ShuffleSFX.Is(SHUFFLESFX_CHAOS)) {
+      SFX::ShuffleSequences(SFX::SeqType::SEQ_PLAYER | SFX::SeqType::SEQ_ITEM | SFX::SeqType::SEQ_EVENT | SFX::SeqType::SEQ_ENEMY | SFX::SeqType::SEQ_SYSTEM | SFX::SeqType::SEQ_OCARINA | SFX::SeqType::SEQ_VOICEOVER);
     }
   }
 

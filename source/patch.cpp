@@ -3,6 +3,7 @@
 #include "cosmetics.hpp"
 #include "custom_messages.hpp"
 #include "music.hpp"
+#include "sound_effects.hpp"
 #include "shops.hpp"
 #include "spoiler_log.hpp"
 #include "entrance.hpp"
@@ -327,9 +328,19 @@ bool WriteAllPatches() {
   ---------------------------------*/
 
   patchOffset = V_TO_P(RBGMOVERRIDES_ADDR);
-  patchSize = sizeof(Music::seqOverrides);
-  if (!WritePatch(patchOffset, patchSize, (char*)Music::seqOverrides.data(), code, bytesWritten, totalRW, buf)) {
+  patchSize = sizeof(Music::seqOverridesMusic);
+  if (!WritePatch(patchOffset, patchSize, (char*)Music::seqOverridesMusic.data(), code, bytesWritten, totalRW, buf)) {
     return false;
+  }
+
+  /*--------------------------------
+  |         rSFXOverrides          |
+  ---------------------------------*/
+
+  patchOffset = V_TO_P(RSFXOVERRIDES_ADDR);
+  patchSize = sizeof(SFX::seqOverridesSFX);
+  if (!WritePatch(patchOffset, patchSize, (char*)SFX::seqOverridesSFX.data(), code, bytesWritten, totalRW, buf)) {
+      return false;
   }
 
   /*--------------------------------

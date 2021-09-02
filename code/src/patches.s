@@ -1516,6 +1516,11 @@ SetBGMEntrance_patch:
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
 
+.section .patch_SetSFX
+.global SetSFX_patch
+SetSFX_patch:
+    b hook_SetSFX
+
 .section .patch_GiantsKnifeWithoutKokiriSword
 .global GiantsKnifeWithoutKokiriSword_patch
 GiantsKnifeWithoutKokiriSword_patch:

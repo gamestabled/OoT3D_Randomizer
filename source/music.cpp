@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 namespace Music {
-    const std::array<SeqType, SEQ_COUNT> seqTypes = {
+    const std::array<SeqType, SEQ_COUNT> seqTypesMusic = {
         /* NA_BGM_FIELD */              SEQ_BGM,
         /* NA_BGM_DUNGEON */            SEQ_BGM,
         /* NA_BGM_KAKARIKO_ADULT */     SEQ_BGM,
@@ -91,12 +91,12 @@ namespace Music {
         /* NA_BGM_MINI_GAME_2 */        SEQ_BGM
     };
 
-    std::array<u32, SEQ_COUNT> seqOverrides;
+    std::array<u32, SEQ_COUNT> seqOverridesMusic;
 
     /* Initializes the list of music overrides to unshuffled */
     void InitMusicRandomizer() {
         for(int i = 0; i < SEQ_COUNT; i++)
-            seqOverrides[i] = BGM_BASE + i;
+            seqOverridesMusic[i] = BGM_BASE + i;
     }
 
     /* Shuffles the sequences grouping them by type */
@@ -106,8 +106,8 @@ namespace Music {
 
         // Get all sequences of the desired type(s) into a vector
         for (int i = 0; i < SEQ_COUNT; i++) {
-            if (seqTypes[i] & type) {
-                seqs.push_back(seqOverrides[i]);
+            if (seqTypesMusic[i] & type) {
+                seqs.push_back(seqOverridesMusic[i]);
             }
         }
 
@@ -119,9 +119,9 @@ namespace Music {
 
         // ...and feed it back into the overrides array
         for (int i = 0; i < SEQ_COUNT; i++) {
-            if (seqTypes[i] & type)
+            if (seqTypesMusic[i] & type)
             {
-                seqOverrides[i] = seqs.back();
+                seqOverridesMusic[i] = seqs.back();
                 seqs.pop_back();
             }
         }

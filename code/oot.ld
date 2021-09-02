@@ -744,6 +744,10 @@ SECTIONS
 		*(.patch_ConvertBombDropTwo)
 	}
 
+	.patch_SetSFX 0x37547C : {
+		*(.patch_SetSFX)
+	}
+
 	.patch_GKSetDurability 0x376BDC : {
 		*(.patch_GKSetDurability)
 	}
