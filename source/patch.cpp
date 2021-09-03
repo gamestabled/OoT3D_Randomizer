@@ -333,14 +333,14 @@ bool WriteAllPatches() {
     return false;
   }
 
-  /*--------------------------------
-  |         rSFXOverrides          |
+  /*---------------------------------
+  |            rSfxData             |
   ---------------------------------*/
 
-  patchOffset = V_TO_P(RSFXOVERRIDES_ADDR);
-  patchSize = sizeof(SFX::seqOverridesSFX);
-  if (!WritePatch(patchOffset, patchSize, (char*)SFX::seqOverridesSFX.data(), code, bytesWritten, totalRW, buf)) {
-      return false;
+  patchOffset = V_TO_P(RSFXDATA_ADDR);
+  patchSize = sizeof(SFXData);
+  if (!WritePatch(patchOffset, patchSize, (char*)(&SFX::GetSFXData()), code, bytesWritten, totalRW, buf)) {
+    return false;
   }
 
   /*--------------------------------

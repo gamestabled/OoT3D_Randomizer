@@ -545,6 +545,8 @@ namespace Settings {
   extern Option ShuffleBGM;
   extern Option ShuffleFanfares;
   extern Option ShuffleOcaMusic;
+  extern Option ShuffleSFX;
+  extern Option ShuffleSFXCategorically;
 
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;

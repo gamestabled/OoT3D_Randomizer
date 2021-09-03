@@ -290,7 +290,6 @@ typedef enum {
 
 typedef enum {
   SHUFFLESFX_OFF,
-  SHUFFLESFX_CATEGORICALLY,
   SHUFFLESFX_ALL,
   SHUFFLESFX_SCENESPECIFIC,
   SHUFFLESFX_CHAOS,
@@ -391,6 +390,9 @@ typedef struct {
   u8 coloredBossKeys;
   u8 mirrorWorld;
 
+  u8 shuffleSFX;
+  u8 shuffleSFXCategorically;
+
   u8 dekuTreeDungeonMode;
   u8 dodongosCavernDungeonMode;
   u8 jabuJabusBellyDungeonMode;
@@ -452,8 +454,6 @@ typedef struct {
   u32 startingUpgrades;
 
   u8 startingTokens;
-
-  u8 shuffleSFX;
 
 } SettingsContext;
 

@@ -768,14 +768,14 @@ string_view shuffleOcaMusicDesc       = "The music that plays back after you pla
 |         SHUFFLE SFX          |                                                           //
 ------------------------------*/                                                           //
 string_view shuffleSFXOff             = "Sound effects will stay vanilla.";                //
-string_view shuffleSFXCategorically   = "Sound effects will be shuffled in categories.";   //
-string_view shuffleSFXAll             = "All sound effects will be shuffled with\n"        //
-                                        "each other.";                                     //
-string_view shuffleSFXSceneSpecific   = "All sound effects will be shuffled with\n"        //
-                                        "each other, but will also be unique per scene.";  //
-string_view shuffleSFXChaos           = "Each sound effect will become random every second."
+string_view shuffleSFXAll             = "All sound effects will be shuffled.";             //
+string_view shuffleSFXSceneSpecific   = "All sound effects will be shuffled, but will also\n"
+                                        "be different in each scene.";                     //
+string_view shuffleSFXChaos           = "Each sound effect will become random about\n"     //
+                                        "every second.";                                   //
+string_view shuffleSFXCategorically   = "Sound effects will be shuffled in categories.\n"  //
                                         "\n"                                               //
-                                        "WARNING: May get annoying quick.";                //
+                                        "The sound may get annoying fast when disabled.";  //
 /*------------------------------                                                           //
 |    RANDOM TRAP DAMAGE TYPE   |                                                           //
 ------------------------------*/                                                           //

@@ -1,7 +1,7 @@
 #include "z3D/z3D.h"
 #include "bgm.h"
 
-static u32 rBGMOverrides[128] = { 0 };
+static u32 rBGMOverrides[128] = {0};
 
 u32 SetBGM(u32 original) {
     s32 i = original - BGM_BASE;

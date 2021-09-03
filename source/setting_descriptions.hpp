@@ -259,10 +259,10 @@ extern string_view fanfaresOcarinaDesc;
 extern string_view shuffleOcaMusicDesc;
 
 extern string_view shuffleSFXOff;
-extern string_view shuffleSFXCategorically;
 extern string_view shuffleSFXAll;
 extern string_view shuffleSFXSceneSpecific;
 extern string_view shuffleSFXChaos;
+extern string_view shuffleSFXCategorically;
 
 extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
