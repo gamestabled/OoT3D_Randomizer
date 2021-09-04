@@ -838,6 +838,9 @@ string_view LogicOutsideGanonsGSDesc                  = "Difficulty: Intermediat
                                                         "from the top of the broken arch.";                //
 string_view LogicManOnRoofDesc                        = "Difficulty: Novice\n"                             //
                                                         "Can be reached by side-hopping off the watchtower.";
+string_view LogicWindmillPoHHookshotDesc              = "Difficulty: Novice\n"                             //
+                                                        "Adult Link can reach the upper area of the windmill"
+                                                        "using the hookshot and a midair jump slash.";     //
 string_view LogicDMTBombableDesc                      = "Difficulty: Expert\n"                             //
                                                         "Child Link can blow up the wall using a nearby\n" //
                                                         "bomb flower. You must backwalk with the flower and"

@@ -444,6 +444,7 @@ namespace Settings {
   Option LogicColossusGS                  = LogicTrick(" Colossus Hill GS\n   w/ Hookshot",           LogicColossusGSDesc);
   Option LogicOutsideGanonsGS             = LogicTrick(" Outside GaC GS\n   w/ Jump Slash",           LogicOutsideGanonsGSDesc);
   Option LogicManOnRoof                   = LogicTrick(" Kak Roof Guy\n   w/o Hookshot",              LogicManOnRoofDesc);
+  Option LogicWindmillPoHHookshot         = LogicTrick(" Windmill PoH\n w/ Hookshot",                 LogicWindmillPoHHookshotDesc);
   Option LogicDMTBombable                 = LogicTrick(" DMT Wall Chest\n   w/ Strength",             LogicDMTBombableDesc);
   Option LogicDMTSoilGS                   = LogicTrick(" DMT Soil GS\n   w/o Opening DC",             LogicDMTSoilGSDesc);
   Option LogicLinkGoronDins               = LogicTrick(" GoC Adult Goron\n   w/ Din's Fire",          LogicLinkGoronDinsDesc);
@@ -529,6 +530,7 @@ namespace Settings {
     &LogicColossusGS,
     &LogicOutsideGanonsGS,
     &LogicManOnRoof,
+    &LogicWindmillPoHHookshot,
     &LogicDMTBombable,
     //&LogicDMTSoilGS, Needs Testing
     &LogicLinkGoronDins,
@@ -631,7 +633,7 @@ namespace Settings {
   Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00111), { GlitchHookshotJump_BonkDescDisabled  ,                                      GlitchHookshotJump_BonkDescIntermediate                                                                                                                 });
   Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", GlitchDifficultyOptions(0b00111), { GlitchHookshotJump_BootsDescDisabled , GlitchHookshotJump_BootsDescNovice , GlitchHookshotJump_BootsDescIntermediate                                                                                                                });
   Option GlitchCutsceneDive       = Option::U8("Cutscene Dives",        GlitchDifficultyOptions(0b00001), { GlitchCutsceneDiveDescDisabled                                                                                                                                                                                                      });
-  Option GlitchNaviDive_Stick     = Option::U8("Navi Dive (Stick)",     GlitchDifficultyOptions(0b00110), { GlitchNaviDive_StickDescDisabled                                                                                                                                                                                                    });
+  Option GlitchNaviDive_Stick     = Option::U8("Navi Dive (Stick)",     GlitchDifficultyOptions(0b00111), { GlitchNaviDive_StickDescDisabled                                                                                                                                                                                                    });
   Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b00111), { GlitchTripleSlashClipDescDisabled    , GlitchTripleSlashClipDescNovice                                                                                                                                                              });
   Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00111), { GlitchLedgeClipDescDisabled          , GlitchLedgeClipDescNovice          , GlitchLedgeClipDescIntermediate                                                                                                                         });
   Option GlitchSeamWalk           = Option::U8("Seam Walk",             GlitchDifficultyOptions(0b11011), { GlitchSeamWalkDescDisabled                                                                                                                                                                                                          });
@@ -1556,6 +1558,7 @@ namespace Settings {
           LogicLabDiving.SetSelectedIndex(1);
           LogicGraveyardPoH.SetSelectedIndex(1);
           LogicManOnRoof.SetSelectedIndex(1);
+          LogicWindmillPoHHookshot.SetSelectedIndex(1);
           LogicGoronCityLeftMost.SetSelectedIndex(1);
           LogicZoraRiverLower.SetSelectedIndex(1);
           LogicZoraRiverUpper.SetSelectedIndex(1);

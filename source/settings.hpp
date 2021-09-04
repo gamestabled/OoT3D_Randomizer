@@ -444,6 +444,7 @@ namespace Settings {
   extern Option LogicColossusGS;
   extern Option LogicOutsideGanonsGS;
   extern Option LogicManOnRoof;
+  extern Option LogicWindmillPoHHookshot;
   extern Option LogicDMTBombable;
   extern Option LogicDMTSoilGS;
   extern Option LogicLinkGoronDins;
