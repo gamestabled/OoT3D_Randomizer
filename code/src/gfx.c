@@ -332,7 +332,8 @@ static void Gfx_ShowMenu(void) {
         itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100;
     }
 
-    Draw_ClearBackbuffer();
+    Draw_ClearFramebuffer();
+    Draw_FlushFramebuffer();
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -451,6 +452,7 @@ static void Gfx_ShowMenu(void) {
 
 void Gfx_Init(void) {
     Draw_SetupFramebuffer();
+    Draw_ClearBackbuffer();
 
     // Setup the title screen logo edits
     gActorOverlayTable[0x171].initInfo->init = EnMag_rInit;
@@ -500,6 +502,7 @@ void Gfx_Update(void) {
 
     if(!isAsleep && openingButton() && isInGame){
         Gfx_ShowMenu();
+        // Check again as it's possible the system was put to sleep while the menu was open
         if (!isAsleep) {
             svcSleepThread(1000 * 1000 * 300LL);
             // Update lastTick one more time so we don't count the added 0.3s sleep
