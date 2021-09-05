@@ -427,7 +427,7 @@ namespace SFX {
         /* NA_SE_EV_CHINETRAP_DOWN */           SEQ_EVENT,
         /* NA_SE_EV_PLANT_BROKEN */             SEQ_EVENT,
         /* NA_SE_EV_SHIP_BELL */                SEQ_EVENT,
-        /* NA_SE_EV_FLUTTER_FLAG */             SEQ_EVENT,
+        /* NA_SE_EV_FLUTTER_FLAG */             SEQ_AMBIENCE,
         /* NA_SE_EV_TRAP_BOUND */               SEQ_EVENT,
         /* NA_SE_EV_ROCK_BROKEN */              SEQ_EVENT,
         /* NA_SE_EV_FANTOM_WARP_S2 */           SEQ_EVENT,
@@ -531,7 +531,7 @@ namespace SFX {
         /* NA_SE_EV_GORON_WATER_DROP */         SEQ_EVENT,
         /* NA_SE_EV_JABJAB_GROAN */             SEQ_VOICE,
         /* NA_SE_EV_DARUMA_VANISH */            SEQ_EVENT,
-        /* NA_SE_EV_BIGBALL_ROLL */             SEQ_EVENT,
+        /* NA_SE_EV_BIGBALL_ROLL */             SEQ_MOVE,
         /* NA_SE_EV_ELEVATOR_MOVE3 */           SEQ_MOVE,
         /* NA_SE_EV_DIAMOND_SWITCH */           SEQ_EVENT,
         /* NA_SE_EV_FLAME_OF_FIRE */            SEQ_EVENT,
@@ -611,10 +611,10 @@ namespace SFX {
         /* NA_SE_EV_DAIKU_CLOTH1 */             SEQ_EVENT,
         /* NA_SE_EV_DEMO_EPONA_LAND */          SEQ_NOSHUFFLE,
         /* NA_SE_EV_DIVE_INTO_WATER_BLOCK */    SEQ_EVENT,
-        /* NA_SE_EV_TORCH2 */                   SEQ_EVENT,
-        /* NA_SE_EV_TORCH3 */                   SEQ_EVENT,
-        /* NA_SE_EV_TORCH4 */                   SEQ_EVENT,
-        /* NA_SE_EV_TORCH5 */                   SEQ_EVENT,
+        /* NA_SE_EV_TORCH2 */                   SEQ_AMBIENCE,
+        /* NA_SE_EV_TORCH3 */                   SEQ_AMBIENCE,
+        /* NA_SE_EV_TORCH4 */                   SEQ_AMBIENCE,
+        /* NA_SE_EV_TORCH5 */                   SEQ_AMBIENCE,
         /* NA_SE_EV_EARTHQUAKE_LAST */          SEQ_EVENT,
         /* NA_SE_EV_YAMI_TRAP_CHAIN */          SEQ_EVENT,
         /* NA_SE_EV_FLAME_IGNITION_GANON */     SEQ_EVENT,
@@ -779,7 +779,7 @@ namespace SFX {
         /* NA_SE_EN_FALL_WALK */                SEQ_WALK,
         /* NA_SE_EN_FALL_DAMAGE */              SEQ_DAMAGE,
         /* NA_SE_EN_FALL_DEAD */                SEQ_DEAD,
-        /* NA_SE_EN_KAICHO_FLUTTER */           SEQ_ENEMY,
+        /* NA_SE_EN_KAICHO_FLUTTER */           SEQ_FLY,
         /* NA_SE_EN_BIRI_FLY */                 SEQ_FLY,
         /* NA_SE_EN_BIRI_JUMP */                SEQ_JUMP,
         /* NA_SE_EN_BIRI_SPARK */               SEQ_ENEMY,
@@ -882,7 +882,7 @@ namespace SFX {
         /* NA_SE_EN_MOFER_CORE_FLY */           SEQ_FLY,
         /* NA_SE_EN_GOLON_WAKE_UP */            SEQ_ENEMY,
         /* NA_SE_EN_GOLON_SIT_DOWN */           SEQ_ENEMY,
-        /* NA_SE_EN_CHICKEN_FLUTTER */          SEQ_ENEMY,
+        /* NA_SE_EN_CHICKEN_FLUTTER */          SEQ_FLY,
         /* NA_SE_EN_DEKU_WAKEUP */              SEQ_ENEMY,
         /* NA_SE_EN_DEADHAND_BITE */            SEQ_ENEMY,
         /* NA_SE_EN_DEADHAND_WALK */            SEQ_WALK,
@@ -922,7 +922,7 @@ namespace SFX {
         /* NA_SE_EN_TWINROBA_THROW_MASIC */     SEQ_ENEMY,
         /* NA_SE_EN_DARUNIA_HIT_BREAST */       SEQ_ENEMY,
         /* NA_SE_EN_DARUNIA_HIT_LINK */         SEQ_ENEMY,
-        /* NA_SE_EN_OWL_FLUTTER */              SEQ_ENEMY,
+        /* NA_SE_EN_OWL_FLUTTER */              SEQ_FLY,
         /* NA_SE_EN_VALVAISA_LAND */            SEQ_LAND,
         /* NA_SE_EN_IRONNACK_WALK */            SEQ_WALK,
         /* NA_SE_EN_IRONNACK_SWING_AXE */       SEQ_ENEMY,
@@ -962,7 +962,7 @@ namespace SFX {
         /* NA_SE_EN_NYU_DEAD */                 SEQ_DEAD,
         /* NA_SE_EN_EIER_DAMAGE */              SEQ_DAMAGE,
         /* NA_SE_EN_EIER_DEAD */                SEQ_DEAD,
-        /* NA_SE_EN_EIER_FLUTTER */             SEQ_ENEMY,
+        /* NA_SE_EN_EIER_FLUTTER */             SEQ_FLY,
         /* NA_SE_EN_EIER_FLY */                 SEQ_FLY,
         /* NA_SE_EN_SHADEST_TAIKO_LOW */        SEQ_ENEMY,
         /* NA_SE_EN_SHADEST_TAIKO_HIGH */       SEQ_ENEMY,
@@ -1431,12 +1431,12 @@ namespace SFX {
                 }
 
                 // Shuffle the vector...
-                for (std::size_t i = 0; i < seqs.size(); i++) {
+                for (size_t i = 0; i < seqs.size(); i++) {
                     std::swap(seqs[i], seqs[rand() % seqs.size()]);
                 }
 
                 // ...and feed it back into the overrides arrays
-                for (std::size_t i = 0; i < seqs.size(); i++) {
+                for (size_t i = 0; i < seqs.size(); i++) {
                     sfxData.rSFXOverrides_Types[type][i] = seqs[i];
                 }
                 for (int i = 0; i < SFX_COUNT; i++) {
@@ -1455,13 +1455,24 @@ namespace SFX {
             }
 
             // Shuffle the vector...
-            for (std::size_t i = 0; i < seqs.size(); i++) {
+            for (size_t i = 0; i < seqs.size(); i++) {
                 std::swap(seqs[i], seqs[rand() % seqs.size()]);
             }
 
             // ...and feed it back into the overrides array
             for (int i = 0; i < SFX_COUNT; i++) {
                 sfxData.rSFXOverrides_All[i] = seqs[i];
+            }
+
+            // Lastly fill the AllTrimmed array
+            std::vector<u32> seqsTrimmed;
+            for (int i = 0; i < SFX_COUNT; i++) {
+                if (seqTypesSFX[i] != SEQ_NOSHUFFLE) {
+                    seqsTrimmed.push_back(seqs[i]);
+                }
+            }
+            for (size_t i = 0; i < seqsTrimmed.size(); i++) {
+                sfxData.rSFXOverrides_AllTrimmed[i] = seqsTrimmed[i];
             }
         }
     }

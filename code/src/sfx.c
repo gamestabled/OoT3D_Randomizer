@@ -33,10 +33,10 @@ u32 SetSFX(u32 original) {
         }
     } else {
         if (gSettingsContext.shuffleSFX == SHUFFLESFX_SCENESPECIFIC) {
-            return rSfxData.rSFXOverrides_All[(sfxID + gGlobalContext->sceneNum) % SFX_COUNT];
+            return rSfxData.rSFXOverrides_AllTrimmed[(sfxID + gGlobalContext->sceneNum) % SFX_COUNT_TRIMMED];
         }
         else if (gSettingsContext.shuffleSFX == SHUFFLESFX_CHAOS) {
-            return rSfxData.rSFXOverrides_All[(sfxID + gRandInt) % SFX_COUNT];
+            return rSfxData.rSFXOverrides_AllTrimmed[(sfxID + gRandInt) % SFX_COUNT_TRIMMED];
         }
     }
 
