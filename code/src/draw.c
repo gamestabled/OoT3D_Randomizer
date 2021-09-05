@@ -38,6 +38,15 @@
 
 static u8* FRAMEBUFFER[6];
 static u8 backBufferBtm[FB_BOTTOM_SIZE];
+static u32 frontBufferIdx_btm = 0;
+
+void Draw_PreSwapBuffers(Draw_Display display)
+{
+    if (display == DISPLAY_1 || display == DISPLAY_BOTH)
+    {
+        frontBufferIdx_btm = ++frontBufferIdx_btm % 2;
+    }
+}
 
 static RecursiveLock lock;
 
@@ -272,8 +281,7 @@ u32 Draw_DrawFormattedStringTop(u32 posX, u32 posY, u32 color, const char *fmt, 
 
 void Draw_FillFramebuffer(u32 value)
 {
-    memset(FRAMEBUFFER[0], value, FB_BOTTOM_SIZE);
-    memset(FRAMEBUFFER[1], value, FB_BOTTOM_SIZE);
+    memset(FRAMEBUFFER[frontBufferIdx_btm], value, FB_BOTTOM_SIZE);
 }
 
 void Draw_ClearFramebuffer(void)
@@ -303,15 +311,13 @@ void Draw_ClearBackbuffer(void)
 
 void Draw_CopyBackBuffer(void)
 {
-    memcpy(FRAMEBUFFER[0], backBufferBtm, FB_BOTTOM_SIZE);
-    memcpy(FRAMEBUFFER[1], backBufferBtm, FB_BOTTOM_SIZE);
+    memcpy(FRAMEBUFFER[frontBufferIdx_btm], backBufferBtm, FB_BOTTOM_SIZE);
     Draw_FlushFramebuffer();
 }
 
 void Draw_FlushFramebuffer(void)
 {
-    svcFlushProcessDataCache(CUR_PROCESS_HANDLE, FRAMEBUFFER[0], FB_BOTTOM_SIZE);
-    svcFlushProcessDataCache(CUR_PROCESS_HANDLE, FRAMEBUFFER[1], FB_BOTTOM_SIZE);
+    svcFlushProcessDataCache(CUR_PROCESS_HANDLE, FRAMEBUFFER[frontBufferIdx_btm], FB_BOTTOM_SIZE);
 }
 
 void Draw_FlushFramebufferTop(void)

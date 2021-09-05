@@ -55,6 +55,14 @@
 
 #define DRAW_MAX_FORMATTED_STRING_SIZE  512
 
+typedef enum
+{
+    DISPLAY_0       = 0x400,
+    DISPLAY_1       = 0x401,
+    DISPLAY_BOTH    = 0x402,
+    DISPLAY0_EXT    = 0x410,
+} Draw_Display;
+
 void Draw_Lock(void);
 void Draw_Unlock(void);
 

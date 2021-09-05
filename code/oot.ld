@@ -964,6 +964,10 @@ SECTIONS
 		*(.patch_CarpetSalesmanSetFlag)
 	}
 
+	.patch_PreSwapBuffers 0x3FD384 : {
+		*(.patch_PreSwapBuffers)
+	}
+
 	.patch_AwakeCallback 0x3FD43C : {
 		*(.patch_AwakeCallback)
 	}

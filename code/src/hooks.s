@@ -23,6 +23,13 @@ hook_Gfx_Update:
     pop {r0-r12, lr}
     pop {r4-r8, pc}
 
+.global hook_Draw_PreSwapBuffers
+hook_Draw_PreSwapBuffers:
+    push {r0-r12, lr}
+    bl Draw_PreSwapBuffers
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_Gfx_SleepQueryCallback
 hook_Gfx_SleepQueryCallback:
     push {r0-r12, lr}

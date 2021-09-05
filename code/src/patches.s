@@ -1427,6 +1427,11 @@ ItemsMenuNumSprites_patch:
 ItemsMenuDraw_patch:
     bl hook_ItemsMenuDraw
 
+.section .patch_PreSwapBuffers
+.global PreSwapBuffers_patch
+PreSwapBuffers_patch:
+    bl hook_Draw_PreSwapBuffers
+
 .section .patch_SleepQueryCallback
 .global SleepQueryCallback_patch
 SleepQueryCallback_patch:
