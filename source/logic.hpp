@@ -322,6 +322,7 @@ namespace Logic {
     BombHover,
     BombOI,
     OutdoorBombOI,
+    WindmillBombOI,
     IndoorBombOI,
     DungeonBombOI,
     HoverBoost,

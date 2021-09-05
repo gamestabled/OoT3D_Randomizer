@@ -447,6 +447,7 @@ namespace Settings {
   extern Option LogicWindmillPoHHookshot;
   extern Option LogicDMTBombable;
   extern Option LogicDMTSoilGS;
+  extern Option LogicDMTSummitHover;
   extern Option LogicLinkGoronDins;
   extern Option LogicGoronCityLeftMost;
   extern Option LogicGoronCityPot;

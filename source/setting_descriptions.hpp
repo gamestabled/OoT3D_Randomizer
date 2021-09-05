@@ -287,6 +287,7 @@ extern string_view LogicManOnRoofDesc;
 extern string_view LogicWindmillPoHHookshotDesc;
 extern string_view LogicDMTBombableDesc;
 extern string_view LogicDMTSoilGSDesc;
+extern string_view LogicDMTSummitHoverDesc;
 extern string_view LogicLinkGoronDinsDesc;
 extern string_view LogicGoronCityLeftMostDesc;
 extern string_view LogicGoronCityPotDesc;
@@ -358,6 +359,7 @@ extern string_view LogicSpiritTrialHookshotDesc;
 extern const std::vector<string_view> GlitchDifficulties;
 
 extern string_view GlitchRestrictedItemsDescDisabled;
+extern string_view GlitchRestrictedItemsDescNovice;
 
 extern string_view GlitchISGDescDisabled;
 extern string_view GlitchISGDescNovice;
@@ -368,10 +370,21 @@ extern string_view GlitchHoverDescIntermediate;
 extern string_view GlitchHoverDescAdvanced;
 
 extern string_view GlitchBombOIDescDisabled;
+extern string_view GlitchBombOIDescNovice;
+extern string_view GlitchBombOIDescIntermediate;
+extern string_view GlitchBombOIDescAdvanced;
+extern string_view GlitchBombOIDescExpert;
 
 extern string_view GlitchHoverBoostDescDisabled;
+extern string_view GlitchHoverBoostDescNovice;
+extern string_view GlitchHoverBoostDescIntermediate;
+extern string_view GlitchHoverBoostDescAdvanced;
 
 extern string_view GlitchSuperSlideDescDisabled;
+extern string_view GlitchSuperSlideDescNovice;
+extern string_view GlitchSuperSlideDescIntermediate;
+extern string_view GlitchSuperSlideDescAdvanced;
+extern string_view GlitchSuperSlideDescExpert;
 
 extern string_view GlitchMegaflipDescDisabled;
 extern string_view GlitchMegaflipDescNovice;
@@ -381,37 +394,65 @@ extern string_view GlitchMegaflipDescExpert;
 extern string_view GlitchMegaflipDescHero;
 
 extern string_view GlitchASlideDescDisabled;
+extern string_view GlitchASlideDescIntermediate;
+extern string_view GlitchASlideDescExpert;
 
 extern string_view GlitchHammerSlideDescDisabled;
+extern string_view GlitchHammerSlideDescNovice;
+extern string_view GlitchHammerSlideDescIntermediate;
 
 extern string_view GlitchLedgeCancelDescDisabled;
+extern string_view GlitchLedgeCancelDescNovice;
+extern string_view GlitchLedgeCancelDescAdvanced;
 
 extern string_view GlitchActionSwapDescDisabled;
+extern string_view GlitchActionSwapDescNovice;
+extern string_view GlitchActionSwapDescAdvanced;
 
 extern string_view GlitchQPADescDisabled;
+extern string_view GlitchQPADescNovice;
+extern string_view GlitchQPADescIntermediate;
+extern string_view GlitchQPADescAdvanced;
+extern string_view GlitchQPADescExpert;
 
 extern string_view GlitchHookshotClipDescDisabled;
 extern string_view GlitchHookshotClipDescNovice;
 
 extern string_view GlitchHookshotJump_BonkDescDisabled;
+extern string_view GlitchHookshotJump_BonkDescNovice;
 extern string_view GlitchHookshotJump_BonkDescIntermediate;
+extern string_view GlitchHookshotJump_BonkDescAdvanced;
 
 extern string_view GlitchHookshotJump_BootsDescDisabled;
 extern string_view GlitchHookshotJump_BootsDescNovice;
 extern string_view GlitchHookshotJump_BootsDescIntermediate;
+extern string_view GlitchHookshotJump_BootsDescAdvanced;
 
 extern string_view GlitchCutsceneDiveDescDisabled;
+extern string_view GlitchCutsceneDiveDescNovice;
 
 extern string_view GlitchNaviDive_StickDescDisabled;
+extern string_view GlitchNaviDive_StickDescNovice;
+extern string_view GlitchNaviDive_StickDescIntermediate;
+extern string_view GlitchNaviDive_StickDescAdvanced;
 
 extern string_view GlitchTripleSlashClipDescDisabled;
 extern string_view GlitchTripleSlashClipDescNovice;
+extern string_view GlitchTripleSlashClipDescIntermediate;
+extern string_view GlitchTripleSlashClipDescAdvanced;
+extern string_view GlitchTripleSlashClipDescExpert;
 
 extern string_view GlitchLedgeClipDescDisabled;
 extern string_view GlitchLedgeClipDescNovice;
 extern string_view GlitchLedgeClipDescIntermediate;
+extern string_view GlitchLedgeClipDescAdvanced;
 
 extern string_view GlitchSeamWalkDescDisabled;
+extern string_view GlitchSeamWalkDescNovice;
+extern string_view GlitchSeamWalkDescIntermediate;
+extern string_view GlitchSeamWalkDescAdvanced;
+extern string_view GlitchSeamWalkDescExpert;
+extern string_view GlitchSeamWalkDescHero;
 
 extern string_view GlitchEntrancePointDescDisabled;
 
