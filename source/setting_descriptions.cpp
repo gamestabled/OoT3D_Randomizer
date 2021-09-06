@@ -896,6 +896,10 @@ string_view LogicZoraRiverLowerDesc                   = "Difficulty: Novice\n"  
 string_view LogicZoraRiverUpperDesc                   = "Difficulty: Novice\n"                             //
                                                         "Adult can reach this PoH with a precise jump, no\n"
                                                         "Hover Boots required.";                           //
+string_view LogicZFGreatFairyDesc                     = "Difficulty: Novice\n"                             //
+                                                        "Destroying the boulders blocking the hidden area\n"
+                                                        "with silver gauntlets and hammer lets you pass\n" //
+                                                        "under the wall to the great fairy fountain.";     //
 string_view LogicDekuB1WebsWithBowDesc                = "Difficulty: Novice\n"                             //
                                                         "All spider web walls in the Deku Tree basement can"
                                                         "be burnt as adult with just a bow by shooting\n"  //
@@ -1321,8 +1325,13 @@ string_view GlitchItemlessWastelandDesc               = "By starting a backwalk 
 string_view GlitchOccamsStatueDesc                    = "With some precise movement through loading zones\n"
                                                         "in Darunia's room, it is possible to unload the\n"//
                                                         "collision of the statue blocking the way to DMC.";//
-string_view GlitchZDOoBJumpSlashDesc                 = "Jump slashing the wall next to the pillar above\n"//
+string_view GlitchZDOoBJumpSlashDesc                  = "Jump slashing the wall next to the pillar above\n"//
                                                         "the ZD to LH shortcut as adult will let you clip\n"
                                                         "through. From here you can either jump to the shop\n"
                                                         "loading zone or fall OoB a little bit and swim\n" //
-                                                         "into the shortcut loading zone.";                //
+                                                        "into the shortcut loading zone.";                 //
+string_view GlitchJabuStickRecoilDesc                 = "Child can enter Jabu without a fish in a bottle\n"//
+                                                        "using the recoil from breaking a deku stick while\n"
+                                                        "sidehopping next to the loading zone.";           //
+string_view GlitchJabuAdultDesc                       = "Adult can enter Jabu by walking over a specific\n"//
+                                                        "section of ice on the side near ice cavern.";     //

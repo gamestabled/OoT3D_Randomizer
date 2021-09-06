@@ -1923,21 +1923,28 @@ void AreaTable_Init() {
                   LocationAccess(ZF_ICEBERG_FREESTANDING_POH, {[]{return IsAdult;}}),
                   LocationAccess(ZF_BOTTOM_FREESTANDING_POH,  {[]{return IsAdult && IronBoots && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));}}),
                   LocationAccess(ZF_GS_TREE,                  {[]{return IsChild;}}),
-                  LocationAccess(ZF_GS_ABOVE_THE_LOG,         {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;}}),
-                  LocationAccess(ZF_GS_HIDDEN_CAVE,           {[]{return CanUse(SILVER_GAUNTLETS) && CanBlastOrSmash && CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
+                  LocationAccess(ZF_GS_ABOVE_THE_LOG,         {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;},
+                                                   /*Glitched*/[]{return IsChild && AtNight && CanGetNightTimeGS && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
+                  LocationAccess(ZF_GS_HIDDEN_CAVE,           {[]{return CanUse(SILVER_GAUNTLETS) && CanBlastOrSmash && CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;},
+                                                   /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::INTERMEDIATE) && CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(ZF_FAIRY_GOSSIP_STONE,       {[]{return true;}}),
                   LocationAccess(ZF_JABU_GOSSIP_STONE,        {[]{return true;}}),
                 }, {
                   //Exits
                   Entrance(ZD_BEHIND_KING_ZORA,       {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_ENTRYWAY, {[]{return (IsChild && Fish);}}),
-                  Entrance(ICE_CAVERN_ENTRYWAY,       {[]{return IsAdult;}}),
-                  Entrance(ZF_GREAT_FAIRY_FOUNTAIN,   {[]{return HasExplosives;}}),
+                  Entrance(JABU_JABUS_BELLY_ENTRYWAY, {[]{return (IsChild && Fish);},
+                                           /*Glitched*/[]{return (CanUse(STICKS) && GlitchJabuStickRecoil) || (IsAdult && GlitchJabuAdult);}}),
+                  Entrance(ICE_CAVERN_ENTRYWAY,       {[]{return IsAdult;},
+                                           /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
+                  Entrance(ZF_GREAT_FAIRY_FOUNTAIN,   {[]{return HasExplosives || (CanUse(SILVER_GAUNTLETS) && Hammer && LogicZFGreatFairy);},
+                                           /*Glitched*/[]{return IsChild && (KokiriSword || Sticks) && CanShield && (CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED) || (CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::INTERMEDIATE)));}}),
   });
 
   areaTable[ZF_GREAT_FAIRY_FOUNTAIN] = Area("ZF Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(ZF_GREAT_FAIRY_REWARD, {[]{return CanPlay(ZeldasLullaby);}}),
+                  LocationAccess(ZF_GREAT_FAIRY_REWARD, {[]{return CanPlay(ZeldasLullaby);},
+                                             /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                                                   ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && ZeldasLullaby;}}),
                 }, {
                   //Exits
                   Entrance(ZORAS_FOUNTAIN, {[]{return true;}}),
@@ -1949,7 +1956,9 @@ void AreaTable_Init() {
                   EventAccess(&LinksCow, {[]{return LinksCow || (CanPlay(EponasSong) && IsAdult && AtDay);}}),
                 }, {
                   //Locations
-                  LocationAccess(SONG_FROM_MALON,     {[]{return IsChild && ZeldasLetter && Ocarina && AtDay;}}),
+                  LocationAccess(SONG_FROM_MALON,     {[]{return IsChild && ZeldasLetter && Ocarina && AtDay;},
+                                           /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                                                 ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && IsChild && ZeldasLetter && AtDay;}}),
                   LocationAccess(LLR_GS_TREE,         {[]{return IsChild;}}),
                   LocationAccess(LLR_GS_RAIN_SHED,    {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(LLR_GS_HOUSE_WINDOW, {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;}}),
@@ -1974,8 +1983,10 @@ void AreaTable_Init() {
 
   areaTable[LLR_STABLES] = Area("LLR Stables", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(LLR_STABLES_LEFT_COW,  {[]{return CanPlay(EponasSong);}}),
-                  LocationAccess(LLR_STABLES_RIGHT_COW, {[]{return CanPlay(EponasSong);}}),
+                  LocationAccess(LLR_STABLES_LEFT_COW,  {[]{return CanPlay(EponasSong);},
+                                             /*Glitched*/[]{return (CanDoGlitch(GlitchType::IndoorBombOI, GlitchDifficulty::EXPERT) || ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE))) && EponasSong;}}),
+                  LocationAccess(LLR_STABLES_RIGHT_COW, {[]{return CanPlay(EponasSong);},
+                                             /*Glitched*/[]{return (CanDoGlitch(GlitchType::IndoorBombOI, GlitchDifficulty::EXPERT) || ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE))) && EponasSong;}}),
                 }, {
                   //Exits
                   Entrance(LON_LON_RANCH, {[]{return true;}}),
@@ -1984,8 +1995,10 @@ void AreaTable_Init() {
   areaTable[LLR_TOWER] = Area("LLR Tower", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(LLR_FREESTANDING_POH, {[]{return IsChild;}}),
-                  LocationAccess(LLR_TOWER_LEFT_COW,   {[]{return CanPlay(EponasSong);}}),
-                  LocationAccess(LLR_TOWER_RIGHT_COW,  {[]{return CanPlay(EponasSong);}}),
+                  LocationAccess(LLR_TOWER_LEFT_COW,   {[]{return CanPlay(EponasSong);},
+                                            /*Glitched*/[]{return (CanDoGlitch(GlitchType::IndoorBombOI, GlitchDifficulty::EXPERT) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE))) && EponasSong;}}),
+                  LocationAccess(LLR_TOWER_RIGHT_COW,  {[]{return CanPlay(EponasSong);},
+                                            /*Glitched*/[]{return (CanDoGlitch(GlitchType::IndoorBombOI, GlitchDifficulty::EXPERT) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE))) && EponasSong;}}),
                 }, {
                   //Exits
                   Entrance(LON_LON_RANCH, {[]{return true;}}),

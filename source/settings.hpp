@@ -458,6 +458,7 @@ namespace Settings {
   extern Option LogicBiggoronBolero;
   extern Option LogicZoraRiverLower;
   extern Option LogicZoraRiverUpper;
+  extern Option LogicZFGreatFairy;
   extern Option LogicDekuB1WebsWithBow;
   extern Option LogicDekuB1Skip;
   extern Option LogicDekuBasementGS;
@@ -543,6 +544,8 @@ namespace Settings {
   extern Option GlitchItemlessWasteland;
   extern Option GlitchOccamsStatue;
   extern Option GlitchZDOoBJumpSlash;
+  extern Option GlitchJabuStickRecoil;
+  extern Option GlitchJabuAdult;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

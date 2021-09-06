@@ -458,6 +458,7 @@ namespace Settings {
   Option LogicBiggoronBolero              = LogicTrick(" DMC Deliver Eyedrops\n   w/ Bolero of Fire", LogicBiggoronBoleroDesc);
   Option LogicZoraRiverLower              = LogicTrick(" ZR Lower PoH\n   w/ Nothing",                LogicZoraRiverLowerDesc);
   Option LogicZoraRiverUpper              = LogicTrick(" ZR Upper PoH\n   w/ Nothing",                LogicZoraRiverUpperDesc);
+  Option LogicZFGreatFairy                = LogicTrick(" ZF Great Fairy\n   w/o Explosives",          LogicZFGreatFairyDesc);
   Option LogicDekuB1WebsWithBow           = LogicTrick(" DT B1 Web\n   w/ Bow",                       LogicDekuB1WebsWithBowDesc);
   Option LogicDekuB1Skip                  = LogicTrick(" DT B1 Navigation\n   w/o Slingshot",         LogicDekuB1SkipDesc);
   Option LogicDekuBasementGS              = LogicTrick(" DT B1 Vines GS\n   w/ Jump Slash",           LogicDekuBasementGSDesc);
@@ -544,6 +545,7 @@ namespace Settings {
     &LogicBiggoronBolero,
     &LogicZoraRiverLower,
     &LogicZoraRiverUpper,
+    &LogicZFGreatFairy,
     &LogicDekuB1WebsWithBow,
     &LogicDekuB1Skip,
     &LogicDekuBasementGS,
@@ -667,11 +669,15 @@ namespace Settings {
   Option GlitchItemlessWasteland = Option::Bool("Cross the HW w/o Items", {"Off", "On"}, {GlitchItemlessWastelandDesc});
   Option GlitchOccamsStatue      = Option::Bool("Occam's Statue",         {"Off", "On"}, {GlitchOccamsStatueDesc});
   Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/ Jump Slash",   {"Off", "On"}, {GlitchZDOoBJumpSlashDesc});
+  Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu w/o Bottle",  {"Off", "On"}, {GlitchJabuStickRecoilDesc});
+  Option GlitchJabuAdult         = Option::Bool("Enter Jabu as Adult",    {"Off", "On"}, {GlitchJabuAdultDesc});
   std::vector<Option*> miscGlitches = {
     &GlitchGVTentAsChild,
     &GlitchItemlessWasteland,
     &GlitchOccamsStatue,
     &GlitchZDOoBJumpSlash,
+    &GlitchJabuStickRecoil,
+    &GlitchJabuAdult,
   };
 
   Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories);
@@ -1567,6 +1573,7 @@ namespace Settings {
           LogicGoronCityLeftMost.SetSelectedIndex(1);
           LogicZoraRiverLower.SetSelectedIndex(1);
           LogicZoraRiverUpper.SetSelectedIndex(1);
+          LogicZFGreatFairy.SetSelectedIndex(1);
           LogicDekuB1WebsWithBow.SetSelectedIndex(1);
           LogicDCJump.SetSelectedIndex(1);
           LogicForestOutdoorEastGS.SetSelectedIndex(1);
