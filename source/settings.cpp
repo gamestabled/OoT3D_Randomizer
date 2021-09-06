@@ -625,7 +625,7 @@ namespace Settings {
   Option GlitchHoverBoost         = Option::U8("HoverBoost",            GlitchDifficultyOptions(0b00111), { GlitchHoverBoostDescDisabled         , GlitchHoverBoostDescNovice         , GlitchHoverBoostDescIntermediate         , GlitchHoverBoostDescAdvanced                                                                                 });
   Option GlitchSuperSlide         = Option::U8("Extended Super Slide",  GlitchDifficultyOptions(0b01111), { GlitchSuperSlideDescDisabled         , GlitchSuperSlideDescNovice         , GlitchSuperSlideDescIntermediate         , GlitchSuperSlideDescAdvanced         , GlitchSuperSlideDescExpert                                            });
   Option GlitchMegaflip           = Option::U8("Megaflip",              GlitchDifficultyOptions(0b11111), { GlitchMegaflipDescDisabled           , GlitchMegaflipDescNovice           , GlitchMegaflipDescIntermediate           , GlitchMegaflipDescAdvanced           , GlitchMegaflipDescExpert           , GlitchMegaflipDescHero           });
-  Option GlitchASlide             = Option::U8("A-Slide",               GlitchDifficultyOptions(0b01010), { GlitchASlideDescDisabled                                                  , GlitchASlideDescIntermediate                                                    , GlitchSuperSlideDescExpert                                            });
+  Option GlitchASlide             = Option::U8("A-Slide",               GlitchDifficultyOptions(0b01111), { GlitchASlideDescDisabled             , GlitchASlideDescNovice             , GlitchASlideDescIntermediate             , GlitchASlideDescAdvanced             , GlitchSuperSlideDescExpert                                            });
   Option GlitchHammerSlide        = Option::U8("Hammer Slide",          GlitchDifficultyOptions(0b00011), { GlitchHammerSlideDescDisabled        , GlitchHammerSlideDescNovice        , GlitchHammerSlideDescIntermediate                                                                                                                       });
   Option GlitchLedgeCancel        = Option::U8("Ledge Cancel",          GlitchDifficultyOptions(0b00101), { GlitchLedgeCancelDescDisabled        , GlitchLedgeCancelDescNovice                                                   , GlitchLedgeCancelDescAdvanced                                                                                });
   Option GlitchActionSwap         = Option::U8("Action Swap",           GlitchDifficultyOptions(0b00101), { GlitchActionSwapDescDisabled         , GlitchActionSwapDescNovice                                                    , GlitchActionSwapDescAdvanced                                                                                 });
@@ -665,9 +665,11 @@ namespace Settings {
 
   Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent as Child", {"Off", "On"}, {GlitchGVTentAsChildDesc});
   Option GlitchItemlessWasteland = Option::Bool("Cross the HW w/o Items", {"Off", "On"}, {GlitchItemlessWastelandDesc});
+  Option GlitchOccamsStatue      = Option::Bool("Occam's Statue"        , {"Off", "On"}, {GlitchOccamsStatueDesc});
   std::vector<Option*> miscGlitches = {
     &GlitchGVTentAsChild,
     &GlitchItemlessWasteland,
+    &GlitchOccamsStatue,
   };
 
   Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories);

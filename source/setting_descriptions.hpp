@@ -394,7 +394,9 @@ extern string_view GlitchMegaflipDescExpert;
 extern string_view GlitchMegaflipDescHero;
 
 extern string_view GlitchASlideDescDisabled;
+extern string_view GlitchASlideDescNovice;
 extern string_view GlitchASlideDescIntermediate;
+extern string_view GlitchASlideDescAdvanced;
 extern string_view GlitchASlideDescExpert;
 
 extern string_view GlitchHammerSlideDescDisabled;
@@ -458,3 +460,4 @@ extern string_view GlitchEntrancePointDescDisabled;
 
 extern string_view GlitchGVTentAsChildDesc;
 extern string_view GlitchItemlessWastelandDesc;
+extern string_view GlitchOccamsStatueDesc;

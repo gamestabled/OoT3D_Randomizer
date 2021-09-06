@@ -1227,7 +1227,9 @@ string_view GlitchMegaflipDescExpert                  = "";                     
 string_view GlitchMegaflipDescHero                    = "";                                                //
 /* A-Slide */                                                                                              //
 string_view GlitchASlideDescDisabled                  = "";                                                //
+string_view GlitchASlideDescNovice                    = "";                                                //
 string_view GlitchASlideDescIntermediate              = "";                                                //
+string_view GlitchASlideDescAdvanced                  = "";                                                //
 string_view GlitchASlideDescExpert                    = "";                                                //
 /* Hammer Slide */                                                                                         //
 string_view GlitchHammerSlideDescDisabled             = "";                                                //
@@ -1316,3 +1318,6 @@ string_view GlitchItemlessWastelandDesc               = "By starting a backwalk 
                                                         "other frame Link will maintain backwalk speed\n"  //
                                                         "over the quicksand in the haunted wasteland which\n"
                                                         "lets him cross with no items.";                   //
+string_view GlitchOccamsStatueDesc                    = "With some precise movement through loading zones\n"
+                                                        "in Darunia's room, it is possible to unload the\n"//
+                                                        "collision of the statue blocking the way to DMC.";//

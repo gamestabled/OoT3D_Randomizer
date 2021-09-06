@@ -285,6 +285,7 @@ namespace Logic {
   extern bool DrainWell;
   extern bool GoronCityChildFire;
   extern bool GCWoodsWarpOpen;
+  extern bool GCDaruniasDoorOpenChild;
   extern bool StopGCRollingGoronAsAdult;
   extern bool ChildWaterTemple;
   extern bool RaiseWaterLevel;

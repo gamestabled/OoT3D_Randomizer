@@ -294,6 +294,7 @@ namespace Logic {
   bool DrainWell                 = false;
   bool GoronCityChildFire        = false;
   bool GCWoodsWarpOpen           = false;
+  bool GCDaruniasDoorOpenChild   = false;
   bool StopGCRollingGoronAsAdult = false;
   bool ChildWaterTemple          = false;
   bool RaiseWaterLevel           = false;
@@ -1057,6 +1058,7 @@ namespace Logic {
      DrainWell                 = false;
      GoronCityChildFire        = false;
      GCWoodsWarpOpen           = false;
+     GCDaruniasDoorOpenChild   = false;
      StopGCRollingGoronAsAdult = false;
      ChildWaterTemple          = false;
      KakarikoVillageGateOpen   = false;
