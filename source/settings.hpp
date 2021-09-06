@@ -542,6 +542,7 @@ namespace Settings {
   extern Option GlitchGVTentAsChild;
   extern Option GlitchItemlessWasteland;
   extern Option GlitchOccamsStatue;
+  extern Option GlitchZDOoBJumpSlash;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

@@ -461,3 +461,4 @@ extern string_view GlitchEntrancePointDescDisabled;
 extern string_view GlitchGVTentAsChildDesc;
 extern string_view GlitchItemlessWastelandDesc;
 extern string_view GlitchOccamsStatueDesc;
+extern string_view GlitchZDOoBJumpSlashDesc;

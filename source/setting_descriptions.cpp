@@ -1321,3 +1321,8 @@ string_view GlitchItemlessWastelandDesc               = "By starting a backwalk 
 string_view GlitchOccamsStatueDesc                    = "With some precise movement through loading zones\n"
                                                         "in Darunia's room, it is possible to unload the\n"//
                                                         "collision of the statue blocking the way to DMC.";//
+string_view GlitchZDOoBJumpSlashDesc                 = "Jump slashing the wall next to the pillar above\n"//
+                                                        "the ZD to LH shortcut as adult will let you clip\n"
+                                                        "through. From here you can either jump to the shop\n"
+                                                        "loading zone or fall OoB a little bit and swim\n" //
+                                                         "into the shortcut loading zone.";                //

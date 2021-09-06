@@ -665,11 +665,13 @@ namespace Settings {
 
   Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent as Child", {"Off", "On"}, {GlitchGVTentAsChildDesc});
   Option GlitchItemlessWasteland = Option::Bool("Cross the HW w/o Items", {"Off", "On"}, {GlitchItemlessWastelandDesc});
-  Option GlitchOccamsStatue      = Option::Bool("Occam's Statue"        , {"Off", "On"}, {GlitchOccamsStatueDesc});
+  Option GlitchOccamsStatue      = Option::Bool("Occam's Statue",         {"Off", "On"}, {GlitchOccamsStatueDesc});
+  Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/ Jump Slash",   {"Off", "On"}, {GlitchZDOoBJumpSlashDesc});
   std::vector<Option*> miscGlitches = {
     &GlitchGVTentAsChild,
     &GlitchItemlessWasteland,
     &GlitchOccamsStatue,
+    &GlitchZDOoBJumpSlash,
   };
 
   Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories);
