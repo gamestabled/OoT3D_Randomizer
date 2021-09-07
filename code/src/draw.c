@@ -44,7 +44,8 @@ void Draw_PreSwapBuffers(Draw_Display display)
 {
     if (display == DISPLAY_1 || display == DISPLAY_BOTH)
     {
-        frontBufferIdx_btm = ++frontBufferIdx_btm % 2;
+        frontBufferIdx_btm++;
+        frontBufferIdx_btm %= 2;
     }
 }
 
