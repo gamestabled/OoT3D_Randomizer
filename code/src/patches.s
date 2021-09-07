@@ -1592,6 +1592,11 @@ OpenSaveDontSpoilTradeItems_patch:
 LostWoodsBridgeMusic_patch:
     bl hook_LostWoodsBridgeMusic
 
+.section .patch_SaveMenuIgnoreOpen
+.global SaveMenuIgnoreOpen_patch
+SaveMenuIgnoreOpen_patch:
+    bl hook_SaveMenuIgnoreOpen
+
 .section .patch_loader
 .global loader_patch
 

@@ -984,6 +984,10 @@ SECTIONS
 		*(.patch_SleepQueryCallback)
 	}
 
+	.patch_SaveMenuIgnoreOpen 0x42EC00 : {
+		*(.patch_SaveMenuIgnoreOpen)
+	}
+
 	.patch_ItemsMenuDraw 0x434C08 : {
 		*(.patch_ItemsMenuDraw)
 	}
