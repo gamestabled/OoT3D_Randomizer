@@ -192,9 +192,9 @@ public:
       Logic::IsChild = Child();
       Logic::IsAdult = Adult();
 
-      //update helpers and check condition
+      //update helpers and check condition as well as having at least child or adult access
       Logic::UpdateHelpers();
-      bool hereVal = condition();
+      bool hereVal = condition() && (Logic::IsAdult || Logic::IsChild);
 
       //set back age variables
       Logic::IsChild = pastChild;
