@@ -972,6 +972,18 @@ SECTIONS
 		*(.patch_CarpetSalesmanSetFlag)
 	}
 
+	.patch_PreSwapBuffers 0x3FD384 : {
+		*(.patch_PreSwapBuffers)
+	}
+
+	.patch_AwakeCallback 0x3FD43C : {
+		*(.patch_AwakeCallback)
+	}
+
+	.patch_SleepQueryCallback 0x3FD6C4 : {
+		*(.patch_SleepQueryCallback)
+	}
+
 	.patch_ItemsMenuDraw 0x434C08 : {
 		*(.patch_ItemsMenuDraw)
 	}

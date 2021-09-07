@@ -37,6 +37,16 @@
 #include <z3D/z3D.h>
 
 static u8* FRAMEBUFFER[6];
+static u8 backBufferBtm[FB_BOTTOM_SIZE];
+static u32 frontBufferIdx_btm = 0;
+
+void Draw_PreSwapBuffers(Draw_Display display)
+{
+    if (display == DISPLAY_1 || display == DISPLAY_BOTH)
+    {
+        frontBufferIdx_btm = ++frontBufferIdx_btm % 2;
+    }
+}
 
 static RecursiveLock lock;
 
@@ -59,9 +69,6 @@ void Draw_Unlock(void)
 
 void Draw_DrawRect(u32 posX, u32 posY, u32 width, u32 height, u32 color)
 {
-    volatile u8 *const fb0 = (volatile u8 *const)FRAMEBUFFER[0];
-    volatile u8 *const fb1 = (volatile u8 *const)FRAMEBUFFER[1];
-
     // Skip drawing entirely if we're off-screen
     if (posX >= SCREEN_BOT_WIDTH) { return; }
     if (posY >= SCREEN_BOT_HEIGHT) { return; }
@@ -76,20 +83,15 @@ void Draw_DrawRect(u32 posX, u32 posY, u32 width, u32 height, u32 color)
         {
             const u32 screenPos = ((posX * SCREEN_BOT_HEIGHT + (SCREEN_BOT_HEIGHT - y - posY - 1)) + (width - x) * SCREEN_BOT_HEIGHT) * 3;
 
-            fb0[screenPos] = (color) & 0xFF;
-            fb0[screenPos + 1] = (color >> 8) & 0xFF;
-            fb0[screenPos + 2] = (color >> 16) & 0xFF;
-            fb1[screenPos] = (color) & 0xFF;
-            fb1[screenPos + 1] = (color >> 8) & 0xFF;
-            fb1[screenPos + 2] = (color >> 16) & 0xFF;
+            backBufferBtm[screenPos] = (color) & 0xFF;
+            backBufferBtm[screenPos + 1] = (color >> 8) & 0xFF;
+            backBufferBtm[screenPos + 2] = (color >> 16) & 0xFF;
         }
     }
 }
 
 void Draw_DrawCharacter_Impl(u32 posX, u32 posY, u32 color, char character, const unsigned char *font, u8 sizeX, u8 sizeY)
 {
-    volatile u8 *const fb0 = (volatile u8 *const)FRAMEBUFFER[0];
-    volatile u8 *const fb1 = (volatile u8 *const)FRAMEBUFFER[1];
     u8 sizeXMinusOne = sizeX - 1;
 
     for(s32 y = 0; y < sizeY; y++)
@@ -101,12 +103,9 @@ void Draw_DrawCharacter_Impl(u32 posX, u32 posY, u32 color, char character, cons
             const u32 screenPos = (posX * SCREEN_BOT_HEIGHT + (SCREEN_BOT_HEIGHT - y - posY - 1)) + (sizeXMinusOne - x) * SCREEN_BOT_HEIGHT;
             const u32 pixelColor = ((charPos >> x) & 1) ? color : COLOR_BLACK;
 
-            fb0[screenPos * 3] = (pixelColor) & 0xFF;
-            fb0[screenPos * 3 + 1] = (pixelColor >> 8) & 0xFF;
-            fb0[screenPos * 3 + 2] = (pixelColor >> 16) & 0xFF;
-            fb1[screenPos * 3] = (pixelColor) & 0xFF;
-            fb1[screenPos * 3 + 1] = (pixelColor >> 8) & 0xFF;
-            fb1[screenPos * 3 + 2] = (pixelColor >> 16) & 0xFF;
+            backBufferBtm[screenPos * 3] = (pixelColor) & 0xFF;
+            backBufferBtm[screenPos * 3 + 1] = (pixelColor >> 8) & 0xFF;
+            backBufferBtm[screenPos * 3 + 2] = (pixelColor >> 16) & 0xFF;
         }
     }
 }
@@ -282,8 +281,7 @@ u32 Draw_DrawFormattedStringTop(u32 posX, u32 posY, u32 color, const char *fmt, 
 
 void Draw_FillFramebuffer(u32 value)
 {
-    memset(FRAMEBUFFER[0], value, FB_BOTTOM_SIZE);
-    memset(FRAMEBUFFER[1], value, FB_BOTTOM_SIZE);
+    memset(FRAMEBUFFER[frontBufferIdx_btm], value, FB_BOTTOM_SIZE);
 }
 
 void Draw_ClearFramebuffer(void)
@@ -301,10 +299,25 @@ void Draw_SetupFramebuffer(void)
     FRAMEBUFFER[5] = (u8*)Z3D_TOP_SCREEN_RIGHT_2;
 }
 
+void Draw_FillBackbuffer(u32 value)
+{
+    memset(backBufferBtm, value, FB_BOTTOM_SIZE);
+}
+
+void Draw_ClearBackbuffer(void)
+{
+    Draw_FillBackbuffer(0);
+}
+
+void Draw_CopyBackBuffer(void)
+{
+    memcpy(FRAMEBUFFER[frontBufferIdx_btm], backBufferBtm, FB_BOTTOM_SIZE);
+    Draw_FlushFramebuffer();
+}
+
 void Draw_FlushFramebuffer(void)
 {
-    svcFlushProcessDataCache(CUR_PROCESS_HANDLE, FRAMEBUFFER[0], FB_BOTTOM_SIZE);
-    svcFlushProcessDataCache(CUR_PROCESS_HANDLE, FRAMEBUFFER[1], FB_BOTTOM_SIZE);
+    svcFlushProcessDataCache(CUR_PROCESS_HANDLE, FRAMEBUFFER[frontBufferIdx_btm], FB_BOTTOM_SIZE);
 }
 
 void Draw_FlushFramebufferTop(void)
