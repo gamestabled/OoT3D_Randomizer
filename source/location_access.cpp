@@ -394,8 +394,8 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(LW_SKULL_KID,                 {[]{return IsChild && CanPlay(SariasSong);}}),
-                  LocationAccess(LW_TRADE_COJIRO,              {[]{return IsAdult && Cojiro;}}),
-                  LocationAccess(LW_TRADE_ODD_POULTICE,        {[]{return IsAdult && OddPoultice && Cojiro;}}),
+                  LocationAccess(LW_TRADE_COJIRO,              {[]{return !ShuffleAdultTradeQuest || (IsAdult && Cojiro);}}),
+                  LocationAccess(LW_TRADE_ODD_POULTICE,        {[]{return !ShuffleAdultTradeQuest || (IsAdult && OddPoultice && Cojiro);}}),
                   LocationAccess(LW_OCARINA_MEMORY_GAME,       {[]{return IsChild && Ocarina;}}),
                   LocationAccess(LW_TARGET_IN_WOODS,           {[]{return CanUse(SLINGSHOT);}}),
                   LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE,    {[]{return IsChild && CanStunDeku;}}),
@@ -661,7 +661,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(LH_LAB_DIVE,     {[]{return ProgressiveScale >= 2 || (LogicLabDiving && IronBoots && CanUse(HOOKSHOT));}}),
-                  LocationAccess(LH_TRADE_FROG,   {[]{return IsAdult && EyeballFrog;}}),
+                  LocationAccess(LH_TRADE_FROG,   {[]{return !ShuffleAdultTradeQuest || (IsAdult && EyeballFrog);}}),
                   LocationAccess(LH_GS_LAB_CRATE, {[]{return IronBoots && CanUse(HOOKSHOT);}}),
                 }, {
                   //Exits
@@ -689,7 +689,7 @@ void AreaTable_Init() {
 
   areaTable[GERUDO_VALLEY] = Area("Gerudo Valley", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&BugRock, {[]{return IsChild && HasBottle;}}),
+                  EventAccess(&BugRock, {[]{return IsChild;}}),
                 }, {
                   //Locations
                   LocationAccess(GV_GS_SMALL_BRIDGE, {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;}}),
@@ -731,7 +731,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(GV_CHEST,          {[]{return CanUse(MEGATON_HAMMER);}}),
-                  LocationAccess(GV_TRADE_SAW,      {[]{return IsAdult && PoachersSaw;}}),
+                  LocationAccess(GV_TRADE_SAW,      {[]{return !ShuffleAdultTradeQuest || (IsAdult && PoachersSaw);}}),
                   LocationAccess(GV_GS_BEHIND_TENT, {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(GV_GS_PILLAR,      {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
                 }, {
@@ -1117,7 +1117,7 @@ void AreaTable_Init() {
                   LocationAccess(SHEIK_IN_KAKARIKO,               {[]{return IsAdult && ForestMedallion && FireMedallion && WaterMedallion;}}),
                   LocationAccess(KAK_ANJU_AS_CHILD,               {[]{return IsChild && AtDay;}}),
                   LocationAccess(KAK_ANJU_AS_ADULT,               {[]{return IsAdult && AtDay;}}),
-                  LocationAccess(KAK_TRADE_POCKET_CUCCO,          {[]{return IsAdult && AtDay && PocketEgg && WakeUpAdultTalon;}}),
+                  LocationAccess(KAK_TRADE_POCKET_CUCCO,          {[]{return !ShuffleAdultTradeQuest || (IsAdult && AtDay && PocketEgg && WakeUpAdultTalon);}}),
                   LocationAccess(KAK_GS_HOUSE_UNDER_CONSTRUCTION, {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(KAK_GS_SKULLTULA_HOUSE,          {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(KAK_GS_GUARDS_HOUSE,             {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
@@ -1269,7 +1269,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&OddPoulticeAccess, {[]{return OddPoulticeAccess || (IsAdult && (OddMushroomAccess || (OddMushroom && DisableTradeRevert)));}}),
                 }, {
-                  LocationAccess(KAK_TRADE_ODD_MUSHROOM, {[]{return IsAdult && OddMushroom;}}),
+                  LocationAccess(KAK_TRADE_ODD_MUSHROOM, {[]{return !ShuffleAdultTradeQuest || (IsAdult && OddMushroom);}}),
                 }, {
                   //Exits
                   Entrance(KAK_BACKYARD, {[]{return true;}}),
@@ -1403,11 +1403,11 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&PrescriptionAccess, {[]{return PrescriptionAccess || (IsAdult && (BrokenSwordAccess || BrokenSword));}}),
                   EventAccess(&GossipStoneFairy,   {[]{return GossipStoneFairy   || CanSummonGossipFairy;}}),
-                  EventAccess(&BugRock,            {[]{return true;}}),
+                  EventAccess(&BugRock,            {[]{return IsChild;}}),
                 }, {
                   //Locations
-                  LocationAccess(DMT_TRADE_BROKEN_SWORD,    {[]{return IsAdult && BrokenSword;}}),
-                  LocationAccess(DMT_TRADE_EYEDROPS,        {[]{return IsAdult && Eyedrops;}}),
+                  LocationAccess(DMT_TRADE_BROKEN_SWORD,    {[]{return !ShuffleAdultTradeQuest || (IsAdult && BrokenSword);}}),
+                  LocationAccess(DMT_TRADE_EYEDROPS,        {[]{return !ShuffleAdultTradeQuest || (IsAdult && Eyedrops);}}),
                   LocationAccess(DMT_TRADE_CLAIM_CHECK,     {[]{return IsAdult && ClaimCheck;}}),
                   LocationAccess(DMT_GS_FALLING_ROCKS_PATH, {[]{return IsAdult && AtNight && CanUse(MEGATON_HAMMER) && CanGetNightTimeGS;}}),
                   LocationAccess(DMT_GOSSIP_STONE,          {[]{return true;}}),
@@ -1455,7 +1455,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&GossipStoneFairy,          {[]{return GossipStoneFairy          || CanSummonGossipFairyWithoutSuns;}}),
                   EventAccess(&StickPot,                  {[]{return StickPot                  || IsChild;}}),
-                  EventAccess(&BugRock,                   {[]{return true;}}),
+                  EventAccess(&BugRock,                   {[]{return CanBlastOrSmash || CanUse(SILVER_GAUNTLETS);}}),
                   EventAccess(&GoronCityChildFire,        {[]{return GoronCityChildFire        || (IsChild && CanUse(DINS_FIRE));}}),
                   EventAccess(&GCWoodsWarpOpen,           {[]{return GCWoodsWarpOpen           || (CanBlastOrSmash || CanUse(DINS_FIRE) || CanUse(BOW) || GoronBracelet || GoronCityChildFire);}}),
                   EventAccess(&StopGCRollingGoronAsAdult, {[]{return StopGCRollingGoronAsAdult || (IsAdult && (GoronBracelet || HasExplosives || Bow || (LogicLinkGoronDins && CanUse(DINS_FIRE))));}}),

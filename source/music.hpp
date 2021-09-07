@@ -16,13 +16,8 @@ namespace Music {
         SEQ_FANFARE   = 1 << 2,
     };
 
-    struct Sequence {
-        u32 id;
-        SeqType type;
-    };
-
-    extern const std::array<SeqType, SEQ_COUNT> seqTypes;
-    extern std::array<u32, SEQ_COUNT> seqOverrides;
+    extern const std::array<SeqType, SEQ_COUNT> seqTypesMusic;
+    extern std::array<u32, SEQ_COUNT> seqOverridesMusic;
 
     void InitMusicRandomizer();
     void ShuffleSequences(int type);
