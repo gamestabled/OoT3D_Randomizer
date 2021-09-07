@@ -288,6 +288,13 @@ typedef enum {
   STARTINGBGS_BIGGORON_SWORD,
 } StartingBiggoronSwordSetting;
 
+typedef enum {
+  SHUFFLESFX_OFF,
+  SHUFFLESFX_ALL,
+  SHUFFLESFX_SCENESPECIFIC,
+  SHUFFLESFX_CHAOS,
+} ShuffleSFXSetting;
+
 typedef struct {
   u8 hashIndexes[5];
 
@@ -383,6 +390,9 @@ typedef struct {
   u8 coloredKeys;
   u8 coloredBossKeys;
   u8 mirrorWorld;
+
+  u8 shuffleSFX;
+  u8 shuffleSFXCategorically;
 
   u8 dekuTreeDungeonMode;
   u8 dodongosCavernDungeonMode;

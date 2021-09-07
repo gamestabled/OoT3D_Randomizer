@@ -882,6 +882,14 @@ hook_SetBGMDayNight:
     push {r4-r6, lr}
     b 0x483C8C
 
+.global hook_SetSFX
+hook_SetSFX:
+    push {r1-r12, lr}
+    bl SetSFX
+    pop {r1-r12, lr}
+    push {r0-r11, lr}
+    b 0x375480
+
 .global hook_TurboTextClose
 hook_TurboTextClose:
     push {r0-r12, lr}

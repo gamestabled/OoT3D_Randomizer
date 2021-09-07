@@ -761,16 +761,27 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 /*------------------------------                                                           //
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
-string_view musicRandoDesc           = "Randomize the music in the game";                  //
-string_view shuffleBGMDesc           = "Randomize area background music";                  //
-string_view fanfaresOffDesc          = "Fanfares are not shuffled.";                       //
-string_view onlyFanfaresDesc         = "Fanfares and ocarina songs are shuffled in\n"      //
-                                       "separate pools.";                                  //
-string_view fanfaresOcarinaDesc      = "Fanfares and ocarina songs are shuffled together\n"//
-                                       "in the same pool.";                                //
-string_view shuffleOcaMusicDesc      = "The music that plays back after you play an ocarina"
-                                       "song is randomized";                               //
-                                                                                           //
+string_view musicRandoDesc            = "Randomize the music in the game.";                //
+string_view shuffleBGMDesc            = "Randomize area background music";                 //
+string_view fanfaresOffDesc           = "Fanfares are not shuffled.";                      //
+string_view onlyFanfaresDesc          = "Fanfares and ocarina songs are shuffled in\n"     //
+                                        "separate pools.";                                 //
+string_view fanfaresOcarinaDesc       = "Fanfares and ocarina songs are shuffled together\n"
+                                        "in the same pool.";                               //
+string_view shuffleOcaMusicDesc       = "The music that plays back after you play an"      //
+                                        "ocarina song is randomized.";                     //
+/*------------------------------                                                           //
+|         SHUFFLE SFX          |                                                           //
+------------------------------*/                                                           //
+string_view shuffleSFXOff             = "Sound effects will stay vanilla.";                //
+string_view shuffleSFXAll             = "All sound effects will be shuffled.";             //
+string_view shuffleSFXSceneSpecific   = "All sound effects will be shuffled, but will also\n"
+                                        "be different in each scene.";                     //
+string_view shuffleSFXChaos           = "Each sound effect will become random about\n"     //
+                                        "every second.";                                   //
+string_view shuffleSFXCategorically   = "Sound effects will be shuffled in categories.\n"  //
+                                        "\n"                                               //
+                                        "The sound may get annoying fast when disabled.";  //
 /*------------------------------                                                           //
 |    RANDOM TRAP DAMAGE TYPE   |                                                           //
 ------------------------------*/                                                           //
