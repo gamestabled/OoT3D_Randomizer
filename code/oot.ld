@@ -692,6 +692,14 @@ SECTIONS
 		*(.patch_FairyReviveHealAmount)
 	}
 
+	.patch_FWLoadSet 0x34D9E8 : {
+		*(.patch_FWLoadSet)
+	}
+
+	.patch_FWGetSet 0x3519CC : {
+		*(.patch_FWGetSet)
+	}
+
 	.patch_OverrideGraphicID_351B94 0x351B94 : {
 		*(.patch_OverrideGraphicID_351B94)
 	}
@@ -1078,6 +1086,10 @@ SECTIONS
 
 	.patch_EnableFW 0x476D1C : {
 		*(.patch_EnableFW)
+	}
+
+	.patch_FWKeepWarpPoint 0x47C3C0 : {
+		*(.patch_FWKeepWarpPoint)
 	}
 
 	.patch_TurboTextAdvance 0x480928 : {

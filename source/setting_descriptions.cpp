@@ -571,6 +571,12 @@ string_view skipSongReplaysDesc       = "The automatic replay after you play a s
                                         "You can choose to keep the sfx anyway, but you\n" //
                                         "will have control of Link during it.";            //
 /*------------------------------                                                           //
+|      KEEP FW WARP POINT      |                                                           //
+------------------------------*/                                                           //
+string_view keepFWWarpPointDesc       = "The Farore's Wind warp point will stay active\n"  //
+                                        "after having been warped to. The old point will\n"//
+                                        "need to be dispelled before setting a new one.";  //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //

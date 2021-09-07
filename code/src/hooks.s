@@ -565,6 +565,24 @@ hook_EnableFW:
     add sp,sp,#0x14
     bx lr
 
+.global hook_FWUnset
+hook_FWUnset:
+    push {r0-r12, lr}
+    bl MagicWind_Unset
+    mov r0,#-0x1
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_FWGetSet
+hook_FWGetSet:
+    push {r0-r12, lr}
+    bl MagicWind_CheckSet
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x351A64
+    b 0x3519D0
+
 .global hook_SetSavewarpEntrance
 hook_SetSavewarpEntrance:
     push {r0-r12, lr}

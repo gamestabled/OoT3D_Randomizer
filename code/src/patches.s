@@ -1259,6 +1259,21 @@ ChestIceSmoke_patch:
 EnableFW_patch:
     bl hook_EnableFW
 
+.section .patch_FWKeepWarpPoint
+.global FWKeepWarpPoint_patch
+FWKeepWarpPoint_patch:
+    blmi hook_FWUnset
+
+.section .patch_FWLoadSet
+.global FWLoadSet_patch
+FWLoadSet_patch:
+    ldr r2,[r1,#-0x668]
+
+.section .patch_FWGetSet
+.global FWGetSet_patch
+FWGetSet_patch:
+    b hook_FWGetSet
+
 .section .patch_SetSavewarpEntrance
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:
