@@ -201,6 +201,7 @@ namespace Settings {
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_SKIPPABLE);
   Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
+  Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -216,6 +217,7 @@ namespace Settings {
     &CompleteMaskQuest,
     &QuickText,
     &SkipSongReplays,
+    &KeepFWWarpPoint,
   };
 
   //Misc Settings
@@ -661,32 +663,29 @@ namespace Settings {
     "Zora Blue",
     "Black",
     "White",
-    "Azure Blue",
-    "Vivid Cyan",
-    "Light Red",
-    "Fuchsia",
-    "Purple",
-    "Majora Purple",
-    "Twitch Purple",
-    "Magenta",
-    "Violet",
-    "Persian Rose",
-    "Dirty Yellow",
-    "Blush Pink",
-    "Hot Pink",
-    "Rose Pink",
     "Orange",
-    "Gray",
     "Yellow",
-    "Silver",
+    "Cyan",
+    "Indigo",
+    "Purple",
+    "Pink",
+    "Dark Gray",
+    "Salmon",
+    "Wine Red",
     "Beige",
-    "Teal",
-    "Blood Red",
-    "Blood Orange",
-    "Royal Blue",
-    "NES Green",
+    "Brown",
+    "Sand",
+    "Tea Green",
     "Dark Green",
-    "Lumen",
+    "Powder Blue",
+    "Teal",
+    "Sky Blue",
+    "Faded Blue",
+    "Lavender",
+    "Magenta",
+    "Mauve",
+    "Silver",
+    "Gold"
   };
   static std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
@@ -876,6 +875,7 @@ namespace Settings {
     ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
     ctx.quickText            = QuickText.Value<u8>();
     ctx.skipSongReplays      = SkipSongReplays.Value<u8>();
+    ctx.keepFWWarpPoint      = KeepFWWarpPoint ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();

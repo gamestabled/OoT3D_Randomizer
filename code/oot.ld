@@ -692,6 +692,14 @@ SECTIONS
 		*(.patch_FairyReviveHealAmount)
 	}
 
+	.patch_FWLoadSet 0x34D9E8 : {
+		*(.patch_FWLoadSet)
+	}
+
+	.patch_FWGetSet 0x3519CC : {
+		*(.patch_FWGetSet)
+	}
+
 	.patch_OverrideGraphicID_351B94 0x351B94 : {
 		*(.patch_OverrideGraphicID_351B94)
 	}
@@ -964,6 +972,18 @@ SECTIONS
 		*(.patch_CarpetSalesmanSetFlag)
 	}
 
+	.patch_PreSwapBuffers 0x3FD384 : {
+		*(.patch_PreSwapBuffers)
+	}
+
+	.patch_AwakeCallback 0x3FD43C : {
+		*(.patch_AwakeCallback)
+	}
+
+	.patch_SleepQueryCallback 0x3FD6C4 : {
+		*(.patch_SleepQueryCallback)
+	}
+
 	.patch_SaveMenuIgnoreOpen 0x42EC00 : {
 		*(.patch_SaveMenuIgnoreOpen)
 	}
@@ -1082,6 +1102,10 @@ SECTIONS
 
 	.patch_EnableFW 0x476D1C : {
 		*(.patch_EnableFW)
+	}
+
+	.patch_FWKeepWarpPoint 0x47C3C0 : {
+		*(.patch_FWKeepWarpPoint)
 	}
 
 	.patch_TurboTextAdvance 0x480928 : {

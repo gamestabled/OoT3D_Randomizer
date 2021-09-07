@@ -1259,6 +1259,21 @@ ChestIceSmoke_patch:
 EnableFW_patch:
     bl hook_EnableFW
 
+.section .patch_FWKeepWarpPoint
+.global FWKeepWarpPoint_patch
+FWKeepWarpPoint_patch:
+    blmi hook_FWUnset
+
+.section .patch_FWLoadSet
+.global FWLoadSet_patch
+FWLoadSet_patch:
+    ldr r2,[r1,#-0x668]
+
+.section .patch_FWGetSet
+.global FWGetSet_patch
+FWGetSet_patch:
+    b hook_FWGetSet
+
 .section .patch_SetSavewarpEntrance
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:
@@ -1426,6 +1441,21 @@ ItemsMenuNumSprites_patch:
 .global ItemsMenuDraw_patch
 ItemsMenuDraw_patch:
     bl hook_ItemsMenuDraw
+
+.section .patch_PreSwapBuffers
+.global PreSwapBuffers_patch
+PreSwapBuffers_patch:
+    bl hook_Draw_PreSwapBuffers
+
+.section .patch_SleepQueryCallback
+.global SleepQueryCallback_patch
+SleepQueryCallback_patch:
+    b hook_Gfx_SleepQueryCallback
+
+.section .patch_AwakeCallback
+.global AwakeCallback_patch
+AwakeCallback_patch:
+    b hook_Gfx_AwakeCallback
 
 .section .patch_AnjuGiveCojiro
 .global AnjuGiveCojiro_patch
