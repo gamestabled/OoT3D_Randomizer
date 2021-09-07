@@ -39,7 +39,8 @@ void SaveFile_Init() {
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
-    gSaveContext.infTable  [0x19] |= 0x0100; //Got Magic Container
+    gSaveContext.infTable  [0x19] |= 0x0100; //Picked up Magic Container
+    gSaveContext.itemGetInf [0x1] |= 0x0008; //Picked up Deku Seeds
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child

@@ -1259,6 +1259,21 @@ ChestIceSmoke_patch:
 EnableFW_patch:
     bl hook_EnableFW
 
+.section .patch_FWKeepWarpPoint
+.global FWKeepWarpPoint_patch
+FWKeepWarpPoint_patch:
+    blmi hook_FWUnset
+
+.section .patch_FWLoadSet
+.global FWLoadSet_patch
+FWLoadSet_patch:
+    ldr r2,[r1,#-0x668]
+
+.section .patch_FWGetSet
+.global FWGetSet_patch
+FWGetSet_patch:
+    b hook_FWGetSet
+
 .section .patch_SetSavewarpEntrance
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:
@@ -1427,6 +1442,21 @@ ItemsMenuNumSprites_patch:
 ItemsMenuDraw_patch:
     bl hook_ItemsMenuDraw
 
+.section .patch_PreSwapBuffers
+.global PreSwapBuffers_patch
+PreSwapBuffers_patch:
+    bl hook_Draw_PreSwapBuffers
+
+.section .patch_SleepQueryCallback
+.global SleepQueryCallback_patch
+SleepQueryCallback_patch:
+    b hook_Gfx_SleepQueryCallback
+
+.section .patch_AwakeCallback
+.global AwakeCallback_patch
+AwakeCallback_patch:
+    b hook_Gfx_AwakeCallback
+
 .section .patch_AnjuGiveCojiro
 .global AnjuGiveCojiro_patch
 AnjuGiveCojiro_patch:
@@ -1466,6 +1496,11 @@ LabScientistDontStartTimerAndSetFlag_patch:
     bl EnMk_SetTradedEyeballFrogFlag
     pop {r0-r12, lr}
     nop
+
+.section .patch_LabScientistIgnoreEyedropsInInventory
+.global LabScientistIgnoreEyedropsInInventory_patch
+LabScientistIgnoreEyedropsInInventory_patch:
+    b 0x3F0B5C
 
 .section .patch_KingZoraDontStartTimer
 .global KingZoraDontStartTimer_patch
@@ -1516,6 +1551,11 @@ SetBGMEntrance_patch:
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
 
+.section .patch_SetSFX
+.global SetSFX_patch
+SetSFX_patch:
+    b hook_SetSFX
+
 .section .patch_GiantsKnifeWithoutKokiriSword
 .global GiantsKnifeWithoutKokiriSword_patch
 GiantsKnifeWithoutKokiriSword_patch:
@@ -1561,6 +1601,11 @@ OpenSaveDontSpoilTradeItems_patch:
 .global LostWoodsBridgeMusic_patch
 LostWoodsBridgeMusic_patch:
     bl hook_LostWoodsBridgeMusic
+
+.section .patch_SaveMenuIgnoreOpen
+.global SaveMenuIgnoreOpen_patch
+SaveMenuIgnoreOpen_patch:
+    bl hook_SaveMenuIgnoreOpen
 
 .section .patch_loader
 .global loader_patch

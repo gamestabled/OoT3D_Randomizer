@@ -1447,7 +1447,7 @@ void GenerateLocationPool() {
   }
 }
 
-void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmediately /*= false*/) {
+void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmediately /*= false*/, bool setHidden /*= false*/) {
   auto loc = Location(locKey);
   PlacementLog_Msg("\n");
   PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
@@ -1475,6 +1475,9 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   }
 
   loc->SetPlacedItem(item);
+  if (setHidden) {
+    loc->SetHidden(true);
+  }
 }
 
 std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category categoryInclude, Category categoryExclude /*= Category::cNull*/) {

@@ -29,7 +29,7 @@ namespace Cosmetics {
   };
 
   extern const std::array<std::string_view, 13> gauntletColors;
-  extern const std::array<std::string_view, 31> tunicColors;
+  extern const std::array<std::string_view, 28> tunicColors;
 
   bool ValidHexString(std::string_view hexStr);
   Color_RGB HexStrToColorRGB(const std::string& hexStr);
