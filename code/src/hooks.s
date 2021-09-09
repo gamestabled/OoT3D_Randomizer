@@ -1013,6 +1013,26 @@ hook_SaveMenuIgnoreOpen:
     beq 0x42F270
     bx lr
 
+.global hook_FireproofDekuShieldOne
+hook_FireproofDekuShieldOne:
+    bne 0x13335C
+    push {r0-r12, lr}
+    bl DekuShield_FireproofEnabled
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x13335C
+    bx lr
+
+.global hook_FireproofDekuShieldTwo
+hook_FireproofDekuShieldTwo:
+    bne 0x25157C
+    push {r0-r12, lr}
+    bl DekuShield_FireproofEnabled
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x25157C
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

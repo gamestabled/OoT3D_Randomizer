@@ -255,12 +255,14 @@ namespace Settings {
   Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                                {childHammerDesc});
   Option GkDurability        = Option::U8  ("GK Durability",          {"Vanilla", "Random Risk", "Random Safe"},                              {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
+  Option FireproofDekuShield = Option::Bool("Fireproof Deku Shield",  {"Disabled", "Enabled"},                                                {fireproofDekuShieldDesc});
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
     &GkDurability,
+    &FireproofDekuShield,
   };
 
   //Item Pool Settings
@@ -899,6 +901,7 @@ namespace Settings {
     ctx.boomerangAsAdult     = (BoomerangAsAdult) ? 1 : 0;
     ctx.hammerAsChild        = (HammerAsChild) ? 1 : 0;
     ctx.gkDurability         = GkDurability.Value<u8>();
+    ctx.fireproofDekuShield  = (FireproofDekuShield) ? 1 : 0;
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();

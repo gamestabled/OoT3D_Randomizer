@@ -1607,6 +1607,16 @@ LostWoodsBridgeMusic_patch:
 SaveMenuIgnoreOpen_patch:
     bl hook_SaveMenuIgnoreOpen
 
+.section .patch_FireproofDekuShieldOne
+.global FireproofDekuShieldOne_patch
+FireproofDekuShieldOne_patch:
+    bl hook_FireproofDekuShieldOne
+
+.section .patch_FireproofDekuShieldTwo
+.global FireproofDekuShieldTwo_patch
+FireproofDekuShieldTwo_patch:
+    bl hook_FireproofDekuShieldTwo
+
 .section .patch_loader
 .global loader_patch
 

@@ -345,10 +345,12 @@ namespace Settings {
   extern Option RandomTrapDmg;
   extern bool HasNightStart;
 
+  extern Option FaroresWindAnywhere;
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
   extern Option GkDurability;
+  extern Option FireproofDekuShield;
 
   extern Option ItemPoolValue;
   extern Option IceTrapValue;

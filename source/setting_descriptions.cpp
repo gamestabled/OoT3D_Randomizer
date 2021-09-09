@@ -743,6 +743,13 @@ string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random du
                                         "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
+|    FIREPROOF DEKU SHIELD     |                                                           //
+------------------------------*/                                                           //
+string_view fireproofDekuShieldDesc   = "The Deku Shield will be able to withstand fire.\n"//
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
 ------------------------------*/                                                           //
 string_view coloredKeysDesc           = "If set, small key models will be colored\n"       //

@@ -250,6 +250,8 @@ extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;
 extern string_view gkDurabilityRandomSafe;
 
+extern string_view fireproofDekuShieldDesc;
+
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
 

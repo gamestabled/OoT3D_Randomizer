@@ -381,6 +381,7 @@ typedef struct {
   u8 boomerangAsAdult;
   u8 hammerAsChild;
   u8 gkDurability;
+  u8 fireproofDekuShield;
 
   u8 itemPoolValue;
   u8 iceTrapValue;
