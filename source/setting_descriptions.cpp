@@ -707,7 +707,7 @@ string_view progGoronSword            = "Giant's Knife will always be found\n"  
 ------------------------------*/                                                           //
 string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
                                         "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "This setting will only affect glitched logic.";   //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
@@ -716,21 +716,21 @@ string_view adultStickDesc            = "Adult Link can wield a deku stick. In g
                                         "Link will look like he's holding a Hylian Shield,\n"
                                         "but rest assured it is a deku stick.\n"           //
                                         "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "This setting will only affect glitched logic.";   //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
 ------------------------------*/                                                           //
 string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.\n"            //
                                         "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "This setting will only affect glitched logic.";   //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE CHILD HAMMER      |                                                           //
 ------------------------------*/                                                           //
 string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.\n"       //
                                         "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "This setting will only affect glitched logic.";   //
                                                                                            //
 /*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
@@ -1335,6 +1335,9 @@ string_view GlitchGVTentAsChildDesc                   = "The loading zone for th
                                                         "in the child map despite the tent being removed.\n\n"
                                                         "With this setting enabled you may be expected to\n"
                                                         "use that loading zone.";                          //
+string_view GlitchGFGuardSneakDesc                    = "By using bow, hookshot, or boomerang while looking\n"
+                                                        "up and targeting the Fortress wall you can walk\n"//
+                                                        "past the guard on the slope without being caught.";
 string_view GlitchItemlessWastelandDesc               = "By starting a backwalk and then targeting every\n"//
                                                         "other frame Link will maintain backwalk speed\n"  //
                                                         "over the quicksand in the haunted wasteland which\n"

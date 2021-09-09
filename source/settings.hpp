@@ -542,6 +542,7 @@ namespace Settings {
   extern Option GlitchEntrancePoint;
   //Misc Glitch Settings
   extern Option GlitchGVTentAsChild;
+  extern Option GlitchGFGuardSneak;
   extern Option GlitchItemlessWasteland;
   extern Option GlitchOccamsStatue;
   extern Option GlitchZDOoBJumpSlash;
@@ -581,6 +582,8 @@ namespace Settings {
   extern std::vector<Option *> excludeLocationsOptions;
   extern std::vector<Option *> startingInventoryOptions;
   extern std::vector<Option *> trickOptions;
+  extern std::vector<Option *> glitchCategories;
+  extern std::vector<Option *> miscGlitches;
 
   extern std::vector<Menu *> detailedLogicOptions;
 

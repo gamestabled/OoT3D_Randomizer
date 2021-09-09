@@ -382,6 +382,34 @@ static void WriteEnabledTricks(tinyxml2::XMLDocument& spoilerLog) {
   }
 }
 
+// Writes the enabled glitches to the spoiler log, if there are any.
+static void WriteEnabledGlitches(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("enabled-glitches");
+
+  for (const auto& setting : Settings::glitchCategories) {
+    if (setting->Value<u8>() == 0) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("glitch-category");
+    node->SetAttribute("name", setting->GetName().c_str());
+    node->SetText(setting->GetSelectedOptionText().c_str());
+  }
+
+  for (const auto& setting : Settings::miscGlitches) {
+    if (!setting->Value<bool>()) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("misc-glitch");
+    node->SetAttribute("name", setting->GetName().c_str());
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
+}
+
 // Writes the Master Quest dungeons to the spoiler log, if there are any.
 static void WriteMasterQuestDungeons(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("master-quest-dungeons");
@@ -521,6 +549,7 @@ bool SpoilerLog_Write() {
   WriteExcludedLocations(spoilerLog);
   WriteStartingInventory(spoilerLog);
   WriteEnabledTricks(spoilerLog);
+  WriteEnabledGlitches(spoilerLog);
   WriteMasterQuestDungeons(spoilerLog);
   WriteRequiredTrials(spoilerLog);
   WritePlaythrough(spoilerLog);

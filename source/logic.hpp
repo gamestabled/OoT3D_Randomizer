@@ -151,7 +151,8 @@ namespace Logic {
   //Gold Skulltula Count
   extern u8 GoldSkulltulaTokens;
 
-  //Bottle Count
+  //Bottle Count, with and without Ruto's Letter
+  extern u8 Bottles;
   extern u8 NumBottles;
 
   //item and bottle drops
