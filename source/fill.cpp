@@ -461,6 +461,11 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
     return;
   }
 
+  if (Settings::Logic.Is(LOGIC_NONE)) {
+    FastFill(items, GetEmptyLocations(allowedLocations), true);
+    return;
+  }
+
   //keep retrying to place everything until it works or takes too long
   int retries = 10;
   bool unsuccessfulPlacement = false;
