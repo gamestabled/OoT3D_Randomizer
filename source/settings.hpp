@@ -548,6 +548,8 @@ namespace Settings {
   extern Option GlitchZDOoBJumpSlash;
   extern Option GlitchJabuStickRecoil;
   extern Option GlitchJabuAdult;
+  extern Option GlitchBlueFireWall;
+  extern Option GlitchDCModernHalfie;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

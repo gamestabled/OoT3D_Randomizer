@@ -1382,3 +1382,8 @@ string_view GlitchJabuStickRecoilDesc                 = "Child can enter Jabu wi
                                                         "sidehopping next to the loading zone.";           //
 string_view GlitchJabuAdultDesc                       = "Adult can enter Jabu by walking over a specific\n"//
                                                         "section of ice on the side near ice cavern.";     //
+string_view GlitchBlueFireWallDesc                    = "Pouring blue fire on certain destructable walls\n"//
+                                                        "will cause them to break.";                       //
+string_view GlitchDCModernHalfieDesc                  = "Using a bomb flower and a twisted backflip, it is\n"
+                                                        "possible to access the switch in DC with only a\n"//
+                                                        "deku shield and the goron bracelet.";             //

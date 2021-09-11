@@ -669,13 +669,15 @@ namespace Settings {
     &GlitchEntrancePoint,
   };
 
-  Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent as Child",  {"Off", "On"}, {GlitchGVTentAsChildDesc});
-  Option GlitchGFGuardSneak      = Option::Bool("Sneak Past the GF Guard", {"Off", "On"}, {GlitchGFGuardSneakDesc});
-  Option GlitchItemlessWasteland = Option::Bool("Cross the HW w/o Items",  {"Off", "On"}, {GlitchItemlessWastelandDesc});
-  Option GlitchOccamsStatue      = Option::Bool("Occam's Statue",          {"Off", "On"}, {GlitchOccamsStatueDesc});
-  Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/ Jump Slash",    {"Off", "On"}, {GlitchZDOoBJumpSlashDesc});
-  Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu w/o Bottle",   {"Off", "On"}, {GlitchJabuStickRecoilDesc});
-  Option GlitchJabuAdult         = Option::Bool("Enter Jabu as Adult",     {"Off", "On"}, {GlitchJabuAdultDesc});
+  Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent as Child",   {"Off", "On"}, {GlitchGVTentAsChildDesc});
+  Option GlitchGFGuardSneak      = Option::Bool("Sneak Past the GF Guard",  {"Off", "On"}, {GlitchGFGuardSneakDesc});
+  Option GlitchItemlessWasteland = Option::Bool("Cross the HW w/o Items",   {"Off", "On"}, {GlitchItemlessWastelandDesc});
+  Option GlitchOccamsStatue      = Option::Bool("Occam's Statue",           {"Off", "On"}, {GlitchOccamsStatueDesc});
+  Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/ Jump Slash",     {"Off", "On"}, {GlitchZDOoBJumpSlashDesc});
+  Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu w/o Bottle",    {"Off", "On"}, {GlitchJabuStickRecoilDesc});
+  Option GlitchJabuAdult         = Option::Bool("Enter Jabu as Adult",      {"Off", "On"}, {GlitchJabuAdultDesc});
+  Option GlitchBlueFireWall      = Option::Bool("Break Walls w/ Blue Fire", {"Off", "on"}, {GlitchBlueFireWallDesc});
+  Option GlitchDCModernHalfie    = Option::Bool("DC Modern Halfie",         {"Off", "On"}, {GlitchDCModernHalfieDesc});
   std::vector<Option*> miscGlitches = {
     &GlitchGVTentAsChild,
     &GlitchGFGuardSneak,
@@ -684,6 +686,8 @@ namespace Settings {
     &GlitchZDOoBJumpSlash,
     &GlitchJabuStickRecoil,
     &GlitchJabuAdult,
+    &GlitchBlueFireWall,
+    &GlitchDCModernHalfie,
   };
 
   Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories, false);

@@ -475,3 +475,5 @@ extern string_view GlitchOccamsStatueDesc;
 extern string_view GlitchZDOoBJumpSlashDesc;
 extern string_view GlitchJabuStickRecoilDesc;
 extern string_view GlitchJabuAdultDesc;
+extern string_view GlitchBlueFireWallDesc;
+extern string_view GlitchDCModernHalfieDesc;
