@@ -1194,8 +1194,12 @@ string_view LogicSpiritTrialHookshotDesc              = "Difficulty: Intermediat
 ------------------------------*/                                                                           //
 const std::vector<string_view> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"}; //
 /* Restricted Items */                                                                                     //
-string_view GlitchRestrictedItemsDescDisabled         = "";                                                //
-string_view GlitchRestrictedItemsDescNovice           = "";                                                //
+string_view GlitchRestrictedItemsDescDisabled         = "Swapping an item that can normally be used in an\n"
+                                                        "area with one that would be dimmed will let you\n"
+                                                        "use that item for 1 frame after closing your\n"   //
+                                                        "inventory. This can be useful on its own or in\n" //
+                                                        "combination with other glitches.";                //
+string_view GlitchRestrictedItemsDescNovice           = "You may be required to use restricted items.";    //
 /* ISG */                                                                                                  //
 string_view GlitchISGDescDisabled                     = "Shortened to ISG, allows Link's melee weapon to\n"//
                                                         "be in a constant swinging state. Simply touching\n"
@@ -1220,70 +1224,93 @@ string_view GlitchHoverDescIntermediate               = "Some hovers may require
 string_view GlitchHoverDescAdvanced                   = "Usage of regular bombs will now also be expected,\n"
                                                         "which may require consecutive precise timings.";  //
 /* Bomb OI */                                                                                              //
-string_view GlitchBombOIDescDisabled                  = "";                                                //
-string_view GlitchBombOIDescNovice                    = "";                                                //
-string_view GlitchBombOIDescIntermediate              = "";                                                //
-string_view GlitchBombOIDescAdvanced                  = "";                                                //
-string_view GlitchBombOIDescExpert                    = "";                                                //
+string_view GlitchBombOIDescDisabled                  = "Allowing a bomb to explode in Link's hands while\n"
+                                                        "moving and then attempting to pull out a cutscene\n"
+                                                        "item on a specific frame will cause Link to play\n"
+                                                        "an invisible ocarina instead.\n"                  //
+                                                        "This will only work if bombs are not dimmed on the\n"
+                                                        "frame you use the cutscene item.";                //
+string_view GlitchBombOIDescNovice                    = "You may be expected to use ocarina items with a\n"//
+                                                        "bomb to play warp songs.";                        //
+string_view GlitchBombOIDescIntermediate              = "You may be expected to use ocarina items with a\n"//
+                                                        "bomb to play the ocarina where Link's position\n" //
+                                                        "matters.";                                        //
+string_view GlitchBombOIDescAdvanced                  = "You may be expected to use restricted items to use\n"
+                                                        "the cutscene item or to make the bombs usable on\n"
+                                                        "the correct frame.";                              //
+string_view GlitchBombOIDescExpert                    = "You may be expected to use restricted items to\n" //
+                                                        "perform ocarina items where Link's position isn't\n"
+                                                        "particularly lenient";                            //
 /* Hover Boost */                                                                                          //
-string_view GlitchHoverBoostDescDisabled              = "";                                                //
-string_view GlitchHoverBoostDescNovice                = "";                                                //
-string_view GlitchHoverBoostDescIntermediate          = "";                                                //
-string_view GlitchHoverBoostDescAdvanced              = "";                                                //
+string_view GlitchHoverBoostDescDisabled              = "";
+string_view GlitchHoverBoostDescNovice                = "";
+string_view GlitchHoverBoostDescIntermediate          = "";
+string_view GlitchHoverBoostDescAdvanced              = "";
 /* Super Slide */                                                                                          //
-string_view GlitchSuperSlideDescDisabled              = "";                                                //
-string_view GlitchSuperSlideDescNovice                = "";                                                //
-string_view GlitchSuperSlideDescIntermediate          = "";                                                //
-string_view GlitchSuperSlideDescAdvanced              = "";                                                //
-string_view GlitchSuperSlideDescExpert                = "";                                                //
+string_view GlitchSuperSlideDescDisabled              = "";
+string_view GlitchSuperSlideDescNovice                = "";
+string_view GlitchSuperSlideDescIntermediate          = "";
+string_view GlitchSuperSlideDescAdvanced              = "";
+string_view GlitchSuperSlideDescExpert                = "";
 /* Megaflip */                                                                                             //
-string_view GlitchMegaflipDescDisabled                = "A Megaflip is a backflip/sidehop with high speed.\n"
-                                                        "This can be done with several methods.";          //
-string_view GlitchMegaflipDescNovice                  = "Only Megaflipping with bombs is required.";       //
-string_view GlitchMegaflipDescIntermediate            = "Some Megaflips where you don't have a lot of room\n"
-                                                        "to work with and positioning is more important\n" //
-                                                        "may be required.";                                //
-string_view GlitchMegaflipDescAdvanced                = "";                                                //
-string_view GlitchMegaflipDescExpert                  = "";                                                //
-string_view GlitchMegaflipDescHero                    = "";                                                //
+string_view GlitchMegaflipDescDisabled                = "A backflip or sidehop with high speed from an\n"  //
+                                                        "attack hitting your shield during i-frames. This\n"
+                                                        "is normally achieved by rolling into an explosion.\n\n"
+                                                        "Equipping hover boots to preserve the high speed\n"
+                                                        "when landing is known as a hoverflip.";           //
+string_view GlitchMegaflipDescNovice                  = "You may be expected to perform megaflips on flat\n"
+                                                        "ground with bombs.";                              //
+string_view GlitchMegaflipDescIntermediate            = "You may be expected to perform megaflips in small\n"
+                                                        "areas, distance megaflips, or hoverflips with a\n"//
+                                                        "bomb.";                                           //
+string_view GlitchMegaflipDescAdvanced                = "You may be expected to perform hoverflips with\n" //
+                                                        "difficult midair movement, or distance megaflips\n"
+                                                        "under time pressure with a bomb.\n\n"             //
+                                                        "Additionally, you may be expected to perform\n"   //
+                                                        "novice megaflips with a bombchu";                 //
+string_view GlitchMegaflipDescExpert                  = "You may be expected to perform intermediate\n"    //
+                                                        "megaflips with a bombchu.";                       //
+string_view GlitchMegaflipDescHero                    = "You may be expected to perform any megaflip with a\n"
+                                                        "bombchu.";                                        //
 /* A-Slide */                                                                                              //
-string_view GlitchASlideDescDisabled                  = "";                                                //
-string_view GlitchASlideDescNovice                    = "";                                                //
-string_view GlitchASlideDescIntermediate              = "";                                                //
-string_view GlitchASlideDescAdvanced                  = "";                                                //
-string_view GlitchASlideDescExpert                    = "";                                                //
+string_view GlitchASlideDescDisabled                  = "";
+string_view GlitchASlideDescNovice                    = "";
+string_view GlitchASlideDescIntermediate              = "";
+string_view GlitchASlideDescAdvanced                  = "";
+string_view GlitchASlideDescExpert                    = "";
 /* Hammer Slide */                                                                                         //
-string_view GlitchHammerSlideDescDisabled             = "";                                                //
-string_view GlitchHammerSlideDescNovice               = "";                                                //
-string_view GlitchHammerSlideDescIntermediate         = "";                                                //
+string_view GlitchHammerSlideDescDisabled             = "";
+string_view GlitchHammerSlideDescNovice               = "";
+string_view GlitchHammerSlideDescIntermediate         = "";
 /* Ledge Cancel */                                                                                         //
-string_view GlitchLedgeCancelDescDisabled             = "";                                                //
-string_view GlitchLedgeCancelDescNovice               = "";                                                //
-string_view GlitchLedgeCancelDescAdvanced             = "";                                                //
+string_view GlitchLedgeCancelDescDisabled             = "";
+string_view GlitchLedgeCancelDescNovice               = "";
+string_view GlitchLedgeCancelDescAdvanced             = "";
 /* Action Swap */                                                                                          //
-string_view GlitchActionSwapDescDisabled              = "";                                                //
-string_view GlitchActionSwapDescNovice                = "";                                                //
-string_view GlitchActionSwapDescAdvanced              = "";                                                //
+string_view GlitchActionSwapDescDisabled              = "";
+string_view GlitchActionSwapDescNovice                = "";
+string_view GlitchActionSwapDescAdvanced              = "";
 /* QPA */                                                                                                  //
-string_view GlitchQPADescDisabled                     = "";                                                //
-string_view GlitchQPADescNovice                       = "";                                                //
-string_view GlitchQPADescIntermediate                 = "";                                                //
-string_view GlitchQPADescAdvanced                     = "";                                                //
-string_view GlitchQPADescExpert                       = "";                                                //
+string_view GlitchQPADescDisabled                     = "";
+string_view GlitchQPADescNovice                       = "";
+string_view GlitchQPADescIntermediate                 = "";
+string_view GlitchQPADescAdvanced                     = "";
+string_view GlitchQPADescExpert                       = "";
 /* Hookshot Clip */                                                                                        //
 string_view GlitchHookshotClipDescDisabled            = "Hookshot Clipping allows Link to hookshot through\n"
                                                         "certain walls, which is useful if a valid\n"      //
                                                         "target is on the other side.";                    //
 string_view GlitchHookshotClipDescNovice              = "Basic Hookshot Clipping may be required.";        //
+string_view GlitchHookshotClipDescIntermediate        = "";
 /* Hookshot Jump: Bonk */                                                                                  //
 string_view GlitchHookshotJump_BonkDescDisabled       = "A Hookshot Jump is an umbrella term for techniques"
                                                         "that launch Link into the sky using the Hookshot\n"
                                                         "in various ways, sometimes together with\n"       //
                                                         "other items. The bonk method only requires the\n" //
                                                         "Hookshot itself.";                                //
-string_view GlitchHookshotJump_BonkDescNovice         = "";                                                //
-string_view GlitchHookshotJump_BonkDescIntermediate   = "";                                                //
-string_view GlitchHookshotJump_BonkDescAdvanced       = "";                                                //
+string_view GlitchHookshotJump_BonkDescNovice         = "";
+string_view GlitchHookshotJump_BonkDescIntermediate   = "";
+string_view GlitchHookshotJump_BonkDescAdvanced       = "";
 /* Hookshot Jump: Boots */                                                                                 //
 string_view GlitchHookshotJump_BootsDescDisabled      = "This Hookshot Jump technique is one of the easier\n"
                                                         "ones, and require any pair of boots.";            //
@@ -1291,15 +1318,15 @@ string_view GlitchHookshotJump_BootsDescNovice        = "Only relatively short H
                                                         "may be required.";                                //
 string_view GlitchHookshotJump_BootsDescIntermediate  = "Higher Hookshot Jumps with boots, where you look\n"
                                                         "further up or downwards may be required.";        //
-string_view GlitchHookshotJump_BootsDescAdvanced      = "";                                                //
+string_view GlitchHookshotJump_BootsDescAdvanced      = "";
 /* Cutscene Dives */                                                                                       //
-string_view GlitchCutsceneDiveDescDisabled            = "";                                                //
-string_view GlitchCutsceneDiveDescNovice              = "";                                                //
+string_view GlitchCutsceneDiveDescDisabled            = "";
+string_view GlitchCutsceneDiveDescNovice              = "";
 /* Navi Dive: Stick */                                                                                     //
-string_view GlitchNaviDive_StickDescDisabled          = "";                                                //
-string_view GlitchNaviDive_StickDescNovice            = "";                                                //
-string_view GlitchNaviDive_StickDescIntermediate      = "";                                                //
-string_view GlitchNaviDive_StickDescAdvanced          = "";                                                //
+string_view GlitchNaviDive_StickDescDisabled          = "";
+string_view GlitchNaviDive_StickDescNovice            = "";
+string_view GlitchNaviDive_StickDescIntermediate      = "";
+string_view GlitchNaviDive_StickDescAdvanced          = "";
 /* TSC */                                                                                                  //
 string_view GlitchTripleSlashClipDescDisabled         = "When doing a three-slash-combo with either the\n" //
                                                         "Kokiri Sword or the Master Sword and put it away,\n"
@@ -1308,9 +1335,9 @@ string_view GlitchTripleSlashClipDescDisabled         = "When doing a three-slas
                                                         "a wall and then put away the sword, Link may clip\n"
                                                         "into a wall behind him if angled correctly.";     //
 string_view GlitchTripleSlashClipDescNovice           = "Basic Triple Slash Clipping may be required.";    //
-string_view GlitchTripleSlashClipDescIntermediate     = "";                                                //
-string_view GlitchTripleSlashClipDescAdvanced         = "";                                                //
-string_view GlitchTripleSlashClipDescExpert           = "";                                                //
+string_view GlitchTripleSlashClipDescIntermediate     = "";
+string_view GlitchTripleSlashClipDescAdvanced         = "";
+string_view GlitchTripleSlashClipDescExpert           = "";
 /* Ledge Clip */                                                                                           //
 string_view GlitchLedgeClipDescDisabled               = "A Ledge Clip allows Link to fall through a floor\n"
                                                         "or pass through an object by facing a wall\n"     //
@@ -1320,16 +1347,16 @@ string_view GlitchLedgeClipDescNovice                 = "Basic Ledge Clips may b
                                                         "Some require that you let go of the ledge with\n" //
                                                         "a specific timing.";                              //
 string_view GlitchLedgeClipDescIntermediate           = "Certain harder clips may also be required.";      //
-string_view GlitchLedgeClipDescAdvanced               = "";                                                //
+string_view GlitchLedgeClipDescAdvanced               = "";
 /* Seam Walk */                                                                                            //
-string_view GlitchSeamWalkDescDisabled                = "";                                                //
-string_view GlitchSeamWalkDescNovice                  = "";                                                //
-string_view GlitchSeamWalkDescIntermediate            = "";                                                //
-string_view GlitchSeamWalkDescAdvanced                = "";                                                //
-string_view GlitchSeamWalkDescExpert                  = "";                                                //
-string_view GlitchSeamWalkDescHero                    = "";                                                //
+string_view GlitchSeamWalkDescDisabled                = "";
+string_view GlitchSeamWalkDescNovice                  = "";
+string_view GlitchSeamWalkDescIntermediate            = "";
+string_view GlitchSeamWalkDescAdvanced                = "";
+string_view GlitchSeamWalkDescExpert                  = "";
+string_view GlitchSeamWalkDescHero                    = "";
 /* EPG */                                                                                                  //
-string_view GlitchEntrancePointDescDisabled           = "";                                                //
+string_view GlitchEntrancePointDescDisabled           = "";
 /* Misc Glitches */                                                                                        //
 string_view GlitchGVTentAsChildDesc                   = "The loading zone for the carpenters' tent exists\n"
                                                         "in the child map despite the tent being removed.\n\n"

@@ -428,6 +428,7 @@ extern string_view GlitchQPADescExpert;
 
 extern string_view GlitchHookshotClipDescDisabled;
 extern string_view GlitchHookshotClipDescNovice;
+extern string_view GlitchHookshotClipDescIntermediate;
 
 extern string_view GlitchHookshotJump_BonkDescDisabled;
 extern string_view GlitchHookshotJump_BonkDescNovice;
