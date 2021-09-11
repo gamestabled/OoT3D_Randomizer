@@ -118,6 +118,10 @@ static int GetMaxGSCount() {
   return std::max(maxUseful, maxBridge);
 }
 
+std::vector<LocationKey> GetEmptyLocations(std::vector<LocationKey> allowedLocations) {
+  return FilterFromPool(allowedLocations, [](const LocationKey loc){ return Location(loc)->GetPlacedItemKey() == NONE;});
+}
+
 std::vector<LocationKey> GetAllEmptyLocations() {
   return FilterFromPool(allLocations, [](const LocationKey loc){ return Location(loc)->GetPlacedItemKey() == NONE;});
 }
@@ -533,7 +537,8 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
         LogicReset();
         GetAccessibleLocations(allLocations, SearchMode::CheckBeatable);
         if (playthroughBeatable) {
-          FastFill(itemsToPlace, GetAllEmptyLocations(), true);
+          PlacementLog_Msg("Game beatable, now placing items randomly. " + std::to_string(itemsToPlace.size()) + " major items remaining.\n\n");
+          FastFill(itemsToPlace, GetEmptyLocations(allowedLocations), true);
           return;
         }
       }
