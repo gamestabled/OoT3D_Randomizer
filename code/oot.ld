@@ -68,6 +68,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyBeansBought)
 	}
 
+	.patch_BiggoronDontSetBGSFlag 0x133F7C : {
+		*(.patch_BiggoronDontSetBGSFlag)
+	}
+
 	.patch_KingZoraDontStartTimer 0x134D7C : {
 		*(.patch_KingZoraDontStartTimer)
 	}
@@ -166,6 +170,10 @@ SECTIONS
 
 	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
 		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
+	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {
+		*(.patch_CarpenterBossDontNullExchangeItem)
 	}
 
 	.patch_CarpenterBossSetTradedSawFlag 0x178D58 : {

@@ -530,6 +530,14 @@ void GenerateRandomizer() {
   } else {
     printf("Failed\nPress Select to exit.\n");
   }
+
+  //Restore settings that were set to a specific value for vanilla logic
+  if (Settings::Logic.Is(LOGIC_VANILLA)) {
+      for (Option* setting : Settings::vanillaLogicDefaults) {
+        setting->RestoreDelayedOption();
+      }
+      Settings::Keysanity.RestoreDelayedOption();
+  }
 }
 
 //opens up the 3ds software keyboard for getting user input
