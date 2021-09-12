@@ -68,6 +68,14 @@ static char *spoilerCollectionGroupNames[] = {
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
 #define COLOR_SCROLL_BAR_BG RGB8(0x58, 0x58, 0x58)
 
+#define COLOR_ICON_MASTER_QUEST RGB8(0x53, 0xBA, 0xFF)
+#define COLOR_ICON_VANILLA      RGB8(0xFF, 0xE8, 0x97)
+#define COLOR_ICON_BOSS_KEY     RGB8(0x20, 0xF9, 0x25)
+#define COLOR_ICON_MAP          RGB8(0xF9, 0x97, 0xFF)
+#define COLOR_ICON_COMPASS      RGB8(0x20, 0x3A, 0xF9)
+#define COLOR_ICON_WOTH         RGB8(0xFF, 0xF8, 0x2D)
+#define COLOR_ICON_FOOL         RGB8(0xFF, 0x2D, 0x4B)
+
 void Gfx_SleepQueryCallback(void)
 {
     ticksElapsed = 0;
@@ -166,6 +174,12 @@ static void Gfx_DrawSeedHash(void) {
 }
 
 static void Gfx_DrawDungeonItems(void) {
+    // Draw header icons
+    Draw_DrawIcon(220, 10, COLOR_WHITE, ICON_SMALL_KEY);
+    Draw_DrawIcon(240, 10, COLOR_WHITE, ICON_BOSS_KEY);
+    Draw_DrawIcon(260, 10, COLOR_WHITE, ICON_MAP);
+    Draw_DrawIcon(280, 10, COLOR_WHITE, ICON_COMPASS);
+
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
         //special case for Ganon's Castle small keys
         s32 keys = 0;
@@ -175,8 +189,35 @@ static void Gfx_DrawDungeonItems(void) {
           keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
         }
 
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-25s %s: %d %s",
-            DungeonNames[dungeonId], "Small Keys", keys, gSaveContext.dungeonItems[dungeonId] & 1 ? "Boss Key" : "");
+        u8 yPos = 24 + (dungeonId * 13);
+        bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
+        bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
+        bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+
+        if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+            // If we have the map, or all dungeon modes are known due to settings, show whether it's a vanilla or MQ dungeon
+            // Ganon's Tower and Gerudo Training Grounds don't have maps, so we always show those for now
+            if (dungeonId >= DUNGEON_GANONS_CASTLE_SECOND_PART || hasMap || gSettingsContext.dungeonModesKnown) {
+                bool isMasterQuest =  gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
+                u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
+                Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
+                Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
+            } else {
+                Draw_DrawCharacter(10, yPos, COLOR_WHITE, '?');
+            }
+        }
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
+        Draw_DrawFormattedString(220, yPos, COLOR_WHITE, "%d", keys);
+
+        if (hasBossKey) {
+            Draw_DrawIcon(240, yPos, COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
+        }
+        if (hasMap) {
+            Draw_DrawIcon(260, yPos, COLOR_ICON_MAP, ICON_MAP);
+        }
+        if (hasCompass) {
+            Draw_DrawIcon(280, yPos, COLOR_ICON_COMPASS, ICON_COMPASS);
+        }
     }
     Gfx_DrawChangeMenuPrompt();
 }

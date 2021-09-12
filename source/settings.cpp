@@ -70,6 +70,7 @@ namespace Settings {
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
   Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {"0","1","2","3","4","5","6","7","8","9","10","11","12", "Random"},{mqDungeonCountDesc});
   u8 MQSet;
+  bool DungeonModesKnown;
   Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {setDungeonTypesDesc});
   Option MQDeku                    = Option::U8  ("  Deku Tree",            {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
   Option MQDodongo                 = Option::U8  ("  Dodongo's Cavern",     {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
@@ -923,8 +924,10 @@ namespace Settings {
     ctx.shadowTempleDungeonMode          = ShadowTemple.IsMQ()          ? 1 : 0;
     ctx.bottomOfTheWellDungeonMode       = BottomOfTheWell.IsMQ()       ? 1 : 0;
     ctx.iceCavernDungeonMode             = IceCavern.IsMQ()             ? 1 : 0;
-    ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
     ctx.ganonsCastleDungeonMode          = GanonsCastle.IsMQ()          ? 1 : 0;
+    ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
+
+    ctx.dungeonModesKnown = DungeonModesKnown;
 
     ctx.forestTrialSkip = (ForestTrial.IsSkipped()) ? 1 : 0;
     ctx.fireTrialSkip   = (FireTrial.IsSkipped())   ? 1 : 0;
@@ -1817,6 +1820,9 @@ namespace Settings {
       // Add more MQ dungeons from the pool set to random until the MQ dungeon count is reached
       Shuffle(randMQOption);
 
+      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
+      DungeonModesKnown = randMQOption.size() == 0;
+
       if (MQSet == 13) {
         MQSet = dungeonCount + Random(0, randMQOption.size() + 1);
       }
@@ -1833,6 +1839,9 @@ namespace Settings {
       for (size_t i = 0; i < dungeons.size(); i++) {
         dungeons[i]->ClearMQ();
       }
+
+      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
+      DungeonModesKnown = MQSet == 0;
 
       //Set appropriate amount of MQ dungeons
       if (MQSet == 13) {

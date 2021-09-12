@@ -322,6 +322,7 @@ typedef struct {
   u8 heartDropRefill;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
+  u8 dungeonModesKnown;
 
   u8 shuffleRewards;
   u8 linksPocketItem;
@@ -394,18 +395,23 @@ typedef struct {
   u8 shuffleSFX;
   u8 shuffleSFXCategorically;
 
-  u8 dekuTreeDungeonMode;
-  u8 dodongosCavernDungeonMode;
-  u8 jabuJabusBellyDungeonMode;
-  u8 forestTempleDungeonMode;
-  u8 fireTempleDungeonMode;
-  u8 waterTempleDungeonMode;
-  u8 spiritTempleDungeonMode;
-  u8 shadowTempleDungeonMode;
-  u8 bottomOfTheWellDungeonMode;
-  u8 iceCavernDungeonMode;
-  u8 gerudoTrainingGroundsDungeonMode;
-  u8 ganonsCastleDungeonMode;
+  union {
+    u8 dungeonModes[12];
+    struct {
+        u8 dekuTreeDungeonMode;
+        u8 dodongosCavernDungeonMode;
+        u8 jabuJabusBellyDungeonMode;
+        u8 forestTempleDungeonMode;
+        u8 fireTempleDungeonMode;
+        u8 waterTempleDungeonMode;
+        u8 spiritTempleDungeonMode;
+        u8 shadowTempleDungeonMode;
+        u8 bottomOfTheWellDungeonMode;
+        u8 iceCavernDungeonMode;
+        u8 ganonsCastleDungeonMode;
+        u8 gerudoTrainingGroundsDungeonMode;
+    };
+  };
 
   u8 forestTrialSkip;
   u8 fireTrialSkip;
