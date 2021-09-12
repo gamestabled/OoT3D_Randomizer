@@ -68,6 +68,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyBeansBought)
 	}
 
+	.patch_BiggoronDontSetBGSFlag 0x133F7C : {
+		*(.patch_BiggoronDontSetBGSFlag)
+	}
+
 	.patch_KingZoraDontStartTimer 0x134D7C : {
 		*(.patch_KingZoraDontStartTimer)
 	}

@@ -485,6 +485,11 @@ BiggoronCheckBGSFlag_patch:
     nop
     nop
 
+.section .patch_BiggoronDontSetBGSFlag
+.global BiggoronDontSetBGSFlag_patch
+BiggoronDontSetBGSFlag_patch:
+    nop
+
 .section .patch_BiggoronSetTextId
 .global BiggoronSetTextId_patch
 BiggoronSetTextId_patch:
