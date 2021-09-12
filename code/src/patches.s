@@ -1488,6 +1488,11 @@ CheckFadoCanSpawnInLostWoods_patch:
 CarpenterBossSetTradedSawFlag_patch:
     bl hook_CarpenterBossSetTradedSawFlag
 
+.section .patch_CarpenterBossDontNullExchangeItem
+.global CarpenterBossDontNullExchangeItem_patch
+CarpenterBossDontNullExchangeItem_patch:
+    nop
+
 .section .patch_LabScientistDontStartTimerAndSetFlag
 .global LabScientistDontStartTimerAndSetFlag_patch
 LabScientistDontStartTimerAndSetFlag_patch:

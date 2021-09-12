@@ -168,6 +168,10 @@ SECTIONS
 		*(.patch_SkipTimeTravelCutsceneOne)
 	}
 
+	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {
+		*(.patch_CarpenterBossDontNullExchangeItem)
+	}
+
 	.patch_CarpenterBossSetTradedSawFlag 0x178D58 : {
 		*(.patch_CarpenterBossSetTradedSawFlag)
 	}
