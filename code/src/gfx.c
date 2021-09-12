@@ -68,6 +68,7 @@ static char *spoilerCollectionGroupNames[] = {
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
 #define COLOR_SCROLL_BAR_BG RGB8(0x58, 0x58, 0x58)
 
+#define COLOR_DARK_GRAY         RGB8(0x29, 0x29, 0x29)
 #define COLOR_ICON_MASTER_QUEST RGB8(0x53, 0xBA, 0xFF)
 #define COLOR_ICON_VANILLA      RGB8(0xFF, 0xE8, 0x97)
 #define COLOR_ICON_BOSS_KEY     RGB8(0x20, 0xF9, 0x25)
@@ -207,16 +208,14 @@ static void Gfx_DrawDungeonItems(void) {
             }
         }
         Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
-        Draw_DrawFormattedString(220, yPos, COLOR_WHITE, "%d", keys);
+        Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
 
-        if (hasBossKey) {
-            Draw_DrawIcon(240, yPos, COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
+        if (dungeonId <= DUNGEON_GANONS_CASTLE_SECOND_PART) {
+            Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
         }
-        if (hasMap) {
-            Draw_DrawIcon(260, yPos, COLOR_ICON_MAP, ICON_MAP);
-        }
-        if (hasCompass) {
-            Draw_DrawIcon(280, yPos, COLOR_ICON_COMPASS, ICON_COMPASS);
+        if (dungeonId <= DUNGEON_ICE_CAVERN) {
+            Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
+            Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
         }
     }
     Gfx_DrawChangeMenuPrompt();
