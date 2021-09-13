@@ -295,6 +295,12 @@ typedef enum {
   SHUFFLESFX_CHAOS,
 } ShuffleSFXSetting;
 
+typedef enum {
+  DUNGEON_NEITHER,
+  DUNGEON_BARREN,
+  DUNGEON_WOTH,
+} DungeonInfo;
+
 typedef struct {
   u8 hashIndexes[5];
 
