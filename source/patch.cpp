@@ -7,6 +7,7 @@
 #include "shops.hpp"
 #include "spoiler_log.hpp"
 #include "entrance.hpp"
+#include "hints.hpp"
 
 #include <array>
 #include <cstring>
@@ -340,6 +341,16 @@ bool WriteAllPatches() {
   patchOffset = V_TO_P(RSFXDATA_ADDR);
   patchSize = sizeof(SFXData);
   if (!WritePatch(patchOffset, patchSize, (char*)(&SFX::GetSFXData()), code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  /*---------------------------------
+  |        rDungeonInfoData         |
+  ---------------------------------*/
+
+  patchOffset = V_TO_P(RDUNGEONINFODATA_ADDR);
+  patchSize = sizeof(dungeonInfoData);
+  if (!WritePatch(patchOffset, patchSize, (char*)(&dungeonInfoData), code, bytesWritten, totalRW, buf)) {
     return false;
   }
 

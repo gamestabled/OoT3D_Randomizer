@@ -24,6 +24,8 @@ static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 static bool isAsleep = false;
 
+DungeonInfo rDungeonInfoData[10]; 
+
 #define TICKS_PER_SEC 268123480
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
 
