@@ -177,6 +177,7 @@ static void Gfx_DrawSeedHash(void) {
 }
 
 static void Gfx_DrawDungeonItems(void) {
+    Draw_DrawString(10, 10, COLOR_TITLE, "Dungeon Items");
     // Draw header icons
     Draw_DrawIcon(220, 10, COLOR_WHITE, ICON_SMALL_KEY);
     Draw_DrawIcon(240, 10, COLOR_WHITE, ICON_BOSS_KEY);
@@ -212,7 +213,7 @@ static void Gfx_DrawDungeonItems(void) {
         Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
         Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
 
-        if (dungeonId <= DUNGEON_GANONS_CASTLE_SECOND_PART) {
+        if (dungeonId <= DUNGEON_SHADOW_TEMPLE || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
             Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
         }
         if (dungeonId <= DUNGEON_ICE_CAVERN) {
@@ -224,8 +225,15 @@ static void Gfx_DrawDungeonItems(void) {
 }
 
 static void Gfx_DrawDungeonRewards(void) {
+    Draw_DrawString(10, 10, COLOR_TITLE, "Dungeon Rewards");
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
+        u8 yPos = 24 + (dungeonId * 13);
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
+
+        // Only show reward if the player has collected the compass
+        // TODO: Optionally always show the reward
+        bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
+        Draw_DrawString(190, yPos, COLOR_WHITE, hasCompass ? DungeonReward_GetName(dungeonId) : "???");
     }
     Gfx_DrawChangeMenuPrompt();
 }
