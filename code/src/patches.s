@@ -485,6 +485,11 @@ BiggoronCheckBGSFlag_patch:
     nop
     nop
 
+.section .patch_BiggoronDontSetBGSFlag
+.global BiggoronDontSetBGSFlag_patch
+BiggoronDontSetBGSFlag_patch:
+    nop
+
 .section .patch_BiggoronSetTextId
 .global BiggoronSetTextId_patch
 BiggoronSetTextId_patch:
@@ -1487,6 +1492,11 @@ CheckFadoCanSpawnInLostWoods_patch:
 .global CarpenterBossSetTradedSawFlag_patch
 CarpenterBossSetTradedSawFlag_patch:
     bl hook_CarpenterBossSetTradedSawFlag
+
+.section .patch_CarpenterBossDontNullExchangeItem
+.global CarpenterBossDontNullExchangeItem_patch
+CarpenterBossDontNullExchangeItem_patch:
+    nop
 
 .section .patch_LabScientistDontStartTimerAndSetFlag
 .global LabScientistDontStartTimerAndSetFlag_patch

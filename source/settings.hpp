@@ -124,6 +124,15 @@ public:
       }
     }
 
+    void SetDelayedOption() {
+      delayedOption = selectedOption;
+    }
+
+    void RestoreDelayedOption() {
+      selectedOption = delayedOption;
+      SetVariable();
+    }
+
     void SetSelectedIndex(size_t idx) {
       selectedOption = idx;
       if (selectedOption >= options.size()) {
@@ -203,6 +212,7 @@ private:
   std::vector<std::string> options;
   std::vector<std::string_view> optionDescriptions;
   u8 selectedOption = 0;
+  u8 delayedOption = 0;
   bool locked = false;
   bool hidden = false;
   OptionCategory category;
@@ -590,4 +600,6 @@ namespace Settings {
   extern std::vector<Menu *> detailedLogicOptions;
 
   extern std::vector<Menu *> mainMenu;
+
+  extern std::vector<Option *> vanillaLogicDefaults;
 }

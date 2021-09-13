@@ -1728,6 +1728,20 @@ namespace Settings {
            option == &MQCastle;
   }
 
+  //Options that should be saved, set to default, then restored after finishing when vanilla logic is enabled
+  std::vector<Option *> vanillaLogicDefaults = {
+    &LinksPocketItem,
+    &ShuffleRewards,
+    &ShuffleSongs,
+    &Shopsanity,
+    &Scrubsanity,
+    &ShuffleCows,
+    &ShuffleMagicBeans,
+    &ShuffleMerchants,
+    &ShuffleAdultTradeQuest,
+    &GossipStoneHints,
+  };
+
   // Randomizes all settings in a category if chosen
   // Hides all relevant options
   void RandomizeAllSettings(const bool selectOptions /*= false*/) {
@@ -1958,16 +1972,12 @@ namespace Settings {
 
     //If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
     if (Logic.Is(LOGIC_VANILLA)) {
-      ShuffleRewards.SetSelectedIndex(0);
-      LinksPocketItem.SetSelectedIndex(0);
-      ShuffleSongs.SetSelectedIndex(0);
-      Scrubsanity.SetSelectedIndex(0);
-      ShuffleCows.SetSelectedIndex(0);
-      ShuffleMagicBeans.SetSelectedIndex(0);
-      ShuffleMerchants.SetSelectedIndex(0);
-      ShuffleAdultTradeQuest.SetSelectedIndex(0);
+      for (Option* setting : vanillaLogicDefaults) {
+        setting->SetDelayedOption();
+        setting->SetSelectedIndex(0);
+      }
+      Keysanity.SetDelayedOption();
       Keysanity.SetSelectedIndex(3); //Set small keys to any dungeon so FiT basement door will be locked
-      GossipStoneHints.SetSelectedIndex(0);
     }
 
     InitMusicRandomizer();
