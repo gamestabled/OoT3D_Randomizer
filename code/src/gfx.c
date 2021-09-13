@@ -210,7 +210,7 @@ static void Gfx_DrawDungeonItems(void) {
         Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
         Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
 
-        if (dungeonId <= DUNGEON_GANONS_CASTLE_SECOND_PART) {
+        if (dungeonId <= DUNGEON_SHADOW_TEMPLE || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
             Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
         }
         if (dungeonId <= DUNGEON_ICE_CAVERN) {
