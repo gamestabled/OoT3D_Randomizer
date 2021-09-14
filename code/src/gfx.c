@@ -23,6 +23,12 @@ static s16 groupItemsScroll = 0;
 static s8 currentGroup = 1;
 static s32 curMenuIdx = 0;
 static float itemPercent = 0;
+static u64 lastTick = 0;
+static u64 ticksElapsed = 0;
+static bool isAsleep = false;
+
+#define TICKS_PER_SEC 268123480
+#define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
 
 static char *spoilerCollectionGroupNames[] = {
     "",
@@ -59,11 +65,24 @@ static char *spoilerCollectionGroupNames[] = {
 #define UP_SOLID_ARROW_CHR 30
 #define DOWN_SOLID_ARROW_CHR 31
 
-#define MAX_ITEM_LINES 8
+#define MAX_ITEM_LINES 9
 #define SCROLL_BAR_THICKNESS 2
 #define SCROLL_BAR_MIN_THUMB_SIZE 4
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
 #define COLOR_SCROLL_BAR_BG RGB8(0x58, 0x58, 0x58)
+
+void Gfx_SleepQueryCallback(void)
+{
+    ticksElapsed = 0;
+    isAsleep = true;
+}
+
+void Gfx_AwakeCallback(void)
+{
+    ticksElapsed = 0;
+    lastTick = svcGetSystemTick();
+    isAsleep = false;
+}
 
 static void Gfx_DrawScrollBar(u16 barX, u16 barY, u16 barSize, u16 currentScroll, u16 maxScroll, u16 pageSize) {
     Draw_DrawRect(barX, barY, SCROLL_BAR_THICKNESS, barSize, COLOR_SCROLL_BAR_BG);
@@ -100,8 +119,7 @@ static void Gfx_GroupsPrevGroup() {
 }
 
 static void Gfx_DrawChangeMenuPrompt(void) {
-    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 54, COLOR_WARN, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
-    Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 30, COLOR_TITLE, "Menu opened %u times", gExtSaveData.openMenuCounter);
+    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 30, COLOR_TITLE, "Press B to close menu, L/R to change menu");
     if (curMenuIdx == 3) {
         Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse spoiler log",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
@@ -116,13 +134,38 @@ static void Gfx_DrawChangeMenuPrompt(void) {
     }
 }
 
+static void Gfx_UpdatePlayTime(bool isInGame)
+{
+    u64 currentTick = svcGetSystemTick();
+    if (!isAsleep && isInGame) {
+        ticksElapsed += currentTick - lastTick;
+        if (ticksElapsed > MAX_TICK_DELTA) {
+            // Assume that if more ticks than MAX_TICK_DELTA have passed, it has been a long
+            // time since we last checked, which means the the system may have been asleep or the home button pressed.
+            // Reset the timer so we don't artificially inflate the play time.
+            ticksElapsed = 0;
+        } else {
+            while (ticksElapsed >= TICKS_PER_SEC) {
+                ticksElapsed -= TICKS_PER_SEC;
+                ++gExtSaveData.playtimeSeconds;
+            }
+        }
+    }
+    lastTick = currentTick;
+}
+
 static void Gfx_DrawSeedHash(void) {
     Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Seed Hash:");
     for (u32 hashIndex = 0; hashIndex < 5; ++hashIndex) {
-        Draw_DrawFormattedString(10, 10 + SPACING_Y + (hashIndex * SPACING_Y), COLOR_WHITE, "    %s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 10 + SPACING_Y + (hashIndex * SPACING_Y), COLOR_WHITE, "%s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
     }
+
+    Draw_DrawString(10, 80, COLOR_TITLE, "Play time:");
+    u32 hours = gExtSaveData.playtimeSeconds / 3600;
+    u32 minutes = (gExtSaveData.playtimeSeconds / 60) % 60;
+    u32 seconds = gExtSaveData.playtimeSeconds % 60;
+    Draw_DrawFormattedString(10 + (SPACING_X * 4), 80 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawDungeonItems(void) {
@@ -139,7 +182,6 @@ static void Gfx_DrawDungeonItems(void) {
             DungeonNames[dungeonId], "Small Keys", keys, gSaveContext.dungeonItems[dungeonId] & 1 ? "Boss Key" : "");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawDungeonRewards(void) {
@@ -147,7 +189,6 @@ static void Gfx_DrawDungeonRewards(void) {
         Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawSpoilerData(void) {
@@ -172,14 +213,13 @@ static void Gfx_DrawSpoilerData(void) {
                 SpoilerData_GetItemNameString(itemIndex));
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, spoilerScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, spoilerScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Spoiler Log");
         Draw_DrawString(10, 40, COLOR_WHITE, "No spoiler log generated!");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawSpoilerAllItems(void) {
@@ -209,14 +249,13 @@ static void Gfx_DrawSpoilerAllItems(void) {
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "All Item Locations");
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void Gfx_DrawSpoilerItemGroups(void) {
@@ -257,14 +296,13 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 62 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Item Location Groups");
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
     Gfx_DrawChangeMenuPrompt();
-    Draw_FlushFramebuffer();
 }
 
 static void (*menu_draw_funcs[])(void) = {
@@ -301,6 +339,11 @@ static void Gfx_ShowMenu(void) {
     Draw_FlushFramebuffer();
 
     do {
+        // End the loop if the system has gone to sleep, so the game can properly respond
+        if (isAsleep) {
+            break;
+        }
+
         bool handledInput = false;
         // Controls for spoiler log and all-items pages come first, as the user may have chosen
         // one of the directional buttons as their menu open/close button and we need to use them
@@ -372,8 +415,8 @@ static void Gfx_ShowMenu(void) {
 
         if (!handledInput) {
             if (pressed & closingButton) {
-                Draw_ClearFramebuffer();
-                Draw_FlushFramebuffer();
+                Draw_ClearBackbuffer();
+                Draw_CopyBackBuffer();
                 break;
             } else if (pressed & BUTTON_R1) {
                 do {
@@ -394,12 +437,17 @@ static void Gfx_ShowMenu(void) {
             }
         }
 
+        // Only clear the screen if there's been some input
         if (handledInput) {
-            Draw_ClearFramebuffer();
-            Draw_FlushFramebuffer();
+            Draw_ClearBackbuffer();
         }
 
+        // Continue counting up play time while in the in-game menu
+        Gfx_UpdatePlayTime(true);
+
         menu_draw_funcs[curMenuIdx]();
+        Draw_CopyBackBuffer();
+
         pressed = Input_WaitWithTimeout(1000, closingButton);
 
     } while(true);
@@ -407,6 +455,7 @@ static void Gfx_ShowMenu(void) {
 
 void Gfx_Init(void) {
     Draw_SetupFramebuffer();
+    Draw_ClearBackbuffer();
 
     // Setup the title screen logo edits
     gActorOverlayTable[0x171].initInfo->init = EnMag_rInit;
@@ -444,17 +493,23 @@ static u8 openingButton(void){
 void Gfx_Update(void) {
     if (!GfxInit) {
         Gfx_Init();
+        lastTick = svcGetSystemTick();
     }
 
     s32 entr = gSaveContext.entranceIndex;
     s32 mode = gSaveContext.gameMode;
-    if(openingButton() &&
-        (mode == 0 ||
-        (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D)
-        )
-      ){
-        gExtSaveData.openMenuCounter++;
+    bool isInGame = mode == 0 ||
+        (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D);
+
+    Gfx_UpdatePlayTime(isInGame);
+
+    if(!isAsleep && openingButton() && isInGame){
         Gfx_ShowMenu();
-        svcSleepThread(1000 * 1000 * 300LL);
+        // Check again as it's possible the system was put to sleep while the menu was open
+        if (!isAsleep) {
+            svcSleepThread(1000 * 1000 * 300LL);
+            // Update lastTick one more time so we don't count the added 0.3s sleep
+            lastTick = svcGetSystemTick();
+        }
     }
 }

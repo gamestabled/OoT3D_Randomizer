@@ -2,6 +2,7 @@
 #include "z3D/z3D.h"
 #include "input.h"
 #include "savefile.h"
+#include "settings.h"
 
 #define gItemsMenuSpritesManager (*(MenuSpriteManager**)0x506734)
 #define gBowMenuSpritesManager (*(MenuSpriteManager**)0x506738)
@@ -59,4 +60,8 @@ void ItemsMenu_Draw(void) {
             }
         }
     }
+}
+
+u16 SaveMenu_IgnoreOpen(void) {
+    return (gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) || (gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt);
 }

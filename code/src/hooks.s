@@ -23,6 +23,29 @@ hook_Gfx_Update:
     pop {r0-r12, lr}
     pop {r4-r8, pc}
 
+.global hook_Draw_PreSwapBuffers
+hook_Draw_PreSwapBuffers:
+    push {r0-r12, lr}
+    bl Draw_PreSwapBuffers
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_Gfx_SleepQueryCallback
+hook_Gfx_SleepQueryCallback:
+    push {r0-r12, lr}
+    bl Gfx_SleepQueryCallback
+    pop {r0-r12, lr}
+    add r0,r0,#0x9C
+    b 0x3FD6C8
+
+.global hook_Gfx_AwakeCallback
+hook_Gfx_AwakeCallback:
+    push {r0-r12, lr}
+    bl Gfx_AwakeCallback
+    pop {r0-r12, lr}
+    add r0,r0,#0x9C
+    b 0x3FD440
+
 .global hook_IncomingGetItemID
 hook_IncomingGetItemID:
     push {r0-r12, lr}
@@ -566,6 +589,24 @@ hook_EnableFW:
     add sp,sp,#0x14
     bx lr
 
+.global hook_FWUnset
+hook_FWUnset:
+    push {r0-r12, lr}
+    bl MagicWind_Unset
+    mov r0,#-0x1
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_FWGetSet
+hook_FWGetSet:
+    push {r0-r12, lr}
+    bl MagicWind_CheckSet
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x351A64
+    b 0x3519D0
+
 .global hook_SetSavewarpEntrance
 hook_SetSavewarpEntrance:
     push {r0-r12, lr}
@@ -842,6 +883,14 @@ hook_SetBGMDayNight:
     push {r4-r6, lr}
     b 0x483C8C
 
+.global hook_SetSFX
+hook_SetSFX:
+    push {r1-r12, lr}
+    bl SetSFX
+    pop {r1-r12, lr}
+    push {r0-r11, lr}
+    b 0x375480
+
 .global hook_TurboTextClose
 hook_TurboTextClose:
     push {r0-r12, lr}
@@ -976,7 +1025,16 @@ hook_SaveGame:
 .notSaving:
     push {r4-r9, lr}
     b 0x2fbfac
-    
+
+.global hook_SaveMenuIgnoreOpen
+hook_SaveMenuIgnoreOpen:
+    push {r0-r12, lr}
+    bl SaveMenu_IgnoreOpen
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x42F270
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

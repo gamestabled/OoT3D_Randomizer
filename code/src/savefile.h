@@ -17,7 +17,7 @@ void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 
 typedef struct {
-    u32 openMenuCounter;
+    u32 playtimeSeconds;
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA

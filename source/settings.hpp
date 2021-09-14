@@ -124,6 +124,15 @@ public:
       }
     }
 
+    void SetDelayedOption() {
+      delayedOption = selectedOption;
+    }
+
+    void RestoreDelayedOption() {
+      selectedOption = delayedOption;
+      SetVariable();
+    }
+
     void SetSelectedIndex(size_t idx) {
       selectedOption = idx;
       if (selectedOption >= options.size()) {
@@ -203,6 +212,7 @@ private:
   std::vector<std::string> options;
   std::vector<std::string_view> optionDescriptions;
   u8 selectedOption = 0;
+  u8 delayedOption = 0;
   bool locked = false;
   bool hidden = false;
   OptionCategory category;
@@ -330,6 +340,7 @@ namespace Settings {
   extern Option CompleteMaskQuest;
   extern Option QuickText;
   extern Option SkipSongReplays;
+  extern Option KeepFWWarpPoint;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
@@ -545,6 +556,8 @@ namespace Settings {
   extern Option ShuffleBGM;
   extern Option ShuffleFanfares;
   extern Option ShuffleOcaMusic;
+  extern Option ShuffleSFX;
+  extern Option ShuffleSFXCategorically;
 
   extern u32 LinksPocketRewardBitMask;
   extern std::array<u32, 9> rDungeonRewardOverrides;
@@ -558,4 +571,6 @@ namespace Settings {
   extern std::vector<Menu *> detailedLogicOptions;
 
   extern std::vector<Menu *> mainMenu;
+
+  extern std::vector<Option *> vanillaLogicDefaults;
 }

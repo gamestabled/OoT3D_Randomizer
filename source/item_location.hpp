@@ -254,6 +254,14 @@ public:
       hintedAt = true;
     }
 
+    bool IsHidden() const {
+      return hidden;
+    }
+
+    void SetHidden(const bool hidden_) {
+      hidden = hidden_;
+    }
+
     bool IsHintable() const {
       return isHintable;
     }
@@ -349,6 +357,7 @@ public:
       isHintable = false;
       price = 0;
       hasShopsanityPrice =  false;
+      hidden = false;
     }
 
 private:
@@ -372,6 +381,7 @@ private:
     bool isHintable = false;
     AreaKey parentRegion = NONE;
     bool hasShopsanityPrice = false;
+    bool hidden = false;
 };
 
 class ItemOverride_Compare {
@@ -406,7 +416,7 @@ extern bool showItemProgress;
 extern u16 itemsPlaced;
 
 void GenerateLocationPool();
-void PlaceItemInLocation(LocationKey loc, ItemKey item, bool applyEffectImmediately = false);
+void PlaceItemInLocation(LocationKey loc, ItemKey item, bool applyEffectImmediately = false, bool setHidden = false);
 std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category categoryInclude, Category categoryExclude = Category::cNull);
 void LocationReset();
 void ItemReset();

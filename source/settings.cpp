@@ -7,6 +7,7 @@
 #include "fill.hpp"
 #include "item_location.hpp"
 #include "music.hpp"
+#include "sound_effects.hpp"
 #include "random.hpp"
 #include "randomizer.hpp"
 #include "setting_descriptions.hpp"
@@ -17,6 +18,7 @@ using namespace Cosmetics;
 using namespace Dungeon;
 using namespace Trial;
 using namespace Music;
+using namespace SFX;
 
 namespace Settings {
   std::string seed;
@@ -201,6 +203,7 @@ namespace Settings {
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_SKIPPABLE);
   Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
+  Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -216,6 +219,7 @@ namespace Settings {
     &CompleteMaskQuest,
     &QuickText,
     &SkipSongReplays,
+    &KeepFWWarpPoint,
   };
 
   //Misc Settings
@@ -661,32 +665,29 @@ namespace Settings {
     "Zora Blue",
     "Black",
     "White",
-    "Azure Blue",
-    "Vivid Cyan",
-    "Light Red",
-    "Fuchsia",
-    "Purple",
-    "Majora Purple",
-    "Twitch Purple",
-    "Magenta",
-    "Violet",
-    "Persian Rose",
-    "Dirty Yellow",
-    "Blush Pink",
-    "Hot Pink",
-    "Rose Pink",
     "Orange",
-    "Gray",
     "Yellow",
-    "Silver",
+    "Cyan",
+    "Indigo",
+    "Purple",
+    "Pink",
+    "Dark Gray",
+    "Salmon",
+    "Wine Red",
     "Beige",
-    "Teal",
-    "Blood Red",
-    "Blood Orange",
-    "Royal Blue",
-    "NES Green",
+    "Brown",
+    "Sand",
+    "Tea Green",
     "Dark Green",
-    "Lumen",
+    "Powder Blue",
+    "Teal",
+    "Sky Blue",
+    "Faded Blue",
+    "Lavender",
+    "Magenta",
+    "Mauve",
+    "Silver",
+    "Gold"
   };
   static std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
@@ -721,6 +722,9 @@ namespace Settings {
   Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions}, {fanfareDescriptions},                                                                                                                                                     OptionCategory::Cosmetic,               1); // Fanfares only
   Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {shuffleOcaMusicDesc},                                                                                                                                                     OptionCategory::Cosmetic,               1); // On
 
+  Option ShuffleSFX              = Option::U8  ("Shuffle SFX",           {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                   OptionCategory::Cosmetic);
+  Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle", {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                  OptionCategory::Cosmetic,               1); // On
+
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
     &ChildTunicColor,
@@ -736,6 +740,8 @@ namespace Settings {
     &ShuffleBGM,
     &ShuffleFanfares,
     &ShuffleOcaMusic,
+    &ShuffleSFX,
+    &ShuffleSFXCategorically,
   };
 
   Menu loadSettingsPreset       = Menu::Action("Load Settings Preset",       LOAD_PRESET);
@@ -876,6 +882,7 @@ namespace Settings {
     ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
     ctx.quickText            = QuickText.Value<u8>();
     ctx.skipSongReplays      = SkipSongReplays.Value<u8>();
+    ctx.keepFWWarpPoint      = KeepFWWarpPoint ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
@@ -901,6 +908,8 @@ namespace Settings {
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
     ctx.coloredKeys          = (ColoredKeys) ? 1 : 0;
     ctx.coloredBossKeys      = (ColoredBossKeys) ? 1 : 0;
+    ctx.shuffleSFX           = ShuffleSFX.Value<u8>();
+    ctx.shuffleSFXCategorically = (ShuffleSFXCategorically) ? 1 : 0;
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
@@ -1614,7 +1623,7 @@ namespace Settings {
       ZoraTunicColor.SetSelectedIndex(5);   //Zora Blue
     }
 
-    // Music
+    // Audio
     if (ShuffleMusic) {
       ShuffleBGM.Unhide();
       ShuffleFanfares.Unhide();
@@ -1626,6 +1635,12 @@ namespace Settings {
       ShuffleBGM.Hide();
       ShuffleFanfares.Hide();
       ShuffleOcaMusic.Hide();
+    }
+
+    if (ShuffleSFX) {
+      ShuffleSFXCategorically.Unhide();
+    } else {
+      ShuffleSFXCategorically.Hide();
     }
 
     ResolveExcludedLocationConflicts();
@@ -1647,6 +1662,20 @@ namespace Settings {
            option == &MQGTG           ||
            option == &MQCastle;
   }
+
+  //Options that should be saved, set to default, then restored after finishing when vanilla logic is enabled
+  std::vector<Option *> vanillaLogicDefaults = {
+    &LinksPocketItem,
+    &ShuffleRewards,
+    &ShuffleSongs,
+    &Shopsanity,
+    &Scrubsanity,
+    &ShuffleCows,
+    &ShuffleMagicBeans,
+    &ShuffleMerchants,
+    &ShuffleAdultTradeQuest,
+    &GossipStoneHints,
+  };
 
   // Randomizes all settings in a category if chosen
   // Hides all relevant options
@@ -1878,35 +1907,36 @@ namespace Settings {
 
     //If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
     if (Logic.Is(LOGIC_VANILLA)) {
-      ShuffleRewards.SetSelectedIndex(0);
-      LinksPocketItem.SetSelectedIndex(0);
-      ShuffleSongs.SetSelectedIndex(0);
-      Scrubsanity.SetSelectedIndex(0);
-      ShuffleCows.SetSelectedIndex(0);
-      ShuffleMagicBeans.SetSelectedIndex(0);
-      ShuffleMerchants.SetSelectedIndex(0);
-      ShuffleAdultTradeQuest.SetSelectedIndex(0);
+      for (Option* setting : vanillaLogicDefaults) {
+        setting->SetDelayedOption();
+        setting->SetSelectedIndex(0);
+      }
+      Keysanity.SetDelayedOption();
       Keysanity.SetSelectedIndex(3); //Set small keys to any dungeon so FiT basement door will be locked
-      GossipStoneHints.SetSelectedIndex(0);
     }
 
     InitMusicRandomizer();
     if (ShuffleMusic) {
       if (ShuffleBGM) {
-        ShuffleSequences(SeqType::SEQ_BGM);
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM);
       }
 
       if (ShuffleFanfares.Is(2)) {
-        ShuffleSequences(SeqType::SEQ_FANFARE | SeqType::SEQ_OCARINA);
+        Music::ShuffleSequences(Music::SeqType::SEQ_FANFARE | Music::SeqType::SEQ_OCARINA);
       } else {
         if (ShuffleFanfares.Is(1)) {
-          ShuffleSequences(SeqType::SEQ_FANFARE);
+          Music::ShuffleSequences(Music::SeqType::SEQ_FANFARE);
         }
 
         if (ShuffleOcaMusic) {
-          ShuffleSequences(SeqType::SEQ_OCARINA);
+          Music::ShuffleSequences(Music::SeqType::SEQ_OCARINA);
         }
       }
+    }
+
+    InitSFXRandomizer();
+    if (ShuffleSFX.IsNot(SHUFFLESFX_OFF)) {
+      SFX::ShuffleSequences(ShuffleSFXCategorically.Value<bool>());
     }
   }
 

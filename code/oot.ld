@@ -68,6 +68,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyBeansBought)
 	}
 
+	.patch_BiggoronDontSetBGSFlag 0x133F7C : {
+		*(.patch_BiggoronDontSetBGSFlag)
+	}
+
 	.patch_KingZoraDontStartTimer 0x134D7C : {
 		*(.patch_KingZoraDontStartTimer)
 	}
@@ -166,6 +170,10 @@ SECTIONS
 
 	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
 		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
+	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {
+		*(.patch_CarpenterBossDontNullExchangeItem)
 	}
 
 	.patch_CarpenterBossSetTradedSawFlag 0x178D58 : {
@@ -696,6 +704,14 @@ SECTIONS
 		*(.patch_FairyReviveHealAmount)
 	}
 
+	.patch_FWLoadSet 0x34D9E8 : {
+		*(.patch_FWLoadSet)
+	}
+
+	.patch_FWGetSet 0x3519CC : {
+		*(.patch_FWGetSet)
+	}
+
 	.patch_OverrideGraphicID_351B94 0x351B94 : {
 		*(.patch_OverrideGraphicID_351B94)
 	}
@@ -746,6 +762,10 @@ SECTIONS
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
 		*(.patch_ConvertBombDropTwo)
+	}
+
+	.patch_SetSFX 0x37547C : {
+		*(.patch_SetSFX)
 	}
 
 	.patch_GKSetDurability 0x376BDC : {
@@ -928,6 +948,10 @@ SECTIONS
 		*(.patch_CarpetSalesmanCheckFlagTwo)
 	}
 
+	.patch_LabScientistIgnoreEyedropsInInventory 0x3F0B44 : {
+		*(.patch_LabScientistIgnoreEyedropsInInventory)
+	}
+
 	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
 		*(.patch_HandleDoorDestroyCustomModels)
 	}
@@ -966,6 +990,22 @@ SECTIONS
 
 	.patch_CarpetSalesmanSetFlag 0x3F9550 : {
 		*(.patch_CarpetSalesmanSetFlag)
+	}
+
+	.patch_PreSwapBuffers 0x3FD384 : {
+		*(.patch_PreSwapBuffers)
+	}
+
+	.patch_AwakeCallback 0x3FD43C : {
+		*(.patch_AwakeCallback)
+	}
+
+	.patch_SleepQueryCallback 0x3FD6C4 : {
+		*(.patch_SleepQueryCallback)
+	}
+
+	.patch_SaveMenuIgnoreOpen 0x42EC00 : {
+		*(.patch_SaveMenuIgnoreOpen)
 	}
 
 	.patch_ItemsMenuDraw 0x434C08 : {
@@ -1086,6 +1126,10 @@ SECTIONS
 
 	.patch_EnableFW 0x476D1C : {
 		*(.patch_EnableFW)
+	}
+
+	.patch_FWKeepWarpPoint 0x47C3C0 : {
+		*(.patch_FWKeepWarpPoint)
 	}
 
 	.patch_TurboTextAdvance 0x480928 : {
