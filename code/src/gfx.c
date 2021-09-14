@@ -183,16 +183,9 @@ static void Gfx_DrawDungeonItems(void) {
     Draw_DrawIcon(240, 10, COLOR_WHITE, ICON_BOSS_KEY);
     Draw_DrawIcon(260, 10, COLOR_WHITE, ICON_MAP);
     Draw_DrawIcon(280, 10, COLOR_WHITE, ICON_COMPASS);
+    Draw_DrawIcon(300, 10, COLOR_WHITE, ICON_TRIFORCE);
 
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
-        //special case for Ganon's Castle small keys
-        s32 keys = 0;
-        if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
-          keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
-        } else {
-          keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
-        }
-
         u8 yPos = 24 + (dungeonId * 13);
         bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
@@ -210,15 +203,37 @@ static void Gfx_DrawDungeonItems(void) {
                 Draw_DrawCharacter(10, yPos, COLOR_WHITE, '?');
             }
         }
-        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
-        Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
 
-        if (dungeonId <= DUNGEON_SHADOW_TEMPLE || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+        if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
+            //special case for Ganon's Castle small keys
+            s32 keys = 0;
+            if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+            keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
+            } else {
+            keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
+            }
+            Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
+        }
+
+        if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
             Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
         }
         if (dungeonId <= DUNGEON_ICE_CAVERN) {
             Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
             Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
+
+            if (hasCompass) {
+                if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
+                    Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
+                } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
+                    Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
+                } else {
+                    Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
+                }
+            } else {
+                Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
+            }
         }
     }
     Gfx_DrawChangeMenuPrompt();
