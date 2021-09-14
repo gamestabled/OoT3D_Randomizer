@@ -560,6 +560,7 @@ namespace Settings {
   extern Option GlitchJabuAdult;
   extern Option GlitchBlueFireWall;
   extern Option GlitchDCModernHalfie;
+  extern Option GlitchJabuSwitch;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

@@ -1362,9 +1362,10 @@ string_view GlitchGVTentAsChildDesc                   = "The loading zone for th
                                                         "in the child map despite the tent being removed.\n\n"
                                                         "With this setting enabled you may be expected to\n"
                                                         "use that loading zone.";                          //
-string_view GlitchGFGuardSneakDesc                    = "By using bow, hookshot, or boomerang while looking\n"
-                                                        "up and targeting the Fortress wall you can walk\n"//
-                                                        "past the guard on the slope without being caught.";
+string_view GlitchGFGuardSneakDesc                    = "By using the bow, hookshot, or boomerang while\n" //
+                                                        "looking up and targeting the Fortress wall, you\n"//
+                                                        "can walk\n past the guard on the slope without\n" //
+                                                        "being caught.";                                   //
 string_view GlitchItemlessWastelandDesc               = "By starting a backwalk and then targeting every\n"//
                                                         "other frame Link will maintain backwalk speed\n"  //
                                                         "over the quicksand in the haunted wasteland which\n"
@@ -1374,7 +1375,7 @@ string_view GlitchOccamsStatueDesc                    = "With some precise movem
                                                         "collision of the statue blocking the way to DMC.";//
 string_view GlitchZDOoBJumpSlashDesc                  = "Jump slashing the wall next to the pillar above\n"//
                                                         "the ZD to LH shortcut as adult will let you clip\n"
-                                                        "through. From here you can either jump to the shop\n"
+                                                        "through. From here you can either jump to the shop"
                                                         "loading zone or fall OoB a little bit and swim\n" //
                                                         "into the shortcut loading zone.";                 //
 string_view GlitchJabuStickRecoilDesc                 = "Child can enter Jabu without a fish in a bottle\n"//
@@ -1387,3 +1388,6 @@ string_view GlitchBlueFireWallDesc                    = "Pouring blue fire on ce
 string_view GlitchDCModernHalfieDesc                  = "Using a bomb flower and a twisted backflip, it is\n"
                                                         "possible to access the switch in DC with only a\n"//
                                                         "deku shield and the goron bracelet.";             //
+string_view GlitchJabuSwitchDesc                      = "Using a cutscene item the frame you land on the\n"//
+                                                        "blue switches in Jabu Jabu's Belly will make them\n"
+                                                        "stay held for a while after you step off them.";  //

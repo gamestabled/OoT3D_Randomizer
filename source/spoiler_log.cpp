@@ -402,7 +402,7 @@ static void WriteEnabledGlitches(tinyxml2::XMLDocument& spoilerLog) {
     }
 
     auto node = parentNode->InsertNewChildElement("misc-glitch");
-    node->SetAttribute("name", setting->GetName().c_str());
+    node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
   }
 
   if (!parentNode->NoChildren()) {
