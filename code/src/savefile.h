@@ -16,7 +16,10 @@ void SaveFile_InitExtSaveData(u32 fileBaseIndex);
 void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 
+#define EXTSAVEDATA_VERSION 1
+
 typedef struct {
+    u32 version;
     u32 playtimeSeconds;
 } ExtSaveData;
 

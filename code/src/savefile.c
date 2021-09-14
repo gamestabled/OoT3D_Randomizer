@@ -517,23 +517,47 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 }
 
 void SaveFile_InitExtSaveData(u32 saveNumber) {
+    gExtSaveData.version = EXTSAVEDATA_VERSION;
     gExtSaveData.playtimeSeconds = 0;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {
     char path[] = "/0.bin";
+    u32 version;
+    u64 fileSize;
 
     Result res;
     FS_Archive fsa;
+    Handle fileHandle;
 
-    if(!R_SUCCEEDED(res = extDataMount(&fsa))) {
+    if (R_FAILED(res = extDataMount(&fsa))) {
+        SaveFile_InitExtSaveData(saveNumber);
         return;
     }
 
     path[1] = saveNumber + '0';
 
-    extDataReadFileDirectly(fsa, path, &gExtSaveData, 0, sizeof(gExtSaveData));
+    // Load default values if the file does not exist
+    if (R_FAILED(res = extDataOpen(&fileHandle, fsa, path))) {
+        extDataUnmount(fsa);
+        SaveFile_InitExtSaveData(saveNumber);
+        return;
+    }
 
+    // Delete the file and load default values if the size does not match or the version is different
+    FSFILE_GetSize(fileHandle, &fileSize);
+    extDataReadFile(fileHandle, &version, 0, sizeof(version));
+    if (fileSize != sizeof(gExtSaveData) || version != EXTSAVEDATA_VERSION) {
+        extDataClose(fileHandle);
+        extDataDeleteFile(fsa, path);
+        extDataUnmount(fsa);
+        SaveFile_InitExtSaveData(saveNumber);
+        return;
+    }
+
+    extDataReadFile(fileHandle, &gExtSaveData, 0, sizeof(gExtSaveData));
+
+    extDataClose(fileHandle);
     extDataUnmount(fsa);
 }
 
@@ -543,7 +567,7 @@ void SaveFile_SaveExtSaveData(u32 saveNumber) {
     Result res;
     FS_Archive fsa;
 
-    if(!R_SUCCEEDED(res = extDataMount(&fsa))) {
+    if (R_FAILED(res = extDataMount(&fsa))) {
         return;
     }
 

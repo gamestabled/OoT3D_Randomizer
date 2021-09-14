@@ -85,6 +85,13 @@ u32 extDataWriteFileDirectly(FS_Archive fsa, char *filename, void *buf, u64 offs
 #define extDataUnmount(fsa) FSUSER_CloseArchive(fsa)
 
 /**
+ * @brief Deletes a file from extData.
+ * @param fsa FS_Archive : The archive obtained from extDataMount.
+ * @param filename char* : The path to the file to delete in the extData.
+ */
+#define extDataDeleteFile(fsa, filename) FSUSER_DeleteFile(fsa, fsMakePath(PATH_ASCII, filename))
+
+/**
  * @brief Opens a file from extData.
  * @param out Handle* : Pointer to output the file handle to.
  * @param fsa FS_Archive : The archive obtained from extDataMount.
