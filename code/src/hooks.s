@@ -36,6 +36,7 @@ hook_IncomingGetItemID:
 .global hook_SaveFile_Init
 hook_SaveFile_Init:
     push {r0-r12, lr}
+    mov r0, r5
     bl SaveFile_Init
     pop {r0-r12, lr}
     strb r1,[r0,#0x35]
@@ -954,6 +955,27 @@ hook_LostWoodsBridgeMusic:
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
+
+.global hook_LoadGame
+hook_LoadGame:
+    add r0, r4, r5
+    push {r0-r12, lr}
+    bl SaveFile_LoadExtSaveData
+    pop {r0-r12, lr}
+    b 0x447384
+
+.global hook_SaveGame
+hook_SaveGame:
+    cmp r5, #0
+    beq .notSaving
+    push {r0-r12, lr}
+    ldrb r0, [r5, #42]
+    adds r0, #-0x30
+    bl SaveFile_SaveExtSaveData
+    pop {r0-r12, lr}
+.notSaving:
+    push {r4-r9, lr}
+    b 0x2fbfac
     
 .section .loader
 .global hook_into_loader

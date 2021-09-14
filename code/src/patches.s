@@ -1562,6 +1562,16 @@ OpenSaveDontSpoilTradeItems_patch:
 LostWoodsBridgeMusic_patch:
     bl hook_LostWoodsBridgeMusic
 
+.section .patch_LoadGame
+.global .LoadGame_patch
+LoadGame_patch:
+    b hook_LoadGame
+
+.section .patch_SaveGame
+.global .SaveGame_patch
+SaveGame_patch:
+    b hook_SaveGame
+
 .section .patch_loader
 .global loader_patch
 

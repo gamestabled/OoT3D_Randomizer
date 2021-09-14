@@ -5,6 +5,7 @@
 #include <string.h>
 #include "3ds/types.h"
 #include "3ds/result.h"
+#include "3ds/env.h"
 #include "3ds/srv.h"
 #include "3ds/svc.h"
 #include "3ds/ipc.h"
@@ -58,19 +59,19 @@ Handle *srvGetSessionHandle(void)
 	return &srvHandle;
 }
 
-// Result srvGetServiceHandle(Handle* out, const char* name)
-// {
-// 	/* Look in service-list given to us by loader. If we find find a match,
-// 	   we return it. */
-// 	Handle h = envGetHandle(name);
+Result srvGetServiceHandle(Handle* out, const char* name)
+{
+	/* Look in service-list given to us by loader. If we find find a match,
+	   we return it. */
+	Handle h = envGetHandle(name);
 
-// 	if(h != 0) {
-// 		return svcDuplicateHandle(out, h);
-// 	}
+	if(h != 0) {
+		return svcDuplicateHandle(out, h);
+	}
 
-// 	/* Normal request to service manager. */
-// 	return srvGetServiceHandleDirect(out, name);
-// }
+	/* Normal request to service manager. */
+	return srvGetServiceHandleDirect(out, name);
+}
 
 Result srvRegisterClient(void)
 {

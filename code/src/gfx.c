@@ -11,6 +11,9 @@
 #include "settings.h"
 #include "spoiler_data.h"
 
+#include "3ds/extdata.h"
+#include "savefile.h"
+
 static u8 GfxInit = 0;
 static u32 closingButton = 0;
 static u8 currentSphere = 0;
@@ -98,7 +101,7 @@ static void Gfx_GroupsPrevGroup() {
 
 static void Gfx_DrawChangeMenuPrompt(void) {
     Draw_DrawString(10, SCREEN_BOT_HEIGHT - 54, COLOR_WARN, "Warning: Putting your 3DS into sleep mode with this menu up will crash.");
-    Draw_DrawString(10, SCREEN_BOT_HEIGHT - 30, COLOR_TITLE, "Press B to close menu, L/R to change menu");
+    Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 30, COLOR_TITLE, "Menu opened %u times", gExtSaveData.openMenuCounter);
     if (curMenuIdx == 3) {
         Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse spoiler log",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
@@ -450,6 +453,7 @@ void Gfx_Update(void) {
         (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D)
         )
       ){
+        gExtSaveData.openMenuCounter++;
         Gfx_ShowMenu();
         svcSleepThread(1000 * 1000 * 300LL);
     }
