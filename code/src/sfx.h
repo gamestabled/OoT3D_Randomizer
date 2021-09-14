@@ -3,7 +3,7 @@
 
 #define SFX_BASE 0x1000001
 #define SFX_COUNT 1388
-#define SFX_COUNT_TRIMMED (1388 - 213)
+#define SFX_COUNT_TRIMMED (1388 - 218)
 
 typedef enum {
     // General Categories
