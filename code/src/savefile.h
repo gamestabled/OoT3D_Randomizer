@@ -16,10 +16,11 @@ void SaveFile_InitExtSaveData(u32 fileBaseIndex);
 void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 
+// Increment the version number whenever the ExtSaveData structure is changed
 #define EXTSAVEDATA_VERSION 1
 
 typedef struct {
-    u32 version;
+    u32 version;            // Needs to always be the first field of the structure
     u32 playtimeSeconds;
 } ExtSaveData;
 

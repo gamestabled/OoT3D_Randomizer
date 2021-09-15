@@ -517,7 +517,7 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 }
 
 void SaveFile_InitExtSaveData(u32 saveNumber) {
-    gExtSaveData.version = EXTSAVEDATA_VERSION;
+    gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     gExtSaveData.playtimeSeconds = 0;
 }
 
