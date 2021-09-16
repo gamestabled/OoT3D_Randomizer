@@ -161,6 +161,10 @@ namespace Settings {
   Option RandomizeDungeon    = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {dungeonRandomize},                                                                                                    OptionCategory::Toggle);
   Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
                                                                       {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere},                                                            OptionCategory::Setting,    MAPSANDCOMPASSES_VANILLA);
+  // Maps and Compasses Give Information
+  Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    1);
+  Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    1);
+  Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    1);
   Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
                                                                       {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere},                                                                        OptionCategory::Setting,    KEYSANITY_VANILLA);
   Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Any Dungeon", "Overworld", "Anywhere"},
@@ -175,9 +179,13 @@ namespace Settings {
   Option LACSRewardCount     = Option::U8  ("  Reward Count",         {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                     {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
   Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8"},                          {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
   Option LACSTokenCount      = Option::U8  ("  Token Count",          {/*Options 0-100 defined in InitSettings()*/},                          {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
+
   std::vector<Option *> shuffleDungeonItemOptions = {
     &RandomizeDungeon,
     &MapsAndCompasses,
+    &CompassesShowReward,
+    &CompassesShowWotH,
+    &MapsShowDungeonMode,
     &Keysanity,
     &GerudoKeys,
     &BossKeysanity,
@@ -859,6 +867,9 @@ namespace Settings {
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
 
     ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
+    ctx.compassesShowReward  = CompassesShowReward.Value<u8>();
+    ctx.compassesShowWotH    = CompassesShowWotH.Value<u8>();
+    ctx.mapsShowDungeonMode  = MapsShowDungeonMode.Value<u8>();
     ctx.keysanity            = Keysanity.Value<u8>();
     ctx.gerudoKeys           = GerudoKeys.Value<u8>();
     ctx.bossKeysanity        = BossKeysanity.Value<u8>();

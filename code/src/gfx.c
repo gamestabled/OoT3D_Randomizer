@@ -183,7 +183,9 @@ static void Gfx_DrawDungeonItems(void) {
     Draw_DrawIcon(240, 10, COLOR_WHITE, ICON_BOSS_KEY);
     Draw_DrawIcon(260, 10, COLOR_WHITE, ICON_MAP);
     Draw_DrawIcon(280, 10, COLOR_WHITE, ICON_COMPASS);
-    Draw_DrawIcon(300, 10, COLOR_WHITE, ICON_TRIFORCE);
+    if (gSettingsContext.compassesShowWotH) {
+        Draw_DrawIcon(300, 10, COLOR_WHITE, ICON_TRIFORCE);
+    }
 
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
         u8 yPos = 24 + (dungeonId * 13);
@@ -191,7 +193,7 @@ static void Gfx_DrawDungeonItems(void) {
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
         bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
 
-        if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+        if (gSettingsContext.mapsShowDungeonMode && dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
             // If we have the map, or all dungeon modes are known due to settings, show whether it's a vanilla or MQ dungeon
             // Ganon's Tower and Gerudo Training Grounds don't have maps, so we always show those for now
             if (dungeonId >= DUNGEON_GANONS_CASTLE_SECOND_PART || hasMap || gSettingsContext.dungeonModesKnown) {
@@ -200,7 +202,7 @@ static void Gfx_DrawDungeonItems(void) {
                 Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
                 Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
             } else {
-                Draw_DrawCharacter(10, yPos, COLOR_WHITE, '?');
+                Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
             }
         }
         Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
@@ -223,16 +225,18 @@ static void Gfx_DrawDungeonItems(void) {
             Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
             Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
 
-            if (hasCompass) {
-                if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
-                    Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
-                } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
-                    Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
+            if (gSettingsContext.compassesShowWotH) {
+                if (hasCompass) {
+                    if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
+                        Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
+                    } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
+                        Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
+                    } else {
+                        Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
+                    }
                 } else {
-                    Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
+                    Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
                 }
-            } else {
-                Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
             }
         }
     }
@@ -248,7 +252,7 @@ static void Gfx_DrawDungeonRewards(void) {
         // Only show reward if the player has collected the compass
         // TODO: Optionally always show the reward
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
-        Draw_DrawString(190, yPos, COLOR_WHITE, hasCompass ? DungeonReward_GetName(dungeonId) : "???");
+        Draw_DrawString(190, yPos, hasCompass ? COLOR_WHITE : COLOR_DARK_GRAY, hasCompass ? DungeonReward_GetName(dungeonId) : "???");
     }
     Gfx_DrawChangeMenuPrompt();
 }
@@ -531,7 +535,7 @@ void Gfx_Init(void) {
     else if(gSettingsContext.menuOpeningButton == 4)    closingButton = BUTTON_B | BUTTON_RIGHT;
     else if(gSettingsContext.menuOpeningButton == 5)    closingButton = BUTTON_B | BUTTON_LEFT;
 
-    if (gSettingsContext.shuffleRewards != REWARDSHUFFLE_END_OF_DUNGEON) {
+    if (gSettingsContext.shuffleRewards != REWARDSHUFFLE_END_OF_DUNGEON || !gSettingsContext.compassesShowReward) {
         menu_draw_funcs[2] = NULL;
     }
     if (!gSettingsContext.ingameSpoilers) {

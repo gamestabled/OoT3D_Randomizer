@@ -128,6 +128,9 @@ extern string_view mapCompassOwnDungeon;
 extern string_view mapCompassAnyDungeon;
 extern string_view mapCompassOverworld;
 extern string_view mapCompassAnywhere;
+extern string_view compassesShowRewardsDesc;
+extern string_view compassesShowWotHDesc;
+extern string_view mapsShowDungeonModesDesc;
 
 extern string_view smallKeyStartWith;
 extern string_view smallKeyVanilla;

@@ -347,6 +347,9 @@ typedef struct {
   u8 shuffleAdultTradeQuest;
 
   u8 mapsAndCompasses;
+  u8 compassesShowReward;
+  u8 compassesShowWotH;
+  u8 mapsShowDungeonMode;
   u8 keysanity;
   u8 gerudoKeys;
   u8 bossKeysanity;

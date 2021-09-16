@@ -391,6 +391,23 @@ string_view mapCompassOverworld       = "Maps and Compasses can only appear outs
 string_view mapCompassAnywhere        = "Maps and Compasses can appear anywhere in the\n"  //
                                         "world.";                                          //
 /*------------------------------                                                           //
+|  MAP AND COMPASS GIVES INFO  |                                                           //
+------------------------------*/                                                           //
+string_view compassesShowRewardsDesc  = "If dungeon rewards are set to be shuffled at the\n"
+                                        "end of dungeons, the in-game menu will reveal\n"  //
+                                        "which reward is in each dungeon, if the compass\n"//
+                                        "for that dungeon has been collected.";            //
+string_view compassesShowWotHDesc     = "The in-game menu will reveal whether each\n"      //
+                                        "dungeon is on the Way of the Hero, a barren\n"    //
+                                        "location, or neither, if the compass for that\n"  //
+                                        "dungeon has been collected.";                     //
+string_view mapsShowDungeonModesDesc  = "If any Master Quest dungeons will be randomly\n"  //
+                                        "shuffled, the in-game menu will reveal whether\n" //
+                                        "it is in its Vanilla or Master Quest form, if\n"  //
+                                        "the map for the dungeon has been collected.\n"    //
+                                        "Ganon's Castle and Gerudo Training Grounds are\n" //
+                                        "always revealed, as they do not have maps.";      //
+/*------------------------------                                                           //
 |         SMALL KEYS           |                                                           //
 ------------------------------*/                                                           //
 string_view smallKeyStartWith         = "Small Keys are given to you from the start so you\n"
