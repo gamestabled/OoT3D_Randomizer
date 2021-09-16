@@ -398,7 +398,7 @@ static void Gfx_ShowMenu(void) {
     }
 
     Draw_ClearFramebuffer();
-    Draw_FlushFramebuffer();
+    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -479,6 +479,7 @@ static void Gfx_ShowMenu(void) {
             if (pressed & closingButton) {
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
+                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
                 break;
             } else if (pressed & BUTTON_R1) {
                 do {
@@ -509,6 +510,7 @@ static void Gfx_ShowMenu(void) {
 
         menu_draw_funcs[curMenuIdx]();
         Draw_CopyBackBuffer();
+        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
 
         pressed = Input_WaitWithTimeout(1000, closingButton);
 

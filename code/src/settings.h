@@ -303,6 +303,7 @@ typedef enum {
 
 typedef struct {
   u8 hashIndexes[5];
+  u8 playOption;
 
   u8 logic;
   u8 openForest;

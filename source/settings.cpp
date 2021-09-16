@@ -817,6 +817,7 @@ namespace Settings {
     ctx.hashIndexes[2] = hashIconIndexes[2];
     ctx.hashIndexes[3] = hashIconIndexes[3];
     ctx.hashIndexes[4] = hashIconIndexes[4];
+    ctx.playOption = PlayOption;
 
     ctx.logic                = Logic.Value<u8>();
     ctx.openForest           = OpenForest.Value<u8>();

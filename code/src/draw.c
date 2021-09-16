@@ -351,7 +351,6 @@ void Draw_ClearBackbuffer(void)
 void Draw_CopyBackBuffer(void)
 {
     memcpy(FRAMEBUFFER[frontBufferIdx_btm], backBufferBtm, FB_BOTTOM_SIZE);
-    Draw_FlushFramebuffer();
 }
 
 void Draw_FlushFramebuffer(void)
