@@ -19,8 +19,8 @@ u32 SetSFX(u32 original) {
     u16 sfxID = original - SFX_BASE;
     SeqType type = rSfxData.rSeqTypesSFX[sfxID];
 
-    // Check for invalid sound effect                                                   // Only system sfx seem to make noise when played in menus
-    if (original < SFX_BASE || original > SFX_BASE + SFX_COUNT || type == SEQ_NOSHUFFLE || (type == SEQ_SYSTEM && !gSettingsContext.shuffleSFXCategorically)) {
+    // Check for invalid sound effect
+    if (original < SFX_BASE || original > SFX_BASE + SFX_COUNT || type >= SEQTYPE_COUNT) {
         return original;
     }
 
