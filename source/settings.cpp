@@ -161,10 +161,6 @@ namespace Settings {
   Option RandomizeDungeon    = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {dungeonRandomize},                                                                                                    OptionCategory::Toggle);
   Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
                                                                       {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere},                                                            OptionCategory::Setting,    MAPSANDCOMPASSES_VANILLA);
-  // Maps and Compasses Give Information
-  Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    1);
-  Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    1);
-  Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    1);
   Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
                                                                       {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere},                                                                        OptionCategory::Setting,    KEYSANITY_VANILLA);
   Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Any Dungeon", "Overworld", "Anywhere"},
@@ -183,9 +179,6 @@ namespace Settings {
   std::vector<Option *> shuffleDungeonItemOptions = {
     &RandomizeDungeon,
     &MapsAndCompasses,
-    &CompassesShowReward,
-    &CompassesShowWotH,
-    &MapsShowDungeonMode,
     &Keysanity,
     &GerudoKeys,
     &BossKeysanity,
@@ -235,6 +228,9 @@ namespace Settings {
   Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
   Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {clearerHintsDesc});
   Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    1); // Balanced
+  Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    1);
+  Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    1);
+  Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    1);
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
@@ -248,6 +244,9 @@ namespace Settings {
     &GossipStoneHints,
     &ClearerHints,
     &HintDistribution,
+    &CompassesShowReward,
+    &CompassesShowWotH,
+    &MapsShowDungeonMode,
     &DamageMultiplier,
     &StartingTime,
     &ChestAnimations,
@@ -867,9 +866,6 @@ namespace Settings {
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
 
     ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
-    ctx.compassesShowReward  = CompassesShowReward.Value<u8>();
-    ctx.compassesShowWotH    = CompassesShowWotH.Value<u8>();
-    ctx.mapsShowDungeonMode  = MapsShowDungeonMode.Value<u8>();
     ctx.keysanity            = Keysanity.Value<u8>();
     ctx.gerudoKeys           = GerudoKeys.Value<u8>();
     ctx.bossKeysanity        = BossKeysanity.Value<u8>();
@@ -898,6 +894,9 @@ namespace Settings {
     ctx.keepFWWarpPoint      = KeepFWWarpPoint ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
+    ctx.compassesShowReward  = CompassesShowReward.Value<u8>();
+    ctx.compassesShowWotH    = CompassesShowWotH.Value<u8>();
+    ctx.mapsShowDungeonMode  = MapsShowDungeonMode.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
     ctx.startingTime         = StartingTime.Value<u8>();
     ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
