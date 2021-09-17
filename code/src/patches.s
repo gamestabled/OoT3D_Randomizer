@@ -1617,6 +1617,11 @@ LostWoodsBridgeMusic_patch:
 SaveMenuIgnoreOpen_patch:
     bl hook_SaveMenuIgnoreOpen
 
+.section .patch_OverrideFogDuringGameplayInit
+.global OverrideFogDuringGameplayInit_patch
+OverrideFogDuringGameplayInit_patch:
+    bl hook_OverrideFogDuringGameplayInit
+
 .section .patch_loader
 .global loader_patch
 

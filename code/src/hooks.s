@@ -1013,6 +1013,13 @@ hook_SaveMenuIgnoreOpen:
     beq 0x42F270
     bx lr
 
+.global hook_OverrideFogDuringGameplayInit
+hook_OverrideFogDuringGameplayInit:
+    push {r0-r12, lr}
+    bl Fog_OverrideState
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
