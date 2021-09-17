@@ -224,6 +224,12 @@ typedef enum {
 } LogicTrickSetting;
 
 typedef enum {
+  HINTMODE_OBSCURE,
+  HINTMODE_AMBIGUOUS,
+  HINTMODE_CLEAR,
+} HintModeSetting;
+
+typedef enum {
   DAMAGEMULTIPLIER_HALF,
   DAMAGEMULTIPLIER_DEFAULT,
   DAMAGEMULTIPLIER_DOUBLE,

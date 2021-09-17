@@ -66,77 +66,78 @@ enum class HintCategory {
 class HintText {
 public:
     HintText() = default;
-    HintText(std::vector<Text> obscureText_, Text clearText_, HintCategory type_)
+    HintText(std::vector<Text> obscureText_, std::vector<Text> ambiguousText_, Text clearText_, HintCategory type_)
     : obscureText(std::move(obscureText_)),
+      ambiguousText(std::move(ambiguousText_)),
       clearText(std::move(clearText_)),
       type(type_) {}
 
-    static auto Item(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Item};
+    static auto Item(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Item};
     }
 
-    static auto Always(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Always};
+    static auto Always(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Always};
     }
 
-    static auto Sometimes(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Sometimes};
+    static auto Sometimes(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Sometimes};
     }
 
-    static auto Exclude(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Exclude};
+    static auto Exclude(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Exclude};
     }
 
-    static auto Entrance(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Entrance};
+    static auto Entrance(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Entrance};
     }
 
-    static auto Region(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Region};
+    static auto Region(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Region};
     }
 
-    static auto Junk(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Junk};
+    static auto Junk(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Junk};
     }
 
-    static auto DungeonName(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::DungeonName};
+    static auto DungeonName(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::DungeonName};
     }
 
-    static auto Boss(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Boss};
+    static auto Boss(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Boss};
     }
 
-    static auto Bridge(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Bridge};
+    static auto Bridge(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Bridge};
     }
 
-    static auto GanonsBossKey(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::GanonsBossKey};
+    static auto GanonsBossKey(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::GanonsBossKey};
     }
 
-    static auto LACS(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::LACS};
+    static auto LACS(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::LACS};
     }
 
-    static auto Altar(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Altar};
+    static auto Altar(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Altar};
     }
 
-    static auto Validation(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::Validation};
+    static auto Validation(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::Validation};
     }
 
-    static auto LightArrow(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::LightArrow};
+    static auto LightArrow(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::LightArrow};
     }
 
-    static auto GanonLine(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::GanonLine};
+    static auto GanonLine(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::GanonLine};
     }
 
-    static auto MerchantsDialogs(std::vector<Text>&& obscureText, Text&& clearText = {}) {
-        return HintText{std::move(obscureText), std::move(clearText), HintCategory::MerchantsDialogs};
+    static auto MerchantsDialogs(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::MerchantsDialogs};
     }
 
     Text& GetObscure() {
@@ -144,6 +145,20 @@ public:
     }
 
     const Text& GetObscure() const {
+        return RandomElement(obscureText);
+    }
+
+    Text& GetAmbiguous() {
+        if (ambiguousText.size() > 0)   {
+            return RandomElement(ambiguousText);
+        }
+        return RandomElement(obscureText);
+    }
+
+    const Text& GetAmbiguous() const {
+        if (ambiguousText.size() > 0) {
+            return RandomElement(ambiguousText);
+        }
         return RandomElement(obscureText);
     }
 
@@ -155,17 +170,23 @@ public:
     }
 
     const Text& GetText() const {
-        if (Settings::ClearerHints) {
+        if (Settings::ClearerHints.Is(HINTMODE_OBSCURE)) {
+            return GetObscure();
+        } else if (Settings::ClearerHints.Is(HINTMODE_AMBIGUOUS)){
+            return GetAmbiguous();
+        } else {
             return GetClear();
         }
-        return GetObscure();
     }
 
     const Text GetTextCopy() const {
-        if (Settings::ClearerHints) {
+        if (Settings::ClearerHints.Is(HINTMODE_OBSCURE)) {
+            return GetObscure();
+        } else if (Settings::ClearerHints.Is(HINTMODE_AMBIGUOUS)){
+            return GetAmbiguous();
+        } else {
             return GetClear();
         }
-        return GetObscure();
     }
 
     HintCategory GetType() const {
@@ -174,6 +195,7 @@ public:
 
     bool operator==(const HintText& right) const {
         return obscureText == right.obscureText &&
+               ambiguousText == right.ambiguousText &&
                clearText == right.clearText;
     }
     bool operator!=(const HintText& right) const {
@@ -182,6 +204,7 @@ public:
 
 private:
     std::vector<Text> obscureText = {};
+    std::vector<Text> ambiguousText = {};
     Text clearText;
     HintCategory type;
 };
