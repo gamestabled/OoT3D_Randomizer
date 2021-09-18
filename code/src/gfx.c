@@ -11,6 +11,9 @@
 #include "settings.h"
 #include "spoiler_data.h"
 
+#include "3ds/extdata.h"
+#include "savefile.h"
+
 static u8 GfxInit = 0;
 static u32 closingButton = 0;
 static u8 currentSphere = 0;
@@ -155,7 +158,7 @@ static void Gfx_UpdatePlayTime(bool isInGame)
         } else {
             while (ticksElapsed >= TICKS_PER_SEC) {
                 ticksElapsed -= TICKS_PER_SEC;
-                ++gSaveContext.playtimeSeconds;
+                ++gExtSaveData.playtimeSeconds;
             }
         }
     }
@@ -169,9 +172,9 @@ static void Gfx_DrawSeedHash(void) {
     }
 
     Draw_DrawString(10, 80, COLOR_TITLE, "Play time:");
-    u32 hours = gSaveContext.playtimeSeconds / 3600;
-    u32 minutes = (gSaveContext.playtimeSeconds / 60) % 60;
-    u32 seconds = gSaveContext.playtimeSeconds % 60;
+    u32 hours = gExtSaveData.playtimeSeconds / 3600;
+    u32 minutes = (gExtSaveData.playtimeSeconds / 60) % 60;
+    u32 seconds = gExtSaveData.playtimeSeconds % 60;
     Draw_DrawFormattedString(10 + (SPACING_X * 4), 80 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
     Gfx_DrawChangeMenuPrompt();
 }

@@ -668,6 +668,10 @@ SECTIONS
 		*(.patch_CorrectCompassChestsTwo)
 	}
 
+	.patch_SaveGame 0x2FBFA8 : {
+		*(.patch_SaveGame)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}
@@ -1006,6 +1010,10 @@ SECTIONS
 
 	.patch_ItemsMenuDraw 0x434C08 : {
 		*(.patch_ItemsMenuDraw)
+	}
+
+	.patch_LoadGame 0x447380 : {
+		*(.patch_LoadGame)
 	}
 
 	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 : {
