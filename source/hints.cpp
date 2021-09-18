@@ -4,7 +4,6 @@
 #include "dungeon.hpp"
 #include "item_location.hpp"
 #include "item_pool.hpp"
-#include "location_access.hpp"
 #include "logic.hpp"
 #include "random.hpp"
 #include "spoiler_log.hpp"
@@ -122,23 +121,27 @@ static Area* GetHintRegion(const AreaKey area) {
       return AreaTable(region);
     }
 
-    //add unchecked exits to spot queue
+    //add unchecked entrances to spot queue
     bool checked = false;
-    for (auto& exit : AreaTable(region)->exits) {
-      for (AreaKey checkedExit : alreadyChecked) {
-        if (exit.GetAreaKey() == checkedExit) {
+    for (auto& entrance : AreaTable(region)->entrances) {
+      for (AreaKey checkedEntrance : alreadyChecked) {
+        if (entrance->GetParentRegionKey() == checkedEntrance) {
           checked = true;
           break;
         }
       }
 
       if (!checked) {
-        spotQueue.insert(spotQueue.begin(), exit.GetAreaKey());
+        spotQueue.insert(spotQueue.begin(), entrance->GetParentRegionKey());
       }
     }
   }
 
   return AreaTable(NONE);
+}
+
+HintKey GetHintRegionHintKey(const AreaKey area) {
+  return GetHintRegion(area)->hintKey;
 }
 
 static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hintedLocation = GANON) {

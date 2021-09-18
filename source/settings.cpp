@@ -65,6 +65,7 @@ namespace Settings {
   Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",      {"Off", "On"},                                                     {shuffleEntrancesDesc});
   Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                                     {dungeonEntrancesDesc});
   Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                                     {overworldEntrancesDesc});
+  Option ShuffleInteriorEntrances  = Option::U8  ("  Interior Entrances",   {"Off", "Simple", "All"},                                          {""});
   Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
   Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_VANILLA);
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
@@ -89,6 +90,7 @@ namespace Settings {
     &ShuffleEntrances,
     &ShuffleDungeonEntrances,
     &ShuffleOverworldEntrances,
+    &ShuffleInteriorEntrances,
     &BombchusInLogic,
     &AmmoDrops,
     &HeartDropRefill,
@@ -836,6 +838,7 @@ namespace Settings {
     ctx.resolvedStartingAge  = ResolvedStartingAge;
     ctx.shuffleDungeonEntrances = (ShuffleDungeonEntrances) ? 1 : 0;
     ctx.shuffleOverworldEntrances = (ShuffleOverworldEntrances) ? 1 : 0;
+    ctx.shuffleInteriorEntrances = ShuffleInteriorEntrances.Value<u8>();
     ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
     ctx.ammoDrops            = AmmoDrops.Value<u8>();
     ctx.heartDropRefill      = HeartDropRefill.Value<u8>();
@@ -1402,11 +1405,14 @@ namespace Settings {
       if (ShuffleEntrances) {
         ShuffleDungeonEntrances.Unhide();
         ShuffleOverworldEntrances.Unhide();
+        ShuffleInteriorEntrances.Unhide();
       } else {
         ShuffleDungeonEntrances.SetSelectedIndex(OFF);
         ShuffleDungeonEntrances.Hide();
         ShuffleOverworldEntrances.SetSelectedIndex(OFF);
         ShuffleOverworldEntrances.Hide();
+        ShuffleInteriorEntrances.SetSelectedIndex(SHUFFLEINTERIORS_OFF);
+        ShuffleInteriorEntrances.Hide();
       }
     }
 
@@ -1773,7 +1779,6 @@ namespace Settings {
   }
 
   //eventual settings
-  bool ShuffleInteriorEntrances         = false;
   bool ShuffleSpecialIndoorEntrances    = false;
 
   template <typename colorsArray>

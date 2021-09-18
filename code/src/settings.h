@@ -75,6 +75,12 @@ typedef enum {
 } AgeSetting;
 
 typedef enum {
+  SHUFFLEINTERIORS_OFF,
+  SHUFFLEINTERIORS_SIMPLE,
+  SHUFFLEINTERIORS_ALL,
+} ShuffleInteriorEntrancesSetting;
+
+typedef enum {
   AMMODROPS_VANILLA,
   AMMODROPS_BOMBCHU,
   AMMODROPS_NONE,
@@ -317,6 +323,7 @@ typedef struct {
   u8 resolvedStartingAge;
   u8 shuffleDungeonEntrances;
   u8 shuffleOverworldEntrances;
+  u8 shuffleInteriorEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;

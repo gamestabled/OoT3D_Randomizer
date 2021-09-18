@@ -7,6 +7,7 @@
 #include "item_location.hpp"
 #include "debug.hpp"
 #include "spoiler_log.hpp"
+#include "hints.hpp"
 
 #include <unistd.h>
 
@@ -193,13 +194,26 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
     return false;
   }
 
-  //ensure both Impa's House entrances are in the same hint area because the cow is reachable from both sides
-
   //check certain conditions when certain types of ER are enabled
   EntranceType type = EntranceType::None;
   if (entrancePlaced != nullptr) {
     type = entrancePlaced->GetType();
   }
+
+  if (Settings::ShuffleInteriorEntrances.IsNot(SHUFFLEINTERIORS_OFF) && Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS) &&
+  (entrancePlaced == nullptr || type == EntranceType::Interior || type == EntranceType::SpecialInterior)) {
+    //When cows are shuffled, ensure both Impa's House entrances are in the same hint area because the cow is reachable from both sides
+    if (Settings::ShuffleCows) {
+      auto impasHouseFrontHintRegion = GetHintRegionHintKey(KAK_IMPAS_HOUSE);
+      auto impasHouseBackHintRegion = GetHintRegionHintKey(KAK_IMPAS_HOUSE_BACK);
+      if (impasHouseFrontHintRegion != NONE && impasHouseBackHintRegion != NONE && impasHouseBackHintRegion != LINKS_POCKET && impasHouseFrontHintRegion != LINKS_POCKET && impasHouseBackHintRegion != impasHouseFrontHintRegion) {
+        auto message = "Kak Impas House entrances are not in the same hint area\n";
+        PlacementLog_Msg(message);
+        return false;
+      }
+    }
+  }
+
   if ((Settings::ShuffleOverworldEntrances /*|| specialInterior || spawnPositions*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
   type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
     //At least one valid starting region with all basic refills should be reachable without using any items at the beginning of the seed
@@ -292,7 +306,7 @@ static bool ShuffleEntrances(std::vector<Entrance*>& entrances, std::vector<Entr
 
 static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vector<Entrance*>& targetEntrances) {
   noRandomEntrances = false;
-  
+
   auto splitEntrances = SplitEntrancesByRequirements(entrancePool, targetEntrances);
 
   auto& restrictiveEntrances = splitEntrances[0];
@@ -368,6 +382,80 @@ void ShuffleAllEntrances() {
      {EntranceType::Dungeon,   ICE_CAVERN_ENTRYWAY,              ZORAS_FOUNTAIN,                   0x03D4}},
     {{EntranceType::Dungeon,   GERUDO_FORTRESS,                  GERUDO_TRAINING_GROUNDS_ENTRYWAY, 0x0008},
      {EntranceType::Dungeon,   GERUDO_TRAINING_GROUNDS_ENTRYWAY, GERUDO_FORTRESS,                  0x03A8}},
+
+    {{EntranceType::Interior,  KOKIRI_FOREST,                    KF_MIDOS_HOUSE,                   0x0433},
+     {EntranceType::Interior,  KF_MIDOS_HOUSE,                   KOKIRI_FOREST,                    0x0443}},
+    {{EntranceType::Interior,  KOKIRI_FOREST,                    KF_SARIAS_HOUSE,                  0x0437},
+     {EntranceType::Interior,  KF_SARIAS_HOUSE,                  KOKIRI_FOREST,                    0x0447}},
+    {{EntranceType::Interior,  KOKIRI_FOREST,                    KF_HOUSE_OF_TWINS,                0x009C},
+     {EntranceType::Interior,  KF_HOUSE_OF_TWINS,                KOKIRI_FOREST,                    0x033C}},
+    {{EntranceType::Interior,  KOKIRI_FOREST,                    KF_KNOW_IT_ALL_HOUSE,             0x00C9},
+     {EntranceType::Interior,  KF_KNOW_IT_ALL_HOUSE,             KOKIRI_FOREST,                    0x026A}},
+    {{EntranceType::Interior,  KOKIRI_FOREST,                    KF_KOKIRI_SHOP,                   0x00C1},
+     {EntranceType::Interior,  KF_KOKIRI_SHOP,                   KOKIRI_FOREST,                    0x0266}},
+    {{EntranceType::Interior,  LAKE_HYLIA,                       LH_LAB,                           0x0043},
+     {EntranceType::Interior,  LH_LAB,                           LAKE_HYLIA,                       0x03CC}},
+    {{EntranceType::Interior,  LH_FISHING_ISLAND,                LH_FISHING_HOLE,                  0x045F},
+     {EntranceType::Interior,  LH_FISHING_HOLE,                  LH_FISHING_ISLAND,                0x0309}},
+    {{EntranceType::Interior,  GV_FORTRESS_SIDE,                 GV_CARPENTER_TENT,                0x03A0},
+     {EntranceType::Interior,  GV_CARPENTER_TENT,                GV_FORTRESS_SIDE,                 0x03D0}},
+    {{EntranceType::Interior,  MARKET_ENTRANCE,                  MARKET_GUARD_HOUSE,               0x007E},
+     {EntranceType::Interior,  MARKET_GUARD_HOUSE,               MARKET_ENTRANCE,                  0x026E}},
+    {{EntranceType::Interior,  THE_MARKET,                       MARKET_MASK_SHOP,                 0x0530},
+     {EntranceType::Interior,  MARKET_MASK_SHOP,                 THE_MARKET,                       0x01D1}},
+    {{EntranceType::Interior,  THE_MARKET,                       MARKET_BOMBCHU_BOWLING,           0x0507},
+     {EntranceType::Interior,  MARKET_BOMBCHU_BOWLING,           THE_MARKET,                       0x03BC}},
+    {{EntranceType::Interior,  THE_MARKET,                       MARKET_POTION_SHOP,               0x0388},
+     {EntranceType::Interior,  MARKET_POTION_SHOP,               THE_MARKET,                       0x02A2}},
+    {{EntranceType::Interior,  THE_MARKET,                       MARKET_TREASURE_CHEST_GAME,       0x0063},
+     {EntranceType::Interior,  MARKET_TREASURE_CHEST_GAME,       THE_MARKET,                       0x01D5}},
+    {{EntranceType::Interior,  MARKET_BACK_ALLEY,                MARKET_BOMBCHU_SHOP,              0x0528},
+     {EntranceType::Interior,  MARKET_BOMBCHU_SHOP,              MARKET_BACK_ALLEY,                0x03C0}},
+    {{EntranceType::Interior,  MARKET_BACK_ALLEY,                MARKET_MAN_IN_GREEN_HOUSE,        0x043B},
+     {EntranceType::Interior,  MARKET_MAN_IN_GREEN_HOUSE,        MARKET_BACK_ALLEY,                0x0067}},
+    {{EntranceType::Interior,  KAKARIKO_VILLAGE,                 KAK_CARPENTER_BOSS_HOUSE,         0x02FD},
+     {EntranceType::Interior,  KAK_CARPENTER_BOSS_HOUSE,         KAKARIKO_VILLAGE,                 0x0349}},
+    {{EntranceType::Interior,  KAKARIKO_VILLAGE,                 KAK_HOUSE_OF_SKULLTULA,           0x0550},
+     {EntranceType::Interior,  KAK_HOUSE_OF_SKULLTULA,           KAKARIKO_VILLAGE,                 0x04EE}},
+    {{EntranceType::Interior,  KAKARIKO_VILLAGE,                 KAK_IMPAS_HOUSE,                  0x039C},
+     {EntranceType::Interior,  KAK_IMPAS_HOUSE,                  KAKARIKO_VILLAGE,                 0x0345}},
+    {{EntranceType::Interior,  KAK_IMPAS_LEDGE,                  KAK_IMPAS_HOUSE_BACK,             0x05C8},
+     {EntranceType::Interior,  KAK_IMPAS_HOUSE_BACK,             KAK_IMPAS_LEDGE,                  0x05DC}},
+    {{EntranceType::Interior,  KAK_BACKYARD,                     KAK_ODD_POULTICE_BUILDING,        0x0072},
+     {EntranceType::Interior,  KAK_ODD_POULTICE_BUILDING,        KAK_BACKYARD,                     0x034D}},
+    {{EntranceType::Interior,  THE_GRAVEYARD,                    GRAVEYARD_DAMPES_HOUSE,           0x030D},
+     {EntranceType::Interior,  GRAVEYARD_DAMPES_HOUSE,           THE_GRAVEYARD,                    0x0355}},
+    {{EntranceType::Interior,  GORON_CITY,                       GC_SHOP,                          0x037C},
+     {EntranceType::Interior,  GC_SHOP,                          GORON_CITY,                       0x03FC}},
+    {{EntranceType::Interior,  ZORAS_DOMAIN,                     ZD_SHOP,                          0x0380},
+     {EntranceType::Interior,  ZD_SHOP,                          ZORAS_DOMAIN,                     0x03C4}},
+    {{EntranceType::Interior,  LON_LON_RANCH,                    LLR_TALONS_HOUSE,                 0x004F},
+     {EntranceType::Interior,  LLR_TALONS_HOUSE,                 LON_LON_RANCH,                    0x0378}},
+    {{EntranceType::Interior,  LON_LON_RANCH,                    LLR_STABLES,                      0x02F9},
+     {EntranceType::Interior,  LLR_STABLES,                      LON_LON_RANCH,                    0x042F}},
+    {{EntranceType::Interior,  LON_LON_RANCH,                    LLR_TOWER,                        0x05D0},
+     {EntranceType::Interior,  LLR_TOWER,                        LON_LON_RANCH,                    0x05D4}},
+    {{EntranceType::Interior,  THE_MARKET,                       MARKET_BAZAAR,                    0x052C},
+     {EntranceType::Interior,  MARKET_BAZAAR,                    THE_MARKET,                       0x03B8}}, //potential addresses start here
+    {{EntranceType::Interior,  THE_MARKET,                       MARKET_SHOOTING_GALLERY,          0x016D},
+     {EntranceType::Interior,  MARKET_SHOOTING_GALLERY,          THE_MARKET,                       0x01CD}},
+    {{EntranceType::Interior,  KAKARIKO_VILLAGE,                 KAK_BAZAAR,                       0x00B7},
+     {EntranceType::Interior,  KAK_BAZAAR,                       KAKARIKO_VILLAGE,                 0x0201}},
+    {{EntranceType::Interior,  KAKARIKO_VILLAGE,                 KAK_SHOOTING_GALLERY,             0x003B},
+     {EntranceType::Interior,  KAK_SHOOTING_GALLERY,             KAKARIKO_VILLAGE,                 0x0463}},
+    {{EntranceType::Interior,  DESERT_COLOSSUS,                  COLOSSUS_GREAT_FAIRY_FOUNTAIN,    0x0588},
+     {EntranceType::Interior,  COLOSSUS_GREAT_FAIRY_FOUNTAIN,    DESERT_COLOSSUS,                  0x057C}},
+    {{EntranceType::Interior,  HYRULE_CASTLE_GROUNDS,            HC_GREAT_FAIRY_FOUNTAIN,          0x0578},
+     {EntranceType::Interior,  HC_GREAT_FAIRY_FOUNTAIN,          CASTLE_GROUNDS,                   0x0340}},
+    {{EntranceType::Interior,  GANONS_CASTLE_GROUNDS,            OGC_GREAT_FAIRY_FOUNTAIN,         0x04C2},
+     {EntranceType::Interior,  OGC_GREAT_FAIRY_FOUNTAIN,         CASTLE_GROUNDS,                   0x0340}},
+    {{EntranceType::Interior,  DMC_LOWER_NEARBY,                 DMC_GREAT_FAIRY_FOUNTAIN,         0x04BE},
+     {EntranceType::Interior,  DMC_GREAT_FAIRY_FOUNTAIN,         DMC_LOWER_LOCAL,                  0x0482}},
+    {{EntranceType::Interior,  DEATH_MOUNTAIN_SUMMIT,            DMT_GREAT_FAIRY_FOUNTAIN,         0x0315},
+     {EntranceType::Interior,  DMT_GREAT_FAIRY_FOUNTAIN,         DEATH_MOUNTAIN_SUMMIT,            0x045B}},
+    {{EntranceType::Interior,  ZORAS_FOUNTAIN,                   ZF_GREAT_FAIRY_FOUNTAIN,          0x0371},
+     {EntranceType::Interior,  ZF_GREAT_FAIRY_FOUNTAIN,          ZORAS_FOUNTAIN,                   0x0394}},
+
     {{EntranceType::Overworld, KOKIRI_FOREST,                    LW_BRIDGE_FROM_FOREST,            0x05E0},
      {EntranceType::Overworld, LW_BRIDGE,                        KOKIRI_FOREST,                    0x020D}},
     {{EntranceType::Overworld, KOKIRI_FOREST,                    THE_LOST_WOODS,                   0x011E},
@@ -414,8 +502,8 @@ void ShuffleAllEntrances() {
      {EntranceType::Overworld, GORON_CITY,                       DEATH_MOUNTAIN_TRAIL,             0x01B9}},
     {{EntranceType::Overworld, GC_DARUNIAS_CHAMBER,              DMC_LOWER_LOCAL,                  0x0246},
      {EntranceType::Overworld, DMC_LOWER_NEARBY,                 GC_DARUNIAS_CHAMBER,              0x01C1}},
-    {{EntranceType::Overworld, DMT_SUMMIT,                       DMC_UPPER_LOCAL,                  0x0147},
-     {EntranceType::Overworld, DMC_UPPER_NEARBY,                 DMT_SUMMIT,                       0x01BD}},
+    {{EntranceType::Overworld, DEATH_MOUNTAIN_SUMMIT,            DMC_UPPER_LOCAL,                  0x0147},
+     {EntranceType::Overworld, DMC_UPPER_NEARBY,                 DEATH_MOUNTAIN_SUMMIT,            0x01BD}},
     {{EntranceType::Overworld, ZR_BEHIND_WATERFALL,              ZORAS_DOMAIN,                     0x0108},
      {EntranceType::Overworld, ZORAS_DOMAIN,                     ZR_BEHIND_WATERFALL,              0x019D}},
     {{EntranceType::Overworld, ZD_BEHIND_KING_ZORA,              ZORAS_FOUNTAIN,                   0x0225},
@@ -448,6 +536,12 @@ void ShuffleAllEntrances() {
   }
 
   //interior entrances
+  if (Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_SIMPLE)) {
+    entrancePools[EntranceType::Interior] = GetShuffleableEntrances(EntranceType::Interior);
+    //special interiors
+
+    //decoupled entrance stuff
+  }
 
   //grotto entrances
 

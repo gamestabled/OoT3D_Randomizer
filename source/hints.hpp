@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "keys.hpp"
 #include "text.hpp"
 #include "random.hpp"
 #include "settings.hpp"
@@ -186,5 +187,6 @@ private:
     HintCategory type;
 };
 
-extern void CreateAllHints();
-extern void CreateMerchantsHints();
+extern HintKey GetHintRegionHintKey(const AreaKey area);
+extern void    CreateAllHints();
+extern void    CreateMerchantsHints();
