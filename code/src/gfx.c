@@ -11,6 +11,9 @@
 #include "settings.h"
 #include "spoiler_data.h"
 
+#include "3ds/extdata.h"
+#include "savefile.h"
+
 static u8 GfxInit = 0;
 static u32 closingButton = 0;
 static u8 currentSphere = 0;
@@ -23,6 +26,8 @@ static float itemPercent = 0;
 static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 static bool isAsleep = false;
+
+DungeonInfo rDungeonInfoData[10]; 
 
 #define TICKS_PER_SEC 268123480
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
@@ -67,6 +72,15 @@ static char *spoilerCollectionGroupNames[] = {
 #define SCROLL_BAR_MIN_THUMB_SIZE 4
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
 #define COLOR_SCROLL_BAR_BG RGB8(0x58, 0x58, 0x58)
+
+#define COLOR_DARK_GRAY         RGB8(0x29, 0x29, 0x29)
+#define COLOR_ICON_MASTER_QUEST RGB8(0x53, 0xBA, 0xFF)
+#define COLOR_ICON_VANILLA      RGB8(0xFF, 0xE8, 0x97)
+#define COLOR_ICON_BOSS_KEY     RGB8(0x20, 0xF9, 0x25)
+#define COLOR_ICON_MAP          RGB8(0xF9, 0x97, 0xFF)
+#define COLOR_ICON_COMPASS      RGB8(0x20, 0x3A, 0xF9)
+#define COLOR_ICON_WOTH         RGB8(0xFF, 0xF8, 0x2D)
+#define COLOR_ICON_FOOL         RGB8(0xFF, 0x2D, 0x4B)
 
 void Gfx_SleepQueryCallback(void)
 {
@@ -144,7 +158,7 @@ static void Gfx_UpdatePlayTime(bool isInGame)
         } else {
             while (ticksElapsed >= TICKS_PER_SEC) {
                 ticksElapsed -= TICKS_PER_SEC;
-                ++gSaveContext.playtimeSeconds;
+                ++gExtSaveData.playtimeSeconds;
             }
         }
     }
@@ -158,32 +172,90 @@ static void Gfx_DrawSeedHash(void) {
     }
 
     Draw_DrawString(10, 80, COLOR_TITLE, "Play time:");
-    u32 hours = gSaveContext.playtimeSeconds / 3600;
-    u32 minutes = (gSaveContext.playtimeSeconds / 60) % 60;
-    u32 seconds = gSaveContext.playtimeSeconds % 60;
+    u32 hours = gExtSaveData.playtimeSeconds / 3600;
+    u32 minutes = (gExtSaveData.playtimeSeconds / 60) % 60;
+    u32 seconds = gExtSaveData.playtimeSeconds % 60;
     Draw_DrawFormattedString(10 + (SPACING_X * 4), 80 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
     Gfx_DrawChangeMenuPrompt();
 }
 
 static void Gfx_DrawDungeonItems(void) {
+    Draw_DrawString(10, 10, COLOR_TITLE, "Dungeon Items");
+    // Draw header icons
+    Draw_DrawIcon(220, 10, COLOR_WHITE, ICON_SMALL_KEY);
+    Draw_DrawIcon(240, 10, COLOR_WHITE, ICON_BOSS_KEY);
+    Draw_DrawIcon(260, 10, COLOR_WHITE, ICON_MAP);
+    Draw_DrawIcon(280, 10, COLOR_WHITE, ICON_COMPASS);
+    if (gSettingsContext.compassesShowWotH) {
+        Draw_DrawIcon(300, 10, COLOR_WHITE, ICON_TRIFORCE);
+    }
+
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
-        //special case for Ganon's Castle small keys
-        s32 keys = 0;
-        if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
-          keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
-        } else {
-          keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
+        u8 yPos = 24 + (dungeonId * 13);
+        bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
+        bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
+        bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+
+        if (gSettingsContext.mapsShowDungeonMode && dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+            // If we have the map, or all dungeon modes are known due to settings, show whether it's a vanilla or MQ dungeon
+            // Ganon's Tower and Gerudo Training Grounds don't have maps, so we always show those for now
+            if (dungeonId >= DUNGEON_GANONS_CASTLE_SECOND_PART || hasMap || gSettingsContext.dungeonModesKnown) {
+                bool isMasterQuest =  gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
+                u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
+                Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
+                Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
+            } else {
+                Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
+            }
+        }
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
+
+        if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
+            //special case for Ganon's Castle small keys
+            s32 keys = 0;
+            if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+            keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
+            } else {
+            keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
+            }
+            Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
         }
 
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-25s %s: %d %s",
-            DungeonNames[dungeonId], "Small Keys", keys, gSaveContext.dungeonItems[dungeonId] & 1 ? "Boss Key" : "");
+        if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+            Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
+        }
+        if (dungeonId <= DUNGEON_ICE_CAVERN) {
+            Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
+            Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
+
+            if (gSettingsContext.compassesShowWotH) {
+                if (hasCompass) {
+                    if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
+                        Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
+                    } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
+                        Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
+                    } else {
+                        Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
+                    }
+                } else {
+                    Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
+                }
+            }
+        }
     }
     Gfx_DrawChangeMenuPrompt();
 }
 
 static void Gfx_DrawDungeonRewards(void) {
+    Draw_DrawString(10, 10, COLOR_TITLE, "Dungeon Rewards");
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
-        Draw_DrawFormattedString(10, 10 + (dungeonId * SPACING_Y), COLOR_WHITE, "%-30s - %s", DungeonNames[dungeonId], DungeonReward_GetName(dungeonId));
+        u8 yPos = 24 + (dungeonId * 13);
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
+
+        // Only show reward if the player has collected the compass
+        // TODO: Optionally always show the reward
+        bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
+        Draw_DrawString(190, yPos, hasCompass ? COLOR_WHITE : COLOR_DARK_GRAY, hasCompass ? DungeonReward_GetName(dungeonId) : "???");
     }
     Gfx_DrawChangeMenuPrompt();
 }
@@ -333,7 +405,7 @@ static void Gfx_ShowMenu(void) {
     }
 
     Draw_ClearFramebuffer();
-    Draw_FlushFramebuffer();
+    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -414,6 +486,7 @@ static void Gfx_ShowMenu(void) {
             if (pressed & closingButton) {
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
+                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
                 break;
             } else if (pressed & BUTTON_R1) {
                 do {
@@ -444,6 +517,7 @@ static void Gfx_ShowMenu(void) {
 
         menu_draw_funcs[curMenuIdx]();
         Draw_CopyBackBuffer();
+        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
 
         pressed = Input_WaitWithTimeout(1000, closingButton);
 
@@ -464,7 +538,7 @@ void Gfx_Init(void) {
     else if(gSettingsContext.menuOpeningButton == 4)    closingButton = BUTTON_B | BUTTON_RIGHT;
     else if(gSettingsContext.menuOpeningButton == 5)    closingButton = BUTTON_B | BUTTON_LEFT;
 
-    if (gSettingsContext.shuffleRewards != REWARDSHUFFLE_END_OF_DUNGEON) {
+    if (gSettingsContext.shuffleRewards != REWARDSHUFFLE_END_OF_DUNGEON || !gSettingsContext.compassesShowReward) {
         menu_draw_funcs[2] = NULL;
     }
     if (!gSettingsContext.ingameSpoilers) {
