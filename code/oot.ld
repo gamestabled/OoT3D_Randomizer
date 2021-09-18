@@ -1016,6 +1016,10 @@ SECTIONS
 		*(.patch_LoadGame)
 	}
 
+	.patch_OverrideFogDuringGameplayInit 0x4485B4 : {
+		*(.patch_OverrideFogDuringGameplayInit)
+	}
+
 	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 : {
 		*(.patch_CheckForPocketCuccoHatchGameplayInit)
 	}
