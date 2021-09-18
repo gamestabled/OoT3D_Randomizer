@@ -882,6 +882,16 @@ hook_SetBGMDayNight:
     push {r4-r6, lr}
     b 0x483C8C
 
+.global hook_SetBGMEvent
+hook_SetBGMEvent:
+    push {r0, r2-r12, lr}
+    cpy r0,r1
+    bl SetBGM
+    cpy r1,r0
+    pop {r0, r2-r12, lr}
+    push {r4-r11, lr}
+    b 0x36EC44
+
 .global hook_SetSFX
 hook_SetSFX:
     push {r1-r12, lr}

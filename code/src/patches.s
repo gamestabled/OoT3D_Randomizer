@@ -1551,6 +1551,11 @@ SetBGMEntrance_patch:
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
 
+.section .patch_SetBGMEvent
+.global SetBGMEvent_patch
+SetBGMEvent_patch:
+    b hook_SetBGMEvent
+
 .section .patch_SetSFX
 .global SetSFX_patch
 SetSFX_patch:
