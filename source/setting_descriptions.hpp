@@ -200,6 +200,8 @@ extern string_view skipSongReplaysDesc;
 
 extern string_view keepFWWarpPointDesc;
 
+extern string_view fastBunnyHoodDesc;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view obscureHintsDesc;

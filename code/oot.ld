@@ -524,7 +524,11 @@ SECTIONS
 		*(.patch_SpiritTempleItemGiveTwo)
 	}
 
-	.patch_SkipDaruniaDanceThree 0x257f00 : {
+	.patch_MultiplyPlayerSpeed 0x251D34 : {
+		*(.patch_MultiplyPlayerSpeed)
+	}
+
+	.patch_SkipDaruniaDanceThree 0x257F00 : {
 		*(.patch_SkipDaruniaDanceThree)
 	}
 

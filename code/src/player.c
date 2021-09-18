@@ -2,6 +2,7 @@
 #include "objects.h"
 #include "custom_models.h"
 #include "player.h"
+#include "settings.h"
 
 #define PlayerActor_Update_addr 0x1E1B54
 #define PlayerActor_Update ((ActorFunc)PlayerActor_Update_addr)
@@ -50,7 +51,7 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         return;
     }
 
-    if(gSaveContext.health > 4) {
+    if (gSaveContext.health > 4) {
         gSaveContext.health--;
         healthDecrement--;
     } else {
@@ -58,3 +59,12 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
+f32 Player_GetSpeedMultiplier(void) {
+    f32 speedMultiplier = 1;
+
+    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 && PLAYER->stateFuncPtr == (void*)0x4BA378) {
+        speedMultiplier *= 1.5;
+    }
+
+    return speedMultiplier;
+}

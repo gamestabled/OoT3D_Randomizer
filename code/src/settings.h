@@ -390,6 +390,7 @@ typedef struct {
   u8 quickText;
   u8 skipSongReplays;
   u8 keepFWWarpPoint;
+  u8 fastBunnyHood;
 
   u8 damageMultiplier;
   u8 startingTime;

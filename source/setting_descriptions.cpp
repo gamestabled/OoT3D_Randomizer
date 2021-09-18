@@ -590,6 +590,11 @@ string_view keepFWWarpPointDesc       = "The Farore's Wind warp point will stay 
                                         "after having been warped to. The old point will\n"//
                                         "need to be dispelled before setting a new one.";  //
 /*------------------------------                                                           //
+|       FAST BUNNY HOOD        |                                                           //
+------------------------------*/                                                           //
+string_view fastBunnyHoodDesc         = "The Bunny Hood mask behaves like it does in\n"    //
+                                        "Majora's Mask and makes you run 50% faster.";     //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //

@@ -1698,6 +1698,11 @@ PlayEntranceCutscene_patch:
 SkipJabuOpeningCutscene_patch:
     bl hook_SkipJabuOpeningCutscene
 
+.section .patch_MultiplyPlayerSpeed
+.global MultiplyPlayerSpeed_patch
+MultiplyPlayerSpeed_patch:
+    bl hook_MultiplyPlayerSpeed
+
 .section .patch_SilenceNavi
 .global SilenceNavi_patch
 SilenceNavi_patch:
