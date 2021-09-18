@@ -8,6 +8,7 @@
 #include "text.hpp"
 #include "random.hpp"
 #include "settings.hpp"
+#include "../code/src/settings.h"
 
 enum class HintType {
   Trial,
@@ -185,6 +186,9 @@ private:
     Text clearText;
     HintCategory type;
 };
+
+//10 dungeons as GTG and GC are excluded
+extern std::array<DungeonInfo, 10> dungeonInfoData;
 
 extern void CreateAllHints();
 extern void CreateMerchantsHints();

@@ -205,6 +205,10 @@ extern string_view balancedHintsDesc;
 extern string_view strongHintsDesc;
 extern string_view veryStrongHintsDesc;
 
+extern string_view compassesShowRewardsDesc;
+extern string_view compassesShowWotHDesc;
+extern string_view mapsShowDungeonModesDesc;
+
 extern string_view damageMultiDesc;
 
 extern string_view startingTimeDesc;
