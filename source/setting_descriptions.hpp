@@ -198,7 +198,9 @@ extern string_view keepFWWarpPointDesc;
 
 extern string_view gossipStonesHintsDesc;
 
-extern string_view clearerHintsDesc;
+extern string_view obscureHintsDesc;
+extern string_view ambiguousHintsDesc;
+extern string_view clearHintsDesc;
 
 extern string_view uselessHintsDesc;
 extern string_view balancedHintsDesc;

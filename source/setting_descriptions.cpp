@@ -590,10 +590,20 @@ string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints
                                         "game.";                                           //
                                                                                            //
 /*------------------------------                                                           //
-|        CLEARER HINTS         |                                                           //
+|        HINT CLARITY          |                                                           //
 ------------------------------*/                                                           //
-string_view clearerHintsDesc          = "The hints provided by Gossip Stones will be very\n"
-                                        "direct if this option is enabled.";               //
+string_view obscureHintsDesc          = "Sets the difficulty of hints.\n"                  //
+                                        "Obscure: Hints are unique for each thing, but\n"  //
+                                        "the writing may be confusing.\n"                  //
+                                        "E.g. Kokiri Sword > a butter knife";              //
+string_view ambiguousHintsDesc        = "Sets the difficulty of hints.\n"                  //
+                                        "Ambiguous: Hints are clearly written, but may\n"  //
+                                        "refer to more than one thing.\n"                  //
+                                        "E.g. Kokiri Sword > a sword";                     //
+string_view clearHintsDesc            = "Sets the difficulty of hints.\n"                  //
+                                        "Clear: Hints are clearly written and are unique\n"//
+                                        "for each thing.\n"                                //
+                                        "E.g. Kokiri Sword > the Kokiri Sword";            //
 /*------------------------------                                                           //
 |      HINT DISTRIBUTION       |                                                           //
 ------------------------------*/                                                           //
