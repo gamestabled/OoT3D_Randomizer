@@ -7,6 +7,7 @@
 #include "settings.h"
 
 #include "z3D/z3D.h"
+#include "3ds/extdata.h"
 
 GlobalContext* gGlobalContext;
 static u8 rRandomizerInit = 0;
@@ -20,6 +21,7 @@ void Randomizer_Init() {
     Actor_Init();
     Entrance_Init();
     ItemOverride_Init();
+    extDataInit();
 }
 
 void before_GlobalContext_Update(GlobalContext* globalCtx) {

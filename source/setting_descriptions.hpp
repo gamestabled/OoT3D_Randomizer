@@ -198,12 +198,18 @@ extern string_view keepFWWarpPointDesc;
 
 extern string_view gossipStonesHintsDesc;
 
-extern string_view clearerHintsDesc;
+extern string_view obscureHintsDesc;
+extern string_view ambiguousHintsDesc;
+extern string_view clearHintsDesc;
 
 extern string_view uselessHintsDesc;
 extern string_view balancedHintsDesc;
 extern string_view strongHintsDesc;
 extern string_view veryStrongHintsDesc;
+
+extern string_view compassesShowRewardsDesc;
+extern string_view compassesShowWotHDesc;
+extern string_view mapsShowDungeonModesDesc;
 
 extern string_view damageMultiDesc;
 
