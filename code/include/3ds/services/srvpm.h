@@ -3,6 +3,7 @@
  * @brief srv:pm service.
  */
 #pragma once
+#include "../result.h"
 
 /// Initializes srv:pm and the service API.
 Result srvPmInit(void);
