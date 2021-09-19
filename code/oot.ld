@@ -752,6 +752,10 @@ SECTIONS
 		*(.patch_ModelSpawnGetObjectStatus)
 	}
 
+	.patch_SetBGMEvent 0x36EC40 : {
+		*(.patch_SetBGMEvent)
+	}
+
 	.patch_DemoEffectMedallionDraw 0x37214C : {
 		*(.patch_DemoEffectMedallionDraw)
 	}
