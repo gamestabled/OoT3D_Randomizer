@@ -96,6 +96,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyPrice)
 	}
 
+	.patch_SkipTwinrovaQuarrelCutsceneOne 0x15273C : {
+		*(.patch_SkipTwinrovaQuarrelCutsceneOne)
+	}
+
 	.patch_FairyPickupHealAmount 0x15CA4C : {
 		*(.patch_FairyPickupHealAmount)
 	}
@@ -170,6 +174,10 @@ SECTIONS
 
 	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
 		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
+	.patch_SkipTwinrovaQuarrelCutsceneTwo 0x176110 : {
+		*(.patch_SkipTwinrovaQuarrelCutsceneTwo)
 	}
 
 	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {

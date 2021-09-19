@@ -22,9 +22,12 @@ static u8 appeared = 0;
 
 void Boss_Tw_rInit(Actor* thisx, GlobalContext* globalCtx) {
     Boss_Tw_Init(thisx, globalCtx);
-    thisx->scale.x = 0.0025f;
-    thisx->scale.y = 0.0025f;
-    thisx->scale.z = 0.0025f;
+    if (thisx->params == 0 || thisx->params == 1) {
+        // Kotake or Koume
+        thisx->scale.x = 0.0025f;
+        thisx->scale.y = 0.0025f;
+        thisx->scale.z = 0.0025f;
+    }
 }
 
 void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
