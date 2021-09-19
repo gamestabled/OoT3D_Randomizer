@@ -485,7 +485,5 @@ extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
 void Settings_SkipSongReplays();
-u32 Hash(u32);
-u8  Bias(u32);
 
 #endif
