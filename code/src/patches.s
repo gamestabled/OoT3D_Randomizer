@@ -1632,6 +1632,11 @@ SaveMenuIgnoreOpen_patch:
 OverrideFogDuringGameplayInit_patch:
     bl hook_OverrideFogDuringGameplayInit
 
+.section .patch_KotakeDontPlayBattleMusic
+.global KotakeDontPlayBattleMusic_patch
+KotakeDontPlayBattleMusic_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 

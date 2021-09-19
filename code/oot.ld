@@ -312,6 +312,10 @@ SECTIONS
 		*(.patch_JabuJabuCutsceneOverride)
 	}
 
+	.patch_KotakeDontPlayBattleMusic 0x1A8218 : {
+		*(.patch_KotakeDontPlayBattleMusic)
+	}
+
 	.patch_GossipStoneAddSariaHint 0x1B398C : {
 		*(.patch_GossipStoneAddSariaHint)
 	}
