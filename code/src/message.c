@@ -28,7 +28,7 @@ const MessageEntry* Message_GetCustomEntry(void* param_1, u32 textId) {
         } else if (textId > id) {
             start = cur + 1;
         } else {
-            return &ptrCustomMessageEntries[cur];
+            return (MessageEntry*)&ptrCustomMessageEntries[cur];
         }
     }
     return Message_GetEntry(param_1, textId);
