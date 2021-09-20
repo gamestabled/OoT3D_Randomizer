@@ -142,8 +142,7 @@ typedef struct {
         /* 0x13C8 */ u32 hour;
         /* 0x13CC */ u32 minute;
     }                         saveTime;
-    /* 0x13D0 */ char         unk_13D0[0x007C];
-    /* 0x144C */ u32          playtimeSeconds; // Added by randomizer to store current total playtime
+    /* 0x13D0 */ char         unk_13D0[0x0080];
     /* 0x1450 */ u32          bossBattleVictories[9];
     /* 0x1474 */ u32          bossBattleScores[9];
     /* 0x1498 */ char         unk_1498[0x0040]; //sheikah stone flags?

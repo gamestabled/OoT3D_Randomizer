@@ -70,6 +70,7 @@ namespace Settings {
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
   Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {"0","1","2","3","4","5","6","7","8","9","10","11","12", "Random"},{mqDungeonCountDesc});
   u8 MQSet;
+  bool DungeonModesKnown;
   Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {setDungeonTypesDesc});
   Option MQDeku                    = Option::U8  ("  Deku Tree",            {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
   Option MQDodongo                 = Option::U8  ("  Dodongo's Cavern",     {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
@@ -174,6 +175,7 @@ namespace Settings {
   Option LACSRewardCount     = Option::U8  ("  Reward Count",         {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                     {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
   Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8"},                          {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
   Option LACSTokenCount      = Option::U8  ("  Token Count",          {/*Options 0-100 defined in InitSettings()*/},                          {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
+
   std::vector<Option *> shuffleDungeonItemOptions = {
     &RandomizeDungeon,
     &MapsAndCompasses,
@@ -224,8 +226,11 @@ namespace Settings {
 
   //Misc Settings
   Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
-  Option ClearerHints        = Option::Bool("  Clearer Hints",        {"Off", "On"},                                                          {clearerHintsDesc});
+  Option ClearerHints        = Option::U8  ("  Hint Clarity",         {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
   Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    1); // Balanced
+  Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    1);
+  Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    1);
+  Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    1);
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
@@ -239,6 +244,9 @@ namespace Settings {
     &GossipStoneHints,
     &ClearerHints,
     &HintDistribution,
+    &CompassesShowReward,
+    &CompassesShowWotH,
+    &MapsShowDungeonMode,
     &DamageMultiplier,
     &StartingTime,
     &ChestAnimations,
@@ -816,6 +824,7 @@ namespace Settings {
     ctx.hashIndexes[2] = hashIconIndexes[2];
     ctx.hashIndexes[3] = hashIconIndexes[3];
     ctx.hashIndexes[4] = hashIconIndexes[4];
+    ctx.playOption = PlayOption;
 
     ctx.logic                = Logic.Value<u8>();
     ctx.openForest           = OpenForest.Value<u8>();
@@ -885,6 +894,9 @@ namespace Settings {
     ctx.keepFWWarpPoint      = KeepFWWarpPoint ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
+    ctx.compassesShowReward  = CompassesShowReward.Value<u8>();
+    ctx.compassesShowWotH    = CompassesShowWotH.Value<u8>();
+    ctx.mapsShowDungeonMode  = MapsShowDungeonMode.Value<u8>();
     ctx.damageMultiplier     = DamageMultiplier.Value<u8>();
     ctx.startingTime         = StartingTime.Value<u8>();
     ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
@@ -923,8 +935,10 @@ namespace Settings {
     ctx.shadowTempleDungeonMode          = ShadowTemple.IsMQ()          ? 1 : 0;
     ctx.bottomOfTheWellDungeonMode       = BottomOfTheWell.IsMQ()       ? 1 : 0;
     ctx.iceCavernDungeonMode             = IceCavern.IsMQ()             ? 1 : 0;
-    ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
     ctx.ganonsCastleDungeonMode          = GanonsCastle.IsMQ()          ? 1 : 0;
+    ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
+
+    ctx.dungeonModesKnown = DungeonModesKnown;
 
     ctx.forestTrialSkip = (ForestTrial.IsSkipped()) ? 1 : 0;
     ctx.fireTrialSkip   = (FireTrial.IsSkipped())   ? 1 : 0;
@@ -1831,6 +1845,9 @@ namespace Settings {
       // Add more MQ dungeons from the pool set to random until the MQ dungeon count is reached
       Shuffle(randMQOption);
 
+      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
+      DungeonModesKnown = randMQOption.size() == 0;
+
       if (MQSet == 13) {
         MQSet = dungeonCount + Random(0, randMQOption.size() + 1);
       }
@@ -1847,6 +1864,9 @@ namespace Settings {
       for (size_t i = 0; i < dungeons.size(); i++) {
         dungeons[i]->ClearMQ();
       }
+
+      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
+      DungeonModesKnown = MQSet == 0;
 
       //Set appropriate amount of MQ dungeons
       if (MQSet == 13) {

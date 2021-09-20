@@ -33,6 +33,7 @@
 #include "3ds/synchronization.h"
 #include "fonts/ascii_font.h"
 #include "fonts/ascii_font_small.h"
+#include "icons.h"
 #include <string.h>
 #include <z3D/z3D.h>
 
@@ -68,6 +69,40 @@ void Draw_Unlock(void)
     RecursiveLock_Unlock(&lock);
 }
 
+void Draw_DrawIcon(u32 posX, u32 posY, u32 color, Draw_IconType icon)
+{
+    // Skip drawing entirely if we're off-screen
+    if (posX >= SCREEN_BOT_WIDTH) { return; }
+    if (posY >= SCREEN_BOT_HEIGHT) { return; }
+
+    u8 sizeX = ICON_WIDTH;
+    u8 sizeY = ICON_HEIGHT;
+
+    // Clamp size to screen bounds
+    if (posX + sizeX > SCREEN_BOT_WIDTH) { sizeX = SCREEN_BOT_WIDTH - posX; }
+    if (posY + sizeY > SCREEN_BOT_HEIGHT) { sizeY = SCREEN_BOT_HEIGHT - posY; }
+    const u8 sizeXMinusOne = ICON_WIDTH - 1;
+
+    const unsigned char *glyph = rIcons[icon];
+
+    for(s32 y = 0; y < sizeY; y++)
+    {
+        const unsigned char glyphRow = glyph[y];
+        const u32 screenPosY = (posX * SCREEN_BOT_HEIGHT) + (SCREEN_BOT_HEIGHT - y - posY - 1);
+
+        for(s32 x = 0; x < sizeX; x++)
+        {
+            const u32 shift = sizeXMinusOne - x;
+            const u32 screenPos = (screenPosY + x * SCREEN_BOT_HEIGHT) * 3;
+            const u32 pixelColor = ((glyphRow >> shift) & 1) ? color : COLOR_BLACK;
+
+            backBufferBtm[screenPos]        = (pixelColor) & 0xFF;
+            backBufferBtm[screenPos + 1]    = (pixelColor >> 8) & 0xFF;
+            backBufferBtm[screenPos + 2]    = (pixelColor >> 16) & 0xFF;
+        }
+    }
+}
+
 void Draw_DrawRect(u32 posX, u32 posY, u32 width, u32 height, u32 color)
 {
     // Skip drawing entirely if we're off-screen
@@ -78,42 +113,45 @@ void Draw_DrawRect(u32 posX, u32 posY, u32 width, u32 height, u32 color)
     if (posX + width > SCREEN_BOT_WIDTH) { width = SCREEN_BOT_WIDTH - posX; }
     if (posY + height > SCREEN_BOT_HEIGHT) { height = SCREEN_BOT_HEIGHT - posY; }
 
-    for(s32 y = 0; y < height; y++)
+    for(u32 y = 0; y < height; y++)
     {
-        for(s32 x = width; x >= 1; x--)
+        const u32 screenPosY = (posX * SCREEN_BOT_HEIGHT) + (SCREEN_BOT_HEIGHT - y - posY - 1);
+        for(u32 x = 0; x < width; x++)
         {
-            const u32 screenPos = ((posX * SCREEN_BOT_HEIGHT + (SCREEN_BOT_HEIGHT - y - posY - 1)) + (width - x) * SCREEN_BOT_HEIGHT) * 3;
+            const u32 screenPos = (screenPosY + x * SCREEN_BOT_HEIGHT) * 3;
 
-            backBufferBtm[screenPos] = (color) & 0xFF;
-            backBufferBtm[screenPos + 1] = (color >> 8) & 0xFF;
-            backBufferBtm[screenPos + 2] = (color >> 16) & 0xFF;
+            backBufferBtm[screenPos]        = (color) & 0xFF;
+            backBufferBtm[screenPos + 1]    = (color >> 8) & 0xFF;
+            backBufferBtm[screenPos + 2]    = (color >> 16) & 0xFF;
         }
     }
 }
 
 void Draw_DrawCharacter_Impl(u32 posX, u32 posY, u32 color, char character, const unsigned char *font, u8 sizeX, u8 sizeY)
 {
-    u8 sizeXMinusOne = sizeX - 1;
+    const u32 shiftBase = sizeX - 1 + (8 - sizeX); // If sizeX is smaller than 8, we must shift further left
 
-    for(s32 y = 0; y < sizeY; y++)
+    for(u32 y = 0; y < sizeY; y++)
     {
         const unsigned char charPos = font[character * sizeY + y];
+        const u32 screenPosY = (posX * SCREEN_BOT_HEIGHT) + (SCREEN_BOT_HEIGHT - y - posY - 1);
 
-        for(s32 x = sizeX; x >= 1; x--)
+        for(u32 x = 0; x < sizeX; x++)
         {
-            const u32 screenPos = (posX * SCREEN_BOT_HEIGHT + (SCREEN_BOT_HEIGHT - y - posY - 1)) + (sizeXMinusOne - x) * SCREEN_BOT_HEIGHT;
-            const u32 pixelColor = ((charPos >> x) & 1) ? color : COLOR_BLACK;
+            const u32 shift = shiftBase - x;
+            const u32 screenPos = (screenPosY + x * SCREEN_BOT_HEIGHT) * 3;
+            const u32 pixelColor = ((charPos >> shift) & 1) ? color : COLOR_BLACK;
 
-            backBufferBtm[screenPos * 3] = (pixelColor) & 0xFF;
-            backBufferBtm[screenPos * 3 + 1] = (pixelColor >> 8) & 0xFF;
-            backBufferBtm[screenPos * 3 + 2] = (pixelColor >> 16) & 0xFF;
+            backBufferBtm[screenPos]        = (pixelColor) & 0xFF;
+            backBufferBtm[screenPos + 1]    = (pixelColor >> 8) & 0xFF;
+            backBufferBtm[screenPos + 2]    = (pixelColor >> 16) & 0xFF;
         }
     }
 }
 
 void Draw_DrawCharacter(u32 posX, u32 posY, u32 color, char character)
 {
-    Draw_DrawCharacter_Impl(posX, posY, color, character, ascii_font, 6, 10);
+    Draw_DrawCharacter_Impl(posX, posY, color, character, ascii_font, FONT_WIDTH, FONT_HEIGHT);
 }
 
 void Draw_DrawCharacterTop(u32 posX, u32 posY, u32 color, char character)
@@ -123,11 +161,11 @@ void Draw_DrawCharacterTop(u32 posX, u32 posY, u32 color, char character)
     volatile u8 *const fb4 = (volatile u8 *const)FRAMEBUFFER[4];
     volatile u8 *const fb5 = (volatile u8 *const)FRAMEBUFFER[5];
 
-    for(s32 y = 0; y < 10; y++)
+    for(u32 y = 0; y < 10; y++)
     {
         const char charPos = ascii_font[character * 10 + y];
 
-        for(s32 x = 6; x >= 1; x--)
+        for(u32 x = 6; x >= 1; x--)
         {
             const u32 screenPos = (posX * SCREEN_TOP_HEIGHT + (SCREEN_TOP_HEIGHT - y - posY - 1)) + (5 - x) * SCREEN_TOP_HEIGHT;
             const u32 pixelColor = ((charPos >> x) & 1) ? color : COLOR_BLACK;
@@ -171,7 +209,7 @@ u32 Draw_DrawString(u32 posX, u32 posY, u32 color, const char *string)
                     if(string[i] == ' ') break; //Spaces at the start look weird
                 }
 
-                Draw_DrawCharacter(posX + line_i * SPACING_X, posY, color, string[i]);
+                Draw_DrawCharacter_Impl(posX + line_i * SPACING_X, posY, color, string[i], ascii_font, FONT_WIDTH, FONT_HEIGHT);
 
                 line_i++;
                 break;
@@ -313,7 +351,6 @@ void Draw_ClearBackbuffer(void)
 void Draw_CopyBackBuffer(void)
 {
     memcpy(FRAMEBUFFER[frontBufferIdx_btm], backBufferBtm, FB_BOTTOM_SIZE);
-    Draw_FlushFramebuffer();
 }
 
 void Draw_FlushFramebuffer(void)
