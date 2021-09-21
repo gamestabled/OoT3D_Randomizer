@@ -3741,6 +3741,7 @@ void AreaTable_Init() {
     for (Entrance& exit : areaTable[i].exits) {
       exit.SetParentRegion(i);
       exit.SetName();
+      exit.GetConnectedRegion()->entrances.push_front(&exit);
     }
   }
   /*
