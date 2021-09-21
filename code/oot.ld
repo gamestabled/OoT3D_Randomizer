@@ -668,6 +668,10 @@ SECTIONS
 		*(.patch_CorrectCompassChestsTwo)
 	}
 
+	.patch_SaveGame 0x2FBFA8 : {
+		*(.patch_SaveGame)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}
@@ -746,6 +750,10 @@ SECTIONS
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
 		*(.patch_ModelSpawnGetObjectStatus)
+	}
+
+	.patch_SetBGMEvent 0x36EC40 : {
+		*(.patch_SetBGMEvent)
 	}
 
 	.patch_DemoEffectMedallionDraw 0x37214C : {
@@ -1006,6 +1014,10 @@ SECTIONS
 
 	.patch_ItemsMenuDraw 0x434C08 : {
 		*(.patch_ItemsMenuDraw)
+	}
+
+	.patch_LoadGame 0x447380 : {
+		*(.patch_LoadGame)
 	}
 
 	.patch_OverrideFogDuringGameplayInit 0x4485B4 : {

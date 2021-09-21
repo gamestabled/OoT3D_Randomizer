@@ -107,6 +107,8 @@ constexpr std::array<HintSetting, 4> hintSettingTable{{
   },
 }};
 
+std::array<DungeonInfo, 10> dungeonInfoData;
+
 static Area* GetHintRegion(const AreaKey area) {
 
   std::vector<AreaKey> alreadyChecked = {};
@@ -694,6 +696,52 @@ void CreateAllHints() {
 
   //get barren regions
   auto barrenLocations = CalculateBarrenRegions();
+
+  //Calculate dungeon woth/barren info
+
+  std::vector<std::string> dungeonNames = {"Deku Tree", "Dodongos Cavern", "Jabu Jabus Belly", "Forest Temple", "Fire Temple",
+                                           "Water Temple", "Spirit Temple", "Shadow Temple", "Bottom of the Well", "Ice Cavern"};
+  //Get list of all barren dungeons
+  std::vector<std::string> barrenDungeons;
+  for (LocationKey barrenLocation : barrenLocations) {
+    std::string barrenRegion = GetHintRegion(Location(barrenLocation)->GetParentRegionKey())->scene;
+    bool isDungeon = std::find(dungeonNames.begin(), dungeonNames.end(), barrenRegion) != dungeonNames.end();
+    //If it hasn't already been added to the list and is a dungeon, add to list
+    if (isDungeon && std::find(barrenDungeons.begin(), barrenDungeons.end(), barrenRegion) == barrenDungeons.end()) {
+      barrenDungeons.push_back(barrenRegion);
+    }
+  }
+  PlacementLog_Msg("\nBarren Dungeons:\n");
+  for (std::string barrenDungeon : barrenDungeons) {
+    PlacementLog_Msg(barrenDungeon + "\n");
+  }
+
+  //Get list of all woth dungeons
+  std::vector<std::string> wothDungeons;
+  for (LocationKey wothLocation : wothLocations) {
+    std::string wothRegion = GetHintRegion(Location(wothLocation)->GetParentRegionKey())->scene;
+    bool isDungeon = std::find(dungeonNames.begin(), dungeonNames.end(), wothRegion) != dungeonNames.end();
+    //If it hasn't already been added to the list and is a dungeon, add to list
+    if (isDungeon && std::find(wothDungeons.begin(), wothDungeons.end(), wothRegion) == wothDungeons.end()) {
+      wothDungeons.push_back(wothRegion);
+    }
+  }
+  PlacementLog_Msg("\nWoth Dungeons:\n");
+  for (std::string wothDungeon : wothDungeons) {
+    PlacementLog_Msg(wothDungeon + "\n");
+  }
+
+  //Set DungeonInfo array for each dungeon
+  for (uint i = 0; i < dungeonInfoData.size(); i++) {
+    std::string dungeonName = dungeonNames[i];
+    if (std::find(barrenDungeons.begin(), barrenDungeons.end(), dungeonName) != barrenDungeons.end()) {
+      dungeonInfoData[i] = DungeonInfo::DUNGEON_BARREN;
+    } else if (std::find(wothDungeons.begin(), wothDungeons.end(), dungeonName) != wothDungeons.end()) {
+      dungeonInfoData[i] = DungeonInfo::DUNGEON_WOTH;
+    } else {
+      dungeonInfoData[i] = DungeonInfo::DUNGEON_NEITHER;
+    }
+  }
 
   //while there are still gossip stones remaining
   while (FilterFromPool(gossipStoneLocations, [](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == NONE;}).size() != 0) {

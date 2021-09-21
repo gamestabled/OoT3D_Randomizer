@@ -590,10 +590,20 @@ string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints
                                         "game.";                                           //
                                                                                            //
 /*------------------------------                                                           //
-|        CLEARER HINTS         |                                                           //
+|        HINT CLARITY          |                                                           //
 ------------------------------*/                                                           //
-string_view clearerHintsDesc          = "The hints provided by Gossip Stones will be very\n"
-                                        "direct if this option is enabled.";               //
+string_view obscureHintsDesc          = "Sets the difficulty of hints.\n"                  //
+                                        "Obscure: Hints are unique for each thing, but\n"  //
+                                        "the writing may be confusing.\n"                  //
+                                        "E.g. Kokiri Sword > a butter knife";              //
+string_view ambiguousHintsDesc        = "Sets the difficulty of hints.\n"                  //
+                                        "Ambiguous: Hints are clearly written, but may\n"  //
+                                        "refer to more than one thing.\n"                  //
+                                        "E.g. Kokiri Sword > a sword";                     //
+string_view clearHintsDesc            = "Sets the difficulty of hints.\n"                  //
+                                        "Clear: Hints are clearly written and are unique\n"//
+                                        "for each thing.\n"                                //
+                                        "E.g. Kokiri Sword > the Kokiri Sword";            //
 /*------------------------------                                                           //
 |      HINT DISTRIBUTION       |                                                           //
 ------------------------------*/                                                           //
@@ -602,6 +612,23 @@ string_view balancedHintsDesc         = "Recommended hint spread.";             
 string_view strongHintsDesc           = "More useful hints.";                              //
 string_view veryStrongHintsDesc       = "Many powerful hints.";                            //
                                                                                            //
+/*------------------------------                                                           //
+|  MAP AND COMPASS GIVES INFO  |                                                           //
+------------------------------*/                                                           //
+string_view compassesShowRewardsDesc  = "If dungeon rewards are set to be shuffled at the\n"
+                                        "end of dungeons, the in-game menu will reveal\n"  //
+                                        "which reward is in each dungeon, if the compass\n"//
+                                        "for that dungeon has been collected.";            //
+string_view compassesShowWotHDesc     = "The in-game menu will reveal whether each\n"      //
+                                        "dungeon is on the Way of the Hero, a barren\n"    //
+                                        "location, or neither, if the compass for that\n"  //
+                                        "dungeon has been collected.";                     //
+string_view mapsShowDungeonModesDesc  = "If any Master Quest dungeons will be randomly\n"  //
+                                        "shuffled, the in-game menu will reveal whether\n" //
+                                        "it is in its Vanilla or Master Quest form, if\n"  //
+                                        "the map for the dungeon has been collected.\n"    //
+                                        "Ganon's Castle and Gerudo Training Grounds are\n" //
+                                        "always revealed, as they do not have maps.";      //
 /*------------------------------                                                           //
 |       DAMAGE MULTIPLIER      |                                                           //
 ------------------------------*/                                                           //

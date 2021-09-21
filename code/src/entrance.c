@@ -186,6 +186,17 @@ void Entrance_Init(void) {
             }
         }
     }
+
+    //Set the exit transition of GC Woods Warp -> Lost Woods to a lost woods transition.
+    //This works as an easy fix for the Overworld ER bug that continues to play the lost
+    //woods music into the next area, even if isn't the lost woods. A "proper" fix would
+    //probably be to stop playing the music on any transition though
+    if (gSettingsContext.shuffleOverworldEntrances == ON) {
+        for (s16 i = 0x4D6; i < 0x4DA; i++) {
+            gEntranceTable[i].field &= 0xFF00;
+            gEntranceTable[i].field |= 0x002C;
+        }
+    }
 }
 
 void Entrance_DeathInGanonBattle(void) {

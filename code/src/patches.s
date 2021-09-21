@@ -1561,6 +1561,11 @@ SetBGMEntrance_patch:
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
 
+.section .patch_SetBGMEvent
+.global SetBGMEvent_patch
+SetBGMEvent_patch:
+    b hook_SetBGMEvent
+
 .section .patch_SetSFX
 .global SetSFX_patch
 SetSFX_patch:
@@ -1611,6 +1616,16 @@ OpenSaveDontSpoilTradeItems_patch:
 .global LostWoodsBridgeMusic_patch
 LostWoodsBridgeMusic_patch:
     bl hook_LostWoodsBridgeMusic
+
+.section .patch_LoadGame
+.global .LoadGame_patch
+LoadGame_patch:
+    b hook_LoadGame
+
+.section .patch_SaveGame
+.global .SaveGame_patch
+SaveGame_patch:
+    b hook_SaveGame
 
 .section .patch_SaveMenuIgnoreOpen
 .global SaveMenuIgnoreOpen_patch
