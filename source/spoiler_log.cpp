@@ -327,14 +327,16 @@ static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll
 static void WriteExcludedLocations(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("excluded-locations");
 
-  for (const auto& location : Settings::excludeLocationsOptions) {
-    if (location->GetSelectedOptionIndex() == INCLUDE) {
-      continue;
-    }
+  for (size_t i = 1; i < Settings::excludeLocationsOptionsVector.size(); i++) {
+    for (const auto& location : Settings::excludeLocationsOptionsVector[i]) {
+      if (location->GetSelectedOptionIndex() == INCLUDE) {
+        continue;
+      }
 
-    tinyxml2::XMLElement* node = spoilerLog.NewElement("location");
-    node->SetAttribute("name", RemoveLineBreaks(location->GetName()).c_str());
-    parentNode->InsertEndChild(node);
+      tinyxml2::XMLElement* node = spoilerLog.NewElement("location");
+      node->SetAttribute("name", RemoveLineBreaks(location->GetName()).c_str());
+      parentNode->InsertEndChild(node);
+    }
   }
 
   if (!parentNode->NoChildren()) {

@@ -20,7 +20,6 @@
 namespace {
   bool seedChanged;
   u16 pastSeedLength;
-  u16 settingBound = 0;
   PrintConsole topScreen, bottomScreen;
   std::vector<std::string> presetEntries;
   std::vector<Menu*> menuList;
@@ -45,8 +44,6 @@ void MenuInit() {
 
   seedChanged = false;
   pastSeedLength = Settings::seed.length();
-
-  settingBound = 0;
 
   Menu* main = new Menu("Main", MenuType::MainMenu, &Settings::mainMenu, MAIN_MENU);
   menuList.push_back(main);
@@ -120,6 +117,13 @@ void MoveCursor(u32 kDown) {
       currentMenu->menuIdx = 0;
     } else if (currentMenu->menuIdx == 0xFFFF) {
       currentMenu->menuIdx = max - 1;
+    }
+
+    //Scroll Check
+    if (currentMenu->menuIdx > currentMenu->settingBound + (MAX_SUBMENUS_ON_SCREEN - 1)) {
+      currentMenu->settingBound = currentMenu->menuIdx - (MAX_SUBMENUS_ON_SCREEN - 1);
+    } else if (currentMenu->menuIdx < currentMenu->settingBound) {
+      currentMenu->settingBound = currentMenu->menuIdx;
     }
   }
 }
@@ -309,7 +313,7 @@ void UpdateGenerateMenu(u32 kDown) {
 void PrintMainMenu() {
   printf("\x1b[0;%dHMain Settings", 1+(BOTTOM_WIDTH-13)/2);
 
-  for (u8 i = 0; i < MAX_MAINMENU_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i < MAX_SUBMENUS_ON_SCREEN; i++) {
     if (i >= Settings::mainMenu.size()) break;
 
     Menu* menu = Settings::mainMenu[i];
@@ -330,7 +334,7 @@ void PrintOptionSubMenu() {
   //this is complicated to account for hidden settings and there's probably a better way to do it
   u16 hiddenSettings = 0;
   u16 visibleSettings = 0;
-  for (u16 i = settingBound; visibleSettings < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
+  for (u16 i = currentMenu->settingBound; visibleSettings < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     if (i >= currentMenu->settingsList->size()) {
       break;
     }
@@ -340,19 +344,19 @@ void PrintOptionSubMenu() {
       visibleSettings++;
     }
   }
-  if (currentMenu->menuIdx >= settingBound + MAX_SUBMENU_SETTINGS_ON_SCREEN + hiddenSettings) {
-    settingBound = currentMenu->menuIdx;
+  if (currentMenu->menuIdx >= currentMenu->settingBound + MAX_SUBMENU_SETTINGS_ON_SCREEN + hiddenSettings) {
+    currentMenu->settingBound = currentMenu->menuIdx;
     u8 offset = 0;
     //skip over hidden settings
     while (offset < MAX_SUBMENU_SETTINGS_ON_SCREEN - 1) {
-      settingBound--;
-      if (settingBound == 0) {
+      currentMenu->settingBound--;
+      if (currentMenu->settingBound == 0) {
         break;
       }
-      offset += currentMenu->settingsList->at(settingBound)->IsHidden() ? 0 : 1;
+      offset += currentMenu->settingsList->at(currentMenu->settingBound)->IsHidden() ? 0 : 1;
     }
-  } else if (currentMenu->menuIdx < settingBound)  {
-    settingBound = currentMenu->menuIdx;
+  } else if (currentMenu->menuIdx < currentMenu->settingBound)  {
+    currentMenu->settingBound = currentMenu->menuIdx;
   }
 
   //print menu name
@@ -363,13 +367,13 @@ void PrintOptionSubMenu() {
 
   for (u8 i = 0; i - hiddenSettings < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
     //break if there are no more settings to print
-    if (i + settingBound >= currentMenu->settingsList->size()) break;
+    if (i + currentMenu->settingBound >= currentMenu->settingsList->size()) break;
 
-    Option* setting = currentMenu->settingsList->at(i + settingBound);
+    Option* setting = currentMenu->settingsList->at(i + currentMenu->settingBound);
 
     u8 row = 3 + ((i - hiddenSettings) * 2);
     //make the current setting green
-    if (currentMenu->menuIdx == i + settingBound) {
+    if (currentMenu->menuIdx == i + currentMenu->settingBound) {
       printf("\x1b[%d;%dH%s>",   row,  1, GREEN);
       printf("\x1b[%d;%dH%s:",   row,  2, setting->GetName().data());
       printf("\x1b[%d;%dH%s%s",  row, 26, setting->GetSelectedOptionText().data(), RESET);
@@ -393,16 +397,16 @@ void PrintOptionSubMenu() {
 void PrintSubMenu() {
   printf("\x1b[0;%dH%s", 1+(BOTTOM_WIDTH-currentMenu->name.length())/2, currentMenu->name.c_str());
 
-  for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
+  for (u8 i = 0; i < MAX_SUBMENUS_ON_SCREEN; i++) {
     if (i >= currentMenu->itemsList->size()) break;
 
     u8 row = 3 + i;
     //make the current menu green
-    if (currentMenu->menuIdx == i) {
+    if (currentMenu->menuIdx == currentMenu->settingBound + i) {
       printf("\x1b[%d;%dH%s>",  row,  2, GREEN);
-      printf("\x1b[%d;%dH%s%s", row,  3, currentMenu->itemsList->at(i)->name.c_str(), RESET);
+      printf("\x1b[%d;%dH%s%s", row,  3, currentMenu->itemsList->at(currentMenu->settingBound + i)->name.c_str(), RESET);
     } else {
-      printf("\x1b[%d;%dH%s",   row,  3, currentMenu->itemsList->at(i)->name.c_str());
+      printf("\x1b[%d;%dH%s",   row,  3, currentMenu->itemsList->at(currentMenu->settingBound + i)->name.c_str());
     }
   }
 }

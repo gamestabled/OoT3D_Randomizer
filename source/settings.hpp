@@ -256,6 +256,7 @@ class Menu {
     std::vector<Menu *>* itemsList;
     u8 mode;
     u16 menuIdx = 0;
+    u16 settingBound = 0;
     int selectedSetting = 0;
     bool printInSpoiler = true;
 };
@@ -564,7 +565,8 @@ namespace Settings {
 
   extern u8 PlayOption;
 
-  extern std::vector<Option *> excludeLocationsOptions;
+  extern std::vector<std::vector<Option *>> excludeLocationsOptionsVector;
+  extern std::vector<Menu *> excludeLocationsMenus;
   extern std::vector<Option *> startingInventoryOptions;
   extern std::vector<Option *> trickOptions;
 
