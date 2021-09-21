@@ -529,7 +529,7 @@ void ShuffleAllEntrances() {
     {{EntranceType::Interior,        HYRULE_CASTLE_GROUNDS,            HC_GREAT_FAIRY_FOUNTAIN,          0x0578},
      {EntranceType::Interior,        HC_GREAT_FAIRY_FOUNTAIN,          CASTLE_GROUNDS,                   0x0340}},
     {{EntranceType::Interior,        GANONS_CASTLE_GROUNDS,            OGC_GREAT_FAIRY_FOUNTAIN,         0x04C2},
-     {EntranceType::Interior,        OGC_GREAT_FAIRY_FOUNTAIN,         CASTLE_GROUNDS,                   0x0340}},
+     {EntranceType::Interior,        OGC_GREAT_FAIRY_FOUNTAIN,         CASTLE_GROUNDS,                   0x03E8}}, //0x3E8 is an unused entrance index repruposed to differentiate between the HC and OGC fairy fountain exits (normally they both use 0x340)
     {{EntranceType::Interior,        DMC_LOWER_NEARBY,                 DMC_GREAT_FAIRY_FOUNTAIN,         0x04BE},
      {EntranceType::Interior,        DMC_GREAT_FAIRY_FOUNTAIN,         DMC_LOWER_LOCAL,                  0x0482}},
     {{EntranceType::Interior,        DEATH_MOUNTAIN_SUMMIT,            DMT_GREAT_FAIRY_FOUNTAIN,         0x0315},

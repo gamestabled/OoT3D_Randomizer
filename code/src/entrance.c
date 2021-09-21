@@ -8,6 +8,9 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
+#define dynamicExitList_addr 0x53C094
+#define dynamicExitList ((s16*)dynamicExitList_addr)
+
 static EntranceOverride rEntranceOverrides[256] = {0};
 
 //This variable is used to store whatever new entrance should lead to
@@ -110,6 +113,18 @@ void Scene_Init(void) {
     gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
 }
 
+static void Entrance_SeparateOGCFairyFountainExit() {
+    //Overwrite unused entrance 0x03E8 with values from 0x0340 to use it as the
+    //exit from OGC Great Fairy Fountain -> Castle Grounds
+    for (size_t i = 0; i < 4; ++i) {
+        gEntranceTable[0x3E8 + i] = gEntranceTable[0x340 + i];
+    }
+
+    //Overwrite the dynamic exit for the OGC Fairy Fountain to be 0x3E8 instead
+    //of 0x340 (0x340 will stay as the exit for the HC Fairy Fountain -> Castle Grounds)
+    dynamicExitList[2] = 0x03E8;
+}
+
 void Entrance_Init(void) {
     s32 index;
 
@@ -131,6 +146,8 @@ void Entrance_Init(void) {
     for (index = 0x50F; index < 0x513; ++index) {
         gEntranceTable[index].field = 0x010B;
     }
+
+    Entrance_SeparateOGCFairyFountainExit();
 
     //copy the entrance table to use for overwriting the original one
     EntranceInfo copyOfEntranceTable[0x613] = {0};
