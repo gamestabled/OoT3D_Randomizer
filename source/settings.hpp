@@ -366,8 +366,6 @@ namespace Settings {
   extern Option RemoveDoubleDefense;
   extern Option ProgressiveGoronSword;
 
-  extern bool ShuffleSpecialIndoorEntrances;
-
   //Starting Inventory
   extern Option StartingConsumables;
   extern Option StartingMaxRupees;

@@ -1792,9 +1792,6 @@ namespace Settings {
     }
   }
 
-  //eventual settings
-  bool ShuffleSpecialIndoorEntrances    = false;
-
   template <typename colorsArray>
   static void ChooseFinalColor(const Option& cosmeticOption, std::string& colorStr, const colorsArray& colors) {
     if (cosmeticOption.Is(CUSTOM_COLOR)) {
