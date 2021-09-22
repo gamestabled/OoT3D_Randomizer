@@ -1107,11 +1107,6 @@ namespace Settings {
 
   //Set default settings for all settings
   void SetDefaultSettings() {
-    for (Menu* menu : Settings::GetAllMenus()) {
-        menu->menuIdx = 0;
-        menu->settingBound = 0;
-    }
-
     for (auto op : openOptions) {
       op->SetToDefault();
     }
@@ -1164,6 +1159,11 @@ namespace Settings {
     Location(GANON)->GetExcludedOption()->Hide();
 
     SetDefaultCosmetics();
+
+    ResolveExcludedLocationConflicts();
+    for (Menu* menu : Settings::GetAllOptionMenus()) {
+      menu->ResetMenuIndex();
+    }
   }
 
   //Include and Lock the desired locations
@@ -1204,7 +1204,7 @@ namespace Settings {
   //This function will hide certain locations from the Excluded Locations
   //menu if the player's current settings would require non-junk to be placed
   //at those locations. Excluded locations will have junk placed at them.
-  static void ResolveExcludedLocationConflicts() {
+  void ResolveExcludedLocationConflicts() {
 
     std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
     //For now, just always hide shop locations, as not sure how to handle hiding them-
@@ -2033,7 +2033,7 @@ namespace Settings {
   }
 
   //Recursively look through each menu from the main menu to get all settings
-  const std::vector<Menu*> GetAllMenus() {
+  const std::vector<Menu*> GetAllOptionMenus() {
     std::vector<Menu*> allMenus;
     for (Menu* menu : Settings::mainMenu) {
       std::vector<Menu*> foundMenus = GetMenusRecursive(menu);

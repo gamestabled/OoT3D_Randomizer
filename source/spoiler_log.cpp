@@ -306,7 +306,7 @@ static void WriteShuffledEntrance(
 static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll = false) {
   auto parentNode = spoilerLog.NewElement("settings");
 
-  std::vector<Menu*> allMenus = Settings::GetAllMenus();
+  std::vector<Menu*> allMenus = Settings::GetAllOptionMenus();
 
   for (const Menu* menu : allMenus) {
     //This is a menu of settings, write them

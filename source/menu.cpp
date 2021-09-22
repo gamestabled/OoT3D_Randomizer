@@ -272,6 +272,10 @@ void UpdatePresetsMenu(u32 kDown) {
   ClearDescription();
   if (kDown & KEY_A && currentMenu->mode == LOAD_PRESET && !presetEntries.empty()) {
     if (LoadPreset(presetEntries[currentMenu->menuIdx], OptionCategory::Setting)) {
+      Settings::ResolveExcludedLocationConflicts();
+      for (Menu* menu : Settings::GetAllOptionMenus()) {
+        menu->ResetMenuIndex();
+      }
       printf("\x1b[24;5HPreset Loaded!");
     } else {
       printf("\x1b[24;5HFailed to load preset.");
