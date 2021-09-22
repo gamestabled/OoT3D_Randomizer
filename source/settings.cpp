@@ -1020,6 +1020,8 @@ namespace Settings {
     ctx.startingEquipment |= StartingMirrorShield.Value<u8>()  << 6;
     ctx.startingEquipment |= StartingGoronTunic.Value<u8>()    << 9;
     ctx.startingEquipment |= StartingZoraTunic.Value<u8>()     << 10;
+    ctx.startingEquipment |= StartingIronBoots.Value<u8>()     << 13;
+    ctx.startingEquipment |= StartingHoverBoots.Value<u8>()    << 14;
 
     //Starting Upgrades
     ctx.startingUpgrades |= StartingStrength.Value<u8>() << 6;

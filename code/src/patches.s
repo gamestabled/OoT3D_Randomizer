@@ -1637,6 +1637,11 @@ SaveMenuIgnoreOpen_patch:
 OverrideFogDuringGameplayInit_patch:
     bl hook_OverrideFogDuringGameplayInit
 
+.section .patch_FixItemsMenuSlotDuplication
+.global FixItemsMenuSlotDuplication_patch
+FixItemsMenuSlotDuplication_patch:
+    b hook_FixItemsMenuSlotDuplication
+
 .section .patch_loader
 .global loader_patch
 
