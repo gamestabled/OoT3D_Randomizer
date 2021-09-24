@@ -10,6 +10,7 @@
 #include "title_screen.h"
 #include "settings.h"
 #include "spoiler_data.h"
+#include "entrance.h"
 
 #include "3ds/extdata.h"
 #include "savefile.h"
@@ -195,11 +196,13 @@ static void Gfx_DrawDungeonItems(void) {
         bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
         bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+        bool dungeonIsDiscovered = (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId)
+            || (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART && SaveFile_GetIsSceneDiscovered(DUNGEON_GANONS_CASTLE_FIRST_PART));
 
-        if (gSettingsContext.mapsShowDungeonMode && dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
-            // If we have the map, or all dungeon modes are known due to settings, show whether it's a vanilla or MQ dungeon
-            // Ganon's Tower and Gerudo Training Grounds don't have maps, so we always show those for now
-            if (dungeonId >= DUNGEON_GANONS_CASTLE_SECOND_PART || hasMap || gSettingsContext.dungeonModesKnown) {
+        if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+            // If we've visited the dungeon, we have the map, or all dungeon modes are known due to settings, show whether it's vanilla or MQ
+            // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
+            if (dungeonIsDiscovered || gSettingsContext.dungeonModesKnown) {
                 bool isMasterQuest =  gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
                 u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
                 Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;

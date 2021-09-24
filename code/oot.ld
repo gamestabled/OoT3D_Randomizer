@@ -684,6 +684,10 @@ SECTIONS
 		*(.patch_SetBGMEntrance)
 	}
 
+	.patch_EnteredLocation 0x338DB8 : {
+		*(.patch_EnteredLocation)
+	}
+
 	.patch_LostWoodsBridgeMusic 0x338DD8 : {
 		*(.patch_LostWoodsBridgeMusic)
 	}

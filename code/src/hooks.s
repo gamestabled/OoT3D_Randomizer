@@ -1007,6 +1007,14 @@ hook_SkipTimeTravelCutscene:
     pop {r0-r12, lr}
     ldmia sp!,{r4,r5,r6,pc}
 
+.global hook_EnteredLocation
+hook_EnteredLocation:
+    cpy r4,r0
+    push {r0-r12, lr}
+    bl Entrance_EnteredLocation
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_LostWoodsBridgeMusic
 hook_LostWoodsBridgeMusic:
     push {r0-r12, lr}

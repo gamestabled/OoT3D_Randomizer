@@ -3,6 +3,7 @@
 #include "settings.h"
 #include "string.h"
 #include "item_override.h"
+#include "savefile.h"
 
 typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
 #define SetNextEntrance_addr 0x3716F0
@@ -203,6 +204,39 @@ u32 Entrance_IsLostWoodsBridge(void) {
     } else {
       return 0;
     }
+}
+
+// Any entrance indices in this array will not be marked as 'discovered' when entered
+// Used mainly to avoid incorrectly writing discovered bits for entrances that don't have
+// all four 'slots' for child day, child night, adult day, adult night
+// TODO: Erring on the side of caution, but we may not need this at all
+s16 ignoredEntrances[] = {
+    0x00A0, // Cutscene Map
+    0x00A1, // Cutscene Map
+    0x00A2, // Cutscene Map
+    0x00A3, // Cutscene Map
+    0x00A4, // Cutscene Map
+    0x00A5, // Cutscene Map
+    0x00A6, // Cutscene Map
+    0x00A7, // Cutscene Map
+    0x00A8, // Cutscene Map
+    0x00A9, // Cutscene Map
+    0x00AA, // Cutscene Map
+    0x00AB, // Cutscene Map
+    0x00AC, // Cutscene Map
+    0x02EF, // Cutscene Map
+};
+
+void Entrance_EnteredLocation(void) {
+    SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
+    u32 ignoredEntrancesCount = sizeof(ignoredEntrances) / sizeof(s16);
+    for (u32 i = 0 ; i < ignoredEntrancesCount; i++)
+    {
+        if (gSaveContext.entranceIndex == ignoredEntrances[i]) {
+            return;
+        }
+    }
+    SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex, gSaveContext.linkAge == 0, gSaveContext.nightFlag);
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance

@@ -1612,6 +1612,11 @@ InterfaceDrawDontSpoilTradeItems_patch:
 OpenSaveDontSpoilTradeItems_patch:
     b 0x44FEB8
 
+.section .patch_EnteredLocation
+.global EnteredLocation_patch
+EnteredLocation_patch:
+    bl hook_EnteredLocation
+
 .section .patch_LostWoodsBridgeMusic
 .global LostWoodsBridgeMusic_patch
 LostWoodsBridgeMusic_patch:
