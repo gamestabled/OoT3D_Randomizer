@@ -257,24 +257,12 @@ u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
     return (gExtSaveData.entrancesDiscovered[idx] & bit) != 0;
 }
 
-void SaveFile_SetEntranceDiscovered(u16 entranceIndex, u8 isAdult, u8 isNight) {
-    // Most entrances have 4 'slots':
-    // base   - Child Day
-    // base+1 - Child Night
-    // base+2 - Adult Day
-    // base+3 - Adult Night
-    // Based on the values of isAdult and isNight, entranceIndex will be moved to the base index,
-    // and then all four slots will be marked as discovered
-    if (isNight) { entranceIndex -= 1; }
-    if (isAdult) { entranceIndex -= 2; }
-
+void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
     u16 numBits = sizeof(u32) * 8;
-    for (u32 i = 0; i < 4; i++) {
-        u32 entranceIdx = entranceIndex / numBits;
-        u32 entranceBit = 1 << (entranceIndex - (entranceIdx * numBits));
-        gExtSaveData.entrancesDiscovered[entranceIdx] |= entranceBit;
-        entranceIndex++;
-    }
+    u32 entranceIdx = entranceIndex / numBits;
+    u32 entranceBit = 1 << (entranceIndex - (entranceIdx * numBits));
+    gExtSaveData.entrancesDiscovered[entranceIdx] |= entranceBit;
+    entranceIndex++;
 }
 
 //Resolve the item ID for the starting bottle
