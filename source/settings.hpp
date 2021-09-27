@@ -293,6 +293,7 @@ namespace Settings {
   extern Option ShuffleEntrances;
   extern Option ShuffleDungeonEntrances;
   extern Option ShuffleOverworldEntrances;
+  extern Option ShuffleInteriorEntrances;
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;
@@ -365,9 +366,6 @@ namespace Settings {
   extern Option IceTrapValue;
   extern Option RemoveDoubleDefense;
   extern Option ProgressiveGoronSword;
-
-  extern bool ShuffleInteriorEntrances;
-  extern bool ShuffleSpecialIndoorEntrances;
 
   //Starting Inventory
   extern Option StartingConsumables;
