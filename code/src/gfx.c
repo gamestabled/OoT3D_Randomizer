@@ -1,6 +1,4 @@
 #include "gfx.h"
-#include "draw.h"
-#include "input.h"
 #include "3ds/svc.h"
 #include "z3D/z3D.h"
 #include "dungeon_rewards.h"
@@ -10,9 +8,11 @@
 #include "title_screen.h"
 #include "settings.h"
 #include "spoiler_data.h"
+#include "gfx_options.h"
+#include "common.h"
 
-#include "3ds/extdata.h"
-#include "savefile.h"
+u32 pressed;
+bool handledInput;
 
 static u8 GfxInit = 0;
 static u32 closingButton = 0;
@@ -73,7 +73,6 @@ static char *spoilerCollectionGroupNames[] = {
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
 #define COLOR_SCROLL_BAR_BG RGB8(0x58, 0x58, 0x58)
 
-#define COLOR_DARK_GRAY         RGB8(0x29, 0x29, 0x29)
 #define COLOR_ICON_MASTER_QUEST RGB8(0x53, 0xBA, 0xFF)
 #define COLOR_ICON_VANILLA      RGB8(0xFF, 0xE8, 0x97)
 #define COLOR_ICON_BOSS_KEY     RGB8(0x20, 0xF9, 0x25)
@@ -143,9 +142,13 @@ static void Gfx_DrawChangeMenuPrompt(void) {
         Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse items, A/Y to change group",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
     }
+    else if (curMenuIdx == 6) {
+        Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c to select option, and %c/%c to change it",
+            UP_ARROW_CHR, DOWN_ARROW_CHR, LEFT_ARROW_CHR, RIGHT_ARROW_CHR);
+    }
 }
 
-static void Gfx_UpdatePlayTime(bool isInGame)
+static void Gfx_UpdatePlayTime(u8 isInGame)
 {
     u64 currentTick = svcGetSystemTick();
     if (!isAsleep && isInGame) {
@@ -176,7 +179,6 @@ static void Gfx_DrawSeedHash(void) {
     u32 minutes = (gExtSaveData.playtimeSeconds / 60) % 60;
     u32 seconds = gExtSaveData.playtimeSeconds % 60;
     Draw_DrawFormattedString(10 + (SPACING_X * 4), 80 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
-    Gfx_DrawChangeMenuPrompt();
 }
 
 static void Gfx_DrawDungeonItems(void) {
@@ -243,7 +245,6 @@ static void Gfx_DrawDungeonItems(void) {
             }
         }
     }
-    Gfx_DrawChangeMenuPrompt();
 }
 
 static void Gfx_DrawDungeonRewards(void) {
@@ -257,7 +258,6 @@ static void Gfx_DrawDungeonRewards(void) {
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
         Draw_DrawString(190, yPos, hasCompass ? COLOR_WHITE : COLOR_DARK_GRAY, hasCompass ? DungeonReward_GetName(dungeonId) : "???");
     }
-    Gfx_DrawChangeMenuPrompt();
 }
 
 static void Gfx_DrawSpoilerData(void) {
@@ -288,7 +288,6 @@ static void Gfx_DrawSpoilerData(void) {
         Draw_DrawString(10, 10, COLOR_TITLE, "Spoiler Log");
         Draw_DrawString(10, 40, COLOR_WHITE, "No spoiler log generated!");
     }
-    Gfx_DrawChangeMenuPrompt();
 }
 
 static void Gfx_DrawSpoilerAllItems(void) {
@@ -324,7 +323,6 @@ static void Gfx_DrawSpoilerAllItems(void) {
         Draw_DrawString(10, 10, COLOR_TITLE, "All Item Locations");
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
-    Gfx_DrawChangeMenuPrompt();
 }
 
 static void Gfx_DrawSpoilerItemGroups(void) {
@@ -371,7 +369,6 @@ static void Gfx_DrawSpoilerItemGroups(void) {
         Draw_DrawString(10, 10, COLOR_TITLE, "Item Location Groups");
         Draw_DrawString(10, 40, COLOR_WHITE, "No item location data!");
     }
-    Gfx_DrawChangeMenuPrompt();
 }
 
 static void (*menu_draw_funcs[])(void) = {
@@ -381,6 +378,7 @@ static void (*menu_draw_funcs[])(void) = {
     Gfx_DrawSpoilerData,
     Gfx_DrawSpoilerAllItems,
     Gfx_DrawSpoilerItemGroups,
+    Gfx_DrawOptions,
 };
 
 static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
@@ -392,7 +390,7 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 }
 
 static void Gfx_ShowMenu(void) {
-    u32 pressed = 0;
+    pressed = 0;
 
     if (!gSettingsContext.ingameSpoilers) {
         float itemsChecked = 0;
@@ -413,7 +411,7 @@ static void Gfx_ShowMenu(void) {
             break;
         }
 
-        bool handledInput = false;
+        handledInput = false;
         // Controls for spoiler log and all-items pages come first, as the user may have chosen
         // one of the directional buttons as their menu open/close button and we need to use them
         if (curMenuIdx == 3 && gSpoilerData.SphereCount > 0) {
@@ -480,6 +478,8 @@ static void Gfx_ShowMenu(void) {
                 Gfx_GroupsPrevGroup();
                 handledInput = true;
             }
+        } else if (curMenuIdx == 6) {
+            Gfx_OptionsUpdate();
         }
 
         if (!handledInput) {
@@ -516,6 +516,7 @@ static void Gfx_ShowMenu(void) {
         Gfx_UpdatePlayTime(true);
 
         menu_draw_funcs[curMenuIdx]();
+        Gfx_DrawChangeMenuPrompt();
         Draw_CopyBackBuffer();
         if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
 
@@ -549,6 +550,8 @@ void Gfx_Init(void) {
         Gfx_GroupsNextGroup(); // Call this to go to the first non-empty group page
     }
 
+    InitOptions();
+
     GfxInit = 1;
 }
 
@@ -567,14 +570,9 @@ void Gfx_Update(void) {
         lastTick = svcGetSystemTick();
     }
 
-    s32 entr = gSaveContext.entranceIndex;
-    s32 mode = gSaveContext.gameMode;
-    bool isInGame = mode == 0 ||
-        (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D);
+    Gfx_UpdatePlayTime(IsInGame());
 
-    Gfx_UpdatePlayTime(isInGame);
-
-    if(!isAsleep && openingButton() && isInGame){
+    if(!isAsleep && openingButton() && IsInGame()){
         Gfx_ShowMenu();
         // Check again as it's possible the system was put to sleep while the menu was open
         if (!isAsleep) {

@@ -355,6 +355,7 @@ namespace Settings {
   extern Option RandomTrapDmg;
   extern bool HasNightStart;
 
+  extern Option FaroresWindAnywhere;
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
