@@ -29,3 +29,8 @@ template <typename T, typename FromPool>
 void AddElementsToPool(std::vector<T>& toPool, const FromPool& fromPool) {
   toPool.insert(toPool.end(), std::cbegin(fromPool), std::cend(fromPool));
 }
+
+template <typename T, typename Container>
+bool ElementInContainer(T& element, const Container& container) {
+  return std::find(container.begin(), container.end(), element) != container.end();
+}

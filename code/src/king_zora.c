@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "king_zora.h"
+#include "common.h"
 
 #define EnKz_Update_addr 0x1B66F8
 #define EnKz_Update ((ActorFunc)EnKz_Update_addr)

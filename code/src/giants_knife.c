@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "giants_knife.h"
+#include "common.h"
 
 u16 GK_SetDurability(void) {
     switch (gSettingsContext.gkDurability) {

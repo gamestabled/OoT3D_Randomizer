@@ -13,20 +13,21 @@
 #define Boss_Tw_Destroy_addr 0x1A88E8
 #define Boss_Tw_Destroy ((ActorFunc)Boss_Tw_Destroy_addr)
 
-#define SomeMusicFunction ((void (*)(u8 unk, u32 music))0x36EC40)
+#define PlayActorMusic ((void (*)(u8 unk, u32 music))0x36EC40)
 
 #define BOSS_BATTLE_BGM 0x1000589
-#define SPIRIT_TEMPLE_BGM 0x10005AC
 
 static u8 fightStarted = 0;
-static u8 musicSet = 0;
 static u8 appeared = 0;
 
 void Boss_Tw_rInit(Actor* thisx, GlobalContext* globalCtx) {
     Boss_Tw_Init(thisx, globalCtx);
-    thisx->scale.x = 0.0025f;
-    thisx->scale.y = 0.0025f;
-    thisx->scale.z = 0.0025f;
+    if (thisx->params == 0 || thisx->params == 1) {
+        // Kotake or Koume
+        thisx->scale.x = 0.0025f;
+        thisx->scale.y = 0.0025f;
+        thisx->scale.z = 0.0025f;
+    }
 }
 
 void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
@@ -35,7 +36,7 @@ void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     if (!fightStarted && pos.x > -100 && pos.x < 100 && pos.y > 200 && pos.z > -100 && pos.z < 100) {
         fightStarted = 1;
-        SomeMusicFunction(0, BOSS_BATTLE_BGM);
+        PlayActorMusic(0, BOSS_BATTLE_BGM);
     }
 
     if (fightStarted) {
@@ -48,10 +49,6 @@ void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         } else if (!appeared) {
             appeared = 1;
         }
-    } else if (!musicSet) {
-        SomeMusicFunction(0, SPIRIT_TEMPLE_BGM);
-        SomeMusicFunction(0, SPIRIT_TEMPLE_BGM); // one doesn't work for some reason
-        musicSet = 1;
     }
 }
 
@@ -63,7 +60,6 @@ void Boss_Tw_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 void Boss_Tw_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
     if (thisx->params == 0x0001) { // Koume. This check is needed because the elemental
         fightStarted = 0;          // attacks are different instances of the actor
-        musicSet = 0;
         appeared = 0;
     }
 

@@ -525,6 +525,8 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     gExtSaveData.playtimeSeconds = 0;
+    gExtSaveData.option_EnableBGM = 1;
+    gExtSaveData.option_EnableSFX = 1;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {

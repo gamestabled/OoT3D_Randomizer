@@ -1637,6 +1637,21 @@ SaveMenuIgnoreOpen_patch:
 OverrideFogDuringGameplayInit_patch:
     bl hook_OverrideFogDuringGameplayInit
 
+.section .patch_KotakeDontPlayBattleMusic
+.global KotakeDontPlayBattleMusic_patch
+KotakeDontPlayBattleMusic_patch:
+    nop
+
+.section .patch_SkipTwinrovaQuarrelCutsceneOne
+.global SkipTwinrovaQuarrelCutsceneOne_patch
+SkipTwinrovaQuarrelCutsceneOne_patch:
+    sub r1,r1,#0x500
+
+.section .patch_SkipTwinrovaQuarrelCutsceneTwo
+.global SkipTwinrovaQuarrelCutsceneTwo_patch
+SkipTwinrovaQuarrelCutsceneTwo_patch:
+    bl hook_SkipTwinrovaQuarrelCutscene
+
 .section .patch_FixItemsMenuSlotDuplication
 .global FixItemsMenuSlotDuplication_patch
 FixItemsMenuSlotDuplication_patch:
