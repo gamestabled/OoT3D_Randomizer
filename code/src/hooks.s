@@ -1052,6 +1052,12 @@ hook_OverrideFogDuringGameplayInit:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_SkipTwinrovaQuarrelCutscene
+hook_SkipTwinrovaQuarrelCutscene:
+    mov r0,#0x500
+    add r0,r0,#0x9
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

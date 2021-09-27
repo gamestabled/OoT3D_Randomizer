@@ -6,6 +6,7 @@
 #include "item_override.h"
 #include "item_table.h"
 #include "models.h"
+#include "entrance.h"
 #include <stddef.h>
 
 static s32 rShopsanityPrices[32] = { 0 };
@@ -70,7 +71,7 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     // Make it so ammo does not sell out
     if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) ||
           ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id) || ShopsanityItem_IsSticks(id))) {
-        if (gSaveContext.entranceIndex == 0x00B7) {
+        if (gSaveContext.entranceIndex == Entrance_GetAdultBazaarEntranceFromKak()) {
             gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
         } else {
             gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk |= itemBit;
@@ -113,7 +114,7 @@ const u16 shopNumToIndex[8] = { 4, 0, 7, 6, 1, 3, 2, 5 };
 u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
     // Get scene index
     u16 shopNum = gGlobalContext->sceneNum - SCENE_BAZAAR;
-    if (gSaveContext.entranceIndex == 0x00B7) {
+    if (gSaveContext.entranceIndex == Entrance_GetAdultBazaarEntranceFromKak()) {
         shopNum = SHOP_KAKARIKO_BAZAAR;
     }
     shopNum = shopNumToIndex[shopNum];                // Transfer to the proper shop index
@@ -128,11 +129,11 @@ s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
     u32 itemBit = 1 << item->shopItemPosition;
 
-    if ((gSaveContext.entranceIndex == 0x00B7) &&
+    if ((gSaveContext.entranceIndex == Entrance_GetAdultBazaarEntranceFromKak()) &&
         (gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit)) {
         item->super.actor.params = SI_SOLD_OUT;
         return 1;
-    } else if ((gSaveContext.entranceIndex != 0x00B7) &&
+    } else if ((gSaveContext.entranceIndex != Entrance_GetAdultBazaarEntranceFromKak()) &&
                gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk & itemBit) {
         item->super.actor.params = SI_SOLD_OUT;
         return 1;
@@ -296,7 +297,7 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
     item->shopItemPosition = numShopItemsLoaded;
     numShopItemsLoaded++;
     item->getItemId = 0x30 + item->shopItemPosition;
-    if (gSaveContext.entranceIndex == 0x00B7) {
+    if (gSaveContext.entranceIndex == Entrance_GetAdultBazaarEntranceFromKak()) {
         item->getItemId += 8;
     }
 

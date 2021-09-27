@@ -75,6 +75,12 @@ typedef enum {
 } AgeSetting;
 
 typedef enum {
+  SHUFFLEINTERIORS_OFF,
+  SHUFFLEINTERIORS_SIMPLE,
+  SHUFFLEINTERIORS_ALL,
+} ShuffleInteriorEntrancesSetting;
+
+typedef enum {
   AMMODROPS_VANILLA,
   AMMODROPS_BOMBCHU,
   AMMODROPS_NONE,
@@ -330,6 +336,7 @@ typedef struct {
   u8 resolvedStartingAge;
   u8 shuffleDungeonEntrances;
   u8 shuffleOverworldEntrances;
+  u8 shuffleInteriorEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;
@@ -485,7 +492,5 @@ extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
 void Settings_SkipSongReplays();
-u32 Hash(u32);
-u8  Bias(u32);
 
 #endif

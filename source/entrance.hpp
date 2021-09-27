@@ -206,9 +206,11 @@ public:
 
     void Connect(AreaKey newConnectedRegion) {
         connectedRegion = newConnectedRegion;
+        AreaTable(newConnectedRegion)->entrances.push_front(this);
     }
 
     AreaKey Disconnect() {
+        AreaTable(connectedRegion)->entrances.remove_if([this](const auto entrance){return this == entrance;});
         AreaKey previouslyConnected = connectedRegion;
         connectedRegion = NONE;
         return previouslyConnected;

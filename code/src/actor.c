@@ -35,6 +35,7 @@
 #include "rupee_trap.h"
 #include "item_override.h"
 #include "songs_visual_effects.h"
+#include "shooting_gallery_man.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -76,6 +77,8 @@ void Actor_Init() {
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
     gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
+
+    gActorOverlayTable[0xC1].initInfo->init = EnSyatekiMan_rInit;
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 

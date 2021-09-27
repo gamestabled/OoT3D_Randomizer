@@ -2,6 +2,7 @@
 #include "objects.h"
 #include "z3D/z3D.h"
 #include "settings.h"
+#include "common.h"
 
 static u8 pendingFreezes = 0;
 static u8 cooldown = 0;
