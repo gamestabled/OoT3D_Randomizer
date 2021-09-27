@@ -286,7 +286,57 @@ namespace Settings {
   };
 
   //Excluded Locations (Individual definitions made in ItemLocation class)
-  std::vector<Option *> excludeLocationsOptions = {};
+  std::vector<std::vector<Option *>> excludeLocationsOptionsVector(SPOILER_COLLECTION_GROUP_COUNT);
+  Menu excludeKokiriForest          = Menu::SubMenu("Kokiri Forest",           &excludeLocationsOptionsVector[GROUP_KOKIRI_FOREST]);
+  Menu excludeLostWoods             = Menu::SubMenu("Lost Woods",              &excludeLocationsOptionsVector[GROUP_LOST_WOODS]);
+  Menu excludeDekuTree              = Menu::SubMenu("Deku Tree",               &excludeLocationsOptionsVector[GROUP_DUNGEON_DEKU_TREE]);
+  Menu excludeForestTemple          = Menu::SubMenu("Forest Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_FOREST_TEMPLE]);
+  Menu excludeKakariko              = Menu::SubMenu("Kakariko Village",        &excludeLocationsOptionsVector[GROUP_KAKARIKO]);
+  Menu excludeBottomWell            = Menu::SubMenu("Bottom of the Well",      &excludeLocationsOptionsVector[GROUP_DUNGEON_BOTTOM_OF_THE_WELL]);
+  Menu excludeShadowTemple          = Menu::SubMenu("Shadow Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SHADOW_TEMPLE]);
+  Menu excludeDeathMountain         = Menu::SubMenu("Death Mountain",          &excludeLocationsOptionsVector[GROUP_DEATH_MOUNTAIN]);
+  Menu excludeGoronCity             = Menu::SubMenu("Goron City",              &excludeLocationsOptionsVector[GROUP_GORON_CITY]);
+  Menu excludeDodongosCavern        = Menu::SubMenu("Dodongo's Cavern",        &excludeLocationsOptionsVector[GROUP_DUNGEON_DODONGOS_CAVERN]);
+  Menu excludeFireTemple            = Menu::SubMenu("Fire Temple",             &excludeLocationsOptionsVector[GROUP_DUNGEON_FIRE_TEMPLE]);
+  Menu excludeZorasRiver            = Menu::SubMenu("Zora's River",            &excludeLocationsOptionsVector[GROUP_ZORAS_RIVER]);
+  Menu excludeZorasDomain           = Menu::SubMenu("Zora's Domain",           &excludeLocationsOptionsVector[GROUP_ZORAS_DOMAIN]);
+  Menu excludeJabuJabu              = Menu::SubMenu("Jabu Jabu's Belly",       &excludeLocationsOptionsVector[GROUP_DUNGEON_JABUJABUS_BELLY]);
+  Menu excludeIceCavern             = Menu::SubMenu("Ice Cavern",              &excludeLocationsOptionsVector[GROUP_DUNGEON_ICE_CAVERN]);
+  Menu excludeHyruleField           = Menu::SubMenu("Hyrule Field",            &excludeLocationsOptionsVector[GROUP_HYRULE_FIELD]);
+  Menu excludeLonLonRanch           = Menu::SubMenu("Lon Lon Ranch",           &excludeLocationsOptionsVector[GROUP_LON_LON_RANCH]);
+  Menu excludeLakeHylia             = Menu::SubMenu("Lake Hylia",              &excludeLocationsOptionsVector[GROUP_LAKE_HYLIA]);
+  Menu excludeWaterTemple           = Menu::SubMenu("Water Temple",            &excludeLocationsOptionsVector[GROUP_DUNGEON_WATER_TEMPLE]);
+  Menu excludeGerudoValley          = Menu::SubMenu("Gerudo Valley",           &excludeLocationsOptionsVector[GROUP_GERUDO_VALLEY]);
+  Menu excludeGerudoTrainingGrounds = Menu::SubMenu("Gerudo Training Grounds", &excludeLocationsOptionsVector[GROUP_GERUDO_TRAINING_GROUND]);
+  Menu excludeSpiritTemple          = Menu::SubMenu("Spirit Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SPIRIT_TEMPLE]);
+  Menu excludeHyruleCastle          = Menu::SubMenu("Hyrule Castle",           &excludeLocationsOptionsVector[GROUP_HYRULE_CASTLE]);
+  Menu excludeGanonsCastle          = Menu::SubMenu("Ganon's Castle",          &excludeLocationsOptionsVector[GROUP_DUNGEON_GANONS_CASTLE]);
+  std::vector<Menu *> excludeLocationsMenus = {
+    &excludeKokiriForest,
+    &excludeLostWoods,
+    &excludeDekuTree,
+    &excludeForestTemple,
+    &excludeKakariko,
+    &excludeBottomWell,
+    &excludeShadowTemple,
+    &excludeDeathMountain,
+    &excludeGoronCity,
+    &excludeDodongosCavern,
+    &excludeFireTemple,
+    &excludeZorasRiver,
+    &excludeZorasDomain,
+    &excludeJabuJabu,
+    &excludeIceCavern,
+    &excludeHyruleField,
+    &excludeLonLonRanch,
+    &excludeLakeHylia,
+    &excludeWaterTemple,
+    &excludeGerudoValley,
+    &excludeGerudoTrainingGrounds,
+    &excludeSpiritTemple,
+    &excludeHyruleCastle,
+    &excludeGanonsCastle,
+  };
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
   std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
@@ -768,7 +818,7 @@ namespace Settings {
 
   //Detailed Logic Options Submenu
   Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
-  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsOptions, false);
+  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, false);
   Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions, false);
   Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions, false);
   std::vector<Menu *> detailedLogicOptions = {
@@ -1084,8 +1134,10 @@ namespace Settings {
     for (auto op : itemPoolOptions) {
       op->SetToDefault();
     }
-    for (auto op : excludeLocationsOptions) {
-      op->SetToDefault();
+    for (auto menu : excludeLocationsMenus) {
+      for (auto op : *menu->settingsList) {
+        op->SetToDefault();
+      }
     }
     for (auto op : startingInventoryOptions) {
       op->SetToDefault();
@@ -1110,6 +1162,11 @@ namespace Settings {
     Location(GANON)->GetExcludedOption()->Hide();
 
     SetDefaultCosmetics();
+
+    ResolveExcludedLocationConflicts();
+    for (Menu* menu : Settings::GetAllOptionMenus()) {
+      menu->ResetMenuIndex();
+    }
   }
 
   //Include and Lock the desired locations
@@ -1150,7 +1207,7 @@ namespace Settings {
   //This function will hide certain locations from the Excluded Locations
   //menu if the player's current settings would require non-junk to be placed
   //at those locations. Excluded locations will have junk placed at them.
-  static void ResolveExcludedLocationConflicts() {
+  void ResolveExcludedLocationConflicts() {
 
     std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
     //For now, just always hide shop locations, as not sure how to handle hiding them-
@@ -1962,7 +2019,7 @@ namespace Settings {
     }
   }
 
-  //If this is an option menu, return th options
+  //If this is an option menu, return the options
   //Else, recursively call each sub menu of this sub menu
   const std::vector<Menu*> GetMenusRecursive(Menu* menu) {
     std::vector<Menu*> menus;
@@ -1978,7 +2035,7 @@ namespace Settings {
   }
 
   //Recursively look through each menu from the main menu to get all settings
-  const std::vector<Menu*> GetAllMenus() {
+  const std::vector<Menu*> GetAllOptionMenus() {
     std::vector<Menu*> allMenus;
     for (Menu* menu : Settings::mainMenu) {
       std::vector<Menu*> foundMenus = GetMenusRecursive(menu);
