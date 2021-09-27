@@ -22,9 +22,18 @@ typedef struct {
     s16 override;
 } EntranceOverride;
 
+typedef struct {
+    s16* newEntrance;
+    s16  originalHardcode;
+} SpecialEntrance;
+
 void Entrance_Init(void);
 s16  Entrance_GetRequiemEntrance(void);
 s16  Entrance_GetLWBridgeEntranceFromKokiriForest(void);
+s16  Entrance_GetChildBazaarEntranceFromMarket(void);
+s16  Entrance_GetAdultBazaarEntranceFromKak(void);
+s16  Entrance_GetChildShootingGalleryEntranceFromMarket(void);
+s16  Entrance_GetAdultShootingGalleryEntranceFromKak(void);
 u32  Entrance_IsLostWoodsBridge(void);
 
 #endif //_ENTRANCE_H_

@@ -127,6 +127,7 @@ public:
     std::vector<EventAccess> events;
     std::vector<LocationAccess> locations;
     std::list<Entrance> exits;
+    std::list<Entrance*> entrances;
     //^ The above exits are now stored in a list instead of a vector because
     //the entrance randomization algorithm plays around with pointers to these
     //entrances a lot. By putting the entrances in a list, we don't have to

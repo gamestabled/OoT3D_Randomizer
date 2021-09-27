@@ -605,7 +605,6 @@ void GenerateItemPool() {
 
   //Initialize ice trap models to always major items
   IceTrapModels = {
-    GI_SWORD_BGS,
     GI_SHIELD_MIRROR,
     GI_BOOMERANG,
     GI_LENS,
@@ -1051,7 +1050,9 @@ void GenerateItemPool() {
   if (ProgressiveGoronSword) {
     ReplaceMaxItem(BIGGORON_SWORD, 0);
     AddItemToMainPool(PROGRESSIVE_GORONSWORD, 2);
-    IceTrapModels.push_back(0xD4);
+    IceTrapModels.push_back(0xD4); // Progressive Goron Sword
+  } else {
+    IceTrapModels.push_back(GI_SWORD_BGS);
   }
 
   //Replace ice traps with junk from the pending junk pool if necessary

@@ -96,6 +96,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyPrice)
 	}
 
+	.patch_SkipTwinrovaQuarrelCutsceneOne 0x15273C : {
+		*(.patch_SkipTwinrovaQuarrelCutsceneOne)
+	}
+
 	.patch_FairyPickupHealAmount 0x15CA4C : {
 		*(.patch_FairyPickupHealAmount)
 	}
@@ -170,6 +174,10 @@ SECTIONS
 
 	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
 		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
+	.patch_SkipTwinrovaQuarrelCutsceneTwo 0x176110 : {
+		*(.patch_SkipTwinrovaQuarrelCutsceneTwo)
 	}
 
 	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {
@@ -310,6 +318,10 @@ SECTIONS
 
 	.patch_JabuJabuCutsceneOverride 0x1A192C : {
 		*(.patch_JabuJabuCutsceneOverride)
+	}
+
+	.patch_KotakeDontPlayBattleMusic 0x1A8218 : {
+		*(.patch_KotakeDontPlayBattleMusic)
 	}
 
 	.patch_GossipStoneAddSariaHint 0x1B398C : {
@@ -1086,6 +1098,10 @@ SECTIONS
 
 	.patch_after_GlobalContext_Update 0x452434 : {
 		*(.patch_after_GlobalContext_Update)
+	}
+
+	.patch_FixItemsMenuSlotDuplication 0x456B90 : {
+		*(.patch_FixItemsMenuSlotDuplication)
 	}
 
 	.patch_GameOverDontSpoilTradeItems 0x458BE0 : {
