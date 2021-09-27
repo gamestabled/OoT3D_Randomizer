@@ -1100,6 +1100,10 @@ SECTIONS
 		*(.patch_after_GlobalContext_Update)
 	}
 
+	.patch_FixItemsMenuSlotDuplication 0x456B90 : {
+		*(.patch_FixItemsMenuSlotDuplication)
+	}
+
 	.patch_GameOverDontSpoilTradeItems 0x458BE0 : {
 		*(.patch_GameOverDontSpoilTradeItems)
 	}
