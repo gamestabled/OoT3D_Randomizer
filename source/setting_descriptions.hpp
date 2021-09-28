@@ -59,6 +59,10 @@ extern string_view dungeonEntrancesDesc;
 
 extern string_view overworldEntrancesDesc;
 
+extern string_view interiorEntrancesOff;
+extern string_view interiorEntrancesSimple;
+extern string_view interiorEntrancesAll;
+
 extern string_view bombchuLogicDesc;
 
 extern string_view defaultAmmoDropsDesc;
