@@ -250,12 +250,27 @@ class Menu {
     Menu(std::string name_, MenuType type_, u8 mode_)
         : name(std::move(name_)), type(type_), mode(mode_) {}
 
+    void ResetMenuIndex() {
+      if (mode == OPTION_SUB_MENU) {
+        for (size_t i = 0; i < settingsList->size(); i++) {
+          if (!settingsList->at(i)->IsLocked() && !settingsList->at(i)->IsHidden()) {
+            menuIdx = i;
+            settingBound = i;
+            return;
+          }
+        }
+      }
+      menuIdx = 0;
+      settingBound = 0;
+    }
+
     std::string name;
     MenuType type;
     std::vector<Option *>* settingsList;
     std::vector<Menu *>* itemsList;
     u8 mode;
     u16 menuIdx = 0;
+    u16 settingBound = 0;
     int selectedSetting = 0;
     bool printInSpoiler = true;
 };
@@ -265,9 +280,10 @@ namespace Settings {
   SettingsContext FillContext();
   void InitSettings();
   void SetDefaultSettings();
+  void ResolveExcludedLocationConflicts();
   void RandomizeAllSettings(const bool selectOptions = false);
   void ForceChange(u32 kDown, Option* currentSetting);
-  const std::vector<Menu*> GetAllMenus();
+  const std::vector<Menu*> GetAllOptionMenus();
 
 
   extern std::string seed;
@@ -293,6 +309,7 @@ namespace Settings {
   extern Option ShuffleEntrances;
   extern Option ShuffleDungeonEntrances;
   extern Option ShuffleOverworldEntrances;
+  extern Option ShuffleInteriorEntrances;
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;
@@ -365,9 +382,6 @@ namespace Settings {
   extern Option IceTrapValue;
   extern Option RemoveDoubleDefense;
   extern Option ProgressiveGoronSword;
-
-  extern bool ShuffleInteriorEntrances;
-  extern bool ShuffleSpecialIndoorEntrances;
 
   //Starting Inventory
   extern Option StartingConsumables;
@@ -592,7 +606,8 @@ namespace Settings {
 
   extern u8 PlayOption;
 
-  extern std::vector<Option *> excludeLocationsOptions;
+  extern std::vector<std::vector<Option *>> excludeLocationsOptionsVector;
+  extern std::vector<Menu *> excludeLocationsMenus;
   extern std::vector<Option *> startingInventoryOptions;
   extern std::vector<Option *> trickOptions;
   extern std::vector<Option *> glitchCategories;

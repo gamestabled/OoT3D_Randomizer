@@ -715,12 +715,18 @@ void AreaTable_Init() {
                   Entrance(ZORAS_DOMAIN,          {[]{return IsChild && CanDive;},
                                        /*Glitched*/[]{return (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(LH_OWL_FLIGHT,         {[]{return IsChild;}}),
-                  Entrance(LH_LAB,                {[]{return true;}}),
-                  Entrance(LH_FISHING_HOLE,       {[]{return IsChild || CanUse(SCARECROW) || CanPlantBean(LAKE_HYLIA) || WaterTempleClear;},
+                  Entrance(LH_FISHING_Island,     {[]{return IsChild || CanUse(SCARECROW) || CanPlantBean(LAKE_HYLIA) || WaterTempleClear;},
                                        /*Glitched*/[]{return (CanUse(HOOKSHOT) && ScarecrowSong && (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE)))) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
+                  Entrance(LH_LAB,                {[]{return true;}}),
                   Entrance(WATER_TEMPLE_ENTRYWAY, {[]{return CanUse(HOOKSHOT) && (CanUse(IRON_BOOTS) || ((CanUse(LONGSHOT)) && ProgressiveScale >= 2));},
                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::ADVANCED);}}),
                   Entrance(LH_GROTTO,             {[]{return true;}}),
+  });
+
+  areaTable[LH_FISHING_ISLAND] = Area("LH Fishing Island", "Lake Hylia", LAKE_HYLIA, DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(LAKE_HYLIA,      {[]{return true;}}),
+                  Entrance(LH_FISHING_HOLE, {[]{return true;}}),
   });
 
   areaTable[LH_OWL_FLIGHT] = Area("LH Owl Flight", "Lake Hylia", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -751,7 +757,7 @@ void AreaTable_Init() {
                   LocationAccess(LH_ADULT_FISHING, {[]{return IsAdult;}}),
                 }, {
                   //Exits
-                  Entrance(LAKE_HYLIA, {[]{return true;}}),
+                  Entrance(LH_FISHING_ISLAND, {[]{return true;}}),
   });
 
   areaTable[LH_GROTTO] = Area("LH Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -836,7 +842,7 @@ void AreaTable_Init() {
 
   areaTable[GV_CARPENTER_TENT] = Area("GV Carpenter Tent", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(GERUDO_VALLEY, {[]{return true;}}),
+                  Entrance(GV_FORTRESS_SIDE, {[]{return true;}}),
   });
 
   areaTable[GV_OCTOROK_GROTTO] = Area("GV Octorok Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1005,9 +1011,15 @@ void AreaTable_Init() {
                   Entrance(MARKET_BOMBCHU_BOWLING,     {[]{return IsChild;}}),
                   Entrance(MARKET_TREASURE_CHEST_GAME, {[]{return IsChild && AtNight;}}),
                   Entrance(MARKET_POTION_SHOP,         {[]{return IsChild && AtDay;}}),
-                  Entrance(MARKET_BOMBCHU_SHOP,        {[]{return IsChild && AtNight;}}),
-                  Entrance(MARKET_DOG_LADY_HOUSE,      {[]{return IsChild;}}),
-                  Entrance(MARKET_MAN_IN_GREEN_HOUSE,  {[]{return IsChild && AtNight;}}),
+                  Entrance(MARKET_BACK_ALLEY,          {[]{return IsChild;}}),
+  });
+
+  areaTable[MARKET_BACK_ALLEY] = Area("Market Back Alley", "Market", THE_MARKET, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(THE_MARKET,                 {[]{return true;}}),
+                  Entrance(MARKET_BOMBCHU_SHOP,        {[]{return AtNight;}}),
+                  Entrance(MARKET_DOG_LADY_HOUSE,      {[]{return true;}}),
+                  Entrance(MARKET_MAN_IN_GREEN_HOUSE,  {[]{return AtNight;}}),
   });
 
   areaTable[TOT_ENTRANCE] = Area("ToT Entrance", "ToT Entrance", THE_MARKET, NO_DAY_NIGHT_CYCLE, {
@@ -1049,12 +1061,12 @@ void AreaTable_Init() {
 
   areaTable[CASTLE_GROUNDS] = Area("Castle Grounds", "Castle Grounds", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(THE_MARKET,  {[]{return true;}}),
-                  Entrance(HC_GROUNDS,  {[]{return IsChild;}}),
-                  Entrance(OGC_GROUNDS, {[]{return IsAdult;}}),
+                  Entrance(THE_MARKET,            {[]{return true;}}),
+                  Entrance(HYRULE_CASTLE_GROUNDS, {[]{return IsChild;}}),
+                  Entrance(GANONS_CASTLE_GROUNDS, {[]{return IsAdult;}}),
   });
 
-  areaTable[HC_GROUNDS] = Area("Hyrule Castle Grounds", "Castle Grounds", HYRULE_CASTLE, DAY_NIGHT_CYCLE, {
+  areaTable[HYRULE_CASTLE_GROUNDS] = Area("Hyrule Castle Grounds", "Castle Grounds", HYRULE_CASTLE, DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || CanSummonGossipFairy;}}),
                   EventAccess(&ButterflyFairy,   {[]{return ButterflyFairy   || CanUse(STICKS);}}),
@@ -1084,7 +1096,7 @@ void AreaTable_Init() {
                   LocationAccess(SONG_FROM_IMPA,   {[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(HC_GROUNDS, {[]{return true;}}),
+                  Entrance(HYRULE_CASTLE_GROUNDS, {[]{return true;}}),
   });
 
   areaTable[HC_GREAT_FAIRY_FOUNTAIN] = Area("HC Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1093,7 +1105,7 @@ void AreaTable_Init() {
                                              /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && Bombs && (CanSurviveDamage || (Fairy && NumBottles >= 2)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && ZeldasLullaby;}}),
                 }, {
                   //Exits
-                  Entrance(HC_GROUNDS, {[]{return true;}}),
+                  Entrance(CASTLE_GROUNDS, {[]{return true;}}),
   });
 
   areaTable[HC_STORMS_GROTTO] = Area("HC Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {
@@ -1112,10 +1124,10 @@ void AreaTable_Init() {
                                                      /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
                 }, {
                   //Exits
-                  Entrance(HC_GROUNDS, {[]{return true;}}),
+                  Entrance(HYRULE_CASTLE_GROUNDS, {[]{return true;}}),
   });
 
-  areaTable[OGC_GROUNDS] = Area("Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {
+  areaTable[GANONS_CASTLE_GROUNDS] = Area("Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations                                   //the terrain was lowered such that you can't get this GS with a simple sword slash
                   LocationAccess(OGC_GS, {[]{return HasExplosives || (IsAdult && (LogicOutsideGanonsGS || Bow || Hookshot || CanUse(DINS_FIRE)));},
                               /*Glitched*/[]{return Boomerang && BoomerangAsAdult;}}),
@@ -1223,7 +1235,7 @@ void AreaTable_Init() {
                   LocationAccess(MARKET_BOMBCHU_SHOP_ITEM_8, {[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(THE_MARKET, {[]{return true;}}),
+                  Entrance(MARKET_BACK_ALLEY, {[]{return true;}}),
   });
 
   areaTable[MARKET_DOG_LADY_HOUSE] = Area("Market Dog Lady House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1231,14 +1243,14 @@ void AreaTable_Init() {
                   LocationAccess(MARKET_LOST_DOG, {[]{return AtNight;}}),
                 }, {
                   //Exits
-                  Entrance(THE_MARKET, {[]{return true;}}),
+                  Entrance(MARKET_BACK_ALLEY, {[]{return true;}}),
   });
 
   areaTable[MARKET_MAN_IN_GREEN_HOUSE] = Area("Market Man in Green House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                 }, {
                   //Exits
-                  Entrance(THE_MARKET, {[]{return true;}}),
+                  Entrance(MARKET_BACK_ALLEY, {[]{return true;}}),
   });
 
   areaTable[KAKARIKO_VILLAGE] = Area("Kakariko Village", "Kakariko Village", KAKARIKO_VILLAGE, NO_DAY_NIGHT_CYCLE, {
@@ -1346,10 +1358,7 @@ void AreaTable_Init() {
                   //Locations
                   LocationAccess(KAK_IMPAS_HOUSE_COW, {[]{return CanPlay(EponasSong);},
                                            /*Glitched*/[]{return (CanDoGlitch(GlitchType::IndoorBombOI, GlitchDifficulty::ADVANCED) || ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))) && EponasSong;}}),
-                }, {
-                  //Exits
-                  Entrance(KAK_IMPAS_HOUSE_BACK, {[]{return false;}}),
-  });
+  }, {});
 
   areaTable[KAK_WINDMILL] = Area("Kak Windmill", "", NONE, NO_DAY_NIGHT_CYCLE, {
                   //Events
@@ -1559,14 +1568,14 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(KAK_BEHIND_GATE,          {[]{return true;}}),
                   Entrance(GORON_CITY,               {[]{return true;}}),
-                  Entrance(DMT_SUMMIT,               {[]{return Here(DEATH_MOUNTAIN_TRAIL, []{return CanBlastOrSmash;}) || (IsAdult && ((CanPlantBean(DEATH_MOUNTAIN_TRAIL) && GoronBracelet) || (HoverBoots && LogicDMTSummitHover)));},
+                  Entrance(DEATH_MOUNTAIN_SUMMIT,    {[]{return Here(DEATH_MOUNTAIN_TRAIL, []{return CanBlastOrSmash;}) || (IsAdult && ((CanPlantBean(DEATH_MOUNTAIN_TRAIL) && GoronBracelet) || (HoverBoots && LogicDMTSummitHover)));},
                                           /*Glitched*/[]{return (IsAdult && Here(DEATH_MOUNTAIN_TRAIL, []{return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);})) || Here(DEATH_MOUNTAIN_TRAIL, []{return IsAdult && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);}) || Here(DEATH_MOUNTAIN_TRAIL, []{return IsChild && Hammer && HammerAsChild;});}}),
                   Entrance(DODONGOS_CAVERN_ENTRYWAY, {[]{return HasExplosives || GoronBracelet || IsAdult;}}),
                   Entrance(DMT_STORMS_GROTTO,        {[]{return CanOpenStormGrotto;},
                                           /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
   });
 
-  areaTable[DMT_SUMMIT] = Area("Death Mountain Summit", "Death Mountain", DEATH_MOUNTAIN_TRAIL, DAY_NIGHT_CYCLE, {
+  areaTable[DEATH_MOUNTAIN_SUMMIT] = Area("Death Mountain Summit", "Death Mountain", DEATH_MOUNTAIN_TRAIL, DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&PrescriptionAccess, {[]{return PrescriptionAccess || (IsAdult && (BrokenSwordAccess || BrokenSword));}}),
                   EventAccess(&GossipStoneFairy,   {[]{return GossipStoneFairy   || CanSummonGossipFairy;}}),
@@ -1583,10 +1592,10 @@ void AreaTable_Init() {
                   Entrance(DEATH_MOUNTAIN_TRAIL,     {[]{return true;}}),
                   Entrance(DMC_UPPER_LOCAL,          {[]{return true;}}),
                   Entrance(DMT_OWL_FLIGHT,           {[]{return IsChild;}}),
-                  Entrance(DMT_COW_GROTTO,           {[]{return Here(DMT_SUMMIT, []{return CanBlastOrSmash;});},
-                                          /*Glitched*/[]{return Here(DMT_SUMMIT, []{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);});}}),
-                  Entrance(DMT_GREAT_FAIRY_FOUNTAIN, {[]{return Here(DMT_SUMMIT, []{return CanBlastOrSmash;});},
-                                          /*Glitched*/[]{return ((KokiriSword || Sticks || IsAdult) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT)) || Here(DMT_SUMMIT, []{return Hammer && HammerAsChild;});}}),
+                  Entrance(DMT_COW_GROTTO,           {[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return CanBlastOrSmash;});},
+                                          /*Glitched*/[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);});}}),
+                  Entrance(DMT_GREAT_FAIRY_FOUNTAIN, {[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return CanBlastOrSmash;});},
+                                          /*Glitched*/[]{return ((KokiriSword || Sticks || IsAdult) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT)) || Here(DEATH_MOUNTAIN_SUMMIT, []{return Hammer && HammerAsChild;});}}),
   });
 
   areaTable[DMT_OWL_FLIGHT] = Area("DMT Owl Flight", "Death Mountain", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1621,7 +1630,7 @@ void AreaTable_Init() {
                                                                     ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && ZeldasLullaby;}}),
                 }, {
                   //Exits
-                  Entrance(DMT_SUMMIT, {[]{return true;}}),
+                  Entrance(DEATH_MOUNTAIN_SUMMIT, {[]{return true;}}),
   });
 
   areaTable[GORON_CITY] = Area("Goron City", "Goron City", GORON_CITY, NO_DAY_NIGHT_CYCLE, {
@@ -1723,10 +1732,10 @@ void AreaTable_Init() {
 
   areaTable[DMC_UPPER_NEARBY] = Area("DMC Upper Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(DMC_UPPER_LOCAL,  {[]{return CanUse(GORON_TUNIC);}}),
-                  Entrance(DMT_SUMMIT,       {[]{return true;}}),
-                  Entrance(DMC_UPPER_GROTTO, {[]{return Here(DMC_UPPER_NEARBY, []{return CanBlastOrSmash;});},
-                                  /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return (Sticks && (IsChild || StickAsAdult) && (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) || ((Fairy || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}})
+                  Entrance(DMC_UPPER_LOCAL,       {[]{return CanUse(GORON_TUNIC);}}),
+                  Entrance(DEATH_MOUNTAIN_SUMMIT, {[]{return true;}}),
+                  Entrance(DMC_UPPER_GROTTO,      {[]{return Here(DMC_UPPER_NEARBY, []{return CanBlastOrSmash;});},
+                                       /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return (Sticks && (IsChild || StickAsAdult) && (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) || ((Fairy || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}})
   });
 
   areaTable[DMC_UPPER_LOCAL] = Area("DMC Upper Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {
@@ -2178,7 +2187,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(GANONS_CASTLE_LOBBY,    {[]{return Dungeon::GanonsCastle.IsVanilla();}}),
                   Entrance(GANONS_CASTLE_MQ_LOBBY, {[]{return Dungeon::GanonsCastle.IsMQ();}}),
-                  Entrance(OGC_GROUNDS,            {[]{return true;}}),
+                  Entrance(GANONS_CASTLE_GROUNDS,  {[]{return true;}}),
   });
 
   /*--------------------------
@@ -4387,6 +4396,7 @@ void AreaTable_Init() {
     for (Entrance& exit : areaTable[i].exits) {
       exit.SetParentRegion(i);
       exit.SetName();
+      exit.GetConnectedRegion()->entrances.push_front(&exit);
     }
   }
   /*
@@ -4400,7 +4410,7 @@ void AreaTable_Init() {
 
 namespace Areas {
 
-  static std::array<const AreaKey, 340> allAreas = {
+  static std::array<const AreaKey, 342> allAreas = {
     ROOT,
     ROOT_EXITS,
     KOKIRI_FOREST,
@@ -4437,6 +4447,7 @@ namespace Areas {
     LAKE_HYLIA,
     LH_OWL_FLIGHT,
     LH_LAB,
+    LH_FISHING_ISLAND,
     LH_FISHING_HOLE,
     LH_GROTTO,
     GERUDO_VALLEY,
@@ -4464,6 +4475,7 @@ namespace Areas {
     MARKET_BOMBCHU_BOWLING,
     MARKET_TREASURE_CHEST_GAME,
     MARKET_POTION_SHOP,
+    MARKET_BACK_ALLEY,
     MARKET_BOMBCHU_SHOP,
     MARKET_DOG_LADY_HOUSE,
     MARKET_MAN_IN_GREEN_HOUSE,
@@ -4471,11 +4483,11 @@ namespace Areas {
     TEMPLE_OF_TIME,
     TOT_BEYOND_DOOR_OF_TIME,
     CASTLE_GROUNDS,
-    HC_GROUNDS,
+    HYRULE_CASTLE_GROUNDS,
     HC_GARDEN,
     HC_GREAT_FAIRY_FOUNTAIN,
     HC_STORMS_GROTTO,
-    OGC_GROUNDS,
+    GANONS_CASTLE_GROUNDS,
     OGC_GREAT_FAIRY_FOUNTAIN,
     KAKARIKO_VILLAGE,
     KAK_CARPENTER_BOSS_HOUSE,
@@ -4503,7 +4515,7 @@ namespace Areas {
     GRAVEYARD_HEART_PIECE_GRAVE,
     GRAVEYARD_WARP_PAD_REGION,
     DEATH_MOUNTAIN_TRAIL,
-    DMT_SUMMIT,
+    DEATH_MOUNTAIN_SUMMIT,
     DMT_OWL_FLIGHT,
     DMT_GREAT_FAIRY_FOUNTAIN,
     DMT_COW_GROTTO,

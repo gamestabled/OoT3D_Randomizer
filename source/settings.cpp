@@ -65,8 +65,9 @@ namespace Settings {
   Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",      {"Off", "On"},                                                     {shuffleEntrancesDesc});
   Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                                     {dungeonEntrancesDesc});
   Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                                     {overworldEntrancesDesc});
+  Option ShuffleInteriorEntrances  = Option::U8  ("  Interior Entrances",   {"Off", "Simple", "All"},                                          {""});
   Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
-  Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_VANILLA);
+  Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_BOMBCHU);
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
   Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {"0","1","2","3","4","5","6","7","8","9","10","11","12", "Random"},{mqDungeonCountDesc});
   u8 MQSet;
@@ -90,6 +91,7 @@ namespace Settings {
     &ShuffleEntrances,
     &ShuffleDungeonEntrances,
     &ShuffleOverworldEntrances,
+    &ShuffleInteriorEntrances,
     &BombchusInLogic,
     &AmmoDrops,
     &HeartDropRefill,
@@ -160,15 +162,15 @@ namespace Settings {
   //Shuffle Dungeon Items
   Option RandomizeDungeon    = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {dungeonRandomize},                                                                                                    OptionCategory::Toggle);
   Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",         {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                      {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere},                                                            OptionCategory::Setting,    MAPSANDCOMPASSES_VANILLA);
+                                                                      {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere},                                                            OptionCategory::Setting,    MAPSANDCOMPASSES_OWN_DUNGEON);
   Option Keysanity           = Option::U8  ("Small Keys",             {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                      {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere},                                                                        OptionCategory::Setting,    KEYSANITY_VANILLA);
+                                                                      {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere},                                                                        OptionCategory::Setting,    KEYSANITY_OWN_DUNGEON);
   Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",   {"Vanilla", "Any Dungeon", "Overworld", "Anywhere"},
                                                                       {gerudoKeysVanilla, gerudoKeysAnyDungeon, gerudoKeysOverworld, gerudoKeysAnywhere});
   Option BossKeysanity       = Option::U8  ("Boss Keys",              {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                      {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere},                                                                              OptionCategory::Setting,    BOSSKEYSANITY_VANILLA);
+                                                                      {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere},                                                                              OptionCategory::Setting,    BOSSKEYSANITY_OWN_DUNGEON);
   Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",       {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens"},
-                                                                      {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, ganonKeyLACS},                                                          OptionCategory::Setting,    GANONSBOSSKEY_VANILLA);
+                                                                      {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, ganonKeyLACS},                                                          OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
   u8 LACSCondition           = 0;
   Option LACSMedallionCount  = Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                                    {lacsMedallionCountDesc},                                                                                         OptionCategory::Setting,    1,                          true);
   Option LACSStoneCount      = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                                   {lacsStoneCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
@@ -191,19 +193,19 @@ namespace Settings {
   };
 
   //Timesaver Settings
-  Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                                 {childStealthDesc});
-  Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {skipTowerEscapeDesc});
+  Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                                 {childStealthDesc},                                                                                               OptionCategory::Setting,    SKIP);
+  Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {skipTowerEscapeDesc},                                                                                            OptionCategory::Setting,    SKIP);
   Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                                 {skipEponaRaceDesc});
   Option SkipMinigamePhases  = Option::Bool("Minigames repetitions",  {"Don't Skip", "Skip"},                                                 {skipMinigamePhasesDesc});
   Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {freeScarecrowDesc});
-  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc});
-  Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc});
+  Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc},                                                                                                   OptionCategory::Setting,    SKIP);
+  Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc},                                                                                          OptionCategory::Setting,    SKIP);
   Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {lakeHyliaOwlDesc},                                                                                               OptionCategory::Setting,    SKIP);
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
   Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
-  Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_SKIPPABLE);
+  Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_INSTANT);
   Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
   Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
   std::vector<Option *> timesaverOptions = {
@@ -238,7 +240,7 @@ namespace Settings {
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""},                                                                                                         OptionCategory::Setting,    1); // On
   Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
-  Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc});
+  Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    1); // Basic
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &GossipStoneHints,
@@ -284,7 +286,57 @@ namespace Settings {
   };
 
   //Excluded Locations (Individual definitions made in ItemLocation class)
-  std::vector<Option *> excludeLocationsOptions = {};
+  std::vector<std::vector<Option *>> excludeLocationsOptionsVector(SPOILER_COLLECTION_GROUP_COUNT);
+  Menu excludeKokiriForest          = Menu::SubMenu("Kokiri Forest",           &excludeLocationsOptionsVector[GROUP_KOKIRI_FOREST]);
+  Menu excludeLostWoods             = Menu::SubMenu("Lost Woods",              &excludeLocationsOptionsVector[GROUP_LOST_WOODS]);
+  Menu excludeDekuTree              = Menu::SubMenu("Deku Tree",               &excludeLocationsOptionsVector[GROUP_DUNGEON_DEKU_TREE]);
+  Menu excludeForestTemple          = Menu::SubMenu("Forest Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_FOREST_TEMPLE]);
+  Menu excludeKakariko              = Menu::SubMenu("Kakariko Village",        &excludeLocationsOptionsVector[GROUP_KAKARIKO]);
+  Menu excludeBottomWell            = Menu::SubMenu("Bottom of the Well",      &excludeLocationsOptionsVector[GROUP_DUNGEON_BOTTOM_OF_THE_WELL]);
+  Menu excludeShadowTemple          = Menu::SubMenu("Shadow Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SHADOW_TEMPLE]);
+  Menu excludeDeathMountain         = Menu::SubMenu("Death Mountain",          &excludeLocationsOptionsVector[GROUP_DEATH_MOUNTAIN]);
+  Menu excludeGoronCity             = Menu::SubMenu("Goron City",              &excludeLocationsOptionsVector[GROUP_GORON_CITY]);
+  Menu excludeDodongosCavern        = Menu::SubMenu("Dodongo's Cavern",        &excludeLocationsOptionsVector[GROUP_DUNGEON_DODONGOS_CAVERN]);
+  Menu excludeFireTemple            = Menu::SubMenu("Fire Temple",             &excludeLocationsOptionsVector[GROUP_DUNGEON_FIRE_TEMPLE]);
+  Menu excludeZorasRiver            = Menu::SubMenu("Zora's River",            &excludeLocationsOptionsVector[GROUP_ZORAS_RIVER]);
+  Menu excludeZorasDomain           = Menu::SubMenu("Zora's Domain",           &excludeLocationsOptionsVector[GROUP_ZORAS_DOMAIN]);
+  Menu excludeJabuJabu              = Menu::SubMenu("Jabu Jabu's Belly",       &excludeLocationsOptionsVector[GROUP_DUNGEON_JABUJABUS_BELLY]);
+  Menu excludeIceCavern             = Menu::SubMenu("Ice Cavern",              &excludeLocationsOptionsVector[GROUP_DUNGEON_ICE_CAVERN]);
+  Menu excludeHyruleField           = Menu::SubMenu("Hyrule Field",            &excludeLocationsOptionsVector[GROUP_HYRULE_FIELD]);
+  Menu excludeLonLonRanch           = Menu::SubMenu("Lon Lon Ranch",           &excludeLocationsOptionsVector[GROUP_LON_LON_RANCH]);
+  Menu excludeLakeHylia             = Menu::SubMenu("Lake Hylia",              &excludeLocationsOptionsVector[GROUP_LAKE_HYLIA]);
+  Menu excludeWaterTemple           = Menu::SubMenu("Water Temple",            &excludeLocationsOptionsVector[GROUP_DUNGEON_WATER_TEMPLE]);
+  Menu excludeGerudoValley          = Menu::SubMenu("Gerudo Valley",           &excludeLocationsOptionsVector[GROUP_GERUDO_VALLEY]);
+  Menu excludeGerudoTrainingGrounds = Menu::SubMenu("Gerudo Training Grounds", &excludeLocationsOptionsVector[GROUP_GERUDO_TRAINING_GROUND]);
+  Menu excludeSpiritTemple          = Menu::SubMenu("Spirit Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SPIRIT_TEMPLE]);
+  Menu excludeHyruleCastle          = Menu::SubMenu("Hyrule Castle",           &excludeLocationsOptionsVector[GROUP_HYRULE_CASTLE]);
+  Menu excludeGanonsCastle          = Menu::SubMenu("Ganon's Castle",          &excludeLocationsOptionsVector[GROUP_DUNGEON_GANONS_CASTLE]);
+  std::vector<Menu *> excludeLocationsMenus = {
+    &excludeKokiriForest,
+    &excludeLostWoods,
+    &excludeDekuTree,
+    &excludeForestTemple,
+    &excludeKakariko,
+    &excludeBottomWell,
+    &excludeShadowTemple,
+    &excludeDeathMountain,
+    &excludeGoronCity,
+    &excludeDodongosCavern,
+    &excludeFireTemple,
+    &excludeZorasRiver,
+    &excludeZorasDomain,
+    &excludeJabuJabu,
+    &excludeIceCavern,
+    &excludeHyruleField,
+    &excludeLonLonRanch,
+    &excludeLakeHylia,
+    &excludeWaterTemple,
+    &excludeGerudoValley,
+    &excludeGerudoTrainingGrounds,
+    &excludeSpiritTemple,
+    &excludeHyruleCastle,
+    &excludeGanonsCastle,
+  };
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
   std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
@@ -827,7 +879,7 @@ namespace Settings {
 
   //Detailed Logic Options Submenu
   Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
-  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsOptions, false);
+  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, false);
   Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions, false);
   Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions, false);
   std::vector<Menu *> detailedLogicOptions = {
@@ -906,6 +958,7 @@ namespace Settings {
     ctx.resolvedStartingAge  = ResolvedStartingAge;
     ctx.shuffleDungeonEntrances = (ShuffleDungeonEntrances) ? 1 : 0;
     ctx.shuffleOverworldEntrances = (ShuffleOverworldEntrances) ? 1 : 0;
+    ctx.shuffleInteriorEntrances = ShuffleInteriorEntrances.Value<u8>();
     ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
     ctx.ammoDrops            = AmmoDrops.Value<u8>();
     ctx.heartDropRefill      = HeartDropRefill.Value<u8>();
@@ -1081,6 +1134,8 @@ namespace Settings {
     ctx.startingEquipment |= StartingMirrorShield.Value<u8>()  << 6;
     ctx.startingEquipment |= StartingGoronTunic.Value<u8>()    << 9;
     ctx.startingEquipment |= StartingZoraTunic.Value<u8>()     << 10;
+    ctx.startingEquipment |= StartingIronBoots.Value<u8>()     << 13;
+    ctx.startingEquipment |= StartingHoverBoots.Value<u8>()    << 14;
 
     //Starting Upgrades
     ctx.startingUpgrades |= StartingStrength.Value<u8>() << 6;
@@ -1142,8 +1197,10 @@ namespace Settings {
     for (auto op : itemPoolOptions) {
       op->SetToDefault();
     }
-    for (auto op : excludeLocationsOptions) {
-      op->SetToDefault();
+    for (auto menu : excludeLocationsMenus) {
+      for (auto op : *menu->settingsList) {
+        op->SetToDefault();
+      }
     }
     for (auto op : startingInventoryOptions) {
       op->SetToDefault();
@@ -1171,6 +1228,11 @@ namespace Settings {
     Location(GANON)->GetExcludedOption()->Hide();
 
     SetDefaultCosmetics();
+
+    ResolveExcludedLocationConflicts();
+    for (Menu* menu : Settings::GetAllOptionMenus()) {
+      menu->ResetMenuIndex();
+    }
   }
 
   //Include and Lock the desired locations
@@ -1211,7 +1273,7 @@ namespace Settings {
   //This function will hide certain locations from the Excluded Locations
   //menu if the player's current settings would require non-junk to be placed
   //at those locations. Excluded locations will have junk placed at them.
-  static void ResolveExcludedLocationConflicts() {
+  void ResolveExcludedLocationConflicts() {
 
     std::vector<LocationKey> shopLocations = GetLocations(everyPossibleLocation, Category::cShop);
     //For now, just always hide shop locations, as not sure how to handle hiding them-
@@ -1480,11 +1542,14 @@ namespace Settings {
       if (ShuffleEntrances) {
         ShuffleDungeonEntrances.Unhide();
         ShuffleOverworldEntrances.Unhide();
+        ShuffleInteriorEntrances.Unhide();
       } else {
         ShuffleDungeonEntrances.SetSelectedIndex(OFF);
         ShuffleDungeonEntrances.Hide();
         ShuffleOverworldEntrances.SetSelectedIndex(OFF);
         ShuffleOverworldEntrances.Hide();
+        ShuffleInteriorEntrances.SetSelectedIndex(SHUFFLEINTERIORS_OFF);
+        ShuffleInteriorEntrances.Hide();
       }
     }
 
@@ -1853,10 +1918,6 @@ namespace Settings {
     }
   }
 
-  //eventual settings
-  bool ShuffleInteriorEntrances         = false;
-  bool ShuffleSpecialIndoorEntrances    = false;
-
   template <typename colorsArray>
   static void ChooseFinalColor(const Option& cosmeticOption, std::string& colorStr, const colorsArray& colors) {
     if (cosmeticOption.Is(CUSTOM_COLOR)) {
@@ -2027,7 +2088,7 @@ namespace Settings {
     }
   }
 
-  //If this is an option menu, return th options
+  //If this is an option menu, return the options
   //Else, recursively call each sub menu of this sub menu
   const std::vector<Menu*> GetMenusRecursive(Menu* menu) {
     std::vector<Menu*> menus;
@@ -2043,7 +2104,7 @@ namespace Settings {
   }
 
   //Recursively look through each menu from the main menu to get all settings
-  const std::vector<Menu*> GetAllMenus() {
+  const std::vector<Menu*> GetAllOptionMenus() {
     std::vector<Menu*> allMenus;
     for (Menu* menu : Settings::mainMenu) {
       std::vector<Menu*> foundMenus = GetMenusRecursive(menu);

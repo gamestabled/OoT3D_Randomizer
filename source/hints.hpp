@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "keys.hpp"
 #include "text.hpp"
 #include "random.hpp"
 #include "settings.hpp"
@@ -213,5 +214,6 @@ private:
 //10 dungeons as GTG and GC are excluded
 extern std::array<DungeonInfo, 10> dungeonInfoData;
 
+extern HintKey GetHintRegionHintKey(const AreaKey area);
 extern void CreateAllHints();
 extern void CreateMerchantsHints();

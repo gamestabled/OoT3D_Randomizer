@@ -58,7 +58,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
-    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple 
+    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple
     bool keysanity = gSettingsContext.keysanity == KEYSANITY_ANYWHERE || gSettingsContext.keysanity == KEYSANITY_OVERWORLD || gSettingsContext.keysanity == KEYSANITY_ANY_DUNGEON;
     if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA && !keysanity) {
         gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
@@ -296,6 +296,8 @@ void SaveFile_SetStartingInventory(void) {
     }
 
     //main inventory
+    u8 insertedInChildItemMenu = 0;
+
     if (gSettingsContext.startingStickCapacity > 0) {
         gSaveContext.upgrades |= ((gSettingsContext.startingStickCapacity + 1) << 17);
         gSaveContext.items[SLOT_STICK] = ITEM_STICK;
@@ -327,14 +329,26 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingFireArrows) {
         gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+        if (gSettingsContext.startingBow == 0) {
+            gSaveContext.itemMenuAdult[insertedInChildItemMenu] = ItemSlots[ITEM_ARROW_FIRE];
+            gSaveContext.itemMenuChild[insertedInChildItemMenu++] = ItemSlots[ITEM_ARROW_FIRE];
+        }
     }
 
     if (gSettingsContext.startingIceArrows) {
         gSaveContext.items[SLOT_ARROW_ICE] = ITEM_ARROW_ICE;
+        if (gSettingsContext.startingBow == 0) {
+            gSaveContext.itemMenuAdult[insertedInChildItemMenu] = ItemSlots[ITEM_ARROW_ICE];
+            gSaveContext.itemMenuChild[insertedInChildItemMenu++] = ItemSlots[ITEM_ARROW_ICE];
+        }
     }
 
     if (gSettingsContext.startingLightArrows) {
         gSaveContext.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+        if (gSettingsContext.startingBow == 0) {
+            gSaveContext.itemMenuAdult[insertedInChildItemMenu] = ItemSlots[ITEM_ARROW_LIGHT];
+            gSaveContext.itemMenuChild[insertedInChildItemMenu++] = ItemSlots[ITEM_ARROW_LIGHT];
+        }
     }
 
     if (gSettingsContext.startingDinsFire) {
@@ -374,14 +388,6 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingHookshot > 0) {
         gSaveContext.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT + (gSettingsContext.startingHookshot - 1);
-    }
-
-    if (gSettingsContext.startingIronBoots) {
-        gSaveContext.items[SLOT_IRON_BOOTS] = ITEM_BOOTS_IRON;
-    }
-
-    if (gSettingsContext.startingHoverBoots) {
-        gSaveContext.items[SLOT_HOVER_BOOTS] = ITEM_BOOTS_HOVER;
     }
 
     SaveFile_GiveStartingBottle(gSettingsContext.startingBottle1, SLOT_BOTTLE_1);
@@ -519,6 +525,8 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     gExtSaveData.playtimeSeconds = 0;
+    gExtSaveData.option_EnableBGM = 1;
+    gExtSaveData.option_EnableSFX = 1;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {
