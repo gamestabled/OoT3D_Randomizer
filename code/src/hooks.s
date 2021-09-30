@@ -1065,6 +1065,14 @@ hook_FixItemsMenuSlotDuplication:
     add r10,r10,#0x1
     b 0x456B94
 
+.global hook_SkipJabuOpeningCutscene
+hook_SkipJabuOpeningCutscene:
+    ldrh r0,[r0,#0x0]
+    push {r0-r12, lr}
+    bl Jabu_SkipOpeningCutscene
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

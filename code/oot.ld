@@ -332,6 +332,10 @@ SECTIONS
 		*(.patch_ReadGossipStoneHints)
 	}
 
+	.patch_SkipJabuOpeningCutscene 0x1B583C : {
+		*(.patch_SkipJabuOpeningCutscene)
+	}
+
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
 		*(.patch_KingZoraSecondTunic)
 	}

@@ -1657,6 +1657,11 @@ SkipTwinrovaQuarrelCutsceneTwo_patch:
 FixItemsMenuSlotDuplication_patch:
     b hook_FixItemsMenuSlotDuplication
 
+.section .patch_SkipJabuOpeningCutscene
+.global SkipJabuOpeningCutscene_patch
+SkipJabuOpeningCutscene_patch:
+    bl hook_SkipJabuOpeningCutscene
+
 .section .patch_loader
 .global loader_patch
 
