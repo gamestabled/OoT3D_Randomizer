@@ -1,5 +1,6 @@
 #include "z3D/z3D.h"
 #include "settings.h"
+#include "entrance.h"
 #include "cow.h"
 
 #define EnCow_Init_addr 0x189FD4
@@ -13,9 +14,9 @@ static s32 sNumCows = 0;
 void EnCow_rInit(Actor* thisx, GlobalContext* globalCtx) {
     static PosRot LLR_TowerRightCow_PosRot = { { -283.13f, 0.0f, 110.46f }, { 0x0000, 0x5044, 0x0000 } };
 
-    if (gSaveContext.entranceIndex == 0x05FC) { // DMT grotto
+    if (Entrance_SceneAndSpawnAre(0x3E, 0x0D)) { // DMT grotto
         thisx->home.rot.x = 1;
-    } else if (gSaveContext.entranceIndex == 0x05A8) { // HF grotto
+    } else if (Entrance_SceneAndSpawnAre(0x3E, 0x05)) { // HF grotto
         thisx->home.rot.x = 2;
     } else if (gGlobalContext->sceneNum == 0x0002) { // Jabu-Jabu (MQ)
         thisx->home.rot.x = 1;

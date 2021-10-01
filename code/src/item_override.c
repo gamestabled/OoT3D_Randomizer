@@ -437,7 +437,7 @@ void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) 
 
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
-    if (receivedGift == 0 && (gSaveContext.entranceIndex == Entrance_GetLWBridgeEntranceFromKokiriForest())) {
+    if (receivedGift == 0 && Entrance_SceneAndSpawnAre(0x5B, 0x09)) {
         ItemOverride_PushDelayedOverride(0x02);
         EventSet(0xC1);
     }

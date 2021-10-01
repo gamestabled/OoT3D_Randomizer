@@ -85,7 +85,7 @@ void Cutscene_OverrideSerenade(void) {
 }
 
 u32 Cutscene_OverrideRequiem(void) {
-    if (!EventCheck(0xAC) && (gSaveContext.entranceIndex == Entrance_GetRequiemEntrance())) {
+    if (!EventCheck(0xAC) && Entrance_SceneAndSpawnAre(0x5C, 0x01)) {
         ItemOverride_PushDelayedOverride(0x23);
         EventSet(0xAC);
         gSaveContext.entranceIndex = 0x1ED;

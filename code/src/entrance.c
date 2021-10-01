@@ -13,25 +13,6 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 
 static EntranceOverride rEntranceOverrides[256] = {0};
 
-//This variable is used to store whatever new entrance should lead to
-//the Requiem of Spirit check. Otherwise, leaving the Spirit Temple
-//will take players to the Requiem cutscene even if it is shuffled.
-static s16 newRequiemEntrance = 0x01E1;
-
-//Same concept as above, except for Saria's Gift check
-static s16 newLWBridgeEntranceFromKokiriForest = 0x05E0;
-
-//Same as above, except used for handling correct ambient music into this area
-static s16 newLWBridgeEntranceFromHyruleField = 0x04DE;
-
-//^, except for handling the bazaar
-static s16 newChildBazaarEntranceFromMarket = 0x052C;
-static s16 newAdultBazaarEntranceFromKak = 0x00B7;
-
-//^, except for handling the shooting gallery
-static s16 newChildShootingGalleryEntranceFromMarket = 0x016D;
-static s16 newAdultShootingGalleryEntranceFromKak = 0x003B;
-
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
 //By default, these will be their vanilla values.
@@ -82,12 +63,6 @@ static void Entrance_SetNewDungeonEntrances(s16 originalIndex, s16 replacementIn
         case GERUDO_TRAINING_GROUNDS_ENTRANCE :
             newGerudoTrainingGroundsEntrance = originalIndex;
             break;
-    }
-}
-
-static void Entrance_SetNewSpecialEntrance(s16 originalIndex, s16 overrideIndex, SpecialEntrance entrance) {
-    if (overrideIndex == entrance.originalHardcode) {
-        *(entrance.newEntrance) = originalIndex;
     }
 }
 
@@ -153,20 +128,6 @@ void Entrance_Init(void) {
     EntranceInfo copyOfEntranceTable[0x613] = {0};
     memcpy(copyOfEntranceTable, gEntranceTable, sizeof(EntranceInfo) * 0x613);
 
-    //a special entrance is one that has to be tracked by other sections
-    //of patch code
-    SpecialEntrance specialEntrances[7] = {
-        {.newEntrance = &newRequiemEntrance,                        .originalHardcode = newRequiemEntrance},
-        {.newEntrance = &newLWBridgeEntranceFromKokiriForest,       .originalHardcode = newLWBridgeEntranceFromKokiriForest},
-        {.newEntrance = &newLWBridgeEntranceFromHyruleField,        .originalHardcode = newLWBridgeEntranceFromHyruleField},
-        {.newEntrance = &newChildBazaarEntranceFromMarket,          .originalHardcode = newChildBazaarEntranceFromMarket},
-        {.newEntrance = &newAdultBazaarEntranceFromKak,             .originalHardcode = newAdultBazaarEntranceFromKak},
-        {.newEntrance = &newChildShootingGalleryEntranceFromMarket, .originalHardcode = newChildShootingGalleryEntranceFromMarket},
-        {.newEntrance = &newAdultShootingGalleryEntranceFromKak,    .originalHardcode = newAdultShootingGalleryEntranceFromKak},
-    };
-
-    size_t numberOfSpecialEntrances = sizeof(specialEntrances) / sizeof(SpecialEntrance);
-
     //rewrite the entrance table for entrance randomizer
     size_t numberOfEntranceOverrides = sizeof(rEntranceOverrides) / sizeof(EntranceOverride);
     for (size_t i = 0; i < numberOfEntranceOverrides; i++) {
@@ -177,11 +138,6 @@ void Entrance_Init(void) {
 
         if (originalIndex == 0 && overrideIndex == 0) {
             continue;
-        }
-
-        //Check setting entrances
-        for (size_t j = 0; j < numberOfSpecialEntrances; j++) {
-            Entrance_SetNewSpecialEntrance(originalIndex, overrideIndex, specialEntrances[j]);
         }
 
         //check to see if this is a new dungeon entrance
@@ -224,32 +180,13 @@ void Entrance_DeathInGanonBattle(void) {
     }
 }
 
-s16 Entrance_GetRequiemEntrance(void) {
-    return newRequiemEntrance;
-}
-
-s16 Entrance_GetLWBridgeEntranceFromKokiriForest(void) {
-    return newLWBridgeEntranceFromKokiriForest;
-}
-
-s16 Entrance_GetChildBazaarEntranceFromMarket(void) {
-    return newChildBazaarEntranceFromMarket;
-}
-
-s16 Entrance_GetAdultBazaarEntranceFromKak(void) {
-    return newAdultBazaarEntranceFromKak;
-}
-
-s16 Entrance_GetChildShootingGalleryEntranceFromMarket(void) {
-    return newChildShootingGalleryEntranceFromMarket;
-}
-
-s16 Entrance_GetAdultShootingGalleryEntranceFromKak(void) {
-    return newAdultShootingGalleryEntranceFromKak;
+u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn) {
+    EntranceInfo currentEntrance = gEntranceTable[gSaveContext.entranceIndex];
+    return currentEntrance.scene == scene && currentEntrance.spawn == spawn;
 }
 
 u32 Entrance_IsLostWoodsBridge(void) {
-    if (gSaveContext.entranceIndex == newLWBridgeEntranceFromHyruleField || gSaveContext.entranceIndex == newLWBridgeEntranceFromKokiriForest) {
+    if (Entrance_SceneAndSpawnAre(0x5B, 0x09) || Entrance_SceneAndSpawnAre(0x5B, 0x08)) {
       return 1;
     } else {
       return 0;
