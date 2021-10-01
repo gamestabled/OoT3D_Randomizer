@@ -1064,6 +1064,10 @@ SECTIONS
 		*(.patch_ExtendedObjectClear)
 	}
 
+	.patch_PlayEntranceCutscene 0x44F068 : {
+		*(.patch_PlayEntranceCutscene)
+	}
+
 	.patch_RequiemLocation 0x44F104 : {
 		*(.patch_RequiemLocation)
 	}

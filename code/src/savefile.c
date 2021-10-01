@@ -48,10 +48,11 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
-    gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
-    gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
-    gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
+    gSaveContext.eventChkInf[0xB] |= 0x0001; //Dodongo's Cavern intro
+  //gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
+  //gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
+  //gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
+  //gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
@@ -145,10 +146,6 @@ void SaveFile_Init(u32 fileBaseIndex) {
 
     if (gSettingsContext.fourPoesCutscene == SKIP) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
-    }
-
-    if (gSettingsContext.templeOfTimeIntro == SKIP) {
-        gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
     }
 
     //Move mido away from the path to the Deku Tree in Open Forest

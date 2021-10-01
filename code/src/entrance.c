@@ -8,6 +8,10 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
+typedef void (*SetEventChkInf_proc)(u32 flag);
+#define SetEventChkInf_addr 0x34CBF8
+#define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
+
 #define dynamicExitList_addr 0x53C094
 #define dynamicExitList ((s16*)dynamicExitList_addr)
 
@@ -358,4 +362,15 @@ void EnableFW() {
             gSaveContext.buttonStatus[i] = 0;
         }
     }
+}
+
+u8 EntranceCutscene_ShouldPlay(u8 flag) {
+    if (gSaveContext.gameMode != 0 || flag == 0x18 || flag == 0xAD || (flag >= 0xBB && flag <= 0xBF)) {
+        if (flag == 0xC0) {
+            gSaveContext.eventChkInf[0x3] &= ~0x0800; // clear "began Nabooru battle"
+        }
+        return 1; // cutscene will play normally in DHWW, or always if it's freeing Epona or clearing a Trial
+    }
+    SetEventChkInf(flag);
+    return 0; //cutscene will not play
 }
