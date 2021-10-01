@@ -14,9 +14,9 @@ static s32 sNumCows = 0;
 void EnCow_rInit(Actor* thisx, GlobalContext* globalCtx) {
     static PosRot LLR_TowerRightCow_PosRot = { { -283.13f, 0.0f, 110.46f }, { 0x0000, 0x5044, 0x0000 } };
 
-    if (Entrance_SceneAndSpawnAre(0x3E, 0x0D)) { // DMT grotto
+    if (Entrance_SceneAndSpawnAre(0x3E, 0x0D)) { // DMT grotto, index 05FC in the entrance table
         thisx->home.rot.x = 1;
-    } else if (Entrance_SceneAndSpawnAre(0x3E, 0x05)) { // HF grotto
+    } else if (Entrance_SceneAndSpawnAre(0x3E, 0x05)) { // HF grotto, index 05A8 in the entrance table
         thisx->home.rot.x = 2;
     } else if (gGlobalContext->sceneNum == 0x0002) { // Jabu-Jabu (MQ)
         thisx->home.rot.x = 1;

@@ -71,7 +71,7 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     // Make it so ammo does not sell out
     if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) ||
           ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id) || ShopsanityItem_IsSticks(id))) {
-        if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { //If this is the kakariko bazaar
+        if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { //kak bazaar, index 00B7 in the entrance table
             gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
         } else {
             gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk |= itemBit;
@@ -114,7 +114,7 @@ const u16 shopNumToIndex[8] = { 4, 0, 7, 6, 1, 3, 2, 5 };
 u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
     // Get scene index
     u16 shopNum = gGlobalContext->sceneNum - SCENE_BAZAAR;
-    if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) {
+    if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { //kak bazaar, index 00B7 in the entrance table
         shopNum = SHOP_KAKARIKO_BAZAAR;
     }
     shopNum = shopNumToIndex[shopNum];                // Transfer to the proper shop index

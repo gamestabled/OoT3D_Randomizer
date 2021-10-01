@@ -186,6 +186,7 @@ u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn) {
 }
 
 u32 Entrance_IsLostWoodsBridge(void) {
+    //  Kokiri Forest -> LW Bridge, index 05E0   Hyrule Field -> LW Bridge, index 04DE
     if (Entrance_SceneAndSpawnAre(0x5B, 0x09) || Entrance_SceneAndSpawnAre(0x5B, 0x08)) {
       return 1;
     } else {
