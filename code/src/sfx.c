@@ -1,6 +1,8 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "sfx.h"
+#include "savefile.h"
+#include "common.h"
 
 SFXData rSfxData = {0};
 
@@ -16,6 +18,10 @@ u16 CustomSFXModulus(u16 sfxOverflow, SeqType type_) {
 }
 
 u32 SetSFX(u32 original) {
+    if (!gExtSaveData.option_EnableSFX && IsInGame()) {
+        return SEQ_AUDIO_BLANK;
+    }
+
     u16 sfxID = original - SFX_BASE;
     SeqType type = rSfxData.rSeqTypesSFX[sfxID];
 
