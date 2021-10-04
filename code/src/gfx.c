@@ -22,6 +22,7 @@ static s16 spoilerScroll = 0;
 static s16 allItemsScroll = 0;
 static s16 groupItemsScroll = 0;
 static s8 currentGroup = 1;
+static s16 entranceScroll = 0;
 static s32 curMenuIdx = 0;
 static float itemPercent = 0;
 static u64 lastTick = 0;
@@ -136,7 +137,7 @@ static void Gfx_DrawChangeMenuPrompt(void) {
         Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse spoiler log",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
     }
-    else if (curMenuIdx == 4) {
+    else if (curMenuIdx == 4 || curMenuIdx == 6) {
         Draw_DrawFormattedString(10, SCREEN_BOT_HEIGHT - 18, COLOR_TITLE, "Press %c/%c/%c/%c to browse items",
             LEFT_ARROW_CHR, RIGHT_ARROW_CHR, UP_ARROW_CHR, DOWN_ARROW_CHR);
     }
@@ -377,6 +378,46 @@ static void Gfx_DrawSpoilerItemGroups(void) {
     Gfx_DrawChangeMenuPrompt();
 }
 
+static void Gfx_DrawERTracker(void) {
+    if (gSettingsContext.shuffleOverworldEntrances || gSettingsContext.shuffleDungeonEntrances) {
+        u16 itemCount = ENTRANCE_OVERRIDES_MAX_COUNT;
+        u16 firstItem = entranceScroll + 1;
+        u16 lastItem = entranceScroll + MAX_ITEM_LINES;
+        if (lastItem > itemCount) { lastItem = itemCount; }
+        Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Randomized Entrances (%d - %d) / %d",
+            firstItem, lastItem, itemCount);
+
+        // TODO random entrances visited %
+        // Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
+
+        u16 listTopY = 26;
+        for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
+            u32 locIndex = item + entranceScroll;
+            if (locIndex >= itemCount) { break; }
+
+            EntranceOverride entrOverride = rEntranceOverrides[locIndex];
+            if (entrOverride.index == 0 && entrOverride.override == 0) {
+                continue;
+            }
+
+            u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
+            u32 itemPosY = locPosY + SPACING_SMALL_Y;
+            bool isDiscovered = SaveFile_GetIsEntranceDiscovered(entrOverride.index);
+            u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
+            Draw_DrawFormattedString_Small(10, locPosY, color,
+                "0x%04X -> 0x%04X, BW: 0x%04X", entrOverride.index, entrOverride.override, entrOverride.blueWarp);
+        }
+
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, entranceScroll, itemCount, MAX_ITEM_LINES);
+        Draw_DrawFormattedString(10 + 10, 200, COLOR_WHITE, "Last: 0x%08X", lastEntered);
+    }
+    else {
+        Draw_DrawString(10, 10, COLOR_TITLE, "Entrances");
+        Draw_DrawString(10, 40, COLOR_WHITE, "Entrance randomization disabled!");
+    }
+    Gfx_DrawChangeMenuPrompt();
+}
+
 static void (*menu_draw_funcs[])(void) = {
     Gfx_DrawSeedHash,
     Gfx_DrawDungeonItems,
@@ -384,6 +425,7 @@ static void (*menu_draw_funcs[])(void) = {
     Gfx_DrawSpoilerData,
     Gfx_DrawSpoilerAllItems,
     Gfx_DrawSpoilerItemGroups,
+    Gfx_DrawERTracker,
 };
 
 static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
@@ -481,6 +523,22 @@ static void Gfx_ShowMenu(void) {
                 handledInput = true;
             } else if (pressed & BUTTON_Y) {
                 Gfx_GroupsPrevGroup();
+                handledInput = true;
+            }
+        } else if (curMenuIdx == 6 && (gSettingsContext.shuffleOverworldEntrances || gSettingsContext.shuffleDungeonEntrances)) {
+            // Entrances list
+            u16 itemCount = ENTRANCE_OVERRIDES_MAX_COUNT;
+            if (pressed & BUTTON_LEFT) {
+                entranceScroll = Gfx_Scroll(entranceScroll, -MAX_ITEM_LINES * 10, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_RIGHT) {
+                entranceScroll = Gfx_Scroll(entranceScroll, MAX_ITEM_LINES * 10, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_UP) {
+                entranceScroll = Gfx_Scroll(entranceScroll, -MAX_ITEM_LINES, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_DOWN) {
+                entranceScroll = Gfx_Scroll(entranceScroll, MAX_ITEM_LINES, itemCount);
                 handledInput = true;
             }
         }

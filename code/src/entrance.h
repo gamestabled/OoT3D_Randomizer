@@ -16,11 +16,18 @@
 #define ICE_CAVERN_ENTRANCE 0x0088
 #define GANONS_CASTLE_ENTRANCE 0x0467
 
+#define ENTRANCE_OVERRIDES_MAX_COUNT 256
+
 typedef struct {
     s16 index;
     s16 blueWarp;
     s16 override;
 } EntranceOverride;
+
+extern EntranceOverride rEntranceOverrides[];
+
+// debug
+extern s16 lastEntered;
 
 void Entrance_Init(void);
 s16  Entrance_GetRequiemEntrance(void);

@@ -9,7 +9,7 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
-static EntranceOverride rEntranceOverrides[256] = {0};
+EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
 
 //This variable is used to store whatever new entrance should lead to
 //the Requiem of Spirit check. Otherwise, leaving the Spirit Temple
@@ -124,8 +124,7 @@ void Entrance_Init(void) {
     memcpy(copyOfEntranceTable, gEntranceTable, sizeof(EntranceInfo) * 0x613);
 
     //rewrite the entrance table for entrance randomizer
-    size_t numberOfEntranceOverrides = sizeof(rEntranceOverrides) / sizeof(EntranceOverride);
-    for (size_t i = 0; i < numberOfEntranceOverrides; i++) {
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
 
         s16 originalIndex = rEntranceOverrides[i].index;
         s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
@@ -205,6 +204,8 @@ u32 Entrance_IsLostWoodsBridge(void) {
       return 0;
     }
 }
+
+s16 lastEntered = -1;
 
 void Entrance_EnteredLocation(void) {
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
