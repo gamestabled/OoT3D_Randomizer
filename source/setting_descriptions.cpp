@@ -172,7 +172,19 @@ string_view overworldEntrancesDesc    = "Shuffle the pool of Overworld entrances
                                         "- Hyrule Castle Courtyard and Garden entrance\n"  //
                                         "- Both Market Back Alley entrances\n"             //
                                         "- Gerudo Valley to Lake Hylia (unless entrances\n"//
-                                        "  are decoupled)";                               //
+                                        "  are decoupled)";                                //
+/*------------------------------                                                           //
+|      INTERIOR ENTRANCES      |                                                           //
+------------------------------*/                                                           //
+string_view interiorEntrancesOff      = "Interior entrances will not be shuffled.";        //
+string_view interiorEntrancesSimple   = "Shuffle the pool of interior entrances which\n"   //
+                                        "contains most Houses and all Great Fairies.";     //
+string_view interiorEntrancesAll      = "An extended version of 'Simple' with some extra\n"//
+                                        "places:\n"                                        //
+                                        "- Windmill\n"                                     //
+                                        "- Link's House\n"                                 //
+                                        "- Temple of Time\n"                               //
+                                        "- Kakariko Potion Shop.";                         //
 /*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
