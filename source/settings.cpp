@@ -199,7 +199,6 @@ namespace Settings {
   Option SkipMinigamePhases  = Option::Bool("Minigames repetitions",  {"Don't Skip", "Skip"},                                                 {skipMinigamePhasesDesc});
   Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {freeScarecrowDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc},                                                                                                   OptionCategory::Setting,    SKIP);
-  Option TempleOfTimeIntro   = Option::Bool("Temple of Time Intro",   {"Don't Skip", "Skip"},                                                 {templeOfTimeIntroDesc},                                                                                          OptionCategory::Setting,    SKIP);
   Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {lakeHyliaOwlDesc},                                                                                               OptionCategory::Setting,    SKIP);
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
@@ -215,7 +214,6 @@ namespace Settings {
     &SkipMinigamePhases,
     &FreeScarecrow,
     &FourPoesCutscene,
-    &TempleOfTimeIntro,
     &LakeHyliaOwl,
     &BigPoeTargetCount,
     &NumRequiredCuccos,
@@ -936,7 +934,6 @@ namespace Settings {
     ctx.skipMinigamePhases   = (SkipMinigamePhases) ? 1 : 0;
     ctx.freeScarecrow        = (FreeScarecrow) ? 1 : 0;
     ctx.fourPoesCutscene     = (FourPoesCutscene) ? 1 : 0;
-    ctx.templeOfTimeIntro    = (TempleOfTimeIntro) ? 1 : 0;
     ctx.lakeHyliaOwl         = (LakeHyliaOwl) ? 1 : 0;
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();

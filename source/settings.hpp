@@ -349,7 +349,6 @@ namespace Settings {
   extern Option SkipMinigamePhases;
   extern Option FreeScarecrow;
   extern Option FourPoesCutscene;
-  extern Option TempleOfTimeIntro;
   extern Option LakeHyliaOwl;
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
