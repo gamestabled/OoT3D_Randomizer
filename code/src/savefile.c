@@ -236,6 +236,35 @@ u8 SaveFile_GetDungeonCount(void) {
     return count;
 }
 
+u8 SaveFile_GetIsSceneDiscovered(u8 sceneNum) {
+    u32 numBits = sizeof(u32) * 8;
+    u32 idx = sceneNum / numBits;
+    u32 bit = 1 << (sceneNum - (idx * numBits));
+    return (gExtSaveData.scenesDiscovered[idx] & bit) != 0;
+}
+
+void SaveFile_SetSceneDiscovered(u8 sceneNum) {
+    u16 numBits = sizeof(u32) * 8;
+    u32 sceneIdx = sceneNum / numBits;
+    u32 sceneBit = 1 << (sceneNum - (sceneIdx * numBits));
+    gExtSaveData.scenesDiscovered[sceneIdx] |= sceneBit;
+}
+
+u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
+    u32 numBits = sizeof(u32) * 8;
+    u32 idx = entranceIndex / numBits;
+    u32 bit = 1 << (entranceIndex - (idx * numBits));
+    return (gExtSaveData.entrancesDiscovered[idx] & bit) != 0;
+}
+
+void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
+    u16 numBits = sizeof(u32) * 8;
+    u32 entranceIdx = entranceIndex / numBits;
+    u32 entranceBit = 1 << (entranceIndex - (entranceIdx * numBits));
+    gExtSaveData.entrancesDiscovered[entranceIdx] |= entranceBit;
+    entranceIndex++;
+}
+
 //Resolve the item ID for the starting bottle
 static void SaveFile_GiveStartingBottle(u8 startingBottle, InventorySlot bottleSlot) {
     if (startingBottle > STARTINGBOTTLE_NONE) {
@@ -525,6 +554,8 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     gExtSaveData.playtimeSeconds = 0;
+    memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
+    memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;
 }
