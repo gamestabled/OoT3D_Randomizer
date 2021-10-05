@@ -528,13 +528,6 @@ string_view fourPoesDesc              = "The cutscene with the 4 poes in Forest 
                                         "be skipped. If the cutscene is not skipped, it can"
                                         "be exploited to reach the basement early.";       //
 /*------------------------------                                                           //
-|     TEMPLE OF TIME INTRO     |                                                           //
-------------------------------*/                                                           //
-string_view templeOfTimeIntroDesc     = "The introduction cutscene to Temple of Time will\n"
-                                        "be skipped. This cutscene is helpful for\n"       //
-                                        "performing Door of Time Skip should the Door of\n"//
-                                        "Time be closed.";                                 //
-/*------------------------------                                                           //
 |        LAKE HYLIA OWL        |                                                           //
 ------------------------------*/                                                           //
 string_view lakeHyliaOwlDesc          = "The owl flight cutscene in Lake Hylia will be\n"  //

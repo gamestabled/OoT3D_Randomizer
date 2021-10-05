@@ -3,15 +3,20 @@
 #include "settings.h"
 #include "string.h"
 #include "item_override.h"
+#include "savefile.h"
 
 typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
+typedef void (*SetEventChkInf_proc)(u32 flag);
+#define SetEventChkInf_addr 0x34CBF8
+#define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
+
 #define dynamicExitList_addr 0x53C094
 #define dynamicExitList ((s16*)dynamicExitList_addr)
 
-static EntranceOverride rEntranceOverrides[256] = {0};
+EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
 
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
@@ -129,8 +134,7 @@ void Entrance_Init(void) {
     memcpy(copyOfEntranceTable, gEntranceTable, sizeof(EntranceInfo) * 0x613);
 
     //rewrite the entrance table for entrance randomizer
-    size_t numberOfEntranceOverrides = sizeof(rEntranceOverrides) / sizeof(EntranceOverride);
-    for (size_t i = 0; i < numberOfEntranceOverrides; i++) {
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
 
         s16 originalIndex = rEntranceOverrides[i].index;
         s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
@@ -192,6 +196,14 @@ u32 Entrance_IsLostWoodsBridge(void) {
     } else {
       return 0;
     }
+}
+
+s16 lastEntered = -1;
+
+void Entrance_EnteredLocation(void) {
+    SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
+    SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
+    lastEntered = gSaveContext.entranceIndex;
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance
@@ -296,4 +308,15 @@ void EnableFW() {
             gSaveContext.buttonStatus[i] = 0;
         }
     }
+}
+
+u8 EntranceCutscene_ShouldPlay(u8 flag) {
+    if (gSaveContext.gameMode != 0 || flag == 0x18 || flag == 0xAD || (flag >= 0xBB && flag <= 0xBF)) {
+        if (flag == 0xC0) {
+            gSaveContext.eventChkInf[0x3] &= ~0x0800; // clear "began Nabooru battle"
+        }
+        return 1; // cutscene will play normally in DHWW, or always if it's freeing Epona or clearing a Trial
+    }
+    SetEventChkInf(flag);
+    return 0; //cutscene will not play
 }
