@@ -63,6 +63,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;
             globalCtx->sceneLoadFlag = 0x14;
+            globalCtx->fadeOutTransition = 5;
         }
     } else {
         if (thisx->params == 0x0002 && !(gSaveContext.eventChkInf[6] & 0x0200)) {
@@ -72,6 +73,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;
             globalCtx->sceneLoadFlag = 0x14;
+            globalCtx->fadeOutTransition = 5;
         }
     }
     /*  //TODO: change shape of the water texture to cover the entire lake, then change collision context stuff to make

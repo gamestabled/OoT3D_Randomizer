@@ -1612,6 +1612,11 @@ InterfaceDrawDontSpoilTradeItems_patch:
 OpenSaveDontSpoilTradeItems_patch:
     b 0x44FEB8
 
+.section .patch_EnteredLocation
+.global EnteredLocation_patch
+EnteredLocation_patch:
+    bl hook_EnteredLocation
+
 .section .patch_LostWoodsBridgeMusic
 .global LostWoodsBridgeMusic_patch
 LostWoodsBridgeMusic_patch:
@@ -1656,6 +1661,16 @@ SkipTwinrovaQuarrelCutsceneTwo_patch:
 .global FixItemsMenuSlotDuplication_patch
 FixItemsMenuSlotDuplication_patch:
     b hook_FixItemsMenuSlotDuplication
+
+.section .patch_PlayEntranceCutscene
+.global PlayEntranceCutscene_patch
+PlayEntranceCutscene_patch:
+    b hook_PlayEntranceCutscene
+
+.section .patch_SkipJabuOpeningCutscene
+.global SkipJabuOpeningCutscene_patch
+SkipJabuOpeningCutscene_patch:
+    bl hook_SkipJabuOpeningCutscene
 
 .section .patch_loader
 .global loader_patch
