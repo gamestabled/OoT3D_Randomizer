@@ -16,24 +16,21 @@
 #define ICE_CAVERN_ENTRANCE 0x0088
 #define GANONS_CASTLE_ENTRANCE 0x0467
 
+#define ENTRANCE_OVERRIDES_MAX_COUNT 256
+
 typedef struct {
     s16 index;
     s16 blueWarp;
     s16 override;
 } EntranceOverride;
 
-typedef struct {
-    s16* newEntrance;
-    s16  originalHardcode;
-} SpecialEntrance;
+// debug
+extern EntranceOverride rEntranceOverrides[];
+extern s16 lastEntered;
 
 void Entrance_Init(void);
-s16  Entrance_GetRequiemEntrance(void);
-s16  Entrance_GetLWBridgeEntranceFromKokiriForest(void);
-s16  Entrance_GetChildBazaarEntranceFromMarket(void);
-s16  Entrance_GetAdultBazaarEntranceFromKak(void);
-s16  Entrance_GetChildShootingGalleryEntranceFromMarket(void);
-s16  Entrance_GetAdultShootingGalleryEntranceFromKak(void);
 u32  Entrance_IsLostWoodsBridge(void);
+void Entrance_EnteredLocation(void);
+u32  Entrance_SceneAndSpawnAre(u8 scene, u8 spawn);
 
 #endif //_ENTRANCE_H_

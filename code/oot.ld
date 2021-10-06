@@ -332,6 +332,10 @@ SECTIONS
 		*(.patch_ReadGossipStoneHints)
 	}
 
+	.patch_SkipJabuOpeningCutscene 0x1B583C : {
+		*(.patch_SkipJabuOpeningCutscene)
+	}
+
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
 		*(.patch_KingZoraSecondTunic)
 	}
@@ -696,6 +700,10 @@ SECTIONS
 		*(.patch_SetBGMEntrance)
 	}
 
+	.patch_EnteredLocation 0x338DB8 : {
+		*(.patch_EnteredLocation)
+	}
+
 	.patch_LostWoodsBridgeMusic 0x338DD8 : {
 		*(.patch_LostWoodsBridgeMusic)
 	}
@@ -1058,6 +1066,10 @@ SECTIONS
 
 	.patch_ExtendedObjectClear 0x44E754 : {
 		*(.patch_ExtendedObjectClear)
+	}
+
+	.patch_PlayEntranceCutscene 0x44F068 : {
+		*(.patch_PlayEntranceCutscene)
 	}
 
 	.patch_RequiemLocation 0x44F104 : {

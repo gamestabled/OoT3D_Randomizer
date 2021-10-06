@@ -172,7 +172,19 @@ string_view overworldEntrancesDesc    = "Shuffle the pool of Overworld entrances
                                         "- Hyrule Castle Courtyard and Garden entrance\n"  //
                                         "- Both Market Back Alley entrances\n"             //
                                         "- Gerudo Valley to Lake Hylia (unless entrances\n"//
-                                        "  are decoupled)";                               //
+                                        "  are decoupled)";                                //
+/*------------------------------                                                           //
+|      INTERIOR ENTRANCES      |                                                           //
+------------------------------*/                                                           //
+string_view interiorEntrancesOff      = "Interior entrances will not be shuffled.";        //
+string_view interiorEntrancesSimple   = "Shuffle the pool of interior entrances which\n"   //
+                                        "contains most Houses and all Great Fairies.";     //
+string_view interiorEntrancesAll      = "An extended version of 'Simple' with some extra\n"//
+                                        "places:\n"                                        //
+                                        "- Windmill\n"                                     //
+                                        "- Link's House\n"                                 //
+                                        "- Temple of Time\n"                               //
+                                        "- Kakariko Potion Shop.";                         //
 /*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
@@ -515,13 +527,6 @@ string_view freeScarecrowDesc         = "Pulling out the Ocarina near a spot at 
 string_view fourPoesDesc              = "The cutscene with the 4 poes in Forest Temple will"
                                         "be skipped. If the cutscene is not skipped, it can"
                                         "be exploited to reach the basement early.";       //
-/*------------------------------                                                           //
-|     TEMPLE OF TIME INTRO     |                                                           //
-------------------------------*/                                                           //
-string_view templeOfTimeIntroDesc     = "The introduction cutscene to Temple of Time will\n"
-                                        "be skipped. This cutscene is helpful for\n"       //
-                                        "performing Door of Time Skip should the Door of\n"//
-                                        "Time be closed.";                                 //
 /*------------------------------                                                           //
 |        LAKE HYLIA OWL        |                                                           //
 ------------------------------*/                                                           //

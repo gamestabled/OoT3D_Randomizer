@@ -5,7 +5,6 @@
 #define DemoKankyo_Update_addr 0x262EA4
 #define DemoKankyo_Update ((ActorFunc)DemoKankyo_Update_addr)
 
-#define DoT_Opening_Cutscene_Pointer ((void*)0x0893AD30)
 #define CsTimer (globalCtx->csCtx.frames)
 
 void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
@@ -14,7 +13,7 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     // Warp Song particles
     if (thisx->params == 0x000F) {
         globalCtx->sceneLoadFlag = 0x14;
-        gGlobalContext->fadeOutTransition = 5;
+        globalCtx->fadeOutTransition = 5;
         switch (globalCtx->unk_2A91[0xEB]) { // text related variable
             case 0:
                 globalCtx->nextEntranceIndex = 0x0600; // Minuet
@@ -47,8 +46,8 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         }
     }
 
-    // Door of Time, the opening cutscene is playing (only regular one, not beta CS #03)
-    if (thisx->params == 0x000D && globalCtx->csCtx.segment == DoT_Opening_Cutscene_Pointer) {
+    // Door of Time, a non-numbered cutscene is playing (it can only be the Door opening cs)
+    if (thisx->params == 0x000D && gSaveContext.cutsceneIndex == 0xFFFD) {
         // skip the Spiritual Stones part of the cutscene
         if (CsTimer < 800) {
             CsTimer = 800;

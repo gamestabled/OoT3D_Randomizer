@@ -44,14 +44,16 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.infTable  [0x19] |= 0x0100; //Picked up Magic Container
+    gSaveContext.infTable  [0x19] |= 0x0020; //Talked to owl in Lake Hylia
     gSaveContext.itemGetInf [0x1] |= 0x0008; //Picked up Deku Seeds
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
-    gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
-    gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
-    gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
+    gSaveContext.eventChkInf[0xB] |= 0x0001; //Dodongo's Cavern intro
+  //gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
+  //gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
+  //gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
+  //gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
@@ -147,10 +149,6 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }
 
-    if (gSettingsContext.templeOfTimeIntro == SKIP) {
-        gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
-    }
-
     //Move mido away from the path to the Deku Tree in Open Forest
     if (gSettingsContext.openForest == OPENFOREST_OPEN) {
       gSaveContext.eventChkInf[0x0] |= 0x0010;
@@ -234,6 +232,35 @@ u8 SaveFile_GetDungeonCount(void) {
     count += (gSaveContext.eventChkInf[3] >> 7) & 0x1; //Jabu Jabu's Belly
 
     return count;
+}
+
+u8 SaveFile_GetIsSceneDiscovered(u8 sceneNum) {
+    u32 numBits = sizeof(u32) * 8;
+    u32 idx = sceneNum / numBits;
+    u32 bit = 1 << (sceneNum - (idx * numBits));
+    return (gExtSaveData.scenesDiscovered[idx] & bit) != 0;
+}
+
+void SaveFile_SetSceneDiscovered(u8 sceneNum) {
+    u16 numBits = sizeof(u32) * 8;
+    u32 sceneIdx = sceneNum / numBits;
+    u32 sceneBit = 1 << (sceneNum - (sceneIdx * numBits));
+    gExtSaveData.scenesDiscovered[sceneIdx] |= sceneBit;
+}
+
+u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
+    u32 numBits = sizeof(u32) * 8;
+    u32 idx = entranceIndex / numBits;
+    u32 bit = 1 << (entranceIndex - (idx * numBits));
+    return (gExtSaveData.entrancesDiscovered[idx] & bit) != 0;
+}
+
+void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
+    u16 numBits = sizeof(u32) * 8;
+    u32 entranceIdx = entranceIndex / numBits;
+    u32 entranceBit = 1 << (entranceIndex - (entranceIdx * numBits));
+    gExtSaveData.entrancesDiscovered[entranceIdx] |= entranceBit;
+    entranceIndex++;
 }
 
 //Resolve the item ID for the starting bottle
@@ -525,6 +552,8 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     gExtSaveData.playtimeSeconds = 0;
+    memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
+    memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;
 }

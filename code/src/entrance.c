@@ -3,34 +3,20 @@
 #include "settings.h"
 #include "string.h"
 #include "item_override.h"
+#include "savefile.h"
 
 typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
+typedef void (*SetEventChkInf_proc)(u32 flag);
+#define SetEventChkInf_addr 0x34CBF8
+#define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
+
 #define dynamicExitList_addr 0x53C094
 #define dynamicExitList ((s16*)dynamicExitList_addr)
 
-static EntranceOverride rEntranceOverrides[256] = {0};
-
-//This variable is used to store whatever new entrance should lead to
-//the Requiem of Spirit check. Otherwise, leaving the Spirit Temple
-//will take players to the Requiem cutscene even if it is shuffled.
-static s16 newRequiemEntrance = 0x01E1;
-
-//Same concept as above, except for Saria's Gift check
-static s16 newLWBridgeEntranceFromKokiriForest = 0x05E0;
-
-//Same as above, except used for handling correct ambient music into this area
-static s16 newLWBridgeEntranceFromHyruleField = 0x04DE;
-
-//^, except for handling the bazaar
-static s16 newChildBazaarEntranceFromMarket = 0x052C;
-static s16 newAdultBazaarEntranceFromKak = 0x00B7;
-
-//^, except for handling the shooting gallery
-static s16 newChildShootingGalleryEntranceFromMarket = 0x016D;
-static s16 newAdultShootingGalleryEntranceFromKak = 0x003B;
+EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
 
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
@@ -82,12 +68,6 @@ static void Entrance_SetNewDungeonEntrances(s16 originalIndex, s16 replacementIn
         case GERUDO_TRAINING_GROUNDS_ENTRANCE :
             newGerudoTrainingGroundsEntrance = originalIndex;
             break;
-    }
-}
-
-static void Entrance_SetNewSpecialEntrance(s16 originalIndex, s16 overrideIndex, SpecialEntrance entrance) {
-    if (overrideIndex == entrance.originalHardcode) {
-        *(entrance.newEntrance) = originalIndex;
     }
 }
 
@@ -153,23 +133,8 @@ void Entrance_Init(void) {
     EntranceInfo copyOfEntranceTable[0x613] = {0};
     memcpy(copyOfEntranceTable, gEntranceTable, sizeof(EntranceInfo) * 0x613);
 
-    //a special entrance is one that has to be tracked by other sections
-    //of patch code
-    SpecialEntrance specialEntrances[7] = {
-        {.newEntrance = &newRequiemEntrance,                        .originalHardcode = newRequiemEntrance},
-        {.newEntrance = &newLWBridgeEntranceFromKokiriForest,       .originalHardcode = newLWBridgeEntranceFromKokiriForest},
-        {.newEntrance = &newLWBridgeEntranceFromHyruleField,        .originalHardcode = newLWBridgeEntranceFromHyruleField},
-        {.newEntrance = &newChildBazaarEntranceFromMarket,          .originalHardcode = newChildBazaarEntranceFromMarket},
-        {.newEntrance = &newAdultBazaarEntranceFromKak,             .originalHardcode = newAdultBazaarEntranceFromKak},
-        {.newEntrance = &newChildShootingGalleryEntranceFromMarket, .originalHardcode = newChildShootingGalleryEntranceFromMarket},
-        {.newEntrance = &newAdultShootingGalleryEntranceFromKak,    .originalHardcode = newAdultShootingGalleryEntranceFromKak},
-    };
-
-    size_t numberOfSpecialEntrances = sizeof(specialEntrances) / sizeof(SpecialEntrance);
-
     //rewrite the entrance table for entrance randomizer
-    size_t numberOfEntranceOverrides = sizeof(rEntranceOverrides) / sizeof(EntranceOverride);
-    for (size_t i = 0; i < numberOfEntranceOverrides; i++) {
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
 
         s16 originalIndex = rEntranceOverrides[i].index;
         s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
@@ -177,11 +142,6 @@ void Entrance_Init(void) {
 
         if (originalIndex == 0 && overrideIndex == 0) {
             continue;
-        }
-
-        //Check setting entrances
-        for (size_t j = 0; j < numberOfSpecialEntrances; j++) {
-            Entrance_SetNewSpecialEntrance(originalIndex, overrideIndex, specialEntrances[j]);
         }
 
         //check to see if this is a new dungeon entrance
@@ -224,36 +184,26 @@ void Entrance_DeathInGanonBattle(void) {
     }
 }
 
-s16 Entrance_GetRequiemEntrance(void) {
-    return newRequiemEntrance;
-}
-
-s16 Entrance_GetLWBridgeEntranceFromKokiriForest(void) {
-    return newLWBridgeEntranceFromKokiriForest;
-}
-
-s16 Entrance_GetChildBazaarEntranceFromMarket(void) {
-    return newChildBazaarEntranceFromMarket;
-}
-
-s16 Entrance_GetAdultBazaarEntranceFromKak(void) {
-    return newAdultBazaarEntranceFromKak;
-}
-
-s16 Entrance_GetChildShootingGalleryEntranceFromMarket(void) {
-    return newChildShootingGalleryEntranceFromMarket;
-}
-
-s16 Entrance_GetAdultShootingGalleryEntranceFromKak(void) {
-    return newAdultShootingGalleryEntranceFromKak;
+u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn) {
+    EntranceInfo currentEntrance = gEntranceTable[gSaveContext.entranceIndex];
+    return currentEntrance.scene == scene && currentEntrance.spawn == spawn;
 }
 
 u32 Entrance_IsLostWoodsBridge(void) {
-    if (gSaveContext.entranceIndex == newLWBridgeEntranceFromHyruleField || gSaveContext.entranceIndex == newLWBridgeEntranceFromKokiriForest) {
+    //  Kokiri Forest -> LW Bridge, index 05E0   Hyrule Field -> LW Bridge, index 04DE
+    if (Entrance_SceneAndSpawnAre(0x5B, 0x09) || Entrance_SceneAndSpawnAre(0x5B, 0x08)) {
       return 1;
     } else {
       return 0;
     }
+}
+
+s16 lastEntered = -1;
+
+void Entrance_EnteredLocation(void) {
+    SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
+    SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
+    lastEntered = gSaveContext.entranceIndex;
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance
@@ -358,4 +308,15 @@ void EnableFW() {
             gSaveContext.buttonStatus[i] = 0;
         }
     }
+}
+
+u8 EntranceCutscene_ShouldPlay(u8 flag) {
+    if (gSaveContext.gameMode != 0 || flag == 0x18 || flag == 0xAD || (flag >= 0xBB && flag <= 0xBF)) {
+        if (flag == 0xC0) {
+            gSaveContext.eventChkInf[0x3] &= ~0x0800; // clear "began Nabooru battle"
+        }
+        return 1; // cutscene will play normally in DHWW, or always if it's freeing Epona or clearing a Trial
+    }
+    SetEventChkInf(flag);
+    return 0; //cutscene will not play
 }

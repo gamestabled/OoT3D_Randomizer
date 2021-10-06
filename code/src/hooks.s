@@ -1007,6 +1007,14 @@ hook_SkipTimeTravelCutscene:
     pop {r0-r12, lr}
     ldmia sp!,{r4,r5,r6,pc}
 
+.global hook_EnteredLocation
+hook_EnteredLocation:
+    cpy r4,r0
+    push {r0-r12, lr}
+    bl Entrance_EnteredLocation
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_LostWoodsBridgeMusic
 hook_LostWoodsBridgeMusic:
     push {r0-r12, lr}
@@ -1064,6 +1072,25 @@ hook_FixItemsMenuSlotDuplication:
     mov lr,#0xFF
     add r10,r10,#0x1
     b 0x456B94
+
+.global hook_PlayEntranceCutscene
+hook_PlayEntranceCutscene:
+    bgt 0x44F0A4
+    push {r0-r12, lr}
+    ldrb r0,[r5,#0x3]
+    bl EntranceCutscene_ShouldPlay
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x44F0A4
+    b 0x44F06C
+
+.global hook_SkipJabuOpeningCutscene
+hook_SkipJabuOpeningCutscene:
+    ldrh r0,[r0,#0x0]
+    push {r0-r12, lr}
+    bl Jabu_SkipOpeningCutscene
+    pop {r0-r12, lr}
+    bx lr
 
 .section .loader
 .global hook_into_loader
