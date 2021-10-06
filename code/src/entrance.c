@@ -17,6 +17,7 @@ typedef void (*SetEventChkInf_proc)(u32 flag);
 #define dynamicExitList ((s16*)dynamicExitList_addr)
 
 EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
+EntranceTrackingData gEntranceTrackingData = {0};
 
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
@@ -198,12 +199,9 @@ u32 Entrance_IsLostWoodsBridge(void) {
     }
 }
 
-s16 lastEntered = -1;
-
 void Entrance_EnteredLocation(void) {
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
     SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
-    lastEntered = gSaveContext.entranceIndex;
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance

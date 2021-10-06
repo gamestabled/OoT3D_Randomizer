@@ -377,14 +377,14 @@ static void Gfx_DrawSpoilerItemGroups(void) {
 
 static void Gfx_DrawERTracker(void) {
     if (gSettingsContext.shuffleOverworldEntrances || gSettingsContext.shuffleDungeonEntrances) {
-        u16 itemCount = ENTRANCE_OVERRIDES_MAX_COUNT;
+        u16 itemCount = gEntranceTrackingData.EntrancePairsCount;
         u16 firstItem = entranceScroll + 1;
         u16 lastItem = entranceScroll + MAX_ITEM_LINES;
         if (lastItem > itemCount) { lastItem = itemCount; }
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Randomized Entrances (%d - %d) / %d",
             firstItem, lastItem, itemCount);
 
-        // TODO random entrances visited %
+        // TODO random entrances visited percent?
         // Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
 
         u16 listTopY = 26;
@@ -392,21 +392,20 @@ static void Gfx_DrawERTracker(void) {
             u32 locIndex = item + entranceScroll;
             if (locIndex >= itemCount) { break; }
 
-            EntranceOverride entrOverride = rEntranceOverrides[locIndex];
-            if (entrOverride.index == 0 && entrOverride.override == 0) {
-                continue;
-            }
-
             u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
             u32 itemPosY = locPosY + SPACING_SMALL_Y;
-            bool isDiscovered = SaveFile_GetIsEntranceDiscovered(entrOverride.index);
+
+            EntranceTrackingPair pair = gEntranceTrackingData.EntrancePairs[locIndex];
+            bool isDiscovered = SaveFile_GetIsEntranceDiscovered(pair.StartIndex) || SaveFile_GetIsEntranceDiscovered(pair.ReturnIndex);
             u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
-            Draw_DrawFormattedString_Small(10, locPosY, color,
-                "0x%04X -> 0x%04X, BW: 0x%04X", entrOverride.index, entrOverride.override, entrOverride.blueWarp);
+            const char* unknown = "???";
+            const char* startName = pair.StartStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.StartStrOffset] : "START STRING NOT FOUND";
+            const char* returnName = pair.ReturnStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.ReturnStrOffset] : "RETURN STRING NOT FOUND";
+            Draw_DrawFormattedString_Small(10, locPosY, color, "%s ->", isDiscovered ? startName : unknown);
+            Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", isDiscovered ? returnName : unknown);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, entranceScroll, itemCount, MAX_ITEM_LINES);
-        Draw_DrawFormattedString(10 + 10, 200, COLOR_WHITE, "Last: 0x%08X", lastEntered);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Entrances");
@@ -525,7 +524,7 @@ static void Gfx_ShowMenu(void) {
             }
         } else if (curMenuIdx == 6 && (gSettingsContext.shuffleOverworldEntrances || gSettingsContext.shuffleDungeonEntrances)) {
             // Entrances list
-            u16 itemCount = ENTRANCE_OVERRIDES_MAX_COUNT;
+            u16 itemCount = gEntranceTrackingData.EntrancePairsCount;
             if (pressed & BUTTON_LEFT) {
                 entranceScroll = Gfx_Scroll(entranceScroll, -MAX_ITEM_LINES * 10, itemCount);
                 handledInput = true;
