@@ -397,6 +397,17 @@ static void Gfx_DrawERTracker(void) {
 
             EntranceTrackingPair pair = gEntranceTrackingData.EntrancePairs[locIndex];
             bool isDiscovered = SaveFile_GetIsEntranceDiscovered(pair.StartIndex) || SaveFile_GetIsEntranceDiscovered(pair.ReturnIndex);
+
+            if (!isDiscovered) {
+                // If the pair included one of the hyrule field <-> zora's river entrances,
+                // the randomizer will have also overriden the water-based entrances, so check those too
+                if ((pair.StartIndex == 0x00EA || pair.ReturnIndex == 0x00EA) && SaveFile_GetIsEntranceDiscovered(0x01D9)) {
+                    isDiscovered = true;
+                } else if ((pair.StartIndex == 0x0181 || pair.ReturnIndex == 0x0181) && SaveFile_GetIsEntranceDiscovered(0x0311)) {
+                    isDiscovered = true;
+                }
+            }
+
             u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
             const char* unknown = "???";
             const char* startName = pair.StartStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.StartStrOffset] : "START STRING NOT FOUND";
