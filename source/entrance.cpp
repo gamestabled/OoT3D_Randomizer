@@ -180,7 +180,7 @@ static void ConfirmReplacement(Entrance* entrance, Entrance* targetEntrance) {
 }
 
 // Returns whether or not we can affirm the entrance can never be accessed as the given age
-static bool EntranceUnreachableAs(Entrance* entrance, u8 age, std::vector<Entrance*> alreadyChecked = {}) {
+static bool EntranceUnreachableAs(Entrance* entrance, u8 age, std::vector<Entrance*>& alreadyChecked) {
 
   if (entrance == nullptr) {
     PlacementLog_Msg("Entrance is nullptr in EntranceUnreachableAs()");
@@ -234,16 +234,20 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
 
     auto allShuffleableEntrances = GetShuffleableEntrances(EntranceType::All, false);
     for (auto& entrance: allShuffleableEntrances) {
+
+      std::vector<Entrance*> alreadyChecked = {};
+
       if (entrance->IsShuffled()) {
         if (entrance->GetReplacement() != nullptr) {
 
           auto replacementName = entrance->GetReplacement()->GetName();
+          alreadyChecked.push_back(entrance->GetReplacement()->GetReverse());
 
-          if (ElementInContainer(replacementName, childForbidden) && !EntranceUnreachableAs(entrance, AGE_CHILD, {entrance->GetReplacement()->GetReverse()})) {
+          if (ElementInContainer(replacementName, childForbidden) && !EntranceUnreachableAs(entrance, AGE_CHILD, alreadyChecked)) {
             auto message = replacementName + " is replaced by an entrance with a potential child access\n";
             PlacementLog_Msg(message);
             return false;
-          } else if (ElementInContainer(replacementName, adultForbidden) && !EntranceUnreachableAs(entrance, AGE_ADULT, {entrance->GetReplacement()->GetReverse()})) {
+          } else if (ElementInContainer(replacementName, adultForbidden) && !EntranceUnreachableAs(entrance, AGE_ADULT, alreadyChecked)) {
             auto message = replacementName + " is replaced by an entrance with a potential adult access\n";
             PlacementLog_Msg(message);
             return false;
@@ -251,12 +255,13 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
         }
       } else {
         auto name = entrance->GetName();
+        alreadyChecked.push_back(entrance->GetReverse());
 
-        if (ElementInContainer(name, childForbidden) && !EntranceUnreachableAs(entrance, AGE_CHILD, {entrance->GetReverse()})) {
+        if (ElementInContainer(name, childForbidden) && !EntranceUnreachableAs(entrance, AGE_CHILD, alreadyChecked)) {
           auto message = name + " is potentially accessible as child\n";
           PlacementLog_Msg(message);
           return false;
-        } else if (ElementInContainer(name, adultForbidden) && !EntranceUnreachableAs(entrance, AGE_ADULT, {entrance->GetReverse()})) {
+        } else if (ElementInContainer(name, adultForbidden) && !EntranceUnreachableAs(entrance, AGE_ADULT, alreadyChecked)) {
           auto message = name + " is potentially accessible as adult\n";
           PlacementLog_Msg(message);
           return false;
@@ -295,7 +300,7 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
     }
   }
 
-  if ((Settings::ShuffleOverworldEntrances /*|| specialInterior || spawnPositions*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
+  if ((Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL) /*|| spawnPositions*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
   type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
     //At least one valid starting region with all basic refills should be reachable without using any items at the beginning of the seed
     Logic::LogicReset();
@@ -326,7 +331,7 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
 
   // The Big Poe shop should always be accessible as adult without the need to use any bottles
   // This is important to ensure that players can never lock their only bottles by filling them with Big Poes they can't sell
-  if ((Settings::ShuffleOverworldEntrances /*|| specialInterior*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
+  if ((Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
   type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
     Logic::LogicReset();
     GetAccessibleLocations({}, SearchMode::PoeCollectorAccess);
@@ -632,7 +637,7 @@ void ShuffleAllEntrances() {
     entrancePools[EntranceType::Interior] = GetShuffleableEntrances(EntranceType::Interior);
     //special interiors
     if (Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) {
-      AddElementsToPool(entrancePools[EntranceType::SpecialInterior], GetShuffleableEntrances(EntranceType::SpecialInterior));
+      AddElementsToPool(entrancePools[EntranceType::Interior], GetShuffleableEntrances(EntranceType::SpecialInterior));
     }
 
     //decoupled entrance stuff
