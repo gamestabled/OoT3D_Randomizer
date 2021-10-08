@@ -418,8 +418,8 @@ static void Gfx_DrawERTracker(void) {
             const char* startName = pair.StartStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.StartStrOffset] : "START STRING NOT FOUND";
             const char* returnName = pair.ReturnStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.ReturnStrOffset] : "RETURN STRING NOT FOUND";
 
-            Draw_DrawFormattedString_Small(10, locPosY, color, "%s %c", isDiscovered ? startName : unknown, H_DOUBLE_ARROW_CHR);
-            Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", isDiscovered ? returnName : unknown);
+            Draw_DrawFormattedString_Small(10, locPosY, color, "%s %c", gSettingsContext.ingameSpoilers || isDiscovered ? startName : unknown, H_DOUBLE_ARROW_CHR);
+            Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", gSettingsContext.ingameSpoilers || isDiscovered ? returnName : unknown);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, entranceScroll, itemCount, MAX_ITEM_LINES);
