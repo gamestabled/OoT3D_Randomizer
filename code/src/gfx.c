@@ -67,6 +67,7 @@ static char *spoilerCollectionGroupNames[] = {
 #define DOWN_ARROW_CHR 25
 #define LEFT_ARROW_CHR 27
 #define RIGHT_ARROW_CHR 26
+#define H_DOUBLE_ARROW_CHR 29
 #define UP_SOLID_ARROW_CHR 30
 #define DOWN_SOLID_ARROW_CHR 31
 
@@ -416,7 +417,8 @@ static void Gfx_DrawERTracker(void) {
             const char* unknown = "???";
             const char* startName = pair.StartStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.StartStrOffset] : "START STRING NOT FOUND";
             const char* returnName = pair.ReturnStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.ReturnStrOffset] : "RETURN STRING NOT FOUND";
-            Draw_DrawFormattedString_Small(10, locPosY, color, "%s <->", isDiscovered ? startName : unknown);
+
+            Draw_DrawFormattedString_Small(10, locPosY, color, "%s %c", isDiscovered ? startName : unknown, H_DOUBLE_ARROW_CHR);
             Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", isDiscovered ? returnName : unknown);
         }
 
