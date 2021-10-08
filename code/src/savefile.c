@@ -237,30 +237,40 @@ u8 SaveFile_GetDungeonCount(void) {
 u8 SaveFile_GetIsSceneDiscovered(u8 sceneNum) {
     u32 numBits = sizeof(u32) * 8;
     u32 idx = sceneNum / numBits;
-    u32 bit = 1 << (sceneNum - (idx * numBits));
-    return (gExtSaveData.scenesDiscovered[idx] & bit) != 0;
+    if (idx < SAVEFILE_SCENES_DISCOVERED_IDX_COUNT) {
+        u32 bit = 1 << (sceneNum - (idx * numBits));
+        return (gExtSaveData.scenesDiscovered[idx] & bit) != 0;
+    }
+    return 0;
 }
 
 void SaveFile_SetSceneDiscovered(u8 sceneNum) {
     u16 numBits = sizeof(u32) * 8;
-    u32 sceneIdx = sceneNum / numBits;
-    u32 sceneBit = 1 << (sceneNum - (sceneIdx * numBits));
-    gExtSaveData.scenesDiscovered[sceneIdx] |= sceneBit;
+    u32 idx = sceneNum / numBits;
+    if (idx < SAVEFILE_SCENES_DISCOVERED_IDX_COUNT) {
+        u32 sceneBit = 1 << (sceneNum - (idx * numBits));
+        gExtSaveData.scenesDiscovered[idx] |= sceneBit;
+    }
 }
 
 u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
     u32 numBits = sizeof(u32) * 8;
     u32 idx = entranceIndex / numBits;
-    u32 bit = 1 << (entranceIndex - (idx * numBits));
-    return (gExtSaveData.entrancesDiscovered[idx] & bit) != 0;
+    if (idx < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT) {
+        u32 bit = 1 << (entranceIndex - (idx * numBits));
+        return (gExtSaveData.entrancesDiscovered[idx] & bit) != 0;
+    }
+    return 0;
 }
 
 void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
     u16 numBits = sizeof(u32) * 8;
-    u32 entranceIdx = entranceIndex / numBits;
-    u32 entranceBit = 1 << (entranceIndex - (entranceIdx * numBits));
-    gExtSaveData.entrancesDiscovered[entranceIdx] |= entranceBit;
-    entranceIndex++;
+    u32 idx = entranceIndex / numBits;
+    if (idx < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT) {
+        u32 entranceBit = 1 << (entranceIndex - (idx * numBits));
+        gExtSaveData.entrancesDiscovered[idx] |= entranceBit;
+        entranceIndex++;
+    }
 }
 
 //Resolve the item ID for the starting bottle

@@ -3,6 +3,9 @@
 
 #include "z3D/z3D.h"
 
+#define SAVEFILE_SCENES_DISCOVERED_IDX_COUNT 4
+#define SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT 49
+
 u8 SaveFile_GetMedallionCount(void);
 u8 SaveFile_GetStoneCount(void);
 u8 SaveFile_GetDungeonCount(void);
@@ -26,8 +29,8 @@ void SaveFile_SaveExtSaveData(u32 saveNumber);
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure
     u32 playtimeSeconds;
-    u32 scenesDiscovered[0x04];
-    u32 entrancesDiscovered[0x31];
+    u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
+    u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
     // Ingame Options, all need to be s8
     s8 option_EnableBGM;
     s8 option_EnableSFX;

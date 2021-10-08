@@ -4,6 +4,7 @@
 #include "string.h"
 #include "item_override.h"
 #include "savefile.h"
+#include "common.h"
 
 typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
 #define SetNextEntrance_addr 0x3716F0
@@ -200,6 +201,9 @@ u32 Entrance_IsLostWoodsBridge(void) {
 }
 
 void Entrance_EnteredLocation(void) {
+    if (!IsInGame()) {
+        return;
+    }
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
     SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
 }
