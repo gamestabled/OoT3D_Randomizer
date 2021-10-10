@@ -104,7 +104,7 @@ static const unsigned char rIcons[][ICON_HEIGHT] = {
         0x1C, /* 00011100 */
         0x00, /* 00000000 */
     },
-    {
+    {   /* Button_R */
         0x00, /* 00000000 */
         0xfc, /* 11111100 */
         0xce, /* 11001110 */
