@@ -1407,6 +1407,9 @@ namespace SFX {
             sfxData.rSFXOverrides_All[i] = SFX_BASE + i;
         }
         // Set the amount of sequence types for each category
+        for (size_t i = 0; i < SEQTYPE_COUNT; i++) {
+            sfxData.rSeqMaxes[i] = 0;
+        }
         for (size_t i = 0; i < seqTypesSFX.size(); i++) {
             if (seqTypesSFX[i] >= SEQTYPE_COUNT) {
                 continue;
