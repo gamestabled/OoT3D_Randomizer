@@ -2,6 +2,7 @@
 
 #include "settings.h"
 #include "gorons.h"
+#include "savefile.h"
 
 SpoilerData gSpoilerData = {0};
 
@@ -85,7 +86,7 @@ u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
 
 u8 SpoilerData_BiggoronCheck(u8 mask)
 {
-    return (gSaveContext.biggoronTrades & mask) != 0;
+    return (gExtSaveData.biggoronTrades & mask) != 0;
 }
 
 u8 SpoilerData_GerudoTokenCheck()

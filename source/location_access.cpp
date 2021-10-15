@@ -1439,7 +1439,7 @@ void AreaTable_Init() {
                   LocationAccess(DMT_COW_GROTTO_COW, {[]{return CanPlay(EponasSong);}}),
                 }, {
                   //Exits
-                  Entrance(DEATH_MOUNTAIN_TRAIL, {[]{return true;}}),
+                  Entrance(DEATH_MOUNTAIN_SUMMIT, {[]{return true;}}),
 
   });
 
