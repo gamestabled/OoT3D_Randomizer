@@ -44,21 +44,23 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
     gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
     gSaveContext.infTable  [0x19] |= 0x0100; //Picked up Magic Container
+    gSaveContext.infTable  [0x19] |= 0x0020; //Talked to owl in Lake Hylia
     gSaveContext.itemGetInf [0x1] |= 0x0008; //Picked up Deku Seeds
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
-    gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
-    gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
-    gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
-    gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
+    gSaveContext.eventChkInf[0xB] |= 0x0001; //Dodongo's Cavern intro
+  //gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
+  //gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
+  //gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
+  //gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
     gSaveContext.unk_13D0[4] |= 0x01; //Club Moblin cutscene
 
     //open lowest Vanilla Fire Temple locked door (to prevent key logic lockouts)
-    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple 
+    //Not done on keysanity since this lockout is a non issue when FiT keys can be found outside the temple
     bool keysanity = gSettingsContext.keysanity == KEYSANITY_ANYWHERE || gSettingsContext.keysanity == KEYSANITY_OVERWORLD || gSettingsContext.keysanity == KEYSANITY_ANY_DUNGEON;
     if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_VANILLA && !keysanity) {
         gSaveContext.sceneFlags[DUNGEON_FIRE_TEMPLE].swch |= 0x00800000;
@@ -147,10 +149,6 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.sceneFlags[3].swch |= 0x08000000; //Remove Poe cutscene in Forest Temple
     }
 
-    if (gSettingsContext.templeOfTimeIntro == SKIP) {
-        gSaveContext.eventChkInf[0xA] |= 0x0080; //Remove Temple of Time intro cutscene
-    }
-
     //Move mido away from the path to the Deku Tree in Open Forest
     if (gSettingsContext.openForest == OPENFOREST_OPEN) {
       gSaveContext.eventChkInf[0x0] |= 0x0010;
@@ -187,7 +185,7 @@ void SaveFile_SwapFaroresWind(void) {
     const u32 numWordsToSwap = sizeof(gSaveContext.fw) / sizeof(u32);
 
     u32* curFWData = (u32*)&gSaveContext.fw;
-    u32* storedFWData = &gSaveContext.sceneFlags[0x40].unk;
+    u32* storedFWData = (u32*)&gExtSaveData.fwStored;
     u32 tempCur;
     u32 tempStored;
 
@@ -198,7 +196,7 @@ void SaveFile_SwapFaroresWind(void) {
         *storedFWData = tempCur;
 
         curFWData++;
-        storedFWData += (sizeof(SaveSceneFlags) / sizeof(u32));
+        storedFWData++;
     }
 }
 
@@ -234,6 +232,45 @@ u8 SaveFile_GetDungeonCount(void) {
     count += (gSaveContext.eventChkInf[3] >> 7) & 0x1; //Jabu Jabu's Belly
 
     return count;
+}
+
+u8 SaveFile_GetIsSceneDiscovered(u8 sceneNum) {
+    u32 numBits = sizeof(u32) * 8;
+    u32 idx = sceneNum / numBits;
+    if (idx < SAVEFILE_SCENES_DISCOVERED_IDX_COUNT) {
+        u32 bit = 1 << (sceneNum - (idx * numBits));
+        return (gExtSaveData.scenesDiscovered[idx] & bit) != 0;
+    }
+    return 0;
+}
+
+void SaveFile_SetSceneDiscovered(u8 sceneNum) {
+    u16 numBits = sizeof(u32) * 8;
+    u32 idx = sceneNum / numBits;
+    if (idx < SAVEFILE_SCENES_DISCOVERED_IDX_COUNT) {
+        u32 sceneBit = 1 << (sceneNum - (idx * numBits));
+        gExtSaveData.scenesDiscovered[idx] |= sceneBit;
+    }
+}
+
+u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
+    u32 numBits = sizeof(u32) * 8;
+    u32 idx = entranceIndex / numBits;
+    if (idx < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT) {
+        u32 bit = 1 << (entranceIndex - (idx * numBits));
+        return (gExtSaveData.entrancesDiscovered[idx] & bit) != 0;
+    }
+    return 0;
+}
+
+void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
+    u16 numBits = sizeof(u32) * 8;
+    u32 idx = entranceIndex / numBits;
+    if (idx < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT) {
+        u32 entranceBit = 1 << (entranceIndex - (idx * numBits));
+        gExtSaveData.entrancesDiscovered[idx] |= entranceBit;
+        entranceIndex++;
+    }
 }
 
 //Resolve the item ID for the starting bottle
@@ -296,6 +333,8 @@ void SaveFile_SetStartingInventory(void) {
     }
 
     //main inventory
+    u8 insertedInChildItemMenu = 0;
+
     if (gSettingsContext.startingStickCapacity > 0) {
         gSaveContext.upgrades |= ((gSettingsContext.startingStickCapacity + 1) << 17);
         gSaveContext.items[SLOT_STICK] = ITEM_STICK;
@@ -327,14 +366,26 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingFireArrows) {
         gSaveContext.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+        if (gSettingsContext.startingBow == 0) {
+            gSaveContext.itemMenuAdult[insertedInChildItemMenu] = ItemSlots[ITEM_ARROW_FIRE];
+            gSaveContext.itemMenuChild[insertedInChildItemMenu++] = ItemSlots[ITEM_ARROW_FIRE];
+        }
     }
 
     if (gSettingsContext.startingIceArrows) {
         gSaveContext.items[SLOT_ARROW_ICE] = ITEM_ARROW_ICE;
+        if (gSettingsContext.startingBow == 0) {
+            gSaveContext.itemMenuAdult[insertedInChildItemMenu] = ItemSlots[ITEM_ARROW_ICE];
+            gSaveContext.itemMenuChild[insertedInChildItemMenu++] = ItemSlots[ITEM_ARROW_ICE];
+        }
     }
 
     if (gSettingsContext.startingLightArrows) {
         gSaveContext.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+        if (gSettingsContext.startingBow == 0) {
+            gSaveContext.itemMenuAdult[insertedInChildItemMenu] = ItemSlots[ITEM_ARROW_LIGHT];
+            gSaveContext.itemMenuChild[insertedInChildItemMenu++] = ItemSlots[ITEM_ARROW_LIGHT];
+        }
     }
 
     if (gSettingsContext.startingDinsFire) {
@@ -374,14 +425,6 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingHookshot > 0) {
         gSaveContext.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT + (gSettingsContext.startingHookshot - 1);
-    }
-
-    if (gSettingsContext.startingIronBoots) {
-        gSaveContext.items[SLOT_IRON_BOOTS] = ITEM_BOOTS_IRON;
-    }
-
-    if (gSettingsContext.startingHoverBoots) {
-        gSaveContext.items[SLOT_HOVER_BOOTS] = ITEM_BOOTS_HOVER;
     }
 
     SaveFile_GiveStartingBottle(gSettingsContext.startingBottle1, SLOT_BOTTLE_1);
@@ -518,7 +561,11 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
+    gExtSaveData.biggoronTrades = 0;
+    memset(&gExtSaveData.fwStored, 0, sizeof(gExtSaveData.fwStored));
     gExtSaveData.playtimeSeconds = 0;
+    memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
+    memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;
 }
