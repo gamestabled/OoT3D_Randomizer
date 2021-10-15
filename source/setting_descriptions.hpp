@@ -59,6 +59,10 @@ extern string_view dungeonEntrancesDesc;
 
 extern string_view overworldEntrancesDesc;
 
+extern string_view interiorEntrancesOff;
+extern string_view interiorEntrancesSimple;
+extern string_view interiorEntrancesAll;
+
 extern string_view bombchuLogicDesc;
 
 extern string_view defaultAmmoDropsDesc;
@@ -173,8 +177,6 @@ extern string_view skipMinigamePhasesDesc;
 extern string_view freeScarecrowDesc;
 
 extern string_view fourPoesDesc;
-
-extern string_view templeOfTimeIntroDesc;
 
 extern string_view lakeHyliaOwlDesc;
 

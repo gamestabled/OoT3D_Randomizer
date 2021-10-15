@@ -377,7 +377,6 @@ typedef struct {
   u8 skipMinigamePhases;
   u8 freeScarecrow;
   u8 fourPoesCutscene;
-  u8 templeOfTimeIntro;
   u8 lakeHyliaOwl;
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
