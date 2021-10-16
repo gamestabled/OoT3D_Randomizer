@@ -365,6 +365,7 @@ namespace Settings {
   extern Option StartingTime;
   extern Option ChestAnimations;
   extern Option ChestSize;
+  extern Option RaceMode;
   extern Option GenerateSpoilerLog;
   extern Option IngameSpoilers;
   extern Option MenuOpeningButton;

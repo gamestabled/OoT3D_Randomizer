@@ -8,9 +8,10 @@
 using RandomizerHash = std::array<std::string, 5>;
 
 void GenerateHash();
+void SetSpoilerLogPassCode(u32 passCode);
 const RandomizerHash& GetRandomizerHash();
 
-bool SpoilerLog_Write();
+bool SpoilerLog_Write(u8 onlyInGameTracker);
 const SpoilerData& GetSpoilerData();
 
 void PlacementLog_Msg(std::string_view msg);

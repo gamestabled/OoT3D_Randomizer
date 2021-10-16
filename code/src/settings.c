@@ -1,6 +1,7 @@
 #include "settings.h"
 #include "hid.h"
 #include "input.h"
+#include "3ds/svc.h"
 
 SettingsContext gSettingsContext = {0};
 u8 Damage32 = 0;
@@ -124,6 +125,13 @@ void Settings_SkipSongReplays() {
     }
     else if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 && gGlobalContext->msgMode < 23) {
         gGlobalContext->msgMode++;
+    }
+}
+
+void ExtendCitraLoadingTime() {
+    // To make racing more fair, wait 0.8 seconds on each scene load if playing on Citra during a race
+    if (gSettingsContext.playOption == PLAY_ON_CITRA && gSettingsContext.raceMode == ON) {
+        svcSleepThread(800000000);
     }
 }
 

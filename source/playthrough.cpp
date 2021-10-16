@@ -49,18 +49,33 @@ namespace Playthrough {
         VanillaFill(); //Just place items in their vanilla locations
       }
       else { //Fill locations with logic
-        int ret = Fill(); 
+        int ret = Fill();
         if (ret < 0) {
           return ret;
         }
       }
 
       GenerateHash();
+      unsigned int spoilerLogPassCode = std::hash<std::string>{}(settingsStr + Settings::seed);
+      SetSpoilerLogPassCode(spoilerLogPassCode);
 
       if (Settings::GenerateSpoilerLog) {
+        // In Race Mode, the spoiler log file is only written if the proper passcode is provided.
+        // The in-game spoiler log is written anyway (if GenerateSpoilerLog is on), because Race Mode prevents cheating with it.
+        u8 onlyInGameTracker = 0;
+        if (Settings::RaceMode && !Settings::IngameSpoilers) {
+          std::string passcode = GetInput("Enter Passcode to generate spoiler log");
+          if (passcode.compare(std::to_string(spoilerLogPassCode))) {
+            printf("\x1b[11;10HInvalid code, writing tracker only...");
+            onlyInGameTracker = 1;
+          }
+        }
+
         //write logs
-        printf("\x1b[11;10HWriting Spoiler Log...");
-        if (SpoilerLog_Write()) {
+        if (!onlyInGameTracker) {
+          printf("\x1b[11;10HWriting Spoiler Log...");
+        }
+        if (SpoilerLog_Write(onlyInGameTracker)) {
           printf("Done");
         } else {
           printf("Failed");

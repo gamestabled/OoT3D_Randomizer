@@ -1,5 +1,7 @@
 #include "common.h"
 #include "settings.h"
+#include "savefile.h"
+#include "spoiler_data.h"
 
 // From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
 u32 Hash(u32 state) {
@@ -42,6 +44,10 @@ u8 Bias(u32 seed) {
 u8 IsInGame(void) {
     s32 entr = gSaveContext.entranceIndex;
     s32 mode = gSaveContext.gameMode;
-    return mode == 0 ||
+    return mode == 0 || mode == 3 ||
         (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D);
+}
+
+u8 SaveFileIsForThisSeed(void) {
+    return gExtSaveData.savedSpoilerLogPassCode == gSpoilerData.spoilerLogPassCode;
 }

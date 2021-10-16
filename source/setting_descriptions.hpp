@@ -224,6 +224,10 @@ extern string_view chestAnimDesc;
 
 extern string_view chestSizeDesc;
 
+extern string_view raceModeDesc;
+
+extern string_view spoilerLogDesc;
+
 extern string_view ingameSpoilersShowDesc;
 extern string_view ingameSpoilersHideDesc;
 

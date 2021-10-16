@@ -313,6 +313,11 @@ typedef enum {
   DUNGEON_WOTH,
 } DungeonInfo;
 
+typedef enum {
+  PLAY_ON_CONSOLE,
+  PLAY_ON_CITRA,
+} PlayOption;
+
 typedef struct {
   u8 hashIndexes[5];
   u8 playOption;
@@ -394,6 +399,7 @@ typedef struct {
   u8 mapsShowDungeonMode;
   u8 chestAnimations;
   u8 chestSize;
+  u8 raceMode;
   u8 generateSpoilerLog;
   u8 ingameSpoilers;
   u8 menuOpeningButton;

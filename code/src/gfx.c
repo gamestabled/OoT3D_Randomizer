@@ -30,7 +30,7 @@ static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 static bool isAsleep = false;
 
-DungeonInfo rDungeonInfoData[10]; 
+DungeonInfo rDungeonInfoData[10];
 
 #define TICKS_PER_SEC 268123480
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
@@ -197,6 +197,22 @@ static void Gfx_DrawSeedHash(void) {
     u32 minutes = (gExtSaveData.playtimeSeconds / 60) % 60;
     u32 seconds = gExtSaveData.playtimeSeconds % 60;
     Draw_DrawFormattedString(10 + (SPACING_X * 4), 80 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
+
+    // Stop here if Race Mode is disabled
+    if (gSettingsContext.raceMode == OFF) {return;}
+
+    Draw_DrawString(10, 105, COLOR_TITLE, "Spoiler Log Passcode:");
+    if (gExtSaveData.savedSpoilerLogPassCode == 0) {
+        Draw_DrawString(10 + (SPACING_X * 4), 105 + SPACING_Y, COLOR_RED, "LOST! Don't copy or manipulate save files!");
+    }
+    else if (!SaveFileIsForThisSeed()) {
+        Draw_DrawString(10 + (SPACING_X * 4), 105 + SPACING_Y, COLOR_RED, "This save file was not created for the current seed.");
+    }
+    else if (!gExtSaveData.reachedGanondorfWithItems) {
+        Draw_DrawString(10 + (SPACING_X * 4), 105 + SPACING_Y, COLOR_WHITE, "???????? (Unlocked at the end of the game)");
+    } else {
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 105 + SPACING_Y, COLOR_WHITE, "%02u", gExtSaveData.savedSpoilerLogPassCode);
+    }
 }
 
 static void Gfx_DrawDungeonItems(void) {
@@ -333,7 +349,9 @@ static void Gfx_DrawSpoilerAllItems(void) {
             u32 color = SpoilerData_GetIsItemLocationCollected(locIndex) ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(locIndex));
-            const char* itemText = (!gSettingsContext.ingameSpoilers && !SpoilerData_GetIsItemLocationCollected(locIndex)) ? "???" : SpoilerData_GetItemNameString(locIndex);
+            const char* itemText = (!gSettingsContext.ingameSpoilers &&
+                                    (!SpoilerData_GetIsItemLocationCollected(locIndex) || (gSettingsContext.raceMode && !SaveFileIsForThisSeed()))
+                                   ) ? "???" : SpoilerData_GetItemNameString(locIndex);
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
 
@@ -379,7 +397,9 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             bool isCollected =  SpoilerData_GetIsItemLocationCollected(locIndex);
             u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
-            const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
+            const char* itemText = (!gSettingsContext.ingameSpoilers &&
+                                    (!isCollected || (gSettingsContext.raceMode && !SaveFileIsForThisSeed()))
+                                   ) ? "???" : SpoilerData_GetItemNameString(locIndex);
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
 
@@ -418,8 +438,9 @@ static void Gfx_DrawERTracker(void) {
             const char* startName = pair.StartStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.StartStrOffset] : "START STRING NOT FOUND";
             const char* returnName = pair.ReturnStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.ReturnStrOffset] : "RETURN STRING NOT FOUND";
 
-            Draw_DrawFormattedString_Small(10, locPosY, color, "%s %c", gSettingsContext.ingameSpoilers || isDiscovered ? startName : unknown, H_DOUBLE_ARROW_CHR);
-            Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", gSettingsContext.ingameSpoilers || isDiscovered ? returnName : unknown);
+            u8 shouldBeDisplayed = gSettingsContext.ingameSpoilers || (isDiscovered && (!gSettingsContext.raceMode || SaveFileIsForThisSeed()));
+            Draw_DrawFormattedString_Small(10, locPosY, color, "%s %c", shouldBeDisplayed ? startName : unknown, H_DOUBLE_ARROW_CHR);
+            Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", shouldBeDisplayed ? returnName : unknown);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, entranceScroll, itemCount, MAX_ITEM_LINES);
@@ -451,6 +472,12 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 }
 
 static void Gfx_ShowMenu(void) {
+
+    // If the race file has been manipulated, delete PassCode
+    if (gSettingsContext.raceMode == ON && gExtSaveData.saveContextChecksum != gSaveContext.checksum) {
+        gExtSaveData.savedSpoilerLogPassCode = 0;
+    }
+
     pressed = 0;
 
     if (!gSettingsContext.ingameSpoilers) {
@@ -474,7 +501,7 @@ static void Gfx_ShowMenu(void) {
     }
 
     Draw_ClearFramebuffer();
-    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+    if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -573,7 +600,7 @@ static void Gfx_ShowMenu(void) {
             if (pressed & closingButton) {
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
                 break;
             } else if (pressed & BUTTON_R1) {
                 do {
@@ -605,7 +632,7 @@ static void Gfx_ShowMenu(void) {
         menu_draw_funcs[curMenuIdx]();
         Gfx_DrawChangeMenuPrompt();
         Draw_CopyBackBuffer();
-        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+        if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
         pressed = Input_WaitWithTimeout(1000, closingButton);
 

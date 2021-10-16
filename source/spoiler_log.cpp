@@ -73,6 +73,10 @@ void GenerateHash() {
   spoilerData = { 0 };
 }
 
+void SetSpoilerLogPassCode(u32 passCode) {
+  spoilerData.spoilerLogPassCode = passCode;
+}
+
 const RandomizerHash& GetRandomizerHash() {
   return randomizerHash;
 }
@@ -273,7 +277,7 @@ static void WriteLocation(
     node->SetAttribute("price", price);
   }
   if (!location->IsAddedToPool()) {
-    #ifdef ENABLE_DEBUG  
+    #ifdef ENABLE_DEBUG
       node->SetAttribute("not-added", true);
     #endif
   }
@@ -506,8 +510,10 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
   spoilerLog.RootElement()->InsertEndChild(parentNode);
 }
 
-bool SpoilerLog_Write() {
+bool SpoilerLog_Write(u8 onlyInGameTracker) {
   WriteIngameSpoilerLog();
+
+  if (onlyInGameTracker) {return true;}
 
   auto spoilerLog = tinyxml2::XMLDocument(false);
   spoilerLog.InsertEndChild(spoilerLog.NewDeclaration());

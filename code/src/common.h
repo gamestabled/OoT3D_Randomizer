@@ -10,4 +10,6 @@ u8  Bias(u32);
 
 u8 IsInGame(void);
 
+u8 SaveFileIsForThisSeed(void);
+
 #endif //_COMMON_H_

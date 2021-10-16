@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "item_effect.h"
 #include "giants_knife.h"
+#include "spoiler_data.h"
 #include "3ds/types.h"
 #include "3ds/extdata.h"
 #include <string.h>
@@ -163,6 +164,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
 
     SaveFile_SetStartingInventory();
     SaveFile_InitExtSaveData(fileBaseIndex + gSaveContext.fileNum);
+    gExtSaveData.savedSpoilerLogPassCode = gSpoilerData.spoilerLogPassCode;
 }
 
 void SaveFile_SaveChildBButton(void) {
@@ -566,6 +568,9 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.playtimeSeconds = 0;
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
+    gExtSaveData.reachedGanondorfWithItems = 0;
+    gExtSaveData.savedSpoilerLogPassCode = 0;
+    gExtSaveData.saveContextChecksum = gSaveContext.checksum;
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;
 }
@@ -611,6 +616,8 @@ void SaveFile_LoadExtSaveData(u32 saveNumber) {
 }
 
 void SaveFile_SaveExtSaveData(u32 saveNumber) {
+    gExtSaveData.saveContextChecksum = gSaveContext.checksum;
+
     char path[] = "/0.bin";
 
     Result res;

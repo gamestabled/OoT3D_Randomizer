@@ -80,6 +80,7 @@ typedef struct {
     char StringData[SPOILER_STRING_DATA_SIZE];
     u16 GroupItemCounts[SPOILER_COLLECTION_GROUP_COUNT];
     u16 GroupOffsets[SPOILER_COLLECTION_GROUP_COUNT];
+    u32 spoilerLogPassCode;
 } SpoilerData;
 
 extern SpoilerData gSpoilerData;
