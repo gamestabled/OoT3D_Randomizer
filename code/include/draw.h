@@ -47,12 +47,13 @@
 #define SPACING_SMALL_Y 9
 #define SPACING_SMALL_X 6
 
-#define COLOR_TITLE     RGB8(0x33, 0x33, 0xFF)
-#define COLOR_WHITE     RGB8(0xFF, 0xFF, 0xFF)
-#define COLOR_RED       RGB8(0xFF, 0x00, 0x00)
-#define COLOR_GREEN     RGB8(0x00, 0xFF, 0x00)
-#define COLOR_BLACK     RGB8(0x00, 0x00, 0x00)
-#define COLOR_DARK_GRAY RGB8(0x29, 0x29, 0x29)
+#define COLOR_TITLE         RGB8(0x33, 0x33, 0xFF)
+#define COLOR_WHITE         RGB8(0xFF, 0xFF, 0xFF)
+#define COLOR_RED           RGB8(0xFF, 0x00, 0x00)
+#define COLOR_GREEN         RGB8(0x00, 0xFF, 0x00)
+#define COLOR_BLACK         RGB8(0x00, 0x00, 0x00)
+#define COLOR_DARK_GRAY     RGB8(0x29, 0x29, 0x29)
+#define COLOR_LIGHT_GRAY    RGB8(0x71, 0x71, 0x71)
 
 #define DRAW_MAX_FORMATTED_STRING_SIZE  512
 
@@ -76,7 +77,11 @@ typedef enum {
     ICON_MAP,
     ICON_COMPASS,
     ICON_BUTTON_R,
+    ICON_BUTTON_R_WIDE_1,
+    ICON_BUTTON_R_WIDE_2,
     ICON_BUTTON_L,
+    ICON_BUTTON_L_WIDE_1,
+    ICON_BUTTON_L_WIDE_2,
     ICON_BUTTON_A,
     ICON_BUTTON_B,
     ICON_BUTTON_X,
