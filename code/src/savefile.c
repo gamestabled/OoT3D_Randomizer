@@ -185,7 +185,7 @@ void SaveFile_SwapFaroresWind(void) {
     const u32 numWordsToSwap = sizeof(gSaveContext.fw) / sizeof(u32);
 
     u32* curFWData = (u32*)&gSaveContext.fw;
-    u32* storedFWData = &gSaveContext.sceneFlags[0x40].unk;
+    u32* storedFWData = (u32*)&gExtSaveData.fwStored;
     u32 tempCur;
     u32 tempStored;
 
@@ -196,7 +196,7 @@ void SaveFile_SwapFaroresWind(void) {
         *storedFWData = tempCur;
 
         curFWData++;
-        storedFWData += (sizeof(SaveSceneFlags) / sizeof(u32));
+        storedFWData++;
     }
 }
 
@@ -561,6 +561,8 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
 
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
+    gExtSaveData.biggoronTrades = 0;
+    memset(&gExtSaveData.fwStored, 0, sizeof(gExtSaveData.fwStored));
     gExtSaveData.playtimeSeconds = 0;
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));

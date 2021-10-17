@@ -24,10 +24,21 @@ void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 3
+#define EXTSAVEDATA_VERSION 4
 
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure
+    u8 biggoronTrades;
+    struct {
+        Vec3i pos;
+        s32  yaw;
+        s32  playerParams;
+        s32  entranceIndex;
+        s32  roomIndex;
+        s32  set;
+        s32  tempSwchFlags;
+        s32  tempCollectFlags;
+    }   fwStored;
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
