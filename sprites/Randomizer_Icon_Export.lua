@@ -1,9 +1,11 @@
--- This script for Aseprite takes the currently-visible pixels of an 8x8 image and creates
+-- This script for Aseprite takes the selected layer of an 8x8 image and creates
 -- data that can be used as an icon in the OoT3D randomizer's in-game menu (icons.h)
 -- Because Aseprite does not allow writing to the clipboard directly via script yet,
 -- the window that pops up displays a selectable text field instead, while also showing
 -- a preview of what the data will look like. The user must use Ctrl+C (or Cmd+C on Mac)
--- to copy the text manually and paste it into the appropriate location in icons.h
+-- to copy the text manually and paste it into the appropriate location in icons.h.
+-- While the window is open, it is possible to select a different layer and click 'Refresh'
+-- to display another sprite's data, to make it quick to export multiple sprites.
 
 -- Number-to-binary string representation, from https://stackoverflow.com/a/9080080
 local function toBits(num,bits)
