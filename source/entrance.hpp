@@ -257,6 +257,7 @@ private:
 
 void ShuffleAllEntrances();
 void CreateEntranceOverrides();
+EntranceTrackingData* GetEntranceTrackingData();
 
 extern std::vector<std::list<Entrance*>> playthroughEntrances;
 extern bool noRandomEntrances;

@@ -25,6 +25,7 @@ static s8 currentGroup = 1;
 static s16 entranceScroll = 0;
 static s32 curMenuIdx = 0;
 static float itemPercent = 0;
+static float entrancesPercent = 0;
 static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 static bool isAsleep = false;
@@ -66,6 +67,7 @@ static char *spoilerCollectionGroupNames[] = {
 #define DOWN_ARROW_CHR 25
 #define LEFT_ARROW_CHR 27
 #define RIGHT_ARROW_CHR 26
+#define H_DOUBLE_ARROW_CHR 29
 #define UP_SOLID_ARROW_CHR 30
 #define DOWN_SOLID_ARROW_CHR 31
 
@@ -94,6 +96,20 @@ void Gfx_AwakeCallback(void)
     ticksElapsed = 0;
     lastTick = svcGetSystemTick();
     isAsleep = false;
+}
+
+static bool IsEntrancePairDiscovered(EntranceTrackingPair pair) {
+    bool isDiscovered = SaveFile_GetIsEntranceDiscovered(pair.StartIndex) || SaveFile_GetIsEntranceDiscovered(pair.ReturnIndex);
+    if (!isDiscovered) {
+        // If the pair included one of the hyrule field <-> zora's river entrances,
+        // the randomizer will have also overriden the water-based entrances, so check those too
+        if ((pair.StartIndex == 0x00EA || pair.ReturnIndex == 0x00EA) && SaveFile_GetIsEntranceDiscovered(0x01D9)) {
+            isDiscovered = true;
+        } else if ((pair.StartIndex == 0x0181 || pair.ReturnIndex == 0x0181) && SaveFile_GetIsEntranceDiscovered(0x0311)) {
+            isDiscovered = true;
+        }
+    }
+    return isDiscovered;
 }
 
 static void Gfx_DrawScrollBar(u16 barX, u16 barY, u16 barSize, u16 currentScroll, u16 maxScroll, u16 pageSize) {
@@ -376,37 +392,37 @@ static void Gfx_DrawSpoilerItemGroups(void) {
 }
 
 static void Gfx_DrawERTracker(void) {
-    if (gSettingsContext.shuffleOverworldEntrances || gSettingsContext.shuffleDungeonEntrances) {
-        u16 itemCount = ENTRANCE_OVERRIDES_MAX_COUNT;
+    if (gEntranceTrackingData.EntrancePairsCount > 0) {
+        u16 itemCount = gEntranceTrackingData.EntrancePairsCount;
         u16 firstItem = entranceScroll + 1;
         u16 lastItem = entranceScroll + MAX_ITEM_LINES;
         if (lastItem > itemCount) { lastItem = itemCount; }
         Draw_DrawFormattedString(10, 10, COLOR_TITLE, "Randomized Entrances (%d - %d) / %d",
             firstItem, lastItem, itemCount);
 
-        // TODO random entrances visited %
-        // Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
+        Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 10, entrancesPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", entrancesPercent);
 
         u16 listTopY = 26;
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + entranceScroll;
             if (locIndex >= itemCount) { break; }
 
-            EntranceOverride entrOverride = rEntranceOverrides[locIndex];
-            if (entrOverride.index == 0 && entrOverride.override == 0) {
-                continue;
-            }
-
             u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
             u32 itemPosY = locPosY + SPACING_SMALL_Y;
-            bool isDiscovered = SaveFile_GetIsEntranceDiscovered(entrOverride.index);
+
+            EntranceTrackingPair pair = gEntranceTrackingData.EntrancePairs[locIndex];
+            bool isDiscovered = IsEntrancePairDiscovered(pair);
+
             u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
-            Draw_DrawFormattedString_Small(10, locPosY, color,
-                "0x%04X -> 0x%04X, BW: 0x%04X", entrOverride.index, entrOverride.override, entrOverride.blueWarp);
+            const char* unknown = "???";
+            const char* startName = pair.StartStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.StartStrOffset] : "START STRING NOT FOUND";
+            const char* returnName = pair.ReturnStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.ReturnStrOffset] : "RETURN STRING NOT FOUND";
+
+            Draw_DrawFormattedString_Small(10, locPosY, color, "%s %c", gSettingsContext.ingameSpoilers || isDiscovered ? startName : unknown, H_DOUBLE_ARROW_CHR);
+            Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", gSettingsContext.ingameSpoilers || isDiscovered ? returnName : unknown);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, entranceScroll, itemCount, MAX_ITEM_LINES);
-        Draw_DrawFormattedString(10 + 10, 200, COLOR_WHITE, "Last: 0x%08X", lastEntered);
     }
     else {
         Draw_DrawString(10, 10, COLOR_TITLE, "Entrances");
@@ -438,13 +454,23 @@ static void Gfx_ShowMenu(void) {
     pressed = 0;
 
     if (!gSettingsContext.ingameSpoilers) {
-        float itemsChecked = 0;
+        float itemsChecked = 0.0f;
         for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
             if (SpoilerData_GetIsItemLocationCollected(i)) {
-                itemsChecked++;
+                itemsChecked += 1.0f;
             }
         }
-        itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100;
+        itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100.0f;
+    }
+
+    if (gEntranceTrackingData.EntrancePairsCount > 0) {
+        float entrancesChecked = 0.0f;
+        for (u16 i = 0; i < gEntranceTrackingData.EntrancePairsCount; i++) {
+            if (IsEntrancePairDiscovered(gEntranceTrackingData.EntrancePairs[i])) {
+                entrancesChecked += 1.0f;
+            }
+        }
+        entrancesPercent = (entrancesChecked / gEntranceTrackingData.EntrancePairsCount) * 100.0f;
     }
 
     Draw_ClearFramebuffer();
@@ -523,9 +549,9 @@ static void Gfx_ShowMenu(void) {
                 Gfx_GroupsPrevGroup();
                 handledInput = true;
             }
-        } else if (curMenuIdx == 6 && (gSettingsContext.shuffleOverworldEntrances || gSettingsContext.shuffleDungeonEntrances)) {
+        } else if (curMenuIdx == 6 && gEntranceTrackingData.EntrancePairsCount > 0) {
             // Entrances list
-            u16 itemCount = ENTRANCE_OVERRIDES_MAX_COUNT;
+            u16 itemCount = gEntranceTrackingData.EntrancePairsCount;
             if (pressed & BUTTON_LEFT) {
                 entranceScroll = Gfx_Scroll(entranceScroll, -MAX_ITEM_LINES * 10, itemCount);
                 handledInput = true;
@@ -605,6 +631,9 @@ void Gfx_Init(void) {
     }
     if (!gSettingsContext.ingameSpoilers) {
         menu_draw_funcs[3] = NULL;
+    }
+    if (gEntranceTrackingData.EntrancePairsCount == 0) {
+        menu_draw_funcs[6] = NULL;
     }
 
     if (gSpoilerData.ItemLocationsCount > 0 && gSpoilerData.GroupItemCounts[currentGroup] == 0) {

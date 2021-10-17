@@ -1610,7 +1610,7 @@ void AreaTable_Init() {
                                                                 ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && EponasSong;}}),
                 }, {
                   //Exits
-                  Entrance(DEATH_MOUNTAIN_TRAIL, {[]{return true;}}),
+                  Entrance(DEATH_MOUNTAIN_SUMMIT, {[]{return true;}}),
 
   });
 
