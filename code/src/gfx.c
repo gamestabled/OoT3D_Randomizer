@@ -455,10 +455,10 @@ static void (*menu_draw_funcs[])(void) = {
 };
 
 static void Gfx_DrawHeader() {
-    const u32 totalTabsWidth = 278;
+    const u32 totalTabsWidth = 280;
     u32 tabsCount = ARR_SIZE(menu_draw_funcs);
-    float tabWidthPlusSpace = (totalTabsWidth / (float)tabsCount);
-    u32 tabXStart = 21;
+    u32 tabWidthPlusSpace = totalTabsWidth / tabsCount;
+    u32 tabXStart = 20;
     u32 tabYStart = 3;
     u32 tabHeightSmall = 4;
     u32 tabHeightBig = 6;
@@ -471,7 +471,7 @@ static void Gfx_DrawHeader() {
     for (u32 i = 0; i < tabsCount; i++) {
         bool isAvailable = menu_draw_funcs[i] != NULL;
         bool isCurrent = curMenuIdx == i;
-        u32 tabX = (u32)((float)i * tabWidthPlusSpace);
+        u32 tabX = (u32)(i * tabWidthPlusSpace);
         Draw_DrawRect(tabXStart + tabX,
             isCurrent ? tabYStart : tabYStart + 2,
             i == tabsCount - 1 ? totalTabsWidth - tabX : (tabWidthPlusSpace - 1),
