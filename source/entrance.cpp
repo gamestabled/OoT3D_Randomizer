@@ -324,6 +324,26 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
       return false;
     }
 
+    //Check that the region is still accessible with the opposite starting time of day
+    //This is to ensure that time passing does not lock out access to all areas that can pass time
+    u8 startTime = Settings::StartingTime.Value<u8>();
+    if (startTime == STARTINGTIME_DAY) {
+      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_NIGHT);
+    } else {
+      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_DAY);
+    }
+
+    //run the search again
+    Logic::LogicReset();
+    GetAccessibleLocations({}, SearchMode::BothAgesNoItems);
+    if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
+      PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
+      return false;
+    }
+
+    //set the Starting Time setting back to what it originally was
+    Settings::StartingTime.SetSelectedIndex(startTime);
+
     // The player should be able to get back to ToT after going through time, without having collected any items
     // This is important to ensure that the player never loses access to the pedestal after going through time
     if (Settings::ResolvedStartingAge == AGE_CHILD && !AreaTable(TEMPLE_OF_TIME)->Adult()) {
