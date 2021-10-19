@@ -453,6 +453,9 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
     }
 
     //fully validate the resulting world to ensure everything is still fine
+    if (!ValidateWorld(nullptr)) {
+      continue;
+    }
 
     //If there are no issues, log the connections and continue
     for (auto& pair : rollbacks) {

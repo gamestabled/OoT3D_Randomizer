@@ -13,15 +13,14 @@ extern std::list<EntranceOverride> entranceOverrides;
 
 enum class EntranceType {
     None,
-    Dungeon,
+    Overworld,
+    GrottoGrave,
     Interior,
     SpecialInterior,
-    Grotto,
-    Grave,
-    Overworld,
-    OwlDrop,
-    Spawn,
+    Dungeon,
     WarpSong,
+    Spawn,
+    OwlDrop,
     Extra,
     All,
 };
