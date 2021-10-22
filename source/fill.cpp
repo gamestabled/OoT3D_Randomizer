@@ -580,7 +580,7 @@ static void RandomizeDungeonRewards() {
     } else { //Randomize dungeon rewards with assumed fill
       AssumedFill(rewards, dungeonRewardLocations);
     }
-    
+
     for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
       const auto index = Location(dungeonRewardLocations[i])->GetPlacedItem().GetItemID() - baseOffset;
       rDungeonRewardOverrides[i] = index;
@@ -791,7 +791,10 @@ int Fill() {
     AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); //assume worst case shopsanity 4
     if (ShuffleEntrances) {
       printf("\x1b[7;10HShuffling Entrances...");
-      ShuffleAllEntrances();
+      if (ShuffleAllEntrances() == ENTRANCE_SHUFFLE_FAILURE) {
+        retries++;
+        continue;
+      }
       printf("\x1b[7;32HDone");
     }
     //erase temporary shop items
