@@ -13,7 +13,7 @@ typedef struct {
 } Option;
 
 s8 selectedOption;
-Option options[2];
+Option options[3];
 
 void InitOptions(void) {
     // BGM
@@ -29,6 +29,13 @@ void InitOptions(void) {
     strcpy(options[1].alternatives[1], "On");
     strcpy(options[1].description, "Toggles the sound effects.");
     options[1].optionPointer = &gExtSaveData.option_EnableSFX;
+
+    // Silence Navi
+    strcpy(options[2].name, "Silence Navi");
+    strcpy(options[2].alternatives[0], "Off");
+    strcpy(options[2].alternatives[1], "On");
+    strcpy(options[2].description, "Prevents Navi from alerting you about advice.");
+    options[2].optionPointer = &gExtSaveData.option_SilenceNavi;
 }
 
 void Gfx_DrawOptions(void) {
