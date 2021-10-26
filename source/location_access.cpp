@@ -149,16 +149,6 @@ void Area::RemoveExit(Entrance* exitToRemove) {
   exits.remove_if([exitToRemove](const auto exit){return &exit == exitToRemove;});
 }
 
-//The exit will still exist in the area, but won't be accessible
-void Area::DisconnectExit(AreaKey exitToDisconnect) {
-  for (auto& exit : exits) {
-    if (exit.GetAreaKey() == exitToDisconnect) {
-      exit.Disconnect();
-      return;
-    }
-  }
-}
-
 void Area::SetAsPrimary(AreaKey exitToBePrimary) {
   for (auto& exit : exits) {
     if (exit.GetAreaKey() == exitToBePrimary) {
