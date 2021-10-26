@@ -4,6 +4,7 @@
 #include "item_table.h"
 #include "settings.h"
 #include "player.h"
+#include "common.h"
 
 #define EnBox_Init_addr 0x1899EC
 #define EnBox_Init ((ActorFunc)EnBox_Init_addr)

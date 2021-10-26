@@ -1561,6 +1561,11 @@ SetBGMEntrance_patch:
 SetBGMDayNight_patch:
     b hook_SetBGMDayNight
 
+.section .patch_SetBGMEvent
+.global SetBGMEvent_patch
+SetBGMEvent_patch:
+    b hook_SetBGMEvent
+
 .section .patch_SetSFX
 .global SetSFX_patch
 SetSFX_patch:
@@ -1607,6 +1612,11 @@ InterfaceDrawDontSpoilTradeItems_patch:
 OpenSaveDontSpoilTradeItems_patch:
     b 0x44FEB8
 
+.section .patch_EnteredLocation
+.global EnteredLocation_patch
+EnteredLocation_patch:
+    bl hook_EnteredLocation
+
 .section .patch_LostWoodsBridgeMusic
 .global LostWoodsBridgeMusic_patch
 LostWoodsBridgeMusic_patch:
@@ -1631,6 +1641,36 @@ SaveMenuIgnoreOpen_patch:
 .global OverrideFogDuringGameplayInit_patch
 OverrideFogDuringGameplayInit_patch:
     bl hook_OverrideFogDuringGameplayInit
+
+.section .patch_KotakeDontPlayBattleMusic
+.global KotakeDontPlayBattleMusic_patch
+KotakeDontPlayBattleMusic_patch:
+    nop
+
+.section .patch_SkipTwinrovaQuarrelCutsceneOne
+.global SkipTwinrovaQuarrelCutsceneOne_patch
+SkipTwinrovaQuarrelCutsceneOne_patch:
+    sub r1,r1,#0x500
+
+.section .patch_SkipTwinrovaQuarrelCutsceneTwo
+.global SkipTwinrovaQuarrelCutsceneTwo_patch
+SkipTwinrovaQuarrelCutsceneTwo_patch:
+    bl hook_SkipTwinrovaQuarrelCutscene
+
+.section .patch_FixItemsMenuSlotDuplication
+.global FixItemsMenuSlotDuplication_patch
+FixItemsMenuSlotDuplication_patch:
+    b hook_FixItemsMenuSlotDuplication
+
+.section .patch_PlayEntranceCutscene
+.global PlayEntranceCutscene_patch
+PlayEntranceCutscene_patch:
+    b hook_PlayEntranceCutscene
+
+.section .patch_SkipJabuOpeningCutscene
+.global SkipJabuOpeningCutscene_patch
+SkipJabuOpeningCutscene_patch:
+    bl hook_SkipJabuOpeningCutscene
 
 .section .patch_loader
 .global loader_patch

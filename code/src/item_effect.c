@@ -164,7 +164,7 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
 }
 
-static u8 MakeSpaceInItemMenu(u8 itemMenu[]) {
+static u8 MakeSpaceInItemMenu(u8* itemMenu) {
     u8 currentSlot = 5;
     u8 emptyButton = 0xFF;
     u8 slotToFree = 0xFF;

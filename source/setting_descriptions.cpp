@@ -172,7 +172,19 @@ string_view overworldEntrancesDesc    = "Shuffle the pool of Overworld entrances
                                         "- Hyrule Castle Courtyard and Garden entrance\n"  //
                                         "- Both Market Back Alley entrances\n"             //
                                         "- Gerudo Valley to Lake Hylia (unless entrances\n"//
-                                        "  are decoupled)";                               //
+                                        "  are decoupled)";                                //
+/*------------------------------                                                           //
+|      INTERIOR ENTRANCES      |                                                           //
+------------------------------*/                                                           //
+string_view interiorEntrancesOff      = "Interior entrances will not be shuffled.";        //
+string_view interiorEntrancesSimple   = "Shuffle the pool of interior entrances which\n"   //
+                                        "contains most Houses and all Great Fairies.";     //
+string_view interiorEntrancesAll      = "An extended version of 'Simple' with some extra\n"//
+                                        "places:\n"                                        //
+                                        "- Windmill\n"                                     //
+                                        "- Link's House\n"                                 //
+                                        "- Temple of Time\n"                               //
+                                        "- Kakariko Potion Shop.";                         //
 /*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
@@ -516,13 +528,6 @@ string_view fourPoesDesc              = "The cutscene with the 4 poes in Forest 
                                         "be skipped. If the cutscene is not skipped, it can"
                                         "be exploited to reach the basement early.";       //
 /*------------------------------                                                           //
-|     TEMPLE OF TIME INTRO     |                                                           //
-------------------------------*/                                                           //
-string_view templeOfTimeIntroDesc     = "The introduction cutscene to Temple of Time will\n"
-                                        "be skipped. This cutscene is helpful for\n"       //
-                                        "performing Door of Time Skip should the Door of\n"//
-                                        "Time be closed.";                                 //
-/*------------------------------                                                           //
 |        LAKE HYLIA OWL        |                                                           //
 ------------------------------*/                                                           //
 string_view lakeHyliaOwlDesc          = "The owl flight cutscene in Lake Hylia will be\n"  //
@@ -590,10 +595,20 @@ string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints
                                         "game.";                                           //
                                                                                            //
 /*------------------------------                                                           //
-|        CLEARER HINTS         |                                                           //
+|        HINT CLARITY          |                                                           //
 ------------------------------*/                                                           //
-string_view clearerHintsDesc          = "The hints provided by Gossip Stones will be very\n"
-                                        "direct if this option is enabled.";               //
+string_view obscureHintsDesc          = "Sets the difficulty of hints.\n"                  //
+                                        "Obscure: Hints are unique for each thing, but\n"  //
+                                        "the writing may be confusing.\n"                  //
+                                        "E.g. Kokiri Sword > a butter knife";              //
+string_view ambiguousHintsDesc        = "Sets the difficulty of hints.\n"                  //
+                                        "Ambiguous: Hints are clearly written, but may\n"  //
+                                        "refer to more than one thing.\n"                  //
+                                        "E.g. Kokiri Sword > a sword";                     //
+string_view clearHintsDesc            = "Sets the difficulty of hints.\n"                  //
+                                        "Clear: Hints are clearly written and are unique\n"//
+                                        "for each thing.\n"                                //
+                                        "E.g. Kokiri Sword > the Kokiri Sword";            //
 /*------------------------------                                                           //
 |      HINT DISTRIBUTION       |                                                           //
 ------------------------------*/                                                           //

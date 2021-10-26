@@ -9,19 +9,21 @@
 
 #include "../code/src/entrance.h"
 
+#define ENTRANCE_SHUFFLE_SUCCESS 0
+#define ENTRANCE_SHUFFLE_FAILURE 1
+
 extern std::list<EntranceOverride> entranceOverrides;
 
 enum class EntranceType {
     None,
-    Dungeon,
-    Interior,
-    SpecialInterior,
-    Grotto,
-    Grave,
-    Overworld,
     OwlDrop,
     Spawn,
     WarpSong,
+    Dungeon,
+    Interior,
+    SpecialInterior,
+    GrottoGrave,
+    Overworld,
     Extra,
     All,
 };
@@ -206,9 +208,11 @@ public:
 
     void Connect(AreaKey newConnectedRegion) {
         connectedRegion = newConnectedRegion;
+        AreaTable(newConnectedRegion)->entrances.push_front(this);
     }
 
     AreaKey Disconnect() {
+        AreaTable(connectedRegion)->entrances.remove_if([this](const auto entrance){return this == entrance;});
         AreaKey previouslyConnected = connectedRegion;
         connectedRegion = NONE;
         return previouslyConnected;
@@ -253,8 +257,9 @@ private:
     std::string name = "";
 };
 
-void ShuffleAllEntrances();
+int  ShuffleAllEntrances();
 void CreateEntranceOverrides();
+EntranceTrackingData* GetEntranceTrackingData();
 
 extern std::vector<std::list<Entrance*>> playthroughEntrances;
 extern bool noRandomEntrances;

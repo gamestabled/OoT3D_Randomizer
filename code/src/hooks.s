@@ -883,6 +883,16 @@ hook_SetBGMDayNight:
     push {r4-r6, lr}
     b 0x483C8C
 
+.global hook_SetBGMEvent
+hook_SetBGMEvent:
+    push {r0, r2-r12, lr}
+    cpy r0,r1
+    bl SetBGM
+    cpy r1,r0
+    pop {r0, r2-r12, lr}
+    push {r4-r11, lr}
+    b 0x36EC44
+
 .global hook_SetSFX
 hook_SetSFX:
     push {r1-r12, lr}
@@ -997,6 +1007,14 @@ hook_SkipTimeTravelCutscene:
     pop {r0-r12, lr}
     ldmia sp!,{r4,r5,r6,pc}
 
+.global hook_EnteredLocation
+hook_EnteredLocation:
+    cpy r4,r0
+    push {r0-r12, lr}
+    bl Entrance_EnteredLocation
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_LostWoodsBridgeMusic
 hook_LostWoodsBridgeMusic:
     push {r0-r12, lr}
@@ -1039,6 +1057,38 @@ hook_SaveMenuIgnoreOpen:
 hook_OverrideFogDuringGameplayInit:
     push {r0-r12, lr}
     bl Fog_OverrideState
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_SkipTwinrovaQuarrelCutscene
+hook_SkipTwinrovaQuarrelCutscene:
+    mov r0,#0x500
+    add r0,r0,#0x9
+    bx lr
+
+.global hook_FixItemsMenuSlotDuplication
+hook_FixItemsMenuSlotDuplication:
+    mov r4,#0xFF
+    mov lr,#0xFF
+    add r10,r10,#0x1
+    b 0x456B94
+
+.global hook_PlayEntranceCutscene
+hook_PlayEntranceCutscene:
+    bgt 0x44F0A4
+    push {r0-r12, lr}
+    ldrb r0,[r5,#0x3]
+    bl EntranceCutscene_ShouldPlay
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x44F0A4
+    b 0x44F06C
+
+.global hook_SkipJabuOpeningCutscene
+hook_SkipJabuOpeningCutscene:
+    ldrh r0,[r0,#0x0]
+    push {r0-r12, lr}
+    bl Jabu_SkipOpeningCutscene
     pop {r0-r12, lr}
     bx lr
 

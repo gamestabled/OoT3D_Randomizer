@@ -96,6 +96,10 @@ SECTIONS
 		*(.patch_BeanDaddyModifyPrice)
 	}
 
+	.patch_SkipTwinrovaQuarrelCutsceneOne 0x15273C : {
+		*(.patch_SkipTwinrovaQuarrelCutsceneOne)
+	}
+
 	.patch_FairyPickupHealAmount 0x15CA4C : {
 		*(.patch_FairyPickupHealAmount)
 	}
@@ -170,6 +174,10 @@ SECTIONS
 
 	.patch_SkipTimeTravelCutsceneOne 0x174DEC : {
 		*(.patch_SkipTimeTravelCutsceneOne)
+	}
+
+	.patch_SkipTwinrovaQuarrelCutsceneTwo 0x176110 : {
+		*(.patch_SkipTwinrovaQuarrelCutsceneTwo)
 	}
 
 	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {
@@ -312,12 +320,20 @@ SECTIONS
 		*(.patch_JabuJabuCutsceneOverride)
 	}
 
+	.patch_KotakeDontPlayBattleMusic 0x1A8218 : {
+		*(.patch_KotakeDontPlayBattleMusic)
+	}
+
 	.patch_GossipStoneAddSariaHint 0x1B398C : {
 		*(.patch_GossipStoneAddSariaHint)
 	}
 
 	.patch_ReadGossipStoneHints 0x1B3A44 : {
 		*(.patch_ReadGossipStoneHints)
+	}
+
+	.patch_SkipJabuOpeningCutscene 0x1B583C : {
+		*(.patch_SkipJabuOpeningCutscene)
 	}
 
 	.patch_KingZoraSecondTunic 0x1B6A18 : {
@@ -684,6 +700,10 @@ SECTIONS
 		*(.patch_SetBGMEntrance)
 	}
 
+	.patch_EnteredLocation 0x338DB8 : {
+		*(.patch_EnteredLocation)
+	}
+
 	.patch_LostWoodsBridgeMusic 0x338DD8 : {
 		*(.patch_LostWoodsBridgeMusic)
 	}
@@ -750,6 +770,10 @@ SECTIONS
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
 		*(.patch_ModelSpawnGetObjectStatus)
+	}
+
+	.patch_SetBGMEvent 0x36EC40 : {
+		*(.patch_SetBGMEvent)
 	}
 
 	.patch_DemoEffectMedallionDraw 0x37214C : {
@@ -1044,6 +1068,10 @@ SECTIONS
 		*(.patch_ExtendedObjectClear)
 	}
 
+	.patch_PlayEntranceCutscene 0x44F068 : {
+		*(.patch_PlayEntranceCutscene)
+	}
+
 	.patch_RequiemLocation 0x44F104 : {
 		*(.patch_RequiemLocation)
 	}
@@ -1082,6 +1110,10 @@ SECTIONS
 
 	.patch_after_GlobalContext_Update 0x452434 : {
 		*(.patch_after_GlobalContext_Update)
+	}
+
+	.patch_FixItemsMenuSlotDuplication 0x456B90 : {
+		*(.patch_FixItemsMenuSlotDuplication)
 	}
 
 	.patch_GameOverDontSpoilTradeItems 0x458BE0 : {

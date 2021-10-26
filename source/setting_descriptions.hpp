@@ -59,6 +59,10 @@ extern string_view dungeonEntrancesDesc;
 
 extern string_view overworldEntrancesDesc;
 
+extern string_view interiorEntrancesOff;
+extern string_view interiorEntrancesSimple;
+extern string_view interiorEntrancesAll;
+
 extern string_view bombchuLogicDesc;
 
 extern string_view defaultAmmoDropsDesc;
@@ -174,8 +178,6 @@ extern string_view freeScarecrowDesc;
 
 extern string_view fourPoesDesc;
 
-extern string_view templeOfTimeIntroDesc;
-
 extern string_view lakeHyliaOwlDesc;
 
 extern string_view bigPoeTargetCountDesc;
@@ -198,7 +200,9 @@ extern string_view keepFWWarpPointDesc;
 
 extern string_view gossipStonesHintsDesc;
 
-extern string_view clearerHintsDesc;
+extern string_view obscureHintsDesc;
+extern string_view ambiguousHintsDesc;
+extern string_view clearHintsDesc;
 
 extern string_view uselessHintsDesc;
 extern string_view balancedHintsDesc;

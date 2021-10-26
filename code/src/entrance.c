@@ -3,23 +3,22 @@
 #include "settings.h"
 #include "string.h"
 #include "item_override.h"
+#include "savefile.h"
+#include "common.h"
 
 typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
-static EntranceOverride rEntranceOverrides[256] = {0};
+typedef void (*SetEventChkInf_proc)(u32 flag);
+#define SetEventChkInf_addr 0x34CBF8
+#define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
 
-//This variable is used to store whatever new entrance should lead to
-//the Requiem of Spirit check. Otherwise, leaving the Spirit Temple
-//will take players to the Requiem cutscene even if it is shuffled.
-static s16 newRequiemEntrance = 0x01E1;
+#define dynamicExitList_addr 0x53C094
+#define dynamicExitList ((s16*)dynamicExitList_addr)
 
-//Same concept as above, except for Saria's Gift check
-static s16 newLWBridgeEntranceFromKokiriForest = 0x05E0;
-
-//Same as above, except used for handling correct ambient music into this area
-static s16 newLWBridgeEntranceFromHyruleField = 0x04DE;
+EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
+EntranceTrackingData gEntranceTrackingData = {0};
 
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
@@ -96,6 +95,18 @@ void Scene_Init(void) {
     gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
 }
 
+static void Entrance_SeparateOGCFairyFountainExit() {
+    //Overwrite unused entrance 0x03E8 with values from 0x0340 to use it as the
+    //exit from OGC Great Fairy Fountain -> Castle Grounds
+    for (size_t i = 0; i < 4; ++i) {
+        gEntranceTable[0x3E8 + i] = gEntranceTable[0x340 + i];
+    }
+
+    //Overwrite the dynamic exit for the OGC Fairy Fountain to be 0x3E8 instead
+    //of 0x340 (0x340 will stay as the exit for the HC Fairy Fountain -> Castle Grounds)
+    dynamicExitList[2] = 0x03E8;
+}
+
 void Entrance_Init(void) {
     s32 index;
 
@@ -118,13 +129,14 @@ void Entrance_Init(void) {
         gEntranceTable[index].field = 0x010B;
     }
 
+    Entrance_SeparateOGCFairyFountainExit();
+
     //copy the entrance table to use for overwriting the original one
     EntranceInfo copyOfEntranceTable[0x613] = {0};
     memcpy(copyOfEntranceTable, gEntranceTable, sizeof(EntranceInfo) * 0x613);
 
     //rewrite the entrance table for entrance randomizer
-    size_t numberOfEntranceOverrides = sizeof(rEntranceOverrides) / sizeof(EntranceOverride);
-    for (size_t i = 0; i < numberOfEntranceOverrides; i++) {
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
 
         s16 originalIndex = rEntranceOverrides[i].index;
         s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
@@ -132,21 +144,6 @@ void Entrance_Init(void) {
 
         if (originalIndex == 0 && overrideIndex == 0) {
             continue;
-        }
-
-        //check to see if this is the new requiem entrance
-        if (overrideIndex == 0x1E1) {
-            newRequiemEntrance = originalIndex;
-        }
-
-        //check to see if this is the new LW Bridge exit from KF
-        if (overrideIndex == 0x5E0) {
-            newLWBridgeEntranceFromKokiriForest = originalIndex;
-        }
-
-        //check to see if this is the new LW Bridge exit from HF
-        if (overrideIndex == 0x4DE) {
-            newLWBridgeEntranceFromHyruleField = originalIndex;
         }
 
         //check to see if this is a new dungeon entrance
@@ -189,20 +186,26 @@ void Entrance_DeathInGanonBattle(void) {
     }
 }
 
-s16 Entrance_GetRequiemEntrance(void) {
-    return newRequiemEntrance;
-}
-
-s16 Entrance_GetLWBridgeEntranceFromKokiriForest(void) {
-    return newLWBridgeEntranceFromKokiriForest;
+u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn) {
+    EntranceInfo currentEntrance = gEntranceTable[gSaveContext.entranceIndex];
+    return currentEntrance.scene == scene && currentEntrance.spawn == spawn;
 }
 
 u32 Entrance_IsLostWoodsBridge(void) {
-    if (gSaveContext.entranceIndex == newLWBridgeEntranceFromHyruleField || gSaveContext.entranceIndex == newLWBridgeEntranceFromKokiriForest) {
+    //  Kokiri Forest -> LW Bridge, index 05E0   Hyrule Field -> LW Bridge, index 04DE
+    if (Entrance_SceneAndSpawnAre(0x5B, 0x09) || Entrance_SceneAndSpawnAre(0x5B, 0x08)) {
       return 1;
     } else {
       return 0;
     }
+}
+
+void Entrance_EnteredLocation(void) {
+    if (!IsInGame()) {
+        return;
+    }
+    SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
+    SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance
@@ -307,4 +310,15 @@ void EnableFW() {
             gSaveContext.buttonStatus[i] = 0;
         }
     }
+}
+
+u8 EntranceCutscene_ShouldPlay(u8 flag) {
+    if (gSaveContext.gameMode != 0 || flag == 0x18 || flag == 0xAD || (flag >= 0xBB && flag <= 0xBF)) {
+        if (flag == 0xC0) {
+            gSaveContext.eventChkInf[0x3] &= ~0x0800; // clear "began Nabooru battle"
+        }
+        return 1; // cutscene will play normally in DHWW, or always if it's freeing Epona or clearing a Trial
+    }
+    SetEventChkInf(flag);
+    return 0; //cutscene will not play
 }

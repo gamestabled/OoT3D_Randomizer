@@ -301,7 +301,7 @@ public:
         excludedOption = Option::Bool(settingText, {"Include", "Exclude"}, {desc});
       }
 
-      Settings::excludeLocationsOptions.push_back(&excludedOption);
+      Settings::excludeLocationsOptionsVector[collectionCheckGroup].push_back(&excludedOption);
     }
 
     static auto Base(u8 scene, u8 flag, std::string&& name, const HintKey hintKey, const ItemKey vanillaItem, std::vector<Category>&& categories, SpoilerCollectionCheck collectionCheck = SpoilerCollectionCheck(), SpoilerCollectionCheckGroup collectionCheckGroup = SpoilerCollectionCheckGroup::GROUP_NO_GROUP) {
