@@ -754,25 +754,6 @@ void CreateEntranceOverrides() {
     PlacementLog_Msg(message);
     message = "\tReplacement " + std::to_string(replacementIndex) + "\n";
     PlacementLog_Msg(message);
-
-    //Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
-    if (originalIndex == 0x00EA) { //Hyrule Field -> ZR Front land entrance
-      entranceOverrides.push_back({
-        .index = 0x01D9, //Hyrule Field -> ZR Front water entrance
-        .destination = destinationIndex,
-        .blueWarp = originalBlueWarp,
-        .override = replacementIndex,
-        .overrideDestination = replacementDestinationIndex,
-      });
-    } else if (originalIndex == 0x0181) { //ZR Front -> Hyrule Field land entrance
-      entranceOverrides.push_back({
-        .index = 0x0311, //ZR Front -> Hyrule Field water entrance
-        .destination = destinationIndex,
-        .blueWarp = originalBlueWarp,
-        .override = replacementIndex,
-        .overrideDestination = replacementDestinationIndex,
-      });
-    }
   }
 }
 

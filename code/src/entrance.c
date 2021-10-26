@@ -164,6 +164,21 @@ void Entrance_Init(void) {
               gEntranceTable[blueWarpIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
             }
         }
+
+        //Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
+        if (originalIndex == 0x00EA) { //Hyrule Field -> ZR Front land entrance
+            for (s16 j = 0; j < 4; j++) {
+                gEntranceTable[0x01D9+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
+                gEntranceTable[0x01D9+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
+                gEntranceTable[0x01D9+j].field = copyOfEntranceTable[overrideIndex+j].field;
+            }
+        } else if (originalIndex == 0x0181) { //ZR Front -> Hyrule Field land entrance
+            for (s16 j = 0; j < 4; j++) {
+                gEntranceTable[0x0311+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
+                gEntranceTable[0x0311+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
+                gEntranceTable[0x0311+j].field = copyOfEntranceTable[overrideIndex+j].field;
+            }
+        }
     }
 
     //Set the exit transition of GC Woods Warp -> Lost Woods to a lost woods transition.
@@ -449,9 +464,7 @@ EntranceName entranceNames[] = {
     { 0x00DB, "Hyrule Field" /* > Kakariko */ , ENTRANCE_GROUP_HYRULE_FIELD },
     { 0x017D, "Kakariko" /* > Hyrule Field */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x00EA, "Hyrule Field" /* > ZR */ , ENTRANCE_GROUP_HYRULE_FIELD },
-    { 0x01D9, "Hyrule Field (River)" /* > ZR (River) */ , ENTRANCE_GROUP_HYRULE_FIELD },
     { 0x0181, "ZR" /* > Hyrule Field */ , ENTRANCE_GROUP_ZORAS_DOMAIN },
-    { 0x0311, "ZR (River)" /* > Hyrule Field (River) */ , ENTRANCE_GROUP_ZORAS_DOMAIN },
     { 0x0157, "Hyrule Field" /* > Lon Lon Ranch */ , ENTRANCE_GROUP_HYRULE_FIELD },
     { 0x01F9, "Lon Lon Ranch" /* > Hyrule Field */ , ENTRANCE_GROUP_LON_LON_RANCH },
     { 0x0328, "Lake Hylia" /* > Zora's Domain */ , ENTRANCE_GROUP_LAKE_HYLIA },
