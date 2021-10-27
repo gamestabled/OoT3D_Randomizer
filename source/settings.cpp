@@ -235,7 +235,7 @@ namespace Settings {
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
   Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
-  Option RaceMode            = Option::Bool("Race Mode",              {"Off", "On"},                                                          {raceModeDesc});
+  Option RacingSetting       = Option::Bool("Racing Setting",         {"Off", "On"},                                                          {racingSettingDesc});
   Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {spoilerLogDesc},                                                                                                 OptionCategory::Setting,    1); // On
   Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
@@ -252,7 +252,7 @@ namespace Settings {
     &StartingTime,
     &ChestAnimations,
     &ChestSize,
-    &RaceMode,
+    &RacingSetting,
     &GenerateSpoilerLog,
     &IngameSpoilers,
     &MenuOpeningButton,
@@ -953,7 +953,7 @@ namespace Settings {
     ctx.startingTime         = StartingTime.Value<u8>();
     ctx.chestAnimations      = (ChestAnimations) ? 1 : 0;
     ctx.chestSize            = (ChestSize) ? 1 : 0;
-    ctx.raceMode             = (RaceMode) ? 1 : 0;
+    ctx.racingSetting        = (RacingSetting) ? 1 : 0;
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
     ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();

@@ -1672,11 +1672,6 @@ PlayEntranceCutscene_patch:
 SkipJabuOpeningCutscene_patch:
     bl hook_SkipJabuOpeningCutscene
 
-.section .patch_LoadingTime
-.global LoadingTime_patch
-LoadingTime_patch:
-    bl hook_LoadingTime
-
 .section .patch_loader
 .global loader_patch
 

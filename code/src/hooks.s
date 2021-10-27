@@ -1092,14 +1092,6 @@ hook_SkipJabuOpeningCutscene:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_LoadingTime
-hook_LoadingTime:
-    push {r0-r12, lr}
-    bl ExtendCitraLoadingTime
-    pop {r0-r12, lr}
-    mov r1,#0x104
-    bx lr
-
 .section .loader
 .global hook_into_loader
 hook_into_loader:

@@ -198,8 +198,8 @@ static void Gfx_DrawSeedHash(void) {
     u32 seconds = gExtSaveData.playtimeSeconds % 60;
     Draw_DrawFormattedString(10 + (SPACING_X * 4), 80 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
 
-    // Stop here if Race Mode is disabled
-    if (gSettingsContext.raceMode == OFF) {return;}
+    // Stop here if Racing Setting is disabled
+    if (gSettingsContext.racingSetting == OFF) {return;}
 
     Draw_DrawString(10, 105, COLOR_TITLE, "Spoiler Log Passcode:");
     if (gExtSaveData.savedSpoilerLogPassCode == 0) {
@@ -350,7 +350,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers &&
-                                    (!SpoilerData_GetIsItemLocationCollected(locIndex) || (gSettingsContext.raceMode && !SaveFileIsForThisSeed()))
+                                    (!SpoilerData_GetIsItemLocationCollected(locIndex) || (gSettingsContext.racingSetting && !SaveFileIsForThisSeed()))
                                    ) ? "???" : SpoilerData_GetItemNameString(locIndex);
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
@@ -398,7 +398,7 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers &&
-                                    (!isCollected || (gSettingsContext.raceMode && !SaveFileIsForThisSeed()))
+                                    (!isCollected || (gSettingsContext.racingSetting && !SaveFileIsForThisSeed()))
                                    ) ? "???" : SpoilerData_GetItemNameString(locIndex);
             Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
         }
@@ -438,7 +438,7 @@ static void Gfx_DrawERTracker(void) {
             const char* startName = pair.StartStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.StartStrOffset] : "START STRING NOT FOUND";
             const char* returnName = pair.ReturnStrOffset != ENTRANCE_INVALID_STRING_OFFSET ? &gEntranceTrackingData.StringData[pair.ReturnStrOffset] : "RETURN STRING NOT FOUND";
 
-            u8 shouldBeDisplayed = gSettingsContext.ingameSpoilers || (isDiscovered && (!gSettingsContext.raceMode || SaveFileIsForThisSeed()));
+            u8 shouldBeDisplayed = gSettingsContext.ingameSpoilers || (isDiscovered && (!gSettingsContext.racingSetting || SaveFileIsForThisSeed()));
             Draw_DrawFormattedString_Small(10, locPosY, color, "%s %c", shouldBeDisplayed ? startName : unknown, H_DOUBLE_ARROW_CHR);
             Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s", shouldBeDisplayed ? returnName : unknown);
         }
@@ -472,12 +472,6 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 }
 
 static void Gfx_ShowMenu(void) {
-
-    // If the race file has been manipulated, delete PassCode
-    if (gSettingsContext.raceMode == ON && gExtSaveData.saveContextChecksum != gSaveContext.checksum) {
-        gExtSaveData.savedSpoilerLogPassCode = 0;
-    }
-
     pressed = 0;
 
     if (!gSettingsContext.ingameSpoilers) {
@@ -688,6 +682,11 @@ void Gfx_Update(void) {
     }
 
     Gfx_UpdatePlayTime(IsInGame());
+
+    // If the race file has been manipulated, delete PassCode
+    if (gSettingsContext.racingSetting == ON && gExtSaveData.saveContextChecksum != gSaveContext.checksum) {
+        gExtSaveData.savedSpoilerLogPassCode = 0;
+    }
 
     if(!isAsleep && openingButton() && IsInGame()){
         Gfx_ShowMenu();

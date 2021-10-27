@@ -1048,10 +1048,6 @@ SECTIONS
 		*(.patch_CheckForPocketCuccoHatchGameplayInit)
 	}
 
-	.patch_LoadingTime 0x448B8C : {
-		*(.patch_LoadingTime)
-	}
-
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}

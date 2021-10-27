@@ -399,7 +399,7 @@ typedef struct {
   u8 mapsShowDungeonMode;
   u8 chestAnimations;
   u8 chestSize;
-  u8 raceMode;
+  u8 racingSetting;
   u8 generateSpoilerLog;
   u8 ingameSpoilers;
   u8 menuOpeningButton;

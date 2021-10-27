@@ -60,10 +60,10 @@ namespace Playthrough {
       SetSpoilerLogPassCode(spoilerLogPassCode);
 
       if (Settings::GenerateSpoilerLog) {
-        // In Race Mode, the spoiler log file is only written if the proper passcode is provided.
-        // The in-game spoiler log is written anyway (if GenerateSpoilerLog is on), because Race Mode prevents cheating with it.
+        // With the Racing Setting enabled, the spoiler log file is only written if the proper passcode is provided.
+        // The in-game spoiler log is written anyway (if GenerateSpoilerLog is on), because the Racing Setting prevents cheating with it.
         u8 onlyInGameTracker = 0;
-        if (Settings::RaceMode && !Settings::IngameSpoilers) {
+        if (Settings::RacingSetting && !Settings::IngameSpoilers) {
           std::string passcode = GetInput("Enter Passcode to generate spoiler log");
           if (passcode.compare(std::to_string(spoilerLogPassCode))) {
             printf("\x1b[11;10HInvalid code, writing tracker only...");

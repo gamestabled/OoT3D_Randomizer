@@ -680,9 +680,7 @@ string_view chestSizeDesc             = "This option will change the appearance 
 /*------------------------------                                                           //
 |           RACE MODE          |                                                           //
 ------------------------------*/                                                           //
-string_view raceModeDesc              = "Citra loads are slowed down to match a real 3DS.\n"
-                                        "\n"                                               //
-                                        "Spoiler Log generation requires either setting\n" //
+string_view racingSettingDesc         = "Spoiler Log generation requires either setting\n" //
                                         "\"Ingame Spoilers\" to Show or a passcode that\n" //
                                         "can be obtained from the in-game menu after\n"    //
                                         "defeating Ganondorf (you have to regenerate\n"    //
@@ -690,9 +688,9 @@ string_view raceModeDesc              = "Citra loads are slowed down to match a 
 /*------------------------------                                                           //
 |         SPOILER L0G          |                                                           //
 ------------------------------*/                                                           //
-string_view spoilerLogDesc            = "If Race Mode is enabled but you want to keep the\n"
-                                        "in-game tracker or generate a log after the race,\n"
-                                        "set this to \"Yes\" and ignore the passcode\n"    //
+string_view spoilerLogDesc            = "If Racing Setting is enabled but you want to keep\n"
+                                        "the in-game tracker or generate a log after the\n"//
+                                        "race, set this to \"Yes\" and ignore the passcode\n"
                                         "(input something random).";                       //
 /*------------------------------                                                           //
 |        INGAME SPOILERS       |                                                           //
