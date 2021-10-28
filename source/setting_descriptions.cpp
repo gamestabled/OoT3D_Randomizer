@@ -794,7 +794,8 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
 string_view musicRandoDesc            = "Randomize the music in the game.";                //
-string_view shuffleBGMDesc            = "Randomize area background music";                 //
+string_view shuffleBGMDesc            = "Randomize area background music, either\n"        //
+                                        "grouped into categories or all mixed together.";  //
 string_view fanfaresOffDesc           = "Fanfares are not shuffled.";                      //
 string_view onlyFanfaresDesc          = "Fanfares and ocarina songs are shuffled in\n"     //
                                         "separate pools.";                                 //

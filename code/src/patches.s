@@ -1672,6 +1672,11 @@ PlayEntranceCutscene_patch:
 SkipJabuOpeningCutscene_patch:
     bl hook_SkipJabuOpeningCutscene
 
+.section .patch_SilenceNavi
+.global SilenceNavi_patch
+SilenceNavi_patch:
+    bl hook_SilenceNavi
+
 .section .patch_loader
 .global loader_patch
 

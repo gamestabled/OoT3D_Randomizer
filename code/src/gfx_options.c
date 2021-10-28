@@ -3,7 +3,7 @@
 
 #define BORDER_WIDTH 2
 #define CHOICE_COLUMN 240
-#define DESCRIPTION_ROW 170
+#define DESCRIPTION_ROW 184
 
 typedef struct {
     char name[30];
@@ -13,7 +13,7 @@ typedef struct {
 } Option;
 
 s8 selectedOption;
-Option options[2];
+Option options[3];
 
 void InitOptions(void) {
     // BGM
@@ -29,15 +29,22 @@ void InitOptions(void) {
     strcpy(options[1].alternatives[1], "On");
     strcpy(options[1].description, "Toggles the sound effects.");
     options[1].optionPointer = &gExtSaveData.option_EnableSFX;
+
+    // Silence Navi
+    strcpy(options[2].name, "Silence Navi");
+    strcpy(options[2].alternatives[0], "Off");
+    strcpy(options[2].alternatives[1], "On");
+    strcpy(options[2].description, "Prevents Navi from alerting you about advice.");
+    options[2].optionPointer = &gExtSaveData.option_SilenceNavi;
 }
 
 void Gfx_DrawOptions(void) {
-    Draw_DrawString(10, 10, COLOR_TITLE, "Options");
+    Draw_DrawString(10, 16, COLOR_TITLE, "Options");
 
     // Options
     for (u8 i = 0; i < sizeof(options) / sizeof(Option); i++) {
-        Draw_DrawString(10, 10 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].name);
-        Draw_DrawString(CHOICE_COLUMN, 10 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].alternatives[*options[i].optionPointer]);
+        Draw_DrawString(10, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].name);
+        Draw_DrawString(CHOICE_COLUMN, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].alternatives[*options[i].optionPointer]);
     }
 
     // Description

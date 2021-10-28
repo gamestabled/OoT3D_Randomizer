@@ -836,10 +836,10 @@ namespace Settings {
   static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares +\n                         Ocarina Music"};
   static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
 
-  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},    {musicRandoDesc},                                                                                                                                                          OptionCategory::Cosmetic,               0); // Off
-  Option ShuffleBGM =      Option::Bool("  Shuffle BGM",           {"Off", "On"},    {shuffleBGMDesc},                                                                                                                                                          OptionCategory::Cosmetic,               1); // On
-  Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions}, {fanfareDescriptions},                                                                                                                                                     OptionCategory::Cosmetic,               1); // Fanfares only
-  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},    {shuffleOcaMusicDesc},                                                                                                                                                     OptionCategory::Cosmetic,               1); // On
+  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},                         {musicRandoDesc},                                                                                                                                     OptionCategory::Cosmetic);
+  Option ShuffleBGM =      Option::U8  ("  Shuffle BGM",           {"Off", "On (Grouped)", "On (Mixed)"}, {shuffleBGMDesc},                                                                                                                                     OptionCategory::Cosmetic,               2); // On (Mixed)
+  Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions},                      {fanfareDescriptions},                                                                                                                                OptionCategory::Cosmetic,               1); // Fanfares only
+  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},                         {shuffleOcaMusicDesc},                                                                                                                                OptionCategory::Cosmetic,               1); // On
 
   Option ShuffleSFX              = Option::U8  ("Shuffle SFX",           {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                   OptionCategory::Cosmetic);
   Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle", {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                  OptionCategory::Cosmetic,               1); // On
@@ -1694,20 +1694,20 @@ namespace Settings {
           LogicChildDampeRacePoH.SetSelectedIndex(1);
           LogicGerudoKitchen.SetSelectedIndex(1);
           LogicOutsideGanonsGS.SetSelectedIndex(1);
-          LogicDMTSoilGS.SetSelectedIndex(1);
+          //LogicDMTSoilGS.SetSelectedIndex(1);
           LogicDMTSummitHover.SetSelectedIndex(1);
           LogicLinkGoronDins.SetSelectedIndex(1);
           LogicGoronCityPotWithStrength.SetSelectedIndex(1);
-          LogicCraterUpperToLower.SetSelectedIndex(1);
+          //LogicCraterUpperToLower.SetSelectedIndex(1);
           LogicBiggoronBolero.SetSelectedIndex(1);
           LogicDekuB1Skip.SetSelectedIndex(1);
           LogicDekuBasementGS.SetSelectedIndex(1);
           LogicDCStaircase.SetSelectedIndex(1);
           LogicDCScarecrowGS.SetSelectedIndex(1);
-          LogicJabuBossGSAdult.SetSelectedIndex(1);
-          LogicJabuScrubJumpDive.SetSelectedIndex(1);
-          LogicForestOutsideBackdoor.SetSelectedIndex(1);
-          LogicForestDoorFrame.SetSelectedIndex(1);
+          //LogicJabuBossGSAdult.SetSelectedIndex(1);
+          //LogicJabuScrubJumpDive.SetSelectedIndex(1);
+          //LogicForestOutsideBackdoor.SetSelectedIndex(1);
+          //LogicForestDoorFrame.SetSelectedIndex(1);
           LogicFireBossDoorJump.SetSelectedIndex(1);
           LogicFireSongOfTime.SetSelectedIndex(1);
           LogicWaterCentralBow.SetSelectedIndex(1);
@@ -1730,7 +1730,7 @@ namespace Settings {
           LogicReverseWasteland.SetSelectedIndex(1);
           LogicColossusGS.SetSelectedIndex(1);
           LogicDMTBombable.SetSelectedIndex(1);
-          LogicGoronCityPot.SetSelectedIndex(1);
+          //LogicGoronCityPot.SetSelectedIndex(1);
           LogicChildRollingWithStrength.SetSelectedIndex(1);
           LogicCraterBeanPoHWithHovers.SetSelectedIndex(1);
           LogicDCSlingshotSkip.SetSelectedIndex(1);
@@ -1742,8 +1742,8 @@ namespace Settings {
           LogicWaterDragonAdult.SetSelectedIndex(1);
           LogicWaterDragonJumpDive.SetSelectedIndex(1);
           LogicSpiritWall.SetSelectedIndex(1);
-          LogicSpiritSunChest.SetSelectedIndex(1);
-          LogicShadowFireArrowEntry.SetSelectedIndex(1);
+          //LogicSpiritSunChest.SetSelectedIndex(1);
+          //LogicShadowFireArrowEntry.SetSelectedIndex(1);
           LogicShadowUmbrella.SetSelectedIndex(1);
         }
       }
@@ -2062,8 +2062,12 @@ namespace Settings {
 
     InitMusicRandomizer();
     if (ShuffleMusic) {
-      if (ShuffleBGM) {
-        Music::ShuffleSequences(Music::SeqType::SEQ_BGM);
+      if (ShuffleBGM.Is(1)) {
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM_WORLD);
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM_EVENT);
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM_BATTLE);
+      } else if (ShuffleBGM.Is(2)) {
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM_WORLD | Music::SeqType::SEQ_BGM_EVENT | Music::SeqType::SEQ_BGM_BATTLE);
       }
 
       if (ShuffleFanfares.Is(2)) {

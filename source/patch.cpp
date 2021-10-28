@@ -195,18 +195,6 @@ bool WriteAllPatches() {
     return false;
   }
 
-  /*----------------------------
-  |    gEntranceTrackingData   |
-  -----------------------------*/
-
-  patchOffset = V_TO_P(GENTRANCETRACKINGDATA_ADDR);
-  patchSize = sizeof(EntranceTrackingData);
-  EntranceTrackingData *eEntranceTrackingPatchData = GetEntranceTrackingData();
-
-  if (!WritePatch(patchOffset, patchSize, (char*)eEntranceTrackingPatchData, code, bytesWritten, totalRW, buf)) {
-    return false;
-  }
-
   /*-------------------------
   |     gSettingsContext    |
   --------------------------*/
