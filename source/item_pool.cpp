@@ -744,7 +744,7 @@ void GenerateItemPool() {
     PlaceItemInLocation(DMT_TRADE_BROKEN_SWORD, PRESCRIPTION, false, true);
     PlaceItemInLocation(ZD_TRADE_PRESCRIPTION, EYEBALL_FROG, false, true);
     PlaceItemInLocation(LH_TRADE_FROG, EYEDROPS, false, true);
-    PlaceItemInLocation(DMT_TRADE_EYEDROPS, ICE_TRAP, false, true);
+    PlaceItemInLocation(DMT_TRADE_EYEDROPS, CLAIM_CHECK, false, true);
   }
   AddItemToMainPool(CLAIM_CHECK);
 
