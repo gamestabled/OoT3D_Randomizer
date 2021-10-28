@@ -1092,6 +1092,16 @@ hook_SkipJabuOpeningCutscene:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_SilenceNavi
+hook_SilenceNavi:
+    push {r0-r12, lr}
+    bl IsNaviSilenced
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x26808C
+    cmp r0,r2
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

@@ -540,6 +540,10 @@ SECTIONS
 		*(.patch_CanPlayBombchuBowlingOne)
 	}
 
+	.patch_SilenceNavi 0x26807C : {
+		*(.patch_SilenceNavi)
+	}
+
 	.patch_CheckGerudoToken_269884 0x269884 : {
 		*(.patch_CheckGerudoToken_269884)
 	}
