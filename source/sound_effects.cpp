@@ -384,7 +384,7 @@ namespace SFX {
         /* NA_SE_EV_FLAME_IGNITION */           SEQ_NOCAT,
         /* NA_SE_EV_SPEAR_HIT */                SEQ_WEAPON_HIT,
         /* NA_SE_EV_ELEVATOR_MOVE */            SEQ_NOCAT,
-        /* NA_SE_EV_WARP_HOLE */                SEQ_AMBIENCE,
+        /* NA_SE_EV_WARP_HOLE */                SEQ_NOCAT,
         /* NA_SE_EV_LINK_WARP */                SEQ_NOCAT,
         /* NA_SE_EV_PILLAR_SINK */              SEQ_NOCAT,
         /* NA_SE_EV_WATER_WALL */               SEQ_AMBIENCE,
@@ -396,7 +396,7 @@ namespace SFX {
         /* NA_SE_EV_LIGHTNING */                SEQ_EXPLOSION,
         /* NA_SE_EV_BOMB_BOUND */               SEQ_NOCAT,
         /* NA_SE_EV_WATERDROP */                SEQ_AMBIENCE,
-        /* NA_SE_EV_TORCH */                    SEQ_AMBIENCE,
+        /* NA_SE_EV_TORCH */                    SEQ_NOCAT,
         /* NA_SE_EV_MAGMA_LEVEL_M */            SEQ_AMBIENCE,
         /* NA_SE_EV_FIRE_PILLAR */              SEQ_NOCAT,
         /* NA_SE_EV_FIRE_PLATE */               SEQ_NOCAT,
@@ -611,10 +611,10 @@ namespace SFX {
         /* NA_SE_EV_DAIKU_CLOTH1 */             SEQ_NOCAT,
         /* NA_SE_EV_DEMO_EPONA_LAND */          SEQ_NOCAT,
         /* NA_SE_EV_DIVE_INTO_WATER_BLOCK */    SEQ_NOCAT,
-        /* NA_SE_EV_TORCH2 */                   SEQ_AMBIENCE,
-        /* NA_SE_EV_TORCH3 */                   SEQ_AMBIENCE,
-        /* NA_SE_EV_TORCH4 */                   SEQ_AMBIENCE,
-        /* NA_SE_EV_TORCH5 */                   SEQ_AMBIENCE,
+        /* NA_SE_EV_TORCH2 */                   SEQ_NOCAT,
+        /* NA_SE_EV_TORCH3 */                   SEQ_NOCAT,
+        /* NA_SE_EV_TORCH4 */                   SEQ_NOCAT,
+        /* NA_SE_EV_TORCH5 */                   SEQ_NOCAT,
         /* NA_SE_EV_EARTHQUAKE_LAST */          SEQ_NOCAT,
         /* NA_SE_EV_YAMI_TRAP_CHAIN */          SEQ_NOCAT,
         /* NA_SE_EV_FLAME_IGNITION_GANON */     SEQ_NOCAT,
@@ -1407,6 +1407,9 @@ namespace SFX {
             sfxData.rSFXOverrides_All[i] = SFX_BASE + i;
         }
         // Set the amount of sequence types for each category
+        for (size_t i = 0; i < SEQTYPE_COUNT; i++) {
+            sfxData.rSeqMaxes[i] = 0;
+        }
         for (size_t i = 0; i < seqTypesSFX.size(); i++) {
             if (seqTypesSFX[i] >= SEQTYPE_COUNT) {
                 continue;
