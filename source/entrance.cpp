@@ -15,16 +15,10 @@
 #include <utility>
 #include <set>
 #include <map>
-#include <unordered_map>
 
 std::list<EntranceOverride> entranceOverrides = {};
 bool noRandomEntrances = false;
 static bool entranceShuffleFailure = false;
-EntranceTrackingData entranceTrackingData = {0};
-
-EntranceTrackingData* GetEntranceTrackingData() {
-  return &entranceTrackingData;
-}
 
 typedef struct {
     EntranceType type;
@@ -468,165 +462,6 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
   }
 }
 
-std::unordered_map<s16, std::string> entranceNames = {
-  { 0x0000, "KF Deku Tree Entrance" },
-  { 0x0209, "Deku Tree" },
-  { 0x0004, "DMT Dodongo's Cavern Entrance" },
-  { 0x0242, "Dodongo's Cavern" },
-  { 0x0028, "ZF Jabu Jabu's Belly Entrance" },
-  { 0x0221, "Jabu Jabu's Belly" },
-  { 0x0169, "SFM Forest Temple Entrance" },
-  { 0x0215, "Forest Temple" },
-  { 0x0165, "DMC Fire Temple Entrance" },
-  { 0x024A, "Fire Temple" },
-  { 0x0010, "LH Water Temple Entrance" },
-  { 0x021D, "Water Temple" },
-  { 0x0082, "Colossus Spirit Temple Entrance" },
-  { 0x01E1, "Spirit Temple" },
-  { 0x0037, "Graveyard Warp Pad" },
-  { 0x0205, "Shadow Temple" },
-  { 0x0098, "Kakariko Bottom of the Well Entrance" },
-  { 0x02A6, "Bottom of the Well" },
-  { 0x0088, "ZF Ice Cavern Entrance" },
-  { 0x03D4, "Ice Cavern" },
-  { 0x0008, "GF Training Grounds Entrance" },
-  { 0x03A8, "Gerudo Training Grounds" },
-  { 0x0433, "KF from Mido's House" },
-  { 0x0443, "Mido's House" },
-  { 0x0437, "KF from Saria's House" },
-  { 0x0447, "Saria's House" },
-  { 0x009C, "KF from House of Twins" },
-  { 0x033C, "House of Twins" },
-  { 0x00C9, "KF from Know-It-All House" },
-  { 0x026A, "Know-It-All House" },
-  { 0x00C1, "KF from Shop" },
-  { 0x0266, "KF Shop" },
-  { 0x0043, "Lake Hylia from Lab" },
-  { 0x03CC, "Lake Hylia Lab" },
-  { 0x045F, "Lake Hylia from Fishing Hole" },
-  { 0x0309, "Lake Hylia Fishing Hole" },
-  { 0x03A0, "GV from GF" },
-  { 0x03D0, "GV Carpenters' Tent" },
-  { 0x007E, "HC Town from Guard House" },
-  { 0x026E, "HC Town Guard House" },
-  { 0x0530, "Market from Mask Shop" },
-  { 0x01D1, "Market Mask Shop" },
-  { 0x0507, "Market from Bombchu Bowling" },
-  { 0x03BC, "Market Bombchu Bowling" },
-  { 0x0388, "Market from Potion Shop" },
-  { 0x02A2, "Market Potion Shop" },
-  { 0x0063, "Market from Treasure Chest Game" },
-  { 0x01D5, "Market Treasure Chest Game" },
-  { 0x0528, "Market Back Alley from Bombchu Shop" },
-  { 0x03C0, "Market Bombchu Shop" },
-  { 0x043B, "Market Back Alley from Man-in-Green's House" },
-  { 0x0067, "Market Man-in-Green's House" },
-  { 0x02FD, "Kakariko from Carpenter Boss House" },
-  { 0x0349, "Carpenter Boss House" },
-  { 0x0550, "Kakariko from House of Skulltula" },
-  { 0x04EE, "House of Skulltula" },
-  { 0x039C, "Kakariko from Impa's House" },
-  { 0x0345, "Impa's House" },
-  { 0x05C8, "Kakariko from Impa's House Ledge" },
-  { 0x05DC, "Impa's House Back" },
-  { 0x0072, "Kakariko Backyard" },
-  { 0x034D, "Kakariko Odd Poultice Building" },
-  { 0x030D, "Graveyard from Dampe's House" },
-  { 0x0355, "Dampe's House" },
-  { 0x037C, "Goron City from Goron Shop" },
-  { 0x03FC, "Goron City Shop" },
-  { 0x0380, "Zora's Domain from Zora's Domain Shop" },
-  { 0x03C4, "Zora's Domain Shop" },
-  { 0x004F, "Lon Lon Ranch from Talon's House" },
-  { 0x0378, "Talon's House" },
-  { 0x02F9, "Lon Lon Ranch from Stables" },
-  { 0x042F, "Lon Lon Ranch Stables" },
-  { 0x05D0, "Lon Lon Ranch from Tower" },
-  { 0x05D4, "Lon Lon Ranch Tower" },
-  { 0x052C, "Market from Bazaar" },
-  { 0x03B8, "Market Bazaar" },
-  { 0x016D, "Market from Shooting Gallery" },
-  { 0x01CD, "Market Shooting Gallery" },
-  { 0x00B7, "Kakariko from Bazaar" },
-  { 0x0201, "Kakariko Bazaar" },
-  { 0x003B, "Kakariko from Shooting Gallery" },
-  { 0x0463, "Kakariko Shooting Gallery" },
-  { 0x0588, "Colossus from Great Fairy Fountain" },
-  { 0x057C, "Colossus Great Fairy Fountain" },
-  { 0x0578, "HC Grounds from Great Fairy Fountain" },
-  { 0x0340, "HC Great Fairy Fountain" },
-  { 0x04C2, "OGC from Great Fairy Fountain" },
-  { 0x03E8, "OGC Great Fairy Fountain" },
-  { 0x04BE, "DMC from Great Fairy Fountain" },
-  { 0x0482, "DMC Great Fairy Fountain" },
-  { 0x0315, "DMT from Great Fairy Fountain" },
-  { 0x045B, "DMT Great Fairy Fountain" },
-  { 0x0371, "ZF from Great Fairy Fountain" },
-  { 0x0394, "ZF Great Fairy Fountain" },
-  { 0x0272, "KF from Link's House" },
-  { 0x0211, "Link's House" },
-  { 0x0053, "Outside Temple of Time" },
-  { 0x0472, "Temple of Time" },
-  { 0x0453, "Kakariko outside Windmill" },
-  { 0x0351, "Kakariko Windmill" },
-  { 0x0384, "Kakariko from Potion Shop Front" },
-  { 0x044B, "Kakariko Potion Shop from Front Entrance" },
-  { 0x03EC, "Kakariko Behind Potion Shop" },
-  { 0x04FF, "Kakariko Potion Shop from Back Entrance" },
-  { 0x05E0, "KF Exit to Lost Woods Bridge" },
-  { 0x020D, "Lost Woods Bridge from KF" },
-  { 0x011E, "KF from Lost Woods Entrance" },
-  { 0x0286, "Lost Woods Exit to KF" },
-  { 0x04E2, "Lost Woods from Goron City Warp" },
-  { 0x04D6, "Goron City from Lost Woods Warp" },
-  { 0x01DD, "Lost Woods from ZR Warp" },
-  { 0x04DA, "ZR from Lost Woods Warp" },
-  { 0x00FC, "Lost Woods from SFM Entrance" },
-  { 0x01A9, "SFM from Lost Woods" },
-  { 0x0185, "Lost Woods Bridge from Hyrule Field" },
-  { 0x04DE, "Hyrule Field from Lost Woods Bridge" },
-  { 0x0102, "Hyrule Field from Lake Hylia" },
-  { 0x0189, "Lake Hylia from Hyrule Field" },
-  { 0x0117, "Hyrule Field from GV" },
-  { 0x018D, "GV from Hyrule Field" },
-  { 0x0276, "Hyrule Field from HC Town" },
-  { 0x01FD, "HC Town Entrance from Hyrule Field" },
-  { 0x00DB, "Hyrule Field from Kakariko" },
-  { 0x017D, "Kakariko from Hyrule Field" },
-  { 0x00EA, "Hyrule Field from ZR" },
-  { 0x0181, "ZR from Hyrule Field" },
-  { 0x0157, "Hyrule Field from Lon Lon Ranch" },
-  { 0x01F9, "Lon Lon Ranch from Hyrule Field" },
-  { 0x0328, "Lake Hylia from Zora's Domain" },
-  { 0x0560, "Zora's Domain from Lake Hylia" },
-  { 0x0129, "GV from GF" },
-  { 0x022D, "GF from GV" },
-  { 0x0130, "GF from Haunted Wasteland" },
-  { 0x03AC, "Haunted Wasteland from GF" },
-  { 0x0123, "Colossus from Haunted Wasteland" },
-  { 0x0365, "Haunted Wasteland from Colossus" },
-  { 0x00B1, "HC Town Entrance from Market" },
-  { 0x0033, "Market from HC Town Entrance" },
-  { 0x0138, "Market from Castle Grounds" },
-  { 0x025A, "Hyrule Castle Grounds from Market" },
-  { 0x0171, "Market from Temple of Time" },
-  { 0x025E, "Temple of Time from Market" },
-  { 0x00E4, "Kakariko from Graveyard" },
-  { 0x0195, "Graveyard from Kakariko" },
-  { 0x013D, "Kakariko Gate to DMT" },
-  { 0x0191, "DMT to Kakariko" },
-  { 0x014D, "DMT Goron City Entrance" },
-  { 0x01B9, "Goron City Exit to DMT" },
-  { 0x0246, "Goron City Darunia's Chamber" },
-  { 0x01C1, "DMC from Darunia's Chamber" },
-  { 0x0147, "DMT from Crater" },
-  { 0x01BD, "DMC Exit to Summit" },
-  { 0x0108, "ZR Entrance to Zora's Domain" },
-  { 0x019D, "Zora's Domain Exit to ZR" },
-  { 0x0225, "Zora's Domain Behind King Zora" },
-  { 0x01A1, "ZF to Zora's Domain" },
-};
-
 //Process for setting up the shuffling of all entrances to be shuffled
 int ShuffleAllEntrances() {
 
@@ -891,9 +726,6 @@ void CreateEntranceOverrides() {
   PlacementLog_Msg("\nCREATING ENTRANCE OVERRIDES\n");
   auto allShuffleableEntrances = GetShuffleableEntrances(EntranceType::All, false);
 
-  std::set<s16> shuffledPairIndices;
-  u16 entrancePairIndex = 0;
-
   for (Entrance* entrance : allShuffleableEntrances) {
 
     //Double-check to make sure the entrance is actually shuffled
@@ -901,87 +733,27 @@ void CreateEntranceOverrides() {
       continue;
     }
 
-    if (shuffledPairIndices.find(entrance->GetIndex()) == shuffledPairIndices.end())
-    {
-      entranceTrackingData.EntrancePairs[entrancePairIndex].StartIndex = entrance->GetIndex();
-      entranceTrackingData.EntrancePairs[entrancePairIndex].ReturnIndex = entrance->GetReplacement()->GetReverse()->GetIndex();
-      entrancePairIndex++;
-
-      shuffledPairIndices.emplace(entrance->GetIndex());
-      shuffledPairIndices.emplace(entrance->GetReplacement()->GetReverse()->GetIndex());
-    }
-
     auto message = "Setting " + entrance->to_string() + "\n";
     PlacementLog_Msg(message);
 
     s16 originalIndex = entrance->GetIndex();
+    s16 destinationIndex = entrance->GetReverse()->GetIndex();
     s16 originalBlueWarp = entrance->GetBlueWarp();
     s16 replacementIndex = entrance->GetReplacement()->GetIndex();
+    s16 replacementDestinationIndex = entrance->GetReplacement()->GetReverse()->GetIndex();
 
     entranceOverrides.push_back({
       .index = originalIndex,
+      .destination = destinationIndex,
       .blueWarp = originalBlueWarp,
       .override = replacementIndex,
+      .overrideDestination = replacementDestinationIndex,
     });
 
     message = "\tOriginal: " + std::to_string(originalIndex) + "\n";
     PlacementLog_Msg(message);
     message = "\tReplacement " + std::to_string(replacementIndex) + "\n";
     PlacementLog_Msg(message);
-
-    //Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
-    if (originalIndex == 0x00EA) { //Hyrule Field -> ZR Front land entrance
-      entranceOverrides.push_back({
-        .index = 0x01D9, //Hyrule Field -> ZR Front water entrance
-        .blueWarp = originalBlueWarp,
-        .override = replacementIndex,
-      });
-    } else if (originalIndex == 0x0181) { //ZR Front -> Hyrule Field land entrance
-      entranceOverrides.push_back({
-        .index = 0x0311, //ZR Front -> Hyrule Field water entrance
-        .blueWarp = originalBlueWarp,
-        .override = replacementIndex,
-      });
-    }
-  }
-
-  entranceTrackingData.EntrancePairsCount = entrancePairIndex;
-
-  u32 entranceStringOffset = 0;
-  bool trackingDataOutOfSpace = false;
-
-  // Create map of entrance indices to their offset into tracking data string data
-  std::unordered_map<s16, u16> stringOffsetMap;
-  stringOffsetMap.reserve(entranceOverrides.size());
-  for (const EntranceOverride& override : entranceOverrides) {
-    const auto& entranceName = entranceNames[override.index];
-    if (stringOffsetMap.find(override.index) == stringOffsetMap.end()) {
-      if (entranceStringOffset + entranceName.size() + 1 >= ENTRANCE_PAIRS_STRING_DATA_SIZE) {
-        trackingDataOutOfSpace = true;
-        break;
-      } else {
-        stringOffsetMap[override.index] = entranceStringOffset;
-        entranceStringOffset += sprintf(&entranceTrackingData.StringData[entranceStringOffset], "%s", entranceName.c_str()) + 1;
-      }
-    }
-  }
-
-  // Fill in string offset values for the entrance tracking data pairs
-  for (int i = 0; i < entranceTrackingData.EntrancePairsCount; i++) {
-    if (stringOffsetMap.find(entranceTrackingData.EntrancePairs[i].StartIndex) != stringOffsetMap.end()) {
-      entranceTrackingData.EntrancePairs[i].StartStrOffset = stringOffsetMap[entranceTrackingData.EntrancePairs[i].StartIndex];
-    } else {
-      entranceTrackingData.EntrancePairs[i].StartStrOffset = ENTRANCE_INVALID_STRING_OFFSET;
-    }
-    if (stringOffsetMap.find(entranceTrackingData.EntrancePairs[i].ReturnIndex) != stringOffsetMap.end()) {
-      entranceTrackingData.EntrancePairs[i].ReturnStrOffset = stringOffsetMap[entranceTrackingData.EntrancePairs[i].ReturnIndex];
-    } else {
-      entranceTrackingData.EntrancePairs[i].ReturnStrOffset = ENTRANCE_INVALID_STRING_OFFSET;
-    }
-  }
-
-  if (trackingDataOutOfSpace) {
-    printf("\x1b[31;Out of space for entrance string data,\nnames may display incorrectly.");
   }
 }
 
