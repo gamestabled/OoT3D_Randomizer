@@ -596,13 +596,13 @@ namespace Settings {
     &LogicManOnRoof,
     &LogicWindmillPoHHookshot,
     &LogicDMTBombable,
-    //&LogicDMTSoilGS, Needs Testing
+    //&LogicDMTSoilGS, Needs Testing                    Yes, but you need to drop the bugs from above the boulder so needs to check for damage
     &LogicLinkGoronDins,
     &LogicGoronCityLeftMost,
-    //&LogicGoronCityPot, Needs Testing
+    &LogicGoronCityPot,
     &LogicGoronCityPotWithStrength,
     &LogicChildRollingWithStrength,
-    //&LogicCraterUpperToLower, Needs Testing
+    //&LogicCraterUpperToLower, Needs Testing           Possible to break in 1 swing if you hit the right place? Right angle? Seems very inconsistent.
     &LogicCraterBeanPoHWithHovers,
     &LogicBiggoronBolero,
     &LogicZoraRiverLower,
@@ -615,10 +615,10 @@ namespace Settings {
     &LogicDCJump,
     &LogicDCSlingshotSkip,
     &LogicDCScarecrowGS,
-    //&LogicJabuBossGSAdult, Needs Testing
-    //&LogicJabuScrubJumpDive, Needs Testing
-    //&LogicForestOutsideBackdoor, Needs Testing
-    //&LogicForestDoorFrame, Needs Testing
+    //&LogicJabuBossGSAdult, Needs Testing              Don't know if possible as described, easier method exists as you can just backwalk with the box
+    &LogicJabuScrubJumpDive,
+    //&LogicForestOutsideBackdoor, Needs Testing        Possible with bombchu damage boost, jumpslash is definitely harder than "intermediate" if at all possible
+    &LogicForestDoorFrame,
     &LogicForestOutdoorEastGS,
     &LogicFireBossDoorJump,
     &LogicFireStrength,
@@ -683,6 +683,7 @@ namespace Settings {
   }
 
   Option GlitchRestrictedItems    = Option::U8("Restricted Items",      GlitchDifficultyOptions(0b00001), { GlitchRestrictedItemsDescDisabled    , GlitchRestrictedItemsDescNovice                                                                                                                                                              });
+  Option GlitchSuperStab          = Option::U8("Super Stab",            GlitchDifficultyOptions(0b00001), { GlitchSuperStabDescDisabled          , GlitchSuperStabDescNovice                                                                                                                                                                    });
   Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00001), { GlitchISGDescDisabled                , GlitchISGDescNovice                                                                                                                                                                          });
   Option GlitchHover              = Option::U8("Bomb Hover",            GlitchDifficultyOptions(0b00111), { GlitchHoverDescDisabled              , GlitchHoverDescNovice              , GlitchHoverDescIntermediate              , GlitchHoverDescAdvanced                                                                                      });
   Option GlitchBombOI             = Option::U8("Ocarina Items (Bomb)",  GlitchDifficultyOptions(0b01111), { GlitchBombOIDescDisabled             , GlitchBombOIDescNovice             , GlitchBombOIDescIntermediate             , GlitchBombOIDescAdvanced             , GlitchBombOIDescExpert                                                });
@@ -702,9 +703,9 @@ namespace Settings {
   Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b01111), { GlitchTripleSlashClipDescDisabled    , GlitchTripleSlashClipDescNovice    , GlitchTripleSlashClipDescIntermediate    , GlitchTripleSlashClipDescAdvanced    , GlitchTripleSlashClipDescExpert                                       });
   Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00111), { GlitchLedgeClipDescDisabled          , GlitchLedgeClipDescNovice          , GlitchLedgeClipDescIntermediate          , GlitchLedgeClipDescAdvanced                                                                                  });
   Option GlitchSeamWalk           = Option::U8("Seam Walk",             GlitchDifficultyOptions(0b11111), { GlitchSeamWalkDescDisabled           , GlitchSeamWalkDescNovice           , GlitchSeamWalkDescIntermediate           , GlitchSeamWalkDescAdvanced           , GlitchSeamWalkDescExpert           , GlitchSeamWalkDescHero           });
-  Option GlitchEntrancePoint      = Option::U8("Entrance Point Glitch", GlitchDifficultyOptions(0b00000), { GlitchEntrancePointDescDisabled                                                                                                                                                                                                     });
   std::vector<Option*> glitchCategories = {
     &GlitchRestrictedItems,
+    &GlitchSuperStab,
     &GlitchISG,
     &GlitchHover,
     &GlitchBombOI,
@@ -724,7 +725,6 @@ namespace Settings {
     &GlitchTripleSlashClip,
     &GlitchLedgeClip,
     &GlitchSeamWalk,
-    &GlitchEntrancePoint,
   };
 
   Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent\n  as Child",   {"Off", "On"}, {GlitchGVTentAsChildDesc});
@@ -735,7 +735,8 @@ namespace Settings {
   Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu\n  w/o Bottle",    {"Off", "On"}, {GlitchJabuStickRecoilDesc});
   Option GlitchJabuAdult         = Option::Bool("Enter Jabu\n  as Adult",      {"Off", "On"}, {GlitchJabuAdultDesc});
   Option GlitchBlueFireWall      = Option::Bool("Break Walls\n  w/ Blue Fire", {"Off", "on"}, {GlitchBlueFireWallDesc});
-  Option GlitchDCModernHalfie    = Option::Bool("Modern Halfie",               {"Off", "On"}, {GlitchDCModernHalfieDesc});
+  Option GlitchClassicHalfie     = Option::Bool("Classic Halfie",              {"Off", "On"}, {GlitchClassicHalfieDesc});
+  Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"Off", "On"}, {GlitchModernHalfieDesc});
   Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {GlitchJabuSwitchDesc});
   std::vector<Option*> miscGlitches = {
     &GlitchGVTentAsChild,
@@ -746,6 +747,7 @@ namespace Settings {
     &GlitchJabuStickRecoil,
     &GlitchJabuAdult,
     &GlitchBlueFireWall,
+    &GlitchClassicHalfie,
     &GlitchDCModernHalfie,
     &GlitchJabuSwitch,
   };
@@ -1669,6 +1671,7 @@ namespace Settings {
           LogicZFGreatFairy.SetSelectedIndex(1);
           LogicDekuB1WebsWithBow.SetSelectedIndex(1);
           LogicDCJump.SetSelectedIndex(1);
+          LogicJabuScrubJumpDive.SetSelectedIndex(1);
           LogicForestOutdoorEastGS.SetSelectedIndex(1);
           LogicFireScarecrow.SetSelectedIndex(1);
           LogicWaterTempleTorchLongshot.SetSelectedIndex(1);
@@ -1694,19 +1697,18 @@ namespace Settings {
           LogicChildDampeRacePoH.SetSelectedIndex(1);
           LogicGerudoKitchen.SetSelectedIndex(1);
           LogicOutsideGanonsGS.SetSelectedIndex(1);
-          LogicDMTSoilGS.SetSelectedIndex(1);
+          //LogicDMTSoilGS.SetSelectedIndex(1);
           LogicDMTSummitHover.SetSelectedIndex(1);
           LogicLinkGoronDins.SetSelectedIndex(1);
           LogicGoronCityPotWithStrength.SetSelectedIndex(1);
-          LogicCraterUpperToLower.SetSelectedIndex(1);
+          //LogicCraterUpperToLower.SetSelectedIndex(1);
           LogicBiggoronBolero.SetSelectedIndex(1);
           LogicDekuB1Skip.SetSelectedIndex(1);
           LogicDekuBasementGS.SetSelectedIndex(1);
           LogicDCStaircase.SetSelectedIndex(1);
           LogicDCScarecrowGS.SetSelectedIndex(1);
-          LogicJabuBossGSAdult.SetSelectedIndex(1);
-          LogicJabuScrubJumpDive.SetSelectedIndex(1);
-          LogicForestOutsideBackdoor.SetSelectedIndex(1);
+          //LogicJabuBossGSAdult.SetSelectedIndex(1);
+          //LogicForestOutsideBackdoor.SetSelectedIndex(1);
           LogicForestDoorFrame.SetSelectedIndex(1);
           LogicFireBossDoorJump.SetSelectedIndex(1);
           LogicFireSongOfTime.SetSelectedIndex(1);
@@ -1742,8 +1744,8 @@ namespace Settings {
           LogicWaterDragonAdult.SetSelectedIndex(1);
           LogicWaterDragonJumpDive.SetSelectedIndex(1);
           LogicSpiritWall.SetSelectedIndex(1);
-          LogicSpiritSunChest.SetSelectedIndex(1);
-          LogicShadowFireArrowEntry.SetSelectedIndex(1);
+          //LogicSpiritSunChest.SetSelectedIndex(1);
+          //LogicShadowFireArrowEntry.SetSelectedIndex(1);
           LogicShadowUmbrella.SetSelectedIndex(1);
         }
       }

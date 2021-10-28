@@ -441,6 +441,14 @@ namespace Logic {
       }
       return true;
 
+    //Super Stab
+    case GlitchType::SuperStab:
+      setDifficulty = GetDifficultyValueFromString(GlitchSuperStab);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return CanShield && Sticks && (IsChild || StickAsAdult);
+
     //Infinite Sword Glitch
     case GlitchType::ISG:
       setDifficulty = GetDifficultyValueFromString(GlitchISG);
@@ -618,14 +626,6 @@ namespace Logic {
         return false;
       }
       return true;
-
-    //Entrance Point Glitch
-    case GlitchType::EntrancePointGlitch:
-      setDifficulty = GetDifficultyValueFromString(GlitchEntrancePoint);
-      if (setDifficulty < static_cast<u8>(difficulty)) {
-        return false;
-      }
-      return Bombs && CanSurviveDamage;
     }
 
     //Shouldn't be reached

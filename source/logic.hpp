@@ -320,6 +320,7 @@ namespace Logic {
 
   enum class GlitchType {
     RestrictedItems,
+    SuperStab,
     ISG,
     BombHover,
     BombOI,
@@ -343,7 +344,6 @@ namespace Logic {
     TripleSlashClip,
     LedgeClip,
     SeamWalk,
-    EntrancePointGlitch,
   };
 
   enum class GlitchDifficulty {

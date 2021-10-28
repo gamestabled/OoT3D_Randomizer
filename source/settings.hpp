@@ -543,6 +543,7 @@ namespace Settings {
 
   //Glitch Settings
   extern Option GlitchRestrictedItems;
+  extern Option GlitchSuperStab;
   extern Option GlitchISG;
   extern Option GlitchHover;
   extern Option GlitchBombOI;
@@ -562,7 +563,6 @@ namespace Settings {
   extern Option GlitchTripleSlashClip;
   extern Option GlitchLedgeClip;
   extern Option GlitchSeamWalk;
-  extern Option GlitchEntrancePoint;
   //Misc Glitch Settings
   extern Option GlitchGVTentAsChild;
   extern Option GlitchGFGuardSneak;
@@ -572,7 +572,8 @@ namespace Settings {
   extern Option GlitchJabuStickRecoil;
   extern Option GlitchJabuAdult;
   extern Option GlitchBlueFireWall;
-  extern Option GlitchDCModernHalfie;
+  extern Option GlitchClassicHalfie;
+  extern Option GlitchModernHalfie;
   extern Option GlitchJabuSwitch;
 
   extern Option CustomTunicColors;

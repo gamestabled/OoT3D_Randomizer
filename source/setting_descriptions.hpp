@@ -378,6 +378,9 @@ extern const std::vector<string_view> GlitchDifficulties;
 extern string_view GlitchRestrictedItemsDescDisabled;
 extern string_view GlitchRestrictedItemsDescNovice;
 
+extern string_view GlitchSuperStabDescDisabled;
+extern string_view GlitchSuperStabDescNovice;
+
 extern string_view GlitchISGDescDisabled;
 extern string_view GlitchISGDescNovice;
 
@@ -474,8 +477,6 @@ extern string_view GlitchSeamWalkDescAdvanced;
 extern string_view GlitchSeamWalkDescExpert;
 extern string_view GlitchSeamWalkDescHero;
 
-extern string_view GlitchEntrancePointDescDisabled;
-
 extern string_view GlitchGVTentAsChildDesc;
 extern string_view GlitchGFGuardSneakDesc;
 extern string_view GlitchItemlessWastelandDesc;
@@ -484,5 +485,6 @@ extern string_view GlitchZDOoBJumpSlashDesc;
 extern string_view GlitchJabuStickRecoilDesc;
 extern string_view GlitchJabuAdultDesc;
 extern string_view GlitchBlueFireWallDesc;
-extern string_view GlitchDCModernHalfieDesc;
+extern string_view GlitchClassicHalfieDesc;
+extern string_view GlitchModernHalfieDesc;
 extern string_view GlitchJabuSwitchDesc;

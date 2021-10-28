@@ -991,7 +991,7 @@ string_view LogicJabuBossGSAdultDesc                  = "Difficulty: Intermediat
                                                         "use a box to keep the switch pressed. One way is\n"
                                                         "to quickly roll from the switch and open the door\n"
                                                         "before it closes.";                               //
-string_view LogicJabuScrubJumpDiveDesc                = "Difficulty: Intermediate\n"                       //
+string_view LogicJabuScrubJumpDiveDesc                = "Difficulty: Novice\n"                             //
                                                         "Standing above the underwater tunnel leading to\n"//
                                                         "the scrub, jump down and swim through the tunnel.\n"
                                                         "This allows adult to access the scrub with no\n"  //
@@ -1232,6 +1232,12 @@ string_view GlitchRestrictedItemsDescDisabled         = "Swapping an item that c
                                                         "inventory. This can be useful on its own or in\n" //
                                                         "combination with other glitches.";                //
 string_view GlitchRestrictedItemsDescNovice           = "You may be required to use restricted items.";    //
+/* Super Stab */                                                                                           //
+string_view GlitchSuperStabDescDisabled               = "Forcing sticks to unequip during a crouch stab by\n"
+                                                        "breaking it and moving them in your inventory has\n"
+                                                        "the effect of hitting all spherical collision.";  //
+string_view GlitchSuperStabDescNovice                 = "You may be expected to hit switches or kill gold\n"
+                                                        "skulltulas with a super stab.";                   //
 /* ISG */                                                                                                  //
 string_view GlitchISGDescDisabled                     = "Shortened to ISG, allows Link's melee weapon to\n"//
                                                         "be in a constant swinging state. Simply touching\n"
@@ -1274,16 +1280,28 @@ string_view GlitchBombOIDescExpert                    = "You may be expected to 
                                                         "perform ocarina items where Link's position isn't\n"
                                                         "particularly lenient";                            //
 /* Hover Boost */                                                                                          //
-string_view GlitchHoverBoostDescDisabled              = "";
-string_view GlitchHoverBoostDescNovice                = "";
-string_view GlitchHoverBoostDescIntermediate          = "";
-string_view GlitchHoverBoostDescAdvanced              = "";
+string_view GlitchHoverBoostDescDisabled              = "Equipping hover boots when Link takes damage will\n"
+                                                        "cause him to keep the high knockback speed and\n" //
+                                                        "lets him traverse large gaps.";                   //
+string_view GlitchHoverBoostDescNovice                = "Hover boosts that do not need the maximum speed\n"//
+                                                        "may be required.";                                //
+string_view GlitchHoverBoostDescIntermediate          = "Hover boosts that do need the maximum speed may be\n"
+                                                        "required.";                                       //
+string_view GlitchHoverBoostDescAdvanced              = "Hover boosts that use more complex movement during\n"
+                                                        "the hover may be required.";                      //
 /* Super Slide */                                                                                          //
-string_view GlitchSuperSlideDescDisabled              = "";
-string_view GlitchSuperSlideDescNovice                = "";
-string_view GlitchSuperSlideDescIntermediate          = "";
-string_view GlitchSuperSlideDescAdvanced              = "";
-string_view GlitchSuperSlideDescExpert                = "";
+string_view GlitchSuperSlideDescDisabled              = "Holding the circle pad just outside the dead zone\n"
+                                                        "will cause Link to turn on the spot which locks\n"//
+                                                        "his speed. This can be used to preserve high\n"   //
+                                                        "speeds indefinitely.";                            //
+string_view GlitchSuperSlideDescNovice                = "Forward extended super slides (FESSes) where Link\n"
+                                                        "is damaged by an explosion may be required.";     //
+string_view GlitchSuperSlideDescIntermediate          = "Hammer extended super slides where the recoil from\n"
+                                                        "a hammer crouch stab is used may be required.";   //
+string_view GlitchSuperSlideDescAdvanced              = "Hyper Extended Super Slides (HESSes) and\n"       //
+                                                        "damageless FESSes where Link rolls into a bomb may\n"
+                                                        "be required.";                                    //
+string_view GlitchSuperSlideDescExpert                = "HESSes with more precise movement may be required.";
 /* Megaflip */                                                                                             //
 string_view GlitchMegaflipDescDisabled                = "A backflip or sidehop with high speed from an\n"  //
                                                         "attack hitting your shield during i-frames. This\n"
@@ -1387,8 +1405,6 @@ string_view GlitchSeamWalkDescIntermediate            = "";
 string_view GlitchSeamWalkDescAdvanced                = "";
 string_view GlitchSeamWalkDescExpert                  = "";
 string_view GlitchSeamWalkDescHero                    = "";
-/* EPG */                                                                                                  //
-string_view GlitchEntrancePointDescDisabled           = "";
 /* Misc Glitches */                                                                                        //
 string_view GlitchGVTentAsChildDesc                   = "The loading zone for the carpenters' tent exists\n"
                                                         "in the child map despite the tent being removed.\n\n"
@@ -1417,6 +1433,10 @@ string_view GlitchJabuAdultDesc                       = "Adult can enter Jabu by
                                                         "section of ice on the side near ice cavern.";     //
 string_view GlitchBlueFireWallDesc                    = "Pouring blue fire on certain destructable walls\n"//
                                                         "will cause them to break.";                       //
+string_view GlitchClassicHalfieDesc                   = "Dying during a jump attack towards a ledge just\n"//
+                                                        "too high to climb will put Link on top of the\n"  //
+                                                        "ledge. Combined with a fairy this lets Link climb\n"
+                                                        "ledges such as the one to the switch in DC.";     //
 string_view GlitchDCModernHalfieDesc                  = "Using a bomb flower and a twisted backflip, it is\n"
                                                         "possible to access the switch in DC with only a\n"//
                                                         "deku shield and the goron bracelet.";             //
