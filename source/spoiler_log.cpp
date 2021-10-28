@@ -103,7 +103,7 @@ static auto GetPlacementLogPath() {
   return GetGeneralPath() + "-placementlog.xml";
 }
 
-static void WriteIngameSpoilerLog() {
+void WriteIngameSpoilerLog() {
   u16 spoilerItemIndex = 0;
   u32 spoilerStringOffset = 0;
   u16 spoilerSphereItemoffset = 0;
@@ -535,8 +535,6 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog) {
 }
 
 bool SpoilerLog_Write() {
-  WriteIngameSpoilerLog();
-
   auto spoilerLog = tinyxml2::XMLDocument(false);
   spoilerLog.InsertEndChild(spoilerLog.NewDeclaration());
 
