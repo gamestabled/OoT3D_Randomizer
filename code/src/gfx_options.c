@@ -3,7 +3,7 @@
 
 #define BORDER_WIDTH 2
 #define CHOICE_COLUMN 240
-#define DESCRIPTION_ROW 170
+#define DESCRIPTION_ROW 184
 
 typedef struct {
     char name[30];
@@ -32,12 +32,12 @@ void InitOptions(void) {
 }
 
 void Gfx_DrawOptions(void) {
-    Draw_DrawString(10, 10, COLOR_TITLE, "Options");
+    Draw_DrawString(10, 16, COLOR_TITLE, "Options");
 
     // Options
     for (u8 i = 0; i < sizeof(options) / sizeof(Option); i++) {
-        Draw_DrawString(10, 10 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].name);
-        Draw_DrawString(CHOICE_COLUMN, 10 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].alternatives[*options[i].optionPointer]);
+        Draw_DrawString(10, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].name);
+        Draw_DrawString(CHOICE_COLUMN, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].alternatives[*options[i].optionPointer]);
     }
 
     // Description
