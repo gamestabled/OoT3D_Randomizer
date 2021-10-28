@@ -1628,19 +1628,19 @@ namespace Settings {
           LogicChildDampeRacePoH.SetSelectedIndex(1);
           LogicGerudoKitchen.SetSelectedIndex(1);
           LogicOutsideGanonsGS.SetSelectedIndex(1);
-          LogicDMTSoilGS.SetSelectedIndex(1);
+          //LogicDMTSoilGS.SetSelectedIndex(1);
           LogicLinkGoronDins.SetSelectedIndex(1);
           LogicGoronCityPotWithStrength.SetSelectedIndex(1);
-          LogicCraterUpperToLower.SetSelectedIndex(1);
+          //LogicCraterUpperToLower.SetSelectedIndex(1);
           LogicBiggoronBolero.SetSelectedIndex(1);
           LogicDekuB1Skip.SetSelectedIndex(1);
           LogicDekuBasementGS.SetSelectedIndex(1);
           LogicDCStaircase.SetSelectedIndex(1);
           LogicDCScarecrowGS.SetSelectedIndex(1);
-          LogicJabuBossGSAdult.SetSelectedIndex(1);
-          LogicJabuScrubJumpDive.SetSelectedIndex(1);
-          LogicForestOutsideBackdoor.SetSelectedIndex(1);
-          LogicForestDoorFrame.SetSelectedIndex(1);
+          //LogicJabuBossGSAdult.SetSelectedIndex(1);
+          //LogicJabuScrubJumpDive.SetSelectedIndex(1);
+          //LogicForestOutsideBackdoor.SetSelectedIndex(1);
+          //LogicForestDoorFrame.SetSelectedIndex(1);
           LogicFireBossDoorJump.SetSelectedIndex(1);
           LogicFireSongOfTime.SetSelectedIndex(1);
           LogicWaterCentralBow.SetSelectedIndex(1);
@@ -1663,7 +1663,7 @@ namespace Settings {
           LogicReverseWasteland.SetSelectedIndex(1);
           LogicColossusGS.SetSelectedIndex(1);
           LogicDMTBombable.SetSelectedIndex(1);
-          LogicGoronCityPot.SetSelectedIndex(1);
+          //LogicGoronCityPot.SetSelectedIndex(1);
           LogicChildRollingWithStrength.SetSelectedIndex(1);
           LogicCraterBeanPoHWithHovers.SetSelectedIndex(1);
           LogicDCSlingshotSkip.SetSelectedIndex(1);
@@ -1675,8 +1675,8 @@ namespace Settings {
           LogicWaterDragonAdult.SetSelectedIndex(1);
           LogicWaterDragonJumpDive.SetSelectedIndex(1);
           LogicSpiritWall.SetSelectedIndex(1);
-          LogicSpiritSunChest.SetSelectedIndex(1);
-          LogicShadowFireArrowEntry.SetSelectedIndex(1);
+          //LogicSpiritSunChest.SetSelectedIndex(1);
+          //LogicShadowFireArrowEntry.SetSelectedIndex(1);
           LogicShadowUmbrella.SetSelectedIndex(1);
         }
       }
