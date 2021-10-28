@@ -19,6 +19,7 @@
 
 std::list<EntranceOverride> entranceOverrides = {};
 bool noRandomEntrances = false;
+static bool entranceShuffleFailure = false;
 EntranceTrackingData entranceTrackingData = {0};
 
 EntranceTrackingData* GetEntranceTrackingData() {
@@ -230,6 +231,17 @@ static bool EntranceUnreachableAs(Entrance* entrance, u8 age, std::vector<Entran
 static bool ValidateWorld(Entrance* entrancePlaced) {
   PlacementLog_Msg("Validating world\n");
 
+  // Check to make sure all locations are still reachable
+  Logic::LogicReset();
+  std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
+  for (ItemKey unplacedItem : itemsToPlace) {
+    ItemTable(unplacedItem).ApplyEffect();
+  }
+  GetAccessibleLocations(allLocations, SearchMode::AllLocationsReachable);
+  if (!allLocationsReachable) {
+    return false;
+  }
+
   // if not world.decouple_entrances:
   // Unless entrances are decoupled, we don't want the player to end up through certain entrances as the wrong age
   // This means we need to hard check that none of the relevant entrances are ever reachable as that age
@@ -275,17 +287,6 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
       }
     }
 
-  // Check to make sure all locations are still reachable
-  Logic::LogicReset();
-  std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
-  for (ItemKey unplacedItem : itemsToPlace) {
-    ItemTable(unplacedItem).ApplyEffect();
-  }
-  GetAccessibleLocations(allLocations, SearchMode::AllLocationsReachable);
-  if (!allLocationsReachable) {
-    return false;
-  }
-
   //check certain conditions when certain types of ER are enabled
   EntranceType type = EntranceType::None;
   if (entrancePlaced != nullptr) {
@@ -323,6 +324,26 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
       PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
       return false;
     }
+
+    //Check that the region is still accessible with the opposite starting time of day
+    //This is to ensure that time passing does not lock out access to all areas that can pass time
+    u8 startTime = Settings::StartingTime.Value<u8>();
+    if (startTime == STARTINGTIME_DAY) {
+      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_NIGHT);
+    } else {
+      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_DAY);
+    }
+
+    //run the search again
+    Logic::LogicReset();
+    GetAccessibleLocations({}, SearchMode::BothAgesNoItems);
+    if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
+      PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
+      return false;
+    }
+
+    //set the Starting Time setting back to what it originally was
+    Settings::StartingTime.SetSelectedIndex(startTime);
 
     // The player should be able to get back to ToT after going through time, without having collected any items
     // This is important to ensure that the player never loses access to the pedestal after going through time
@@ -369,6 +390,8 @@ static bool ReplaceEntrance(Entrance* entrance, Entrance* target, std::vector<En
 
 // Shuffle entrances by placing them instead of entrances in the provided target entrances list
 static bool ShuffleEntrances(std::vector<Entrance*>& entrances, std::vector<Entrance*>& targetEntrances, std::vector<EntrancePair>& rollbacks) {
+
+  Shuffle(entrances);
 
   //place all entrances in the pool, validating after every placement
   for (Entrance* entrance : entrances) {
@@ -432,8 +455,6 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
       continue;
     }
 
-    //fully validate the resulting world to ensure everything is still fine
-
     //If there are no issues, log the connections and continue
     for (auto& pair : rollbacks) {
       ConfirmReplacement(pair.first, pair.second);
@@ -442,8 +463,8 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
   }
 
   if (retries <= 0) {
-    printf("\x1b[29;0HEntrance Shuffle failed. Entrances will not be\nshuffled");
-    noRandomEntrances = true;
+    PlacementLog_Msg("Entrance placement attempt count exceeded. Restarting randomization completely");
+    entranceShuffleFailure = true;
   }
 }
 
@@ -607,7 +628,7 @@ std::unordered_map<s16, std::string> entranceNames = {
 };
 
 //Process for setting up the shuffling of all entrances to be shuffled
-void ShuffleAllEntrances() {
+int ShuffleAllEntrances() {
 
   std::vector<EntranceInfoPair> entranceShuffleTable = {
                                    //Parent Region                     Connected Region                  index   blue warp
@@ -772,6 +793,7 @@ void ShuffleAllEntrances() {
      {EntranceType::Overworld,       ZORAS_FOUNTAIN,                   ZD_BEHIND_KING_ZORA,              0x01A1}},
   };
 
+  entranceShuffleFailure = false;
   SetAllEntrancesData(entranceShuffleTable);
 
   // one_way_entrance_pools = OrderedDict()
@@ -852,7 +874,12 @@ void ShuffleAllEntrances() {
   //shuffle all entrances among pools to shuffle
   for (auto& pool : entrancePools) {
     ShuffleEntrancePool(pool.second, targetEntrancePools[pool.first]);
+    if (entranceShuffleFailure) {
+      return ENTRANCE_SHUFFLE_FAILURE;
+    }
   }
+
+  return ENTRANCE_SHUFFLE_SUCCESS;
 }
 
 //Create the set of entrances that will be overridden
