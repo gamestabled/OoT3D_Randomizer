@@ -399,11 +399,15 @@ typedef struct GlobalContext {
     /* 0x2A90 */ u8                    msgMode; //seems to be used primarily for the ocarina
     /* 0x2A91 */ char                  unk_2A91[0xED];
     /* 0x2B7E */ s16                   unk_2B7E; // msgCtx.unk_E3EE in OoT
-    /* 0x2B80 */ char                  unk_2B80[0x0ED8];
+    /* 0x2B80 */ char                  unk_2B80[0x06B0];
+    /* 0x3230 */ u32                   lightSettingsList_addr;
+    /* 0x3234 */ char                  unk_3234[0x0824];
     /* 0x3A58 */ ObjectContext         objectCtx;
     /* 0x43DC */ char                  unk_43DC[0x1824];
     /* 0x5C00 */ u8                    linkAgeOnLoad;
-    /* 0x5C01 */ char                  unk_5C01[0x002C];
+    /* 0x5C01 */ char                  unk_5C01[0x001B];
+    /* 0x5C1C */ s16*                  setupExitList;
+    /* 0x5C20 */ char                  unk_5C20[0x000D];
     /* 0x5C2D */ s8                    sceneLoadFlag; // "fade_direction"
     /* 0x5C2E */ char                  unk_5C2E[0x0004];
     /* 0x5C32 */ s16                   nextEntranceIndex;
