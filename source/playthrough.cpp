@@ -56,6 +56,7 @@ namespace Playthrough {
       }
 
       GenerateHash();
+      WriteIngameSpoilerLog();
 
       if (Settings::GenerateSpoilerLog) {
         //write logs

@@ -522,6 +522,17 @@ namespace Logic {
     FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
+    //Unshuffled adult trade quest
+    Eyedrops     = Eyedrops     || (!ShuffleAdultTradeQuest && ClaimCheck);
+    EyeballFrog  = EyeballFrog  || (!ShuffleAdultTradeQuest && Eyedrops);
+    Prescription = Prescription || (!ShuffleAdultTradeQuest && EyeballFrog);
+    BrokenSword  = BrokenSword  || (!ShuffleAdultTradeQuest && Prescription);
+    PoachersSaw  = PoachersSaw  || (!ShuffleAdultTradeQuest && BrokenSword);
+    OddPoultice  = OddPoultice  || (!ShuffleAdultTradeQuest && PoachersSaw);
+    OddMushroom  = OddMushroom  || (!ShuffleAdultTradeQuest && OddPoultice);
+    Cojiro       = Cojiro       || (!ShuffleAdultTradeQuest && OddMushroom);
+    PocketEgg    = PocketEgg    || (!ShuffleAdultTradeQuest && Cojiro);
+
     // IsChild = Age == AGE_CHILD;
     // IsAdult = Age == AGE_ADULT;
 
