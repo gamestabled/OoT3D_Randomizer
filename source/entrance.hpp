@@ -9,19 +9,21 @@
 
 #include "../code/src/entrance.h"
 
+#define ENTRANCE_SHUFFLE_SUCCESS 0
+#define ENTRANCE_SHUFFLE_FAILURE 1
+
 extern std::list<EntranceOverride> entranceOverrides;
 
 enum class EntranceType {
     None,
-    Dungeon,
-    Interior,
-    SpecialInterior,
-    Grotto,
-    Grave,
-    Overworld,
     OwlDrop,
     Spawn,
     WarpSong,
+    Dungeon,
+    Interior,
+    SpecialInterior,
+    GrottoGrave,
+    Overworld,
     Extra,
     All,
 };
@@ -255,7 +257,7 @@ private:
     std::string name = "";
 };
 
-void ShuffleAllEntrances();
+int  ShuffleAllEntrances();
 void CreateEntranceOverrides();
 EntranceTrackingData* GetEntranceTrackingData();
 

@@ -688,10 +688,9 @@ string_view racingSettingDesc         = "Spoiler Log generation requires either 
 /*------------------------------                                                           //
 |         SPOILER L0G          |                                                           //
 ------------------------------*/                                                           //
-string_view spoilerLogDesc            = "If Racing Setting is enabled but you want to keep\n"
-                                        "the in-game tracker or generate a log after the\n"//
-                                        "race, set this to \"Yes\" and ignore the passcode\n"
-                                        "(input something random).";                       //
+string_view spoilerLogDesc            = "If Racing Setting is enabled but you want to\n"   //
+                                        "generate a log after the race, set this to \"Yes\"\n"
+                                        "and ignore the passcode (input something random).";
 /*------------------------------                                                           //
 |        INGAME SPOILERS       |                                                           //
 ------------------------------*/                                                           //
@@ -809,7 +808,8 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
 string_view musicRandoDesc            = "Randomize the music in the game.";                //
-string_view shuffleBGMDesc            = "Randomize area background music";                 //
+string_view shuffleBGMDesc            = "Randomize area background music, either\n"        //
+                                        "grouped into categories or all mixed together.";  //
 string_view fanfaresOffDesc           = "Fanfares are not shuffled.";                      //
 string_view onlyFanfaresDesc          = "Fanfares and ocarina songs are shuffled in\n"     //
                                         "separate pools.";                                 //

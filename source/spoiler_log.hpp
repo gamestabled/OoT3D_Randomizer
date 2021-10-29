@@ -11,7 +11,9 @@ void GenerateHash();
 void SetSpoilerLogPassCode(u32 passCode);
 const RandomizerHash& GetRandomizerHash();
 
-bool SpoilerLog_Write(u8 onlyInGameTracker);
+void WriteIngameSpoilerLog();
+
+bool SpoilerLog_Write();
 const SpoilerData& GetSpoilerData();
 
 void PlacementLog_Msg(std::string_view msg);

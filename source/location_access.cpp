@@ -149,16 +149,6 @@ void Area::RemoveExit(Entrance* exitToRemove) {
   exits.remove_if([exitToRemove](const auto exit){return &exit == exitToRemove;});
 }
 
-//The exit will still exist in the area, but won't be accessible
-void Area::DisconnectExit(AreaKey exitToDisconnect) {
-  for (auto& exit : exits) {
-    if (exit.GetAreaKey() == exitToDisconnect) {
-      exit.Disconnect();
-      return;
-    }
-  }
-}
-
 void Area::SetAsPrimary(AreaKey exitToBePrimary) {
   for (auto& exit : exits) {
     if (exit.GetAreaKey() == exitToBePrimary) {
@@ -394,8 +384,8 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(LW_SKULL_KID,                 {[]{return IsChild && CanPlay(SariasSong);}}),
-                  LocationAccess(LW_TRADE_COJIRO,              {[]{return !ShuffleAdultTradeQuest || (IsAdult && Cojiro);}}),
-                  LocationAccess(LW_TRADE_ODD_POULTICE,        {[]{return !ShuffleAdultTradeQuest || (IsAdult && OddPoultice && Cojiro);}}),
+                  LocationAccess(LW_TRADE_COJIRO,              {[]{return IsAdult && Cojiro;}}),
+                  LocationAccess(LW_TRADE_ODD_POULTICE,        {[]{return IsAdult && OddPoultice && Cojiro;}}),
                   LocationAccess(LW_OCARINA_MEMORY_GAME,       {[]{return IsChild && Ocarina;}}),
                   LocationAccess(LW_TARGET_IN_WOODS,           {[]{return CanUse(SLINGSHOT);}}),
                   LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE,    {[]{return IsChild && CanStunDeku;}}),
@@ -667,7 +657,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(LH_LAB_DIVE,     {[]{return ProgressiveScale >= 2 || (LogicLabDiving && IronBoots && CanUse(HOOKSHOT));}}),
-                  LocationAccess(LH_TRADE_FROG,   {[]{return !ShuffleAdultTradeQuest || (IsAdult && EyeballFrog);}}),
+                  LocationAccess(LH_TRADE_FROG,   {[]{return IsAdult && EyeballFrog;}}),
                   LocationAccess(LH_GS_LAB_CRATE, {[]{return IronBoots && CanUse(HOOKSHOT);}}),
                 }, {
                   //Exits
@@ -737,7 +727,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(GV_CHEST,          {[]{return CanUse(MEGATON_HAMMER);}}),
-                  LocationAccess(GV_TRADE_SAW,      {[]{return !ShuffleAdultTradeQuest || (IsAdult && PoachersSaw);}}),
+                  LocationAccess(GV_TRADE_SAW,      {[]{return IsAdult && PoachersSaw;}}),
                   LocationAccess(GV_GS_BEHIND_TENT, {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(GV_GS_PILLAR,      {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
                 }, {
@@ -1129,7 +1119,7 @@ void AreaTable_Init() {
                   LocationAccess(SHEIK_IN_KAKARIKO,               {[]{return IsAdult && ForestMedallion && FireMedallion && WaterMedallion;}}),
                   LocationAccess(KAK_ANJU_AS_CHILD,               {[]{return IsChild && AtDay;}}),
                   LocationAccess(KAK_ANJU_AS_ADULT,               {[]{return IsAdult && AtDay;}}),
-                  LocationAccess(KAK_TRADE_POCKET_CUCCO,          {[]{return !ShuffleAdultTradeQuest || (IsAdult && AtDay && PocketEgg && WakeUpAdultTalon);}}),
+                  LocationAccess(KAK_TRADE_POCKET_CUCCO,          {[]{return IsAdult && AtDay && PocketEgg && WakeUpAdultTalon;}}),
                   LocationAccess(KAK_GS_HOUSE_UNDER_CONSTRUCTION, {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(KAK_GS_SKULLTULA_HOUSE,          {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(KAK_GS_GUARDS_HOUSE,             {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
@@ -1278,7 +1268,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&OddPoulticeAccess, {[]{return OddPoulticeAccess || (IsAdult && (OddMushroomAccess || (OddMushroom && DisableTradeRevert)));}}),
                 }, {
-                  LocationAccess(KAK_TRADE_ODD_MUSHROOM, {[]{return !ShuffleAdultTradeQuest || (IsAdult && OddMushroom);}}),
+                  LocationAccess(KAK_TRADE_ODD_MUSHROOM, {[]{return IsAdult && OddMushroom;}}),
                 }, {
                   //Exits
                   Entrance(KAK_BACKYARD, {[]{return true;}}),
@@ -1415,8 +1405,8 @@ void AreaTable_Init() {
                   EventAccess(&BugRock,            {[]{return IsChild;}}),
                 }, {
                   //Locations
-                  LocationAccess(DMT_TRADE_BROKEN_SWORD,    {[]{return !ShuffleAdultTradeQuest || (IsAdult && BrokenSword);}}),
-                  LocationAccess(DMT_TRADE_EYEDROPS,        {[]{return !ShuffleAdultTradeQuest || (IsAdult && Eyedrops);}}),
+                  LocationAccess(DMT_TRADE_BROKEN_SWORD,    {[]{return IsAdult && BrokenSword;}}),
+                  LocationAccess(DMT_TRADE_EYEDROPS,        {[]{return IsAdult && Eyedrops;}}),
                   LocationAccess(DMT_TRADE_CLAIM_CHECK,     {[]{return IsAdult && ClaimCheck;}}),
                   LocationAccess(DMT_GS_FALLING_ROCKS_PATH, {[]{return IsAdult && AtNight && CanUse(MEGATON_HAMMER) && CanGetNightTimeGS;}}),
                   LocationAccess(DMT_GOSSIP_STONE,          {[]{return true;}}),
@@ -3758,6 +3748,8 @@ namespace Areas {
   static std::array<const AreaKey, 301> allAreas = {
     ROOT,
     ROOT_EXITS,
+
+    // Below is ordered for entrance tracker groups
     KOKIRI_FOREST,
     KF_LINKS_HOUSE,
     KF_MIDOS_HOUSE,
@@ -3765,8 +3757,10 @@ namespace Areas {
     KF_HOUSE_OF_TWINS,
     KF_KNOW_IT_ALL_HOUSE,
     KF_KOKIRI_SHOP,
-    KF_OUTSIDE_DEKU_TREE,
     KF_STORMS_GROTTO,
+    KF_OUTSIDE_DEKU_TREE,
+    DEKU_TREE_ENTRYWAY,
+
     THE_LOST_WOODS,
     LW_BRIDGE_FROM_FOREST,
     LW_BRIDGE,
@@ -3780,60 +3774,8 @@ namespace Areas {
     SFM_WOLFOS_GROTTO,
     SFM_FAIRY_GROTTO,
     SFM_STORMS_GROTTO,
-    HYRULE_FIELD,
-    HF_SOUTHEAST_GROTTO,
-    HF_OPEN_GROTTO,
-    HF_INSIDE_FENCE_GROTTO,
-    HF_COW_GROTTO,
-    HF_NEAR_MARKET_GROTTO,
-    HF_FAIRY_GROTTO,
-    HF_NEAR_KAK_GROTTO,
-    HF_TEKTITE_GROTTO,
-    LAKE_HYLIA,
-    LH_OWL_FLIGHT,
-    LH_LAB,
-    LH_FISHING_ISLAND,
-    LH_FISHING_HOLE,
-    LH_GROTTO,
-    GERUDO_VALLEY,
-    GV_STREAM,
-    GV_CRATE_LEDGE,
-    GV_OCTOROK_GROTTO,
-    GV_FORTRESS_SIDE,
-    GV_CARPENTER_TENT,
-    GV_STORMS_GROTTO,
-    GERUDO_FORTRESS,
-    GF_OUTSIDE_GATE,
-    GF_STORMS_GROTTO,
-    WASTELAND_NEAR_FORTRESS,
-    HAUNTED_WASTELAND,
-    WASTELAND_NEAR_COLOSSUS,
-    DESERT_COLOSSUS,
-    COLOSSUS_GREAT_FAIRY_FOUNTAIN,
-    COLOSSUS_GROTTO,
-    MARKET_ENTRANCE,
-    THE_MARKET,
-    MARKET_GUARD_HOUSE,
-    MARKET_BAZAAR,
-    MARKET_MASK_SHOP,
-    MARKET_SHOOTING_GALLERY,
-    MARKET_BOMBCHU_BOWLING,
-    MARKET_TREASURE_CHEST_GAME,
-    MARKET_POTION_SHOP,
-    MARKET_BACK_ALLEY,
-    MARKET_BOMBCHU_SHOP,
-    MARKET_DOG_LADY_HOUSE,
-    MARKET_MAN_IN_GREEN_HOUSE,
-    TOT_ENTRANCE,
-    TEMPLE_OF_TIME,
-    TOT_BEYOND_DOOR_OF_TIME,
-    CASTLE_GROUNDS,
-    HYRULE_CASTLE_GROUNDS,
-    HC_GARDEN,
-    HC_GREAT_FAIRY_FOUNTAIN,
-    HC_STORMS_GROTTO,
-    GANONS_CASTLE_GROUNDS,
-    OGC_GREAT_FAIRY_FOUNTAIN,
+    FOREST_TEMPLE_ENTRYWAY,
+
     KAKARIKO_VILLAGE,
     KAK_CARPENTER_BOSS_HOUSE,
     KAK_HOUSE_OF_SKULLTULA,
@@ -3852,6 +3794,8 @@ namespace Areas {
     KAK_ODD_POULTICE_BUILDING,
     KAK_REDEAD_GROTTO,
     KAK_OPEN_GROTTO,
+    BOTTOM_OF_THE_WELL_ENTRYWAY,
+
     THE_GRAVEYARD,
     GRAVEYARD_DAMPES_GRAVE,
     GRAVEYARD_DAMPES_HOUSE,
@@ -3859,17 +3803,16 @@ namespace Areas {
     GRAVEYARD_COMPOSERS_GRAVE,
     GRAVEYARD_HEART_PIECE_GRAVE,
     GRAVEYARD_WARP_PAD_REGION,
+    SHADOW_TEMPLE_ENTRYWAY,
+
     DEATH_MOUNTAIN_TRAIL,
     DEATH_MOUNTAIN_SUMMIT,
     DMT_OWL_FLIGHT,
     DMT_GREAT_FAIRY_FOUNTAIN,
     DMT_COW_GROTTO,
     DMT_STORMS_GROTTO,
-    GORON_CITY,
-    GC_WOODS_WARP,
-    GC_DARUNIAS_CHAMBER,
-    GC_SHOP,
-    GC_GROTTO,
+    DODONGOS_CAVERN_ENTRYWAY,
+
     DMC_UPPER_LOCAL,
     DMC_CENTRAL_LOCAL,
     DMC_LOWER_LOCAL,
@@ -3880,6 +3823,14 @@ namespace Areas {
     DMC_UPPER_GROTTO,
     DMC_HAMMER_GROTTO,
     DMC_GREAT_FAIRY_FOUNTAIN,
+    FIRE_TEMPLE_ENTRYWAY,
+
+    GORON_CITY,
+    GC_WOODS_WARP,
+    GC_DARUNIAS_CHAMBER,
+    GC_SHOP,
+    GC_GROTTO,
+
     ZR_FRONT,
     ZORAS_RIVER,
     ZR_BEHIND_WATERFALL,
@@ -3892,24 +3843,79 @@ namespace Areas {
     ZD_STORMS_GROTTO,
     ZORAS_FOUNTAIN,
     ZF_GREAT_FAIRY_FOUNTAIN,
+    JABU_JABUS_BELLY_ENTRYWAY,
+    ICE_CAVERN_ENTRYWAY,
+
+    HYRULE_FIELD,
+    HF_SOUTHEAST_GROTTO,
+    HF_OPEN_GROTTO,
+    HF_INSIDE_FENCE_GROTTO,
+    HF_COW_GROTTO,
+    HF_NEAR_MARKET_GROTTO,
+    HF_FAIRY_GROTTO,
+    HF_NEAR_KAK_GROTTO,
+    HF_TEKTITE_GROTTO,
+
     LON_LON_RANCH,
     LLR_TALONS_HOUSE,
     LLR_STABLES,
     LLR_TOWER,
     LLR_GROTTO,
 
-    DEKU_TREE_ENTRYWAY,
-    DODONGOS_CAVERN_ENTRYWAY,
-    JABU_JABUS_BELLY_ENTRYWAY,
-    FOREST_TEMPLE_ENTRYWAY,
-    FIRE_TEMPLE_ENTRYWAY,
+    LAKE_HYLIA,
+    LH_OWL_FLIGHT,
+    LH_LAB,
+    LH_FISHING_ISLAND,
+    LH_FISHING_HOLE,
+    LH_GROTTO,
     WATER_TEMPLE_ENTRYWAY,
-    SPIRIT_TEMPLE_ENTRYWAY,
-    SHADOW_TEMPLE_ENTRYWAY,
-    BOTTOM_OF_THE_WELL_ENTRYWAY,
-    ICE_CAVERN_ENTRYWAY,
+
+    GERUDO_VALLEY,
+    GV_STREAM,
+    GV_CRATE_LEDGE,
+    GV_OCTOROK_GROTTO,
+    GV_FORTRESS_SIDE,
+    GV_CARPENTER_TENT,
+    GV_STORMS_GROTTO,
+    GERUDO_FORTRESS,
+    GF_OUTSIDE_GATE,
+    GF_STORMS_GROTTO,
     GERUDO_TRAINING_GROUNDS_ENTRYWAY,
+
+    WASTELAND_NEAR_FORTRESS,
+    HAUNTED_WASTELAND,
+    WASTELAND_NEAR_COLOSSUS,
+    DESERT_COLOSSUS,
+    COLOSSUS_GREAT_FAIRY_FOUNTAIN,
+    COLOSSUS_GROTTO,
+    SPIRIT_TEMPLE_ENTRYWAY,
+
+    MARKET_ENTRANCE,
+    THE_MARKET,
+    MARKET_GUARD_HOUSE,
+    MARKET_BAZAAR,
+    MARKET_MASK_SHOP,
+    MARKET_SHOOTING_GALLERY,
+    MARKET_BOMBCHU_BOWLING,
+    MARKET_TREASURE_CHEST_GAME,
+    MARKET_POTION_SHOP,
+    MARKET_BACK_ALLEY,
+    MARKET_BOMBCHU_SHOP,
+    MARKET_DOG_LADY_HOUSE,
+    MARKET_MAN_IN_GREEN_HOUSE,
+    TOT_ENTRANCE,
+    TEMPLE_OF_TIME,
+    TOT_BEYOND_DOOR_OF_TIME,
+
+    CASTLE_GROUNDS,
+    HYRULE_CASTLE_GROUNDS,
+    HC_GARDEN,
+    HC_GREAT_FAIRY_FOUNTAIN,
+    HC_STORMS_GROTTO,
+    GANONS_CASTLE_GROUNDS,
+    OGC_GREAT_FAIRY_FOUNTAIN,
     GANONS_CASTLE_ENTRYWAY,
+    // Above is ordered for entrance tracker groups
 
     DEKU_TREE_LOBBY,
     DEKU_TREE_SLINGSHOT_ROOM,

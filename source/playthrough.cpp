@@ -59,26 +59,27 @@ namespace Playthrough {
       unsigned int spoilerLogPassCode = std::hash<std::string>{}(settingsStr + Settings::seed);
       SetSpoilerLogPassCode(spoilerLogPassCode);
 
+      WriteIngameSpoilerLog();
+
       if (Settings::GenerateSpoilerLog) {
         // With the Racing Setting enabled, the spoiler log file is only written if the proper passcode is provided.
-        // The in-game spoiler log is written anyway (if GenerateSpoilerLog is on), because the Racing Setting prevents cheating with it.
-        u8 onlyInGameTracker = 0;
+        u8 generationAllowed = 1;
         if (Settings::RacingSetting && !Settings::IngameSpoilers) {
           std::string passcode = GetInput("Enter Passcode to generate spoiler log");
           if (passcode.compare(std::to_string(spoilerLogPassCode))) {
-            printf("\x1b[11;10HInvalid code, writing tracker only...");
-            onlyInGameTracker = 1;
+            printf("\x1b[11;10HInvalid code, spoiler log not generated.");
+            generationAllowed = 0;
           }
         }
 
         //write logs
-        if (!onlyInGameTracker) {
+        if (generationAllowed) {
           printf("\x1b[11;10HWriting Spoiler Log...");
-        }
-        if (SpoilerLog_Write(onlyInGameTracker)) {
-          printf("Done");
-        } else {
-          printf("Failed");
+          if (SpoilerLog_Write()) {
+            printf("Done");
+          } else {
+            printf("Failed");
+          }
         }
         #ifdef ENABLE_DEBUG
           printf("\x1b[11;10HWriting Placement Log...");

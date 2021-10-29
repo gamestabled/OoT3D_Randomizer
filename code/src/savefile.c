@@ -6,6 +6,7 @@
 #include "3ds/types.h"
 #include "3ds/extdata.h"
 #include <string.h>
+#include "entrance.h"
 
 #define DECLARE_EXTSAVEDATA
 #include "savefile.h"
@@ -266,12 +267,25 @@ u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
 }
 
 void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
+    // Skip if already set to save time from setting the connected
+    if (SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
+        return;
+    }
+
     u16 numBits = sizeof(u32) * 8;
     u32 idx = entranceIndex / numBits;
     if (idx < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT) {
         u32 entranceBit = 1 << (entranceIndex - (idx * numBits));
         gExtSaveData.entrancesDiscovered[idx] |= entranceBit;
-        entranceIndex++;
+        // Set connected
+        for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
+            if (entranceIndex == rEntranceOverrides[i].index) {
+                if (!SaveFile_GetIsEntranceDiscovered(rEntranceOverrides[i].overrideDestination)) {
+                    SaveFile_SetEntranceDiscovered(rEntranceOverrides[i].overrideDestination);
+                }
+                break;
+            }
+        }
     }
 }
 
@@ -571,8 +585,10 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.reachedGanondorfWithItems = 0;
     gExtSaveData.savedSpoilerLogPassCode = 0;
     gExtSaveData.saveContextChecksum = gSaveContext.checksum;
+    // Ingame Options
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;
+    gExtSaveData.option_SilenceNavi = 0;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {
