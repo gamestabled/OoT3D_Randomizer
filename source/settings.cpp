@@ -141,6 +141,7 @@ namespace Settings {
   Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
   Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
+  Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
   std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -157,6 +158,7 @@ namespace Settings {
     &ShuffleMagicBeans,
     &ShuffleMerchants,
     &ShuffleAdultTradeQuest,
+    &ShuffleChestMinigame,
   };
 
   //Shuffle Dungeon Items
@@ -915,6 +917,7 @@ namespace Settings {
     ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleMerchants     = ShuffleMerchants.Value<u8>();
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
+    ctx.shuffleChestMinigame = ShuffleChestMinigame.Value<u8>();
 
     ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
     ctx.keysanity            = Keysanity.Value<u8>();
@@ -1309,6 +1312,14 @@ namespace Settings {
       Unhide(adultTradeLocations);
     } else {
       IncludeAndHide(adultTradeLocations);
+    }
+
+    //Force include Chest Game keys if Shuffle Chest Minigame is off
+    std::vector<LocationKey> ChestMinigameLocations = {MARKET_TREASURE_CHEST_GAME_ITEM_1, MARKET_TREASURE_CHEST_GAME_ITEM_2, MARKET_TREASURE_CHEST_GAME_ITEM_3, MARKET_TREASURE_CHEST_GAME_ITEM_4, MARKET_TREASURE_CHEST_GAME_ITEM_5};
+    if (ShuffleChestMinigame) {
+      Unhide(ChestMinigameLocations);
+    } else {
+      IncludeAndHide(ChestMinigameLocations);
     }
 
     //Force include Map and Compass Chests when Vanilla

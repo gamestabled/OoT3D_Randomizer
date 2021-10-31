@@ -468,6 +468,18 @@ SECTIONS
 		*(.patch_SkipSongReplayForTimeWarpBlocksTwo)
 	}
 
+	.patch_ChestMinigame_DontOpenChestsOnInit 0x20EC8C : {
+		*(.patch_ChestMinigame_DontOpenChestsOnInit)
+	}
+
+	.patch_ChestMinigame_KeyChestVisibility 0x20EDB8 : {
+		*(.patch_ChestMinigame_KeyChestVisibility)
+	}
+
+	.patch_ChestMinigame_RewardChestVisibility 0x20EFE0 : {
+		*(.patch_ChestMinigame_RewardChestVisibility)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
@@ -1257,6 +1269,7 @@ SECTIONS
 	.patch_TycoonWalletSize 0x53CC08 : {
 		*(.patch_TycoonWalletSize)
 	}
+
 	. = 0x005C7000;
     .text : {
         __text_start = . ;

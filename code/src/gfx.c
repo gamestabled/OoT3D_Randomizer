@@ -35,7 +35,7 @@ static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 static bool isAsleep = false;
 
-DungeonInfo rDungeonInfoData[10]; 
+DungeonInfo rDungeonInfoData[10];
 
 #define TICKS_PER_SEC 268123480
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
@@ -209,10 +209,10 @@ static void Gfx_DrawButtonPrompts(void) {
     } else if (curMenuIdx == 5 || curMenuIdx == 7) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse items");
-        
+
         Draw_DrawIcon(102, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
         Draw_DrawString(114, textY, COLOR_TITLE, "Next group");
-        
+
         Draw_DrawIcon(184, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
         Draw_DrawString(196, textY, COLOR_TITLE, "Prev group");
     } else if (curMenuIdx == 8) {
@@ -265,8 +265,9 @@ static void Gfx_DrawDungeonItems(void) {
         Draw_DrawIcon(300, 16, COLOR_WHITE, ICON_TRIFORCE);
     }
 
+    u8 yPos = 0;
     for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
-        u8 yPos = 30 + (dungeonId * 13);
+        yPos = 30 + (dungeonId * 13);
         bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
         bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
@@ -319,6 +320,14 @@ static void Gfx_DrawDungeonItems(void) {
                 }
             }
         }
+    }
+
+    // Show key count for Treasure Chest Shop if the option is enabled
+    yPos += 13;
+    if (gSettingsContext.shuffleChestMinigame) {
+        Draw_DrawString(24, yPos, COLOR_WHITE, "Treasure Chest Shop");
+        s32 chestGameKeys = (gSaveContext.dungeonKeys[DUNGEON_TREASURE_CHEST_SHOP] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_TREASURE_CHEST_SHOP] : 0;
+        Draw_DrawFormattedString(220, yPos, chestGameKeys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", chestGameKeys);
     }
 }
 

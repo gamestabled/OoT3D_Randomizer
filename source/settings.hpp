@@ -330,6 +330,7 @@ namespace Settings {
   extern Option ShuffleMagicBeans;
   extern Option ShuffleMerchants;
   extern Option ShuffleAdultTradeQuest;
+  extern Option ShuffleChestMinigame;
 
   extern Option MapsAndCompasses;
   extern Option Keysanity;

@@ -239,6 +239,8 @@ static ItemRow rItemTable[] = {
 
     [0xD4] = ITEM_ROW(  -1, 0,   -1,     -1, 0x00F8, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x43, ItemUpgrade_GoronSword, ItemEffect_None, -1, -1), // Progressive Goron Sword
 
+    [0xD5] = ITEM_ROW(0x53, 3, 0x41, 0x00F3, 0x00AA, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_TREASURE_CHEST_SHOP, -1), // Small Key (Chest Game)
+
 };
 
 ItemRow* ItemTable_GetItemRow(u16 itemId) {

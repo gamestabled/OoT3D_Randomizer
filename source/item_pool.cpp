@@ -748,6 +748,18 @@ void GenerateItemPool() {
   }
   AddItemToMainPool(CLAIM_CHECK);
 
+  if (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS)) {
+    AddItemToMainPool(TREASURE_GAME_SMALL_KEY, 6); // 6 individual keys
+  } else if (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK)) {
+    AddItemToMainPool(TREASURE_GAME_SMALL_KEY); // 1 key which will behave as a pack of 6
+  } else {
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_1, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_2, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_3, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_4, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_5, TREASURE_GAME_SMALL_KEY, false, true);
+  };
+
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
     for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
       PlaceItemInLocation(loc, GOLD_SKULLTULA_TOKEN, false, true);
