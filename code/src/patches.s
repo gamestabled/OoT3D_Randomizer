@@ -1585,17 +1585,22 @@ SyatekiManReminder_patch:
 .section .patch_SkipTimeTravelCutsceneOne
 .global SkipTimeTravelCutsceneOne_patch
 SkipTimeTravelCutsceneOne_patch:
-    b hook_SkipTimeTravelCutscene
+    b hook_SkipTimeTravelCutsceneOne
 
 .section .patch_SkipTimeTravelCutsceneTwo
 .global SkipTimeTravelCutsceneTwo_patch
 SkipTimeTravelCutsceneTwo_patch:
-    mov r1,#0x324
+    bl hook_SkipTimeTravelCutsceneTwo
 
 .section .patch_SwapAgeIgnoreSceneSetup
 .global SwapAgeIgnoreSceneSetup_patch
 SwapAgeIgnoreSceneSetup_patch:
     nop
+
+.section .patch_SkipMasterSwordFanfare
+.global SkipMasterSwordFanfare_patch
+SkipMasterSwordFanfare_patch:
+    bl hook_SkipMasterSwordFanfare
 
 .section .patch_GameOverDontSpoilTradeItems
 .global GameOverDontSpoilTradeItems_patch

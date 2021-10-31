@@ -948,6 +948,10 @@ SECTIONS
 		*(.patch_MasterSwordAlwaysDrop)
 	}
 
+	.patch_SkipMasterSwordFanfare 0x3E5F60 : {
+		*(.patch_SkipMasterSwordFanfare)
+	}
+
 	.patch_FairyReward 0x3E7598 : {
 		*(.patch_FairyReward)
 	}

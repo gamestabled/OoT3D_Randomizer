@@ -1000,12 +1000,30 @@ hook_SyatekiManReminder:
     addne r1,r1,#0xAF
     b 0x23920C
 
-.global hook_SkipTimeTravelCutscene
-hook_SkipTimeTravelCutscene:
+.global hook_SkipTimeTravelCutsceneOne
+hook_SkipTimeTravelCutsceneOne:
     push {r0-r12, lr}
     bl TimeTravelAdvanceCutsceneTimer
     pop {r0-r12, lr}
     ldmia sp!,{r4,r5,r6,pc}
+
+.global hook_SkipTimeTravelCutsceneTwo
+hook_SkipTimeTravelCutsceneTwo:
+    push {r0-r12, lr}
+    bl SetTimeTraveled
+    pop {r0-r12, lr}
+    mov r1,#0x324
+    bx lr
+
+.global hook_SkipMasterSwordFanfare
+hook_SkipMasterSwordFanfare:
+    push {r0-r12, lr}
+    bl ShouldSkipMasterSwordCutscene
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x3E5F7C
+    mov r1,#0x0
+    bx lr
 
 .global hook_EnteredLocation
 hook_EnteredLocation:
