@@ -367,7 +367,7 @@ constexpr std::array DungeonColors = {
         } else if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK)) {
             CreateMessage(0x0F3, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got all 6 "+COLOR(QM_RED)+"Treasure Chest Shop"+NEWLINE()+"Small Keys"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez [PLURAL] "+COLOR(QM_RED)+"petite clé"+NEWLINE()+"de la chasse aux trésors"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez les "+COLOR(QM_RED)+"petites clés"+NEWLINE()+"de la chasse aux trésors"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido todas las 6 "+COLOR(QM_RED)+"llaves"+NEWLINE()+"pequeñas del Cofre del Tesoro"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
     }

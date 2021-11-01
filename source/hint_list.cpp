@@ -1401,10 +1401,10 @@ void HintTable_Init() {
 
     hintTable[TREASURE_GAME_SMALL_KEY] = HintText::Item({
                         //obscure text
-                        Text{"a gambler's tool for unlocking", /*french*/"un anti-porte [CHEST GAME]",            /*spanish*/"una clave de una entrada [CHEST GAME]"},
-                        Text{"a gambler's dungeon pass",       /*french*/"le rêve d'un prisonnier [CHEST GAME]", /*spanish*/"un pase de una mazmorra [CHEST GAME]"},
-                        Text{"a gambler's lock remover",       /*french*/"un efface-serrure [CHEST GAME]",        /*spanish*/"un destructor de cerraduras [CHEST GAME]"},
-                        Text{"a gambler's lockpick",           /*french*/"un crochet à porte [CHEST GAME]",       /*spanish*/"una apertura portentosa [CHEST GAME]"},
+                        Text{"a gambler's tool for unlocking", /*french*/"un anti-porte de parieur",            /*spanish*/"una clave de una entrada [CHEST GAME]"},
+                        Text{"a gambler's dungeon pass",       /*french*/"le rêve d'un prisonnier parieur", /*spanish*/"un pase de una mazmorra [CHEST GAME]"},
+                        Text{"a gambler's lock remover",       /*french*/"un efface-serrure de parieur",        /*spanish*/"un destructor de cerraduras [CHEST GAME]"},
+                        Text{"a gambler's lockpick",           /*french*/"un crochet à serrure de parieur",       /*spanish*/"una apertura portentosa [CHEST GAME]"},
                       }, {
                         //ambiguous text
                         Text{"a small key", /*french*/"une petite clé", /*spanish*/"una llave pequeña"},
@@ -2083,47 +2083,47 @@ void HintTable_Init() {
 
     hintTable[MARKET_TREASURE_CHEST_GAME_ITEM_1] = HintText::Sometimes({
                        //obscure text
-                       Text{"#gambling once# grants",               /*french*/"#parier# donne [1]",                     /*spanish*/"#los juegos de azar# revelan [1]"},
-                       Text{"the #first or second chest# contains",               /*french*/"#parier# donne [1]",                     /*spanish*/"#los juegos de azar# revelan [1]"},
+                       Text{"#gambling once# grants",                    /*french*/"#parier une fois# donne",                        /*spanish*/"#los juegos de azar# revelan [1]"},
+                       Text{"the #first or second game chest# contains", /*french*/"le #premier ou deuxième coffre à jeu# contient", /*spanish*/"#los juegos de azar# revelan [1]"},
                      }, {},
                        //clear text
-                       Text{"the #first locked room# in the chest game contains", /*french*/"la #chasse aux trésors# donne [1]", /*spanish*/"#el Cofre del Tesoro# premia [1]"}
+                       Text{"the #first locked room# in the chest game contains", /*french*/"la #première salle# de la chasse aux trésors contient", /*spanish*/"#el Cofre del Tesoro# premia [1]"}
   );
 
     hintTable[MARKET_TREASURE_CHEST_GAME_ITEM_2] = HintText::Sometimes({
                        //obscure text
-                       Text{"#gambling twice# grants",               /*french*/"#parier# donne [2]",                     /*spanish*/"#los juegos de azar# revelan [2]"},
-                       Text{"the #third or fourth chest# contains",               /*french*/"#parier# donne [2]",                     /*spanish*/"#los juegos de azar# revelan [2]"},
+                       Text{"#gambling twice# grants",                   /*french*/"#parier deux fois# donne",                          /*spanish*/"#los juegos de azar# revelan [2]"},
+                       Text{"the #third or fourth game chest# contains", /*french*/"le #troisième ou quatrième coffre à jeu# contient", /*spanish*/"#los juegos de azar# revelan [2]"},
                      }, {},
                        //clear text
-                       Text{"the #second locked room# in the chest game contains", /*french*/"la #chasse aux trésors# donne [2]", /*spanish*/"#el Cofre del Tesoro# premia [2]"}
+                       Text{"the #second locked room# in the chest game contains", /*french*/"la #deuxième salle# de la chasse aux trésors contient", /*spanish*/"#el Cofre del Tesoro# premia [2]"}
   );
 
     hintTable[MARKET_TREASURE_CHEST_GAME_ITEM_3] = HintText::Sometimes({
                        //obscure text
-                       Text{"#gambling 3 times# grants",               /*french*/"#parier# donne [3]",                     /*spanish*/"#los juegos de azar# revelan [3]"},
-                       Text{"the #fifth or sixth chest# contains",               /*french*/"#parier# donne [3]",                     /*spanish*/"#los juegos de azar# revelan [3]"},
+                       Text{"#gambling 3 times# grants",                /*french*/"#parier trois fois# donne",                       /*spanish*/"#los juegos de azar# revelan [3]"},
+                       Text{"the #fifth or sixth game chest# contains", /*french*/"le #cinquième ou sixième coffre à jeu# contient", /*spanish*/"#los juegos de azar# revelan [3]"},
                      }, {},
                        //clear text
-                       Text{"the #third locked room# in the chest game contains", /*french*/"la #chasse aux trésors# donne [3]", /*spanish*/"#el Cofre del Tesoro# premia [3]"}
+                       Text{"the #third locked room# in the chest game contains", /*french*/"la #troisième salle# de la chasse aux trésors contient", /*spanish*/"#el Cofre del Tesoro# premia [3]"}
   );
 
     hintTable[MARKET_TREASURE_CHEST_GAME_ITEM_4] = HintText::Sometimes({
                        //obscure text
-                       Text{"#gambling 4 times# grants",               /*french*/"#parier# donne [4]",                     /*spanish*/"#los juegos de azar# revelan [4]"},
-                       Text{"the #seventh or eighth chest# contains",               /*french*/"#parier# donne",                     /*spanish*/"#los juegos de azar# revelan [4]"},
+                       Text{"#gambling 4 times# grants",                   /*french*/"#parier quatre fois# donne",                      /*spanish*/"#los juegos de azar# revelan [4]"},
+                       Text{"the #seventh or eighth game chest# contains", /*french*/"le #septième ou huitième coffre à jeu# contient", /*spanish*/"#los juegos de azar# revelan [4]"},
                      }, {},
                        //clear text
-                       Text{"the #fourth locked room# in the chest game contains", /*french*/"la #chasse aux trésors# donne [4]", /*spanish*/"#el Cofre del Tesoro# premia [4]"}
+                       Text{"the #fourth locked room# in the chest game contains", /*french*/"la #quatrième salle# de la chasse aux trésors contient", /*spanish*/"#el Cofre del Tesoro# premia [4]"}
   );
 
     hintTable[MARKET_TREASURE_CHEST_GAME_ITEM_5] = HintText::Sometimes({
                        //obscure text
-                       Text{"#gambling 5 times# grants",               /*french*/"#parier# donne [5]",                     /*spanish*/"#los juegos de azar# revelan [5]"},
-                       Text{"the #ninth or tenth chest# contains",               /*french*/"#parier# donne [5]",                     /*spanish*/"#los juegos de azar# revelan [5]"},
+                       Text{"#gambling 5 times# grants",                /*french*/"#parier cinq fois# donne",                       /*spanish*/"#los juegos de azar# revelan [5]"},
+                       Text{"the #ninth or tenth game chest# contains", /*french*/"le #neuvième ou dixième coffre à jeu# contient", /*spanish*/"#los juegos de azar# revelan [5]"},
                      }, {},
                        //clear text
-                       Text{"the #fourth locked room# in the chest game contains", /*french*/"la #chasse aux trésors# donne", /*spanish*/"#el Cofre del Tesoro# premia"}
+                       Text{"the #fifth locked room# in the chest game contains", /*french*/"la #cinquième salle# de la chasse aux trésors contient", /*spanish*/"#el Cofre del Tesoro# premia"}
   );
 
     hintTable[GF_HBA_1500_POINTS] = HintText::Sometimes({
@@ -5954,7 +5954,7 @@ void HintTable_Init() {
 
     hintTable[MARKET_TREASURE_CHEST_GAME] = HintText::Region({
                      //obscure text
-                     Text{"the #Treasure Box Shop#", /*french*/"la #chasse aux trésors#", /*spanish*/"el Cofre del Tesoro"},
+                     Text{"the #Treasure Chest Shop#", /*french*/"la #chasse aux trésors#", /*spanish*/"el Cofre del Tesoro"},
   });
 
     hintTable[MARKET_BOMBCHU_SHOP] = HintText::Region({
