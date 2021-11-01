@@ -485,13 +485,14 @@ static void Gfx_DrawERTracker(void) {
         u32 itemPosY = locPosY + SPACING_SMALL_Y;
 
         bool isDiscovered = IsEntranceDiscovered(rEntranceOverrides[locIndex].index);
+        u8 shouldBeDisplayed = gSettingsContext.ingameSpoilers || (isDiscovered && (!gSettingsContext.racingSetting || SaveFileIsForThisSeed()));
 
         u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
         const char* unknown = "???";
         const char* origSrcName = GetEntranceName(rEntranceOverrides[locIndex].index);
         const char* origDstName = GetEntranceName(rEntranceOverrides[locIndex].destination);
-        const char* rplcSrcName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceName(rEntranceOverrides[locIndex].override) : unknown;
-        const char* rplcDstName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceName(rEntranceOverrides[locIndex].overrideDestination) : unknown;
+        const char* rplcSrcName = gSettingsContext.ingameSpoilers || shouldBeDisplayed ? GetEntranceName(rEntranceOverrides[locIndex].override) : unknown;
+        const char* rplcDstName = gSettingsContext.ingameSpoilers || shouldBeDisplayed ? GetEntranceName(rEntranceOverrides[locIndex].overrideDestination) : unknown;
 
         Draw_DrawFormattedString_Small(10, locPosY, color, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
         Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s from %s", rplcDstName, rplcSrcName);
