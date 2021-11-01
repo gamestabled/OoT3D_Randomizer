@@ -1438,9 +1438,14 @@ string_view GlitchClassicHalfieDesc                   = "Dying during a jump att
                                                         "too high to climb will put Link on top of the\n"  //
                                                         "ledge. Combined with a fairy this lets Link climb\n"
                                                         "ledges such as the one to the switch in DC.";     //
-string_view GlitchDCModernHalfieDesc                  = "Using a bomb flower and a twisted backflip, it is\n"
+string_view GlitchModernHalfieDesc                    = "Using a bomb flower and a twisted backflip, it is\n"
                                                         "possible to access the switch in DC with only a\n"//
                                                         "deku shield and the goron bracelet.";             //
 string_view GlitchJabuSwitchDesc                      = "Using a cutscene item the frame you land on the\n"//
                                                         "blue switches in Jabu Jabu's Belly will make them\n"
                                                         "stay held for a while after you step off them.";  //
+string_view GlitchForestBKSkipDesc                    = "Using the hookshot or bow to shorten a backflip\n"//
+                                                        "it is possible to land on the other side of the\n"//
+                                                        "railing in the north of the lobby and get clipped\n"
+                                                        "out of bounds. From here it is possible to jump\n"//
+                                                        "into the boss loading zone.";                     //

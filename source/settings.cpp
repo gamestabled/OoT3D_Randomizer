@@ -597,6 +597,7 @@ namespace Settings {
     &LogicWindmillPoHHookshot,
     &LogicDMTBombable,
     //&LogicDMTSoilGS, Needs Testing                    Yes, but you need to drop the bugs from above the boulder so needs to check for damage
+    &LogicDMTSummitHover,
     &LogicLinkGoronDins,
     &LogicGoronCityLeftMost,
     &LogicGoronCityPot,
@@ -738,6 +739,7 @@ namespace Settings {
   Option GlitchClassicHalfie     = Option::Bool("Classic Halfie",              {"Off", "On"}, {GlitchClassicHalfieDesc});
   Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"Off", "On"}, {GlitchModernHalfieDesc});
   Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {GlitchJabuSwitchDesc});
+  Option GlitchForestBKSkip      = Option::Bool("Forest Temple\n  BK Skip",    {"Off", "On"}, {GlitchForestBKSkipDesc});
   std::vector<Option*> miscGlitches = {
     &GlitchGVTentAsChild,
     &GlitchGFGuardSneak,
@@ -748,8 +750,9 @@ namespace Settings {
     &GlitchJabuAdult,
     &GlitchBlueFireWall,
     &GlitchClassicHalfie,
-    &GlitchDCModernHalfie,
+    &GlitchModernHalfie,
     &GlitchJabuSwitch,
+    &GlitchForestBKSkip,
   };
 
   Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories, false);

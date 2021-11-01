@@ -301,7 +301,11 @@ namespace Logic {
   bool RaiseWaterLevel           = false;
   bool KakarikoVillageGateOpen   = false;
   bool KingZoraThawed            = false;
+  bool ForestTempleJoelle        = false;
+  bool ForestTempleBeth          = false;
   bool ForestTempleJoAndBeth     = false;
+  bool ForestTempleAmy           = false;
+  bool ForestTempleMeg           = false;
   bool ForestTempleAmyAndMeg     = false;
   bool LinksCow                  = false;
   bool AtDampeTime               = false;
@@ -1077,7 +1081,11 @@ namespace Logic {
      ChildWaterTemple          = false;
      KakarikoVillageGateOpen   = false;
      KingZoraThawed            = false;
+     ForestTempleJoelle        = false;
+     ForestTempleBeth          = false;
      ForestTempleJoAndBeth     = false;
+     ForestTempleAmy           = false;
+     ForestTempleMeg           = false;
      ForestTempleAmyAndMeg     = false;
      LinksCow                  = false;
      AtDampeTime               = false;

@@ -575,6 +575,7 @@ namespace Settings {
   extern Option GlitchClassicHalfie;
   extern Option GlitchModernHalfie;
   extern Option GlitchJabuSwitch;
+  extern Option GlitchForestBKSkip;
 
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;

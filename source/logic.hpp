@@ -294,7 +294,11 @@ namespace Logic {
   extern bool AtDampeTime;
   extern bool DeliverLetter;
   extern bool KakarikoVillageGateOpen;
+  extern bool ForestTempleJoelle;
+  extern bool ForestTempleBeth;
   extern bool ForestTempleJoAndBeth;
+  extern bool ForestTempleAmy;
+  extern bool ForestTempleMeg;
   extern bool ForestTempleAmyAndMeg;
   extern bool TimeTravel;
 

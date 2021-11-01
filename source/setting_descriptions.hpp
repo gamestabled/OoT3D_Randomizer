@@ -488,3 +488,4 @@ extern string_view GlitchBlueFireWallDesc;
 extern string_view GlitchClassicHalfieDesc;
 extern string_view GlitchModernHalfieDesc;
 extern string_view GlitchJabuSwitchDesc;
+extern string_view GlitchForestBKSkipDesc;
