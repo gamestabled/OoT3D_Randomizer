@@ -176,6 +176,7 @@ typedef enum {
   GERUDOKEYS_ANY_DUNGEON,
   GERUDOKEYS_OVERWORLD,
   GERUDOKEYS_ANYWHERE,
+  GERUDOKEYS_PACK,
 } GerudoKeysSetting;
 
 typedef enum {

@@ -144,6 +144,7 @@ extern string_view gerudoKeysVanilla;
 extern string_view gerudoKeysAnyDungeon;
 extern string_view gerudoKeysOverworld;
 extern string_view gerudoKeysAnywhere;
+extern string_view gerudoKeysPack;
 
 extern string_view bossKeyStartWith;
 extern string_view bossKeyVanilla;

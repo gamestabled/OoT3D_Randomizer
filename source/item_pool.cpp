@@ -796,14 +796,20 @@ void GenerateItemPool() {
     PlaceItemInLocation(GF_SOUTH_F1_CARPENTER, RECOVERY_HEART, false, true);
     PlaceItemInLocation(GF_SOUTH_F2_CARPENTER, RECOVERY_HEART, false, true);
   } else if (GerudoKeys.IsNot(GERUDOKEYS_VANILLA)) {
-    if (GerudoFortress.Is(GERUDOFORTRESS_FAST)) {
+    if (GerudoFortress.Is(GERUDOFORTRESS_FAST)) { //Fast GF, only need one key and carpenter location
       AddItemToMainPool(GERUDO_FORTRESS_SMALL_KEY);
       PlaceItemInLocation(GF_NORTH_F2_CARPENTER, RECOVERY_HEART, false, true);
       PlaceItemInLocation(GF_SOUTH_F1_CARPENTER, RECOVERY_HEART, false, true);
       PlaceItemInLocation(GF_SOUTH_F2_CARPENTER, RECOVERY_HEART, false, true);
-    } else {
+    }
+    //Gerudo's fortress is not fast and they're set to be placed in a pack, so only place one 
+    else if (GerudoKeys.Is(GERUDOKEYS_PACK)) {
+      AddItemToMainPool(GERUDO_FORTRESS_SMALL_KEY);
+    }
+    else { //Default number of keys if fortress has 4 locks and keys not in a pack
       AddItemToMainPool(GERUDO_FORTRESS_SMALL_KEY, 4);
     }
+    //Extra key/pack on plentiful
     if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
       AddItemToPool(PendingJunkPool, GERUDO_FORTRESS_SMALL_KEY);
     }

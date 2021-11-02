@@ -439,6 +439,9 @@ string_view gerudoKeysOverworld       = "Gerudo Fortress Keys can only appear ou
                                         "dungeons.";                                       //
 string_view gerudoKeysAnywhere        = "Gerudo Fortress Keys can appear anywhere in the\n"//
                                         "world.";                                          //
+string_view gerudoKeysPack            = "Gerudo Fortress Keys can appear anywhere in the\n"//
+                                        "world, and you will get all 4 at once in a pack\n"//
+                                        "if the Fortress setting is default.";             //                                        
 /*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
