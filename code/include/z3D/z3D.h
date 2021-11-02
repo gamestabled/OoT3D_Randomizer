@@ -172,7 +172,9 @@ typedef struct {
     /* 0x1594 */ char         unk_1594[0x000C];
     /* 0x15A0 */ u16          nextCutsceneIndex;
     /* 0x15A2 */ u8           cutsceneTrigger;
-    /* 0x15A3 */ char         unk_15A3[0x00F];
+    /* 0x15A3 */ char         unk_15A3[0x008];
+    /* 0x15AB */ u8           nextTransition;
+    /* 0x15AC */ char         unk_15AC[0x006];
     /* 0x15B2 */ s16          healthAccumulator;
 
 //stuff below is from z64.h

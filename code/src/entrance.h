@@ -3,6 +3,8 @@
 
 //Entrance Table Data: https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 
+#define ENTRANCE_TABLE_SIZE 0x0614
+
 #define DEKU_TREE_ENTRANCE 0x0000
 #define DODONGOS_CAVERN_ENTRANCE 0x0004
 #define JABU_JABUS_BELLY_ENTRANCE 0x0028
@@ -66,6 +68,7 @@ extern EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT];
 extern EntranceTrackingData gEntranceTrackingData;
 
 void Entrance_Init(void);
+s16  Entrance_GetOverride(s16 index);
 u32  Entrance_IsLostWoodsBridge(void);
 void Entrance_EnteredLocation(void);
 u32  Entrance_SceneAndSpawnAre(u8 scene, u8 spawn);

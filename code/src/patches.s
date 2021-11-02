@@ -1677,6 +1677,21 @@ SkipJabuOpeningCutscene_patch:
 SilenceNavi_patch:
     bl hook_SilenceNavi
 
+.section .patch_OverrideSetupExitList
+.global OverrideSetupExitList_patch
+OverrideSetupExitList_patch:
+    bl hook_OverrideSetupExitList
+
+.section .patch_SceneExitOverride
+.global SceneExitOverride_patch
+SceneExitOverride_patch:
+    bl hook_SceneExitOverride
+
+.section .patch_OverrideGrottoActorEntrance
+.global OverrideGrottoActorEntrance_patch
+OverrideGrottoActorEntrance_patch:
+    b hook_OverrideGrottoActorEntrance
+
 .section .patch_loader
 .global loader_patch
 

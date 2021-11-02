@@ -704,6 +704,10 @@ SECTIONS
 		*(.patch_SetBGMEntrance)
 	}
 
+	.patch_SceneExitOverride 0x3366EC : {
+		*(.patch_SceneExitOverride)
+	}
+
 	.patch_EnteredLocation 0x338DB8 : {
 		*(.patch_EnteredLocation)
 	}
@@ -984,6 +988,10 @@ SECTIONS
 		*(.patch_HandleDoorDestroyCustomModels)
 	}
 
+	.patch_OverrideGrottoActorEntrance 0x3F2254 : {
+		*(.patch_OverrideGrottoActorEntrance)
+	}
+
 	.patch_FireArrowRequirement 0x3F23AC : {
 		*(.patch_FireArrowRequirement)
 	}
@@ -1050,6 +1058,10 @@ SECTIONS
 
 	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 : {
 		*(.patch_CheckForPocketCuccoHatchGameplayInit)
+	}
+
+	.patch_OverrideSetupExitList 0x449190 : {
+		*(.patch_OverrideSetupExitList)
 	}
 
 	.patch_InitSceneClearExtendedObjects 0x449218 : {

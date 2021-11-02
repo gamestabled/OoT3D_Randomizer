@@ -66,6 +66,7 @@ namespace Settings {
   Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                                     {dungeonEntrancesDesc});
   Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                                     {overworldEntrancesDesc});
   Option ShuffleInteriorEntrances  = Option::U8  ("  Interior Entrances",   {"Off", "Simple", "All"},                                          {interiorEntrancesOff, interiorEntrancesSimple, interiorEntrancesAll});
+  Option ShuffleGrottoEntrances    = Option::Bool("  Grottos Entrances",    {"Off", "On"},                                                     {grottoEntrancesDesc});
   Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
   Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_BOMBCHU);
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
@@ -92,6 +93,7 @@ namespace Settings {
     &ShuffleDungeonEntrances,
     &ShuffleOverworldEntrances,
     &ShuffleInteriorEntrances,
+    &ShuffleGrottoEntrances,
     &BombchusInLogic,
     &AmmoDrops,
     &HeartDropRefill,
@@ -1476,6 +1478,7 @@ namespace Settings {
         ShuffleDungeonEntrances.Unhide();
         ShuffleOverworldEntrances.Unhide();
         ShuffleInteriorEntrances.Unhide();
+        ShuffleGrottoEntrances.Unhide();
       } else {
         ShuffleDungeonEntrances.SetSelectedIndex(OFF);
         ShuffleDungeonEntrances.Hide();
@@ -1483,6 +1486,8 @@ namespace Settings {
         ShuffleOverworldEntrances.Hide();
         ShuffleInteriorEntrances.SetSelectedIndex(SHUFFLEINTERIORS_OFF);
         ShuffleInteriorEntrances.Hide();
+        ShuffleGrottoEntrances.SetSelectedIndex(OFF);
+        ShuffleGrottoEntrances.Hide();
       }
     }
 
