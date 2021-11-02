@@ -158,8 +158,9 @@ namespace Logic {
   u8 GoldSkulltulaTokens = 0;
 
   //Bottle Count
-  u8 Bottles    = 0;
-  u8 NumBottles = 0;
+  u8   Bottles    = 0;
+  u8   NumBottles = 0;
+  bool NoBottles  = false;
 
   //Drops and Bottle Contents Access
   bool DekuNutDrop      = false;
@@ -639,7 +640,7 @@ namespace Logic {
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
     NumBottles      = Bottles + ((DeliverLetter) ? 1 : 0);
-    HasBottle       = NumBottles >= 1;
+    HasBottle       = NumBottles >= 1 && !NoBottles;
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
     Ocarina         = ProgressiveOcarina    >= 1;
     OcarinaOfTime   = ProgressiveOcarina    >= 2;
@@ -948,6 +949,7 @@ namespace Logic {
      //Bottle Count
      Bottles    = 0;
      NumBottles = 0;
+     NoBottles  = false;
 
 
 

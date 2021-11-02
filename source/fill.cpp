@@ -148,7 +148,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
   }
   //checking if poe collector is reachable without using bottle contents
   if (mode == SearchMode::PoeCollectorAccess) {
-      Logic::HasBottle = false;
+      Logic::NoBottles = true;
   }
   std::vector<AreaKey> areaPool = {ROOT};
 

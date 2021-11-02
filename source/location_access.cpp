@@ -2116,9 +2116,9 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_ENTRYWAY] = Area("Forest Temple Entryway", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_ENTRANCE, {[]{return Dungeon::ForestTemple.IsVanilla();}}),
-                  Entrance(FOREST_TEMPLE_MQ_LOBBY, {[]{return Dungeon::ForestTemple.IsMQ();}}),
-                  Entrance(SACRED_FOREST_MEADOW,   {[]{return true;}}),
+                  Entrance(FOREST_TEMPLE_FIRST_ROOM, {[]{return Dungeon::ForestTemple.IsVanilla();}}),
+                  Entrance(FOREST_TEMPLE_MQ_LOBBY,   {[]{return Dungeon::ForestTemple.IsMQ();}}),
+                  Entrance(SACRED_FOREST_MEADOW,     {[]{return true;}}),
   });
 
   areaTable[FIRE_TEMPLE_ENTRYWAY] = Area("Fire Temple Entryway", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2759,7 +2759,7 @@ void AreaTable_Init() {
   }
 
   if (Dungeon::ForestTemple.IsVanilla()) {
-  areaTable[FOREST_TEMPLE_ENTRANCE] = Area("Forest Temple Entrance", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+  areaTable[FOREST_TEMPLE_FIRST_ROOM] = Area("Forest Temple First Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_FIRST_ROOM_CHEST, {[]{return true;}}),
                   LocationAccess(FOREST_TEMPLE_GS_FIRST_ROOM,    {[]{return (IsAdult && (Hookshot || Bow || Bombs)) || (IsChild && (Boomerang || Slingshot)) || HasBombchus || CanUse(DINS_FIRE);},
@@ -2772,9 +2772,9 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_SOUTH_CORRIDOR] = Area("Forest Temple South Corridor", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_ENTRANCE, {[]{return true;}}),
-                  Entrance(FOREST_TEMPLE_LOBBY,    {[]{return IsAdult || CanChildAttack || Nuts;},
-                                        /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  Entrance(FOREST_TEMPLE_FIRST_ROOM, {[]{return true;}}),
+                  Entrance(FOREST_TEMPLE_LOBBY,      {[]{return IsAdult || CanChildAttack || Nuts;},
+                                          /*Glitched*/[]{return Hammer && HammerAsChild;}}),
   });
 
   areaTable[FOREST_TEMPLE_LOBBY] = Area("Forest Temple Lobby", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
@@ -4813,7 +4813,7 @@ namespace Areas {
     JABU_JABUS_BELLY_NEAR_BOSS_ROOM,
     JABU_JABUS_BELLY_BOSS_ROOM,
 
-    FOREST_TEMPLE_ENTRANCE,
+    FOREST_TEMPLE_FIRST_ROOM,
     FOREST_TEMPLE_SOUTH_CORRIDOR,
     FOREST_TEMPLE_LOBBY,
     FOREST_TEMPLE_NORTH_CORRIDOR,
@@ -5029,7 +5029,7 @@ namespace Areas {
 
 Area* AreaTable(const AreaKey areaKey) {
   if (areaKey > KEY_ENUM_MAX) {
-    printf("\x1b[1;1HERROR: AREAKEY TOO BIG %lu", areaKey); //todo: remove
+    printf("\x1b[1;1HERROR: AREAKEY TOO BIG");
   }
   return &(areaTable[areaKey]);
 }
