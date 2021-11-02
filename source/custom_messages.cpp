@@ -237,10 +237,19 @@ constexpr std::array DungeonColors = {
         }
         for (u32 smallKey = 0; smallKey <= (DUNGEON_GANONS_CASTLE_FIRST_PART - DUNGEON_GERUDO_TRAINING_GROUNDS); smallKey++) {
             u32 dungeon = DUNGEON_GERUDO_TRAINING_GROUNDS + smallKey;
-            CreateMessage(0x9F4 + smallKey, 0, 2, 3,
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got a "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Small Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(DungeonColors[dungeon])+"petite clé"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido una "+COLOR(DungeonColors[dungeon])+"llave pequeña "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+            //We want different text if it's a GF key and the GF keys are in a pack
+            if (dungeon == DUNGEON_GERUDO_FORTRESS && Settings::GerudoKeys.Is(GERUDOKEYS_PACK) && Settings::GerudoFortress.Is(GERUDOFORTRESS_NORMAL)) {
+                CreateMessage(0x9F4 + smallKey, 0, 2, 3,
+                    UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got all 4 "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Small Keys"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                    UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez les "+COLOR(DungeonColors[dungeon])+"petite clés"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                    UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido todas las 4 "+COLOR(DungeonColors[dungeon])+"llaves "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+
+            } else {
+                CreateMessage(0x9F4 + smallKey, 0, 2, 3,
+                    UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got a "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Small Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                    UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(DungeonColors[dungeon])+"petite clé"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                    UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido una "+COLOR(DungeonColors[dungeon])+"llave pequeña "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+            }
         }
         //Tycoon's Wallet
         CreateMessage(0x09F7, 0, 2, 3,

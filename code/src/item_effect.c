@@ -64,6 +64,10 @@ void ItemEffect_GiveSmallKey(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
     if (keys < 0) {
         keys = 0;
     }
+    // Special case for Gerudo's Fortress: if the keys are in a pack, and fortress has all 4 locks, give all 4 at once
+    if (dungeonId == DUNGEON_GERUDO_FORTRESS && gSettingsContext.gerudoKeys == GERUDOKEYS_PACK && gSettingsContext.gerudoFortress == GERUDOFORTRESS_NORMAL) {
+        keys += 3;
+    }
     saveCtx->dungeonKeys[dungeonId] = keys + 1;
 }
 
