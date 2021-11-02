@@ -19,6 +19,7 @@ public:
 
     static size_t getTextWidth(const std::string& str);
     static void drawText(const std::string& str, int x, int y, float depth, float txtScale, uint32_t clr);
+    static void drawTextWrap(const std::string& str, int x, int y, float depth, float txtScale, int maxWidth, uint32_t clr);
 
 private:
     Graphics();

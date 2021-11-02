@@ -1,7 +1,7 @@
 #include "gui.hpp"
 
-void GUI::doFrame(const touchPosition& touchPos) {
-    updateAll(touchPos);
+void GUI::doFrame(const touchPosition& touchPos, u32 kDown, u32 kHeld) {
+    updateAll(touchPos, kDown, kHeld);
 
     graphics->beginFrame();
     graphics->startTopScreen();
@@ -13,15 +13,15 @@ void GUI::doFrame(const touchPosition& touchPos) {
     clearElements();
 }
 
-void GUI::updateAll(const touchPosition& touchPos) {
+void GUI::updateAll(const touchPosition& touchPos, u32 kDown, u32 kHeld) {
     if (spotlightElement != nullptr) {
-        spotlightElement->update(touchPos);
+        spotlightElement->update(touchPos, kDown, kHeld);
     } else {
         for (auto element : topFrameElements) {
-            element->update(touchPos);
+            element->update(touchPos, kDown, kHeld);
         }
         for (auto element : bottomFrameElements) {
-            element->update(touchPos);
+            element->update(touchPos, kDown, kHeld);
         }
     }
 }

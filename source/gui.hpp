@@ -33,8 +33,8 @@ public:
         spotlightElement = nullptr;
     }
 
-    void doFrame(const touchPosition& touchPos);
-    void updateAll(const touchPosition& touchPos);
+    void doFrame(const touchPosition& touchPos, u32 kDown, u32 kHeld);
+    void updateAll(const touchPosition& touchPos, u32 kDown, u32 kHeld);
 
 private:
     void clearElements();

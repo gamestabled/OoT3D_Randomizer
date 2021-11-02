@@ -36,7 +36,7 @@ APP_AUTHOR      :=  Gamestabled
 APP_DESCRIPTION :=  A different Ocarina of Time experience
 TARGET		    :=	$(notdir $(CURDIR))
 BUILD		    :=	build
-SOURCES		    :=	source source/lib/ui
+SOURCES		    :=	source source/lib/ui source/menus source/settings
 DATA		    :=	data
 INCLUDES	    :=	include
 GRAPHICS		:=	gfx
@@ -55,7 +55,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 
 CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS
 
-CXXFLAGS	:= $(CFLAGS) -frtti -fno-exceptions -fno-var-tracking-assignments -std=gnu++17 -Wreorder
+CXXFLAGS	:= $(CFLAGS) -frtti -fno-var-tracking-assignments -std=gnu++17 -Wreorder
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)

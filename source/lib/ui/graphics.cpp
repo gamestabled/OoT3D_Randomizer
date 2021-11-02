@@ -66,3 +66,38 @@ void Graphics::drawText(const std::string& str, int x, int y, float depth, float
     C2D_DrawText(&tmpTxt, C2D_WithColor, (float)x, (float)y, depth, txtScale, txtScale, clr);
     C2D_TextBufDelete(tmpBuf);
 }
+
+/* TODO: this function is really buggy */
+void Graphics::drawTextWrap(const std::string& str, int x, int y, float depth, float txtScale, int maxWidth, uint32_t clr) {
+    C2D_Text tmpTxt;
+    C2D_TextBuf tmpBuf = C2D_TextBufNew(512);
+
+    int xOffset = 0;
+    for(int i = 0; i < (int)str.length(); ) {
+        if(str[i] == '\n') {
+            ++i;
+            xOffset = 0;
+        }
+        size_t nextBreak = str.find_first_of(" /_.", i);
+        if(nextBreak == str.npos) {
+            C2D_TextParse(&tmpTxt, tmpBuf, str.substr(i, str.length() - i).c_str());
+            C2D_TextOptimize(&tmpTxt);
+            C2D_DrawText(&tmpTxt, C2D_WithColor, (float)(x + xOffset), (float)y, depth, txtScale, txtScale, clr);
+            break;
+        } else {
+            std::string temp = str.substr(i, (nextBreak + 1) - i);
+            size_t width = getTextWidth(temp);
+            if((int)(xOffset + width) > maxWidth) {
+                xOffset = 0;
+                y += 12;
+            }
+
+            C2D_TextParse(&tmpTxt, tmpBuf, temp.c_str());
+            C2D_TextOptimize(&tmpTxt);
+            C2D_DrawText(&tmpTxt, C2D_WithColor, (float)(x + xOffset), (float)y, depth, txtScale, txtScale, clr);
+            xOffset += width;
+            i += temp.length();
+        }
+    }
+    C2D_TextBufDelete(tmpBuf);
+}
