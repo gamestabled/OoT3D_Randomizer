@@ -1632,6 +1632,11 @@ LoadGame_patch:
 SaveGame_patch:
     b hook_SaveGame
 
+.section .patch_OnSave
+.global OnSave_patch
+OnSave_patch:
+    b hook_OnSave
+
 .section .patch_SaveMenuIgnoreOpen
 .global SaveMenuIgnoreOpen_patch
 SaveMenuIgnoreOpen_patch:

@@ -1044,6 +1044,14 @@ hook_SaveGame:
     push {r4-r9, lr}
     b 0x2fbfac
 
+.global hook_OnSave
+hook_OnSave:
+    push {r0-r12, lr}
+    bl SaveFile_OnSave
+    pop {r0-r12, lr}
+    push {r4-r10, lr}
+    b 0x2FDACC
+
 .global hook_SaveMenuIgnoreOpen
 hook_SaveMenuIgnoreOpen:
     push {r0-r12, lr}

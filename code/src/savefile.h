@@ -23,8 +23,14 @@ void SaveFile_InitExtSaveData(u32 fileBaseIndex);
 void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 
+extern u32 autosaveTimer;
+void SaveFile_Autosave(void);
+typedef void (*SaveDataFunc_proc)(GlobalContext* gCtx, u8 isFirstSave);
+#define SaveDataFunc_addr 0x2FDAC8
+#define SaveDataFunc ((SaveDataFunc_proc)SaveDataFunc_addr)
+
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 5
+#define EXTSAVEDATA_VERSION 6
 
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure
@@ -46,6 +52,7 @@ typedef struct {
     s8 option_EnableBGM;
     s8 option_EnableSFX;
     s8 option_SilenceNavi;
+    s8 option_Autosave;
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA

@@ -235,6 +235,12 @@ static void Gfx_UpdatePlayTime(u8 isInGame)
             while (ticksElapsed >= TICKS_PER_SEC) {
                 ticksElapsed -= TICKS_PER_SEC;
                 ++gExtSaveData.playtimeSeconds;
+
+                if (gExtSaveData.option_Autosave > 0) {
+                    ++autosaveTimer;
+                } else {
+                    autosaveTimer = 0;
+                }
             }
         }
     }

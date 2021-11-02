@@ -13,7 +13,7 @@ typedef struct {
 } Option;
 
 s8 selectedOption;
-Option options[3];
+Option options[4];
 
 void InitOptions(void) {
     // BGM
@@ -36,6 +36,17 @@ void InitOptions(void) {
     strcpy(options[2].alternatives[1], "On");
     strcpy(options[2].description, "Prevents Navi from alerting you about advice.");
     options[2].optionPointer = &gExtSaveData.option_SilenceNavi;
+
+    // Autosave
+    strcpy(options[3].name, "Autosave");
+    strcpy(options[3].alternatives[0], "Never");
+    strcpy(options[3].alternatives[1], "2 minutes");
+    strcpy(options[3].alternatives[2], "5 minutes");
+    strcpy(options[3].alternatives[3], "10 minutes");
+    strcpy(options[3].alternatives[4], "15 minutes");
+    strcpy(options[3].alternatives[5], "30 minutes");
+    strcpy(options[3].description, "Progress will be autosaved when traveling between\nareas after the set amount of time has passed.");
+    options[3].optionPointer = &gExtSaveData.option_Autosave;
 }
 
 void Gfx_DrawOptions(void) {

@@ -692,6 +692,10 @@ SECTIONS
 		*(.patch_SaveGame)
 	}
 
+	.patch_OnSave 0x2FDAC8 : {
+		*(.patch_OnSave)
+	}
+
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
 	}

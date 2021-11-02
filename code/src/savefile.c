@@ -584,6 +584,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;
     gExtSaveData.option_SilenceNavi = 0;
+    gExtSaveData.option_Autosave = 0;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {
@@ -641,4 +642,22 @@ void SaveFile_SaveExtSaveData(u32 saveNumber) {
     extDataWriteFileDirectly(fsa, path, &gExtSaveData, 0, sizeof(gExtSaveData));
 
     extDataUnmount(fsa);
+}
+
+u32 autosaveTimer = 0;
+void SaveFile_Autosave(void) {
+    if (gExtSaveData.option_Autosave == 0) {
+        return;
+    }
+
+    static const u8 minLimits[] = { 0, 2, 5, 10, 15, 30 };
+    const u32 autosaveTimerMinutes = autosaveTimer / 60;
+
+    if (autosaveTimerMinutes >= minLimits[gExtSaveData.option_Autosave]) {
+        SaveDataFunc(gGlobalContext, 0);
+    }
+}
+
+void SaveFile_OnSave(void) {
+    autosaveTimer = 0;
 }

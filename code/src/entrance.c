@@ -217,10 +217,13 @@ u32 Entrance_IsLostWoodsBridge(void) {
 
 void Entrance_EnteredLocation(void) {
     if (!IsInGame()) {
+        autosaveTimer = 0;
         return;
     }
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
     SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
+
+    SaveFile_Autosave();
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance
