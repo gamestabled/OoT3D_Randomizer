@@ -1068,6 +1068,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextTwo)
 	}
 
+	.patch_GameplayDestroy 0x44E294 : {
+		*(.patch_GameplayDestroy)
+	}
+
 	.patch_ExtendedObjectClear 0x44E754 : {
 		*(.patch_ExtendedObjectClear)
 	}

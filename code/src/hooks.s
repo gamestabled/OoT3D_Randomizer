@@ -1102,6 +1102,14 @@ hook_SilenceNavi:
     cmp r0,r2
     bx lr
 
+.global hook_GameplayDestroy
+hook_GameplayDestroy:
+    cpy r4,r0
+    push {r0-r12, lr}
+    bl Entrance_CheckEpona
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
