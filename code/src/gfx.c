@@ -205,16 +205,16 @@ static void Gfx_DrawButtonPrompts(void) {
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse spoiler log");
     } else if (curMenuIdx == 4 || curMenuIdx == 6) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Browse items");
+        Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
     } else if (curMenuIdx == 5 || curMenuIdx == 7) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Browse items");
-        
-        Draw_DrawIcon(102, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
-        Draw_DrawString(114, textY, COLOR_TITLE, "Next group");
-        
-        Draw_DrawIcon(184, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
-        Draw_DrawString(196, textY, COLOR_TITLE, "Prev group");
+        Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
+
+        static const u8 groupOffsetX = 114;
+        Draw_DrawIcon(groupOffsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
+        Draw_DrawString(groupOffsetX + 8, textY, COLOR_TITLE, "/");
+        Draw_DrawIcon(groupOffsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+        Draw_DrawString(groupOffsetX + 28, textY, COLOR_TITLE, "Change group");
     } else if (curMenuIdx == 8) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Select / change options");
@@ -353,7 +353,7 @@ static void Gfx_DrawSpoilerData(void) {
             u32 color = SpoilerData_GetIsItemLocationCollected(itemIndex) ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(itemIndex));
-            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color,
+            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color,
                 SpoilerData_GetItemNameString(itemIndex));
         }
 
@@ -389,7 +389,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers && !SpoilerData_GetIsItemLocationCollected(locIndex)) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
+            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
@@ -435,7 +435,7 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
+            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
