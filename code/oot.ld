@@ -540,6 +540,10 @@ SECTIONS
 		*(.patch_CanPlayBombchuBowlingOne)
 	}
 
+	.patch_SilenceNavi 0x26807C : {
+		*(.patch_SilenceNavi)
+	}
+
 	.patch_CheckGerudoToken_269884 0x269884 : {
 		*(.patch_CheckGerudoToken_269884)
 	}
@@ -944,6 +948,10 @@ SECTIONS
 		*(.patch_MasterSwordAlwaysDrop)
 	}
 
+	.patch_SkipMasterSwordFanfare 0x3E5F60 : {
+		*(.patch_SkipMasterSwordFanfare)
+	}
+
 	.patch_FairyReward 0x3E7598 : {
 		*(.patch_FairyReward)
 	}
@@ -1062,6 +1070,10 @@ SECTIONS
 
 	.patch_GetCustomMessageTextTwo 0x44D5A4 : {
 		*(.patch_GetCustomMessageTextTwo)
+	}
+
+	.patch_GameplayDestroy 0x44E294 : {
+		*(.patch_GameplayDestroy)
 	}
 
 	.patch_ExtendedObjectClear 0x44E754 : {

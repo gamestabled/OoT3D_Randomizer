@@ -146,8 +146,6 @@ public:
 
     void RemoveExit(Entrance* exitToRemove);
 
-    void DisconnectExit(AreaKey exitToDisconnect);
-
     void SetAsPrimary(AreaKey exitToBePrimary);
 
     Entrance* GetExit(AreaKey exit);
