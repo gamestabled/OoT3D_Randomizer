@@ -326,6 +326,18 @@ u8 EntranceCutscene_ShouldPlay(u8 flag) {
     return 0; //cutscene will not play
 }
 
+void Entrance_CheckEpona() {
+    s32 entrance = gSaveContext.entranceIndex;
+    s8 dest = gEntranceTable[entrance].scene;
+    //If Link is riding Epona but he's about to enter a scene where she can't spawn,
+    //unset the Epona flag to avoid Master glitch, and restore temp B.
+    if (gSettingsContext.shuffleOverworldEntrances && entrance != 0x496 && (PLAYER->stateFlags1 & 0x00800000) &&
+        dest != 81 && dest != 87 && dest != 90 && dest != 95 && dest != 99) {
+        gStaticContext.spawnOnEpona = 0;
+        gSaveContext.equips.buttonItems[0] = gSaveContext.buttonStatus[0]; //"temp B"
+    }
+}
+
 EntranceName entranceNames[] = {
     { 0x0000, "KF" /* > Deku Tree */ , ENTRANCE_GROUP_KOKIRI_FOREST },
     { 0x0209, "Deku Tree" /* > KF */ , ENTRANCE_GROUP_KOKIRI_FOREST },
