@@ -1672,6 +1672,26 @@ PlayEntranceCutscene_patch:
 SkipJabuOpeningCutscene_patch:
     bl hook_SkipJabuOpeningCutscene
 
+.section .patch_SilenceNavi
+.global SilenceNavi_patch
+SilenceNavi_patch:
+    bl hook_SilenceNavi
+
+.section .patch_SceneExitOverride
+.global SceneExitOverride_patch
+SceneExitOverride_patch:
+    bl hook_SceneExitOverride
+
+.section .patch_SceneExitDynamicOverride
+.global SceneExitDynamicOverride_patch
+SceneExitDynamicOverride_patch:
+    bl hook_SceneExitDynamicOverride
+
+.section .patch_OverrideGrottoActorEntrance
+.global OverrideGrottoActorEntrance_patch
+OverrideGrottoActorEntrance_patch:
+    b hook_OverrideGrottoActorEntrance
+
 .section .patch_loader
 .global loader_patch
 

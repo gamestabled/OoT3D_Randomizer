@@ -186,6 +186,12 @@ string_view interiorEntrancesAll      = "An extended version of 'Simple' with so
                                         "- Temple of Time\n"                               //
                                         "- Kakariko Potion Shop.";                         //
 /*------------------------------                                                           //
+|       GROTTO ENTRANCES       |                                                           //
+------------------------------*/                                                           //
+string_view grottoEntrancesDesc       = "Shuffle the pool of grotto entrances, including\n"//
+                                        "all graves, small Fairy Fountains and the Lost\n" //
+                                        "Woods Stage.";                                    //
+/*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic.\n"     //
@@ -794,7 +800,8 @@ string_view mirrorWorldDesc           = "If set, the world will be mirrored.";  
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
 string_view musicRandoDesc            = "Randomize the music in the game.";                //
-string_view shuffleBGMDesc            = "Randomize area background music";                 //
+string_view shuffleBGMDesc            = "Randomize area background music, either\n"        //
+                                        "grouped into categories or all mixed together.";  //
 string_view fanfaresOffDesc           = "Fanfares are not shuffled.";                      //
 string_view onlyFanfaresDesc          = "Fanfares and ocarina songs are shuffled in\n"     //
                                         "separate pools.";                                 //

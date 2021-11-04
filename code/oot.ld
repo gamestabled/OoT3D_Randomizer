@@ -540,6 +540,10 @@ SECTIONS
 		*(.patch_CanPlayBombchuBowlingOne)
 	}
 
+	.patch_SilenceNavi 0x26807C : {
+		*(.patch_SilenceNavi)
+	}
+
 	.patch_CheckGerudoToken_269884 0x269884 : {
 		*(.patch_CheckGerudoToken_269884)
 	}
@@ -698,6 +702,14 @@ SECTIONS
 
 	.patch_SetBGMEntrance 0x331048 : {
 		*(.patch_SetBGMEntrance)
+	}
+
+	.patch_SceneExitOverride 0x3366EC : {
+		*(.patch_SceneExitOverride)
+	}
+
+	.patch_SceneExitDynamicOverride 0x33676C : {
+		*(.patch_SceneExitDynamicOverride)
 	}
 
 	.patch_EnteredLocation 0x338DB8 : {
@@ -978,6 +990,10 @@ SECTIONS
 
 	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
 		*(.patch_HandleDoorDestroyCustomModels)
+	}
+
+	.patch_OverrideGrottoActorEntrance 0x3F2254 : {
+		*(.patch_OverrideGrottoActorEntrance)
 	}
 
 	.patch_FireArrowRequirement 0x3F23AC : {

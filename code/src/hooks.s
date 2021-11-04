@@ -1092,6 +1092,41 @@ hook_SkipJabuOpeningCutscene:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_SilenceNavi
+hook_SilenceNavi:
+    push {r0-r12, lr}
+    bl IsNaviSilenced
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x26808C
+    cmp r0,r2
+    bx lr
+
+.global hook_SceneExitOverride
+hook_SceneExitOverride:
+    ldrsh r9, [r1,r0]
+    push {r0-r8, r10-r12, lr}
+    cpy r0, r9
+    bl Entrance_OverrideNextIndex
+    cpy r9, r0
+    pop {r0-r8, r10-r12, lr}
+    bx lr
+
+.global hook_SceneExitDynamicOverride
+hook_SceneExitDynamicOverride:
+    push {r0-r12, lr}
+    bl Entrance_OverrideDynamicExit
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_OverrideGrottoActorEntrance
+hook_OverrideGrottoActorEntrance:
+    push {r0-r12, lr}
+    cpy r0, r4
+    bl Grotto_OverrideActorEntrance
+    pop {r0-r12, lr}
+    b 0x3F22C4
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
