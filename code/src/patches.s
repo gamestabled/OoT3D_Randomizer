@@ -1682,6 +1682,11 @@ SkipJabuOpeningCutscene_patch:
 SilenceNavi_patch:
     bl hook_SilenceNavi
 
+.section .patch_GameplayDestroy
+.global GameplayDestroy_patch
+GameplayDestroy_patch:
+    bl hook_GameplayDestroy
+
 .section .patch_loader
 .global loader_patch
 
