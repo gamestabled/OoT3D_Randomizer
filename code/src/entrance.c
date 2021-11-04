@@ -173,10 +173,12 @@ s16 Entrance_GetOverride(s16 index) {
 }
 
 s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
+    SaveFile_SetEntranceDiscovered(nextEntranceIndex);
     return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
 }
 
 void Entrance_OverrideDynamicExit(void) {
+    SaveFile_SetEntranceDiscovered(gGlobalContext->nextEntranceIndex);
     gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex));
 }
 
