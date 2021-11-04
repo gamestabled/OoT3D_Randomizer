@@ -202,7 +202,7 @@ static void Gfx_DrawButtonPrompts(void) {
     Draw_DrawString(SCREEN_BOT_WIDTH - 38, textY, COLOR_TITLE, "Close");
 
     if (curMenuIdx == 1) {
-        Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_A);
+        Draw_DrawIcon(10, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
         Draw_DrawString(22, textY, COLOR_TITLE, "Toggle Legend");
     } else if (curMenuIdx == 3) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
@@ -259,9 +259,9 @@ static void Gfx_DrawSeedHash(void) {
 }
 
 static void Gfx_DrawDungeonItems(void) {
-    Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
 
     if (showingLegend) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items Legend");
         Draw_DrawIcon(10, 30, COLOR_ICON_VANILLA, ICON_VANILLA);
         Draw_DrawIcon(10, 43, COLOR_ICON_MASTER_QUEST, ICON_MASTER_QUEST);
         Draw_DrawIcon(10, 56, COLOR_WHITE, ICON_SMALL_KEY);
@@ -271,15 +271,16 @@ static void Gfx_DrawDungeonItems(void) {
         Draw_DrawIcon(10, 108, COLOR_ICON_WOTH, ICON_TRIFORCE);
         Draw_DrawIcon(10, 121, COLOR_ICON_FOOL, ICON_FOOL);
 
-        Draw_DrawString(20, 30, COLOR_WHITE, "Vanilla Dungeon");
-        Draw_DrawString(20, 43, COLOR_WHITE, "Master Quest Dungeon");
-        Draw_DrawString(20, 56, COLOR_WHITE, "Small Key");
-        Draw_DrawString(20, 69, COLOR_WHITE, "Boss Key");
-        Draw_DrawString(20, 82, COLOR_WHITE, "Map");
-        Draw_DrawString(20, 95, COLOR_WHITE, "Compass");
-        Draw_DrawString(20, 108, COLOR_WHITE, "Way of the Hero");
-        Draw_DrawString(20, 121, COLOR_WHITE, "Barren Location");
+        Draw_DrawString(24, 30, COLOR_WHITE, "Vanilla Dungeon");
+        Draw_DrawString(24, 43, COLOR_WHITE, "Master Quest Dungeon");
+        Draw_DrawString(24, 56, COLOR_WHITE, "Small Key");
+        Draw_DrawString(24, 69, COLOR_WHITE, "Boss Key");
+        Draw_DrawString(24, 82, COLOR_WHITE, "Map");
+        Draw_DrawString(24, 95, COLOR_WHITE, "Compass");
+        Draw_DrawString(24, 108, COLOR_WHITE, "Way of the Hero");
+        Draw_DrawString(24, 121, COLOR_WHITE, "Barren Location");
     } else {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
         // Draw header icons
         Draw_DrawIcon(220, 16, COLOR_WHITE, ICON_SMALL_KEY);
         Draw_DrawIcon(240, 16, COLOR_WHITE, ICON_BOSS_KEY);
@@ -741,11 +742,13 @@ static void Gfx_ShowMenu(void) {
 
         if (!handledInput) {
             if (pressed & closingButton) {
+                showingLegend = false;
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
                 if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
                 break;
             } else if (pressed & BUTTON_R1) {
+                showingLegend = false;
                 do {
                     curMenuIdx++;
                     if (curMenuIdx >= ARR_SIZE(menu_draw_funcs)) {
@@ -754,6 +757,7 @@ static void Gfx_ShowMenu(void) {
                 } while (menu_draw_funcs[curMenuIdx] == NULL);
                 handledInput = true;
             } else if (pressed & BUTTON_L1) {
+                showingLegend = false;
                 do {
                     curMenuIdx--;
                     if (curMenuIdx < 0) {
