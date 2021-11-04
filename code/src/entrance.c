@@ -22,8 +22,6 @@ typedef void (*SetEventChkInf_proc)(u32 flag);
 
 // Owl Flights : 0x492064 and 0x492080
 
-// TODO: Fix Jabu entrance cutscene
-
 EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
 EntranceTrackingData gEntranceTrackingData = {0};
 static s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE] = {0};
@@ -147,13 +145,6 @@ void Entrance_Init(void) {
         }
     }
 
-    // Overwrite various hardcoded entrance index lists with their new entrances
-    size_t numDynamicExits = 14;
-    for (size_t i = 0; i < numDynamicExits; i++) {
-        dynamicExitList[i] = entranceOverrideTable[dynamicExitList[i]];
-    }
-    // TODO: Overwrite the warp song entrance list when warp song shuffle is implemented
-
     //Set the exit transition of GC Woods Warp -> Lost Woods to a lost woods transition.
     //This works as an easy fix for the Overworld ER bug that continues to play the lost
     //woods music into the next area, even if isn't the lost woods. A "proper" fix would
@@ -181,41 +172,12 @@ s16 Entrance_GetOverride(s16 index) {
     return entranceOverrideTable[index];
 }
 
-// Each scene has an array of exit indices (called the 'setupExitList' in oot decomp).
-// This array is indexed into when Link is above a loading zone to determine which
-// entrance to load next. When each scene loads, this function will loop through
-// the setupExitList and override the exit indices that are shuffled to something else
-void Scene_OverrideSetupExitList(void) {
-
-    // Don't do this on the title screen
-    if (!IsInGame()) {
-        return;
-    }
-
-    //The light settings list always comes after the setup exit list, so we can
-    //use their addresses to determine the number of exits in the setup exit list
-    size_t numExits = (gGlobalContext->lightSettingsList_addr - ((u32) gGlobalContext->setupExitList)) / 2; //Divide by 2 since each exit index is 2 bytes long
-
-    // Don't override the last exit if it's zero. I'm not sure why there's an
-    // entry for zero at the end of some of these lists, but ootr takes care to
-    // not override it so we'll do the same here.
-    if (gGlobalContext->setupExitList[numExits - 1] == 0) {
-        numExits--;
-    }
-
-    //Override the exits
-    for (size_t i = 0; i < numExits; i++) {
-        s16 originalExit = gGlobalContext->setupExitList[i];
-        gGlobalContext->setupExitList[i] = Entrance_GetOverride(originalExit);
-    }
+s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
+    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
 }
 
-s16 Scene_ExitHook(s16 nextEntranceIndex) {
-    return Grotto_CheckSpecialEntrance(nextEntranceIndex);
-}
-
-void Scene_ExitHookDynamicEntrance(void) {
-    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(gGlobalContext->nextEntranceIndex);
+void Entrance_OverrideDynamicExit(void) {
+    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex));
 }
 
 void Entrance_DeathInGanonBattle(void) {
@@ -264,7 +226,7 @@ void Entrance_SetGameOverEntrance(void) {
         case 0x0301 : //Jabu Jabus Belly Boss Room
             gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
             return;
-        case 0x000C : //Fores Temple Boss Room
+        case 0x000C : //Forest Temple Boss Room
             gSaveContext.entranceIndex = newForestTempleEntrance;
             return;
         case 0x0305 : //Fire Temple Boss Room

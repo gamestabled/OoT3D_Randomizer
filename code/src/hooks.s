@@ -1102,20 +1102,12 @@ hook_SilenceNavi:
     cmp r0,r2
     bx lr
 
-.global hook_OverrideSetupExitList
-hook_OverrideSetupExitList:
-    push {r0-r12, lr}
-    bl Scene_OverrideSetupExitList
-    pop {r0-r12, lr}
-    mov r0,#0x14
-    bx lr
-
 .global hook_SceneExitOverride
 hook_SceneExitOverride:
     ldrsh r9, [r1,r0]
     push {r0-r8, r10-r12, lr}
     cpy r0, r9
-    bl Scene_ExitHook
+    bl Entrance_OverrideNextIndex
     cpy r9, r0
     pop {r0-r8, r10-r12, lr}
     bx lr
@@ -1123,7 +1115,7 @@ hook_SceneExitOverride:
 .global hook_SceneExitDynamicOverride
 hook_SceneExitDynamicOverride:
     push {r0-r12, lr}
-    bl Scene_ExitHookDynamicEntrance
+    bl Entrance_OverrideDynamicExit
     pop {r0-r12, lr}
     bx lr
 

@@ -1677,11 +1677,6 @@ SkipJabuOpeningCutscene_patch:
 SilenceNavi_patch:
     bl hook_SilenceNavi
 
-.section .patch_OverrideSetupExitList
-.global OverrideSetupExitList_patch
-OverrideSetupExitList_patch:
-    bl hook_OverrideSetupExitList
-
 .section .patch_SceneExitOverride
 .global SceneExitOverride_patch
 SceneExitOverride_patch:

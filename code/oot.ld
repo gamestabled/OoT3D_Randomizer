@@ -1064,10 +1064,6 @@ SECTIONS
 		*(.patch_CheckForPocketCuccoHatchGameplayInit)
 	}
 
-	.patch_OverrideSetupExitList 0x449190 : {
-		*(.patch_OverrideSetupExitList)
-	}
-
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}
