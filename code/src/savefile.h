@@ -4,7 +4,7 @@
 #include "z3D/z3D.h"
 
 #define SAVEFILE_SCENES_DISCOVERED_IDX_COUNT 4
-#define SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT 49
+#define SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT 257
 
 u8 SaveFile_GetMedallionCount(void);
 u8 SaveFile_GetStoneCount(void);
@@ -24,7 +24,7 @@ void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 5
+#define EXTSAVEDATA_VERSION 6
 
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure

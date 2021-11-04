@@ -1687,6 +1687,11 @@ OverrideSetupExitList_patch:
 SceneExitOverride_patch:
     bl hook_SceneExitOverride
 
+.section .patch_SceneExitDynamicOverride
+.global SceneExitDynamicOverride_patch
+SceneExitDynamicOverride_patch:
+    bl hook_SceneExitDynamicOverride
+
 .section .patch_OverrideGrottoActorEntrance
 .global OverrideGrottoActorEntrance_patch
 OverrideGrottoActorEntrance_patch:

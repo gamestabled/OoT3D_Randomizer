@@ -16,9 +16,9 @@ typedef void (*SetEventChkInf_proc)(u32 flag);
 #define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
 
 #define dynamicExitList_addr 0x53C094
-#define dynamicExitList ((s16*)dynamicExitList_addr)
+#define dynamicExitList ((s16*)dynamicExitList_addr) // = { 0x045B, 0x0482, 0x0340, 0x044B, 0x02A2, 0x0201, 0x03B8, 0x04EE, 0x03C0, 0x0463, 0x01CD, 0x0394, 0x0340, 0x057C }
 
-// Warp Song indices array : 0x53C33C
+// Warp Song indices array : 0x53C33C = { 0x0600, 0x04F6, 0x0604, 0x01F1, 0x0568, 0x05F4 }
 
 // Owl Flights : 0x492064 and 0x492080
 
@@ -147,7 +147,12 @@ void Entrance_Init(void) {
         }
     }
 
-    // TODO: Overwrite the warp song list
+    // Overwrite various hardcoded entrance index lists with their new entrances
+    size_t numDynamicExits = 14;
+    for (size_t i = 0; i < numDynamicExits; i++) {
+        dynamicExitList[i] = entranceOverrideTable[dynamicExitList[i]];
+    }
+    // TODO: Overwrite the warp song entrance list when warp song shuffle is implemented
 
     //Set the exit transition of GC Woods Warp -> Lost Woods to a lost woods transition.
     //This works as an easy fix for the Overworld ER bug that continues to play the lost
@@ -206,7 +211,11 @@ void Scene_OverrideSetupExitList(void) {
 }
 
 s16 Scene_ExitHook(s16 nextEntranceIndex) {
-    return Grotto_OverrideSpecialEntrance(nextEntranceIndex);
+    return Grotto_CheckSpecialEntrance(nextEntranceIndex);
+}
+
+void Scene_ExitHookDynamicEntrance(void) {
+    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(gGlobalContext->nextEntranceIndex);
 }
 
 void Entrance_DeathInGanonBattle(void) {
@@ -236,7 +245,6 @@ void Entrance_EnteredLocation(void) {
         return;
     }
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
-    SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance

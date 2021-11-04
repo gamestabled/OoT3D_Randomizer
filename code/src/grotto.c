@@ -1,5 +1,6 @@
 #include "../include/z3D/z3D.h"
 #include "grotto.h"
+#include "savefile.h"
 
 // Information necessary for entering each grotto
 static const GrottoLoadInfo grottoLoadTable[NUM_GROTTOS] = {
@@ -78,6 +79,7 @@ static const GrottoReturnInfo grottoReturnTable[NUM_GROTTOS] = {
 static s16 grottoExitList[NUM_GROTTOS] = {0};
 static s16 grottoLoadList[NUM_GROTTOS] = {0};
 static s8 grottoId = 0xFF;
+static s8 entranceFromGrottoActor = 0;
 
 // Initialize both lists so that each index refers to itself. An index referring
 // to itself means that the entrance is not shuffled. Indices will be overwritten
@@ -101,9 +103,22 @@ void Grotto_SetLoadOverride(s16 originalIndex, s16 overrideIndex) {
     grottoLoadList[id] = overrideIndex;
 }
 
+static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto) {
+  // Set necessary grotto return data
+  gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = grotto.entranceIndex;
+  gSaveContext.respawn[RESPAWN_MODE_RETURN].roomIndex = grotto.room;
+  gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x04FF; // exiting grotto with no initial camera focus
+  gSaveContext.respawn[RESPAWN_MODE_RETURN].yaw = grotto.angle;
+  gSaveContext.respawn[RESPAWN_MODE_RETURN].pos = grotto.pos;
+  gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags = gGlobalContext->actorCtx.flags.tempSwch;
+  gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags = gGlobalContext->actorCtx.flags.tempCollect;
+
+  gSaveContext.respawnFlag = 2;
+}
+
 // Translates and overrides the passed in entrance index if it corresponds to a
 // special grotto entrance (grotto load or returnpoint)
-s16 Grotto_OverrideSpecialEntrance(s16 nextEntranceIndex) {
+s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
 
     // If Link hits a grotto exit, load the entrance index from the grotto exit list
     // based on the current grotto ID
@@ -111,42 +126,35 @@ s16 Grotto_OverrideSpecialEntrance(s16 nextEntranceIndex) {
         nextEntranceIndex = grottoExitList[grottoId];
     }
 
+    // Get the new grotto id from the next entrance
     grottoId = nextEntranceIndex & 0x00FF;
+    SaveFile_SetEntranceDiscovered(nextEntranceIndex);
 
     // Grotto Returns
     if (nextEntranceIndex >= 0x2000 && nextEntranceIndex < 0x2000 + NUM_GROTTOS) {
 
         GrottoReturnInfo grotto = grottoReturnTable[grottoId];
-
-        // Set necessary grotto return data
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = grotto.entranceIndex;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].roomIndex = grotto.room;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x04FF; // exiting grotto with no initial camera focus
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].yaw = grotto.angle;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].pos = grotto.pos;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags = gGlobalContext->actorCtx.flags.tempSwch;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags = gGlobalContext->actorCtx.flags.tempCollect;
-
-        gSaveContext.respawnFlag = 2;
+        Grotto_SetupReturnInfo(grotto);
         gGlobalContext->fadeOutTransition = 3;
         gSaveContext.nextTransition = 3;
 
-        grottoId = 0xFF;
-        return 0x7FFF;
+        // This keeps the transition lighting consistent and makes
+        // grotto entrance -> grotto return point entrances work properly
+        nextEntranceIndex = entranceFromGrottoActor ? grotto.entranceIndex : 0x7FFF;
 
     // Grotto Loads
     } else if (nextEntranceIndex >= 0x1000 && nextEntranceIndex < 0x2000) {
 
         GrottoLoadInfo grotto = grottoLoadTable[grottoId];
-
         gSaveContext.respawn[RESPAWN_MODE_RETURN].data = grotto.content;
-        return grotto.entranceIndex;
+        nextEntranceIndex = grotto.entranceIndex;
 
     // Otherwise just unset the current grotto ID
     } else {
         grottoId = 0xFF;
     }
 
+    entranceFromGrottoActor = 0;
     return nextEntranceIndex;
 }
 
@@ -156,14 +164,17 @@ void Grotto_OverrideActorEntrance(Actor* thisx) {
 
     s8 grottoContent = thisx->params & 0x00FF;
 
-    //loop through the grotto load table until we find the matching index
+    // Loop through the grotto load table until we find the matching index based
+    // on content and scene
     for (s16 index = 0; index < NUM_GROTTOS; index++) {
 
         if (grottoContent == grottoLoadTable[index].content && gGlobalContext->sceneNum == grottoLoadTable[index].scene) {
             // Find the override for the matching index from the grotto Load List
             index = grottoLoadList[index];
+
             // Run the index through the special entrances override check
-            gGlobalContext->nextEntranceIndex = Grotto_OverrideSpecialEntrance(index);
+            entranceFromGrottoActor = 1;
+            gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(index);
             return;
         }
     }

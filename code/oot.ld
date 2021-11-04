@@ -708,6 +708,10 @@ SECTIONS
 		*(.patch_SceneExitOverride)
 	}
 
+	.patch_SceneExitDynamicOverride 0x33676C : {
+		*(.patch_SceneExitDynamicOverride)
+	}
+
 	.patch_EnteredLocation 0x338DB8 : {
 		*(.patch_EnteredLocation)
 	}

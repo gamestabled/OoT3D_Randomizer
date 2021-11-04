@@ -264,7 +264,18 @@ u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
     return 0;
 }
 
-void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
+void SaveFile_SetEntranceDiscovered(u16 overrideIndex) {
+
+    u16 entranceIndex = 0xFFFF;
+
+    // Find the original source entrance
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
+        if (overrideIndex == rEntranceOverrides[i].override) {
+            entranceIndex = rEntranceOverrides[i].index;
+            break;
+        }
+    }
+
     // Skip if already set to save time from setting the connected
     if (SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
         return;
@@ -277,9 +288,9 @@ void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
         gExtSaveData.entrancesDiscovered[idx] |= entranceBit;
         // Set connected
         for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-            if (entranceIndex == rEntranceOverrides[i].index) {
-                if (!SaveFile_GetIsEntranceDiscovered(rEntranceOverrides[i].overrideDestination)) {
-                    SaveFile_SetEntranceDiscovered(rEntranceOverrides[i].overrideDestination);
+            if (entranceIndex == rEntranceOverrides[i].overrideDestination) {
+                if (!SaveFile_GetIsEntranceDiscovered(rEntranceOverrides[i].override)) {
+                    SaveFile_SetEntranceDiscovered(rEntranceOverrides[i].override);
                 }
                 break;
             }

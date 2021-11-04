@@ -1120,6 +1120,13 @@ hook_SceneExitOverride:
     pop {r0-r8, r10-r12, lr}
     bx lr
 
+.global hook_SceneExitDynamicOverride
+hook_SceneExitDynamicOverride:
+    push {r0-r12, lr}
+    bl Scene_ExitHookDynamicEntrance
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_OverrideGrottoActorEntrance
 hook_OverrideGrottoActorEntrance:
     push {r0-r12, lr}
