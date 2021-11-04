@@ -898,6 +898,7 @@ namespace Settings {
     ctx.shuffleDungeonEntrances = (ShuffleDungeonEntrances) ? 1 : 0;
     ctx.shuffleOverworldEntrances = (ShuffleOverworldEntrances) ? 1 : 0;
     ctx.shuffleInteriorEntrances = ShuffleInteriorEntrances.Value<u8>();
+    ctx.shuffleGrottoEntrances  = (ShuffleGrottoEntrances) ? 1 : 0;
     ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
     ctx.ammoDrops            = AmmoDrops.Value<u8>();
     ctx.heartDropRefill      = HeartDropRefill.Value<u8>();

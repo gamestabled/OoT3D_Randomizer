@@ -337,6 +337,7 @@ typedef struct {
   u8 shuffleDungeonEntrances;
   u8 shuffleOverworldEntrances;
   u8 shuffleInteriorEntrances;
+  u8 shuffleGrottoEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;
