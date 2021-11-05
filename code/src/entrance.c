@@ -322,7 +322,7 @@ void EnableFW() {
 
     for (int i = 1; i < 5; i++) {
         if (gSaveContext.equips.buttonItems[i] == 13) {
-            gSaveContext.buttonStatus[i] = 0;
+            gSaveContext.buttonStatus[i] = BTN_ENABLED;
         }
     }
 }
