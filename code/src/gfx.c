@@ -262,23 +262,29 @@ static void Gfx_DrawDungeonItems(void) {
 
     if (showingLegend) {
         Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items Legend");
-        Draw_DrawIcon(10, 30, COLOR_ICON_VANILLA, ICON_VANILLA);
-        Draw_DrawIcon(10, 43, COLOR_ICON_MASTER_QUEST, ICON_MASTER_QUEST);
-        Draw_DrawIcon(10, 56, COLOR_WHITE, ICON_SMALL_KEY);
-        Draw_DrawIcon(10, 69, COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
-        Draw_DrawIcon(10, 82, COLOR_ICON_MAP, ICON_MAP);
-        Draw_DrawIcon(10, 95, COLOR_ICON_COMPASS, ICON_COMPASS);
-        Draw_DrawIcon(10, 108, COLOR_ICON_WOTH, ICON_TRIFORCE);
-        Draw_DrawIcon(10, 121, COLOR_ICON_FOOL, ICON_FOOL);
+        Draw_DrawIcon(10, 43, COLOR_ICON_VANILLA, ICON_VANILLA);
+        Draw_DrawIcon(10, 56, COLOR_ICON_MASTER_QUEST, ICON_MASTER_QUEST);
 
-        Draw_DrawString(24, 30, COLOR_WHITE, "Vanilla Dungeon");
-        Draw_DrawString(24, 43, COLOR_WHITE, "Master Quest Dungeon");
-        Draw_DrawString(24, 56, COLOR_WHITE, "Small Key");
-        Draw_DrawString(24, 69, COLOR_WHITE, "Boss Key");
-        Draw_DrawString(24, 82, COLOR_WHITE, "Map");
-        Draw_DrawString(24, 95, COLOR_WHITE, "Compass");
-        Draw_DrawString(24, 108, COLOR_WHITE, "Way of the Hero");
-        Draw_DrawString(24, 121, COLOR_WHITE, "Barren Location");
+        Draw_DrawIcon(10, 82, COLOR_WHITE, ICON_SMALL_KEY);
+        Draw_DrawIcon(10, 95, COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
+        Draw_DrawIcon(10, 108, COLOR_ICON_MAP, ICON_MAP);
+        Draw_DrawIcon(10, 121, COLOR_ICON_COMPASS, ICON_COMPASS);
+
+        Draw_DrawIcon(10, 147, COLOR_ICON_WOTH, ICON_TRIFORCE);
+        Draw_DrawIcon(10, 160, COLOR_ICON_FOOL, ICON_FOOL);
+        Draw_DrawString(10, 173, COLOR_WHITE, "-");
+
+        Draw_DrawString(24, 43, COLOR_WHITE, "Vanilla Dungeon");
+        Draw_DrawString(24, 56, COLOR_WHITE, "Master Quest Dungeon");
+
+        Draw_DrawString(24, 82, COLOR_WHITE, "Small Key");
+        Draw_DrawString(24, 95, COLOR_WHITE, "Boss Key");
+        Draw_DrawString(24, 108, COLOR_WHITE, "Map");
+        Draw_DrawString(24, 121, COLOR_WHITE, "Compass");
+
+        Draw_DrawString(24, 147, COLOR_WHITE, "Way of the Hero");
+        Draw_DrawString(24, 160, COLOR_WHITE, "Barren Location");
+        Draw_DrawString(24, 173, COLOR_WHITE, "Non-WotH / Non-Barren Location");
     } else {
         Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
         // Draw header icons
