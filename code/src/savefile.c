@@ -580,6 +580,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.playtimeSeconds = 0;
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
+    gExtSaveData.hasTraveledTimeOnce = 0;
     // Ingame Options
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;

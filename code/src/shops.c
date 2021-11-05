@@ -103,6 +103,12 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
                 return CANBUY_RESULT_CANT_GET_NOW;
             }
         }
+        //If it is a non-shopsanity tunic, check that it is not already owned
+        else if (item->getItemId == GI_TUNIC_GORON && gSaveContext.equipment & 0x0200) {
+            return CANBUY_RESULT_CANT_GET_NOW;
+        } else if (item->getItemId == GI_TUNIC_ZORA && gSaveContext.equipment & 0x0400) {
+            return CANBUY_RESULT_CANT_GET_NOW;
+        }
         return CANBUY_RESULT_0;
     } else { // Not enough rupees
         return CANBUY_RESULT_NEED_RUPEES;
