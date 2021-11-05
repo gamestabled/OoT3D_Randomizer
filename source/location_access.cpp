@@ -1048,9 +1048,9 @@ void AreaTable_Init() {
 
   areaTable[MARKET_BOMBCHU_BOWLING] = Area("Market Bombchu Bowling", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(MARKET_BOMBCHU_BOWLING_FIRST_PRIZE,  {[]{return FoundBombchus;}}),
-                  LocationAccess(MARKET_BOMBCHU_BOWLING_SECOND_PRIZE, {[]{return FoundBombchus;}}),
-                  LocationAccess(MARKET_BOMBCHU_BOWLING_BOMBCHUS,     {[]{return FoundBombchus;}}),
+                  LocationAccess(MARKET_BOMBCHU_BOWLING_FIRST_PRIZE,  {[]{return CanPlayBowling;}}),
+                  LocationAccess(MARKET_BOMBCHU_BOWLING_SECOND_PRIZE, {[]{return CanPlayBowling;}}),
+                  LocationAccess(MARKET_BOMBCHU_BOWLING_BOMBCHUS,     {[]{return CanPlayBowling;}}),
                 }, {
                   //Exits
                   Entrance(THE_MARKET, {[]{return true;}}),
