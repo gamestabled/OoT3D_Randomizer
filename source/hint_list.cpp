@@ -1415,7 +1415,7 @@ void HintTable_Init() {
 
     hintTable[KOKIRI_EMERALD] = HintText::Item({
                        //obscure text
-                       Text{"a green stone",       /*french*/"une pierre verte",               /*spanish*/"una piedra trébol"},
+                       Text{"a green stone",       /*french*/"une pierre verte",               /*spanish*/"una piedra verde"},
                        Text{"a gift before death", /*french*/"le dernier souffle d'un arbre", /*spanish*/"un obsequio testamentario"},
                      }, {
                        //ambiguous text
@@ -2083,7 +2083,7 @@ void HintTable_Init() {
 
     hintTable[MARKET_TREASURE_CHEST_GAME_ITEM_1] = HintText::Sometimes({
                        //obscure text
-                       Text{"#gambling once# grants",                    /*french*/"#parier une fois# donne",                        /*spanish*/"#apostar una vez# revelará"},
+                       Text{"#gambling once# grants",                    /*french*/"#parier une fois# donne",                        /*spanish*/"#apostar solo una vez# revelará"},
                        Text{"the #first or second game chest# contains", /*french*/"le #premier ou deuxième coffre à jeu# contient", /*spanish*/"#el primer o segundo cofre del azar# revela"},
                      }, {},
                        //clear text
@@ -2111,7 +2111,7 @@ void HintTable_Init() {
     hintTable[MARKET_TREASURE_CHEST_GAME_ITEM_4] = HintText::Sometimes({
                        //obscure text
                        Text{"#gambling 4 times# grants",                   /*french*/"#parier quatre fois# donne",                      /*spanish*/"#apostar cuatro veces# revelará"},
-                       Text{"the #seventh or eighth game chest# contains", /*french*/"le #septième ou huitième coffre à jeu# contient", /*spanish*/"#el séptimo o octavo cofre del azar# revela"},
+                       Text{"the #seventh or eighth game chest# contains", /*french*/"le #septième ou huitième coffre à jeu# contient", /*spanish*/"#el séptimo u octavo cofre del azar# revela"},
                      }, {},
                        //clear text
                        Text{"the #fourth locked room# in the chest game contains", /*french*/"la #quatrième salle# de la chasse aux trésors contient", /*spanish*/"#en la cuarta sala del Cofre del Tesoro# aguarda"}
