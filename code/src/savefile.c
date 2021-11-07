@@ -43,7 +43,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
-    gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
+    gSaveContext.infTable  [0x14] |= 0x0016; //Ruto in Jabu can be escorted immediately, skip cutscene entering Big Octo room
     gSaveContext.infTable  [0x19] |= 0x0100; //Picked up Magic Container
     gSaveContext.infTable  [0x19] |= 0x0020; //Talked to owl in Lake Hylia
     gSaveContext.itemGetInf [0x1] |= 0x0008; //Picked up Deku Seeds
