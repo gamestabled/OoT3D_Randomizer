@@ -12,7 +12,6 @@
 typedef struct {
     /* 0x00 */ u8  buttonItems[5]; //B,Y,X,I,II
     /* 0x05 */ u8  buttonSlots[4]; //Y,X,I,II
-    /* 0x09 */ u8  unk_09;
     /* 0x0A */ u16 equipment;
 } ItemEquips; // size = 0x0C
 
