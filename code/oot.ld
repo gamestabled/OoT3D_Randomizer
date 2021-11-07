@@ -80,6 +80,10 @@ SECTIONS
 		*(.patch_SongOfStormsLocation)
 	}
 
+	.patch_JabuSwitchRutoCheck 0x143AC8 : {
+	  *(.patch_JabuSwitchRutoCheck)
+	}
+
 	.patch_OwlMagicCheck 0x144B44 : {
 		*(.patch_OwlMagicCheck)
 	}
@@ -494,6 +498,10 @@ SECTIONS
 
 	.patch_DungeonCheckJabuMQBox 0x21590C : {
 	  *(.patch_DungeonCheckJabuMQBox)
+	}
+
+	.patch_JabuBoxCheckRuto 0x215934 : {
+	  *(.patch_JabuBoxCheckRuto)
 	}
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {

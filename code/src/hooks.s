@@ -519,7 +519,23 @@ hook_CheckDekuTreeClear:
 hook_CheckCurrentDungeonMode:
     push {r0-r12, lr}
     bl Dungeon_GetCurrentDungeonMode
-    cmp r0,#0x1
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_JabuSwitchRutoCheck
+hook_JabuSwitchRutoCheck:
+    cmp r0,#0xA1
+    bxeq lr
+    cmp r0,#0x110
+    bx lr
+
+.global hook_JabuBoxCheckRuto
+hook_JabuBoxCheckRuto:
+    tst r0,#0x80
+    push {r0-r12, lr}
+    bleq ObjKibako_CheckRuto
+    cmpeq r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
