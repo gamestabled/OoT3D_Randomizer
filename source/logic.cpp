@@ -521,7 +521,7 @@ namespace Logic {
 
     FoundBombchus   = (BombchuDrop || Bombchus || Bombchus5 || Bombchus10 || Bombchus20);
     CanPlayBowling  = (BombchusInLogic && FoundBombchus) || (!BombchusInLogic && BombBag);
-    HasBombchus     = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || (AmmoDrops.Is(AMMODROPS_BOMBCHU) && FoundBombchus)) && CanPlayBowling;
+    HasBombchus     = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || (AmmoDrops.Is(AMMODROPS_BOMBCHU) && FoundBombchus));
     
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
