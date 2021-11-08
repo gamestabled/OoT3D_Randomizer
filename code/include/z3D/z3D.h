@@ -10,8 +10,8 @@
 // #include "hid.h"
 
 typedef struct {
-    /* 0x00 */ u8 buttonItems[5]; //B,Y,X,I,II
-    /* 0x05 */ u8 buttonSlots[4]; //Y,X,I,II
+    /* 0x00 */ u8  buttonItems[5]; //B,Y,X,I,II
+    /* 0x05 */ u8  buttonSlots[4]; //Y,X,I,II
     /* 0x0A */ u16 equipment;
 } ItemEquips; // size = 0x0C
 
@@ -415,10 +415,12 @@ typedef struct GlobalContext {
 _Static_assert(sizeof(GlobalContext) == 0x5F14, "Global Context size");
 
 typedef struct StaticContext {
-    /* 0x0000 */ char unk_0[0x0E72];
-    /* 0x0E72 */ u16 collisionDisplay;
+    /* 0x0000 */ char unk_0[0x0E60];
+    /* 0x0E60 */ u16  spawnOnEpona;
+    /* 0x0E62 */ char unk_E72[0x0010];
+    /* 0x0E72 */ u16  collisionDisplay;
     /* 0x0E74 */ char unk_E74[0x015C];
-    /* 0x0FD0 */ u16 renderGeometryDisable;
+    /* 0x0FD0 */ u16  renderGeometryDisable;
     /* 0x0FD2 */ char unk_FD2[0x0602];
 } StaticContext; //size 0x15D4
 // _Static_assert(sizeof(StaticContext) == 0x15D4, "Static Context size");

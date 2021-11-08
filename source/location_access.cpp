@@ -65,22 +65,22 @@ bool LocationAccess::CanBuy() const {
   //Check if wallet is large enough to buy item
   bool SufficientWallet = true;
   if (Location(location)->GetPrice() > 500) {
-    SufficientWallet = Logic::ProgressiveWallet >= 3;
+    SufficientWallet = ProgressiveWallet >= 3;
   } else if (Location(location)->GetPrice() > 200) {
-    SufficientWallet = Logic::ProgressiveWallet >= 2;
+    SufficientWallet = ProgressiveWallet >= 2;
   } else if (Location(location)->GetPrice() > 99) {
-    SufficientWallet = Logic::ProgressiveWallet >= 1;
+    SufficientWallet = ProgressiveWallet >= 1;
   }
 
   bool OtherCondition = true;
   u32 placed = Location(location)->GetPlacedItemKey();
   //Need bottle to buy bottle items, only logically relevant bottle items included here
   if (placed == BUY_BLUE_FIRE || placed == BUY_BOTTLE_BUG || placed == BUY_FISH || placed == BUY_FAIRYS_SPIRIT) {
-    OtherCondition = Logic::HasBottle;
+    OtherCondition = HasBottle;
   }
-  //Need explosives to be able to buy bombchus
+  //If bombchus in logic, need to have found chus to buy; if not just need bomb bag
   else if (placed == BUY_BOMBCHU_5 || placed == BUY_BOMBCHU_10 || placed == BUY_BOMBCHU_20) {
-    OtherCondition = Logic::HasExplosives;
+    OtherCondition = (!BombchusInLogic && Bombs) || (BombchusInLogic && FoundBombchus);
   }
 
   return SufficientWallet && OtherCondition;
@@ -1048,9 +1048,9 @@ void AreaTable_Init() {
 
   areaTable[MARKET_BOMBCHU_BOWLING] = Area("Market Bombchu Bowling", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(MARKET_BOMBCHU_BOWLING_FIRST_PRIZE,  {[]{return FoundBombchus;}}),
-                  LocationAccess(MARKET_BOMBCHU_BOWLING_SECOND_PRIZE, {[]{return FoundBombchus;}}),
-                  LocationAccess(MARKET_BOMBCHU_BOWLING_BOMBCHUS,     {[]{return FoundBombchus;}}),
+                  LocationAccess(MARKET_BOMBCHU_BOWLING_FIRST_PRIZE,  {[]{return CanPlayBowling;}}),
+                  LocationAccess(MARKET_BOMBCHU_BOWLING_SECOND_PRIZE, {[]{return CanPlayBowling;}}),
+                  LocationAccess(MARKET_BOMBCHU_BOWLING_BOMBCHUS,     {[]{return CanPlayBowling;}}),
                 }, {
                   //Exits
                   Entrance(THE_MARKET, {[]{return true;}}),

@@ -29,6 +29,7 @@ static s16 groupEntranceScroll = 0;
 static s8 currentEntranceGroup = 1;
 
 static s32 curMenuIdx = 0;
+static bool showingLegend = false;
 static float itemPercent = 0;
 static float entrancesPercent = 0;
 static u64 lastTick = 0;
@@ -200,21 +201,24 @@ static void Gfx_DrawButtonPrompts(void) {
     Draw_DrawIcon(SCREEN_BOT_WIDTH - 50, promptY, COLOR_BUTTON_B, ICON_BUTTON_B);
     Draw_DrawString(SCREEN_BOT_WIDTH - 38, textY, COLOR_TITLE, "Close");
 
-    if (curMenuIdx == 3) {
+    if (curMenuIdx == 1) {
+        Draw_DrawIcon(10, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+        Draw_DrawString(22, textY, COLOR_TITLE, "Toggle Legend");
+    } else if (curMenuIdx == 3) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse spoiler log");
     } else if (curMenuIdx == 4 || curMenuIdx == 6) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Browse items");
+        Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
     } else if (curMenuIdx == 5 || curMenuIdx == 7) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Browse items");
-        
-        Draw_DrawIcon(102, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
-        Draw_DrawString(114, textY, COLOR_TITLE, "Next group");
-        
-        Draw_DrawIcon(184, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
-        Draw_DrawString(196, textY, COLOR_TITLE, "Prev group");
+        Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
+
+        static const u8 groupOffsetX = 114;
+        Draw_DrawIcon(groupOffsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
+        Draw_DrawString(groupOffsetX + 8, textY, COLOR_TITLE, "/");
+        Draw_DrawIcon(groupOffsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+        Draw_DrawString(groupOffsetX + 28, textY, COLOR_TITLE, "Change group");
     } else if (curMenuIdx == 8) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Select / change options");
@@ -255,67 +259,95 @@ static void Gfx_DrawSeedHash(void) {
 }
 
 static void Gfx_DrawDungeonItems(void) {
-    Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
-    // Draw header icons
-    Draw_DrawIcon(220, 16, COLOR_WHITE, ICON_SMALL_KEY);
-    Draw_DrawIcon(240, 16, COLOR_WHITE, ICON_BOSS_KEY);
-    Draw_DrawIcon(260, 16, COLOR_WHITE, ICON_MAP);
-    Draw_DrawIcon(280, 16, COLOR_WHITE, ICON_COMPASS);
-    if (gSettingsContext.compassesShowWotH) {
-        Draw_DrawIcon(300, 16, COLOR_WHITE, ICON_TRIFORCE);
-    }
 
-    for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
-        u8 yPos = 30 + (dungeonId * 13);
-        bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
-        bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
-        bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
-        bool dungeonIsDiscovered = (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId)
-            || (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART && SaveFile_GetIsSceneDiscovered(DUNGEON_GANONS_CASTLE_FIRST_PART));
+    if (showingLegend) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items Legend");
+        Draw_DrawIcon(10, 43, COLOR_ICON_VANILLA, ICON_VANILLA);
+        Draw_DrawIcon(10, 56, COLOR_ICON_MASTER_QUEST, ICON_MASTER_QUEST);
 
-        if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
-            // If we've visited the dungeon, we have the map, or all dungeon modes are known due to settings, show whether it's vanilla or MQ
-            // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
-            if (dungeonIsDiscovered || gSettingsContext.dungeonModesKnown) {
-                bool isMasterQuest =  gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
-                u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
-                Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
-                Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
-            } else {
-                Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
-            }
-        }
-        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
+        Draw_DrawIcon(10, 82, COLOR_WHITE, ICON_SMALL_KEY);
+        Draw_DrawIcon(10, 95, COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
+        Draw_DrawIcon(10, 108, COLOR_ICON_MAP, ICON_MAP);
+        Draw_DrawIcon(10, 121, COLOR_ICON_COMPASS, ICON_COMPASS);
 
-        if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
-            //special case for Ganon's Castle small keys
-            s32 keys = 0;
-            if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
-            keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
-            } else {
-            keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
-            }
-            Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
+        Draw_DrawIcon(10, 147, COLOR_ICON_WOTH, ICON_TRIFORCE);
+        Draw_DrawIcon(10, 160, COLOR_ICON_FOOL, ICON_FOOL);
+        Draw_DrawString(10, 173, COLOR_WHITE, "-");
+
+        Draw_DrawString(24, 43, COLOR_WHITE, "Vanilla Dungeon");
+        Draw_DrawString(24, 56, COLOR_WHITE, "Master Quest Dungeon");
+
+        Draw_DrawString(24, 82, COLOR_WHITE, "Small Key");
+        Draw_DrawString(24, 95, COLOR_WHITE, "Boss Key");
+        Draw_DrawString(24, 108, COLOR_WHITE, "Map");
+        Draw_DrawString(24, 121, COLOR_WHITE, "Compass");
+
+        Draw_DrawString(24, 147, COLOR_WHITE, "Way of the Hero");
+        Draw_DrawString(24, 160, COLOR_WHITE, "Barren Location");
+        Draw_DrawString(24, 173, COLOR_WHITE, "Non-WotH / Non-Barren Location");
+    } else {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
+        // Draw header icons
+        Draw_DrawIcon(220, 16, COLOR_WHITE, ICON_SMALL_KEY);
+        Draw_DrawIcon(240, 16, COLOR_WHITE, ICON_BOSS_KEY);
+        Draw_DrawIcon(260, 16, COLOR_WHITE, ICON_MAP);
+        Draw_DrawIcon(280, 16, COLOR_WHITE, ICON_COMPASS);
+        if (gSettingsContext.compassesShowWotH) {
+            Draw_DrawIcon(300, 16, COLOR_WHITE, ICON_TRIFORCE);
         }
 
-        if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
-            Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
-        }
-        if (dungeonId <= DUNGEON_ICE_CAVERN) {
-            Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
-            Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
+        for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
+            u8 yPos = 30 + (dungeonId * 13);
+            bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
+            bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
+            bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+            bool dungeonIsDiscovered = (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId)
+                || (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART && SaveFile_GetIsSceneDiscovered(DUNGEON_GANONS_CASTLE_FIRST_PART));
 
-            if (gSettingsContext.compassesShowWotH) {
-                if (hasCompass) {
-                    if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
-                        Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
-                    } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
-                        Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
-                    } else {
-                        Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
-                    }
+            if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+                // If we've visited the dungeon, we have the map, or all dungeon modes are known due to settings, show whether it's vanilla or MQ
+                // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
+                if (dungeonIsDiscovered || gSettingsContext.dungeonModesKnown) {
+                    bool isMasterQuest =  gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
+                    u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
+                    Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
+                    Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
                 } else {
-                    Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
+                    Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
+                }
+            }
+            Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
+
+            if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
+                //special case for Ganon's Castle small keys
+                s32 keys = 0;
+                if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+                keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
+                } else {
+                keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
+                }
+                Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
+            }
+
+            if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+                Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
+            }
+            if (dungeonId <= DUNGEON_ICE_CAVERN) {
+                Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
+                Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
+
+                if (gSettingsContext.compassesShowWotH) {
+                    if (hasCompass) {
+                        if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
+                            Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
+                        } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
+                            Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
+                        } else {
+                            Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
+                        }
+                    } else {
+                        Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
+                    }
                 }
             }
         }
@@ -353,7 +385,7 @@ static void Gfx_DrawSpoilerData(void) {
             u32 color = SpoilerData_GetIsItemLocationCollected(itemIndex) ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(itemIndex));
-            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color,
+            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color,
                 SpoilerData_GetItemNameString(itemIndex));
         }
 
@@ -389,7 +421,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers && !SpoilerData_GetIsItemLocationCollected(locIndex)) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
+            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
@@ -435,7 +467,7 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
             Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
             const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString_Small(10 + SPACING_SMALL_X, itemPosY, color, itemText);
+            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
         }
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
@@ -716,11 +748,13 @@ static void Gfx_ShowMenu(void) {
 
         if (!handledInput) {
             if (pressed & closingButton) {
+                showingLegend = false;
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
                 if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
                 break;
             } else if (pressed & BUTTON_R1) {
+                showingLegend = false;
                 do {
                     curMenuIdx++;
                     if (curMenuIdx >= ARR_SIZE(menu_draw_funcs)) {
@@ -729,12 +763,16 @@ static void Gfx_ShowMenu(void) {
                 } while (menu_draw_funcs[curMenuIdx] == NULL);
                 handledInput = true;
             } else if (pressed & BUTTON_L1) {
+                showingLegend = false;
                 do {
                     curMenuIdx--;
                     if (curMenuIdx < 0) {
                         curMenuIdx = (ARR_SIZE(menu_draw_funcs) - 1);
                     }
                 } while (menu_draw_funcs[curMenuIdx] == NULL);
+                handledInput = true;
+            } else if (curMenuIdx == 1 && (pressed & BUTTON_A)) {
+                showingLegend = !showingLegend;
                 handledInput = true;
             }
         }

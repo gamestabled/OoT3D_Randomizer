@@ -519,7 +519,23 @@ hook_CheckDekuTreeClear:
 hook_CheckCurrentDungeonMode:
     push {r0-r12, lr}
     bl Dungeon_GetCurrentDungeonMode
-    cmp r0,#0x1
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_JabuSwitchRutoCheck
+hook_JabuSwitchRutoCheck:
+    cmp r0,#0xA1
+    bxeq lr
+    cmp r0,#0x110
+    bx lr
+
+.global hook_JabuBoxCheckRuto
+hook_JabuBoxCheckRuto:
+    tst r0,#0x80
+    push {r0-r12, lr}
+    bleq ObjKibako_CheckRuto
+    cmpeq r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
@@ -1000,12 +1016,30 @@ hook_SyatekiManReminder:
     addne r1,r1,#0xAF
     b 0x23920C
 
-.global hook_SkipTimeTravelCutscene
-hook_SkipTimeTravelCutscene:
+.global hook_SkipTimeTravelCutsceneOne
+hook_SkipTimeTravelCutsceneOne:
     push {r0-r12, lr}
     bl TimeTravelAdvanceCutsceneTimer
     pop {r0-r12, lr}
     ldmia sp!,{r4,r5,r6,pc}
+
+.global hook_SkipTimeTravelCutsceneTwo
+hook_SkipTimeTravelCutsceneTwo:
+    push {r0-r12, lr}
+    bl SetTimeTraveled
+    pop {r0-r12, lr}
+    mov r1,#0x324
+    bx lr
+
+.global hook_SkipMasterSwordFanfare
+hook_SkipMasterSwordFanfare:
+    push {r0-r12, lr}
+    bl ShouldSkipMasterSwordCutscene
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x3E5F7C
+    mov r1,#0x0
+    bx lr
 
 .global hook_EnteredLocation
 hook_EnteredLocation:
@@ -1100,6 +1134,14 @@ hook_SilenceNavi:
     pop {r0-r12, lr}
     beq 0x26808C
     cmp r0,r2
+    bx lr
+
+.global hook_GameplayDestroy
+hook_GameplayDestroy:
+    cpy r4,r0
+    push {r0-r12, lr}
+    bl Entrance_CheckEpona
+    pop {r0-r12, lr}
     bx lr
 
 .section .loader

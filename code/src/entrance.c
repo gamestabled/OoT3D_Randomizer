@@ -338,6 +338,18 @@ u8 EntranceCutscene_ShouldPlay(u8 flag) {
     return 0; //cutscene will not play
 }
 
+void Entrance_CheckEpona() {
+    s32 entrance = gSaveContext.entranceIndex;
+    s8 dest = gEntranceTable[entrance].scene;
+    //If Link is riding Epona but he's about to enter a scene where she can't spawn,
+    //unset the Epona flag to avoid Master glitch, and restore temp B.
+    if (gSettingsContext.shuffleOverworldEntrances && entrance != 0x496 && (PLAYER->stateFlags1 & 0x00800000) &&
+        dest != 81 && dest != 87 && dest != 90 && dest != 95 && dest != 99) {
+        gStaticContext.spawnOnEpona = 0;
+        gSaveContext.equips.buttonItems[0] = gSaveContext.buttonStatus[0]; //"temp B"
+    }
+}
+
 EntranceName entranceNames[] = {
     { 0x0000, "KF" /* > Deku Tree */ , ENTRANCE_GROUP_KOKIRI_FOREST },
     { 0x0209, "Deku Tree" /* > KF */ , ENTRANCE_GROUP_KOKIRI_FOREST },
@@ -383,8 +395,8 @@ EntranceName entranceNames[] = {
     { 0x01D1, "Mask Shop" /* > Market */ , ENTRANCE_GROUP_MARKET },
     { 0x0507, "Market" /* > Bombchu Bowling */ , ENTRANCE_GROUP_MARKET },
     { 0x03BC, "Bombchu Bowling" /* > Market */ , ENTRANCE_GROUP_MARKET },
-    { 0x0388, "Market" /* > Potion Shop */ , ENTRANCE_GROUP_MARKET },
-    { 0x02A2, "Potion Shop" /* > Market */ , ENTRANCE_GROUP_MARKET },
+    { 0x0388, "Market" /* > MK Potion Shop */ , ENTRANCE_GROUP_MARKET },
+    { 0x02A2, "MK Potion Shop" /* > Market */ , ENTRANCE_GROUP_MARKET },
     { 0x0063, "Market" /* > Treasure Chest Game */ , ENTRANCE_GROUP_MARKET },
     { 0x01D5, "Treasure Chest Game" /* > Market */ , ENTRANCE_GROUP_MARKET },
     { 0x0528, "Market" /* > Bombchu Shop */ , ENTRANCE_GROUP_MARKET },
@@ -395,14 +407,14 @@ EntranceName entranceNames[] = {
     { 0x0349, "Carpenter Boss House" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x0550, "Kakariko" /* > House of Skulltula */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x04EE, "House of Skulltula" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
-    { 0x039C, "Kakariko" /* > Impa's House */ , ENTRANCE_GROUP_KAKARIKO },
-    { 0x0345, "Impa's House" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
+    { 0x039C, "Kakariko" /* > Impa's House Front */ , ENTRANCE_GROUP_KAKARIKO },
+    { 0x0345, "Impa's House Front" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x05C8, "Kakariko" /* > Impa's House Back */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x05DC, "Impa's House Back" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x0072, "Kakariko" /* > Granny's Potion Shop */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x034D, "Granny's Potion Shop" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
-    { 0x030D, "Graveyard" /* > Dampe's House */ , ENTRANCE_GROUP_GRAVEYARD },
-    { 0x0355, "Dampe's House" /* > Graveyard */ , ENTRANCE_GROUP_GRAVEYARD },
+    { 0x030D, "Graveyard" /* > Dampe's Shack */ , ENTRANCE_GROUP_GRAVEYARD },
+    { 0x0355, "Dampe's Shack" /* > Graveyard */ , ENTRANCE_GROUP_GRAVEYARD },
     { 0x037C, "Goron City" /* > Goron Shop */ , ENTRANCE_GROUP_GORON_CITY },
     { 0x03FC, "Goron Shop" /* > Goron City */ , ENTRANCE_GROUP_GORON_CITY },
     { 0x0380, "Zora's Domain" /* > Zora Shop */ , ENTRANCE_GROUP_ZORAS_DOMAIN },
