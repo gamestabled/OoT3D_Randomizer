@@ -216,8 +216,9 @@ namespace Logic {
   extern bool BottleWithBigPoe;
 
   extern bool Bombs;
-  extern bool HasBombchus;
   extern bool FoundBombchus;
+  extern bool CanPlayBowling;
+  extern bool HasBombchus;
   extern bool HasExplosives;
   extern bool IsChild;
   extern bool IsAdult;
