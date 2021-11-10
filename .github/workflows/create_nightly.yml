@@ -353,7 +353,7 @@ jobs:
               LINE=`sed -e 's/^"//' -e 's/"$//' <<<"$LINE"`
               ARRLINE=($(echo $LINE | tr " " "\n"))
               sed -i "s#<NIGHTLY_${LINENUM}_URL_CIA>#${ARRLINE[0]}#g" OoT3DR.unistore
-              VERSION=$(echo ${ARRLINE[0]} | cut -c76-80)
+              VERSION=$(echo ${ARRLINE[0]} | cut -c75-80)
               MODIFIED=$(echo ${ARRLINE[1]} | cut -c1-10)
               MODIFIED_DATE=$(echo ${ARRLINE[1]} | cut -c12-19)
               sed -i "s#<NIGHTLY_$LINENUM>#$VERSION#g" OoT3DR.unistore

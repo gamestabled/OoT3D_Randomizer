@@ -225,8 +225,9 @@ namespace Logic {
   bool Fairy            = false;
   bool BottleWithBigPoe = false;
 
-  bool HasBombchus      = false;
   bool FoundBombchus    = false;
+  bool CanPlayBowling   = false;
+  bool HasBombchus      = false;
   bool HasExplosives    = false;
   bool IsChild          = false;
   bool IsAdult          = false;
@@ -518,8 +519,10 @@ namespace Logic {
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess;
 
-    HasBombchus   = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || AmmoDrops.Is(AMMODROPS_BOMBCHU)) && FoundBombchus;
-    FoundBombchus = (BombchusInLogic && (Bombchus || Bombchus5 || Bombchus10 || Bombchus20)) || (!BombchusInLogic && BombBag);
+    FoundBombchus   = (BombchuDrop || Bombchus || Bombchus5 || Bombchus10 || Bombchus20);
+    CanPlayBowling  = (BombchusInLogic && FoundBombchus) || (!BombchusInLogic && BombBag);
+    HasBombchus     = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || (AmmoDrops.Is(AMMODROPS_BOMBCHU) && FoundBombchus));
+    
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
     //Unshuffled adult trade quest
@@ -804,6 +807,7 @@ namespace Logic {
      FairyPot         = false;
      FreeFairies      = false;
      FairyPond        = false;
+     BombchuDrop      = false;
 
      BuyBombchus5     = false;
      BuyBombchus10    = false;
@@ -849,8 +853,9 @@ namespace Logic {
      Fairy            = false;
      BottleWithBigPoe = false;
 
-     HasBombchus      = false;
      FoundBombchus    = false;
+     CanPlayBowling   = false;
+     HasBombchus      = false;
      HasExplosives    = false;
      IsChild          = false;
      IsAdult          = false;
