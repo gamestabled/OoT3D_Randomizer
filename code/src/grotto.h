@@ -4,6 +4,9 @@
 #include "z3D/z3Dvec.h"
 
 #define NUM_GROTTOS 33
+#define NOT_GROTTO 0
+#define GROTTO_LOAD 1
+#define GROTTO_RETURN 2
 
 typedef struct {
     s16 entranceIndex;

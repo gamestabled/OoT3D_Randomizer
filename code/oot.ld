@@ -1148,8 +1148,16 @@ SECTIONS
 		*(.patch_SetGameOverEntrance)
 	}
 
+	.patch_SetGameOverRespawnFlag 0x458EF0 : {
+		*(.patch_SetGameOverRespawnFlag)
+	}
+
 	.patch_InterfaceDrawDontSpoilTradeItems 0x45A17C : {
 		*(.patch_InterfaceDrawDontSpoilTradeItems)
+	}
+
+	.patch_SetSunsSongRespawnFlag 0x45B660 : {
+		*(.patch_SetSunsSongRespawnFlag)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {
@@ -1204,6 +1212,10 @@ SECTIONS
 		*(.patch_SetBGMDayNight)
 	}
 
+	.patch_SetFWGrottoID 0x4911D4 : {
+		*(.patch_SetFWGrottoID)
+	}
+
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
 	}
@@ -1222,6 +1234,14 @@ SECTIONS
 
 	.patch_FairyUseHealAmount 0x4968B4 : {
 		*(.patch_FairyUseHealAmount)
+	}
+
+	.patch_ReturnFWSetupGrottoInfo 0x496B88 : {
+		*(.patch_PlayerFWSetupGrottoInfo)
+	}
+
+	.patch_SetVoidoutRespawnFlag 0x496C70 : {
+		*(.patch_SetVoidoutRespawnFlag)
 	}
 
 	.patch_GanonBattleDeathWarp 0x496C98 : {

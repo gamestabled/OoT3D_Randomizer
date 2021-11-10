@@ -1291,6 +1291,21 @@ SetGameOverEntrance_patch:
     bl hook_SetGameOverEntrance
     b  0x458EC8
 
+.section .patch_SetGameOverRespawnFlag
+.global SetGameOverRespawnFlag_patch
+SetGameOverRespawnFlag_patch:
+    bl hook_SetGameOverRespawnFlag
+
+.section .patch_SetSunsSongRespawnFlag
+.global SetSunsSongRespawnFlag_patch
+SetSunsSongRespawnFlag_patch:
+    bl hook_SetSunsSongRespawnFlag
+
+.section .patch_SetVoidoutRespawnFlag
+.global SetVoidoutRespawnFlag_patch
+SetVoidoutRespawnFlag_patch:
+    bl hook_SetVoidoutRespawnFlag
+
 .section .patch_SariasSongHintsOne
 .global SariasSongHintsOne_patch
 SariasSongHintsOne_patch:
@@ -1701,6 +1716,16 @@ SceneExitDynamicOverride_patch:
 .global OverrideGrottoActorEntrance_patch
 OverrideGrottoActorEntrance_patch:
     b hook_OverrideGrottoActorEntrance
+
+.section .patch_ReturnFWSetupGrottoInfo
+.global ReturnFWSetupGrottoInfo_patch
+ReturnFWSetupGrottoInfo_patch:
+    bl hook_ReturnFWSetupGrottoInfo
+
+.section .patch_SetFWGrottoID
+.global SetFWGrottoID_patch
+SetFWGrottoID_patch:
+    bl hook_SetFWGrottoID
 
 .section .patch_loader
 .global loader_patch

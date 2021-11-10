@@ -621,6 +621,30 @@ hook_SetGameOverEntrance:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_SetGameOverRespawnFlag
+hook_SetGameOverRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlag
+    pop {r0-r12, lr}
+    cmp r8,#0x3
+    bx lr
+
+.global hook_SetSunsSongRespawnFlag
+hook_SetSunsSongRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlag
+    pop {r0-r12, lr}
+    cpy r0,r6
+    bx lr
+
+.global hook_SetVoidoutRespawnFlag
+hook_SetVoidoutRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlagAndDamage
+    pop {r0-r12, lr}
+    mov r1,#0x104
+    bx lr
+
 .global hook_GossipStoneAddSariaHint
 hook_GossipStoneAddSariaHint:
     strh r1,[r5,#0x16]
@@ -1152,6 +1176,22 @@ hook_OverrideGrottoActorEntrance:
     bl Grotto_OverrideActorEntrance
     pop {r0-r12, lr}
     b 0x3F22C4
+
+.global hook_ReturnFWSetupGrottoInfo
+hook_ReturnFWSetupGrottoInfo:
+    push {r0-r12, lr}
+    bl Grotto_SetupReturnInfoOnFWReturn
+    pop {r0-r12, lr}
+    add sp,sp,#0x8
+    bx lr
+
+.global hook_SetFWGrottoID
+hook_SetFWGrottoID:
+    push {r0-r12, lr}
+    bl Grotto_StoreGrottoIDOnFWSet
+    pop {r0-r12, lr}
+    add r1,r7,#0x400
+    bx lr
 
 .section .loader
 .global hook_into_loader

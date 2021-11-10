@@ -1,6 +1,7 @@
 #include "../include/z3D/z3D.h"
 #include "grotto.h"
 #include "savefile.h"
+#include "settings.h"
 
 // Information necessary for entering each grotto
 static const GrottoLoadInfo grottoLoadTable[NUM_GROTTOS] = {
@@ -44,42 +45,42 @@ static const GrottoReturnInfo grottoReturnTable[NUM_GROTTOS] = {
     {.entranceIndex = 0x0123, .room = 0x00, .angle = 0xA71C, .pos = {.x =    62.5078f, .y =   -32.0f, .z = -1296.2f}},   // Colossus Grotto -> Desert Colossus
     {.entranceIndex = 0x0102, .room = 0x00, .angle = 0x0000, .pos = {.x = -3039.34f,   .y = -1033.0f, .z =  6080.74f}},  // LH Grotto -> Lake Hylia
     {.entranceIndex = 0x00EA, .room = 0x00, .angle = 0x0000, .pos = {.x = -1630.05f,   .y =   100.0f, .z =  -132.104f}}, // ZR Storms Grotto -> Zora River
-    {.entranceIndex = 0x00EA, .room = 0x00, .angle = 0xE000, .pos = {.x =   670.507f,  .y =   570.0f, .z =  -361.853f}}, // ZR Fairy Grotto -> Zora River
-    {.entranceIndex = 0x00EA, .room = 0x00, .angle = 0x8000, .pos = {.x =   362.29f,   .y =   570.0f, .z =   137.63f}},  // ZR Open Grotto -> Zora River
-    {.entranceIndex = 0x0246, .room = 0x01, .angle = 0x31C7, .pos = {.x = -1684.52f,   .y =   722.0f, .z =  -474.667f}}, // DMC Hammer Grotto -> DMC Lower Local
-    {.entranceIndex = 0x0147, .room = 0x01, .angle = 0x238E, .pos = {.x =    35.8008f, .y =  1265.0f, .z =  1766.67f}},  // DMC Upper Grotto -> DMC Upper Local
-    {.entranceIndex = 0x014D, .room = 0x03, .angle = 0x0000, .pos = {.x =  1104.73f,   .y =   580.0f, .z = -1182.41f}},  // GC Grotto -> GC Grotto Platform
+    {.entranceIndex = 0x00EA, .room = 0x00, .angle = 0xE000, .pos = {.x =   649.507f,  .y =   570.0f, .z =  -346.853f}}, // ZR Fairy Grotto -> Zora River
+    {.entranceIndex = 0x00EA, .room = 0x00, .angle = 0x8000, .pos = {.x =   362.29f,   .y =   570.0f, .z =   111.48f}},  // ZR Open Grotto -> Zora River
+    {.entranceIndex = 0x0246, .room = 0x01, .angle = 0x31C7, .pos = {.x = -1666.73f,   .y =   721.0f, .z =  -459.21f}},  // DMC Hammer Grotto -> DMC Lower Local
+    {.entranceIndex = 0x0147, .room = 0x01, .angle = 0x238E, .pos = {.x =    63.723f,  .y =  1265.0f, .z =  1791.39f}},  // DMC Upper Grotto -> DMC Upper Local
+    {.entranceIndex = 0x014D, .room = 0x03, .angle = 0x0000, .pos = {.x =  1104.73f,   .y =   580.0f, .z = -1159.95f}},  // GC Grotto -> GC Grotto Platform
     {.entranceIndex = 0x01B9, .room = 0x00, .angle = 0x8000, .pos = {.x =  -387.584f,  .y =  1386.0f, .z = -1213.05f}},  // DMT Storms Grotto -> Death Mountain
-    {.entranceIndex = 0x01B9, .room = 0x00, .angle = 0x8000, .pos = {.x =  -691.022f,  .y =  1946.0f, .z =  -281.969f}}, // DMT Cow Grotto -> Death Mountain Summit
-    {.entranceIndex = 0x00DB, .room = 0x00, .angle = 0x0000, .pos = {.x =   855.238f,  .y =    80.0f, .z =  -253.095f}}, // Kak Open Grotto -> Kak Backyard
+    {.entranceIndex = 0x01B9, .room = 0x00, .angle = 0x8000, .pos = {.x =  -691.022f,  .y =  1946.0f, .z =  -312.969f}}, // DMT Cow Grotto -> Death Mountain Summit
+    {.entranceIndex = 0x00DB, .room = 0x00, .angle = 0x0000, .pos = {.x =   855.238f,  .y =    80.0f, .z =  -234.095f}}, // Kak Open Grotto -> Kak Backyard
     {.entranceIndex = 0x00DB, .room = 0x00, .angle = 0x0000, .pos = {.x =  -401.873f,  .y =     0.0f, .z =   402.792f}}, // Kak Redead Grotto -> Kakariko Village
     {.entranceIndex = 0x0138, .room = 0x00, .angle = 0x9555, .pos = {.x =  1009.02f,   .y =  1571.0f, .z =   855.532f}}, // HC Storms Grotto -> Castle Grounds
     {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x1555, .pos = {.x = -4949.58f,   .y =  -300.0f, .z =  2837.59f}},  // HF Tektite Grotto -> Hyrule Field
     {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0xC000, .pos = {.x =  2050.6f,    .y =    20.0f, .z =  -160.397f}}, // HF Near Kak Grotto -> Hyrule Field
-    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x0000, .pos = {.x = -4452.66f,   .y =  -300.0f, .z =  -426.191f}}, // HF Fairy Grotto -> Hyrule Field
-    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0xE000, .pos = {.x = -1429.56f,   .y =     0.0f, .z =   817.775f}}, // HF Near Market Grotto -> Hyrule Field
+    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x0000, .pos = {.x = -4447.66f,   .y =  -300.0f, .z =  -393.191f}}, // HF Fairy Grotto -> Hyrule Field
+    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0xE000, .pos = {.x = -1446.56f,   .y =     0.0f, .z =   830.775f}}, // HF Near Market Grotto -> Hyrule Field
     {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x0000, .pos = {.x = -7874.07f,   .y =  -300.0f, .z =  6921.31f}},  // HF Cow Grotto -> Hyrule Field
     {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0xEAAB, .pos = {.x = -4989.13f,   .y =  -700.0f, .z = 13821.1f}},   // HF Inside Fence Grotto -> Hyrule Field
-    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x8000, .pos = {.x = -4022.61f,   .y =  -700.0f, .z = 13859.5f}},   // HF Open Grotto -> Hyrule Field
-    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x9555, .pos = {.x =  -265.313f,  .y =  -500.0f, .z = 12343.2f}},   // HF Southeast Grotto -> Hyrule Field
-    {.entranceIndex = 0x0157, .room = 0x00, .angle = 0xAAAB, .pos = {.x =  1799.92f,   .y =     0.0f, .z =  1500.82f}},  // LLR Grotto -> Lon Lon Ranch
+    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x8000, .pos = {.x = -4032.61f,   .y =  -700.0f, .z = 13831.5f}},   // HF Open Grotto -> Hyrule Field
+    {.entranceIndex = 0x01F9, .room = 0x00, .angle = 0x9555, .pos = {.x =  -288.313f,  .y =  -500.0f, .z = 12320.2f}},   // HF Southeast Grotto -> Hyrule Field
+    {.entranceIndex = 0x0157, .room = 0x00, .angle = 0xAAAB, .pos = {.x =  1775.92f,   .y =     0.0f, .z =  1486.82f}},  // LLR Grotto -> Lon Lon Ranch
     {.entranceIndex = 0x00FC, .room = 0x00, .angle = 0x8000, .pos = {.x =  -189.861f,  .y =     0.0f, .z =  1898.09f}},  // SFM Wolfos Grotto -> SFM Entryway
     {.entranceIndex = 0x00FC, .room = 0x00, .angle = 0xAAAB, .pos = {.x =   314.853f,  .y =   480.0f, .z = -2300.39f}},  // SFM Storms Grotto -> Sacred Forest Meadow
-    {.entranceIndex = 0x00FC, .room = 0x00, .angle = 0x0000, .pos = {.x =    55.034f,  .y =     0.0f, .z =   206.595f}}, // SFM Fairy Grotto -> Sacred Forest Meadow
-    {.entranceIndex = 0x01A9, .room = 0x08, .angle = 0x2000, .pos = {.x =   676.994f,  .y =     0.0f, .z = -2526.2f}},   // LW Scrubs Grotto -> LW Beyond Mido
-    {.entranceIndex = 0x011E, .room = 0x02, .angle = 0xE000, .pos = {.x =   914.755f,  .y =     0.0f, .z =  -915.43f}},  // LW Near Shortcuts Grotto -> Lost Woods
+    {.entranceIndex = 0x00FC, .room = 0x00, .angle = 0x0000, .pos = {.x =    55.034f,  .y =     0.0f, .z =   250.595f}}, // SFM Fairy Grotto -> Sacred Forest Meadow
+    {.entranceIndex = 0x01A9, .room = 0x08, .angle = 0x2000, .pos = {.x =   691.994f,  .y =     0.0f, .z = -2502.2f}},   // LW Scrubs Grotto -> LW Beyond Mido
+    {.entranceIndex = 0x011E, .room = 0x02, .angle = 0xE000, .pos = {.x =   905.755f,  .y =     0.0f, .z =  -901.43f}},  // LW Near Shortcuts Grotto -> Lost Woods
     {.entranceIndex = 0x0286, .room = 0x00, .angle = 0x4000, .pos = {.x =  -507.065f,  .y =   380.0f, .z = -1220.43f}},  // KF Storms Grotto -> Kokiri Forest
     {.entranceIndex = 0x0108, .room = 0x01, .angle = 0xD555, .pos = {.x =  -855.68f,   .y =    14.0f, .z =  -474.422f}}, // ZD Storms Grotto -> Zoras Domain
     {.entranceIndex = 0x0129, .room = 0x00, .angle = 0x4000, .pos = {.x =   380.521f,  .y =   333.0f, .z = -1560.74f}},  // GF Storms Grotto -> Gerudo Fortress
     {.entranceIndex = 0x022D, .room = 0x00, .angle = 0x9555, .pos = {.x = -1326.34f,   .y =    15.0f, .z =  -983.994f}}, // GV Storms Grotto -> GV Fortress Side
     {.entranceIndex = 0x0117, .room = 0x00, .angle = 0x8000, .pos = {.x =   291.513f,  .y =  -555.0f, .z =  1478.39f}},  // GV Octorok Grotto -> GV Grotto Ledge
-    {.entranceIndex = 0x01A9, .room = 0x06, .angle = 0x4000, .pos = {.x =    85.281f,  .y =   -20.0f, .z = -1601.42f}},  // Deku Theater -> LW Beyond Mido
+    {.entranceIndex = 0x01A9, .room = 0x06, .angle = 0x4000, .pos = {.x =   109.281f,  .y =   -20.0f, .z = -1601.42f}},  // Deku Theater -> LW Beyond Mido
 };
 
 static s16 grottoExitList[NUM_GROTTOS] = {0};
 static s16 grottoLoadList[NUM_GROTTOS] = {0};
 static s8 grottoId = 0xFF;
-static s8 entranceFromGrottoActor = 0;
+static s8 lastEntranceType = NOT_GROTTO;
 
 // Initialize both lists so that each index refers to itself. An index referring
 // to itself means that the entrance is not shuffled. Indices will be overwritten
@@ -103,22 +104,27 @@ void Grotto_SetLoadOverride(s16 originalIndex, s16 overrideIndex) {
     grottoLoadList[id] = overrideIndex;
 }
 
-static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto) {
+static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto, RespawnMode respawnMode) {
   // Set necessary grotto return data
-  gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = grotto.entranceIndex;
-  gSaveContext.respawn[RESPAWN_MODE_RETURN].roomIndex = grotto.room;
-  gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x04FF; // exiting grotto with no initial camera focus
-  gSaveContext.respawn[RESPAWN_MODE_RETURN].yaw = grotto.angle;
-  gSaveContext.respawn[RESPAWN_MODE_RETURN].pos = grotto.pos;
-  gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags = gGlobalContext->actorCtx.flags.tempSwch;
-  gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags = gGlobalContext->actorCtx.flags.tempCollect;
+  gSaveContext.respawn[respawnMode].entranceIndex = grotto.entranceIndex;
+  gSaveContext.respawn[respawnMode].roomIndex = grotto.room;
+  gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
+  gSaveContext.respawn[respawnMode].yaw = grotto.angle;
+  gSaveContext.respawn[respawnMode].pos = grotto.pos;
+  gSaveContext.respawn[respawnMode].tempSwchFlags = gGlobalContext->actorCtx.flags.tempSwch;
+  gSaveContext.respawn[respawnMode].tempCollectFlags = gGlobalContext->actorCtx.flags.tempCollect;
 
-  gSaveContext.respawnFlag = 2;
+  gSaveContext.respawnFlag = 1;
 }
 
 // Translates and overrides the passed in entrance index if it corresponds to a
 // special grotto entrance (grotto load or returnpoint)
 s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
+
+    // Don't change anything unless grotto shuffle has been enabled
+    if (gSettingsContext.shuffleGrottoEntrances == OFF) {
+        return nextEntranceIndex;
+    }
 
     // If Link hits a grotto exit, load the entrance index from the grotto exit list
     // based on the current grotto ID
@@ -134,33 +140,44 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
     if (nextEntranceIndex >= 0x2000 && nextEntranceIndex < 0x2000 + NUM_GROTTOS) {
 
         GrottoReturnInfo grotto = grottoReturnTable[grottoId];
-        Grotto_SetupReturnInfo(grotto);
+        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
         gGlobalContext->fadeOutTransition = 3;
         gSaveContext.nextTransition = 3;
 
-        // This keeps the transition lighting consistent and makes
-        // grotto entrance -> grotto return point entrances work properly
-        nextEntranceIndex = entranceFromGrottoActor ? grotto.entranceIndex : 0x7FFF;
+        // If this entrance is triggered by Link falling into a grotto actor
+        // and then spawning at a grotto return point, we want to return the
+        // regular entrance index so that it works properly. Otherwise, we
+        // want to return 0x7FFF to make the lighting of the area transition
+        // look correct.
+        nextEntranceIndex = (lastEntranceType == GROTTO_LOAD) ? grotto.entranceIndex : 0x7FFF;
+        lastEntranceType = GROTTO_RETURN;
 
     // Grotto Loads
     } else if (nextEntranceIndex >= 0x1000 && nextEntranceIndex < 0x2000) {
 
+        // Set the respawn data to load the correct grotto
         GrottoLoadInfo grotto = grottoLoadTable[grottoId];
         gSaveContext.respawn[RESPAWN_MODE_RETURN].data = grotto.content;
         nextEntranceIndex = grotto.entranceIndex;
 
+        lastEntranceType = NOT_GROTTO;
     // Otherwise just unset the current grotto ID
     } else {
         grottoId = 0xFF;
+        lastEntranceType = NOT_GROTTO;
     }
 
-    entranceFromGrottoActor = 0;
     return nextEntranceIndex;
 }
 
 // Override the entrance index when entering into a grotto actor
 // thisx - pointer to the grotto actor
 void Grotto_OverrideActorEntrance(Actor* thisx) {
+
+    // Vanilla Behavior if grottos aren't shuffled
+    if (gSettingsContext.shuffleGrottoEntrances == OFF) {
+        return;
+    }
 
     s8 grottoContent = thisx->params & 0x00FF;
 
@@ -174,9 +191,63 @@ void Grotto_OverrideActorEntrance(Actor* thisx) {
             index = grottoLoadList[index];
 
             // Run the index through the special entrances override check
-            entranceFromGrottoActor = 1;
+            lastEntranceType = GROTTO_LOAD;
             gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(index);
             return;
         }
+    }
+}
+
+// Set the respawn flag for when we want to return from a grotto entrance
+void Grotto_SetRespawnFlag(void) {
+    if (lastEntranceType == GROTTO_RETURN && gSettingsContext.shuffleGrottoEntrances == ON) {
+        gSaveContext.respawnFlag = 2;
+    }
+}
+
+// This feels too hacky, but it's the only way I can get it to work.
+// For some reason, voiding out at DMT and respawning at grotto returns
+// won't damage Link, so we have to force it here
+void Grotto_SetRespawnFlagAndDamage(void) {
+    if (lastEntranceType == GROTTO_RETURN && gSettingsContext.shuffleGrottoEntrances == ON) {
+        gSaveContext.respawnFlag = 2;
+        // This is only half damage of a normal voidout. For some reason the
+        // game runs it twice. So...*shrug*
+        Health_ChangeBy(gGlobalContext, -0x08);
+    }
+}
+
+void Grotto_StoreGrottoIDOnFWSet(void) {
+    if (gSaveContext.linkAge == AGE_ADULT) {
+        gExtSaveData.adultFWgrottoID = grottoId;
+    } else if (gSaveContext.linkAge == AGE_CHILD) {
+        gExtSaveData.childFWgrottoID = grottoId;
+    }
+}
+
+// When returning FW to a grotto return we want to set the data like
+// we normally would when loading from a loading zone
+void Grotto_SetupReturnInfoOnFWReturn(void) {
+
+    if (gSettingsContext.shuffleGrottoEntrances == ON) {
+        if (gSaveContext.linkAge == AGE_ADULT && gExtSaveData.adultFWgrottoID != 0xFF) {
+
+            grottoId = gExtSaveData.adultFWgrottoID;
+            gExtSaveData.adultFWgrottoID = 0xFF;
+
+        } else if (gSaveContext.linkAge == AGE_CHILD && gExtSaveData.childFWgrottoID != 0xFF) {
+
+            grottoId = gExtSaveData.childFWgrottoID;
+            gExtSaveData.childFWgrottoID = 0xFF;
+
+        } else {
+            return;
+        }
+
+        GrottoReturnInfo grotto = grottoReturnTable[grottoId];
+        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
+        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_RETURN);
+        lastEntranceType = GROTTO_RETURN;
+        gSaveContext.respawnFlag = 3;
     }
 }
