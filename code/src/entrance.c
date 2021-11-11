@@ -327,12 +327,12 @@ u8 EntranceCutscene_ShouldPlay(u8 flag) {
 }
 
 void Entrance_CheckEpona() {
-    s32 entrance = gSaveContext.entranceIndex;
+    s32 entrance = gGlobalContext->nextEntranceIndex;
     s8 dest = gEntranceTable[entrance].scene;
     //If Link is riding Epona but he's about to enter a scene where she can't spawn,
     //unset the Epona flag to avoid Master glitch, and restore temp B.
     if (gSettingsContext.shuffleOverworldEntrances && entrance != 0x496 && (PLAYER->stateFlags1 & 0x00800000) &&
-        dest != 81 && dest != 87 && dest != 90 && dest != 95 && dest != 99) {
+        dest != 81 && dest != 87 && dest != 90 && dest != 93 && dest != 99) {
         gStaticContext.spawnOnEpona = 0;
         gSaveContext.equips.buttonItems[0] = gSaveContext.buttonStatus[0]; //"temp B"
     }
