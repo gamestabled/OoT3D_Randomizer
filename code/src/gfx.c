@@ -142,6 +142,24 @@ static bool IsEntranceDiscovered(s16 index) {
     return isDiscovered;
 }
 
+static bool IsDungeonDiscovered(DungeonId dungeonId) {
+    if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+        if (gSettingsContext.dungeonModesKnown) {
+            return true;
+        }
+
+        // A dungeon is considered discovered if we've visited the dungeon at least once, we have the map,
+        // or all the dungeon modes are known due to settings.
+        // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
+        bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+        bool dungeonIsDiscovered = (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId)
+            || (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART && SaveFile_GetIsSceneDiscovered(DUNGEON_GANONS_CASTLE_FIRST_PART));
+
+        return dungeonIsDiscovered;
+    }
+    return false;
+}
+
 static void Gfx_DrawScrollBar(u16 barX, u16 barY, u16 barSize, u16 currentScroll, u16 maxScroll, u16 pageSize) {
     Draw_DrawRect(barX, barY, SCROLL_BAR_THICKNESS, barSize, COLOR_SCROLL_BAR_BG);
 
@@ -301,13 +319,9 @@ static void Gfx_DrawDungeonItems(void) {
             bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
             bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
             bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
-            bool dungeonIsDiscovered = (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId)
-                || (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART && SaveFile_GetIsSceneDiscovered(DUNGEON_GANONS_CASTLE_FIRST_PART));
 
             if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
-                // If we've visited the dungeon, we have the map, or all dungeon modes are known due to settings, show whether it's vanilla or MQ
-                // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
-                if (dungeonIsDiscovered || gSettingsContext.dungeonModesKnown) {
+                if (IsDungeonDiscovered(dungeonId)) {
                     bool isMasterQuest =  gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
                     u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
                     Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
