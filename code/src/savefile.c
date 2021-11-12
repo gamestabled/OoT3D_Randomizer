@@ -265,8 +265,10 @@ u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
 }
 
 void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
-    // Skip if already set to save time from setting the connected
-    if (SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
+
+    // Skip if already set to save time from setting the connected or
+    // if this is a dynamic entrance
+    if (entranceIndex > 0x2020 || SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
         return;
     }
 
@@ -577,6 +579,8 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     gExtSaveData.biggoronTrades = 0;
     memset(&gExtSaveData.fwStored, 0, sizeof(gExtSaveData.fwStored));
+    gExtSaveData.childFWgrottoID = 0xFF;
+    gExtSaveData.adultFWgrottoID = 0xFF;
     gExtSaveData.playtimeSeconds = 0;
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
