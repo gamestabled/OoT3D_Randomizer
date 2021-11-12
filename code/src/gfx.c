@@ -41,6 +41,34 @@ DungeonInfo rDungeonInfoData[10];
 #define TICKS_PER_SEC 268123480
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
 
+static s8 spoilerGroupDungeonIds[] = {
+    -1,
+    -1,
+    -1,
+    DUNGEON_DEKU_TREE,
+    DUNGEON_FOREST_TEMPLE,
+    -1,
+    DUNGEON_BOTTOM_OF_THE_WELL,
+    DUNGEON_SHADOW_TEMPLE,
+    -1,
+    -1,
+    DUNGEON_DODONGOS_CAVERN,
+    DUNGEON_FIRE_TEMPLE,
+    -1,
+    -1,
+    DUNGEON_JABUJABUS_BELLY,
+    DUNGEON_ICE_CAVERN,
+    -1,
+    -1,
+    -1,
+    DUNGEON_WATER_TEMPLE,
+    -1,
+    DUNGEON_GERUDO_TRAINING_GROUNDS,
+    DUNGEON_SPIRIT_TEMPLE,
+    -1,
+    DUNGEON_GANONS_CASTLE_SECOND_PART,
+};
+
 static char *spoilerCollectionGroupNames[] = {
     "",
     "Kokiri Forest",
@@ -158,6 +186,11 @@ static bool IsDungeonDiscovered(DungeonId dungeonId) {
         return dungeonIsDiscovered;
     }
     return false;
+}
+
+static bool CanShowSpoilerGroup(SpoilerCollectionCheckGroup group) {
+    s8 dungeonId = spoilerGroupDungeonIds[group];
+    return dungeonId == -1 || IsDungeonDiscovered(dungeonId);
 }
 
 static void Gfx_DrawScrollBar(u16 barX, u16 barY, u16 barSize, u16 currentScroll, u16 maxScroll, u16 pageSize) {
@@ -425,16 +458,34 @@ static void Gfx_DrawSpoilerAllItems(void) {
         }
 
         u16 listTopY = 32;
+        u32 itemGroupIndex = 1; // Keep the last picked group index around to start the search from
         for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
             u32 locIndex = item + allItemsScroll;
             if (locIndex >= gSpoilerData.ItemLocationsCount) { break; }
 
             u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
             u32 itemPosY = locPosY + SPACING_SMALL_Y;
-            u32 color = SpoilerData_GetIsItemLocationCollected(locIndex) ? COLOR_GREEN : COLOR_WHITE;
-            Draw_DrawString_Small(10, locPosY, color,
-                SpoilerData_GetItemLocationString(locIndex));
-            const char* itemText = (!gSettingsContext.ingameSpoilers && !SpoilerData_GetIsItemLocationCollected(locIndex)) ? "???" : SpoilerData_GetItemNameString(locIndex);
+
+            bool isCollected = SpoilerData_GetIsItemLocationCollected(locIndex);
+
+            // Find this item's group index, so we can see if we should hide
+            // its name because it's located in an undiscovered dungeon
+            for (u32 group = itemGroupIndex; group < SPOILER_COLLECTION_GROUP_COUNT; ++group) {
+                u16 groupOffset = gSpoilerData.GroupOffsets[group];
+                if (locIndex >= groupOffset && locIndex < groupOffset + gSpoilerData.GroupItemCounts[group]) {
+                    itemGroupIndex = group;
+                    break;
+                }
+            }
+            bool canShowGroup = isCollected || CanShowSpoilerGroup(itemGroupIndex);
+
+            u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
+            if (canShowGroup) {
+                Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
+            } else {
+                Draw_DrawFormattedString_Small(10, locPosY, color, "%s (Undiscovered)", spoilerCollectionGroupNames[itemGroupIndex]);
+            }
+            const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
             Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
         }
 
@@ -448,43 +499,52 @@ static void Gfx_DrawSpoilerAllItems(void) {
 
 static void Gfx_DrawSpoilerItemGroups(void) {
     if (gSpoilerData.ItemLocationsCount > 0) {
-        u16 itemCount = gSpoilerData.GroupItemCounts[currentItemGroup];
-        u16 startIndex = gSpoilerData.GroupOffsets[currentItemGroup];
+        if (CanShowSpoilerGroup(currentItemGroup)) {
+            u16 itemCount = gSpoilerData.GroupItemCounts[currentItemGroup];
+            u16 startIndex = gSpoilerData.GroupOffsets[currentItemGroup];
 
-        if (!gSettingsContext.ingameSpoilers && itemCount > 0) {
-            // Gather up completed items to calculate how far along this group is
-            u16 completeItems = 0;
-            for (u32 i = 0; i < itemCount; ++i) {
-                u32 locIndex = i + startIndex;
-                if (SpoilerData_GetIsItemLocationCollected(locIndex)) {
-                    ++completeItems;
+            if (!gSettingsContext.ingameSpoilers && itemCount > 0) {
+                // Gather up completed items to calculate how far along this group is
+                u16 completeItems = 0;
+                for (u32 i = 0; i < itemCount; ++i) {
+                    u32 locIndex = i + startIndex;
+                    if (SpoilerData_GetIsItemLocationCollected(locIndex)) {
+                        ++completeItems;
+                    }
                 }
+                float groupPercent = ((float)completeItems / (float)itemCount) * 100.0f;
+                Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, completeItems == itemCount ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
             }
-            float groupPercent = ((float)completeItems / (float)itemCount) * 100.0f;
-            Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, completeItems == itemCount ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
+
+            u16 firstItem = groupItemsScroll + 1;
+            u16 lastItem = groupItemsScroll + MAX_ITEM_LINES;
+            if (lastItem > itemCount) { lastItem = itemCount; }
+            Draw_DrawFormattedString(10, 16, COLOR_TITLE, "%s - (%d - %d) / %d",
+                spoilerCollectionGroupNames[currentItemGroup], firstItem, lastItem, itemCount);
+
+            u16 listTopY = 32;
+            for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
+                u32 locIndex = item + startIndex + groupItemsScroll;
+                if (item >= itemCount) { break; }
+
+                u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
+                u32 itemPosY = locPosY + SPACING_SMALL_Y;
+                bool isCollected =  SpoilerData_GetIsItemLocationCollected(locIndex);
+                u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
+                Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
+                const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
+                Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
+            }
+
+            Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
+        } else {
+            Draw_DrawString(10, 16, COLOR_TITLE, spoilerCollectionGroupNames[currentItemGroup]);
+            Draw_DrawString(10, 46, COLOR_WHITE, "Reveal this dungeon to see the item list.");
+            Draw_DrawString(10, 57, COLOR_WHITE, " - Enter the dungeon at least once");
+            if (gSettingsContext.mapsShowDungeonMode) {
+                Draw_DrawString(10, 68, COLOR_WHITE, " - Find the dungeon's map");
+            }
         }
-
-        u16 firstItem = groupItemsScroll + 1;
-        u16 lastItem = groupItemsScroll + MAX_ITEM_LINES;
-        if (lastItem > itemCount) { lastItem = itemCount; }
-        Draw_DrawFormattedString(10, 16, COLOR_TITLE, "%s - (%d - %d) / %d",
-            spoilerCollectionGroupNames[currentItemGroup], firstItem, lastItem, itemCount);
-
-        u16 listTopY = 32;
-        for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
-            u32 locIndex = item + startIndex + groupItemsScroll;
-            if (item >= itemCount) { break; }
-
-            u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
-            u32 itemPosY = locPosY + SPACING_SMALL_Y;
-            bool isCollected =  SpoilerData_GetIsItemLocationCollected(locIndex);
-            u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
-            Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
-            const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
-        }
-
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
     }
     else {
         Draw_DrawString(10, 16, COLOR_TITLE, "Item Location Groups");
