@@ -519,6 +519,14 @@ hook_CheckDekuTreeClear:
 hook_CheckCurrentDungeonMode:
     push {r0-r12, lr}
     bl Dungeon_GetCurrentDungeonMode
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_DungeonCheckJabuMQBox
+hook_DungeonCheckJabuMQBox:
+    push {r0-r12, lr}
+    bl Dungeon_GetCurrentDungeonMode
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr

@@ -1096,7 +1096,7 @@ DoorOfTimeOpenCutscene_patch:
 .section .patch_DungeonCheckJabuMQBox
 .global DungeonCheckJabuMQBox_patch
 DungeonCheckJabuMQBox_patch:
-    bl hook_CheckCurrentDungeonMode
+    bl hook_DungeonCheckJabuMQBox
     nop
 
 .section .patch_JabuSwitchRutoCheck
