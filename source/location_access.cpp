@@ -486,7 +486,7 @@ void AreaTable_Init() {
                   LocationAccess(SFM_WOLFOS_GROTTO_CHEST, {[]{return IsAdult || Slingshot || Sticks || KokiriSword || CanUse(DINS_FIRE);}}),
                 }, {
                   //Exits
-                  Entrance(SACRED_FOREST_MEADOW, {[]{return true;}}),
+                  Entrance(SFM_ENTRYWAY, {[]{return true;}}),
   });
 
   areaTable[SFM_STORMS_GROTTO] = Area("SFM Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -692,17 +692,17 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(HYRULE_FIELD,      {[]{return true;}}),
-                  Entrance(GV_STREAM,         {[]{return true;}}),
+                  Entrance(GV_UPPER_STREAM,   {[]{return true;}}),
                   Entrance(GV_CRATE_LEDGE,    {[]{return IsChild || CanUse(LONGSHOT);}}),
-                  Entrance(GV_OCTOROK_GROTTO, {[]{return CanUse(SILVER_GAUNTLETS);}}),
+                  Entrance(GV_GROTTO_LEDGE,   {[]{return true;}}),
                   Entrance(GV_FORTRESS_SIDE,  {[]{return IsAdult && (CanRideEpona || CanUse(LONGSHOT) || GerudoFortress.Is(GERUDOFORTRESS_OPEN) || CarpenterRescue);},
                                    /*Glitched*/[]{return IsAdult && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
   });
 
-  areaTable[GV_STREAM] = Area("GV Stream", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {
+  areaTable[GV_UPPER_STREAM] = Area("GV Upper Stream", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || CanSummonGossipFairy;}}),
-                  EventAccess(&BeanPlantFairy,   {[]{return BeanPlantFairy   || (CanPlantBean(GV_STREAM) && CanPlay(SongOfStorms));}}),
+                  EventAccess(&BeanPlantFairy,   {[]{return BeanPlantFairy   || (CanPlantBean(GV_UPPER_STREAM) && CanPlay(SongOfStorms));}}),
                 }, {
                   //Locations
                   LocationAccess(GV_WATERFALL_FREESTANDING_POH, {[]{return true;}}),
@@ -711,7 +711,19 @@ void AreaTable_Init() {
                   LocationAccess(GV_GOSSIP_STONE,               {[]{return true;}}),
                 }, {
                   //Exits
+                  Entrance(GV_LOWER_STREAM, {[]{return true;}}),
+  });
+
+  areaTable[GV_LOWER_STREAM] = Area("GV Lower Stream", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
                   Entrance(LAKE_HYLIA, {[]{return true;}}),
+  });
+
+  areaTable[GV_GROTTO_LEDGE] = Area("GV Grotto Ledge", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(GV_LOWER_STREAM,   {[]{return true;}}),
+                  Entrance(GV_OCTOROK_GROTTO, {[]{return CanUse(SILVER_GAUNTLETS);}}),
+                  Entrance(GV_CRATE_LEDGE,    {[]{return CanUse(LONGSHOT);}}),
   });
 
   areaTable[GV_CRATE_LEDGE] = Area("GV Crate Ledge", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {}, {
@@ -719,6 +731,7 @@ void AreaTable_Init() {
                   LocationAccess(GV_CRATE_FREESTANDING_POH, {[]{return true;}}),
                 }, {
                   //Exits
+                  Entrance(GV_LOWER_STREAM, {[]{return true;}}),
   });
 
   areaTable[GV_FORTRESS_SIDE] = Area("GV Fortress Side", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {
@@ -733,7 +746,7 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(GERUDO_FORTRESS,   {[]{return true;}}),
-                  Entrance(GV_STREAM,         {[]{return true;}}),
+                  Entrance(GV_UPPER_STREAM,   {[]{return true;}}),
                   Entrance(GERUDO_VALLEY,     {[]{return IsChild || CanRideEpona || CanUse(LONGSHOT) || GerudoFortress.Is(GERUDOFORTRESS_OPEN) || CarpenterRescue;}}),
                   Entrance(GV_CARPENTER_TENT, {[]{return IsAdult;}}),
                   Entrance(GV_STORMS_GROTTO,  {[]{return IsAdult && CanOpenStormGrotto;}}),
@@ -746,7 +759,7 @@ void AreaTable_Init() {
 
   areaTable[GV_OCTOROK_GROTTO] = Area("GV Octorok Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(GERUDO_VALLEY, {[]{return true;}}),
+                  Entrance(GV_GROTTO_LEDGE, {[]{return true;}}),
   });
 
   areaTable[GV_STORMS_GROTTO] = Area("GV Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1477,7 +1490,14 @@ void AreaTable_Init() {
                   Entrance(GC_WOODS_WARP,        {[]{return GCWoodsWarpOpen;}}),
                   Entrance(GC_SHOP,              {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && (HasExplosives || GoronBracelet || GoronCityChildFire));}}),
                   Entrance(GC_DARUNIAS_CHAMBER,  {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && CanPlay(ZeldasLullaby));}}),
-                  Entrance(GC_GROTTO,            {[]{return IsAdult && ((CanPlay(SongOfTime) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) || CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) || (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && CanUse(GORON_TUNIC) && CanUse(HOOKSHOT)) ||(CanUse(NAYRUS_LOVE) && CanUse(HOOKSHOT)));}}),
+                  Entrance(GC_GROTTO_PLATFORM,   {[]{return IsAdult &&
+                                                            ((CanPlay(SongOfTime) &&
+                                                                    ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) &&
+                                                                      DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) ||
+                                                                          CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) ||
+                                                                    (CanUse(HOOKSHOT) &&
+                                                                          ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && CanUse(GORON_TUNIC)) ||
+                                                                                CanUse(NAYRUS_LOVE))));}}),
   });
 
   areaTable[GC_WOODS_WARP] = Area("GC Woods Warp", "Goron City", NONE, NO_DAY_NIGHT_CYCLE, {
@@ -1499,6 +1519,13 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(GORON_CITY,      {[]{return true;}}),
                   Entrance(DMC_LOWER_LOCAL, {[]{return IsAdult;}}),
+  });
+
+  areaTable[GC_GROTTO_PLATFORM] = Area("GC Grotto Platform", "Goron City", GORON_CITY, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(GC_GROTTO,  {[]{return true;}}),
+                  Entrance(GORON_CITY, {[]{return (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) ||
+                                                  CanUse(GORON_TUNIC) || CanUse(NAYRUS_LOVE) || (CanPlay(SongOfTime) && CanUse(LONGSHOT));}}),
   });
 
   areaTable[GC_SHOP] = Area("GC Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1523,7 +1550,7 @@ void AreaTable_Init() {
                   LocationAccess(GC_DEKU_SCRUB_GROTTO_CENTER, {[]{return CanStunDeku;}}),
                 }, {
                   //Exits
-                  Entrance(GORON_CITY, {[]{return true;}}),
+                  Entrance(GC_GROTTO_PLATFORM, {[]{return true;}}),
   });
 
   areaTable[DMC_UPPER_NEARBY] = Area("DMC Upper Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3745,7 +3772,7 @@ void AreaTable_Init() {
 
 namespace Areas {
 
-  static std::array<const AreaKey, 301> allAreas = {
+  static std::array<const AreaKey, 304> allAreas = {
     ROOT,
     ROOT_EXITS,
 
@@ -3828,6 +3855,7 @@ namespace Areas {
     GORON_CITY,
     GC_WOODS_WARP,
     GC_DARUNIAS_CHAMBER,
+    GC_GROTTO_PLATFORM,
     GC_SHOP,
     GC_GROTTO,
 
@@ -3871,7 +3899,9 @@ namespace Areas {
     WATER_TEMPLE_ENTRYWAY,
 
     GERUDO_VALLEY,
-    GV_STREAM,
+    GV_UPPER_STREAM,
+    GV_LOWER_STREAM,
+    GV_GROTTO_LEDGE,
     GV_CRATE_LEDGE,
     GV_OCTOROK_GROTTO,
     GV_FORTRESS_SIDE,
