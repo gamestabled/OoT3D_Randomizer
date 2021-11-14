@@ -27,6 +27,7 @@ static s8 currentItemGroup = 1;
 static s16 allEntranceScroll = 0;
 static s16 groupEntranceScroll = 0;
 static s8 currentEntranceGroup = 1;
+static u8 destListToggle = 0;
 
 static s32 curMenuIdx = 0;
 static bool showingLegend = false;
@@ -258,18 +259,22 @@ static void Gfx_DrawButtonPrompts(void) {
     } else if (curMenuIdx == 3) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse spoiler log");
-    } else if (curMenuIdx == 4 || curMenuIdx == 6) {
+    } else if (curMenuIdx >= 4 && curMenuIdx <= 7) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
-    } else if (curMenuIdx == 5 || curMenuIdx == 7) {
-        Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
-
-        static const u8 groupOffsetX = 114;
-        Draw_DrawIcon(groupOffsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
-        Draw_DrawString(groupOffsetX + 8, textY, COLOR_TITLE, "/");
-        Draw_DrawIcon(groupOffsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
-        Draw_DrawString(groupOffsetX + 28, textY, COLOR_TITLE, "Change group");
+        if (curMenuIdx == 5 || curMenuIdx == 7) {
+            static const u8 groupOffsetX = 114;
+            Draw_DrawIcon(groupOffsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
+            Draw_DrawString(groupOffsetX + 8, textY, COLOR_TITLE, "/");
+            Draw_DrawIcon(groupOffsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+            Draw_DrawString(groupOffsetX + 28, textY, COLOR_TITLE, "Change group");
+            if (curMenuIdx == 7) {
+                static const u8 toggleOffsetX = 222;
+                Draw_DrawIcon(toggleOffsetX, promptY, COLOR_BUTTON_X, ICON_BUTTON_X);
+                const char* destToggleString = destListToggle ? "Dest" : "Src";
+                Draw_DrawString(toggleOffsetX + 12, textY, COLOR_TITLE, destToggleString);
+            }
+        }
     } else if (curMenuIdx == 8) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Select / change options");
@@ -587,6 +592,8 @@ static void Gfx_DrawERTracker(void) {
 }
 
 static void Gfx_DrawERTrackerGroups(void) {
+    EntranceOverride* entranceList = destListToggle ? destList : rEntranceOverrides;
+
     u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
     u16 startIndex = gEntranceTrackingData.GroupOffsets[currentEntranceGroup];
 
@@ -595,7 +602,7 @@ static void Gfx_DrawERTrackerGroups(void) {
         u16 completeItems = 0;
         for (u32 i = 0; i < entranceCount; ++i) {
             u32 locIndex = i + startIndex;
-            if (IsEntranceDiscovered(rEntranceOverrides[locIndex].index)) {
+            if (IsEntranceDiscovered(entranceList[locIndex].index)) {
                 ++completeItems;
             }
         }
@@ -617,14 +624,15 @@ static void Gfx_DrawERTrackerGroups(void) {
         u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * entrance * 2);
         u32 itemPosY = locPosY + SPACING_SMALL_Y;
 
-        bool isDiscovered = IsEntranceDiscovered(rEntranceOverrides[locIndex].index);
+        bool isDiscovered = IsEntranceDiscovered(entranceList[locIndex].index);
 
         u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
         const char* unknown = "???";
-        const char* origSrcName = GetEntranceName(rEntranceOverrides[locIndex].index);
-        const char* origDstName = GetEntranceName(rEntranceOverrides[locIndex].destination);
-        const char* rplcSrcName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceName(rEntranceOverrides[locIndex].override) : unknown;
-        const char* rplcDstName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceName(rEntranceOverrides[locIndex].overrideDestination) : unknown;
+
+        const char* origSrcName = GetEntranceName(entranceList[locIndex].index);
+        const char* origDstName = GetEntranceName(entranceList[locIndex].destination);
+        const char* rplcSrcName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceName(entranceList[locIndex].override) : unknown;
+        const char* rplcDstName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceName(entranceList[locIndex].overrideDestination) : unknown;
 
         Draw_DrawFormattedString_Small(10, locPosY, color, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
         Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s from %s", rplcDstName, rplcSrcName);
@@ -795,7 +803,7 @@ static void Gfx_ShowMenu(void) {
                 handledInput = true;
             }
         } else if (curMenuIdx == 7 && gEntranceTrackingData.EntranceCount > 0) {
-            // Grouped Items list
+            // Grouped Entrances list
             u16 itemCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
             if (pressed & BUTTON_LEFT) {
                 groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, -MAX_ITEM_LINES * 10, itemCount);
@@ -814,6 +822,9 @@ static void Gfx_ShowMenu(void) {
                 handledInput = true;
             } else if (pressed & BUTTON_Y) {
                 PrevEntranceGroup();
+                handledInput = true;
+            } else if (pressed & BUTTON_X) {
+                destListToggle = !destListToggle;
                 handledInput = true;
             }
         } else if (curMenuIdx == 8) {

@@ -19,9 +19,6 @@
 #define GANONS_CASTLE_ENTRANCE 0x0467
 
 #define ENTRANCE_OVERRIDES_MAX_COUNT 256
-#define ENTRANCE_PAIRS_MAX_COUNT 128
-#define ENTRANCE_PAIRS_STRING_DATA_SIZE 8192
-#define ENTRANCE_INVALID_STRING_OFFSET 65535
 
 typedef struct {
     s16 index;
@@ -65,6 +62,7 @@ typedef struct {
 
 extern EntranceName entranceNames[ENTRANCE_OVERRIDES_MAX_COUNT];
 extern EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT];
+extern EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT];
 extern EntranceTrackingData gEntranceTrackingData;
 
 void Entrance_Init(void);

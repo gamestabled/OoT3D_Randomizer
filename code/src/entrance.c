@@ -23,6 +23,7 @@ typedef void (*SetEventChkInf_proc)(u32 flag);
 // Owl Flights : 0x492064 and 0x492080
 
 EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
+EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
 EntranceTrackingData gEntranceTrackingData = {0};
 static s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE] = {0};
 
@@ -40,6 +41,11 @@ static s16 newShadowTempleEntrance          = SHADOW_TEMPLE_ENTRANCE;
 static s16 newBottomOfTheWellEntrance       = BOTTOM_OF_THE_WELL_ENTRANCE;
 static s16 newGerudoTrainingGroundsEntrance = GERUDO_TRAINING_GROUNDS_ENTRANCE;
 static s16 newIceCavernEntrance             = ICE_CAVERN_ENTRANCE;
+
+u8 EntranceIsNull(EntranceOverride* entranceOverride) {
+    return entranceOverride->index == 0 && entranceOverride->destination == 0 && entranceOverride->blueWarp == 0
+        && entranceOverride->override == 0 && entranceOverride->overrideDestination == 0;
+}
 
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
@@ -111,13 +117,13 @@ void Entrance_Init(void) {
     // Then overwrite the indices which are shuffled
     for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
 
+        if (EntranceIsNull(&rEntranceOverrides[i])) {
+            break;
+        }
+
         s16 originalIndex = rEntranceOverrides[i].index;
         s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
         s16 overrideIndex = rEntranceOverrides[i].override;
-
-        if (originalIndex == 0 && overrideIndex == 0) {
-            continue;
-        }
 
         //Overwrite grotto related indices
         if (originalIndex >= 0x2000) {
@@ -577,12 +583,23 @@ char* GetEntranceName(s16 index_) {
             return entranceNames[i].name;
         }
     }
+    // Shouldn't be reached
     return NULL;
+}
+
+SpoilerEntranceGroup GetEntranceGroup(s16 index_) {
+    for (size_t i = 0; i < sizeof(entranceNames) / sizeof(EntranceName); i++) {
+        if (index_ == entranceNames[i].index) {
+            return entranceNames[i].group;
+        }
+    }
+    // Shouldn't be reached
+    return -1;
 }
 
 void InitEntranceTrackingData(void) {
     // Check if entrance randomization is disabled
-    if (rEntranceOverrides[0].index == 0 && rEntranceOverrides[0].override == 0) {
+    if (EntranceIsNull(&rEntranceOverrides[0])) {
         return;
     }
 
@@ -591,7 +608,7 @@ void InitEntranceTrackingData(void) {
             break;
         }
         for (size_t j = 0; j < ENTRANCE_OVERRIDES_MAX_COUNT; j++) {
-            if (rEntranceOverrides[j].index == 0 && rEntranceOverrides[j].override == 0) {
+            if (EntranceIsNull(&rEntranceOverrides[j])) {
                 break;
             }
             if (entranceNames[i].index == rEntranceOverrides[j].index) {
@@ -605,5 +622,19 @@ void InitEntranceTrackingData(void) {
     for (size_t i = 1; i < SPOILER_ENTRANCE_GROUP_COUNT; i++) {
         offsetTotal += gEntranceTrackingData.GroupEntranceCounts[i - 1];
         gEntranceTrackingData.GroupOffsets[i] = offsetTotal;
+    }
+
+    // Fill destList which has the entrances reordered based on the destination instead of the source
+    int idx = 0;
+    for (size_t i = 0; i < SPOILER_ENTRANCE_GROUP_COUNT; i++) {
+        for (size_t j = 0; j < ENTRANCE_OVERRIDES_MAX_COUNT; j++) {
+            if (EntranceIsNull(&rEntranceOverrides[j])) {
+                break;
+            }
+            if (GetEntranceGroup(rEntranceOverrides[j].overrideDestination) == i) {
+                destList[idx] = rEntranceOverrides[j];
+                idx++;
+            }
+        }
     }
 }
