@@ -28,6 +28,7 @@ static s16 allEntranceScroll = 0;
 static s16 groupEntranceScroll = 0;
 static s8 currentEntranceGroup = 1;
 static u8 destListToggle = 0;
+static const u32 entrColors[] = { ENTR_COLOR_OVERWORLD, ENTR_COLOR_INTERIOR, ENTR_COLOR_GROTTO, ENTR_COLOR_DUNGEON };
 
 static s32 curMenuIdx = 0;
 static bool showingLegend = false;
@@ -577,15 +578,17 @@ static void Gfx_DrawERTracker(void) {
 
         bool isDiscovered = IsEntranceDiscovered(rEntranceOverrides[locIndex].index);
 
-        u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
+        u32 colorSrc = isDiscovered ? entrColors[GetEntranceData(rEntranceOverrides[locIndex].index)->type] : COLOR_WHITE;
+        u32 colorDst = isDiscovered ? entrColors[GetEntranceData(rEntranceOverrides[locIndex].overrideDestination)->type] : COLOR_WHITE;
         const char* unknown = "???";
+
         const char* origSrcName = GetEntranceData(rEntranceOverrides[locIndex].index)->name;
         const char* origDstName = GetEntranceData(rEntranceOverrides[locIndex].destination)->name;
         const char* rplcSrcName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceData(rEntranceOverrides[locIndex].override)->name : unknown;
         const char* rplcDstName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceData(rEntranceOverrides[locIndex].overrideDestination)->name : unknown;
 
-        Draw_DrawFormattedString_Small(10, locPosY, color, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
-        Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s from %s", rplcDstName, rplcSrcName);
+        Draw_DrawFormattedString_Small(10, locPosY, colorSrc, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
+        Draw_DrawFormattedString_Small(10, itemPosY, colorDst, "  %s from %s", rplcDstName, rplcSrcName);
     }
 
     Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allEntranceScroll, itemCount, MAX_ITEM_LINES);
@@ -626,16 +629,17 @@ static void Gfx_DrawERTrackerGroups(void) {
 
         bool isDiscovered = IsEntranceDiscovered(entranceList[locIndex].index);
 
-        u32 color = isDiscovered ? COLOR_GREEN : COLOR_WHITE;
+        u32 colorSrc = isDiscovered ? entrColors[GetEntranceData(entranceList[locIndex].index)->type] : COLOR_WHITE;
+        u32 colorDst = isDiscovered ? entrColors[GetEntranceData(entranceList[locIndex].overrideDestination)->type] : COLOR_WHITE;
         const char* unknown = "???";
 
-        const char* origSrcName = GetEntranceData(entranceList[locIndex].index)->name;
-        const char* origDstName = GetEntranceData(entranceList[locIndex].destination)->name;
-        const char* rplcSrcName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceData(entranceList[locIndex].override)->name : unknown;
-        const char* rplcDstName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceData(entranceList[locIndex].overrideDestination)->name : unknown;
+        const char* origSrcName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].index)->name : unknown;
+        const char* origDstName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].destination)->name : unknown;
+        const char* rplcSrcName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].override)->name : unknown;
+        const char* rplcDstName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].overrideDestination)->name : unknown;
 
-        Draw_DrawFormattedString_Small(10, locPosY, color, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
-        Draw_DrawFormattedString_Small(10, itemPosY, color, "  %s from %s", rplcDstName, rplcSrcName);
+        Draw_DrawFormattedString_Small(10, locPosY, colorSrc, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
+        Draw_DrawFormattedString_Small(10, itemPosY, colorDst, "  %s from %s", rplcDstName, rplcSrcName);
     }
 
     Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupEntranceScroll, entranceCount, MAX_ITEM_LINES);
