@@ -2004,11 +2004,14 @@ void AreaTable_Init() {
 
   areaTable[DEKU_TREE_BOSS_ROOM] = Area("Deku Tree Boss Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || (Here(DEKU_TREE_BOSS_ROOM, []{return HasShield;}) && (IsAdult || KokiriSword || Sticks));}}),
+                  EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || (Here(DEKU_TREE_BOSS_ROOM, []{return HasShield;}) && (IsAdult || KokiriSword || Sticks) &&
+                                                                              (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));}}),
                 }, {
                   //Locations
-                  LocationAccess(QUEEN_GOHMA,                 {[]{return Here(DEKU_TREE_BOSS_ROOM, []{return HasShield;}) && (IsAdult || KokiriSword || Sticks);}}),
-                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return Here(DEKU_TREE_BOSS_ROOM, []{return HasShield;}) && (IsAdult || KokiriSword || Sticks);}}),
+                  LocationAccess(QUEEN_GOHMA,                 {[]{return Here(DEKU_TREE_BOSS_ROOM, []{return HasShield;}) && (IsAdult || KokiriSword || Sticks) &&
+                                                                            (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
+                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return Here(DEKU_TREE_BOSS_ROOM, []{return HasShield;}) && (IsAdult || KokiriSword || Sticks) &&
+                                                                            (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
                 }, {
                   //Exits
                   Entrance(DEKU_TREE_LOBBY, {[]{return true;}}),
@@ -2155,8 +2158,9 @@ void AreaTable_Init() {
                   LocationAccess(FOREST_TEMPLE_GS_LEVEL_ISLAND_COURTYARD, {[]{return CanUse(LONGSHOT) || Here(FOREST_TEMPLE_OUTSIDE_UPPER_LEDGE, []{return CanUse(HOOKSHOT);});}}),
                 }, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_NE_OUTDOORS,             {[]{return GoldScale;}}),
-                  Entrance(FOREST_TEMPLE_OUTDOORS_HIGH_BALCONIES, {[]{return Here(FOREST_TEMPLE_NW_OUTDOORS, []{return IsAdult || (HasExplosives || ((CanUse(BOOMERANG) || Nuts || DekuShield) && (Sticks || KokiriSword || CanUse(SLINGSHOT))));});}}),
+                  Entrance(FOREST_TEMPLE_NE_OUTDOORS,             {[]{return CanUse(IRON_BOOTS) || GoldScale;}}),
+                  Entrance(FOREST_TEMPLE_OUTDOORS_HIGH_BALCONIES, {[]{return Here(FOREST_TEMPLE_NW_OUTDOORS, []{return HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(BOW) ||
+                                                                                ((IsAdult || (IsChild && (Sticks || KokiriSword || Slingshot))) && (Nuts || HookshotOrBoomerang || CanShield));});}}),
                   Entrance(FOREST_TEMPLE_OUTSIDE_UPPER_LEDGE,     {[]{return false;},
                                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE);}}),
   });
@@ -2174,7 +2178,7 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_OUTDOORS_HIGH_BALCONIES, {[]{return CanUse(LONGSHOT);}}),
-                  Entrance(FOREST_TEMPLE_NW_OUTDOORS,             {[]{return CanUse(IRON_BOOTS) || ProgressiveScale >= 2;}}),
+                  Entrance(FOREST_TEMPLE_NW_OUTDOORS,             {[]{return CanUse(IRON_BOOTS) || GoldScale;}}),
                   Entrance(FOREST_TEMPLE_LOBBY,                   {[]{return true;}}),
   });
 
@@ -2431,9 +2435,9 @@ void AreaTable_Init() {
                   EventAccess(&NutCrate, {[]{return true;}}),
                 }, {
                   //Locations
-                  LocationAccess(SPIRIT_TEMPLE_CHILD_BRIDGE_CHEST,        {[]{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}}),
-                  LocationAccess(SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST, {[]{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot))) && (Sticks || CanUse(DINS_FIRE));}}),
-                  LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE,            {[]{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (Sticks || HasExplosives || ((Nuts || Boomerang) && (KokiriSword || Slingshot)));}}),
+                  LocationAccess(SPIRIT_TEMPLE_CHILD_BRIDGE_CHEST,        {[]{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (HasExplosives || ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot)));}}),
+                  LocationAccess(SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST, {[]{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (HasExplosives || ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot))) && (Sticks || CanUse(DINS_FIRE));}}),
+                  LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE,            {[]{return (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) && (HasExplosives || ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot)));}}),
                 }, {
                   //Exits
                   Entrance(SPIRIT_TEMPLE_CHILD_CLIMB, {[]{return SmallKeys(SpiritTempleKeys, 1);}}),
@@ -2551,13 +2555,13 @@ void AreaTable_Init() {
                   EventAccess(&FairyPot, {[]{return true;}}), //This fairy pot is only on 3DS
                 }, {
                   //Locations
-                  LocationAccess(SHADOW_TEMPLE_COMPASS_CHEST,            {[]{return true;}}),
-                  LocationAccess(SHADOW_TEMPLE_EARLY_SILVER_RUPEE_CHEST, {[]{return true;}}),
+                  LocationAccess(SHADOW_TEMPLE_COMPASS_CHEST,            {[]{return IsAdult || KokiriSword || Sticks;}}),
+                  LocationAccess(SHADOW_TEMPLE_EARLY_SILVER_RUPEE_CHEST, {[]{return CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT);}}),
                   LocationAccess(SHADOW_TEMPLE_GS_NEAR_SHIP,             {[]{return false;},
                                                               /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE) && Longshot;}}),
                 }, {
                   //Exits
-                  Entrance(SHADOW_TEMPLE_HUGE_PIT,    {[]{return HasExplosives && SmallKeys_ShadowTemple(ShadowTempleKeys, 1, 2);}}),
+                  Entrance(SHADOW_TEMPLE_HUGE_PIT,    {[]{return HasExplosives && IsAdult && SmallKeys_ShadowTemple(ShadowTempleKeys, 1, 2);}}),
                   Entrance(SHADOW_TEMPLE_BEYOND_BOAT, {[]{return false;},
                                            /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE) && Longshot && CanPlay(ZeldasLullaby);}}),
   });
