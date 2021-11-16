@@ -2392,7 +2392,7 @@ void AreaTable_Init() {
 
   areaTable[WATER_TEMPLE_MIDDLE_WATER_LEVEL] = Area("Water Temple Middle Water Level", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST, {[]{return CanUse(ZORA_TUNIC) && CanUse(HOOKSHOT) && ((SmallKeys(WaterTempleKeys, 5) || CanUse(BOW) || CanUse(DINS_FIRE)));}}),
+                  LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST, {[]{return CanUse(ZORA_TUNIC) && CanUse(HOOKSHOT) && CanUse(IRON_BOOTS) && ((SmallKeys(WaterTempleKeys, 5) || CanUse(BOW) || CanUse(DINS_FIRE)));}}),
                 }, {
                   //Exits
                   Entrance(WATER_TEMPLE_CRACKED_WALL, {[]{return true;}}),
@@ -2926,12 +2926,12 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || (Here(DEKU_TREE_MQ_BASEMENT_LEDGE, []{return HasFireSourceWithTorch;}) &&
                                                                            Here(DEKU_TREE_MQ_BASEMENT_LEDGE, []{return HasShield;})  &&
-                                                                           (IsAdult || KokiriSword || Sticks));}}),
+                                                                           (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));}}),
   }, {
                   //Locations
                   LocationAccess(DEKU_TREE_MQ_DEKU_SCRUB,     {[]{return CanStunDeku;}}),
-                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks);}}),
-                  LocationAccess(QUEEN_GOHMA,                 {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks);}}),
+                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
+                  LocationAccess(QUEEN_GOHMA,                 {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
   }, {
                   //Exits
                   Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM, {[]{return IsChild;}}),
@@ -3431,7 +3431,7 @@ void AreaTable_Init() {
   areaTable[SHADOW_TEMPLE_MQ_BEGINNING] = Area("Shadow Temple MQ Beginning", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(SHADOW_TEMPLE_ENTRYWAY,          {[]{return true;}}),
-                  Entrance(SHADOW_TEMPLE_MQ_FIRST_BEAMOS,   {[]{return CanUse(FIRE_ARROWS) || HoverBoots;}}),
+                  Entrance(SHADOW_TEMPLE_MQ_FIRST_BEAMOS,   {[]{return CanUse(FIRE_ARROWS) || CanUse(HOVER_BOOTS);}}),
                     //Trick: CanUse(FIRE_ARROWS) || HoverBoots || (LogicShadowMQGap && CanUse(LONGSHOT))
                   Entrance(SHADOW_TEMPLE_MQ_DEAD_HAND_AREA, {[]{return HasExplosives && SmallKeys(ShadowTempleKeys, 6);}}),
   });
@@ -3439,7 +3439,7 @@ void AreaTable_Init() {
   areaTable[SHADOW_TEMPLE_MQ_DEAD_HAND_AREA] = Area("Shadow Temple MQ Dead Hand Area", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(SHADOW_TEMPLE_MQ_COMPASS_CHEST,     {[]{return true;}}),
-                  LocationAccess(SHADOW_TEMPLE_MQ_HOVER_BOOTS_CHEST, {[]{return CanPlay(SongOfTime) && Bow;}}),
+                  LocationAccess(SHADOW_TEMPLE_MQ_HOVER_BOOTS_CHEST, {[]{return CanPlay(SongOfTime) && CanUse(BOW);}}),
   }, {});
 
   areaTable[SHADOW_TEMPLE_MQ_FIRST_BEAMOS] = Area("Shadow Temple MQ First Beamos", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
