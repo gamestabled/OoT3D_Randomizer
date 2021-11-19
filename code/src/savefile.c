@@ -132,7 +132,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     }
 
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
-	  //If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
+    //If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
     if(gSettingsContext.startingDungeonReward == 0){
         gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
     }
