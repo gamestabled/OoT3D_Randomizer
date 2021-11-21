@@ -1673,24 +1673,11 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DEATH_MOUNTAIN_TRAIL, {[]{return true;}}),
                   Entrance(GC_WOODS_WARP,        {[]{return GCWoodsWarpOpen;}}),
-<<<<<<< HEAD
                   Entrance(GC_SHOP,              {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && (HasExplosives || GoronBracelet || GoronCityChildFire));},
                                       /*Glitched*/[]{return IsChild && ((Sticks && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild));}}),
                   Entrance(GC_DARUNIAS_CHAMBER,  {[]{return (IsAdult && StopGCRollingGoronAsAdult) || GCDaruniasDoorOpenChild;}}),
                   Entrance(GC_GROTTO,            {[]{return IsAdult && ((CanPlay(SongOfTime) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && !NeedNayrusLove) || CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) || (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && CanUse(GORON_TUNIC) && CanUse(HOOKSHOT)) || (CanUse(NAYRUS_LOVE) && CanUse(HOOKSHOT)));},
                                       /*Glitched*/[]{return HasBombchus && ((IsChild && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
-=======
-                  Entrance(GC_SHOP,              {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && (HasExplosives || GoronBracelet || GoronCityChildFire));}}),
-                  Entrance(GC_DARUNIAS_CHAMBER,  {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && CanPlay(ZeldasLullaby));}}),
-                  Entrance(GC_GROTTO_PLATFORM,   {[]{return IsAdult &&
-                                                            ((CanPlay(SongOfTime) &&
-                                                                    ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) &&
-                                                                      DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) ||
-                                                                          CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) ||
-                                                                    (CanUse(HOOKSHOT) &&
-                                                                          ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && CanUse(GORON_TUNIC)) ||
-                                                                                CanUse(NAYRUS_LOVE))));}}),
->>>>>>> 9531c502759550667bfc9e7e79d40c0e4166ea83
   });
 
   areaTable[GC_WOODS_WARP] = Area("GC Woods Warp", "Goron City", NONE, NO_DAY_NIGHT_CYCLE, {
@@ -4617,11 +4604,7 @@ void AreaTable_Init() {
 
 namespace Areas {
 
-<<<<<<< HEAD
-  static std::array<const AreaKey, 360> allAreas = {
-=======
-  static std::array<const AreaKey, 304> allAreas = {
->>>>>>> 9531c502759550667bfc9e7e79d40c0e4166ea83
+  static std::array<const AreaKey, 363> allAreas = {
     ROOT,
     ROOT_EXITS,
 
