@@ -118,6 +118,19 @@ static int GetMaxGSCount() {
   return std::max(maxUseful, maxBridge);
 }
 
+std::string GetShopItemBaseName(std::string itemName) {
+  std::string baseName = itemName.erase(0, 4); //Delete "Buy "
+  //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
+  if (baseName.find("(") != std::string::npos) {
+    baseName = baseName.erase(baseName.find("("));
+  }
+  //Do the same for [] (only applies to red potions, other things with [] also have a ())
+  if (baseName.find("[") != std::string::npos) {
+    baseName = baseName.erase(baseName.find("["));
+  }
+  return baseName;
+}
+
 std::vector<LocationKey> GetEmptyLocations(std::vector<LocationKey> allowedLocations) {
   return FilterFromPool(allowedLocations, [](const LocationKey loc){ return Location(loc)->GetPlacedItemKey() == NONE;});
 }
@@ -129,7 +142,7 @@ std::vector<LocationKey> GetAllEmptyLocations() {
 //This function will return a vector of ItemLocations that are accessible with
 //where items have been placed so far within the world. The allowedLocations argument
 //specifies the pool of locations that we're trying to search for an accessible location in
-std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations, SearchMode mode) {
+std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations, SearchMode mode /* = SearchMode::ReachabilitySearch*/, std::string ignore /*= ""*/) {
   std::vector<LocationKey> accessibleLocations;
   //Reset all access to begin a new search
   if (mode != SearchMode::BothAgesNoItems) {
@@ -223,7 +236,30 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
             accessibleLocations.push_back(loc); //Empty location, consider for placement
           } else {
             if (mode < SearchMode::BothAgesNoItems) {
-              newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
+              //If ignore has a value, we want to check if the item location should be considered or not
+              //This is necessary due to the below preprocessing for playthrough generation
+              if (ignore != "") {
+                ItemType type = location->GetPlacedItem().GetItemType();
+                std::string itemName(location->GetPlacedItemName().GetEnglish());
+                //If we want to ignore tokens, only add if not a token
+                if (ignore == "Tokens" && type != ITEMTYPE_TOKEN) {
+                  newItemLocations.push_back(location);
+                } 
+                //If we want to ignore bombchus, only add if bombchu is not in the name
+                else if (ignore == "Bombchus" && itemName.find("Bombchu") == std::string::npos) {
+                  newItemLocations.push_back(location);
+                }
+                //We want to ignore a specific Buy item name 
+                else if (ignore != "Tokens" && ignore != "Bombchus") {
+                  if ((type == ITEMTYPE_SHOP && ignore != GetShopItemBaseName(itemName)) || type != ITEMTYPE_SHOP) {
+                    newItemLocations.push_back(location);
+                  }
+                }
+              } 
+              //If it doesn't, we can just add the location
+              else {
+                newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
+              }    
             }
           }
 
@@ -257,11 +293,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
               //If ammo drops are off, don't do this step, since buyable ammo becomes logically important
               else if (AmmoDrops.IsNot(AMMODROPS_NONE) && !(bombchus && bombchusFound) && type == ITEMTYPE_SHOP) {
                 //Only check each buy item once
-                std::string buyItem = itemName.erase(0, 4); //Delete "Buy "
-                //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
-                if (buyItem.find("(") != std::string::npos) {
-                  buyItem = buyItem.erase(buyItem.find("("));
-                }
+                std::string buyItem = GetShopItemBaseName(itemName);
                 //Buy item not in list to ignore, add it to list and write to playthrough
                 if (std::find(buyIgnores.begin(), buyIgnores.end(), buyItem) == buyIgnores.end()) {
                   exclude = false;
@@ -352,7 +384,20 @@ static void PareDownPlaythrough() {
       Location(loc)->SetPlacedItem(NONE); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
+      
+      std::string ignore = "";
+      if (ItemTable(copy).GetItemType() == ITEMTYPE_TOKEN) {
+        ignore = "Tokens";
+      }
+      else if (ItemTable(copy).GetName().GetEnglish().find("Bombchu") != std::string::npos) {
+        ignore = "Bombchus";
+      }
+      else if (ItemTable(copy).GetItemType() == ITEMTYPE_SHOP) {
+        ignore = GetShopItemBaseName(ItemTable(copy).GetName().GetEnglish());
+      }
+
+      GetAccessibleLocations(allLocations, SearchMode::CheckBeatable, ignore); //Check if game is still beatable
+
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra

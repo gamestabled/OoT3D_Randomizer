@@ -523,6 +523,30 @@ hook_CheckCurrentDungeonMode:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_DungeonCheckJabuMQBox
+hook_DungeonCheckJabuMQBox:
+    push {r0-r12, lr}
+    bl Dungeon_GetCurrentDungeonMode
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_JabuSwitchRutoCheck
+hook_JabuSwitchRutoCheck:
+    cmp r0,#0xA1
+    bxeq lr
+    cmp r0,#0x110
+    bx lr
+
+.global hook_JabuBoxCheckRuto
+hook_JabuBoxCheckRuto:
+    tst r0,#0x80
+    push {r0-r12, lr}
+    bleq ObjKibako_CheckRuto
+    cmpeq r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_CanReadHints
 hook_CanReadHints:
     push {r0-r12, lr}
@@ -619,6 +643,30 @@ hook_SetGameOverEntrance:
     push {r0-r12, lr}
     bl Entrance_SetGameOverEntrance
     pop {r0-r12, lr}
+    bx lr
+
+.global hook_SetGameOverRespawnFlag
+hook_SetGameOverRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlag
+    pop {r0-r12, lr}
+    cmp r8,#0x3
+    bx lr
+
+.global hook_SetSunsSongRespawnFlag
+hook_SetSunsSongRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlag
+    pop {r0-r12, lr}
+    cpy r0,r6
+    bx lr
+
+.global hook_SetVoidoutRespawnFlag
+hook_SetVoidoutRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlagAndDamage
+    pop {r0-r12, lr}
+    mov r1,#0x104
     bx lr
 
 .global hook_GossipStoneAddSariaHint
@@ -1000,12 +1048,30 @@ hook_SyatekiManReminder:
     addne r1,r1,#0xAF
     b 0x23920C
 
-.global hook_SkipTimeTravelCutscene
-hook_SkipTimeTravelCutscene:
+.global hook_SkipTimeTravelCutsceneOne
+hook_SkipTimeTravelCutsceneOne:
     push {r0-r12, lr}
     bl TimeTravelAdvanceCutsceneTimer
     pop {r0-r12, lr}
     ldmia sp!,{r4,r5,r6,pc}
+
+.global hook_SkipTimeTravelCutsceneTwo
+hook_SkipTimeTravelCutsceneTwo:
+    push {r0-r12, lr}
+    bl SetTimeTraveled
+    pop {r0-r12, lr}
+    mov r1,#0x324
+    bx lr
+
+.global hook_SkipMasterSwordFanfare
+hook_SkipMasterSwordFanfare:
+    push {r0-r12, lr}
+    bl ShouldSkipMasterSwordCutscene
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x3E5F7C
+    mov r1,#0x0
+    bx lr
 
 .global hook_EnteredLocation
 hook_EnteredLocation:
@@ -1100,6 +1166,55 @@ hook_SilenceNavi:
     pop {r0-r12, lr}
     beq 0x26808C
     cmp r0,r2
+    bx lr
+
+.global hook_GameplayDestroy
+hook_GameplayDestroy:
+    cpy r4,r0
+    push {r0-r12, lr}
+    bl Entrance_CheckEpona
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_SceneExitOverride
+hook_SceneExitOverride:
+    ldrsh r9, [r1,r0]
+    push {r0-r8, r10-r12, lr}
+    cpy r0, r9
+    bl Entrance_OverrideNextIndex
+    cpy r9, r0
+    pop {r0-r8, r10-r12, lr}
+    bx lr
+
+.global hook_SceneExitDynamicOverride
+hook_SceneExitDynamicOverride:
+    push {r0-r12, lr}
+    bl Entrance_OverrideDynamicExit
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_OverrideGrottoActorEntrance
+hook_OverrideGrottoActorEntrance:
+    push {r0-r12, lr}
+    cpy r0, r4
+    bl Grotto_OverrideActorEntrance
+    pop {r0-r12, lr}
+    b 0x3F22C4
+
+.global hook_ReturnFWSetupGrottoInfo
+hook_ReturnFWSetupGrottoInfo:
+    push {r0-r12, lr}
+    bl Grotto_SetupReturnInfoOnFWReturn
+    pop {r0-r12, lr}
+    add sp,sp,#0x8
+    bx lr
+
+.global hook_SetFWGrottoID
+hook_SetFWGrottoID:
+    push {r0-r12, lr}
+    bl Grotto_StoreGrottoIDOnFWSet
+    pop {r0-r12, lr}
+    add r1,r7,#0x400
     bx lr
 
 .section .loader

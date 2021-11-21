@@ -1096,7 +1096,18 @@ DoorOfTimeOpenCutscene_patch:
 .section .patch_DungeonCheckJabuMQBox
 .global DungeonCheckJabuMQBox_patch
 DungeonCheckJabuMQBox_patch:
-    bl hook_CheckCurrentDungeonMode
+    bl hook_DungeonCheckJabuMQBox
+    nop
+
+.section .patch_JabuSwitchRutoCheck
+.global JabuSwitchRutoCheck_patch
+JabuSwitchRutoCheck_patch:
+    bl hook_JabuSwitchRutoCheck
+
+.section .patch_JabuBoxCheckRuto
+.global JabuBoxCheckRuto_patch
+JabuBoxCheckRuto_patch:
+    bl hook_JabuBoxCheckRuto
 
 .section .patch_TalonGetCastleTextbox
 .global TalonGetCastleTextbox_patch
@@ -1290,6 +1301,21 @@ SetSavewarpEntrance_patch:
 SetGameOverEntrance_patch:
     bl hook_SetGameOverEntrance
     b  0x458EC8
+
+.section .patch_SetGameOverRespawnFlag
+.global SetGameOverRespawnFlag_patch
+SetGameOverRespawnFlag_patch:
+    bl hook_SetGameOverRespawnFlag
+
+.section .patch_SetSunsSongRespawnFlag
+.global SetSunsSongRespawnFlag_patch
+SetSunsSongRespawnFlag_patch:
+    bl hook_SetSunsSongRespawnFlag
+
+.section .patch_SetVoidoutRespawnFlag
+.global SetVoidoutRespawnFlag_patch
+SetVoidoutRespawnFlag_patch:
+    bl hook_SetVoidoutRespawnFlag
 
 .section .patch_SariasSongHintsOne
 .global SariasSongHintsOne_patch
@@ -1585,17 +1611,22 @@ SyatekiManReminder_patch:
 .section .patch_SkipTimeTravelCutsceneOne
 .global SkipTimeTravelCutsceneOne_patch
 SkipTimeTravelCutsceneOne_patch:
-    b hook_SkipTimeTravelCutscene
+    b hook_SkipTimeTravelCutsceneOne
 
 .section .patch_SkipTimeTravelCutsceneTwo
 .global SkipTimeTravelCutsceneTwo_patch
 SkipTimeTravelCutsceneTwo_patch:
-    mov r1,#0x324
+    bl hook_SkipTimeTravelCutsceneTwo
 
 .section .patch_SwapAgeIgnoreSceneSetup
 .global SwapAgeIgnoreSceneSetup_patch
 SwapAgeIgnoreSceneSetup_patch:
     nop
+
+.section .patch_SkipMasterSwordFanfare
+.global SkipMasterSwordFanfare_patch
+SkipMasterSwordFanfare_patch:
+    bl hook_SkipMasterSwordFanfare
 
 .section .patch_GameOverDontSpoilTradeItems
 .global GameOverDontSpoilTradeItems_patch
@@ -1676,6 +1707,36 @@ SkipJabuOpeningCutscene_patch:
 .global SilenceNavi_patch
 SilenceNavi_patch:
     bl hook_SilenceNavi
+
+.section .patch_GameplayDestroy
+.global GameplayDestroy_patch
+GameplayDestroy_patch:
+    bl hook_GameplayDestroy
+
+.section .patch_SceneExitOverride
+.global SceneExitOverride_patch
+SceneExitOverride_patch:
+    bl hook_SceneExitOverride
+
+.section .patch_SceneExitDynamicOverride
+.global SceneExitDynamicOverride_patch
+SceneExitDynamicOverride_patch:
+    bl hook_SceneExitDynamicOverride
+
+.section .patch_OverrideGrottoActorEntrance
+.global OverrideGrottoActorEntrance_patch
+OverrideGrottoActorEntrance_patch:
+    b hook_OverrideGrottoActorEntrance
+
+.section .patch_ReturnFWSetupGrottoInfo
+.global ReturnFWSetupGrottoInfo_patch
+ReturnFWSetupGrottoInfo_patch:
+    bl hook_ReturnFWSetupGrottoInfo
+
+.section .patch_SetFWGrottoID
+.global SetFWGrottoID_patch
+SetFWGrottoID_patch:
+    bl hook_SetFWGrottoID
 
 .section .patch_loader
 .global loader_patch

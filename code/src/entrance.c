@@ -5,6 +5,7 @@
 #include "item_override.h"
 #include "savefile.h"
 #include "common.h"
+#include "grotto.h"
 
 typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
 #define SetNextEntrance_addr 0x3716F0
@@ -15,10 +16,15 @@ typedef void (*SetEventChkInf_proc)(u32 flag);
 #define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
 
 #define dynamicExitList_addr 0x53C094
-#define dynamicExitList ((s16*)dynamicExitList_addr)
+#define dynamicExitList ((s16*)dynamicExitList_addr) // = { 0x045B, 0x0482, 0x0340, 0x044B, 0x02A2, 0x0201, 0x03B8, 0x04EE, 0x03C0, 0x0463, 0x01CD, 0x0394, 0x0340, 0x057C }
+
+// Warp Song indices array : 0x53C33C = { 0x0600, 0x04F6, 0x0604, 0x01F1, 0x0568, 0x05F4 }
+
+// Owl Flights : 0x492064 and 0x492080
 
 EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
 EntranceTrackingData gEntranceTrackingData = {0};
+static s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE] = {0};
 
 //These variables store the new entrance indices for dungeons so that
 //savewarping and game overs respawn players at the proper entrance.
@@ -34,44 +40,6 @@ static s16 newShadowTempleEntrance          = SHADOW_TEMPLE_ENTRANCE;
 static s16 newBottomOfTheWellEntrance       = BOTTOM_OF_THE_WELL_ENTRANCE;
 static s16 newGerudoTrainingGroundsEntrance = GERUDO_TRAINING_GROUNDS_ENTRANCE;
 static s16 newIceCavernEntrance             = ICE_CAVERN_ENTRANCE;
-
-static void Entrance_SetNewDungeonEntrances(s16 originalIndex, s16 replacementIndex) {
-    switch (replacementIndex) {
-        case DEKU_TREE_ENTRANCE :
-            newDekuTreeEntrance = originalIndex;
-            break;
-        case DODONGOS_CAVERN_ENTRANCE :
-            newDodongosCavernEntrance = originalIndex;
-            break;
-        case JABU_JABUS_BELLY_ENTRANCE :
-            newJabuJabusBellyEntrance = originalIndex;
-            break;
-        case FOREST_TEMPLE_ENTRANCE :
-            newForestTempleEntrance = originalIndex;
-            break;
-        case FIRE_TEMPLE_ENTRANCE :
-            newFireTempleEntrance = originalIndex;
-            break;
-        case WATER_TEMPLE_ENTRANCE :
-            newWaterTempleEntrance = originalIndex;
-            break;
-        case SPIRIT_TEMPLE_ENTRANCE :
-            newSpiritTempleEntrance = originalIndex;
-            break;
-        case SHADOW_TEMPLE_ENTRANCE :
-            newShadowTempleEntrance = originalIndex;
-            break;
-        case BOTTOM_OF_THE_WELL_ENTRANCE :
-            newBottomOfTheWellEntrance = originalIndex;
-            break;
-        case ICE_CAVERN_ENTRANCE :
-            newIceCavernEntrance = originalIndex;
-            break;
-        case GERUDO_TRAINING_GROUNDS_ENTRANCE :
-            newGerudoTrainingGroundsEntrance = originalIndex;
-            break;
-    }
-}
 
 void Scene_Init(void) {
     memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
@@ -131,11 +99,16 @@ void Entrance_Init(void) {
 
     Entrance_SeparateOGCFairyFountainExit();
 
-    //copy the entrance table to use for overwriting the original one
-    EntranceInfo copyOfEntranceTable[0x613] = {0};
-    memcpy(copyOfEntranceTable, gEntranceTable, sizeof(EntranceInfo) * 0x613);
+    // Initialize the entrance override table with each index leading to itself. An
+    // index referring to itself means that the entrance is not currently shuffled.
+    for (s16 i = 0; i < ENTRANCE_TABLE_SIZE; i++) {
+        entranceOverrideTable[i] = i;
+    }
 
-    //rewrite the entrance table for entrance randomizer
+    // Initialize the grotto exit and load lists
+    Grotto_InitExitAndLoadLists();
+
+    // Then overwrite the indices which are shuffled
     for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
 
         s16 originalIndex = rEntranceOverrides[i].index;
@@ -146,38 +119,29 @@ void Entrance_Init(void) {
             continue;
         }
 
-        //check to see if this is a new dungeon entrance
-        Entrance_SetNewDungeonEntrances(originalIndex, overrideIndex);
+        //Overwrite grotto related indices
+        if (originalIndex >= 0x2000) {
+            Grotto_SetExitOverride(originalIndex, overrideIndex);
+            continue;
+        }
 
-        //Overwrite the original entrance index data with the data from the override index.
-        //Using the copy ensures that we don't overwrite data from an index before it needs
-        //to be copied somewhere else.
-        for (s16 j = 0; j < 4; j++) {
-            gEntranceTable[originalIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
-            gEntranceTable[originalIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
-            gEntranceTable[originalIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
+        if (originalIndex >= 0x1000 && originalIndex < 0x2000) {
+            Grotto_SetLoadOverride(originalIndex, overrideIndex);
+            continue;
+        }
 
-            //If there's a blue warp entrance, overwrite that one as well
-            if (blueWarpIndex != 0) {
-              gEntranceTable[blueWarpIndex+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
-              gEntranceTable[blueWarpIndex+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
-              gEntranceTable[blueWarpIndex+j].field = copyOfEntranceTable[overrideIndex+j].field;
-            }
+        // Overwrite the indices which we want to shuffle, leaving the rest as they are
+        entranceOverrideTable[originalIndex] = overrideIndex;
+
+        if (blueWarpIndex != 0) {
+            entranceOverrideTable[blueWarpIndex] = overrideIndex;
         }
 
         //Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
         if (originalIndex == 0x00EA) { //Hyrule Field -> ZR Front land entrance
-            for (s16 j = 0; j < 4; j++) {
-                gEntranceTable[0x01D9+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
-                gEntranceTable[0x01D9+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
-                gEntranceTable[0x01D9+j].field = copyOfEntranceTable[overrideIndex+j].field;
-            }
+            entranceOverrideTable[0x01D9] = overrideIndex;
         } else if (originalIndex == 0x0181) { //ZR Front -> Hyrule Field land entrance
-            for (s16 j = 0; j < 4; j++) {
-                gEntranceTable[0x0311+j].scene = copyOfEntranceTable[overrideIndex+j].scene;
-                gEntranceTable[0x0311+j].spawn = copyOfEntranceTable[overrideIndex+j].spawn;
-                gEntranceTable[0x0311+j].field = copyOfEntranceTable[overrideIndex+j].field;
-            }
+            entranceOverrideTable[0x0311] = overrideIndex;
         }
     }
 
@@ -186,11 +150,36 @@ void Entrance_Init(void) {
     //woods music into the next area, even if isn't the lost woods. A "proper" fix would
     //probably be to stop playing the music on any transition though
     if (gSettingsContext.shuffleOverworldEntrances == ON) {
-        for (s16 i = 0x4D6; i < 0x4DA; i++) {
-            gEntranceTable[i].field &= 0xFF00;
-            gEntranceTable[i].field |= 0x002C;
+
+        s16 goronCityToLostWoodsIndex = entranceOverrideTable[0x04D6];
+
+        for (s16 i = 0; i < 4; i++) {
+            gEntranceTable[goronCityToLostWoodsIndex + i].field &= 0xFF00;
+            gEntranceTable[goronCityToLostWoodsIndex + i].field |= 0x002C;
         }
     }
+}
+
+s16 Entrance_GetOverride(s16 index) {
+
+    // The game sometimes uses special indices from 0x7FF9 -> 0x7FFF for exiting
+    // grottos and fairy fountains. These aren't handled here since the game
+    // naturally handles them later.
+    if (index >= ENTRANCE_TABLE_SIZE) {
+        return index;
+    }
+
+    return entranceOverrideTable[index];
+}
+
+s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
+    SaveFile_SetEntranceDiscovered(nextEntranceIndex);
+    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
+}
+
+void Entrance_OverrideDynamicExit(void) {
+    SaveFile_SetEntranceDiscovered(gGlobalContext->nextEntranceIndex);
+    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex));
 }
 
 void Entrance_DeathInGanonBattle(void) {
@@ -220,7 +209,6 @@ void Entrance_EnteredLocation(void) {
         return;
     }
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
-    SaveFile_SetEntranceDiscovered(gSaveContext.entranceIndex);
 }
 
 //Properly respawn the player after a game over, accounding for dungeon entrance
@@ -240,7 +228,7 @@ void Entrance_SetGameOverEntrance(void) {
         case 0x0301 : //Jabu Jabus Belly Boss Room
             gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
             return;
-        case 0x000C : //Fores Temple Boss Room
+        case 0x000C : //Forest Temple Boss Room
             gSaveContext.entranceIndex = newForestTempleEntrance;
             return;
         case 0x0305 : //Fire Temple Boss Room
@@ -299,9 +287,9 @@ void Entrance_SetSavewarpEntrance(void) {
     } else if (scene == DUNGEON_GERUDO_FORTRESS) {
         gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
     } else if (gSaveContext.linkAge == AGE_CHILD) {
-        gSaveContext.entranceIndex = 0x00BB; // Link's House Child Spawn
+        gSaveContext.entranceIndex = Entrance_GetOverride(0x00BB); // Link's House Child Spawn
     } else {
-        gSaveContext.entranceIndex = 0x05F4; // Temple of Time Adult Spawn
+        gSaveContext.entranceIndex = Entrance_GetOverride(0x05F4); // Temple of Time Adult Spawn
     }
 }
 
@@ -336,6 +324,18 @@ u8 EntranceCutscene_ShouldPlay(u8 flag) {
     }
     SetEventChkInf(flag);
     return 0; //cutscene will not play
+}
+
+void Entrance_CheckEpona() {
+    s32 entrance = gGlobalContext->nextEntranceIndex;
+    s8 dest = gEntranceTable[entrance].scene;
+    //If Link is riding Epona but he's about to enter a scene where she can't spawn,
+    //unset the Epona flag to avoid Master glitch, and restore temp B.
+    if (gSettingsContext.shuffleOverworldEntrances && entrance != 0x496 && (PLAYER->stateFlags1 & 0x00800000) &&
+        dest != 81 && dest != 87 && dest != 90 && dest != 93 && dest != 99) {
+        gStaticContext.spawnOnEpona = 0;
+        gSaveContext.equips.buttonItems[0] = gSaveContext.buttonStatus[0]; //"temp B"
+    }
 }
 
 EntranceName entranceNames[] = {
@@ -383,8 +383,8 @@ EntranceName entranceNames[] = {
     { 0x01D1, "Mask Shop" /* > Market */ , ENTRANCE_GROUP_MARKET },
     { 0x0507, "Market" /* > Bombchu Bowling */ , ENTRANCE_GROUP_MARKET },
     { 0x03BC, "Bombchu Bowling" /* > Market */ , ENTRANCE_GROUP_MARKET },
-    { 0x0388, "Market" /* > Potion Shop */ , ENTRANCE_GROUP_MARKET },
-    { 0x02A2, "Potion Shop" /* > Market */ , ENTRANCE_GROUP_MARKET },
+    { 0x0388, "Market" /* > MK Potion Shop */ , ENTRANCE_GROUP_MARKET },
+    { 0x02A2, "MK Potion Shop" /* > Market */ , ENTRANCE_GROUP_MARKET },
     { 0x0063, "Market" /* > Treasure Chest Game */ , ENTRANCE_GROUP_MARKET },
     { 0x01D5, "Treasure Chest Game" /* > Market */ , ENTRANCE_GROUP_MARKET },
     { 0x0528, "Market" /* > Bombchu Shop */ , ENTRANCE_GROUP_MARKET },
@@ -395,14 +395,14 @@ EntranceName entranceNames[] = {
     { 0x0349, "Carpenter Boss House" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x0550, "Kakariko" /* > House of Skulltula */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x04EE, "House of Skulltula" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
-    { 0x039C, "Kakariko" /* > Impa's House */ , ENTRANCE_GROUP_KAKARIKO },
-    { 0x0345, "Impa's House" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
+    { 0x039C, "Kakariko" /* > Impa's House Front */ , ENTRANCE_GROUP_KAKARIKO },
+    { 0x0345, "Impa's House Front" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x05C8, "Kakariko" /* > Impa's House Back */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x05DC, "Impa's House Back" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x0072, "Kakariko" /* > Granny's Potion Shop */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x034D, "Granny's Potion Shop" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
-    { 0x030D, "Graveyard" /* > Dampe's House */ , ENTRANCE_GROUP_GRAVEYARD },
-    { 0x0355, "Dampe's House" /* > Graveyard */ , ENTRANCE_GROUP_GRAVEYARD },
+    { 0x030D, "Graveyard" /* > Dampe's Shack */ , ENTRANCE_GROUP_GRAVEYARD },
+    { 0x0355, "Dampe's Shack" /* > Graveyard */ , ENTRANCE_GROUP_GRAVEYARD },
     { 0x037C, "Goron City" /* > Goron Shop */ , ENTRANCE_GROUP_GORON_CITY },
     { 0x03FC, "Goron Shop" /* > Goron City */ , ENTRANCE_GROUP_GORON_CITY },
     { 0x0380, "Zora's Domain" /* > Zora Shop */ , ENTRANCE_GROUP_ZORAS_DOMAIN },
@@ -443,6 +443,80 @@ EntranceName entranceNames[] = {
     { 0x044B, "Kak Potion Shop Front" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x03EC, "Kakariko" /* > Kak Potion Shop Back */ , ENTRANCE_GROUP_KAKARIKO },
     { 0x04FF, "Kak Potion Shop Back" /* > Kakariko */ , ENTRANCE_GROUP_KAKARIKO },
+    { 0x1000, "Desert Colossus" /* > Colossus Grotto */, ENTRANCE_GROUP_HAUNTED_WASTELAND },
+    { 0x2000, "Colossus Grotto" /* > Desert Colossus */, ENTRANCE_GROUP_HAUNTED_WASTELAND },
+    { 0x1001, "Lake Hylia" /* > LH Grotto */, ENTRANCE_GROUP_LAKE_HYLIA },
+    { 0x2001, "LH Grotto" /* > Lake Hylia */, ENTRANCE_GROUP_LAKE_HYLIA },
+    { 0x1002, "ZR" /* > ZR Storms Grotto */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x2002, "ZR Storms Grotto" /* > ZR */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x1003, "ZR" /* > ZR Fairy Grotto */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x2003, "ZR Fairy Grotto" /* > ZR */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x1004, "ZR" /* > ZR Open Grotto */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x2004, "ZR Open Grotto" /* > ZR */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x1005, "DMC" /* > DMC Hammer Grotto */, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER },
+    { 0x2005, "DMC Hammer Grotto" /* > DMC */, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER },
+    { 0x1006, "DMC" /* > DMC Upper Grotto */, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER },
+    { 0x2006, "DMC Upper Grotto" /* > DMC */, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER },
+    { 0x1007, "Goron City" /* > Goron City Grotto */, ENTRANCE_GROUP_GORON_CITY },
+    { 0x2007, "Goron City Grotto" /* > Goron City */, ENTRANCE_GROUP_GORON_CITY },
+    { 0x1008, "DMT" /* > DMT Storms Grotto */, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL },
+    { 0x2008, "DMT Storms Grotto" /* > DMT */, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL },
+    { 0x1009, "DMT" /* > DMT Cow Grotto */, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL },
+    { 0x2009, "DMT Cow Grotto" /* > DMT */, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL },
+    { 0x100A, "Kakariko" /* > Kak Open Grotto */, ENTRANCE_GROUP_KAKARIKO },
+    { 0x200A, "Kak Open Grotto" /* > Kakariko */, ENTRANCE_GROUP_KAKARIKO },
+    { 0x100B, "Kakariko" /* > Kak Redead Grotto */, ENTRANCE_GROUP_KAKARIKO },
+    { 0x200B, "Kak Redead Grotto" /* > Kakariko */, ENTRANCE_GROUP_KAKARIKO },
+    { 0x100C, "HC Grounds" /* > HC Storms Grotto */, ENTRANCE_GROUP_HYRULE_CASTLE },
+    { 0x200C, "HC Storms Grotto" /* > HC Grounds */, ENTRANCE_GROUP_HYRULE_CASTLE },
+    { 0x100D, "Hyrule Field" /* > HF Tektite Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x200D, "HF Tektite Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x100E, "Hyrule Field" /* > HF Near Kak Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x200E, "HF Near Kak Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x100F, "Hyrule Field" /* > HF Fairy Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x200F, "HF Fairy Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x1010, "Hyrule Field" /* > HF Near Market Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x2010, "HF Near Market Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x1011, "Hyrule Field" /* > HF Cow Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x2011, "HF Cow Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x1012, "Hyrule Field" /* > HF Inside Fence Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x2012, "HF Inside Fence Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x1013, "Hyrule Field" /* > HF Open Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x2013, "HF Open Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x1014, "Hyrule Field" /* > HF Southeast Grotto */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x2014, "HF Southeast Grotto" /* > Hyrule Field */, ENTRANCE_GROUP_HYRULE_FIELD },
+    { 0x1015, "Lon Lon Ranch" /* > LLR Grotto */, ENTRANCE_GROUP_LON_LON_RANCH },
+    { 0x2015, "LLR Grotto" /* > Lon Lon Ranch */, ENTRANCE_GROUP_LON_LON_RANCH },
+    { 0x1016, "SFM" /* > SFM Wolfos Grotto */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x2016, "SFM Wolfos Grotto" /* > SFM */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x1017, "SFM" /* > SFM Storms Grotto */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x2017, "SFM Storms Grotto" /* > SFM */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x1018, "SFM" /* > SFM Fairy Grotto */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x2018, "SFM Fairy Grotto" /* > SFM */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x1019, "Lost Woods" /* > LW Scrubs Grotto */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x2019, "LW Scrubs Grotto" /* > Lost Woods */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x101A, "Lost Woods" /* > LW Near Shortcuts Grotto */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x201A, "LW Near Shortcuts Grotto" /* > Lost Woods */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x101B, "Kokiri Forest" /* > KF Storms Grotto */, ENTRANCE_GROUP_KOKIRI_FOREST },
+    { 0x201B, "KF Storms Grotto" /* > Kokiri Forest */, ENTRANCE_GROUP_KOKIRI_FOREST },
+    { 0x101C, "Zora's Domain" /* > ZD Storms Grotto */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x201C, "ZD Storms Grotto" /* > Zora's Domain */, ENTRANCE_GROUP_ZORAS_DOMAIN },
+    { 0x101D, "GF" /* > GF Storms Grotto */, ENTRANCE_GROUP_GERUDO_VALLEY },
+    { 0x201D, "GF Storms Grotto" /* > GF */, ENTRANCE_GROUP_GERUDO_VALLEY },
+    { 0x101E, "GV" /* > GV Storms Grotto */, ENTRANCE_GROUP_GERUDO_VALLEY },
+    { 0x201E, "GV Storms Grotto" /* > GV */, ENTRANCE_GROUP_GERUDO_VALLEY },
+    { 0x101F, "GV" /* > GV Octorok Grotto */, ENTRANCE_GROUP_GERUDO_VALLEY },
+    { 0x201F, "GV Octorok Grotto" /* > GF */, ENTRANCE_GROUP_GERUDO_VALLEY },
+    { 0x1020, "Lost Woods" /* > Deku Theater */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x2020, "Deku Theater" /* > Lost Woods */, ENTRANCE_GROUP_LOST_WOODS },
+    { 0x004B, "Graveyard" /* > Shield Grave */, ENTRANCE_GROUP_GRAVEYARD },
+    { 0x035D, "Shield Grave" /* > Graveyard */, ENTRANCE_GROUP_GRAVEYARD },
+    { 0x031C, "Graveyard" /* > Heart Piece Grave */, ENTRANCE_GROUP_GRAVEYARD },
+    { 0x0361, "Heart Piece Grave" /* > Graveyard */, ENTRANCE_GROUP_GRAVEYARD },
+    { 0x002D, "Graveyard" /* > Composer's Grave */, ENTRANCE_GROUP_GRAVEYARD },
+    { 0x050B, "Composer's Grave" /* > Graveyard */, ENTRANCE_GROUP_GRAVEYARD },
+    { 0x044F, "Graveyard" /* > Dampe's Grave */, ENTRANCE_GROUP_GRAVEYARD },
+    { 0x0359, "Dampe's Grave" /* > Graveyard */, ENTRANCE_GROUP_GRAVEYARD },
     { 0x05E0, "KF" /* > Lost Woods Bridge */ , ENTRANCE_GROUP_KOKIRI_FOREST },
     { 0x020D, "Lost Woods Bridge" /* > KF */ , ENTRANCE_GROUP_LOST_WOODS },
     { 0x011E, "KF" /* > Lost Woods */ , ENTRANCE_GROUP_KOKIRI_FOREST },

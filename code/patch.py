@@ -16,7 +16,7 @@ desiredSymbols = ("rItemOverrides", "gSettingsContext", "gSpoilerData", "rScrubR
 
 nmResult = subprocess.run([os.environ["DEVKITARM"] + r'/bin/arm-none-eabi-nm', elf], stdout=subprocess.PIPE)
 nmLines = str(nmResult.stdout).split('\\n')
-symbolsInfo = [line.split() for line in nmLines if len(line.split()) >= 2 and line.split()[2].replace("\\r", "") in desiredSymbols]
+symbolsInfo = [line.split() for line in nmLines if len(line.split()) >= 3 and line.split()[2].replace("\\r", "") in desiredSymbols]
 symbols = {sym[2].replace("\\r", ""):hex(int(sym[0],16)) for sym in symbolsInfo}
 symbolsJson = json.dumps(symbols, indent=4)
 with open("../source/patch_symbols.hpp", 'w') as syms:
