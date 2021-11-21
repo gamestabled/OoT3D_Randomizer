@@ -151,17 +151,28 @@ void Entrance_Init(void) {
         }
     }
 
-    //Set the exit transition of GC Woods Warp -> Lost Woods to a lost woods transition.
-    //This works as an easy fix for the Overworld ER bug that continues to play the lost
-    //woods music into the next area, even if isn't the lost woods. A "proper" fix would
-    //probably be to stop playing the music on any transition though
+    // Stop playing background music during shuffled entrance transitions
+    // so that we don't get duplicated or overlapping music tracks
     if (gSettingsContext.shuffleOverworldEntrances == ON) {
 
-        s16 goronCityToLostWoodsIndex = entranceOverrideTable[0x04D6];
+        s16 indicesToSilenceBackgroundMusic[2] = {
+            // The lost woods music playing near the GC Woods Warp keeps playing
+            // in the next area if the bvackground music is allowed to keep playing
+            entranceOverrideTable[0x04D6], // Goron City -> Lost Woods override
 
-        for (s16 i = 0; i < 4; i++) {
-            gEntranceTable[goronCityToLostWoodsIndex + i].field &= 0xFF00;
-            gEntranceTable[goronCityToLostWoodsIndex + i].field |= 0x002C;
+            // If Malon is singing at night, then her singing will be transferred
+            // to the next area if it allows the background music to keep playing
+            entranceOverrideTable[0x025A], // Castle Grounds -> Market override
+        };
+
+        for (size_t j = 0; j < sizeof(indicesToSilenceBackgroundMusic) / sizeof(s16); j++) {
+
+            s16 override = indicesToSilenceBackgroundMusic[j];
+            for (s16 i = 0; i < 4; i++) {
+                // Zero out the bit in the field which tells the game to keep playing
+                // background music for all four scene setups at each index
+                gEntranceTable[override + i].field &= ~0x8000;
+            }
         }
     }
 }
