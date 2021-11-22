@@ -159,8 +159,8 @@ string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, 
                                         "shuffled.\n"                                      //
                                         "\n"                                               //
                                         "Additionally, the entrances of Deku Tree, Fire\n" //
-                                        "Temple and Bottom of the Well are opened for both\n"
-                                        "adult and child.";                                //
+                                        "Temple, Bottom of the Well and Gerudo Training\n" //
+                                        "Ground are opened for both adult and child.";     //
 /*------------------------------                                                           //
 |      OVERWORLD ENTRANCES     |                                                           //
 ------------------------------*/                                                           //

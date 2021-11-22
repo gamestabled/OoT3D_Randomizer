@@ -280,6 +280,7 @@ namespace Logic {
   bool ShowedMidoSwordAndShield  = false;
   bool CarpenterRescue           = false;
   bool GF_GateOpen               = false;
+  bool GtG_GateOpen              = false;
   bool DampesWindmillAccess      = false;
   bool DrainWell                 = false;
   bool GoronCityChildFire        = false;
@@ -522,7 +523,7 @@ namespace Logic {
     FoundBombchus   = (BombchuDrop || Bombchus || Bombchus5 || Bombchus10 || Bombchus20);
     CanPlayBowling  = (BombchusInLogic && FoundBombchus) || (!BombchusInLogic && BombBag);
     HasBombchus     = (BuyBombchus5 || BuyBombchus10 || BuyBombchus20 || (AmmoDrops.Is(AMMODROPS_BOMBCHU) && FoundBombchus));
-    
+
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
     //Unshuffled adult trade quest
@@ -904,6 +905,7 @@ namespace Logic {
      ShowedMidoSwordAndShield  = false;
      CarpenterRescue           = false;
      GF_GateOpen               = false;
+     GtG_GateOpen              = false;
      DampesWindmillAccess      = false;
      DrainWell                 = false;
      GoronCityChildFire        = false;

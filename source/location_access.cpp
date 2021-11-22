@@ -775,6 +775,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&CarpenterRescue, {[]{return CanFinishGerudoFortress;}}),
                   EventAccess(&GF_GateOpen,     {[]{return IsAdult && GerudoToken;}}),
+                  EventAccess(&GtG_GateOpen,    {[]{return GtG_GateOpen || (IsAdult && GerudoToken);}}),
                 }, {
                   //Locations
                   LocationAccess(GF_CHEST,              {[]{return CanUse(HOVER_BOOTS) || CanUse(SCARECROW) || CanUse(LONGSHOT);}}),
@@ -791,13 +792,13 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(GV_FORTRESS_SIDE,                 {[]{return true;}}),
                   Entrance(GF_OUTSIDE_GATE,                  {[]{return GF_GateOpen;}}),
-                  Entrance(GERUDO_TRAINING_GROUNDS_ENTRYWAY, {[]{return IsAdult && GerudoToken;}}),
+                  Entrance(GERUDO_TRAINING_GROUNDS_ENTRYWAY, {[]{return GtG_GateOpen && (IsAdult || ShuffleDungeonEntrances);}}),
                   Entrance(GF_STORMS_GROTTO,                 {[]{return IsAdult && CanOpenStormGrotto;}}),
   });
 
   areaTable[GF_OUTSIDE_GATE] = Area("GF Outside Gate", "Gerudo Fortress", NONE, NO_DAY_NIGHT_CYCLE, {
-                  //Events                                                      //no guard on the other side of the gate yet
-                  //EventAccess(&GF_GateOpen, {[]{return IsAdult && GerudoToken && (ShuffleGerudoToken || ShuffleOverworldEntrances || ShuffleSpecialIndoorEntrances);}}),
+                  //Events
+                  EventAccess(&GF_GateOpen, {[]{return IsAdult && GerudoToken && (ShuffleGerudoToken || ShuffleOverworldEntrances /*|| ShuffleSpecialIndoorEntrances*/);}}),
                 }, {}, {
                   //Exits
                   Entrance(GERUDO_FORTRESS,         {[]{return IsAdult || (ShuffleOverworldEntrances && GF_GateOpen);}}),

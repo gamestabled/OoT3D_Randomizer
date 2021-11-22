@@ -36,6 +36,7 @@
 #include "item_override.h"
 #include "songs_visual_effects.h"
 #include "shooting_gallery_man.h"
+#include "gtg_gate.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -132,6 +133,9 @@ void Actor_Init() {
 
     gActorOverlayTable[0x18A].initInfo->update = OceffWipe_rUpdate;
     gActorOverlayTable[0x18B].initInfo->update = OceffStorm_rUpdate;
+
+    gActorOverlayTable[0x191].initInfo->init = BgSpot12Saku_rInit;
+    gActorOverlayTable[0x191].initInfo->update = BgSpot12Saku_rUpdate;
 
     gActorOverlayTable[0x195].initInfo->init = EnShopnuts_rInit;
 
