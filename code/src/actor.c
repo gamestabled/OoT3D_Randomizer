@@ -36,6 +36,7 @@
 #include "item_override.h"
 #include "songs_visual_effects.h"
 #include "shooting_gallery_man.h"
+#include "malon.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -89,6 +90,8 @@ void Actor_Init() {
     gActorOverlayTable[0xDC].initInfo->update = Boss_Tw_rUpdate;
     gActorOverlayTable[0xDC].initInfo->draw = Boss_Tw_rDraw;
     gActorOverlayTable[0xDC].initInfo->destroy = Boss_Tw_rDestroy;
+
+    gActorOverlayTable[0xE7].initInfo->init = EnMa1_rInit;
 
     gActorOverlayTable[0xF1].initInfo->init = ItemOcarina_rInit;
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
