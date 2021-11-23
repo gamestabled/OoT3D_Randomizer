@@ -1453,15 +1453,10 @@ TurboTextClose_patch:
 TurboTextSignalNPC_patch:
     bl hook_TurboTextSignalNPC
 
-.section .patch_SkipSongReplayForTimeBlocksOne
-.global SkipSongReplayForTimeBlocksOne_patch
-SkipSongReplayForTimeBlocksOne_patch:
-    b hook_SkipSongReplayForTimeBlocksOne
-
-.section .patch_SkipSongReplayForTimeBlocksTwo
-.global SkipSongReplayForTimeBlocksTwo_patch
-SkipSongReplayForTimeBlocksTwo_patch:
-    b hook_SkipSongReplayForTimeBlocksTwo
+.section .patch_SkipSongReplays_TimeBlocksFix
+.global SkipSongReplays_TimeBlocksFix_patch
+SkipSongReplays_TimeBlocksFix_patch:
+    moveq r1,#0x1
 
 .section .patch_ItemsMenuNumSprites
 .global ItemsMenuNumSprites_patch
@@ -1562,15 +1557,10 @@ CheckForPocketCuccoHatchGameplayInit_patch:
 CheckForPocketCuccoHatchKankyo_patch:
     bl SaveFile_CheckForPocketCuccoHatch
 
-.section .patch_SkipSongReplayForTimeWarpBlocksOne
-.global SkipSongReplayForTimeWarpBlocksOne_patch
-SkipSongReplayForTimeWarpBlocksOne_patch:
-    b hook_SkipSongReplayForTimeWarpBlocksOne
-
-.section .patch_SkipSongReplayForTimeWarpBlocksTwo
-.global SkipSongReplayForTimeWarpBlocksTwo_patch
-SkipSongReplayForTimeWarpBlocksTwo_patch:
-    b hook_SkipSongReplayForTimeWarpBlocksTwo
+.section .patch_SkipSongReplays_WarpBlocksFix
+.global SkipSongReplays_WarpBlocksFix_patch
+SkipSongReplays_WarpBlocksFix_patch:
+    moveq r1,#0x1
 
 .section .patch_PlaySound
 .global PlaySound_patch
