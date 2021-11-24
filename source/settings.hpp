@@ -310,6 +310,7 @@ namespace Settings {
   extern Option ShuffleDungeonEntrances;
   extern Option ShuffleOverworldEntrances;
   extern Option ShuffleInteriorEntrances;
+  extern Option ShuffleGrottoEntrances;
   extern Option BombchusInLogic;
   extern Option AmmoDrops;
   extern Option HeartDropRefill;

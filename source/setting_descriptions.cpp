@@ -186,6 +186,12 @@ string_view interiorEntrancesAll      = "An extended version of 'Simple' with so
                                         "- Temple of Time\n"                               //
                                         "- Kakariko Potion Shop.";                         //
 /*------------------------------                                                           //
+|       GROTTO ENTRANCES       |                                                           //
+------------------------------*/                                                           //
+string_view grottoEntrancesDesc       = "Shuffle the pool of grotto entrances, including\n"//
+                                        "all graves, small Fairy Fountains and the Lost\n" //
+                                        "Woods Stage.";                                    //
+/*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //
 string_view bombchuLogicDesc          = "Bombchus are properly considered in logic.\n"     //

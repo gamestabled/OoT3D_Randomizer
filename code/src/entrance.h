@@ -3,6 +3,8 @@
 
 //Entrance Table Data: https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 
+#define ENTRANCE_TABLE_SIZE 0x0614
+
 #define DEKU_TREE_ENTRANCE 0x0000
 #define DODONGOS_CAVERN_ENTRANCE 0x0004
 #define JABU_JABUS_BELLY_ENTRANCE 0x0028
@@ -17,9 +19,6 @@
 #define GANONS_CASTLE_ENTRANCE 0x0467
 
 #define ENTRANCE_OVERRIDES_MAX_COUNT 256
-#define ENTRANCE_PAIRS_MAX_COUNT 128
-#define ENTRANCE_PAIRS_STRING_DATA_SIZE 8192
-#define ENTRANCE_INVALID_STRING_OFFSET 65535
 
 typedef struct {
     s16 index;
@@ -49,27 +48,40 @@ typedef enum {
     SPOILER_ENTRANCE_GROUP_COUNT,
 } SpoilerEntranceGroup;
 
+typedef enum {
+    ENTRANCE_TYPE_OVERWORLD,
+    ENTRANCE_TYPE_INTERIOR,
+    ENTRANCE_TYPE_GROTTO,
+    ENTRANCE_TYPE_DUNGEON,
+    ENTRANCE_TYPE_COUNT,
+} TrackerEntranceType;
+
+typedef struct {
+    s16 index;
+    char* name;
+    SpoilerEntranceGroup group;
+    TrackerEntranceType type;
+} EntranceData;
+
 typedef struct {
     u8 EntranceCount;
     u16 GroupEntranceCounts[SPOILER_ENTRANCE_GROUP_COUNT];
     u16 GroupOffsets[SPOILER_ENTRANCE_GROUP_COUNT];
 } EntranceTrackingData;
 
-typedef struct {
-    s16 index;
-    char* name;
-    SpoilerEntranceGroup group;
-} EntranceName;
-
-extern EntranceName entranceNames[ENTRANCE_OVERRIDES_MAX_COUNT];
+extern EntranceData entranceData[ENTRANCE_OVERRIDES_MAX_COUNT];
 extern EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT];
+extern EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT];
 extern EntranceTrackingData gEntranceTrackingData;
 
 void Entrance_Init(void);
+s16  Entrance_GetOverride(s16 index);
+s16  Entrance_OverrideNextIndex(s16 nextEntranceIndex);
 u32  Entrance_IsLostWoodsBridge(void);
 void Entrance_EnteredLocation(void);
 u32  Entrance_SceneAndSpawnAre(u8 scene, u8 spawn);
-char* GetEntranceName(s16 index_);
+/// Returns entrance data of the specified index
+EntranceData* GetEntranceData(s16 index_);
 void InitEntranceTrackingData(void);
 
 #endif //_ENTRANCE_H_
