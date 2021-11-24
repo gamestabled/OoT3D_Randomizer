@@ -1456,7 +1456,7 @@ TurboTextSignalNPC_patch:
 .section .patch_SkipSongReplays_TimeBlocksFix
 .global SkipSongReplays_TimeBlocksFix_patch
 SkipSongReplays_TimeBlocksFix_patch:
-    moveq r1,#0x1
+    b hook_SkipSongReplays_TimeBlocksFix
 
 .section .patch_ItemsMenuNumSprites
 .global ItemsMenuNumSprites_patch
@@ -1560,7 +1560,7 @@ CheckForPocketCuccoHatchKankyo_patch:
 .section .patch_SkipSongReplays_WarpBlocksFix
 .global SkipSongReplays_WarpBlocksFix_patch
 SkipSongReplays_WarpBlocksFix_patch:
-    moveq r1,#0x1
+    b hook_SkipSongReplays_WarpBlocksFix
 
 .section .patch_PlaySound
 .global PlaySound_patch

@@ -968,6 +968,30 @@ hook_TurboTextSignalNPC:
     movne r4,#0x1
     bx lr
 
+.global hook_SkipSongReplays_TimeBlocksFix
+hook_SkipSongReplays_TimeBlocksFix:
+    bne 0x208008
+    push  {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    moveq r1,#0x6E
+    movne r1,#0x10
+    cmp r0,r0
+    b 0x208008
+
+.global hook_SkipSongReplays_WarpBlocksFix
+hook_SkipSongReplays_WarpBlocksFix:
+    bne 0x20806C
+    push  {r0-r12, lr}
+    bl Settings_GetSongReplaysOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    moveq r1,#0x6E
+    movne r1,#0x10
+    cmp r0,r0
+    b 0x20806C
+
 .global hook_CarpenterBossSetTradedSawFlag
 hook_CarpenterBossSetTradedSawFlag:
     push {r0-r12, lr}
