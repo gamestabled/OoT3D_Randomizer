@@ -36,7 +36,7 @@ namespace Music {
         /* NA_BGM_OCA_WATER */          SEQ_OCARINA,
         /* NA_BGM_OCA_SOUL */           SEQ_OCARINA,
         /* NA_BGM_OCA_DARKNESS */       SEQ_OCARINA,
-        /* NA_BGM_MIDDLE_BOSS */        SEQ_NOSHUFFLE, // Temporarily unshuffled: Override keeps playing even after the fight is over
+        /* NA_BGM_MIDDLE_BOSS */        SEQ_BGM_ERROR,
         /* NA_BGM_S_ITEM_GET */         SEQ_FANFARE,
         /* NA_BGM_SHRINE_OF_TIME */     SEQ_BGM_WORLD,
         /* NA_BGM_EVENT_CLEAR */        SEQ_FANFARE,
@@ -88,7 +88,7 @@ namespace Music {
         /* NA_BGM_STAFF_3 */            SEQ_NOSHUFFLE,
         /* NA_BGM_STAFF_4 */            SEQ_NOSHUFFLE,
         /* NA_BGM_BOSS01 */             SEQ_BGM_BATTLE,
-        /* NA_BGM_MINI_GAME_2 */        SEQ_BGM_EVENT,
+        /* NA_BGM_MINI_GAME_2 */        SEQ_BGM_ERROR,
     };
 
     std::array<u32, SEQ_COUNT> seqOverridesMusic;
