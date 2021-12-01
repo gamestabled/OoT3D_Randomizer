@@ -502,6 +502,7 @@ static void CreateGanonText() {
 //Find the location which has the given itemKey and create the generic altar text for the reward
 static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
   LocationKey location = FilterFromPool(allLocations, [itemKey](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == itemKey;})[0];
+  Location(location)->SetAsHinted();
   //Calling ITEM_OBTAINED draws the passed in itemID to the left side of the textbox
   return Text()+ITEM_OBTAINED(itemID)+"#"+GetHintRegion(Location(location)->GetParentRegionKey())->GetHint().GetText()+"#...^";
 }
