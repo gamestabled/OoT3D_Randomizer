@@ -2018,6 +2018,7 @@ namespace Settings {
         Music::ShuffleSequences(Music::SeqType::SEQ_BGM_BATTLE);
       } else if (ShuffleBGM.Is(2)) {
         Music::ShuffleSequences(Music::SeqType::SEQ_BGM_WORLD | Music::SeqType::SEQ_BGM_EVENT | Music::SeqType::SEQ_BGM_BATTLE);
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM_ERROR);
       }
 
       if (ShuffleFanfares.Is(2)) {

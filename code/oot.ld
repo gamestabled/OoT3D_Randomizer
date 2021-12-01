@@ -456,20 +456,12 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
-	.patch_SkipSongReplayForTimeBlocksOne 0x207FD8 : {
-		*(.patch_SkipSongReplayForTimeBlocksOne)
+	.patch_SkipSongReplays_TimeBlocksFix 0x208004 : {
+		*(.patch_SkipSongReplays_TimeBlocksFix)
 	}
 
-	.patch_SkipSongReplayForTimeBlocksTwo 0x207FF8 : {
-		*(.patch_SkipSongReplayForTimeBlocksTwo)
-	}
-
-	.patch_SkipSongReplayForTimeWarpBlocksOne 0x20803C : {
-		*(.patch_SkipSongReplayForTimeWarpBlocksOne)
-	}
-
-	.patch_SkipSongReplayForTimeWarpBlocksTwo 0x20805C : {
-		*(.patch_SkipSongReplayForTimeWarpBlocksTwo)
+	.patch_SkipSongReplays_WarpBlocksFix 0x208068 : {
+		*(.patch_SkipSongReplays_WarpBlocksFix)
 	}
 
 	.patch_ChestMinigame_DontOpenChestsOnInit 0x20EC8C : {

@@ -968,31 +968,29 @@ hook_TurboTextSignalNPC:
     movne r4,#0x1
     bx lr
 
-.global hook_SkipSongReplayForTimeBlocksOne
-hook_SkipSongReplayForTimeBlocksOne:
-    add r1,r1,#0x2B00
-    push {r0-r12, lr}
+.global hook_SkipSongReplays_TimeBlocksFix
+hook_SkipSongReplays_TimeBlocksFix:
+    bne 0x208008
+    push  {r0-r12, lr}
     bl Settings_GetSongReplaysOption
     cmp r0,#0x0
     pop {r0-r12, lr}
-    beq 0x207FDC
-    push {r0,r1}
-    sub r1,r1,#0x70
-    ldrb r0,[r1]
-    cmp r0,#23
-    pop {r0,r1}
-    bne 0x208030
-    b 0x207FDC
+    moveq r1,#0x6E
+    movne r1,#0x10
+    cmp r0,r0
+    b 0x208008
 
-.global hook_SkipSongReplayForTimeBlocksTwo
-hook_SkipSongReplayForTimeBlocksTwo:
-    push {r0-r12, lr}
+.global hook_SkipSongReplays_WarpBlocksFix
+hook_SkipSongReplays_WarpBlocksFix:
+    bne 0x20806C
+    push  {r0-r12, lr}
     bl Settings_GetSongReplaysOption
     cmp r0,#0x0
     pop {r0-r12, lr}
-    bne 0x208028
-    add r0,r0,#0x100
-    b 0x207FFC
+    moveq r1,#0x6E
+    movne r1,#0x10
+    cmp r0,r0
+    b 0x20806C
 
 .global hook_CarpenterBossSetTradedSawFlag
 hook_CarpenterBossSetTradedSawFlag:
@@ -1009,32 +1007,6 @@ hook_KingZoraSetTradedPrescriptionFlag:
     pop {r0-r12, lr}
     mov r2,#0x24
     b 0x1C52A4
-
-.global hook_SkipSongReplayForTimeWarpBlocksOne
-hook_SkipSongReplayForTimeWarpBlocksOne:
-    add r1,r1,#0x2B00
-    push {r0-r12, lr}
-    bl Settings_GetSongReplaysOption
-    cmp r0,#0x0
-    pop {r0-r12, lr}
-    beq 0x208040
-    push {r0,r1}
-    sub r1,r1,#0x70
-    ldrb r0,[r1]
-    cmp r0,#23
-    pop {r0,r1}
-    bne 0x208094
-    b 0x208040
-
-.global hook_SkipSongReplayForTimeWarpBlocksTwo
-hook_SkipSongReplayForTimeWarpBlocksTwo:
-    push {r0-r12, lr}
-    bl Settings_GetSongReplaysOption
-    cmp r0,#0x0
-    pop {r0-r12, lr}
-    bne 0x20808C
-    add r0,r0,#0x100
-    b 0x208060
 
 .global hook_SyatekiManReminder
 hook_SyatekiManReminder:
