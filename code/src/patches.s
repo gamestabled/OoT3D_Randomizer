@@ -1312,6 +1312,11 @@ SetGameOverRespawnFlag_patch:
 SetSunsSongRespawnFlag_patch:
     bl hook_SetSunsSongRespawnFlag
 
+.section .patch_SunsSongEndCloseTextbox
+.global SunsSongsEndCloseTextbox_patch
+SunsSongsEndCloseTextbox_patch:
+    beq hook_SunsSongEndCloseTextbox
+
 .section .patch_SetVoidoutRespawnFlag
 .global SetVoidoutRespawnFlag_patch
 SetVoidoutRespawnFlag_patch:
