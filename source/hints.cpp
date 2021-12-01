@@ -146,6 +146,10 @@ HintKey GetHintRegionHintKey(const AreaKey area) {
   return GetHintRegion(area)->hintKey;
 }
 
+HintKey GetLocationRegionHintKey(const LocationKey location) {
+  return GetHintRegion(Location(location)->GetParentRegionKey())->hintKey;
+}
+
 static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hintedLocation = GANON) {
   //temporarily remove the hinted location's item, and then perform a
   //reachability search for gossip stone locations.
@@ -393,7 +397,8 @@ static std::vector<LocationKey> CalculateBarrenRegions() {
   std::vector<LocationKey> potentiallyUsefulLocations = {};
 
   for (LocationKey loc : allLocations) {
-    if (Location(loc)->GetPlacedItem().IsMajorItem()) {
+    // If a location has a major item or is a way of the hero location, it is not barren
+    if (Location(loc)->GetPlacedItem().IsMajorItem() || ElementInContainer(loc, wothLocations)) {
       AddElementsToPool(potentiallyUsefulLocations, std::vector{loc});
     } else {
       if (loc != LINKS_POCKET) { //Nobody cares to know if Link's Pocket is barren
@@ -402,11 +407,11 @@ static std::vector<LocationKey> CalculateBarrenRegions() {
     }
   }
 
-  //leave only locations at barren regions in the list
+  // Leave only locations at barren regions in the list
   auto finalBarrenLocations = FilterFromPool(barrenLocations, [&potentiallyUsefulLocations](LocationKey loc){
     for (LocationKey usefulLoc : potentiallyUsefulLocations) {
-      HintKey barrenKey = GetHintRegion(Location(loc)->GetParentRegionKey())->hintKey;
-      HintKey usefulKey = GetHintRegion(Location(usefulLoc)->GetParentRegionKey())->hintKey;
+      HintKey barrenKey = GetLocationRegionHintKey(loc);
+      HintKey usefulKey = GetLocationRegionHintKey(usefulLoc);
       if (barrenKey == usefulKey) {
         return false;
       }
@@ -743,6 +748,22 @@ void CreateAllHints() {
     }
   }
 
+  std::array<std::string, 13> hintTypeNames = {
+    "Trial",
+    "Always",
+    "WotH",
+    "Barren",
+    "Entrance",
+    "Sometimes",
+    "Random",
+    "Item",
+    "Song",
+    "Overworld",
+    "Dungeon",
+    "Junk",
+    "NamedItem",
+  };
+
   //while there are still gossip stones remaining
   while (FilterFromPool(gossipStoneLocations, [](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == NONE;}).size() != 0) {
     //TODO: fixed hint types
@@ -755,7 +776,7 @@ void CreateAllHints() {
     HintType type = RandomElement(remainingHintTypes, true);
 
     PlacementLog_Msg("Attempting to make hint of type: ");
-    PlacementLog_Msg(std::to_string(static_cast<int>(type)));
+    PlacementLog_Msg(hintTypeNames[static_cast<int>(type)]);
     PlacementLog_Msg("\n");
 
     //create the appropriate hint for the type

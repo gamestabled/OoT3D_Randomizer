@@ -7,7 +7,7 @@ namespace Music {
         /* NA_BGM_FIELD */              SEQ_BGM_WORLD,
         /* NA_BGM_DUNGEON */            SEQ_BGM_WORLD,
         /* NA_BGM_KAKARIKO_ADULT */     SEQ_BGM_WORLD,
-        /* NA_BGM_ENEMY */              SEQ_BGM_BATTLE,
+        /* NA_BGM_ENEMY */              SEQ_NOSHUFFLE, // Temporarily unshuffled: Override plays incorrect in some areas, like Lake Hylia, by continuously repeating the start
         /* NA_BGM_BOSS00 */             SEQ_BGM_BATTLE,
         /* NA_BGM_FAIRY_DUNGEON */      SEQ_BGM_WORLD,
         /* NA_BGM_MARKET */             SEQ_BGM_WORLD,
@@ -36,7 +36,7 @@ namespace Music {
         /* NA_BGM_OCA_WATER */          SEQ_OCARINA,
         /* NA_BGM_OCA_SOUL */           SEQ_OCARINA,
         /* NA_BGM_OCA_DARKNESS */       SEQ_OCARINA,
-        /* NA_BGM_MIDDLE_BOSS */        SEQ_BGM_BATTLE,
+        /* NA_BGM_MIDDLE_BOSS */        SEQ_BGM_ERROR,
         /* NA_BGM_S_ITEM_GET */         SEQ_FANFARE,
         /* NA_BGM_SHRINE_OF_TIME */     SEQ_BGM_WORLD,
         /* NA_BGM_EVENT_CLEAR */        SEQ_FANFARE,
@@ -88,7 +88,7 @@ namespace Music {
         /* NA_BGM_STAFF_3 */            SEQ_NOSHUFFLE,
         /* NA_BGM_STAFF_4 */            SEQ_NOSHUFFLE,
         /* NA_BGM_BOSS01 */             SEQ_BGM_BATTLE,
-        /* NA_BGM_MINI_GAME_2 */        SEQ_BGM_EVENT,
+        /* NA_BGM_MINI_GAME_2 */        SEQ_BGM_ERROR,
     };
 
     std::array<u32, SEQ_COUNT> seqOverridesMusic;
