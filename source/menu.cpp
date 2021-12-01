@@ -512,6 +512,7 @@ void GenerateRandomizer() {
   if (ret < 0) {
     if(ret == -1) { //Failed to generate after 5 tries
       printf("\n\nFailed to generate after 5 tries.\nPress Select to exit or B to go back to the menu.\n");
+      PlacementLog_Write();
       return;
     }
     else {

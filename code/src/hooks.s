@@ -523,6 +523,30 @@ hook_CheckCurrentDungeonMode:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_DungeonCheckJabuMQBox
+hook_DungeonCheckJabuMQBox:
+    push {r0-r12, lr}
+    bl Dungeon_GetCurrentDungeonMode
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_JabuSwitchRutoCheck
+hook_JabuSwitchRutoCheck:
+    cmp r0,#0xA1
+    bxeq lr
+    cmp r0,#0x110
+    bx lr
+
+.global hook_JabuBoxCheckRuto
+hook_JabuBoxCheckRuto:
+    tst r0,#0x80
+    push {r0-r12, lr}
+    bleq ObjKibako_CheckRuto
+    cmpeq r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_CanReadHints
 hook_CanReadHints:
     push {r0-r12, lr}
@@ -619,6 +643,30 @@ hook_SetGameOverEntrance:
     push {r0-r12, lr}
     bl Entrance_SetGameOverEntrance
     pop {r0-r12, lr}
+    bx lr
+
+.global hook_SetGameOverRespawnFlag
+hook_SetGameOverRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlag
+    pop {r0-r12, lr}
+    cmp r8,#0x3
+    bx lr
+
+.global hook_SetSunsSongRespawnFlag
+hook_SetSunsSongRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlag
+    pop {r0-r12, lr}
+    cpy r0,r6
+    bx lr
+
+.global hook_SetVoidoutRespawnFlag
+hook_SetVoidoutRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_SetRespawnFlagAndDamage
+    pop {r0-r12, lr}
+    mov r1,#0x104
     bx lr
 
 .global hook_GossipStoneAddSariaHint
@@ -920,31 +968,29 @@ hook_TurboTextSignalNPC:
     movne r4,#0x1
     bx lr
 
-.global hook_SkipSongReplayForTimeBlocksOne
-hook_SkipSongReplayForTimeBlocksOne:
-    add r1,r1,#0x2B00
-    push {r0-r12, lr}
+.global hook_SkipSongReplays_TimeBlocksFix
+hook_SkipSongReplays_TimeBlocksFix:
+    bne 0x208008
+    push  {r0-r12, lr}
     bl Settings_GetSongReplaysOption
     cmp r0,#0x0
     pop {r0-r12, lr}
-    beq 0x207FDC
-    push {r0,r1}
-    sub r1,r1,#0x70
-    ldrb r0,[r1]
-    cmp r0,#23
-    pop {r0,r1}
-    bne 0x208030
-    b 0x207FDC
+    moveq r1,#0x6E
+    movne r1,#0x10
+    cmp r0,r0
+    b 0x208008
 
-.global hook_SkipSongReplayForTimeBlocksTwo
-hook_SkipSongReplayForTimeBlocksTwo:
-    push {r0-r12, lr}
+.global hook_SkipSongReplays_WarpBlocksFix
+hook_SkipSongReplays_WarpBlocksFix:
+    bne 0x20806C
+    push  {r0-r12, lr}
     bl Settings_GetSongReplaysOption
     cmp r0,#0x0
     pop {r0-r12, lr}
-    bne 0x208028
-    add r0,r0,#0x100
-    b 0x207FFC
+    moveq r1,#0x6E
+    movne r1,#0x10
+    cmp r0,r0
+    b 0x20806C
 
 .global hook_CarpenterBossSetTradedSawFlag
 hook_CarpenterBossSetTradedSawFlag:
@@ -961,32 +1007,6 @@ hook_KingZoraSetTradedPrescriptionFlag:
     pop {r0-r12, lr}
     mov r2,#0x24
     b 0x1C52A4
-
-.global hook_SkipSongReplayForTimeWarpBlocksOne
-hook_SkipSongReplayForTimeWarpBlocksOne:
-    add r1,r1,#0x2B00
-    push {r0-r12, lr}
-    bl Settings_GetSongReplaysOption
-    cmp r0,#0x0
-    pop {r0-r12, lr}
-    beq 0x208040
-    push {r0,r1}
-    sub r1,r1,#0x70
-    ldrb r0,[r1]
-    cmp r0,#23
-    pop {r0,r1}
-    bne 0x208094
-    b 0x208040
-
-.global hook_SkipSongReplayForTimeWarpBlocksTwo
-hook_SkipSongReplayForTimeWarpBlocksTwo:
-    push {r0-r12, lr}
-    bl Settings_GetSongReplaysOption
-    cmp r0,#0x0
-    pop {r0-r12, lr}
-    bne 0x20808C
-    add r0,r0,#0x100
-    b 0x208060
 
 .global hook_SyatekiManReminder
 hook_SyatekiManReminder:
@@ -1126,6 +1146,47 @@ hook_GameplayDestroy:
     push {r0-r12, lr}
     bl Entrance_CheckEpona
     pop {r0-r12, lr}
+    bx lr
+
+.global hook_SceneExitOverride
+hook_SceneExitOverride:
+    ldrsh r9, [r1,r0]
+    push {r0-r8, r10-r12, lr}
+    cpy r0, r9
+    bl Entrance_OverrideNextIndex
+    cpy r9, r0
+    pop {r0-r8, r10-r12, lr}
+    bx lr
+
+.global hook_SceneExitDynamicOverride
+hook_SceneExitDynamicOverride:
+    push {r0-r12, lr}
+    bl Entrance_OverrideDynamicExit
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_OverrideGrottoActorEntrance
+hook_OverrideGrottoActorEntrance:
+    push {r0-r12, lr}
+    cpy r0, r4
+    bl Grotto_OverrideActorEntrance
+    pop {r0-r12, lr}
+    b 0x3F22C4
+
+.global hook_ReturnFWSetupGrottoInfo
+hook_ReturnFWSetupGrottoInfo:
+    push {r0-r12, lr}
+    bl Grotto_SetupReturnInfoOnFWReturn
+    pop {r0-r12, lr}
+    add sp,sp,#0x8
+    bx lr
+
+.global hook_SetFWGrottoID
+hook_SetFWGrottoID:
+    push {r0-r12, lr}
+    bl Grotto_StoreGrottoIDOnFWSet
+    pop {r0-r12, lr}
+    add r1,r7,#0x400
     bx lr
 
 .section .loader

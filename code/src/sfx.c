@@ -7,12 +7,13 @@
 SFXData rSfxData = {0};
 
 u32 SetSFX(u32 original) {
-    if (!gExtSaveData.option_EnableSFX && IsInGame()) {
-        return SEQ_AUDIO_BLANK;
-    }
-
     u16 sfxID = original - SFX_BASE;
     SeqType type = rSfxData.rSeqTypesSFX[sfxID];
+
+    static const u16 GET_BOXITEM_ID = 1205; // Treat GET_BOXITEM as a fanfare
+    if (IsInGame() && ((!gExtSaveData.option_EnableSFX && sfxID != GET_BOXITEM_ID) || (!gExtSaveData.option_EnableBGM && sfxID == GET_BOXITEM_ID))) {
+        return SEQ_AUDIO_BLANK;
+    }
 
     // Check for invalid sound effect
     if (original < SFX_BASE || original > SFX_BASE + SFX_COUNT || type >= SEQTYPE_COUNT) {

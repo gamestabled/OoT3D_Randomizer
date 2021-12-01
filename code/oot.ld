@@ -80,6 +80,10 @@ SECTIONS
 		*(.patch_SongOfStormsLocation)
 	}
 
+	.patch_JabuSwitchRutoCheck 0x143AC8 : {
+	  *(.patch_JabuSwitchRutoCheck)
+	}
+
 	.patch_OwlMagicCheck 0x144B44 : {
 		*(.patch_OwlMagicCheck)
 	}
@@ -452,20 +456,12 @@ SECTIONS
 		*(.patch_BombchuBowlingStaticReward)
 	}
 
-	.patch_SkipSongReplayForTimeBlocksOne 0x207FD8 : {
-		*(.patch_SkipSongReplayForTimeBlocksOne)
+	.patch_SkipSongReplays_TimeBlocksFix 0x208004 : {
+		*(.patch_SkipSongReplays_TimeBlocksFix)
 	}
 
-	.patch_SkipSongReplayForTimeBlocksTwo 0x207FF8 : {
-		*(.patch_SkipSongReplayForTimeBlocksTwo)
-	}
-
-	.patch_SkipSongReplayForTimeWarpBlocksOne 0x20803C : {
-		*(.patch_SkipSongReplayForTimeWarpBlocksOne)
-	}
-
-	.patch_SkipSongReplayForTimeWarpBlocksTwo 0x20805C : {
-		*(.patch_SkipSongReplayForTimeWarpBlocksTwo)
+	.patch_SkipSongReplays_WarpBlocksFix 0x208068 : {
+		*(.patch_SkipSongReplays_WarpBlocksFix)
 	}
 
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
@@ -494,6 +490,10 @@ SECTIONS
 
 	.patch_DungeonCheckJabuMQBox 0x21590C : {
 	  *(.patch_DungeonCheckJabuMQBox)
+	}
+
+	.patch_JabuBoxCheckRuto 0x215934 : {
+	  *(.patch_JabuBoxCheckRuto)
 	}
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
@@ -702,6 +702,14 @@ SECTIONS
 
 	.patch_SetBGMEntrance 0x331048 : {
 		*(.patch_SetBGMEntrance)
+	}
+
+	.patch_SceneExitOverride 0x3366EC : {
+		*(.patch_SceneExitOverride)
+	}
+
+	.patch_SceneExitDynamicOverride 0x33676C : {
+		*(.patch_SceneExitDynamicOverride)
 	}
 
 	.patch_EnteredLocation 0x338DB8 : {
@@ -988,6 +996,10 @@ SECTIONS
 		*(.patch_HandleDoorDestroyCustomModels)
 	}
 
+	.patch_OverrideGrottoActorEntrance 0x3F2254 : {
+		*(.patch_OverrideGrottoActorEntrance)
+	}
+
 	.patch_FireArrowRequirement 0x3F23AC : {
 		*(.patch_FireArrowRequirement)
 	}
@@ -1136,8 +1148,16 @@ SECTIONS
 		*(.patch_SetGameOverEntrance)
 	}
 
+	.patch_SetGameOverRespawnFlag 0x458EF0 : {
+		*(.patch_SetGameOverRespawnFlag)
+	}
+
 	.patch_InterfaceDrawDontSpoilTradeItems 0x45A17C : {
 		*(.patch_InterfaceDrawDontSpoilTradeItems)
+	}
+
+	.patch_SetSunsSongRespawnFlag 0x45B660 : {
+		*(.patch_SetSunsSongRespawnFlag)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {
@@ -1192,6 +1212,10 @@ SECTIONS
 		*(.patch_SetBGMDayNight)
 	}
 
+	.patch_SetFWGrottoID 0x4911D4 : {
+		*(.patch_SetFWGrottoID)
+	}
+
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
 	}
@@ -1210,6 +1234,14 @@ SECTIONS
 
 	.patch_FairyUseHealAmount 0x4968B4 : {
 		*(.patch_FairyUseHealAmount)
+	}
+
+	.patch_ReturnFWSetupGrottoInfo 0x496B88 : {
+		*(.patch_PlayerFWSetupGrottoInfo)
+	}
+
+	.patch_SetVoidoutRespawnFlag 0x496C70 : {
+		*(.patch_SetVoidoutRespawnFlag)
 	}
 
 	.patch_GanonBattleDeathWarp 0x496C98 : {

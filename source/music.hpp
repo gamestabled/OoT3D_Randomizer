@@ -16,6 +16,10 @@ namespace Music {
         SEQ_BGM_BATTLE = 1 << 2,
         SEQ_OCARINA    = 1 << 3,
         SEQ_FANFARE    = 1 << 4,
+        // A soundtrack in this category has the issue where if another soundtrack that isn't
+        // in this category overrides it, it will keep playing when it should be stopped.
+        // For example when beating a mini-boss or finishing the zora diving game.
+        SEQ_BGM_ERROR  = 1 << 5,
     };
 
     extern const std::array<SeqType, SEQ_COUNT> seqTypesMusic;

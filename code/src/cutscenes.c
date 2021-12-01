@@ -198,7 +198,7 @@ void Cutscene_OverrideDekuTree(void) {
         gSaveContext.nextCutsceneIndex = 0xFFF1;
         return;
     }
-    gGlobalContext->nextEntranceIndex = 0x457;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x457);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex = 0x0;
@@ -212,7 +212,7 @@ void Custcene_OverrideDodongosCavern(void) {
         gSaveContext.nextCutsceneIndex = 0xFFF1;
         return;
     }
-    gGlobalContext->nextEntranceIndex = 0x47A;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x47A);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex = 0x0;
@@ -227,14 +227,14 @@ void Custcene_OverrideJabuJabusBelly(void) {
         gSaveContext.nextCutsceneIndex = 0xFFF0;
         return;
     }
-    gGlobalContext->nextEntranceIndex = 0x221;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x221);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex = 0x0;
 }
 
 void Custcene_OverrideForestTemple(void) {
-    gGlobalContext->nextEntranceIndex = 0x608;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x608);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
@@ -250,14 +250,14 @@ void Cutscene_OverrideFireTemple(void) {
         gSaveContext.nextCutsceneIndex = 0xFFF3;
         return;
     }
-    gGlobalContext->nextEntranceIndex = 0x564;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x564);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
 }
 
 void Custcene_OverrideWaterTemple(void) {
-    gGlobalContext->nextEntranceIndex = 0x60C;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x60C);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
@@ -266,7 +266,7 @@ void Custcene_OverrideWaterTemple(void) {
 }
 
 void Custcene_OverrideSpiritTemple(void) {
-    gGlobalContext->nextEntranceIndex = 0x610;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x610);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
@@ -277,7 +277,7 @@ void Custcene_OverrideSpiritTemple(void) {
 }
 
 void Custcene_OverrideShadowTemple(void) {
-    gGlobalContext->nextEntranceIndex = 0x580;
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x580);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex = 0x0;
