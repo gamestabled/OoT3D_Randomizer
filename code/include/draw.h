@@ -55,16 +55,10 @@
 #define COLOR_DARK_GRAY     RGB8(0x29, 0x29, 0x29)
 #define COLOR_LIGHT_GRAY    RGB8(0x71, 0x71, 0x71)
 
-#define ENTR_COLOR_OVERWORLD        RGB8(0x00, 0xFF, 0x00) // Green
-#define ENTR_COLOR_INTERIOR_OUTSIDE RGB8(0x00, 0xA0, 0xFF) // Light Blue
-#define ENTR_COLOR_INTERIOR_INSIDE  RGB8(0x00, 0x55, 0xFF) // Blue
-#define ENTR_COLOR_SHOP             RGB8(0xCC, 0x28, 0x28) // Red
-#define ENTR_COLOR_GREAT_FAIRY      RGB8(0xFF, 0x91, 0xFF) // Pink
-#define ENTR_COLOR_GROTTO_OUTSIDE   RGB8(0xFF, 0x98, 0x00) // Orange
-#define ENTR_COLOR_GROTTO_INSIDE    RGB8(0x7F, 0x48, 0x0C) // Brown
-#define ENTR_COLOR_GRAVE_INSIDE     RGB8(0x55, 0x7F, 0x3F) // Moss Gray
-#define ENTR_COLOR_DUNGEON_OUTSIDE  RGB8(0xD2, 0x00, 0xFF) // Purple
-#define ENTR_COLOR_DUNGEON_INSIDE   RGB8(0x90, 0x00, 0xFF) // Dark Purple
+#define ENTR_COLOR_OVERWORLD    RGB8(0x00, 0xFF, 0x00) // Green
+#define ENTR_COLOR_INTERIOR     RGB8(0x00, 0xA0, 0xFF) // Light Blue
+#define ENTR_COLOR_GROTTO       RGB8(0xFF, 0x98, 0x00) // Orange
+#define ENTR_COLOR_DUNGEON      RGB8(0xD2, 0x00, 0xFF) // Purple
 
 #define DRAW_MAX_FORMATTED_STRING_SIZE  512
 

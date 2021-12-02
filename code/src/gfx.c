@@ -572,27 +572,12 @@ static void Gfx_DrawEntranceTracker(void) {
         u16 offsetY = 2;
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_OVERWORLD);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Overworld");
-        offsetY++;
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_INTERIOR_OUTSIDE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Interior (Outside)");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_INTERIOR_INSIDE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Interior (Inside)");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_SHOP);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Standard Shop");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_GREAT_FAIRY);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Great Fairy Fountain");
-        offsetY++;
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_GROTTO_OUTSIDE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Grotto (Outside)");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_GROTTO_INSIDE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Grotto (Inside)");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_GRAVE_INSIDE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Grave (Inside)");
-        offsetY++;
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_DUNGEON_OUTSIDE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Dungeon (Outside)");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_DUNGEON_INSIDE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Dungeon (Inside)");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_INTERIOR);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Interior");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_GROTTO);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Grotto");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_DUNGEON);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Dungeon");
         return;
     }
 
