@@ -3780,7 +3780,6 @@ namespace Areas {
     ROOT,
     ROOT_EXITS,
 
-    // Below is ordered for entrance tracker groups
     KOKIRI_FOREST,
     KF_LINKS_HOUSE,
     KF_MIDOS_HOUSE,
@@ -3949,7 +3948,6 @@ namespace Areas {
     GANONS_CASTLE_GROUNDS,
     OGC_GREAT_FAIRY_FOUNTAIN,
     GANONS_CASTLE_ENTRYWAY,
-    // Above is ordered for entrance tracker groups
 
     DEKU_TREE_LOBBY,
     DEKU_TREE_SLINGSHOT_ROOM,
