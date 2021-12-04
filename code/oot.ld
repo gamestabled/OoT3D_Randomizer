@@ -1237,7 +1237,7 @@ SECTIONS
 	}
 
 	.patch_ReturnFWSetupGrottoInfo 0x496B88 : {
-		*(.patch_PlayerFWSetupGrottoInfo)
+		*(.patch_ReturnFWSetupGrottoInfo)
 	}
 
 	.patch_SetVoidoutRespawnFlag 0x496C70 : {
