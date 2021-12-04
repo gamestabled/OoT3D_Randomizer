@@ -24,7 +24,7 @@ void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 7
+#define EXTSAVEDATA_VERSION 8
 
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure
@@ -39,8 +39,6 @@ typedef struct {
         s32  tempSwchFlags;
         s32  tempCollectFlags;
     }   fwStored;
-    u8 adultFWgrottoID;
-    u8 childFWgrottoID;
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
