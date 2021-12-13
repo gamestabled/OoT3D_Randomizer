@@ -174,12 +174,12 @@ static bool IsEntranceDiscovered(s16 index) {
 
 static bool IsDungeonDiscovered(DungeonId dungeonId) {
     if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
-        if (gSettingsContext.dungeonModesKnown) {
+        if (gSettingsContext.dungeonModesKnown[dungeonId]) {
             return true;
         }
 
         // A dungeon is considered discovered if we've visited the dungeon at least once, we have the map,
-        // or all the dungeon modes are known due to settings.
+        // or the dungeon mode is known due to settings.
         // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
         bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
         bool dungeonIsDiscovered = (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId)

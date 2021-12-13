@@ -347,7 +347,7 @@ typedef struct {
   u8 heartDropRefill;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
-  u8 dungeonModesKnown;
+  u8 dungeonModesKnown[12]; // 12 dungeons which can be set Vanilla or MQ
 
   u8 shuffleRewards;
   u8 linksPocketItem;
