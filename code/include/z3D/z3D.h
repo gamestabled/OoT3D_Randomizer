@@ -557,6 +557,10 @@ typedef void (*Flags_SetEnv_proc)(GlobalContext* globalCtx, s16 flag);
 typedef void (*GiveItem_proc)(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
     __attribute__((pcs("aapcs-vfp")));
 #define GiveItem_addr 0x3724DC
-#define GiveItem ((GiveItem_proc)0x3724DC)
+#define GiveItem ((GiveItem_proc)GiveItem_addr)
+
+typedef void (*Message_CloseTextbox_proc)(GlobalContext* globalCtx);
+#define Message_CloseTextbox_addr 0x3725E0
+#define Message_CloseTextbox ((Message_CloseTextbox_proc)Message_CloseTextbox_addr)
 
 #endif //_Z3D_H_

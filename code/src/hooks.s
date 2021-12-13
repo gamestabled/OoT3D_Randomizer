@@ -661,6 +661,13 @@ hook_SetSunsSongRespawnFlag:
     cpy r0,r6
     bx lr
 
+.global hook_SunsSongEndCloseTextbox
+hook_SunsSongEndCloseTextbox:
+    push {r0-r12, lr}
+    bl Settings_SunsSongEndCloseTextbox
+    pop {r0-r12, lr}
+    b 0x45B518
+
 .global hook_SetSpecialVoidOutRespawnFlag
 hook_SetSpecialVoidOutRespawnFlag:
     push {r0-r12, lr}
