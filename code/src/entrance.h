@@ -62,6 +62,7 @@ typedef struct {
     SpoilerEntranceGroup group;
     TrackerEntranceType type;
     u32 color;
+    u8 oneExit;
 } EntranceData;
 
 typedef struct {

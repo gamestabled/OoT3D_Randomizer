@@ -638,10 +638,12 @@ static void Gfx_DrawEntranceTracker(void) {
 
         offsetX = 2;
         Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcDstColor, "%s", rplcDstName);
-        offsetX += strlen(rplcDstName) + 1;
-        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, COLOR_WHITE, "from");
-        offsetX += strlen("from") + 1;
-        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcSrcColor, "%s", rplcSrcName);
+        if (!isDiscovered || !GetEntranceData(entranceList[locIndex].overrideDestination)->oneExit) {
+            offsetX += strlen(rplcDstName) + 1;
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, COLOR_WHITE, "from");
+            offsetX += strlen("from") + 1;
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcSrcColor, "%s", rplcSrcName);
+        }
     }
 
     Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, *entranceScroll, entranceCount, MAX_ENTRY_LINES);
