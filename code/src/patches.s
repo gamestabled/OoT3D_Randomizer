@@ -1317,10 +1317,10 @@ SetSunsSongRespawnFlag_patch:
 SunsSongsEndCloseTextbox_patch:
     beq hook_SunsSongEndCloseTextbox
 
-.section .patch_SetVoidoutRespawnFlag
-.global SetVoidoutRespawnFlag_patch
-SetVoidoutRespawnFlag_patch:
-    bl hook_SetVoidoutRespawnFlag
+.section .patch_SetSpecialVoidOutRespawnFlag
+.global SetSpecialVoidOutRespawnFlag_patch
+SetSpecialVoidOutRespawnFlag_patch:
+    bl hook_SetSpecialVoidOutRespawnFlag
 
 .section .patch_SariasSongHintsOne
 .global SariasSongHintsOne_patch
@@ -1727,11 +1727,6 @@ OverrideGrottoActorEntrance_patch:
 .global ReturnFWSetupGrottoInfo_patch
 ReturnFWSetupGrottoInfo_patch:
     bl hook_ReturnFWSetupGrottoInfo
-
-.section .patch_SetFWGrottoID
-.global SetFWGrottoID_patch
-SetFWGrottoID_patch:
-    bl hook_SetFWGrottoID
 
 .section .patch_loader
 .global loader_patch
