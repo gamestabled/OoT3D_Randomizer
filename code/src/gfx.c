@@ -11,6 +11,7 @@
 #include "entrance.h"
 #include "gfx_options.h"
 #include "common.h"
+#include "string.h"
 
 u32 pressed;
 bool handledInput;
@@ -28,7 +29,6 @@ static s16 allEntranceScroll = 0;
 static s16 groupEntranceScroll = 0;
 static s8 currentEntranceGroup = 1;
 static u8 destListToggle = 0;
-static const u32 entrColors[] = { ENTR_COLOR_OVERWORLD, ENTR_COLOR_INTERIOR, ENTR_COLOR_GROTTO, ENTR_COLOR_DUNGEON };
 
 static s32 curMenuIdx = 0;
 static bool showingLegend = false;
@@ -100,7 +100,7 @@ static char *spoilerCollectionGroupNames[] = {
 };
 
 static char* spoilerEntranceGroupNames[] = {
-    "",
+    "Randomized Entrances", // All
     "Kokiri Forest",
     "Lost Woods",
     "Kakariko Village",
@@ -126,7 +126,7 @@ static char* spoilerEntranceGroupNames[] = {
 #define UP_SOLID_ARROW_CHR 30
 #define DOWN_SOLID_ARROW_CHR 31
 
-#define MAX_ITEM_LINES 9
+#define MAX_ENTRY_LINES 9
 #define SCROLL_BAR_THICKNESS 2
 #define SCROLL_BAR_MIN_THUMB_SIZE 4
 #define COLOR_WARN RGB8(0xD1, 0xDF, 0x3C)
@@ -263,18 +263,21 @@ static void Gfx_DrawButtonPrompts(void) {
     } else if (curMenuIdx >= 4 && curMenuIdx <= 7) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
+        static const u8 offsetX = 114;
         if (curMenuIdx == 5 || curMenuIdx == 7) {
-            static const u8 groupOffsetX = 114;
-            Draw_DrawIcon(groupOffsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
-            Draw_DrawString(groupOffsetX + 8, textY, COLOR_TITLE, "/");
-            Draw_DrawIcon(groupOffsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
-            Draw_DrawString(groupOffsetX + 28, textY, COLOR_TITLE, "Change group");
+            Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
+            Draw_DrawString(offsetX + 8, textY, COLOR_TITLE, "/");
+            Draw_DrawIcon(offsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+            Draw_DrawString(offsetX + 28, textY, COLOR_TITLE, "Change group");
             if (curMenuIdx == 7) {
                 static const u8 toggleOffsetX = 222;
                 Draw_DrawIcon(toggleOffsetX, promptY, COLOR_BUTTON_X, ICON_BUTTON_X);
                 const char* destToggleString = destListToggle ? "Dest" : "Src";
                 Draw_DrawString(toggleOffsetX + 12, textY, COLOR_TITLE, destToggleString);
             }
+        } else if (curMenuIdx == 6) {
+            Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+            Draw_DrawString(offsetX + 12, textY, COLOR_TITLE, "Toggle Legend");
         }
     } else if (curMenuIdx == 8) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
@@ -316,7 +319,6 @@ static void Gfx_DrawSeedHash(void) {
 }
 
 static void Gfx_DrawDungeonItems(void) {
-
     if (showingLegend) {
         Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items Legend");
         Draw_DrawIcon(10, 43, COLOR_ICON_VANILLA, ICON_VANILLA);
@@ -342,65 +344,65 @@ static void Gfx_DrawDungeonItems(void) {
         Draw_DrawString(24, 147, COLOR_WHITE, "Way of the Hero");
         Draw_DrawString(24, 160, COLOR_WHITE, "Barren Location");
         Draw_DrawString(24, 173, COLOR_WHITE, "Non-WotH / Non-Barren Location");
-    } else {
-        Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
-        // Draw header icons
-        Draw_DrawIcon(220, 16, COLOR_WHITE, ICON_SMALL_KEY);
-        Draw_DrawIcon(240, 16, COLOR_WHITE, ICON_BOSS_KEY);
-        Draw_DrawIcon(260, 16, COLOR_WHITE, ICON_MAP);
-        Draw_DrawIcon(280, 16, COLOR_WHITE, ICON_COMPASS);
-        if (gSettingsContext.compassesShowWotH) {
-            Draw_DrawIcon(300, 16, COLOR_WHITE, ICON_TRIFORCE);
+        return;
+    }
+    Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
+    // Draw header icons
+    Draw_DrawIcon(220, 16, COLOR_WHITE, ICON_SMALL_KEY);
+    Draw_DrawIcon(240, 16, COLOR_WHITE, ICON_BOSS_KEY);
+    Draw_DrawIcon(260, 16, COLOR_WHITE, ICON_MAP);
+    Draw_DrawIcon(280, 16, COLOR_WHITE, ICON_COMPASS);
+    if (gSettingsContext.compassesShowWotH) {
+        Draw_DrawIcon(300, 16, COLOR_WHITE, ICON_TRIFORCE);
+    }
+
+    for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
+        u8 yPos = 30 + (dungeonId * 13);
+        bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
+        bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
+        bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+
+        if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+            if (IsDungeonDiscovered(dungeonId)) {
+                bool isMasterQuest = gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
+                u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
+                Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
+                Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
+            } else {
+                Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
+            }
+        }
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
+
+        if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
+            //special case for Ganon's Castle small keys
+            s32 keys = 0;
+            if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+                keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
+            } else {
+                keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
+            }
+            Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
         }
 
-        for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
-            u8 yPos = 30 + (dungeonId * 13);
-            bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
-            bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
-            bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+        if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+            Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
+        }
+        if (dungeonId <= DUNGEON_ICE_CAVERN) {
+            Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
+            Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
 
-            if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
-                if (IsDungeonDiscovered(dungeonId)) {
-                    bool isMasterQuest =  gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
-                    u32 modeIconColor = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
-                    Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
-                    Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
-                } else {
-                    Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
-                }
-            }
-            Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
-
-            if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
-                //special case for Ganon's Castle small keys
-                s32 keys = 0;
-                if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
-                keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
-                } else {
-                keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
-                }
-                Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
-            }
-
-            if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
-                Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
-            }
-            if (dungeonId <= DUNGEON_ICE_CAVERN) {
-                Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
-                Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
-
-                if (gSettingsContext.compassesShowWotH) {
-                    if (hasCompass) {
-                        if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
-                            Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
-                        } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
-                            Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
-                        } else {
-                            Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
-                        }
+            if (gSettingsContext.compassesShowWotH) {
+                if (hasCompass) {
+                    if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
+                        Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
+                    } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
+                        Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
                     } else {
-                        Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
+                        Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');
                     }
+                } else {
+                    Draw_DrawCharacter(300, yPos, COLOR_DARK_GRAY, '?');
                 }
             }
         }
@@ -428,7 +430,7 @@ static void Gfx_DrawSpoilerData(void) {
 
         u16 sphereItemLocOffset = gSpoilerData.Spheres[currentSphere].ItemLocationsOffset;
         u16 listTopY = 32;
-        for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
+        for (u32 item = 0; item < MAX_ENTRY_LINES; ++item) {
             u32 locIndex = item + spoilerScroll;
             if (locIndex >= gSpoilerData.Spheres[currentSphere].ItemCount) { break; }
 
@@ -442,7 +444,7 @@ static void Gfx_DrawSpoilerData(void) {
                 SpoilerData_GetItemNameString(itemIndex));
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, spoilerScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, spoilerScroll, itemCount, MAX_ENTRY_LINES);
     }
     else {
         Draw_DrawString(10, 16, COLOR_TITLE, "Spoiler Log");
@@ -450,12 +452,16 @@ static void Gfx_DrawSpoilerData(void) {
     }
 }
 
+static u8 ViewingGroups() {
+    return curMenuIdx == 5 || curMenuIdx == 7;
+}
+
 static void Gfx_DrawSpoilerAllItems(void) {
     if (gSpoilerData.ItemLocationsCount > 0) {
         u16 itemCount = gSpoilerData.ItemLocationsCount;
 
         u16 firstItem = allItemsScroll + 1;
-        u16 lastItem = allItemsScroll + MAX_ITEM_LINES;
+        u16 lastItem = allItemsScroll + MAX_ENTRY_LINES;
         if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
         Draw_DrawFormattedString(10, 16, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
             firstItem, lastItem, gSpoilerData.ItemLocationsCount);
@@ -465,7 +471,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
 
         u16 listTopY = 32;
         u32 itemGroupIndex = 1; // Keep the last picked group index around to start the search from
-        for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
+        for (u32 item = 0; item < MAX_ENTRY_LINES; ++item) {
             u32 locIndex = item + allItemsScroll;
             if (locIndex >= gSpoilerData.ItemLocationsCount) { break; }
 
@@ -495,7 +501,7 @@ static void Gfx_DrawSpoilerAllItems(void) {
             Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
         }
 
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allItemsScroll, itemCount, MAX_ITEM_LINES);
+        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allItemsScroll, itemCount, MAX_ENTRY_LINES);
     }
     else {
         Draw_DrawString(10, 16, COLOR_TITLE, "All Item Locations");
@@ -523,13 +529,13 @@ static void Gfx_DrawSpoilerItemGroups(void) {
             }
 
             u16 firstItem = groupItemsScroll + 1;
-            u16 lastItem = groupItemsScroll + MAX_ITEM_LINES;
+            u16 lastItem = groupItemsScroll + MAX_ENTRY_LINES;
             if (lastItem > itemCount) { lastItem = itemCount; }
             Draw_DrawFormattedString(10, 16, COLOR_TITLE, "%s - (%d - %d) / %d",
                 spoilerCollectionGroupNames[currentItemGroup], firstItem, lastItem, itemCount);
 
             u16 listTopY = 32;
-            for (u32 item = 0; item < MAX_ITEM_LINES; ++item) {
+            for (u32 item = 0; item < MAX_ENTRY_LINES; ++item) {
                 u32 locIndex = item + startIndex + groupItemsScroll;
                 if (item >= itemCount) { break; }
 
@@ -542,7 +548,7 @@ static void Gfx_DrawSpoilerItemGroups(void) {
                 Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
             }
 
-            Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ITEM_LINES);
+            Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ENTRY_LINES);
         } else {
             Draw_DrawString(10, 16, COLOR_TITLE, spoilerCollectionGroupNames[currentItemGroup]);
             Draw_DrawString(10, 46, COLOR_WHITE, "Reveal this dungeon to see the item list.");
@@ -558,79 +564,62 @@ static void Gfx_DrawSpoilerItemGroups(void) {
     }
 }
 
-static void Gfx_DrawERTracker(void) {
-    u16 itemCount = gEntranceTrackingData.EntranceCount;
-    u16 firstItem = allEntranceScroll + 1;
-    u16 lastItem = allEntranceScroll + MAX_ITEM_LINES;
-    if (lastItem > itemCount) { lastItem = itemCount; }
-    Draw_DrawFormattedString(10, 16, COLOR_TITLE, "Randomized Entrances (%d - %d) / %d",
-        firstItem, lastItem, itemCount);
+static void Gfx_DrawEntranceTracker(void) {
+    if (!ViewingGroups() && showingLegend) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Entrance Colors Legend");
 
-    Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, entrancesPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", entrancesPercent);
-
-    u16 listTopY = 32;
-    for (u32 entrance = 0; entrance < MAX_ITEM_LINES; ++entrance) {
-        u32 locIndex = entrance + allEntranceScroll;
-        if (locIndex >= itemCount) { break; }
-
-        u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * entrance * 2);
-        u32 itemPosY = locPosY + SPACING_SMALL_Y;
-
-        bool isDiscovered = IsEntranceDiscovered(rEntranceOverrides[locIndex].index);
-
-        u32 colorSrc = isDiscovered ? entrColors[GetEntranceData(rEntranceOverrides[locIndex].index)->type] : COLOR_WHITE;
-        u32 colorDst = isDiscovered ? entrColors[GetEntranceData(rEntranceOverrides[locIndex].overrideDestination)->type] : COLOR_WHITE;
-        const char* unknown = "???";
-
-        const char* origSrcName = GetEntranceData(rEntranceOverrides[locIndex].index)->name;
-        const char* origDstName = GetEntranceData(rEntranceOverrides[locIndex].destination)->name;
-        const char* rplcSrcName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceData(rEntranceOverrides[locIndex].override)->name : unknown;
-        const char* rplcDstName = gSettingsContext.ingameSpoilers || isDiscovered ? GetEntranceData(rEntranceOverrides[locIndex].overrideDestination)->name : unknown;
-
-        Draw_DrawFormattedString_Small(10, locPosY, colorSrc, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
-        Draw_DrawFormattedString_Small(10, itemPosY, colorDst, "  %s from %s", rplcDstName, rplcSrcName);
+        static const u8 squareWidth = 9;
+        u16 offsetY = 2;
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_OVERWORLD);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Overworld");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_INTERIOR);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Interior");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_GROTTO);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Grotto");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_DUNGEON);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Dungeon");
+        return;
     }
 
-    Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allEntranceScroll, itemCount, MAX_ITEM_LINES);
-}
+    EntranceOverride* entranceList = (ViewingGroups() && destListToggle) ? destList : rEntranceOverrides;
 
-static void Gfx_DrawERTrackerGroups(void) {
-    EntranceOverride* entranceList = destListToggle ? destList : rEntranceOverrides;
-
-    u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
-    u16 startIndex = gEntranceTrackingData.GroupOffsets[currentEntranceGroup];
+    u16 entranceCount = ViewingGroups() ? gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] : gEntranceTrackingData.EntranceCount;
+    u16 startIndex = ViewingGroups() ? gEntranceTrackingData.GroupOffsets[currentEntranceGroup] : 0;
+    s16* entranceScroll = ViewingGroups() ? &groupEntranceScroll : &allEntranceScroll;
 
     if (entranceCount > 0) {
-        // Gather up completed items to calculate how far along this group is
-        u16 completeItems = 0;
+        // Gather up discovered entrances to calculate how far along this group is
+        u16 discoveredEntrs = 0;
         for (u32 i = 0; i < entranceCount; ++i) {
             u32 locIndex = i + startIndex;
             if (IsEntranceDiscovered(entranceList[locIndex].index)) {
-                ++completeItems;
+                ++discoveredEntrs;
             }
         }
-        float groupPercent = ((float)completeItems / (float)entranceCount) * 100.0f;
-        Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, completeItems == entranceCount ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
+        float groupPercent = ((float)discoveredEntrs / (float)entranceCount) * 100.0f;
+        Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, discoveredEntrs == entranceCount ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
     }
 
-    u16 firstItem = groupEntranceScroll + 1;
-    u16 lastItem = groupEntranceScroll + MAX_ITEM_LINES;
-    if (lastItem > entranceCount) { lastItem = entranceCount; }
+    u16 firstEntr = *entranceScroll + 1;
+    u16 lastEntr = *entranceScroll + MAX_ENTRY_LINES;
+    if (lastEntr > entranceCount) { lastEntr = entranceCount; }
     Draw_DrawFormattedString(10, 16, COLOR_TITLE, "%s - (%d - %d) / %d",
-        spoilerEntranceGroupNames[currentEntranceGroup], firstItem, lastItem, entranceCount);
+        spoilerEntranceGroupNames[ViewingGroups() ? currentEntranceGroup : 0], firstEntr, lastEntr, entranceCount);
 
     u16 listTopY = 32;
-    for (u32 entrance = 0; entrance < MAX_ITEM_LINES; ++entrance) {
-        u32 locIndex = entrance + startIndex + groupEntranceScroll;
+    for (u32 entrance = 0; entrance < MAX_ENTRY_LINES; ++entrance) {
+        u32 locIndex = entrance + startIndex + *entranceScroll;
         if (entrance >= entranceCount) { break; }
 
         u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * entrance * 2);
-        u32 itemPosY = locPosY + SPACING_SMALL_Y;
+        u32 entrPosY = locPosY + SPACING_SMALL_Y;
 
         bool isDiscovered = IsEntranceDiscovered(entranceList[locIndex].index);
 
-        u32 colorSrc = isDiscovered ? entrColors[GetEntranceData(entranceList[locIndex].index)->type] : COLOR_WHITE;
-        u32 colorDst = isDiscovered ? entrColors[GetEntranceData(entranceList[locIndex].overrideDestination)->type] : COLOR_WHITE;
+        u32 origSrcColor = isDiscovered ? GetEntranceData(entranceList[locIndex].index)->color : COLOR_WHITE;
+        u32 origDstColor = isDiscovered ? GetEntranceData(entranceList[locIndex].destination)->color : COLOR_WHITE;
+        u32 rplcSrcColor = isDiscovered ? GetEntranceData(entranceList[locIndex].override)->color : COLOR_WHITE;
+        u32 rplcDstColor = isDiscovered ? GetEntranceData(entranceList[locIndex].overrideDestination)->color : COLOR_WHITE;
         const char* unknown = "???";
 
         const char* origSrcName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].index)->name : unknown;
@@ -638,11 +627,26 @@ static void Gfx_DrawERTrackerGroups(void) {
         const char* rplcSrcName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].override)->name : unknown;
         const char* rplcDstName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].overrideDestination)->name : unknown;
 
-        Draw_DrawFormattedString_Small(10, locPosY, colorSrc, "%s to %s %c", origSrcName, origDstName, RIGHT_ARROW_CHR);
-        Draw_DrawFormattedString_Small(10, itemPosY, colorDst, "  %s from %s", rplcDstName, rplcSrcName);
+        u16 offsetX = 0;
+        Draw_DrawFormattedString_Small(10, locPosY, origSrcColor, "%s", origSrcName);
+        offsetX += strlen(origSrcName) + 1;
+        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "to");
+        offsetX += strlen("to") + 1;
+        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, origDstColor, "%s", origDstName);
+        offsetX += strlen(origDstName) + 1;
+        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "%c", RIGHT_ARROW_CHR);
+
+        offsetX = 2;
+        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcDstColor, "%s", rplcDstName);
+        if (!isDiscovered || !GetEntranceData(entranceList[locIndex].overrideDestination)->oneExit) {
+            offsetX += strlen(rplcDstName) + 1;
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, COLOR_WHITE, "from");
+            offsetX += strlen("from") + 1;
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcSrcColor, "%s", rplcSrcName);
+        }
     }
 
-    Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupEntranceScroll, entranceCount, MAX_ITEM_LINES);
+    Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, *entranceScroll, entranceCount, MAX_ENTRY_LINES);
 }
 
 static void (*menu_draw_funcs[])(void) = {
@@ -652,8 +656,8 @@ static void (*menu_draw_funcs[])(void) = {
     Gfx_DrawSpoilerData,
     Gfx_DrawSpoilerAllItems,
     Gfx_DrawSpoilerItemGroups,
-    Gfx_DrawERTracker,
-    Gfx_DrawERTrackerGroups,
+    Gfx_DrawEntranceTracker,
+    Gfx_DrawEntranceTracker,
     Gfx_DrawOptions,
 };
 
@@ -684,7 +688,7 @@ static void Gfx_DrawHeader() {
 }
 
 static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
-    s16 maxScroll = itemCount > MAX_ITEM_LINES ? itemCount - MAX_ITEM_LINES : 0;
+    s16 maxScroll = itemCount > MAX_ENTRY_LINES ? itemCount - MAX_ENTRY_LINES : 0;
     current += scrollDelta;
     if (current < 0) { current = 0; }
     else if (current > maxScroll) { current = maxScroll; }
@@ -726,7 +730,12 @@ static void Gfx_ShowMenu(void) {
         handledInput = false;
         // Controls for spoiler log and all-items pages come first, as the user may have chosen
         // one of the directional buttons as their menu open/close button and we need to use them
-        if (curMenuIdx == 3 && gSpoilerData.SphereCount > 0) {
+        if (curMenuIdx == 1) {
+            if (pressed & BUTTON_A) {
+                showingLegend = !showingLegend;
+                handledInput = true;
+            }
+        } else if (curMenuIdx == 3 && gSpoilerData.SphereCount > 0) {
             // Spoiler log
             u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
             if (pressed & BUTTON_LEFT) {
@@ -756,32 +765,32 @@ static void Gfx_ShowMenu(void) {
             // All Items list
             u16 itemCount = gSpoilerData.ItemLocationsCount;
             if (pressed & BUTTON_LEFT) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ITEM_LINES * 10, itemCount);
+                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES * 10, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_RIGHT) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ITEM_LINES * 10, itemCount);
+                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES * 10, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_UP) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ITEM_LINES, itemCount);
+                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_DOWN) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ITEM_LINES, itemCount);
+                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES, itemCount);
                 handledInput = true;
             }
         } else if (curMenuIdx == 5 && gSpoilerData.ItemLocationsCount > 0) {
             // Grouped Items list
             u16 itemCount = gSpoilerData.GroupItemCounts[currentItemGroup];
             if (pressed & BUTTON_LEFT) {
-                groupItemsScroll = Gfx_Scroll(groupItemsScroll, -MAX_ITEM_LINES * 10, itemCount);
+                groupItemsScroll = Gfx_Scroll(groupItemsScroll, -MAX_ENTRY_LINES * 10, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_RIGHT) {
-                groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ITEM_LINES * 10, itemCount);
+                groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ENTRY_LINES * 10, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_UP) {
-                groupItemsScroll = Gfx_Scroll(groupItemsScroll, -MAX_ITEM_LINES, itemCount);
+                groupItemsScroll = Gfx_Scroll(groupItemsScroll, -MAX_ENTRY_LINES, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_DOWN) {
-                groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ITEM_LINES, itemCount);
+                groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ENTRY_LINES, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_A) {
                 NextItemGroup();
@@ -792,34 +801,39 @@ static void Gfx_ShowMenu(void) {
             }
         } else if (curMenuIdx == 6 && gEntranceTrackingData.EntranceCount > 0) {
             // Entrances list
-            u16 itemCount = gEntranceTrackingData.EntranceCount;
-            if (pressed & BUTTON_LEFT) {
-                allEntranceScroll = Gfx_Scroll(allEntranceScroll, -MAX_ITEM_LINES * 10, itemCount);
+            if (pressed & BUTTON_A) {
+                showingLegend = !showingLegend;
                 handledInput = true;
-            } else if (pressed & BUTTON_RIGHT) {
-                allEntranceScroll = Gfx_Scroll(allEntranceScroll, MAX_ITEM_LINES * 10, itemCount);
-                handledInput = true;
-            } else if (pressed & BUTTON_UP) {
-                allEntranceScroll = Gfx_Scroll(allEntranceScroll, -MAX_ITEM_LINES, itemCount);
-                handledInput = true;
-            } else if (pressed & BUTTON_DOWN) {
-                allEntranceScroll = Gfx_Scroll(allEntranceScroll, MAX_ITEM_LINES, itemCount);
-                handledInput = true;
+            } else if (!showingLegend) {
+                u16 entranceCount = gEntranceTrackingData.EntranceCount;
+                if (pressed & BUTTON_DOWN) {
+                    allEntranceScroll = Gfx_Scroll(allEntranceScroll, MAX_ENTRY_LINES, entranceCount);
+                    handledInput = true;
+                } else if (pressed & BUTTON_UP) {
+                    allEntranceScroll = Gfx_Scroll(allEntranceScroll, -MAX_ENTRY_LINES, entranceCount);
+                    handledInput = true;
+                } else if (pressed & BUTTON_RIGHT) {
+                    allEntranceScroll = Gfx_Scroll(allEntranceScroll, MAX_ENTRY_LINES * 10, entranceCount);
+                    handledInput = true;
+                } else if (pressed & BUTTON_LEFT) {
+                    allEntranceScroll = Gfx_Scroll(allEntranceScroll, -MAX_ENTRY_LINES * 10, entranceCount);
+                    handledInput = true;
+                }
             }
         } else if (curMenuIdx == 7 && gEntranceTrackingData.EntranceCount > 0) {
             // Grouped Entrances list
-            u16 itemCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
-            if (pressed & BUTTON_LEFT) {
-                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, -MAX_ITEM_LINES * 10, itemCount);
-                handledInput = true;
-            } else if (pressed & BUTTON_RIGHT) {
-                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, MAX_ITEM_LINES * 10, itemCount);
+            u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
+            if (pressed & BUTTON_DOWN) {
+                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, 1, entranceCount);
                 handledInput = true;
             } else if (pressed & BUTTON_UP) {
-                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, -MAX_ITEM_LINES, itemCount);
+                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, -1, entranceCount);
                 handledInput = true;
-            } else if (pressed & BUTTON_DOWN) {
-                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, MAX_ITEM_LINES, itemCount);
+            } else if (pressed & BUTTON_RIGHT) {
+                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, MAX_ENTRY_LINES, entranceCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_LEFT) {
+                groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, -MAX_ENTRY_LINES, entranceCount);
                 handledInput = true;
             } else if (pressed & BUTTON_A) {
                 NextEntranceGroup();
@@ -859,9 +873,6 @@ static void Gfx_ShowMenu(void) {
                         curMenuIdx = (ARR_SIZE(menu_draw_funcs) - 1);
                     }
                 } while (menu_draw_funcs[curMenuIdx] == NULL);
-                handledInput = true;
-            } else if (curMenuIdx == 1 && (pressed & BUTTON_A)) {
-                showingLegend = !showingLegend;
                 handledInput = true;
             }
         }

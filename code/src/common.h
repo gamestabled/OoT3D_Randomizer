@@ -3,6 +3,8 @@
 
 #include "../include/z3D/z3D.h"
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+
 #define SEQ_AUDIO_BLANK 0x1000142
 
 u32 Hash(u32);
