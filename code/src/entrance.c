@@ -350,22 +350,37 @@ void Entrance_CheckEpona() {
     //unset the Epona flag to avoid Master glitch, and restore temp B.
     if (gSettingsContext.shuffleOverworldEntrances && (PLAYER->stateFlags1 & 0x00800000)) {
 
-        static const s16 validEponaEntrances[13] = {
+        static const s16 validEponaEntrances[] = {
             0x0102, // Hyrule Field -> Lake Hylia
             0x0189, // Lake Hylia -> Hyrule Field
+            0x0309, // LH Fishing Hole -> LH Fishing Island
+            0x03CC, // LH Lab -> Lake Hylia
             0x0117, // Hyrule Field -> Gerudo Valley
             0x018D, // Gerudo Valley -> Hyrule Field
             0x0157, // Hyrule Field -> Lon Lon Ranch
             0x01F9, // Lon Lon Ranch -> Hyrule Field
+            0x01FD, // Market Entrance -> Hyrule Field
+            0x00EA, // ZR Front -> Hyrule Field
+            0x0181, // LW Bridge -> Hyrule Field
             0x0129, // GV Fortress Side -> Gerudo Fortress
             0x022D, // Gerudo Fortress -> GV Fortress Side
+            0x03D0, // GV Carpenter Tent -> GV Fortress Side
             0x0496, // Gerudo Fortress -> Thieves Hideout
+            0x042F, // LLR Stables -> Lon Lon Ranch
+            0x05D4, // LLR Tower -> Lon Lon Ranch
+            0x0378, // LLR Talons House -> Lon Lon Ranch
             0x028A, // LLR Southern Fence Jump
             0x028E, // LLR Western Fence Jump
             0x0292, // LLR Eastern Fence Jump
             0x0476, // LLR Front Gate Jump
+            // The following indices currently aren't randomized, but we'll list
+            // them in case they ever are. They're all Theives Hideout -> Gerudo Fortress
+            0x231,
+            0x235,
+            0x239,
+            0x2BA,
         };
-        for (size_t i = 0; i < 13; i++) {
+        for (size_t i = 0; i < ARRAY_SIZE(validEponaEntrances); i++) {
             // If the entrance is equal to any of the valid ones, return and
             // don't change anything
             if (entrance == validEponaEntrances[i]) {
