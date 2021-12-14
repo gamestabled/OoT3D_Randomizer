@@ -29,6 +29,7 @@ u32 rActiveItemGraphicId = 0;
 u32 rActiveItemFastChest = 0;
 
 static u8 rSatisfiedPendingFrames = 0;
+static u8 rSatisfiedPendingFramesWater = 0;
 
 void ItemOverride_Init(void) {
     while (rItemOverrides[rItemOverrides_Count].key.all != 0) {
@@ -257,6 +258,28 @@ static u32 ItemOverride_PlayerIsReady(void) {
     return 0;
 }
 
+static u32 ItemOverride_PlayerIsReadyInWater(void) {
+  if ((PLAYER->stateFlags1 & 0xF4AC2085) == 0 /*&& (PLAYER->actor.bgCheckFlags & 0x0001)*/ &&
+      (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
+      gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
+      gGlobalContext->actorCtx.titleCtx.alpha == 0 &&
+      (PLAYER->stateFlags1 & 0x08000000) != 0 && // Player is Swimming
+      (PLAYER->stateFlags2 & 0x400) != 0 && // Player is underwater
+      (PLAYER->stateFlags1 & 0x400) == 0 // Player is not already receiving an item when surfacing
+      // && (z64_event_state_1 & 0x20) == 0 //TODO
+      // && (z64_game.camera_2 == 0) //TODO
+  ) {
+      rSatisfiedPendingFramesWater++;
+  } else {
+      rSatisfiedPendingFramesWater = 0;
+  }
+  if (rSatisfiedPendingFramesWater >= 2) {
+      rSatisfiedPendingFramesWater = 0;
+      return 1;
+  }
+  return 0;
+}
+
 static void ItemOverride_TryPendingItem(void) {
     ItemOverride override = rPendingOverrideQueue[0];
 
@@ -286,6 +309,14 @@ void ItemOverride_Update(void) {
         } else {
             ItemOverride_TryPendingItem();
         }
+    } else if (ItemOverride_PlayerIsReadyInWater() && ItemOverride_IsAPendingOverride()) {
+        // Link receives an item when surfacing
+        PLAYER->stateFlags1 |= 0x400;
+        // Copied from decomp, puts Link into a cutscene state when floating up
+        // so players can't savewarp to miss the incoming override
+        PLAYER->stateFlags1 |= 0x20000800;
+        ItemOverride_TryPendingItem();
+        ItemOverride_PopPendingOverride();
     }
 }
 
