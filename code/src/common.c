@@ -45,3 +45,9 @@ u8 IsInGame(void) {
     return mode == 0 ||
         (mode == 1 && entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D);
 }
+
+void DebugPrintNumber(const char* message, int num) {
+    char buf[128];
+    int length = snprintf(buf, 128, message, num);
+    svcOutputDebugString(buf, length);
+}
