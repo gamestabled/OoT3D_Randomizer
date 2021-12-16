@@ -1255,6 +1255,7 @@ string_view GlitchISGDescDisabled                     = "Shortened to ISG, allow
                                                         "interrupting a crouch stab.";                     //
 string_view GlitchISGDescNovice                       = "ISG may be required to kill certain enemies,\n"   //
                                                         "or to Bomb Hover when enabled.";                  //
+string_view GlitchISGDescIntermediate                 = "";                                                //
 /* Hover */                                                                                                //
 string_view GlitchHoverDescDisabled                   = "Hovering allows Link to consecutively backflip\n" //
                                                         "in the air without falling. By shielding\n"       //
@@ -1455,3 +1456,8 @@ string_view GlitchForestBKSkipDesc                    = "Using the hookshot or b
                                                         "railing in the north of the lobby and get clipped\n"
                                                         "out of bounds. From here it is possible to jump\n"//
                                                         "into the boss loading zone.";                     //
+string_view GlitchFireGrunzClipDesc                   = "Grabbing a ledge in a corner partially clips Link\n"
+                                                        "through the wall. A bomb can be used to push Link\n"
+                                                        "fully through the wall to get out of bounds. This\n"
+                                                        "can be used in the fire temple along with hover\n"//
+                                                        "boots to skip hammer in the first room.";         //

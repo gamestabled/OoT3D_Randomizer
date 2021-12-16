@@ -687,7 +687,7 @@ namespace Settings {
 
   Option GlitchRestrictedItems    = Option::U8("Restricted Items",      GlitchDifficultyOptions(0b00001), { GlitchRestrictedItemsDescDisabled    , GlitchRestrictedItemsDescNovice                                                                                                                                                              });
   Option GlitchSuperStab          = Option::U8("Super Stab",            GlitchDifficultyOptions(0b00001), { GlitchSuperStabDescDisabled          , GlitchSuperStabDescNovice                                                                                                                                                                    });
-  Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00001), { GlitchISGDescDisabled                , GlitchISGDescNovice                                                                                                                                                                          });
+  Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00011), { GlitchISGDescDisabled                , GlitchISGDescNovice                , GlitchISGDescIntermediate                                                                                                                               });
   Option GlitchHover              = Option::U8("Bomb Hover",            GlitchDifficultyOptions(0b00111), { GlitchHoverDescDisabled              , GlitchHoverDescNovice              , GlitchHoverDescIntermediate              , GlitchHoverDescAdvanced                                                                                      });
   Option GlitchBombOI             = Option::U8("Ocarina Items (Bomb)",  GlitchDifficultyOptions(0b01111), { GlitchBombOIDescDisabled             , GlitchBombOIDescNovice             , GlitchBombOIDescIntermediate             , GlitchBombOIDescAdvanced             , GlitchBombOIDescExpert                                                });
   Option GlitchHoverBoost         = Option::U8("HoverBoost",            GlitchDifficultyOptions(0b00111), { GlitchHoverBoostDescDisabled         , GlitchHoverBoostDescNovice         , GlitchHoverBoostDescIntermediate         , GlitchHoverBoostDescAdvanced                                                                                 });
@@ -742,6 +742,7 @@ namespace Settings {
   Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"Off", "On"}, {GlitchModernHalfieDesc});
   Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {GlitchJabuSwitchDesc});
   Option GlitchForestBKSkip      = Option::Bool("Forest Temple\n  BK Skip",    {"Off", "On"}, {GlitchForestBKSkipDesc});
+  Option GlitchFireGrunzClip     = Option::Bool("Fire Temple\n  Grunz Clip",   {"Off", "On"}, {GlitchFireGrunzClipDesc});
   std::vector<Option*> miscGlitches = {
     &GlitchGVTentAsChild,
     &GlitchGFGuardSneak,
@@ -755,6 +756,7 @@ namespace Settings {
     &GlitchModernHalfie,
     &GlitchJabuSwitch,
     &GlitchForestBKSkip,
+    &GlitchFireGrunzClip,
   };
 
   Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories, false);

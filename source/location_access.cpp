@@ -560,7 +560,7 @@ void AreaTable_Init() {
                   Entrance(KOKIRI_FOREST,  {[]{return true;}}),
                   Entrance(HYRULE_FIELD,   {[]{return true;}}),
                   Entrance(THE_LOST_WOODS, {[]{return CanUse(LONGSHOT);},
-                                /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::NOVICE);}}),
+                                /*Glitched*/[]{return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[HYRULE_FIELD] = Area("Hyrule Field", "Hyrule Field", HYRULE_FIELD, DAY_NIGHT_CYCLE, {
@@ -921,7 +921,7 @@ void AreaTable_Init() {
                   Entrance(GF_OUTSIDE_GATE,   {[]{return true;}}),
                   Entrance(HAUNTED_WASTELAND, {[]{return CanUse(HOVER_BOOTS) || CanUse(LONGSHOT);},
                                    /*Glitched*/[]{return ((Bombs || HasBombchus) && CanSurviveDamage && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Hammer && (IsAdult || HammerAsChild) && CanShield && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::INTERMEDIATE)) ||
-                                                         (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED)) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE)) || GlitchItemlessWasteland;}}),
+                                                         (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED)) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) || GlitchItemlessWasteland;}}),
   });
 
   areaTable[HAUNTED_WASTELAND] = Area("Haunted Wasteland", "Haunted Wasteland", HAUNTED_WASTELAND, NO_DAY_NIGHT_CYCLE, {
@@ -941,7 +941,7 @@ void AreaTable_Init() {
                   Entrance(WASTELAND_NEAR_COLOSSUS, {[]{return LogicLensWasteland || CanUse(LENS_OF_TRUTH);}}),
                   Entrance(WASTELAND_NEAR_FORTRESS, {[]{return CanUse(HOVER_BOOTS) || CanUse(LONGSHOT);},
                                          /*Glitched*/[]{return ((Bombs || HasBombchus) && CanSurviveDamage && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Hammer && (IsAdult || HammerAsChild) && CanShield && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::INTERMEDIATE)) ||
-                                                               (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED)) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE)) || GlitchItemlessWasteland;}}),
+                                                               (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED)) || (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE)) || GlitchItemlessWasteland;}}),
   });
 
   areaTable[WASTELAND_NEAR_COLOSSUS] = Area("Wasteland Near Colossus", "Haunted Wasteland", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1122,7 +1122,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(HC_GS_STORMS_GROTTO,           {[]{return CanBlastOrSmash && HookshotOrBoomerang;},
-                                                     /*Glitched*/[]{return (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE)) || ((HasExplosives || (Hammer && (IsAdult || HammerAsChild))) && (HookshotOrBoomerang || (Boomerang && BoomerangAsAdult)));}}),
+                                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || ((HasExplosives || (Hammer && (IsAdult || HammerAsChild))) && (HookshotOrBoomerang || (Boomerang && BoomerangAsAdult)));}}),
                   LocationAccess(HC_STORMS_GROTTO_GOSSIP_STONE, {[]{return CanBlastOrSmash;},
                                                      /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
                 }, {
@@ -1980,7 +1980,7 @@ void AreaTable_Init() {
   areaTable[ZD_BEHIND_KING_ZORA] = Area("ZD Behind King Zora", "Zoras Domain", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(ZORAS_DOMAIN,   {[]{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) || (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult);},
-                                /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) || (CanUse(LONGSHOT) && CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
+                                /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) || (CanUse(LONGSHOT) && CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                   Entrance(ZORAS_FOUNTAIN, {[]{return true;}}),
   });
 
@@ -2332,7 +2332,7 @@ void AreaTable_Init() {
   areaTable[DEKU_TREE_BASEMENT_BACK_ROOM] = Area("Deku Tree Basement Back Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DEKU_TREE_GS_BASEMENT_BACK_ROOM, {[]{return HookshotOrBoomerang;},
-                                                       /*Glitched*/[]{return Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
+                                                       /*Glitched*/[]{return Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                 }, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_BACK_LOBBY, {[]{return true;}}),
@@ -2638,9 +2638,9 @@ void AreaTable_Init() {
   areaTable[JABU_JABUS_BELLY_MAIN_LOWER] = Area("Jabu Jabus Belly Main Lower", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER, {[]{return HookshotOrBoomerang;},
-                                                                /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
+                                                                /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                   LocationAccess(JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER, {[]{return HookshotOrBoomerang;},
-                                                                /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
+                                                                /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MAIN_UPPER,       {[]{return true;}}),
@@ -2683,7 +2683,7 @@ void AreaTable_Init() {
   areaTable[JABU_JABUS_BELLY_FORKED_CORRIDOR] = Area("Jabu Jabus Belly Forked Corridor", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MAIN_UPPER,     {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_BOOMERANG_ROOM, {[]{return true;}}), //TODO: Relies on Ruto, softlockable
+                  Entrance(JABU_JABUS_BELLY_BOOMERANG_ROOM, {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_MAP_ROOM,       {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_COMPASS_ROOM,   {[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return CanUse(BOOMERANG);});},
                                                  /*Glitched*/[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return Boomerang && BoomerangAsAdult;});}}),
@@ -2695,7 +2695,7 @@ void AreaTable_Init() {
 
   areaTable[JABU_JABUS_BELLY_BOOMERANG_ROOM] = Area("Jabu Jabus Belly Boomerang Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(JABU_JABUS_BELLY_BOOMERANG_CHEST, {[]{return true;}}), //TODO: Relies on Ruto, softlockable
+                  LocationAccess(JABU_JABUS_BELLY_BOOMERANG_CHEST, {[]{return true;}}),
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return true;}}),
@@ -2853,7 +2853,7 @@ void AreaTable_Init() {
                                                  /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::NOVICE) || (SongOfTime && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) ||
                                                                        ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))));}}),
                   Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER, {[]{return false;},
-                                                 /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::NOVICE) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
+                                                 /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::NOVICE) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                   Entrance(FOREST_TEMPLE_MAP_ROOM,          {[]{return true;}}),
                   Entrance(FOREST_TEMPLE_SEWER,             {[]{return GoldScale || CanUse(IRON_BOOTS) || HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER);}}),
                   Entrance(FOREST_TEMPLE_BOSS_ROOM,         {[]{return false;},
@@ -2888,7 +2888,7 @@ void AreaTable_Init() {
                   Entrance(FOREST_TEMPLE_NE_OUTDOORS_UPPER, {[]{return CanUse(LONGSHOT);}}),
                   Entrance(FOREST_TEMPLE_SEWER,             {[]{return GoldScale || CanUse(IRON_BOOTS) || HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER);}}),
                   Entrance(FOREST_TEMPLE_FALLING_ROOM,      {[]{return false;},
-                                                 /*Glitched*/[]{return Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
+                                                 /*Glitched*/[]{return Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
   });
 
   areaTable[FOREST_TEMPLE_NE_OUTDOORS_UPPER] = Area("Forest Temple NE Outdoors Upper", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
@@ -2955,13 +2955,13 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(FOREST_TEMPLE_WEST_CORRIDOR,            {[]{return true;}}),
                   Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER,        {[]{return CanUse(HOVER_BOOTS) || (LogicForestOutsideBackdoor && IsAdult && GoronBracelet);},
-                                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE));}}),
+                                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                   Entrance(FOREST_TEMPLE_NW_CORRIDOR_TWISTED,      {[]{return IsAdult && GoronBracelet && SmallKeys(ForestTempleKeys, 2);},
                                                         /*Glitched*/[]{return ((IsAdult && (Bow || Hookshot) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) ||
-                                                                               (Bombs && GoronBracelet && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE))) && SmallKeys(ForestTempleKeys, 2);}}),
+                                                                               (Bombs && GoronBracelet && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE))) && SmallKeys(ForestTempleKeys, 2);}}),
                   Entrance(FOREST_TEMPLE_NW_CORRIDOR_STRAIGHTENED, {[]{return CanUse(BOW) && GoronBracelet && SmallKeys(ForestTempleKeys, 2);},
                                                         /*Glitched*/[]{return ((CanUse(BOW) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) ||
-                                                                               (CanUse(SLINGSHOT) && Bombs && GoronBracelet && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE))) && SmallKeys(ForestTempleKeys, 2);}}),
+                                                                               (CanUse(SLINGSHOT) && Bombs && GoronBracelet && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE))) && SmallKeys(ForestTempleKeys, 2);}}),
   });
 
   areaTable[FOREST_TEMPLE_NW_CORRIDOR_TWISTED] = Area("Forest Temple NW Corridor Twisted", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3063,7 +3063,7 @@ void AreaTable_Init() {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_BASEMENT_CHEST, {[]{return true;}}),
                   LocationAccess(FOREST_TEMPLE_GS_BASEMENT,    {[]{return HookshotOrBoomerang;},
-                                                    /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
+                                                    /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_LOBBY,     {[]{return true;}}),
@@ -3084,6 +3084,302 @@ void AreaTable_Init() {
   }
 
   if (Dungeon::FireTemple.IsVanilla()) {
+  areaTable[FIRE_TEMPLE_FIRST_ROOM] = Area("Fire Temple First Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                }, {
+                  //Exits
+                  Entrance(FIRE_TEMPLE_ENTRYWAY,       {[]{return true;}}),
+                  Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, {[]{return LogicFewerTunicRequirements || CanUse(GORON_TUNIC);}}),
+                  Entrance(FIRE_TEMPLE_LOOP_ENEMIES,   {[]{return CanUse(MEGATON_HAMMER) && (SmallKeys(FireTempleKeys, 8) || !IsKeysanity);},
+                                            /*Glitched*/[]{return (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT) || (Hammer && HammerAsChild) ||
+                                                                  (GlitchFireGrunzClip && Bombs && CanUse(HOVER_BOOTS) && CanSurviveDamage)) && (SmallKeys(FireTempleKeys, 8) || !IsKeysanity);}}),
+                  Entrance(FIRE_TEMPLE_LOOP_EXIT,      {[]{return true;}}),
+                  Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM,  {[]{return SmallKeys(FireTempleKeys, 2) && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC));}}),
+  });
+
+  areaTable[FIRE_TEMPLE_NEAR_BOSS_ROOM] = Area("Fire Temple Near Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventAccess(&FairyPot, {[]{return FairyPot || (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT));}}),
+                }, {
+                  //Locations
+                  LocationAccess(FIRE_TEMPLE_NEAR_BOSS_CHEST, {[]{return true;}}),
+                }, {
+                  //Exits
+                  Entrance(FIRE_TEMPLE_FIRST_ROOM, {[]{return true;}}),
+                  Entrance(FIRE_TEMPLE_BOSS_ROOM,  {[]{return BossKeyFireTemple && (LogicFireBossDoorJump || CanUse(HOVER_BOOTS) ||
+                                                              Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return CanUse(MEGATON_HAMMER);}));},
+                                        /*Glitched*/[]{return BossKeyFireTemple && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
+                                                              (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
+                                                              Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return Hammer && HammerAsChild;}));}}),
+  });
+
+  areaTable[FIRE_TEMPLE_BOSS_ROOM] = Area("Fire Temple Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventAccess(&FireTempleClear, {[]{return FireTempleClear || (CanUse(GORON_TUNIC) && CanUse(MEGATON_HAMMER));},
+                                     /*Glitched*/[]{return CanUse(GORON_TUNIC) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
+                }, {
+                  //Locations
+                  LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, {[]{return FireTempleClear;}}),
+                  LocationAccess(VOLVAGIA,                   {[]{return FireTempleClear;}}),
+                }, {
+                  //Exits
+                  Entrance(FIRE_TEMPLE_ENTRYWAY, {[]{return FireTempleClear;}}),
+  });
+
+  areaTable[FIRE_TEMPLE_LOOP_ENEMIES] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_LOOP_TILES] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_LOOP_FLARE_DANCER] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_LOOP_GORON_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_LOOP_EXIT] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_BIG_LAVA_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_GORON] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_TILES] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_FIRE_PILLAR_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_SHORTCUT_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_BOULDER_MAZE_LOWER] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_BOULDER_MAZE_LOWER_SIDE_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_EAST_CENTRAL_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_FIRE_WALL_CHASE] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_MAP_AREA] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_BOULDER_MAZE_UPPER] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_SCARECROW_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_EAST_PEAK] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_CORRIDOR] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_FIRE_MAZE_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_FIRE_MAZE_UPPER] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_FIRE_MAZE_SIDE_ROOM] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_WEST_CENTRAL_LOWER] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_WEST_CENTRAL_UPPER] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_LATE_FIRE_MAZE] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_UPPER_FLARE_DANCER] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_WEST_CLIMB] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_WEST_PEAK] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_HAMMER_RETURN_PATH] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+  areaTable[FIRE_TEMPLE_ABOVE_FIRE_MAZE] = Area("Fire Temple xxx", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                }, {
+                  //Locations
+                }, {
+                  //Exits
+  });
+
+
+
+
+
+
+
+
   //Fire Temple logic currently assumes that the lowest locked door is unlocked from the start
   areaTable[FIRE_TEMPLE_LOWER] = Area("Fire Temple Lower", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
@@ -4604,7 +4900,7 @@ void AreaTable_Init() {
 
 namespace Areas {
 
-  static std::array<const AreaKey, 363> allAreas = {
+  static std::array<const AreaKey, 393> allAreas = {
     ROOT,
     ROOT_EXITS,
 
@@ -4865,10 +5161,41 @@ namespace Areas {
     FOREST_TEMPLE_BOSS_REGION,
     FOREST_TEMPLE_BOSS_ROOM,
 
-    FIRE_TEMPLE_LOWER,
+    FIRE_TEMPLE_FIRST_ROOM,
+    FIRE_TEMPLE_NEAR_BOSS_ROOM,
+    FIRE_TEMPLE_BOSS_ROOM,
+    FIRE_TEMPLE_LOOP_ENEMIES,
+    FIRE_TEMPLE_LOOP_TILES,
+    FIRE_TEMPLE_LOOP_FLARE_DANCER,
+    FIRE_TEMPLE_LOOP_GORON_ROOM,
+    FIRE_TEMPLE_LOOP_EXIT,
     FIRE_TEMPLE_BIG_LAVA_ROOM,
-    FIRE_TEMPLE_MIDDLE,
-    FIRE_TEMPLE_UPPER,
+    FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_GORON,
+    FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_TILES,
+    FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON,
+    FIRE_TEMPLE_FIRE_PILLAR_ROOM,
+    FIRE_TEMPLE_SHORTCUT_ROOM,
+    FIRE_TEMPLE_BOULDER_MAZE_LOWER,
+    FIRE_TEMPLE_BOULDER_MAZE_LOWER_SIDE_ROOM,
+    FIRE_TEMPLE_EAST_CENTRAL_ROOM,
+    FIRE_TEMPLE_FIRE_WALL_CHASE,
+    FIRE_TEMPLE_MAP_AREA,
+    FIRE_TEMPLE_BOULDER_MAZE_UPPER,
+    FIRE_TEMPLE_SCARECROW_ROOM,
+    FIRE_TEMPLE_EAST_PEAK,
+    FIRE_TEMPLE_CORRIDOR,
+    FIRE_TEMPLE_FIRE_MAZE_ROOM,
+    FIRE_TEMPLE_FIRE_MAZE_UPPER,
+    FIRE_TEMPLE_FIRE_MAZE_SIDE_ROOM,
+    FIRE_TEMPLE_WEST_CENTRAL_LOWER,
+    FIRE_TEMPLE_WEST_CENTRAL_UPPER,
+    FIRE_TEMPLE_LATE_FIRE_MAZE,
+    FIRE_TEMPLE_UPPER_FLARE_DANCER,
+    FIRE_TEMPLE_WEST_CLIMB,
+    FIRE_TEMPLE_WEST_PEAK,
+    FIRE_TEMPLE_HAMMER_RETURN_PATH,
+    FIRE_TEMPLE_ABOVE_FIRE_MAZE,
+
     WATER_TEMPLE_LOBBY,
     WATER_TEMPLE_HIGHEST_WATER_LEVEL,
     WATER_TEMPLE_DIVE,
