@@ -640,6 +640,11 @@ static void RandomizeDungeonRewards() {
   } else if (LinksPocketItem.Is(LINKSPOCKETITEM_DUNGEON_REWARD)) {
     //get 1 stone/medallion
     std::vector<ItemKey> rewards = FilterFromPool(ItemPool, [](const ItemKey i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    // If there are no remaining stones/medallions, then Link's pocket won't get one
+    if (rewards.empty()) {
+      PlaceItemInLocation(LINKS_POCKET, GREEN_RUPEE);
+      return;
+    }
     ItemKey startingReward = RandomElement(rewards, true);
 
     LinksPocketRewardBitMask = bitMaskTable[ItemTable(startingReward).GetItemID() - baseOffset];
