@@ -2107,7 +2107,7 @@ void HintTable_Init() {
 
     hintTable[HF_GS_COW_GROTTO] = HintText::Sometimes({
                        //obscure text
-                       Text{"a #spider behind webs# in a grotto holds", /*french*/"l'#araignée derrière une toile# dans une grotte donne", /*spanish*/"una #Skulltula tras la telaraña de una cueva otorga"},
+                       Text{"a #spider behind webs# in a grotto holds", /*french*/"l'#araignée derrière une toile# dans une grotte donne", /*spanish*/"una #Skulltula tras la telaraña# de una cueva otorga"},
   });
 
     hintTable[HF_COW_GROTTO_COW] = HintText::Sometimes({

@@ -41,7 +41,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
         // Spawn a Navi check spot
         if (!(gSaveContext.eventChkInf[4] & 0x0400)) { // Water Temple blue warp not cleared
-            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x173, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, 0x3DB2);
+            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x173, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, 0x3DB3);
         }
 
         actionCounter++;
