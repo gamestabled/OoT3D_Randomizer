@@ -563,4 +563,8 @@ typedef void (*Message_CloseTextbox_proc)(GlobalContext* globalCtx);
 #define Message_CloseTextbox_addr 0x3725E0
 #define Message_CloseTextbox ((Message_CloseTextbox_proc)Message_CloseTextbox_addr)
 
+typedef void (*SetupItemInWater_proc)(Player* player, GlobalContext* globalCtx);
+#define SetupItemInWater_addr 0x354894
+#define SetupItemInWater ((SetupItemInWater_proc)SetupItemInWater_addr)
+
 #endif //_Z3D_H_
