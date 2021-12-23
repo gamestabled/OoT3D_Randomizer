@@ -302,6 +302,7 @@ namespace Logic {
   extern bool ForestTempleAmy;
   extern bool ForestTempleMeg;
   extern bool ForestTempleAmyAndMeg;
+  extern bool FireLoopSwitch;
   extern bool TimeTravel;
 
   /* --- END OF HELPERS --- */
@@ -364,8 +365,8 @@ namespace Logic {
   bool CanPlay(bool song);
   bool CanUse(ItemKey itemName);
   bool HasProjectile(HasProjectileAge age);
-  bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
-  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched);
+  bool SmallKeys(Key dungeon, u8 requiredAmount);
+  bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitched);
   bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty);
   bool EventsUpdated();
   void LogicReset();

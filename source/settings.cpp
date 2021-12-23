@@ -558,7 +558,7 @@ namespace Settings {
   Option LogicSpiritWall                  = LogicTrick(" SpT Shifting Wall\n   w/ Nothing",           LogicSpiritWallDesc);
   Option LogicSpiritLobbyGS               = LogicTrick(" SpT Main Room GS\n   w/ Boomerang",          LogicSpiritLobbyGSDesc);
   Option LogicSpiritMapChest              = LogicTrick(" SpT Map Chest\n   w/ Bow",                   LogicSpiritMapChestDesc);
-  Option LogicSpiritSunChest              = LogicTrick(" SpT Sun Block Room\n   w/ Bow",              LogicSpiritSunChestDesc); //Needs Testing
+  Option LogicSpiritSunChest              = LogicTrick(" SpT Sun Block Room\n   w/ Bow",              LogicSpiritSunChestDesc);
   Option LogicShadowFireArrowEntry        = LogicTrick(" ShT Entry\n   w/ Fire Arrows",               LogicShadowFireArrowEntryDesc); //Needs Testing
   Option LogicShadowUmbrella              = LogicTrick(" ShT Stone Umbrella\n   w/ Hover Boots",      LogicShadowUmbrellaDesc);
   Option LogicShadowFreestandingKey       = LogicTrick(" ShT Skull Vase Key\n   w/ Bombchu",          LogicShadowFreestandingKeyDesc);
@@ -646,7 +646,7 @@ namespace Settings {
     &LogicSpiritWall,
     &LogicSpiritLobbyGS,
     &LogicSpiritMapChest,
-    //&LogicSpiritSunChest, Needs Testing
+    &LogicSpiritSunChest,
     //&LogicShadowFireArrowEntry, Needs Testing
     &LogicShadowUmbrella,
     &LogicShadowFreestandingKey,
@@ -737,7 +737,7 @@ namespace Settings {
   Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/\n  Jump Slash",     {"Off", "On"}, {GlitchZDOoBJumpSlashDesc});
   Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu\n  w/o Bottle",    {"Off", "On"}, {GlitchJabuStickRecoilDesc});
   Option GlitchJabuAdult         = Option::Bool("Enter Jabu\n  as Adult",      {"Off", "On"}, {GlitchJabuAdultDesc});
-  Option GlitchBlueFireWall      = Option::Bool("Break Walls\n  w/ Blue Fire", {"Off", "on"}, {GlitchBlueFireWallDesc});
+  Option GlitchBlueFireWall      = Option::Bool("Break Walls\n  w/ Blue Fire", {"Off", "On"}, {GlitchBlueFireWallDesc});
   Option GlitchClassicHalfie     = Option::Bool("Classic Halfie",              {"Off", "On"}, {GlitchClassicHalfieDesc});
   Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"Off", "On"}, {GlitchModernHalfieDesc});
   Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {GlitchJabuSwitchDesc});
@@ -1756,7 +1756,7 @@ namespace Settings {
           LogicWaterDragonAdult.SetSelectedIndex(1);
           LogicWaterDragonJumpDive.SetSelectedIndex(1);
           LogicSpiritWall.SetSelectedIndex(1);
-          //LogicSpiritSunChest.SetSelectedIndex(1);
+          LogicSpiritSunChest.SetSelectedIndex(1);
           //LogicShadowFireArrowEntry.SetSelectedIndex(1);
           LogicShadowUmbrella.SetSelectedIndex(1);
           LogicGtgWithoutHookshot.SetSelectedIndex(1);

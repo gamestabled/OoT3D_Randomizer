@@ -309,6 +309,7 @@ namespace Logic {
   bool ForestTempleAmy           = false;
   bool ForestTempleMeg           = false;
   bool ForestTempleAmyAndMeg     = false;
+  bool FireLoopSwitch            = false;
   bool LinksCow                  = false;
   bool AtDampeTime               = false;
   bool DeliverLetter             = false;
@@ -763,15 +764,63 @@ namespace Logic {
 
   }
 
-  bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
-    return (dungeonKeyCount >= requiredAmount);
+  bool SmallKeys(Key dungeon, u8 requiredAmount) {
+    return SmallKeys(dungeon, requiredAmount, requiredAmount);
   }
 
-  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
-    if (Settings::Logic.Is(LOGIC_GLITCHED) && GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE)) {
-      return (dungeonKeyCount >= requiredAmountGlitched);
-    } else {
-      return (dungeonKeyCount >= requiredAmountGlitchless);
+  bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
+    switch (dungeon) {
+      case FOREST_TEMPLE:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (GetDifficultyValueFromString(GlitchHookshotJump_Boots) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHoverBoost) >= static_cast<u8>(GlitchDifficulty::NOVICE) ||
+                                                  (GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::NOVICE) && GetDifficultyValueFromString(GlitchISG) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE)))) {
+          return ForestTempleKeys >= requiredAmountGlitched;
+        }
+        return ForestTempleKeys >= requiredAmountGlitchless;
+
+      case FIRE_TEMPLE:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (GetDifficultyValueFromString(GlitchLedgeClip) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) {
+          return FireTempleKeys >= requiredAmountGlitched;
+        }
+        return FireTempleKeys >= requiredAmountGlitchless;
+
+      case WATER_TEMPLE:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+          return WaterTempleKeys >= requiredAmountGlitched;
+        }
+        return WaterTempleKeys >= requiredAmountGlitchless;
+
+      case SPIRIT_TEMPLE:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+          return SpiritTempleKeys >= requiredAmountGlitched;
+        }
+        return SpiritTempleKeys >= requiredAmountGlitchless;
+
+      case SHADOW_TEMPLE:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE))) {
+          return ShadowTempleKeys >= requiredAmountGlitched;
+        }
+        return ShadowTempleKeys >= requiredAmountGlitchless;
+
+      case BOTTOM_OF_THE_WELL:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+          return BottomOfTheWellKeys >= requiredAmountGlitched;
+        }
+        return BottomOfTheWellKeys >= requiredAmountGlitchless;
+
+      case GERUDO_TRAINING_GROUNDS:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+          return GerudoTrainingGroundsKeys >= requiredAmountGlitched;
+        }
+        return GerudoTrainingGroundsKeys >= requiredAmountGlitchless;
+
+      case GANONS_CASTLE:
+        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+          return GanonsCastleKeys >= requiredAmountGlitched;
+        }
+        return GanonsCastleKeys >= requiredAmountGlitchless;
+
+      default:
+        return false;
     }
   }
 
@@ -1094,6 +1143,7 @@ namespace Logic {
      ForestTempleAmy           = false;
      ForestTempleMeg           = false;
      ForestTempleAmyAndMeg     = false;
+     FireLoopSwitch            = false;
      LinksCow                  = false;
      AtDampeTime               = false;
      DeliverLetter             = false;
