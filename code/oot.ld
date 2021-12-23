@@ -1156,6 +1156,10 @@ SECTIONS
 		*(.patch_InterfaceDrawDontSpoilTradeItems)
 	}
 
+	.patch_SunsSongEndCloseTextbox 0x45B514 : {
+		*(.patch_SunsSongEndCloseTextbox)
+	}
+
 	.patch_SetSunsSongRespawnFlag 0x45B660 : {
 		*(.patch_SetSunsSongRespawnFlag)
 	}
@@ -1212,10 +1216,6 @@ SECTIONS
 		*(.patch_SetBGMDayNight)
 	}
 
-	.patch_SetFWGrottoID 0x4911D4 : {
-		*(.patch_SetFWGrottoID)
-	}
-
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
 	}
@@ -1237,11 +1237,11 @@ SECTIONS
 	}
 
 	.patch_ReturnFWSetupGrottoInfo 0x496B88 : {
-		*(.patch_PlayerFWSetupGrottoInfo)
+		*(.patch_ReturnFWSetupGrottoInfo)
 	}
 
-	.patch_SetVoidoutRespawnFlag 0x496C70 : {
-		*(.patch_SetVoidoutRespawnFlag)
+	.patch_SetSpecialVoidOutRespawnFlag 0x496C70 : {
+		*(.patch_SetSpecialVoidOutRespawnFlag)
 	}
 
 	.patch_GanonBattleDeathWarp 0x496C98 : {

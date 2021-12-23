@@ -618,6 +618,13 @@ static void RandomizeDungeonRewards() {
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
     std::vector<ItemKey> rewards = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+
+    // If there are less than 9 dungeon rewards, prioritize the actual dungeons
+    // for placement instead of Link's Pocket
+    if (rewards.size() < 9) {
+      PlaceItemInLocation(LINKS_POCKET, GREEN_RUPEE);
+    }
+
     if (Settings::Logic.Is(LOGIC_VANILLA)) { //Place dungeon rewards in vanilla locations
       for (LocationKey loc : dungeonRewardLocations) {
         Location(loc)->PlaceVanillaItem();
@@ -640,6 +647,11 @@ static void RandomizeDungeonRewards() {
   } else if (LinksPocketItem.Is(LINKSPOCKETITEM_DUNGEON_REWARD)) {
     //get 1 stone/medallion
     std::vector<ItemKey> rewards = FilterFromPool(ItemPool, [](const ItemKey i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    // If there are no remaining stones/medallions, then Link's pocket won't get one
+    if (rewards.empty()) {
+      PlaceItemInLocation(LINKS_POCKET, GREEN_RUPEE);
+      return;
+    }
     ItemKey startingReward = RandomElement(rewards, true);
 
     LinksPocketRewardBitMask = bitMaskTable[ItemTable(startingReward).GetItemID() - baseOffset];

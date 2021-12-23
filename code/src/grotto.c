@@ -104,17 +104,17 @@ void Grotto_SetLoadOverride(s16 originalIndex, s16 overrideIndex) {
     grottoLoadList[id] = overrideIndex;
 }
 
-static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto, RespawnMode respawnMode) {
-  // Set necessary grotto return data
-  gSaveContext.respawn[respawnMode].entranceIndex = grotto.entranceIndex;
-  gSaveContext.respawn[respawnMode].roomIndex = grotto.room;
-  gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
-  gSaveContext.respawn[respawnMode].yaw = grotto.angle;
-  gSaveContext.respawn[respawnMode].pos = grotto.pos;
-  gSaveContext.respawn[respawnMode].tempSwchFlags = gGlobalContext->actorCtx.flags.tempSwch;
-  gSaveContext.respawn[respawnMode].tempCollectFlags = gGlobalContext->actorCtx.flags.tempCollect;
-
-  gSaveContext.respawnFlag = 1;
+static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto) {
+  // Set necessary grotto return data to the Entrance Point, so that voiding out and setting FW work correctly
+  gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = grotto.entranceIndex;
+  gSaveContext.respawn[RESPAWN_MODE_DOWN].roomIndex = grotto.room;
+  //TODO If Mixed Entrance Pool or decoupled entrances are active, reenable the line below:
+  //gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
+  gSaveContext.respawn[RESPAWN_MODE_DOWN].yaw = grotto.angle;
+  gSaveContext.respawn[RESPAWN_MODE_DOWN].pos = grotto.pos;
+  //TODO If Mixed Entrance Pool or decoupled entrances are active, set these flags to 0 instead of restoring them
+  gSaveContext.respawn[RESPAWN_MODE_DOWN].tempSwchFlags = gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags;
+  gSaveContext.respawn[RESPAWN_MODE_DOWN].tempCollectFlags = gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags;
 }
 
 // Translates and overrides the passed in entrance index if it corresponds to a
@@ -140,7 +140,7 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
     if (nextEntranceIndex >= 0x2000 && nextEntranceIndex < 0x2000 + NUM_GROTTOS) {
 
         GrottoReturnInfo grotto = grottoReturnTable[grottoId];
-        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
+        Grotto_SetupReturnInfo(grotto);
         gGlobalContext->fadeOutTransition = 3;
         gSaveContext.nextTransition = 3;
 
@@ -199,55 +199,32 @@ void Grotto_OverrideActorEntrance(Actor* thisx) {
 }
 
 // Set the respawn flag for when we want to return from a grotto entrance
-void Grotto_SetRespawnFlag(void) {
+// Used for Sun's Song and Game Over, which usually don't restore saved position data
+void Grotto_ForceGrottoReturn(void) {
     if (lastEntranceType == GROTTO_RETURN && gSettingsContext.shuffleGrottoEntrances == ON) {
         gSaveContext.respawnFlag = 2;
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
+        //Save the current temp flags in the grotto return point, so they'll properly keep their values.
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags = gGlobalContext->actorCtx.flags.tempSwch;
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags = gGlobalContext->actorCtx.flags.tempCollect;
     }
 }
 
-// This feels too hacky, but it's the only way I can get it to work.
-// For some reason, voiding out at DMT and respawning at grotto returns
-// won't damage Link, so we have to force it here
-void Grotto_SetRespawnFlagAndDamage(void) {
+// Used for the DMT special voids, which usually don't restore saved position data
+void Grotto_ForceRegularVoidOut(void) {
     if (lastEntranceType == GROTTO_RETURN && gSettingsContext.shuffleGrottoEntrances == ON) {
-        gSaveContext.respawnFlag = 2;
-        // This is only half damage of a normal voidout. For some reason the
-        // game runs it twice. So...*shrug*
-        Health_ChangeBy(gGlobalContext, -0x08);
+        gSaveContext.respawn[RESPAWN_MODE_DOWN] = gSaveContext.respawn[RESPAWN_MODE_RETURN];
+        gSaveContext.respawn[RESPAWN_MODE_DOWN].playerParams = 0x0DFF;
+        gSaveContext.respawnFlag = 1;
     }
 }
 
-void Grotto_StoreGrottoIDOnFWSet(void) {
-    if (gSaveContext.linkAge == AGE_ADULT) {
-        gExtSaveData.adultFWgrottoID = grottoId;
-    } else if (gSaveContext.linkAge == AGE_CHILD) {
-        gExtSaveData.childFWgrottoID = grottoId;
-    }
-}
-
-// When returning FW to a grotto return we want to set the data like
-// we normally would when loading from a loading zone
+// If returning to a FW point saved at a grotto exit, copy the FW data to the Grotto Return Point
+// so that Sun's Song and Game Over will behave correctly
 void Grotto_SetupReturnInfoOnFWReturn(void) {
-
     if (gSettingsContext.shuffleGrottoEntrances == ON) {
-        if (gSaveContext.linkAge == AGE_ADULT && gExtSaveData.adultFWgrottoID != 0xFF) {
-
-            grottoId = gExtSaveData.adultFWgrottoID;
-            gExtSaveData.adultFWgrottoID = 0xFF;
-
-        } else if (gSaveContext.linkAge == AGE_CHILD && gExtSaveData.childFWgrottoID != 0xFF) {
-
-            grottoId = gExtSaveData.childFWgrottoID;
-            gExtSaveData.childFWgrottoID = 0xFF;
-
-        } else {
-            return;
-        }
-
-        GrottoReturnInfo grotto = grottoReturnTable[grottoId];
-        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
-        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_RETURN);
+        gSaveContext.respawn[RESPAWN_MODE_RETURN] = gSaveContext.respawn[RESPAWN_MODE_TOP];
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
         lastEntranceType = GROTTO_RETURN;
-        gSaveContext.respawnFlag = 3;
     }
 }

@@ -51,7 +51,7 @@ namespace Music {
         /* NA_BGM_OCA_SARIA */          SEQ_OCARINA,
         /* NA_BGM_OCA_EPONA */          SEQ_OCARINA,
         /* NA_BGM_OCA_ZELDA */          SEQ_OCARINA,
-        /* NA_BGM_OCA_SUNMOON */        SEQ_OCARINA,
+        /* NA_BGM_OCA_SUNMOON */        SEQ_NOSHUFFLE, /* Remove Sun's Song from the Ocarina pool for now due to bugs */
         /* NA_BGM_OCA_TIME */           SEQ_OCARINA,
         /* NA_BGM_OCA_STORM */          SEQ_OCARINA,
         /* NA_BGM_NAVI */               SEQ_BGM_EVENT,

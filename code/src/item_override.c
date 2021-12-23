@@ -7,11 +7,15 @@
 #include "objects.h"
 #include "entrance.h"
 #include "savefile.h"
+#include "common.h"
 #include <stddef.h>
 
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
 #include "z3D/actors/z_en_item00.h"
+
+#define READY_ON_LAND 1
+#define READY_IN_WATER 2
 
 static ItemOverride rItemOverrides[640] = { 0 };
 static s32 rItemOverrides_Count = 0;
@@ -29,6 +33,7 @@ u32 rActiveItemGraphicId = 0;
 u32 rActiveItemFastChest = 0;
 
 static u8 rSatisfiedPendingFrames = 0;
+static u8 rSatisfiedPendingFramesWater = 0;
 
 void ItemOverride_Init(void) {
     while (rItemOverrides[rItemOverrides_Count].key.all != 0) {
@@ -238,7 +243,7 @@ void ItemOverride_AfterItemReceived(void) {
     ItemOverride_Clear();
 }
 
-static u32 ItemOverride_PlayerIsReady(void) {
+static u32 ItemOverride_PlayerIsReadyOnLand(void) {
     if ((PLAYER->stateFlags1 & 0xFCAC2485) == 0 && (PLAYER->actor.bgCheckFlags & 0x0001) &&
         (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
         gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
@@ -253,6 +258,38 @@ static u32 ItemOverride_PlayerIsReady(void) {
     if (rSatisfiedPendingFrames >= 2) {
         rSatisfiedPendingFrames = 0;
         return 1;
+    }
+    return 0;
+}
+
+static u32 ItemOverride_PlayerIsReadyInWater(void) {
+    if ((PLAYER->stateFlags1 & 0xF4AC2085) == 0 /*&& (PLAYER->actor.bgCheckFlags & 0x0001)*/ &&
+        (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
+        gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
+        gGlobalContext->actorCtx.titleCtx.alpha == 0 &&
+        (PLAYER->stateFlags1 & 0x08000000) != 0 && // Player is Swimming
+        (PLAYER->stateFlags2 & 0x400) != 0 && // Player is underwater
+        (PLAYER->stateFlags1 & 0x400) == 0 // Player is not already receiving an item when surfacing
+        // && (z64_event_state_1 & 0x20) == 0 //TODO
+        // && (z64_game.camera_2 == 0) //TODO
+    ) {
+        rSatisfiedPendingFramesWater++;
+    } else {
+        rSatisfiedPendingFramesWater = 0;
+    }
+    if (rSatisfiedPendingFramesWater >= 2) {
+        rSatisfiedPendingFramesWater = 0;
+        return 1;
+    }
+    return 0;
+}
+
+static u32 ItemOverride_PlayerIsReady(void) {
+    if (ItemOverride_PlayerIsReadyOnLand()) {
+        return READY_ON_LAND;
+    }
+    if (ItemOverride_PlayerIsReadyInWater()) {
+        return READY_IN_WATER;
     }
     return 0;
 }
@@ -279,12 +316,18 @@ void ItemOverride_Update(void) {
     ItemOverride_CheckZeldasLetter();
     IceTrap_Update();
     CustomModel_Update();
-    if (ItemOverride_PlayerIsReady()) {
+    u8 readyStatus = ItemOverride_PlayerIsReady();
+    if (readyStatus) {
         ItemOverride_PopIceTrap();
         if (IceTrap_IsPending()) {
             IceTrap_Give();
         } else {
             ItemOverride_TryPendingItem();
+            if (readyStatus == READY_IN_WATER) {
+                SetupItemInWater(PLAYER, gGlobalContext);
+                rDummyActor->parent = NULL;
+                ItemOverride_PopPendingOverride();
+            }
         }
     }
 }
