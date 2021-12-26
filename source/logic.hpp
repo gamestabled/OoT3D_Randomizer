@@ -191,6 +191,10 @@ namespace Logic {
   extern bool BuySeed;
   extern bool MagicRefill;
 
+  extern u8   PieceOfHeart;
+  extern u8   HeartContainer;
+  extern bool DoubleDefense;
+
   /* --- HELPERS --- */
   /* These are used to simplify reading the logic, but need to be updated
   /  every time a base value is updated.                       */
@@ -232,7 +236,7 @@ namespace Logic {
   extern bool HasBoots;
   extern bool IsChild;
   extern bool IsAdult;
-  //extern bool IsGlitched;
+  extern bool IsGlitched;
   extern bool CanBlastOrSmash;
   extern bool CanChildAttack;
   extern bool CanChildDamage;
@@ -254,6 +258,13 @@ namespace Logic {
   extern bool HookshotOrBoomerang;
   extern bool CanGetNightTimeGS;
   extern bool BigPoeKill;
+
+  extern u8   BaseHealth;
+  extern u8   Health;
+  extern u8   Multiplier;
+  extern u8   EffectiveHealth;
+  extern u8   FireTimer;
+  extern u8   WaterTimer;
 
   extern bool GuaranteeTradePath;
   extern bool GuaranteeHint;

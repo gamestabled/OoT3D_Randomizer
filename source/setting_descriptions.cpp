@@ -1414,6 +1414,10 @@ string_view GlitchSeamWalkDescAdvanced                = "";
 string_view GlitchSeamWalkDescExpert                  = "";
 string_view GlitchSeamWalkDescHero                    = "";
 /* Misc Glitches */                                                                                        //
+string_view GlitchWWTEscapeDesc                       = "Using deku nuts and the crawlspace to let you\n"  //
+                                                        "move while reading the nearby sign, you can walk\n"
+                                                        "through the Kokiri guarding the exit. This only\n"//
+                                                        "affects logic with shuffled entrances.";          //
 string_view GlitchGVTentAsChildDesc                   = "The loading zone for the carpenters' tent exists\n"
                                                         "in the child map despite the tent being removed.\n\n"
                                                         "With this setting enabled you may be expected to\n"

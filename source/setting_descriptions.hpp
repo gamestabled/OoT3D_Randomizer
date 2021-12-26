@@ -480,6 +480,7 @@ extern string_view GlitchSeamWalkDescAdvanced;
 extern string_view GlitchSeamWalkDescExpert;
 extern string_view GlitchSeamWalkDescHero;
 
+extern string_view GlitchWWTEscapeDesc;
 extern string_view GlitchGVTentAsChildDesc;
 extern string_view GlitchGFGuardSneakDesc;
 extern string_view GlitchItemlessWastelandDesc;

@@ -312,7 +312,8 @@ void AreaTable_Init() {
                   Entrance(KF_OUTSIDE_DEKU_TREE,  {[]{return IsAdult || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;},
                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(THE_LOST_WOODS,        {[]{return true;}}),
-                  Entrance(LW_BRIDGE_FROM_FOREST, {[]{return CanLeaveForest;}}),
+                  Entrance(LW_BRIDGE_FROM_FOREST, {[]{return IsAdult || OpenForest.IsNot(OPENFOREST_CLOSED) || DekuTreeClear;},
+                                       /*Glitched*/[]{return CanLeaveForest && (CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || GlitchWWTEscape);}}),
                   Entrance(KF_STORMS_GROTTO,      {[]{return CanOpenStormGrotto;},
                                        /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
   });
@@ -329,7 +330,8 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DEKU_TREE_ENTRYWAY, {[]{return IsChild || (ShuffleDungeonEntrances && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));},
                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE);}}),
-                  Entrance(KOKIRI_FOREST,      {[]{return true;}}),
+                  Entrance(KOKIRI_FOREST,      {[]{return IsAdult || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;},
+                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
   });
 
   areaTable[KF_LINKS_HOUSE] = Area("KF Link's House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1763,7 +1765,7 @@ void AreaTable_Init() {
                   Entrance(DMC_CENTRAL_NEARBY,       {[]{return CanUse(GORON_TUNIC) && CanUse(LONGSHOT) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && !NeedNayrusLove) || (Fairy && !ShuffleDungeonEntrances) || CanUse(NAYRUS_LOVE));}}),
                   Entrance(DMC_CENTRAL_LOCAL,        {[]{return false;},
                                           /*Glitched*/[]{return CanTakeDamage && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
-                  Entrance(DMC_LOWER_LOCAL,          {[]{return false;},
+                  Entrance(DMC_LOWER_NEARBY,         {[]{return false;},
                                           /*Glitched*/[]{return (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
   });
 

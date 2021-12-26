@@ -565,6 +565,7 @@ namespace Settings {
   extern Option GlitchLedgeClip;
   extern Option GlitchSeamWalk;
   //Misc Glitch Settings
+  extern Option GlitchWWTEscape;
   extern Option GlitchGVTentAsChild;
   extern Option GlitchGFGuardSneak;
   extern Option GlitchItemlessWasteland;

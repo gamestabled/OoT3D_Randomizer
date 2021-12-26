@@ -340,7 +340,7 @@ namespace Settings {
 
   std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
   std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
-                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts"};//,  "1 heart",   "2 hearts"}; // TODO: logic for lower health
+                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts",  "1 heart",   "2 hearts"}; // TODO: logic for lower health
   Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
   Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {startWithMaxRupeesDesc});
   Option StartingInventoryToggle  = Option::U8  ("Inventory",              {"All Off",          "All On",           "Choose"},                              {""});
@@ -730,6 +730,7 @@ namespace Settings {
     &GlitchSeamWalk,
   };
 
+  Option GlitchWWTEscape         = Option::Bool("WWT Kokiri\n  Forest Escape", {"Off", "On"}, {GlitchWWTEscapeDesc});
   Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent\n  as Child",   {"Off", "On"}, {GlitchGVTentAsChildDesc});
   Option GlitchGFGuardSneak      = Option::Bool("Sneak Past\n  the GF Guard",  {"Off", "On"}, {GlitchGFGuardSneakDesc});
   Option GlitchItemlessWasteland = Option::Bool("Cross the HW\n  w/o Items",   {"Off", "On"}, {GlitchItemlessWastelandDesc});
@@ -744,6 +745,7 @@ namespace Settings {
   Option GlitchForestBKSkip      = Option::Bool("Forest Temple\n  BK Skip",    {"Off", "On"}, {GlitchForestBKSkipDesc});
   Option GlitchFireGrunzClip     = Option::Bool("Fire Temple\n  Grunz Clip",   {"Off", "On"}, {GlitchFireGrunzClipDesc});
   std::vector<Option*> miscGlitches = {
+    &GlitchWWTEscape,
     &GlitchGVTentAsChild,
     &GlitchGFGuardSneak,
     &GlitchItemlessWasteland,

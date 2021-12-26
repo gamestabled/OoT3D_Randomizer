@@ -182,6 +182,9 @@ void GenerateStartingInventory() {
 
 void ApplyStartingInventory() {
   for (ItemKey item : StartingInventory) {
+    if (item == PIECE_OF_HEART || item == HEART_CONTAINER || item == TREASURE_GAME_HEART)
+      continue;
+
     ItemTable(item).ApplyEffect();
   }
 }
