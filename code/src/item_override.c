@@ -269,7 +269,10 @@ static u32 ItemOverride_PlayerIsReadyInWater(void) {
         gGlobalContext->actorCtx.titleCtx.alpha == 0 &&
         (PLAYER->stateFlags1 & 0x08000000) != 0 && // Player is Swimming
         (PLAYER->stateFlags2 & 0x400) != 0 && // Player is underwater
-        (PLAYER->stateFlags1 & 0x400) == 0 // Player is not already receiving an item when surfacing
+        (PLAYER->stateFlags1 & 0x400) == 0 && // Player is not already receiving an item when surfacing
+        gGlobalContext->sceneLoadFlag == 0 && // Another scene isn't about to be loaded
+        rPendingOverrideQueue[0].key.type == OVR_TEMPLE // Must be an item received for completing a dungeon
+        // && Multiworld is off
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
     ) {
