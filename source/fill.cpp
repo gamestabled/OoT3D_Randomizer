@@ -86,7 +86,7 @@ static bool UpdateToDAccess(Entrance* entrance, SearchMode mode) {
 }
 
 // Various checks that need to pass for the world to be validated as completable
-static void ValidateWorldChecks(SearchMode& mode, bool checkPoeCollectorAccess, bool checkOtherEntranceAccess) {
+static void ValidateWorldChecks(SearchMode& mode, bool checkPoeCollectorAccess, bool checkOtherEntranceAccess, std::vector<AreaKey>& areaPool) {
   // Condition for validating Temple of Time Access
   if (mode == SearchMode::TempleOfTimeAccess && ((Settings::ResolvedStartingAge == AGE_CHILD && AreaTable(TEMPLE_OF_TIME)->Adult()) || (Settings::ResolvedStartingAge == AGE_ADULT && AreaTable(TEMPLE_OF_TIME)->Child()) || !checkOtherEntranceAccess)) {
     mode = SearchMode::ValidStartingRegion;
@@ -116,6 +116,18 @@ static void ValidateWorldChecks(SearchMode& mode, bool checkPoeCollectorAccess, 
     std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
     for (ItemKey unplacedItem : itemsToPlace) {
       ItemTable(unplacedItem).ApplyEffect();
+    }
+    // Reset access as the non-starting age
+    if (Settings::ResolvedStartingAge == AGE_CHILD) {
+      for (AreaKey areaKey : areaPool) {
+        AreaTable(areaKey)->adultDay = false;
+        AreaTable(areaKey)->adultNight = false;
+      }
+    } else {
+      for (AreaKey areaKey : areaPool) {
+        AreaTable(areaKey)->childDay = false;
+        AreaTable(areaKey)->childNight = false;
+      }
     }
     mode = SearchMode::AllLocationsReachable;
   }
@@ -269,7 +281,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
         //Update Time of Day Access for the exit
         if (UpdateToDAccess(&exit, mode)) {
           ageTimePropogated = true;
-          ValidateWorldChecks(mode, checkPoeCollectorAccess, checkOtherEntranceAccess);
+          ValidateWorldChecks(mode, checkPoeCollectorAccess, checkOtherEntranceAccess, areaPool);
         }
 
         //If the exit is accessible and hasn't been added yet, add it to the pool
