@@ -1799,6 +1799,10 @@ namespace Settings {
         if (selectOptions) {
           worldOptions[i]->SetSelectedIndex(Random(0,worldOptions[i]->GetOptionCount()));
         }
+        // Sanity Check Closed Forest
+        if (OpenForest.Is(OPENFOREST_CLOSED)) {
+          StartingAge.SetSelectedIndex(AGE_CHILD);
+        }
       }
     }
     else {
@@ -1808,6 +1812,14 @@ namespace Settings {
         }
         worldOptions[i]->Unhide();
       }
+    }
+
+    // Sanity Check Entrance Shuffling
+    if (!ShuffleEntrances) {
+      ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+      ShuffleOverworldEntrances.SetSelectedIndex(OFF);
+      ShuffleInteriorEntrances.SetSelectedIndex(OFF);
+      ShuffleGrottoEntrances.SetSelectedIndex(OFF);
     }
 
     // Shuffle Settings

@@ -8,6 +8,7 @@
 #include "debug.hpp"
 #include "spoiler_log.hpp"
 #include "hints.hpp"
+#include "location_access.hpp"
 
 #include <unistd.h>
 
@@ -19,6 +20,8 @@
 std::list<EntranceOverride> entranceOverrides = {};
 bool noRandomEntrances = false;
 static bool entranceShuffleFailure = false;
+static int totalRandomizableEntrances = 0;
+static int curNumRandomizedEntrances = 0;
 
 typedef struct {
     EntranceType type;
@@ -36,6 +39,28 @@ using EntrancePair = std::pair<Entrance*, Entrance*>;
 //of python). It may be easier to understand the algorithm by looking at the
 //base randomizer's code instead:
 // https://github.com/TestRunnerSRL/OoT-Randomizer/blob/Dev/EntranceShuffle.py
+
+// Updates the user on how many entrances are currently shuffled
+static void DisplayEntranceProgress() {
+  std::string dots = ".";
+  float progress = (float)curNumRandomizedEntrances / (float)totalRandomizableEntrances;
+  if (progress > 0.33) {
+    dots += ".";
+  } else {
+    dots += " ";
+  }
+  if (progress > 0.66) {
+    dots += ".";
+  } else {
+    dots += " ";
+  }
+  printf("\x1b[7;29H%s", dots.c_str());
+  #ifdef ENABLE_DEBUG
+    if (curNumRandomizedEntrances == totalRandomizableEntrances) {
+      Areas::DumpWorldGraph("Finish Validation");
+    }
+  #endif
+}
 
 void SetAllEntrancesData(std::vector<EntranceInfoPair>& entranceShuffleTable) {
   for (auto& entrancePair: entranceShuffleTable) {
@@ -108,7 +133,7 @@ static std::array<std::vector<Entrance*>, 2> SplitEntrancesByRequirements(std::v
     ItemTable(unplacedItem).ApplyEffect();
   }
   // run a search to see what's accessible
-  GetAccessibleLocations(allLocations);
+  GetAccessibleLocations({});
 
   for (Entrance* entrance : entrancesToSplit) {
     // if an entrance is accessible at all times of day by both ages, it's a soft entrance with no restrictions
@@ -225,16 +250,20 @@ static bool EntranceUnreachableAs(Entrance* entrance, u8 age, std::vector<Entran
 static bool ValidateWorld(Entrance* entrancePlaced) {
   PlacementLog_Msg("Validating world\n");
 
+  //check certain conditions when certain types of ER are enabled
+  EntranceType type = EntranceType::None;
+  if (entrancePlaced != nullptr) {
+    type = entrancePlaced->GetType();
+  }
+
+  bool checkPoeCollectorAccess  = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) && (entrancePlaced == nullptr /*|| Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF)*/ ||
+                                 type == EntranceType::Interior || type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop);
+  bool checkOtherEntranceAccess = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL) /*|| Settings::ShuffleOverworldSpawns*/) && (entrancePlaced == nullptr /*|| Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF)*/ ||
+                                 type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop);
+
   // Check to make sure all locations are still reachable
   Logic::LogicReset();
-  std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
-  for (ItemKey unplacedItem : itemsToPlace) {
-    ItemTable(unplacedItem).ApplyEffect();
-  }
-  GetAccessibleLocations(allLocations, SearchMode::AllLocationsReachable);
-  if (!allLocationsReachable) {
-    return false;
-  }
+  GetAccessibleLocations({}, SearchMode::ValidateWorld, "", checkPoeCollectorAccess, checkOtherEntranceAccess);
 
   // if not world.decouple_entrances:
   // Unless entrances are decoupled, we don't want the player to end up through certain entrances as the wrong age
@@ -281,12 +310,6 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
       }
     }
 
-  //check certain conditions when certain types of ER are enabled
-  EntranceType type = EntranceType::None;
-  if (entrancePlaced != nullptr) {
-    type = entrancePlaced->GetType();
-  }
-
   if (Settings::ShuffleInteriorEntrances.IsNot(SHUFFLEINTERIORS_OFF) && Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS) &&
   (entrancePlaced == nullptr || type == EntranceType::Interior || type == EntranceType::SpecialInterior)) {
     //When cows are shuffled, ensure both Impa's House entrances are in the same hint area because the cow is reachable from both sides
@@ -301,67 +324,43 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
     }
   }
 
-  if ((Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL) /*|| spawnPositions*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
-  type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
-    //At least one valid starting region with all basic refills should be reachable without using any items at the beginning of the seed
-    Logic::LogicReset();
-    GetAccessibleLocations({});
-    if (!AreaTable(KOKIRI_FOREST)->HasAccess() && !AreaTable(KAKARIKO_VILLAGE)->HasAccess()) {
-      PlacementLog_Msg("Invalid starting area\n");
-      return false;
+  // If all locations aren't reachable, that means that one of the conditions failed when searching
+  if (!allLocationsReachable) {
+    if (checkOtherEntranceAccess) {
+      // At least one valid starting region with all basic refills should be reachable without using any items at the beginning of the seed
+      if (!AreaTable(KOKIRI_FOREST)->HasAccess() && !AreaTable(KAKARIKO_VILLAGE)->HasAccess()) {
+        PlacementLog_Msg("Invalid starting area\n");
+        return false;
+      }
+
+      // Check that a region where time passes is always reachable as both ages without having collected any items
+      if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
+        PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
+        return false;
+      }
+
+      // The player should be able to get back to ToT after going through time, without having collected any items
+      // This is important to ensure that the player never loses access to the pedestal after going through time
+      if (Settings::ResolvedStartingAge == AGE_CHILD && !AreaTable(TEMPLE_OF_TIME)->Adult()) {
+        PlacementLog_Msg("Path to Temple of Time as adult is not guaranteed\n");
+        return false;
+      } else if (Settings::ResolvedStartingAge == AGE_ADULT && !AreaTable(TEMPLE_OF_TIME)->Child()) {
+        PlacementLog_Msg("Path to Temple of Time as child is not guaranteed\n");
+        return false;
+      }
     }
 
-    //Check that a region where time passes is always reachable as both ages without having collected any items
-    Logic::LogicReset();
-    GetAccessibleLocations({}, SearchMode::BothAgesNoItems);
-    if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
-      PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
-      return false;
+    // The Big Poe shop should always be accessible as adult without the need to use any bottles
+    // This is important to ensure that players can never lock their only bottles by filling them with Big Poes they can't sell
+    if (checkPoeCollectorAccess) {
+      if (!AreaTable(MARKET_GUARD_HOUSE)->Adult()) {
+        PlacementLog_Msg("Big Poe Shop access is not guarenteed as adult\n");
+        return false;
+      }
     }
-
-    //Check that the region is still accessible with the opposite starting time of day
-    //This is to ensure that time passing does not lock out access to all areas that can pass time
-    u8 startTime = Settings::StartingTime.Value<u8>();
-    if (startTime == STARTINGTIME_DAY) {
-      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_NIGHT);
-    } else {
-      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_DAY);
-    }
-
-    //run the search again
-    Logic::LogicReset();
-    GetAccessibleLocations({}, SearchMode::BothAgesNoItems);
-    if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
-      PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
-      return false;
-    }
-
-    //set the Starting Time setting back to what it originally was
-    Settings::StartingTime.SetSelectedIndex(startTime);
-
-    // The player should be able to get back to ToT after going through time, without having collected any items
-    // This is important to ensure that the player never loses access to the pedestal after going through time
-    if (Settings::ResolvedStartingAge == AGE_CHILD && !AreaTable(TEMPLE_OF_TIME)->Adult()) {
-      PlacementLog_Msg("Path to Temple of Time as adult is not guaranteed\n");
-      return false;
-    } else if (Settings::ResolvedStartingAge == AGE_ADULT && !AreaTable(TEMPLE_OF_TIME)->Child()) {
-      PlacementLog_Msg("Path to Temple of Time as child is not guaranteed\n");
-      return false;
-    }
+    PlacementLog_Msg("All Locations NOT REACHABLE\n");
+    return false;
   }
-
-  // The Big Poe shop should always be accessible as adult without the need to use any bottles
-  // This is important to ensure that players can never lock their only bottles by filling them with Big Poes they can't sell
-  if ((Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
-  type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
-    Logic::LogicReset();
-    GetAccessibleLocations({}, SearchMode::PoeCollectorAccess);
-    if (!AreaTable(MARKET_GUARD_HOUSE)->Adult()) {
-      PlacementLog_Msg("Big Poe Shop access is not guarenteed as adult\n");
-      return false;
-    }
-  }
-
   return true;
 }
 
@@ -372,13 +371,28 @@ static bool ReplaceEntrance(Entrance* entrance, Entrance* target, std::vector<En
   }
   ChangeConnections(entrance, target);
   if (ValidateWorld(entrance)) {
+    #ifdef ENABLE_DEBUG
+      std::string ticks = std::to_string(svcGetSystemTick());
+      auto message = "Dumping World Graph at " + ticks + "\n";
+      //PlacementLog_Msg(message);
+      //Areas::DumpWorldGraph(ticks);
+    #endif
     rollbacks.push_back(EntrancePair{entrance, target});
+    curNumRandomizedEntrances++;
+    DisplayEntranceProgress();
     return true;
   } else {
+    #ifdef ENABLE_DEBUG
+      std::string ticks = std::to_string(svcGetSystemTick());
+      auto message = "Dumping World Graph at " + ticks + "\n";
+      //PlacementLog_Msg(message);
+      //Areas::DumpWorldGraph(ticks);
+    #endif
     if (entrance->GetConnectedRegionKey() != NONE) {
       RestoreConnections(entrance, target);
     }
   }
+  DisplayEntranceProgress();
   return false;
 }
 
@@ -424,8 +438,12 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
   int retries = 20;
   while (retries > 0) {
     if (retries != 20) {
-      auto message = "Failed to connect entrances. Retrying " + std::to_string(retries) + " more times.\n";
-      PlacementLog_Msg(message);
+      #ifdef ENABLE_DEBUG
+        std::string ticks = std::to_string(svcGetSystemTick());
+        auto message = "Failed to connect entrances. Retrying " + std::to_string(retries) + " more times.\nDumping World Graph at " + ticks + "\n";
+        PlacementLog_Msg(message);
+        Areas::DumpWorldGraph(ticks);
+      #endif
     }
     retries--;
 
@@ -439,12 +457,14 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
       if(!success) {
         for (auto& pair : rollbacks) {
           RestoreConnections(pair.first, pair.second);
+          curNumRandomizedEntrances--;
         }
         continue;
       }
     } else {
       for (auto& pair : rollbacks) {
         RestoreConnections(pair.first, pair.second);
+        curNumRandomizedEntrances--;
       }
       continue;
     }
@@ -464,6 +484,9 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
 
 //Process for setting up the shuffling of all entrances to be shuffled
 int ShuffleAllEntrances() {
+
+  totalRandomizableEntrances = 0;
+  curNumRandomizedEntrances = 0;
 
   std::vector<EntranceInfoPair> entranceShuffleTable = {
                                    //Parent Region                     Connected Region                  index   blue warp
@@ -603,7 +626,7 @@ int ShuffleAllEntrances() {
     {{EntranceType::GrottoGrave,     KAKARIKO_VILLAGE,                 KAK_REDEAD_GROTTO,                0x100B},
      {EntranceType::GrottoGrave,     KAK_REDEAD_GROTTO,                KAKARIKO_VILLAGE,                 0x200B}},
     {{EntranceType::GrottoGrave,     HYRULE_CASTLE_GROUNDS,            HC_STORMS_GROTTO,                 0x100C},
-     {EntranceType::GrottoGrave,     HC_STORMS_GROTTO,                 HYRULE_CASTLE_GROUNDS,            0x200C}},
+     {EntranceType::GrottoGrave,     HC_STORMS_GROTTO,                 CASTLE_GROUNDS,                   0x200C}},
     {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_TEKTITE_GROTTO,                0x100D},
      {EntranceType::GrottoGrave,     HF_TEKTITE_GROTTO,                HYRULE_FIELD,                     0x200D}},
     {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_NEAR_KAK_GROTTO,               0x100E},
@@ -759,12 +782,16 @@ int ShuffleAllEntrances() {
     entrancePools[EntranceType::Overworld] = GetShuffleableEntrances(EntranceType::Overworld, excludeOverworldReverse);
     // if not worlds[0].decouple_entrances:
     //     entrance_pools['Overworld'].remove(world.get_entrance('GV Lower Stream -> Lake Hylia'))
+    if (!excludeOverworldReverse) {
+      totalRandomizableEntrances -= 26; //Only count each overworld entrance once
+    }
   }
 
   //Set shuffled entrances as such
   for (auto& pool : entrancePools) {
     for (Entrance* entrance : pool.second) {
       entrance->SetAsShuffled();
+      totalRandomizableEntrances++;
       if (entrance->GetReverse() != nullptr) {
         entrance->GetReverse()->SetAsShuffled();
       }

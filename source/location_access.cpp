@@ -11,6 +11,8 @@
 #include "entrance.hpp"
 
 #include <unistd.h>
+#include <fstream>
+#include <iostream>
 
 using namespace Logic;
 using namespace Settings;
@@ -102,9 +104,9 @@ Area::Area(std::string regionName_, std::string scene_, u32 hintKey_,
 
 Area::~Area() = default;
 
-bool Area::UpdateEvents() {
+bool Area::UpdateEvents(SearchMode mode) {
 
-  if (timePass) {
+  if (timePass && mode != SearchMode::TimePassAccess) {
     if (Child()) {
       childDay = true;
       childNight = true;
@@ -996,7 +998,7 @@ void AreaTable_Init() {
                   LocationAccess(HC_STORMS_GROTTO_GOSSIP_STONE, {[]{return CanBlastOrSmash;}}),
                 }, {
                   //Exits
-                  Entrance(HYRULE_CASTLE_GROUNDS, {[]{return true;}}),
+                  Entrance(CASTLE_GROUNDS, {[]{return true;}}),
   });
 
   areaTable[GANONS_CASTLE_GROUNDS] = Area("Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -4152,6 +4154,56 @@ namespace Areas {
       }
     }
     return false;
+  }
+
+  // Will dump a file which can be turned into a visual graph using graphviz
+  // https://graphviz.org/download/
+  // Use command: dot -Tsvg <filename> -o world.svg
+  // Then open in a browser and CTRL + F to find the area of interest
+  void DumpWorldGraph(std::string str) {
+    std::ofstream worldGraph;
+    worldGraph.open (str + ".dot");
+    worldGraph << "digraph {\n\tcenter=true;\n";
+
+    for (const AreaKey areaKey : allAreas) {
+      auto area = AreaTable(areaKey);
+      for (auto exit : area->exits) {
+        if (exit.GetConnectedRegion()->regionName != "Invalid Area") {
+          std::string parent = exit.GetParentRegion()->regionName;
+          if (area->childDay) {
+            parent += " CD";
+          }
+          if (area->childNight) {
+            parent += " CN";
+          }
+          if (area->adultDay) {
+            parent += " AD";
+          }
+          if (area->adultNight) {
+            parent += " AN";
+          }
+          Area* connected = exit.GetConnectedRegion();
+          auto connectedStr = connected->regionName;
+          if (connected->childDay) {
+            connectedStr += " CD";
+          }
+          if (connected->childNight) {
+            connectedStr += " CN";
+          }
+          if (connected->adultDay) {
+            connectedStr += " AD";
+          }
+          if (connected->adultNight) {
+            connectedStr += " AN";
+          }
+          worldGraph << "\t\"" + parent + "\"[shape=\"plain\"];\n";
+          worldGraph << "\t\"" + connectedStr + "\"[shape=\"plain\"];\n";
+          worldGraph << "\t\"" + parent + "\" -> \"" + connectedStr + "\"\n";
+        }
+      }
+    }
+    worldGraph << "}";
+    worldGraph.close();
   }
 
 } //namespace Areas
