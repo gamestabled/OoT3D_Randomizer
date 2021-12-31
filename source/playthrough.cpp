@@ -49,7 +49,7 @@ namespace Playthrough {
         VanillaFill(); //Just place items in their vanilla locations
       }
       else { //Fill locations with logic
-        int ret = Fill(); 
+        int ret = Fill();
         if (ret < 0) {
           return ret;
         }
@@ -92,6 +92,7 @@ namespace Playthrough {
         repeatedSeed = rand() % 0xFFFFFFFF;
         Settings::seed = std::to_string(repeatedSeed);
         CitraPrint("testing seed: " + Settings::seed);
+        ClearProgress();
         Playthrough_Init(std::hash<std::string>{}(Settings::seed));
         PlacementLog_Clear();
         printf("\x1b[15;15HSeeds Generated: %d\n", i + 1);

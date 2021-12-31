@@ -180,6 +180,11 @@ void GenerateStartingInventory() {
   }
 }
 
+bool StartingInventoryHasBottle() {
+  ItemKey bottle = EMPTY_BOTTLE;
+  return ElementInContainer(bottle, StartingInventory);
+}
+
 void ApplyStartingInventory() {
   for (ItemKey item : StartingInventory) {
     ItemTable(item).ApplyEffect();
