@@ -1330,8 +1330,6 @@ void AreaTable_Init() {
                   Entrance(KAKARIKO_VILLAGE,             {[]{return true;}}),
                   Entrance(GRAVEYARD_WARP_PAD_REGION,    {[]{return false;},
                                               /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE);}}),
-                  Entrance(SHADOW_TEMPLE_ENTRYWAY,       {[]{return false;},
-                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[GRAVEYARD_SHIELD_GRAVE] = Area("Graveyard Shield Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1388,7 +1386,8 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(THE_GRAVEYARD,             {[]{return true;}}),
-                  Entrance(SHADOW_TEMPLE_ENTRYWAY,    {[]{return CanUse(DINS_FIRE) || (LogicShadowFireArrowEntry && CanUse(FIRE_ARROWS));}}),
+                  Entrance(SHADOW_TEMPLE_ENTRYWAY,    {[]{return CanUse(DINS_FIRE) || (LogicShadowFireArrowEntry && CanUse(FIRE_ARROWS));},
+                                           /*Glitched*/[]{return (CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE)) && CanTakeDamage;}}),
   });
 
   areaTable[KAK_BEHIND_GATE] = Area("Kak Behind Gate", "Kakariko Village", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3785,7 +3784,6 @@ namespace Areas {
     ROOT,
     ROOT_EXITS,
 
-    // Below is ordered for entrance tracker groups
     KOKIRI_FOREST,
     KF_LINKS_HOUSE,
     KF_MIDOS_HOUSE,
@@ -3954,7 +3952,6 @@ namespace Areas {
     GANONS_CASTLE_GROUNDS,
     OGC_GREAT_FAIRY_FOUNTAIN,
     GANONS_CASTLE_ENTRYWAY,
-    // Above is ordered for entrance tracker groups
 
     DEKU_TREE_LOBBY,
     DEKU_TREE_SLINGSHOT_ROOM,

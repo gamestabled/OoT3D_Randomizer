@@ -72,7 +72,7 @@ namespace Settings {
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
   Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {"0","1","2","3","4","5","6","7","8","9","10","11","12", "Random"},{mqDungeonCountDesc});
   u8 MQSet;
-  bool DungeonModesKnown;
+  bool DungeonModesKnown[12];
   Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {setDungeonTypesDesc});
   Option MQDeku                    = Option::U8  ("  Deku Tree",            {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
   Option MQDodongo                 = Option::U8  ("  Dodongo's Cavern",     {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
@@ -994,7 +994,9 @@ namespace Settings {
     ctx.ganonsCastleDungeonMode          = GanonsCastle.IsMQ()          ? 1 : 0;
     ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
 
-    ctx.dungeonModesKnown = DungeonModesKnown;
+    for (u8 i = 0; i < sizeof(ctx.dungeonModesKnown); ++i) {
+      ctx.dungeonModesKnown[i] = DungeonModesKnown[i];
+    }
 
     ctx.forestTrialSkip = (ForestTrial.IsSkipped()) ? 1 : 0;
     ctx.fireTrialSkip   = (FireTrial.IsSkipped())   ? 1 : 0;
@@ -1808,6 +1810,10 @@ namespace Settings {
         if (selectOptions) {
           worldOptions[i]->SetSelectedIndex(Random(0,worldOptions[i]->GetOptionCount()));
         }
+        // Sanity Check Closed Forest
+        if (OpenForest.Is(OPENFOREST_CLOSED)) {
+          StartingAge.SetSelectedIndex(AGE_CHILD);
+        }
       }
     }
     else {
@@ -1903,6 +1909,8 @@ namespace Settings {
 
       for (size_t i = 0; i < dungeons.size(); i++) {
         dungeons[i]->ClearMQ();
+        // Dungeon mode assumed known at first
+        DungeonModesKnown[i] = true;
 
         switch (dungeonOptions[i]->Value<u8>()) {
           case 1:
@@ -1913,15 +1921,14 @@ namespace Settings {
           case 2:
             // Track indexes of dungeons set to random
             randMQOption.push_back(i);
+            // Dungeon mode will be unknown for this dungeon
+            DungeonModesKnown[i] = false;
             break;
         }
       }
 
       // Add more MQ dungeons from the pool set to random until the MQ dungeon count is reached
       Shuffle(randMQOption);
-
-      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
-      DungeonModesKnown = randMQOption.size() == 0;
 
       if (MQSet == 13) {
         MQSet = dungeonCount + Random(0, randMQOption.size() + 1);
@@ -1940,8 +1947,12 @@ namespace Settings {
         dungeons[i]->ClearMQ();
       }
 
-      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
-      DungeonModesKnown = MQSet == 0;
+      // If we won't be randomly choosing any MQ dungeons, or if we'll be setting
+      // all dungeons to MQ, dungeon modes are assumed known
+      bool allDungeonModesKnown = MQSet == 0 || MQSet == dungeons.size();
+      for (u8 i = 0; i < sizeof(DungeonModesKnown); ++i) {
+        DungeonModesKnown[i] = allDungeonModesKnown;
+      }
 
       //Set appropriate amount of MQ dungeons
       if (MQSet == 13) {

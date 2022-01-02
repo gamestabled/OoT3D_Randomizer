@@ -648,7 +648,7 @@ hook_SetGameOverEntrance:
 .global hook_SetGameOverRespawnFlag
 hook_SetGameOverRespawnFlag:
     push {r0-r12, lr}
-    bl Grotto_SetRespawnFlag
+    bl Grotto_ForceGrottoReturn
     pop {r0-r12, lr}
     cmp r8,#0x3
     bx lr
@@ -656,15 +656,22 @@ hook_SetGameOverRespawnFlag:
 .global hook_SetSunsSongRespawnFlag
 hook_SetSunsSongRespawnFlag:
     push {r0-r12, lr}
-    bl Grotto_SetRespawnFlag
+    bl Grotto_ForceGrottoReturn
     pop {r0-r12, lr}
     cpy r0,r6
     bx lr
 
-.global hook_SetVoidoutRespawnFlag
-hook_SetVoidoutRespawnFlag:
+.global hook_SunsSongEndCloseTextbox
+hook_SunsSongEndCloseTextbox:
     push {r0-r12, lr}
-    bl Grotto_SetRespawnFlagAndDamage
+    bl Settings_SunsSongEndCloseTextbox
+    pop {r0-r12, lr}
+    b 0x45B518
+
+.global hook_SetSpecialVoidOutRespawnFlag
+hook_SetSpecialVoidOutRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_ForceRegularVoidOut
     pop {r0-r12, lr}
     mov r1,#0x104
     bx lr
@@ -1200,14 +1207,6 @@ hook_ReturnFWSetupGrottoInfo:
     bl Grotto_SetupReturnInfoOnFWReturn
     pop {r0-r12, lr}
     add sp,sp,#0x8
-    bx lr
-
-.global hook_SetFWGrottoID
-hook_SetFWGrottoID:
-    push {r0-r12, lr}
-    bl Grotto_StoreGrottoIDOnFWSet
-    pop {r0-r12, lr}
-    add r1,r7,#0x400
     bx lr
 
 .section .loader
