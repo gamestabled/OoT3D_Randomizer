@@ -1814,6 +1814,14 @@ namespace Settings {
       }
     }
 
+    // Sanity Check Entrance Shuffling
+    if (!ShuffleEntrances) {
+      ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+      ShuffleOverworldEntrances.SetSelectedIndex(OFF);
+      ShuffleInteriorEntrances.SetSelectedIndex(OFF);
+      ShuffleGrottoEntrances.SetSelectedIndex(OFF);
+    }
+
     // Shuffle Settings
     if (RandomizeShuffle) {
       // Still displays if previously locked
