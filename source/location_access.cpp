@@ -1677,7 +1677,7 @@ void AreaTable_Init() {
                   Entrance(GC_SHOP,              {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && (HasExplosives || GoronBracelet || GoronCityChildFire));},
                                       /*Glitched*/[]{return IsChild && ((Sticks && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild));}}),
                   Entrance(GC_DARUNIAS_CHAMBER,  {[]{return (IsAdult && StopGCRollingGoronAsAdult) || GCDaruniasDoorOpenChild;}}),
-                  Entrance(GC_GROTTO,            {[]{return IsAdult && ((CanPlay(SongOfTime) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && !NeedNayrusLove) || CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) || (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && CanUse(GORON_TUNIC) && CanUse(HOOKSHOT)) || (CanUse(NAYRUS_LOVE) && CanUse(HOOKSHOT)));},
+                  Entrance(GC_GROTTO,            {[]{return IsAdult && ((CanPlay(SongOfTime) && ((EffectiveHealth > 2) || CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) || (EffectiveHealth > 1 && CanUse(GORON_TUNIC) && CanUse(HOOKSHOT)) || (CanUse(NAYRUS_LOVE) && CanUse(HOOKSHOT)));},
                                       /*Glitched*/[]{return HasBombchus && ((IsChild && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
   });
 
@@ -1746,27 +1746,26 @@ void AreaTable_Init() {
                   Entrance(DMC_UPPER_LOCAL,       {[]{return CanUse(GORON_TUNIC);}}),
                   Entrance(DEATH_MOUNTAIN_SUMMIT, {[]{return true;}}),
                   Entrance(DMC_UPPER_GROTTO,      {[]{return Here(DMC_UPPER_NEARBY, []{return CanBlastOrSmash;});},
-                                       /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return (Sticks && (IsChild || StickAsAdult) && (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) || ((Fairy || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}})
+                                       /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return (Sticks && (IsChild || StickAsAdult) && ((CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) && FireTimer >= 3) || ((Fairy || FireTimer >= 6) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}})
   });
 
   areaTable[DMC_UPPER_LOCAL] = Area("DMC Upper Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || (HasExplosives && CanSummonGossipFairyWithoutSuns);}}),
+                  EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || (HasExplosives && CanSummonGossipFairyWithoutSuns && FireTimer > 2);}}),
                 }, {
                   //Locations
-                  LocationAccess(DMC_WALL_FREESTANDING_POH, {[]{return true;}}),
+                  LocationAccess(DMC_WALL_FREESTANDING_POH, {[]{return FireTimer > 1;}}),
                   LocationAccess(DMC_GS_CRATE,              {[]{return IsChild && CanChildAttack;},
                                                  /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
-                  LocationAccess(DMC_GOSSIP_STONE,          {[]{return HasExplosives;}}),
+                  LocationAccess(DMC_GOSSIP_STONE,          {[]{return HasExplosives && FireTimer > 1;}}),
                 }, {
                   //Exits
                   Entrance(DMC_UPPER_NEARBY,         {[]{return true;}}),
-                  Entrance(DMC_LADDER_AREA_NEARBY,   {[]{return true;}}),
-                  Entrance(DMC_CENTRAL_NEARBY,       {[]{return CanUse(GORON_TUNIC) && CanUse(LONGSHOT) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && !NeedNayrusLove) || (Fairy && !ShuffleDungeonEntrances) || CanUse(NAYRUS_LOVE));}}),
-                  Entrance(DMC_CENTRAL_LOCAL,        {[]{return false;},
-                                          /*Glitched*/[]{return CanTakeDamage && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
+                  Entrance(DMC_LADDER_AREA_NEARBY,   {[]{return FireTimer > 1;}}),
+                  Entrance(DMC_CENTRAL_NEARBY,       {[]{return CanUse(GORON_TUNIC) && CanUse(DISTANT_SCARECROW) && ((EffectiveHealth > 2) || (Fairy && !ShuffleDungeonEntrances) || CanUse(NAYRUS_LOVE));},
+                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)) && CanTakeDamage && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
                   Entrance(DMC_LOWER_NEARBY,         {[]{return false;},
-                                          /*Glitched*/[]{return (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
+                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[DMC_LADDER_AREA_NEARBY] = Area("DMC Ladder Area Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1775,8 +1774,8 @@ void AreaTable_Init() {
                                       /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
                 }, {
                   //Exits
-                  Entrance(DMC_UPPER_NEARBY, {[]{return IsAdult;}}),
-                  Entrance(DMC_LOWER_NEARBY, {[]{return CanUse(HOVER_BOOTS) || (LogicCraterUpperToLower && CanUse(MEGATON_HAMMER));}}),
+                  Entrance(DMC_UPPER_NEARBY, {[]{return FireTimer > 2;}}),
+                  Entrance(DMC_LOWER_NEARBY, {[]{return FireTimer > 2 && CanUse(HOVER_BOOTS) || (LogicCraterUpperToLower && CanUse(MEGATON_HAMMER));}}),
   });
 
   areaTable[DMC_LOWER_NEARBY] = Area("DMC Lower Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
