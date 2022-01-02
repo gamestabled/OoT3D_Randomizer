@@ -11,6 +11,8 @@
 #include "entrance.hpp"
 
 #include <unistd.h>
+#include <fstream>
+#include <iostream>
 
 using namespace Logic;
 using namespace Settings;
@@ -102,9 +104,9 @@ Area::Area(std::string regionName_, std::string scene_, u32 hintKey_,
 
 Area::~Area() = default;
 
-bool Area::UpdateEvents() {
+bool Area::UpdateEvents(SearchMode mode) {
 
-  if (timePass) {
+  if (timePass && mode != SearchMode::TimePassAccess) {
     if (Child()) {
       childDay = true;
       childNight = true;
@@ -997,7 +999,7 @@ void AreaTable_Init() {
                   LocationAccess(HC_STORMS_GROTTO_GOSSIP_STONE, {[]{return CanBlastOrSmash;}}),
                 }, {
                   //Exits
-                  Entrance(HYRULE_CASTLE_GROUNDS, {[]{return true;}}),
+                  Entrance(CASTLE_GROUNDS, {[]{return true;}}),
   });
 
   areaTable[GANONS_CASTLE_GROUNDS] = Area("Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1326,8 +1328,6 @@ void AreaTable_Init() {
                   Entrance(KAKARIKO_VILLAGE,             {[]{return true;}}),
                   Entrance(GRAVEYARD_WARP_PAD_REGION,    {[]{return false;},
                                               /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE);}}),
-                  Entrance(SHADOW_TEMPLE_ENTRYWAY,       {[]{return false;},
-                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[GRAVEYARD_SHIELD_GRAVE] = Area("Graveyard Shield Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1384,7 +1384,8 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(THE_GRAVEYARD,             {[]{return true;}}),
-                  Entrance(SHADOW_TEMPLE_ENTRYWAY,    {[]{return CanUse(DINS_FIRE) || (LogicShadowFireArrowEntry && CanUse(FIRE_ARROWS));}}),
+                  Entrance(SHADOW_TEMPLE_ENTRYWAY,    {[]{return CanUse(DINS_FIRE) || (LogicShadowFireArrowEntry && CanUse(FIRE_ARROWS));},
+                                           /*Glitched*/[]{return (CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE)) && CanTakeDamage;}}),
   });
 
   areaTable[KAK_BEHIND_GATE] = Area("Kak Behind Gate", "Kakariko Village", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3781,7 +3782,6 @@ namespace Areas {
     ROOT,
     ROOT_EXITS,
 
-    // Below is ordered for entrance tracker groups
     KOKIRI_FOREST,
     KF_LINKS_HOUSE,
     KF_MIDOS_HOUSE,
@@ -3950,7 +3950,6 @@ namespace Areas {
     GANONS_CASTLE_GROUNDS,
     OGC_GREAT_FAIRY_FOUNTAIN,
     GANONS_CASTLE_ENTRYWAY,
-    // Above is ordered for entrance tracker groups
 
     DEKU_TREE_LOBBY,
     DEKU_TREE_SLINGSHOT_ROOM,
@@ -4156,6 +4155,56 @@ namespace Areas {
       }
     }
     return false;
+  }
+
+  // Will dump a file which can be turned into a visual graph using graphviz
+  // https://graphviz.org/download/
+  // Use command: dot -Tsvg <filename> -o world.svg
+  // Then open in a browser and CTRL + F to find the area of interest
+  void DumpWorldGraph(std::string str) {
+    std::ofstream worldGraph;
+    worldGraph.open (str + ".dot");
+    worldGraph << "digraph {\n\tcenter=true;\n";
+
+    for (const AreaKey areaKey : allAreas) {
+      auto area = AreaTable(areaKey);
+      for (auto exit : area->exits) {
+        if (exit.GetConnectedRegion()->regionName != "Invalid Area") {
+          std::string parent = exit.GetParentRegion()->regionName;
+          if (area->childDay) {
+            parent += " CD";
+          }
+          if (area->childNight) {
+            parent += " CN";
+          }
+          if (area->adultDay) {
+            parent += " AD";
+          }
+          if (area->adultNight) {
+            parent += " AN";
+          }
+          Area* connected = exit.GetConnectedRegion();
+          auto connectedStr = connected->regionName;
+          if (connected->childDay) {
+            connectedStr += " CD";
+          }
+          if (connected->childNight) {
+            connectedStr += " CN";
+          }
+          if (connected->adultDay) {
+            connectedStr += " AD";
+          }
+          if (connected->adultNight) {
+            connectedStr += " AN";
+          }
+          worldGraph << "\t\"" + parent + "\"[shape=\"plain\"];\n";
+          worldGraph << "\t\"" + connectedStr + "\"[shape=\"plain\"];\n";
+          worldGraph << "\t\"" + parent + "\" -> \"" + connectedStr + "\"\n";
+        }
+      }
+    }
+    worldGraph << "}";
+    worldGraph.close();
   }
 
 } //namespace Areas
