@@ -351,25 +351,17 @@ static void WriteExcludedLocations(tinyxml2::XMLDocument& spoilerLog) {
 static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
   auto parentNode = spoilerLog.NewElement("starting-inventory");
 
-  std::vector<std::vector<Option *>*> startingInventoryOptions = {
-    &Settings::startingItemsOptions,
-    &Settings::startingSongsOptions,
-    &Settings::startingEquipmentOptions,
-    &Settings::startingStonesMedallionsOptions,
-  };
-
-  for (std::vector<Option *>* menu : startingInventoryOptions) {
-    for (size_t i = 0; i < menu->size(); ++i) {
-      const auto setting = menu->at(i);
-      //Ignore no starting bottles and the Choose/All On toggles
-      if (setting->GetSelectedOptionIndex() == 0) {
-        continue;
-      }
-
-      auto node = parentNode->InsertNewChildElement("item");
-      node->SetAttribute("name", setting->GetName().c_str());
-      node->SetText(setting->GetSelectedOptionText().c_str());
+  // Start at index 3 to skip over the toggle, "Start with Consumables", and "Start with Max Rupees".
+  for (size_t i = 3; i < Settings::startingInventoryOptions.size(); ++i) {
+    const auto setting = Settings::startingInventoryOptions[i];
+    //Ignore no starting bottles and the Choose/All On toggles
+    if (setting->GetSelectedOptionIndex() == STARTINGBOTTLE_NONE || setting->GetSelectedOptionText() == "Choose" || setting->GetSelectedOptionText() == "All On") {
+      continue;
     }
+
+    auto node = parentNode->InsertNewChildElement("item");
+    node->SetAttribute("name", setting->GetName().c_str());
+    node->SetText(setting->GetSelectedOptionText().c_str());
   }
 
   if (!parentNode->NoChildren()) {
