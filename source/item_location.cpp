@@ -1472,9 +1472,10 @@ void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmed
   itemsPlaced++;
   if (showItemProgress) {
     double completion = (double) itemsPlaced / (double)(allLocations.size() + dungeonRewardLocations.size());
-    printf("\x1b[8;10HPlacing Items.");
-    if (completion > 0.25) printf(".");
-    if (completion > 0.50) printf(".");
+    std::string message = "\x1b[8;10HPlacing Items.";
+    message += completion > 0.25 ? "." : " ";
+    message += completion > 0.50 ? "." : " ";
+    printf("%s", message.c_str());
   }
 
   //If we're placing a non-shop item in a shop location, we want to record it for custom messages

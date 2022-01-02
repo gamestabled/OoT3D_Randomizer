@@ -7,6 +7,7 @@
 #include "logic.hpp"
 #include "hint_list.hpp"
 #include "keys.hpp"
+#include "fill.hpp"
 
 typedef bool (*ConditionFn)();
 
@@ -140,7 +141,7 @@ public:
     bool adultNight = false;
     bool addedToPool = false;
 
-    bool UpdateEvents();
+    bool UpdateEvents(SearchMode mode);
 
     void AddExit(AreaKey parentKey, AreaKey newExitKey, ConditionFn condition);
 
@@ -222,6 +223,7 @@ namespace Areas {
   extern void AccessReset();
   extern void ResetAllLocations();
   extern bool HasTimePassAccess(u8 age);
+  extern void DumpWorldGraph(std::string str);
 } //namespace Exits
 
 void  AreaTable_Init();
