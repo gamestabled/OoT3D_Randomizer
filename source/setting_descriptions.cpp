@@ -157,8 +157,8 @@ string_view shuffleEntrancesDesc      = "Shuffle where the entrances between are
 ------------------------------*/                                                           //
 string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, including\n"
                                         "Bottom of the Well, Ice Cavern, and Gerudo\n"     //
-                                        "Training Grounds. However, Ganon's Castle is not\n"
-                                        "shuffled.\n"                                      //
+                                        "Training Grounds. Shuffling Ganon's Castle can\n" //
+                                        "be enabled separately.\n"                         //
                                         "\n"                                               //
                                         "Additionally, the entrances of Deku Tree, Fire\n" //
                                         "Temple and Bottom of the Well are opened for both\n"

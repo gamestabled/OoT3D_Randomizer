@@ -512,6 +512,8 @@ int ShuffleAllEntrances() {
      {EntranceType::Dungeon,         ICE_CAVERN_ENTRYWAY,              ZORAS_FOUNTAIN,                   0x03D4}},
     {{EntranceType::Dungeon,         GERUDO_FORTRESS,                  GERUDO_TRAINING_GROUNDS_ENTRYWAY, 0x0008},
      {EntranceType::Dungeon,         GERUDO_TRAINING_GROUNDS_ENTRYWAY, GERUDO_FORTRESS,                  0x03A8}},
+    {{EntranceType::GanonDungeon,    GANONS_CASTLE_GROUNDS,            GANONS_CASTLE_ENTRYWAY,           0x0467},
+     {EntranceType::GanonDungeon,    GANONS_CASTLE_ENTRYWAY,           GANONS_CASTLE_GROUNDS,            0x023D}},
 
     {{EntranceType::Interior,        KOKIRI_FOREST,                    KF_MIDOS_HOUSE,                   0x0433},
      {EntranceType::Interior,        KF_MIDOS_HOUSE,                   KOKIRI_FOREST,                    0x0443}},
@@ -746,15 +748,18 @@ int ShuffleAllEntrances() {
   //warpsongs
 
   //Shuffle Dungeon Entrances
-  if (Settings::ShuffleDungeonEntrances) {
+  if (Settings::ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) {
     entrancePools[EntranceType::Dungeon] = GetShuffleableEntrances(EntranceType::Dungeon);
-
+	//Add Ganon's Castle, if set to On + Ganon
+    if (Settings::ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_GANON)) {
+      AddElementsToPool(entrancePools[EntranceType::Dungeon], GetShuffleableEntrances(EntranceType::GanonDungeon));
+    }
     //If forest is closed don't allow a forest escape via spirit temple hands
     if (Settings::OpenForest.Is(OPENFOREST_CLOSED)) {
       FilterAndEraseFromPool(entrancePools[EntranceType::Dungeon], [](const Entrance* entrance){return entrance->GetParentRegionKey()    == KF_OUTSIDE_DEKU_TREE &&
                                                                                                        entrance->GetConnectedRegionKey() == DEKU_TREE_ENTRYWAY;});
     }
-
+	
     //decoupled entrances stuff
   }
 

@@ -20,6 +20,7 @@ enum class EntranceType {
     Spawn,
     WarpSong,
     Dungeon,
+    GanonDungeon,
     Interior,
     SpecialInterior,
     GrottoGrave,
