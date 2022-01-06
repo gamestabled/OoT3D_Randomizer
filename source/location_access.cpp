@@ -2794,7 +2794,7 @@ void AreaTable_Init() {
                   EventAccess(&ForestTrialClear, {[]{return CanUse(LIGHT_ARROWS) && (FireArrows || DinsFire);}}),
                 }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST, {[]{return IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE);}}),
+                  LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST, {[]{return IsAdult || CanChildDamage;}}),
   }, {});
 
   areaTable[GANONS_CASTLE_FIRE_TRIAL] = Area("Ganon's Castle Fire Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -2824,7 +2824,7 @@ void AreaTable_Init() {
 
   areaTable[GANONS_CASTLE_SPIRIT_TRIAL] = Area("Ganon's Castle Spirit Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&NutPot,           {[]{return NutPot || ((LogicSpiritTrialHookshot || CanUse(HOOKSHOT)) && HasBombchus && Bow && MirrorShield);}}),
+                  EventAccess(&NutPot,           {[]{return NutPot || ((LogicSpiritTrialHookshot || CanUse(HOOKSHOT)) && HasBombchus && Bow && MirrorShield && IsAdult);}}),
                   EventAccess(&SpiritTrialClear, {[]{return CanUse(LIGHT_ARROWS)  && MirrorShield && HasBombchus && (LogicSpiritTrialHookshot || CanUse(HOOKSHOT));}}),
                 }, {
                   //Locations
@@ -3716,7 +3716,7 @@ void AreaTable_Init() {
                   EventAccess(&BlueFireAccess,  {[]{return BlueFireAccess || HasBottle;}}),
   }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_MQ_WATER_TRIAL_CHEST, {[]{return BlueFire && (IsAdult || IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives);}}),
+                  LocationAccess(GANONS_CASTLE_MQ_WATER_TRIAL_CHEST, {[]{return BlueFire && (IsAdult || CanUse(STICKS) || KokiriSword || CanUseProjectile);}}),
   }, {});
 
   areaTable[GANONS_CASTLE_MQ_SHADOW_TRIAL] = Area("Ganon's Castle MQ Shadow Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -3736,12 +3736,12 @@ void AreaTable_Init() {
                   EventAccess(&NutPot,           {[]{return NutPot || (Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield);}}),
   }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,             {[]{return Bow && Hammer;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,         {[]{return Bow && Hammer && HasBombchus && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH));}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST,    {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST,     {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST,  {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST,    {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,             {[]{return IsAdult && Bow && Hammer;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,         {[]{return IsAdult && Bow && Hammer && HasBombchus && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH));}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST,    {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST,     {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST,  {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST,    {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
   }, {});
 
   areaTable[GANONS_CASTLE_MQ_LIGHT_TRIAL] = Area("Ganon's Castle MQ Light Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
