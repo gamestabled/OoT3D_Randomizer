@@ -362,7 +362,7 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Water level control system."+NEWLINE()+CENTER_TEXT()+"Keep away!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Contrôle du niveau d'eau."+NEWLINE()+CENTER_TEXT()+"Ne pas toucher!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Control del nivel del agua."+NEWLINE()+CENTER_TEXT()+"¡No te acerques!"+INSTANT_TEXT_OFF()+MESSAGE_END());
-        CreateMessage(0x1B2, 0, 0, 3,
+        CreateMessage(0x1B3, 0, 0, 3,
             UNSKIPPABLE()+"This switch is rustier than you think."+WAIT_FOR_INPUT()+"Something must be wrong with the pipe"+NEWLINE()+"system in the Water Temple."+MESSAGE_END(),
             UNSKIPPABLE()+"Cet interrupteur est très rouillé."+WAIT_FOR_INPUT()+"Quelque chose ne va pas avec"+NEWLINE()+"la tuyauterie du Temple de l'Eau."+MESSAGE_END(),
             UNSKIPPABLE()+"El interruptor está más oxidado de lo que"+NEWLINE()+"aparenta."+WAIT_FOR_INPUT()+"Algo debe andar mal en el sistema de"+NEWLINE()+"cañerías del Templo del Agua."+MESSAGE_END());

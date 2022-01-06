@@ -10,8 +10,8 @@
 // #include "hid.h"
 
 typedef struct {
-    /* 0x00 */ u8 buttonItems[5]; //B,Y,X,I,II
-    /* 0x05 */ u8 buttonSlots[4]; //Y,X,I,II
+    /* 0x00 */ u8  buttonItems[5]; //B,Y,X,I,II
+    /* 0x05 */ u8  buttonSlots[4]; //Y,X,I,II
     /* 0x0A */ u16 equipment;
 } ItemEquips; // size = 0x0C
 
@@ -172,7 +172,9 @@ typedef struct {
     /* 0x1594 */ char         unk_1594[0x000C];
     /* 0x15A0 */ u16          nextCutsceneIndex;
     /* 0x15A2 */ u8           cutsceneTrigger;
-    /* 0x15A3 */ char         unk_15A3[0x00F];
+    /* 0x15A3 */ char         unk_15A3[0x008];
+    /* 0x15AB */ u8           nextTransition;
+    /* 0x15AC */ char         unk_15AC[0x006];
     /* 0x15B2 */ s16          healthAccumulator;
 
 //stuff below is from z64.h
@@ -399,11 +401,15 @@ typedef struct GlobalContext {
     /* 0x2A90 */ u8                    msgMode; //seems to be used primarily for the ocarina
     /* 0x2A91 */ char                  unk_2A91[0xED];
     /* 0x2B7E */ s16                   unk_2B7E; // msgCtx.unk_E3EE in OoT
-    /* 0x2B80 */ char                  unk_2B80[0x0ED8];
+    /* 0x2B80 */ char                  unk_2B80[0x06B0];
+    /* 0x3230 */ u32                   lightSettingsList_addr;
+    /* 0x3234 */ char                  unk_3234[0x0824];
     /* 0x3A58 */ ObjectContext         objectCtx;
     /* 0x43DC */ char                  unk_43DC[0x1824];
     /* 0x5C00 */ u8                    linkAgeOnLoad;
-    /* 0x5C01 */ char                  unk_5C01[0x002C];
+    /* 0x5C01 */ char                  unk_5C01[0x001B];
+    /* 0x5C1C */ s16*                  setupExitList;
+    /* 0x5C20 */ char                  unk_5C20[0x000D];
     /* 0x5C2D */ s8                    sceneLoadFlag; // "fade_direction"
     /* 0x5C2E */ char                  unk_5C2E[0x0004];
     /* 0x5C32 */ s16                   nextEntranceIndex;
@@ -415,10 +421,12 @@ typedef struct GlobalContext {
 _Static_assert(sizeof(GlobalContext) == 0x5F14, "Global Context size");
 
 typedef struct StaticContext {
-    /* 0x0000 */ char unk_0[0x0E72];
-    /* 0x0E72 */ u16 collisionDisplay;
+    /* 0x0000 */ char unk_0[0x0E60];
+    /* 0x0E60 */ u16  spawnOnEpona;
+    /* 0x0E62 */ char unk_E72[0x0010];
+    /* 0x0E72 */ u16  collisionDisplay;
     /* 0x0E74 */ char unk_E74[0x015C];
-    /* 0x0FD0 */ u16 renderGeometryDisable;
+    /* 0x0FD0 */ u16  renderGeometryDisable;
     /* 0x0FD2 */ char unk_FD2[0x0602];
 } StaticContext; //size 0x15D4
 // _Static_assert(sizeof(StaticContext) == 0x15D4, "Static Context size");
@@ -549,6 +557,14 @@ typedef void (*Flags_SetEnv_proc)(GlobalContext* globalCtx, s16 flag);
 typedef void (*GiveItem_proc)(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
     __attribute__((pcs("aapcs-vfp")));
 #define GiveItem_addr 0x3724DC
-#define GiveItem ((GiveItem_proc)0x3724DC)
+#define GiveItem ((GiveItem_proc)GiveItem_addr)
+
+typedef void (*Message_CloseTextbox_proc)(GlobalContext* globalCtx);
+#define Message_CloseTextbox_addr 0x3725E0
+#define Message_CloseTextbox ((Message_CloseTextbox_proc)Message_CloseTextbox_addr)
+
+typedef void (*SetupItemInWater_proc)(Player* player, GlobalContext* globalCtx);
+#define SetupItemInWater_addr 0x354894
+#define SetupItemInWater ((SetupItemInWater_proc)SetupItemInWater_addr)
 
 #endif //_Z3D_H_

@@ -47,7 +47,7 @@ static void RemoveStartingItemsFromPool() {
 }
 
 //This function will propogate Time of Day access through the entrance
-static bool UpdateToDAccess(Entrance* entrance) {
+static bool UpdateToDAccess(Entrance* entrance, SearchMode mode) {
 
   bool ageTimePropogated = false;
 
@@ -73,15 +73,64 @@ static bool UpdateToDAccess(Entrance* entrance) {
   }
 
   //special check for temple of time
-  if (!AreaTable(ROOT)->Adult() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child()) {
+  bool propogateTimeTravel = mode != SearchMode::TimePassAccess && mode != SearchMode::TempleOfTimeAccess;
+  if (!AreaTable(ROOT)->Adult() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child() && propogateTimeTravel) {
     AreaTable(ROOT)->adultDay   = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->childDay;
     AreaTable(ROOT)->adultNight = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->childNight;
-  } else if (!AreaTable(ROOT)->Child() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult()){
+  } else if (!AreaTable(ROOT)->Child() && AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult() && propogateTimeTravel){
     AreaTable(ROOT)->childDay   = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->adultDay;
     AreaTable(ROOT)->childNight = AreaTable(TOT_BEYOND_DOOR_OF_TIME)->adultNight;
   }
 
   return ageTimePropogated;
+}
+
+// Various checks that need to pass for the world to be validated as completable
+static void ValidateWorldChecks(SearchMode& mode, bool checkPoeCollectorAccess, bool checkOtherEntranceAccess, std::vector<AreaKey>& areaPool) {
+  // Condition for validating Temple of Time Access
+  if (mode == SearchMode::TempleOfTimeAccess && ((Settings::ResolvedStartingAge == AGE_CHILD && AreaTable(TEMPLE_OF_TIME)->Adult()) || (Settings::ResolvedStartingAge == AGE_ADULT && AreaTable(TEMPLE_OF_TIME)->Child()) || !checkOtherEntranceAccess)) {
+    mode = SearchMode::ValidStartingRegion;
+  }
+  // Condition for validating a valid starting region
+  if (mode == SearchMode::ValidStartingRegion) {
+    bool childAccess = Settings::ResolvedStartingAge == AGE_CHILD || AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Child();
+    bool adultAccess = Settings::ResolvedStartingAge == AGE_ADULT || AreaTable(TOT_BEYOND_DOOR_OF_TIME)->Adult();
+
+    Area* kokiri = AreaTable(KOKIRI_FOREST);
+    Area* kakariko = AreaTable(KAKARIKO_VILLAGE);
+
+    if ((childAccess && (kokiri->Child() || kakariko->Child())) ||
+        (adultAccess && (kokiri->Adult() || kakariko->Adult())) ||
+        !checkOtherEntranceAccess) {
+       mode = SearchMode::PoeCollectorAccess;
+       ApplyStartingInventory();
+       Logic::HasBottle = false;
+    }
+  }
+  // Condition for validating Poe Collector Access
+  if (mode == SearchMode::PoeCollectorAccess && (AreaTable(MARKET_GUARD_HOUSE)->Adult() || !checkPoeCollectorAccess)) {
+    if (StartingInventoryHasBottle()) {
+      Logic::HasBottle = true;
+    }
+    // Apply all items that are necessary for checking all location access
+    std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
+    for (ItemKey unplacedItem : itemsToPlace) {
+      ItemTable(unplacedItem).ApplyEffect();
+    }
+    // Reset access as the non-starting age
+    if (Settings::ResolvedStartingAge == AGE_CHILD) {
+      for (AreaKey areaKey : areaPool) {
+        AreaTable(areaKey)->adultDay = false;
+        AreaTable(areaKey)->adultNight = false;
+      }
+    } else {
+      for (AreaKey areaKey : areaPool) {
+        AreaTable(areaKey)->childDay = false;
+        AreaTable(areaKey)->childNight = false;
+      }
+    }
+    mode = SearchMode::AllLocationsReachable;
+  }
 }
 
 //Get the max number of tokens that can possibly be useful
@@ -118,6 +167,19 @@ static int GetMaxGSCount() {
   return std::max(maxUseful, maxBridge);
 }
 
+std::string GetShopItemBaseName(std::string itemName) {
+  std::string baseName = itemName.erase(0, 4); //Delete "Buy "
+  //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
+  if (baseName.find("(") != std::string::npos) {
+    baseName = baseName.erase(baseName.find("("));
+  }
+  //Do the same for [] (only applies to red potions, other things with [] also have a ())
+  if (baseName.find("[") != std::string::npos) {
+    baseName = baseName.erase(baseName.find("["));
+  }
+  return baseName;
+}
+
 std::vector<LocationKey> GetEmptyLocations(std::vector<LocationKey> allowedLocations) {
   return FilterFromPool(allowedLocations, [](const LocationKey loc){ return Location(loc)->GetPlacedItemKey() == NONE;});
 }
@@ -129,40 +191,44 @@ std::vector<LocationKey> GetAllEmptyLocations() {
 //This function will return a vector of ItemLocations that are accessible with
 //where items have been placed so far within the world. The allowedLocations argument
 //specifies the pool of locations that we're trying to search for an accessible location in
-std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations, SearchMode mode) {
+std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& allowedLocations, SearchMode mode /* = SearchMode::ReachabilitySearch*/, std::string ignore /*= ""*/, bool checkPoeCollectorAccess /*= false*/, bool checkOtherEntranceAccess /*= false*/) {
   std::vector<LocationKey> accessibleLocations;
-  //Reset all access to begin a new search
-  if (mode != SearchMode::BothAgesNoItems) {
-      ApplyStartingInventory();
+  // Reset all access to begin a new search
+  if (mode < SearchMode::ValidateWorld) {
+    ApplyStartingInventory();
   }
   Areas::AccessReset();
   LocationReset();
-  if (mode >= SearchMode::BothAgesNoItems) {
-    if (Settings::HasNightStart) {
-      AreaTable(ROOT)->childNight = true;
-      AreaTable(ROOT)->adultNight = true;
-    } else {
-      AreaTable(ROOT)->childDay = true;
-      AreaTable(ROOT)->adultDay = true;
-    }
-  }
-  //checking if poe collector is reachable without using bottle contents
-  if (mode == SearchMode::PoeCollectorAccess) {
-      Logic::HasBottle = false;
-  }
   std::vector<AreaKey> areaPool = {ROOT};
+
+  if (mode == SearchMode::ValidateWorld) {
+    mode = SearchMode::TimePassAccess;
+    AreaTable(ROOT)->childNight = true;
+    AreaTable(ROOT)->adultNight = true;
+    AreaTable(ROOT)->childDay = true;
+    AreaTable(ROOT)->adultDay = true;
+    allLocationsReachable = false;
+  }
 
   //Variables for playthrough
   int gsCount = 0;
   const int maxGsCount = mode == SearchMode::GeneratePlaythrough ? GetMaxGSCount() : 0; //If generating playthrough want the max that's possibly useful, else doesn't matter
   bool bombchusFound = false;
   std::vector<std::string> buyIgnores;
+
   //Variables for search
   std::vector<ItemLocation*> newItemLocations;
   bool updatedEvents = false;
   bool ageTimePropogated = false;
   bool firstIteration = true;
 
+  //Variables for Time Pass access
+  bool timePassChildDay = false;
+  bool timePassChildNight = false;
+  bool timePassAdultDay = false;
+  bool timePassAdultNight = false;
+
+  // Main access checking loop
   while (newItemLocations.size() > 0 || updatedEvents || ageTimePropogated || firstIteration) {
     firstIteration = false;
     ageTimePropogated = false;
@@ -179,16 +245,43 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     for (size_t i = 0; i < areaPool.size(); i++) {
       Area* area = AreaTable(areaPool[i]);
 
-      if(area->UpdateEvents()){
+      if (area->UpdateEvents(mode)){
         updatedEvents = true;
+      }
+
+      // If we're checking for TimePass access do that for each area as it's being updated.
+      // TimePass Access is satisfied when every AgeTime can reach an area with TimePass
+      // without the aid of TimePass. During this mode, TimePass won't update ToD access
+      // in any area.
+      if (mode == SearchMode::TimePassAccess) {
+        if (area->timePass) {
+          if (area->childDay) {
+            timePassChildDay = true;
+          }
+          if (area->childNight) {
+            timePassChildNight = true;
+          }
+          if (area->adultDay) {
+            timePassAdultDay = true;
+          }
+          if (area->adultNight) {
+            timePassAdultNight = true;
+          }
+        }
+        // Condition for validating that all startring AgeTimes have timepass access
+        // Once satisifed, change the mode to begin checking for Temple of Time Access
+        if ((timePassChildDay && timePassChildNight && timePassAdultDay && timePassAdultNight) || !checkOtherEntranceAccess) {
+          mode = SearchMode::TempleOfTimeAccess;
+        }
       }
 
       //for each exit in this area
       for (auto& exit : area->exits) {
 
         //Update Time of Day Access for the exit
-        if (UpdateToDAccess(&exit)) {
+        if (UpdateToDAccess(&exit, mode)) {
           ageTimePropogated = true;
+          ValidateWorldChecks(mode, checkPoeCollectorAccess, checkOtherEntranceAccess, areaPool);
         }
 
         //If the exit is accessible and hasn't been added yet, add it to the pool
@@ -198,103 +291,119 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
           areaPool.push_back(exit.GetAreaKey());
         }
 
-        //add shuffled entrances to the entrance playthrough
+        // Add shuffled entrances to the entrance playthrough
         if (mode == SearchMode::GeneratePlaythrough && exit.IsShuffled() && !exit.IsAddedToPool() && !noRandomEntrances) {
           entranceSphere.push_back(&exit);
           exit.AddToPool();
-          //don't list a coupled entrance from both directions
-          if (exit.GetReplacement()->GetReverse() != nullptr /*&& not decoupled_entrances*/) {
+          // Don't list a coupled entrance from both directions
+          if (exit.GetReplacement()->GetReverse() != nullptr /*&& !DecoupleEntrances*/) {
             exit.GetReplacement()->GetReverse()->AddToPool();
           }
         }
       }
 
       //for each ItemLocation in this area
-      for (size_t k = 0; k < area->locations.size(); k++) {
-        LocationAccess& locPair = area->locations[k];
-        LocationKey loc = locPair.GetLocation();
-        ItemLocation* location = Location(loc);
+      if (mode < SearchMode::ValidateWorld) {
+        for (size_t k = 0; k < area->locations.size(); k++) {
+          LocationAccess& locPair = area->locations[k];
+          LocationKey loc = locPair.GetLocation();
+          ItemLocation* location = Location(loc);
 
-        if (!location->IsAddedToPool() && locPair.ConditionsMet()) {
+          if (!location->IsAddedToPool() && locPair.ConditionsMet()) {
 
-          location->AddToPool();
+            location->AddToPool();
 
-          if (location->GetPlacedItemKey() == NONE) {
-            accessibleLocations.push_back(loc); //Empty location, consider for placement
-          } else {
-            if (mode < SearchMode::BothAgesNoItems) {
-              newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
-            }
-          }
-
-          //Playthrough stuff
-          //Generate the playthrough, so we want to add advancement items, unless we know to ignore them
-          if (mode == SearchMode::GeneratePlaythrough) {
-            //Item is an advancement item, figure out if it should be added to this sphere
-            if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
-              ItemType type = location->GetPlacedItem().GetItemType();
-              std::string itemName(location->GetPlacedItemName().GetEnglish());
-              bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
-
-              //Decide whether to exclude this location
-              //This preprocessing is done to reduce the amount of searches performed in PareDownPlaythrough
-              //Want to exclude:
-              //1) Tokens after the last potentially useful one (the last one that gives an advancement item or last for token bridge)
-              //2) Bombchus after the first (including buy bombchus)
-              //3) Buy items of the same type, after the first (So only see Buy Deku Nut of any amount once)
-              bool exclude = true;
-              //Exclude tokens after the last possibly useful one
-              if (type == ITEMTYPE_TOKEN && gsCount < maxGsCount) {
-                gsCount++;
-                exclude = false;
-              }
-              //Only print first bombchu location found
-              else if (bombchus && !bombchusFound) {
-                bombchusFound = true;
-                exclude = false;
-              }
-              //Handle buy items
-              //If ammo drops are off, don't do this step, since buyable ammo becomes logically important
-              else if (AmmoDrops.IsNot(AMMODROPS_NONE) && !(bombchus && bombchusFound) && type == ITEMTYPE_SHOP) {
-                //Only check each buy item once
-                std::string buyItem = itemName.erase(0, 4); //Delete "Buy "
-                //Delete amount, if present (so when it looks like Buy Deku Nut (10) remove the (10))
-                if (buyItem.find("(") != std::string::npos) {
-                  buyItem = buyItem.erase(buyItem.find("("));
+            if (location->GetPlacedItemKey() == NONE) {
+              accessibleLocations.push_back(loc); //Empty location, consider for placement
+            } else {
+              //If ignore has a value, we want to check if the item location should be considered or not
+              //This is necessary due to the below preprocessing for playthrough generation
+              if (ignore != "") {
+                ItemType type = location->GetPlacedItem().GetItemType();
+                std::string itemName(location->GetPlacedItemName().GetEnglish());
+                //If we want to ignore tokens, only add if not a token
+                if (ignore == "Tokens" && type != ITEMTYPE_TOKEN) {
+                  newItemLocations.push_back(location);
                 }
-                //Buy item not in list to ignore, add it to list and write to playthrough
-                if (std::find(buyIgnores.begin(), buyIgnores.end(), buyItem) == buyIgnores.end()) {
+                //If we want to ignore bombchus, only add if bombchu is not in the name
+                else if (ignore == "Bombchus" && itemName.find("Bombchu") == std::string::npos) {
+                  newItemLocations.push_back(location);
+                }
+                //We want to ignore a specific Buy item name
+                else if (ignore != "Tokens" && ignore != "Bombchus") {
+                  if ((type == ITEMTYPE_SHOP && ignore != GetShopItemBaseName(itemName)) || type != ITEMTYPE_SHOP) {
+                    newItemLocations.push_back(location);
+                  }
+                }
+              }
+              //If it doesn't, we can just add the location
+              else {
+                newItemLocations.push_back(location); //Add item to cache to be considered in logic next iteration
+              }
+            }
+
+            //Playthrough stuff
+            //Generate the playthrough, so we want to add advancement items, unless we know to ignore them
+            if (mode == SearchMode::GeneratePlaythrough) {
+              //Item is an advancement item, figure out if it should be added to this sphere
+              if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
+                ItemType type = location->GetPlacedItem().GetItemType();
+                std::string itemName(location->GetPlacedItemName().GetEnglish());
+                bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
+
+                //Decide whether to exclude this location
+                //This preprocessing is done to reduce the amount of searches performed in PareDownPlaythrough
+                //Want to exclude:
+                //1) Tokens after the last potentially useful one (the last one that gives an advancement item or last for token bridge)
+                //2) Bombchus after the first (including buy bombchus)
+                //3) Buy items of the same type, after the first (So only see Buy Deku Nut of any amount once)
+                bool exclude = true;
+                //Exclude tokens after the last possibly useful one
+                if (type == ITEMTYPE_TOKEN && gsCount < maxGsCount) {
+                  gsCount++;
                   exclude = false;
-                  buyIgnores.push_back(buyItem);
+                }
+                //Only print first bombchu location found
+                else if (bombchus && !bombchusFound) {
+                  bombchusFound = true;
+                  exclude = false;
+                }
+                //Handle buy items
+                //If ammo drops are off, don't do this step, since buyable ammo becomes logically important
+                else if (AmmoDrops.IsNot(AMMODROPS_NONE) && !(bombchus && bombchusFound) && type == ITEMTYPE_SHOP) {
+                  //Only check each buy item once
+                  std::string buyItem = GetShopItemBaseName(itemName);
+                  //Buy item not in list to ignore, add it to list and write to playthrough
+                  if (std::find(buyIgnores.begin(), buyIgnores.end(), buyItem) == buyIgnores.end()) {
+                    exclude = false;
+                    buyIgnores.push_back(buyItem);
+                  }
+                }
+                //Add all other advancement items
+                else if (!bombchus && type != ITEMTYPE_TOKEN && (AmmoDrops.Is(AMMODROPS_NONE) || type != ITEMTYPE_SHOP)) {
+                  exclude = false;
+                }
+                //Has not been excluded, add to playthrough
+                if (!exclude) {
+                  itemSphere.push_back(loc);
                 }
               }
-              //Add all other advancement items
-              else if (!bombchus && type != ITEMTYPE_TOKEN && (AmmoDrops.Is(AMMODROPS_NONE) || type != ITEMTYPE_SHOP)) {
-                exclude = false;
-              }
-              //Has not been excluded, add to playthrough
-              if (!exclude) {
+              //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
+              else if (location->GetPlacedItemKey() == TRIFORCE) {
+                itemSphere.clear();
                 itemSphere.push_back(loc);
+                playthroughBeatable = true;
               }
             }
-            //Triforce has been found, seed is beatable, nothing else in this or future spheres matters
-            else if (location->GetPlacedItemKey() == TRIFORCE) {
-              itemSphere.clear();
-              itemSphere.push_back(loc);
+            //All we care about is if the game is beatable, used to pare down playthrough
+            else if (location->GetPlacedItemKey() == TRIFORCE && mode == SearchMode::CheckBeatable) {
               playthroughBeatable = true;
+              return {}; //Return early for efficiency
             }
-          }
-          //All we care about is if the game is beatable, used to pare down playthrough
-          else if (location->GetPlacedItemKey() == TRIFORCE && mode == SearchMode::CheckBeatable) {
-            playthroughBeatable = true;
-            return {}; //Return early for efficiency
           }
         }
       }
     }
-
-    //this actually seems to slow down the search algorithm, will leave commented out for now
-    //erase_if(areaPool, [](const AreaKey e){ return AreaTable(e)->AllAccountedFor();});
 
     if (mode == SearchMode::GeneratePlaythrough && itemSphere.size() > 0) {
       playthroughLocations.push_back(itemSphere);
@@ -352,7 +461,20 @@ static void PareDownPlaythrough() {
       Location(loc)->SetPlacedItem(NONE); //Write in empty item
       playthroughBeatable = false;
       LogicReset();
-      GetAccessibleLocations(allLocations, SearchMode::CheckBeatable); //Check if game is still beatable
+
+      std::string ignore = "";
+      if (ItemTable(copy).GetItemType() == ITEMTYPE_TOKEN) {
+        ignore = "Tokens";
+      }
+      else if (ItemTable(copy).GetName().GetEnglish().find("Bombchu") != std::string::npos) {
+        ignore = "Bombchus";
+      }
+      else if (ItemTable(copy).GetItemType() == ITEMTYPE_SHOP) {
+        ignore = GetShopItemBaseName(ItemTable(copy).GetName().GetEnglish());
+      }
+
+      GetAccessibleLocations(allLocations, SearchMode::CheckBeatable, ignore); //Check if game is still beatable
+
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
@@ -509,6 +631,7 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
         #ifdef ENABLE_DEBUG
+          Areas::DumpWorldGraph(ItemTable(item).GetName().GetEnglish());
           PlacementLog_Write();
         #endif
 
@@ -573,6 +696,13 @@ static void RandomizeDungeonRewards() {
   if (ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
     //get stones and medallions
     std::vector<ItemKey> rewards = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+
+    // If there are less than 9 dungeon rewards, prioritize the actual dungeons
+    // for placement instead of Link's Pocket
+    if (rewards.size() < 9) {
+      PlaceItemInLocation(LINKS_POCKET, GREEN_RUPEE);
+    }
+
     if (Settings::Logic.Is(LOGIC_VANILLA)) { //Place dungeon rewards in vanilla locations
       for (LocationKey loc : dungeonRewardLocations) {
         Location(loc)->PlaceVanillaItem();
@@ -595,6 +725,11 @@ static void RandomizeDungeonRewards() {
   } else if (LinksPocketItem.Is(LINKSPOCKETITEM_DUNGEON_REWARD)) {
     //get 1 stone/medallion
     std::vector<ItemKey> rewards = FilterFromPool(ItemPool, [](const ItemKey i) {return ItemTable(i).GetItemType() == ITEMTYPE_DUNGEONREWARD;});
+    // If there are no remaining stones/medallions, then Link's pocket won't get one
+    if (rewards.empty()) {
+      PlaceItemInLocation(LINKS_POCKET, GREEN_RUPEE);
+      return;
+    }
     ItemKey startingReward = RandomElement(rewards, true);
 
     LinksPocketRewardBitMask = bitMaskTable[ItemTable(startingReward).GetItemID() - baseOffset];
@@ -770,7 +905,16 @@ void VanillaFill() {
   CreateAlwaysIncludedMessages();
 }
 
+void ClearProgress() {
+  printf("\x1b[7;32H    "); // Done
+  printf("\x1b[8;10H                    "); // Placing Items...Done
+  printf("\x1b[9;10H                              "); // Calculating Playthrough...Done
+  printf("\x1b[10;10H                     "); // Creating Hints...Done
+  printf("\x1b[11;10H                                  "); // Writing Spoiler Log...Done
+}
+
 int Fill() {
+
   int retries = 0;
   while(retries < 5) {
     placementFailure = false;
@@ -790,9 +934,10 @@ int Fill() {
     //can validate the world using deku/hylian shields
     AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); //assume worst case shopsanity 4
     if (ShuffleEntrances) {
-      printf("\x1b[7;10HShuffling Entrances...");
+      printf("\x1b[7;10HShuffling Entrances");
       if (ShuffleAllEntrances() == ENTRANCE_SHUFFLE_FAILURE) {
         retries++;
+        ClearProgress();
         continue;
       }
       printf("\x1b[7;32HDone");
@@ -908,9 +1053,10 @@ int Fill() {
     //Unsuccessful placement
     if(retries < 4) {
       GetAccessibleLocations(allLocations, SearchMode::AllLocationsReachable);
-      printf("\x1b[9;10HFailed. Retrying... %d", retries+2);
+      PlacementLog_Msg("\nGOT STUCK. RETRYING...\n");
       Areas::ResetAllLocations();
       LogicReset();
+      ClearProgress();
     }
     retries++;
   }

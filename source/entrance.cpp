@@ -8,6 +8,7 @@
 #include "debug.hpp"
 #include "spoiler_log.hpp"
 #include "hints.hpp"
+#include "location_access.hpp"
 
 #include <unistd.h>
 
@@ -19,6 +20,8 @@
 std::list<EntranceOverride> entranceOverrides = {};
 bool noRandomEntrances = false;
 static bool entranceShuffleFailure = false;
+static int totalRandomizableEntrances = 0;
+static int curNumRandomizedEntrances = 0;
 
 typedef struct {
     EntranceType type;
@@ -36,6 +39,28 @@ using EntrancePair = std::pair<Entrance*, Entrance*>;
 //of python). It may be easier to understand the algorithm by looking at the
 //base randomizer's code instead:
 // https://github.com/TestRunnerSRL/OoT-Randomizer/blob/Dev/EntranceShuffle.py
+
+// Updates the user on how many entrances are currently shuffled
+static void DisplayEntranceProgress() {
+  std::string dots = ".";
+  float progress = (float)curNumRandomizedEntrances / (float)totalRandomizableEntrances;
+  if (progress > 0.33) {
+    dots += ".";
+  } else {
+    dots += " ";
+  }
+  if (progress > 0.66) {
+    dots += ".";
+  } else {
+    dots += " ";
+  }
+  printf("\x1b[7;29H%s", dots.c_str());
+  #ifdef ENABLE_DEBUG
+    if (curNumRandomizedEntrances == totalRandomizableEntrances) {
+      Areas::DumpWorldGraph("Finish Validation");
+    }
+  #endif
+}
 
 void SetAllEntrancesData(std::vector<EntranceInfoPair>& entranceShuffleTable) {
   for (auto& entrancePair: entranceShuffleTable) {
@@ -108,7 +133,7 @@ static std::array<std::vector<Entrance*>, 2> SplitEntrancesByRequirements(std::v
     ItemTable(unplacedItem).ApplyEffect();
   }
   // run a search to see what's accessible
-  GetAccessibleLocations(allLocations);
+  GetAccessibleLocations({});
 
   for (Entrance* entrance : entrancesToSplit) {
     // if an entrance is accessible at all times of day by both ages, it's a soft entrance with no restrictions
@@ -225,16 +250,20 @@ static bool EntranceUnreachableAs(Entrance* entrance, u8 age, std::vector<Entran
 static bool ValidateWorld(Entrance* entrancePlaced) {
   PlacementLog_Msg("Validating world\n");
 
+  //check certain conditions when certain types of ER are enabled
+  EntranceType type = EntranceType::None;
+  if (entrancePlaced != nullptr) {
+    type = entrancePlaced->GetType();
+  }
+
+  bool checkPoeCollectorAccess  = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) && (entrancePlaced == nullptr /*|| Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF)*/ ||
+                                 type == EntranceType::Interior || type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop);
+  bool checkOtherEntranceAccess = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL) /*|| Settings::ShuffleOverworldSpawns*/) && (entrancePlaced == nullptr /*|| Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF)*/ ||
+                                 type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop);
+
   // Check to make sure all locations are still reachable
   Logic::LogicReset();
-  std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
-  for (ItemKey unplacedItem : itemsToPlace) {
-    ItemTable(unplacedItem).ApplyEffect();
-  }
-  GetAccessibleLocations(allLocations, SearchMode::AllLocationsReachable);
-  if (!allLocationsReachable) {
-    return false;
-  }
+  GetAccessibleLocations({}, SearchMode::ValidateWorld, "", checkPoeCollectorAccess, checkOtherEntranceAccess);
 
   // if not world.decouple_entrances:
   // Unless entrances are decoupled, we don't want the player to end up through certain entrances as the wrong age
@@ -281,12 +310,6 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
       }
     }
 
-  //check certain conditions when certain types of ER are enabled
-  EntranceType type = EntranceType::None;
-  if (entrancePlaced != nullptr) {
-    type = entrancePlaced->GetType();
-  }
-
   if (Settings::ShuffleInteriorEntrances.IsNot(SHUFFLEINTERIORS_OFF) && Settings::GossipStoneHints.IsNot(HINTS_NO_HINTS) &&
   (entrancePlaced == nullptr || type == EntranceType::Interior || type == EntranceType::SpecialInterior)) {
     //When cows are shuffled, ensure both Impa's House entrances are in the same hint area because the cow is reachable from both sides
@@ -301,67 +324,43 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
     }
   }
 
-  if ((Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL) /*|| spawnPositions*/) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
-  type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
-    //At least one valid starting region with all basic refills should be reachable without using any items at the beginning of the seed
-    Logic::LogicReset();
-    GetAccessibleLocations({});
-    if (!AreaTable(KOKIRI_FOREST)->HasAccess() && !AreaTable(KAKARIKO_VILLAGE)->HasAccess()) {
-      PlacementLog_Msg("Invalid starting area\n");
-      return false;
+  // If all locations aren't reachable, that means that one of the conditions failed when searching
+  if (!allLocationsReachable) {
+    if (checkOtherEntranceAccess) {
+      // At least one valid starting region with all basic refills should be reachable without using any items at the beginning of the seed
+      if (!AreaTable(KOKIRI_FOREST)->HasAccess() && !AreaTable(KAKARIKO_VILLAGE)->HasAccess()) {
+        PlacementLog_Msg("Invalid starting area\n");
+        return false;
+      }
+
+      // Check that a region where time passes is always reachable as both ages without having collected any items
+      if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
+        PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
+        return false;
+      }
+
+      // The player should be able to get back to ToT after going through time, without having collected any items
+      // This is important to ensure that the player never loses access to the pedestal after going through time
+      if (Settings::ResolvedStartingAge == AGE_CHILD && !AreaTable(TEMPLE_OF_TIME)->Adult()) {
+        PlacementLog_Msg("Path to Temple of Time as adult is not guaranteed\n");
+        return false;
+      } else if (Settings::ResolvedStartingAge == AGE_ADULT && !AreaTable(TEMPLE_OF_TIME)->Child()) {
+        PlacementLog_Msg("Path to Temple of Time as child is not guaranteed\n");
+        return false;
+      }
     }
 
-    //Check that a region where time passes is always reachable as both ages without having collected any items
-    Logic::LogicReset();
-    GetAccessibleLocations({}, SearchMode::BothAgesNoItems);
-    if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
-      PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
-      return false;
+    // The Big Poe shop should always be accessible as adult without the need to use any bottles
+    // This is important to ensure that players can never lock their only bottles by filling them with Big Poes they can't sell
+    if (checkPoeCollectorAccess) {
+      if (!AreaTable(MARKET_GUARD_HOUSE)->Adult()) {
+        PlacementLog_Msg("Big Poe Shop access is not guarenteed as adult\n");
+        return false;
+      }
     }
-
-    //Check that the region is still accessible with the opposite starting time of day
-    //This is to ensure that time passing does not lock out access to all areas that can pass time
-    u8 startTime = Settings::StartingTime.Value<u8>();
-    if (startTime == STARTINGTIME_DAY) {
-      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_NIGHT);
-    } else {
-      Settings::StartingTime.SetSelectedIndex(STARTINGTIME_DAY);
-    }
-
-    //run the search again
-    Logic::LogicReset();
-    GetAccessibleLocations({}, SearchMode::BothAgesNoItems);
-    if (!Areas::HasTimePassAccess(AGE_CHILD) || !Areas::HasTimePassAccess(AGE_ADULT)) {
-      PlacementLog_Msg("Time passing is not guaranteed as both ages\n");
-      return false;
-    }
-
-    //set the Starting Time setting back to what it originally was
-    Settings::StartingTime.SetSelectedIndex(startTime);
-
-    // The player should be able to get back to ToT after going through time, without having collected any items
-    // This is important to ensure that the player never loses access to the pedestal after going through time
-    if (Settings::ResolvedStartingAge == AGE_CHILD && !AreaTable(TEMPLE_OF_TIME)->Adult()) {
-      PlacementLog_Msg("Path to Temple of Time as adult is not guaranteed\n");
-      return false;
-    } else if (Settings::ResolvedStartingAge == AGE_ADULT && !AreaTable(TEMPLE_OF_TIME)->Child()) {
-      PlacementLog_Msg("Path to Temple of Time as child is not guaranteed\n");
-      return false;
-    }
+    PlacementLog_Msg("All Locations NOT REACHABLE\n");
+    return false;
   }
-
-  // The Big Poe shop should always be accessible as adult without the need to use any bottles
-  // This is important to ensure that players can never lock their only bottles by filling them with Big Poes they can't sell
-  if ((Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) && (entrancePlaced == nullptr /*|| world.mix_entrance_pools != 'off'*/ ||
-  type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop)) {
-    Logic::LogicReset();
-    GetAccessibleLocations({}, SearchMode::PoeCollectorAccess);
-    if (!AreaTable(MARKET_GUARD_HOUSE)->Adult()) {
-      PlacementLog_Msg("Big Poe Shop access is not guarenteed as adult\n");
-      return false;
-    }
-  }
-
   return true;
 }
 
@@ -372,13 +371,28 @@ static bool ReplaceEntrance(Entrance* entrance, Entrance* target, std::vector<En
   }
   ChangeConnections(entrance, target);
   if (ValidateWorld(entrance)) {
+    #ifdef ENABLE_DEBUG
+      std::string ticks = std::to_string(svcGetSystemTick());
+      auto message = "Dumping World Graph at " + ticks + "\n";
+      //PlacementLog_Msg(message);
+      //Areas::DumpWorldGraph(ticks);
+    #endif
     rollbacks.push_back(EntrancePair{entrance, target});
+    curNumRandomizedEntrances++;
+    DisplayEntranceProgress();
     return true;
   } else {
+    #ifdef ENABLE_DEBUG
+      std::string ticks = std::to_string(svcGetSystemTick());
+      auto message = "Dumping World Graph at " + ticks + "\n";
+      //PlacementLog_Msg(message);
+      //Areas::DumpWorldGraph(ticks);
+    #endif
     if (entrance->GetConnectedRegionKey() != NONE) {
       RestoreConnections(entrance, target);
     }
   }
+  DisplayEntranceProgress();
   return false;
 }
 
@@ -424,8 +438,12 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
   int retries = 20;
   while (retries > 0) {
     if (retries != 20) {
-      auto message = "Failed to connect entrances. Retrying " + std::to_string(retries) + " more times.\n";
-      PlacementLog_Msg(message);
+      #ifdef ENABLE_DEBUG
+        std::string ticks = std::to_string(svcGetSystemTick());
+        auto message = "Failed to connect entrances. Retrying " + std::to_string(retries) + " more times.\nDumping World Graph at " + ticks + "\n";
+        PlacementLog_Msg(message);
+        Areas::DumpWorldGraph(ticks);
+      #endif
     }
     retries--;
 
@@ -439,12 +457,14 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
       if(!success) {
         for (auto& pair : rollbacks) {
           RestoreConnections(pair.first, pair.second);
+          curNumRandomizedEntrances--;
         }
         continue;
       }
     } else {
       for (auto& pair : rollbacks) {
         RestoreConnections(pair.first, pair.second);
+        curNumRandomizedEntrances--;
       }
       continue;
     }
@@ -464,6 +484,9 @@ static void ShuffleEntrancePool(std::vector<Entrance*>& entrancePool, std::vecto
 
 //Process for setting up the shuffling of all entrances to be shuffled
 int ShuffleAllEntrances() {
+
+  totalRandomizableEntrances = 0;
+  curNumRandomizedEntrances = 0;
 
   std::vector<EntranceInfoPair> entranceShuffleTable = {
                                    //Parent Region                     Connected Region                  index   blue warp
@@ -543,7 +566,7 @@ int ShuffleAllEntrances() {
     {{EntranceType::Interior,        LON_LON_RANCH,                    LLR_TOWER,                        0x05D0},
      {EntranceType::Interior,        LLR_TOWER,                        LON_LON_RANCH,                    0x05D4}},
     {{EntranceType::Interior,        THE_MARKET,                       MARKET_BAZAAR,                    0x052C},
-     {EntranceType::Interior,        MARKET_BAZAAR,                    THE_MARKET,                       0x03B8}}, //potential addresses start here
+     {EntranceType::Interior,        MARKET_BAZAAR,                    THE_MARKET,                       0x03B8}},
     {{EntranceType::Interior,        THE_MARKET,                       MARKET_SHOOTING_GALLERY,          0x016D},
      {EntranceType::Interior,        MARKET_SHOOTING_GALLERY,          THE_MARKET,                       0x01CD}},
     {{EntranceType::Interior,        KAKARIKO_VILLAGE,                 KAK_BAZAAR,                       0x00B7},
@@ -573,6 +596,87 @@ int ShuffleAllEntrances() {
      {EntranceType::SpecialInterior, KAK_POTION_SHOP_FRONT,            KAKARIKO_VILLAGE,                 0x044B}},
     {{EntranceType::SpecialInterior, KAK_BACKYARD,                     KAK_POTION_SHOP_BACK,             0x03EC},
      {EntranceType::SpecialInterior, KAK_POTION_SHOP_BACK,             KAK_BACKYARD,                     0x04FF}},
+
+     // Grotto Loads use an entrance index of 0x1000 + their grotto id. The id is used as index for the
+     // grottoLoadTable in src/grotto.c
+     // Grotto Returns use an entrance index of 0x2000 + their grotto id. The id is used as index for the
+     // grottoReturnTable in src/grotto.c
+    {{EntranceType::GrottoGrave,     DESERT_COLOSSUS,                  COLOSSUS_GROTTO,                  0x1000},
+     {EntranceType::GrottoGrave,     COLOSSUS_GROTTO,                  DESERT_COLOSSUS,                  0x2000}},
+    {{EntranceType::GrottoGrave,     LAKE_HYLIA,                       LH_GROTTO,                        0x1001},
+     {EntranceType::GrottoGrave,     LH_GROTTO,                        LAKE_HYLIA,                       0x2001}},
+    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_STORMS_GROTTO,                 0x1002},
+     {EntranceType::GrottoGrave,     ZR_STORMS_GROTTO,                 ZORAS_RIVER,                      0x2002}},
+    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_FAIRY_GROTTO,                  0x1003},
+     {EntranceType::GrottoGrave,     ZR_FAIRY_GROTTO,                  ZORAS_RIVER,                      0x2003}},
+    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_OPEN_GROTTO,                   0x1004},
+     {EntranceType::GrottoGrave,     ZR_OPEN_GROTTO,                   ZORAS_RIVER,                      0x2004}},
+    {{EntranceType::GrottoGrave,     DMC_LOWER_NEARBY,                 DMC_HAMMER_GROTTO,                0x1005},
+     {EntranceType::GrottoGrave,     DMC_HAMMER_GROTTO,                DMC_LOWER_LOCAL,                  0x2005}},
+    {{EntranceType::GrottoGrave,     DMC_UPPER_NEARBY,                 DMC_UPPER_GROTTO,                 0x1006},
+     {EntranceType::GrottoGrave,     DMC_UPPER_GROTTO,                 DMC_UPPER_LOCAL,                  0x2006}},
+    {{EntranceType::GrottoGrave,     GC_GROTTO_PLATFORM,               GC_GROTTO,                        0x1007},
+     {EntranceType::GrottoGrave,     GC_GROTTO,                        GC_GROTTO_PLATFORM,               0x2007}},
+    {{EntranceType::GrottoGrave,     DEATH_MOUNTAIN_TRAIL,             DMT_STORMS_GROTTO,                0x1008},
+     {EntranceType::GrottoGrave,     DMT_STORMS_GROTTO,                DEATH_MOUNTAIN_TRAIL,             0x2008}},
+    {{EntranceType::GrottoGrave,     DEATH_MOUNTAIN_SUMMIT,            DMT_COW_GROTTO,                   0x1009},
+     {EntranceType::GrottoGrave,     DMT_COW_GROTTO,                   DEATH_MOUNTAIN_SUMMIT,            0x2009}},
+    {{EntranceType::GrottoGrave,     KAK_BACKYARD,                     KAK_OPEN_GROTTO,                  0x100A},
+     {EntranceType::GrottoGrave,     KAK_OPEN_GROTTO,                  KAK_BACKYARD,                     0x200A}},
+    {{EntranceType::GrottoGrave,     KAKARIKO_VILLAGE,                 KAK_REDEAD_GROTTO,                0x100B},
+     {EntranceType::GrottoGrave,     KAK_REDEAD_GROTTO,                KAKARIKO_VILLAGE,                 0x200B}},
+    {{EntranceType::GrottoGrave,     HYRULE_CASTLE_GROUNDS,            HC_STORMS_GROTTO,                 0x100C},
+     {EntranceType::GrottoGrave,     HC_STORMS_GROTTO,                 CASTLE_GROUNDS,                   0x200C}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_TEKTITE_GROTTO,                0x100D},
+     {EntranceType::GrottoGrave,     HF_TEKTITE_GROTTO,                HYRULE_FIELD,                     0x200D}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_NEAR_KAK_GROTTO,               0x100E},
+     {EntranceType::GrottoGrave,     HF_NEAR_KAK_GROTTO,               HYRULE_FIELD,                     0x200E}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_FAIRY_GROTTO,                  0x100F},
+     {EntranceType::GrottoGrave,     HF_FAIRY_GROTTO,                  HYRULE_FIELD,                     0x200F}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_NEAR_MARKET_GROTTO,            0x1010},
+     {EntranceType::GrottoGrave,     HF_NEAR_MARKET_GROTTO,            HYRULE_FIELD,                     0x2010}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_COW_GROTTO,                    0x1011},
+     {EntranceType::GrottoGrave,     HF_COW_GROTTO,                    HYRULE_FIELD,                     0x2011}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_INSIDE_FENCE_GROTTO,           0x1012},
+     {EntranceType::GrottoGrave,     HF_INSIDE_FENCE_GROTTO,           HYRULE_FIELD,                     0x2012}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_OPEN_GROTTO,                   0x1013},
+     {EntranceType::GrottoGrave,     HF_OPEN_GROTTO,                   HYRULE_FIELD,                     0x2013}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_SOUTHEAST_GROTTO,              0x1014},
+     {EntranceType::GrottoGrave,     HF_SOUTHEAST_GROTTO,              HYRULE_FIELD,                     0x2014}},
+    {{EntranceType::GrottoGrave,     LON_LON_RANCH,                    LLR_GROTTO,                       0x1015},
+     {EntranceType::GrottoGrave,     LLR_GROTTO,                       LON_LON_RANCH,                    0x2015}},
+    {{EntranceType::GrottoGrave,     SFM_ENTRYWAY,                     SFM_WOLFOS_GROTTO,                0x1016},
+     {EntranceType::GrottoGrave,     SFM_WOLFOS_GROTTO,                SFM_ENTRYWAY,                     0x2016}},
+    {{EntranceType::GrottoGrave,     SACRED_FOREST_MEADOW,             SFM_STORMS_GROTTO,                0x1017},
+     {EntranceType::GrottoGrave,     SFM_STORMS_GROTTO,                SACRED_FOREST_MEADOW,             0x2017}},
+    {{EntranceType::GrottoGrave,     SACRED_FOREST_MEADOW,             SFM_FAIRY_GROTTO,                 0x1018},
+     {EntranceType::GrottoGrave,     SFM_FAIRY_GROTTO,                 SACRED_FOREST_MEADOW,             0x2018}},
+    {{EntranceType::GrottoGrave,     LW_BEYOND_MIDO,                   LW_SCRUBS_GROTTO,                 0x1019},
+     {EntranceType::GrottoGrave,     LW_SCRUBS_GROTTO,                 LW_BEYOND_MIDO,                   0x2019}},
+    {{EntranceType::GrottoGrave,     THE_LOST_WOODS,                   LW_NEAR_SHORTCUTS_GROTTO,         0x101A},
+     {EntranceType::GrottoGrave,     LW_NEAR_SHORTCUTS_GROTTO,         THE_LOST_WOODS,                   0x201A}},
+    {{EntranceType::GrottoGrave,     KOKIRI_FOREST,                    KF_STORMS_GROTTO,                 0x101B},
+     {EntranceType::GrottoGrave,     KF_STORMS_GROTTO,                 KOKIRI_FOREST,                    0x201B}},
+    {{EntranceType::GrottoGrave,     ZORAS_DOMAIN,                     ZD_STORMS_GROTTO,                 0x101C},
+     {EntranceType::GrottoGrave,     ZD_STORMS_GROTTO,                 ZORAS_DOMAIN,                     0x201C}},
+    {{EntranceType::GrottoGrave,     GERUDO_FORTRESS,                  GF_STORMS_GROTTO,                 0x101D},
+     {EntranceType::GrottoGrave,     GF_STORMS_GROTTO,                 GERUDO_FORTRESS,                  0x201D}},
+    {{EntranceType::GrottoGrave,     GV_FORTRESS_SIDE,                 GV_STORMS_GROTTO,                 0x101E},
+     {EntranceType::GrottoGrave,     GV_STORMS_GROTTO,                 GV_FORTRESS_SIDE,                 0x201E}},
+    {{EntranceType::GrottoGrave,     GV_GROTTO_LEDGE,                  GV_OCTOROK_GROTTO,                0x101F},
+     {EntranceType::GrottoGrave,     GV_OCTOROK_GROTTO,                GV_GROTTO_LEDGE,                  0x201F}},
+    {{EntranceType::GrottoGrave,     LW_BEYOND_MIDO,                   DEKU_THEATER,                     0x1020},
+     {EntranceType::GrottoGrave,     DEKU_THEATER,                     LW_BEYOND_MIDO,                   0x2020}},
+
+    // Graves have their own specified entrance indices
+    {{EntranceType::GrottoGrave,     THE_GRAVEYARD,                    GRAVEYARD_SHIELD_GRAVE,           0x004B},
+     {EntranceType::GrottoGrave,     GRAVEYARD_SHIELD_GRAVE,           THE_GRAVEYARD,                    0x035D}},
+    {{EntranceType::GrottoGrave,     THE_GRAVEYARD,                    GRAVEYARD_HEART_PIECE_GRAVE,      0x031C},
+     {EntranceType::GrottoGrave,     GRAVEYARD_HEART_PIECE_GRAVE,      THE_GRAVEYARD,                    0x0361}},
+    {{EntranceType::GrottoGrave,     THE_GRAVEYARD,                    GRAVEYARD_COMPOSERS_GRAVE,        0x002D},
+     {EntranceType::GrottoGrave,     GRAVEYARD_COMPOSERS_GRAVE,        THE_GRAVEYARD,                    0x050B}},
+    {{EntranceType::GrottoGrave,     THE_GRAVEYARD,                    GRAVEYARD_DAMPES_GRAVE,           0x044F},
+     {EntranceType::GrottoGrave,     GRAVEYARD_DAMPES_GRAVE,           THE_GRAVEYARD,                    0x0359}},
 
     {{EntranceType::Overworld,       KOKIRI_FOREST,                    LW_BRIDGE_FROM_FOREST,            0x05E0},
      {EntranceType::Overworld,       LW_BRIDGE,                        KOKIRI_FOREST,                    0x020D}},
@@ -666,6 +770,11 @@ int ShuffleAllEntrances() {
   }
 
   //grotto entrances
+  if (Settings::ShuffleGrottoEntrances) {
+    entrancePools[EntranceType::GrottoGrave] = GetShuffleableEntrances(EntranceType::GrottoGrave);
+
+    //decoupled entrance stuff
+  }
 
   //overworld entrances
   if (Settings::ShuffleOverworldEntrances) {
@@ -673,12 +782,16 @@ int ShuffleAllEntrances() {
     entrancePools[EntranceType::Overworld] = GetShuffleableEntrances(EntranceType::Overworld, excludeOverworldReverse);
     // if not worlds[0].decouple_entrances:
     //     entrance_pools['Overworld'].remove(world.get_entrance('GV Lower Stream -> Lake Hylia'))
+    if (!excludeOverworldReverse) {
+      totalRandomizableEntrances -= 26; //Only count each overworld entrance once
+    }
   }
 
   //Set shuffled entrances as such
   for (auto& pool : entrancePools) {
     for (Entrance* entrance : pool.second) {
       entrance->SetAsShuffled();
+      totalRandomizableEntrances++;
       if (entrance->GetReverse() != nullptr) {
         entrance->GetReverse()->SetAsShuffled();
       }

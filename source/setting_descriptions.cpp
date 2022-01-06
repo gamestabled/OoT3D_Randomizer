@@ -148,7 +148,9 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
 ------------------------------*/                                                           //
 string_view shuffleEntrancesDesc      = "Shuffle where the entrances between areas lead to."
                                         "If turned on, select which kinds of entrances you\n"
-                                        "want shuffled in the options below.";             //
+                                        "want shuffled in the options below. Note that some"
+                                        "types of entrances can have wildly varying\n"     //
+                                        "generation times.";                               //
                                                                                            //
 /*------------------------------                                                           //
 |       DUNGEON ENTRANCES      |                                                           //
@@ -185,6 +187,12 @@ string_view interiorEntrancesAll      = "An extended version of 'Simple' with so
                                         "- Link's House\n"                                 //
                                         "- Temple of Time\n"                               //
                                         "- Kakariko Potion Shop.";                         //
+/*------------------------------                                                           //
+|       GROTTO ENTRANCES       |                                                           //
+------------------------------*/                                                           //
+string_view grottoEntrancesDesc       = "Shuffle the pool of grotto entrances, including\n"//
+                                        "all graves, small Fairy Fountains and the Lost\n" //
+                                        "Woods Stage.";                                    //
 /*------------------------------                                                           //
 |      BOMBCHUS IN LOGIC       |                                                           //
 ------------------------------*/                                                           //

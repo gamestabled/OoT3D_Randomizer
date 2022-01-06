@@ -511,7 +511,9 @@ void GenerateRandomizer() {
   int ret = Playthrough::Playthrough_Init(std::hash<std::string>{}(Settings::seed));
   if (ret < 0) {
     if(ret == -1) { //Failed to generate after 5 tries
-      printf("\n\nFailed to generate after 5 tries.\nPress Select to exit or B to go back to the menu.\n");
+      printf("\n\nFailed to generate after 5 tries.\nPress B to go back to the menu.\nA different seed might be successful.");\
+      PlacementLog_Msg("\nRANDOMIZATION FAILED COMPLETELY. PLZ FIX\n");
+      PlacementLog_Write();
       return;
     }
     else {

@@ -66,12 +66,13 @@ namespace Settings {
   Option ShuffleDungeonEntrances   = Option::Bool("  Dungeon Entrances",    {"Off", "On"},                                                     {dungeonEntrancesDesc});
   Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                                     {overworldEntrancesDesc});
   Option ShuffleInteriorEntrances  = Option::U8  ("  Interior Entrances",   {"Off", "Simple", "All"},                                          {interiorEntrancesOff, interiorEntrancesSimple, interiorEntrancesAll});
+  Option ShuffleGrottoEntrances    = Option::Bool("  Grottos Entrances",    {"Off", "On"},                                                     {grottoEntrancesDesc});
   Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
   Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_BOMBCHU);
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
   Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {"0","1","2","3","4","5","6","7","8","9","10","11","12", "Random"},{mqDungeonCountDesc});
   u8 MQSet;
-  bool DungeonModesKnown;
+  bool DungeonModesKnown[12];
   Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {setDungeonTypesDesc});
   Option MQDeku                    = Option::U8  ("  Deku Tree",            {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
   Option MQDodongo                 = Option::U8  ("  Dodongo's Cavern",     {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
@@ -92,6 +93,7 @@ namespace Settings {
     &ShuffleDungeonEntrances,
     &ShuffleOverworldEntrances,
     &ShuffleInteriorEntrances,
+    &ShuffleGrottoEntrances,
     &BombchusInLogic,
     &AmmoDrops,
     &HeartDropRefill,
@@ -896,6 +898,7 @@ namespace Settings {
     ctx.shuffleDungeonEntrances = (ShuffleDungeonEntrances) ? 1 : 0;
     ctx.shuffleOverworldEntrances = (ShuffleOverworldEntrances) ? 1 : 0;
     ctx.shuffleInteriorEntrances = ShuffleInteriorEntrances.Value<u8>();
+    ctx.shuffleGrottoEntrances  = (ShuffleGrottoEntrances) ? 1 : 0;
     ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
     ctx.ammoDrops            = AmmoDrops.Value<u8>();
     ctx.heartDropRefill      = HeartDropRefill.Value<u8>();
@@ -988,7 +991,9 @@ namespace Settings {
     ctx.ganonsCastleDungeonMode          = GanonsCastle.IsMQ()          ? 1 : 0;
     ctx.gerudoTrainingGroundsDungeonMode = GerudoTrainingGrounds.IsMQ() ? 1 : 0;
 
-    ctx.dungeonModesKnown = DungeonModesKnown;
+    for (u8 i = 0; i < sizeof(ctx.dungeonModesKnown); ++i) {
+      ctx.dungeonModesKnown[i] = DungeonModesKnown[i];
+    }
 
     ctx.forestTrialSkip = (ForestTrial.IsSkipped()) ? 1 : 0;
     ctx.fireTrialSkip   = (FireTrial.IsSkipped())   ? 1 : 0;
@@ -1476,6 +1481,7 @@ namespace Settings {
         ShuffleDungeonEntrances.Unhide();
         ShuffleOverworldEntrances.Unhide();
         ShuffleInteriorEntrances.Unhide();
+        ShuffleGrottoEntrances.Unhide();
       } else {
         ShuffleDungeonEntrances.SetSelectedIndex(OFF);
         ShuffleDungeonEntrances.Hide();
@@ -1483,6 +1489,8 @@ namespace Settings {
         ShuffleOverworldEntrances.Hide();
         ShuffleInteriorEntrances.SetSelectedIndex(SHUFFLEINTERIORS_OFF);
         ShuffleInteriorEntrances.Hide();
+        ShuffleGrottoEntrances.SetSelectedIndex(OFF);
+        ShuffleGrottoEntrances.Hide();
       }
     }
 
@@ -1612,7 +1620,6 @@ namespace Settings {
           LogicSpiritLowerAdultSwitch.SetSelectedIndex(1);
           LogicShadowStatue.SetSelectedIndex(1);
           LogicChildDeadhand.SetSelectedIndex(1);
-          LogicGtgWithoutHookshot.SetSelectedIndex(1);
           LogicGtgFakeWall.SetSelectedIndex(1);
           LogicLensSpirit.SetSelectedIndex(1);
           LogicLensShadow.SetSelectedIndex(1);
@@ -1678,6 +1685,7 @@ namespace Settings {
           //LogicSpiritSunChest.SetSelectedIndex(1);
           //LogicShadowFireArrowEntry.SetSelectedIndex(1);
           LogicShadowUmbrella.SetSelectedIndex(1);
+          LogicGtgWithoutHookshot.SetSelectedIndex(1);
         }
       }
     }
@@ -1791,6 +1799,10 @@ namespace Settings {
         if (selectOptions) {
           worldOptions[i]->SetSelectedIndex(Random(0,worldOptions[i]->GetOptionCount()));
         }
+        // Sanity Check Closed Forest
+        if (OpenForest.Is(OPENFOREST_CLOSED)) {
+          StartingAge.SetSelectedIndex(AGE_CHILD);
+        }
       }
     }
     else {
@@ -1800,6 +1812,14 @@ namespace Settings {
         }
         worldOptions[i]->Unhide();
       }
+    }
+
+    // Sanity Check Entrance Shuffling
+    if (!ShuffleEntrances) {
+      ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+      ShuffleOverworldEntrances.SetSelectedIndex(OFF);
+      ShuffleInteriorEntrances.SetSelectedIndex(OFF);
+      ShuffleGrottoEntrances.SetSelectedIndex(OFF);
     }
 
     // Shuffle Settings
@@ -1886,6 +1906,8 @@ namespace Settings {
 
       for (size_t i = 0; i < dungeons.size(); i++) {
         dungeons[i]->ClearMQ();
+        // Dungeon mode assumed known at first
+        DungeonModesKnown[i] = true;
 
         switch (dungeonOptions[i]->Value<u8>()) {
           case 1:
@@ -1896,15 +1918,14 @@ namespace Settings {
           case 2:
             // Track indexes of dungeons set to random
             randMQOption.push_back(i);
+            // Dungeon mode will be unknown for this dungeon
+            DungeonModesKnown[i] = false;
             break;
         }
       }
 
       // Add more MQ dungeons from the pool set to random until the MQ dungeon count is reached
       Shuffle(randMQOption);
-
-      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
-      DungeonModesKnown = randMQOption.size() == 0;
 
       if (MQSet == 13) {
         MQSet = dungeonCount + Random(0, randMQOption.size() + 1);
@@ -1923,8 +1944,12 @@ namespace Settings {
         dungeons[i]->ClearMQ();
       }
 
-      // If we won't be randomly choosing any MQ dungeons, dungeon modes are assumed known
-      DungeonModesKnown = MQSet == 0;
+      // If we won't be randomly choosing any MQ dungeons, or if we'll be setting
+      // all dungeons to MQ, dungeon modes are assumed known
+      bool allDungeonModesKnown = MQSet == 0 || MQSet == dungeons.size();
+      for (u8 i = 0; i < sizeof(DungeonModesKnown); ++i) {
+        DungeonModesKnown[i] = allDungeonModesKnown;
+      }
 
       //Set appropriate amount of MQ dungeons
       if (MQSet == 13) {
@@ -2001,6 +2026,7 @@ namespace Settings {
         Music::ShuffleSequences(Music::SeqType::SEQ_BGM_BATTLE);
       } else if (ShuffleBGM.Is(2)) {
         Music::ShuffleSequences(Music::SeqType::SEQ_BGM_WORLD | Music::SeqType::SEQ_BGM_EVENT | Music::SeqType::SEQ_BGM_BATTLE);
+        Music::ShuffleSequences(Music::SeqType::SEQ_BGM_ERROR);
       }
 
       if (ShuffleFanfares.Is(2)) {

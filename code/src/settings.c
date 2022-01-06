@@ -85,9 +85,7 @@ u32 FairyReviveHealAmount(void) {
 u32 FairyUseHealAmount(void) {
     return Settings_SetFullHealthRestore(0x30);
 }
-typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
-#define Health_ChangeBy_addr 0x352dbc
-#define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
+
 void FairyPickupHealAmount(void) {
     if(gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
         Health_ChangeBy(gGlobalContext, 0x30);
@@ -125,6 +123,11 @@ void Settings_SkipSongReplays() {
     else if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 && gGlobalContext->msgMode < 23) {
         gGlobalContext->msgMode++;
     }
+}
+
+void Settings_SunsSongEndCloseTextbox() {
+    Message_CloseTextbox(gGlobalContext);
+    gGlobalContext->unk_2B7E = 4; // msgCtx.ocarinaMode, exits the ocarina playing
 }
 
   const char hashIconNames[32][25] = {

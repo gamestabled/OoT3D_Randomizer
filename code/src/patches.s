@@ -1096,7 +1096,18 @@ DoorOfTimeOpenCutscene_patch:
 .section .patch_DungeonCheckJabuMQBox
 .global DungeonCheckJabuMQBox_patch
 DungeonCheckJabuMQBox_patch:
-    bl hook_CheckCurrentDungeonMode
+    bl hook_DungeonCheckJabuMQBox
+    nop
+
+.section .patch_JabuSwitchRutoCheck
+.global JabuSwitchRutoCheck_patch
+JabuSwitchRutoCheck_patch:
+    bl hook_JabuSwitchRutoCheck
+
+.section .patch_JabuBoxCheckRuto
+.global JabuBoxCheckRuto_patch
+JabuBoxCheckRuto_patch:
+    bl hook_JabuBoxCheckRuto
 
 .section .patch_TalonGetCastleTextbox
 .global TalonGetCastleTextbox_patch
@@ -1291,6 +1302,26 @@ SetGameOverEntrance_patch:
     bl hook_SetGameOverEntrance
     b  0x458EC8
 
+.section .patch_SetGameOverRespawnFlag
+.global SetGameOverRespawnFlag_patch
+SetGameOverRespawnFlag_patch:
+    bl hook_SetGameOverRespawnFlag
+
+.section .patch_SetSunsSongRespawnFlag
+.global SetSunsSongRespawnFlag_patch
+SetSunsSongRespawnFlag_patch:
+    bl hook_SetSunsSongRespawnFlag
+
+.section .patch_SunsSongEndCloseTextbox
+.global SunsSongsEndCloseTextbox_patch
+SunsSongsEndCloseTextbox_patch:
+    beq hook_SunsSongEndCloseTextbox
+
+.section .patch_SetSpecialVoidOutRespawnFlag
+.global SetSpecialVoidOutRespawnFlag_patch
+SetSpecialVoidOutRespawnFlag_patch:
+    bl hook_SetSpecialVoidOutRespawnFlag
+
 .section .patch_SariasSongHintsOne
 .global SariasSongHintsOne_patch
 SariasSongHintsOne_patch:
@@ -1427,15 +1458,10 @@ TurboTextClose_patch:
 TurboTextSignalNPC_patch:
     bl hook_TurboTextSignalNPC
 
-.section .patch_SkipSongReplayForTimeBlocksOne
-.global SkipSongReplayForTimeBlocksOne_patch
-SkipSongReplayForTimeBlocksOne_patch:
-    b hook_SkipSongReplayForTimeBlocksOne
-
-.section .patch_SkipSongReplayForTimeBlocksTwo
-.global SkipSongReplayForTimeBlocksTwo_patch
-SkipSongReplayForTimeBlocksTwo_patch:
-    b hook_SkipSongReplayForTimeBlocksTwo
+.section .patch_SkipSongReplays_TimeBlocksFix
+.global SkipSongReplays_TimeBlocksFix_patch
+SkipSongReplays_TimeBlocksFix_patch:
+    b hook_SkipSongReplays_TimeBlocksFix
 
 .section .patch_ItemsMenuNumSprites
 .global ItemsMenuNumSprites_patch
@@ -1536,15 +1562,10 @@ CheckForPocketCuccoHatchGameplayInit_patch:
 CheckForPocketCuccoHatchKankyo_patch:
     bl SaveFile_CheckForPocketCuccoHatch
 
-.section .patch_SkipSongReplayForTimeWarpBlocksOne
-.global SkipSongReplayForTimeWarpBlocksOne_patch
-SkipSongReplayForTimeWarpBlocksOne_patch:
-    b hook_SkipSongReplayForTimeWarpBlocksOne
-
-.section .patch_SkipSongReplayForTimeWarpBlocksTwo
-.global SkipSongReplayForTimeWarpBlocksTwo_patch
-SkipSongReplayForTimeWarpBlocksTwo_patch:
-    b hook_SkipSongReplayForTimeWarpBlocksTwo
+.section .patch_SkipSongReplays_WarpBlocksFix
+.global SkipSongReplays_WarpBlocksFix_patch
+SkipSongReplays_WarpBlocksFix_patch:
+    b hook_SkipSongReplays_WarpBlocksFix
 
 .section .patch_PlaySound
 .global PlaySound_patch
@@ -1585,17 +1606,22 @@ SyatekiManReminder_patch:
 .section .patch_SkipTimeTravelCutsceneOne
 .global SkipTimeTravelCutsceneOne_patch
 SkipTimeTravelCutsceneOne_patch:
-    b hook_SkipTimeTravelCutscene
+    b hook_SkipTimeTravelCutsceneOne
 
 .section .patch_SkipTimeTravelCutsceneTwo
 .global SkipTimeTravelCutsceneTwo_patch
 SkipTimeTravelCutsceneTwo_patch:
-    mov r1,#0x324
+    bl hook_SkipTimeTravelCutsceneTwo
 
 .section .patch_SwapAgeIgnoreSceneSetup
 .global SwapAgeIgnoreSceneSetup_patch
 SwapAgeIgnoreSceneSetup_patch:
     nop
+
+.section .patch_SkipMasterSwordFanfare
+.global SkipMasterSwordFanfare_patch
+SkipMasterSwordFanfare_patch:
+    bl hook_SkipMasterSwordFanfare
 
 .section .patch_GameOverDontSpoilTradeItems
 .global GameOverDontSpoilTradeItems_patch
@@ -1676,6 +1702,31 @@ SkipJabuOpeningCutscene_patch:
 .global SilenceNavi_patch
 SilenceNavi_patch:
     bl hook_SilenceNavi
+
+.section .patch_GameplayDestroy
+.global GameplayDestroy_patch
+GameplayDestroy_patch:
+    bl hook_GameplayDestroy
+
+.section .patch_SceneExitOverride
+.global SceneExitOverride_patch
+SceneExitOverride_patch:
+    bl hook_SceneExitOverride
+
+.section .patch_SceneExitDynamicOverride
+.global SceneExitDynamicOverride_patch
+SceneExitDynamicOverride_patch:
+    bl hook_SceneExitDynamicOverride
+
+.section .patch_OverrideGrottoActorEntrance
+.global OverrideGrottoActorEntrance_patch
+OverrideGrottoActorEntrance_patch:
+    b hook_OverrideGrottoActorEntrance
+
+.section .patch_ReturnFWSetupGrottoInfo
+.global ReturnFWSetupGrottoInfo_patch
+ReturnFWSetupGrottoInfo_patch:
+    bl hook_ReturnFWSetupGrottoInfo
 
 .section .patch_loader
 .global loader_patch

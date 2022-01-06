@@ -43,18 +43,19 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.cutsceneIndex = 0;          //no intro cutscene
     gSaveContext.infTable   [0x0] |= 0x01;   //greeted by Saria
     gSaveContext.infTable  [0x11] |= 0x0400; //Met Darunia in Fire Temple
-    gSaveContext.infTable  [0x14] |= 0x000E; //Ruto in Jabu can be escorted immediately
+    gSaveContext.infTable  [0x14] |= 0x0016; //Ruto in Jabu can be escorted immediately, skip cutscene entering Big Octo room
     gSaveContext.infTable  [0x19] |= 0x0100; //Picked up Magic Container
     gSaveContext.infTable  [0x19] |= 0x0020; //Talked to owl in Lake Hylia
+    gSaveContext.infTable   [0x8] |= 0x0810; //Met Malon in Market/Castle Grounds and talked to her once
     gSaveContext.itemGetInf [0x1] |= 0x0008; //Picked up Deku Seeds
     gSaveContext.eventChkInf[0x3] |= 0x0800; //began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; //began boss battles
     gSaveContext.eventChkInf[0x9] |= 0x0010; //Spoke to Nabooru as child
     gSaveContext.eventChkInf[0xB] |= 0x0001; //Dodongo's Cavern intro
-  //gSaveContext.eventChkInf[0xA] |= 0x017B; //entrance cutscenes (minus temple of time)
-  //gSaveContext.eventChkInf[0xB] |= 0x07FF; //more entrance cutscenes
-  //gSaveContext.eventChkInf[0xC] |= 0x0001; //Nabooru ordered to fight by Twinrova
-  //gSaveContext.eventChkInf[0xC] |= 0x8000; //Forest Temple entrance cutscene (3ds only)
+    gSaveContext.eventChkInf[0x0] |= 0x0004; //Spoke to mido
+    gSaveContext.eventChkInf[0x0] |= 0x1020; //Met deku tree and opened mouth
+    gSaveContext.eventChkInf[0x4] |= 0x8020; //Entered MS chamber, Pulled MS from pedestal
+    gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
 
     gSaveContext.sceneFlags[5].swch |= 0x00010000; //remove Ruto cutscene in Water Temple
 
@@ -81,9 +82,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     }
 
     if (gSettingsContext.resolvedStartingAge == AGE_ADULT) {
-        gSaveContext.linkAge       = AGE_ADULT;  //age is adult
-        gSaveContext.entranceIndex = 0xF4050000; //spawn at temple of time
-        gSaveContext.sceneIndex    = 0x6100;     //^
+        gSaveContext.linkAge = AGE_ADULT;  //age is adult
         gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
         gSaveContext.adultEquips.equipment = 0x1120; //Adult equips Kokiri Tunic, Kokiri Boots, and Master Sword
         gSaveContext.infTable[29]  = 0x00; //Unset swordless flag
@@ -133,7 +132,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     }
 
     //Give Link a starting stone/medallion if he has one (if he doesn't the value is just 0)
-	//If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
+    //If starting inventory is set to start with any stone/medallion, just consider that Link's Pocket
     if(gSettingsContext.startingDungeonReward == 0){
         gSaveContext.questItems |= gSettingsContext.linksPocketRewardBitMask;
     }
@@ -154,13 +153,6 @@ void SaveFile_Init(u32 fileBaseIndex) {
     if (gSettingsContext.openForest == OPENFOREST_OPEN) {
       gSaveContext.eventChkInf[0x0] |= 0x0010;
     }
-
-    gSaveContext.eventChkInf[0x0] |= 0x0004; //spoke to mido
-    gSaveContext.eventChkInf[0x0] |= 0x1020; //met deku tree and opened mouth
-
-    gSaveContext.eventChkInf[0x4] |= 0x8020; //entered MS chamber, Pulled MS from pedestal
-
-    gSaveContext.eventChkInf[0xC] |= 0x0020; //Sheik Spawned at MS pedestal as Adult
 
     SaveFile_SetStartingInventory();
     SaveFile_InitExtSaveData(fileBaseIndex + gSaveContext.fileNum);
@@ -265,8 +257,10 @@ u8 SaveFile_GetIsEntranceDiscovered(u16 entranceIndex) {
 }
 
 void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
-    // Skip if already set to save time from setting the connected
-    if (SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
+
+    // Skip if already set to save time from setting the connected or
+    // if this is a dynamic entrance
+    if (entranceIndex > 0x2020 || SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
         return;
     }
 
@@ -580,6 +574,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.playtimeSeconds = 0;
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
+    gExtSaveData.hasTraveledTimeOnce = 0;
     // Ingame Options
     gExtSaveData.option_EnableBGM = 1;
     gExtSaveData.option_EnableSFX = 1;

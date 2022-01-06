@@ -3,6 +3,10 @@
 
 #include "../include/z3D/z3D.h"
 
+typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
+#define Health_ChangeBy_addr 0x352dbc
+#define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
+
 typedef enum {
   OFF,
   ON,
@@ -338,12 +342,13 @@ typedef struct {
   u8 shuffleDungeonEntrances;
   u8 shuffleOverworldEntrances;
   u8 shuffleInteriorEntrances;
+  u8 shuffleGrottoEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;
   u8 randomMQDungeons;
   u8 mqDungeonCount;
-  u8 dungeonModesKnown;
+  u8 dungeonModesKnown[12]; // 12 dungeons which can be set Vanilla or MQ
 
   u8 shuffleRewards;
   u8 linksPocketItem;

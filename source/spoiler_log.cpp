@@ -165,6 +165,9 @@ void WriteIngameSpoilerLog() {
         }
     }
 
+    // Copy at most 51 chars from the name and location name to avoid issues with names that don't fit on screen
+    const char * nameFormatStr = "%.51s";
+
     auto locName = loc->GetName();
     if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
       if (spoilerStringOffset + locName.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
@@ -172,7 +175,7 @@ void WriteIngameSpoilerLog() {
         break;
       } else {
         stringOffsetMap[locName] = spoilerStringOffset;
-        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], "%s", locName.c_str()) + 1;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], nameFormatStr, locName.c_str()) + 1;
       }
     }
 
@@ -183,7 +186,7 @@ void WriteIngameSpoilerLog() {
         break;
       } else {
         stringOffsetMap[locItem] = spoilerStringOffset;
-        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], "%s", locItem.c_str()) + 1;
+        spoilerStringOffset += sprintf(&spoilerData.StringData[spoilerStringOffset], nameFormatStr, locItem.c_str()) + 1;
       }
     }
 
