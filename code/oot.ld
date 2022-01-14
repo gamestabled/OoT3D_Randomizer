@@ -644,6 +644,10 @@ SECTIONS
 		*(.patch_NoSilverGauntletsCutsceneWarp)
 	}
 
+	.patch_FishingIgnoreTempBOne 0x2C3A10 : {
+		*(.patch_FishingIgnoreTempBOne)
+	}
+
 	.patch_DoorOfTimeOpenCutscene 0x2C6218 : {
 		*(.patch_DoorOfTimeOpenCutscene)
 	}
@@ -734,6 +738,10 @@ SECTIONS
 
 	.patch_FairyReviveHealAmount 0x34AF48 : {
 		*(.patch_FairyReviveHealAmount)
+	}
+
+	.patch_FishingIgnoreTempBTwo 0x34CFCC : {
+		*(.patch_FishingIgnoreTempBTwo)
 	}
 
 	.patch_FWLoadSet 0x34D9E8 : {
@@ -1186,14 +1194,6 @@ SECTIONS
 
 	.patch_CheckForPocketCuccoHatchKankyo 0x470D1C : {
 		*(.patch_CheckForPocketCuccoHatchKankyo)
-	}
-
-	.patch_FishingStoreTempB 0x475F8C : {
-		*(.patch_FishingStoreTempB)
-	}
-
-	.patch_FishingRestoreTempB 0x475FC0 : {
-		*(.patch_FishingRestoreTempB)
 	}
 
 	.patch_EnableFW 0x476D1C : {
