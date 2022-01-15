@@ -185,14 +185,6 @@ hook_DaruniaStrengthCheck:
     pop {r0-r12, lr}
     b 0x1E48A0
 
-.global hook_DampeCheckCollectibleFlag
-hook_DampeCheckCollectibleFlag:
-    push {r0-r12, lr}
-    bl EnTk_CheckCollectFlag
-    pop {r0-r12, lr}
-    cpy r4,r0
-    bx lr
-
 .global hook_GetToken
 hook_GetToken:
     push {r0-r12, lr}

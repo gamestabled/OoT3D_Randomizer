@@ -221,11 +221,6 @@ DampeCheckRewardFlag_patch:
 .section .patch_DampeSetCollectibleFlag
     .word 0x00000806
 
-.section .patch_DampeCheckCollectibleFlag
-.global DampeCheckCollectibleFlag_patch
-DampeCheckCollectibleFlag_patch:
-    bl hook_DampeCheckCollectibleFlag
-
 .section .patch_DampeCheckCanDig1
 .global DampeCheckCanDig1_patch
 DampeCheckCanDig1_patch:
