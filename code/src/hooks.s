@@ -806,25 +806,6 @@ hook_CarpetSalesmanSetFlag:
     mvn r0,#0xC7
     bx lr
 
-.global hook_PotionLadyCheckFlagOne
-hook_PotionLadyCheckFlagOne:
-
-.global hook_PotionLadyCheckFlagTwo
-hook_PotionLadyCheckFlagTwo:
-
-.global hook_PotionLadySetRewardFlag
-hook_PotionLadySetRewardFlag:
-
-.global hook_PotionLadyItemOverrideOne
-hook_PotionLadyItemOverrideOne:
-
-.global hook_PotionLadyItemOverrideTwo
-hook_PotionLadyItemOverrideTwo:
-
-.global hook_PotionLadyGetCustomText
-hook_PotionLadyGetCustomText:
-
-
 .global hook_KakarikoGateCheck
 hook_KakarikoGateCheck:
     push {r0-r12, lr}
