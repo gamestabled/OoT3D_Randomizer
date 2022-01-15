@@ -408,6 +408,8 @@ typedef struct {
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+  u8 ironbootsAsChild;
+  u8 masksAsAdult;
   u8 gkDurability;
 
   u8 itemPoolValue;

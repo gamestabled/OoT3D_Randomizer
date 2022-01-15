@@ -376,6 +376,8 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option IronBootsAsChild;
+  extern Option MasksAsAdult;
   extern Option GkDurability;
 
   extern Option ItemPoolValue;
