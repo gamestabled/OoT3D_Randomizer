@@ -109,6 +109,8 @@ constexpr std::array<HintSetting, 4> hintSettingTable{{
 
 std::array<DungeonInfo, 10> dungeonInfoData;
 
+
+
 static Area* GetHintRegion(const AreaKey area) {
 
   std::vector<AreaKey> alreadyChecked = {};
@@ -677,10 +679,18 @@ void CreateAllHints() {
   // Add 'always' location hints
   if (hintSetting.distTable[static_cast<int>(HintType::Always)].copies > 0) {
     // Only filter locations that had a random item placed at them (e.g. don't get cow locations if shuffle cows is off)
-    const auto alwaysHintLocations = FilterFromPool(allLocations, [](const LocationKey loc){
+    auto alwaysHintLocations = FilterFromPool(allLocations, [](const LocationKey loc){
         return Location(loc)->GetHint().GetType() == HintCategory::Always &&
                Location(loc)->IsHintable()        && !(Location(loc)->IsHintedAt());
     });
+
+    for (auto& hint : conditionalAlwaysHints) {
+        LocationKey loc = hint.first;
+        if (hint.second() && Location(loc)->IsHintable() && !Location(loc)->IsHintedAt()) {
+            alwaysHintLocations.push_back(loc);
+        }
+    }
+
     for (LocationKey location : alwaysHintLocations) {
       CreateLocationHint({location});
     }
