@@ -185,14 +185,6 @@ hook_DaruniaStrengthCheck:
     pop {r0-r12, lr}
     b 0x1E48A0
 
-.global hook_DampeCheckCollectibleFlag
-hook_DampeCheckCollectibleFlag:
-    push {r0-r12, lr}
-    bl EnTk_CheckCollectFlag
-    pop {r0-r12, lr}
-    cpy r4,r0
-    bx lr
-
 .global hook_GetToken
 hook_GetToken:
     push {r0-r12, lr}
@@ -363,19 +355,27 @@ hook_LullabyCheckFlag:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_FishingStoreTempB
-hook_FishingStoreTempB:
+.global hook_FishingIgnoreTempBOne
+hook_FishingIgnoreTempBOne:
+    bne 0x2C3A14
     push {r0-r12, lr}
-    bl Fishing_StoreTempB
+    bl isFishing
+    cmp r0,#0x1
     pop {r0-r12, lr}
-    bx lr
+    bne 0x2C3998
+    moveq r0,#89
+    b 0x2C3A14
 
-.global hook_FishingRestoreTempB
-hook_FishingRestoreTempB:
+.global hook_FishingIgnoreTempBTwo
+hook_FishingIgnoreTempBTwo:
+    blt 0x34CFD0
     push {r0-r12, lr}
-    bl Fishing_RestoreTempB
+    bl isFishing
+    cmp r0,#0x1
     pop {r0-r12, lr}
-    bx lr
+    bne 0x34CFF0
+    ldrb r1,[r4,#0x80]
+    b 0x34CFD0
 
 .global hook_ConvertBombDropOne
 hook_ConvertBombDropOne:
