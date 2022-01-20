@@ -396,7 +396,7 @@ namespace Settings {
   Option StartingShardOfAgony     = Option::U8  ("  Shard of Agony",       {"None",             "Shard of Agony"},                                          {""});
   Option StartingHealth           = Option::U8  ("  Health",               healthOptions,                                                                   {""});
   Option StartingMagicMeter       = Option::U8  ("  Magic Meter",          {"None",             "Single Magic",     "Double Magic"},                        {""});
-  Option StartingDoubleDefense    = Option::U8  ("  Double Defense",       {"None",             "Double Defence"},                                          {""});
+  Option StartingDoubleDefense    = Option::U8  ("  Double Defense",       {"None",             "Double Defense"},                                          {""});
   Option StartingQuestToggle      = Option::U8  ("Quest Items",            {"All Off",          "All On",           "Choose"},                              {""});
   Option StartingKokiriEmerald    = Option::U8  ("  Kokiri's Emerald",     {"None",             "Kokiri's Emer."},                                          {""});
   Option StartingGoronRuby        = Option::U8  ("  Goron's Ruby",         {"None",             "Goron's Ruby"},                                            {""});
@@ -1875,6 +1875,10 @@ namespace Settings {
         if (selectOptions) {
           worldOptions[i]->SetSelectedIndex(Random(0,worldOptions[i]->GetOptionCount()));
         }
+        // Sanity Check Closed Forest
+        if (OpenForest.Is(OPENFOREST_CLOSED)) {
+          StartingAge.SetSelectedIndex(AGE_CHILD);
+        }
       }
     }
     else {
@@ -1884,6 +1888,14 @@ namespace Settings {
         }
         worldOptions[i]->Unhide();
       }
+    }
+
+    // Sanity Check Entrance Shuffling
+    if (!ShuffleEntrances) {
+      ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+      ShuffleOverworldEntrances.SetSelectedIndex(OFF);
+      ShuffleInteriorEntrances.SetSelectedIndex(OFF);
+      ShuffleGrottoEntrances.SetSelectedIndex(OFF);
     }
 
     // Shuffle Settings

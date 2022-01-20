@@ -148,7 +148,9 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
 ------------------------------*/                                                           //
 string_view shuffleEntrancesDesc      = "Shuffle where the entrances between areas lead to."
                                         "If turned on, select which kinds of entrances you\n"
-                                        "want shuffled in the options below.";             //
+                                        "want shuffled in the options below. Note that some"
+                                        "types of entrances can have wildly varying\n"     //
+                                        "generation times.";                               //
                                                                                            //
 /*------------------------------                                                           //
 |       DUNGEON ENTRANCES      |                                                           //

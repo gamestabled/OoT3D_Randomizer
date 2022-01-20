@@ -58,8 +58,13 @@ public:
         return AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
     }
 
-    void SetName() {
-        name = AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
+    void SetName(std::string name_ = "") {
+        if (name_ == "") {
+          name = AreaTable(parentRegion)->regionName + " -> " + AreaTable(connectedRegion)->regionName;
+        } else {
+          name = std::move(name_);
+        }
+
     }
 
     std::string GetName() const {
@@ -86,10 +91,10 @@ public:
         }
 
         //check all possible day/night condition combinations
-        conditionsMet = (parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay))   +
-                        (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight)) +
-                        (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay))   +
-                        (parent->adultNight && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight));
+        conditionsMet = (parent->childDay   && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtDay, allAgeTimes))   +
+                        (parent->childNight && CheckConditionAtAgeTime(Logic::IsChild, Logic::AtNight, allAgeTimes)) +
+                        (parent->adultDay   && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtDay, allAgeTimes))   +
+                        (parent->adultNight && CheckConditionAtAgeTime(Logic::IsAdult, Logic::AtNight, allAgeTimes));
 
         return conditionsMet && (!allAgeTimes || conditionsMet == 4);
     }
@@ -99,7 +104,7 @@ public:
     }
 
     //set the logic to be a specific age and time of day and see if the condition still holds
-    bool CheckConditionAtAgeTime(bool& age, bool& time) const {
+    bool CheckConditionAtAgeTime(bool& age, bool& time, bool passAnyway = false) const {
 
         Logic::IsChild = false;
         Logic::IsAdult = false;
@@ -110,10 +115,9 @@ public:
         age = true;
 
         Logic::UpdateHelpers();
-        return GetConditionsMet();
+        return GetConditionsMet() && (connectedRegion != NONE || passAnyway);
     }
 
-    //Yes this is the exact same function as above, trust me on this
     AreaKey GetConnectedRegionKey() const {
         return connectedRegion;
     }
@@ -227,6 +231,7 @@ public:
         AreaTable(ROOT)->AddExit(ROOT, connectedRegion, []{return true;});
         Entrance* targetEntrance = AreaTable(ROOT)->GetExit(connectedRegion);
         targetEntrance->SetReplacement(this);
+        targetEntrance->SetName(GetParentRegion()->regionName + " -> " + GetConnectedRegion()->regionName);
         return targetEntrance;
     }
 
