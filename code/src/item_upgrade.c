@@ -122,6 +122,11 @@ u16 ItemUpgrade_SeedsToRupee(SaveContext* saveCtx, u16 itemId) {
 u16 ItemUpgrade_TokenToRupee(SaveContext* saveCtx, u16 itemId) {
     return (gSaveContext.gsTokens < 100) ? itemId : GI_RUPEE_BLUE; // Blue Rupee
 }
+
+u16 ItemUpgrade_HealthToRupee(SaveContext* saveCtx, u16 itemId) {
+    return (gSaveContext.healthCapacity < 320) ? itemId : GI_RUPEE_BLUE; // Blue Rupee
+}
+
 u16 ItemUpgrade_LetterToBottle(SaveContext* saveCtx, u16 itemId) {
     if (saveCtx->eventChkInf[3] & 0x0008) // "King Zora Moved Aside" //TODO: check this
         return 0xC8; // Redundant Letter Bottle

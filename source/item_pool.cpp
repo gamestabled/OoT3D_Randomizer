@@ -602,6 +602,7 @@ static void SetMinimalItemPool() {
 void GenerateItemPool() {
 
   ItemPool.clear();
+  PendingJunkPool.clear();
 
   //Initialize ice trap models to always major items
   IceTrapModels = {
@@ -1090,6 +1091,7 @@ void GenerateItemPool() {
       if (junkSet) break;
     }
   }
+  PendingJunkPool.clear();
 }
 
 void AddJunk() {
