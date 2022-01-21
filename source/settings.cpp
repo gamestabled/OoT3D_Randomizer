@@ -1272,7 +1272,7 @@ namespace Settings {
           break;
         case 1:
           startingInventoryOptions[i]->Hide();
-          startingInventoryOptions[i]->SetSelectedIndex((startingInventoryOptions[i]->GetOptionCount())-1);
+          startingInventoryOptions[i]->SetSelectedIndex((startingInventoryOptions[i]->GetOptionCount())-1); //TODO: Starting health exception
           break;
         case 2:
           startingInventoryOptions[i]->Unhide();
