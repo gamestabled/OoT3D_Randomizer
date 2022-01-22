@@ -22,6 +22,7 @@ void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot);
 void SaveFile_InitExtSaveData(u32 fileBaseIndex);
 void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
+void SaveFile_EnforceHealthLimit(void);
 
 // Increment the version number whenever the ExtSaveData structure is changed
 #define EXTSAVEDATA_VERSION 8

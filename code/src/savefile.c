@@ -637,3 +637,9 @@ void SaveFile_SaveExtSaveData(u32 saveNumber) {
 
     extDataUnmount(fsa);
 }
+
+void SaveFile_EnforceHealthLimit(void) {
+    if (gSaveContext.health > gSaveContext.healthCapacity) {
+        gSaveContext.health = gSaveContext.healthCapacity;
+    }
+}

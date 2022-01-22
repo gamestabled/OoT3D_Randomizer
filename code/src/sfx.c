@@ -15,6 +15,11 @@ u32 SetSFX(u32 original) {
         return SEQ_AUDIO_BLANK;
     }
 
+    static const u16 HITPOINT_ALARM = 1183; // Disable low health beep when max health is 1 heart
+    if (sfxID == HITPOINT_ALARM && gSaveContext.healthCapacity == 0x10) {
+        return SEQ_AUDIO_BLANK;
+    }
+
     // Check for invalid sound effect
     if (original < SFX_BASE || original > SFX_BASE + SFX_COUNT || type >= SEQTYPE_COUNT) {
         return original;

@@ -1120,7 +1120,7 @@ namespace Logic {
      BigPoeKill          = false;
      HookshotOrBoomerang = false;
 
-     BaseHealth      = (StartingHealth.Value<u8>() + 2) % 20 + 1;
+     BaseHealth      = StartingHealth.Value<u8>() + 1;
      Health          = 0;
      Multiplier      = (DamageMultiplier.Value<u8>() < 6) ? DamageMultiplier.Value<u8>() : 10;
      EffectiveHealth = 0;
