@@ -38,6 +38,7 @@
 #include "shooting_gallery_man.h"
 #include "malon.h"
 #include "jabu.h"
+#include "dampe.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -71,6 +72,8 @@ void Actor_Init() {
     gActorOverlayTable[0x5F].initInfo->init = ItemBHeart_rInit;
     gActorOverlayTable[0x5F].initInfo->destroy = ItemBHeart_rDestroy;
     gActorOverlayTable[0x5F].initInfo->draw = ItemBHeart_rDraw;
+
+    gActorOverlayTable[0x85].initInfo->update = EnTk_rUpdate;
 
     gActorOverlayTable[0x8B].initInfo->init = DemoEffect_rInit;
     gActorOverlayTable[0x8B].initInfo->destroy = DemoEffect_rDestroy;

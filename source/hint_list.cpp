@@ -6801,35 +6801,35 @@ void HintTable_Init() {
                      //obscure text                                                  singular        plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone|Spiritual Stones|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |pierre spirituelle|pierres spirituelles|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |una piedra espiritual|unas piedras espirituales|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |piedra espiritual|piedras espirituales|#."},
     });
 
     hintTable[BRIDGE_MEDALLIONS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular  plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Medallion|Medallions|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |médaillon|médaillons|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |un medallón|unos medallones|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |medallón|medallones|#."},
     });
 
     hintTable[BRIDGE_REWARDS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular                     plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone&or Medallion|Spiritual Stones&and Medallions|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |pierre spirituelle&ou médaillon|pierres spirituelles&et médaillons|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |una piedra espiritual o medallón|unas piedras espirtuales y unos medallones|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |piedra espiritual o medallón|piedras espirtuales y medallones|#."},
     });
 
     hintTable[BRIDGE_DUNGEONS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular plural
                      Text{"The awakened ones will await for the&Hero to conquer #%d |Dungeon|Dungeons|#.",
                 /*french*/"Les êtres de sagesse attendront la&conquête de #%d |donjon|donjons|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe& complete #%d |una mazmorra|unas mazmorras|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe& complete #%d |mazmorra|mazmorras|#."},
     });
 
     hintTable[BRIDGE_TOKENS_HINT] = HintText::Bridge({
                      //obscure text
                      Text{"The awakened ones will await for the&Hero to collect #%d |Gold Skulltula&Token|Gold Skulltula&Tokens|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |symbole|symboles| de&Skulltula d'or#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |un símbolo|unos símbolos| de&skulltula dorada#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |símbolo|símbolos| de&skulltula dorada#."},
     });
 
     /*--------------------------
@@ -6900,35 +6900,35 @@ void HintTable_Init() {
                      //obscure text                                                     singular      plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d&|Medallion# is|Medallions# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |médaillon|médaillons|#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |un medallón|unos medallones|#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |medallón|medallones|#."},
     });
 
     hintTable[LACS_STONES_HINT] = HintText::LACS({
                      //obscure text                                                     singular            plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone# is|Spiritual&Stones# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d des |pierre&spirituelle|pierres&spirituelles|#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |una piedra espiritual|unas piedras espirituales|#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |piedra espiritual|piedras espirituales|#."},
     });
 
     hintTable[LACS_REWARDS_HINT] = HintText::LACS({
                      //obscure text                                                     singular                         plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone or Medallion# is|Spiritual&Stones and Medallions# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |pierre spirituelle&et des médaillon|pierres spirituelles&et des médaillons|#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |una piedra espiritual o medallón|unas piedras espirituales o unos medallones|#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |piedra espiritual o medallón|piedras espirituales o medallones|#."},
     });
 
     hintTable[LACS_DUNGEONS_HINT] = HintText::LACS({
                      //obscure text                                                     singular    plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Dungeon#&is|Dungeons#&are| conquered.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# une fois #%d |donjon conquéri|donjons conquéris|#.",
-               /*spanish*/"las #piedras espirituales y los medallones#"},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras completar&#%d |mazmorra|mazmorras|#."},
     });
 
     hintTable[LACS_TOKENS_HINT] = HintText::LACS({
                      //obscure text                                                     singular                 plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Gold&Skulltula Token# is|Gold&Skulltula Tokens# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |symbole|symboles| de&Skulltula d'or#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |un símbolo|unos símbolos| de&skulltula dorada#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |símbolo|símbolos| de&skulltula dorada#."},
     });
     /*--------------------------
     |     TRIAL HINT TEXT      |
