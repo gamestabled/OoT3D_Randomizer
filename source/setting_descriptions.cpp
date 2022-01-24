@@ -1218,6 +1218,12 @@ string_view LogicSpiritTrialHookshotDesc              = "Difficulty: Intermediat
                                                         "A precise jump off of an Armos can collect the\n" //
                                                         "highest rupee.";                                  //
                                                                                                            //
+string_view LogicFlamingChestsDesc                    = "Difficulty: Novice\n"                             //
+                                                        "The chests encircled in flames in Gerudo Training\n"
+                                                        "Grounds and in Spirit Temple can be opened by\n"  //
+                                                        "running into the flames while Link is invincible\n"
+                                                        "after taking damage.";                            //
+                                                                                                           //
 /*------------------------------                                                                           //
 |           GLITCHES           |                                                                           //
 ------------------------------*/                                                                           //
