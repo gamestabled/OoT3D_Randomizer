@@ -6,6 +6,9 @@
 #define EnMag_Init_addr 0x18CBB8
 #define EnMag_Init ((ActorFunc)EnMag_Init_addr)
 
+u8 missingRomfsAlert = 0;
+s16 romfsAlertFrames = 0;
+
 void EnMag_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnMag* this = (EnMag*)thisx;
 
@@ -31,4 +34,11 @@ void EnMag_rInit(Actor* thisx, GlobalContext* globalCtx) {
     TexAnim_Spawn(this->copyrightModel->unk_0C, cmabMan);
     this->copyrightModel->unk_0C->animSpeed = 0.0f;
     this->copyrightModel->unk_0C->animMode = 0;
+
+    if (cmabMan == 0) {
+        // If the pointer is 0, the romfs folder is not present.
+        // The 3DS would've crashed by this point, so this alert is for Citra only.
+        missingRomfsAlert = 1;
+        romfsAlertFrames = 300;
+    }
 }
