@@ -60,7 +60,7 @@ typedef struct {
     /* 0x0008 */ s32          cutsceneIndex;
     /* 0x000C */ u16          dayTime; // "zelda_time"
     /* 0x000E */ u8           masterQuestFlag;
-    /* 0x000F */ char         unk_F[0x0001];
+    /* 0x000F */ u8           motionControlSetting;
     /* 0x0010 */ s32          nightFlag;
     /* 0x0014 */ s32          unk_14;
     /* 0x0018 */ s32          unk_18;
@@ -142,7 +142,9 @@ typedef struct {
         /* 0x13C8 */ u32 hour;
         /* 0x13CC */ u32 minute;
     }                         saveTime;
-    /* 0x13D0 */ char         unk_13D0[0x0080];
+    /* 0x13D0 */ char         unk_13D0[0x0008];
+    /* 0x13D8 */ u8           cameraControlSetting;
+    /* 0x13D9 */ char         unk_13D9[0x0077];
     /* 0x1450 */ u32          bossBattleVictories[9];
     /* 0x1474 */ u32          bossBattleScores[9];
     /* 0x1498 */ char         unk_1498[0x0040]; //sheikah stone flags?

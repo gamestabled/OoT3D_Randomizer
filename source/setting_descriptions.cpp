@@ -783,6 +783,17 @@ string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random du
                                         "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
+|       INGAME DEFAULTS        |                                                           //
+------------------------------*/                                                           //
+string_view zTargetingDesc            = "Sets L-Targeting to start as switch or hold.";    //
+string_view cameraControlDesc         = "Sets the camera controls to start as normal or\n" //
+                                        "with the y-axis inverted.";                       //
+string_view motionControlDesc         = "Sets the motion controls to start on or off.";    //
+string_view togglePlayMusicDesc       = "Starts the game with the music on or off.";       //
+string_view togglePlaySFXDesc         = "Starts the game with the sound effects on or off.";
+string_view silenceNaviDesc           = "Sets whether Navi should start silenced or not."; //
+                                                                                           //
+/*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
 ------------------------------*/                                                           //
 string_view coloredKeysDesc           = "If set, small key models will be colored\n"       //
@@ -1217,6 +1228,12 @@ string_view LogicLensCastleMQDesc                     = "Difficulty: Intermediat
 string_view LogicSpiritTrialHookshotDesc              = "Difficulty: Intermediate\n"                       //
                                                         "A precise jump off of an Armos can collect the\n" //
                                                         "highest rupee.";                                  //
+                                                                                                           //
+string_view LogicFlamingChestsDesc                    = "Difficulty: Novice\n"                             //
+                                                        "The chests encircled in flames in Gerudo Training\n"
+                                                        "Grounds and in Spirit Temple can be opened by\n"  //
+                                                        "running into the flames while Link is invincible\n"
+                                                        "after taking damage.";                            //
                                                                                                            //
 /*------------------------------                                                                           //
 |           GLITCHES           |                                                                           //
