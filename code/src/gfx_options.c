@@ -17,14 +17,14 @@ Option options[3];
 
 void InitOptions(void) {
     // BGM
-    strcpy(options[0].name, "Music");
+    strcpy(options[0].name, "Play Music");
     strcpy(options[0].alternatives[0], "Off");
     strcpy(options[0].alternatives[1], "On");
     strcpy(options[0].description, "Toggles the music.\nTakes effect once music is switched.");
     options[0].optionPointer = &gExtSaveData.option_EnableBGM;
 
     // SFX
-    strcpy(options[1].name, "Sound Effects");
+    strcpy(options[1].name, "Play Sound Effects");
     strcpy(options[1].alternatives[0], "Off");
     strcpy(options[1].alternatives[1], "On");
     strcpy(options[1].description, "Toggles the sound effects.");

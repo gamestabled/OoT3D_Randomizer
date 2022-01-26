@@ -6801,35 +6801,35 @@ void HintTable_Init() {
                      //obscure text                                                  singular        plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone|Spiritual Stones|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |pierre spirituelle|pierres spirituelles|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |una piedra espiritual|unas piedras espirituales|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |piedra espiritual|piedras espirituales|#."},
     });
 
     hintTable[BRIDGE_MEDALLIONS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular  plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Medallion|Medallions|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |médaillon|médaillons|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |un medallón|unos medallones|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |medallón|medallones|#."},
     });
 
     hintTable[BRIDGE_REWARDS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular                     plural
                      Text{"The awakened ones will await for the&Hero to collect #%d |Spiritual Stone&or Medallion|Spiritual Stones&and Medallions|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |pierre spirituelle&ou médaillon|pierres spirituelles&et médaillons|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |una piedra espiritual o medallón|unas piedras espirtuales y unos medallones|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |piedra espiritual o medallón|piedras espirtuales y medallones|#."},
     });
 
     hintTable[BRIDGE_DUNGEONS_HINT] = HintText::Bridge({
                      //obscure text                                                  singular plural
                      Text{"The awakened ones will await for the&Hero to conquer #%d |Dungeon|Dungeons|#.",
                 /*french*/"Les êtres de sagesse attendront la&conquête de #%d |donjon|donjons|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe& complete #%d |una mazmorra|unas mazmorras|#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe& complete #%d |mazmorra|mazmorras|#."},
     });
 
     hintTable[BRIDGE_TOKENS_HINT] = HintText::Bridge({
                      //obscure text
                      Text{"The awakened ones will await for the&Hero to collect #%d |Gold Skulltula&Token|Gold Skulltula&Tokens|#.",
                 /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |symbole|symboles| de&Skulltula d'or#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |un símbolo|unos símbolos| de&skulltula dorada#."},
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |símbolo|símbolos| de&skulltula dorada#."},
     });
 
     /*--------------------------
@@ -6900,35 +6900,35 @@ void HintTable_Init() {
                      //obscure text                                                     singular      plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d&|Medallion# is|Medallions# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |médaillon|médaillons|#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |un medallón|unos medallones|#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |medallón|medallones|#."},
     });
 
     hintTable[LACS_STONES_HINT] = HintText::LACS({
                      //obscure text                                                     singular            plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone# is|Spiritual&Stones# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d des |pierre&spirituelle|pierres&spirituelles|#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |una piedra espiritual|unas piedras espirituales|#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |piedra espiritual|piedras espirituales|#."},
     });
 
     hintTable[LACS_REWARDS_HINT] = HintText::LACS({
                      //obscure text                                                     singular                         plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Spiritual&Stone or Medallion# is|Spiritual&Stones and Medallions# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |pierre spirituelle&et des médaillon|pierres spirituelles&et des médaillons|#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |una piedra espiritual o medallón|unas piedras espirituales o unos medallones|#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |piedra espiritual o medallón|piedras espirituales o medallones|#."},
     });
 
     hintTable[LACS_DUNGEONS_HINT] = HintText::LACS({
                      //obscure text                                                     singular    plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Dungeon#&is|Dungeons#&are| conquered.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# une fois #%d |donjon conquéri|donjons conquéris|#.",
-               /*spanish*/"las #piedras espirituales y los medallones#"},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras completar&#%d |mazmorra|mazmorras|#."},
     });
 
     hintTable[LACS_TOKENS_HINT] = HintText::LACS({
                      //obscure text                                                     singular                 plural
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Gold&Skulltula Token# is|Gold&Skulltula Tokens# are| retrieved.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |symbole|symboles| de&Skulltula d'or#.",
-               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |un símbolo|unos símbolos| de&skulltula dorada#."},
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |símbolo|símbolos| de&skulltula dorada#."},
     });
     /*--------------------------
     |     TRIAL HINT TEXT      |
@@ -7154,6 +7154,75 @@ void HintTable_Init() {
                /*spanish*/"!#^La marca que te guiará al #Templo del&Espíritu# es la #bandera que está a la&"+IF_NOT_MQ()+"izquierda"+MQ_ELSE()+"derecha"+MQ_END()+"# al salir de aquí. ¡Nos vemos!"},
     });
 }
+
+s32 StonesRequiredBySettings() {
+    s32 stones = 0;
+    if (Settings::Bridge.Is(RAINBOWBRIDGE_STONES)) {
+        stones = std::max<s32>({ stones, (s32)Settings::BridgeStoneCount.Value<u8>() });
+    }
+    if (Settings::Bridge.Is(RAINBOWBRIDGE_REWARDS)) {
+        stones = std::max<s32>({ stones, (s32)Settings::BridgeRewardCount.Value<u8>() - 6 });
+    }
+    if ((Settings::Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) && (Settings::ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON))) {
+        stones = std::max<s32>({ stones, (s32)Settings::BridgeDungeonCount.Value<u8>() - 6 });
+    }
+    if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES)) {
+        stones = std::max<s32>({ stones, (s32)Settings::LACSStoneCount.Value<u8>() });
+    }
+    if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS)) {
+        stones = std::max<s32>({ stones, (s32)Settings::LACSRewardCount.Value<u8>() - 6 });
+    }
+    if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
+        stones = std::max<s32>({ stones, (s32)Settings::LACSDungeonCount.Value<u8>() - 6 });
+    }
+    return stones;
+}
+
+s32 MedallionsRequiredBySettings() {
+    s32 medallions = 0;
+    if (Settings::Bridge.Is(RAINBOWBRIDGE_MEDALLIONS)) {
+        medallions = std::max<s32>({ medallions, (s32)Settings::BridgeMedallionCount.Value<u8>() });
+    }
+    if (Settings::Bridge.Is(RAINBOWBRIDGE_REWARDS)) {
+        medallions = std::max<s32>({ medallions, (s32)Settings::BridgeRewardCount.Value<u8>() - 3 });
+    }
+    if ((Settings::Bridge.Is(RAINBOWBRIDGE_DUNGEONS)) && (Settings::ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON))) {
+        medallions = std::max<s32>({ medallions, (s32)Settings::BridgeDungeonCount.Value<u8>() - 3 });
+    }
+    if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
+        medallions = std::max<s32>({ medallions, (s32)Settings::LACSMedallionCount.Value<u8>() });
+    }
+    if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS)) {
+        medallions = std::max<s32>({ medallions, (s32)Settings::LACSRewardCount.Value<u8>() - 3 });
+    }
+    if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS)) {
+        medallions = std::max<s32>({ medallions, (s32)Settings::LACSDungeonCount.Value<u8>() - 3 });
+    }
+    return medallions;
+}
+
+s32 TokensRequiredBySettings() {
+    s32 tokens = 0;
+    if (Settings::Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
+        tokens = std::max<s32>({ tokens, (s32)Settings::BridgeTokenCount.Value<u8>() });
+    }
+    if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+        tokens = std::max<s32>({ tokens, (s32)Settings::LACSTokenCount.Value<u8>() });
+    }
+    return tokens;
+}
+
+std::array<ConditionalAlwaysHint, 9> conditionalAlwaysHints = {
+    std::make_pair(MARKET_10_BIG_POES, [](){ return Settings::BigPoeTargetCount.Value<u8>() >= 3; }), // Remember, the option's value being 3 means 4 are required
+    std::make_pair(DEKU_THEATER_MASK_OF_TRUTH, [](){ return !Settings::CompleteMaskQuest; }),
+    std::make_pair(SONG_FROM_OCARINA_OF_TIME, [](){ return StonesRequiredBySettings() < 2; }),
+    std::make_pair(HF_OCARINA_OF_TIME_ITEM, [](){ return StonesRequiredBySettings() < 2; }),
+    std::make_pair(SHEIK_IN_KAKARIKO, [](){ return MedallionsRequiredBySettings() < 5; }),
+    std::make_pair(DMT_TRADE_CLAIM_CHECK, [](){ return false; }),
+    std::make_pair(KAK_30_GOLD_SKULLTULA_REWARD, [](){ return TokensRequiredBySettings() < 30; }),
+    std::make_pair(KAK_40_GOLD_SKULLTULA_REWARD, [](){ return TokensRequiredBySettings() < 40; }),
+    std::make_pair(KAK_50_GOLD_SKULLTULA_REWARD, [](){ return TokensRequiredBySettings() < 50; })
+};
 
 const HintText& Hint(const HintKey hintKey) {
     return hintTable[hintKey];

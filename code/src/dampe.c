@@ -1,30 +1,20 @@
-#include "z3D/z3D.h"
+#include "dampe.h"
 
-typedef struct {
-    /* 0x000 */ char unk_00[0xBA8];
-    /* 0xBA8 */ u32 currentReward;
-} EnTk;
+#define EnTk_Update_addr 0x1BC088
+#define EnTk_Update ((ActorFunc)EnTk_Update_addr)
 
-typedef struct {
-    /* 0x000 */ char unk_00[0xB1C];
-    /* 0xB1C */ u8 unk_B1C;
-} EnPoRelay;
-
-// Sets the flag for having received the reward from Dampe
-// Upgrades the current reward to 4, the highest
-void EnTk_SetRewardFlag(EnTk* dampe) {
-    gSaveContext.itemGetInf[1] |= 0x1000;
-    dampe->currentReward = 4;
+void EnTk_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    // Custom collectible flag for the heart piece
+    if (gGlobalContext->actorCtx.flags.collect & 0x100) {
+        // Sets the flag for having received the reward from Dampe
+        gSaveContext.itemGetInf[1] |= 0x1000;
+    }
+    EnTk_Update(thisx, globalCtx);
 }
 
-// Runs in the destroy function for Dampe
-// Checks if the reward was collected, and if not
-// unsets the flag for having received the reward
-void EnTk_CheckCollectFlag(void) {
-    // Custom collectible flag for the heart piece
-    if (!(gGlobalContext->actorCtx.flags.collect & 0x100)) {
-        gSaveContext.itemGetInf[1] &= ~0x1000;
-    }
+// Upgrades the current reward to 4, the highest
+void EnTk_SetRewardFlag(EnTk* dampe) {
+    dampe->currentReward = 4;
 }
 
 // Checks the clear flag for the first race (chest spawned, not opened)

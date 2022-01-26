@@ -156,6 +156,11 @@ void SaveFile_Init(u32 fileBaseIndex) {
 
     SaveFile_SetStartingInventory();
     SaveFile_InitExtSaveData(fileBaseIndex + gSaveContext.fileNum);
+
+    //Ingame Defaults
+    gSaveContext.zTargetingSetting = gSettingsContext.zTargeting;
+    gSaveContext.cameraControlSetting = gSettingsContext.cameraControl;
+    gSaveContext.motionControlSetting = gSettingsContext.motionControl;
 }
 
 void SaveFile_SaveChildBButton(void) {
@@ -576,9 +581,9 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
     gExtSaveData.hasTraveledTimeOnce = 0;
     // Ingame Options
-    gExtSaveData.option_EnableBGM = 1;
-    gExtSaveData.option_EnableSFX = 1;
-    gExtSaveData.option_SilenceNavi = 0;
+    gExtSaveData.option_EnableBGM = gSettingsContext.playMusic;
+    gExtSaveData.option_EnableSFX = gSettingsContext.playSFX;
+    gExtSaveData.option_SilenceNavi = gSettingsContext.silenceNavi;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {

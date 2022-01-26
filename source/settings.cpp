@@ -594,6 +594,7 @@ namespace Settings {
   Option LogicLensGtgMQ                   = LogicTrick(" GTG MQ Navigate\n   w/o Lens of Truth",      LogicLensGtgMQDesc);
   Option LogicLensCastleMQ                = LogicTrick(" GaC MQ Navigate\n   w/o Lens of Truth",      LogicLensCastleMQDesc);
   Option LogicSpiritTrialHookshot         = LogicTrick(" Spirit Trial\n   w/o Hookshot",              LogicSpiritTrialHookshotDesc);
+  Option LogicFlamingChests               = LogicTrick(" Open chests through\n   flame circles",      LogicFlamingChestsDesc);
   std::vector<Option *> trickOptions = {
     &ToggleAllTricks,
     &LogicGrottosWithoutAgony,
@@ -679,6 +680,7 @@ namespace Settings {
     &LogicLensGtgMQ,
     &LogicLensCastleMQ,
     &LogicSpiritTrialHookshot,
+    &LogicFlamingChests,
   };
 
   //Function to avoid accidentally naming the options wrong, as logic.cpp requires these exact names
@@ -713,6 +715,21 @@ namespace Settings {
     &GlitchHookshotJump_Boots,
     &GlitchLedgeClip,
     &GlitchTripleSlashClip,
+  };
+
+  Option ZTargeting      = Option::U8("L-Targeting",        {"Switch", "Hold"},          {zTargetingDesc},      OptionCategory::Cosmetic, 1);
+  Option CameraControl   = Option::U8("Camera Control",     {"Normal", "Invert Y-axis"}, {cameraControlDesc},   OptionCategory::Cosmetic);
+  Option MotionControl   = Option::U8("Motion Control",     {"On", "Off"},               {motionControlDesc},   OptionCategory::Cosmetic);
+  Option TogglePlayMusic = Option::U8("Play Music",         {"Off", "On"},               {togglePlayMusicDesc}, OptionCategory::Cosmetic, 1);
+  Option TogglePlaySFX   = Option::U8("Play Sound Effects", {"Off", "On"},               {togglePlaySFXDesc},   OptionCategory::Cosmetic, 1);
+  Option SilenceNavi     = Option::U8("Silence Navi",       {"Off", "On"},               {silenceNaviDesc},     OptionCategory::Cosmetic);
+  std::vector<Option*> ingameDefaultOptions = {
+    &ZTargeting,
+    &CameraControl,
+    &MotionControl,
+    &TogglePlayMusic,
+    &TogglePlaySFX,
+    &SilenceNavi,
   };
 
   static std::vector<std::string> gauntletOptions = {
@@ -855,8 +872,9 @@ namespace Settings {
   Menu miscSettings             = Menu::SubMenu("Misc Settings",              &miscOptions);
   Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);
   Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
-  Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
+  Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions);
   Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
+  Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
   Menu generateRandomizer       = Menu::Action ("Generate Randomizer",        GENERATE_MODE);
 
   //adding a menu with no options crashes, might fix later
@@ -871,6 +889,7 @@ namespace Settings {
     &miscSettings,
     &itemPoolSettings,
     &itemUsabilitySettings,
+    &ingameDefaults,
     &cosmetics,
     &settingsPresets,
     &generateRandomizer,
@@ -985,6 +1004,13 @@ namespace Settings {
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();
     ctx.progressiveGoronSword = (ProgressiveGoronSword) ? 1 : 0;
+
+    ctx.zTargeting           = ZTargeting.Value<u8>();
+    ctx.cameraControl        = CameraControl.Value<u8>();
+    ctx.motionControl        = MotionControl.Value<u8>();
+    ctx.playMusic            = TogglePlayMusic.Value<u8>();
+    ctx.playSFX              = TogglePlaySFX.Value<u8>();
+    ctx.silenceNavi          = SilenceNavi.Value<u8>();
 
     ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
