@@ -1653,6 +1653,11 @@ LoadGame_patch:
 SaveGame_patch:
     b hook_SaveGame
 
+.section .patch_DontSetMotionSetting
+.global .DontSetMotionSetting_patch
+DontSetMotionSetting_patch:
+    nop
+
 .section .patch_SaveMenuIgnoreOpen
 .global SaveMenuIgnoreOpen_patch
 SaveMenuIgnoreOpen_patch:

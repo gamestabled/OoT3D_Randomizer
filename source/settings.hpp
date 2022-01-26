@@ -549,6 +549,15 @@ namespace Settings {
   extern Option GlitchLedgeClip;
   extern Option GlitchTripleSlashClip;
 
+  //Ingame Default Settings
+  extern Option ZTargeting;
+  extern Option CameraControl;
+  extern Option MotionControl;
+  extern Option TogglePlayMusic;
+  extern Option TogglePlaySFX;
+  extern Option SilenceNavi;
+
+  //Cosmetic Settings
   extern Option CustomTunicColors;
   extern Option ChildTunicColor;
   extern Option KokiriTunicColor;

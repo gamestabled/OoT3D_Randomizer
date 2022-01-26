@@ -414,6 +414,13 @@ typedef struct {
   u8 iceTrapValue;
   u8 progressiveGoronSword;
 
+  u8 zTargeting;
+  u8 cameraControl;
+  u8 motionControl;
+  u8 playMusic;
+  u8 playSFX;
+  u8 silenceNavi;
+
   u8 customTunicColors;
   u8 coloredKeys;
   u8 coloredBossKeys;

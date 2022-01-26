@@ -1064,6 +1064,10 @@ SECTIONS
 		*(.patch_LoadGame)
 	}
 
+	.patch_DontSetMotionSetting 0x447410 : {
+		*(.patch_DontSetMotionSetting)
+	}
+
 	.patch_OverrideFogDuringGameplayInit 0x4485B4 : {
 		*(.patch_OverrideFogDuringGameplayInit)
 	}
