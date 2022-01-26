@@ -378,6 +378,7 @@ extern string_view LogicLensBotwMQDesc;
 extern string_view LogicLensGtgMQDesc;
 extern string_view LogicLensCastleMQDesc;
 extern string_view LogicSpiritTrialHookshotDesc;
+extern string_view LogicFlamingChestsDesc;
 
 extern const std::vector<string_view> GlitchDifficulties;
 extern string_view GlitchISGDescDisabled;

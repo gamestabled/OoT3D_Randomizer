@@ -538,6 +538,7 @@ namespace Settings {
   extern Option LogicLensGtgMQ;
   extern Option LogicLensCastleMQ;
   extern Option LogicSpiritTrialHookshot;
+  extern Option LogicFlamingChests;
 
   //Glitch Settings
   extern Option GlitchISG;

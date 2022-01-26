@@ -577,6 +577,7 @@ namespace Settings {
   Option LogicLensGtgMQ                   = LogicTrick(" GTG MQ Navigate\n   w/o Lens of Truth",      LogicLensGtgMQDesc);
   Option LogicLensCastleMQ                = LogicTrick(" GaC MQ Navigate\n   w/o Lens of Truth",      LogicLensCastleMQDesc);
   Option LogicSpiritTrialHookshot         = LogicTrick(" Spirit Trial\n   w/o Hookshot",              LogicSpiritTrialHookshotDesc);
+  Option LogicFlamingChests               = LogicTrick(" Open chests through\n   flame circles",      LogicFlamingChestsDesc);
   std::vector<Option *> trickOptions = {
     &ToggleAllTricks,
     &LogicGrottosWithoutAgony,
@@ -662,6 +663,7 @@ namespace Settings {
     &LogicLensGtgMQ,
     &LogicLensCastleMQ,
     &LogicSpiritTrialHookshot,
+    &LogicFlamingChests,
   };
 
   //Function to avoid accidentally naming the options wrong, as logic.cpp requires these exact names
