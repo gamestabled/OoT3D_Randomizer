@@ -1246,6 +1246,24 @@ hook_ReturnFWSetupGrottoInfo:
     add sp,sp,#0x8
     bx lr
 
+.global hook_ChildHoverBoots
+hook_ChildHoverBoots:
+    beq 0x2D5F04
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHoverBootsEffect
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x2D5F04
+    b 0x2D5DFC
+
+.global hook_ArrowsOrSeeds
+hook_ArrowsOrSeeds:
+    push {r0-r12, lr}
+    bl Player_ShouldUseSlingshot
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

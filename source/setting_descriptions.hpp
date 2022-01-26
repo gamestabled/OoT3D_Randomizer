@@ -259,7 +259,10 @@ extern string_view faroresWindAnywhereDesc;
 extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
+extern string_view adultSlingshotDesc;
+extern string_view childBowDesc;
 extern string_view childIronBootsDesc;
+extern string_view childHoverBootsDesc;
 extern string_view adultMasksDesc;
 
 extern string_view gkDurabilityVanilla;

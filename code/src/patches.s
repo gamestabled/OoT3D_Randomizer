@@ -1755,6 +1755,21 @@ OverrideGrottoActorEntrance_patch:
 ReturnFWSetupGrottoInfo_patch:
     bl hook_ReturnFWSetupGrottoInfo
 
+.section .patch_ChildHoverBoots
+.global ChildHoverBoots_patch
+ChildHoverBoots_patch:
+    b hook_ChildHoverBoots
+
+.section .patch_NockArrow
+.global NockArrow_patch
+NockArrow_patch:
+    bl hook_ArrowsOrSeeds
+
+.section .patch_DecreaseArrowCount
+.global DecreaseArrowCount_patch
+DecreaseArrowCount_patch:
+    bl hook_ArrowsOrSeeds
+
 .section .patch_loader
 .global loader_patch
 

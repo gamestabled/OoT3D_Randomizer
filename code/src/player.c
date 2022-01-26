@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "objects.h"
 #include "custom_models.h"
+#include "settings.h"
 #include "player.h"
 #include "settings.h"
 
@@ -88,4 +89,18 @@ f32 Player_GetSpeedMultiplier(void) {
     }
 
     return speedMultiplier;
+}
+
+s32 Player_ShouldDrawHoverBootsEffect() {
+    return gSaveContext.linkAge == 0 || !gSettingsContext.hoverbootsAsChild;
+}
+
+s32 Player_ShouldUseSlingshot() {
+
+    if (PLAYER->heldItemActionParam == 0xF) { // Slingshot
+        return gSaveContext.linkAge == 1 || gSettingsContext.slingshotAsAdult;
+    }
+    else {
+        return gSaveContext.linkAge == 1 && !gSettingsContext.bowAsChild;
+    }
 }

@@ -787,11 +787,36 @@ string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.\n" 
 string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.\n"       //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
+/*------------------------------                                                           //
+|    ENABLE ADULT SLINGSHOT    |                                                           //
+------------------------------*/                                                           //
+string_view adultSlingshotDesc        = "Adult Link can use the Slingshot (but it looks\n" //
+                                        "like the Bow).\n"                                 //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|      ENABLE CHILD BOW        |                                                           //
+------------------------------*/                                                           //
+string_view childBowDesc              = "Child Link can use the Bow. It will look like the\n"
+                                        "Slingshot, but will shoot arrows. You can only\n" //
+                                        "change arrow type with the quick-swapping, not\n" //
+                                        "with the Items Menu.\n"                           //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
                                                                                            //
 /*------------------------------                                                           //
 |   ENABLE CHILD IRON BOOTS    |                                                           //
 ------------------------------*/                                                           //
 string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.\n"           //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|   ENABLE CHILD HOVER BOOTS   |                                                           //
+------------------------------*/                                                           //
+string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots. The yellow\n"
+                                        "circle beneath Link's feet won't appear.\n"       //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //

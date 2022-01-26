@@ -268,7 +268,10 @@ namespace Settings {
   Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                                {adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                                {childHammerDesc});
+  Option SlingshotAsAdult    = Option::Bool("Adult Slingshot",        {"Disabled", "Enabled"},                                                {adultSlingshotDesc});
+  Option BowAsChild          = Option::Bool("Child Bow",              {"Disabled", "Enabled"},                                                {childBowDesc});
   Option IronBootsAsChild    = Option::Bool("Child Iron Boots",       {"Disabled", "Enabled"},                                                {childIronBootsDesc});
+  Option HoverBootsAsChild   = Option::Bool("Child Hover Boots",      {"Disabled", "Enabled"},                                                {childHoverBootsDesc});
   Option MasksAsAdult        = Option::Bool("Adult Masks",            {"Disabled", "Enabled"},                                                {adultMasksDesc});
   Option GkDurability        = Option::U8  ("GK Durability",          {"Vanilla", "Random Risk", "Random Safe"},                              {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
   std::vector<Option *> itemUsabilityOptions = {
@@ -276,7 +279,10 @@ namespace Settings {
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
+    &SlingshotAsAdult,
+    &BowAsChild,
     &IronBootsAsChild,
+    &HoverBootsAsChild,
     &MasksAsAdult,
     &GkDurability,
   };
@@ -1009,7 +1015,10 @@ namespace Settings {
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
     ctx.boomerangAsAdult     = (BoomerangAsAdult) ? 1 : 0;
     ctx.hammerAsChild        = (HammerAsChild) ? 1 : 0;
+    ctx.slingshotAsAdult     = (SlingshotAsAdult) ? 1 : 0;
+    ctx.bowAsChild           = (BowAsChild) ? 1 : 0;
     ctx.ironbootsAsChild     = (IronBootsAsChild) ? 1 : 0;
+    ctx.hoverbootsAsChild    = (HoverBootsAsChild) ? 1 : 0;
     ctx.masksAsAdult         = (MasksAsAdult) ? 1 : 0;
     ctx.gkDurability         = GkDurability.Value<u8>();
 

@@ -680,6 +680,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
+	.patch_ChildHoverBoots 0x2D5DF8 : {
+		*(.patch_ChildHoverBoots)
+	}
+
 	.patch_InstantTextFirstLine 0x2E049C : {
 		*(.patch_InstantTextFirstLine)
 	}
@@ -722,6 +726,14 @@ SECTIONS
 
 	.patch_SetBGMEntrance 0x331048 : {
 		*(.patch_SetBGMEntrance)
+	}
+
+	.patch_NockArrow 0x33615C : {
+		*(.patch_NockArrow)
+	}
+
+	.patch_DecreaseArrowCount 0x3362C4 : {
+		*(.patch_DecreaseArrowCount)
 	}
 
 	.patch_SceneExitOverride 0x3366EC : {

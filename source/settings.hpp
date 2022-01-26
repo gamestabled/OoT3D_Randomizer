@@ -378,7 +378,10 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option SlingshotAsAdult;
+  extern Option BowAsChild;
   extern Option IronBootsAsChild;
+  extern Option HoverBootsAsChild;
   extern Option MasksAsAdult;
   extern Option GkDurability;
 
