@@ -314,7 +314,8 @@ void AreaTable_Init() {
                   Entrance(KF_OUTSIDE_DEKU_TREE,  {[]{return IsAdult || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;},
                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(THE_LOST_WOODS,        {[]{return true;}}),
-                  Entrance(LW_BRIDGE_FROM_FOREST, {[]{return CanLeaveForest;}}),
+                  Entrance(LW_BRIDGE_FROM_FOREST, {[]{return IsAdult || OpenForest.IsNot(OPENFOREST_CLOSED) || DekuTreeClear;},
+                                       /*Glitched*/[]{return CanLeaveForest && (CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || GlitchWWTEscape);}}),
                   Entrance(KF_STORMS_GROTTO,      {[]{return CanOpenStormGrotto;},
                                        /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
   });
@@ -331,7 +332,8 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DEKU_TREE_ENTRYWAY, {[]{return IsChild || (ShuffleDungeonEntrances && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));},
                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE);}}),
-                  Entrance(KOKIRI_FOREST,      {[]{return true;}}),
+                  Entrance(KOKIRI_FOREST,      {[]{return IsAdult || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;},
+                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
   });
 
   areaTable[KF_LINKS_HOUSE] = Area("KF Link's House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1677,7 +1679,7 @@ void AreaTable_Init() {
                   Entrance(GC_SHOP,              {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && (HasExplosives || GoronBracelet || GoronCityChildFire));},
                                       /*Glitched*/[]{return IsChild && ((Sticks && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild));}}),
                   Entrance(GC_DARUNIAS_CHAMBER,  {[]{return (IsAdult && StopGCRollingGoronAsAdult) || GCDaruniasDoorOpenChild;}}),
-                  Entrance(GC_GROTTO,            {[]{return IsAdult && ((CanPlay(SongOfTime) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && !NeedNayrusLove) || CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) || (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && CanUse(GORON_TUNIC) && CanUse(HOOKSHOT)) || (CanUse(NAYRUS_LOVE) && CanUse(HOOKSHOT)));},
+                  Entrance(GC_GROTTO,            {[]{return IsAdult && ((CanPlay(SongOfTime) && ((EffectiveHealth > 2) || CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) || (EffectiveHealth > 1 && CanUse(GORON_TUNIC) && CanUse(HOOKSHOT)) || (CanUse(NAYRUS_LOVE) && CanUse(HOOKSHOT)));},
                                       /*Glitched*/[]{return HasBombchus && ((IsChild && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
   });
 
@@ -1743,30 +1745,29 @@ void AreaTable_Init() {
 
   areaTable[DMC_UPPER_NEARBY] = Area("DMC Upper Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(DMC_UPPER_LOCAL,       {[]{return CanUse(GORON_TUNIC);}}),
+                  Entrance(DMC_UPPER_LOCAL,       {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
                   Entrance(DEATH_MOUNTAIN_SUMMIT, {[]{return true;}}),
                   Entrance(DMC_UPPER_GROTTO,      {[]{return Here(DMC_UPPER_NEARBY, []{return CanBlastOrSmash;});},
-                                       /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return (Sticks && (IsChild || StickAsAdult) && (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) || ((Fairy || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}})
+                                       /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return (Sticks && (IsChild || StickAsAdult) && ((CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) && FireTimer >= 3) || ((Fairy || FireTimer >= 6) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}})
   });
 
   areaTable[DMC_UPPER_LOCAL] = Area("DMC Upper Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || (HasExplosives && CanSummonGossipFairyWithoutSuns);}}),
+                  EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || (HasExplosives && CanSummonGossipFairyWithoutSuns && FireTimer > 2);}}),
                 }, {
                   //Locations
-                  LocationAccess(DMC_WALL_FREESTANDING_POH, {[]{return true;}}),
+                  LocationAccess(DMC_WALL_FREESTANDING_POH, {[]{return FireTimer > 1;}}),
                   LocationAccess(DMC_GS_CRATE,              {[]{return IsChild && CanChildAttack;},
                                                  /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
-                  LocationAccess(DMC_GOSSIP_STONE,          {[]{return HasExplosives;}}),
+                  LocationAccess(DMC_GOSSIP_STONE,          {[]{return HasExplosives && FireTimer > 1;}}),
                 }, {
                   //Exits
                   Entrance(DMC_UPPER_NEARBY,         {[]{return true;}}),
-                  Entrance(DMC_LADDER_AREA_NEARBY,   {[]{return true;}}),
-                  Entrance(DMC_CENTRAL_NEARBY,       {[]{return CanUse(GORON_TUNIC) && CanUse(LONGSHOT) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && !NeedNayrusLove) || (Fairy && !ShuffleDungeonEntrances) || CanUse(NAYRUS_LOVE));}}),
-                  Entrance(DMC_CENTRAL_LOCAL,        {[]{return false;},
-                                          /*Glitched*/[]{return CanTakeDamage && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
-                  Entrance(DMC_LOWER_LOCAL,          {[]{return false;},
-                                          /*Glitched*/[]{return (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
+                  Entrance(DMC_LADDER_AREA_NEARBY,   {[]{return FireTimer > 1;}}),
+                  Entrance(DMC_CENTRAL_NEARBY,       {[]{return CanUse(GORON_TUNIC) && CanUse(DISTANT_SCARECROW) && ((EffectiveHealth > 2) || (Fairy && !ShuffleDungeonEntrances) || CanUse(NAYRUS_LOVE));},
+                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)) && CanTakeDamage && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
+                  Entrance(DMC_LOWER_NEARBY,         {[]{return false;},
+                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[DMC_LADDER_AREA_NEARBY] = Area("DMC Ladder Area Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1775,19 +1776,19 @@ void AreaTable_Init() {
                                       /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
                 }, {
                   //Exits
-                  Entrance(DMC_UPPER_NEARBY, {[]{return IsAdult;}}),
-                  Entrance(DMC_LOWER_NEARBY, {[]{return CanUse(HOVER_BOOTS) || (LogicCraterUpperToLower && CanUse(MEGATON_HAMMER));}}),
+                  Entrance(DMC_UPPER_NEARBY, {[]{return FireTimer > 2;}}),
+                  Entrance(DMC_LOWER_NEARBY, {[]{return FireTimer > 2 && (CanUse(HOVER_BOOTS) || (LogicCraterUpperToLower && CanUse(MEGATON_HAMMER)));}}),
   });
 
   areaTable[DMC_LOWER_NEARBY] = Area("DMC Lower Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(DMC_LOWER_LOCAL,          {[]{return CanUse(GORON_TUNIC);}}),
+                  Entrance(DMC_LOWER_LOCAL,          {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
                   Entrance(GC_DARUNIAS_CHAMBER,      {[]{return true;}}),
                   Entrance(DMC_GREAT_FAIRY_FOUNTAIN, {[]{return CanUse(MEGATON_HAMMER);},
-                                          /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || (CanUse(GORON_TUNIC) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))) ||
-                                                                (Hammer && HammerAsChild) || (Bombs && CanShield && CanUse(GORON_TUNIC) && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) || Here(DMC_UPPER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED);});}}),
+                                          /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || ((CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))) ||
+                                                                (Hammer && HammerAsChild) || (Bombs && CanShield && (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) || Here(DMC_UPPER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED);});}}),
                   Entrance(DMC_HAMMER_GROTTO,        {[]{return CanUse(MEGATON_HAMMER);},
-                                          /*Glitched*/[]{return CanUse(GORON_TUNIC) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}}),
+                                          /*Glitched*/[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}}),
   });
 
   areaTable[DMC_LOWER_LOCAL] = Area("DMC Lower Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1796,17 +1797,17 @@ void AreaTable_Init() {
                   Entrance(DMC_LADDER_AREA_NEARBY, {[]{return true;}}),
                   Entrance(DMC_CENTRAL_NEARBY,     {[]{return CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT);},
                                         /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
-                  Entrance(DMC_CENTRAL_LOCAL,      {[]{return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC));}}),
+                  Entrance(DMC_CENTRAL_LOCAL,      {[]{return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC));}}),
   });
 
   areaTable[DMC_CENTRAL_NEARBY] = Area("DMC Central Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(DMC_VOLCANO_FREESTANDING_POH, {[]{return IsAdult && (CanPlantBean(DMC_CENTRAL_LOCAL) || (LogicCraterBeanPoHWithHovers && HoverBoots));},
-                                                    /*Glitched*/[]{return Here(DMC_LOWER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) && CanUse(GORON_TUNIC);});}}),
+                  LocationAccess(DMC_VOLCANO_FREESTANDING_POH, {[]{return IsAdult && FireTimer > 2 && (CanPlantBean(DMC_CENTRAL_LOCAL) || (LogicCraterBeanPoHWithHovers && HoverBoots));},
+                                                    /*Glitched*/[]{return Here(DMC_LOWER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) && (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2));});}}),
                   LocationAccess(SHEIK_IN_CRATER,              {[]{return IsAdult;}}),
                 }, {
                   //Exits
-                  Entrance(DMC_CENTRAL_LOCAL, {[]{return CanUse(GORON_TUNIC);}}),
+                  Entrance(DMC_CENTRAL_LOCAL, {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
   });
 
   areaTable[DMC_CENTRAL_LOCAL] = Area("DMC Central Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {
@@ -1820,9 +1821,10 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DMC_CENTRAL_NEARBY,   {[]{return true;}}),
                   Entrance(DMC_LOWER_NEARBY,     {[]{return IsAdult && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT) || CanPlantBean(DMC_CENTRAL_LOCAL));},
-                                      /*Glitched*/[]{return IsChild && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
+                                      /*Glitched*/[]{return IsChild && FireTimer > 2 && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
                   Entrance(DMC_UPPER_NEARBY,     {[]{return IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL);}}),
-                  Entrance(FIRE_TEMPLE_ENTRYWAY, {[]{return (IsChild && ShuffleDungeonEntrances) || (IsAdult && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)));}}),
+                  Entrance(FIRE_TEMPLE_ENTRYWAY, {[]{return (IsChild && FireTimer > 2 && ShuffleDungeonEntrances) || (IsAdult && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)));},
+                                      /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) && FireTimer > 5;}}),
   });
 
   areaTable[DMC_GREAT_FAIRY_FOUNTAIN] = Area("DMC Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -2013,7 +2015,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(ZF_ICEBERG_FREESTANDING_POH, {[]{return IsAdult;}}),
-                  LocationAccess(ZF_BOTTOM_FREESTANDING_POH,  {[]{return IsAdult && IronBoots && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));}}),
+                  LocationAccess(ZF_BOTTOM_FREESTANDING_POH,  {[]{return IsAdult && IronBoots && ((LogicFewerTunicRequirements && WaterTimer > 2) || CanUse(ZORA_TUNIC));}}),
                   LocationAccess(ZF_GS_TREE,                  {[]{return IsChild;}}),
                   LocationAccess(ZF_GS_ABOVE_THE_LOG,         {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;},
                                                    /*Glitched*/[]{return IsChild && AtNight && CanGetNightTimeGS && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
@@ -3086,12 +3088,12 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_ENTRYWAY,       {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, {[]{return LogicFewerTunicRequirements || CanUse(GORON_TUNIC);}}),
+                  Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, {[]{return (LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC);}}),
                   Entrance(FIRE_TEMPLE_LOOP_ENEMIES,   {[]{return Here(FIRE_TEMPLE_FIRST_ROOM, []{return CanUse(MEGATON_HAMMER);}) && (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);},
                                             /*Glitched*/[]{return ((IsAdult && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT)) || (Hammer && HammerAsChild) || //todo: check if tsc possible as child
                                                                   (GlitchFireGrunzClip && Bombs && CanUse(HOVER_BOOTS) && CanSurviveDamage)) && (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);}}),
                   Entrance(FIRE_TEMPLE_LOOP_EXIT,      {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM,  {[]{return SmallKeys(FIRE_TEMPLE, 2) && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC));}}),
+                  Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM,  {[]{return SmallKeys(FIRE_TEMPLE, 2) && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC));}}),
   });
 
   areaTable[FIRE_TEMPLE_NEAR_BOSS_ROOM] = Area("Fire Temple Near Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
@@ -3103,8 +3105,7 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_FIRST_ROOM, {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_BOSS_ROOM,  {[]{return BossKeyFireTemple && (LogicFireBossDoorJump || CanUse(HOVER_BOOTS) ||
-                                                              Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return CanUse(MEGATON_HAMMER);}));},
+                  Entrance(FIRE_TEMPLE_BOSS_ROOM,  {[]{return BossKeyFireTemple && (LogicFireBossDoorJump || CanUse(HOVER_BOOTS) || Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return CanUse(MEGATON_HAMMER);}));},
                                         /*Glitched*/[]{return BossKeyFireTemple && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
                                                               (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
                                                               Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return Hammer && HammerAsChild;}));}}),
@@ -3112,8 +3113,8 @@ void AreaTable_Init() {
 
   areaTable[FIRE_TEMPLE_BOSS_ROOM] = Area("Fire Temple Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&FireTempleClear, {[]{return FireTempleClear || (CanUse(GORON_TUNIC) && CanUse(MEGATON_HAMMER));},
-                                     /*Glitched*/[]{return CanUse(GORON_TUNIC) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
+                  EventAccess(&FireTempleClear, {[]{return FireTempleClear || ((CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 7)) && CanUse(MEGATON_HAMMER));},
+                                     /*Glitched*/[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                 }, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, {[]{return FireTempleClear;}}),
@@ -3184,9 +3185,10 @@ void AreaTable_Init() {
                   Entrance(FIRE_TEMPLE_FIRST_ROOM,                {[]{return SmallKeys(FIRE_TEMPLE, 2);}}),
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_GORON, {[]{return true;}}),
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_TILES, {[]{return IsAdult && (CanPlay(SongOfTime) || LogicFireSongOfTime);},
-                                                       /*Glitched*/[]{return CanUse(GORON_TUNIC) && ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
-                                                                             (SongOfTime && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) || (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && (Bugs || Fish) && CanShield))));}}),
-                  Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON, {[]{return IsAdult && HasExplosives;}}),
+                                                       /*Glitched*/[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
+                                                                             (IsAdult && (SongOfTime && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) || (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && (Bugs || Fish) && CanShield)))));}}),
+                  Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON, {[]{return IsAdult && HasExplosives;},
+                                                       /*Glitched*/[]{return LogicFewerTunicRequirements && FireTimer > 5 && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(FIRE_TEMPLE_FIRE_PILLAR_ROOM,          {[]{return SmallKeys(FIRE_TEMPLE, 3);}}),
   });
 
@@ -3217,7 +3219,7 @@ void AreaTable_Init() {
   areaTable[FIRE_TEMPLE_FIRE_PILLAR_ROOM] = Area("Fire Temple Fire Pillar Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, {[]{return SmallKeys(FIRE_TEMPLE, 3);}}),
-                  Entrance(FIRE_TEMPLE_SHORTCUT_ROOM, {[]{return CanUse(GORON_TUNIC) && SmallKeys(FIRE_TEMPLE, 4);}}),
+                  Entrance(FIRE_TEMPLE_SHORTCUT_ROOM, {[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 6)) && SmallKeys(FIRE_TEMPLE, 4);}}),
   });
 
   areaTable[FIRE_TEMPLE_SHORTCUT_ROOM] = Area("Fire Temple Shortcut Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -3273,10 +3275,12 @@ void AreaTable_Init() {
 
   areaTable[FIRE_TEMPLE_FIRE_WALL_CHASE] = Area("Fire Temple Fire Wall Chase", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FIRE_TEMPLE_EAST_CENTRAL_ROOM,  {[]{return CanUse(GORON_TUNIC) && SmallKeys(FIRE_TEMPLE, 6, 8);}}),
+                  Entrance(FIRE_TEMPLE_EAST_CENTRAL_ROOM,  {[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2)) && SmallKeys(FIRE_TEMPLE, 6, 8);}}),
                   Entrance(FIRE_TEMPLE_MAP_AREA,           {[]{return IsAdult;}}),
-                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_UPPER, {[]{return CanUse(GORON_TUNIC);}}),
-                  Entrance(FIRE_TEMPLE_CORRIDOR,           {[]{return CanUse(GORON_TUNIC) && SmallKeys(FIRE_TEMPLE, 7);}}),
+                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_UPPER, {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2 && IsAdult);},
+                                                /*Glitched*/[]{return LogicFewerTunicRequirements && FireTimer > 3 && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
+                  Entrance(FIRE_TEMPLE_CORRIDOR,           {[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2 && IsAdult)) && SmallKeys(FIRE_TEMPLE, 7);},
+                                                /*Glitched*/[]{return LogicFewerTunicRequirements && FireTimer > 3 && SmallKeys(FIRE_TEMPLE, 7) && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && Bombs && HasBombchus && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
   });
 
   areaTable[FIRE_TEMPLE_MAP_AREA] = Area("Fire Temple Map Area", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {

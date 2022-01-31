@@ -109,9 +109,6 @@ static void ValidateWorldChecks(SearchMode& mode, bool checkPoeCollectorAccess, 
   }
   // Condition for validating Poe Collector Access
   if (mode == SearchMode::PoeCollectorAccess && (AreaTable(MARKET_GUARD_HOUSE)->Adult() || !checkPoeCollectorAccess)) {
-    if (StartingInventoryHasBottle()) {
-      Logic::NoBottles = false;
-    }
     // Apply all items that are necessary for checking all location access
     std::vector<ItemKey> itemsToPlace = FilterFromPool(ItemPool, [](const ItemKey i){ return ItemTable(i).IsAdvancement();});
     for (ItemKey unplacedItem : itemsToPlace) {
@@ -130,6 +127,8 @@ static void ValidateWorldChecks(SearchMode& mode, bool checkPoeCollectorAccess, 
       }
     }
     mode = SearchMode::AllLocationsReachable;
+  } else {
+    Logic::NoBottles = false;
   }
 }
 

@@ -198,6 +198,10 @@ namespace Logic {
   bool BuyBPotion       = false;
   bool MagicRefill      = false;
 
+  u8   PieceOfHeart     = 0;
+  u8   HeartContainer   = 0;
+  bool DoubleDefense    = false;
+
   /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
   /* These are used to simplify reading the logic, but need to be updated
   /  every time a base value is updated.                       */
@@ -241,6 +245,7 @@ namespace Logic {
   bool HasBoots         = false;
   bool IsChild          = false;
   bool IsAdult          = false;
+  bool IsGlitched       = false;
   bool CanBlastOrSmash  = false;
   bool CanChildAttack   = false;
   bool CanChildDamage   = false;
@@ -262,6 +267,13 @@ namespace Logic {
   bool BigPoeKill          = false;
   bool HookshotOrBoomerang = false;
   bool CanGetNightTimeGS   = false;
+
+  u8   BaseHealth      = 0;
+  u8   Health          = 0;
+  u8   Multiplier      = 0;
+  u8   EffectiveHealth = 0;
+  u8   FireTimer       = 0;
+  u8   WaterTimer      = 0;
 
   bool GuaranteeTradePath     = false;
   bool GuaranteeHint          = false;
@@ -702,28 +714,31 @@ namespace Logic {
     // IsChild = Age == AGE_CHILD;
     // IsAdult = Age == AGE_ADULT;
 
-    //IsGlitched = false;
-
     CanBlastOrSmash = HasExplosives || CanUse(MEGATON_HAMMER);
     CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE));
     CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE));
     CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || Nuts || DekuShield);
     CanCutShrubs    = IsAdult /*|| Sticks*/ || KokiriSword || Boomerang || HasExplosives;
     CanDive         = ProgressiveScale >= 1;
-    CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear;
+    CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear || ShuffleInteriorEntrances || ShuffleOverworldEntrances;
     CanPlantBugs    = IsChild && Bugs;
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
-    NeedNayrusLove      = DamageMultiplier.Is(DAMAGEMULTIPLIER_OHKO) || DamageMultiplier.Is(DAMAGEMULTIPLIER_OCTUPLE) || DamageMultiplier.Is(DAMAGEMULTIPLIER_SEXDECUPLE);
+    NeedNayrusLove      = (EffectiveHealth == 1);
     CanSurviveDamage    = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
     CanTakeDamage       = Fairy || CanSurviveDamage;
-    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || (DamageMultiplier.Is(DAMAGEMULTIPLIER_QUADRUPLE) && (CanUse(NAYRUS_LOVE) || Fairy)) || (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && CanSurviveDamage);
+    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || ((EffectiveHealth == 2) && (CanUse(NAYRUS_LOVE) || Fairy)) || (EffectiveHealth > 2);
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
     HookshotOrBoomerang = CanUse(HOOKSHOT) || CanUse(BOOMERANG);
     CanGetNightTimeGS = (CanPlay(SunsSong) || !NightGSExpectSuns);
+
+    Health          = BaseHealth + HeartContainer + (PieceOfHeart >> 2);
+    EffectiveHealth = ((Health << (2 + DoubleDefense)) >> Multiplier) + ((Health << (2 + DoubleDefense)) % (1 << Multiplier) > 0); //Number of half heart hits to die, ranges from 1 to 160
+    FireTimer       = CanUse(GORON_TUNIC) ? 255 : Health;
+    WaterTimer      = CanUse( ZORA_TUNIC) ? 255 : Health;
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
@@ -771,50 +786,50 @@ namespace Logic {
   bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
     switch (dungeon) {
       case FOREST_TEMPLE:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (GetDifficultyValueFromString(GlitchHookshotJump_Boots) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHoverBoost) >= static_cast<u8>(GlitchDifficulty::NOVICE) ||
-                                                  (GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::NOVICE) && GetDifficultyValueFromString(GlitchISG) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE)))) {
+        if (IsGlitched && (GetDifficultyValueFromString(GlitchHookshotJump_Boots) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHoverBoost) >= static_cast<u8>(GlitchDifficulty::NOVICE) ||
+                          (GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::NOVICE) && GetDifficultyValueFromString(GlitchISG) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE)))) {
           return ForestTempleKeys >= requiredAmountGlitched;
         }
         return ForestTempleKeys >= requiredAmountGlitchless;
 
       case FIRE_TEMPLE:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (GetDifficultyValueFromString(GlitchLedgeClip) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) {
+        if (IsGlitched && (GetDifficultyValueFromString(GlitchLedgeClip) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) {
           return FireTempleKeys >= requiredAmountGlitched;
         }
         return FireTempleKeys >= requiredAmountGlitchless;
 
       case WATER_TEMPLE:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+        if (IsGlitched && (false)) {
           return WaterTempleKeys >= requiredAmountGlitched;
         }
         return WaterTempleKeys >= requiredAmountGlitchless;
 
       case SPIRIT_TEMPLE:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+        if (IsGlitched && (false)) {
           return SpiritTempleKeys >= requiredAmountGlitched;
         }
         return SpiritTempleKeys >= requiredAmountGlitchless;
 
       case SHADOW_TEMPLE:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE))) {
+        if (IsGlitched && (GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE))) {
           return ShadowTempleKeys >= requiredAmountGlitched;
         }
         return ShadowTempleKeys >= requiredAmountGlitchless;
 
       case BOTTOM_OF_THE_WELL:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+        if (IsGlitched && (false)) {
           return BottomOfTheWellKeys >= requiredAmountGlitched;
         }
         return BottomOfTheWellKeys >= requiredAmountGlitchless;
 
       case GERUDO_TRAINING_GROUNDS:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+        if (IsGlitched && (false)) {
           return GerudoTrainingGroundsKeys >= requiredAmountGlitched;
         }
         return GerudoTrainingGroundsKeys >= requiredAmountGlitchless;
 
       case GANONS_CASTLE:
-        if (Settings::Logic.Is(LOGIC_GLITCHED) && (false)) {
+        if (IsGlitched && (false)) {
           return GanonsCastleKeys >= requiredAmountGlitched;
         }
         return GanonsCastleKeys >= requiredAmountGlitchless;
@@ -1040,6 +1055,10 @@ namespace Logic {
      BuyBPotion       = false;
      MagicRefill      = false;
 
+     PieceOfHeart     = 0;
+     HeartContainer   = 0;
+     DoubleDefense    = false;
+
      /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
      /* These are used to simplify reading the logic, but need to be updated
      /  every time a base value is updated.                       */
@@ -1083,7 +1102,7 @@ namespace Logic {
      HasBoots         = false;
      IsChild          = false;
      IsAdult          = false;
-   //IsGlitched       = false;
+     IsGlitched       = Settings::Logic.Is(LOGIC_GLITCHED);
      CanBlastOrSmash  = false;
      CanChildAttack   = false;
      CanChildDamage   = false;
@@ -1100,6 +1119,13 @@ namespace Logic {
      CanOpenStormGrotto  = false;
      BigPoeKill          = false;
      HookshotOrBoomerang = false;
+
+     BaseHealth      = StartingHealth.Value<u8>() + 1;
+     Health          = 0;
+     Multiplier      = (DamageMultiplier.Value<u8>() < 6) ? DamageMultiplier.Value<u8>() : 10;
+     EffectiveHealth = 0;
+     FireTimer       = 0;
+     WaterTimer      = 0;
 
      GuaranteeTradePath     = false;
      GuaranteeHint          = false;

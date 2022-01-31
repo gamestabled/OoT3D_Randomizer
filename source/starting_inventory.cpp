@@ -153,7 +153,7 @@ void GenerateStartingInventory() {
   AddItemToInventory(LIGHT_MEDALLION,           StartingLightMedallion.Value<u8>());
   AddItemToInventory(GOLD_SKULLTULA_TOKEN,      StartingSkulltulaToken.Value<u8>());
 
-  s8 hearts = (StartingHealth.Value<u8>() + 2) % 20 - 2;
+  s8 hearts = StartingHealth.Value<u8>() - 2;
   AdditionalHeartContainers = 0;
   if (hearts < 0) {
     AddItemToInventory(PIECE_OF_HEART, 4);
@@ -187,6 +187,9 @@ bool StartingInventoryHasBottle() {
 
 void ApplyStartingInventory() {
   for (ItemKey item : StartingInventory) {
+    if (item == PIECE_OF_HEART || item == HEART_CONTAINER || item == TREASURE_GAME_HEART)
+      continue;
+
     ItemTable(item).ApplyEffect();
   }
 }
