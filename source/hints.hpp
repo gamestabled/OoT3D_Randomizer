@@ -211,8 +211,12 @@ private:
     HintCategory type;
 };
 
+using ConditionalAlwaysHint = std::pair<LocationKey, std::function<bool()>>;
+
 //10 dungeons as GTG and GC are excluded
 extern std::array<DungeonInfo, 10> dungeonInfoData;
+
+extern std::array<ConditionalAlwaysHint, 9> conditionalAlwaysHints;
 
 extern HintKey GetHintRegionHintKey(const AreaKey area);
 extern void CreateAllHints();
