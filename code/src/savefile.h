@@ -19,6 +19,7 @@ void SaveFile_UnsetTradeItemAsOwned(u8 itemId);
 u32 SaveFile_TradeItemIsOwned(u8 itemId);
 void SaveFile_SetOwnedTradeItemEquipped(void);
 void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot);
+u8 SaveFile_InventoryMenuHasSlot(u8 adult, u8 itemSlot);
 void SaveFile_InitExtSaveData(u32 fileBaseIndex);
 void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);

@@ -6,6 +6,7 @@
 
 void EnSi_rInit(Actor* token, GlobalContext* globalCtx);
 void EnSi_rDestroy(Actor* token, GlobalContext* globalCtx);
+void EnSi_rUpdate(Actor* token, GlobalContext* globalCtx);
 void EnSi_rDraw(Actor* token, GlobalContext* globalCtx);
 
 #endif //_TOKEN_H_

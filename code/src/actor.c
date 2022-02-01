@@ -42,6 +42,12 @@
 #include "malon.h"
 #include "jabu.h"
 #include "dampe.h"
+#include "web.h"
+#include "boulder_red.h"
+#include "skulltula.h"
+#include "collapsing_platform.h"
+#include "carpenter.h"
+#include "pushblock.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -61,14 +67,20 @@ void Actor_Init() {
     gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
     gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
 
+    gActorOverlayTable[0x9].initInfo->update = (ActorFunc)EnDoor_rUpdate;
+
     gActorOverlayTable[0xA].initInfo->init = EnBox_rInit;
     gActorOverlayTable[0xA].initInfo->update = EnBox_rUpdate;
 
+    gActorOverlayTable[0xF].initInfo->update = (ActorFunc)BgYdanSp_rUpdate;
+
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
+    gActorOverlayTable[0x15].initInfo->update = EnItem00_rUpdate;
     gActorOverlayTable[0x15].initInfo->draw = EnItem00_rDraw;
 
     gActorOverlayTable[0x2E].initInfo->init = DoorShutter_rInit;
+    gActorOverlayTable[0x2E].initInfo->update = (ActorFunc)DoorShutter_rUpdate;
 
     gActorOverlayTable[0x3D].initInfo->destroy = EnOssan_rDestroy;
 
@@ -78,6 +90,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x5F].initInfo->init = ItemBHeart_rInit;
     gActorOverlayTable[0x5F].initInfo->destroy = ItemBHeart_rDestroy;
+    gActorOverlayTable[0x5F].initInfo->update = ItemBHeart_rUpdate;
     gActorOverlayTable[0x5F].initInfo->draw = ItemBHeart_rDraw;
 
     gActorOverlayTable[0x85].initInfo->update = EnTk_rUpdate;
@@ -87,6 +100,8 @@ void Actor_Init() {
     gActorOverlayTable[0x8B].initInfo->update = DemoEffect_rUpdate;
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
+
+    gActorOverlayTable[0x95].initInfo->update = (ActorFunc)EnSw_rUpdate;
 
     gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
 
@@ -110,16 +125,27 @@ void Actor_Init() {
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
     gActorOverlayTable[0xF1].initInfo->draw = ItemOcarina_rDraw;
 
+    gActorOverlayTable[0xFF].initInfo->update = ObjOshihiki_rUpdate;
+
     gActorOverlayTable[0x104].initInfo->init = BgSpot01Idomizu_rInit;
+
+    gActorOverlayTable[0x107].initInfo->update = BgSpot15Rrbox_rUpdate;
 
     gActorOverlayTable[0x10F].initInfo->init = ItemEtcetera_rInit;
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
+    gActorOverlayTable[0x10F].initInfo->update = ItemEtcetera_rUpdate;
+
+    gActorOverlayTable[0x11A].initInfo->update = EnDns_rUpdate;
 
     gActorOverlayTable[0x11B].initInfo->update = NULL;
 
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
+    gActorOverlayTable[0x12C].initInfo->update = (ActorFunc)ObjLift_rUpdate;
+
     gActorOverlayTable[0x131].initInfo->update = EnExRuppy_rUpdate;
+
+    gActorOverlayTable[0x133].initInfo->update = (ActorFunc)EnDaiku_rUpdate;
 
     gActorOverlayTable[0x138].initInfo->init = EnGe1_rInit;
     gActorOverlayTable[0x138].initInfo->update = EnGe1_rUpdate;
@@ -130,6 +156,7 @@ void Actor_Init() {
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
 
     gActorOverlayTable[0x14E].initInfo->init = EnIshi_rInit;
+    gActorOverlayTable[0x14E].initInfo->update = (ActorFunc)EnIshi_rUpdate;
 
     gActorOverlayTable[0x153].initInfo->update = EnFu_rUpdate;
 
@@ -141,6 +168,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x168].initInfo->init = EnExItem_rInit;
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
+
+    gActorOverlayTable[0x172].initInfo->update = (ActorFunc)DoorGerudo_rUpdate;
 
     gActorOverlayTable[0x174].initInfo->update = DemoGt_rUpdate;
 
@@ -163,6 +192,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x19C].initInfo->init = EnSi_rInit;
     gActorOverlayTable[0x19C].initInfo->destroy = EnSi_rDestroy;
+    gActorOverlayTable[0x19C].initInfo->update = EnSi_rUpdate;
     gActorOverlayTable[0x19C].initInfo->draw = EnSi_rDraw;
 
     gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
@@ -171,6 +201,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x1C6].initInfo->init = EnCow_rInit;
     gActorOverlayTable[0x1C6].initInfo->destroy = EnCow_rDestroy;
+
+    gActorOverlayTable[0x1D2].initInfo->update = (ActorFunc)ObjHamishi_rUpdate;
 
     // Define object 4 to be by default the same as object 189
     strncpy(gObjectTable[OBJECT_CUSTOM_DOUBLE_DEFENSE].filename, gObjectTable[OBJECT_GI_HEARTS].filename, 0x40);

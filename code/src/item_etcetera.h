@@ -6,5 +6,6 @@
 
 void ItemEtcetera_rInit(Actor* item, GlobalContext* globalCtx);
 void ItemEtcetera_rDestroy(Actor* item, GlobalContext* globalCtx);
+void ItemEtcetera_rUpdate(Actor* item, GlobalContext* globalCtx);
 
 #endif //_ITEM_ETCETERA_H_

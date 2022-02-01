@@ -12,6 +12,10 @@
 #include "gfx_options.h"
 #include "common.h"
 #include "string.h"
+#include "savefile.h"
+#include "draw.h"
+#include "input.h"
+#include "multiplayer.h"
 
 u32 pressed;
 bool handledInput;
@@ -32,15 +36,12 @@ static u8 destListToggle = 0;
 
 static s32 curMenuIdx = 0;
 static bool showingLegend = false;
-static float itemPercent = 0;
-static float entrancesPercent = 0;
 static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 static bool isAsleep = false;
 
 DungeonInfo rDungeonInfoData[10];
 
-#define TICKS_PER_SEC 268123480
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
 
 static s8 spoilerGroupDungeonIds[] = {
@@ -306,16 +307,31 @@ static void Gfx_UpdatePlayTime(u8 isInGame)
 }
 
 static void Gfx_DrawSeedHash(void) {
-    Draw_DrawFormattedString(10, 16, COLOR_TITLE, "Seed Hash:");
-    for (u32 hashIndex = 0; hashIndex < 5; ++hashIndex) {
-        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + SPACING_Y + (hashIndex * SPACING_Y), COLOR_WHITE, "%s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
+    u8 offsetY = 0;
+    Draw_DrawFormattedString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Seed Hash:");
+    for (u32 hashIndex = 0; hashIndex < ARRAY_SIZE(gSettingsContext.hashIndexes); ++hashIndex) {
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "%s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
     }
+    offsetY++;
 
-    Draw_DrawString(10, 86, COLOR_TITLE, "Play time:");
+    Draw_DrawString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Play time:");
     u32 hours = gExtSaveData.playtimeSeconds / 3600;
     u32 minutes = (gExtSaveData.playtimeSeconds / 60) % 60;
     u32 seconds = gExtSaveData.playtimeSeconds % 60;
-    Draw_DrawFormattedString(10 + (SPACING_X * 4), 86 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
+    Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
+    offsetY++;
+
+    if (gSettingsContext.mp_Enabled) {
+        Draw_DrawFormattedString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Multiplayer:");
+        s16 playerCount = Multiplayer_PlayerCount();
+        if (playerCount >= 0) {
+            Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Connected players: %d", playerCount);
+        } else {
+            Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Connected players: Unknown");
+        }
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Received packets: %d", receivedPackets);
+        offsetY++;
+    }
 }
 
 static void Gfx_DrawDungeonItems(void) {
@@ -474,7 +490,15 @@ static void Gfx_DrawSpoilerAllItems(void) {
         if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
         Draw_DrawFormattedString(10, 16, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
             firstItem, lastItem, gSpoilerData.ItemLocationsCount);
+
         if (!gSettingsContext.ingameSpoilers) {
+            float itemsChecked = 0.0f;
+            for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
+                if (SpoilerData_GetIsItemLocationCollected(i)) {
+                    itemsChecked += 1.0f;
+                }
+            }
+            float itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100.0f;
             Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
         }
 
@@ -707,26 +731,6 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 static void Gfx_ShowMenu(void) {
     pressed = 0;
 
-    if (!gSettingsContext.ingameSpoilers) {
-        float itemsChecked = 0.0f;
-        for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
-            if (SpoilerData_GetIsItemLocationCollected(i)) {
-                itemsChecked += 1.0f;
-            }
-        }
-        itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100.0f;
-    }
-
-    if (gEntranceTrackingData.EntranceCount > 0) {
-        float entrancesChecked = 0.0f;
-        for (u16 i = 0; i < gEntranceTrackingData.EntranceCount; i++) {
-            if (IsEntranceDiscovered(rEntranceOverrides[i].index)) {
-                entrancesChecked += 1.0f;
-            }
-        }
-        entrancesPercent = (entrancesChecked / gEntranceTrackingData.EntranceCount) * 100.0f;
-    }
-
     Draw_ClearFramebuffer();
     if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
 
@@ -886,10 +890,10 @@ static void Gfx_ShowMenu(void) {
             }
         }
 
-        // Only clear the screen if there's been some input
-        if (handledInput) {
-            Draw_ClearBackbuffer();
-        }
+        // Keep updating while in the in-game menu
+        Multiplayer_Update();
+
+        Draw_ClearBackbuffer();
 
         // Continue counting up play time while in the in-game menu
         Gfx_UpdatePlayTime(true);
@@ -958,6 +962,18 @@ void Gfx_Update(void) {
         Gfx_Init();
         lastTick = svcGetSystemTick();
     }
+
+    // The update is called here so it works while in file select
+    static u64 lastTickM = 0;
+    static u64 elapsedTicksM = 0;
+    elapsedTicksM += svcGetSystemTick() - lastTickM;
+    if (elapsedTicksM >= TICKS_PER_SEC) {
+        if (!IsInGame()) {
+            Multiplayer_Update();
+        }
+        elapsedTicksM = 0;
+    }
+    lastTickM = svcGetSystemTick();
 
     Gfx_UpdatePlayTime(IsInGame());
 

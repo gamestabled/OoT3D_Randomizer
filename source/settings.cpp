@@ -725,6 +725,19 @@ namespace Settings {
     &GlitchTripleSlashClip,
   };
 
+  Option MP_Enabled        = Option::U8  ("Multiplayer",     {"Off", "On (Local)"}, {mp_EnabledDesc});
+  Option MP_SharedProgress = Option::Bool("Shared Progress", {"Off", "On"},         {mp_SharedProgressDesc});
+  Option MP_SharedHealth   = Option::Bool("Shared Health",   {"Off", "On"},         {mp_SharedHealthDesc});
+  Option MP_SharedRupees   = Option::Bool("Shared Rupees",   {"Off", "On"},         {mp_SharedRupeesDesc});
+  Option MP_SharedAmmo     = Option::Bool("Shared Ammo",     {"Off", "On"},         {mp_SharedAmmoDesc});
+  std::vector<Option*> multiplayerOptions = {
+    &MP_Enabled,
+    &MP_SharedProgress,
+    &MP_SharedHealth,
+    &MP_SharedRupees,
+    &MP_SharedAmmo,
+  };
+
   Option ZTargeting      = Option::U8("L-Targeting",        {"Switch", "Hold"},          {zTargetingDesc},      OptionCategory::Cosmetic, 1);
   Option CameraControl   = Option::U8("Camera Control",     {"Normal", "Invert Y-axis"}, {cameraControlDesc},   OptionCategory::Cosmetic);
   Option MotionControl   = Option::U8("Motion Control",     {"On", "Off"},               {motionControlDesc},   OptionCategory::Cosmetic);
@@ -880,6 +893,7 @@ namespace Settings {
   Menu miscSettings             = Menu::SubMenu("Misc Settings",              &miscOptions);
   Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);
   Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
+  Menu multiplayerSettings      = Menu::SubMenu("Multiplayer Settings",       &multiplayerOptions);
   Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions);
   Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
   Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
@@ -897,6 +911,7 @@ namespace Settings {
     &miscSettings,
     &itemPoolSettings,
     &itemUsabilitySettings,
+    &multiplayerSettings,
     &ingameDefaults,
     &cosmetics,
     &settingsPresets,
@@ -1016,6 +1031,12 @@ namespace Settings {
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();
     ctx.progressiveGoronSword = (ProgressiveGoronSword) ? 1 : 0;
+
+    ctx.mp_Enabled           = MP_Enabled.Value<u8>();
+    ctx.mp_SharedProgress    = (MP_SharedProgress) ? 1 : 0;
+    ctx.mp_SharedAmmo        = (MP_SharedAmmo) ? 1 : 0;
+    ctx.mp_SharedHealth      = (MP_SharedHealth) ? 1 : 0;
+    ctx.mp_SharedRupees      = (MP_SharedRupees) ? 1 : 0;
 
     ctx.zTargeting           = ZTargeting.Value<u8>();
     ctx.cameraControl        = CameraControl.Value<u8>();
@@ -1220,6 +1241,9 @@ namespace Settings {
       op->SetToDefault();
     }
     for (auto op : glitchOptions) {
+      op->SetToDefault();
+    }
+    for (auto op : multiplayerOptions) {
       op->SetToDefault();
     }
 
@@ -1722,6 +1746,19 @@ namespace Settings {
           LogicShadowUmbrella.SetSelectedIndex(1);
           LogicGtgWithoutHookshot.SetSelectedIndex(1);
         }
+      }
+    }
+
+    // Multiplayer
+    for (auto op : multiplayerOptions) {
+      if (op == &MP_Enabled) {
+        continue;
+      }
+      if (MP_Enabled) {
+        op->Unhide();
+      } else {
+        op->Hide();
+        op->SetSelectedIndex(0);
       }
     }
 

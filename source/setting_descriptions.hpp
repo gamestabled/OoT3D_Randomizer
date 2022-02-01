@@ -266,6 +266,12 @@ extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;
 extern string_view gkDurabilityRandomSafe;
 
+extern string_view mp_EnabledDesc;
+extern string_view mp_SharedProgressDesc;
+extern string_view mp_SharedHealthDesc;
+extern string_view mp_SharedRupeesDesc;
+extern string_view mp_SharedAmmoDesc;
+
 extern string_view zTargetingDesc;
 extern string_view cameraControlDesc;
 extern string_view motionControlDesc;
