@@ -13,6 +13,7 @@ void ItemEffect_GiveBiggoronSword(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveBottle(SaveContext* saveCtx, s16 bottleItemId, s16 arg2);
 void ItemEffect_GiveDungeonItem(SaveContext* saveCtx, s16 mask, s16 dungeonId);
 void ItemEffect_GiveSmallKey(SaveContext* saveCtx, s16 dungeonId, s16 arg2);
+void ItemEffect_GiveSmallKeyRing(SaveContext* saveCtx, s16 dungeonId, s16 arg2);
 void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2);
