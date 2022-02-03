@@ -448,6 +448,15 @@ string_view gerudoKeysOverworld       = "Gerudo Fortress Keys can only appear ou
 string_view gerudoKeysAnywhere        = "Gerudo Fortress Keys can appear anywhere in the\n"//
                                         "world.";                                          //
 /*------------------------------                                                           //
+|           Key Rings          |                                                           //
+------------------------------*/                                                           //
+string_view keyRingDesc               = "Selected key ring dungeons will have all of their\n"
+                                        "keys found at once in a ring rather than\n"       //
+                                        "individually.\n\n"                                //
+                                        "For example, instead of shuffling 5 Forest Temple\n"
+                                        "small keys into the pool, you will find a single\n"
+                                        "key ring which will give you all 5 keys at once.\n";
+/*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
 string_view bossKeyStartWith          = "Boss Keys are given to you from the start so you\n"

@@ -376,6 +376,16 @@ typedef struct {
   u8 lacsDungeonCount;
   u8 lacsTokenCount;
 
+  u8 ringFortress;
+  u8 ringForest;
+  u8 ringFire;
+  u8 ringWater;
+  u8 ringSpirit;
+  u8 ringShadow;
+  u8 ringWell;
+  u8 ringGtg;
+  u8 ringCastle;
+
   u8 skipChildStealth;
   u8 skipTowerEscape;
   u8 skipEponaRace;
