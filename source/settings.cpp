@@ -2038,6 +2038,37 @@ namespace Settings {
       }
     }
 
+    //Set key ring for each dungeon
+    for (size_t i = 0; i < dungeons.size(); i++) {
+      dungeons[i]->ClearKeyRing();
+    }
+    if (KeyRings) {
+      if (RingWell) {
+        BottomOfTheWell.SetKeyRing();
+      }
+      if (RingForest) {
+        ForestTemple.SetKeyRing();
+      }
+      if (RingFire) {
+        FireTemple.SetKeyRing();
+      }
+      if (RingWater) {
+        WaterTemple.SetKeyRing();
+      }
+      if (RingSpirit) {
+        SpiritTemple.SetKeyRing();
+      }
+      if (RingShadow) {
+        ShadowTemple.SetKeyRing();
+      }
+      if (RingGtg) {
+        GerudoTrainingGrounds.SetKeyRing();
+      }
+      if (RingCastle) {
+        GanonsCastle.SetKeyRing();
+      }
+    }
+
     //shuffle the trials then require the amount set in GanonsTrialsCount
     auto trials = trialList;
     Shuffle(trials);
