@@ -1409,7 +1409,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Forest Temple Small Key", /*french*/"une porte-clés du temple de la forêt", /*spanish*/"una llavero del Templo del Bosque"}
+                        Text{"a Forest Temple Key Ring", /*french*/"une porte-clés du temple de la forêt", /*spanish*/"una llavero del Templo del Bosque"}
      );
     hintTable[FIRE_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1422,7 +1422,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Fire Temple Small Key", /*french*/"une porte-clés du temple du feu", /*spanish*/"una llavero del Templo del Fuego"}
+                        Text{"a Fire Temple Key Ring", /*french*/"une porte-clés du temple du feu", /*spanish*/"una llavero del Templo del Fuego"}
      );
     hintTable[WATER_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1435,7 +1435,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Water Temple Small Key", /*french*/"une porte-clés du temple de l'eau", /*spanish*/"una llavero del Templo del Agua"}
+                        Text{"a Water Temple Key Ring", /*french*/"une porte-clés du temple de l'eau", /*spanish*/"una llavero del Templo del Agua"}
      );
     hintTable[SPIRIT_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1448,7 +1448,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Spirit Temple Small Key", /*french*/"une porte-clés du temple de l'esprit", /*spanish*/"una llavero del Templo del Espíritu"}
+                        Text{"a Spirit Temple Key Ring", /*french*/"une porte-clés du temple de l'esprit", /*spanish*/"una llavero del Templo del Espíritu"}
      );
     hintTable[SHADOW_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1461,7 +1461,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Shadow Temple Small Key", /*french*/"une porte-clés du temple de l'ombre", /*spanish*/"una llavero del Templo de las Sombras"}
+                        Text{"a Shadow Temple Key Ring", /*french*/"une porte-clés du temple de l'ombre", /*spanish*/"una llavero del Templo de las Sombras"}
      );
     hintTable[GERUDO_TRAINING_GROUNDS_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1474,7 +1474,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Gerudo Training Ground Small Key", /*french*/"une porte-clés du gymnase Gerudo", /*spanish*/"una llavero del Centro de Instrucción Gerudo"}
+                        Text{"a Gerudo Training Ground Key Ring", /*french*/"une porte-clés du gymnase Gerudo", /*spanish*/"una llavero del Centro de Instrucción Gerudo"}
      );
     hintTable[GERUDO_FORTRESS_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1487,7 +1487,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Gerudo Fortress Small Key", /*french*/"une porte-clés de la forteresse Gerudo", /*spanish*/"una llavero de la Fortaleza Gerudo"}
+                        Text{"a Gerudo Fortress Key Ring", /*french*/"une porte-clés de la forteresse Gerudo", /*spanish*/"una llavero de la Fortaleza Gerudo"}
      );
     hintTable[BOTTOM_OF_THE_WELL_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1500,7 +1500,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Bottom of the Well Small Key", /*french*/"une porte-clés du fond du puits", /*spanish*/"una llavero del Fondo del pozo"}
+                        Text{"a Bottom of the Well Key Ring", /*french*/"une porte-clés du fond du puits", /*spanish*/"una llavero del Fondo del pozo"}
      );
     hintTable[GANONS_CASTLE_KEY_RING] = HintText::Item({
                         //obscure text
@@ -1513,7 +1513,7 @@ void HintTable_Init() {
                         Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Ganon's Castle Small Key", /*french*/"une porte-clés du château de Ganon", /*spanish*/"una llavero del Castillo de Ganon"}
+                        Text{"a Ganon's Castle Key Ring", /*french*/"une porte-clés du château de Ganon", /*spanish*/"una llavero del Castillo de Ganon"}
      );
 
     hintTable[KOKIRI_EMERALD] = HintText::Item({
