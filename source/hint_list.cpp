@@ -1400,120 +1400,120 @@ void HintTable_Init() {
      );
      hintTable[FOREST_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a sylvan toolbox for unlocking", /*french*/"un anti-porte sylvestre",            /*spanish*/"una clave de una entrada enselvada"},
-                        Text{"a sylvan dungeon season pass",       /*french*/"le rêve sylvestre d'un prisonnier", /*spanish*/"un pase de una mazmorra enselvada"},
-                        Text{"a sylvan jingling ring",       /*french*/"un efface-serrure sylvestre",        /*spanish*/"un destructor de cerraduras enselvada"},
-                        Text{"a sylvan skeleton key",           /*french*/"un crochet à porte sylvestre",       /*spanish*/"una apertura portentosa enselvada"},
+                        Text{"a sylvan toolbox for unlocking", /*french*/"des anti-portes sylvestres",            /*spanish*/"una clave de una entrada enselvada"},
+                        Text{"a sylvan dungeon season pass",       /*french*/"les rêves sylvestres d'un prisonnier", /*spanish*/"un pase de una mazmorra enselvada"},
+                        Text{"a sylvan jingling ring",       /*french*/"des efface-serrures sylvestres",        /*spanish*/"un destructor de cerraduras enselvada"},
+                        Text{"a sylvan skeleton key",           /*french*/"des crochets à porte sylvestres",       /*spanish*/"una apertura portentosa enselvada"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Forest Temple Key Ring", /*french*/"une porte-clés du temple de la forêt", /*spanish*/"una llavero del Templo del Bosque"}
+                        Text{"a Forest Temple Key Ring", /*french*/"un trousseau de clés du temple de la forêt", /*spanish*/"una llavero del Templo del Bosque"}
      );
     hintTable[FIRE_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a molten toolbox for unlocking", /*french*/"un anti-porte fondu",            /*spanish*/"una clave de una entrada fundida"},
-                        Text{"a molten dungeon season pass",       /*french*/"le rêve fondu d'un prisonnier", /*spanish*/"un pase de una mazmorra fundida"},
-                        Text{"a molten jingling ring",       /*french*/"un efface-serrure fondu",        /*spanish*/"un destructor de cerraduras fundida"},
-                        Text{"a molten skeleton key",           /*french*/"un crochet à porte fondu",       /*spanish*/"una apertura portentosa fundida"},
+                        Text{"a molten toolbox for unlocking", /*french*/"des anti-portes fondus",            /*spanish*/"una clave de una entrada fundida"},
+                        Text{"a molten dungeon season pass",       /*french*/"les rêves fondus d'un prisonnier", /*spanish*/"un pase de una mazmorra fundida"},
+                        Text{"a molten jingling ring",       /*french*/"des efface-serrures fondus",        /*spanish*/"un destructor de cerraduras fundida"},
+                        Text{"a molten skeleton key",           /*french*/"des crochets à porte fondus",       /*spanish*/"una apertura portentosa fundida"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Fire Temple Key Ring", /*french*/"une porte-clés du temple du feu", /*spanish*/"una llavero del Templo del Fuego"}
+                        Text{"a Fire Temple Key Ring", /*french*/"un trousseau de clés du temple du feu", /*spanish*/"una llavero del Templo del Fuego"}
      );
     hintTable[WATER_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a wet toolbox for unlocking", /*french*/"un anti-porte humide",            /*spanish*/"una clave de una entrada mojada"},
-                        Text{"a wet dungeon season pass",       /*french*/"le rêve humide d'un prisonnier", /*spanish*/"un pase de una mazmorra mojada"},
-                        Text{"a wet jingling ring",       /*french*/"un efface-serrure humide",        /*spanish*/"un destructor de cerraduras mojada"},
-                        Text{"a wet skeleton key",           /*french*/"un crochet à porte humide",       /*spanish*/"una apertura portentosa mojada"},
+                        Text{"a wet toolbox for unlocking", /*french*/"des anti-portes humides",            /*spanish*/"una clave de una entrada mojada"},
+                        Text{"a wet dungeon season pass",       /*french*/"les rêves humides d'un prisonnier", /*spanish*/"un pase de una mazmorra mojada"},
+                        Text{"a wet jingling ring",       /*french*/"des efface-serrures humides",        /*spanish*/"un destructor de cerraduras mojada"},
+                        Text{"a wet skeleton key",           /*french*/"des crochets à porte humides",       /*spanish*/"una apertura portentosa mojada"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Water Temple Key Ring", /*french*/"une porte-clés du temple de l'eau", /*spanish*/"una llavero del Templo del Agua"}
+                        Text{"a Water Temple Key Ring", /*french*/"un trousseau de clés du temple de l'eau", /*spanish*/"una llavero del Templo del Agua"}
      );
     hintTable[SPIRIT_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a sandy toolbox for unlocking", /*french*/"un anti-porte sableux",            /*spanish*/"una clave de una entrada arenosa"},
-                        Text{"a sandy dungeon season pass",       /*french*/"le rêve sableux d'un prisonnier", /*spanish*/"un pase de una mazmorra arenosa"},
-                        Text{"a sandy jingling ring",       /*french*/"un efface-serrure sableux",        /*spanish*/"un destructor de cerraduras arenosa"},
-                        Text{"a sandy skeleton key",           /*french*/"un crochet à porte sableux",       /*spanish*/"una apertura portentosa arenosa"},
+                        Text{"a sandy toolbox for unlocking", /*french*/"des anti-portes sableux",            /*spanish*/"una clave de una entrada arenosa"},
+                        Text{"a sandy dungeon season pass",       /*french*/"les rêves sableux d'un prisonnier", /*spanish*/"un pase de una mazmorra arenosa"},
+                        Text{"a sandy jingling ring",       /*french*/"des efface-serrures sableux",        /*spanish*/"un destructor de cerraduras arenosa"},
+                        Text{"a sandy skeleton key",           /*french*/"des crochets à porte sableux",       /*spanish*/"una apertura portentosa arenosa"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Spirit Temple Key Ring", /*french*/"une porte-clés du temple de l'esprit", /*spanish*/"una llavero del Templo del Espíritu"}
+                        Text{"a Spirit Temple Key Ring", /*french*/"un trousseau de clés du temple de l'esprit", /*spanish*/"una llavero del Templo del Espíritu"}
      );
     hintTable[SHADOW_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a creepy toolbox for unlocking", /*french*/"un anti-porte sinistre",            /*spanish*/"una clave de una entrada siniestra:a"},
-                        Text{"a creepy dungeon season pass",       /*french*/"le rêve sinistre d'un prisonnier", /*spanish*/"un pase de una mazmorra siniestra:a"},
-                        Text{"a creepy jingling ring",       /*french*/"un efface-serrure sinistre",        /*spanish*/"un destructor de cerraduras siniestra:a"},
-                        Text{"a creepy skeleton key",           /*french*/"un crochet à porte sinistre",       /*spanish*/"una apertura portentosa siniestra:a"},
+                        Text{"a creepy toolbox for unlocking", /*french*/"des anti-portes sinistres",            /*spanish*/"una clave de una entrada siniestra:a"},
+                        Text{"a creepy dungeon season pass",       /*french*/"les rêves sinistres d'un prisonnier", /*spanish*/"un pase de una mazmorra siniestra:a"},
+                        Text{"a creepy jingling ring",       /*french*/"des efface-serrures sinistres",        /*spanish*/"un destructor de cerraduras siniestra:a"},
+                        Text{"a creepy skeleton key",           /*french*/"des crochets à porte sinistres",       /*spanish*/"una apertura portentosa siniestra:a"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Shadow Temple Key Ring", /*french*/"une porte-clés du temple de l'ombre", /*spanish*/"una llavero del Templo de las Sombras"}
+                        Text{"a Shadow Temple Key Ring", /*french*/"un trousseau de clés du temple de l'ombre", /*spanish*/"una llavero del Templo de las Sombras"}
      );
     hintTable[GERUDO_TRAINING_GROUNDS_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a labyrinthian toolbox for unlocking", /*french*/"un anti-porte labyrinthique",            /*spanish*/"una clave de una entrada laberíntica"},
-                        Text{"a labyrinthian dungeon season pass",       /*french*/"le rêve labyrinthique d'un prisonnier", /*spanish*/"un pase de una mazmorra laberíntica"},
-                        Text{"a labyrinthian jingling ring",       /*french*/"un efface-serrure labyrinthique",        /*spanish*/"un destructor de cerraduras laberíntica"},
-                        Text{"a labyrinthian skeleton key",           /*french*/"un crochet à porte labyrinthique",       /*spanish*/"una apertura portentosa laberíntica"},
+                        Text{"a labyrinthian toolbox for unlocking", /*french*/"des anti-portes labyrinthiques",            /*spanish*/"una clave de una entrada laberíntica"},
+                        Text{"a labyrinthian dungeon season pass",       /*french*/"les rêves labyrinthiques d'un prisonnier", /*spanish*/"un pase de una mazmorra laberíntica"},
+                        Text{"a labyrinthian jingling ring",       /*french*/"des efface-serrures labyrinthiques",        /*spanish*/"un destructor de cerraduras laberíntica"},
+                        Text{"a labyrinthian skeleton key",           /*french*/"des crochets à porte labyrinthiques",       /*spanish*/"una apertura portentosa laberíntica"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Gerudo Training Ground Key Ring", /*french*/"une porte-clés du gymnase Gerudo", /*spanish*/"una llavero del Centro de Instrucción Gerudo"}
+                        Text{"a Gerudo Training Ground Key Ring", /*french*/"un trousseau de clés du gymnase Gerudo", /*spanish*/"una llavero del Centro de Instrucción Gerudo"}
      );
     hintTable[GERUDO_FORTRESS_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"an imprisoned toolbox for unlocking", /*french*/"un anti-porte emprisonné",            /*spanish*/"una clave de una entrada encarcelada"},
-                        Text{"an imprisoned dungeon season pass",       /*french*/"le rêve emprisonné d'un prisonnier", /*spanish*/"un pase de una mazmorra encarcelada"},
-                        Text{"an imprisoned jingling ring",       /*french*/"un efface-serrure emprisonné",        /*spanish*/"un destructor de cerraduras encarcelada"},
-                        Text{"an imprisoned skeleton key",           /*french*/"un crochet à porte emprisonné",       /*spanish*/"una apertura portentosa encarcelada"},
+                        Text{"an imprisoned toolbox for unlocking", /*french*/"des anti-portes emprisonnés",            /*spanish*/"una clave de una entrada encarcelada"},
+                        Text{"an imprisoned dungeon season pass",       /*french*/"les rêves emprisonnés d'un prisonnier", /*spanish*/"un pase de una mazmorra encarcelada"},
+                        Text{"an imprisoned jingling ring",       /*french*/"des efface-serrures emprisonnés",        /*spanish*/"un destructor de cerraduras encarcelada"},
+                        Text{"an imprisoned skeleton key",           /*french*/"des crochets à porte emprisonnés",       /*spanish*/"una apertura portentosa encarcelada"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Gerudo Fortress Key Ring", /*french*/"une porte-clés de la forteresse Gerudo", /*spanish*/"una llavero de la Fortaleza Gerudo"}
+                        Text{"a Gerudo Fortress Key Ring", /*french*/"un trousseau de clés de la forteresse Gerudo", /*spanish*/"una llavero de la Fortaleza Gerudo"}
      );
     hintTable[BOTTOM_OF_THE_WELL_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a moldy toolbox for unlocking", /*french*/"un anti-porte moisi",            /*spanish*/"una clave de una entrada mohosa"},
-                        Text{"a moldy dungeon season pass",       /*french*/"le rêve moisi d'un prisonnier", /*spanish*/"un pase de una mazmorra mohosa"},
-                        Text{"a moldy jingling ring",       /*french*/"un efface-serrure moisi",        /*spanish*/"un destructor de cerraduras mohosa"},
-                        Text{"a moldy skeleton key",           /*french*/"un crochet à porte moisi",       /*spanish*/"una apertura portentosa mohosa"},
+                        Text{"a moldy toolbox for unlocking", /*french*/"des anti-portes moisis",            /*spanish*/"una clave de una entrada mohosa"},
+                        Text{"a moldy dungeon season pass",       /*french*/"les rêves moisis d'un prisonnier", /*spanish*/"un pase de una mazmorra mohosa"},
+                        Text{"a moldy jingling ring",       /*french*/"des efface-serrures moisis",        /*spanish*/"un destructor de cerraduras mohosa"},
+                        Text{"a moldy skeleton key",           /*french*/"des crochets à porte moisis",       /*spanish*/"una apertura portentosa mohosa"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Bottom of the Well Key Ring", /*french*/"une porte-clés du fond du puits", /*spanish*/"una llavero del Fondo del pozo"}
+                        Text{"a Bottom of the Well Key Ring", /*french*/"un trousseau de clés du fond du puits", /*spanish*/"una llavero del Fondo del pozo"}
      );
     hintTable[GANONS_CASTLE_KEY_RING] = HintText::Item({
                         //obscure text
-                        Text{"a final toolbox for unlocking", /*french*/"un anti-porte final",            /*spanish*/"una clave de una entrada final"},
-                        Text{"a final dungeon season pass",       /*french*/"le rêve final d'un prisonnier", /*spanish*/"un pase de una mazmorra final"},
-                        Text{"a final jingling ring",       /*french*/"un efface-serrure final",        /*spanish*/"un destructor de cerraduras final"},
-                        Text{"a final skeleton key",           /*french*/"un crochet à porte final",       /*spanish*/"una apertura portentosa final"},
+                        Text{"a final toolbox for unlocking", /*french*/"des anti-portes finaux",            /*spanish*/"una clave de una entrada final"},
+                        Text{"a final dungeon season pass",       /*french*/"les rêves finaux d'un prisonnier", /*spanish*/"un pase de una mazmorra final"},
+                        Text{"a final jingling ring",       /*french*/"des efface-serrures finaux",        /*spanish*/"un destructor de cerraduras final"},
+                        Text{"a final skeleton key",           /*french*/"des crochets à porte finaux",       /*spanish*/"una apertura portentosa final"},
                       }, {
                         //ambiguous text
-                        Text{"a key ring", /*french*/"une porte-clés", /*spanish*/"una llavero"},
+                        Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"una llavero"},
                       },
                         //clear text
-                        Text{"a Ganon's Castle Key Ring", /*french*/"une porte-clés du château de Ganon", /*spanish*/"una llavero del Castillo de Ganon"}
+                        Text{"a Ganon's Castle Key Ring", /*french*/"un trousseau de clés du château de Ganon", /*spanish*/"una llavero del Castillo de Ganon"}
      );
 
     hintTable[KOKIRI_EMERALD] = HintText::Item({
