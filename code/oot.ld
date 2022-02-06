@@ -1292,6 +1292,22 @@ SECTIONS
 		*(.patch_EditDrawGetItemBeforeModelSpawn)
 	}
 
+	.patch_HookshotDrawRedLaser 0x4C2620 : {
+		*(.patch_HookshotDrawRedLaser)
+	}
+
+	.patch_HookshotDrawChain 0x2202A0 : {
+		*(.patch_HookshotDrawChain)
+	}
+
+	.patch_HookshotRotation 0x4C2524 : {
+		*(.patch_HookshotRotation)
+	}
+
+	.patch_LinkReflection 0x3F2F0C : {
+		*(.patch_LinkReflection)
+	}
+
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
 		*(.patch_EditDrawGetItemAfterModelSpawn)
 	}

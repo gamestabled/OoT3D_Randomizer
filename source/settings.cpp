@@ -270,6 +270,7 @@ namespace Settings {
   Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                                {childHammerDesc});
   Option SlingshotAsAdult    = Option::Bool("Adult Slingshot",        {"Disabled", "Enabled"},                                                {adultSlingshotDesc});
   Option BowAsChild          = Option::Bool("Child Bow",              {"Disabled", "Enabled"},                                                {childBowDesc});
+  Option HookshotAsChild     = Option::Bool("Child Hookshot",         {"Disabled", "Enabled"},                                                {childHookshotDesc});
   Option IronBootsAsChild    = Option::Bool("Child Iron Boots",       {"Disabled", "Enabled"},                                                {childIronBootsDesc});
   Option HoverBootsAsChild   = Option::Bool("Child Hover Boots",      {"Disabled", "Enabled"},                                                {childHoverBootsDesc});
   Option MasksAsAdult        = Option::Bool("Adult Masks",            {"Disabled", "Enabled"},                                                {adultMasksDesc});
@@ -281,6 +282,7 @@ namespace Settings {
     &HammerAsChild,
     &SlingshotAsAdult,
     &BowAsChild,
+    &HookshotAsChild,
     &IronBootsAsChild,
     &HoverBootsAsChild,
     &MasksAsAdult,
@@ -1017,6 +1019,7 @@ namespace Settings {
     ctx.hammerAsChild        = (HammerAsChild) ? 1 : 0;
     ctx.slingshotAsAdult     = (SlingshotAsAdult) ? 1 : 0;
     ctx.bowAsChild           = (BowAsChild) ? 1 : 0;
+    ctx.hookshotAsChild      = (HookshotAsChild) ? 1 : 0;
     ctx.ironbootsAsChild     = (IronBootsAsChild) ? 1 : 0;
     ctx.hoverbootsAsChild    = (HoverBootsAsChild) ? 1 : 0;
     ctx.masksAsAdult         = (MasksAsAdult) ? 1 : 0;

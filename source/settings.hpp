@@ -380,6 +380,7 @@ namespace Settings {
   extern Option HammerAsChild;
   extern Option SlingshotAsAdult;
   extern Option BowAsChild;
+  extern Option HookshotAsChild;
   extern Option IronBootsAsChild;
   extern Option HoverBootsAsChild;
   extern Option MasksAsAdult;

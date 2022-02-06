@@ -418,6 +418,7 @@ typedef struct {
   u8 hammerAsChild;
   u8 slingshotAsAdult;
   u8 bowAsChild;
+  u8 hookshotAsChild;
   u8 ironbootsAsChild;
   u8 hoverbootsAsChild;
   u8 masksAsAdult;

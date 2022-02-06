@@ -806,6 +806,15 @@ string_view childBowDesc              = "Child Link can use the Bow. It will loo
                                         "This setting will not change the logic.";         //
                                                                                            //
 /*------------------------------                                                           //
+|    ENABLE CHILD HOOKSHOT     |                                                           //
+------------------------------*/                                                           //
+string_view childHookshotDesc         = "Child Link can use the Hookshot/Longshot.\n"      //
+                                        "It will be difficult to aim, the red dot/laser\n" //
+                                        "won't appear and the hook will look like a small\n"
+                                        "bomb.\n"                                          //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+/*------------------------------                                                           //
 |   ENABLE CHILD IRON BOOTS    |                                                           //
 ------------------------------*/                                                           //
 string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.\n"           //

@@ -1770,6 +1770,26 @@ NockArrow_patch:
 DecreaseArrowCount_patch:
     bl hook_ArrowsOrSeeds
 
+.section .patch_HookshotDrawRedLaser
+.global HookshotDrawRedLaser_patch
+HookshotDrawRedLaser_patch:
+    bl hook_HookshotDrawRedLaser
+
+.section .patch_HookshotDrawChain
+.global HookshotDrawChain_patch
+HookshotDrawChain_patch:
+    b hook_HookshotDrawChain
+
+.section .patch_HookshotRotation
+.global HookshotRotation_patch
+HookshotRotation_patch:
+    bl hook_HookshotRotation
+
+.section .patch_LinkReflection
+.global LinkReflection_patch
+LinkReflection_patch:
+    b hook_LinkReflection
+
 .section .patch_loader
 .global loader_patch
 

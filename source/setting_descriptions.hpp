@@ -261,6 +261,7 @@ extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
 extern string_view adultSlingshotDesc;
 extern string_view childBowDesc;
+extern string_view childHookshotDesc;
 extern string_view childIronBootsDesc;
 extern string_view childHoverBootsDesc;
 extern string_view adultMasksDesc;

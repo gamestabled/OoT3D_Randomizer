@@ -83,6 +83,10 @@ void ItemOverride_Init(void) {
         gItemUsabilityTable[ITEM_MASK_GERUDO]     = 0x09;
         gItemUsabilityTable[ITEM_MASK_TRUTH]      = 0x09;
     }
+    if (gSettingsContext.hookshotAsChild) {
+        gItemUsabilityTable[ITEM_HOOKSHOT]        = 0x09;
+        gItemUsabilityTable[ITEM_LONGSHOT]        = 0x09;
+    }
 }
 
 static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 itemId) {
