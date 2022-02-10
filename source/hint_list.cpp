@@ -1284,7 +1284,7 @@ void HintTable_Init() {
     hintTable[FOREST_TEMPLE_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a sylvan tool for unlocking", /*french*/"un anti-porte sylvestre",            /*spanish*/"una clave de una entrada enselvada"},
-                        Text{"a sylvan dungeon pass",       /*french*/"le rêve sylvestre d'un prisonnier", /*spanish*/"un pase de una mazmorra enselvada"},
+                        Text{"a sylvan dungeon pass",       /*french*/"le rêve sylvestre d'un prisonnier",  /*spanish*/"un pase de una mazmorra enselvada"},
                         Text{"a sylvan lock remover",       /*french*/"un efface-serrure sylvestre",        /*spanish*/"un destructor de cerraduras enselvada"},
                         Text{"a sylvan lockpick",           /*french*/"un crochet à porte sylvestre",       /*spanish*/"una apertura portentosa enselvada"},
                       }, {
@@ -1297,7 +1297,7 @@ void HintTable_Init() {
     hintTable[FIRE_TEMPLE_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a molten tool for unlocking", /*french*/"un anti-porte fondu",            /*spanish*/"una clave de una entrada fundida"},
-                        Text{"a molten dungeon pass",       /*french*/"le rêve fondu d'un prisonnier", /*spanish*/"un pase de una mazmorra fundida"},
+                        Text{"a molten dungeon pass",       /*french*/"le rêve fondu d'un prisonnier",  /*spanish*/"un pase de una mazmorra fundida"},
                         Text{"a molten lock remover",       /*french*/"un efface-serrure fondu",        /*spanish*/"un destructor de cerraduras fundida"},
                         Text{"a molten lockpick",           /*french*/"un crochet à porte fondu",       /*spanish*/"una apertura portentosa fundida"},
                       }, {
@@ -1310,7 +1310,7 @@ void HintTable_Init() {
     hintTable[WATER_TEMPLE_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a wet tool for unlocking", /*french*/"un anti-porte humide",            /*spanish*/"una clave de una entrada mojada"},
-                        Text{"a wet dungeon pass",       /*french*/"le rêve humide d'un prisonnier", /*spanish*/"un pase de una mazmorra mojada"},
+                        Text{"a wet dungeon pass",       /*french*/"le rêve humide d'un prisonnier",  /*spanish*/"un pase de una mazmorra mojada"},
                         Text{"a wet lock remover",       /*french*/"un efface-serrure humide",        /*spanish*/"un destructor de cerraduras mojada"},
                         Text{"a wet lockpick",           /*french*/"un crochet à porte humide",       /*spanish*/"una apertura portentosa mojada"},
                       }, {
@@ -1323,7 +1323,7 @@ void HintTable_Init() {
     hintTable[SPIRIT_TEMPLE_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a sandy tool for unlocking", /*french*/"un anti-porte sableux",            /*spanish*/"una clave de una entrada arenosa"},
-                        Text{"a sandy dungeon pass",       /*french*/"le rêve sableux d'un prisonnier", /*spanish*/"un pase de una mazmorra arenosa"},
+                        Text{"a sandy dungeon pass",       /*french*/"le rêve sableux d'un prisonnier",  /*spanish*/"un pase de una mazmorra arenosa"},
                         Text{"a sandy lock remover",       /*french*/"un efface-serrure sableux",        /*spanish*/"un destructor de cerraduras arenosa"},
                         Text{"a sandy lockpick",           /*french*/"un crochet à porte sableux",       /*spanish*/"una apertura portentosa arenosa"},
                       }, {
@@ -1336,7 +1336,7 @@ void HintTable_Init() {
     hintTable[SHADOW_TEMPLE_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a creepy tool for unlocking", /*french*/"un anti-porte sinistre",            /*spanish*/"una clave de una entrada siniestra:a"},
-                        Text{"a creepy dungeon pass",       /*french*/"le rêve sinistre d'un prisonnier", /*spanish*/"un pase de una mazmorra siniestra:a"},
+                        Text{"a creepy dungeon pass",       /*french*/"le rêve sinistre d'un prisonnier",  /*spanish*/"un pase de una mazmorra siniestra:a"},
                         Text{"a creepy lock remover",       /*french*/"un efface-serrure sinistre",        /*spanish*/"un destructor de cerraduras siniestra:a"},
                         Text{"a creepy lockpick",           /*french*/"un crochet à porte sinistre",       /*spanish*/"una apertura portentosa siniestra:a"},
                       }, {
@@ -1349,7 +1349,7 @@ void HintTable_Init() {
     hintTable[GERUDO_TRAINING_GROUNDS_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a labyrinthian tool for unlocking", /*french*/"un anti-porte labyrinthique",            /*spanish*/"una clave de una entrada laberíntica"},
-                        Text{"a labyrinthian dungeon pass",       /*french*/"le rêve labyrinthique d'un prisonnier", /*spanish*/"un pase de una mazmorra laberíntica"},
+                        Text{"a labyrinthian dungeon pass",       /*french*/"le rêve labyrinthique d'un prisonnier",  /*spanish*/"un pase de una mazmorra laberíntica"},
                         Text{"a labyrinthian lock remover",       /*french*/"un efface-serrure labyrinthique",        /*spanish*/"un destructor de cerraduras laberíntica"},
                         Text{"a labyrinthian lockpick",           /*french*/"un crochet à porte labyrinthique",       /*spanish*/"una apertura portentosa laberíntica"},
                       }, {
@@ -1362,7 +1362,7 @@ void HintTable_Init() {
     hintTable[GERUDO_FORTRESS_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"an imprisoned tool for unlocking", /*french*/"un anti-porte emprisonné",            /*spanish*/"una clave de una entrada encarcelada"},
-                        Text{"an imprisoned dungeon pass",       /*french*/"le rêve emprisonné d'un prisonnier", /*spanish*/"un pase de una mazmorra encarcelada"},
+                        Text{"an imprisoned dungeon pass",       /*french*/"le rêve emprisonné d'un prisonnier",  /*spanish*/"un pase de una mazmorra encarcelada"},
                         Text{"an imprisoned lock remover",       /*french*/"un efface-serrure emprisonné",        /*spanish*/"un destructor de cerraduras encarcelada"},
                         Text{"an imprisoned lockpick",           /*french*/"un crochet à porte emprisonné",       /*spanish*/"una apertura portentosa encarcelada"},
                       }, {
@@ -1375,7 +1375,7 @@ void HintTable_Init() {
     hintTable[BOTTOM_OF_THE_WELL_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a moldy tool for unlocking", /*french*/"un anti-porte moisi",            /*spanish*/"una clave de una entrada mohosa"},
-                        Text{"a moldy dungeon pass",       /*french*/"le rêve moisi d'un prisonnier", /*spanish*/"un pase de una mazmorra mohosa"},
+                        Text{"a moldy dungeon pass",       /*french*/"le rêve moisi d'un prisonnier",  /*spanish*/"un pase de una mazmorra mohosa"},
                         Text{"a moldy lock remover",       /*french*/"un efface-serrure moisi",        /*spanish*/"un destructor de cerraduras mohosa"},
                         Text{"a moldy lockpick",           /*french*/"un crochet à porte moisi",       /*spanish*/"una apertura portentosa mohosa"},
                       }, {
@@ -1388,7 +1388,7 @@ void HintTable_Init() {
     hintTable[GANONS_CASTLE_SMALL_KEY] = HintText::Item({
                         //obscure text
                         Text{"a final tool for unlocking", /*french*/"un anti-porte final",            /*spanish*/"una clave de una entrada final"},
-                        Text{"a final dungeon pass",       /*french*/"le rêve final d'un prisonnier", /*spanish*/"un pase de una mazmorra final"},
+                        Text{"a final dungeon pass",       /*french*/"le rêve final d'un prisonnier",  /*spanish*/"un pase de una mazmorra final"},
                         Text{"a final lock remover",       /*french*/"un efface-serrure final",        /*spanish*/"un destructor de cerraduras final"},
                         Text{"a final lockpick",           /*french*/"un crochet à porte final",       /*spanish*/"una apertura portentosa final"},
                       }, {
@@ -1401,9 +1401,9 @@ void HintTable_Init() {
      hintTable[FOREST_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a sylvan toolbox for unlocking", /*french*/"des anti-portes sylvestres",            /*spanish*/"un conjunto silvestre de cerrajero"},
-                        Text{"a sylvan dungeon season pass",       /*french*/"les rêves sylvestres d'un prisonnier", /*spanish*/"un pase vip de mazmorras silvestre"},
-                        Text{"a sylvan jingling ring",       /*french*/"des efface-serrures sylvestres",        /*spanish*/"una cadena multiusos silvestre"},
-                        Text{"a sylvan skeleton key",           /*french*/"des crochets à porte sylvestres",       /*spanish*/"un anillo silvestre contra cerrojos"},
+                        Text{"a sylvan dungeon season pass",   /*french*/"les rêves sylvestres d'un prisonnier",  /*spanish*/"un pase vip de mazmorras silvestre"},
+                        Text{"a sylvan jingling ring",         /*french*/"des efface-serrures sylvestres",        /*spanish*/"una cadena multiusos silvestre"},
+                        Text{"a sylvan skeleton key",          /*french*/"des crochets à porte sylvestres",       /*spanish*/"un anillo silvestre contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1414,9 +1414,9 @@ void HintTable_Init() {
     hintTable[FIRE_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a molten toolbox for unlocking", /*french*/"des anti-portes fondus",            /*spanish*/"un conjunto fundido de cerrajero"},
-                        Text{"a molten dungeon season pass",       /*french*/"les rêves fondus d'un prisonnier", /*spanish*/"un pase vip de mazmorras fundido"},
-                        Text{"a molten jingling ring",       /*french*/"des efface-serrures fondus",        /*spanish*/"una cadena multiusos fundida"},
-                        Text{"a molten skeleton key",           /*french*/"des crochets à porte fondus",       /*spanish*/"un anillo fundido contra cerrojos"},
+                        Text{"a molten dungeon season pass",   /*french*/"les rêves fondus d'un prisonnier",  /*spanish*/"un pase vip de mazmorras fundido"},
+                        Text{"a molten jingling ring",         /*french*/"des efface-serrures fondus",        /*spanish*/"una cadena multiusos fundida"},
+                        Text{"a molten skeleton key",          /*french*/"des crochets à porte fondus",       /*spanish*/"un anillo fundido contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1427,9 +1427,9 @@ void HintTable_Init() {
     hintTable[WATER_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a wet toolbox for unlocking", /*french*/"des anti-portes humides",            /*spanish*/"un conjunto abisal de cerrajero"},
-                        Text{"a wet dungeon season pass",       /*french*/"les rêves humides d'un prisonnier", /*spanish*/"un pase vip de mazmorras abisal"},
-                        Text{"a wet jingling ring",       /*french*/"des efface-serrures humides",        /*spanish*/"una cadena multiusos abisal"},
-                        Text{"a wet skeleton key",           /*french*/"des crochets à porte humides",       /*spanish*/"un anillo abisal contra cerrojos"},
+                        Text{"a wet dungeon season pass",   /*french*/"les rêves humides d'un prisonnier",  /*spanish*/"un pase vip de mazmorras abisal"},
+                        Text{"a wet jingling ring",         /*french*/"des efface-serrures humides",        /*spanish*/"una cadena multiusos abisal"},
+                        Text{"a wet skeleton key",          /*french*/"des crochets à porte humides",       /*spanish*/"un anillo abisal contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1440,9 +1440,9 @@ void HintTable_Init() {
     hintTable[SPIRIT_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a sandy toolbox for unlocking", /*french*/"des anti-portes sableux",            /*spanish*/"un conjunto arenoso de cerrajero"},
-                        Text{"a sandy dungeon season pass",       /*french*/"les rêves sableux d'un prisonnier", /*spanish*/"un pase vip de mazmorras arenoso"},
-                        Text{"a sandy jingling ring",       /*french*/"des efface-serrures sableux",        /*spanish*/"una cadena multiusos arenosa"},
-                        Text{"a sandy skeleton key",           /*french*/"des crochets à porte sableux",       /*spanish*/"un anillo arenoso contra cerrojos"},
+                        Text{"a sandy dungeon season pass",   /*french*/"les rêves sableux d'un prisonnier",  /*spanish*/"un pase vip de mazmorras arenoso"},
+                        Text{"a sandy jingling ring",         /*french*/"des efface-serrures sableux",        /*spanish*/"una cadena multiusos arenosa"},
+                        Text{"a sandy skeleton key",          /*french*/"des crochets à porte sableux",       /*spanish*/"un anillo arenoso contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1453,9 +1453,9 @@ void HintTable_Init() {
     hintTable[SHADOW_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a creepy toolbox for unlocking", /*french*/"des anti-portes sinistres",            /*spanish*/"un conjunto tenebroso de cerrajero"},
-                        Text{"a creepy dungeon season pass",       /*french*/"les rêves sinistres d'un prisonnier", /*spanish*/"un pase vip de mazmorras tenebroso"},
-                        Text{"a creepy jingling ring",       /*french*/"des efface-serrures sinistres",        /*spanish*/"una cadena multiusos tenebrosa"},
-                        Text{"a creepy skeleton key",           /*french*/"des crochets à porte sinistres",       /*spanish*/"un anillo tenebroso contra cerrojos"},
+                        Text{"a creepy dungeon season pass",   /*french*/"les rêves sinistres d'un prisonnier",  /*spanish*/"un pase vip de mazmorras tenebroso"},
+                        Text{"a creepy jingling ring",         /*french*/"des efface-serrures sinistres",        /*spanish*/"una cadena multiusos tenebrosa"},
+                        Text{"a creepy skeleton key",          /*french*/"des crochets à porte sinistres",       /*spanish*/"un anillo tenebroso contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1466,9 +1466,9 @@ void HintTable_Init() {
     hintTable[GERUDO_TRAINING_GROUNDS_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a labyrinthian toolbox for unlocking", /*french*/"des anti-portes labyrinthiques",            /*spanish*/"un conjunto laberíntico de cerrajero"},
-                        Text{"a labyrinthian dungeon season pass",       /*french*/"les rêves labyrinthiques d'un prisonnier", /*spanish*/"un pase vip de mazmorras laberíntico"},
-                        Text{"a labyrinthian jingling ring",       /*french*/"des efface-serrures labyrinthiques",        /*spanish*/"una cadena multiusos laberíntica"},
-                        Text{"a labyrinthian skeleton key",           /*french*/"des crochets à porte labyrinthiques",       /*spanish*/"un anillo laberíntico contra cerrojos"},
+                        Text{"a labyrinthian dungeon season pass",   /*french*/"les rêves labyrinthiques d'un prisonnier",  /*spanish*/"un pase vip de mazmorras laberíntico"},
+                        Text{"a labyrinthian jingling ring",         /*french*/"des efface-serrures labyrinthiques",        /*spanish*/"una cadena multiusos laberíntica"},
+                        Text{"a labyrinthian skeleton key",          /*french*/"des crochets à porte labyrinthiques",       /*spanish*/"un anillo laberíntico contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1479,9 +1479,9 @@ void HintTable_Init() {
     hintTable[GERUDO_FORTRESS_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"an imprisoned toolbox for unlocking", /*french*/"des anti-portes emprisonnés",            /*spanish*/"un conjunto enjaulado de cerrajero"},
-                        Text{"an imprisoned dungeon season pass",       /*french*/"les rêves emprisonnés d'un prisonnier", /*spanish*/"un pase vip de una mazmorra enjaulado"},
-                        Text{"an imprisoned jingling ring",       /*french*/"des efface-serrures emprisonnés",        /*spanish*/"una cadena multiusos enjaulada"},
-                        Text{"an imprisoned skeleton key",           /*french*/"des crochets à porte emprisonnés",       /*spanish*/"un anillo enjaulado contra cerrojos"},
+                        Text{"an imprisoned dungeon season pass",   /*french*/"les rêves emprisonnés d'un prisonnier",  /*spanish*/"un pase vip de una mazmorra enjaulado"},
+                        Text{"an imprisoned jingling ring",         /*french*/"des efface-serrures emprisonnés",        /*spanish*/"una cadena multiusos enjaulada"},
+                        Text{"an imprisoned skeleton key",          /*french*/"des crochets à porte emprisonnés",       /*spanish*/"un anillo enjaulado contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1492,9 +1492,9 @@ void HintTable_Init() {
     hintTable[BOTTOM_OF_THE_WELL_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a moldy toolbox for unlocking", /*french*/"des anti-portes moisis",            /*spanish*/"un conjunto subterráneo de cerrajero"},
-                        Text{"a moldy dungeon season pass",       /*french*/"les rêves moisis d'un prisonnier", /*spanish*/"un pase vip de una mazmorra subterráneo"},
-                        Text{"a moldy jingling ring",       /*french*/"des efface-serrures moisis",        /*spanish*/"una cadena multiusos subterránea"},
-                        Text{"a moldy skeleton key",           /*french*/"des crochets à porte moisis",       /*spanish*/"un anillo subterráneo contra cerrojos"},
+                        Text{"a moldy dungeon season pass",   /*french*/"les rêves moisis d'un prisonnier",  /*spanish*/"un pase vip de una mazmorra subterráneo"},
+                        Text{"a moldy jingling ring",         /*french*/"des efface-serrures moisis",        /*spanish*/"una cadena multiusos subterránea"},
+                        Text{"a moldy skeleton key",          /*french*/"des crochets à porte moisis",       /*spanish*/"un anillo subterráneo contra cerrojos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
@@ -1505,9 +1505,9 @@ void HintTable_Init() {
     hintTable[GANONS_CASTLE_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a final toolbox for unlocking", /*french*/"des anti-portes finaux",            /*spanish*/"un conjunto decisivo de cerrajero"},
-                        Text{"a final dungeon season pass",       /*french*/"les rêves finaux d'un prisonnier", /*spanish*/"un pase vip de una mazmorra decisivo"},
-                        Text{"a final jingling ring",       /*french*/"des efface-serrures finaux",        /*spanish*/"una cadena multiusos decisiva"},
-                        Text{"a final skeleton key",           /*french*/"des crochets à porte finaux",       /*spanish*/"un anillo decisivo multiusos"},
+                        Text{"a final dungeon season pass",   /*french*/"les rêves finaux d'un prisonnier",  /*spanish*/"un pase vip de una mazmorra decisivo"},
+                        Text{"a final jingling ring",         /*french*/"des efface-serrures finaux",        /*spanish*/"una cadena multiusos decisiva"},
+                        Text{"a final skeleton key",          /*french*/"des crochets à porte finaux",       /*spanish*/"un anillo decisivo multiusos"},
                       }, {
                         //ambiguous text
                         Text{"a key ring", /*french*/"un trousseau de clés", /*spanish*/"un llavero"},
