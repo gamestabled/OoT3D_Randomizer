@@ -440,7 +440,8 @@ hook_AnjuCheckCuccoAmount:
     push {r1-r12, lr}
     bl EnNiwLady_CheckCuccoAmount
     pop {r1-r12, lr}
-    cmp r0,#0x0
+    cmp r0,#0x7
+    cpylt r8,r0
     b 0x179424
 
 .global hook_KingZoraCheckMovedFlag

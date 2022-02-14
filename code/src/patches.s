@@ -976,7 +976,6 @@ CowItemOverride_patch:
 .global AnjuCheckCuccoAmount_patch
 AnjuCheckCuccoAmount_patch:
     b hook_AnjuCheckCuccoAmount
-    beq 0x179444
 
 .section .patch_FrogReward
 .global FrogReward_patch
