@@ -1187,6 +1187,8 @@ ReadGossipStoneHints_patch:
     bl hook_CanReadHints
     nop
     nop
+    nop
+    nop
 
 .section .patch_GossipStoneAddSariaHint
 .global GossipStoneAddSariaHint_patch
