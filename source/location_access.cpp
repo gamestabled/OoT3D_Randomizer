@@ -1375,7 +1375,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(KAK_WINDMILL_FREESTANDING_POH, {[]{return CanUse(BOOMERANG) || DampesWindmillAccess || (CanUse(HOOKSHOT) && LogicWindmillPoHHookshot);},
-                                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
+                                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (Boomerang && BoomerangAsAdult);}}),
                   LocationAccess(SONG_FROM_WINDMILL,            {[]{return IsAdult && Ocarina;},
                                                      /*Glitched*/[]{return IsAdult && (CanDoGlitch(GlitchType::WindmillBombOI, GlitchDifficulty::EXPERT) || ((Fish || Bugs) && CanShield && ((Bombs && (CanSurviveDamage || (Fairy && NumBottles >= 2))) || (DampesWindmillAccess || (CanUse(HOOKSHOT) && LogicWindmillPoHHookshot) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE))) &&
                                                                            CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Fish || Bugs) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));}}),
@@ -3114,7 +3114,8 @@ void AreaTable_Init() {
   areaTable[FIRE_TEMPLE_BOSS_ROOM] = Area("Fire Temple Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&FireTempleClear, {[]{return FireTempleClear || ((CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 7)) && CanUse(MEGATON_HAMMER));},
-                                     /*Glitched*/[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
+                                     /*Glitched*/[]{return ((CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && ((Sticks && (StickAsAdult || IsChild) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
+                                                           (Hammer && (IsAdult || HammerAsChild))) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) || (LogicFewerTunicRequirements && FireTimer > 7 && Hammer && HammerAsChild);}}),
                 }, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, {[]{return FireTempleClear;}}),
