@@ -803,7 +803,7 @@ void AreaTable_Init() {
                   EventAccess(&GF_GateOpen, {[]{return IsAdult && GerudoToken && (ShuffleGerudoToken || ShuffleOverworldEntrances /*|| ShuffleSpecialIndoorEntrances*/);}}),
                 }, {}, {
                   //Exits
-                  Entrance(GERUDO_FORTRESS,         {[]{return IsAdult || (ShuffleOverworldEntrances && GF_GateOpen);}}),
+                  Entrance(GERUDO_FORTRESS,         {[]{return (IsAdult && (Hookshot || !ShuffleOverworldEntrances)) || GF_GateOpen;}}),
                   Entrance(WASTELAND_NEAR_FORTRESS, {[]{return true;}}),
   });
 
