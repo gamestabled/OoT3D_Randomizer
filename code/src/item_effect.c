@@ -64,6 +64,10 @@ void ItemEffect_GiveSmallKey(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
     if (keys < 0) {
         keys = 0;
     }
+    // Special case for Treasure Chest Shop: if the keys are in a pack, give all 6 at once
+    if (dungeonId == DUNGEON_TREASURE_CHEST_SHOP && gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_PACK) {
+        keys += 5;
+    }
     saveCtx->dungeonKeys[dungeonId] = keys + 1;
 }
 
@@ -159,7 +163,7 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
     if (gSettingsContext.completeMaskQuest) {
         gSaveContext.infTable[7] |= 0x80; // "Soldier Wears Keaton Mask"
-        gSaveContext.itemGetInf[3] |= 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth" 
+        gSaveContext.itemGetInf[3] |= 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth"
         gSaveContext.eventChkInf[8] |= 0xF000; // "Paid Back Mask Fees"
     }
 }

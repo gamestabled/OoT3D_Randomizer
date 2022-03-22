@@ -36,6 +36,8 @@
 #include "item_override.h"
 #include "songs_visual_effects.h"
 #include "shooting_gallery_man.h"
+#include "chest_minigame.h"
+#include "door.h"
 #include "malon.h"
 #include "jabu.h"
 #include "dampe.h"
@@ -62,6 +64,8 @@ void Actor_Init() {
     gActorOverlayTable[0x15].initInfo->init = EnItem00_rInit;
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
     gActorOverlayTable[0x15].initInfo->draw = EnItem00_rDraw;
+
+    gActorOverlayTable[0x2E].initInfo->init = DoorShutter_rInit;
 
     gActorOverlayTable[0x3D].initInfo->destroy = EnOssan_rDestroy;
 
@@ -126,6 +130,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x153].initInfo->update = EnFu_rUpdate;
 
+    gActorOverlayTable[0x155].initInfo->init = EnChanger_rInit;
+
     gActorOverlayTable[0x15E].initInfo->init = EnGanonOrgan_rInit;
 
     gActorOverlayTable[0x164].initInfo->update = EnKz_rUpdate;
@@ -134,6 +140,8 @@ void Actor_Init() {
     gActorOverlayTable[0x168].initInfo->destroy = EnExItem_rDestroy;
 
     gActorOverlayTable[0x174].initInfo->update = DemoGt_rUpdate;
+
+    gActorOverlayTable[0x17C].initInfo->init = EnTakaraMan_rInit;
 
     gActorOverlayTable[0x17E].initInfo->update = OceffSpot_rUpdate;
 

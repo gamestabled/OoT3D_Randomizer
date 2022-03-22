@@ -395,6 +395,17 @@ string_view adultTradeDesc            = "Enabling this adds all of the adult tra
                                         "the L and R buttons. If disabled, only the Claim\n"
                                         "Check will be found in the pool.";                //
 /*------------------------------                                                           //
+|    SHUFFLE CHEST MINIGAME    |                                                           //
+------------------------------*/                                                           //
+string_view chestMinigameDesc         = "The 5 key chests in the Treasure Chest Shop will\n"
+                                        "be randomized, and the 6 keys will be added to the"//
+                                        "pool. The rupee chests will be replaced by traps.\n"
+                                        "Also, the shop owner is on vacation, so he can't\n"
+                                        "close any chests or doors once you leave.\n"      //
+                                        "\n"                                               //
+                                        "If you choose the \"pack\" option, you will get\n"//
+                                        "all the keys at once, in a single item.";         //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //

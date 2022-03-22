@@ -1708,6 +1708,22 @@ MultiplyPlayerSpeed_patch:
 SilenceNavi_patch:
     bl hook_SilenceNavi
 
+.section .patch_ChestMinigame_RewardChestVisibility
+.global ChestMinigame_RewardChestVisibility_patch
+ChestMinigame_RewardChestVisibility_patch:
+    .word 0x00000EC0
+    .word 0x00000EA0
+
+.section .patch_ChestMinigame_KeyChestVisibility
+.global ChestMinigame_KeyChestVisibility_patch
+ChestMinigame_KeyChestVisibility_patch:
+    bl hook_ChestMinigame_KeyChestVisibility
+
+.section .patch_ChestMinigame_DontOpenChestsOnInit
+.global ChestMinigame_DontOpenChestsOnInit_patch
+ChestMinigame_DontOpenChestsOnInit_patch:
+    bl hook_ChestMinigame_DontOpenChestsOnInit
+
 .section .patch_GameplayDestroy
 .global GameplayDestroy_patch
 GameplayDestroy_patch:

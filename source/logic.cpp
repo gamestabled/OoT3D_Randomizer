@@ -143,6 +143,7 @@ namespace Logic {
   u8 GerudoFortressKeys        = 0;
   u8 GerudoTrainingGroundsKeys = 0;
   u8 BottomOfTheWellKeys       = 0;
+  u8 TreasureGameKeys          = 0;
 
   //Boss Keys
   bool BossKeyForestTemple = false;
@@ -770,6 +771,7 @@ namespace Logic {
      GerudoFortressKeys        = 0;
      GerudoTrainingGroundsKeys = 0;
      BottomOfTheWellKeys       = 0;
+     TreasureGameKeys          = 0;
 
      //Boss Keys
      BossKeyForestTemple = 0;

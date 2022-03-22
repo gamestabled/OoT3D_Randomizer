@@ -460,6 +460,18 @@ SECTIONS
 		*(.patch_SkipSongReplays_WarpBlocksFix)
 	}
 
+	.patch_ChestMinigame_DontOpenChestsOnInit 0x20EC8C : {
+		*(.patch_ChestMinigame_DontOpenChestsOnInit)
+	}
+
+	.patch_ChestMinigame_KeyChestVisibility 0x20EDB8 : {
+		*(.patch_ChestMinigame_KeyChestVisibility)
+	}
+
+	.patch_ChestMinigame_RewardChestVisibility 0x20EFE0 : {
+		*(.patch_ChestMinigame_RewardChestVisibility)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
@@ -1212,12 +1224,12 @@ SECTIONS
 		*(.patch_TurboTextAdvance)
 	}
 
-	.patch_TurboTextClose 0x488214 : {
-		*(.patch_TurboTextClose)
-	}
-
 	.patch_SetBGMDayNight 0x483C88 : {
 		*(.patch_SetBGMDayNight)
+	}
+
+	.patch_TurboTextClose 0x488214 : {
+		*(.patch_TurboTextClose)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {
@@ -1301,6 +1313,7 @@ SECTIONS
 	.patch_TycoonWalletSize 0x53CC08 : {
 		*(.patch_TycoonWalletSize)
 	}
+
 	. = 0x005C7000;
     .text : {
         __text_start = . ;
