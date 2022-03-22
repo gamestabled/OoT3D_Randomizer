@@ -358,6 +358,7 @@ namespace Settings {
   extern Option QuickText;
   extern Option SkipSongReplays;
   extern Option KeepFWWarpPoint;
+  extern Option FastBunnyHood;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
