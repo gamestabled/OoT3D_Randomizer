@@ -593,9 +593,14 @@ namespace Settings {
 
   extern std::vector<std::vector<Option *>> excludeLocationsOptionsVector;
   extern std::vector<Menu *> excludeLocationsMenus;
-  extern std::vector<Option *> startingInventoryOptions;
+  extern std::vector<Option *> startingItemsOptions;
+  extern std::vector<Option *> startingSongsOptions;
+  extern std::vector<Option *> startingEquipmentOptions;
+  extern std::vector<Option *> startingStonesMedallionsOptions;
+  extern std::vector<Option *> startingOtherOptions;
   extern std::vector<Option *> trickOptions;
 
+  extern std::vector<Menu *> startingInventoryOptions;
   extern std::vector<Menu *> detailedLogicOptions;
 
   extern std::vector<Menu *> mainMenu;
