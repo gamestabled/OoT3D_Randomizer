@@ -23,6 +23,9 @@ void EnGe1_rInit(Actor* thisx, GlobalContext* globalCtx) {
     } else if ((self->actor.params & 0xFF) == GE1_TYPE_EXTRA_GATE_OPERATOR) {
         self->actor.params &= ~0xFF;
         self->actor.params |= GE1_TYPE_GATE_OPERATOR;
+    } else if ((self->actor.params & 0xFF) == GE1_TYPE_TRAINING_GROUNDS_GUARD && gSaveContext.sceneFlags[93].swch & 0x00000004) {
+        self->actor.params &= ~0xFF;
+        self->actor.params |= GE1_TYPE_NORMAL;
     }
 
     EnGe1_Init(thisx, globalCtx);

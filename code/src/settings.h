@@ -158,6 +158,12 @@ typedef enum {
 } ShuffleAdultTradeQuestSetting;
 
 typedef enum {
+  SHUFFLECHESTMINIGAME_OFF,
+  SHUFFLECHESTMINIGAME_SINGLE_KEYS,
+  SHUFFLECHESTMINIGAME_PACK,
+} ShuffleChestMinigameSetting;
+
+typedef enum {
   MAPSANDCOMPASSES_START_WITH,
   MAPSANDCOMPASSES_VANILLA,
   MAPSANDCOMPASSES_OWN_DUNGEON,
@@ -363,6 +369,7 @@ typedef struct {
   u8 shuffleMagicBeans;
   u8 shuffleMerchants;
   u8 shuffleAdultTradeQuest;
+  u8 shuffleChestMinigame;
 
   u8 mapsAndCompasses;
   u8 keysanity;
@@ -390,6 +397,7 @@ typedef struct {
   u8 quickText;
   u8 skipSongReplays;
   u8 keepFWWarpPoint;
+  u8 fastBunnyHood;
 
   u8 damageMultiplier;
   u8 startingTime;
