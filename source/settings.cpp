@@ -143,6 +143,7 @@ namespace Settings {
   Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
   Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
+  Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
   std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -159,6 +160,7 @@ namespace Settings {
     &ShuffleMagicBeans,
     &ShuffleMerchants,
     &ShuffleAdultTradeQuest,
+    &ShuffleChestMinigame,
   };
 
   //Shuffle Dungeon Items
@@ -209,6 +211,7 @@ namespace Settings {
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_INSTANT);
   Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
   Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
+  Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -224,6 +227,7 @@ namespace Settings {
     &QuickText,
     &SkipSongReplays,
     &KeepFWWarpPoint,
+    &FastBunnyHood,
   };
 
   //Misc Settings
@@ -396,7 +400,7 @@ namespace Settings {
   Option StartingShardOfAgony     = Option::U8  ("  Shard of Agony",       {"None",             "Shard of Agony"},                                          {""});
   Option StartingHealth           = Option::U8  ("  Health",               healthOptions,                                                                   {""});
   Option StartingMagicMeter       = Option::U8  ("  Magic Meter",          {"None",             "Single Magic",     "Double Magic"},                        {""});
-  Option StartingDoubleDefense    = Option::U8  ("  Double Defense",       {"None",             "Double Defence"},                                          {""});
+  Option StartingDoubleDefense    = Option::U8  ("  Double Defense",       {"None",             "Double Defense"},                                          {""});
   Option StartingQuestToggle      = Option::U8  ("Quest Items",            {"All Off",          "All On",           "Choose"},                              {""});
   Option StartingKokiriEmerald    = Option::U8  ("  Kokiri's Emerald",     {"None",             "Kokiri's Emer."},                                          {""});
   Option StartingGoronRuby        = Option::U8  ("  Goron's Ruby",         {"None",             "Goron's Ruby"},                                            {""});
@@ -577,6 +581,7 @@ namespace Settings {
   Option LogicLensGtgMQ                   = LogicTrick(" GTG MQ Navigate\n   w/o Lens of Truth",      LogicLensGtgMQDesc);
   Option LogicLensCastleMQ                = LogicTrick(" GaC MQ Navigate\n   w/o Lens of Truth",      LogicLensCastleMQDesc);
   Option LogicSpiritTrialHookshot         = LogicTrick(" Spirit Trial\n   w/o Hookshot",              LogicSpiritTrialHookshotDesc);
+  Option LogicFlamingChests               = LogicTrick(" Open chests through\n   flame circles",      LogicFlamingChestsDesc);
   std::vector<Option *> trickOptions = {
     &ToggleAllTricks,
     &LogicGrottosWithoutAgony,
@@ -662,6 +667,7 @@ namespace Settings {
     &LogicLensGtgMQ,
     &LogicLensCastleMQ,
     &LogicSpiritTrialHookshot,
+    &LogicFlamingChests,
   };
 
   //Function to avoid accidentally naming the options wrong, as logic.cpp requires these exact names
@@ -696,6 +702,21 @@ namespace Settings {
     &GlitchHookshotJump_Boots,
     &GlitchLedgeClip,
     &GlitchTripleSlashClip,
+  };
+
+  Option ZTargeting      = Option::U8("L-Targeting",        {"Switch", "Hold"},          {zTargetingDesc},      OptionCategory::Cosmetic, 1);
+  Option CameraControl   = Option::U8("Camera Control",     {"Normal", "Invert Y-axis"}, {cameraControlDesc},   OptionCategory::Cosmetic);
+  Option MotionControl   = Option::U8("Motion Control",     {"On", "Off"},               {motionControlDesc},   OptionCategory::Cosmetic);
+  Option TogglePlayMusic = Option::U8("Play Music",         {"Off", "On"},               {togglePlayMusicDesc}, OptionCategory::Cosmetic, 1);
+  Option TogglePlaySFX   = Option::U8("Play Sound Effects", {"Off", "On"},               {togglePlaySFXDesc},   OptionCategory::Cosmetic, 1);
+  Option SilenceNavi     = Option::U8("Silence Navi",       {"Off", "On"},               {silenceNaviDesc},     OptionCategory::Cosmetic);
+  std::vector<Option*> ingameDefaultOptions = {
+    &ZTargeting,
+    &CameraControl,
+    &MotionControl,
+    &TogglePlayMusic,
+    &TogglePlaySFX,
+    &SilenceNavi,
   };
 
   static std::vector<std::string> gauntletOptions = {
@@ -838,8 +859,9 @@ namespace Settings {
   Menu miscSettings             = Menu::SubMenu("Misc Settings",              &miscOptions);
   Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);
   Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
-  Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
+  Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions);
   Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
+  Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
   Menu generateRandomizer       = Menu::Action ("Generate Randomizer",        GENERATE_MODE);
 
   //adding a menu with no options crashes, might fix later
@@ -854,6 +876,7 @@ namespace Settings {
     &miscSettings,
     &itemPoolSettings,
     &itemUsabilitySettings,
+    &ingameDefaults,
     &cosmetics,
     &settingsPresets,
     &generateRandomizer,
@@ -918,6 +941,7 @@ namespace Settings {
     ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleMerchants     = ShuffleMerchants.Value<u8>();
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
+    ctx.shuffleChestMinigame = ShuffleChestMinigame.Value<u8>();
 
     ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
     ctx.keysanity            = Keysanity.Value<u8>();
@@ -945,6 +969,7 @@ namespace Settings {
     ctx.quickText            = QuickText.Value<u8>();
     ctx.skipSongReplays      = SkipSongReplays.Value<u8>();
     ctx.keepFWWarpPoint      = KeepFWWarpPoint ? 1 : 0;
+    ctx.fastBunnyHood        = FastBunnyHood ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.compassesShowReward  = CompassesShowReward.Value<u8>();
@@ -968,6 +993,13 @@ namespace Settings {
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();
     ctx.progressiveGoronSword = (ProgressiveGoronSword) ? 1 : 0;
+
+    ctx.zTargeting           = ZTargeting.Value<u8>();
+    ctx.cameraControl        = CameraControl.Value<u8>();
+    ctx.motionControl        = MotionControl.Value<u8>();
+    ctx.playMusic            = TogglePlayMusic.Value<u8>();
+    ctx.playSFX              = TogglePlaySFX.Value<u8>();
+    ctx.silenceNavi          = SilenceNavi.Value<u8>();
 
     ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
@@ -1314,6 +1346,14 @@ namespace Settings {
       Unhide(adultTradeLocations);
     } else {
       IncludeAndHide(adultTradeLocations);
+    }
+
+    //Force include Chest Game keys if Shuffle Chest Minigame is off
+    std::vector<LocationKey> ChestMinigameLocations = {MARKET_TREASURE_CHEST_GAME_ITEM_1, MARKET_TREASURE_CHEST_GAME_ITEM_2, MARKET_TREASURE_CHEST_GAME_ITEM_3, MARKET_TREASURE_CHEST_GAME_ITEM_4, MARKET_TREASURE_CHEST_GAME_ITEM_5};
+    if (ShuffleChestMinigame) {
+      Unhide(ChestMinigameLocations);
+    } else {
+      IncludeAndHide(ChestMinigameLocations);
     }
 
     //Force include Map and Compass Chests when Vanilla

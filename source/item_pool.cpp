@@ -602,6 +602,7 @@ static void SetMinimalItemPool() {
 void GenerateItemPool() {
 
   ItemPool.clear();
+  PendingJunkPool.clear();
 
   //Initialize ice trap models to always major items
   IceTrapModels = {
@@ -747,6 +748,18 @@ void GenerateItemPool() {
     PlaceItemInLocation(DMT_TRADE_EYEDROPS, CLAIM_CHECK, false, true);
   }
   AddItemToMainPool(CLAIM_CHECK);
+
+  if (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS)) {
+    AddItemToMainPool(TREASURE_GAME_SMALL_KEY, 6); // 6 individual keys
+  } else if (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK)) {
+    AddItemToMainPool(TREASURE_GAME_SMALL_KEY); // 1 key which will behave as a pack of 6
+  } else {
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_1, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_2, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_3, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_4, TREASURE_GAME_SMALL_KEY, false, true);
+    PlaceItemInLocation(MARKET_TREASURE_CHEST_GAME_ITEM_5, TREASURE_GAME_SMALL_KEY, false, true);
+  };
 
   if (Tokensanity.Is(TOKENSANITY_OFF)) {
     for (LocationKey loc : GetLocations(allLocations, Category::cSkulltula)) {
@@ -1090,6 +1103,7 @@ void GenerateItemPool() {
       if (junkSet) break;
     }
   }
+  PendingJunkPool.clear();
 }
 
 void AddJunk() {

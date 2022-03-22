@@ -128,6 +128,8 @@ extern string_view merchantsHintsDesc;
 
 extern string_view adultTradeDesc;
 
+extern string_view chestMinigameDesc;
+
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
 extern string_view mapCompassOwnDungeon;
@@ -200,6 +202,8 @@ extern string_view skipSongReplaysDesc;
 
 extern string_view keepFWWarpPointDesc;
 
+extern string_view fastBunnyHoodDesc;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view obscureHintsDesc;
@@ -259,6 +263,13 @@ extern string_view childHammerDesc;
 extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;
 extern string_view gkDurabilityRandomSafe;
+
+extern string_view zTargetingDesc;
+extern string_view cameraControlDesc;
+extern string_view motionControlDesc;
+extern string_view togglePlayMusicDesc;
+extern string_view togglePlaySFXDesc;
+extern string_view silenceNaviDesc;
 
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
@@ -371,6 +382,7 @@ extern string_view LogicLensBotwMQDesc;
 extern string_view LogicLensGtgMQDesc;
 extern string_view LogicLensCastleMQDesc;
 extern string_view LogicSpiritTrialHookshotDesc;
+extern string_view LogicFlamingChestsDesc;
 
 extern const std::vector<string_view> GlitchDifficulties;
 extern string_view GlitchISGDescDisabled;

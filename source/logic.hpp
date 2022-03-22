@@ -137,6 +137,7 @@ namespace Logic {
   extern u8 GerudoTrainingGroundsKeys;
   extern u8 GerudoFortressKeys;
   extern u8 GanonsCastleKeys;
+  extern u8 TreasureGameKeys;
 
   //Boss Keys
   extern bool BossKeyForestTemple;

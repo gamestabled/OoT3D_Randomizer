@@ -357,6 +357,19 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+"This switch is rustier than you think."+WAIT_FOR_INPUT()+"Something must be wrong with the pipe"+NEWLINE()+"system in the Water Temple."+MESSAGE_END(),
             UNSKIPPABLE()+"Cet interrupteur est très rouillé."+WAIT_FOR_INPUT()+"Quelque chose ne va pas avec"+NEWLINE()+"la tuyauterie du Temple de l'Eau."+MESSAGE_END(),
             UNSKIPPABLE()+"El interruptor está más oxidado de lo que"+NEWLINE()+"aparenta."+WAIT_FOR_INPUT()+"Algo debe andar mal en el sistema de"+NEWLINE()+"cañerías del Templo del Agua."+MESSAGE_END());
+
+        //Treasure chest shop keys. If they're not randomized leave the base game text
+        if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS)) {
+            CreateMessage(0x0F3, 0, 2, 3,
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got a "+COLOR(QM_RED)+"Treasure Chest Shop"+NEWLINE()+"Small Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(QM_RED)+"petite clé"+NEWLINE()+"de la chasse aux trésors"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido una "+COLOR(QM_RED)+"llave pequeña del"+NEWLINE()+"Cofre del Tesoro"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        } else if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK)) {
+            CreateMessage(0x0F3, 0, 2, 3,
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got all 6 "+COLOR(QM_RED)+"Treasure Chest Shop"+NEWLINE()+"Small Keys"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez les "+COLOR(QM_RED)+"petites clés"+NEWLINE()+"de la chasse aux trésors"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido todas las 6 "+COLOR(QM_RED)+"llaves"+NEWLINE()+"pequeñas del Cofre del Tesoro"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+        }
     }
 
     Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {

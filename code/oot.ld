@@ -148,10 +148,6 @@ SECTIONS
 		*(.patch_SariasSongCheckFlag)
 	}
 
-	.patch_DampeCheckCollectibleFlag 0x169F88 : {
-		*(.patch_DampeCheckCollectibleFlag)
-	}
-
 	.patch_GrogCheckForShouldDespawn 0x16485C : {
 		*(.patch_GrogCheckForShouldDespawn)
 	}
@@ -464,6 +460,18 @@ SECTIONS
 		*(.patch_SkipSongReplays_WarpBlocksFix)
 	}
 
+	.patch_ChestMinigame_DontOpenChestsOnInit 0x20EC8C : {
+		*(.patch_ChestMinigame_DontOpenChestsOnInit)
+	}
+
+	.patch_ChestMinigame_KeyChestVisibility 0x20EDB8 : {
+		*(.patch_ChestMinigame_KeyChestVisibility)
+	}
+
+	.patch_ChestMinigame_RewardChestVisibility 0x20EFE0 : {
+		*(.patch_ChestMinigame_RewardChestVisibility)
+	}
+
 	.patch_ShopItemDontSetAnimSpeedOne 0x2101BC : {
 		*(.patch_ShopItemDontSetAnimSpeedOne)
 	}
@@ -528,7 +536,11 @@ SECTIONS
 		*(.patch_SpiritTempleItemGiveTwo)
 	}
 
-	.patch_SkipDaruniaDanceThree 0x257f00 : {
+	.patch_MultiplyPlayerSpeed 0x251D34 : {
+		*(.patch_MultiplyPlayerSpeed)
+	}
+
+	.patch_SkipDaruniaDanceThree 0x257F00 : {
 		*(.patch_SkipDaruniaDanceThree)
 	}
 
@@ -644,6 +656,10 @@ SECTIONS
 		*(.patch_NoSilverGauntletsCutsceneWarp)
 	}
 
+	.patch_FishingIgnoreTempBOne 0x2C3A10 : {
+		*(.patch_FishingIgnoreTempBOne)
+	}
+
 	.patch_DoorOfTimeOpenCutscene 0x2C6218 : {
 		*(.patch_DoorOfTimeOpenCutscene)
 	}
@@ -734,6 +750,10 @@ SECTIONS
 
 	.patch_FairyReviveHealAmount 0x34AF48 : {
 		*(.patch_FairyReviveHealAmount)
+	}
+
+	.patch_FishingIgnoreTempBTwo 0x34CFCC : {
+		*(.patch_FishingIgnoreTempBTwo)
 	}
 
 	.patch_FWLoadSet 0x34D9E8 : {
@@ -1060,6 +1080,10 @@ SECTIONS
 		*(.patch_LoadGame)
 	}
 
+	.patch_DontSetMotionSetting 0x447410 : {
+		*(.patch_DontSetMotionSetting)
+	}
+
 	.patch_OverrideFogDuringGameplayInit 0x4485B4 : {
 		*(.patch_OverrideFogDuringGameplayInit)
 	}
@@ -1188,14 +1212,6 @@ SECTIONS
 		*(.patch_CheckForPocketCuccoHatchKankyo)
 	}
 
-	.patch_FishingStoreTempB 0x475F8C : {
-		*(.patch_FishingStoreTempB)
-	}
-
-	.patch_FishingRestoreTempB 0x475FC0 : {
-		*(.patch_FishingRestoreTempB)
-	}
-
 	.patch_EnableFW 0x476D1C : {
 		*(.patch_EnableFW)
 	}
@@ -1208,12 +1224,12 @@ SECTIONS
 		*(.patch_TurboTextAdvance)
 	}
 
-	.patch_TurboTextClose 0x488214 : {
-		*(.patch_TurboTextClose)
-	}
-
 	.patch_SetBGMDayNight 0x483C88 : {
 		*(.patch_SetBGMDayNight)
+	}
+
+	.patch_TurboTextClose 0x488214 : {
+		*(.patch_TurboTextClose)
 	}
 
 	.patch_SwapFaroresWind 0x49186C : {
@@ -1297,6 +1313,7 @@ SECTIONS
 	.patch_TycoonWalletSize 0x53CC08 : {
 		*(.patch_TycoonWalletSize)
 	}
+
 	. = 0x005C7000;
     .text : {
         __text_start = . ;

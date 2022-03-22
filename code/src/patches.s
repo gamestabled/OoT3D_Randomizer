@@ -221,11 +221,6 @@ DampeCheckRewardFlag_patch:
 .section .patch_DampeSetCollectibleFlag
     .word 0x00000806
 
-.section .patch_DampeCheckCollectibleFlag
-.global DampeCheckCollectibleFlag_patch
-DampeCheckCollectibleFlag_patch:
-    bl hook_DampeCheckCollectibleFlag
-
 .section .patch_DampeCheckCanDig1
 .global DampeCheckCanDig1_patch
 DampeCheckCanDig1_patch:
@@ -829,15 +824,15 @@ ChildDontEquipSwordSlotByDefault_patch:
 LullabyCheckFlag_patch:
     bl hook_LullabyCheckFlag
 
-.section .patch_FishingStoreTempB
-.global FishingStoreTempB_patch
-FishingStoreTempB_patch:
-    bl hook_FishingStoreTempB
+.section .patch_FishingIgnoreTempBOne
+.global FishingIgnoreTempBOne_patch
+FishingIgnoreTempBOne_patch:
+    b hook_FishingIgnoreTempBOne
 
-.section .patch_FishingRestoreTempB
-.global FishingRestoreTempB_patch
-FishingRestoreTempB_patch:
-    bl hook_FishingRestoreTempB
+.section .patch_FishingIgnoreTempBTwo
+.global FishingIgnoreTempBTwo_patch
+FishingIgnoreTempBTwo_patch:
+    b hook_FishingIgnoreTempBTwo
 
 .section .patch_ItemGiveBombchuDropOne
 .global ItemGiveBombchuDropOne_patch
@@ -1658,6 +1653,11 @@ LoadGame_patch:
 SaveGame_patch:
     b hook_SaveGame
 
+.section .patch_DontSetMotionSetting
+.global .DontSetMotionSetting_patch
+DontSetMotionSetting_patch:
+    nop
+
 .section .patch_SaveMenuIgnoreOpen
 .global SaveMenuIgnoreOpen_patch
 SaveMenuIgnoreOpen_patch:
@@ -1698,10 +1698,31 @@ PlayEntranceCutscene_patch:
 SkipJabuOpeningCutscene_patch:
     bl hook_SkipJabuOpeningCutscene
 
+.section .patch_MultiplyPlayerSpeed
+.global MultiplyPlayerSpeed_patch
+MultiplyPlayerSpeed_patch:
+    bl hook_MultiplyPlayerSpeed
+
 .section .patch_SilenceNavi
 .global SilenceNavi_patch
 SilenceNavi_patch:
     bl hook_SilenceNavi
+
+.section .patch_ChestMinigame_RewardChestVisibility
+.global ChestMinigame_RewardChestVisibility_patch
+ChestMinigame_RewardChestVisibility_patch:
+    .word 0x00000EC0
+    .word 0x00000EA0
+
+.section .patch_ChestMinigame_KeyChestVisibility
+.global ChestMinigame_KeyChestVisibility_patch
+ChestMinigame_KeyChestVisibility_patch:
+    bl hook_ChestMinigame_KeyChestVisibility
+
+.section .patch_ChestMinigame_DontOpenChestsOnInit
+.global ChestMinigame_DontOpenChestsOnInit_patch
+ChestMinigame_DontOpenChestsOnInit_patch:
+    bl hook_ChestMinigame_DontOpenChestsOnInit
 
 .section .patch_GameplayDestroy
 .global GameplayDestroy_patch
