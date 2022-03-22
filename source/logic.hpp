@@ -273,6 +273,7 @@ namespace Logic {
   extern bool CarpenterRescue;
   extern bool DampesWindmillAccess;
   extern bool GF_GateOpen;
+  extern bool GtG_GateOpen;
   extern bool DrainWell;
   extern bool GoronCityChildFire;
   extern bool GCWoodsWarpOpen;
