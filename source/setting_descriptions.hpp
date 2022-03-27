@@ -128,6 +128,8 @@ extern string_view merchantsHintsDesc;
 
 extern string_view adultTradeDesc;
 
+extern string_view chestMinigameDesc;
+
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
 extern string_view mapCompassOwnDungeon;
@@ -199,6 +201,8 @@ extern string_view quickTextDesc3;
 extern string_view skipSongReplaysDesc;
 
 extern string_view keepFWWarpPointDesc;
+
+extern string_view fastBunnyHoodDesc;
 
 extern string_view gossipStonesHintsDesc;
 

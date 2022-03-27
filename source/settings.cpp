@@ -143,6 +143,7 @@ namespace Settings {
   Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
   Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
+  Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
   std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -159,6 +160,7 @@ namespace Settings {
     &ShuffleMagicBeans,
     &ShuffleMerchants,
     &ShuffleAdultTradeQuest,
+    &ShuffleChestMinigame,
   };
 
   //Shuffle Dungeon Items
@@ -209,6 +211,7 @@ namespace Settings {
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_INSTANT);
   Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
   Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
+  Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
   std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -224,6 +227,7 @@ namespace Settings {
     &QuickText,
     &SkipSongReplays,
     &KeepFWWarpPoint,
+    &FastBunnyHood,
   };
 
   //Misc Settings
@@ -338,80 +342,34 @@ namespace Settings {
     &excludeGanonsCastle,
   };
 
-  std::vector<std::string> bottleOptions = {"None", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
-  std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
-                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts"};//,  "1 heart",   "2 hearts"}; // TODO: logic for lower health
-  Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
-  Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {startWithMaxRupeesDesc});
-  Option StartingInventoryToggle  = Option::U8  ("Inventory",              {"All Off",          "All On",           "Choose"},                              {""});
-  Option StartingStickCapacity    = Option::U8  ("  Deku Sticks",          {"10 Deku Sticks",   "20 Deku Sticks",   "30 Deku Sticks"},                      {""});
-  Option StartingNutCapacity      = Option::U8  ("  Deku Nuts",            {"20 Deku Nuts",     "30 Deku Nuts",     "40 Deku Nuts"},                        {""});
-  Option StartingSlingshot        = Option::U8  ("  Slingshot",            {"None",             "Slingshot 30",     "Slingshot 40",     "Slingshot 50"},    {""});
-  Option StartingOcarina          = Option::U8  ("  Ocarina",              {"None",             "Fairy Ocarina",    "Ocarina of Time"},                     {""});
-  Option StartingBombBag          = Option::U8  ("  Bomb Bag",             {"None",             "Bomb Bag 20",      "Bomb Bag 30",      "Bomb Bag 40"},     {""});
-  Option StartingBombchus         = Option::U8  ("  Bombchus",             {"None",             "Bombchus"},                                                {""});
-  Option StartingBoomerang        = Option::U8  ("  Boomerang",            {"None",             "Boomerang"},                                               {""});
-  Option StartingHookshot         = Option::U8  ("  Hookshot",             {"None",             "Hookshot",         "Longshot"},                            {""});
-  Option StartingBow              = Option::U8  ("  Bow",                  {"None",             "Bow + Quiver 30",  "Bow + Quiver 40",  "Bow + Quiver 50"}, {""});
-  Option StartingFireArrows       = Option::U8  ("  Fire Arrow",           {"None",             "Fire Arrow"},                                              {""});
-  Option StartingIceArrows        = Option::U8  ("  Ice Arrow",            {"None",             "Ice Arrow"},                                               {""});
-  Option StartingLightArrows      = Option::U8  ("  Light Arrow",          {"None",             "Light Arrow"},                                             {""});
-  Option StartingMegatonHammer    = Option::U8  ("  Megaton Hammer",       {"None",             "Megaton Hammer"},                                          {""});
-  Option StartingIronBoots        = Option::U8  ("  Iron Boots",           {"None",             "Iron Boots"},                                              {""});
-  Option StartingHoverBoots       = Option::U8  ("  Hover Boots",          {"None",             "Hover Boots"},                                             {""});
-  Option StartingLensOfTruth      = Option::U8  ("  Lens of Truth",        {"None",             "Lens of Truth"},                                           {""});
-  Option StartingDinsFire         = Option::U8  ("  Din's Fire",           {"None",             "Din's Fire"},                                              {""});
-  Option StartingFaroresWind      = Option::U8  ("  Farore's Wind",        {"None",             "Farore's Wind"},                                           {""});
-  Option StartingNayrusLove       = Option::U8  ("  Nayru's Love",         {"None",             "Nayru's Love"},                                            {""});
-  Option StartingMagicBean        = Option::U8  ("  Magic Beans",          {"None",             "Magic Beans"},                                             {""});
-  Option StartingBottle1          = Option::U8  ("  Bottle Slot 1",        bottleOptions,                                                                   {""});
-  Option StartingBottle2          = Option::U8  ("  Bottle Slot 2",        bottleOptions,                                                                   {""});
-  Option StartingBottle3          = Option::U8  ("  Bottle Slot 3",        bottleOptions,                                                                   {""});
-  Option StartingBottle4          = Option::U8  ("  Bottle Slot 4",        bottleOptions,                                                                   {""});
-  Option StartingRutoBottle       = Option::U8  ("  Ruto's Letter",        {"None",             "Ruto's Letter"},                                           {""});
-  Option StartingSongsToggle      = Option::U8  ("Ocarina Songs",          {"All Off",          "All On",           "Choose"},                              {""});
-  Option StartingZeldasLullaby    = Option::U8  ("  Zelda's Lullaby",      {"None",             "Zelda's Lull."},                                           {""});
-  Option StartingEponasSong       = Option::U8  ("  Epona's Song",         {"None",             "Epona's Song"},                                            {""});
-  Option StartingSariasSong       = Option::U8  ("  Saria's Song",         {"None",             "Saria's Song"},                                            {""});
-  Option StartingSunsSong         = Option::U8  ("  Sun's Song",           {"None",             "Sun's Song"},                                              {""});
-  Option StartingSongOfTime       = Option::U8  ("  Song of Time",         {"None",             "Song of Time"},                                            {""});
-  Option StartingSongOfStorms     = Option::U8  ("  Song of Storms",       {"None",             "Song of Storms"},                                          {""});
-  Option StartingMinuetOfForest   = Option::U8  ("  Minuet of Forest",     {"None",             "Minuet of F."},                                            {""});
-  Option StartingBoleroOfFire     = Option::U8  ("  Bolero of Fire",       {"None",             "Bolero of Fire"},                                          {""});
-  Option StartingSerenadeOfWater  = Option::U8  ("  Serenade of Water",    {"None",             "Serenade of W."},                                          {""});
-  Option StartingRequiemOfSpirit  = Option::U8  ("  Requiem of Spirit",    {"None",             "Requiem of S."},                                           {""});
-  Option StartingNocturneOfShadow = Option::U8  ("  Nocturne of Shadow",   {"None",             "Nocturne of S."},                                          {""});
-  Option StartingPreludeOfLight   = Option::U8  ("  Prelude of Light",     {"None",             "Prelude of L."},                                           {""});
-  Option StartingUpgradesToggle   = Option::U8  ("Equipment & Upgrades",   {"All Off",          "All On",           "Choose"},                              {""});
-  Option StartingKokiriSword      = Option::U8  ("  Kokiri Sword",         {"None",             "Kokiri Sword"},                                            {""});
-  Option StartingBiggoronSword    = Option::U8  ("  Biggoron Sword",       {"None",             "Giant's Knife",    "Biggoron Sword"},                      {""});
-  Option StartingDekuShield       = Option::U8  ("  Deku Shield",          {"None",             "Deku Shield"},                                             {""});
-  Option StartingHylianShield     = Option::U8  ("  Hylian Shield",        {"None",             "Hylian Shield"},                                           {""});
-  Option StartingMirrorShield     = Option::U8  ("  Mirror Shield",        {"None",             "Mirror Shield"},                                           {""});
-  Option StartingGoronTunic       = Option::U8  ("  Goron Tunic",          {"None",             "Goron Tunic"},                                             {""});
-  Option StartingZoraTunic        = Option::U8  ("  Zora Tunic",           {"None",             "Zora Tunic"},                                              {""});
-  Option StartingStrength         = Option::U8  ("  Strength Upgrade",     {"None",             "Goron Bracelet",   "Silver Gauntlet",  "Golden Gauntlet"}, {""});
-  Option StartingScale            = Option::U8  ("  Scale Upgrade",        {"None",             "Silver Scale"  ,   "Golden Scale"},                        {""});
-  Option StartingWallet           = Option::U8  ("  Wallet Upgrade",       {"None",             "Adult's Wallet",   "Giant's Wallet" ,  "Tycoon's Wallet"}, {""});
-  Option StartingShardOfAgony     = Option::U8  ("  Shard of Agony",       {"None",             "Shard of Agony"},                                          {""});
-  Option StartingHealth           = Option::U8  ("  Health",               healthOptions,                                                                   {""});
-  Option StartingMagicMeter       = Option::U8  ("  Magic Meter",          {"None",             "Single Magic",     "Double Magic"},                        {""});
-  Option StartingDoubleDefense    = Option::U8  ("  Double Defense",       {"None",             "Double Defense"},                                          {""});
-  Option StartingQuestToggle      = Option::U8  ("Quest Items",            {"All Off",          "All On",           "Choose"},                              {""});
-  Option StartingKokiriEmerald    = Option::U8  ("  Kokiri's Emerald",     {"None",             "Kokiri's Emer."},                                          {""});
-  Option StartingGoronRuby        = Option::U8  ("  Goron's Ruby",         {"None",             "Goron's Ruby"},                                            {""});
-  Option StartingZoraSapphire     = Option::U8  ("  Zora's Sapphire",      {"None",             "Zora's Sapph."},                                           {""});
-  Option StartingLightMedallion   = Option::U8  ("  Light Medallion",      {"None",             "Light Medall."},                                           {""});
-  Option StartingForestMedallion  = Option::U8  ("  Forest Medallion",     {"None",             "Forest Medall."},                                          {""});
-  Option StartingFireMedallion    = Option::U8  ("  Fire Medallion",       {"None",             "Fire Medallion"},                                          {""});
-  Option StartingWaterMedallion   = Option::U8  ("  Water Medallion",      {"None",             "Water Medall."},                                           {""});
-  Option StartingSpiritMedallion  = Option::U8  ("  Spirit Medallion",     {"None",             "Spirit Medall."},                                          {""});
-  Option StartingShadowMedallion  = Option::U8  ("  Shadow Medallion",     {"None",             "Shadow Medall."},                                          {""});
-  Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {/*Options 0-100 defined in InitSettings()*/},                                   {""},                                                                                               OptionCategory::Setting,    0,                          false);
-  std::vector<Option *> startingInventoryOptions = {
-    &StartingConsumables,
-    &StartingMaxRupees,
-    &StartingInventoryToggle,
+  //Starting Inventory submenus and menus
+  std::vector<std::string> bottleOptions = {"Off", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
+  Option StartingStickCapacity    = Option::U8  ("Deku Sticks",          {"Deku Sticks (10)","Deku Sticks (20)", "Deku Sticks (30)"},                     {""});
+  Option StartingNutCapacity      = Option::U8  ("Deku Nuts",            {"Deku Nuts (20)",  "Deku Nuts (30)",   "Deku Nuts (40)"},                       {""});
+  Option StartingSlingshot        = Option::U8  ("Slingshot",            {"Off",             "Slingshot (30)",   "Slingshot (40)",    "Slingshot (50)"},  {""});
+  Option StartingOcarina          = Option::U8  ("Ocarina",              {"Off",             "Fairy Ocarina",    "Ocarina of Time"},                      {""});
+  Option StartingBombBag          = Option::U8  ("Bombs",                {"Off",             "Bomb Bag (20)",    "Bomb Bag (30)",     "Bomb Bag (40)"},   {""});
+  Option StartingBombchus         = Option::U8  ("Bombchus",             {"Off",             "On"},                                                       {""});
+  Option StartingBoomerang        = Option::U8  ("Boomerang",            {"Off",             "On"},                                                       {""});
+  Option StartingHookshot         = Option::U8  ("Hookshot",             {"Off",             "Hookshot",         "Longshot"},                             {""});
+  Option StartingBow              = Option::U8  ("Bow",                  {"Off",             "Bow (30)",         "Bow (40)",          "Bow (50)"},        {""});
+  Option StartingFireArrows       = Option::U8  ("Fire Arrow",           {"Off",             "On"},                                                       {""});
+  Option StartingIceArrows        = Option::U8  ("Ice Arrow",            {"Off",             "On"},                                                       {""});
+  Option StartingLightArrows      = Option::U8  ("Light Arrow",          {"Off",             "On"},                                                       {""});
+  Option StartingMegatonHammer    = Option::U8  ("Megaton Hammer",       {"Off",             "On"},                                                       {""});
+  Option StartingIronBoots        = Option::U8  ("Iron Boots",           {"Off",             "On"},                                                       {""});
+  Option StartingHoverBoots       = Option::U8  ("Hover Boots",          {"Off",             "On"},                                                       {""});
+  Option StartingLensOfTruth      = Option::U8  ("Lens of Truth",        {"Off",             "On"},                                                       {""});
+  Option StartingDinsFire         = Option::U8  ("Din's Fire",           {"Off",             "On"},                                                       {""});
+  Option StartingFaroresWind      = Option::U8  ("Farore's Wind",        {"Off",             "On"},                                                       {""});
+  Option StartingNayrusLove       = Option::U8  ("Nayru's Love",         {"Off",             "On"},                                                       {""});
+  Option StartingMagicBean        = Option::U8  ("Magic Beans",          {"Off",             "On"},                                                       {""});
+  Option StartingBottle1          = Option::U8  ("Bottle 1",             bottleOptions,                                                                   {""});
+  Option StartingBottle2          = Option::U8  ("Bottle 2",             bottleOptions,                                                                   {""});
+  Option StartingBottle3          = Option::U8  ("Bottle 3",             bottleOptions,                                                                   {""});
+  Option StartingBottle4          = Option::U8  ("Bottle 4",             bottleOptions,                                                                   {""});
+  Option StartingRutoBottle       = Option::U8  ("Ruto's Letter",        {"Off",             "On"},                                                       {""});
+  std::vector<Option *> startingItemsOptions = {
     &StartingStickCapacity,
     &StartingNutCapacity,
     &StartingSlingshot,
@@ -437,7 +395,21 @@ namespace Settings {
     &StartingBottle3,
     &StartingBottle4,
     &StartingRutoBottle,
-    &StartingSongsToggle,
+  };
+
+  Option StartingZeldasLullaby    = Option::U8  ("Zelda's Lullaby",      {"Off",             "On"},                                                       {""});
+  Option StartingEponasSong       = Option::U8  ("Epona's Song",         {"Off",             "On"},                                                       {""});
+  Option StartingSariasSong       = Option::U8  ("Saria's Song",         {"Off",             "On"},                                                       {""});
+  Option StartingSunsSong         = Option::U8  ("Sun's Song",           {"Off",             "On"},                                                       {""});
+  Option StartingSongOfTime       = Option::U8  ("Song of Time",         {"Off",             "On"},                                                       {""});
+  Option StartingSongOfStorms     = Option::U8  ("Song of Storms",       {"Off",             "On"},                                                       {""});
+  Option StartingMinuetOfForest   = Option::U8  ("Minuet of Forest",     {"Off",             "On"},                                                       {""});
+  Option StartingBoleroOfFire     = Option::U8  ("Bolero of Fire",       {"Off",             "On"},                                                       {""});
+  Option StartingSerenadeOfWater  = Option::U8  ("Serenade of Water",    {"Off",             "On"},                                                       {""});
+  Option StartingRequiemOfSpirit  = Option::U8  ("Requiem of Spirit",    {"Off",             "On"},                                                       {""});
+  Option StartingNocturneOfShadow = Option::U8  ("Nocturne of Shadow",   {"Off",             "On"},                                                       {""});
+  Option StartingPreludeOfLight   = Option::U8  ("Prelude of Light",     {"Off",             "On"},                                                       {""});
+  std::vector<Option *> startingSongsOptions = {
     &StartingZeldasLullaby,
     &StartingEponasSong,
     &StartingSariasSong,
@@ -450,7 +422,25 @@ namespace Settings {
     &StartingRequiemOfSpirit,
     &StartingNocturneOfShadow,
     &StartingPreludeOfLight,
-    &StartingUpgradesToggle,
+  };
+
+  std::vector<std::string> healthOptions = { "3 hearts",  "4 hearts",  "5 hearts",  "6 hearts",  "7 hearts",  "8 hearts",  "9 hearts", "10 hearts", "11 hearts", "12 hearts",
+                                            "13 hearts", "14 hearts", "15 hearts", "16 hearts", "17 hearts", "18 hearts", "19 hearts", "20 hearts"};//,  "1 heart",   "2 hearts"}; // TODO: logic for lower health
+  Option StartingKokiriSword      = Option::U8  ("Kokiri Sword",         {"Off",             "On"},                                                       {""});
+  Option StartingBiggoronSword    = Option::U8  ("Biggoron Sword",       {"Off",             "Giant's Knife",    "Biggoron Sword"},                       {""});
+  Option StartingDekuShield       = Option::U8  ("Deku Shield",          {"Off",             "On"},                                                       {""});
+  Option StartingHylianShield     = Option::U8  ("Hylian Shield",        {"Off",             "On"},                                                       {""});
+  Option StartingMirrorShield     = Option::U8  ("Mirror Shield",        {"Off",             "On"},                                                       {""});
+  Option StartingGoronTunic       = Option::U8  ("Goron Tunic",          {"Off",             "On"},                                                       {""});
+  Option StartingZoraTunic        = Option::U8  ("Zora Tunic",           {"Off",             "On"},                                                       {""});
+  Option StartingStrength         = Option::U8  ("Strength Upgrade",     {"Off",             "Goron Bracelet",   "Silver Gauntlet",  "Golden Gauntlet"},  {""});
+  Option StartingScale            = Option::U8  ("Scale Upgrade",        {"Off",             "Silver Scale"  ,   "Golden Scale"},                         {""});
+  Option StartingWallet           = Option::U8  ("Wallet Upgrade",       {"Off",             "Adult's Wallet",   "Giant's Wallet" ,  "Tycoon's Wallet"},  {""});
+  Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",       {"Off",             "On"},                                                       {""});
+  Option StartingHealth           = Option::U8  ("Health",               healthOptions,                                                                   {""});
+  Option StartingMagicMeter       = Option::U8  ("Magic Meter",          {"Off",             "Single Magic",     "Double Magic"},                         {""});
+  Option StartingDoubleDefense    = Option::U8  ("Double Defense",       {"Off",             "On"},                                                       {""});
+  std::vector<Option *> startingEquipmentOptions = {
     &StartingKokiriSword,
     &StartingBiggoronSword,
     &StartingDekuShield,
@@ -465,7 +455,18 @@ namespace Settings {
     &StartingHealth,
     &StartingMagicMeter,
     &StartingDoubleDefense,
-    &StartingQuestToggle,
+  };
+
+  Option StartingKokiriEmerald    = Option::U8  ("Kokiri's Emerald",     {"Off",             "On"},                                                       {""});
+  Option StartingGoronRuby        = Option::U8  ("Goron's Ruby",         {"Off",             "On"},                                                       {""});
+  Option StartingZoraSapphire     = Option::U8  ("Zora's Sapphire",      {"Off",             "On"},                                                       {""});
+  Option StartingLightMedallion   = Option::U8  ("Light Medallion",      {"Off",             "On"},                                                       {""});
+  Option StartingForestMedallion  = Option::U8  ("Forest Medallion",     {"Off",             "On"},                                                       {""});
+  Option StartingFireMedallion    = Option::U8  ("Fire Medallion",       {"Off",             "On"},                                                       {""});
+  Option StartingWaterMedallion   = Option::U8  ("Water Medallion",      {"Off",             "On"},                                                       {""});
+  Option StartingSpiritMedallion  = Option::U8  ("Spirit Medallion",     {"Off",             "On"},                                                       {""});
+  Option StartingShadowMedallion  = Option::U8  ("Shadow Medallion",     {"Off",             "On"},                                                       {""});
+  std::vector<Option *> startingStonesMedallionsOptions = {
     &StartingKokiriEmerald,
     &StartingGoronRuby,
     &StartingZoraSapphire,
@@ -475,9 +476,29 @@ namespace Settings {
     &StartingWaterMedallion,
     &StartingSpiritMedallion,
     &StartingShadowMedallion,
+  };
+
+  Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
+  Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {startWithMaxRupeesDesc});
+  Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {/*Options 0-100 defined in SetDefaultSettings()*/},                             {""});
+  std::vector<Option *> startingOthersOptions = {
+    &StartingConsumables,
+    &StartingMaxRupees,
     &StartingSkulltulaToken,
   };
 
+  Menu startingItems            = Menu::SubMenu("Items",                &startingItemsOptions, false);
+  Menu startingSongs            = Menu::SubMenu("Ocarina Songs",        &startingSongsOptions, false);
+  Menu startingEquipment        = Menu::SubMenu("Equipment & Upgrades", &startingEquipmentOptions, false);
+  Menu startingStonesMedallions = Menu::SubMenu("Stones & Medallions",  &startingStonesMedallionsOptions, false);
+  Menu startingOthers           = Menu::SubMenu("Other",                &startingOthersOptions, false);
+  std::vector<Menu *> startingInventoryOptions = {
+    &startingItems,
+    &startingSongs,
+    &startingEquipment,
+    &startingStonesMedallions,
+    &startingOthers,
+  };
   Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicGlitched, logicNoLogic, logicVanilla});
   Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                                     {locationsReachableDesc},                                                                                                              OptionCategory::Setting,    1); //All Locations Reachable On
   Option NightGSExpectSuns  = Option::Bool("Night GSs Expect Sun's",  {"Off", "On"},                                     {nightGSDesc});
@@ -937,6 +958,7 @@ namespace Settings {
     ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleMerchants     = ShuffleMerchants.Value<u8>();
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
+    ctx.shuffleChestMinigame = ShuffleChestMinigame.Value<u8>();
 
     ctx.mapsAndCompasses     = MapsAndCompasses.Value<u8>();
     ctx.keysanity            = Keysanity.Value<u8>();
@@ -964,6 +986,7 @@ namespace Settings {
     ctx.quickText            = QuickText.Value<u8>();
     ctx.skipSongReplays      = SkipSongReplays.Value<u8>();
     ctx.keepFWWarpPoint      = KeepFWWarpPoint ? 1 : 0;
+    ctx.fastBunnyHood        = FastBunnyHood ? 1 : 0;
 
     ctx.gossipStoneHints     = GossipStoneHints.Value<u8>();
     ctx.compassesShowReward  = CompassesShowReward.Value<u8>();
@@ -1169,7 +1192,19 @@ namespace Settings {
         op->SetToDefault();
       }
     }
-    for (auto op : startingInventoryOptions) {
+    for (auto op : startingItemsOptions) {
+      op->SetToDefault();
+    }
+    for (auto op : startingSongsOptions) {
+      op->SetToDefault();
+    }
+    for (auto op : startingEquipmentOptions) {
+      op->SetToDefault();
+    }
+    for (auto op : startingStonesMedallionsOptions) {
+      op->SetToDefault();
+    }
+    for (auto op : startingOthersOptions) {
       op->SetToDefault();
     }
     for (auto op : logicOptions) {
@@ -1211,26 +1246,6 @@ namespace Settings {
   static void Unhide(std::vector<LocationKey> locations) {
     for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->Unhide();
-    }
-  }
-
-
-  //Used for Starting Inventory options, enables/disables the options or expands/collapses each category based on their index number
-  void CollapseCategory(Option startingInventorySections, int startNum, int endNum) {
-    for(int i = startNum; i < endNum ;++i){
-      switch(startingInventorySections.Value<u8>()) {
-        case 0:
-          startingInventoryOptions[i]->Hide();
-          startingInventoryOptions[i]->SetSelectedIndex(0);
-          break;
-        case 1:
-          startingInventoryOptions[i]->Hide();
-          startingInventoryOptions[i]->SetSelectedIndex((startingInventoryOptions[i]->GetOptionCount())-1);
-          break;
-        case 2:
-          startingInventoryOptions[i]->Unhide();
-          break;
-      }
     }
   }
 
@@ -1342,6 +1357,14 @@ namespace Settings {
       IncludeAndHide(adultTradeLocations);
     }
 
+    //Force include Chest Game keys if Shuffle Chest Minigame is off
+    std::vector<LocationKey> ChestMinigameLocations = {MARKET_TREASURE_CHEST_GAME_ITEM_1, MARKET_TREASURE_CHEST_GAME_ITEM_2, MARKET_TREASURE_CHEST_GAME_ITEM_3, MARKET_TREASURE_CHEST_GAME_ITEM_4, MARKET_TREASURE_CHEST_GAME_ITEM_5};
+    if (ShuffleChestMinigame) {
+      Unhide(ChestMinigameLocations);
+    } else {
+      IncludeAndHide(ChestMinigameLocations);
+    }
+
     //Force include Map and Compass Chests when Vanilla
     std::vector<LocationKey> mapChests = GetLocations(everyPossibleLocation, Category::cVanillaMap);
     std::vector<LocationKey> compassChests = GetLocations(everyPossibleLocation, Category::cVanillaCompass);
@@ -1407,35 +1430,15 @@ namespace Settings {
   //will force Starting Age to Child).
   void ForceChange(u32 kDown, Option* currentSetting) {
 
-    //Groups the item categories; bottles are handled separately because the proper item is Empty Bottle (1)
-    CollapseCategory(StartingInventoryToggle, 3, 23);
-    CollapseCategory(StartingSongsToggle, 29, 41);
-    CollapseCategory(StartingUpgradesToggle, 42, 56);
-    CollapseCategory(StartingQuestToggle, 57, 66);
-    for(int i = 23; i < 28 ;++i){
-      switch(StartingInventoryToggle.Value<u8>()) {
-        case 0:
-          startingInventoryOptions[i]->Hide();
-          startingInventoryOptions[i]->SetSelectedIndex(0);
-          break;
-        case 1:
-          startingInventoryOptions[i]->Hide();
-          startingInventoryOptions[i]->SetSelectedIndex(1);
-          break;
-        case 2:
-          startingInventoryOptions[i]->Unhide();
-          break;
-      }
-      // If Zora's Fountain is open, hide and un-select Ruto's Letter
-      if (ZorasFountain.Is(ZORASFOUNTAIN_OPEN) && i == 27) {
-        startingInventoryOptions[i]->Hide();
-        startingInventoryOptions[i]->SetSelectedIndex(0);
-      }
-      // If not open, hide and un-select bottle 4
-      else if (ZorasFountain.IsNot(ZORASFOUNTAIN_OPEN) && i == 26) {
-        startingInventoryOptions[i]->Hide();
-        startingInventoryOptions[i]->SetSelectedIndex(0);
-      }
+    // If Zora's Fountain is open, hide and un-select Ruto's Letter. If not open, hide and un-select bottle 4 instead
+    if (ZorasFountain.Is(ZORASFOUNTAIN_OPEN)) {
+      startingItemsOptions[23]->Unhide();
+      startingItemsOptions[24]->Hide();
+      startingItemsOptions[24]->SetSelectedIndex(0);
+    } else {
+      startingItemsOptions[24]->Unhide();
+      startingItemsOptions[23]->Hide();
+      startingItemsOptions[23]->SetSelectedIndex(0);
     }
 
     //Only hide the options for now, select them later in UpdateSettings()

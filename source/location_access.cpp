@@ -777,6 +777,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&CarpenterRescue, {[]{return CanFinishGerudoFortress;}}),
                   EventAccess(&GF_GateOpen,     {[]{return IsAdult && GerudoToken;}}),
+                  EventAccess(&GtG_GateOpen,    {[]{return GtG_GateOpen || (IsAdult && GerudoToken);}}),
                 }, {
                   //Locations
                   LocationAccess(GF_CHEST,              {[]{return CanUse(HOVER_BOOTS) || CanUse(SCARECROW) || CanUse(LONGSHOT);}}),
@@ -793,16 +794,16 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(GV_FORTRESS_SIDE,                 {[]{return true;}}),
                   Entrance(GF_OUTSIDE_GATE,                  {[]{return GF_GateOpen;}}),
-                  Entrance(GERUDO_TRAINING_GROUNDS_ENTRYWAY, {[]{return IsAdult && GerudoToken;}}),
+                  Entrance(GERUDO_TRAINING_GROUNDS_ENTRYWAY, {[]{return GtG_GateOpen && (IsAdult || ShuffleDungeonEntrances);}}),
                   Entrance(GF_STORMS_GROTTO,                 {[]{return IsAdult && CanOpenStormGrotto;}}),
   });
 
   areaTable[GF_OUTSIDE_GATE] = Area("GF Outside Gate", "Gerudo Fortress", NONE, NO_DAY_NIGHT_CYCLE, {
-                  //Events                                                      //no guard on the other side of the gate yet
-                  //EventAccess(&GF_GateOpen, {[]{return IsAdult && GerudoToken && (ShuffleGerudoToken || ShuffleOverworldEntrances || ShuffleSpecialIndoorEntrances);}}),
+                  //Events
+                  EventAccess(&GF_GateOpen, {[]{return IsAdult && GerudoToken && (ShuffleGerudoToken || ShuffleOverworldEntrances /*|| ShuffleSpecialIndoorEntrances*/);}}),
                 }, {}, {
                   //Exits
-                  Entrance(GERUDO_FORTRESS,         {[]{return IsAdult || (ShuffleOverworldEntrances && GF_GateOpen);}}),
+                  Entrance(GERUDO_FORTRESS,         {[]{return (IsAdult && (Hookshot || !ShuffleOverworldEntrances)) || GF_GateOpen;}}),
                   Entrance(WASTELAND_NEAR_FORTRESS, {[]{return true;}}),
   });
 
@@ -1088,7 +1089,12 @@ void AreaTable_Init() {
 
   areaTable[MARKET_TREASURE_CHEST_GAME] = Area("Market Treasure Chest Game", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(MARKET_TREASURE_CHEST_GAME_REWARD, {[]{return CanUse(LENS_OF_TRUTH);}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_REWARD, {[]{return (CanUse(LENS_OF_TRUTH) && !ShuffleChestMinigame) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 6)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_1, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 1)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_2, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 2)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_3, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 3)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_4, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 4)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_5, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 5)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
                 }, {
                   //Exits
                   Entrance(THE_MARKET, {[]{return true;}}),
