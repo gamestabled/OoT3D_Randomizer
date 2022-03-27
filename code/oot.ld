@@ -656,6 +656,10 @@ SECTIONS
 		*(.patch_NoSilverGauntletsCutsceneWarp)
 	}
 
+	.patch_RunAnimationSpeed 0x2BE70C : {
+		*(.patch_RunAnimationSpeed)
+	}
+
 	.patch_FishingIgnoreTempBOne 0x2C3A10 : {
 		*(.patch_FishingIgnoreTempBOne)
 	}

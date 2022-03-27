@@ -1147,6 +1147,16 @@ hook_MultiplyPlayerSpeed:
     vmul.f32 s0,s1
     bx lr
 
+.global hook_RunAnimationSpeed
+hook_RunAnimationSpeed:
+    vldr.32 s17,[r5,#0x21C]
+    push {r0-r12, lr}
+    bl Player_GetSpeedMultiplier
+    vmov s1,r0
+    pop {r0-r12, lr}
+    vmul.f32 s17,s1
+    bx lr
+
 .global hook_SilenceNavi
 hook_SilenceNavi:
     push {r0-r12, lr}

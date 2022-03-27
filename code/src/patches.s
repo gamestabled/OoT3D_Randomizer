@@ -1703,6 +1703,11 @@ SkipJabuOpeningCutscene_patch:
 MultiplyPlayerSpeed_patch:
     bl hook_MultiplyPlayerSpeed
 
+.section .patch_RunAnimationSpeed
+.global RunAnimationSpeed_patch
+RunAnimationSpeed_patch:
+    bl hook_RunAnimationSpeed
+
 .section .patch_SilenceNavi
 .global SilenceNavi_patch
 SilenceNavi_patch:
