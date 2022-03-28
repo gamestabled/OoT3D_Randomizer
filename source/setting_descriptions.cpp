@@ -789,6 +789,20 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
                                         "This setting will not change the logic.";         //
                                                                                            //
 /*------------------------------                                                           //
+|   ENABLE CHILD IRON BOOTS    |                                                           //
+------------------------------*/                                                           //
+string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.\n"           //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  TRADE ITEMS & BEANS BOTH    |                                                           //
+------------------------------*/                                                           //
+string_view adultMasksDesc            = "Adult Link can equip masks.\n"                    //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
 ------------------------------*/                                                           //
 string_view gkDurabilityVanilla       = "The durability will always be set to 8.";         //
