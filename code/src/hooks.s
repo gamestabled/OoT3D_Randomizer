@@ -440,7 +440,8 @@ hook_AnjuCheckCuccoAmount:
     push {r1-r12, lr}
     bl EnNiwLady_CheckCuccoAmount
     pop {r1-r12, lr}
-    cmp r0,#0x0
+    cmp r0,#0x7
+    cpylt r8,r0
     b 0x179424
 
 .global hook_KingZoraCheckMovedFlag
@@ -553,6 +554,22 @@ hook_CanReadHints:
     bl Hints_CanReadHints
     cmp r0,#0x1
     pop {r0-r12, lr}
+    #"What do you suppose this stone is?"
+    movne r0,#0x100
+    addne r0,r0,#0xB1
+    bxne lr
+    push {r0-r12, lr}
+    bl Hints_GetHintsSetting
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    #"Responding to your mask..."
+    moveq r0,#0x2000
+    addeq r0,r0,#0x54
+    bxeq lr
+    #Hint message, skipping other text
+    ldrh r0,[r4,#0x1C]
+    and r0,r0,#0xFF
+    add r0,r0,#0x400
     bx lr
 
 .global hook_FastChests

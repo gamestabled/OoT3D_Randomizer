@@ -976,7 +976,6 @@ CowItemOverride_patch:
 .global AnjuCheckCuccoAmount_patch
 AnjuCheckCuccoAmount_patch:
     b hook_AnjuCheckCuccoAmount
-    beq 0x179444
 
 .section .patch_FrogReward
 .global FrogReward_patch
@@ -1186,6 +1185,8 @@ FishingSizeIgnoreAdult_patch:
 .global ReadGossipStoneHints_patch
 ReadGossipStoneHints_patch:
     bl hook_CanReadHints
+    nop
+    nop
     nop
     nop
 
