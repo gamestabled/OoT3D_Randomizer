@@ -265,6 +265,13 @@ extern string_view childHookshotDesc;
 extern string_view childIronBootsDesc;
 extern string_view childHoverBootsDesc;
 extern string_view adultMasksDesc;
+extern string_view adultKokiriSwordDesc;
+extern string_view childMasterSwordDesc;
+extern string_view childBiggoronSwordDesc;
+extern string_view adultDekuShieldDesc;
+extern string_view childMirrorShieldDesc;
+extern string_view childGoronTunicDesc;
+extern string_view childZoraTunicDesc;
 
 extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;

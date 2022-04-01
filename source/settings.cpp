@@ -265,18 +265,27 @@ namespace Settings {
 
   //Item Usability Settings
   Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere", {"Disabled", "Enabled"},                                                {faroresWindAnywhereDesc});
-  Option StickAsAdult        = Option::Bool("Adult Deku Stick",       {"Disabled", "Enabled"},                                                {adultStickDesc});
-  Option BoomerangAsAdult    = Option::Bool("Adult Boomerang",        {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
-  Option HammerAsChild       = Option::Bool("Child Hammer",           {"Disabled", "Enabled"},                                                {childHammerDesc});
-  Option SlingshotAsAdult    = Option::Bool("Adult Slingshot",        {"Disabled", "Enabled"},                                                {adultSlingshotDesc});
-  Option BowAsChild          = Option::Bool("Child Bow",              {"Disabled", "Enabled"},                                                {childBowDesc});
-  Option HookshotAsChild     = Option::Bool("Child Hookshot",         {"Disabled", "Enabled"},                                                {childHookshotDesc});
-  Option IronBootsAsChild    = Option::Bool("Child Iron Boots",       {"Disabled", "Enabled"},                                                {childIronBootsDesc});
-  Option HoverBootsAsChild   = Option::Bool("Child Hover Boots",      {"Disabled", "Enabled"},                                                {childHoverBootsDesc});
-  Option MasksAsAdult        = Option::Bool("Adult Masks",            {"Disabled", "Enabled"},                                                {adultMasksDesc});
+  Option AgeItemsToggle      = Option::U8  ("Lift Age Restrictions",  {"All Off",  "All On", "Choose"},                                       {""});
+  Option StickAsAdult        = Option::Bool("  Adult Deku Stick",     {"Disabled", "Enabled"},                                                {adultStickDesc});
+  Option BoomerangAsAdult    = Option::Bool("  Adult Boomerang",      {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
+  Option HammerAsChild       = Option::Bool("  Child Hammer",         {"Disabled", "Enabled"},                                                {childHammerDesc});
+  Option SlingshotAsAdult    = Option::Bool("  Adult Slingshot",      {"Disabled", "Enabled"},                                                {adultSlingshotDesc});
+  Option BowAsChild          = Option::Bool("  Child Bow",            {"Disabled", "Enabled"},                                                {childBowDesc});
+  Option HookshotAsChild     = Option::Bool("  Child Hookshot",       {"Disabled", "Enabled"},                                                {childHookshotDesc});
+  Option IronBootsAsChild    = Option::Bool("  Child Iron Boots",     {"Disabled", "Enabled"},                                                {childIronBootsDesc});
+  Option HoverBootsAsChild   = Option::Bool("  Child Hover Boots",    {"Disabled", "Enabled"},                                                {childHoverBootsDesc});
+  Option MasksAsAdult        = Option::Bool("  Adult Masks",          {"Disabled", "Enabled"},                                                {adultMasksDesc});
+  Option KokiriSwordAsAdult  = Option::Bool("  Adult Kokiri Sword",   {"Disabled", "Enabled"},                                                {adultKokiriSwordDesc});
+  Option MasterSwordAsChild  = Option::Bool("  Child Master Sword",   {"Disabled", "Enabled"},                                                {childMasterSwordDesc});
+  Option BiggoronSwordAsChild= Option::Bool("  Child Biggoron Sword", {"Disabled", "Enabled"},                                                {childBiggoronSwordDesc});
+  Option DekuShieldAsAdult   = Option::Bool("  Adult Deku Shield",    {"Disabled", "Enabled"},                                                {adultDekuShieldDesc});
+  Option MirrorShieldAsChild = Option::Bool("  Child Mirror Shield",  {"Disabled", "Enabled"},                                                {childMirrorShieldDesc});
+  Option GoronTunicAsChild   = Option::Bool("  Child Goron Tunic",    {"Disabled", "Enabled"},                                                {childGoronTunicDesc});
+  Option ZoraTunicAsChild    = Option::Bool("  Child Zora Tunic",     {"Disabled", "Enabled"},                                                {childZoraTunicDesc});
   Option GkDurability        = Option::U8  ("GK Durability",          {"Vanilla", "Random Risk", "Random Safe"},                              {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
+    &AgeItemsToggle,
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
@@ -286,6 +295,13 @@ namespace Settings {
     &IronBootsAsChild,
     &HoverBootsAsChild,
     &MasksAsAdult,
+    &KokiriSwordAsAdult,
+    &MasterSwordAsChild,
+    &BiggoronSwordAsChild,
+    &DekuShieldAsAdult,
+    &MirrorShieldAsChild,
+    &GoronTunicAsChild,
+    &ZoraTunicAsChild,
     &GkDurability,
   };
 
@@ -1023,6 +1039,13 @@ namespace Settings {
     ctx.ironbootsAsChild     = (IronBootsAsChild) ? 1 : 0;
     ctx.hoverbootsAsChild    = (HoverBootsAsChild) ? 1 : 0;
     ctx.masksAsAdult         = (MasksAsAdult) ? 1 : 0;
+    ctx.kokiriSwordAsAdult   = (KokiriSwordAsAdult) ? 1 : 0;
+    ctx.masterSwordAsChild   = (MasterSwordAsChild) ? 1 : 0;
+    ctx.biggoronSwordAsChild = (BiggoronSwordAsChild) ? 1 : 0;
+    ctx.dekuShieldAsAdult    = (DekuShieldAsAdult) ? 1 : 0;
+    ctx.mirrorShieldAsChild  = (MirrorShieldAsChild) ? 1 : 0;
+    ctx.goronTunicAsChild    = (GoronTunicAsChild) ? 1 : 0;
+    ctx.zoraTunicAsChild     = (ZoraTunicAsChild) ? 1 : 0;
     ctx.gkDurability         = GkDurability.Value<u8>();
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
@@ -1264,6 +1287,25 @@ namespace Settings {
   static void Unhide(std::vector<LocationKey> locations) {
     for (LocationKey loc : locations) {
       Location(loc)->GetExcludedOption()->Unhide();
+    }
+  }
+
+  //Used for toggle options, enables/disables the options or expands/collapses each category based on their index number
+  void ToggleSet(std::vector<Option *> optionsList, Option toggleOption, int startNum, int endNum) {
+    for(int i = startNum; i <= endNum ; ++i){
+      switch(toggleOption.Value<u8>()) {
+        case 0:
+          optionsList[i]->Hide();
+          optionsList[i]->SetSelectedIndex(0);
+          break;
+        case 1:
+          optionsList[i]->Hide();
+          optionsList[i]->SetSelectedIndex(1);
+          break;
+        case 2:
+          optionsList[i]->Unhide();
+          break;
+      }
     }
   }
 
@@ -1632,6 +1674,9 @@ namespace Settings {
       ClearerHints.Unhide();
       HintDistribution.Unhide();
     }
+
+    //Manage toggle for item usability options
+    ToggleSet(itemUsabilityOptions, AgeItemsToggle, 2, 17);
 
     if (RemoveDoubleDefense) {
       StartingDoubleDefense.SetSelectedIndex(0);

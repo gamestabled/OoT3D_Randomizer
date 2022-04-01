@@ -87,6 +87,27 @@ void ItemOverride_Init(void) {
         gItemUsabilityTable[ITEM_HOOKSHOT]        = 0x09;
         gItemUsabilityTable[ITEM_LONGSHOT]        = 0x09;
     }
+    if (gSettingsContext.kokiriSwordAsAdult) {
+        gGearUsabilityTable[GearSlot(ITEM_SWORD_KOKIRI)]  = 0x09;
+    }
+    if (gSettingsContext.masterSwordAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_SWORD_MASTER)]  = 0x09;
+    }
+    if (gSettingsContext.biggoronSwordAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_SWORD_BGS)]     = 0x09;
+    }
+    if (gSettingsContext.dekuShieldAsAdult) {
+        gGearUsabilityTable[GearSlot(ITEM_SHIELD_DEKU)]   = 0x09;
+    }
+    if (gSettingsContext.mirrorShieldAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_SHIELD_MIRROR)] = 0x09;
+    }
+    if (gSettingsContext.goronTunicAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_TUNIC_GORON)]   = 0x09;
+    }
+    if (gSettingsContext.zoraTunicAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_TUNIC_ZORA)]    = 0x09;
+    }
 }
 
 static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 itemId) {

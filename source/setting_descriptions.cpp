@@ -830,9 +830,58 @@ string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots. T
                                         "This setting will not change the logic.";         //
                                                                                            //
 /*------------------------------                                                           //
-|  TRADE ITEMS & BEANS BOTH    |                                                           //
+|     ENABLE ADULT MASKS       |                                                           //
 ------------------------------*/                                                           //
 string_view adultMasksDesc            = "Adult Link can equip masks.\n"                    //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE ADULT KOKIRI SWORD   |                                                           //
+------------------------------*/                                                           //
+string_view adultKokiriSwordDesc      = "Adult Link can equip the Kokiri Sword.\n"         //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE CHILD MASTER SWORD   |                                                           //
+------------------------------*/                                                           //
+string_view childMasterSwordDesc      = "Child Link can equip the Master Sword.\n"         //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE CHILD BIGGORON SWORD |                                                           //
+------------------------------*/                                                           //
+string_view childBiggoronSwordDesc    = "Child Link can equip the Biggoron Sword.\n"       //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|   ENABLE ADULT DEKU SHIELD   |                                                           //
+------------------------------*/                                                           //
+string_view adultDekuShieldDesc       = "Adult Link can equip the Deku Shield.\n"          //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE CHILD MIRROR SHIELD  |                                                           //
+------------------------------*/                                                           //
+string_view childMirrorShieldDesc     = "Child Link can equip Mirror Shield.\n"            //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|   ENABLE CHILD GORON TUNIC   |                                                           //
+------------------------------*/                                                           //
+string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.\n"          //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|    ENABLE CHILD ZORA TUNIC   |                                                           //
+------------------------------*/                                                           //
+string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.\n"           //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //
