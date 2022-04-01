@@ -1300,6 +1300,16 @@ hook_LinkReflection:
     streq r1,[r0,#0x714]
     bx lr
 
+.global hook_ChildCanOpenBowSubMenu
+hook_ChildCanOpenBowSubMenu:
+    push {r0-r12, lr}
+    bl Settings_BowAsChild
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bxeq lr
+    cmp r12,#0x0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

@@ -1790,6 +1790,11 @@ HookshotRotation_patch:
 LinkReflection_patch:
     b hook_LinkReflection
 
+.section .patch_ChildCanOpenBowSubMenu
+.global ChildCanOpenBowSubMenu_patch
+ChildCanOpenBowSubMenu_patch:
+    cmp r12,r12
+
 .section .patch_loader
 .global loader_patch
 

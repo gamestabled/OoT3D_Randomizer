@@ -704,6 +704,10 @@ SECTIONS
 		*(.patch_SceneInitAfterCopyScenes)
 	}
 
+	.patch_ChildCanOpenBowSubMenu 0x2EB2D8 : {
+		*(.patch_ChildCanOpenBowSubMenu)
+	}
+
 	.patch_CorrectCompassChests 0x2F161C : {
 		*(.patch_CorrectCompassChests)
 	}
