@@ -265,7 +265,7 @@ namespace Settings {
 
   //Item Usability Settings
   Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere", {"Disabled", "Enabled"},                                                {faroresWindAnywhereDesc});
-  Option AgeItemsToggle      = Option::U8  ("Lift Age Restrictions",  {"All Off",  "All On", "Choose"},                                       {""});
+  Option AgeItemsToggle      = Option::U8  ("Lift Age Restrictions",  {"All Disabled",  "All Enabled", "Choose"},                             {ageRestrictionsDesc});
   Option StickAsAdult        = Option::Bool("  Adult Deku Stick",     {"Disabled", "Enabled"},                                                {adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("  Adult Boomerang",      {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("  Child Hammer",         {"Disabled", "Enabled"},                                                {childHammerDesc});
@@ -1290,10 +1290,15 @@ namespace Settings {
     }
   }
 
-  //Used for toggle options, enables/disables the options or expands/collapses each category based on their index number
-  void ToggleSet(std::vector<Option *> optionsList, Option toggleOption, int startNum, int endNum) {
-    for(int i = startNum; i <= endNum ; ++i){
-      switch(toggleOption.Value<u8>()) {
+  //Used for toggle options, enables/disables all the options between the 2 given
+  void ToggleSet(std::vector<Option *> optionsList, Option* toggleOption, Option* firstOptionInSet, Option* lastOptionInSet) {
+    u32 i;
+    for(i = 0; i < optionsList.size(); i++){
+      if(optionsList[i] == firstOptionInSet)
+        break;
+    }
+    for(; i < optionsList.size(); i++){
+      switch(toggleOption->Value<u8>()) {
         case 0:
           optionsList[i]->Hide();
           optionsList[i]->SetSelectedIndex(0);
@@ -1306,6 +1311,8 @@ namespace Settings {
           optionsList[i]->Unhide();
           break;
       }
+      if(optionsList[i] == lastOptionInSet)
+        return;
     }
   }
 
@@ -1676,7 +1683,7 @@ namespace Settings {
     }
 
     //Manage toggle for item usability options
-    ToggleSet(itemUsabilityOptions, AgeItemsToggle, 2, 17);
+    ToggleSet(itemUsabilityOptions, &AgeItemsToggle, &StickAsAdult, &ZoraTunicAsChild);
 
     if (RemoveDoubleDefense) {
       StartingDoubleDefense.SetSelectedIndex(0);

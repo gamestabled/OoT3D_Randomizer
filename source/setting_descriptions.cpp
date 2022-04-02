@@ -766,6 +766,17 @@ string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of du
                                         "This setting will not change the logic.";         //
                                                                                            //
 /*------------------------------                                                           //
+|    LIFT AGE RESTRICTIONS     |                                                           //
+------------------------------*/                                                           //
+string_view ageRestrictionsDesc       = "Remove age restrictions for inventory items.\n"   //
+                                        "Select \"Choose\" to open the list of individual\n"
+                                        "options.\n\n"                                     //
+                                        "Most of the items won't appear correctly when\n"  //
+                                        "used as the wrong version of Link, but they'll be\n"
+                                        "fully functional otherwise.\n"                    //
+                                        "These settings will not change the logic.";       //
+                                                                                           //
+/*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
 string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"
@@ -799,9 +810,7 @@ string_view adultSlingshotDesc        = "Adult Link can use the Slingshot (but i
 |      ENABLE CHILD BOW        |                                                           //
 ------------------------------*/                                                           //
 string_view childBowDesc              = "Child Link can use the Bow. It will look like the\n"
-                                        "Slingshot, but will shoot arrows. You can only\n" //
-                                        "change arrow type with the quick-swapping, not\n" //
-                                        "with the Items Menu.\n"                           //
+                                        "Slingshot, but will shoot arrows.\n"              //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //
@@ -809,9 +818,9 @@ string_view childBowDesc              = "Child Link can use the Bow. It will loo
 |    ENABLE CHILD HOOKSHOT     |                                                           //
 ------------------------------*/                                                           //
 string_view childHookshotDesc         = "Child Link can use the Hookshot/Longshot.\n"      //
-                                        "It will be difficult to aim, the red dot/laser\n" //
-                                        "won't appear and the hook will look like a small\n"
-                                        "bomb.\n"                                          //
+                                        "It will be difficult to aim, the red dot and\n"   //
+                                        "laser won't appear and the hook will look like\n" //
+                                        "a small bomb.\n"                                  //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
 /*------------------------------                                                           //
@@ -853,7 +862,8 @@ string_view childMasterSwordDesc      = "Child Link can equip the Master Sword.\
 /*------------------------------                                                           //
 |  ENABLE CHILD BIGGORON SWORD |                                                           //
 ------------------------------*/                                                           //
-string_view childBiggoronSwordDesc    = "Child Link can equip the Biggoron Sword.\n"       //
+string_view childBiggoronSwordDesc    = "Child Link can equip the Biggoron Sword and the\n"//
+                                        "Giant's Knife.\n"                                 //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //
@@ -867,7 +877,7 @@ string_view adultDekuShieldDesc       = "Adult Link can equip the Deku Shield.\n
 /*------------------------------                                                           //
 |  ENABLE CHILD MIRROR SHIELD  |                                                           //
 ------------------------------*/                                                           //
-string_view childMirrorShieldDesc     = "Child Link can equip Mirror Shield.\n"            //
+string_view childMirrorShieldDesc     = "Child Link can equip the Mirror Shield.\n"        //
                                         "\n"                                               //
                                         "This setting will not change the logic.";         //
                                                                                            //
