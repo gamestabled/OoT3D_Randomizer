@@ -161,8 +161,8 @@ string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, 
                                         "shuffled.\n"                                      //
                                         "\n"                                               //
                                         "Additionally, the entrances of Deku Tree, Fire\n" //
-                                        "Temple and Bottom of the Well are opened for both\n"
-                                        "adult and child.";                                //
+                                        "Temple, Bottom of the Well and Gerudo Training\n" //
+                                        "Ground are opened for both adult and child.";     //
 /*------------------------------                                                           //
 |      OVERWORLD ENTRANCES     |                                                           //
 ------------------------------*/                                                           //
@@ -395,6 +395,17 @@ string_view adultTradeDesc            = "Enabling this adds all of the adult tra
                                         "the L and R buttons. If disabled, only the Claim\n"
                                         "Check will be found in the pool.";                //
 /*------------------------------                                                           //
+|    SHUFFLE CHEST MINIGAME    |                                                           //
+------------------------------*/                                                           //
+string_view chestMinigameDesc         = "The 5 key chests in the Treasure Chest Shop will\n"
+                                        "be randomized, and the 6 keys will be added to the"//
+                                        "pool. The rupee chests will be replaced by traps.\n"
+                                        "Also, the shop owner is on vacation, so he can't\n"
+                                        "close any chests or doors once you leave.\n"      //
+                                        "\n"                                               //
+                                        "If you choose the \"pack\" option, you will get\n"//
+                                        "all the keys at once, in a single item.";         //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //
@@ -589,6 +600,11 @@ string_view skipSongReplaysDesc       = "The automatic replay after you play a s
 string_view keepFWWarpPointDesc       = "The Farore's Wind warp point will stay active\n"  //
                                         "after having been warped to. The old point will\n"//
                                         "need to be dispelled before setting a new one.";  //
+/*------------------------------                                                           //
+|       FAST BUNNY HOOD        |                                                           //
+------------------------------*/                                                           //
+string_view fastBunnyHoodDesc         = "The Bunny Hood mask behaves like it does in\n"    //
+                                        "Majora's Mask and makes you run 50% faster.";     //
 /*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //

@@ -8,9 +8,9 @@ using namespace Logic;
 
 static std::array<Item, KEY_ENUM_MAX> itemTable;
 
-void ItemTable_Init() {                                   //English name      French           Spanish           Item Type       getItemID    advancement     logic       hint key
-    itemTable[NONE]                              = Item(Text{"No Item",                         "Rien",                             "Sin Objeto"},                              ITEMTYPE_EVENT, GI_RUPEE_GREEN,    false,    &noVariable,  NONE);
-    itemTable[KOKIRI_SWORD]                      = Item(Text{"Kokiri Sword",                    "Épée Kokiri",                      "Espada Kokiri"},                           ITEMTYPE_ITEM,  GI_SWORD_KOKIRI,   true,     &KokiriSword, KOKIRI_SWORD);
+void ItemTable_Init() {                                    //English name                       French                              Spanish                                     Item Type       getItemID       advancement    logic           hint key
+    itemTable[NONE]                              = Item(Text{"No Item",                         "Rien",                             "Sin Objeto"},                              ITEMTYPE_EVENT, GI_RUPEE_GREEN,    false,      &noVariable,    NONE);
+    itemTable[KOKIRI_SWORD]                      = Item(Text{"Kokiri Sword",                    "Épée Kokiri",                      "Espada Kokiri"},                           ITEMTYPE_ITEM,  GI_SWORD_KOKIRI,   true,       &KokiriSword,   KOKIRI_SWORD);
   //[MASTER_SWORD]
     itemTable[GIANTS_KNIFE]                      = Item(Text{"Giant's Knife",                   "Lame de géant",                    "Espada de Biggoron"},                      ITEMTYPE_ITEM,  GI_SWORD_KNIFE,    false,      &noVariable,    GIANTS_KNIFE);
     itemTable[BIGGORON_SWORD]                    = Item(Text{"Biggoron's Sword",                "Épée de Grogoron",                 "Espada de Biggoron"},                      ITEMTYPE_ITEM,  GI_SWORD_BGS,      true,       &BiggoronSword, BIGGORON_SWORD);
@@ -21,8 +21,8 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[ZORA_TUNIC]                        = Item(Text{"Zora Tunic",                      "Tunique Zora",                     "Sayo zora"},                               ITEMTYPE_ITEM,  GI_TUNIC_ZORA,     true,       &ZoraTunic,     ZORA_TUNIC);
     itemTable[IRON_BOOTS]                        = Item(Text{"Iron Boots",                      "Bottes de plomb",                  "Botas de hierro"},                         ITEMTYPE_ITEM,  GI_BOOTS_IRON,     true,       &IronBoots,     IRON_BOOTS);
     itemTable[HOVER_BOOTS]                       = Item(Text{"Hover Boots",                     "Bottes des airs",                  "Botas voladoras"},                         ITEMTYPE_ITEM,  GI_BOOTS_HOVER,    true,       &HoverBoots,    HOVER_BOOTS);
-																																																				
-																																																				   
+
+
     itemTable[BOOMERANG]                         = Item(Text{"Boomerang",                       "Boomerang",                        "Búmeran"},                                 ITEMTYPE_ITEM,  GI_BOOMERANG,      true,       &Boomerang,     BOOMERANG);
     itemTable[LENS_OF_TRUTH]                     = Item(Text{"Lens of Truth",                   "Loupe de vérité",                  "Lupa de la Verdad"},                       ITEMTYPE_ITEM,  GI_LENS,           true,       &LensOfTruth,   LENS_OF_TRUTH);
     itemTable[MEGATON_HAMMER]                    = Item(Text{"Megaton Hammer",                  "Masse des titans",                 "Martillo Megatón"},                        ITEMTYPE_ITEM,  GI_HAMMER,         true,       &Hammer,        MEGATON_HAMMER);
@@ -149,6 +149,7 @@ void ItemTable_Init() {                                   //English name      Fr
     itemTable[GERUDO_TRAINING_GROUNDS_SMALL_KEY] = Item(Text{"Training Grounds Small Key",      "Petite clé du gymnase Gerudo",     "Llave del Centro de Instrucción"},         ITEMTYPE_SMALLKEY,          0xB5, true, &GerudoTrainingGroundsKeys, GERUDO_TRAINING_GROUNDS_SMALL_KEY);
     itemTable[GERUDO_FORTRESS_SMALL_KEY]         = Item(Text{"Gerudo Fortress Small Key",       "Petite clé du repaire Gerudo",     "Llave de la Fortaleza Gerudo"},            ITEMTYPE_FORTRESS_SMALLKEY, 0xB6, true, &GerudoFortressKeys,        GERUDO_FORTRESS_SMALL_KEY);
     itemTable[GANONS_CASTLE_SMALL_KEY]           = Item(Text{"Ganon's Castle Small Key",        "Petite clé du château de Ganon",   "Llave del Castillo de Ganon"},             ITEMTYPE_SMALLKEY,          0xB7, true, &GanonsCastleKeys,          GANONS_CASTLE_SMALL_KEY);
+    itemTable[TREASURE_GAME_SMALL_KEY]           = Item(Text{"Chest Game Small Key",            "Clé de la chasse-aux-trésors",     "Llave del Cofre del Tesoro"},              ITEMTYPE_ITEM,              0xD5, true, &TreasureGameKeys,          TREASURE_GAME_SMALL_KEY);
 
     //Stones and Medallions
     itemTable[KOKIRI_EMERALD]                    = Item(Text{"Kokiri's Emerald",                "Émeraude Kokiri",                  "Esmeralda de los Kokiri"},                 ITEMTYPE_DUNGEONREWARD, 0xCB,  true, &KokiriEmerald,   KOKIRI_EMERALD);

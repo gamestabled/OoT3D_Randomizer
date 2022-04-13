@@ -1137,6 +1137,16 @@ hook_SkipJabuOpeningCutscene:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_MultiplyPlayerSpeed
+hook_MultiplyPlayerSpeed:
+    vldr.32 s0,[r6,#0x21C]
+    push {r0-r12, lr}
+    bl Player_GetSpeedMultiplier
+    vmov s1,r0
+    pop {r0-r12, lr}
+    vmul.f32 s0,s1
+    bx lr
+
 .global hook_SilenceNavi
 hook_SilenceNavi:
     push {r0-r12, lr}
@@ -1145,6 +1155,27 @@ hook_SilenceNavi:
     pop {r0-r12, lr}
     beq 0x26808C
     cmp r0,r2
+    bx lr
+
+.global hook_ChestMinigame_KeyChestVisibility
+hook_ChestMinigame_KeyChestVisibility:
+    push {r0-r12, lr}
+    bl Settings_GetChestMinigameOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    orrne r10,r7,#0x0
+    orreq r10,r7,#0x4000
+    bx lr
+
+.global hook_ChestMinigame_DontOpenChestsOnInit
+hook_ChestMinigame_DontOpenChestsOnInit:
+    cmp r0,#0x0
+    bxeq lr
+    push {r0-r12, lr}
+    bl Settings_GetChestMinigameOption
+    cmp r0,#0x1
+    cmpgt r0,r0
+    pop {r0-r12, lr}
     bx lr
 
 .global hook_GameplayDestroy
