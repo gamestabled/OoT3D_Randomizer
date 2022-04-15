@@ -6,6 +6,7 @@ enum class Category {
     cForest,
     cGrotto,
     cMinigame,
+    cChestMinigame,
     cLostWoods,
     cDekuScrub,
     cDekuScrubUpgrades,
