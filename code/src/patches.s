@@ -291,7 +291,7 @@ RainbowBridge_patch:
     cmp r0,#0x0
     pop {r0-r12, lr}
     beq 0x3E7D70
-    b 0x3E7CE0
+    b 0x3E7D34
 
 .section .patch_ModelSpawnGetObjectStatus
 .global ModelSpawnGetObjectStatus_patch
