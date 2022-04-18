@@ -5,7 +5,8 @@
 
 typedef struct EnShopnuts {
     /* 0x000 */ Actor actor;
-    /* 0x1A4 */ char unk_1A4[0x6FC];
+    /* 0x1A4 */ void* action_fn;
+    /* 0x1A8 */ char unk_1A8[0x6F8];
 } EnShopnuts; // size 0x8A0
 
 #endif //_EN_SHOPNUTS_H_

@@ -813,6 +813,19 @@ string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random du
                                         "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
+|         MULTIPLAYER          |                                                           //
+------------------------------*/                                                           //
+string_view mp_EnabledDesc            = "Enables multiplayer.\n"                           //
+                                        "Other players will always be seen and heard\n"    //
+                                        "regardless of the other settings.";               //
+string_view mp_SharedProgressDesc     = "Progress and certain actors will be synced\n"     //
+                                        "between everyone who has this option on and the\n"//
+                                        "same seed hash.";                                 //
+string_view mp_SharedHealthDesc       = "Damage and recovery will be synced.";             //
+string_view mp_SharedRupeesDesc       = "Rupee gain and loss will be synced.";             //
+string_view mp_SharedAmmoDesc         = "Ammo gain and loss will be synced.";              //
+                                                                                           //
+/*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
 ------------------------------*/                                                           //
 string_view zTargetingDesc            = "Sets L-Targeting to start as switch or hold.";    //

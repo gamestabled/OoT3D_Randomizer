@@ -1755,6 +1755,31 @@ OverrideGrottoActorEntrance_patch:
 ReturnFWSetupGrottoInfo_patch:
     bl hook_ReturnFWSetupGrottoInfo
 
+.section .patch_BrownBoulderExplode
+.global BrownBoulderExplode_patch
+BrownBoulderExplode_patch:
+    bl hook_BrownBoulderExplode
+
+.section .patch_RedBoulderExplode
+.global RedBoulderExplode_patch
+RedBoulderExplode_patch:
+    b hook_RedBoulderExplode
+
+.section .patch_Multiplayer_UpdatePrevActorFlags
+.global Multiplayer_UpdatePrevActorFlags_patch
+Multiplayer_UpdatePrevActorFlags_patch:
+    bl hook_Multiplayer_UpdatePrevActorFlags
+
+.section .patch_Multiplayer_OnLoadFile
+.global Multiplayer_OnLoadFile_patch
+Multiplayer_OnLoadFile_patch:
+    b hook_Multiplayer_OnLoadFile
+
+.section .patch_SendDroppedBottleContents
+.global SendDroppedBottleContents_patch
+SendDroppedBottleContents_patch:
+    bl hook_SendDroppedBottleContents
+
 .section .patch_loader
 .global loader_patch
 

@@ -1,5 +1,9 @@
 #include <string.h>
 #include "gfx_options.h"
+#include "gfx.h"
+#include "savefile.h"
+#include "draw.h"
+#include "input.h"
 
 #define BORDER_WIDTH 2
 #define CHOICE_COLUMN 240

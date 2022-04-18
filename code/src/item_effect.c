@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "z3D/z3D.h"
 #include "savefile.h"
+#include "multiplayer.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
@@ -44,6 +45,10 @@ void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_GiveBiggoronSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->bgsFlag = 1; // Set flag to make the sword durable
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_BGSFlag();
+    }
 }
 
 void ItemEffect_GiveBottle(SaveContext* saveCtx, s16 bottleItemId, s16 arg2) {
@@ -78,6 +83,10 @@ void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
         saveCtx->healthAccumulator = 20 * 0x10;
     }
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_GreatFairyBuff(0);
+    }
 }
 
 void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -85,6 +94,10 @@ void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->magicAcquired = 1;     // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x30; // Set meter size
     saveCtx->magic = 0x30;          // Fill meter
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_GreatFairyBuff(1);
+    }
 }
 
 void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -93,6 +106,10 @@ void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleMagic = 1;       // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x60; // Set meter size
     saveCtx->magic = 0x60;          // Fill meter
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_GreatFairyBuff(2);
+    }
 }
 
 void ItemEffect_GiveFairyOcarina(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -213,7 +230,7 @@ static u8 MakeSpaceInItemMenu(u8* itemMenu) {
     return 0xFF;
 }
 
-static void PushSlotIntoInventoryMenu(u8 itemSlot) {
+void PushSlotIntoInventoryMenu(u8 itemSlot) {
     u8 currentSlot = 0;
     while ((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuChild[currentSlot] != 0xFF) {
         currentSlot++;
@@ -244,20 +261,37 @@ void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_FIRE]);
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_ICE]);
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_LIGHT]);
+        if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+            Multiplayer_Send_MagicArrow(arg1);
+        }
     } else if (saveCtx->items[ItemSlots[ITEM_BOW]] == ITEM_NONE) {
         if (arg1 == 1 && saveCtx->items[ItemSlots[ITEM_ARROW_FIRE]] == ITEM_NONE) { // Fire Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_FIRE]);
+            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+                Multiplayer_Send_MagicArrow(arg1);
+            }
         } else if (arg1 == 2 && saveCtx->items[ItemSlots[ITEM_ARROW_ICE]] == ITEM_NONE) { // Ice Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_ICE]);
+            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+                Multiplayer_Send_MagicArrow(arg1);
+            }
         } else if (arg1 == 3 && saveCtx->items[ItemSlots[ITEM_ARROW_LIGHT]] == ITEM_NONE) { // Light Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_LIGHT]);
+            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+                Multiplayer_Send_MagicArrow(arg1);
+            }
         }
     }
+    duplicateSendProtection = false;
 }
 
 void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     // Put the Kokiri Sword on Child B button when Link goes back child
     saveCtx->childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_KokiriSwordEquip();
+    }
 }
 
 void ItemEffect_GiveStone(SaveContext* saveCtx, s16 mask, s16 arg2) {

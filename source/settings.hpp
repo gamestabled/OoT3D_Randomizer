@@ -554,6 +554,13 @@ namespace Settings {
   extern Option GlitchLedgeClip;
   extern Option GlitchTripleSlashClip;
 
+  //Multiplayer Settings
+  extern Option MP_Enabled;
+  extern Option MP_SharedProgress;
+  extern Option MP_SharedHealth;
+  extern Option MP_SharedRupees;
+  extern Option MP_SharedAmmo;
+
   //Ingame Default Settings
   extern Option ZTargeting;
   extern Option CameraControl;
