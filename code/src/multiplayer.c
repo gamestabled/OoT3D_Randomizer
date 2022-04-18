@@ -305,9 +305,12 @@ void Multiplayer_Run(void) {
 
     Result result;
     static bool shouldSendFullSyncRequest = false;
+    static u8 initTimer = 0;
+    const u32 wlancommID = 0x3656B7DA; // Unique ID set manually
+    static u8 netScanChecks = 0;
+
     switch (netStage) {
         case 0:
-            static u8 initTimer = 0;
             initTimer++;
             // Initializing too fast fails
             if (initTimer >= 30) {
@@ -322,10 +325,7 @@ void Multiplayer_Run(void) {
             }
             break;
         case 1:
-            const u32 wlancommID = 0x3656B7DA; // Unique ID set manually
-
             // Connect or host: Scan for a bit before creating a network
-            static u8 netScanChecks = 0;
             if (netScanChecks < (gSettingsContext.playOption == 0 ? 3 : 30)) {
                 netScanChecks++;
 
