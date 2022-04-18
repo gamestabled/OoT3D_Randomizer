@@ -9,10 +9,15 @@
 #define EnItem00_Destroy_addr 0x1F706C
 #define EnItem00_Destroy ((ActorFunc)EnItem00_Destroy_addr)
 
+#define EnItem00_Update_addr 0x22B71C
+#define EnItem00_Update ((ActorFunc)EnItem00_Update_addr)
+
 #define EnItem00_Draw_addr 0x22B6C0
 #define EnItem00_Draw ((ActorFunc)EnItem00_Draw_addr)
 
 #define THIS ((EnItem00*)thisx)
+
+#define FUN_002B175C (void*)0x2B175C
 
 typedef enum {
     /* 0x00 */ ITEM00_RUPEE_GREEN,
@@ -80,6 +85,17 @@ void EnItem00_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 
     Model_DestroyByActor(&item->actor);
     EnItem00_Destroy(&item->actor, globalCtx);
+}
+
+void EnItem00_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    EnItem00* item = THIS;
+
+    if (Flags_GetCollectible(globalCtx, item->collectibleFlag) && item->action_fn != FUN_002B175C) {
+        Actor_Kill(&item->actor);
+        return;
+    }
+
+    EnItem00_Update(&item->actor, globalCtx);
 }
 
 void EnItem00_rDraw(Actor* thisx, GlobalContext* globalCtX) {

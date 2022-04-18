@@ -273,6 +273,18 @@ typedef struct {
 } ActorListEntry; // size = 0x08
 
 typedef struct {
+    /* 0x00 */ u32    swch;
+    /* 0x04 */ u32    tempSwch;
+    /* 0x08 */ u32    unk0;
+    /* 0x0C */ u32    unk1;
+    /* 0x10 */ u32    chest;
+    /* 0x14 */ u32    clear;
+    /* 0x18 */ u32    tempClear;
+    /* 0x1C */ u32    collect;
+    /* 0x20 */ u32    tempCollect;
+} ActorFlags; // size = 0x24
+
+typedef struct {
     /* 0x0000 */ u8     unk_00;
     /* 0x0001 */ char   unk_01[0x01];
     /* 0x0002 */ u8     unk_02;
@@ -283,17 +295,7 @@ typedef struct {
     /* 0x000C */ ActorListEntry actorList[12];
     // /* 0x006C */ TargetContext targetCtx;
     /* 0x006C */ char   unk_6C[0x130];
-    struct {
-        /* 0x019C */ u32    swch;
-        /* 0x01A0 */ u32    tempSwch;
-        /* 0x01A4 */ u32    unk0;
-        /* 0x01A8 */ u32    unk1;
-        /* 0x01AC */ u32    chest;
-        /* 0x01B0 */ u32    clear;
-        /* 0x01B4 */ u32    tempClear;
-        /* 0x01B8 */ u32    collect;
-        /* 0x01BC */ u32    tempCollect;
-    }                   flags;
+    /* 0x019C */ ActorFlags flags;
     /* 0x01C0 */ TitleCardContext titleCtx;
 } ActorContext; // TODO: size = 0x1D8
 
@@ -568,5 +570,25 @@ typedef void (*Message_CloseTextbox_proc)(GlobalContext* globalCtx);
 typedef void (*SetupItemInWater_proc)(Player* player, GlobalContext* globalCtx);
 #define SetupItemInWater_addr 0x354894
 #define SetupItemInWater ((SetupItemInWater_proc)SetupItemInWater_addr)
+
+typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
+#define Health_ChangeBy_addr 0x352DBC
+#define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
+
+typedef void (*PlaySFX_proc)(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f32* a4, s8* reverbAdd);
+#define PlaySFX_addr 0x37547C
+#define PlaySFX ((PlaySFX_proc)PlaySFX_addr)
+
+typedef void (*Flags_SetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_SetSwitch_addr 0x375C10
+#define Flags_SetSwitch ((Flags_SetSwitch_proc)Flags_SetSwitch_addr)
+
+typedef u32 (*Flags_GetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_GetSwitch_addr 0x36E864
+#define Flags_GetSwitch ((Flags_GetSwitch_proc)Flags_GetSwitch_addr)
+
+typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_GetCollectible_addr 0x36405C
+#define Flags_GetCollectible ((Flags_GetCollectible_proc)Flags_GetCollectible_addr)
 
 #endif //_Z3D_H_

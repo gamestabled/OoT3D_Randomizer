@@ -440,7 +440,8 @@ hook_AnjuCheckCuccoAmount:
     push {r1-r12, lr}
     bl EnNiwLady_CheckCuccoAmount
     pop {r1-r12, lr}
-    cmp r0,#0x0
+    cmp r0,#0x7
+    cpylt r8,r0
     b 0x179424
 
 .global hook_KingZoraCheckMovedFlag
@@ -553,6 +554,22 @@ hook_CanReadHints:
     bl Hints_CanReadHints
     cmp r0,#0x1
     pop {r0-r12, lr}
+    #"What do you suppose this stone is?"
+    movne r0,#0x100
+    addne r0,r0,#0xB1
+    bxne lr
+    push {r0-r12, lr}
+    bl Hints_GetHintsSetting
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    #"Responding to your mask..."
+    moveq r0,#0x2000
+    addeq r0,r0,#0x54
+    bxeq lr
+    #Hint message, skipping other text
+    ldrh r0,[r4,#0x1C]
+    and r0,r0,#0xFF
+    add r0,r0,#0x400
     bx lr
 
 .global hook_FastChests
@@ -1147,6 +1164,16 @@ hook_MultiplyPlayerSpeed:
     vmul.f32 s0,s1
     bx lr
 
+.global hook_RunAnimationSpeed
+hook_RunAnimationSpeed:
+    vldr.32 s17,[r5,#0x21C]
+    push {r0-r12, lr}
+    bl Player_GetSpeedMultiplier
+    vmov s1,r0
+    pop {r0-r12, lr}
+    vmul.f32 s17,s1
+    bx lr
+
 .global hook_SilenceNavi
 hook_SilenceNavi:
     push {r0-r12, lr}
@@ -1217,6 +1244,55 @@ hook_ReturnFWSetupGrottoInfo:
     bl Grotto_SetupReturnInfoOnFWReturn
     pop {r0-r12, lr}
     add sp,sp,#0x8
+    bx lr
+
+.global hook_BrownBoulderExplode
+hook_BrownBoulderExplode:
+    push {r0-r12, lr}
+    cpy r0,r5
+    cpy r1,r7
+    bl ObjBombiwa_GetFlag
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x26FA7C
+    b 0x346D94
+
+.global hook_RedBoulderExplode
+hook_RedBoulderExplode:
+    ldrb r0,[r5,#0x1B5]
+    push {r0-r12, lr}
+    cpy r0,r5
+    bl ObjHamishi_HitCount
+    cmp r0,#0x2
+    pop {r0-r12, lr}
+    bge 0x26FE9C
+    b 0x26FE80
+
+.global hook_Multiplayer_UpdatePrevActorFlags
+hook_Multiplayer_UpdatePrevActorFlags:
+    str r0,[r5,#0x1b8]
+    push {r0-r12, lr}
+    bl Multiplayer_Sync_UpdatePrevActorFlags
+    pop {r0-r12, pc}
+
+.global hook_Multiplayer_OnLoadFile
+hook_Multiplayer_OnLoadFile:
+    strh r6,[r0,#0x4C]
+    push {r0-r12, lr}
+    bl Multiplayer_OnFileLoad
+    pop {r0-r12, lr}
+    b 0x449F00
+
+.global hook_SendDroppedBottleContents
+hook_SendDroppedBottleContents:
+    add r0,r0,#0x8C
+    push {r0-r12, lr}
+    cpy r0,r2
+    vmov r1,s0
+    vmov r2,s1
+    vmov r3,s2
+    bl SendDroppedBottleContents
+    pop {r0-r12, lr}
     bx lr
 
 .section .loader

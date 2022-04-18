@@ -1,5 +1,16 @@
 #include "common.h"
 #include "settings.h"
+#include "3ds/svc.h"
+#include "lib/printf.h"
+
+s8 BitCompare(u32 value1, u32 value2, u8 bit) {
+    if ((value1 & (1 << bit)) > (value2 & (1 << bit))) {
+        return 1;
+    } else if ((value2 & (1 << bit)) > (value1 & (1 << bit))) {
+        return -1;
+    }
+    return 0;
+}
 
 // From section 5 of https://www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
 u32 Hash(u32 state) {

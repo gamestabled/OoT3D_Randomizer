@@ -158,6 +158,10 @@ void WriteIngameSpoilerLog() {
         else if (!Settings::ShuffleAdultTradeQuest && loc->IsCategory(Category::cAdultTrade)) {
           continue;
         }
+        // Chest Minigame
+        else if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_OFF) && loc->IsCategory(Category::cChestMinigame)) {
+            continue;
+        }
         // Gerudo Fortress
         else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
             (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {

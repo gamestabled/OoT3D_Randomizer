@@ -7,6 +7,7 @@
 #include "item_table.h"
 #include "models.h"
 #include "entrance.h"
+#include "multiplayer.h"
 #include <stddef.h>
 
 static s32 rShopsanityPrices[32] = { 0 };
@@ -62,6 +63,19 @@ u8 ShopsanityItem_IsSticks(u8 id) {
     return id == ITEM_STICK || id == ITEM_STICKS_5 || id == ITEM_STICKS_10;
 }
 
+// Transfer order of scene indices to order of indices defined elsewhere in the code
+const u16 shopNumToIndex[8] = { 4, 0, 7, 6, 1, 3, 2, 5 };
+u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
+    // Get scene index
+    u16 shopNum = gGlobalContext->sceneNum - SCENE_BAZAAR;
+    if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { //kak bazaar, index 00B7 in the entrance table
+        shopNum = SHOP_KAKARIKO_BAZAAR;
+    }
+    shopNum = shopNumToIndex[shopNum];                // Transfer to the proper shop index
+    u16 index = shopNum * 8 + item->shopItemPosition; // Index first by shop num then by item within shop
+    return 4 * ((index / 4) / 2) + index % 4; // Transform index- For more explanation see shops.cpp TransformShopIndex
+}
+
 void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     ShopsanityItem* shopItem = (ShopsanityItem*)item;
 
@@ -76,6 +90,8 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
         } else {
             gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk |= itemBit;
         }
+        u16 index = ShopsanityItem_GetIndex(shopItem);
+        Multiplayer_Send_ActorUpdate((Actor*)shopItem, &index, sizeof(u16));
     }
 
     Rupees_ChangeBy(-item->basePrice);
@@ -115,19 +131,6 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
     }
 }
 
-// Transfer order of scene indices to order of indices defined elsewhere in the code
-const u16 shopNumToIndex[8] = { 4, 0, 7, 6, 1, 3, 2, 5 };
-u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
-    // Get scene index
-    u16 shopNum = gGlobalContext->sceneNum - SCENE_BAZAAR;
-    if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { //kak bazaar, index 00B7 in the entrance table
-        shopNum = SHOP_KAKARIKO_BAZAAR;
-    }
-    shopNum = shopNumToIndex[shopNum];                // Transfer to the proper shop index
-    u16 index = shopNum * 8 + item->shopItemPosition; // Index first by shop num then by item within shop
-    return 4 * ((index / 4) / 2) + index % 4; // Transform index- For more explanation see shops.cpp TransformShopIndex
-}
-
 s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
     return rShopsanityPrices[ShopsanityItem_GetIndex(item)]; // Get price from table
 }
@@ -135,12 +138,8 @@ s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
     u32 itemBit = 1 << item->shopItemPosition;
 
-    if ((Entrance_SceneAndSpawnAre(0x2C, 0x00)) &&
-        (gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit)) {
-        item->super.actor.params = SI_SOLD_OUT;
-        return 1;
-    } else if ((!Entrance_SceneAndSpawnAre(0x2C, 0x00)) &&
-               gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk & itemBit) {
+    if ((Entrance_SceneAndSpawnAre(0x2C, 0x00) && gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit) ||
+        (!Entrance_SceneAndSpawnAre(0x2C, 0x00) && gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk & itemBit)) {
         item->super.actor.params = SI_SOLD_OUT;
         return 1;
     } else {
@@ -348,6 +347,18 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
         }
         item->rObjBankIndex = objBankIndex;
     }
+}
+
+void ShopsanityItem_SellOut(Actor* itemx, u16 index) {
+    ShopsanityItem* item = (ShopsanityItem*)itemx;
+
+    if (ShopsanityItem_GetIndex(item) != index) {
+        return;
+    }
+
+    item->super.actor.params = SI_SOLD_OUT;
+    item->super.actionFunc2 = EnGirlA_InitializeItemAction;
+    item->super.actor.textId = EnGirlA_ShopItemEntries[SI_SOLD_OUT].itemDescTextId;
 }
 
 void EnOssan_rDestroy(Actor* shopkeeperx, GlobalContext* globalCtx) {

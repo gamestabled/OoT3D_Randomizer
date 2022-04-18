@@ -23,6 +23,7 @@ void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void PushSlotIntoInventoryMenu(u8 itemSlot);
 void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveStone(SaveContext* saveCtx, s16 mask, s16 arg2);
