@@ -244,6 +244,11 @@ u8 SaveFile_GetIsSceneDiscovered(u8 sceneNum) {
 }
 
 void SaveFile_SetSceneDiscovered(u8 sceneNum) {
+    // This is used to reveal Kak Shop items when entered the scene as adult only
+    if (sceneNum == 0x30 && gSaveContext.linkAge == AGE_ADULT) {
+        EventSet(0x8B);
+    }
+
     if (SaveFile_GetIsSceneDiscovered(sceneNum)) {
         return;
     }

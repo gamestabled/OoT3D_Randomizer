@@ -61,7 +61,6 @@ typedef struct {
     char* name;
     SpoilerEntranceGroup group;
     TrackerEntranceType type;
-    u32 color;
     u8 oneExit;
 } EntranceData;
 
@@ -82,7 +81,9 @@ u32  Entrance_IsLostWoodsBridge(void);
 void Entrance_EnteredLocation(void);
 u32  Entrance_SceneAndSpawnAre(u8 scene, u8 spawn);
 /// Returns entrance data of the specified index
-const EntranceData* GetEntranceData(s16 index_);
+const EntranceData* GetEntranceData(s16 index);
+/// Returns the index that replaced the parameter index
+s16 Entrance_GetReplacementIndex(s16 index);
 void InitEntranceTrackingData(void);
 
 #endif //_ENTRANCE_H_
