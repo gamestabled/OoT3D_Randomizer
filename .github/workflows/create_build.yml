@@ -1,8 +1,15 @@
-name: OoT3DR Nightly Builds
+name: OoT3DR Builds
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Create full release? (Nightly if false)'
+        required: false
+        type: boolean
+      version:
+        description: 'Release version: (For example: 3.2)'
+        required: false
 
 jobs:
   build-cia-3dsx:
@@ -19,11 +26,12 @@ jobs:
           chmod +x linux_build_rando.sh
           ./linux_build_rando.sh
           
-      - name: Get shorthand commit for release titles.
+      - name: Get shorthand commit.
         id: vars
         run: echo "::set-output name=sha_short::$(echo ${{ github.sha }} | cut -c1-6)"
 
-      - name: Create Pre-release
+      - if: ${{ github.event.inputs.release == 'false' }}
+        name: Create Pre-release
         uses: ncipollo/release-action@v1.8.3
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
@@ -34,6 +42,27 @@ jobs:
           name: "Nightly-${{ steps.vars.outputs.sha_short }}"
           body: |
             Please note that these are DEVELOPMENT builds and may not be entirely stable.
+            When reporting issues, please mention the six character commit listed in the randomizer menu.
+            You can use the FBI homebrew application to install the randomizer using either of these QR codes.
+            CIA QR Code:
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
+            3DSX QR Code:
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)
+
+      - if: ${{ github.event.inputs.release == 'true' }}
+        name: Create Release
+        uses: ncipollo/release-action@v1.8.3
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
+          prerelease: false
+          commit: "${{ github.sha }}"
+          tag: "v${{ github.event.inputs.version }}"
+          name: "v${{ github.event.inputs.version }}"
+          body: |
+            ${{ github.event.inputs.version }} Changes:
+            - Please check back later for a full list of changes.
+            
             When reporting issues, please mention the six character commit listed in the randomizer menu.
             You can use the FBI homebrew application to install the randomizer using either of these QR codes.
             CIA QR Code:
