@@ -378,6 +378,8 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option IronBootsAsChild;
+  extern Option MasksAsAdult;
   extern Option GkDurability;
 
   extern Option ItemPoolValue;
@@ -582,6 +584,13 @@ namespace Settings {
   extern Option GlitchJabuSwitch;
   extern Option GlitchForestBKSkip;
   extern Option GlitchFireGrunzClip;
+
+  //Multiplayer Settings
+  extern Option MP_Enabled;
+  extern Option MP_SharedProgress;
+  extern Option MP_SharedHealth;
+  extern Option MP_SharedRupees;
+  extern Option MP_SharedAmmo;
 
   //Ingame Default Settings
   extern Option ZTargeting;

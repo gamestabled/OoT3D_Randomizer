@@ -789,6 +789,20 @@ string_view childHammerDesc           = "Child Link can swing the Megaton Hammer
                                         "This setting will only affect glitched logic.";   //
                                                                                            //
 /*------------------------------                                                           //
+|   ENABLE CHILD IRON BOOTS    |                                                           //
+------------------------------*/                                                           //
+string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.\n"           //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  TRADE ITEMS & BEANS BOTH    |                                                           //
+------------------------------*/                                                           //
+string_view adultMasksDesc            = "Adult Link can equip masks.\n"                    //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
 ------------------------------*/                                                           //
 string_view gkDurabilityVanilla       = "The durability will always be set to 8.";         //
@@ -797,6 +811,19 @@ string_view gkDurabilityRandomRisk    = "Each Giant's Knife will get a random du
                                         "and with an average of 15.";                      //
 string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random durability\n"//
                                         "between 10 and 50, with an average of 30.";       //
+                                                                                           //
+/*------------------------------                                                           //
+|         MULTIPLAYER          |                                                           //
+------------------------------*/                                                           //
+string_view mp_EnabledDesc            = "Enables multiplayer.\n"                           //
+                                        "Other players will always be seen and heard\n"    //
+                                        "regardless of the other settings.";               //
+string_view mp_SharedProgressDesc     = "Progress and certain actors will be synced\n"     //
+                                        "between everyone who has this option on and the\n"//
+                                        "same seed hash.";                                 //
+string_view mp_SharedHealthDesc       = "Damage and recovery will be synced.";             //
+string_view mp_SharedRupeesDesc       = "Rupee gain and loss will be synced.";             //
+string_view mp_SharedAmmoDesc         = "Ammo gain and loss will be synced.";              //
                                                                                            //
 /*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //

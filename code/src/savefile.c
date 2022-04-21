@@ -6,6 +6,7 @@
 #include "3ds/extdata.h"
 #include <string.h>
 #include "entrance.h"
+#include "multiplayer.h"
 
 #define DECLARE_EXTSAVEDATA
 #include "savefile.h"
@@ -243,11 +244,16 @@ u8 SaveFile_GetIsSceneDiscovered(u8 sceneNum) {
 }
 
 void SaveFile_SetSceneDiscovered(u8 sceneNum) {
+    if (SaveFile_GetIsSceneDiscovered(sceneNum)) {
+        return;
+    }
+
     u16 numBits = sizeof(u32) * 8;
     u32 idx = sceneNum / numBits;
     if (idx < SAVEFILE_SCENES_DISCOVERED_IDX_COUNT) {
         u32 sceneBit = 1 << (sceneNum - (idx * numBits));
         gExtSaveData.scenesDiscovered[idx] |= sceneBit;
+        Multiplayer_Send_DiscoveredScene(idx, sceneBit);
     }
 }
 
@@ -274,6 +280,7 @@ void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
     if (idx < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT) {
         u32 entranceBit = 1 << (entranceIndex - (idx * numBits));
         gExtSaveData.entrancesDiscovered[idx] |= entranceBit;
+        Multiplayer_Send_DiscoveredEntrance(idx, entranceBit);
         // Set connected
         for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
             if (entranceIndex == rEntranceOverrides[i].index) {
@@ -556,6 +563,16 @@ void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot) {
             gSaveContext.itemMenuAdult[i] = 0xFF;
         }
     }
+}
+
+u8 SaveFile_InventoryMenuHasSlot(u8 adult, u8 itemSlot) {
+    u8* itemMenu = adult ? gSaveContext.itemMenuAdult : gSaveContext.itemMenuChild;
+    for (size_t i = 0; i < 0x18; i++) {
+        if (itemMenu[i] == itemSlot) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void SaveFile_SetOwnedTradeItemEquipped(void) {

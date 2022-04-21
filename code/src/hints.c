@@ -19,9 +19,14 @@ s32 sSariasSongHintsLoaded = 0;
 
 u8 Hints_CanReadHints(void) {
     return (gSettingsContext.gossipStoneHints == HINTS_NEED_NOTHING) ||
-           (gSettingsContext.gossipStoneHints == HINTS_MASK_OF_TRUTH &&
-            Player_GetMask(gGlobalContext) == MASK_OF_TRUTH_ID) ||
-           (gSettingsContext.gossipStoneHints == HINTS_SHARD_OF_AGONY && (gSaveContext.questItems >> 21) & 0x1);
+           ((gSettingsContext.gossipStoneHints == HINTS_NO_HINTS || gSettingsContext.gossipStoneHints == HINTS_MASK_OF_TRUTH) &&
+                Player_GetMask(gGlobalContext) == MASK_OF_TRUTH_ID) ||
+           (gSettingsContext.gossipStoneHints == HINTS_SHARD_OF_AGONY &&
+                (gSaveContext.questItems >> 21) & 0x1);
+}
+
+u8 Hints_GetHintsSetting(void) {
+    return gSettingsContext.gossipStoneHints;
 }
 
 void Hints_AddSariasSongHint(u16 textId) {
