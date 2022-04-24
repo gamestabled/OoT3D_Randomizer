@@ -432,6 +432,7 @@ typedef struct {
   u8 playMusic;
   u8 playSFX;
   u8 silenceNavi;
+  u8 ignoreMaskReaction;
 
   u8 customTunicColors;
   u8 coloredKeys;

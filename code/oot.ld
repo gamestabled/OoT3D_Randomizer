@@ -816,6 +816,10 @@ SECTIONS
 		*(.patch_ModelSpawnGetObjectStatus)
 	}
 
+	.patch_IgnoreMaskReaction 0x36BBC4 : {
+		*(.patch_IgnoreMaskReaction)
+	}
+
 	.patch_SetBGMEvent 0x36EC40 : {
 		*(.patch_SetBGMEvent)
 	}

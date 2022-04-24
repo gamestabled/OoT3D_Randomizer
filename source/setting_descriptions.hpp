@@ -278,6 +278,7 @@ extern string_view motionControlDesc;
 extern string_view togglePlayMusicDesc;
 extern string_view togglePlaySFXDesc;
 extern string_view silenceNaviDesc;
+extern string_view ignoreMaskReactionDesc;
 
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;

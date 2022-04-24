@@ -835,6 +835,8 @@ string_view motionControlDesc         = "Sets the motion controls to start on or
 string_view togglePlayMusicDesc       = "Starts the game with the music on or off.";       //
 string_view togglePlaySFXDesc         = "Starts the game with the sound effects on or off.";
 string_view silenceNaviDesc           = "Sets whether Navi should start silenced or not."; //
+string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask or not.\n" //
+                                        "Does not apply when trading masks.";              //
                                                                                            //
 /*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
