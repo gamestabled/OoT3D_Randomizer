@@ -527,6 +527,7 @@ namespace Settings {
   Option LogicLabWallGS                   = LogicTrick(" LH Lab Wall GS\n   w/ Jump Slash",           LogicLabWallGSDesc);
   Option LogicGraveyardPoH                = LogicTrick(" GY Crate PoH\n   w/ Boomerang",              LogicGraveyardPoHDesc);
   Option LogicChildDampeRacePoH           = LogicTrick(" GY Second Dampe\n   Race as Child",          LogicChildDampeRacePoHDesc);
+  Option LogicGVHammerChest               = LogicTrick(" GV Hammer Chest\n   w/o Hammer",             LogicGVHammerChestDesc);
   Option LogicGerudoKitchen               = LogicTrick(" GF Through Kitchen\n   w/ Nothing",          LogicGerudoKitchenDesc);
   Option LogicLensWasteland               = LogicTrick(" Haunted Wasteland\n   w/o Lens of Truth",    LogicLensWastelandDesc);
   Option LogicReverseWasteland            = LogicTrick(" Haunted Wasteland\n   in Reverse",           LogicReverseWastelandDesc);
@@ -613,6 +614,7 @@ namespace Settings {
     &LogicLabWallGS,
     &LogicGraveyardPoH,
     &LogicChildDampeRacePoH,
+    &LogicGVHammerChest,
     &LogicGerudoKitchen,
     &LogicLensWasteland,
     &LogicReverseWasteland,
@@ -1664,6 +1666,7 @@ namespace Settings {
           LogicLostWoodsGSBean.SetSelectedIndex(1);
           LogicLabDiving.SetSelectedIndex(1);
           LogicGraveyardPoH.SetSelectedIndex(1);
+          LogicGVHammerChest.SetSelectedIndex(1);
           LogicManOnRoof.SetSelectedIndex(1);
           LogicGoronCityLeftMost.SetSelectedIndex(1);
           LogicZoraRiverLower.SetSelectedIndex(1);

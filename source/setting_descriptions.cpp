@@ -930,6 +930,9 @@ string_view LogicChildDampeRacePoHDesc                = "Difficulty: Intermediat
                                                         "It is possible to complete the second dampe race\n"
                                                         "as child in under a minute, but it is a strict\n" //
                                                         "time limit.";                                     //
+string_view LogicGVHammerChestDesc                    = "Difficulty: Novice\n"                             //
+                                                        "The chest can be reached by sidehopping between\n"//
+                                                        "the wall and the east most hammer rock.";         //
 string_view LogicGerudoKitchenDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The logic normally guarantees one of Bow,\n"      //
                                                         "Hookshot, or Hover Boots.";                       //
