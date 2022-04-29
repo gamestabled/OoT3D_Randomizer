@@ -1780,6 +1780,11 @@ Multiplayer_OnLoadFile_patch:
 SendDroppedBottleContents_patch:
     bl hook_SendDroppedBottleContents
 
+.section .patch_IgnoreMaskReaction
+.global IgnoreMaskReaction_patch
+IgnoreMaskReaction_patch:
+    b hook_IgnoreMaskReaction
+
 .section .patch_loader
 .global loader_patch
 

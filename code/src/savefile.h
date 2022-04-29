@@ -48,6 +48,7 @@ typedef struct {
     s8 option_EnableBGM;
     s8 option_EnableSFX;
     s8 option_SilenceNavi;
+    s8 option_IgnoreMaskReaction;
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA

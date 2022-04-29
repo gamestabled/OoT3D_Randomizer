@@ -569,6 +569,7 @@ namespace Settings {
   extern Option TogglePlayMusic;
   extern Option TogglePlaySFX;
   extern Option SilenceNavi;
+  extern Option IgnoreMaskReaction;
 
   //Cosmetic Settings
   extern Option CustomTunicColors;

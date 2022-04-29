@@ -740,12 +740,13 @@ namespace Settings {
     &MP_SharedAmmo,
   };
 
-  Option ZTargeting      = Option::U8("L-Targeting",        {"Switch", "Hold"},          {zTargetingDesc},      OptionCategory::Cosmetic, 1);
-  Option CameraControl   = Option::U8("Camera Control",     {"Normal", "Invert Y-axis"}, {cameraControlDesc},   OptionCategory::Cosmetic);
-  Option MotionControl   = Option::U8("Motion Control",     {"On", "Off"},               {motionControlDesc},   OptionCategory::Cosmetic);
-  Option TogglePlayMusic = Option::U8("Play Music",         {"Off", "On"},               {togglePlayMusicDesc}, OptionCategory::Cosmetic, 1);
-  Option TogglePlaySFX   = Option::U8("Play Sound Effects", {"Off", "On"},               {togglePlaySFXDesc},   OptionCategory::Cosmetic, 1);
-  Option SilenceNavi     = Option::U8("Silence Navi",       {"Off", "On"},               {silenceNaviDesc},     OptionCategory::Cosmetic);
+  Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},          {zTargetingDesc},         OptionCategory::Cosmetic, 1);
+  Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"}, {cameraControlDesc},      OptionCategory::Cosmetic);
+  Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},               {motionControlDesc},      OptionCategory::Cosmetic);
+  Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},               {togglePlayMusicDesc},    OptionCategory::Cosmetic, 1);
+  Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},               {togglePlaySFXDesc},      OptionCategory::Cosmetic, 1);
+  Option SilenceNavi        = Option::U8("Silence Navi",         {"Off", "On"},               {silenceNaviDesc},        OptionCategory::Cosmetic);
+  Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},               {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
   std::vector<Option*> ingameDefaultOptions = {
     &ZTargeting,
     &CameraControl,
@@ -753,6 +754,7 @@ namespace Settings {
     &TogglePlayMusic,
     &TogglePlaySFX,
     &SilenceNavi,
+    &IgnoreMaskReaction,
   };
 
   static std::vector<std::string> gauntletOptions = {
@@ -1046,6 +1048,7 @@ namespace Settings {
     ctx.playMusic            = TogglePlayMusic.Value<u8>();
     ctx.playSFX              = TogglePlaySFX.Value<u8>();
     ctx.silenceNavi          = SilenceNavi.Value<u8>();
+    ctx.ignoreMaskReaction   = IgnoreMaskReaction.Value<u8>();
 
     ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
     ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;

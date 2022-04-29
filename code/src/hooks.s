@@ -1295,6 +1295,17 @@ hook_SendDroppedBottleContents:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_IgnoreMaskReaction
+hook_IgnoreMaskReaction:
+    ldrh r0,[r0,#0x0]
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl SaveFile_GetIgnoreMaskReactionOption
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    moveq r0,#0x0
+    b 0x36BBC8
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

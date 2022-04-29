@@ -589,6 +589,14 @@ void SaveFile_SetOwnedTradeItemEquipped(void) {
     }
 }
 
+s8 SaveFile_GetIgnoreMaskReactionOption(u32 reactionSet) {
+    // This option somehow breaks talking to the Kakariko Mountain Gate guard, so use a workaround
+    if (reactionSet == 0x3C && PLAYER->currentMask == 1 && (gSaveContext.infTable[7] & 0x80) == 0) {
+        return 0;
+    }
+    return gExtSaveData.option_IgnoreMaskReaction;
+}
+
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     gExtSaveData.biggoronTrades = 0;
@@ -601,6 +609,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.option_EnableBGM = gSettingsContext.playMusic;
     gExtSaveData.option_EnableSFX = gSettingsContext.playSFX;
     gExtSaveData.option_SilenceNavi = gSettingsContext.silenceNavi;
+    gExtSaveData.option_IgnoreMaskReaction = gSettingsContext.ignoreMaskReaction;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {
