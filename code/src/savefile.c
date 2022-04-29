@@ -271,7 +271,7 @@ void SaveFile_SetEntranceDiscovered(u16 entranceIndex) {
 
     // Skip if already set to save time from setting the connected or
     // if this is a dynamic entrance
-    if (entranceIndex > 0x2020 || SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
+    if (entranceIndex > 0x0820 || SaveFile_GetIsEntranceDiscovered(entranceIndex)) {
         return;
     }
 

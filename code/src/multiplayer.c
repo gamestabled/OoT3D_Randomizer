@@ -902,8 +902,7 @@ void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
     Multiplayer_Send_FullSceneFlagSync(senderID, 1);
     Multiplayer_Send_FullSceneFlagSync(senderID, 2);
     Multiplayer_Send_FullSceneFlagSync(senderID, 3);
-    Multiplayer_Send_FullEntranceSync(senderID, 0);
-    Multiplayer_Send_FullEntranceSync(senderID, 1);
+    Multiplayer_Send_FullEntranceSync(senderID);
 }
 
 void Multiplayer_Send_BaseSync(u16 targetID) {
@@ -1073,7 +1072,7 @@ void Multiplayer_Receive_FullSceneFlagSync(u16 senderID) {
     }
 }
 
-void Multiplayer_Send_FullEntranceSync(u16 targetID, u8 latterHalf) {
+void Multiplayer_Send_FullEntranceSync(u16 targetID) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
@@ -1083,18 +1082,11 @@ void Multiplayer_Send_FullEntranceSync(u16 targetID, u8 latterHalf) {
     for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
         mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
     }
-    mBuffer[memSpacer++] = latterHalf;
-    if (!latterHalf) {
-        for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.scenesDiscovered); i++) {
-            mBuffer[memSpacer++] = mSaveContext.scenesDiscovered[i];
-        }
-        for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.entrancesDiscovered) / 2; i++) {
-            mBuffer[memSpacer++] = mSaveContext.entrancesDiscovered[i];
-        }
-    } else {
-        for (size_t i = ARRAY_SIZE(mSaveContext.entrancesDiscovered) / 2; i < ARRAY_SIZE(mSaveContext.entrancesDiscovered); i++) {
-            mBuffer[memSpacer++] = mSaveContext.entrancesDiscovered[i];
-        }
+    for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.scenesDiscovered); i++) {
+        mBuffer[memSpacer++] = mSaveContext.scenesDiscovered[i];
+    }
+    for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.entrancesDiscovered); i++) {
+        mBuffer[memSpacer++] = mSaveContext.entrancesDiscovered[i];
     }
     Multiplayer_SendPacket(memSpacer, targetID);
 }
@@ -1105,19 +1097,11 @@ void Multiplayer_Receive_FullEntranceSync(u16 senderID) {
     }
     u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
 
-    u8 latterHalf = mBuffer[memSpacer++];
-
-    if (!latterHalf) {
-        for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.scenesDiscovered); i++) {
-            mSaveContext.scenesDiscovered[i] = mBuffer[memSpacer++];
-        }
-        for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.entrancesDiscovered) / 2; i++) {
-            mSaveContext.entrancesDiscovered[i] = mBuffer[memSpacer++];
-        }
-    } else {
-        for (size_t i = ARRAY_SIZE(mSaveContext.entrancesDiscovered) / 2; i < ARRAY_SIZE(mSaveContext.entrancesDiscovered); i++) {
-            mSaveContext.entrancesDiscovered[i] = mBuffer[memSpacer++];
-        }
+    for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.scenesDiscovered); i++) {
+        mSaveContext.scenesDiscovered[i] = mBuffer[memSpacer++];
+    }
+    for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.entrancesDiscovered); i++) {
+        mSaveContext.entrancesDiscovered[i] = mBuffer[memSpacer++];
     }
 }
 
