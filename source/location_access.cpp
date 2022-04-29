@@ -741,7 +741,7 @@ void AreaTable_Init() {
                   EventAccess(&BrokenSwordAccess, {[]{return IsAdult && (PoachersSawAccess || PoachersSaw);}}),
                 }, {
                   //Locations
-                  LocationAccess(GV_CHEST,          {[]{return CanUse(MEGATON_HAMMER);}}),
+                  LocationAccess(GV_CHEST,          {[]{return CanUse(MEGATON_HAMMER) || (LogicGVHammerChest && IsAdult);}}),
                   LocationAccess(GV_TRADE_SAW,      {[]{return IsAdult && PoachersSaw;}}),
                   LocationAccess(GV_GS_BEHIND_TENT, {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(GV_GS_PILLAR,      {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),

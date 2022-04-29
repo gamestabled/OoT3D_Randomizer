@@ -278,6 +278,7 @@ extern string_view motionControlDesc;
 extern string_view togglePlayMusicDesc;
 extern string_view togglePlaySFXDesc;
 extern string_view silenceNaviDesc;
+extern string_view ignoreMaskReactionDesc;
 
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
@@ -315,6 +316,7 @@ extern string_view LogicLabDivingDesc;
 extern string_view LogicLabWallGSDesc;
 extern string_view LogicGraveyardPoHDesc;
 extern string_view LogicChildDampeRacePoHDesc;
+extern string_view LogicGVHammerChestDesc;
 extern string_view LogicGerudoKitchenDesc;
 extern string_view LogicLensWastelandDesc;
 extern string_view LogicReverseWastelandDesc;

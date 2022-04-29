@@ -467,6 +467,7 @@ namespace Settings {
   extern Option LogicLabWallGS;
   extern Option LogicGraveyardPoH;
   extern Option LogicChildDampeRacePoH;
+  extern Option LogicGVHammerChest;
   extern Option LogicGerudoKitchen;
   extern Option LogicLensWasteland;
   extern Option LogicReverseWasteland;
@@ -568,6 +569,7 @@ namespace Settings {
   extern Option TogglePlayMusic;
   extern Option TogglePlaySFX;
   extern Option SilenceNavi;
+  extern Option IgnoreMaskReaction;
 
   //Cosmetic Settings
   extern Option CustomTunicColors;

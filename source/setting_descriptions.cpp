@@ -835,6 +835,8 @@ string_view motionControlDesc         = "Sets the motion controls to start on or
 string_view togglePlayMusicDesc       = "Starts the game with the music on or off.";       //
 string_view togglePlaySFXDesc         = "Starts the game with the sound effects on or off.";
 string_view silenceNaviDesc           = "Sets whether Navi should start silenced or not."; //
+string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask or not.\n" //
+                                        "Does not apply when trading masks.";              //
                                                                                            //
 /*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
@@ -930,6 +932,9 @@ string_view LogicChildDampeRacePoHDesc                = "Difficulty: Intermediat
                                                         "It is possible to complete the second dampe race\n"
                                                         "as child in under a minute, but it is a strict\n" //
                                                         "time limit.";                                     //
+string_view LogicGVHammerChestDesc                    = "Difficulty: Novice\n"                             //
+                                                        "The chest can be reached by sidehopping between\n"//
+                                                        "the wall and the east most hammer rock.";         //
 string_view LogicGerudoKitchenDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The logic normally guarantees one of Bow,\n"      //
                                                         "Hookshot, or Hover Boots.";                       //
