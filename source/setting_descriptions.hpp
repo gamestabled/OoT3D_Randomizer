@@ -315,6 +315,7 @@ extern string_view LogicLabDivingDesc;
 extern string_view LogicLabWallGSDesc;
 extern string_view LogicGraveyardPoHDesc;
 extern string_view LogicChildDampeRacePoHDesc;
+extern string_view LogicGVHammerChestDesc;
 extern string_view LogicGerudoKitchenDesc;
 extern string_view LogicLensWastelandDesc;
 extern string_view LogicReverseWastelandDesc;
