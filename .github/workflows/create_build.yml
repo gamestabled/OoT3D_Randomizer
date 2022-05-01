@@ -3,10 +3,13 @@ name: OoT3DR Builds
 on:
   workflow_dispatch:
     inputs:
-      release:
-        description: 'Create full release? (Nightly if false)'
-        required: false
-        type: boolean
+      build_type:
+        description: 'Build type:'
+        required: true
+        type: choice
+        options:
+        - Nightly
+        - Release
       version:
         description: 'Release version: (For example: 3.2)'
         required: false
@@ -30,7 +33,7 @@ jobs:
         id: vars
         run: echo "::set-output name=sha_short::$(echo ${{ github.sha }} | cut -c1-6)"
 
-      - if: ${{ github.event.inputs.release == 'false' }}
+      - if: ${{ github.event.inputs.build_type == 'Nightly' }}
         name: Create Pre-release
         uses: ncipollo/release-action@v1.8.3
         with:
@@ -49,7 +52,7 @@ jobs:
             3DSX QR Code:
             ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)
 
-      - if: ${{ github.event.inputs.release == 'true' }}
+      - if: ${{ github.event.inputs.build_type == 'Release' }}
         name: Create Release
         uses: ncipollo/release-action@v1.8.3
         with:
