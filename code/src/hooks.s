@@ -1306,9 +1306,9 @@ hook_ChildCanOpenBowSubMenu:
     bl Settings_BowAsChild
     cmp r0,#0x1
     pop {r0-r12, lr}
-    bxeq lr
+    beq 0x2EB2DC
     cmp r12,#0x0
-    bx lr
+    b 0x2EB2DC
 
 .global hook_BrownBoulderExplode
 hook_BrownBoulderExplode:
