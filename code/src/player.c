@@ -2,11 +2,19 @@
 #include "objects.h"
 #include "custom_models.h"
 #include "player.h"
+#include "settings.h"
+
+#define PlayerActor_Init_addr 0x191844
+#define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
 
 #define PlayerActor_Update_addr 0x1E1B54
 #define PlayerActor_Update ((ActorFunc)PlayerActor_Update_addr)
 
+#define PlayerActor_Destroy_addr 0x19262C
+#define PlayerActor_Destroy ((ActorFunc)PlayerActor_Destroy_addr)
+
 u16 healthDecrement = 0;
+u8  storedMask = 0;
 
 void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void* cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
@@ -44,13 +52,20 @@ void Player_SetChildCustomTunicCMAB(void) {
     TexAnim_Spawn(PLAYER->skelAnime.unk_28->unk_0C, cmabMan);
 }
 
+void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
+    PlayerActor_Init(thisx, globalCtx);
+    if (gSettingsContext.fastBunnyHood) {
+        PLAYER->currentMask = storedMask;
+    }
+}
+
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     PlayerActor_Update(thisx, globalCtx);
     if (healthDecrement <= 0) {
         return;
     }
 
-    if(gSaveContext.health > 4) {
+    if (gSaveContext.health > 4) {
         gSaveContext.health--;
         healthDecrement--;
     } else {
@@ -58,3 +73,19 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
+void PlayerActor_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
+    if (gSettingsContext.fastBunnyHood) {
+        storedMask = PLAYER->currentMask;
+    }
+    PlayerActor_Destroy(thisx, globalCtx);
+}
+
+f32 Player_GetSpeedMultiplier(void) {
+    f32 speedMultiplier = 1;
+
+    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 && PLAYER->stateFuncPtr == (void*)0x4BA378) {
+        speedMultiplier *= 1.5;
+    }
+
+    return speedMultiplier;
+}

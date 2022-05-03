@@ -5,7 +5,7 @@
 
 typedef struct EnItem00 {
     /* 0x000 */ Actor actor;
-    /* 0x1A4 */ char unk_1A4[0x4];
+    /* 0x1A4 */ void* action_fn;
     /* 0x1A8 */ u16 collectibleFlag;
     /* 0x1AA */ char unk_1AA[0x4];
     /* 0x1AE */ u16 unk_1AE;

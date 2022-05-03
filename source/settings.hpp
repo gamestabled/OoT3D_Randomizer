@@ -331,6 +331,7 @@ namespace Settings {
   extern Option ShuffleMagicBeans;
   extern Option ShuffleMerchants;
   extern Option ShuffleAdultTradeQuest;
+  extern Option ShuffleChestMinigame;
 
   extern Option MapsAndCompasses;
   extern Option Keysanity;
@@ -368,6 +369,7 @@ namespace Settings {
   extern Option QuickText;
   extern Option SkipSongReplays;
   extern Option KeepFWWarpPoint;
+  extern Option FastBunnyHood;
 
   extern Option GossipStoneHints;
   extern Option ClearerHints;
@@ -386,6 +388,8 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option IronBootsAsChild;
+  extern Option MasksAsAdult;
   extern Option GkDurability;
 
   extern Option ItemPoolValue;
@@ -473,6 +477,7 @@ namespace Settings {
   extern Option LogicLabWallGS;
   extern Option LogicGraveyardPoH;
   extern Option LogicChildDampeRacePoH;
+  extern Option LogicGVHammerChest;
   extern Option LogicGerudoKitchen;
   extern Option LogicLensWasteland;
   extern Option LogicReverseWasteland;
@@ -560,6 +565,13 @@ namespace Settings {
   extern Option GlitchLedgeClip;
   extern Option GlitchTripleSlashClip;
 
+  //Multiplayer Settings
+  extern Option MP_Enabled;
+  extern Option MP_SharedProgress;
+  extern Option MP_SharedHealth;
+  extern Option MP_SharedRupees;
+  extern Option MP_SharedAmmo;
+
   //Ingame Default Settings
   extern Option ZTargeting;
   extern Option CameraControl;
@@ -567,6 +579,7 @@ namespace Settings {
   extern Option TogglePlayMusic;
   extern Option TogglePlaySFX;
   extern Option SilenceNavi;
+  extern Option IgnoreMaskReaction;
 
   //Cosmetic Settings
   extern Option CustomTunicColors;
@@ -601,9 +614,14 @@ namespace Settings {
 
   extern std::vector<std::vector<Option *>> excludeLocationsOptionsVector;
   extern std::vector<Menu *> excludeLocationsMenus;
-  extern std::vector<Option *> startingInventoryOptions;
+  extern std::vector<Option *> startingItemsOptions;
+  extern std::vector<Option *> startingSongsOptions;
+  extern std::vector<Option *> startingEquipmentOptions;
+  extern std::vector<Option *> startingStonesMedallionsOptions;
+  extern std::vector<Option *> startingOtherOptions;
   extern std::vector<Option *> trickOptions;
 
+  extern std::vector<Menu *> startingInventoryOptions;
   extern std::vector<Menu *> detailedLogicOptions;
 
   extern std::vector<Menu *> mainMenu;

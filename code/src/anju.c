@@ -4,7 +4,7 @@
 #include "anju.h"
 
 u32 EnNiwLady_CheckCuccoAmount(u32 cuccosInPen) {
-    return cuccosInPen >= gSettingsContext.numRequiredCuccos;
+    return cuccosInPen - gSettingsContext.numRequiredCuccos + 7;
 }
 
 void EnNiwLady_rGiveCojiro(EnNiwLady* self, GlobalContext* globalCtx) {

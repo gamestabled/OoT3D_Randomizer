@@ -128,6 +128,8 @@ extern string_view merchantsHintsDesc;
 
 extern string_view adultTradeDesc;
 
+extern string_view chestMinigameDesc;
+
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
 extern string_view mapCompassOwnDungeon;
@@ -202,6 +204,8 @@ extern string_view skipSongReplaysDesc;
 
 extern string_view keepFWWarpPointDesc;
 
+extern string_view fastBunnyHoodDesc;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view obscureHintsDesc;
@@ -257,10 +261,18 @@ extern string_view faroresWindAnywhereDesc;
 extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
+extern string_view childIronBootsDesc;
+extern string_view adultMasksDesc;
 
 extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;
 extern string_view gkDurabilityRandomSafe;
+
+extern string_view mp_EnabledDesc;
+extern string_view mp_SharedProgressDesc;
+extern string_view mp_SharedHealthDesc;
+extern string_view mp_SharedRupeesDesc;
+extern string_view mp_SharedAmmoDesc;
 
 extern string_view zTargetingDesc;
 extern string_view cameraControlDesc;
@@ -268,6 +280,7 @@ extern string_view motionControlDesc;
 extern string_view togglePlayMusicDesc;
 extern string_view togglePlaySFXDesc;
 extern string_view silenceNaviDesc;
+extern string_view ignoreMaskReactionDesc;
 
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
@@ -305,6 +318,7 @@ extern string_view LogicLabDivingDesc;
 extern string_view LogicLabWallGSDesc;
 extern string_view LogicGraveyardPoHDesc;
 extern string_view LogicChildDampeRacePoHDesc;
+extern string_view LogicGVHammerChestDesc;
 extern string_view LogicGerudoKitchenDesc;
 extern string_view LogicLensWastelandDesc;
 extern string_view LogicReverseWastelandDesc;

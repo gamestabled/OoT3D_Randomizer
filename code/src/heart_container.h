@@ -6,6 +6,7 @@
 
 void ItemBHeart_rInit(Actor* thisx, GlobalContext* globalCtx);
 void ItemBHeart_rDestroy(Actor* thisx, GlobalContext* globalCtx);
+void ItemBHeart_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 void ItemBHeart_rDraw(Actor* thisx, GlobalContext* globalCtX);
 
 #endif //_HEART_CONTAINER_H_

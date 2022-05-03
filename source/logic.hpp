@@ -137,6 +137,7 @@ namespace Logic {
   extern u8 GerudoTrainingGroundsKeys;
   extern u8 GerudoFortressKeys;
   extern u8 GanonsCastleKeys;
+  extern u8 TreasureGameKeys;
 
   //Boss Keys
   extern bool BossKeyForestTemple;
@@ -272,6 +273,7 @@ namespace Logic {
   extern bool CarpenterRescue;
   extern bool DampesWindmillAccess;
   extern bool GF_GateOpen;
+  extern bool GtG_GateOpen;
   extern bool DrainWell;
   extern bool GoronCityChildFire;
   extern bool GCWoodsWarpOpen;
