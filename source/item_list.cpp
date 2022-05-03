@@ -149,7 +149,7 @@ void ItemTable_Init() {                                    //English name       
     itemTable[GERUDO_TRAINING_GROUNDS_SMALL_KEY] = Item(Text{"Training Grounds Small Key",      "Petite clé du gymnase Gerudo",     "Llave del Centro de Instrucción"},         ITEMTYPE_SMALLKEY,          0xB5, true, &GerudoTrainingGroundsKeys, GERUDO_TRAINING_GROUNDS_SMALL_KEY);
     itemTable[GERUDO_FORTRESS_SMALL_KEY]         = Item(Text{"Gerudo Fortress Small Key",       "Petite clé du repaire Gerudo",     "Llave de la Fortaleza Gerudo"},            ITEMTYPE_FORTRESS_SMALLKEY, 0xB6, true, &GerudoFortressKeys,        GERUDO_FORTRESS_SMALL_KEY);
     itemTable[GANONS_CASTLE_SMALL_KEY]           = Item(Text{"Ganon's Castle Small Key",        "Petite clé du château de Ganon",   "Llave del Castillo de Ganon"},             ITEMTYPE_SMALLKEY,          0xB7, true, &GanonsCastleKeys,          GANONS_CASTLE_SMALL_KEY);
-    itemTable[TREASURE_GAME_SMALL_KEY]           = Item(Text{"Chest Game Small Key",            "Clé de la chasse-aux-trésors",     "Llave del Cofre del Tesoro"},              ITEMTYPE_ITEM,              0xD5, true, &TreasureGameKeys,          TREASURE_GAME_SMALL_KEY);
+    itemTable[TREASURE_GAME_SMALL_KEY]           = Item(Text{"Chest Game Small Key",            "Clé de la chasse-aux-trésors",     "Llave del Cofre del Tesoro"},              ITEMTYPE_ITEM,              0xDE, true, &TreasureGameKeys,          TREASURE_GAME_SMALL_KEY);
 
     // Key Rings
     itemTable[FOREST_TEMPLE_KEY_RING]           = Item(Text{"Forest Temple Key Ring",           "Trousseau du temple de la forêt",  "Llavero del Templo del Bosque"},           ITEMTYPE_SMALLKEY,          0xD5, true, &ForestTempleKeys,          FOREST_TEMPLE_KEY_RING);
