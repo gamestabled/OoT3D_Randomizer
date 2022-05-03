@@ -3,10 +3,6 @@
 
 #include "../include/z3D/z3D.h"
 
-typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
-#define Health_ChangeBy_addr 0x352dbc
-#define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
-
 typedef enum {
   OFF,
   ON,
@@ -77,6 +73,12 @@ typedef enum {
   AGE_CHILD,
   AGE_RANDOM,
 } AgeSetting;
+
+typedef enum {
+  SHUFFLEDUNGEONS_OFF,
+  SHUFFLEDUNGEONS_ON,
+  SHUFFLEDUNGEONS_GANON,
+} ShuffleDungeonEntrancesSetting;
 
 typedef enum {
   SHUFFLEINTERIORS_OFF,
@@ -383,6 +385,16 @@ typedef struct {
   u8 lacsDungeonCount;
   u8 lacsTokenCount;
 
+  u8 ringFortress;
+  u8 ringForest;
+  u8 ringFire;
+  u8 ringWater;
+  u8 ringSpirit;
+  u8 ringShadow;
+  u8 ringWell;
+  u8 ringGtg;
+  u8 ringCastle;
+
   u8 skipChildStealth;
   u8 skipTowerEscape;
   u8 skipEponaRace;
@@ -435,12 +447,19 @@ typedef struct {
   u8 iceTrapValue;
   u8 progressiveGoronSword;
 
+  u8 mp_Enabled;
+  u8 mp_SharedProgress;
+  u8 mp_SharedHealth;
+  u8 mp_SharedRupees;
+  u8 mp_SharedAmmo;
+
   u8 zTargeting;
   u8 cameraControl;
   u8 motionControl;
   u8 playMusic;
   u8 playSFX;
   u8 silenceNavi;
+  u8 ignoreMaskReaction;
 
   u8 customTunicColors;
   u8 coloredKeys;

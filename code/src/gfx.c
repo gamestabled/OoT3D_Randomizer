@@ -12,6 +12,10 @@
 #include "gfx_options.h"
 #include "common.h"
 #include "string.h"
+#include "savefile.h"
+#include "draw.h"
+#include "input.h"
+#include "multiplayer.h"
 
 u32 pressed;
 bool handledInput;
@@ -32,15 +36,12 @@ static u8 destListToggle = 0;
 
 static s32 curMenuIdx = 0;
 static bool showingLegend = false;
-static float itemPercent = 0;
-static float entrancesPercent = 0;
 static u64 lastTick = 0;
 static u64 ticksElapsed = 0;
 static bool isAsleep = false;
 
 DungeonInfo rDungeonInfoData[10];
 
-#define TICKS_PER_SEC 268123480
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
 
 static s8 spoilerGroupDungeonIds[] = {
@@ -72,7 +73,7 @@ static s8 spoilerGroupDungeonIds[] = {
 };
 
 static char *spoilerCollectionGroupNames[] = {
-    "",
+    "All Item Locations", // All
     "Kokiri Forest",
     "Lost Woods",
     "Deku Tree",
@@ -144,6 +145,20 @@ static char* spoilerEntranceGroupNames[] = {
 #define COLOR_BUTTON_B          RGB8(0xFD, 0xDD, 0x68)
 #define COLOR_BUTTON_X          RGB8(0x32, 0x7D, 0xFE)
 #define COLOR_BUTTON_Y          RGB8(0x00, 0xD0, 0x98)
+
+typedef enum {
+    PAGE_SEEDHASH,
+    PAGE_DUNGEONITEMS,
+    PAGE_DUNGEONREWARDS,
+    PAGE_SPHERES,
+    PAGE_ITEMTRACKER_ALL,
+    PAGE_ITEMTRACKER_GROUPS,
+    PAGE_ENTRANCETRACKER_ALL,
+    PAGE_ENTRANCETRACKER_GROUPS,
+    PAGE_OPTIONS,
+} GfxPage;
+
+static u32 entranceTypeToColor[] = { COLOR_GREEN, COLOR_BLUE, COLOR_ORANGE, COLOR_PINK };
 
 void Gfx_SleepQueryCallback(void)
 {
@@ -254,32 +269,32 @@ static void Gfx_DrawButtonPrompts(void) {
     Draw_DrawIcon(SCREEN_BOT_WIDTH - 50, promptY, COLOR_BUTTON_B, ICON_BUTTON_B);
     Draw_DrawString(SCREEN_BOT_WIDTH - 38, textY, COLOR_TITLE, "Close");
 
-    if (curMenuIdx == 1) {
+    if (curMenuIdx == PAGE_DUNGEONITEMS) {
         Draw_DrawIcon(10, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
         Draw_DrawString(22, textY, COLOR_TITLE, "Toggle Legend");
-    } else if (curMenuIdx == 3) {
+    } else if (curMenuIdx == PAGE_SPHERES) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse spoiler log");
-    } else if (curMenuIdx >= 4 && curMenuIdx <= 7) {
+    } else if (curMenuIdx >= PAGE_ITEMTRACKER_ALL && curMenuIdx <= PAGE_ENTRANCETRACKER_GROUPS) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
         static const u8 offsetX = 114;
-        if (curMenuIdx == 5 || curMenuIdx == 7) {
+        if (curMenuIdx == PAGE_ITEMTRACKER_GROUPS || curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
             Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
             Draw_DrawString(offsetX + 8, textY, COLOR_TITLE, "/");
             Draw_DrawIcon(offsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
             Draw_DrawString(offsetX + 28, textY, COLOR_TITLE, "Change group");
-            if (curMenuIdx == 7) {
+            if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
                 static const u8 toggleOffsetX = 222;
                 Draw_DrawIcon(toggleOffsetX, promptY, COLOR_BUTTON_X, ICON_BUTTON_X);
                 const char* destToggleString = destListToggle ? "Dest" : "Src";
                 Draw_DrawString(toggleOffsetX + 12, textY, COLOR_TITLE, destToggleString);
             }
-        } else if (curMenuIdx == 6) {
+        } else if (curMenuIdx == PAGE_ITEMTRACKER_ALL || curMenuIdx == PAGE_ENTRANCETRACKER_ALL) {
             Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
             Draw_DrawString(offsetX + 12, textY, COLOR_TITLE, "Toggle Legend");
         }
-    } else if (curMenuIdx == 8) {
+    } else if (curMenuIdx == PAGE_OPTIONS) {
         Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         Draw_DrawString(22, textY, COLOR_TITLE, "Select / change options");
     }
@@ -306,16 +321,31 @@ static void Gfx_UpdatePlayTime(u8 isInGame)
 }
 
 static void Gfx_DrawSeedHash(void) {
-    Draw_DrawFormattedString(10, 16, COLOR_TITLE, "Seed Hash:");
-    for (u32 hashIndex = 0; hashIndex < 5; ++hashIndex) {
-        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + SPACING_Y + (hashIndex * SPACING_Y), COLOR_WHITE, "%s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
+    u8 offsetY = 0;
+    Draw_DrawFormattedString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Seed Hash:");
+    for (u32 hashIndex = 0; hashIndex < ARRAY_SIZE(gSettingsContext.hashIndexes); ++hashIndex) {
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "%s", hashIconNames[gSettingsContext.hashIndexes[hashIndex]]);
     }
+    offsetY++;
 
-    Draw_DrawString(10, 86, COLOR_TITLE, "Play time:");
+    Draw_DrawString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Play time:");
     u32 hours = gExtSaveData.playtimeSeconds / 3600;
     u32 minutes = (gExtSaveData.playtimeSeconds / 60) % 60;
     u32 seconds = gExtSaveData.playtimeSeconds % 60;
-    Draw_DrawFormattedString(10 + (SPACING_X * 4), 86 + SPACING_Y, COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
+    Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "%02u:%02u:%02u", hours, minutes, seconds);
+    offsetY++;
+
+    if (gSettingsContext.mp_Enabled) {
+        Draw_DrawFormattedString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Multiplayer:");
+        s16 playerCount = Multiplayer_PlayerCount();
+        if (playerCount >= 0) {
+            Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Connected players: %d", playerCount);
+        } else {
+            Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Connected players: Unknown");
+        }
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Received packets: %d", receivedPackets);
+        offsetY++;
+    }
 }
 
 static void Gfx_DrawDungeonItems(void) {
@@ -446,7 +476,14 @@ static void Gfx_DrawSpoilerData(void) {
             u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
             u32 itemPosY = locPosY + SPACING_SMALL_Y;
             u16 itemIndex = gSpoilerData.SphereItemLocations[sphereItemLocOffset + locIndex];
-            u32 color = SpoilerData_GetIsItemLocationCollected(itemIndex) ? COLOR_GREEN : COLOR_WHITE;
+            u32 color = COLOR_WHITE;
+            if (SpoilerData_GetIsItemLocationCollected(itemIndex)) {
+                color = COLOR_GREEN;
+            } else if (gSpoilerData.ItemLocations[itemIndex].StaticUncollectable) {
+                color = COLOR_ORANGE;
+            } else if (gSpoilerData.ItemLocations[itemIndex].Repeatable) {
+                color = COLOR_BLUE;
+            }
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(itemIndex));
             Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color,
@@ -462,130 +499,113 @@ static void Gfx_DrawSpoilerData(void) {
 }
 
 static u8 ViewingGroups() {
-    return curMenuIdx == 5 || curMenuIdx == 7;
+    return curMenuIdx == PAGE_ITEMTRACKER_GROUPS || curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS;
 }
 
-static void Gfx_DrawSpoilerAllItems(void) {
-    if (gSpoilerData.ItemLocationsCount > 0) {
-        u16 itemCount = gSpoilerData.ItemLocationsCount;
+static void Gfx_DrawItemTracker(void) {
+    if (!ViewingGroups() && showingLegend) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Item Color Legend");
 
-        u16 firstItem = allItemsScroll + 1;
-        u16 lastItem = allItemsScroll + MAX_ENTRY_LINES;
-        if (lastItem > gSpoilerData.ItemLocationsCount) { lastItem = gSpoilerData.ItemLocationsCount; }
-        Draw_DrawFormattedString(10, 16, COLOR_TITLE, "All Item Locations (%d - %d) / %d",
-            firstItem, lastItem, gSpoilerData.ItemLocationsCount);
-        if (!gSettingsContext.ingameSpoilers) {
-            Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, itemPercent == 100 ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", itemPercent);
-        }
-
-        u16 listTopY = 32;
-        u32 itemGroupIndex = 1; // Keep the last picked group index around to start the search from
-        for (u32 item = 0; item < MAX_ENTRY_LINES; ++item) {
-            u32 locIndex = item + allItemsScroll;
-            if (locIndex >= gSpoilerData.ItemLocationsCount) { break; }
-
-            u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
-            u32 itemPosY = locPosY + SPACING_SMALL_Y;
-
-            bool isCollected = SpoilerData_GetIsItemLocationCollected(locIndex);
-
-            // Find this item's group index, so we can see if we should hide
-            // its name because it's located in an undiscovered dungeon
-            for (u32 group = itemGroupIndex; group < SPOILER_COLLECTION_GROUP_COUNT; ++group) {
-                u16 groupOffset = gSpoilerData.GroupOffsets[group];
-                if (locIndex >= groupOffset && locIndex < groupOffset + gSpoilerData.GroupItemCounts[group]) {
-                    itemGroupIndex = group;
-                    break;
-                }
-            }
-            bool canShowGroup = isCollected || CanShowSpoilerGroup(itemGroupIndex);
-
-            u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
-            if (canShowGroup) {
-                Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
-            } else {
-                Draw_DrawFormattedString_Small(10, locPosY, color, "%s (Undiscovered)", spoilerCollectionGroupNames[itemGroupIndex]);
-            }
-            const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
-            Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
-        }
-
-        Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, allItemsScroll, itemCount, MAX_ENTRY_LINES);
+        static const u8 squareWidth = 9;
+        u16 offsetY = 2;
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_GREEN);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Collected");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_BLUE);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Repeatable");
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_ORANGE);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Static Uncollectable");
+        return;
     }
-    else {
-        Draw_DrawString(10, 16, COLOR_TITLE, "All Item Locations");
-        Draw_DrawString(10, 46, COLOR_WHITE, "No item location data!");
+    if (ViewingGroups() && !CanShowSpoilerGroup(currentItemGroup)) {
+        Draw_DrawString(10, 16, COLOR_TITLE, spoilerCollectionGroupNames[currentItemGroup]);
+        Draw_DrawString(10, 46, COLOR_WHITE, "Reveal this dungeon to see the item list.");
+        Draw_DrawString(10, 57, COLOR_WHITE, " - Enter the dungeon at least once");
+        if (gSettingsContext.mapsShowDungeonMode) {
+            Draw_DrawString(10, 68, COLOR_WHITE, " - Find the dungeon's map");
+        }
+        return;
     }
-}
 
-static void Gfx_DrawSpoilerItemGroups(void) {
-    if (gSpoilerData.ItemLocationsCount > 0) {
-        if (CanShowSpoilerGroup(currentItemGroup)) {
-            u16 itemCount = gSpoilerData.GroupItemCounts[currentItemGroup];
-            u16 startIndex = gSpoilerData.GroupOffsets[currentItemGroup];
+    u16 itemCount = ViewingGroups() ? gSpoilerData.GroupItemCounts[currentItemGroup] : gSpoilerData.ItemLocationsCount;
+    u16 startIndex = ViewingGroups() ? gSpoilerData.GroupOffsets[currentItemGroup] : 0;
+    s16* itemScroll = ViewingGroups() ? &groupItemsScroll : &allItemsScroll;
 
-            if (!gSettingsContext.ingameSpoilers && itemCount > 0) {
-                // Gather up completed items to calculate how far along this group is
-                u16 completeItems = 0;
-                for (u32 i = 0; i < itemCount; ++i) {
-                    u32 locIndex = i + startIndex;
-                    if (SpoilerData_GetIsItemLocationCollected(locIndex)) {
-                        ++completeItems;
-                    }
-                }
-                float groupPercent = ((float)completeItems / (float)itemCount) * 100.0f;
-                Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, completeItems == itemCount ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
+    // Gather up completed items to calculate how far along this group is
+    u16 completeItems = 0;
+    u16 uncollectableItems = 0;
+    for (u32 i = 0; i < itemCount; ++i) {
+        u32 locIndex = i + startIndex;
+        if (SpoilerData_GetIsItemLocationCollected(locIndex)) {
+            completeItems++;
+        } else if (gSpoilerData.ItemLocations[locIndex].StaticUncollectable ||
+            ((SpoilerData_GetIsItemLocationRevealed(locIndex) || gSettingsContext.ingameSpoilers) && gSpoilerData.ItemLocations[locIndex].Repeatable)) {
+            uncollectableItems++;
+        }
+    }
+    float groupPercent = ((float)completeItems / (float)(itemCount - uncollectableItems)) * 100.0f;
+    Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, completeItems == itemCount - uncollectableItems ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
+
+    u16 firstItem = *itemScroll + 1;
+    u16 lastItem = *itemScroll + MAX_ENTRY_LINES;
+    if (lastItem > itemCount) { lastItem = itemCount; }
+    Draw_DrawFormattedString(10, 16, COLOR_TITLE, "%s - (%d - %d) / %d",
+        spoilerCollectionGroupNames[ViewingGroups() ? currentItemGroup : 0], firstItem, lastItem, itemCount);
+
+    u16 listTopY = 32;
+    u32 itemGroupIndex = 1; // Keep the last picked group index around to start the search from
+    for (u32 item = 0; item < MAX_ENTRY_LINES; ++item) {
+        u32 locIndex = item + startIndex + *itemScroll;
+        if (item >= itemCount) { break; }
+
+        u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
+        u32 itemPosY = locPosY + SPACING_SMALL_Y;
+        bool isCollected = SpoilerData_GetIsItemLocationCollected(locIndex);
+        u32 color = COLOR_WHITE;
+        if (isCollected) {
+            color = COLOR_GREEN;
+        } else if (gSpoilerData.ItemLocations[locIndex].StaticUncollectable) {
+            color = COLOR_ORANGE;
+        } else if (SpoilerData_GetIsItemLocationRevealed(locIndex) && gSpoilerData.ItemLocations[locIndex].Repeatable) {
+            color = COLOR_BLUE;
+        }
+        bool itemRevealed = gSettingsContext.ingameSpoilers || isCollected || SpoilerData_GetIsItemLocationRevealed(locIndex);
+
+        // Find this item's group index, so we can see if we should hide
+        // its name because it's located in an undiscovered dungeon
+        for (u32 group = itemGroupIndex; group < SPOILER_COLLECTION_GROUP_COUNT; ++group) {
+            u16 groupOffset = gSpoilerData.GroupOffsets[group];
+            if (locIndex >= groupOffset && locIndex < groupOffset + gSpoilerData.GroupItemCounts[group]) {
+                itemGroupIndex = group;
+                break;
             }
+        }
+        bool canShowGroup = isCollected || CanShowSpoilerGroup(itemGroupIndex);
 
-            u16 firstItem = groupItemsScroll + 1;
-            u16 lastItem = groupItemsScroll + MAX_ENTRY_LINES;
-            if (lastItem > itemCount) { lastItem = itemCount; }
-            Draw_DrawFormattedString(10, 16, COLOR_TITLE, "%s - (%d - %d) / %d",
-                spoilerCollectionGroupNames[currentItemGroup], firstItem, lastItem, itemCount);
-
-            u16 listTopY = 32;
-            for (u32 item = 0; item < MAX_ENTRY_LINES; ++item) {
-                u32 locIndex = item + startIndex + groupItemsScroll;
-                if (item >= itemCount) { break; }
-
-                u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
-                u32 itemPosY = locPosY + SPACING_SMALL_Y;
-                bool isCollected =  SpoilerData_GetIsItemLocationCollected(locIndex);
-                u32 color = isCollected ? COLOR_GREEN : COLOR_WHITE;
-                Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
-                const char* itemText = (!gSettingsContext.ingameSpoilers && !isCollected) ? "???" : SpoilerData_GetItemNameString(locIndex);
-                Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
-            }
-
-            Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, groupItemsScroll, itemCount, MAX_ENTRY_LINES);
+        if (canShowGroup) {
+            Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
         } else {
-            Draw_DrawString(10, 16, COLOR_TITLE, spoilerCollectionGroupNames[currentItemGroup]);
-            Draw_DrawString(10, 46, COLOR_WHITE, "Reveal this dungeon to see the item list.");
-            Draw_DrawString(10, 57, COLOR_WHITE, " - Enter the dungeon at least once");
-            if (gSettingsContext.mapsShowDungeonMode) {
-                Draw_DrawString(10, 68, COLOR_WHITE, " - Find the dungeon's map");
-            }
+            Draw_DrawFormattedString_Small(10, locPosY, color, "%s (Undiscovered)", spoilerCollectionGroupNames[itemGroupIndex]);
         }
+        const char* itemText = itemRevealed ? SpoilerData_GetItemNameString(locIndex) : "???";
+        Draw_DrawString_Small(10 + (SPACING_SMALL_X * 2), itemPosY, color, itemText);
     }
-    else {
-        Draw_DrawString(10, 16, COLOR_TITLE, "Item Location Groups");
-        Draw_DrawString(10, 46, COLOR_WHITE, "No item location data!");
-    }
+
+    Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, *itemScroll, itemCount, MAX_ENTRY_LINES);
 }
 
 static void Gfx_DrawEntranceTracker(void) {
     if (!ViewingGroups() && showingLegend) {
-        Draw_DrawString(10, 16, COLOR_TITLE, "Entrance Colors Legend");
+        Draw_DrawString(10, 16, COLOR_TITLE, "Entrance Color Legend");
 
         static const u8 squareWidth = 9;
         u16 offsetY = 2;
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_OVERWORLD);
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_GREEN);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Overworld");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_INTERIOR);
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_BLUE);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Interior");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_GROTTO);
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_ORANGE);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Grotto");
-        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, ENTR_COLOR_DUNGEON);
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_PINK);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Dungeon");
         return;
     }
@@ -625,10 +645,10 @@ static void Gfx_DrawEntranceTracker(void) {
 
         bool isDiscovered = IsEntranceDiscovered(entranceList[locIndex].index);
 
-        u32 origSrcColor = isDiscovered ? GetEntranceData(entranceList[locIndex].index)->color : COLOR_WHITE;
-        u32 origDstColor = isDiscovered ? GetEntranceData(entranceList[locIndex].destination)->color : COLOR_WHITE;
-        u32 rplcSrcColor = isDiscovered ? GetEntranceData(entranceList[locIndex].override)->color : COLOR_WHITE;
-        u32 rplcDstColor = isDiscovered ? GetEntranceData(entranceList[locIndex].overrideDestination)->color : COLOR_WHITE;
+        u32 origSrcColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].index)->type] : COLOR_WHITE;
+        u32 origDstColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].destination)->type] : COLOR_WHITE;
+        u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].override)->type] : COLOR_WHITE;
+        u32 rplcDstColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].overrideDestination)->type] : COLOR_WHITE;
         const char* unknown = "???";
 
         const char* origSrcName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].index)->name : unknown;
@@ -647,7 +667,7 @@ static void Gfx_DrawEntranceTracker(void) {
 
         offsetX = 2;
         Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcDstColor, "%s", rplcDstName);
-        if (!isDiscovered || !GetEntranceData(entranceList[locIndex].overrideDestination)->oneExit) {
+        if ((!gSettingsContext.ingameSpoilers && !isDiscovered) || !GetEntranceData(entranceList[locIndex].overrideDestination)->oneExit) {
             offsetX += strlen(rplcDstName) + 1;
             Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, COLOR_WHITE, "from");
             offsetX += strlen("from") + 1;
@@ -659,14 +679,15 @@ static void Gfx_DrawEntranceTracker(void) {
 }
 
 static void (*menu_draw_funcs[])(void) = {
+    // Make sure these line up with the GfxPage enum above
     Gfx_DrawSeedHash,
     Gfx_DrawDungeonItems,
     Gfx_DrawDungeonRewards,
     Gfx_DrawSpoilerData,
-    Gfx_DrawSpoilerAllItems,
-    Gfx_DrawSpoilerItemGroups,
-    Gfx_DrawEntranceTracker,
-    Gfx_DrawEntranceTracker,
+    Gfx_DrawItemTracker, // All
+    Gfx_DrawItemTracker, // Groups
+    Gfx_DrawEntranceTracker, // All
+    Gfx_DrawEntranceTracker, // Groups
     Gfx_DrawOptions,
 };
 
@@ -707,26 +728,6 @@ static s16 Gfx_Scroll(s16 current, s16 scrollDelta, u16 itemCount) {
 static void Gfx_ShowMenu(void) {
     pressed = 0;
 
-    if (!gSettingsContext.ingameSpoilers) {
-        float itemsChecked = 0.0f;
-        for (u16 i = 0; i < gSpoilerData.ItemLocationsCount; i++) {
-            if (SpoilerData_GetIsItemLocationCollected(i)) {
-                itemsChecked += 1.0f;
-            }
-        }
-        itemPercent = (itemsChecked / gSpoilerData.ItemLocationsCount) * 100.0f;
-    }
-
-    if (gEntranceTrackingData.EntranceCount > 0) {
-        float entrancesChecked = 0.0f;
-        for (u16 i = 0; i < gEntranceTrackingData.EntranceCount; i++) {
-            if (IsEntranceDiscovered(rEntranceOverrides[i].index)) {
-                entrancesChecked += 1.0f;
-            }
-        }
-        entrancesPercent = (entrancesChecked / gEntranceTrackingData.EntranceCount) * 100.0f;
-    }
-
     Draw_ClearFramebuffer();
     if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
 
@@ -739,12 +740,12 @@ static void Gfx_ShowMenu(void) {
         handledInput = false;
         // Controls for spoiler log and all-items pages come first, as the user may have chosen
         // one of the directional buttons as their menu open/close button and we need to use them
-        if (curMenuIdx == 1) {
+        if (curMenuIdx == PAGE_DUNGEONITEMS) {
             if (pressed & BUTTON_A) {
                 showingLegend = !showingLegend;
                 handledInput = true;
             }
-        } else if (curMenuIdx == 3 && gSpoilerData.SphereCount > 0) {
+        } else if (curMenuIdx == PAGE_SPHERES && gSpoilerData.SphereCount > 0) {
             // Spoiler log
             u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
             if (pressed & BUTTON_LEFT) {
@@ -770,36 +771,41 @@ static void Gfx_ShowMenu(void) {
                 spoilerScroll = Gfx_Scroll(spoilerScroll, 1, itemCount);
                 handledInput = true;
             }
-        } else if (curMenuIdx == 4 && gSpoilerData.ItemLocationsCount > 0) {
+        } else if (curMenuIdx == PAGE_ITEMTRACKER_ALL && gSpoilerData.ItemLocationsCount > 0) {
             // All Items list
-            u16 itemCount = gSpoilerData.ItemLocationsCount;
-            if (pressed & BUTTON_LEFT) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES * 10, itemCount);
+            if (pressed & BUTTON_A) {
+                showingLegend = !showingLegend;
                 handledInput = true;
-            } else if (pressed & BUTTON_RIGHT) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES * 10, itemCount);
-                handledInput = true;
-            } else if (pressed & BUTTON_UP) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES, itemCount);
-                handledInput = true;
-            } else if (pressed & BUTTON_DOWN) {
-                allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES, itemCount);
-                handledInput = true;
+            } else if (!showingLegend) {
+                u16 itemCount = gSpoilerData.ItemLocationsCount;
+                if (pressed & BUTTON_LEFT) {
+                    allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES * 10, itemCount);
+                    handledInput = true;
+                } else if (pressed & BUTTON_RIGHT) {
+                    allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES * 10, itemCount);
+                    handledInput = true;
+                } else if (pressed & BUTTON_UP) {
+                    allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES, itemCount);
+                    handledInput = true;
+                } else if (pressed & BUTTON_DOWN) {
+                    allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES, itemCount);
+                    handledInput = true;
+                }
             }
-        } else if (curMenuIdx == 5 && gSpoilerData.ItemLocationsCount > 0) {
+        } else if (curMenuIdx == PAGE_ITEMTRACKER_GROUPS && gSpoilerData.ItemLocationsCount > 0) {
             // Grouped Items list
             u16 itemCount = gSpoilerData.GroupItemCounts[currentItemGroup];
             if (pressed & BUTTON_LEFT) {
-                groupItemsScroll = Gfx_Scroll(groupItemsScroll, -MAX_ENTRY_LINES * 10, itemCount);
-                handledInput = true;
-            } else if (pressed & BUTTON_RIGHT) {
-                groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ENTRY_LINES * 10, itemCount);
-                handledInput = true;
-            } else if (pressed & BUTTON_UP) {
                 groupItemsScroll = Gfx_Scroll(groupItemsScroll, -MAX_ENTRY_LINES, itemCount);
                 handledInput = true;
-            } else if (pressed & BUTTON_DOWN) {
+            } else if (pressed & BUTTON_RIGHT) {
                 groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ENTRY_LINES, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_UP) {
+                groupItemsScroll = Gfx_Scroll(groupItemsScroll, -1, itemCount);
+                handledInput = true;
+            } else if (pressed & BUTTON_DOWN) {
+                groupItemsScroll = Gfx_Scroll(groupItemsScroll, 1, itemCount);
                 handledInput = true;
             } else if (pressed & BUTTON_A) {
                 NextItemGroup();
@@ -808,7 +814,7 @@ static void Gfx_ShowMenu(void) {
                 PrevItemGroup();
                 handledInput = true;
             }
-        } else if (curMenuIdx == 6 && gEntranceTrackingData.EntranceCount > 0) {
+        } else if (curMenuIdx == PAGE_ENTRANCETRACKER_ALL && gEntranceTrackingData.EntranceCount > 0) {
             // Entrances list
             if (pressed & BUTTON_A) {
                 showingLegend = !showingLegend;
@@ -829,7 +835,7 @@ static void Gfx_ShowMenu(void) {
                     handledInput = true;
                 }
             }
-        } else if (curMenuIdx == 7 && gEntranceTrackingData.EntranceCount > 0) {
+        } else if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS && gEntranceTrackingData.EntranceCount > 0) {
             // Grouped Entrances list
             u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
             if (pressed & BUTTON_DOWN) {
@@ -854,7 +860,7 @@ static void Gfx_ShowMenu(void) {
                 destListToggle = !destListToggle;
                 handledInput = true;
             }
-        } else if (curMenuIdx == 8) {
+        } else if (curMenuIdx == PAGE_OPTIONS) {
             Gfx_OptionsUpdate();
         }
 
@@ -886,10 +892,10 @@ static void Gfx_ShowMenu(void) {
             }
         }
 
-        // Only clear the screen if there's been some input
-        if (handledInput) {
-            Draw_ClearBackbuffer();
-        }
+        // Keep updating while in the in-game menu
+        Multiplayer_Update();
+
+        Draw_ClearBackbuffer();
 
         // Continue counting up play time while in the in-game menu
         Gfx_UpdatePlayTime(true);
@@ -920,15 +926,19 @@ void Gfx_Init(void) {
     else if(gSettingsContext.menuOpeningButton == 5)    closingButton = BUTTON_B | BUTTON_LEFT;
 
     if (gSettingsContext.shuffleRewards != REWARDSHUFFLE_END_OF_DUNGEON || !gSettingsContext.compassesShowReward) {
-        menu_draw_funcs[2] = NULL;
+        menu_draw_funcs[PAGE_DUNGEONREWARDS] = NULL;
     }
     if (!gSettingsContext.ingameSpoilers) {
-        menu_draw_funcs[3] = NULL;
+        menu_draw_funcs[PAGE_SPHERES] = NULL;
+    }
+    if (gSpoilerData.ItemLocationsCount == 0) {
+        menu_draw_funcs[PAGE_ITEMTRACKER_ALL] = NULL;
+        menu_draw_funcs[PAGE_ITEMTRACKER_GROUPS] = NULL;
     }
     InitEntranceTrackingData();
     if (gEntranceTrackingData.EntranceCount == 0) {
-        menu_draw_funcs[6] = NULL;
-        menu_draw_funcs[7] = NULL;
+        menu_draw_funcs[PAGE_ENTRANCETRACKER_ALL] = NULL;
+        menu_draw_funcs[PAGE_ENTRANCETRACKER_GROUPS] = NULL;
     }
 
     // Call these to go to the first non-empty group page
@@ -958,6 +968,18 @@ void Gfx_Update(void) {
         Gfx_Init();
         lastTick = svcGetSystemTick();
     }
+
+    // The update is called here so it works while in file select
+    static u64 lastTickM = 0;
+    static u64 elapsedTicksM = 0;
+    elapsedTicksM += svcGetSystemTick() - lastTickM;
+    if (elapsedTicksM >= TICKS_PER_SEC) {
+        if (!IsInGame()) {
+            Multiplayer_Update();
+        }
+        elapsedTicksM = 0;
+    }
+    lastTickM = svcGetSystemTick();
 
     Gfx_UpdatePlayTime(IsInGame());
 

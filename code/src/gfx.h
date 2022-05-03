@@ -1,10 +1,7 @@
 #ifndef _GFX_H_
 #define _GFX_H_
 
-#include "../include/draw.h"
-#include "../include/input.h"
-#include "3ds/extdata.h"
-#include "savefile.h"
+#include "3ds/types.h"
 
 extern u32 pressed;
 extern bool handledInput;

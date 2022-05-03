@@ -9,6 +9,7 @@
 #include "trial.hpp"
 #include "tinyxml2.h"
 #include "utils.hpp"
+#include "shops.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -129,40 +130,34 @@ void WriteIngameSpoilerLog() {
   for (const LocationKey key : allLocations) {
     auto loc = Location(key);
 
-    // Exclude uncheckable/repeatable locations from ingame tracker
-    if (!Settings::IngameSpoilers) {
-        // General
-        if (loc->IsExcluded() || loc->GetHintKey() == NONE) {
-            continue;
-        }
-        // Shops
-        else if (loc->IsShop() && (
-            loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
-            loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
-            loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS)) {
-            continue;
-        }
-        // Deku Scrubs
-        else if (Settings::Scrubsanity.Is(SCRUBSANITY_OFF) && loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades)) {
-            continue;
-        }
-        // Cows
-        else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
-            continue;
-        }
-        // Merchants
-        else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
-            continue;
-        }
-        // Adult Trade
-        else if (!Settings::ShuffleAdultTradeQuest && loc->IsCategory(Category::cAdultTrade)) {
-          continue;
-        }
-        // Gerudo Fortress
-        else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
-            (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
-            continue;
-        }
+    // Hide excluded locations from ingame tracker
+    if (loc->IsExcluded()) {
+        continue;
+    }
+    // Deku Scrubs
+    else if (Settings::Scrubsanity.Is(SCRUBSANITY_OFF) && loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades)) {
+        continue;
+    }
+    // Cows
+    else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
+        continue;
+    }
+    // Merchants
+    else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
+        continue;
+    }
+    // Adult Trade
+    else if (!Settings::ShuffleAdultTradeQuest && loc->IsCategory(Category::cAdultTrade)) {
+        continue;
+    }
+    // Chest Minigame
+    else if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_OFF) && loc->IsCategory(Category::cChestMinigame)) {
+        continue;
+    }
+    // Gerudo Fortress
+    else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
+        (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
+        continue;
     }
 
     // Copy at most 51 chars from the name and location name to avoid issues with names that don't fit on screen
@@ -180,6 +175,9 @@ void WriteIngameSpoilerLog() {
     }
 
     auto locItem = loc->GetPlacedItemName().GetEnglish();
+    if (loc->GetPlacedItemKey() == ICE_TRAP && loc->IsCategory(Category::cShop)) {
+        locItem = NonShopItems[TransformShopIndex(GetShopIndex(key))].Name.GetEnglish();
+    }
     if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
       if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
         spoilerOutOfSpace = true;
@@ -195,6 +193,16 @@ void WriteIngameSpoilerLog() {
     spoilerData.ItemLocations[spoilerItemIndex].CollectionCheckType = loc->GetCollectionCheck().type;
     spoilerData.ItemLocations[spoilerItemIndex].LocationScene = loc->GetCollectionCheck().scene;
     spoilerData.ItemLocations[spoilerItemIndex].LocationFlag = loc->GetCollectionCheck().flag;
+    if (loc->IsShop()) {
+        spoilerData.ItemLocations[spoilerItemIndex].RevealOnSceneDiscovery = 1;
+        if (loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
+            loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
+            loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS) {
+            spoilerData.ItemLocations[spoilerItemIndex].Repeatable = 1;
+        }
+    } else if (loc->GetHintKey() == NONE) {
+        spoilerData.ItemLocations[spoilerItemIndex].StaticUncollectable = 1;
+    }
 
     auto checkGroup = loc->GetCollectionCheckGroup();
     spoilerData.ItemLocations[spoilerItemIndex].Group = checkGroup;

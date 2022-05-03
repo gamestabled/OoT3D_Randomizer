@@ -65,7 +65,7 @@ CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS $(VERFLAGS)
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
 ASFLAGS	+=	-g $(ARCH) $(VERFLAGS)
-LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) -nostdlib $(VERFLAGS) -lgcc
+LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) $(VERFLAGS) -lgcc
 
 LIBS	:=	-lgcc
 

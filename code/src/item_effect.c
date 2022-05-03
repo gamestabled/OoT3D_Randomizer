@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "z3D/z3D.h"
 #include "savefile.h"
+#include "multiplayer.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
@@ -44,6 +45,10 @@ void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_GiveBiggoronSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->bgsFlag = 1; // Set flag to make the sword durable
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_BGSFlag();
+    }
 }
 
 void ItemEffect_GiveBottle(SaveContext* saveCtx, s16 bottleItemId, s16 arg2) {
@@ -71,12 +76,94 @@ void ItemEffect_GiveSmallKey(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
     saveCtx->dungeonKeys[dungeonId] = keys + 1;
 }
 
+void ItemEffect_GiveSmallKeyRing(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
+    s8 keys = saveCtx->dungeonKeys[dungeonId];
+    if (keys < 0) {
+        keys = 0;
+    }
+    s8 amt = 0;
+    switch(dungeonId) {
+        case DUNGEON_FOREST_TEMPLE:
+            if (gSettingsContext.forestTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 6;
+            }
+            else {
+                amt = 5;
+            }
+            break;
+        case DUNGEON_FIRE_TEMPLE:
+            if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 5;
+            }
+            else {
+                amt = 8;
+            }
+            break;
+        case DUNGEON_WATER_TEMPLE:
+            if (gSettingsContext.waterTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 2;
+            }
+            else {
+                amt = 6;
+            }
+            break;
+        case DUNGEON_SPIRIT_TEMPLE:
+            if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 7;
+            }
+            else {
+                amt = 5;
+            }
+            break;
+        case DUNGEON_SHADOW_TEMPLE:
+            if (gSettingsContext.shadowTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 6;
+            }
+            else {
+                amt = 5;
+            }
+            break;
+        case DUNGEON_BOTTOM_OF_THE_WELL:
+            if (gSettingsContext.bottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
+                amt = 2;
+            }
+            else {
+                amt = 3;
+            }
+            break;
+        case DUNGEON_GERUDO_TRAINING_GROUNDS:
+            if (gSettingsContext.gerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
+                amt = 3;
+            }
+            else {
+                amt = 9;
+            }
+            break;
+        case DUNGEON_GERUDO_FORTRESS:
+            amt = 4;
+            break;
+        case DUNGEON_GANONS_CASTLE_FIRST_PART:
+            if (gSettingsContext.ganonsCastleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 3;
+            }
+            else {
+                amt = 2;
+            }
+            break;
+    }
+    saveCtx->dungeonKeys[dungeonId] = keys + amt;
+}
+
 void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleDefense = 1;
     // saveCtx->defense_hearts = 20; //TODO? is this needed?
     //With the No Health Refills option on, store-bought health upgrades do not heal the player
     if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
         saveCtx->healthAccumulator = 20 * 0x10;
+    }
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_GreatFairyBuff(0);
     }
 }
 
@@ -85,6 +172,10 @@ void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->magicAcquired = 1;     // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x30; // Set meter size
     saveCtx->magic = 0x30;          // Fill meter
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_GreatFairyBuff(1);
+    }
 }
 
 void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -93,6 +184,10 @@ void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleMagic = 1;       // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x60; // Set meter size
     saveCtx->magic = 0x60;          // Fill meter
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_GreatFairyBuff(2);
+    }
 }
 
 void ItemEffect_GiveFairyOcarina(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -213,7 +308,7 @@ static u8 MakeSpaceInItemMenu(u8* itemMenu) {
     return 0xFF;
 }
 
-static void PushSlotIntoInventoryMenu(u8 itemSlot) {
+void PushSlotIntoInventoryMenu(u8 itemSlot) {
     u8 currentSlot = 0;
     while ((currentSlot + 1) % 6 == 0 || gSaveContext.itemMenuChild[currentSlot] != 0xFF) {
         currentSlot++;
@@ -244,20 +339,37 @@ void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_FIRE]);
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_ICE]);
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_LIGHT]);
+        if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+            Multiplayer_Send_MagicArrow(arg1);
+        }
     } else if (saveCtx->items[ItemSlots[ITEM_BOW]] == ITEM_NONE) {
         if (arg1 == 1 && saveCtx->items[ItemSlots[ITEM_ARROW_FIRE]] == ITEM_NONE) { // Fire Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_FIRE]);
+            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+                Multiplayer_Send_MagicArrow(arg1);
+            }
         } else if (arg1 == 2 && saveCtx->items[ItemSlots[ITEM_ARROW_ICE]] == ITEM_NONE) { // Ice Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_ICE]);
+            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+                Multiplayer_Send_MagicArrow(arg1);
+            }
         } else if (arg1 == 3 && saveCtx->items[ItemSlots[ITEM_ARROW_LIGHT]] == ITEM_NONE) { // Light Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_LIGHT]);
+            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+                Multiplayer_Send_MagicArrow(arg1);
+            }
         }
     }
+    duplicateSendProtection = false;
 }
 
 void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     // Put the Kokiri Sword on Child B button when Link goes back child
     saveCtx->childEquips.buttonItems[0] = ITEM_SWORD_KOKIRI;
+
+    if (gSettingsContext.mp_SharedProgress == ON) {
+        Multiplayer_Send_KokiriSwordEquip();
+    }
 }
 
 void ItemEffect_GiveStone(SaveContext* saveCtx, s16 mask, s16 arg2) {

@@ -8,6 +8,9 @@
 #define ItemBHeart_Destroy_addr 0x2537D4
 #define ItemBHeart_Destroy ((ActorFunc)ItemBHeart_Destroy_addr)
 
+#define ItemBHeart_Update_addr 0x285C18
+#define ItemBHeart_Update ((ActorFunc)ItemBHeart_Update_addr)
+
 #define ItemBHeart_Draw_addr 0x285BEC
 #define ItemBHeart_Draw ((ActorFunc)ItemBHeart_Draw_addr)
 
@@ -25,6 +28,17 @@ void ItemBHeart_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 
     Model_DestroyByActor(&container->actor);
     ItemBHeart_Destroy(&container->actor, globalCtx);
+}
+
+void ItemBHeart_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    ItemBHeart* container = THIS;
+
+    if (Flags_GetCollectible(globalCtx, 0x1F)) {
+        Actor_Kill(&container->actor);
+        return;
+    }
+
+    ItemBHeart_Update(&container->actor, globalCtx);
 }
 
 void ItemBHeart_rDraw(Actor* thisx, GlobalContext* globalCtX) {

@@ -291,7 +291,7 @@ RainbowBridge_patch:
     cmp r0,#0x0
     pop {r0-r12, lr}
     beq 0x3E7D70
-    b 0x3E7CE0
+    b 0x3E7D34
 
 .section .patch_ModelSpawnGetObjectStatus
 .global ModelSpawnGetObjectStatus_patch
@@ -1794,6 +1794,36 @@ LinkReflection_patch:
 .global ChildCanOpenBowSubMenu_patch
 ChildCanOpenBowSubMenu_patch:
     cmp r12,r12
+
+.section .patch_BrownBoulderExplode
+.global BrownBoulderExplode_patch
+BrownBoulderExplode_patch:
+    bl hook_BrownBoulderExplode
+
+.section .patch_RedBoulderExplode
+.global RedBoulderExplode_patch
+RedBoulderExplode_patch:
+    b hook_RedBoulderExplode
+
+.section .patch_Multiplayer_UpdatePrevActorFlags
+.global Multiplayer_UpdatePrevActorFlags_patch
+Multiplayer_UpdatePrevActorFlags_patch:
+    bl hook_Multiplayer_UpdatePrevActorFlags
+
+.section .patch_Multiplayer_OnLoadFile
+.global Multiplayer_OnLoadFile_patch
+Multiplayer_OnLoadFile_patch:
+    b hook_Multiplayer_OnLoadFile
+
+.section .patch_SendDroppedBottleContents
+.global SendDroppedBottleContents_patch
+SendDroppedBottleContents_patch:
+    bl hook_SendDroppedBottleContents
+
+.section .patch_IgnoreMaskReaction
+.global IgnoreMaskReaction_patch
+IgnoreMaskReaction_patch:
+    b hook_IgnoreMaskReaction
 
 .section .patch_loader
 .global loader_patch

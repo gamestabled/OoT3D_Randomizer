@@ -11,7 +11,7 @@ namespace Dungeon {
 class DungeonInfo {
 public:
     DungeonInfo(std::string name_, ItemKey map_, ItemKey compass_,
-                ItemKey smallKey_, ItemKey bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
+                ItemKey smallKey_, ItemKey keyRing_, ItemKey bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
                 std::vector<LocationKey> vanillaLocations_,
                 std::vector<LocationKey> mqLocations_,
                 std::vector<LocationKey> sharedLocations_);
@@ -33,6 +33,18 @@ public:
         return masterQuest;
     }
 
+    void SetKeyRing() {
+        hasKeyRing = true;
+    }
+
+    void ClearKeyRing() {
+        hasKeyRing = false;
+    }
+
+    bool HasKeyRing() const {
+        return hasKeyRing;
+    }
+
     bool IsVanilla() const {
         return !masterQuest;
     }
@@ -42,6 +54,7 @@ public:
     }
 
     ItemKey GetSmallKey() const;
+    ItemKey GetKeyRing() const;
     ItemKey GetMap() const;
     ItemKey GetCompass() const;
     ItemKey GetBossKey() const;
@@ -62,10 +75,12 @@ private:
     ItemKey map;
     ItemKey compass;
     ItemKey smallKey;
+    ItemKey keyRing;
     ItemKey bossKey;
     u8 vanillaKeyCount;
     u8 mqKeyCount;
     bool masterQuest = false;
+    bool hasKeyRing = false;
     std::vector<LocationKey> vanillaLocations;
     std::vector<LocationKey> mqLocations;
     std::vector<LocationKey> sharedLocations;

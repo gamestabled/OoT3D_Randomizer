@@ -18,7 +18,14 @@ typedef struct {
 
 typedef struct EnDns {
     /* 0x000 */ Actor actor;
-    /* 0x1A4 */ char unk_1A4[0x64];
+    /* 0x1A4 */ void* action_fn;
+    /* 0x1A8 */ char collider[0x58];
+    /* 0x200 */ s16 dust_timer;
+    /* 0x202 */ char unk_202;
+    /* 0x203 */ u8 maintain_collider;
+    /* 0x204 */ u8 stand_on_ground;
+    /* 0x205 */ u8 drop_collectible;
+    /* 0x206 */ char unk_206[0x2];
     /* 0x208 */ DnsItemEntry* dnsItemEntry;
     /* 0x20C */ char unk_20C[0x6A0];
 } EnDns; // size 0x8AC

@@ -301,15 +301,15 @@ void AreaTable_Init() {
 
   areaTable[KF_OUTSIDE_DEKU_TREE] = Area("KF Outside Deku Tree", "Kokiri Forest", KOKIRI_FOREST, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || ((IsAdult && !ShuffleDungeonEntrances) || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || ((IsAdult && !ShuffleDungeonEntrances) || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || ((IsAdult && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF)) || KokiriSword || Boomerang);}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || ((IsAdult && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF)) || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));}}),
                 }, {
                   //Locations
                   LocationAccess(KF_DEKU_TREE_GOSSIP_STONE_LEFT,  {[]{return true;}}),
                   LocationAccess(KF_DEKU_TREE_GOSSIP_STONE_RIGHT, {[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(DEKU_TREE_ENTRYWAY, {[]{return IsChild || (ShuffleDungeonEntrances && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));}}),
+                  Entrance(DEKU_TREE_ENTRYWAY, {[]{return IsChild || (ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF) && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));}}),
                   Entrance(KOKIRI_FOREST,      {[]{return true;}}),
   });
 
@@ -741,7 +741,7 @@ void AreaTable_Init() {
                   EventAccess(&BrokenSwordAccess, {[]{return IsAdult && (PoachersSawAccess || PoachersSaw);}}),
                 }, {
                   //Locations
-                  LocationAccess(GV_CHEST,          {[]{return CanUse(MEGATON_HAMMER);}}),
+                  LocationAccess(GV_CHEST,          {[]{return CanUse(MEGATON_HAMMER) || (LogicGVHammerChest && IsAdult);}}),
                   LocationAccess(GV_TRADE_SAW,      {[]{return IsAdult && PoachersSaw;}}),
                   LocationAccess(GV_GS_BEHIND_TENT, {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(GV_GS_PILLAR,      {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;}}),
@@ -1090,11 +1090,11 @@ void AreaTable_Init() {
   areaTable[MARKET_TREASURE_CHEST_GAME] = Area("Market Treasure Chest Game", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(MARKET_TREASURE_CHEST_GAME_REWARD, {[]{return (CanUse(LENS_OF_TRUTH) && !ShuffleChestMinigame) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 6)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
-                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_1, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 1)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
-                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_2, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 2)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
-                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_3, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 3)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
-                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_4, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 4)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
-                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_5, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 5)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1));}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_1, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 1)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1)) || (CanUse(LENS_OF_TRUTH) && !ShuffleChestMinigame);}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_2, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 2)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1)) || (CanUse(LENS_OF_TRUTH) && !ShuffleChestMinigame);}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_3, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 3)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1)) || (CanUse(LENS_OF_TRUTH) && !ShuffleChestMinigame);}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_4, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 4)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1)) || (CanUse(LENS_OF_TRUTH) && !ShuffleChestMinigame);}}),
+                  LocationAccess(MARKET_TREASURE_CHEST_GAME_ITEM_5, {[]{return (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS) && SmallKeys(TreasureGameKeys, 5)) || (ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK) && SmallKeys(TreasureGameKeys, 1)) || (CanUse(LENS_OF_TRUTH) && !ShuffleChestMinigame);}}),
                 }, {
                   //Exits
                   Entrance(THE_MARKET, {[]{return true;}}),
@@ -1157,7 +1157,7 @@ void AreaTable_Init() {
                   Entrance(KAK_BAZAAR,                  {[]{return IsAdult && AtDay;},
                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE);}}),
                   Entrance(KAK_SHOOTING_GALLERY,        {[]{return IsAdult && AtDay;}}),
-                  Entrance(BOTTOM_OF_THE_WELL_ENTRYWAY, {[]{return DrainWell && (IsChild || ShuffleDungeonEntrances);}}),
+                  Entrance(BOTTOM_OF_THE_WELL_ENTRYWAY, {[]{return DrainWell && (IsChild || ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF));}}),
                   Entrance(KAK_POTION_SHOP_FRONT,       {[]{return AtDay || IsChild;}}),
                   Entrance(KAK_REDEAD_GROTTO,           {[]{return CanOpenBombGrotto;}}),
                   Entrance(KAK_IMPAS_LEDGE,             {[]{return (IsChild && AtDay) || CanUse(HOOKSHOT);}}),
@@ -1579,7 +1579,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DMC_UPPER_NEARBY,       {[]{return true;}}),
                   Entrance(DMC_LADDER_AREA_NEARBY, {[]{return true;}}),
-                  Entrance(DMC_CENTRAL_NEARBY,     {[]{return CanUse(GORON_TUNIC) && CanUse(LONGSHOT) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) || (Fairy && !ShuffleDungeonEntrances) || CanUse(NAYRUS_LOVE));}}),
+                  Entrance(DMC_CENTRAL_NEARBY,     {[]{return CanUse(GORON_TUNIC) && CanUse(LONGSHOT) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) || (Fairy && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF)) || CanUse(NAYRUS_LOVE));}}),
                   Entrance(DMC_CENTRAL_LOCAL,      {[]{return false;},
                                         /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
   });
@@ -1629,7 +1629,7 @@ void AreaTable_Init() {
                   Entrance(DMC_CENTRAL_NEARBY,   {[]{return true;}}),
                   Entrance(DMC_LOWER_NEARBY,     {[]{return IsAdult && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT) || CanPlantBean(DMC_CENTRAL_LOCAL));}}),
                   Entrance(DMC_UPPER_NEARBY,     {[]{return IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL);}}),
-                  Entrance(FIRE_TEMPLE_ENTRYWAY, {[]{return (IsChild && ShuffleDungeonEntrances) || (IsAdult && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)));}}),
+                  Entrance(FIRE_TEMPLE_ENTRYWAY, {[]{return (IsChild && ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) || (IsAdult && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)));}}),
   });
 
   areaTable[DMC_GREAT_FAIRY_FOUNTAIN] = Area("DMC Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -2452,12 +2452,12 @@ void AreaTable_Init() {
 
   areaTable[SPIRIT_TEMPLE_CHILD_CLIMB] = Area("Child Spirit Temple Climb", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(SPIRIT_TEMPLE_CHILD_CLIMB_NORTH_CHEST, {[]{return HasProjectile(HasProjectileAge::Both) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse(SILVER_GAUNTLETS) && HasProjectile(HasProjectileAge::Adult)) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile(HasProjectileAge::Child));}}),
-                  LocationAccess(SPIRIT_TEMPLE_CHILD_CLIMB_EAST_CHEST,  {[]{return HasProjectile(HasProjectileAge::Both) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse(SILVER_GAUNTLETS) && HasProjectile(HasProjectileAge::Adult)) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile(HasProjectileAge::Child));}}),
+                  LocationAccess(SPIRIT_TEMPLE_CHILD_CLIMB_NORTH_CHEST, {[]{return HasProjectile(HasProjectileAge::Both) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) && CanUse(SILVER_GAUNTLETS) && HasProjectile(HasProjectileAge::Adult)) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile(HasProjectileAge::Child));}}),
+                  LocationAccess(SPIRIT_TEMPLE_CHILD_CLIMB_EAST_CHEST,  {[]{return HasProjectile(HasProjectileAge::Both) || ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) && CanUse(SILVER_GAUNTLETS) && HasProjectile(HasProjectileAge::Adult)) || (SmallKeys(SpiritTempleKeys, 5) && IsChild && HasProjectile(HasProjectileAge::Child));}}),
                   LocationAccess(SPIRIT_TEMPLE_GS_SUN_ON_FLOOR_ROOM,    {[]{return HasProjectile(HasProjectileAge::Both) || CanUse(DINS_FIRE) ||
                                                                                       (CanTakeDamage && (Sticks || KokiriSword || HasProjectile(HasProjectileAge::Child))) ||
                                                                                         (IsChild && SmallKeys(SpiritTempleKeys, 5) && HasProjectile(HasProjectileAge::Child)) ||
-                                                                                          ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) && CanUse(SILVER_GAUNTLETS) && (HasProjectile(HasProjectileAge::Adult) || CanTakeDamage));}}),
+                                                                                          ((SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) && CanUse(SILVER_GAUNTLETS) && (HasProjectile(HasProjectileAge::Adult) || CanTakeDamage));}}),
                 }, {
                   //Exits
                   Entrance(SPIRIT_TEMPLE_CENTRAL_CHAMBER, {[]{return HasExplosives;}}),
@@ -2477,7 +2477,7 @@ void AreaTable_Init() {
 
   areaTable[SPIRIT_TEMPLE_CENTRAL_CHAMBER] = Area("Spirit Temple Central Chamber", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(SPIRIT_TEMPLE_MAP_CHEST,                    {[]{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) &&
+                  LocationAccess(SPIRIT_TEMPLE_MAP_CHEST,                    {[]{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) &&
                                                                                                 (CanUse(DINS_FIRE) ||
                                                                                                     (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) ||
                                                                                             (SmallKeys(SpiritTempleKeys, 5) && HasExplosives &&
@@ -2485,7 +2485,7 @@ void AreaTable_Init() {
                                                                                             (SmallKeys(SpiritTempleKeys, 3) &&
                                                                                                 (CanUse(FIRE_ARROWS) || (LogicSpiritMapChest && Bow)) &&
                                                                                                 CanUse(SILVER_GAUNTLETS));}}),
-                  LocationAccess(SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST,         {[]{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) &&
+                  LocationAccess(SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST,         {[]{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) &&
                                                                                                 (CanUse(DINS_FIRE) ||
                                                                                                     (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) ||
                                                                                             (SmallKeys(SpiritTempleKeys, 5) && HasExplosives &&
@@ -2499,8 +2499,8 @@ void AreaTable_Init() {
                                                                                             (CanUse(BOOMERANG) && SmallKeys(SpiritTempleKeys, 5) && HasExplosives) ||
                                                                                             (Hookshot && CanUse(SILVER_GAUNTLETS) &&
                                                                                                 (SmallKeys(SpiritTempleKeys, 3) ||
-                                                                                                    (SmallKeys(SpiritTempleKeys, 2) && Boomerang && BombchusInLogic && !ShuffleDungeonEntrances)));}}),
-                  LocationAccess(SPIRIT_TEMPLE_GS_LOBBY,                     {[]{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && !ShuffleDungeonEntrances)) &&
+                                                                                                    (SmallKeys(SpiritTempleKeys, 2) && Boomerang && BombchusInLogic && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))));}}),
+                  LocationAccess(SPIRIT_TEMPLE_GS_LOBBY,                     {[]{return ((HasExplosives || SmallKeys(SpiritTempleKeys, 3) || (SmallKeys(SpiritTempleKeys, 2) && BombchusInLogic && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) &&
                                                                                                 LogicSpiritLobbyGS && Boomerang && (Hookshot || HoverBoots)) ||
                                                                                             (LogicSpiritLobbyGS && SmallKeys(SpiritTempleKeys, 5) && HasExplosives && CanUse(BOOMERANG)) ||
                                                                                             (SmallKeys(SpiritTempleKeys, 3) && CanUse(SILVER_GAUNTLETS) && (Hookshot || HoverBoots));}}),
@@ -2789,10 +2789,10 @@ void AreaTable_Init() {
                   EventAccess(&FreeFairies, {[]{return true;}}),
                 }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,  {[]{return true;}}),
-                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, {[]{return true;}}),
-                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_RIGHT,        {[]{return true;}}),
-                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_LEFT,         {[]{return true;}}),
+                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,  {[]{return CanStunDeku;}}),
+                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT, {[]{return CanStunDeku;}}),
+                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_RIGHT,        {[]{return CanStunDeku;}}),
+                  LocationAccess(GANONS_CASTLE_DEKU_SCRUB_LEFT,         {[]{return CanStunDeku;}}),
   }, {});
 
   areaTable[GANONS_CASTLE_FOREST_TRIAL] = Area("Ganon's Castle Forest Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -2800,7 +2800,7 @@ void AreaTable_Init() {
                   EventAccess(&ForestTrialClear, {[]{return CanUse(LIGHT_ARROWS) && (FireArrows || DinsFire);}}),
                 }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST, {[]{return true;}}),
+                  LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST, {[]{return IsAdult || CanChildDamage;}}),
   }, {});
 
   areaTable[GANONS_CASTLE_FIRE_TRIAL] = Area("Ganon's Castle Fire Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -2821,26 +2821,26 @@ void AreaTable_Init() {
 
   areaTable[GANONS_CASTLE_SHADOW_TRIAL] = Area("Ganon's Castle Shadow Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ShadowTrialClear, {[]{return CanUse(LIGHT_ARROWS) && Hammer && ((FireArrows && (LogicLensCastle || CanUse(LENS_OF_TRUTH))) || (CanUse(LONGSHOT) && (HoverBoots || (DinsFire && (LogicLensCastle || CanUse(LENS_OF_TRUTH))))));}}),
+                  EventAccess(&ShadowTrialClear, {[]{return CanUse(LIGHT_ARROWS) && Hammer && ((FireArrows && (LogicLensCastle || CanUse(LENS_OF_TRUTH))) || (CanUse(LONGSHOT) && (CanUse(HOVER_BOOTS) || (DinsFire && (LogicLensCastle || CanUse(LENS_OF_TRUTH))))));}}),
                 }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST,            {[]{return CanUse(FIRE_ARROWS) || Hookshot || HoverBoots || CanPlay(SongOfTime);}}),
-                  LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST, {[]{return CanUse(FIRE_ARROWS) || (CanUse(LONGSHOT) && (HoverBoots || CanUse(DINS_FIRE)));}}),
+                  LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST,            {[]{return CanUse(FIRE_ARROWS) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || CanPlay(SongOfTime) || IsChild;}}),
+                  LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST, {[]{return CanUse(FIRE_ARROWS) || (CanUse(LONGSHOT) && (CanUse(HOVER_BOOTS) || CanUse(DINS_FIRE)));}}),
   }, {});
 
   areaTable[GANONS_CASTLE_SPIRIT_TRIAL] = Area("Ganon's Castle Spirit Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&NutPot,           {[]{return NutPot || ((LogicSpiritTrialHookshot || Hookshot) && HasBombchus && Bow && MirrorShield);}}),
-                  EventAccess(&SpiritTrialClear, {[]{return CanUse(LIGHT_ARROWS)  && MirrorShield && HasBombchus && (LogicSpiritTrialHookshot || Hookshot);}}),
+                  EventAccess(&NutPot,           {[]{return NutPot || ((LogicSpiritTrialHookshot || CanUse(HOOKSHOT)) && HasBombchus && Bow && MirrorShield && IsAdult);}}),
+                  EventAccess(&SpiritTrialClear, {[]{return CanUse(LIGHT_ARROWS)  && MirrorShield && HasBombchus && (LogicSpiritTrialHookshot || CanUse(HOOKSHOT));}}),
                 }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_CRYSTAL_SWITCH_CHEST, {[]{return LogicSpiritTrialHookshot || Hookshot;}}),
-                  LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_INVISIBLE_CHEST,      {[]{return (LogicSpiritTrialHookshot || Hookshot) && HasBombchus && (LogicLensCastle || CanUse(LENS_OF_TRUTH));}}),
+                  LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_CRYSTAL_SWITCH_CHEST, {[]{return LogicSpiritTrialHookshot || CanUse(HOOKSHOT);}}),
+                  LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_INVISIBLE_CHEST,      {[]{return (LogicSpiritTrialHookshot || CanUse(HOOKSHOT)) && HasBombchus && (LogicLensCastle || CanUse(LENS_OF_TRUTH));}}),
   }, {});
 
   areaTable[GANONS_CASTLE_LIGHT_TRIAL] = Area("Ganon's Castle Light Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&LightTrialClear, {[]{return CanUse(LIGHT_ARROWS) && Hookshot && SmallKeys(GanonsCastleKeys, 2) && (LogicLensCastle || CanUse(LENS_OF_TRUTH));}}),
+                  EventAccess(&LightTrialClear, {[]{return CanUse(LIGHT_ARROWS) && CanUse(HOOKSHOT) && SmallKeys(GanonsCastleKeys, 2) && (LogicLensCastle || CanUse(LENS_OF_TRUTH));}}),
                 }, {
                   //Locations
                   LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_FIRST_LEFT_CHEST,        {[]{return true;}}),
@@ -3584,8 +3584,8 @@ void AreaTable_Init() {
                   //Locations
                   LocationAccess(ICE_CAVERN_MQ_IRON_BOOTS_CHEST, {[]{return IsAdult;}}),
                   LocationAccess(SHEIK_IN_ICE_CAVERN,            {[]{return IsAdult;}}),
-                  LocationAccess(ICE_CAVERN_MQ_GS_ICE_BLOCK,     {[]{return IsAdult || CanChildAttack;}}),
-                  LocationAccess(ICE_CAVERN_MQ_GS_SCARECROW,     {[]{return CanUse(SCARECROW) || (HoverBoots && CanUse(LONGSHOT));}}),
+                  LocationAccess(ICE_CAVERN_MQ_GS_ICE_BLOCK,     {[]{return IsAdult || CanUseProjectile;}}),
+                  LocationAccess(ICE_CAVERN_MQ_GS_SCARECROW,     {[]{return CanUse(SCARECROW) || (CanUse(HOVER_BOOTS) && CanUse(LONGSHOT));}}),
                     //Tricks: CanUse(SCARECROW) || (HoverBoots && CanUse(LONGSHOT)) || (LogicIceMQScarecrow && IsAdult)
   }, {});
 
@@ -3678,7 +3678,7 @@ void AreaTable_Init() {
   if (Dungeon::GanonsCastle.IsMQ()) {
   areaTable[GANONS_CASTLE_MQ_LOBBY] = Area("Ganon's Castle MQ Lobby", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(GANONS_CASTLE_ENTRYWAY,        {[]{return true;}}),
+                  Entrance(GANONS_CASTLE_ENTRYWAY,        {[]{return (IsAdult || (HasExplosives || ((Nuts || Boomerang) && (Sticks || KokiriSword))));}}),
                   Entrance(GANONS_CASTLE_MQ_FOREST_TRIAL, {[]{return true;}}),
                   Entrance(GANONS_CASTLE_MQ_FIRE_TRIAL,   {[]{return true;}}),
                   Entrance(GANONS_CASTLE_MQ_WATER_TRIAL,  {[]{return true;}}),
@@ -3699,11 +3699,11 @@ void AreaTable_Init() {
                   EventAccess(&FreeFairies, {[]{return true;}}),
   }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,  {[]{return true;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,       {[]{return true;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT, {[]{return true;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,         {[]{return true;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,        {[]{return true;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,  {[]{return CanStunDeku;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,       {[]{return CanStunDeku;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT, {[]{return CanStunDeku;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,         {[]{return CanStunDeku;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,        {[]{return CanStunDeku;}}),
   }, {});
 
   areaTable[GANONS_CASTLE_MQ_FOREST_TRIAL] = Area("Ganon's Castle MQ Forest Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
@@ -3711,14 +3711,14 @@ void AreaTable_Init() {
                   EventAccess(&ForestTrialClear, {[]{return CanUse(LIGHT_ARROWS) && CanPlay(SongOfTime);}}),
   }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_MQ_FOREST_TRIAL_EYE_SWITCH_CHEST,        {[]{return Bow;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_FOREST_TRIAL_EYE_SWITCH_CHEST,        {[]{return CanUse(BOW) || CanUse(SLINGSHOT);}}),
                   LocationAccess(GANONS_CASTLE_MQ_FOREST_TRIAL_FROZEN_EYE_SWITCH_CHEST, {[]{return HasFireSource;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_FOREST_TRIAL_FREESTANDING_KEY,        {[]{return Hookshot;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_FOREST_TRIAL_FREESTANDING_KEY,        {[]{return HookshotOrBoomerang;}}),
   }, {});
 
   areaTable[GANONS_CASTLE_MQ_FIRE_TRIAL] = Area("Ganon's Castle MQ Fire Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&FireTrialClear, {[]{return CanUse(GORON_TUNIC) && CanUse(GOLDEN_GAUNTLETS) && CanUse(LIGHT_ARROWS) && (CanUse(LONGSHOT) || HoverBoots);}}),
+                  EventAccess(&FireTrialClear, {[]{return CanUse(GORON_TUNIC) && CanUse(GOLDEN_GAUNTLETS) && CanUse(LIGHT_ARROWS) && (CanUse(LONGSHOT) || CanUse(HOVER_BOOTS));}}),
                     //Trick: CanUse(GORON_TUNIC) && CanUse(GOLDEN_GAUNTLETS) && CanUse(LIGHT_ARROWS) && (CanUse(LONGSHOT) || HoverBoots || (LogicFireTrialMQ && CanUse(HOOKSHOT)))
   }, {}, {});
 
@@ -3728,17 +3728,17 @@ void AreaTable_Init() {
                   EventAccess(&BlueFireAccess,  {[]{return BlueFireAccess || HasBottle;}}),
   }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_MQ_WATER_TRIAL_CHEST, {[]{return BlueFire;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_WATER_TRIAL_CHEST, {[]{return BlueFire && (IsAdult || CanUse(STICKS) || KokiriSword || CanUseProjectile);}}),
   }, {});
 
   areaTable[GANONS_CASTLE_MQ_SHADOW_TRIAL] = Area("Ganon's Castle MQ Shadow Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ShadowTrialClear, {[]{return CanUse(LIGHT_ARROWS) && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (HoverBoots || (Hookshot && HasFireSource));}}),
+                  EventAccess(&ShadowTrialClear, {[]{return CanUse(LIGHT_ARROWS) && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (CanUse(HOVER_BOOTS) || (CanUse(HOOKSHOT) && HasFireSource));}}),
                     //Trick: CanUse(LIGHT_ARROWS) && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (HoverBoots || (Hookshot && (HasFireSource || LogicShadowTrialMQ)))
   }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_MQ_SHADOW_TRIAL_BOMB_FLOWER_CHEST, {[]{return (Bow && (Hookshot || HoverBoots)) || (HoverBoots && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (HasExplosives || GoronBracelet || CanUse(DINS_FIRE)));}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SHADOW_TRIAL_EYE_SWITCH_CHEST,  {[]{return Bow && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (HoverBoots || (Hookshot && HasFireSource));}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SHADOW_TRIAL_BOMB_FLOWER_CHEST, {[]{return (Bow && (CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS))) || (CanUse(HOVER_BOOTS) && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (HasExplosives || GoronBracelet || CanUse(DINS_FIRE)));}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SHADOW_TRIAL_EYE_SWITCH_CHEST,  {[]{return Bow && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (CanUse(HOVER_BOOTS) || (CanUse(HOOKSHOT) && HasFireSource));}}),
                     //Trick: Bow && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (HoverBoots || (Hookshot && (HasFireSource || LogicShadowTrialMQ)))
   }, {});
 
@@ -3748,17 +3748,17 @@ void AreaTable_Init() {
                   EventAccess(&NutPot,           {[]{return NutPot || (Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield);}}),
   }, {
                   //Locations
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,             {[]{return Bow && Hammer;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,         {[]{return Bow && Hammer && HasBombchus && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH));}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST,    {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST,     {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST,  {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
-                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST,    {[]{return Hammer && HasBombchus && CanUse(FIRE_ARROWS) && MirrorShield;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,             {[]{return IsAdult && Bow && Hammer;}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,         {[]{return IsAdult && Bow && Hammer && HasBombchus && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH));}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST,    {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST,     {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST,  {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
+                  LocationAccess(GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST,    {[]{return IsAdult && Hammer && HasBombchus && CanUse(FIRE_ARROWS) && CanUse(MIRROR_SHIELD);}}),
   }, {});
 
   areaTable[GANONS_CASTLE_MQ_LIGHT_TRIAL] = Area("Ganon's Castle MQ Light Trial", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&LightTrialClear, {[]{return CanUse(LIGHT_ARROWS) && SmallKeys(GanonsCastleKeys, 3) && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && Hookshot;}}),
+                  EventAccess(&LightTrialClear, {[]{return CanUse(LIGHT_ARROWS) && SmallKeys(GanonsCastleKeys, 3) && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && CanUse(HOOKSHOT);}}),
                     //Trick: CanUse(LIGHT_ARROWS) && SmallKeys(GanonsCastleKeys, 3) && (LogicLensCastleMQ || CanUse(LENS_OF_TRUTH)) && (Hookshot || LogicLightTrialMQ)
   }, {
                   //Locations

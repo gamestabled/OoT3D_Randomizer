@@ -1,5 +1,10 @@
 #include <string.h>
 #include "gfx_options.h"
+#include "gfx.h"
+#include "savefile.h"
+#include "draw.h"
+#include "input.h"
+#include "common.h"
 
 #define BORDER_WIDTH 2
 #define CHOICE_COLUMN 240
@@ -13,7 +18,7 @@ typedef struct {
 } Option;
 
 s8 selectedOption;
-Option options[3];
+Option options[4];
 
 void InitOptions(void) {
     // BGM
@@ -36,13 +41,20 @@ void InitOptions(void) {
     strcpy(options[2].alternatives[1], "On");
     strcpy(options[2].description, "Prevents Navi from alerting you about advice.");
     options[2].optionPointer = &gExtSaveData.option_SilenceNavi;
+
+    // Ignore Mask Reaction
+    strcpy(options[3].name, "Ignore Mask Reaction");
+    strcpy(options[3].alternatives[0], "Off");
+    strcpy(options[3].alternatives[1], "On");
+    strcpy(options[3].description, "Causes NPCs to respond normally when wearing\nmasks. Does not apply to trade quest dialouges.");
+    options[3].optionPointer = &gExtSaveData.option_IgnoreMaskReaction;
 }
 
 void Gfx_DrawOptions(void) {
     Draw_DrawString(10, 16, COLOR_TITLE, "Options");
 
     // Options
-    for (u8 i = 0; i < sizeof(options) / sizeof(Option); i++) {
+    for (u8 i = 0; i < ARRAY_SIZE(options); i++) {
         Draw_DrawString(10, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].name);
         Draw_DrawString(CHOICE_COLUMN, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].alternatives[*options[i].optionPointer]);
     }
@@ -53,22 +65,22 @@ void Gfx_DrawOptions(void) {
     Draw_DrawString(10, DESCRIPTION_ROW, COLOR_WHITE, options[selectedOption].description);
 }
 
-void NextOption(const Option* option_) {
+void NextOption(const Option* option) {
     do {
-        *option_->optionPointer += 1;
-        if (*option_->optionPointer > (s8)(sizeof(option_->alternatives) / sizeof(option_->alternatives[0])) - 1) {
-            *option_->optionPointer = 0;
+        (*option->optionPointer)++;
+        if (*option->optionPointer > ARRAY_SIZE(option->alternatives) - 1) {
+            *option->optionPointer = 0;
         }
-    } while (strlen(option_->alternatives[*option_->optionPointer]) == 0);
+    } while (strlen(option->alternatives[*option->optionPointer]) == 0);
 }
 
-void PrevOption(const Option* option_) {
+void PrevOption(const Option* option) {
     do {
-        *option_->optionPointer -= 1;
-        if (*option_->optionPointer < 0) {
-            *option_->optionPointer = (s8)(sizeof(option_->alternatives) / sizeof(option_->alternatives[0])) - 1;
+        (*option->optionPointer)--;
+        if (*option->optionPointer < 0) {
+            *option->optionPointer = ARRAY_SIZE(option->alternatives) - 1;
         }
-    } while (strlen(option_->alternatives[*option_->optionPointer]) == 0);
+    } while (strlen(option->alternatives[*option->optionPointer]) == 0);
 }
 
 void Gfx_OptionsUpdate(void) {
@@ -81,9 +93,9 @@ void Gfx_OptionsUpdate(void) {
     }
 
     if (selectedOption < 0) {
+        selectedOption = ARRAY_SIZE(options) - 1;
+    } else if (selectedOption > ARRAY_SIZE(options) - 1) {
         selectedOption = 0;
-    } else if (selectedOption > (s8)(sizeof(options) / sizeof(Option)) - 1) {
-        selectedOption = (s8)(sizeof(options) / sizeof(Option)) - 1;
     }
 
     if (pressed & BUTTON_RIGHT) {

@@ -576,6 +576,14 @@ SECTIONS
 		*(.patch_WaterTempleItemGiveTwo)
 	}
 
+	.patch_BrownBoulderExplode 0x26F9F8 : {
+		*(.patch_BrownBoulderExplode)
+	}
+
+	.patch_RedBoulderExplode 0x26FE7C : {
+		*(.patch_RedBoulderExplode)
+	}
+
 	.patch_SongOfTimeJingle 0x274B1C : {
 		*(.patch_SongOfTimeJingle)
 	}
@@ -822,6 +830,10 @@ SECTIONS
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
 		*(.patch_ModelSpawnGetObjectStatus)
+	}
+
+	.patch_IgnoreMaskReaction 0x36BBC4 : {
+		*(.patch_IgnoreMaskReaction)
 	}
 
 	.patch_SetBGMEvent 0x36EC40 : {
@@ -1120,6 +1132,10 @@ SECTIONS
 		*(.patch_SaveFile_Init)
 	}
 
+	.patch_Multiplayer_OnLoadFile 0x449EFC : {
+		*(.patch_Multiplayer_OnLoadFile)
+	}
+
 	.patch_GetCustomMessageEntryTwo 0x44D564 : {
 		*(.patch_GetCustomMessageEntryTwo)
 	}
@@ -1134,6 +1150,10 @@ SECTIONS
 
 	.patch_ExtendedObjectClear 0x44E754 : {
 		*(.patch_ExtendedObjectClear)
+	}
+
+	.patch_Multiplayer_UpdatePrevActorFlags 0x44E878 : {
+		*(.patch_Multiplayer_UpdatePrevActorFlags)
 	}
 
 	.patch_PlayEntranceCutscene 0x44F068 : {
@@ -1270,6 +1290,10 @@ SECTIONS
 
 	.patch_FairyUseHealAmount 0x4968B4 : {
 		*(.patch_FairyUseHealAmount)
+	}
+
+	.patch_SendDroppedBottleContents 0x496A1C : {
+		*(.patch_SendDroppedBottleContents)
 	}
 
 	.patch_ReturnFWSetupGrottoInfo 0x496B88 : {

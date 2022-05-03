@@ -5,11 +5,11 @@
 /*------------------------------
 |      RANDOMIZE SETTINGS      |                            *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
-string_view openRandomize             = "Randomize all Open Settings except for Logic rules";
+string_view openRandomize             = "Randomize all Open Settings.";                    //
 string_view worldRandomize            = "Randomize all World Settings except for MQ\n"     //
-                                        "dungeons";                                        //
-string_view shuffleRandomize          = "Randomize all Shuffle Settings";                  //
-string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings";          //
+                                        "dungeons.";                                       //
+string_view shuffleRandomize          = "Randomize all Shuffle Settings.";                 //
+string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings.";         //
                                                                                            //
 /*------------------------------                                                           //
 |            LOGIC             |                                                           //
@@ -157,8 +157,8 @@ string_view shuffleEntrancesDesc      = "Shuffle where the entrances between are
 ------------------------------*/                                                           //
 string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, including\n"
                                         "Bottom of the Well, Ice Cavern, and Gerudo\n"     //
-                                        "Training Grounds. However, Ganon's Castle is not\n"
-                                        "shuffled.\n"                                      //
+                                        "Training Grounds. Shuffling Ganon's Castle can\n" //
+                                        "be enabled separately.\n"                         //
                                         "\n"                                               //
                                         "Additionally, the entrances of Deku Tree, Fire\n" //
                                         "Temple, Bottom of the Well and Gerudo Training\n" //
@@ -458,6 +458,15 @@ string_view gerudoKeysOverworld       = "Gerudo Fortress Keys can only appear ou
                                         "dungeons.";                                       //
 string_view gerudoKeysAnywhere        = "Gerudo Fortress Keys can appear anywhere in the\n"//
                                         "world.";                                          //
+/*------------------------------                                                           //
+|           Key Rings          |                                                           //
+------------------------------*/                                                           //
+string_view keyRingDesc               = "Selected key ring dungeons will have all of their\n"
+                                        "keys found at once in a ring rather than\n"       //
+                                        "individually.\n\n"                                //
+                                        "For example, instead of shuffling 5 Forest Temple\n"
+                                        "small keys into the pool, you will find a single\n"
+                                        "key ring which will give you all 5 keys at once.\n";
 /*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
@@ -906,6 +915,19 @@ string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random du
                                         "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
+|         MULTIPLAYER          |                                                           //
+------------------------------*/                                                           //
+string_view mp_EnabledDesc            = "Enables multiplayer.\n"                           //
+                                        "Other players will always be seen and heard\n"    //
+                                        "regardless of the other settings.";               //
+string_view mp_SharedProgressDesc     = "Progress and certain actors will be synced\n"     //
+                                        "between everyone who has this option on and the\n"//
+                                        "same seed hash.";                                 //
+string_view mp_SharedHealthDesc       = "Damage and recovery will be synced.";             //
+string_view mp_SharedRupeesDesc       = "Rupee gain and loss will be synced.";             //
+string_view mp_SharedAmmoDesc         = "Ammo gain and loss will be synced.";              //
+                                                                                           //
+/*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
 ------------------------------*/                                                           //
 string_view zTargetingDesc            = "Sets L-Targeting to start as switch or hold.";    //
@@ -915,6 +937,8 @@ string_view motionControlDesc         = "Sets the motion controls to start on or
 string_view togglePlayMusicDesc       = "Starts the game with the music on or off.";       //
 string_view togglePlaySFXDesc         = "Starts the game with the sound effects on or off.";
 string_view silenceNaviDesc           = "Sets whether Navi should start silenced or not."; //
+string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask or not.\n" //
+                                        "Does not apply when trading masks.";              //
                                                                                            //
 /*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
@@ -1010,6 +1034,9 @@ string_view LogicChildDampeRacePoHDesc                = "Difficulty: Intermediat
                                                         "It is possible to complete the second dampe race\n"
                                                         "as child in under a minute, but it is a strict\n" //
                                                         "time limit.";                                     //
+string_view LogicGVHammerChestDesc                    = "Difficulty: Novice\n"                             //
+                                                        "The chest can be reached by sidehopping between\n"//
+                                                        "the wall and the east most hammer rock.";         //
 string_view LogicGerudoKitchenDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The logic normally guarantees one of Bow,\n"      //
                                                         "Hookshot, or Hover Boots.";                       //

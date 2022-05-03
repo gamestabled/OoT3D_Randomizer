@@ -344,6 +344,16 @@ namespace Settings {
   extern Option LACSRewardCount;
   extern Option LACSDungeonCount;
   extern Option LACSTokenCount;
+  extern Option KeyRings;
+  extern Option RingFortress;
+  extern Option RingForest;
+  extern Option RingFire;
+  extern Option RingWater;
+  extern Option RingSpirit;
+  extern Option RingShadow;
+  extern Option RingWell;
+  extern Option RingGtg;
+  extern Option RingCastle;
 
   extern Option SkipChildStealth;
   extern Option SkipTowerEscape;
@@ -478,6 +488,7 @@ namespace Settings {
   extern Option LogicLabWallGS;
   extern Option LogicGraveyardPoH;
   extern Option LogicChildDampeRacePoH;
+  extern Option LogicGVHammerChest;
   extern Option LogicGerudoKitchen;
   extern Option LogicLensWasteland;
   extern Option LogicReverseWasteland;
@@ -565,6 +576,13 @@ namespace Settings {
   extern Option GlitchLedgeClip;
   extern Option GlitchTripleSlashClip;
 
+  //Multiplayer Settings
+  extern Option MP_Enabled;
+  extern Option MP_SharedProgress;
+  extern Option MP_SharedHealth;
+  extern Option MP_SharedRupees;
+  extern Option MP_SharedAmmo;
+
   //Ingame Default Settings
   extern Option ZTargeting;
   extern Option CameraControl;
@@ -572,6 +590,7 @@ namespace Settings {
   extern Option TogglePlayMusic;
   extern Option TogglePlaySFX;
   extern Option SilenceNavi;
+  extern Option IgnoreMaskReaction;
 
   //Cosmetic Settings
   extern Option CustomTunicColors;
