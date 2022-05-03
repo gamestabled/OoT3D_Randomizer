@@ -134,6 +134,10 @@ void Settings_SunsSongEndCloseTextbox() {
     gGlobalContext->unk_2B7E = 4; // msgCtx.ocarinaMode, exits the ocarina playing
 }
 
+s32 Settings_BowAsChild() {
+    return (s32)gSettingsContext.bowAsChild;
+}
+
   const char hashIconNames[32][25] = {
     "Deku Stick",
     "Deku Nut",

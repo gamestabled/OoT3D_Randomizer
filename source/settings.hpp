@@ -388,8 +388,19 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option SlingshotAsAdult;
+  extern Option BowAsChild;
+  extern Option HookshotAsChild;
   extern Option IronBootsAsChild;
+  extern Option HoverBootsAsChild;
   extern Option MasksAsAdult;
+  extern Option KokiriSwordAsAdult;
+  extern Option MasterSwordAsChild;
+  extern Option BiggoronSwordAsChild;
+  extern Option DekuShieldAsAdult;
+  extern Option MirrorShieldAsChild;
+  extern Option GoronTunicAsChild;
+  extern Option ZoraTunicAsChild;
   extern Option GkDurability;
 
   extern Option ItemPoolValue;

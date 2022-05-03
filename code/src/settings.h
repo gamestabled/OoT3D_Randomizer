@@ -428,8 +428,19 @@ typedef struct {
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+  u8 slingshotAsAdult;
+  u8 bowAsChild;
+  u8 hookshotAsChild;
   u8 ironbootsAsChild;
+  u8 hoverbootsAsChild;
   u8 masksAsAdult;
+  u8 kokiriSwordAsAdult;
+  u8 masterSwordAsChild;
+  u8 biggoronSwordAsChild;
+  u8 dekuShieldAsAdult;
+  u8 mirrorShieldAsChild;
+  u8 goronTunicAsChild;
+  u8 zoraTunicAsChild;
   u8 gkDurability;
 
   u8 itemPoolValue;

@@ -1246,6 +1246,70 @@ hook_ReturnFWSetupGrottoInfo:
     add sp,sp,#0x8
     bx lr
 
+.global hook_ChildHoverBoots
+hook_ChildHoverBoots:
+    beq 0x2D5F04
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHoverBootsEffect
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x2D5F04
+    b 0x2D5DFC
+
+.global hook_ArrowsOrSeeds
+hook_ArrowsOrSeeds:
+    push {r0-r12, lr}
+    bl Player_ShouldUseSlingshot
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_HookshotDrawRedLaser
+hook_HookshotDrawRedLaser:
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHookshotParts
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bxeq lr
+    b 0x4C55C0
+
+.global hook_HookshotDrawChain
+hook_HookshotDrawChain:
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHookshotParts
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x2202BC
+    ldr r0,[r4,#0x290]
+    b 0x2202A4
+
+.global hook_HookshotRotation
+hook_HookshotRotation:
+    push {r0-r12, lr}
+    bl Hookshot_GetZRotation
+    vmov.f32 s0,r0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LinkReflection
+hook_LinkReflection:
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHookshotParts
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    streq r1,[r0,#0x714]
+    bx lr
+
+.global hook_ChildCanOpenBowSubMenu
+hook_ChildCanOpenBowSubMenu:
+    push {r0-r12, lr}
+    bl Settings_BowAsChild
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x2EB2DC
+    cmp r12,#0x0
+    b 0x2EB2DC
+
 .global hook_BrownBoulderExplode
 hook_BrownBoulderExplode:
     push {r0-r12, lr}

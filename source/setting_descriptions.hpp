@@ -258,11 +258,23 @@ extern string_view progGoronSword;
 
 extern string_view faroresWindAnywhereDesc;
 
+extern string_view ageRestrictionsDesc;
 extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;
+extern string_view adultSlingshotDesc;
+extern string_view childBowDesc;
+extern string_view childHookshotDesc;
 extern string_view childIronBootsDesc;
+extern string_view childHoverBootsDesc;
 extern string_view adultMasksDesc;
+extern string_view adultKokiriSwordDesc;
+extern string_view childMasterSwordDesc;
+extern string_view childBiggoronSwordDesc;
+extern string_view adultDekuShieldDesc;
+extern string_view childMirrorShieldDesc;
+extern string_view childGoronTunicDesc;
+extern string_view childZoraTunicDesc;
 
 extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;
