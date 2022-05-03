@@ -344,6 +344,16 @@ namespace Settings {
   extern Option LACSRewardCount;
   extern Option LACSDungeonCount;
   extern Option LACSTokenCount;
+  extern Option KeyRings;
+  extern Option RingFortress;
+  extern Option RingForest;
+  extern Option RingFire;
+  extern Option RingWater;
+  extern Option RingSpirit;
+  extern Option RingShadow;
+  extern Option RingWell;
+  extern Option RingGtg;
+  extern Option RingCastle;
 
   extern Option SkipChildStealth;
   extern Option SkipTowerEscape;

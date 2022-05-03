@@ -5,11 +5,11 @@
 /*------------------------------
 |      RANDOMIZE SETTINGS      |                            *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
-string_view openRandomize             = "Randomize all Open Settings except for Logic rules";
+string_view openRandomize             = "Randomize all Open Settings.";                    //
 string_view worldRandomize            = "Randomize all World Settings except for MQ\n"     //
-                                        "dungeons";                                        //
-string_view shuffleRandomize          = "Randomize all Shuffle Settings";                  //
-string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings";          //
+                                        "dungeons.";                                       //
+string_view shuffleRandomize          = "Randomize all Shuffle Settings.";                 //
+string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings.";         //
                                                                                            //
 /*------------------------------                                                           //
 |            LOGIC             |                                                           //
@@ -458,6 +458,15 @@ string_view gerudoKeysOverworld       = "Gerudo Fortress Keys can only appear ou
                                         "dungeons.";                                       //
 string_view gerudoKeysAnywhere        = "Gerudo Fortress Keys can appear anywhere in the\n"//
                                         "world.";                                          //
+/*------------------------------                                                           //
+|           Key Rings          |                                                           //
+------------------------------*/                                                           //
+string_view keyRingDesc               = "Selected key ring dungeons will have all of their\n"
+                                        "keys found at once in a ring rather than\n"       //
+                                        "individually.\n\n"                                //
+                                        "For example, instead of shuffling 5 Forest Temple\n"
+                                        "small keys into the pool, you will find a single\n"
+                                        "key ring which will give you all 5 keys at once.\n";
 /*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
