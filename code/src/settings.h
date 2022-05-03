@@ -75,6 +75,12 @@ typedef enum {
 } AgeSetting;
 
 typedef enum {
+  SHUFFLEDUNGEONS_OFF,
+  SHUFFLEDUNGEONS_ON,
+  SHUFFLEDUNGEONS_GANON,
+} ShuffleDungeonEntrancesSetting;
+
+typedef enum {
   SHUFFLEINTERIORS_OFF,
   SHUFFLEINTERIORS_SIMPLE,
   SHUFFLEINTERIORS_ALL,
