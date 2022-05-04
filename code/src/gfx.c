@@ -300,10 +300,10 @@ static void Gfx_DrawButtonPrompts(void) {
     }
 }
 
-static void Gfx_UpdatePlayTime(u8 isInGame)
+static void Gfx_UpdatePlayTime(void)
 {
     u64 currentTick = svcGetSystemTick();
-    if (!isAsleep && isInGame) {
+    if (!isAsleep && IsInGame()) {
         ticksElapsed += currentTick - lastTick;
         if (ticksElapsed > MAX_TICK_DELTA) {
             // Assume that if more ticks than MAX_TICK_DELTA have passed, it has been a long
@@ -898,7 +898,7 @@ static void Gfx_ShowMenu(void) {
         Draw_ClearBackbuffer();
 
         // Continue counting up play time while in the in-game menu
-        Gfx_UpdatePlayTime(true);
+        Gfx_UpdatePlayTime();
 
         menu_draw_funcs[curMenuIdx]();
         Gfx_DrawButtonPrompts();
@@ -909,6 +909,78 @@ static void Gfx_ShowMenu(void) {
         pressed = Input_WaitWithTimeout(1000, closingButton);
 
     } while(true);
+}
+
+static void Gfx_ShowMultiplayerSyncMenu(void) {
+    Draw_ClearFramebuffer();
+    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+
+    do {
+        // End the loop if the system has gone to sleep, so the game can properly respond
+        if (isAsleep) {
+            break;
+        }
+
+        Draw_ClearBackbuffer();
+
+        Multiplayer_Update();
+
+        u8 offsetY = 1;
+        const char* titleString = mp_foundSyncer ? "Syncing..." : "Looking for syncer...";
+        Draw_DrawString(SCREEN_BOT_WIDTH / 2 - (strlen(titleString) / 2) * SPACING_X, 16 + SPACING_Y * offsetY++, COLOR_WHITE, titleString);
+
+        if (mp_foundSyncer) {
+            offsetY++;
+            static const char* syncPacketNames[] = { "Base Sync", "Save Scene Flags 1", "Save Scene Flags 2", "Save Scene Flags 3", "Save Scene Flags 4", "Entrance Data" };
+            static const u8 squareSize = 9;
+            for (size_t i = 0; i < ARRAY_SIZE(mp_completeSyncs); i++) {
+                Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareSize, squareSize, COLOR_WHITE);
+                Draw_DrawRect(11, 17 + SPACING_Y * offsetY, squareSize - 2, squareSize - 2, mp_completeSyncs[i] ? COLOR_GREEN : COLOR_BLACK);
+                Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, syncPacketNames[i]);
+            }
+            if (Multiplayer_GetNeededPacketsMask() != 0) {
+                Multiplayer_Send_FullSyncRequest(Multiplayer_GetNeededPacketsMask());
+            } else {
+                // Syncing is done!
+                offsetY++;
+                const char* msgString = "Done!";
+                Draw_DrawString(SCREEN_BOT_WIDTH / 2 - (strlen(msgString) / 2) * SPACING_X, 16 + SPACING_Y * offsetY, COLOR_WHITE, msgString);
+                Draw_CopyBackBuffer();
+                svcSleepThread(1000 * 1000 * 1000LL);
+
+                Draw_ClearBackbuffer();
+                Draw_CopyBackBuffer();
+                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                mp_isSyncing = false;
+                mSaveContextInit = true;
+                break;
+            }
+        } else {
+            Multiplayer_Send_FullSyncRequest(0); // Send 0 to only ask for ping, to reduce chance of packet loss
+            static u8 syncerSearchTimer = 0;
+            // Look for a syncer for 5 seconds
+            if (syncerSearchTimer >= 5) {
+                Draw_ClearBackbuffer();
+                const char* msgString = "No syncer found.";
+                Draw_DrawString(SCREEN_BOT_WIDTH / 2 - (strlen(msgString) / 2) * SPACING_X, 10 + SPACING_Y * offsetY, COLOR_WHITE, msgString);
+                Draw_CopyBackBuffer();
+                svcSleepThread(1000 * 1000 * 1000LL);
+
+                Draw_ClearBackbuffer();
+                Draw_CopyBackBuffer();
+                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                mp_isSyncing = false;
+                break;
+            }
+            syncerSearchTimer++;
+        }
+
+        Draw_CopyBackBuffer();
+        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+
+        svcSleepThread(1000 * 1000 * 1000LL);
+
+    } while (true);
 }
 
 void Gfx_Init(void) {
@@ -969,6 +1041,10 @@ void Gfx_Update(void) {
         lastTick = svcGetSystemTick();
     }
 
+    if (mp_isSyncing) {
+        Gfx_ShowMultiplayerSyncMenu();
+    }
+
     // The update is called here so it works while in file select
     static u64 lastTickM = 0;
     static u64 elapsedTicksM = 0;
@@ -981,7 +1057,7 @@ void Gfx_Update(void) {
     }
     lastTickM = svcGetSystemTick();
 
-    Gfx_UpdatePlayTime(IsInGame());
+    Gfx_UpdatePlayTime();
 
     if(!isAsleep && openingButton() && IsInGame()){
         Gfx_ShowMenu();

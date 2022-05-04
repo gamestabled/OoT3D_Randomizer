@@ -25,7 +25,10 @@
 u32 receivedPackets = 0;
 bool duplicateSendProtection = false;
 static s8 netStage = 0;
-static bool mSaveContextInit = false;
+bool mp_isSyncing = false;
+bool mp_foundSyncer = false;
+bool mp_completeSyncs[6];
+bool mSaveContextInit = false;
 /// When shared progress is on, whoever in a network is the first to load a savefile
 /// with a unique seed hash becomes a "Seed Hash Host". That player is the one that other
 /// players, who have the same seed hash, will sync with when they start their game.
@@ -263,6 +266,7 @@ typedef enum {
     PACKET_LINKSFX,
     // Shared Progress
     PACKET_FULLSYNCREQUEST,
+    PACKET_FULLSYNCPING,
     PACKET_BASESYNC,
     PACKET_FULLSCENEFLAGSYNC,
     PACKET_FULLENTRANCESYNC,
@@ -309,7 +313,6 @@ void Multiplayer_Run(void) {
     }
 
     Result result;
-    static bool shouldSendFullSyncRequest = false;
     static u8 initTimer = 0;
     const u32 wlancommID = 0x3656B7DA; // Unique ID set manually
     static u8 netScanChecks = 0;
@@ -360,7 +363,6 @@ void Multiplayer_Run(void) {
                     if (R_FAILED(result)) {
                         return;
                     }
-                    shouldSendFullSyncRequest = true;
                     netStage++;
                 }
             } else {
@@ -386,11 +388,12 @@ void Multiplayer_Run(void) {
             mBufSize = UDS_DATAFRAME_MAXSIZE;
             mBuffer = SystemArena_Malloc(mBufSize);
 
+            if (gSettingsContext.mp_SharedProgress == ON) {
+                mp_isSyncing = true;
+            }
+
             netStage++;
 
-            if (shouldSendFullSyncRequest) {
-                Multiplayer_Send_FullSyncRequest();
-            }
             break;
         case 3:
             // Ready to go! This update is only called in-game with the gfx menu closed
@@ -883,7 +886,19 @@ void Multiplayer_Receive_LinkSFX(u16 senderID) {
 
 // Shared Progress
 
-void Multiplayer_Send_FullSyncRequest(void) {
+u8 Multiplayer_GetNeededPacketsMask(void) {
+    u8 neededPacketsMask = 0;
+
+    for (size_t i = 0; i < ARRAY_SIZE(mp_completeSyncs); i++) {
+        if (!mp_completeSyncs[i]) {
+            neededPacketsMask |= 1 << i;
+        }
+    }
+
+    return neededPacketsMask;
+}
+
+void Multiplayer_Send_FullSyncRequest(u8 neededPacketsMask) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
@@ -893,6 +908,7 @@ void Multiplayer_Send_FullSyncRequest(void) {
     for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
         mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
     }
+    mBuffer[memSpacer++] = neededPacketsMask;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
@@ -901,12 +917,51 @@ void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
         return;
     }
 
-    Multiplayer_Send_BaseSync(senderID);
-    Multiplayer_Send_FullSceneFlagSync(senderID, 0);
-    Multiplayer_Send_FullSceneFlagSync(senderID, 1);
-    Multiplayer_Send_FullSceneFlagSync(senderID, 2);
-    Multiplayer_Send_FullSceneFlagSync(senderID, 3);
-    Multiplayer_Send_FullEntranceSync(senderID);
+    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+
+    u8 neededPacketsMask = mBuffer[memSpacer++];
+
+    Multiplayer_Send_FullSyncPing();
+    u8 maskSpacer = 0;
+    if (neededPacketsMask & 1 << maskSpacer++) {
+        Multiplayer_Send_BaseSync(senderID);
+    }
+    if (neededPacketsMask & 1 << maskSpacer++) {
+        Multiplayer_Send_FullSceneFlagSync(senderID, 0);
+    }
+    if (neededPacketsMask & 1 << maskSpacer++) {
+        Multiplayer_Send_FullSceneFlagSync(senderID, 1);
+    }
+    if (neededPacketsMask & 1 << maskSpacer++) {
+        Multiplayer_Send_FullSceneFlagSync(senderID, 2);
+    }
+    if (neededPacketsMask & 1 << maskSpacer++) {
+        Multiplayer_Send_FullSceneFlagSync(senderID, 3);
+    }
+    if (neededPacketsMask & 1 << maskSpacer++) {
+        Multiplayer_Send_FullEntranceSync(senderID);
+    }
+}
+
+void Multiplayer_Send_FullSyncPing(void) {
+    if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
+        return;
+    }
+    memset(mBuffer, 0, mBufSize);
+    u8 memSpacer = 0;
+    mBuffer[memSpacer++] = PACKET_FULLSYNCPING; // 0: Identifier
+    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
+        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
+    }
+    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+}
+
+void Multiplayer_Receive_FullSyncPing(u16 senderID) {
+    if (gSettingsContext.mp_SharedProgress == OFF || !IsHashSame(&mBuffer[1])) {
+        return;
+    }
+
+    mp_foundSyncer = true;
 }
 
 void Multiplayer_Send_BaseSync(u16 targetID) {
@@ -967,10 +1022,9 @@ void Multiplayer_Send_BaseSync(u16 targetID) {
 }
 
 void Multiplayer_Receive_BaseSync(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF || mp_completeSyncs[0]) {
         return;
     }
-    mSaveContextInit = true;
     u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
 
     mSaveContext.healthCapacity = mBuffer[memSpacer++];
@@ -1029,6 +1083,8 @@ void Multiplayer_Receive_BaseSync(u16 senderID) {
         mSaveContext.rupees = maxRupees[mSaveContext.upgrades >> 12 & 0x3];
         memSpacer++;
     }
+
+    mp_completeSyncs[0] = true;
 }
 
 void Multiplayer_Send_FullSceneFlagSync(u16 targetID, u8 part) {
@@ -1063,6 +1119,11 @@ void Multiplayer_Receive_FullSceneFlagSync(u16 senderID) {
     u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
 
     u8 part = mBuffer[memSpacer++];
+
+    if (mp_completeSyncs[1 + part]) {
+        return;
+    }
+
     u8 start = 31 * part;
     u8 end = start + 31;
     for (size_t i = start; i < end; i++) {
@@ -1074,6 +1135,8 @@ void Multiplayer_Receive_FullSceneFlagSync(u16 senderID) {
         mSaveContext.sceneFlags[i].rooms1 = mBuffer[memSpacer++];
         mSaveContext.sceneFlags[i].rooms2 = mBuffer[memSpacer++];
     }
+
+    mp_completeSyncs[1 + part] = true;
 }
 
 void Multiplayer_Send_FullEntranceSync(u16 targetID) {
@@ -1096,7 +1159,7 @@ void Multiplayer_Send_FullEntranceSync(u16 targetID) {
 }
 
 void Multiplayer_Receive_FullEntranceSync(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF || mp_completeSyncs[5]) {
         return;
     }
     u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
@@ -1107,6 +1170,8 @@ void Multiplayer_Receive_FullEntranceSync(u16 senderID) {
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.entrancesDiscovered); i++) {
         mSaveContext.entrancesDiscovered[i] = mBuffer[memSpacer++];
     }
+
+    mp_completeSyncs[5] = true;
 }
 
 void Multiplayer_Send_Item(u8 slot, ItemID item) {
@@ -2387,6 +2452,7 @@ static void Multiplayer_UnpackPacket(u16 senderID) {
         Multiplayer_Receive_LinkSFX,
         // Shared Progress
         Multiplayer_Receive_FullSyncRequest,
+        Multiplayer_Receive_FullSyncPing,
         Multiplayer_Receive_BaseSync,
         Multiplayer_Receive_FullSceneFlagSync,
         Multiplayer_Receive_FullEntranceSync,
