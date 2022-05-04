@@ -41,6 +41,7 @@ void Multiplayer_Send_InfTableBit(u8 index, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_ActorFlagBit(u8 index, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_SceneFlagBit(u8 scene, u8 member, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_GSFlagBit(u8 index, u8 bit, u8 setOrUnset);
+void Multiplayer_Send_BigPoePoints(u32 pointDiff);
 void Multiplayer_Send_FishingFlag(u8 bit, u8 setOrUnset);
 void Multiplayer_Send_WorldMapBit(u8 bit, u8 setOrUnset);
 void Multiplayer_Send_BiggoronTradeBit(u8 bit);
