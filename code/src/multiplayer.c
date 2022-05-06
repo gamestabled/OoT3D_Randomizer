@@ -533,14 +533,14 @@ void Multiplayer_Sync_Update(void) {
 
     // Ammo
     if (gSettingsContext.mp_SharedAmmo == ON) {
-        for (size_t index = 0; index < ARRAY_SIZE(gSaveContext.ammo); index++) {
-            if (index == SLOT_BEAN) {
+        for (size_t slot = 0; slot < ARRAY_SIZE(gSaveContext.ammo); slot++) {
+            if (slot == SLOT_BEAN) {
                 continue;
             }
-            if (prevAmmo[index] != gSaveContext.ammo[index]) {
-                Multiplayer_Send_AmmoChange(index, gSaveContext.ammo[index] - prevAmmo[index]);
+            if (prevAmmo[slot] != gSaveContext.ammo[slot]) {
+                Multiplayer_Send_AmmoChange(slot, gSaveContext.ammo[slot] - prevAmmo[slot]);
             }
-            prevAmmo[index] = gSaveContext.ammo[index];
+            prevAmmo[slot] = gSaveContext.ammo[slot];
         }
     }
 }
@@ -2219,6 +2219,10 @@ void Multiplayer_Send_HealthChange(s16 diff) {
     memset(mBuffer, 0, mBufSize);
     u8 memSpacer = 0;
     mBuffer[memSpacer++] = PACKET_HEALTHCHANGE; // 0: Identifier
+    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
+        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
+    }
+    mBuffer[memSpacer++] = gSaveContext.health;
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
@@ -2227,17 +2231,23 @@ void Multiplayer_Receive_HealthChange(u16 senderID) {
     if (gSettingsContext.mp_SharedHealth == OFF) {
         return;
     }
-    s16 diff = mBuffer[1];
+    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+
+    s16 newHealth = mBuffer[memSpacer++];
+    s16 diff = mBuffer[memSpacer++];
 
     if (gSettingsContext.mp_SharedProgress == ON) {
-        mSaveContext.health += diff;
+        if (IsHashSame(&mBuffer[1])) {
+            mSaveContext.health = newHealth;
+        } else {
+            mSaveContext.health += diff;
 
-        if (mSaveContext.health > mSaveContext.healthCapacity) {
-            mSaveContext.health = mSaveContext.healthCapacity;
-        } else if (mSaveContext.health < 0) {
-            mSaveContext.health = 0;
+            if (mSaveContext.health > mSaveContext.healthCapacity) {
+                mSaveContext.health = mSaveContext.healthCapacity;
+            } else if (mSaveContext.health < 0) {
+                mSaveContext.health = 0;
+            }
         }
-
         prevHealth = mSaveContext.health;
     } else {
         if (!IsInGame()) {
@@ -2262,6 +2272,10 @@ void Multiplayer_Send_RupeeChange(s16 diff) {
     memset(mBuffer, 0, mBufSize);
     u8 memSpacer = 0;
     mBuffer[memSpacer++] = PACKET_RUPEESCHANGE; // 0: Identifier
+    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
+        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
+    }
+    mBuffer[memSpacer++] = gSaveContext.rupees;
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
@@ -2270,19 +2284,25 @@ void Multiplayer_Receive_RupeeChange(u16 senderID) {
     if (gSettingsContext.mp_SharedRupees == OFF) {
         return;
     }
-    s16 diff = mBuffer[1];
+    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+
+    s16 newRupees = mBuffer[memSpacer++];
+    s16 diff = mBuffer[memSpacer++];
 
     if (gSettingsContext.mp_SharedProgress == ON) {
-        mSaveContext.rupees += diff;
+        if (IsHashSame(&mBuffer[1])) {
+            mSaveContext.rupees = newRupees;
+        } else {
+            mSaveContext.rupees += diff;
 
-        static u16 maxRupees[] = { 99, 200, 500, 999 };
-        u8 upgrade = mSaveContext.upgrades >> 12 & 0x3;
-        if (mSaveContext.rupees > maxRupees[upgrade]) {
-            mSaveContext.rupees = maxRupees[upgrade];
-        } else if (mSaveContext.rupees < 0) {
-            mSaveContext.rupees = 0;
+            static u16 maxRupees[] = { 99, 200, 500, 999 };
+            u8 upgrade = mSaveContext.upgrades >> 12 & 0x3;
+            if (mSaveContext.rupees > maxRupees[upgrade]) {
+                mSaveContext.rupees = maxRupees[upgrade];
+            } else if (mSaveContext.rupees < 0) {
+                mSaveContext.rupees = 0;
+            }
         }
-
         prevRupees = mSaveContext.rupees;
     } else {
         if (!IsInGame()) {
@@ -2290,7 +2310,7 @@ void Multiplayer_Receive_RupeeChange(u16 senderID) {
         }
         gSaveContext.rupees += diff;
 
-        static u16 maxRupees[] = { 99, 200, 500, 999 };
+        static const u16 maxRupees[] = { 99, 200, 500, 999 };
         u8 upgrade = gSaveContext.upgrades >> 12 & 0x3;
         if (gSaveContext.rupees > maxRupees[upgrade]) {
             gSaveContext.rupees = maxRupees[upgrade];
@@ -2309,6 +2329,10 @@ void Multiplayer_Send_AmmoChange(u8 slot, s8 diff) {
     memset(mBuffer, 0, mBufSize);
     u8 memSpacer = 0;
     mBuffer[memSpacer++] = PACKET_AMMOCHANGE; // 0: Identifier
+    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
+        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
+    }
+    mBuffer[memSpacer++] = gSaveContext.ammo[slot];
     mBuffer[memSpacer++] = slot;
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
@@ -2318,14 +2342,21 @@ void Multiplayer_Receive_AmmoChange(u16 senderID) {
     if (gSettingsContext.mp_SharedAmmo == OFF) {
         return;
     }
-    u8 slot = mBuffer[1];
-    s8 diff = mBuffer[2];
+    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+
+    s8 newAmmo = mBuffer[memSpacer++];
+    u8 slot = mBuffer[memSpacer++];
+    s8 diff = mBuffer[memSpacer++];
 
     // TODO: Don't go over max
     if (gSettingsContext.mp_SharedProgress == ON) {
-        mSaveContext.ammo[slot] += diff;
-        if (mSaveContext.ammo[slot] < 0) {
-            mSaveContext.ammo[slot] = 0;
+        if (IsHashSame(&mBuffer[1])) {
+            mSaveContext.ammo[slot] = newAmmo;
+        } else {
+            mSaveContext.ammo[slot] += diff;
+            if (mSaveContext.ammo[slot] < 0) {
+                mSaveContext.ammo[slot] = 0;
+            }
         }
         prevAmmo[slot] = mSaveContext.ammo[slot];
     } else {
