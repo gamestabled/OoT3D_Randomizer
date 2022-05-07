@@ -1,5 +1,6 @@
 #include "skulltula.h"
 #include "multiplayer.h"
+#include "settings.h"
 
 #define EnSw_Update_addr 0x1BB110
 #define EnSw_Update ((ActorFunc)EnSw_Update_addr)
@@ -42,4 +43,19 @@ void EnSw_Kill(EnSw* thisx, GlobalContext* globalCtx) {
     thisx->deathTimer_maybe = 15;
     thisx->unk_word1 = 1;
     thisx->action_fn = EnSw_GoldSkulltulaDeath;
+}
+
+s32 EnSw_IsMasterQuestSkulltula(void) {
+    // Certain Gold Skulltulas check the MQ flag to determine if they should have a collider or not.
+    // Grezzo did this to make MQ skulltulas intangible if they're hidden inside blocks.
+    // For the randomizer they have to check the individual dungeon mode.
+    s16 scene = gGlobalContext->sceneNum;
+    if (scene <= 9)
+        return gSettingsContext.dungeonModes[scene];
+    else if (scene == 11) // GtG
+        return gSettingsContext.dungeonModes[11];
+    else if (scene == 13) // Inside Ganon's Castle
+        return gSettingsContext.dungeonModes[10];
+
+    return 0;
 }

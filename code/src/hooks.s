@@ -1370,6 +1370,14 @@ hook_IgnoreMaskReaction:
     moveq r0,#0x0
     b 0x36BBC8
 
+.global hook_MasterQuestGoldSkulltulaCheck
+hook_MasterQuestGoldSkulltulaCheck:
+    push {r0-r5,r7-r12, lr}
+    bl EnSw_IsMasterQuestSkulltula
+    cpy r6,r0
+    pop {r0-r5,r7-r12, lr}
+    b 0x3415CC
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

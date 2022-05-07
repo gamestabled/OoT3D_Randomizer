@@ -1825,6 +1825,11 @@ SendDroppedBottleContents_patch:
 IgnoreMaskReaction_patch:
     b hook_IgnoreMaskReaction
 
+.section .patch_MasterQuestGoldSkulltulaCheck
+.global MasterQuestGoldSkulltulaCheck_patch
+MasterQuestGoldSkulltulaCheck_patch:
+    b hook_MasterQuestGoldSkulltulaCheck
+
 .section .patch_loader
 .global loader_patch
 

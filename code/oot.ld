@@ -772,6 +772,10 @@ SECTIONS
 		*(.patch_BiggoronDayCheck)
 	}
 
+	.patch_MasterQuestGoldSkulltulaCheck 0x3415C8 : {
+		*(.patch_MasterQuestGoldSkulltulaCheck)
+	}
+
 	.patch_TurboTextSignalNPC 0x3469F4 : {
 		*(.patch_TurboTextSignalNPC)
 	}
