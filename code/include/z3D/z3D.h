@@ -169,7 +169,8 @@ typedef struct {
     /* 0x156F */ u8           buttonStatus[5];
     /* 0x1574 */ char         unk_1574[0x000F];
     /* 0x1584 */ u16          magicMeterSize;
-    /* 0x1586 */ char         unk_1586[0x000C];
+    /* 0x1586 */ char         unk_1586[0x0004];
+    /* 0x158A */ u16          eventInf[4];
     /* 0x1592 */ u16          dungeonIndex;
     /* 0x1594 */ char         unk_1594[0x000C];
     /* 0x15A0 */ u16          nextCutsceneIndex;
