@@ -75,7 +75,7 @@ void SetAllEntrancesData(std::vector<EntranceInfoPair>& entranceShuffleTable) {
     forwardEntrance->SetType(forwardEntry.type);
     forwardEntrance->SetAsPrimary();
     // if type == 'Grotto':
-    //     forward_entrance.data['index'] = 0x1000 + forward_entrance.data['grotto_id']
+    //     forward_entrance.data['index'] = 0x0700 + forward_entrance.data['grotto_id']
     if (returnEntry.parentRegion != NONE) {
       Entrance* returnEntrance = AreaTable(returnEntry.parentRegion)->GetExit(returnEntry.connectedRegion);
       returnEntrance->SetIndex(returnEntry.index);
@@ -83,7 +83,7 @@ void SetAllEntrancesData(std::vector<EntranceInfoPair>& entranceShuffleTable) {
       returnEntrance->SetType(returnEntry.type);
       forwardEntrance->BindTwoWay(returnEntrance);
       // if type == 'Grotto':
-      //     return_entrance.data['index'] = 0x2000 + return_entrance.data['grotto_id']
+      //     return_entrance.data['index'] = 0x0800 + return_entrance.data['grotto_id']
     }
   }
 }
@@ -512,6 +512,8 @@ int ShuffleAllEntrances() {
      {EntranceType::Dungeon,         ICE_CAVERN_ENTRYWAY,              ZORAS_FOUNTAIN,                   0x03D4}},
     {{EntranceType::Dungeon,         GERUDO_FORTRESS,                  GERUDO_TRAINING_GROUNDS_ENTRYWAY, 0x0008},
      {EntranceType::Dungeon,         GERUDO_TRAINING_GROUNDS_ENTRYWAY, GERUDO_FORTRESS,                  0x03A8}},
+    {{EntranceType::GanonDungeon,    GANONS_CASTLE_GROUNDS,            GANONS_CASTLE_ENTRYWAY,           0x0467},
+     {EntranceType::GanonDungeon,    GANONS_CASTLE_ENTRYWAY,           GANONS_CASTLE_GROUNDS,            0x023D}},
 
     {{EntranceType::Interior,        KOKIRI_FOREST,                    KF_MIDOS_HOUSE,                   0x0433},
      {EntranceType::Interior,        KF_MIDOS_HOUSE,                   KOKIRI_FOREST,                    0x0443}},
@@ -597,76 +599,76 @@ int ShuffleAllEntrances() {
     {{EntranceType::SpecialInterior, KAK_BACKYARD,                     KAK_POTION_SHOP_BACK,             0x03EC},
      {EntranceType::SpecialInterior, KAK_POTION_SHOP_BACK,             KAK_BACKYARD,                     0x04FF}},
 
-     // Grotto Loads use an entrance index of 0x1000 + their grotto id. The id is used as index for the
+     // Grotto Loads use an entrance index of 0x0700 + their grotto id. The id is used as index for the
      // grottoLoadTable in src/grotto.c
-     // Grotto Returns use an entrance index of 0x2000 + their grotto id. The id is used as index for the
+     // Grotto Returns use an entrance index of 0x0800 + their grotto id. The id is used as index for the
      // grottoReturnTable in src/grotto.c
-    {{EntranceType::GrottoGrave,     DESERT_COLOSSUS,                  COLOSSUS_GROTTO,                  0x1000},
-     {EntranceType::GrottoGrave,     COLOSSUS_GROTTO,                  DESERT_COLOSSUS,                  0x2000}},
-    {{EntranceType::GrottoGrave,     LAKE_HYLIA,                       LH_GROTTO,                        0x1001},
-     {EntranceType::GrottoGrave,     LH_GROTTO,                        LAKE_HYLIA,                       0x2001}},
-    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_STORMS_GROTTO,                 0x1002},
-     {EntranceType::GrottoGrave,     ZR_STORMS_GROTTO,                 ZORAS_RIVER,                      0x2002}},
-    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_FAIRY_GROTTO,                  0x1003},
-     {EntranceType::GrottoGrave,     ZR_FAIRY_GROTTO,                  ZORAS_RIVER,                      0x2003}},
-    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_OPEN_GROTTO,                   0x1004},
-     {EntranceType::GrottoGrave,     ZR_OPEN_GROTTO,                   ZORAS_RIVER,                      0x2004}},
-    {{EntranceType::GrottoGrave,     DMC_LOWER_NEARBY,                 DMC_HAMMER_GROTTO,                0x1005},
-     {EntranceType::GrottoGrave,     DMC_HAMMER_GROTTO,                DMC_LOWER_LOCAL,                  0x2005}},
-    {{EntranceType::GrottoGrave,     DMC_UPPER_NEARBY,                 DMC_UPPER_GROTTO,                 0x1006},
-     {EntranceType::GrottoGrave,     DMC_UPPER_GROTTO,                 DMC_UPPER_LOCAL,                  0x2006}},
-    {{EntranceType::GrottoGrave,     GC_GROTTO_PLATFORM,               GC_GROTTO,                        0x1007},
-     {EntranceType::GrottoGrave,     GC_GROTTO,                        GC_GROTTO_PLATFORM,               0x2007}},
-    {{EntranceType::GrottoGrave,     DEATH_MOUNTAIN_TRAIL,             DMT_STORMS_GROTTO,                0x1008},
-     {EntranceType::GrottoGrave,     DMT_STORMS_GROTTO,                DEATH_MOUNTAIN_TRAIL,             0x2008}},
-    {{EntranceType::GrottoGrave,     DEATH_MOUNTAIN_SUMMIT,            DMT_COW_GROTTO,                   0x1009},
-     {EntranceType::GrottoGrave,     DMT_COW_GROTTO,                   DEATH_MOUNTAIN_SUMMIT,            0x2009}},
-    {{EntranceType::GrottoGrave,     KAK_BACKYARD,                     KAK_OPEN_GROTTO,                  0x100A},
-     {EntranceType::GrottoGrave,     KAK_OPEN_GROTTO,                  KAK_BACKYARD,                     0x200A}},
-    {{EntranceType::GrottoGrave,     KAKARIKO_VILLAGE,                 KAK_REDEAD_GROTTO,                0x100B},
-     {EntranceType::GrottoGrave,     KAK_REDEAD_GROTTO,                KAKARIKO_VILLAGE,                 0x200B}},
-    {{EntranceType::GrottoGrave,     HYRULE_CASTLE_GROUNDS,            HC_STORMS_GROTTO,                 0x100C},
-     {EntranceType::GrottoGrave,     HC_STORMS_GROTTO,                 CASTLE_GROUNDS,                   0x200C}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_TEKTITE_GROTTO,                0x100D},
-     {EntranceType::GrottoGrave,     HF_TEKTITE_GROTTO,                HYRULE_FIELD,                     0x200D}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_NEAR_KAK_GROTTO,               0x100E},
-     {EntranceType::GrottoGrave,     HF_NEAR_KAK_GROTTO,               HYRULE_FIELD,                     0x200E}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_FAIRY_GROTTO,                  0x100F},
-     {EntranceType::GrottoGrave,     HF_FAIRY_GROTTO,                  HYRULE_FIELD,                     0x200F}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_NEAR_MARKET_GROTTO,            0x1010},
-     {EntranceType::GrottoGrave,     HF_NEAR_MARKET_GROTTO,            HYRULE_FIELD,                     0x2010}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_COW_GROTTO,                    0x1011},
-     {EntranceType::GrottoGrave,     HF_COW_GROTTO,                    HYRULE_FIELD,                     0x2011}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_INSIDE_FENCE_GROTTO,           0x1012},
-     {EntranceType::GrottoGrave,     HF_INSIDE_FENCE_GROTTO,           HYRULE_FIELD,                     0x2012}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_OPEN_GROTTO,                   0x1013},
-     {EntranceType::GrottoGrave,     HF_OPEN_GROTTO,                   HYRULE_FIELD,                     0x2013}},
-    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_SOUTHEAST_GROTTO,              0x1014},
-     {EntranceType::GrottoGrave,     HF_SOUTHEAST_GROTTO,              HYRULE_FIELD,                     0x2014}},
-    {{EntranceType::GrottoGrave,     LON_LON_RANCH,                    LLR_GROTTO,                       0x1015},
-     {EntranceType::GrottoGrave,     LLR_GROTTO,                       LON_LON_RANCH,                    0x2015}},
-    {{EntranceType::GrottoGrave,     SFM_ENTRYWAY,                     SFM_WOLFOS_GROTTO,                0x1016},
-     {EntranceType::GrottoGrave,     SFM_WOLFOS_GROTTO,                SFM_ENTRYWAY,                     0x2016}},
-    {{EntranceType::GrottoGrave,     SACRED_FOREST_MEADOW,             SFM_STORMS_GROTTO,                0x1017},
-     {EntranceType::GrottoGrave,     SFM_STORMS_GROTTO,                SACRED_FOREST_MEADOW,             0x2017}},
-    {{EntranceType::GrottoGrave,     SACRED_FOREST_MEADOW,             SFM_FAIRY_GROTTO,                 0x1018},
-     {EntranceType::GrottoGrave,     SFM_FAIRY_GROTTO,                 SACRED_FOREST_MEADOW,             0x2018}},
-    {{EntranceType::GrottoGrave,     LW_BEYOND_MIDO,                   LW_SCRUBS_GROTTO,                 0x1019},
-     {EntranceType::GrottoGrave,     LW_SCRUBS_GROTTO,                 LW_BEYOND_MIDO,                   0x2019}},
-    {{EntranceType::GrottoGrave,     THE_LOST_WOODS,                   LW_NEAR_SHORTCUTS_GROTTO,         0x101A},
-     {EntranceType::GrottoGrave,     LW_NEAR_SHORTCUTS_GROTTO,         THE_LOST_WOODS,                   0x201A}},
-    {{EntranceType::GrottoGrave,     KOKIRI_FOREST,                    KF_STORMS_GROTTO,                 0x101B},
-     {EntranceType::GrottoGrave,     KF_STORMS_GROTTO,                 KOKIRI_FOREST,                    0x201B}},
-    {{EntranceType::GrottoGrave,     ZORAS_DOMAIN,                     ZD_STORMS_GROTTO,                 0x101C},
-     {EntranceType::GrottoGrave,     ZD_STORMS_GROTTO,                 ZORAS_DOMAIN,                     0x201C}},
-    {{EntranceType::GrottoGrave,     GERUDO_FORTRESS,                  GF_STORMS_GROTTO,                 0x101D},
-     {EntranceType::GrottoGrave,     GF_STORMS_GROTTO,                 GERUDO_FORTRESS,                  0x201D}},
-    {{EntranceType::GrottoGrave,     GV_FORTRESS_SIDE,                 GV_STORMS_GROTTO,                 0x101E},
-     {EntranceType::GrottoGrave,     GV_STORMS_GROTTO,                 GV_FORTRESS_SIDE,                 0x201E}},
-    {{EntranceType::GrottoGrave,     GV_GROTTO_LEDGE,                  GV_OCTOROK_GROTTO,                0x101F},
-     {EntranceType::GrottoGrave,     GV_OCTOROK_GROTTO,                GV_GROTTO_LEDGE,                  0x201F}},
-    {{EntranceType::GrottoGrave,     LW_BEYOND_MIDO,                   DEKU_THEATER,                     0x1020},
-     {EntranceType::GrottoGrave,     DEKU_THEATER,                     LW_BEYOND_MIDO,                   0x2020}},
+    {{EntranceType::GrottoGrave,     DESERT_COLOSSUS,                  COLOSSUS_GROTTO,                  0x0700},
+     {EntranceType::GrottoGrave,     COLOSSUS_GROTTO,                  DESERT_COLOSSUS,                  0x0800}},
+    {{EntranceType::GrottoGrave,     LAKE_HYLIA,                       LH_GROTTO,                        0x0701},
+     {EntranceType::GrottoGrave,     LH_GROTTO,                        LAKE_HYLIA,                       0x0801}},
+    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_STORMS_GROTTO,                 0x0702},
+     {EntranceType::GrottoGrave,     ZR_STORMS_GROTTO,                 ZORAS_RIVER,                      0x0802}},
+    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_FAIRY_GROTTO,                  0x0703},
+     {EntranceType::GrottoGrave,     ZR_FAIRY_GROTTO,                  ZORAS_RIVER,                      0x0803}},
+    {{EntranceType::GrottoGrave,     ZORAS_RIVER,                      ZR_OPEN_GROTTO,                   0x0704},
+     {EntranceType::GrottoGrave,     ZR_OPEN_GROTTO,                   ZORAS_RIVER,                      0x0804}},
+    {{EntranceType::GrottoGrave,     DMC_LOWER_NEARBY,                 DMC_HAMMER_GROTTO,                0x0705},
+     {EntranceType::GrottoGrave,     DMC_HAMMER_GROTTO,                DMC_LOWER_LOCAL,                  0x0805}},
+    {{EntranceType::GrottoGrave,     DMC_UPPER_NEARBY,                 DMC_UPPER_GROTTO,                 0x0706},
+     {EntranceType::GrottoGrave,     DMC_UPPER_GROTTO,                 DMC_UPPER_LOCAL,                  0x0806}},
+    {{EntranceType::GrottoGrave,     GC_GROTTO_PLATFORM,               GC_GROTTO,                        0x0707},
+     {EntranceType::GrottoGrave,     GC_GROTTO,                        GC_GROTTO_PLATFORM,               0x0807}},
+    {{EntranceType::GrottoGrave,     DEATH_MOUNTAIN_TRAIL,             DMT_STORMS_GROTTO,                0x0708},
+     {EntranceType::GrottoGrave,     DMT_STORMS_GROTTO,                DEATH_MOUNTAIN_TRAIL,             0x0808}},
+    {{EntranceType::GrottoGrave,     DEATH_MOUNTAIN_SUMMIT,            DMT_COW_GROTTO,                   0x0709},
+     {EntranceType::GrottoGrave,     DMT_COW_GROTTO,                   DEATH_MOUNTAIN_SUMMIT,            0x0809}},
+    {{EntranceType::GrottoGrave,     KAK_BACKYARD,                     KAK_OPEN_GROTTO,                  0x070A},
+     {EntranceType::GrottoGrave,     KAK_OPEN_GROTTO,                  KAK_BACKYARD,                     0x080A}},
+    {{EntranceType::GrottoGrave,     KAKARIKO_VILLAGE,                 KAK_REDEAD_GROTTO,                0x070B},
+     {EntranceType::GrottoGrave,     KAK_REDEAD_GROTTO,                KAKARIKO_VILLAGE,                 0x080B}},
+    {{EntranceType::GrottoGrave,     HYRULE_CASTLE_GROUNDS,            HC_STORMS_GROTTO,                 0x070C},
+     {EntranceType::GrottoGrave,     HC_STORMS_GROTTO,                 CASTLE_GROUNDS,                   0x080C}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_TEKTITE_GROTTO,                0x070D},
+     {EntranceType::GrottoGrave,     HF_TEKTITE_GROTTO,                HYRULE_FIELD,                     0x080D}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_NEAR_KAK_GROTTO,               0x070E},
+     {EntranceType::GrottoGrave,     HF_NEAR_KAK_GROTTO,               HYRULE_FIELD,                     0x080E}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_FAIRY_GROTTO,                  0x070F},
+     {EntranceType::GrottoGrave,     HF_FAIRY_GROTTO,                  HYRULE_FIELD,                     0x080F}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_NEAR_MARKET_GROTTO,            0x0710},
+     {EntranceType::GrottoGrave,     HF_NEAR_MARKET_GROTTO,            HYRULE_FIELD,                     0x0810}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_COW_GROTTO,                    0x0711},
+     {EntranceType::GrottoGrave,     HF_COW_GROTTO,                    HYRULE_FIELD,                     0x0811}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_INSIDE_FENCE_GROTTO,           0x0712},
+     {EntranceType::GrottoGrave,     HF_INSIDE_FENCE_GROTTO,           HYRULE_FIELD,                     0x0812}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_OPEN_GROTTO,                   0x0713},
+     {EntranceType::GrottoGrave,     HF_OPEN_GROTTO,                   HYRULE_FIELD,                     0x0813}},
+    {{EntranceType::GrottoGrave,     HYRULE_FIELD,                     HF_SOUTHEAST_GROTTO,              0x0714},
+     {EntranceType::GrottoGrave,     HF_SOUTHEAST_GROTTO,              HYRULE_FIELD,                     0x0814}},
+    {{EntranceType::GrottoGrave,     LON_LON_RANCH,                    LLR_GROTTO,                       0x0715},
+     {EntranceType::GrottoGrave,     LLR_GROTTO,                       LON_LON_RANCH,                    0x0815}},
+    {{EntranceType::GrottoGrave,     SFM_ENTRYWAY,                     SFM_WOLFOS_GROTTO,                0x0716},
+     {EntranceType::GrottoGrave,     SFM_WOLFOS_GROTTO,                SFM_ENTRYWAY,                     0x0816}},
+    {{EntranceType::GrottoGrave,     SACRED_FOREST_MEADOW,             SFM_STORMS_GROTTO,                0x0717},
+     {EntranceType::GrottoGrave,     SFM_STORMS_GROTTO,                SACRED_FOREST_MEADOW,             0x0817}},
+    {{EntranceType::GrottoGrave,     SACRED_FOREST_MEADOW,             SFM_FAIRY_GROTTO,                 0x0718},
+     {EntranceType::GrottoGrave,     SFM_FAIRY_GROTTO,                 SACRED_FOREST_MEADOW,             0x0818}},
+    {{EntranceType::GrottoGrave,     LW_BEYOND_MIDO,                   LW_SCRUBS_GROTTO,                 0x0719},
+     {EntranceType::GrottoGrave,     LW_SCRUBS_GROTTO,                 LW_BEYOND_MIDO,                   0x0819}},
+    {{EntranceType::GrottoGrave,     THE_LOST_WOODS,                   LW_NEAR_SHORTCUTS_GROTTO,         0x071A},
+     {EntranceType::GrottoGrave,     LW_NEAR_SHORTCUTS_GROTTO,         THE_LOST_WOODS,                   0x081A}},
+    {{EntranceType::GrottoGrave,     KOKIRI_FOREST,                    KF_STORMS_GROTTO,                 0x071B},
+     {EntranceType::GrottoGrave,     KF_STORMS_GROTTO,                 KOKIRI_FOREST,                    0x081B}},
+    {{EntranceType::GrottoGrave,     ZORAS_DOMAIN,                     ZD_STORMS_GROTTO,                 0x071C},
+     {EntranceType::GrottoGrave,     ZD_STORMS_GROTTO,                 ZORAS_DOMAIN,                     0x081C}},
+    {{EntranceType::GrottoGrave,     GERUDO_FORTRESS,                  GF_STORMS_GROTTO,                 0x071D},
+     {EntranceType::GrottoGrave,     GF_STORMS_GROTTO,                 GERUDO_FORTRESS,                  0x081D}},
+    {{EntranceType::GrottoGrave,     GV_FORTRESS_SIDE,                 GV_STORMS_GROTTO,                 0x071E},
+     {EntranceType::GrottoGrave,     GV_STORMS_GROTTO,                 GV_FORTRESS_SIDE,                 0x081E}},
+    {{EntranceType::GrottoGrave,     GV_GROTTO_LEDGE,                  GV_OCTOROK_GROTTO,                0x071F},
+     {EntranceType::GrottoGrave,     GV_OCTOROK_GROTTO,                GV_GROTTO_LEDGE,                  0x081F}},
+    {{EntranceType::GrottoGrave,     LW_BEYOND_MIDO,                   DEKU_THEATER,                     0x0720},
+     {EntranceType::GrottoGrave,     DEKU_THEATER,                     LW_BEYOND_MIDO,                   0x0820}},
 
     // Graves have their own specified entrance indices
     {{EntranceType::GrottoGrave,     THE_GRAVEYARD,                    GRAVEYARD_SHIELD_GRAVE,           0x004B},
@@ -746,15 +748,18 @@ int ShuffleAllEntrances() {
   //warpsongs
 
   //Shuffle Dungeon Entrances
-  if (Settings::ShuffleDungeonEntrances) {
+  if (Settings::ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) {
     entrancePools[EntranceType::Dungeon] = GetShuffleableEntrances(EntranceType::Dungeon);
-
+	//Add Ganon's Castle, if set to On + Ganon
+    if (Settings::ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_GANON)) {
+      AddElementsToPool(entrancePools[EntranceType::Dungeon], GetShuffleableEntrances(EntranceType::GanonDungeon));
+    }
     //If forest is closed don't allow a forest escape via spirit temple hands
     if (Settings::OpenForest.Is(OPENFOREST_CLOSED) && !(Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances)) {
       FilterAndEraseFromPool(entrancePools[EntranceType::Dungeon], [](const Entrance* entrance){return entrance->GetParentRegionKey()    == KF_OUTSIDE_DEKU_TREE &&
                                                                                                        entrance->GetConnectedRegionKey() == DEKU_TREE_ENTRYWAY;});
     }
-
+	
     //decoupled entrances stuff
   }
 

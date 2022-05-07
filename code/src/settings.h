@@ -75,6 +75,12 @@ typedef enum {
 } AgeSetting;
 
 typedef enum {
+  SHUFFLEDUNGEONS_OFF,
+  SHUFFLEDUNGEONS_ON,
+  SHUFFLEDUNGEONS_GANON,
+} ShuffleDungeonEntrancesSetting;
+
+typedef enum {
   SHUFFLEINTERIORS_OFF,
   SHUFFLEINTERIORS_SIMPLE,
   SHUFFLEINTERIORS_ALL,
@@ -379,6 +385,16 @@ typedef struct {
   u8 lacsDungeonCount;
   u8 lacsTokenCount;
 
+  u8 ringFortress;
+  u8 ringForest;
+  u8 ringFire;
+  u8 ringWater;
+  u8 ringSpirit;
+  u8 ringShadow;
+  u8 ringWell;
+  u8 ringGtg;
+  u8 ringCastle;
+
   u8 skipChildStealth;
   u8 skipTowerEscape;
   u8 skipEponaRace;
@@ -412,8 +428,19 @@ typedef struct {
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+  u8 slingshotAsAdult;
+  u8 bowAsChild;
+  u8 hookshotAsChild;
   u8 ironbootsAsChild;
+  u8 hoverbootsAsChild;
   u8 masksAsAdult;
+  u8 kokiriSwordAsAdult;
+  u8 masterSwordAsChild;
+  u8 biggoronSwordAsChild;
+  u8 dekuShieldAsAdult;
+  u8 mirrorShieldAsChild;
+  u8 goronTunicAsChild;
+  u8 zoraTunicAsChild;
   u8 gkDurability;
 
   u8 itemPoolValue;
@@ -432,6 +459,7 @@ typedef struct {
   u8 playMusic;
   u8 playSFX;
   u8 silenceNavi;
+  u8 ignoreMaskReaction;
 
   u8 customTunicColors;
   u8 coloredKeys;

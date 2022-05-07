@@ -1051,7 +1051,6 @@ int Fill() {
     }
     //Unsuccessful placement
     if(retries < 4) {
-      GetAccessibleLocations(allLocations, SearchMode::AllLocationsReachable);
       PlacementLog_Msg("\nGOT STUCK. RETRYING...\n");
       Areas::ResetAllLocations();
       LogicReset();

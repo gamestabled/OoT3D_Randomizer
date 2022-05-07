@@ -1755,6 +1755,46 @@ OverrideGrottoActorEntrance_patch:
 ReturnFWSetupGrottoInfo_patch:
     bl hook_ReturnFWSetupGrottoInfo
 
+.section .patch_ChildHoverBoots
+.global ChildHoverBoots_patch
+ChildHoverBoots_patch:
+    b hook_ChildHoverBoots
+
+.section .patch_NockArrow
+.global NockArrow_patch
+NockArrow_patch:
+    bl hook_ArrowsOrSeeds
+
+.section .patch_DecreaseArrowCount
+.global DecreaseArrowCount_patch
+DecreaseArrowCount_patch:
+    bl hook_ArrowsOrSeeds
+
+.section .patch_HookshotDrawRedLaser
+.global HookshotDrawRedLaser_patch
+HookshotDrawRedLaser_patch:
+    bl hook_HookshotDrawRedLaser
+
+.section .patch_HookshotDrawChain
+.global HookshotDrawChain_patch
+HookshotDrawChain_patch:
+    b hook_HookshotDrawChain
+
+.section .patch_HookshotRotation
+.global HookshotRotation_patch
+HookshotRotation_patch:
+    bl hook_HookshotRotation
+
+.section .patch_LinkReflection
+.global LinkReflection_patch
+LinkReflection_patch:
+    b hook_LinkReflection
+
+.section .patch_ChildCanOpenBowSubMenu
+.global ChildCanOpenBowSubMenu_patch
+ChildCanOpenBowSubMenu_patch:
+    b hook_ChildCanOpenBowSubMenu
+
 .section .patch_BrownBoulderExplode
 .global BrownBoulderExplode_patch
 BrownBoulderExplode_patch:
@@ -1779,6 +1819,11 @@ Multiplayer_OnLoadFile_patch:
 .global SendDroppedBottleContents_patch
 SendDroppedBottleContents_patch:
     bl hook_SendDroppedBottleContents
+
+.section .patch_IgnoreMaskReaction
+.global IgnoreMaskReaction_patch
+IgnoreMaskReaction_patch:
+    b hook_IgnoreMaskReaction
 
 .section .patch_loader
 .global loader_patch

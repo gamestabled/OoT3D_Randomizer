@@ -6,6 +6,10 @@
 
 extern u32 receivedPackets;
 extern bool duplicateSendProtection;
+extern bool mp_isSyncing;
+extern bool mp_foundSyncer;
+extern bool mp_completeSyncs[6];
+extern bool mSaveContextInit;
 
 void Multiplayer_Run(void);
 void Multiplayer_Update(void);
@@ -18,7 +22,9 @@ void Multiplayer_Send_GhostPing(void);
 void Multiplayer_Send_GhostData(void);
 void Multiplayer_Send_LinkSFX(u32 sfxID);
 // Shared Progress
-void Multiplayer_Send_FullSyncRequest();
+u8 Multiplayer_GetNeededPacketsMask(void);
+void Multiplayer_Send_FullSyncRequest(u8 neededPacketsMask);
+void Multiplayer_Send_FullSyncPing(void);
 void Multiplayer_Send_BaseSync(u16 targetID);
 void Multiplayer_Send_FullSceneFlagSync(u16 targetID, u8 part);
 void Multiplayer_Send_Item(u8 slot, ItemID item);
@@ -41,10 +47,11 @@ void Multiplayer_Send_InfTableBit(u8 index, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_ActorFlagBit(u8 index, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_SceneFlagBit(u8 scene, u8 member, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_GSFlagBit(u8 index, u8 bit, u8 setOrUnset);
+void Multiplayer_Send_BigPoePoints(u32 pointDiff);
 void Multiplayer_Send_FishingFlag(u8 bit, u8 setOrUnset);
 void Multiplayer_Send_WorldMapBit(u8 bit, u8 setOrUnset);
 void Multiplayer_Send_BiggoronTradeBit(u8 bit);
-void Multiplayer_Send_FullEntranceSync(u16 targetID, u8 latterHalf);
+void Multiplayer_Send_FullEntranceSync(u16 targetID);
 void Multiplayer_Send_DiscoveredScene(u32 index, u32 bit);
 void Multiplayer_Send_DiscoveredEntrance(u32 index, u32 bit);
 void Multiplayer_Send_ActorUpdate(Actor* actor, void* extraData, u32 extraDataSize);

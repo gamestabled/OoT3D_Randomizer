@@ -344,6 +344,16 @@ namespace Settings {
   extern Option LACSRewardCount;
   extern Option LACSDungeonCount;
   extern Option LACSTokenCount;
+  extern Option KeyRings;
+  extern Option RingFortress;
+  extern Option RingForest;
+  extern Option RingFire;
+  extern Option RingWater;
+  extern Option RingSpirit;
+  extern Option RingShadow;
+  extern Option RingWell;
+  extern Option RingGtg;
+  extern Option RingCastle;
 
   extern Option SkipChildStealth;
   extern Option SkipTowerEscape;
@@ -378,8 +388,19 @@ namespace Settings {
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
+  extern Option SlingshotAsAdult;
+  extern Option BowAsChild;
+  extern Option HookshotAsChild;
   extern Option IronBootsAsChild;
+  extern Option HoverBootsAsChild;
   extern Option MasksAsAdult;
+  extern Option KokiriSwordAsAdult;
+  extern Option MasterSwordAsChild;
+  extern Option BiggoronSwordAsChild;
+  extern Option DekuShieldAsAdult;
+  extern Option MirrorShieldAsChild;
+  extern Option GoronTunicAsChild;
+  extern Option ZoraTunicAsChild;
   extern Option GkDurability;
 
   extern Option ItemPoolValue;
@@ -467,6 +488,7 @@ namespace Settings {
   extern Option LogicLabWallGS;
   extern Option LogicGraveyardPoH;
   extern Option LogicChildDampeRacePoH;
+  extern Option LogicGVHammerChest;
   extern Option LogicGerudoKitchen;
   extern Option LogicLensWasteland;
   extern Option LogicReverseWasteland;
@@ -599,6 +621,7 @@ namespace Settings {
   extern Option TogglePlayMusic;
   extern Option TogglePlaySFX;
   extern Option SilenceNavi;
+  extern Option IgnoreMaskReaction;
 
   //Cosmetic Settings
   extern Option CustomTunicColors;

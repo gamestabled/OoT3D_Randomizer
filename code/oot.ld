@@ -688,6 +688,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
+	.patch_ChildHoverBoots 0x2D5DF8 : {
+		*(.patch_ChildHoverBoots)
+	}
+
 	.patch_InstantTextFirstLine 0x2E049C : {
 		*(.patch_InstantTextFirstLine)
 	}
@@ -706,6 +710,10 @@ SECTIONS
 
 	.patch_SceneInitAfterCopyScenes 0x2EAFDC : {
 		*(.patch_SceneInitAfterCopyScenes)
+	}
+
+	.patch_ChildCanOpenBowSubMenu 0x2EB2D8 : {
+		*(.patch_ChildCanOpenBowSubMenu)
 	}
 
 	.patch_CorrectCompassChests 0x2F161C : {
@@ -730,6 +738,14 @@ SECTIONS
 
 	.patch_SetBGMEntrance 0x331048 : {
 		*(.patch_SetBGMEntrance)
+	}
+
+	.patch_NockArrow 0x33615C : {
+		*(.patch_NockArrow)
+	}
+
+	.patch_DecreaseArrowCount 0x3362C4 : {
+		*(.patch_DecreaseArrowCount)
 	}
 
 	.patch_SceneExitOverride 0x3366EC : {
@@ -814,6 +830,10 @@ SECTIONS
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
 		*(.patch_ModelSpawnGetObjectStatus)
+	}
+
+	.patch_IgnoreMaskReaction 0x36BBC4 : {
+		*(.patch_IgnoreMaskReaction)
 	}
 
 	.patch_SetBGMEvent 0x36EC40 : {
@@ -1298,6 +1318,22 @@ SECTIONS
 
 	.patch_EditDrawGetItemBeforeModelSpawn 0x4C0FD0 : {
 		*(.patch_EditDrawGetItemBeforeModelSpawn)
+	}
+
+	.patch_HookshotDrawRedLaser 0x4C2620 : {
+		*(.patch_HookshotDrawRedLaser)
+	}
+
+	.patch_HookshotDrawChain 0x2202A0 : {
+		*(.patch_HookshotDrawChain)
+	}
+
+	.patch_HookshotRotation 0x4C2524 : {
+		*(.patch_HookshotRotation)
+	}
+
+	.patch_LinkReflection 0x3F2F0C : {
+		*(.patch_LinkReflection)
 	}
 
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
