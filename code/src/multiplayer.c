@@ -66,6 +66,7 @@ typedef struct {
     s16 gsTokens;
     SaveSceneFlags sceneFlags[124];
     u8 gsFlags[22];
+    u32 bigPoePoints;
     u8 fishingFlags;
     u16 eventChkInf[14];
     u16 itemGetInf[4];
@@ -116,6 +117,7 @@ static void Multiplayer_Overwrite_mSaveContext(void) {
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.gsFlags); i++) {
         mSaveContext.gsFlags[i] = gSaveContext.gsFlags[i];
     }
+    mSaveContext.bigPoePoints = gSaveContext.bigPoePoints;
     mSaveContext.fishingFlags = gSaveContext.fishingStats.flags;
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.eventChkInf); i++) {
         mSaveContext.eventChkInf[i] = gSaveContext.eventChkInf[i];
@@ -174,6 +176,7 @@ static void Multiplayer_Overwrite_gSaveContext(void) {
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.gsFlags); i++) {
         gSaveContext.gsFlags[i] = mSaveContext.gsFlags[i];
     }
+    gSaveContext.bigPoePoints = mSaveContext.bigPoePoints;
     gSaveContext.fishingStats.flags = mSaveContext.fishingFlags;
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.eventChkInf); i++) {
         gSaveContext.eventChkInf[i] = mSaveContext.eventChkInf[i];
@@ -249,6 +252,7 @@ u16 prevInfTable[30];
 ActorFlags prevActorFlags;
 SaveSceneFlags prevSaveSceneFlags[124];
 u8 prevGSFlags[22];
+u32 prevBigPoePoints;
 u8 prevFishingFlags;
 u32 prevWorldMapAreaData;
 u32 prevAdultTrade;
@@ -286,6 +290,7 @@ typedef enum {
     PACKET_ACTORFLAGS,
     PACKET_SAVESCENEFLAG,
     PACKET_GSFLAGS,
+    PACKET_BIGPOEPOINTS,
     PACKET_FISHINGFLAG,
     PACKET_WORLDMAPBIT,
     PACKET_BIGGORONTRADE,
@@ -485,6 +490,9 @@ static void Multiplayer_Sync_Init(void) {
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.gsFlags); i++) {
         prevGSFlags[i] = gSaveContext.gsFlags[i];
     }
+
+    // Big Poe Points
+    prevBigPoePoints = gSaveContext.bigPoePoints;
 
     // Fishing Flags
     prevFishingFlags = gSaveContext.fishingStats.flags;
@@ -758,6 +766,12 @@ static void Multiplayer_Sync_SharedProgress(void) {
         prevGSFlags[index] = gSaveContext.gsFlags[index];
     }
 
+    // Big Poe Points
+    if (prevBigPoePoints != gSaveContext.bigPoePoints) {
+        Multiplayer_Send_BigPoePoints(gSaveContext.bigPoePoints - prevBigPoePoints);
+    }
+    prevBigPoePoints = gSaveContext.bigPoePoints;
+
     // Fishing Flags
     if (prevFishingFlags != gSaveContext.fishingStats.flags) {
         for (size_t bit = 0; bit < BIT_COUNT(gSaveContext.fishingStats.flags); bit++) {
@@ -949,6 +963,7 @@ void Multiplayer_Send_BaseSync(u16 targetID) {
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.gsFlags); i++) {
         mBuffer[memSpacer++] = mSaveContext.gsFlags[i];
     }
+    mBuffer[memSpacer++] = mSaveContext.bigPoePoints;
     mBuffer[memSpacer++] = mSaveContext.fishingFlags;
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.eventChkInf); i++) {
         mBuffer[memSpacer++] = mSaveContext.eventChkInf[i];
@@ -1004,6 +1019,7 @@ void Multiplayer_Receive_BaseSync(u16 senderID) {
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.gsFlags); i++) {
         mSaveContext.gsFlags[i] = mBuffer[memSpacer++];
     }
+    mSaveContext.bigPoePoints = mBuffer[memSpacer++];
     mSaveContext.fishingFlags = mBuffer[memSpacer++];
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.eventChkInf); i++) {
         mSaveContext.eventChkInf[i] = mBuffer[memSpacer++];
@@ -1855,6 +1871,32 @@ void Multiplayer_Receive_GSFlagBit(u16 senderID) {
     }
 }
 
+void Multiplayer_Send_BigPoePoints(u32 pointDiff) {
+    if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
+        return;
+    }
+    memset(mBuffer, 0, mBufSize);
+    u8 memSpacer = 0;
+    mBuffer[memSpacer++] = PACKET_BIGPOEPOINTS; // 0: Identifier
+    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
+        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
+    }
+    mBuffer[memSpacer++] = pointDiff;
+    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+}
+
+void Multiplayer_Receive_BigPoePoints(u16 senderID) {
+    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+        return;
+    }
+    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+
+    u32 pointDiff = mBuffer[memSpacer++];
+
+    mSaveContext.bigPoePoints += pointDiff;
+    prevBigPoePoints += pointDiff;
+}
+
 void Multiplayer_Send_FishingFlag(u8 bit, u8 setOrUnset) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
@@ -2410,6 +2452,7 @@ static void Multiplayer_UnpackPacket(u16 senderID) {
         Multiplayer_Receive_ActorFlagBit,
         Multiplayer_Receive_SceneFlagBit,
         Multiplayer_Receive_GSFlagBit,
+        Multiplayer_Receive_BigPoePoints,
         Multiplayer_Receive_FishingFlag,
         Multiplayer_Receive_WorldMapBit,
         Multiplayer_Receive_BiggoronTradeBit,
