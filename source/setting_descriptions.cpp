@@ -923,9 +923,12 @@ string_view mp_EnabledDesc            = "Enables multiplayer.\n"                
 string_view mp_SharedProgressDesc     = "Progress and certain actors will be synced\n"     //
                                         "between everyone who has this option on and the\n"//
                                         "same seed hash.";                                 //
-string_view mp_SharedHealthDesc       = "Damage and recovery will be synced.";             //
-string_view mp_SharedRupeesDesc       = "Rupee gain and loss will be synced.";             //
-string_view mp_SharedAmmoDesc         = "Ammo gain and loss will be synced.";              //
+string_view mp_SharedHealthDesc       = "Syncs health when shared progress is on,\n"       //
+                                        "otherwise just shares the damage and recovery.";  //
+string_view mp_SharedRupeesDesc       = "Syncs rupees when shared progress is on,\n"       //
+                                        "otherwise just shares the gain and loss.";        //
+string_view mp_SharedAmmoDesc         = "Syncs ammo when shared progress is on,\n"         //
+                                        "otherwise just shares the gain and loss.";        //
                                                                                            //
 /*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
