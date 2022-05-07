@@ -781,6 +781,10 @@ namespace Logic {
 
   }
 
+  bool SmallKeys(u8 chestGameKeyCount, u8 requiredAmount) {
+    return (chestGameKeyCount >= requiredAmount);
+  }
+
   bool SmallKeys(Key dungeon, u8 requiredAmount) {
     return SmallKeys(dungeon, requiredAmount, requiredAmount);
   }
