@@ -920,9 +920,15 @@ string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random du
 string_view mp_EnabledDesc            = "Enables multiplayer.\n"                           //
                                         "Other players will always be seen and heard\n"    //
                                         "regardless of the other settings.";               //
-string_view mp_SharedProgressDesc     = "Progress and certain actors will be synced\n"     //
-                                        "between everyone who has this option on and the\n"//
-                                        "same seed hash.";                                 //
+string_view mp_SharedProgressDesc     = "Progress and certain actors will be synced between"
+                                        "everyone in the network that has this option on,\n"
+                                        "the same seed hash, and the same sync id.";       //
+string_view mp_SyncIdDesc             = "Limits shared progress to only sync with other\n" //
+                                        "players that have the same sync ID. This is only\n"
+                                        "necessary to set if multiple groups of players\n" //
+                                        "play on the same seed hash, but only want to share"
+                                        "their progress with certan people.\n"             //
+                                        "For example, when doing a 2v2 race.";             //
 string_view mp_SharedHealthDesc       = "Syncs health when shared progress is on,\n"       //
                                         "otherwise just shares the damage and recovery.";  //
 string_view mp_SharedRupeesDesc       = "Syncs rupees when shared progress is on,\n"       //
