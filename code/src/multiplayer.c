@@ -826,15 +826,6 @@ void Multiplayer_Sync_UpdatePrevActorFlags(void) {
     }
 }
 
-static bool IsHashSame(u32* hashPtr) {
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        if (hashPtr[i] != gSettingsContext.hashIndexes[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 // Ghost Data
 
 void Multiplayer_Send_GhostPing(void) {
@@ -900,6 +891,46 @@ void Multiplayer_Receive_LinkSFX(u16 senderID) {
 
 // Shared Progress
 
+// Places the identifier, sync id, and hash in the buffer in order, and returns the memSpacer offset.
+static u8 PrepareSharedProgressPacket(u8 packetIdentifier) {
+    u8 memSpacer = 0;
+
+    mBuffer[memSpacer++] = packetIdentifier;
+    mBuffer[memSpacer++] = gSettingsContext.mp_SyncId;
+    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
+        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
+    }
+
+    return memSpacer;
+}
+
+// Follows the standard of putting the indentifier, sync id, and hash in the same order.
+static u8 GetSharedProgressMemSpacerOffset(void) {
+    u8 memSpacerOffset = 0;
+
+    memSpacerOffset++; // Identifier
+    memSpacerOffset++; // Sync Id
+    memSpacerOffset += ARRAY_SIZE(gSettingsContext.hashIndexes);
+
+    return memSpacerOffset;
+}
+
+// This function should only be called inside shared-progress-receive functions, right after mBuffer has been filled.
+static bool IsSyncIdAndHashSame(void) {
+    u8 receivedSyncId = mBuffer[1];
+    u32* receivedHashPtr = &mBuffer[2];
+
+    if (receivedSyncId != gSettingsContext.mp_SyncId) {
+        return false;
+    }
+    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
+        if (receivedHashPtr[i] != gSettingsContext.hashIndexes[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 u8 Multiplayer_GetNeededPacketsMask(void) {
     u8 neededPacketsMask = 0;
 
@@ -917,21 +948,18 @@ void Multiplayer_Send_FullSyncRequest(u8 neededPacketsMask) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_FULLSYNCREQUEST; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSYNCREQUEST);
+
     mBuffer[memSpacer++] = neededPacketsMask;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
-    if (gSettingsContext.mp_SharedProgress == OFF || !isSeedHashHost || !IsHashSame(&mBuffer[1])) {
+    if (gSettingsContext.mp_SharedProgress == OFF || !isSeedHashHost || !IsSyncIdAndHashSame()) {
         return;
     }
 
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 neededPacketsMask = mBuffer[memSpacer++];
 
@@ -962,16 +990,13 @@ void Multiplayer_Send_FullSyncPing(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_FULLSYNCPING; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSYNCPING);
+
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_FullSyncPing(u16 senderID) {
-    if (gSettingsContext.mp_SharedProgress == OFF || !IsHashSame(&mBuffer[1])) {
+    if (gSettingsContext.mp_SharedProgress == OFF || !IsSyncIdAndHashSame()) {
         return;
     }
 
@@ -983,11 +1008,8 @@ void Multiplayer_Send_BaseSync(u16 targetID) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_BASESYNC; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_BASESYNC);
+
     mBuffer[memSpacer++] = mSaveContext.healthCapacity;
     mBuffer[memSpacer++] = mSaveContext.doubleDefense;
     mBuffer[memSpacer++] = mSaveContext.magicLevel;
@@ -1037,10 +1059,10 @@ void Multiplayer_Send_BaseSync(u16 targetID) {
 }
 
 void Multiplayer_Receive_BaseSync(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF || mp_completeSyncs[0]) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF || mp_completeSyncs[0]) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     mSaveContext.healthCapacity = mBuffer[memSpacer++];
     mSaveContext.doubleDefense = mBuffer[memSpacer++];
@@ -1108,11 +1130,8 @@ void Multiplayer_Send_FullSceneFlagSync(u16 targetID, u8 part) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_FULLSCENEFLAGSYNC; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSCENEFLAGSYNC);
+
     mBuffer[memSpacer++] = part;
     u8 start = 31 * part;
     u8 end = start + 31;
@@ -1129,10 +1148,10 @@ void Multiplayer_Send_FullSceneFlagSync(u16 targetID, u8 part) {
 }
 
 void Multiplayer_Receive_FullSceneFlagSync(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 part = mBuffer[memSpacer++];
 
@@ -1160,11 +1179,8 @@ void Multiplayer_Send_FullEntranceSync(u16 targetID) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_FULLENTRANCESYNC; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLENTRANCESYNC);
+
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.scenesDiscovered); i++) {
         mBuffer[memSpacer++] = mSaveContext.scenesDiscovered[i];
     }
@@ -1175,10 +1191,10 @@ void Multiplayer_Send_FullEntranceSync(u16 targetID) {
 }
 
 void Multiplayer_Receive_FullEntranceSync(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF || mp_completeSyncs[5]) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF || mp_completeSyncs[5]) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.scenesDiscovered); i++) {
         mSaveContext.scenesDiscovered[i] = mBuffer[memSpacer++];
@@ -1195,21 +1211,18 @@ void Multiplayer_Send_Item(u8 slot, ItemID item) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_ITEM; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_ITEM);
+
     mBuffer[memSpacer++] = slot;
     mBuffer[memSpacer++] = item;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_Item(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 slot = mBuffer[memSpacer++];
     ItemID item = mBuffer[memSpacer++];
@@ -1242,20 +1255,17 @@ void Multiplayer_Send_MaxHealth(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_MAXHEALTH; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_MAXHEALTH);
+
     mBuffer[memSpacer++] = gSaveContext.healthCapacity;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_MaxHealth(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u16 newMaxHealth = mBuffer[memSpacer++];
 
@@ -1268,16 +1278,13 @@ void Multiplayer_Send_KokiriSwordEquip(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_KOKIRISWORDEQUIP; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_KOKIRISWORDEQUIP);
+
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_KokiriSwordEquip(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
 
@@ -1289,16 +1296,13 @@ void Multiplayer_Send_BGSFlag(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_BGSFLAG; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_BGSFLAG);
+
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_BGSFlag(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
 
@@ -1311,20 +1315,17 @@ void Multiplayer_Send_MagicArrow(u8 type) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_MAGICARROW; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_MAGICARROW);
+
     mBuffer[memSpacer++] = type;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_MagicArrow(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF || !IsInGame()) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF || !IsInGame()) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 type = mBuffer[memSpacer++];
 
@@ -1337,20 +1338,17 @@ void Multiplayer_Send_GreatFairyBuff(u8 type) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_GREATFAIRYBUFF; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_GREATFAIRYBUFF);
+
     mBuffer[memSpacer++] = type;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_GreatFairyBuff(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 type = mBuffer[memSpacer++];
 
@@ -1379,20 +1377,17 @@ void Multiplayer_Send_MagicBeanDiff(s8 diff) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_MAGICBEANDIFF; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_MAGICBEANDIFF);
+
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_MagicBeanDiff(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 beanDiff = mBuffer[memSpacer++];
 
@@ -1405,20 +1400,17 @@ void Multiplayer_Send_MagicBeansBoughtUpdate(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_MAGICBEANSBOUGHT; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_MAGICBEANSBOUGHT);
+
     mBuffer[memSpacer++] = gSaveContext.magic_beans_available;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_MagicBeansBoughtUpdate(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 magic_beans_available = mBuffer[memSpacer++];
 
@@ -1431,21 +1423,18 @@ void Multiplayer_Send_EquipmentBit(u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_EQUIPMENT; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_EQUIPMENT);
+
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_EquipmentBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 bit = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
@@ -1474,21 +1463,18 @@ void Multiplayer_Send_UpgradesBit(u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_UPGRADES; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_UPGRADES);
+
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_UpgradesBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 bit = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
@@ -1507,21 +1493,18 @@ void Multiplayer_Send_QuestItemBit(u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_QUESTITEM; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_QUESTITEM);
+
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_QuestItemBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 bit = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
@@ -1540,11 +1523,8 @@ void Multiplayer_Send_DungeonItemBit(u8 index, u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_DUNGEONITEM; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_DUNGEONITEM);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
@@ -1552,10 +1532,10 @@ void Multiplayer_Send_DungeonItemBit(u8 index, u8 bit, u8 setOrUnset) {
 }
 
 void Multiplayer_Receive_DungeonItemBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 index = mBuffer[memSpacer++];
     u8 bit = mBuffer[memSpacer++];
@@ -1575,21 +1555,18 @@ void Multiplayer_Send_DungeonKeyUpdate(u8 index, s8 diff) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_DUNGEONKEY; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_DUNGEONKEY);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_DungeonKeyUpdate(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 index = mBuffer[memSpacer++];
     s8 diff = mBuffer[memSpacer++];
@@ -1603,20 +1580,17 @@ void Multiplayer_Send_GSTokenDiff(s16 diff) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_GSTOKENDIFF; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_GSTOKENDIFF);
+
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_GSTokenDiff(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 diff = mBuffer[memSpacer++];
 
@@ -1629,11 +1603,8 @@ void Multiplayer_Send_EventChkInfBit(u8 index, u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_EVENTCHKINF; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_EVENTCHKINF);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
@@ -1641,10 +1612,10 @@ void Multiplayer_Send_EventChkInfBit(u8 index, u8 bit, u8 setOrUnset) {
 }
 
 void Multiplayer_Receive_EventChkInfBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 index = mBuffer[memSpacer++];
     u8 bit = mBuffer[memSpacer++];
@@ -1669,11 +1640,8 @@ void Multiplayer_Send_ItemGetInfBit(u8 index, u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_ITEMGETINF; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_ITEMGETINF);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
@@ -1681,10 +1649,10 @@ void Multiplayer_Send_ItemGetInfBit(u8 index, u8 bit, u8 setOrUnset) {
 }
 
 void Multiplayer_Receive_ItemGetInfBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 index = mBuffer[memSpacer++];
     u8 bit = mBuffer[memSpacer++];
@@ -1704,11 +1672,8 @@ void Multiplayer_Send_InfTableBit(u8 index, u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_INFTABLE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_INFTABLE);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
@@ -1716,10 +1681,10 @@ void Multiplayer_Send_InfTableBit(u8 index, u8 bit, u8 setOrUnset) {
 }
 
 void Multiplayer_Receive_InfTableBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 index = mBuffer[memSpacer++];
     u8 bit = mBuffer[memSpacer++];
@@ -1739,11 +1704,8 @@ void Multiplayer_Send_ActorFlagBit(u8 member, u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_ACTORFLAGS; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_ACTORFLAGS);
+
     mBuffer[memSpacer++] = gGlobalContext->sceneNum;
     mBuffer[memSpacer++] = member;
     mBuffer[memSpacer++] = bit;
@@ -1752,10 +1714,10 @@ void Multiplayer_Send_ActorFlagBit(u8 member, u8 bit, u8 setOrUnset) {
 }
 
 void Multiplayer_Receive_ActorFlagBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 scene = mBuffer[memSpacer++];
     u8 member = mBuffer[memSpacer++];
@@ -1847,11 +1809,8 @@ void Multiplayer_Send_SceneFlagBit(u8 scene, u8 member, u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_SAVESCENEFLAG; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_SAVESCENEFLAG);
+
     mBuffer[memSpacer++] = scene;
     mBuffer[memSpacer++] = member;
     mBuffer[memSpacer++] = bit;
@@ -1860,10 +1819,10 @@ void Multiplayer_Send_SceneFlagBit(u8 scene, u8 member, u8 bit, u8 setOrUnset) {
 }
 
 void Multiplayer_Receive_SceneFlagBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 scene = mBuffer[memSpacer++];
     u8 member = mBuffer[memSpacer++];
@@ -1906,11 +1865,8 @@ void Multiplayer_Send_GSFlagBit(u8 index, u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_GSFLAGS; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_GSFLAGS);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
@@ -1918,10 +1874,10 @@ void Multiplayer_Send_GSFlagBit(u8 index, u8 bit, u8 setOrUnset) {
 }
 
 void Multiplayer_Receive_GSFlagBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 index = mBuffer[memSpacer++];
     u8 bit = mBuffer[memSpacer++];
@@ -1941,20 +1897,17 @@ void Multiplayer_Send_BigPoePoints(u32 pointDiff) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_BIGPOEPOINTS; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_BIGPOEPOINTS);
+
     mBuffer[memSpacer++] = pointDiff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_BigPoePoints(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u32 pointDiff = mBuffer[memSpacer++];
 
@@ -1967,21 +1920,18 @@ void Multiplayer_Send_FishingFlag(u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_FISHINGFLAG; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_FISHINGFLAG);
+
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_FishingFlag(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 bit = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
@@ -2000,21 +1950,18 @@ void Multiplayer_Send_WorldMapBit(u8 bit, u8 setOrUnset) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_WORLDMAPBIT; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_WORLDMAPBIT);
+
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_WorldMapBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 bit = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
@@ -2033,20 +1980,17 @@ void Multiplayer_Send_BiggoronTradeBit(u8 bit) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_BIGGORONTRADE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_BIGGORONTRADE);
+
     mBuffer[memSpacer++] = bit;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_BiggoronTradeBit(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 bit = mBuffer[memSpacer++];
 
@@ -2059,21 +2003,18 @@ void Multiplayer_Send_DiscoveredScene(u32 index, u32 bit) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_DISCOVEREDSCENE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_DISCOVEREDSCENE);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_DiscoveredScene(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u32 index = mBuffer[memSpacer++];
     u32 bit = mBuffer[memSpacer++];
@@ -2086,21 +2027,18 @@ void Multiplayer_Send_DiscoveredEntrance(u32 index, u32 bit) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_DISCOVEREDENTRANCE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_DISCOVEREDENTRANCE);
+
     mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_DiscoveredEntrance(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u32 index = mBuffer[memSpacer++];
     u32 bit = mBuffer[memSpacer++];
@@ -2113,11 +2051,8 @@ void Multiplayer_Send_ActorUpdate(Actor* actor, void* extraData, u32 extraDataSi
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_ACTORUPDATE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_ACTORUPDATE);
+
     mBuffer[memSpacer++] = gGlobalContext->sceneNum;
     mBuffer[memSpacer++] = actor->id;
     mBuffer[memSpacer++] = actor->type;
@@ -2131,10 +2066,10 @@ void Multiplayer_Send_ActorUpdate(Actor* actor, void* extraData, u32 extraDataSi
 }
 
 void Multiplayer_Receive_ActorUpdate(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 sceneNum = mBuffer[memSpacer++];
     if (sceneNum != gGlobalContext->sceneNum) {
@@ -2282,11 +2217,8 @@ void Multiplayer_Send_ActorSpawn(s16 actorId, PosRot posRot, s16 params) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_ACTORSPAWN; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_ACTORSPAWN);
+
     mBuffer[memSpacer++] = gGlobalContext->sceneNum;
     mBuffer[memSpacer++] = actorId;
     memcpy(&mBuffer[memSpacer], &posRot, sizeof(PosRot));
@@ -2296,10 +2228,10 @@ void Multiplayer_Send_ActorSpawn(s16 actorId, PosRot posRot, s16 params) {
 }
 
 void Multiplayer_Receive_ActorSpawn(u16 senderID) {
-    if (!IsHashSame(&mBuffer[1]) || gSettingsContext.mp_SharedProgress == OFF) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 sceneNum = mBuffer[memSpacer++];
     s16 actorId = mBuffer[memSpacer++];
@@ -2324,11 +2256,8 @@ void Multiplayer_Send_HealthChange(s16 diff) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_HEALTHCHANGE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_HEALTHCHANGE);
+
     mBuffer[memSpacer++] = gSaveContext.health;
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
@@ -2338,13 +2267,13 @@ void Multiplayer_Receive_HealthChange(u16 senderID) {
     if (gSettingsContext.mp_SharedHealth == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 newHealth = mBuffer[memSpacer++];
     s16 diff = mBuffer[memSpacer++];
 
     if (gSettingsContext.mp_SharedProgress == ON) {
-        if (IsHashSame(&mBuffer[1])) {
+        if (IsSyncIdAndHashSame()) {
             mSaveContext.health = newHealth;
         } else {
             mSaveContext.health += diff;
@@ -2377,11 +2306,8 @@ void Multiplayer_Send_RupeeChange(s16 diff) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_RUPEESCHANGE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_RUPEESCHANGE);
+
     mBuffer[memSpacer++] = gSaveContext.rupees;
     mBuffer[memSpacer++] = diff;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
@@ -2391,13 +2317,13 @@ void Multiplayer_Receive_RupeeChange(u16 senderID) {
     if (gSettingsContext.mp_SharedRupees == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 newRupees = mBuffer[memSpacer++];
     s16 diff = mBuffer[memSpacer++];
 
     if (gSettingsContext.mp_SharedProgress == ON) {
-        if (IsHashSame(&mBuffer[1])) {
+        if (IsSyncIdAndHashSame()) {
             mSaveContext.rupees = newRupees;
         } else {
             mSaveContext.rupees += diff;
@@ -2434,11 +2360,8 @@ void Multiplayer_Send_AmmoChange(u8 slot, s8 diff) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
-    mBuffer[memSpacer++] = PACKET_AMMOCHANGE; // 0: Identifier
-    for (size_t i = 0; i < ARRAY_SIZE(gSettingsContext.hashIndexes); i++) {
-        mBuffer[memSpacer++] = gSettingsContext.hashIndexes[i];
-    }
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_AMMOCHANGE);
+
     mBuffer[memSpacer++] = gSaveContext.ammo[slot];
     mBuffer[memSpacer++] = slot;
     mBuffer[memSpacer++] = diff;
@@ -2449,7 +2372,7 @@ void Multiplayer_Receive_AmmoChange(u16 senderID) {
     if (gSettingsContext.mp_SharedAmmo == OFF) {
         return;
     }
-    u8 memSpacer = 1 + ARRAY_SIZE(gSettingsContext.hashIndexes);
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s8 newAmmo = mBuffer[memSpacer++];
     u8 slot = mBuffer[memSpacer++];
@@ -2457,7 +2380,7 @@ void Multiplayer_Receive_AmmoChange(u16 senderID) {
 
     // TODO: Don't go over max
     if (gSettingsContext.mp_SharedProgress == ON) {
-        if (IsHashSame(&mBuffer[1])) {
+        if (IsSyncIdAndHashSame()) {
             mSaveContext.ammo[slot] = newAmmo;
         } else {
             mSaveContext.ammo[slot] += diff;
