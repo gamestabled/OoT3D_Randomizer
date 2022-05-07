@@ -76,6 +76,84 @@ void ItemEffect_GiveSmallKey(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
     saveCtx->dungeonKeys[dungeonId] = keys + 1;
 }
 
+void ItemEffect_GiveSmallKeyRing(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
+    s8 keys = saveCtx->dungeonKeys[dungeonId];
+    if (keys < 0) {
+        keys = 0;
+    }
+    s8 amt = 0;
+    switch(dungeonId) {
+        case DUNGEON_FOREST_TEMPLE:
+            if (gSettingsContext.forestTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 6;
+            }
+            else {
+                amt = 5;
+            }
+            break;
+        case DUNGEON_FIRE_TEMPLE:
+            if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 5;
+            }
+            else {
+                amt = 8;
+            }
+            break;
+        case DUNGEON_WATER_TEMPLE:
+            if (gSettingsContext.waterTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 2;
+            }
+            else {
+                amt = 6;
+            }
+            break;
+        case DUNGEON_SPIRIT_TEMPLE:
+            if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 7;
+            }
+            else {
+                amt = 5;
+            }
+            break;
+        case DUNGEON_SHADOW_TEMPLE:
+            if (gSettingsContext.shadowTempleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 6;
+            }
+            else {
+                amt = 5;
+            }
+            break;
+        case DUNGEON_BOTTOM_OF_THE_WELL:
+            if (gSettingsContext.bottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
+                amt = 2;
+            }
+            else {
+                amt = 3;
+            }
+            break;
+        case DUNGEON_GERUDO_TRAINING_GROUNDS:
+            if (gSettingsContext.gerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
+                amt = 3;
+            }
+            else {
+                amt = 9;
+            }
+            break;
+        case DUNGEON_GERUDO_FORTRESS:
+            amt = 4;
+            break;
+        case DUNGEON_GANONS_CASTLE_FIRST_PART:
+            if (gSettingsContext.ganonsCastleDungeonMode == DUNGEONMODE_MQ) {
+                amt = 3;
+            }
+            else {
+                amt = 2;
+            }
+            break;
+    }
+    saveCtx->dungeonKeys[dungeonId] = keys + amt;
+}
+
 void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleDefense = 1;
     // saveCtx->defense_hearts = 20; //TODO? is this needed?

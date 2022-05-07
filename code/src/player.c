@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "objects.h"
 #include "custom_models.h"
+#include "settings.h"
 #include "player.h"
 #include "settings.h"
 
@@ -12,6 +13,8 @@
 
 #define PlayerActor_Destroy_addr 0x19262C
 #define PlayerActor_Destroy ((ActorFunc)PlayerActor_Destroy_addr)
+
+#define Hookshot_ActorInit ((ActorInit*)0x5108E8)
 
 u16 healthDecrement = 0;
 u8  storedMask = 0;
@@ -57,6 +60,9 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.fastBunnyHood) {
         PLAYER->currentMask = storedMask;
     }
+    if (gSettingsContext.hookshotAsChild) {
+        Hookshot_ActorInit->objectId = (gSaveContext.linkAge == 1 ? 0x1 : 0x14);
+    }
 }
 
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
@@ -88,4 +94,22 @@ f32 Player_GetSpeedMultiplier(void) {
     }
 
     return speedMultiplier;
+}
+
+s32 Player_ShouldDrawHoverBootsEffect() {
+    return gSaveContext.linkAge == 0 || !gSettingsContext.hoverbootsAsChild;
+}
+
+s32 Player_ShouldUseSlingshot() {
+
+    if (PLAYER->heldItemActionParam == 0xF) { // Slingshot
+        return gSaveContext.linkAge == 1 || gSettingsContext.slingshotAsAdult;
+    }
+    else {
+        return gSaveContext.linkAge == 1 && !gSettingsContext.bowAsChild;
+    }
+}
+
+s32 Player_ShouldDrawHookshotParts() {
+    return gSaveContext.linkAge == 0 || !gSettingsContext.hookshotAsChild;
 }

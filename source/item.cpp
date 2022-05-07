@@ -29,19 +29,30 @@ Item::Item(Text name_, ItemType type_, int getItemId_, bool advancement_, u8* lo
 Item::~Item() = default;
 
 void Item::ApplyEffect() {
-    if (std::holds_alternative<bool*>(logicVar)) {
-        *std::get<bool*>(logicVar) = true;
-    } else {
-        *std::get<u8*>(logicVar) += 1;
+    //If this is a key ring, logically add as many keys as we could need
+    if (FOREST_TEMPLE_KEY_RING <= hintKey && hintKey <= GANONS_CASTLE_KEY_RING) {
+        *std::get<u8*>(logicVar) += 10;
+    }
+    else {
+        if (std::holds_alternative<bool*>(logicVar)) {
+            *std::get<bool*>(logicVar) = true;
+        } else {
+            *std::get<u8*>(logicVar) += 1;
+        }
     }
     Logic::UpdateHelpers();
 }
 
 void Item::UndoEffect() {
-    if (std::holds_alternative<bool*>(logicVar)) {
-        *std::get<bool*>(logicVar) = false;
-    } else {
-        *std::get<u8*>(logicVar) -= 1;
+    if (FOREST_TEMPLE_KEY_RING <= hintKey && hintKey <= GANONS_CASTLE_KEY_RING) {
+        *std::get<u8*>(logicVar) -= 10;
+    }
+    else {
+        if (std::holds_alternative<bool*>(logicVar)) {
+            *std::get<bool*>(logicVar) = false;
+        } else {
+            *std::get<u8*>(logicVar) -= 1;
+        }
     }
     Logic::UpdateHelpers();
 }

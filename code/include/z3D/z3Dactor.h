@@ -209,7 +209,12 @@ typedef struct {
 
 typedef struct {
     /* 0x0000 */ Actor  actor;
-    /* 0x01A4 */ char   unk_1A4[0x13];
+    /* 0x01A4 */ char   unk_148[0x0005];
+    /* 0x01A9 */ s8     heldItemActionParam;
+    /* 0x01AA */ u8     heldItemId;
+    /* 0x01AB */ char   unk_1AB[0x1];
+    /* 0x01AC */ s8     itemActionParam;
+    /* 0x01AD */ char   unk_1AD[0x000A];
     /* 0x01B7 */ u8     currentMask;
     /* 0x01B8 */ char   unk_1B8[0x94];
     /* 0x024C */ void*  giDrawSpace;

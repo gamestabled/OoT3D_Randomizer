@@ -47,26 +47,66 @@ void ItemOverride_Init(void) {
 
     // Enable items by age as determined by settings
     if (gSettingsContext.stickAsAdult) {
-        gItemUsabilityTable[ITEM_STICK]        = 0x09;
+        gItemUsabilityTable[ITEM_STICK]           = 0x09;
     }
     if (gSettingsContext.boomerangAsAdult) {
-        gItemUsabilityTable[ITEM_BOOMERANG]    = 0x09;
+        gItemUsabilityTable[ITEM_BOOMERANG]       = 0x09;
     }
     if (gSettingsContext.hammerAsChild) {
-        gItemUsabilityTable[ITEM_HAMMER]       = 0x09;
+        gItemUsabilityTable[ITEM_HAMMER]          = 0x09;
+    }
+    if (gSettingsContext.slingshotAsAdult) {
+        gItemUsabilityTable[ITEM_SLINGSHOT]       = 0x09;
+    }
+    if (gSettingsContext.bowAsChild) {
+        gItemUsabilityTable[ITEM_BOW]             = 0x09;
+        gItemUsabilityTable[ITEM_ARROW_FIRE]      = 0x09;
+        gItemUsabilityTable[ITEM_ARROW_ICE]       = 0x09;
+        gItemUsabilityTable[ITEM_ARROW_LIGHT]     = 0x09;
+        gItemUsabilityTable[ITEM_BOW_ARROW_FIRE]  = 0x09;
+        gItemUsabilityTable[ITEM_BOW_ARROW_ICE]   = 0x09;
+        gItemUsabilityTable[ITEM_BOW_ARROW_LIGHT] = 0x09;
     }
     if (gSettingsContext.ironbootsAsChild) {
-        gItemUsabilityTable[ITEM_BOOTS_IRON]   = 0x09;
+        gItemUsabilityTable[ITEM_BOOTS_IRON]      = 0x09;
+    }
+    if (gSettingsContext.hoverbootsAsChild) {
+        gItemUsabilityTable[ITEM_BOOTS_HOVER]     = 0x09;
     }
     if (gSettingsContext.masksAsAdult) {
-        gItemUsabilityTable[ITEM_MASK_KEATON]  = 0x09;
-        gItemUsabilityTable[ITEM_MASK_SKULL]   = 0x09;
-        gItemUsabilityTable[ITEM_MASK_SPOOKY]  = 0x09;
-        gItemUsabilityTable[ITEM_MASK_BUNNY]   = 0x09;
-        gItemUsabilityTable[ITEM_MASK_GORON]   = 0x09;
-        gItemUsabilityTable[ITEM_MASK_ZORA]    = 0x09;
-        gItemUsabilityTable[ITEM_MASK_GERUDO]  = 0x09;
-        gItemUsabilityTable[ITEM_MASK_TRUTH]   = 0x09;
+        gItemUsabilityTable[ITEM_MASK_KEATON]     = 0x09;
+        gItemUsabilityTable[ITEM_MASK_SKULL]      = 0x09;
+        gItemUsabilityTable[ITEM_MASK_SPOOKY]     = 0x09;
+        gItemUsabilityTable[ITEM_MASK_BUNNY]      = 0x09;
+        gItemUsabilityTable[ITEM_MASK_GORON]      = 0x09;
+        gItemUsabilityTable[ITEM_MASK_ZORA]       = 0x09;
+        gItemUsabilityTable[ITEM_MASK_GERUDO]     = 0x09;
+        gItemUsabilityTable[ITEM_MASK_TRUTH]      = 0x09;
+    }
+    if (gSettingsContext.hookshotAsChild) {
+        gItemUsabilityTable[ITEM_HOOKSHOT]        = 0x09;
+        gItemUsabilityTable[ITEM_LONGSHOT]        = 0x09;
+    }
+    if (gSettingsContext.kokiriSwordAsAdult) {
+        gGearUsabilityTable[GearSlot(ITEM_SWORD_KOKIRI)]  = 0x09;
+    }
+    if (gSettingsContext.masterSwordAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_SWORD_MASTER)]  = 0x09;
+    }
+    if (gSettingsContext.biggoronSwordAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_SWORD_BGS)]     = 0x09;
+    }
+    if (gSettingsContext.dekuShieldAsAdult) {
+        gGearUsabilityTable[GearSlot(ITEM_SHIELD_DEKU)]   = 0x09;
+    }
+    if (gSettingsContext.mirrorShieldAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_SHIELD_MIRROR)] = 0x09;
+    }
+    if (gSettingsContext.goronTunicAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_TUNIC_GORON)]   = 0x09;
+    }
+    if (gSettingsContext.zoraTunicAsChild) {
+        gGearUsabilityTable[GearSlot(ITEM_TUNIC_ZORA)]    = 0x09;
     }
 }
 
