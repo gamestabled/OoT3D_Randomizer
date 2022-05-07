@@ -440,7 +440,8 @@ hook_AnjuCheckCuccoAmount:
     push {r1-r12, lr}
     bl EnNiwLady_CheckCuccoAmount
     pop {r1-r12, lr}
-    cmp r0,#0x0
+    cmp r0,#0x7
+    cpylt r8,r0
     b 0x179424
 
 .global hook_KingZoraCheckMovedFlag
@@ -553,6 +554,22 @@ hook_CanReadHints:
     bl Hints_CanReadHints
     cmp r0,#0x1
     pop {r0-r12, lr}
+    #"What do you suppose this stone is?"
+    movne r0,#0x100
+    addne r0,r0,#0xB1
+    bxne lr
+    push {r0-r12, lr}
+    bl Hints_GetHintsSetting
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    #"Responding to your mask..."
+    moveq r0,#0x2000
+    addeq r0,r0,#0x54
+    bxeq lr
+    #Hint message, skipping other text
+    ldrh r0,[r4,#0x1C]
+    and r0,r0,#0xFF
+    add r0,r0,#0x400
     bx lr
 
 .global hook_FastChests
@@ -1137,6 +1154,26 @@ hook_SkipJabuOpeningCutscene:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_MultiplyPlayerSpeed
+hook_MultiplyPlayerSpeed:
+    vldr.32 s0,[r6,#0x21C]
+    push {r0-r12, lr}
+    bl Player_GetSpeedMultiplier
+    vmov s1,r0
+    pop {r0-r12, lr}
+    vmul.f32 s0,s1
+    bx lr
+
+.global hook_RunAnimationSpeed
+hook_RunAnimationSpeed:
+    vldr.32 s17,[r5,#0x21C]
+    push {r0-r12, lr}
+    bl Player_GetSpeedMultiplier
+    vmov s1,r0
+    pop {r0-r12, lr}
+    vmul.f32 s17,s1
+    bx lr
+
 .global hook_SilenceNavi
 hook_SilenceNavi:
     push {r0-r12, lr}
@@ -1145,6 +1182,27 @@ hook_SilenceNavi:
     pop {r0-r12, lr}
     beq 0x26808C
     cmp r0,r2
+    bx lr
+
+.global hook_ChestMinigame_KeyChestVisibility
+hook_ChestMinigame_KeyChestVisibility:
+    push {r0-r12, lr}
+    bl Settings_GetChestMinigameOption
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    orrne r10,r7,#0x0
+    orreq r10,r7,#0x4000
+    bx lr
+
+.global hook_ChestMinigame_DontOpenChestsOnInit
+hook_ChestMinigame_DontOpenChestsOnInit:
+    cmp r0,#0x0
+    bxeq lr
+    push {r0-r12, lr}
+    bl Settings_GetChestMinigameOption
+    cmp r0,#0x1
+    cmpgt r0,r0
+    pop {r0-r12, lr}
     bx lr
 
 .global hook_GameplayDestroy
@@ -1187,6 +1245,130 @@ hook_ReturnFWSetupGrottoInfo:
     pop {r0-r12, lr}
     add sp,sp,#0x8
     bx lr
+
+.global hook_ChildHoverBoots
+hook_ChildHoverBoots:
+    beq 0x2D5F04
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHoverBootsEffect
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x2D5F04
+    b 0x2D5DFC
+
+.global hook_ArrowsOrSeeds
+hook_ArrowsOrSeeds:
+    push {r0-r12, lr}
+    bl Player_ShouldUseSlingshot
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_HookshotDrawRedLaser
+hook_HookshotDrawRedLaser:
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHookshotParts
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bxeq lr
+    b 0x4C55C0
+
+.global hook_HookshotDrawChain
+hook_HookshotDrawChain:
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHookshotParts
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x2202BC
+    ldr r0,[r4,#0x290]
+    b 0x2202A4
+
+.global hook_HookshotRotation
+hook_HookshotRotation:
+    push {r0-r12, lr}
+    bl Hookshot_GetZRotation
+    vmov.f32 s0,r0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LinkReflection
+hook_LinkReflection:
+    push {r0-r12, lr}
+    bl Player_ShouldDrawHookshotParts
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    streq r1,[r0,#0x714]
+    bx lr
+
+.global hook_ChildCanOpenBowSubMenu
+hook_ChildCanOpenBowSubMenu:
+    push {r0-r12, lr}
+    bl Settings_BowAsChild
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    beq 0x2EB2DC
+    cmp r12,#0x0
+    b 0x2EB2DC
+
+.global hook_BrownBoulderExplode
+hook_BrownBoulderExplode:
+    push {r0-r12, lr}
+    cpy r0,r5
+    cpy r1,r7
+    bl ObjBombiwa_GetFlag
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x26FA7C
+    b 0x346D94
+
+.global hook_RedBoulderExplode
+hook_RedBoulderExplode:
+    ldrb r0,[r5,#0x1B5]
+    push {r0-r12, lr}
+    cpy r0,r5
+    bl ObjHamishi_HitCount
+    cmp r0,#0x2
+    pop {r0-r12, lr}
+    bge 0x26FE9C
+    b 0x26FE80
+
+.global hook_Multiplayer_UpdatePrevActorFlags
+hook_Multiplayer_UpdatePrevActorFlags:
+    str r0,[r5,#0x1b8]
+    push {r0-r12, lr}
+    bl Multiplayer_Sync_UpdatePrevActorFlags
+    pop {r0-r12, pc}
+
+.global hook_Multiplayer_OnLoadFile
+hook_Multiplayer_OnLoadFile:
+    strh r6,[r0,#0x4C]
+    push {r0-r12, lr}
+    bl Multiplayer_OnFileLoad
+    pop {r0-r12, lr}
+    b 0x449F00
+
+.global hook_SendDroppedBottleContents
+hook_SendDroppedBottleContents:
+    add r0,r0,#0x8C
+    push {r0-r12, lr}
+    cpy r0,r2
+    vmov r1,s0
+    vmov r2,s1
+    vmov r3,s2
+    bl SendDroppedBottleContents
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_IgnoreMaskReaction
+hook_IgnoreMaskReaction:
+    ldrh r0,[r0,#0x0]
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl SaveFile_GetIgnoreMaskReactionOption
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    moveq r0,#0x0
+    b 0x36BBC8
 
 .section .loader
 .global hook_into_loader

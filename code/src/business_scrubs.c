@@ -1,7 +1,9 @@
-#include "z3D/z3D.h"
-#include "z3D/actors/z_en_dns.h"
-#include "z3D/actors/z_en_shopnuts.h"
+#include "business_scrubs.h"
 #include "settings.h"
+#include "multiplayer.h"
+
+#define EnDns_Update_addr 0x1D67CC
+#define EnDns_Update ((ActorFunc)EnDns_Update_addr)
 
 #define EnShopnuts_Init_addr 0x22ED2C
 #define EnShopnuts_Init ((ActorFunc)EnShopnuts_Init_addr)
@@ -101,4 +103,44 @@ void EnShopnuts_rInit(Actor* thisx, GlobalContext* globalCtx) {
         scrub->actor.params = 0x03;
     }
     EnShopnuts_Init(&scrub->actor, globalCtx);
+}
+
+#define EnDns_Talk (void*)0x161960
+#define FUN_00161828 (void*)0x161828
+#define FUN_003CE92C (void*)0x3CE92C
+#define FUN_00100434 (void*)0x100434
+#define EnDns_SetupBurrow (void*)0x3C3C04
+#define EnDns_Burrow (void*)0x3CEA64
+
+typedef u32(*EnDns_ChangeAnim_proc)(EnDns* globalCtx, u8 arg1);
+#define EnDns_ChangeAnim_addr 0x37693C
+#define EnDns_ChangeAnim ((EnDns_ChangeAnim_proc)EnDns_ChangeAnim_addr)
+
+void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    EnDns* scrub = (EnDns*)thisx;
+
+    void* prev_action_fn = scrub->action_fn;
+
+    EnDns_Update(&scrub->actor, globalCtx);
+
+    // Skip scrubs with repeatable purchases
+    if (gSettingsContext.scrubsanity == SCRUBSANITY_OFF && scrub->actor.params != 0x2 && scrub->actor.params != 0x9 && scrub->actor.params != 0xA) {
+        return;
+    }
+
+    if (prev_action_fn == EnDns_Talk && (scrub->action_fn == FUN_00161828 || scrub->action_fn == FUN_003CE92C || scrub->action_fn == FUN_00100434)) {
+        Multiplayer_Send_ActorUpdate(thisx, NULL, 0);
+    }
+}
+
+void EnDns_StartBurrow(EnDns* thisx) {
+    if (thisx->action_fn == FUN_00161828 || thisx->action_fn == FUN_003CE92C || thisx->action_fn == FUN_00100434 ||
+        thisx->action_fn == EnDns_SetupBurrow || thisx->action_fn == EnDns_Burrow) {
+        return;
+    }
+    thisx->drop_collectible = 0;
+    thisx->maintain_collider = 0;
+    thisx->actor.flags &= ~(0x1);
+    EnDns_ChangeAnim(thisx, 1);
+    thisx->action_fn = EnDns_SetupBurrow;
 }

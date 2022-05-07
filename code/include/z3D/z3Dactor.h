@@ -209,7 +209,14 @@ typedef struct {
 
 typedef struct {
     /* 0x0000 */ Actor  actor;
-    /* 0x01A4 */ char   unk_148[0x00A8];
+    /* 0x01A4 */ char   unk_148[0x0005];
+    /* 0x01A9 */ s8     heldItemActionParam;
+    /* 0x01AA */ u8     heldItemId;
+    /* 0x01AB */ char   unk_1AB[0x1];
+    /* 0x01AC */ s8     itemActionParam;
+    /* 0x01AD */ char   unk_1AD[0x000A];
+    /* 0x01B7 */ u8     currentMask;
+    /* 0x01B8 */ char   unk_1B8[0x94];
     /* 0x024C */ void*  giDrawSpace;
     /* 0x0250 */ char   unk_250[0x0004];
     /* 0x0254 */ struct SkelAnime skelAnime;
@@ -218,7 +225,9 @@ typedef struct {
     /* 0x12AD */ char   unk_12AD[0x0001];
     /* 0x12AE */ u16    getItemDirection;
     /* 0x12B0 */ Actor* interactRangeActor;
-    /* 0x12B4 */ char   unk_12B4[0x045C];
+    /* 0x12B4 */ char   unk_12B4[0x0454];
+    /* 0x1708 */ void*  stateFuncPtr;
+    /* 0x170C */ char   unk_170C[0x0004];
     /* 0x1710 */ u32    stateFlags1;
     /* 0x1714 */ u32    stateFlags2;
     /* 0x1718 */ char   unk_1718[0x0013];

@@ -85,12 +85,12 @@ static s8 lastEntranceType = NOT_GROTTO;
 // Initialize both lists so that each index refers to itself. An index referring
 // to itself means that the entrance is not shuffled. Indices will be overwritten
 // later in Entrance_Init() in entrance.c if entrance shuffle is enabled.
-// For the grotto load list, the entrance index is 0x1000 + the grotto id
-// For the grotto exit list, the entrance index is 0x2000 + the grotto id
+// For the grotto load list, the entrance index is 0x0700 + the grotto id
+// For the grotto exit list, the entrance index is 0x0800 + the grotto id
 void Grotto_InitExitAndLoadLists(void) {
     for (u8 i = 0; i < NUM_GROTTOS; i++) {
-        grottoLoadList[i] = 0x1000 + i;
-        grottoExitList[i] = 0x2000 + i;
+        grottoLoadList[i] = 0x0700 + i;
+        grottoExitList[i] = 0x0800 + i;
     }
 }
 
@@ -129,7 +129,7 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
     // If Link hits a grotto exit, load the entrance index from the grotto exit list
     // based on the current grotto ID
     if (nextEntranceIndex == 0x7FFF) {
-        SaveFile_SetEntranceDiscovered(0x2000 + grottoId);
+        SaveFile_SetEntranceDiscovered(0x0800 + grottoId);
         nextEntranceIndex = grottoExitList[grottoId];
     }
 
@@ -137,7 +137,7 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
     grottoId = nextEntranceIndex & 0x00FF;
 
     // Grotto Returns
-    if (nextEntranceIndex >= 0x2000 && nextEntranceIndex < 0x2000 + NUM_GROTTOS) {
+    if (nextEntranceIndex >= 0x0800 && nextEntranceIndex < 0x0800 + NUM_GROTTOS) {
 
         GrottoReturnInfo grotto = grottoReturnTable[grottoId];
         Grotto_SetupReturnInfo(grotto);
@@ -153,7 +153,7 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
         lastEntranceType = GROTTO_RETURN;
 
     // Grotto Loads
-    } else if (nextEntranceIndex >= 0x1000 && nextEntranceIndex < 0x2000) {
+    } else if (nextEntranceIndex >= 0x0700 && nextEntranceIndex < 0x0800) {
 
         // Set the respawn data to load the correct grotto
         GrottoLoadInfo grotto = grottoLoadTable[grottoId];
@@ -187,7 +187,7 @@ void Grotto_OverrideActorEntrance(Actor* thisx) {
 
         if (grottoContent == grottoLoadTable[index].content && gGlobalContext->sceneNum == grottoLoadTable[index].scene) {
             // Find the override for the matching index from the grotto Load List
-            SaveFile_SetEntranceDiscovered(0x1000 + index);
+            SaveFile_SetEntranceDiscovered(0x0700 + index);
             index = grottoLoadList[index];
 
             // Run the index through the special entrances override check

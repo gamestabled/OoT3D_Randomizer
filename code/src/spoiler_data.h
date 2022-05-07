@@ -64,6 +64,9 @@ typedef struct {
     u8 LocationScene;
     u8 LocationFlag;
     SpoilerCollectionCheckGroup Group;
+    u8 Repeatable;
+    u8 RevealOnSceneDiscovery;
+    u8 StaticUncollectable;
 } SpoilerItemLocation;
 
 typedef struct {
@@ -101,5 +104,6 @@ u8 SpoilerData_GerudoTokenCheck();
 u8 SpoilerData_BigPoePointsCheck();
 u8 SpoilerData_ShopItemCheck(SpoilerItemLocation itemLoc);
 u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_GetIsItemLocationRevealed(u16 itemIndex);
 
 #endif // _SPOILER_DATA_H_

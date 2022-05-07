@@ -5,11 +5,11 @@
 /*------------------------------
 |      RANDOMIZE SETTINGS      |                            *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
-string_view openRandomize             = "Randomize all Open Settings except for Logic rules";
+string_view openRandomize             = "Randomize all Open Settings.";                    //
 string_view worldRandomize            = "Randomize all World Settings except for MQ\n"     //
-                                        "dungeons";                                        //
-string_view shuffleRandomize          = "Randomize all Shuffle Settings";                  //
-string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings";          //
+                                        "dungeons.";                                       //
+string_view shuffleRandomize          = "Randomize all Shuffle Settings.";                 //
+string_view dungeonRandomize          = "Randomize all Dungeon Shuffle Settings.";         //
                                                                                            //
 /*------------------------------                                                           //
 |            LOGIC             |                                                           //
@@ -157,12 +157,12 @@ string_view shuffleEntrancesDesc      = "Shuffle where the entrances between are
 ------------------------------*/                                                           //
 string_view dungeonEntrancesDesc      = "Shuffle the pool of dungeon entrances, including\n"
                                         "Bottom of the Well, Ice Cavern, and Gerudo\n"     //
-                                        "Training Grounds. However, Ganon's Castle is not\n"
-                                        "shuffled.\n"                                      //
+                                        "Training Grounds. Shuffling Ganon's Castle can\n" //
+                                        "be enabled separately.\n"                         //
                                         "\n"                                               //
                                         "Additionally, the entrances of Deku Tree, Fire\n" //
-                                        "Temple and Bottom of the Well are opened for both\n"
-                                        "adult and child.";                                //
+                                        "Temple, Bottom of the Well and Gerudo Training\n" //
+                                        "Ground are opened for both adult and child.";     //
 /*------------------------------                                                           //
 |      OVERWORLD ENTRANCES     |                                                           //
 ------------------------------*/                                                           //
@@ -395,6 +395,17 @@ string_view adultTradeDesc            = "Enabling this adds all of the adult tra
                                         "the L and R buttons. If disabled, only the Claim\n"
                                         "Check will be found in the pool.";                //
 /*------------------------------                                                           //
+|    SHUFFLE CHEST MINIGAME    |                                                           //
+------------------------------*/                                                           //
+string_view chestMinigameDesc         = "The 5 key chests in the Treasure Chest Shop will\n"
+                                        "be randomized, and the 6 keys will be added to the"//
+                                        "pool. The rupee chests will be replaced by traps.\n"
+                                        "Also, the shop owner is on vacation, so he can't\n"
+                                        "close any chests or doors once you leave.\n"      //
+                                        "\n"                                               //
+                                        "If you choose the \"pack\" option, you will get\n"//
+                                        "all the keys at once, in a single item.";         //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //
@@ -447,6 +458,15 @@ string_view gerudoKeysOverworld       = "Gerudo Fortress Keys can only appear ou
                                         "dungeons.";                                       //
 string_view gerudoKeysAnywhere        = "Gerudo Fortress Keys can appear anywhere in the\n"//
                                         "world.";                                          //
+/*------------------------------                                                           //
+|           Key Rings          |                                                           //
+------------------------------*/                                                           //
+string_view keyRingDesc               = "Selected key ring dungeons will have all of their\n"
+                                        "keys found at once in a ring rather than\n"       //
+                                        "individually.\n\n"                                //
+                                        "For example, instead of shuffling 5 Forest Temple\n"
+                                        "small keys into the pool, you will find a single\n"
+                                        "key ring which will give you all 5 keys at once.\n";
 /*------------------------------                                                           //
 |          BOSS KEYS           |                                                           //
 ------------------------------*/                                                           //
@@ -589,6 +609,11 @@ string_view skipSongReplaysDesc       = "The automatic replay after you play a s
 string_view keepFWWarpPointDesc       = "The Farore's Wind warp point will stay active\n"  //
                                         "after having been warped to. The old point will\n"//
                                         "need to be dispelled before setting a new one.";  //
+/*------------------------------                                                           //
+|       FAST BUNNY HOOD        |                                                           //
+------------------------------*/                                                           //
+string_view fastBunnyHoodDesc         = "The Bunny Hood mask behaves like it does in\n"    //
+                                        "Majora's Mask and makes you run 50% faster.";     //
 /*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
@@ -750,6 +775,17 @@ string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of du
                                         "This setting will only affect glitched logic.";   //
                                                                                            //
 /*------------------------------                                                           //
+|    LIFT AGE RESTRICTIONS     |                                                           //
+------------------------------*/                                                           //
+string_view ageRestrictionsDesc       = "Remove age restrictions for inventory items.\n"   //
+                                        "Select \"Choose\" to open the list of individual\n"
+                                        "options.\n\n"                                     //
+                                        "Most of the items won't appear correctly when\n"  //
+                                        "used as the wrong version of Link, but they'll be\n"
+                                        "fully functional otherwise.\n"                    //
+                                        "These settings will not change the logic.";       //
+                                                                                           //
+/*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
 string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"
@@ -771,6 +807,102 @@ string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.\n" 
 string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.\n"       //
                                         "\n"                                               //
                                         "This setting will only affect glitched logic.";   //
+/*------------------------------                                                           //
+|    ENABLE ADULT SLINGSHOT    |                                                           //
+------------------------------*/                                                           //
+string_view adultSlingshotDesc        = "Adult Link can use the Slingshot (but it looks\n" //
+                                        "like the Bow).\n"                                 //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|      ENABLE CHILD BOW        |                                                           //
+------------------------------*/                                                           //
+string_view childBowDesc              = "Child Link can use the Bow. It will look like the\n"
+                                        "Slingshot, but will shoot arrows.\n"              //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|    ENABLE CHILD HOOKSHOT     |                                                           //
+------------------------------*/                                                           //
+string_view childHookshotDesc         = "Child Link can use the Hookshot/Longshot.\n"      //
+                                        "It will be difficult to aim, the red dot and\n"   //
+                                        "laser won't appear and the hook will look like\n" //
+                                        "a small bomb.\n"                                  //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+/*------------------------------                                                           //
+|   ENABLE CHILD IRON BOOTS    |                                                           //
+------------------------------*/                                                           //
+string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.\n"           //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|   ENABLE CHILD HOVER BOOTS   |                                                           //
+------------------------------*/                                                           //
+string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots. The yellow\n"
+                                        "circle beneath Link's feet won't appear.\n"       //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|     ENABLE ADULT MASKS       |                                                           //
+------------------------------*/                                                           //
+string_view adultMasksDesc            = "Adult Link can equip masks.\n"                    //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE ADULT KOKIRI SWORD   |                                                           //
+------------------------------*/                                                           //
+string_view adultKokiriSwordDesc      = "Adult Link can equip the Kokiri Sword.\n"         //
+                                        "\n"                                               //
+                                        "This setting will not change the logic.";         //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE CHILD MASTER SWORD   |                                                           //
+------------------------------*/                                                           //
+string_view childMasterSwordDesc      = "Child Link can equip the Master Sword.\n"         //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE CHILD BIGGORON SWORD |                                                           //
+------------------------------*/                                                           //
+string_view childBiggoronSwordDesc    = "Child Link can equip the Biggoron Sword and the\n"//
+                                        "Giant's Knife.\n"                                 //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|   ENABLE ADULT DEKU SHIELD   |                                                           //
+------------------------------*/                                                           //
+string_view adultDekuShieldDesc       = "Adult Link can equip the Deku Shield.\n"          //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|  ENABLE CHILD MIRROR SHIELD  |                                                           //
+------------------------------*/                                                           //
+string_view childMirrorShieldDesc     = "Child Link can equip the Mirror Shield.\n"        //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|   ENABLE CHILD GORON TUNIC   |                                                           //
+------------------------------*/                                                           //
+string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.\n"          //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
+                                                                                           //
+/*------------------------------                                                           //
+|    ENABLE CHILD ZORA TUNIC   |                                                           //
+------------------------------*/                                                           //
+string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.\n"           //
+                                        "\n"                                               //
+                                        "This setting will only affect glitched logic.";   //
                                                                                            //
 /*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
@@ -783,6 +915,22 @@ string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random du
                                         "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
+|         MULTIPLAYER          |                                                           //
+------------------------------*/                                                           //
+string_view mp_EnabledDesc            = "Enables multiplayer.\n"                           //
+                                        "Other players will always be seen and heard\n"    //
+                                        "regardless of the other settings.";               //
+string_view mp_SharedProgressDesc     = "Progress and certain actors will be synced\n"     //
+                                        "between everyone who has this option on and the\n"//
+                                        "same seed hash.";                                 //
+string_view mp_SharedHealthDesc       = "Syncs health when shared progress is on,\n"       //
+                                        "otherwise just shares the damage and recovery.";  //
+string_view mp_SharedRupeesDesc       = "Syncs rupees when shared progress is on,\n"       //
+                                        "otherwise just shares the gain and loss.";        //
+string_view mp_SharedAmmoDesc         = "Syncs ammo when shared progress is on,\n"         //
+                                        "otherwise just shares the gain and loss.";        //
+                                                                                           //
+/*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
 ------------------------------*/                                                           //
 string_view zTargetingDesc            = "Sets L-Targeting to start as switch or hold.";    //
@@ -792,6 +940,8 @@ string_view motionControlDesc         = "Sets the motion controls to start on or
 string_view togglePlayMusicDesc       = "Starts the game with the music on or off.";       //
 string_view togglePlaySFXDesc         = "Starts the game with the sound effects on or off.";
 string_view silenceNaviDesc           = "Sets whether Navi should start silenced or not."; //
+string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask or not.\n" //
+                                        "Does not apply when trading masks.";              //
                                                                                            //
 /*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
@@ -887,6 +1037,9 @@ string_view LogicChildDampeRacePoHDesc                = "Difficulty: Intermediat
                                                         "It is possible to complete the second dampe race\n"
                                                         "as child in under a minute, but it is a strict\n" //
                                                         "time limit.";                                     //
+string_view LogicGVHammerChestDesc                    = "Difficulty: Novice\n"                             //
+                                                        "The chest can be reached by sidehopping between\n"//
+                                                        "the wall and the east most hammer rock.";         //
 string_view LogicGerudoKitchenDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The logic normally guarantees one of Bow,\n"      //
                                                         "Hookshot, or Hover Boots.";                       //

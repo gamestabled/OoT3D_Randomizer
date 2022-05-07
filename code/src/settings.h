@@ -3,10 +3,6 @@
 
 #include "../include/z3D/z3D.h"
 
-typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
-#define Health_ChangeBy_addr 0x352dbc
-#define Health_ChangeBy ((Health_ChangeBy_proc)Health_ChangeBy_addr)
-
 typedef enum {
   OFF,
   ON,
@@ -77,6 +73,12 @@ typedef enum {
   AGE_CHILD,
   AGE_RANDOM,
 } AgeSetting;
+
+typedef enum {
+  SHUFFLEDUNGEONS_OFF,
+  SHUFFLEDUNGEONS_ON,
+  SHUFFLEDUNGEONS_GANON,
+} ShuffleDungeonEntrancesSetting;
 
 typedef enum {
   SHUFFLEINTERIORS_OFF,
@@ -156,6 +158,12 @@ typedef enum {
   SHUFFLEADULTTRADEQUEST_OFF,
   SHUFFLEADULTTRADEQUEST_ON,
 } ShuffleAdultTradeQuestSetting;
+
+typedef enum {
+  SHUFFLECHESTMINIGAME_OFF,
+  SHUFFLECHESTMINIGAME_SINGLE_KEYS,
+  SHUFFLECHESTMINIGAME_PACK,
+} ShuffleChestMinigameSetting;
 
 typedef enum {
   MAPSANDCOMPASSES_START_WITH,
@@ -363,6 +371,7 @@ typedef struct {
   u8 shuffleMagicBeans;
   u8 shuffleMerchants;
   u8 shuffleAdultTradeQuest;
+  u8 shuffleChestMinigame;
 
   u8 mapsAndCompasses;
   u8 keysanity;
@@ -375,6 +384,16 @@ typedef struct {
   u8 lacsRewardCount;
   u8 lacsDungeonCount;
   u8 lacsTokenCount;
+
+  u8 ringFortress;
+  u8 ringForest;
+  u8 ringFire;
+  u8 ringWater;
+  u8 ringSpirit;
+  u8 ringShadow;
+  u8 ringWell;
+  u8 ringGtg;
+  u8 ringCastle;
 
   u8 skipChildStealth;
   u8 skipTowerEscape;
@@ -390,6 +409,7 @@ typedef struct {
   u8 quickText;
   u8 skipSongReplays;
   u8 keepFWWarpPoint;
+  u8 fastBunnyHood;
 
   u8 damageMultiplier;
   u8 startingTime;
@@ -408,11 +428,30 @@ typedef struct {
   u8 stickAsAdult;
   u8 boomerangAsAdult;
   u8 hammerAsChild;
+  u8 slingshotAsAdult;
+  u8 bowAsChild;
+  u8 hookshotAsChild;
+  u8 ironbootsAsChild;
+  u8 hoverbootsAsChild;
+  u8 masksAsAdult;
+  u8 kokiriSwordAsAdult;
+  u8 masterSwordAsChild;
+  u8 biggoronSwordAsChild;
+  u8 dekuShieldAsAdult;
+  u8 mirrorShieldAsChild;
+  u8 goronTunicAsChild;
+  u8 zoraTunicAsChild;
   u8 gkDurability;
 
   u8 itemPoolValue;
   u8 iceTrapValue;
   u8 progressiveGoronSword;
+
+  u8 mp_Enabled;
+  u8 mp_SharedProgress;
+  u8 mp_SharedHealth;
+  u8 mp_SharedRupees;
+  u8 mp_SharedAmmo;
 
   u8 zTargeting;
   u8 cameraControl;
@@ -420,6 +459,7 @@ typedef struct {
   u8 playMusic;
   u8 playSFX;
   u8 silenceNavi;
+  u8 ignoreMaskReaction;
 
   u8 customTunicColors;
   u8 coloredKeys;

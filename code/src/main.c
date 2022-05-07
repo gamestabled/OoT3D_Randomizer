@@ -9,11 +9,12 @@
 #include "draw.h"
 #include "common.h"
 #include "savefile.h"
+#include "multiplayer.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
 
-GlobalContext* gGlobalContext;
+GlobalContext* gGlobalContext = NULL;
 static u8 rRandomizerInit = 0;
 
 void set_GlobalContext(GlobalContext* globalCtx) {
@@ -40,6 +41,8 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     SaveFile_EnforceHealthLimit();
 
     Settings_SkipSongReplays();
+
+    Multiplayer_Run();
 }
 
 void after_GlobalContext_Update() {
@@ -50,4 +53,6 @@ void after_GlobalContext_Update() {
             romfsAlertFrames--;
         }
     }
+
+    Multiplayer_Sync_Update();
 }
