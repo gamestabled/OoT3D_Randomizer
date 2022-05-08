@@ -525,11 +525,11 @@ typedef void (*DisplayTextbox_proc)(GlobalContext* globalCtx, u16 textId, Actor*
 #define DisplayTextbox_addr 0x367C7C
 #define DisplayTextbox ((DisplayTextbox_proc)DisplayTextbox_addr)
 
-typedef u32 (*EventCheck_proc)(u32 param_1);
+typedef u32 (*EventCheck_proc)(u32 flag);
 #define EventCheck_addr 0x350CF4
 #define EventCheck ((EventCheck_proc)EventCheck_addr)
 
-typedef void (*EventSet_proc)(u32 param_1);
+typedef void (*EventSet_proc)(u32 flag);
 #define EventSet_addr 0x34CBF8
 #define EventSet ((EventSet_proc)EventSet_addr)
 

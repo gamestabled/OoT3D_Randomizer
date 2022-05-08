@@ -312,12 +312,8 @@ SECTIONS
 		*(.patch_DampeChest)
 	}
 
-	.patch_JabuJabuItemGive 0x1A1918 : {
-		*(.patch_JabuJabuItemGive)
-	}
-
-	.patch_JabuJabuCutsceneOverride 0x1A192C : {
-		*(.patch_JabuJabuCutsceneOverride)
+	.patch_RutoBlueWarpOverride 0x1A1900 : {
+		*(.patch_RutoBlueWarpOverride)
 	}
 
 	.patch_KotakeDontPlayBattleMusic 0x1A8218 : {
@@ -388,52 +384,8 @@ SECTIONS
 		*(.patch_BombchuShopAlwaysOpen)
 	}
 
-	.patch_ForestTempleItemGive 0x1E3F84 : {
-		*(.patch_ForestTempleItemGive)
-	}
-
-	.patch_ForestTempleCutsceneOverride 0x1E3F98 : {
-		*(.patch_ForestTempleCutsceneOverride)
-	}
-
-	.patch_FireTempleItemGive 0x1E4010 : {
-		*(.patch_FireTempleItemGive)
-	}
-
-	.patch_FireTempleCutsceneOverride 0x1E4024 : {
-		*(.patch_FireTempleCutsceneOverride)
-	}
-
-	.patch_WaterTempleItemGive 0x1E40D8 : {
-		*(.patch_WaterTempleItemGive)
-	}
-
-	.patch_WaterTempleCutsceneOverride 0x1E40EC : {
-		*(.patch_WaterTempleCutsceneOverride)
-	}
-
-	.patch_SpiritTempleCompleteCheck 0x1E415C : {
-		*(.patch_SpiritTempleCompleteCheck)
-	}
-
-	.patch_SpiritTempleItemGive 0x1E4168 : {
-		*(.patch_SpiritTempleItemGive)
-	}
-
-	.patch_SpiritTempleCutsceneOverride 0x1E417C : {
-		*(.patch_SpiritTempleCutsceneOverride)
-	}
-
-	.patch_ShadowTempleCompleteCheck 0x1E41E4 : {
-		*(.patch_ShadowTempleCompleteCheck)
-	}
-
-	.patch_ShadowTempleItemGive 0x1E41F0 : {
-		*(.patch_ShadowTempleItemGive)
-	}
-
-	.patch_ShadowTempleCutsceneOverride 0x1E4204 : {
-		*(.patch_ShadowTempleCutsceneOverride)
+	.patch_AdultBlueWarpOverride 0x1E3F50 : {
+		*(.patch_AdultBlueWarpOverride)
 	}
 
 	.patch_DaruniaCheckStrength 0x1E489C : {
@@ -532,10 +484,6 @@ SECTIONS
 		*(.patch_EnExItemModelDraw)
 	}
 
-	.patch_SpiritTempleItemGiveTwo 0x24CF4C : {
-		*(.patch_SpiritTempleItemGiveTwo)
-	}
-
 	.patch_MultiplyPlayerSpeed 0x251D34 : {
 		*(.patch_MultiplyPlayerSpeed)
 	}
@@ -560,20 +508,12 @@ SECTIONS
 		*(.patch_CheckGerudoToken_269884)
 	}
 
-	.patch_SpiritTempleItemGiveThree 0x26B33C : {
-		*(.patch_SpiritTempleItemGiveThree)
-	}
-
 	.patch_MinuetLocation 0x26C388 : {
 		*(.patch_MinuetLocation)
 	}
 
 	.patch_BoleroLocation 0x26C448 : {
 		*(.patch_BoleroLocation)
-	}
-
-	.patch_WaterTempleItemGiveTwo 0x26DCD4 : {
-		*(.patch_WaterTempleItemGiveTwo)
 	}
 
 	.patch_BrownBoulderExplode 0x26F9F8 : {
@@ -592,24 +532,8 @@ SECTIONS
 		*(.patch_DoorOfTimeCheck)
 	}
 
-	.patch_FireTempleItemGiveThree 0x27D060 : {
-		*(.patch_FireTempleItemGiveThree)
-	}
-
-	.patch_ShadowTempleItemGiveTwo 0x27DED0 : {
-		*(.patch_ShadowTempleItemGiveTwo)
-	}
-
 	.patch_ImpaInCourtyardCheckForVisitedZelda 0x27DEF8 : {
 		*(.patch_ImpaInCourtyardCheckForVisitedZelda)
-	}
-
-	.patch_ForestTempleItemGiveTwo 0x27E074 : {
-		*(.patch_ForestTempleItemGiveTwo)
-	}
-
-	.patch_WaterTempleItemGiveThree 0x283CA8 : {
-		*(.patch_WaterTempleItemGiveThree)
 	}
 
 	.patch_AnjuGiveCojiro 0x2884F4 : {
@@ -622,18 +546,6 @@ SECTIONS
 
 	.patch_KakarikoGateCheck 0x28A678 : {
 		*(.patch_KakarikoGateCheck)
-	}
-
-	.patch_FireTempleItemGiveFour 0x28E2AC : {
-		*(.patch_FireTempleItemGiveFour)
-	}
-
-	.patch_ShadowTempleItemGiveThree 0x28F258 : {
-		*(.patch_ShadowTempleItemGiveThree)
-	}
-
-	.patch_ForestTempleItemGiveThree 0x28FF44 : {
-		*(.patch_ForestTempleItemGiveThree)
 	}
 
 	.patch_BombchuBowlingAlwaysFirstPrize 0x291924 : {
@@ -1072,20 +984,8 @@ SECTIONS
 		*(.patch_SlidingDoorDestroyCustomModels)
 	}
 
-	.patch_DodongosCavernItemGive 0x3F57B0 : {
-		*(.patch_DodongosCavernItemGive)
-	}
-
-	.patch_DodongosCavernCutsceneOverride 0x3F57C4 : {
-		*(.patch_DodongosCavernCutsceneOverride)
-	}
-
-	.patch_DekuTreeItemGive 0x3F582C : {
-		*(.patch_DekuTreeItemGive)
-	}
-
-	.patch_DekuTreeCutsceneOverride 0x3F5840 : {
-		*(.patch_DekuTreeCutsceneOverride)
+	.patch_ChildBlueWarpOverride 0x3F5774 : {
+		*(.patch_ChildBlueWarpOverride)
 	}
 
 	.patch_CarpetSalesmanSetFlag 0x3F9550 : {
@@ -1286,10 +1186,6 @@ SECTIONS
 
 	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 : {
 		*(.patch_SwapAgeIgnoreSceneSetup)
-	}
-
-	.patch_FireTempleItemGiveTwo 0x491B60 : {
-		*(.patch_FireTempleItemGiveTwo)
 	}
 
 	.patch_FairyUseHealAmount 0x4968B4 : {
