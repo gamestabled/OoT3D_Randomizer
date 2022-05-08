@@ -435,7 +435,7 @@ namespace Logic {
   }
 
   // Same as CanUse but includes item usability settings
-  // This exists because a lot of logic uses the inferred age check in CanUse - eg: GV chest only checks CanUse(MEGATON_HAMMER)
+  // TODO: merge this with CanUse once logic no longer assumes age when using CanUse
   bool Usable(ItemKey itemName) {
     // Spells/lens don't have age restrictions
     if (IsMagicItem(itemName)) {
