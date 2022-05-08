@@ -12,10 +12,6 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
-typedef void (*SetEventChkInf_proc)(u32 flag);
-#define SetEventChkInf_addr 0x34CBF8
-#define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
-
 #define dynamicExitList_addr 0x53C094
 #define dynamicExitList ((s16*)dynamicExitList_addr) // = { 0x045B, 0x0482, 0x0340, 0x044B, 0x02A2, 0x0201, 0x03B8, 0x04EE, 0x03C0, 0x0463, 0x01CD, 0x0394, 0x0340, 0x057C }
 
@@ -345,7 +341,7 @@ u8 EntranceCutscene_ShouldPlay(u8 flag) {
         }
         return 1; // cutscene will play normally in DHWW, or always if it's freeing Epona or clearing a Trial
     }
-    SetEventChkInf(flag);
+    EventSet(flag);
     return 0; //cutscene will not play
 }
 
