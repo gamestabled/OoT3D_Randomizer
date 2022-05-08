@@ -300,6 +300,7 @@ typedef enum {
     PACKET_BIGGORONTRADE,
     PACKET_DISCOVEREDSCENE,
     PACKET_DISCOVEREDENTRANCE,
+    PACKET_UNLOCKEDDOOR,
     PACKET_ACTORUPDATE,
     PACKET_ACTORSPAWN,
     // Etc
@@ -643,7 +644,12 @@ static void Multiplayer_Sync_SharedProgress(void) {
 
     // Dungeon Keys
     for (size_t index = 0; index < ARRAY_SIZE(gSaveContext.dungeonKeys); index++) {
-        if (prevDungeonKeys[index] != gSaveContext.dungeonKeys[index]) {
+        // Don't sync chest minigame keys when the setting is off
+        if (index == DUNGEON_TREASURE_CHEST_SHOP && gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_OFF) {
+            continue;
+        }
+        // Only look for increased key count and handle used keys in Multiplayer_Send_UnlockedDoor()
+        if (prevDungeonKeys[index] < gSaveContext.dungeonKeys[index]) {
             Multiplayer_Send_DungeonKeyUpdate(index, gSaveContext.dungeonKeys[index] - prevDungeonKeys[index]);
         }
         prevDungeonKeys[index] = gSaveContext.dungeonKeys[index];
@@ -714,6 +720,10 @@ static void Multiplayer_Sync_SharedProgress(void) {
         &prevActorFlags.collect,
     };
     for (size_t member = 0; member < ARRAY_SIZE(actorFlagPtr); member++) {
+        // Don't sync chest minigame chests (except the final one) when the setting is off
+        if (member == 1 && gGlobalContext->sceneNum == 16 && gGlobalContext->roomNum != 6 && gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_OFF) {
+            continue;
+        }
         if (*prevActorFlagPtr[member] != *actorFlagPtr[member]) {
             for (size_t bit = 0; bit < BIT_COUNT(*actorFlagPtr[member]); bit++) {
                 s8 result = BitCompare(*actorFlagPtr[member], *prevActorFlagPtr[member], bit);
@@ -2046,6 +2056,42 @@ void Multiplayer_Receive_DiscoveredEntrance(u16 senderID) {
     mSaveContext.entrancesDiscovered[index] |= bit;
 }
 
+void Multiplayer_Send_UnlockedDoor(u32 flag) {
+    if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
+        return;
+    }
+    memset(mBuffer, 0, mBufSize);
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_UNLOCKEDDOOR);
+
+    // Set this prev flag to prevent sending the swch bit packet.
+    prevSaveSceneFlags[gGlobalContext->sceneNum].swch |= (1 << flag);
+
+    mBuffer[memSpacer++] = gGlobalContext->sceneNum;
+    mBuffer[memSpacer++] = gSaveContext.dungeonIndex;
+    mBuffer[memSpacer++] = flag;
+    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+}
+
+void Multiplayer_Receive_UnlockedDoor(u16 senderID) {
+    if (!IsSyncIdAndHashSame() || gSettingsContext.mp_SharedProgress == OFF) {
+        return;
+    }
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
+
+    s16 sceneNum = mBuffer[memSpacer++];
+    u16 dungeonIndex = mBuffer[memSpacer++];
+    u32 flag = mBuffer[memSpacer++];
+
+    if (mSaveContext.sceneFlags[sceneNum].swch & (1 << flag)) {
+        return;
+    }
+
+    mSaveContext.dungeonKeys[dungeonIndex]--;
+    prevDungeonKeys[dungeonIndex]--;
+    mSaveContext.sceneFlags[sceneNum].swch |= (1 << flag);
+    prevSaveSceneFlags[sceneNum].swch |= (1 << flag);
+}
+
 void Multiplayer_Send_ActorUpdate(Actor* actor, void* extraData, u32 extraDataSize) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
@@ -2478,6 +2524,7 @@ static void Multiplayer_UnpackPacket(u16 senderID) {
         Multiplayer_Receive_BiggoronTradeBit,
         Multiplayer_Receive_DiscoveredScene,
         Multiplayer_Receive_DiscoveredEntrance,
+        Multiplayer_Receive_UnlockedDoor,
         Multiplayer_Receive_ActorUpdate,
         Multiplayer_Receive_ActorSpawn,
         // Etc

@@ -54,6 +54,7 @@ void Multiplayer_Send_BiggoronTradeBit(u8 bit);
 void Multiplayer_Send_FullEntranceSync(u16 targetID);
 void Multiplayer_Send_DiscoveredScene(u32 index, u32 bit);
 void Multiplayer_Send_DiscoveredEntrance(u32 index, u32 bit);
+void Multiplayer_Send_UnlockedDoor(u32 flag);
 void Multiplayer_Send_ActorUpdate(Actor* actor, void* extraData, u32 extraDataSize);
 void Multiplayer_Send_ActorSpawn(s16 actorId, PosRot posRot, s16 params);
 // Etc
