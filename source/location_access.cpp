@@ -301,7 +301,7 @@ void AreaTable_Init() {
                   LocationAccess(KF_GS_BEAN_PATCH,        {[]{return CanPlantBugs && CanChildAttack;},
                                                /*Glitched*/[]{return CanPlantBugs && IsChild && Hammer && HammerAsChild;}}),
                   LocationAccess(KF_GS_HOUSE_OF_TWINS,    {[]{return IsAdult && AtNight && CanUse(HOOKSHOT) && CanGetNightTimeGS;},
-                                               /*Glitched*/[]{return IsAdult && AtNight && CanGetNightTimeGS && (CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE) || (Boomerang && BoomerangAsAdult));}}),
+                                               /*Glitched*/[]{return IsAdult && AtNight && CanGetNightTimeGS && (CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE) || Usable(BOOMERANG));}}),
                   LocationAccess(KF_GOSSIP_STONE,         {[]{return true;}}),
                 }, {
                   //Exits
@@ -419,24 +419,24 @@ void AreaTable_Init() {
                                                     /*Glitched*/[]{return IsChild && (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Fish || Bugs) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));}}),
                   LocationAccess(LW_TARGET_IN_WOODS,           {[]{return CanUse(SLINGSHOT);}}),
                   LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE,    {[]{return IsChild && CanStunDeku;},
-                                                    /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return IsChild && Usable(MEGATON_HAMMER);}}),
                   LocationAccess(LW_GS_BEAN_PATCH_NEAR_BRIDGE, {[]{return CanPlantBugs && CanChildAttack;},
-                                                    /*Glitched*/[]{return CanPlantBugs && IsChild && Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return CanPlantBugs && IsChild && Usable(MEGATON_HAMMER);}}),
                   LocationAccess(LW_GOSSIP_STONE,              {[]{return true;}}),
                 }, {
                   //Exits
                   Entrance(LW_FOREST_EXIT,           {[]{return true;}}),
                   Entrance(GC_WOODS_WARP,            {[]{return true;}}),
-                  Entrance(LW_BRIDGE,                {[]{return IsAdult && (CanUse(HOVER_BOOTS) || CanUse(LONGSHOT) || CanPlantBean(THE_LOST_WOODS));},
+                  Entrance(LW_BRIDGE,                {[]{return (IsAdult && CanPlantBean(THE_LOST_WOODS)) || Usable(HOVER_BOOTS) || Usable(LONGSHOT);},
                                           /*Glitched*/[]{return CanLeaveForest && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && HasBombchus) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE));}}),
-                  Entrance(ZORAS_RIVER,              {[]{return CanLeaveForest && (CanDive || CanUse(IRON_BOOTS));},
+                  Entrance(ZORAS_RIVER,              {[]{return CanLeaveForest && (CanDive || Usable(IRON_BOOTS));},
                                           /*Glitched*/[]{return CanLeaveForest && (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::ADVANCED));}}),
                   Entrance(LW_BEYOND_MIDO,           {[]{return IsChild || CanPlay(SariasSong);},
                                           /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) ||
                                                                 CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || (CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::ADVANCED) && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE) || HoverBoots)) ||
                                                                 ((CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && SariasSong);}}),
                   Entrance(LW_NEAR_SHORTCUTS_GROTTO, {[]{return Here(THE_LOST_WOODS, []{return CanBlastOrSmash;});},
-                                          /*Glitched*/[]{return Here(THE_LOST_WOODS, []{return ((IsChild || StickAsAdult) && Sticks && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);});}}),
+                                          /*Glitched*/[]{return Here(THE_LOST_WOODS, []{return (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
   });
 
   areaTable[LW_BEYOND_MIDO] = Area("LW Beyond Mido", "Lost Woods", THE_LOST_WOODS, NO_DAY_NIGHT_CYCLE, {
@@ -517,7 +517,7 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(SFM_ENTRYWAY,           {[]{return true;}}),
-                  Entrance(FOREST_TEMPLE_ENTRYWAY, {[]{return CanUse(HOOKSHOT);},
+                  Entrance(FOREST_TEMPLE_ENTRYWAY, {[]{return Usable(HOOKSHOT);},
                                         /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(SFM_FAIRY_GROTTO,       {[]{return true;}}),
                   Entrance(SFM_STORMS_GROTTO,      {[]{return CanOpenStormGrotto;},
@@ -564,7 +564,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(KOKIRI_FOREST,  {[]{return true;}}),
                   Entrance(HYRULE_FIELD,   {[]{return true;}}),
-                  Entrance(THE_LOST_WOODS, {[]{return CanUse(LONGSHOT);},
+                  Entrance(THE_LOST_WOODS, {[]{return Usable(LONGSHOT);},
                                 /*Glitched*/[]{return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::NOVICE);}}),
   });
 
@@ -590,15 +590,15 @@ void AreaTable_Init() {
                   Entrance(HF_INSIDE_FENCE_GROTTO, {[]{return CanOpenBombGrotto;},
                                         /*Glitched*/[]{return (Sticks && IsChild && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);}}),
                   Entrance(HF_COW_GROTTO,          {[]{return (CanUse(MEGATON_HAMMER) || IsChild) && CanOpenBombGrotto;},
-                                        /*Glitched*/[]{return (Sticks && (IsChild || (StickAsAdult && CanOpenBombGrotto && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) || (Hammer && HammerAsChild);}}),
+                                        /*Glitched*/[]{return (Sticks && ((IsChild && (ShardOfAgony || LogicGrottosWithoutAgony)) || (StickAsAdult && CanOpenBombGrotto && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE));}}),
                   Entrance(HF_NEAR_MARKET_GROTTO,  {[]{return Here(HYRULE_FIELD, []{return CanBlastOrSmash;});},
-                                        /*Glitched*/[]{return Here(HYRULE_FIELD, []{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);});}}),
+                                        /*Glitched*/[]{return Here(HYRULE_FIELD, []{return (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
                   Entrance(HF_FAIRY_GROTTO,        {[]{return Here(HYRULE_FIELD, []{return CanBlastOrSmash;});},
-                                        /*Glitched*/[]{return Here(HYRULE_FIELD, []{return (Sticks && ((IsChild && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT)) || (IsAdult && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}}),
+                                        /*Glitched*/[]{return Here(HYRULE_FIELD, []{return Sticks && ((IsChild && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT)) || (IsAdult && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)));});}}),
                   Entrance(HF_NEAR_KAK_GROTTO,     {[]{return CanOpenBombGrotto;},
-                                        /*Glitched*/[]{return (Sticks && IsChild && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);}}),
+                                        /*Glitched*/[]{return Sticks && IsChild && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);}}),
                   Entrance(HF_TEKTITE_GROTTO,      {[]{return CanOpenBombGrotto;},
-                                        /*Glitched*/[]{return (Sticks && IsChild && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);}}),
+                                        /*Glitched*/[]{return Sticks && IsChild && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);}}),
   });
 
   areaTable[HF_SOUTHEAST_GROTTO] = Area("HF Southeast Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents, {
@@ -670,7 +670,7 @@ void AreaTable_Init() {
 
   areaTable[HF_TEKTITE_GROTTO] = Area("HF Tektite Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(HF_TEKTITE_GROTTO_FREESTANDING_POH, {[]{return ProgressiveScale >= 2 || CanUse(IRON_BOOTS);}}),
+                  LocationAccess(HF_TEKTITE_GROTTO_FREESTANDING_POH, {[]{return ProgressiveScale >= 2 || Usable(IRON_BOOTS);}}),
                 }, {
                   //Exits
                   Entrance(HYRULE_FIELD, {[]{return true;}}),
@@ -713,7 +713,7 @@ void AreaTable_Init() {
                   Entrance(LH_FISHING_ISLAND,     {[]{return IsChild || CanUse(SCARECROW) || CanPlantBean(LAKE_HYLIA) || WaterTempleClear;},
                                        /*Glitched*/[]{return (CanUse(HOOKSHOT) && ScarecrowSong && (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE)))) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
                   Entrance(LH_LAB,                {[]{return true;}}),
-                  Entrance(WATER_TEMPLE_ENTRYWAY, {[]{return CanUse(HOOKSHOT) && (CanUse(IRON_BOOTS) || ((CanUse(LONGSHOT)) && ProgressiveScale >= 2));},
+                  Entrance(WATER_TEMPLE_ENTRYWAY, {[]{return Usable(HOOKSHOT) && (Usable(IRON_BOOTS) || (CanUse(LONGSHOT) && ProgressiveScale >= 2));},
                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::ADVANCED);}}),
                   Entrance(LH_GROTTO,             {[]{return true;}}),
   });
@@ -734,13 +734,13 @@ void AreaTable_Init() {
                   EventAccess(&EyedropsAccess, {[]{return EyedropsAccess || (IsAdult && (EyeballFrogAccess || (EyeballFrog && DisableTradeRevert)));}}),
                 }, {
                   //Locations
-                  LocationAccess(LH_LAB_DIVE,     {[]{return ProgressiveScale >= 2 || (LogicLabDiving && IronBoots && CanUse(HOOKSHOT));},
-                                       /*Glitched*/[]{return CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE));}}),
+                  LocationAccess(LH_LAB_DIVE,     {[]{return ProgressiveScale >= 2 || (LogicLabDiving && Usable(IRON_BOOTS) && Usable(HOOKSHOT));},
+                                       /*Glitched*/[]{return CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && Usable(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE));}}),
                   LocationAccess(LH_TRADE_FROG,   {[]{return IsAdult && EyeballFrog;}}),
-                  LocationAccess(LH_GS_LAB_CRATE, {[]{return IronBoots && CanUse(HOOKSHOT);},
+                  LocationAccess(LH_GS_LAB_CRATE, {[]{return Usable(IRON_BOOTS) && Usable(HOOKSHOT);},
                                        /*Glitched*/[]{return ((CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && HasBombchus && (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg))) &&
-                                                             (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::ADVANCED) || ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || ProgressiveScale >= 2 || CanUse(IRON_BOOTS))) ||
-                                                             (CanUse(IRON_BOOTS) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE));}}),
+                                                             (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::ADVANCED) || ((Bugs || Fish) && Usable(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || ProgressiveScale >= 2 || Usable(IRON_BOOTS))) ||
+                                                             (Usable(IRON_BOOTS) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE));}}),
                 }, {
                   //Exits
                   Entrance(LAKE_HYLIA, {[]{return true;}}),
@@ -774,7 +774,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(GV_GS_SMALL_BRIDGE, {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;},
-                                          /*Glitched*/[]{return HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
+                                          /*Glitched*/[]{return IsChild && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && AtNight && CanGetNightTimeGS;}}),
                 }, {
                   //Exits
                   Entrance(HYRULE_FIELD,      {[]{return true;}}),
@@ -782,8 +782,8 @@ void AreaTable_Init() {
                   Entrance(GV_CRATE_LEDGE,    {[]{return IsChild || CanUse(LONGSHOT);}}),
                   Entrance(GV_GROTTO_LEDGE,   {[]{return true;}}),
                   Entrance(GV_FORTRESS_SIDE,  {[]{return IsAdult && (CanRideEpona || CanUse(LONGSHOT) || GerudoFortress.Is(GERUDOFORTRESS_OPEN) || CarpenterRescue);},
-                                   /*Glitched*/[]{return (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || (IsChild && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::HERO)) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::ADVANCED) ||
-                                                         (CanUse(HOVER_BOOTS) && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE) || (CanSurviveDamage && (Bombs || HasBombchus) && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED))));}}),
+                                   /*Glitched*/[]{return (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || (IsChild && (CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::HERO) || Usable(HOOKSHOT))) || (IsAdult && (CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::ADVANCED) ||
+                                                         (CanUse(HOVER_BOOTS) && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE) || (CanSurviveDamage && (Bombs || HasBombchus) && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED))))));}}),
   });
 
   areaTable[GV_UPPER_STREAM] = Area("GV Upper Stream", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {
@@ -812,7 +812,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(GV_LOWER_STREAM,   {[]{return true;}}),
                   Entrance(GV_OCTOROK_GROTTO, {[]{return CanUse(SILVER_GAUNTLETS);}}),
-                  Entrance(GV_CRATE_LEDGE,    {[]{return CanUse(LONGSHOT);}}),
+                  Entrance(GV_CRATE_LEDGE,    {[]{return Usable(LONGSHOT);}}),
   });
 
   areaTable[GV_CRATE_LEDGE] = Area("GV Crate Ledge", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {}, {
@@ -832,9 +832,9 @@ void AreaTable_Init() {
                                          /*Glitched*/[]{return IsAdult && (CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))));}}),
                   LocationAccess(GV_TRADE_SAW,      {[]{return IsAdult && PoachersSaw;}}),
                   LocationAccess(GV_GS_BEHIND_TENT, {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;},
-                                         /*Glitched*/[]{return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (Boomerang && BoomerangAsAdult)) && IsAdult && AtNight && CanGetNightTimeGS;}}),
+                                         /*Glitched*/[]{return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || Usable(BOOMERANG)) && IsAdult && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(GV_GS_PILLAR,      {[]{return CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS;},
-                                         /*Glitched*/[]{return Boomerang && BoomerangAsAdult && IsAdult && AtNight && CanGetNightTimeGS;}}),
+                                         /*Glitched*/[]{return Usable(BOOMERANG) && IsAdult && AtNight && CanGetNightTimeGS;}}),
                 }, {
                   //Exits
                   Entrance(GERUDO_FORTRESS,   {[]{return true;}}),
@@ -876,31 +876,31 @@ void AreaTable_Init() {
                   EventAccess(&GtG_GateOpen,    {[]{return GtG_GateOpen || (IsAdult && GerudoToken);}}),
                 }, {
                   //Locations
-                  LocationAccess(GF_CHEST,              {[]{return CanUse(HOVER_BOOTS) || CanUse(SCARECROW) || CanUse(LONGSHOT);},
-                                             /*Glitched*/[]{return (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE))) && (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen);}}),
+                  LocationAccess(GF_CHEST,              {[]{return Usable(HOVER_BOOTS) || CanUse(SCARECROW) || Usable(LONGSHOT);},
+                                             /*Glitched*/[]{return (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE))) && (GerudoToken || Usable(BOW) || Usable(HOOKSHOT) || Usable(HOVER_BOOTS) || LogicGerudoKitchen);}}),
                   LocationAccess(GF_HBA_1000_POINTS,    {[]{return GerudoToken && CanRideEpona && Bow && AtDay;}}),
                   LocationAccess(GF_HBA_1500_POINTS,    {[]{return GerudoToken && CanRideEpona && Bow && AtDay;}}),
                   LocationAccess(GF_NORTH_F1_CARPENTER, {[]{return  IsAdult || KokiriSword;},
                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
-                  LocationAccess(GF_NORTH_F2_CARPENTER, {[]{return (IsAdult || KokiriSword) && (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen);},
-                                             /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen);}}),
+                  LocationAccess(GF_NORTH_F2_CARPENTER, {[]{return (IsAdult || KokiriSword) && (GerudoToken || Usable(BOW) || Usable(HOOKSHOT) || Usable(HOVER_BOOTS) || LogicGerudoKitchen);},
+                                             /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && (GerudoToken || Usable(BOW) || Usable(HOOKSHOT) || Usable(HOVER_BOOTS) || LogicGerudoKitchen);}}),
                   LocationAccess(GF_SOUTH_F1_CARPENTER, {[]{return  IsAdult || KokiriSword;},
                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
                   LocationAccess(GF_SOUTH_F2_CARPENTER, {[]{return  IsAdult || KokiriSword;},
                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
                   LocationAccess(GF_GERUDO_TOKEN,       {[]{return CanFinishGerudoFortress;}}),
                   LocationAccess(GF_GS_ARCHERY_RANGE,   {[]{return CanUse(HOOKSHOT) && GerudoToken && AtNight && CanGetNightTimeGS;},
-                                             /*Glitched*/[]{return IsAdult && (Hookshot || (Boomerang && BoomerangAsAdult)) && (GerudoToken || GlitchGFGuardSneak) && AtNight && CanGetNightTimeGS;}}),
+                                             /*Glitched*/[]{return IsAdult && (Hookshot || Usable(BOOMERANG)) && (GerudoToken || GlitchGFGuardSneak) && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(GF_GS_TOP_FLOOR,       {[]{return IsAdult && AtNight && (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen) && CanGetNightTimeGS;}}),
                 }, {
                   //Exits
                   Entrance(GV_FORTRESS_SIDE,                 {[]{return true;}}),
                   Entrance(GF_OUTSIDE_GATE,                  {[]{return GF_GateOpen;},
-                                                  /*Glitched*/[]{return (IsChild && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || ((IsChild || ((CanUse(HOOKSHOT) || CanUse(BOW) || (Boomerang && BoomerangAsAdult)) && GlitchGFGuardSneak)) && ((CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::NOVICE)) ||
-                                                                        CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::INTERMEDIATE)) && ((Sticks && (IsChild || StickAsAdult)) || (BiggoronSword && IsAdult) || CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE)));}}),
+                                                  /*Glitched*/[]{return (IsChild && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || ((IsChild || ((CanUse(HOOKSHOT) || CanUse(BOW) || Usable(BOOMERANG)) && GlitchGFGuardSneak)) && ((CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::NOVICE)) ||
+                                                                        CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::INTERMEDIATE)) && (Usable(STICKS) || (BiggoronSword && IsAdult) || CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE)));}}),
                   Entrance(GERUDO_TRAINING_GROUNDS_ENTRYWAY, {[]{return GtG_GateOpen && (IsAdult || ShuffleDungeonEntrances);},
-                                                  /*Glitched*/[]{return (CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE) && (HoverBoots || CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::ADVANCED))) || ((IsChild || ((CanUse(HOOKSHOT) || CanUse(BOW) || (Boomerang && BoomerangAsAdult)) && GlitchGFGuardSneak)) && ((CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
-                                                                        CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::INTERMEDIATE)) && ((Sticks && (IsChild || StickAsAdult)) || (BiggoronSword && IsAdult) || CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE)));}}),
+                                                  /*Glitched*/[]{return (CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE) && (HoverBoots || CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::ADVANCED))) || ((IsChild || ((CanUse(HOOKSHOT) || CanUse(BOW) || Usable(BOOMERANG)) && GlitchGFGuardSneak)) && ((CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
+                                                                        CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::INTERMEDIATE)) && (Usable(STICKS) || (BiggoronSword && IsAdult) || CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE)));}}),
                   Entrance(GF_STORMS_GROTTO,                 {[]{return IsAdult && CanOpenStormGrotto;},
                                                   /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && IsAdult && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
   });
@@ -925,8 +925,8 @@ void AreaTable_Init() {
   areaTable[WASTELAND_NEAR_FORTRESS] = Area("Wasteland Near Fortress", "Haunted Wasteland", HAUNTED_WASTELAND, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(GF_OUTSIDE_GATE,   {[]{return true;}}),
-                  Entrance(HAUNTED_WASTELAND, {[]{return CanUse(HOVER_BOOTS) || CanUse(LONGSHOT);},
-                                   /*Glitched*/[]{return ((Bombs || HasBombchus) && CanSurviveDamage && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Hammer && (IsAdult || HammerAsChild) && CanShield && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::INTERMEDIATE)) ||
+                  Entrance(HAUNTED_WASTELAND, {[]{return Usable(HOVER_BOOTS) || Usable(LONGSHOT);},
+                                   /*Glitched*/[]{return ((Bombs || HasBombchus) && CanSurviveDamage && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Usable(MEGATON_HAMMER) && CanShield && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::INTERMEDIATE)) ||
                                                          (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED)) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) || GlitchItemlessWasteland;}}),
   });
 
@@ -945,8 +945,8 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(WASTELAND_NEAR_COLOSSUS, {[]{return LogicLensWasteland || CanUse(LENS_OF_TRUTH);}}),
-                  Entrance(WASTELAND_NEAR_FORTRESS, {[]{return CanUse(HOVER_BOOTS) || CanUse(LONGSHOT);},
-                                         /*Glitched*/[]{return ((Bombs || HasBombchus) && CanSurviveDamage && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Hammer && (IsAdult || HammerAsChild) && CanShield && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::INTERMEDIATE)) ||
+                  Entrance(WASTELAND_NEAR_FORTRESS, {[]{return Usable(HOVER_BOOTS) || Usable(LONGSHOT);},
+                                         /*Glitched*/[]{return ((Bombs || HasBombchus) && CanSurviveDamage && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::NOVICE)) || (Usable(MEGATON_HAMMER) && CanShield && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::INTERMEDIATE)) ||
                                                                (Bombs && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED)) || (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE)) || GlitchItemlessWasteland;}}),
   });
 
@@ -1301,9 +1301,9 @@ void AreaTable_Init() {
                   Entrance(KAK_POTION_SHOP_FRONT,       {[]{return AtDay || IsChild;}}),
                   Entrance(KAK_REDEAD_GROTTO,           {[]{return CanOpenBombGrotto;},
                                              /*Glitched*/[]{return Hammer && HammerAsChild;}}),
-                  Entrance(KAK_IMPAS_LEDGE,             {[]{return (IsChild && AtDay) || CanUse(HOOKSHOT);},
+                  Entrance(KAK_IMPAS_LEDGE,             {[]{return (IsChild && AtDay) || Usable(HOOKSHOT);},
                                              /*Glitched*/[]{return IsAdult && ((HoverBoots && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE)) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE)) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE));}}),
-                  Entrance(KAK_ROOFTOP,                 {[]{return CanUse(HOOKSHOT) || (LogicManOnRoof && (IsAdult || AtDay || Slingshot || HasBombchus));},
+                  Entrance(KAK_ROOFTOP,                 {[]{return Usable(HOOKSHOT) || (LogicManOnRoof && (IsAdult || AtDay || Slingshot || HasBombchus));},
                                              /*Glitched*/[]{return LogicManOnRoof && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
                   Entrance(THE_GRAVEYARD,               {[]{return true;}}),
                   Entrance(KAK_BEHIND_GATE,             {[]{return IsAdult || (KakarikoVillageGateOpen);},
@@ -1381,8 +1381,8 @@ void AreaTable_Init() {
                                                      CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Fish || Bugs) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));}}),
                 }, {
                   //Locations
-                  LocationAccess(KAK_WINDMILL_FREESTANDING_POH, {[]{return CanUse(BOOMERANG) || DampesWindmillAccess || (CanUse(HOOKSHOT) && LogicWindmillPoHHookshot);},
-                                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (Boomerang && BoomerangAsAdult);}}),
+                  LocationAccess(KAK_WINDMILL_FREESTANDING_POH, {[]{return Usable(BOOMERANG) || DampesWindmillAccess || (CanUse(HOOKSHOT) && LogicWindmillPoHHookshot);},
+                                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
                   LocationAccess(SONG_FROM_WINDMILL,            {[]{return IsAdult && Ocarina;},
                                                      /*Glitched*/[]{return IsAdult && (CanDoGlitch(GlitchType::WindmillBombOI, GlitchDifficulty::EXPERT) || ((Fish || Bugs) && CanShield && ((Bombs && (CanSurviveDamage || (Fairy && NumBottles >= 2))) || (DampesWindmillAccess || (CanUse(HOOKSHOT) && LogicWindmillPoHHookshot) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE))) &&
                                                                            CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Fish || Bugs) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));}}),
@@ -1471,11 +1471,11 @@ void AreaTable_Init() {
                   EventAccess(&BugRock,        {[]{return true;}}),
                 }, {
                   //Locations
-                  LocationAccess(GRAVEYARD_FREESTANDING_POH,        {[]{return (IsAdult && (CanPlantBean(THE_GRAVEYARD) || CanUse(LONGSHOT))) || (LogicGraveyardPoH && CanUse(BOOMERANG));},
-                                                         /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::NOVICE) || (LogicGraveyardPoH && Boomerang && BoomerangAsAdult);}}),
+                  LocationAccess(GRAVEYARD_FREESTANDING_POH,        {[]{return (IsAdult && (CanPlantBean(THE_GRAVEYARD) || Usable(LONGSHOT))) || (LogicGraveyardPoH && Usable(BOOMERANG));},
+                                                         /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::NOVICE);}}),
                   LocationAccess(GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR, {[]{return IsChild && AtNight;}}), //TODO: This needs to change
                   LocationAccess(GRAVEYARD_GS_WALL,                 {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;},
-                                                         /*Glitched*/[]{return IsChild && AtNight && CanGetNightTimeGS && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
+                                                         /*Glitched*/[]{return IsChild && AtNight && CanGetNightTimeGS && (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || Usable(HOOKSHOT));}}),
                   LocationAccess(GRAVEYARD_GS_BEAN_PATCH,           {[]{return CanPlantBugs && CanChildAttack;},
                                                          /*Glitched*/[]{return CanPlantBugs && IsChild && Hammer && HammerAsChild;}}),
                 }, {
@@ -1554,7 +1554,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(THE_GRAVEYARD,             {[]{return true;}}),
                   Entrance(SHADOW_TEMPLE_ENTRYWAY,    {[]{return CanUse(DINS_FIRE) || (LogicShadowFireArrowEntry && CanUse(FIRE_ARROWS));},
-                                           /*Glitched*/[]{return (Sticks && (IsChild || StickAsAdult) && (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE) || CanUse(FIRE_ARROWS))) || (CanTakeDamage && (
+                                           /*Glitched*/[]{return (Usable(STICKS) && (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE) || Usable(FIRE_ARROWS))) || (CanTakeDamage && (
                                                                  CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::NOVICE)));}}),
   });
 
@@ -1571,10 +1571,10 @@ void AreaTable_Init() {
                   //Locations
                   LocationAccess(DMT_CHEST,                    {[]{return CanBlastOrSmash || (LogicDMTBombable && IsChild && GoronBracelet);},
                                                     /*Glitched*/[]{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);}}),
-                  LocationAccess(DMT_FREESTANDING_POH,         {[]{return CanTakeDamage || CanUse(HOVER_BOOTS) || (IsAdult && CanPlantBean(DEATH_MOUNTAIN_TRAIL) && (HasExplosives || GoronBracelet));}}),
+                  LocationAccess(DMT_FREESTANDING_POH,         {[]{return CanTakeDamage || Usable(HOVER_BOOTS) || (IsAdult && CanPlantBean(DEATH_MOUNTAIN_TRAIL) && (HasExplosives || GoronBracelet));}}),
                   LocationAccess(DMT_GS_BEAN_PATCH,            {[]{return CanPlantBugs && (HasExplosives || GoronBracelet || (LogicDMTSoilGS && CanUse(BOOMERANG)));}}),
                   LocationAccess(DMT_GS_NEAR_KAK,              {[]{return CanBlastOrSmash;},
-                                                    /*Glitched*/[]{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);}}),
+                                                    /*Glitched*/[]{return (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}}),
                   LocationAccess(DMT_GS_ABOVE_DODONGOS_CAVERN, {[]{return IsAdult && AtNight && CanUse(MEGATON_HAMMER) && CanGetNightTimeGS;},
                                                     /*Glitched*/[]{return IsAdult && AtNight && CanGetNightTimeGS && Sticks && StickAsAdult && ((CanTakeDamageTwice && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}}),
                 }, {
@@ -1582,7 +1582,7 @@ void AreaTable_Init() {
                   Entrance(KAK_BEHIND_GATE,          {[]{return true;}}),
                   Entrance(GORON_CITY,               {[]{return true;}}),
                   Entrance(DEATH_MOUNTAIN_SUMMIT,    {[]{return Here(DEATH_MOUNTAIN_TRAIL, []{return CanBlastOrSmash;}) || (IsAdult && ((CanPlantBean(DEATH_MOUNTAIN_TRAIL) && GoronBracelet) || (HoverBoots && LogicDMTSummitHover)));},
-                                          /*Glitched*/[]{return (IsAdult && Here(DEATH_MOUNTAIN_TRAIL, []{return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);})) || Here(DEATH_MOUNTAIN_TRAIL, []{return IsAdult && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);}) || Here(DEATH_MOUNTAIN_TRAIL, []{return IsChild && Hammer && HammerAsChild;});}}),
+                                          /*Glitched*/[]{return IsAdult && Here(DEATH_MOUNTAIN_TRAIL, []{return Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);});}}),
                   Entrance(DODONGOS_CAVERN_ENTRYWAY, {[]{return HasExplosives || GoronBracelet || IsAdult;}}),
                   Entrance(DMT_STORMS_GROTTO,        {[]{return CanOpenStormGrotto;},
                                           /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
@@ -1606,9 +1606,9 @@ void AreaTable_Init() {
                   Entrance(DMC_UPPER_LOCAL,          {[]{return true;}}),
                   Entrance(DMT_OWL_FLIGHT,           {[]{return IsChild;}}),
                   Entrance(DMT_COW_GROTTO,           {[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return CanBlastOrSmash;});},
-                                          /*Glitched*/[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);});}}),
+                                          /*Glitched*/[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);});}}),
                   Entrance(DMT_GREAT_FAIRY_FOUNTAIN, {[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return CanBlastOrSmash;});},
-                                          /*Glitched*/[]{return ((KokiriSword || Sticks || IsAdult) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT)) || Here(DEATH_MOUNTAIN_SUMMIT, []{return Hammer && HammerAsChild;});}}),
+                                          /*Glitched*/[]{return ((KokiriSword || Sticks || IsAdult) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT));}}),
   });
 
   areaTable[DMT_OWL_FLIGHT] = Area("DMT Owl Flight", "Death Mountain", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -1654,40 +1654,36 @@ void AreaTable_Init() {
                                                /*Glitched*/[]{return Hammer && HammerAsChild;}}),
                   EventAccess(&GoronCityChildFire,        {[]{return GoronCityChildFire        || (IsChild && CanUse(DINS_FIRE));},
                                                /*Glitched*/[]{return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE);}}),
-                  EventAccess(&GCWoodsWarpOpen,           {[]{return GCWoodsWarpOpen           || (CanBlastOrSmash || CanUse(DINS_FIRE) || CanUse(BOW) || GoronBracelet || GoronCityChildFire);},
-                                               /*Glitched*/[]{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);}}),
+                  EventAccess(&GCWoodsWarpOpen,           {[]{return GCWoodsWarpOpen           || (CanBlastOrSmash || CanUse(DINS_FIRE) || Usable(BOW) || GoronBracelet || GoronCityChildFire);},
+                                               /*Glitched*/[]{return (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}}),
                   EventAccess(&GCDaruniasDoorOpenChild,   {[]{return GCDaruniasDoorOpenChild   || (IsChild && CanPlay(ZeldasLullaby));},
                                                /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
                                                                      ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && IsChild && ZeldasLullaby;}}),
                   EventAccess(&StopGCRollingGoronAsAdult, {[]{return StopGCRollingGoronAsAdult || (IsAdult && (GoronBracelet || HasExplosives || Bow || (LogicLinkGoronDins && CanUse(DINS_FIRE))));}}),
                 }, {
                   //Locations
-                  LocationAccess(GC_MAZE_LEFT_CHEST,        {[]{return CanUse(MEGATON_HAMMER) || CanUse(SILVER_GAUNTLETS) || (LogicGoronCityLeftMost && HasExplosives && CanUse(HOVER_BOOTS));},
-                                                 /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) || (Hammer && HammerAsChild);}}),
-                  LocationAccess(GC_MAZE_CENTER_CHEST,      {[]{return CanBlastOrSmash  || CanUse(SILVER_GAUNTLETS);},
-                                                 /*Glitched*/[]{return Hammer && HammerAsChild;}}),
-                  LocationAccess(GC_MAZE_RIGHT_CHEST,       {[]{return CanBlastOrSmash  || CanUse(SILVER_GAUNTLETS);},
-                                                 /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  LocationAccess(GC_MAZE_LEFT_CHEST,        {[]{return Usable(MEGATON_HAMMER) || CanUse(SILVER_GAUNTLETS) || (LogicGoronCityLeftMost && HasExplosives && Usable(HOVER_BOOTS));},
+                                                 /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
+                  LocationAccess(GC_MAZE_CENTER_CHEST,      {[]{return CanBlastOrSmash  || CanUse(SILVER_GAUNTLETS);}}),
+                  LocationAccess(GC_MAZE_RIGHT_CHEST,       {[]{return CanBlastOrSmash  || CanUse(SILVER_GAUNTLETS);}}),
                   LocationAccess(GC_POT_FREESTANDING_POH,   {[]{return IsChild && GoronCityChildFire && (Bombs || (GoronBracelet && LogicGoronCityPotWithStrength) || (HasBombchus && LogicGoronCityPot));}}),
                   LocationAccess(GC_ROLLING_GORON_AS_CHILD, {[]{return IsChild && (HasExplosives || (GoronBracelet && LogicChildRollingWithStrength));}}),
                   LocationAccess(GC_ROLLING_GORON_AS_ADULT, {[]{return StopGCRollingGoronAsAdult;}}),
                   LocationAccess(GC_GS_BOULDER_MAZE,        {[]{return IsChild && HasExplosives;},
-                                                 /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
+                                                 /*Glitched*/[]{return IsChild && Usable(MEGATON_HAMMER);}}),
                   LocationAccess(GC_GS_CENTER_PLATFORM,     {[]{return IsAdult;}}),
                   LocationAccess(GC_MEDIGORON,              {[]{return IsAdult && AdultsWallet && (CanBlastOrSmash || GoronBracelet);}}),
-                  LocationAccess(GC_MAZE_GOSSIP_STONE,      {[]{return CanBlastOrSmash || CanUse(SILVER_GAUNTLETS);},
-                                                 /*Glitched*/[]{return Hammer && HammerAsChild;}}),
-                  LocationAccess(GC_MEDIGORON_GOSSIP_STONE, {[]{return CanBlastOrSmash || GoronBracelet;},
-                                                 /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  LocationAccess(GC_MAZE_GOSSIP_STONE,      {[]{return CanBlastOrSmash || CanUse(SILVER_GAUNTLETS);}}),
+                  LocationAccess(GC_MEDIGORON_GOSSIP_STONE, {[]{return CanBlastOrSmash || GoronBracelet;}}),
                 }, {
                   //Exits
                   Entrance(DEATH_MOUNTAIN_TRAIL, {[]{return true;}}),
                   Entrance(GC_WOODS_WARP,        {[]{return GCWoodsWarpOpen;}}),
                   Entrance(GC_SHOP,              {[]{return (IsAdult && StopGCRollingGoronAsAdult) || (IsChild && (HasExplosives || GoronBracelet || GoronCityChildFire));},
-                                      /*Glitched*/[]{return IsChild && ((Sticks && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild));}}),
+                                      /*Glitched*/[]{return IsChild && ((Sticks && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || Usable(MEGATON_HAMMER));}}),
                   Entrance(GC_DARUNIAS_CHAMBER,  {[]{return (IsAdult && StopGCRollingGoronAsAdult) || GCDaruniasDoorOpenChild;}}),
                   Entrance(GC_GROTTO,            {[]{return IsAdult && ((CanPlay(SongOfTime) && ((EffectiveHealth > 2) || CanUse(GORON_TUNIC) || CanUse(LONGSHOT) || CanUse(NAYRUS_LOVE))) || (EffectiveHealth > 1 && CanUse(GORON_TUNIC) && CanUse(HOOKSHOT)) || (CanUse(NAYRUS_LOVE) && CanUse(HOOKSHOT)));},
-                                      /*Glitched*/[]{return HasBombchus && ((IsChild && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE));}}),
+                                      /*Glitched*/[]{return (HasBombchus && ((IsChild && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE))) || (IsChild && Usable(LONGSHOT));}}),
   });
 
   areaTable[GC_WOODS_WARP] = Area("GC Woods Warp", "Goron City", NONE, NO_DAY_NIGHT_CYCLE, {
@@ -1719,7 +1715,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(GC_GROTTO,  {[]{return true;}}),
                   Entrance(GORON_CITY, {[]{return (DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) ||
-                                                  CanUse(GORON_TUNIC) || CanUse(NAYRUS_LOVE) || (CanPlay(SongOfTime) && CanUse(LONGSHOT));}}),
+                                                  Usable(GORON_TUNIC) || CanUse(NAYRUS_LOVE) || ((IsChild || CanPlay(SongOfTime)) && Usable(LONGSHOT));}}),
   });
 
   areaTable[GC_SHOP] = Area("GC Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1740,11 +1736,11 @@ void AreaTable_Init() {
   areaTable[GC_GROTTO] = Area("GC Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(GC_DEKU_SCRUB_GROTTO_LEFT,   {[]{return CanStunDeku;},
-                                                   /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                   /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(GC_DEKU_SCRUB_GROTTO_RIGHT,  {[]{return CanStunDeku;},
-                                                   /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                   /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(GC_DEKU_SCRUB_GROTTO_CENTER, {[]{return CanStunDeku;},
-                                                   /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                   /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(GC_GROTTO_PLATFORM, {[]{return true;}}),
@@ -1752,10 +1748,10 @@ void AreaTable_Init() {
 
   areaTable[DMC_UPPER_NEARBY] = Area("DMC Upper Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(DMC_UPPER_LOCAL,       {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
+                  Entrance(DMC_UPPER_LOCAL,       {[]{return Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
                   Entrance(DEATH_MOUNTAIN_SUMMIT, {[]{return true;}}),
                   Entrance(DMC_UPPER_GROTTO,      {[]{return Here(DMC_UPPER_NEARBY, []{return CanBlastOrSmash;});},
-                                       /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return (Sticks && (IsChild || StickAsAdult) && ((CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) && FireTimer >= 3) || ((Fairy || FireTimer >= 6) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)))) || (Hammer && HammerAsChild);});}})
+                                       /*Glitched*/[]{return Here(DMC_UPPER_NEARBY, []{return Usable(STICKS) && ((CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT) && FireTimer >= 3) || ((Fairy || FireTimer >= 6) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)));});}})
   });
 
   areaTable[DMC_UPPER_LOCAL] = Area("DMC Upper Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {
@@ -1765,16 +1761,16 @@ void AreaTable_Init() {
                   //Locations
                   LocationAccess(DMC_WALL_FREESTANDING_POH, {[]{return FireTimer > 1;}}),
                   LocationAccess(DMC_GS_CRATE,              {[]{return IsChild && CanChildAttack;},
-                                                 /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
+                                                 /*Glitched*/[]{return IsChild && Usable(MEGATON_HAMMER);}}),
                   LocationAccess(DMC_GOSSIP_STONE,          {[]{return HasExplosives && FireTimer > 1;}}),
                 }, {
                   //Exits
                   Entrance(DMC_UPPER_NEARBY,         {[]{return true;}}),
                   Entrance(DMC_LADDER_AREA_NEARBY,   {[]{return FireTimer > 1;}}),
                   Entrance(DMC_CENTRAL_NEARBY,       {[]{return CanUse(GORON_TUNIC) && CanUse(DISTANT_SCARECROW) && ((EffectiveHealth > 2) || (Fairy && ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) || CanUse(NAYRUS_LOVE));},
-                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)) && CanTakeDamage && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
+                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || Usable(GORON_TUNIC)) && CanTakeDamage && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
                   Entrance(DMC_LOWER_NEARBY,         {[]{return false;},
-                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
+                                          /*Glitched*/[]{return ((LogicFewerTunicRequirements && FireTimer > 2) || Usable(GORON_TUNIC)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[DMC_LADDER_AREA_NEARBY] = Area("DMC Ladder Area Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {
@@ -1784,16 +1780,16 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(DMC_UPPER_NEARBY, {[]{return FireTimer > 2;}}),
-                  Entrance(DMC_LOWER_NEARBY, {[]{return FireTimer > 2 && (CanUse(HOVER_BOOTS) || (LogicCraterUpperToLower && CanUse(MEGATON_HAMMER)));}}),
+                  Entrance(DMC_LOWER_NEARBY, {[]{return FireTimer > 2 && (Usable(HOVER_BOOTS) || (LogicCraterUpperToLower && CanUse(MEGATON_HAMMER)));}}),
   });
 
   areaTable[DMC_LOWER_NEARBY] = Area("DMC Lower Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(DMC_LOWER_LOCAL,          {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
+                  Entrance(DMC_LOWER_LOCAL,          {[]{return Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
                   Entrance(GC_DARUNIAS_CHAMBER,      {[]{return true;}}),
-                  Entrance(DMC_GREAT_FAIRY_FOUNTAIN, {[]{return CanUse(MEGATON_HAMMER);},
-                                          /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || ((CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))) ||
-                                                                (Hammer && HammerAsChild) || (Bombs && CanShield && (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) || Here(DMC_UPPER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED);});}}),
+                  Entrance(DMC_GREAT_FAIRY_FOUNTAIN, {[]{return Usable(MEGATON_HAMMER);},
+                                          /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || ((Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))) ||
+                                                                (Bombs && CanShield && (Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) || Here(DMC_UPPER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED);});}}),
                   Entrance(DMC_HAMMER_GROTTO,        {[]{return CanUse(MEGATON_HAMMER);},
                                           /*Glitched*/[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && Sticks && StickAsAdult && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}}),
   });
@@ -1802,19 +1798,19 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DMC_LOWER_NEARBY,       {[]{return true;}}),
                   Entrance(DMC_LADDER_AREA_NEARBY, {[]{return true;}}),
-                  Entrance(DMC_CENTRAL_NEARBY,     {[]{return CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT);},
+                  Entrance(DMC_CENTRAL_NEARBY,     {[]{return Usable(HOVER_BOOTS) || Usable(HOOKSHOT);},
                                         /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
-                  Entrance(DMC_CENTRAL_LOCAL,      {[]{return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC));}}),
+                  Entrance(DMC_CENTRAL_LOCAL,      {[]{return (Usable(HOVER_BOOTS) || Usable(HOOKSHOT)) && ((LogicFewerTunicRequirements && FireTimer > 2) || Usable(GORON_TUNIC));}}),
   });
 
   areaTable[DMC_CENTRAL_NEARBY] = Area("DMC Central Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DMC_VOLCANO_FREESTANDING_POH, {[]{return IsAdult && FireTimer > 2 && (CanPlantBean(DMC_CENTRAL_LOCAL) || (LogicCraterBeanPoHWithHovers && HoverBoots));},
-                                                    /*Glitched*/[]{return Here(DMC_LOWER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) && (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2));});}}),
+                                                    /*Glitched*/[]{return Here(DMC_LOWER_LOCAL, []{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) && (Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2));});}}),
                   LocationAccess(SHEIK_IN_CRATER,              {[]{return IsAdult;}}),
                 }, {
                   //Exits
-                  Entrance(DMC_CENTRAL_LOCAL, {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
+                  Entrance(DMC_CENTRAL_LOCAL, {[]{return Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5);}}),
   });
 
   areaTable[DMC_CENTRAL_LOCAL] = Area("DMC Central Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {
@@ -1823,11 +1819,11 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(DMC_GS_BEAN_PATCH, {[]{return CanPlantBugs && CanChildAttack;},
-                                         /*Glitched*/[]{return CanPlantBugs && IsChild && Hammer && HammerAsChild;}}),
+                                         /*Glitched*/[]{return CanPlantBugs && IsChild && Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(DMC_CENTRAL_NEARBY,   {[]{return true;}}),
-                  Entrance(DMC_LOWER_NEARBY,     {[]{return IsAdult && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT) || CanPlantBean(DMC_CENTRAL_LOCAL));},
+                  Entrance(DMC_LOWER_NEARBY,     {[]{return (IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL)) || Usable(HOVER_BOOTS) || Usable(HOOKSHOT);},
                                       /*Glitched*/[]{return IsChild && FireTimer > 2 && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
                   Entrance(DMC_UPPER_NEARBY,     {[]{return IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL);}}),
                   Entrance(FIRE_TEMPLE_ENTRYWAY, {[]{return (IsChild && FireTimer > 2 && ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) || (IsAdult && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)));},
@@ -1856,11 +1852,11 @@ void AreaTable_Init() {
   areaTable[DMC_HAMMER_GROTTO] = Area("DMC Hammer Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DMC_DEKU_SCRUB_GROTTO_LEFT,   {[]{return CanStunDeku;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(DMC_DEKU_SCRUB_GROTTO_RIGHT,  {[]{return CanStunDeku;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(DMC_DEKU_SCRUB_GROTTO_CENTER, {[]{return CanStunDeku;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(DMC_LOWER_LOCAL, {[]{return true;}}),
@@ -1869,11 +1865,11 @@ void AreaTable_Init() {
   areaTable[ZR_FRONT] = Area("ZR Front", "Zora River", ZORAS_RIVER, DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(ZR_GS_TREE, {[]{return IsChild && CanChildAttack;},
-                                  /*Glitched*/[]{return IsChild && Hammer && HammerAsChild;}}),
+                                  /*Glitched*/[]{return IsChild && Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(ZORAS_RIVER,  {[]{return IsAdult || HasExplosives;},
-                              /*Glitched*/[]{return (CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);}}),
+                              /*Glitched*/[]{return (CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || Usable(MEGATON_HAMMER);}}),
                   Entrance(HYRULE_FIELD, {[]{return true;}}),
   });
 
@@ -1883,7 +1879,7 @@ void AreaTable_Init() {
                   EventAccess(&BeanPlantFairy,   {[]{return BeanPlantFairy   || (CanPlantBean(ZORAS_RIVER) && CanPlay(SongOfStorms));}}),
                   EventAccess(&ButterflyFairy,   {[]{return ButterflyFairy   || CanUse(STICKS);}}),
                   EventAccess(&BugShrub,         {[]{return BugShrub         || CanCutShrubs;},
-                                      /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                      /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Locations
                   LocationAccess(ZR_MAGIC_BEAN_SALESMAN,               {[]{return IsChild;}}),
@@ -1908,7 +1904,7 @@ void AreaTable_Init() {
                   Entrance(ZR_OPEN_GROTTO,      {[]{return true;}}),
                   Entrance(ZR_FAIRY_GROTTO,     {[]{return Here(ZORAS_RIVER, []{return CanBlastOrSmash;});},
                                      /*Glitched*/[]{return Here(ZORAS_RIVER, []{return (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (Hammer && HammerAsChild);});}}),
-                  Entrance(THE_LOST_WOODS,      {[]{return CanDive || CanUse(IRON_BOOTS);},
+                  Entrance(THE_LOST_WOODS,      {[]{return CanDive || Usable(IRON_BOOTS);},
                                      /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(ZR_STORMS_GROTTO,    {[]{return CanOpenStormGrotto;},
                                      /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
@@ -1944,9 +1940,9 @@ void AreaTable_Init() {
   areaTable[ZR_STORMS_GROTTO] = Area("ZR Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(ZR_DEKU_SCRUB_GROTTO_REAR,  {[]{return CanStunDeku;},
-                                                  /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                  /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(ZR_DEKU_SCRUB_GROTTO_FRONT, {[]{return CanStunDeku;},
-                                                  /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                  /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(ZORAS_RIVER, {[]{return true;}}),
@@ -1974,7 +1970,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(ZR_BEHIND_WATERFALL, {[]{return true;}}),
                   Entrance(LAKE_HYLIA,          {[]{return IsChild && CanDive;},
-                                     /*Glitched*/[]{return IsAdult && GlitchZDOoBJumpSlash;}}),
+                                     /*Glitched*/[]{return (IsAdult && GlitchZDOoBJumpSlash) || (IsChild && Usable(IRON_BOOTS));}}),
                   Entrance(ZD_BEHIND_KING_ZORA, {[]{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) || (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult);},
                                      /*Glitched*/[]{return ((IsChild || CanUse(IRON_BOOTS)) && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) ||
                                                            CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE);}}),
@@ -1988,7 +1984,7 @@ void AreaTable_Init() {
   areaTable[ZD_BEHIND_KING_ZORA] = Area("ZD Behind King Zora", "Zoras Domain", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(ZORAS_DOMAIN,   {[]{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) || (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult);},
-                                /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) || (CanUse(LONGSHOT) && CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
+                                /*Glitched*/[]{return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) || (Usable(LONGSHOT) && CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                   Entrance(ZORAS_FOUNTAIN, {[]{return true;}}),
   });
 
@@ -2062,9 +2058,10 @@ void AreaTable_Init() {
                                                                  ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && IsChild && ZeldasLetter && AtDay;}}),
                   LocationAccess(LLR_GS_TREE,         {[]{return IsChild;}}),
                   LocationAccess(LLR_GS_RAIN_SHED,    {[]{return IsChild && AtNight && CanGetNightTimeGS;}}),
-                  LocationAccess(LLR_GS_HOUSE_WINDOW, {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;}}),
+                  LocationAccess(LLR_GS_HOUSE_WINDOW, {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;},
+                                           /*Glitched*/[]{return Usable(HOOKSHOT) && IsChild && AtNight && CanGetNightTimeGS;}}),
                   LocationAccess(LLR_GS_BACK_WALL,    {[]{return CanUse(BOOMERANG) && AtNight && CanGetNightTimeGS;},
-                                           /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && AtNight && CanGetNightTimeGS;}}),
+                                           /*Glitched*/[]{return (Usable(HOOKSHOT) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE)) && IsChild && AtNight && CanGetNightTimeGS;}}),
                 }, {
                   //Exits
                   Entrance(HYRULE_FIELD,     {[]{return true;}}),
@@ -2108,11 +2105,11 @@ void AreaTable_Init() {
   areaTable[LLR_GROTTO] = Area("LLR Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(LLR_DEKU_SCRUB_GROTTO_LEFT,   {[]{return CanStunDeku;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(LLR_DEKU_SCRUB_GROTTO_RIGHT,  {[]{return CanStunDeku;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(LLR_DEKU_SCRUB_GROTTO_CENTER, {[]{return CanStunDeku;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(LON_LON_RANCH, {[]{return true;}}),
@@ -2172,9 +2169,9 @@ void AreaTable_Init() {
 
   areaTable[SHADOW_TEMPLE_ENTRYWAY] = Area("Shadow Temple Entryway", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(SHADOW_TEMPLE_BEGINNING,    {[]{return Dungeon::ShadowTemple.IsVanilla() && (LogicLensShadow || CanUse(LENS_OF_TRUTH)) && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT));},
+                  Entrance(SHADOW_TEMPLE_BEGINNING,    {[]{return Dungeon::ShadowTemple.IsVanilla() && (LogicLensShadow || CanUse(LENS_OF_TRUTH)) && (Usable(HOVER_BOOTS) || Usable(HOOKSHOT));},
                                             /*Glitched*/[]{return Dungeon::ShadowTemple.IsVanilla() && (LogicLensShadow || CanUse(LENS_OF_TRUTH)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE);}}),
-                  Entrance(SHADOW_TEMPLE_MQ_BEGINNING, {[]{return Dungeon::ShadowTemple.IsMQ()    && (LogicLensShadowMQ || CanUse(LENS_OF_TRUTH)) && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT));},
+                  Entrance(SHADOW_TEMPLE_MQ_BEGINNING, {[]{return Dungeon::ShadowTemple.IsMQ()    && (LogicLensShadowMQ || CanUse(LENS_OF_TRUTH)) && (Usable(HOVER_BOOTS) || Usable(HOOKSHOT));},
                                             /*Glitched*/[]{return Dungeon::ShadowTemple.IsMQ()    && (LogicLensShadowMQ || CanUse(LENS_OF_TRUTH)) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(GRAVEYARD_WARP_PAD_REGION,  {[]{return true;}}),
   });
@@ -2182,7 +2179,7 @@ void AreaTable_Init() {
   areaTable[BOTTOM_OF_THE_WELL_ENTRYWAY] = Area("Bottom of the Well Entryway", "Bottom of the Well", BOTTOM_OF_THE_WELL, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(BOTTOM_OF_THE_WELL_MAIN_AREA,    {[]{return Dungeon::BottomOfTheWell.IsVanilla() && IsChild && (CanChildAttack || Nuts);},
-                                                 /*Glitched*/[]{return Dungeon::BottomOfTheWell.IsVanilla() && IsChild && Hammer && HammerAsChild;}}),
+                                                 /*Glitched*/[]{return Dungeon::BottomOfTheWell.IsVanilla() && IsChild && Usable(MEGATON_HAMMER);}}),
                   Entrance(BOTTOM_OF_THE_WELL_MQ_PERIMETER, {[]{return Dungeon::BottomOfTheWell.IsMQ()      && IsChild;},
                                                  /*Glitched*/[]{return Dungeon::BottomOfTheWell.IsMQ()      && CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE) && Longshot;}}),
                   Entrance(KAKARIKO_VILLAGE,                {[]{return true;}}),
@@ -2217,7 +2214,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Locations
                   LocationAccess(DEKU_TREE_MAP_CHEST, {[]{return true;}}),
@@ -2227,7 +2224,7 @@ void AreaTable_Init() {
                   Entrance(DEKU_TREE_2F_MIDDLE_ROOM,    {[]{return true;}}),
                   Entrance(DEKU_TREE_COMPASS_ROOM,      {[]{return true;}}),
                   Entrance(DEKU_TREE_BASEMENT_LOWER,    {[]{return Here(DEKU_TREE_LOBBY, []{return IsAdult || CanChildAttack || Nuts;});},
-                                             /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                             /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM, {[]{return false;},
                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
                   Entrance(DEKU_TREE_BOSS_ROOM,         {[]{return false;},
@@ -2236,10 +2233,8 @@ void AreaTable_Init() {
 
   areaTable[DEKU_TREE_2F_MIDDLE_ROOM] = Area("Deku Tree 2F Middle Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(DEKU_TREE_LOBBY,         {[]{return Here(DEKU_TREE_2F_MIDDLE_ROOM, []{return HasShield || CanUse(MEGATON_HAMMER);});},
-                                         /*Glitched*/[]{return Hammer && HammerAsChild;}}),
-                  Entrance(DEKU_TREE_SLINGSHOT_ROOM,{[]{return Here(DEKU_TREE_2F_MIDDLE_ROOM, []{return HasShield || CanUse(MEGATON_HAMMER);});},
-                                         /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  Entrance(DEKU_TREE_LOBBY,         {[]{return Here(DEKU_TREE_2F_MIDDLE_ROOM, []{return HasShield || Usable(MEGATON_HAMMER);});}}),
+                  Entrance(DEKU_TREE_SLINGSHOT_ROOM,{[]{return Here(DEKU_TREE_2F_MIDDLE_ROOM, []{return HasShield || Usable(MEGATON_HAMMER);});}}),
   });
 
   areaTable[DEKU_TREE_SLINGSHOT_ROOM] = Area("Deku Tree Slingshot Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -2248,7 +2243,7 @@ void AreaTable_Init() {
                   LocationAccess(DEKU_TREE_SLINGSHOT_ROOM_SIDE_CHEST, {[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(DEKU_TREE_2F_MIDDLE_ROOM, {[]{return CanUse(SLINGSHOT) || CanUse(HOVER_BOOTS);},
+                  Entrance(DEKU_TREE_2F_MIDDLE_ROOM, {[]{return Usable(SLINGSHOT) || Usable(HOVER_BOOTS);},
                                           /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE);}}),
   });
 
@@ -2262,11 +2257,10 @@ void AreaTable_Init() {
                   LocationAccess(DEKU_TREE_COMPASS_CHEST,           {[]{return true;}}),
                   LocationAccess(DEKU_TREE_COMPASS_ROOM_SIDE_CHEST, {[]{return true;}}),
                   LocationAccess(DEKU_TREE_GS_COMPASS_ROOM,         {[]{return IsAdult || CanChildAttack;},
-                                                         /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                         /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
-                  Entrance(DEKU_TREE_LOBBY,     {[]{return HasFireSourceWithTorch || CanUse(BOW);},
-                                     /*Glitched*/[]{return Sticks && StickAsAdult;}}),
+                  Entrance(DEKU_TREE_LOBBY,     {[]{return HasFireSourceWithTorch || Usable(BOW);}}),
                   Entrance(DEKU_TREE_BOSS_ROOM, {[]{return false;},
                                      /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::ADVANCED);}}),
   });
@@ -2275,19 +2269,18 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Locations
                   LocationAccess(DEKU_TREE_BASEMENT_CHEST,    {[]{return true;}}),
                   LocationAccess(DEKU_TREE_GS_BASEMENT_GATE,  {[]{return IsAdult || CanChildAttack;},
-                                                   /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                   /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(DEKU_TREE_GS_BASEMENT_VINES, {[]{return CanUseProjectile || CanUse(DINS_FIRE) || (LogicDekuBasementGS && (IsAdult || Sticks || KokiriSword));},
                                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Exits
                   Entrance(DEKU_TREE_LOBBY,               {[]{return true;}}),
-                  Entrance(DEKU_TREE_BASEMENT_SCRUB_ROOM, {[]{return Here(DEKU_TREE_BASEMENT_LOWER, []{return HasFireSourceWithTorch || CanUse(BOW);});},
-                                               /*Glitched*/[]{return Sticks && StickAsAdult;}}),
+                  Entrance(DEKU_TREE_BASEMENT_SCRUB_ROOM, {[]{return Here(DEKU_TREE_BASEMENT_LOWER, []{return HasFireSourceWithTorch || Usable(BOW);});}}),
                   Entrance(DEKU_TREE_BASEMENT_UPPER,      {[]{return IsAdult || LogicDekuB1Skip || HasAccessTo(DEKU_TREE_BASEMENT_UPPER);},
                                                /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
                   Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM,   {[]{return false;},
@@ -2297,7 +2290,7 @@ void AreaTable_Init() {
   areaTable[DEKU_TREE_BASEMENT_SCRUB_ROOM] = Area("Deku Tree Basement Scrub Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_LOWER,      {[]{return true;}}),
-                  Entrance(DEKU_TREE_BASEMENT_WATER_ROOM, {[]{return Here(DEKU_TREE_BASEMENT_SCRUB_ROOM, []{return CanUse(SLINGSHOT) || CanUse(BOW);});}}),
+                  Entrance(DEKU_TREE_BASEMENT_WATER_ROOM, {[]{return Here(DEKU_TREE_BASEMENT_SCRUB_ROOM, []{return Usable(SLINGSHOT) || Usable(BOW);});}}),
   });
 
   areaTable[DEKU_TREE_BASEMENT_WATER_ROOM] = Area("Deku Tree Basement Water Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2310,30 +2303,27 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {}, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_WATER_ROOM, {[]{return true;}}),
-                  Entrance(DEKU_TREE_BASEMENT_BACK_LOBBY, {[]{return Here(DEKU_TREE_BASEMENT_TORCH_ROOM, []{return HasFireSourceWithTorch || CanUse(BOW);});},
-                                               /*Glitched*/[]{return Sticks && StickAsAdult;}}),
+                  Entrance(DEKU_TREE_BASEMENT_BACK_LOBBY, {[]{return Here(DEKU_TREE_BASEMENT_TORCH_ROOM, []{return HasFireSourceWithTorch || Usable(BOW);});}}),
   });
 
   areaTable[DEKU_TREE_BASEMENT_BACK_LOBBY] = Area("Deku Tree Basement Back Lobby", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(BOW);}) &&
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || Usable(BOW);}) &&
                                                                             (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE)));},
-                                    /*Glitched*/[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(BOW) || (Sticks && StickAsAdult);}) &&
-                                                          (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE) || (Hammer && HammerAsChild));}}),
+                                    /*Glitched*/[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || Usable(BOW);}) && Usable(MEGATON_HAMMER);}}),
                 }, {}, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_TORCH_ROOM, {[]{return true;}}),
-                  Entrance(DEKU_TREE_BASEMENT_BACK_ROOM,  {[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(Bow);}) &&
+                  Entrance(DEKU_TREE_BASEMENT_BACK_ROOM,  {[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || Usable(Bow);}) &&
                                                                      Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return CanBlastOrSmash;});},
-                                               /*Glitched*/[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(Bow) || (Sticks && StickAsAdult);}) &&
-                                                                     Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return CanBlastOrSmash || (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire) ||
-                                                                                                                   (Sticks && (IsChild || StickAsAdult) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT));});}}),
-                  Entrance(DEKU_TREE_BASEMENT_UPPER,      {[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(Bow);}) && IsChild;}}),
+                                               /*Glitched*/[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || Usable(Bow);}) &&
+                                                                     Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return (GlitchBlueFireWall && BlueFire) || (Usable(STICKS) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT));});}}),
+                  Entrance(DEKU_TREE_BASEMENT_UPPER,      {[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || Usable(Bow);}) && IsChild;}}),
   });
 
   areaTable[DEKU_TREE_BASEMENT_BACK_ROOM] = Area("Deku Tree Basement Back Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -2349,13 +2339,12 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {}, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_LOWER,      {[]{return true;}}),
                   Entrance(DEKU_TREE_BASEMENT_BACK_LOBBY, {[]{return IsChild;}}),
-                  Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM,   {[]{return Here(DEKU_TREE_BASEMENT_UPPER, []{return HasFireSourceWithTorch || (LogicDekuB1WebsWithBow && CanUse(BOW));});},
-                                               /*Glitched*/[]{return Sticks && StickAsAdult;}}),
+                  Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM,   {[]{return Here(DEKU_TREE_BASEMENT_UPPER, []{return HasFireSourceWithTorch || (LogicDekuB1WebsWithBow && CanUse(BOW));});}}),
   });
 
   areaTable[DEKU_TREE_OUTSIDE_BOSS_ROOM] = Area("Deku Tree Outside Boss Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2366,8 +2355,8 @@ void AreaTable_Init() {
 
   areaTable[DEKU_TREE_BOSS_ROOM] = Area("Deku Tree Boss Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || ((IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));},
-                                   /*Glitched*/[]{return (IsAdult && Boomerang && BoomerangAsAdult) || CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
+                  EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || ((IsAdult || KokiriSword || Sticks) && (Nuts || Usable(SLINGSHOT) || Usable(BOW) || HookshotOrBoomerang));},
+                                   /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Locations
                   LocationAccess(QUEEN_GOHMA,                 {[]{return DekuTreeClear;}}),
@@ -2384,28 +2373,28 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DODONGOS_CAVERN_ENTRYWAY, {[]{return true;}}),
                   Entrance(DODONGOS_CAVERN_LOBBY,    {[]{return Here(DODONGOS_CAVERN_BEGINNING, []{return CanBlastOrSmash || GoronBracelet;});},
-                                          /*Glitched*/[]{return Here(DODONGOS_CAVERN_BEGINNING, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire);});}}),
+                                          /*Glitched*/[]{return Here(DODONGOS_CAVERN_BEGINNING, []{return GlitchBlueFireWall && BlueFire;});}}),
   });
 
   areaTable[DODONGOS_CAVERN_LOBBY] = Area("Dodongos Cavern Lobby", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&GossipStoneFairy, {[]{return GossipStoneFairy || (CanSummonGossipFairy && Here(DODONGOS_CAVERN_LOBBY, []{return CanBlastOrSmash || GoronBracelet;}));},
-                                      /*Glitched*/[]{return CanSummonGossipFairy && Here(DODONGOS_CAVERN_LOBBY, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire);});}}),
+                                      /*Glitched*/[]{return CanSummonGossipFairy && Here(DODONGOS_CAVERN_LOBBY, []{return GlitchBlueFireWall && BlueFire;});}}),
                 }, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_MAP_CHEST,        {[]{return Here(DODONGOS_CAVERN_LOBBY, []{return CanBlastOrSmash || GoronBracelet;});},
-                                                        /*Glitched*/[]{return Here(DODONGOS_CAVERN_LOBBY, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire) || (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}) || CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE);}}),
+                                                        /*Glitched*/[]{return Here(DODONGOS_CAVERN_LOBBY, []{return (GlitchBlueFireWall && BlueFire) || (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}) || CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE);}}),
                   LocationAccess(DODONGOS_CAVERN_DEKU_SCRUB_LOBBY, {[]{return CanStunDeku || GoronBracelet;},
-                                                        /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                        /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(DODONGOS_CAVERN_GOSSIP_STONE,     {[]{return Here(DODONGOS_CAVERN_LOBBY, []{return CanBlastOrSmash || GoronBracelet;});},
-                                                        /*Glitched*/[]{return Here(DODONGOS_CAVERN_LOBBY, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire) || (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
+                                                        /*Glitched*/[]{return Here(DODONGOS_CAVERN_LOBBY, []{return (GlitchBlueFireWall && BlueFire) || (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_BEGINNING,    {[]{return true;}}),
                   Entrance(DODONGOS_CAVERN_LOBBY_SWITCH, {[]{return IsAdult;},
-                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) || (HasExplosives && CanUse(SLINGSHOT) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) || (CanShield && GoronBracelet && GlitchModernHalfie) || ((KokiriSword || Sticks || (Hammer && HammerAsChild)) && (Bombs || GoronBracelet) && Fairy && GlitchClassicHalfie);}}),
+                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) || (HasExplosives && (CanUse(SLINGSHOT) || Usable(HOOKSHOT) || Usable(BOW)) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) || (CanShield && GoronBracelet && GlitchModernHalfie) || ((KokiriSword || Sticks || (Hammer && HammerAsChild)) && (Bombs || GoronBracelet) && Fairy && GlitchClassicHalfie);}}),
                   Entrance(DODONGOS_CAVERN_SE_CORRIDOR,  {[]{return Here(DODONGOS_CAVERN_LOBBY, []{return CanBlastOrSmash || GoronBracelet;});},
-                                              /*Glitched*/[]{return Here(DODONGOS_CAVERN_LOBBY, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire) || (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
+                                              /*Glitched*/[]{return Here(DODONGOS_CAVERN_LOBBY, []{return (GlitchBlueFireWall && BlueFire) || (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
                   Entrance(DODONGOS_CAVERN_STAIRS_LOWER, {[]{return HasAccessTo(DODONGOS_CAVERN_LOBBY_SWITCH);}}),
                   Entrance(DODONGOS_CAVERN_FAR_BRIDGE,   {[]{return HasAccessTo(DODONGOS_CAVERN_FAR_BRIDGE);},
                                               /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE);}}),
@@ -2423,19 +2412,19 @@ void AreaTable_Init() {
   areaTable[DODONGOS_CAVERN_SE_CORRIDOR] = Area("Dodongos Cavern SE Corridor", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_GS_SCARECROW, {[]{return CanUse(SCARECROW) || CanUse(LONGSHOT) || (LogicDCScarecrowGS && (IsAdult || CanChildAttack));},
-                                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
+                                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (Usable(LONGSHOT) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_LOBBY,               {[]{return true;}}),
                   Entrance(DODONGOS_CAVERN_SE_ROOM,             {[]{return Here(DODONGOS_CAVERN_SE_CORRIDOR, []{return CanBlastOrSmash || IsAdult || CanChildAttack || (CanTakeDamage && CanShield);});},
-                                                     /*Glitched*/[]{return Here(DODONGOS_CAVERN_SE_CORRIDOR, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire);});}}),
+                                                     /*Glitched*/[]{return Here(DODONGOS_CAVERN_SE_CORRIDOR, []{return (GlitchBlueFireWall && BlueFire);});}}),
                   Entrance(DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, {[]{return true;}}),
   });
 
   areaTable[DODONGOS_CAVERN_SE_ROOM] = Area("Dodongos Cavern SE Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_GS_SIDE_ROOM_NEAR_LOWER_LIZALFOS, {[]{return IsAdult || CanChildAttack;},
-                                                                        /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                                        /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_SE_CORRIDOR, {[]{return true;}}),
@@ -2450,24 +2439,23 @@ void AreaTable_Init() {
   areaTable[DODONGOS_CAVERN_LOWER_LIZALFOS] = Area("Dodongos Cavern Lower Lizalfos", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, {[]{return Here(DODONGOS_CAVERN_LOWER_LIZALFOS, []{return IsAdult || Slingshot || Sticks || KokiriSword || HasExplosives;});},
-                                                     /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                     /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   Entrance(DODONGOS_CAVERN_DODONGO_ROOM,        {[]{return Here(DODONGOS_CAVERN_LOWER_LIZALFOS, []{return IsAdult || Slingshot || Sticks || KokiriSword || HasExplosives;});},
-                                                     /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                     /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[DODONGOS_CAVERN_DODONGO_ROOM] = Area("Dodongos Cavern Dodongo Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(DODONGOS_CAVERN_LOBBY_SWITCH,      {[]{return HasFireSourceWithTorch;},
-                                                   /*Glitched*/[]{return Sticks && StickAsAdult;}}),
+                  Entrance(DODONGOS_CAVERN_LOBBY_SWITCH,      {[]{return HasFireSourceWithTorch;}}),
                   Entrance(DODONGOS_CAVERN_LOWER_LIZALFOS,    {[]{return true;}}),
                   Entrance(DODONGOS_CAVERN_NEAR_DODONGO_ROOM, {[]{return Here(DODONGOS_CAVERN_DODONGO_ROOM, []{return CanBlastOrSmash || GoronBracelet;});},
-                                                   /*Glitched*/[]{return Here(DODONGOS_CAVERN_DODONGO_ROOM, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire);});}}),
+                                                   /*Glitched*/[]{return Here(DODONGOS_CAVERN_DODONGO_ROOM, []{return GlitchBlueFireWall && BlueFire;});}}),
   });
 
   areaTable[DODONGOS_CAVERN_NEAR_DODONGO_ROOM] = Area("Dodongos Cavern Near Dodongo Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS, {[]{return CanStunDeku;},
-                                                                          /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                                          /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_DODONGO_ROOM, {[]{return true;}}),
@@ -2476,14 +2464,14 @@ void AreaTable_Init() {
   areaTable[DODONGOS_CAVERN_STAIRS_LOWER] = Area("Dodongos Cavern Stairs Lower", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_LOBBY,        {[]{return true;}}),
-                  Entrance(DODONGOS_CAVERN_STAIRS_UPPER, {[]{return HasExplosives || GoronBracelet || CanUse(DINS_FIRE) || (LogicDCStaircase && CanUse(BOW));}}),
+                  Entrance(DODONGOS_CAVERN_STAIRS_UPPER, {[]{return HasExplosives || GoronBracelet || CanUse(DINS_FIRE) || (LogicDCStaircase && Usable(BOW));}}),
                   Entrance(DODONGOS_CAVERN_COMPASS_ROOM, {[]{return Here(DODONGOS_CAVERN_STAIRS_LOWER, []{return CanBlastOrSmash || GoronBracelet;});},
-                                              /*Glitched*/[]{return Here(DODONGOS_CAVERN_STAIRS_LOWER, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire);});}}),
+                                              /*Glitched*/[]{return Here(DODONGOS_CAVERN_STAIRS_LOWER, []{return GlitchBlueFireWall && BlueFire;});}}),
   });
 
   areaTable[DODONGOS_CAVERN_STAIRS_UPPER] = Area("Dodongos Cavern Stairs Upper", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(DODONGOS_CAVERN_GS_ALCOVE_ABOVE_STAIRS, {[]{return Here(DODONGOS_CAVERN_FAR_BRIDGE, []{return HookshotOrBoomerang;}) || CanUse(LONGSHOT);},
+                  LocationAccess(DODONGOS_CAVERN_GS_ALCOVE_ABOVE_STAIRS, {[]{return Here(DODONGOS_CAVERN_FAR_BRIDGE, []{return HookshotOrBoomerang;}) || Usable(LONGSHOT);},
                                                               /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::NOVICE) && HookshotOrBoomerang);}}),
                   LocationAccess(DODONGOS_CAVERN_GS_VINES_ABOVE_STAIRS,  {[]{return IsAdult || CanChildAttack;}}),
                 }, {
@@ -2498,7 +2486,7 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_STAIRS_LOWER, {[]{return IsAdult || HasExplosives || GoronBracelet;},
-                                              /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                              /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[DODONGOS_CAVERN_ARMOS_ROOM] = Area("Dodongos Cavern Armos Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2513,22 +2501,20 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_2F_SIDE_ROOM,         {[]{return Here(DODONGOS_CAVERN_BOMB_ROOM_LOWER, []{return CanBlastOrSmash;});},
-                                                      /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOMB_ROOM_LOWER, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire) ||
-                                                                                                                            (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
+                                                      /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOMB_ROOM_LOWER, []{return (GlitchBlueFireWall && BlueFire) || (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
                   Entrance(DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM, {[]{return Here(DODONGOS_CAVERN_BOMB_ROOM_LOWER, []{return CanBlastOrSmash || GoronBracelet;});},
-                                                      /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOMB_ROOM_LOWER, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire) ||
-                                                                                                                            (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
-                  Entrance(DODONGOS_CAVERN_BOMB_ROOM_UPPER,      {[]{return IsAdult && (HoverBoots || Longshot || LogicDCJump);},
+                                                      /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOMB_ROOM_LOWER, []{return (GlitchBlueFireWall && BlueFire) || (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
+                  Entrance(DODONGOS_CAVERN_BOMB_ROOM_UPPER,      {[]{return (IsAdult && LogicDCJump) || Usable(HOVER_BOOTS) || CanUse(LONGSHOT);},
                                                       /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) ||
-                                                                            ((CanUse(BOW) || CanUse(HOOKSHOT)) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED));}}),
+                                                                            (IsAdult && (CanUse(BOW) || CanUse(HOOKSHOT) || Usable(SLINGSHOT)) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED));}}),
   });
 
   areaTable[DODONGOS_CAVERN_2F_SIDE_ROOM] = Area("Dodongos Cavern 2F Side Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT,  {[]{return CanStunDeku;},
-                                                                      /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                                      /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   LocationAccess(DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT, {[]{return CanStunDeku;},
-                                                                      /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                                      /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_BOMB_ROOM_LOWER, {[]{return true;}}),
@@ -2537,7 +2523,7 @@ void AreaTable_Init() {
   areaTable[DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM] = Area("Dodongos Cavern First Slingshot Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_BOMB_ROOM_LOWER, {[]{return true;}}),
-                  Entrance(DODONGOS_CAVERN_UPPER_LIZALFOS,  {[]{return CanUse(SLINGSHOT) || CanUse(BOW) || LogicDCSlingshotSkip;},
+                  Entrance(DODONGOS_CAVERN_UPPER_LIZALFOS,  {[]{return Usable(SLINGSHOT) || Usable(BOW) || LogicDCSlingshotSkip;},
                                                  /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (CanUse(HOOKSHOT) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED));}}),
   });
 
@@ -2545,15 +2531,15 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DODONGOS_CAVERN_LOWER_LIZALFOS,        {[]{return true;}}),
                   Entrance(DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM,  {[]{return Here(DODONGOS_CAVERN_LOWER_LIZALFOS, []{return IsAdult || Slingshot || Sticks || KokiriSword || HasExplosives;});},
-                                                       /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                       /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   Entrance(DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM, {[]{return Here(DODONGOS_CAVERN_LOWER_LIZALFOS, []{return IsAdult || Slingshot || Sticks || KokiriSword || HasExplosives;});},
-                                                       /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                       /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM] = Area("Dodongos Cavern Second Slingshot Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_UPPER_LIZALFOS,  {[]{return true;}}),
-                  Entrance(DODONGOS_CAVERN_BOMB_ROOM_UPPER, {[]{return CanUse(SLINGSHOT) || CanUse(BOW) || LogicDCSlingshotSkip;},
+                  Entrance(DODONGOS_CAVERN_BOMB_ROOM_UPPER, {[]{return Usable(SLINGSHOT) || Usable(BOW) || LogicDCSlingshotSkip;},
                                                  /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || (CanUse(HOOKSHOT) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED));}}),
   });
 
@@ -2570,7 +2556,7 @@ void AreaTable_Init() {
   areaTable[DODONGOS_CAVERN_FAR_BRIDGE] = Area("Dodongos Cavern Far Bridge", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_END_OF_BRIDGE_CHEST, {[]{return Here(DODONGOS_CAVERN_FAR_BRIDGE, []{return CanBlastOrSmash;});},
-                                                           /*Glitched*/[]{return Here(DODONGOS_CAVERN_FAR_BRIDGE, []{return (Hammer && HammerAsChild) || (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}) ||
+                                                           /*Glitched*/[]{return Here(DODONGOS_CAVERN_FAR_BRIDGE, []{return (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}) ||
                                                                                  CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Exits
@@ -2585,15 +2571,14 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(DODONGOS_CAVERN_LOBBY, {[]{return true;}}),
                   Entrance(DODONGOS_CAVERN_BACK_ROOM, {[]{return Here(DODONGOS_CAVERN_BOSS_AREA, []{return CanBlastOrSmash;});},
-                                           /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOSS_AREA, []{return (Hammer && HammerAsChild) || (GlitchBlueFireWall && BlueFire) ||
-                                                                                                           (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
+                                           /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOSS_AREA, []{return (GlitchBlueFireWall && BlueFire) || (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));});}}),
                   Entrance(DODONGOS_CAVERN_BOSS_ROOM, {[]{return true;}}),
   });
 
   areaTable[DODONGOS_CAVERN_BACK_ROOM] = Area("Dodongos Cavern Back Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_GS_BACK_ROOM, {[]{return IsAdult || CanChildAttack;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_BOSS_AREA, {[]{return true;}}),
@@ -2601,8 +2586,8 @@ void AreaTable_Init() {
 
   areaTable[DODONGOS_CAVERN_BOSS_ROOM] = Area("Dodongos Cavern Boss Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DodongosCavernClear, {[]{return DodongosCavernClear || (Here(DODONGOS_CAVERN_BOSS_ROOM, []{return HasExplosives || (CanUse(MEGATON_HAMMER) && CanShield);}) && (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword));},
-                                         /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOSS_ROOM, []{return (Hammer && HammerAsChild && CanShield) || (GlitchBlueFireWall && BlueFire);}) && (HasExplosives || GoronBracelet) && (IsAdult || Sticks || KokiriSword || (Hammer && HammerAsChild));}}),
+                  EventAccess(&DodongosCavernClear, {[]{return DodongosCavernClear || (Here(DODONGOS_CAVERN_BOSS_ROOM, []{return HasExplosives || (Usable(MEGATON_HAMMER) && CanShield);}) && (Bombs || GoronBracelet) && (IsAdult || Sticks || KokiriSword));},
+                                         /*Glitched*/[]{return Here(DODONGOS_CAVERN_BOSS_ROOM, []{return HasExplosives || (Usable(MEGATON_HAMMER) && CanShield) || (GlitchBlueFireWall && BlueFire);}) && (HasExplosives || GoronBracelet) && (IsAdult || Sticks || KokiriSword || Usable(MEGATON_HAMMER));}}),
                 }, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_BOSS_ROOM_CHEST,    {[]{return true;}}),
@@ -2620,7 +2605,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_ENTRYWAY,    {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE, {[]{return CanUseProjectile;},
-                                              /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Sticks && (IsChild || StickAsAdult) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
+                                              /*Glitched*/[]{return Usable(BOOMERANG) || Usable(BOW) || Usable(HOOKSHOT) || (Usable(STICKS) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[JABU_JABUS_BELLY_LIFT_MIDDLE] = Area("Jabu Jabus Belly Lift Middle", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2638,16 +2623,15 @@ void AreaTable_Init() {
                   Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE,     {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_MAIN_LOWER,      {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_BIGOCTO_ROOM,    {[]{return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, []{return CanUse(BOOMERANG);});},
-                                                  /*Glitched*/[]{return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, []{return Boomerang && BoomerangAsAdult;});}}),
+                  Entrance(JABU_JABUS_BELLY_BIGOCTO_ROOM,    {[]{return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, []{return Usable(BOOMERANG);});}}),
   });
 
   areaTable[JABU_JABUS_BELLY_MAIN_LOWER] = Area("Jabu Jabus Belly Main Lower", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER, {[]{return HookshotOrBoomerang;},
-                                                                /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
+                                                                /*Glitched*/[]{return Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                   LocationAccess(JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER, {[]{return HookshotOrBoomerang;},
-                                                                /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
+                                                                /*Glitched*/[]{return Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MAIN_UPPER,       {[]{return true;}}),
@@ -2665,13 +2649,13 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MAIN_LOWER, {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_LIFT_LOWER, {[]{return CanUseProjectile;},
-                                             /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Sticks && (IsChild || StickAsAdult) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT));}}),
+                                             /*Glitched*/[]{return Usable(BOOMERANG) || Usable(BOW) || Usable(HOOKSHOT) || (Usable(STICKS) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT));}}),
   });
 
   areaTable[JABU_JABUS_BELLY_LOWER_SIDE_ROOM] = Area("Jabu Jabus Belly Lower Side Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&FairyPot, {[]{return FairyPot || (CanUse(BOOMERANG) || CanUse(HOVER_BOOTS));},
-                              /*Glitched*/[]{return (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE) || (Boomerang && BoomerangAsAdult);}}),
+                  EventAccess(&FairyPot, {[]{return FairyPot || (Usable(BOOMERANG) || Usable(HOVER_BOOTS));},
+                              /*Glitched*/[]{return (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE);}}),
                 }, {}, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MAIN_LOWER, {[]{return true;}}),
@@ -2680,7 +2664,7 @@ void AreaTable_Init() {
   areaTable[JABU_JABUS_BELLY_LIFT_LOWER] = Area("Jabu Jabus Belly Lift Lower", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(JABU_JABUS_BELLY_DEKU_SCRUB, {[]{return (IsChild || CanDive || LogicJabuScrubJumpDive || CanUse(IRON_BOOTS)) && CanStunDeku;},
-                                                   /*Glitched*/[]{return (IsChild || CanDive || LogicJabuScrubJumpDive || CanUse(IRON_BOOTS)) &&  (Hammer && HammerAsChild);}}),
+                                                   /*Glitched*/[]{return (IsChild || CanDive || LogicJabuScrubJumpDive || CanUse(IRON_BOOTS)) && Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_SHABOMB_CORRIDOR, {[]{return true;}}),
@@ -2692,12 +2676,9 @@ void AreaTable_Init() {
                   Entrance(JABU_JABUS_BELLY_MAIN_UPPER,     {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_BOOMERANG_ROOM, {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_MAP_ROOM,       {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_COMPASS_ROOM,   {[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return CanUse(BOOMERANG);});},
-                                                 /*Glitched*/[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return Boomerang && BoomerangAsAdult;});}}),
-                  Entrance(JABU_JABUS_BELLY_BLUE_TENTACLE,  {[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return CanUse(BOOMERANG);});},
-                                                 /*Glitched*/[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return Boomerang && BoomerangAsAdult;});}}),
-                  Entrance(JABU_JABUS_BELLY_GREEN_TENTACLE, {[]{return Here(JABU_JABUS_BELLY_BLUE_TENTACLE, []{return CanUse(BOOMERANG);});},
-                                                 /*Glitched*/[]{return Here(JABU_JABUS_BELLY_BLUE_TENTACLE, []{return Boomerang && BoomerangAsAdult;});}}),
+                  Entrance(JABU_JABUS_BELLY_COMPASS_ROOM,   {[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return Usable(BOOMERANG);});}}),
+                  Entrance(JABU_JABUS_BELLY_BLUE_TENTACLE,  {[]{return Here(JABU_JABUS_BELLY_MAP_ROOM,      []{return Usable(BOOMERANG);});}}),
+                  Entrance(JABU_JABUS_BELLY_GREEN_TENTACLE, {[]{return Here(JABU_JABUS_BELLY_BLUE_TENTACLE, []{return Usable(BOOMERANG);});}}),
   });
 
   areaTable[JABU_JABUS_BELLY_BOOMERANG_ROOM] = Area("Jabu Jabus Belly Boomerang Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
@@ -2710,8 +2691,7 @@ void AreaTable_Init() {
 
   areaTable[JABU_JABUS_BELLY_MAP_ROOM] = Area("Jabu Jabus Belly Map Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(JABU_JABUS_BELLY_MAP_CHEST, {[]{return CanUse(BOOMERANG);},
-                                                  /*Glitched*/[]{return Boomerang && BoomerangAsAdult;}}),
+                  LocationAccess(JABU_JABUS_BELLY_MAP_CHEST, {[]{return Usable(BOOMERANG);}}),
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return true;}}),
@@ -2727,21 +2707,18 @@ void AreaTable_Init() {
 
   areaTable[JABU_JABUS_BELLY_BLUE_TENTACLE] = Area("Jabu Jabus Belly Blue Tentacle", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return Here(JABU_JABUS_BELLY_BLUE_TENTACLE, []{return CanUse(BOOMERANG);});},
-                                                  /*Glitched*/[]{return Here(JABU_JABUS_BELLY_BLUE_TENTACLE, []{return Boomerang && BoomerangAsAdult;});}}),
+                  Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return Here(JABU_JABUS_BELLY_BLUE_TENTACLE, []{return Usable(BOOMERANG);});}}),
   });
 
   areaTable[JABU_JABUS_BELLY_GREEN_TENTACLE] = Area("Jabu Jabus Belly Green Tentacle", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, []{return CanUse(BOOMERANG);});},
-                                                  /*Glitched*/[]{return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, []{return Boomerang && BoomerangAsAdult;});}}),
+                  Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, []{return Usable(BOOMERANG);});}}),
   });
 
   areaTable[JABU_JABUS_BELLY_BIGOCTO_ROOM] = Area("Jabu Jabus Belly Bigocto Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MAIN_LOWER,    {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_ABOVE_BIGOCTO, {[]{return Here(JABU_JABUS_BELLY_BIGOCTO_ROOM, []{return IsChild && (Boomerang || Nuts) && (KokiriSword || Sticks);});},
-                                                /*Glitched*/[]{return Here(JABU_JABUS_BELLY_BIGOCTO_ROOM, []{return ((Boomerang && BoomerangAsAdult) || Nuts) && (Sticks && StickAsAdult);});}}),
+                  Entrance(JABU_JABUS_BELLY_ABOVE_BIGOCTO, {[]{return Here(JABU_JABUS_BELLY_BIGOCTO_ROOM, []{return (Usable(BOOMERANG) || Nuts) && (Usable(KOKIRI_SWORD) || Usable(STICKS));});}}),
   });
 
   areaTable[JABU_JABUS_BELLY_ABOVE_BIGOCTO] = Area("Jabu Jabus Belly Above Bigocto", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {
@@ -2750,8 +2727,8 @@ void AreaTable_Init() {
                   EventAccess(&NutPot,   {[]{return true;}}),
                 }, {}, {
                   //Exits
-                  Entrance(JABU_JABUS_BELLY_LIFT_UPPER, {[]{return CanUse(BOOMERANG);},
-                                             /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (HasBombchus && CanShield && (CanUse(HOOKSHOT) || CanUse(BOW)) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED));}}),
+                  Entrance(JABU_JABUS_BELLY_LIFT_UPPER, {[]{return Usable(BOOMERANG);},
+                                             /*Glitched*/[]{return HasBombchus && CanShield && IsAdult && (CanUse(HOOKSHOT) || CanUse(BOW) || Usable(SLINGSHOT)) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED);}}),
   });
 
   areaTable[JABU_JABUS_BELLY_LIFT_UPPER] = Area("Jabu Jabus Belly Lift Upper", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2766,14 +2743,14 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE, {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_BOSS_ROOM,   {[]{return CanUse(BOOMERANG);},
-                                              /*Glitched*/[]{return (IsAdult && ((Boomerang && BoomerangAsAdult) || Hookshot || (Bow && HoverBoots))) || (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
+                  Entrance(JABU_JABUS_BELLY_BOSS_ROOM,   {[]{return Usable(BOOMERANG);},
+                                              /*Glitched*/[]{return (Usable(HOVER_BOOTS) && (Usable(BOW) || Usable(SLINGSHOT))) || CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE) ||
+                                                                    (Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) || (Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[JABU_JABUS_BELLY_BOSS_ROOM] = Area("Jabu Jabus Belly Boss Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&JabuJabusBellyClear, {[]{return JabuJabusBellyClear || CanUse(BOOMERANG);},
-                                         /*Glitched*/[]{return Boomerang && BoomerangAsAdult;}}),
+                  EventAccess(&JabuJabusBellyClear, {[]{return JabuJabusBellyClear || Usable(BOOMERANG);}}),
                 }, {
                   //Locations
                   LocationAccess(JABU_JABUS_BELLY_BARINADE_HEART, {[]{return JabuJabusBellyClear;}}),
@@ -2789,8 +2766,8 @@ void AreaTable_Init() {
   areaTable[FOREST_TEMPLE_FIRST_ROOM] = Area("Forest Temple First Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_FIRST_ROOM_CHEST, {[]{return true;}}),
-                  LocationAccess(FOREST_TEMPLE_GS_FIRST_ROOM,    {[]{return (IsAdult && (Hookshot || Bow || Bombs)) || (IsChild && (Boomerang || Slingshot)) || HasBombchus || CanUse(DINS_FIRE);},
-                                                      /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
+                  LocationAccess(FOREST_TEMPLE_GS_FIRST_ROOM,    {[]{return (IsAdult && Bombs) || Usable(BOW) || Usable(HOOKSHOT) || Usable(BOOMERANG) || Usable(SLINGSHOT) || HasBombchus || CanUse(DINS_FIRE);},
+                                                      /*Glitched*/[]{return (Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_ENTRYWAY,       {[]{return true;}}),
@@ -2801,16 +2778,16 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(FOREST_TEMPLE_FIRST_ROOM, {[]{return true;}}),
                   Entrance(FOREST_TEMPLE_LOBBY,      {[]{return IsAdult || CanChildAttack || Nuts;},
-                                          /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                          /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FOREST_TEMPLE_LOBBY] = Area("Forest Temple Lobby", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ForestTempleMeg, {[]{return ForestTempleMeg || (ForestTempleJoelle && ForestTempleBeth && ForestTempleAmy && CanUse(BOW));}}),
+                  EventAccess(&ForestTempleMeg, {[]{return ForestTempleMeg || (ForestTempleJoelle && ForestTempleBeth && ForestTempleAmy && Usable(BOW));}}),
                 }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_GS_LOBBY, {[]{return HookshotOrBoomerang;},
-                                              /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (IsAdult && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE));}}),
+                                              /*Glitched*/[]{return IsAdult && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_SOUTH_CORRIDOR,    {[]{return true;}}),
@@ -2818,13 +2795,13 @@ void AreaTable_Init() {
                   Entrance(FOREST_TEMPLE_NW_OUTDOORS_LOWER, {[]{return CanPlay(SongOfTime) || IsChild;},
                                                  /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::NOVICE) || (SongOfTime && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) ||
                                                                        ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))));}}),
-                  Entrance(FOREST_TEMPLE_NE_OUTDOORS_LOWER, {[]{return CanUse(BOW) || CanUse(SLINGSHOT);}}),
+                  Entrance(FOREST_TEMPLE_NE_OUTDOORS_LOWER, {[]{return Usable(BOW) || Usable(SLINGSHOT);}}),
                   Entrance(FOREST_TEMPLE_WEST_CORRIDOR,     {[]{return SmallKeys(FOREST_TEMPLE, 1, 5);}}),
                   Entrance(FOREST_TEMPLE_EAST_CORRIDOR,     {[]{return false;},
                                                  /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
                   Entrance(FOREST_TEMPLE_BOSS_REGION,       {[]{return ForestTempleMeg;}}),
                   Entrance(FOREST_TEMPLE_BOSS_ROOM,         {[]{return false;},
-                                                 /*Glitched*/[]{return (CanUse(HOOKSHOT) || CanUse(BOW)) && GlitchForestBKSkip;}}),
+                                                 /*Glitched*/[]{return IsAdult && (CanUse(HOOKSHOT) || CanUse(BOW) || Usable(SLINGSHOT)) && GlitchForestBKSkip;}}),
   });
 
   areaTable[FOREST_TEMPLE_NORTH_CORRIDOR] = Area("Forest Temple North Corridor", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2839,7 +2816,7 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_FIRST_STALFOS_CHEST, {[]{return IsAdult || KokiriSword;},
-                                                         /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                         /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_NORTH_CORRIDOR, {[]{return true;}}),
@@ -2849,20 +2826,19 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Locations
-                  LocationAccess(FOREST_TEMPLE_GS_LEVEL_ISLAND_COURTYARD, {[]{return CanUse(LONGSHOT) || Here(FOREST_TEMPLE_NW_OUTDOORS_UPPER, []{return HookshotOrBoomerang;});},
-                                                               /*Glitched*/[]{return Here(FOREST_TEMPLE_NW_OUTDOORS_UPPER, []{return BoomerangAsAdult && Boomerang;});}}),
+                  LocationAccess(FOREST_TEMPLE_GS_LEVEL_ISLAND_COURTYARD, {[]{return Usable(LONGSHOT) || Here(FOREST_TEMPLE_NW_OUTDOORS_UPPER, []{return HookshotOrBoomerang;});}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_LOBBY,             {[]{return CanPlay(SongOfTime);},
                                                  /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::NOVICE) || (SongOfTime && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) ||
                                                                        ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))));}}),
                   Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER, {[]{return false;},
-                                                 /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::NOVICE) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
+                                                 /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || (IsAdult && CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::NOVICE)) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                   Entrance(FOREST_TEMPLE_MAP_ROOM,          {[]{return true;}}),
-                  Entrance(FOREST_TEMPLE_SEWER,             {[]{return GoldScale || CanUse(IRON_BOOTS) || HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER);}}),
+                  Entrance(FOREST_TEMPLE_SEWER,             {[]{return GoldScale || Usable(IRON_BOOTS) || HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER);}}),
                   Entrance(FOREST_TEMPLE_BOSS_ROOM,         {[]{return false;},
                                                  /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE);}}),
   });
@@ -2871,7 +2847,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {}, {
                   //Exits
                   Entrance(FOREST_TEMPLE_NW_OUTDOORS_LOWER,    {[]{return true;}}),
@@ -2884,16 +2860,16 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Locations
-                  LocationAccess(FOREST_TEMPLE_RAISED_ISLAND_COURTYARD_CHEST, {[]{return CanUse(HOOKSHOT) || HasAccessTo(FOREST_TEMPLE_FALLING_ROOM);}}),
-                  LocationAccess(FOREST_TEMPLE_GS_RAISED_ISLAND_COURTYARD,    {[]{return CanUse(HOOKSHOT) || (LogicForestOutdoorEastGS && CanUse(BOOMERANG)) || Here(FOREST_TEMPLE_FALLING_ROOM, []{return CanUse(BOW) || CanUse(DINS_FIRE) || HasExplosives;});}}),
+                  LocationAccess(FOREST_TEMPLE_RAISED_ISLAND_COURTYARD_CHEST, {[]{return Usable(HOOKSHOT) || HasAccessTo(FOREST_TEMPLE_FALLING_ROOM);}}),
+                  LocationAccess(FOREST_TEMPLE_GS_RAISED_ISLAND_COURTYARD,    {[]{return Usable(HOOKSHOT) || (LogicForestOutdoorEastGS && Usable(BOOMERANG)) || Here(FOREST_TEMPLE_FALLING_ROOM, []{return Usable(BOW) || Usable(SLINGSHOT) || CanUse(DINS_FIRE) || HasExplosives;});}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_LOBBY,             {[]{return true;}}),
-                  Entrance(FOREST_TEMPLE_NE_OUTDOORS_UPPER, {[]{return CanUse(LONGSHOT);}}),
-                  Entrance(FOREST_TEMPLE_SEWER,             {[]{return GoldScale || CanUse(IRON_BOOTS) || HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER);}}),
+                  Entrance(FOREST_TEMPLE_NE_OUTDOORS_UPPER, {[]{return Usable(LONGSHOT);}}),
+                  Entrance(FOREST_TEMPLE_SEWER,             {[]{return GoldScale || Usable(IRON_BOOTS) || HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER);}}),
                   Entrance(FOREST_TEMPLE_FALLING_ROOM,      {[]{return false;},
                                                  /*Glitched*/[]{return Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
   });
@@ -2902,7 +2878,7 @@ void AreaTable_Init() {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {}, {
                   //Exits
                   Entrance(FOREST_TEMPLE_NE_OUTDOORS_LOWER, {[]{return true;}}),
@@ -2913,14 +2889,11 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_MAP_ROOM] = Area("Forest Temple Map Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(FOREST_TEMPLE_MAP_CHEST, {[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});},
-                                               /*Glitched*/[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return (Hammer && HammerAsChild) || (Boomerang && BoomerangAsAdult);});}}),
+                  LocationAccess(FOREST_TEMPLE_MAP_CHEST, {[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return HasExplosives || Usable(MEGATON_HAMMER) || Usable(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});}}),
                 }, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_NW_OUTDOORS_LOWER, {[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});},
-                                                 /*Glitched*/[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return (Hammer && HammerAsChild) || (Boomerang && BoomerangAsAdult);});}}),
-                  Entrance(FOREST_TEMPLE_NE_OUTDOORS_UPPER, {[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});},
-                                                 /*Glitched*/[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return (Hammer && HammerAsChild) || (Boomerang && BoomerangAsAdult);});}}),
+                  Entrance(FOREST_TEMPLE_NW_OUTDOORS_LOWER, {[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return HasExplosives || Usable(MEGATON_HAMMER) || Usable(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});}}),
+                  Entrance(FOREST_TEMPLE_NE_OUTDOORS_UPPER, {[]{return Here(FOREST_TEMPLE_MAP_ROOM, []{return HasExplosives || Usable(MEGATON_HAMMER) || Usable(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});}}),
   });
 
   areaTable[FOREST_TEMPLE_SEWER] = Area("Forest Temple Sewer", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -2934,14 +2907,13 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST] = Area("Forest Temple Below Boss Key Chest", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER, {[]{return Here(FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST, []{return HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});},
-                                                 /*Glitched*/[]{return Here(FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST, []{return (Hammer && HammerAsChild) || (Boomerang && BoomerangAsAdult);});}}),
+                  Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER, {[]{return Here(FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST, []{return HasExplosives || Usable(MEGATON_HAMMER) || Usable(BOW) || ((IsAdult || Sticks || KokiriSword || Slingshot) && (Nuts || HookshotOrBoomerang || CanShield));});}}),
   });
 
   areaTable[FOREST_TEMPLE_FLOORMASTER_ROOM] = Area("Forest Temple Floormaster Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_FLOORMASTER_CHEST, {[]{return IsAdult || CanChildDamage;},
-                                                       /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                       /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER, {[]{return true;}}),
@@ -2951,24 +2923,24 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(FOREST_TEMPLE_LOBBY,           {[]{return SmallKeys(FOREST_TEMPLE, 1, 5);}}),
                   Entrance(FOREST_TEMPLE_BLOCK_PUSH_ROOM, {[]{return IsAdult || CanChildAttack || Nuts;},
-                                               /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                               /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FOREST_TEMPLE_BLOCK_PUSH_ROOM] = Area("Forest Temple Block Push Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(FOREST_TEMPLE_EYE_SWITCH_CHEST, {[]{return GoronBracelet && (CanUse(BOW) || CanUse(SLINGSHOT));},
-                                                      /*Glitched*/[]{return CanUse(BOW) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED);}}),
+                  LocationAccess(FOREST_TEMPLE_EYE_SWITCH_CHEST, {[]{return GoronBracelet && (Usable(BOW) || Usable(SLINGSHOT));},
+                                                      /*Glitched*/[]{return IsAdult && (Usable(BOW) || Usable(SLINGSHOT)) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_WEST_CORRIDOR,            {[]{return true;}}),
-                  Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER,        {[]{return CanUse(HOVER_BOOTS) || (LogicForestOutsideBackdoor && IsAdult && GoronBracelet);},
+                  Entrance(FOREST_TEMPLE_NW_OUTDOORS_UPPER,        {[]{return Usable(HOVER_BOOTS) || (LogicForestOutsideBackdoor && IsAdult && GoronBracelet);},
                                                         /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                   Entrance(FOREST_TEMPLE_NW_CORRIDOR_TWISTED,      {[]{return IsAdult && GoronBracelet && SmallKeys(FOREST_TEMPLE, 2);},
-                                                        /*Glitched*/[]{return ((IsAdult && (Bow || Hookshot) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) ||
+                                                        /*Glitched*/[]{return ((IsAdult && (Bow || Hookshot || Usable(SLINGSHOT)) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) ||
                                                                                (Bombs && GoronBracelet && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE))) && SmallKeys(FOREST_TEMPLE, 2);}}),
-                  Entrance(FOREST_TEMPLE_NW_CORRIDOR_STRAIGHTENED, {[]{return CanUse(BOW) && GoronBracelet && SmallKeys(FOREST_TEMPLE, 2);},
-                                                        /*Glitched*/[]{return ((CanUse(BOW) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) ||
-                                                                               (CanUse(SLINGSHOT) && Bombs && GoronBracelet && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE))) && SmallKeys(FOREST_TEMPLE, 2);}}),
+                  Entrance(FOREST_TEMPLE_NW_CORRIDOR_STRAIGHTENED, {[]{return Usable(BOW) && GoronBracelet && SmallKeys(FOREST_TEMPLE, 2);},
+                                                        /*Glitched*/[]{return ((IsAdult && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)) ||
+                                                                               (IsChild && Bombs && GoronBracelet && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE))) && (Usable(BOW) || Usable(SLINGSHOT)) && SmallKeys(FOREST_TEMPLE, 2);}}),
   });
 
   areaTable[FOREST_TEMPLE_NW_CORRIDOR_TWISTED] = Area("Forest Temple NW Corridor Twisted", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -2988,7 +2960,7 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_RED_POE_ROOM] = Area("Forest Temple Red Poe Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ForestTempleJoelle, {[]{return ForestTempleJoelle || CanUse(BOW);}}),
+                  EventAccess(&ForestTempleJoelle, {[]{return ForestTempleJoelle || Usable(BOW);}}),
                 }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_RED_POE_CHEST, {[]{return ForestTempleJoelle;}}),
@@ -3001,18 +2973,18 @@ void AreaTable_Init() {
   areaTable[FOREST_TEMPLE_UPPER_STALFOS] = Area("Forest Temple Upper Stalfos", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_BOW_CHEST, {[]{return IsAdult || KokiriSword;},
-                                               /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                               /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_RED_POE_ROOM,  {[]{return IsAdult || KokiriSword;},
-                                             /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                             /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   Entrance(FOREST_TEMPLE_BLUE_POE_ROOM, {[]{return IsAdult || KokiriSword;},
-                                             /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                             /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FOREST_TEMPLE_BLUE_POE_ROOM] = Area("Forest Temple Blue Poe Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ForestTempleBeth, {[]{return ForestTempleBeth || CanUse(BOW);}}),
+                  EventAccess(&ForestTempleBeth, {[]{return ForestTempleBeth || Usable(BOW);}}),
                 }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_BLUE_POE_CHEST, {[]{return ForestTempleBeth;}}),
@@ -3037,7 +3009,7 @@ void AreaTable_Init() {
   areaTable[FOREST_TEMPLE_FROZEN_EYE_ROOM] = Area("Forest Temple Frozen Eye Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(FOREST_TEMPLE_NE_CORRIDOR_STRAIGHTENED, {[]{return SmallKeys(FOREST_TEMPLE, 5);}}),
-                  Entrance(FOREST_TEMPLE_NE_CORRIDOR_TWISTED,      {[]{return SmallKeys(FOREST_TEMPLE, 5) && (CanUse(BOW) || CanUse(DINS_FIRE));}}),
+                  Entrance(FOREST_TEMPLE_NE_CORRIDOR_TWISTED,      {[]{return SmallKeys(FOREST_TEMPLE, 5) && (Usable(BOW) || CanUse(DINS_FIRE));}}),
   });
 
   areaTable[FOREST_TEMPLE_FALLING_ROOM] = Area("Forest Temple Falling Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -3051,7 +3023,7 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_GREEN_POE_ROOM] = Area("Forest Temple Green Poe Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ForestTempleAmy, {[]{return ForestTempleAmy || CanUse(BOW);}}),
+                  EventAccess(&ForestTempleAmy, {[]{return ForestTempleAmy || Usable(BOW);}}),
                 }, {}, {
                   //Exits
                   Entrance(FOREST_TEMPLE_FALLING_ROOM,  {[]{return true;}}),
@@ -3061,16 +3033,16 @@ void AreaTable_Init() {
   areaTable[FOREST_TEMPLE_EAST_CORRIDOR] = Area("Forest Temple East Corridor", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(FOREST_TEMPLE_LOBBY,          {[]{return IsAdult || CanChildAttack || Nuts;},
-                                              /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                              /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                   Entrance(FOREST_TEMPLE_GREEN_POE_ROOM, {[]{return IsAdult || CanChildAttack || Nuts;},
-                                              /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                              /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FOREST_TEMPLE_BOSS_REGION] = Area("Forest Temple Boss Region", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_BASEMENT_CHEST, {[]{return true;}}),
                   LocationAccess(FOREST_TEMPLE_GS_BASEMENT,    {[]{return HookshotOrBoomerang;},
-                                                    /*Glitched*/[]{return (Boomerang && BoomerangAsAdult) || (Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
+                                                    /*Glitched*/[]{return Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_LOBBY,     {[]{return true;}}),
@@ -3079,7 +3051,7 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_BOSS_ROOM] = Area("Forest Temple Boss Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ForestTempleClear, {[]{return ForestTempleClear || ((IsAdult && (Hookshot || Bow)) || (IsChild && Slingshot && KokiriSword));}}),
+                  EventAccess(&ForestTempleClear, {[]{return ForestTempleClear || ((IsAdult || KokiriSword) && (Usable(HOOKSHOT) || Usable(BOW) || Usable(SLINGSHOT)));}}),
                 }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_PHANTOM_GANON_HEART, {[]{return ForestTempleClear;}}),
@@ -3095,34 +3067,33 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_ENTRYWAY,       {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, {[]{return (LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC);}}),
-                  Entrance(FIRE_TEMPLE_LOOP_ENEMIES,   {[]{return Here(FIRE_TEMPLE_FIRST_ROOM, []{return CanUse(MEGATON_HAMMER);}) && (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);},
-                                            /*Glitched*/[]{return ((IsAdult && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT)) || (Hammer && HammerAsChild) || //todo: check if tsc possible as child
+                  Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, {[]{return (LogicFewerTunicRequirements && FireTimer > 2) || Usable(GORON_TUNIC);}}),
+                  Entrance(FIRE_TEMPLE_LOOP_ENEMIES,   {[]{return Here(FIRE_TEMPLE_FIRST_ROOM, []{return Usable(MEGATON_HAMMER);}) && (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);},
+                                            /*Glitched*/[]{return ((IsAdult && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT)) ||
                                                                   (GlitchFireGrunzClip && Bombs && CanUse(HOVER_BOOTS) && CanSurviveDamage)) && (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);}}),
                   Entrance(FIRE_TEMPLE_LOOP_EXIT,      {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM,  {[]{return SmallKeys(FIRE_TEMPLE, 2) && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC));}}),
+                  Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM,  {[]{return SmallKeys(FIRE_TEMPLE, 2) && ((LogicFewerTunicRequirements && FireTimer > 2) || Usable(GORON_TUNIC));}}),
   });
 
   areaTable[FIRE_TEMPLE_NEAR_BOSS_ROOM] = Area("Fire Temple Near Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&FairyPot, {[]{return FairyPot || (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT));}}),
+                  EventAccess(&FairyPot, {[]{return FairyPot || (Usable(HOVER_BOOTS) || Usable(HOOKSHOT));}}),
                 }, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_NEAR_BOSS_CHEST, {[]{return true;}}),
                 }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_FIRST_ROOM, {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_BOSS_ROOM,  {[]{return BossKeyFireTemple && (LogicFireBossDoorJump || CanUse(HOVER_BOOTS) || Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return CanUse(MEGATON_HAMMER);}));},
+                  Entrance(FIRE_TEMPLE_BOSS_ROOM,  {[]{return BossKeyFireTemple && ((IsAdult && LogicFireBossDoorJump) || Usable(HOVER_BOOTS) || Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return Usable(MEGATON_HAMMER);}));},
                                         /*Glitched*/[]{return BossKeyFireTemple && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
-                                                              (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
-                                                              Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, []{return Hammer && HammerAsChild;}));}}),
+                                                              (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)));}}),
   });
 
   areaTable[FIRE_TEMPLE_BOSS_ROOM] = Area("Fire Temple Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&FireTempleClear, {[]{return FireTempleClear || ((CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 7)) && CanUse(MEGATON_HAMMER));},
-                                     /*Glitched*/[]{return ((CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && ((Sticks && (StickAsAdult || IsChild) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
-                                                           (Hammer && (IsAdult || HammerAsChild))) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) || (LogicFewerTunicRequirements && FireTimer > 7 && Hammer && HammerAsChild);}}),
+                  EventAccess(&FireTempleClear, {[]{return FireTempleClear || ((Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 7)) && Usable(MEGATON_HAMMER));},
+                                     /*Glitched*/[]{return (Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && ((Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
+                                                           Usable(MEGATON_HAMMER)) && Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                 }, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, {[]{return FireTempleClear;}}),
@@ -3136,13 +3107,13 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(FIRE_TEMPLE_FIRST_ROOM, {[]{return SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity;}}),
                   Entrance(FIRE_TEMPLE_LOOP_TILES, {[]{return Here(FIRE_TEMPLE_LOOP_ENEMIES, []{return IsAdult || KokiriSword;});},
-                                        /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                        /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FIRE_TEMPLE_LOOP_TILES] = Area("Fire Temple Loop Tiles", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_GS_BOSS_KEY_LOOP, {[]{return IsAdult || CanChildAttack;},
-                                                    /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                                                    /*Glitched*/[]{return Usable(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_LOOP_ENEMIES,      {[]{return true;}}),
@@ -3151,20 +3122,19 @@ void AreaTable_Init() {
 
   areaTable[FIRE_TEMPLE_LOOP_FLARE_DANCER] = Area("Fire Temple Loop Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(FIRE_TEMPLE_FLARE_DANCER_CHEST, {[]{return (HasExplosives || CanUse(MEGATON_HAMMER)) && IsAdult;},
+                  LocationAccess(FIRE_TEMPLE_FLARE_DANCER_CHEST, {[]{return (HasExplosives || Usable(MEGATON_HAMMER)) && IsAdult;},
                                                       /*Glitched*/[]{return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
-                                                                            (CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED) && HasBombchus && (DekuShield || HylianShield) && Slingshot);}}),
+                                                                            (CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED) && HasBombchus && CanShield && (Slingshot || Usable(BOW) || Usable(HOOKSHOT)));}}),
                 }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_LOOP_TILES,         {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_LOOP_HAMMER_SWITCH, {[]{return Here(FIRE_TEMPLE_LOOP_FLARE_DANCER, []{return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) && (IsAdult || KokiriSword || Slingshot || Boomerang);});},
-                                                /*Glitched*/[]{return Here(FIRE_TEMPLE_LOOP_FLARE_DANCER, []{return Hammer && HammerAsChild;});}}),
+                  Entrance(FIRE_TEMPLE_LOOP_HAMMER_SWITCH, {[]{return Here(FIRE_TEMPLE_LOOP_FLARE_DANCER, []{return (HasExplosives || Usable(MEGATON_HAMMER) || Usable(HOOKSHOT)) && (IsAdult || KokiriSword || Slingshot || Boomerang);});}}),
   });
 
   areaTable[FIRE_TEMPLE_LOOP_HAMMER_SWITCH] = Area("Fire Temple Loop Hammer Switch", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&FireLoopSwitch, {[]{return FireLoopSwitch || CanUse(MEGATON_HAMMER);},
-                                    /*Glitched*/[]{return (Hammer && HammerAsChild) || (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && Bombs && CanTakeDamage && Sticks && (IsChild || StickAsAdult));}}),
+                  EventAccess(&FireLoopSwitch, {[]{return FireLoopSwitch || Usable(MEGATON_HAMMER);},
+                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) && Bombs && CanTakeDamage && Usable(STICKS);}}),
                 }, {}, {
                   //Exits
                   Entrance(FIRE_TEMPLE_LOOP_FLARE_DANCER, {[]{return true;}}),
@@ -3193,7 +3163,7 @@ void AreaTable_Init() {
                   Entrance(FIRE_TEMPLE_FIRST_ROOM,                {[]{return SmallKeys(FIRE_TEMPLE, 2);}}),
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_GORON, {[]{return true;}}),
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_TILES, {[]{return IsAdult && (CanPlay(SongOfTime) || LogicFireSongOfTime);},
-                                                       /*Glitched*/[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
+                                                       /*Glitched*/[]{return (Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 5)) && ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
                                                                              (IsAdult && (SongOfTime && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) || (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && (Bugs || Fish) && CanShield)))));}}),
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON, {[]{return IsAdult && HasExplosives;},
                                                        /*Glitched*/[]{return LogicFewerTunicRequirements && FireTimer > 5 && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
@@ -3227,7 +3197,7 @@ void AreaTable_Init() {
   areaTable[FIRE_TEMPLE_FIRE_PILLAR_ROOM] = Area("Fire Temple Fire Pillar Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, {[]{return SmallKeys(FIRE_TEMPLE, 3);}}),
-                  Entrance(FIRE_TEMPLE_SHORTCUT_ROOM, {[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 6)) && SmallKeys(FIRE_TEMPLE, 4);}}),
+                  Entrance(FIRE_TEMPLE_SHORTCUT_ROOM, {[]{return (Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 6)) && SmallKeys(FIRE_TEMPLE, 4);}}),
   });
 
   areaTable[FIRE_TEMPLE_SHORTCUT_ROOM] = Area("Fire Temple Shortcut Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -3239,9 +3209,9 @@ void AreaTable_Init() {
                   Entrance(FIRE_TEMPLE_FIRE_PILLAR_ROOM,   {[]{return SmallKeys(FIRE_TEMPLE, 4);}}),
                   Entrance(FIRE_TEMPLE_SHORTCUT_CLIMB,     {[]{return Here(FIRE_TEMPLE_SHORTCUT_CLIMB, []{return true;});},
                                                 /*Glitched*/[]{return (GoronBracelet || LogicFireStrength) && Bombs && CanSurviveDamage && CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE);}}),
-                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_LOWER, {[]{return (GoronBracelet || (IsAdult && LogicFireStrength)) && (HasExplosives || CanUse(BOW) || CanUse(HOOKSHOT));},
+                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_LOWER, {[]{return (GoronBracelet || (IsAdult && LogicFireStrength)) && (HasExplosives || (IsAdult && (CanUse(BOW) || CanUse(HOOKSHOT) || Usable(SLINGSHOT))));},
                                                 /*Glitched*/[]{return (GoronBracelet || (IsAdult && LogicFireStrength)) && (CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE) ||
-                                                                      (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && Sticks && (IsChild || StickAsAdult)));}}),
+                                                                      (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && Usable(STICKS)));}}),
   });
 
   areaTable[FIRE_TEMPLE_SHORTCUT_CLIMB] = Area("Fire Temple Shortcut Climb", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3253,7 +3223,7 @@ void AreaTable_Init() {
   areaTable[FIRE_TEMPLE_BOULDER_MAZE_LOWER] = Area("Fire Temple Boulder Maze Lower", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_BOULDER_MAZE_LOWER_CHEST, {[]{return true;}}),
-                  LocationAccess(FIRE_TEMPLE_GS_BOULDER_MAZE,          {[]{return HasExplosives && (IsAdult || Boomerang);},
+                  LocationAccess(FIRE_TEMPLE_GS_BOULDER_MAZE,          {[]{return HasExplosives && (IsAdult || Boomerang || Usable(HOOKSHOT));},
                                                             /*Glitched*/[]{return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE) && Bombs) ||
                                                                                   Here(FIRE_TEMPLE_BOULDER_MAZE_UPPER, []{return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE);});}}),
                 }, {
@@ -3278,16 +3248,16 @@ void AreaTable_Init() {
                   Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM,      {[]{return CanTakeDamage;}}),
                   Entrance(FIRE_TEMPLE_BOULDER_MAZE_LOWER, {[]{return SmallKeys(FIRE_TEMPLE, 5, 8);}}),
                   Entrance(FIRE_TEMPLE_FIRE_WALL_CHASE,    {[]{return SmallKeys(FIRE_TEMPLE, 6, 8);}}),
-                  Entrance(FIRE_TEMPLE_MAP_AREA,           {[]{return CanUse(SLINGSHOT) || CanUse(BOW);}}),
+                  Entrance(FIRE_TEMPLE_MAP_AREA,           {[]{return Usable(SLINGSHOT) || Usable(BOW);}}),
   });
 
   areaTable[FIRE_TEMPLE_FIRE_WALL_CHASE] = Area("Fire Temple Fire Wall Chase", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FIRE_TEMPLE_EAST_CENTRAL_ROOM,  {[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2)) && SmallKeys(FIRE_TEMPLE, 6, 8);}}),
+                  Entrance(FIRE_TEMPLE_EAST_CENTRAL_ROOM,  {[]{return (Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2)) && SmallKeys(FIRE_TEMPLE, 6, 8);}}),
                   Entrance(FIRE_TEMPLE_MAP_AREA,           {[]{return IsAdult;}}),
-                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_UPPER, {[]{return CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2 && IsAdult);},
+                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_UPPER, {[]{return Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2 && IsAdult);},
                                                 /*Glitched*/[]{return LogicFewerTunicRequirements && FireTimer > 3 && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
-                  Entrance(FIRE_TEMPLE_CORRIDOR,           {[]{return (CanUse(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2 && IsAdult)) && SmallKeys(FIRE_TEMPLE, 7);},
+                  Entrance(FIRE_TEMPLE_CORRIDOR,           {[]{return (Usable(GORON_TUNIC) || (LogicFewerTunicRequirements && FireTimer > 2 && IsAdult)) && SmallKeys(FIRE_TEMPLE, 7);},
                                                 /*Glitched*/[]{return LogicFewerTunicRequirements && FireTimer > 3 && SmallKeys(FIRE_TEMPLE, 7) && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && Bombs && HasBombchus && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
   });
 
@@ -3338,7 +3308,7 @@ void AreaTable_Init() {
   areaTable[FIRE_TEMPLE_FIRE_MAZE_ROOM] = Area("Fire Temple Fire Maze Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(FIRE_TEMPLE_CORRIDOR,            {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_FIRE_MAZE_UPPER,     {[]{return CanUse(HOVER_BOOTS);},
+                  Entrance(FIRE_TEMPLE_FIRE_MAZE_UPPER,     {[]{return Usable(HOVER_BOOTS);},
                                                  /*Glitched*/[]{return Bombs && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(FIRE_TEMPLE_FIRE_MAZE_SIDE_ROOM, {[]{return true;}}),
                   Entrance(FIRE_TEMPLE_WEST_CENTRAL_LOWER,  {[]{return SmallKeys(FIRE_TEMPLE, 8);}}),
@@ -3348,11 +3318,10 @@ void AreaTable_Init() {
 
   areaTable[FIRE_TEMPLE_FIRE_MAZE_UPPER] = Area("Fire Temple Fire Maze Upper", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM,     {[]{return CanUse(MEGATON_HAMMER);},
-                                                /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM,     {[]{return Usable(MEGATON_HAMMER);}}),
                   Entrance(FIRE_TEMPLE_FIRE_MAZE_ROOM,     {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_WEST_CENTRAL_UPPER, {[]{return CanUse(MEGATON_HAMMER);},
-                                                /*Glitched*/[]{return (Hammer && HammerAsChild) || (Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE));}}),
+                  Entrance(FIRE_TEMPLE_WEST_CENTRAL_UPPER, {[]{return Usable(MEGATON_HAMMER);},
+                                                /*Glitched*/[]{return Usable(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[FIRE_TEMPLE_FIRE_MAZE_SIDE_ROOM] = Area("Fire Temple Fire Maze Side Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -3365,11 +3334,11 @@ void AreaTable_Init() {
 
   areaTable[FIRE_TEMPLE_WEST_CENTRAL_LOWER] = Area("Fire Temple West Central Lower", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(FIRE_TEMPLE_HIGHEST_GORON_CHEST, {[]{return Here(FIRE_TEMPLE_WEST_CENTRAL_UPPER, []{return CanPlay(SongOfTime) && CanUse(MEGATON_HAMMER);});},
+                  LocationAccess(FIRE_TEMPLE_HIGHEST_GORON_CHEST, {[]{return Here(FIRE_TEMPLE_WEST_CENTRAL_UPPER, []{return CanPlay(SongOfTime) && Usable(MEGATON_HAMMER);});},
                                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE) || Here(FIRE_TEMPLE_WEST_CENTRAL_UPPER, []{return (IsAdult || CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
                                                                              (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE))) &&
                                                                              (((SongOfTime && (((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::NOVICE))) ||
-                                                                             CanPlay(SongOfTime)) && ((Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE)) || (Hammer && (IsAdult || HammerAsChild))));});}}),
+                                                                             CanPlay(SongOfTime)) && ((Sticks && (IsChild || StickAsAdult) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE)) || Usable(MEGATON_HAMMER)));});}}),
                 }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_FIRE_MAZE_ROOM,     {[]{return SmallKeys(FIRE_TEMPLE, 8);}}),
@@ -3397,10 +3366,8 @@ void AreaTable_Init() {
 
   areaTable[FIRE_TEMPLE_UPPER_FLARE_DANCER] = Area("Fire Temple Upper Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FIRE_TEMPLE_LATE_FIRE_MAZE, {[]{return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, []{return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) && (IsAdult || KokiriSword || Slingshot || Boomerang);});},
-                                            /*Glitched*/[]{return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, []{return Hammer && HammerAsChild;});}}),
-                  Entrance(FIRE_TEMPLE_WEST_CLIMB,     {[]{return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, []{return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) && (IsAdult || KokiriSword || Slingshot || Boomerang);});},
-                                            /*Glitched*/[]{return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, []{return Hammer && HammerAsChild;});}}),
+                  Entrance(FIRE_TEMPLE_LATE_FIRE_MAZE, {[]{return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, []{return (HasExplosives || Usable(MEGATON_HAMMER) || Usable(HOOKSHOT)) && (IsAdult || KokiriSword || Slingshot || Boomerang);});}}),
+                  Entrance(FIRE_TEMPLE_WEST_CLIMB,     {[]{return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, []{return (HasExplosives || Usable(MEGATON_HAMMER) || Usable(HOOKSHOT)) && (IsAdult || KokiriSword || Slingshot || Boomerang);});}}),
   });
 
   areaTable[FIRE_TEMPLE_WEST_CLIMB] = Area("Fire Temple West Climb", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3417,21 +3384,18 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(FIRE_TEMPLE_WEST_CENTRAL_UPPER, {[]{return CanTakeDamage;}}),
                   Entrance(FIRE_TEMPLE_WEST_CLIMB,         {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_HAMMER_RETURN_PATH, {[]{return CanUse(MEGATON_HAMMER);},
-                                                /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  Entrance(FIRE_TEMPLE_HAMMER_RETURN_PATH, {[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FIRE_TEMPLE_HAMMER_RETURN_PATH] = Area("Fire Temple Hammer Return Path", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(FIRE_TEMPLE_ABOVE_FIRE_MAZE, {[]{return CanUse(MEGATON_HAMMER);},
-                                             /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  Entrance(FIRE_TEMPLE_ABOVE_FIRE_MAZE, {[]{return Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FIRE_TEMPLE_ABOVE_FIRE_MAZE] = Area("Fire Temple Above Fire Maze", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(FIRE_TEMPLE_HAMMER_RETURN_PATH, {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_FIRE_MAZE_UPPER,    {[]{return CanUse(MEGATON_HAMMER);},
-                                                /*Glitched*/[]{return Hammer && HammerAsChild;}}),
+                  Entrance(FIRE_TEMPLE_FIRE_MAZE_UPPER,    {[]{return Usable(MEGATON_HAMMER);}}),
   });
   }
 
