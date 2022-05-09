@@ -3936,20 +3936,20 @@ void AreaTable_Init() {
   areaTable[DEKU_TREE_MQ_LOBBY] = Area("Deku Tree MQ Lobby", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || Usable(DINS_FIRE));}}),
   }, {
                   //Locations
                   LocationAccess(DEKU_TREE_MQ_MAP_CHEST,                 {[]{return true;}}),
                   LocationAccess(DEKU_TREE_MQ_SLINGSHOT_CHEST,           {[]{return IsAdult || CanChildAttack;}}),
-                  LocationAccess(DEKU_TREE_MQ_SLINGSHOT_ROOM_BACK_CHEST, {[]{return HasFireSourceWithTorch || CanUse(BOW);}}),
-                  LocationAccess(DEKU_TREE_MQ_BASEMENT_CHEST,            {[]{return HasFireSourceWithTorch || CanUse(BOW);}}),
+                  LocationAccess(DEKU_TREE_MQ_SLINGSHOT_ROOM_BACK_CHEST, {[]{return HasFireSourceWithTorch || (IsAdult && Usable(BOW));}}),
+                  LocationAccess(DEKU_TREE_MQ_BASEMENT_CHEST,            {[]{return HasFireSourceWithTorch || (IsAdult && Usable(BOW));}}),
                   LocationAccess(DEKU_TREE_MQ_GS_LOBBY,                  {[]{return IsAdult || CanChildAttack;}}),
   }, {
                   //Exits
                   Entrance(DEKU_TREE_ENTRYWAY,                     {[]{return true;}}),
-                  Entrance(DEKU_TREE_MQ_COMPASS_ROOM,              {[]{return Here(DEKU_TREE_MQ_LOBBY, []{return CanUse(SLINGSHOT) || CanUse(BOW);}) &&
-                                                                               Here(DEKU_TREE_MQ_LOBBY, []{return HasFireSourceWithTorch || CanUse(BOW);});}}),
-                  Entrance(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT, {[]{return Here(DEKU_TREE_MQ_LOBBY, []{return CanUse(SLINGSHOT) || CanUse(BOW);}) &&
+                  Entrance(DEKU_TREE_MQ_COMPASS_ROOM,              {[]{return Here(DEKU_TREE_MQ_LOBBY, []{return (IsChild && Usable(SLINGSHOT)) || (IsAdult && Usable(BOW));}) &&
+                                                                               Here(DEKU_TREE_MQ_LOBBY, []{return HasFireSourceWithTorch || (IsAdult && Usable(BOW));});}}),
+                  Entrance(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT, {[]{return Here(DEKU_TREE_MQ_LOBBY, []{return (IsChild && Usable(SLINGSHOT)) || (IsAdult && Usable(BOW));}) &&
                                                                                Here(DEKU_TREE_MQ_LOBBY, []{return HasFireSourceWithTorch;});}}),
                   Entrance(DEKU_TREE_MQ_BASEMENT_LEDGE,            {[]{return LogicDekuB1Skip || Here(DEKU_TREE_MQ_LOBBY, []{return IsAdult;});}}),
   });
@@ -3960,7 +3960,7 @@ void AreaTable_Init() {
                   LocationAccess(DEKU_TREE_MQ_GS_COMPASS_ROOM, {[]{return HookshotOrBoomerang &&
                                                                                Here(DEKU_TREE_MQ_COMPASS_ROOM, []{return HasBombchus ||
                                                                                (Bombs && (CanPlay(SongOfTime) || IsAdult)) ||
-                                                                               (CanUse(MEGATON_HAMMER) && (CanPlay(SongOfTime) /*|| LogicDekuMQCompassGS*/));});}}),
+                                                                               (IsAdult && Usable(MEGATON_HAMMER) && (CanPlay(SongOfTime) /*|| LogicDekuMQCompassGS*/));});}}),
   }, {
                   //Exits
                   Entrance(DEKU_TREE_MQ_LOBBY, {[]{return true;}}),
@@ -3972,7 +3972,7 @@ void AreaTable_Init() {
   }, {
                   //Exits
                   Entrance(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, {[]{return /*LogicDekuMQLog || */ (IsChild && (DekuShield || HylianShield)) ||
-                                                                             CanUse(LONGSHOT) || (CanUse(HOOKSHOT) && CanUse(IRON_BOOTS));}}),
+                                                                             IsAdult && (Usable(LONGSHOT) || (Usable(HOOKSHOT) && Usable(IRON_BOOTS)));}}),
                   Entrance(DEKU_TREE_MQ_LOBBY,                    {[]{return true;}}),
   });
 
@@ -3981,32 +3981,32 @@ void AreaTable_Init() {
                   LocationAccess(DEKU_TREE_MQ_AFTER_SPINNING_LOG_CHEST, {[]{return CanPlay(SongOfTime);}}),
   }, {
                   //Exits
-                  Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM,        {[]{return Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, []{return CanUse(STICKS) || CanUse(DINS_FIRE) ||
-                                                                               Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT, []{return CanUse(FIRE_ARROWS);});}) &&
+                  Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM,        {[]{return Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, []{return (IsChild && Usable(STICKS)) || Usable(DINS_FIRE) ||
+                                                                               Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT, []{return IsAdult && Usable(FIRE_ARROWS);});}) &&
                                                                                  Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, []{return IsAdult || KokiriSword || CanUseProjectile || (Nuts && Sticks);});}}),
                   Entrance(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT, {[]{return true;}}),
   });
 
   areaTable[DEKU_TREE_MQ_BASEMENT_BACK_ROOM] = Area("Deku Tree MQ Basement Back Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(DEKU_TREE_MQ_GS_BASEMENT_GRAVES_ROOM, {[]{return CanUse(LONGSHOT) || (CanPlay(SongOfTime) && HookshotOrBoomerang);}}),
+                  LocationAccess(DEKU_TREE_MQ_GS_BASEMENT_GRAVES_ROOM, {[]{return (IsAdult && Usable(LONGSHOT)) || (CanPlay(SongOfTime) && HookshotOrBoomerang);}}),
                   LocationAccess(DEKU_TREE_MQ_GS_BASEMENT_BACK_ROOM,   {[]{return HasFireSourceWithTorch && HookshotOrBoomerang;}}),
   }, {
                   //Exits
                   Entrance(DEKU_TREE_MQ_BASEMENT_LEDGE,           {[]{return IsChild;}}),
-                  Entrance(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, {[]{return CanUse(KOKIRI_SWORD) || CanUseProjectile || (Nuts && CanUse(STICKS));}}),
+                  Entrance(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, {[]{return (IsChild && Usable(KOKIRI_SWORD)) || CanUseProjectile || (Nuts && (IsChild && Usable(STICKS)));}}),
   });
 
   areaTable[DEKU_TREE_MQ_BASEMENT_LEDGE] = Area("Deku Tree MQ Basement Ledge", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || (Here(DEKU_TREE_MQ_BASEMENT_LEDGE, []{return HasFireSourceWithTorch;}) &&
                                                                            Here(DEKU_TREE_MQ_BASEMENT_LEDGE, []{return HasShield;})  &&
-                                                                           (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));}}),
+                                                                           (IsAdult || KokiriSword || Sticks) && (Nuts || Usable(SLINGSHOT) || Usable(BOW) || HookshotOrBoomerang));}}),
   }, {
                   //Locations
                   LocationAccess(DEKU_TREE_MQ_DEKU_SCRUB,     {[]{return CanStunDeku;}}),
-                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
-                  LocationAccess(QUEEN_GOHMA,                 {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
+                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || Usable(SLINGSHOT) || Usable(BOW) || HookshotOrBoomerang);}}),
+                  LocationAccess(QUEEN_GOHMA,                 {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || Usable(SLINGSHOT) || Usable(BOW) || HookshotOrBoomerang);}}),
   }, {
                   //Exits
                   Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM, {[]{return IsChild;}}),
@@ -4029,10 +4029,10 @@ void AreaTable_Init() {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_MQ_MAP_CHEST,                  {[]{return true;}}),
                   LocationAccess(DODONGOS_CAVERN_MQ_COMPASS_CHEST,              {[]{return IsAdult || CanChildAttack || Nuts;}}),
-                  LocationAccess(DODONGOS_CAVERN_MQ_LARVAE_ROOM_CHEST,          {[]{return CanUse(STICKS) || HasFireSource;}}),
-                  LocationAccess(DODONGOS_CAVERN_MQ_TORCH_PUZZLE_ROOM_CHEST,    {[]{return CanBlastOrSmash || CanUse(STICKS) || CanUse(DINS_FIRE) || (IsAdult && (LogicDCJump || HoverBoots || Hookshot));}}),
+                  LocationAccess(DODONGOS_CAVERN_MQ_LARVAE_ROOM_CHEST,          {[]{return (IsChild && Usable(STICKS)) || HasFireSource;}}),
+                  LocationAccess(DODONGOS_CAVERN_MQ_TORCH_PUZZLE_ROOM_CHEST,    {[]{return CanBlastOrSmash || (IsChild && Usable(STICKS)) || Usable(DINS_FIRE) || (IsAdult && (LogicDCJump || HoverBoots || Hookshot));}}),
                   LocationAccess(DODONGOS_CAVERN_MQ_GS_SONG_OF_TIME_BLOCK_ROOM, {[]{return CanPlay(SongOfTime) && (CanChildAttack || IsAdult);}}),
-                  LocationAccess(DODONGOS_CAVERN_MQ_GS_LARVAE_ROOM,             {[]{return CanUse(STICKS) || HasFireSource;}}),
+                  LocationAccess(DODONGOS_CAVERN_MQ_GS_LARVAE_ROOM,             {[]{return (IsChild && Usable(STICKS)) || HasFireSource;}}),
                   LocationAccess(DODONGOS_CAVERN_MQ_GS_LIZALFOS_ROOM,           {[]{return CanBlastOrSmash;}}),
                   LocationAccess(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR,      {[]{return CanStunDeku;}}),
                   LocationAccess(DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_FRONT,     {[]{return CanStunDeku;}}),
@@ -4040,11 +4040,11 @@ void AreaTable_Init() {
                   LocationAccess(DODONGOS_CAVERN_GOSSIP_STONE,                  {[]{return true;}}),
   }, {
                   //Exits
-                  Entrance(DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE,  {[]{return Here(DODONGOS_CAVERN_MQ_LOBBY, []{return CanBlastOrSmash || ((CanUse(STICKS) || CanUse(DINS_FIRE)) && CanTakeDamage);});}}),
+                  Entrance(DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE,  {[]{return Here(DODONGOS_CAVERN_MQ_LOBBY, []{return CanBlastOrSmash || (((IsChild && Usable(STICKS)) || Usable(DINS_FIRE)) && CanTakeDamage);});}}),
                   Entrance(DODONGOS_CAVERN_MQ_BOMB_BAG_AREA,     {[]{return IsAdult || (Here(DODONGOS_CAVERN_MQ_LOBBY, []{return IsAdult;}) && HasExplosives);}}),
                     //Trick: IsAdult || HasExplosives || (LogicDCMQChildBombs && (KokiriSword || Sticks) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO))
                   Entrance(DODONGOS_CAVERN_MQ_BOSS_AREA,         {[]{return HasExplosives;}}),
-                    //Trick: HasExplosives || (LogicDCMQEyes && GoronBracelet && (IsAdult || LogicDCMQChildBack) && (CanUse(STICKS) || CanUse(DINS_FIRE) || (IsAdult && (LogicDCJump || Hammer || HoverBoots || Hookshot))))
+                    //Trick: HasExplosives || (LogicDCMQEyes && GoronBracelet && (IsAdult || LogicDCMQChildBack) && ((IsChild && Usable(STICKS)) || Usable(DINS_FIRE) || (IsAdult && (LogicDCJump || Hammer || HoverBoots || Hookshot))))
   });
 
   areaTable[DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE] = Area("Dodongos Cavern MQ Lower Right Side", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
@@ -4052,15 +4052,15 @@ void AreaTable_Init() {
                   LocationAccess(DODONGOS_CAVERN_MQ_DEKU_SCRUB_SIDE_ROOM_NEAR_LOWER_LIZALFOS, {[]{return CanStunDeku;}}),
   }, {
                   //Exits
-                  Entrance(DODONGOS_CAVERN_MQ_BOMB_BAG_AREA, {[]{return (Here(DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE, []{return CanUse(BOW);}) || GoronBracelet ||
-                                                                                CanUse(DINS_FIRE) || HasExplosives) &&
-                                                                                CanUse(SLINGSHOT);}}),
+                  Entrance(DODONGOS_CAVERN_MQ_BOMB_BAG_AREA, {[]{return (Here(DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE, []{return IsAdult && Usable(BOW);}) || GoronBracelet ||
+                                                                                Usable(DINS_FIRE) || HasExplosives) &&
+                                                                                IsChild && Usable(SLINGSHOT);}}),
   });
 
   areaTable[DODONGOS_CAVERN_MQ_BOMB_BAG_AREA] = Area("Dodongos Cavern MQ Bomb Bag Area", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(DODONGOS_CAVERN_MQ_BOMB_BAG_CHEST, {[]{return true;}}),
-                  LocationAccess(DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM,  {[]{return (Here(DODONGOS_CAVERN_MQ_BOMB_BAG_AREA, []{return CanUse(BOW);}) ||  GoronBracelet || CanUse(DINS_FIRE) || HasExplosives) && (CanUse(HOOKSHOT) || CanUse(BOOMERANG));}}),
+                  LocationAccess(DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM,  {[]{return (Here(DODONGOS_CAVERN_MQ_BOMB_BAG_AREA, []{return IsAdult && Usable(BOW);}) ||  GoronBracelet || Usable(DINS_FIRE) || HasExplosives) && HookshotOrBoomerang;}}),
   }, {
                   //Exits
                   Entrance(DODONGOS_CAVERN_MQ_LOWER_RIGHT_SIDE, {[]{return true;}}),
@@ -4087,39 +4087,39 @@ void AreaTable_Init() {
   }, {
                   //Locations
                   LocationAccess(JABU_JABUS_BELLY_MQ_MAP_CHEST,             {[]{return CanBlastOrSmash;}}),
-                  LocationAccess(JABU_JABUS_BELLY_MQ_FIRST_ROOM_SIDE_CHEST, {[]{return CanUse(SLINGSHOT);}}),
+                  LocationAccess(JABU_JABUS_BELLY_MQ_FIRST_ROOM_SIDE_CHEST, {[]{return IsChild && Usable(SLINGSHOT);}}),
   }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_ENTRYWAY, {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_MQ_MAIN,  {[]{return Here(JABU_JABUS_BELLY_MQ_BEGINNING, []{return IsChild && CanUse(SLINGSHOT);});}}),
+                  Entrance(JABU_JABUS_BELLY_MQ_MAIN,  {[]{return Here(JABU_JABUS_BELLY_MQ_BEGINNING, []{return IsChild && Usable(SLINGSHOT);});}}),
   });
 
   areaTable[JABU_JABUS_BELLY_MQ_MAIN] = Area("Jabu Jabus Belly MQ Main", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(JABU_JABUS_BELLY_MQ_SECOND_ROOM_LOWER_CHEST,      {[]{return true;}}),
-                  LocationAccess(JABU_JABUS_BELLY_MQ_SECOND_ROOM_UPPER_CHEST,      {[]{return CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT) || ChildCanAccess(JABU_JABUS_BELLY_MQ_BOSS_AREA);}}),
+                  LocationAccess(JABU_JABUS_BELLY_MQ_SECOND_ROOM_UPPER_CHEST,      {[]{return (IsAdult && (Usable(HOVER_BOOTS) || Usable(HOOKSHOT))) || ChildCanAccess(JABU_JABUS_BELLY_MQ_BOSS_AREA);}}),
                   LocationAccess(JABU_JABUS_BELLY_MQ_COMPASS_CHEST,                {[]{return true;}}),
                   LocationAccess(JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_VINES_CHEST,    {[]{return true;}}),
                   LocationAccess(JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_SWITCHES_CHEST, {[]{return true;}}),
                   LocationAccess(JABU_JABUS_BELLY_MQ_BOOMERANG_ROOM_SMALL_CHEST,   {[]{return true;}}),
                   LocationAccess(JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST,              {[]{return true;}}),
                   LocationAccess(JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,      {[]{return CanPlay(SongOfTime);}}),
-                    //Trick: CanPlay(SongOfTime) || (LogicJabuMQSoTGS && CanUse(BOOMERANG))
+                    //Trick: CanPlay(SongOfTime) || (LogicJabuMQSoTGS && IsChild && Usable(BOOMERANG))
   }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MQ_BEGINNING, {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_MQ_DEPTHS,    {[]{return HasExplosives && CanUse(BOOMERANG);}}),
+                  Entrance(JABU_JABUS_BELLY_MQ_DEPTHS,    {[]{return HasExplosives && IsChild && Usable(BOOMERANG);}}),
   });
 
   areaTable[JABU_JABUS_BELLY_MQ_DEPTHS] = Area("Jabu Jabus Belly MQ Depths", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(JABU_JABUS_BELLY_MQ_FALLING_LIKE_LIKE_ROOM_CHEST, {[]{return true;}}),
-                  LocationAccess(JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,          {[]{return Sticks || CanUse(DINS_FIRE);}}),
-                  LocationAccess(JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,    {[]{return (LogicLensJabuMQ || CanUse(LENS_OF_TRUTH)) || Here(JABU_JABUS_BELLY_MQ_MAIN, []{return CanUse(HOVER_BOOTS) && CanUse(HOOKSHOT);});}}),
+                  LocationAccess(JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,          {[]{return Sticks || Usable(DINS_FIRE);}}),
+                  LocationAccess(JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,    {[]{return (LogicLensJabuMQ || Usable(LENS_OF_TRUTH)) || Here(JABU_JABUS_BELLY_MQ_MAIN, []{return IsAdult && Usable(HOVER_BOOTS) && Usable(HOOKSHOT);});}}),
   }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MQ_MAIN,      {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_MQ_BOSS_AREA, {[]{return Sticks || (CanUse(DINS_FIRE) && KokiriSword);}}),
+                  Entrance(JABU_JABUS_BELLY_MQ_BOSS_AREA, {[]{return Sticks || (Usable(DINS_FIRE) && KokiriSword);}}),
   });
 
   areaTable[JABU_JABUS_BELLY_MQ_BOSS_AREA] = Area("Jabu Jabus Belly MQ Boss Area", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {
@@ -4142,8 +4142,8 @@ void AreaTable_Init() {
   if (Dungeon::ForestTemple.IsMQ()) {
   areaTable[FOREST_TEMPLE_MQ_LOBBY] = Area("Forest Temple MQ Lobby", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(FOREST_TEMPLE_MQ_FIRST_ROOM_CHEST, {[]{return IsAdult || Bombs || CanUse(STICKS) || Nuts || CanUse(BOOMERANG) || CanUse(DINS_FIRE) || KokiriSword || CanUse(SLINGSHOT);}}),
-                  LocationAccess(FOREST_TEMPLE_MQ_GS_FIRST_HALLWAY, {[]{return CanUse(HOOKSHOT) || CanUse(BOOMERANG);}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_FIRST_ROOM_CHEST, {[]{return IsAdult || Bombs || Usable(STICKS) || Nuts || Usable(BOOMERANG) || Usable(DINS_FIRE) || KokiriSword || Usable(SLINGSHOT);}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_GS_FIRST_HALLWAY, {[]{return HookshotOrBoomerang;}}),
   }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_ENTRYWAY,        {[]{return true;}}),
@@ -4155,16 +4155,16 @@ void AreaTable_Init() {
                   EventAccess(&FairyPot, {[]{return true;}}),
   }, {
                   //Locations
-                  LocationAccess(FOREST_TEMPLE_MQ_WOLFOS_CHEST,       {[]{return (CanPlay(SongOfTime) || IsChild) && (IsAdult || CanUse(DINS_FIRE) || CanUse(STICKS) || CanUse(SLINGSHOT) || KokiriSword);}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_WOLFOS_CHEST,       {[]{return (CanPlay(SongOfTime) || IsChild) && (IsAdult || Usable(DINS_FIRE) || Usable(STICKS) || Usable(SLINGSHOT) || KokiriSword);}}),
                   LocationAccess(FOREST_TEMPLE_MQ_GS_BLOCK_PUSH_ROOM, {[]{return IsAdult || KokiriSword;}}),
   }, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_MQ_NW_OUTDOORS,        {[]{return CanUse(BOW) || CanUse(SLINGSHOT);}}),
-                  Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS,        {[]{return CanUse(BOW) || CanUse(SLINGSHOT);}}), //This is as far as child can get
+                  Entrance(FOREST_TEMPLE_MQ_NW_OUTDOORS,        {[]{return (IsAdult && Usable(BOW)) || (IsChild && Usable(SLINGSHOT));}}),
+                  Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS,        {[]{return (IsAdult && Usable(BOW)) || (IsChild && Usable(SLINGSHOT));}}), //This is as far as child can get
                   Entrance(FOREST_TEMPLE_MQ_AFTER_BLOCK_PUZZLE, {[]{return IsAdult && GoronBracelet;}}),
-                    //Trick: IsAdult && (GoronBracelet || (LogicForestMQBlockPuzzle && HasBombchus && CanUse(HOOKSHOT)))
+                    //Trick: IsAdult && (GoronBracelet || (LogicForestMQBlockPuzzle && HasBombchus && IsAdult && Usable(HOOKSHOT)))
                   Entrance(FOREST_TEMPLE_MQ_OUTDOOR_LEDGE,      {[]{return false;}}),
-                    //Trick: (LogicForestMQHallwaySwitchJumpslash && CanUse(HOVER_BOOTS)) || (LogicForestMQHallwaySwitchHookshot && CanUse(HOOKSHOT))
+                    //Trick: (LogicForestMQHallwaySwitchJumpslash && IsAdult && Usable(HOVER_BOOTS)) || (LogicForestMQHallwaySwitchHookshot && IsAdult && Usable(HOOKSHOT))
                   Entrance(FOREST_TEMPLE_MQ_BOSS_REGION,        {[]{return ForestTempleJoAndBeth && ForestTempleAmyAndMeg;}}),
   });
 
@@ -4175,7 +4175,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(FOREST_TEMPLE_MQ_BOW_REGION,    {[]{return SmallKeys(FOREST_TEMPLE, 4);}}),
                   Entrance(FOREST_TEMPLE_MQ_OUTDOOR_LEDGE, {[]{return SmallKeys(FOREST_TEMPLE, 3);}}),
-                    //Trick: SmallKeys(FOREST_TEMPLE, 3) || (LogicForestMQHallwaySwitchJumpslash && (CanUse(HOOKSHOT) || LogicForestOutsideBackdoor))
+                    //Trick: SmallKeys(FOREST_TEMPLE, 3) || (LogicForestMQHallwaySwitchJumpslash && ((IsAdult && Usable(HOOKSHOT)) || LogicForestOutsideBackdoor))
                   Entrance(FOREST_TEMPLE_MQ_NW_OUTDOORS,   {[]{return SmallKeys(FOREST_TEMPLE, 2);}}),
   });
 
@@ -4192,24 +4192,24 @@ void AreaTable_Init() {
                   LocationAccess(FOREST_TEMPLE_MQ_GS_LEVEL_ISLAND_COURTYARD, {[]{return true;}}),
   }, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS,         {[]{return CanUse(IRON_BOOTS) || CanUse(LONGSHOT) || ProgressiveScale >= 2;}}),
-                    //Trick: CanUse(IRON_BOOTS) || CanUse(LONGSHOT) || ProgressiveScale >= 2 || (LogicForestMQWellSwim && CanUse(HOOKSHOT))
-                  Entrance(FOREST_TEMPLE_MQ_OUTDOORS_TOP_LEDGES, {[]{return CanUse(FIRE_ARROWS);}}),
+                  Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS,         {[]{return (IsAdult && (Usable(IRON_BOOTS) || Usable(LONGSHOT))) || ProgressiveScale >= 2;}}),
+                    //Trick: (IsAdult && (Usable(IRON_BOOTS) || Usable(LONGSHOT) || (LogicForestMQWellSwim && Usable(HOOKSHOT)))) || ProgressiveScale >= 2
+                  Entrance(FOREST_TEMPLE_MQ_OUTDOORS_TOP_LEDGES, {[]{return IsAdult && Usable(FIRE_ARROWS);}}),
   });
 
   areaTable[FOREST_TEMPLE_MQ_NE_OUTDOORS] = Area("Forest Temple MQ NE Outdoors", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
                   EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || Usable(DINS_FIRE));}}),
   }, {
                   //Locations
-                  LocationAccess(FOREST_TEMPLE_MQ_WELL_CHEST,                 {[]{return CanUse(BOW) || CanUse(SLINGSHOT);}}),
-                  LocationAccess(FOREST_TEMPLE_MQ_GS_RAISED_ISLAND_COURTYARD, {[]{return CanUse(HOOKSHOT) || CanUse(BOOMERANG) || (CanUse(FIRE_ARROWS) && (CanPlay(SongOfTime) || (CanUse(HOVER_BOOTS) && LogicForestDoorFrame)));}}),
-                  LocationAccess(FOREST_TEMPLE_MQ_GS_WELL,                    {[]{return (CanUse(IRON_BOOTS) && CanUse(HOOKSHOT)) || CanUse(BOW) || CanUse(SLINGSHOT);}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_WELL_CHEST,                 {[]{return (IsAdult && Usable(BOW)) || (IsChild && Usable(SLINGSHOT));}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_GS_RAISED_ISLAND_COURTYARD, {[]{return HookshotOrBoomerang || (IsAdult && Usable(FIRE_ARROWS) && (CanPlay(SongOfTime) || (Usable(HOVER_BOOTS) && LogicForestDoorFrame)));}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_GS_WELL,                    {[]{return (IsAdult && (Usable(IRON_BOOTS) && Usable(HOOKSHOT)) || Usable(BOW)) || (IsChild && Usable(SLINGSHOT));}}),
   }, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_MQ_OUTDOORS_TOP_LEDGES, {[]{return CanUse(HOOKSHOT) && (CanUse(LONGSHOT) || CanUse(HOVER_BOOTS) || CanPlay(SongOfTime));}}),
-                  Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS_LEDGE,   {[]{return CanUse(LONGSHOT);}}),
+                  Entrance(FOREST_TEMPLE_MQ_OUTDOORS_TOP_LEDGES, {[]{return IsAdult && Usable(HOOKSHOT) && (Usable(LONGSHOT) || Usable(HOVER_BOOTS) || CanPlay(SongOfTime));}}),
+                  Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS_LEDGE,   {[]{return IsAdult && Usable(LONGSHOT);}}),
   });
 
   areaTable[FOREST_TEMPLE_MQ_OUTDOORS_TOP_LEDGES] = Area("Forest Temple MQ Outdoors Top Ledges", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -4219,7 +4219,7 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS,       {[]{return true;}}),
                   Entrance(FOREST_TEMPLE_MQ_NE_OUTDOORS_LEDGE, {[]{return false;}}),
-                    //Trick: LogicForestOutdoorsLedge && CanUse(HOVER_BOOTS)
+                    //Trick: LogicForestOutdoorsLedge && IsAdult && Usable(HOVER_BOOTS)
   });
 
   areaTable[FOREST_TEMPLE_MQ_NE_OUTDOORS_LEDGE] = Area("Forest Temple MQ NE Outdoors Ledge", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -4233,20 +4233,20 @@ void AreaTable_Init() {
 
   areaTable[FOREST_TEMPLE_MQ_BOW_REGION] = Area("Forest Temple MQ Bow Region", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ForestTempleJoAndBeth, {[]{return ForestTempleJoAndBeth || CanUse(BOW);}}),
+                  EventAccess(&ForestTempleJoAndBeth, {[]{return ForestTempleJoAndBeth || (IsAdult && Usable(BOW));}}),
   }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_MQ_BOW_CHEST,     {[]{return true;}}),
-                  LocationAccess(FOREST_TEMPLE_MQ_MAP_CHEST,     {[]{return CanUse(BOW);}}),
-                  LocationAccess(FOREST_TEMPLE_MQ_COMPASS_CHEST, {[]{return CanUse(BOW);}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_MAP_CHEST,     {[]{return IsAdult && Usable(BOW);}}),
+                  LocationAccess(FOREST_TEMPLE_MQ_COMPASS_CHEST, {[]{return IsAdult && Usable(BOW);}}),
   }, {
                   //Exits
-                  Entrance(FOREST_TEMPLE_MQ_FALLING_ROOM, {[]{return SmallKeys(FOREST_TEMPLE, 5) && (CanUse(BOW) || CanUse(DINS_FIRE));}}),
+                  Entrance(FOREST_TEMPLE_MQ_FALLING_ROOM, {[]{return SmallKeys(FOREST_TEMPLE, 5) && ((IsAdult && Usable(BOW)) || Usable(DINS_FIRE));}}),
   });
 
   areaTable[FOREST_TEMPLE_MQ_FALLING_ROOM] = Area("Forest Temple MQ Falling Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ForestTempleAmyAndMeg, {[]{return ForestTempleAmyAndMeg || (CanUse(BOW) && SmallKeys(FOREST_TEMPLE, 6));}}),
+                  EventAccess(&ForestTempleAmyAndMeg, {[]{return ForestTempleAmyAndMeg || (IsAdult && Usable(BOW) && SmallKeys(FOREST_TEMPLE, 6));}}),
   }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_MQ_FALLING_CEILING_ROOM_CHEST, {[]{return true;}}),
@@ -4269,21 +4269,21 @@ void AreaTable_Init() {
   if (Dungeon::FireTemple.IsMQ()) {
   areaTable[FIRE_TEMPLE_MQ_LOWER] = Area("Fire Temple MQ Lower", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(FIRE_TEMPLE_MQ_MAP_ROOM_SIDE_CHEST, {[]{return IsAdult || KokiriSword || Sticks || Slingshot || Bombs || CanUse(DINS_FIRE);}}),
-                  LocationAccess(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,     {[]{return (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)) 
-                                                                             && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT))
-                                                                             && (CanUse(FIRE_ARROWS) || (CanUse(DINS_FIRE) &&
+                  LocationAccess(FIRE_TEMPLE_MQ_MAP_ROOM_SIDE_CHEST, {[]{return IsAdult || KokiriSword || Sticks || Slingshot || Bombs || Usable(DINS_FIRE);}}),
+                  LocationAccess(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,     {[]{return IsAdult && (LogicFewerTunicRequirements || Usable(GORON_TUNIC))
+                                                                             && (Usable(HOVER_BOOTS) || Usable(HOOKSHOT))
+                                                                             && (Usable(FIRE_ARROWS) || (Usable(DINS_FIRE) &&
                                                                                                             ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE))
-                                                                                                           || CanUse(GORON_TUNIC)
-                                                                                                           || CanUse(BOW)
-                                                                                                           || CanUse(LONGSHOT))));}}),
-                    //Trick: (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)) && (((CanUse(HOVER_BOOTS) || (LogicFireMQNearBoss && CanUse(BOW))) && HasFireSource) || (CanUse(HOOKSHOT) && CanUse(FIRE_ARROWS) || (CanUse(DINS_FIRE) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) || CanUse(GORON_TUNIC) || CanUse(BOW) || CanUse(LONGSHOT)))))
+                                                                                                           || Usable(GORON_TUNIC)
+                                                                                                           || Usable(BOW)
+                                                                                                           || Usable(LONGSHOT))));}}),
+                    //Trick: IsAdult && (LogicFewerTunicRequirements || Usable(GORON_TUNIC)) && (((Usable(HOVER_BOOTS) || (LogicFireMQNearBoss && Usable(BOW))) && HasFireSource) || (Usable(HOOKSHOT) && Usable(FIRE_ARROWS) || (Usable(DINS_FIRE) && ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE)) || Usable(GORON_TUNIC) || Usable(BOW) || Usable(LONGSHOT)))))
   }, {
                   //Exits
                   Entrance(FIRE_TEMPLE_ENTRYWAY,             {[]{return true;}}),
-                  Entrance(FIRE_TEMPLE_MQ_BOSS_ROOM,         {[]{return CanUse(GORON_TUNIC) && CanUse(MEGATON_HAMMER) && BossKeyFireTemple && ((HasFireSource && (LogicFireBossDoorJump || HoverBoots)) || HasAccessTo(FIRE_TEMPLE_MQ_UPPER));}}),
+                  Entrance(FIRE_TEMPLE_MQ_BOSS_ROOM,         {[]{return IsAdult && Usable(GORON_TUNIC) && Usable(MEGATON_HAMMER) && BossKeyFireTemple && ((HasFireSource && (LogicFireBossDoorJump || HoverBoots)) || HasAccessTo(FIRE_TEMPLE_MQ_UPPER));}}),
                   Entrance(FIRE_TEMPLE_MQ_LOWER_LOCKED_DOOR, {[]{return SmallKeys(FIRE_TEMPLE, 5) && (IsAdult || KokiriSword);}}),
-                  Entrance(FIRE_TEMPLE_MQ_BIG_LAVA_ROOM,     {[]{return (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)) && CanUse(MEGATON_HAMMER);}}),
+                  Entrance(FIRE_TEMPLE_MQ_BIG_LAVA_ROOM,     {[]{return IsAdult && (LogicFewerTunicRequirements || Usable(GORON_TUNIC)) && Usable(MEGATON_HAMMER);}}),
   });
 
   areaTable[FIRE_TEMPLE_MQ_LOWER_LOCKED_DOOR] = Area("Fire Temple MQ Lower Locked Door", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
@@ -4292,7 +4292,7 @@ void AreaTable_Init() {
   }, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_MQ_MEGATON_HAMMER_CHEST, {[]{return IsAdult && (HasExplosives || Hammer || Hookshot);}}),
-                  LocationAccess(FIRE_TEMPLE_MQ_MAP_CHEST,            {[]{return CanUse(MEGATON_HAMMER);}}),
+                  LocationAccess(FIRE_TEMPLE_MQ_MAP_CHEST,            {[]{return IsAdult && Usable(MEGATON_HAMMER);}}),
   }, {});
 
   areaTable[FIRE_TEMPLE_MQ_BIG_LAVA_ROOM] = Area("Fire Temple MQ Big Lava Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {

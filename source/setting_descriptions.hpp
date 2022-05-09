@@ -464,6 +464,7 @@ extern string_view GlitchHammerSlideDescIntermediate;
 
 extern string_view GlitchLedgeCancelDescDisabled;
 extern string_view GlitchLedgeCancelDescNovice;
+extern string_view GlitchLedgeCancelDescIntermediate;
 extern string_view GlitchLedgeCancelDescAdvanced;
 
 extern string_view GlitchActionSwapDescDisabled;

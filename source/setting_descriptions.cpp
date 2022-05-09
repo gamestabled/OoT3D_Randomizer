@@ -1503,23 +1503,44 @@ string_view GlitchMegaflipDescExpert                  = "You may be expected to 
 string_view GlitchMegaflipDescHero                    = "You may be expected to perform any megaflip with a\n"
                                                         "bombchu.";                                        //
 /* A-Slide */                                                                                              //
-string_view GlitchASlideDescDisabled                  = "";
-string_view GlitchASlideDescNovice                    = "";
-string_view GlitchASlideDescIntermediate              = "";
-string_view GlitchASlideDescAdvanced                  = "";
-string_view GlitchASlideDescExpert                    = "";
+string_view GlitchASlideDescDisabled                  = "An A-slide is performed the same as a megaflip\n" //
+                                                        "except without pressing the A button at the end.\n"
+                                                        "This causes child Link's collision to glitch below\n
+                                                        "the ground and lets him bypass certain actors.";  //
+string_view GlitchASlideDescNovice                    = "You may be expected to perform A-slides to pass\n"//
+                                                        "actors you can't press A to interact with.";      //
+string_view GlitchASlideDescIntermediate              = "You may be expected to perform A-slides quickly or\n"
+                                                        "around actors that can be interacted with.";      //
+string_view GlitchASlideDescAdvanced                  = "You may be expected to perform novice A-slides\n" //
+                                                        "with a bombchu.";                                 //
+string_view GlitchASlideDescExpert                    = "You may be expected to perform intermediate\n"    //
+                                                        "A-slides with a bombchu.";
 /* Hammer Slide */                                                                                         //
-string_view GlitchHammerSlideDescDisabled             = "";
-string_view GlitchHammerSlideDescNovice               = "";
-string_view GlitchHammerSlideDescIntermediate         = "";
+string_view GlitchHammerSlideDescDisabled             = "Equipping hover boots after a hammer crouch stab\n"
+                                                        "against a wall preserves the recoil speed which\n"//
+                                                        "allows Link to cross larger gaps than usual.";    //
+string_view GlitchHammerSlideDescNovice               = "Simple hammer slides may be required";            //
+string_view GlitchHammerSlideDescIntermediate         = "Hammer slides which require good movement and high\n"
+                                                        "speed may be required.";                          //
 /* Ledge Cancel */                                                                                         //
-string_view GlitchLedgeCancelDescDisabled             = "";
-string_view GlitchLedgeCancelDescNovice               = "";
-string_view GlitchLedgeCancelDescAdvanced             = "";
+string_view GlitchLedgeCancelDescDisabled             = "Climbing a short ledge and shielding damage will\n"
+                                                        "prevent the ledge climbing state from ending.\n"  //
+                                                        "This state allows Link to walk through some actors\n"
+                                                        "such as boulders and NPCs.";                      //
+string_view GlitchLedgeCancelDescNovice               = "You may be expected to perform ledge cancels using\n"
+                                                        "bombs as a damage source.";                       //
+string_view GlitchLedgeCancelDescIntermediate         = "You may be expected to perform ledge cancels in\n"//
+                                                        "places with little room.";                        //
+string_view GlitchLedgeCancelDescAdvanced             = "You may be expected to perform ledge cancels using\n"
+                                                        "bombchus as a damage source.";                    //
 /* Action Swap */                                                                                          //
-string_view GlitchActionSwapDescDisabled              = "";
-string_view GlitchActionSwapDescNovice                = "";
-string_view GlitchActionSwapDescAdvanced              = "";
+string_view GlitchActionSwapDescDisabled              = "Action swap allows Link to switch between 2 held\n"
+                                                        "items without the put away/equip animations.\n"   //
+                                                        "This can be exploited to produce various effects.";
+string_view GlitchActionSwapDescNovice                = "You may be expected to use shallow water to set up\n"
+                                                        "action swap.";                                    //
+string_view GlitchActionSwapDescAdvanced              = "You may be expected to use bombchus to set up\n"  //
+                                                        "action swap.";                                    //
 /* QPA */                                                                                                  //
 string_view GlitchQPADescDisabled                     = "";
 string_view GlitchQPADescNovice                       = "";

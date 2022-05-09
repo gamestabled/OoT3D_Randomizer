@@ -530,27 +530,27 @@ namespace Logic {
       }
       return Bombs && CanSurviveDamage;
     case GlitchType::OutdoorBombOI:
-      return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
+      return ((Usable(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
               (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
               (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
               CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
-             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) ||
-              (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
+             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (Usable(NAYRUS_LOVE) || Usable(DINS_FIRE))) ||
+              (Usable(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
     case GlitchType::WindmillBombOI:
-      return (((CanUse(FARORES_WIND) || (!NeedNayrusLove && (NayrusLove || DinsFire))) && (LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
+      return (((Usable(FARORES_WIND) || (!NeedNayrusLove && (NayrusLove || DinsFire))) && (LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
               (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
               (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
               CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
-             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
+             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (Usable(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
     case GlitchType::IndoorBombOI:
-      return (((IsAdult && ClaimCheck) && (HasBottle || HasBoots || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
-              ((Bugs || Fish || Fairy) && (NumBottles >= 2 || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg) || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
-              ((CanUse(FARORES_WIND) && FaroresWindAnywhere) && (HasBottle || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg))) ||
-              (((!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || CanUse(FARORES_WIND)) &&
+      return (((IsAdult && ClaimCheck) && (HasBottle || HasBoots || (Usable(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((Bugs || Fish || Fairy) && (NumBottles >= 2 || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg) || (Usable(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((Usable(FARORES_WIND) && FaroresWindAnywhere) && (HasBottle || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg))) ||
+              (((!NeedNayrusLove && (Usable(NAYRUS_LOVE) || Usable(DINS_FIRE))) || Usable(FARORES_WIND)) &&
                (NumBottles + ((IsChild) ? ((WeirdEgg) ? 1 : 0) : (((IronBoots) ? 1 : 0) + ((HoverBoots) ? 1 : 0) + ((ClaimCheck) ? 1 : 0))) >= 2))) &&
              CanDoGlitch(GlitchType::BombOI, difficulty) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE);
     case GlitchType::DungeonBombOI:
-      return ((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND))) && CanDoGlitch(GlitchType::BombOI, difficulty);
+      return ((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (Usable(NAYRUS_LOVE) || Usable(DINS_FIRE))) || (Usable(FARORES_WIND))) && CanDoGlitch(GlitchType::BombOI, difficulty);
 
     //Hover Boost
     case GlitchType::HoverBoost:
@@ -600,8 +600,8 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      //                             Same deal as bombchu megaflips / A-slides
-      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+      //                             Similar to bombchu megaflips / A-slides but doesn't scale beyond advanced
+      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
 
     //Action Swap
     case GlitchType::ActionSwap:
@@ -753,9 +753,9 @@ namespace Logic {
     // IsAdult = Age == AGE_ADULT;
 
     CanBlastOrSmash = HasExplosives || Usable(MEGATON_HAMMER);
-    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE));
-    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE));
-    CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || Nuts || DekuShield);
+    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || Usable(DINS_FIRE));
+    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || Usable(DINS_FIRE));
+    CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || Usable(DINS_FIRE) || Nuts || DekuShield);
     CanCutShrubs    = IsAdult /*|| Sticks*/ || KokiriSword || Boomerang || HasExplosives;
     CanDive         = ProgressiveScale >= 1;
     CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear || ShuffleInteriorEntrances || ShuffleOverworldEntrances;
@@ -764,9 +764,9 @@ namespace Logic {
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
     NeedNayrusLove      = (EffectiveHealth == 1);
-    CanSurviveDamage    = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
+    CanSurviveDamage    = !NeedNayrusLove || Usable(NAYRUS_LOVE);
     CanTakeDamage       = Fairy || CanSurviveDamage;
-    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || ((EffectiveHealth == 2) && (CanUse(NAYRUS_LOVE) || Fairy)) || (EffectiveHealth > 2);
+    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || ((EffectiveHealth == 2) && (Usable(NAYRUS_LOVE) || Fairy)) || (EffectiveHealth > 2);
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
@@ -780,7 +780,7 @@ namespace Logic {
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
-    HasFireSource          = CanUse(DINS_FIRE) || Usable(FIRE_ARROWS);
+    HasFireSource          = Usable(DINS_FIRE) || Usable(FIRE_ARROWS);
     HasFireSourceWithTorch = HasFireSource || Usable(STICKS);
 
     //Gerudo Fortress
