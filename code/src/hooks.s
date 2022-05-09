@@ -1373,10 +1373,17 @@ hook_IgnoreMaskReaction:
 .global hook_MasterQuestGoldSkulltulaCheck
 hook_MasterQuestGoldSkulltulaCheck:
     push {r0-r5,r7-r12, lr}
-    bl EnSw_IsMasterQuestSkulltula
+    bl Settings_IsMasterQuestDungeon
     cpy r6,r0
     pop {r0-r5,r7-r12, lr}
     b 0x3415CC
+
+.global hook_WaterSpoutMasterQuestCheck
+hook_WaterSpoutMasterQuestCheck:
+    push {r1-r12, lr}
+    bl Settings_IsMasterQuestDungeon
+    pop {r1-r12, lr}
+    bx lr
 
 .section .loader
 .global hook_into_loader

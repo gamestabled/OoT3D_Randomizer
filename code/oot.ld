@@ -444,6 +444,10 @@ SECTIONS
 		*(.patch_BugsRecatchable)
 	}
 
+	.patch_WaterSpoutMasterQuestCheck 0x212BDC : {
+		*(.patch_WaterSpoutMasterQuestCheck)
+	}
+
 	.patch_DekuSproutCheckForest 0x2153A4 : {
 		*(.patch_DekuSproutCheckForest)
 	}

@@ -1696,6 +1696,11 @@ IgnoreMaskReaction_patch:
 MasterQuestGoldSkulltulaCheck_patch:
     b hook_MasterQuestGoldSkulltulaCheck
 
+.section .patch_WaterSpoutMasterQuestCheck
+.global WaterSpoutMasterQuestCheck_patch
+WaterSpoutMasterQuestCheck_patch:
+    bl hook_WaterSpoutMasterQuestCheck
+
 .section .patch_loader
 .global loader_patch
 
