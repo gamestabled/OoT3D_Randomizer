@@ -51,6 +51,7 @@ namespace Logic {
   bool FireArrows    = false;
   bool IceArrows     = false;
   bool LightArrows   = false;
+  bool MasterSword   = false;
   bool BiggoronSword = false;
 
   //Trade Quest
@@ -369,29 +370,6 @@ namespace Logic {
            item == LENS_OF_TRUTH;
   }
 
-  static bool IsAdultItem(ItemKey item) {
-    return item == BOW              ||
-           item == MEGATON_HAMMER   ||
-           item == IRON_BOOTS       ||
-           item == HOVER_BOOTS      ||
-           item == HOOKSHOT         ||
-           item == LONGSHOT         ||
-           item == SILVER_GAUNTLETS ||
-           item == GOLDEN_GAUNTLETS ||
-           item == GORON_TUNIC      ||
-           item == ZORA_TUNIC       ||
-           item == SCARECROW        ||
-           item == DISTANT_SCARECROW;
-  }
-
-  static bool IsChildItem(ItemKey item) {
-    return item == SLINGSHOT    ||
-           item == BOOMERANG    ||
-           item == KOKIRI_SWORD ||
-           item == STICKS       ||
-           item == DEKU_SHIELD;
-  }
-
   static bool IsMagicArrow(ItemKey item) {
     return item == FIRE_ARROWS ||
            item == ICE_ARROWS  ||
@@ -415,6 +393,10 @@ namespace Logic {
            (itemName == ZORA_TUNIC        && ZoraTunic)       ||
            (itemName == SCARECROW         && Scarecrow)       ||
            (itemName == DISTANT_SCARECROW && DistantScarecrow)||
+           (itemName == HYLIAN_SHIELD     && HylianShield)    ||
+           (itemName == MIRROR_SHIELD     && MirrorShield)    ||
+           (itemName == MASTER_SWORD      && MasterSword)     ||
+           (itemName == BIGGORON_SWORD    && BiggoronSword)   ||
            (itemName == SLINGSHOT         && Slingshot)       ||
            (itemName == BOOMERANG         && Boomerang)       ||
            (itemName == KOKIRI_SWORD      && KokiriSword)     ||
@@ -428,45 +410,34 @@ namespace Logic {
 
   //Can the passed in item be used?
   bool CanUse(ItemKey itemName) {
-    return (IsMagicItem(itemName)  && HasItem(itemName) && MagicMeter) ||
-           (IsAdultItem(itemName)  && HasItem(itemName) && IsAdult)    ||
-           (IsMagicArrow(itemName) && HasItem(itemName) && MagicMeter  && IsAdult && Bow) ||
-           (IsChildItem(itemName)  && HasItem(itemName) && IsChild);
-  }
-
-  // Same as CanUse but includes item usability settings
-  // TODO: merge this with CanUse once logic no longer assumes age when using CanUse
-  bool Usable(ItemKey itemName) {
-    // Spells/lens don't have age restrictions
-    if (IsMagicItem(itemName)) {
-      return CanUse(itemName);
-    }
-
     switch (itemName) {
-      case BOW:               return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && BowAsChild));
-      case MEGATON_HAMMER:    return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && HammerAsChild));
-      case IRON_BOOTS:        return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && IronBootsAsChild));
-      case HOVER_BOOTS:       return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && HoverBootsAsChild));
-      case HOOKSHOT:          return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && HookshotAsChild));
-      case LONGSHOT:          return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && HookshotAsChild));
+      // Adult items
+      case BOW:               return HasItem(itemName) && (IsAdult || (IsGlitched && BowAsChild));
+      case MEGATON_HAMMER:    return HasItem(itemName) && (IsAdult || (IsGlitched && HammerAsChild));
+      case IRON_BOOTS:        return HasItem(itemName) && (IsAdult || (IsGlitched && IronBootsAsChild));
+      case HOVER_BOOTS:       return HasItem(itemName) && (IsAdult || (IsGlitched && HoverBootsAsChild));
+      case HOOKSHOT:          return HasItem(itemName) && (IsAdult || (IsGlitched && HookshotAsChild));
+      case LONGSHOT:          return HasItem(itemName) && (IsAdult || (IsGlitched && HookshotAsChild));
       case SILVER_GAUNTLETS:  return HasItem(itemName) && (IsAdult);
       case GOLDEN_GAUNTLETS:  return HasItem(itemName) && (IsAdult);
-      case GORON_TUNIC:       return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && GoronTunicAsChild));
-      case ZORA_TUNIC:        return HasItem(itemName) && (IsAdult || (Settings::Logic.Is(LOGIC_GLITCHED) && ZoraTunicAsChild));
+      case GORON_TUNIC:       return HasItem(itemName) && (IsAdult || (IsGlitched && GoronTunicAsChild));
+      case ZORA_TUNIC:        return HasItem(itemName) && (IsAdult || (IsGlitched && ZoraTunicAsChild));
       case SCARECROW:         return HasItem(itemName) && (IsAdult);
       case DISTANT_SCARECROW: return HasItem(itemName) && (IsAdult);
+      case HYLIAN_SHIELD:     return HasItem(itemName) && (IsAdult);
+      case MIRROR_SHIELD:     return HasItem(itemName) && (IsAdult || (IsGlitched && MirrorShieldAsChild));
+      case MASTER_SWORD:      return HasItem(itemName) && (IsAdult || (IsGlitched && MasterSwordAsChild));
+      case BIGGORON_SWORD:    return HasItem(itemName) && (IsAdult || (IsGlitched && BiggoronSwordAsChild));
 
-      case SLINGSHOT:         return HasItem(itemName) && (IsChild || (Settings::Logic.Is(LOGIC_GLITCHED) && SlingshotAsAdult));
-      case BOOMERANG:         return HasItem(itemName) && (IsChild || (Settings::Logic.Is(LOGIC_GLITCHED) && BoomerangAsAdult));
-      case KOKIRI_SWORD:      return HasItem(itemName) && (IsChild || (Settings::Logic.Is(LOGIC_GLITCHED) && KokiriSwordAsAdult));
-      case STICKS:            return HasItem(itemName) && (IsChild || (Settings::Logic.Is(LOGIC_GLITCHED) && StickAsAdult));
-      case DEKU_SHIELD:       return HasItem(itemName) && (IsChild || (Settings::Logic.Is(LOGIC_GLITCHED) && DekuShieldAsAdult));
+      // Child items
+      case SLINGSHOT:         return HasItem(itemName) && (IsChild || (IsGlitched && SlingshotAsAdult));
+      case BOOMERANG:         return HasItem(itemName) && (IsChild || (IsGlitched && BoomerangAsAdult));
+      case KOKIRI_SWORD:      return HasItem(itemName) && (IsChild || (IsGlitched && KokiriSwordAsAdult));
+      case STICKS:            return HasItem(itemName) && (IsChild || (IsGlitched && StickAsAdult));
+      case DEKU_SHIELD:       return HasItem(itemName) && (IsChild || (IsGlitched && DekuShieldAsAdult));
 
-      case FIRE_ARROWS:       return HasItem(itemName) && MagicMeter && Usable(BOW);
-      case ICE_ARROWS:        return HasItem(itemName) && MagicMeter && Usable(BOW);
-      case LIGHT_ARROWS:      return HasItem(itemName) && MagicMeter && Usable(BOW);
-
-      default: return false;
+      // Magic items
+      default: return (IsMagicItem(itemName) && HasItem(itemName) && MagicMeter) || (IsMagicArrow(itemName) && HasItem(itemName) && MagicMeter && CanUse(BOW));
     }
   }
 
@@ -504,7 +475,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return CanShield && Usable(STICKS);
+      return CanShield && CanUse(STICKS);
 
     //Infinite Sword Glitch
     case GlitchType::ISG:
@@ -530,27 +501,27 @@ namespace Logic {
       }
       return Bombs && CanSurviveDamage;
     case GlitchType::OutdoorBombOI:
-      return ((Usable(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
+      return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
               (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
               (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
               CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
-             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (Usable(NAYRUS_LOVE) || Usable(DINS_FIRE))) ||
-              (Usable(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
+             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) ||
+              (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
     case GlitchType::WindmillBombOI:
-      return (((Usable(FARORES_WIND) || (!NeedNayrusLove && (NayrusLove || DinsFire))) && (LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
+      return (((CanUse(FARORES_WIND) || (!NeedNayrusLove && (NayrusLove || DinsFire))) && (LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
               (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
               (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
               CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
-             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (Usable(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
+             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
     case GlitchType::IndoorBombOI:
-      return (((IsAdult && ClaimCheck) && (HasBottle || HasBoots || (Usable(FARORES_WIND) && FaroresWindAnywhere))) ||
-              ((Bugs || Fish || Fairy) && (NumBottles >= 2 || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg) || (Usable(FARORES_WIND) && FaroresWindAnywhere))) ||
-              ((Usable(FARORES_WIND) && FaroresWindAnywhere) && (HasBottle || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg))) ||
-              (((!NeedNayrusLove && (Usable(NAYRUS_LOVE) || Usable(DINS_FIRE))) || Usable(FARORES_WIND)) &&
+      return (((IsAdult && ClaimCheck) && (HasBottle || HasBoots || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((Bugs || Fish || Fairy) && (NumBottles >= 2 || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg) || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((CanUse(FARORES_WIND) && FaroresWindAnywhere) && (HasBottle || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg))) ||
+              (((!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || CanUse(FARORES_WIND)) &&
                (NumBottles + ((IsChild) ? ((WeirdEgg) ? 1 : 0) : (((IronBoots) ? 1 : 0) + ((HoverBoots) ? 1 : 0) + ((ClaimCheck) ? 1 : 0))) >= 2))) &&
              CanDoGlitch(GlitchType::BombOI, difficulty) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE);
     case GlitchType::DungeonBombOI:
-      return ((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (Usable(NAYRUS_LOVE) || Usable(DINS_FIRE))) || (Usable(FARORES_WIND))) && CanDoGlitch(GlitchType::BombOI, difficulty);
+      return ((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND))) && CanDoGlitch(GlitchType::BombOI, difficulty);
 
     //Hover Boost
     case GlitchType::HoverBoost:
@@ -558,7 +529,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return Bombs && Usable(HOVER_BOOTS) && CanSurviveDamage;
+      return Bombs && CanUse(HOVER_BOOTS) && CanSurviveDamage;
 
     //Super Slide
     case GlitchType::SuperSlide:
@@ -592,7 +563,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return Usable(MEGATON_HAMMER) && Usable(HOVER_BOOTS) && CanShield;
+      return CanUse(MEGATON_HAMMER) && CanUse(HOVER_BOOTS) && CanShield;
 
     //Ledge Cancel
     case GlitchType::LedgeCancel:
@@ -618,7 +589,7 @@ namespace Logic {
         return false;
       }
       //                                           Boot Put Away Delay Method                  Frame Perfect Method                                                 Ledge Grab Method
-      return (CanTakeDamage && Bombs && ((Usable(HOVER_BOOTS) || Usable(IRON_BOOTS)) || setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) || setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
+      return (CanTakeDamage && Bombs && ((CanUse(HOVER_BOOTS) || CanUse(IRON_BOOTS)) || setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) || setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
 
     //Hookshot Clip
     case GlitchType::HookshotClip:
@@ -626,7 +597,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return Usable(HOOKSHOT);
+      return CanUse(HOOKSHOT);
 
     //Hookshot Jump: Bonk
     case GlitchType::HookshotJump_Bonk:
@@ -707,6 +678,7 @@ namespace Logic {
     SilverScale     = ProgressiveScale      >= 1;
     GoldScale       = ProgressiveScale      >= 2;
     AdultsWallet    = ProgressiveWallet     >= 1;
+    MasterSword     = MasterSword   || IsAdult;
     BiggoronSword   = BiggoronSword || ProgressiveGiantKnife >= 2;
 
     ScarecrowSong    = ScarecrowSong || (ChildScarecrow && AdultScarecrow);
@@ -752,10 +724,10 @@ namespace Logic {
     // IsChild = Age == AGE_CHILD;
     // IsAdult = Age == AGE_ADULT;
 
-    CanBlastOrSmash = HasExplosives || Usable(MEGATON_HAMMER);
-    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || Usable(DINS_FIRE));
-    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || Usable(DINS_FIRE));
-    CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || Usable(DINS_FIRE) || Nuts || DekuShield);
+    CanBlastOrSmash = HasExplosives || CanUse(MEGATON_HAMMER);
+    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD));
+    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD));
+    CanStunDeku     = IsAdult || CanChildAttack || Nuts || HasShield;
     CanCutShrubs    = IsAdult /*|| Sticks*/ || KokiriSword || Boomerang || HasExplosives;
     CanDive         = ProgressiveScale >= 1;
     CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear || ShuffleInteriorEntrances || ShuffleOverworldEntrances;
@@ -764,34 +736,34 @@ namespace Logic {
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
     NeedNayrusLove      = (EffectiveHealth == 1);
-    CanSurviveDamage    = !NeedNayrusLove || Usable(NAYRUS_LOVE);
+    CanSurviveDamage    = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
     CanTakeDamage       = Fairy || CanSurviveDamage;
-    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || ((EffectiveHealth == 2) && (Usable(NAYRUS_LOVE) || Fairy)) || (EffectiveHealth > 2);
+    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || ((EffectiveHealth == 2) && (CanUse(NAYRUS_LOVE) || Fairy)) || (EffectiveHealth > 2);
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
-    HookshotOrBoomerang = Usable(HOOKSHOT) || Usable(BOOMERANG);
+    HookshotOrBoomerang = CanUse(HOOKSHOT) || CanUse(BOOMERANG);
     CanGetNightTimeGS   = (CanPlay(SunsSong) || !NightGSExpectSuns);
 
     Health          = BaseHealth + HeartContainer + (PieceOfHeart >> 2);
     EffectiveHealth = ((Health << (2 + DoubleDefense)) >> Multiplier) + ((Health << (2 + DoubleDefense)) % (1 << Multiplier) > 0); //Number of half heart hits to die, ranges from 1 to 160
-    FireTimer       = Usable(GORON_TUNIC) ? 255 : Health;
-    WaterTimer      = Usable( ZORA_TUNIC) ? 255 : Health;
+    FireTimer       = CanUse(GORON_TUNIC) ? 255 : Health;
+    WaterTimer      = CanUse( ZORA_TUNIC) ? 255 : Health;
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
-    HasFireSource          = Usable(DINS_FIRE) || Usable(FIRE_ARROWS);
-    HasFireSourceWithTorch = HasFireSource || Usable(STICKS);
+    HasFireSource          = CanUse(DINS_FIRE) || CanUse(FIRE_ARROWS);
+    HasFireSourceWithTorch = HasFireSource || CanUse(STICKS);
 
     //Gerudo Fortress
     CanFinishGerudoFortress = (GerudoFortress.Is(GERUDOFORTRESS_NORMAL)    && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword) && ((IsAdult && (Bow || Hookshot || HoverBoots)) || GerudoToken || LogicGerudoKitchen)) ||
                               (GerudoFortress.Is(GERUDOFORTRESS_FAST)      && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword)) ||
                               (GerudoFortress.IsNot(GERUDOFORTRESS_NORMAL) && GerudoFortress.IsNot(GERUDOFORTRESS_FAST));
 
-    HasShield        = (IsAdult && HylianShield) ||                   (IsChild && DekuShield); //Mirror shield can't reflect attacks
-    CanShield        = (IsAdult && (HylianShield || MirrorShield)) || (IsChild && (DekuShield || (Settings::Logic.Is(LOGIC_GLITCHED) && MirrorShield && MirrorShieldAsChild)));
+    HasShield        = CanUse(HYLIAN_SHIELD) || CanUse(DEKU_SHIELD); //Mirror shield can't reflect attacks
+    CanShield        = CanUse(MIRROR_SHIELD) || HasShield;
     CanJumpslash     = IsAdult || Sticks || KokiriSword;
-    CanUseProjectile = HasExplosives || Usable(BOW) || Usable(HOOKSHOT) || Usable(SLINGSHOT) || Usable(BOOMERANG);
+    CanUseProjectile = HasExplosives || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || CanUse(BOOMERANG);
 
     //Bridge and LACS Requirements
     MedallionCount        = (ForestMedallion ? 1:0) + (FireMedallion ? 1:0) + (WaterMedallion ? 1:0) + (SpiritMedallion ? 1:0) + (ShadowMedallion ? 1:0) + (LightMedallion ? 1:0);
@@ -951,6 +923,7 @@ namespace Logic {
      FireArrows    = false;
      IceArrows     = false;
      LightArrows   = false;
+     MasterSword   = false;
      BiggoronSword = false;
 
      //Trade Quest

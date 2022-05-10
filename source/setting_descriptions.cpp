@@ -1505,7 +1505,7 @@ string_view GlitchMegaflipDescHero                    = "You may be expected to 
 /* A-Slide */                                                                                              //
 string_view GlitchASlideDescDisabled                  = "An A-slide is performed the same as a megaflip\n" //
                                                         "except without pressing the A button at the end.\n"
-                                                        "This causes child Link's collision to glitch below\n
+                                                        "This causes child Link's collision to glitch below\n"
                                                         "the ground and lets him bypass certain actors.";  //
 string_view GlitchASlideDescNovice                    = "You may be expected to perform A-slides to pass\n"//
                                                         "actors you can't press A to interact with.";      //
