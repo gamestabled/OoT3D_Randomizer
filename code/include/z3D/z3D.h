@@ -169,7 +169,8 @@ typedef struct {
     /* 0x156F */ u8           buttonStatus[5];
     /* 0x1574 */ char         unk_1574[0x000F];
     /* 0x1584 */ u16          magicMeterSize;
-    /* 0x1586 */ char         unk_1586[0x000C];
+    /* 0x1586 */ char         unk_1586[0x0004];
+    /* 0x158A */ u16          eventInf[4];
     /* 0x1592 */ u16          dungeonIndex;
     /* 0x1594 */ char         unk_1594[0x000C];
     /* 0x15A0 */ u16          nextCutsceneIndex;
@@ -524,11 +525,11 @@ typedef void (*DisplayTextbox_proc)(GlobalContext* globalCtx, u16 textId, Actor*
 #define DisplayTextbox_addr 0x367C7C
 #define DisplayTextbox ((DisplayTextbox_proc)DisplayTextbox_addr)
 
-typedef u32 (*EventCheck_proc)(u32 param_1);
+typedef u32 (*EventCheck_proc)(u32 flag);
 #define EventCheck_addr 0x350CF4
 #define EventCheck ((EventCheck_proc)EventCheck_addr)
 
-typedef void (*EventSet_proc)(u32 param_1);
+typedef void (*EventSet_proc)(u32 flag);
 #define EventSet_addr 0x34CBF8
 #define EventSet ((EventSet_proc)EventSet_addr)
 
