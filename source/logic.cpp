@@ -416,29 +416,29 @@ namespace Logic {
 
     switch (itemName) {
       // Adult items
-      case BOW:               return IsAdult || (IsGlitched && BowAsChild);
-      case MEGATON_HAMMER:    return IsAdult || (IsGlitched && HammerAsChild);
-      case IRON_BOOTS:        return IsAdult || (IsGlitched && IronBootsAsChild);
-      case HOVER_BOOTS:       return IsAdult || (IsGlitched && HoverBootsAsChild);
-      case HOOKSHOT:          return IsAdult || (IsGlitched && HookshotAsChild);
-      case LONGSHOT:          return IsAdult || (IsGlitched && HookshotAsChild);
+      case BOW:               return IsAdult || BowAsChild;
+      case MEGATON_HAMMER:    return IsAdult || HammerAsChild;
+      case IRON_BOOTS:        return IsAdult || IronBootsAsChild;
+      case HOVER_BOOTS:       return IsAdult || HoverBootsAsChild;
+      case HOOKSHOT:          return IsAdult || HookshotAsChild;
+      case LONGSHOT:          return IsAdult || HookshotAsChild;
       case SILVER_GAUNTLETS:  return IsAdult;
       case GOLDEN_GAUNTLETS:  return IsAdult;
-      case GORON_TUNIC:       return IsAdult || (IsGlitched && GoronTunicAsChild);
-      case ZORA_TUNIC:        return IsAdult || (IsGlitched && ZoraTunicAsChild);
-      case SCARECROW:         return IsAdult;
-      case DISTANT_SCARECROW: return IsAdult;
+      case GORON_TUNIC:       return IsAdult || GoronTunicAsChild;
+      case ZORA_TUNIC:        return IsAdult || ZoraTunicAsChild;
+      case SCARECROW:         return IsAdult || HookshotAsChild;
+      case DISTANT_SCARECROW: return IsAdult || HookshotAsChild;
       case HYLIAN_SHIELD:     return IsAdult;
-      case MIRROR_SHIELD:     return IsAdult || (IsGlitched && MirrorShieldAsChild);
-      case MASTER_SWORD:      return IsAdult || (IsGlitched && MasterSwordAsChild);
-      case BIGGORON_SWORD:    return IsAdult || (IsGlitched && BiggoronSwordAsChild);
+      case MIRROR_SHIELD:     return IsAdult || MirrorShieldAsChild;
+      case MASTER_SWORD:      return IsAdult || MasterSwordAsChild;
+      case BIGGORON_SWORD:    return IsAdult || BiggoronSwordAsChild;
 
       // Child items
-      case SLINGSHOT:         return IsChild || (IsGlitched && SlingshotAsAdult);
-      case BOOMERANG:         return IsChild || (IsGlitched && BoomerangAsAdult);
-      case KOKIRI_SWORD:      return IsChild || (IsGlitched && KokiriSwordAsAdult);
-      case STICKS:            return IsChild || (IsGlitched && StickAsAdult);
-      case DEKU_SHIELD:       return IsChild || (IsGlitched && DekuShieldAsAdult);
+      case SLINGSHOT:         return IsChild || SlingshotAsAdult;
+      case BOOMERANG:         return IsChild || BoomerangAsAdult;
+      case KOKIRI_SWORD:      return IsChild || KokiriSwordAsAdult;
+      case STICKS:            return IsChild || StickAsAdult;
+      case DEKU_SHIELD:       return IsChild || DekuShieldAsAdult;
 
       // Magic items
       default: return MagicMeter && (IsMagicItem(itemName) || (IsMagicArrow(itemName) && CanUse(BOW)));
