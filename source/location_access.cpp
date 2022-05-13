@@ -3361,106 +3361,241 @@ void AreaTable_Init() {
 
   if (Dungeon::WaterTemple.IsVanilla()) {
   //Water Temple logic currently assumes that the locked door leading to the upper water raising location is unlocked from the start
-  areaTable[WATER_TEMPLE_LOBBY] = Area("Water Temple Lobby", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+  areaTable[WATER_TEMPLE_LOBBY] = Area("Water Temple Lobby", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_ENTRYWAY,              {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_EAST_LOWER,            {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && (CanUse(IRON_BOOTS) || (CanUse(LONGSHOT) && LogicWaterTempleTorchLongshot)));}}),
+                  Entrance(WATER_TEMPLE_NORTH_LOWER,           {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && CanUse(IRON_BOOTS));}}),
+                  Entrance(WATER_TEMPLE_SOUTH_LOWER,           {[]{return WaterTempleLow && HasExplosives && (CanDive || CanUse(IRON_BOOTS)) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));}}),
+                  Entrance(WATER_TEMPLE_WEST_LOWER,            {[]{return WaterTempleLow && GoronBracelet && (IsChild || CanDive || CanUse(IRON_BOOTS)) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));}}),
+                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_LOWER,  {[]{return WaterTempleLow && SmallKeys(WATER_TEMPLE, 5);}}),
+                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_UPPER,  {[]{return (WaterTempleLow || WaterTempleMiddle) && (HasFireSourceWithTorch || CanUse(BOW));}}),
+                  Entrance(WATER_TEMPLE_EAST_MIDDLE,           {[]{return (WaterTempleLow || WaterTempleMiddle || (CanUse(IRON_BOOTS) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)))) && CanUse(HOOKSHOT);}}),
+                  Entrance(WATER_TEMPLE_WEST_MIDDLE,           {[]{return WaterTempleMiddle;}}),
+                  Entrance(WATER_TEMPLE_HIGH_WATER,            {[]{return IsAdult && (CanUse(HOVER_BOOTS) || (LogicWaterTempleUpperBoost && Bombs && CanTakeDamage));}}),
+                  Entrance(WATER_TEMPLE_BLOCK_CORRIDOR,        {[]{return (WaterTempleLow || WaterTempleMiddle) && (CanUse(SLINGSHOT) || CanUse(BOW)) && (CanUse(LONGSHOT) || CanUse(HOVER_BOOTS) || (LogicWaterCentralBow && (IsAdult || WaterTempleMiddle)));}}),
+                  Entrance(WATER_TEMPLE_FALLING_PLATFORM_ROOM, {[]{return WaterTempleHigh && SmallKeys(WATER_TEMPLE, 4);}}),
+                  Entrance(WATER_TEMPLE_PRE_BOSS_ROOM,         {[]{return WaterTempleHigh && CanUse(LONGSHOT);}}),
+  });
+
+  areaTable[WATER_TEMPLE_EAST_LOWER] = Area("Water Temple East Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&ChildWaterTemple, {[]{return IsChild;}}),
-                  EventAccess(&RaiseWaterLevel,  {[]{return (IsAdult && ((Hookshot && (LogicWaterTempleUpperBoost && Bombs && CanTakeDamage)) || HoverBoots || Bow)) || (HasFireSourceWithTorch && CanUseProjectile);}}),
+                  EventAccess(&WaterTempleLow, {[]{return WaterTempleLow || CanPlay(ZeldasLullaby);}})
                 }, {}, {
                   //Exits
-                  Entrance(WATER_TEMPLE_ENTRYWAY,            {[]{return true;}}),
-                  Entrance(WATER_TEMPLE_HIGHEST_WATER_LEVEL, {[]{return RaiseWaterLevel;}}),
-                  Entrance(WATER_TEMPLE_DIVE,                {[]{return IsAdult && (CanUse(ZORA_TUNIC) || LogicFewerTunicRequirements) && ((LogicWaterTempleTorchLongshot && CanUse(LONGSHOT)) || CanUse(IRON_BOOTS));}}),
+                  Entrance(WATER_TEMPLE_LOBBY,        {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && CanUse(IRON_BOOTS));}}),
+                  Entrance(WATER_TEMPLE_MAP_ROOM,     {[]{return WaterTempleHigh;}}),
+                  Entrance(WATER_TEMPLE_CRACKED_WALL, {[]{return WaterTempleMiddle || (WaterTempleHigh && WaterTempleLow && ((CanUse(HOVER_BOOTS) && LogicWaterCrackedWallHovers) || LogicWaterCrackedWallNothing));}}),
+                  Entrance(WATER_TEMPLE_TORCH_ROOM,   {[]{return WaterTempleLow && (HasFireSourceWithTorch || CanUse(BOW));}}),
   });
 
-  areaTable[WATER_TEMPLE_HIGHEST_WATER_LEVEL] = Area("Water Temple Highest Water Level", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
-                  //Events
-                  EventAccess(&FairyPot,         {[]{return FairyPot         || (IsAdult && CanUse(LONGSHOT));}}),
-                  EventAccess(&WaterTempleClear, {[]{return WaterTempleClear || (BossKeyWaterTemple && IsAdult && CanUse(LONGSHOT));}}),
-                }, {
+  areaTable[WATER_TEMPLE_MAP_ROOM] = Area("Water Temple Map Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(MORPHA,                    {[]{return BossKeyWaterTemple && IsAdult && CanUse(LONGSHOT);}}),
-                  LocationAccess(WATER_TEMPLE_MORPHA_HEART, {[]{return BossKeyWaterTemple && IsAdult && CanUse(LONGSHOT);}}),
+                  LocationAccess(WATER_TEMPLE_MAP_CHEST, {[]{return (MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT);}}),
                 }, {
                   //Exits
-                  Entrance(WATER_TEMPLE_FALLING_PLATFORM_ROOM, {[]{return SmallKeys(WATER_TEMPLE, 4);}}),
-
+                  Entrance(WATER_TEMPLE_EAST_LOWER, {[]{return (MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT);}}),
   });
-
-  areaTable[WATER_TEMPLE_DIVE] = Area("Water Temple Dive", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
-                  //Locations
-                  LocationAccess(WATER_TEMPLE_MAP_CHEST,                {[]{return RaiseWaterLevel;}}),
-                  LocationAccess(WATER_TEMPLE_COMPASS_CHEST,            {[]{return (CanPlay(ZeldasLullaby) || IronBoots) && IsAdult && CanUse(HOOKSHOT);}}),
-                  LocationAccess(WATER_TEMPLE_TORCHES_CHEST,            {[]{return (Bow || CanUse(DINS_FIRE) || (ChildWaterTemple && Sticks && KokiriSword && MagicMeter)) && CanPlay(ZeldasLullaby);}}),
-                  LocationAccess(WATER_TEMPLE_CENTRAL_BOW_TARGET_CHEST, {[]{return GoronBracelet && CanPlay(ZeldasLullaby) &&
-                                                                                    ((Bow && (LogicWaterCentralBow || HoverBoots || CanUse(LONGSHOT))) ||
-                                                                                      (LogicWaterCentralBow && ChildWaterTemple && Slingshot && HasAccessTo(WATER_TEMPLE_MIDDLE_WATER_LEVEL)));}}),
-                  LocationAccess(WATER_TEMPLE_GS_BEHIND_GATE,           {[]{return (CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS)) &&
-                                                                                    (HasExplosives && CanPlay(ZeldasLullaby)) &&
-                                                                                    (CanUse(IRON_BOOTS) || CanDive);}}),
-                  LocationAccess(WATER_TEMPLE_GS_CENTRAL_PILLAR,        {[]{return CanPlay(ZeldasLullaby) &&
-                                                                                      (((CanUse(LONGSHOT) || (LogicWaterCentralGSFW && CanUse(HOOKSHOT) && CanUse(FARORES_WIND))) &&
-                                                                                        (SmallKeys(WATER_TEMPLE, 5) || CanUse(BOW) || CanUse(DINS_FIRE))) ||
-                                                                                      (LogicWaterCentralGSFW && ChildWaterTemple && Boomerang && CanUse(FARORES_WIND) &&
-                                                                                        (Sticks || CanUse(DINS_FIRE) ||
-                                                                                        (SmallKeys(WATER_TEMPLE, 5) && (CanUse(HOVER_BOOTS) || CanUse(BOW))))));}}),
-                }, {
-                  //Exits
-                  Entrance(WATER_TEMPLE_CRACKED_WALL,       {[]{return CanPlay(ZeldasLullaby) && (CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS)) && (LogicWaterCrackedWallNothing || (LogicWaterCrackedWallHovers && CanUse(HOVER_BOOTS)));}}),
-                  Entrance(WATER_TEMPLE_MIDDLE_WATER_LEVEL, {[]{return (Bow || CanUse(DINS_FIRE) || (SmallKeys(WATER_TEMPLE, 5) && CanUse(HOOKSHOT)) || (ChildWaterTemple && Sticks)) && CanPlay(ZeldasLullaby);}}),
-                  Entrance(WATER_TEMPLE_NORTH_BASEMENT,     {[]{return SmallKeys(WATER_TEMPLE, 5) && (CanUse(LONGSHOT) || (LogicWaterBossKeyRegion && CanUse(HOVER_BOOTS))) && (CanUse(IRON_BOOTS) || CanPlay(ZeldasLullaby));}}),
-                  Entrance(WATER_TEMPLE_DRAGON_STATUE,      {[]{return CanPlay(ZeldasLullaby) && GoronBracelet &&
-                                                                                ((IronBoots && CanUse(HOOKSHOT)) ||
-                                                                                (LogicWaterDragonAdult && (HasBombchus || CanUse(BOW) || CanUse(HOOKSHOT)) && (CanDive || IronBoots)));}}),
-  });
-
-  areaTable[WATER_TEMPLE_NORTH_BASEMENT] = Area("Water Temple North Basement", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
-                  //Events
-                  EventAccess(&FairyPot, {[]{return FairyPot || (SmallKeys(WATER_TEMPLE, 5) && (LogicWaterBKJumpDive || CanUse(IRON_BOOTS)) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots));}}),
-                }, {
-                  //Locations
-                  LocationAccess(WATER_TEMPLE_BOSS_KEY_CHEST,         {[]{return SmallKeys(WATER_TEMPLE, 5) && (LogicWaterBKJumpDive || CanUse(IRON_BOOTS)) && (LogicWaterNorthBasementLedgeJump || (HasExplosives && GoronBracelet) || HoverBoots);}}),
-                  LocationAccess(WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST, {[]{return true;}}),
-  }, {});
 
   areaTable[WATER_TEMPLE_CRACKED_WALL] = Area("Water Temple Cracked Wall", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(WATER_TEMPLE_CRACKED_WALL_CHEST, {[]{return HasExplosives;}}),
-  }, {});
-
-  areaTable[WATER_TEMPLE_DRAGON_STATUE] = Area("Water Temple Dragon Statue", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
-                  //Locations
-                  LocationAccess(WATER_TEMPLE_DRAGON_CHEST, {[]{return true;}}),
-  }, {});
-
-  areaTable[WATER_TEMPLE_MIDDLE_WATER_LEVEL] = Area("Water Temple Middle Water Level", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
-                  //Locations
-                  LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST, {[]{return CanUse(ZORA_TUNIC) && CanUse(HOOKSHOT) && CanUse(IRON_BOOTS) && ((SmallKeys(WATER_TEMPLE, 5) || CanUse(BOW) || CanUse(DINS_FIRE)));}}),
                 }, {
                   //Exits
-                  Entrance(WATER_TEMPLE_CRACKED_WALL, {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_EAST_LOWER, {[]{return true;}}),
+  });
+
+  areaTable[WATER_TEMPLE_TORCH_ROOM] = Area("Water Temple Torch Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_TORCHES_CHEST, {[]{return (MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT);}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_EAST_LOWER, {[]{return (MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT);}}),
+  });
+
+  areaTable[WATER_TEMPLE_NORTH_LOWER] = Area("Water Temple North Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY, {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_BOULDERS_LOWER, {[]{return (CanUse(LONGSHOT) || (LogicWaterBossKeyRegion && CanUse(HOVER_BOOTS))) && SmallKeys(WATER_TEMPLE, 4);}}),
+  });
+
+  areaTable[WATER_TEMPLE_BOULDERS_LOWER] = Area("Water Temple Boulders Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST, {[]{return CanUse(LONGSHOT) || Here(WATER_TEMPLE_BOULDERS_UPPER, []{return HookshotOrBoomerang;});}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_NORTH_LOWER, {[]{return SmallKeys(WATER_TEMPLE, 4);}}),
+                  Entrance(WATER_TEMPLE_BLOCK_ROOM,  {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_BOULDERS_UPPER, {[]{return IsAdult && (CanUse(HOVER_BOOTS) || LogicWaterNorthBasementLedgeJump);}}),
+  });
+
+  areaTable[WATER_TEMPLE_BLOCK_ROOM] = Area("Water Temple Block Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_BOULDERS_LOWER, {[]{return (GoronBracelet && HasExplosives) || CanUse(HOOKSHOT);}}),
+                  Entrance(WATER_TEMPLE_JETS_ROOM,      {[]{return GoronBracelet && HasExplosives;}}),
+  });
+
+  areaTable[WATER_TEMPLE_JETS_ROOM] = Area("Water Temple Jets Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_BLOCK_ROOM,     {[]{return CanUse(HOOKSHOT);}}),
+                  Entrance(WATER_TEMPLE_BOULDERS_UPPER, {[]{return true;}}),
+  });
+
+  areaTable[WATER_TEMPLE_BOULDERS_UPPER] = Area("Water Temple Boulders Upper", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_BOULDERS_LOWER, {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_JETS_ROOM,      {[]{return IsAdult;}}),
+                  Entrance(WATER_TEMPLE_BOSS_KEY_ROOM,  {[]{return (CanUse(IRON_BOOTS) || (IsAdult && LogicWaterBKJumpDive)) && SmallKeys(WATER_TEMPLE, 5);}}),
+  });
+
+  areaTable[WATER_TEMPLE_BOSS_KEY_ROOM] = Area("Water Temple Boss Key Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventAccess(&FairyPot, {[]{return true;}}),
+                }, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_BOSS_KEY_CHEST, {[]{return true;}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_BOULDERS_UPPER, {[]{return (CanUse(IRON_BOOTS) || (IsAdult && LogicWaterBKJumpDive)) && SmallKeys(WATER_TEMPLE, 5);}}),
+  });
+
+  areaTable[WATER_TEMPLE_SOUTH_LOWER] = Area("Water Temple South Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_GS_BEHIND_GATE, {[]{return CanUse(HOOKSHOT) || (IsAdult && CanUse(HOVER_BOOTS));}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY, {[]{return CanUse(IRON_BOOTS);}}),
+  });
+
+  areaTable[WATER_TEMPLE_WEST_LOWER] = Area("Water Temple West Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY,       {[]{return CanUse(HOOKSHOT) && CanUse(IRON_BOOTS) && GoronBracelet;}}),
+                  Entrance(WATER_TEMPLE_DRAGON_ROOM, {[]{return IsAdult || CanChildAttack;}}),
+  });
+
+  areaTable[WATER_TEMPLE_DRAGON_ROOM] = Area("Water Temple Dragon Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_DRAGON_CHEST, {[]{return (CanUse(HOOKSHOT) && CanUse(IRON_BOOTS)) || (IsAdult && LogicWaterDragonAdult && (HasBombchus || CanUse(BOW) || CanUse(HOOKSHOT)) && (CanDive || CanUse(IRON_BOOTS)));}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_WEST_LOWER, {[]{return true;}}),
+  });
+
+  areaTable[WATER_TEMPLE_CENTRAL_PILLAR_LOWER] = Area("Water Temple Central Pillar Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY,                   {[]{return SmallKeys(WATER_TEMPLE, 5);}}),
+                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_UPPER,    {[]{return CanUse(HOOKSHOT);}}),
+                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT, {[]{return WaterTempleMiddle && CanUse(IRON_BOOTS) && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 4));}}),
+  });
+
+  areaTable[WATER_TEMPLE_CENTRAL_PILLAR_UPPER] = Area("Water Temple Central Pillar Upper", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventAccess(&WaterTempleMiddle, {[]{return WaterTempleMiddle || CanPlay(ZeldasLullaby);}}),
+                }, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_GS_CENTRAL_PILLAR, {[]{return CanUse(LONGSHOT) || (LogicWaterCentralGSFW && WaterTempleHigh && CanUse(FARORES_WIND) && HookshotOrBoomerang);}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY,                {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_LOWER, {[]{return true;}}),
+  });
+
+  areaTable[WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT] = Area("Water Temple Central Pillar Basement", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST, {[]{return CanUse(HOOKSHOT) && CanUse(IRON_BOOTS) && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 4));}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_LOWER, {[]{return CanUse(IRON_BOOTS) && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 1));}}),
+  });
+
+  areaTable[WATER_TEMPLE_EAST_MIDDLE] = Area("Water Temple East Middle", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_COMPASS_CHEST, {[]{return CanUseProjectile;}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY, {[]{return CanUse(IRON_BOOTS);}}),
+  });
+
+  areaTable[WATER_TEMPLE_WEST_MIDDLE] = Area("Water Temple West Middle", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY,      {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_HIGH_WATER, {[]{return CanUseProjectile;}}),
+  });
+
+  areaTable[WATER_TEMPLE_HIGH_WATER] = Area("Water Temple High Water", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventAccess(&WaterTempleHigh, {[]{return WaterTempleHigh || CanPlay(ZeldasLullaby);}}),
+                }, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY, {[]{return true;}}),
+  });
+
+  areaTable[WATER_TEMPLE_BLOCK_CORRIDOR] = Area("Water Temple Block Corridor", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_CENTRAL_BOW_TARGET_CHEST, {[]{return GoronBracelet && (WaterTempleLow || WaterTempleMiddle);}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY, {[]{return CanUse(HOOKSHOT);}}),
   });
 
   areaTable[WATER_TEMPLE_FALLING_PLATFORM_ROOM] = Area("Water Temple Falling Platform Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_GS_FALLING_PLATFORM_ROOM, {[]{return CanUse(LONGSHOT) || (LogicWaterFallingPlatformGS && CanUse(HOOKSHOT));}}),
+                  LocationAccess(WATER_TEMPLE_GS_FALLING_PLATFORM_ROOM, {[]{return CanUse(LONGSHOT) || (LogicWaterFallingPlatformGS && IsAdult && HookshotOrBoomerang);}}),
                 }, {
                   //Exits
-                  Entrance(WATER_TEMPLE_DARK_LINK_REGION, {[]{return SmallKeys(WATER_TEMPLE, 5) && CanUse(HOOKSHOT);}}),
+                  Entrance(WATER_TEMPLE_LOBBY,               {[]{return CanUse(HOOKSHOT) && SmallKeys(WATER_TEMPLE, 4);}}),
+                  Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM, {[]{return CanUse(HOOKSHOT) && SmallKeys(WATER_TEMPLE, 5);}}),
   });
 
-  areaTable[WATER_TEMPLE_DARK_LINK_REGION] = Area("Water Temple Dark Link Region", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
-                  //Events
-                  EventAccess(&FairyPot, {[]{return FairyPot || (SmallKeys(WATER_TEMPLE, 5) && CanPlay(SongOfTime));}}),
-                }, {
+  areaTable[WATER_TEMPLE_DRAGON_PILLARS_ROOM] = Area("Water Temple Dragon Pillars Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_FALLING_PLATFORM_ROOM, {[]{return CanUseProjectile;}}),
+                  Entrance(WATER_TEMPLE_DARK_LINK_ROOM,        {[]{return CanUse(HOOKSHOT);}}),
+  });
+
+  areaTable[WATER_TEMPLE_DARK_LINK_ROOM] = Area("Water Temple Dark Link Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM, {[]{return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);}}),
+                  Entrance(WATER_TEMPLE_LONGSHOT_ROOM,       {[]{return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);}}),
+  });
+
+  areaTable[WATER_TEMPLE_LONGSHOT_ROOM] = Area("Water Temple Longshot Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_LONGSHOT_CHEST, {[]{return SmallKeys(WATER_TEMPLE, 5);}}),
-                  LocationAccess(WATER_TEMPLE_RIVER_CHEST,    {[]{return SmallKeys(WATER_TEMPLE, 5) && CanPlay(SongOfTime) && Bow;}}),
-                  LocationAccess(WATER_TEMPLE_GS_RIVER,       {[]{return CanPlay(SongOfTime) && SmallKeys(WATER_TEMPLE, 5) && (IronBoots || (LogicWaterRiverGS && CanUse(LONGSHOT) && (Bow || HasBombchus)));}}),
+                  LocationAccess(WATER_TEMPLE_LONGSHOT_CHEST, {[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(WATER_TEMPLE_DRAGON_STATUE, {[]{return (CanUse(ZORA_TUNIC) || LogicFewerTunicRequirements) &&
-                                                                         CanPlay(SongOfTime) && Bow &&
-                                                                         (IronBoots || LogicWaterDragonJumpDive || LogicWaterDragonAdult);}}),
+                  Entrance(WATER_TEMPLE_DARK_LINK_ROOM, {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_RIVER,          {[]{return IsChild || CanPlay(SongOfTime);}}),
+  });
+
+  areaTable[WATER_TEMPLE_RIVER] = Area("Water Temple River", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_RIVER_CHEST, {[]{return (CanUse(SLINGSHOT) || CanUse(BOW)) && (IsAdult || CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT));}}),
+                  LocationAccess(WATER_TEMPLE_GS_RIVER,    {[]{return (CanUse(IRON_BOOTS) && CanUse(HOOKSHOT)) || (LogicWaterRiverGS && CanUse(LONGSHOT));}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_DRAGON_ROOM, {[]{return (CanUse(SLINGSHOT) || CanUse(BOW)) && (IsAdult || CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT));}}),
+  });
+
+  areaTable[WATER_TEMPLE_PRE_BOSS_ROOM] = Area("Water Temple Pre Boss Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventAccess(&FairyPot, {[]{return true;}}),
+                }, {}, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_LOBBY,     {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_BOSS_ROOM, {[]{return BossKeyWaterTemple;}}),
+  });
+
+  areaTable[WATER_TEMPLE_BOSS_ROOM] = Area("Water Temple Boss Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
+                  //Events
+                  EventAccess(&WaterTempleClear, {[]{return WaterTempleClear || (CanUse(HOOKSHOT) && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)));}}),
+                }, {
+                  //Locations
+                  LocationAccess(WATER_TEMPLE_MORPHA_HEART, {[]{return WaterTempleClear;}}),
+                  LocationAccess(MORPHA,                    {[]{return WaterTempleClear;}}),
+                }, {
+                  //Exits
+                  Entrance(WATER_TEMPLE_ENTRYWAY, {[]{return WaterTempleClear;}}),
   });
   }
 
@@ -4825,7 +4960,7 @@ void AreaTable_Init() {
 
 namespace Areas {
 
-  static std::array<const AreaKey, 395> allAreas = {
+  static std::array<const AreaKey, 414> allAreas = {
     ROOT,
     ROOT_EXITS,
 
@@ -5122,14 +5257,34 @@ namespace Areas {
     FIRE_TEMPLE_ABOVE_FIRE_MAZE,
 
     WATER_TEMPLE_LOBBY,
-    WATER_TEMPLE_HIGHEST_WATER_LEVEL,
-    WATER_TEMPLE_DIVE,
+    WATER_TEMPLE_EAST_LOWER,
+    WATER_TEMPLE_MAP_ROOM,
     WATER_TEMPLE_CRACKED_WALL,
-    WATER_TEMPLE_NORTH_BASEMENT,
-    WATER_TEMPLE_DRAGON_STATUE,
-    WATER_TEMPLE_MIDDLE_WATER_LEVEL,
+    WATER_TEMPLE_TORCH_ROOM,
+    WATER_TEMPLE_NORTH_LOWER,
+    WATER_TEMPLE_BOULDERS_LOWER,
+    WATER_TEMPLE_BLOCK_ROOM,
+    WATER_TEMPLE_JETS_ROOM,
+    WATER_TEMPLE_BOULDERS_UPPER,
+    WATER_TEMPLE_BOSS_KEY_ROOM,
+    WATER_TEMPLE_SOUTH_LOWER,
+    WATER_TEMPLE_WEST_LOWER,
+    WATER_TEMPLE_DRAGON_ROOM,
+    WATER_TEMPLE_CENTRAL_PILLAR_LOWER,
+    WATER_TEMPLE_CENTRAL_PILLAR_UPPER,
+    WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT,
+    WATER_TEMPLE_EAST_MIDDLE,
+    WATER_TEMPLE_WEST_MIDDLE,
+    WATER_TEMPLE_HIGH_WATER,
+    WATER_TEMPLE_BLOCK_CORRIDOR,
     WATER_TEMPLE_FALLING_PLATFORM_ROOM,
-    WATER_TEMPLE_DARK_LINK_REGION,
+    WATER_TEMPLE_DRAGON_PILLARS_ROOM,
+    WATER_TEMPLE_DARK_LINK_ROOM,
+    WATER_TEMPLE_LONGSHOT_ROOM,
+    WATER_TEMPLE_RIVER,
+    WATER_TEMPLE_PRE_BOSS_ROOM,
+    WATER_TEMPLE_BOSS_ROOM,
+
     SPIRIT_TEMPLE_LOBBY,
     SPIRIT_TEMPLE_CHILD,
     SPIRIT_TEMPLE_CHILD_CLIMB,

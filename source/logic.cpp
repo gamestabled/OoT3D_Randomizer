@@ -314,8 +314,9 @@ namespace Logic {
   bool GCWoodsWarpOpen           = false;
   bool GCDaruniasDoorOpenChild   = false;
   bool StopGCRollingGoronAsAdult = false;
-  bool ChildWaterTemple          = false;
-  bool RaiseWaterLevel           = false;
+  bool WaterTempleLow            = false;
+  bool WaterTempleMiddle         = false;
+  bool WaterTempleHigh           = false;
   bool KakarikoVillageGateOpen   = false;
   bool KingZoraThawed            = false;
   bool ForestTempleJoelle        = false;
@@ -410,34 +411,37 @@ namespace Logic {
 
   //Can the passed in item be used?
   bool CanUse(ItemKey itemName) {
+    if (!HasItem(itemName))
+      return false;
+
     switch (itemName) {
       // Adult items
-      case BOW:               return HasItem(itemName) && (IsAdult || (IsGlitched && BowAsChild));
-      case MEGATON_HAMMER:    return HasItem(itemName) && (IsAdult || (IsGlitched && HammerAsChild));
-      case IRON_BOOTS:        return HasItem(itemName) && (IsAdult || (IsGlitched && IronBootsAsChild));
-      case HOVER_BOOTS:       return HasItem(itemName) && (IsAdult || (IsGlitched && HoverBootsAsChild));
-      case HOOKSHOT:          return HasItem(itemName) && (IsAdult || (IsGlitched && HookshotAsChild));
-      case LONGSHOT:          return HasItem(itemName) && (IsAdult || (IsGlitched && HookshotAsChild));
-      case SILVER_GAUNTLETS:  return HasItem(itemName) && (IsAdult);
-      case GOLDEN_GAUNTLETS:  return HasItem(itemName) && (IsAdult);
-      case GORON_TUNIC:       return HasItem(itemName) && (IsAdult || (IsGlitched && GoronTunicAsChild));
-      case ZORA_TUNIC:        return HasItem(itemName) && (IsAdult || (IsGlitched && ZoraTunicAsChild));
-      case SCARECROW:         return HasItem(itemName) && (IsAdult);
-      case DISTANT_SCARECROW: return HasItem(itemName) && (IsAdult);
-      case HYLIAN_SHIELD:     return HasItem(itemName) && (IsAdult);
-      case MIRROR_SHIELD:     return HasItem(itemName) && (IsAdult || (IsGlitched && MirrorShieldAsChild));
-      case MASTER_SWORD:      return HasItem(itemName) && (IsAdult || (IsGlitched && MasterSwordAsChild));
-      case BIGGORON_SWORD:    return HasItem(itemName) && (IsAdult || (IsGlitched && BiggoronSwordAsChild));
+      case BOW:               return IsAdult || (IsGlitched && BowAsChild);
+      case MEGATON_HAMMER:    return IsAdult || (IsGlitched && HammerAsChild);
+      case IRON_BOOTS:        return IsAdult || (IsGlitched && IronBootsAsChild);
+      case HOVER_BOOTS:       return IsAdult || (IsGlitched && HoverBootsAsChild);
+      case HOOKSHOT:          return IsAdult || (IsGlitched && HookshotAsChild);
+      case LONGSHOT:          return IsAdult || (IsGlitched && HookshotAsChild);
+      case SILVER_GAUNTLETS:  return IsAdult;
+      case GOLDEN_GAUNTLETS:  return IsAdult;
+      case GORON_TUNIC:       return IsAdult || (IsGlitched && GoronTunicAsChild);
+      case ZORA_TUNIC:        return IsAdult || (IsGlitched && ZoraTunicAsChild);
+      case SCARECROW:         return IsAdult;
+      case DISTANT_SCARECROW: return IsAdult;
+      case HYLIAN_SHIELD:     return IsAdult;
+      case MIRROR_SHIELD:     return IsAdult || (IsGlitched && MirrorShieldAsChild);
+      case MASTER_SWORD:      return IsAdult || (IsGlitched && MasterSwordAsChild);
+      case BIGGORON_SWORD:    return IsAdult || (IsGlitched && BiggoronSwordAsChild);
 
       // Child items
-      case SLINGSHOT:         return HasItem(itemName) && (IsChild || (IsGlitched && SlingshotAsAdult));
-      case BOOMERANG:         return HasItem(itemName) && (IsChild || (IsGlitched && BoomerangAsAdult));
-      case KOKIRI_SWORD:      return HasItem(itemName) && (IsChild || (IsGlitched && KokiriSwordAsAdult));
-      case STICKS:            return HasItem(itemName) && (IsChild || (IsGlitched && StickAsAdult));
-      case DEKU_SHIELD:       return HasItem(itemName) && (IsChild || (IsGlitched && DekuShieldAsAdult));
+      case SLINGSHOT:         return IsChild || (IsGlitched && SlingshotAsAdult);
+      case BOOMERANG:         return IsChild || (IsGlitched && BoomerangAsAdult);
+      case KOKIRI_SWORD:      return IsChild || (IsGlitched && KokiriSwordAsAdult);
+      case STICKS:            return IsChild || (IsGlitched && StickAsAdult);
+      case DEKU_SHIELD:       return IsChild || (IsGlitched && DekuShieldAsAdult);
 
       // Magic items
-      default: return (IsMagicItem(itemName) && HasItem(itemName) && MagicMeter) || (IsMagicArrow(itemName) && HasItem(itemName) && MagicMeter && CanUse(BOW));
+      default: return MagicMeter && (IsMagicItem(itemName) || (IsMagicArrow(itemName) && CanUse(BOW)));
     }
   }
 
@@ -1177,7 +1181,9 @@ namespace Logic {
      GCWoodsWarpOpen           = false;
      GCDaruniasDoorOpenChild   = false;
      StopGCRollingGoronAsAdult = false;
-     ChildWaterTemple          = false;
+     WaterTempleLow            = false;
+     WaterTempleMiddle         = false;
+     WaterTempleHigh           = false;
      KakarikoVillageGateOpen   = false;
      KingZoraThawed            = false;
      ForestTempleJoelle        = false;
