@@ -12,10 +12,6 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
-typedef void (*SetEventChkInf_proc)(u32 flag);
-#define SetEventChkInf_addr 0x34CBF8
-#define SetEventChkInf ((SetEventChkInf_proc)SetEventChkInf_addr)
-
 #define dynamicExitList_addr 0x53C094
 #define dynamicExitList ((s16*)dynamicExitList_addr) // = { 0x045B, 0x0482, 0x0340, 0x044B, 0x02A2, 0x0201, 0x03B8, 0x04EE, 0x03C0, 0x0463, 0x01CD, 0x0394, 0x0340, 0x057C }
 
@@ -70,7 +66,7 @@ void Scene_Init(void) {
     gRestrictionFlags[94].flags3 = 0; // Allows farore's wind in Ganon's Castle
 }
 
-static void Entrance_SeparateOGCFairyFountainExit() {
+static void Entrance_SeparateOGCFairyFountainExit(void) {
     //Overwrite unused entrance 0x03E8 with values from 0x0340 to use it as the
     //exit from OGC Great Fairy Fountain -> Castle Grounds
     for (size_t i = 0; i < 4; ++i) {
@@ -191,6 +187,11 @@ s16 Entrance_GetOverride(s16 index) {
 }
 
 s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
+    // When entering Spirit Temple, clear temp flags so they don't carry over to the randomized dungeon
+    if (nextEntranceIndex == 0x0082 && Entrance_GetOverride(nextEntranceIndex) != nextEntranceIndex) {
+        gGlobalContext->actorCtx.flags.tempSwch = 0;
+        gGlobalContext->actorCtx.flags.tempCollect = 0;
+    }
     SaveFile_SetEntranceDiscovered(nextEntranceIndex);
     return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
 }
@@ -311,7 +312,7 @@ void Entrance_SetSavewarpEntrance(void) {
     }
 }
 
-void EnableFW() {
+void EnableFW(void) {
     // Leave restriction in Tower Collapse Interior, Castle Collapse, Treasure Box Shop, Tower Collapse Exterior,
     // Grottos area, Fishing Pond, Ganon Battle and for states that disable buttons.
     if (!gSettingsContext.faroresWindAnywhere ||
@@ -340,11 +341,11 @@ u8 EntranceCutscene_ShouldPlay(u8 flag) {
         }
         return 1; // cutscene will play normally in DHWW, or always if it's freeing Epona or clearing a Trial
     }
-    SetEventChkInf(flag);
+    EventSet(flag);
     return 0; //cutscene will not play
 }
 
-void Entrance_CheckEpona() {
+void Entrance_CheckEpona(void) {
     s32 entrance = gGlobalContext->nextEntranceIndex;
     //If Link is riding Epona but he's about to go through an entrance where she can't spawn,
     //unset the Epona flag to avoid Master glitch, and restore temp B.

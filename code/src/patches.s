@@ -514,163 +514,29 @@ Kokiri_CheckOpenForest_patch:
 BombchuBowlingStaticReward_patch:
     b 0x20618C
 
-.section .patch_DekuTreeItemGive
-.global DekuTreeItemGive_patch
-DekuTreeItemGive_patch:
-    nop
+.section .patch_ChildBlueWarpOverride
+.global ChildBlueWarpOverride_patch
+ChildBlueWarpOverride_patch:
+    push {r0-r12, lr}
+    bl Cutscene_BlueWarpOverride
+    pop {r0-r12, lr}
+    b 0x3F58A8
 
-.section .patch_DekuTreeCutsceneOverride
-.global DekuTreeCutsceneOverride_patch
-DekuTreeCutsceneOverride_patch:
-    bl Cutscene_OverrideDekuTree
-    nop
+.section .patch_RutoBlueWarpOverride
+.global RutoBlueWarpOverride_patch
+RutoBlueWarpOverride_patch:
+    push {r0-r12, lr}
+    bl Cutscene_BlueWarpOverride
+    pop {r0-r12, lr}
+    b 0x1A1944
 
-.section .patch_DodongosCavernItemGive
-.global DodongosCavernItemGive_patch
-DodongosCavernItemGive_patch:
-    nop
-
-.section .patch_DodongosCavernCutsceneOverride
-.global DodongosCavernCutsceneOverride_patch
-DodongosCavernCutsceneOverride_patch:
-    bl Custcene_OverrideDodongosCavern
-    nop
-
-.section .patch_JabuJabuItemGive
-.global JabuJabuItemGive_patch
-JabuJabuItemGive_patch:
-    nop
-
-.section .patch_JabuJabuCutsceneOverride
-.global JabuJabuCutsceneOverride_patch
-JabuJabuCutsceneOverride_patch:
-    bl Custcene_OverrideJabuJabusBelly
-    nop
-    nop
-
-.section .patch_ForestTempleItemGive
-.global ForestTempleItemGive_patch
-ForestTempleItemGive_patch:
-    nop
-
-.section .patch_ForestTempleItemGiveTwo
-.global ForestTempleItemGiveTwo_patch
-ForestTempleItemGiveTwo_patch:
-    nop
-
-.section .patch_ForestTempleItemGiveThree
-.global ForestTempleItemGiveThree_patch
-ForestTempleItemGiveThree_patch:
-    nop
-
-.section .patch_ForestTempleCutsceneOverride
-.global ForestTempleCutsceneOverride_patch
-ForestTempleCutsceneOverride_patch:
-    bl Custcene_OverrideForestTemple
-    nop
-    nop
-
-.section .patch_FireTempleItemGive
-.global FireTempleItemGive_patch
-FireTempleItemGive_patch:
-    nop
-
-.section .patch_FireTempleItemGiveTwo
-.global FireTempleItemGiveTwo_patch
-FireTempleItemGiveTwo_patch:
-    nop
-
-.section .patch_FireTempleItemGiveThree
-.global FireTempleItemGiveThree_patch
-FireTempleItemGiveThree_patch:
-    nop
-
-.section .patch_FireTempleItemGiveFour
-.global FireTempleItemGiveFour_patch
-FireTempleItemGiveFour_patch:
-    nop
-
-.section .patch_FireTempleCutsceneOverride
-.global FireTempleCutsceneOverride_patch
-FireTempleCutsceneOverride_patch:
-    bl Cutscene_OverrideFireTemple
-    nop
-    nop
-
-.section .patch_WaterTempleItemGive
-.global WaterTempleItemGive_patch
-WaterTempleItemGive_patch:
-    nop
-
-.section .patch_WaterTempleItemGiveTwo
-.global WaterTempleItemGiveTwo_patch
-WaterTempleItemGiveTwo_patch:
-    nop
-
-.section .patch_WaterTempleItemGiveThree
-.global WaterTempleItemGiveThree_patch
-WaterTempleItemGiveThree_patch:
-    nop
-
-.section .patch_WaterTempleCutsceneOverride
-.global WaterTempleCutsceneOverride_patch
-WaterTempleCutsceneOverride_patch:
-    bl Custcene_OverrideWaterTemple
-    nop
-    nop
-    nop
-
-.section .patch_SpiritTempleItemGive
-.global SpiritTempleItemGive_patch
-SpiritTempleItemGive_patch:
-    nop
-
-.section .patch_SpiritTempleItemGiveTwo
-.global SpiritTempleItemGiveTwo_patch
-SpiritTempleItemGiveTwo_patch:
-    nop
-
-.section .patch_SpiritTempleItemGiveThree
-.global SpiritTempleItemGiveThree_patch
-SpiritTempleItemGiveThree_patch:
-    nop
-
-.section .patch_SpiritTempleCompleteCheck
-.global SpiritTempleCompleteCheck_patch
-SpiritTempleCompleteCheck_patch:
-    nop
-
-.section .patch_SpiritTempleCutsceneOverride
-.global SpiritTempleCutsceneOverride_patch
-SpiritTempleCutsceneOverride_patch:
-    bl Custcene_OverrideSpiritTemple
-    nop
-
-.section .patch_ShadowTempleItemGive
-.global ShadowTempleItemGive_patch
-ShadowTempleItemGive_patch:
-    nop
-
-.section .patch_ShadowTempleItemGiveTwo
-.global ShadowTempleItemGiveTwo_patch
-ShadowTempleItemGiveTwo_patch:
-    nop
-
-.section .patch_ShadowTempleItemGiveThree
-.global ShadowTempleItemGiveThree_patch
-ShadowTempleItemGiveThree_patch:
-    nop
-
-.section .patch_ShadowTempleCompleteCheck
-.global ShadowTempleCompleteCheck_patch
-ShadowTempleCompleteCheck_patch:
-    nop
-
-.section .patch_ShadowTempleCutsceneOverride
-.global ShadowTempleCutsceneOverride_patch
-ShadowTempleCutsceneOverride_patch:
-    bl Custcene_OverrideShadowTemple
-    nop
+.section .patch_AdultBlueWarpOverride
+.global AdultBlueWarpOverride_patch
+AdultBlueWarpOverride_patch:
+    push {r0-r12, lr}
+    bl Cutscene_BlueWarpOverride
+    pop {r0-r12, lr}
+    b 0x1E4274
 
 .section .patch_EnExItemModelDraw
 .global EnExItemModelDraw_patch
@@ -1824,6 +1690,16 @@ SendDroppedBottleContents_patch:
 .global IgnoreMaskReaction_patch
 IgnoreMaskReaction_patch:
     b hook_IgnoreMaskReaction
+
+.section .patch_MasterQuestGoldSkulltulaCheck
+.global MasterQuestGoldSkulltulaCheck_patch
+MasterQuestGoldSkulltulaCheck_patch:
+    b hook_MasterQuestGoldSkulltulaCheck
+
+.section .patch_WaterSpoutMasterQuestCheck
+.global WaterSpoutMasterQuestCheck_patch
+WaterSpoutMasterQuestCheck_patch:
+    bl hook_WaterSpoutMasterQuestCheck
 
 .section .patch_loader
 .global loader_patch

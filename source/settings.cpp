@@ -25,6 +25,30 @@ namespace Settings {
   std::string version = RANDOMIZER_VERSION "-" COMMIT_NUMBER;
   std::array<u8, 5> hashIconIndexes;
 
+  std::vector<std::string> NumOpts(int min, int max, int step = 1, std::string textBefore = {}, std::string textAfter = {}) {
+    std::vector<std::string> options;
+    options.reserve((max - min) / step + 1);
+    for (int i = min; i <= max; i += step) {
+      options.push_back(textBefore + std::to_string(i) + textAfter);
+    }
+    return options;
+  }
+
+  std::vector<std::string> MultiVecOpts(std::vector<std::vector<std::string>> optionsVector) {
+    u32 totalSize = 0;
+    for (auto vector : optionsVector) {
+      totalSize += vector.size();
+    }
+    std::vector<std::string> options;
+    options.reserve(totalSize);
+    for (auto vector : optionsVector) {
+      for (auto op : vector) {
+        options.push_back(op);
+      }
+    }
+    return options;
+  }
+
   //                                        Setting name,              Options,                                                                     Setting Descriptions (assigned in setting_descriptions.cpp)                                                 Category (default: Setting),Default index (default: 0), Default hidden (default: false)
   //Open Settings                                                                                                                                   Any option index past the last description will use the last description
   Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {openRandomize},                                                                                            OptionCategory::Toggle);
@@ -34,13 +58,13 @@ namespace Settings {
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {gerudoNormal, gerudoFast, gerudoOpen});
   Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens},   OptionCategory::Setting,    RAINBOWBRIDGE_VANILLA);
-  Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {"0", "1", "2", "3"},                                                         {bridgeStoneCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
-  Option BridgeMedallionCount= Option::U8  ("  Medallion Count",      {"0", "1", "2", "3", "4", "5", "6"},                                          {bridgeMedallionCountDesc},                                                                                 OptionCategory::Setting,    1,                          true);
-  Option BridgeRewardCount   = Option::U8  ("  Reward Count",         {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                           {bridgeRewardCountDesc},                                                                                    OptionCategory::Setting,    1,                          true);
-  Option BridgeDungeonCount  = Option::U8  ("  Dungeon Count",        {"0", "1", "2", "3", "4", "5", "6", "7", "8"},                                {bridgeDungeonCountDesc},                                                                                   OptionCategory::Setting,    1,                          true);
-  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {/*Options 0-100 defined in InitSettings()*/},                                {bridgeTokenCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
+  Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {NumOpts(0, 3)},                                                              {bridgeStoneCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
+  Option BridgeMedallionCount= Option::U8  ("  Medallion Count",      {NumOpts(0, 6)},                                                              {bridgeMedallionCountDesc},                                                                                 OptionCategory::Setting,    1,                          true);
+  Option BridgeRewardCount   = Option::U8  ("  Reward Count",         {NumOpts(0, 9)},                                                              {bridgeRewardCountDesc},                                                                                    OptionCategory::Setting,    1,                          true);
+  Option BridgeDungeonCount  = Option::U8  ("  Dungeon Count",        {NumOpts(0, 8)},                                                              {bridgeDungeonCountDesc},                                                                                   OptionCategory::Setting,    1,                          true);
+  Option BridgeTokenCount    = Option::U8  ("  Token Count",          {NumOpts(0, 100)},                                                            {bridgeTokenCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
   Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                                                {randomGanonsTrialsDesc},                                                                                   OptionCategory::Setting,    ON);
-  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {"0", "1", "2", "3", "4", "5", "6"},                                          {ganonsTrialCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
+  Option GanonsTrialsCount   = Option::U8  ("  Trial Count",          {NumOpts(0, 6)},                                                              {ganonsTrialCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
   std::vector<Option *> openOptions = {
     &RandomizeOpen,
     &OpenForest,
@@ -70,7 +94,7 @@ namespace Settings {
   Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
   Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_BOMBCHU);
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
-  Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {"0","1","2","3","4","5","6","7","8","9","10","11","12", "Random"},{mqDungeonCountDesc});
+  Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",       {MultiVecOpts({NumOpts(0, 12), {"Random"}})},                      {mqDungeonCountDesc});
   u8 MQSet;
   bool DungeonModesKnown[12];
   Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {setDungeonTypesDesc});
@@ -132,7 +156,7 @@ namespace Settings {
   Option ShuffleRewards         = Option::U8  ("Shuffle Dungeon Rewards",{"End of Dungeons", "Any Dungeon", "Overworld", "Anywhere"},       {shuffleRewardsEndOfDungeon, shuffleRewardsAnyDungeon, shuffleRewardsOverworld, shuffleRewardsAnywhere});
   Option LinksPocketItem        = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
   Option ShuffleSongs           = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {songsSongLocations, songsDungeonRewards, songsAllLocations});
-  Option Shopsanity             = Option::U8  ("Shopsanity",             {"Off", "0", "1", "2", "3", "4", "Random"},                        {shopsOff, shopsZero, shopsOne, shopsTwo, shopsThree, shopsFour, shopsRandom});
+  Option Shopsanity             = Option::U8  ("Shopsanity",             {MultiVecOpts({{"Off"}, NumOpts(0, 4), {"Random"}})},              {shopsOff, shopsZero, shopsOne, shopsTwo, shopsThree, shopsFour, shopsRandom});
   Option Tokensanity            = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},                    {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
   Option Scrubsanity            = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
   Option ShuffleCows            = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {shuffleCowsDesc});
@@ -176,11 +200,11 @@ namespace Settings {
   Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",          {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens"},
                                                                          {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, ganonKeyLACS},                                                          OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
   u8 LACSCondition           = 0;
-  Option LACSMedallionCount  = Option::U8  ("  Medallion Count",         {"0", "1", "2", "3", "4", "5", "6"},                                    {lacsMedallionCountDesc},                                                                                         OptionCategory::Setting,    1,                          true);
-  Option LACSStoneCount      = Option::U8  ("  Stone Count",             {"0", "1", "2", "3"},                                                   {lacsStoneCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
-  Option LACSRewardCount     = Option::U8  ("  Reward Count",            {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},                     {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
-  Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",           {"0", "1", "2", "3", "4", "5", "6", "7", "8"},                          {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
-  Option LACSTokenCount      = Option::U8  ("  Token Count",             {/*Options 0-100 defined in InitSettings()*/},                          {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
+  Option LACSMedallionCount  = Option::U8  ("  Medallion Count",         {NumOpts(0, 6)},                                                        {lacsMedallionCountDesc},                                                                                         OptionCategory::Setting,    1,                          true);
+  Option LACSStoneCount      = Option::U8  ("  Stone Count",             {NumOpts(0, 3)},                                                        {lacsStoneCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
+  Option LACSRewardCount     = Option::U8  ("  Reward Count",            {NumOpts(0, 9)},                                                        {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
+  Option LACSDungeonCount    = Option::U8  ("  Dungeon Count",           {NumOpts(0, 8)},                                                        {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
+  Option LACSTokenCount      = Option::U8  ("  Token Count",             {NumOpts(0, 100)},                                                      {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
   Option KeyRings            = Option::Bool("Key Rings",                 {"Off", "On"},                                                          {keyRingDesc});
   Option RingFortress        = Option::Bool("  Gerudo Fortress",         {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
   Option RingForest          = Option::Bool("  Forest Temple",           {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
@@ -235,8 +259,8 @@ namespace Settings {
   Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {freeScarecrowDesc});
   Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc},                                                                                                   OptionCategory::Setting,    SKIP);
   Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {lakeHyliaOwlDesc},                                                                                               OptionCategory::Setting,    SKIP);
-  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},                    {bigPoeTargetCountDesc});
-  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {"0", "1", "2", "3", "4", "5", "6", "7"},                               {numRequiredCuccosDesc});
+  Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {NumOpts(1, 10)},                                                       {bigPoeTargetCountDesc});
+  Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {NumOpts(0, 7)},                                                        {numRequiredCuccosDesc});
   Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_INSTANT);
@@ -403,8 +427,8 @@ namespace Settings {
 
   //Starting Inventory submenus and menus
   std::vector<std::string> bottleOptions = {"Off", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
-  Option StartingStickCapacity    = Option::U8  ("Deku Sticks",          {"Deku Sticks (10)","Deku Sticks (20)", "Deku Sticks (30)"},                     {""});
-  Option StartingNutCapacity      = Option::U8  ("Deku Nuts",            {"Deku Nuts (20)",  "Deku Nuts (30)",   "Deku Nuts (40)"},                       {""});
+  Option StartingStickCapacity    = Option::U8  ("Deku Sticks capacity", {"10 Deku Sticks",  "20 Deku Sticks",   "30 Deku Sticks"},                       {""});
+  Option StartingNutCapacity      = Option::U8  ("Deku Nuts capacity",   {"20 Deku Nuts",    "30 Deku Nuts",     "40 Deku Nuts"},                         {""});
   Option StartingSlingshot        = Option::U8  ("Slingshot",            {"Off",             "Slingshot (30)",   "Slingshot (40)",    "Slingshot (50)"},  {""});
   Option StartingOcarina          = Option::U8  ("Ocarina",              {"Off",             "Fairy Ocarina",    "Ocarina of Time"},                      {""});
   Option StartingBombBag          = Option::U8  ("Bombs",                {"Off",             "Bomb Bag (20)",    "Bomb Bag (30)",     "Bomb Bag (40)"},   {""});
@@ -539,7 +563,7 @@ namespace Settings {
 
   Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
   Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {startWithMaxRupeesDesc});
-  Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {/*Options 0-100 defined in SetDefaultSettings()*/},                             {""});
+  Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {NumOpts(0, 100)},                                                               {""});
   std::vector<Option *> startingOthersOptions = {
     &StartingConsumables,
     &StartingMaxRupees,
@@ -1322,17 +1346,6 @@ namespace Settings {
 
   //One-time initialization
   void InitSettings() {
-    //Set up token options
-    //TODO: Create new 'number range' option type so this isn't necessary
-    std::vector<std::string> tokenOptions;
-    tokenOptions.reserve(101);
-    for (int i = 0; i <= 100; i++) {
-      tokenOptions.push_back(std::to_string(i));
-    }
-    BridgeTokenCount.SetOptions(tokenOptions);
-    StartingSkulltulaToken.SetOptions(tokenOptions);
-    LACSTokenCount.SetOptions(tokenOptions);
-
     //Create Location Exclude settings
     AddExcludedOptions();
 
