@@ -4,8 +4,8 @@
 #include "3ds/types.h"
 #include "z3D/z3D.h"
 
-extern u32 receivedPackets;
-extern bool duplicateSendProtection;
+extern u32 mp_receivedPackets;
+extern bool mp_duplicateSendProtection;
 extern bool mp_isSyncing;
 extern bool mp_foundSyncer;
 extern bool mp_completeSyncs[6];

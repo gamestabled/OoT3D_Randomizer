@@ -343,7 +343,7 @@ static void Gfx_DrawSeedHash(void) {
         } else {
             Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Connected players: Unknown");
         }
-        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Received packets: %d", receivedPackets);
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Received packets: %d", mp_receivedPackets);
         if (gSettingsContext.mp_SharedProgress) {
             Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), COLOR_WHITE, "Sync ID: %d", gSettingsContext.mp_SyncId);
         }
