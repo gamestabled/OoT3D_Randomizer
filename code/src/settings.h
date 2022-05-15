@@ -449,6 +449,7 @@ typedef struct {
 
   u8 mp_Enabled;
   u8 mp_SharedProgress;
+  u8 mp_SyncId;
   u8 mp_SharedHealth;
   u8 mp_SharedRupees;
   u8 mp_SharedAmmo;

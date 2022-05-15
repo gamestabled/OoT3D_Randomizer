@@ -339,28 +339,28 @@ void ItemEffect_PlaceMagicArrowsInInventory(SaveContext* saveCtx, s16 arg1, s16 
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_FIRE]);
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_ICE]);
         SaveFile_ResetItemSlotsIfMatchesID(ItemSlots[ITEM_ARROW_LIGHT]);
-        if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+        if (gSettingsContext.mp_SharedProgress == ON && !mp_duplicateSendProtection) {
             Multiplayer_Send_MagicArrow(arg1);
         }
     } else if (saveCtx->items[ItemSlots[ITEM_BOW]] == ITEM_NONE) {
         if (arg1 == 1 && saveCtx->items[ItemSlots[ITEM_ARROW_FIRE]] == ITEM_NONE) { // Fire Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_FIRE]);
-            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+            if (gSettingsContext.mp_SharedProgress == ON && !mp_duplicateSendProtection) {
                 Multiplayer_Send_MagicArrow(arg1);
             }
         } else if (arg1 == 2 && saveCtx->items[ItemSlots[ITEM_ARROW_ICE]] == ITEM_NONE) { // Ice Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_ICE]);
-            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+            if (gSettingsContext.mp_SharedProgress == ON && !mp_duplicateSendProtection) {
                 Multiplayer_Send_MagicArrow(arg1);
             }
         } else if (arg1 == 3 && saveCtx->items[ItemSlots[ITEM_ARROW_LIGHT]] == ITEM_NONE) { // Light Arrow
             PushSlotIntoInventoryMenu(ItemSlots[ITEM_ARROW_LIGHT]);
-            if (gSettingsContext.mp_SharedProgress == ON && !duplicateSendProtection) {
+            if (gSettingsContext.mp_SharedProgress == ON && !mp_duplicateSendProtection) {
                 Multiplayer_Send_MagicArrow(arg1);
             }
         }
     }
-    duplicateSendProtection = false;
+    mp_duplicateSendProtection = false;
 }
 
 void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {

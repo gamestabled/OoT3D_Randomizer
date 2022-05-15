@@ -4,8 +4,8 @@
 #include "3ds/types.h"
 #include "z3D/z3D.h"
 
-extern u32 receivedPackets;
-extern bool duplicateSendProtection;
+extern u32 mp_receivedPackets;
+extern bool mp_duplicateSendProtection;
 extern bool mp_isSyncing;
 extern bool mp_foundSyncer;
 extern bool mp_completeSyncs[6];
@@ -54,6 +54,7 @@ void Multiplayer_Send_BiggoronTradeBit(u8 bit);
 void Multiplayer_Send_FullEntranceSync(u16 targetID);
 void Multiplayer_Send_DiscoveredScene(u32 index, u32 bit);
 void Multiplayer_Send_DiscoveredEntrance(u32 index, u32 bit);
+void Multiplayer_Send_UnlockedDoor(u32 flag);
 void Multiplayer_Send_ActorUpdate(Actor* actor, void* extraData, u32 extraDataSize);
 void Multiplayer_Send_ActorSpawn(s16 actorId, PosRot posRot, s16 params);
 // Etc

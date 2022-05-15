@@ -282,6 +282,7 @@ extern string_view gkDurabilityRandomSafe;
 
 extern string_view mp_EnabledDesc;
 extern string_view mp_SharedProgressDesc;
+extern string_view mp_SyncIdDesc;
 extern string_view mp_SharedHealthDesc;
 extern string_view mp_SharedRupeesDesc;
 extern string_view mp_SharedAmmoDesc;

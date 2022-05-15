@@ -312,6 +312,10 @@ SECTIONS
 		*(.patch_DampeChest)
 	}
 
+	.patch_PierreSoftlockFixOne 0x19C734 : {
+		*(.patch_PierreSoftlockFixOne)
+	}
+
 	.patch_RutoBlueWarpOverride 0x1A1900 : {
 		*(.patch_RutoBlueWarpOverride)
 	}
@@ -546,6 +550,14 @@ SECTIONS
 
 	.patch_SunsSongLocation 0x2888C8 : {
 		*(.patch_SunsSongLocation)
+	}
+
+	.patch_PierreSoftlockFixTwo 0x288914 : {
+		*(.patch_PierreSoftlockFixTwo)
+	}
+
+	.patch_PierreSoftlockFixThree 0x2889D4 : {
+		*(.patch_PierreSoftlockFixThree)
 	}
 
 	.patch_KakarikoGateCheck 0x28A678 : {

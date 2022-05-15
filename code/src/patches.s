@@ -1701,6 +1701,25 @@ MasterQuestGoldSkulltulaCheck_patch:
 WaterSpoutMasterQuestCheck_patch:
     bl hook_WaterSpoutMasterQuestCheck
 
+.section .patch_PierreSoftlockFixOne
+.global PierreSoftlockFixOne_patch
+PierreSoftlockFixOne_patch:
+    pop {r3-r7,lr}
+    bx lr
+
+.section .patch_PierreSoftlockFixTwo
+.global PierreSoftlockFixTwo_patch
+PierreSoftlockFixTwo_patch:
+    bl hook_PierreSoftlockFixTwo
+
+.section .patch_PierreSoftlockFixThree
+.global PierreSoftlockFixThree_patch
+PierreSoftlockFixThree_patch:
+    nop
+    nop
+    nop
+    nop
+
 .section .patch_loader
 .global loader_patch
 

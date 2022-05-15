@@ -410,7 +410,9 @@ typedef struct GlobalContext {
     /* 0x3230 */ u32                   lightSettingsList_addr;
     /* 0x3234 */ char                  unk_3234[0x0824];
     /* 0x3A58 */ ObjectContext         objectCtx;
-    /* 0x43DC */ char                  unk_43DC[0x1824];
+    /* 0x43DC */ char                  unk_43DC[0x0854];
+    /* 0x4C30 */ u8                    roomNum;
+    /* 0x4C31 */ char                  unk_4C31[0x0FCF];
     /* 0x5C00 */ u8                    linkAgeOnLoad;
     /* 0x5C01 */ char                  unk_5C01[0x001B];
     /* 0x5C1C */ s16*                  setupExitList;
