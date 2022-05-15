@@ -1385,6 +1385,17 @@ hook_WaterSpoutMasterQuestCheck:
     pop {r1-r12, lr}
     bx lr
 
+.global hook_PierreSoftlockFixTwo
+hook_PierreSoftlockFixTwo:
+    cpy r6,r1
+    push {r0-r12, lr}
+    mov r2,#0x1
+    mov r1,#0x0
+    cpy r0,r6
+    bl 0x36E980
+    pop {r0-r12, lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
