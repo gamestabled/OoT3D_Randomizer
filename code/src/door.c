@@ -31,6 +31,7 @@ void EnDoor_rUpdate(EnDoor* thisx, GlobalContext* globalCtx) {
     EnDoor_Update((Actor*)thisx, globalCtx);
 
     if (thisx->lock_timer != 0 && prev_action_fn == EnDoor_Idle && thisx->action_fn == EnDoor_Open) {
+        Multiplayer_Send_UnlockedDoor(thisx->base.params & 0x3F);
         Multiplayer_Send_ActorUpdate((Actor*)thisx, NULL, 0);
     }
 }
@@ -77,7 +78,15 @@ void DoorShutter_rUpdate(DoorShutter* thisx, GlobalContext* globalCtx) {
 
     DoorShutter_Update((Actor*)thisx, globalCtx);
 
+    // Don't sync chest minigame doors when the setting is off
+    if (globalCtx->sceneNum == 16 && gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_OFF) {
+        return;
+    }
+
     if (thisx->lock_timer != 0 && prev_action_fn == DoorShutter_SlidingDoor_Idle && thisx->action_fn == DoorShutter_SlidingDoor_Open) {
+        if (thisx->door_type_maybe != 5) {
+            Multiplayer_Send_UnlockedDoor(thisx->base.params & 0x3F);
+        }
         Multiplayer_Send_ActorUpdate((Actor*)thisx, NULL, 0);
     }
 }
@@ -114,6 +123,7 @@ void DoorGerudo_rUpdate(DoorGerudo* thisx, GlobalContext* globalCtx) {
     DoorGerudo_Update((Actor*)thisx, globalCtx);
 
     if (thisx->lock_timer != 0 && prev_action_fn == DoorGerudo_Idle && thisx->action_fn == DoorGerudo_Unlocking) {
+        Multiplayer_Send_UnlockedDoor(thisx->base.params & 0x3F);
         Multiplayer_Send_ActorUpdate((Actor*)thisx, NULL, 0);
     }
 }

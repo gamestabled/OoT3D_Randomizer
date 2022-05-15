@@ -806,12 +806,14 @@ namespace Settings {
 
   Option MP_Enabled        = Option::U8  ("Multiplayer",     {"Off", "On (Local)"}, {mp_EnabledDesc});
   Option MP_SharedProgress = Option::Bool("Shared Progress", {"Off", "On"},         {mp_SharedProgressDesc});
+  Option MP_SyncId         = Option::U8  ("  Sync ID",       {NumOpts(1, 8)},       {mp_SyncIdDesc}, OptionCategory::Cosmetic);
   Option MP_SharedHealth   = Option::Bool("Shared Health",   {"Off", "On"},         {mp_SharedHealthDesc});
   Option MP_SharedRupees   = Option::Bool("Shared Rupees",   {"Off", "On"},         {mp_SharedRupeesDesc});
   Option MP_SharedAmmo     = Option::Bool("Shared Ammo",     {"Off", "On"},         {mp_SharedAmmoDesc});
   std::vector<Option*> multiplayerOptions = {
     &MP_Enabled,
     &MP_SharedProgress,
+    &MP_SyncId,
     &MP_SharedHealth,
     &MP_SharedRupees,
     &MP_SharedAmmo,
@@ -1136,6 +1138,7 @@ namespace Settings {
 
     ctx.mp_Enabled           = MP_Enabled.Value<u8>();
     ctx.mp_SharedProgress    = (MP_SharedProgress) ? 1 : 0;
+    ctx.mp_SyncId            = MP_SyncId.Value<u8>() + 1;
     ctx.mp_SharedAmmo        = (MP_SharedAmmo) ? 1 : 0;
     ctx.mp_SharedHealth      = (MP_SharedHealth) ? 1 : 0;
     ctx.mp_SharedRupees      = (MP_SharedRupees) ? 1 : 0;
@@ -1893,6 +1896,12 @@ namespace Settings {
         op->Hide();
         op->SetSelectedIndex(0);
       }
+    }
+    if (MP_SharedProgress) {
+      MP_SyncId.Unhide();
+    } else {
+      MP_SyncId.Hide();
+      MP_SyncId.SetSelectedIndex(0);
     }
 
     //Tunic Colors
