@@ -280,6 +280,7 @@ namespace Logic {
   extern bool CanShield;
   extern bool CanJumpslash;
   extern bool CanUseProjectile;
+  extern bool CanUseMagicArrow;
 
   //Bridge Requirements
   extern bool HasAllStones;

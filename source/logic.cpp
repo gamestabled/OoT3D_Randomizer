@@ -288,6 +288,7 @@ namespace Logic {
   bool CanShield        = false;
   bool CanJumpslash     = false;
   bool CanUseProjectile = false;
+  bool CanUseMagicArrow = false;
 
   //Bridge and LACS Requirements
   u8 MedallionCount          = 0;
@@ -768,6 +769,7 @@ namespace Logic {
     CanShield        = CanUse(MIRROR_SHIELD) || HasShield;
     CanJumpslash     = IsAdult || Sticks || KokiriSword;
     CanUseProjectile = HasExplosives || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || CanUse(BOOMERANG);
+    CanUseMagicArrow = CanUse(FIRE_ARROWS) || CanUse(ICE_ARROWS) || CanUse(LIGHT_ARROWS);
 
     //Bridge and LACS Requirements
     MedallionCount        = (ForestMedallion ? 1:0) + (FireMedallion ? 1:0) + (WaterMedallion ? 1:0) + (SpiritMedallion ? 1:0) + (ShadowMedallion ? 1:0) + (LightMedallion ? 1:0);
@@ -1158,6 +1160,7 @@ namespace Logic {
      CanShield        = false;
      CanJumpslash     = false;
      CanUseProjectile = false;
+     CanUseMagicArrow = false;
 
      //Bridge Requirements
      HasAllStones          = false;

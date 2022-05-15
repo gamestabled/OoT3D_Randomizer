@@ -770,9 +770,7 @@ string_view progGoronSword            = "Giant's Knife will always be found\n"  
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //
-string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.";  //
                                                                                            //
 /*------------------------------                                                           //
 |    LIFT AGE RESTRICTIONS     |                                                           //
@@ -782,46 +780,35 @@ string_view ageRestrictionsDesc       = "Remove age restrictions for inventory i
                                         "options.\n\n"                                     //
                                         "Most of the items won't appear correctly when\n"  //
                                         "used as the wrong version of Link, but they'll be\n"
-                                        "fully functional otherwise.\n"                    //
-                                        "These settings will not change the logic.";       //
+                                        "fully functional otherwise.";                     //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
 string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"
                                         "Link will look like he's holding a Hylian Shield,\n"
-                                        "but rest assured it is a deku stick.\n"           //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+                                        "but rest assured it is a deku stick.";            //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
 ------------------------------*/                                                           //
-string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.\n"            //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.";             //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE CHILD HAMMER      |                                                           //
 ------------------------------*/                                                           //
-string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.\n"       //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.";        //
 /*------------------------------                                                           //
 |    ENABLE ADULT SLINGSHOT    |                                                           //
 ------------------------------*/                                                           //
 string_view adultSlingshotDesc        = "Adult Link can use the Slingshot (but it looks\n" //
-                                        "like the Bow).\n"                                 //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+                                        "like the Bow).";                                  //
                                                                                            //
 /*------------------------------                                                           //
 |      ENABLE CHILD BOW        |                                                           //
 ------------------------------*/                                                           //
 string_view childBowDesc              = "Child Link can use the Bow. It will look like the\n"
-                                        "Slingshot, but will shoot arrows.\n"              //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+                                        "Slingshot, but will shoot arrows.";               //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE CHILD HOOKSHOT     |                                                           //
@@ -829,23 +816,17 @@ string_view childBowDesc              = "Child Link can use the Bow. It will loo
 string_view childHookshotDesc         = "Child Link can use the Hookshot/Longshot.\n"      //
                                         "It will be difficult to aim, the red dot and\n"   //
                                         "laser won't appear and the hook will look like\n" //
-                                        "a small bomb.\n"                                  //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+                                        "a small bomb.";                                   //
 /*------------------------------                                                           //
 |   ENABLE CHILD IRON BOOTS    |                                                           //
 ------------------------------*/                                                           //
-string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.\n"           //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.";            //
                                                                                            //
 /*------------------------------                                                           //
 |   ENABLE CHILD HOVER BOOTS   |                                                           //
 ------------------------------*/                                                           //
 string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots. The yellow\n"
-                                        "circle beneath Link's feet won't appear.\n"       //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+                                        "circle beneath Link's feet won't appear.";        //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE ADULT MASKS       |                                                           //
@@ -857,52 +838,38 @@ string_view adultMasksDesc            = "Adult Link can equip masks.\n"         
 /*------------------------------                                                           //
 |  ENABLE ADULT KOKIRI SWORD   |                                                           //
 ------------------------------*/                                                           //
-string_view adultKokiriSwordDesc      = "Adult Link can equip the Kokiri Sword.\n"         //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view adultKokiriSwordDesc      = "Adult Link can equip the Kokiri Sword.";          //
                                                                                            //
 /*------------------------------                                                           //
 |  ENABLE CHILD MASTER SWORD   |                                                           //
 ------------------------------*/                                                           //
-string_view childMasterSwordDesc      = "Child Link can equip the Master Sword.\n"         //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view childMasterSwordDesc      = "Child Link can equip the Master Sword.";          //
                                                                                            //
 /*------------------------------                                                           //
 |  ENABLE CHILD BIGGORON SWORD |                                                           //
 ------------------------------*/                                                           //
 string_view childBiggoronSwordDesc    = "Child Link can equip the Biggoron Sword and the\n"//
-                                        "Giant's Knife.\n"                                 //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+                                        "Giant's Knife.";                                  //
                                                                                            //
 /*------------------------------                                                           //
 |   ENABLE ADULT DEKU SHIELD   |                                                           //
 ------------------------------*/                                                           //
-string_view adultDekuShieldDesc       = "Adult Link can equip the Deku Shield.\n"          //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view adultDekuShieldDesc       = "Adult Link can equip the Deku Shield.";           //
                                                                                            //
 /*------------------------------                                                           //
 |  ENABLE CHILD MIRROR SHIELD  |                                                           //
 ------------------------------*/                                                           //
-string_view childMirrorShieldDesc     = "Child Link can equip the Mirror Shield.\n"        //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view childMirrorShieldDesc     = "Child Link can equip the Mirror Shield.";         //
                                                                                            //
 /*------------------------------                                                           //
 |   ENABLE CHILD GORON TUNIC   |                                                           //
 ------------------------------*/                                                           //
-string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.\n"          //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.";           //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE CHILD ZORA TUNIC   |                                                           //
 ------------------------------*/                                                           //
-string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.\n"           //
-                                        "\n"                                               //
-                                        "This setting will only affect glitched logic.";   //
+string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.";            //
                                                                                            //
 /*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
@@ -1428,6 +1395,7 @@ string_view GlitchISGDescDisabled                     = "Shortened to ISG, allow
 string_view GlitchISGDescNovice                       = "ISG may be required to kill certain enemies,\n"   //
                                                         "or to Bomb Hover when enabled.";                  //
 string_view GlitchISGDescIntermediate                 = "";                                                //
+string_view GlitchISGDescAdvanced                     = "";
 /* Hover */                                                                                                //
 string_view GlitchHoverDescDisabled                   = "Hovering allows Link to consecutively backflip\n" //
                                                         "in the air without falling. By shielding\n"       //
@@ -1573,6 +1541,8 @@ string_view GlitchHookshotJump_BootsDescAdvanced      = "";
 /* Cutscene Dives */                                                                                       //
 string_view GlitchCutsceneDiveDescDisabled            = "";
 string_view GlitchCutsceneDiveDescNovice              = "";
+string_view GlitchCutsceneDiveDescIntermediate        = "";
+string_view GlitchCutsceneDiveDescAdvanced            = "";
 /* Navi Dive: Stick */                                                                                     //
 string_view GlitchNaviDive_StickDescDisabled          = "";
 string_view GlitchNaviDive_StickDescNovice            = "";

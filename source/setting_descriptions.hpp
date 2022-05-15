@@ -422,6 +422,7 @@ extern string_view GlitchSuperStabDescNovice;
 extern string_view GlitchISGDescDisabled;
 extern string_view GlitchISGDescNovice;
 extern string_view GlitchISGDescIntermediate;
+extern string_view GlitchISGDescAdvanced;
 
 extern string_view GlitchHoverDescDisabled;
 extern string_view GlitchHoverDescNovice;
@@ -493,6 +494,8 @@ extern string_view GlitchHookshotJump_BootsDescAdvanced;
 
 extern string_view GlitchCutsceneDiveDescDisabled;
 extern string_view GlitchCutsceneDiveDescNovice;
+extern string_view GlitchCutsceneDiveDescIntermediate;
+extern string_view GlitchCutsceneDiveDescAdvanced;
 
 extern string_view GlitchNaviDive_StickDescDisabled;
 extern string_view GlitchNaviDive_StickDescNovice;

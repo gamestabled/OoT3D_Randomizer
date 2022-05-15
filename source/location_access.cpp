@@ -429,7 +429,9 @@ void AreaTable_Init() {
                   Entrance(LW_BRIDGE,                {[]{return (IsAdult && CanPlantBean(THE_LOST_WOODS)) || CanUse(HOVER_BOOTS) || CanUse(LONGSHOT);},
                                           /*Glitched*/[]{return CanLeaveForest && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) || (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && HasBombchus) || CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE));}}),
                   Entrance(ZORAS_RIVER,              {[]{return CanLeaveForest && (CanDive || CanUse(IRON_BOOTS));},
-                                          /*Glitched*/[]{return CanLeaveForest && (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::ADVANCED));}}),
+                                          /*Glitched*/[]{return CanLeaveForest && (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::ADVANCED) ||
+                                                                ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::INTERMEDIATE)) || (CanUse(FARORES_WIND) && (FaroresWindAnywhere || (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg)))) &&
+                                                                ((CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || (CanUseMagicArrow && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::ADVANCED)))));}}),
                   Entrance(LW_BEYOND_MIDO,           {[]{return IsChild || CanPlay(SariasSong);},
                                           /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) ||
                                                                 CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || (CanDoGlitch(GlitchType::HookshotJump_Bonk, GlitchDifficulty::ADVANCED) && (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE) || HoverBoots)) ||
@@ -699,7 +701,9 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(HYRULE_FIELD,          {[]{return true;}}),
                   Entrance(ZORAS_DOMAIN,          {[]{return IsChild && CanDive;},
-                                       /*Glitched*/[]{return (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::INTERMEDIATE);}}),
+                                       /*Glitched*/[]{return IsChild && (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::INTERMEDIATE) ||
+                                                             (Bugs && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::INTERMEDIATE)) || (CanUse(FARORES_WIND) && (FaroresWindAnywhere || (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg)))) &&
+                                                             ((CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || (CanUseMagicArrow && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::ADVANCED)))));}}),
                   Entrance(LH_OWL_FLIGHT,         {[]{return IsChild;}}),
                   Entrance(LH_FISHING_ISLAND,     {[]{return IsChild || CanUse(SCARECROW) || CanPlantBean(LAKE_HYLIA) || WaterTempleClear;},
                                        /*Glitched*/[]{return (CanUse(HOOKSHOT) && ScarecrowSong && (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Bugs || Fish) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE)))) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
@@ -726,11 +730,13 @@ void AreaTable_Init() {
                 }, {
                   //Locations
                   LocationAccess(LH_LAB_DIVE,     {[]{return ProgressiveScale >= 2 || (LogicLabDiving && CanUse(IRON_BOOTS) && CanUse(HOOKSHOT));},
-                                       /*Glitched*/[]{return CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE));}}),
+                                       /*Glitched*/[]{return CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::INTERMEDIATE)) ||
+                                                             (CanUse(FARORES_WIND) && (FaroresWindAnywhere || (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg)))) && CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE));}}),
                   LocationAccess(LH_TRADE_FROG,   {[]{return IsAdult && EyeballFrog;}}),
                   LocationAccess(LH_GS_LAB_CRATE, {[]{return CanUse(IRON_BOOTS) && CanUse(HOOKSHOT);},
-                                       /*Glitched*/[]{return ((CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && HasBombchus && (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg))) &&
-                                                             (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::ADVANCED) || ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || ProgressiveScale >= 2 || CanUse(IRON_BOOTS))) ||
+                                       /*Glitched*/[]{return (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && HasBombchus && (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg)) &&
+                                                             (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::ADVANCED) || ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::INTERMEDIATE)) ||
+                                                             (CanUse(FARORES_WIND) && CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || ProgressiveScale >= 2 || CanUse(IRON_BOOTS))) ||
                                                              (CanUse(IRON_BOOTS) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE));}}),
                 }, {
                   //Exits
@@ -1279,7 +1285,9 @@ void AreaTable_Init() {
                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE);}}),
                   Entrance(KAK_SHOOTING_GALLERY,        {[]{return IsAdult && AtDay;}}),
                   Entrance(BOTTOM_OF_THE_WELL_ENTRYWAY, {[]{return DrainWell && (IsChild || ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF));},
-                                             /*Glitched*/[]{return (IsChild && (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE) || (AtNight && CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::NOVICE)))) || (IsAdult && CanUse(LONGSHOT) && AtDay && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE));}}),
+                                             /*Glitched*/[]{return (IsChild && (CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE) || (AtNight && (CanDoGlitch(GlitchType::NaviDive_Stick, GlitchDifficulty::NOVICE) || ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::INTERMEDIATE)) ||
+                                                                   (CanUse(FARORES_WIND) && (FaroresWindAnywhere || (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && (HasBottle || WeirdEgg))) && ((CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) ||
+                                                                   (CanUseMagicArrow && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::ADVANCED)))))))) || (IsAdult && CanUse(LONGSHOT) && AtDay && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE));}}),
                   Entrance(KAK_POTION_SHOP_FRONT,       {[]{return AtDay || IsChild;}}),
                   Entrance(KAK_REDEAD_GROTTO,           {[]{return CanOpenBombGrotto;},
                                              /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
@@ -1877,7 +1885,8 @@ void AreaTable_Init() {
                   Entrance(ZR_FAIRY_GROTTO,     {[]{return Here(ZORAS_RIVER, []{return CanBlastOrSmash;});},
                                      /*Glitched*/[]{return Here(ZORAS_RIVER, []{return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);});}}),
                   Entrance(THE_LOST_WOODS,      {[]{return CanDive || CanUse(IRON_BOOTS);},
-                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE);}}),
+                                     /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) || (CanUse(FARORES_WIND) && (FaroresWindAnywhere || (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg)))) &&
+                                                           ((CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || (CanUseMagicArrow && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::ADVANCED))));}}),
                   Entrance(ZR_STORMS_GROTTO,    {[]{return CanOpenStormGrotto;},
                                      /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
                                                            ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
@@ -1938,8 +1947,9 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(ZR_BEHIND_WATERFALL, {[]{return true;}}),
-                  Entrance(LAKE_HYLIA,          {[]{return IsChild && CanDive;},
-                                     /*Glitched*/[]{return (IsAdult && GlitchZDOoBJumpSlash) || (IsChild && CanUse(IRON_BOOTS));}}),
+                  Entrance(LAKE_HYLIA,          {[]{return IsChild && (CanDive || CanUse(IRON_BOOTS));},
+                                     /*Glitched*/[]{return (IsAdult && GlitchZDOoBJumpSlash) || (IsChild && CanUse(FARORES_WIND) && (FaroresWindAnywhere || (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && (HasBottle || WeirdEgg))) &&
+                                                           ((CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || (CanUseMagicArrow && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::ADVANCED))));}}),
                   Entrance(ZD_BEHIND_KING_ZORA, {[]{return DeliverLetter || ZorasFountain.Is(ZORASFOUNTAIN_OPEN) || (ZorasFountain.Is(ZORASFOUNTAIN_ADULT) && IsAdult);},
                                      /*Glitched*/[]{return ((IsChild || CanUse(IRON_BOOTS)) && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) ||
                                                            CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE);}}),
@@ -3364,28 +3374,42 @@ void AreaTable_Init() {
   areaTable[WATER_TEMPLE_LOBBY] = Area("Water Temple Lobby", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(WATER_TEMPLE_ENTRYWAY,              {[]{return true;}}),
-                  Entrance(WATER_TEMPLE_EAST_LOWER,            {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && (CanUse(IRON_BOOTS) || (CanUse(LONGSHOT) && LogicWaterTempleTorchLongshot)));}}),
+                  Entrance(WATER_TEMPLE_EAST_LOWER,            {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && (CanUse(IRON_BOOTS) || (CanUse(LONGSHOT) && LogicWaterTempleTorchLongshot)));},
+                                                    /*Glitched*/[]{return ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::INTERMEDIATE)) || (CanUse(FARORES_WIND) &&
+                                                                          ((CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || (CanUseMagicArrow && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::ADVANCED))));}}),
                   Entrance(WATER_TEMPLE_NORTH_LOWER,           {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && CanUse(IRON_BOOTS));}}),
-                  Entrance(WATER_TEMPLE_SOUTH_LOWER,           {[]{return WaterTempleLow && HasExplosives && (CanDive || CanUse(IRON_BOOTS)) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));}}),
+                  Entrance(WATER_TEMPLE_SOUTH_LOWER,           {[]{return WaterTempleLow && HasExplosives && (CanDive || CanUse(IRON_BOOTS)) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));},
+                                                    /*Glitched*/[]{return CanUse(IRON_BOOTS) && (WaterTempleMiddle || WaterTempleHigh) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && AdultCanAccess(WATER_TEMPLE_WEST_LOWER) && CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(WATER_TEMPLE_WEST_LOWER,            {[]{return WaterTempleLow && GoronBracelet && (IsChild || CanDive || CanUse(IRON_BOOTS)) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));}}),
                   Entrance(WATER_TEMPLE_CENTRAL_PILLAR_LOWER,  {[]{return WaterTempleLow && SmallKeys(WATER_TEMPLE, 5);}}),
                   Entrance(WATER_TEMPLE_CENTRAL_PILLAR_UPPER,  {[]{return (WaterTempleLow || WaterTempleMiddle) && (HasFireSourceWithTorch || CanUse(BOW));}}),
                   Entrance(WATER_TEMPLE_EAST_MIDDLE,           {[]{return (WaterTempleLow || WaterTempleMiddle || (CanUse(IRON_BOOTS) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)))) && CanUse(HOOKSHOT);}}),
-                  Entrance(WATER_TEMPLE_WEST_MIDDLE,           {[]{return WaterTempleMiddle;}}),
-                  Entrance(WATER_TEMPLE_HIGH_WATER,            {[]{return IsAdult && (CanUse(HOVER_BOOTS) || (LogicWaterTempleUpperBoost && Bombs && CanTakeDamage));}}),
-                  Entrance(WATER_TEMPLE_BLOCK_CORRIDOR,        {[]{return (WaterTempleLow || WaterTempleMiddle) && (CanUse(SLINGSHOT) || CanUse(BOW)) && (CanUse(LONGSHOT) || CanUse(HOVER_BOOTS) || (LogicWaterCentralBow && (IsAdult || WaterTempleMiddle)));}}),
-                  Entrance(WATER_TEMPLE_FALLING_PLATFORM_ROOM, {[]{return WaterTempleHigh && SmallKeys(WATER_TEMPLE, 4);}}),
-                  Entrance(WATER_TEMPLE_PRE_BOSS_ROOM,         {[]{return WaterTempleHigh && CanUse(LONGSHOT);}}),
+                  Entrance(WATER_TEMPLE_WEST_MIDDLE,           {[]{return WaterTempleMiddle;},
+                                                    /*Glitched*/[]{return WaterTempleLow && (CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE));}}),
+                  Entrance(WATER_TEMPLE_HIGH_WATER,            {[]{return IsAdult && (CanUse(HOVER_BOOTS) || (LogicWaterTempleUpperBoost && Bombs && CanTakeDamage));},
+                                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE) || (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
+                  Entrance(WATER_TEMPLE_BLOCK_CORRIDOR,        {[]{return (WaterTempleLow || WaterTempleMiddle) && (CanUse(SLINGSHOT) || CanUse(BOW)) && (CanUse(LONGSHOT) || CanUse(HOVER_BOOTS) || (LogicWaterCentralBow && (IsAdult || WaterTempleMiddle)));},
+                                                    /*Glitched*/[]{return (WaterTempleLow || WaterTempleMiddle) && IsAdult && CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE);}}),
+                  Entrance(WATER_TEMPLE_FALLING_PLATFORM_ROOM, {[]{return WaterTempleHigh && SmallKeys(WATER_TEMPLE, 4);},
+                                                    /*Glitched*/[]{return SmallKeys(WATER_TEMPLE, 4) && (CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::NOVICE));}}),
+                  Entrance(WATER_TEMPLE_PRE_BOSS_ROOM,         {[]{return WaterTempleHigh && CanUse(LONGSHOT);},
+                                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::NOVICE) ||
+                                                                          (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
   });
 
   areaTable[WATER_TEMPLE_EAST_LOWER] = Area("Water Temple East Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&WaterTempleLow, {[]{return WaterTempleLow || CanPlay(ZeldasLullaby);}})
+                  EventAccess(&WaterTempleLow, {[]{return WaterTempleLow || CanPlay(ZeldasLullaby);},
+                                    /*Glitched*/[]{return ZeldasLullaby && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield &&
+                                                          ((Bombs && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || (HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)))));}}),
                 }, {}, {
                   //Exits
-                  Entrance(WATER_TEMPLE_LOBBY,        {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && CanUse(IRON_BOOTS));}}),
+                  Entrance(WATER_TEMPLE_LOBBY,        {[]{return WaterTempleLow || ((LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && CanUse(IRON_BOOTS));},
+                                           /*Glitched*/[]{return ((Bugs || Fish) && CanUse(HOVER_BOOTS) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::INTERMEDIATE)) || (CanUse(FARORES_WIND) &&
+                                                                 ((CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE)) || (CanUseMagicArrow && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::ADVANCED))));}}),
                   Entrance(WATER_TEMPLE_MAP_ROOM,     {[]{return WaterTempleHigh;}}),
-                  Entrance(WATER_TEMPLE_CRACKED_WALL, {[]{return WaterTempleMiddle || (WaterTempleHigh && WaterTempleLow && ((CanUse(HOVER_BOOTS) && LogicWaterCrackedWallHovers) || LogicWaterCrackedWallNothing));}}),
+                  Entrance(WATER_TEMPLE_CRACKED_WALL, {[]{return WaterTempleMiddle || (WaterTempleHigh && WaterTempleLow && ((CanUse(HOVER_BOOTS) && LogicWaterCrackedWallHovers) || LogicWaterCrackedWallNothing));},
+                                           /*Glitched*/[]{return WaterTempleHigh && WaterTempleLow && CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE);}}),
                   Entrance(WATER_TEMPLE_TORCH_ROOM,   {[]{return WaterTempleLow && (HasFireSourceWithTorch || CanUse(BOW));}}),
   });
 
@@ -3399,7 +3423,8 @@ void AreaTable_Init() {
 
   areaTable[WATER_TEMPLE_CRACKED_WALL] = Area("Water Temple Cracked Wall", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_CRACKED_WALL_CHEST, {[]{return HasExplosives;}}),
+                  LocationAccess(WATER_TEMPLE_CRACKED_WALL_CHEST, {[]{return HasExplosives;},
+                                                       /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Exits
                   Entrance(WATER_TEMPLE_EAST_LOWER, {[]{return true;}}),
@@ -3415,24 +3440,27 @@ void AreaTable_Init() {
 
   areaTable[WATER_TEMPLE_NORTH_LOWER] = Area("Water Temple North Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(WATER_TEMPLE_LOBBY, {[]{return true;}}),
-                  Entrance(WATER_TEMPLE_BOULDERS_LOWER, {[]{return (CanUse(LONGSHOT) || (LogicWaterBossKeyRegion && CanUse(HOVER_BOOTS))) && SmallKeys(WATER_TEMPLE, 4);}}),
+                  Entrance(WATER_TEMPLE_LOBBY,          {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_BOULDERS_LOWER, {[]{return (CanUse(LONGSHOT) || (LogicWaterBossKeyRegion && CanUse(HOVER_BOOTS))) && SmallKeys(WATER_TEMPLE, 4);},
+                                             /*Glitched*/[]{return ((Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
+                                                                   CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE)) && SmallKeys(WATER_TEMPLE, 4);}}),
   });
 
   areaTable[WATER_TEMPLE_BOULDERS_LOWER] = Area("Water Temple Boulders Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST, {[]{return CanUse(LONGSHOT) || Here(WATER_TEMPLE_BOULDERS_UPPER, []{return HookshotOrBoomerang;});}}),
+                  LocationAccess(WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST, {[]{return CanUse(LONGSHOT) || Here(WATER_TEMPLE_BOULDERS_UPPER, []{return (IsAdult && HookshotOrBoomerang) || (CanUse(IRON_BOOTS) && CanUse(HOOKSHOT));});}}),
                 }, {
                   //Exits
-                  Entrance(WATER_TEMPLE_NORTH_LOWER, {[]{return SmallKeys(WATER_TEMPLE, 4);}}),
-                  Entrance(WATER_TEMPLE_BLOCK_ROOM,  {[]{return true;}}),
-                  Entrance(WATER_TEMPLE_BOULDERS_UPPER, {[]{return IsAdult && (CanUse(HOVER_BOOTS) || LogicWaterNorthBasementLedgeJump);}}),
+                  Entrance(WATER_TEMPLE_NORTH_LOWER,    {[]{return SmallKeys(WATER_TEMPLE, 4);}}),
+                  Entrance(WATER_TEMPLE_BLOCK_ROOM,     {[]{return true;}}),
+                  Entrance(WATER_TEMPLE_BOULDERS_UPPER, {[]{return (IsAdult && (CanUse(HOVER_BOOTS) || LogicWaterNorthBasementLedgeJump)) || (CanUse(HOVER_BOOTS) && CanUse(IRON_BOOTS));}}),
   });
 
   areaTable[WATER_TEMPLE_BLOCK_ROOM] = Area("Water Temple Block Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(WATER_TEMPLE_BOULDERS_LOWER, {[]{return (GoronBracelet && HasExplosives) || CanUse(HOOKSHOT);}}),
-                  Entrance(WATER_TEMPLE_JETS_ROOM,      {[]{return GoronBracelet && HasExplosives;}}),
+                  Entrance(WATER_TEMPLE_JETS_ROOM,      {[]{return (GoronBracelet && HasExplosives) || (CanUse(HOOKSHOT) && CanUse(HOVER_BOOTS));},
+                                             /*Glitched*/[]{return CanUse(HOOKSHOT) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE);}}),
   });
 
   areaTable[WATER_TEMPLE_JETS_ROOM] = Area("Water Temple Jets Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -3456,12 +3484,14 @@ void AreaTable_Init() {
                   LocationAccess(WATER_TEMPLE_BOSS_KEY_CHEST, {[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(WATER_TEMPLE_BOULDERS_UPPER, {[]{return (CanUse(IRON_BOOTS) || (IsAdult && LogicWaterBKJumpDive)) && SmallKeys(WATER_TEMPLE, 5);}}),
+                  Entrance(WATER_TEMPLE_BOULDERS_UPPER, {[]{return (CanUse(IRON_BOOTS) || (IsAdult && LogicWaterBKJumpDive) || IsChild || CanDive) && SmallKeys(WATER_TEMPLE, 5);}}),
   });
 
   areaTable[WATER_TEMPLE_SOUTH_LOWER] = Area("Water Temple South Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_GS_BEHIND_GATE, {[]{return CanUse(HOOKSHOT) || (IsAdult && CanUse(HOVER_BOOTS));}}),
+                  LocationAccess(WATER_TEMPLE_GS_BEHIND_GATE, {[]{return CanUse(HOOKSHOT) || (IsAdult && CanUse(HOVER_BOOTS));},
+                                                   /*Glitched*/[]{return (CanUse(BOOMERANG) && CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE)) ||
+                                                                         (Bombs && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));}}),
                 }, {
                   //Exits
                   Entrance(WATER_TEMPLE_LOBBY, {[]{return CanUse(IRON_BOOTS);}}),
@@ -3469,13 +3499,16 @@ void AreaTable_Init() {
 
   areaTable[WATER_TEMPLE_WEST_LOWER] = Area("Water Temple West Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(WATER_TEMPLE_LOBBY,       {[]{return CanUse(HOOKSHOT) && CanUse(IRON_BOOTS) && GoronBracelet;}}),
+                  Entrance(WATER_TEMPLE_LOBBY,       {[]{return CanUse(HOOKSHOT) && CanUse(IRON_BOOTS) && GoronBracelet;},
+                                          /*Glitched*/[]{return CanUse(IRON_BOOTS) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(WATER_TEMPLE_DRAGON_ROOM, {[]{return IsAdult || CanChildAttack;}}),
   });
 
   areaTable[WATER_TEMPLE_DRAGON_ROOM] = Area("Water Temple Dragon Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_DRAGON_CHEST, {[]{return (CanUse(HOOKSHOT) && CanUse(IRON_BOOTS)) || (IsAdult && LogicWaterDragonAdult && (HasBombchus || CanUse(BOW) || CanUse(HOOKSHOT)) && (CanDive || CanUse(IRON_BOOTS)));}}),
+                  LocationAccess(WATER_TEMPLE_DRAGON_CHEST, {[]{return (CanUse(HOOKSHOT) && CanUse(IRON_BOOTS)) || (IsAdult && LogicWaterDragonAdult && HasBombchus && (CanDive || CanUse(IRON_BOOTS))) ||
+                                                                       Here(WATER_TEMPLE_RIVER, []{return IsAdult && CanUse(BOW) && ((LogicWaterDragonAdult && (CanDive || CanUse(IRON_BOOTS))) || LogicWaterDragonJumpDive);});},
+                                                 /*Glitched*/[]{return Bombs && ((IsAdult && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::ADVANCED)) || (CanUse(IRON_BOOTS) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)));}}),
                 }, {
                   //Exits
                   Entrance(WATER_TEMPLE_WEST_LOWER, {[]{return true;}}),
@@ -3485,12 +3518,15 @@ void AreaTable_Init() {
                   //Exits
                   Entrance(WATER_TEMPLE_LOBBY,                   {[]{return SmallKeys(WATER_TEMPLE, 5);}}),
                   Entrance(WATER_TEMPLE_CENTRAL_PILLAR_UPPER,    {[]{return CanUse(HOOKSHOT);}}),
-                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT, {[]{return WaterTempleMiddle && CanUse(IRON_BOOTS) && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 4));}}),
+                  Entrance(WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT, {[]{return WaterTempleMiddle && CanUse(IRON_BOOTS) && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 4));},
+                                                      /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::NOVICE) && CanUse(IRON_BOOTS) && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 4));}}),
   });
 
   areaTable[WATER_TEMPLE_CENTRAL_PILLAR_UPPER] = Area("Water Temple Central Pillar Upper", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&WaterTempleMiddle, {[]{return WaterTempleMiddle || CanPlay(ZeldasLullaby);}}),
+                  EventAccess(&WaterTempleMiddle, {[]{return WaterTempleMiddle || CanPlay(ZeldasLullaby);},
+                                       /*Glitched*/[]{return ZeldasLullaby && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield &&
+                                                             (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) || (HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)))));}}),
                 }, {
                   //Locations
                   LocationAccess(WATER_TEMPLE_GS_CENTRAL_PILLAR, {[]{return CanUse(LONGSHOT) || (LogicWaterCentralGSFW && WaterTempleHigh && CanUse(FARORES_WIND) && HookshotOrBoomerang);}}),
@@ -3524,7 +3560,9 @@ void AreaTable_Init() {
 
   areaTable[WATER_TEMPLE_HIGH_WATER] = Area("Water Temple High Water", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&WaterTempleHigh, {[]{return WaterTempleHigh || CanPlay(ZeldasLullaby);}}),
+                  EventAccess(&WaterTempleHigh, {[]{return WaterTempleHigh || CanPlay(ZeldasLullaby);},
+                                     /*Glitched*/[]{return ZeldasLullaby && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield &&
+                                                           (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) || (HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)))));}}),
                 }, {}, {
                   //Exits
                   Entrance(WATER_TEMPLE_LOBBY, {[]{return true;}}),
@@ -3532,7 +3570,8 @@ void AreaTable_Init() {
 
   areaTable[WATER_TEMPLE_BLOCK_CORRIDOR] = Area("Water Temple Block Corridor", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_CENTRAL_BOW_TARGET_CHEST, {[]{return GoronBracelet && (WaterTempleLow || WaterTempleMiddle);}}),
+                  LocationAccess(WATER_TEMPLE_CENTRAL_BOW_TARGET_CHEST, {[]{return GoronBracelet && (WaterTempleLow || WaterTempleMiddle);},
+                                                             /*Glitched*/[]{return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE) && (WaterTempleLow || WaterTempleMiddle);}}),
                 }, {
                   //Exits
                   Entrance(WATER_TEMPLE_LOBBY, {[]{return CanUse(HOOKSHOT);}}),
@@ -3565,7 +3604,9 @@ void AreaTable_Init() {
                 }, {
                   //Exits
                   Entrance(WATER_TEMPLE_DARK_LINK_ROOM, {[]{return true;}}),
-                  Entrance(WATER_TEMPLE_RIVER,          {[]{return IsChild || CanPlay(SongOfTime);}}),
+                  Entrance(WATER_TEMPLE_RIVER,          {[]{return IsChild || CanPlay(SongOfTime);},
+                                             /*Glitched*/[]{return SongOfTime && (CanDoGlitch(GlitchType::DungeonBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield &&
+                                                                   (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) || (HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)))));}}),
   });
 
   areaTable[WATER_TEMPLE_RIVER] = Area("Water Temple River", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
