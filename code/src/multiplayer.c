@@ -1256,6 +1256,12 @@ void Multiplayer_Receive_Item(u16 senderID) {
         return;
     }
 
+    // Add bombchu ammo when they're unlocked and in logic
+    if (gSettingsContext.bombchusInLogic && slot == SLOT_BOMBCHU && mSaveContext.items[slot] == ITEM_NONE && item != ITEM_NONE) {
+        mSaveContext.ammo[SLOT_BOMBCHU] = 20;
+        prevAmmo[SLOT_BOMBCHU] = 20;
+    }
+
     mSaveContext.items[slot] = item;
     prevItems[slot] = item;
 }
@@ -1496,6 +1502,47 @@ void Multiplayer_Receive_UpgradesBit(u16 senderID) {
         mSaveContext.upgrades &= ~(1 << bit);
         prevUpgrades &= ~(1 << bit);
     }
+
+    // Add ammo
+    if (setOrUnset) {
+        u8 upgradeNum = 0;
+        switch (bit) {
+            case 0:
+            case 1:
+                upgradeNum = (mSaveContext.upgrades >> 0) & 0b11;
+                mSaveContext.ammo[SLOT_BOW] = 30 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_BOW] = 30 + 10 * (upgradeNum - 1);
+                break;
+            case 3:
+            case 4:
+                upgradeNum = (mSaveContext.upgrades >> 3) & 0b11;
+                mSaveContext.ammo[SLOT_BOMB] = 20 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_BOMB] = 20 + 10 * (upgradeNum - 1);
+                break;
+            case 14:
+            case 15:
+                upgradeNum = (mSaveContext.upgrades >> 14) & 0b11;
+                mSaveContext.ammo[SLOT_SLINGSHOT] = 30 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_SLINGSHOT] = 30 + 10 * (upgradeNum - 1);
+                break;
+            case 17:
+            case 18:
+                upgradeNum = (mSaveContext.upgrades >> 17) & 0b11;
+                if (upgradeNum > 1) {
+                    mSaveContext.ammo[SLOT_STICK] = 10 + 10 * (upgradeNum - 1);
+                    prevAmmo[SLOT_STICK] = 10 + 10 * (upgradeNum - 1);
+                }
+                break;
+            case 20:
+            case 21:
+                upgradeNum = (mSaveContext.upgrades >> 20) & 0b11;
+                if (upgradeNum > 1) {
+                    mSaveContext.ammo[SLOT_NUT] = 20 + 10 * (upgradeNum - 1);
+                    prevAmmo[SLOT_NUT] = 20 + 10 * (upgradeNum - 1);
+                }
+                break;
+        }
+    }
 }
 
 void Multiplayer_Send_QuestItemBit(u8 bit, u8 setOrUnset) {
@@ -1633,6 +1680,11 @@ void Multiplayer_Receive_EventChkInfBit(u16 senderID) {
 
     // Ignore Lake Hylia water switch
     if (index == 6 && bit == 9) {
+        return;
+    }
+
+    // Ignore Tower Collapse cutscene flag
+    if (index == 12 && bit == 7) {
         return;
     }
 
