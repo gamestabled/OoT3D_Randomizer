@@ -463,6 +463,14 @@ typedef struct {
   u8 ignoreMaskReaction;
 
   u8 customTunicColors;
+  u8 rainbowIdleNaviInnerColor;
+  u8 rainbowNPCNaviInnerColor;
+  u8 rainbowEnemyNaviInnerColor;
+  u8 rainbowPropNaviInnerColor;
+  u8 rainbowIdleNaviOuterColor;
+  u8 rainbowNPCNaviOuterColor;
+  u8 rainbowEnemyNaviOuterColor;
+  u8 rainbowPropNaviOuterColor;
   u8 coloredKeys;
   u8 coloredBossKeys;
   u8 mirrorWorld;

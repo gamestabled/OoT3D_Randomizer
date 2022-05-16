@@ -1252,6 +1252,10 @@ SECTIONS
 		*(.patch_LinkReflection)
 	}
 
+	.patch_StoreTargetActorType 0x479984 : {
+		*(.patch_StoreTargetActorType)
+	}
+
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
 		*(.patch_EditDrawGetItemAfterModelSpawn)
 	}

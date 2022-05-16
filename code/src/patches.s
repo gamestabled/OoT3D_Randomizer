@@ -1720,6 +1720,11 @@ PierreSoftlockFixThree_patch:
     nop
     nop
 
+.section .patch_StoreTargetActorType
+.global StoreTargetActorType_patch
+StoreTargetActorType_patch:
+    bl hook_StoreTargetActorType
+
 .section .patch_loader
 .global loader_patch
 

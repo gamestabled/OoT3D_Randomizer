@@ -1396,6 +1396,15 @@ hook_PierreSoftlockFixTwo:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_StoreTargetActorType
+hook_StoreTargetActorType:
+    push {r0-r12, lr}
+    cpy r0,r6
+    bl Fairy_StoreTargetActorType
+    pop {r0-r12, lr}
+    cmp r5,#0x0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

@@ -360,14 +360,67 @@ bool WriteAllPatches() {
 
   const u32 GAUNTLETCOLORSARRAY_ADDR = 0x0053CA1C;
   const std::array rGauntletColors{
-    Cosmetics::HexStrToColorRGB(Settings::finalSilverGauntletsColor),
-    Cosmetics::HexStrToColorRGB(Settings::finalGoldGauntletsColor),
+    Cosmetics::HexStrToColorRGBAf(Settings::finalSilverGauntletsColor),
+    Cosmetics::HexStrToColorRGBAf(Settings::finalGoldGauntletsColor),
   };
 
   // Write Gauntlet Colors address to code
   patchOffset = V_TO_P(GAUNTLETCOLORSARRAY_ADDR);
   patchSize = sizeof(rGauntletColors);
   if (!WritePatch(patchOffset, patchSize, (char*)rGauntletColors.data(), code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  /*--------------------------------
+  |           Navi Colors          |
+  ---------------------------------*/
+
+  const u32 NAVICOLORSARRAY_ADDR = 0x0050C998;
+  const std::array rNaviColors{
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalIdleNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalIdleNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalNPCNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalNPCNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalEnemyNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalEnemyNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalEnemyNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalEnemyNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviInnerColor),
+    Cosmetics::HexStrToColorRGBA8(Settings::finalPropNaviOuterColor),
+  };
+
+  // Write Navi Colors address to code
+  patchOffset = V_TO_P(NAVICOLORSARRAY_ADDR);
+  patchSize = sizeof(rNaviColors);
+  if (!WritePatch(patchOffset, patchSize, (char*)rNaviColors.data(), code, bytesWritten, totalRW, buf)) {
     return false;
   }
 
@@ -399,10 +452,10 @@ bool WriteAllPatches() {
   |       custom assets      |
   --------------------------*/
 
-  Cosmetics::Color_RGB childTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalChildTunicColor);
-  Cosmetics::Color_RGB kokiriTunicColor = Cosmetics::HexStrToColorRGB(Settings::finalKokiriTunicColor);
-  Cosmetics::Color_RGB goronTunicColor  = Cosmetics::HexStrToColorRGB(Settings::finalGoronTunicColor);
-  Cosmetics::Color_RGB zoraTunicColor   = Cosmetics::HexStrToColorRGB(Settings::finalZoraTunicColor);
+  Cosmetics::Color_RGBAf childTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalChildTunicColor);
+  Cosmetics::Color_RGBAf kokiriTunicColor = Cosmetics::HexStrToColorRGBAf(Settings::finalKokiriTunicColor);
+  Cosmetics::Color_RGBAf goronTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalGoronTunicColor);
+  Cosmetics::Color_RGBAf zoraTunicColor   = Cosmetics::HexStrToColorRGBAf(Settings::finalZoraTunicColor);
 
   // Delete assets if it exists
   Handle assetsOut;

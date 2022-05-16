@@ -601,12 +601,28 @@ namespace Settings {
   extern Option ZoraTunicColor;
   extern Option SilverGauntletsColor;
   extern Option GoldGauntletsColor;
+  extern Option IdleNaviInnerColor;
+  extern Option NPCNaviInnerColor;
+  extern Option EnemyNaviInnerColor;
+  extern Option PropNaviInnerColor;
+  extern Option IdleNaviOuterColor;
+  extern Option NPCNaviOuterColor;
+  extern Option EnemyNaviOuterColor;
+  extern Option PropNaviOuterColor;
   extern std::string finalChildTunicColor;
   extern std::string finalKokiriTunicColor;
   extern std::string finalGoronTunicColor;
   extern std::string finalZoraTunicColor;
   extern std::string finalSilverGauntletsColor;
   extern std::string finalGoldGauntletsColor;
+  extern std::string finalIdleNaviInnerColor;
+  extern std::string finalNPCNaviInnerColor;
+  extern std::string finalEnemyNaviInnerColor;
+  extern std::string finalPropNaviInnerColor;
+  extern std::string finalIdleNaviOuterColor;
+  extern std::string finalNPCNaviOuterColor;
+  extern std::string finalEnemyNaviOuterColor;
+  extern std::string finalPropNaviOuterColor;
 
   extern Option ColoredKeys;
   extern Option ColoredBossKeys;

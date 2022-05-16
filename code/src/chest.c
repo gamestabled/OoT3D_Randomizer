@@ -5,6 +5,7 @@
 #include "settings.h"
 #include "player.h"
 #include "common.h"
+#include "fairy.h"
 
 #define EnBox_Init_addr 0x1899EC
 #define EnBox_Init ((ActorFunc)EnBox_Init_addr)
@@ -20,7 +21,7 @@ static u8 type = 0;
 static u8 checkedForBombchus = 0;
 Actor* lastTrapChest = 0;
 Actor* bomb = 0;
-Actor* fairy = 0;
+EnElf* fairy = 0;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     lastTrapChest = 0;
@@ -91,9 +92,9 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     if (fairy != 0 && thisx == lastTrapChest) {
-        for (int i = 0x928; i < 0x934; i++) {
-            *(((u8*)(fairy)) + i) = 0; // evil dark fairy (inner color)
-        }
+        fairy->innerColor.r = 0; // evil dark fairy
+        fairy->innerColor.g = 0;
+        fairy->innerColor.b = 0;
 
         if (gSaveContext.health <= 16 || gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO) {
             gSaveContext.health = 0;
@@ -183,7 +184,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         }
         // Unhealing fairy
         else if (damageType == 6) {
-            fairy = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
+            fairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
             PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
         }
         // Explosive Rupee Trap

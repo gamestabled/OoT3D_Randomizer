@@ -4,6 +4,7 @@
 #include "settings.h"
 #include "player.h"
 #include "settings.h"
+#include "fairy.h"
 
 #define PlayerActor_Init_addr 0x191844
 #define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
@@ -66,7 +67,13 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    Player* this = (Player*) thisx;
     PlayerActor_Update(thisx, globalCtx);
+
+    if (this->naviActor != 0) {
+        updateNaviColors((EnElf*)this->naviActor);
+    }
+
     if (healthDecrement <= 0) {
         return;
     }

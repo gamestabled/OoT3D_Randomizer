@@ -950,6 +950,14 @@ string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask 
                                         "Does not apply when trading masks.";              //
                                                                                            //
 /*------------------------------                                                           //
+|          NAVI COLORS         |                                                           //
+------------------------------*/                                                           //
+string_view naviColorsDesc            = "Inner color is for the main light orb, outer color"
+                                        "is for the aura.\n\n"                             //
+                                        "The Rainbow option will make the color change\n"  //
+                                        "continuously in a 3 seconds loop.";               //
+                                                                                           //
+/*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //
 ------------------------------*/                                                           //
 string_view coloredKeysDesc           = "If set, small key models will be colored\n"       //
