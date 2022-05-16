@@ -180,8 +180,8 @@ void ItemTable_Init() {                                    //English name       
     itemTable[RED_RUPEE]                         = Item(Text{"Red Rupee",                       "Rubis rouge",                      "Rupia roja"},                              ITEMTYPE_ITEM, GI_RUPEE_RED,         false, &noVariable,     RED_RUPEE);
     itemTable[PURPLE_RUPEE]                      = Item(Text{"Purple Rupee",                    "Rubis pourpre",                    "Rupia morada"},                            ITEMTYPE_ITEM, GI_RUPEE_PURPLE,      false, &noVariable,     PURPLE_RUPEE);
     itemTable[HUGE_RUPEE]                        = Item(Text{"Huge Rupee",                      "Énorme rubis",                     "Rupia gigante"},                           ITEMTYPE_ITEM, GI_RUPEE_GOLD,        false, &noVariable,     HUGE_RUPEE);
-    itemTable[PIECE_OF_HEART]                    = Item(Text{"Piece of Heart",                  "Quart de cœur",                    "Pieza de corazón"},                        ITEMTYPE_ITEM, GI_HEART_PIECE,       false, &PieceOfHeart,   PIECE_OF_HEART);
-    itemTable[HEART_CONTAINER]                   = Item(Text{"Heart Container",                 "Réceptacle de cœur",               "Contenedor de corazón"},                   ITEMTYPE_ITEM, GI_HEART_CONTAINER_2, false, &HeartContainer, HEART_CONTAINER);
+    itemTable[PIECE_OF_HEART]                    = Item(Text{"Piece of Heart",                  "Quart de cœur",                    "Pieza de corazón"},                        ITEMTYPE_ITEM, GI_HEART_PIECE,       true,  &PieceOfHeart,   PIECE_OF_HEART);
+    itemTable[HEART_CONTAINER]                   = Item(Text{"Heart Container",                 "Réceptacle de cœur",               "Contenedor de corazón"},                   ITEMTYPE_ITEM, GI_HEART_CONTAINER_2, true,  &HeartContainer, HEART_CONTAINER);
     itemTable[ICE_TRAP]                          = Item(Text{"Ice Trap",                        "Piège de glace",                   "Trampa de hielo"},                         ITEMTYPE_ITEM, GI_ICE_TRAP,          false, &noVariable,     ICE_TRAP);
     itemTable[MILK]                              = Item(Text{"Milk",                            "Lait",                             "Leche Lon Lon"},                           ITEMTYPE_ITEM, GI_MILK,              false, &noVariable,     NONE);
 
@@ -205,7 +205,7 @@ void ItemTable_Init() {                                    //English name       
     itemTable[BLUE_POTION_REFILL]                = Item(Text{"Blue Potion Refill",              "Potion bleue",                     "Recarga de poción azul"},                  ITEMTYPE_REFILL, GI_POTION_BLUE,    false, &noVariable,  NONE);
 
     //Treasure Game
-    itemTable[TREASURE_GAME_HEART]               = Item(Text{"Piece of Heart (Treasure Chest Minigame)",    "Quart de cœur (Chasse-aux-trésors)",   "Pieza de corazón (Cofre del Tesoro)"},     ITEMTYPE_ITEM, GI_HEART_PIECE_WIN,  false, &PieceOfHeart, TREASURE_GAME_HEART);
+    itemTable[TREASURE_GAME_HEART]               = Item(Text{"Piece of Heart (Treasure Chest Minigame)",    "Quart de cœur (Chasse-aux-trésors)",   "Pieza de corazón (Cofre del Tesoro)"},     ITEMTYPE_ITEM, GI_HEART_PIECE_WIN,  true,  &PieceOfHeart, TREASURE_GAME_HEART);
     itemTable[TREASURE_GAME_GREEN_RUPEE]         = Item(Text{"Green Rupee (Treasure Chest Minigame)",       "Rubis vert (Chasse-aux-trésors)",      "Rupia Verde (Cofre del Tesoro)"},          ITEMTYPE_ITEM, GI_RUPEE_GREEN_LOSE, false, &noVariable,   TREASURE_GAME_GREEN_RUPEE);
 
     //Shop Items                                                                                                                                                                                                                                     price

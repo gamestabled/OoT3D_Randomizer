@@ -1900,6 +1900,7 @@ namespace Settings {
           LogicLensShadowMQ.SetSelectedIndex(1);
           LogicLensBotwMQ.SetSelectedIndex(1);
           LogicLensGtgMQ.SetSelectedIndex(1);
+          LogicFlamingChests.SetSelectedIndex(1);
         }
         if(currentSetting->GetSelectedOptionIndex() >= 2){ //intermediate options
           LogicLabWallGS.SetSelectedIndex(1);
