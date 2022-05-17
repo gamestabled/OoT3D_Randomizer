@@ -836,6 +836,12 @@ namespace Settings {
     &IgnoreMaskReaction,
   };
 
+  //Function to make options vectors for Navi and Tunic colors without the "Same as ..." option
+  std::vector<std::string> VectorCopyExceptLastElement(std::vector<std::string> vect) {
+      std::vector<std::string> copy(vect.begin(), std::prev(vect.end()));
+      return copy;
+  }
+
   static std::vector<std::string> gauntletOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
@@ -854,7 +860,8 @@ namespace Settings {
     "Lime",
     "Purple",
   };
-  static std::vector<std::string> tunicOptions = {
+
+  static std::vector<std::string> childTunicOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
     std::string(CUSTOM_COLOR_STR),
@@ -885,8 +892,12 @@ namespace Settings {
     "Magenta",
     "Mauve",
     "Silver",
-    "Gold"
+    "Gold",
+    "Same as Kokiri",
   };
+  #define SAME_AS_KOKIRI (childTunicOptions.size() - 1)
+  static std::vector<std::string> tunicOptions = VectorCopyExceptLastElement(childTunicOptions);
+
   static std::vector<std::string> naviOuterOptionNames = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
@@ -915,12 +926,7 @@ namespace Settings {
   };
   #define RAINBOW_NAVI (naviOuterOptionNames.size() - 2)
   #define SAME_AS_INNER (naviOuterOptionNames.size() - 1)
-
-  std::vector<std::string> NaviInnerOptionNamesVector() {
-      std::vector<std::string> vect(naviOuterOptionNames.begin(), std::prev(naviOuterOptionNames.end()));
-      return vect;
-  }
-  static std::vector<std::string> naviInnerOptionNames = NaviInnerOptionNamesVector();
+  static std::vector<std::string> naviInnerOptionNames = VectorCopyExceptLastElement(naviOuterOptionNames);
 
   static std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
@@ -930,7 +936,7 @@ namespace Settings {
   };
 
   Option CustomTunicColors          = Option::Bool("Custom Tunic Colors",    {"Off", "On"},             {""},                                                                                                                                                             OptionCategory::Cosmetic);
-  Option ChildTunicColor            = Option::U8  ("  Child Tunic Color",    tunicOptions,              cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               3); // Kokiri Green
+  Option ChildTunicColor            = Option::U8  ("  Child Tunic Color",    childTunicOptions,         cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,              31); // Same as Kokiri
   Option KokiriTunicColor           = Option::U8  ("  Kokiri Tunic Color",   tunicOptions,              cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               3); // Kokiri Green
   Option GoronTunicColor            = Option::U8  ("  Goron Tunic Color",    tunicOptions,              cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               4); // Goron Red
   Option ZoraTunicColor             = Option::U8  ("  Zora Tunic Color",     tunicOptions,              cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               5); // Zora Blue
@@ -1984,7 +1990,7 @@ namespace Settings {
       KokiriTunicColor.Hide();
       GoronTunicColor.Hide();
       ZoraTunicColor.Hide();
-      ChildTunicColor.SetSelectedIndex(3);  //Kokiri Green
+      ChildTunicColor.SetSelectedIndex(31); //Same as Kokiri
       KokiriTunicColor.SetSelectedIndex(3); //Kokiri Green
       GoronTunicColor.SetSelectedIndex(4);  //Goron Red
       ZoraTunicColor.SetSelectedIndex(5);   //Zora Blue
@@ -2216,10 +2222,14 @@ namespace Settings {
   //Function to update cosmetics options depending on choices
   static void UpdateCosmetics() {
 
-    ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
     ChooseFinalColor(KokiriTunicColor, finalKokiriTunicColor, tunicColors);
     ChooseFinalColor(GoronTunicColor, finalGoronTunicColor, tunicColors);
     ChooseFinalColor(ZoraTunicColor, finalZoraTunicColor, tunicColors);
+    if (ChildTunicColor.Is(SAME_AS_KOKIRI)) {
+      finalChildTunicColor = finalKokiriTunicColor;
+    } else {
+      ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
+    }
     ChooseFinalColor(SilverGauntletsColor, finalSilverGauntletsColor, gauntletColors);
     ChooseFinalColor(GoldGauntletsColor, finalGoldGauntletsColor, gauntletColors);
     ChooseFinalNaviColor(IdleNaviInnerColor, IdleNaviOuterColor, finalIdleNaviInnerColor, finalIdleNaviOuterColor);
