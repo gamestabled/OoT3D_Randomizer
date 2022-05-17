@@ -733,7 +733,7 @@ static void Gfx_ShowMenu(void) {
     pressed = 0;
 
     Draw_ClearFramebuffer();
-    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+    if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -873,7 +873,7 @@ static void Gfx_ShowMenu(void) {
                 showingLegend = false;
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
                 break;
             } else if (pressed & BUTTON_R1) {
                 showingLegend = false;
@@ -908,7 +908,7 @@ static void Gfx_ShowMenu(void) {
         Gfx_DrawButtonPrompts();
         Gfx_DrawHeader();
         Draw_CopyBackBuffer();
-        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+        if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
         pressed = Input_WaitWithTimeout(1000, closingButton);
 
@@ -917,7 +917,7 @@ static void Gfx_ShowMenu(void) {
 
 static void Gfx_ShowMultiplayerSyncMenu(void) {
     Draw_ClearFramebuffer();
-    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+    if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -954,7 +954,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
                 mp_isSyncing = false;
                 mSaveContextInit = true;
                 break;
@@ -972,7 +972,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
                 mp_isSyncing = false;
                 break;
             }
@@ -980,7 +980,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
         }
 
         Draw_CopyBackBuffer();
-        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+        if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
         svcSleepThread(1000 * 1000 * 1000LL);
 

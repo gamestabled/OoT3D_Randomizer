@@ -340,7 +340,7 @@ void Multiplayer_Run(void) {
             break;
         case 1:
             // Connect or host: Scan for a bit before creating a network
-            if (netScanChecks < (gSettingsContext.playOption == 0 ? 3 : 30)) {
+            if (netScanChecks < (gSettingsContext.playOption == PLAY_ON_CONSOLE ? 3 : 30)) {
                 netScanChecks++;
 
                 size_t total_networks = 0;
@@ -374,7 +374,7 @@ void Multiplayer_Run(void) {
             } else {
                 u8 max_players = UDS_MAXNODES;
                 // Citra crashes when allowing too many nodes
-                if (gSettingsContext.playOption == 1) {
+                if (gSettingsContext.playOption == PLAY_ON_CITRA) {
                     max_players /= 2;
                 }
                 udsNetworkStruct networkstruct;

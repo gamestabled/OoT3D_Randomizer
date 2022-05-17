@@ -26,7 +26,7 @@ void EnGs_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
 void EnHintstone_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     // Destroy the hintstones on Citra as they cause huge lag when entered
-    if (gSettingsContext.playOption == 1) {
+    if (gSettingsContext.playOption == PLAY_ON_CITRA) {
         Actor_Kill(thisx);
         return;
     }
