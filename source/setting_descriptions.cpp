@@ -1581,7 +1581,7 @@ string_view GlitchNaviDive_StickDescDisabled          = "A Navi dive is a type o
                                                         "the usual method for achieving this is a TSC, it\n"
                                                         "is also possible to perform using a jump attack\n"//
                                                         "with deku sticks.";                               //
-string_view GlitchNaviDive_StickDescNovice            = "You may be expected tp enter BotW with a stick\n" //
+string_view GlitchNaviDive_StickDescNovice            = "You may be expected to enter BotW with a stick\n" //
                                                         "Navi dive.";                                      //
 string_view GlitchNaviDive_StickDescIntermediate      = "You may be expected to use the LH to ZD shortcut\n"
                                                         "with a stick Navi dive.";                         //
