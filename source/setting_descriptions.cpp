@@ -1439,7 +1439,7 @@ string_view GlitchHoverBoostDescDisabled              = "Equipping hover boots w
                                                         "cause him to keep the high knockback speed and\n" //
                                                         "lets him traverse large gaps.\n"                  //
                                                         "If performed at the edge of a platform Link will\n"
-                                                        "instead perform a super jump which has less range\n"
+                                                        "instead perform a mega jump which has less range\n"
                                                         "but more height than a hover boost.";             //
 string_view GlitchHoverBoostDescNovice                = "Hover boosts that do not need the maximum speed\n"//
                                                         "may be required.";                                //
