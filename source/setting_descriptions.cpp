@@ -1400,8 +1400,9 @@ string_view GlitchISGDescDisabled                     = "Shortened to ISG, allow
                                                         "interrupting a crouch stab.";                     //
 string_view GlitchISGDescNovice                       = "ISG may be required to kill certain enemies,\n"   //
                                                         "or to Bomb Hover when enabled.";                  //
-string_view GlitchISGDescIntermediate                 = "";                                                //
-string_view GlitchISGDescAdvanced                     = "";
+string_view GlitchISGDescIntermediate                 = "You may be required to use a bomb to activate ISG.";
+string_view GlitchISGDescAdvanced                     = "You may be required to use a bomb to activate ISG\n"
+                                                        "repeatedly or while under attack.";               //
 /* Hover */                                                                                                //
 string_view GlitchHoverDescDisabled                   = "Hovering allows Link to consecutively backflip\n" //
                                                         "in the air without falling. By shielding\n"       //
@@ -1420,14 +1421,14 @@ string_view GlitchBombOIDescDisabled                  = "Allowing a bomb to expl
                                                         "moving and then attempting to pull out a cutscene\n"
                                                         "item on a specific frame will cause Link to play\n"
                                                         "an invisible ocarina instead.\n"                  //
-                                                        "This will only work if bombs are not dimmed on the\n"
+                                                        "This will only work if bombs are not dimmed on the"
                                                         "frame you use the cutscene item.";                //
 string_view GlitchBombOIDescNovice                    = "You may be expected to use ocarina items with a\n"//
                                                         "bomb to play warp songs.";                        //
 string_view GlitchBombOIDescIntermediate              = "You may be expected to use ocarina items with a\n"//
                                                         "bomb to play the ocarina where Link's position\n" //
                                                         "matters.";                                        //
-string_view GlitchBombOIDescAdvanced                  = "You may be expected to use restricted items to use\n"
+string_view GlitchBombOIDescAdvanced                  = "You may be expected to use restricted items to use"
                                                         "the cutscene item or to make the bombs usable on\n"
                                                         "the correct frame.";                              //
 string_view GlitchBombOIDescExpert                    = "You may be expected to use restricted items to\n" //
@@ -1436,12 +1437,15 @@ string_view GlitchBombOIDescExpert                    = "You may be expected to 
 /* Hover Boost */                                                                                          //
 string_view GlitchHoverBoostDescDisabled              = "Equipping hover boots when Link takes damage will\n"
                                                         "cause him to keep the high knockback speed and\n" //
-                                                        "lets him traverse large gaps.";                   //
+                                                        "lets him traverse large gaps.\n"                  //
+                                                        "If performed at the edge of a platform Link will\n"
+                                                        "instead perform a super jump which has less range\n"
+                                                        "but more height than a hover boost.";             //
 string_view GlitchHoverBoostDescNovice                = "Hover boosts that do not need the maximum speed\n"//
                                                         "may be required.";                                //
-string_view GlitchHoverBoostDescIntermediate          = "Hover boosts that do need the maximum speed may be\n"
+string_view GlitchHoverBoostDescIntermediate          = "Hover boosts that do need the maximum speed may be"
                                                         "required.";                                       //
-string_view GlitchHoverBoostDescAdvanced              = "Hover boosts that use more complex movement during\n"
+string_view GlitchHoverBoostDescAdvanced              = "Hover boosts that use more complex movement during"
                                                         "the hover may be required.";                      //
 /* Super Slide */                                                                                          //
 string_view GlitchSuperSlideDescDisabled              = "Holding the circle pad just outside the dead zone\n"
@@ -1450,16 +1454,16 @@ string_view GlitchSuperSlideDescDisabled              = "Holding the circle pad 
                                                         "speeds indefinitely.";                            //
 string_view GlitchSuperSlideDescNovice                = "Forward extended super slides (FESSes) where Link\n"
                                                         "is damaged by an explosion may be required.";     //
-string_view GlitchSuperSlideDescIntermediate          = "Hammer extended super slides where the recoil from\n"
+string_view GlitchSuperSlideDescIntermediate          = "Hammer extended super slides where the recoil from"
                                                         "a hammer crouch stab is used may be required.";   //
 string_view GlitchSuperSlideDescAdvanced              = "Hyper Extended Super Slides (HESSes) and\n"       //
-                                                        "damageless FESSes where Link rolls into a bomb may\n"
+                                                        "damageless FESSes where Link rolls into a bomb may"
                                                         "be required.";                                    //
 string_view GlitchSuperSlideDescExpert                = "HESSes with more precise movement may be required.";
 /* Megaflip */                                                                                             //
 string_view GlitchMegaflipDescDisabled                = "A backflip or sidehop with high speed from an\n"  //
                                                         "attack hitting your shield during i-frames. This\n"
-                                                        "is normally achieved by rolling into an explosion.\n\n"
+                                                        "is normally achieved by rolling into an explosion.\n"
                                                         "Equipping hover boots to preserve the high speed\n"
                                                         "when landing is known as a hoverflip.";           //
 string_view GlitchMegaflipDescNovice                  = "You may be expected to perform megaflips on flat\n"
@@ -1474,16 +1478,16 @@ string_view GlitchMegaflipDescAdvanced                = "You may be expected to 
                                                         "novice megaflips with a bombchu";                 //
 string_view GlitchMegaflipDescExpert                  = "You may be expected to perform intermediate\n"    //
                                                         "megaflips with a bombchu.";                       //
-string_view GlitchMegaflipDescHero                    = "You may be expected to perform any megaflip with a\n"
+string_view GlitchMegaflipDescHero                    = "You may be expected to perform any megaflip with a"
                                                         "bombchu.";                                        //
 /* A-Slide */                                                                                              //
 string_view GlitchASlideDescDisabled                  = "An A-slide is performed the same as a megaflip\n" //
                                                         "except without pressing the A button at the end.\n"
-                                                        "This causes child Link's collision to glitch below\n"
+                                                        "This causes child Link's collision to glitch below"
                                                         "the ground and lets him bypass certain actors.";  //
 string_view GlitchASlideDescNovice                    = "You may be expected to perform A-slides to pass\n"//
                                                         "actors you can't press A to interact with.";      //
-string_view GlitchASlideDescIntermediate              = "You may be expected to perform A-slides quickly or\n"
+string_view GlitchASlideDescIntermediate              = "You may be expected to perform A-slides quickly or"
                                                         "around actors that can be interacted with.";      //
 string_view GlitchASlideDescAdvanced                  = "You may be expected to perform novice A-slides\n" //
                                                         "with a bombchu.";                                 //
@@ -1494,48 +1498,59 @@ string_view GlitchHammerSlideDescDisabled             = "Equipping hover boots a
                                                         "against a wall preserves the recoil speed which\n"//
                                                         "allows Link to cross larger gaps than usual.";    //
 string_view GlitchHammerSlideDescNovice               = "Simple hammer slides may be required";            //
-string_view GlitchHammerSlideDescIntermediate         = "Hammer slides which require good movement and high\n"
+string_view GlitchHammerSlideDescIntermediate         = "Hammer slides which require good movement and high"
                                                         "speed may be required.";                          //
 /* Ledge Cancel */                                                                                         //
 string_view GlitchLedgeCancelDescDisabled             = "Climbing a short ledge and shielding damage will\n"
                                                         "prevent the ledge climbing state from ending.\n"  //
-                                                        "This state allows Link to walk through some actors\n"
+                                                        "This state allows Link to walk through some actors"
                                                         "such as boulders and NPCs.";                      //
-string_view GlitchLedgeCancelDescNovice               = "You may be expected to perform ledge cancels using\n"
+string_view GlitchLedgeCancelDescNovice               = "You may be expected to perform ledge cancels using"
                                                         "bombs as a damage source.";                       //
 string_view GlitchLedgeCancelDescIntermediate         = "You may be expected to perform ledge cancels in\n"//
                                                         "places with little room.";                        //
-string_view GlitchLedgeCancelDescAdvanced             = "You may be expected to perform ledge cancels using\n"
+string_view GlitchLedgeCancelDescAdvanced             = "You may be expected to perform ledge cancels using"
                                                         "bombchus as a damage source.";                    //
 /* Action Swap */                                                                                          //
 string_view GlitchActionSwapDescDisabled              = "Action swap allows Link to switch between 2 held\n"
                                                         "items without the put away/equip animations.\n"   //
                                                         "This can be exploited to produce various effects.";
-string_view GlitchActionSwapDescNovice                = "You may be expected to use shallow water to set up\n"
+string_view GlitchActionSwapDescNovice                = "You may be expected to use shallow water to set up"
                                                         "action swap.";                                    //
 string_view GlitchActionSwapDescAdvanced              = "You may be expected to use bombchus to set up\n"  //
                                                         "action swap.";                                    //
 /* QPA */                                                                                                  //
-string_view GlitchQPADescDisabled                     = "";
-string_view GlitchQPADescNovice                       = "";
-string_view GlitchQPADescIntermediate                 = "";
-string_view GlitchQPADescAdvanced                     = "";
-string_view GlitchQPADescExpert                       = "";
+string_view GlitchQPADescDisabled                     = "Certain events can cancel putting away an item\n" //
+                                                        "which later lets Link put it away without an\n"   //
+                                                        "animation. This can be used with sticks to access\n"
+                                                        "a glitched damage value with the properties of\n" //
+                                                        "hammer and fire arrows, or with a bottle to store\n"
+                                                        "a cutscene for ocarina items.";                   //
+string_view GlitchQPADescNovice                       = "You may be expected to get QPA using the boots\n" //
+                                                        "animation to delay putting away the item and a\n" //
+                                                        "bomb.";                                           //
+string_view GlitchQPADescIntermediate                 = "You may be expected to get QPA using only a bomb.";
+string_view GlitchQPADescAdvanced                     = "You may be expected to get QPA using a ledge grab\n"
+                                                        "to interrupt putting away the item.";             //
+string_view GlitchQPADescExpert                       = "You may be expected to get QPA from enemy attacks.";
 /* Hookshot Clip */                                                                                        //
 string_view GlitchHookshotClipDescDisabled            = "Hookshot Clipping allows Link to hookshot through\n"
                                                         "certain walls, which is useful if a valid\n"      //
                                                         "target is on the other side.";                    //
 string_view GlitchHookshotClipDescNovice              = "Basic Hookshot Clipping may be required.";        //
-string_view GlitchHookshotClipDescIntermediate        = "";
+string_view GlitchHookshotClipDescIntermediate        = "Hookshot clips with precise angles and poor\n"    //
+                                                        "visibility may be required.";                     //
 /* Hookshot Jump: Bonk */                                                                                  //
 string_view GlitchHookshotJump_BonkDescDisabled       = "A Hookshot Jump is an umbrella term for techniques"
                                                         "that launch Link into the sky using the Hookshot\n"
                                                         "in various ways, sometimes together with\n"       //
                                                         "other items. The bonk method only requires the\n" //
                                                         "Hookshot itself.";                                //
-string_view GlitchHookshotJump_BonkDescNovice         = "";
-string_view GlitchHookshotJump_BonkDescIntermediate   = "";
-string_view GlitchHookshotJump_BonkDescAdvanced       = "";
+string_view GlitchHookshotJump_BonkDescNovice         = "Simple hookshot jumps against large flat walls of\n"
+                                                        "hookshottable surfaces may be required.";         //
+string_view GlitchHookshotJump_BonkDescIntermediate   = "Less lenient hookshot jumps may be required.";    //
+string_view GlitchHookshotJump_BonkDescAdvanced       = "Hookshot jumps with precise midair movement may be"
+                                                        "required.";                                       //
 /* Hookshot Jump: Boots */                                                                                 //
 string_view GlitchHookshotJump_BootsDescDisabled      = "This Hookshot Jump technique is one of the easier\n"
                                                         "ones, and require any pair of boots.";            //
@@ -1543,17 +1558,35 @@ string_view GlitchHookshotJump_BootsDescNovice        = "Only relatively short H
                                                         "may be required.";                                //
 string_view GlitchHookshotJump_BootsDescIntermediate  = "Higher Hookshot Jumps with boots, where you look\n"
                                                         "further up or downwards may be required.";        //
-string_view GlitchHookshotJump_BootsDescAdvanced      = "";
+string_view GlitchHookshotJump_BootsDescAdvanced      = "Hookshot jumps that require a lot of height and\n"//
+                                                        "precise midair movement may be required.";        //
 /* Cutscene Dives */                                                                                       //
-string_view GlitchCutsceneDiveDescDisabled            = "";
-string_view GlitchCutsceneDiveDescNovice              = "";
-string_view GlitchCutsceneDiveDescIntermediate        = "";
-string_view GlitchCutsceneDiveDescAdvanced            = "";
+string_view GlitchCutsceneDiveDescDisabled            = "Water physics won't effect Link if he enters the\n"
+                                                        "water while a cutscene is playing, allowing him\n"//
+                                                        "to sink to the bottom.";                      //
+string_view GlitchCutsceneDiveDescNovice              = "Attempting to use Farore's Wind (when it's already"
+                                                        "set) with another magic item active prevents the\n"
+                                                        "water from clearing the FW cutscene until the\n"  //
+                                                        "other effect ends.\n"                             //
+                                                        "You may be expected to use Nayru's Love as the\n" //
+                                                        "other magic effect.";                             //
+string_view GlitchCutsceneDiveDescIntermediate        = "You can catch something in a bottle while standing"
+                                                        "over water using the hover boots to fall through\n"
+                                                        "the water during the catching cutscene.";         //
+string_view GlitchCutsceneDiveDescAdvanced            = "You may be expected to use magic arrows to perform"
+                                                        "Farore's Wind cutscene dives.";                   //
 /* Navi Dive: Stick */                                                                                     //
-string_view GlitchNaviDive_StickDescDisabled          = "";
-string_view GlitchNaviDive_StickDescNovice            = "";
-string_view GlitchNaviDive_StickDescIntermediate      = "";
-string_view GlitchNaviDive_StickDescAdvanced          = "";
+string_view GlitchNaviDive_StickDescDisabled          = "A Navi dive is a type of cutscene dive achieved by"
+                                                        "falling off a ledge while talking to Navi. While\n"
+                                                        "the usual method for achieving this is a TSC, it\n"
+                                                        "is also possible to perform using a jump attack\n"//
+                                                        "with deku sticks.";                               //
+string_view GlitchNaviDive_StickDescNovice            = "You may be expected tp enter BotW with a stick\n" //
+                                                        "Navi dive.";                                      //
+string_view GlitchNaviDive_StickDescIntermediate      = "You may be expected to use the LH to ZD shortcut\n"
+                                                        "with a stick Navi dive.";                         //
+string_view GlitchNaviDive_StickDescAdvanced          = "You may be expected to use the LW to ZR shortcut\n"
+                                                        "with a stick Navi dive.";                         //
 /* TSC */                                                                                                  //
 string_view GlitchTripleSlashClipDescDisabled         = "When doing a three-slash-combo with either the\n" //
                                                         "Kokiri Sword or the Master Sword and put it away,\n"
@@ -1562,26 +1595,34 @@ string_view GlitchTripleSlashClipDescDisabled         = "When doing a three-slas
                                                         "a wall and then put away the sword, Link may clip\n"
                                                         "into a wall behind him if angled correctly.";     //
 string_view GlitchTripleSlashClipDescNovice           = "Basic Triple Slash Clipping may be required.";    //
-string_view GlitchTripleSlashClipDescIntermediate     = "";
-string_view GlitchTripleSlashClipDescAdvanced         = "";
-string_view GlitchTripleSlashClipDescExpert           = "";
+string_view GlitchTripleSlashClipDescIntermediate     = "Some more complex OoB movement may be required."; //
+string_view GlitchTripleSlashClipDescAdvanced         = "Very precise OoB movement may be required.";      //
+string_view GlitchTripleSlashClipDescExpert           = "Very precise TSCs may be required.";              //
 /* Ledge Clip */                                                                                           //
 string_view GlitchLedgeClipDescDisabled               = "A Ledge Clip allows Link to fall through a floor\n"
                                                         "or pass through an object by facing a wall\n"     //
-                                                        "and dropping down to the left in a various ways.\n"
+                                                        "and dropping down to the left in various ways.\n" //
                                                         "These only work as an adult.";                    //
 string_view GlitchLedgeClipDescNovice                 = "Basic Ledge Clips may be required.\n"             //
                                                         "Some require that you let go of the ledge with\n" //
                                                         "a specific timing.";                              //
 string_view GlitchLedgeClipDescIntermediate           = "Certain harder clips may also be required.";      //
-string_view GlitchLedgeClipDescAdvanced               = "";
+string_view GlitchLedgeClipDescAdvanced               = "Ledge clips with complex OoB movement may be\n"   //
+                                                        "required.";                                       //
 /* Seam Walk */                                                                                            //
-string_view GlitchSeamWalkDescDisabled                = "";
-string_view GlitchSeamWalkDescNovice                  = "";
-string_view GlitchSeamWalkDescIntermediate            = "";
-string_view GlitchSeamWalkDescAdvanced                = "";
-string_view GlitchSeamWalkDescExpert                  = "";
-string_view GlitchSeamWalkDescHero                    = "";
+string_view GlitchSeamWalkDescDisabled                = "Where 2 walls come together they form a seam that\n"
+                                                        "Link can stand on. It is possible to use these to\n"
+                                                        "gain height and reach normally inaccessible areas.\n"
+                                                        "Additionally these seams can reach far above the\n"
+                                                        "walls that form them, creating invisible seams."; //
+string_view GlitchSeamWalkDescNovice                  = "Short seam walks up visible walls with ISG may be\n"
+                                                        "required.";                                       //
+string_view GlitchSeamWalkDescIntermediate            = "Short seam walks up visible walls without ISG or\n"
+                                                        "longer seam walks with ISG may be required.";     //
+string_view GlitchSeamWalkDescAdvanced                = "Longer seam walks without ISG may be required.";  //
+string_view GlitchSeamWalkDescExpert                  = "Very precise seam walks may be required.";        //
+string_view GlitchSeamWalkDescHero                    = "Crossing Gerudo Valley as child by walking up a\n"//
+                                                        "wall with the cucco may be required.";            //
 /* Misc Glitches */                                                                                        //
 string_view GlitchWWTEscapeDesc                       = "Using deku nuts and the crawlspace to let you\n"  //
                                                         "move while reading the nearby sign, you can walk\n"
