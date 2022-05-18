@@ -3926,7 +3926,7 @@ void AreaTable_Init() {
 
   areaTable[GERUDO_TRAINING_GROUNDS_LAVA_ROOM] = Area("Gerudo Training Grounds Lava Room", "Gerudo Training Grounds", GERUDO_TRAINING_GROUNDS, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(GERUDO_TRAINING_GROUNDS_UNDERWATER_SILVER_RUPEE_CHEST, {[]{return CanUse(HOOKSHOT) && CanPlay(SongOfTime) && IronBoots && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));}}),
+                  LocationAccess(GERUDO_TRAINING_GROUNDS_UNDERWATER_SILVER_RUPEE_CHEST, {[]{return CanUse(HOOKSHOT) && CanPlay(SongOfTime) && IronBoots && ((LogicFewerTunicRequirements && WaterTimer > 2) || CanUse(ZORA_TUNIC));}}),
                 }, {
                   //Exits
                   Entrance(GERUDO_TRAINING_GROUNDS_CENTRAL_MAZE_RIGHT, {[]{return CanPlay(SongOfTime) || IsChild;}}),
@@ -4414,7 +4414,7 @@ void AreaTable_Init() {
   areaTable[FIRE_TEMPLE_MQ_LOWER] = Area("Fire Temple MQ Lower", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(FIRE_TEMPLE_MQ_MAP_ROOM_SIDE_CHEST, {[]{return IsAdult || KokiriSword || Sticks || Slingshot || Bombs || CanUse(DINS_FIRE);}}),
-                  LocationAccess(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,     {[]{return IsAdult && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC))
+                  LocationAccess(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,     {[]{return IsAdult && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC))
                                                                              && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT))
                                                                              && (CanUse(FIRE_ARROWS) || (CanUse(DINS_FIRE) &&
                                                                                                             ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_QUADRUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) && DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE))
@@ -4427,7 +4427,7 @@ void AreaTable_Init() {
                   Entrance(FIRE_TEMPLE_ENTRYWAY,             {[]{return true;}}),
                   Entrance(FIRE_TEMPLE_MQ_BOSS_ROOM,         {[]{return IsAdult && CanUse(GORON_TUNIC) && CanUse(MEGATON_HAMMER) && BossKeyFireTemple && ((HasFireSource && (LogicFireBossDoorJump || HoverBoots)) || HasAccessTo(FIRE_TEMPLE_MQ_UPPER));}}),
                   Entrance(FIRE_TEMPLE_MQ_LOWER_LOCKED_DOOR, {[]{return SmallKeys(FIRE_TEMPLE, 5) && (IsAdult || KokiriSword);}}),
-                  Entrance(FIRE_TEMPLE_MQ_BIG_LAVA_ROOM,     {[]{return IsAdult && (LogicFewerTunicRequirements || CanUse(GORON_TUNIC)) && CanUse(MEGATON_HAMMER);}}),
+                  Entrance(FIRE_TEMPLE_MQ_BIG_LAVA_ROOM,     {[]{return IsAdult && ((LogicFewerTunicRequirements && FireTimer > 2) || CanUse(GORON_TUNIC)) && CanUse(MEGATON_HAMMER);}}),
   });
 
   areaTable[FIRE_TEMPLE_MQ_LOWER_LOCKED_DOOR] = Area("Fire Temple MQ Lower Locked Door", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {
@@ -4515,7 +4515,7 @@ void AreaTable_Init() {
   }, {
                   //Exits
                   Entrance(WATER_TEMPLE_ENTRYWAY,            {[]{return true;}}),
-                  Entrance(WATER_TEMPLE_MQ_DIVE,             {[]{return IsAdult && (CanUse(ZORA_TUNIC) || LogicFewerTunicRequirements) && CanUse(IRON_BOOTS);}}),
+                  Entrance(WATER_TEMPLE_MQ_DIVE,             {[]{return IsAdult && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 2)) && CanUse(IRON_BOOTS);}}),
                   Entrance(WATER_TEMPLE_MQ_DARK_LINK_REGION, {[]{return SmallKeys(WATER_TEMPLE, 1) && IsAdult && CanUse(LONGSHOT);}}),
   });
 
@@ -4543,11 +4543,11 @@ void AreaTable_Init() {
                   EventAccess(&NutPot,   {[]{return true;}}),
   }, {
                   //Locations
-                  LocationAccess(WATER_TEMPLE_MQ_BOSS_KEY_CHEST, {[]{return IsAdult && (CanUse(ZORA_TUNIC) || LogicFewerTunicRequirements) && CanUse(DINS_FIRE) && (LogicWaterDragonJumpDive || CanDive || CanUse(IRON_BOOTS));}}),
+                  LocationAccess(WATER_TEMPLE_MQ_BOSS_KEY_CHEST, {[]{return IsAdult && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 2)) && CanUse(DINS_FIRE) && (LogicWaterDragonJumpDive || CanDive || CanUse(IRON_BOOTS));}}),
                   LocationAccess(WATER_TEMPLE_MQ_GS_RIVER,       {[]{return true;}}),
   }, {
                   //Exits
-                  Entrance(WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS, {[]{return IsAdult && (CanUse(ZORA_TUNIC) || LogicFewerTunicRequirements) && CanUse(DINS_FIRE) && CanUse(IRON_BOOTS);}}),
+                  Entrance(WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS, {[]{return IsAdult && (CanUse(ZORA_TUNIC) || (LogicFewerTunicRequirements && WaterTimer > 2)) && CanUse(DINS_FIRE) && CanUse(IRON_BOOTS);}}),
   });
 
   areaTable[WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS] = Area("Water Temple MQ Basement Gated Areas", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -4839,7 +4839,7 @@ void AreaTable_Init() {
 
   areaTable[GERUDO_TRAINING_GROUNDS_MQ_UNDERWATER] = Area("Gerudo Training Grounds MQ Underwater", "Gerudo Training Grounds", GERUDO_TRAINING_GROUNDS, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(GERUDO_TRAINING_GROUNDS_MQ_UNDERWATER_SILVER_RUPEE_CHEST, {[]{return HasFireSource && IsAdult && CanUse(IRON_BOOTS) && (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC)) && CanTakeDamage;}}),
+                  LocationAccess(GERUDO_TRAINING_GROUNDS_MQ_UNDERWATER_SILVER_RUPEE_CHEST, {[]{return HasFireSource && IsAdult && CanUse(IRON_BOOTS) && ((LogicFewerTunicRequirements && WaterTimer > 2) || CanUse(ZORA_TUNIC)) && CanTakeDamage;}}),
   }, {});
 
   areaTable[GERUDO_TRAINING_GROUNDS_MQ_LEFT_SIDE] = Area("Gerudo Training Grounds MQ Left Side", "Gerudo Training Grounds", GERUDO_TRAINING_GROUNDS, NO_DAY_NIGHT_CYCLE, {}, {
