@@ -14,3 +14,7 @@ void EnSyatekiMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
         EnSyatekiMan_Init(thisx, globalCtx);
     }
 }
+
+u32 EnSyatekiMan_UseRemindText(void) {
+	return gSaveContext.linkAge == 0 && (gSaveContext.upgrades & 0x7) == 0;
+}
