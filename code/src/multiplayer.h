@@ -24,7 +24,7 @@ void Multiplayer_Send_LinkSFX(u32 sfxID);
 // Shared Progress
 u8 Multiplayer_GetNeededPacketsMask(void);
 void Multiplayer_Send_FullSyncRequest(u8 neededPacketsMask);
-void Multiplayer_Send_FullSyncPing(void);
+void Multiplayer_Send_FullSyncPing(u16 targetID);
 void Multiplayer_Send_BaseSync(u16 targetID);
 void Multiplayer_Send_FullSceneFlagSync(u16 targetID, u8 part);
 void Multiplayer_Send_Item(u8 slot, ItemID item);

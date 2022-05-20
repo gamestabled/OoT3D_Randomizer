@@ -29,10 +29,8 @@ bool mp_isSyncing = false;
 bool mp_foundSyncer = false;
 bool mp_completeSyncs[6];
 bool mSaveContextInit = false;
-/// When shared progress is on, whoever in a network is the first to load a savefile
-/// with a unique seed hash becomes a "Sync Group Host". That player is the one that other
-/// players, who are in the same sync group, will sync with when they start their game.
-static bool isSyncGroupHost = false;
+// Shared Progress: The ID that this client fullsyncs with
+static u16 fullSyncerID = 0;
 
 // Network Vars
 u32* mBuffer;
@@ -209,7 +207,6 @@ void Multiplayer_OnFileLoad(void) {
 
     if (!mSaveContextInit) {
         mSaveContextInit = true;
-        isSyncGroupHost = true;
         Multiplayer_Overwrite_mSaveContext();
     } else {
         Multiplayer_Overwrite_gSaveContext();
@@ -961,19 +958,22 @@ void Multiplayer_Send_FullSyncRequest(u8 neededPacketsMask) {
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSYNCREQUEST);
 
     mBuffer[memSpacer++] = neededPacketsMask;
-    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+    Multiplayer_SendPacket(memSpacer, neededPacketsMask == 0 ? UDS_BROADCAST_NETWORKNODEID : fullSyncerID);
 }
 
 void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
-    if (gSettingsContext.mp_SharedProgress == OFF || !isSyncGroupHost || !IsInSameSyncGroup()) {
+    if (gSettingsContext.mp_SharedProgress == OFF || !IsInSameSyncGroup() || !mSaveContextInit) {
         return;
     }
-
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 neededPacketsMask = mBuffer[memSpacer++];
 
-    Multiplayer_Send_FullSyncPing();
+    if (neededPacketsMask == 0) {
+        Multiplayer_Send_FullSyncPing(senderID);
+        return;
+    }
+
     u8 maskSpacer = 0;
     if (neededPacketsMask & 1 << maskSpacer++) {
         Multiplayer_Send_BaseSync(senderID);
@@ -995,21 +995,22 @@ void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
     }
 }
 
-void Multiplayer_Send_FullSyncPing(void) {
+void Multiplayer_Send_FullSyncPing(u16 targetID) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSYNCPING);
 
-    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+    Multiplayer_SendPacket(memSpacer, targetID);
 }
 
 void Multiplayer_Receive_FullSyncPing(u16 senderID) {
-    if (gSettingsContext.mp_SharedProgress == OFF || !IsInSameSyncGroup()) {
+    if (gSettingsContext.mp_SharedProgress == OFF || !IsInSameSyncGroup() || fullSyncerID != 0) {
         return;
     }
 
+    fullSyncerID = senderID;
     mp_foundSyncer = true;
 }
 
