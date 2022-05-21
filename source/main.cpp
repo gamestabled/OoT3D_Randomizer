@@ -43,8 +43,12 @@ int main() {
 
     //launch oot3d directly by holding L and R (cartridge only)
     if (kHeld & KEY_L && kHeld & KEY_R) {
-      aptSetChainloader(0x0004000000033500, 2);
-      break;
+      s64 output = 0;
+      svcGetSystemInfo(&output, 0x20000, 0); // This checks if the app is running on Citra
+      if (!output) {
+        aptSetChainloader(0x0004000000033500, 2);
+        break;
+      }
     }
 
     // Flush and swap framebuffers

@@ -134,10 +134,6 @@ void WriteIngameSpoilerLog() {
     if (loc->IsExcluded()) {
         continue;
     }
-    // Deku Scrubs
-    else if (Settings::Scrubsanity.Is(SCRUBSANITY_OFF) && loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades)) {
-        continue;
-    }
     // Cows
     else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
         continue;
@@ -193,15 +189,39 @@ void WriteIngameSpoilerLog() {
     spoilerData.ItemLocations[spoilerItemIndex].CollectionCheckType = loc->GetCollectionCheck().type;
     spoilerData.ItemLocations[spoilerItemIndex].LocationScene = loc->GetCollectionCheck().scene;
     spoilerData.ItemLocations[spoilerItemIndex].LocationFlag = loc->GetCollectionCheck().flag;
-    if (loc->IsShop()) {
-        spoilerData.ItemLocations[spoilerItemIndex].RevealOnSceneDiscovery = 1;
+
+    // Collect Type and Reveal Type
+    if (key == GANON) {
+        spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_NEVER;
+        spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+    } else if (key == MARKET_BOMBCHU_BOWLING_BOMBCHUS) {
+        spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
+        spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+    }
+    // Shops
+    else if (loc->IsShop()) {
+        if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
+            spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+        } else {
+            spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_SCENE;
+        }
         if (loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
             loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
             loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS) {
-            spoilerData.ItemLocations[spoilerItemIndex].Repeatable = 1;
+            spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
         }
-    } else if (loc->GetHintKey() == NONE) {
-        spoilerData.ItemLocations[spoilerItemIndex].StaticUncollectable = 1;
+    }
+    // Gold Skulltulas
+    else if (loc->IsCategory(Category::cSkulltula) && (
+        (Settings::Tokensanity.Is(TOKENSANITY_OFF)) ||
+        (Settings::Tokensanity.Is(TOKENSANITY_DUNGEONS) && !loc->IsDungeon()) ||
+        (Settings::Tokensanity.Is(TOKENSANITY_OVERWORLD) && loc->IsDungeon()))) {
+        spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+    }
+    // Deku Scrubs
+    else if (loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades) && Settings::Scrubsanity.Is(SCRUBSANITY_OFF)) {
+        spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
+        spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
     }
 
     auto checkGroup = loc->GetCollectionCheckGroup();

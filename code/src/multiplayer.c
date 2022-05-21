@@ -29,10 +29,8 @@ bool mp_isSyncing = false;
 bool mp_foundSyncer = false;
 bool mp_completeSyncs[6];
 bool mSaveContextInit = false;
-/// When shared progress is on, whoever in a network is the first to load a savefile
-/// with a unique seed hash becomes a "Sync Group Host". That player is the one that other
-/// players, who are in the same sync group, will sync with when they start their game.
-static bool isSyncGroupHost = false;
+// Shared Progress: The ID that this client fullsyncs with
+static u16 fullSyncerID = 0;
 
 // Network Vars
 u32* mBuffer;
@@ -209,7 +207,6 @@ void Multiplayer_OnFileLoad(void) {
 
     if (!mSaveContextInit) {
         mSaveContextInit = true;
-        isSyncGroupHost = true;
         Multiplayer_Overwrite_mSaveContext();
     } else {
         Multiplayer_Overwrite_gSaveContext();
@@ -340,7 +337,7 @@ void Multiplayer_Run(void) {
             break;
         case 1:
             // Connect or host: Scan for a bit before creating a network
-            if (netScanChecks < (gSettingsContext.playOption == 0 ? 3 : 30)) {
+            if (netScanChecks < (gSettingsContext.playOption == PLAY_ON_CONSOLE ? 3 : 30)) {
                 netScanChecks++;
 
                 size_t total_networks = 0;
@@ -374,7 +371,7 @@ void Multiplayer_Run(void) {
             } else {
                 u8 max_players = UDS_MAXNODES;
                 // Citra crashes when allowing too many nodes
-                if (gSettingsContext.playOption == 1) {
+                if (gSettingsContext.playOption == PLAY_ON_CITRA) {
                     max_players /= 2;
                 }
                 udsNetworkStruct networkstruct;
@@ -961,19 +958,22 @@ void Multiplayer_Send_FullSyncRequest(u8 neededPacketsMask) {
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSYNCREQUEST);
 
     mBuffer[memSpacer++] = neededPacketsMask;
-    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+    Multiplayer_SendPacket(memSpacer, neededPacketsMask == 0 ? UDS_BROADCAST_NETWORKNODEID : fullSyncerID);
 }
 
 void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
-    if (gSettingsContext.mp_SharedProgress == OFF || !isSyncGroupHost || !IsInSameSyncGroup()) {
+    if (gSettingsContext.mp_SharedProgress == OFF || !IsInSameSyncGroup() || !mSaveContextInit) {
         return;
     }
-
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 neededPacketsMask = mBuffer[memSpacer++];
 
-    Multiplayer_Send_FullSyncPing();
+    if (neededPacketsMask == 0) {
+        Multiplayer_Send_FullSyncPing(senderID);
+        return;
+    }
+
     u8 maskSpacer = 0;
     if (neededPacketsMask & 1 << maskSpacer++) {
         Multiplayer_Send_BaseSync(senderID);
@@ -995,21 +995,22 @@ void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
     }
 }
 
-void Multiplayer_Send_FullSyncPing(void) {
+void Multiplayer_Send_FullSyncPing(u16 targetID) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSYNCPING);
 
-    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+    Multiplayer_SendPacket(memSpacer, targetID);
 }
 
 void Multiplayer_Receive_FullSyncPing(u16 senderID) {
-    if (gSettingsContext.mp_SharedProgress == OFF || !IsInSameSyncGroup()) {
+    if (gSettingsContext.mp_SharedProgress == OFF || !IsInSameSyncGroup() || fullSyncerID != 0) {
         return;
     }
 
+    fullSyncerID = senderID;
     mp_foundSyncer = true;
 }
 
@@ -1256,6 +1257,12 @@ void Multiplayer_Receive_Item(u16 senderID) {
         return;
     }
 
+    // Add bombchu ammo when they're unlocked and in logic
+    if (gSettingsContext.bombchusInLogic && slot == SLOT_BOMBCHU && mSaveContext.items[slot] == ITEM_NONE && item != ITEM_NONE) {
+        mSaveContext.ammo[SLOT_BOMBCHU] = 20;
+        prevAmmo[SLOT_BOMBCHU] = 20;
+    }
+
     mSaveContext.items[slot] = item;
     prevItems[slot] = item;
 }
@@ -1496,6 +1503,47 @@ void Multiplayer_Receive_UpgradesBit(u16 senderID) {
         mSaveContext.upgrades &= ~(1 << bit);
         prevUpgrades &= ~(1 << bit);
     }
+
+    // Add ammo
+    if (setOrUnset) {
+        u8 upgradeNum = 0;
+        switch (bit) {
+            case 0:
+            case 1:
+                upgradeNum = (mSaveContext.upgrades >> 0) & 0b11;
+                mSaveContext.ammo[SLOT_BOW] = 30 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_BOW] = 30 + 10 * (upgradeNum - 1);
+                break;
+            case 3:
+            case 4:
+                upgradeNum = (mSaveContext.upgrades >> 3) & 0b11;
+                mSaveContext.ammo[SLOT_BOMB] = 20 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_BOMB] = 20 + 10 * (upgradeNum - 1);
+                break;
+            case 14:
+            case 15:
+                upgradeNum = (mSaveContext.upgrades >> 14) & 0b11;
+                mSaveContext.ammo[SLOT_SLINGSHOT] = 30 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_SLINGSHOT] = 30 + 10 * (upgradeNum - 1);
+                break;
+            case 17:
+            case 18:
+                upgradeNum = (mSaveContext.upgrades >> 17) & 0b11;
+                if (upgradeNum > 1) {
+                    mSaveContext.ammo[SLOT_STICK] = 10 + 10 * (upgradeNum - 1);
+                    prevAmmo[SLOT_STICK] = 10 + 10 * (upgradeNum - 1);
+                }
+                break;
+            case 20:
+            case 21:
+                upgradeNum = (mSaveContext.upgrades >> 20) & 0b11;
+                if (upgradeNum > 1) {
+                    mSaveContext.ammo[SLOT_NUT] = 20 + 10 * (upgradeNum - 1);
+                    prevAmmo[SLOT_NUT] = 20 + 10 * (upgradeNum - 1);
+                }
+                break;
+        }
+    }
 }
 
 void Multiplayer_Send_QuestItemBit(u8 bit, u8 setOrUnset) {
@@ -1633,6 +1681,11 @@ void Multiplayer_Receive_EventChkInfBit(u16 senderID) {
 
     // Ignore Lake Hylia water switch
     if (index == 6 && bit == 9) {
+        return;
+    }
+
+    // Ignore Tower Collapse cutscene flag
+    if (index == 12 && bit == 7) {
         return;
     }
 

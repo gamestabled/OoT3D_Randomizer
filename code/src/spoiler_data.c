@@ -188,11 +188,15 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
 }
 
 u8 SpoilerData_GetIsItemLocationRevealed(u16 itemIndex) {
+    if (gSettingsContext.ingameSpoilers) {
+        return 1;
+    }
+
     SpoilerItemLocation* itemLoc = &gSpoilerData.ItemLocations[itemIndex];
 
-    if (itemLoc->StaticUncollectable) {
+    if (itemLoc->RevealType == REVEALTYPE_ALWAYS) {
         return 1;
-    } else if (!itemLoc->RevealOnSceneDiscovery) {
+    } else if (itemLoc->RevealType == REVEALTYPE_NORMAL) {
         return 0;
     }
 

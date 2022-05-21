@@ -351,8 +351,6 @@ void SaveFile_SetStartingInventory(void) {
     if (gSettingsContext.startingConsumables) {
         gSaveContext.items[SLOT_NUT] = ITEM_NUT;
         gSaveContext.items[SLOT_STICK] = ITEM_STICK;
-        gSaveContext.upgrades |= 1 << 17;
-        gSaveContext.upgrades |= 1 << 20;
         gSaveContext.ammo[SLOT_NUT] = 20;
         gSaveContext.ammo[SLOT_STICK] = 10;
     }
@@ -364,12 +362,16 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.upgrades |= ((gSettingsContext.startingStickCapacity + 1) << 17);
         gSaveContext.items[SLOT_STICK] = ITEM_STICK;
         gSaveContext.ammo[SLOT_STICK] = (gSettingsContext.startingStickCapacity + 1) * 10;
+    } else if (gSettingsContext.startingConsumables) {
+        gSaveContext.upgrades |= 1 << 17;
     }
 
     if (gSettingsContext.startingNutCapacity > 0) {
         gSaveContext.upgrades |= ((gSettingsContext.startingNutCapacity + 1) << 20);
         gSaveContext.items[SLOT_NUT] = ITEM_NUT;
         gSaveContext.ammo[SLOT_NUT] = (gSettingsContext.startingNutCapacity + 2) * 10;
+    } else if (gSettingsContext.startingConsumables) {
+        gSaveContext.upgrades |= 1 << 20;
     }
 
     if (gSettingsContext.startingBombBag > 0) {

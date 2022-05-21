@@ -482,10 +482,10 @@ static void Gfx_DrawSpoilerData(void) {
             u32 color = COLOR_WHITE;
             if (SpoilerData_GetIsItemLocationCollected(itemIndex)) {
                 color = COLOR_GREEN;
-            } else if (gSpoilerData.ItemLocations[itemIndex].StaticUncollectable) {
-                color = COLOR_ORANGE;
-            } else if (gSpoilerData.ItemLocations[itemIndex].Repeatable) {
+            } else if (gSpoilerData.ItemLocations[itemIndex].CollectType == COLLECTTYPE_REPEATABLE) {
                 color = COLOR_BLUE;
+            } else if (gSpoilerData.ItemLocations[itemIndex].CollectType == COLLECTTYPE_NEVER) {
+                color = COLOR_ORANGE;
             }
             Draw_DrawString_Small(10, locPosY, color,
                 SpoilerData_GetItemLocationString(itemIndex));
@@ -516,7 +516,7 @@ static void Gfx_DrawItemTracker(void) {
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_BLUE);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Repeatable");
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_ORANGE);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Static Uncollectable");
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Uncollectable");
         return;
     }
     if (ViewingGroups() && !CanShowSpoilerGroup(currentItemGroup)) {
@@ -540,13 +540,14 @@ static void Gfx_DrawItemTracker(void) {
         u32 locIndex = i + startIndex;
         if (SpoilerData_GetIsItemLocationCollected(locIndex)) {
             completeItems++;
-        } else if (gSpoilerData.ItemLocations[locIndex].StaticUncollectable ||
-            ((SpoilerData_GetIsItemLocationRevealed(locIndex) || gSettingsContext.ingameSpoilers) && gSpoilerData.ItemLocations[locIndex].Repeatable)) {
+        } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER ||
+            (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE && SpoilerData_GetIsItemLocationRevealed(locIndex))) {
             uncollectableItems++;
         }
     }
-    float groupPercent = ((float)completeItems / (float)(itemCount - uncollectableItems)) * 100.0f;
-    Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, completeItems == itemCount - uncollectableItems ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
+    u16 collectableItems = itemCount - uncollectableItems;
+    float groupPercent = ((float)completeItems / (float)collectableItems) * 100.0f;
+    Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - (SPACING_X * 6), 16, completeItems == collectableItems ? COLOR_GREEN : COLOR_WHITE, "%5.1f%%", groupPercent);
 
     u16 firstItem = *itemScroll + 1;
     u16 lastItem = *itemScroll + MAX_ENTRY_LINES;
@@ -566,12 +567,12 @@ static void Gfx_DrawItemTracker(void) {
         u32 color = COLOR_WHITE;
         if (isCollected) {
             color = COLOR_GREEN;
-        } else if (gSpoilerData.ItemLocations[locIndex].StaticUncollectable) {
-            color = COLOR_ORANGE;
-        } else if (SpoilerData_GetIsItemLocationRevealed(locIndex) && gSpoilerData.ItemLocations[locIndex].Repeatable) {
+        } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE && SpoilerData_GetIsItemLocationRevealed(locIndex)) {
             color = COLOR_BLUE;
+        } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER) {
+            color = COLOR_ORANGE;
         }
-        bool itemRevealed = gSettingsContext.ingameSpoilers || isCollected || SpoilerData_GetIsItemLocationRevealed(locIndex);
+        bool itemRevealed = isCollected || SpoilerData_GetIsItemLocationRevealed(locIndex);
 
         // Find this item's group index, so we can see if we should hide
         // its name because it's located in an undiscovered dungeon
@@ -732,7 +733,7 @@ static void Gfx_ShowMenu(void) {
     pressed = 0;
 
     Draw_ClearFramebuffer();
-    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+    if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -872,7 +873,7 @@ static void Gfx_ShowMenu(void) {
                 showingLegend = false;
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
                 break;
             } else if (pressed & BUTTON_R1) {
                 showingLegend = false;
@@ -907,7 +908,7 @@ static void Gfx_ShowMenu(void) {
         Gfx_DrawButtonPrompts();
         Gfx_DrawHeader();
         Draw_CopyBackBuffer();
-        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+        if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
         pressed = Input_WaitWithTimeout(1000, closingButton);
 
@@ -916,7 +917,7 @@ static void Gfx_ShowMenu(void) {
 
 static void Gfx_ShowMultiplayerSyncMenu(void) {
     Draw_ClearFramebuffer();
-    if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+    if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
     do {
         // End the loop if the system has gone to sleep, so the game can properly respond
@@ -953,7 +954,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
                 mp_isSyncing = false;
                 mSaveContextInit = true;
                 break;
@@ -971,7 +972,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
                 mp_isSyncing = false;
                 break;
             }
@@ -979,7 +980,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
         }
 
         Draw_CopyBackBuffer();
-        if (gSettingsContext.playOption == 0) { Draw_FlushFramebuffer(); }
+        if (gSettingsContext.playOption == PLAY_ON_CONSOLE) { Draw_FlushFramebuffer(); }
 
         svcSleepThread(1000 * 1000 * 1000LL);
 
