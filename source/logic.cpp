@@ -795,10 +795,6 @@ namespace Logic {
 
   }
 
-  bool SmallKeys(u8 chestGameKeyCount, u8 requiredAmount) {
-    return (chestGameKeyCount >= requiredAmount);
-  }
-
   bool SmallKeys(Key dungeon, u8 requiredAmount) {
     return SmallKeys(dungeon, requiredAmount, requiredAmount);
   }
@@ -853,6 +849,12 @@ namespace Logic {
           return GanonsCastleKeys >= requiredAmountGlitched;
         }
         return GanonsCastleKeys >= requiredAmountGlitchless;
+
+      case MARKET_TREASURE_CHEST_GAME:
+        if (IsGlitched && (false)) {
+          return TreasureGameKeys >= requiredAmountGlitched;
+        }
+        return TreasureGameKeys >= requiredAmountGlitchless;
 
       default:
         return false;
