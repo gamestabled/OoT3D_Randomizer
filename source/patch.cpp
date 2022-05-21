@@ -420,7 +420,136 @@ bool WriteAllPatches() {
   // Write Navi Colors address to code
   patchOffset = V_TO_P(NAVICOLORSARRAY_ADDR);
   patchSize = sizeof(rNaviColors);
-  if (!WritePatch(patchOffset, patchSize, (char*)rNaviColors.data(), code, bytesWritten, totalRW, buf)) {
+  if (ctx.customNaviColors && !WritePatch(patchOffset, patchSize, (char*)rNaviColors.data(), code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  /*--------------------------------
+  |           Sword Trails         |
+  ---------------------------------*/
+
+  const u32 SWORDTRAILCOLORSARRAY_ADDR = 0x0053C136;
+  Cosmetics::Color_RGBA8 p1StartColor = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
+  Cosmetics::Color_RGBA8 p2StartColor = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
+  Cosmetics::Color_RGBA8 p1EndColor = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
+  Cosmetics::Color_RGBA8 p2EndColor = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
+  bool shouldDrawSimple = (p1StartColor.r != 0xFF && p1StartColor.g != 0xFF && p1StartColor.b != 0xFF) ||
+                          (p2StartColor.r != 0xFF && p2StartColor.g != 0xFF && p2StartColor.b != 0xFF);
+  // Restore original alpha for End colors
+  p1EndColor.a = 0;
+  p2EndColor.a = 0;
+  if (shouldDrawSimple) {
+    p1StartColor.a = 0xC0;
+    p2StartColor.a = 0xC0;
+  }
+  // Make rainbow colors start at different points
+  if (ctx.rainbowSwordTrailOuterColor) {
+    p1EndColor.g = 0xFF;
+  }
+  if (ctx.rainbowSwordTrailInnerColor) {
+    p2StartColor.b = 0xFF;
+  }
+  const std::array rSwordTrailColors{
+    p1StartColor, p2StartColor, p1EndColor, p2EndColor
+  };
+
+  // Write Sword Trail Colors address to code
+  patchOffset = V_TO_P(SWORDTRAILCOLORSARRAY_ADDR);
+  patchSize = sizeof(rSwordTrailColors);
+  if (ctx.customTrailEffects && !WritePatch(patchOffset, patchSize, (char*)rSwordTrailColors.data(), code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  const u32 SWORDTRAILDURATION_ADDR = 0x0053C146;
+  char rSwordTrailDuration = 6;
+  switch (Settings::SwordTrailDuration.Value<u8>()) {
+    case 0: rSwordTrailDuration = 0; break;
+    case 1: rSwordTrailDuration = 3; break;
+    case 2: rSwordTrailDuration = 6; break;
+    case 3: rSwordTrailDuration = 16; break;
+    case 4: rSwordTrailDuration = 24; break;
+    case 5: rSwordTrailDuration = 32; break;
+  }
+
+  // Write Sword Trail Duration to code
+  patchOffset = V_TO_P(SWORDTRAILDURATION_ADDR);
+  patchSize = sizeof(rSwordTrailDuration);
+  if (ctx.customTrailEffects && !WritePatch(patchOffset, patchSize, &rSwordTrailDuration, code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  const u32 SWORDTRAILUNKMODE_ADDR = 0x0053C158;
+  char rSwordTrailUnkMode = 0; // Mode 0 is needed to draw black and blue.
+
+  // Write Sword Trail UnkMode to code
+  patchOffset = V_TO_P(SWORDTRAILUNKMODE_ADDR);
+  patchSize = sizeof(rSwordTrailUnkMode);
+  if (ctx.customTrailEffects && shouldDrawSimple &&
+      !WritePatch(patchOffset, patchSize, &rSwordTrailUnkMode, code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  /*--------------------------------
+  |         Bombchu Trails         |
+  ---------------------------------*/
+
+  const u32 BOMBCHUTRAILCOLORSARRAY_ADDR = 0x00521248;
+  p1StartColor = Cosmetics::HexStrToColorRGBA8(Settings::finalChuTrailOuterColor);
+  p2StartColor = Cosmetics::HexStrToColorRGBA8(Settings::finalChuTrailInnerColor);
+  p1EndColor = Cosmetics::HexStrToColorRGBA8(Settings::finalChuTrailOuterColor);
+  p2EndColor = Cosmetics::HexStrToColorRGBA8(Settings::finalChuTrailInnerColor);
+  // Restore original alpha
+  p1StartColor.a = 0xFA;
+  p2StartColor.a = 0x82;
+  p1EndColor.a = 0x34;
+  p2EndColor.a = 0x62;
+  // Make rainbow colors start at different points
+  if (ctx.rainbowChuTrailOuterColor) {
+    p1EndColor.g = 0xFF;
+  }
+  if (ctx.rainbowChuTrailInnerColor) {
+    p2StartColor.b = 0xFF;
+  }
+  const std::array rBombchuTrailColors{
+    p1StartColor, p2StartColor, p1EndColor, p2EndColor
+  };
+
+  // Write Bombchu Trail Colors address to code
+  patchOffset = V_TO_P(BOMBCHUTRAILCOLORSARRAY_ADDR);
+  patchSize = sizeof(rBombchuTrailColors);
+  if (ctx.customTrailEffects && !WritePatch(patchOffset, patchSize, (char*)rBombchuTrailColors.data(), code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  const u32 BOMBCHUTRAILUNKMODE_ADDR = 0x0020EAB4; // This is part of an ASM instruction, "mov r0,#0xE". Mode 0 is needed to draw black and blue.
+  char rBombchuTrailUnkMode = 0;
+
+  // Write Bombchu Trail UnkMode address to code
+  patchOffset = V_TO_P(BOMBCHUTRAILUNKMODE_ADDR);
+  patchSize = sizeof(rBombchuTrailUnkMode);
+  if (ctx.customTrailEffects && !WritePatch(patchOffset, patchSize, &rBombchuTrailUnkMode, code, bytesWritten, totalRW, buf)) {
+    return false;
+  }
+
+  /*--------------------------------
+  |        Boomerang Trails        |
+  ---------------------------------*/
+
+  /*
+  Colors are not set here, because they're not saved as data in the game, they're set with ASM instructions instead.
+  So it's easier to use a patch in oot.ld to change them.
+  */
+
+  const u32 BOOMERANGTRAILUNKMODE_ADDR = 0x001ADB18; // This is part of an ASM instruction, "mov r0,#0xC"
+  char rBoomerangTrailUnkMode = 0;
+  // As for Bombchus, setting this to 0 is needed to draw dark colors, but this time this will actually change how the trail looks like.
+  // So it should only be done if the chosen color doesn't have any component at max level.
+
+  // Write Boomerang Trail UnkMode address to code
+  patchOffset = V_TO_P(BOOMERANGTRAILUNKMODE_ADDR);
+  patchSize = sizeof(rBoomerangTrailUnkMode);
+  if (ctx.customTrailEffects && ctx.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE &&
+      !WritePatch(patchOffset, patchSize, &rBoomerangTrailUnkMode, code, bytesWritten, totalRW, buf)) {
     return false;
   }
 

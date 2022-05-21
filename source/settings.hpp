@@ -601,6 +601,7 @@ namespace Settings {
   extern Option ZoraTunicColor;
   extern Option SilverGauntletsColor;
   extern Option GoldGauntletsColor;
+  extern Option CustomNaviColors;
   extern Option IdleNaviInnerColor;
   extern Option NPCNaviInnerColor;
   extern Option EnemyNaviInnerColor;
@@ -609,6 +610,13 @@ namespace Settings {
   extern Option NPCNaviOuterColor;
   extern Option EnemyNaviOuterColor;
   extern Option PropNaviOuterColor;
+  extern Option CustomTrailEffects;
+  extern Option SwordTrailInnerColor;
+  extern Option SwordTrailOuterColor;
+  extern Option SwordTrailDuration;
+  extern Option BoomerangTrailColor;
+  extern Option BombchuTrailInnerColor;
+  extern Option BombchuTrailOuterColor;
   extern std::string finalChildTunicColor;
   extern std::string finalKokiriTunicColor;
   extern std::string finalGoronTunicColor;
@@ -623,6 +631,13 @@ namespace Settings {
   extern std::string finalNPCNaviOuterColor;
   extern std::string finalEnemyNaviOuterColor;
   extern std::string finalPropNaviOuterColor;
+  extern std::string finalSwordTrailInnerColor;
+  extern std::string finalSwordTrailOuterColor;
+  extern std::string finalSwordTrailDuration;
+  extern Cosmetics::Color_RGBA8 finalBoomerangColor;
+  extern u8 boomerangTrailColorMode;
+  extern std::string finalChuTrailInnerColor;
+  extern std::string finalChuTrailOuterColor;
 
   extern Option ColoredKeys;
   extern Option ColoredBossKeys;

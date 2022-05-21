@@ -39,6 +39,7 @@ namespace Cosmetics {
   extern const std::array<std::string_view, 28> tunicColors;
   extern const std::array<std::string_view, 20> naviInnerColors;
   extern const std::array<std::string_view, 20> naviOuterColors;
+  extern const std::array<std::string_view, 13> weaponTrailColors;
 
   bool ValidHexString(std::string_view hexStr);
   Color_RGBAf HexStrToColorRGBAf(const std::string& hexStr);

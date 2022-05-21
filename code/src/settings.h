@@ -2,6 +2,7 @@
 #define _SETTINGS_H_
 
 #include "../include/z3D/z3D.h"
+#include "colors.h"
 
 typedef enum {
   OFF,
@@ -325,6 +326,12 @@ typedef enum {
   DUNGEON_WOTH,
 } DungeonInfo;
 
+typedef enum {
+  TRAILCOLOR_VANILLAMODE,
+  TRAILCOLOR_FORCEDSIMPLEMODE,
+  TRAILCOLOR_RAINBOW,
+} TrailColorMode;
+
 typedef struct {
   u8 hashIndexes[5];
   u8 playOption;
@@ -463,6 +470,7 @@ typedef struct {
   u8 ignoreMaskReaction;
 
   u8 customTunicColors;
+  u8 customNaviColors;
   u8 rainbowIdleNaviInnerColor;
   u8 rainbowNPCNaviInnerColor;
   u8 rainbowEnemyNaviInnerColor;
@@ -471,6 +479,14 @@ typedef struct {
   u8 rainbowNPCNaviOuterColor;
   u8 rainbowEnemyNaviOuterColor;
   u8 rainbowPropNaviOuterColor;
+  u8 customTrailEffects;
+  u8 rainbowSwordTrailInnerColor;
+  u8 rainbowSwordTrailOuterColor;
+  Color_RGBA8 boomerangTrailColor;
+  u8 boomerangTrailColorMode;
+  u8 rainbowChuTrailInnerColor;
+  u8 rainbowChuTrailOuterColor;
+
   u8 coloredKeys;
   u8 coloredBossKeys;
   u8 mirrorWorld;

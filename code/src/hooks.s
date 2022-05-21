@@ -1405,6 +1405,39 @@ hook_StoreTargetActorType:
     cmp r5,#0x0
     bx lr
 
+.global hook_ForceTrailEffectUpdate
+hook_ForceTrailEffectUpdate:
+    push {r1-r12, lr}
+    cpy r0,r4
+    bl forceTrailEffectUpdate
+    pop {r1-r12, lr}
+    cmp r0,#0x10
+    bx lr
+
+.global hook_RainbowSwordTrail
+hook_RainbowSwordTrail:
+    push {r0-r12, lr}
+    bl updateSwordTrailColors
+    pop {r0-r12, lr}
+    add r8,r7,#0x100
+    bx lr
+
+.global hook_BoomerangTrailEffect
+hook_BoomerangTrailEffect:
+    push {r0-r12, lr}
+    bl updateBoomerangTrailColors
+    pop {r0-r12, lr}
+    add r2,sp,#0x64
+    bx lr
+
+.global hook_RainbowChuTrail
+hook_RainbowChuTrail:
+    push {r0-r12, lr}
+    bl updateChuTrailColors
+    pop {r0-r12, lr}
+    strb r7,[r0,#0x282]
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

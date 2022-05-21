@@ -2,10 +2,7 @@
 #define _FAIRY_H_
 
 #include "z3D/z3D.h"
-
-typedef struct {
-    f32 r, g, b, a;
-} Color_RGBAf;
+#include "colors.h"
 
 typedef struct EnElf {
     /* 0x000 */ Actor actor;
