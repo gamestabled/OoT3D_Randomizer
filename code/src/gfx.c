@@ -564,15 +564,6 @@ static void Gfx_DrawItemTracker(void) {
         u32 locPosY = listTopY + ((SPACING_SMALL_Y + 1) * item * 2);
         u32 itemPosY = locPosY + SPACING_SMALL_Y;
         bool isCollected = SpoilerData_GetIsItemLocationCollected(locIndex);
-        u32 color = COLOR_WHITE;
-        if (isCollected) {
-            color = COLOR_GREEN;
-        } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE && SpoilerData_GetIsItemLocationRevealed(locIndex)) {
-            color = COLOR_BLUE;
-        } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER) {
-            color = COLOR_ORANGE;
-        }
-        bool itemRevealed = isCollected || SpoilerData_GetIsItemLocationRevealed(locIndex);
 
         // Find this item's group index, so we can see if we should hide
         // its name because it's located in an undiscovered dungeon
@@ -584,6 +575,18 @@ static void Gfx_DrawItemTracker(void) {
             }
         }
         bool canShowGroup = isCollected || CanShowSpoilerGroup(itemGroupIndex);
+
+        u32 color = COLOR_WHITE;
+        if (isCollected) {
+            color = COLOR_GREEN;
+        } else if (canShowGroup) {
+            if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE && SpoilerData_GetIsItemLocationRevealed(locIndex)) {
+                color = COLOR_BLUE;
+            } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER) {
+                color = COLOR_ORANGE;
+            }
+        }
+        bool itemRevealed = canShowGroup && (isCollected || SpoilerData_GetIsItemLocationRevealed(locIndex));
 
         if (canShowGroup) {
             Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(locIndex));
