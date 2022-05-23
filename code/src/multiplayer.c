@@ -242,7 +242,7 @@ s8 prevAmmo[15];
 u8 prevMagicBeansBought;
 u16 prevEquipment;
 u32 prevUpgrades;
-u32 prevQuestItem;
+u32 prevQuestItems;
 u8 prevDungeonItems[20];
 s8 prevDungeonKeys[19];
 s16 prevGSTokens;
@@ -453,7 +453,7 @@ static void Multiplayer_Sync_Init(void) {
     prevUpgrades = gSaveContext.upgrades;
 
     // Quest Items
-    prevQuestItem = gSaveContext.questItems;
+    prevQuestItems = gSaveContext.questItems;
 
     // Dungeon Items
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.dungeonItems); i++) {
@@ -555,6 +555,14 @@ void Multiplayer_Sync_Update(void) {
 }
 
 static void Multiplayer_Sync_SharedProgress(void) {
+    // If a player gets the 4th heart piece but stays in the item get message while another
+    // player gets another heart piece, the 4th heart piece bit never unsets and causes various issues.
+    // To avoid this, unset it instantly and give the health increase directly.
+    if (gSaveContext.questItems & (1 << 30)) {
+        gSaveContext.questItems &= ~(1 << 30);
+        gSaveContext.healthCapacity += 0x10;
+    }
+
     // Max Health
     if (prevHealthCapacity != gSaveContext.healthCapacity) {
         Multiplayer_Send_MaxHealth();
@@ -612,9 +620,9 @@ static void Multiplayer_Sync_SharedProgress(void) {
     prevUpgrades = gSaveContext.upgrades;
 
     // Quest Items
-    if (prevQuestItem != gSaveContext.questItems) {
+    if (prevQuestItems != gSaveContext.questItems) {
         for (size_t bit = 0; bit < BIT_COUNT(gSaveContext.questItems); bit++) {
-            s8 result = BitCompare(gSaveContext.questItems, prevQuestItem, bit);
+            s8 result = BitCompare(gSaveContext.questItems, prevQuestItems, bit);
             if (result > 0) {
                 Multiplayer_Send_QuestItemBit(bit, 1);
             } else if (result < 0) {
@@ -622,7 +630,7 @@ static void Multiplayer_Sync_SharedProgress(void) {
             }
         }
     }
-    prevQuestItem = gSaveContext.questItems;
+    prevQuestItems = gSaveContext.questItems;
 
     // Dungeon Items
     for (size_t index = 0; index < ARRAY_SIZE(gSaveContext.dungeonItems); index++) {
@@ -1569,10 +1577,10 @@ void Multiplayer_Receive_QuestItemBit(u16 senderID) {
 
     if (setOrUnset) {
         mSaveContext.questItems |= (1 << bit);
-        prevUpgrades |= (1 << bit);
+        prevQuestItems |= (1 << bit);
     } else {
         mSaveContext.questItems &= ~(1 << bit);
-        prevUpgrades &= ~(1 << bit);
+        prevQuestItems &= ~(1 << bit);
     }
 }
 
