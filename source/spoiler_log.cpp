@@ -370,7 +370,7 @@ static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
     for (size_t i = 0; i < menu->size(); ++i) {
       const auto setting = menu->at(i);
       //Ignore no starting bottles and the Choose/All On toggles
-      if (setting->GetSelectedOptionIndex() == 0) {
+      if (setting->IsDefaultSelected()) {
         continue;
       }
 
@@ -568,7 +568,9 @@ bool SpoilerLog_Write() {
   WriteExcludedLocations(spoilerLog);
   WriteStartingInventory(spoilerLog);
   WriteEnabledTricks(spoilerLog);
-  WriteEnabledGlitches(spoilerLog);
+  if (Settings::Logic.Is(LOGIC_GLITCHED)) {
+    WriteEnabledGlitches(spoilerLog);
+  }
   WriteMasterQuestDungeons(spoilerLog);
   WriteRequiredTrials(spoilerLog);
   WritePlaythrough(spoilerLog);
