@@ -270,8 +270,8 @@ namespace Logic {
   bool HookshotOrBoomerang = false;
   bool CanGetNightTimeGS   = false;
 
-  u8   BaseHealth      = 0;
-  u8   Health          = 0;
+  u8   BaseHearts      = 0;
+  u8   Hearts          = 0;
   u8   Multiplier      = 0;
   u8   EffectiveHealth = 0;
   u8   FireTimer       = 0;
@@ -740,6 +740,10 @@ namespace Logic {
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
+    Hearts          = BaseHearts + HeartContainer + (PieceOfHeart >> 2);
+    EffectiveHealth = ((Hearts << (2 + DoubleDefense)) >> Multiplier) + ((Hearts << (2 + DoubleDefense)) % (1 << Multiplier) > 0); //Number of half heart hits to die, ranges from 1 to 160
+    FireTimer       = CanUse(GORON_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
+    WaterTimer      = CanUse( ZORA_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
     NeedNayrusLove      = (EffectiveHealth == 1);
     CanSurviveDamage    = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
     CanTakeDamage       = Fairy || CanSurviveDamage;
@@ -749,11 +753,6 @@ namespace Logic {
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
     HookshotOrBoomerang = CanUse(HOOKSHOT) || CanUse(BOOMERANG);
     CanGetNightTimeGS   = (CanPlay(SunsSong) || !NightGSExpectSuns);
-
-    Health          = BaseHealth + HeartContainer + (PieceOfHeart >> 2);
-    EffectiveHealth = ((Health << (2 + DoubleDefense)) >> Multiplier) + ((Health << (2 + DoubleDefense)) % (1 << Multiplier) > 0); //Number of half heart hits to die, ranges from 1 to 160
-    FireTimer       = CanUse(GORON_TUNIC) ? 255 : Health;
-    WaterTimer      = CanUse( ZORA_TUNIC) ? 255 : Health;
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
@@ -1144,8 +1143,8 @@ namespace Logic {
      BigPoeKill          = false;
      HookshotOrBoomerang = false;
 
-     BaseHealth      = StartingHealth.Value<u8>() + 1;
-     Health          = 0;
+     BaseHearts      = StartingHearts.Value<u8>() + 1;
+     Hearts          = 0;
      Multiplier      = (DamageMultiplier.Value<u8>() < 6) ? DamageMultiplier.Value<u8>() : 10;
      EffectiveHealth = 0;
      FireTimer       = 0;

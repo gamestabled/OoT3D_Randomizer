@@ -528,7 +528,7 @@ typedef struct {
   u8 startingBiggoronSword;
   u8 startingMagicMeter;
   u8 startingDoubleDefense;
-  u8 startingHealth;
+  u8 startingHearts;
 
   u32 startingQuestItems;
   u32 startingDungeonReward;

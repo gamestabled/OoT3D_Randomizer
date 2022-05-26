@@ -261,8 +261,8 @@ namespace Logic {
   extern bool CanGetNightTimeGS;
   extern bool BigPoeKill;
 
-  extern u8   BaseHealth;
-  extern u8   Health;
+  extern u8   BaseHearts;
+  extern u8   Hearts;
   extern u8   Multiplier;
   extern u8   EffectiveHealth;
   extern u8   FireTimer;
