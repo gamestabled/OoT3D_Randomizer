@@ -1425,16 +1425,20 @@ hook_RainbowSwordTrail:
 .global hook_BoomerangTrailEffect
 hook_BoomerangTrailEffect:
     push {r0-r12, lr}
-    bl updateBoomerangTrailColors
+    bl updateBoomerangTrailEffect
+    cmp r0,#0x1
     pop {r0-r12, lr}
-    add r2,sp,#0x64
+    bne 0x1F4228
+    strb r4,[r0,#0x282]
     bx lr
 
 .global hook_RainbowChuTrail
 hook_RainbowChuTrail:
     push {r0-r12, lr}
     bl updateChuTrailColors
+    cmp r0,#0x1
     pop {r0-r12, lr}
+    addne pc,lr,#0x4
     strb r7,[r0,#0x282]
     bx lr
 

@@ -400,7 +400,7 @@ SECTIONS
 		*(.patch_CanPlayBombchuBowlingTwo)
 	}
 
-	.patch_BoomerangTrailEffect 0x1F4218 : {
+	.patch_BoomerangTrailEffect 0x1F4220 : {
 		*(.patch_BoomerangTrailEffect)
 	} /*EnBoom_Draw*/
 

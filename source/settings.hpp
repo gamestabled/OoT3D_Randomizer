@@ -615,8 +615,10 @@ namespace Settings {
   extern Option SwordTrailOuterColor;
   extern Option SwordTrailDuration;
   extern Option BoomerangTrailColor;
+  extern Option BoomerangTrailDuration;
   extern Option BombchuTrailInnerColor;
   extern Option BombchuTrailOuterColor;
+  extern Option BombchuTrailDuration;
   extern std::string finalChildTunicColor;
   extern std::string finalKokiriTunicColor;
   extern std::string finalGoronTunicColor;
@@ -633,7 +635,6 @@ namespace Settings {
   extern std::string finalPropNaviOuterColor;
   extern std::string finalSwordTrailInnerColor;
   extern std::string finalSwordTrailOuterColor;
-  extern std::string finalSwordTrailDuration;
   extern Cosmetics::Color_RGBA8 finalBoomerangColor;
   extern u8 boomerangTrailColorMode;
   extern std::string finalChuTrailInnerColor;

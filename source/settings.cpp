@@ -960,6 +960,15 @@ namespace Settings {
     "Lightsaber",
   };
 
+  static std::vector<std::string> chuTrailDurationOptionNames = {
+    "Disabled",
+    "Short",
+    "Vanilla",
+    "Long",
+    "Very Long",
+    "Hero's Path",
+  };
+
   static std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
     RANDOM_COLOR_DESC,
@@ -987,9 +996,11 @@ namespace Settings {
   Option SwordTrailInnerColor       = Option::U8  ("  Sword (Inner Color)",  weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the base\nof the sword."},                                         OptionCategory::Cosmetic,                      3); // White
   Option SwordTrailOuterColor       = Option::U8  ("  Sword (Outer Color)",  weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the tip\nof the sword."},                                          OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
   Option SwordTrailDuration         = Option::U8  ("  Sword (Duration)",     trailDurationOptionNames,      {"Select the duration for sword trails.\n\nIf too many trails are on screen, the duration\nmay be capped at Long for some of them."},                             OptionCategory::Cosmetic,                      2); // Vanilla
-  Option BoomerangTrailColor        = Option::U8  ("  Boomerang",            weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, ""},                                                                                                   OptionCategory::Cosmetic,                      8); // Yellow
-  Option BombchuTrailInnerColor     = Option::U8  ("  Bombchu (Inner Color)",weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, ""},                                                                                                   OptionCategory::Cosmetic,                      5); // Red
-  Option BombchuTrailOuterColor     = Option::U8  ("  Bombchu (Outer Color)",weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, ""},                                                                                                   OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
+  Option BoomerangTrailColor        = Option::U8  ("  Boomerang (Color)",    weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for boomerang trails."},                                                             OptionCategory::Cosmetic,                      8); // Yellow
+  Option BoomerangTrailDuration     = Option::U8  ("  Boomerang (Duration)", trailDurationOptionNames,      {"Select the duration for boomerang trails."},                                                                                                                    OptionCategory::Cosmetic,                      2); // Vanilla
+  Option BombchuTrailInnerColor     = Option::U8  ("  Bombchu (Inner Color)",weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the center of the\nbombchu trail."},                                             OptionCategory::Cosmetic,                      5); // Red
+  Option BombchuTrailOuterColor     = Option::U8  ("  Bombchu (Outer Color)",weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the sides of the\nbombchu trail."},                                              OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
+  Option BombchuTrailDuration       = Option::U8  ("  Bombchu (Duration)",   chuTrailDurationOptionNames,   {"Select the duration for bombchu trails."},                                                                                                                      OptionCategory::Cosmetic,                      2); // Vanilla
   std::string finalChildTunicColor      = ChildTunicColor.GetSelectedOptionText();
   std::string finalKokiriTunicColor     = KokiriTunicColor.GetSelectedOptionText();
   std::string finalGoronTunicColor      = GoronTunicColor.GetSelectedOptionText();
@@ -1006,7 +1017,6 @@ namespace Settings {
   std::string finalPropNaviOuterColor   = PropNaviOuterColor.GetSelectedOptionText();
   std::string finalSwordTrailOuterColor = SwordTrailOuterColor.GetSelectedOptionText();
   std::string finalSwordTrailInnerColor = SwordTrailInnerColor.GetSelectedOptionText();
-  std::string finalSwordTrailDuration   = SwordTrailDuration.GetSelectedOptionText();
   Cosmetics::Color_RGBA8 finalBoomerangColor = {0};
   u8 boomerangTrailColorMode = 0;
   std::string finalChuTrailInnerColor   = BombchuTrailInnerColor.GetSelectedOptionText();
@@ -1049,8 +1059,10 @@ namespace Settings {
     &SwordTrailOuterColor,
     &SwordTrailDuration,
     &BoomerangTrailColor,
+    &BoomerangTrailDuration,
     &BombchuTrailInnerColor,
     &BombchuTrailOuterColor,
+    &BombchuTrailDuration,
     &ColoredKeys,
     &ColoredBossKeys,
     &MirrorWorld,
@@ -1289,8 +1301,10 @@ namespace Settings {
     ctx.boomerangTrailColor.b      = finalBoomerangColor.b;
     ctx.boomerangTrailColor.a      = finalBoomerangColor.a;
     ctx.boomerangTrailColorMode    = boomerangTrailColorMode;
+    ctx.boomerangTrailDuration     = BoomerangTrailDuration.Value<u8>();
     ctx.rainbowChuTrailInnerColor  = (BombchuTrailInnerColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
     ctx.rainbowChuTrailOuterColor  = (BombchuTrailOuterColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
+    ctx.bombchuTrailDuration       = BombchuTrailDuration.Value<u8>();
     ctx.mirrorWorld                = (MirrorWorld) ? 1 : 0;
     ctx.coloredKeys                = (ColoredKeys) ? 1 : 0;
     ctx.coloredBossKeys            = (ColoredBossKeys) ? 1 : 0;
@@ -2093,21 +2107,27 @@ namespace Settings {
       SwordTrailOuterColor.Unhide();
       SwordTrailDuration.Unhide();
       BoomerangTrailColor.Unhide();
+      BoomerangTrailDuration.Unhide();
       BombchuTrailInnerColor.Unhide();
       BombchuTrailOuterColor.Unhide();
+      BombchuTrailDuration.Unhide();
     } else {
       SwordTrailInnerColor.Hide();
       SwordTrailOuterColor.Hide();
       SwordTrailDuration.Hide();
       BoomerangTrailColor.Hide();
+      BoomerangTrailDuration.Hide();
       BombchuTrailInnerColor.Hide();
       BombchuTrailOuterColor.Hide();
+      BombchuTrailDuration.Hide();
       SwordTrailInnerColor.SetSelectedIndex(3);   // White
       SwordTrailOuterColor.SetSelectedIndex(SAME_AS_INNER_TRAIL);
       SwordTrailDuration.SetSelectedIndex(2);     // Vanilla
       BoomerangTrailColor.SetSelectedIndex(8);    // Yellow
+      BoomerangTrailDuration.SetSelectedIndex(2); // Vanilla
       BombchuTrailInnerColor.SetSelectedIndex(5); // Red
       BombchuTrailOuterColor.SetSelectedIndex(SAME_AS_INNER_TRAIL);
+      BombchuTrailDuration.SetSelectedIndex(2); // Vanilla
     }
 
     // Audio

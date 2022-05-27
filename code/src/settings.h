@@ -332,6 +332,15 @@ typedef enum {
   TRAILCOLOR_RAINBOW,
 } TrailColorMode;
 
+typedef enum {
+    TRAILDURATION_DISABLED,
+    TRAILDURATION_VERYSHORT,
+    TRAILDURATION_VANILLA,
+    TRAILDURATION_LONG,
+    TRAILDURATION_VERYLONG,
+    TRAILDURATION_LIGHTSABER,
+} TrailDuration;
+
 typedef struct {
   u8 hashIndexes[5];
   u8 playOption;
@@ -484,8 +493,10 @@ typedef struct {
   u8 rainbowSwordTrailOuterColor;
   Color_RGBA8 boomerangTrailColor;
   u8 boomerangTrailColorMode;
+  u8 boomerangTrailDuration;
   u8 rainbowChuTrailInnerColor;
   u8 rainbowChuTrailOuterColor;
+  u8 bombchuTrailDuration;
 
   u8 coloredKeys;
   u8 coloredBossKeys;
