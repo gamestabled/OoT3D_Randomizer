@@ -703,7 +703,7 @@ namespace Settings {
     &LogicManOnRoof,
     &LogicWindmillPoHHookshot,
     &LogicDMTBombable,
-    //&LogicDMTSoilGS, Needs Testing                    Yes, but you need to drop the bugs from above the boulder so needs to check for damage
+    &LogicDMTSoilGS,
     &LogicDMTSummitHover,
     &LogicLinkGoronDins,
     &LogicGoronCityLeftMost,
@@ -1907,7 +1907,7 @@ namespace Settings {
           LogicChildDampeRacePoH.SetSelectedIndex(1);
           LogicGerudoKitchen.SetSelectedIndex(1);
           LogicOutsideGanonsGS.SetSelectedIndex(1);
-          //LogicDMTSoilGS.SetSelectedIndex(1);
+          LogicDMTSoilGS.SetSelectedIndex(1);
           LogicDMTSummitHover.SetSelectedIndex(1);
           LogicLinkGoronDins.SetSelectedIndex(1);
           LogicGoronCityPotWithStrength.SetSelectedIndex(1);

@@ -1042,10 +1042,10 @@ string_view LogicDMTBombableDesc                      = "Difficulty: Expert\n"  
                                                         "then quickly throw it toward the wall.";          //
 string_view LogicDMTSoilGSDesc                        = "Difficulty: Intermediate\n"                       //
                                                         "Bugs will go into the soft soil even while the\n" //
-                                                        "boulder is still blocking the entrance. Then,\n"  //
-                                                        "using a precise moving setup you can kill the Gold"
-                                                        "Skulltula and obtain the token by having the\n"   //
-                                                        "Boomerang interact with it along the return path.";
+                                                        "boulder is still blocking the entrance if dropped\n"
+                                                        "from above. Then, using a precise moving setup you"
+                                                        "can kill the Gold Skulltula and obtain the token by"
+                                                        "having the Boomerang collect it while returning.";//
 string_view LogicDMTSummitHoverDesc                   = "Difficulty: Intermediate\n"                       //
                                                         "By rolling around the lower boulder with hover\n" //
                                                         "boots and grabbing the ledge with the higher\n"   //
