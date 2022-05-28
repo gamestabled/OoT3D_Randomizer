@@ -104,6 +104,10 @@ s32 handleLongTrails(u8 durationSetting, EffectBlure* effect, Vec3f* p1, Vec3f* 
 }
 
 u32 updateBoomerangTrailEffect(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
+    u8 isRainbow = gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_RAINBOW ||
+                   gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_RAINBOW_SIMPLEMODE;
+    u8 isSimpleMode = gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE ||
+                      gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_RAINBOW_SIMPLEMODE;
 
     if (gSettingsContext.customTrailEffects == OFF)
         return 1;
@@ -127,25 +131,25 @@ u32 updateBoomerangTrailEffect(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
         effect->p1StartColor.r = gSettingsContext.boomerangTrailColor.r;
         effect->p1StartColor.g = gSettingsContext.boomerangTrailColor.g;
         effect->p1StartColor.b = gSettingsContext.boomerangTrailColor.b;
-        effect->p1StartColor.a = (gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE) ? 0xFA : 0xFF;
+        effect->p1StartColor.a = isSimpleMode ? 0xFA : 0xFF;
 
         effect->p2StartColor.r = gSettingsContext.boomerangTrailColor.r;
         effect->p2StartColor.g = gSettingsContext.boomerangTrailColor.g;
         effect->p2StartColor.b = gSettingsContext.boomerangTrailColor.b;
-        effect->p2StartColor.a = (gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE) ? 0x82 : 0xFF;
+        effect->p2StartColor.a = isSimpleMode ? 0x82 : 0xFF;
 
         effect->p1EndColor.r   = gSettingsContext.boomerangTrailColor.r;
         effect->p1EndColor.g   = gSettingsContext.boomerangTrailColor.g;
         effect->p1EndColor.b   = gSettingsContext.boomerangTrailColor.b;
-        effect->p1EndColor.a   = (gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE) ? 0x10 : 0xFF;
+        effect->p1EndColor.a   = isSimpleMode ? 0x10 : 0xFF;
 
         effect->p2EndColor.r   = gSettingsContext.boomerangTrailColor.r;
         effect->p2EndColor.g   = gSettingsContext.boomerangTrailColor.g;
         effect->p2EndColor.b   = gSettingsContext.boomerangTrailColor.b;
-        effect->p2EndColor.a   = (gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE) ? 0x10 : 0xFF;
+        effect->p2EndColor.a   = isSimpleMode ? 0x10 : 0xFF;
     }
 
-    if (gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_RAINBOW) {
+    if (isRainbow) {
         changeRainbowColorRGBA8(&effect->p2StartColor);
         changeRainbowColorRGBA8(&effect->p2EndColor);
         changeRainbowColorRGBA8(&effect->p1StartColor);

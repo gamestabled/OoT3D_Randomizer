@@ -433,7 +433,8 @@ bool WriteAllPatches() {
   Cosmetics::Color_RGBA8 p2StartColor = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
   Cosmetics::Color_RGBA8 p1EndColor = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
   Cosmetics::Color_RGBA8 p2EndColor = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
-  bool shouldDrawSimple = (p1StartColor.r != 0xFF && p1StartColor.g != 0xFF && p1StartColor.b != 0xFF) ||
+  bool shouldDrawSimple = Settings::ChosenSimpleMode ||
+                          (p1StartColor.r != 0xFF && p1StartColor.g != 0xFF && p1StartColor.b != 0xFF) ||
                           (p2StartColor.r != 0xFF && p2StartColor.g != 0xFF && p2StartColor.b != 0xFF);
   // Restore original alpha for End colors
   p1EndColor.a = 0;
@@ -540,6 +541,11 @@ bool WriteAllPatches() {
   So it's easier to use a patch in oot.ld to change them.
   */
 
+  // variable from Sword Trails
+  shouldDrawSimple = Settings::ChosenSimpleMode ||
+                     ctx.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE ||
+                     ctx.boomerangTrailColorMode == TRAILCOLOR_RAINBOW_SIMPLEMODE;
+
   const u32 BOOMERANGTRAILUNKMODE_ADDR = 0x001ADB18; // This is part of an ASM instruction, "mov r0,#0xC"
   char rBoomerangTrailUnkMode = 0;
   // As for Bombchus, setting this to 0 is needed to draw dark colors, but this time this will actually change how the trail looks like.
@@ -548,7 +554,7 @@ bool WriteAllPatches() {
   // Write Boomerang Trail UnkMode address to code
   patchOffset = V_TO_P(BOOMERANGTRAILUNKMODE_ADDR);
   patchSize = sizeof(rBoomerangTrailUnkMode);
-  if (ctx.customTrailEffects && ctx.boomerangTrailColorMode == TRAILCOLOR_FORCEDSIMPLEMODE &&
+  if (ctx.customTrailEffects && shouldDrawSimple &&
       !WritePatch(patchOffset, patchSize, &rBoomerangTrailUnkMode, code, bytesWritten, totalRW, buf)) {
     return false;
   }

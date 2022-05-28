@@ -993,6 +993,7 @@ namespace Settings {
   Option EnemyNaviOuterColor        = Option::U8  ("  On Enemy (Outer)",     naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
   Option PropNaviOuterColor         = Option::U8  ("  On Prop (Outer)",      naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
   Option CustomTrailEffects         = Option::Bool("Custom Trail Effects",   {"Off", "On"},                 {""},                                                                                                                                                             OptionCategory::Cosmetic);
+  Option ChosenSimpleMode           = Option::Bool("  Draw simple texture",  {"When necessary","Always"},   {necessarySimpleModeDesc,alwaysSimpleModeDesc},                                                                                                                   OptionCategory::Cosmetic);
   Option SwordTrailInnerColor       = Option::U8  ("  Sword (Inner Color)",  weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the base\nof the sword."},                                         OptionCategory::Cosmetic,                      3); // White
   Option SwordTrailOuterColor       = Option::U8  ("  Sword (Outer Color)",  weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the tip\nof the sword."},                                          OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
   Option SwordTrailDuration         = Option::U8  ("  Sword (Duration)",     trailDurationOptionNames,      {"Select the duration for sword trails.\n\nIf too many trails are on screen, the duration\nmay be capped at Long for some of them."},                             OptionCategory::Cosmetic,                      2); // Vanilla
@@ -1055,6 +1056,7 @@ namespace Settings {
     &EnemyNaviOuterColor,
     &PropNaviOuterColor,
     &CustomTrailEffects,
+    &ChosenSimpleMode,
     &SwordTrailInnerColor,
     &SwordTrailOuterColor,
     &SwordTrailDuration,
@@ -2103,6 +2105,7 @@ namespace Settings {
     }
 
     if (CustomTrailEffects) {
+      ChosenSimpleMode.Unhide();
       SwordTrailInnerColor.Unhide();
       SwordTrailOuterColor.Unhide();
       SwordTrailDuration.Unhide();
@@ -2112,6 +2115,7 @@ namespace Settings {
       BombchuTrailOuterColor.Unhide();
       BombchuTrailDuration.Unhide();
     } else {
+      ChosenSimpleMode.Hide();
       SwordTrailInnerColor.Hide();
       SwordTrailOuterColor.Hide();
       SwordTrailDuration.Hide();
@@ -2120,6 +2124,7 @@ namespace Settings {
       BombchuTrailInnerColor.Hide();
       BombchuTrailOuterColor.Hide();
       BombchuTrailDuration.Hide();
+      ChosenSimpleMode.SetSelectedIndex(OFF);
       SwordTrailInnerColor.SetSelectedIndex(3);   // White
       SwordTrailOuterColor.SetSelectedIndex(SAME_AS_INNER_TRAIL);
       SwordTrailDuration.SetSelectedIndex(2);     // Vanilla
@@ -2360,13 +2365,15 @@ namespace Settings {
     finalBoomerangColor.g = tempColor.g;
     finalBoomerangColor.b = tempColor.b;
     finalBoomerangColor.a = tempColor.a;
-    if (Settings::BoomerangTrailColor.Value<u8>() == RAINBOW_TRAIL)
-      boomerangTrailColorMode = TRAILCOLOR_RAINBOW;
-    else if ((Settings::finalBoomerangColor.r != 0xFF && Settings::finalBoomerangColor.g != 0xFF && Settings::finalBoomerangColor.b != 0xFF) ||
-             (Settings::BoomerangTrailColor.Value<u8>() == 3)) // Dark color, or White
+    if (Settings::BoomerangTrailColor.Value<u8>() == RAINBOW_TRAIL) {
+      boomerangTrailColorMode = (ChosenSimpleMode) ? TRAILCOLOR_RAINBOW_SIMPLEMODE : TRAILCOLOR_RAINBOW;
+    } else if (ChosenSimpleMode ||
+             (Settings::finalBoomerangColor.r != 0xFF && Settings::finalBoomerangColor.g != 0xFF && Settings::finalBoomerangColor.b != 0xFF) ||
+             (Settings::BoomerangTrailColor.Value<u8>() == 3)) { // Chosen Simple Mode, dark color, or White
       boomerangTrailColorMode = TRAILCOLOR_FORCEDSIMPLEMODE;
-    else
+    } else {
       boomerangTrailColorMode = TRAILCOLOR_VANILLAMODE;
+    }
     // Bombchus Trail
     ChooseFinalColor(BombchuTrailInnerColor, finalChuTrailInnerColor, weaponTrailColors);
     if (BombchuTrailOuterColor.Is(SAME_AS_INNER_TRAIL)) {

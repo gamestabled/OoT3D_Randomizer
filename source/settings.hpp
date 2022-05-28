@@ -616,6 +616,7 @@ namespace Settings {
   extern Option SwordTrailDuration;
   extern Option BoomerangTrailColor;
   extern Option BoomerangTrailDuration;
+  extern Option ChosenSimpleMode;
   extern Option BombchuTrailInnerColor;
   extern Option BombchuTrailOuterColor;
   extern Option BombchuTrailDuration;

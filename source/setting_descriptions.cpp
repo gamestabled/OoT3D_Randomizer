@@ -950,12 +950,23 @@ string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask 
                                         "Does not apply when trading masks.";              //
                                                                                            //
 /*------------------------------                                                           //
-|          NAVI COLORS         |                                                           //
+|      NAVI & TRAIL COLORS     |                                                           //
 ------------------------------*/                                                           //
 string_view naviColorsDesc            = "Inner color is for the main light orb, outer color"
                                         "is for the aura.\n\n"                             //
                                         "The Rainbow option will make the color change\n"  //
                                         "continuously in a 3 seconds loop.";               //
+string_view necessarySimpleModeDesc   = "For boomerang and sword trails, OoT3D uses a\n"   //
+                                        "special texture that doesn't support every color.\n\n"
+                                        "Unsupported colors will always use the plain\n"   //
+                                        "texture from OoT instead:\n"                      //
+                                        "- Black and Purple sword trails\n"                //
+                                        "- White, Black and Purple boomerang trails\n"     //
+                                        "- Random or Custom colors without at least one\n" //
+                                        "  maxed out RGB component.";                      //
+string_view alwaysSimpleModeDesc      = "All boomerang and sword trails will use the plain\n"
+                                        "texture from OoT, regardless of what color is\n"  //
+                                        "chosen.";                                         //
                                                                                            //
 /*------------------------------                                                           //
 |         COLORED KEYS         |                                                           //

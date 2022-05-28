@@ -296,6 +296,8 @@ extern string_view silenceNaviDesc;
 extern string_view ignoreMaskReactionDesc;
 
 extern string_view naviColorsDesc;
+extern string_view necessarySimpleModeDesc;
+extern string_view alwaysSimpleModeDesc;
 
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
