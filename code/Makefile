@@ -29,9 +29,9 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src
+SOURCES		:=	src $(sort $(dir $(wildcard src/*/)))
 DATA		:=	data
-INCLUDES	:=	include
+INCLUDES	:=	include $(SOURCES)
 INCLUDES    +=  assets
 #ROMFS		:=	romfs
 
