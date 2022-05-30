@@ -9,14 +9,25 @@ namespace Cosmetics {
     return hexStr.find_first_not_of("0123456789ABCDEFabcdef") == std::string_view::npos && hexStr.length() == 6;
   }
 
-  Color_RGB HexStrToColorRGB(const std::string& hexStr) {
+  Color_RGBAf HexStrToColorRGBAf(const std::string& hexStr) {
     u32 hex = std::stoi(hexStr, nullptr, 16);
 
-    return Color_RGB{
+    return Color_RGBAf{
       .r = ((hex & 0xFF0000) >> 16) / 255.0f,
       .g = ((hex & 0x00FF00) >> 8)  / 255.0f,
       .b = (hex & 0x0000FF) / 255.0f,
       .a = 1.0f,
+    };
+  }
+
+  Color_RGBA8 HexStrToColorRGBA8(const std::string& hexStr) {
+    u32 hex = std::stoi(hexStr, nullptr, 16);
+
+    return Color_RGBA8{
+      .r = (uint8_t)((hex & 0xFF0000) >> 16),
+      .g = (uint8_t)((hex & 0x00FF00) >> 8),
+      .b = (uint8_t)(hex & 0x0000FF),
+      .a = 0xFF,
     };
   }
 
@@ -72,6 +83,65 @@ namespace Cosmetics {
     "52314F", //Mauve
     "505A59", //Silver
     "F16F16", //Gold
+  };
+  const std::array<std::string_view, 20> naviInnerColors = {
+    "FFFFFF", //White
+    "00FF00", //Green
+    "9696FF", //Light Blue
+    "FFFF00", //Yellow
+    "FF0000", //Red
+    "FF00FF", //Magenta
+    "FECC3C", //Gold
+    "000000", //Black
+    "FFFFFF", //Tatl
+    "49146C", //Tael
+    "2C9EC4", //Fi
+    "E6DE83", //Ciela
+    "D14902", //Epona
+    "629C5F", //Ezlo
+    "A83317", //KoRL
+    "032660", //Linebeck
+    "D62E31", //Loftwing
+    "192426", //Midna
+    "977A6C", //Phantom Zelda
+    "FF0000", //Rainbow (starts at red)
+  };
+  const std::array<std::string_view, 20> naviOuterColors = {
+    "0000FF", //White
+    "00FF00", //Green
+    "9696FF", //Light Blue
+    "C89B00", //Yellow
+    "FF0000", //Red
+    "C8009B", //Magenta
+    "FEC007", //Gold
+    "000000", //Black
+    "C89800", //Tatl
+    "FF0000", //Tael
+    "2C1983", //Fi
+    "C6BE5B", //Ciela
+    "551F08", //Epona
+    "3F5D37", //Ezlo
+    "DED7C5", //KoRL
+    "EFFFFF", //Linebeck
+    "FDE6CC", //Loftwing
+    "D28330", //Midna
+    "6F4667", //Phantom Zelda
+    "FF0000", //Rainbow (starts at red)
+  };
+  const std::array<std::string_view, 13> weaponTrailColors = {
+    "FFFFFF", //White
+    "000000", //Black
+    "FF0000", //Red
+    "00FF00", //Green
+    "0000FF", //Blue
+    "FFFF00", //Yellow
+    "00FFFF", //Cyan
+    "FF00FF", //Magenta
+    "FFA500", //Orange
+    "FFD700", //Gold
+    "800080", //Purple
+    "FF69B4", //Pink
+    "FF0000", //Rainbow (starts at red)
   };
 
   //Generate random hex color

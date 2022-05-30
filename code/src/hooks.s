@@ -1396,6 +1396,52 @@ hook_PierreSoftlockFixTwo:
     pop {r0-r12, lr}
     bx lr
 
+.global hook_StoreTargetActorType
+hook_StoreTargetActorType:
+    push {r0-r12, lr}
+    cpy r0,r6
+    bl Fairy_StoreTargetActorType
+    pop {r0-r12, lr}
+    cmp r5,#0x0
+    bx lr
+
+.global hook_ForceTrailEffectUpdate
+hook_ForceTrailEffectUpdate:
+    push {r1-r12, lr}
+    cpy r0,r4
+    bl forceTrailEffectUpdate
+    pop {r1-r12, lr}
+    cmp r0,#0x10
+    bx lr
+
+.global hook_RainbowSwordTrail
+hook_RainbowSwordTrail:
+    push {r0-r12, lr}
+    bl updateSwordTrailColors
+    pop {r0-r12, lr}
+    add r8,r7,#0x100
+    bx lr
+
+.global hook_BoomerangTrailEffect
+hook_BoomerangTrailEffect:
+    push {r0-r12, lr}
+    bl updateBoomerangTrailEffect
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bne 0x1F4228
+    strb r4,[r0,#0x282]
+    bx lr
+
+.global hook_RainbowChuTrail
+hook_RainbowChuTrail:
+    push {r0-r12, lr}
+    bl updateChuTrailColors
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    addne pc,lr,#0x4
+    strb r7,[r0,#0x282]
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

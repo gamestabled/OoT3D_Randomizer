@@ -1720,6 +1720,41 @@ PierreSoftlockFixThree_patch:
     nop
     nop
 
+.section .patch_StoreTargetActorType
+.global StoreTargetActorType_patch
+StoreTargetActorType_patch:
+    bl hook_StoreTargetActorType
+
+.section .patch_SwordTrailDurationGrezzoFix
+.global SwordTrailDurationGrezzoFix_patch
+SwordTrailDurationGrezzoPatch_patch:
+    nop
+
+.section .patch_ForceTrailEffectUpdate
+.global ForceTrailEffectUpdate_patch
+ForceTrailEffectUpdate_patch:
+    blne hook_ForceTrailEffectUpdate
+
+.section .patch_RainbowSwordTrail
+.global RainbowSwordTrail_patch
+RainbowSwordTrail_patch:
+    bl hook_RainbowSwordTrail
+
+.section .patch_BoomerangTrailEffect
+.global BoomerangTrailEffect_patch
+BoomerangTrailEffect_patch:
+    bl hook_BoomerangTrailEffect
+
+.section .patch_RainbowChuTrailOne
+.global RainbowChuTrailOne_patch
+RainbowChuTrailOne_patch:
+    bl hook_RainbowChuTrail
+
+.section .patch_RainbowChuTrailTwo
+.global RainbowChuTrailTwo_patch
+RainbowChuTrailTwo_patch:
+    bl hook_RainbowChuTrail
+
 .section .patch_loader
 .global loader_patch
 

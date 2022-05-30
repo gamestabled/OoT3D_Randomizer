@@ -230,7 +230,12 @@ typedef struct {
     /* 0x170C */ char   unk_170C[0x0004];
     /* 0x1710 */ u32    stateFlags1;
     /* 0x1714 */ u32    stateFlags2;
-    /* 0x1718 */ char   unk_1718[0x0013];
+    /* 0x1718 */ Actor* unk_1718;
+    /* 0x171C */ Actor* boomerangActor;
+    /* 0x1720 */ Actor* unk_1720;
+    /* 0x1724 */ Actor* naviActor;
+    /* 0x1728 */ s16    naviTextId;
+    /* 0x172A */ u8     stateFlags3;
     /* 0x172B */ s8     exchangeItemId;
     /* 0x172C */ char   unk_172C[0x0AF0];
     /* 0x221C */ float  xzSpeed; //probably

@@ -836,6 +836,12 @@ namespace Settings {
     &IgnoreMaskReaction,
   };
 
+  //Function to make options vectors for Navi and Tunic colors without the "Same as ..." option
+  std::vector<std::string> VectorCopyExceptLastElement(std::vector<std::string> vect) {
+      std::vector<std::string> copy(vect.begin(), std::prev(vect.end()));
+      return copy;
+  }
+
   static std::vector<std::string> gauntletOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
@@ -854,7 +860,8 @@ namespace Settings {
     "Lime",
     "Purple",
   };
-  static std::vector<std::string> tunicOptions = {
+
+  static std::vector<std::string> childTunicOptions = {
     std::string(RANDOM_CHOICE_STR),
     std::string(RANDOM_COLOR_STR),
     std::string(CUSTOM_COLOR_STR),
@@ -885,8 +892,83 @@ namespace Settings {
     "Magenta",
     "Mauve",
     "Silver",
-    "Gold"
+    "Gold",
+    "Same as Kokiri",
   };
+  #define SAME_AS_KOKIRI (childTunicOptions.size() - 1)
+  static std::vector<std::string> tunicOptions = VectorCopyExceptLastElement(childTunicOptions);
+
+  static std::vector<std::string> naviOuterOptionNames = {
+    std::string(RANDOM_CHOICE_STR),
+    std::string(RANDOM_COLOR_STR),
+    std::string(CUSTOM_COLOR_STR),
+    "White",
+    "Green",
+    "Light Blue",
+    "Yellow",
+    "Red",
+    "Magenta",
+    "Gold",
+    "Black",
+    "Tatl",
+    "Tael",
+    "Fi",
+    "Ciela",
+    "Epona",
+    "Ezlo",
+    "King Red Lions",
+    "Linebeck",
+    "Loftwing",
+    "Midna",
+    "Phantom Zelda",
+    "Rainbow",
+    "Same as Inner",
+  };
+  #define RAINBOW_NAVI (naviOuterOptionNames.size() - 2)
+  #define SAME_AS_INNER_NAVI (naviOuterOptionNames.size() - 1)
+  static std::vector<std::string> naviInnerOptionNames = VectorCopyExceptLastElement(naviOuterOptionNames);
+
+  static std::vector<std::string> weaponTrailOuterOptionNames = {
+    std::string(RANDOM_CHOICE_STR),
+    std::string(RANDOM_COLOR_STR),
+    std::string(CUSTOM_COLOR_STR),
+    "White",
+    "Black",
+    "Red",
+    "Green",
+    "Blue",
+    "Yellow",
+    "Cyan",
+    "Magenta",
+    "Orange",
+    "Gold",
+    "Purple",
+    "Pink",
+    "Rainbow",
+    "Same as Inner",
+  };
+  #define RAINBOW_TRAIL (weaponTrailOuterOptionNames.size() - 2)
+  #define SAME_AS_INNER_TRAIL (weaponTrailOuterOptionNames.size() - 1)
+  static std::vector<std::string> weaponTrailInnerOptionNames = VectorCopyExceptLastElement(weaponTrailOuterOptionNames);
+
+  static std::vector<std::string> trailDurationOptionNames = {
+    "Disabled",
+    "Very short",
+    "Vanilla",
+    "Long",
+    "Very Long",
+    "Lightsaber",
+  };
+
+  static std::vector<std::string> chuTrailDurationOptionNames = {
+    "Disabled",
+    "Short",
+    "Vanilla",
+    "Long",
+    "Very Long",
+    "Hero's Path",
+  };
+
   static std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
     RANDOM_COLOR_DESC,
@@ -894,19 +976,52 @@ namespace Settings {
     "This will only affect the color on Link's model.",
   };
 
-  Option CustomTunicColors          = Option::Bool("Custom Tunic Colors",    {"Off", "On"},   {""},                                                                                                                                                             OptionCategory::Cosmetic);
-  Option ChildTunicColor            = Option::U8  ("  Child Tunic Color",    tunicOptions,    cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               3); // Kokiri Green
-  Option KokiriTunicColor           = Option::U8  ("  Kokiri Tunic Color",   tunicOptions,    cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               3); // Kokiri Green
-  Option GoronTunicColor            = Option::U8  ("  Goron Tunic Color",    tunicOptions,    cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               4); // Goron Red
-  Option ZoraTunicColor             = Option::U8  ("  Zora Tunic Color",     tunicOptions,    cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               5); // Zora Blue
-  Option SilverGauntletsColor       = Option::U8  ("Silver Gauntlets Color", gauntletOptions, cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               3); // Silver
-  Option GoldGauntletsColor         = Option::U8  ("Gold Gauntlets Color",   gauntletOptions, cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,               4); // Gold
+  Option CustomTunicColors          = Option::Bool("Custom Tunic Colors",    {"Off", "On"},                 {""},                                                                                                                                                             OptionCategory::Cosmetic);
+  Option ChildTunicColor            = Option::U8  ("  Child Tunic Color",    childTunicOptions,             cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,        SAME_AS_KOKIRI);
+  Option KokiriTunicColor           = Option::U8  ("  Kokiri Tunic Color",   tunicOptions,                  cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,                     3); // Kokiri Green
+  Option GoronTunicColor            = Option::U8  ("  Goron Tunic Color",    tunicOptions,                  cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,                     4); // Goron Red
+  Option ZoraTunicColor             = Option::U8  ("  Zora Tunic Color",     tunicOptions,                  cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,                     5); // Zora Blue
+  Option SilverGauntletsColor       = Option::U8  ("Silver Gauntlets Color", gauntletOptions,               cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,                     3); // Silver
+  Option GoldGauntletsColor         = Option::U8  ("Gold Gauntlets Color",   gauntletOptions,               cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,                     4); // Gold
+  Option CustomNaviColors           = Option::Bool("Custom Navi Colors",     {"Off", "On"},                 {""},                                                                                                                                                             OptionCategory::Cosmetic);
+  Option IdleNaviInnerColor         = Option::U8  ("  Idle (Inner)",         naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     3); // White
+  Option NPCNaviInnerColor          = Option::U8  ("  On NPC (Inner)",       naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     5); // Light Blue
+  Option EnemyNaviInnerColor        = Option::U8  ("  On Enemy (Inner)",     naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     6); // Yellow
+  Option PropNaviInnerColor         = Option::U8  ("  On Prop (Inner)",      naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     4); // Green
+  Option IdleNaviOuterColor         = Option::U8  ("  Idle (Outer)",         naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+  Option NPCNaviOuterColor          = Option::U8  ("  On NPC (Outer)",       naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+  Option EnemyNaviOuterColor        = Option::U8  ("  On Enemy (Outer)",     naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+  Option PropNaviOuterColor         = Option::U8  ("  On Prop (Outer)",      naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+  Option CustomTrailEffects         = Option::Bool("Custom Trail Effects",   {"Off", "On"},                 {""},                                                                                                                                                             OptionCategory::Cosmetic);
+  Option ChosenSimpleMode           = Option::Bool("  Draw simple texture",  {"When necessary","Always"},   {necessarySimpleModeDesc,alwaysSimpleModeDesc},                                                                                                                   OptionCategory::Cosmetic);
+  Option SwordTrailInnerColor       = Option::U8  ("  Sword (Inner Color)",  weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the base\nof the sword."},                                         OptionCategory::Cosmetic,                      3); // White
+  Option SwordTrailOuterColor       = Option::U8  ("  Sword (Outer Color)",  weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the tip\nof the sword."},                                          OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
+  Option SwordTrailDuration         = Option::U8  ("  Sword (Duration)",     trailDurationOptionNames,      {"Select the duration for sword trails.\n\nIf too many trails are on screen, the duration\nmay be capped at Long for some of them."},                             OptionCategory::Cosmetic,                      2); // Vanilla
+  Option BoomerangTrailColor        = Option::U8  ("  Boomerang (Color)",    weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for boomerang trails."},                                                             OptionCategory::Cosmetic,                      8); // Yellow
+  Option BoomerangTrailDuration     = Option::U8  ("  Boomerang (Duration)", trailDurationOptionNames,      {"Select the duration for boomerang trails."},                                                                                                                    OptionCategory::Cosmetic,                      2); // Vanilla
+  Option BombchuTrailInnerColor     = Option::U8  ("  Bombchu (Inner Color)",weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the center of the\nbombchu trail."},                                             OptionCategory::Cosmetic,                      5); // Red
+  Option BombchuTrailOuterColor     = Option::U8  ("  Bombchu (Outer Color)",weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the sides of the\nbombchu trail."},                                              OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
+  Option BombchuTrailDuration       = Option::U8  ("  Bombchu (Duration)",   chuTrailDurationOptionNames,   {"Select the duration for bombchu trails."},                                                                                                                      OptionCategory::Cosmetic,                      2); // Vanilla
   std::string finalChildTunicColor      = ChildTunicColor.GetSelectedOptionText();
   std::string finalKokiriTunicColor     = KokiriTunicColor.GetSelectedOptionText();
   std::string finalGoronTunicColor      = GoronTunicColor.GetSelectedOptionText();
   std::string finalZoraTunicColor       = ZoraTunicColor.GetSelectedOptionText();
   std::string finalSilverGauntletsColor = SilverGauntletsColor.GetSelectedOptionText();
   std::string finalGoldGauntletsColor   = GoldGauntletsColor.GetSelectedOptionText();
+  std::string finalIdleNaviInnerColor   = IdleNaviInnerColor.GetSelectedOptionText();
+  std::string finalNPCNaviInnerColor    = NPCNaviInnerColor.GetSelectedOptionText();
+  std::string finalEnemyNaviInnerColor  = EnemyNaviInnerColor.GetSelectedOptionText();
+  std::string finalPropNaviInnerColor   = PropNaviInnerColor.GetSelectedOptionText();
+  std::string finalIdleNaviOuterColor   = IdleNaviOuterColor.GetSelectedOptionText();
+  std::string finalNPCNaviOuterColor    = NPCNaviOuterColor.GetSelectedOptionText();
+  std::string finalEnemyNaviOuterColor  = EnemyNaviOuterColor.GetSelectedOptionText();
+  std::string finalPropNaviOuterColor   = PropNaviOuterColor.GetSelectedOptionText();
+  std::string finalSwordTrailOuterColor = SwordTrailOuterColor.GetSelectedOptionText();
+  std::string finalSwordTrailInnerColor = SwordTrailInnerColor.GetSelectedOptionText();
+  Cosmetics::Color_RGBA8 finalBoomerangColor = {0};
+  u8 boomerangTrailColorMode = 0;
+  std::string finalChuTrailInnerColor   = BombchuTrailInnerColor.GetSelectedOptionText();
+  std::string finalChuTrailOuterColor   = BombchuTrailOuterColor.GetSelectedOptionText();
 
   Option ColoredKeys =     Option::Bool("Colored Small Keys", {"Off", "On"}, {coloredKeysDesc},                                                                                                                                                                 OptionCategory::Cosmetic);
   Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc},                                                                                                                                                             OptionCategory::Cosmetic);
@@ -931,6 +1046,25 @@ namespace Settings {
     &ZoraTunicColor,
     &SilverGauntletsColor,
     &GoldGauntletsColor,
+    &CustomNaviColors,
+    &IdleNaviInnerColor,
+    &NPCNaviInnerColor,
+    &EnemyNaviInnerColor,
+    &PropNaviInnerColor,
+    &IdleNaviOuterColor,
+    &NPCNaviOuterColor,
+    &EnemyNaviOuterColor,
+    &PropNaviOuterColor,
+    &CustomTrailEffects,
+    &ChosenSimpleMode,
+    &SwordTrailInnerColor,
+    &SwordTrailOuterColor,
+    &SwordTrailDuration,
+    &BoomerangTrailColor,
+    &BoomerangTrailDuration,
+    &BombchuTrailInnerColor,
+    &BombchuTrailOuterColor,
+    &BombchuTrailDuration,
     &ColoredKeys,
     &ColoredBossKeys,
     &MirrorWorld,
@@ -1151,12 +1285,33 @@ namespace Settings {
     ctx.silenceNavi          = SilenceNavi.Value<u8>();
     ctx.ignoreMaskReaction   = IgnoreMaskReaction.Value<u8>();
 
-    ctx.customTunicColors    = (CustomTunicColors) ? 1 : 0;
-    ctx.mirrorWorld          = (MirrorWorld) ? 1 : 0;
-    ctx.coloredKeys          = (ColoredKeys) ? 1 : 0;
-    ctx.coloredBossKeys      = (ColoredBossKeys) ? 1 : 0;
-    ctx.shuffleSFX           = ShuffleSFX.Value<u8>();
-    ctx.shuffleSFXCategorically = (ShuffleSFXCategorically) ? 1 : 0;
+    ctx.customTunicColors          = (CustomTunicColors) ? 1 : 0;
+    ctx.customNaviColors           = (CustomNaviColors) ? 1 : 0;
+    ctx.rainbowIdleNaviInnerColor  = (IdleNaviInnerColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.rainbowNPCNaviInnerColor   = (NPCNaviInnerColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.rainbowEnemyNaviInnerColor = (EnemyNaviInnerColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.rainbowPropNaviInnerColor  = (PropNaviInnerColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.rainbowIdleNaviOuterColor  = (IdleNaviOuterColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.rainbowNPCNaviOuterColor   = (NPCNaviOuterColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.rainbowEnemyNaviOuterColor = (EnemyNaviOuterColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.rainbowPropNaviOuterColor  = (PropNaviOuterColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
+    ctx.customTrailEffects         = (CustomTrailEffects) ? 1 : 0;
+    ctx.rainbowSwordTrailInnerColor= (SwordTrailInnerColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
+    ctx.rainbowSwordTrailOuterColor= (SwordTrailOuterColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
+    ctx.boomerangTrailColor.r      = finalBoomerangColor.r;
+    ctx.boomerangTrailColor.g      = finalBoomerangColor.g;
+    ctx.boomerangTrailColor.b      = finalBoomerangColor.b;
+    ctx.boomerangTrailColor.a      = finalBoomerangColor.a;
+    ctx.boomerangTrailColorMode    = boomerangTrailColorMode;
+    ctx.boomerangTrailDuration     = BoomerangTrailDuration.Value<u8>();
+    ctx.rainbowChuTrailInnerColor  = (BombchuTrailInnerColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
+    ctx.rainbowChuTrailOuterColor  = (BombchuTrailOuterColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
+    ctx.bombchuTrailDuration       = BombchuTrailDuration.Value<u8>();
+    ctx.mirrorWorld                = (MirrorWorld) ? 1 : 0;
+    ctx.coloredKeys                = (ColoredKeys) ? 1 : 0;
+    ctx.coloredBossKeys            = (ColoredBossKeys) ? 1 : 0;
+    ctx.shuffleSFX                 = ShuffleSFX.Value<u8>();
+    ctx.shuffleSFXCategorically    = (ShuffleSFXCategorically) ? 1 : 0;
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
@@ -1915,10 +2070,69 @@ namespace Settings {
       KokiriTunicColor.Hide();
       GoronTunicColor.Hide();
       ZoraTunicColor.Hide();
-      ChildTunicColor.SetSelectedIndex(3);  //Kokiri Green
+      ChildTunicColor.SetSelectedIndex(SAME_AS_KOKIRI);
       KokiriTunicColor.SetSelectedIndex(3); //Kokiri Green
       GoronTunicColor.SetSelectedIndex(4);  //Goron Red
       ZoraTunicColor.SetSelectedIndex(5);   //Zora Blue
+    }
+
+    if (CustomNaviColors) {
+      IdleNaviInnerColor.Unhide();
+      NPCNaviInnerColor.Unhide();
+      EnemyNaviInnerColor.Unhide();
+      PropNaviInnerColor.Unhide();
+      IdleNaviOuterColor.Unhide();
+      NPCNaviOuterColor.Unhide();
+      EnemyNaviOuterColor.Unhide();
+      PropNaviOuterColor.Unhide();
+    } else {
+      IdleNaviInnerColor.Hide();
+      NPCNaviInnerColor.Hide();
+      EnemyNaviInnerColor.Hide();
+      PropNaviInnerColor.Hide();
+      IdleNaviOuterColor.Hide();
+      NPCNaviOuterColor.Hide();
+      EnemyNaviOuterColor.Hide();
+      PropNaviOuterColor.Hide();
+      IdleNaviInnerColor.SetSelectedIndex(3);  // White
+      NPCNaviInnerColor.SetSelectedIndex(5);   // Light Blue
+      EnemyNaviInnerColor.SetSelectedIndex(6); // Yellow
+      PropNaviInnerColor.SetSelectedIndex(4);  // Green
+      IdleNaviOuterColor.SetSelectedIndex(SAME_AS_INNER_NAVI);
+      NPCNaviOuterColor.SetSelectedIndex(SAME_AS_INNER_NAVI);
+      EnemyNaviOuterColor.SetSelectedIndex(SAME_AS_INNER_NAVI);
+      PropNaviOuterColor.SetSelectedIndex(SAME_AS_INNER_NAVI);
+    }
+
+    if (CustomTrailEffects) {
+      ChosenSimpleMode.Unhide();
+      SwordTrailInnerColor.Unhide();
+      SwordTrailOuterColor.Unhide();
+      SwordTrailDuration.Unhide();
+      BoomerangTrailColor.Unhide();
+      BoomerangTrailDuration.Unhide();
+      BombchuTrailInnerColor.Unhide();
+      BombchuTrailOuterColor.Unhide();
+      BombchuTrailDuration.Unhide();
+    } else {
+      ChosenSimpleMode.Hide();
+      SwordTrailInnerColor.Hide();
+      SwordTrailOuterColor.Hide();
+      SwordTrailDuration.Hide();
+      BoomerangTrailColor.Hide();
+      BoomerangTrailDuration.Hide();
+      BombchuTrailInnerColor.Hide();
+      BombchuTrailOuterColor.Hide();
+      BombchuTrailDuration.Hide();
+      ChosenSimpleMode.SetSelectedIndex(OFF);
+      SwordTrailInnerColor.SetSelectedIndex(3);   // White
+      SwordTrailOuterColor.SetSelectedIndex(SAME_AS_INNER_TRAIL);
+      SwordTrailDuration.SetSelectedIndex(2);     // Vanilla
+      BoomerangTrailColor.SetSelectedIndex(8);    // Yellow
+      BoomerangTrailDuration.SetSelectedIndex(2); // Vanilla
+      BombchuTrailInnerColor.SetSelectedIndex(5); // Red
+      BombchuTrailOuterColor.SetSelectedIndex(SAME_AS_INNER_TRAIL);
+      BombchuTrailDuration.SetSelectedIndex(2);   // Vanilla
     }
 
     // Audio
@@ -2083,11 +2297,13 @@ namespace Settings {
   }
 
   template <typename colorsArray>
-  static void ChooseFinalColor(const Option& cosmeticOption, std::string& colorStr, const colorsArray& colors) {
+  static void ChooseFinalColor(Option& cosmeticOption, std::string& colorStr, const colorsArray& colors) {
     if (cosmeticOption.Is(CUSTOM_COLOR)) {
       colorStr = GetCustomColor(cosmeticOption.GetSelectedOptionText());
     } else if (cosmeticOption.Is(RANDOM_CHOICE)) {
-      colorStr = colors[rand() % colors.size()]; //use default rand to not interfere with seed
+      size_t randomIndex = rand() % colors.size(); //use default rand to not interfere with seed
+      cosmeticOption.SetSelectedIndex(randomIndex + NON_COLOR_COUNT); //set index so it can be copied for other settings (Navi outer color)
+      colorStr = colors[randomIndex];
     } else if (cosmeticOption.Is(RANDOM_COLOR)) {
       colorStr = RandomColor();
     } else {
@@ -2095,15 +2311,77 @@ namespace Settings {
     }
   }
 
+  static void ChooseFinalNaviColor(Option& innerColorOption, Option& outerColorOption, std::string& innerColorStr, std::string& outerColorStr) {
+    ChooseFinalColor(innerColorOption, innerColorStr, naviInnerColors);
+
+    // If the outer color is "Same as Inner", only random and custom colors are copied directly via the hex code.
+    // If instead a listed color is chosen (even through Random Choice), the outer color will use the same index as the inner one
+    // to preserve color palettes (e.g. Midna giving black inner and gold outer).
+    if (outerColorOption.Is(SAME_AS_INNER_NAVI) && (innerColorOption.Is(RANDOM_COLOR) || innerColorOption.Is(CUSTOM_COLOR))) {
+      outerColorStr = innerColorStr;
+    }
+    else if (outerColorOption.Is(SAME_AS_INNER_NAVI)) {
+      outerColorOption.SetSelectedIndex(innerColorOption.Value<u8>());
+      ChooseFinalColor(outerColorOption, outerColorStr, naviOuterColors);
+    }
+    else {
+      ChooseFinalColor(outerColorOption, outerColorStr, naviOuterColors);
+    }
+  }
+
   //Function to update cosmetics options depending on choices
   static void UpdateCosmetics() {
-
-    ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
+    // Tunics
     ChooseFinalColor(KokiriTunicColor, finalKokiriTunicColor, tunicColors);
     ChooseFinalColor(GoronTunicColor, finalGoronTunicColor, tunicColors);
     ChooseFinalColor(ZoraTunicColor, finalZoraTunicColor, tunicColors);
+    if (ChildTunicColor.Is(SAME_AS_KOKIRI)) {
+      finalChildTunicColor = finalKokiriTunicColor;
+    } else {
+      ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
+    }
+    // Gauntlets
     ChooseFinalColor(SilverGauntletsColor, finalSilverGauntletsColor, gauntletColors);
     ChooseFinalColor(GoldGauntletsColor, finalGoldGauntletsColor, gauntletColors);
+    // Navi
+    ChooseFinalNaviColor(IdleNaviInnerColor, IdleNaviOuterColor, finalIdleNaviInnerColor, finalIdleNaviOuterColor);
+    ChooseFinalNaviColor(NPCNaviInnerColor, NPCNaviOuterColor,  finalNPCNaviInnerColor,  finalNPCNaviOuterColor);
+    ChooseFinalNaviColor(EnemyNaviInnerColor, EnemyNaviOuterColor, finalEnemyNaviInnerColor, finalEnemyNaviOuterColor);
+    ChooseFinalNaviColor(PropNaviInnerColor, PropNaviOuterColor, finalPropNaviInnerColor, finalPropNaviOuterColor);
+    // Sword Trail
+    ChooseFinalColor(SwordTrailInnerColor, finalSwordTrailInnerColor, weaponTrailColors);
+    if (SwordTrailOuterColor.Is(SAME_AS_INNER_TRAIL)) {
+      SwordTrailOuterColor.SetSelectedIndex(SwordTrailInnerColor.Value<u8>());
+      finalSwordTrailOuterColor = finalSwordTrailInnerColor;
+    } else {
+      ChooseFinalColor(SwordTrailOuterColor, finalSwordTrailOuterColor, weaponTrailColors);
+    }
+    // Boomerang Trail
+    std::string tempString;
+    Cosmetics::Color_RGBA8 tempColor;
+    ChooseFinalColor(BoomerangTrailColor, tempString, weaponTrailColors);
+    tempColor = Cosmetics::HexStrToColorRGBA8(tempString);
+    finalBoomerangColor.r = tempColor.r;
+    finalBoomerangColor.g = tempColor.g;
+    finalBoomerangColor.b = tempColor.b;
+    finalBoomerangColor.a = tempColor.a;
+    if (Settings::BoomerangTrailColor.Value<u8>() == RAINBOW_TRAIL) {
+      boomerangTrailColorMode = (ChosenSimpleMode) ? TRAILCOLOR_RAINBOW_SIMPLEMODE : TRAILCOLOR_RAINBOW;
+    } else if (ChosenSimpleMode ||
+             (Settings::finalBoomerangColor.r != 0xFF && Settings::finalBoomerangColor.g != 0xFF && Settings::finalBoomerangColor.b != 0xFF) ||
+             (Settings::BoomerangTrailColor.Value<u8>() == 3)) { // Chosen Simple Mode, dark color, or White
+      boomerangTrailColorMode = TRAILCOLOR_FORCEDSIMPLEMODE;
+    } else {
+      boomerangTrailColorMode = TRAILCOLOR_VANILLAMODE;
+    }
+    // Bombchus Trail
+    ChooseFinalColor(BombchuTrailInnerColor, finalChuTrailInnerColor, weaponTrailColors);
+    if (BombchuTrailOuterColor.Is(SAME_AS_INNER_TRAIL)) {
+      BombchuTrailOuterColor.SetSelectedIndex(BombchuTrailInnerColor.Value<u8>());
+      finalChuTrailOuterColor = finalChuTrailInnerColor;
+    } else {
+      ChooseFinalColor(BombchuTrailOuterColor, finalChuTrailOuterColor, weaponTrailColors);
+    }
   }
 
   //Function to set flags depending on settings

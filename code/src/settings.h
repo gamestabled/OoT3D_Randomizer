@@ -2,6 +2,7 @@
 #define _SETTINGS_H_
 
 #include "../include/z3D/z3D.h"
+#include "colors.h"
 
 typedef enum {
   OFF,
@@ -326,6 +327,22 @@ typedef enum {
 } DungeonInfo;
 
 typedef enum {
+  TRAILCOLOR_VANILLAMODE,
+  TRAILCOLOR_FORCEDSIMPLEMODE,
+  TRAILCOLOR_RAINBOW,
+  TRAILCOLOR_RAINBOW_SIMPLEMODE,
+} TrailColorMode;
+
+typedef enum {
+    TRAILDURATION_DISABLED,
+    TRAILDURATION_VERYSHORT,
+    TRAILDURATION_VANILLA,
+    TRAILDURATION_LONG,
+    TRAILDURATION_VERYLONG,
+    TRAILDURATION_LIGHTSABER,
+} TrailDuration;
+
+typedef enum {
   PLAY_ON_CONSOLE,
   PLAY_ON_CITRA,
 } PlayOption;
@@ -468,6 +485,25 @@ typedef struct {
   u8 ignoreMaskReaction;
 
   u8 customTunicColors;
+  u8 customNaviColors;
+  u8 rainbowIdleNaviInnerColor;
+  u8 rainbowNPCNaviInnerColor;
+  u8 rainbowEnemyNaviInnerColor;
+  u8 rainbowPropNaviInnerColor;
+  u8 rainbowIdleNaviOuterColor;
+  u8 rainbowNPCNaviOuterColor;
+  u8 rainbowEnemyNaviOuterColor;
+  u8 rainbowPropNaviOuterColor;
+  u8 customTrailEffects;
+  u8 rainbowSwordTrailInnerColor;
+  u8 rainbowSwordTrailOuterColor;
+  Color_RGBA8 boomerangTrailColor;
+  u8 boomerangTrailColorMode;
+  u8 boomerangTrailDuration;
+  u8 rainbowChuTrailInnerColor;
+  u8 rainbowChuTrailOuterColor;
+  u8 bombchuTrailDuration;
+
   u8 coloredKeys;
   u8 coloredBossKeys;
   u8 mirrorWorld;

@@ -400,6 +400,10 @@ SECTIONS
 		*(.patch_CanPlayBombchuBowlingTwo)
 	}
 
+	.patch_BoomerangTrailEffect 0x1F4220 : {
+		*(.patch_BoomerangTrailEffect)
+	} /*EnBoom_Draw*/
+
 	.patch_ItemGiveBombchuDropOne 0x1F6F70 : {
 		*(.patch_ItemGiveBombchuDropOne)
 	}
@@ -488,9 +492,21 @@ SECTIONS
 		*(.patch_SyatekiManReminder)
 	}
 
+	.patch_RainbowChuTrailOne 0x247FC0 : {
+		*(.patch_RainbowChuTrailOne)
+	} /*Bombchus use 2 EffectBlure instances*/
+
+	.patch_RainbowChuTrailTwo 0x2480A4 : {
+		*(.patch_RainbowChuTrailTwo)
+	} /*Bombchus use 2 EffectBlure instances*/
+
 	.patch_EnExItemModelDraw 0x249C94 : {
 		*(.patch_EnExItemModelDraw)
 	}
+
+	.patch_SwordTrailDurationGrezzoFix 0x2507D0 : {
+		*(.patch_SwordTrailDurationGrezzoFix)
+	} /*duration is set to 6 due to framerate increase. NOP to allow custom duration*/
 
 	.patch_MultiplyPlayerSpeed 0x251D34 : {
 		*(.patch_MultiplyPlayerSpeed)
@@ -578,6 +594,10 @@ SECTIONS
 
 	.patch_SerenadeLocation 0x2B2574 : {
 		*(.patch_SerenadeLocation)
+	}
+
+	.patch_RainbowSwordTrail 0x2B9AD0 : {
+		*(.patch_RainbowSwordTrail)
 	}
 
 	.patch_OverrideTextID 0x2BC1C4 : {
@@ -759,6 +779,10 @@ SECTIONS
 	.patch_ISGCrouchStab 0x360690 : {
 		*(.patch_ISGCrouchStab)
 	}
+
+	.patch_ForceTrailEffectUpdate 0x362108 : {
+		*(.patch_ForceTrailEffectUpdate)
+	} /*EffectBlure_AddVertex*/
 
 	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
 		*(.patch_ModelSpawnGetObjectStatus)
@@ -1250,6 +1274,10 @@ SECTIONS
 
 	.patch_LinkReflection 0x3F2F0C : {
 		*(.patch_LinkReflection)
+	}
+
+	.patch_StoreTargetActorType 0x479984 : {
+		*(.patch_StoreTargetActorType)
 	}
 
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
