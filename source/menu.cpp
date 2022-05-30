@@ -73,9 +73,32 @@ void MenuInit() {
   PrintMainMenu();
 }
 
-void MoveCursor(u32 kDown) {
+void MoveCursor(u32 kDown, bool updatedByHeld) {
   //Option sub menus need special checking for locked options
   if (currentMenu->mode == OPTION_SUB_MENU) {
+    // Cancel if holding and reached first/last selectable option
+    if (updatedByHeld) {
+      bool noSelectableOption = true;
+      if (kDown & KEY_DUP) {
+        for (int i = currentMenu->menuIdx - 1; i >= 0; i--) {
+          if (!currentMenu->settingsList->at(i)->IsHidden() && !currentMenu->settingsList->at(i)->IsLocked()) {
+            noSelectableOption = false;
+            break;
+          }
+        }
+      }
+      if (kDown & KEY_DDOWN) {
+        for (size_t i = currentMenu->menuIdx + 1; i < currentMenu->settingsList->size(); i++) {
+          if (!currentMenu->settingsList->at(i)->IsHidden() && !currentMenu->settingsList->at(i)->IsLocked()) {
+            noSelectableOption = false;
+            break;
+          }
+        }
+      }
+      if (noSelectableOption) {
+        return;
+      }
+    }
     //Loop through settings until an unlocked one is reached
     do {
       if ((kDown & KEY_DUP) != 0) {
@@ -97,6 +120,14 @@ void MoveCursor(u32 kDown) {
   }
   //All other menus except reset-to-defaults confirmation
   else if (currentMenu->mode != RESET_TO_DEFAULTS) {
+    // Cancel if holding and reached first/last menu
+    if (updatedByHeld) {
+      if ((kDown & KEY_DUP && currentMenu->menuIdx == 0) ||
+        (kDown & KEY_DDOWN && currentMenu->menuIdx == currentMenu->itemsList->size() - 1)) {
+        return;
+      }
+    }
+
     if (kDown & KEY_DUP) {
       currentMenu->menuIdx--;
     }
@@ -128,7 +159,7 @@ void MoveCursor(u32 kDown) {
   }
 }
 
-void MenuUpdate(u32 kDown) {
+void MenuUpdate(u32 kDown, bool updatedByHeld) {
   consoleSelect(&bottomScreen);
   consoleClear();
 
@@ -186,7 +217,7 @@ void MenuUpdate(u32 kDown) {
 
   //Print current menu (if applicable)
   consoleSelect(&bottomScreen);
-  MoveCursor(kDown); //Move cursor, if applicable
+  MoveCursor(kDown, updatedByHeld); //Move cursor, if applicable
   if (currentMenu->mode == MAIN_MENU) {
     PrintMainMenu();
     ClearDescription();
@@ -348,19 +379,26 @@ void PrintOptionSubMenu() {
       visibleSettings++;
     }
   }
-  if (currentMenu->menuIdx >= currentMenu->settingBound + MAX_SUBMENU_SETTINGS_ON_SCREEN + hiddenSettings) {
+  bool isLastVisibleSetting = true;
+  for (size_t i = currentMenu->menuIdx + 1; i < currentMenu->settingsList->size(); i++) {
+    if (!currentMenu->settingsList->at(i)->IsHidden()) {
+      isLastVisibleSetting = false;
+      break;
+    }
+  }
+  if (currentMenu->menuIdx >= currentMenu->settingBound - (isLastVisibleSetting ? 0 : 1) + MAX_SUBMENU_SETTINGS_ON_SCREEN + hiddenSettings) {
     currentMenu->settingBound = currentMenu->menuIdx;
     u8 offset = 0;
     //skip over hidden settings
-    while (offset < MAX_SUBMENU_SETTINGS_ON_SCREEN - 1) {
+    while (offset < MAX_SUBMENU_SETTINGS_ON_SCREEN - (isLastVisibleSetting ? 1 : 2)) {
       currentMenu->settingBound--;
       if (currentMenu->settingBound == 0) {
         break;
       }
       offset += currentMenu->settingsList->at(currentMenu->settingBound)->IsHidden() ? 0 : 1;
     }
-  } else if (currentMenu->menuIdx < currentMenu->settingBound)  {
-    currentMenu->settingBound = currentMenu->menuIdx;
+  } else if (currentMenu->menuIdx < currentMenu->settingBound + 1)  {
+    currentMenu->settingBound = std::max(currentMenu->menuIdx - 1, 0);
   }
 
   //print menu name

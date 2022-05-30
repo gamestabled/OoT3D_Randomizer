@@ -427,8 +427,8 @@ namespace Settings {
 
   //Starting Inventory submenus and menus
   std::vector<std::string> bottleOptions = {"Off", "Empty Bottle", "Red Potion", "Green Potion", "Blue Potion", "Fairy", "Fish", "Milk", "Blue Fire", "Bugs", "Big Poe", "Half Milk", "Poe"};
-  Option StartingStickCapacity    = Option::U8  ("Deku Sticks capacity", {"10 Deku Sticks",  "20 Deku Sticks",   "30 Deku Sticks"},                       {""});
-  Option StartingNutCapacity      = Option::U8  ("Deku Nuts capacity",   {"20 Deku Nuts",    "30 Deku Nuts",     "40 Deku Nuts"},                         {""});
+  Option StartingStickCapacity    = Option::U8  ("Deku Stick Capacity",  {NumOpts(10, 30, 10, {}, " Deku Sticks")},                                       {""});
+  Option StartingNutCapacity      = Option::U8  ("Deku Nut Capacity",    {NumOpts(20, 40, 10, {}, " Deku Nuts")},                                         {""});
   Option StartingSlingshot        = Option::U8  ("Slingshot",            {"Off",             "Slingshot (30)",   "Slingshot (40)",    "Slingshot (50)"},  {""});
   Option StartingOcarina          = Option::U8  ("Ocarina",              {"Off",             "Fairy Ocarina",    "Ocarina of Time"},                      {""});
   Option StartingBombBag          = Option::U8  ("Bombs",                {"Off",             "Bomb Bag (20)",    "Bomb Bag (30)",     "Bomb Bag (40)"},   {""});
