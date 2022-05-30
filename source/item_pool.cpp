@@ -596,7 +596,7 @@ static void SetMinimalItemPool() {
   ReplaceMaxItem(PROGRESSIVE_BOMB_BAG, 1);
   ReplaceMaxItem(PIECE_OF_HEART, 0);
   // Need an extra heart container when starting with 1 heart to be able to reach 3 hearts
-  ReplaceMaxItem(HEART_CONTAINER, (StartingHealth.Value<u8>() == 18)? 1 : 0);
+  ReplaceMaxItem(HEART_CONTAINER, (StartingHearts.Value<u8>() == 18)? 1 : 0);
 }
 
 void GenerateItemPool() {

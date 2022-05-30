@@ -770,9 +770,7 @@ string_view progGoronSword            = "Giant's Knife will always be found\n"  
 /*------------------------------                                                           //
 |  USE FARORE'S WIND ANYWHERE  |                                                           //
 ------------------------------*/                                                           //
-string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.\n" //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view faroresWindAnywhereDesc   = "Farore's Wind can be used outside of dungeons.";  //
                                                                                            //
 /*------------------------------                                                           //
 |    LIFT AGE RESTRICTIONS     |                                                           //
@@ -782,46 +780,35 @@ string_view ageRestrictionsDesc       = "Remove age restrictions for inventory i
                                         "options.\n\n"                                     //
                                         "Most of the items won't appear correctly when\n"  //
                                         "used as the wrong version of Link, but they'll be\n"
-                                        "fully functional otherwise.\n"                    //
-                                        "These settings will not change the logic.";       //
+                                        "fully functional otherwise.";                     //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
 string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"
                                         "Link will look like he's holding a Hylian Shield,\n"
-                                        "but rest assured it is a deku stick.\n"           //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "but rest assured it is a deku stick.";            //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
 ------------------------------*/                                                           //
-string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.\n"            //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.";             //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE CHILD HAMMER      |                                                           //
 ------------------------------*/                                                           //
-string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.\n"       //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.";        //
 /*------------------------------                                                           //
 |    ENABLE ADULT SLINGSHOT    |                                                           //
 ------------------------------*/                                                           //
 string_view adultSlingshotDesc        = "Adult Link can use the Slingshot (but it looks\n" //
-                                        "like the Bow).\n"                                 //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "like the Bow).";                                  //
                                                                                            //
 /*------------------------------                                                           //
 |      ENABLE CHILD BOW        |                                                           //
 ------------------------------*/                                                           //
 string_view childBowDesc              = "Child Link can use the Bow. It will look like the\n"
-                                        "Slingshot, but will shoot arrows.\n"              //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "Slingshot, but will shoot arrows.";               //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE CHILD HOOKSHOT     |                                                           //
@@ -829,23 +816,17 @@ string_view childBowDesc              = "Child Link can use the Bow. It will loo
 string_view childHookshotDesc         = "Child Link can use the Hookshot/Longshot.\n"      //
                                         "It will be difficult to aim, the red dot and\n"   //
                                         "laser won't appear and the hook will look like\n" //
-                                        "a small bomb.\n"                                  //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "a small bomb.";                                   //
 /*------------------------------                                                           //
 |   ENABLE CHILD IRON BOOTS    |                                                           //
 ------------------------------*/                                                           //
-string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.\n"           //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view childIronBootsDesc        = "Child Link can equip the Iron Boots.";            //
                                                                                            //
 /*------------------------------                                                           //
 |   ENABLE CHILD HOVER BOOTS   |                                                           //
 ------------------------------*/                                                           //
 string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots. The yellow\n"
-                                        "circle beneath Link's feet won't appear.\n"       //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "circle beneath Link's feet won't appear.";        //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE ADULT MASKS       |                                                           //
@@ -857,52 +838,38 @@ string_view adultMasksDesc            = "Adult Link can equip masks.\n"         
 /*------------------------------                                                           //
 |  ENABLE ADULT KOKIRI SWORD   |                                                           //
 ------------------------------*/                                                           //
-string_view adultKokiriSwordDesc      = "Adult Link can equip the Kokiri Sword.\n"         //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view adultKokiriSwordDesc      = "Adult Link can equip the Kokiri Sword.";          //
                                                                                            //
 /*------------------------------                                                           //
 |  ENABLE CHILD MASTER SWORD   |                                                           //
 ------------------------------*/                                                           //
-string_view childMasterSwordDesc      = "Child Link can equip the Master Sword.\n"         //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view childMasterSwordDesc      = "Child Link can equip the Master Sword.";          //
                                                                                            //
 /*------------------------------                                                           //
 |  ENABLE CHILD BIGGORON SWORD |                                                           //
 ------------------------------*/                                                           //
 string_view childBiggoronSwordDesc    = "Child Link can equip the Biggoron Sword and the\n"//
-                                        "Giant's Knife.\n"                                 //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+                                        "Giant's Knife.";                                  //
                                                                                            //
 /*------------------------------                                                           //
 |   ENABLE ADULT DEKU SHIELD   |                                                           //
 ------------------------------*/                                                           //
-string_view adultDekuShieldDesc       = "Adult Link can equip the Deku Shield.\n"          //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view adultDekuShieldDesc       = "Adult Link can equip the Deku Shield.";           //
                                                                                            //
 /*------------------------------                                                           //
 |  ENABLE CHILD MIRROR SHIELD  |                                                           //
 ------------------------------*/                                                           //
-string_view childMirrorShieldDesc     = "Child Link can equip the Mirror Shield.\n"        //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view childMirrorShieldDesc     = "Child Link can equip the Mirror Shield.";         //
                                                                                            //
 /*------------------------------                                                           //
 |   ENABLE CHILD GORON TUNIC   |                                                           //
 ------------------------------*/                                                           //
-string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.\n"          //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.";           //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE CHILD ZORA TUNIC   |                                                           //
 ------------------------------*/                                                           //
-string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.\n"           //
-                                        "\n"                                               //
-                                        "This setting will not change the logic.";         //
+string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.";            //
                                                                                            //
 /*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
@@ -1085,16 +1052,24 @@ string_view LogicOutsideGanonsGSDesc                  = "Difficulty: Intermediat
                                                         "from the top of the broken arch.";                //
 string_view LogicManOnRoofDesc                        = "Difficulty: Novice\n"                             //
                                                         "Can be reached by side-hopping off the watchtower.";
+string_view LogicWindmillPoHHookshotDesc              = "Difficulty: Novice\n"                             //
+                                                        "Adult Link can reach the upper area of the windmill"
+                                                        "using the hookshot and a midair jump slash.";     //
 string_view LogicDMTBombableDesc                      = "Difficulty: Expert\n"                             //
                                                         "Child Link can blow up the wall using a nearby\n" //
                                                         "bomb flower. You must backwalk with the flower and"
                                                         "then quickly throw it toward the wall.";          //
 string_view LogicDMTSoilGSDesc                        = "Difficulty: Intermediate\n"                       //
                                                         "Bugs will go into the soft soil even while the\n" //
-                                                        "boulder is still blocking the entrance. Then,\n"  //
-                                                        "using a precise moving setup you can kill the Gold"
-                                                        "Skulltula and obtain the token by having the\n"   //
-                                                        "Boomerang interact with it along the return path.";
+                                                        "boulder is still blocking the entrance if dropped\n"
+                                                        "from above. Then, using a precise moving setup you"
+                                                        "can kill the Gold Skulltula and obtain the token by"
+                                                        "having the Boomerang collect it while returning.";//
+string_view LogicDMTSummitHoverDesc                   = "Difficulty: Intermediate\n"                       //
+                                                        "By rolling around the lower boulder with hover\n" //
+                                                        "boots and grabbing the ledge with the higher\n"   //
+                                                        "boulder near the wall, you'll be able to grab the\n"
+                                                        "ledge above it to reach the summit.";             //
 string_view LogicLinkGoronDinsDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The timing is quite awkward.";                    //
 string_view LogicGoronCityLeftMostDesc                = "Difficulty: Novice\n"                             //
@@ -1135,6 +1110,10 @@ string_view LogicZoraRiverLowerDesc                   = "Difficulty: Novice\n"  
 string_view LogicZoraRiverUpperDesc                   = "Difficulty: Novice\n"                             //
                                                         "Adult can reach this PoH with a precise jump, no\n"
                                                         "Hover Boots required.";                           //
+string_view LogicZFGreatFairyDesc                     = "Difficulty: Novice\n"                             //
+                                                        "Destroying the boulders blocking the hidden area\n"
+                                                        "with silver gauntlets and hammer lets you pass\n" //
+                                                        "under the wall to the great fairy fountain.";     //
 string_view LogicDekuB1WebsWithBowDesc                = "Difficulty: Novice\n"                             //
                                                         "All spider web walls in the Deku Tree basement can"
                                                         "be burnt as adult with just a bow by shooting\n"  //
@@ -1177,7 +1156,7 @@ string_view LogicJabuBossGSAdultDesc                  = "Difficulty: Intermediat
                                                         "use a box to keep the switch pressed. One way is\n"
                                                         "to quickly roll from the switch and open the door\n"
                                                         "before it closes.";                               //
-string_view LogicJabuScrubJumpDiveDesc                = "Difficulty: Intermediate\n"                       //
+string_view LogicJabuScrubJumpDiveDesc                = "Difficulty: Novice\n"                             //
                                                         "Standing above the underwater tunnel leading to\n"//
                                                         "the scrub, jump down and swim through the tunnel.\n"
                                                         "This allows adult to access the scrub with no\n"  //
@@ -1416,8 +1395,21 @@ string_view LogicFlamingChestsDesc                    = "Difficulty: Novice\n"  
 /*------------------------------                                                                           //
 |           GLITCHES           |                                                                           //
 ------------------------------*/                                                                           //
-const std::vector<string_view> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"};
-
+const std::vector<string_view> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"}; //
+/* Restricted Items */                                                                                     //
+string_view GlitchRestrictedItemsDescDisabled         = "Swapping an item that can normally be used in an\n"
+                                                        "area with one that would be dimmed will let you\n"
+                                                        "use that item for 1 frame after closing your\n"   //
+                                                        "inventory. This can be useful on its own or in\n" //
+                                                        "combination with other glitches.";                //
+string_view GlitchRestrictedItemsDescNovice           = "You may be required to use restricted items.";    //
+/* Super Stab */                                                                                           //
+string_view GlitchSuperStabDescDisabled               = "Forcing sticks to unequip during a crouch stab by\n"
+                                                        "breaking it and moving them in your inventory has\n"
+                                                        "the effect of hitting all spherical collision.";  //
+string_view GlitchSuperStabDescNovice                 = "You may be expected to hit switches or kill gold\n"
+                                                        "skulltulas with a super stab.";                   //
+/* ISG */                                                                                                  //
 string_view GlitchISGDescDisabled                     = "Shortened to ISG, allows Link's melee weapon to\n"//
                                                         "be in a constant swinging state. Simply touching\n"
                                                         "objects with this causes them to get hit.\n"      //
@@ -1427,6 +1419,10 @@ string_view GlitchISGDescDisabled                     = "Shortened to ISG, allow
                                                         "interrupting a crouch stab.";                     //
 string_view GlitchISGDescNovice                       = "ISG may be required to kill certain enemies,\n"   //
                                                         "or to Bomb Hover when enabled.";                  //
+string_view GlitchISGDescIntermediate                 = "You may be required to use a bomb to activate ISG.";
+string_view GlitchISGDescAdvanced                     = "You may be required to use a bomb to activate ISG\n"
+                                                        "repeatedly or while under attack.";               //
+/* Hover */                                                                                                //
 string_view GlitchHoverDescDisabled                   = "Hovering allows Link to consecutively backflip\n" //
                                                         "in the air without falling. By shielding\n"       //
                                                         "damage with ISG on, Link will stay in midair.\n"  //
@@ -1439,36 +1435,178 @@ string_view GlitchHoverDescIntermediate               = "Some hovers may require
                                                         "terrain, which requires somewhat precise timing.";//
 string_view GlitchHoverDescAdvanced                   = "Usage of regular bombs will now also be expected,\n"
                                                         "which may require consecutive precise timings.";  //
-string_view GlitchMegaflipDescDisabled                = "A Megaflip is a backflip/sidehop with high speed.\n"
-                                                        "This can be done with several methods.";          //
-string_view GlitchMegaflipDescNovice                  = "Only Megaflipping with bombs is required.";       //
-string_view GlitchMegaflipDescIntermediate            = "Some Megaflips where you don't have a lot of room\n"
-                                                        "to work with and positioning is more important\n" //
+/* Bomb OI */                                                                                              //
+string_view GlitchBombOIDescDisabled                  = "Allowing a bomb to explode in Link's hands while\n"
+                                                        "moving and then attempting to pull out a cutscene\n"
+                                                        "item on a specific frame will cause Link to play\n"
+                                                        "an invisible ocarina instead.\n"                  //
+                                                        "This will only work if bombs are not dimmed on the"
+                                                        "frame you use the cutscene item.";                //
+string_view GlitchBombOIDescNovice                    = "You may be expected to use ocarina items with a\n"//
+                                                        "bomb to play warp songs.";                        //
+string_view GlitchBombOIDescIntermediate              = "You may be expected to use ocarina items with a\n"//
+                                                        "bomb to play the ocarina where Link's position\n" //
+                                                        "matters.";                                        //
+string_view GlitchBombOIDescAdvanced                  = "You may be expected to use restricted items to use"
+                                                        "the cutscene item or to make the bombs usable on\n"
+                                                        "the correct frame.";                              //
+string_view GlitchBombOIDescExpert                    = "You may be expected to use restricted items to\n" //
+                                                        "perform ocarina items where Link's position isn't\n"
+                                                        "particularly lenient";                            //
+/* Hover Boost */                                                                                          //
+string_view GlitchHoverBoostDescDisabled              = "Equipping hover boots when Link takes damage will\n"
+                                                        "cause him to keep the high knockback speed and\n" //
+                                                        "lets him traverse large gaps.\n"                  //
+                                                        "If performed at the edge of a platform Link will\n"
+                                                        "instead perform a mega jump which has less range\n"
+                                                        "but more height than a hover boost.";             //
+string_view GlitchHoverBoostDescNovice                = "Hover boosts that do not need the maximum speed\n"//
                                                         "may be required.";                                //
+string_view GlitchHoverBoostDescIntermediate          = "Hover boosts that do need the maximum speed may be"
+                                                        "required.";                                       //
+string_view GlitchHoverBoostDescAdvanced              = "Hover boosts that use more complex movement during"
+                                                        "the hover may be required.";                      //
+/* Super Slide */                                                                                          //
+string_view GlitchSuperSlideDescDisabled              = "Holding the circle pad just outside the dead zone\n"
+                                                        "will cause Link to turn on the spot which locks\n"//
+                                                        "his speed. This can be used to preserve high\n"   //
+                                                        "speeds indefinitely.";                            //
+string_view GlitchSuperSlideDescNovice                = "Forward extended super slides (FESSes) where Link\n"
+                                                        "is damaged by an explosion may be required.";     //
+string_view GlitchSuperSlideDescIntermediate          = "Hammer extended super slides where the recoil from"
+                                                        "a hammer crouch stab is used may be required.";   //
+string_view GlitchSuperSlideDescAdvanced              = "Hyper Extended Super Slides (HESSes) and\n"       //
+                                                        "damageless FESSes where Link rolls into a bomb may"
+                                                        "be required.";                                    //
+string_view GlitchSuperSlideDescExpert                = "HESSes with more precise movement may be required.";
+/* Megaflip */                                                                                             //
+string_view GlitchMegaflipDescDisabled                = "A backflip or sidehop with high speed from an\n"  //
+                                                        "attack hitting your shield during i-frames. This\n"
+                                                        "is normally achieved by rolling into an explosion.\n"
+                                                        "Equipping hover boots to preserve the high speed\n"
+                                                        "when landing is known as a hoverflip.";           //
+string_view GlitchMegaflipDescNovice                  = "You may be expected to perform megaflips on flat\n"
+                                                        "ground with bombs.";                              //
+string_view GlitchMegaflipDescIntermediate            = "You may be expected to perform megaflips in small\n"
+                                                        "areas, distance megaflips, or hoverflips with a\n"//
+                                                        "bomb.";                                           //
+string_view GlitchMegaflipDescAdvanced                = "You may be expected to perform hoverflips with\n" //
+                                                        "difficult midair movement, or distance megaflips\n"
+                                                        "under time pressure with a bomb.\n\n"             //
+                                                        "Additionally, you may be expected to perform\n"   //
+                                                        "novice megaflips with a bombchu";                 //
+string_view GlitchMegaflipDescExpert                  = "You may be expected to perform intermediate\n"    //
+                                                        "megaflips with a bombchu.";                       //
+string_view GlitchMegaflipDescHero                    = "You may be expected to perform any megaflip with a"
+                                                        "bombchu.";                                        //
+/* A-Slide */                                                                                              //
+string_view GlitchASlideDescDisabled                  = "An A-slide is performed the same as a megaflip\n" //
+                                                        "except without pressing the A button at the end.\n"
+                                                        "This causes child Link's collision to glitch below"
+                                                        "the ground and lets him bypass certain actors.";  //
+string_view GlitchASlideDescNovice                    = "You may be expected to perform A-slides to pass\n"//
+                                                        "actors you can't press A to interact with.";      //
+string_view GlitchASlideDescIntermediate              = "You may be expected to perform A-slides quickly or"
+                                                        "around actors that can be interacted with.";      //
+string_view GlitchASlideDescAdvanced                  = "You may be expected to perform novice A-slides\n" //
+                                                        "with a bombchu.";                                 //
+string_view GlitchASlideDescExpert                    = "You may be expected to perform intermediate\n"    //
+                                                        "A-slides with a bombchu.";
+/* Hammer Slide */                                                                                         //
+string_view GlitchHammerSlideDescDisabled             = "Equipping hover boots after a hammer crouch stab\n"
+                                                        "against a wall preserves the recoil speed which\n"//
+                                                        "allows Link to cross larger gaps than usual.";    //
+string_view GlitchHammerSlideDescNovice               = "Simple hammer slides may be required";            //
+string_view GlitchHammerSlideDescIntermediate         = "Hammer slides which require good movement and high"
+                                                        "speed may be required.";                          //
+/* Ledge Cancel */                                                                                         //
+string_view GlitchLedgeCancelDescDisabled             = "Climbing a short ledge and shielding damage will\n"
+                                                        "prevent the ledge climbing state from ending.\n"  //
+                                                        "This state allows Link to walk through some actors"
+                                                        "such as boulders and NPCs.";                      //
+string_view GlitchLedgeCancelDescNovice               = "You may be expected to perform ledge cancels using"
+                                                        "bombs as a damage source.";                       //
+string_view GlitchLedgeCancelDescIntermediate         = "You may be expected to perform ledge cancels in\n"//
+                                                        "places with little room.";                        //
+string_view GlitchLedgeCancelDescAdvanced             = "You may be expected to perform ledge cancels using"
+                                                        "bombchus as a damage source.";                    //
+/* Action Swap */                                                                                          //
+string_view GlitchActionSwapDescDisabled              = "Action swap allows Link to switch between 2 held\n"
+                                                        "items without the put away/equip animations.\n"   //
+                                                        "This can be exploited to produce various effects.";
+string_view GlitchActionSwapDescNovice                = "You may be expected to use shallow water to set up"
+                                                        "action swap.";                                    //
+string_view GlitchActionSwapDescAdvanced              = "You may be expected to use bombchus to set up\n"  //
+                                                        "action swap.";                                    //
+/* QPA */                                                                                                  //
+string_view GlitchQPADescDisabled                     = "Certain events can cancel putting away an item\n" //
+                                                        "which later lets Link put it away without an\n"   //
+                                                        "animation. This can be used with sticks to access\n"
+                                                        "a glitched damage value with the properties of\n" //
+                                                        "hammer and fire arrows, or with a bottle to store\n"
+                                                        "a cutscene for ocarina items.";                   //
+string_view GlitchQPADescNovice                       = "You may be expected to get QPA using the boots\n" //
+                                                        "animation to delay putting away the item and a\n" //
+                                                        "bomb.";                                           //
+string_view GlitchQPADescIntermediate                 = "You may be expected to get QPA using only a bomb.";
+string_view GlitchQPADescAdvanced                     = "You may be expected to get QPA using a ledge grab\n"
+                                                        "to interrupt putting away the item.";             //
+string_view GlitchQPADescExpert                       = "You may be expected to get QPA from enemy attacks.";
+/* Hookshot Clip */                                                                                        //
 string_view GlitchHookshotClipDescDisabled            = "Hookshot Clipping allows Link to hookshot through\n"
                                                         "certain walls, which is useful if a valid\n"      //
                                                         "target is on the other side.";                    //
 string_view GlitchHookshotClipDescNovice              = "Basic Hookshot Clipping may be required.";        //
+string_view GlitchHookshotClipDescIntermediate        = "Hookshot clips with precise angles and poor\n"    //
+                                                        "visibility may be required.";                     //
+/* Hookshot Jump: Bonk */                                                                                  //
 string_view GlitchHookshotJump_BonkDescDisabled       = "A Hookshot Jump is an umbrella term for techniques"
                                                         "that launch Link into the sky using the Hookshot\n"
                                                         "in various ways, sometimes together with\n"       //
                                                         "other items. The bonk method only requires the\n" //
                                                         "Hookshot itself.";                                //
-string_view GlitchHookshotJump_BonkDescIntermediate   = "Basic Hookshot Jumps with a bonk may be required.";
+string_view GlitchHookshotJump_BonkDescNovice         = "Simple hookshot jumps against large flat walls of\n"
+                                                        "hookshottable surfaces may be required.";         //
+string_view GlitchHookshotJump_BonkDescIntermediate   = "Less lenient hookshot jumps may be required.";    //
+string_view GlitchHookshotJump_BonkDescAdvanced       = "Hookshot jumps with precise midair movement may be"
+                                                        "required.";                                       //
+/* Hookshot Jump: Boots */                                                                                 //
 string_view GlitchHookshotJump_BootsDescDisabled      = "This Hookshot Jump technique is one of the easier\n"
                                                         "ones, and require any pair of boots.";            //
 string_view GlitchHookshotJump_BootsDescNovice        = "Only relatively short Hookshot Jumps with boots\n"//
                                                         "may be required.";                                //
 string_view GlitchHookshotJump_BootsDescIntermediate  = "Higher Hookshot Jumps with boots, where you look\n"
                                                         "further up or downwards may be required.";        //
-string_view GlitchLedgeClipDescDisabled               = "A Ledge Clip allows Link to fall through a floor\n"
-                                                        "or pass through an object by facing a wall\n"     //
-                                                        "and dropping down to the left in a various ways.\n"
-                                                        "These only work as an adult.";                    //
-string_view GlitchLedgeClipDescNovice                 = "Basic Ledge Clips may be required.\n"             //
-                                                        "Some require that you let go of the ledge with\n" //
-                                                        "a specific timing.";                              //
-string_view GlitchLedgeClipDescIntermediate           = "Certain harder clips may also be required.";      //
+string_view GlitchHookshotJump_BootsDescAdvanced      = "Hookshot jumps that require a lot of height and\n"//
+                                                        "precise midair movement may be required.";        //
+/* Cutscene Dives */                                                                                       //
+string_view GlitchCutsceneDiveDescDisabled            = "Water physics won't effect Link if he enters the\n"
+                                                        "water while a cutscene is playing, allowing him\n"//
+                                                        "to sink to the bottom.";                      //
+string_view GlitchCutsceneDiveDescNovice              = "Attempting to use Farore's Wind (when it's already"
+                                                        "set) with another magic item active prevents the\n"
+                                                        "water from clearing the FW cutscene until the\n"  //
+                                                        "other effect ends.\n"                             //
+                                                        "You may be expected to use Nayru's Love as the\n" //
+                                                        "other magic effect.";                             //
+string_view GlitchCutsceneDiveDescIntermediate        = "You can catch something in a bottle while standing"
+                                                        "over water using the hover boots to fall through\n"
+                                                        "the water during the catching cutscene.";         //
+string_view GlitchCutsceneDiveDescAdvanced            = "You may be expected to use magic arrows to perform"
+                                                        "Farore's Wind cutscene dives.";                   //
+/* Navi Dive: Stick */                                                                                     //
+string_view GlitchNaviDive_StickDescDisabled          = "A Navi dive is a type of cutscene dive achieved by"
+                                                        "falling off a ledge while talking to Navi. While\n"
+                                                        "the usual method for achieving this is a TSC, it\n"
+                                                        "is also possible to perform using a jump attack\n"//
+                                                        "with deku sticks.";                               //
+string_view GlitchNaviDive_StickDescNovice            = "You may be expected to enter BotW with a stick\n" //
+                                                        "Navi dive.";                                      //
+string_view GlitchNaviDive_StickDescIntermediate      = "You may be expected to use the LH to ZD shortcut\n"
+                                                        "with a stick Navi dive.";                         //
+string_view GlitchNaviDive_StickDescAdvanced          = "You may be expected to use the LW to ZR shortcut\n"
+                                                        "with a stick Navi dive.";                         //
+/* TSC */                                                                                                  //
 string_view GlitchTripleSlashClipDescDisabled         = "When doing a three-slash-combo with either the\n" //
                                                         "Kokiri Sword or the Master Sword and put it away,\n"
                                                         "Link will be placed back a small distance.\n"     //
@@ -1476,3 +1614,83 @@ string_view GlitchTripleSlashClipDescDisabled         = "When doing a three-slas
                                                         "a wall and then put away the sword, Link may clip\n"
                                                         "into a wall behind him if angled correctly.";     //
 string_view GlitchTripleSlashClipDescNovice           = "Basic Triple Slash Clipping may be required.";    //
+string_view GlitchTripleSlashClipDescIntermediate     = "Some more complex OoB movement may be required."; //
+string_view GlitchTripleSlashClipDescAdvanced         = "Very precise OoB movement may be required.";      //
+string_view GlitchTripleSlashClipDescExpert           = "Very precise TSCs may be required.";              //
+/* Ledge Clip */                                                                                           //
+string_view GlitchLedgeClipDescDisabled               = "A Ledge Clip allows Link to fall through a floor\n"
+                                                        "or pass through an object by facing a wall\n"     //
+                                                        "and dropping down to the left in various ways.\n" //
+                                                        "These only work as an adult.";                    //
+string_view GlitchLedgeClipDescNovice                 = "Basic Ledge Clips may be required.\n"             //
+                                                        "Some require that you let go of the ledge with\n" //
+                                                        "a specific timing.";                              //
+string_view GlitchLedgeClipDescIntermediate           = "Certain harder clips may also be required.";      //
+string_view GlitchLedgeClipDescAdvanced               = "Ledge clips with complex OoB movement may be\n"   //
+                                                        "required.";                                       //
+/* Seam Walk */                                                                                            //
+string_view GlitchSeamWalkDescDisabled                = "Where 2 walls come together they form a seam that\n"
+                                                        "Link can stand on. It is possible to use these to\n"
+                                                        "gain height and reach normally inaccessible areas.\n"
+                                                        "Additionally these seams can reach far above the\n"
+                                                        "walls that form them, creating invisible seams."; //
+string_view GlitchSeamWalkDescNovice                  = "Short seam walks up visible walls with ISG may be\n"
+                                                        "required.";                                       //
+string_view GlitchSeamWalkDescIntermediate            = "Short seam walks up visible walls without ISG or\n"
+                                                        "longer seam walks with ISG may be required.";     //
+string_view GlitchSeamWalkDescAdvanced                = "Longer seam walks without ISG may be required.";  //
+string_view GlitchSeamWalkDescExpert                  = "Very precise seam walks may be required.";        //
+string_view GlitchSeamWalkDescHero                    = "Crossing Gerudo Valley as child by walking up a\n"//
+                                                        "wall with the cucco may be required.";            //
+/* Misc Glitches */                                                                                        //
+string_view GlitchWWTEscapeDesc                       = "Using deku nuts and the crawlspace to let you\n"  //
+                                                        "move while reading the nearby sign, you can walk\n"
+                                                        "through the Kokiri guarding the exit. This only\n"//
+                                                        "affects logic with shuffled entrances.";          //
+string_view GlitchGVTentAsChildDesc                   = "The loading zone for the carpenters' tent exists\n"
+                                                        "in the child map despite the tent being removed.\n\n"
+                                                        "With this setting enabled you may be expected to\n"
+                                                        "use that loading zone.";                          //
+string_view GlitchGFGuardSneakDesc                    = "By using the bow, hookshot, or boomerang while\n" //
+                                                        "looking up and targeting the Fortress wall, you\n"//
+                                                        "can walk\n past the guard on the slope without\n" //
+                                                        "being caught.";                                   //
+string_view GlitchItemlessWastelandDesc               = "By starting a backwalk and then targeting every\n"//
+                                                        "other frame Link will maintain backwalk speed\n"  //
+                                                        "over the quicksand in the haunted wasteland which\n"
+                                                        "lets him cross with no items.";                   //
+string_view GlitchOccamsStatueDesc                    = "With some precise movement through loading zones\n"
+                                                        "in Darunia's room, it is possible to unload the\n"//
+                                                        "collision of the statue blocking the way to DMC.";//
+string_view GlitchZDOoBJumpSlashDesc                  = "Jump slashing the wall next to the pillar above\n"//
+                                                        "the ZD to LH shortcut as adult will let you clip\n"
+                                                        "through. From here you can either jump to the shop"
+                                                        "loading zone or fall OoB a little bit and swim\n" //
+                                                        "into the shortcut loading zone.";                 //
+string_view GlitchJabuStickRecoilDesc                 = "Child can enter Jabu without a fish in a bottle\n"//
+                                                        "using the recoil from breaking a deku stick while\n"
+                                                        "sidehopping next to the loading zone.";           //
+string_view GlitchJabuAdultDesc                       = "Adult can enter Jabu by walking over a specific\n"//
+                                                        "section of ice on the side near ice cavern.";     //
+string_view GlitchBlueFireWallDesc                    = "Pouring blue fire on certain destructable walls\n"//
+                                                        "will cause them to break.";                       //
+string_view GlitchClassicHalfieDesc                   = "Dying during a jump attack towards a ledge just\n"//
+                                                        "too high to climb will put Link on top of the\n"  //
+                                                        "ledge. Combined with a fairy this lets Link climb\n"
+                                                        "ledges such as the one to the switch in DC.";     //
+string_view GlitchModernHalfieDesc                    = "Using a bomb flower and a twisted backflip, it is\n"
+                                                        "possible to access the switch in DC with only a\n"//
+                                                        "deku shield and the goron bracelet.";             //
+string_view GlitchJabuSwitchDesc                      = "Using a cutscene item the frame you land on the\n"//
+                                                        "blue switches in Jabu Jabu's Belly will make them\n"
+                                                        "stay held for a while after you step off them.";  //
+string_view GlitchForestBKSkipDesc                    = "Using the hookshot or bow to shorten a backflip\n"//
+                                                        "it is possible to land on the other side of the\n"//
+                                                        "railing in the north of the lobby and get clipped\n"
+                                                        "out of bounds. From here it is possible to jump\n"//
+                                                        "into the boss loading zone.";                     //
+string_view GlitchFireGrunzClipDesc                   = "Grabbing a ledge in a corner partially clips Link\n"
+                                                        "through the wall. A bomb can be used to push Link\n"
+                                                        "fully through the wall to get out of bounds. This\n"
+                                                        "can be used in the fire temple along with hover\n"//
+                                                        "boots to skip hammer in the first room.";         //

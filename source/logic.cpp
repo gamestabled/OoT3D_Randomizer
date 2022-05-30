@@ -51,6 +51,8 @@ namespace Logic {
   bool FireArrows    = false;
   bool IceArrows     = false;
   bool LightArrows   = false;
+  bool MasterSword   = false;
+  bool BiggoronSword = false;
 
   //Trade Quest
   bool PocketEgg     = false;
@@ -120,15 +122,16 @@ namespace Logic {
   bool LightTrialClear  = false;
 
   //Progressive Items
-  u8 ProgressiveBulletBag = 0;
-  u8 ProgressiveBombBag   = 0;
-  u8 ProgressiveMagic     = 0;
-  u8 ProgressiveScale     = 0;
-  u8 ProgressiveHookshot  = 0;
-  u8 ProgressiveBow       = 0;
-  u8 ProgressiveWallet    = 0;
-  u8 ProgressiveStrength  = 0;
-  u8 ProgressiveOcarina   = 0;
+  u8 ProgressiveBulletBag  = 0;
+  u8 ProgressiveBombBag    = 0;
+  u8 ProgressiveMagic      = 0;
+  u8 ProgressiveScale      = 0;
+  u8 ProgressiveHookshot   = 0;
+  u8 ProgressiveBow        = 0;
+  u8 ProgressiveWallet     = 0;
+  u8 ProgressiveStrength   = 0;
+  u8 ProgressiveOcarina    = 0;
+  u8 ProgressiveGiantKnife = 0;
 
   //Logical keysanity
   bool IsKeysanity = false;
@@ -155,6 +158,11 @@ namespace Logic {
 
   //Gold Skulltula Count
   u8 GoldSkulltulaTokens = 0;
+
+  //Bottle Count
+  u8   Bottles    = 0;
+  u8   NumBottles = 0;
+  bool NoBottles  = false;
 
   //Drops and Bottle Contents Access
   bool DekuNutDrop      = false;
@@ -192,6 +200,10 @@ namespace Logic {
   bool BuyBPotion       = false;
   bool MagicRefill      = false;
 
+  u8   PieceOfHeart     = 0;
+  u8   HeartContainer   = 0;
+  bool DoubleDefense    = false;
+
   /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
   /* These are used to simplify reading the logic, but need to be updated
   /  every time a base value is updated.                       */
@@ -211,6 +223,8 @@ namespace Logic {
   bool GoldScale        = false;
   bool AdultsWallet     = false;
 
+  bool ChildScarecrow   = false;
+  bool AdultScarecrow   = false;
   bool ScarecrowSong    = false;
   bool Scarecrow        = false;
   bool DistantScarecrow = false;
@@ -230,8 +244,10 @@ namespace Logic {
   bool CanPlayBowling   = false;
   bool HasBombchus      = false;
   bool HasExplosives    = false;
+  bool HasBoots         = false;
   bool IsChild          = false;
   bool IsAdult          = false;
+  bool IsGlitched       = false;
   bool CanBlastOrSmash  = false;
   bool CanChildAttack   = false;
   bool CanChildDamage   = false;
@@ -243,13 +259,23 @@ namespace Logic {
   bool CanStunDeku      = false;
   bool CanSummonGossipFairy = false;
   bool CanSummonGossipFairyWithoutSuns = false;
+  bool NeedNayrusLove      = false;
+  bool CanSurviveDamage    = false;
   bool CanTakeDamage       = false;
+  bool CanTakeDamageTwice  = false;
   //bool CanPlantBean        = false;
   bool CanOpenBombGrotto   = false;
   bool CanOpenStormGrotto  = false;
   bool BigPoeKill          = false;
   bool HookshotOrBoomerang = false;
   bool CanGetNightTimeGS   = false;
+
+  u8   BaseHearts      = 0;
+  u8   Hearts          = 0;
+  u8   Multiplier      = 0;
+  u8   EffectiveHealth = 0;
+  u8   FireTimer       = 0;
+  u8   WaterTimer      = 0;
 
   bool GuaranteeTradePath     = false;
   bool GuaranteeHint          = false;
@@ -262,6 +288,7 @@ namespace Logic {
   bool CanShield        = false;
   bool CanJumpslash     = false;
   bool CanUseProjectile = false;
+  bool CanUseMagicArrow = false;
 
   //Bridge and LACS Requirements
   u8 MedallionCount          = 0;
@@ -286,13 +313,20 @@ namespace Logic {
   bool DrainWell                 = false;
   bool GoronCityChildFire        = false;
   bool GCWoodsWarpOpen           = false;
+  bool GCDaruniasDoorOpenChild   = false;
   bool StopGCRollingGoronAsAdult = false;
-  bool ChildWaterTemple          = false;
-  bool RaiseWaterLevel           = false;
+  bool WaterTempleLow            = false;
+  bool WaterTempleMiddle         = false;
+  bool WaterTempleHigh           = false;
   bool KakarikoVillageGateOpen   = false;
   bool KingZoraThawed            = false;
+  bool ForestTempleJoelle        = false;
+  bool ForestTempleBeth          = false;
   bool ForestTempleJoAndBeth     = false;
+  bool ForestTempleAmy           = false;
+  bool ForestTempleMeg           = false;
   bool ForestTempleAmyAndMeg     = false;
+  bool FireLoopSwitch            = false;
   bool LinksCow                  = false;
   bool AtDampeTime               = false;
   bool DeliverLetter             = false;
@@ -338,29 +372,6 @@ namespace Logic {
            item == LENS_OF_TRUTH;
   }
 
-  static bool IsAdultItem(ItemKey item) {
-    return item == BOW              ||
-           item == MEGATON_HAMMER   ||
-           item == IRON_BOOTS       ||
-           item == HOVER_BOOTS      ||
-           item == HOOKSHOT         ||
-           item == LONGSHOT         ||
-           item == SILVER_GAUNTLETS ||
-           item == GOLDEN_GAUNTLETS ||
-           item == GORON_TUNIC      ||
-           item == ZORA_TUNIC       ||
-           item == SCARECROW        ||
-           item == DISTANT_SCARECROW;
-  }
-
-  static bool IsChildItem(ItemKey item) {
-    return item == SLINGSHOT    ||
-           item == BOOMERANG    ||
-           item == KOKIRI_SWORD ||
-           item == STICKS       ||
-           item == DEKU_SHIELD;
-  }
-
   static bool IsMagicArrow(ItemKey item) {
     return item == FIRE_ARROWS ||
            item == ICE_ARROWS  ||
@@ -384,6 +395,10 @@ namespace Logic {
            (itemName == ZORA_TUNIC        && ZoraTunic)       ||
            (itemName == SCARECROW         && Scarecrow)       ||
            (itemName == DISTANT_SCARECROW && DistantScarecrow)||
+           (itemName == HYLIAN_SHIELD     && HylianShield)    ||
+           (itemName == MIRROR_SHIELD     && MirrorShield)    ||
+           (itemName == MASTER_SWORD      && MasterSword)     ||
+           (itemName == BIGGORON_SWORD    && BiggoronSword)   ||
            (itemName == SLINGSHOT         && Slingshot)       ||
            (itemName == BOOMERANG         && Boomerang)       ||
            (itemName == KOKIRI_SWORD      && KokiriSword)     ||
@@ -397,10 +412,38 @@ namespace Logic {
 
   //Can the passed in item be used?
   bool CanUse(ItemKey itemName) {
-    return (IsMagicItem(itemName)  && HasItem(itemName) && MagicMeter) ||
-           (IsAdultItem(itemName)  && HasItem(itemName) && IsAdult)    ||
-           (IsMagicArrow(itemName) && HasItem(itemName) && MagicMeter  && IsAdult && Bow) ||
-           (IsChildItem(itemName)  && HasItem(itemName) && IsChild);
+    if (!HasItem(itemName))
+      return false;
+
+    switch (itemName) {
+      // Adult items
+      case BOW:               return IsAdult || BowAsChild;
+      case MEGATON_HAMMER:    return IsAdult || HammerAsChild;
+      case IRON_BOOTS:        return IsAdult || IronBootsAsChild;
+      case HOVER_BOOTS:       return IsAdult || HoverBootsAsChild;
+      case HOOKSHOT:          return IsAdult || HookshotAsChild;
+      case LONGSHOT:          return IsAdult || HookshotAsChild;
+      case SILVER_GAUNTLETS:  return IsAdult;
+      case GOLDEN_GAUNTLETS:  return IsAdult;
+      case GORON_TUNIC:       return IsAdult || GoronTunicAsChild;
+      case ZORA_TUNIC:        return IsAdult || ZoraTunicAsChild;
+      case SCARECROW:         return IsAdult || HookshotAsChild;
+      case DISTANT_SCARECROW: return IsAdult || HookshotAsChild;
+      case HYLIAN_SHIELD:     return IsAdult;
+      case MIRROR_SHIELD:     return IsAdult || MirrorShieldAsChild;
+      case MASTER_SWORD:      return IsAdult || MasterSwordAsChild;
+      case BIGGORON_SWORD:    return IsAdult || BiggoronSwordAsChild;
+
+      // Child items
+      case SLINGSHOT:         return IsChild || SlingshotAsAdult;
+      case BOOMERANG:         return IsChild || BoomerangAsAdult;
+      case KOKIRI_SWORD:      return IsChild || KokiriSwordAsAdult;
+      case STICKS:            return IsChild || StickAsAdult;
+      case DEKU_SHIELD:       return IsChild || DekuShieldAsAdult;
+
+      // Magic items
+      default: return MagicMeter && (IsMagicItem(itemName) || (IsMagicArrow(itemName) && CanUse(BOW)));
+    }
   }
 
   bool HasProjectile(HasProjectileAge age) {
@@ -423,13 +466,30 @@ namespace Logic {
   bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
     u8 setDifficulty;
     switch (glitch) {
+    //Restricted Items
+    case GlitchType::RestrictedItems:
+      setDifficulty = GetDifficultyValueFromString(GlitchRestrictedItems);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
+    //Super Stab
+    case GlitchType::SuperStab:
+      setDifficulty = GetDifficultyValueFromString(GlitchSuperStab);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return CanShield && CanUse(STICKS);
+
     //Infinite Sword Glitch
     case GlitchType::ISG:
       setDifficulty = GetDifficultyValueFromString(GlitchISG);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return HasShield && (IsAdult || (IsChild && (KokiriSword || Sticks)));
+      return CanShield && (IsAdult || KokiriSword || Sticks);
+
     //Bomb Hover
     case GlitchType::BombHover:
       setDifficulty = GetDifficultyValueFromString(GlitchHover);
@@ -437,34 +497,153 @@ namespace Logic {
         return false;
       }
       return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) && (HasBombchus || (Bombs && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
+
+    //Bomb Ocarina Items
+    case GlitchType::BombOI:
+      setDifficulty = GetDifficultyValueFromString(GlitchBombOI);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return Bombs && CanSurviveDamage;
+    case GlitchType::OutdoorBombOI:
+      return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
+              (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
+              (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
+              CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) ||
+              (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
+    case GlitchType::WindmillBombOI:
+      return (((CanUse(FARORES_WIND) || (!NeedNayrusLove && (NayrusLove || DinsFire))) && (LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
+              (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
+              (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
+              CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
+             (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
+    case GlitchType::IndoorBombOI:
+      return (((IsAdult && ClaimCheck) && (HasBottle || HasBoots || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((Bugs || Fish || Fairy) && (NumBottles >= 2 || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg) || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
+              ((CanUse(FARORES_WIND) && FaroresWindAnywhere) && (HasBottle || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg))) ||
+              (((!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || CanUse(FARORES_WIND)) &&
+               (NumBottles + ((IsChild) ? ((WeirdEgg) ? 1 : 0) : (((IronBoots) ? 1 : 0) + ((HoverBoots) ? 1 : 0) + ((ClaimCheck) ? 1 : 0))) >= 2))) &&
+             CanDoGlitch(GlitchType::BombOI, difficulty) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE);
+    case GlitchType::DungeonBombOI:
+      return ((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) || (CanUse(FARORES_WIND))) && CanDoGlitch(GlitchType::BombOI, difficulty);
+
+    //Hover Boost
+    case GlitchType::HoverBoost:
+      setDifficulty = GetDifficultyValueFromString(GlitchHoverBoost);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return Bombs && CanUse(HOVER_BOOTS) && CanSurviveDamage;
+
+    //Super Slide
+    case GlitchType::SuperSlide:
+      setDifficulty = GetDifficultyValueFromString(GlitchSuperSlide);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
     //Megaflip
     case GlitchType::Megaflip:
       setDifficulty = GetDifficultyValueFromString(GlitchMegaflip);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return HasShield && Bombs;
+      //                             Bombchu megaflips should be considered 2 difficulty levels higher
+      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+
+    //A-Slide
+    case GlitchType::ASlide:
+      setDifficulty = GetDifficultyValueFromString(GlitchASlide);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      //                                        Same deal as bombchu megaflips
+      return IsChild && CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+
+    //Hammer Slide
+    case GlitchType::HammerSlide:
+      setDifficulty = GetDifficultyValueFromString(GlitchHammerSlide);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return CanUse(MEGATON_HAMMER) && CanUse(HOVER_BOOTS) && CanShield;
+
+    //Ledge Cancel
+    case GlitchType::LedgeCancel:
+      setDifficulty = GetDifficultyValueFromString(GlitchLedgeCancel);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      //                             Similar to bombchu megaflips / A-slides but doesn't scale beyond advanced
+      return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
+
+    //Action Swap
+    case GlitchType::ActionSwap:
+      setDifficulty = GetDifficultyValueFromString(GlitchActionSwap);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
+    //Quick Put Away
+    case GlitchType::QPA:
+      setDifficulty = GetDifficultyValueFromString(GlitchQPA);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      //                                           Boot Put Away Delay Method                  Frame Perfect Method                                                 Ledge Grab Method
+      return (CanTakeDamage && Bombs && ((CanUse(HOVER_BOOTS) || CanUse(IRON_BOOTS)) || setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) || setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
+
     //Hookshot Clip
     case GlitchType::HookshotClip:
       setDifficulty = GetDifficultyValueFromString(GlitchHookshotClip);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return IsAdult && Hookshot;
+      return CanUse(HOOKSHOT);
+
     //Hookshot Jump: Bonk
     case GlitchType::HookshotJump_Bonk:
       setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Bonk);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return IsAdult && Hookshot;
+      return IsAdult && Hookshot; // Child hookshot jumps are tiny so these stay as adult only until I check
+
     //Hookshot Jump: Boots
     case GlitchType::HookshotJump_Boots:
       setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Boots);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return IsAdult && Hookshot && (IronBoots || HoverBoots);
+      return IsAdult && Hookshot && HasBoots; // Child hookshot jumps are tiny so these stay as adult only until I check
+
+    //Cutscene Dives
+    case GlitchType::CutsceneDive:
+      setDifficulty = GetDifficultyValueFromString(GlitchCutsceneDive);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return true;
+
+    //Navi Dives without TSC
+    case GlitchType::NaviDive_Stick:
+      setDifficulty = GetDifficultyValueFromString(GlitchNaviDive_Stick);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsChild && Sticks;
+
+    //Triple Slash Clip
+    case GlitchType::TripleSlashClip:
+      setDifficulty = GetDifficultyValueFromString(GlitchTripleSlashClip);
+      if (setDifficulty < static_cast<u8>(difficulty)) {
+        return false;
+      }
+      return IsAdult || KokiriSword;
+
     //Ledge Clip
     case GlitchType::LedgeClip:
       setDifficulty = GetDifficultyValueFromString(GlitchLedgeClip);
@@ -472,35 +651,42 @@ namespace Logic {
         return false;
       }
       return IsAdult;
-    //Triple Slash Clip
-    case GlitchType::TripleSlashClip:
-      setDifficulty = GetDifficultyValueFromString(GlitchTripleSlashClip);
+
+    //Seam Walks
+    case GlitchType::SeamWalk:
+      setDifficulty = GetDifficultyValueFromString(GlitchSeamWalk);
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return IsAdult || (IsChild && KokiriSword);
+      return true;
     }
+
     //Shouldn't be reached
     return false;
   }
 
   //Updates all logic helpers. Should be called whenever a non-helper is changed
   void UpdateHelpers() {
+    NumBottles      = ((NoBottles) ? 0 : (Bottles + ((DeliverLetter) ? 1 : 0)));
+    HasBottle       = NumBottles >= 1;
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
-    Ocarina         = ProgressiveOcarina   >= 1;
-    OcarinaOfTime   = ProgressiveOcarina   >= 2;
+    Ocarina         = ProgressiveOcarina    >= 1;
+    OcarinaOfTime   = ProgressiveOcarina    >= 2;
     MagicMeter      = (ProgressiveMagic     >= 1) && (AmmoCanDrop || (HasBottle && (BuyGPotion || BuyBPotion)));
     BombBag         = (ProgressiveBombBag   >= 1) && (BuyBomb || AmmoCanDrop);
-    Hookshot        = ProgressiveHookshot  >= 1;
-    Longshot        = ProgressiveHookshot  >= 2;
+    Hookshot        = ProgressiveHookshot   >= 1;
+    Longshot        = ProgressiveHookshot   >= 2;
     Bow             = (ProgressiveBow       >= 1) && (BuyArrow || AmmoCanDrop);
-    GoronBracelet   = ProgressiveStrength  >= 1;
-    SilverGauntlets = ProgressiveStrength  >= 2;
-    GoldenGauntlets = ProgressiveStrength  >= 3;
-    SilverScale     = ProgressiveScale     >= 1;
-    GoldScale       = ProgressiveScale     >= 2;
-    AdultsWallet    = ProgressiveWallet    >= 1;
+    GoronBracelet   = ProgressiveStrength   >= 1;
+    SilverGauntlets = ProgressiveStrength   >= 2;
+    GoldenGauntlets = ProgressiveStrength   >= 3;
+    SilverScale     = ProgressiveScale      >= 1;
+    GoldScale       = ProgressiveScale      >= 2;
+    AdultsWallet    = ProgressiveWallet     >= 1;
+    MasterSword     = MasterSword   || IsAdult;
+    BiggoronSword   = BiggoronSword || ProgressiveGiantKnife >= 2;
 
+    ScarecrowSong    = ScarecrowSong || (ChildScarecrow && AdultScarecrow);
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
     DistantScarecrow = Longshot && CanPlay(ScarecrowSong);
 
@@ -527,6 +713,8 @@ namespace Logic {
 
     HasExplosives =  Bombs || (BombchusInLogic && HasBombchus);
 
+    HasBoots = IronBoots || HoverBoots;
+
     //Unshuffled adult trade quest
     Eyedrops     = Eyedrops     || (!ShuffleAdultTradeQuest && ClaimCheck);
     EyeballFrog  = EyeballFrog  || (!ShuffleAdultTradeQuest && Eyedrops);
@@ -541,40 +729,46 @@ namespace Logic {
     // IsChild = Age == AGE_CHILD;
     // IsAdult = Age == AGE_ADULT;
 
-    //IsGlitched = false;
-
     CanBlastOrSmash = HasExplosives || CanUse(MEGATON_HAMMER);
-    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE));
-    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE));
-    CanStunDeku     = IsAdult || (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || Nuts || DekuShield);
-    CanCutShrubs    = IsAdult /*|| Sticks*/ || KokiriSword || Boomerang || HasExplosives;
+    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD));
+    CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD));
+    CanStunDeku     = IsAdult || CanChildAttack || Nuts || HasShield;
+    CanCutShrubs    = IsAdult /*|| Sticks*/ || KokiriSword || Boomerang || HasExplosives || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD);
     CanDive         = ProgressiveScale >= 1;
-    CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear;
+    CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear || ShuffleInteriorEntrances || ShuffleOverworldEntrances;
     CanPlantBugs    = IsChild && Bugs;
     CanRideEpona    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
-    CanTakeDamage       = DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OCTUPLE) || DamageMultiplier.IsNot(DAMAGEMULTIPLIER_SEXDECUPLE) || Fairy || CanUse(NAYRUS_LOVE);
+    Hearts          = BaseHearts + HeartContainer + (PieceOfHeart >> 2);
+    EffectiveHealth = ((Hearts << (2 + DoubleDefense)) >> Multiplier) + ((Hearts << (2 + DoubleDefense)) % (1 << Multiplier) > 0); //Number of half heart hits to die, ranges from 1 to 160
+    FireTimer       = CanUse(GORON_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
+    WaterTimer      = CanUse( ZORA_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
+    NeedNayrusLove      = (EffectiveHealth == 1);
+    CanSurviveDamage    = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
+    CanTakeDamage       = Fairy || CanSurviveDamage;
+    CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || ((EffectiveHealth == 2) && (CanUse(NAYRUS_LOVE) || Fairy)) || (EffectiveHealth > 2);
     //CanPlantBean        = IsChild && (MagicBean || MagicBeanPack);
     CanOpenBombGrotto   = CanBlastOrSmash       && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
     HookshotOrBoomerang = CanUse(HOOKSHOT) || CanUse(BOOMERANG);
-    CanGetNightTimeGS = (CanPlay(SunsSong) || !NightGSExpectSuns);
+    CanGetNightTimeGS   = (CanPlay(SunsSong) || !NightGSExpectSuns);
 
     GuaranteeTradePath     = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero || CanBlastOrSmash || StopGCRollingGoronAsAdult;
   //GuaranteeHint          = (hints == "Mask" && MaskofTruth) || (hints == "Agony") || (hints != "Mask" && hints != "Agony");
     HasFireSource          = CanUse(DINS_FIRE) || CanUse(FIRE_ARROWS);
-    HasFireSourceWithTorch = HasFireSource || (IsChild && Sticks);
+    HasFireSourceWithTorch = HasFireSource || CanUse(STICKS);
 
     //Gerudo Fortress
-    CanFinishGerudoFortress = (GerudoFortress.Is(GERUDOFORTRESS_NORMAL)    && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword) && ((IsAdult && (Bow || Hookshot || HoverBoots)) || GerudoToken || LogicGerudoKitchen)) ||
-                              (GerudoFortress.Is(GERUDOFORTRESS_FAST)      && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword)) ||
+    CanFinishGerudoFortress = (GerudoFortress.Is(GERUDOFORTRESS_NORMAL)    && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) && (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen)) ||
+                              (GerudoFortress.Is(GERUDOFORTRESS_FAST)      && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD))) ||
                               (GerudoFortress.IsNot(GERUDOFORTRESS_NORMAL) && GerudoFortress.IsNot(GERUDOFORTRESS_FAST));
 
-    HasShield        = (IsAdult && HylianShield) ||                   (IsChild && DekuShield); //Mirror shield can't reflect attacks
-    CanShield        = (IsAdult && (HylianShield || MirrorShield)) || (IsChild && DekuShield);
+    HasShield        = CanUse(HYLIAN_SHIELD) || CanUse(DEKU_SHIELD); //Mirror shield can't reflect attacks
+    CanShield        = CanUse(MIRROR_SHIELD) || HasShield;
     CanJumpslash     = IsAdult || Sticks || KokiriSword;
-    CanUseProjectile = HasExplosives || (IsAdult && (Bow || Hookshot)) || (IsChild && (Slingshot || Boomerang));
+    CanUseProjectile = HasExplosives || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || CanUse(BOOMERANG);
+    CanUseMagicArrow = CanUse(FIRE_ARROWS) || CanUse(ICE_ARROWS) || CanUse(LIGHT_ARROWS);
 
     //Bridge and LACS Requirements
     MedallionCount        = (ForestMedallion ? 1:0) + (FireMedallion ? 1:0) + (WaterMedallion ? 1:0) + (SpiritMedallion ? 1:0) + (ShadowMedallion ? 1:0) + (LightMedallion ? 1:0);
@@ -600,15 +794,69 @@ namespace Logic {
 
   }
 
-  bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount) {
-    return (dungeonKeyCount >= requiredAmount);
+  bool SmallKeys(Key dungeon, u8 requiredAmount) {
+    return SmallKeys(dungeon, requiredAmount, requiredAmount);
   }
 
-  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
-    if (Settings::Logic.Is(LOGIC_GLITCHED) && GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE)) {
-      return (dungeonKeyCount >= requiredAmountGlitched);
-    } else {
-      return (dungeonKeyCount >= requiredAmountGlitchless);
+  bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
+    switch (dungeon) {
+      case FOREST_TEMPLE:
+        if (IsGlitched && (GetDifficultyValueFromString(GlitchHookshotJump_Boots) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHoverBoost) >= static_cast<u8>(GlitchDifficulty::NOVICE) ||
+                          (GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::NOVICE) && GetDifficultyValueFromString(GlitchISG) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE)))) {
+          return ForestTempleKeys >= requiredAmountGlitched;
+        }
+        return ForestTempleKeys >= requiredAmountGlitchless;
+
+      case FIRE_TEMPLE:
+        if (IsGlitched && (GetDifficultyValueFromString(GlitchLedgeClip) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) || GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) {
+          return FireTempleKeys >= requiredAmountGlitched;
+        }
+        return FireTempleKeys >= requiredAmountGlitchless;
+
+      case WATER_TEMPLE:
+        if (IsGlitched && (false)) {
+          return WaterTempleKeys >= requiredAmountGlitched;
+        }
+        return WaterTempleKeys >= requiredAmountGlitchless;
+
+      case SPIRIT_TEMPLE:
+        if (IsGlitched && (false)) {
+          return SpiritTempleKeys >= requiredAmountGlitched;
+        }
+        return SpiritTempleKeys >= requiredAmountGlitchless;
+
+      case SHADOW_TEMPLE:
+        if (IsGlitched && (GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE))) {
+          return ShadowTempleKeys >= requiredAmountGlitched;
+        }
+        return ShadowTempleKeys >= requiredAmountGlitchless;
+
+      case BOTTOM_OF_THE_WELL:
+        if (IsGlitched && (false)) {
+          return BottomOfTheWellKeys >= requiredAmountGlitched;
+        }
+        return BottomOfTheWellKeys >= requiredAmountGlitchless;
+
+      case GERUDO_TRAINING_GROUNDS:
+        if (IsGlitched && (false)) {
+          return GerudoTrainingGroundsKeys >= requiredAmountGlitched;
+        }
+        return GerudoTrainingGroundsKeys >= requiredAmountGlitchless;
+
+      case GANONS_CASTLE:
+        if (IsGlitched && (false)) {
+          return GanonsCastleKeys >= requiredAmountGlitched;
+        }
+        return GanonsCastleKeys >= requiredAmountGlitchless;
+
+      case MARKET_TREASURE_CHEST_GAME:
+        if (IsGlitched && (false)) {
+          return TreasureGameKeys >= requiredAmountGlitched;
+        }
+        return TreasureGameKeys >= requiredAmountGlitchless;
+
+      default:
+        return false;
     }
   }
 
@@ -682,6 +930,8 @@ namespace Logic {
      FireArrows    = false;
      IceArrows     = false;
      LightArrows   = false;
+     MasterSword   = false;
+     BiggoronSword = false;
 
      //Trade Quest
      PocketEgg     = false;
@@ -751,15 +1001,16 @@ namespace Logic {
      LightTrialClear  = false;
 
      //Progressive Items
-     ProgressiveBulletBag = 0;
-     ProgressiveBombBag   = 0;
-     ProgressiveMagic     = 0;
-     ProgressiveScale     = 0;
-     ProgressiveHookshot  = 0;
-     ProgressiveBow       = 0;
-     ProgressiveWallet    = 0;
-     ProgressiveStrength  = 0;
-     ProgressiveOcarina   = 0;
+     ProgressiveBulletBag  = 0;
+     ProgressiveBombBag    = 0;
+     ProgressiveMagic      = 0;
+     ProgressiveScale      = 0;
+     ProgressiveHookshot   = 0;
+     ProgressiveBow        = 0;
+     ProgressiveWallet     = 0;
+     ProgressiveStrength   = 0;
+     ProgressiveOcarina    = 0;
+     ProgressiveGiantKnife = 0;
 
      //Keys
      ForestTempleKeys          = 0;
@@ -784,6 +1035,11 @@ namespace Logic {
 
      //Gold Skulltula Count
      GoldSkulltulaTokens = 0;
+
+     //Bottle Count
+     Bottles    = 0;
+     NumBottles = 0;
+     NoBottles  = false;
 
 
 
@@ -822,6 +1078,10 @@ namespace Logic {
      BuyBPotion       = false;
      MagicRefill      = false;
 
+     PieceOfHeart     = 0;
+     HeartContainer   = 0;
+     DoubleDefense    = false;
+
      /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
      /* These are used to simplify reading the logic, but need to be updated
      /  every time a base value is updated.                       */
@@ -841,6 +1101,8 @@ namespace Logic {
      GoldScale        = false;
      AdultsWallet     = false;
 
+     ChildScarecrow   = false;
+     AdultScarecrow   = false;
      ScarecrowSong    = false;
      Scarecrow        = false;
      DistantScarecrow = false;
@@ -860,9 +1122,10 @@ namespace Logic {
      CanPlayBowling   = false;
      HasBombchus      = false;
      HasExplosives    = false;
+     HasBoots         = false;
      IsChild          = false;
      IsAdult          = false;
-   //IsGlitched       = false;
+     IsGlitched       = Settings::Logic.Is(LOGIC_GLITCHED);
      CanBlastOrSmash  = false;
      CanChildAttack   = false;
      CanChildDamage   = false;
@@ -880,6 +1143,13 @@ namespace Logic {
      BigPoeKill          = false;
      HookshotOrBoomerang = false;
 
+     BaseHearts      = StartingHearts.Value<u8>() + 1;
+     Hearts          = 0;
+     Multiplier      = (DamageMultiplier.Value<u8>() < 6) ? DamageMultiplier.Value<u8>() : 10;
+     EffectiveHealth = 0;
+     FireTimer       = 0;
+     WaterTimer      = 0;
+
      GuaranteeTradePath     = false;
      GuaranteeHint          = false;
      HasFireSource          = false;
@@ -891,6 +1161,7 @@ namespace Logic {
      CanShield        = false;
      CanJumpslash     = false;
      CanUseProjectile = false;
+     CanUseMagicArrow = false;
 
      //Bridge Requirements
      HasAllStones          = false;
@@ -912,12 +1183,20 @@ namespace Logic {
      DrainWell                 = false;
      GoronCityChildFire        = false;
      GCWoodsWarpOpen           = false;
+     GCDaruniasDoorOpenChild   = false;
      StopGCRollingGoronAsAdult = false;
-     ChildWaterTemple          = false;
+     WaterTempleLow            = false;
+     WaterTempleMiddle         = false;
+     WaterTempleHigh           = false;
      KakarikoVillageGateOpen   = false;
      KingZoraThawed            = false;
+     ForestTempleJoelle        = false;
+     ForestTempleBeth          = false;
      ForestTempleJoAndBeth     = false;
+     ForestTempleAmy           = false;
+     ForestTempleMeg           = false;
      ForestTempleAmyAndMeg     = false;
+     FireLoopSwitch            = false;
      LinksCow                  = false;
      AtDampeTime               = false;
      DeliverLetter             = false;

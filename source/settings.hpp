@@ -461,7 +461,7 @@ namespace Settings {
   extern Option StartingWallet;
   extern Option StartingShardOfAgony;
   extern Option StartingDoubleDefense;
-  extern Option StartingHealth;
+  extern Option StartingHearts;
   extern Option StartingKokiriEmerald;
   extern Option StartingGoronRuby;
   extern Option StartingZoraSapphire;
@@ -495,8 +495,10 @@ namespace Settings {
   extern Option LogicColossusGS;
   extern Option LogicOutsideGanonsGS;
   extern Option LogicManOnRoof;
+  extern Option LogicWindmillPoHHookshot;
   extern Option LogicDMTBombable;
   extern Option LogicDMTSoilGS;
+  extern Option LogicDMTSummitHover;
   extern Option LogicLinkGoronDins;
   extern Option LogicGoronCityLeftMost;
   extern Option LogicGoronCityPot;
@@ -507,6 +509,7 @@ namespace Settings {
   extern Option LogicBiggoronBolero;
   extern Option LogicZoraRiverLower;
   extern Option LogicZoraRiverUpper;
+  extern Option LogicZFGreatFairy;
   extern Option LogicDekuB1WebsWithBow;
   extern Option LogicDekuB1Skip;
   extern Option LogicDekuBasementGS;
@@ -567,14 +570,42 @@ namespace Settings {
   extern Option LogicFlamingChests;
 
   //Glitch Settings
+  extern Option GlitchRestrictedItems;
+  extern Option GlitchSuperStab;
   extern Option GlitchISG;
   extern Option GlitchHover;
+  extern Option GlitchBombOI;
+  extern Option GlitchHoverBoost;
+  extern Option GlitchSuperSlide;
   extern Option GlitchMegaflip;
+  extern Option GlitchASlide;
+  extern Option GlitchHammerSlide;
+  extern Option GlitchLedgeCancel;
+  extern Option GlitchActionSwap;
+  extern Option GlitchQPA;
   extern Option GlitchHookshotClip;
   extern Option GlitchHookshotJump_Bonk;
   extern Option GlitchHookshotJump_Boots;
-  extern Option GlitchLedgeClip;
+  extern Option GlitchCutsceneDive;
+  extern Option GlitchNaviDive_Stick;
   extern Option GlitchTripleSlashClip;
+  extern Option GlitchLedgeClip;
+  extern Option GlitchSeamWalk;
+  //Misc Glitch Settings
+  extern Option GlitchWWTEscape;
+  extern Option GlitchGVTentAsChild;
+  extern Option GlitchGFGuardSneak;
+  extern Option GlitchItemlessWasteland;
+  extern Option GlitchOccamsStatue;
+  extern Option GlitchZDOoBJumpSlash;
+  extern Option GlitchJabuStickRecoil;
+  extern Option GlitchJabuAdult;
+  extern Option GlitchBlueFireWall;
+  extern Option GlitchClassicHalfie;
+  extern Option GlitchModernHalfie;
+  extern Option GlitchJabuSwitch;
+  extern Option GlitchForestBKSkip;
+  extern Option GlitchFireGrunzClip;
 
   //Multiplayer Settings
   extern Option MP_Enabled;
@@ -665,6 +696,8 @@ namespace Settings {
   extern std::vector<Option *> startingStonesMedallionsOptions;
   extern std::vector<Option *> startingOtherOptions;
   extern std::vector<Option *> trickOptions;
+  extern std::vector<Option *> glitchCategories;
+  extern std::vector<Option *> miscGlitches;
 
   extern std::vector<Menu *> startingInventoryOptions;
   extern std::vector<Menu *> detailedLogicOptions;

@@ -755,7 +755,7 @@ int ShuffleAllEntrances() {
       AddElementsToPool(entrancePools[EntranceType::Dungeon], GetShuffleableEntrances(EntranceType::GanonDungeon));
     }
     //If forest is closed don't allow a forest escape via spirit temple hands
-    if (Settings::OpenForest.Is(OPENFOREST_CLOSED)) {
+    if (Settings::OpenForest.Is(OPENFOREST_CLOSED) && !(Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances)) {
       FilterAndEraseFromPool(entrancePools[EntranceType::Dungeon], [](const Entrance* entrance){return entrance->GetParentRegionKey()    == KF_OUTSIDE_DEKU_TREE &&
                                                                                                        entrance->GetConnectedRegionKey() == DEKU_TREE_ENTRYWAY;});
     }

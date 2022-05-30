@@ -390,7 +390,7 @@ static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
     for (size_t i = 0; i < menu->size(); ++i) {
       const auto setting = menu->at(i);
       //Ignore no starting bottles and the Choose/All On toggles
-      if (setting->GetSelectedOptionIndex() == 0) {
+      if (setting->IsDefaultSelected()) {
         continue;
       }
 
@@ -415,6 +415,34 @@ static void WriteEnabledTricks(tinyxml2::XMLDocument& spoilerLog) {
     }
 
     auto node = parentNode->InsertNewChildElement("trick");
+    node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
+  }
+
+  if (!parentNode->NoChildren()) {
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+  }
+}
+
+// Writes the enabled glitches to the spoiler log, if there are any.
+static void WriteEnabledGlitches(tinyxml2::XMLDocument& spoilerLog) {
+  auto parentNode = spoilerLog.NewElement("enabled-glitches");
+
+  for (const auto& setting : Settings::glitchCategories) {
+    if (setting->Value<u8>() == 0) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("glitch-category");
+    node->SetAttribute("name", setting->GetName().c_str());
+    node->SetText(setting->GetSelectedOptionText().c_str());
+  }
+
+  for (const auto& setting : Settings::miscGlitches) {
+    if (!setting->Value<bool>()) {
+      continue;
+    }
+
+    auto node = parentNode->InsertNewChildElement("misc-glitch");
     node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
   }
 
@@ -560,6 +588,9 @@ bool SpoilerLog_Write() {
   WriteExcludedLocations(spoilerLog);
   WriteStartingInventory(spoilerLog);
   WriteEnabledTricks(spoilerLog);
+  if (Settings::Logic.Is(LOGIC_GLITCHED)) {
+    WriteEnabledGlitches(spoilerLog);
+  }
   WriteMasterQuestDungeons(spoilerLog);
   WriteRequiredTrials(spoilerLog);
   WritePlaythrough(spoilerLog);
@@ -600,6 +631,7 @@ bool PlacementLog_Write() {
   WriteExcludedLocations(placementLog);
   WriteStartingInventory(placementLog);
   WriteEnabledTricks(placementLog);
+  WriteEnabledGlitches(placementLog);
   WriteMasterQuestDungeons(placementLog);
   WriteRequiredTrials(placementLog);
 

@@ -432,7 +432,7 @@ namespace Settings {
   Option StartingSlingshot        = Option::U8  ("Slingshot",            {"Off",             "Slingshot (30)",   "Slingshot (40)",    "Slingshot (50)"},  {""});
   Option StartingOcarina          = Option::U8  ("Ocarina",              {"Off",             "Fairy Ocarina",    "Ocarina of Time"},                      {""});
   Option StartingBombBag          = Option::U8  ("Bombs",                {"Off",             "Bomb Bag (20)",    "Bomb Bag (30)",     "Bomb Bag (40)"},   {""});
-  Option StartingBombchus         = Option::U8  ("Bombchus",             {"Off",             "On"},                                                       {""});
+  Option StartingBombchus         = Option::U8  ("Bombchus",             {"Off",             "20 Bombchus",      "50 Bombchus"},                          {""});
   Option StartingBoomerang        = Option::U8  ("Boomerang",            {"Off",             "On"},                                                       {""});
   Option StartingHookshot         = Option::U8  ("Hookshot",             {"Off",             "Hookshot",         "Longshot"},                             {""});
   Option StartingBow              = Option::U8  ("Bow",                  {"Off",             "Bow (30)",         "Bow (40)",          "Bow (50)"},        {""});
@@ -518,7 +518,7 @@ namespace Settings {
   Option StartingScale            = Option::U8  ("Scale Upgrade",        {"Off",             "Silver Scale"  ,   "Golden Scale"},                         {""});
   Option StartingWallet           = Option::U8  ("Wallet Upgrade",       {"Off",             "Adult's Wallet",   "Giant's Wallet" ,  "Tycoon's Wallet"},  {""});
   Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",       {"Off",             "On"},                                                       {""});
-  Option StartingHealth           = Option::U8  ("Health",               {NumOpts(3, 20, 1, {}, " hearts")},                                              {""}); // TODO: logic for lower health
+  Option StartingHearts           = Option::U8  ("Hearts",               {NumOpts(1, 20)},                                                                {""}, OptionCategory::Setting, 2); // Default 3 hearts
   Option StartingMagicMeter       = Option::U8  ("Magic Meter",          {"Off",             "Single Magic",     "Double Magic"},                         {""});
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",       {"Off",             "On"},                                                       {""});
   std::vector<Option *> startingEquipmentOptions = {
@@ -533,7 +533,7 @@ namespace Settings {
     &StartingScale,
     &StartingWallet,
     &StartingShardOfAgony,
-    &StartingHealth,
+    &StartingHearts,
     &StartingMagicMeter,
     &StartingDoubleDefense,
   };
@@ -611,8 +611,10 @@ namespace Settings {
   Option LogicColossusGS                  = LogicTrick(" Colossus Hill GS\n   w/ Hookshot",           LogicColossusGSDesc);
   Option LogicOutsideGanonsGS             = LogicTrick(" Outside GaC GS\n   w/ Jump Slash",           LogicOutsideGanonsGSDesc);
   Option LogicManOnRoof                   = LogicTrick(" Kak Roof Guy\n   w/o Hookshot",              LogicManOnRoofDesc);
+  Option LogicWindmillPoHHookshot         = LogicTrick(" Windmill PoH\n   w/ Hookshot",               LogicWindmillPoHHookshotDesc);
   Option LogicDMTBombable                 = LogicTrick(" DMT Wall Chest\n   w/ Strength",             LogicDMTBombableDesc);
   Option LogicDMTSoilGS                   = LogicTrick(" DMT Soil GS\n   w/o Opening DC",             LogicDMTSoilGSDesc);
+  Option LogicDMTSummitHover              = LogicTrick(" DMT Summit\n   w/ Hover Boots",              LogicDMTSummitHoverDesc);
   Option LogicLinkGoronDins               = LogicTrick(" GoC Adult Goron\n   w/ Din's Fire",          LogicLinkGoronDinsDesc);
   Option LogicGoronCityLeftMost           = LogicTrick(" GoC Maze Left Chest\n   w/ Hover Boots",     LogicGoronCityLeftMostDesc);
   Option LogicGoronCityPot                = LogicTrick(" GoC Goron Vase PoH\n   w/ Bombchu",          LogicGoronCityPotDesc); //Needs Testing
@@ -623,6 +625,7 @@ namespace Settings {
   Option LogicBiggoronBolero              = LogicTrick(" DMC Deliver Eyedrops\n   w/ Bolero of Fire", LogicBiggoronBoleroDesc);
   Option LogicZoraRiverLower              = LogicTrick(" ZR Lower PoH\n   w/ Nothing",                LogicZoraRiverLowerDesc);
   Option LogicZoraRiverUpper              = LogicTrick(" ZR Upper PoH\n   w/ Nothing",                LogicZoraRiverUpperDesc);
+  Option LogicZFGreatFairy                = LogicTrick(" ZF Great Fairy\n   w/o Explosives",          LogicZFGreatFairyDesc);
   Option LogicDekuB1WebsWithBow           = LogicTrick(" DT B1 Web\n   w/ Bow",                       LogicDekuB1WebsWithBowDesc);
   Option LogicDekuB1Skip                  = LogicTrick(" DT B1 Navigation\n   w/o Slingshot",         LogicDekuB1SkipDesc);
   Option LogicDekuBasementGS              = LogicTrick(" DT B1 Vines GS\n   w/ Jump Slash",           LogicDekuBasementGSDesc);
@@ -658,7 +661,7 @@ namespace Settings {
   Option LogicSpiritWall                  = LogicTrick(" SpT Shifting Wall\n   w/ Nothing",           LogicSpiritWallDesc);
   Option LogicSpiritLobbyGS               = LogicTrick(" SpT Main Room GS\n   w/ Boomerang",          LogicSpiritLobbyGSDesc);
   Option LogicSpiritMapChest              = LogicTrick(" SpT Map Chest\n   w/ Bow",                   LogicSpiritMapChestDesc);
-  Option LogicSpiritSunChest              = LogicTrick(" SpT Sun Block Room\n   w/ Bow",              LogicSpiritSunChestDesc); //Needs Testing
+  Option LogicSpiritSunChest              = LogicTrick(" SpT Sun Block Room\n   w/ Bow",              LogicSpiritSunChestDesc);
   Option LogicShadowFireArrowEntry        = LogicTrick(" ShT Entry\n   w/ Fire Arrows",               LogicShadowFireArrowEntryDesc); //Needs Testing
   Option LogicShadowUmbrella              = LogicTrick(" ShT Stone Umbrella\n   w/ Hover Boots",      LogicShadowUmbrellaDesc);
   Option LogicShadowFreestandingKey       = LogicTrick(" ShT Skull Vase Key\n   w/ Bombchu",          LogicShadowFreestandingKeyDesc);
@@ -698,18 +701,21 @@ namespace Settings {
     &LogicColossusGS,
     &LogicOutsideGanonsGS,
     &LogicManOnRoof,
+    &LogicWindmillPoHHookshot,
     &LogicDMTBombable,
-    //&LogicDMTSoilGS, Needs Testing
+    &LogicDMTSoilGS,
+    &LogicDMTSummitHover,
     &LogicLinkGoronDins,
     &LogicGoronCityLeftMost,
-    //&LogicGoronCityPot, Needs Testing
+    &LogicGoronCityPot,
     &LogicGoronCityPotWithStrength,
     &LogicChildRollingWithStrength,
-    //&LogicCraterUpperToLower, Needs Testing
+    //&LogicCraterUpperToLower, Needs Testing           Possible to break in 1 swing if you hit the right place? Right angle? Seems very inconsistent.
     &LogicCraterBeanPoHWithHovers,
     &LogicBiggoronBolero,
     &LogicZoraRiverLower,
     &LogicZoraRiverUpper,
+    &LogicZFGreatFairy,
     &LogicDekuB1WebsWithBow,
     &LogicDekuB1Skip,
     &LogicDekuBasementGS,
@@ -717,10 +723,10 @@ namespace Settings {
     &LogicDCJump,
     &LogicDCSlingshotSkip,
     &LogicDCScarecrowGS,
-    //&LogicJabuBossGSAdult, Needs Testing
-    //&LogicJabuScrubJumpDive, Needs Testing
-    //&LogicForestOutsideBackdoor, Needs Testing
-    //&LogicForestDoorFrame, Needs Testing
+    //&LogicJabuBossGSAdult, Needs Testing              Don't know if possible as described, easier method exists as you can just backwalk with the box
+    &LogicJabuScrubJumpDive,
+    //&LogicForestOutsideBackdoor, Needs Testing        Possible with bombchu damage boost, jumpslash is definitely harder than "intermediate" if at all possible
+    &LogicForestDoorFrame,
     &LogicForestOutdoorEastGS,
     &LogicFireBossDoorJump,
     &LogicFireStrength,
@@ -745,7 +751,7 @@ namespace Settings {
     &LogicSpiritWall,
     &LogicSpiritLobbyGS,
     &LogicSpiritMapChest,
-    //&LogicSpiritSunChest, Needs Testing
+    &LogicSpiritSunChest,
     //&LogicShadowFireArrowEntry, Needs Testing
     &LogicShadowUmbrella,
     &LogicShadowFreestandingKey,
@@ -785,23 +791,87 @@ namespace Settings {
     return selectableDifficulties;
   }
 
-  Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00001), {GlitchISGDescDisabled, GlitchISGDescNovice});
-  Option GlitchHover              = Option::U8("Bomb Hover",            GlitchDifficultyOptions(0b00111), {GlitchHoverDescDisabled, GlitchHoverDescNovice, GlitchHoverDescIntermediate, GlitchHoverDescAdvanced});
-  Option GlitchMegaflip           = Option::U8("Megaflip",              GlitchDifficultyOptions(0b00011), {GlitchMegaflipDescDisabled, GlitchMegaflipDescNovice, GlitchMegaflipDescIntermediate});
-  Option GlitchHookshotClip       = Option::U8("Hookshot Clip",         GlitchDifficultyOptions(0b00001), {GlitchHookshotClipDescDisabled, GlitchHookshotClipDescNovice});
-  Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00010), {GlitchHookshotJump_BonkDescDisabled, GlitchHookshotJump_BonkDescIntermediate});
-  Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", GlitchDifficultyOptions(0b00011), {GlitchHookshotJump_BootsDescDisabled, GlitchHookshotJump_BootsDescNovice, GlitchHookshotJump_BootsDescIntermediate});
-  Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00011), {GlitchLedgeClipDescDisabled, GlitchLedgeClipDescNovice, GlitchLedgeClipDescIntermediate});
-  Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b00001), {GlitchTripleSlashClipDescDisabled, GlitchTripleSlashClipDescNovice});
-  std::vector<Option*> glitchOptions = {
+  Option GlitchRestrictedItems    = Option::U8("Restricted Items",      GlitchDifficultyOptions(0b00001), { GlitchRestrictedItemsDescDisabled    , GlitchRestrictedItemsDescNovice                                                                                                                                                              });
+  Option GlitchSuperStab          = Option::U8("Super Stab",            GlitchDifficultyOptions(0b00001), { GlitchSuperStabDescDisabled          , GlitchSuperStabDescNovice                                                                                                                                                                    });
+  Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00111), { GlitchISGDescDisabled                , GlitchISGDescNovice                , GlitchISGDescIntermediate                , GlitchISGDescAdvanced                                                                                        });
+  Option GlitchHover              = Option::U8("Bomb Hover",            GlitchDifficultyOptions(0b00111), { GlitchHoverDescDisabled              , GlitchHoverDescNovice              , GlitchHoverDescIntermediate              , GlitchHoverDescAdvanced                                                                                      });
+  Option GlitchBombOI             = Option::U8("Ocarina Items (Bomb)",  GlitchDifficultyOptions(0b01111), { GlitchBombOIDescDisabled             , GlitchBombOIDescNovice             , GlitchBombOIDescIntermediate             , GlitchBombOIDescAdvanced             , GlitchBombOIDescExpert                                                });
+  Option GlitchHoverBoost         = Option::U8("HoverBoost",            GlitchDifficultyOptions(0b00111), { GlitchHoverBoostDescDisabled         , GlitchHoverBoostDescNovice         , GlitchHoverBoostDescIntermediate         , GlitchHoverBoostDescAdvanced                                                                                 });
+  Option GlitchSuperSlide         = Option::U8("Extended Super Slide",  GlitchDifficultyOptions(0b01111), { GlitchSuperSlideDescDisabled         , GlitchSuperSlideDescNovice         , GlitchSuperSlideDescIntermediate         , GlitchSuperSlideDescAdvanced         , GlitchSuperSlideDescExpert                                            });
+  Option GlitchMegaflip           = Option::U8("Megaflip",              GlitchDifficultyOptions(0b11111), { GlitchMegaflipDescDisabled           , GlitchMegaflipDescNovice           , GlitchMegaflipDescIntermediate           , GlitchMegaflipDescAdvanced           , GlitchMegaflipDescExpert           , GlitchMegaflipDescHero           });
+  Option GlitchASlide             = Option::U8("A-Slide",               GlitchDifficultyOptions(0b01111), { GlitchASlideDescDisabled             , GlitchASlideDescNovice             , GlitchASlideDescIntermediate             , GlitchASlideDescAdvanced             , GlitchASlideDescExpert                                                });
+  Option GlitchHammerSlide        = Option::U8("Hammer Slide",          GlitchDifficultyOptions(0b00011), { GlitchHammerSlideDescDisabled        , GlitchHammerSlideDescNovice        , GlitchHammerSlideDescIntermediate                                                                                                                       });
+  Option GlitchLedgeCancel        = Option::U8("Ledge Cancel",          GlitchDifficultyOptions(0b00111), { GlitchLedgeCancelDescDisabled        , GlitchLedgeCancelDescNovice        , GlitchLedgeCancelDescIntermediate        , GlitchLedgeCancelDescAdvanced                                                                                });
+  Option GlitchActionSwap         = Option::U8("Action Swap",           GlitchDifficultyOptions(0b00101), { GlitchActionSwapDescDisabled         , GlitchActionSwapDescNovice                                                    , GlitchActionSwapDescAdvanced                                                                                 });
+  Option GlitchQPA                = Option::U8("Quick Put Away",        GlitchDifficultyOptions(0b01111), { GlitchQPADescDisabled                , GlitchQPADescNovice                , GlitchQPADescIntermediate                , GlitchQPADescAdvanced                , GlitchQPADescExpert                                                   });
+  Option GlitchHookshotClip       = Option::U8("Hookshot Clip",         GlitchDifficultyOptions(0b00011), { GlitchHookshotClipDescDisabled       , GlitchHookshotClipDescNovice       , GlitchHookshotClipDescIntermediate                                                                                                                      });
+  Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00111), { GlitchHookshotJump_BonkDescDisabled  , GlitchHookshotJump_BonkDescNovice  , GlitchHookshotJump_BonkDescIntermediate  , GlitchHookshotJump_BonkDescAdvanced                                                                          });
+  Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", GlitchDifficultyOptions(0b00111), { GlitchHookshotJump_BootsDescDisabled , GlitchHookshotJump_BootsDescNovice , GlitchHookshotJump_BootsDescIntermediate , GlitchHookshotJump_BootsDescAdvanced                                                                         });
+  Option GlitchCutsceneDive       = Option::U8("Cutscene Dives",        GlitchDifficultyOptions(0b00111), { GlitchCutsceneDiveDescDisabled       , GlitchCutsceneDiveDescNovice       , GlitchCutsceneDiveDescIntermediate       , GlitchCutsceneDiveDescAdvanced                                                                               });
+  Option GlitchNaviDive_Stick     = Option::U8("Navi Dive (Stick)",     GlitchDifficultyOptions(0b00111), { GlitchNaviDive_StickDescDisabled     , GlitchNaviDive_StickDescNovice     , GlitchNaviDive_StickDescIntermediate     , GlitchNaviDive_StickDescAdvanced                                                                             });
+  Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b01111), { GlitchTripleSlashClipDescDisabled    , GlitchTripleSlashClipDescNovice    , GlitchTripleSlashClipDescIntermediate    , GlitchTripleSlashClipDescAdvanced    , GlitchTripleSlashClipDescExpert                                       });
+  Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00111), { GlitchLedgeClipDescDisabled          , GlitchLedgeClipDescNovice          , GlitchLedgeClipDescIntermediate          , GlitchLedgeClipDescAdvanced                                                                                  });
+  Option GlitchSeamWalk           = Option::U8("Seam Walk",             GlitchDifficultyOptions(0b11111), { GlitchSeamWalkDescDisabled           , GlitchSeamWalkDescNovice           , GlitchSeamWalkDescIntermediate           , GlitchSeamWalkDescAdvanced           , GlitchSeamWalkDescExpert           , GlitchSeamWalkDescHero           });
+  std::vector<Option*> glitchCategories = {
+    &GlitchRestrictedItems,
+    &GlitchSuperStab,
     &GlitchISG,
     &GlitchHover,
+    &GlitchBombOI,
+    &GlitchHoverBoost,
+    &GlitchSuperSlide,
     &GlitchMegaflip,
+    &GlitchASlide,
+    &GlitchHammerSlide,
+    &GlitchLedgeCancel,
+    &GlitchActionSwap,
+    &GlitchQPA,
     &GlitchHookshotClip,
     &GlitchHookshotJump_Bonk,
     &GlitchHookshotJump_Boots,
-    &GlitchLedgeClip,
+    &GlitchCutsceneDive,
+    &GlitchNaviDive_Stick,
     &GlitchTripleSlashClip,
+    &GlitchLedgeClip,
+    &GlitchSeamWalk,
+  };
+
+  Option GlitchWWTEscape         = Option::Bool("WWT Kokiri\n  Forest Escape", {"Off", "On"}, {GlitchWWTEscapeDesc});
+  Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent\n  as Child",   {"Off", "On"}, {GlitchGVTentAsChildDesc});
+  Option GlitchGFGuardSneak      = Option::Bool("Sneak Past\n  the GF Guard",  {"Off", "On"}, {GlitchGFGuardSneakDesc});
+  Option GlitchItemlessWasteland = Option::Bool("Cross the HW\n  w/o Items",   {"Off", "On"}, {GlitchItemlessWastelandDesc});
+  Option GlitchOccamsStatue      = Option::Bool("Occam's Statue",              {"Off", "On"}, {GlitchOccamsStatueDesc});
+  Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/\n  Jump Slash",     {"Off", "On"}, {GlitchZDOoBJumpSlashDesc});
+  Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu\n  w/o Bottle",    {"Off", "On"}, {GlitchJabuStickRecoilDesc});
+  Option GlitchJabuAdult         = Option::Bool("Enter Jabu\n  as Adult",      {"Off", "On"}, {GlitchJabuAdultDesc});
+  Option GlitchBlueFireWall      = Option::Bool("Break Walls\n  w/ Blue Fire", {"Off", "On"}, {GlitchBlueFireWallDesc});
+  Option GlitchClassicHalfie     = Option::Bool("Classic Halfie",              {"Off", "On"}, {GlitchClassicHalfieDesc});
+  Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"Off", "On"}, {GlitchModernHalfieDesc});
+  Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {GlitchJabuSwitchDesc});
+  Option GlitchForestBKSkip      = Option::Bool("Forest Temple\n  BK Skip",    {"Off", "On"}, {GlitchForestBKSkipDesc});
+  Option GlitchFireGrunzClip     = Option::Bool("Fire Temple\n  Grunz Clip",   {"Off", "On"}, {GlitchFireGrunzClipDesc});
+  std::vector<Option*> miscGlitches = {
+    &GlitchWWTEscape,
+    &GlitchGVTentAsChild,
+    &GlitchGFGuardSneak,
+    &GlitchItemlessWasteland,
+    &GlitchOccamsStatue,
+    &GlitchZDOoBJumpSlash,
+    &GlitchJabuStickRecoil,
+    &GlitchJabuAdult,
+    &GlitchBlueFireWall,
+    &GlitchClassicHalfie,
+    &GlitchModernHalfie,
+    &GlitchJabuSwitch,
+    &GlitchForestBKSkip,
+    &GlitchFireGrunzClip,
+  };
+
+  Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories, false);
+  Menu miscGlitchSettings     = Menu::SubMenu("Miscellaneous Glitches", &miscGlitches,     false);
+  std::vector<Menu*> glitchOptions = {
+    &glitchCategorySettings,
+    &miscGlitchSettings,
   };
 
   Option MP_Enabled        = Option::U8  ("Multiplayer",     {"Off", "On (Local)"}, {mp_EnabledDesc});
@@ -1369,7 +1439,7 @@ namespace Settings {
     ctx.startingOcarina       = StartingOcarina.Value<u8>();
     ctx.startingKokiriSword   = StartingKokiriSword.Value<u8>();
     ctx.startingBiggoronSword = StartingBiggoronSword.Value<u8>();
-    ctx.startingHealth        = (StartingHealth.Value<u8>() + 2) % 20 + 1;
+    ctx.startingHearts        = StartingHearts.Value<u8>() + 1;
     ctx.startingMagicMeter    = StartingMagicMeter.Value<u8>();
     ctx.startingDoubleDefense = StartingDoubleDefense.Value<u8>();
 
@@ -1490,7 +1560,10 @@ namespace Settings {
     for (auto op : trickOptions) {
       op->SetToDefault();
     }
-    for (auto op : glitchOptions) {
+    for (auto op : glitchCategories) {
+      op->SetToDefault();
+    }
+    for (auto op : miscGlitches) {
       op->SetToDefault();
     }
     for (auto op : multiplayerOptions) {
@@ -1956,11 +2029,14 @@ namespace Settings {
           LogicGraveyardPoH.SetSelectedIndex(1);
           LogicGVHammerChest.SetSelectedIndex(1);
           LogicManOnRoof.SetSelectedIndex(1);
+          LogicWindmillPoHHookshot.SetSelectedIndex(1);
           LogicGoronCityLeftMost.SetSelectedIndex(1);
           LogicZoraRiverLower.SetSelectedIndex(1);
           LogicZoraRiverUpper.SetSelectedIndex(1);
+          LogicZFGreatFairy.SetSelectedIndex(1);
           LogicDekuB1WebsWithBow.SetSelectedIndex(1);
           LogicDCJump.SetSelectedIndex(1);
+          LogicJabuScrubJumpDive.SetSelectedIndex(1);
           LogicForestOutdoorEastGS.SetSelectedIndex(1);
           LogicFireScarecrow.SetSelectedIndex(1);
           LogicWaterTempleTorchLongshot.SetSelectedIndex(1);
@@ -1979,13 +2055,15 @@ namespace Settings {
           LogicLensShadowMQ.SetSelectedIndex(1);
           LogicLensBotwMQ.SetSelectedIndex(1);
           LogicLensGtgMQ.SetSelectedIndex(1);
+          LogicFlamingChests.SetSelectedIndex(1);
         }
         if(currentSetting->GetSelectedOptionIndex() >= 2){ //intermediate options
           LogicLabWallGS.SetSelectedIndex(1);
           LogicChildDampeRacePoH.SetSelectedIndex(1);
           LogicGerudoKitchen.SetSelectedIndex(1);
           LogicOutsideGanonsGS.SetSelectedIndex(1);
-          //LogicDMTSoilGS.SetSelectedIndex(1);
+          LogicDMTSoilGS.SetSelectedIndex(1);
+          LogicDMTSummitHover.SetSelectedIndex(1);
           LogicLinkGoronDins.SetSelectedIndex(1);
           LogicGoronCityPotWithStrength.SetSelectedIndex(1);
           //LogicCraterUpperToLower.SetSelectedIndex(1);
@@ -1995,9 +2073,8 @@ namespace Settings {
           LogicDCStaircase.SetSelectedIndex(1);
           LogicDCScarecrowGS.SetSelectedIndex(1);
           //LogicJabuBossGSAdult.SetSelectedIndex(1);
-          //LogicJabuScrubJumpDive.SetSelectedIndex(1);
           //LogicForestOutsideBackdoor.SetSelectedIndex(1);
-          //LogicForestDoorFrame.SetSelectedIndex(1);
+          LogicForestDoorFrame.SetSelectedIndex(1);
           LogicFireBossDoorJump.SetSelectedIndex(1);
           LogicFireSongOfTime.SetSelectedIndex(1);
           LogicWaterCentralBow.SetSelectedIndex(1);
@@ -2020,7 +2097,7 @@ namespace Settings {
           LogicReverseWasteland.SetSelectedIndex(1);
           LogicColossusGS.SetSelectedIndex(1);
           LogicDMTBombable.SetSelectedIndex(1);
-          //LogicGoronCityPot.SetSelectedIndex(1);
+          LogicGoronCityPot.SetSelectedIndex(1);
           LogicChildRollingWithStrength.SetSelectedIndex(1);
           LogicCraterBeanPoHWithHovers.SetSelectedIndex(1);
           LogicDCSlingshotSkip.SetSelectedIndex(1);
@@ -2032,7 +2109,7 @@ namespace Settings {
           LogicWaterDragonAdult.SetSelectedIndex(1);
           LogicWaterDragonJumpDive.SetSelectedIndex(1);
           LogicSpiritWall.SetSelectedIndex(1);
-          //LogicSpiritSunChest.SetSelectedIndex(1);
+          LogicSpiritSunChest.SetSelectedIndex(1);
           //LogicShadowFireArrowEntry.SetSelectedIndex(1);
           LogicShadowUmbrella.SetSelectedIndex(1);
           LogicGtgWithoutHookshot.SetSelectedIndex(1);

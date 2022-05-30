@@ -45,6 +45,8 @@ namespace Logic {
   extern bool FireArrows;
   extern bool IceArrows;
   extern bool LightArrows;
+  extern bool MasterSword;
+  extern bool BiggoronSword;
 
   //Trade Quest
   extern bool PocketEgg;
@@ -123,6 +125,7 @@ namespace Logic {
   extern u8 ProgressiveWallet;
   extern u8 ProgressiveMagic;
   extern u8 ProgressiveOcarina;
+  extern u8 ProgressiveGiantKnife;
 
   //Keysanity
   extern bool IsKeysanity;
@@ -149,6 +152,11 @@ namespace Logic {
 
   //Gold Skulltula Count
   extern u8 GoldSkulltulaTokens;
+
+  //Bottle Count, with and without Ruto's Letter
+  extern u8   Bottles;
+  extern u8   NumBottles;
+  extern bool NoBottles;
 
   //item and bottle drops
   extern bool DekuNutDrop;
@@ -185,6 +193,10 @@ namespace Logic {
   extern bool BuySeed;
   extern bool MagicRefill;
 
+  extern u8   PieceOfHeart;
+  extern u8   HeartContainer;
+  extern bool DoubleDefense;
+
   /* --- HELPERS --- */
   /* These are used to simplify reading the logic, but need to be updated
   /  every time a base value is updated.                       */
@@ -201,6 +213,8 @@ namespace Logic {
   extern bool GoldScale;
   extern bool AdultsWallet;
 
+  extern bool ChildScarecrow;
+  extern bool AdultScarecrow;
   extern bool ScarecrowSong;
   extern bool Scarecrow;
   extern bool DistantScarecrow;
@@ -221,9 +235,10 @@ namespace Logic {
   extern bool CanPlayBowling;
   extern bool HasBombchus;
   extern bool HasExplosives;
+  extern bool HasBoots;
   extern bool IsChild;
   extern bool IsAdult;
-//extern bool IsGlitched;
+  extern bool IsGlitched;
   extern bool CanBlastOrSmash;
   extern bool CanChildAttack;
   extern bool CanChildDamage;
@@ -235,13 +250,23 @@ namespace Logic {
   extern bool CanStunDeku;
   extern bool CanSummonGossipFairy;
   extern bool CanSummonGossipFairyWithoutSuns;
+  extern bool NeedNayrusLove;
+  extern bool CanSurviveDamage;
   extern bool CanTakeDamage;
+  extern bool CanTakeDamageTwice;
   //extern bool CanPlantBean;
   extern bool CanOpenBombGrotto;
   extern bool CanOpenStormGrotto;
   extern bool HookshotOrBoomerang;
   extern bool CanGetNightTimeGS;
   extern bool BigPoeKill;
+
+  extern u8   BaseHearts;
+  extern u8   Hearts;
+  extern u8   Multiplier;
+  extern u8   EffectiveHealth;
+  extern u8   FireTimer;
+  extern u8   WaterTimer;
 
   extern bool GuaranteeTradePath;
   extern bool GuaranteeHint;
@@ -255,6 +280,7 @@ namespace Logic {
   extern bool CanShield;
   extern bool CanJumpslash;
   extern bool CanUseProjectile;
+  extern bool CanUseMagicArrow;
 
   //Bridge Requirements
   extern bool HasAllStones;
@@ -277,15 +303,22 @@ namespace Logic {
   extern bool DrainWell;
   extern bool GoronCityChildFire;
   extern bool GCWoodsWarpOpen;
+  extern bool GCDaruniasDoorOpenChild;
   extern bool StopGCRollingGoronAsAdult;
-  extern bool ChildWaterTemple;
-  extern bool RaiseWaterLevel;
+  extern bool WaterTempleLow;
+  extern bool WaterTempleMiddle;
+  extern bool WaterTempleHigh;
   extern bool KingZoraThawed;
   extern bool AtDampeTime;
   extern bool DeliverLetter;
   extern bool KakarikoVillageGateOpen;
+  extern bool ForestTempleJoelle;
+  extern bool ForestTempleBeth;
   extern bool ForestTempleJoAndBeth;
+  extern bool ForestTempleAmy;
+  extern bool ForestTempleMeg;
   extern bool ForestTempleAmyAndMeg;
+  extern bool FireLoopSwitch;
   extern bool TimeTravel;
 
   /* --- END OF HELPERS --- */
@@ -309,14 +342,31 @@ namespace Logic {
   };
 
   enum class GlitchType {
+    RestrictedItems,
+    SuperStab,
     ISG,
     BombHover,
+    BombOI,
+    OutdoorBombOI,
+    WindmillBombOI,
+    IndoorBombOI,
+    DungeonBombOI,
+    HoverBoost,
+    SuperSlide,
     Megaflip,
+    ASlide,
+    HammerSlide,
+    LedgeCancel,
+    ActionSwap,
+    QPA,
     HookshotClip,
     HookshotJump_Bonk,
     HookshotJump_Boots,
-    LedgeClip,
+    CutsceneDive,
+    NaviDive_Stick,
     TripleSlashClip,
+    LedgeClip,
+    SeamWalk,
   };
 
   enum class GlitchDifficulty {
@@ -331,8 +381,8 @@ namespace Logic {
   bool CanPlay(bool song);
   bool CanUse(ItemKey itemName);
   bool HasProjectile(HasProjectileAge age);
-  bool SmallKeys(u8 dungeonKeyCount, u8 requiredAmount);
-  bool SmallKeys_ShadowTemple(u8 dungeonKeyCount, u8 requiredAmountGlitchless, u8 requiredAmountGlitched);
+  bool SmallKeys(Key dungeon, u8 requiredAmount);
+  bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitched);
   bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty);
   bool EventsUpdated();
   void LogicReset();

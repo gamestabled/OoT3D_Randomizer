@@ -382,7 +382,7 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingBombchus > 0) {
         gSaveContext.items[SLOT_BOMBCHU] = ITEM_BOMBCHU;
-        gSaveContext.ammo[SLOT_BOMBCHU] = 20;
+        gSaveContext.ammo[SLOT_BOMBCHU] = 30 * gSettingsContext.startingBombchus - 10;
     }
 
     if (gSettingsContext.startingBow > 0) {
@@ -490,8 +490,8 @@ void SaveFile_SetStartingInventory(void) {
         ItemEffect_GiveDefense(&gSaveContext, 0, 0);
     }
 
-    gSaveContext.healthCapacity = gSettingsContext.startingHealth << 4;
-    gSaveContext.health         = gSettingsContext.startingHealth << 4;
+    gSaveContext.healthCapacity = gSettingsContext.startingHearts << 4;
+    gSaveContext.health         = gSettingsContext.startingHearts << 4;
 
     gSaveContext.questItems |= gSettingsContext.startingQuestItems;
     gSaveContext.questItems |= gSettingsContext.startingDungeonReward;
@@ -674,4 +674,10 @@ void SaveFile_SaveExtSaveData(u32 saveNumber) {
     extDataWriteFileDirectly(fsa, path, &gExtSaveData, 0, sizeof(gExtSaveData));
 
     extDataUnmount(fsa);
+}
+
+void SaveFile_EnforceHealthLimit(void) {
+    if (gSaveContext.health > gSaveContext.healthCapacity) {
+        gSaveContext.health = gSaveContext.healthCapacity;
+    }
 }
