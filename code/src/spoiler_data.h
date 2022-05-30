@@ -57,6 +57,18 @@ typedef enum {
     // Grottos are all 0x3E
 } SpoilerCollectionCheckGroup;
 
+typedef enum {
+    COLLECTTYPE_NORMAL,
+    COLLECTTYPE_REPEATABLE,
+    COLLECTTYPE_NEVER,
+} SpoilerItemCollectType;
+
+typedef enum {
+    REVEALTYPE_NORMAL,
+    REVEALTYPE_SCENE,
+    REVEALTYPE_ALWAYS,
+} SpoilerItemRevealType;
+
 typedef struct {
     u16 LocationStrOffset;
     u16 ItemStrOffset;
@@ -64,9 +76,8 @@ typedef struct {
     u8 LocationScene;
     u8 LocationFlag;
     SpoilerCollectionCheckGroup Group;
-    u8 Repeatable;
-    u8 RevealOnSceneDiscovery;
-    u8 StaticUncollectable;
+    SpoilerItemCollectType CollectType;
+    SpoilerItemRevealType RevealType;
 } SpoilerItemLocation;
 
 typedef struct {
