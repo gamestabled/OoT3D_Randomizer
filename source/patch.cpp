@@ -450,6 +450,7 @@ bool WriteAllPatches() {
   if (ctx.rainbowSwordTrailInnerColor) {
     p2StartColor.b = 0xFF;
   }
+
   const std::array rSwordTrailColors{
     p1StartColor, p2StartColor, p1EndColor, p2EndColor
   };
@@ -475,12 +476,12 @@ bool WriteAllPatches() {
   // Write Sword Trail Duration to code
   patchOffset = V_TO_P(SWORDTRAILDURATION_ADDR);
   patchSize = sizeof(rSwordTrailDuration);
-  if (ctx.customTrailEffects && !WritePatch(patchOffset, patchSize, &rSwordTrailDuration, code, bytesWritten, totalRW, buf)) {
+  if (!WritePatch(patchOffset, patchSize, &rSwordTrailDuration, code, bytesWritten, totalRW, buf)) {
     return false;
   }
 
   const u32 SWORDTRAILUNKMODE_ADDR = 0x0053C158;
-  char rSwordTrailUnkMode = 0; // Mode 0 is needed to draw black and blue.
+  char rSwordTrailUnkMode = 0; // Mode 0 is needed to draw black.
 
   // Write Sword Trail UnkMode to code
   patchOffset = V_TO_P(SWORDTRAILUNKMODE_ADDR);
@@ -511,6 +512,7 @@ bool WriteAllPatches() {
   if (ctx.rainbowChuTrailInnerColor) {
     p2StartColor.b = 0xFF;
   }
+
   const std::array rBombchuTrailColors{
     p1StartColor, p2StartColor, p1EndColor, p2EndColor
   };

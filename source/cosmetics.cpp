@@ -129,19 +129,19 @@ namespace Cosmetics {
     "FF0000", //Rainbow (starts at red)
   };
   const std::array<std::string_view, 13> weaponTrailColors = {
-    "FFFFFF",
-    "000000",
-    "FF0000",
-    "00FF00",
-    "0000FF",
-    "FFFF00",
-    "00FFFF",
-    "FF00FF",
-    "FFA500",
-    "FFD700",
-    "800080",
-    "FF69B4",
-    "FF0000",
+    "FFFFFF", //White
+    "000000", //Black
+    "FF0000", //Red
+    "00FF00", //Green
+    "0000FF", //Blue
+    "FFFF00", //Yellow
+    "00FFFF", //Cyan
+    "FF00FF", //Magenta
+    "FFA500", //Orange
+    "FFD700", //Gold
+    "800080", //Purple
+    "FF69B4", //Pink
+    "FF0000", //Rainbow (starts at red)
   };
 
   //Generate random hex color

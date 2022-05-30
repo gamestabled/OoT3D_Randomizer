@@ -2070,7 +2070,7 @@ namespace Settings {
       KokiriTunicColor.Hide();
       GoronTunicColor.Hide();
       ZoraTunicColor.Hide();
-      ChildTunicColor.SetSelectedIndex(SAME_AS_KOKIRI); //Same as Kokiri
+      ChildTunicColor.SetSelectedIndex(SAME_AS_KOKIRI);
       KokiriTunicColor.SetSelectedIndex(3); //Kokiri Green
       GoronTunicColor.SetSelectedIndex(4);  //Goron Red
       ZoraTunicColor.SetSelectedIndex(5);   //Zora Blue
@@ -2132,7 +2132,7 @@ namespace Settings {
       BoomerangTrailDuration.SetSelectedIndex(2); // Vanilla
       BombchuTrailInnerColor.SetSelectedIndex(5); // Red
       BombchuTrailOuterColor.SetSelectedIndex(SAME_AS_INNER_TRAIL);
-      BombchuTrailDuration.SetSelectedIndex(2); // Vanilla
+      BombchuTrailDuration.SetSelectedIndex(2);   // Vanilla
     }
 
     // Audio
