@@ -29,7 +29,7 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src $(sort $(dir $(wildcard src/*/)))
+SOURCES		:=	$(sort $(dir $(wildcard src/*/ src/)))
 DATA		:=	data
 INCLUDES	:=	include $(SOURCES)
 INCLUDES    +=  assets
