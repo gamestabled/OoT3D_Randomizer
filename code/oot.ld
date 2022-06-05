@@ -724,6 +724,10 @@ SECTIONS
 		*(.patch_BiggoronDayCheck)
 	}
 
+	.patch_WarpSongTimerDepletion 0x33DE84 : {
+		*(.patch_WarpSongTimerDepletion)
+	}
+
 	.patch_MasterQuestGoldSkulltulaCheck 0x3415C8 : {
 		*(.patch_MasterQuestGoldSkulltulaCheck)
 	}
@@ -766,6 +770,10 @@ SECTIONS
 
 	.patch_FastChests 0x354CD4 : {
 		*(.patch_FastChests)
+	}
+
+	.patch_MasterSwordTimerCheck 0x354DFC : {
+		*(.patch_MasterSwordTimerCheck)
 	}
 
 	.patch_LikeLikeNeverEatTunic 0x355C2C : {
@@ -1052,6 +1060,14 @@ SECTIONS
 		*(.patch_SleepQueryCallback)
 	}
 
+	.patch_CurseTrapDizzyStick 0x41AB24 : {
+		*(.patch_CurseTrapDizzyStick)
+	}
+
+	.patch_CurseTrapDizzyButtons 0x41ABDC : {
+		*(.patch_CurseTrapDizzyButtons)
+	}
+
 	.patch_SaveMenuIgnoreOpen 0x42EC00 : {
 		*(.patch_SaveMenuIgnoreOpen)
 	}
@@ -1172,6 +1188,14 @@ SECTIONS
 		*(.patch_InterfaceDrawDontSpoilTradeItems)
 	}
 
+	.patch_TimerExpiration 0x45A948 : {
+		*(.patch_TimerExpiration)
+	}
+
+	.patch_Timer2TickSound 0x45A9B4 : {
+		*(.patch_Timer2TickSound)
+	}
+
 	.patch_SunsSongEndCloseTextbox 0x45B514 : {
 		*(.patch_SunsSongEndCloseTextbox)
 	}
@@ -1282,6 +1306,10 @@ SECTIONS
 
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
 		*(.patch_EditDrawGetItemAfterModelSpawn)
+	}
+
+	.patch_CrouchStabHitbox 0x4C85D4 : {
+		*(.patch_CrouchStabHitbox)
 	}
 
 	. = 0x4C99A8;

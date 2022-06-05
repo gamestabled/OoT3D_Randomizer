@@ -1755,6 +1755,43 @@ RainbowChuTrailOne_patch:
 RainbowChuTrailTwo_patch:
     bl hook_RainbowChuTrail
 
+.section .patch_WarpSongTimerDepletion
+.global WarpSongTimerDepletion_patch
+WarpSongTimerDepletion_patch:
+    push {lr}
+    bl hook_WarpSongTimerDepletion
+    pop {lr}
+
+.section .patch_TimerExpiration
+.global TimerExpiration_patch
+TimerExpiration_patch:
+    bl hook_TimerExpiration
+
+.section .patch_Timer2TickSound
+.global Timer2TickSound_patch
+Timer2TickSound_patch:
+    bl hook_Timer2TickSound
+
+.section .patch_CurseTrapDizzyStick
+.global CurseTrapDizzyStick_patch
+CurseTrapDizzyStick_patch:
+    bl hook_CurseTrapDizzyStick
+
+.section .patch_CurseTrapDizzyButtons
+.global CurseTrapDizzyButtons_patch
+CurseTrapDizzyButtons_patch:
+    b hook_CurseTrapDizzyButtons
+
+.section .patch_CrouchStabHitbox
+.global CrouchStabHitbox_patch
+CrouchStabHitbox_patch:
+    bl hook_CrouchStabHitbox
+
+.section .patch_MasterSwordTimerCheck
+.global MasterSwordTimerCheck_patch
+MasterSwordTimerCheck_patch:
+    nop
+
 .section .patch_loader
 .global loader_patch
 

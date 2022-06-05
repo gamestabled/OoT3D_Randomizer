@@ -6,6 +6,7 @@
 #include "player.h"
 #include "common.h"
 #include "fairy.h"
+#include "icetrap.h"
 
 #define EnBox_Init_addr 0x1899EC
 #define EnBox_Init ((ActorFunc)EnBox_Init_addr)
@@ -157,7 +158,19 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         if (gSettingsContext.randomTrapDmg == 1) { //basic
             damageType = pRandInt % 6;
         } else if (gSettingsContext.randomTrapDmg == 2) { //advanced
-            damageType = pRandInt % 9;
+            damageType = pRandInt % 13;
+        }
+
+        // Curses
+        if (damageType > 8) {
+            if (IceTrap_ActivateCurseTrap((s8)damageType - 9)) {
+                PLAYER->getItemId = 0;
+                PLAYER->stateFlags1 &= ~0x20000C00;
+                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
+                return 1;
+            }
+            else
+                damageType = 1; // if the curse can't trigger, use a bomb trap
         }
 
         if (damageType == 3) {

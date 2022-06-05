@@ -428,7 +428,9 @@ typedef struct GlobalContext {
 _Static_assert(sizeof(GlobalContext) == 0x5F14, "Global Context size");
 
 typedef struct StaticContext {
-    /* 0x0000 */ char unk_0[0x0E60];
+    /* 0x0000 */ char unk_0[0x0D38];
+    /* 0x0D38 */ s16  dekuNutFlash; // set to -1 to trigger flash
+    /* 0x0D3A */ char unk_D3A[0x0126];
     /* 0x0E60 */ u16  spawnOnEpona;
     /* 0x0E62 */ char unk_E72[0x0010];
     /* 0x0E72 */ u16  collisionDisplay;
@@ -596,5 +598,9 @@ typedef u32 (*Flags_GetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
 typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetCollectible_addr 0x36405C
 #define Flags_GetCollectible ((Flags_GetCollectible_proc)Flags_GetCollectible_addr)
+
+typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* player);
+#define Player_SetEquipmentData_addr 0x34913C
+#define Player_SetEquipmentData ((Player_SetEquipmentData_proc)Player_SetEquipmentData_addr)
 
 #endif //_Z3D_H_

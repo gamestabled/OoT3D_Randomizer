@@ -1442,6 +1442,76 @@ hook_RainbowChuTrail:
     strb r7,[r0,#0x282]
     bx lr
 
+.global hook_TimerExpiration
+hook_TimerExpiration:
+    mov r0,#0x5
+    push {r0-r12,lr}
+    bl IceTrap_IsCurseActive
+    cmp r0,#0x1
+    pop {r0-r12,lr}
+    bxne lr
+    add lr,lr,#0x30
+    mov r0,#0x0
+    strh r0,[r4,#0x62]
+    bx lr
+
+.global hook_WarpSongTimerDepletion
+hook_WarpSongTimerDepletion:
+    moveq r1,#0x1
+    movne r1,#0xEF
+    push {r0-r12,lr}
+    bl IceTrap_IsCurseActive
+    cmp r0,#0x1
+    pop {r0-r12,lr}
+    bxne lr
+    strh r1,[r0,#0x64]
+    bx lr
+
+.global hook_Timer2TickSound
+hook_Timer2TickSound:
+    push {r0-r12,lr}
+    bl IceTrap_IsCurseActive
+    cmp r0,#0x1
+    pop {r0-r12,lr}
+    addeq lr,lr,#0x4
+    cmp r0,#0x3C
+    bx lr
+
+.global hook_CurseTrapDizzyStick
+hook_CurseTrapDizzyStick:
+    push {r0-r12,lr}
+    bl IceTrap_ReverseStick
+    pop {r0-r12,lr}
+    b 0x2FF258
+
+.global hook_CurseTrapDizzyButtons
+hook_CurseTrapDizzyButtons:
+    push {r0,r3-r12,lr}
+    # R1 and R2 contain button status fields
+    # Apply the curse effect to both
+    push {r2}
+    cpy r0,r1
+    bl IceTrap_RandomizeButtons
+    pop {r2}
+    push {r0}
+    cpy r0,r2
+    bl IceTrap_RandomizeButtons
+    cpy r2,r0
+    pop {r1}
+    pop {r0,r3-r12,lr}
+    stmia r0,{r1,r2,r3,r5,r6,r7,r8,r9,r10,r11,r12,lr}
+    b 0x41ABE0
+
+.global hook_CrouchStabHitbox
+hook_CrouchStabHitbox:
+    push {r0-r12,lr}
+    bl IceTrap_IsSlashHitboxDisabled
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    movne r10,#0xFF
+    strb r10,[r6,#0x227]
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
