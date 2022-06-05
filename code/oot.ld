@@ -480,6 +480,10 @@ SECTIONS
 		*(.patch_NoHealFromBombchuBowlingPrize)
 	}
 
+	.patch_HookshotDrawChain 0x2202A0 : {
+		*(.patch_HookshotDrawChain)
+	}
+
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {
 		*(.patch_ItemGiveBombchuDropTwo)
 	}
@@ -1020,6 +1024,10 @@ SECTIONS
 		*(.patch_FireArrowCheckChestFlagTwo)
 	}
 
+	.patch_LinkReflection 0x3F2F0C : {
+		*(.patch_LinkReflection)
+	}
+
 	.patch_SlidingDoorDestroyCustomModels 0x3F4A70 : {
 		*(.patch_SlidingDoorDestroyCustomModels)
 	}
@@ -1200,6 +1208,10 @@ SECTIONS
 		*(.patch_EnableFW)
 	}
 
+	.patch_StoreTargetActorType 0x479984 : {
+		*(.patch_StoreTargetActorType)
+	}
+
 	.patch_FWKeepWarpPoint 0x47C3C0 : {
 		*(.patch_FWKeepWarpPoint)
 	}
@@ -1260,24 +1272,12 @@ SECTIONS
 		*(.patch_EditDrawGetItemBeforeModelSpawn)
 	}
 
-	.patch_HookshotDrawRedLaser 0x4C2620 : {
-		*(.patch_HookshotDrawRedLaser)
-	}
-
-	.patch_HookshotDrawChain 0x2202A0 : {
-		*(.patch_HookshotDrawChain)
-	}
-
 	.patch_HookshotRotation 0x4C2524 : {
 		*(.patch_HookshotRotation)
 	}
 
-	.patch_LinkReflection 0x3F2F0C : {
-		*(.patch_LinkReflection)
-	}
-
-	.patch_StoreTargetActorType 0x479984 : {
-		*(.patch_StoreTargetActorType)
+	.patch_HookshotDrawRedLaser 0x4C2620 : {
+		*(.patch_HookshotDrawRedLaser)
 	}
 
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
