@@ -300,6 +300,9 @@ namespace Settings {
   Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    1); // Basic
+  Option FireTrap            = Option::Bool("  Fire Trap",            {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    1); // On
+  Option AntiFairyTrap       = Option::Bool("  Anti-Fairy Trap",      {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    1); // On
+  Option CurseTraps          = Option::Bool("  Curse Traps",          {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &GossipStoneHints,
@@ -316,6 +319,9 @@ namespace Settings {
     &IngameSpoilers,
     &MenuOpeningButton,
     &RandomTrapDmg,
+    &FireTrap,
+    &AntiFairyTrap,
+    &CurseTraps,
   };
 
   //Item Usability Settings
@@ -1316,6 +1322,9 @@ namespace Settings {
     ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
+    ctx.fireTrap             = (FireTrap) ? 1 : 0;
+    ctx.antiFairyTrap        = (AntiFairyTrap) ? 1 : 0;
+    ctx.curseTraps           = (CurseTraps) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -2003,6 +2012,17 @@ namespace Settings {
     } else {
       ClearerHints.Unhide();
       HintDistribution.Unhide();
+    }
+
+    //Only show advanced trap options if random trap damage is set to "Advanced"
+    if (RandomTrapDmg.Is(RANDOMTRAPS_ADVANCED)) {
+      FireTrap.Unhide();
+      AntiFairyTrap.Unhide();
+      CurseTraps.Unhide();
+    } else {
+      FireTrap.Hide();
+      AntiFairyTrap.Hide();
+      CurseTraps.Hide();
     }
 
     //Manage toggle for item usability options

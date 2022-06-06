@@ -18,7 +18,7 @@ static u32 source[16];
 s8 IceTrap_ActiveCurse = -1;
 static s16 previousTimer1Value = 0;
 static s16 previousTimer2Value = 60;
-static u32 dizzyCurseSeed = 0;
+u32 dizzyCurseSeed = 0;
 
 // LUT for 1 - 0.5sin(0.5x) * 1.1^-x where x = 30 - INDEX
 const f32 SCALE_TRAP[] = {
@@ -29,6 +29,42 @@ const f32 SCALE_TRAP[] = {
     1.185f, 1.207f, 1.177f, 1.090f, 0.960f,
     0.814f, 0.690f, 0.625f, 0.652f, 0.782f
 };
+
+u32 possibleChestTraps[20] = {ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA,
+                                ICETRAP_SHOCK, ICETRAP_BOMB_SIMPLE, ICETRAP_BOMB_KNOCKDOWN};
+u32 possibleChestTrapsAmount = 0;
+static u32 possibleItemTraps[20] = {ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA,
+                                    ICETRAP_SHOCK, ICETRAP_SCALE};
+static u32 possibleItemTrapsAmount = 0;
+
+void IceTrap_InitTypes(void) {
+    possibleChestTrapsAmount = 6;
+    possibleItemTrapsAmount = 5;
+
+    if (gSettingsContext.randomTrapDmg == RANDOMTRAPS_BASIC)
+        return;
+
+    possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_RUPPY;
+    possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_RUPPY;
+
+    if (gSettingsContext.fireTrap) {
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_FIRE;
+        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_FIRE;
+    }
+    if (gSettingsContext.antiFairyTrap) {
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_ANTIFAIRY;
+    }
+    if (gSettingsContext.curseTraps) {
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_SWORD;
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_SHIELD;
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_DIZZY;
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_BLIND;
+        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_SWORD;
+        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_SHIELD;
+        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_DIZZY;
+        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_BLIND;
+    }
+}
 
 u32 IceTrap_IsPending(void) {
     return pendingFreezes > 0;
@@ -51,16 +87,16 @@ void LinkDamageNoKnockback(void) {
 }
 
 void IceTrap_Give(void) {
+    if (possibleItemTrapsAmount == 0)
+        IceTrap_InitTypes();
+
     if (cooldown == 0 && pendingFreezes &&
         ExtendedObject_IsLoaded(&gGlobalContext->objectCtx, ExtendedObject_GetIndex(&gGlobalContext->objectCtx, 0x3))) {
         u32 pRandInt = dizzyCurseSeed = Hash(source[0]);
 
-        u8 damageType = 3; // Default to ice trap
-        if (gSettingsContext.randomTrapDmg == 1) { //Basic
-            damageType = pRandInt % 5 + 1; // From testing 0-4 are all the unique damage types and 0 is boring (5 is custom)
-        }
-        else if (gSettingsContext.randomTrapDmg == 2) { //Advanced
-            damageType = pRandInt % 10; // 0 will be used for the fire trap, 6 and higher for curses
+        u8 trapType = ICETRAP_VANILLA; // Default to ice trap
+        if (gSettingsContext.randomTrapDmg != RANDOMTRAPS_OFF) {
+            trapType = possibleItemTraps[pRandInt % possibleItemTrapsAmount];
         }
 
         pendingFreezes--;
@@ -68,17 +104,17 @@ void IceTrap_Give(void) {
             source[i] = source[i + 1];
         }
 
-        if (damageType > 5) {
-            if (IceTrap_ActivateCurseTrap((s8)damageType - 6))
+        if (trapType >= ICETRAP_CURSE_SHIELD) {
+            if (IceTrap_ActivateCurseTrap(trapType))
                 return;
             else
-                damageType = 5; // if the curse can't trigger, use a scale trap
+                trapType = ICETRAP_SCALE; // if the curse can't trigger, use a scale trap
         }
 
-        modifyScale = (damageType == 5);
+        modifyScale = (trapType == ICETRAP_SCALE);
 
         PLAYER->stateFlags1 &= ~0xC00;
-        if (damageType == 3 || damageType == 0) {
+        if (trapType == ICETRAP_VANILLA || trapType == ICETRAP_FIRE) {
             PLAYER->actor.colChkInfo.damage = 0;
         } else {
             PLAYER->actor.colChkInfo.damage = (gSettingsContext.mirrorWorld) ? 16 : 8; // Damage Multiplier is accounted for by the patch
@@ -88,19 +124,26 @@ void IceTrap_Give(void) {
             PLAYER->invincibilityTimer = 0;
         }
 
-        if (damageType == 0) {
-            FireDamage(&(PLAYER->actor), gGlobalContext, 0);
+        if (trapType == ICETRAP_FIRE) {
+            FireDamage(&(PLAYER->actor), gGlobalContext, gRandInt % 2);
         }
-        if (damageType == 5) {
+        if (trapType == ICETRAP_SCALE) {
             LinkDamageNoKnockback();
+        } else if (trapType == ICETRAP_RUPPY) {
+            // Spawn 4 explosive rupees around the player
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x + 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z + 30, 0, 0, 0, 0x2);
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x + 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z - 30, 0, 0, 0, 0x2);
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x - 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z + 30, 0, 0, 0, 0x2);
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x - 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z - 30, 0, 0, 0, 0x2);
         } else {
-            LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20);
+            // From testing 0-4 are all the unique damage types and 0 is boring (lava/spikes damage), so it's used for the Fire Trap
+            LinkDamage(gGlobalContext, PLAYER, trapType, 0.0f, 0.0f, 0, 20);
         }
         cooldown = 30;
     }
 }
 
-u8 IceTrap_ActivateCurseTrap(s8 curseType) {
+u8 IceTrap_ActivateCurseTrap(u8 curseType) {
     if (IceTrap_ActiveCurse >= 0 || gSaveContext.timer2State != 0)
         return 0;
 
@@ -137,9 +180,9 @@ u8 IceTrap_ActivateCurseTrap(s8 curseType) {
     gSaveContext.timer2State = 4; // "active"
     gSaveContext.timer2Value = 60;
     TimerFrameCounter = 30;
-    DisplayTextbox(gGlobalContext, 0x8FF0 + curseType, 0);
+    DisplayTextbox(gGlobalContext, 0x8FF0 + curseType - ICETRAP_CURSE_SHIELD, 0);
     PlaySound(0x100035C); // Poe laugh SFX
-    IceTrap_ActiveCurse = curseType;
+    IceTrap_ActiveCurse = (s8)curseType;
     return 1;
 }
 

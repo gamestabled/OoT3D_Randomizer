@@ -77,7 +77,11 @@ void OceffSpot_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 // Song of Storms
 void OceffStorm_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_BLIND)
+        gStaticContext.dekuNutFlash = -1;
+
     IceTrap_DispelCurses();
+
     if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffStorm_Update(thisx, globalCtx);
     } else {

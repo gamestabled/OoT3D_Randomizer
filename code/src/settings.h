@@ -271,6 +271,12 @@ typedef enum {
 } GossipStoneHintsSetting;
 
 typedef enum {
+  RANDOMTRAPS_OFF,
+  RANDOMTRAPS_BASIC,
+  RANDOMTRAPS_ADVANCED,
+} RandomTrapDamageSetting;
+
+typedef enum {
   ITEMPOOL_PLENTIFUL,
   ITEMPOOL_BALANCED,
   ITEMPOOL_SCARCE,
@@ -445,6 +451,9 @@ typedef struct {
   u8 ingameSpoilers;
   u8 menuOpeningButton;
   u8 randomTrapDmg;
+  u8 fireTrap;
+  u8 antiFairyTrap;
+  u8 curseTraps;
 
   u8 faroresWindAnywhere;
   u8 stickAsAdult;

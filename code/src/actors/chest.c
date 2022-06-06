@@ -146,70 +146,66 @@ u8 Chest_OverrideDecoration() {
 }
 
 u8 Chest_OverrideIceSmoke(Actor* thisx) {
-    if (gSettingsContext.randomTrapDmg == 0) {
+    if (gSettingsContext.randomTrapDmg == RANDOMTRAPS_OFF) {
         return 0;
     }
 
+    if (possibleChestTrapsAmount == 0)
+        IceTrap_InitTypes();
+
     if (thisx != lastTrapChest && thisx->xzDistToPlayer < 50.0f) {
         lastTrapChest = thisx;
-        u32 pRandInt = Hash(thisx->params);
+        u32 pRandInt = dizzyCurseSeed = Hash(thisx->params);
 
-        u8 damageType = 0;
-        if (gSettingsContext.randomTrapDmg == 1) { //basic
-            damageType = pRandInt % 6;
-        } else if (gSettingsContext.randomTrapDmg == 2) { //advanced
-            damageType = pRandInt % 13;
-        }
+        u8 trapType = possibleChestTraps[pRandInt % possibleChestTrapsAmount];
 
         // Curses
-        if (damageType > 8) {
-            if (IceTrap_ActivateCurseTrap((s8)damageType - 9)) {
+        if (trapType >= ICETRAP_CURSE_SHIELD) {
+            if (IceTrap_ActivateCurseTrap(trapType)) {
                 PLAYER->getItemId = 0;
                 PLAYER->stateFlags1 &= ~0x20000C00;
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 return 1;
             }
             else
-                damageType = 1; // if the curse can't trigger, use a bomb trap
+                trapType = ICETRAP_BOMB_KNOCKDOWN; // if the curse can't trigger, use a bomb trap
         }
 
-        if (damageType == 3) {
+        if (trapType == ICETRAP_VANILLA) {
             return 0;
         }
         PLAYER->getItemId = 0;
         PLAYER->stateFlags1 &= ~0x20000C00;
         PLAYER->actor.colChkInfo.damage = (gSettingsContext.mirrorWorld) ? 16 : 8;
-        if (damageType == 0 || ((damageType == 1 || damageType == 5) && pRandInt % 2)) { // For knockback
-            PLAYER->stateFlags1 |= 0x4000;                                               // Ledge Cancel
+        if (trapType == ICETRAP_KNOCKDOWN || trapType == ICETRAP_BOMB_KNOCKDOWN) { // For knockback
+            PLAYER->stateFlags1 |= 0x4000;                                         // Ledge Cancel
         }
         if (PLAYER->invincibilityTimer > 0) {
             PLAYER->invincibilityTimer = 0;
         }
 
-        // Big knockback, small knockback or shock
-        if (damageType == 0 || damageType == 2 || damageType == 4) {
-            LinkDamage(gGlobalContext, PLAYER, damageType, 0.0f, 0.0f, 0, 20);
-            return 1;
-        }
-        // Bomb surprise
-        else if (damageType == 1 || damageType == 5) {
-            bomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
-        }
-        // Unhealing fairy
-        else if (damageType == 6) {
-            fairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
-            PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
-        }
-        // Explosive Rupee Trap
-        else if(damageType == 7) {
-            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x, thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2);
-            PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
-        }
-        // Fire Trap
-        else if(damageType == 8) {
-            FireDamage(&(PLAYER->actor), gGlobalContext, pRandInt % 2);
-            LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
-            return 1;
+        switch (trapType) {
+            case ICETRAP_KNOCKDOWN:
+            case ICETRAP_ZELDA2_KNOCKBACK:
+            case ICETRAP_SHOCK:
+                LinkDamage(gGlobalContext, PLAYER, trapType, 0.0f, 0.0f, 0, 20);
+                break;
+            case ICETRAP_BOMB_SIMPLE:
+            case ICETRAP_BOMB_KNOCKDOWN:
+                bomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
+                break;
+            case ICETRAP_ANTIFAIRY:
+                fairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
+                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
+                break;
+            case ICETRAP_RUPPY:
+                Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x, thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2);
+                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
+                break;
+            case ICETRAP_FIRE:
+                FireDamage(&(PLAYER->actor), gGlobalContext, gRandInt % 2);
+                LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
+                break;
         }
     }
 

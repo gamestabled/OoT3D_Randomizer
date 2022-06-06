@@ -80,6 +80,9 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         PLAYER->meleeWeaponState = -1; // slash effect with no hitbox (same as "damageless death ISG")
     }
     if (PLAYER->itemActionParam == 38) { // Blue Potion
+        if (IceTrap_ActiveCurse == ICETRAP_CURSE_BLIND)
+            gStaticContext.dekuNutFlash = -1;
+
         IceTrap_DispelCurses();
     }
 

@@ -382,6 +382,9 @@ namespace Settings {
   extern Option IngameSpoilers;
   extern Option MenuOpeningButton;
   extern Option RandomTrapDmg;
+  extern Option FireTrap;
+  extern Option AntiFairyTrap;
+  extern Option CurseTraps;
   extern bool HasNightStart;
 
   extern Option FaroresWindAnywhere;
