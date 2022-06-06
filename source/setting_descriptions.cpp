@@ -1035,6 +1035,9 @@ string_view LogicGVHammerChestDesc                    = "Difficulty: Novice\n"  
 string_view LogicGerudoKitchenDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The logic normally guarantees one of Bow,\n"      //
                                                         "Hookshot, or Hover Boots.";                       //
+string_view LogicGerudoChildClimbDesc                 = "Difficulty: Intermediate\n"                       //
+                                                        "A precise jump allows child to climb the ledge\n" //
+                                                        "after the kitchen room.";                         //
 string_view LogicLensWastelandDesc                    = "Difficulty: Expert\n"                             //
                                                         "By memorizing the path, you can travel through the"
                                                         "Wasteland without using the Lens of Truth to see\n"

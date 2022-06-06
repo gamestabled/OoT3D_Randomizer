@@ -606,6 +606,7 @@ namespace Settings {
   Option LogicChildDampeRacePoH           = LogicTrick(" GY Second Dampe\n   Race as Child",          LogicChildDampeRacePoHDesc);
   Option LogicGVHammerChest               = LogicTrick(" GV Hammer Chest\n   w/o Hammer",             LogicGVHammerChestDesc);
   Option LogicGerudoKitchen               = LogicTrick(" GF Through Kitchen\n   w/ Nothing",          LogicGerudoKitchenDesc);
+  Option LogicGerudoChildClimb            = LogicTrick(" GF Top Floor\n   as child",                  LogicGerudoChildClimbDesc);
   Option LogicLensWasteland               = LogicTrick(" Haunted Wasteland\n   w/o Lens of Truth",    LogicLensWastelandDesc);
   Option LogicReverseWasteland            = LogicTrick(" Haunted Wasteland\n   in Reverse",           LogicReverseWastelandDesc);
   Option LogicColossusGS                  = LogicTrick(" Colossus Hill GS\n   w/ Hookshot",           LogicColossusGSDesc);
@@ -696,6 +697,7 @@ namespace Settings {
     &LogicChildDampeRacePoH,
     &LogicGVHammerChest,
     &LogicGerudoKitchen,
+    &LogicGerudoChildClimb,
     &LogicLensWasteland,
     &LogicReverseWasteland,
     &LogicColossusGS,
@@ -2061,6 +2063,7 @@ namespace Settings {
           LogicLabWallGS.SetSelectedIndex(1);
           LogicChildDampeRacePoH.SetSelectedIndex(1);
           LogicGerudoKitchen.SetSelectedIndex(1);
+          LogicGerudoChildClimb.SetSelectedIndex(1);
           LogicOutsideGanonsGS.SetSelectedIndex(1);
           LogicDMTSoilGS.SetSelectedIndex(1);
           LogicDMTSummitHover.SetSelectedIndex(1);

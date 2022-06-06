@@ -337,6 +337,7 @@ extern string_view LogicGraveyardPoHDesc;
 extern string_view LogicChildDampeRacePoHDesc;
 extern string_view LogicGVHammerChestDesc;
 extern string_view LogicGerudoKitchenDesc;
+extern string_view LogicGerudoChildClimbDesc;
 extern string_view LogicLensWastelandDesc;
 extern string_view LogicReverseWastelandDesc;
 extern string_view LogicColossusGSDesc;
