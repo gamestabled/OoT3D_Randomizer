@@ -58,7 +58,12 @@ void Player_SetChildCustomTunicCMAB(void) {
 }
 
 void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_SHIELD) {
+        gSaveContext.equips.equipment &= ~0xF0; // unequip shield
+    }
+
     PlayerActor_Init(thisx, globalCtx);
+
     if (gSettingsContext.fastBunnyHood) {
         PLAYER->currentMask = storedMask;
     }
