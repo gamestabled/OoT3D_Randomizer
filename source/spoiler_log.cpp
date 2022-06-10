@@ -197,6 +197,8 @@ void WriteIngameSpoilerLog() {
     } else if (key == MARKET_BOMBCHU_BOWLING_BOMBCHUS) {
         spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
         spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+    } else if (key == ZR_MAGIC_BEAN_SALESMAN && !Settings::ShuffleMagicBeans) {
+        spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
     }
     // Shops
     else if (loc->IsShop()) {

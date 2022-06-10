@@ -229,23 +229,23 @@ enum class MenuType {
 class Menu {
   public:
 
-    static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_, bool printInSpoiler_ = true) {
-      return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU, printInSpoiler_};
+    static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_, std::string description_ = {}, bool printInSpoiler_ = true) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU, std::move(description_), printInSpoiler_};
     }
 
-    static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_, bool printInSpoiler_ = true) {
-      return Menu{std::move(name_), MenuType::SubMenu, std::move(itemsList_), SUB_MENU, printInSpoiler_};
+    static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_, std::string description_ = {}, bool printInSpoiler_ = true) {
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(itemsList_), SUB_MENU, std::move(description_), printInSpoiler_};
     }
 
     static Menu Action(std::string name_, u8 mode_) {
       return Menu{std::move(name_), MenuType::Action, std::move(mode_)};
     }
 
-    Menu(std::string name_, MenuType type_, std::vector<Option *>* settingsList_, u8 mode_, bool printInSpoiler_ = true)
-        : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_), printInSpoiler(printInSpoiler_) {}
+    Menu(std::string name_, MenuType type_, std::vector<Option *>* settingsList_, u8 mode_, std::string description_ = {}, bool printInSpoiler_ = true)
+        : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_), description(std::move(description_)), printInSpoiler(printInSpoiler_) {}
 
-    Menu(std::string name_, MenuType type_, std::vector<Menu *>* itemsList_, u8 mode_, bool printInSpoiler_ = true)
-        : name(std::move(name_)), type(type_), itemsList(std::move(itemsList_)), mode(mode_), printInSpoiler(printInSpoiler_) {}
+    Menu(std::string name_, MenuType type_, std::vector<Menu *>* itemsList_, u8 mode_, std::string description_ = {}, bool printInSpoiler_ = true)
+        : name(std::move(name_)), type(type_), itemsList(std::move(itemsList_)), mode(mode_), description(std::move(description_)), printInSpoiler(printInSpoiler_) {}
 
     Menu(std::string name_, MenuType type_, u8 mode_)
         : name(std::move(name_)), type(type_), mode(mode_) {}
@@ -272,6 +272,7 @@ class Menu {
     u16 menuIdx = 0;
     u16 settingBound = 0;
     int selectedSetting = 0;
+    std::string description = {};
     bool printInSpoiler = true;
 };
 
@@ -371,6 +372,7 @@ namespace Settings {
   extern Option KeepFWWarpPoint;
   extern Option FastBunnyHood;
 
+  extern Option Racing;
   extern Option GossipStoneHints;
   extern Option ClearerHints;
   extern Option HintDistribution;
@@ -688,6 +690,9 @@ namespace Settings {
 
   extern u8 PlayOption;
 
+  extern Menu loadSettingsPreset;
+  extern Menu deleteSettingsPreset;
+
   extern std::vector<std::vector<Option *>> excludeLocationsOptionsVector;
   extern std::vector<Menu *> excludeLocationsMenus;
   extern std::vector<Option *> startingItemsOptions;
@@ -704,5 +709,6 @@ namespace Settings {
 
   extern std::vector<Menu *> mainMenu;
 
-  extern std::vector<Option *> vanillaLogicDefaults;
+  extern std::vector<std::pair<Option*, u8>> racingOverrides;
+  extern std::vector<std::pair<Option*, u8>> vanillaLogicOverrides;
 }
