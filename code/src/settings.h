@@ -277,10 +277,10 @@ typedef enum {
 } RandomTrapDamageSetting;
 
 typedef enum {
-  ITEMPOOL_PLENTIFUL,
-  ITEMPOOL_BALANCED,
-  ITEMPOOL_SCARCE,
   ITEMPOOL_MINIMAL,
+  ITEMPOOL_SCARCE,
+  ITEMPOOL_BALANCED,
+  ITEMPOOL_PLENTIFUL,
 } ItemPoolSetting;
 
 typedef enum {

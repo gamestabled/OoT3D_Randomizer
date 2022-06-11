@@ -158,14 +158,14 @@ void GenerateStartingInventory() {
   if (hearts < 0) {
     AddItemToInventory(PIECE_OF_HEART, 4);
     // Plentiful and minimal have less than 4 standard pieces of heart so also replace the winner heart
-    if (ItemPoolValue.Value<u8>() == 0 || ItemPoolValue.Value<u8>() == 3) {
+    if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL) || ItemPoolValue.Is(ITEMPOOL_MINIMAL)) {
         AddItemToInventory(TREASURE_GAME_HEART);
     }
 
     AdditionalHeartContainers = 1 - hearts;
   } else if (hearts > 0) {
     // 16 containers in plentiful, 8 in balanced and 0 in the others
-    u8 maxContainers = 8 * std::max(0, 2 - ItemPoolValue.Value<u8>());
+    u8 maxContainers = 8 * std::max(0, ItemPoolValue.Value<u8>() - 1);
 
     if (hearts <= maxContainers) {
       AddItemToInventory(HEART_CONTAINER, hearts);
