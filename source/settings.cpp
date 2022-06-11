@@ -888,7 +888,7 @@ namespace Settings {
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
   Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc},                                                                                            OptionCategory::Cosmetic);
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc},                                                                                                 OptionCategory::Cosmetic);
-  std::vector<Option*> preferanceOptions = {
+  std::vector<Option*> preferenceOptions = {
     &QuickText,
     &SkipSongReplays,
     &MenuOpeningButton,
@@ -1154,12 +1154,12 @@ namespace Settings {
     &ShuffleSFXCategorically,
   };
 
-  Menu preferances              = Menu::SubMenu("Preferances",                &preferanceOptions);
+  Menu preferences              = Menu::SubMenu("Preferences",                &preferenceOptions);
   Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions);
   Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
   Menu audio                    = Menu::SubMenu("Audio Settings",             &audioOptions);
   std::vector<Menu*> personalizationOptions = {
-    &preferances,
+    &preferences,
     &ingameDefaults,
     &cosmetics,
     &audio,

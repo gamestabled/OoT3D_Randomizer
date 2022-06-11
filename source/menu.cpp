@@ -562,6 +562,9 @@ static void RestoreOverrides() {
       overridePair.first->RestoreDelayedOption();
     }
   }
+
+  //Reload Cosmetic settings because Random Choice options might have been changed during generation
+  LoadCachedCosmetics();
 }
 
 void GenerateRandomizer() {
