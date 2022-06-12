@@ -229,11 +229,11 @@ enum class MenuType {
 class Menu {
   public:
 
-    static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_, std::string description_ = {}, bool printInSpoiler_ = true) {
+    static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_, std::string_view description_ = "", bool printInSpoiler_ = true) {
       return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU, std::move(description_), printInSpoiler_};
     }
 
-    static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_, std::string description_ = {}, bool printInSpoiler_ = true) {
+    static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_, std::string_view description_ = "", bool printInSpoiler_ = true) {
       return Menu{std::move(name_), MenuType::SubMenu, std::move(itemsList_), SUB_MENU, std::move(description_), printInSpoiler_};
     }
 
@@ -241,10 +241,10 @@ class Menu {
       return Menu{std::move(name_), MenuType::Action, std::move(mode_)};
     }
 
-    Menu(std::string name_, MenuType type_, std::vector<Option *>* settingsList_, u8 mode_, std::string description_ = {}, bool printInSpoiler_ = true)
+    Menu(std::string name_, MenuType type_, std::vector<Option *>* settingsList_, u8 mode_, std::string_view description_ = "", bool printInSpoiler_ = true)
         : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_), description(std::move(description_)), printInSpoiler(printInSpoiler_) {}
 
-    Menu(std::string name_, MenuType type_, std::vector<Menu *>* itemsList_, u8 mode_, std::string description_ = {}, bool printInSpoiler_ = true)
+    Menu(std::string name_, MenuType type_, std::vector<Menu *>* itemsList_, u8 mode_, std::string_view description_ = "", bool printInSpoiler_ = true)
         : name(std::move(name_)), type(type_), itemsList(std::move(itemsList_)), mode(mode_), description(std::move(description_)), printInSpoiler(printInSpoiler_) {}
 
     Menu(std::string name_, MenuType type_, u8 mode_)
@@ -272,7 +272,7 @@ class Menu {
     u16 menuIdx = 0;
     u16 settingBound = 0;
     int selectedSetting = 0;
-    std::string description = {};
+    std::string_view description = "";
     bool printInSpoiler = true;
 };
 

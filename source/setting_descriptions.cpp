@@ -1,5 +1,13 @@
 #include "setting_descriptions.hpp"
 
+/*------------------------------
+|      MENU DESCRIPTIONS       |                            *SCREEN WIDTH*
+------------------------------*/       /*--------------------------------------------------*/
+string_view personalizationDesc       = "These options do not affect seed generation.";    //
+string_view ingameDefaultsDesc        = "These options decide what the ingame options are\n"
+                                        "set to when creating a save file. The new ingame\n"
+                                        "options can be changed in the Custom Info Menu."; //
+
 //Setting descriptions are mostly copied from OoT Randomizer tooltips with minor edits
 
 /*------------------------------
@@ -615,10 +623,10 @@ string_view keepFWWarpPointDesc       = "The Farore's Wind warp point will stay 
 string_view fastBunnyHoodDesc         = "The Bunny Hood mask behaves like it does in\n"    //
                                         "Majora's Mask and makes you run 50% faster.";     //
 /*------------------------------                                                           //
-|          RACE SEED           |                                                           //
+|            RACING            |                                                           //
 ------------------------------*/                                                           //
-string_view racingDesc                = "Overrides cosmetic options that could affect how\n"
-                                        "fast a seed is beaten.";                          //
+string_view racingDesc                = "Overrides personalization options that could\n"   //
+                                        "affect how fast a seed is beaten.";               //
                                                                                            //
 /*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
@@ -913,15 +921,9 @@ string_view mp_SharedAmmoDesc         = "Syncs ammo when shared progress is on,\
 /*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
 ------------------------------*/                                                           //
-string_view zTargetingDesc            = "Sets L-Targeting to start as switch or hold.";    //
-string_view cameraControlDesc         = "Sets the camera controls to start as normal or\n" //
-                                        "with the y-axis inverted.";                       //
-string_view motionControlDesc         = "Sets the motion controls to start on or off.";    //
-string_view togglePlayMusicDesc       = "Starts the game with the music on or off.";       //
-string_view togglePlaySFXDesc         = "Starts the game with the sound effects on or off.";
-string_view silenceNaviDesc           = "Sets whether Navi should start silenced or not."; //
-string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask or not.\n" //
-                                        "Does not apply when trading masks.";              //
+string_view silenceNaviDesc           = "Prevents Navi from alerting you about advice.";   //
+string_view ignoreMaskReactionDesc    = "Causes NPCs to respond normally when wearing\n"   //
+                                        "masks. Does not apply to trade quest dialouges."; //
                                                                                            //
 /*------------------------------                                                           //
 |      NAVI & TRAIL COLORS     |                                                           //
