@@ -5,6 +5,7 @@
 #include "player.h"
 #include "settings.h"
 #include "fairy.h"
+#include "icetrap.h"
 
 #define PlayerActor_Init_addr 0x191844
 #define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
@@ -57,7 +58,12 @@ void Player_SetChildCustomTunicCMAB(void) {
 }
 
 void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_SHIELD) {
+        gSaveContext.equips.equipment &= ~0xF0; // unequip shield
+    }
+
     PlayerActor_Init(thisx, globalCtx);
+
     if (gSettingsContext.fastBunnyHood) {
         PLAYER->currentMask = storedMask;
     }
@@ -72,6 +78,17 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     if (this->naviActor != 0) {
         updateNaviColors((EnElf*)this->naviActor);
+    }
+
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_SWORD && PLAYER->meleeWeaponState != 0 &&
+            ((PLAYER->itemActionParam >= 3 && PLAYER->itemActionParam <= 5) || PLAYER->itemActionParam == 35)) { //sword items
+        PLAYER->meleeWeaponState = -1; // slash effect with no hitbox (same as "damageless death ISG")
+    }
+    if (PLAYER->itemActionParam == 38) { // Blue Potion
+        if (IceTrap_ActiveCurse == ICETRAP_CURSE_BLIND)
+            gStaticContext.dekuNutFlash = -1;
+
+        IceTrap_DispelCurses();
     }
 
     if (healthDecrement <= 0) {

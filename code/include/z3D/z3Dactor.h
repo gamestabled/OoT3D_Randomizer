@@ -240,7 +240,7 @@ typedef struct {
     /* 0x172C */ char   unk_172C[0x0AF0];
     /* 0x221C */ float  xzSpeed; //probably
     /* 0x2220 */ char   unk_2220[0x0007];
-    /* 0x2227 */ u8     isg;
+    /* 0x2227 */ s8     meleeWeaponState;
     /* 0x2228 */ char   unk_2228[0x260];
     /* 0x2488 */ s8     invincibilityTimer; // prevents damage when nonzero (positive = visible, counts towards zero each frame)
     /* 0x2489 */ char   unk_2489[0x27B];

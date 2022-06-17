@@ -480,6 +480,10 @@ SECTIONS
 		*(.patch_NoHealFromBombchuBowlingPrize)
 	}
 
+	.patch_HookshotDrawChain 0x2202A0 : {
+		*(.patch_HookshotDrawChain)
+	}
+
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {
 		*(.patch_ItemGiveBombchuDropTwo)
 	}
@@ -720,6 +724,10 @@ SECTIONS
 		*(.patch_BiggoronDayCheck)
 	}
 
+	.patch_WarpSongTimerDepletion 0x33DE84 : {
+		*(.patch_WarpSongTimerDepletion)
+	}
+
 	.patch_MasterQuestGoldSkulltulaCheck 0x3415C8 : {
 		*(.patch_MasterQuestGoldSkulltulaCheck)
 	}
@@ -762,6 +770,10 @@ SECTIONS
 
 	.patch_FastChests 0x354CD4 : {
 		*(.patch_FastChests)
+	}
+
+	.patch_MasterSwordTimerCheck 0x354DFC : {
+		*(.patch_MasterSwordTimerCheck)
 	}
 
 	.patch_LikeLikeNeverEatTunic 0x355C2C : {
@@ -1020,6 +1032,10 @@ SECTIONS
 		*(.patch_FireArrowCheckChestFlagTwo)
 	}
 
+	.patch_LinkReflection 0x3F2F0C : {
+		*(.patch_LinkReflection)
+	}
+
 	.patch_SlidingDoorDestroyCustomModels 0x3F4A70 : {
 		*(.patch_SlidingDoorDestroyCustomModels)
 	}
@@ -1042,6 +1058,14 @@ SECTIONS
 
 	.patch_SleepQueryCallback 0x3FD6C4 : {
 		*(.patch_SleepQueryCallback)
+	}
+
+	.patch_CurseTrapDizzyStick 0x41AB24 : {
+		*(.patch_CurseTrapDizzyStick)
+	}
+
+	.patch_CurseTrapDizzyButtons 0x41ABDC : {
+		*(.patch_CurseTrapDizzyButtons)
 	}
 
 	.patch_SaveMenuIgnoreOpen 0x42EC00 : {
@@ -1164,6 +1188,14 @@ SECTIONS
 		*(.patch_InterfaceDrawDontSpoilTradeItems)
 	}
 
+	.patch_TimerExpiration 0x45A948 : {
+		*(.patch_TimerExpiration)
+	}
+
+	.patch_Timer2TickSound 0x45A9B4 : {
+		*(.patch_Timer2TickSound)
+	}
+
 	.patch_SunsSongEndCloseTextbox 0x45B514 : {
 		*(.patch_SunsSongEndCloseTextbox)
 	}
@@ -1198,6 +1230,10 @@ SECTIONS
 
 	.patch_EnableFW 0x476D1C : {
 		*(.patch_EnableFW)
+	}
+
+	.patch_StoreTargetActorType 0x479984 : {
+		*(.patch_StoreTargetActorType)
 	}
 
 	.patch_FWKeepWarpPoint 0x47C3C0 : {
@@ -1260,28 +1296,20 @@ SECTIONS
 		*(.patch_EditDrawGetItemBeforeModelSpawn)
 	}
 
-	.patch_HookshotDrawRedLaser 0x4C2620 : {
-		*(.patch_HookshotDrawRedLaser)
-	}
-
-	.patch_HookshotDrawChain 0x2202A0 : {
-		*(.patch_HookshotDrawChain)
-	}
-
 	.patch_HookshotRotation 0x4C2524 : {
 		*(.patch_HookshotRotation)
 	}
 
-	.patch_LinkReflection 0x3F2F0C : {
-		*(.patch_LinkReflection)
-	}
-
-	.patch_StoreTargetActorType 0x479984 : {
-		*(.patch_StoreTargetActorType)
+	.patch_HookshotDrawRedLaser 0x4C2620 : {
+		*(.patch_HookshotDrawRedLaser)
 	}
 
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
 		*(.patch_EditDrawGetItemAfterModelSpawn)
+	}
+
+	.patch_CrouchStabHitbox 0x4C85D4 : {
+		*(.patch_CrouchStabHitbox)
 	}
 
 	. = 0x4C99A8;

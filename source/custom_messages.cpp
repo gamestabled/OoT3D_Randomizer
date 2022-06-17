@@ -286,6 +286,24 @@ constexpr std::array DungeonColors = {
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"FOOL!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"IDIOT!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"¡TONTO!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
+        //Curse Traps
+        CreateMessage(0x8FF0, 0, 2, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+        CreateMessage(0x8FF1, 0, 2, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+        CreateMessage(0x8FF2, 0, 2, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+        CreateMessage(0x8FF3, 0, 2, 3,
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+
         //Business Scrubs
         //The less significant byte represents the price of the item
         for (u32 price = 0; price <= 95; price += 5) {

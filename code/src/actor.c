@@ -49,6 +49,7 @@
 #include "collapsing_platform.h"
 #include "carpenter.h"
 #include "pushblock.h"
+#include "spin_attack.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -88,6 +89,8 @@ void Actor_Init() {
     gActorOverlayTable[0x3E].initInfo->init = BgTreemouth_rInit;
 
     gActorOverlayTable[0x4A].initInfo->update = BgSpot00Hanebasi_rUpdate;
+
+    gActorOverlayTable[0x57].initInfo->init = EnMThunder_rInit;
 
     gActorOverlayTable[0x5F].initInfo->init = ItemBHeart_rInit;
     gActorOverlayTable[0x5F].initInfo->destroy = ItemBHeart_rDestroy;

@@ -984,8 +984,17 @@ string_view randomTrapDmgDesc         = "All traps will be the base game ice tra
 string_view basicTrapDmgDesc          = "All alternative traps will cause a small damage\n"//
                                         "and no other negative effects";                   //
                                                                                            //
-string_view advancedTrapDmgDesc       = "Some chest traps will burn your Deku Shield or\n" //
-                                        "cause a lot of damage (with one-hit protection)"; //
+string_view advancedTrapDmgDesc       = "Choose which advanced traps may appear from the\n"//
+                                        "list below";                                      //
+                                                                                           //
+string_view fireTrapDesc              = "This trap will set you on fire, burning your\n"   //
+                                        "Deku Shield if it's equipped.";                   //
+                                                                                           //
+string_view antiFairyTrapDesc         = "This dangerous fairy will inflict up to 8 hearts\n"
+                                        "of damage, but it usually doesn't kill you if you\n"
+                                        "have less than that.";                            //
+                                                                                           //
+string_view curseTrapsDesc            = "Some traps will apply status effects for 1 minute.";
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

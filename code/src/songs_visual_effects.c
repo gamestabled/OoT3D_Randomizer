@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "songs_visual_effects.h"
+#include "icetrap.h"
 
 #define OceffWipe_Update_addr 0x256158
 #define OceffWipe_Update ((ActorFunc)OceffWipe_Update_addr)
@@ -75,6 +76,12 @@ void OceffSpot_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
 // Song of Storms
 void OceffStorm_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_BLIND)
+        gStaticContext.dekuNutFlash = -1;
+
+    IceTrap_DispelCurses();
+
     if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffStorm_Update(thisx, globalCtx);
     } else {
