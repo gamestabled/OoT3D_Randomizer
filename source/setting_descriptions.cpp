@@ -1,5 +1,13 @@
 #include "setting_descriptions.hpp"
 
+/*------------------------------
+|      MENU DESCRIPTIONS       |                            *SCREEN WIDTH*
+------------------------------*/       /*--------------------------------------------------*/
+string_view personalizationDesc       = "These options do not affect seed generation.";    //
+string_view ingameDefaultsDesc        = "These options decide what the ingame options are\n"
+                                        "set to when creating a save file. The new ingame\n"
+                                        "options can be changed in the Custom Info Menu."; //
+
 //Setting descriptions are mostly copied from OoT Randomizer tooltips with minor edits
 
 /*------------------------------
@@ -615,6 +623,12 @@ string_view keepFWWarpPointDesc       = "The Farore's Wind warp point will stay 
 string_view fastBunnyHoodDesc         = "The Bunny Hood mask behaves like it does in\n"    //
                                         "Majora's Mask and makes you run 50% faster.";     //
 /*------------------------------                                                           //
+|            RACING            |                                                           //
+------------------------------*/                                                           //
+string_view racingDesc                = "Overrides personalization options that could\n"   //
+                                        "affect how fast a seed is beaten.";               //
+                                                                                           //
+/*------------------------------                                                           //
 |     GOSSIP STONE HINTS       |                                                           //
 ------------------------------*/                                                           //
 string_view gossipStonesHintsDesc     = "Gossip Stones can be made to give hints about\n"  //
@@ -720,9 +734,8 @@ string_view ingameSpoilersHideDesc    = "Hides the spheres page and only shows a
 /*------------------------------                                                           //
 |      MENU OPENING BUTTON     |                                                           //
 ------------------------------*/                                                           //
-string_view menuButtonDesc            = "Choose which button will bring up the Dungeon\n"  //
-                                        "Information Menu. You can also use the menu to\n" //
-                                        "buffer frame perfect inputs if you choose D-Pad"; //
+string_view menuButtonDesc            = "Choose which button will bring up the Custom\n"   //
+                                        "Information Menu.";                               //
                                                                                            //
 /*------------------------------                                                           //
 |     START WITH CONSUMABLES   |                                                           //
@@ -895,7 +908,9 @@ string_view mp_SyncIdDesc             = "Limits shared progress to only sync wit
                                         "necessary to set if multiple groups of players\n" //
                                         "play on the same seed hash, but only want to share"
                                         "their progress with certan people.\n"             //
-                                        "For example, when doing a 2v2 race.";             //
+                                        "For example, when doing a 2v2 race.\n"            //
+                                        "\n"                                               //
+                                        "Does not affect seed generation.";                //
 string_view mp_SharedHealthDesc       = "Syncs health when shared progress is on,\n"       //
                                         "otherwise just shares the damage and recovery.";  //
 string_view mp_SharedRupeesDesc       = "Syncs rupees when shared progress is on,\n"       //
@@ -906,15 +921,9 @@ string_view mp_SharedAmmoDesc         = "Syncs ammo when shared progress is on,\
 /*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
 ------------------------------*/                                                           //
-string_view zTargetingDesc            = "Sets L-Targeting to start as switch or hold.";    //
-string_view cameraControlDesc         = "Sets the camera controls to start as normal or\n" //
-                                        "with the y-axis inverted.";                       //
-string_view motionControlDesc         = "Sets the motion controls to start on or off.";    //
-string_view togglePlayMusicDesc       = "Starts the game with the music on or off.";       //
-string_view togglePlaySFXDesc         = "Starts the game with the sound effects on or off.";
-string_view silenceNaviDesc           = "Sets whether Navi should start silenced or not."; //
-string_view ignoreMaskReactionDesc    = "Sets whether NPCs ignore the worn mask or not.\n" //
-                                        "Does not apply when trading masks.";              //
+string_view silenceNaviDesc           = "Prevents Navi from alerting you about advice.";   //
+string_view ignoreMaskReactionDesc    = "Causes NPCs to respond normally when wearing\n"   //
+                                        "masks. Does not apply to trade quest dialouges."; //
                                                                                            //
 /*------------------------------                                                           //
 |      NAVI & TRAIL COLORS     |                                                           //
@@ -962,7 +971,7 @@ string_view onlyFanfaresDesc          = "Fanfares and ocarina songs are shuffled
                                         "separate pools.";                                 //
 string_view fanfaresOcarinaDesc       = "Fanfares and ocarina songs are shuffled together\n"
                                         "in the same pool.";                               //
-string_view shuffleOcaMusicDesc       = "The music that plays back after you play an"      //
+string_view shuffleOcaMusicDesc       = "The music that plays back after you play an\n"    //
                                         "ocarina song is randomized.";                     //
 /*------------------------------                                                           //
 |         SHUFFLE SFX          |                                                           //

@@ -44,6 +44,7 @@ void PrintResetToDefaultsMenu();
 void PrintGenerateMenu();
 void ClearDescription();
 void PrintOptionDescription();
+void PrintMenuDescription();
 void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 

@@ -263,8 +263,6 @@ namespace Settings {
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {NumOpts(0, 7)},                                                        {numRequiredCuccosDesc});
   Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
-  Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Setting,    QUICKTEXT_INSTANT);
-  Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc});
   Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
   Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
   std::vector<Option *> timesaverOptions = {
@@ -279,13 +277,12 @@ namespace Settings {
     &NumRequiredCuccos,
     &KingZoraSpeed,
     &CompleteMaskQuest,
-    &QuickText,
-    &SkipSongReplays,
     &KeepFWWarpPoint,
     &FastBunnyHood,
   };
 
   //Misc Settings
+  Option Racing              = Option::Bool("Racing",                 {"Off", "On"},                                                          {racingDesc});
   Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
   Option ClearerHints        = Option::U8  ("  Hint Clarity",         {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
   Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    1); // Balanced
@@ -296,15 +293,15 @@ namespace Settings {
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
   Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
-  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {"", ""},                                                                                                         OptionCategory::Setting,    1); // On
+  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    1); // On
   Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
-  Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc});
   Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    1); // Basic
   Option FireTrap            = Option::Bool("  Fire Trap",            {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    1); // On
   Option AntiFairyTrap       = Option::Bool("  Anti-Fairy Trap",      {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    1); // On
   Option CurseTraps          = Option::Bool("  Curse Traps",          {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
+    &Racing,
     &GossipStoneHints,
     &ClearerHints,
     &HintDistribution,
@@ -317,7 +314,6 @@ namespace Settings {
     &ChestSize,
     &GenerateSpoilerLog,
     &IngameSpoilers,
-    &MenuOpeningButton,
     &RandomTrapDmg,
     &FireTrap,
     &AntiFairyTrap,
@@ -380,30 +376,30 @@ namespace Settings {
 
   //Excluded Locations (Individual definitions made in ItemLocation class)
   std::vector<std::vector<Option *>> excludeLocationsOptionsVector(SPOILER_COLLECTION_GROUP_COUNT);
-  Menu excludeKokiriForest          = Menu::SubMenu("Kokiri Forest",           &excludeLocationsOptionsVector[GROUP_KOKIRI_FOREST], false);
-  Menu excludeLostWoods             = Menu::SubMenu("Lost Woods",              &excludeLocationsOptionsVector[GROUP_LOST_WOODS], false);
-  Menu excludeDekuTree              = Menu::SubMenu("Deku Tree",               &excludeLocationsOptionsVector[GROUP_DUNGEON_DEKU_TREE], false);
-  Menu excludeForestTemple          = Menu::SubMenu("Forest Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_FOREST_TEMPLE], false);
-  Menu excludeKakariko              = Menu::SubMenu("Kakariko Village",        &excludeLocationsOptionsVector[GROUP_KAKARIKO], false);
-  Menu excludeBottomWell            = Menu::SubMenu("Bottom of the Well",      &excludeLocationsOptionsVector[GROUP_DUNGEON_BOTTOM_OF_THE_WELL], false);
-  Menu excludeShadowTemple          = Menu::SubMenu("Shadow Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SHADOW_TEMPLE], false);
-  Menu excludeDeathMountain         = Menu::SubMenu("Death Mountain",          &excludeLocationsOptionsVector[GROUP_DEATH_MOUNTAIN], false);
-  Menu excludeGoronCity             = Menu::SubMenu("Goron City",              &excludeLocationsOptionsVector[GROUP_GORON_CITY], false);
-  Menu excludeDodongosCavern        = Menu::SubMenu("Dodongo's Cavern",        &excludeLocationsOptionsVector[GROUP_DUNGEON_DODONGOS_CAVERN], false);
-  Menu excludeFireTemple            = Menu::SubMenu("Fire Temple",             &excludeLocationsOptionsVector[GROUP_DUNGEON_FIRE_TEMPLE], false);
-  Menu excludeZorasRiver            = Menu::SubMenu("Zora's River",            &excludeLocationsOptionsVector[GROUP_ZORAS_RIVER], false);
-  Menu excludeZorasDomain           = Menu::SubMenu("Zora's Domain",           &excludeLocationsOptionsVector[GROUP_ZORAS_DOMAIN], false);
-  Menu excludeJabuJabu              = Menu::SubMenu("Jabu Jabu's Belly",       &excludeLocationsOptionsVector[GROUP_DUNGEON_JABUJABUS_BELLY], false);
-  Menu excludeIceCavern             = Menu::SubMenu("Ice Cavern",              &excludeLocationsOptionsVector[GROUP_DUNGEON_ICE_CAVERN], false);
-  Menu excludeHyruleField           = Menu::SubMenu("Hyrule Field",            &excludeLocationsOptionsVector[GROUP_HYRULE_FIELD], false);
-  Menu excludeLonLonRanch           = Menu::SubMenu("Lon Lon Ranch",           &excludeLocationsOptionsVector[GROUP_LON_LON_RANCH], false);
-  Menu excludeLakeHylia             = Menu::SubMenu("Lake Hylia",              &excludeLocationsOptionsVector[GROUP_LAKE_HYLIA], false);
-  Menu excludeWaterTemple           = Menu::SubMenu("Water Temple",            &excludeLocationsOptionsVector[GROUP_DUNGEON_WATER_TEMPLE], false);
-  Menu excludeGerudoValley          = Menu::SubMenu("Gerudo Valley",           &excludeLocationsOptionsVector[GROUP_GERUDO_VALLEY], false);
-  Menu excludeGerudoTrainingGrounds = Menu::SubMenu("Gerudo Training Grounds", &excludeLocationsOptionsVector[GROUP_GERUDO_TRAINING_GROUND], false);
-  Menu excludeSpiritTemple          = Menu::SubMenu("Spirit Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SPIRIT_TEMPLE], false);
-  Menu excludeHyruleCastle          = Menu::SubMenu("Hyrule Castle",           &excludeLocationsOptionsVector[GROUP_HYRULE_CASTLE], false);
-  Menu excludeGanonsCastle          = Menu::SubMenu("Ganon's Castle",          &excludeLocationsOptionsVector[GROUP_DUNGEON_GANONS_CASTLE], false);
+  Menu excludeKokiriForest          = Menu::SubMenu("Kokiri Forest",           &excludeLocationsOptionsVector[GROUP_KOKIRI_FOREST],              "", false);
+  Menu excludeLostWoods             = Menu::SubMenu("Lost Woods",              &excludeLocationsOptionsVector[GROUP_LOST_WOODS],                 "", false);
+  Menu excludeDekuTree              = Menu::SubMenu("Deku Tree",               &excludeLocationsOptionsVector[GROUP_DUNGEON_DEKU_TREE],          "", false);
+  Menu excludeForestTemple          = Menu::SubMenu("Forest Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_FOREST_TEMPLE],      "", false);
+  Menu excludeKakariko              = Menu::SubMenu("Kakariko Village",        &excludeLocationsOptionsVector[GROUP_KAKARIKO],                   "", false);
+  Menu excludeBottomWell            = Menu::SubMenu("Bottom of the Well",      &excludeLocationsOptionsVector[GROUP_DUNGEON_BOTTOM_OF_THE_WELL], "", false);
+  Menu excludeShadowTemple          = Menu::SubMenu("Shadow Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SHADOW_TEMPLE],      "", false);
+  Menu excludeDeathMountain         = Menu::SubMenu("Death Mountain",          &excludeLocationsOptionsVector[GROUP_DEATH_MOUNTAIN],             "", false);
+  Menu excludeGoronCity             = Menu::SubMenu("Goron City",              &excludeLocationsOptionsVector[GROUP_GORON_CITY],                 "", false);
+  Menu excludeDodongosCavern        = Menu::SubMenu("Dodongo's Cavern",        &excludeLocationsOptionsVector[GROUP_DUNGEON_DODONGOS_CAVERN],    "", false);
+  Menu excludeFireTemple            = Menu::SubMenu("Fire Temple",             &excludeLocationsOptionsVector[GROUP_DUNGEON_FIRE_TEMPLE],        "", false);
+  Menu excludeZorasRiver            = Menu::SubMenu("Zora's River",            &excludeLocationsOptionsVector[GROUP_ZORAS_RIVER],                "", false);
+  Menu excludeZorasDomain           = Menu::SubMenu("Zora's Domain",           &excludeLocationsOptionsVector[GROUP_ZORAS_DOMAIN],               "", false);
+  Menu excludeJabuJabu              = Menu::SubMenu("Jabu Jabu's Belly",       &excludeLocationsOptionsVector[GROUP_DUNGEON_JABUJABUS_BELLY],    "", false);
+  Menu excludeIceCavern             = Menu::SubMenu("Ice Cavern",              &excludeLocationsOptionsVector[GROUP_DUNGEON_ICE_CAVERN],         "", false);
+  Menu excludeHyruleField           = Menu::SubMenu("Hyrule Field",            &excludeLocationsOptionsVector[GROUP_HYRULE_FIELD],               "", false);
+  Menu excludeLonLonRanch           = Menu::SubMenu("Lon Lon Ranch",           &excludeLocationsOptionsVector[GROUP_LON_LON_RANCH],              "", false);
+  Menu excludeLakeHylia             = Menu::SubMenu("Lake Hylia",              &excludeLocationsOptionsVector[GROUP_LAKE_HYLIA],                 "", false);
+  Menu excludeWaterTemple           = Menu::SubMenu("Water Temple",            &excludeLocationsOptionsVector[GROUP_DUNGEON_WATER_TEMPLE],       "", false);
+  Menu excludeGerudoValley          = Menu::SubMenu("Gerudo Valley",           &excludeLocationsOptionsVector[GROUP_GERUDO_VALLEY],              "", false);
+  Menu excludeGerudoTrainingGrounds = Menu::SubMenu("Gerudo Training Grounds", &excludeLocationsOptionsVector[GROUP_GERUDO_TRAINING_GROUND],     "", false);
+  Menu excludeSpiritTemple          = Menu::SubMenu("Spirit Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SPIRIT_TEMPLE],      "", false);
+  Menu excludeHyruleCastle          = Menu::SubMenu("Hyrule Castle",           &excludeLocationsOptionsVector[GROUP_HYRULE_CASTLE],              "", false);
+  Menu excludeGanonsCastle          = Menu::SubMenu("Ganon's Castle",          &excludeLocationsOptionsVector[GROUP_DUNGEON_GANONS_CASTLE],      "", false);
   std::vector<Menu *> excludeLocationsMenus = {
     &excludeKokiriForest,
     &excludeLostWoods,
@@ -574,11 +570,11 @@ namespace Settings {
     &StartingSkulltulaToken,
   };
 
-  Menu startingItems            = Menu::SubMenu("Items",                &startingItemsOptions, false);
-  Menu startingSongs            = Menu::SubMenu("Ocarina Songs",        &startingSongsOptions, false);
-  Menu startingEquipment        = Menu::SubMenu("Equipment & Upgrades", &startingEquipmentOptions, false);
-  Menu startingStonesMedallions = Menu::SubMenu("Stones & Medallions",  &startingStonesMedallionsOptions, false);
-  Menu startingOthers           = Menu::SubMenu("Other",                &startingOthersOptions, false);
+  Menu startingItems            = Menu::SubMenu("Items",                &startingItemsOptions,            "", false);
+  Menu startingSongs            = Menu::SubMenu("Ocarina Songs",        &startingSongsOptions,            "", false);
+  Menu startingEquipment        = Menu::SubMenu("Equipment & Upgrades", &startingEquipmentOptions,        "", false);
+  Menu startingStonesMedallions = Menu::SubMenu("Stones & Medallions",  &startingStonesMedallionsOptions, "", false);
+  Menu startingOthers           = Menu::SubMenu("Other",                &startingOthersOptions,           "", false);
   std::vector<Menu *> startingInventoryOptions = {
     &startingItems,
     &startingSongs,
@@ -875,8 +871,8 @@ namespace Settings {
     &GlitchFireGrunzClip,
   };
 
-  Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories, false);
-  Menu miscGlitchSettings     = Menu::SubMenu("Miscellaneous Glitches", &miscGlitches,     false);
+  Menu glitchCategorySettings = Menu::SubMenu("General Categories",     &glitchCategories, "", false);
+  Menu miscGlitchSettings     = Menu::SubMenu("Miscellaneous Glitches", &miscGlitches,     "", false);
   std::vector<Menu*> glitchOptions = {
     &glitchCategorySettings,
     &miscGlitchSettings,
@@ -897,11 +893,20 @@ namespace Settings {
     &MP_SharedAmmo,
   };
 
-  Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},          {zTargetingDesc},         OptionCategory::Cosmetic, 1);
-  Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"}, {cameraControlDesc},      OptionCategory::Cosmetic);
-  Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},               {motionControlDesc},      OptionCategory::Cosmetic);
-  Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},               {togglePlayMusicDesc},    OptionCategory::Cosmetic, 1);
-  Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},               {togglePlaySFXDesc},      OptionCategory::Cosmetic, 1);
+  Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
+  Option SkipSongReplays     = Option::U8  ("  Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc},                                                                                            OptionCategory::Cosmetic);
+  Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc},                                                                                                 OptionCategory::Cosmetic);
+  std::vector<Option*> preferenceOptions = {
+    &QuickText,
+    &SkipSongReplays,
+    &MenuOpeningButton,
+  };
+
+  Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},          {""},                     OptionCategory::Cosmetic, 1);
+  Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"}, {""},                     OptionCategory::Cosmetic);
+  Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},               {""},                     OptionCategory::Cosmetic);
+  Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},               {""},                     OptionCategory::Cosmetic, 1);
+  Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},               {""},                     OptionCategory::Cosmetic, 1);
   Option SilenceNavi        = Option::U8("Silence Navi",         {"Off", "On"},               {silenceNaviDesc},        OptionCategory::Cosmetic);
   Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},               {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
   std::vector<Option*> ingameDefaultOptions = {
@@ -1105,17 +1110,6 @@ namespace Settings {
   Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc},                                                                                                                                                             OptionCategory::Cosmetic);
   Option MirrorWorld =     Option::Bool("Mirror World",       {"Off", "On"}, {mirrorWorldDesc},                                                                                                                                                                 OptionCategory::Cosmetic);
 
-  static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares +\n                         Ocarina Music"};
-  static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
-
-  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},                         {musicRandoDesc},                                                                                                                                     OptionCategory::Cosmetic);
-  Option ShuffleBGM =      Option::U8  ("  Shuffle BGM",           {"Off", "On (Grouped)", "On (Mixed)"}, {shuffleBGMDesc},                                                                                                                                     OptionCategory::Cosmetic,               2); // On (Mixed)
-  Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions},                      {fanfareDescriptions},                                                                                                                                OptionCategory::Cosmetic,               1); // Fanfares only
-  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},                         {shuffleOcaMusicDesc},                                                                                                                                OptionCategory::Cosmetic,               1); // On
-
-  Option ShuffleSFX              = Option::U8  ("Shuffle SFX",           {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                   OptionCategory::Cosmetic);
-  Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle", {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                  OptionCategory::Cosmetic,               1); // On
-
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
     &ChildTunicColor,
@@ -1146,12 +1140,37 @@ namespace Settings {
     &ColoredKeys,
     &ColoredBossKeys,
     &MirrorWorld,
+  };
+
+  static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares +\n                         Ocarina Music"};
+  static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
+
+  Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},                         {musicRandoDesc},                                                                                                                                     OptionCategory::Cosmetic);
+  Option ShuffleBGM =      Option::U8  ("  Shuffle BGM",           {"Off", "On (Grouped)", "On (Mixed)"}, {shuffleBGMDesc},                                                                                                                                     OptionCategory::Cosmetic,               2); // On (Mixed)
+  Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions},                      {fanfareDescriptions},                                                                                                                                OptionCategory::Cosmetic,               1); // Fanfares only
+  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},                         {shuffleOcaMusicDesc},                                                                                                                                OptionCategory::Cosmetic,               1); // On
+
+  Option ShuffleSFX              = Option::U8  ("Shuffle SFX",           {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                   OptionCategory::Cosmetic);
+  Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle", {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                  OptionCategory::Cosmetic,               1); // On
+
+  std::vector<Option*> audioOptions = {
     &ShuffleMusic,
     &ShuffleBGM,
     &ShuffleFanfares,
     &ShuffleOcaMusic,
     &ShuffleSFX,
     &ShuffleSFXCategorically,
+  };
+
+  Menu preferences              = Menu::SubMenu("Preferences",                &preferenceOptions);
+  Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions, ingameDefaultsDesc);
+  Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
+  Menu audio                    = Menu::SubMenu("Audio Settings",             &audioOptions);
+  std::vector<Menu*> personalizationOptions = {
+    &preferences,
+    &ingameDefaults,
+    &cosmetics,
+    &audio,
   };
 
   Menu loadSettingsPreset       = Menu::Action("Load Settings Preset",       LOAD_PRESET);
@@ -1168,9 +1187,9 @@ namespace Settings {
 
   //Detailed Logic Options Submenu
   Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
-  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, false);
-  Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions, false);
-  Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions, false);
+  Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, "", false);
+  Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions,          "", false);
+  Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions,         "", false);
   std::vector<Menu *> detailedLogicOptions = {
     &logicSettings,
     &excludeLocations,
@@ -1183,14 +1202,13 @@ namespace Settings {
   Menu shuffle                  = Menu::SubMenu("Shuffle Settings",           &shuffleOptions);
   Menu shuffleDungeonItems      = Menu::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
   Menu detailedLogic            = Menu::SubMenu("Detailed Logic Settings",    &detailedLogicOptions);
-  Menu startingInventory        = Menu::SubMenu("Starting Inventory",         &startingInventoryOptions, false);
+  Menu startingInventory        = Menu::SubMenu("Starting Inventory",         &startingInventoryOptions, "", false);
   Menu timesaverSettings        = Menu::SubMenu("Timesaver Settings",         &timesaverOptions);
   Menu miscSettings             = Menu::SubMenu("Misc Settings",              &miscOptions);
   Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);
   Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
   Menu multiplayerSettings      = Menu::SubMenu("Multiplayer Settings",       &multiplayerOptions);
-  Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions);
-  Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
+  Menu personalization          = Menu::SubMenu("Personalization Settings",   &personalizationOptions, personalizationDesc);
   Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
   Menu generateRandomizer       = Menu::Action ("Generate Randomizer",        GENERATE_MODE);
 
@@ -1207,8 +1225,7 @@ namespace Settings {
     &itemPoolSettings,
     &itemUsabilitySettings,
     &multiplayerSettings,
-    &ingameDefaults,
-    &cosmetics,
+    &personalization,
     &settingsPresets,
     &generateRandomizer,
   };
@@ -2275,18 +2292,27 @@ namespace Settings {
            option == &MQCastle;
   }
 
-  //Options that should be saved, set to default, then restored after finishing when vanilla logic is enabled
-  std::vector<Option *> vanillaLogicDefaults = {
-    &LinksPocketItem,
-    &ShuffleRewards,
-    &ShuffleSongs,
-    &Shopsanity,
-    &Scrubsanity,
-    &ShuffleCows,
-    &ShuffleMagicBeans,
-    &ShuffleMerchants,
-    &ShuffleAdultTradeQuest,
-    &GossipStoneHints,
+  // Options that should be overridden and then restored after generating when racing is enabled
+  std::vector<std::pair<Option*, u8>> racingOverrides = {
+      { &QuickText, QUICKTEXT_TURBO },
+      { &SkipSongReplays, SONGREPLAYS_SKIP_NO_SFX },
+      { &ColoredKeys, ON },
+      { &ColoredBossKeys, ON },
+  };
+
+  // Options that should be overridden and then restored after generating when vanilla logic is enabled
+  std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
+      { &LinksPocketItem, LINKSPOCKETITEM_DUNGEON_REWARD },
+      { &ShuffleRewards, REWARDSHUFFLE_END_OF_DUNGEON },
+      { &ShuffleSongs, SONGSHUFFLE_SONG_LOCATIONS },
+      { &Shopsanity, SHOPSANITY_OFF },
+      { &Scrubsanity, SCRUBSANITY_OFF },
+      { &ShuffleCows, OFF },
+      { &ShuffleMagicBeans, OFF },
+      { &ShuffleMerchants, SHUFFLEMERCHANTS_OFF },
+      { &ShuffleAdultTradeQuest, SHUFFLEADULTTRADEQUEST_ON },
+      { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
+      { &GossipStoneHints, HINTS_NO_HINTS },
   };
 
   // Randomizes all settings in a category if chosen
@@ -2486,6 +2512,21 @@ namespace Settings {
 
   //Function to set flags depending on settings
   void UpdateSettings() {
+    //Override cosmetic options that can affect how fast a seed is beaten
+    if (Racing) {
+      for (auto overridePair : racingOverrides) {
+        overridePair.first->SetDelayedOption();
+        overridePair.first->SetSelectedIndex(overridePair.second);
+      }
+    }
+
+    //If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
+    if (Logic.Is(LOGIC_VANILLA)) {
+      for (auto overridePair : vanillaLogicOverrides) {
+        overridePair.first->SetDelayedOption();
+        overridePair.first->SetSelectedIndex(overridePair.second);
+      }
+    }
 
     RandomizeAllSettings(true); //now select any random options instead of just hiding them
 
@@ -2630,16 +2671,6 @@ namespace Settings {
     }
 
     UpdateCosmetics();
-
-    //If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
-    if (Logic.Is(LOGIC_VANILLA)) {
-      for (Option* setting : vanillaLogicDefaults) {
-        setting->SetDelayedOption();
-        setting->SetSelectedIndex(0);
-      }
-      Keysanity.SetDelayedOption();
-      Keysanity.SetSelectedIndex(3); //Set small keys to any dungeon so FiT basement door will be locked
-    }
 
     InitMusicRandomizer();
     if (ShuffleMusic) {

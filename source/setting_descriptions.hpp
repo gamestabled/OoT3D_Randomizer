@@ -4,6 +4,9 @@
 
 using string_view = std::string_view;
 
+extern string_view personalizationDesc;
+extern string_view ingameDefaultsDesc;
+
 extern string_view openRandomize;
 extern string_view worldRandomize;
 extern string_view shuffleRandomize;
@@ -206,6 +209,8 @@ extern string_view keepFWWarpPointDesc;
 
 extern string_view fastBunnyHoodDesc;
 
+extern string_view racingDesc;
+
 extern string_view gossipStonesHintsDesc;
 
 extern string_view obscureHintsDesc;
@@ -287,11 +292,6 @@ extern string_view mp_SharedHealthDesc;
 extern string_view mp_SharedRupeesDesc;
 extern string_view mp_SharedAmmoDesc;
 
-extern string_view zTargetingDesc;
-extern string_view cameraControlDesc;
-extern string_view motionControlDesc;
-extern string_view togglePlayMusicDesc;
-extern string_view togglePlaySFXDesc;
 extern string_view silenceNaviDesc;
 extern string_view ignoreMaskReactionDesc;
 
