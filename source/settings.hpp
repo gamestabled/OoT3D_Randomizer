@@ -490,6 +490,7 @@ namespace Settings {
   extern Option LogicChildDampeRacePoH;
   extern Option LogicGVHammerChest;
   extern Option LogicGerudoKitchen;
+  extern Option LogicGerudoChildClimb;
   extern Option LogicLensWasteland;
   extern Option LogicReverseWasteland;
   extern Option LogicColossusGS;
