@@ -605,4 +605,8 @@ typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* p
 #define Player_SetEquipmentData_addr 0x34913C
 #define Player_SetEquipmentData ((Player_SetEquipmentData_proc)Player_SetEquipmentData_addr)
 
+typedef s32 (*BossChallenge_IsActive_proc)(void);
+#define BossChallenge_IsActive_addr 0x35B164
+#define BossChallenge_IsActive ((BossChallenge_IsActive_proc)BossChallenge_IsActive_addr)
+
 #endif //_Z3D_H_

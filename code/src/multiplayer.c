@@ -307,7 +307,7 @@ typedef enum {
 } PacketIdentifier;
 
 static u8 IsSendReceiveReady(void) {
-    return gSettingsContext.mp_Enabled != OFF && netStage >= 3;
+    return gSettingsContext.mp_Enabled != OFF && netStage >= 3 && !BossChallenge_IsActive() && gSaveContext.gameMode != 4;
 }
 
 void Multiplayer_Run(void) {
