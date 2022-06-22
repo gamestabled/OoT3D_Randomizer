@@ -510,6 +510,8 @@ typedef enum {
     DUNGEON_JABUJABUS_BELLY_BOSS_ROOM,
 } DungeonId;
 
+#define SCENE_LINK_HOUSE 52
+
 /* TODO: figure out what to do with this stuff */
 #define real_hid_addr   0x10002000
 #define real_hid        (*(hid_mem_t *) real_hid_addr)

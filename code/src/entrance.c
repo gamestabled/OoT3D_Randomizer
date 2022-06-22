@@ -270,8 +270,7 @@ void Entrance_SetGameOverEntrance(void) {
 
 //Properly savewarp the player accounting for dungeon entrance randomizer.
 //It's easier to rewrite this entirely compared to performing an ASM
-//dance for just the boss rooms. This removes the behavior where savewarping
-//as adult Link in Link's House respawns adult Link in Link's House.
+//dance for just the boss rooms.
 //https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetSavewarpEntrance(void) {
 
@@ -305,8 +304,10 @@ void Entrance_SetSavewarpEntrance(void) {
         gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower Climb
     } else if (scene == DUNGEON_GERUDO_FORTRESS) {
         gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
+    } else if (scene == SCENE_LINK_HOUSE) {
+        gSaveContext.entranceIndex = LINK_HOUSE_SAVEWARP_ENTRANCE;
     } else if (gSaveContext.linkAge == AGE_CHILD) {
-        gSaveContext.entranceIndex = Entrance_GetOverride(0x00BB); // Link's House Child Spawn
+        gSaveContext.entranceIndex = Entrance_GetOverride(LINK_HOUSE_SAVEWARP_ENTRANCE);
     } else {
         gSaveContext.entranceIndex = Entrance_GetOverride(0x05F4); // Temple of Time Adult Spawn
     }
