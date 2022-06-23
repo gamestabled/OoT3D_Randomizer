@@ -298,11 +298,11 @@ void Entrance_SetSavewarpEntrance(void) {
         gSaveContext.entranceIndex = newGerudoTrainingGroundsEntrance;
     } else if (scene == DUNGEON_ICE_CAVERN) {
         gSaveContext.entranceIndex = newIceCavernEntrance;
-    } else if (scene == DUNGEON_GANONS_CASTLE_FIRST_PART) {
+    } else if (scene == DUNGEON_INSIDE_GANONS_CASTLE) {
         gSaveContext.entranceIndex = GANONS_CASTLE_ENTRANCE;
-    } else if (scene == DUNGEON_GANONS_CASTLE_SECOND_PART || scene == DUNGEON_GANONS_CASTLE_CRUMBLING || scene == DUNGEON_GANONS_CASTLE_FLOOR_BENEATH_BOSS_CHAMBER || scene == 0x4F || scene == 0x1A) {
+    } else if (scene == DUNGEON_GANONS_TOWER || scene == DUNGEON_GANONS_CASTLE_COLLAPSING || scene == DUNGEON_GANONS_TOWER_COLLAPSING_INTERIOR || scene == 0x4F || scene == 0x1A) {
         gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower Climb
-    } else if (scene == DUNGEON_GERUDO_FORTRESS) {
+    } else if (scene == DUNGEON_THIEVES_HIDEOUT) {
         gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
     } else if (scene == SCENE_LINK_HOUSE) {
         gSaveContext.entranceIndex = LINK_HOUSE_SAVEWARP_ENTRANCE;

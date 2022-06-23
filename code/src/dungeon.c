@@ -33,7 +33,7 @@ u8 Dungeon_GetCurrentDungeonMode() {
             return gSettingsContext.iceCavernDungeonMode;
         case DUNGEON_GERUDO_TRAINING_GROUNDS:
             return gSettingsContext.gerudoTrainingGroundsDungeonMode;
-        case DUNGEON_GANONS_CASTLE_FIRST_PART:
+        case DUNGEON_INSIDE_GANONS_CASTLE:
             return gSettingsContext.ganonsCastleDungeonMode;
     }
 

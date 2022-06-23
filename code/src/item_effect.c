@@ -139,10 +139,10 @@ void ItemEffect_GiveSmallKeyRing(SaveContext* saveCtx, s16 dungeonId, s16 arg2) 
                 amt = 9;
             }
             break;
-        case DUNGEON_GERUDO_FORTRESS:
+        case DUNGEON_THIEVES_HIDEOUT:
             amt = 4;
             break;
-        case DUNGEON_GANONS_CASTLE_FIRST_PART:
+        case DUNGEON_INSIDE_GANONS_CASTLE:
             if (gSettingsContext.ganonsCastleDungeonMode == DUNGEONMODE_MQ) {
                 amt = 3;
             }

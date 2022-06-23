@@ -106,12 +106,12 @@ void SaveFile_Init(u32 fileBaseIndex) {
 
     if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_FAST) {
         gSaveContext.eventChkInf[0x9] |= 0x000E; //Free 3 carpenters
-        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].swch    |= 0x000D01DC; //heard yells/unlocked doors
-        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].collect |= 0x0000C400; //picked up keys
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].swch    |= 0x000D01DC; //heard yells/unlocked doors
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].collect |= 0x0000C400; //picked up keys
     } else if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) {
         gSaveContext.eventChkInf[0x9] |= 0x000F; //Free all carpenters
-        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].swch    |= 0x000F01FE; //heard yells/unlocked doors
-        gSaveContext.sceneFlags[DUNGEON_GERUDO_FORTRESS].collect |= 0x0000D400; //picked up keys
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].swch    |= 0x000F01FE; //heard yells/unlocked doors
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].collect |= 0x0000D400; //picked up keys
     }
 
     if (gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN) {
@@ -327,7 +327,7 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.dungeonKeys[DUNGEON_SHADOW_TEMPLE]            = gSettingsContext.shadowTempleDungeonMode          ? 6 : 5;
         gSaveContext.dungeonKeys[DUNGEON_BOTTOM_OF_THE_WELL]       = gSettingsContext.bottomOfTheWellDungeonMode       ? 2 : 3;
         gSaveContext.dungeonKeys[DUNGEON_GERUDO_TRAINING_GROUNDS]  = gSettingsContext.gerudoTrainingGroundsDungeonMode ? 3 : 9;
-        gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] = gSettingsContext.ganonsCastleDungeonMode          ? 3 : 2;
+        gSaveContext.dungeonKeys[DUNGEON_INSIDE_GANONS_CASTLE] = gSettingsContext.ganonsCastleDungeonMode          ? 3 : 2;
         //give starting spirit keys for vanilla key locations
     } else if (gSettingsContext.keysanity == KEYSANITY_VANILLA) {
         if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
@@ -344,7 +344,7 @@ void SaveFile_SetStartingInventory(void) {
 
     //give Ganon's Castle Boss Key
     if (gSettingsContext.ganonsBossKey == GANONSBOSSKEY_START_WITH) {
-        gSaveContext.dungeonItems[DUNGEON_GANONS_CASTLE_SECOND_PART] |= 0x1;
+        gSaveContext.dungeonItems[DUNGEON_GANONS_TOWER] |= 0x1;
     }
 
     //starting Nuts and Sticks
