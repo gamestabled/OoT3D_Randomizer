@@ -1148,6 +1148,10 @@ SECTIONS
 		*(.patch_LACSConditionTwo)
 	}
 
+	.patch_BossChallenge_Enter 0x44F634 : {
+		*(.patch_BossChallenge_Enter)
+	}
+
 	.patch_SetSavewarpEntrance 0x44FBE4 : {
 		*(.patch_SetSavewarpEntrance)
 	}
@@ -1202,6 +1206,10 @@ SECTIONS
 
 	.patch_SetSunsSongRespawnFlag 0x45B660 : {
 		*(.patch_SetSunsSongRespawnFlag)
+	}
+
+	.patch_BossChallenge_ExitMenu 0x45CCA4 : {
+		*(.patch_BossChallenge_ExitMenu)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {

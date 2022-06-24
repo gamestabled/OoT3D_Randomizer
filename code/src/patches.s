@@ -1792,6 +1792,16 @@ CrouchStabHitbox_patch:
 MasterSwordTimerCheck_patch:
     nop
 
+.section .patch_BossChallenge_Enter
+.global BossChallenge_Enter_patch
+BossChallenge_Enter_patch:
+    bl hook_BossChallenge_Enter
+
+.section .patch_BossChallenge_ExitMenu
+.global BossChallenge_ExitMenu_patch
+BossChallenge_ExitMenu_patch:
+    bl hook_BossChallenge_ExitMenu
+
 .section .patch_loader
 .global loader_patch
 

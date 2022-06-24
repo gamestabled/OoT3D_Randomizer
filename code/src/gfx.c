@@ -1066,7 +1066,7 @@ void Gfx_Update(void) {
 
     Gfx_UpdatePlayTime();
 
-    if(!isAsleep && openingButton() && IsInGame()){
+    if(!isAsleep && openingButton() && IsInGame() && !BossChallenge_IsActive()){
         Gfx_ShowMenu();
         // Check again as it's possible the system was put to sleep while the menu was open
         if (!isAsleep) {

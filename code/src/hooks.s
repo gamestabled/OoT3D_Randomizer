@@ -1512,6 +1512,23 @@ hook_CrouchStabHitbox:
     strb r10,[r6,#0x227]
     bx lr
 
+.global hook_BossChallenge_Enter
+hook_BossChallenge_Enter:
+    push {r0-r12,lr}
+    bl BossChallenge_Enter
+    pop {r0-r12,lr}
+    cpy r4,r0
+    bx lr
+
+.global hook_BossChallenge_ExitMenu
+hook_BossChallenge_ExitMenu:
+    push {r0-r12,lr}
+    cpy r0,r8
+    bl BossChallenge_ExitMenu
+    pop {r0-r12,lr}
+    cmp r8,#0x0
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
