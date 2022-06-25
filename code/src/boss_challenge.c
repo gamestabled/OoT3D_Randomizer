@@ -1,4 +1,5 @@
 #include "z3D/z3D.h"
+#include "multiplayer.h"
 
 #define STONES_MEDALLIONS_BITMASK 0x001C003F
 #define bossChallengeData ((void*)0x5C3F58)
@@ -29,6 +30,7 @@ void BossChallenge_ExitMenu(s32 exitType) {
         for (s32 i = 0; i < 8; i++) {
             gSaveContext.bossBattleVictories[i]--;
         }
+        Multiplayer_OnFileLoad();
         enteredBCmenu = 0;
     }
     else {

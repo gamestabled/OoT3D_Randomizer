@@ -16,6 +16,7 @@ void Multiplayer_Update(void);
 s8 Multiplayer_PlayerCount();
 void Multiplayer_Sync_Update(void);
 void Multiplayer_ReceivePackets();
+void Multiplayer_OnFileLoad(void);
 
 // Ghost Data
 void Multiplayer_Send_GhostPing(void);

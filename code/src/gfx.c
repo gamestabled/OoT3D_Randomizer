@@ -1052,7 +1052,7 @@ void Gfx_Update(void) {
         Gfx_ShowMultiplayerSyncMenu();
     }
 
-    // The update is called here so it works while in file select
+    // The update is called here so it works while in different game modes (title screen, file select, boss challenge, credits, MQ unlock)
     static u64 lastTickM = 0;
     static u64 elapsedTicksM = 0;
     elapsedTicksM += svcGetSystemTick() - lastTickM;
@@ -1066,7 +1066,7 @@ void Gfx_Update(void) {
 
     Gfx_UpdatePlayTime();
 
-    if(!isAsleep && openingButton() && IsInGame() && !BossChallenge_IsActive()){
+    if(!isAsleep && openingButton() && IsInGame()){
         Gfx_ShowMenu();
         // Check again as it's possible the system was put to sleep while the menu was open
         if (!isAsleep) {

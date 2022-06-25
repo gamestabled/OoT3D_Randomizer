@@ -51,6 +51,10 @@ u8 Bias(u32 seed) {
 }
 
 u8 IsInGame(void) {
+    return IsInGameOrBossChallenge() && !BossChallenge_IsActive();
+}
+
+u8 IsInGameOrBossChallenge(void) {
     s32 entr = gSaveContext.entranceIndex;
     s32 mode = gSaveContext.gameMode;
     return mode == 0 || gSaveContext.cutsceneIndex < 0xFFF0 ||
