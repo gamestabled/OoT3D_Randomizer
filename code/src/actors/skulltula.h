@@ -28,7 +28,7 @@ typedef struct {
     f32 unk_float1;
 } EnSw;
 
-void EnSw_rUpdate(EnSw* thisx, GlobalContext* globalCtx);
-void EnSw_Kill(EnSw* thisx, GlobalContext* globalCtx);
+void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnSw_Kill(EnSw* this, GlobalContext* globalCtx);
 
 #endif //_SKULLTULA_H_

@@ -107,7 +107,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
-    gActorOverlayTable[0x95].initInfo->update = (ActorFunc)EnSw_rUpdate;
+    gActorOverlayTable[0x95].initInfo->update = EnSw_rUpdate;
 
     gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
 
