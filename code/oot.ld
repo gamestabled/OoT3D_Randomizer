@@ -180,6 +180,10 @@ SECTIONS
 		*(.patch_SkipTwinrovaQuarrelCutsceneTwo)
 	}
 
+	.patch_LostWoodsTargetCutscene 0x178058 : {
+		*(.patch_LostWoodsTargetCutscene)
+	}
+
 	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {
 		*(.patch_CarpenterBossDontNullExchangeItem)
 	}
@@ -368,6 +372,10 @@ SECTIONS
 		*(.patch_KingZoraSetTradedPrescriptionFlag)
 	}
 
+	.patch_TruthSpinnerSpeed 0x1CD814 : {
+		*(.patch_TruthSpinnerSpeed)
+	}
+
 	.patch_DemoEffectStoneDraw 0x1D209C : {
 		*(.patch_DemoEffectStoneDraw)
 	}
@@ -518,6 +526,10 @@ SECTIONS
 
 	.patch_SkipDaruniaDanceThree 0x257F00 : {
 		*(.patch_SkipDaruniaDanceThree)
+	}
+
+	.patch_LostWoodsTargetTimer 0x2592B8 : {
+		*(.patch_LostWoodsTargetTimer)
 	}
 
 	.patch_LostWoodsShootingGame 0x259E4C : {

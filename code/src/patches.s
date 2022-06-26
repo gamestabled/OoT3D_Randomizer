@@ -1802,6 +1802,23 @@ BossChallenge_Enter_patch:
 BossChallenge_ExitMenu_patch:
     bl hook_BossChallenge_ExitMenu
 
+.section .patch_TruthSpinnerSpeed
+.global TruthSpinnerSpeed_patch
+TruthSpinnerSpeed_patch:
+    cmp r2,#0x20
+    strh r2,[r4,#0xC4]
+    movgt r2,#0x20
+
+.section .patch_LostWoodsTargetCutscene
+.global LostWoodsTargetCutscene_patch
+LostWoodsTargetCutscene_patch:
+    nop
+
+.section .patch_LostWoodsTargetTimer
+.global LostWoodsTargetTimer_patch
+LostWoodsTargetTimer_patch:
+    mov r0,#0x1
+
 .section .patch_loader
 .global loader_patch
 
