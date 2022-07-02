@@ -328,10 +328,6 @@ SECTIONS
 		*(.patch_KotakeDontPlayBattleMusic)
 	}
 
-	.patch_GossipStoneAddSariaHint 0x1B398C : {
-		*(.patch_GossipStoneAddSariaHint)
-	}
-
 	.patch_ReadGossipStoneHints 0x1B3A44 : {
 		*(.patch_ReadGossipStoneHints)
 	}

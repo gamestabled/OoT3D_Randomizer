@@ -554,7 +554,8 @@ hook_CanReadHints:
     bl Hints_CanReadHints
     cmp r0,#0x1
     pop {r0-r12, lr}
-    #"What do you suppose this stone is?"
+    # Cannot read hints, show this text
+    # "What do you suppose this stone is?"
     movne r0,#0x100
     addne r0,r0,#0xB1
     bxne lr
@@ -562,14 +563,21 @@ hook_CanReadHints:
     bl Hints_GetHintsSetting
     cmp r0,#0x0
     pop {r0-r12, lr}
-    #"Responding to your mask..."
+    # Vanilla hints, can read them (wearing mask)
+    # "Responding to your mask..."
     moveq r0,#0x2000
     addeq r0,r0,#0x54
     bxeq lr
-    #Hint message, skipping other text
+    # Randomizer hints enabled, can read them
+    # Hint message, skipping other text
     ldrh r0,[r4,#0x1C]
     and r0,r0,#0xFF
     add r0,r0,#0x400
+    # Register hint for Saria's Song
+    push {r0-r12, lr}
+    add r0,r0,#0x600
+    bl Hints_AddSariasSongHint
+    pop {r0-r12, lr}
     bx lr
 
 .global hook_FastChests
@@ -691,15 +699,6 @@ hook_SetSpecialVoidOutRespawnFlag:
     bl Grotto_ForceRegularVoidOut
     pop {r0-r12, lr}
     mov r1,#0x104
-    bx lr
-
-.global hook_GossipStoneAddSariaHint
-hook_GossipStoneAddSariaHint:
-    strh r1,[r5,#0x16]
-    push {r0-r12, lr}
-    add r0,r1,#0x600
-    bl Hints_AddSariasSongHint
-    pop {r0-r12, lr}
     bx lr
 
 .global hook_NoHealFromHealthUpgrades
