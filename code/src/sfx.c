@@ -17,7 +17,7 @@ u32 SetSFX(u32 original) {
 
     // Send SFX
     if (!mp_duplicateSendProtection) {
-        if (IsInGame() && sfxID >= 1258 && sfxID <= 1321) {
+        if (IsInGameOrBossChallenge() && sfxID >= 1258 && sfxID <= 1321) {
             Multiplayer_Send_LinkSFX(original);
         }
     }
