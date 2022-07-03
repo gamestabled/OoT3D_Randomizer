@@ -400,21 +400,21 @@ void Multiplayer_Run(void) {
             break;
         case 3:
             // Ready to go! This update is only called in-game with the gfx menu closed
-            if (IsInGame()) {
-                Multiplayer_Update();
+            if (IsInGameOrBossChallenge()) {
+                Multiplayer_Update(1);
                 Multiplayer_Ghosts_DrawAll();
             }
             break;
     }
 }
 
-void Multiplayer_Update(void) {
+void Multiplayer_Update(u8 fromGlobalContextUpdate) {
     if (!IsSendReceiveReady()) {
         return;
     }
     Multiplayer_ReceivePackets();
     Multiplayer_Ghosts_Tick();
-    if (IsInGame()) {
+    if (fromGlobalContextUpdate) {
         Multiplayer_Send_GhostData();
     } else {
         Multiplayer_Send_GhostPing();

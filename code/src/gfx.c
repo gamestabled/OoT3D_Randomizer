@@ -900,7 +900,7 @@ static void Gfx_ShowMenu(void) {
         }
 
         // Keep updating while in the in-game menu
-        Multiplayer_Update();
+        Multiplayer_Update(0);
 
         Draw_ClearBackbuffer();
 
@@ -930,7 +930,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
         Draw_ClearBackbuffer();
 
-        Multiplayer_Update();
+        Multiplayer_Update(0);
 
         u8 offsetY = 1;
         const char* titleString = mp_foundSyncer ? "Syncing..." : "Looking for syncer...";
@@ -1058,7 +1058,7 @@ void Gfx_Update(void) {
     elapsedTicksM += svcGetSystemTick() - lastTickM;
     if (elapsedTicksM >= TICKS_PER_SEC) {
         if (!IsInGame()) {
-            Multiplayer_Update();
+            Multiplayer_Update(0);
         }
         elapsedTicksM = 0;
     }
