@@ -617,6 +617,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.option_EnableSFX = gSettingsContext.playSFX;
     gExtSaveData.option_SilenceNavi = gSettingsContext.silenceNavi;
     gExtSaveData.option_IgnoreMaskReaction = gSettingsContext.ignoreMaskReaction;
+    gExtSaveData.option_SkipSongReplays = gSettingsContext.skipSongReplays;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {

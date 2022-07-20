@@ -26,7 +26,7 @@ void SaveFile_SaveExtSaveData(u32 saveNumber);
 void SaveFile_EnforceHealthLimit(void);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 9
+#define EXTSAVEDATA_VERSION 10
 
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure
@@ -50,6 +50,7 @@ typedef struct {
     s8 option_EnableSFX;
     s8 option_SilenceNavi;
     s8 option_IgnoreMaskReaction;
+    s8 option_SkipSongReplays;
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA

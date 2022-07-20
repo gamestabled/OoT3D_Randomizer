@@ -7,8 +7,9 @@
 #include "common.h"
 
 #define BORDER_WIDTH 2
-#define CHOICE_COLUMN 240
+#define CHOICE_COLUMN 220
 #define DESCRIPTION_ROW 184
+#define OPTIONS_COUNT 5
 
 typedef struct {
     char name[30];
@@ -18,7 +19,7 @@ typedef struct {
 } Option;
 
 s8 selectedOption;
-Option options[4];
+Option options[OPTIONS_COUNT];
 
 void InitOptions(void) {
     // BGM
@@ -46,8 +47,16 @@ void InitOptions(void) {
     strcpy(options[3].name, "Ignore Mask Reaction");
     strcpy(options[3].alternatives[0], "Off");
     strcpy(options[3].alternatives[1], "On");
-    strcpy(options[3].description, "Causes NPCs to respond normally when wearing\nmasks. Does not apply to trade quest dialouges.");
+    strcpy(options[3].description, "Causes NPCs to respond normally when wearing\nmasks. Does not apply to trade quest dialogues.");
     options[3].optionPointer = &gExtSaveData.option_IgnoreMaskReaction;
+
+    // Skip Song Replays
+    strcpy(options[4].name, "Skip Song Replays");
+    strcpy(options[4].alternatives[0], "Don't Skip");
+    strcpy(options[4].alternatives[1], "Skip (No SFX)");
+    strcpy(options[4].alternatives[2], "Skip (Keep SFX)");
+    strcpy(options[4].description, "Toggle skipping the automatic replay after\nyou play a song.");
+    options[4].optionPointer = &gExtSaveData.option_SkipSongReplays;
 }
 
 void Gfx_DrawOptions(void) {

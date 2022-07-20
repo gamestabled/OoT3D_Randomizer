@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "songs_visual_effects.h"
 #include "icetrap.h"
+#include "savefile.h"
 
 #define OceffWipe_Update_addr 0x256158
 #define OceffWipe_Update ((ActorFunc)OceffWipe_Update_addr)
@@ -26,7 +27,7 @@
 
 // Zelda's Lullaby, Song of Time
 void OceffWipe_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
+    if (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffWipe_Update(thisx, globalCtx);
     } else {
         Actor_Kill(thisx);
@@ -35,7 +36,7 @@ void OceffWipe_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
 // Epona's Song
 void OceffWipe2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
+    if (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffWipe2_Update(thisx, globalCtx);
     } else {
         Actor_Kill(thisx);
@@ -44,7 +45,7 @@ void OceffWipe2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
 // Saria's Song
 void OceffWipe3_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
+    if (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffWipe3_Update(thisx, globalCtx);
     } else {
         Actor_Kill(thisx);
@@ -53,7 +54,7 @@ void OceffWipe3_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
 // Scarecrow's Song
 void OceffWipe4_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
+    if (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffWipe4_Update(thisx, globalCtx);
     } else {
         Actor_Kill(thisx);
@@ -62,13 +63,13 @@ void OceffWipe4_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
 // Sun's Song
 void OceffSpot_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
+    if (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffSpot_Update(thisx, globalCtx);
     }
     // Wait for a bit before calling OceffSpot_End, otherwise Link and the music staff spots could start waiting
     // for the Sun's Song light after it's been killed already, causing softlocks and non-functional song switches in MQ Spirit
-    else if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_KEEP_SFX && gGlobalContext->msgMode == 0) ||
-             (gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && ((PLAYER->stateFlags1 >> 24) & 0x30) != 0x30)
+    else if ((gExtSaveData.option_SkipSongReplays == SONGREPLAYS_SKIP_KEEP_SFX && gGlobalContext->msgMode == 0) ||
+             (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_SKIP_NO_SFX && ((PLAYER->stateFlags1 >> 24) & 0x30) != 0x30)
             ) {
         OceffSpot_End(thisx, globalCtx);
     }
@@ -82,7 +83,7 @@ void OceffStorm_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     IceTrap_DispelCurses();
 
-    if (gSettingsContext.skipSongReplays == SONGREPLAYS_DONT_SKIP) {
+    if (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_DONT_SKIP) {
         OceffStorm_Update(thisx, globalCtx);
     } else {
         Flags_SetEnv(globalCtx, 5);
