@@ -496,10 +496,6 @@ SECTIONS
 		*(.patch_BusinessScrubCheckFlags)
 	}
 
-	.patch_SyatekiManReminder 0x2391D8 : {
-		*(.patch_SyatekiManReminder)
-	}
-
 	.patch_RainbowChuTrailOne 0x247FC0 : {
 		*(.patch_RainbowChuTrailOne)
 	} /*Bombchus use 2 EffectBlure instances*/

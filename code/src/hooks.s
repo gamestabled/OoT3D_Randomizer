@@ -1031,18 +1031,6 @@ hook_KingZoraSetTradedPrescriptionFlag:
     mov r2,#0x24
     b 0x1C52A4
 
-.global hook_SyatekiManReminder
-hook_SyatekiManReminder:
-    push {r0-r12, lr}
-    bl EnSyatekiMan_UseRemindText
-    cmp r0,#1
-    pop {r0-r12, lr}
-    moveq r1,#0x9100
-    addeq r1,r1,#0x40
-    movne r1,#0x7100
-    addne r1,r1,#0xAF
-    b 0x23920C
-
 .global hook_SkipTimeTravelCutsceneOne
 hook_SkipTimeTravelCutsceneOne:
     push {r0-r12, lr}

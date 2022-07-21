@@ -113,6 +113,7 @@ void Actor_Init() {
     gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
 
     gActorOverlayTable[0xC1].initInfo->init = EnSyatekiMan_rInit;
+    gActorOverlayTable[0xC1].initInfo->update = EnSyatekiMan_rUpdate;
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 

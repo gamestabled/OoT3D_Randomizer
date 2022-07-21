@@ -337,9 +337,9 @@ constexpr std::array DungeonColors = {
 
         //Bow Shooting Gallery reminder
         CreateMessage(0x9140, 0, 0, 0,
-            UNSKIPPABLE()+"Wonderful! Bravo! Perfect!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Here's a fantastic present! But I have"+COLOR(QM_RED)+NEWLINE()+"something else "+COLOR(QM_WHITE)+"for you once you have a bow."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
-            UNSKIPPABLE()+"Merveilleux! Bravo! C'est parfait!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Voici un prix fantastique! J'aurai "+COLOR(QM_RED)+"autre chose"+COLOR(QM_WHITE)+NEWLINE()+"pour toi quand tu auras un arc."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
-            UNSKIPPABLE()+"¡Espectacular! ¡Bravo! ¡Perfecto!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Toma este sensacional regalo! Pero te tengo"+NEWLINE()+"guardado "+COLOR(QM_RED)+"algo más "+COLOR(QM_WHITE)+"para cuando traigas tu"+NEWLINE()+"propio arco."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END());
+            UNSKIPPABLE()+"Come back when you have your own bow"+NEWLINE()+"and you'll get a "+COLOR(QM_RED)+"different prize"+COLOR(QM_WHITE)+"!"+CLOSE_AFTER(255)+MESSAGE_END(),
+            UNSKIPPABLE()+"J'aurai "+COLOR(QM_RED)+"autre chose"+COLOR(QM_WHITE)+NEWLINE()+"pour toi quand tu auras un arc."+CLOSE_AFTER(255)+MESSAGE_END(),
+            UNSKIPPABLE()+"Pero te tengo"+NEWLINE()+"guardado "+COLOR(QM_RED)+"algo más "+COLOR(QM_WHITE)+"para cuando traigas tu"+NEWLINE()+"propio arco."+CLOSE_AFTER(255)+MESSAGE_END());
 
         //Shopsanity items
         //64 textboxes, 2 for each of 32 potential shopsanity items

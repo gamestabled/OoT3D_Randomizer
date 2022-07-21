@@ -5,6 +5,9 @@
 #define EnSyatekiMan_Init_addr 0x283F94
 #define EnSyatekiMan_Init ((ActorFunc)EnSyatekiMan_Init_addr)
 
+#define EnSyatekiMan_Update_addr 0x2A60BC
+#define EnSyatekiMan_Update ((ActorFunc)EnSyatekiMan_Update_addr)
+
 void EnSyatekiMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
     //If child is in the adult shooting gallery or adult in the child shooting gallery, then despawn the shooting gallery man
     if ((gSaveContext.linkAge == AGE_CHILD && Entrance_SceneAndSpawnAre(0x42, 0x00)) || //Kakariko Village -> Adult Shooting Gallery, index 003B in the entrance table
@@ -15,6 +18,15 @@ void EnSyatekiMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-u32 EnSyatekiMan_UseRemindText(void) {
-	return gSaveContext.linkAge == 0 && (gSaveContext.upgrades & 0x7) == 0;
+void EnSyatekiMan_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    static u8 previouslyGettingItem = 0;
+    u8 currentlyGettingItem = ((PLAYER->stateFlags1 >> 10) & 1);
+
+    EnSyatekiMan_Update(thisx, globalCtx);
+
+    if (previouslyGettingItem && !currentlyGettingItem && (gSaveContext.linkAge == 0 && (gSaveContext.upgrades & 0x7) == 0)) {
+        DisplayTextbox(gGlobalContext, 0x9140, 0);
+    }
+
+    previouslyGettingItem = currentlyGettingItem;
 }
