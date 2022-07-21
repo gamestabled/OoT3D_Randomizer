@@ -289,20 +289,20 @@ constexpr std::array DungeonColors = {
         //Curse Traps
         CreateMessage(0x8FF0, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Vous ne pouvez pas utiliser votre bouclier"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡No puedes usar tu escudo!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
         CreateMessage(0x8FF1, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Votre épée "+COLOR(QM_RED)+"ne peut rien toucher"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡Tu espada "+COLOR(QM_RED)+"no puede golpear"+COLOR(QM_WHITE)+" nada!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
         CreateMessage(0x8FF2, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Vous êtes "+COLOR(QM_RED)+"confus"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡Estás "+COLOR(QM_RED)+"confundido"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
         CreateMessage(0x8FF3, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Le terrain est "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡El terreno es "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
 
         //Business Scrubs
         //The less significant byte represents the price of the item
@@ -338,8 +338,8 @@ constexpr std::array DungeonColors = {
         //Bow Shooting Gallery reminder
         CreateMessage(0x9140, 0, 0, 0,
             UNSKIPPABLE()+"Come back when you have your own bow"+NEWLINE()+"and you'll get a "+COLOR(QM_RED)+"different prize"+COLOR(QM_WHITE)+"!"+CLOSE_AFTER(255)+MESSAGE_END(),
-            UNSKIPPABLE()+"J'aurai "+COLOR(QM_RED)+"autre chose"+COLOR(QM_WHITE)+NEWLINE()+"pour toi quand tu auras un arc."+CLOSE_AFTER(255)+MESSAGE_END(),
-            UNSKIPPABLE()+"Pero te tengo"+NEWLINE()+"guardado "+COLOR(QM_RED)+"algo más "+COLOR(QM_WHITE)+"para cuando traigas tu"+NEWLINE()+"propio arco."+CLOSE_AFTER(255)+MESSAGE_END());
+            UNSKIPPABLE()+"J'aurai "+COLOR(QM_RED)+"une autre récompense"+COLOR(QM_WHITE)+" pour toi"+NEWLINE()+"lorsque tu auras ton propre arc."+CLOSE_AFTER(255)+MESSAGE_END(),
+            UNSKIPPABLE()+"Si regresas cuando tienes tu propio arco,"+NEWLINE()+"recibirás "+COLOR(QM_RED)+"otro premio"+COLOR(QM_WHITE)+"."+CLOSE_AFTER(255)+MESSAGE_END());
 
         //Shopsanity items
         //64 textboxes, 2 for each of 32 potential shopsanity items
