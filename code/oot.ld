@@ -180,6 +180,10 @@ SECTIONS
 		*(.patch_SkipTwinrovaQuarrelCutsceneTwo)
 	}
 
+	.patch_LostWoodsTargetCutscene 0x178058 : {
+		*(.patch_LostWoodsTargetCutscene)
+	}
+
 	.patch_CarpenterBossDontNullExchangeItem 0x178BE4 : {
 		*(.patch_CarpenterBossDontNullExchangeItem)
 	}
@@ -324,10 +328,6 @@ SECTIONS
 		*(.patch_KotakeDontPlayBattleMusic)
 	}
 
-	.patch_GossipStoneAddSariaHint 0x1B398C : {
-		*(.patch_GossipStoneAddSariaHint)
-	}
-
 	.patch_ReadGossipStoneHints 0x1B3A44 : {
 		*(.patch_ReadGossipStoneHints)
 	}
@@ -366,6 +366,10 @@ SECTIONS
 
 	.patch_KingZoraSetTradedPrescriptionFlag 0x1C52A0 : {
 		*(.patch_KingZoraSetTradedPrescriptionFlag)
+	}
+
+	.patch_TruthSpinnerSpeed 0x1CD814 : {
+		*(.patch_TruthSpinnerSpeed)
 	}
 
 	.patch_DemoEffectStoneDraw 0x1D209C : {
@@ -492,10 +496,6 @@ SECTIONS
 		*(.patch_BusinessScrubCheckFlags)
 	}
 
-	.patch_SyatekiManReminder 0x2391D8 : {
-		*(.patch_SyatekiManReminder)
-	}
-
 	.patch_RainbowChuTrailOne 0x247FC0 : {
 		*(.patch_RainbowChuTrailOne)
 	} /*Bombchus use 2 EffectBlure instances*/
@@ -518,6 +518,10 @@ SECTIONS
 
 	.patch_SkipDaruniaDanceThree 0x257F00 : {
 		*(.patch_SkipDaruniaDanceThree)
+	}
+
+	.patch_LostWoodsTargetTimer 0x2592B8 : {
+		*(.patch_LostWoodsTargetTimer)
 	}
 
 	.patch_LostWoodsShootingGame 0x259E4C : {
@@ -1148,6 +1152,10 @@ SECTIONS
 		*(.patch_LACSConditionTwo)
 	}
 
+	.patch_BossChallenge_Enter 0x44F634 : {
+		*(.patch_BossChallenge_Enter)
+	}
+
 	.patch_SetSavewarpEntrance 0x44FBE4 : {
 		*(.patch_SetSavewarpEntrance)
 	}
@@ -1202,6 +1210,10 @@ SECTIONS
 
 	.patch_SetSunsSongRespawnFlag 0x45B660 : {
 		*(.patch_SetSunsSongRespawnFlag)
+	}
+
+	.patch_BossChallenge_ExitMenu 0x45CCA4 : {
+		*(.patch_BossChallenge_ExitMenu)
 	}
 
 	.patch_StoreChildBButtonEquip 0x45F20C : {

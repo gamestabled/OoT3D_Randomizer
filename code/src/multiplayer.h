@@ -12,10 +12,11 @@ extern bool mp_completeSyncs[6];
 extern bool mSaveContextInit;
 
 void Multiplayer_Run(void);
-void Multiplayer_Update(void);
+void Multiplayer_Update(u8 fromGlobalContextUpdate);
 s8 Multiplayer_PlayerCount();
 void Multiplayer_Sync_Update(void);
 void Multiplayer_ReceivePackets();
+void Multiplayer_OnFileLoad(void);
 
 // Ghost Data
 void Multiplayer_Send_GhostPing(void);

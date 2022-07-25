@@ -50,6 +50,7 @@
 #include "carpenter.h"
 #include "pushblock.h"
 #include "spin_attack.h"
+#include "deku_scrubs.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -107,11 +108,12 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
-    gActorOverlayTable[0x95].initInfo->update = (ActorFunc)EnSw_rUpdate;
+    gActorOverlayTable[0x95].initInfo->update = EnSw_rUpdate;
 
     gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
 
     gActorOverlayTable[0xC1].initInfo->init = EnSyatekiMan_rInit;
+    gActorOverlayTable[0xC1].initInfo->update = EnSyatekiMan_rUpdate;
 
     gActorOverlayTable[0xC3].initInfo->draw = EnNb_rDraw;
 
@@ -200,6 +202,8 @@ void Actor_Init() {
     gActorOverlayTable[0x19C].initInfo->destroy = EnSi_rDestroy;
     gActorOverlayTable[0x19C].initInfo->update = EnSi_rUpdate;
     gActorOverlayTable[0x19C].initInfo->draw = EnSi_rDraw;
+
+    gActorOverlayTable[0x1A3].initInfo->update = EnDntNomal_rUpdate;
 
     gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
 

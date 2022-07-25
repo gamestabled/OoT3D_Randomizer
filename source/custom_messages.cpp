@@ -210,9 +210,9 @@ constexpr std::array DungeonColors = {
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[dungeon])+"gran llave "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         CreateMessage(0x9D9, 0, 2, 3,
-            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+EnglishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"clé d'or "+NEWLINE()+FrenchDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+" "+FrenchDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[DUNGEON_GANONS_CASTLE_FIRST_PART])+"gran llave "+SpanishDungeonArticles[DUNGEON_GANONS_CASTLE_FIRST_PART]+NEWLINE()+SpanishDungeonNames[DUNGEON_GANONS_CASTLE_FIRST_PART]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
+            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"You got the "+COLOR(DungeonColors[DUNGEON_INSIDE_GANONS_CASTLE])+EnglishDungeonNames[DUNGEON_INSIDE_GANONS_CASTLE]+NEWLINE()+"Boss Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"Vous trouvez la "+COLOR(DungeonColors[DUNGEON_INSIDE_GANONS_CASTLE])+"clé d'or "+NEWLINE()+FrenchDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE]+" "+FrenchDungeonNames[DUNGEON_INSIDE_GANONS_CASTLE]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_BOSS)+INSTANT_TEXT_ON()+"¡Tienes la "+COLOR(DungeonColors[DUNGEON_INSIDE_GANONS_CASTLE])+"gran llave "+SpanishDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE]+NEWLINE()+SpanishDungeonNames[DUNGEON_INSIDE_GANONS_CASTLE]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Compasses
         for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
             CreateMessage(0x9DA + dungeon, 0, 2, 3,
@@ -235,7 +235,7 @@ constexpr std::array DungeonColors = {
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez une "+COLOR(DungeonColors[dungeon])+"petite clé"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido una "+COLOR(DungeonColors[dungeon])+"llave pequeña "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
-        for (u32 smallKey = 0; smallKey <= (DUNGEON_GANONS_CASTLE_FIRST_PART - DUNGEON_GERUDO_TRAINING_GROUNDS); smallKey++) {
+        for (u32 smallKey = 0; smallKey <= (DUNGEON_INSIDE_GANONS_CASTLE - DUNGEON_GERUDO_TRAINING_GROUNDS); smallKey++) {
             u32 dungeon = DUNGEON_GERUDO_TRAINING_GROUNDS + smallKey;
             CreateMessage(0x9F4 + smallKey, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got a "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Small Key"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
@@ -250,7 +250,7 @@ constexpr std::array DungeonColors = {
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Vous trouvez un "+COLOR(DungeonColors[dungeon])+"trousseau"+NEWLINE()+FrenchDungeonArticles[dungeon]+FrenchDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"¡Has obtenido un "+COLOR(DungeonColors[dungeon])+"llavero "+SpanishDungeonArticles[dungeon]+NEWLINE()+SpanishDungeonNames[dungeon]+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
-        for (u32 smallKey = 0; smallKey <= (DUNGEON_GANONS_CASTLE_FIRST_PART - DUNGEON_GERUDO_TRAINING_GROUNDS); smallKey++) {
+        for (u32 smallKey = 0; smallKey <= (DUNGEON_INSIDE_GANONS_CASTLE - DUNGEON_GERUDO_TRAINING_GROUNDS); smallKey++) {
             u32 dungeon = DUNGEON_GERUDO_TRAINING_GROUNDS + smallKey;
             CreateMessage(0x9306 + smallKey, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"You got a "+COLOR(DungeonColors[dungeon])+EnglishDungeonNames[dungeon]+NEWLINE()+"Key Ring"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+MESSAGE_END(),
@@ -289,20 +289,20 @@ constexpr std::array DungeonColors = {
         //Curse Traps
         CreateMessage(0x8FF0, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Vous ne pouvez pas utiliser votre bouclier"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡No puedes usar tu escudo!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
         CreateMessage(0x8FF1, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Your sword "+COLOR(QM_RED)+"can't hit"+COLOR(QM_WHITE)+" anything!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Votre épée "+COLOR(QM_RED)+"ne peut rien toucher"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡Tu espada "+COLOR(QM_RED)+"no puede golpear"+COLOR(QM_WHITE)+" nada!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
         CreateMessage(0x8FF2, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You are "+COLOR(QM_RED)+"confused"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Vous êtes "+COLOR(QM_RED)+"confus"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡Estás "+COLOR(QM_RED)+"confundido"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
         CreateMessage(0x8FF3, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"Terrain is "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"Un "+COLOR(QM_RED)+"sort"+COLOR(QM_WHITE)+" vous a été jeté!"+NEWLINE()+CENTER_TEXT()+"Le terrain est "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"¡Has sido "+COLOR(QM_RED)+"hechizado"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"¡El terreno es "+COLOR(QM_RED)+"invisible"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END());
 
         //Business Scrubs
         //The less significant byte represents the price of the item
@@ -337,9 +337,9 @@ constexpr std::array DungeonColors = {
 
         //Bow Shooting Gallery reminder
         CreateMessage(0x9140, 0, 0, 0,
-            UNSKIPPABLE()+"Wonderful! Bravo! Perfect!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Here's a fantastic present! But I have"+COLOR(QM_RED)+NEWLINE()+"something else "+COLOR(QM_WHITE)+"for you once you have a bow."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
-            UNSKIPPABLE()+"Merveilleux! Bravo! C'est parfait!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"Voici un prix fantastique! J'aurai "+COLOR(QM_RED)+"autre chose"+COLOR(QM_WHITE)+NEWLINE()+"pour toi quand tu auras un arc."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END(),
-            UNSKIPPABLE()+"¡Espectacular! ¡Bravo! ¡Perfecto!"+WAIT_FOR_INPUT()+NEWLINE()+UNSKIPPABLE()+"¡Toma este sensacional regalo! Pero te tengo"+NEWLINE()+"guardado "+COLOR(QM_RED)+"algo más "+COLOR(QM_WHITE)+"para cuando traigas tu"+NEWLINE()+"propio arco."+SET_SPEED(30)+" "+EVENT_TRIGGER()+MESSAGE_END());
+            UNSKIPPABLE()+"Come back when you have your own bow"+NEWLINE()+"and you'll get a "+COLOR(QM_RED)+"different prize"+COLOR(QM_WHITE)+"!"+CLOSE_AFTER(255)+MESSAGE_END(),
+            UNSKIPPABLE()+"J'aurai "+COLOR(QM_RED)+"une autre récompense"+COLOR(QM_WHITE)+" pour toi"+NEWLINE()+"lorsque tu auras ton propre arc."+CLOSE_AFTER(255)+MESSAGE_END(),
+            UNSKIPPABLE()+"Si regresas cuando tienes tu propio arco,"+NEWLINE()+"recibirás "+COLOR(QM_RED)+"otro premio"+COLOR(QM_WHITE)+"."+CLOSE_AFTER(255)+MESSAGE_END());
 
         //Shopsanity items
         //64 textboxes, 2 for each of 32 potential shopsanity items

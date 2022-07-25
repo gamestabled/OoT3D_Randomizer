@@ -14,7 +14,7 @@ void DemoKankyo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (thisx->params == 0x000F) {
         globalCtx->sceneLoadFlag = 0x14;
         globalCtx->fadeOutTransition = 5;
-        switch (globalCtx->unk_2A91[0xEB]) { // text related variable
+        switch (globalCtx->lastPlayedSong) {
             case 0:
                 globalCtx->nextEntranceIndex = 0x0600; // Minuet
                 break;

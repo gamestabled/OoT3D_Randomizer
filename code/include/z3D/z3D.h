@@ -142,7 +142,9 @@ typedef struct {
         /* 0x13C8 */ u32 hour;
         /* 0x13CC */ u32 minute;
     }                         saveTime;
-    /* 0x13D0 */ char         unk_13D0[0x0008];
+    /* 0x13D0 */ char         unk_13D0[0x0004];
+    /* 0x13D4 */ u8           otherNewEventFlags; // Club Moblin cutscene and Sheikah Stone Navi message
+    /* 0x13D5 */ char         unk_13D5[0x0003];
     /* 0x13D8 */ u8           cameraControlSetting;
     /* 0x13D9 */ char         unk_13D9[0x0077];
     /* 0x1450 */ u32          bossBattleVictories[9];
@@ -404,7 +406,8 @@ typedef struct GlobalContext {
     /* 0x2298 */ CutsceneContext       csCtx; // "demo_play"
     /* 0x2304 */ char                  unk_2304[0x078C];
     /* 0x2A90 */ u8                    msgMode; //seems to be used primarily for the ocarina
-    /* 0x2A91 */ char                  unk_2A91[0xED];
+    /* 0x2A91 */ char                  unk_2A91[0xEB];
+    /* 0x2B7C */ u16                   lastPlayedSong;
     /* 0x2B7E */ s16                   unk_2B7E; // msgCtx.unk_E3EE in OoT
     /* 0x2B80 */ char                  unk_2B80[0x06B0];
     /* 0x3230 */ u32                   lightSettingsList_addr;
@@ -498,17 +501,19 @@ typedef enum {
     DUNGEON_SHADOW_TEMPLE,
     DUNGEON_BOTTOM_OF_THE_WELL,
     DUNGEON_ICE_CAVERN,
-    DUNGEON_GANONS_CASTLE_SECOND_PART,
+    DUNGEON_GANONS_TOWER,
     DUNGEON_GERUDO_TRAINING_GROUNDS,
-    DUNGEON_GERUDO_FORTRESS,
-    DUNGEON_GANONS_CASTLE_FIRST_PART,
-    DUNGEON_GANONS_CASTLE_FLOOR_BENEATH_BOSS_CHAMBER,
-    DUNGEON_GANONS_CASTLE_CRUMBLING,
+    DUNGEON_THIEVES_HIDEOUT,
+    DUNGEON_INSIDE_GANONS_CASTLE,
+    DUNGEON_GANONS_TOWER_COLLAPSING_INTERIOR,
+    DUNGEON_GANONS_CASTLE_COLLAPSING,
     DUNGEON_TREASURE_CHEST_SHOP,
     DUNGEON_DEKU_TREE_BOSS_ROOM,
     DUNGEON_DODONGOS_CAVERN_BOSS_ROOM,
     DUNGEON_JABUJABUS_BELLY_BOSS_ROOM,
 } DungeonId;
+
+#define SCENE_LINK_HOUSE 52
 
 /* TODO: figure out what to do with this stuff */
 #define real_hid_addr   0x10002000
@@ -602,5 +607,9 @@ typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
 typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* player);
 #define Player_SetEquipmentData_addr 0x34913C
 #define Player_SetEquipmentData ((Player_SetEquipmentData_proc)Player_SetEquipmentData_addr)
+
+typedef s32 (*BossChallenge_IsActive_proc)(void);
+#define BossChallenge_IsActive_addr 0x35B164
+#define BossChallenge_IsActive ((BossChallenge_IsActive_proc)BossChallenge_IsActive_addr)
 
 #endif //_Z3D_H_

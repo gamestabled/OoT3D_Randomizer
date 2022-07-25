@@ -69,7 +69,7 @@ static s8 spoilerGroupDungeonIds[] = {
     DUNGEON_GERUDO_TRAINING_GROUNDS,
     DUNGEON_SPIRIT_TEMPLE,
     -1,
-    DUNGEON_GANONS_CASTLE_SECOND_PART,
+    DUNGEON_GANONS_TOWER,
 };
 
 static char *spoilerCollectionGroupNames[] = {
@@ -198,7 +198,7 @@ static bool IsDungeonDiscovered(DungeonId dungeonId) {
         // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
         bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
         bool dungeonIsDiscovered = (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId)
-            || (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART && SaveFile_GetIsSceneDiscovered(DUNGEON_GANONS_CASTLE_FIRST_PART));
+            || (dungeonId == DUNGEON_GANONS_TOWER && SaveFile_GetIsSceneDiscovered(DUNGEON_INSIDE_GANONS_CASTLE));
 
         return dungeonIsDiscovered;
     }
@@ -390,7 +390,7 @@ static void Gfx_DrawDungeonItems(void) {
     }
 
     u8 yPos = 0;
-    for (u32 dungeonId = 0; dungeonId <= DUNGEON_GERUDO_FORTRESS; ++dungeonId) {
+    for (u32 dungeonId = 0; dungeonId <= DUNGEON_THIEVES_HIDEOUT; ++dungeonId) {
         yPos = 30 + (dungeonId * 13);
         bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
@@ -406,20 +406,20 @@ static void Gfx_DrawDungeonItems(void) {
                 Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
             }
         }
-        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART ? DUNGEON_GANONS_CASTLE_FIRST_PART : dungeonId]);
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId == DUNGEON_GANONS_TOWER ? DUNGEON_INSIDE_GANONS_CASTLE : dungeonId]);
 
         if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
             //special case for Ganon's Castle small keys
             s32 keys = 0;
-            if (dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
-                keys = (gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_GANONS_CASTLE_FIRST_PART] : 0;
+            if (dungeonId == DUNGEON_GANONS_TOWER) {
+                keys = (gSaveContext.dungeonKeys[DUNGEON_INSIDE_GANONS_CASTLE] >= 0) ? gSaveContext.dungeonKeys[DUNGEON_INSIDE_GANONS_CASTLE] : 0;
             } else {
                 keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
             }
             Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
         }
 
-        if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_CASTLE_SECOND_PART) {
+        if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) || dungeonId == DUNGEON_GANONS_TOWER) {
             Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
         }
         if (dungeonId <= DUNGEON_ICE_CAVERN) {
@@ -900,7 +900,7 @@ static void Gfx_ShowMenu(void) {
         }
 
         // Keep updating while in the in-game menu
-        Multiplayer_Update();
+        Multiplayer_Update(0);
 
         Draw_ClearBackbuffer();
 
@@ -930,7 +930,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
         Draw_ClearBackbuffer();
 
-        Multiplayer_Update();
+        Multiplayer_Update(0);
 
         u8 offsetY = 1;
         const char* titleString = mp_foundSyncer ? "Syncing..." : "Looking for syncer...";
@@ -1052,13 +1052,13 @@ void Gfx_Update(void) {
         Gfx_ShowMultiplayerSyncMenu();
     }
 
-    // The update is called here so it works while in file select
+    // The update is called here so it works while in different game modes (title screen, file select, boss challenge, credits, MQ unlock)
     static u64 lastTickM = 0;
     static u64 elapsedTicksM = 0;
     elapsedTicksM += svcGetSystemTick() - lastTickM;
     if (elapsedTicksM >= TICKS_PER_SEC) {
         if (!IsInGame()) {
-            Multiplayer_Update();
+            Multiplayer_Update(0);
         }
         elapsedTicksM = 0;
     }

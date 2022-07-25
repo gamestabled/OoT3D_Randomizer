@@ -1056,11 +1056,6 @@ ReadGossipStoneHints_patch:
     nop
     nop
 
-.section .patch_GossipStoneAddSariaHint
-.global GossipStoneAddSariaHint_patch
-GossipStoneAddSariaHint_patch:
-    bl hook_GossipStoneAddSariaHint
-
 .section .patch_DecoratedChest
 .global DecoratedChest_patch
 DecoratedChest_patch:
@@ -1460,11 +1455,6 @@ GiantsKnifeWithoutKokiriSword_patch:
     cmp r3,#0x8
     blt 0x376C54
 
-.section .patch_SyatekiManReminder
-.global SyatekiManReminder_patch
-SyatekiManReminder_patch:
-    beq hook_SyatekiManReminder
-
 .section .patch_SkipTimeTravelCutsceneOne
 .global SkipTimeTravelCutsceneOne_patch
 SkipTimeTravelCutsceneOne_patch:
@@ -1791,6 +1781,33 @@ CrouchStabHitbox_patch:
 .global MasterSwordTimerCheck_patch
 MasterSwordTimerCheck_patch:
     nop
+
+.section .patch_BossChallenge_Enter
+.global BossChallenge_Enter_patch
+BossChallenge_Enter_patch:
+    bl hook_BossChallenge_Enter
+
+.section .patch_BossChallenge_ExitMenu
+.global BossChallenge_ExitMenu_patch
+BossChallenge_ExitMenu_patch:
+    bl hook_BossChallenge_ExitMenu
+
+.section .patch_TruthSpinnerSpeed
+.global TruthSpinnerSpeed_patch
+TruthSpinnerSpeed_patch:
+    cmp r2,#0x20
+    strh r2,[r4,#0xC4]
+    movgt r2,#0x20
+
+.section .patch_LostWoodsTargetCutscene
+.global LostWoodsTargetCutscene_patch
+LostWoodsTargetCutscene_patch:
+    nop
+
+.section .patch_LostWoodsTargetTimer
+.global LostWoodsTargetTimer_patch
+LostWoodsTargetTimer_patch:
+    mov r0,#0x1
 
 .section .patch_loader
 .global loader_patch

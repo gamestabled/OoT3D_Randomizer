@@ -270,8 +270,7 @@ void Entrance_SetGameOverEntrance(void) {
 
 //Properly savewarp the player accounting for dungeon entrance randomizer.
 //It's easier to rewrite this entirely compared to performing an ASM
-//dance for just the boss rooms. This removes the behavior where savewarping
-//as adult Link in Link's House respawns adult Link in Link's House.
+//dance for just the boss rooms.
 //https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetSavewarpEntrance(void) {
 
@@ -299,14 +298,16 @@ void Entrance_SetSavewarpEntrance(void) {
         gSaveContext.entranceIndex = newGerudoTrainingGroundsEntrance;
     } else if (scene == DUNGEON_ICE_CAVERN) {
         gSaveContext.entranceIndex = newIceCavernEntrance;
-    } else if (scene == DUNGEON_GANONS_CASTLE_FIRST_PART) {
+    } else if (scene == DUNGEON_INSIDE_GANONS_CASTLE) {
         gSaveContext.entranceIndex = GANONS_CASTLE_ENTRANCE;
-    } else if (scene == DUNGEON_GANONS_CASTLE_SECOND_PART || scene == DUNGEON_GANONS_CASTLE_CRUMBLING || scene == DUNGEON_GANONS_CASTLE_FLOOR_BENEATH_BOSS_CHAMBER || scene == 0x4F || scene == 0x1A) {
+    } else if (scene == DUNGEON_GANONS_TOWER || scene == DUNGEON_GANONS_CASTLE_COLLAPSING || scene == DUNGEON_GANONS_TOWER_COLLAPSING_INTERIOR || scene == 0x4F || scene == 0x1A) {
         gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower Climb
-    } else if (scene == DUNGEON_GERUDO_FORTRESS) {
+    } else if (scene == DUNGEON_THIEVES_HIDEOUT) {
         gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
+    } else if (scene == SCENE_LINK_HOUSE) {
+        gSaveContext.entranceIndex = LINK_HOUSE_SAVEWARP_ENTRANCE;
     } else if (gSaveContext.linkAge == AGE_CHILD) {
-        gSaveContext.entranceIndex = Entrance_GetOverride(0x00BB); // Link's House Child Spawn
+        gSaveContext.entranceIndex = Entrance_GetOverride(LINK_HOUSE_SAVEWARP_ENTRANCE);
     } else {
         gSaveContext.entranceIndex = Entrance_GetOverride(0x05F4); // Temple of Time Adult Spawn
     }
@@ -319,7 +320,7 @@ void EnableFW(void) {
         gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 || (gGlobalContext->sceneNum == 16 && !gSettingsContext.shuffleChestMinigame) ||
         gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62 || gGlobalContext->sceneNum == 73 ||
         gGlobalContext->sceneNum == 79 ||
-        gSaveContext.unk_1586[4] & 0x1 ||   // Ingo's Minigame state
+        gSaveContext.eventInf[0] & 0x1 ||   // Ingo's Minigame state
         PLAYER->stateFlags1 & 0x08A02000 || // Swimming, riding horse, Down A, hanging from a ledge
         PLAYER->stateFlags2 & 0x00040000    // Blank A
         // Shielding, spinning and getting skull tokens still disable buttons automatically

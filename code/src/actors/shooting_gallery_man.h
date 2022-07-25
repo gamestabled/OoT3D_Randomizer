@@ -4,5 +4,6 @@
 #include "z3D/z3D.h"
 
 void EnSyatekiMan_rInit(Actor* thisx, GlobalContext* globalCtx);
+void EnSyatekiMan_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 
 #endif
