@@ -2322,6 +2322,7 @@ namespace Settings {
       { &ShuffleMerchants, SHUFFLEMERCHANTS_OFF },
       { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
       { &ShuffleAdultTradeQuest, SHUFFLEADULTTRADEQUEST_ON },
+      { &ShuffleChestMinigame, SHUFFLECHESTMINIGAME_OFF },
       { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
       { &GossipStoneHints, HINTS_NO_HINTS },
   };
