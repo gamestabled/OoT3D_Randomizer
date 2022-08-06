@@ -331,6 +331,7 @@ namespace Settings {
   extern Option ShuffleGerudoToken;
   extern Option ShuffleMagicBeans;
   extern Option ShuffleMerchants;
+  extern Option ShuffleFrogSongRupees;
   extern Option ShuffleAdultTradeQuest;
   extern Option ShuffleChestMinigame;
 

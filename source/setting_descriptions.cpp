@@ -380,6 +380,13 @@ string_view magicBeansDesc            = "Enabling this adds a pack of 10 beans t
                                         "pool and changes the Magic Bean Salesman to sell a"
                                         "random item at a price of 60 rupees.";            //
 /*------------------------------                                                           //
+|   SHUFFLE FROG SONG RUPEES   |                                                           //
+------------------------------*/                                                           //
+string_view frogSongRupeesDesc        = "Enabling this adds 5 Purple Rupees to the item\n" //
+                                        "pool and shuffles the rewards from playing Zelda's\n"
+                                        "Lullaby, Epona's Song, Saria's Song, Sun's Song,\n"
+                                        "and Song of Time to the frogs in Zora's River.\n";//
+/*------------------------------                                                           //
 |       SHUFFLE MERCHANTS      |                                                           //
 ------------------------------*/                                                           //
 string_view merchantsDesc             = "Enabling this adds a Giant's Knife and a pack\n"  //
