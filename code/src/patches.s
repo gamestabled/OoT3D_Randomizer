@@ -848,6 +848,11 @@ AnjuCheckCuccoAmount_patch:
 FrogReward_patch:
     b hook_FrogReward
 
+.section .patch_FrogRewardPurple
+.global FrogRewardPurple_patch
+FrogRewardPurple_patch:
+    beq hook_FrogReward
+
 .section .patch_CanPlayBombchuBowlingOne
 .global CanPlayBombchuBowlingOne_patch
 CanPlayBombchuBowlingOne_patch:

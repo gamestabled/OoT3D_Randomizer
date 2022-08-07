@@ -166,9 +166,9 @@ namespace Settings {
   Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
   Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
-  Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Song Rupees",{"Off", "On"},                                                    {frogSongRupeesDesc});
   Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
   Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
+  Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
   std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -184,9 +184,9 @@ namespace Settings {
     &ShuffleGerudoToken,
     &ShuffleMagicBeans,
     &ShuffleMerchants,
-    &ShuffleFrogSongRupees,
     &ShuffleAdultTradeQuest,
     &ShuffleChestMinigame,
+    &ShuffleFrogSongRupees,
   };
 
   //Shuffle Dungeon Items
