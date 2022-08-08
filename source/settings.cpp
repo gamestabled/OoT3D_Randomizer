@@ -166,6 +166,7 @@ namespace Settings {
   Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
   Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
+  Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Song Rupees",{"Off", "On"},                                                    {frogSongRupeesDesc});
   Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
   Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
   std::vector<Option *> shuffleOptions = {
@@ -183,6 +184,7 @@ namespace Settings {
     &ShuffleGerudoToken,
     &ShuffleMagicBeans,
     &ShuffleMerchants,
+    &ShuffleFrogSongRupees,
     &ShuffleAdultTradeQuest,
     &ShuffleChestMinigame,
   };
@@ -1288,6 +1290,7 @@ namespace Settings {
     ctx.shuffleGerudoToken   = (ShuffleGerudoToken) ? 1 : 0;
     ctx.shuffleMagicBeans    = (ShuffleMagicBeans) ? 1 : 0;
     ctx.shuffleMerchants     = ShuffleMerchants.Value<u8>();
+    ctx.shuffleFrogSongRupees = (ShuffleFrogSongRupees) ? 1 : 0;
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
     ctx.shuffleChestMinigame = ShuffleChestMinigame.Value<u8>();
 
@@ -1754,6 +1757,21 @@ namespace Settings {
     } else {
       IncludeAndHide({GC_MEDIGORON});
       IncludeAndHide({WASTELAND_BOMBCHU_SALESMAN});
+    }
+
+    //Force include frog song rupees if they're not shuffled
+    if (ShuffleFrogSongRupees) {
+      Unhide({ZR_FROGS_ZELDAS_LULLABY});
+      Unhide({ZR_FROGS_EPONAS_SONG});
+      Unhide({ZR_FROGS_SARIAS_SONG});
+      Unhide({ZR_FROGS_SUNS_SONG});
+      Unhide({ZR_FROGS_SONG_OF_TIME});
+    } else {
+      IncludeAndHide({ZR_FROGS_ZELDAS_LULLABY});
+      IncludeAndHide({ZR_FROGS_EPONAS_SONG});
+      IncludeAndHide({ZR_FROGS_SARIAS_SONG});
+      IncludeAndHide({ZR_FROGS_SUNS_SONG});
+      IncludeAndHide({ZR_FROGS_SONG_OF_TIME});
     }
 
     //Force include adult trade quest if Shuffle Adult Trade Quest is off
@@ -2302,6 +2320,7 @@ namespace Settings {
       { &ShuffleCows, OFF },
       { &ShuffleMagicBeans, OFF },
       { &ShuffleMerchants, SHUFFLEMERCHANTS_OFF },
+      { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
       { &ShuffleAdultTradeQuest, SHUFFLEADULTTRADEQUEST_ON },
       { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
       { &GossipStoneHints, HINTS_NO_HINTS },

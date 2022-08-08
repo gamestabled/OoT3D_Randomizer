@@ -156,6 +156,11 @@ typedef enum {
 } ShuffleMerchantsSetting;
 
 typedef enum {
+  SHUFFLEFROGSONGRUPEES_OFF,
+  SHUFFLEFROGSONGRUPEES_ON,
+} ShuffleFrogSongRupeesSetting;
+
+typedef enum {
   SHUFFLEADULTTRADEQUEST_OFF,
   SHUFFLEADULTTRADEQUEST_ON,
 } ShuffleAdultTradeQuestSetting;
@@ -398,6 +403,7 @@ typedef struct {
   u8 shuffleGerudoToken;
   u8 shuffleMagicBeans;
   u8 shuffleMerchants;
+  u8 shuffleFrogSongRupees;
   u8 shuffleAdultTradeQuest;
   u8 shuffleChestMinigame;
 
