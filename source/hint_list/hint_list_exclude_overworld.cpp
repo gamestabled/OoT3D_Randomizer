@@ -291,52 +291,52 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZR_FROGS_IN_THE_RAIN] = HintText::Exclude({
                        //obscure text
-                       Text{"#frogs in a storm# gift", /*french*/"#les grenouilles mouillées# donnent", /*spanish*/"las #ranas bajo la tormenta# otorgan"},
+                       Text{"#frogs in a storm# gift", /*french*/"#les grenouilles mouillées# donnent", /*spanish*/"las #ranas bajo la tormenta# regalan"},
   });
 
     hintTable[ZR_FROGS_ZELDAS_LULLABY] = HintText::Exclude({
                        //obscure text
-                       Text{"#sleepy frogs# gift", /*french*/"#les grenouilles somnolentes# donnent", /*spanish*/"las #ranas somnolientas# otorgan"},
-                       Text{"#the Froggish Tenor in the back-left# gifts", /*french*/"#le ténor grenouillesque au fond à gauche# donne", /*spanish*/"el #Sapo Tenore al fondo, a la izquierda#, otorga"},
+                       Text{"#sleepy frogs# gift",                         /*french*/"#les grenouilles somnolentes# donnent",            /*spanish*/"las #ranas somnolientas# regalan"},
+                       Text{"#the Froggish Tenor in the back-left# gifts", /*french*/"#le ténor grenouillesque au fond à gauche# donne", /*spanish*/"el #Sapo Tenore al fondo, a la izquierda#, regala"},
                        }, {},
                        //clear text
-                       Text{"after hearing #Zelda's Lullaby, the Frogs of Zora's River# gift", /*french*/"après avoir écouté #la berceuse de Zelda, les grenouilles du fleuve zora# donnent", /*spanish*/"después de escuchar #la Nana de Zelda, las ranas del Río Zora# otorgan"}
+                       Text{"after hearing #Zelda's Lullaby, the frogs# gift", /*french*/"à l'écoute de #la berceuse de Zelda, les grenouilles# donnent", /*spanish*/"después de escuchar #la Nana de Zelda, las ranas# regalan"}
   );
 
     hintTable[ZR_FROGS_EPONAS_SONG] = HintText::Exclude({
                        //obscure text
-                       Text{"#equine frogs# gift", /*french*/"#les grenouilles équines# donnent", /*spanish*/"las #ranas equinas# otorgan"},
-                       Text{"#the Froggish Tenor in the back-right# gifts", /*french*/"#le ténor grenouillesque au fond à droite# donne", /*spanish*/"el #Sapo Tenore al fondo, a la derecha#, otorga"},
+                       Text{"#equine frogs# gift",                          /*french*/"#les grenouilles équestres# donnent",              /*spanish*/"las #ranas equinas# regalan"},
+                       Text{"#the Froggish Tenor in the back-right# gifts", /*french*/"#le ténor grenouillesque au fond à droite# donne", /*spanish*/"el #Sapo Tenore al fondo, a la derecha#, regala"},
                        }, {},
                        //clear text
-                       Text{"after hearing #Epona's Song, the Frogs of Zora's River# gift", /*french*/"après avoir écouté #le chant d'Epona, les grenouilles du fleuve zora# donnent", /*spanish*/"después de escuchar #la Canción de Epona, las ranas del Río Zora# otorgan"}
+                       Text{"after hearing #Epona's Song, the frogs# gift", /*french*/"à l'écoute du #chant d'Epona, les grenouilles# donnent", /*spanish*/"después de escuchar #la Canción de Epona, las ranas# regalan"}
   );
 
     hintTable[ZR_FROGS_SARIAS_SONG] = HintText::Exclude({
                        //obscure text
-                       Text{"#tree-loving frogs# gift", /*french*/"#les grenouilles amoureux des arbres# donnent", /*spanish*/"las #ranas amantes de los árboles# otorgan"},
-                       Text{"#the Froggish Tenor in the center# gifts", /*french*/"#le ténor grenouillesque dans le centre# donne", /*spanish*/"el #Sapo Tenore en el centro# otorga"},
+                       Text{"#sylvan frogs# gift",                      /*french*/"#les grenouilles sylvestres# donnent",           /*spanish*/"las #ranas silvestres# regalan"},
+                       Text{"#the Froggish Tenor in the center# gifts", /*french*/"#le ténor grenouillesque dans le centre# donne", /*spanish*/"el #Sapo Tenore en el centro# regala"},
                        }, {},
                        //clear text
-                       Text{"after hearing #Saria's Song, the Frogs of Zora's River# gift", /*french*/"après avoir écouté #le chant de Saria, les grenouilles du fleuve zora# donnent", /*spanish*/"después de escuchar #la Canción de Saria, las ranas del Río Zora# otorgan"}
+                       Text{"after hearing #Saria's Song, the frogs# gift", /*french*/"à l'écoute du #chant de Saria, les grenouilles# donnent", /*spanish*/"después de escuchar #la Canción de Saria, las ranas# regalan"}
   );
 
     hintTable[ZR_FROGS_SUNS_SONG] = HintText::Exclude({
                        //obscure text
-                       Text{"#enlightened frogs# gift", /*french*/"#les grenouilles éclairées# donnent", /*spanish*/"las #ranas alumbradas# otorgan"},
-                       Text{"#the Froggish Tenor in the front-left# gifts", /*french*/"#le ténor grenouillesque à l'avant gauche# donne", /*spanish*/"el #Sapo Tenore al frente, a la izquierda#, otorga"},
+                       Text{"#enlightened frogs# gift",                     /*french*/"#les grenouilles éclairées# donnent",              /*spanish*/"las #ranas alumbradas# regalan"},
+                       Text{"#the Froggish Tenor in the front-left# gifts", /*french*/"#le ténor grenouillesque à l'avant gauche# donne", /*spanish*/"el #Sapo Tenore al frente, a la izquierda#, regala"},
                        }, {},
                        //clear text
-                       Text{"after hearing #the Sun's Song, the Frogs of Zora's River# gift", /*french*/"après avoir écouté #le chant du soleil, les grenouilles du fleuve zora# donnent", /*spanish*/"después de escuchar #la Canción del Sol, las ranas del Río Zora# otorgan"}
+                       Text{"after hearing #the Sun's Song, the frogs# gift", /*french*/"à l'écoute du #chant du soleil, les grenouilles# donnent", /*spanish*/"después de escuchar #la Canción del Sol, las ranas# regalan"}
   );
 
     hintTable[ZR_FROGS_SONG_OF_TIME] = HintText::Exclude({
                        //obscure text
-                       Text{"#time-traveling frogs# gift", /*french*/"#les grenouilles voyageuses dans le temps# donnent", /*spanish*/"las #ranas viajeras del tiempo# otorgan"},
-                       Text{"#the Froggish Tenor in the front-right# gifts", /*french*/"#le ténor grenouillesque à l'avant droite# donne", /*spanish*/"el #Sapo Tenore al frente, a la derecha#, otorga"},
+                       Text{"#time-traveling frogs# gift",                   /*french*/"#les grenouilles voyageuses dans le temps# donnent", /*spanish*/"las #ranas viajeras del tiempo# regalan"},
+                       Text{"#the Froggish Tenor in the front-right# gifts", /*french*/"#le ténor grenouillesque à l'avant droite# donne",   /*spanish*/"el #Sapo Tenore al frente, a la derecha#, regala"},
                        }, {},
                        //clear text
-                       Text{"after hearing #the Song of Time, the Frogs of Zora's River# gift", /*french*/"après avoir écouté #le chant du temps, les grenouilles du fleuve zora# donnent", /*spanish*/"después de escuchar #la Canción del tiempo, las ranas del Río Zora# otorgan"}
+                       Text{"after hearing #the Song of Time, the frogs# gift", /*french*/"à l'écoute du #chant du temps, les grenouilles# donnent", /*spanish*/"después de escuchar #la Canción del tiempo, las ranas# regalan"}
   );
 
     hintTable[GF_HBA_1000_POINTS] = HintText::Exclude({
