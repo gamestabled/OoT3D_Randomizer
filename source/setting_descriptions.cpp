@@ -383,7 +383,7 @@ string_view magicBeansDesc            = "Enabling this adds a pack of 10 beans t
 |   SHUFFLE FROG SONG RUPEES   |                                                           //
 ------------------------------*/                                                           //
 string_view frogSongRupeesDesc        = "Enabling this adds 5 Purple Rupees to the item\n" //
-                                        "pool and shuffles the rewards from playing Zelda's\n"
+                                        "pool and shuffles the rewards from playing Zelda's"
                                         "Lullaby, Epona's Song, Saria's Song, Sun's Song,\n"
                                         "and Song of Time to the frogs in Zora's River.\n";//
 /*------------------------------                                                           //

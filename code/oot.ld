@@ -840,6 +840,10 @@ SECTIONS
 		*(.patch_NoLensOfTruthNaviText)
 	}
 
+	.patch_FrogRewardPurple 0x3898F0 : {
+		*(.patch_FrogRewardPurple)
+	}
+
 	.patch_FrogReward 0x38992C : {
 		*(.patch_FrogReward)
 	}
