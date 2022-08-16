@@ -892,6 +892,13 @@ string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.";
 string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.";            //
                                                                                            //
 /*------------------------------                                                           //
+|          RESTORE ISG         |                                                           //
+------------------------------*/                                                           //
+string_view restoreISGdesc            = "The Infinite Sword Glitch will work like in OoT.\n\n"
+                                        "Specifically, interrupting a crouch stab will\n"  //
+                                        "activate the glitch, and putting away or pulling\n"
+                                        "out items will not cancel it.";                   //
+/*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
 ------------------------------*/                                                           //
 string_view gkDurabilityVanilla       = "The durability will always be set to 8.";         //

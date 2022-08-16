@@ -650,12 +650,12 @@ OcarinaMinigameEndAfterWin_patch:
 .section .patch_ISGPutaway
 .global ISGPutaway_patch
 ISGPutaway_patch:
-    nop
+    bl hook_RestoreISG
 
 .section .patch_ISGCrouchStab
 .global ISGCrouchStab_patch
 ISGCrouchStab_patch:
-    nop
+    bl hook_RestoreISG
 
 .section .patch_ApplyDamageMultiplier
 .global ApplyDamageMultiplier_patch

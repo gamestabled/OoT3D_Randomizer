@@ -341,6 +341,7 @@ namespace Settings {
   Option MirrorShieldAsChild = Option::Bool("  Child Mirror Shield",  {"Disabled", "Enabled"},                                                {childMirrorShieldDesc});
   Option GoronTunicAsChild   = Option::Bool("  Child Goron Tunic",    {"Disabled", "Enabled"},                                                {childGoronTunicDesc});
   Option ZoraTunicAsChild    = Option::Bool("  Child Zora Tunic",     {"Disabled", "Enabled"},                                                {childZoraTunicDesc});
+  Option RestoreISG          = Option::Bool("Restore ISG",            {"Disabled", "Enabled"},                                                {restoreISGdesc},                                                                                                 OptionCategory::Setting,    ON);
   Option GkDurability        = Option::U8  ("GK Durability",          {"Vanilla", "Random Risk", "Random Safe"},                              {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
@@ -361,6 +362,7 @@ namespace Settings {
     &MirrorShieldAsChild,
     &GoronTunicAsChild,
     &ZoraTunicAsChild,
+    &RestoreISG,
     &GkDurability,
   };
 
@@ -1365,6 +1367,7 @@ namespace Settings {
     ctx.mirrorShieldAsChild  = (MirrorShieldAsChild) ? 1 : 0;
     ctx.goronTunicAsChild    = (GoronTunicAsChild) ? 1 : 0;
     ctx.zoraTunicAsChild     = (ZoraTunicAsChild) ? 1 : 0;
+    ctx.restoreISG           = (RestoreISG) ? 1 : 0;
     ctx.gkDurability         = GkDurability.Value<u8>();
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
@@ -2062,6 +2065,16 @@ namespace Settings {
       StartingDoubleDefense.Lock();
     } else {
       StartingDoubleDefense.Unlock();
+    }
+
+    if (RestoreISG) {
+      GlitchISG.Unlock();
+      GlitchHover.Unlock();
+    } else {
+      GlitchISG.SetSelectedIndex(0);
+      GlitchISG.Lock();
+      GlitchHover.SetSelectedIndex(0);
+      GlitchHover.Lock();
     }
 
     if (currentSetting != nullptr) {
