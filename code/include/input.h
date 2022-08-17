@@ -6,6 +6,10 @@ typedef struct {
     btn_t up;
     btn_t pressed;
     btn_t old;
+    int16_t touchX;
+    int16_t touchY;
+    uint32_t touchPressed;
+    uint32_t touchHeld;
 } InputContext;
 
 void Input_Update(void);

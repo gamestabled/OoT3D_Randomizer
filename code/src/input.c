@@ -18,6 +18,10 @@ void Input_Update(void) {
     rInputCtx.pressed.val = (rInputCtx.cur.val) & (~rInputCtx.old.val);
     rInputCtx.up.val = (~rInputCtx.cur.val) & (rInputCtx.old.val);
     rInputCtx.old.val = rInputCtx.cur.val;
+    rInputCtx.touchX = real_hid.touch.touches[real_hid.touch.index].touch.x;
+    rInputCtx.touchY = real_hid.touch.touches[real_hid.touch.index].touch.y;
+    rInputCtx.touchPressed = real_hid.touch.touches[real_hid.touch.index].updated && !rInputCtx.touchHeld;
+    rInputCtx.touchHeld = real_hid.touch.touches[real_hid.touch.index].updated;
 }
 
 u32 buttonCheck(u32 key) {

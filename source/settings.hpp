@@ -384,6 +384,7 @@ namespace Settings {
   extern Option GenerateSpoilerLog;
   extern Option IngameSpoilers;
   extern Option MenuOpeningButton;
+  extern Option ArrowSwitchButton;
   extern Option RandomTrapDmg;
   extern Option FireTrap;
   extern Option AntiFairyTrap;

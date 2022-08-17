@@ -745,6 +745,14 @@ string_view menuButtonDesc            = "Choose which button will bring up the C
                                         "Information Menu.";                               //
                                                                                            //
 /*------------------------------                                                           //
+|    ARROW SWITCHING BUTTON    |                                                           //
+------------------------------*/                                                           //
+string_view arrowSwitchDesc           = "Choose how you want to cycle through the arrow\n" //
+                                        "types while you're aiming the bow.\n"             //
+                                        "The touch screen option refers to the middle part\n"
+                                        "of the screen where the map is displayed.";       //
+                                                                                           //
+/*------------------------------                                                           //
 |     START WITH CONSUMABLES   |                                                           //
 ------------------------------*/                                                           //
 string_view startWithConsumablesDesc  = "Start the game with maxed out Deku Sticks and Deku"

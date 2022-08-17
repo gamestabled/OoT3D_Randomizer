@@ -898,10 +898,12 @@ namespace Settings {
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
   Option SkipSongReplays     = Option::U8  ("Skip Song Replays",      {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc},                                                                                            OptionCategory::Cosmetic);
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc},                                                                                                 OptionCategory::Cosmetic);
+  Option ArrowSwitchButton   = Option::U8  ("Switch Arrows with",     {"D-Pad Right","D-Pad Left","D-Pad Up","D-Pad Down","Touch Screen",},   {arrowSwitchDesc},                                                                                                OptionCategory::Cosmetic);
   std::vector<Option*> preferenceOptions = {
     &QuickText,
     &SkipSongReplays,
     &MenuOpeningButton,
+    &ArrowSwitchButton,
   };
 
   Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},          {""},                     OptionCategory::Cosmetic, 1);
@@ -1343,6 +1345,7 @@ namespace Settings {
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
     ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
+    ctx.arrowSwitchButton    = ArrowSwitchButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
     ctx.fireTrap             = (FireTrap) ? 1 : 0;
     ctx.antiFairyTrap        = (AntiFairyTrap) ? 1 : 0;
