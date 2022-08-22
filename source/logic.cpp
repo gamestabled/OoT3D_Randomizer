@@ -1143,7 +1143,7 @@ namespace Logic {
      BigPoeKill          = false;
      HookshotOrBoomerang = false;
 
-     BaseHearts      = StartingHearts.Value<u8>() + 1;
+     BaseHearts      = StartingHearts.Value<u8>();
      Hearts          = 0;
      Multiplier      = (DamageMultiplier.Value<u8>() < 6) ? DamageMultiplier.Value<u8>() : 10;
      EffectiveHealth = 0;

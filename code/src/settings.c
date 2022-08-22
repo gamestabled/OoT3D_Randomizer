@@ -75,6 +75,8 @@ u32 Settings_SetFullHealthRestore(u8 setAmount) {
     }
 }
 u32 NoHealFromHealthUpgrades(void) {
+    if (gSaveContext.healthCapacity == 0) // avoid Game Over when picking up a PoH with 0 hearts
+        return 0;
     return Settings_SetFullHealthRestore(0);
 }
 u32 NoHealFromBombchuBowlingPrize(void) {

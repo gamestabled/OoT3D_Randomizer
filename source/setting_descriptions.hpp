@@ -248,6 +248,8 @@ extern string_view startWithConsumablesDesc;
 
 extern string_view startWithMaxRupeesDesc;
 
+extern string_view startingHealthDesc;
+
 extern string_view itemPoolPlentiful;
 extern string_view itemPoolBalanced;
 extern string_view itemPoolScarce;

@@ -62,6 +62,13 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
         gSaveContext.equips.equipment &= ~0xF0; // unequip shield
     }
 
+    // If the player has started with 0 hearts, some entrances that knock Link down will cause a Game Over.
+    // When respawning after the Game Over, change the entrance type to avoid softlocks.
+    u8 playerEntranceType = (thisx->params & 0xF00) >> 8;
+    if (gSaveContext.healthCapacity == 0 && gSaveContext.respawnFlag == -2 && playerEntranceType == 7) {
+        thisx->params = (thisx->params & ~0xF00) | 0xD00; // Link will spawn standing in place
+    }
+
     PlayerActor_Init(thisx, globalCtx);
 
     if (gSettingsContext.fastBunnyHood) {
