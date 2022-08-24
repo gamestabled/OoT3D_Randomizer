@@ -162,8 +162,8 @@ static int GetMaxGSCount() {
   else if (Location(KAK_10_GOLD_SKULLTULA_REWARD)->GetPlacedItem().IsAdvancement() && Location(KAK_10_GOLD_SKULLTULA_REWARD)->GetPlacedItem().GetItemType() != ITEMTYPE_TOKEN) {
     maxUseful = 10;
   }
-  //Return max of the two possible reasons tokens could be important
-  return std::max(maxUseful, maxBridge);
+  //Return max of the two possible reasons tokens could be important, minus the tokens in the starting inventory
+  return std::max(maxUseful, maxBridge) - StartingSkulltulaToken.Value<u8>();
 }
 
 std::string GetShopItemBaseName(std::string itemName) {
