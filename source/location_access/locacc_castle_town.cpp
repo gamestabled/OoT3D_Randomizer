@@ -137,7 +137,7 @@ void AreaTable_Init_CastleTown() {
 
   areaTable[GANONS_CASTLE_GROUNDS] = Area("Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations                                   //the terrain was lowered such that you can't get this GS with a simple sword slash
-                  LocationAccess(OGC_GS, {[]{return HasExplosives || (IsAdult && (LogicOutsideGanonsGS || Bow || HookshotOrBoomerang || CanUse(DINS_FIRE)));}}),
+                  LocationAccess(OGC_GS, {[]{return CanUse(DINS_FIRE) || CanUseProjectile || (CanJumpslash && LogicOutsideGanonsGS);}}),
                 }, {
                   //Exits
                   Entrance(CASTLE_GROUNDS,           {[]{return AtNight;}}),

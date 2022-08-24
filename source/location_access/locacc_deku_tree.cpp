@@ -23,9 +23,8 @@ void AreaTable_Init_DekuTree() {
   if (Dungeon::DekuTree.IsVanilla()) {
   areaTable[DEKU_TREE_LOBBY] = Area("Deku Tree Lobby", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) || CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE));}}),
                 }, {
                   //Locations
                   LocationAccess(DEKU_TREE_MAP_CHEST, {[]{return true;}}),
@@ -34,12 +33,11 @@ void AreaTable_Init_DekuTree() {
                   Entrance(DEKU_TREE_ENTRYWAY,          {[]{return true;}}),
                   Entrance(DEKU_TREE_2F_MIDDLE_ROOM,    {[]{return true;}}),
                   Entrance(DEKU_TREE_COMPASS_ROOM,      {[]{return true;}}),
-                  Entrance(DEKU_TREE_BASEMENT_LOWER,    {[]{return Here(DEKU_TREE_LOBBY, []{return IsAdult || CanChildAttack || Nuts;});},
-                                             /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
+                  Entrance(DEKU_TREE_BASEMENT_LOWER,    {[]{return Here(DEKU_TREE_LOBBY, []{return CanAdultAttack || CanChildAttack || Nuts;});}}),
                   Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM, {[]{return false;},
                                              /*Glitched*/[]{return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);}}),
                   Entrance(DEKU_TREE_BOSS_ROOM,         {[]{return false;},
-                                             /*Glitched*/[]{return IsChild && CanUse(KOKIRI_SWORD) && Nuts && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::EXPERT);}}),
+                                             /*Glitched*/[]{return IsChild && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD)) && Nuts && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::EXPERT);}}),
   });
 
   areaTable[DEKU_TREE_2F_MIDDLE_ROOM] = Area("Deku Tree 2F Middle Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -60,15 +58,13 @@ void AreaTable_Init_DekuTree() {
 
   areaTable[DEKU_TREE_COMPASS_ROOM] = Area("Deku Tree Compass Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) || CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE));}}),
                 }, {
                   //Locations
                   LocationAccess(DEKU_TREE_COMPASS_CHEST,           {[]{return true;}}),
                   LocationAccess(DEKU_TREE_COMPASS_ROOM_SIDE_CHEST, {[]{return true;}}),
-                  LocationAccess(DEKU_TREE_GS_COMPASS_ROOM,         {[]{return IsAdult || CanChildAttack;},
-                                                         /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
+                  LocationAccess(DEKU_TREE_GS_COMPASS_ROOM,         {[]{return CanAdultAttack || CanChildAttack;}}),
                 }, {
                   //Exits
                   Entrance(DEKU_TREE_LOBBY,     {[]{return HasFireSourceWithTorch || CanUse(BOW);}}),
@@ -78,16 +74,14 @@ void AreaTable_Init_DekuTree() {
 
   areaTable[DEKU_TREE_BASEMENT_LOWER] = Area("Deku Tree Basement Lower", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) || CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE));}}),
                 }, {
                   //Locations
                   LocationAccess(DEKU_TREE_BASEMENT_CHEST,    {[]{return true;}}),
-                  LocationAccess(DEKU_TREE_GS_BASEMENT_GATE,  {[]{return IsAdult || CanChildAttack;},
-                                                   /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
-                  LocationAccess(DEKU_TREE_GS_BASEMENT_VINES, {[]{return CanUseProjectile || CanUse(DINS_FIRE) || (LogicDekuBasementGS && (IsAdult || Sticks || KokiriSword));},
-                                                   /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
+                  LocationAccess(DEKU_TREE_GS_BASEMENT_GATE,  {[]{return CanAdultAttack || CanChildAttack;}}),
+                  LocationAccess(DEKU_TREE_GS_BASEMENT_VINES, {[]{return CanUseProjectile || CanUse(DINS_FIRE) || (LogicDekuBasementGS && CanJumpslash);},
+                                                   /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Exits
                   Entrance(DEKU_TREE_LOBBY,               {[]{return true;}}),
@@ -112,9 +106,8 @@ void AreaTable_Init_DekuTree() {
 
   areaTable[DEKU_TREE_BASEMENT_TORCH_ROOM] = Area("Deku Tree Basement Torch Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) || CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE));}}),
                 }, {}, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_WATER_ROOM, {[]{return true;}}),
@@ -123,10 +116,10 @@ void AreaTable_Init_DekuTree() {
 
   areaTable[DEKU_TREE_BASEMENT_BACK_LOBBY] = Area("Deku Tree Basement Back Lobby", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(BOW);}) &&
+                                                                            (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG)));}}),
                   EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(BOW);}) &&
-                                                                            (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE)));},
-                                    /*Glitched*/[]{return Here(DEKU_TREE_BASEMENT_BACK_LOBBY, []{return HasFireSourceWithTorch || CanUse(BOW);}) && CanUse(MEGATON_HAMMER);}}),
+                                                                            (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) || CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE)));}}),
                 }, {}, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_TORCH_ROOM, {[]{return true;}}),
@@ -148,9 +141,8 @@ void AreaTable_Init_DekuTree() {
 
   areaTable[DEKU_TREE_BASEMENT_UPPER] = Area("Deku Tree Basement Upper", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));},
-                                    /*Glitched*/[]{return CanUse(MEGATON_HAMMER);}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) || CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE));}}),
                 }, {}, {
                   //Exits
                   Entrance(DEKU_TREE_BASEMENT_LOWER,      {[]{return true;}}),
@@ -166,7 +158,7 @@ void AreaTable_Init_DekuTree() {
 
   areaTable[DEKU_TREE_BOSS_ROOM] = Area("Deku Tree Boss Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || ((IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));},
+                  EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || (CanJumpslash && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));},
                                    /*Glitched*/[]{return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Locations
@@ -185,15 +177,15 @@ void AreaTable_Init_DekuTree() {
   if (Dungeon::DekuTree.IsMQ()) {
   areaTable[DEKU_TREE_MQ_LOBBY] = Area("Deku Tree MQ Lobby", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {
                   //Events
-                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (IsAdult || KokiriSword || Boomerang);}}),
-                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (IsAdult || KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE));}}),
+                  EventAccess(&DekuBabaSticks, {[]{return DekuBabaSticks || (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG));}}),
+                  EventAccess(&DekuBabaNuts,   {[]{return DekuBabaNuts   || (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) || CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE));}}),
   }, {
                   //Locations
                   LocationAccess(DEKU_TREE_MQ_MAP_CHEST,                 {[]{return true;}}),
-                  LocationAccess(DEKU_TREE_MQ_SLINGSHOT_CHEST,           {[]{return IsAdult || CanChildAttack;}}),
+                  LocationAccess(DEKU_TREE_MQ_SLINGSHOT_CHEST,           {[]{return CanAdultAttack || CanChildAttack;}}),
                   LocationAccess(DEKU_TREE_MQ_SLINGSHOT_ROOM_BACK_CHEST, {[]{return HasFireSourceWithTorch || (IsAdult && CanUse(BOW));}}),
                   LocationAccess(DEKU_TREE_MQ_BASEMENT_CHEST,            {[]{return HasFireSourceWithTorch || (IsAdult && CanUse(BOW));}}),
-                  LocationAccess(DEKU_TREE_MQ_GS_LOBBY,                  {[]{return IsAdult || CanChildAttack;}}),
+                  LocationAccess(DEKU_TREE_MQ_GS_LOBBY,                  {[]{return CanAdultAttack || CanChildAttack;}}),
   }, {
                   //Exits
                   Entrance(DEKU_TREE_ENTRYWAY,                     {[]{return true;}}),
@@ -233,7 +225,7 @@ void AreaTable_Init_DekuTree() {
                   //Exits
                   Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM,        {[]{return Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, []{return (IsChild && CanUse(STICKS)) || CanUse(DINS_FIRE) ||
                                                                                Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT, []{return IsAdult && CanUse(FIRE_ARROWS);});}) &&
-                                                                                 Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, []{return IsAdult || KokiriSword || CanUseProjectile || (Nuts && Sticks);});}}),
+                                                                                 Here(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_BACK, []{return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUseProjectile || (Nuts && CanUse(STICKS));});}}),
                   Entrance(DEKU_TREE_MQ_BASEMENT_WATER_ROOM_FRONT, {[]{return true;}}),
   });
 
@@ -251,12 +243,12 @@ void AreaTable_Init_DekuTree() {
                   //Events
                   EventAccess(&DekuTreeClear, {[]{return DekuTreeClear || (Here(DEKU_TREE_MQ_BASEMENT_LEDGE, []{return HasFireSourceWithTorch;}) &&
                                                                            Here(DEKU_TREE_MQ_BASEMENT_LEDGE, []{return HasShield;})  &&
-                                                                           (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));}}),
+                                                                           CanJumpslash && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));}}),
   }, {
                   //Locations
                   LocationAccess(DEKU_TREE_MQ_DEKU_SCRUB,     {[]{return CanStunDeku;}}),
-                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
-                  LocationAccess(QUEEN_GOHMA,                 {[]{return HasFireSourceWithTorch && HasShield && (IsAdult || KokiriSword || Sticks) && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang);}}),
+                  LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, {[]{return DekuTreeClear;}}),
+                  LocationAccess(QUEEN_GOHMA,                 {[]{return DekuTreeClear;}}),
   }, {
                   //Exits
                   Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM, {[]{return IsChild;}}),

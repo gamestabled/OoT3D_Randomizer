@@ -391,6 +391,7 @@ namespace Settings {
   extern bool HasNightStart;
 
   extern Option FaroresWindAnywhere;
+  extern Option AgeItemsInLogic;
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;

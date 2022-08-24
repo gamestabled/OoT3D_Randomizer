@@ -25,7 +25,7 @@ void AreaTable_Init_JabuJabusBelly() {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_ENTRYWAY,    {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE, {[]{return CanUseProjectile;},
-                                              /*Glitched*/[]{return CanUse(BOOMERANG) || CanUse(BOW) || CanUse(HOOKSHOT) || (CanUse(STICKS) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
+                                              /*Glitched*/[]{return (CanUse(STICKS) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT)) || CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);}}),
   });
 
   areaTable[JABU_JABUS_BELLY_LIFT_MIDDLE] = Area("Jabu Jabus Belly Lift Middle", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -69,7 +69,7 @@ void AreaTable_Init_JabuJabusBelly() {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_MAIN_LOWER, {[]{return true;}}),
                   Entrance(JABU_JABUS_BELLY_LIFT_LOWER, {[]{return CanUseProjectile;},
-                                             /*Glitched*/[]{return CanUse(BOOMERANG) || CanUse(BOW) || CanUse(HOOKSHOT) || (CanUse(STICKS) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT));}}),
+                                             /*Glitched*/[]{return CanUse(STICKS) && CanTakeDamage && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT);}}),
   });
 
   areaTable[JABU_JABUS_BELLY_LOWER_SIDE_ROOM] = Area("Jabu Jabus Belly Lower Side Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {
@@ -118,7 +118,7 @@ void AreaTable_Init_JabuJabusBelly() {
 
   areaTable[JABU_JABUS_BELLY_COMPASS_ROOM] = Area("Jabu Jabus Belly Compass Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(JABU_JABUS_BELLY_COMPASS_CHEST, {[]{return IsAdult || CanChildAttack;}}),
+                  LocationAccess(JABU_JABUS_BELLY_COMPASS_CHEST, {[]{return CanAdultAttack || CanChildAttack;}}),
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, {[]{return true;}}),
@@ -158,7 +158,7 @@ void AreaTable_Init_JabuJabusBelly() {
 
   areaTable[JABU_JABUS_BELLY_NEAR_BOSS_ROOM] = Area("Jabu Jabus Belly Near Boss Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(JABU_JABUS_BELLY_GS_NEAR_BOSS, {[]{return IsAdult || CanChildAttack;}}),
+                  LocationAccess(JABU_JABUS_BELLY_GS_NEAR_BOSS, {[]{return CanAdultAttack || CanChildAttack;}}),
                 }, {
                   //Exits
                   Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE, {[]{return true;}}),

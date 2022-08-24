@@ -803,6 +803,11 @@ string_view ageRestrictionsDesc       = "Remove age restrictions for inventory i
                                         "fully functional otherwise.";                     //
                                                                                            //
 /*------------------------------                                                           //
+|  AGE RESTRICTIONS IN LOGIC   |                                                           //
+------------------------------*/                                                           //
+string_view ageItemsInLogicDesc       = "Using items as the wrong age may be required to\n"//
+                                        "beat the seed.";                                  //
+/*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
 string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"

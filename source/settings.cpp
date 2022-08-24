@@ -325,6 +325,7 @@ namespace Settings {
   //Item Usability Settings
   Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere", {"Disabled", "Enabled"},                                                {faroresWindAnywhereDesc});
   Option AgeItemsToggle      = Option::U8  ("Lift Age Restrictions",  {"All Disabled",  "All Enabled", "Choose"},                             {ageRestrictionsDesc});
+  Option AgeItemsInLogic     = Option::Bool(" Consider in Logic",     {"No", "Yes"},                                                          {ageItemsInLogicDesc});
   Option StickAsAdult        = Option::Bool("  Adult Deku Stick",     {"Disabled", "Enabled"},                                                {adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("  Adult Boomerang",      {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("  Child Hammer",         {"Disabled", "Enabled"},                                                {childHammerDesc});
@@ -345,6 +346,7 @@ namespace Settings {
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
     &AgeItemsToggle,
+    &AgeItemsInLogic,
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
@@ -2056,6 +2058,12 @@ namespace Settings {
 
     //Manage toggle for item usability options
     ToggleSet(itemUsabilityOptions, &AgeItemsToggle, &StickAsAdult, &ZoraTunicAsChild);
+    if (AgeItemsToggle.Value<u8>() > 0) {
+      AgeItemsInLogic.Unhide();
+    } else {
+      AgeItemsInLogic.Hide();
+      AgeItemsInLogic.SetSelectedIndex(0);
+    }
 
     if (RemoveDoubleDefense) {
       StartingDoubleDefense.SetSelectedIndex(0);
