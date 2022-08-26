@@ -769,7 +769,7 @@ static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
 
   //Add specific items that need be randomized within this dungeon
   if (Keysanity.Is(KEYSANITY_OWN_DUNGEON) && dungeon->GetSmallKey() != NONE) {
-    std::vector<ItemKey> dungeonSmallKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const ItemKey i){ return i == dungeon->GetSmallKey();});
+    std::vector<ItemKey> dungeonSmallKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const ItemKey i){ return (i == dungeon->GetSmallKey()) || (i == dungeon->GetKeyRing());});
     AddElementsToPool(dungeonItems, dungeonSmallKeys);
   }
 
@@ -810,10 +810,10 @@ static void RandomizeDungeonItems() {
 
   for (auto dungeon : dungeonList) {
     if (Keysanity.Is(KEYSANITY_ANY_DUNGEON)) {
-      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const ItemKey i){return i == dungeon->GetSmallKey();});
+      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const ItemKey i){return (i == dungeon->GetSmallKey()) || (i == dungeon->GetKeyRing());});
       AddElementsToPool(anyDungeonItems, dungeonKeys);
     } else if (Keysanity.Is(KEYSANITY_OVERWORLD)) {
-      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const ItemKey i){return i == dungeon->GetSmallKey();});
+      auto dungeonKeys = FilterAndEraseFromPool(ItemPool, [dungeon](const ItemKey i){return (i == dungeon->GetSmallKey()) || (i == dungeon->GetKeyRing());});
       AddElementsToPool(overworldItems, dungeonKeys);
     }
 
