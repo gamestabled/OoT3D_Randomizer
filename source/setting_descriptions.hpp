@@ -244,6 +244,8 @@ extern string_view ingameSpoilersHideDesc;
 
 extern string_view menuButtonDesc;
 
+extern string_view arrowSwitchDesc;
+
 extern string_view startWithConsumablesDesc;
 
 extern string_view startWithMaxRupeesDesc;

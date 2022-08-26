@@ -289,6 +289,14 @@ typedef enum {
 } ItemPoolSetting;
 
 typedef enum {
+  ARROWSWITCH_RIGHT,
+  ARROWSWITCH_LEFT,
+  ARROWSWITCH_UP,
+  ARROWSWITCH_DOWN,
+  ARROWSWITCH_TOUCH,
+} ArrowSwitchSetting;
+
+typedef enum {
   ICETRAPS_OFF,
   ICETRAPS_NORMAL,
   ICETRAPS_EXTRA,
@@ -456,6 +464,7 @@ typedef struct {
   u8 generateSpoilerLog;
   u8 ingameSpoilers;
   u8 menuOpeningButton;
+  u8 arrowSwitchButton;
   u8 randomTrapDmg;
   u8 fireTrap;
   u8 antiFairyTrap;
