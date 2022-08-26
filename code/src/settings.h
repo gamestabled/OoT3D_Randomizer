@@ -478,6 +478,7 @@ typedef struct {
   u8 mirrorShieldAsChild;
   u8 goronTunicAsChild;
   u8 zoraTunicAsChild;
+  u8 restoreISG;
   u8 gkDurability;
 
   u8 itemPoolValue;

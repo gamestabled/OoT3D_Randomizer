@@ -283,6 +283,8 @@ extern string_view childMirrorShieldDesc;
 extern string_view childGoronTunicDesc;
 extern string_view childZoraTunicDesc;
 
+extern string_view restoreISGdesc;
+
 extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;
 extern string_view gkDurabilityRandomSafe;

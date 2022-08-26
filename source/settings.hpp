@@ -407,6 +407,7 @@ namespace Settings {
   extern Option MirrorShieldAsChild;
   extern Option GoronTunicAsChild;
   extern Option ZoraTunicAsChild;
+  extern Option RestoreISG;
   extern Option GkDurability;
 
   extern Option ItemPoolValue;
