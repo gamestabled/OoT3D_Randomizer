@@ -2274,6 +2274,15 @@ void HintTable_Init() {
                /*italian*/"!#^La direzione per il #Santuario dello Spirito# è indicata dalla #bandiera sulla "+IF_NOT_MQ()+"sinistra"+MQ_ELSE()+"destra"+MQ_END()+"# del negozio. A presto!",
                 /*german*/"Deutsch"},
     });
+
+    hintTable[GRANNY_DIALOG] = HintText::MerchantsDialogs({
+                     //obscure text
+                     Text{"! How about #100 Rupees#?&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
+                /*french*/"! Que dis-tu de #100 rubis#?&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
+               /*spanish*/". Vendo por #100 rupias#.&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
+               /*italian*/"! Che ne dici di #100 rupie#?&"+TWO_WAY_CHOICE()+"#Aggiudicato!&Non mi serve...#",
+                /*german*/"Deutsch &"+TWO_WAY_CHOICE()+"#Y&N#"},
+    });
 }
 
 s32 StonesRequiredBySettings() {
