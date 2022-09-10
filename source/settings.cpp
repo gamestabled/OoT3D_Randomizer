@@ -1156,8 +1156,10 @@ namespace Settings {
   Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions},                      {fanfareDescriptions},                                                                                                                                OptionCategory::Cosmetic,               1); // Fanfares only
   Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},                         {shuffleOcaMusicDesc},                                                                                                                                OptionCategory::Cosmetic,               1); // On
 
-  Option ShuffleSFX              = Option::U8  ("Shuffle SFX",           {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                   OptionCategory::Cosmetic);
-  Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle", {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                  OptionCategory::Cosmetic,               1); // On
+  Option ShuffleSFX              = Option::U8  ("Shuffle SFX",            {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                  OptionCategory::Cosmetic);
+  Option ShuffleSFXFootsteps     = Option::Bool("  Include Footsteps",    {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               1); // Yes
+  Option ShuffleSFXLinkVoice     = Option::Bool("  Include Link's Voice", {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               1); // Yes
+  Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle",  {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                 OptionCategory::Cosmetic,               1); // On
 
   std::vector<Option*> audioOptions = {
     &ShuffleMusic,
@@ -1165,6 +1167,8 @@ namespace Settings {
     &ShuffleFanfares,
     &ShuffleOcaMusic,
     &ShuffleSFX,
+    &ShuffleSFXFootsteps,
+    &ShuffleSFXLinkVoice,
     &ShuffleSFXCategorically,
   };
 
@@ -1418,6 +1422,8 @@ namespace Settings {
     ctx.coloredKeys                = (ColoredKeys) ? 1 : 0;
     ctx.coloredBossKeys            = (ColoredBossKeys) ? 1 : 0;
     ctx.shuffleSFX                 = ShuffleSFX.Value<u8>();
+    ctx.shuffleSFXFootsteps        = (ShuffleSFXFootsteps) ? 1 : 0;
+    ctx.shuffleSFXLinkVoice        = (ShuffleSFXLinkVoice) ? 1 : 0;
     ctx.shuffleSFXCategorically    = (ShuffleSFXCategorically) ? 1 : 0;
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
@@ -2293,8 +2299,12 @@ namespace Settings {
     }
 
     if (ShuffleSFX) {
+      ShuffleSFXFootsteps.Unhide();
+      ShuffleSFXLinkVoice.Unhide();
       ShuffleSFXCategorically.Unhide();
     } else {
+      ShuffleSFXFootsteps.Hide();
+      ShuffleSFXLinkVoice.Hide();
       ShuffleSFXCategorically.Hide();
     }
 

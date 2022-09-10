@@ -4,6 +4,7 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <functional>
 
 #include "keys.hpp"
 #include "text.hpp"

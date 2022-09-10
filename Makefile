@@ -53,7 +53,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS
+CFLAGS	+=	$(INCLUDE) -D__3DS__
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -fno-var-tracking-assignments -std=gnu++17 -Wreorder
 
