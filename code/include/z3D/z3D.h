@@ -566,6 +566,14 @@ typedef Actor* (*Actor_Spawn_proc)(ActorContext *actorCtx,GlobalContext *globalC
 #define Actor_Spawn_addr 0x3738D0
 #define Actor_Spawn ((Actor_Spawn_proc)Actor_Spawn_addr)
 
+typedef Actor* (*Actor_Find_proc)(ActorContext* actorCtx, s16 actorId, u8 actorType);
+#define Actor_Find_addr 0x372D64
+#define Actor_Find ((Actor_Find_proc)Actor_Find_addr)
+
+typedef void (*Actor_GetScreenPos_proc)(GlobalContext* globalCtx, Actor* actor, s16* outX, s16* outY);
+#define Actor_GetScreenPos_addr 0x363A20
+#define Actor_GetScreenPos ((Actor_GetScreenPos_proc)Actor_GetScreenPos_addr)
+
 typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int flamesColor);
 #define FireDamage_addr 0x35D8D8
 #define FireDamage ((FireDamage_proc)FireDamage_addr)
