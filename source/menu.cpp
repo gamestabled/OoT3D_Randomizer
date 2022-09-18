@@ -202,7 +202,7 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
     kDown = 0;
   }
 
-  if (currentMenu->mode != GENERATE_MODE) {
+  if (currentMenu->mode != POST_GENERATE) {
 
     //New Random Seed
     if (kDown & KEY_Y) {

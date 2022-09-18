@@ -154,6 +154,10 @@ s32 Settings_IsMasterQuestDungeon(void) {
     return 0;
 }
 
+s32 Settings_IsIsgEnabled(void) {
+    return (s32)gSettingsContext.restoreISG;
+}
+
 const char hashIconNames[32][25] = {
     "Deku Stick",
     "Deku Nut",

@@ -342,6 +342,7 @@ namespace Settings {
   Option MirrorShieldAsChild = Option::Bool("  Child Mirror Shield",  {"Disabled", "Enabled"},                                                {childMirrorShieldDesc});
   Option GoronTunicAsChild   = Option::Bool("  Child Goron Tunic",    {"Disabled", "Enabled"},                                                {childGoronTunicDesc});
   Option ZoraTunicAsChild    = Option::Bool("  Child Zora Tunic",     {"Disabled", "Enabled"},                                                {childZoraTunicDesc});
+  Option RestoreISG          = Option::Bool("Restore ISG",            {"Disabled", "Enabled"},                                                {restoreISGdesc},                                                                                                 OptionCategory::Setting,    ON);
   Option GkDurability        = Option::U8  ("GK Durability",          {"Vanilla", "Random Risk", "Random Safe"},                              {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
@@ -363,6 +364,7 @@ namespace Settings {
     &MirrorShieldAsChild,
     &GoronTunicAsChild,
     &ZoraTunicAsChild,
+    &RestoreISG,
     &GkDurability,
   };
 
@@ -900,10 +902,12 @@ namespace Settings {
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
   Option SkipSongReplays     = Option::U8  ("Skip Song Replays",      {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc},                                                                                            OptionCategory::Cosmetic);
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc},                                                                                                 OptionCategory::Cosmetic);
+  Option ArrowSwitchButton   = Option::U8  ("Switch Arrows with",     {"D-Pad Right","D-Pad Left","D-Pad Up","D-Pad Down","Touch Screen",},   {arrowSwitchDesc},                                                                                                OptionCategory::Cosmetic);
   std::vector<Option*> preferenceOptions = {
     &QuickText,
     &SkipSongReplays,
     &MenuOpeningButton,
+    &ArrowSwitchButton,
   };
 
   Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},          {""},                     OptionCategory::Cosmetic, 1);
@@ -1345,6 +1349,7 @@ namespace Settings {
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
     ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
+    ctx.arrowSwitchButton    = ArrowSwitchButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
     ctx.fireTrap             = (FireTrap) ? 1 : 0;
     ctx.antiFairyTrap        = (AntiFairyTrap) ? 1 : 0;
@@ -1367,6 +1372,7 @@ namespace Settings {
     ctx.mirrorShieldAsChild  = (MirrorShieldAsChild) ? 1 : 0;
     ctx.goronTunicAsChild    = (GoronTunicAsChild) ? 1 : 0;
     ctx.zoraTunicAsChild     = (ZoraTunicAsChild) ? 1 : 0;
+    ctx.restoreISG           = (RestoreISG) ? 1 : 0;
     ctx.gkDurability         = GkDurability.Value<u8>();
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
@@ -2070,6 +2076,16 @@ namespace Settings {
       StartingDoubleDefense.Lock();
     } else {
       StartingDoubleDefense.Unlock();
+    }
+
+    if (RestoreISG) {
+      GlitchISG.Unlock();
+      GlitchHover.Unlock();
+    } else {
+      GlitchISG.SetSelectedIndex(0);
+      GlitchISG.Lock();
+      GlitchHover.SetSelectedIndex(0);
+      GlitchHover.Lock();
     }
 
     if (currentSetting != nullptr) {

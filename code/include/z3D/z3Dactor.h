@@ -220,7 +220,9 @@ typedef struct {
     /* 0x024C */ void*  giDrawSpace;
     /* 0x0250 */ char   unk_250[0x0004];
     /* 0x0254 */ struct SkelAnime skelAnime;
-    /* 0x02D8 */ char   unk_2D8[0x0FD4];
+    /* 0x02D8 */ char   unk_2D8[0x0F4C];
+    /* 0x1224 */ Actor* heldActor;
+    /* 0x1228 */ char   unk_1228[0x84];
     /* 0x12AC */ u8     getItemId;
     /* 0x12AD */ char   unk_12AD[0x0001];
     /* 0x12AE */ u16    getItemDirection;
