@@ -3,6 +3,7 @@
 #include "debug.hpp"
 #include "shops.hpp"
 #include "../code/src/message.h"
+#include "settings.hpp"
 
 #include <array>
 #include <set>
@@ -130,38 +131,89 @@ constexpr std::array DungeonColors = {
 
     //textBoxType and textBoxPosition are defined here: https://wiki.cloudmodding.com/oot/Text_Format#Message_Id
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-                       std::string englishText, std::string frenchText, std::string spanishText) {
+                       std::string NAEnglishText, std::string NAFrenchText, std::string NASpanishText,
+                       std::string EUREnglishText, std::string EURFrenchText, std::string EURSpanishText,
+                       std::string EURItalianText, std::string EURGermanText) {
             MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
-            while ((englishText.size() % 4) != 0) {
-              englishText += "\0"s;
-            }
-            messageData.seekg(0, messageData.end);
-            newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
-            newEntry.info[ENGLISH_U].length = englishText.size();
-            messageData << englishText;
+            if (Settings::Region == REGION_NA) {
+                while ((NAEnglishText.size() % 4) != 0) {
+                    NAEnglishText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[ENGLISH_U].length = NAEnglishText.size();
+                messageData << NAEnglishText;
 
-            while ((frenchText.size() % 4) != 0) {
-              frenchText += "\0"s;
-            }
-            messageData.seekg(0, messageData.end);
-            newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
-            newEntry.info[FRENCH_U].length = frenchText.size();
-            messageData << frenchText;
+                while ((NAFrenchText.size() % 4) != 0) {
+                    NAFrenchText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[FRENCH_U].length = NAFrenchText.size();
+                messageData << NAFrenchText;
 
-            while ((spanishText.size() % 4) != 0) {
-              spanishText += "\0"s;
+                while ((NASpanishText.size() % 4) != 0) {
+                    NASpanishText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[SPANISH_U].length = NASpanishText.size();
+                messageData << NASpanishText;
+            } else if (Settings::Region == REGION_EUR) {
+                while ((EUREnglishText.size() % 4) != 0) {
+                    EUREnglishText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[ENGLISH_E].length = EUREnglishText.size();
+                messageData << EUREnglishText;
+
+                while ((EURFrenchText.size() % 4) != 0) {
+                    EURFrenchText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[FRENCH_E].length = EURFrenchText.size();
+                messageData << EURFrenchText;
+
+                while ((EURSpanishText.size() % 4) != 0) {
+                    EURSpanishText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[SPANISH_E].length = EURSpanishText.size();
+                messageData << EURSpanishText;
+
+                while ((EURItalianText.size() % 4) != 0) {
+                    EURItalianText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[ITALIAN_E].length = EURItalianText.size();
+                messageData << EURItalianText;
+
+                while ((EURGermanText.size() % 4) != 0) {
+                    EURGermanText += "\0"s;
+                }
+                messageData.seekg(0, messageData.end);
+                newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[GERMAN_E].length = EURGermanText.size();
+                messageData << EURGermanText;
             }
-            messageData.seekg(0, messageData.end);
-            newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
-            newEntry.info[SPANISH_U].length = spanishText.size();
-            messageData << spanishText;
 
             messageEntries.insert(newEntry);
     }
 
+    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
+                       std::string NAEnglishText, std::string NAFrenchText, std::string NASpanishText) {
+        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, NAEnglishText, NAFrenchText, NASpanishText,
+                        NAEnglishText, NAFrenchText, NASpanishText, NAEnglishText, NAEnglishText);
+    }
+
     void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text) {
-        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetEnglish(), text.GetFrench(), text.GetSpanish());
+        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetNAEnglish(), text.GetNAFrench(), text.GetNASpanish(),
+            text.GetEUREnglish(), text.GetEURFrench(), text.GetEURSpanish(), text.GetEURItalian(), text.GetEURGerman());
     }
 
     u32 NumMessages() {
@@ -347,29 +399,29 @@ constexpr std::array DungeonColors = {
             Text name = NonShopItems[shopitems].Name;
             std::string price = std::to_string(NonShopItems[shopitems].Price);
             //Prevent names from being too long and overflowing textbox
-            if (name.GetEnglish() == "Piece of Heart (Treasure Chest Minigame)") {
+            if (name.GetNAEnglish() == "Piece of Heart (Treasure Chest Minigame)") {
                 name = Text{"Piece of Heart", "Quart de coeur", "Pieza de corazón"};
-            } else if (name.GetEnglish() == "Green Rupee (Treasure Chest Minigame)") {
+            } else if (name.GetNAEnglish() == "Green Rupee (Treasure Chest Minigame)") {
                 name = Text{"Green Rupee", "Rubis vert", "Rupia verde"};
             }
             //Message to display when hovering over the item
             if (NonShopItems[shopitems].Repurchaseable) { //Different checkbox for repurchaseable items
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetSpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial!"+NEWLINE()+"¡Compra todo lo que quieras!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNASpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial!"+NEWLINE()+"¡Compra todo lo que quieras!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
             }
             else { //Normal textbox
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetSpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡SOLO QUEDA UNA UNIDAD!"+NEWLINE()+"¡Hazte con ella antes de que se agote!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNASpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡SOLO QUEDA UNA UNIDAD!"+NEWLINE()+"¡Hazte con ella antes de que se agote!"+SHOP_MESSAGE_BOX()+MESSAGE_END());
             }
             //Message to display when going to buy the item
             CreateMessage(0x9200+shopitems*2+1, 0, 0, 0,
-                INSTANT_TEXT_ON()+name.GetEnglish()+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name.GetFrench()+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name.GetSpanish()+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
+                INSTANT_TEXT_ON()+name.GetNAEnglish()+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetNAFrench()+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetNASpanish()+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //easter egg
         CreateMessage(0x96F, 0, 2, 2,
@@ -408,7 +460,7 @@ constexpr std::array DungeonColors = {
     Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
 
       //for each language
-      for (std::string* textStr : {&text.english, &text.french, &text.spanish}) {
+      for (std::string* textStr : {&text.NAenglish, &text.NAfrench, &text.NAspanish}) {
 
         //insert playername
         size_t atSymbol = textStr->find('@');

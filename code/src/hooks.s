@@ -345,7 +345,7 @@ hook_StoreChildBButtonEquip:
     push {r0-r12, lr}
     bl SaveFile_SaveChildBButton
     pop {r0-r12, lr}
-    b 0x45F210
+    b 0x45F230
 
 .global hook_LullabyCheckFlag
 hook_LullabyCheckFlag:
@@ -691,7 +691,7 @@ hook_SunsSongEndCloseTextbox:
     push {r0-r12, lr}
     bl Settings_SunsSongEndCloseTextbox
     pop {r0-r12, lr}
-    b 0x45B518
+    b 0x45B538
 
 .global hook_SetSpecialVoidOutRespawnFlag
 hook_SetSpecialVoidOutRespawnFlag:
@@ -952,7 +952,7 @@ hook_SetBGMDayNight:
     bl SetBGM
     pop {r1-r12, lr}
     push {r4-r6, lr}
-    b 0x483C8C
+    b 0x483CAC
 
 .global hook_SetBGMEvent
 hook_SetBGMEvent:
@@ -1078,7 +1078,7 @@ hook_LoadGame:
     push {r0-r12, lr}
     bl SaveFile_LoadExtSaveData
     pop {r0-r12, lr}
-    b 0x447384
+    b 0x4473A4
 
 .global hook_SaveGame
 hook_SaveGame:
@@ -1099,7 +1099,7 @@ hook_SaveMenuIgnoreOpen:
     bl SaveMenu_IgnoreOpen
     cmp r0,#0x1
     pop {r0-r12, lr}
-    beq 0x42F270
+    beq 0x42F294
     bx lr
 
 .global hook_OverrideFogDuringGameplayInit
@@ -1120,18 +1120,18 @@ hook_FixItemsMenuSlotDuplication:
     mov r4,#0xFF
     mov lr,#0xFF
     add r10,r10,#0x1
-    b 0x456B94
+    b 0x456BB4
 
 .global hook_PlayEntranceCutscene
 hook_PlayEntranceCutscene:
-    bgt 0x44F0A4
+    bgt 0x44F0C4
     push {r0-r12, lr}
     ldrb r0,[r5,#0x3]
     bl EntranceCutscene_ShouldPlay
     cmp r0,#0x0
     pop {r0-r12, lr}
-    beq 0x44F0A4
-    b 0x44F06C
+    beq 0x44F0C4
+    b 0x44F08C
 
 .global hook_SkipJabuOpeningCutscene
 hook_SkipJabuOpeningCutscene:
@@ -1332,7 +1332,7 @@ hook_Multiplayer_OnLoadFile:
     push {r0-r12, lr}
     bl Multiplayer_OnFileLoad
     pop {r0-r12, lr}
-    b 0x449F00
+    b 0x449F20
 
 .global hook_SendDroppedBottleContents
 hook_SendDroppedBottleContents:
@@ -1487,7 +1487,7 @@ hook_CurseTrapDizzyButtons:
     pop {r1}
     pop {r0,r3-r12,lr}
     stmia r0,{r1,r2,r3,r5,r6,r7,r8,r9,r10,r11,r12,lr}
-    b 0x41ABE0
+    b 0x41AC04
 
 .global hook_CrouchStabHitbox
 hook_CrouchStabHitbox:

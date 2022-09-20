@@ -19,6 +19,7 @@
 
 namespace {
   bool seedChanged;
+  bool chosePlayOption;
   u16 pastSeedLength;
   PrintConsole topScreen, bottomScreen;
   std::vector<std::string> presetEntries;
@@ -43,6 +44,7 @@ void MenuInit() {
   Settings::InitSettings();
 
   seedChanged = false;
+  chosePlayOption = false;
   pastSeedLength = Settings::seed.length();
 
   Menu* main = new Menu("Main", MenuType::MainMenu, &Settings::mainMenu, MAIN_MENU);
@@ -189,7 +191,7 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
       kDown = 0;
     }
   //If they pressed B on any menu other than main, go backwards to the previous menu
-  } else if (kDown & KEY_B && currentMenu->mode != MAIN_MENU) {
+  } else if (kDown & KEY_B && currentMenu->mode != MAIN_MENU && !chosePlayOption) {
     //Want to reset generate menu when leaving
     if (currentMenu->mode == POST_GENERATE) {
       currentMenu->mode = GENERATE_MODE;
@@ -348,13 +350,26 @@ void UpdateResetToDefaultsMenu(u32 kDown) {
 }
 
 void UpdateGenerateMenu(u32 kDown) {
-  if ((kDown & KEY_A) != 0) {
-    Settings::PlayOption = currentMenu->menuIdx;
-    consoleSelect(&bottomScreen);
-    consoleClear();
-    GenerateRandomizer();
-    //This is just a dummy mode to stop the prompt from appearing again
-    currentMenu->mode = POST_GENERATE;
+  if (!chosePlayOption) {
+    if ((kDown & KEY_A) != 0) {
+      Settings::PlayOption = currentMenu->menuIdx;
+      consoleSelect(&bottomScreen);
+      consoleClear();
+      chosePlayOption = true;
+    }
+  } else {
+    if ((kDown & KEY_B) != 0) {
+      consoleSelect(&bottomScreen);
+      consoleClear();
+      chosePlayOption = false;
+    } else if ((kDown & KEY_A) != 0) {
+      Settings::Region = currentMenu->menuIdx;
+      consoleSelect(&bottomScreen);
+      consoleClear();
+      GenerateRandomizer();
+      //This is just a dummy mode to stop the prompt from appearing again
+      currentMenu->mode = POST_GENERATE;
+    }
   }
 }
 
@@ -510,19 +525,37 @@ void PrintGenerateMenu() {
 
   consoleSelect(&bottomScreen);
 
-  printf("\x1b[3;%dHHow will you play?", 1+(BOTTOM_WIDTH-18)/2);
-  std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
+  if (!chosePlayOption) {
+    printf("\x1b[3;%dHHow will you play?", 1+(BOTTOM_WIDTH-18)/2);
+    std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
 
-  for (u8 i = 0; i < playOptions.size(); i++) {
+    for (u8 i = 0; i < playOptions.size(); i++) {
 
-    std::string option = playOptions[i];
-    u8 row = 6 + (i * 2);
-    //make the current selection green
-    if (currentMenu->menuIdx == i) {
-      printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
-      printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
-    } else {
-      printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+      std::string option = playOptions[i];
+      u8 row = 6 + (i * 2);
+      //make the current selection green
+      if (currentMenu->menuIdx == i) {
+        printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
+        printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
+      } else {
+        printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+      }
+    }
+  } else {
+    printf("\x1b[3;%dHSelect your game region", 1+(BOTTOM_WIDTH-18)/2);
+    std::vector<std::string> regionOptions = {"North America (33500)", "Europe (33600)"};
+
+    for (u8 i = 0; i < regionOptions.size(); i++) {
+
+      std::string option = regionOptions[i];
+      u8 row = 6 + (i * 2);
+      //make the current selection green
+      if (currentMenu->menuIdx == i) {
+        printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
+        printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
+      } else {
+        printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+      }
     }
   }
 }

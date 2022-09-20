@@ -90,7 +90,7 @@ public:
             return false;
         }
 
-        if (name.GetEnglish().find("Bombchus") != std::string::npos && !BombchusInLogic) {
+        if (name.GetNAEnglish().find("Bombchus") != std::string::npos && !BombchusInLogic) {
             return false;
         }
 

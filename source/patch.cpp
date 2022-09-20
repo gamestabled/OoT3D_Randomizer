@@ -101,6 +101,12 @@ bool WriteAllPatches() {
   u32 bytesWritten = 0;
   u32 totalRW = 0;
   char buf[512];
+  std::string titleId;
+  if (Settings::Region == REGION_NA) {
+    titleId = "0004000000033500";
+  } else if (Settings::Region == REGION_EUR) {
+    titleId = "0004000000033600";
+  }
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
@@ -112,12 +118,12 @@ bool WriteAllPatches() {
   FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma"), FS_ATTRIBUTE_DIRECTORY);
   //Create the titles directory if it doesn't exist
   FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles"), FS_ATTRIBUTE_DIRECTORY);
-  //Create the 0004000000033500 directory if it doesn't exist (oot3d game id)
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the 0004000000033500 (33600 for EUR) directory if it doesn't exist (oot3d game id)
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId).c_str()), FS_ATTRIBUTE_DIRECTORY);
   //Create the romfs directory if it doesn't exist (for LayeredFS)
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/romfs"), FS_ATTRIBUTE_DIRECTORY);
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/romfs").c_str()), FS_ATTRIBUTE_DIRECTORY);
   //Create the actor directory if it doesn't exist
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/romfs/actor"), FS_ATTRIBUTE_DIRECTORY);
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/romfs/actor").c_str()), FS_ATTRIBUTE_DIRECTORY);
 
   /*romfs is used to get files from the romfs folder. This allows us to copy
   from basecode and write the exheader without the user needing to worry about
@@ -132,10 +138,10 @@ bool WriteAllPatches() {
   --------------------------*/
 
   // Delete code.ips if it exists
-  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/code.ips"));
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/code.ips").c_str()));
 
   // Open code.ips
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&code, sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/code.ips"), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&code, sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/code.ips").c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 
@@ -583,7 +589,7 @@ bool WriteAllPatches() {
     filePath = "romfs:/exheader_citra.bin";
   }
 
-  CopyFile(sdmcArchive, "/luma/titles/0004000000033500/exheader.bin", filePath);
+  CopyFile(sdmcArchive, ("/luma/titles/" + titleId + "/exheader.bin").c_str(), filePath);
 
   /*-------------------------
   |       custom assets      |
@@ -596,7 +602,7 @@ bool WriteAllPatches() {
 
   // Delete assets if it exists
   Handle assetsOut;
-  const char* assetsOutPath = "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar";
+  const char* assetsOutPath = ("/luma/titles/" + titleId + "/romfs/actor/zelda_gi_melody.zar").c_str();
   const char* assetsInPath = "romfs:/zelda_gi_melody.zar";
   FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath));
 
