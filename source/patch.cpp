@@ -602,12 +602,12 @@ bool WriteAllPatches() {
 
   // Delete assets if it exists
   Handle assetsOut;
-  const char* assetsOutPath = ("/luma/titles/" + titleId + "/romfs/actor/zelda_gi_melody.zar").c_str();
+  std::string assetsOutPath = "/luma/titles/" + titleId + "/romfs/actor/zelda_gi_melody.zar";
   const char* assetsInPath = "romfs:/zelda_gi_melody.zar";
-  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath));
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath.c_str()));
 
   // Open assets destination
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&assetsOut, sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&assetsOut, sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 
