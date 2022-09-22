@@ -1064,235 +1064,235 @@ SECTIONS
 		*(.patch_SleepQueryCallback)
 	}
 
-	.patch_CurseTrapDizzyStick 0x41AB24 : {
+	.patch_CurseTrapDizzyStick 0x41AB48 : {
 		*(.patch_CurseTrapDizzyStick)
 	}
 
-	.patch_CurseTrapDizzyButtons 0x41ABDC : {
+	.patch_CurseTrapDizzyButtons 0x41AC00 : {
 		*(.patch_CurseTrapDizzyButtons)
 	}
 
-	.patch_SaveMenuIgnoreOpen 0x42EC00 : {
+	.patch_SaveMenuIgnoreOpen 0x42EC24 : {
 		*(.patch_SaveMenuIgnoreOpen)
 	}
 
-	.patch_ItemsMenuDraw 0x434C08 : {
+	.patch_ItemsMenuDraw 0x434C2C : {
 		*(.patch_ItemsMenuDraw)
 	}
 
-	.patch_LoadGame 0x447380 : {
+	.patch_LoadGame 0x4473A0 : {
 		*(.patch_LoadGame)
 	}
 
-	.patch_DontSetMotionSetting 0x447410 : {
+	.patch_DontSetMotionSetting 0x447430 : {
 		*(.patch_DontSetMotionSetting)
 	}
 
-	.patch_OverrideFogDuringGameplayInit 0x4485B4 : {
+	.patch_OverrideFogDuringGameplayInit 0x4485D4 : {
 		*(.patch_OverrideFogDuringGameplayInit)
 	}
 
-	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 : {
+	.patch_CheckForPocketCuccoHatchGameplayInit 0x448AA0 : {
 		*(.patch_CheckForPocketCuccoHatchGameplayInit)
 	}
 
-	.patch_InitSceneClearExtendedObjects 0x449218 : {
+	.patch_InitSceneClearExtendedObjects 0x449238 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}
 
-	.patch_SaveFile_Init 0x449A04 : {
+	.patch_SaveFile_Init 0x449A24 : {
 		*(.patch_SaveFile_Init)
 	}
 
-	.patch_Multiplayer_OnLoadFile 0x449EFC : {
+	.patch_Multiplayer_OnLoadFile 0x449F1C : {
 		*(.patch_Multiplayer_OnLoadFile)
 	}
 
-	.patch_GetCustomMessageEntryTwo 0x44D564 : {
+	.patch_GetCustomMessageEntryTwo 0x44D584 : {
 		*(.patch_GetCustomMessageEntryTwo)
 	}
 
-	.patch_GetCustomMessageTextTwo 0x44D5A4 : {
+	.patch_GetCustomMessageTextTwo 0x44D5C4 : {
 		*(.patch_GetCustomMessageTextTwo)
 	}
 
-	.patch_GameplayDestroy 0x44E294 : {
+	.patch_GameplayDestroy 0x44E2B4 : {
 		*(.patch_GameplayDestroy)
 	}
 
-	.patch_ExtendedObjectClear 0x44E754 : {
+	.patch_ExtendedObjectClear 0x44E774 : {
 		*(.patch_ExtendedObjectClear)
 	}
 
-	.patch_Multiplayer_UpdatePrevActorFlags 0x44E878 : {
+	.patch_Multiplayer_UpdatePrevActorFlags 0x44E898 : {
 		*(.patch_Multiplayer_UpdatePrevActorFlags)
 	}
 
-	.patch_PlayEntranceCutscene 0x44F068 : {
+	.patch_PlayEntranceCutscene 0x44F088 : {
 		*(.patch_PlayEntranceCutscene)
 	}
 
-	.patch_RequiemLocation 0x44F104 : {
+	.patch_RequiemLocation 0x44F124 : {
 		*(.patch_RequiemLocation)
 	}
 
-	.patch_NocturneLocation 0x44F12C : {
+	.patch_NocturneLocation 0x44F14C : {
 		*(.patch_NocturneLocation)
 	}
 
-	.patch_SariasGift 0x44F188 : {
+	.patch_SariasGift 0x44F1A8 : {
 		*(.patch_SariasGift)
 	}
 
-	.patch_LACSConditionOne 0x44F1D4 : {
+	.patch_LACSConditionOne 0x44F1F4 : {
 		*(.patch_LACSConditionOne)
 	}
 
-	.patch_LACSConditionTwo 0x44F20C : {
+	.patch_LACSConditionTwo 0x44F22C : {
 		*(.patch_LACSConditionTwo)
 	}
 
-	.patch_BossChallenge_Enter 0x44F634 : {
+	.patch_BossChallenge_Enter 0x44F654 : {
 		*(.patch_BossChallenge_Enter)
 	}
 
-	.patch_SetSavewarpEntrance 0x44FBE4 : {
+	.patch_SetSavewarpEntrance 0x44FC04 : {
 		*(.patch_SetSavewarpEntrance)
 	}
 
-	.patch_LullabyCheckFlag 0x44FD54 : {
+	.patch_LullabyCheckFlag 0x44FD74 : {
 		*(.patch_LullabyCheckFlag)
 	}
 
-	.patch_OpenSaveDontSpoilTradeItems 0x44FDF8 : {
+	.patch_OpenSaveDontSpoilTradeItems 0x44FE18 : {
 		*(.patch_OpenSaveDontSpoilTradeItems)
 	}
 
-	.patch_before_GlobalContext_Update 0x452390 : {
+	.patch_before_GlobalContext_Update 0x4523B0 : {
 		*(.patch_before_GlobalContext_Update)
 	}
 
-	.patch_after_GlobalContext_Update 0x452434 : {
+	.patch_after_GlobalContext_Update 0x452454 : {
 		*(.patch_after_GlobalContext_Update)
 	}
 
-	.patch_FixItemsMenuSlotDuplication 0x456B90 : {
+	.patch_FixItemsMenuSlotDuplication 0x456BB0 : {
 		*(.patch_FixItemsMenuSlotDuplication)
 	}
 
-	.patch_GameOverDontSpoilTradeItems 0x458BE0 : {
+	.patch_GameOverDontSpoilTradeItems 0x458C00 : {
 		*(.patch_GameOverDontSpoilTradeItems)
 	}
 
-	.patch_SetGameOverEntrance 0x458E3C : {
+	.patch_SetGameOverEntrance 0x458E5C : {
 		*(.patch_SetGameOverEntrance)
 	}
 
-	.patch_SetGameOverRespawnFlag 0x458EF0 : {
+	.patch_SetGameOverRespawnFlag 0x458F10 : {
 		*(.patch_SetGameOverRespawnFlag)
 	}
 
-	.patch_InterfaceDrawDontSpoilTradeItems 0x45A17C : {
+	.patch_InterfaceDrawDontSpoilTradeItems 0x45A19C : {
 		*(.patch_InterfaceDrawDontSpoilTradeItems)
 	}
 
-	.patch_TimerExpiration 0x45A948 : {
+	.patch_TimerExpiration 0x45A968 : {
 		*(.patch_TimerExpiration)
 	}
 
-	.patch_Timer2TickSound 0x45A9B4 : {
+	.patch_Timer2TickSound 0x45A9D4 : {
 		*(.patch_Timer2TickSound)
 	}
 
-	.patch_SunsSongEndCloseTextbox 0x45B514 : {
+	.patch_SunsSongEndCloseTextbox 0x45B534 : {
 		*(.patch_SunsSongEndCloseTextbox)
 	}
 
-	.patch_SetSunsSongRespawnFlag 0x45B660 : {
+	.patch_SetSunsSongRespawnFlag 0x45B680 : {
 		*(.patch_SetSunsSongRespawnFlag)
 	}
 
-	.patch_BossChallenge_ExitMenu 0x45CCA4 : {
+	.patch_BossChallenge_ExitMenu 0x45CCC4 : {
 		*(.patch_BossChallenge_ExitMenu)
 	}
 
-	.patch_StoreChildBButtonEquip 0x45F20C : {
+	.patch_StoreChildBButtonEquip 0x45F22C : {
 		*(.patch_StoreChildBButtonEquip)
 	}
 
-	.patch_AlwaysRestoreChildEquips 0x45F3B0 : {
+	.patch_AlwaysRestoreChildEquips 0x45F3D0 : {
 		*(.patch_AlwaysRestoreChildEquips)
 	}
 
-	.patch_ChildDontEquipSwordSlotByDefault 0x45F49C : {
+	.patch_ChildDontEquipSwordSlotByDefault 0x45F4BC : {
 		*(.patch_ChildDontEquipSwordSlotByDefault)
 	}
 
-	.patch_TitleCardUpdate 0x4618B8 : {
+	.patch_TitleCardUpdate 0x4618D8 : {
 		*(.patch_TitleCardUpdate)
 	}
 
-	.patch_ItemsMenuNumSprites 0x46B758 : {
+	.patch_ItemsMenuNumSprites 0x46B778 : {
 		*(.patch_ItemsMenuNumSprites)
 	}
 
-	.patch_CheckForPocketCuccoHatchKankyo 0x470D1C : {
+	.patch_CheckForPocketCuccoHatchKankyo 0x470D3C : {
 		*(.patch_CheckForPocketCuccoHatchKankyo)
 	}
 
-	.patch_EnableFW 0x476D1C : {
+	.patch_EnableFW 0x476D3C : {
 		*(.patch_EnableFW)
 	}
 
-	.patch_StoreTargetActorType 0x479984 : {
+	.patch_StoreTargetActorType 0x4799A4 : {
 		*(.patch_StoreTargetActorType)
 	}
 
-	.patch_FWKeepWarpPoint 0x47C3C0 : {
+	.patch_FWKeepWarpPoint 0x47C3E0 : {
 		*(.patch_FWKeepWarpPoint)
 	}
 
-	.patch_TurboTextAdvance 0x480928 : {
+	.patch_TurboTextAdvance 0x480948 : {
 		*(.patch_TurboTextAdvance)
 	}
 
-	.patch_SetBGMDayNight 0x483C88 : {
+	.patch_SetBGMDayNight 0x483CA8 : {
 		*(.patch_SetBGMDayNight)
 	}
 
-	.patch_TurboTextClose 0x488214 : {
+	.patch_TurboTextClose 0x488234 : {
 		*(.patch_TurboTextClose)
 	}
 
-	.patch_SwapFaroresWind 0x49186C : {
+	.patch_SwapFaroresWind 0x49188C : {
 		*(.patch_SwapFaroresWind)
 	}
 
-	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 : {
+	.patch_SkipTimeTravelCutsceneTwo 0x4918E8 : {
 		*(.patch_SkipTimeTravelCutsceneTwo)
 	}
 
-	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 : {
+	.patch_SwapAgeIgnoreSceneSetup 0x4918D0 : {
 		*(.patch_SwapAgeIgnoreSceneSetup)
 	}
 
-	.patch_FairyUseHealAmount 0x4968B4 : {
+	.patch_FairyUseHealAmount 0x4968D4 : {
 		*(.patch_FairyUseHealAmount)
 	}
 
-	.patch_SendDroppedBottleContents 0x496A1C : {
+	.patch_SendDroppedBottleContents 0x496A3C : {
 		*(.patch_SendDroppedBottleContents)
 	}
 
-	.patch_ReturnFWSetupGrottoInfo 0x496B88 : {
+	.patch_ReturnFWSetupGrottoInfo 0x496BA8 : {
 		*(.patch_ReturnFWSetupGrottoInfo)
 	}
 
-	.patch_SetSpecialVoidOutRespawnFlag 0x496C70 : {
+	.patch_SetSpecialVoidOutRespawnFlag 0x496C90 : {
 		*(.patch_SetSpecialVoidOutRespawnFlag)
 	}
 
-	.patch_GanonBattleDeathWarp 0x496C98 : {
+	.patch_GanonBattleDeathWarp 0x496CB8 : {
 		*(.patch_GanonBattleDeathWarp)
 	}
 

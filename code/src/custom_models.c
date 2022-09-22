@@ -45,7 +45,7 @@ void CustomModel_EditLinkToCustomTunic(void* linkCMB) {
 
 void CustomModel_EditChildLinkToCustomTunic(void* linkCMB) {
     char* BASE_ = (char*)linkCMB;
-	
+
 	// Edit combinerIndices
 	EDIT_BYTE(0x6C4, 0x03);// Update combinerCount
 	EDIT_BYTE(0x6CC, 0x0D); EDIT_BYTE(0x6CD, 0x00);
@@ -110,15 +110,15 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
     EDIT_BYTE(0x5B16, 0xA0); EDIT_BYTE(0x5B1A, 0xA0); EDIT_BYTE(0x5B22, 0xA0); EDIT_BYTE(0x5B26, 0xA0);
 
 
-    if (gSettingsContext.region == REGION_EUR) {
-        // title_logo_jpeu.cmb: Edit positionOffset of each shape	
+    #ifdef Version_EUR
+        // title_logo_jpeu.cmb: Edit positionOffset of each shape
         EDIT_BYTE(0xF31A, 0x40); EDIT_BYTE(0xF45A, 0x40); EDIT_BYTE(0xF59A, 0x40); EDIT_BYTE(0xF6DA, 0x40);
         EDIT_BYTE(0xF81A, 0x40); EDIT_BYTE(0xF95A, 0x40); EDIT_BYTE(0xFA9A, 0x40); EDIT_BYTE(0xFBDA, 0x40);
         EDIT_BYTE(0xFD1A, 0x40); EDIT_BYTE(0xFE5A, 0x40); EDIT_BYTE(0xFF9A, 0x40); EDIT_BYTE(0x100DA, 0x40);
         EDIT_BYTE(0x1021A, 0x40); EDIT_BYTE(0x1035A, 0x40); EDIT_BYTE(0x1049A, 0x40); EDIT_BYTE(0x105DA, 0x40);
         EDIT_BYTE(0x1071A, 0x40); EDIT_BYTE(0x1085A, 0x40); EDIT_BYTE(0x1099A, 0x40); EDIT_BYTE(0x10ADA, 0x40);
         EDIT_BYTE(0x10C1A, 0x40); EDIT_BYTE(0x10D5A, 0x40);
-    } else {
+    #else
         // title_logo_us.cmb: Edit positionOffset of each shape
         EDIT_BYTE(0x36BF3, 0x40); EDIT_BYTE(0x36D33, 0x40); EDIT_BYTE(0x36E73, 0x40); EDIT_BYTE(0x36FB3, 0x40);
         EDIT_BYTE(0x370F3, 0x40); EDIT_BYTE(0x37233, 0x40); EDIT_BYTE(0x37373, 0x40); EDIT_BYTE(0x374B3, 0x40);
@@ -126,7 +126,7 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
         EDIT_BYTE(0x37AF3, 0x40); EDIT_BYTE(0x37C33, 0x40); EDIT_BYTE(0x37D73, 0x40); EDIT_BYTE(0x37EB3, 0x40);
         EDIT_BYTE(0x37FF3, 0x40); EDIT_BYTE(0x38133, 0x40); EDIT_BYTE(0x38273, 0x40); EDIT_BYTE(0x383B3, 0x40);
         EDIT_BYTE(0x384F3, 0x40); EDIT_BYTE(0x38633, 0x40);
-    }
+    #endif
 
     // g_title_fire.cmab
     EDIT_BYTE(0x5E570, 0x01);// Change keyframe count to 1 so we only have to change one keyframe

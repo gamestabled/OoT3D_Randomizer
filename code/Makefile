@@ -38,21 +38,12 @@ INCLUDES    +=  assets
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-OOT3D	 	:= OOT3D
-OOT3DJ 		:= OOT3DJ
-Z3D			:= OOT3D
+USA         := USA
+EUR         := EUR
+JP          := JP
+REGION      := USA
 
-ifeq ($(OOT3D), $(Z3D))
-  LINK_SCRIPT 	:= oot.ld
-  ASFLAGS += -D _USA_=1 -D _JP_=0
-else
-ifeq ($(OOT3DJ), $(Z3D))
-  LINK_SCRIPT 	:= oot_j.ld
-  ASFLAGS += -D _USA_=0 -D _JP_=1
-endif
-endif
-
-VERFLAGS := -D OOT3D=$(OOT3D) -D OOT3DJ=$(OOT3DJ) -D Z3D=$(Z3D)
+VERFLAGS := -D USA=$(USA) -D EUR=$(EUR) -D JP=$(JP) -D REGION=$(REGION)
 
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=softfp -mtp=soft -mfpu=vfpv2
 
@@ -63,6 +54,23 @@ CFLAGS	:=	-g -Wall -mword-relocations -D DEBUG \
 CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS $(VERFLAGS)
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+
+ifeq ($(USA), $(REGION))
+  LINK_SCRIPT 	:= oot.ld
+  ASFLAGS += -D _USA_=1 -D _EUR_=0 -D _JP_=0
+  CFLAGS += -g -DVersion_USA
+else
+ifeq ($(EUR), $(REGION))
+  LINK_SCRIPT 	:= oot_e.ld
+  ASFLAGS += -D _USA_=0 -D _EUR_=1 -D _JP_=0
+  CFLAGS += -g -DVersion_EUR
+ifeq ($(JP), $(REGION))
+  LINK_SCRIPT 	:= oot_j.ld
+  ASFLAGS += -D _USA_=0 -D _EUR_=0 -D _JP_=1
+  CFLAGS += -g -DVersion_JP
+endif
+endif
+endif
 
 ASFLAGS	+=	-g $(ARCH) $(VERFLAGS)
 LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) $(VERFLAGS) -lgcc
