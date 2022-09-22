@@ -369,6 +369,7 @@ void UpdateGenerateMenu(u32 kDown) {
       GenerateRandomizer();
       //This is just a dummy mode to stop the prompt from appearing again
       currentMenu->mode = POST_GENERATE;
+      chosePlayOption = false;
     }
   }
 }
