@@ -83,6 +83,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     }
 
     if (gSettingsContext.resolvedStartingAge == AGE_ADULT) {
+        gSaveContext.sceneIndex = 0x43;    //Temple of Time (any scene other than a dungeon or Link's House would work too)
         gSaveContext.linkAge = AGE_ADULT;  //age is adult
         gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
         gSaveContext.adultEquips.equipment = 0x1120; //Adult equips Kokiri Tunic, Kokiri Boots, and Master Sword
@@ -678,7 +679,10 @@ void SaveFile_SaveExtSaveData(u32 saveNumber) {
 }
 
 void SaveFile_EnforceHealthLimit(void) {
-    if (gSaveContext.health > gSaveContext.healthCapacity) {
-        gSaveContext.health = gSaveContext.healthCapacity;
+    u16 healthLimit = (gSaveContext.healthCapacity == 0) ? 2 : gSaveContext.healthCapacity;
+    if (gSaveContext.health > healthLimit) {
+        gSaveContext.health = healthLimit;
+    } else if (gSaveContext.health < 0) {
+        gSaveContext.health = 0;
     }
 }

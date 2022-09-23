@@ -245,8 +245,8 @@ void AreaTable_Init_WaterTemple() {
 
   areaTable[WATER_TEMPLE_DARK_LINK_ROOM] = Area("Water Temple Dark Link Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
-                  Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM, {[]{return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);}}),
-                  Entrance(WATER_TEMPLE_LONGSHOT_ROOM,       {[]{return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);}}),
+                  Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM, {[]{return (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) && Hearts > 0;}}),
+                  Entrance(WATER_TEMPLE_LONGSHOT_ROOM,       {[]{return (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) && Hearts > 0;}}),
   });
 
   areaTable[WATER_TEMPLE_LONGSHOT_ROOM] = Area("Water Temple Longshot Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {

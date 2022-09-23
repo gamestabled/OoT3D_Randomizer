@@ -113,8 +113,8 @@ void AreaTable_Init_GanonsCastle() {
   areaTable[GANONS_CASTLE_TOWER] = Area("Ganon's Castle Tower", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LocationAccess(GANONS_TOWER_BOSS_KEY_CHEST, {[]{return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);}}),
-                  LocationAccess(GANONDORF_HINT,              {[]{return BossKeyGanonsCastle;}}),
-                  LocationAccess(GANON,                       {[]{return BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD);}}),
+                  LocationAccess(GANONDORF_HINT,              {[]{return BossKeyGanonsCastle && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));}}),
+                  LocationAccess(GANON,                       {[]{return BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD) && Hearts > 0;}}),
   }, {});
 
   /*---------------------------

@@ -261,6 +261,9 @@ void ModeChangeInit() {
     //loop through until we reach an unlocked setting
     while(currentMenu->settingsList->at(currentMenu->menuIdx)->IsLocked() || currentMenu->settingsList->at(currentMenu->menuIdx)->IsHidden()) {
       currentMenu->menuIdx++;
+      if (currentMenu->menuIdx >= currentMenu->settingsList->size()) {
+        currentMenu->menuIdx = 0;
+      }
     }
     currentSetting = currentMenu->settingsList->at(currentMenu->menuIdx);
 

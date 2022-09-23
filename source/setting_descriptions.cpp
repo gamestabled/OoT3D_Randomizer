@@ -763,6 +763,15 @@ string_view startWithConsumablesDesc  = "Start the game with maxed out Deku Stic
 ------------------------------*/                                                           //
 string_view startWithMaxRupeesDesc    = "Start the game with a full wallet.\n"             //
                                         "Wallet upgrades will also fill the wallet.";      //
+/*------------------------------                                                           //
+|        STARTING HEALTH       |                                                           //
+------------------------------*/                                                           //
+string_view startingHealthDesc        = "If you start with 0 hearts, Link will be instantly"
+                                        "KO'd not only by any damage source, but also by\n"//
+                                        "recovery hearts and fairies. Sometimes guards too.\n"
+                                        "You can safely pick up Heart Pieces and Containers"
+                                        "though, and the effects will end when you obtain\n"
+                                        "at least one heart.";                             //
                                                                                            //
 /*------------------------------                                                           //
 |          ITEM POOL           |                                                           //

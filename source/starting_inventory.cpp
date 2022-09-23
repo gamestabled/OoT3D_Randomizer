@@ -153,7 +153,7 @@ void GenerateStartingInventory() {
   AddItemToInventory(LIGHT_MEDALLION,           StartingLightMedallion.Value<u8>());
   AddItemToInventory(GOLD_SKULLTULA_TOKEN,      StartingSkulltulaToken.Value<u8>());
 
-  s8 hearts = StartingHearts.Value<u8>() - 2;
+  s8 hearts = StartingHearts.Value<u8>() - 3;
   AdditionalHeartContainers = 0;
   if (hearts < 0) {
     AddItemToInventory(PIECE_OF_HEART, 4);
