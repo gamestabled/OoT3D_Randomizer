@@ -1,4 +1,4 @@
-#include "setting_descriptions.hpp"
+#include "descriptions.hpp"
 
 /*------------------------------
 |      MENU DESCRIPTIONS       |                            *SCREEN WIDTH*
@@ -7,6 +7,20 @@ string_view personalizationDesc       = "These options do not affect seed genera
 string_view ingameDefaultsDesc        = "These options decide what the ingame options are\n"
                                         "set to when creating a save file. The new ingame\n"
                                         "options can be changed in the Custom Info Menu."; //
+
+/*------------------------------
+|      PRESET DESCRIPTIONS     |                            *SCREEN WIDTH*
+------------------------------*/       /*--------------------------------------------------*/
+string_view presetNintendedDesc       = "Locks the world in a state as intended by the\n"  //
+                                        "developers. Start as child and work your way\n"   //
+                                        "towards Ganon in a classical way.";               //
+string_view presetAllsanityDesc       = "ANYTHING ANYWHERE! Both items and entrances.";    //
+string_view presetRacingDesc          = "Community racing settings.";                      //
+string_view presetFullChaosDesc       = "The hardest and worst settings possible.\n"       //
+                                        "Closes everything as much as possible.\n"         //
+                                        "No logic. Anything anywhere.\n"                   //
+                                        "Full entrance shuffle.\n"                         //
+                                        "One-hit KO. Max ice traps.";                      //
 
 //Setting descriptions are mostly copied from OoT Randomizer tooltips with minor edits
 

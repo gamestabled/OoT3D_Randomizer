@@ -230,7 +230,7 @@ class Menu {
   public:
 
     static Menu SubMenu(std::string name_, std::vector<Option *>* settingsList_, std::string_view description_ = "", bool printInSpoiler_ = true) {
-      return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_SUB_MENU, std::move(description_), printInSpoiler_};
+      return Menu{std::move(name_), MenuType::SubMenu, std::move(settingsList_), OPTION_MENU, std::move(description_), printInSpoiler_};
     }
 
     static Menu SubMenu(std::string name_, std::vector<Menu *>* itemsList_, std::string_view description_ = "", bool printInSpoiler_ = true) {
@@ -251,7 +251,7 @@ class Menu {
         : name(std::move(name_)), type(type_), mode(mode_) {}
 
     void ResetMenuIndex() {
-      if (mode == OPTION_SUB_MENU) {
+      if (mode == OPTION_MENU) {
         for (size_t i = 0; i < settingsList->size(); i++) {
           if (!settingsList->at(i)->IsLocked() && !settingsList->at(i)->IsHidden()) {
             menuIdx = i;
@@ -377,6 +377,9 @@ namespace Settings {
   extern Option GossipStoneHints;
   extern Option ClearerHints;
   extern Option HintDistribution;
+  extern Option CompassesShowReward;
+  extern Option CompassesShowWotH;
+  extern Option MapsShowDungeonMode;
   extern Option DamageMultiplier;
   extern Option StartingTime;
   extern Option ChestAnimations;
@@ -699,8 +702,8 @@ namespace Settings {
 
   extern u8 PlayOption;
 
-  extern Menu loadSettingsPreset;
-  extern Menu deleteSettingsPreset;
+  extern Menu loadCustomPreset;
+  extern Menu deleteCustomPreset;
 
   extern std::vector<std::vector<Option *>> excludeLocationsOptionsVector;
   extern std::vector<Menu *> excludeLocationsMenus;

@@ -7,6 +7,11 @@ using string_view = std::string_view;
 extern string_view personalizationDesc;
 extern string_view ingameDefaultsDesc;
 
+extern string_view presetNintendedDesc;
+extern string_view presetAllsanityDesc;
+extern string_view presetRacingDesc;
+extern string_view presetFullChaosDesc;
+
 extern string_view openRandomize;
 extern string_view worldRandomize;
 extern string_view shuffleRandomize;

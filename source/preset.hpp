@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+#include <settings.hpp>
+#include <item_location.hpp>
+
 enum class OptionCategory;
 
 bool CreatePresetDirectories();
@@ -15,3 +18,12 @@ void SaveCachedSettings();
 void LoadCachedSettings();
 bool SaveCachedCosmetics();
 void LoadCachedCosmetics();
+
+typedef struct {
+    std::string_view name;
+    std::string_view description;
+    std::vector<std::pair<Option*, u8>> optionOverrides;
+    std::vector<LocationKey> excludedLocations;
+} PremadePreset;
+
+extern std::vector<PremadePreset*> premadePresets;

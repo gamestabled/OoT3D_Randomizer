@@ -221,6 +221,12 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+  KINGZORASPEED_FAST,
+  KINGZORASPEED_VANILLA,
+  KINGZORASPEED_RANDOM,
+} KingZoraSpeedSetting;
+
+typedef enum {
   QUICKTEXT_VANILLA,
   QUICKTEXT_SKIPPABLE,
   QUICKTEXT_INSTANT,
@@ -248,10 +254,24 @@ typedef enum {
 } LogicTrickSetting;
 
 typedef enum {
+  HINTS_NO_HINTS,
+  HINTS_NEED_NOTHING,
+  HINTS_MASK_OF_TRUTH,
+  HINTS_SHARD_OF_AGONY,
+} GossipStoneHintsSetting;
+
+typedef enum {
   HINTMODE_OBSCURE,
   HINTMODE_AMBIGUOUS,
   HINTMODE_CLEAR,
 } HintModeSetting;
+
+typedef enum {
+  HINTDISTRIBUTION_USELESS,
+  HINTDISTRIBUTION_BALANCED,
+  HINTDISTRIBUTION_STRONG,
+  HINTDISTRIBUTION_VERYSTRONG,
+} HintDistributionSettings;
 
 typedef enum {
   DAMAGEMULTIPLIER_HALF,
@@ -269,11 +289,14 @@ typedef enum {
 } StartingTimeSetting;
 
 typedef enum {
-  HINTS_NO_HINTS,
-  HINTS_NEED_NOTHING,
-  HINTS_MASK_OF_TRUTH,
-  HINTS_SHARD_OF_AGONY,
-} GossipStoneHintsSetting;
+  CHESTANIMATIONS_ALWAYSFAST,
+  CHESTANIMATIONS_MATCHCONTENT,
+} ChestAnimationsSetting;
+
+typedef enum {
+  CHESTSIZE_VANILLA,
+  CHESTSIZE_MATCHCONTENT,
+} ChestSizeSetting;
 
 typedef enum {
   RANDOMTRAPS_OFF,

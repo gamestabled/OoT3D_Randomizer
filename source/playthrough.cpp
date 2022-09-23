@@ -29,7 +29,7 @@ namespace Playthrough {
       std::string settingsStr;
       for (Menu* menu : Settings::GetAllOptionMenus()) {
         //don't go through non-menus
-        if (menu->mode != OPTION_SUB_MENU) {
+        if (menu->mode != OPTION_MENU) {
           continue;
         }
 
