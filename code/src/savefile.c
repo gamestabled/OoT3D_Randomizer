@@ -678,7 +678,10 @@ void SaveFile_SaveExtSaveData(u32 saveNumber) {
 }
 
 void SaveFile_EnforceHealthLimit(void) {
-    if (gSaveContext.health > gSaveContext.healthCapacity) {
-        gSaveContext.health = gSaveContext.healthCapacity;
+    u16 healthLimit = (gSaveContext.healthCapacity == 0) ? 2 : gSaveContext.healthCapacity;
+    if (gSaveContext.health > healthLimit) {
+        gSaveContext.health = healthLimit;
+    } else if (gSaveContext.health < 0) {
+        gSaveContext.health = 0;
     }
 }
