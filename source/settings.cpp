@@ -161,6 +161,7 @@ namespace Settings {
   Option Scrubsanity            = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
   Option ShuffleCows            = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {shuffleCowsDesc});
   Option ShuffleKokiriSword     = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                                     {kokiriSwordDesc});
+  Option ShuffleMasterSword     = Option::Bool("Shuffle Master Sword",   {"Off", "On"},                                                     {masterSwordDesc});
   Option ShuffleOcarinas        = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                                     {ocarinasDesc});
   Option ShuffleWeirdEgg        = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {weirdEggDesc});
   Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
@@ -179,6 +180,7 @@ namespace Settings {
     &Scrubsanity,
     &ShuffleCows,
     &ShuffleKokiriSword,
+    &ShuffleMasterSword,
     &ShuffleOcarinas,
     &ShuffleWeirdEgg,
     &ShuffleGerudoToken,
@@ -1291,6 +1293,7 @@ namespace Settings {
     ctx.scrubsanity          = Scrubsanity.Value<u8>();
     ctx.shuffleCows          = (ShuffleCows) ? 1 : 0;
     ctx.shuffleKokiriSword   = (ShuffleKokiriSword) ? 1 : 0;
+    ctx.shuffleMasterSword   = (ShuffleMasterSword) ? 1 : 0;
     ctx.shuffleOcarinas      = (ShuffleOcarinas) ? 1 : 0;
     ctx.shuffleWeirdEgg      = (ShuffleWeirdEgg) ? 1 : 0;
     ctx.shuffleGerudoToken   = (ShuffleGerudoToken) ? 1 : 0;

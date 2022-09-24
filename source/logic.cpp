@@ -685,7 +685,6 @@ namespace Logic {
     SilverScale     = ProgressiveScale      >= 1;
     GoldScale       = ProgressiveScale      >= 2;
     AdultsWallet    = ProgressiveWallet     >= 1;
-    MasterSword     = MasterSword   || IsAdult;
     BiggoronSword   = BiggoronSword || ProgressiveGiantKnife >= 2;
 
     ScarecrowSong    = ScarecrowSong || FreeScarecrow || (ChildScarecrow && AdultScarecrow);

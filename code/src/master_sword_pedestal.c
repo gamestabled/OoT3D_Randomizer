@@ -1,4 +1,5 @@
 #include "z3D/z3D.h"
+#include "item_override.h"
 #include "settings.h"
 #include "savefile.h"
 
@@ -18,4 +19,19 @@ void TimeTravelAdvanceCutsceneTimer() {
 
 void SetTimeTraveled() {
     gExtSaveData.hasTraveledTimeOnce = 1;
+}
+
+void Pedestal_PickUpMasterSword(void) {
+    // Push pedestal item
+    if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.masterSwordFlags & 2)) {
+        ItemOverride_PushDelayedOverride(0x00);
+    }
+
+    if (!SaveFile_SwordlessPatchesEnabled()) {
+        // Add master sword to inventory
+        gSaveContext.equipment |= 0x2;
+    }
+
+    // Mark pedestal item collected
+    gExtSaveData.masterSwordFlags |= 2;
 }

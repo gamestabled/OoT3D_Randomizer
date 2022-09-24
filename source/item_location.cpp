@@ -751,6 +751,7 @@ void LocationTable_Init() {
             --- CUTSCENES ---
       -------------------------------*/
 
+    locationTable[TOT_MASTER_SWORD]                              = ItemLocation::Delayed(0xFF, 0x00, "ToT Master Sword",                               TOT_MASTER_SWORD,            MASTER_SWORD,              {Category::cTempleOfTime, Category::cMarket},                                                                     SpoilerCollectionCheck::MasterSword(),                   SpoilerCollectionCheckGroup::GROUP_HYRULE_CASTLE);
     locationTable[TOT_LIGHT_ARROWS_CUTSCENE]                     = ItemLocation::Delayed(0xFF, 0x01, "ToT Light Arrow Cutscene",                       TOT_LIGHT_ARROWS_CUTSCENE,   LIGHT_ARROWS,              {Category::cTempleOfTime, Category::cMarket},                                                                     SpoilerCollectionCheck::EventChkInf(0xC4),               SpoilerCollectionCheckGroup::GROUP_HYRULE_CASTLE);
     locationTable[LW_GIFT_FROM_SARIA]                            = ItemLocation::Delayed(0xFF, 0x02, "LW Gift From Saria",                             LW_GIFT_FROM_SARIA,          PROGRESSIVE_OCARINA,       {Category::cLostWoods, Category::cForest},                                                                        SpoilerCollectionCheck::EventChkInf(0xC1),               SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
     locationTable[ZF_GREAT_FAIRY_REWARD]                         = ItemLocation::Delayed(0xFF, 0x10, "ZF Great Fairy Reward",                          ZF_GREAT_FAIRY_REWARD,       FARORES_WIND,              {Category::cZorasFountain, Category::cFairies},                                                                   SpoilerCollectionCheck::ItemGetInf(16),                  SpoilerCollectionCheckGroup::GROUP_ZORAS_DOMAIN);
@@ -1209,6 +1210,7 @@ std::vector<LocationKey> overworldLocations = {
 
   //Temple of Time
   SHEIK_AT_TEMPLE,
+  TOT_MASTER_SWORD,
   TOT_LIGHT_ARROWS_CUTSCENE,
 
   //Kakariko

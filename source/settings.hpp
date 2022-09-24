@@ -326,6 +326,7 @@ namespace Settings {
   extern Option Scrubsanity;
   extern Option ShuffleCows;
   extern Option ShuffleKokiriSword;
+  extern Option ShuffleMasterSword;
   extern Option ShuffleOcarinas;
   extern Option ShuffleWeirdEgg;
   extern Option ShuffleGerudoToken;

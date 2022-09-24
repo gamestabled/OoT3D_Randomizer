@@ -1527,6 +1527,66 @@ hook_RestoreISG:
     pop {lr}
     bx lr
 
+.global hook_BecomeAdult
+hook_BecomeAdult:
+    strh r3,[r2,#0x5e]
+    push {r0-r12,lr}
+    bl SaveFile_BecomeAdult
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    ldrb r3,[r2,#0x60]
+    bx lr
+
+.global hook_SwordlessPatchCheck
+hook_SwordlessPatchCheck:
+    cmp r1,#0x0
+    bxne lr
+    push {r0-r12,lr}
+    bl SaveFile_SwordlessPatchesEnabled
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    bx lr
+
+.global hook_HandleBButton
+hook_HandleBButton:
+    cmp r0,#0x3B
+    cmpne r0,#0x3C
+    cmpne r0,#0x3D
+    cmpne r0,#0xFE
+    bx lr
+
+.global hook_LoadFileSwordless
+hook_LoadFileSwordless:
+    push {lr}
+    push {r0-r12}
+    bl SaveFile_LoadFileSwordless
+    pop {r0-r12}
+    bl hook_SwordlessPatchCheck
+    pop {lr}
+    bx lr
+
+.global hook_GanonRestoreMSOnDeath
+hook_GanonRestoreMSOnDeath:
+    tst r0,r1
+    bxne lr
+    push {r0-r12,lr}
+    bl SaveFile_SwordlessPatchesEnabled
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    bx lr
+
+.global hook_CriticalHealthCheck
+hook_CriticalHealthCheck:
+    cmp r0,#0x10
+    movle r0,#0x00
+    bxle lr
+    cmp r0,#0x50
+    movle r0,#0x10
+    bxle lr
+    cmp r0,#0xA0
+    movle r0,#0x18
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

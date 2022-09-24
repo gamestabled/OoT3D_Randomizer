@@ -1374,4 +1374,52 @@ SECTIONS
 		rCustomMessages = . ;
         __text_end  = . ;
     }
+
+    .patch_BecomeAdult 0x45F230 : {
+        *(.patch_BecomeAdult)
+    }
+
+    .patch_PickUpMasterSword 0x3E5EC8 : {
+        *(.patch_PickUpMasterSword)
+    }
+
+    .patch_SaveFileSwordless 0x2FDCE4 : {
+        *(.patch_SaveFileSwordless)
+    }
+
+    .patch_LoadFileSwordless 0x44fd98 : {
+        *(.patch_LoadFileSwordless)
+    }
+
+    .patch_DeathHandleBButton 0x458CA8 : {
+        *(.patch_DeathHandleBButton)
+    }
+
+    .patch_GanonCSEquipMS 0x2359A4 : {
+        *(.patch_GanonCSEquipMS)
+    }
+
+    .patch_GanonRestoreMSOnDeath 0x496CB4 : {
+        *(.patch_GanonRestoreMSOnDeath)
+    }
+
+    .patch_GanonGiveMSMidFight 0x288030 : {
+        *(.patch_GanonGiveMSMidFight)
+    }
+
+    .patch_GiveItemMasterSword 0x376C18 : {
+        *(.patch_GiveItemMasterSword)
+    }
+
+    .patch_CriticalHealthCheckOne 0x4715B8 : {
+        *(.patch_CriticalHealthCheckOne)
+    }
+
+    .patch_CriticalHealthCheckTwo 0x4716D4 : {
+        *(.patch_CriticalHealthCheckTwo)
+    }
+
+    .patch_CriticalHealthCheckThree 0x49F294 : {
+        *(.patch_CriticalHealthCheckThree)
+    }
 }

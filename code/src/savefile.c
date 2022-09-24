@@ -7,6 +7,7 @@
 #include <string.h>
 #include "entrance.h"
 #include "multiplayer.h"
+#include "item_override.h"
 
 #define DECLARE_EXTSAVEDATA
 #include "savefile.h"
@@ -82,11 +83,14 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.eventChkInf[0x4] |= 0x2000;
     }
 
+    gSaveContext.adultEquips.buttonItems[0] = (gSettingsContext.shuffleMasterSword) ? 0xFE : 0xFF;
+
     if (gSettingsContext.resolvedStartingAge == AGE_ADULT) {
         gSaveContext.sceneIndex = 0x43;    //Temple of Time (any scene other than a dungeon or Link's House would work too)
         gSaveContext.linkAge = AGE_ADULT;  //age is adult
         gSaveContext.childEquips.equipment = 0x1100; //Child equips Kokiri Tunic and Kokiri Boots, no sword or shield
         gSaveContext.adultEquips.equipment = 0x1120; //Adult equips Kokiri Tunic, Kokiri Boots, and Master Sword
+        gSaveContext.equips.buttonItems[0] = gSaveContext.adultEquips.buttonItems[0];
         gSaveContext.infTable[29]  = 0x00; //Unset swordless flag
     }
 
@@ -613,6 +617,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
     gExtSaveData.hasTraveledTimeOnce = 0;
+    gExtSaveData.masterSwordFlags = (gSettingsContext.shuffleMasterSword) ? 0 : 1;
     // Ingame Options
     gExtSaveData.option_EnableBGM = gSettingsContext.playMusic;
     gExtSaveData.option_EnableSFX = gSettingsContext.playSFX;
@@ -684,5 +689,45 @@ void SaveFile_EnforceHealthLimit(void) {
         gSaveContext.health = healthLimit;
     } else if (gSaveContext.health < 0) {
         gSaveContext.health = 0;
+    }
+}
+
+u8 SaveFile_SwordlessPatchesEnabled(void) {
+    return gSettingsContext.shuffleMasterSword && !(gExtSaveData.masterSwordFlags & 1);
+}
+
+u8 SaveFile_BecomeAdult(void) {
+    // Normal behaviour checks for 0xFF
+    if (gSaveContext.adultEquips.buttonItems[0] == 0xFF) {
+        if (SaveFile_SwordlessPatchesEnabled()) {
+            // Equip functionless item if not supposed to get master sword equipped
+            gSaveContext.adultEquips.buttonItems[0] = 0xFE;
+        } else {
+            // Normal behaviour if supposed to get master sword equipped
+            return 0;
+        }
+    }
+
+    // If first time going adult update adult equips (equip master sword if in inventory)
+    if (gSaveContext.adultEquips.equipment == 0) {
+        gSaveContext.adultEquips.equipment = 0x1120 | (gSaveContext.equipment & 0x2);
+        if (gSaveContext.equipment & 0x2) {
+            gSaveContext.adultEquips.buttonItems[0] = 0x3C;
+        }
+    }
+
+    // Return to code for 2nd time becoming adult
+    return 1;
+}
+
+void SaveFile_LoadFileSwordless(void) {
+    if (gSaveContext.linkAge == 0) {
+        // Push pedestal item if adult and haven't received yet
+        if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.masterSwordFlags & 2)) {
+            ItemOverride_PushDelayedOverride(0x00);
+        }
+
+        // Mark pedestal item collected
+        gExtSaveData.masterSwordFlags |= 2;
     }
 }

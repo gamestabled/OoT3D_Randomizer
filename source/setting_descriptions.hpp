@@ -117,6 +117,7 @@ extern string_view scrubsRandomPrices;
 extern string_view shuffleCowsDesc;
 
 extern string_view kokiriSwordDesc;
+extern string_view masterSwordDesc;
 
 extern string_view ocarinasDesc;
 

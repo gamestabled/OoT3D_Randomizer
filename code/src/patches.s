@@ -1814,6 +1814,93 @@ LostWoodsTargetCutscene_patch:
 LostWoodsTargetTimer_patch:
     mov r0,#0x1
 
+.section .patch_BecomeAdult
+.global BecomeAdult_patch
+BecomeAdult_patch:
+    push {lr}
+    bl hook_BecomeAdult
+    pop {lr}
+
+.section .patch_PickUpMasterSword
+.global PickUpMasterSword_patch
+PickUpMasterSword_patch:
+    bl Pedestal_PickUpMasterSword
+
+.section .patch_SaveFileSwordless
+.global SaveFileSwordless_patch
+SaveFileSwordless_patch:
+    push {lr}
+    bl hook_HandleBButton
+    pop {lr}
+
+.section .patch_LoadFileSwordless
+.global LoadFileSwordless_patch
+LoadFileSwordless_patch:
+    bl hook_LoadFileSwordless
+
+.section .patch_DeathHandleBButton
+.global DeathHandleBButton_patch
+DeathHandleBButton_patch:
+    push {lr}
+    bl hook_HandleBButton
+    pop {lr}
+
+.section .patch_GanonCSEquipMS
+.global GanonCSEquipMS_patch
+GanonCSEquipMS_patch:
+    bl Ganon_CSEquipMS
+    nop
+    nop
+    nop
+
+.section .patch_GanonRestoreMSOnDeath
+.global GanonRestoreMSOnDeath_patch
+GanonRestoreMSOnDeath_patch:
+    bl hook_GanonRestoreMSOnDeath
+
+.section .patch_GanonGiveMSMidFight
+.global GanonGiveMSMidFight_patch
+GanonGiveMSMidFight_patch:
+    bl Ganon_GiveMSMidFight
+
+.section .patch_GiveItemMasterSword
+.global GiveItemMasterSword_patch
+GiveItemMasterSword_patch:
+    push {r0-r12,lr}
+    bl ItemEffect_EquipMasterSword
+    pop {r0-r12,lr}
+    nop
+    nop
+    nop
+    nop
+
+.section .patch_CriticalHealthCheckOne
+.global CriticalHealthCheckOne_Patch
+CriticalHealthCheckOne_patch:
+    bl hook_CriticalHealthCheck
+    nop
+    nop
+    nop
+    nop
+
+.section .patch_CriticalHealthCheckTwo
+.global CriticalHealthCheckTwo_patch
+CriticalHealthCheckTwo_patch:
+    bl hook_CriticalHealthCheck
+    nop
+    nop
+    nop
+    nop
+
+.section .patch_CriticalHealthCheckThree
+.global CriticalHealthCheckThree_patch
+CriticalHealthCheckThree_patch:
+    push {lr}
+    bl hook_CriticalHealthCheck
+    pop {lr}
+    nop
+    nop
+
 .section .patch_loader
 .global loader_patch
 

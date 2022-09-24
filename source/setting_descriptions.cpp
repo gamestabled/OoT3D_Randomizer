@@ -346,6 +346,16 @@ string_view kokiriSwordDesc           = "Enabling this shuffles the Kokiri Sword
                                         "This will require extensive use of sticks until\n"//
                                         "the sword is found.";                             //
 /*------------------------------                                                           //
+|     SHUFFLE MASTER SWORD     |                                                           //
+------------------------------*/                                                           //
+string_view masterSwordDesc           = "Enabling this shuffles the Master Sword into the\n"
+                                        "item pool.\n"                                     //
+                                        "\n"                                               //
+                                        "Adult Link will start with a second free item\n"  //
+                                        "instead of the Master Sword. If you haven't found\n"
+                                        "the Master Sword before facing Ganon, you won't\n"//
+                                        "receive it during the fight.";                    //
+/*------------------------------                                                           //
 |       SHUFFLE OCARINAS       |                                                           //
 ------------------------------*/                                                           //
 string_view ocarinasDesc              = "Enabling this shuffles the Fairy Ocarina and the\n"
