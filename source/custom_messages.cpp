@@ -461,7 +461,10 @@ constexpr std::array DungeonColors = {
     Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
 
       //for each language
-      for (std::string* textStr : {&text.NAenglish, &text.NAfrench, &text.NAspanish}) {
+      for (std::string* textStr : {
+                    &text.NAenglish, &text.NAfrench, &text.NAspanish,
+                    &text.EURenglish, &text.EURfrench, &text.EURspanish, &text.EURitalian, &text.EURgerman
+                }) {
 
         //insert playername
         size_t atSymbol = textStr->find('@');
