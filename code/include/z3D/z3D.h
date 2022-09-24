@@ -169,9 +169,12 @@ typedef struct {
     /* 0x156A */ s16          timerY[2]; //changing these doesn't seem to actually move the timer?
     /* 0x156E */ u8           nightSeqIndex;
     /* 0x156F */ u8           buttonStatus[5];
-    /* 0x1574 */ char         unk_1574[0x000F];
+    /* 0x1574 */ char         unk_1574[0x000B];
+    /* 0x1580 */ s16          magicState;
+    /* 0x1582 */ char         unk_1582[0x0002];
     /* 0x1584 */ u16          magicMeterSize;
-    /* 0x1586 */ char         unk_1586[0x0004];
+    /* 0x1586 */ char         unk_1586[0x0002];
+    /* 0x1588 */ s16          magicTarget;
     /* 0x158A */ u16          eventInf[4];
     /* 0x1592 */ u16          dungeonIndex;
     /* 0x1594 */ char         unk_1594[0x000C];

@@ -2398,11 +2398,7 @@ void Multiplayer_Receive_HealthChange(u16 senderID) {
         }
         gSaveContext.health += diff;
 
-        if (gSaveContext.health > gSaveContext.healthCapacity) {
-            gSaveContext.health = gSaveContext.healthCapacity;
-        } else if (gSaveContext.health < 0) {
-            gSaveContext.health = 0;
-        }
+        SaveFile_EnforceHealthLimit();
 
         prevHealth = gSaveContext.health;
     }

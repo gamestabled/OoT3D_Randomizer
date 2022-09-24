@@ -244,9 +244,13 @@ extern string_view ingameSpoilersHideDesc;
 
 extern string_view menuButtonDesc;
 
+extern string_view arrowSwitchDesc;
+
 extern string_view startWithConsumablesDesc;
 
 extern string_view startWithMaxRupeesDesc;
+
+extern string_view startingHealthDesc;
 
 extern string_view itemPoolPlentiful;
 extern string_view itemPoolBalanced;
@@ -282,6 +286,8 @@ extern string_view adultDekuShieldDesc;
 extern string_view childMirrorShieldDesc;
 extern string_view childGoronTunicDesc;
 extern string_view childZoraTunicDesc;
+
+extern string_view restoreISGdesc;
 
 extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;

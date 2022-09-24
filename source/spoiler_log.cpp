@@ -150,6 +150,10 @@ void WriteIngameSpoilerLog() {
     else if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_OFF) && loc->IsCategory(Category::cChestMinigame)) {
         continue;
     }
+    // Frog Song Rupees
+    else if (!Settings::ShuffleFrogSongRupees && loc->IsCategory(Category::cFrogRupees)) {
+        continue;
+    }
     // Gerudo Fortress
     else if ((Settings::GerudoFortress.Is(GERUDOFORTRESS_OPEN) && (loc->IsCategory(Category::cVanillaGFSmallKey) || loc->GetHintKey() == GF_GERUDO_TOKEN)) ||
         (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) && loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
@@ -306,7 +310,7 @@ static void WriteLocation(
     node->SetAttribute("price", price);
   }
   if (!location->IsAddedToPool()) {
-    #ifdef ENABLE_DEBUG  
+    #ifdef ENABLE_DEBUG
       node->SetAttribute("not-added", true);
     #endif
   }

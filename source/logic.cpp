@@ -686,7 +686,7 @@ namespace Logic {
     MasterSword     = MasterSword   || IsAdult;
     BiggoronSword   = BiggoronSword || ProgressiveGiantKnife >= 2;
 
-    ScarecrowSong    = ScarecrowSong || (ChildScarecrow && AdultScarecrow);
+    ScarecrowSong    = ScarecrowSong || FreeScarecrow || (ChildScarecrow && AdultScarecrow);
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
     DistantScarecrow = Longshot && CanPlay(ScarecrowSong);
 
@@ -705,7 +705,7 @@ namespace Logic {
     Bugs         = HasBottle && BugsAccess;
     BlueFire     = HasBottle && BlueFireAccess;
     Fish         = HasBottle && FishAccess;
-    Fairy        = HasBottle && FairyAccess;
+    Fairy        = HasBottle && FairyAccess && Hearts > 0;
 
     FoundBombchus   = (BombchuDrop || Bombchus || Bombchus5 || Bombchus10 || Bombchus20);
     CanPlayBowling  = (BombchusInLogic && FoundBombchus) || (!BombchusInLogic && BombBag);
@@ -744,7 +744,7 @@ namespace Logic {
     EffectiveHealth = ((Hearts << (2 + DoubleDefense)) >> Multiplier) + ((Hearts << (2 + DoubleDefense)) % (1 << Multiplier) > 0); //Number of half heart hits to die, ranges from 1 to 160
     FireTimer       = CanUse(GORON_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
     WaterTimer      = CanUse( ZORA_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
-    NeedNayrusLove      = (EffectiveHealth == 1);
+    NeedNayrusLove      = (EffectiveHealth <= 1);
     CanSurviveDamage    = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
     CanTakeDamage       = Fairy || CanSurviveDamage;
     CanTakeDamageTwice  = (Fairy && NumBottles >= 2) || ((EffectiveHealth == 2) && (CanUse(NAYRUS_LOVE) || Fairy)) || (EffectiveHealth > 2);
@@ -1143,7 +1143,7 @@ namespace Logic {
      BigPoeKill          = false;
      HookshotOrBoomerang = false;
 
-     BaseHearts      = StartingHearts.Value<u8>() + 1;
+     BaseHearts      = StartingHearts.Value<u8>();
      Hearts          = 0;
      Multiplier      = (DamageMultiplier.Value<u8>() < 6) ? DamageMultiplier.Value<u8>() : 10;
      EffectiveHealth = 0;

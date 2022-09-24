@@ -383,7 +383,7 @@ string_view magicBeansDesc            = "Enabling this adds a pack of 10 beans t
 |   SHUFFLE FROG SONG RUPEES   |                                                           //
 ------------------------------*/                                                           //
 string_view frogSongRupeesDesc        = "Enabling this adds 5 Purple Rupees to the item\n" //
-                                        "pool and shuffles the rewards from playing Zelda's\n"
+                                        "pool and shuffles the rewards from playing Zelda's"
                                         "Lullaby, Epona's Song, Saria's Song, Sun's Song,\n"
                                         "and Song of Time to the frogs in Zora's River.\n";//
 /*------------------------------                                                           //
@@ -745,6 +745,14 @@ string_view menuButtonDesc            = "Choose which button will bring up the C
                                         "Information Menu.";                               //
                                                                                            //
 /*------------------------------                                                           //
+|    ARROW SWITCHING BUTTON    |                                                           //
+------------------------------*/                                                           //
+string_view arrowSwitchDesc           = "Choose how you want to cycle through the arrow\n" //
+                                        "types while you're aiming the bow.\n"             //
+                                        "The touch screen option refers to the middle part\n"
+                                        "of the screen where the map is displayed.";       //
+                                                                                           //
+/*------------------------------                                                           //
 |     START WITH CONSUMABLES   |                                                           //
 ------------------------------*/                                                           //
 string_view startWithConsumablesDesc  = "Start the game with maxed out Deku Sticks and Deku"
@@ -755,6 +763,15 @@ string_view startWithConsumablesDesc  = "Start the game with maxed out Deku Stic
 ------------------------------*/                                                           //
 string_view startWithMaxRupeesDesc    = "Start the game with a full wallet.\n"             //
                                         "Wallet upgrades will also fill the wallet.";      //
+/*------------------------------                                                           //
+|        STARTING HEALTH       |                                                           //
+------------------------------*/                                                           //
+string_view startingHealthDesc        = "If you start with 0 hearts, Link will be instantly"
+                                        "KO'd not only by any damage source, but also by\n"//
+                                        "recovery hearts and fairies. Sometimes guards too.\n"
+                                        "You can safely pick up Heart Pieces and Containers"
+                                        "though, and the effects will end when you obtain\n"
+                                        "at least one heart.";                             //
                                                                                            //
 /*------------------------------                                                           //
 |          ITEM POOL           |                                                           //
@@ -891,6 +908,13 @@ string_view childGoronTunicDesc       = "Child Link can equip the Goron Tunic.";
 ------------------------------*/                                                           //
 string_view childZoraTunicDesc        = "Child Link can equip the Zora Tunic.";            //
                                                                                            //
+/*------------------------------                                                           //
+|          RESTORE ISG         |                                                           //
+------------------------------*/                                                           //
+string_view restoreISGdesc            = "The Infinite Sword Glitch will work like in OoT.\n\n"
+                                        "Specifically, interrupting a crouch stab will\n"  //
+                                        "activate the glitch, and putting away or pulling\n"
+                                        "out items will not cancel it.";                   //
 /*------------------------------                                                           //
 |         GK DURABILITY        |                                                           //
 ------------------------------*/                                                           //

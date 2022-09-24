@@ -145,9 +145,19 @@ u8 Chest_OverrideDecoration() {
     return 0;
 }
 
+u8 vanillaIceTrap() {
+    // Ice Traps from chests softlock when max health is 0, so just kill Link immediately
+    if (gSaveContext.healthCapacity == 0) {
+        PLAYER->stateFlags1 &= ~0x20000C00;
+        gSaveContext.health = 0;
+        return 1;
+    }
+    return 0;
+}
+
 u8 Chest_OverrideIceSmoke(Actor* thisx) {
     if (gSettingsContext.randomTrapDmg == RANDOMTRAPS_OFF) {
-        return 0;
+        return vanillaIceTrap();
     }
 
     if (possibleChestTrapsAmount == 0)
@@ -172,7 +182,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         }
 
         if (trapType == ICETRAP_VANILLA) {
-            return 0;
+            return vanillaIceTrap();
         }
         PLAYER->getItemId = 0;
         PLAYER->stateFlags1 &= ~0x20000C00;

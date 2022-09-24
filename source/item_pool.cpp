@@ -595,8 +595,8 @@ static void SetMinimalItemPool() {
   ReplaceMaxItem(PROGRESSIVE_SLINGSHOT, 1);
   ReplaceMaxItem(PROGRESSIVE_BOMB_BAG, 1);
   ReplaceMaxItem(PIECE_OF_HEART, 0);
-  // Need an extra heart container when starting with 1 heart to be able to reach 3 hearts
-  ReplaceMaxItem(HEART_CONTAINER, (StartingHearts.Value<u8>() == 18)? 1 : 0);
+  // Need extra heart containers when starting with 1 heart or less to be able to reach 3 hearts
+  ReplaceMaxItem(HEART_CONTAINER, 2 - StartingHearts.Value<u8>());
 }
 
 void GenerateItemPool() {
@@ -929,7 +929,7 @@ void GenerateItemPool() {
         AddItemToPool(PendingJunkPool, GANONS_CASTLE_KEY_RING);
       } else {
         AddItemToPool(PendingJunkPool, GANONS_CASTLE_SMALL_KEY);
-      } 
+      }
     }
 
     if (BossKeysanity.Is(BOSSKEYSANITY_ANYWHERE) || BossKeysanity.Is(BOSSKEYSANITY_ANY_DUNGEON) || BossKeysanity.Is(BOSSKEYSANITY_OVERWORLD)) {

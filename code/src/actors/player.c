@@ -6,6 +6,7 @@
 #include "settings.h"
 #include "fairy.h"
 #include "icetrap.h"
+#include "arrow.h"
 
 #define PlayerActor_Init_addr 0x191844
 #define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
@@ -62,6 +63,13 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
         gSaveContext.equips.equipment &= ~0xF0; // unequip shield
     }
 
+    // If the player has started with 0 hearts, some entrances that knock Link down will cause a Game Over.
+    // When respawning after the Game Over, change the entrance type to avoid softlocks.
+    u8 playerEntranceType = (thisx->params & 0xF00) >> 8;
+    if (gSaveContext.healthCapacity == 0 && gSaveContext.respawnFlag == -2 && playerEntranceType == 7) {
+        thisx->params = (thisx->params & ~0xF00) | 0xD00; // Link will spawn standing in place
+    }
+
     PlayerActor_Init(thisx, globalCtx);
 
     if (gSettingsContext.fastBunnyHood) {
@@ -75,6 +83,8 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     Player* this = (Player*) thisx;
     PlayerActor_Update(thisx, globalCtx);
+
+    Arrow_HandleSwap(this, globalCtx);
 
     if (this->naviActor != 0) {
         updateNaviColors((EnElf*)this->naviActor);

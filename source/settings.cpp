@@ -166,9 +166,9 @@ namespace Settings {
   Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
   Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
   Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
-  Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Song Rupees",{"Off", "On"},                                                    {frogSongRupeesDesc});
   Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
   Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
+  Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
   std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -184,9 +184,9 @@ namespace Settings {
     &ShuffleGerudoToken,
     &ShuffleMagicBeans,
     &ShuffleMerchants,
-    &ShuffleFrogSongRupees,
     &ShuffleAdultTradeQuest,
     &ShuffleChestMinigame,
+    &ShuffleFrogSongRupees,
   };
 
   //Shuffle Dungeon Items
@@ -341,6 +341,7 @@ namespace Settings {
   Option MirrorShieldAsChild = Option::Bool("  Child Mirror Shield",  {"Disabled", "Enabled"},                                                {childMirrorShieldDesc});
   Option GoronTunicAsChild   = Option::Bool("  Child Goron Tunic",    {"Disabled", "Enabled"},                                                {childGoronTunicDesc});
   Option ZoraTunicAsChild    = Option::Bool("  Child Zora Tunic",     {"Disabled", "Enabled"},                                                {childZoraTunicDesc});
+  Option RestoreISG          = Option::Bool("Restore ISG",            {"Disabled", "Enabled"},                                                {restoreISGdesc},                                                                                                 OptionCategory::Setting,    ON);
   Option GkDurability        = Option::U8  ("GK Durability",          {"Vanilla", "Random Risk", "Random Safe"},                              {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
@@ -361,6 +362,7 @@ namespace Settings {
     &MirrorShieldAsChild,
     &GoronTunicAsChild,
     &ZoraTunicAsChild,
+    &RestoreISG,
     &GkDurability,
   };
 
@@ -522,7 +524,7 @@ namespace Settings {
   Option StartingScale            = Option::U8  ("Scale Upgrade",        {"Off",             "Silver Scale"  ,   "Golden Scale"},                         {""});
   Option StartingWallet           = Option::U8  ("Wallet Upgrade",       {"Off",             "Adult's Wallet",   "Giant's Wallet" ,  "Tycoon's Wallet"},  {""});
   Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",       {"Off",             "On"},                                                       {""});
-  Option StartingHearts           = Option::U8  ("Hearts",               {NumOpts(1, 20)},                                                                {""}, OptionCategory::Setting, 2); // Default 3 hearts
+  Option StartingHearts           = Option::U8  ("Hearts",               {NumOpts(0, 20)},                                                                {startingHealthDesc,""}, OptionCategory::Setting, 3); // Default 3 hearts
   Option StartingMagicMeter       = Option::U8  ("Magic Meter",          {"Off",             "Single Magic",     "Double Magic"},                         {""});
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",       {"Off",             "On"},                                                       {""});
   std::vector<Option *> startingEquipmentOptions = {
@@ -898,10 +900,12 @@ namespace Settings {
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
   Option SkipSongReplays     = Option::U8  ("Skip Song Replays",      {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc},                                                                                            OptionCategory::Cosmetic);
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc},                                                                                                 OptionCategory::Cosmetic);
+  Option ArrowSwitchButton   = Option::U8  ("Switch Arrows with",     {"D-Pad Right","D-Pad Left","D-Pad Up","D-Pad Down","Touch Screen",},   {arrowSwitchDesc},                                                                                                OptionCategory::Cosmetic);
   std::vector<Option*> preferenceOptions = {
     &QuickText,
     &SkipSongReplays,
     &MenuOpeningButton,
+    &ArrowSwitchButton,
   };
 
   Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},          {""},                     OptionCategory::Cosmetic, 1);
@@ -1345,6 +1349,7 @@ namespace Settings {
     ctx.generateSpoilerLog   = (GenerateSpoilerLog) ? 1 : 0;
     ctx.ingameSpoilers       = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton    = MenuOpeningButton.Value<u8>();
+    ctx.arrowSwitchButton    = ArrowSwitchButton.Value<u8>();
     ctx.randomTrapDmg        = RandomTrapDmg.Value<u8>();
     ctx.fireTrap             = (FireTrap) ? 1 : 0;
     ctx.antiFairyTrap        = (AntiFairyTrap) ? 1 : 0;
@@ -1367,6 +1372,7 @@ namespace Settings {
     ctx.mirrorShieldAsChild  = (MirrorShieldAsChild) ? 1 : 0;
     ctx.goronTunicAsChild    = (GoronTunicAsChild) ? 1 : 0;
     ctx.zoraTunicAsChild     = (ZoraTunicAsChild) ? 1 : 0;
+    ctx.restoreISG           = (RestoreISG) ? 1 : 0;
     ctx.gkDurability         = GkDurability.Value<u8>();
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
@@ -1472,7 +1478,7 @@ namespace Settings {
     ctx.startingOcarina       = StartingOcarina.Value<u8>();
     ctx.startingKokiriSword   = StartingKokiriSword.Value<u8>();
     ctx.startingBiggoronSword = StartingBiggoronSword.Value<u8>();
-    ctx.startingHearts        = StartingHearts.Value<u8>() + 1;
+    ctx.startingHearts        = StartingHearts.Value<u8>();
     ctx.startingMagicMeter    = StartingMagicMeter.Value<u8>();
     ctx.startingDoubleDefense = StartingDoubleDefense.Value<u8>();
 
@@ -2066,6 +2072,16 @@ namespace Settings {
       StartingDoubleDefense.Unlock();
     }
 
+    if (RestoreISG) {
+      GlitchISG.Unlock();
+      GlitchHover.Unlock();
+    } else {
+      GlitchISG.SetSelectedIndex(0);
+      GlitchISG.Lock();
+      GlitchHover.SetSelectedIndex(0);
+      GlitchHover.Lock();
+    }
+
     if (currentSetting != nullptr) {
       if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
         for (u16 i = 1; i < Settings::trickOptions.size(); i++) {
@@ -2324,6 +2340,7 @@ namespace Settings {
       { &ShuffleMerchants, SHUFFLEMERCHANTS_OFF },
       { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
       { &ShuffleAdultTradeQuest, SHUFFLEADULTTRADEQUEST_ON },
+      { &ShuffleChestMinigame, SHUFFLECHESTMINIGAME_OFF },
       { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
       { &GossipStoneHints, HINTS_NO_HINTS },
   };

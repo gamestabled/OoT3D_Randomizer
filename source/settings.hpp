@@ -384,6 +384,7 @@ namespace Settings {
   extern Option GenerateSpoilerLog;
   extern Option IngameSpoilers;
   extern Option MenuOpeningButton;
+  extern Option ArrowSwitchButton;
   extern Option RandomTrapDmg;
   extern Option FireTrap;
   extern Option AntiFairyTrap;
@@ -407,6 +408,7 @@ namespace Settings {
   extern Option MirrorShieldAsChild;
   extern Option GoronTunicAsChild;
   extern Option ZoraTunicAsChild;
+  extern Option RestoreISG;
   extern Option GkDurability;
 
   extern Option ItemPoolValue;

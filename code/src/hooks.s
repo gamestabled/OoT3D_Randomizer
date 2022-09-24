@@ -1557,6 +1557,17 @@ hook_BossChallenge_ExitMenu:
     cmp r8,#0x0
     bx lr
 
+.global hook_RestoreISG
+hook_RestoreISG:
+    push {lr}
+    push {r0-r12}
+    bl Settings_IsIsgEnabled
+    cmp r0,#0x0
+    pop {r0-r12}
+    bleq 0x34BBFC @Function that cancels ISG
+    pop {lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

@@ -204,7 +204,7 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
     kDown = 0;
   }
 
-  if (currentMenu->mode != GENERATE_MODE) {
+  if (currentMenu->mode != POST_GENERATE) {
 
     //New Random Seed
     if (kDown & KEY_Y) {
@@ -263,6 +263,9 @@ void ModeChangeInit() {
     //loop through until we reach an unlocked setting
     while(currentMenu->settingsList->at(currentMenu->menuIdx)->IsLocked() || currentMenu->settingsList->at(currentMenu->menuIdx)->IsHidden()) {
       currentMenu->menuIdx++;
+      if (currentMenu->menuIdx >= currentMenu->settingsList->size()) {
+        currentMenu->menuIdx = 0;
+      }
     }
     currentSetting = currentMenu->settingsList->at(currentMenu->menuIdx);
 
