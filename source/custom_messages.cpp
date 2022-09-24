@@ -212,6 +212,13 @@ constexpr std::array DungeonColors = {
                         NAEnglishText, NAFrenchText, NASpanishText, NAEnglishText, NAEnglishText);
     }
 
+    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
+                       std::string englishText, std::string frenchText, std::string spanishText,
+                       std::string italianText, std::string germanText) {
+        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, englishText, frenchText, spanishText,
+                        englishText, frenchText, spanishText, italianText, germanText);
+    }
+
     void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text) {
         CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetNAEnglish(), text.GetNAFrench(), text.GetNASpanish(),
             text.GetEUREnglish(), text.GetEURFrench(), text.GetEURSpanish(), text.GetEURItalian(), text.GetEURGerman());
@@ -338,7 +345,9 @@ constexpr std::array DungeonColors = {
         CreateMessage(0x9002, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"FOOL!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"IDIOT!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"¡TONTO!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"¡TONTO!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"STOLTO!"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+            UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+COLOR(QM_RED)+"Deutsch"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         //Curse Traps
         CreateMessage(0x8FF0, 0, 2, 3,
             UNSKIPPABLE()+INSTANT_TEXT_ON()+CENTER_TEXT()+"You've been "+COLOR(QM_RED)+"cursed"+COLOR(QM_WHITE)+"!"+NEWLINE()+CENTER_TEXT()+"You can't use your shield!"+INSTANT_TEXT_OFF()+CLOSE_AFTER(120)+MESSAGE_END(),
@@ -363,7 +372,9 @@ constexpr std::array DungeonColors = {
             CreateMessage(0x9000 + price, 0, 0, 0,
                 INSTANT_TEXT_ON()+"I'll sell you something good for "+COLOR(QM_RED)+std::to_string(price)+" Rupees"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"OK"+NEWLINE()+"No way"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 INSTANT_TEXT_ON()+"Je te vends un truc super pour "+COLOR(QM_RED)+std::to_string(price)+" Rubis"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"D'accord"+NEWLINE()+"Hors de question"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+"¡Te puedo vender algo bueno por "+COLOR(QM_RED)+std::to_string(price)+" rupias"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Vale"+NEWLINE()+"Ni hablar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
+                INSTANT_TEXT_ON()+"¡Te puedo vender algo bueno por "+COLOR(QM_RED)+std::to_string(price)+" rupias"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Vale"+NEWLINE()+"Ni hablar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+"Ti venderò una bella cosa per "+COLOR(QM_RED)+std::to_string(price)+" rupie"+COLOR(QM_WHITE)+"!"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Va bene"+NEWLINE()+"Non ci penso nemmeno"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+"Deutsch"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //Poe Collector
         //The last digit represent the number of poes needed to collect

@@ -18,6 +18,17 @@ public:
         EURitalian(NAenglish_),
         EURgerman(std::move(NAenglish_)) {}
 
+    Text(std::string english_, std::string french_, std::string spanish_,
+         std::string italian_, std::string german_)
+      : NAenglish(english_),
+        NAfrench(french_),
+        NAspanish(spanish_),
+        EURenglish(std::move(english_)),
+        EURfrench(std::move(french_)),
+        EURspanish(std::move(spanish_)),
+        EURitalian(std::move(italian_)),
+        EURgerman(std::move(german_)) {}
+
     Text(std::string NAenglish_, std::string NAfrench_, std::string NAspanish_,
          std::string EURenglish_, std::string EURfrench_, std::string EURspanish_,
          std::string EURitalian_, std::string EURgerman_)
