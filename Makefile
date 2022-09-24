@@ -177,10 +177,10 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 
 $(BUILD):
 	$(MAKE) REGION=USA -C code
-	@mv code/basecode.ips $(ROMFS)/basecode_u.ips
+	@mv code/basecode_USA.ips $(ROMFS)
 	$(MAKE) clean -C code
 	$(MAKE) REGION=EUR -C code
-	@mv code/basecode.ips $(ROMFS)/basecode_e.ips
+	@mv code/basecode_EUR.ips $(ROMFS)
 	@mkdir -p $@
 
 ifneq ($(GFXBUILD),$(BUILD))
@@ -196,7 +196,7 @@ endif
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) $(ROMFS)/basecode.ips $(ROMFS)/basecode_u.ips $(ROMFS)/basecode_e.ips
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) $(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips
 	$(MAKE) clean -C code
 
 #---------------------------------------------------------------------------------

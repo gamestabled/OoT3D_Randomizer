@@ -1,5 +1,6 @@
 #include "custom_messages.hpp"
-#include "patch_symbols.hpp"
+#include "patch_symbols_USA.hpp"
+#include "patch_symbols_EUR.hpp"
 #include "debug.hpp"
 #include "shops.hpp"
 #include "../code/src/message.h"
@@ -141,7 +142,7 @@ constexpr std::array DungeonColors = {
                     NAEnglishText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
                 newEntry.info[ENGLISH_U].length = NAEnglishText.size();
                 messageData << NAEnglishText;
 
@@ -149,7 +150,7 @@ constexpr std::array DungeonColors = {
                     NAFrenchText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
                 newEntry.info[FRENCH_U].length = NAFrenchText.size();
                 messageData << NAFrenchText;
 
@@ -157,7 +158,7 @@ constexpr std::array DungeonColors = {
                     NASpanishText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
                 newEntry.info[SPANISH_U].length = NASpanishText.size();
                 messageData << NASpanishText;
             } else if (Settings::Region == REGION_EUR) {
@@ -165,7 +166,7 @@ constexpr std::array DungeonColors = {
                     EUREnglishText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
                 newEntry.info[ENGLISH_E].length = EUREnglishText.size();
                 messageData << EUREnglishText;
 
@@ -173,7 +174,7 @@ constexpr std::array DungeonColors = {
                     EURFrenchText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
                 newEntry.info[FRENCH_E].length = EURFrenchText.size();
                 messageData << EURFrenchText;
 
@@ -181,7 +182,7 @@ constexpr std::array DungeonColors = {
                     EURSpanishText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
                 newEntry.info[SPANISH_E].length = EURSpanishText.size();
                 messageData << EURSpanishText;
 
@@ -189,7 +190,7 @@ constexpr std::array DungeonColors = {
                     EURItalianText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
                 newEntry.info[ITALIAN_E].length = EURItalianText.size();
                 messageData << EURItalianText;
 
@@ -197,7 +198,7 @@ constexpr std::array DungeonColors = {
                     EURGermanText += "\0"s;
                 }
                 messageData.seekg(0, messageData.end);
-                newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_ADDR;
+                newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
                 newEntry.info[GERMAN_E].length = EURGermanText.size();
                 messageData << EURGermanText;
             }
