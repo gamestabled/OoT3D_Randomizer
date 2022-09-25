@@ -617,7 +617,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
     gExtSaveData.hasTraveledTimeOnce = 0;
-    gExtSaveData.masterSwordFlags = (gSettingsContext.shuffleMasterSword) ? 0 : 1;
+    gExtSaveData.masterSwordFlags = (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
     // Ingame Options
     gExtSaveData.option_EnableBGM = gSettingsContext.playMusic;
     gExtSaveData.option_EnableSFX = gSettingsContext.playSFX;

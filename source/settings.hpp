@@ -459,6 +459,7 @@ namespace Settings {
   extern Option StartingNocturneOfShadow;
   extern Option StartingPreludeOfLight;
   extern Option StartingKokiriSword;
+  extern Option StartingMasterSword;
   extern Option StartingBiggoronSword;
   extern Option StartingDekuShield;
   extern Option StartingHylianShield;

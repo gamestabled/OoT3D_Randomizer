@@ -518,6 +518,7 @@ namespace Settings {
   };
 
   Option StartingKokiriSword      = Option::U8  ("Kokiri Sword",         {"Off",             "On"},                                                       {""});
+  Option StartingMasterSword      = Option::U8  ("Master Sword",         {"Off",             "On"},                                                       {""});
   Option StartingBiggoronSword    = Option::U8  ("Biggoron Sword",       {"Off",             "Giant's Knife",    "Biggoron Sword"},                       {""});
   Option StartingDekuShield       = Option::U8  ("Deku Shield",          {"Off",             "On"},                                                       {""});
   Option StartingHylianShield     = Option::U8  ("Hylian Shield",        {"Off",             "On"},                                                       {""});
@@ -533,6 +534,7 @@ namespace Settings {
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",       {"Off",             "On"},                                                       {""});
   std::vector<Option *> startingEquipmentOptions = {
     &StartingKokiriSword,
+    &StartingMasterSword,
     &StartingBiggoronSword,
     &StartingDekuShield,
     &StartingHylianShield,
@@ -1518,6 +1520,7 @@ namespace Settings {
 
     //Starting Equipment
     ctx.startingEquipment |= StartingKokiriSword.Value<u8>();
+    ctx.startingEquipment |= StartingMasterSword.Value<u8>()   << 1;
     ctx.startingEquipment |= (StartingBiggoronSword.Value<u8>() ? 1: 0) << 2;
     ctx.startingEquipment |= StartingDekuShield.Value<u8>()    << 4;
     ctx.startingEquipment |= StartingHylianShield.Value<u8>()  << 5;
