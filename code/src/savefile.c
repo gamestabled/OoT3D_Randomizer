@@ -700,8 +700,10 @@ u8 SaveFile_BecomeAdult(void) {
     // Normal behaviour checks for 0xFF
     if (gSaveContext.adultEquips.buttonItems[0] == 0xFF) {
         if (SaveFile_SwordlessPatchesEnabled()) {
-            // Equip functionless item if not supposed to get master sword equipped
+            // Simulate adult reset but without equipping/giving master sword
             gSaveContext.adultEquips.buttonItems[0] = 0xFE;
+            gSaveContext.adultEquips.equipment = 0x1120;
+            return 1;
         } else {
             // Normal behaviour if supposed to get master sword equipped
             return 0;
