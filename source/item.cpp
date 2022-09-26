@@ -8,23 +8,29 @@
 #include "settings.hpp"
 #include "../code/src/item_override.h"
 
-Item::Item(Text name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_)
-    : name(std::move(name_)),
-      type(type_),
+Item::Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_, Text name_)
+    : type(type_),
       getItemId(getItemId_),
       advancement(advancement_),
       logicVar(logicVar_),
       hintKey(hintKey_),
-      price(price_) {}
+      price(price_),
+      name(std::move(name_)) {}
 
-Item::Item(Text name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_)
-    : name(std::move(name_)),
-      type(type_),
+Item::Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_, Text name_)
+    : type(type_),
       getItemId(getItemId_),
       advancement(advancement_),
       logicVar(logicVar_),
       hintKey(hintKey_),
-      price(price_) {}
+      price(price_),
+      name(std::move(name_)) {}
+
+Item::Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, Text name_) :
+    Item::Item(type_, getItemId_, advancement_, logicVar_, hintKey_, 0, name_) {}
+
+Item::Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, Text name_) :
+    Item::Item(type_, getItemId_, advancement_, logicVar_, hintKey_, 0, name_) {}
 
 Item::~Item() = default;
 

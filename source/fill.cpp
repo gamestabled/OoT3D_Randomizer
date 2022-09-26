@@ -954,7 +954,7 @@ int Fill() {
       if (Shopsanity.IsNot(SHOPSANITY_ZERO)) { //Shopsanity 1-4, random
         //Initialize NonShopItems
         ItemAndPrice init;
-        init.Name = Text{"No Item", "Sin objeto", "Pas d'objet"};
+        init.Name = Text{"No Item", "Pas d'objet", "Sin objeto", "Nessun Oggetto", "Deutsch"};
         init.Price = -1;
         init.Repurchaseable = false;
         NonShopItems.assign(32, init);
