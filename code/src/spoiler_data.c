@@ -87,7 +87,7 @@ u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc)
 
 u8 SpoilerData_BiggoronCheck(u8 mask)
 {
-    return (gExtSaveData.biggoronTrades & mask) != 0;
+    return (gExtSaveData.extInf[EXTINF_BIGGORONTRADES] & mask) != 0;
 }
 
 u8 SpoilerData_GerudoTokenCheck()
@@ -126,7 +126,7 @@ u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation itemLoc)
 
 u8 SpoilerData_MasterSwordCheck()
 {
-    return (gExtSaveData.masterSwordFlags & 2) != 0;
+    return (gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] & 2) != 0;
 }
 
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
