@@ -534,6 +534,8 @@ typedef struct {
   u8 mirrorWorld;
 
   u8 shuffleSFX;
+  u8 shuffleSFXFootsteps;
+  u8 shuffleSFXLinkVoice;
   u8 shuffleSFXCategorically;
 
   union {

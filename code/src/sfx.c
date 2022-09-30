@@ -7,6 +7,17 @@
 
 SFXData rSfxData = {0};
 
+u8 SeqTypeIsMovement(SeqType type) {
+    return type == SEQ_WALK ||
+        type == SEQ_WALK_LOUD ||
+        type == SEQ_JUMP ||
+        type == SEQ_LAND ||
+        type == SEQ_SLIP ||
+        type == SEQ_SLIP_LOOP ||
+        type == SEQ_BOUND ||
+        type == SEQ_CRAWL;
+}
+
 u32 SetSFX(u32 original) {
     // Hack for hookshot as child (adult voice -> child voice)
     if (original == 0x100050D && gSaveContext.linkAge == 1) {
@@ -34,7 +45,9 @@ u32 SetSFX(u32 original) {
     }
 
     // Check for invalid sound effect
-    if (original < SFX_BASE || original > SFX_BASE + SFX_COUNT || type >= SEQTYPE_COUNT) {
+    if (original < SFX_BASE || original > SFX_BASE + SFX_COUNT || type >= SEQTYPE_COUNT ||
+        (!gSettingsContext.shuffleSFXFootsteps && SeqTypeIsMovement(type)) ||
+        (!gSettingsContext.shuffleSFXLinkVoice && sfxID >= 1258 && sfxID <= 1321)) {
         return original;
     }
 

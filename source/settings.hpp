@@ -690,6 +690,8 @@ namespace Settings {
   extern Option ShuffleFanfares;
   extern Option ShuffleOcaMusic;
   extern Option ShuffleSFX;
+  extern Option ShuffleSFXFootsteps;
+  extern Option ShuffleSFXLinkVoice;
   extern Option ShuffleSFXCategorically;
 
   extern u32 LinksPocketRewardBitMask;
