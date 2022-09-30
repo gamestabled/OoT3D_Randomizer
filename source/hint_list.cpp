@@ -1980,36 +1980,36 @@ void HintTable_Init() {
                      //obscure text
                      Text{"#Ganon's Tower# is protected by a powerful barrier.",
                 /*french*/"#la tour de Ganon# est protégée par une puissante barrière",
-               /*spanish*/"la #torre de Ganon# está protegida por una poderosa barrera"},
-             ///*italian*/"la #torre di Ganon# è protetta da una potente barriera.",
-              ///*german*/"Deutsch"},
+               /*spanish*/"la #torre de Ganon# está protegida por una poderosa barrera",
+               /*italian*/"la #torre di Ganon# è protetta da una potente barriera.",
+                /*german*/"Deutsch"},
     });
 
     hintTable[ZERO_TRIALS] = HintText::Exclude({
                      //obscure text
                      Text{"Sheik dispelled the barrier around #Ganon's Tower#.",
                 /*french*/"Sheik a dissipé la barrière autour de #la tour de Ganon#",
-               /*spanish*/"Sheik disipó la barrera alrededor de la #torre de Ganon#."},
-             ///*italian*/"Sheik ha dissolto la barriera attorno alla #torre di Ganon#.",
-              ///*german*/"Deutsch"},
+               /*spanish*/"Sheik disipó la barrera alrededor de la #torre de Ganon#.",
+               /*italian*/"Sheik ha dissolto la barriera attorno alla #torre di Ganon#.",
+                /*german*/"Deutsch"},
     });
 
     hintTable[FOUR_TO_FIVE_TRIALS] = HintText::Exclude({
                      //obscure text
                      Text{" was dispelled by Sheik.",
                 /*french*/" a été dissipée par Sheik.",
-               /*spanish*/" se disipó gracias a Sheik."},
-             ///*italian*/" è stata dissolta da Sheik.",
-              ///*german*/" Deutsch"},
+               /*spanish*/" se disipó gracias a Sheik.",
+               /*italian*/" è stata dissolta da Sheik.",
+                /*german*/" Deutsch"},
     });
 
     hintTable[ONE_TO_THREE_TRIALS] = HintText::Exclude({
                      //obscure text
                      Text{" protects Ganons Tower.",
                 /*french*/" protège la tour de Ganon.",
-               /*spanish*/" protege la torre de Ganon"},
-             ///*italian*/" protegge la torre di Ganon.",
-              ///*german*/" Deutsch"},
+               /*spanish*/" protege la torre de Ganon",
+               /*italian*/" protegge la torre di Ganon.",
+                /*german*/" Deutsch"},
     });
 
     /*--------------------------
