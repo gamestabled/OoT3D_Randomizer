@@ -20,6 +20,7 @@
 #include "business_scrubs.h"
 #include "shops.h"
 #include "pushblock.h"
+#include "bean_plant.h"
 
 // Self Vars
 u32 mp_receivedPackets = 0;
@@ -2161,6 +2162,7 @@ void Multiplayer_Send_ActorUpdate(Actor* actor, void* extraData, u32 extraDataSi
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_ACTORUPDATE);
 
     mBuffer[memSpacer++] = gGlobalContext->sceneNum;
+    mBuffer[memSpacer++] = gGlobalContext->roomNum;
     mBuffer[memSpacer++] = actor->id;
     mBuffer[memSpacer++] = actor->type;
     mBuffer[memSpacer++] = actor->params;
@@ -2179,7 +2181,9 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 sceneNum = mBuffer[memSpacer++];
-    if (sceneNum != gGlobalContext->sceneNum) {
+    u8 roomNum = mBuffer[memSpacer++];
+
+    if (sceneNum != gGlobalContext->sceneNum || roomNum != gGlobalContext->roomNum) {
         return;
     }
 
@@ -2242,6 +2246,9 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
                 }
                 case 0x11A: // Business Scrubs
                     EnDns_StartBurrow((EnDns*)actor);
+                    break;
+                case 0x126: // Bean Plant (Child)
+                    ObjBean_StartGrowth((ObjBean*)actor);
                     break;
                 case 0x12C: // Collapsing Platforms
                 {
@@ -2316,6 +2323,16 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
                 }
             }
             break;
+        case 0x126: // Bean Plant (Adult)
+            if (gSaveContext.linkAge == 0 && Actor_Find(&gGlobalContext->actorCtx, actorId, actorType) == NULL) {
+                // Set flag so it doesn't despawn. Needs to be set in gSaveContext, even though
+                // it gets overwritten later, because the actor init function gets called in Actor_Spawn.
+                Flags_SetSwitch(gGlobalContext, lastBeanPlant_Params & 0x3F);
+                Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId,
+                    lastBeanPlant_Home.pos.x, lastBeanPlant_Home.pos.y, lastBeanPlant_Home.pos.z,
+                    lastBeanPlant_Home.rot.x, lastBeanPlant_Home.rot.y, lastBeanPlant_Home.rot.z, lastBeanPlant_Params);
+            }
+            break;
     }
 }
 
@@ -2327,6 +2344,7 @@ void Multiplayer_Send_ActorSpawn(s16 actorId, PosRot posRot, s16 params) {
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_ACTORSPAWN);
 
     mBuffer[memSpacer++] = gGlobalContext->sceneNum;
+    mBuffer[memSpacer++] = gGlobalContext->roomNum;
     mBuffer[memSpacer++] = actorId;
     memcpy(&mBuffer[memSpacer], &posRot, sizeof(PosRot));
     memSpacer += sizeof(PosRot) / 4;
@@ -2341,15 +2359,17 @@ void Multiplayer_Receive_ActorSpawn(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 sceneNum = mBuffer[memSpacer++];
+    u8 roomNum = mBuffer[memSpacer++];
+
+    if (sceneNum != gGlobalContext->sceneNum || roomNum != gGlobalContext->roomNum || !IsInGame()) {
+        return;
+    }
+
     s16 actorId = mBuffer[memSpacer++];
     PosRot rcvdPosRot;
     memcpy(&rcvdPosRot, &mBuffer[memSpacer], sizeof(PosRot));
     memSpacer += sizeof(PosRot) / 4;
     s16 params = mBuffer[memSpacer++];
-
-    if (sceneNum != gGlobalContext->sceneNum || !IsInGame()) {
-        return;
-    }
 
     Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId,
         rcvdPosRot.pos.x, rcvdPosRot.pos.y, rcvdPosRot.pos.z,

@@ -51,6 +51,7 @@
 #include "pushblock.h"
 #include "spin_attack.h"
 #include "deku_scrubs.h"
+#include "bean_plant.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -146,6 +147,9 @@ void Actor_Init() {
     gActorOverlayTable[0x11A].initInfo->update = EnDns_rUpdate;
 
     gActorOverlayTable[0x11B].initInfo->update = NULL;
+
+    gActorOverlayTable[0x126].initInfo->init = (ActorFunc)ObjBean_rInit;
+    gActorOverlayTable[0x126].initInfo->update = (ActorFunc)ObjBean_rUpdate;
 
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 
