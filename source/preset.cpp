@@ -12,6 +12,7 @@
 
 #include "category.hpp"
 #include "settings.hpp"
+#include "descriptions.hpp"
 #include "tinyxml2.h"
 #include "utils.hpp"
 
@@ -92,7 +93,7 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
   preset.InsertEndChild(rootNode);
 
   for (Menu* menu : Settings::GetAllOptionMenus()) {
-    if (menu->mode != OPTION_SUB_MENU) {
+    if (menu->mode != OPTION_MENU) {
       continue;
     }
     for (const Option* setting : *menu->settingsList) {
@@ -129,7 +130,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
   XMLElement* curNode = rootNode->FirstChildElement();
 
   for (Menu* menu : Settings::GetAllOptionMenus()) {
-    if (menu->mode != OPTION_SUB_MENU) {
+    if (menu->mode != OPTION_MENU) {
       continue;
     }
 
@@ -221,3 +222,225 @@ void LoadCachedCosmetics() {
     }
   }
 }
+
+PremadePreset presetNintended = {
+    "Nintended", presetNintendedDesc, {
+    // Open Settings
+    { &Settings::OpenForest, OPENFOREST_CLOSED },
+    { &Settings::OpenKakariko, OPENKAKARIKO_CLOSED },
+    { &Settings::OpenDoorOfTime, OPENDOOROFTIME_INTENDED },
+    { &Settings::ZorasFountain, ZORASFOUNTAIN_NORMAL },
+    { &Settings::GerudoFortress, GERUDOFORTRESS_NORMAL },
+    { &Settings::Bridge, RAINBOWBRIDGE_MEDALLIONS },
+    { &Settings::BridgeMedallionCount, 6 },
+    { &Settings::RandomGanonsTrials, OFF },
+    { &Settings::GanonsTrialsCount, 6 },
+} };
+
+PremadePreset presetAllsanity = {
+    "Allsanity", presetAllsanityDesc, {
+    // World Settings
+    { &Settings::ShuffleEntrances, ON },
+    { &Settings::ShuffleDungeonEntrances, SHUFFLEDUNGEONS_GANON },
+    { &Settings::ShuffleOverworldEntrances, ON },
+    { &Settings::ShuffleInteriorEntrances, SHUFFLEINTERIORS_ALL },
+    { &Settings::ShuffleGrottoEntrances, ON },
+    // Shuffle Settings
+    { &Settings::ShuffleRewards, REWARDSHUFFLE_ANYWHERE },
+    { &Settings::LinksPocketItem, LINKSPOCKETITEM_ANYTHING },
+    { &Settings::ShuffleSongs, SONGSHUFFLE_ANYWHERE },
+    { &Settings::Shopsanity, SHOPSANITY_FOUR },
+    { &Settings::Tokensanity, TOKENSANITY_ALL_TOKENS },
+    { &Settings::Scrubsanity, SCRUBSANITY_AFFORDABLE },
+    { &Settings::ShuffleCows, ON },
+    { &Settings::ShuffleKokiriSword, ON },
+    { &Settings::ShuffleOcarinas, ON },
+    { &Settings::ShuffleWeirdEgg, ON },
+    { &Settings::ShuffleGerudoToken, ON },
+    { &Settings::ShuffleMagicBeans, ON },
+    { &Settings::ShuffleMerchants, ON },
+    { &Settings::ShuffleAdultTradeQuest, ON },
+    { &Settings::ShuffleChestMinigame, ON },
+    { &Settings::ShuffleFrogSongRupees, ON },
+    // Shuffle Dungeon Items
+    { &Settings::MapsAndCompasses, MAPSANDCOMPASSES_ANYWHERE },
+    { &Settings::Keysanity, KEYSANITY_ANYWHERE },
+    { &Settings::GerudoKeys, GERUDOKEYS_ANYWHERE },
+    { &Settings::BossKeysanity, BOSSKEYSANITY_ANYWHERE },
+    { &Settings::GanonsBossKey, GANONSBOSSKEY_ANYWHERE },
+} };
+
+PremadePreset presetRacing = {
+    "Racing", presetRacingDesc, {
+    // Open Settings
+    { &Settings::OpenForest, OPENFOREST_OPEN },
+    { &Settings::OpenKakariko, OPENKAKARIKO_OPEN },
+    { &Settings::OpenDoorOfTime, OPENDOOROFTIME_OPEN },
+    { &Settings::ZorasFountain, ZORASFOUNTAIN_NORMAL },
+    { &Settings::GerudoFortress, GERUDOFORTRESS_FAST },
+    { &Settings::Bridge, RAINBOWBRIDGE_MEDALLIONS },
+    { &Settings::BridgeMedallionCount, 6 },
+    { &Settings::RandomGanonsTrials, OFF },
+    { &Settings::GanonsTrialsCount, 0 },
+    // World Settings
+    { &Settings::StartingAge, AGE_ADULT },
+    { &Settings::ShuffleEntrances, ON },
+    { &Settings::ShuffleDungeonEntrances, SHUFFLEDUNGEONS_ON },
+    { &Settings::BombchusInLogic, OFF },
+    { &Settings::AmmoDrops, AMMODROPS_VANILLA },
+    // Shuffle Settings
+    { &Settings::ShuffleRewards, REWARDSHUFFLE_ANYWHERE },
+    { &Settings::Tokensanity, TOKENSANITY_DUNGEONS },
+    { &Settings::ShuffleKokiriSword, ON },
+    { &Settings::MapsAndCompasses, MAPSANDCOMPASSES_START_WITH },
+    { &Settings::GanonsBossKey, GANONSBOSSKEY_LACS_DUNGEONS },
+    { &Settings::LACSDungeonCount, 5 },
+    // Timesaver Settings
+    { &Settings::SkipChildStealth, SKIP },
+    { &Settings::SkipTowerEscape, SKIP },
+    { &Settings::SkipEponaRace, SKIP },
+    { &Settings::SkipMinigamePhases, SKIP },
+    { &Settings::FreeScarecrow, ON },
+    { &Settings::FourPoesCutscene, SKIP },
+    { &Settings::LakeHyliaOwl, SKIP },
+    { &Settings::BigPoeTargetCount, 0 }, // Index 0 is 1 poe
+    { &Settings::NumRequiredCuccos, 3 },
+    { &Settings::KingZoraSpeed, KINGZORASPEED_FAST },
+    { &Settings::CompleteMaskQuest, ON },
+    { &Settings::FastBunnyHood, ON },
+    // Logical Tricks
+    { &Settings::LogicGrottosWithoutAgony, ON },
+    { &Settings::LogicVisibleCollision, ON },
+    { &Settings::LogicFewerTunicRequirements, ON },
+    { &Settings::LogicLostWoodsGSBean, ON },
+    { &Settings::LogicLabDiving, ON },
+    { &Settings::LogicManOnRoof, ON },
+    { &Settings::LogicWindmillPoHHookshot, ON },
+    { &Settings::LogicCraterBeanPoHWithHovers, ON },
+    { &Settings::LogicDCJump, ON },
+    { &Settings::LogicChildDeadhand, ON },
+    { &Settings::LogicLensSpirit, ON },
+    { &Settings::LogicLensShadow, ON },
+    { &Settings::LogicLensShadowBack, ON },
+    { &Settings::LogicLensBotw, ON },
+    { &Settings::LogicLensGtg, ON },
+    { &Settings::LogicLensCastle, ON },
+    { &Settings::LogicLensJabuMQ, ON },
+    { &Settings::LogicLensSpiritMQ, ON },
+    { &Settings::LogicLensShadowMQ, ON },
+    { &Settings::LogicLensShadowMQBack, ON },
+    { &Settings::LogicLensBotwMQ, ON },
+    { &Settings::LogicLensGtgMQ, ON },
+    { &Settings::LogicFlamingChests, ON },
+    // Starting Inventory
+    { &Settings::StartingOcarina, 1 }, // Fairy Ocarina
+    { &Settings::StartingKokiriSword, ON },
+    { &Settings::StartingDekuShield, ON },
+    { &Settings::StartingHylianShield, ON },
+    { &Settings::StartingConsumables, ON },
+    // Misc Settings
+    { &Settings::Racing, ON },
+    { &Settings::GossipStoneHints, HINTS_NEED_NOTHING },
+    { &Settings::ClearerHints, HINTMODE_CLEAR },
+    { &Settings::HintDistribution, HINTDISTRIBUTION_BALANCED },
+    { &Settings::CompassesShowReward, ON },
+    { &Settings::CompassesShowWotH, OFF },
+    { &Settings::MapsShowDungeonMode, ON },
+    { &Settings::StartingTime, STARTINGTIME_NIGHT },
+    { &Settings::ChestAnimations, CHESTANIMATIONS_ALWAYSFAST },
+    { &Settings::ChestSize, CHESTSIZE_MATCHCONTENT },
+    { &Settings::GenerateSpoilerLog, OFF },
+    { &Settings::RandomTrapDmg, RANDOMTRAPS_OFF },
+    // Item Pool Settings
+    { &Settings::IceTrapValue, ICETRAPS_OFF },
+}, {
+    // Excluded Locations
+    KAK_40_GOLD_SKULLTULA_REWARD,
+    KAK_50_GOLD_SKULLTULA_REWARD,
+} };
+
+PremadePreset presetFullChaos = {
+    "Full Chaos", presetFullChaosDesc, {
+    // Open Settings
+    { &Settings::OpenForest, OPENFOREST_CLOSED },
+    { &Settings::OpenKakariko, OPENKAKARIKO_CLOSED },
+    { &Settings::OpenDoorOfTime, OPENDOOROFTIME_INTENDED },
+    { &Settings::ZorasFountain, ZORASFOUNTAIN_NORMAL },
+    { &Settings::GerudoFortress, GERUDOFORTRESS_NORMAL },
+    { &Settings::Bridge, RAINBOWBRIDGE_TOKENS },
+    { &Settings::BridgeTokenCount, 100 },
+    { &Settings::RandomGanonsTrials, OFF },
+    { &Settings::GanonsTrialsCount, 6 },
+    // World Settings
+    { &Settings::StartingAge, AGE_CHILD },
+    { &Settings::ShuffleEntrances, ON },
+    { &Settings::ShuffleDungeonEntrances, SHUFFLEDUNGEONS_ON }, // Including Ganon's Castle could make it too easy
+    { &Settings::ShuffleOverworldEntrances, ON },
+    { &Settings::ShuffleInteriorEntrances, SHUFFLEINTERIORS_ALL },
+    { &Settings::ShuffleGrottoEntrances, ON },
+    { &Settings::AmmoDrops, AMMODROPS_NONE },
+    { &Settings::HeartDropRefill, HEARTDROPREFILL_NODROPREFILL },
+    { &Settings::MQDungeonCount, 13 }, // Random
+    // Shuffle Settings
+    { &Settings::ShuffleRewards, REWARDSHUFFLE_ANYWHERE },
+    { &Settings::LinksPocketItem, LINKSPOCKETITEM_ANYTHING },
+    { &Settings::ShuffleSongs, SONGSHUFFLE_ANYWHERE },
+    { &Settings::Shopsanity, SHOPSANITY_FOUR },
+    { &Settings::Tokensanity, TOKENSANITY_ALL_TOKENS },
+    { &Settings::Scrubsanity, SCRUBSANITY_RANDOM_PRICES },
+    { &Settings::ShuffleCows, ON },
+    { &Settings::ShuffleKokiriSword, ON },
+    { &Settings::ShuffleOcarinas, ON },
+    { &Settings::ShuffleWeirdEgg, ON },
+    { &Settings::ShuffleGerudoToken, ON },
+    { &Settings::ShuffleMagicBeans, ON },
+    { &Settings::ShuffleMerchants, SHUFFLEMERCHANTS_NO_HINTS },
+    { &Settings::ShuffleAdultTradeQuest, ON },
+    { &Settings::ShuffleChestMinigame, SHUFFLECHESTMINIGAME_SINGLE_KEYS },
+    { &Settings::ShuffleFrogSongRupees, ON },
+    // Shuffle Dungeon Items
+    { &Settings::MapsAndCompasses, MAPSANDCOMPASSES_ANYWHERE },
+    { &Settings::Keysanity, KEYSANITY_ANYWHERE },
+    { &Settings::GerudoKeys, GERUDOKEYS_ANYWHERE },
+    { &Settings::BossKeysanity, BOSSKEYSANITY_ANYWHERE },
+    { &Settings::GanonsBossKey, GANONSBOSSKEY_ANYWHERE },
+    // Timesaver Settings
+    { &Settings::SkipChildStealth, DONT_SKIP },
+    { &Settings::SkipTowerEscape, DONT_SKIP },
+    { &Settings::SkipEponaRace, DONT_SKIP },
+    { &Settings::SkipMinigamePhases, DONT_SKIP },
+    { &Settings::FreeScarecrow, OFF },
+    { &Settings::BigPoeTargetCount, 9 }, // Index 9 is 10 poes
+    { &Settings::NumRequiredCuccos, 7 },
+    { &Settings::KingZoraSpeed, KINGZORASPEED_RANDOM },
+    // Logic Options
+    { &Settings::Logic, LOGIC_NONE },
+    // Starting Inventory
+    { &Settings::StartingHearts, 0 },
+    // Misc Settings
+    { &Settings::GossipStoneHints, HINTS_NEED_NOTHING },
+    { &Settings::ClearerHints, HINTMODE_CLEAR },
+    { &Settings::HintDistribution, HINTDISTRIBUTION_USELESS },
+    { &Settings::CompassesShowReward, OFF },
+    { &Settings::CompassesShowWotH, OFF },
+    { &Settings::MapsShowDungeonMode, OFF },
+    { &Settings::DamageMultiplier, DAMAGEMULTIPLIER_OHKO },
+    { &Settings::RandomTrapDmg, RANDOMTRAPS_ADVANCED },
+    { &Settings::FireTrap, ON },
+    { &Settings::AntiFairyTrap, ON },
+    { &Settings::CurseTraps, ON },
+    // Item Pool Settings
+    { &Settings::IceTrapValue, ICETRAPS_ONSLAUGHT },
+    { &Settings::RemoveDoubleDefense, OFF },
+    { &Settings::ProgressiveGoronSword, ON },
+    // Item Usability Settings
+    { &Settings::RestoreISG, OFF },
+    { &Settings::GkDurability, GKDURABILITY_RANDOMRISK },
+} };
+
+std::vector<PremadePreset*> premadePresets = {
+    &presetNintended,
+    &presetAllsanity,
+    &presetRacing,
+    &presetFullChaos,
+};

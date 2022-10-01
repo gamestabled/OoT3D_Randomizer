@@ -10,7 +10,7 @@
 #include "sound_effects.hpp"
 #include "random.hpp"
 #include "randomizer.hpp"
-#include "setting_descriptions.hpp"
+#include "descriptions.hpp"
 #include "trial.hpp"
 #include "keys.hpp"
 
@@ -287,19 +287,19 @@ namespace Settings {
   Option Racing              = Option::Bool("Racing",                 {"Off", "On"},                                                          {racingDesc});
   Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
   Option ClearerHints        = Option::U8  ("  Hint Clarity",         {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
-  Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    1); // Balanced
-  Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    1);
-  Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    1);
-  Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    1);
+  Option HintDistribution    = Option::U8  ("  Hint Distribution",    {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
+  Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    ON);
+  Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    ON);
+  Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    ON);
   Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
   Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
   Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
   Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
-  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    1); // On
+  Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    ON);
   Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
-  Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    1); // Basic
-  Option FireTrap            = Option::Bool("  Fire Trap",            {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    1); // On
-  Option AntiFairyTrap       = Option::Bool("  Anti-Fairy Trap",      {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    1); // On
+  Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
+  Option FireTrap            = Option::Bool("  Fire Trap",            {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
+  Option AntiFairyTrap       = Option::Bool("  Anti-Fairy Trap",      {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
   Option CurseTraps          = Option::Bool("  Curse Traps",          {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
@@ -587,7 +587,7 @@ namespace Settings {
     &startingOthers,
   };
   Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicGlitched, logicNoLogic, logicVanilla});
-  Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                                     {locationsReachableDesc},                                                                                                              OptionCategory::Setting,    1); //All Locations Reachable On
+  Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                                     {locationsReachableDesc},                                                                                                              OptionCategory::Setting,    ON);
   Option NightGSExpectSuns  = Option::Bool("Night GSs Expect Sun's",  {"Off", "On"},                                     {nightGSDesc});
   std::vector<Option *> logicOptions = {
     &Logic,
@@ -898,23 +898,22 @@ namespace Settings {
   };
 
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
-  Option SkipSongReplays     = Option::U8  ("Skip Song Replays",      {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},                     {skipSongReplaysDesc},                                                                                            OptionCategory::Cosmetic);
   Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc},                                                                                                 OptionCategory::Cosmetic);
   Option ArrowSwitchButton   = Option::U8  ("Switch Arrows with",     {"D-Pad Right","D-Pad Left","D-Pad Up","D-Pad Down","Touch Screen",},   {arrowSwitchDesc},                                                                                                OptionCategory::Cosmetic);
   std::vector<Option*> preferenceOptions = {
     &QuickText,
-    &SkipSongReplays,
     &MenuOpeningButton,
     &ArrowSwitchButton,
   };
 
-  Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},          {""},                     OptionCategory::Cosmetic, 1);
-  Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"}, {""},                     OptionCategory::Cosmetic);
-  Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},               {""},                     OptionCategory::Cosmetic);
-  Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},               {""},                     OptionCategory::Cosmetic, 1);
-  Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},               {""},                     OptionCategory::Cosmetic, 1);
-  Option SilenceNavi        = Option::U8("Silence Navi",         {"Off", "On"},               {silenceNaviDesc},        OptionCategory::Cosmetic);
-  Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},               {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
+  Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},                                 {""},                     OptionCategory::Cosmetic, 1);
+  Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"},                        {""},                     OptionCategory::Cosmetic);
+  Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},                                      {""},                     OptionCategory::Cosmetic);
+  Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},                                      {""},                     OptionCategory::Cosmetic, 1);
+  Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},                                      {""},                     OptionCategory::Cosmetic, 1);
+  Option SilenceNavi        = Option::U8("Silence Navi",         {"Off", "On"},                                      {silenceNaviDesc},        OptionCategory::Cosmetic);
+  Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},                                      {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
+  Option SkipSongReplays    = Option::U8("Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"}, {skipSongReplaysDesc},    OptionCategory::Cosmetic);
   std::vector<Option*> ingameDefaultOptions = {
     &ZTargeting,
     &CameraControl,
@@ -923,6 +922,7 @@ namespace Settings {
     &TogglePlaySFX,
     &SilenceNavi,
     &IgnoreMaskReaction,
+    &SkipSongReplays,
   };
 
   //Function to make options vectors for Navi and Tunic colors without the "Same as ..." option
@@ -1154,12 +1154,12 @@ namespace Settings {
   Option ShuffleMusic =    Option::Bool("Shuffle Music",           {"Off", "On"},                         {musicRandoDesc},                                                                                                                                     OptionCategory::Cosmetic);
   Option ShuffleBGM =      Option::U8  ("  Shuffle BGM",           {"Off", "On (Grouped)", "On (Mixed)"}, {shuffleBGMDesc},                                                                                                                                     OptionCategory::Cosmetic,               2); // On (Mixed)
   Option ShuffleFanfares = Option::U8  ("  Shuffle Fanfares",      {fanfareOptions},                      {fanfareDescriptions},                                                                                                                                OptionCategory::Cosmetic,               1); // Fanfares only
-  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},                         {shuffleOcaMusicDesc},                                                                                                                                OptionCategory::Cosmetic,               1); // On
+  Option ShuffleOcaMusic = Option::Bool("  Shuffle Ocarina Music", {"Off", "On"},                         {shuffleOcaMusicDesc},                                                                                                                                OptionCategory::Cosmetic,               ON);
 
   Option ShuffleSFX              = Option::U8  ("Shuffle SFX",            {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                  OptionCategory::Cosmetic);
-  Option ShuffleSFXFootsteps     = Option::Bool("  Include Footsteps",    {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               1); // Yes
-  Option ShuffleSFXLinkVoice     = Option::Bool("  Include Link's Voice", {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               1); // Yes
-  Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle",  {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                 OptionCategory::Cosmetic,               1); // On
+  Option ShuffleSFXFootsteps     = Option::Bool("  Include Footsteps",    {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               ON);
+  Option ShuffleSFXLinkVoice     = Option::Bool("  Include Link's Voice", {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               ON);
+  Option ShuffleSFXCategorically = Option::Bool("  Categorical Shuffle",  {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                 OptionCategory::Cosmetic,               ON);
 
   std::vector<Option*> audioOptions = {
     &ShuffleMusic,
@@ -1183,15 +1183,17 @@ namespace Settings {
     &audio,
   };
 
-  Menu loadSettingsPreset       = Menu::Action("Load Settings Preset",       LOAD_PRESET);
-  Menu saveSettingsPreset       = Menu::Action("Save Settings Preset",       SAVE_PRESET);
-  Menu deleteSettingsPreset     = Menu::Action("Delete Settings Preset",     DELETE_PRESET);
-  Menu resetToDefaultSettings   = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS);
+  Menu loadPremadePreset      = Menu::Action("Load Premade Preset",        LOAD_PREMADE_PRESET);
+  Menu loadCustomPreset       = Menu::Action("Load Settings Preset",       LOAD_CUSTOM_PRESET);
+  Menu saveCustomPreset       = Menu::Action("Save Settings Preset",       SAVE_CUSTOM_PRESET);
+  Menu deleteCustomPreset     = Menu::Action("Delete Settings Preset",     DELETE_CUSTOM_PRESET);
+  Menu resetToDefaultSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS);
 
   std::vector<Menu *> settingsPresetItems = {
-    &loadSettingsPreset,
-    &saveSettingsPreset,
-    &deleteSettingsPreset,
+    &loadPremadePreset,
+    &loadCustomPreset,
+    &saveCustomPreset,
+    &deleteCustomPreset,
     &resetToDefaultSettings,
   };
 
@@ -1536,13 +1538,6 @@ namespace Settings {
     return ctx;
   }
 
-  //Set default cosmetics where the default is not the first option
-  static void SetDefaultCosmetics() {
-    for (auto op : cosmeticOptions) {
-      op->SetToDefault();
-    }
-  }
-
   //One-time initialization
   void InitSettings() {
     //Create Location Exclude settings
@@ -1553,76 +1548,28 @@ namespace Settings {
 
   //Set default settings for all settings
   void SetDefaultSettings() {
-    for (auto op : openOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : worldOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : shuffleOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : shuffleDungeonItemOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : timesaverOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : miscOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : itemUsabilityOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : itemPoolOptions) {
-      op->SetToDefault();
-    }
-    for (auto menu : excludeLocationsMenus) {
-      for (auto op : *menu->settingsList) {
-        op->SetToDefault();
-      }
-    }
-    for (auto op : startingItemsOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : startingSongsOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : startingEquipmentOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : startingStonesMedallionsOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : startingOthersOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : logicOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : trickOptions) {
-      op->SetToDefault();
-    }
-    for (auto op : glitchCategories) {
-      op->SetToDefault();
-    }
-    for (auto op : miscGlitches) {
-      op->SetToDefault();
-    }
-    for (auto op : multiplayerOptions) {
-      op->SetToDefault();
-    }
+      std::function<void(std::vector<Menu*>*)> setAllOptionsToDefault = [&](std::vector<Menu*>* menuPtr) {
+          for (auto menu : *menuPtr) {
+              if (menu->mode == SUB_MENU) {
+                  setAllOptionsToDefault(menu->itemsList);
+              } else if (menu->mode == OPTION_MENU) {
+                  for (auto option : *menu->settingsList) {
+                      if (option->IsCategory(OptionCategory::Cosmetic)) {
+                          continue;
+                      }
+                      option->SetToDefault();
+                  }
+              }
+          }
+      };
 
-    for (auto loc : allLocations) {
-      Location(loc)->GetExcludedOption()->SetToDefault();
-    }
+      setAllOptionsToDefault(&mainMenu);
+
     //Don't let users exclude these locations
     //TODO: Make sure the defaults are set appropriately for these?
     Location(HC_ZELDAS_LETTER)->GetExcludedOption()->Hide();
     Location(MARKET_BOMBCHU_BOWLING_BOMBCHUS)->GetExcludedOption()->Hide();
     Location(GANON)->GetExcludedOption()->Hide();
-
-    SetDefaultCosmetics();
 
     ResolveExcludedLocationConflicts();
     for (Menu* menu : Settings::GetAllOptionMenus()) {
@@ -2744,7 +2691,7 @@ namespace Settings {
   //Else, recursively call each sub menu of this sub menu
   const std::vector<Menu*> GetMenusRecursive(Menu* menu) {
     std::vector<Menu*> menus;
-    if (menu->mode == OPTION_SUB_MENU) {
+    if (menu->mode == OPTION_MENU) {
       menus.push_back(menu);
     } else if (menu->mode == SUB_MENU) {
         for (Menu* subMenu : *menu->itemsList) {

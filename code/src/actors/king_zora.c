@@ -18,7 +18,7 @@ u32 EnKz_CheckMovedFlag(void) {
 void EnKz_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnKz_Update(thisx, globalCtx);
     // Zora's Domain scene, the position check is just to add a 1 frame delay
-    if (gSettingsContext.kingZoraSpeed != 1 && globalCtx->sceneNum == 88 && thisx->speedXZ != 0 && thisx->world.pos.x < 628.0f) {
+    if (gSettingsContext.kingZoraSpeed != KINGZORASPEED_VANILLA && globalCtx->sceneNum == 88 && thisx->speedXZ != 0 && thisx->world.pos.x < 628.0f) {
         u8 mweepCount = (gSettingsContext.kingZoraSpeed)? Bias(Hash(0)) + 1 : 1;
         thisx->speedXZ = 6.4f / (2.56f * (mweepCount - 0.58f));
         thisx->world.pos.z = -1783.0f; // lock Z position so the increased speed doesn't mess it up
