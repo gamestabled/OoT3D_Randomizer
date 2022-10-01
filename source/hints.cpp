@@ -169,7 +169,7 @@ static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hint
 
 static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<u8>& colors = {}) {
   //save hints as dummy items for writing to the spoiler log
-  NewItem(gossipStone, Item{hint, ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE});
+  NewItem(gossipStone, Item{ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE, hint});
   Location(gossipStone)->SetPlacedItem(gossipStone);
 
   //create the in game message
@@ -194,7 +194,7 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetNAEnglish());
   PlacementLog_Msg("\n");
 
   if (accessibleGossipStones.empty()) {
@@ -212,7 +212,7 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
   PlacementLog_Msg("\tMessage: ");
-  PlacementLog_Msg(finalHint.english);
+  PlacementLog_Msg(finalHint.NAenglish);
   PlacementLog_Msg("\n\n");
 
   AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
@@ -241,7 +241,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetNAEnglish());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
@@ -267,7 +267,7 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
   }
   Text finalWothHint = Hint(PREFIX).GetText()+"#"+locationText+"#"+Hint(WAY_OF_THE_HERO).GetText();
   PlacementLog_Msg("\tMessage: ");
-  PlacementLog_Msg(finalWothHint.english);
+  PlacementLog_Msg(finalWothHint.NAenglish);
   PlacementLog_Msg("\n\n");
   AddHint(finalWothHint, gossipStone, {QM_LBLUE});
 }
@@ -289,7 +289,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<Locati
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetNAEnglish());
   PlacementLog_Msg("\n");
 
   //get an accessible gossip stone
@@ -313,7 +313,7 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<Locati
   }
   Text finalBarrenHint = Hint(PREFIX).GetText()+Hint(PLUNDERING).GetText()+"#"+locationText+"#"+Hint(FOOLISH).GetText();
   PlacementLog_Msg("\tMessage: ");
-  PlacementLog_Msg(finalBarrenHint.english);
+  PlacementLog_Msg(finalBarrenHint.NAenglish);
   PlacementLog_Msg("\n\n");
   AddHint(finalBarrenHint, gossipStone, {QM_PINK});
 
@@ -340,7 +340,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
   PlacementLog_Msg("\n");
 
   PlacementLog_Msg("\tItem: ");
-  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetEnglish());
+  PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetNAEnglish());
   PlacementLog_Msg("\n");
 
   //get an acessible gossip stone
@@ -359,14 +359,14 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
     Text locationText = AreaTable(parentRegion)->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# "+Hint(HOARDS).GetText()+" #"+itemText+"#.";
     PlacementLog_Msg("\tMessage: ");
-    PlacementLog_Msg(finalHint.english);
+    PlacementLog_Msg(finalHint.NAenglish);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_GREEN, QM_RED});
   } else {
     Text locationText = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# "+Hint(CAN_BE_FOUND_AT).GetText()+" #"+locationText+"#.";
     PlacementLog_Msg("\tMessage: ");
-    PlacementLog_Msg(finalHint.english);
+    PlacementLog_Msg(finalHint.NAenglish);
     PlacementLog_Msg("\n\n");
     AddHint(finalHint, gossipStone, {QM_RED, QM_GREEN});
   }
@@ -389,7 +389,7 @@ static void CreateJunkHint() {
   Text hint = junkHint.GetText();
 
   PlacementLog_Msg("\tMessage: ");
-  PlacementLog_Msg(hint.english);
+  PlacementLog_Msg(hint.NAenglish);
   PlacementLog_Msg("\n\n");
 
   AddHint(hint, gossipStone, {QM_PINK});
@@ -637,9 +637,9 @@ static void CreateAltarText() {
   //Child Altar Text
   Text childText = Hint(SPIRITUAL_STONE_TEXT_START).GetText()+"^"+
   //Spiritual Stones
-  (StartingKokiriEmerald.Value<u8>() ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD))+
-  (StartingGoronRuby.Value<u8>()     ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY))+
-  (StartingZoraSapphire.Value<u8>()  ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE))+
+  (StartingKokiriEmerald.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD))+
+  (StartingGoronRuby.Value<u8>()     ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY))+
+  (StartingZoraSapphire.Value<u8>()  ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE))+
   //How to open Door of Time, the event trigger is necessary to read the altar multiple times
   BuildDoorOfTimeText()+EVENT_TRIGGER();
   CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, {QM_GREEN, QM_RED, QM_BLUE}));
@@ -647,12 +647,12 @@ static void CreateAltarText() {
   //Adult Altar Text
   Text adultText = Hint(ADULT_ALTAR_TEXT_START).GetText()+"^"+
   //Medallion Areas
-  (StartingLightMedallion.Value<u8>()  ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_LIGHT,  LIGHT_MEDALLION))+
-  (StartingForestMedallion.Value<u8>() ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION))+
-  (StartingFireMedallion.Value<u8>()   ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_FIRE,   FIRE_MEDALLION))+
-  (StartingWaterMedallion.Value<u8>()  ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_WATER,  WATER_MEDALLION))+
-  (StartingSpiritMedallion.Value<u8>() ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION))+
-  (StartingShadowMedallion.Value<u8>() ? Text{"##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION))+
+  (StartingLightMedallion.Value<u8>()  ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_LIGHT,  LIGHT_MEDALLION))+
+  (StartingForestMedallion.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION))+
+  (StartingFireMedallion.Value<u8>()   ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_FIRE,   FIRE_MEDALLION))+
+  (StartingWaterMedallion.Value<u8>()  ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_WATER,  WATER_MEDALLION))+
+  (StartingSpiritMedallion.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION))+
+  (StartingShadowMedallion.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION))+
 
   //Bridge requirement
   BuildBridgeReqsText()+

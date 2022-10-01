@@ -1472,7 +1472,7 @@ void GenerateLocationPool() {
 void PlaceItemInLocation(LocationKey locKey, ItemKey item, bool applyEffectImmediately /*= false*/, bool setHidden /*= false*/) {
   auto loc = Location(locKey);
   PlacementLog_Msg("\n");
-  PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
+  PlacementLog_Msg(ItemTable(item).GetName().GetNAEnglish());
   PlacementLog_Msg(" placed at ");
   PlacementLog_Msg(loc->GetName());
   PlacementLog_Msg("\n\n");
@@ -1583,7 +1583,7 @@ void CreateItemOverrides() {
     PlacementLog_Msg("\t");
     PlacementLog_Msg(loc->GetName());
     PlacementLog_Msg(": ");
-    PlacementLog_Msg(loc->GetPlacedItemName().GetEnglish());
+    PlacementLog_Msg(loc->GetPlacedItemName().GetNAEnglish());
     PlacementLog_Msg("\n");
   }
   PlacementLog_Msg("Overrides Created: ");

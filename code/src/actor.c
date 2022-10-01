@@ -51,6 +51,7 @@
 #include "pushblock.h"
 #include "spin_attack.h"
 #include "deku_scrubs.h"
+#include "bean_plant.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -59,7 +60,11 @@
 #define OBJECT_GI_OCARINA_0 270
 
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
-#define TitleCard_Update_addr 0x47953C
+#ifdef Version_EUR
+    #define TitleCard_Update_addr 0x47955C
+#else
+    #define TitleCard_Update_addr 0x47953C
+#endif
 #define TitleCard_Update ((TitleCard_Update_proc)TitleCard_Update_addr)
 
 void Actor_Init() {
@@ -146,6 +151,9 @@ void Actor_Init() {
     gActorOverlayTable[0x11A].initInfo->update = EnDns_rUpdate;
 
     gActorOverlayTable[0x11B].initInfo->update = NULL;
+
+    gActorOverlayTable[0x126].initInfo->init = (ActorFunc)ObjBean_rInit;
+    gActorOverlayTable[0x126].initInfo->update = (ActorFunc)ObjBean_rUpdate;
 
     gActorOverlayTable[0x12A].initInfo->init = ObjSwitch_rInit;
 

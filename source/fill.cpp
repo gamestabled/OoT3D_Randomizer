@@ -319,7 +319,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
               //This is necessary due to the below preprocessing for playthrough generation
               if (ignore != "") {
                 ItemType type = location->GetPlacedItem().GetItemType();
-                std::string itemName(location->GetPlacedItemName().GetEnglish());
+                std::string itemName(location->GetPlacedItemName().GetNAEnglish());
                 //If we want to ignore tokens, only add if not a token
                 if (ignore == "Tokens" && type != ITEMTYPE_TOKEN) {
                   newItemLocations.push_back(location);
@@ -347,7 +347,7 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
               //Item is an advancement item, figure out if it should be added to this sphere
               if (!playthroughBeatable && location->GetPlacedItem().IsAdvancement()) {
                 ItemType type = location->GetPlacedItem().GetItemType();
-                std::string itemName(location->GetPlacedItemName().GetEnglish());
+                std::string itemName(location->GetPlacedItemName().GetNAEnglish());
                 bool bombchus = itemName.find("Bombchu") != std::string::npos; //Is a bombchu location
 
                 //Decide whether to exclude this location
@@ -465,11 +465,11 @@ static void PareDownPlaythrough() {
       if (ItemTable(copy).GetItemType() == ITEMTYPE_TOKEN) {
         ignore = "Tokens";
       }
-      else if (ItemTable(copy).GetName().GetEnglish().find("Bombchu") != std::string::npos) {
+      else if (ItemTable(copy).GetName().GetNAEnglish().find("Bombchu") != std::string::npos) {
         ignore = "Bombchus";
       }
       else if (ItemTable(copy).GetItemType() == ITEMTYPE_SHOP) {
-        ignore = GetShopItemBaseName(ItemTable(copy).GetName().GetEnglish());
+        ignore = GetShopItemBaseName(ItemTable(copy).GetName().GetNAEnglish());
       }
 
       GetAccessibleLocations(allLocations, SearchMode::CheckBeatable, ignore); //Check if game is still beatable
@@ -477,7 +477,7 @@ static void PareDownPlaythrough() {
       //Playthrough is still beatable without this item, therefore it can be removed from playthrough section.
       if (playthroughBeatable) {
         //Uncomment to print playthrough deletion log in citra
-        // std::string itemname(ItemTable(copy).GetName().GetEnglish());
+        // std::string itemname(ItemTable(copy).GetName().GetNAEnglish());
         // std::string locationname(Location(loc)->GetName());
         // std::string removallog = itemname + " at " + locationname + " removed from playthrough";
         // CitraPrint(removallog);
@@ -568,7 +568,7 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
     PlacementLog_Msg("Items:\n");
     for (const ItemKey item: items) {
       PlacementLog_Msg("\t");
-      PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
+      PlacementLog_Msg(ItemTable(item).GetName().GetNAEnglish());
       PlacementLog_Msg("\n");
     }
     PlacementLog_Msg("\nAllowed Locations:\n");
@@ -626,11 +626,11 @@ static void AssumedFill(const std::vector<ItemKey>& items, const std::vector<Loc
       if (accessibleLocations.empty()) {
 
         PlacementLog_Msg("\nCANNOT PLACE ");
-        PlacementLog_Msg(ItemTable(item).GetName().GetEnglish());
+        PlacementLog_Msg(ItemTable(item).GetName().GetNAEnglish());
         PlacementLog_Msg(". TRYING AGAIN...\n");
 
         #ifdef ENABLE_DEBUG
-          Areas::DumpWorldGraph(ItemTable(item).GetName().GetEnglish());
+          Areas::DumpWorldGraph(ItemTable(item).GetName().GetNAEnglish());
           PlacementLog_Write();
         #endif
 
@@ -954,7 +954,7 @@ int Fill() {
       if (Shopsanity.IsNot(SHOPSANITY_ZERO)) { //Shopsanity 1-4, random
         //Initialize NonShopItems
         ItemAndPrice init;
-        init.Name = Text{"No Item", "Sin objeto", "Pas d'objet"};
+        init.Name = Text{"No Item", "Pas d'objet", "Sin objeto", "Nessun Oggetto", "Deutsch"};
         init.Price = -1;
         init.Repurchaseable = false;
         NonShopItems.assign(32, init);

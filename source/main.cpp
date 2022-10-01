@@ -48,7 +48,11 @@ int main() {
       s64 output = 0;
       svcGetSystemInfo(&output, 0x20000, 0); // This checks if the app is running on Citra
       if (!output) {
-        aptSetChainloader(0x0004000000033500, 2);
+        if (Settings::Region == REGION_NA) {
+          aptSetChainloader(0x0004000000033500, 2);
+        } else if (Settings::Region == REGION_EUR) {
+          aptSetChainloader(0x0004000000033600, 2);
+        }
         break;
       }
     }

@@ -19,6 +19,7 @@
 
 namespace {
   bool seedChanged;
+  bool chosePlayOption;
   u16 pastSeedLength;
   PrintConsole topScreen, bottomScreen;
   std::vector<std::string> presetEntries;
@@ -43,6 +44,7 @@ void MenuInit() {
   Settings::InitSettings();
 
   seedChanged = false;
+  chosePlayOption = false;
   pastSeedLength = Settings::seed.length();
 
   Menu* main = new Menu("Main", MenuType::MainMenu, &Settings::mainMenu, MAIN_MENU);
@@ -75,7 +77,7 @@ void MenuInit() {
 
 void MoveCursor(u32 kDown, bool updatedByHeld) {
   //Option sub menus need special checking for locked options
-  if (currentMenu->mode == OPTION_SUB_MENU) {
+  if (currentMenu->mode == OPTION_MENU) {
     // Cancel if holding and reached first/last selectable option
     if (updatedByHeld) {
       bool noSelectableOption = true;
@@ -121,7 +123,9 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
   //All other menus except reset-to-defaults confirmation
   else if (currentMenu->mode != RESET_TO_DEFAULTS) {
     u16 max = -1;
-    if (currentMenu->mode == LOAD_PRESET || currentMenu->mode == DELETE_PRESET) { //Number of presets if applicable
+    if (currentMenu->mode == LOAD_PREMADE_PRESET) {
+      max = premadePresets.size();
+    } else if (currentMenu->mode == LOAD_CUSTOM_PRESET || currentMenu->mode == DELETE_CUSTOM_PRESET) { //Number of presets if applicable
       max = presetEntries.size();
     } else if (currentMenu->mode == GENERATE_MODE) { //Generate menu: 2 options
       max = 2;
@@ -153,7 +157,7 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
 
     //Scroll Check
     u16 max_entries_on_screen = MAX_SUBMENUS_ON_SCREEN;
-    if (currentMenu->mode == LOAD_PRESET || currentMenu->mode == DELETE_PRESET) {
+    if (currentMenu->mode == LOAD_CUSTOM_PRESET || currentMenu->mode == DELETE_CUSTOM_PRESET) {
         max_entries_on_screen = MAX_SUBMENU_SETTINGS_ON_SCREEN;
     }
     if (currentMenu->menuIdx > currentMenu->settingBound + (max_entries_on_screen - (currentMenu->menuIdx == max - 1 ? 1 : 2))) {
@@ -163,12 +167,12 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
     }
 
     // Shared cursor for preset menus
-    if (currentMenu->mode == LOAD_PRESET) {
-      Settings::deleteSettingsPreset.settingBound = currentMenu->settingBound;
-      Settings::deleteSettingsPreset.menuIdx = currentMenu->menuIdx;
-    } else if (currentMenu->mode == DELETE_PRESET) {
-      Settings::loadSettingsPreset.settingBound = currentMenu->settingBound;
-      Settings::loadSettingsPreset.menuIdx = currentMenu->menuIdx;
+    if (currentMenu->mode == LOAD_CUSTOM_PRESET) {
+      Settings::deleteCustomPreset.settingBound = currentMenu->settingBound;
+      Settings::deleteCustomPreset.menuIdx = currentMenu->menuIdx;
+    } else if (currentMenu->mode == DELETE_CUSTOM_PRESET) {
+      Settings::loadCustomPreset.settingBound = currentMenu->settingBound;
+      Settings::loadCustomPreset.menuIdx = currentMenu->menuIdx;
     }
   }
 }
@@ -179,7 +183,7 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
 
   //Check for menu change
   //If user pressed A on a non-option, non-action menu, they're navigating to a new menu
-  if (kDown & KEY_A && currentMenu->mode != OPTION_SUB_MENU && currentMenu->type != MenuType::Action) {
+  if (kDown & KEY_A && currentMenu->mode != OPTION_MENU && currentMenu->type != MenuType::Action) {
     if (currentMenu->itemsList->size() > currentMenu->menuIdx) {
       Menu* newMenu;
       newMenu = currentMenu->itemsList->at(currentMenu->menuIdx);
@@ -189,7 +193,7 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
       kDown = 0;
     }
   //If they pressed B on any menu other than main, go backwards to the previous menu
-  } else if (kDown & KEY_B && currentMenu->mode != MAIN_MENU) {
+  } else if (kDown & KEY_B && currentMenu->mode != MAIN_MENU && !chosePlayOption) {
     //Want to reset generate menu when leaving
     if (currentMenu->mode == POST_GENERATE) {
       currentMenu->mode = GENERATE_MODE;
@@ -234,15 +238,18 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
   MoveCursor(kDown, updatedByHeld); //Move cursor, if applicable
   if (currentMenu->mode == MAIN_MENU) {
     PrintMainMenu();
-  } else if (currentMenu->mode == OPTION_SUB_MENU) {
+  } else if (currentMenu->mode == OPTION_MENU) {
     UpdateOptionSubMenu(kDown);
     PrintOptionSubMenu();
-  } else if (currentMenu->mode == LOAD_PRESET) {
-    UpdatePresetsMenu(kDown);
-    PrintPresetsMenu();
-  } else if (currentMenu->mode == DELETE_PRESET) {
-    UpdatePresetsMenu(kDown);
-    PrintPresetsMenu();
+  } else if (currentMenu->mode == LOAD_PREMADE_PRESET) {
+    UpdatePremadePresetsMenu(kDown);
+    PrintPremadePresetsMenu(kDown);
+  } else if (currentMenu->mode == LOAD_CUSTOM_PRESET) {
+    UpdateCustomPresetsMenu(kDown);
+    PrintCustomPresetsMenu();
+  } else if (currentMenu->mode == DELETE_CUSTOM_PRESET) {
+    UpdateCustomPresetsMenu(kDown);
+    PrintCustomPresetsMenu();
   } else if (currentMenu->mode == RESET_TO_DEFAULTS) {
     UpdateResetToDefaultsMenu(kDown);
     PrintResetToDefaultsMenu();
@@ -257,7 +264,7 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
 }
 
 void ModeChangeInit() {
-  if (currentMenu->mode == OPTION_SUB_MENU) {
+  if (currentMenu->mode == OPTION_MENU) {
     //loop through until we reach an unlocked setting
     while(currentMenu->settingsList->at(currentMenu->menuIdx)->IsLocked() || currentMenu->settingsList->at(currentMenu->menuIdx)->IsHidden()) {
       currentMenu->menuIdx++;
@@ -267,7 +274,7 @@ void ModeChangeInit() {
     }
     currentSetting = currentMenu->settingsList->at(currentMenu->menuIdx);
 
-  } else if (currentMenu->mode == SAVE_PRESET) {
+  } else if (currentMenu->mode == SAVE_CUSTOM_PRESET) {
     ClearDescription();
     if (SaveSpecifiedPreset(GetInput("Preset Name").substr(0, 19), OptionCategory::Setting)) {
       printf("\x1b[24;5HPreset Saved!");
@@ -277,7 +284,7 @@ void ModeChangeInit() {
       printf("\x1b[26;5HPress B to return to the preset menu.");
     }
 
-  } else if (currentMenu->mode == LOAD_PRESET || currentMenu->mode == DELETE_PRESET) {
+  } else if (currentMenu->mode == LOAD_CUSTOM_PRESET || currentMenu->mode == DELETE_CUSTOM_PRESET) {
     presetEntries = GetSettingsPresets();
 
   } else if (currentMenu->mode == GENERATE_MODE) {
@@ -313,11 +320,30 @@ void UpdateOptionSubMenu(u32 kDown) {
   UpdateCustomCosmeticColors(kDown);
 }
 
-void UpdatePresetsMenu(u32 kDown) {
+void UpdatePremadePresetsMenu(u32 kDown) {
+    consoleSelect(&topScreen);
+    if (kDown & KEY_A) {
+        Settings::SetDefaultSettings();
+        for (auto optionOverride : premadePresets[currentMenu->menuIdx]->optionOverrides) {
+            optionOverride.first->SetSelectedIndex(optionOverride.second);
+        }
+        for (auto loc : premadePresets[currentMenu->menuIdx]->excludedLocations) {
+            Location(loc)->GetExcludedOption()->SetSelectedIndex(EXCLUDE);
+        }
+        Settings::ResolveExcludedLocationConflicts();
+        for (Menu* menu : Settings::GetAllOptionMenus()) {
+            menu->ResetMenuIndex();
+        }
+        ClearDescription();
+        printf("\x1b[24;5HPreset Loaded!");
+    }
+}
+
+void UpdateCustomPresetsMenu(u32 kDown) {
   consoleSelect(&topScreen);
   //clear any potential message
   ClearDescription();
-  if (kDown & KEY_A && currentMenu->mode == LOAD_PRESET && !presetEntries.empty()) {
+  if (kDown & KEY_A && currentMenu->mode == LOAD_CUSTOM_PRESET && !presetEntries.empty()) {
     if (LoadPreset(presetEntries[currentMenu->menuIdx], OptionCategory::Setting)) {
       Settings::ResolveExcludedLocationConflicts();
       for (Menu* menu : Settings::GetAllOptionMenus()) {
@@ -327,7 +353,7 @@ void UpdatePresetsMenu(u32 kDown) {
     } else {
       printf("\x1b[24;5HFailed to load preset.");
     }
-  } else if (kDown & KEY_A && currentMenu->mode == DELETE_PRESET && !presetEntries.empty()) {
+  } else if (kDown & KEY_A && currentMenu->mode == DELETE_CUSTOM_PRESET && !presetEntries.empty()) {
     if (DeletePreset(presetEntries[currentMenu->menuIdx], OptionCategory::Setting)) {
       presetEntries.erase(presetEntries.begin() + currentMenu->menuIdx);
       if(currentMenu->menuIdx == presetEntries.size()) { //Catch when last preset is deleted
@@ -351,13 +377,27 @@ void UpdateResetToDefaultsMenu(u32 kDown) {
 }
 
 void UpdateGenerateMenu(u32 kDown) {
-  if ((kDown & KEY_A) != 0) {
-    Settings::PlayOption = currentMenu->menuIdx;
-    consoleSelect(&bottomScreen);
-    consoleClear();
-    GenerateRandomizer();
-    //This is just a dummy mode to stop the prompt from appearing again
-    currentMenu->mode = POST_GENERATE;
+  if (!chosePlayOption) {
+    if ((kDown & KEY_A) != 0) {
+      Settings::PlayOption = currentMenu->menuIdx;
+      consoleSelect(&bottomScreen);
+      consoleClear();
+      chosePlayOption = true;
+    }
+  } else {
+    if ((kDown & KEY_B) != 0) {
+      consoleSelect(&bottomScreen);
+      consoleClear();
+      chosePlayOption = false;
+    } else if ((kDown & KEY_A) != 0) {
+      Settings::Region = currentMenu->menuIdx;
+      consoleSelect(&bottomScreen);
+      consoleClear();
+      GenerateRandomizer();
+      //This is just a dummy mode to stop the prompt from appearing again
+      currentMenu->mode = POST_GENERATE;
+      chosePlayOption = false;
+    }
   }
 }
 
@@ -379,7 +419,7 @@ void PrintMainMenu() {
     }
   }
 
-  PrintMenuDescription();
+  PrintDescription(currentMenu->itemsList->at(currentMenu->menuIdx)->description);
 }
 
 void PrintOptionSubMenu() {
@@ -451,7 +491,7 @@ void PrintOptionSubMenu() {
     }
   }
 
-  PrintOptionDescription();
+  PrintDescription(currentSetting->GetSelectedOptionDescription());
 }
 
 void PrintSubMenu() {
@@ -470,10 +510,34 @@ void PrintSubMenu() {
     }
   }
 
-  PrintMenuDescription();
+  PrintDescription(currentMenu->itemsList->at(currentMenu->menuIdx)->description);
 }
 
-void PrintPresetsMenu() {
+void PrintPremadePresetsMenu(u32 kDown) {
+    consoleSelect(&bottomScreen);
+    printf("\x1b[0;%dHSelect a Preset to Load", 1 + (BOTTOM_WIDTH - 23) / 2);
+
+    for (u8 i = 0; i < MAX_SUBMENU_SETTINGS_ON_SCREEN; i++) {
+        if (i + currentMenu->settingBound >= premadePresets.size()) break;
+
+        std::string preset = premadePresets[currentMenu->settingBound + i]->name.data();
+
+        u8 row = 3 + (i * 2);
+        //make the current preset green
+        if (currentMenu->menuIdx == currentMenu->settingBound + i) {
+            printf("\x1b[%d;%dH%s>", row, 14, GREEN);
+            printf("\x1b[%d;%dH%s%s", row, 15, preset.c_str(), RESET);
+        } else {
+            printf("\x1b[%d;%dH%s", row, 15, preset.c_str());
+        }
+    }
+
+    if (!(kDown & KEY_A)) {
+        PrintDescription(premadePresets[currentMenu->menuIdx]->description);
+    }
+}
+
+void PrintCustomPresetsMenu() {
   consoleSelect(&bottomScreen);
   if (presetEntries.empty()) {
     printf("\x1b[10;4HNo Presets Detected!");
@@ -481,9 +545,9 @@ void PrintPresetsMenu() {
     return;
   }
 
-  if(currentMenu->mode == LOAD_PRESET) {
+  if(currentMenu->mode == LOAD_CUSTOM_PRESET) {
     printf("\x1b[0;%dHSelect a Preset to Load", 1+(BOTTOM_WIDTH-23)/2);
-  } else if (currentMenu->mode == DELETE_PRESET) {
+  } else if (currentMenu->mode == DELETE_CUSTOM_PRESET) {
     printf("\x1b[0;%dHSelect a Preset to Delete", 1+(BOTTOM_WIDTH-25)/2);
   }
 
@@ -513,19 +577,37 @@ void PrintGenerateMenu() {
 
   consoleSelect(&bottomScreen);
 
-  printf("\x1b[3;%dHHow will you play?", 1+(BOTTOM_WIDTH-18)/2);
-  std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
+  if (!chosePlayOption) {
+    printf("\x1b[3;%dHHow will you play?", 1+(BOTTOM_WIDTH-18)/2);
+    std::vector<std::string> playOptions = {"3ds Console", "Citra Emulator"};
 
-  for (u8 i = 0; i < playOptions.size(); i++) {
+    for (u8 i = 0; i < playOptions.size(); i++) {
 
-    std::string option = playOptions[i];
-    u8 row = 6 + (i * 2);
-    //make the current selection green
-    if (currentMenu->menuIdx == i) {
-      printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
-      printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
-    } else {
-      printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+      std::string option = playOptions[i];
+      u8 row = 6 + (i * 2);
+      //make the current selection green
+      if (currentMenu->menuIdx == i) {
+        printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
+        printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
+      } else {
+        printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+      }
+    }
+  } else {
+    printf("\x1b[3;%dHSelect your game region", 1+(BOTTOM_WIDTH-18)/2);
+    std::vector<std::string> regionOptions = {"North America (33500)", "Europe (33600)"};
+
+    for (u8 i = 0; i < regionOptions.size(); i++) {
+
+      std::string option = regionOptions[i];
+      u8 row = 6 + (i * 2);
+      //make the current selection green
+      if (currentMenu->menuIdx == i) {
+        printf("\x1b[%d;%dH%s>",   row, 14, GREEN);
+        printf("\x1b[%d;%dH%s%s",  row, 15, option.c_str(), RESET);
+      } else {
+        printf("\x1b[%d;%dH%s",    row, 15, option.c_str());
+      }
     }
   }
 }
@@ -539,17 +621,8 @@ void ClearDescription() {
   printf("\x1b[20;0H%s", spaces.c_str());
 }
 
-void PrintOptionDescription() {
+void PrintDescription(std::string_view description) {
   ClearDescription();
-  std::string_view description = currentSetting->GetSelectedOptionDescription();
-
-  printf("\x1b[20;0H%s", description.data());
-}
-
-void PrintMenuDescription() {
-  ClearDescription();
-  std::string_view description = currentMenu->itemsList->at(currentMenu->menuIdx)->description;
-
   printf("\x1b[20;0H%s", description.data());
 }
 

@@ -9,7 +9,7 @@
 
 #include "settings.hpp"
 #include "dungeon.hpp"
-#include "setting_descriptions.hpp"
+#include "descriptions.hpp"
 
 using namespace Settings;
 

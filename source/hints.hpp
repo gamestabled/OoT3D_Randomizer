@@ -4,6 +4,7 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <functional>
 
 #include "keys.hpp"
 #include "text.hpp"
@@ -170,7 +171,7 @@ public:
     }
 
     const Text& GetClear() const {
-        if (clearText.GetEnglish().empty()) {
+        if (clearText.GetNAEnglish().empty()) {
             return GetObscure();
         }
         return clearText;

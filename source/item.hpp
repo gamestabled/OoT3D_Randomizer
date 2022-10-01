@@ -29,8 +29,10 @@ enum ItemType {
 class Item {
 public:
     Item() = default;
-    Item(Text name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_ = 0);
-    Item(Text name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_ = 0);
+    Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_, Text name_);
+    Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_, Text name_);
+    Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, Text name_);
+    Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, Text name_);
     ~Item();
 
     void ApplyEffect();
@@ -90,7 +92,7 @@ public:
             return false;
         }
 
-        if (name.GetEnglish().find("Bombchus") != std::string::npos && !BombchusInLogic) {
+        if (name.GetNAEnglish().find("Bombchus") != std::string::npos && !BombchusInLogic) {
             return false;
         }
 
@@ -130,12 +132,12 @@ public:
     }
 
 private:
-    Text name;
     ItemType type;
     int  getItemId;
     bool advancement;
     std::variant<bool*, u8*> logicVar;
     HintKey hintKey;
     u16  price;
+    Text name;
     bool playthrough = false;
 };

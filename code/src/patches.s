@@ -380,7 +380,11 @@ RequiemLocation_patch:
 .global NocturneLocation_patch
 NocturneLocation_patch:
     bl Cutscene_OverrideNocturne
+.if _EUR_==1
+    b 0x44F1A0
+.else
     b 0x44F180
+.endif
 
 .section .patch_FreeScarecrow
 .global FreeScarecrow_patch
@@ -1156,13 +1160,21 @@ FWGetSet_patch:
 .global SetSavewarpEntrance_patch
 SetSavewarpEntrance_patch:
     bl hook_SetSavewarpEntrance
+.if _EUR_==1
+    b  0x44FD00
+.else
     b  0x44FCE0
+.endif
 
 .section .patch_SetGameOverEntrance
 .global SetGameOverEntrance_patch
 SetGameOverEntrance_patch:
     bl hook_SetGameOverEntrance
+.if _EUR_==1
+    b  0x458EE8
+.else
     b  0x458EC8
+.endif
 
 .section .patch_SetGameOverRespawnFlag
 .global SetGameOverRespawnFlag_patch
@@ -1483,17 +1495,29 @@ SkipMasterSwordFanfare_patch:
 .section .patch_GameOverDontSpoilTradeItems
 .global GameOverDontSpoilTradeItems_patch
 GameOverDontSpoilTradeItems_patch:
+.if _EUR_==1
+    b 0x458CC0
+.else
     b 0x458CA0
+.endif
 
 .section .patch_InterfaceDrawDontSpoilTradeItems
 .global InterfaceDrawDontSpoilTradeItems_patch
 InterfaceDrawDontSpoilTradeItems_patch:
+.if _EUR_==1
+    b 0x45A230
+.else
     b 0x45A210
+.endif
 
 .section .patch_OpenSaveDontSpoilTradeItems
 .global OpenSaveDontSpoilTradeItems_patch
 OpenSaveDontSpoilTradeItems_patch:
+.if _EUR_==1
+    b 0x44FED8
+.else
     b 0x44FEB8
+.endif
 
 .section .patch_EnteredLocation
 .global EnteredLocation_patch

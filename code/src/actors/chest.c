@@ -27,7 +27,7 @@ EnElf* fairy = 0;
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     lastTrapChest = 0;
     // treasure box shop chests
-    u8 vanilla = (gSettingsContext.chestSize == VANILLA_SIZE) || (globalCtx->sceneNum == 16 && thisx->room != 6);
+    u8 vanilla = (gSettingsContext.chestSize == CHESTSIZE_VANILLA) || (globalCtx->sceneNum == 16 && thisx->room != 6);
 
     if (!checkedForBombchus && gSettingsContext.bombchusInLogic && gSaveContext.items[8] == 0xFF) {
         ItemTable_SetBombchusChestType(0);
@@ -127,7 +127,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
 u8 Chest_OverrideAnimation() {
 
-    if ((gSettingsContext.chestAnimations == ALWAYS_FAST) ||
+    if ((gSettingsContext.chestAnimations == CHESTANIMATIONS_ALWAYSFAST) ||
         (rActiveItemActionId == 0)) // The animation is always fast for unused chests that aren't randomized
         return 0;
 
@@ -139,7 +139,7 @@ u8 Chest_OverrideAnimation() {
 
 u8 Chest_OverrideDecoration() {
 
-    if (type == DECORATED_BIG || ((gSettingsContext.chestSize == SIZE_MATCHES_CONTENT) && (type == DECORATED_SMALL))) {
+    if (type == DECORATED_BIG || ((gSettingsContext.chestSize == CHESTSIZE_MATCHCONTENT) && (type == DECORATED_SMALL))) {
         return 1;
     }
     return 0;
