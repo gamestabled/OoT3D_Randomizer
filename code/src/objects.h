@@ -19,7 +19,11 @@ typedef void (*Object_UpdateBank_proc)(ObjectContext* objectCtx);
 #define Object_UpdateBank ((Object_UpdateBank_proc)Object_UpdateBank_addr)
 
 typedef void (*Object_Clear_proc)(GlobalContext* globalCtx, ObjectContext* objectCtx);
-#define Object_Clear_addr 0x45FDA0
+#ifdef Version_EUR
+    #define Object_Clear_addr 0x45FDC0
+#else
+    #define Object_Clear_addr 0x45FDA0
+#endif
 #define Object_Clear ((Object_Clear_proc)Object_Clear_addr)
 
 typedef void* (*ZAR_Get_proc)(ZARInfo* zarInfo, u32 index);

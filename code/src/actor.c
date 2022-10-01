@@ -60,7 +60,11 @@
 #define OBJECT_GI_OCARINA_0 270
 
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
-#define TitleCard_Update_addr 0x47953C
+#ifdef Version_EUR
+    #define TitleCard_Update_addr 0x47955C
+#else
+    #define TitleCard_Update_addr 0x47953C
+#endif
 #define TitleCard_Update ((TitleCard_Update_proc)TitleCard_Update_addr)
 
 void Actor_Init() {

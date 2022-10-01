@@ -16,6 +16,14 @@
 #include <string>
 #include <vector>
 
+const PatchSymbols UsaSymbols = {GSETTINGSCONTEXT_USA_ADDR,GSPOILERDATA_USA_ADDR,NUMCUSTOMMESSAGEENTRIES_USA_ADDR,PTRCUSTOMMESSAGEENTRIES_USA_ADDR,RBGMOVERRIDES_USA_ADDR,
+RCUSTOMMESSAGES_USA_ADDR,RDUNGEONINFODATA_USA_ADDR,RDUNGEONREWARDOVERRIDES_USA_ADDR,RENTRANCEOVERRIDES_USA_ADDR,RITEMOVERRIDES_USA_ADDR,RSCRUBRANDOMITEMPRICES_USA_ADDR,
+RSFXDATA_USA_ADDR,RSHOPSANITYPRICES_USA_ADDR};
+
+const PatchSymbols EurSymbols = {GSETTINGSCONTEXT_EUR_ADDR,GSPOILERDATA_EUR_ADDR,NUMCUSTOMMESSAGEENTRIES_EUR_ADDR,PTRCUSTOMMESSAGEENTRIES_EUR_ADDR,RBGMOVERRIDES_EUR_ADDR,
+RCUSTOMMESSAGES_EUR_ADDR,RDUNGEONINFODATA_EUR_ADDR,RDUNGEONREWARDOVERRIDES_EUR_ADDR,RENTRANCEOVERRIDES_EUR_ADDR,RITEMOVERRIDES_EUR_ADDR,RSCRUBRANDOMITEMPRICES_EUR_ADDR,
+RSFXDATA_EUR_ADDR,RSHOPSANITYPRICES_EUR_ADDR};
+
 // For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
 
 using FILEPtr = std::unique_ptr<FILE, decltype(&std::fclose)>;
@@ -101,6 +109,15 @@ bool WriteAllPatches() {
   u32 bytesWritten = 0;
   u32 totalRW = 0;
   char buf[512];
+  std::string titleId;
+  PatchSymbols patchSymbols;
+  if (Settings::Region == REGION_EUR) {
+    titleId = "0004000000033600";
+    patchSymbols = EurSymbols;
+  } else { // REGION_NA
+    titleId = "0004000000033500";
+    patchSymbols = UsaSymbols;
+  }
 
   // Open SD archive
   if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
@@ -112,12 +129,12 @@ bool WriteAllPatches() {
   FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma"), FS_ATTRIBUTE_DIRECTORY);
   //Create the titles directory if it doesn't exist
   FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles"), FS_ATTRIBUTE_DIRECTORY);
-  //Create the 0004000000033500 directory if it doesn't exist (oot3d game id)
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500"), FS_ATTRIBUTE_DIRECTORY);
+  //Create the 0004000000033500 (33600 for EUR) directory if it doesn't exist (oot3d game id)
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId).c_str()), FS_ATTRIBUTE_DIRECTORY);
   //Create the romfs directory if it doesn't exist (for LayeredFS)
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/romfs"), FS_ATTRIBUTE_DIRECTORY);
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/romfs").c_str()), FS_ATTRIBUTE_DIRECTORY);
   //Create the actor directory if it doesn't exist
-  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/romfs/actor"), FS_ATTRIBUTE_DIRECTORY);
+  FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/romfs/actor").c_str()), FS_ATTRIBUTE_DIRECTORY);
 
   /*romfs is used to get files from the romfs folder. This allows us to copy
   from basecode and write the exheader without the user needing to worry about
@@ -132,15 +149,16 @@ bool WriteAllPatches() {
   --------------------------*/
 
   // Delete code.ips if it exists
-  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/code.ips"));
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/code.ips").c_str()));
 
   // Open code.ips
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&code, sdmcArchive, fsMakePath(PATH_ASCII, "/luma/titles/0004000000033500/code.ips"), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&code, sdmcArchive, fsMakePath(PATH_ASCII, ("/luma/titles/" + titleId + "/code.ips").c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 
   // Copy basecode to code
-  if (auto basecode = FILEPtr{std::fopen("romfs:/basecode.ips", "r"), std::fclose}) {
+  const char* basecodeFile = Settings::Region == REGION_NA ? "romfs:/basecode_USA.ips" : "romfs:/basecode_EUR.ips";
+  if (auto basecode = FILEPtr{std::fopen(basecodeFile, "r"), std::fclose}) {
     // obtain basecode.ips file size
     fseek(basecode.get(), 0, SEEK_END);
     const auto lSize = static_cast<size_t>(ftell(basecode.get()));
@@ -165,7 +183,7 @@ bool WriteAllPatches() {
   |      rItemOverrides     |
   --------------------------*/
 
-  u32 patchOffset = V_TO_P(RITEMOVERRIDES_ADDR);
+  u32 patchOffset = V_TO_P(patchSymbols.RITEMOVERRIDES_ADDR);
   s32 patchSize = sizeof(ItemOverride) * overrides.size();
   ItemOverride ovrPatchData[overrides.size()] = {};
   //generate override data
@@ -182,7 +200,7 @@ bool WriteAllPatches() {
   |    rEntranceOverrides   |
   --------------------------*/
 
-  patchOffset = V_TO_P(RENTRANCEOVERRIDES_ADDR);
+  patchOffset = V_TO_P(patchSymbols.RENTRANCEOVERRIDES_ADDR);
   patchSize = sizeof(EntranceOverride) * entranceOverrides.size();
   EntranceOverride eOvrPatchData[entranceOverrides.size()] = {};
   //generate entrance override patch data
@@ -199,7 +217,7 @@ bool WriteAllPatches() {
   |     gSettingsContext    |
   --------------------------*/
 
-  patchOffset = V_TO_P(GSETTINGSCONTEXT_ADDR);
+  patchOffset = V_TO_P(patchSymbols.GSETTINGSCONTEXT_ADDR);
   patchSize = sizeof(SettingsContext);
   //get the settings context
   SettingsContext ctx = Settings::FillContext();
@@ -211,7 +229,7 @@ bool WriteAllPatches() {
   |       gSpoilerData      |
   --------------------------*/
 
-  patchOffset = V_TO_P(GSPOILERDATA_ADDR);
+  patchOffset = V_TO_P(patchSymbols.GSPOILERDATA_ADDR);
   patchSize = sizeof(SpoilerData);
   //Get the spoiler data
   SpoilerData spoilerData = GetSpoilerData();
@@ -239,7 +257,7 @@ bool WriteAllPatches() {
     }
 
     // Write the patch for random scrub prices
-    patchOffset = V_TO_P(RSCRUBRANDOMITEMPRICES_ADDR);
+    patchOffset = V_TO_P(patchSymbols.RSCRUBRANDOMITEMPRICES_ADDR);
     patchSize = sizeof(rScrubRandomItemPrices);
     if (!WritePatch(patchOffset, patchSize, (char*)(&rScrubRandomItemPrices), code, bytesWritten, totalRW, buf)) {
       return false;
@@ -270,7 +288,7 @@ bool WriteAllPatches() {
     }
 
     // Write shopsanity item prices to the patch
-    patchOffset = V_TO_P(RSHOPSANITYPRICES_ADDR);
+    patchOffset = V_TO_P(patchSymbols.RSHOPSANITYPRICES_ADDR);
     patchSize = sizeof(rShopsanityPrices);
     if (!WritePatch(patchOffset, patchSize, (char*)(&rShopsanityPrices), code, bytesWritten, totalRW, buf)) {
       return false;
@@ -281,7 +299,7 @@ bool WriteAllPatches() {
   |     rDungeonRewardOverrides    |
   ---------------------------------*/
   // Write rDungeonRewardOverrides to the patch
-  patchOffset = V_TO_P(RDUNGEONREWARDOVERRIDES_ADDR);
+  patchOffset = V_TO_P(patchSymbols.RDUNGEONREWARDOVERRIDES_ADDR);
   patchSize = sizeof(Settings::rDungeonRewardOverrides);
   if (!WritePatch(patchOffset, patchSize, (char*)(&Settings::rDungeonRewardOverrides), code, bytesWritten, totalRW, buf)) {
     return false;
@@ -295,7 +313,7 @@ bool WriteAllPatches() {
   std::pair<const char*, u32> messageEntriesInfo = CustomMessages::RawMessageEntryData();
 
   // Write message data to patch
-  u32 messageDataOffset = V_TO_P(RCUSTOMMESSAGES_ADDR);
+  u32 messageDataOffset = V_TO_P(patchSymbols.RCUSTOMMESSAGES_ADDR);
   s32 messageDataSize = messageDataInfo.second;
   if (!WritePatch(messageDataOffset, messageDataSize, (char*)messageDataInfo.first, code, bytesWritten, totalRW, buf)) {
     return false;
@@ -309,7 +327,7 @@ bool WriteAllPatches() {
   }
 
   // Write ptrCustomMessageEntries to patch
-  patchOffset = V_TO_P(PTRCUSTOMMESSAGEENTRIES_ADDR);
+  patchOffset = V_TO_P(patchSymbols.PTRCUSTOMMESSAGEENTRIES_ADDR);
   patchSize = 4;
   u32 ptrCustomMessageEntriesData = P_TO_V(messageEntriesOffset);
   if (!WritePatch(patchOffset, patchSize, (char*)(&ptrCustomMessageEntriesData), code, bytesWritten, totalRW, buf)) {
@@ -317,7 +335,7 @@ bool WriteAllPatches() {
   }
 
   // Write numCustomMessageEntries to code
-  patchOffset = V_TO_P(NUMCUSTOMMESSAGEENTRIES_ADDR);
+  patchOffset = V_TO_P(patchSymbols.NUMCUSTOMMESSAGEENTRIES_ADDR);
   patchSize = 4;
   u32 numCustomMessageEntriesData = CustomMessages::NumMessages();
   if (!WritePatch(patchOffset, patchSize, (char*)(&numCustomMessageEntriesData), code, bytesWritten, totalRW, buf)) {
@@ -328,7 +346,7 @@ bool WriteAllPatches() {
   |         rBGMOverrides          |
   ---------------------------------*/
 
-  patchOffset = V_TO_P(RBGMOVERRIDES_ADDR);
+  patchOffset = V_TO_P(patchSymbols.RBGMOVERRIDES_ADDR);
   patchSize = sizeof(Music::seqOverridesMusic);
   if (!WritePatch(patchOffset, patchSize, (char*)Music::seqOverridesMusic.data(), code, bytesWritten, totalRW, buf)) {
     return false;
@@ -338,7 +356,7 @@ bool WriteAllPatches() {
   |            rSfxData             |
   ---------------------------------*/
 
-  patchOffset = V_TO_P(RSFXDATA_ADDR);
+  patchOffset = V_TO_P(patchSymbols.RSFXDATA_ADDR);
   patchSize = sizeof(SFXData);
   if (!WritePatch(patchOffset, patchSize, (char*)(&SFX::GetSFXData()), code, bytesWritten, totalRW, buf)) {
     return false;
@@ -348,7 +366,7 @@ bool WriteAllPatches() {
   |        rDungeonInfoData         |
   ---------------------------------*/
 
-  patchOffset = V_TO_P(RDUNGEONINFODATA_ADDR);
+  patchOffset = V_TO_P(patchSymbols.RDUNGEONINFODATA_ADDR);
   patchSize = sizeof(dungeonInfoData);
   if (!WritePatch(patchOffset, patchSize, (char*)(&dungeonInfoData), code, bytesWritten, totalRW, buf)) {
     return false;
@@ -583,7 +601,7 @@ bool WriteAllPatches() {
     filePath = "romfs:/exheader_citra.bin";
   }
 
-  CopyFile(sdmcArchive, "/luma/titles/0004000000033500/exheader.bin", filePath);
+  CopyFile(sdmcArchive, ("/luma/titles/" + titleId + "/exheader.bin").c_str(), filePath);
 
   /*-------------------------
   |       custom assets      |
@@ -596,12 +614,12 @@ bool WriteAllPatches() {
 
   // Delete assets if it exists
   Handle assetsOut;
-  const char* assetsOutPath = "/luma/titles/0004000000033500/romfs/actor/zelda_gi_melody.zar";
+  std::string assetsOutPath = "/luma/titles/" + titleId + "/romfs/actor/zelda_gi_melody.zar";
   const char* assetsInPath = "romfs:/zelda_gi_melody.zar";
-  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath));
+  FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath.c_str()));
 
   // Open assets destination
-  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&assetsOut, sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
+  if (!R_SUCCEEDED(res = FSUSER_OpenFile(&assetsOut, sdmcArchive, fsMakePath(PATH_ASCII, assetsOutPath.c_str()), FS_OPEN_WRITE | FS_OPEN_CREATE, 0))) {
     return false;
   }
 

@@ -5,6 +5,8 @@
 #include "3ds/srv.h"
 #include "3ds/svc.h"
 
+#include "settings.h"
+
 static u8 icn[14016];
 
 Result extDataInit() {
@@ -50,7 +52,12 @@ Result extDataCreate() {
     }
 
     extInfo.mediaType = MEDIATYPE_SD;
-    extInfo.saveId = 0x33500;
+    if (gSettingsContext.region == REGION_NA) {
+        extInfo.saveId = 0x33500;
+    } else if (gSettingsContext.region == REGION_EUR) {
+        extInfo.saveId = 0x33600;
+    }
+
     // Create the extdata with the icon, one folder max (all the files are in /)
     // and per save file: 1 file, 1MiB max
     return FSUSER_CreateExtSaveData(extInfo, 1, 6, 6 * EXTDATA_MAXFILESIZE, icnSize, icn);
@@ -63,6 +70,11 @@ Result extDataMount(FS_Archive *out) {
         u32 saveIDLo;
         u32 saveIDHi;
     } extDataLowPath = { MEDIATYPE_SD, 0x33500, 0 };
+    if (gSettingsContext.region == REGION_NA) {
+        extDataLowPath.saveIDLo = 0x33500;
+    } else if (gSettingsContext.region == REGION_EUR) {
+        extDataLowPath.saveIDLo = 0x33600;
+    }
     FS_Path extDataPath = { PATH_BINARY, sizeof(extDataLowPath), &extDataLowPath };
 
     // Try mounting the extdata archive

@@ -1248,6 +1248,7 @@ namespace Settings {
 
   //declared here, set in menu.cpp
   u8 PlayOption;
+  u8 Region;
 
   //Fills and returns a SettingsContext struct.
   //This struct is written to the code.ips patch and allows the game
@@ -1260,6 +1261,7 @@ namespace Settings {
     ctx.hashIndexes[3] = hashIconIndexes[3];
     ctx.hashIndexes[4] = hashIconIndexes[4];
     ctx.playOption = PlayOption;
+    ctx.region = Region;
 
     ctx.logic                = Logic.Value<u8>();
     ctx.openForest           = OpenForest.Value<u8>();

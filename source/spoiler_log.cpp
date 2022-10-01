@@ -174,9 +174,9 @@ void WriteIngameSpoilerLog() {
       }
     }
 
-    auto locItem = loc->GetPlacedItemName().GetEnglish();
+    auto locItem = loc->GetPlacedItemName().GetNAEnglish();
     if (loc->GetPlacedItemKey() == ICE_TRAP && loc->IsCategory(Category::cShop)) {
-        locItem = NonShopItems[TransformShopIndex(GetShopIndex(key))].Name.GetEnglish();
+        locItem = NonShopItems[TransformShopIndex(GetShopIndex(key))].Name.GetNAEnglish();
     }
     if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
       if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
@@ -286,7 +286,7 @@ static void WriteLocation(
 
   auto node = parentNode->InsertNewChildElement("location");
   node->SetAttribute("name", location->GetName().c_str());
-  node->SetText(location->GetPlacedItemName().GetEnglish().c_str());
+  node->SetText(location->GetPlacedItemName().GetNAEnglish().c_str());
 
   if (withPadding) {
     constexpr int16_t LONGEST_NAME = 56; // The longest name of a location.
@@ -485,7 +485,7 @@ static void WriteRequiredTrials(tinyxml2::XMLDocument& spoilerLog) {
     }
 
     auto node = parentNode->InsertNewChildElement("trial");
-    std::string name = trial->GetName().GetEnglish();
+    std::string name = trial->GetName().GetNAEnglish();
     name[0] = toupper(name[0]); // Capitalize T in "The"
     node->SetAttribute("name", name.c_str());
   }
@@ -558,7 +558,7 @@ static void WriteHints(tinyxml2::XMLDocument& spoilerLog) {
     auto node = parentNode->InsertNewChildElement("hint");
     node->SetAttribute("location", location->GetName().c_str());
 
-    auto text = location->GetPlacedItemName().GetEnglish();
+    auto text = location->GetPlacedItemName().GetNAEnglish();
     std::replace(text.begin(), text.end(), '&', ' ');
     std::replace(text.begin(), text.end(), '^', ' ');
     node->SetText(text.c_str());
