@@ -496,6 +496,10 @@ SECTIONS
 		*(.patch_BusinessScrubCheckFlags)
 	}
 
+	.patch_GanonCSEquipMS 0x2359A4 : {
+		*(.patch_GanonCSEquipMS)
+	}
+
 	.patch_RainbowChuTrailOne 0x247FC0 : {
 		*(.patch_RainbowChuTrailOne)
 	} /*Bombchus use 2 EffectBlure instances*/
@@ -566,6 +570,10 @@ SECTIONS
 
 	.patch_ImpaInCourtyardCheckForVisitedZelda 0x27DEF8 : {
 		*(.patch_ImpaInCourtyardCheckForVisitedZelda)
+	}
+
+	.patch_GanonGiveMSMidFight 0x288030 : {
+		*(.patch_GanonGiveMSMidFight)
 	}
 
 	.patch_AnjuGiveCojiro 0x2884F4 : {
@@ -682,6 +690,10 @@ SECTIONS
 
 	.patch_SaveGame 0x2FBFA8 : {
 		*(.patch_SaveGame)
+	}
+
+	.patch_SaveFileSwordless 0x2FDCE4 : {
+		*(.patch_SaveFileSwordless)
 	}
 
 	.patch_Gfx_Update 0x310254 : {
@@ -836,6 +848,10 @@ SECTIONS
 		*(.patch_GiantsKnifeWithoutKokiriSword)
 	}
 
+	.patch_GiveItemMasterSword 0x376C18 : {
+		*(.patch_GiveItemMasterSword)
+	}
+
 	.patch_NoLensOfTruthNaviText 0x37798C : {
 		*(.patch_NoLensOfTruthNaviText)
 	}
@@ -982,6 +998,10 @@ SECTIONS
 
 	.patch_MasterSwordAlwaysDrop 0x3E5E98 : {
 		*(.patch_MasterSwordAlwaysDrop)
+	}
+
+	.patch_PickUpMasterSword 0x3E5EC8 : {
+		*(.patch_PickUpMasterSword)
 	}
 
 	.patch_SkipMasterSwordFanfare 0x3E5F60 : {
@@ -1168,6 +1188,10 @@ SECTIONS
 		*(.patch_LullabyCheckFlag)
 	}
 
+	.patch_LoadFileSwordless 0x44FDB8 : {
+		*(.patch_LoadFileSwordless)
+	}
+
 	.patch_OpenSaveDontSpoilTradeItems 0x44FE18 : {
 		*(.patch_OpenSaveDontSpoilTradeItems)
 	}
@@ -1186,6 +1210,10 @@ SECTIONS
 
 	.patch_GameOverDontSpoilTradeItems 0x458C00 : {
 		*(.patch_GameOverDontSpoilTradeItems)
+	}
+
+	.patch_DeathHandleBButton 0x458CC8 : {
+		*(.patch_DeathHandleBButton)
 	}
 
 	.patch_SetGameOverEntrance 0x458E5C : {
@@ -1224,6 +1252,10 @@ SECTIONS
 		*(.patch_StoreChildBButtonEquip)
 	}
 
+	.patch_BecomeAdult 0x45F250 : {
+		*(.patch_BecomeAdult)
+	}
+
 	.patch_AlwaysRestoreChildEquips 0x45F3D0 : {
 		*(.patch_AlwaysRestoreChildEquips)
 	}
@@ -1242,6 +1274,14 @@ SECTIONS
 
 	.patch_CheckForPocketCuccoHatchKankyo 0x470D3C : {
 		*(.patch_CheckForPocketCuccoHatchKankyo)
+	}
+
+	.patch_CriticalHealthCheckOne 0x4715D8 : {
+		*(.patch_CriticalHealthCheckOne)
+	}
+
+	.patch_CriticalHealthCheckTwo 0x4716F4 : {
+		*(.patch_CriticalHealthCheckTwo)
 	}
 
 	.patch_EnableFW 0x476D3C : {
@@ -1298,6 +1338,14 @@ SECTIONS
 
 	.patch_GanonBattleDeathWarp 0x496CB8 : {
 		*(.patch_GanonBattleDeathWarp)
+	}
+
+	.patch_GanonRestoreMSOnDeath 0x496CD4 : {
+		*(.patch_GanonRestoreMSOnDeath)
+	}
+	
+	.patch_CriticalHealthCheckThree 0x49F2B4 : {
+		*(.patch_CriticalHealthCheckThree)
 	}
 
 	.patch_OverrideGraphicID_4BC604 0x4BC604 : {
@@ -1363,15 +1411,15 @@ SECTIONS
 	}
 
 	. = 0x005C7000;
-    .text : {
-        __text_start = . ;
-        *(.text)
-        *(.text.*)
-        *(.rodata)
-        *(.data)
-        *(.bss)
-        *(COMMON)
+	.text : {
+		__text_start = . ;
+		*(.text)
+		*(.text.*)
+		*(.rodata)
+		*(.data)
+		*(.bss)
+		*(COMMON)
 		rCustomMessages = . ;
-        __text_end  = . ;
-    }
+		__text_end  = . ;
+	}
 }

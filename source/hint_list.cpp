@@ -2109,7 +2109,9 @@ void HintTable_Init() {
                      //obscure text
                      Text{"And even if you do, you'll never find the legendary blade hidden in ",
                 /*french*/"Et même si tu les trouves, tu ne touveras jamais l'épée de légende cachée dans ",
-               /*spanish*/"E incluso si lo haces, nunca encontrarás la espada legendaria escondida en "},
+               /*spanish*/"E incluso si lo haces, nunca encontrarás la espada legendaria escondida en ",
+               /*italian*/"Italiano",
+                /*german*/"Deutsch"},
     });
 
     /*--------------------------
