@@ -115,6 +115,25 @@ typedef struct {
 } CollisionCheckInfo; // size = 0x1C
 
 typedef struct {
+    /* 0x00 */ struct Actor* actor; // Attached actor
+    /* 0x04 */ struct Actor* at; // Actor attached to what it collided with as an AT collider.
+    /* 0x08 */ struct Actor* ac; // Actor attached to what it collided with as an AC collider.
+    /* 0x0C */ struct Actor* oc; // Actor attached to what it collided with as an OC collider.
+    /* 0x10 */ u8 atFlags; // Information flags for AT collisions.
+    /* 0x11 */ u8 acFlags; // Information flags for AC collisions.
+    /* 0x12 */ u8 ocFlags1; // Information flags for OC collisions.
+    /* 0x13 */ u8 ocFlags2;  // Flags related to which colliders it can OC collide with.
+    /* 0x14 */ u8 colType; // Determines hitmarks and sound effects during AC collisions.
+    /* 0x15 */ u8 shape; // JntSph, Cylinder, Tris, or Quad
+} Collider; // size = 0x18
+
+typedef struct {
+    /* 0x00 */ Collider base;
+    /* 0x18 */ //ColliderInfo info;
+    /* 0x40 */ //Cylinderf dim;
+} ColliderCylinder; // size = 0x58
+
+typedef struct {
     /* 0x00 */ Vec3s  rot; // Current actor shape rotation
     /* 0x06 */ u8     unk_06;
     /* 0x08 */ f32    unk_08; // Model y axis offset. Represents model space units. collision mesh related
@@ -194,6 +213,18 @@ typedef struct Actor {
     /* 0x1A0 */ f32           unk_1A0;
    /* From here on, the structure and size varies for each actor */
 } Actor; // size = 0x1A4
+
+typedef struct DynaPolyActor {
+    /* 0x000 */ struct Actor actor;
+    /* 0x1A4 */ s32 bgId;
+    /* 0x1A8 */ f32 unk_1A8;
+    /* 0x1AC */ f32 unk_1AC;
+    /* 0x1B0 */ s16 unk_1B0;
+    /* 0x1B2 */ u16 unk_1B2;
+    /* 0x1B4 */ u32 unk_1B4;
+    /* 0x1B8 */ u8 unk_1B8;
+    /* 0x1BA */ s16 unk_1BA;
+} DynaPolyActor; // size = 0x1BC
 
 typedef struct {
     /* 0x00 */ Actor* actor;

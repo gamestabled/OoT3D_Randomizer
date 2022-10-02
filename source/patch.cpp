@@ -343,6 +343,30 @@ bool WriteAllPatches() {
   }
 
   /*--------------------------------
+  |       Extra Arrow Effects      |
+  ---------------------------------*/
+
+  const u32 BREAKWALL_BUMPERFLAGS_ADDR  = 0x00510C80;
+  const u32 ARROW_ATFLAGS_ADDR          = 0x00520749;
+  const u32 SUNSWITCH_BUMPERFLAGS_ADDR  = 0x00535390;
+
+  u32 patchOffset_Breakwall  = V_TO_P(BREAKWALL_BUMPERFLAGS_ADDR);
+  u32 patchOffset_Arrow      = V_TO_P(ARROW_ATFLAGS_ADDR);
+  u32 patchOffset_SunSwitch  = V_TO_P(SUNSWITCH_BUMPERFLAGS_ADDR);
+
+  u8  arrowAtFlags          = 0x29;       // adding AT_TYPE_OTHER (0x20)
+  u32 breakwallBumperFlags  = 0x00001048; // adding Ice Arrow damage (0x00001000)
+  u32 sunSwitchBumperFlags  = 0x00202000; // adding Light Arrow damage (0x00002000)
+
+  if (ctx.extraArrowEffects && (
+      !WritePatch(patchOffset_Breakwall, sizeof(breakwallBumperFlags), (char*)(&breakwallBumperFlags), code, bytesWritten, totalRW, buf) ||
+      !WritePatch(patchOffset_Arrow, sizeof(arrowAtFlags), (char*)(&arrowAtFlags), code, bytesWritten, totalRW, buf) ||
+      !WritePatch(patchOffset_SunSwitch, sizeof(sunSwitchBumperFlags), (char*)(&sunSwitchBumperFlags), code, bytesWritten, totalRW, buf)
+      )) {
+    return false;
+  }
+
+  /*--------------------------------
   |         rBGMOverrides          |
   ---------------------------------*/
 

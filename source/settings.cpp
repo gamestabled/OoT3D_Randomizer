@@ -303,6 +303,7 @@ namespace Settings {
   Option FireTrap            = Option::Bool("  Fire Trap",            {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
   Option AntiFairyTrap       = Option::Bool("  Anti-Fairy Trap",      {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
   Option CurseTraps          = Option::Bool("  Curse Traps",          {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
+  Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
   bool HasNightStart         = false;
   std::vector<Option *> miscOptions = {
     &Racing,
@@ -322,6 +323,7 @@ namespace Settings {
     &FireTrap,
     &AntiFairyTrap,
     &CurseTraps,
+    &ExtraArrowEffects,
   };
 
   //Item Usability Settings
@@ -1367,6 +1369,7 @@ namespace Settings {
     ctx.fireTrap             = (FireTrap) ? 1 : 0;
     ctx.antiFairyTrap        = (AntiFairyTrap) ? 1 : 0;
     ctx.curseTraps           = (CurseTraps) ? 1 : 0;
+    ctx.extraArrowEffects    = (ExtraArrowEffects) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;

@@ -1064,6 +1064,15 @@ string_view antiFairyTrapDesc         = "This dangerous fairy will inflict up to
                                         "have less than that.";                            //
                                                                                            //
 string_view curseTrapsDesc            = "Some traps will apply status effects for 1 minute.";
+                                                                                           //
+/*------------------------------                                                           //
+|      EXTRA ARROW EFFECTS     |                                                           //
+------------------------------*/                                                           //
+string_view extraArrowEffectsDesc     = "Ice Arrows will act like blue fire, melting red\n"//
+                                        "ice and breaking mud walls in Dodongo's Cavern.\n\n"
+                                        "Light Arrows will activate Sun Switches like in\n"//
+                                        "Majora's Mask.";                                  //
+                                                                                           //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

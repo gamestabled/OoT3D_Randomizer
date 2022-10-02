@@ -700,6 +700,10 @@ SECTIONS
 		*(.patch_Gfx_Update)
 	}
 
+	.patch_CollisionATvsAC 0x3191B0 : {
+		*(.patch_CollisionATvsAC)
+	}
+
 	.patch_ISGPutaway 0x32B4AC : {
 		*(.patch_ISGPutaway)
 	}
