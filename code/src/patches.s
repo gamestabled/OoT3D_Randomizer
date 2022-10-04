@@ -1925,6 +1925,11 @@ CriticalHealthCheckThree_patch:
     nop
     nop
 
+.section .patch_CollisionATvsAC
+.global CollisionATvsAC_patch
+CollisionATvsAC_patch:
+    bl hook_CollisionATvsAC
+
 .section .patch_loader
 .global loader_patch
 

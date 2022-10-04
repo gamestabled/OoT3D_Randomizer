@@ -1628,6 +1628,16 @@ hook_CriticalHealthCheck:
     movle r0,#0x18
     bx lr
 
+.global hook_CollisionATvsAC
+hook_CollisionATvsAC:
+    ldr r12,[sp,#0x18]
+    push {r0-r12,lr}
+    cpy r0,r1  @ AT collider
+    cpy r1,r12 @ AC collider
+    bl RedIce_CheckIceArrow
+    pop {r0-r12,lr}
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:

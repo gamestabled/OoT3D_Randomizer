@@ -338,6 +338,7 @@ extern string_view advancedTrapDmgDesc;
 extern string_view fireTrapDesc;
 extern string_view antiFairyTrapDesc;
 extern string_view curseTrapsDesc;
+extern string_view extraArrowEffectsDesc;
 
 extern string_view ToggleAllTricksDesc;
 

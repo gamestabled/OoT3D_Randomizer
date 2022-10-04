@@ -393,6 +393,7 @@ namespace Settings {
   extern Option FireTrap;
   extern Option AntiFairyTrap;
   extern Option CurseTraps;
+  extern Option ExtraArrowEffects;
   extern bool HasNightStart;
 
   extern Option FaroresWindAnywhere;

@@ -332,7 +332,6 @@ typedef struct SubGlobalContext_118 {
     /* 0x60 */ void** unk_60; //seems to point to an array of cutscene pointers, maybe?
 } SubGlobalContext_118; // size = at least 0x64
 
-typedef struct Collider Collider; //TODO
 typedef struct OcLine OcLine; //TODO
 #define COLLISION_CHECK_AT_MAX 50
 #define COLLISION_CHECK_AC_MAX 60
@@ -622,5 +621,9 @@ typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* p
 typedef s32 (*BossChallenge_IsActive_proc)(void);
 #define BossChallenge_IsActive_addr 0x35B164
 #define BossChallenge_IsActive ((BossChallenge_IsActive_proc)BossChallenge_IsActive_addr)
+
+typedef s32 (*Audio_PlayActorSfx2_proc)(Actor* actor, s32 sfxID);
+#define Audio_PlayActorSfx2_addr 0x375BCC
+#define Audio_PlayActorSfx2 ((Audio_PlayActorSfx2_proc)Audio_PlayActorSfx2_addr)
 
 #endif //_Z3D_H_

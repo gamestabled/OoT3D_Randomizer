@@ -704,7 +704,7 @@ namespace Logic {
     Nuts         = DekuNutDrop || Nuts;
     Sticks       = DekuStickDrop || Sticks;
     Bugs         = HasBottle && BugsAccess;
-    BlueFire     = HasBottle && BlueFireAccess;
+    BlueFire     = (HasBottle && BlueFireAccess) || (ExtraArrowEffects && CanUse(ICE_ARROWS));
     Fish         = HasBottle && FishAccess;
     Fairy        = HasBottle && FairyAccess && Hearts > 0;
 
