@@ -707,6 +707,10 @@ static void Multiplayer_Sync_SharedProgress(void) {
     for (size_t index = 0; index < ARRAY_SIZE(gSaveContext.infTable); index++) {
         if (prevInfTable[index] != gSaveContext.infTable[index]) {
             for (size_t bit = 0; bit < BIT_COUNT(gSaveContext.infTable[index]); bit++) {
+                // Skip swordless flag
+                if (index == 29 && bit == 0) {
+                    continue;
+                }
                 s8 result = BitCompare(gSaveContext.infTable[index], prevInfTable[index], bit);
                 if (result > 0) {
                     Multiplayer_Send_InfTableBit(index, bit, 1);
