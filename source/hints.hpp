@@ -62,6 +62,7 @@ enum class HintCategory {
   Altar,
   Validation,
   LightArrow,
+  MasterSword,
   GanonLine,
   MerchantsDialogs,
 };
@@ -133,6 +134,10 @@ public:
 
     static auto LightArrow(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
         return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::LightArrow};
+    }
+
+    static auto MasterSword(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {
+        return HintText{std::move(obscureText), std::move(ambiguousText), std::move(clearText), HintCategory::MasterSword};
     }
 
     static auto GanonLine(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {}, Text&& clearText = {}) {

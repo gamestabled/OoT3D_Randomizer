@@ -175,10 +175,10 @@ void InitTrickNames() {
      Text{"Korok Sword", "Épée Korok", "Espada Korok"},
      Text{"Hero's Sword", "Épée du héros", "Espada del héroe"},
      Text{"Razor Sword", "Lame rasoir", "Espada de esmeril"}};
-/*  trickNameTable[GI_SWORD_MASTER] = {
+  trickNameTable[GI_SWORD_MASTER] = {
      Text{"Goddess Sword", "Épée de la déesse", "Espada Divina"},
      Text{"Gilded Sword", "Excalibur", "Espada de los Sabios"},
-     Text{"Magical Sword", "Lame dorée", "Fay"}};*/
+     Text{"Magical Sword", "Lame dorée", "Fay"}};
   trickNameTable[GI_SWORD_KNIFE] = {
      Text{"Big Goron's Sword", "Épée de gros Goron", "Espada de Big Goron"},
      Text{"Fierce Deity's Sword", "Épée du dieu démon", "Espada de la Fiera Deidad"},

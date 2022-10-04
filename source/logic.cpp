@@ -251,6 +251,8 @@ namespace Logic {
   bool CanBlastOrSmash  = false;
   bool CanChildAttack   = false;
   bool CanChildDamage   = false;
+  bool CanAdultAttack   = false;
+  bool CanAdultDamage   = false;
   bool CanCutShrubs     = false;
   bool CanDive          = false;
   bool CanLeaveForest   = false;
@@ -417,29 +419,29 @@ namespace Logic {
 
     switch (itemName) {
       // Adult items
-      case BOW:               return IsAdult || BowAsChild;
-      case MEGATON_HAMMER:    return IsAdult || HammerAsChild;
-      case IRON_BOOTS:        return IsAdult || IronBootsAsChild;
-      case HOVER_BOOTS:       return IsAdult || HoverBootsAsChild;
-      case HOOKSHOT:          return IsAdult || HookshotAsChild;
-      case LONGSHOT:          return IsAdult || HookshotAsChild;
+      case BOW:               return IsAdult || (AgeItemsInLogic && BowAsChild);
+      case MEGATON_HAMMER:    return IsAdult || (AgeItemsInLogic && HammerAsChild);
+      case IRON_BOOTS:        return IsAdult || (AgeItemsInLogic && IronBootsAsChild);
+      case HOVER_BOOTS:       return IsAdult || (AgeItemsInLogic && HoverBootsAsChild);
+      case HOOKSHOT:          return IsAdult || (AgeItemsInLogic && HookshotAsChild);
+      case LONGSHOT:          return IsAdult || (AgeItemsInLogic && HookshotAsChild);
       case SILVER_GAUNTLETS:  return IsAdult;
       case GOLDEN_GAUNTLETS:  return IsAdult;
-      case GORON_TUNIC:       return IsAdult || GoronTunicAsChild;
-      case ZORA_TUNIC:        return IsAdult || ZoraTunicAsChild;
-      case SCARECROW:         return IsAdult || HookshotAsChild;
-      case DISTANT_SCARECROW: return IsAdult || HookshotAsChild;
+      case GORON_TUNIC:       return IsAdult || (AgeItemsInLogic && GoronTunicAsChild);
+      case ZORA_TUNIC:        return IsAdult || (AgeItemsInLogic && ZoraTunicAsChild);
+      case SCARECROW:         return IsAdult || (AgeItemsInLogic && HookshotAsChild);
+      case DISTANT_SCARECROW: return IsAdult || (AgeItemsInLogic && HookshotAsChild);
       case HYLIAN_SHIELD:     return IsAdult;
-      case MIRROR_SHIELD:     return IsAdult || MirrorShieldAsChild;
-      case MASTER_SWORD:      return IsAdult || MasterSwordAsChild;
-      case BIGGORON_SWORD:    return IsAdult || BiggoronSwordAsChild;
+      case MIRROR_SHIELD:     return IsAdult || (AgeItemsInLogic && MirrorShieldAsChild);
+      case MASTER_SWORD:      return IsAdult || (AgeItemsInLogic && MasterSwordAsChild);
+      case BIGGORON_SWORD:    return IsAdult || (AgeItemsInLogic && BiggoronSwordAsChild);
 
       // Child items
-      case SLINGSHOT:         return IsChild || SlingshotAsAdult;
-      case BOOMERANG:         return IsChild || BoomerangAsAdult;
-      case KOKIRI_SWORD:      return IsChild || KokiriSwordAsAdult;
-      case STICKS:            return IsChild || StickAsAdult;
-      case DEKU_SHIELD:       return IsChild || DekuShieldAsAdult;
+      case SLINGSHOT:         return IsChild || (AgeItemsInLogic && SlingshotAsAdult);
+      case BOOMERANG:         return IsChild || (AgeItemsInLogic && BoomerangAsAdult);
+      case KOKIRI_SWORD:      return IsChild || (AgeItemsInLogic && KokiriSwordAsAdult);
+      case STICKS:            return IsChild || (AgeItemsInLogic && StickAsAdult);
+      case DEKU_SHIELD:       return IsChild || (AgeItemsInLogic && DekuShieldAsAdult);
 
       // Magic items
       default: return MagicMeter && (IsMagicItem(itemName) || (IsMagicArrow(itemName) && CanUse(BOW)));
@@ -488,7 +490,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return CanShield && (IsAdult || KokiriSword || Sticks);
+      return CanShield && CanJumpslash;
 
     //Bomb Hover
     case GlitchType::BombHover:
@@ -507,18 +509,18 @@ namespace Logic {
       return Bombs && CanSurviveDamage;
     case GlitchType::OutdoorBombOI:
       return ((CanUse(FARORES_WIND) && (DinsFire || NayrusLove || LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
-              (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
-              (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
+              CanUse(STICKS) || CanUse(SLINGSHOT) || (IsChild && (MagicBean || MagicBeanPack || WeirdEgg)) || CanUse(BOOMERANG) ||
+              CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || CanUse(IRON_BOOTS) || CanUse(MEGATON_HAMMER) || (IsAdult && SkullMask && MasksAsAdult)) &&
               CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
              (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (!NeedNayrusLove && (CanUse(NAYRUS_LOVE) || CanUse(DINS_FIRE))) ||
               (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
     case GlitchType::WindmillBombOI:
       return (((CanUse(FARORES_WIND) || (!NeedNayrusLove && (NayrusLove || DinsFire))) && (LensOfTruth || HasBottle || HasBombchus || Nuts || StartingConsumables ||
-              (IsChild && (Sticks || ProgressiveBulletBag || (MagicBean || MagicBeanPack) || Boomerang || WeirdEgg || (Hammer && HammerAsChild))) ||
-              (IsAdult && (ProgressiveBow || Hookshot || HasBoots || Hammer || (Sticks && StickAsAdult) || (Boomerang && BoomerangAsAdult)))) &&
+              CanUse(STICKS) || CanUse(SLINGSHOT) || (IsChild && (MagicBean || MagicBeanPack || WeirdEgg)) || CanUse(BOOMERANG) ||
+              CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || CanUse(IRON_BOOTS) || CanUse(MEGATON_HAMMER) || (IsAdult && SkullMask && MasksAsAdult)) &&
               CanDoGlitch(GlitchType::BombOI, (static_cast<u8>(difficulty) >= 3) ? difficulty : GlitchDifficulty::ADVANCED) && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE)) ||
              (((IsAdult && ClaimCheck) || Bugs || Fish || Fairy || (CanUse(FARORES_WIND) && FaroresWindAnywhere)) && CanDoGlitch(GlitchType::BombOI, difficulty)));
-    case GlitchType::IndoorBombOI:
+    case GlitchType::IndoorBombOI: // TODO: Update for item usability settings
       return (((IsAdult && ClaimCheck) && (HasBottle || HasBoots || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
               ((Bugs || Fish || Fairy) && (NumBottles >= 2 || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg) || (CanUse(FARORES_WIND) && FaroresWindAnywhere))) ||
               ((CanUse(FARORES_WIND) && FaroresWindAnywhere) && (HasBottle || (IsAdult && (ClaimCheck || HasBoots)) || (IsChild && WeirdEgg))) ||
@@ -642,7 +644,7 @@ namespace Logic {
       if (setDifficulty < static_cast<u8>(difficulty)) {
         return false;
       }
-      return IsAdult || KokiriSword;
+      return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD);
 
     //Ledge Clip
     case GlitchType::LedgeClip:
@@ -683,7 +685,6 @@ namespace Logic {
     SilverScale     = ProgressiveScale      >= 1;
     GoldScale       = ProgressiveScale      >= 2;
     AdultsWallet    = ProgressiveWallet     >= 1;
-    MasterSword     = MasterSword   || IsAdult;
     BiggoronSword   = BiggoronSword || ProgressiveGiantKnife >= 2;
 
     ScarecrowSong    = ScarecrowSong || FreeScarecrow || (ChildScarecrow && AdultScarecrow);
@@ -730,10 +731,12 @@ namespace Logic {
     // IsAdult = Age == AGE_ADULT;
 
     CanBlastOrSmash = HasExplosives || CanUse(MEGATON_HAMMER);
-    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD));
+    CanChildAttack  = IsChild && (Slingshot || Boomerang || Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT));
     CanChildDamage  = IsChild && (Slingshot ||              Sticks || KokiriSword || HasExplosives || CanUse(DINS_FIRE) || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD));
-    CanStunDeku     = IsAdult || CanChildAttack || Nuts || HasShield;
-    CanCutShrubs    = IsAdult /*|| Sticks*/ || KokiriSword || Boomerang || HasExplosives || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD);
+    CanAdultAttack  = IsAdult && (CanUse(SLINGSHOT) || CanUse(BOOMERANG) || CanUse(STICKS) || CanUse(KOKIRI_SWORD) || HasExplosives || CanUse(DINS_FIRE) || MasterSword || Hammer || BiggoronSword || Hookshot);
+    CanAdultDamage  = IsAdult && (CanUse(SLINGSHOT) ||                      CanUse(STICKS) || CanUse(KOKIRI_SWORD) || HasExplosives || CanUse(DINS_FIRE) || MasterSword || Hammer || BiggoronSword);
+    CanStunDeku     = CanAdultAttack || CanChildAttack || Nuts || HasShield;
+    CanCutShrubs    = CanUse(KOKIRI_SWORD) || CanUse(BOOMERANG) || HasExplosives || CanUse(MASTER_SWORD) || CanUse(MEGATON_HAMMER) || CanUse(BIGGORON_SWORD);
     CanDive         = ProgressiveScale >= 1;
     CanLeaveForest  = OpenForest.IsNot(OPENFOREST_CLOSED) || IsAdult || DekuTreeClear || ShuffleInteriorEntrances || ShuffleOverworldEntrances;
     CanPlantBugs    = IsChild && Bugs;
@@ -760,13 +763,13 @@ namespace Logic {
     HasFireSourceWithTorch = HasFireSource || CanUse(STICKS);
 
     //Gerudo Fortress
-    CanFinishGerudoFortress = (GerudoFortress.Is(GERUDOFORTRESS_NORMAL)    && GerudoFortressKeys >= 4 && (IsAdult || KokiriSword || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) && (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen)) ||
-                              (GerudoFortress.Is(GERUDOFORTRESS_FAST)      && GerudoFortressKeys >= 1 && (IsAdult || KokiriSword || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD))) ||
+    CanFinishGerudoFortress = (GerudoFortress.Is(GERUDOFORTRESS_NORMAL)    && GerudoFortressKeys >= 4 && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) && (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen)) ||
+                              (GerudoFortress.Is(GERUDOFORTRESS_FAST)      && GerudoFortressKeys >= 1 && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD))) ||
                               (GerudoFortress.IsNot(GERUDOFORTRESS_NORMAL) && GerudoFortress.IsNot(GERUDOFORTRESS_FAST));
 
     HasShield        = CanUse(HYLIAN_SHIELD) || CanUse(DEKU_SHIELD); //Mirror shield can't reflect attacks
     CanShield        = CanUse(MIRROR_SHIELD) || HasShield;
-    CanJumpslash     = IsAdult || Sticks || KokiriSword;
+    CanJumpslash     = CanUse(STICKS) || CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD); // Not including hammer as hammer jump attacks can be weird
     CanUseProjectile = HasExplosives || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || CanUse(BOOMERANG);
     CanUseMagicArrow = CanUse(FIRE_ARROWS) || CanUse(ICE_ARROWS) || CanUse(LIGHT_ARROWS);
 
@@ -1129,6 +1132,8 @@ namespace Logic {
      CanBlastOrSmash  = false;
      CanChildAttack   = false;
      CanChildDamage   = false;
+     CanAdultAttack   = false;
+     CanAdultDamage   = false;
      CanCutShrubs     = false;
      CanDive          = false;
      CanLeaveForest   = false;

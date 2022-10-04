@@ -122,6 +122,7 @@ extern string_view scrubsRandomPrices;
 extern string_view shuffleCowsDesc;
 
 extern string_view kokiriSwordDesc;
+extern string_view masterSwordDesc;
 
 extern string_view ocarinasDesc;
 
@@ -275,6 +276,7 @@ extern string_view progGoronSword;
 extern string_view faroresWindAnywhereDesc;
 
 extern string_view ageRestrictionsDesc;
+extern string_view ageItemsInLogicDesc;
 extern string_view adultStickDesc;
 extern string_view adultBoomerangDesc;
 extern string_view childHammerDesc;

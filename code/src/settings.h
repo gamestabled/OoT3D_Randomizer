@@ -435,6 +435,7 @@ typedef struct {
   u8 shopsanity;
   u8 shuffleCows;
   u8 shuffleKokiriSword;
+  u8 shuffleMasterSword;
   u8 shuffleOcarinas;
   u8 shuffleWeirdEgg;
   u8 shuffleGerudoToken;

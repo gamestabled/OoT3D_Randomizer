@@ -124,6 +124,11 @@ u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation itemLoc)
     }
 }
 
+u8 SpoilerData_MasterSwordCheck()
+{
+    return (gExtSaveData.masterSwordFlags & 2) != 0;
+}
+
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
 {
     if (itemIndex >= gSpoilerData.ItemLocationsCount) {
@@ -179,6 +184,9 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex)
         }
         case SPOILER_CHK_MAGIC_BEANS: {
             return SpoilerData_MagicBeansCheck(itemLoc);
+        }
+        case SPOILER_CHK_MASTER_SWORD: {
+            return SpoilerData_MasterSwordCheck();
         }
         default: {
             return 0;

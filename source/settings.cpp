@@ -161,6 +161,7 @@ namespace Settings {
   Option Scrubsanity            = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
   Option ShuffleCows            = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {shuffleCowsDesc});
   Option ShuffleKokiriSword     = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                                     {kokiriSwordDesc});
+  Option ShuffleMasterSword     = Option::Bool("Shuffle Master Sword",   {"Off", "On"},                                                     {masterSwordDesc});
   Option ShuffleOcarinas        = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                                     {ocarinasDesc});
   Option ShuffleWeirdEgg        = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {weirdEggDesc});
   Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
@@ -179,6 +180,7 @@ namespace Settings {
     &Scrubsanity,
     &ShuffleCows,
     &ShuffleKokiriSword,
+    &ShuffleMasterSword,
     &ShuffleOcarinas,
     &ShuffleWeirdEgg,
     &ShuffleGerudoToken,
@@ -325,6 +327,7 @@ namespace Settings {
   //Item Usability Settings
   Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere", {"Disabled", "Enabled"},                                                {faroresWindAnywhereDesc});
   Option AgeItemsToggle      = Option::U8  ("Lift Age Restrictions",  {"All Disabled",  "All Enabled", "Choose"},                             {ageRestrictionsDesc});
+  Option AgeItemsInLogic     = Option::Bool(" Consider in Logic",     {"No", "Yes"},                                                          {ageItemsInLogicDesc});
   Option StickAsAdult        = Option::Bool("  Adult Deku Stick",     {"Disabled", "Enabled"},                                                {adultStickDesc});
   Option BoomerangAsAdult    = Option::Bool("  Adult Boomerang",      {"Disabled", "Enabled"},                                                {adultBoomerangDesc});
   Option HammerAsChild       = Option::Bool("  Child Hammer",         {"Disabled", "Enabled"},                                                {childHammerDesc});
@@ -346,6 +349,7 @@ namespace Settings {
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
     &AgeItemsToggle,
+    &AgeItemsInLogic,
     &StickAsAdult,
     &BoomerangAsAdult,
     &HammerAsChild,
@@ -514,6 +518,7 @@ namespace Settings {
   };
 
   Option StartingKokiriSword      = Option::U8  ("Kokiri Sword",         {"Off",             "On"},                                                       {""});
+  Option StartingMasterSword      = Option::U8  ("Master Sword",         {"Off",             "On"},                                                       {""});
   Option StartingBiggoronSword    = Option::U8  ("Biggoron Sword",       {"Off",             "Giant's Knife",    "Biggoron Sword"},                       {""});
   Option StartingDekuShield       = Option::U8  ("Deku Shield",          {"Off",             "On"},                                                       {""});
   Option StartingHylianShield     = Option::U8  ("Hylian Shield",        {"Off",             "On"},                                                       {""});
@@ -529,6 +534,7 @@ namespace Settings {
   Option StartingDoubleDefense    = Option::U8  ("Double Defense",       {"Off",             "On"},                                                       {""});
   std::vector<Option *> startingEquipmentOptions = {
     &StartingKokiriSword,
+    &StartingMasterSword,
     &StartingBiggoronSword,
     &StartingDekuShield,
     &StartingHylianShield,
@@ -1297,6 +1303,7 @@ namespace Settings {
     ctx.scrubsanity          = Scrubsanity.Value<u8>();
     ctx.shuffleCows          = (ShuffleCows) ? 1 : 0;
     ctx.shuffleKokiriSword   = (ShuffleKokiriSword) ? 1 : 0;
+    ctx.shuffleMasterSword   = (ShuffleMasterSword) ? 1 : 0;
     ctx.shuffleOcarinas      = (ShuffleOcarinas) ? 1 : 0;
     ctx.shuffleWeirdEgg      = (ShuffleWeirdEgg) ? 1 : 0;
     ctx.shuffleGerudoToken   = (ShuffleGerudoToken) ? 1 : 0;
@@ -1523,6 +1530,7 @@ namespace Settings {
 
     //Starting Equipment
     ctx.startingEquipment |= StartingKokiriSword.Value<u8>();
+    ctx.startingEquipment |= StartingMasterSword.Value<u8>()   << 1;
     ctx.startingEquipment |= (StartingBiggoronSword.Value<u8>() ? 1: 0) << 2;
     ctx.startingEquipment |= StartingDekuShield.Value<u8>()    << 4;
     ctx.startingEquipment |= StartingHylianShield.Value<u8>()  << 5;
@@ -2017,6 +2025,12 @@ namespace Settings {
 
     //Manage toggle for item usability options
     ToggleSet(itemUsabilityOptions, &AgeItemsToggle, &StickAsAdult, &ZoraTunicAsChild);
+    if (AgeItemsToggle.Value<u8>() > 0) {
+      AgeItemsInLogic.Unhide();
+    } else {
+      AgeItemsInLogic.Hide();
+      AgeItemsInLogic.SetSelectedIndex(0);
+    }
 
     if (RemoveDoubleDefense) {
       StartingDoubleDefense.SetSelectedIndex(0);

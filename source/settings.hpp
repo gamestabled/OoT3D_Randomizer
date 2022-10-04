@@ -326,6 +326,7 @@ namespace Settings {
   extern Option Scrubsanity;
   extern Option ShuffleCows;
   extern Option ShuffleKokiriSword;
+  extern Option ShuffleMasterSword;
   extern Option ShuffleOcarinas;
   extern Option ShuffleWeirdEgg;
   extern Option ShuffleGerudoToken;
@@ -395,6 +396,7 @@ namespace Settings {
   extern bool HasNightStart;
 
   extern Option FaroresWindAnywhere;
+  extern Option AgeItemsInLogic;
   extern Option StickAsAdult;
   extern Option BoomerangAsAdult;
   extern Option HammerAsChild;
@@ -460,6 +462,7 @@ namespace Settings {
   extern Option StartingNocturneOfShadow;
   extern Option StartingPreludeOfLight;
   extern Option StartingKokiriSword;
+  extern Option StartingMasterSword;
   extern Option StartingBiggoronSword;
   extern Option StartingDekuShield;
   extern Option StartingHylianShield;

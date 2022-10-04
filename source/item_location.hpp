@@ -102,6 +102,10 @@ public:
   static auto MagicBeans(u8 scene, u8 flag) {
       return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MAGIC_BEANS, scene, flag);
   }
+
+  static auto MasterSword() {
+    return SpoilerCollectionCheck(SpoilerCollectionCheckType::SPOILER_CHK_MASTER_SWORD, 0x00, 0x00);
+  }
 };
 
 class ItemLocation {

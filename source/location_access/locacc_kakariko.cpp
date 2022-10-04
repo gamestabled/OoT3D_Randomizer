@@ -121,10 +121,10 @@ void AreaTable_Init_Kakariko() {
                                                      CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Fish || Bugs) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));}}),
                 }, {
                   //Locations
-                  LocationAccess(KAK_WINDMILL_FREESTANDING_POH, {[]{return CanUse(BOOMERANG) || DampesWindmillAccess || (IsAdult && CanUse(HOOKSHOT) && LogicWindmillPoHHookshot);},
+                  LocationAccess(KAK_WINDMILL_FREESTANDING_POH, {[]{return CanUse(BOOMERANG) || DampesWindmillAccess || (IsAdult && CanJumpslash && CanUse(HOOKSHOT) && LogicWindmillPoHHookshot);},
                                                      /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
                   LocationAccess(SONG_FROM_WINDMILL,            {[]{return IsAdult && Ocarina;},
-                                                     /*Glitched*/[]{return IsAdult && (CanDoGlitch(GlitchType::WindmillBombOI, GlitchDifficulty::EXPERT) || ((Fish || Bugs) && CanShield && ((Bombs && (CanSurviveDamage || (Fairy && NumBottles >= 2))) || (DampesWindmillAccess || (IsAdult && CanUse(HOOKSHOT) && LogicWindmillPoHHookshot) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE))) &&
+                                                     /*Glitched*/[]{return IsAdult && (CanDoGlitch(GlitchType::WindmillBombOI, GlitchDifficulty::EXPERT) || ((Fish || Bugs) && CanShield && ((Bombs && (CanSurviveDamage || (Fairy && NumBottles >= 2))) || (DampesWindmillAccess || (IsAdult && CanJumpslash && CanUse(HOOKSHOT) && LogicWindmillPoHHookshot) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE))) &&
                                                                            CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) || ((Fish || Bugs) && HasBombchus && CanShield && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));}}),
                 }, {
                   //Exits
@@ -188,7 +188,7 @@ void AreaTable_Init_Kakariko() {
 
   areaTable[KAK_REDEAD_GROTTO] = Area("Kak Redead Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LocationAccess(KAK_REDEAD_GROTTO_CHEST, {[]{return IsAdult || (Sticks || KokiriSword || CanUse(DINS_FIRE) || CanUse(MEGATON_HAMMER) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));}}),
+                  LocationAccess(KAK_REDEAD_GROTTO_CHEST, {[]{return CanUse(STICKS) || CanUse(KOKIRI_SWORD) || CanUse(DINS_FIRE) || CanUse(MEGATON_HAMMER) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);}}),
                 }, {
                   //Exits
                   Entrance(KAKARIKO_VILLAGE, {[]{return true;}}),
@@ -252,7 +252,7 @@ void AreaTable_Init_Kakariko() {
                   //Locations
                   LocationAccess(GRAVEYARD_COMPOSERS_GRAVE_CHEST, {[]{return HasFireSource;},
                                                        /*Glitched*/[]{return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE);}}),
-                  LocationAccess(SONG_FROM_COMPOSERS_GRAVE,       {[]{return IsAdult || (Slingshot || Boomerang || Sticks || HasExplosives || KokiriSword || CanUse(MEGATON_HAMMER) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOW) || CanUse(HOOKSHOT));}}),
+                  LocationAccess(SONG_FROM_COMPOSERS_GRAVE,       {[]{return CanUseProjectile || CanJumpslash || CanUse(MEGATON_HAMMER);}}),
                 }, {
                   //Exits
                   Entrance(THE_GRAVEYARD, {[]{return true;}}),

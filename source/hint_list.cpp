@@ -2090,7 +2090,7 @@ void HintTable_Init() {
     hintTable[LIGHT_ARROW_LOCATION_HINT] = HintText::LightArrow({
                      //obscure text
                      Text{"Ha ha ha... You'll never beat me by reflecting my lightning bolts and unleashing the arrows from ",
-                /*french*/"Ha ha ha... Pauvre fou! Tu ne pourras jamais me vaincre sans les flèches que j'ai caché dans ",
+                /*french*/"Ha ha ha... Pauvre fou! Tu ne pourras jamais me vaincre sans les flèches que j'ai cachées dans ",
                /*spanish*/"Ja, ja, ja... Nunca me derrotarás reflejando mis esferas de energía y desplegando la flecha de luz de ",
                /*italian*/"Ah ah ah... Non mi sconfiggerai mai senza le frecce di luce! Sono ben nascoste in un posto chiamato ",
                 /*german*/"Deutsch"},
@@ -2099,6 +2099,19 @@ void HintTable_Init() {
     hintTable[YOUR_POCKET] = HintText::Exclude({
                      //obscure text
                      Text{"your pocket", /*french*/"tes poches", /*spanish*/"tu bolsillo", /*italian*/"le tue tasche", /*german*/"Deutsch"},
+    });
+
+    /*--------------------------
+    |MASTER SWORD LOCATION TEXT|
+    ---------------------------*/
+
+    hintTable[MASTER_SWORD_LOCATION_HINT] = HintText::MasterSword({
+                     //obscure text
+                     Text{"And even if you do, you'll never find the legendary blade hidden in ",
+                /*french*/"Et même si tu les trouves, tu ne touveras jamais l'épée de légende cachée dans ",
+               /*spanish*/"E incluso si lo haces, nunca encontrarás la espada legendaria escondida en ",
+               /*italian*/"Italiano",
+                /*german*/"Deutsch"},
     });
 
     /*--------------------------

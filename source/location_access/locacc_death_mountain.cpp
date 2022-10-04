@@ -50,7 +50,7 @@ void AreaTable_Init_DeathMountain() {
                   Entrance(DMT_COW_GROTTO,           {[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return CanBlastOrSmash;});},
                                           /*Glitched*/[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);});}}),
                   Entrance(DMT_GREAT_FAIRY_FOUNTAIN, {[]{return Here(DEATH_MOUNTAIN_SUMMIT, []{return CanBlastOrSmash;});},
-                                          /*Glitched*/[]{return ((KokiriSword || Sticks || IsAdult) && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT));}}),
+                                          /*Glitched*/[]{return (CanJumpslash && CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::ADVANCED)) || (IsChild && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT));}}),
   });
 
   areaTable[DMT_OWL_FLIGHT] = Area("DMT Owl Flight", "Death Mountain", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -93,7 +93,7 @@ void AreaTable_Init_DeathMountain() {
                   EventAccess(&GossipStoneFairy,          {[]{return GossipStoneFairy          || CanSummonGossipFairyWithoutSuns;}}),
                   EventAccess(&StickPot,                  {[]{return StickPot                  || IsChild;}}),
                   EventAccess(&BugRock,                   {[]{return BugRock                   || (CanBlastOrSmash || CanUse(SILVER_GAUNTLETS));}}),
-                  EventAccess(&GoronCityChildFire,        {[]{return GoronCityChildFire        || (IsChild && CanUse(DINS_FIRE));},
+                  EventAccess(&GoronCityChildFire,        {[]{return GoronCityChildFire        || (IsChild && (CanUse(DINS_FIRE) || CanUse(FIRE_ARROWS)));},
                                                /*Glitched*/[]{return IsChild && CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE);}}),
                   EventAccess(&GCWoodsWarpOpen,           {[]{return GCWoodsWarpOpen           || (CanBlastOrSmash || CanUse(DINS_FIRE) || CanUse(BOW) || GoronBracelet || GoronCityChildFire);},
                                                /*Glitched*/[]{return (CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));}}),
@@ -111,7 +111,7 @@ void AreaTable_Init_DeathMountain() {
                   LocationAccess(GC_ROLLING_GORON_AS_CHILD, {[]{return IsChild && (HasExplosives || (GoronBracelet && LogicChildRollingWithStrength));}}),
                   LocationAccess(GC_ROLLING_GORON_AS_ADULT, {[]{return StopGCRollingGoronAsAdult;}}),
                   LocationAccess(GC_GS_BOULDER_MAZE,        {[]{return IsChild && CanBlastOrSmash;}}),
-                  LocationAccess(GC_GS_CENTER_PLATFORM,     {[]{return IsAdult;}}),
+                  LocationAccess(GC_GS_CENTER_PLATFORM,     {[]{return CanAdultAttack;}}),
                   LocationAccess(GC_MEDIGORON,              {[]{return IsAdult && AdultsWallet && (CanBlastOrSmash || GoronBracelet);}}),
                   LocationAccess(GC_MAZE_GOSSIP_STONE,      {[]{return CanBlastOrSmash || CanUse(SILVER_GAUNTLETS);}}),
                   LocationAccess(GC_MEDIGORON_GOSSIP_STONE, {[]{return CanBlastOrSmash || GoronBracelet;}}),

@@ -11,6 +11,7 @@
 #include "hint_list.hpp"
 #include "trial.hpp"
 #include "entrance.hpp"
+#include "settings.hpp"
 
 using namespace CustomMessages;
 using namespace Logic;
@@ -502,6 +503,20 @@ static void CreateGanonText() {
     text = Hint(LIGHT_ARROW_LOCATION_HINT).GetText()+GetHintRegion(Location(lightArrowLocation[0])->GetParentRegionKey())->GetHint().GetText();
   }
   text = text + "!";
+
+  if (ShuffleMasterSword) {
+    //Get the location of the master sword
+    auto masterSwordLocation = FilterFromPool(allLocations, [](const LocationKey loc){return Location(loc)->GetPlacedItemKey() == MASTER_SWORD;});
+
+    // Add second text box
+    text = text + "^";
+    if (masterSwordLocation.empty()) {
+      text = text+Hint(MASTER_SWORD_LOCATION_HINT).GetText()+Hint(YOUR_POCKET).GetText();
+    } else {
+      text = text+Hint(MASTER_SWORD_LOCATION_HINT).GetText()+GetHintRegion(Location(masterSwordLocation[0])->GetParentRegionKey())->GetHint().GetText();
+    }
+    text = text + "!";
+  }
 
   CreateMessageFromTextObject(0x70CC, 0, 2, 3, AddColorsAndFormat(text));
 }

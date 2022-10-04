@@ -125,6 +125,7 @@ void GenerateStartingInventory() {
   AddItemToInventory(NOCTURNE_OF_SHADOW,        StartingNocturneOfShadow.Value<u8>());
   AddItemToInventory(PRELUDE_OF_LIGHT,          StartingPreludeOfLight.Value<u8>());
   AddItemToInventory(KOKIRI_SWORD,              StartingKokiriSword.Value<u8>());
+  AddItemToInventory(MASTER_SWORD,              StartingMasterSword.Value<u8>());
   if (ProgressiveGoronSword) {
     AddItemToInventory(PROGRESSIVE_GORONSWORD,  StartingBiggoronSword.Value<u8>());
   } else {
