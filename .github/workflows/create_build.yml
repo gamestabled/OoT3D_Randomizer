@@ -15,20 +15,36 @@ on:
         required: false
 
 jobs:
+  get-changelog:
+    name: Retrieve Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v3.0.0
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      changelog: ${{ steps.changelog.outputs.changelog }}
+
   build-cia-3dsx:
+    needs: get-changelog
+    name: Build CIA and 3DSX Files
     runs-on: ubuntu-latest
     container:
       image: phlex/oot3dr-build-tools
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Project
+        uses: actions/checkout@v3
 
       - name: Run Build Script
-      
         run: |
           chmod +x linux_build_rando.sh
           ./linux_build_rando.sh
-          
+
       - name: Get shorthand commit.
         id: vars
         run: echo "::set-output name=sha_short::$(echo ${{ github.sha }} | cut -c1-6)"
@@ -51,6 +67,10 @@ jobs:
             ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
             3DSX QR Code:
             ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)
+
+            Changes 🛠:  
+            ${{ needs.get-changelog.outputs.changelog }}
+
 
       - if: ${{ github.event.inputs.build_type == 'Release' }}
         name: Create Release
