@@ -76,7 +76,7 @@ typedef struct {
     u32 worldMapAreaData;
     u16 magicMeterSize;
     // ExtData
-    u8 biggoronTrades;
+    u8 extInf[EXTINF_SIZE];
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
 } MultiplayerSaveContext;
@@ -133,7 +133,9 @@ static void Multiplayer_Overwrite_mSaveContext(void) {
     mSaveContext.worldMapAreaData = gSaveContext.worldMapAreaData;
     mSaveContext.magicMeterSize = gSaveContext.magicMeterSize;
     // ExtData
-    mSaveContext.biggoronTrades = gExtSaveData.biggoronTrades;
+    for (size_t i = 0; i < EXTINF_SIZE; i++) {
+        mSaveContext.extInf[i] = gExtSaveData.extInf[i];
+    }
     for (size_t i = 0; i < SAVEFILE_SCENES_DISCOVERED_IDX_COUNT; i++) {
         mSaveContext.scenesDiscovered[i] = gExtSaveData.scenesDiscovered[i];
     }
@@ -192,7 +194,9 @@ static void Multiplayer_Overwrite_gSaveContext(void) {
     gSaveContext.worldMapAreaData = mSaveContext.worldMapAreaData;
     gSaveContext.magicMeterSize = mSaveContext.magicMeterSize;
     // ExtData
-    gExtSaveData.biggoronTrades = mSaveContext.biggoronTrades;
+    for (size_t i = 0; i < EXTINF_SIZE; i++) {
+        gExtSaveData.extInf[i] = mSaveContext.extInf[i];
+    }
     for (size_t i = 0; i < SAVEFILE_SCENES_DISCOVERED_IDX_COUNT; i++) {
         gExtSaveData.scenesDiscovered[i] = mSaveContext.scenesDiscovered[i];
     }
@@ -257,7 +261,7 @@ u32 prevBigPoePoints;
 u8 prevFishingFlags;
 u32 prevWorldMapAreaData;
 u32 prevAdultTrade;
-u8 prevBiggoronTrades;
+u8 prevExtInf[EXTINF_SIZE];
 s16 prevHealth;
 s16 prevRupees;
 
@@ -295,7 +299,7 @@ typedef enum {
     PACKET_BIGPOEPOINTS,
     PACKET_FISHINGFLAG,
     PACKET_WORLDMAPBIT,
-    PACKET_BIGGORONTRADE,
+    PACKET_EXTINF,
     PACKET_DISCOVEREDSCENE,
     PACKET_DISCOVEREDENTRANCE,
     PACKET_UNLOCKEDDOOR,
@@ -505,8 +509,10 @@ static void Multiplayer_Sync_Init(void) {
     // Adult Trade
     prevAdultTrade = gSaveContext.sceneFlags[0x60].unk;
 
-    // Biggoron Trades
-    prevBiggoronTrades = gExtSaveData.biggoronTrades;
+    // Extra Info Table
+    for (size_t i = 0; i < EXTINF_SIZE; i++) {
+        prevExtInf[i] = gExtSaveData.extInf[i];
+    }
 
     // Health
     prevHealth = gSaveContext.health;
@@ -593,8 +599,8 @@ static void Multiplayer_Sync_SharedProgress(void) {
     // Equipment
     if (prevEquipment != gSaveContext.equipment) {
         for (size_t bit = 0; bit < BIT_COUNT(gSaveContext.equipment); bit++) {
-            // Don't sync giant's knife's state
-            if (bit == 3) {
+            // Don't sync Master Sword in final Ganon fight, nor giant's knife's state
+            if ((bit == 1 && gGlobalContext->sceneNum == 0x4F) || bit == 3) {
                 continue;
             }
             s8 result = BitCompare(gSaveContext.equipment, prevEquipment, bit);
@@ -701,6 +707,10 @@ static void Multiplayer_Sync_SharedProgress(void) {
     for (size_t index = 0; index < ARRAY_SIZE(gSaveContext.infTable); index++) {
         if (prevInfTable[index] != gSaveContext.infTable[index]) {
             for (size_t bit = 0; bit < BIT_COUNT(gSaveContext.infTable[index]); bit++) {
+                // Skip swordless flag
+                if (index == 29 && bit == 0) {
+                    continue;
+                }
                 s8 result = BitCompare(gSaveContext.infTable[index], prevInfTable[index], bit);
                 if (result > 0) {
                     Multiplayer_Send_InfTableBit(index, bit, 1);
@@ -825,13 +835,23 @@ static void Multiplayer_Sync_SharedProgress(void) {
     }
     prevAdultTrade = gSaveContext.sceneFlags[0x60].unk;
 
-    // Biggoron Trades
-    if (prevBiggoronTrades != gExtSaveData.biggoronTrades) {
-        for (size_t bit = 0; bit < BIT_COUNT(gExtSaveData.biggoronTrades); bit++) {
-            if (BitCompare(gExtSaveData.biggoronTrades, prevBiggoronTrades, bit) > 0) {
-                Multiplayer_Send_BiggoronTradeBit(bit);
+    // Extra Info Table
+    for (size_t index = 0; index < ARRAY_SIZE(gExtSaveData.extInf); index++) {
+        // Don't send this to allow all current players to watch the cutscene
+        if (index == EXTINF_HASTIMETRAVELED) {
+            continue;
+        }
+        if (prevExtInf[index] != gExtSaveData.extInf[index]) {
+            for (size_t bit = 0; bit < BIT_COUNT(gExtSaveData.extInf[index]); bit++) {
+                s8 result = BitCompare(gExtSaveData.extInf[index], prevExtInf[index], bit);
+                if (result > 0) {
+                    Multiplayer_Send_ExtInfBit(index, bit, 1);
+                } else if (result < 0) {
+                    Multiplayer_Send_ExtInfBit(index, bit, 0);
+                }
             }
         }
+        prevExtInf[index] = gExtSaveData.extInf[index];
     }
 }
 
@@ -1072,7 +1092,9 @@ void Multiplayer_Send_BaseSync(u16 targetID) {
         mBuffer[memSpacer++] = mSaveContext.infTable[i];
     }
     mBuffer[memSpacer++] = mSaveContext.worldMapAreaData;
-    mBuffer[memSpacer++] = mSaveContext.biggoronTrades;
+    for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.extInf); i++) {
+        mBuffer[memSpacer++] = mSaveContext.extInf[i];
+    }
     mBuffer[memSpacer++] = mSaveContext.health;
     mBuffer[memSpacer++] = mSaveContext.rupees;
     Multiplayer_SendPacket(memSpacer, targetID);
@@ -1127,7 +1149,9 @@ void Multiplayer_Receive_BaseSync(u16 senderID) {
         mSaveContext.infTable[i] = mBuffer[memSpacer++];
     }
     mSaveContext.worldMapAreaData = mBuffer[memSpacer++];
-    mSaveContext.biggoronTrades = mBuffer[memSpacer++];
+    for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.extInf); i++) {
+        mSaveContext.extInf[i] = mBuffer[memSpacer++];
+    }
     if (gSettingsContext.mp_SharedHealth) {
         mSaveContext.health = mBuffer[memSpacer++];
     } else {
@@ -2047,27 +2071,36 @@ void Multiplayer_Receive_WorldMapBit(u16 senderID) {
     }
 }
 
-void Multiplayer_Send_BiggoronTradeBit(u8 bit) {
+void Multiplayer_Send_ExtInfBit(u8 index, u8 bit, u8 setOrUnset) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = PrepareSharedProgressPacket(PACKET_BIGGORONTRADE);
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_EXTINF);
 
+    mBuffer[memSpacer++] = index;
     mBuffer[memSpacer++] = bit;
+    mBuffer[memSpacer++] = setOrUnset;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
-void Multiplayer_Receive_BiggoronTradeBit(u16 senderID) {
+void Multiplayer_Receive_ExtInfBit(u16 senderID) {
     if (!IsInSameSyncGroup() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
+    u8 index = mBuffer[memSpacer++];
     u8 bit = mBuffer[memSpacer++];
+    u8 setOrUnset = mBuffer[memSpacer++];
 
-    mSaveContext.biggoronTrades |= (1 << bit);
-    prevBiggoronTrades |= (1 << bit);
+    if (setOrUnset) {
+        mSaveContext.extInf[index] |= (1 << bit);
+        prevExtInf[index] |= (1 << bit);
+    } else {
+        mSaveContext.extInf[index] &= ~(1 << bit);
+        prevExtInf[index] &= ~(1 << bit);
+    }
 }
 
 void Multiplayer_Send_DiscoveredScene(u32 index, u32 bit) {
@@ -2598,7 +2631,7 @@ static void Multiplayer_UnpackPacket(u16 senderID) {
         Multiplayer_Receive_BigPoePoints,
         Multiplayer_Receive_FishingFlag,
         Multiplayer_Receive_WorldMapBit,
-        Multiplayer_Receive_BiggoronTradeBit,
+        Multiplayer_Receive_ExtInfBit,
         Multiplayer_Receive_DiscoveredScene,
         Multiplayer_Receive_DiscoveredEntrance,
         Multiplayer_Receive_UnlockedDoor,
