@@ -295,6 +295,7 @@ namespace Settings {
   extern Option OpenKakariko;
   extern Option OpenDoorOfTime;
   extern Option ZorasFountain;
+  extern Option OpenJabu;
   extern Option GerudoFortress;
   extern Option Bridge;
   extern Option BridgeStoneCount;

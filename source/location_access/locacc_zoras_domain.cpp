@@ -183,7 +183,7 @@ void AreaTable_Init_ZorasDomain() {
                 }, {
                   //Exits
                   Entrance(ZD_BEHIND_KING_ZORA,       {[]{return true;}}),
-                  Entrance(JABU_JABUS_BELLY_ENTRYWAY, {[]{return (IsChild && Fish);},
+                  Entrance(JABU_JABUS_BELLY_ENTRYWAY, {[]{return (IsChild && Fish) || OpenJabu;},
                                            /*Glitched*/[]{return (IsChild && CanUse(STICKS) && GlitchJabuStickRecoil) || (IsAdult && GlitchJabuAdult);}}),
                   Entrance(ICE_CAVERN_ENTRYWAY,       {[]{return IsAdult;},
                                            /*Glitched*/[]{return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),

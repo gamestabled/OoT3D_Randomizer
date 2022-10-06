@@ -56,6 +56,7 @@ namespace Settings {
   Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
   Option OpenDoorOfTime      = Option::U8  ("Door of Time",           {"Open", "Closed", "Intended"},                                               {doorOfTimeOpen, doorOfTimeClosed, doorOfTimeIntended});
   Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
+  Option OpenJabu            = Option::U8  ("Jabu-Jabu",              {"Closed", "Open"},                                                           {jabuJabuCloseDesc, jabuJabuOpenDesc});
   Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {gerudoNormal, gerudoFast, gerudoOpen});
   Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens},   OptionCategory::Setting,    RAINBOWBRIDGE_MEDALLIONS);
   Option BridgeStoneCount    = Option::U8  ("  Stone Count",          {NumOpts(0, 3)},                                                              {bridgeStoneCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
@@ -71,6 +72,7 @@ namespace Settings {
     &OpenKakariko,
     &OpenDoorOfTime,
     &ZorasFountain,
+    &OpenJabu,
     &GerudoFortress,
     &Bridge,
     &BridgeStoneCount,
@@ -1276,6 +1278,7 @@ namespace Settings {
     ctx.openKakariko         = OpenKakariko.Value<u8>();
     ctx.openDoorOfTime       = OpenDoorOfTime.Value<u8>();
     ctx.zorasFountain        = ZorasFountain.Value<u8>();
+    ctx.openJabu             = OpenJabu.Value<u8>();
     ctx.gerudoFortress       = GerudoFortress.Value<u8>();
     ctx.rainbowBridge        = Bridge.Value<u8>();
     ctx.bridgeStoneCount     = BridgeStoneCount.Value<u8>();
