@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "entrance.h"
+#include "grotto.h"
 
 #define BgBdanSwitch_Init_addr 0x276508
 #define BgBdanSwitch_Init ((ActorFunc)BgBdanSwitch_Init_addr)
@@ -9,6 +10,8 @@ void Jabu_SkipOpeningCutscene(void) {
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x0028);
     gGlobalContext->sceneLoadFlag = 0x14;
     gGlobalContext->fadeOutTransition = 2;
+    // In case Jabu's mouth leads to a grotto return
+    Grotto_ForceGrottoReturnOnSpecialEntrance();
 }
 
 // Used to make the small crate appear after Ruto gets the sapphire

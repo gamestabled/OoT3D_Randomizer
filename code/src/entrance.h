@@ -54,6 +54,9 @@ typedef enum {
     ENTRANCE_TYPE_INTERIOR,
     ENTRANCE_TYPE_GROTTO,
     ENTRANCE_TYPE_DUNGEON,
+    ENTRANCE_TYPE_OWL_FLIGHT,
+    ENTRANCE_TYPE_SPAWN,
+    ENTRANCE_TYPE_WARP_SONG,
     ENTRANCE_TYPE_COUNT,
 } TrackerEntranceType;
 
@@ -78,6 +81,7 @@ extern EntranceTrackingData gEntranceTrackingData;
 void Entrance_Init(void);
 s16  Entrance_GetOverride(s16 index);
 s16  Entrance_OverrideNextIndex(s16 nextEntranceIndex);
+s16  Entrance_OverrideNextIndexWithoutGrottoIndex(s16 nextEntranceIndex);
 u32  Entrance_IsLostWoodsBridge(void);
 void Entrance_EnteredLocation(void);
 u32  Entrance_SceneAndSpawnAre(u8 scene, u8 spawn);

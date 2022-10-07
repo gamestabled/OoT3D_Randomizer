@@ -104,25 +104,32 @@ void Grotto_SetLoadOverride(s16 originalIndex, s16 overrideIndex) {
     grottoLoadList[id] = overrideIndex;
 }
 
-static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto) {
+static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto, RespawnMode respawnMode) {
   // Set necessary grotto return data to the Entrance Point, so that voiding out and setting FW work correctly
-  gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = grotto.entranceIndex;
-  gSaveContext.respawn[RESPAWN_MODE_DOWN].roomIndex = grotto.room;
-  //TODO If Mixed Entrance Pool or decoupled entrances are active, reenable the line below:
-  //gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
-  gSaveContext.respawn[RESPAWN_MODE_DOWN].yaw = grotto.angle;
-  gSaveContext.respawn[RESPAWN_MODE_DOWN].pos = grotto.pos;
-  //TODO If Mixed Entrance Pool or decoupled entrances are active, set these flags to 0 instead of restoring them
-  gSaveContext.respawn[RESPAWN_MODE_DOWN].tempSwchFlags = gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags;
-  gSaveContext.respawn[RESPAWN_MODE_DOWN].tempCollectFlags = gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags;
+  gSaveContext.respawn[respawnMode].entranceIndex = grotto.entranceIndex;
+  gSaveContext.respawn[respawnMode].roomIndex = grotto.room;
+
+  if (gSettingsContext.mixedEntrancePools != MIXEDENTRANCES_OFF || gSettingsContext.decoupleEntrances == ON) {
+    gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
+  }
+  gSaveContext.respawn[respawnMode].yaw = grotto.angle;
+  gSaveContext.respawn[respawnMode].pos = grotto.pos;
+  //If Mixed Entrance Pools or decoupled entrances are active, set these flags to 0 instead of restoring them
+  if (gSettingsContext.mixedEntrancePools != MIXEDENTRANCES_OFF || gSettingsContext.decoupleEntrances == ON) {
+    gSaveContext.respawn[respawnMode].tempSwchFlags = 0;
+    gSaveContext.respawn[respawnMode].tempCollectFlags = 0;
+  } else {
+    gSaveContext.respawn[respawnMode].tempSwchFlags = gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags;
+    gSaveContext.respawn[respawnMode].tempCollectFlags = gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags;
+  }
 }
 
 // Translates and overrides the passed in entrance index if it corresponds to a
 // special grotto entrance (grotto load or returnpoint)
-s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
+s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex, u32 realIndexOnGrottoReturn) {
 
     // Don't change anything unless grotto shuffle has been enabled
-    if (gSettingsContext.shuffleGrottoEntrances == OFF) {
+    if (gSettingsContext.shuffleGrottoEntrances != ON && gSettingsContext.shuffleOverworldSpawns != ON && gSettingsContext.shuffleWarpSongs != ON) {
         return nextEntranceIndex;
     }
 
@@ -140,17 +147,19 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
     if (nextEntranceIndex >= 0x0800 && nextEntranceIndex < 0x0800 + NUM_GROTTOS) {
 
         GrottoReturnInfo grotto = grottoReturnTable[grottoId];
-        Grotto_SetupReturnInfo(grotto);
+        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
+        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_RETURN);
         gGlobalContext->fadeOutTransition = 3;
         gSaveContext.nextTransition = 3;
 
-        // If this entrance is triggered by Link falling into a grotto actor
-        // and then spawning at a grotto return point, we want to return the
-        // regular entrance index so that it works properly. Otherwise, we
-        // want to return 0x7FFF to make the lighting of the area transition
-        // look correct.
-        nextEntranceIndex = (lastEntranceType == GROTTO_LOAD) ? grotto.entranceIndex : 0x7FFF;
+        // We want to return the actual entrance index in specific circumstances
+        // such as overworld spawns and warp songs. Otherwise, we want to return
+        // 0x7FFF to make the lighting of the area transition look correct.
+        nextEntranceIndex = realIndexOnGrottoReturn ? grotto.entranceIndex : 0x7FFF;
         lastEntranceType = GROTTO_RETURN;
+        if (realIndexOnGrottoReturn) {
+            Grotto_ForceGrottoReturnOnSpecialEntrance();
+        }
 
     // Grotto Loads
     } else if (nextEntranceIndex >= 0x0700 && nextEntranceIndex < 0x0800) {
@@ -192,16 +201,27 @@ void Grotto_OverrideActorEntrance(Actor* thisx) {
 
             // Run the index through the special entrances override check
             lastEntranceType = GROTTO_LOAD;
-            gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(index);
+            gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(index, GET_REAL_RETURN_INDEX);
             return;
         }
+    }
+}
+
+// Set necessary flags for when warp songs/overworld spawns are shuffled to grotto return points
+void Grotto_ForceGrottoReturnOnSpecialEntrance(void) {
+    if (lastEntranceType == GROTTO_RETURN && (gSettingsContext.shuffleGrottoEntrances == ON || gSettingsContext.shuffleOverworldSpawns == ON || gSettingsContext.shuffleWarpSongs == ON)) {
+        gSaveContext.respawnFlag = 2;
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x4FF;
+        // Clear current temp flags
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags = 0;
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags = 0;
     }
 }
 
 // Set the respawn flag for when we want to return from a grotto entrance
 // Used for Sun's Song and Game Over, which usually don't restore saved position data
 void Grotto_ForceGrottoReturn(void) {
-    if (lastEntranceType == GROTTO_RETURN && gSettingsContext.shuffleGrottoEntrances == ON) {
+    if (lastEntranceType == GROTTO_RETURN && (gSettingsContext.shuffleGrottoEntrances == ON || gSettingsContext.shuffleOverworldSpawns == ON || gSettingsContext.shuffleWarpSongs == ON)) {
         gSaveContext.respawnFlag = 2;
         gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
         //Save the current temp flags in the grotto return point, so they'll properly keep their values.
@@ -212,7 +232,7 @@ void Grotto_ForceGrottoReturn(void) {
 
 // Used for the DMT special voids, which usually don't restore saved position data
 void Grotto_ForceRegularVoidOut(void) {
-    if (lastEntranceType == GROTTO_RETURN && gSettingsContext.shuffleGrottoEntrances == ON) {
+    if (lastEntranceType == GROTTO_RETURN && (gSettingsContext.shuffleGrottoEntrances == ON || gSettingsContext.shuffleOverworldSpawns == ON || gSettingsContext.shuffleWarpSongs == ON)) {
         gSaveContext.respawn[RESPAWN_MODE_DOWN] = gSaveContext.respawn[RESPAWN_MODE_RETURN];
         gSaveContext.respawn[RESPAWN_MODE_DOWN].playerParams = 0x0DFF;
         gSaveContext.respawnFlag = 1;
@@ -222,7 +242,7 @@ void Grotto_ForceRegularVoidOut(void) {
 // If returning to a FW point saved at a grotto exit, copy the FW data to the Grotto Return Point
 // so that Sun's Song and Game Over will behave correctly
 void Grotto_SetupReturnInfoOnFWReturn(void) {
-    if (gSettingsContext.shuffleGrottoEntrances == ON) {
+    if (gSettingsContext.shuffleGrottoEntrances == ON || gSettingsContext.shuffleOverworldSpawns == ON || gSettingsContext.shuffleWarpSongs == ON) {
         gSaveContext.respawn[RESPAWN_MODE_RETURN] = gSaveContext.respawn[RESPAWN_MODE_TOP];
         gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
         lastEntranceType = GROTTO_RETURN;

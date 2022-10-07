@@ -78,6 +78,14 @@ static void Entrance_SeparateOGCFairyFountainExit(void) {
     dynamicExitList[2] = 0x03E8;
 }
 
+static void Entrance_SeparateAdultSpawnAndPrelude() {
+    // Overwrite unused entrance 0x0282 with values from 0x05F4 to use it as the
+    // Adult Spawn index and separate it from Prelude of Light
+    for (size_t i = 0; i < 4; ++i) {
+        gEntranceTable[0x282 + i] = gEntranceTable[0x5F4 + i];
+    }
+}
+
 void Entrance_Init(void) {
     s32 index;
 
@@ -101,6 +109,7 @@ void Entrance_Init(void) {
     }
 
     Entrance_SeparateOGCFairyFountainExit();
+    Entrance_SeparateAdultSpawnAndPrelude();
 
     // Initialize the entrance override table with each index leading to itself. An
     // index referring to itself means that the entrance is not currently shuffled.
@@ -193,12 +202,24 @@ s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
         gGlobalContext->actorCtx.flags.tempCollect = 0;
     }
     SaveFile_SetEntranceDiscovered(nextEntranceIndex);
-    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
+    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex), GET_REAL_RETURN_INDEX);
+}
+
+// Additional function definition to specify not returning the default index of
+// a grotto return point and instead just returning 0x7FFF
+s16 Entrance_OverrideNextIndexWithoutGrottoIndex(s16 nextEntranceIndex) {
+    // When entering Spirit Temple, clear temp flags so they don't carry over to the randomized dungeon
+    if (nextEntranceIndex == 0x0082 && Entrance_GetOverride(nextEntranceIndex) != nextEntranceIndex) {
+        gGlobalContext->actorCtx.flags.tempSwch = 0;
+        gGlobalContext->actorCtx.flags.tempCollect = 0;
+    }
+    SaveFile_SetEntranceDiscovered(nextEntranceIndex);
+    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex), 0);
 }
 
 void Entrance_OverrideDynamicExit(void) {
     SaveFile_SetEntranceDiscovered(gGlobalContext->nextEntranceIndex);
-    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex));
+    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex), GET_REAL_RETURN_INDEX);
 }
 
 void Entrance_DeathInGanonBattle(void) {
@@ -305,11 +326,11 @@ void Entrance_SetSavewarpEntrance(void) {
     } else if (scene == DUNGEON_THIEVES_HIDEOUT) {
         gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
     } else if (scene == SCENE_LINK_HOUSE) {
-        gSaveContext.entranceIndex = LINK_HOUSE_SAVEWARP_ENTRANCE;
+        gSaveContext.entranceIndex = Entrance_OverrideNextIndex(LINK_HOUSE_SAVEWARP_ENTRANCE);
     } else if (gSaveContext.linkAge == AGE_CHILD) {
-        gSaveContext.entranceIndex = Entrance_GetOverride(LINK_HOUSE_SAVEWARP_ENTRANCE);
+        gSaveContext.entranceIndex = Entrance_OverrideNextIndex(LINK_HOUSE_SAVEWARP_ENTRANCE); // Child Overworld Spawn
     } else {
-        gSaveContext.entranceIndex = Entrance_GetOverride(0x05F4); // Temple of Time Adult Spawn
+        gSaveContext.entranceIndex = Entrance_OverrideNextIndex(0x0282); // Adult Overworld Spawn (Normally 0x5F4, but 0x282 has been repurposed to differentiate from Prelude which also uses 0x5F4)
     }
 }
 
@@ -688,32 +709,32 @@ void SortEntranceList(EntranceOverride* entranceList, u8 byDest) {
 
 void InitEntranceTrackingData(void) {
     // Check if entrance randomization is disabled
-    if (EntranceIsNull(&rEntranceOverrides[0])) {
-        return;
-    }
-
-    // Set total and group counts
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-        if (EntranceIsNull(&rEntranceOverrides[i])) {
-            break;
-        }
-        gEntranceTrackingData.GroupEntranceCounts[GetEntranceData(rEntranceOverrides[i].index)->group]++;
-        gEntranceTrackingData.EntranceCount++;
-    }
-
-    // Set offset
-    u16 offsetTotal = 0;
-    for (size_t i = 1; i < SPOILER_ENTRANCE_GROUP_COUNT; i++) {
-        offsetTotal += gEntranceTrackingData.GroupEntranceCounts[i - 1];
-        gEntranceTrackingData.GroupOffsets[i] = offsetTotal;
-    }
-
-    // Fill destList which will have the entrances reordered based on the destination instead of the source
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-        destList[i] = rEntranceOverrides[i];
-    }
-
-    // Sort entrances by entrance type
-    SortEntranceList(rEntranceOverrides, 0);
-    SortEntranceList(destList, 1);
+    // if (EntranceIsNull(&rEntranceOverrides[0])) {
+    //     return;
+    // }
+    //
+    // // Set total and group counts
+    // for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
+    //     if (EntranceIsNull(&rEntranceOverrides[i])) {
+    //         break;
+    //     }
+    //     gEntranceTrackingData.GroupEntranceCounts[GetEntranceData(rEntranceOverrides[i].index)->group]++;
+    //     gEntranceTrackingData.EntranceCount++;
+    // }
+    //
+    // // Set offset
+    // u16 offsetTotal = 0;
+    // for (size_t i = 1; i < SPOILER_ENTRANCE_GROUP_COUNT; i++) {
+    //     offsetTotal += gEntranceTrackingData.GroupEntranceCounts[i - 1];
+    //     gEntranceTrackingData.GroupOffsets[i] = offsetTotal;
+    // }
+    //
+    // // Fill destList which will have the entrances reordered based on the destination instead of the source
+    // for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
+    //     destList[i] = rEntranceOverrides[i];
+    // }
+    //
+    // // Sort entrances by entrance type
+    // SortEntranceList(rEntranceOverrides, 0);
+    // SortEntranceList(destList, 1);
 }

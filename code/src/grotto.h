@@ -8,6 +8,8 @@
 #define GROTTO_LOAD 1
 #define GROTTO_RETURN 2
 
+#define GET_REAL_RETURN_INDEX 1
+
 typedef struct {
     s16 entranceIndex;
     s8 content;
@@ -24,6 +26,7 @@ typedef struct {
 void Grotto_InitExitAndLoadLists(void);
 void Grotto_SetExitOverride(s16 originalIndex, s16 overrideIndex);
 void Grotto_SetLoadOverride(s16 originalIndex, s16 overrideIndex);
-s16  Grotto_CheckSpecialEntrance(s16 nextEntranceIndex);
+s16  Grotto_CheckSpecialEntrance(s16 nextEntranceIndex, u32 realIndexOnGrottoReturn);
+void Grotto_ForceGrottoReturnOnSpecialEntrance(void);
 
 #endif //_GROTTO_H_

@@ -1266,6 +1266,33 @@ hook_ReturnFWSetupGrottoInfo:
     add sp,sp,#0x8
     bx lr
 
+.global hook_WarpSongEntranceOverride
+hook_WarpSongEntranceOverride:
+    push {r0-r1, r3-r12, lr}
+    cpy r0, r2
+    bl Entrance_OverrideNextIndex
+    cpy r2, r0
+    pop {r0-r1, r3-r12, lr}
+    strh r2,[r1,#0x1c]
+    bx lr
+
+.global hook_OwlEntranceOverride
+hook_OwlEntranceOverride:
+    push {r0, r2-r12, lr}
+    cpy r0, r1
+    bl Entrance_OverrideNextIndex
+    cpy r1, r0
+    pop {r0, r2-r12, lr}
+    b 0x3716F0
+
+.global hook_SavewarpSetRespawnFlag
+hook_SavewarpSetRespawnFlag:
+    push {r0-r12, lr}
+    bl Grotto_ForceGrottoReturnOnSpecialEntrance
+    pop {r0-r12, lr}
+    mov r0,#0xFF
+    bx lr
+
 .global hook_ChildHoverBoots
 hook_ChildHoverBoots:
     beq 0x2D5F04

@@ -88,6 +88,12 @@ typedef enum {
 } ShuffleInteriorEntrancesSetting;
 
 typedef enum {
+  MIXEDENTRANCES_OFF,
+  MIXEDENTRANCES_INDOOR,
+  MIXEDENTRANCES_ALL,
+} MixedEntraancesSetting;
+
+typedef enum {
   AMMODROPS_VANILLA,
   AMMODROPS_BOMBCHU,
   AMMODROPS_NONE,
@@ -420,6 +426,11 @@ typedef struct {
   u8 shuffleOverworldEntrances;
   u8 shuffleInteriorEntrances;
   u8 shuffleGrottoEntrances;
+  u8 shuffleOwlDrops;
+  u8 shuffleWarpSongs;
+  u8 shuffleOverworldSpawns;
+  u8 mixedEntrancePools;
+  u8 decoupleEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;
