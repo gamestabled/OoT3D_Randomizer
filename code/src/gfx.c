@@ -102,14 +102,18 @@ static char *spoilerCollectionGroupNames[] = {
 
 static char* spoilerEntranceGroupNames[] = {
     "Randomized Entrances", // All
+    "Spawns/Warp Songs/Owls",
     "Kokiri Forest",
     "Lost Woods",
+    "Sacred Forest Meadow",
     "Kakariko Village",
     "Graveyard",
     "Death Mountain Trail",
     "Death Mountain Crater",
     "Goron City",
+    "Zora's River",
     "Zora's Domain",
+    "Zora's Fountain",
     "Hyrule Field",
     "Lon Lon Ranch",
     "Lake Hylia",
@@ -158,7 +162,7 @@ typedef enum {
     PAGE_OPTIONS,
 } GfxPage;
 
-static u32 entranceTypeToColor[] = { COLOR_GREEN, COLOR_BLUE, COLOR_ORANGE, COLOR_PINK };
+static u32 entranceTypeToColor[] = { COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_ORANGE, COLOR_PINK };
 
 void Gfx_SleepQueryCallback(void)
 {
@@ -606,6 +610,8 @@ static void Gfx_DrawEntranceTracker(void) {
 
         static const u8 squareWidth = 9;
         u16 offsetY = 2;
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_YELLOW);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "One-way Entrances");
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_GREEN);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Overworld");
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_BLUE);
@@ -652,29 +658,41 @@ static void Gfx_DrawEntranceTracker(void) {
 
         bool isDiscovered = IsEntranceDiscovered(entranceList[locIndex].index);
 
-        u32 origSrcColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].index)->type] : COLOR_WHITE;
-        u32 origDstColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].destination)->type] : COLOR_WHITE;
-        u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].override)->type] : COLOR_WHITE;
-        u32 rplcDstColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].overrideDestination)->type] : COLOR_WHITE;
+        const EntranceData* original = GetEntranceData(entranceList[locIndex].index);
+        const EntranceData* override = GetEntranceData(entranceList[locIndex].override);
+
+        u32 origSrcColor = isDiscovered ? entranceTypeToColor[original->type] : COLOR_WHITE;
+        u32 origDstColor = isDiscovered ? entranceTypeToColor[original->type] : COLOR_WHITE;
+        u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
+        u32 rplcDstColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
+
+        u8 showOriginal = gSettingsContext.ingameSpoilers || (!destListToggle || original->group == ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
+        u8 showOverride = gSettingsContext.ingameSpoilers || ( destListToggle && original->group != ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
+
         const char* unknown = "???";
 
-        const char* origSrcName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].index)->name : unknown;
-        const char* origDstName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].destination)->name : unknown;
-        const char* rplcSrcName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].override)->name : unknown;
-        const char* rplcDstName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].overrideDestination)->name : unknown;
+        const char* origSrcName = showOriginal ? original->source      : unknown;
+        const char* origDstName = showOriginal ? original->destination : unknown;
+        const char* rplcSrcName = showOverride ? override->source      : unknown;
+        const char* rplcDstName = showOverride ? override->destination : unknown;
 
         u16 offsetX = 0;
         Draw_DrawFormattedString_Small(10, locPosY, origSrcColor, "%s", origSrcName);
         offsetX += strlen(origSrcName) + 1;
-        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "to");
-        offsetX += strlen("to") + 1;
-        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, origDstColor, "%s", origDstName);
-        offsetX += strlen(origDstName) + 1;
+        // Don't show original destinations for one way entrances
+        if (original->group != ENTRANCE_GROUP_ONE_WAY) {
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "to");
+            offsetX += strlen("to") + 1;
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, origDstColor, "%s", origDstName);
+            offsetX += strlen(origDstName) + 1;
+        }
         Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "%c", RIGHT_ARROW_CHR);
 
         offsetX = 2;
         Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcDstColor, "%s", rplcDstName);
-        if ((!gSettingsContext.ingameSpoilers && !isDiscovered) || !GetEntranceData(entranceList[locIndex].overrideDestination)->oneExit) {
+        // Don't show the replacement source area if the area only has one entrance, or if the entrance
+        // is one-way
+        if (!showOverride || (showOverride && (!override->oneExit && override->group != ENTRANCE_GROUP_ONE_WAY))) {
             offsetX += strlen(rplcDstName) + 1;
             Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, COLOR_WHITE, "from");
             offsetX += strlen("from") + 1;
