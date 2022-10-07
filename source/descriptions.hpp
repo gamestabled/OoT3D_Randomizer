@@ -204,6 +204,7 @@ extern string_view numRequiredCuccosDesc;
 extern string_view kingZoraSpeedFast;
 extern string_view kingZoraSpeedVanilla;
 extern string_view kingZoraSpeedRandom;
+extern string_view kingZoraSpeedCustom;
 
 extern string_view completeMaskDesc;
 

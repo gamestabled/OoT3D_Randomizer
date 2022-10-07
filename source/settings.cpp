@@ -265,8 +265,8 @@ namespace Settings {
   Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {lakeHyliaOwlDesc},                                                                                               OptionCategory::Setting,    SKIP);
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {NumOpts(1, 10)},                                                       {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {NumOpts(0, 7)},                                                        {numRequiredCuccosDesc});
-  Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random", "Custom"},                                {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom, "Manually set how many shuffles King Zora takes."});
-  Option ExactZoraSpeed      = Option::U8  ("  Exact Shuffle Count",  {NumOpts(1,128)},                                                      {""});
+  Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random", "Custom"},                                {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom, kingZoraSpeedCustom});
+  Option ExactZoraSpeed      = Option::U8  ("  Exact Shuffle Count",  {NumOpts(1,128)},                                                       {""});
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
   Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});

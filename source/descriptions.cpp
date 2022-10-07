@@ -619,6 +619,8 @@ string_view kingZoraSpeedVanilla      = "King Zora will move out of the way in 2
                                                                                            //
 string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1 to 128\n" //
                                         "shuffles, with lower numbers being more common";  //
+string_view kingZoraSpeedCustom       = "Set the exact number of shuffles King Zora will\n"//
+                                        "take to move out of the way.";                    //
 /*------------------------------                                                           //
 |      COMPLETE MASK QUEST     |                                                           //
 ------------------------------*/                                                           //
