@@ -820,12 +820,13 @@ AmyBlockCooldownTimer_patch:
     mov r1,#0x1
 
 .section .patch_FireBlockSpeed
-    .word 0x40800000
+    .word 0x3DCCCCCD
 
-.section .patch_FireBlockCooldownTimer
-.global FireBlockCooldownTimer_patch
-FireBlockCooldownTimer_patch:
-    mov r0,#0x1
+.section .patch_ArmosPushSpeed
+    .word 0x3F800000
+
+.section .patch_ArmosCooldownTimer
+    mov r0,#0xC
 
 .section .patch_ForestTempleBasementPuzzleDelay
 .global ForestTempleBasementPuzzleDelay_patch
