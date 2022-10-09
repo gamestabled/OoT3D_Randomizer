@@ -17,7 +17,7 @@
 #define PlayerActor_Destroy_addr 0x19262C
 #define PlayerActor_Destroy ((ActorFunc)PlayerActor_Destroy_addr)
 
-#define PlayerActor_Draw_addr 0X4BF618
+#define PlayerActor_Draw_addr 0x4BF618
 #define PlayerActor_Draw ((ActorFunc)PlayerActor_Draw_addr)
 
 #define Hookshot_ActorInit ((ActorInit*)0x5108E8)
