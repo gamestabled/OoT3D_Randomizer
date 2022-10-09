@@ -1930,6 +1930,11 @@ CriticalHealthCheckThree_patch:
 CollisionATvsAC_patch:
     bl hook_CollisionATvsAC
 
+.section .patch_GanonDrawMasterSword
+.global GanonDrawMasterSword_patch
+GanonDrawMasterSword_patch:
+    bl hook_GanonDrawMasterSword
+
 .section .patch_loader
 .global loader_patch
 

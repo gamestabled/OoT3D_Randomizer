@@ -536,6 +536,10 @@ SECTIONS
 		*(.patch_CanPlayBombchuBowlingOne)
 	}
 
+	.patch_GanonDrawMasterSword 0x26207C : {
+		*(.patch_GanonDrawMasterSword)
+	}
+
 	.patch_SilenceNavi 0x26807C : {
 		*(.patch_SilenceNavi)
 	}
