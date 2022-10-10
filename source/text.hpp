@@ -125,6 +125,15 @@ public:
         }
     }
 
+    // Convert first char to upper case
+    Text Capitalize(void) const {
+        Text cap = *this + "";
+        for (std::string* str : {&cap.NAenglish, &cap.NAfrench, &cap.NAspanish, &cap.EURenglish, &cap.EURfrench, &cap.EURspanish, &cap.EURitalian, &cap.EURgerman}) {
+            (*str)[0] = std::toupper((*str)[0]);
+        }
+        return cap;
+    }
+
     //find the appropriate bars that separate singular from plural
     void SetForm(int form) {
         for (std::string* str : {&NAenglish, &NAfrench, &NAspanish, &EURenglish, &EURfrench, &EURspanish, &EURitalian, &EURgerman}) {

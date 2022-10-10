@@ -28,6 +28,10 @@ SECTIONS
 		*(.patch_ShortenRainbowBridgeCS)
 	}
 
+	.patch_GrannyTextID 0x10DCD0 : {
+		*(.patch_GrannyTextID)
+	}
+
 	.patch_LabScientistDontStartTimerAndSetFlag 0x112440 : {
 		*(.patch_LabScientistDontStartTimerAndSetFlag)
 	}
@@ -114,6 +118,14 @@ SECTIONS
 
 	.patch_FairyPickupHealAmount 0x15CA4C : {
 		*(.patch_FairyPickupHealAmount)
+	}
+
+	.patch_GrannyBottleCheck 0x161044 : {
+		*(.patch_GrannyBottleCheck)
+	}
+
+	.patch_GrannyItemOverrideOne 0x161094 : {
+		*(.patch_GrannyItemOverrideOne)
 	}
 
 	.patch_ScrubStickUpgradeOne 0x161898 : {
@@ -982,6 +994,14 @@ SECTIONS
 
 	.patch_MalonNextAction 0x3C6210 : {
 		*(.patch_MalonNextAction)
+	}
+
+	.patch_GrannySetRewardFlag 0x3D0E34 : {
+		*(.patch_GrannySetRewardFlag)
+	}
+
+	.patch_GrannyItemOverrideTwo 0x3D0E60 : {
+		*(.patch_GrannyItemOverrideTwo)
 	}
 
 	.patch_MidoCheckDekuTreeClearFour 0x3D2C18 : {

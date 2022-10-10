@@ -1839,6 +1839,31 @@ LostWoodsTargetCutscene_patch:
 LostWoodsTargetTimer_patch:
     mov r0,#0x1
 
+.section .patch_GrannyTextID
+.global GrannyTextID_patch
+GrannyTextID_patch:
+    bl hook_GrannyTextID
+
+.section .patch_GrannyBottleCheck
+.global GrannyBottleCheck_patch
+GrannyBottleCheck_patch:
+    bl hook_GrannyBottleCheck
+
+.section .patch_GrannyItemOverrideOne
+.global GrannyItemOverrideOne_patch
+GrannyItemOverrideOne_patch:
+    bl hook_GrannyItemOverride
+
+.section .patch_GrannyItemOverrideTwo
+.global GrannyItemOverrideTwo_patch
+GrannyItemOverrideTwo_patch:
+    b hook_GrannyItemOverride
+
+.section .patch_GrannySetRewardFlag
+.global GrannySetRewardFlag_patch
+GrannySetRewardFlag_patch:
+    bl hook_GrannySetRewardFlag
+
 .section .patch_BecomeAdult
 .global BecomeAdult_patch
 BecomeAdult_patch:
