@@ -544,6 +544,10 @@ SECTIONS
 		*(.patch_CanPlayBombchuBowlingOne)
 	}
 
+	.patch_GanonDrawMasterSword 0x26207C : {
+		*(.patch_GanonDrawMasterSword)
+	}
+
 	.patch_SilenceNavi 0x26807C : {
 		*(.patch_SilenceNavi)
 	}
@@ -1351,7 +1355,7 @@ SECTIONS
 	.patch_GanonRestoreMSOnDeath 0x496CD4 : {
 		*(.patch_GanonRestoreMSOnDeath)
 	}
-	
+
 	.patch_CriticalHealthCheckThree 0x49F2B4 : {
 		*(.patch_CriticalHealthCheckThree)
 	}

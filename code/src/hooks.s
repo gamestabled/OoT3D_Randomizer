@@ -1638,6 +1638,17 @@ hook_CollisionATvsAC:
     pop {r0-r12,lr}
     bx lr
 
+.global hook_GanonDrawMasterSword
+hook_GanonDrawMasterSword:
+    ldrh r0,[r4,#0x2E]
+    push {r0-r12,lr}
+    bl SaveFile_SwordlessPatchesEnabled
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    bxeq lr
+    strb r10,[r4,#0x0] @ delete MS effect
+    bx lr
+
 .section .loader
 .global hook_into_loader
 hook_into_loader:
