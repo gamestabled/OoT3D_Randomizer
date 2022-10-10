@@ -105,7 +105,8 @@ string_view fountainOpen              = "King Zora starts as moved in both the c
 /*------------------------------                                                           //
 |         JABU-JABU            |                                                           //
 ------------------------------*/                                                           //
-string_view jabuJabuCloseDesc         = "Jabu-Jabu's mouth stays closed until a fish is fed.";
+string_view jabuJabuCloseDesc         = "Jabu-Jabu's mouth stays closed until a fish is\n" //
+                                        "fed.";                                            //
 string_view jabuJabuOpenDesc          = "Jabu-Jabu's mouth is always open.";               //
 /*------------------------------                                                           //
 |       GERUDO FORTRESS        |                                                           //
