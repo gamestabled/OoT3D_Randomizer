@@ -16,6 +16,14 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearTwo)
 	}
 
+	.patch_ArmosCooldownTimer 0x10B41C : {
+		*(.patch_ArmosCooldownTimer)
+	}
+
+	.patch_ArmosPushSpeed 0x10B5C4 : {
+		*(.patch_ArmosPushSpeed)
+	}
+
 	.patch_ShortenRainbowBridgeCS 0x10B904 : {
 		*(.patch_ShortenRainbowBridgeCS)
 	}
@@ -976,14 +984,6 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearFour)
 	}
 
-	.patch_FireBlockCooldownTimer 0x3E0A2C : {
-		*(.patch_FireBlockCooldownTimer)
-	}
-
-	.patch_FireBlockSpeed 0x3E0BA8 : {
-		*(.patch_FireBlockSpeed)
-	}
-
 	.patch_BombPurchaseableCheck 0x3CE800 : {
 		*(.patch_BombPurchaseableCheck)
 	}
@@ -994,6 +994,10 @@ SECTIONS
 
 	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
 		*(.patch_ScrubNutUpgradeTwo)
+	}
+
+	.patch_FireBlockSpeed 0x3E0BB4 : {
+		*(.patch_FireBlockSpeed)
 	}
 
 	.patch_FreeScarecrow 0x3E55A8 : {
