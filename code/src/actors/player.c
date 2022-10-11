@@ -17,7 +17,13 @@
 #define PlayerActor_Destroy_addr 0x19262C
 #define PlayerActor_Destroy ((ActorFunc)PlayerActor_Destroy_addr)
 
+#define PlayerActor_Draw_addr 0x4BF618
+#define PlayerActor_Draw ((ActorFunc)PlayerActor_Draw_addr)
+
 #define Hookshot_ActorInit ((ActorInit*)0x5108E8)
+
+#define PlayerDListGroup_EmptySheathAdult ((void*)0x53C4D8)
+#define PlayerDListGroup_EmptySheathChildWithHylianShield ((void*)0x53C4DC)
 
 u16 healthDecrement = 0;
 u8  storedMask = 0;
@@ -118,6 +124,19 @@ void PlayerActor_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
         storedMask = PLAYER->currentMask;
     }
     PlayerActor_Destroy(thisx, globalCtx);
+}
+
+void PlayerActor_rDraw(Actor* thisx, GlobalContext* globalCtx) {
+    // Draw empty scabbard if no sword is equipped.
+    // For child, do this only with certain shields, because the game already handles the other cases.
+    if (!(gSaveContext.equips.equipment & 0x000F)) {
+        if (gSaveContext.linkAge == AGE_ADULT) {
+            PLAYER->sheathDLists = PlayerDListGroup_EmptySheathAdult;
+        } else if ((gSaveContext.equips.equipment & 0x00F0) >= 0x0020) { // Hylian or Mirror shield
+            PLAYER->sheathDLists = PlayerDListGroup_EmptySheathChildWithHylianShield;
+        }
+    }
+    PlayerActor_Draw(thisx, globalCtx);
 }
 
 f32 Player_GetSpeedMultiplier(void) {

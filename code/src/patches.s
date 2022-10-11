@@ -820,12 +820,13 @@ AmyBlockCooldownTimer_patch:
     mov r1,#0x1
 
 .section .patch_FireBlockSpeed
-    .word 0x40800000
+    .word 0x3DCCCCCD
 
-.section .patch_FireBlockCooldownTimer
-.global FireBlockCooldownTimer_patch
-FireBlockCooldownTimer_patch:
-    mov r0,#0x1
+.section .patch_ArmosPushSpeed
+    .word 0x3F800000
+
+.section .patch_ArmosCooldownTimer
+    mov r0,#0xC
 
 .section .patch_ForestTempleBasementPuzzleDelay
 .global ForestTempleBasementPuzzleDelay_patch
@@ -1858,6 +1859,31 @@ LostWoodsTargetCutscene_patch:
 LostWoodsTargetTimer_patch:
     mov r0,#0x1
 
+.section .patch_GrannyTextID
+.global GrannyTextID_patch
+GrannyTextID_patch:
+    bl hook_GrannyTextID
+
+.section .patch_GrannyBottleCheck
+.global GrannyBottleCheck_patch
+GrannyBottleCheck_patch:
+    bl hook_GrannyBottleCheck
+
+.section .patch_GrannyItemOverrideOne
+.global GrannyItemOverrideOne_patch
+GrannyItemOverrideOne_patch:
+    bl hook_GrannyItemOverride
+
+.section .patch_GrannyItemOverrideTwo
+.global GrannyItemOverrideTwo_patch
+GrannyItemOverrideTwo_patch:
+    b hook_GrannyItemOverride
+
+.section .patch_GrannySetRewardFlag
+.global GrannySetRewardFlag_patch
+GrannySetRewardFlag_patch:
+    bl hook_GrannySetRewardFlag
+
 .section .patch_BecomeAdult
 .global BecomeAdult_patch
 BecomeAdult_patch:
@@ -1949,6 +1975,11 @@ CriticalHealthCheckThree_patch:
 .global CollisionATvsAC_patch
 CollisionATvsAC_patch:
     bl hook_CollisionATvsAC
+
+.section .patch_GanonDrawMasterSword
+.global GanonDrawMasterSword_patch
+GanonDrawMasterSword_patch:
+    bl hook_GanonDrawMasterSword
 
 .section .patch_loader
 .global loader_patch

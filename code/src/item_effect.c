@@ -215,15 +215,17 @@ void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_GiveMasterSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    gExtSaveData.masterSwordFlags |= 1;
+    gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] |= 1;
 }
 
 void ItemEffect_EquipMasterSword(void) {
     // Prevent auto-equipping master sword on child unless can equip normally
     if (gSettingsContext.shuffleMasterSword && gSaveContext.linkAge == 1 && !gSettingsContext.masterSwordAsChild) return;
-    // Otherwise run original code
+    // Otherwise run original code...
     gSaveContext.equips.equipment = (gSaveContext.equips.equipment & 0xFFF0) | 0x2;
     gSaveContext.equips.buttonItems[0] = 0x3C;
+    // ...and reset the scabbard model
+    Player_SetEquipmentData(gGlobalContext, PLAYER);
 }
 
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {

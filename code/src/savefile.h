@@ -29,9 +29,16 @@ u8 SaveFile_SwordlessPatchesEnabled(void);
 // Increment the version number whenever the ExtSaveData structure is changed
 #define EXTSAVEDATA_VERSION 11
 
+typedef enum {
+    EXTINF_BIGGORONTRADES,
+    EXTINF_HASTIMETRAVELED,
+    EXTINF_MASTERSWORDFLAGS,
+    EXTINF_SIZE,
+} ExtInf;
+
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure
-    u8 biggoronTrades;
+    u8 extInf[EXTINF_SIZE]; // Used for various bit flags
     struct {
         Vec3i pos;
         s32  yaw;
@@ -45,8 +52,6 @@ typedef struct {
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
-    u8 hasTraveledTimeOnce;
-    u8 masterSwordFlags;
     // Ingame Options, all need to be s8
     s8 option_EnableBGM;
     s8 option_EnableSFX;

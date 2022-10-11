@@ -71,6 +71,7 @@ void Actor_Init() {
     gActorOverlayTable[0x0].initInfo->init = PlayerActor_rInit;
     gActorOverlayTable[0x0].initInfo->update = PlayerActor_rUpdate;
     gActorOverlayTable[0x0].initInfo->destroy = PlayerActor_rDestroy;
+    gActorOverlayTable[0x0].initInfo->draw = PlayerActor_rDraw;
 
     gActorOverlayTable[0x4].initInfo->init = ShopsanityItem_Init;
     gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);

@@ -1595,6 +1595,38 @@ hook_RestoreISG:
     pop {lr}
     bx lr
 
+.global hook_GrannyTextID
+hook_GrannyTextID:
+    push {r1-r12,lr}
+    bl EnDs_GetTextID
+    pop {r1-r12,lr}
+    bx lr
+
+.global hook_GrannyBottleCheck
+hook_GrannyBottleCheck:
+    push {r0-r12,lr}
+    bl EnDs_ShouldIgnoreBottle
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    beq 0x377A04 @Check for bottle
+    bx lr
+
+.global hook_GrannyItemOverride
+hook_GrannyItemOverride:
+    push {r0,r1,r3-r12,lr}
+    bl EnDs_ItemOverride
+    cpy r2,r0
+    pop {r0,r1,r3-r12,lr}
+    b 0x3724DC @GiveItem
+
+.global hook_GrannySetRewardFlag
+hook_GrannySetRewardFlag:
+    push {r0-r12,lr}
+    bl EnDs_SetRewardFlag
+    pop {r0-r12,lr}
+    mov r0,#0x0
+    bx lr
+
 .global hook_BecomeAdult
 hook_BecomeAdult:
     strh r3,[r2,#0x5e]
@@ -1663,6 +1695,17 @@ hook_CollisionATvsAC:
     cpy r1,r12 @ AC collider
     bl RedIce_CheckIceArrow
     pop {r0-r12,lr}
+    bx lr
+
+.global hook_GanonDrawMasterSword
+hook_GanonDrawMasterSword:
+    ldrh r0,[r4,#0x2E]
+    push {r0-r12,lr}
+    bl SaveFile_SwordlessPatchesEnabled
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    bxeq lr
+    strb r10,[r4,#0x0] @ delete MS effect
     bx lr
 
 .section .loader

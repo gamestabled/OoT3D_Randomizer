@@ -16,8 +16,20 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearTwo)
 	}
 
+	.patch_ArmosCooldownTimer 0x10B41C : {
+		*(.patch_ArmosCooldownTimer)
+	}
+
+	.patch_ArmosPushSpeed 0x10B5C4 : {
+		*(.patch_ArmosPushSpeed)
+	}
+
 	.patch_ShortenRainbowBridgeCS 0x10B904 : {
 		*(.patch_ShortenRainbowBridgeCS)
+	}
+
+	.patch_GrannyTextID 0x10DCD0 : {
+		*(.patch_GrannyTextID)
 	}
 
 	.patch_LabScientistDontStartTimerAndSetFlag 0x112440 : {
@@ -106,6 +118,14 @@ SECTIONS
 
 	.patch_FairyPickupHealAmount 0x15CA4C : {
 		*(.patch_FairyPickupHealAmount)
+	}
+
+	.patch_GrannyBottleCheck 0x161044 : {
+		*(.patch_GrannyBottleCheck)
+	}
+
+	.patch_GrannyItemOverrideOne 0x161094 : {
+		*(.patch_GrannyItemOverrideOne)
 	}
 
 	.patch_ScrubStickUpgradeOne 0x161898 : {
@@ -534,6 +554,10 @@ SECTIONS
 
 	.patch_CanPlayBombchuBowlingOne 0x25A744 : {
 		*(.patch_CanPlayBombchuBowlingOne)
+	}
+
+	.patch_GanonDrawMasterSword 0x26207C : {
+		*(.patch_GanonDrawMasterSword)
 	}
 
 	.patch_SilenceNavi 0x26807C : {
@@ -972,16 +996,16 @@ SECTIONS
 		*(.patch_MalonNextAction)
 	}
 
+	.patch_GrannySetRewardFlag 0x3D0E34 : {
+		*(.patch_GrannySetRewardFlag)
+	}
+
+	.patch_GrannyItemOverrideTwo 0x3D0E60 : {
+		*(.patch_GrannyItemOverrideTwo)
+	}
+
 	.patch_MidoCheckDekuTreeClearFour 0x3D2C18 : {
 		*(.patch_MidoCheckDekuTreeClearFour)
-	}
-
-	.patch_FireBlockCooldownTimer 0x3E0A2C : {
-		*(.patch_FireBlockCooldownTimer)
-	}
-
-	.patch_FireBlockSpeed 0x3E0BA8 : {
-		*(.patch_FireBlockSpeed)
 	}
 
 	.patch_BombPurchaseableCheck 0x3CE800 : {
@@ -994,6 +1018,10 @@ SECTIONS
 
 	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
 		*(.patch_ScrubNutUpgradeTwo)
+	}
+
+	.patch_FireBlockSpeed 0x3E0BB4 : {
+		*(.patch_FireBlockSpeed)
 	}
 
 	.patch_FreeScarecrow 0x3E55A8 : {

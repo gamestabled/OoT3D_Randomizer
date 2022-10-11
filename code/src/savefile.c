@@ -611,13 +611,12 @@ s8 SaveFile_GetIgnoreMaskReactionOption(u32 reactionSet) {
 
 void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
-    gExtSaveData.biggoronTrades = 0;
+    memset(&gExtSaveData.extInf, 0, sizeof(gExtSaveData.extInf));
+    gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] = (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
     memset(&gExtSaveData.fwStored, 0, sizeof(gExtSaveData.fwStored));
     gExtSaveData.playtimeSeconds = 0;
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
-    gExtSaveData.hasTraveledTimeOnce = 0;
-    gExtSaveData.masterSwordFlags = (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
     // Ingame Options
     gExtSaveData.option_EnableBGM = gSettingsContext.playMusic;
     gExtSaveData.option_EnableSFX = gSettingsContext.playSFX;
@@ -693,7 +692,7 @@ void SaveFile_EnforceHealthLimit(void) {
 }
 
 u8 SaveFile_SwordlessPatchesEnabled(void) {
-    return gSettingsContext.shuffleMasterSword && !(gExtSaveData.masterSwordFlags & 1);
+    return gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] & 1);
 }
 
 u8 SaveFile_BecomeAdult(void) {
@@ -725,11 +724,11 @@ u8 SaveFile_BecomeAdult(void) {
 void SaveFile_LoadFileSwordless(void) {
     if (gSaveContext.linkAge == 0) {
         // Push pedestal item if adult and haven't received yet
-        if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.masterSwordFlags & 2)) {
+        if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] & 2)) {
             ItemOverride_PushDelayedOverride(0x00);
         }
 
         // Mark pedestal item collected
-        gExtSaveData.masterSwordFlags |= 2;
+        gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] |= 2;
     }
 }

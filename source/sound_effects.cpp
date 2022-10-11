@@ -1401,6 +1401,26 @@ namespace SFX {
         return sfxData;
     }
 
+    bool IsSFXExcluded(int sfxID) {
+        static const std::vector<SeqType> movementTypes{
+            SEQ_WALK,
+            SEQ_WALK_LOUD,
+            SEQ_JUMP,
+            SEQ_LAND,
+            SEQ_SLIP,
+            SEQ_SLIP_LOOP,
+            SEQ_BOUND,
+            SEQ_CRAWL,
+        };
+
+        if (!Settings::ShuffleSFXLinkVoice && sfxID >= 1258 && sfxID <= 1321) {
+            return true;
+        } else if (!Settings::ShuffleSFXFootsteps && (std::find(movementTypes.begin(), movementTypes.end(), seqTypesSFX[sfxID]) != movementTypes.end())) {
+            return true;
+        }
+        return false;
+    }
+
     void InitSFXRandomizer() {
         // Set the sequences to default
         for (int i = 0; i < SFX_COUNT; i++) {
@@ -1411,7 +1431,7 @@ namespace SFX {
             sfxData.rSeqMaxes[i] = 0;
         }
         for (size_t i = 0; i < seqTypesSFX.size(); i++) {
-            if (seqTypesSFX[i] >= SEQTYPE_COUNT) {
+            if (seqTypesSFX[i] >= SEQTYPE_COUNT || IsSFXExcluded(i)) {
                 continue;
             }
             sfxData.rSeqMaxes[seqTypesSFX[i]]++;
@@ -1423,32 +1443,12 @@ namespace SFX {
     }
 
     void ShuffleSequences(bool shuffleCategorically) {
-        auto skipSFX = [](int sfxID) {
-            static const std::vector<SeqType> movementTypes{
-                SEQ_WALK,
-                SEQ_WALK_LOUD,
-                SEQ_JUMP,
-                SEQ_LAND,
-                SEQ_SLIP,
-                SEQ_SLIP_LOOP,
-                SEQ_BOUND,
-                SEQ_CRAWL,
-            };
-
-            if (!Settings::ShuffleSFXLinkVoice && sfxID >= 1258 && sfxID <= 1321) {
-                return true;
-            } else if (!Settings::ShuffleSFXFootsteps && (std::find(movementTypes.begin(), movementTypes.end(), seqTypesSFX[sfxID]) != movementTypes.end())) {
-                return true;
-            }
-            return false;
-        };
-
         std::vector<u32> seqs;
         if (shuffleCategorically) {
             for (int type = 0; type < SEQTYPE_COUNT; type++) {
                 // Get all sequences of the desired type into a vector
                 for (int i = 0; i < SFX_COUNT; i++) {
-                    if (skipSFX(i)) {
+                    if (IsSFXExcluded(i)) {
                         continue;
                     }
                     if (seqTypesSFX[i] == type) {
@@ -1466,7 +1466,7 @@ namespace SFX {
                     sfxData.rSFXOverrides_Types[type][i] = seqs[i];
                 }
                 for (int i = 0; i < SFX_COUNT; i++) {
-                    if (skipSFX(i)) {
+                    if (IsSFXExcluded(i)) {
                         continue;
                     }
                     if (seqTypesSFX[i] == type) {
@@ -1478,7 +1478,7 @@ namespace SFX {
         } else {
             // Get all sequences into a vector
             for (int i = 0; i < SFX_COUNT; i++) {
-                if (seqTypesSFX[i] == SEQ_NOSHUFFLE || skipSFX(i)) {
+                if (seqTypesSFX[i] == SEQ_NOSHUFFLE || IsSFXExcluded(i)) {
                     continue;
                 }
                 seqs.push_back(sfxData.rSFXOverrides_All[i]);
@@ -1494,7 +1494,7 @@ namespace SFX {
                 sfxData.rSFXOverrides_AllTrimmed[i] = seqs[i];
             }
             for (int i = 0; i < SFX_COUNT; i++) {
-                if (seqTypesSFX[i] == SEQ_NOSHUFFLE || skipSFX(i)) {
+                if (seqTypesSFX[i] == SEQ_NOSHUFFLE || IsSFXExcluded(i)) {
                     continue;
                 }
                 sfxData.rSFXOverrides_All[i] = seqs.back();

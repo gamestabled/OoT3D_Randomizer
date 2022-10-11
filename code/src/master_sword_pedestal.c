@@ -4,7 +4,7 @@
 #include "savefile.h"
 
 u8 ShouldSkipMasterSwordCutscene() {
-    return gExtSaveData.hasTraveledTimeOnce || gSettingsContext.openDoorOfTime == OPENDOOROFTIME_OPEN;
+    return gExtSaveData.extInf[EXTINF_HASTIMETRAVELED] || gSettingsContext.openDoorOfTime == OPENDOOROFTIME_OPEN;
 }
 
 void TimeTravelAdvanceCutsceneTimer() {
@@ -18,12 +18,12 @@ void TimeTravelAdvanceCutsceneTimer() {
 }
 
 void SetTimeTraveled() {
-    gExtSaveData.hasTraveledTimeOnce = 1;
+    gExtSaveData.extInf[EXTINF_HASTIMETRAVELED] = 1;
 }
 
 void Pedestal_PickUpMasterSword(void) {
     // Push pedestal item
-    if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.masterSwordFlags & 2)) {
+    if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] & 2)) {
         ItemOverride_PushDelayedOverride(0x00);
     }
 
@@ -33,5 +33,5 @@ void Pedestal_PickUpMasterSword(void) {
     }
 
     // Mark pedestal item collected
-    gExtSaveData.masterSwordFlags |= 2;
+    gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] |= 2;
 }
