@@ -1034,16 +1034,11 @@ int Fill() {
       printf("Done");
       printf("\x1b[9;10HCalculating Playthrough...");
       PareDownPlaythrough();
-      CitraPrint("1");
       CalculateWotH();
       printf("Done");
-      CitraPrint("2");
       CreateItemOverrides();
-      CitraPrint("3");
       CreateEntranceOverrides();
-      CitraPrint("4");
       CreateAlwaysIncludedMessages();
-      CitraPrint("5");
       if (GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
         printf("\x1b[10;10HCreating Hints...");
         CreateAllHints();
