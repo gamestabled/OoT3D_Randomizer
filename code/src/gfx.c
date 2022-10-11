@@ -254,7 +254,7 @@ static void NextEntranceGroup() {
     do {
         ++currentEntranceGroup;
         if (currentEntranceGroup >= SPOILER_ENTRANCE_GROUP_COUNT) { currentEntranceGroup = 1; }
-    } while (gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
+    } while (gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
 }
 
 static void PrevEntranceGroup() {
@@ -263,7 +263,7 @@ static void PrevEntranceGroup() {
     do {
         --currentEntranceGroup;
         if (currentEntranceGroup < 1) { currentEntranceGroup = SPOILER_ENTRANCE_GROUP_COUNT - 1; }
-    } while (gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
+    } while (gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
 }
 
 static void Gfx_DrawButtonPrompts(void) {
@@ -611,7 +611,7 @@ static void Gfx_DrawEntranceTracker(void) {
         static const u8 squareWidth = 9;
         u16 offsetY = 2;
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_YELLOW);
-        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "One-way Entrances");
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Spawns/Warp Songs/Owls");
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_GREEN);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Overworld");
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_BLUE);
@@ -625,8 +625,8 @@ static void Gfx_DrawEntranceTracker(void) {
 
     EntranceOverride* entranceList = (ViewingGroups() && destListToggle) ? destList : rEntranceOverrides;
 
-    u16 entranceCount = ViewingGroups() ? gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] : gEntranceTrackingData.EntranceCount;
-    u16 startIndex = ViewingGroups() ? gEntranceTrackingData.GroupOffsets[currentEntranceGroup] : 0;
+    u16 entranceCount = ViewingGroups() ? gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] : gEntranceTrackingData.EntranceCount;
+    u16 startIndex = ViewingGroups() ? gEntranceTrackingData.GroupOffsets[destListToggle][currentEntranceGroup] : 0;
     s16* entranceScroll = ViewingGroups() ? &groupEntranceScroll : &allEntranceScroll;
 
     if (entranceCount > 0) {
@@ -666,8 +666,8 @@ static void Gfx_DrawEntranceTracker(void) {
         u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
         u32 rplcDstColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
 
-        u8 showOriginal = gSettingsContext.ingameSpoilers || (!destListToggle || original->group == ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
-        u8 showOverride = gSettingsContext.ingameSpoilers || ( destListToggle && original->group != ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
+        u8 showOriginal = gSettingsContext.ingameSpoilers || (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
+        u8 showOverride = gSettingsContext.ingameSpoilers || ( destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
 
         const char* unknown = "???";
 
@@ -680,7 +680,7 @@ static void Gfx_DrawEntranceTracker(void) {
         Draw_DrawFormattedString_Small(10, locPosY, origSrcColor, "%s", origSrcName);
         offsetX += strlen(origSrcName) + 1;
         // Don't show original destinations for one way entrances
-        if (original->group != ENTRANCE_GROUP_ONE_WAY) {
+        if (original->srcGroup != ENTRANCE_GROUP_ONE_WAY) {
             Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "to");
             offsetX += strlen("to") + 1;
             Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, origDstColor, "%s", origDstName);
@@ -692,7 +692,7 @@ static void Gfx_DrawEntranceTracker(void) {
         Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcDstColor, "%s", rplcDstName);
         // Don't show the replacement source area if the area only has one entrance, or if the entrance
         // is one-way
-        if (!showOverride || (showOverride && (!override->oneExit && override->group != ENTRANCE_GROUP_ONE_WAY))) {
+        if (!showOverride || (showOverride && (!override->oneExit && override->srcGroup != ENTRANCE_GROUP_ONE_WAY))) {
             offsetX += strlen(rplcDstName) + 1;
             Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, COLOR_WHITE, "from");
             offsetX += strlen("from") + 1;
@@ -862,7 +862,7 @@ static void Gfx_ShowMenu(void) {
             }
         } else if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS && gEntranceTrackingData.EntranceCount > 0) {
             // Grouped Entrances list
-            u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
+            u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup];
             if (pressed & BUTTON_DOWN) {
                 groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, 1, entranceCount);
                 handledInput = true;
@@ -1042,7 +1042,7 @@ void Gfx_Init(void) {
     if (gSpoilerData.ItemLocationsCount > 0 && gSpoilerData.GroupItemCounts[currentItemGroup] == 0) {
         NextItemGroup();
     }
-    if (gEntranceTrackingData.EntranceCount > 0 && gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] == 0) {
+    if (gEntranceTrackingData.EntranceCount > 0 && gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] == 0) {
         NextEntranceGroup();
     }
 

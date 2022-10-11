@@ -66,15 +66,19 @@ typedef struct {
     s16 index;
     char* source;
     char* destination;
-    SpoilerEntranceGroup group;
+    SpoilerEntranceGroup srcGroup;
+    SpoilerEntranceGroup dstGroup;
     TrackerEntranceType type;
     u8 oneExit;
 } EntranceData;
 
+#define ENTRANCE_SOURCE 0
+#define ENTRANCE_DESTINATION 1
+
 typedef struct {
     u8 EntranceCount;
-    u16 GroupEntranceCounts[SPOILER_ENTRANCE_GROUP_COUNT];
-    u16 GroupOffsets[SPOILER_ENTRANCE_GROUP_COUNT];
+    u16 GroupEntranceCounts[2][SPOILER_ENTRANCE_GROUP_COUNT];
+    u16 GroupOffsets[2][SPOILER_ENTRANCE_GROUP_COUNT];
 } EntranceTrackingData;
 
 extern EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT];
