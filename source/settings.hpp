@@ -63,6 +63,10 @@ public:
         SetToDefault();
     }
 
+    const std::vector<std::string>& GetOptions() {
+        return options;
+    }
+
     size_t GetOptionCount() const {
         return options.size();
     }
@@ -588,6 +592,7 @@ namespace Settings {
   extern Option LogicFlamingChests;
 
   //Glitch Settings
+  extern Option ToggleAllGlitches;
   extern Option GlitchRestrictedItems;
   extern Option GlitchSuperStab;
   extern Option GlitchISG;

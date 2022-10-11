@@ -459,7 +459,7 @@ namespace Logic {
   u8 GetDifficultyValueFromString(Option& glitchOption) {
     for (size_t i = 0; i < GlitchDifficulties.size(); i++) {
       if (glitchOption.GetSelectedOptionText() == GlitchDifficulties[i]) {
-        return i + 1;
+        return i;
       }
     }
     return 0;
