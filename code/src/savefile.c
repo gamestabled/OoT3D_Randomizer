@@ -123,6 +123,10 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.eventChkInf[0x3] |= 0x0008; //King Zora Moved Aside
     }
 
+    if (gSettingsContext.openJabu == JABUJABU_OPEN) {
+        gSaveContext.eventChkInf[0x3] |= 0x0400;//Offered Fish to Jabu-Jabu
+    }
+
     //Set Skipped Trials
     gSaveContext.eventChkInf[0xB] |= (gSettingsContext.forestTrialSkip) ? 0x0800 : 0;
     gSaveContext.eventChkInf[0xB] |= (gSettingsContext.fireTrialSkip)   ? 0x4000 : 0;

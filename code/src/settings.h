@@ -45,6 +45,11 @@ typedef enum {
 } ZorasFountainSetting;
 
 typedef enum {
+  JABUJABU_CLOSED,
+  JABUJABU_OPEN,
+} JabuJabuSetting;
+
+typedef enum {
   GERUDOFORTRESS_NORMAL,
   GERUDOFORTRESS_FAST,
   GERUDOFORTRESS_OPEN,
@@ -403,6 +408,7 @@ typedef struct {
   u8 openForest;
   u8 openKakariko;
   u8 openDoorOfTime;
+  u8 openJabu;
   u8 zorasFountain;
   u8 gerudoFortress;
   u8 rainbowBridge;

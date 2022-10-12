@@ -103,6 +103,12 @@ string_view fountainOpen              = "King Zora starts as moved in both the c
                                         "adult eras. This also removes Ruto's Letter from\n"
                                         "the pool since it can't be used.";                //
 /*------------------------------                                                           //
+|         JABU-JABU            |                                                           //
+------------------------------*/                                                           //
+string_view jabuJabuCloseDesc         = "Jabu-Jabu's mouth stays closed until a fish is\n" //
+                                        "fed.";                                            //
+string_view jabuJabuOpenDesc          = "Jabu-Jabu's mouth is always open.";               //
+/*------------------------------                                                           //
 |       GERUDO FORTRESS        |                                                           //
 ------------------------------*/                                                           //
 string_view gerudoNormal              = "All 4 carpenters can be rescued.";                //

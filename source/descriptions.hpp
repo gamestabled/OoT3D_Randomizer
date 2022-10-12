@@ -37,6 +37,9 @@ extern string_view fountainNormal;
 extern string_view fountainAdult;
 extern string_view fountainOpen;
 
+extern string_view jabuJabuCloseDesc;
+extern string_view jabuJabuOpenDesc;
+
 extern string_view gerudoNormal;
 extern string_view gerudoFast;
 extern string_view gerudoOpen;
