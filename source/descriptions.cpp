@@ -239,20 +239,19 @@ string_view overworldSpawnsDesc       = "Randomize where you start as Child or A
 /*------------------------------                                                           //
 |     MIXED ENTRANCE POOLS     |                                                           //
 ------------------------------*/                                                           //
-string_view mixedPoolsOffDesc         = "Shuffle entrances into a mixed pool instead of\n" //
-                                        "separate ones.";                                  //
-string_view mixedPoolsIndoorDesc      = "Shuffle entrances into a mixed pool instead of\n" //
-                                        "separate ones.\n"                                 //
-                                        "\n"                                               //
-                                        "Mixes \"Indoor\" entrance pools, which correspond\n"
-                                        "to entrances of type Dungeon, Grotto, or Interior."
-                                        "Overworld entrances are kept in their own separate"
-                                        "pool if randomized.";                             //
-string_view mixedPoolsAllDesc         = "Shuffle entrances into a mixed pool instead of\n" //
-                                        "separate ones.\n"                                 //
-                                        "\n"                                               //
-                                        "Mixes all entrance pools, including both \"Indoor\"\n"
-                                        "and Overworld entrances.";                        //
+string_view mixedPoolsDesc            = "Shuffle entrances into a mixed pool instead of\n" //
+                                        "separate ones. For example, enabling the settings\n"
+                                        "to shuffle grotto, dungeon, and overworld\n"      //
+                                        "entrances and selecting grotto and dungeon\n"     //
+                                        "entrances here will allow a dungeon to be inside a"
+                                        "grotto or vice versa, while overworld entrances\n"//
+                                        "are shuffled in their own separate pool and\n"    //
+                                        "indoors stay vanilla.";                           //
+string_view mixDungeonsDesc           = "Dungeon entrances will be part of the mixed pool.";
+string_view mixOverworldDesc          = "Overworld entrances will be part of the mixed\n"  //
+                                        "pool.";                                           //
+string_view mixInteriorsDesc          = "Interior entrances will be part of the mixed pool.";
+string_view mixGrottosDesc            = "Grotto entrances will be part of the mixed pool.";//
 /*------------------------------                                                           //
 |      DECOUPLED ENTRANCES     |                                                           //
 ------------------------------*/                                                           //

@@ -316,6 +316,10 @@ namespace Settings {
   extern Option ShuffleWarpSongs;
   extern Option ShuffleOverworldSpawns;
   extern Option MixedEntrancePools;
+  extern Option MixDungeons;
+  extern Option MixOverworld;
+  extern Option MixInteriors;
+  extern Option MixGrottos;
   extern Option DecoupleEntrances;
   extern Option BombchusInLogic;
   extern Option AmmoDrops;

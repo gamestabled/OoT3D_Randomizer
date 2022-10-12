@@ -109,13 +109,13 @@ static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto, RespawnMode respawnM
   gSaveContext.respawn[respawnMode].entranceIndex = grotto.entranceIndex;
   gSaveContext.respawn[respawnMode].roomIndex = grotto.room;
 
-  if (gSettingsContext.mixedEntrancePools != MIXEDENTRANCES_OFF || gSettingsContext.decoupleEntrances == ON) {
+  if (gSettingsContext.mixGrottos == ON || gSettingsContext.decoupleEntrances == ON) {
     gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
   }
   gSaveContext.respawn[respawnMode].yaw = grotto.angle;
   gSaveContext.respawn[respawnMode].pos = grotto.pos;
   //If Mixed Entrance Pools or decoupled entrances are active, set these flags to 0 instead of restoring them
-  if (gSettingsContext.mixedEntrancePools != MIXEDENTRANCES_OFF || gSettingsContext.decoupleEntrances == ON) {
+  if (gSettingsContext.mixGrottos == ON || gSettingsContext.decoupleEntrances == ON) {
     gSaveContext.respawn[respawnMode].tempSwchFlags = 0;
     gSaveContext.respawn[respawnMode].tempCollectFlags = 0;
   } else {

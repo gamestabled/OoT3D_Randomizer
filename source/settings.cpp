@@ -94,7 +94,11 @@ namespace Settings {
   Option ShuffleOwlDrops           = Option::Bool("  Owl Drops",            {"Off", "On"},                                                     {owlDropsDesc});
   Option ShuffleWarpSongs          = Option::Bool("  Warp Songs",           {"Off", "On"},                                                     {warpSongsDesc});
   Option ShuffleOverworldSpawns    = Option::Bool("  Overworld Spawns",     {"Off", "On"},                                                     {overworldSpawnsDesc});
-  Option MixedEntrancePools        = Option::U8  ("  Mixed Entrance Pools", {"Off", "Indoor", "All"},                                          {mixedPoolsOffDesc, mixedPoolsIndoorDesc, mixedPoolsAllDesc});
+  Option MixedEntrancePools        = Option::Bool("  Mixed Entrance Pools", {"Off", "On"},                                                     {mixedPoolsDesc});
+  Option MixDungeons               = Option::Bool("    Mix Dungeons",       {"Off", "On"},                                                     {mixDungeonsDesc});
+  Option MixOverworld              = Option::Bool("    Mix Overworld",      {"Off", "On"},                                                     {mixOverworldDesc});
+  Option MixInteriors              = Option::Bool("    Mix Interiors",      {"Off", "On"},                                                     {mixInteriorsDesc});
+  Option MixGrottos                = Option::Bool("    Mix Grottos",        {"Off", "On"},                                                     {mixGrottosDesc});
   Option DecoupleEntrances         = Option::Bool("  Decouple Entrances",   {"Off", "On"},                                                     {decoupledEntrancesDesc});
   Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
   Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_BOMBCHU);
@@ -127,6 +131,10 @@ namespace Settings {
     &ShuffleWarpSongs,
     &ShuffleOverworldSpawns,
     &MixedEntrancePools,
+    &MixDungeons,
+    &MixOverworld,
+    &MixInteriors,
+    &MixGrottos,
     &DecoupleEntrances,
     &BombchusInLogic,
     &AmmoDrops,
@@ -1305,7 +1313,11 @@ namespace Settings {
     ctx.shuffleOwlDrops         = (ShuffleOwlDrops) ? 1 : 0;
     ctx.shuffleWarpSongs        = (ShuffleWarpSongs) ? 1 : 0;
     ctx.shuffleOverworldSpawns  = (ShuffleOverworldSpawns) ? 1 : 0;
-    ctx.mixedEntrancePools      = MixedEntrancePools.Value<u8>();
+    ctx.mixedEntrancePools      = (MixedEntrancePools) ? 1 : 0;
+    ctx.mixDungeons             = (MixDungeons) ? 1 : 0;
+    ctx.mixOverworld            = (MixOverworld) ? 1 : 0;
+    ctx.mixInteriors            = (MixInteriors) ? 1 : 0;
+    ctx.mixGrottos              = (MixGrottos) ? 1 : 0;
     ctx.decoupleEntrances       = (DecoupleEntrances) ? 1 : 0;
     ctx.bombchusInLogic         = (BombchusInLogic) ? 1 : 0;
     ctx.ammoDrops            = AmmoDrops.Value<u8>();
@@ -1950,6 +1962,46 @@ namespace Settings {
         DecoupleEntrances.SetSelectedIndex(OFF);
         DecoupleEntrances.Hide();
       }
+
+      // Only show the options for mixing each pool if they're already being shuffled
+      if (MixedEntrancePools) {
+        if (ShuffleDungeonEntrances) {
+          MixDungeons.Unhide();
+        } else {
+          MixDungeons.Hide();
+          MixDungeons.SetSelectedIndex(OFF);
+        }
+
+        if (ShuffleOverworldEntrances) {
+          MixOverworld.Unhide();
+        } else {
+          MixOverworld.Hide();
+          MixOverworld.SetSelectedIndex(OFF);
+        }
+
+        if (ShuffleInteriorEntrances.IsNot(OFF)) {
+          MixInteriors.Unhide();
+        } else {
+          MixInteriors.Hide();
+          MixInteriors.SetSelectedIndex(OFF);
+        }
+
+        if (ShuffleGrottoEntrances) {
+          MixGrottos.Unhide();
+        } else {
+          MixGrottos.Hide();
+          MixGrottos.SetSelectedIndex(OFF);
+        }
+      } else {
+        MixDungeons.Hide();
+        MixDungeons.SetSelectedIndex(OFF);
+        MixOverworld.Hide();
+        MixOverworld.SetSelectedIndex(OFF);
+        MixInteriors.Hide();
+        MixInteriors.SetSelectedIndex(OFF);
+        MixGrottos.Hide();
+        MixGrottos.SetSelectedIndex(OFF);
+      }
     }
 
     if (SetDungeonTypes) {
@@ -2415,6 +2467,13 @@ namespace Settings {
       ShuffleOverworldSpawns.SetSelectedIndex(OFF);
       MixedEntrancePools.SetSelectedIndex(OFF);
       DecoupleEntrances.SetSelectedIndex(OFF);
+    }
+
+    if (!MixedEntrancePools) {
+      MixDungeons.SetSelectedIndex(OFF);
+      MixOverworld.SetSelectedIndex(OFF);
+      MixInteriors.SetSelectedIndex(OFF);
+      MixGrottos.SetSelectedIndex(OFF);
     }
 
     // Shuffle Settings

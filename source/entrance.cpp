@@ -99,7 +99,7 @@ static std::vector<Entrance*> AssumeEntrancePool(std::vector<Entrance*>& entranc
     Entrance* assumedForward = entrance->AssumeReachable();
     if (entrance->GetReverse() != nullptr && !Settings::DecoupleEntrances) {
       Entrance* assumedReturn = entrance->GetReverse()->AssumeReachable();
-      if (!(Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF) && (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)))) {
+      if (!(Settings::MixedEntrancePools && (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)))) {
         auto type = entrance->GetType();
         if (((type == EntranceType::Dungeon || type == EntranceType::GrottoGrave) && entrance->GetReverse()->GetName() != "Spirit Temple Entryway -> Desert Colossus From Spirit Entryway") ||
              (type == EntranceType::Interior && Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL))) {
@@ -305,9 +305,9 @@ static bool ValidateWorld(Entrance* entrancePlaced) {
     type = entrancePlaced->GetType();
   }
 
-  bool checkPoeCollectorAccess  = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) && (entrancePlaced == nullptr || Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF) ||
+  bool checkPoeCollectorAccess  = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL)) && (entrancePlaced == nullptr || Settings::MixedEntrancePools ||
                                  type == EntranceType::Interior || type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop);
-  bool checkOtherEntranceAccess = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL) || Settings::ShuffleOverworldSpawns) && (entrancePlaced == nullptr || Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF) ||
+  bool checkOtherEntranceAccess = (Settings::ShuffleOverworldEntrances || Settings::ShuffleInteriorEntrances.Is(SHUFFLEINTERIORS_ALL) || Settings::ShuffleOverworldSpawns) && (entrancePlaced == nullptr || Settings::MixedEntrancePools ||
                                  type == EntranceType::SpecialInterior || type == EntranceType::Overworld || type == EntranceType::Spawn || type == EntranceType::WarpSong || type == EntranceType::OwlDrop);
 
   // Search the world to verify that all necessary conditions are still being held
@@ -1018,7 +1018,7 @@ int ShuffleAllEntrances() {
 
   //overworld entrances
   if (Settings::ShuffleOverworldEntrances) {
-    bool excludeOverworldReverse = Settings::MixedEntrancePools.Is(MIXEDENTRANCES_ALL) && !Settings::DecoupleEntrances;
+    bool excludeOverworldReverse = Settings::MixOverworld && !Settings::DecoupleEntrances;
     entrancePools[EntranceType::Overworld] = GetShuffleableEntrances(EntranceType::Overworld, excludeOverworldReverse);
     // Only shuffle GV Lower Stream -> Lake Hylia if decoupled entrances are on
     if (!Settings::DecoupleEntrances) {
@@ -1031,16 +1031,45 @@ int ShuffleAllEntrances() {
   SetShuffledEntrances(entrancePools);
   SetShuffledEntrances(oneWayEntrancePools);
 
-  //combine entrance pools if mixing pools
-  if (Settings::MixedEntrancePools.IsNot(MIXEDENTRANCES_OFF)) {
+  //combine entrance pools if mixing pools. Only continue if more than one pool is selected.
+  int totalMixedPools = (Settings::MixDungeons ? 1 : 0) + (Settings::MixOverworld ? 1 : 0) + (Settings::MixInteriors ? 1 : 0) + (Settings::MixGrottos ? 1 : 0);
+  if (totalMixedPools < 2) {
+    Settings::MixedEntrancePools.SetSelectedIndex(OFF);
+    Settings::MixDungeons.SetSelectedIndex(OFF);
+    Settings::MixOverworld.SetSelectedIndex(OFF);
+    Settings::MixInteriors.SetSelectedIndex(OFF);
+    Settings::MixGrottos.SetSelectedIndex(OFF);
+  }
+  if (Settings::MixedEntrancePools) {
+    std::set<EntranceType> poolsToMix = {};
+    if (Settings::MixDungeons) {
+      poolsToMix.insert(EntranceType::Dungeon);
+      // Insert reverse entrances when decoupled entrances is on
+      if (Settings::DecoupleEntrances) {
+        poolsToMix.insert(EntranceType::DungeonReverse);
+      }
+    }
+    if (Settings::MixOverworld) {
+      poolsToMix.insert(EntranceType::Overworld);
+    }
+    if (Settings::MixInteriors) {
+      poolsToMix.insert(EntranceType::Interior);
+      if (Settings::DecoupleEntrances) {
+        poolsToMix.insert(EntranceType::InteriorReverse);
+      }
+    }
+    if (Settings::MixGrottos) {
+      poolsToMix.insert(EntranceType::GrottoGrave);
+      if (Settings::DecoupleEntrances) {
+        poolsToMix.insert(EntranceType::GrottoGraveReverse);
+      }
+    }
+
     for (auto& pool : entrancePools) {
 
       auto type = pool.first;
-      // Don't mix in overworld entrances if the indoor mixed pools setting is selected and
-      // don't throw away the eventual mixed pool
-      if ((type == EntranceType::Mixed) || (type == EntranceType::Overworld && Settings::MixedEntrancePools.Is(MIXEDENTRANCES_INDOOR))) {
-        continue;
-      } else {
+
+      if (poolsToMix.count(type) > 0) {
         AddElementsToPool(entrancePools[EntranceType::Mixed], pool.second);
         entrancePools[type].clear();
       }

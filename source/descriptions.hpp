@@ -75,9 +75,11 @@ extern string_view warpSongsDesc;
 
 extern string_view overworldSpawnsDesc;
 
-extern string_view mixedPoolsOffDesc;
-extern string_view mixedPoolsIndoorDesc;
-extern string_view mixedPoolsAllDesc;
+extern string_view mixedPoolsDesc;
+extern string_view mixDungeonsDesc;
+extern string_view mixOverworldDesc;
+extern string_view mixInteriorsDesc;
+extern string_view mixGrottosDesc;
 
 extern string_view decoupledEntrancesDesc;
 
