@@ -69,6 +69,18 @@ extern string_view overworldEntrancesDesc;
 
 extern string_view grottoEntrancesDesc;
 
+extern string_view owlDropsDesc;
+
+extern string_view warpSongsDesc;
+
+extern string_view overworldSpawnsDesc;
+
+extern string_view mixedPoolsOffDesc;
+extern string_view mixedPoolsIndoorDesc;
+extern string_view mixedPoolsAllDesc;
+
+extern string_view decoupledEntrancesDesc;
+
 extern string_view interiorEntrancesOff;
 extern string_view interiorEntrancesSimple;
 extern string_view interiorEntrancesAll;

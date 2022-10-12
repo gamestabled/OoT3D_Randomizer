@@ -91,11 +91,11 @@ namespace Settings {
   Option ShuffleOverworldEntrances = Option::Bool("  Overworld Entrances",  {"Off", "On"},                                                     {overworldEntrancesDesc});
   Option ShuffleInteriorEntrances  = Option::U8  ("  Interior Entrances",   {"Off", "Simple", "All"},                                          {interiorEntrancesOff, interiorEntrancesSimple, interiorEntrancesAll});
   Option ShuffleGrottoEntrances    = Option::Bool("  Grottos Entrances",    {"Off", "On"},                                                     {grottoEntrancesDesc});
-  Option ShuffleOwlDrops           = Option::Bool("  Owl Drops",            {"Off", "On"},                                                     {""});
-  Option ShuffleWarpSongs          = Option::Bool("  Warp Songs",           {"Off", "On"},                                                     {""});
-  Option ShuffleOverworldSpawns    = Option::Bool("  Overworld Spawns",     {"Off", "On"},                                                     {""});
-  Option MixedEntrancePools        = Option::U8  ("  Mixed Entrance Pools", {"Off", "Indoor", "All"},                                          {""});
-  Option DecoupleEntrances         = Option::Bool("  Decouple Entrances",   {"Off", "On"},                                                     {""});
+  Option ShuffleOwlDrops           = Option::Bool("  Owl Drops",            {"Off", "On"},                                                     {owlDropsDesc});
+  Option ShuffleWarpSongs          = Option::Bool("  Warp Songs",           {"Off", "On"},                                                     {warpSongsDesc});
+  Option ShuffleOverworldSpawns    = Option::Bool("  Overworld Spawns",     {"Off", "On"},                                                     {overworldSpawnsDesc});
+  Option MixedEntrancePools        = Option::U8  ("  Mixed Entrance Pools", {"Off", "Indoor", "All"},                                          {mixedPoolsOffDesc, mixedPoolsIndoorDesc, mixedPoolsAllDesc});
+  Option DecoupleEntrances         = Option::Bool("  Decouple Entrances",   {"Off", "On"},                                                     {decoupledEntrancesDesc});
   Option BombchusInLogic           = Option::Bool("Bombchus in Logic",      {"Off", "On"},                                                     {bombchuLogicDesc});
   Option AmmoDrops                 = Option::U8  ("Ammo Drops",             {"On", "On + Bombchu", "Off"},                                     {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_BOMBCHU);
   Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills",{"On", "No Drop", "No Refill", "Off"},                             {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
