@@ -267,7 +267,8 @@ namespace Settings {
   Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {lakeHyliaOwlDesc},                                                                                               OptionCategory::Setting,    SKIP);
   Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {NumOpts(1, 10)},                                                       {bigPoeTargetCountDesc});
   Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {NumOpts(0, 7)},                                                        {numRequiredCuccosDesc});
-  Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random"},                                          {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom});
+  Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random", "Custom"},                                {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom, kingZoraSpeedCustom});
+  Option ExactZoraSpeed      = Option::U8  ("  Exact Shuffle Count",  {NumOpts(1,128)},                                                       {""});
   Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
   Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
   Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
@@ -282,6 +283,7 @@ namespace Settings {
     &BigPoeTargetCount,
     &NumRequiredCuccos,
     &KingZoraSpeed,
+    &ExactZoraSpeed,
     &CompleteMaskQuest,
     &KeepFWWarpPoint,
     &FastBunnyHood,
@@ -1350,6 +1352,7 @@ namespace Settings {
     ctx.bigPoeTargetCount    = BigPoeTargetCount.Value<u8>() + 1;
     ctx.numRequiredCuccos    = NumRequiredCuccos.Value<u8>();
     ctx.kingZoraSpeed        = KingZoraSpeed.Value<u8>();
+    ctx.exactZoraSpeed       = ExactZoraSpeed.Value<u8>();
     ctx.completeMaskQuest    = CompleteMaskQuest ? 1 : 0;
     ctx.quickText            = QuickText.Value<u8>();
     ctx.skipSongReplays      = SkipSongReplays.Value<u8>();
@@ -1903,6 +1906,14 @@ namespace Settings {
       } else {
         GanonsTrialsCount.Unhide();
       }
+    }
+
+    //Only show Manual Zora Speed if it's set to Custom
+    if (KingZoraSpeed.Is(KINGZORASPEED_CUSTOM)){
+      ExactZoraSpeed.Unhide();
+    }
+    else{
+      ExactZoraSpeed.Hide();
     }
 
     //Only go through options if all settings are not randomized

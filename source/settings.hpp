@@ -369,6 +369,7 @@ namespace Settings {
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
   extern Option KingZoraSpeed;
+  extern Option ExactZoraSpeed;
   extern Option CompleteMaskQuest;
   extern Option QuickText;
   extern Option SkipSongReplays;

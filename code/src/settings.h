@@ -229,6 +229,7 @@ typedef enum {
   KINGZORASPEED_FAST,
   KINGZORASPEED_VANILLA,
   KINGZORASPEED_RANDOM,
+  KINGZORASPEED_CUSTOM,
 } KingZoraSpeedSetting;
 
 typedef enum {
@@ -483,6 +484,7 @@ typedef struct {
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
   u8 kingZoraSpeed;
+  u8 exactZoraSpeed;
   u8 completeMaskQuest;
   u8 quickText;
   u8 skipSongReplays;
