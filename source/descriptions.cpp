@@ -166,11 +166,13 @@ string_view ganonsTrialCountDesc      = "Set the number of trials required to en
 ------------------------------*/                                                           //
 string_view ageDesc                   = "Choose which age Link will start as.\n"           //
                                         "\n"                                               //
-                                        "Starting as adult means you start with the Master\n"
-                                        "Sword in your inventory.\n"                       //
-                                        "\n"                                               //
                                         "Only the child option is compatible with Closed\n"//
-                                        "Forest.";                                         //
+                                        "Forest.\n"                                        //
+                                        "\n"                                               //
+                                        "Child will also be forced if Door of Time is set\n"
+                                        "to intended, ocarinas are unshuffled, and logic is"
+                                        "set to glitchless since adult Link can't obtain\n"//
+                                        "the Ocarina from the moat.";                      //
 /*------------------------------                                                           //
 |      SHUFFLE ENTRANCES       |                                                           //
 ------------------------------*/                                                           //
