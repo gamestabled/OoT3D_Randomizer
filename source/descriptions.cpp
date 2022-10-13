@@ -103,6 +103,12 @@ string_view fountainOpen              = "King Zora starts as moved in both the c
                                         "adult eras. This also removes Ruto's Letter from\n"
                                         "the pool since it can't be used.";                //
 /*------------------------------                                                           //
+|         JABU-JABU            |                                                           //
+------------------------------*/                                                           //
+string_view jabuJabuCloseDesc         = "Jabu-Jabu's mouth stays closed until a fish is\n" //
+                                        "fed.";                                            //
+string_view jabuJabuOpenDesc          = "Jabu-Jabu's mouth is always open.";               //
+/*------------------------------                                                           //
 |       GERUDO FORTRESS        |                                                           //
 ------------------------------*/                                                           //
 string_view gerudoNormal              = "All 4 carpenters can be rescued.";                //
@@ -666,6 +672,8 @@ string_view kingZoraSpeedVanilla      = "King Zora will move out of the way in 2
                                                                                            //
 string_view kingZoraSpeedRandom       = "King Zora will move out of the way in 1 to 128\n" //
                                         "shuffles, with lower numbers being more common";  //
+string_view kingZoraSpeedCustom       = "Set the exact number of shuffles King Zora will\n"//
+                                        "take to move out of the way.";                    //
 /*------------------------------                                                           //
 |      COMPLETE MASK QUEST     |                                                           //
 ------------------------------*/                                                           //

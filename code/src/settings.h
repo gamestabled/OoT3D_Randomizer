@@ -45,6 +45,11 @@ typedef enum {
 } ZorasFountainSetting;
 
 typedef enum {
+  JABUJABU_CLOSED,
+  JABUJABU_OPEN,
+} JabuJabuSetting;
+
+typedef enum {
   GERUDOFORTRESS_NORMAL,
   GERUDOFORTRESS_FAST,
   GERUDOFORTRESS_OPEN,
@@ -224,6 +229,7 @@ typedef enum {
   KINGZORASPEED_FAST,
   KINGZORASPEED_VANILLA,
   KINGZORASPEED_RANDOM,
+  KINGZORASPEED_CUSTOM,
 } KingZoraSpeedSetting;
 
 typedef enum {
@@ -403,6 +409,7 @@ typedef struct {
   u8 openForest;
   u8 openKakariko;
   u8 openDoorOfTime;
+  u8 openJabu;
   u8 zorasFountain;
   u8 gerudoFortress;
   u8 rainbowBridge;
@@ -486,6 +493,7 @@ typedef struct {
   u8 bigPoeTargetCount;
   u8 numRequiredCuccos;
   u8 kingZoraSpeed;
+  u8 exactZoraSpeed;
   u8 completeMaskQuest;
   u8 quickText;
   u8 skipSongReplays;

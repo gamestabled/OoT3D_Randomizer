@@ -295,6 +295,7 @@ namespace Settings {
   extern Option OpenKakariko;
   extern Option OpenDoorOfTime;
   extern Option ZorasFountain;
+  extern Option OpenJabu;
   extern Option GerudoFortress;
   extern Option Bridge;
   extern Option BridgeStoneCount;
@@ -377,6 +378,7 @@ namespace Settings {
   extern Option BigPoeTargetCount;
   extern Option NumRequiredCuccos;
   extern Option KingZoraSpeed;
+  extern Option ExactZoraSpeed;
   extern Option CompleteMaskQuest;
   extern Option QuickText;
   extern Option SkipSongReplays;
