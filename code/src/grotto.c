@@ -183,8 +183,8 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex, u32 realIndexOnGrottoRetu
 // thisx - pointer to the grotto actor
 void Grotto_OverrideActorEntrance(Actor* thisx) {
 
-    // Vanilla Behavior if grottos aren't shuffled
-    if (gSettingsContext.shuffleGrottoEntrances == OFF) {
+    // Vanilla Behavior if there's no possibility of ending up in a grotto randomly
+    if (gSettingsContext.shuffleGrottoEntrances != ON && gSettingsContext.shuffleOverworldSpawns != ON && gSettingsContext.shuffleWarpSongs != ON) {
         return;
     }
 
