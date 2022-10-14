@@ -427,6 +427,15 @@ typedef struct {
   u8 shuffleOverworldEntrances;
   u8 shuffleInteriorEntrances;
   u8 shuffleGrottoEntrances;
+  u8 shuffleOwlDrops;
+  u8 shuffleWarpSongs;
+  u8 shuffleOverworldSpawns;
+  u8 mixedEntrancePools;
+  u8 mixDungeons;
+  u8 mixOverworld;
+  u8 mixInteriors;
+  u8 mixGrottos;
+  u8 decoupleEntrances;
   u8 bombchusInLogic;
   u8 ammoDrops;
   u8 heartDropRefill;

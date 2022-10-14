@@ -102,14 +102,18 @@ static char *spoilerCollectionGroupNames[] = {
 
 static char* spoilerEntranceGroupNames[] = {
     "Randomized Entrances", // All
+    "Spawns/Warp Songs/Owls",
     "Kokiri Forest",
     "Lost Woods",
+    "Sacred Forest Meadow",
     "Kakariko Village",
     "Graveyard",
     "Death Mountain Trail",
     "Death Mountain Crater",
     "Goron City",
+    "Zora's River",
     "Zora's Domain",
+    "Zora's Fountain",
     "Hyrule Field",
     "Lon Lon Ranch",
     "Lake Hylia",
@@ -158,7 +162,7 @@ typedef enum {
     PAGE_OPTIONS,
 } GfxPage;
 
-static u32 entranceTypeToColor[] = { COLOR_GREEN, COLOR_BLUE, COLOR_ORANGE, COLOR_PINK };
+static u32 entranceTypeToColor[] = { COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_ORANGE, COLOR_PINK };
 
 void Gfx_SleepQueryCallback(void)
 {
@@ -250,7 +254,7 @@ static void NextEntranceGroup() {
     do {
         ++currentEntranceGroup;
         if (currentEntranceGroup >= SPOILER_ENTRANCE_GROUP_COUNT) { currentEntranceGroup = 1; }
-    } while (gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
+    } while (gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
 }
 
 static void PrevEntranceGroup() {
@@ -259,7 +263,7 @@ static void PrevEntranceGroup() {
     do {
         --currentEntranceGroup;
         if (currentEntranceGroup < 1) { currentEntranceGroup = SPOILER_ENTRANCE_GROUP_COUNT - 1; }
-    } while (gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
+    } while (gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] == 0 && currentEntranceGroup != prevGroup);
 }
 
 static void Gfx_DrawButtonPrompts(void) {
@@ -287,7 +291,7 @@ static void Gfx_DrawButtonPrompts(void) {
             if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
                 static const u8 toggleOffsetX = 222;
                 Draw_DrawIcon(toggleOffsetX, promptY, COLOR_BUTTON_X, ICON_BUTTON_X);
-                const char* destToggleString = destListToggle ? "Dest" : "Src";
+                const char* destToggleString = destListToggle ? "To" : "From";
                 Draw_DrawString(toggleOffsetX + 12, textY, COLOR_TITLE, destToggleString);
             }
         } else if (curMenuIdx == PAGE_ITEMTRACKER_ALL || curMenuIdx == PAGE_ENTRANCETRACKER_ALL) {
@@ -606,6 +610,8 @@ static void Gfx_DrawEntranceTracker(void) {
 
         static const u8 squareWidth = 9;
         u16 offsetY = 2;
+        Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_YELLOW);
+        Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Spawns/Warp Songs/Owls");
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_GREEN);
         Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, "Overworld");
         Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareWidth, squareWidth, COLOR_BLUE);
@@ -619,8 +625,8 @@ static void Gfx_DrawEntranceTracker(void) {
 
     EntranceOverride* entranceList = (ViewingGroups() && destListToggle) ? destList : rEntranceOverrides;
 
-    u16 entranceCount = ViewingGroups() ? gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] : gEntranceTrackingData.EntranceCount;
-    u16 startIndex = ViewingGroups() ? gEntranceTrackingData.GroupOffsets[currentEntranceGroup] : 0;
+    u16 entranceCount = ViewingGroups() ? gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] : gEntranceTrackingData.EntranceCount;
+    u16 startIndex = ViewingGroups() ? gEntranceTrackingData.GroupOffsets[destListToggle][currentEntranceGroup] : 0;
     s16* entranceScroll = ViewingGroups() ? &groupEntranceScroll : &allEntranceScroll;
 
     if (entranceCount > 0) {
@@ -652,29 +658,41 @@ static void Gfx_DrawEntranceTracker(void) {
 
         bool isDiscovered = IsEntranceDiscovered(entranceList[locIndex].index);
 
-        u32 origSrcColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].index)->type] : COLOR_WHITE;
-        u32 origDstColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].destination)->type] : COLOR_WHITE;
-        u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].override)->type] : COLOR_WHITE;
-        u32 rplcDstColor = isDiscovered ? entranceTypeToColor[GetEntranceData(entranceList[locIndex].overrideDestination)->type] : COLOR_WHITE;
+        const EntranceData* original = GetEntranceData(entranceList[locIndex].index);
+        const EntranceData* override = GetEntranceData(entranceList[locIndex].override);
+
+        u32 origSrcColor = isDiscovered ? entranceTypeToColor[original->type] : COLOR_WHITE;
+        u32 origDstColor = isDiscovered ? entranceTypeToColor[original->type] : COLOR_WHITE;
+        u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
+        u32 rplcDstColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
+
+        u8 showOriginal = gSettingsContext.ingameSpoilers || (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
+        u8 showOverride = gSettingsContext.ingameSpoilers || ( destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
+
         const char* unknown = "???";
 
-        const char* origSrcName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].index)->name : unknown;
-        const char* origDstName = gSettingsContext.ingameSpoilers || !destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].destination)->name : unknown;
-        const char* rplcSrcName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].override)->name : unknown;
-        const char* rplcDstName = gSettingsContext.ingameSpoilers ||  destListToggle || isDiscovered ? GetEntranceData(entranceList[locIndex].overrideDestination)->name : unknown;
+        const char* origSrcName = showOriginal ? original->source      : unknown;
+        const char* origDstName = showOriginal ? original->destination : unknown;
+        const char* rplcSrcName = showOverride ? override->source      : unknown;
+        const char* rplcDstName = showOverride ? override->destination : unknown;
 
         u16 offsetX = 0;
         Draw_DrawFormattedString_Small(10, locPosY, origSrcColor, "%s", origSrcName);
         offsetX += strlen(origSrcName) + 1;
-        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "to");
-        offsetX += strlen("to") + 1;
-        Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, origDstColor, "%s", origDstName);
-        offsetX += strlen(origDstName) + 1;
+        // Don't show original destinations for one way entrances
+        if (original->srcGroup != ENTRANCE_GROUP_ONE_WAY) {
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "to");
+            offsetX += strlen("to") + 1;
+            Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, origDstColor, "%s", origDstName);
+            offsetX += strlen(origDstName) + 1;
+        }
         Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, locPosY, COLOR_WHITE, "%c", RIGHT_ARROW_CHR);
 
         offsetX = 2;
         Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, rplcDstColor, "%s", rplcDstName);
-        if ((!gSettingsContext.ingameSpoilers && !isDiscovered) || !GetEntranceData(entranceList[locIndex].overrideDestination)->oneExit) {
+        // Don't show the replacement source area if the area only has one entrance, or if the entrance
+        // is one-way
+        if (!showOverride || (showOverride && (!override->oneExit && override->srcGroup != ENTRANCE_GROUP_ONE_WAY))) {
             offsetX += strlen(rplcDstName) + 1;
             Draw_DrawFormattedString_Small(10 + offsetX * SPACING_SMALL_X, entrPosY, COLOR_WHITE, "from");
             offsetX += strlen("from") + 1;
@@ -844,7 +862,7 @@ static void Gfx_ShowMenu(void) {
             }
         } else if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS && gEntranceTrackingData.EntranceCount > 0) {
             // Grouped Entrances list
-            u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup];
+            u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup];
             if (pressed & BUTTON_DOWN) {
                 groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, 1, entranceCount);
                 handledInput = true;
@@ -1024,7 +1042,7 @@ void Gfx_Init(void) {
     if (gSpoilerData.ItemLocationsCount > 0 && gSpoilerData.GroupItemCounts[currentItemGroup] == 0) {
         NextItemGroup();
     }
-    if (gEntranceTrackingData.EntranceCount > 0 && gEntranceTrackingData.GroupEntranceCounts[currentEntranceGroup] == 0) {
+    if (gEntranceTrackingData.EntranceCount > 0 && gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup] == 0) {
         NextEntranceGroup();
     }
 

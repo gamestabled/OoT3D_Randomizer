@@ -62,8 +62,11 @@ u8 IsInGameOrBossChallenge(void) {
                        (entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D)));
 }
 
-void DebugPrintNumber(const char* message, int num) {
+void CitraPrint(const char* message, ...) {
+    va_list args;
+    va_start(args, message);
     char buf[128];
-    int length = snprintf(buf, 128, message, num);
+    int length = vsnprintf(buf, 128, message, args);
     svcOutputDebugString(buf, length);
+    va_end(args);
 }

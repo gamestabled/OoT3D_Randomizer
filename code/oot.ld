@@ -1160,6 +1160,10 @@ SECTIONS
 		*(.patch_SaveFile_Init)
 	}
 
+	.patch_SavewarpSetRespawnFlag 0x449E40 : {
+		*(.patch_SavewarpSetRespawnFlag)
+	}
+
 	.patch_Multiplayer_OnLoadFile 0x449EFC : {
 		*(.patch_Multiplayer_OnLoadFile)
 	}
@@ -1340,6 +1344,10 @@ SECTIONS
 		*(.patch_TurboTextClose)
 	}
 
+	.patch_WarpSongEntranceOverride 0x488850 : {
+		*(.patch_WarpSongEntranceOverride)
+	}
+
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
 	}
@@ -1350,6 +1358,14 @@ SECTIONS
 
 	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 : {
 		*(.patch_SwapAgeIgnoreSceneSetup)
+	}
+
+	.patch_DMTOwlEntranceOverride 0x492064 : {
+		*(.patch_DMTOwlEntranceOverride)
+	}
+
+	.patch_LHOwlEntranceOverride 0x492080 : {
+		*(.patch_LHOwlEntranceOverride)
 	}
 
 	.patch_FairyUseHealAmount 0x4968B4 : {
