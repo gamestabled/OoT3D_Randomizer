@@ -1853,8 +1853,9 @@ namespace Settings {
 
     //Only go through options if all settings are not randomized
     if (!RandomizeOpen) {
-      //Adult is not compatible with Closed Forest
-      if (OpenForest.Is(OPENFOREST_CLOSED)) {
+      // Adult is not compatible with Closed Forest
+      // Adult is also not compatible with Intended DoT + Unshuffled Ocarinas unless the player starts with an ocarina
+      if (OpenForest.Is(OPENFOREST_CLOSED) || (OpenDoorOfTime.Is(OPENDOOROFTIME_INTENDED) && !ShuffleOcarinas && StartingOcarina.Is(OFF))) {
         StartingAge.SetSelectedIndex(AGE_CHILD);
         StartingAge.Lock();
       } else {
