@@ -230,6 +230,7 @@ PremadePreset presetNintended = {
     { &Settings::OpenKakariko, OPENKAKARIKO_CLOSED },
     { &Settings::OpenDoorOfTime, OPENDOOROFTIME_INTENDED },
     { &Settings::ZorasFountain, ZORASFOUNTAIN_NORMAL },
+    { &Settings::OpenJabu, JABUJABU_CLOSED },
     { &Settings::GerudoFortress, GERUDOFORTRESS_NORMAL },
     { &Settings::Bridge, RAINBOWBRIDGE_MEDALLIONS },
     { &Settings::BridgeMedallionCount, 6 },
@@ -259,9 +260,9 @@ PremadePreset presetAllsanity = {
     { &Settings::ShuffleWeirdEgg, ON },
     { &Settings::ShuffleGerudoToken, ON },
     { &Settings::ShuffleMagicBeans, ON },
-    { &Settings::ShuffleMerchants, ON },
+    { &Settings::ShuffleMerchants, SHUFFLEMERCHANTS_HINTS },
     { &Settings::ShuffleAdultTradeQuest, ON },
-    { &Settings::ShuffleChestMinigame, ON },
+    { &Settings::ShuffleChestMinigame, SHUFFLECHESTMINIGAME_SINGLE_KEYS },
     { &Settings::ShuffleFrogSongRupees, ON },
     // Shuffle Dungeon Items
     { &Settings::MapsAndCompasses, MAPSANDCOMPASSES_ANYWHERE },
@@ -360,6 +361,39 @@ PremadePreset presetRacing = {
     KAK_50_GOLD_SKULLTULA_REWARD,
 } };
 
+PremadePreset presetVanilla = {
+    "Vanilla Plus", presetVanillaDesc, {
+    // Open Settings
+    { &Settings::OpenForest, OPENFOREST_CLOSED },
+    { &Settings::OpenKakariko, OPENKAKARIKO_CLOSED },
+    { &Settings::OpenDoorOfTime, OPENDOOROFTIME_INTENDED },
+    { &Settings::ZorasFountain, ZORASFOUNTAIN_NORMAL },
+    { &Settings::OpenJabu, JABUJABU_CLOSED },
+    { &Settings::GerudoFortress, GERUDOFORTRESS_NORMAL },
+    { &Settings::Bridge, RAINBOWBRIDGE_MEDALLIONS },
+    { &Settings::BridgeMedallionCount, 6 },
+    { &Settings::RandomGanonsTrials, OFF },
+    { &Settings::GanonsTrialsCount, 6 },
+    // Timesaver Settings
+    { &Settings::SkipChildStealth, DONT_SKIP },
+    { &Settings::SkipTowerEscape, DONT_SKIP },
+    { &Settings::SkipEponaRace, DONT_SKIP },
+    { &Settings::SkipMinigamePhases, SKIP },
+    { &Settings::FreeScarecrow, OFF },
+    { &Settings::FourPoesCutscene, SKIP },
+    { &Settings::LakeHyliaOwl, SKIP },
+    { &Settings::BigPoeTargetCount, 0 }, // Index 0 is 1 poe
+    { &Settings::NumRequiredCuccos, 1 },
+    { &Settings::KingZoraSpeed, KINGZORASPEED_FAST },
+    { &Settings::CompleteMaskQuest, OFF },
+    { &Settings::KeepFWWarpPoint, ON },
+    { &Settings::FastBunnyHood, ON },
+    // Logic Options
+    { &Settings::Logic, LOGIC_VANILLA },
+    // Item Usability Settings
+    { &Settings::FaroresWindAnywhere, ON },
+} };
+
 PremadePreset presetFullChaos = {
     "Full Chaos", presetFullChaosDesc, {
     // Open Settings
@@ -367,6 +401,7 @@ PremadePreset presetFullChaos = {
     { &Settings::OpenKakariko, OPENKAKARIKO_CLOSED },
     { &Settings::OpenDoorOfTime, OPENDOOROFTIME_INTENDED },
     { &Settings::ZorasFountain, ZORASFOUNTAIN_NORMAL },
+    { &Settings::OpenJabu, JABUJABU_CLOSED },
     { &Settings::GerudoFortress, GERUDOFORTRESS_NORMAL },
     { &Settings::Bridge, RAINBOWBRIDGE_TOKENS },
     { &Settings::BridgeTokenCount, 100 },
@@ -414,7 +449,8 @@ PremadePreset presetFullChaos = {
     { &Settings::FreeScarecrow, OFF },
     { &Settings::BigPoeTargetCount, 9 }, // Index 9 is 10 poes
     { &Settings::NumRequiredCuccos, 7 },
-    { &Settings::KingZoraSpeed, KINGZORASPEED_RANDOM },
+    { &Settings::KingZoraSpeed, KINGZORASPEED_CUSTOM },
+    { &Settings::ExactZoraSpeed, 127 }, // Index 127 is 128 mweeps
     // Logic Options
     { &Settings::Logic, LOGIC_NONE },
     // Starting Inventory
@@ -444,5 +480,6 @@ std::vector<PremadePreset*> premadePresets = {
     &presetNintended,
     &presetAllsanity,
     &presetRacing,
+    &presetVanilla,
     &presetFullChaos,
 };

@@ -16,7 +16,11 @@ string_view presetNintendedDesc       = "Locks the world in a state as intended 
                                         "towards Ganon in a classical way.";               //
 string_view presetAllsanityDesc       = "ANYTHING ANYWHERE! Both items and entrances.";    //
 string_view presetRacingDesc          = "Community racing settings.";                      //
-string_view presetFullChaosDesc       = "The hardest and worst settings possible.\n"       //
+string_view presetVanillaDesc         = "Experience a regular playthrough but with all of\n"
+                                        "the randomizer's improvements.\n"                 //
+                                        "\n"                                               //
+                                        "Enable entrance shuffle for an extra challenge!"; //
+string_view presetFullChaosDesc       = "The hardest and craziest settings possible.\n"    //
                                         "Closes everything as much as possible.\n"         //
                                         "No logic. Anything anywhere.\n"                   //
                                         "Full entrance shuffle.\n"                         //
@@ -1494,7 +1498,9 @@ string_view LogicFlamingChestsDesc                    = "Difficulty: Novice\n"  
 /*------------------------------                                                                           //
 |           GLITCHES           |                                                                           //
 ------------------------------*/                                                                           //
-const std::vector<string_view> GlitchDifficulties{"Novice", "Intermediate", "Advanced", "Expert", "Hero"}; //
+const std::vector<string_view> GlitchDifficulties{"Disabled", "Novice", "Intermediate", "Advanced", "Expert", "Hero"};
+string_view ToggleAllGlitchesDesc                     = "Set all glitches to the selected difficulty, or\n"//
+                                                        "the closest available below.";                    //
 /* Restricted Items */                                                                                     //
 string_view GlitchRestrictedItemsDescDisabled         = "Swapping an item that can normally be used in an\n"
                                                         "area with one that would be dimmed will let you\n"

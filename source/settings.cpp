@@ -811,6 +811,7 @@ namespace Settings {
     return selectableDifficulties;
   }
 
+  Option ToggleAllGlitches        = Option::U8("All Glitches",          GlitchDifficultyOptions(0b11111), { ToggleAllGlitchesDesc }, OptionCategory::Toggle);
   Option GlitchRestrictedItems    = Option::U8("Restricted Items",      GlitchDifficultyOptions(0b00001), { GlitchRestrictedItemsDescDisabled    , GlitchRestrictedItemsDescNovice                                                                                                                                                              });
   Option GlitchSuperStab          = Option::U8("Super Stab",            GlitchDifficultyOptions(0b00001), { GlitchSuperStabDescDisabled          , GlitchSuperStabDescNovice                                                                                                                                                                    });
   Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00111), { GlitchISGDescDisabled                , GlitchISGDescNovice                , GlitchISGDescIntermediate                , GlitchISGDescAdvanced                                                                                        });
@@ -833,6 +834,7 @@ namespace Settings {
   Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00111), { GlitchLedgeClipDescDisabled          , GlitchLedgeClipDescNovice          , GlitchLedgeClipDescIntermediate          , GlitchLedgeClipDescAdvanced                                                                                  });
   Option GlitchSeamWalk           = Option::U8("Seam Walk",             GlitchDifficultyOptions(0b11111), { GlitchSeamWalkDescDisabled           , GlitchSeamWalkDescNovice           , GlitchSeamWalkDescIntermediate           , GlitchSeamWalkDescAdvanced           , GlitchSeamWalkDescExpert           , GlitchSeamWalkDescHero           });
   std::vector<Option*> glitchCategories = {
+    &ToggleAllGlitches,
     &GlitchRestrictedItems,
     &GlitchSuperStab,
     &GlitchISG,
@@ -2069,7 +2071,7 @@ namespace Settings {
     }
 
     if (currentSetting != nullptr) {
-      if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting->GetName() == "All Tricks")  {
+      if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting == &ToggleAllTricks)  {
         for (u16 i = 1; i < Settings::trickOptions.size(); i++) {
           trickOptions[i]->SetSelectedIndex(0);
         }
@@ -2169,6 +2171,31 @@ namespace Settings {
           LogicGtgWithoutHookshot.SetSelectedIndex(1);
         }
       }
+    }
+
+    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting == &ToggleAllGlitches) {
+        auto setDifficulty = ToggleAllGlitches.GetSelectedOptionIndex();
+        for (auto option : glitchCategories) {
+            if (option == &ToggleAllGlitches || (!RestoreISG && (option == &GlitchISG || option == &GlitchHover))) {
+                continue;
+            }
+            // See if the glitch option has the set difficulty available.
+            // If not, check one difficulty lower. Repeat until found.
+            // (All glitches are guaranteed to have "Disabled")
+            bool difficultyFound = false;
+            for (size_t i = setDifficulty; i >= 0; i--) {
+                for (size_t j = 0; j < option->GetOptions().size(); j++) {
+                    if (option->GetOptions()[j] == GlitchDifficulties[i]) {
+                        option->SetSelectedIndex(j);
+                        difficultyFound = true;
+                        break;
+                    }
+                }
+                if (difficultyFound) {
+                    break;
+                }
+            }
+        }
     }
 
     // Multiplayer
@@ -2328,9 +2355,9 @@ namespace Settings {
       { &ShuffleCows, OFF },
       { &ShuffleMagicBeans, OFF },
       { &ShuffleMerchants, SHUFFLEMERCHANTS_OFF },
-      { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
       { &ShuffleAdultTradeQuest, SHUFFLEADULTTRADEQUEST_ON },
       { &ShuffleChestMinigame, SHUFFLECHESTMINIGAME_OFF },
+      { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
       { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
       { &GossipStoneHints, HINTS_NO_HINTS },
   };
