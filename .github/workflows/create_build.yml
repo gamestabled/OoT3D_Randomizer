@@ -21,11 +21,16 @@ jobs:
     steps:
       - name: Checkout Project
         uses: actions/checkout@v3
+      - name: Get Last Nightly
+        id: nightly-version
+        run: |
+          echo "::set-output name=last_nightly::$(git describe --tags --abbrev=0)"
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v3.0.0
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
+          base-ref: ${{ steps.nightly-version.outputs.last_nightly }}
     outputs:
       changelog: ${{ steps.changelog.outputs.changelog }}
 
