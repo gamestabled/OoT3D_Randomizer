@@ -21,18 +21,21 @@ jobs:
     steps:
       - name: Checkout Project
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Get Last Nightly
         id: nightly-version
         run: |
-          echo "::set-output name=last_nightly::$(git describe --tags --abbrev=0)"
+          echo "last_nightly=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v3.0.0
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-          base-ref: ${{ steps.nightly-version.outputs.last_nightly }}
+          base-ref: ${{ env.last_nightly }}
     outputs:
       changelog: ${{ steps.changelog.outputs.changelog }}
+      last-nightly: ${{ env.last_nightly }}
 
   build-cia-3dsx:
     needs: get-changelog
@@ -52,7 +55,7 @@ jobs:
 
       - name: Get shorthand commit.
         id: vars
-        run: echo "::set-output name=sha_short::$(echo ${{ github.sha }} | cut -c1-6)"
+        run: echo "sha_short=$(echo ${{ github.sha }} | cut -c1-6)" >> $GITHUB_ENV
 
       - if: ${{ github.event.inputs.build_type == 'Nightly' }}
         name: Create Pre-release
@@ -62,18 +65,18 @@ jobs:
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
           prerelease: true
           commit: "${{ github.sha }}"
-          tag: "Nightly-${{ steps.vars.outputs.sha_short }}"
-          name: "Nightly-${{ steps.vars.outputs.sha_short }}"
+          tag: "Nightly-${{ env.sha_short }}"
+          name: "Nightly-${{ env.sha_short }}"
           body: |
             Please note that these are DEVELOPMENT builds and may not be entirely stable.
             When reporting issues, please mention the six character commit listed in the randomizer menu.
             You can use the FBI homebrew application to install the randomizer using either of these QR codes.
             CIA QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/cia.png)
             3DSX QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/3dsx.png)
 
-            Changes 🛠:  
+            Changes Since [${{ needs.get-changelog.outputs.last-nightly }}](https://github.com/${{ github.repository }}/releases/tag/${{ needs.get-changelog.outputs.last-nightly }}) 🛠:  
             ${{ needs.get-changelog.outputs.changelog }}
 
 
@@ -94,9 +97,9 @@ jobs:
             When reporting issues, please mention the six character commit listed in the randomizer menu.
             You can use the FBI homebrew application to install the randomizer using either of these QR codes.
             CIA QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/cia.png)
             3DSX QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/3dsx.png)
 
   deploy-gist:
     needs: build-cia-3dsx
