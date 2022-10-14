@@ -10,6 +10,7 @@ extern string_view ingameDefaultsDesc;
 extern string_view presetNintendedDesc;
 extern string_view presetAllsanityDesc;
 extern string_view presetRacingDesc;
+extern string_view presetVanillaDesc;
 extern string_view presetFullChaosDesc;
 
 extern string_view openRandomize;
@@ -455,6 +456,8 @@ extern string_view LogicSpiritTrialHookshotDesc;
 extern string_view LogicFlamingChestsDesc;
 
 extern const std::vector<string_view> GlitchDifficulties;
+
+extern string_view ToggleAllGlitchesDesc;
 
 extern string_view GlitchRestrictedItemsDescDisabled;
 extern string_view GlitchRestrictedItemsDescNovice;
