@@ -291,7 +291,7 @@ static void Gfx_DrawButtonPrompts(void) {
             if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
                 static const u8 toggleOffsetX = 222;
                 Draw_DrawIcon(toggleOffsetX, promptY, COLOR_BUTTON_X, ICON_BUTTON_X);
-                const char* destToggleString = destListToggle ? "Dest" : "Src";
+                const char* destToggleString = destListToggle ? "To" : "From";
                 Draw_DrawString(toggleOffsetX + 12, textY, COLOR_TITLE, destToggleString);
             }
         } else if (curMenuIdx == PAGE_ITEMTRACKER_ALL || curMenuIdx == PAGE_ENTRANCETRACKER_ALL) {
