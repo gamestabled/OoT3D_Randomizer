@@ -170,9 +170,8 @@ string_view ageDesc                   = "Choose which age Link will start as.\n"
                                         "Forest.\n"                                        //
                                         "\n"                                               //
                                         "Child will also be forced if Door of Time is set\n"
-                                        "to intended, ocarinas are unshuffled, and logic is"
-                                        "set to glitchless since adult Link can't obtain\n"//
-                                        "the Ocarina from the moat.";                      //
+                                        "to intended and ocarinas are unshuffled unless you"
+                                        "start with an ocarina already in your inventory.";//
 /*------------------------------                                                           //
 |      SHUFFLE ENTRANCES       |                                                           //
 ------------------------------*/                                                           //
