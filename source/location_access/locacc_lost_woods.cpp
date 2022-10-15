@@ -27,7 +27,7 @@ void AreaTable_Init_LostWoods() {
                   Entrance(KF_HOUSE_OF_TWINS,     {[]{return true;}}),
                   Entrance(KF_KNOW_IT_ALL_HOUSE,  {[]{return true;}}),
                   Entrance(KF_KOKIRI_SHOP,        {[]{return true;}}),
-                  Entrance(KF_OUTSIDE_DEKU_TREE,  {[]{return IsAdult || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;},
+                  Entrance(KF_OUTSIDE_DEKU_TREE,  {[]{return (IsAdult && (CanAdultDamage || ForestTempleClear)) || OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield;},
                                        /*Glitched*/[]{return CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(THE_LOST_WOODS,        {[]{return true;}}),
                   Entrance(LW_BRIDGE_FROM_FOREST, {[]{return IsAdult || OpenForest.IsNot(OPENFOREST_CLOSED) || DekuTreeClear;},

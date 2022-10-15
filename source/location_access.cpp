@@ -294,7 +294,10 @@ void AreaTable_Init() {
                   Entrance(KF_LINKS_HOUSE, {[]{return true;}}),
   });
 
-  areaTable[ADULT_SPAWN] = Area("Adult Spawn", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {
+  areaTable[ADULT_SPAWN] = Area("Adult Spawn", "", TEMPLE_OF_TIME, NO_DAY_NIGHT_CYCLE, {}, {
+                  //Locations
+                  LocationAccess(TOT_MASTER_SWORD, {[]{return true;}}),
+                }, {
                   //Exits
                   Entrance(TEMPLE_OF_TIME, {[]{return true;}}),
   });
