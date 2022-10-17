@@ -7,6 +7,7 @@
 #include "fairy.h"
 #include "icetrap.h"
 #include "arrow.h"
+#include "grotto.h"
 
 #define PlayerActor_Init_addr 0x191844
 #define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
@@ -69,6 +70,7 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
         gSaveContext.equips.equipment &= ~0xF0; // unequip shield
     }
 
+    Grotto_SanitizeEntranceType();
     // If the player has started with 0 hearts, some entrances that knock Link down will cause a Game Over.
     // When respawning after the Game Over, change the entrance type to avoid softlocks.
     u8 playerEntranceType = (thisx->params & 0xF00) >> 8;

@@ -1636,10 +1636,10 @@ SceneExitDynamicOverride_patch:
 OverrideGrottoActorEntrance_patch:
     b hook_OverrideGrottoActorEntrance
 
-.section .patch_ReturnFWSetupGrottoInfo
-.global ReturnFWSetupGrottoInfo_patch
-ReturnFWSetupGrottoInfo_patch:
-    bl hook_ReturnFWSetupGrottoInfo
+.section .patch_ReturnFW
+.global ReturnFW_patch
+ReturnFW_patch:
+    bl hook_ReturnFW
 
 .section .patch_WarpSongEntranceOverride
 .global WarpSongEntranceOverride_patch
@@ -1981,8 +1981,15 @@ CollisionATvsAC_patch:
 GanonDrawMasterSword_patch:
     bl hook_GanonDrawMasterSword
 
+.section .patch_SetFWPlayerParams
+.global SetFWPlayerParams_patch
+SetFWPlayerParams_patch:
+    bl hook_SetFWPlayerParams
+
+@ ----------------------------------
+@ ----------------------------------
+
 .section .patch_loader
 .global loader_patch
-
 loader_patch:
     b hook_into_loader
