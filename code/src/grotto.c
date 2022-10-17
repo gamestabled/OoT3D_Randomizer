@@ -2,6 +2,7 @@
 #include "grotto.h"
 #include "savefile.h"
 #include "settings.h"
+#include "common.h"
 
 // Information necessary for entering each grotto
 static const GrottoLoadInfo grottoLoadTable[NUM_GROTTOS] = {
