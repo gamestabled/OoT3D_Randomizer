@@ -9,7 +9,7 @@
 #define BORDER_WIDTH 2
 #define CHOICE_COLUMN 220
 #define DESCRIPTION_ROW 184
-#define OPTIONS_COUNT 5
+#define OPTIONS_COUNT 6
 
 typedef struct {
     char name[30];
@@ -57,6 +57,14 @@ void InitOptions(void) {
     strcpy(options[4].alternatives[2], "Skip (Keep SFX)");
     strcpy(options[4].description, "Toggle skipping the automatic replay after\nyou play a song.");
     options[4].optionPointer = &gExtSaveData.option_SkipSongReplays;
+
+    // Hide & Seek Mode
+    strcpy(options[5].name, "Hide & Seek Mode");
+    strcpy(options[5].alternatives[0], "Off");
+    strcpy(options[5].alternatives[1], "Hider");
+    strcpy(options[5].alternatives[2], "Seeker");
+    strcpy(options[5].description, "If set to hider, contact with a seeker\nin multiplayer will end in death.");
+    options[5].optionPointer = &gExtSaveData.option_HideSeek;
 }
 
 void Gfx_DrawOptions(void) {

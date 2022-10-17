@@ -8,6 +8,7 @@ typedef struct {
     s16 currentScene;
     s32 age;
     Vec3f position;
+    s8 hideSeek;
     // Animation vars here
 } GhostData;
 

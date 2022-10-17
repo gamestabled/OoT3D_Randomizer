@@ -1037,6 +1037,8 @@ string_view mp_SharedRupeesDesc       = "Syncs rupees when shared progress is on
                                         "otherwise just shares the gain and loss.";        //
 string_view mp_SharedAmmoDesc         = "Syncs ammo when shared progress is on,\n"         //
                                         "otherwise just shares the gain and loss.";        //
+string_view mp_HideSeekDesc           = "If set to hider, any multiplayers set to seeker\n"//
+                                        "will kill you on contact. Can be changed later."; //
                                                                                            //
 /*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //

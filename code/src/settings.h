@@ -246,6 +246,12 @@ typedef enum {
 } SkipSongReplaysSetting;
 
 typedef enum {
+  MP_HIDESEEK_OFF,
+  MP_HIDESEEK_HIDE,
+  MP_HIDESEEK_SEEK,
+} MP_HideSeekSetting;
+
+typedef enum {
   INCLUDE,
   EXCLUDE,
 } ExcludeLocationSetting;
@@ -548,6 +554,7 @@ typedef struct {
   u8 mp_SharedHealth;
   u8 mp_SharedRupees;
   u8 mp_SharedAmmo;
+  u8 mp_HideSeek;
 
   u8 zTargeting;
   u8 cameraControl;
@@ -656,7 +663,7 @@ typedef struct {
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;
-extern const char hashIconNames[32][25];
+extern const char hashIconNames[32][25];\
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
 void Settings_SkipSongReplays();

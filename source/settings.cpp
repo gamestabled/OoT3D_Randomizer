@@ -914,12 +914,13 @@ namespace Settings {
     &miscGlitchSettings,
   };
 
-  Option MP_Enabled        = Option::U8  ("Multiplayer",     {"Off", "On (Local)"}, {mp_EnabledDesc});
-  Option MP_SharedProgress = Option::Bool("Shared Progress", {"Off", "On"},         {mp_SharedProgressDesc});
-  Option MP_SyncId         = Option::U8  ("  Sync ID",       {NumOpts(1, 8)},       {mp_SyncIdDesc}, OptionCategory::Cosmetic);
-  Option MP_SharedHealth   = Option::Bool("Shared Health",   {"Off", "On"},         {mp_SharedHealthDesc});
-  Option MP_SharedRupees   = Option::Bool("Shared Rupees",   {"Off", "On"},         {mp_SharedRupeesDesc});
-  Option MP_SharedAmmo     = Option::Bool("Shared Ammo",     {"Off", "On"},         {mp_SharedAmmoDesc});
+  Option MP_Enabled        = Option::U8  ("Multiplayer",     {"Off", "On (Local)"},     {mp_EnabledDesc});
+  Option MP_SharedProgress = Option::Bool("Shared Progress", {"Off", "On"},             {mp_SharedProgressDesc});
+  Option MP_SyncId         = Option::U8  ("  Sync ID",       {NumOpts(1, 8)},           {mp_SyncIdDesc}, OptionCategory::Cosmetic);
+  Option MP_SharedHealth   = Option::Bool("Shared Health",   {"Off", "On"},             {mp_SharedHealthDesc});
+  Option MP_SharedRupees   = Option::Bool("Shared Rupees",   {"Off", "On"},             {mp_SharedRupeesDesc});
+  Option MP_SharedAmmo     = Option::Bool("Shared Ammo",     {"Off", "On"},             {mp_SharedAmmoDesc});
+  Option MP_HideSeek       = Option::U8  ("Hide & Seek",     {"Off", "Hider", "Seeker"},{mp_HideSeekDesc}, OptionCategory::Cosmetic);
   std::vector<Option*> multiplayerOptions = {
     &MP_Enabled,
     &MP_SharedProgress,
@@ -927,6 +928,7 @@ namespace Settings {
     &MP_SharedHealth,
     &MP_SharedRupees,
     &MP_SharedAmmo,
+    &MP_HideSeek,
   };
 
   Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
@@ -1436,6 +1438,7 @@ namespace Settings {
     ctx.mp_SharedAmmo        = (MP_SharedAmmo) ? 1 : 0;
     ctx.mp_SharedHealth      = (MP_SharedHealth) ? 1 : 0;
     ctx.mp_SharedRupees      = (MP_SharedRupees) ? 1 : 0;
+    ctx.mp_HideSeek          = MP_HideSeek.Value<u8>();
 
     ctx.zTargeting           = ZTargeting.Value<u8>();
     ctx.cameraControl        = CameraControl.Value<u8>();

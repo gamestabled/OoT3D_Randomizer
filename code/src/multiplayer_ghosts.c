@@ -1,6 +1,8 @@
 #include "multiplayer_ghosts.h"
 #include "3ds/svc.h"
 #include "common.h"
+#include "settings.h"
+#include "savefile.h"
 
 typedef struct {
     bool inUse;
@@ -12,6 +14,34 @@ typedef struct {
 static LinkGhost ghosts[16];
 
 #define INACTIVE_TIME_LIMIT (TICKS_PER_SEC * 3)
+
+int powOf(int base, int exp){
+    if(exp < 0){
+        return -1;
+    }
+    int result = 1;
+    while (exp){
+        if (exp & 1){
+            result *= base;
+        }
+        exp >>= 1;
+        base *= base;
+    }
+    return result;
+}
+float sqroot(int x) {
+    int i;
+    float s;
+    s=((x/2)+x/(x/2)) / 2;
+    for(i=1;i<=4;i++) {
+        s=(x+s/s)/2;
+    }
+    return s;
+}
+float dist(float x1, float y1, float x2, float y2){
+    float result=sqroot(powOf((x2- x1), 2)+powOf((y2- y1), 2));
+    return(result);
+}
 
 void Multiplayer_Ghosts_Tick(void) {
     u64 currentTick = svcGetSystemTick();
@@ -55,6 +85,7 @@ void Multiplayer_Ghosts_UpdateGhost(u16 networkID, GhostData* ghostData) {
         ghostX->ghostData.currentScene = ghostData->currentScene;
         ghostX->ghostData.age = ghostData->age;
         ghostX->ghostData.position = ghostData->position;
+        ghostX->ghostData.hideSeek = ghostData->hideSeek;
         // Temporary offset for effect
         ghostX->ghostData.position.y += (ghostData->age == 0 ? 50 : 35);
     }
@@ -88,9 +119,23 @@ void Multiplayer_Ghosts_DrawAll(void) {
             static f32 colorG[] = { 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.5, 0.0 };
             static f32 colorB[] = { 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0 };
 
+            int GhostPosX=ghost->ghostData.position.x;
+            int GhostPosY=ghost->ghostData.position.y - (ghost->ghostData.age==0?50:35);
+            int GhostPosZ=ghost->ghostData.position.z;
+            int ghostHeight=ghost->ghostData.age == 0 ? 60 : 48;
+
+            int PlayerPosX=PLAYER->actor.world.pos.x;
+            int PlayerPosY=PLAYER->actor.world.pos.y;
+            int PlayerPosZ=PLAYER->actor.world.pos.z;
+            int playerHeight=gSaveContext.linkAge == 0 ? 60 : 48;
+            
             s16 envR = 100 * colorR[(ghost->networkID - 1) % ARRAY_SIZE(colorR)];
             s16 envG = 100 * colorG[(ghost->networkID - 1) % ARRAY_SIZE(colorG)];
             s16 envB = 100 * colorB[(ghost->networkID - 1) % ARRAY_SIZE(colorB)];
+            if(dist(PlayerPosX,PlayerPosZ, GhostPosX,GhostPosZ)<24&&PlayerPosY+playerHeight>GhostPosY-5 && PlayerPosY<GhostPosY+ghostHeight+5 && gExtSaveData.option_HideSeek==1 && ghost->ghostData.hideSeek==2){
+                gExtSaveData.option_HideSeek=2;
+                gSaveContext.health = 0;
+            }
 
             EffectSsDeadDb_Spawn(gGlobalContext, &ghost->ghostData.position, &vecEmpty, &vecEmpty,
                 ghost->ghostData.age == 0 ? 100 : 70, -1,

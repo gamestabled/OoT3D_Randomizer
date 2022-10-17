@@ -890,6 +890,7 @@ void Multiplayer_Send_GhostData(void) {
     ghostData.currentScene = gGlobalContext->sceneNum;
     ghostData.age = gSaveContext.linkAge;
     ghostData.position = PLAYER->actor.world.pos;
+    ghostData.hideSeek = gExtSaveData.option_HideSeek;
 
     memcpy(&mBuffer[memSpacer], &ghostData, sizeof(GhostData));
     memSpacer += sizeof(GhostData) / 4;

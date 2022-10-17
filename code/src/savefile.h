@@ -58,6 +58,7 @@ typedef struct {
     s8 option_SilenceNavi;
     s8 option_IgnoreMaskReaction;
     s8 option_SkipSongReplays;
+    s8 option_HideSeek;
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA

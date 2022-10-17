@@ -646,6 +646,7 @@ namespace Settings {
   extern Option MP_SharedHealth;
   extern Option MP_SharedRupees;
   extern Option MP_SharedAmmo;
+  extern Option MP_HideSeek;
 
   //Ingame Default Settings
   extern Option ZTargeting;
