@@ -126,7 +126,7 @@ static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto, RespawnMode respawnM
 
 // Translates and overrides the passed in entrance index if it corresponds to a
 // special grotto entrance (grotto load or returnpoint)
-s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex, u32 realIndexOnGrottoReturn) {
+s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
 
     // Don't change anything unless grotto shuffle has been enabled
     if (gSettingsContext.shuffleGrottoEntrances != ON && gSettingsContext.shuffleOverworldSpawns != ON && gSettingsContext.shuffleWarpSongs != ON) {
@@ -147,20 +147,22 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex, u32 realIndexOnGrottoRetu
     if (nextEntranceIndex >= 0x0800 && nextEntranceIndex < 0x0800 + NUM_GROTTOS) {
 
         GrottoReturnInfo grotto = grottoReturnTable[grottoId];
-        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
         Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_RETURN);
-        gGlobalContext->fadeOutTransition = 3;
-        gSaveContext.nextTransition = 3;
+        Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
 
-        // We want to return the actual entrance index in specific circumstances
-        // such as overworld spawns and warp songs. Otherwise, we want to return
-        // 0x7FFF to make the lighting of the area transition look correct.
-        nextEntranceIndex = realIndexOnGrottoReturn ? grotto.entranceIndex : 0x7FFF;
-        lastEntranceType = GROTTO_RETURN;
-        if (realIndexOnGrottoReturn) {
-            Grotto_ForceGrottoReturnOnSpecialEntrance();
+        // When the nextEntranceIndex is determined by a dynamic exit, we have
+        // to set the respawn information and nextEntranceIndex manually
+        if (gGlobalContext->nextEntranceIndex != -1) {
+            gSaveContext.respawnFlag = 2;
+            nextEntranceIndex = grotto.entranceIndex;
+            gGlobalContext->fadeOutTransition = 3;
+            gSaveContext.nextTransition = 3;
+        // Otherwise return 0x7FFF and let the game handle it
+        } else {
+            nextEntranceIndex = 0x7FFF;
         }
 
+        lastEntranceType = GROTTO_RETURN;
     // Grotto Loads
     } else if (nextEntranceIndex >= 0x0700 && nextEntranceIndex < 0x0800) {
 
@@ -201,7 +203,7 @@ void Grotto_OverrideActorEntrance(Actor* thisx) {
 
             // Run the index through the special entrances override check
             lastEntranceType = GROTTO_LOAD;
-            gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(index, GET_REAL_RETURN_INDEX);
+            gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(index);
             return;
         }
     }
@@ -246,5 +248,14 @@ void Grotto_SetupReturnInfoOnFWReturn(void) {
         gSaveContext.respawn[RESPAWN_MODE_RETURN] = gSaveContext.respawn[RESPAWN_MODE_TOP];
         gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
         lastEntranceType = GROTTO_RETURN;
+    }
+}
+
+void Grotto_SanitizeEntranceType(void) {
+    // Clear entrance type when on the title screen or after being thrown out
+    // by the Hyrule Castle guards if the last entrance was HC Storms Grotto -> HC
+    // This allows OHKO playthroughs to get past the guards properly.
+    if (!IsInGame() || gSaveContext.entranceIndex == 0x47E) {
+        lastEntranceType = NOT_GROTTO;
     }
 }

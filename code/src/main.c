@@ -10,6 +10,7 @@
 #include "common.h"
 #include "savefile.h"
 #include "multiplayer.h"
+#include "grotto.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -41,6 +42,8 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     SaveFile_EnforceHealthLimit();
 
     Settings_SkipSongReplays();
+
+    Grotto_SanitizeEntranceType();
 
     Multiplayer_Run();
 }
