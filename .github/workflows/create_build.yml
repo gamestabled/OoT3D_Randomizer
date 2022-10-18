@@ -42,7 +42,7 @@ jobs:
     name: Build CIA and 3DSX Files
     runs-on: ubuntu-latest
     container:
-      image: phlex/oot3dr-build-tools
+      image: ghcr.io/z3dr/randotools:latest
 
     steps:
       - name: Checkout Project
