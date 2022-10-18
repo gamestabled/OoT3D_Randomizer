@@ -663,7 +663,7 @@ typedef struct {
 } SettingsContext;
 
 extern SettingsContext gSettingsContext;
-extern const char hashIconNames[32][25];\
+extern const char hashIconNames[32][25];
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext*, s32);
 void Settings_SkipSongReplays();
