@@ -204,24 +204,12 @@ s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
         gGlobalContext->actorCtx.flags.tempCollect = 0;
     }
     SaveFile_SetEntranceDiscovered(nextEntranceIndex);
-    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex), GET_REAL_RETURN_INDEX);
-}
-
-// Additional function definition to specify not returning the default index of
-// a grotto return point and instead just returning 0x7FFF
-s16 Entrance_OverrideNextIndexWithoutGrottoIndex(s16 nextEntranceIndex) {
-    // When entering Spirit Temple, clear temp flags so they don't carry over to the randomized dungeon
-    if (nextEntranceIndex == 0x0082 && Entrance_GetOverride(nextEntranceIndex) != nextEntranceIndex) {
-        gGlobalContext->actorCtx.flags.tempSwch = 0;
-        gGlobalContext->actorCtx.flags.tempCollect = 0;
-    }
-    SaveFile_SetEntranceDiscovered(nextEntranceIndex);
-    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex), 0);
+    return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
 }
 
 void Entrance_OverrideDynamicExit(void) {
     SaveFile_SetEntranceDiscovered(gGlobalContext->nextEntranceIndex);
-    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex), GET_REAL_RETURN_INDEX);
+    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex));
 }
 
 void Entrance_DeathInGanonBattle(void) {
@@ -760,7 +748,7 @@ void SortEntranceList(EntranceOverride* entranceList, u8 byDest) {
         // Increment the idx by however many one-way entrances are shuffled since these
         // will still be displayed at the beginning
         idx += gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE][ENTRANCE_GROUP_ONE_WAY];
-        
+
         // Sort the rest of the Destination List by matching destination strings with source strings when possible
         // and otherwise by group
         for (size_t group = ENTRANCE_GROUP_KOKIRI_FOREST; group < SPOILER_ENTRANCE_GROUP_COUNT; group++) {
