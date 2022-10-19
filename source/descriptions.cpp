@@ -1336,7 +1336,7 @@ string_view LogicFireBossDoorJumpDesc                 = "Difficulty: Intermediat
                                                         "farther away than is normally possible.";         //
 string_view LogicFireStrengthDesc                     = "Difficulty: Expert\n"                             //
                                                         "A precise jump can be used to skip pushing the\n" //
-                                                        "block.";                                          //
+                                                        "block. This also allows child to reach the block.";
 string_view LogicFireScarecrowDesc                    = "Difficulty: Novice\n"                             //
                                                         "Also known as \"Pixelshot\". The Longshot can\n"  //
                                                         "reach the target on the elevator itself, allowing\n"
