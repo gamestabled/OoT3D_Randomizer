@@ -129,7 +129,7 @@ void AreaTable_Init_ZorasDomain() {
                                      /*Glitched*/[]{return ((IsChild || CanUse(IRON_BOOTS)) && CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::NOVICE)) || CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::NOVICE) ||
                                                            CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::NOVICE) || CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) || CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE);}}),
                   Entrance(ZD_SHOP,             {[]{return IsChild || BlueFire;},
-                                     /*Glitched*/[]{return GlitchZDOoBJumpSlash.Value<bool>();}}),
+                                     /*Glitched*/[]{return CanJumpslash && GlitchZDOoBJumpSlash;}}),
                   Entrance(ZD_STORMS_GROTTO,    {[]{return CanOpenStormGrotto;},
                                      /*Glitched*/[]{return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) || ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
                                                            ((Bugs || Fish) && CanShield && HasBombchus && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) && SongOfStorms && (ShardOfAgony || LogicGrottosWithoutAgony);}}),
