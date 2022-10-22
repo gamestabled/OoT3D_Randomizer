@@ -2,7 +2,6 @@
 #include "grotto.h"
 #include "savefile.h"
 #include "settings.h"
-#include "common.h"
 
 // Information necessary for entering each grotto
 static const GrottoLoadInfo grottoLoadTable[NUM_GROTTOS] = {
@@ -82,6 +81,7 @@ static s16 grottoExitList[NUM_GROTTOS] = {0};
 static s16 grottoLoadList[NUM_GROTTOS] = {0};
 static s8 grottoId = 0xFF;
 static s8 lastEntranceType = NOT_GROTTO;
+static u8 overridingNextEntrance = FALSE;
 
 // Initialize both lists so that each index refers to itself. An index referring
 // to itself means that the entrance is not shuffled. Indices will be overwritten
@@ -179,6 +179,7 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
         lastEntranceType = NOT_GROTTO;
     }
 
+    overridingNextEntrance = TRUE;
     return nextEntranceIndex;
 }
 
@@ -242,21 +243,38 @@ void Grotto_ForceRegularVoidOut(void) {
     }
 }
 
+// If setting FW at a grotto exit, save different player params in the FW data, so
+// we can remember to restore the lastEntranceType when returning to the warp point.
+s32 Grotto_ChooseFWPlayerParams() {
+    if ((gSettingsContext.shuffleGrottoEntrances == ON || gSettingsContext.shuffleOverworldSpawns == ON || gSettingsContext.shuffleWarpSongs == ON) &&
+            lastEntranceType == GROTTO_RETURN) {
+
+        return 0x4FF;
+    }
+    return 0x6FF; // Normal FW params
+}
+
 // If returning to a FW point saved at a grotto exit, copy the FW data to the Grotto Return Point
 // so that Sun's Song and Game Over will behave correctly
 void Grotto_SetupReturnInfoOnFWReturn(void) {
-    if (gSettingsContext.shuffleGrottoEntrances == ON || gSettingsContext.shuffleOverworldSpawns == ON || gSettingsContext.shuffleWarpSongs == ON) {
+    if ((gSettingsContext.shuffleGrottoEntrances == ON || gSettingsContext.shuffleOverworldSpawns == ON || gSettingsContext.shuffleWarpSongs == ON) &&
+           gSaveContext.fw.playerParams == 0x4FF) {
+
+        gSaveContext.fw.playerParams = gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams = 0x6FF;
         gSaveContext.respawn[RESPAWN_MODE_RETURN] = gSaveContext.respawn[RESPAWN_MODE_TOP];
         gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
         lastEntranceType = GROTTO_RETURN;
+    } else {
+        lastEntranceType = NOT_GROTTO;
     }
 }
 
-void Grotto_SanitizeEntranceType(void) {
-    // Clear entrance type when on the title screen or after being thrown out
-    // by the Hyrule Castle guards if the last entrance was HC Storms Grotto -> HC
-    // This allows OHKO playthroughs to get past the guards properly.
-    if (!IsInGame() || gSaveContext.entranceIndex == 0x47E) {
+// If a scene transition is not overridden at all (i.e. guards throwing Link out / quitting game)
+// the lastEntranceType must be cleared to avoid messing up savewarps and deathwarps.
+// This does not apply to void out and other respawns, which should keep the lastEntranceType.
+void Grotto_SanitizeEntranceType() {
+    if (!overridingNextEntrance && gSaveContext.respawnFlag == 0) {
         lastEntranceType = NOT_GROTTO;
     }
+    overridingNextEntrance = FALSE;
 }

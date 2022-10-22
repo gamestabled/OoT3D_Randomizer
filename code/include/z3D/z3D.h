@@ -9,6 +9,9 @@
 
 // #include "hid.h"
 
+#define TRUE  1
+#define FALSE 0
+
 typedef struct {
     /* 0x00 */ u8  buttonItems[5]; //B,Y,X,I,II
     /* 0x05 */ u8  buttonSlots[4]; //Y,X,I,II

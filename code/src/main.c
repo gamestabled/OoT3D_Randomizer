@@ -43,8 +43,6 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
 
     Settings_SkipSongReplays();
 
-    Grotto_SanitizeEntranceType();
-
     Multiplayer_Run();
 }
 
