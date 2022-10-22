@@ -1348,6 +1348,10 @@ SECTIONS
 		*(.patch_WarpSongEntranceOverride)
 	}
 
+	.patch_SetFWPlayerParams 0x4911B8 : {
+		*(.patch_SetFWPlayerParams)
+	}
+
 	.patch_SwapFaroresWind 0x49186C : {
 		*(.patch_SwapFaroresWind)
 	}
@@ -1376,8 +1380,8 @@ SECTIONS
 		*(.patch_SendDroppedBottleContents)
 	}
 
-	.patch_ReturnFWSetupGrottoInfo 0x496B88 : {
-		*(.patch_ReturnFWSetupGrottoInfo)
+	.patch_ReturnFW 0x496B88 : {
+		*(.patch_ReturnFW)
 	}
 
 	.patch_SetSpecialVoidOutRespawnFlag 0x496C70 : {

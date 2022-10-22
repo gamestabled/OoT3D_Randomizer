@@ -28,6 +28,6 @@ void Grotto_SetExitOverride(s16 originalIndex, s16 overrideIndex);
 void Grotto_SetLoadOverride(s16 originalIndex, s16 overrideIndex);
 s16  Grotto_CheckSpecialEntrance(s16 nextEntranceIndex);
 void Grotto_ForceGrottoReturnOnSpecialEntrance(void);
-void Grotto_SanitizeEntranceType();
+void Grotto_SanitizeEntranceType(void);
 
 #endif //_GROTTO_H_
