@@ -181,6 +181,7 @@ u16 SaveFile_RestoreChildEquips(void) {
     //if Kokiri Sword is not on child B button
     if (gSaveContext.childEquips.buttonItems[0] != ITEM_SWORD_KOKIRI) {
         gSaveContext.infTable[29] |= 0x1; //set swordless flag
+        gSaveContext.buttonStatus[0] = 0xFF; //clear Temp B
     }
     return (gSaveContext.childEquips.equipment & 0xFFF0) | (gSaveContext.equipment & 0x1);
 }
