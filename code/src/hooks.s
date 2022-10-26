@@ -1258,8 +1258,8 @@ hook_OverrideGrottoActorEntrance:
     pop {r0-r12, lr}
     b 0x3F22C4
 
-.global hook_ReturnFWSetupGrottoInfo
-hook_ReturnFWSetupGrottoInfo:
+.global hook_ReturnFW
+hook_ReturnFW:
     push {r0-r12, lr}
     bl Grotto_SetupReturnInfoOnFWReturn
     pop {r0-r12, lr}
@@ -1707,6 +1707,17 @@ hook_GanonDrawMasterSword:
     bxeq lr
     strb r10,[r4,#0x0] @ delete MS effect
     bx lr
+
+.global hook_SetFWPlayerParams
+hook_SetFWPlayerParams:
+    push {r0-r9,r11-r12,lr}
+    bl Grotto_ChooseFWPlayerParams
+    mov r10,r0
+    pop {r0-r9,r11-r12,lr}
+    bx lr
+
+@ ----------------------------------
+@ ----------------------------------
 
 .section .loader
 .global hook_into_loader
