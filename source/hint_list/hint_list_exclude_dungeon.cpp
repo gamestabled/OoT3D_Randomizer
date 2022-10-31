@@ -1245,8 +1245,11 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[SHADOW_TEMPLE_MQ_HOVER_BOOTS_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#Dead Hand in the Shadow Temple# holds", /*french*/"le #Poigneur dans le temple de l'ombre# cache", /*spanish*/"la #Mano Muerta del Templo de las Sombras# guarda", /*italian*/"lo #Smaniosso nel Santuario dell'Ombra# possiede", /*german*/"Deutsch"},
-  });
+                       Text{"a #nether dweller in the Shadow Temple# holds", /*french*/"le #spectre du temple de l'ombre# a", /*spanish*/"un #temido morador del Templo de las Sombras# guarda", /*italian*/"un #tipo manesco nel Santuario dell'Ombra# possiede", /*german*/"Deutsch"},
+                     }, {},
+                       //clear text
+                       Text{"#Dead Hand in the Shadow Temple# holds", /*french*/"le #Poigneur dans le temple de l'ombre# cache", /*spanish*/"la #Mano Muerta del Templo de las Sombras# guarda", /*italian*/"lo #Smaniosso nel Santuario dell'Ombra# possiede", /*german*/"Deutsch"}
+  );
 
     hintTable[SHADOW_TEMPLE_MQ_EARLY_GIBDOS_CHEST] = HintText::Exclude({
                        //obscure text
@@ -1260,7 +1263,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[SHADOW_TEMPLE_MQ_BEAMOS_SILVER_RUPEES_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#collecting rupees in a vast cavern# with the Shadow Temple unveils", /*french*/"les #pièces argentées dans le temple de l'ombre# révèlent", /*spanish*/"hacerte con las #rupias en una gran caverna# del Templo de las Sombras revela", /*italian*/"#raccogliere rupie in una vasta caverna# nel Santuario dell'Ombra rivela", /*german*/"Deutsch"},
+                       Text{"#collecting rupees in a vast cavern# within the Shadow Temple unveils", /*french*/"les #pièces argentées dans le temple de l'ombre# révèlent", /*spanish*/"hacerte con las #rupias en una gran caverna# del Templo de las Sombras revela", /*italian*/"#raccogliere rupie in una vasta caverna# nel Santuario dell'Ombra rivela", /*german*/"Deutsch"},
   });
 
     hintTable[SHADOW_TEMPLE_MQ_FALLING_SPIKES_SWITCH_CHEST] = HintText::Exclude({

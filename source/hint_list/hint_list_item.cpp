@@ -18,6 +18,7 @@ void HintTable_Init_Item() {
                        //obscure text
                        Text{"evil's bane",        /*french*/"le fléau du mal",       /*spanish*/"la destructora del mal",    /*italian*/"il potere dell'esorcismo", /*german*/"Deutsch"},
                        Text{"a seven year limbo", /*french*/"une stase de sept ans", /*spanish*/"unos siete años de espera", /*italian*/"un sonno di sette anni",   /*german*/"Deutsch"},
+                       Text{"Fi",                 /*french*/"Fay",                   /*spanish*/"Fay",                       /*italian*/"Faih",                     /*german*/"Phai"},
                      }, {
                        //ambiguous text
                        Text{"a sword", /*french*/"une épée", /*spanish*/"una espada", /*italian*/"una spada", /*german*/"Deutsch"},

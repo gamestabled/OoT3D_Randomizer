@@ -167,17 +167,17 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMT_GREAT_FAIRY_REWARD] = HintText::Exclude({
                        //obscure text
-                       Text{"a #magical fairy# gifts", /*french*/"la #fée de la magie# a", /*spanish*/"un #hada mágica# brinda", /*italian*/"la #Fata radiosa della Forza# consegna", /*german*/"Deutsch"},
+                       Text{"the #Great Fairy of Power# gifts", /*french*/"la #grande fée de la force# a", /*spanish*/"la #Gran Hada del Poder# brinda", /*italian*/"la #Fata radiosa della Forza# consegna", /*german*/"Deutsch"},
   });
 
     hintTable[DMC_GREAT_FAIRY_REWARD] = HintText::Exclude({
                        //obscure text
-                       Text{"a #magical fairy# gifts", /*french*/"la #fée de la magie# a", /*spanish*/"un #hada mágica# brinda", /*italian*/"la #Fata radiosa della Saggezza# consegna", /*german*/"Deutsch"},
+                       Text{"the #Great Fairy of Wisdom# gifts", /*french*/"la #grande fée de la sagesse# a", /*spanish*/"la #Gran Hada de la Sabiduría# brinda", /*italian*/"la #Fata radiosa della Saggezza# consegna", /*german*/"Deutsch"},
   });
 
     hintTable[OGC_GREAT_FAIRY_REWARD] = HintText::Exclude({
                        //obscure text
-                       Text{"the #fairy of strength# holds", /*french*/"la #fée de la force# a", /*spanish*/"el #hada de la fuerza# brinda", /*italian*/"la #Fata radiosa del Coraggio# consegna", /*german*/"Deutsch"},
+                       Text{"the #Great Fairy of Courage# holds", /*french*/"la #grande fée du courage# a", /*spanish*/"la #Gran Hada del Valor# brinda", /*italian*/"la #Fata radiosa del Coraggio# consegna", /*german*/"Deutsch"},
   });
 
 

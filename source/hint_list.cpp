@@ -1396,7 +1396,7 @@ void HintTable_Init() {
 
     hintTable[JUNK36] = HintText::Junk({
                      //obscure text
-                     Text{"Tingle Tingle Kooloo Limpah!", /*french*/"Tingle! Tingle! Kooloolin... Pah!", /*spanish*/"Tingle, Tingle, Kurulín... ¡PA!", /*italian*/"Tingle, Tingle!&Kururìn-PA!", /*german*/"Deutsch"},
+                     Text{COLOR(QM_GREEN)} + Text{"Tingle Tingle Kooloo Limpah!", /*french*/"Tingle! Tingle! Kooloolin... Pah!", /*spanish*/"Tingle, Tingle, Kurulín... ¡PA!", /*italian*/"Tingle, Tingle!&Kururìn-PA!", /*german*/"Deutsch"},
     });
 
     hintTable[JUNK37] = HintText::Junk({
@@ -1516,7 +1516,7 @@ void HintTable_Init() {
 
     hintTable[JUNK60] = HintText::Junk({
                      //obscure text
-                     Text{"You found a spiritual Stone! By which I mean, I worship Nayru.", /*french*/"Vous avez trouvé une pierre spirituelle! En effet, je vénère la déesse Hylia.", /*spanish*/"¡Has encontrado una piedra espiritual! Es que le rindo culto a Nayru...", /*italian*/"Hai trovato una pietra spirituale! Sai com'è, io venero Nayru.", /*german*/"Deutsch"},
+                     Text{"You found a Spiritual Stone! By which I mean, I worship Nayru.", /*french*/"Vous avez trouvé une pierre spirituelle! En effet, je vénère la déesse Hylia.", /*spanish*/"¡Has encontrado una piedra espiritual! Es que le rindo culto a Nayru...", /*italian*/"Hai trovato una pietra spirituale! Sai com'è, io venero Nayru.", /*german*/"Deutsch"},
     });
 
     hintTable[JUNK61] = HintText::Junk({
