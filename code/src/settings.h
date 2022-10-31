@@ -391,6 +391,14 @@ typedef enum {
 } TrailDuration;
 
 typedef enum {
+    MIRRORWORLD_OFF,
+    MIRRORWORLD_ON,
+    MIRRORWORLD_SCENESPECIFIC,
+    MIRRORWORLD_ENTRANCESPECIFIC,
+    MIRRORWORLD_RANDOM,
+} MirrorWorld;
+
+typedef enum {
   PLAY_ON_CONSOLE,
   PLAY_ON_CITRA,
 } PlayOption;
