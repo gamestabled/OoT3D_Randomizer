@@ -165,8 +165,8 @@ void AreaTable_Init_FireTemple() {
                   Entrance(FIRE_TEMPLE_FIRE_PILLAR_ROOM,   {[]{return SmallKeys(FIRE_TEMPLE, 4);}}),
                   Entrance(FIRE_TEMPLE_SHORTCUT_CLIMB,     {[]{return Here(FIRE_TEMPLE_SHORTCUT_CLIMB, []{return true;});},
                                                 /*Glitched*/[]{return (GoronBracelet || LogicFireStrength) && Bombs && CanSurviveDamage && CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE);}}),
-                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_LOWER, {[]{return (GoronBracelet || (IsAdult && LogicFireStrength)) && (HasExplosives || (IsAdult && (CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT))));},
-                                                /*Glitched*/[]{return (GoronBracelet || (IsAdult && LogicFireStrength)) && (CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE) ||
+                  Entrance(FIRE_TEMPLE_BOULDER_MAZE_LOWER, {[]{return (GoronBracelet || (IsAdult && LogicFireStrength)) && (IsAdult || LogicFireStrength) && (HasExplosives || (IsAdult && (CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT))));},
+                                                /*Glitched*/[]{return (GoronBracelet || (IsAdult && LogicFireStrength)) && (IsAdult || LogicFireStrength) && (CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE) ||
                                                                       (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) && CanUse(STICKS)));}}),
   });
 
