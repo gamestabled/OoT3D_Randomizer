@@ -62,7 +62,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[DEKU_TREE_MQ_BEFORE_SPINNING_LOG_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#magical fire in the Deku Tree# leads to", /*french*/"le #feu magique dans l'arbre Mojo# éclaire", /*spanish*/"el #fuego mágico en el Gran Árbol Deku# conduce a", /*italian*/"con del #fuoco magico nell'Albero Deku# si può ottenere", /*german*/"Deutsch"},
+                       Text{"#magical fire in the Deku Tree# leads to", /*french*/"le #feu magique dans l'arbre Mojo# éclaire", /*spanish*/"el #fuego mágico en el Gran Árbol Deku# conduce a", /*italian*/"con del #fuoco magico nell'Albero Deku# si |può|possono| ottenere", /*german*/"Deutsch"},
   });
 
     hintTable[DEKU_TREE_QUEEN_GOHMA_HEART] = HintText::Exclude({
@@ -175,7 +175,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[DODONGOS_CAVERN_MQ_UNDER_GRAVE_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#beneath a headstone# in Dodongo's Cavern lies", /*french*/"#sous une pierre tombale# dans la caverne Dodongo gît", /*spanish*/"#bajo una lápida# en la Cueva de los Dodongos yace", /*italian*/"#sotto una lapide# nella caverna dei Dodongo giace", /*german*/"Deutsch"},
+                       Text{"#beneath a headstone# in Dodongo's Cavern lies", /*french*/"#sous une pierre tombale# dans la caverne Dodongo gît", /*spanish*/"#bajo una lápida# en la Cueva de los Dodongos yace", /*italian*/"#sotto una lapide# nella caverna dei Dodongo |giace|giacciono|", /*german*/"Deutsch"},
   });
 
     hintTable[DODONGOS_CAVERN_KING_DODONGO_HEART] = HintText::Exclude({
@@ -1234,7 +1234,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[SHADOW_TEMPLE_FREESTANDING_KEY] = HintText::Exclude({
                        //obscure text
-                       Text{"#inside a burning skull# lies", /*french*/"#dans un crâne enflammé# gît", /*spanish*/"en el #interior de una calavera en llamas# aguarda", /*italian*/"da un #vaso a forma di teschio# salta fuori", /*german*/"Deutsch"},
+                       Text{"#inside a burning skull# lies", /*french*/"#dans un crâne enflammé# gît", /*spanish*/"en el #interior de una calavera en llamas# aguarda", /*italian*/"da un #vaso a forma di teschio# |salta|saltano| fuori", /*german*/"Deutsch"},
   });
 
 
@@ -1886,32 +1886,32 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si ottiene", /*german*/"Deutsch"},
+                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si |ottiene|ottengono|", /*german*/"Deutsch"},
   });
 
     hintTable[GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si ottiene", /*german*/"Deutsch"},
+                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si |ottiene|ottengono|", /*german*/"Deutsch"},
   });
 
     hintTable[GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si ottiene", /*german*/"Deutsch"},
+                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si |ottiene|ottengono|", /*german*/"Deutsch"},
   });
 
     hintTable[GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si ottiene", /*german*/"Deutsch"},
+                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si |ottiene|ottengono|", /*german*/"Deutsch"},
   });
 
     hintTable[GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si ottiene", /*german*/"Deutsch"},
+                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si |ottiene|ottengono|", /*german*/"Deutsch"},
   });
 
     hintTable[GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST] = HintText::Exclude({
                        //obscure text
-                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si ottiene", /*german*/"Deutsch"},
+                       Text{"#reflected light in the test of the sands# reveals", /*french*/"le #soleil dans l'épreuve des sables# révèle", /*spanish*/"#reflejar la luz en la prueba de las arenas# revela", /*italian*/"#riflettendo nella prova delle sabbie# si |ottiene|ottengono|", /*german*/"Deutsch"},
   });
 
     hintTable[GANONS_CASTLE_MQ_FOREST_TRIAL_FREESTANDING_KEY] = HintText::Exclude({

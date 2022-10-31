@@ -31,7 +31,7 @@ void HintTable_Init() {
     hintTable[WAY_OF_THE_HERO] = HintText::Exclude({Text{" is on the way of the hero.", /*french*/" est sur le chemin du héros.", /*spanish*/" conduce a la senda del héroe.", /*italian*/" è sul cammino dell'eroe.",    /*german*/"Deutsch"}});
     hintTable[PLUNDERING]      = HintText::Exclude({Text{"plundering ",                 /*french*/"explorer ",                    /*spanish*/"inspeccionar ",                  /*italian*/"saccheggiare ",                /*german*/"Deutsch"}});
     hintTable[FOOLISH]         = HintText::Exclude({Text{" is a foolish choice.",       /*french*/" est futile.",                 /*spanish*/" no es una sabia decisión.",     /*italian*/" è una perdita di tempo.",     /*german*/"Deutsch"}});
-    hintTable[CAN_BE_FOUND_AT] = HintText::Exclude({Text{"can be found at",             /*french*/"se trouve dans",               /*spanish*/"aguarda en",                     /*italian*/"si trova presso",              /*german*/"Deutsch"}});
+    hintTable[CAN_BE_FOUND_AT] = HintText::Exclude({Text{"can be found at",             /*french*/"se trouve dans",               /*spanish*/"aguarda en",                     /*italian*/"si |trova|trovano| presso",    /*german*/"Deutsch"}});
     hintTable[HOARDS]          = HintText::Exclude({Text{"hoards",                      /*french*/"recèle",                       /*spanish*/"acapara",                        /*italian*/"nasconde",                     /*german*/"Deutsch"}});
 
     HintTable_Init_Item();
@@ -57,7 +57,7 @@ void HintTable_Init() {
                        Text{"the #bovine bounty of a horseback hustle# gifts", /*french*/"le cadeau #qui découle d'une réussite équestre# est", /*spanish*/"la #recompensa bovina de un paseo a caballo# brinda", /*italian*/"la #ricompensa bovina di un'impresa equestre# dona", /*german*/"Deutsch"},
                      }, {},
                        //clear text
-                       Text{"#Malon's obstacle course# leads to", /*french*/"la #course à obstacle de Malon# amène à", /*spanish*/"la #carrera de obstáculos de Malon# brinda", /*italian*/"la #corsa ad ostacoli di Malon# porta verso", /*german*/"Deutsch"}
+                       Text{"#Malon's obstacle course# leads to", /*french*/"la #course à obstacle de Malon# amène à", /*spanish*/"la #carrera de obstáculos de Malon# brinda", /*italian*/"se vinci la #corsa ad ostacoli di Malon# ti |arriva|arrivano| a casa", /*german*/"Deutsch"}
   );
 
     /*--------------------------
@@ -92,7 +92,7 @@ void HintTable_Init() {
 
     hintTable[SHEIK_IN_ICE_CAVERN] = HintText::Sometimes({
                        //obscure text
-                       Text{"the #frozen cavern# echoes with", /*french*/"Sheik confiera, #dans une caverne étoilée#,", /*spanish*/"en la #caverna de hielo# retumban los ecos de", /*italian*/"nella #caverna ghiacciata# riecheggia", /*german*/"Deutsch"},
+                       Text{"the #frozen cavern# echoes with", /*french*/"Sheik confiera, #dans une caverne étoilée#,", /*spanish*/"en la #caverna de hielo# retumban los ecos de", /*italian*/"nella #caverna ghiacciata# |riecheggia|riecheggiano|", /*german*/"Deutsch"},
   });
 
     hintTable[SHEIK_IN_KAKARIKO] = HintText::Sometimes({
@@ -111,7 +111,7 @@ void HintTable_Init() {
                        Text{"#ghost hunters# will be rewarded with", /*french*/"#les chasseurs de fantômes# sont récompensés avec", /*spanish*/"los #cazafantasmas# son premiados con", /*italian*/"gli #acchiappafantasmi# saranno ricompensati con", /*german*/"Deutsch"},
                      }, {},
                        //clear text
-                       Text{"catching #Big Poes# leads to", /*french*/"#d'attraper des fantômes# donne", /*spanish*/"hacerte con #Grandes Poes# conduce a", /*italian*/"catturare #Grandi Poo# porta verso", /*german*/"Deutsch"}
+                       Text{"catching #Big Poes# leads to", /*french*/"#d'attraper des fantômes# donne", /*spanish*/"hacerte con #Grandes Poes# conduce a", /*italian*/"chi cattura #Grandi Poo# viene ripagato con", /*german*/"Deutsch"}
   );
 
     hintTable[DEKU_THEATER_SKULL_MASK] = HintText::Sometimes({
@@ -354,8 +354,8 @@ void HintTable_Init() {
 
     hintTable[WASTELAND_CHEST] = HintText::Sometimes({
                        //obscure text
-                       Text{"#deep in the wasteland# is",         /*french*/"#loin dans le désert# gît",                     /*spanish*/"en lo #profundo del desierto encantado# yace", /*italian*/"#nel profondo del deserto stregato# puoi trovare", /*german*/"Deutsch"},
-                       Text{"beneath #the sands#, flames reveal", /*french*/"#sous le désert#, les flammes font apparaître", /*spanish*/"tras las #arenas# unas llamas revelan",        /*italian*/"#sotto la sabbia#, delle fiamme rivelano",         /*german*/"Deutsch"},
+                       Text{"#deep in the wasteland# is",         /*french*/"#loin dans le désert# gît",                     /*spanish*/"en lo #profundo del desierto encantado# yace", /*italian*/"#nel profondo del deserto stregato# si |cela|celano|", /*german*/"Deutsch"},
+                       Text{"beneath #the sands#, flames reveal", /*french*/"#sous le désert#, les flammes font apparaître", /*spanish*/"tras las #arenas# unas llamas revelan",        /*italian*/"#sotto la sabbia#, delle fiamme rivelano",             /*german*/"Deutsch"},
   });
 
     hintTable[WASTELAND_GS] = HintText::Sometimes({

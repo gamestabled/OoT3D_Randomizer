@@ -300,7 +300,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZR_FROGS_ZELDAS_LULLABY] = HintText::Exclude({
                        //obscure text
-                       Text{"#sleepy frogs# gift",                         /*french*/"#les grenouilles somnolentes# donnent",            /*spanish*/"las #ranas somnolientas# regalan",                  /*italian*/"delle #rane assonnate# regalano", /*german*/"Deutsch"},
+                       Text{"#sleepy frogs# gift",                         /*french*/"#les grenouilles somnolentes# donnent",            /*spanish*/"las #ranas somnolientas# regalan",                  /*italian*/"delle #rane assonnate# regalano",                /*german*/"Deutsch"},
                        Text{"#the Froggish Tenor in the back-left# gifts", /*french*/"#le ténor grenouillesque au fond à gauche# donne", /*spanish*/"el #Sapo Tenore al fondo, a la izquierda#, regala", /*italian*/"il #musico batrace in fondo a sinistra# regala", /*german*/"Deutsch"},
                        }, {},
                        //clear text
@@ -309,7 +309,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZR_FROGS_EPONAS_SONG] = HintText::Exclude({
                        //obscure text
-                       Text{"#equine frogs# gift",                          /*french*/"#les grenouilles équestres# donnent",              /*spanish*/"las #ranas equinas# regalan",                     /*italian*/"delle #rane equine# regalano", /*german*/"Deutsch"},
+                       Text{"#equine frogs# gift",                          /*french*/"#les grenouilles équestres# donnent",              /*spanish*/"las #ranas equinas# regalan",                     /*italian*/"delle #rane equine# regalano",                 /*german*/"Deutsch"},
                        Text{"#the Froggish Tenor in the back-right# gifts", /*french*/"#le ténor grenouillesque au fond à droite# donne", /*spanish*/"el #Sapo Tenore al fondo, a la derecha#, regala", /*italian*/"il #musico batrace in fondo a destra# regala", /*german*/"Deutsch"},
                        }, {},
                        //clear text
@@ -318,7 +318,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZR_FROGS_SARIAS_SONG] = HintText::Exclude({
                        //obscure text
-                       Text{"#sylvan frogs# gift",                      /*french*/"#les grenouilles sylvestres# donnent",           /*spanish*/"las #ranas silvestres# regalan",       /*italian*/"delle #rane silvestri# regalano", /*german*/"Deutsch"},
+                       Text{"#sylvan frogs# gift",                      /*french*/"#les grenouilles sylvestres# donnent",           /*spanish*/"las #ranas silvestres# regalan",       /*italian*/"delle #rane silvestri# regalano",      /*german*/"Deutsch"},
                        Text{"#the Froggish Tenor in the center# gifts", /*french*/"#le ténor grenouillesque dans le centre# donne", /*spanish*/"el #Sapo Tenore en el centro# regala", /*italian*/"il #musico batrace al centro# regala", /*german*/"Deutsch"},
                        }, {},
                        //clear text
@@ -327,7 +327,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZR_FROGS_SUNS_SONG] = HintText::Exclude({
                        //obscure text
-                       Text{"#enlightened frogs# gift",                     /*french*/"#les grenouilles éclairées# donnent",              /*spanish*/"las #ranas alumbradas# regalan",                     /*italian*/"delle #rane illuminate# regalano", /*german*/"Deutsch"},
+                       Text{"#enlightened frogs# gift",                     /*french*/"#les grenouilles éclairées# donnent",              /*spanish*/"las #ranas alumbradas# regalan",                     /*italian*/"delle #rane illuminate# regalano",              /*german*/"Deutsch"},
                        Text{"#the Froggish Tenor in the front-left# gifts", /*french*/"#le ténor grenouillesque à l'avant gauche# donne", /*spanish*/"el #Sapo Tenore al frente, a la izquierda#, regala", /*italian*/"il #musico batrace davanti a sinistra# regala", /*german*/"Deutsch"},
                        }, {},
                        //clear text
@@ -337,7 +337,7 @@ void HintTable_Init_Exclude_Overworld() {
     hintTable[ZR_FROGS_SONG_OF_TIME] = HintText::Exclude({
                        //obscure text
                        Text{"#time-traveling frogs# gift",                   /*french*/"#les grenouilles voyageuses dans le temps# donnent", /*spanish*/"las #ranas viajeras del tiempo# regalan",          /*italian*/"delle #rane che viaggiano nel tempo# regalano", /*german*/"Deutsch"},
-                       Text{"#the Froggish Tenor in the front-right# gifts", /*french*/"#le ténor grenouillesque à l'avant droite# donne",   /*spanish*/"el #Sapo Tenore al frente, a la derecha#, regala", /*italian*/"il #musico batrace davanti a destra# regala", /*german*/"Deutsch"},
+                       Text{"#the Froggish Tenor in the front-right# gifts", /*french*/"#le ténor grenouillesque à l'avant droite# donne",   /*spanish*/"el #Sapo Tenore al frente, a la derecha#, regala", /*italian*/"il #musico batrace davanti a destra# regala",   /*german*/"Deutsch"},
                        }, {},
                        //clear text
                        Text{"after hearing #the Song of Time, the frogs# gift", /*french*/"à l'écoute du #chant du temps, les grenouilles# donnent", /*spanish*/"después de escuchar #la Canción del tiempo, las ranas# regalan", /*italian*/"dopo aver ascoltato #la Canzone del tempo, le rane# regalano", /*german*/"Deutsch"}
