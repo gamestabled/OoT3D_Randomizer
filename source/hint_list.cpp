@@ -17,6 +17,8 @@ using namespace CustomMessages;
 // - OoT Randomizer
 
 // '%d' indicates a number will be placed there.
+// '$' at the end of an item name indicates that it's plural.
+// '|' separates singular and plural form.
 
 std::array<HintText, KEY_ENUM_MAX> hintTable;
 

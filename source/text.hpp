@@ -160,6 +160,34 @@ public:
         this->Replace("|", "");
     }
 
+    //if there's a '$' in the text, the verb will need to be plural
+    void SetFormPerLanguage() {
+        for (std::string* str : {&NAenglish, &NAfrench, &NAspanish, &EURenglish, &EURfrench, &EURspanish, &EURitalian, &EURgerman}) {
+
+            size_t firstBar = str->find('|');
+            if (firstBar != std::string::npos) {
+
+                size_t dollarSign = str->find('$');
+                size_t secondBar = str->find('|', firstBar + 1);
+                if (secondBar != std::string::npos) {
+
+                    size_t thirdBar = str->find('|', secondBar + 1);
+                    if (thirdBar != std::string::npos) {
+
+                        if (dollarSign == std::string::npos) {
+                            str->erase(secondBar, thirdBar - secondBar);
+                        } else {
+                            str->erase(firstBar, secondBar - firstBar);
+                        }
+                    }
+                }
+            }
+        }
+        //remove remaining bars and dollar sign
+        this->Replace("|", "");
+        this->Replace("$", "");
+    }
+
     std::string NAenglish = "";
     std::string NAfrench = "";
     std::string NAspanish = "";

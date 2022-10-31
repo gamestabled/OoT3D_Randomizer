@@ -211,6 +211,7 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
   Text prefix = Hint(PREFIX).GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
+  finalHint.SetFormPerLanguage();
   PlacementLog_Msg("\tMessage: ");
   PlacementLog_Msg(finalHint.NAenglish);
   PlacementLog_Msg("\n\n");
@@ -358,6 +359,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
     AreaKey parentRegion = Location(hintedLocation)->GetParentRegionKey();
     Text locationText = AreaTable(parentRegion)->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# "+Hint(HOARDS).GetText()+" #"+itemText+"#.";
+    finalHint.SetFormPerLanguage();
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.NAenglish);
     PlacementLog_Msg("\n\n");
@@ -365,6 +367,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
   } else {
     Text locationText = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# "+Hint(CAN_BE_FOUND_AT).GetText()+" #"+locationText+"#.";
+    finalHint.SetFormPerLanguage();
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.NAenglish);
     PlacementLog_Msg("\n\n");
