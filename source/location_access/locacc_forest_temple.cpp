@@ -44,7 +44,7 @@ void AreaTable_Init_ForestTemple() {
                 }, {
                   //Locations
                   LocationAccess(FOREST_TEMPLE_GS_LOBBY, {[]{return HookshotOrBoomerang;},
-                                              /*Glitched*/[]{return IsAdult && HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
+                                              /*Glitched*/[]{return HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);}}),
                 }, {
                   //Exits
                   Entrance(FOREST_TEMPLE_SOUTH_CORRIDOR,    {[]{return true;}}),
