@@ -377,7 +377,9 @@ constexpr std::array DungeonColors = {
         CreateMessage(0x9309, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"You got the "+COLOR(QM_RED)+"Master Sword"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"This sacred blade is the only weapon"+NEWLINE()+"capable of defeating the "+COLOR(QM_GREEN)+"Evil King"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"Vous obtenez l'"+COLOR(QM_RED)+"épée de légende"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Cette lame sacrée est l'unique"+NEWLINE()+"arme capable de vaincre le"+NEWLINE()+COLOR(QM_GREEN)+"seigneur du Malin"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"¡Has obtenido la "+COLOR(QM_RED)+"Espada Maestra"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"¡Esta espada sagrada es la única arma"+NEWLINE()+"capaz de derrotar al "+COLOR(QM_GREEN)+"Rey Malvado"+COLOR(QM_WHITE)+"!"+MESSAGE_END());
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"¡Has obtenido la "+COLOR(QM_RED)+"Espada Maestra"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"¡Esta espada sagrada es la única arma"+NEWLINE()+"capaz de derrotar al "+COLOR(QM_GREEN)+"Rey Malvado"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"Hai ottenuto la "+COLOR(QM_RED)+"spada suprema"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Questa spada sacra è l'unica arma"+NEWLINE()+"in grado di sconfiggere"+COLOR(QM_GREEN)+"re del male"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
+                UNSKIPPABLE()+"Deutsch"+MESSAGE_END());
         //Tycoon's Wallet
         CreateMessage(0x09F7, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"You got a "+COLOR(QM_RED)+"Tycoon's Wallet"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"It's gigantic! Now you can carry"+NEWLINE()+"up to "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"Rupees"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
