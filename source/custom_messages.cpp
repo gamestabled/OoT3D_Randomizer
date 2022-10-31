@@ -241,12 +241,6 @@ constexpr std::array DungeonColors = {
     }
 
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-                       std::string NAEnglishText, std::string NAFrenchText, std::string NASpanishText) {
-        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, NAEnglishText, NAFrenchText, NASpanishText,
-                        NAEnglishText, NAFrenchText, NASpanishText, NAEnglishText, NAEnglishText);
-    }
-
-    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
                        std::string englishText, std::string frenchText, std::string spanishText,
                        std::string italianText, std::string germanText) {
         CreateMessage(textId, unk_04, textBoxType, textBoxPosition, englishText, frenchText, spanishText,
@@ -666,7 +660,7 @@ constexpr std::array DungeonColors = {
           }
         }
       }
-      return Text{"","",""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
+      return Text{""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
     }
 
     void ClearMessages() {

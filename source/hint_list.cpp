@@ -24,7 +24,7 @@ void HintTable_Init() {
     /*--------------------------
     |       GENERAL TEXT       |
     ---------------------------*/
-    hintTable[NONE]            = HintText::Exclude({Text{"No Hint","",""}});
+    hintTable[NONE]            = HintText::Exclude({Text{"No Hint"}});
     hintTable[PREFIX]          = HintText::Exclude({Text{"They say that ",              /*french*/"Selon moi, ",                  /*spanish*/"Según dicen, ",                  /*italian*/"Ho sentito dire che ",         /*german*/"Deutsch"}});
     hintTable[WAY_OF_THE_HERO] = HintText::Exclude({Text{" is on the way of the hero.", /*french*/" est sur le chemin du héros.", /*spanish*/" conduce a la senda del héroe.", /*italian*/" è sul cammino dell'eroe.",    /*german*/"Deutsch"}});
     hintTable[PLUNDERING]      = HintText::Exclude({Text{"plundering ",                 /*french*/"explorer ",                    /*spanish*/"inspeccionar ",                  /*italian*/"saccheggiare ",                /*german*/"Deutsch"}});

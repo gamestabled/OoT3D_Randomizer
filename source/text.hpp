@@ -8,15 +8,15 @@
 class Text {
 public:
     Text() = default;
-    Text(std::string NAenglish_, std::string NAfrench_, std::string NAspanish_)
-      : NAenglish(NAenglish_),
-        NAfrench(NAfrench_),
-        NAspanish(NAspanish_),
-        EURenglish(NAenglish_),
-        EURfrench(std::move(NAfrench_)),
-        EURspanish(std::move(NAspanish_)),
-        EURitalian(NAenglish_),
-        EURgerman(std::move(NAenglish_)) {}
+    Text(std::string generic)
+      : NAenglish(generic),
+        NAfrench(generic),
+        NAspanish(generic),
+        EURenglish(generic),
+        EURfrench(generic),
+        EURspanish(generic),
+        EURitalian(generic),
+        EURgerman(std::move(generic)) {}
 
     Text(std::string english_, std::string french_, std::string spanish_,
          std::string italian_, std::string german_)
