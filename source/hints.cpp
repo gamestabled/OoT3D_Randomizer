@@ -675,6 +675,10 @@ void CreateMerchantsHints() {
   Text carpetSalesmanItemText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetText();
   Text carpetSalesmanItemClearText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetClear();
 
+  for (Text* itemText : {&medigoronItemText, &grannyItemText, &carpetSalesmanItemText, &carpetSalesmanItemClearText}) {
+    itemText->Replace("$", "");
+  }
+
   Text grannyCapitalItemText = grannyItemText.Capitalize();
 
   Text medigoronText = Hint(MEDIGORON_DIALOG_FIRST).GetText()+medigoronItemText+Hint(MEDIGORON_DIALOG_SECOND).GetText();

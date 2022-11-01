@@ -2252,10 +2252,10 @@ void HintTable_Init() {
 
     hintTable[CARPET_SALESMAN_DIALOG_SECOND] = HintText::MerchantsDialogs({
                      //obscure text
-                     Text{"! Terrifying!&I won't tell you what it is until I see the&money...^How about #200 Rupees#?&&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
-                /*french*/"! Un&concentré de puissance! Mais montre tes&rubis avant que je te dise ce que c'est...^Disons #200 rubis#?&&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
-               /*spanish*/"! ¡Terrorífico!&No te revelaré su nombre hasta que&vea el dinero...^#200 rupias#, ¿qué te parece?&&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
-               /*italian*/"! Non ti dico di che si&tratta finché non vedo la grana.^Hai #200 rupie#?&&"+TWO_WAY_CHOICE()+"#Tieni!&Veramente no...#",
+                     Text{"! Terrifying! I won't tell you what it is until I see the money...^How about #200 Rupees#?&&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
+                /*french*/"! Un concentré de puissance! Mais montre tes rubis avant que je te dise ce que c'est...^Disons #200 rubis#?&&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
+               /*spanish*/"! ¡Terrorífico! No te revelaré su nombre hasta que vea el dinero...^#200 rupias#, ¿qué te parece?&&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
+               /*italian*/"! Non ti dico di che si tratta finché non vedo la grana.^Hai #200 rupie#?&&"+TWO_WAY_CHOICE()+"#Tieni!&Veramente no...#",
                 /*german*/"Deutsch"},
     });
 
