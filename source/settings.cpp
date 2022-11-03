@@ -1144,9 +1144,9 @@ namespace Settings {
   std::string finalChuTrailInnerColor   = BombchuTrailInnerColor.GetSelectedOptionText();
   std::string finalChuTrailOuterColor   = BombchuTrailOuterColor.GetSelectedOptionText();
 
-  Option ColoredKeys =     Option::Bool("Colored Small Keys", {"Off", "On"}, {coloredKeysDesc},                                                                                                                                                                 OptionCategory::Cosmetic);
-  Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"}, {coloredBossKeysDesc},                                                                                                                                                             OptionCategory::Cosmetic);
-  Option MirrorWorld =     Option::Bool("Mirror World",       {"Off", "On"}, {mirrorWorldDesc},                                                                                                                                                                 OptionCategory::Cosmetic);
+  Option ColoredKeys =     Option::Bool("Colored Small Keys", {"Off", "On"},                                {coloredKeysDesc},                                                                                                                                  OptionCategory::Cosmetic);
+  Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"},                                {coloredBossKeysDesc},                                                                                                                              OptionCategory::Cosmetic);
+  Option MirrorWorld =     Option::U8  ("Mirror World",       {"Off", "On", "Scene", "Entrance", "Random"}, {mirrorWorldOffDesc, mirrorWorldOnDesc, mirrorWorldSceneDesc, mirrorWorldEntranceDesc, mirrorWorldRandomDesc},                                      OptionCategory::Cosmetic);
 
   std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
@@ -1467,7 +1467,7 @@ namespace Settings {
     ctx.rainbowChuTrailInnerColor  = (BombchuTrailInnerColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
     ctx.rainbowChuTrailOuterColor  = (BombchuTrailOuterColor.Value<u8>() == RAINBOW_TRAIL) ? 1 : 0;
     ctx.bombchuTrailDuration       = BombchuTrailDuration.Value<u8>();
-    ctx.mirrorWorld                = (MirrorWorld) ? 1 : 0;
+    ctx.mirrorWorld                = MirrorWorld.Value<u8>();
     ctx.coloredKeys                = (ColoredKeys) ? 1 : 0;
     ctx.coloredBossKeys            = (ColoredBossKeys) ? 1 : 0;
     ctx.shuffleSFX                 = ShuffleSFX.Value<u8>();

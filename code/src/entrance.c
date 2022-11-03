@@ -834,3 +834,18 @@ void InitEntranceTrackingData(void) {
     }
     SortEntranceList(destList, 1);
 }
+
+void Entrance_UpdateMQFlag(void) {
+    if (IsInGame()) {
+        switch (gSettingsContext.mirrorWorld) {
+            case MIRRORWORLD_SCENESPECIFIC:
+                gSaveContext.masterQuestFlag = Hash(gGlobalContext->sceneNum) & 1;
+                return;
+            case MIRRORWORLD_ENTRANCESPECIFIC:
+                gSaveContext.masterQuestFlag = Hash(gSaveContext.entranceIndex) & 1;
+                return;
+            case MIRRORWORLD_RANDOM:
+                gSaveContext.masterQuestFlag = gRandInt & 1;
+        }
+    }
+}

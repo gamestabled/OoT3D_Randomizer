@@ -1687,6 +1687,14 @@ hook_CriticalHealthCheck:
     movle r0,#0x18
     bx lr
 
+.global hook_InitSceneMirrorWorld
+hook_InitSceneMirrorWorld:
+    push {r0-r12,lr}
+    bl Entrance_UpdateMQFlag
+    pop {r0-r12,lr}
+    cpy r4,r0
+    bx lr
+
 .global hook_CollisionATvsAC
 hook_CollisionATvsAC:
     ldr r12,[sp,#0x18]

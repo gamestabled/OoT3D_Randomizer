@@ -1971,6 +1971,11 @@ CriticalHealthCheckThree_patch:
     nop
     nop
 
+.section .patch_InitSceneMirrorWorld
+.global InitSceneMirrorWorld_patch
+InitSceneMirrorWorld_patch:
+    bl hook_InitSceneMirrorWorld
+
 .section .patch_CollisionATvsAC
 .global CollisionATvsAC_patch
 CollisionATvsAC_patch:

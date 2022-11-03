@@ -1152,6 +1152,10 @@ SECTIONS
 		*(.patch_CheckForPocketCuccoHatchGameplayInit)
 	}
 
+	.patch_InitSceneMirrorWorld 0x4490DC : {
+		*(.patch_InitSceneMirrorWorld)
+	}
+
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}

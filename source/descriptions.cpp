@@ -1078,8 +1078,13 @@ string_view coloredBossKeysDesc       = "If set, boss key models will be colored
 /*------------------------------                                                           //
 |         MIRROR WORLD         |                                                           //
 ------------------------------*/                                                           //
-string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
-                                                                                           //
+string_view mirrorWorldOffDesc        = "The world will not be mirrored.";                 //
+string_view mirrorWorldOnDesc         = "The world will be mirrored.";                     //
+string_view mirrorWorldSceneDesc      = "Some regions will be mirrored while others won't.";
+string_view mirrorWorldEntranceDesc   = "Different entrances to the same region will alter\n"
+                                        "whether it is mirrored or not.";                  //
+string_view mirrorWorldRandomDesc     = "Whether the world is mirrored may change after\n" //
+                                        "every loading zone inconsistently.";              //
 /*------------------------------                                                           //
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
