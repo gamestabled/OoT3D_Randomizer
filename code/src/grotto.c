@@ -109,10 +109,7 @@ static void Grotto_SetupReturnInfo(GrottoReturnInfo grotto, RespawnMode respawnM
   // Set necessary grotto return data to the Entrance Point, so that voiding out and setting FW work correctly
   gSaveContext.respawn[respawnMode].entranceIndex = grotto.entranceIndex;
   gSaveContext.respawn[respawnMode].roomIndex = grotto.room;
-
-  if (gSettingsContext.mixGrottos == ON || gSettingsContext.decoupleEntrances == ON) {
-    gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
-  }
+  gSaveContext.respawn[respawnMode].playerParams = 0x04FF; // exiting grotto with no initial camera focus
   gSaveContext.respawn[respawnMode].yaw = grotto.angle;
   gSaveContext.respawn[respawnMode].pos = grotto.pos;
   //If Mixed Entrance Pools or decoupled entrances are active, set these flags to 0 instead of restoring them
