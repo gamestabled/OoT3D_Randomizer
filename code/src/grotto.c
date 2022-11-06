@@ -148,8 +148,9 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
         Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_RETURN);
         Grotto_SetupReturnInfo(grotto, RESPAWN_MODE_DOWN);
 
-        // When the nextEntranceIndex is determined by a dynamic exit, we have
-        // to set the respawn information and nextEntranceIndex manually
+        // When the nextEntranceIndex is determined by a dynamic exit,
+        // or set by Cutscene_BlueWarpOverride to mark a blue warp entrance,
+        // we have to set the respawn information and nextEntranceIndex manually
         if (gGlobalContext->nextEntranceIndex != -1) {
             gSaveContext.respawnFlag = 2;
             nextEntranceIndex = grotto.entranceIndex;
