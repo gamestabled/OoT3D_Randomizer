@@ -241,12 +241,6 @@ constexpr std::array DungeonColors = {
     }
 
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-                       std::string NAEnglishText, std::string NAFrenchText, std::string NASpanishText) {
-        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, NAEnglishText, NAFrenchText, NASpanishText,
-                        NAEnglishText, NAFrenchText, NASpanishText, NAEnglishText, NAEnglishText);
-    }
-
-    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
                        std::string englishText, std::string frenchText, std::string spanishText,
                        std::string italianText, std::string germanText) {
         CreateMessage(textId, unk_04, textBoxType, textBoxPosition, englishText, frenchText, spanishText,
@@ -377,7 +371,9 @@ constexpr std::array DungeonColors = {
         CreateMessage(0x9309, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"You got the "+COLOR(QM_RED)+"Master Sword"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"This sacred blade is the only weapon"+NEWLINE()+"capable of defeating the "+COLOR(QM_GREEN)+"Evil King"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"Vous obtenez l'"+COLOR(QM_RED)+"épée de légende"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Cette lame sacrée est l'unique"+NEWLINE()+"arme capable de vaincre le"+NEWLINE()+COLOR(QM_GREEN)+"seigneur du Malin"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
-                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"¡Has obtenido la "+COLOR(QM_RED)+"Espada Maestra"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"¡Esta espada sagrada es la única arma"+NEWLINE()+"capaz de derrotar al "+COLOR(QM_GREEN)+"Rey Malvado"+COLOR(QM_WHITE)+"!"+MESSAGE_END());
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"¡Has obtenido la "+COLOR(QM_RED)+"Espada Maestra"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"¡Esta espada sagrada es la única arma"+NEWLINE()+"capaz de derrotar al "+COLOR(QM_GREEN)+"Rey Malvado"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
+                UNSKIPPABLE()+ITEM_OBTAINED(ITEM_SWORD_MASTER)+INSTANT_TEXT_ON()+"Hai ottenuto la "+COLOR(QM_RED)+"spada suprema"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"Questa spada sacra è l'unica arma"+NEWLINE()+"in grado di sconfiggere il "+COLOR(QM_GREEN)+"re del male"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
+                UNSKIPPABLE()+"Deutsch"+MESSAGE_END());
         //Tycoon's Wallet
         CreateMessage(0x09F7, 0, 2, 3,
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_WALLET_GIANT)+INSTANT_TEXT_ON()+"You got a "+COLOR(QM_RED)+"Tycoon's Wallet"+COLOR(QM_WHITE)+"!"+INSTANT_TEXT_OFF()+NEWLINE()+"It's gigantic! Now you can carry"+NEWLINE()+"up to "+COLOR(QM_YELLOW)+"999 "+COLOR(QM_WHITE)+COLOR(QM_YELLOW)+"Rupees"+COLOR(QM_WHITE)+"!"+MESSAGE_END(),
@@ -498,33 +494,42 @@ constexpr std::array DungeonColors = {
             Text name = NonShopItems[shopitems].Name;
             std::string price = std::to_string(NonShopItems[shopitems].Price);
             //Prevent names from being too long and overflowing textbox
-            if (name.GetNAEnglish() == "Piece of Heart (Treasure Chest Minigame)") {
-                name = Text{"Piece of Heart", "Quart de coeur", "Pieza de corazón", "Frammento di cuore", "Deutsch"};
-            } else if (name.GetNAEnglish() == "Green Rupee (Treasure Chest Minigame)") {
-                name = Text{"Green Rupee", "Rubis vert", "Rupia verde", "Rupia verde", "Deutsch"};
-            }
+            Text priceSeparator = Text {
+                name.NAenglish.length()  <= 30 ? ": "  : NEWLINE()+"                                        ",
+                name.NAfrench.length()   <= 30 ? ": "  : NEWLINE()+"                                        ",
+                name.NAspanish.length()  <= 30 ? ": "  : NEWLINE()+"                                        ",
+                name.EURitalian.length() <= 30 ? " - " : NEWLINE()+"                                        ",
+                name.EURgerman.length()  <= 30 ? ": "  : NEWLINE()+"                                        ",
+            };
+            Text newlinesAfterPrice = Text {
+                name.NAenglish.length()  <= 30 ? NEWLINE()+NEWLINE() : NEWLINE(),
+                name.NAfrench.length()   <= 30 ? NEWLINE()+NEWLINE() : NEWLINE(),
+                name.NAspanish.length()  <= 30 ? NEWLINE()+NEWLINE() : NEWLINE(),
+                name.EURitalian.length() <= 30 ? NEWLINE()+NEWLINE() : NEWLINE(),
+                name.EURgerman.length()  <= 30 ? NEWLINE()+NEWLINE() : NEWLINE(),
+            };
             //Message to display when hovering over the item
             if (NonShopItems[shopitems].Repurchaseable) { //Different checkbox for repurchaseable items
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNASpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial!"+NEWLINE()+"¡Compra todo lo que quieras!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEURItalian()+" - "+price+" rupie"+NEWLINE()+COLOR(QM_WHITE)+"Offerta speciale!"+NEWLINE()+"Compratene a volontà!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAEnglish()+priceSeparator.GetNAEnglish()+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal!"+NEWLINE()+"Buy as many as you want!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAFrench()+priceSeparator.GetNAFrench()+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale!"+NEWLINE()+"Achetez-en à volonté!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNASpanish()+priceSeparator.GetNASpanish()+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial!"+NEWLINE()+"¡Compra todo lo que quieras!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEURItalian()+priceSeparator.GetEURItalian()+price+" rupie"+NEWLINE()+COLOR(QM_WHITE)+"Offerta speciale!"+NEWLINE()+"Compratene a volontà!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
                     UNSKIPPABLE()+"Deutsch"+SHOP_MESSAGE_BOX()+MESSAGE_END());
             } else { //Normal textbox
                 CreateMessage(0x9200+shopitems*2, 0, 0, 0,
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAEnglish()+": "+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAFrench()+": "+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNASpanish()+": "+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡SOLO QUEDA UNA UNIDAD!"+NEWLINE()+"¡Hazte con ella antes de que se agote!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
-                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEURItalian()+" - "+price+" rupie"+NEWLINE()+COLOR(QM_WHITE)+"Offerta speciale! ULTIMO PEZZO!"+NEWLINE()+"Affrettatevi ad aquistarlo!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAEnglish()+priceSeparator.GetNAEnglish()+price+" Rupees"+NEWLINE()+COLOR(QM_WHITE)+"Special deal! ONE LEFT!"+NEWLINE()+"Get it while it lasts!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNAFrench()+priceSeparator.GetNAFrench()+price+" rubis"+NEWLINE()+COLOR(QM_WHITE)+"Offre spéciale! DERNIER EN STOCK!"+NEWLINE()+"Faites vite!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetNASpanish()+priceSeparator.GetNASpanish()+price+" rupias"+NEWLINE()+COLOR(QM_WHITE)+"¡Oferta especial! ¡SOLO QUEDA UNA UNIDAD!"+NEWLINE()+"¡Hazte con ella antes de que se agote!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
+                    INSTANT_TEXT_ON()+COLOR(QM_RED)+name.GetEURItalian()+priceSeparator.GetEURItalian()+price+" rupie"+NEWLINE()+COLOR(QM_WHITE)+"Offerta speciale! ULTIMO PEZZO!"+NEWLINE()+"Affrettatevi ad aquistarlo!"+SHOP_MESSAGE_BOX()+MESSAGE_END(),
                     UNSKIPPABLE()+"Deutsch"+SHOP_MESSAGE_BOX()+MESSAGE_END());
             }
             //Message to display when going to buy the item
             CreateMessage(0x9200+shopitems*2+1, 0, 0, 0,
-                INSTANT_TEXT_ON()+name.GetNAEnglish()+": "+price+" Rupees"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name.GetNAFrench()+": "+price+" rubis"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name.GetNASpanish()+": "+price+" rupias"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
-                INSTANT_TEXT_ON()+name.GetEURItalian()+" - "+price+" rupie"+INSTANT_TEXT_OFF()+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Compra"+NEWLINE()+"Non comprare"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetNAEnglish()+priceSeparator.GetNAEnglish()+price+" Rupees"+INSTANT_TEXT_OFF()+newlinesAfterPrice.GetNAEnglish()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Buy"+NEWLINE()+"Don't buy"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetNAFrench()+priceSeparator.GetNAFrench()+price+" rubis"+INSTANT_TEXT_OFF()+newlinesAfterPrice.GetNAFrench()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Acheter"+NEWLINE()+"Ne pas acheter"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetNASpanish()+priceSeparator.GetNASpanish()+price+" rupias"+INSTANT_TEXT_OFF()+newlinesAfterPrice.GetNASpanish()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Comprar"+NEWLINE()+"No comprar"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
+                INSTANT_TEXT_ON()+name.GetEURItalian()+priceSeparator.GetEURItalian()+price+" rupie"+INSTANT_TEXT_OFF()+newlinesAfterPrice.GetEURItalian()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Compra"+NEWLINE()+"Non comprare"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END(),
                 UNSKIPPABLE()+"Deutsch"+NEWLINE()+NEWLINE()+TWO_WAY_CHOICE()+COLOR(QM_GREEN)+"Y"+NEWLINE()+"N"+COLOR(QM_WHITE)+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
         //easter egg
@@ -664,7 +669,7 @@ constexpr std::array DungeonColors = {
           }
         }
       }
-      return Text{"","",""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
+      return Text{""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
     }
 
     void ClearMessages() {

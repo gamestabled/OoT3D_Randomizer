@@ -211,6 +211,7 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
   Text prefix = Hint(PREFIX).GetText();
 
   Text finalHint = prefix + locationHintText + " #"+itemHintText+"#.";
+  finalHint.SetFormPerLanguage();
   PlacementLog_Msg("\tMessage: ");
   PlacementLog_Msg(finalHint.NAenglish);
   PlacementLog_Msg("\n\n");
@@ -358,6 +359,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
     AreaKey parentRegion = Location(hintedLocation)->GetParentRegionKey();
     Text locationText = AreaTable(parentRegion)->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+locationText+"# "+Hint(HOARDS).GetText()+" #"+itemText+"#.";
+    finalHint.SetFormPerLanguage();
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.NAenglish);
     PlacementLog_Msg("\n\n");
@@ -365,6 +367,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
   } else {
     Text locationText = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
     Text finalHint = Hint(PREFIX).GetText()+"#"+itemText+"# "+Hint(CAN_BE_FOUND_AT).GetText()+" #"+locationText+"#.";
+    finalHint.SetFormPerLanguage();
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.NAenglish);
     PlacementLog_Msg("\n\n");
@@ -637,9 +640,9 @@ static void CreateAltarText() {
   //Child Altar Text
   Text childText = Hint(SPIRITUAL_STONE_TEXT_START).GetText()+"^"+
   //Spiritual Stones
-  (StartingKokiriEmerald.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD))+
-  (StartingGoronRuby.Value<u8>()     ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY))+
-  (StartingZoraSapphire.Value<u8>()  ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE))+
+  (StartingKokiriEmerald.Value<u8>() ? Text{"##"} : BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD))+
+  (StartingGoronRuby.Value<u8>()     ? Text{"##"} : BuildDungeonRewardText(ITEM_GORON_RUBY,     GORON_RUBY))+
+  (StartingZoraSapphire.Value<u8>()  ? Text{"##"} : BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE,  ZORA_SAPPHIRE))+
   //How to open Door of Time, the event trigger is necessary to read the altar multiple times
   BuildDoorOfTimeText()+EVENT_TRIGGER();
   CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, {QM_GREEN, QM_RED, QM_BLUE}));
@@ -647,12 +650,12 @@ static void CreateAltarText() {
   //Adult Altar Text
   Text adultText = Hint(ADULT_ALTAR_TEXT_START).GetText()+"^"+
   //Medallion Areas
-  (StartingLightMedallion.Value<u8>()  ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_LIGHT,  LIGHT_MEDALLION))+
-  (StartingForestMedallion.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION))+
-  (StartingFireMedallion.Value<u8>()   ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_FIRE,   FIRE_MEDALLION))+
-  (StartingWaterMedallion.Value<u8>()  ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_WATER,  WATER_MEDALLION))+
-  (StartingSpiritMedallion.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION))+
-  (StartingShadowMedallion.Value<u8>() ? Text{"##","##","##","##","##"} : BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION))+
+  (StartingLightMedallion.Value<u8>()  ? Text{"##"} : BuildDungeonRewardText(ITEM_MEDALLION_LIGHT,  LIGHT_MEDALLION))+
+  (StartingForestMedallion.Value<u8>() ? Text{"##"} : BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION))+
+  (StartingFireMedallion.Value<u8>()   ? Text{"##"} : BuildDungeonRewardText(ITEM_MEDALLION_FIRE,   FIRE_MEDALLION))+
+  (StartingWaterMedallion.Value<u8>()  ? Text{"##"} : BuildDungeonRewardText(ITEM_MEDALLION_WATER,  WATER_MEDALLION))+
+  (StartingSpiritMedallion.Value<u8>() ? Text{"##"} : BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION))+
+  (StartingShadowMedallion.Value<u8>() ? Text{"##"} : BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION))+
 
   //Bridge requirement
   BuildBridgeReqsText()+
@@ -671,6 +674,10 @@ void CreateMerchantsHints() {
   Text grannyItemText = Location(KAK_GRANNYS_SHOP)->GetPlacedItem().GetHint().GetText();
   Text carpetSalesmanItemText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetText();
   Text carpetSalesmanItemClearText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetClear();
+
+  for (Text* itemText : {&medigoronItemText, &grannyItemText, &carpetSalesmanItemText, &carpetSalesmanItemClearText}) {
+    itemText->Replace("$", "");
+  }
 
   Text grannyCapitalItemText = grannyItemText.Capitalize();
 

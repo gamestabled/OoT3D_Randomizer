@@ -8,15 +8,15 @@
 class Text {
 public:
     Text() = default;
-    Text(std::string NAenglish_, std::string NAfrench_, std::string NAspanish_)
-      : NAenglish(NAenglish_),
-        NAfrench(NAfrench_),
-        NAspanish(NAspanish_),
-        EURenglish(NAenglish_),
-        EURfrench(std::move(NAfrench_)),
-        EURspanish(std::move(NAspanish_)),
-        EURitalian(NAenglish_),
-        EURgerman(std::move(NAenglish_)) {}
+    Text(std::string generic)
+      : NAenglish(generic),
+        NAfrench(generic),
+        NAspanish(generic),
+        EURenglish(generic),
+        EURfrench(generic),
+        EURspanish(generic),
+        EURitalian(generic),
+        EURgerman(std::move(generic)) {}
 
     Text(std::string english_, std::string french_, std::string spanish_,
          std::string italian_, std::string german_)
@@ -158,6 +158,34 @@ public:
         }
         //remove the remaining bar
         this->Replace("|", "");
+    }
+
+    //if there's a '$' in the text, the verb will need to be plural
+    void SetFormPerLanguage() {
+        for (std::string* str : {&NAenglish, &NAfrench, &NAspanish, &EURenglish, &EURfrench, &EURspanish, &EURitalian, &EURgerman}) {
+
+            size_t firstBar = str->find('|');
+            if (firstBar != std::string::npos) {
+
+                size_t dollarSign = str->find('$');
+                size_t secondBar = str->find('|', firstBar + 1);
+                if (secondBar != std::string::npos) {
+
+                    size_t thirdBar = str->find('|', secondBar + 1);
+                    if (thirdBar != std::string::npos) {
+
+                        if (dollarSign == std::string::npos) {
+                            str->erase(secondBar, thirdBar - secondBar);
+                        } else {
+                            str->erase(firstBar, secondBar - firstBar);
+                        }
+                    }
+                }
+            }
+        }
+        //remove remaining bars and dollar sign
+        this->Replace("|", "");
+        this->Replace("$", "");
     }
 
     std::string NAenglish = "";

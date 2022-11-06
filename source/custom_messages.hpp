@@ -18,7 +18,8 @@
 
 namespace CustomMessages {
     void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-                       std::string englishText, std::string frenchText, std::string spanishText);
+                       std::string englishText, std::string frenchText, std::string spanishText,
+                       std::string italianText, std::string germanText);
     void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text);
 
     u32 NumMessages();
