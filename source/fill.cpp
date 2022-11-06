@@ -296,8 +296,8 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
           exit.AddToPool();
           if (exit.GetReplacement()->GetReverse() != nullptr) {
             exit.GetReplacement()->GetReverse()->AddToPool();
-            // When decoupled, list the reverse direction too
-            if (Settings::DecoupleEntrances) {
+            // When decoupled, list the reverse direction too, unless the entrance is one-way
+            if (Settings::DecoupleEntrances && exit.GetReverse() != nullptr) {
               entranceSphere.push_back(exit.GetReplacement()->GetReverse());
             }
           }
