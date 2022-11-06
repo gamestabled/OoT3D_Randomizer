@@ -8,6 +8,7 @@
 #include "icetrap.h"
 #include "arrow.h"
 #include "grotto.h"
+#include "item_override.h"
 
 #define PlayerActor_Init_addr 0x191844
 #define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
@@ -167,4 +168,15 @@ s32 Player_ShouldUseSlingshot() {
 
 s32 Player_ShouldDrawHookshotParts() {
     return gSaveContext.linkAge == 0 || !gSettingsContext.hookshotAsChild;
+}
+
+s32 Player_CanPickUpThisActor(Actor* interactedActor) {
+    switch (interactedActor->id) {
+        case 0xA:  // Chest, can never be picked up
+            return 0;
+        case 0x6C: // Pedestal of Time, prevent interaction while waiting to get item
+            return !ItemOverride_IsAPendingOverride();
+        default:
+            return 1;
+    }
 }

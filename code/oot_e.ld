@@ -816,6 +816,10 @@ SECTIONS
 		*(.patch_FastChests)
 	}
 
+	.patch_AboutToPickUpActor 0x354DD8 : {
+		*(.patch_AboutToPickUpActor)
+	}
+
 	.patch_MasterSwordTimerCheck 0x354DFC : {
 		*(.patch_MasterSwordTimerCheck)
 	}

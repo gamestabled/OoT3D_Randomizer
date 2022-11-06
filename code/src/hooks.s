@@ -1724,6 +1724,17 @@ hook_SetFWPlayerParams:
     pop {r0-r9,r11-r12,lr}
     bx lr
 
+.global hook_AboutToPickUpActor
+hook_AboutToPickUpActor:
+    ldrh r0,[r7]
+    push {r0-r12,lr}
+    mov r0,r7
+    bl Player_CanPickUpThisActor
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    subeq lr,lr,#0x8
+    bx lr
+
 @ ----------------------------------
 @ ----------------------------------
 

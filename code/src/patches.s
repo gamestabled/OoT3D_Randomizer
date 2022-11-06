@@ -1991,6 +1991,11 @@ GanonDrawMasterSword_patch:
 SetFWPlayerParams_patch:
     bl hook_SetFWPlayerParams
 
+.section .patch_AboutToPickUpActor
+.global AboutToPickUpActor_patch
+AboutToPickUpActor_patch:
+    bl hook_AboutToPickUpActor
+
 @ ----------------------------------
 @ ----------------------------------
 
