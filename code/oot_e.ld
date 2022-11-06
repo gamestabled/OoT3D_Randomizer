@@ -768,8 +768,8 @@ SECTIONS
 		*(.patch_BiggoronDayCheck)
 	}
 
-	.patch_WarpSongTimerDepletion 0x33DE84 : {
-		*(.patch_WarpSongTimerDepletion)
+	.patch_FWandWarpSongTimerDepletion 0x33DE84 : {
+		*(.patch_FWandWarpSongTimerDepletion)
 	}
 
 	.patch_MasterQuestGoldSkulltulaCheck 0x3415C8 : {

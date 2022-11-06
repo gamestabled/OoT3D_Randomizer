@@ -1795,11 +1795,11 @@ RainbowChuTrailOne_patch:
 RainbowChuTrailTwo_patch:
     bl hook_RainbowChuTrail
 
-.section .patch_WarpSongTimerDepletion
-.global WarpSongTimerDepletion_patch
-WarpSongTimerDepletion_patch:
+.section .patch_FWandWarpSongTimerDepletion
+.global FWandWarpSongTimerDepletion_patch
+FWandWarpSongTimerDepletion_patch:
     push {lr}
-    bl hook_WarpSongTimerDepletion
+    bl hook_FWandWarpSongTimerDepletion
     pop {lr}
 
 .section .patch_TimerExpiration
