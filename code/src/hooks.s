@@ -1506,15 +1506,15 @@ hook_TimerExpiration:
     strh r0,[r4,#0x62]
     bx lr
 
-.global hook_WarpSongTimerDepletion
-hook_WarpSongTimerDepletion:
+.global hook_FWandWarpSongTimerDepletion
+hook_FWandWarpSongTimerDepletion:
     moveq r1,#0x1
     movne r1,#0xEF
     push {r0-r12,lr}
     bl IceTrap_IsCurseActive
     cmp r0,#0x1
     pop {r0-r12,lr}
-    bxne lr
+    bxeq lr
     strh r1,[r0,#0x64]
     bx lr
 
@@ -1722,6 +1722,17 @@ hook_SetFWPlayerParams:
     bl Grotto_ChooseFWPlayerParams
     mov r10,r0
     pop {r0-r9,r11-r12,lr}
+    bx lr
+
+.global hook_AboutToPickUpActor
+hook_AboutToPickUpActor:
+    ldrh r0,[r7]
+    push {r0-r12,lr}
+    mov r0,r7
+    bl Player_CanPickUpThisActor
+    cmp r0,#0x0
+    pop {r0-r12,lr}
+    subeq lr,lr,#0x8
     bx lr
 
 @ ----------------------------------

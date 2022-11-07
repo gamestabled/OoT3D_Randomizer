@@ -1482,7 +1482,7 @@ string_view LogicShadowStatueDesc                     = "Difficulty: Novice\n"  
                                                         "you can knock down the statue without needing a\n"//
                                                         "Bow. Applies in both vanilla and MQ Shadow.";     //
 string_view LogicChildDeadhandDesc                    = "Difficulty: Novice\n"                             //
-                                                        "Requires 9 sticks or 5 jump slashes.";            //
+                                                        "Requires 10 stick slashes.";                      //
 string_view LogicGtgWithoutHookshotDesc               = "Difficulty: Expert\n"                             //
                                                         "The final silver rupee on the ceiling can be\n"   //
                                                         "reached by being pulled up into it by the\n"      //

@@ -307,6 +307,9 @@ void Custcene_OverrideShadowTemple(void) {
 }
 
 void Cutscene_BlueWarpOverride(void) {
+    // Set nextEntranceIndex as a flag so that Grotto_CheckSpecialEntrance
+    // won't return index 0x7FFF, which can't work to override blue warps.
+    gGlobalContext->nextEntranceIndex = 0;
     switch (gGlobalContext->sceneNum - 0x11) { // dungeon index from boss room scene
         case DUNGEON_DEKU_TREE:
             Cutscene_OverrideDekuTree();

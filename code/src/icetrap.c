@@ -222,7 +222,7 @@ void IceTrap_HandleCurses(void) {
     }
 
     // Dispel curses if the timer is reset or runs out, or if the scene is Tower Collapse Exterior
-    if ((!IsInGame() || gSaveContext.timer2State != 4 || gSaveContext.timer2Value == 0 || gGlobalContext->sceneNum == 0x1A)) {
+    if ((!IsInGame() || gSaveContext.timer2State <= 1 || gSaveContext.timer2Value == 0 || gGlobalContext->sceneNum == 0x1A)) {
         IceTrap_DispelCurses();
         return;
     }
