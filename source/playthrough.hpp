@@ -6,6 +6,6 @@
 #include "../code/include/z3D/z3D.h"
 
 namespace Playthrough {
-    int Playthrough_Init(u32 seed);
-    int Playthrough_Repeat(int count = 1);
-}
+int Playthrough_Init(u32 seed);
+int Playthrough_Repeat(int count = 1);
+} // namespace Playthrough

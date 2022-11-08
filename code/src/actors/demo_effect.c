@@ -27,9 +27,10 @@ void DemoEffect_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
     DemoEffect_Destroy(&reward->actor, globalCtx);
 }
 
-void DemoEffect_rUpdate(Actor* thisx, GlobalContext* globalCtx){
+void DemoEffect_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     u8 type = thisx->params & 0xFF;
-    if((type == 0x13 || type == 0x14 || type == 0x15) && gGlobalContext->sceneNum == 0x43 && !(gSaveContext.eventChkInf[4] & 0x800)){
+    if ((type == 0x13 || type == 0x14 || type == 0x15) && gGlobalContext->sceneNum == 0x43 &&
+        !(gSaveContext.eventChkInf[4] & 0x800)) {
         return;
     }
     DemoEffect_Update(thisx, globalCtx);

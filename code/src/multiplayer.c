@@ -23,11 +23,11 @@
 #include "bean_plant.h"
 
 // Self Vars
-u32 mp_receivedPackets = 0;
+u32 mp_receivedPackets          = 0;
 bool mp_duplicateSendProtection = false;
-static s8 netStage = 0;
-bool mp_isSyncing = false;
-bool mp_foundSyncer = false;
+static s8 netStage              = 0;
+bool mp_isSyncing               = false;
+bool mp_foundSyncer             = false;
 bool mp_completeSyncs[6];
 bool mSaveContextInit = false;
 // Shared Progress: The ID that this client fullsyncs with
@@ -85,16 +85,16 @@ static MultiplayerSaveContext mSaveContext;
 
 static void Multiplayer_Overwrite_mSaveContext(void) {
     // SaveContext
-    mSaveContext.healthCapacity = gSaveContext.healthCapacity;
-    mSaveContext.health = gSaveContext.health;
-    mSaveContext.rupees = gSaveContext.rupees;
-    mSaveContext.magicLevel = gSaveContext.magicLevel;
-    mSaveContext.magic = gSaveContext.magic;
-    mSaveContext.bgsHitsLeft = gSaveContext.bgsHitsLeft;
-    mSaveContext.magicAcquired = gSaveContext.magicAcquired;
-    mSaveContext.doubleMagic = gSaveContext.doubleMagic;
-    mSaveContext.doubleDefense = gSaveContext.doubleDefense;
-    mSaveContext.bgsFlag = gSaveContext.bgsFlag;
+    mSaveContext.healthCapacity     = gSaveContext.healthCapacity;
+    mSaveContext.health             = gSaveContext.health;
+    mSaveContext.rupees             = gSaveContext.rupees;
+    mSaveContext.magicLevel         = gSaveContext.magicLevel;
+    mSaveContext.magic              = gSaveContext.magic;
+    mSaveContext.bgsHitsLeft        = gSaveContext.bgsHitsLeft;
+    mSaveContext.magicAcquired      = gSaveContext.magicAcquired;
+    mSaveContext.doubleMagic        = gSaveContext.doubleMagic;
+    mSaveContext.doubleDefense      = gSaveContext.doubleDefense;
+    mSaveContext.bgsFlag            = gSaveContext.bgsFlag;
     mSaveContext.childEquipsButtonB = gSaveContext.childEquips.buttonItems[0];
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.items); i++) {
         mSaveContext.items[i] = gSaveContext.items[i];
@@ -103,9 +103,9 @@ static void Multiplayer_Overwrite_mSaveContext(void) {
         mSaveContext.ammo[i] = gSaveContext.ammo[i];
     }
     mSaveContext.magic_beans_available = gSaveContext.magic_beans_available;
-    mSaveContext.equipment = gSaveContext.equipment;
-    mSaveContext.upgrades = gSaveContext.upgrades;
-    mSaveContext.questItems = gSaveContext.questItems;
+    mSaveContext.equipment             = gSaveContext.equipment;
+    mSaveContext.upgrades              = gSaveContext.upgrades;
+    mSaveContext.questItems            = gSaveContext.questItems;
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.dungeonItems); i++) {
         mSaveContext.dungeonItems[i] = gSaveContext.dungeonItems[i];
     }
@@ -131,7 +131,7 @@ static void Multiplayer_Overwrite_mSaveContext(void) {
         mSaveContext.infTable[i] = gSaveContext.infTable[i];
     }
     mSaveContext.worldMapAreaData = gSaveContext.worldMapAreaData;
-    mSaveContext.magicMeterSize = gSaveContext.magicMeterSize;
+    mSaveContext.magicMeterSize   = gSaveContext.magicMeterSize;
     // ExtData
     for (size_t i = 0; i < EXTINF_SIZE; i++) {
         mSaveContext.extInf[i] = gExtSaveData.extInf[i];
@@ -146,16 +146,16 @@ static void Multiplayer_Overwrite_mSaveContext(void) {
 
 static void Multiplayer_Overwrite_gSaveContext(void) {
     // SaveContext
-    gSaveContext.healthCapacity = mSaveContext.healthCapacity;
-    gSaveContext.health = mSaveContext.health;
-    gSaveContext.rupees = mSaveContext.rupees;
-    gSaveContext.magicLevel = mSaveContext.magicLevel;
-    gSaveContext.magic = mSaveContext.magic;
-    gSaveContext.bgsHitsLeft = mSaveContext.bgsHitsLeft;
-    gSaveContext.magicAcquired = mSaveContext.magicAcquired;
-    gSaveContext.doubleMagic = mSaveContext.doubleMagic;
-    gSaveContext.doubleDefense = mSaveContext.doubleDefense;
-    gSaveContext.bgsFlag = mSaveContext.bgsFlag;
+    gSaveContext.healthCapacity             = mSaveContext.healthCapacity;
+    gSaveContext.health                     = mSaveContext.health;
+    gSaveContext.rupees                     = mSaveContext.rupees;
+    gSaveContext.magicLevel                 = mSaveContext.magicLevel;
+    gSaveContext.magic                      = mSaveContext.magic;
+    gSaveContext.bgsHitsLeft                = mSaveContext.bgsHitsLeft;
+    gSaveContext.magicAcquired              = mSaveContext.magicAcquired;
+    gSaveContext.doubleMagic                = mSaveContext.doubleMagic;
+    gSaveContext.doubleDefense              = mSaveContext.doubleDefense;
+    gSaveContext.bgsFlag                    = mSaveContext.bgsFlag;
     gSaveContext.childEquips.buttonItems[0] = mSaveContext.childEquipsButtonB;
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.items); i++) {
         gSaveContext.items[i] = mSaveContext.items[i];
@@ -164,9 +164,9 @@ static void Multiplayer_Overwrite_gSaveContext(void) {
         gSaveContext.ammo[i] = mSaveContext.ammo[i];
     }
     gSaveContext.magic_beans_available = mSaveContext.magic_beans_available;
-    gSaveContext.equipment = mSaveContext.equipment;
-    gSaveContext.upgrades = mSaveContext.upgrades;
-    gSaveContext.questItems = mSaveContext.questItems;
+    gSaveContext.equipment             = mSaveContext.equipment;
+    gSaveContext.upgrades              = mSaveContext.upgrades;
+    gSaveContext.questItems            = mSaveContext.questItems;
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.dungeonItems); i++) {
         gSaveContext.dungeonItems[i] = mSaveContext.dungeonItems[i];
     }
@@ -180,7 +180,7 @@ static void Multiplayer_Overwrite_gSaveContext(void) {
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.gsFlags); i++) {
         gSaveContext.gsFlags[i] = mSaveContext.gsFlags[i];
     }
-    gSaveContext.bigPoePoints = mSaveContext.bigPoePoints;
+    gSaveContext.bigPoePoints       = mSaveContext.bigPoePoints;
     gSaveContext.fishingStats.flags = mSaveContext.fishingFlags;
     for (size_t i = 0; i < ARRAY_SIZE(gSaveContext.eventChkInf); i++) {
         gSaveContext.eventChkInf[i] = mSaveContext.eventChkInf[i];
@@ -192,7 +192,7 @@ static void Multiplayer_Overwrite_gSaveContext(void) {
         gSaveContext.infTable[i] = mSaveContext.infTable[i];
     }
     gSaveContext.worldMapAreaData = mSaveContext.worldMapAreaData;
-    gSaveContext.magicMeterSize = mSaveContext.magicMeterSize;
+    gSaveContext.magicMeterSize   = mSaveContext.magicMeterSize;
     // ExtData
     for (size_t i = 0; i < EXTINF_SIZE; i++) {
         gExtSaveData.extInf[i] = mSaveContext.extInf[i];
@@ -219,10 +219,12 @@ void Multiplayer_OnFileLoad(void) {
 
     // Clear Empty Slots
     for (u8 i = 0; i < 0x18; ++i) {
-        if (gSaveContext.itemMenuChild[i] != SLOT_NONE && gSaveContext.items[gSaveContext.itemMenuChild[i]] == ITEM_NONE) {
+        if (gSaveContext.itemMenuChild[i] != SLOT_NONE &&
+            gSaveContext.items[gSaveContext.itemMenuChild[i]] == ITEM_NONE) {
             gSaveContext.itemMenuChild[i] = SLOT_NONE;
         }
-        if (gSaveContext.itemMenuAdult[i] != SLOT_NONE && gSaveContext.items[gSaveContext.itemMenuAdult[i]] == ITEM_NONE) {
+        if (gSaveContext.itemMenuAdult[i] != SLOT_NONE &&
+            gSaveContext.items[gSaveContext.itemMenuAdult[i]] == ITEM_NONE) {
             gSaveContext.itemMenuAdult[i] = SLOT_NONE;
         }
     }
@@ -230,7 +232,8 @@ void Multiplayer_OnFileLoad(void) {
     static const u8 SLOT_MAGIC_ARROW[] = { SLOT_ARROW_FIRE, SLOT_ARROW_ICE, SLOT_ARROW_LIGHT };
     for (size_t i = 0; i < ARRAY_SIZE(SLOT_MAGIC_ARROW); i++) {
         if (gSaveContext.items[SLOT_BOW] == ITEM_NONE && gSaveContext.items[SLOT_MAGIC_ARROW[i]] != ITEM_NONE &&
-            !SaveFile_InventoryMenuHasSlot(0, SLOT_MAGIC_ARROW[i]) && !SaveFile_InventoryMenuHasSlot(1, SLOT_MAGIC_ARROW[i])) {
+            !SaveFile_InventoryMenuHasSlot(0, SLOT_MAGIC_ARROW[i]) &&
+            !SaveFile_InventoryMenuHasSlot(1, SLOT_MAGIC_ARROW[i])) {
             PushSlotIntoInventoryMenu(SLOT_MAGIC_ARROW[i]);
         } else if (gSaveContext.items[SLOT_BOW] != ITEM_NONE || gSaveContext.items[SLOT_MAGIC_ARROW[i]] == ITEM_NONE) {
             SaveFile_ResetItemSlotsIfMatchesID(SLOT_MAGIC_ARROW[i]);
@@ -321,8 +324,8 @@ void Multiplayer_Run(void) {
     }
 
     Result result;
-    static u8 initTimer = 0;
-    const u32 wlancommID = 0x3656B7DA; // Unique ID set manually
+    static u8 initTimer     = 0;
+    const u32 wlancommID    = 0x3656B7DA; // Unique ID set manually
     static u8 netScanChecks = 0;
 
     switch (netStage) {
@@ -336,7 +339,7 @@ void Multiplayer_Run(void) {
                     return;
                 }
                 mBufSize = 0x4000;
-                mBuffer = SystemArena_Malloc(mBufSize);
+                mBuffer  = SystemArena_Malloc(mBufSize);
                 netStage++;
             }
             break;
@@ -345,9 +348,9 @@ void Multiplayer_Run(void) {
             if (netScanChecks < (gSettingsContext.playOption == PLAY_ON_CONSOLE ? 3 : 30)) {
                 netScanChecks++;
 
-                size_t total_networks = 0;
+                size_t total_networks        = 0;
                 udsNetworkScanInfo* networks = NULL;
-                udsNetworkScanInfo* network = NULL;
+                udsNetworkScanInfo* network  = NULL;
 
                 memset(mBuffer, 0, sizeof(mBufSize));
                 result = udsScanBeacons(mBuffer, mBufSize, &networks, &total_networks, wlancommID, 0, NULL, false);
@@ -361,7 +364,8 @@ void Multiplayer_Run(void) {
 
                     // Try 10 times?
                     for (size_t i = 0; i < 10; i++) {
-                        result = udsConnectNetwork(&network->network, "", 1, &bindctx, UDS_BROADCAST_NETWORKNODEID, UDSCONTYPE_Client, data_channel, UDS_DEFAULT_RECVBUFSIZE);
+                        result = udsConnectNetwork(&network->network, "", 1, &bindctx, UDS_BROADCAST_NETWORKNODEID,
+                                                   UDSCONTYPE_Client, data_channel, UDS_DEFAULT_RECVBUFSIZE);
                         if (R_SUCCEEDED(result)) {
                             break;
                         }
@@ -394,7 +398,7 @@ void Multiplayer_Run(void) {
             // Free buffer
             SystemArena_Free(mBuffer);
             mBufSize = UDS_DATAFRAME_MAXSIZE;
-            mBuffer = SystemArena_Malloc(mBufSize);
+            mBuffer  = SystemArena_Malloc(mBufSize);
 
             if (gSettingsContext.mp_SharedProgress == ON) {
                 mp_isSyncing = true;
@@ -737,7 +741,8 @@ static void Multiplayer_Sync_SharedProgress(void) {
     };
     for (size_t member = 0; member < ARRAY_SIZE(actorFlagPtr); member++) {
         // Don't sync chest minigame chests (except the final one) when the setting is off
-        if (member == 1 && gGlobalContext->sceneNum == 16 && gGlobalContext->roomNum != 6 && gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_OFF) {
+        if (member == 1 && gGlobalContext->sceneNum == 16 && gGlobalContext->roomNum != 6 &&
+            gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_OFF) {
             continue;
         }
         if (*prevActorFlagPtr[member] != *actorFlagPtr[member]) {
@@ -869,7 +874,7 @@ void Multiplayer_Send_GhostPing(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
+    u8 memSpacer         = 0;
     mBuffer[memSpacer++] = PACKET_GHOSTPING; // 0: Identifier
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
@@ -883,13 +888,13 @@ void Multiplayer_Send_GhostData(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
+    u8 memSpacer         = 0;
     mBuffer[memSpacer++] = PACKET_GHOSTDATA; // 0: Identifier
 
     GhostData ghostData;
     ghostData.currentScene = gGlobalContext->sceneNum;
-    ghostData.age = gSaveContext.linkAge;
-    ghostData.position = PLAYER->actor.world.pos;
+    ghostData.age          = gSaveContext.linkAge;
+    ghostData.position     = PLAYER->actor.world.pos;
 
     memcpy(&mBuffer[memSpacer], &ghostData, sizeof(GhostData));
     memSpacer += sizeof(GhostData) / 4;
@@ -909,7 +914,7 @@ void Multiplayer_Send_LinkSFX(u32 sfxID_) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = 0;
+    u8 memSpacer         = 0;
     mBuffer[memSpacer++] = PACKET_LINKSFX; // 0: Identifier
     mBuffer[memSpacer++] = sfxID_;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
@@ -953,7 +958,7 @@ static u8 GetSharedProgressMemSpacerOffset(void) {
 
 // This function should only be called inside shared-progress-receive functions, right after mBuffer has been filled.
 static bool IsInSameSyncGroup(void) {
-    u8 receivedSyncId = mBuffer[1];
+    u8 receivedSyncId    = mBuffer[1];
     u32* receivedHashPtr = &mBuffer[2];
 
     if (receivedSyncId != gSettingsContext.mp_SyncId) {
@@ -1039,7 +1044,7 @@ void Multiplayer_Receive_FullSyncPing(u16 senderID) {
         return;
     }
 
-    fullSyncerID = senderID;
+    fullSyncerID   = senderID;
     mp_foundSyncer = true;
 }
 
@@ -1106,16 +1111,16 @@ void Multiplayer_Receive_BaseSync(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    mSaveContext.healthCapacity = mBuffer[memSpacer++];
-    mSaveContext.doubleDefense = mBuffer[memSpacer++];
-    mSaveContext.magicLevel = mBuffer[memSpacer++];
-    mSaveContext.magic = 0x30 * mSaveContext.magicLevel;
-    mSaveContext.bgsHitsLeft = mBuffer[memSpacer++];
-    mSaveContext.magicAcquired = mBuffer[memSpacer++];
-    mSaveContext.doubleMagic = mBuffer[memSpacer++];
-    mSaveContext.magicMeterSize = mBuffer[memSpacer++];
-    mSaveContext.doubleDefense = mBuffer[memSpacer++];
-    mSaveContext.bgsFlag = mBuffer[memSpacer++];
+    mSaveContext.healthCapacity     = mBuffer[memSpacer++];
+    mSaveContext.doubleDefense      = mBuffer[memSpacer++];
+    mSaveContext.magicLevel         = mBuffer[memSpacer++];
+    mSaveContext.magic              = 0x30 * mSaveContext.magicLevel;
+    mSaveContext.bgsHitsLeft        = mBuffer[memSpacer++];
+    mSaveContext.magicAcquired      = mBuffer[memSpacer++];
+    mSaveContext.doubleMagic        = mBuffer[memSpacer++];
+    mSaveContext.magicMeterSize     = mBuffer[memSpacer++];
+    mSaveContext.doubleDefense      = mBuffer[memSpacer++];
+    mSaveContext.bgsFlag            = mBuffer[memSpacer++];
     mSaveContext.childEquipsButtonB = mBuffer[memSpacer++];
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.items); i++) {
         mSaveContext.items[i] = mBuffer[memSpacer++];
@@ -1124,9 +1129,9 @@ void Multiplayer_Receive_BaseSync(u16 senderID) {
         mSaveContext.ammo[i] = mBuffer[memSpacer++];
     }
     mSaveContext.magic_beans_available = mBuffer[memSpacer++];
-    mSaveContext.equipment = mBuffer[memSpacer++];
-    mSaveContext.upgrades = mBuffer[memSpacer++];
-    mSaveContext.questItems = mBuffer[memSpacer++];
+    mSaveContext.equipment             = mBuffer[memSpacer++];
+    mSaveContext.upgrades              = mBuffer[memSpacer++];
+    mSaveContext.questItems            = mBuffer[memSpacer++];
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.dungeonItems); i++) {
         mSaveContext.dungeonItems[i] = mBuffer[memSpacer++];
     }
@@ -1162,7 +1167,7 @@ void Multiplayer_Receive_BaseSync(u16 senderID) {
         mSaveContext.rupees = mBuffer[memSpacer++];
     } else if (gSettingsContext.startingMaxRupees) {
         static u16 maxRupees[] = { 99, 200, 500, 999 };
-        mSaveContext.rupees = maxRupees[mSaveContext.upgrades >> 12 & 0x3];
+        mSaveContext.rupees    = maxRupees[mSaveContext.upgrades >> 12 & 0x3];
         memSpacer++;
     }
 
@@ -1177,8 +1182,8 @@ void Multiplayer_Send_FullSceneFlagSync(u16 targetID, u8 part) {
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLSCENEFLAGSYNC);
 
     mBuffer[memSpacer++] = part;
-    u8 start = 31 * part;
-    u8 end = start + 31;
+    u8 start             = 31 * part;
+    u8 end               = start + 31;
     for (size_t i = start; i < end; i++) {
         mBuffer[memSpacer++] = mSaveContext.sceneFlags[i].chest;
         mBuffer[memSpacer++] = mSaveContext.sceneFlags[i].swch;
@@ -1204,15 +1209,15 @@ void Multiplayer_Receive_FullSceneFlagSync(u16 senderID) {
     }
 
     u8 start = 31 * part;
-    u8 end = start + 31;
+    u8 end   = start + 31;
     for (size_t i = start; i < end; i++) {
-        mSaveContext.sceneFlags[i].chest = mBuffer[memSpacer++];
-        mSaveContext.sceneFlags[i].swch = mBuffer[memSpacer++];
-        mSaveContext.sceneFlags[i].clear = mBuffer[memSpacer++];
+        mSaveContext.sceneFlags[i].chest   = mBuffer[memSpacer++];
+        mSaveContext.sceneFlags[i].swch    = mBuffer[memSpacer++];
+        mSaveContext.sceneFlags[i].clear   = mBuffer[memSpacer++];
         mSaveContext.sceneFlags[i].collect = mBuffer[memSpacer++];
-        mSaveContext.sceneFlags[i].unk = mBuffer[memSpacer++];
-        mSaveContext.sceneFlags[i].rooms1 = mBuffer[memSpacer++];
-        mSaveContext.sceneFlags[i].rooms2 = mBuffer[memSpacer++];
+        mSaveContext.sceneFlags[i].unk     = mBuffer[memSpacer++];
+        mSaveContext.sceneFlags[i].rooms1  = mBuffer[memSpacer++];
+        mSaveContext.sceneFlags[i].rooms2  = mBuffer[memSpacer++];
     }
 
     mp_completeSyncs[1 + part] = true;
@@ -1268,7 +1273,7 @@ void Multiplayer_Receive_Item(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 slot = mBuffer[memSpacer++];
+    u8 slot     = mBuffer[memSpacer++];
     ItemID item = mBuffer[memSpacer++];
 
     // Ignore arrow type changes
@@ -1278,11 +1283,13 @@ void Multiplayer_Receive_Item(u16 senderID) {
 
     // Skip bottle content syncing except for removing Big Poes and Rutos Letter
     if (slot >= SLOT_BOTTLE_1 && slot <= SLOT_BOTTLE_4 && mSaveContext.items[slot] != ITEM_NONE &&
-        !(item == ITEM_BOTTLE && (mSaveContext.items[slot] == ITEM_BIG_POE || mSaveContext.items[slot] == ITEM_LETTER_RUTO))) {
+        !(item == ITEM_BOTTLE &&
+          (mSaveContext.items[slot] == ITEM_BIG_POE || mSaveContext.items[slot] == ITEM_LETTER_RUTO))) {
         return;
     }
     // Skip post-letter child trade syncing, aka masks/sold out
-    if (slot == SLOT_TRADE_CHILD && item != ITEM_NONE && item != ITEM_WEIRD_EGG && item != ITEM_CHICKEN && item != ITEM_LETTER_ZELDA) {
+    if (slot == SLOT_TRADE_CHILD && item != ITEM_NONE && item != ITEM_WEIRD_EGG && item != ITEM_CHICKEN &&
+        item != ITEM_LETTER_ZELDA) {
         return;
     }
     // Adult trade slot/item syncing is handled in Multiplayer_Sync_SharedProgress
@@ -1291,13 +1298,14 @@ void Multiplayer_Receive_Item(u16 senderID) {
     }
 
     // Add bombchu ammo when they're unlocked and in logic
-    if (gSettingsContext.bombchusInLogic && slot == SLOT_BOMBCHU && mSaveContext.items[slot] == ITEM_NONE && item != ITEM_NONE) {
+    if (gSettingsContext.bombchusInLogic && slot == SLOT_BOMBCHU && mSaveContext.items[slot] == ITEM_NONE &&
+        item != ITEM_NONE) {
         mSaveContext.ammo[SLOT_BOMBCHU] = 20;
-        prevAmmo[SLOT_BOMBCHU] = 20;
+        prevAmmo[SLOT_BOMBCHU]          = 20;
     }
 
     mSaveContext.items[slot] = item;
-    prevItems[slot] = item;
+    prevItems[slot]          = item;
 }
 
 void Multiplayer_Send_MaxHealth(void) {
@@ -1320,7 +1328,7 @@ void Multiplayer_Receive_MaxHealth(u16 senderID) {
     u16 newMaxHealth = mBuffer[memSpacer++];
 
     mSaveContext.healthCapacity = newMaxHealth;
-    prevHealthCapacity = newMaxHealth;
+    prevHealthCapacity          = newMaxHealth;
 }
 
 void Multiplayer_Send_KokiriSwordEquip(void) {
@@ -1356,7 +1364,7 @@ void Multiplayer_Receive_BGSFlag(u16 senderID) {
         return;
     }
 
-    mSaveContext.bgsFlag = 1;
+    mSaveContext.bgsFlag     = 1;
     mSaveContext.bgsHitsLeft = GK_SetDurability();
 }
 
@@ -1407,17 +1415,17 @@ void Multiplayer_Receive_GreatFairyBuff(u16 senderID) {
             mSaveContext.doubleDefense = 1;
             break;
         case 1:
-            mSaveContext.magicLevel = 1;
-            mSaveContext.magicAcquired = 1;
+            mSaveContext.magicLevel     = 1;
+            mSaveContext.magicAcquired  = 1;
             mSaveContext.magicMeterSize = 0x30;
-            mSaveContext.magic = 0x30;
+            mSaveContext.magic          = 0x30;
             break;
         case 2:
-            mSaveContext.magicLevel = 2;
-            mSaveContext.magicAcquired = 1;
-            mSaveContext.doubleMagic = 1;
+            mSaveContext.magicLevel     = 2;
+            mSaveContext.magicAcquired  = 1;
+            mSaveContext.doubleMagic    = 1;
             mSaveContext.magicMeterSize = 0x60;
-            mSaveContext.magic = 0x60;
+            mSaveContext.magic          = 0x60;
             break;
     }
 }
@@ -1465,7 +1473,7 @@ void Multiplayer_Receive_MagicBeansBoughtUpdate(u16 senderID) {
     u8 magic_beans_available = mBuffer[memSpacer++];
 
     mSaveContext.magic_beans_available = magic_beans_available;
-    prevMagicBeansBought = magic_beans_available;
+    prevMagicBeansBought               = magic_beans_available;
 }
 
 void Multiplayer_Send_EquipmentBit(u8 bit, u8 setOrUnset) {
@@ -1486,7 +1494,7 @@ void Multiplayer_Receive_EquipmentBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 bit = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     // Giant's Knife / Biggoron Sword
@@ -1526,7 +1534,7 @@ void Multiplayer_Receive_UpgradesBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 bit = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -1543,28 +1551,28 @@ void Multiplayer_Receive_UpgradesBit(u16 senderID) {
         switch (bit) {
             case 0:
             case 1:
-                upgradeNum = (mSaveContext.upgrades >> 0) & 0b11;
+                upgradeNum                  = (mSaveContext.upgrades >> 0) & 0b11;
                 mSaveContext.ammo[SLOT_BOW] = 30 + 10 * (upgradeNum - 1);
-                prevAmmo[SLOT_BOW] = 30 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_BOW]          = 30 + 10 * (upgradeNum - 1);
                 break;
             case 3:
             case 4:
-                upgradeNum = (mSaveContext.upgrades >> 3) & 0b11;
+                upgradeNum                   = (mSaveContext.upgrades >> 3) & 0b11;
                 mSaveContext.ammo[SLOT_BOMB] = 20 + 10 * (upgradeNum - 1);
-                prevAmmo[SLOT_BOMB] = 20 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_BOMB]          = 20 + 10 * (upgradeNum - 1);
                 break;
             case 14:
             case 15:
-                upgradeNum = (mSaveContext.upgrades >> 14) & 0b11;
+                upgradeNum                        = (mSaveContext.upgrades >> 14) & 0b11;
                 mSaveContext.ammo[SLOT_SLINGSHOT] = 30 + 10 * (upgradeNum - 1);
-                prevAmmo[SLOT_SLINGSHOT] = 30 + 10 * (upgradeNum - 1);
+                prevAmmo[SLOT_SLINGSHOT]          = 30 + 10 * (upgradeNum - 1);
                 break;
             case 17:
             case 18:
                 upgradeNum = (mSaveContext.upgrades >> 17) & 0b11;
                 if (upgradeNum > 1) {
                     mSaveContext.ammo[SLOT_STICK] = 10 + 10 * (upgradeNum - 1);
-                    prevAmmo[SLOT_STICK] = 10 + 10 * (upgradeNum - 1);
+                    prevAmmo[SLOT_STICK]          = 10 + 10 * (upgradeNum - 1);
                 }
                 break;
             case 20:
@@ -1572,7 +1580,7 @@ void Multiplayer_Receive_UpgradesBit(u16 senderID) {
                 upgradeNum = (mSaveContext.upgrades >> 20) & 0b11;
                 if (upgradeNum > 1) {
                     mSaveContext.ammo[SLOT_NUT] = 20 + 10 * (upgradeNum - 1);
-                    prevAmmo[SLOT_NUT] = 20 + 10 * (upgradeNum - 1);
+                    prevAmmo[SLOT_NUT]          = 20 + 10 * (upgradeNum - 1);
                 }
                 break;
         }
@@ -1597,7 +1605,7 @@ void Multiplayer_Receive_QuestItemBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 bit = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -1628,8 +1636,8 @@ void Multiplayer_Receive_DungeonItemBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 index = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    u8 index      = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -1660,7 +1668,7 @@ void Multiplayer_Receive_DungeonKeyUpdate(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 index = mBuffer[memSpacer++];
-    s8 diff = mBuffer[memSpacer++];
+    s8 diff  = mBuffer[memSpacer++];
 
     mSaveContext.dungeonKeys[index] += diff;
     prevDungeonKeys[index] += diff;
@@ -1708,8 +1716,8 @@ void Multiplayer_Receive_EventChkInfBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 index = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    u8 index      = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     // Ignore Lake Hylia water switch
@@ -1750,8 +1758,8 @@ void Multiplayer_Receive_ItemGetInfBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 index = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    u8 index      = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -1782,8 +1790,8 @@ void Multiplayer_Receive_InfTableBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 index = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    u8 index      = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -1815,9 +1823,9 @@ void Multiplayer_Receive_ActorFlagBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    s16 scene = mBuffer[memSpacer++];
-    u8 member = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    s16 scene     = mBuffer[memSpacer++];
+    u8 member     = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     switch (member) {
@@ -1920,9 +1928,9 @@ void Multiplayer_Receive_SceneFlagBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 scene = mBuffer[memSpacer++];
-    u8 member = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    u8 scene      = mBuffer[memSpacer++];
+    u8 member     = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     switch (member) {
@@ -1975,8 +1983,8 @@ void Multiplayer_Receive_GSFlagBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 index = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    u8 index      = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -2029,7 +2037,7 @@ void Multiplayer_Receive_FishingFlag(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 bit = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -2059,7 +2067,7 @@ void Multiplayer_Receive_WorldMapBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 bit = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -2090,8 +2098,8 @@ void Multiplayer_Receive_ExtInfBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 index = mBuffer[memSpacer++];
-    u8 bit = mBuffer[memSpacer++];
+    u8 index      = mBuffer[memSpacer++];
+    u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 
     if (setOrUnset) {
@@ -2122,7 +2130,7 @@ void Multiplayer_Receive_DiscoveredScene(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u32 index = mBuffer[memSpacer++];
-    u32 bit = mBuffer[memSpacer++];
+    u32 bit   = mBuffer[memSpacer++];
 
     mSaveContext.scenesDiscovered[index] |= bit;
 }
@@ -2146,7 +2154,7 @@ void Multiplayer_Receive_DiscoveredEntrance(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u32 index = mBuffer[memSpacer++];
-    u32 bit = mBuffer[memSpacer++];
+    u32 bit   = mBuffer[memSpacer++];
 
     mSaveContext.entrancesDiscovered[index] |= bit;
 }
@@ -2173,9 +2181,9 @@ void Multiplayer_Receive_UnlockedDoor(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    s16 sceneNum = mBuffer[memSpacer++];
+    s16 sceneNum     = mBuffer[memSpacer++];
     u16 dungeonIndex = mBuffer[memSpacer++];
-    u32 flag = mBuffer[memSpacer++];
+    u32 flag         = mBuffer[memSpacer++];
 
     if (mSaveContext.sceneFlags[sceneNum].swch & (1 << flag)) {
         return;
@@ -2214,14 +2222,14 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 sceneNum = mBuffer[memSpacer++];
-    u8 roomNum = mBuffer[memSpacer++];
+    u8 roomNum   = mBuffer[memSpacer++];
 
     if (sceneNum != gGlobalContext->sceneNum || roomNum != gGlobalContext->roomNum) {
         return;
     }
 
-    s16 actorId = mBuffer[memSpacer++];
-    u8 actorType = mBuffer[memSpacer++];
+    s16 actorId     = mBuffer[memSpacer++];
+    u8 actorType    = mBuffer[memSpacer++];
     s16 actorParams = mBuffer[memSpacer++];
     PosRot actorHome;
     memcpy(&actorHome, &mBuffer[memSpacer], sizeof(PosRot));
@@ -2246,10 +2254,10 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
         }
         // If only one actor has the same params, check for that. Otherwise use the home PosRot
         if ((amountWithSameParams <= 1 && actor->params == actorParams) ||
-            (amountWithSameParams > 1 &&
-                (s32)actorHome.pos.x == (s32)actor->home.pos.x && actorHome.rot.x == actor->home.rot.x &&
-                (s32)actorHome.pos.y == (s32)actor->home.pos.y && actorHome.rot.y == actor->home.rot.y &&
-                (s32)actorHome.pos.z == (s32)actor->home.pos.z && actorHome.rot.z == actor->home.rot.z)) {
+            (amountWithSameParams > 1 && (s32)actorHome.pos.x == (s32)actor->home.pos.x &&
+             actorHome.rot.x == actor->home.rot.x && (s32)actorHome.pos.y == (s32)actor->home.pos.y &&
+             actorHome.rot.y == actor->home.rot.y && (s32)actorHome.pos.z == (s32)actor->home.pos.z &&
+             actorHome.rot.z == actor->home.rot.z)) {
             switch (actorId) {
                 case 0x4: // Shop Items
                 {
@@ -2274,7 +2282,7 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
                     Vec3f newPos;
                     memcpy(&newPos, &mBuffer[memSpacer], sizeof(Vec3f));
                     actor->world.pos = newPos;
-                    actor->home.pos = newPos;
+                    actor->home.pos  = newPos;
                     break;
                 }
                 case 0x11A: // Business Scrubs
@@ -2312,7 +2320,8 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
         {
             BgYdanSp_SendData sendData;
             memcpy(&sendData, &mBuffer[memSpacer], sizeof(BgYdanSp_SendData));
-            for (Actor* actor = gGlobalContext->actorCtx.actorList[actorType].first; actor != NULL; actor = actor->next) {
+            for (Actor* actor = gGlobalContext->actorCtx.actorList[actorType].first; actor != NULL;
+                 actor        = actor->next) {
                 if (actor->id != actorId) {
                     continue;
                 }
@@ -2329,7 +2338,8 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
         {
             BgSpot15Rrbox_SendData sendData;
             memcpy(&sendData, &mBuffer[memSpacer], sizeof(BgSpot15Rrbox_SendData));
-            for (Actor* actor = gGlobalContext->actorCtx.actorList[actorType].first; actor != NULL; actor = actor->next) {
+            for (Actor* actor = gGlobalContext->actorCtx.actorList[actorType].first; actor != NULL;
+                 actor        = actor->next) {
                 if (actor->id != actorId) {
                     continue;
                 }
@@ -2337,19 +2347,19 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
                     (s32)sendData.focusPos.y == (s32)actor->focus.pos.y &&
                     (s32)sendData.focusPos.z == (s32)actor->focus.pos.z) {
                     actor->world.pos = sendData.worldPos;
-                    actor->home.pos = sendData.worldPos;
+                    actor->home.pos  = sendData.worldPos;
                     break;
                 }
             }
             break;
         }
         case 0x11A: // Business Scrubs
-            for (Actor* actor = gGlobalContext->actorCtx.actorList[ACTORTYPE_ENEMY].first; actor != NULL; actor = actor->next) {
+            for (Actor* actor = gGlobalContext->actorCtx.actorList[ACTORTYPE_ENEMY].first; actor != NULL;
+                 actor        = actor->next) {
                 if (actor->id != 0x195) {
                     continue;
                 }
-                if ((s32)actorHome.pos.x == (s32)actor->home.pos.x &&
-                    (s32)actorHome.pos.y == (s32)actor->home.pos.y &&
+                if ((s32)actorHome.pos.x == (s32)actor->home.pos.x && (s32)actorHome.pos.y == (s32)actor->home.pos.y &&
                     (s32)actorHome.pos.z == (s32)actor->home.pos.z) {
                     Actor_Kill(actor);
                     break;
@@ -2361,9 +2371,9 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
                 // Set flag so it doesn't despawn. Needs to be set in gSaveContext, even though
                 // it gets overwritten later, because the actor init function gets called in Actor_Spawn.
                 Flags_SetSwitch(gGlobalContext, lastBeanPlant_Params & 0x3F);
-                Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId,
-                    lastBeanPlant_Home.pos.x, lastBeanPlant_Home.pos.y, lastBeanPlant_Home.pos.z,
-                    lastBeanPlant_Home.rot.x, lastBeanPlant_Home.rot.y, lastBeanPlant_Home.rot.z, lastBeanPlant_Params);
+                Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId, lastBeanPlant_Home.pos.x,
+                            lastBeanPlant_Home.pos.y, lastBeanPlant_Home.pos.z, lastBeanPlant_Home.rot.x,
+                            lastBeanPlant_Home.rot.y, lastBeanPlant_Home.rot.z, lastBeanPlant_Params);
             }
             break;
     }
@@ -2392,7 +2402,7 @@ void Multiplayer_Receive_ActorSpawn(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 sceneNum = mBuffer[memSpacer++];
-    u8 roomNum = mBuffer[memSpacer++];
+    u8 roomNum   = mBuffer[memSpacer++];
 
     if (sceneNum != gGlobalContext->sceneNum || roomNum != gGlobalContext->roomNum || !IsInGame()) {
         return;
@@ -2404,9 +2414,8 @@ void Multiplayer_Receive_ActorSpawn(u16 senderID) {
     memSpacer += sizeof(PosRot) / 4;
     s16 params = mBuffer[memSpacer++];
 
-    Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId,
-        rcvdPosRot.pos.x, rcvdPosRot.pos.y, rcvdPosRot.pos.z,
-        rcvdPosRot.rot.x, rcvdPosRot.rot.y, rcvdPosRot.rot.z, params);
+    Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId, rcvdPosRot.pos.x, rcvdPosRot.pos.y,
+                rcvdPosRot.pos.z, rcvdPosRot.rot.x, rcvdPosRot.rot.y, rcvdPosRot.rot.z, params);
 }
 
 // Etc
@@ -2430,7 +2439,7 @@ void Multiplayer_Receive_HealthChange(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 newHealth = mBuffer[memSpacer++];
-    s16 diff = mBuffer[memSpacer++];
+    s16 diff      = mBuffer[memSpacer++];
 
     if (gSettingsContext.mp_SharedProgress == ON) {
         if (IsInSameSyncGroup()) {
@@ -2476,7 +2485,7 @@ void Multiplayer_Receive_RupeeChange(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s16 newRupees = mBuffer[memSpacer++];
-    s16 diff = mBuffer[memSpacer++];
+    s16 diff      = mBuffer[memSpacer++];
 
     if (gSettingsContext.mp_SharedProgress == ON) {
         if (IsInSameSyncGroup()) {
@@ -2485,7 +2494,7 @@ void Multiplayer_Receive_RupeeChange(u16 senderID) {
             mSaveContext.rupees += diff;
 
             static u16 maxRupees[] = { 99, 200, 500, 999 };
-            u8 upgrade = mSaveContext.upgrades >> 12 & 0x3;
+            u8 upgrade             = mSaveContext.upgrades >> 12 & 0x3;
             if (mSaveContext.rupees > maxRupees[upgrade]) {
                 mSaveContext.rupees = maxRupees[upgrade];
             } else if (mSaveContext.rupees < 0) {
@@ -2500,7 +2509,7 @@ void Multiplayer_Receive_RupeeChange(u16 senderID) {
         gSaveContext.rupees += diff;
 
         static const u16 maxRupees[] = { 99, 200, 500, 999 };
-        u8 upgrade = gSaveContext.upgrades >> 12 & 0x3;
+        u8 upgrade                   = gSaveContext.upgrades >> 12 & 0x3;
         if (gSaveContext.rupees > maxRupees[upgrade]) {
             gSaveContext.rupees = maxRupees[upgrade];
         } else if (gSaveContext.rupees < 0) {
@@ -2531,8 +2540,8 @@ void Multiplayer_Receive_AmmoChange(u16 senderID) {
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
     s8 newAmmo = mBuffer[memSpacer++];
-    u8 slot = mBuffer[memSpacer++];
-    s8 diff = mBuffer[memSpacer++];
+    u8 slot    = mBuffer[memSpacer++];
+    s8 diff    = mBuffer[memSpacer++];
 
     // TODO: Don't go over max
     if (gSettingsContext.mp_SharedProgress == ON) {
@@ -2569,9 +2578,9 @@ void Multiplayer_ReceivePackets() {
     }
 
     if (gSettingsContext.mp_SharedProgress == ON && IsInGame()) {
-        gSaveContext.sceneFlags[gGlobalContext->sceneNum].swch = gGlobalContext->actorCtx.flags.swch;
-        gSaveContext.sceneFlags[gGlobalContext->sceneNum].chest = gGlobalContext->actorCtx.flags.chest;
-        gSaveContext.sceneFlags[gGlobalContext->sceneNum].clear = gGlobalContext->actorCtx.flags.clear;
+        gSaveContext.sceneFlags[gGlobalContext->sceneNum].swch    = gGlobalContext->actorCtx.flags.swch;
+        gSaveContext.sceneFlags[gGlobalContext->sceneNum].chest   = gGlobalContext->actorCtx.flags.chest;
+        gSaveContext.sceneFlags[gGlobalContext->sceneNum].clear   = gGlobalContext->actorCtx.flags.clear;
         gSaveContext.sceneFlags[gGlobalContext->sceneNum].collect = gGlobalContext->actorCtx.flags.collect;
         Multiplayer_Overwrite_mSaveContext();
     }

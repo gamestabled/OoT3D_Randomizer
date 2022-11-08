@@ -17,27 +17,16 @@ namespace CustomMessages {
 using namespace std::literals::string_literals;
 
 class MessageEntryComp {
-public:
+  public:
     bool operator()(const MessageEntry& lhs, const MessageEntry& rhs) const {
         return lhs.id < rhs.id;
     }
 };
 
 constexpr std::array EnglishDungeonNames = {
-    "Deku Tree",
-    "Dodongo's Cavern",
-    "Jabu Jabu's Belly",
-    "Forest Temple",
-    "Fire Temple",
-    "Water Temple",
-    "Spirit Temple",
-    "Shadow Temple",
-    "Bottom of the Well",
-    "Ice Cavern",
-    "Ganon's Tower",
-    "Gerudo Training Grounds",
-    "Gerudo Fortress",
-    "Ganon's Castle",
+    "Deku Tree",     "Dodongo's Cavern",        "Jabu Jabu's Belly", "Forest Temple",      "Fire Temple",
+    "Water Temple",  "Spirit Temple",           "Shadow Temple",     "Bottom of the Well", "Ice Cavern",
+    "Ganon's Tower", "Gerudo Training Grounds", "Gerudo Fortress",   "Ganon's Castle",
 };
 
 constexpr std::array FrenchDungeonNames = {
@@ -57,6 +46,7 @@ constexpr std::array FrenchDungeonNames = {
     "château de Ganon",
 };
 
+// clang-format off
 constexpr std::array FrenchDungeonArticles = {
     "du ",
     "de la ",
@@ -73,24 +63,15 @@ constexpr std::array FrenchDungeonArticles = {
     "de la ",
     "du ",
 };
+// clang-format on
 
 constexpr std::array SpanishDungeonNames = {
-    "Gran Árbol Deku",
-    "Cueva de los Dodongos",
-    "Tripa de Jabu-Jabu",
-    "Templo del Bosque",
-    "Templo del Fuego",
-    "Templo del Agua",
-    "Templo del Espíritu",
-    "Templo de las Sombras",
-    "Fondo del pozo",
-    "Caverna de hielo",
-    "Torre de Ganon",
-    "Centro de Instrucción Gerudo",
-    "Fortaleza Gerudo",
-    "Castillo de Ganon",
+    "Gran Árbol Deku", "Cueva de los Dodongos",        "Tripa de Jabu-Jabu",    "Templo del Bosque", "Templo del Fuego",
+    "Templo del Agua", "Templo del Espíritu",          "Templo de las Sombras", "Fondo del pozo",    "Caverna de hielo",
+    "Torre de Ganon",  "Centro de Instrucción Gerudo", "Fortaleza Gerudo",      "Castillo de Ganon",
 };
 
+// clang-format off
 constexpr std::array SpanishDungeonArticles = {
     "del",
     "de la",
@@ -107,24 +88,16 @@ constexpr std::array SpanishDungeonArticles = {
     "de la",
     "del",
 };
+// clang-format on
 
 constexpr std::array ItalianDungeonNames = {
-    "Grande Albero Deku",
-    "caverna dei Dodongo",
-    "pancia di Jabu Jabu",
-    "Santuario della Foresta",
-    "Santuario del Fuoco",
-    "Santuario dell'Acqua",
-    "Santuario dello Spirito",
-    "Santuario dell'Ombra",
-    "fondo del pozzo",
-    "caverna di ghiaccio",
-    "torre di Ganon",
-    "zona di addestramento Gerudo",
-    "fortezza Gerudo",
-    "castello di Ganon",
+    "Grande Albero Deku",  "caverna dei Dodongo",  "pancia di Jabu Jabu",     "Santuario della Foresta",
+    "Santuario del Fuoco", "Santuario dell'Acqua", "Santuario dello Spirito", "Santuario dell'Ombra",
+    "fondo del pozzo",     "caverna di ghiaccio",  "torre di Ganon",          "zona di addestramento Gerudo",
+    "fortezza Gerudo",     "castello di Ganon",
 };
 
+// clang-format off
 constexpr std::array ItalianDungeonArticles = {
     "del",
     "della",
@@ -141,6 +114,7 @@ constexpr std::array ItalianDungeonArticles = {
     "della",
     "del",
 };
+// clang-format on
 
 constexpr std::array GermanDungeonNames = {
     "Deku-Baum",
@@ -194,133 +168,285 @@ constexpr std::array GermanDungeonGenitiv = {
 };
 
 constexpr std::array DungeonColors = {
-    QM_GREEN,
-    QM_RED,
-    QM_BLUE,
-    QM_GREEN,
-    QM_RED,
-    QM_BLUE,
-    QM_YELLOW,
-    QM_PINK,
-    QM_PINK,
-    QM_LBLUE,
-    QM_BLACK,
-    QM_YELLOW,
-    QM_YELLOW,
-    QM_RED,
+    QM_GREEN, QM_RED,  QM_BLUE,  QM_GREEN, QM_RED,    QM_BLUE,   QM_YELLOW,
+    QM_PINK,  QM_PINK, QM_LBLUE, QM_BLACK, QM_YELLOW, QM_YELLOW, QM_RED,
 };
 
-    std::set<MessageEntry, MessageEntryComp> messageEntries;
-    std::vector<MessageEntry> arrangedMessageEntries;
-    std::stringstream messageData;
-    std::string arrangedMessageData;
+std::set<MessageEntry, MessageEntryComp> messageEntries;
+std::vector<MessageEntry> arrangedMessageEntries;
+std::stringstream messageData;
+std::string arrangedMessageData;
 
-    //textBoxType and textBoxPosition are defined here: https://wiki.cloudmodding.com/oot/Text_Format#Message_Id
-    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-                       std::string NAEnglishText, std::string NAFrenchText, std::string NASpanishText,
-                       std::string EUREnglishText, std::string EURFrenchText, std::string EURSpanishText,
-                       std::string EURItalianText, std::string EURGermanText) {
-            MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
+// textBoxType and textBoxPosition are defined here: https://wiki.cloudmodding.com/oot/Text_Format#Message_Id
+void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, std::string NAEnglishText,
+                   std::string NAFrenchText, std::string NASpanishText, std::string EUREnglishText,
+                   std::string EURFrenchText, std::string EURSpanishText, std::string EURItalianText,
+                   std::string EURGermanText) {
+    MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
-            if (Settings::Region == REGION_NA) {
-                while ((NAEnglishText.size() % 4) != 0) {
-                    NAEnglishText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
-                newEntry.info[ENGLISH_U].length = NAEnglishText.size();
-                messageData << NAEnglishText;
+    if (Settings::Region == REGION_NA) {
+        while ((NAEnglishText.size() % 4) != 0) {
+            NAEnglishText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[ENGLISH_U].length = NAEnglishText.size();
+        messageData << NAEnglishText;
 
-                while ((NAFrenchText.size() % 4) != 0) {
-                    NAFrenchText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
-                newEntry.info[FRENCH_U].length = NAFrenchText.size();
-                messageData << NAFrenchText;
+        while ((NAFrenchText.size() % 4) != 0) {
+            NAFrenchText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[FRENCH_U].length = NAFrenchText.size();
+        messageData << NAFrenchText;
 
-                while ((NASpanishText.size() % 4) != 0) {
-                    NASpanishText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
-                newEntry.info[SPANISH_U].length = NASpanishText.size();
-                messageData << NASpanishText;
-            } else if (Settings::Region == REGION_EUR) {
-                while ((EUREnglishText.size() % 4) != 0) {
-                    EUREnglishText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
-                newEntry.info[ENGLISH_E].length = EUREnglishText.size();
-                messageData << EUREnglishText;
+        while ((NASpanishText.size() % 4) != 0) {
+            NASpanishText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[SPANISH_U].length = NASpanishText.size();
+        messageData << NASpanishText;
+    } else if (Settings::Region == REGION_EUR) {
+        while ((EUREnglishText.size() % 4) != 0) {
+            EUREnglishText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[ENGLISH_E].length = EUREnglishText.size();
+        messageData << EUREnglishText;
 
-                while ((EURFrenchText.size() % 4) != 0) {
-                    EURFrenchText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
-                newEntry.info[FRENCH_E].length = EURFrenchText.size();
-                messageData << EURFrenchText;
+        while ((EURFrenchText.size() % 4) != 0) {
+            EURFrenchText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[FRENCH_E].length = EURFrenchText.size();
+        messageData << EURFrenchText;
 
-                while ((EURSpanishText.size() % 4) != 0) {
-                    EURSpanishText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
-                newEntry.info[SPANISH_E].length = EURSpanishText.size();
-                messageData << EURSpanishText;
+        while ((EURSpanishText.size() % 4) != 0) {
+            EURSpanishText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[SPANISH_E].length = EURSpanishText.size();
+        messageData << EURSpanishText;
 
-                while ((EURItalianText.size() % 4) != 0) {
-                    EURItalianText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
-                newEntry.info[ITALIAN_E].length = EURItalianText.size();
-                messageData << EURItalianText;
+        while ((EURItalianText.size() % 4) != 0) {
+            EURItalianText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[ITALIAN_E].length = EURItalianText.size();
+        messageData << EURItalianText;
 
-                while ((EURGermanText.size() % 4) != 0) {
-                    EURGermanText += "\0"s;
-                }
-                messageData.seekg(0, messageData.end);
-                newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
-                newEntry.info[GERMAN_E].length = EURGermanText.size();
-                messageData << EURGermanText;
-            }
-
-            messageEntries.insert(newEntry);
+        while ((EURGermanText.size() % 4) != 0) {
+            EURGermanText += "\0"s;
+        }
+        messageData.seekg(0, messageData.end);
+        newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[GERMAN_E].length = EURGermanText.size();
+        messageData << EURGermanText;
     }
 
-    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
-                       std::string englishText, std::string frenchText, std::string spanishText,
-                       std::string italianText, std::string germanText) {
-        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, englishText, frenchText, spanishText,
-                        englishText, frenchText, spanishText, italianText, germanText);
+    void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, std::string englishText,
+                       std::string frenchText, std::string spanishText, std::string italianText,
+                       std::string germanText) {
+        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, englishText, frenchText, spanishText, englishText,
+                      frenchText, spanishText, italianText, germanText);
     }
 
-    void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text) {
-        CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetNAEnglish(), text.GetNAFrench(), text.GetNASpanish(),
-            text.GetEUREnglish(), text.GetEURFrench(), text.GetEURSpanish(), text.GetEURItalian(), text.GetEURGerman());
-    }
+    // Talon (this is to prevent accidentally skipping Malon in HC)
+    CreateMessage(0x9100, 0, 2, 0,
+                  UNSKIPPABLE() + "You should go talk to my daughter Malon," + NEWLINE() + "she has an item for you." +
+                      NEWLINE() + SET_SPEED(3) + "........." + SET_SPEED(0) + WAIT_FOR_INPUT() +
+                      "I have to think about some stuff now," + NEWLINE() + "please don't distract me." + MESSAGE_END(),
+                  UNSKIPPABLE() + "Zzzz... Muh... Malon..." + NEWLINE() + "Parler avec... Malon..." + NEWLINE() +
+                      SET_SPEED(3) + "........." + SET_SPEED(0) + WAIT_FOR_INPUT() + "Si fatigué..." + NEWLINE() +
+                      "Quelle vie..." + MESSAGE_END(),
+                  UNSKIPPABLE() + "Habla con Malon, tiene algo que darte..." + SET_SPEED(3) + "........." +
+                      SET_SPEED(0) + MESSAGE_END(),
+                  UNSKIPPABLE() + "Dovresti andare a parlare a mia figlia" + NEWLINE() +
+                      "Malon, ha un oggetto per te." + NEWLINE() + SET_SPEED(3) + "........." + SET_SPEED(0) +
+                      WAIT_FOR_INPUT() + "Ora devo pensare a delle cose serie," + NEWLINE() +
+                      "non distrarmi per favore." + MESSAGE_END(),
+                  UNSKIPPABLE() + "Deutsch" + MESSAGE_END());
 
-    u32 NumMessages() {
-        return messageEntries.size();
-    }
+    // Bow Shooting Gallery reminder
+    CreateMessage(0x9140, 0, 0, 0,
+                  UNSKIPPABLE() + "Come back when you have your own bow" + NEWLINE() + "and you'll get a " +
+                      COLOR(QM_RED) + "different prize" + COLOR(QM_WHITE) + "!" + CLOSE_AFTER(255) + MESSAGE_END(),
+                  UNSKIPPABLE() + "J'aurai " + COLOR(QM_RED) + "une autre récompense" + COLOR(QM_WHITE) + " pour toi" +
+                      NEWLINE() + "lorsque tu auras ton propre arc." + CLOSE_AFTER(255) + MESSAGE_END(),
+                  UNSKIPPABLE() + "Si regresas cuando tienes tu propio arco," + NEWLINE() + "recibirás " +
+                      COLOR(QM_RED) + "otro premio" + COLOR(QM_WHITE) + "." + CLOSE_AFTER(255) + MESSAGE_END(),
+                  UNSKIPPABLE() + "Torna quando avrai un tuo arco personale" + NEWLINE() + "e riceverai un " +
+                      COLOR(QM_RED) + "altro premio" + COLOR(QM_WHITE) + "!" + CLOSE_AFTER(255) + MESSAGE_END(),
+                  UNSKIPPABLE() + "Deutsch" + CLOSE_AFTER(255) + MESSAGE_END());
 
-    std::pair<const char*, u32> RawMessageEntryData() {
-        arrangedMessageEntries.assign(messageEntries.begin(), messageEntries.end());
-        const char* data = (const char*)arrangedMessageEntries.data();
-        u32 size = arrangedMessageEntries.size() * sizeof(MessageEntry);
-        return { data, size };
+    // Shopsanity items
+    // 64 textboxes, 2 for each of 32 potential shopsanity items
+    for (u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
+        Text name         = NonShopItems[shopitems].Name;
+        std::string price = std::to_string(NonShopItems[shopitems].Price);
+        // Prevent names from being too long and overflowing textbox
+        if (name.GetNAEnglish() == "Piece of Heart (Treasure Chest Minigame)") {
+            name = Text{ "Piece of Heart", "Quart de coeur", "Pieza de corazón", "Frammento di cuore", "Deutsch" };
+        } else if (name.GetNAEnglish() == "Green Rupee (Treasure Chest Minigame)") {
+            name = Text{ "Green Rupee", "Rubis vert", "Rupia verde", "Rupia verde", "Deutsch" };
+        }
+        // Message to display when hovering over the item
+        if (NonShopItems[shopitems].Repurchaseable) { // Different checkbox for repurchaseable items
+            CreateMessage(0x9200 + shopitems * 2, 0, 0, 0,
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetNAEnglish() + ": " + price + " Rupees" +
+                              NEWLINE() + COLOR(QM_WHITE) + "Special deal!" + NEWLINE() + "Buy as many as you want!" +
+                              SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetNAFrench() + ": " + price + " rubis" + NEWLINE() +
+                              COLOR(QM_WHITE) + "Offre spéciale!" + NEWLINE() + "Achetez-en à volonté!" +
+                              SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetNASpanish() + ": " + price + " rupias" +
+                              NEWLINE() + COLOR(QM_WHITE) + "¡Oferta especial!" + NEWLINE() +
+                              "¡Compra todo lo que quieras!" + SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetEURItalian() + " - " + price + " rupie" +
+                              NEWLINE() + COLOR(QM_WHITE) + "Offerta speciale!" + NEWLINE() + "Compratene a volontà!" +
+                              SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          UNSKIPPABLE() + "Deutsch" + SHOP_MESSAGE_BOX() + MESSAGE_END());
+        } else { // Normal textbox
+            CreateMessage(0x9200 + shopitems * 2, 0, 0, 0,
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetNAEnglish() + ": " + price + " Rupees" +
+                              NEWLINE() + COLOR(QM_WHITE) + "Special deal! ONE LEFT!" + NEWLINE() +
+                              "Get it while it lasts!" + SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetNAFrench() + ": " + price + " rubis" + NEWLINE() +
+                              COLOR(QM_WHITE) + "Offre spéciale! DERNIER EN STOCK!" + NEWLINE() + "Faites vite!" +
+                              SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetNASpanish() + ": " + price + " rupias" +
+                              NEWLINE() + COLOR(QM_WHITE) + "¡Oferta especial! ¡SOLO QUEDA UNA UNIDAD!" + NEWLINE() +
+                              "¡Hazte con ella antes de que se agote!" + SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          INSTANT_TEXT_ON() + COLOR(QM_RED) + name.GetEURItalian() + " - " + price + " rupie" +
+                              NEWLINE() + COLOR(QM_WHITE) + "Offerta speciale! ULTIMO PEZZO!" + NEWLINE() +
+                              "Affrettatevi ad aquistarlo!" + SHOP_MESSAGE_BOX() + MESSAGE_END(),
+                          UNSKIPPABLE() + "Deutsch" + SHOP_MESSAGE_BOX() + MESSAGE_END());
+        }
+        // Message to display when going to buy the item
+        CreateMessage(0x9200 + shopitems * 2 + 1, 0, 0, 0,
+                      INSTANT_TEXT_ON() + name.GetNAEnglish() + ": " + price + " Rupees" + INSTANT_TEXT_OFF() +
+                          NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() + COLOR(QM_GREEN) + "Buy" + NEWLINE() + "Don't buy" +
+                          COLOR(QM_WHITE) + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      INSTANT_TEXT_ON() + name.GetNAFrench() + ": " + price + " rubis" + INSTANT_TEXT_OFF() +
+                          NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() + COLOR(QM_GREEN) + "Acheter" + NEWLINE() +
+                          "Ne pas acheter" + COLOR(QM_WHITE) + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      INSTANT_TEXT_ON() + name.GetNASpanish() + ": " + price + " rupias" + INSTANT_TEXT_OFF() +
+                          NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() + COLOR(QM_GREEN) + "Comprar" + NEWLINE() +
+                          "No comprar" + COLOR(QM_WHITE) + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      INSTANT_TEXT_ON() + name.GetEURItalian() + " - " + price + " rupie" + INSTANT_TEXT_OFF() +
+                          NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() + COLOR(QM_GREEN) + "Compra" + NEWLINE() +
+                          "Non comprare" + COLOR(QM_WHITE) + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + "Deutsch" + NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() + COLOR(QM_GREEN) + "Y" +
+                          NEWLINE() + "N" + COLOR(QM_WHITE) + INSTANT_TEXT_OFF() + MESSAGE_END());
     }
+    // easter egg
+    CreateMessage(0x96F, 0, 2, 2,
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Oh hey, you watched all the credits!" +
+                      NEWLINE() + CENTER_TEXT() + "Here's a prize for your patience." + NEWLINE() + CENTER_TEXT() +
+                      "Unlocking MQ and saving..." + NEWLINE() + NEWLINE() + CENTER_TEXT() + COLOR(QM_RED) +
+                      "Do not remove the Game Card" + NEWLINE() + CENTER_TEXT() + "or turn the power off." +
+                      INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "The Legend of Zelda Ocarina of Time 3D" +
+                      NEWLINE() + CENTER_TEXT() + "Master Quest va être déverrouillé." + NEWLINE() + CENTER_TEXT() +
+                      "Sauvegarde... Veuillez patienter." + NEWLINE() + NEWLINE() + CENTER_TEXT() + COLOR(QM_RED) +
+                      "N'éteignez pas la console et" + NEWLINE() + CENTER_TEXT() + "ne retirez pas la carte de jeu" +
+                      INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Desbloqueando The Legend of Zelda" + NEWLINE() +
+                      CENTER_TEXT() + "Ocarina of Time 3D Master Quest." + NEWLINE() + CENTER_TEXT() +
+                      "Guardando. Espera un momento..." + NEWLINE() + NEWLINE() + CENTER_TEXT() + COLOR(QM_RED) +
+                      "No saques la tarjeta de juego" + NEWLINE() + CENTER_TEXT() + "ni apagues la consola." +
+                      INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Oh, hai guardato i crediti fino alla fine!" +
+                      NEWLINE() + CENTER_TEXT() + "Ecco un premio per la tua pazienza." + NEWLINE() + CENTER_TEXT() +
+                      "Sblocco MQ e salvataggio in corso..." + NEWLINE() + NEWLINE() + CENTER_TEXT() + COLOR(QM_RED) +
+                      "Non estrarre la scheda di gioco" + NEWLINE() + CENTER_TEXT() + "e non spegnere la console." +
+                      INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + "Deutsch" + MESSAGE_END());
+    CreateMessage(0x970, 0, 2, 3,
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Master Quest doesn't affect the Randomizer," +
+                      NEWLINE() + CENTER_TEXT() + "so you can use 3 more save slots now." + NEWLINE() + NEWLINE() +
+                      CENTER_TEXT() + "Thanks for playing!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Vous pouvez désormais jouer à" + NEWLINE() +
+                      CENTER_TEXT() + "The Legend of Zelda Ocarina of Time 3D" + NEWLINE() + CENTER_TEXT() +
+                      "Master Quest!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Ya puedes jugar The Legend of Zelda" +
+                      NEWLINE() + CENTER_TEXT() + "Ocarina of Time 3D Master Quest!" + INSTANT_TEXT_OFF() +
+                      MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Il Randomizer non cambierà in Master Quest," +
+                      NEWLINE() + CENTER_TEXT() + "perciò ora puoi usare altri 3 file." + NEWLINE() + NEWLINE() +
+                      CENTER_TEXT() + "Grazie per aver giocato!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + "Deutsch" + MESSAGE_END());
 
-    std::pair<const char*, u32> RawMessageData() {
-        arrangedMessageData = messageData.str();
-        const char* data = arrangedMessageData.data();
-        u32 size = arrangedMessageData.size();
-        return { data, size };
+    // Messages for the new Lake Hylia switch
+    CreateMessage(0x346, 0, 1, 3,
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Water level control system." + NEWLINE() +
+                      CENTER_TEXT() + "Keep away!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Contrôle du niveau d'eau." + NEWLINE() +
+                      CENTER_TEXT() + "Ne pas toucher!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Control del nivel del agua." + NEWLINE() +
+                      CENTER_TEXT() + "¡No te acerques!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Controllo del livello dell'acqua." + NEWLINE() +
+                      CENTER_TEXT() + "Non toccare!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + "Deutsch" + MESSAGE_END());
+    CreateMessage(
+        0x1B3, 0, 0, 3,
+        UNSKIPPABLE() + "This switch is rustier than you think." + WAIT_FOR_INPUT() +
+            "Something must be wrong with the pipe" + NEWLINE() + "system in the Water Temple." + MESSAGE_END(),
+        UNSKIPPABLE() + "Cet interrupteur est très rouillé." + WAIT_FOR_INPUT() + "Quelque chose ne va pas avec" +
+            NEWLINE() + "la tuyauterie du Temple de l'Eau." + MESSAGE_END(),
+        UNSKIPPABLE() + "El interruptor está más oxidado de lo que" + NEWLINE() + "aparenta." + WAIT_FOR_INPUT() +
+            "Algo debe andar mal en el sistema de" + NEWLINE() + "cañerías del Templo del Agua." + MESSAGE_END(),
+        UNSKIPPABLE() + "Questo interruttore è più arrugginito di" + NEWLINE() + "quanto sembri." + WAIT_FOR_INPUT() +
+            "Deve esserci qualche problema nelle" + NEWLINE() + "tubature del Santuario dell'Acqua." + MESSAGE_END(),
+        UNSKIPPABLE() + "Deutsch" + MESSAGE_END());
+
+    // Treasure chest shop keys. If they're not randomized leave the base game text
+    if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_SINGLE_KEYS)) {
+        CreateMessage(0x0F3, 0, 2, 3,
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "You got a " + COLOR(QM_RED) +
+                          "Treasure Chest Shop" + NEWLINE() + "Small Key" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() +
+                          MESSAGE_END(),
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "Vous trouvez une " +
+                          COLOR(QM_RED) + "petite clé" + NEWLINE() + "de la chasse aux trésors" + COLOR(QM_WHITE) +
+                          "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "¡Has obtenido una " +
+                          COLOR(QM_RED) + "llave pequeña del" + NEWLINE() + "Cofre del Tesoro" + COLOR(QM_WHITE) + "!" +
+                          INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "Hai ottenuto una " +
+                          COLOR(QM_RED) + "piccola chiave della" + NEWLINE() + "sala della fortuna" + COLOR(QM_WHITE) +
+                          "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + "Deutsch" + MESSAGE_END());
+    } else if (Settings::ShuffleChestMinigame.Is(SHUFFLECHESTMINIGAME_PACK)) {
+        CreateMessage(0x0F3, 0, 2, 3,
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "You got all 6 " +
+                          COLOR(QM_RED) + "Treasure Chest Shop" + NEWLINE() + "Small Keys" + COLOR(QM_WHITE) + "!" +
+                          INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "Vous trouvez les " +
+                          COLOR(QM_RED) + "petites clés" + NEWLINE() + "de la chasse aux trésors" + COLOR(QM_WHITE) +
+                          "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "¡Has obtenido todas las 6 " +
+                          COLOR(QM_RED) + "llaves" + NEWLINE() + "pequeñas del Cofre del Tesoro" + COLOR(QM_WHITE) +
+                          "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_SMALL) + INSTANT_TEXT_ON() + "Hai ottenuto tutte e 6 le " +
+                          COLOR(QM_RED) + "piccole" + NEWLINE() + "chiavi della sala della fortuna" + COLOR(QM_WHITE) +
+                          "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      UNSKIPPABLE() + "Deutsch" + MESSAGE_END());
     }
+}
 
+Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
+
+    // for each language
+    for (std::string* textStr : { &text.NAenglish, &text.NAfrench, &text.NAspanish, &text.EURenglish, &text.EURfrench,
+                                  &text.EURspanish, &text.EURitalian, &text.EURgerman }) {
+
+        // clang-format off
     void CreateAlwaysIncludedMessages() {
         // Bombchu (10) Purchase Prompt
         CreateMessage(0x8C, 0, 2, 3,
@@ -633,99 +759,99 @@ constexpr std::array DungeonColors = {
                 UNSKIPPABLE()+ITEM_OBTAINED(ITEM_KEY_SMALL)+INSTANT_TEXT_ON()+"Du hast das "+COLOR(QM_RED)+"Schlüsselbund "+COLOR(QM_WHITE)+"der"+NEWLINE()+COLOR(QM_RED)+"Truhenlotterie "+COLOR(QM_WHITE)+"erhalten!"+INSTANT_TEXT_OFF()+MESSAGE_END());
         }
     }
+        // clang-format on
+        Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
 
-    Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
+            // for each language
+            for (std::string* textStr : { &text.NAenglish, &text.NAfrench, &text.NAspanish, &text.EURenglish,
+                                          &text.EURfrench, &text.EURspanish, &text.EURitalian, &text.EURgerman }) {
 
-      //for each language
-      for (std::string* textStr : {
-                    &text.NAenglish, &text.NAfrench, &text.NAspanish,
-                    &text.EURenglish, &text.EURfrench, &text.EURspanish, &text.EURitalian, &text.EURgerman
-                }) {
+                // insert playername
+                size_t atSymbol = textStr->find('@');
+                while (atSymbol != std::string::npos) {
+                    textStr->replace(atSymbol, 1, PLAYER_NAME());
+                    atSymbol = textStr->find('@');
+                }
+                // insert newlines either manually or when encountering a '&'
+                constexpr size_t lineLength = 44;
+                size_t lastNewline          = 0;
+                while (lastNewline + lineLength < textStr->length()) {
+                    size_t carrot     = textStr->find('^', lastNewline);
+                    size_t ampersand  = textStr->find('&', lastNewline);
+                    size_t lastSpace  = textStr->rfind(' ', lastNewline + lineLength);
+                    size_t lastPeriod = textStr->rfind('.', lastNewline + lineLength);
+                    // replace '&' first if it's within the newline range
+                    if (ampersand < lastNewline + lineLength) {
+                        textStr->replace(ampersand, 1, NEWLINE());
+                        lastNewline = ampersand + NEWLINE().length();
+                        // or move the lastNewline cursor to the next line if a '^' is encountered
+                    } else if (carrot < lastNewline + lineLength) {
+                        lastNewline = carrot + 1;
+                        // some lines need to be split but don't have spaces, look for periods instead
+                    } else if (lastSpace == std::string::npos) {
+                        textStr->replace(lastPeriod, 1, "." + NEWLINE());
+                        lastNewline = lastPeriod + NEWLINE().length() + 1;
+                    } else {
+                        textStr->replace(lastSpace, 1, NEWLINE());
+                        lastNewline = lastSpace + NEWLINE().length();
+                    }
+                }
+                // clean up any remaining '&' characters
+                size_t ampersand = textStr->find('&');
+                while (ampersand != std::string::npos) {
+                    textStr->replace(ampersand, 1, NEWLINE());
+                    ampersand = textStr->find('&');
+                }
 
-        //insert playername
-        size_t atSymbol = textStr->find('@');
-        while (atSymbol != std::string::npos) {
-          textStr->replace(atSymbol, 1, PLAYER_NAME());
-          atSymbol = textStr->find('@');
-        }
-        //insert newlines either manually or when encountering a '&'
-        constexpr size_t lineLength = 44;
-        size_t lastNewline = 0;
-        while (lastNewline + lineLength < textStr->length()) {
-          size_t carrot     = textStr->find('^', lastNewline);
-          size_t ampersand  = textStr->find('&', lastNewline);
-          size_t lastSpace  = textStr->rfind(' ', lastNewline + lineLength);
-          size_t lastPeriod = textStr->rfind('.', lastNewline + lineLength);
-          //replace '&' first if it's within the newline range
-          if (ampersand < lastNewline + lineLength) {
-            textStr->replace(ampersand, 1, NEWLINE());
-            lastNewline = ampersand + NEWLINE().length();
-          //or move the lastNewline cursor to the next line if a '^' is encountered
-          } else if (carrot < lastNewline + lineLength) {
-            lastNewline = carrot + 1;
-          //some lines need to be split but don't have spaces, look for periods instead
-          } else if (lastSpace == std::string::npos) {
-            textStr->replace(lastPeriod, 1, "."+NEWLINE());
-            lastNewline = lastPeriod + NEWLINE().length() + 1;
-          } else {
-            textStr->replace(lastSpace, 1, NEWLINE());
-            lastNewline = lastSpace + NEWLINE().length();
-          }
-        }
-        //clean up any remaining '&' characters
-        size_t ampersand = textStr->find('&');
-        while (ampersand != std::string::npos) {
-          textStr->replace(ampersand, 1, NEWLINE());
-          ampersand = textStr->find('&');
-        }
+                // insert box break
+                size_t carrotSymbol = textStr->find('^');
+                while (carrotSymbol != std::string::npos) {
+                    textStr->replace(carrotSymbol, 1, INSTANT_TEXT_OFF() + WAIT_FOR_INPUT() + INSTANT_TEXT_ON());
+                    carrotSymbol = textStr->find('^');
+                }
 
-        //insert box break
-        size_t carrotSymbol = textStr->find('^');
-        while (carrotSymbol != std::string::npos) {
-          textStr->replace(carrotSymbol, 1, INSTANT_TEXT_OFF()+WAIT_FOR_INPUT()+INSTANT_TEXT_ON());
-          carrotSymbol = textStr->find('^');
-        }
+                // If there's a two-way choice and only 1 newline before it in the same text box, add another one
+                size_t choice = textStr->find(TWO_WAY_CHOICE());
+                if (choice != std::string::npos) {
+                    size_t newLinesCount = 0;
+                    size_t lastBoxBreak  = textStr->rfind(WAIT_FOR_INPUT(), choice);
+                    lastNewline          = choice;
 
-        //If there's a two-way choice and only 1 newline before it in the same text box, add another one
-        size_t choice = textStr->find(TWO_WAY_CHOICE());
-        if (choice != std::string::npos) {
-          size_t newLinesCount = 0;
-          size_t lastBoxBreak = textStr->rfind(WAIT_FOR_INPUT(), choice);
-          lastNewline = choice;
+                    if (lastBoxBreak == std::string::npos) {
+                        lastBoxBreak = 0;
+                    }
 
-          if (lastBoxBreak == std::string::npos) {
-            lastBoxBreak = 0;
-          }
+                    while ((lastNewline != std::string::npos)) {
+                        lastNewline = textStr->rfind(NEWLINE(), lastNewline - 1);
+                        if (lastNewline != std::string::npos && lastNewline > lastBoxBreak) {
+                            newLinesCount++;
+                        } else {
+                            break;
+                        }
+                    }
 
-          while ((lastNewline != std::string::npos)) {
-            lastNewline = textStr->rfind(NEWLINE(), lastNewline - 1);
-            if (lastNewline != std::string::npos && lastNewline > lastBoxBreak) {
-                newLinesCount++;
-            } else {
-                break;
+                    if (newLinesCount <= 1) {
+                        textStr->replace(choice, TWO_WAY_CHOICE().length(), NEWLINE() + TWO_WAY_CHOICE());
+                    }
+                }
+
+                // add colors
+                for (auto color : colors) {
+                    size_t firstHashtag = textStr->find('#');
+                    if (firstHashtag != std::string::npos) {
+                        textStr->replace(firstHashtag, 1, COLOR(color));
+                        size_t secondHashtag = textStr->find('#');
+                        if (secondHashtag == std::string::npos) {
+                            CitraPrint("ERROR: Couldn't find second '#' in " + (*textStr));
+                        } else {
+                            textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
+                        }
+                    }
+                }
             }
-          }
-
-          if (newLinesCount <= 1) {
-              textStr->replace(choice, TWO_WAY_CHOICE().length(), NEWLINE()+TWO_WAY_CHOICE());
-          }
+            return Text{ "" } + UNSKIPPABLE() + INSTANT_TEXT_ON() + text + INSTANT_TEXT_OFF() + MESSAGE_END();
         }
-
-        //add colors
-        for (auto color : colors) {
-          size_t firstHashtag = textStr->find('#');
-          if (firstHashtag != std::string::npos) {
-              textStr->replace(firstHashtag, 1, COLOR(color));
-              size_t secondHashtag = textStr->find('#');
-              if (secondHashtag == std::string::npos) {
-                CitraPrint("ERROR: Couldn't find second '#' in " + (*textStr));
-              } else {
-                textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
-              }
-          }
-        }
-      }
-      return Text{""}+UNSKIPPABLE()+INSTANT_TEXT_ON()+text+INSTANT_TEXT_OFF()+MESSAGE_END();
+        return Text{ "", "", "" } + UNSKIPPABLE() + INSTANT_TEXT_ON() + text + INSTANT_TEXT_OFF() + MESSAGE_END();
     }
 
     void ClearMessages() {

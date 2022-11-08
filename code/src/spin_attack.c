@@ -7,8 +7,7 @@
 void EnMThunder_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (IceTrap_ActiveCurse != ICETRAP_CURSE_SWORD) {
         EnMThunder_Init(thisx, globalCtx);
-    }
-    else {
+    } else {
         Actor_Kill(thisx);
     }
 }

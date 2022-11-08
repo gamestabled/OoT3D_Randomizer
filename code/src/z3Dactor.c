@@ -2,7 +2,7 @@
 #include "stddef.h"
 
 void Actor_Kill(Actor* actor) {
-    actor->draw = NULL;
+    actor->draw   = NULL;
     actor->update = NULL;
     actor->flags &= ~0x1;
 }
