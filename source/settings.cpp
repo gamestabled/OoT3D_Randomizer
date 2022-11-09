@@ -370,6 +370,7 @@ namespace Settings {
   Option ZoraTunicAsChild    = Option::Bool("  Child Zora Tunic",     {"Disabled", "Enabled"},                                                {childZoraTunicDesc});
   Option RestoreISG          = Option::Bool("Restore ISG",            {"Disabled", "Enabled"},                                                {restoreISGdesc},                                                                                                 OptionCategory::Setting,    ON);
   Option GkDurability        = Option::U8  ("GK Durability",          {"Vanilla", "Random Risk", "Random Safe"},                              {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
+  Option RetroAmmo           = Option::Bool("Rupees as Ammo",         {"Disabled", "Enabled"},                                                {retroAmmoDesc});
   std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
     &AgeItemsToggle,
@@ -392,6 +393,7 @@ namespace Settings {
     &ZoraTunicAsChild,
     &RestoreISG,
     &GkDurability,
+    &RetroAmmo,
   };
 
   //Item Pool Settings
@@ -1425,6 +1427,7 @@ namespace Settings {
     ctx.zoraTunicAsChild     = (ZoraTunicAsChild) ? 1 : 0;
     ctx.restoreISG           = (RestoreISG) ? 1 : 0;
     ctx.gkDurability         = GkDurability.Value<u8>();
+    ctx.retroAmmo            = (RetroAmmo) ? 1 : 0;
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();

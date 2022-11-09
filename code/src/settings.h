@@ -545,6 +545,7 @@ typedef struct {
   u8 zoraTunicAsChild;
   u8 restoreISG;
   u8 gkDurability;
+  u8 retroAmmo;
 
   u8 itemPoolValue;
   u8 iceTrapValue;
