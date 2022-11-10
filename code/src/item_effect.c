@@ -263,7 +263,7 @@ void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 //Use rupees as ammo when count gets to 0 and the player has the corresponding item
 void ItemEffect_RupeeAmmo(SaveContext* saveCtx) {
     if(gSettingsContext.retroAmmo){
-        if(saveCtx->ammo[SLOT_BOW] == 0 && saveCtx->rupees >= 4 && saveCtx->items[SLOT_BOW] == ITEM_BOW){
+        if(saveCtx->ammo[SLOT_BOW] == 0 && saveCtx->rupees >= 4 && (saveCtx->items[SLOT_BOW] == ITEM_BOW || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_FIRE || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_ICE || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_LIGHT){
             saveCtx->rupeeAccumulator -= 4;
             saveCtx->ammo[SLOT_BOW] += 1;
         }
