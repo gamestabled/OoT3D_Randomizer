@@ -290,7 +290,7 @@ void ItemEffect_RupeeAmmo(SaveContext* saveCtx) {
         //Use rupees as magic when it becomes low, when the player has magic, and when magic isn't being filled
         if(saveCtx->magic < 0x18 && saveCtx->rupees >= 1 && saveCtx->magicState < 8 && saveCtx->magicLevel > 0){
             saveCtx->rupeeAccumulator -= 1;
-            saveCtx->magic += 0x01;
+            saveCtx->magic += 0x02;
         }
     }
 }
