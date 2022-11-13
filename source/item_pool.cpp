@@ -567,33 +567,6 @@ static void PlaceVanillaCowMilk() {
   }
 }
 
-static void ReplaceBottlesInPool(u8 bottleCount) {
-  ReplaceMaxItem(EMPTY_BOTTLE, 0);
-  ReplaceMaxItem(BOTTLE_WITH_MILK, 0);
-  ReplaceMaxItem(BOTTLE_WITH_RED_POTION, 0);
-  ReplaceMaxItem(BOTTLE_WITH_GREEN_POTION, 0);
-  ReplaceMaxItem(BOTTLE_WITH_BLUE_POTION, 0);
-  ReplaceMaxItem(BOTTLE_WITH_FAIRY, 0);
-  ReplaceMaxItem(BOTTLE_WITH_FISH, 0);
-  ReplaceMaxItem(BOTTLE_WITH_BUGS, 0);
-  ReplaceMaxItem(BOTTLE_WITH_POE, 0);
-  ReplaceMaxItem(BOTTLE_WITH_BIG_POE, 0);
-  ReplaceMaxItem(BOTTLE_WITH_BLUE_FIRE, 0);
-  
-  u8 rutoBottles = 1;
-  if (ZorasFountain.Is(ZORASFOUNTAIN_OPEN)) {
-    rutoBottles = 0;
-  }
-  bottleCount = bottleCount - rutoBottles;
-  
-  std::vector<ItemKey> bottles;
-  bottles.assign(normalBottles.begin(), normalBottles.end());
-  
-  for (u8 i = 0; i < bottleCount; i++) {
-	  AddRandomBottle(bottles);
-  }
-}
-
 static void SetScarceItemPool() {
   ReplaceMaxItem(PROGRESSIVE_BOMBCHUS, 3);
   ReplaceMaxItem(BOMBCHU_5, 1);
@@ -607,11 +580,6 @@ static void SetScarceItemPool() {
   ReplaceMaxItem(PROGRESSIVE_SLINGSHOT, 2);
   ReplaceMaxItem(PROGRESSIVE_BOMB_BAG, 2);
   ReplaceMaxItem(HEART_CONTAINER, 0);
-  // Bottles
-  if (IncludeBottles) {
-	  u8 bottleCount = 2;
-	  ReplaceBottlesInPool(bottleCount);
-  }
 }
 
 static void SetMinimalItemPool() {
@@ -630,11 +598,6 @@ static void SetMinimalItemPool() {
   ReplaceMaxItem(PIECE_OF_HEART, 0);
   // Need extra heart containers when starting with 1 heart or less to be able to reach 3 hearts
   ReplaceMaxItem(HEART_CONTAINER, 2 - StartingHearts.Value<u8>());
-    // Bottles
-  if (IncludeBottles) {
-	  u8 bottleCount = 1;
-	  ReplaceBottlesInPool(bottleCount);
-  }
 }
 
 void GenerateItemPool() {
@@ -1098,8 +1061,13 @@ void GenerateItemPool() {
     rutoBottles = 0;
   }
 
-  //Add 4 total bottles
+  //Add 4 total bottles, 2 or 1 if bottles are included in the Item Pool
   u8 bottleCount = 4;
+  if ((ItemPoolValue.Is(ITEMPOOL_MINIMAL)) && IncludeBottles) {
+	  bottleCount = 1;
+  } else if ((ItemPoolValue.Is(ITEMPOOL_SCARCE)) && IncludeBottles) {
+	  bottleCount = 2;
+    }
   std::vector<ItemKey> bottles;
   bottles.assign(normalBottles.begin(), normalBottles.end());
   IceTrapModels.push_back(ItemTable(RandomElement(bottles)).GetItemID()); //Get one random bottle type for ice traps
