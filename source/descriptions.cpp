@@ -867,6 +867,14 @@ string_view itemPoolScarce            = "Some excess items are removed, includin
 string_view itemPoolMinimal           = "Most excess items are removed.";                  //
                                                                                            //
 /*------------------------------                                                           //
+|       INCLUDE BOTTLES        |                                                           //
+------------------------------*/                                                           //
+string_view includeBottlesOffDesc     = "The Item Pool setting will not affect the\n"      //
+                                        "amount of bottles in the game.";                  //
+string_view includeBottlesOnDesc      = "Scarce also takes 2 bottles out of the pool.\n"   //
+                                        "Minimum also takes 3 bottles out of the pool.";   //
+                                                                                           //
+/*------------------------------                                                           //
 |          ICE TRAPS           |                                                           //
 ------------------------------*/                                                           //
 string_view iceTrapsOff               = "All Ice Traps are removed.";                      //

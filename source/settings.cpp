@@ -396,11 +396,13 @@ namespace Settings {
 
   //Item Pool Settings
   Option ItemPoolValue         = Option::U8  ("Item Pool",             {"Minimal", "Scarce", "Balanced", "Plentiful"},                        {itemPoolMinimal, itemPoolScarce, itemPoolBalanced, itemPoolPlentiful},                                           OptionCategory::Setting,    ITEMPOOL_BALANCED);
+  Option IncludeBottles        = Option::Bool("  Include Bottles",     {"No", "Yes"},                                                         {includeBottlesOffDesc, includeBottlesOnDesc});
   Option IceTrapValue          = Option::U8  ("Ice Traps",             {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                     {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught},                                  OptionCategory::Setting,    ICETRAPS_NORMAL);
   Option RemoveDoubleDefense   = Option::Bool("Remove Double Defense", {"No", "Yes"},                                                         {removeDDDesc});
   Option ProgressiveGoronSword = Option::Bool("Prog Goron Sword",      {"Disabled", "Enabled"},                                               {progGoronSword});
   std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
+    &IncludeBottles,
     &IceTrapValue,
     &RemoveDoubleDefense,
     &ProgressiveGoronSword,
@@ -1427,6 +1429,7 @@ namespace Settings {
     ctx.gkDurability         = GkDurability.Value<u8>();
 
     ctx.itemPoolValue        = ItemPoolValue.Value<u8>();
+    ctx.includeBottles       = (IncludeBottles) ? 1 : 0;
     ctx.iceTrapValue         = IceTrapValue.Value<u8>();
     ctx.progressiveGoronSword = (ProgressiveGoronSword) ? 1 : 0;
 
@@ -2020,6 +2023,12 @@ namespace Settings {
         MixGrottos.SetSelectedIndex(OFF);
       }
     }
+
+    if ((ItemPoolValue.Is(ITEMPOOL_SCARCE)) || (ItemPoolValue.Is(ITEMPOOL_MINIMAL))) {
+		IncludeBottles.Unhide();
+    } else {
+		IncludeBottles.Hide();
+      }
 
     if (SetDungeonTypes) {
       for (Option *option : dungeonOptions) {
