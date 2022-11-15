@@ -1061,13 +1061,13 @@ void GenerateItemPool() {
     rutoBottles = 0;
   }
 
-  //Add 4 total bottles, 2 or 1 if bottles are included in the Item Pool
+  //Add 4 total bottles, 2 or 1 if bottles should be reduced by the Item Pool setting
   u8 bottleCount = 4;
-  if ((ItemPoolValue.Is(ITEMPOOL_MINIMAL)) && IncludeBottles) {
-	  bottleCount = 1;
-  } else if ((ItemPoolValue.Is(ITEMPOOL_SCARCE)) && IncludeBottles) {
-	  bottleCount = 2;
-    }
+  if (ReduceBottles && ItemPoolValue.Is(ITEMPOOL_SCARCE)) {
+    bottleCount = 2;
+  } else if (ReduceBottles && ItemPoolValue.Is(ITEMPOOL_MINIMAL)) {
+    bottleCount = 1;
+  }
   std::vector<ItemKey> bottles;
   bottles.assign(normalBottles.begin(), normalBottles.end());
   IceTrapModels.push_back(ItemTable(RandomElement(bottles)).GetItemID()); //Get one random bottle type for ice traps

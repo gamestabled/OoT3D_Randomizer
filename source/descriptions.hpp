@@ -282,8 +282,8 @@ extern string_view itemPoolBalanced;
 extern string_view itemPoolScarce;
 extern string_view itemPoolMinimal;
 
-extern string_view includeBottlesOffDesc;
-extern string_view includeBottlesOnDesc;
+extern string_view reduceBottlesOffDesc;
+extern string_view reduceBottlesOnDesc;
 
 extern string_view iceTrapsOff;
 extern string_view iceTrapsNormal;

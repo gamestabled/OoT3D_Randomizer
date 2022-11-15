@@ -547,7 +547,7 @@ typedef struct {
   u8 gkDurability;
 
   u8 itemPoolValue;
-  u8 includeBottles;
+  u8 reduceBottles;
   u8 iceTrapValue;
   u8 progressiveGoronSword;
 

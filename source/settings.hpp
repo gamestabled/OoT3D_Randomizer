@@ -433,7 +433,7 @@ namespace Settings {
   extern Option GkDurability;
 
   extern Option ItemPoolValue;
-  extern Option IncludeBottles;
+  extern Option ReduceBottles;
   extern Option IceTrapValue;
   extern Option RemoveDoubleDefense;
   extern Option ProgressiveGoronSword;
