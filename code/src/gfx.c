@@ -48,15 +48,19 @@ static s8 spoilerGroupDungeonIds[] = {
     -1,
     -1,
     -1,
+    -1,
     DUNGEON_DEKU_TREE,
     DUNGEON_FOREST_TEMPLE,
+    -1,
     -1,
     DUNGEON_BOTTOM_OF_THE_WELL,
     DUNGEON_SHADOW_TEMPLE,
     -1,
     -1,
+    -1,
     DUNGEON_DODONGOS_CAVERN,
     DUNGEON_FIRE_TEMPLE,
+    -1,
     -1,
     -1,
     DUNGEON_JABUJABUS_BELLY,
@@ -66,22 +70,46 @@ static s8 spoilerGroupDungeonIds[] = {
     -1,
     DUNGEON_WATER_TEMPLE,
     -1,
+    -1,
     DUNGEON_GERUDO_TRAINING_GROUNDS,
     DUNGEON_SPIRIT_TEMPLE,
+    -1,
     -1,
     DUNGEON_GANONS_TOWER,
 };
 
 static char* spoilerCollectionGroupNames[] = {
     "All Item Locations", // All
-    "Kokiri Forest",      "Lost Woods",        "Deku Tree",
-    "Forest Temple",      "Kakariko Village",  "Bottom of the Well",
-    "Shadow Temple",      "Death Mountain",    "Goron City",
-    "Dodongo's Cavern",   "Fire Temple",       "Zora's River",
-    "Zora's Domain",      "Jabu Jabu's Belly", "Ice Cavern",
-    "Hyrule Field",       "Lon Lon Ranch",     "Lake Hylia",
-    "Water Temple",       "Gerudo Valley",     "Gerudo Training Grounds",
-    "Spirit Temple",      "Hyrule Castle",     "Ganon's Castle",
+    "Kokiri Forest",
+    "Lost Woods",
+    "Sacred Forest Meadow",
+    "Deku Tree",
+    "Forest Temple",
+    "Kakariko Village",
+    "Graveyard",
+    "Bottom of the Well",
+    "Shadow Temple",
+    "Death Mountain Trail",
+    "Death Mountain Crater",
+    "Goron City",
+    "Dodongo's Cavern",
+    "Fire Temple",
+    "Zora's River",
+    "Zora's Domain",
+    "Zora's Fountain",
+    "Jabu Jabu's Belly",
+    "Ice Cavern",
+    "Hyrule Field",
+    "Lon Lon Ranch",
+    "Lake Hylia",
+    "Water Temple",
+    "Gerudo Valley",
+    "Haunted Wasteland",
+    "Gerudo Training Grounds",
+    "Spirit Temple",
+    "Market",
+    "Hyrule Castle",
+    "Ganon's Castle",
 };
 
 static char* spoilerEntranceGroupNames[] = {
@@ -256,34 +284,53 @@ static void Gfx_DrawButtonPrompts(void) {
     Draw_DrawIcon(SCREEN_BOT_WIDTH - 50, promptY, COLOR_BUTTON_B, ICON_BUTTON_B);
     Draw_DrawString(SCREEN_BOT_WIDTH - 38, textY, COLOR_TITLE, "Close");
 
+    static const u8 buttonSpacing = 12;
+    u16 offsetX                   = 10;
+    char* nextStr                 = NULL;
+
     if (curMenuIdx == PAGE_DUNGEONITEMS) {
-        Draw_DrawIcon(10, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Toggle Legend");
+        Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+        offsetX += buttonSpacing;
+        Draw_DrawString(offsetX, textY, COLOR_TITLE, "Toggle Legend");
     } else if (curMenuIdx == PAGE_SPHERES) {
-        Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Browse spoiler log");
-    } else if (curMenuIdx >= PAGE_ITEMTRACKER_ALL && curMenuIdx <= PAGE_ENTRANCETRACKER_GROUPS) {
-        Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Browse entries");
-        static const u8 offsetX = 114;
+        Draw_DrawIcon(offsetX, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
+        offsetX += buttonSpacing;
+        Draw_DrawString(offsetX, textY, COLOR_TITLE, "Browse spoiler log");
+    } else if (curMenuIdx == PAGE_ITEMTRACKER_ALL || curMenuIdx == PAGE_ITEMTRACKER_GROUPS ||
+               curMenuIdx == PAGE_ENTRANCETRACKER_ALL || curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
+        Draw_DrawIcon(offsetX, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
+        offsetX += buttonSpacing;
+        nextStr = "Browse entries";
+        Draw_DrawString(offsetX, textY, COLOR_TITLE, nextStr);
+        offsetX += (strlen(nextStr) + 1) * SPACING_X;
         if (curMenuIdx == PAGE_ITEMTRACKER_GROUPS || curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
             Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
-            Draw_DrawString(offsetX + 8, textY, COLOR_TITLE, "/");
-            Draw_DrawIcon(offsetX + 16, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
-            Draw_DrawString(offsetX + 28, textY, COLOR_TITLE, "Change group");
-            if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
-                static const u8 toggleOffsetX = 222;
-                Draw_DrawIcon(toggleOffsetX, promptY, COLOR_BUTTON_X, ICON_BUTTON_X);
-                const char* destToggleString = destListToggle ? "To" : "From";
-                Draw_DrawString(toggleOffsetX + 12, textY, COLOR_TITLE, destToggleString);
-            }
-        } else if (curMenuIdx == PAGE_ITEMTRACKER_ALL || curMenuIdx == PAGE_ENTRANCETRACKER_ALL) {
+            offsetX += 8;
+            Draw_DrawString(offsetX, textY, COLOR_TITLE, "/");
+            offsetX += 8;
             Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
-            Draw_DrawString(offsetX + 12, textY, COLOR_TITLE, "Toggle Legend");
+            offsetX += buttonSpacing;
+            nextStr = "Change group";
+            Draw_DrawString(offsetX, textY, COLOR_TITLE, nextStr);
+            offsetX += (strlen(nextStr) + 1) * SPACING_X;
+        }
+        if (curMenuIdx == PAGE_ITEMTRACKER_ALL || curMenuIdx == PAGE_ENTRANCETRACKER_ALL) {
+            Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+            offsetX += buttonSpacing;
+            nextStr = "Toggle Legend";
+            Draw_DrawString(offsetX, textY, COLOR_TITLE, nextStr);
+            offsetX += (strlen(nextStr) + 1) * SPACING_X;
+        }
+        if (curMenuIdx == PAGE_ENTRANCETRACKER_ALL || curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS) {
+            Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_X, ICON_BUTTON_X);
+            offsetX += buttonSpacing;
+            nextStr = destListToggle ? "To" : "From";
+            Draw_DrawString(offsetX, textY, COLOR_TITLE, nextStr);
         }
     } else if (curMenuIdx == PAGE_OPTIONS) {
-        Draw_DrawIcon(10, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
-        Draw_DrawString(22, textY, COLOR_TITLE, "Select / change options");
+        Draw_DrawIcon(offsetX, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
+        offsetX += buttonSpacing;
+        Draw_DrawString(offsetX, textY, COLOR_TITLE, "Select / change options");
     }
 }
 
@@ -630,7 +677,7 @@ static void Gfx_DrawEntranceTracker(void) {
         return;
     }
 
-    EntranceOverride* entranceList = (ViewingGroups() && destListToggle) ? destList : rEntranceOverrides;
+    EntranceOverride* entranceList = destListToggle ? destList : rEntranceOverrides;
 
     u16 entranceCount = ViewingGroups()
                             ? gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup]
@@ -681,10 +728,10 @@ static void Gfx_DrawEntranceTracker(void) {
         u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
         u32 rplcDstColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
 
-        u8 showOriginal = gSettingsContext.ingameSpoilers ||
-                          (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
-        u8 showOverride = gSettingsContext.ingameSpoilers ||
-                          (destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY) || isDiscovered;
+        u8 showOriginal = gSettingsContext.ingameSpoilers || isDiscovered ||
+                          (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY);
+        u8 showOverride = gSettingsContext.ingameSpoilers || isDiscovered ||
+                          (destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY);
 
         const char* unknown = "???";
 
@@ -877,6 +924,9 @@ static void Gfx_ShowMenu(void) {
                 } else if (pressed & BUTTON_LEFT) {
                     allEntranceScroll = Gfx_Scroll(allEntranceScroll, -MAX_ENTRY_LINES * 10, entranceCount);
                     handledInput      = true;
+                } else if (pressed & BUTTON_X) {
+                    destListToggle = !destListToggle;
+                    handledInput   = true;
                 }
             }
         } else if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS && gEntranceTrackingData.EntranceCount > 0) {

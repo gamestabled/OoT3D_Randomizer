@@ -412,17 +412,21 @@ std::vector<Option *> itemPoolOptions = {
 std::vector<std::vector<Option *>> excludeLocationsOptionsVector(SPOILER_COLLECTION_GROUP_COUNT);
 Menu excludeKokiriForest          = Menu::SubMenu("Kokiri Forest",           &excludeLocationsOptionsVector[GROUP_KOKIRI_FOREST],              "", false);
 Menu excludeLostWoods             = Menu::SubMenu("Lost Woods",              &excludeLocationsOptionsVector[GROUP_LOST_WOODS],                 "", false);
+Menu excludeSacredForestMeadow    = Menu::SubMenu("Sacred Forest Meadow",    &excludeLocationsOptionsVector[GROUP_SACRED_FOREST_MEADOW],       "", false);
 Menu excludeDekuTree              = Menu::SubMenu("Deku Tree",               &excludeLocationsOptionsVector[GROUP_DUNGEON_DEKU_TREE],          "", false);
 Menu excludeForestTemple          = Menu::SubMenu("Forest Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_FOREST_TEMPLE],      "", false);
 Menu excludeKakariko              = Menu::SubMenu("Kakariko Village",        &excludeLocationsOptionsVector[GROUP_KAKARIKO],                   "", false);
+Menu excludeGraveyard             = Menu::SubMenu("Graveyard",               &excludeLocationsOptionsVector[GROUP_GRAVEYARD],                  "", false);
 Menu excludeBottomWell            = Menu::SubMenu("Bottom of the Well",      &excludeLocationsOptionsVector[GROUP_DUNGEON_BOTTOM_OF_THE_WELL], "", false);
 Menu excludeShadowTemple          = Menu::SubMenu("Shadow Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SHADOW_TEMPLE],      "", false);
-Menu excludeDeathMountain         = Menu::SubMenu("Death Mountain",          &excludeLocationsOptionsVector[GROUP_DEATH_MOUNTAIN],             "", false);
+Menu excludeDeathMountainTrail    = Menu::SubMenu("Death Mountain Trail",    &excludeLocationsOptionsVector[GROUP_DEATH_MOUNTAIN_TRAIL],       "", false);
+Menu excludeDeathMountainCrater   = Menu::SubMenu("Death Mountain Crater",   &excludeLocationsOptionsVector[GROUP_DEATH_MOUNTAIN_CRATER],      "", false);
 Menu excludeGoronCity             = Menu::SubMenu("Goron City",              &excludeLocationsOptionsVector[GROUP_GORON_CITY],                 "", false);
 Menu excludeDodongosCavern        = Menu::SubMenu("Dodongo's Cavern",        &excludeLocationsOptionsVector[GROUP_DUNGEON_DODONGOS_CAVERN],    "", false);
 Menu excludeFireTemple            = Menu::SubMenu("Fire Temple",             &excludeLocationsOptionsVector[GROUP_DUNGEON_FIRE_TEMPLE],        "", false);
 Menu excludeZorasRiver            = Menu::SubMenu("Zora's River",            &excludeLocationsOptionsVector[GROUP_ZORAS_RIVER],                "", false);
 Menu excludeZorasDomain           = Menu::SubMenu("Zora's Domain",           &excludeLocationsOptionsVector[GROUP_ZORAS_DOMAIN],               "", false);
+Menu excludeZorasFountain         = Menu::SubMenu("Zora's Fountain",         &excludeLocationsOptionsVector[GROUP_ZORAS_FOUNTAIN],             "", false);
 Menu excludeJabuJabu              = Menu::SubMenu("Jabu Jabu's Belly",       &excludeLocationsOptionsVector[GROUP_DUNGEON_JABUJABUS_BELLY],    "", false);
 Menu excludeIceCavern             = Menu::SubMenu("Ice Cavern",              &excludeLocationsOptionsVector[GROUP_DUNGEON_ICE_CAVERN],         "", false);
 Menu excludeHyruleField           = Menu::SubMenu("Hyrule Field",            &excludeLocationsOptionsVector[GROUP_HYRULE_FIELD],               "", false);
@@ -430,24 +434,30 @@ Menu excludeLonLonRanch           = Menu::SubMenu("Lon Lon Ranch",           &ex
 Menu excludeLakeHylia             = Menu::SubMenu("Lake Hylia",              &excludeLocationsOptionsVector[GROUP_LAKE_HYLIA],                 "", false);
 Menu excludeWaterTemple           = Menu::SubMenu("Water Temple",            &excludeLocationsOptionsVector[GROUP_DUNGEON_WATER_TEMPLE],       "", false);
 Menu excludeGerudoValley          = Menu::SubMenu("Gerudo Valley",           &excludeLocationsOptionsVector[GROUP_GERUDO_VALLEY],              "", false);
+Menu excludeHauntedWasteland      = Menu::SubMenu("Haunted Wasteland",       &excludeLocationsOptionsVector[GROUP_HAUNTED_WASTELAND],          "", false);
 Menu excludeGerudoTrainingGrounds = Menu::SubMenu("Gerudo Training Grounds", &excludeLocationsOptionsVector[GROUP_GERUDO_TRAINING_GROUND],     "", false);
 Menu excludeSpiritTemple          = Menu::SubMenu("Spirit Temple",           &excludeLocationsOptionsVector[GROUP_DUNGEON_SPIRIT_TEMPLE],      "", false);
+Menu excludeMarket                = Menu::SubMenu("Market",                  &excludeLocationsOptionsVector[GROUP_MARKET],                     "", false);
 Menu excludeHyruleCastle          = Menu::SubMenu("Hyrule Castle",           &excludeLocationsOptionsVector[GROUP_HYRULE_CASTLE],              "", false);
 Menu excludeGanonsCastle          = Menu::SubMenu("Ganon's Castle",          &excludeLocationsOptionsVector[GROUP_DUNGEON_GANONS_CASTLE],      "", false);
 std::vector<Menu *> excludeLocationsMenus = {
     &excludeKokiriForest,
     &excludeLostWoods,
+    &excludeSacredForestMeadow,
     &excludeDekuTree,
     &excludeForestTemple,
     &excludeKakariko,
+    &excludeGraveyard,
     &excludeBottomWell,
     &excludeShadowTemple,
-    &excludeDeathMountain,
+    &excludeDeathMountainTrail,
+    &excludeDeathMountainCrater,
     &excludeGoronCity,
     &excludeDodongosCavern,
     &excludeFireTemple,
     &excludeZorasRiver,
     &excludeZorasDomain,
+    &excludeZorasFountain,
     &excludeJabuJabu,
     &excludeIceCavern,
     &excludeHyruleField,
@@ -455,8 +465,10 @@ std::vector<Menu *> excludeLocationsMenus = {
     &excludeLakeHylia,
     &excludeWaterTemple,
     &excludeGerudoValley,
+    &excludeHauntedWasteland,
     &excludeGerudoTrainingGrounds,
     &excludeSpiritTemple,
+    &excludeMarket,
     &excludeHyruleCastle,
     &excludeGanonsCastle,
 };
@@ -1206,8 +1218,8 @@ std::vector<Option*> audioOptions = {
     &ShuffleSFXCategorically,
 };
 
-Menu preferences              = Menu::SubMenu("Preferences",                &preferenceOptions);
-Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions, ingameDefaultsDesc);
+Menu preferences              = Menu::SubMenu("Misc Preferences",           &preferenceOptions);
+Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions, menuIngameDefaultsDesc);
 Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
 Menu audio                    = Menu::SubMenu("Audio Settings",             &audioOptions);
 std::vector<Menu*> personalizationOptions = {
@@ -1218,9 +1230,9 @@ std::vector<Menu*> personalizationOptions = {
 };
 
 Menu loadPremadePreset      = Menu::Action("Load Premade Preset",        LOAD_PREMADE_PRESET);
-Menu loadCustomPreset       = Menu::Action("Load Settings Preset",       LOAD_CUSTOM_PRESET);
-Menu saveCustomPreset       = Menu::Action("Save Settings Preset",       SAVE_CUSTOM_PRESET);
-Menu deleteCustomPreset     = Menu::Action("Delete Settings Preset",     DELETE_CUSTOM_PRESET);
+Menu loadCustomPreset       = Menu::Action("Load Custom Preset",         LOAD_CUSTOM_PRESET);
+Menu saveCustomPreset       = Menu::Action("Save Custom Preset",         SAVE_CUSTOM_PRESET);
+Menu deleteCustomPreset     = Menu::Action("Delete Custom Preset",       DELETE_CUSTOM_PRESET);
 Menu resetToDefaultSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS);
 
 std::vector<Menu *> settingsPresetItems = {
@@ -1233,9 +1245,9 @@ std::vector<Menu *> settingsPresetItems = {
 
 // Detailed Logic Options Submenu
 Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
-Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, "", false);
-Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions,          "", false);
-Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions,         "", false);
+Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, "",                    false);
+Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions,          "",                    false);
+Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions,         menuGlitchOptionsDesc, false);
 std::vector<Menu *> detailedLogicOptions = {
     &logicSettings,
     &excludeLocations,
@@ -1243,7 +1255,7 @@ std::vector<Menu *> detailedLogicOptions = {
     &glitchSettings,
 };
 
-Menu open                     = Menu::SubMenu("Open Settings",              &openOptions);
+Menu open                     = Menu::SubMenu("Open Settings",              &openOptions, menuOpenSettingsDesc);
 Menu world                    = Menu::SubMenu("World Settings",             &worldOptions);
 Menu shuffle                  = Menu::SubMenu("Shuffle Settings",           &shuffleOptions);
 Menu shuffleDungeonItems      = Menu::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
@@ -1254,7 +1266,7 @@ Menu miscSettings             = Menu::SubMenu("Misc Settings",              &mis
 Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);
 Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
 Menu multiplayerSettings      = Menu::SubMenu("Multiplayer Settings",       &multiplayerOptions);
-Menu personalization          = Menu::SubMenu("Personalization Settings",   &personalizationOptions, personalizationDesc);
+Menu personalization          = Menu::SubMenu("Personalization Settings",   &personalizationOptions, menuPersonalizationDesc);
 Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
 Menu generateRandomizer       = Menu::Action ("Generate Randomizer",        GENERATE_MODE);
 
