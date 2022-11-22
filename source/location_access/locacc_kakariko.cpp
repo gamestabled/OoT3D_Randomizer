@@ -329,6 +329,7 @@ void AreaTable_Init_Kakariko() {
         },
         {
             LocationAccess(KAK_TRADE_ODD_MUSHROOM, { [] { return IsAdult && OddMushroom; } }),
+            LocationAccess(KAK_GRANNYS_SHOP, { [] { return IsAdult && OddMushroom && AdultsWallet; } }),
         },
         {
             // Exits
