@@ -59,7 +59,7 @@ void AreaTable_Init_FireTemple() {
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_FIRST_ROOM, { [] { return true; } }),
-                     Entrance(FIRE_TEMPLE_BOSS_ROOM,
+                     Entrance(FIRE_TEMPLE_BOSS_ENTRYWAY,
                               { [] {
                                    return BossKeyFireTemple &&
                                           ((IsAdult && LogicFireBossDoorJump) || CanUse(HOVER_BOOTS) ||
@@ -74,30 +74,6 @@ void AreaTable_Init_FireTemple() {
                                              CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)));
                                 } }),
                  });
-
-        areaTable[FIRE_TEMPLE_BOSS_ROOM] = Area(
-            "Fire Temple Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
-            {
-                // Events
-                EventAccess(&FireTempleClear,
-                            { [] { return FireTempleClear || (FireTimer >= 64 && CanUse(MEGATON_HAMMER)); },
-                              /*Glitched*/
-                              [] {
-                                  return FireTimer >= 48 &&
-                                         ((CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
-                                          CanUse(MEGATON_HAMMER)) &&
-                                         Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
-                              } }),
-            },
-            {
-                // Locations
-                LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, { [] { return FireTempleClear; } }),
-                LocationAccess(VOLVAGIA, { [] { return FireTempleClear; } }),
-            },
-            {
-                // Exits
-                Entrance(FIRE_TEMPLE_ENTRYWAY, { [] { return FireTempleClear; } }),
-            });
 
         areaTable[FIRE_TEMPLE_LOOP_ENEMIES] =
             Area("Fire Temple Loop Enemies", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
@@ -545,7 +521,7 @@ void AreaTable_Init_FireTemple() {
             {
                 // Exits
                 Entrance(
-                    FIRE_TEMPLE_BOSS_ROOM,
+                    FIRE_TEMPLE_BOSS_ENTRYWAY,
                     { [] { return false; },
                       /*Glitched*/ [] { return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::INTERMEDIATE); } }),
                 Entrance(FIRE_TEMPLE_FIRE_MAZE_UPPER, { [] { return true; } }),
@@ -660,7 +636,7 @@ void AreaTable_Init_FireTemple() {
             {
                 // Exits
                 Entrance(FIRE_TEMPLE_ENTRYWAY, { [] { return true; } }),
-                Entrance(FIRE_TEMPLE_MQ_BOSS_ROOM, { [] {
+                Entrance(FIRE_TEMPLE_BOSS_ENTRYWAY, { [] {
                              return IsAdult && CanUse(GORON_TUNIC) && CanUse(MEGATON_HAMMER) && BossKeyFireTemple &&
                                     ((HasFireSource && (LogicFireBossDoorJump || HoverBoots)) ||
                                      HasAccessTo(FIRE_TEMPLE_MQ_UPPER));
@@ -783,18 +759,42 @@ void AreaTable_Init_FireTemple() {
                      // IsAdult && CanUse(LONGSHOT))
                  },
                  {});
-
-        areaTable[FIRE_TEMPLE_MQ_BOSS_ROOM] =
-            Area("Fire Temple MQ Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&FireTempleClear, { [] { return true; } }),
-                 },
-                 {
-                     // Locations
-                     LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, { [] { return true; } }),
-                     LocationAccess(VOLVAGIA, { [] { return true; } }),
-                 },
-                 {});
     }
+
+    /*---------------------------
+    |         BOSS ROOM         |
+    ---------------------------*/
+    areaTable[FIRE_TEMPLE_BOSS_ENTRYWAY] =
+        Area("Fire Temple Boss Entryway", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, { [] { return Dungeon::FireTemple.IsVanilla() && false; } }),
+                 Entrance(FIRE_TEMPLE_MQ_LOWER, { [] { return Dungeon::FireTemple.IsMQ() && false; } }),
+                 Entrance(FIRE_TEMPLE_BOSS_ROOM, { [] { return true; } }),
+             });
+
+    areaTable[FIRE_TEMPLE_BOSS_ROOM] =
+        Area("Fire Temple Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&FireTempleClear,
+                             { [] { return FireTempleClear || (FireTimer >= 64 && CanUse(MEGATON_HAMMER)); },
+                               /*Glitched*/
+                               [] {
+                                   return FireTimer >= 48 &&
+                                          ((CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
+                                           CanUse(MEGATON_HAMMER)) &&
+                                          Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
+                               } }),
+             },
+             {
+                 // Locations
+                 LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, { [] { return FireTempleClear; } }),
+                 LocationAccess(VOLVAGIA, { [] { return FireTempleClear; } }),
+             },
+             {
+                 // Exits
+                 Entrance(FIRE_TEMPLE_BOSS_ENTRYWAY, { [] { return false; } }),
+                 Entrance(FIRE_TEMPLE_ENTRYWAY, { [] { return FireTempleClear; } }),
+             });
 }

@@ -603,7 +603,7 @@ bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
             if (setDifficulty < static_cast<u8>(difficulty)) {
                 return false;
             }
-            //                             Similar to bombchu megaflips / A-slides but doesn't scale beyond advanced
+            //                Similar to bombchu megaflips / A-slides but doesn't scale beyond advanced
             return CanShield &&
                    (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
 
@@ -621,12 +621,12 @@ bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
             if (setDifficulty < static_cast<u8>(difficulty)) {
                 return false;
             }
-            //                                           Boot Put Away Delay Method                  Frame Perfect
-            //                                           Method                                                 Ledge
-            //                                           Grab Method
             return (CanTakeDamage && Bombs &&
+                    // Boot Put Away Delay Method
                     ((CanUse(HOVER_BOOTS) || CanUse(IRON_BOOTS)) ||
+                     // Frame Perfect Method
                      setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) ||
+                   // Grab Method
                    setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
 
         // Hookshot Clip

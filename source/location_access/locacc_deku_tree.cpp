@@ -51,13 +51,14 @@ void AreaTable_Init_DekuTree() {
                 Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM,
                          { [] { return false; },
                            /*Glitched*/ [] { return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE); } }),
-                Entrance(DEKU_TREE_BOSS_ROOM, { [] { return false; },
-                                                /*Glitched*/
-                                                [] {
-                                                    return IsChild && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD)) &&
-                                                           Nuts &&
-                                                           CanDoGlitch(GlitchType::SeamWalk, GlitchDifficulty::EXPERT);
-                                                } }),
+                Entrance(DEKU_TREE_BOSS_ENTRYWAY, { [] { return false; },
+                                                    /*Glitched*/
+                                                    [] {
+                                                        return IsChild &&
+                                                               (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD)) && Nuts &&
+                                                               CanDoGlitch(GlitchType::SeamWalk,
+                                                                           GlitchDifficulty::EXPERT);
+                                                    } }),
             });
 
         areaTable[DEKU_TREE_2F_MIDDLE_ROOM] = Area(
@@ -112,7 +113,7 @@ void AreaTable_Init_DekuTree() {
             {
                 // Exits
                 Entrance(DEKU_TREE_LOBBY, { [] { return HasFireSourceWithTorch || CanUse(BOW); } }),
-                Entrance(DEKU_TREE_BOSS_ROOM,
+                Entrance(DEKU_TREE_BOSS_ENTRYWAY,
                          { [] { return false; },
                            /*Glitched*/
                            [] { return CanDoGlitch(GlitchType::HookshotJump_Boots, GlitchDifficulty::ADVANCED); } }),
@@ -294,31 +295,9 @@ void AreaTable_Init_DekuTree() {
                  {
                      // Exits
                      Entrance(DEKU_TREE_BASEMENT_UPPER, { [] { return true; } }),
-                     Entrance(DEKU_TREE_BOSS_ROOM,
+                     Entrance(DEKU_TREE_BOSS_ENTRYWAY,
                               { [] { return Here(DEKU_TREE_OUTSIDE_BOSS_ROOM, [] { return HasShield; }); } }),
                  });
-
-        areaTable[DEKU_TREE_BOSS_ROOM] = Area(
-            "Deku Tree Boss Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
-            {
-                // Events
-                EventAccess(&DekuTreeClear,
-                            { [] {
-                                 return DekuTreeClear || (CanJumpslash && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) ||
-                                                                           HookshotOrBoomerang));
-                             },
-                              /*Glitched*/ [] { return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
-            },
-            {
-                // Locations
-                LocationAccess(QUEEN_GOHMA, { [] { return DekuTreeClear; } }),
-                LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, { [] { return DekuTreeClear; } }),
-            },
-            {
-                // Exits
-                Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM, { [] { return true; } }),
-                Entrance(DEKU_TREE_ENTRYWAY, { [] { return DekuTreeClear; } }),
-            });
     }
 
     /*---------------------------
@@ -442,27 +421,62 @@ void AreaTable_Init_DekuTree() {
                          } }),
             });
 
-        areaTable[DEKU_TREE_MQ_BASEMENT_LEDGE] =
-            Area("Deku Tree MQ Basement Ledge", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&DekuTreeClear, { [] {
-                         return DekuTreeClear ||
-                                (Here(DEKU_TREE_MQ_BASEMENT_LEDGE, [] { return HasFireSourceWithTorch; }) &&
-                                 Here(DEKU_TREE_MQ_BASEMENT_LEDGE, [] { return HasShield; }) && CanJumpslash &&
-                                 (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) || HookshotOrBoomerang));
-                     } }),
-                 },
-                 {
-                     // Locations
-                     LocationAccess(DEKU_TREE_MQ_DEKU_SCRUB, { [] { return CanStunDeku; } }),
-                     LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, { [] { return DekuTreeClear; } }),
-                     LocationAccess(QUEEN_GOHMA, { [] { return DekuTreeClear; } }),
-                 },
+        areaTable[DEKU_TREE_MQ_BASEMENT_LEDGE] = Area(
+            "Deku Tree MQ Basement Ledge", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {},
+            {
+                // Locations
+                LocationAccess(DEKU_TREE_MQ_DEKU_SCRUB, { [] { return CanStunDeku; } }),
+            },
+            {
+                // Exits
+                Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM, { [] { return IsChild; } }),
+                Entrance(DEKU_TREE_MQ_LOBBY, { [] { return true; } }),
+                Entrance(DEKU_TREE_MQ_OUTSIDE_BOSS_ROOM,
+                         { [] { return Here(DEKU_TREE_MQ_BASEMENT_LEDGE, [] { return HasFireSourceWithTorch; }); } }),
+            });
+
+        areaTable[DEKU_TREE_MQ_OUTSIDE_BOSS_ROOM] =
+            Area("Deku Tree MQ Outside Boss Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {},
                  {
                      // Exits
-                     Entrance(DEKU_TREE_MQ_BASEMENT_BACK_ROOM, { [] { return IsChild; } }),
-                     Entrance(DEKU_TREE_MQ_LOBBY, { [] { return true; } }),
+                     Entrance(DEKU_TREE_MQ_BASEMENT_LEDGE, { [] { return true; } }),
+                     Entrance(DEKU_TREE_BOSS_ENTRYWAY,
+                              { [] { return Here(DEKU_TREE_MQ_BASEMENT_LEDGE, [] { return HasShield; }); } }),
                  });
     }
+
+    /*---------------------------
+    |         BOSS ROOM         |
+    ---------------------------*/
+    areaTable[DEKU_TREE_BOSS_ENTRYWAY] =
+        Area("Deku Tree Boss Entryway", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM, { [] { return Dungeon::DekuTree.IsVanilla(); } }),
+                 Entrance(DEKU_TREE_MQ_OUTSIDE_BOSS_ROOM, { [] { return Dungeon::DekuTree.IsMQ(); } }),
+                 Entrance(DEKU_TREE_BOSS_ROOM, { [] { return true; } }),
+             });
+
+    areaTable[DEKU_TREE_BOSS_ROOM] =
+        Area("Deku Tree Boss Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&DekuTreeClear, { [] {
+                                                  return DekuTreeClear ||
+                                                         (CanJumpslash && (Nuts || CanUse(SLINGSHOT) || CanUse(BOW) ||
+                                                                           HookshotOrBoomerang));
+                                              },
+                                               /*Glitched*/
+                                               [] { return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
+             },
+             {
+                 // Locations
+                 LocationAccess(QUEEN_GOHMA, { [] { return DekuTreeClear; } }),
+                 LocationAccess(DEKU_TREE_QUEEN_GOHMA_HEART, { [] { return DekuTreeClear; } }),
+             },
+             {
+                 // Exits
+                 Entrance(DEKU_TREE_BOSS_ENTRYWAY, { [] { return true; } }),
+                 Entrance(DEKU_TREE_ENTRYWAY, { [] { return DekuTreeClear; } }),
+             });
 }
