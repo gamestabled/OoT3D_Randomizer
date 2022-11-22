@@ -63,7 +63,7 @@ void EnDns_rSetRupees(EnDns* scrub) {
 
 void EnDns_rSetRupeesAndFlags(EnDns* scrub) {
     u32 sceneNum = gGlobalContext->sceneNum;
-    u32 bitMask = (0x1 << (scrub->actor.params + 1));
+    u32 bitMask  = (0x1 << (scrub->actor.params + 1));
 
     // Grotto scene
     if (sceneNum == 0x3E) {
@@ -85,7 +85,7 @@ void EnDns_rSetRupeesAndFlagsIfScrubsanity(EnDns* scrub) {
 
 u32 EnShopnnuts_rCheckFlags(EnShopnuts* scrub) {
     u32 sceneNum = gGlobalContext->sceneNum;
-    u32 bitMask = (0x1 << (scrub->actor.params + 1));
+    u32 bitMask  = (0x1 << (scrub->actor.params + 1));
 
     // Grotto scene
     if (sceneNum == 0x3E) {
@@ -112,7 +112,7 @@ void EnShopnuts_rInit(Actor* thisx, GlobalContext* globalCtx) {
 #define EnDns_SetupBurrow (void*)0x3C3C04
 #define EnDns_Burrow (void*)0x3CEA64
 
-typedef u32(*EnDns_ChangeAnim_proc)(EnDns* globalCtx, u8 arg1);
+typedef u32 (*EnDns_ChangeAnim_proc)(EnDns* globalCtx, u8 arg1);
 #define EnDns_ChangeAnim_addr 0x37693C
 #define EnDns_ChangeAnim ((EnDns_ChangeAnim_proc)EnDns_ChangeAnim_addr)
 
@@ -124,11 +124,13 @@ void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnDns_Update(&scrub->actor, globalCtx);
 
     // Skip scrubs with repeatable purchases
-    if (gSettingsContext.scrubsanity == SCRUBSANITY_OFF && scrub->actor.params != 0x2 && scrub->actor.params != 0x9 && scrub->actor.params != 0xA) {
+    if (gSettingsContext.scrubsanity == SCRUBSANITY_OFF && scrub->actor.params != 0x2 && scrub->actor.params != 0x9 &&
+        scrub->actor.params != 0xA) {
         return;
     }
 
-    if (prev_action_fn == EnDns_Talk && (scrub->action_fn == FUN_00161828 || scrub->action_fn == FUN_003CE92C || scrub->action_fn == FUN_00100434)) {
+    if (prev_action_fn == EnDns_Talk &&
+        (scrub->action_fn == FUN_00161828 || scrub->action_fn == FUN_003CE92C || scrub->action_fn == FUN_00100434)) {
         Multiplayer_Send_ActorUpdate(thisx, NULL, 0);
     }
 }
@@ -138,7 +140,7 @@ void EnDns_StartBurrow(EnDns* thisx) {
         thisx->action_fn == EnDns_SetupBurrow || thisx->action_fn == EnDns_Burrow) {
         return;
     }
-    thisx->drop_collectible = 0;
+    thisx->drop_collectible  = 0;
     thisx->maintain_collider = 0;
     thisx->actor.flags &= ~(0x1);
     EnDns_ChangeAnim(thisx, 1);

@@ -35,5 +35,4 @@ typedef struct {
     f32 data[4][4];
 } nn_math_MTX44;
 
-
 #endif

@@ -118,7 +118,7 @@ typedef enum {
 typedef struct {
     EnGirlA super;
     s32 shopItemPosition;
-    s32 getItemId; //or shop item ID for regular shop items
+    s32 getItemId; // or shop item ID for regular shop items
     ItemRow* itemRow;
     s16 rObjBankIndex;
 } ShopsanityItem;
@@ -127,8 +127,8 @@ typedef struct {
     /* 0x00 */ s16 objId;
     /* 0x02 */ s16 objModelIdx;
     /* 0x04 */ s16 objModelIdx2; // -1 if none
-    /* 0x06 */ s16 cmabIndex; // -1 if none
-    /* 0x08 */ s16 cmabIndex2; // -1 if none
+    /* 0x06 */ s16 cmabIndex;    // -1 if none
+    /* 0x08 */ s16 cmabIndex2;   // -1 if none
     /* 0x0A */ s16 price;
     /* 0x0C */ s16 count;
     /* 0x0E */ u16 itemDescTextId;

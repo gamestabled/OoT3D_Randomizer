@@ -17,7 +17,7 @@ void ObjHamishi_rUpdate(ObjHamishi* thisx, GlobalContext* globalCtx) {
 void ObjHamishi_Hit(ObjHamishi* thisx) {
     thisx->hit_count++;
     if (thisx->hit_count < 2) {
-        thisx->shake_frames = 15;
+        thisx->shake_frames        = 15;
         thisx->shake_position_size = 2.0;
         thisx->shake_rotation_size = 400.0;
     }

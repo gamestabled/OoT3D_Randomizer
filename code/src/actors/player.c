@@ -28,7 +28,7 @@
 #define PlayerDListGroup_EmptySheathChildWithHylianShield ((void*)0x53C4DC)
 
 u16 healthDecrement = 0;
-u8  storedMask = 0;
+u8 storedMask       = 0;
 
 void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void* cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
@@ -90,7 +90,7 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    Player* this = (Player*) thisx;
+    Player* this = (Player*)thisx;
     PlayerActor_Update(thisx, globalCtx);
 
     Arrow_HandleSwap(this, globalCtx);
@@ -100,8 +100,9 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     if (IceTrap_ActiveCurse == ICETRAP_CURSE_SWORD && PLAYER->meleeWeaponState != 0 &&
-            ((PLAYER->itemActionParam >= 3 && PLAYER->itemActionParam <= 5) || PLAYER->itemActionParam == 35)) { //sword items
-        PLAYER->meleeWeaponState = -1; // slash effect with no hitbox (same as "damageless death ISG")
+        ((PLAYER->itemActionParam >= 3 && PLAYER->itemActionParam <= 5) ||
+         PLAYER->itemActionParam == 35)) { // sword items
+        PLAYER->meleeWeaponState = -1;     // slash effect with no hitbox (same as "damageless death ISG")
     }
     if (PLAYER->itemActionParam == 38) { // Blue Potion
         if (IceTrap_ActiveCurse == ICETRAP_CURSE_BLIND)
@@ -160,8 +161,7 @@ s32 Player_ShouldUseSlingshot() {
 
     if (PLAYER->heldItemActionParam == 0xF) { // Slingshot
         return gSaveContext.linkAge == 1 || gSettingsContext.slingshotAsAdult;
-    }
-    else {
+    } else {
         return gSaveContext.linkAge == 1 && !gSettingsContext.bowAsChild;
     }
 }
@@ -172,7 +172,7 @@ s32 Player_ShouldDrawHookshotParts() {
 
 s32 Player_CanPickUpThisActor(Actor* interactedActor) {
     switch (interactedActor->id) {
-        case 0xA:  // Chest, can never be picked up
+        case 0xA: // Chest, can never be picked up
             return 0;
         case 0x6C: // Pedestal of Time, prevent interaction while waiting to get item
             return !ItemOverride_IsAPendingOverride();

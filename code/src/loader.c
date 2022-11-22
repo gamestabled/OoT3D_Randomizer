@@ -18,7 +18,7 @@ Handle getCurrentProcessHandle(void) __attribute__((section(".loader")));
 void loader_main(void) {
     Result res;
 
-    u32 address = NEWCODE_OFFSET;
+    u32 address      = NEWCODE_OFFSET;
     u32 neededMemory = (NEWCODE_SIZE + 0xFFF) & ~0xFFF; // rounding up
 
     res = svcControlProcessMemory(getCurrentProcessHandle(), address, address, neededMemory, MEMOP_PROT,
@@ -39,7 +39,7 @@ void loader_main(void) {
 }
 
 Handle getCurrentProcessHandle(void) {
-    Handle handle = 0;
+    Handle handle  = 0;
     u32 currentPid = 0;
     Result res;
 

@@ -67,10 +67,11 @@ void OceffSpot_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         OceffSpot_Update(thisx, globalCtx);
     }
     // Wait for a bit before calling OceffSpot_End, otherwise Link and the music staff spots could start waiting
-    // for the Sun's Song light after it's been killed already, causing softlocks and non-functional song switches in MQ Spirit
+    // for the Sun's Song light after it's been killed already, causing softlocks and non-functional song switches in MQ
+    // Spirit
     else if ((gExtSaveData.option_SkipSongReplays == SONGREPLAYS_SKIP_KEEP_SFX && gGlobalContext->msgMode == 0) ||
-             (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_SKIP_NO_SFX && ((PLAYER->stateFlags1 >> 24) & 0x30) != 0x30)
-            ) {
+             (gExtSaveData.option_SkipSongReplays == SONGREPLAYS_SKIP_NO_SFX &&
+              ((PLAYER->stateFlags1 >> 24) & 0x30) != 0x30)) {
         OceffSpot_End(thisx, globalCtx);
     }
 }

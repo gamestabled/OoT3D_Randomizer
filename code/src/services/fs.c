@@ -1,4 +1,5 @@
-/* Edited from https://github.com/devkitPro/libctru/blob/6360f4bdb1ca5f8131ffc92640c1dd16afb63083/libctru/source/services/fs.c */
+/* Edited from
+ * https://github.com/devkitPro/libctru/blob/6360f4bdb1ca5f8131ffc92640c1dd16afb63083/libctru/source/services/fs.c */
 
 #include <string.h>
 #include "3ds/types.h"
@@ -13,135 +14,139 @@ static Handle fsuHandle;
 static int fsuRefCount;
 static int fsIsInit = 0;
 
-Result fsInit(void)
-{
-	Result ret = 0;
+Result fsInit(void) {
+    Result ret = 0;
 
-	if(fsIsInit) return 0;
-	if (AtomicPostIncrement(&fsuRefCount)) return 0;
+    if (fsIsInit)
+        return 0;
+    if (AtomicPostIncrement(&fsuRefCount))
+        return 0;
 
-	ret = srvGetServiceHandle(&fsuHandle, "fs:USER");
-	if (R_SUCCEEDED(ret))
-	{
-		ret = FSUSER_Initialize(fsuHandle);
-		if (R_FAILED(ret)) svcCloseHandle(fsuHandle);
-	}
+    ret = srvGetServiceHandle(&fsuHandle, "fs:USER");
+    if (R_SUCCEEDED(ret)) {
+        ret = FSUSER_Initialize(fsuHandle);
+        if (R_FAILED(ret))
+            svcCloseHandle(fsuHandle);
+    }
 
-	if (R_FAILED(ret)) AtomicDecrement(&fsuRefCount);
-	else fsIsInit = 1;
+    if (R_FAILED(ret))
+        AtomicDecrement(&fsuRefCount);
+    else
+        fsIsInit = 1;
 
-	return ret;
+    return ret;
 }
 
-void fsExit(void)
-{
-	if (AtomicDecrement(&fsuRefCount)) return;
-	svcCloseHandle(fsuHandle);
+void fsExit(void) {
+    if (AtomicDecrement(&fsuRefCount))
+        return;
+    svcCloseHandle(fsuHandle);
 }
 
-FS_Path fsMakePath(FS_PathType type, const void* path)
-{
-	FS_Path p = { type, 0, path };
-	switch (type)
-	{
-		case PATH_ASCII:
-			p.size = strlen((const char*)path)+1;
-			break;
-		case PATH_UTF16:
-		{
-			const u16* str = (const u16*)path;
-			while (*str++) p.size++;
-			p.size = (p.size+1)*2;
-			break;
-		}
-		case PATH_EMPTY:
-			p.size = 1;
-			p.data = "";
-		default:
-			break;
-	}
-	return p;
+FS_Path fsMakePath(FS_PathType type, const void* path) {
+    FS_Path p = { type, 0, path };
+    switch (type) {
+        case PATH_ASCII:
+            p.size = strlen((const char*)path) + 1;
+            break;
+        case PATH_UTF16: {
+            const u16* str = (const u16*)path;
+            while (*str++)
+                p.size++;
+            p.size = (p.size + 1) * 2;
+            break;
+        }
+        case PATH_EMPTY:
+            p.size = 1;
+            p.data = "";
+        default:
+            break;
+    }
+    return p;
 }
 
-Result FSUSER_Initialize(Handle session)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSUSER_Initialize(Handle session) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x801,0,2); // 0x8010002
-	cmdbuf[1] = IPC_Desc_CurProcessId();
+    cmdbuf[0] = IPC_MakeHeader(0x801, 0, 2); // 0x8010002
+    cmdbuf[1] = IPC_Desc_CurProcessId();
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(session))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(session)))
+        return ret;
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
-Result FSUSER_OpenFile(Handle* out, FS_Archive archive, FS_Path path, u32 openFlags, u32 attributes)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSUSER_OpenFile(Handle* out, FS_Archive archive, FS_Path path, u32 openFlags, u32 attributes) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x802,7,2); // 0x80201C2
-	cmdbuf[1] = 0;
-	cmdbuf[2] = (u32) archive;
-	cmdbuf[3] = (u32) (archive >> 32);
-	cmdbuf[4] = path.type;
-	cmdbuf[5] = path.size;
-	cmdbuf[6] = openFlags;
-	cmdbuf[7] = attributes;
-	cmdbuf[8] = IPC_Desc_StaticBuffer(path.size, 0);
-	cmdbuf[9] = (u32) path.data;
+    cmdbuf[0] = IPC_MakeHeader(0x802, 7, 2); // 0x80201C2
+    cmdbuf[1] = 0;
+    cmdbuf[2] = (u32)archive;
+    cmdbuf[3] = (u32)(archive >> 32);
+    cmdbuf[4] = path.type;
+    cmdbuf[5] = path.size;
+    cmdbuf[6] = openFlags;
+    cmdbuf[7] = attributes;
+    cmdbuf[8] = IPC_Desc_StaticBuffer(path.size, 0);
+    cmdbuf[9] = (u32)path.data;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(fsuHandle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(fsuHandle)))
+        return ret;
 
-	if(out) *out = cmdbuf[3];
+    if (out)
+        *out = cmdbuf[3];
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
-Result FSUSER_OpenFileDirectly(Handle* out, FS_ArchiveID archiveId, FS_Path archivePath, FS_Path filePath, u32 openFlags, u32 attributes)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSUSER_OpenFileDirectly(Handle* out, FS_ArchiveID archiveId, FS_Path archivePath, FS_Path filePath,
+                               u32 openFlags, u32 attributes) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x803,8,4); // 0x8030204
-	cmdbuf[1] = 0;
-	cmdbuf[2] = archiveId;
-	cmdbuf[3] = archivePath.type;
-	cmdbuf[4] = archivePath.size;
-	cmdbuf[5] = filePath.type;
-	cmdbuf[6] = filePath.size;
-	cmdbuf[7] = openFlags;
-	cmdbuf[8] = attributes;
-	cmdbuf[9] = IPC_Desc_StaticBuffer(archivePath.size, 2);
-	cmdbuf[10] = (u32) archivePath.data;
-	cmdbuf[11] = IPC_Desc_StaticBuffer(filePath.size, 0);
-	cmdbuf[12] = (u32) filePath.data;
+    cmdbuf[0]  = IPC_MakeHeader(0x803, 8, 4); // 0x8030204
+    cmdbuf[1]  = 0;
+    cmdbuf[2]  = archiveId;
+    cmdbuf[3]  = archivePath.type;
+    cmdbuf[4]  = archivePath.size;
+    cmdbuf[5]  = filePath.type;
+    cmdbuf[6]  = filePath.size;
+    cmdbuf[7]  = openFlags;
+    cmdbuf[8]  = attributes;
+    cmdbuf[9]  = IPC_Desc_StaticBuffer(archivePath.size, 2);
+    cmdbuf[10] = (u32)archivePath.data;
+    cmdbuf[11] = IPC_Desc_StaticBuffer(filePath.size, 0);
+    cmdbuf[12] = (u32)filePath.data;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(fsuHandle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(fsuHandle)))
+        return ret;
 
-	if(out) *out = cmdbuf[3];
+    if (out)
+        *out = cmdbuf[3];
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
-Result FSUSER_DeleteFile(FS_Archive archive, FS_Path path)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSUSER_DeleteFile(FS_Archive archive, FS_Path path) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x804,5,2); // 0x8040142
-	cmdbuf[1] = 0;
-	cmdbuf[2] = (u32) archive;
-	cmdbuf[3] = (u32) (archive >> 32);
-	cmdbuf[4] = path.type;
-	cmdbuf[5] = path.size;
-	cmdbuf[6] = IPC_Desc_StaticBuffer(path.size, 0);
-	cmdbuf[7] = (u32) path.data;
+    cmdbuf[0] = IPC_MakeHeader(0x804, 5, 2); // 0x8040142
+    cmdbuf[1] = 0;
+    cmdbuf[2] = (u32)archive;
+    cmdbuf[3] = (u32)(archive >> 32);
+    cmdbuf[4] = path.type;
+    cmdbuf[5] = path.size;
+    cmdbuf[6] = IPC_Desc_StaticBuffer(path.size, 0);
+    cmdbuf[7] = (u32)path.data;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(fsuHandle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(fsuHandle)))
+        return ret;
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
 // Result FSUSER_DeleteDirectory(FS_Archive archive, FS_Path path)
@@ -182,26 +187,26 @@ Result FSUSER_DeleteFile(FS_Archive archive, FS_Path path)
 // 	return cmdbuf[1];
 // }
 
-Result FSUSER_CreateFile(FS_Archive archive, FS_Path path, u32 attributes, u64 fileSize)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSUSER_CreateFile(FS_Archive archive, FS_Path path, u32 attributes, u64 fileSize) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x808,8,2); // 0x8080202
-	cmdbuf[1] = 0;
-	cmdbuf[2] = (u32) archive;
-	cmdbuf[3] = (u32) (archive >> 32);
-	cmdbuf[4] = path.type;
-	cmdbuf[5] = path.size;
-	cmdbuf[6] = attributes;
-	cmdbuf[7] = (u32) fileSize;
-	cmdbuf[8] = (u32) (fileSize >> 32);
-	cmdbuf[9] = IPC_Desc_StaticBuffer(path.size, 0);
-	cmdbuf[10] = (u32) path.data;
+    cmdbuf[0]  = IPC_MakeHeader(0x808, 8, 2); // 0x8080202
+    cmdbuf[1]  = 0;
+    cmdbuf[2]  = (u32)archive;
+    cmdbuf[3]  = (u32)(archive >> 32);
+    cmdbuf[4]  = path.type;
+    cmdbuf[5]  = path.size;
+    cmdbuf[6]  = attributes;
+    cmdbuf[7]  = (u32)fileSize;
+    cmdbuf[8]  = (u32)(fileSize >> 32);
+    cmdbuf[9]  = IPC_Desc_StaticBuffer(path.size, 0);
+    cmdbuf[10] = (u32)path.data;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(fsuHandle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(fsuHandle)))
+        return ret;
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
 // Result FSUSER_CreateDirectory(FS_Archive archive, FS_Path path, u32 attributes)
@@ -244,41 +249,43 @@ Result FSUSER_CreateFile(FS_Archive archive, FS_Path path, u32 attributes, u64 f
 // 	return cmdbuf[1];
 // }
 
-Result FSUSER_OpenArchive(FS_Archive* archive, FS_ArchiveID id, FS_Path path)
-{
-	if(!archive) return -2;
+Result FSUSER_OpenArchive(FS_Archive* archive, FS_ArchiveID id, FS_Path path) {
+    if (!archive)
+        return -2;
 
-	u32 *cmdbuf = getThreadCommandBuffer();
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x80C,3,2); // 0x80C00C2
-	cmdbuf[1] = id;
-	cmdbuf[2] = path.type;
-	cmdbuf[3] = path.size;
-	cmdbuf[4] = IPC_Desc_StaticBuffer(path.size, 0);
-	cmdbuf[5] = (u32) path.data;
+    cmdbuf[0] = IPC_MakeHeader(0x80C, 3, 2); // 0x80C00C2
+    cmdbuf[1] = id;
+    cmdbuf[2] = path.type;
+    cmdbuf[3] = path.size;
+    cmdbuf[4] = IPC_Desc_StaticBuffer(path.size, 0);
+    cmdbuf[5] = (u32)path.data;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(fsuHandle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(fsuHandle)))
+        return ret;
 
-	*archive = cmdbuf[2] | ((u64) cmdbuf[3] << 32);
+    *archive = cmdbuf[2] | ((u64)cmdbuf[3] << 32);
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
-Result FSUSER_CloseArchive(FS_Archive archive)
-{
-	if(!archive) return -2;
+Result FSUSER_CloseArchive(FS_Archive archive) {
+    if (!archive)
+        return -2;
 
-	u32 *cmdbuf = getThreadCommandBuffer();
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x80E,2,0); // 0x80E0080
-	cmdbuf[1] = (u32) archive;
-	cmdbuf[2] = (u32) (archive >> 32);
+    cmdbuf[0] = IPC_MakeHeader(0x80E, 2, 0); // 0x80E0080
+    cmdbuf[1] = (u32)archive;
+    cmdbuf[2] = (u32)(archive >> 32);
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(fsuHandle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(fsuHandle)))
+        return ret;
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
 // Result FSUSER_CheckAuthorityToAccessExtSaveData(bool* access, FS_MediaType mediaType, u64 saveId, u32 processId)
@@ -299,24 +306,25 @@ Result FSUSER_CloseArchive(FS_Archive archive)
 // 	return cmdbuf[1];
 // }
 
-Result FSUSER_CreateExtSaveData(FS_ExtSaveDataInfo info, u32 directories, u32 files, u64 sizeLimit, u32 smdhSize, u8* smdh)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSUSER_CreateExtSaveData(FS_ExtSaveDataInfo info, u32 directories, u32 files, u64 sizeLimit, u32 smdhSize,
+                                u8* smdh) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x851,9,2); // 0x8510242
-	memcpy(&cmdbuf[1], &info, sizeof(FS_ExtSaveDataInfo));
-	cmdbuf[5] = directories;
-	cmdbuf[6] = files;
-	cmdbuf[7] = (u32) sizeLimit;
-	cmdbuf[8] = (u32) (sizeLimit >> 32);
-	cmdbuf[9] = smdhSize;
-	cmdbuf[10] = IPC_Desc_Buffer(smdhSize, IPC_BUFFER_R);
-	cmdbuf[11] = (u32) smdh;
+    cmdbuf[0] = IPC_MakeHeader(0x851, 9, 2); // 0x8510242
+    memcpy(&cmdbuf[1], &info, sizeof(FS_ExtSaveDataInfo));
+    cmdbuf[5]  = directories;
+    cmdbuf[6]  = files;
+    cmdbuf[7]  = (u32)sizeLimit;
+    cmdbuf[8]  = (u32)(sizeLimit >> 32);
+    cmdbuf[9]  = smdhSize;
+    cmdbuf[10] = IPC_Desc_Buffer(smdhSize, IPC_BUFFER_R);
+    cmdbuf[11] = (u32)smdh;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(fsuHandle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(fsuHandle)))
+        return ret;
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
 // Result FSUSER_DeleteExtSaveData(FS_ExtSaveDataInfo info)
@@ -349,7 +357,8 @@ Result FSUSER_CreateExtSaveData(FS_ExtSaveDataInfo info, u32 directories, u32 fi
 // 	return cmdbuf[1];
 // }
 
-// Result FSUSER_EnumerateExtSaveData(u32* idsWritten, u32 idsSize, FS_MediaType mediaType, u32 idSize, bool shared, u8* ids)
+// Result FSUSER_EnumerateExtSaveData(u32* idsWritten, u32 idsSize, FS_MediaType mediaType, u32 idSize, bool shared, u8*
+// ids)
 // {
 // 	u32 *cmdbuf = getThreadCommandBuffer();
 
@@ -387,82 +396,86 @@ Result FSUSER_CreateExtSaveData(FS_ExtSaveDataInfo info, u32 directories, u32 fi
 // 	return cmdbuf[1];
 // }
 
-Result FSFILE_Read(Handle handle, u32* bytesRead, u64 offset, void* buffer, u32 size)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSFILE_Read(Handle handle, u32* bytesRead, u64 offset, void* buffer, u32 size) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x802,3,2); // 0x80200C2
-	cmdbuf[1] = (u32) offset;
-	cmdbuf[2] = (u32) (offset >> 32);
-	cmdbuf[3] = size;
-	cmdbuf[4] = IPC_Desc_Buffer(size, IPC_BUFFER_W);
-	cmdbuf[5] = (u32) buffer;
+    cmdbuf[0] = IPC_MakeHeader(0x802, 3, 2); // 0x80200C2
+    cmdbuf[1] = (u32)offset;
+    cmdbuf[2] = (u32)(offset >> 32);
+    cmdbuf[3] = size;
+    cmdbuf[4] = IPC_Desc_Buffer(size, IPC_BUFFER_W);
+    cmdbuf[5] = (u32)buffer;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(handle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(handle)))
+        return ret;
 
-	if(bytesRead) *bytesRead = cmdbuf[2];
+    if (bytesRead)
+        *bytesRead = cmdbuf[2];
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
-Result FSFILE_Write(Handle handle, u32* bytesWritten, u64 offset, const void* buffer, u32 size, u32 flags)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSFILE_Write(Handle handle, u32* bytesWritten, u64 offset, const void* buffer, u32 size, u32 flags) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x803,4,2); // 0x8030102
-	cmdbuf[1] = (u32) offset;
-	cmdbuf[2] = (u32) (offset >> 32);
-	cmdbuf[3] = size;
-	cmdbuf[4] = flags;
-	cmdbuf[5] = IPC_Desc_Buffer(size, IPC_BUFFER_R);
-	cmdbuf[6] = (u32) buffer;
+    cmdbuf[0] = IPC_MakeHeader(0x803, 4, 2); // 0x8030102
+    cmdbuf[1] = (u32)offset;
+    cmdbuf[2] = (u32)(offset >> 32);
+    cmdbuf[3] = size;
+    cmdbuf[4] = flags;
+    cmdbuf[5] = IPC_Desc_Buffer(size, IPC_BUFFER_R);
+    cmdbuf[6] = (u32)buffer;
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(handle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(handle)))
+        return ret;
 
-	if(bytesWritten) *bytesWritten = cmdbuf[2];
+    if (bytesWritten)
+        *bytesWritten = cmdbuf[2];
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
-Result FSFILE_GetSize(Handle handle, u64* size)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSFILE_GetSize(Handle handle, u64* size) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x804,0,0); // 0x8040000
+    cmdbuf[0] = IPC_MakeHeader(0x804, 0, 0); // 0x8040000
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(handle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(handle)))
+        return ret;
 
-	if(size) *size = cmdbuf[2] | ((u64) cmdbuf[3] << 32);
+    if (size)
+        *size = cmdbuf[2] | ((u64)cmdbuf[3] << 32);
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
 
-Result FSFILE_Close(Handle handle)
-{
-	u32* cmdbuf = getThreadCommandBuffer();
+Result FSFILE_Close(Handle handle) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x808,0,0); // 0x8080000
+    cmdbuf[0] = IPC_MakeHeader(0x808, 0, 0); // 0x8080000
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(handle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(handle)))
+        return ret;
 
-	ret = cmdbuf[1];
-	if(R_SUCCEEDED(ret)) ret = svcCloseHandle(handle);
+    ret = cmdbuf[1];
+    if (R_SUCCEEDED(ret))
+        ret = svcCloseHandle(handle);
 
-	return ret;
+    return ret;
 }
 
-Result FSFILE_Flush(Handle handle)
-{
-	u32 *cmdbuf = getThreadCommandBuffer();
+Result FSFILE_Flush(Handle handle) {
+    u32* cmdbuf = getThreadCommandBuffer();
 
-	cmdbuf[0] = IPC_MakeHeader(0x809,0,0); // 0x8090000
+    cmdbuf[0] = IPC_MakeHeader(0x809, 0, 0); // 0x8090000
 
-	Result ret = 0;
-	if(R_FAILED(ret = svcSendSyncRequest(handle))) return ret;
+    Result ret = 0;
+    if (R_FAILED(ret = svcSendSyncRequest(handle)))
+        return ret;
 
-	return cmdbuf[1];
+    return cmdbuf[1];
 }
