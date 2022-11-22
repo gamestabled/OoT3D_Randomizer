@@ -16,6 +16,6 @@ void* rHeap_Alloc(u32 bytes) {
         bytes += 16 - rem;
 
     void* result = rHeap_Next;
-    rHeap_Next = (char*)rHeap_Next + bytes;
+    rHeap_Next   = (char*)rHeap_Next + bytes;
     return result;
 }

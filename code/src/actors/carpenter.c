@@ -28,5 +28,5 @@ void EnDaiku_StartEscape(EnDaiku* thisx) {
     }
     Actor_Kill((Actor*)thisx);
     // TODO: Start escape instead
-    //thisx->action_fn = EnDaiku_EscapeRotate;
+    // thisx->action_fn = EnDaiku_EscapeRotate;
 }

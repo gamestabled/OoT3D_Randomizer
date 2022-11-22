@@ -3,6 +3,6 @@
 
 typedef struct MenuSpriteManager {
     char unk_00[0x474];
-} MenuSpriteManager; //size = 0x474
+} MenuSpriteManager; // size = 0x474
 
 #endif //_MENUS_H_

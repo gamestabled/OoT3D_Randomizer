@@ -6,15 +6,17 @@
 
 #include "z3D/z3D.h"
 
-#define ITEM_ROW( \
-        baseItemId_, chestType_, actionId_,  textId_, objectId_, objectModelIdx_, cmabIndex_, \
-        objectModelIdx2_, cmabIndex2_, special_, graphicId_, upgrade_, effect_, effectArg1_, effectArg2_) \
-    { .baseItemId = baseItemId_, .chestType = chestType_, .actionId = actionId_, \
-      .textId = textId_, .objectId = objectId_, .objectModelIdx = objectModelIdx_, .cmabIndex = cmabIndex_, \
-      .objectModelIdx2 = objectModelIdx2_, .cmabIndex2 = cmabIndex2_, .special = special_, .graphicId = graphicId_, \
-      .upgrade = upgrade_, .effect = effect_, .effectArg1 = effectArg1_, .effectArg2 = effectArg2_ }
+#define ITEM_ROW(baseItemId_, chestType_, actionId_, textId_, objectId_, objectModelIdx_, cmabIndex_,                 \
+                 objectModelIdx2_, cmabIndex2_, special_, graphicId_, upgrade_, effect_, effectArg1_, effectArg2_)    \
+    {                                                                                                                 \
+        .baseItemId = baseItemId_, .chestType = chestType_, .actionId = actionId_, .textId = textId_,                 \
+        .objectId = objectId_, .objectModelIdx = objectModelIdx_, .cmabIndex = cmabIndex_,                            \
+        .objectModelIdx2 = objectModelIdx2_, .cmabIndex2 = cmabIndex2_, .special = special_, .graphicId = graphicId_, \
+        .upgrade = upgrade_, .effect = effect_, .effectArg1 = effectArg1_, .effectArg2 = effectArg2_                  \
+    }
 
-//TODO: All the object model indexes
+// TODO: All the object model indexes
+// clang-format off
 static ItemRow rItemTable[] = {
     [0x01] = ITEM_ROW(0x4D, 1, 0x8E, 0x0032, 0x00CE, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x20, ItemUpgrade_BombsToRupee, ItemEffect_None, -1, -1), // Bombs (5)
     [0x02] = ITEM_ROW(0x4D, 1, 0x8C, 0x0034, 0x00BB, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x12, ItemUpgrade_None, ItemEffect_None, -1, -1), // Deku Nuts (5)
@@ -226,7 +228,7 @@ static ItemRow rItemTable[] = {
     [0xC7] = ITEM_ROW(0x53, 0, 0x41, 0x09F7, 0x00D1, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x23, ItemUpgrade_None, ItemEffect_GiveTycoonWallet, 3, -1), // Tycoon's Wallet
     [0xC8] = ITEM_ROW(0x53, 0, 0x14, 0x9099, 0x010B, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x45, ItemUpgrade_None, ItemEffect_None,            -1, -1), // Redundant Letter Bottle
     [0xC9] = ITEM_ROW(0x53, 0, 0x41, 0x0048, 0x00F3, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x3E, ItemUpgrade_None, ItemEffect_BeanPack,        -1, -1), // Magic Bean Pack
- // [0xCA] = ITEM_ROW(0x53, 0, 0x41, 0x9003, 0x0193, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x35, ItemUpgrade_None, give_triforce_piece,        -1, -1), // Triforce piece
+    // [0xCA] = ITEM_ROW(0x53, 0, 0x41, 0x9003, 0x0193, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x35, ItemUpgrade_None, give_triforce_piece,        -1, -1), // Triforce piece
 
     [0xCB] = ITEM_ROW(0x53, 0, 0x41, 0x0080, 0x019C, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x88, ItemUpgrade_None, ItemEffect_GiveStone, 0x0004, -1), // Kokiri Emerald
     [0xCC] = ITEM_ROW(0x53, 0, 0x41, 0x0081, 0x019D, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x89, ItemUpgrade_None, ItemEffect_GiveStone, 0x0008, -1), // Goron Ruby
@@ -254,6 +256,7 @@ static ItemRow rItemTable[] = {
     [0xDE] = ITEM_ROW(0x53, 3, 0x41, 0x00F3, 0x00AA, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_TREASURE_CHEST_SHOP, -1), // Small Key (Chest Game)
 
 };
+// clang-format on
 
 ItemRow* ItemTable_GetItemRow(u16 itemId) {
     if (itemId >= ARR_SIZE(rItemTable)) {
@@ -270,14 +273,14 @@ ItemRow* ItemTable_GetItemRowFromIndex(u8 rowIndex) {
     return &rItemTable[rowIndex];
 }
 
-void ItemTable_SetBombchusChestType(u8 type){
+void ItemTable_SetBombchusChestType(u8 type) {
     rItemTable[0x6B].chestType = type;
 }
 
 u16 ItemTable_ResolveUpgrades(u16 itemId) {
     for (;;) {
         ItemRow* itemRow = ItemTable_GetItemRow(itemId);
-        u16 newItemId = itemRow->upgrade(&gSaveContext, itemId);
+        u16 newItemId    = itemRow->upgrade(&gSaveContext, itemId);
         if (newItemId == itemId) {
             return itemId;
         }

@@ -1,7 +1,7 @@
 #ifndef _ENTRANCE_H_
 #define _ENTRANCE_H_
 
-//Entrance Table Data: https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
+// Entrance Table Data: https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 
 #define ENTRANCE_TABLE_SIZE 0x0614
 
@@ -86,12 +86,12 @@ extern EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT];
 extern EntranceTrackingData gEntranceTrackingData;
 
 void Entrance_Init(void);
-s16  Entrance_GetOverride(s16 index);
-s16  Entrance_OverrideNextIndex(s16 nextEntranceIndex);
-s16  Entrance_OverrideNextIndexWithoutGrottoIndex(s16 nextEntranceIndex);
-u32  Entrance_IsLostWoodsBridge(void);
+s16 Entrance_GetOverride(s16 index);
+s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex);
+s16 Entrance_OverrideNextIndexWithoutGrottoIndex(s16 nextEntranceIndex);
+u32 Entrance_IsLostWoodsBridge(void);
 void Entrance_EnteredLocation(void);
-u32  Entrance_SceneAndSpawnAre(u8 scene, u8 spawn);
+u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn);
 /// Returns entrance data of the specified index
 const EntranceData* GetEntranceData(s16 index);
 /// Returns the index that replaced the parameter index

@@ -68,10 +68,10 @@ const u16 shopNumToIndex[8] = { 4, 0, 7, 6, 1, 3, 2, 5 };
 u16 ShopsanityItem_GetIndex(ShopsanityItem* item) {
     // Get scene index
     u16 shopNum = gGlobalContext->sceneNum - SCENE_BAZAAR;
-    if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { //kak bazaar, index 00B7 in the entrance table
+    if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { // kak bazaar, index 00B7 in the entrance table
         shopNum = SHOP_KAKARIKO_BAZAAR;
     }
-    shopNum = shopNumToIndex[shopNum];                // Transfer to the proper shop index
+    shopNum   = shopNumToIndex[shopNum];              // Transfer to the proper shop index
     u16 index = shopNum * 8 + item->shopItemPosition; // Index first by shop num then by item within shop
     return 4 * ((index / 4) / 2) + index % 4; // Transform index- For more explanation see shops.cpp TransformShopIndex
 }
@@ -85,7 +85,7 @@ void ShopsanityItem_BuyEventFunc(GlobalContext* globalCtx, EnGirlA* item) {
     // Make it so ammo does not sell out
     if (!(ShopsanityItem_IsBombs(id) || ShopsanityItem_IsArrows(id) || ShopsanityItem_IsSeeds(id) ||
           ShopsanityItem_IsBombchus(id) || ShopsanityItem_IsNuts(id) || ShopsanityItem_IsSticks(id))) {
-        if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { //kak bazaar, index 00B7 in the entrance table
+        if (Entrance_SceneAndSpawnAre(0x2C, 0x00)) { // kak bazaar, index 00B7 in the entrance table
             gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk |= itemBit;
         } else {
             gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk |= itemBit;
@@ -119,7 +119,7 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
                 return CANBUY_RESULT_CANT_GET_NOW;
             }
         }
-        //If it is a non-shopsanity tunic, check that it is not already owned
+        // If it is a non-shopsanity tunic, check that it is not already owned
         else if (item->getItemId == GI_TUNIC_GORON && gSaveContext.equipment & 0x0200) {
             return CANBUY_RESULT_CANT_GET_NOW;
         } else if (item->getItemId == GI_TUNIC_ZORA && gSaveContext.equipment & 0x0400) {
@@ -138,7 +138,8 @@ s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
     u32 itemBit = 1 << item->shopItemPosition;
 
-    if ((Entrance_SceneAndSpawnAre(0x2C, 0x00) && gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit) ||
+    if ((Entrance_SceneAndSpawnAre(0x2C, 0x00) &&
+         gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit) ||
         (!Entrance_SceneAndSpawnAre(0x2C, 0x00) && gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk & itemBit)) {
         item->super.actor.params = SI_SOLD_OUT;
         return 1;
@@ -151,11 +152,11 @@ void ShopsanityItem_1C4Func(GlobalContext* globalCtx, EnGirlA* item) {
     ShopsanityItem* shopItem = (ShopsanityItem*)item;
 
     if (Shopsanity_CheckAlreadySold(shopItem)) {
-        item->actionFunc2 = EnGirlA_InitializeItemAction;
+        item->actionFunc2  = EnGirlA_InitializeItemAction;
         item->actor.textId = EnGirlA_ShopItemEntries[item->actor.params].itemDescTextId;
     } else {
         item->isInvisible = 0;
-        item->actor.draw = EnGirlA_Draw;
+        item->actor.draw  = EnGirlA_Draw;
     }
 }
 
@@ -172,12 +173,12 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
     switch (objectId) {
         case OBJECT_CUSTOM_ADULT_SONGS:
             ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_ADULT_SONGS)->zarInfo.buf;
-            cmb = (void*)(((char*)ZARBuf) + 0xE8);
+            cmb    = (void*)(((char*)ZARBuf) + 0xE8);
             CustomModel_SetOcarinaToRGBA565(cmb);
             break;
         case OBJECT_CUSTOM_CHILD_SONGS:
             ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_CHILD_SONGS)->zarInfo.buf;
-            cmb = (void*)(((char*)ZARBuf) + 0x2E60);
+            cmb    = (void*)(((char*)ZARBuf) + 0x2E60);
             CustomModel_SetOcarinaToRGBA565(cmb);
             break;
         case OBJECT_CUSTOM_SMALL_KEY_FOREST:
@@ -190,17 +191,17 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
         case OBJECT_CUSTOM_SMALL_KEY_GTG:
         case OBJECT_CUSTOM_SMALL_KEY_GANON:
             ZARBuf = ExtendedObject_GetStatus(objectId)->zarInfo.buf;
-            cmb = (void*)(((char*)ZARBuf) + 0x74);
+            cmb    = (void*)(((char*)ZARBuf) + 0x74);
             CustomModel_ApplyColorEditsToSmallKey(cmb, special);
             break;
         case OBJECT_CUSTOM_BOSS_KEYS:
             ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_BOSS_KEYS)->zarInfo.buf;
-            cmb = (void*)(((char*)ZARBuf) + 0x78);
+            cmb    = (void*)(((char*)ZARBuf) + 0x78);
             CustomModel_SetBossKeyToRGBA565(cmb);
             break;
         case OBJECT_CUSTOM_DOUBLE_DEFENSE:
             ZARBuf = ExtendedObject_GetStatus(OBJECT_CUSTOM_DOUBLE_DEFENSE)->zarInfo.buf;
-            cmb = (void*)(((char*)ZARBuf) + 0xA4);
+            cmb    = (void*)(((char*)ZARBuf) + 0xA4);
             CustomModel_EditHeartContainerToDoubleDefense(cmb);
             break;
     }
@@ -213,23 +214,23 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
     if (objectId == OBJECT_CUSTOM_CHILD_SONGS) {
         Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
         item->model->unk_0C->animSpeed = 0.0f;
-        item->model->unk_0C->animMode = 0;
-        item->model->unk_0C->curFrame = special;
+        item->model->unk_0C->animMode  = 0;
+        item->model->unk_0C->curFrame  = special;
     } else if (objectId == OBJECT_CUSTOM_ADULT_SONGS) {
         Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
         item->model->unk_0C->animSpeed = 0.0f;
-        item->model->unk_0C->animMode = 0;
-        item->model->unk_0C->curFrame = special;
+        item->model->unk_0C->animMode  = 0;
+        item->model->unk_0C->curFrame  = special;
     } else if (objectId == OBJECT_CUSTOM_BOSS_KEYS) {
         Model_SetAnim(item->model, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
         item->model->unk_0C->animSpeed = 0.0f;
-        item->model->unk_0C->animMode = 0;
-        item->model->unk_0C->curFrame = special;
+        item->model->unk_0C->animMode  = 0;
+        item->model->unk_0C->curFrame  = special;
     } else if (cmabIdx >= 0) {
         void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx);
         TexAnim_Spawn(item->model->unk_0C, cmabMan);
         item->model->unk_0C->animSpeed = 2.0f;
-        item->model->unk_0C->animMode = 1;
+        item->model->unk_0C->animMode  = 1;
     }
 
     if (objModelIdx2 >= 0) {
@@ -238,7 +239,7 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
             void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, cmabIdx2);
             TexAnim_Spawn(item->model2->unk_0C, cmabMan);
             item->model2->unk_0C->animSpeed = 2.0f;
-            item->model2->unk_0C->animMode = 1;
+            item->model2->unk_0C->animMode  = 1;
         }
     }
 }
@@ -252,21 +253,21 @@ void ShopsanityItem_InitializeItem(EnGirlA* item, GlobalContext* globalCtx) {
         ShopsanityItem_ResetModels(shopItem, globalCtx, shopItem->itemRow->objectId, shopItem->itemRow->objectModelIdx,
                                    shopItem->itemRow->objectModelIdx2, shopItem->itemRow->cmabIndex,
                                    shopItem->itemRow->cmabIndex2, shopItem->itemRow->special);
-        item->unk_1C4 = ShopsanityItem_1C4Func;
-        item->getItemId = shopItem->getItemId;
-        item->canBuyFunc = ShopsanityItem_CanBuy;
-        item->itemGiveFunc = NULL;
-        item->buyEventFunc = ShopsanityItem_BuyEventFunc;
-        item->basePrice = ShopsanityItem_GetPrice(shopItem);
-        item->itemCount = 1;
-        u16 index = ShopsanityItem_GetIndex(shopItem);
-        item->actor.textId = 0x9200 + index * 2;
+        item->unk_1C4             = ShopsanityItem_1C4Func;
+        item->getItemId           = shopItem->getItemId;
+        item->canBuyFunc          = ShopsanityItem_CanBuy;
+        item->itemGiveFunc        = NULL;
+        item->buyEventFunc        = ShopsanityItem_BuyEventFunc;
+        item->basePrice           = ShopsanityItem_GetPrice(shopItem);
+        item->itemCount           = 1;
+        u16 index                 = ShopsanityItem_GetIndex(shopItem);
+        item->actor.textId        = 0x9200 + index * 2;
         item->itemBuyPromptTextId = 0x9200 + index * 2 + 1;
     }
 }
 
 void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* globalCtx) {
-    ShopsanityItem* shopItem = (ShopsanityItem*)item;
+    ShopsanityItem* shopItem     = (ShopsanityItem*)item;
     ShopItemEntry* shopItemEntry = &EnGirlA_ShopItemEntries[shopItem->getItemId];
 
     if (Object_IsLoaded(&globalCtx->objectCtx, item->objBankIndex) &&
@@ -275,17 +276,17 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
         ShopsanityItem_ResetModels(shopItem, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx,
                                    shopItemEntry->objModelIdx2, shopItemEntry->cmabIndex, shopItemEntry->cmabIndex2,
                                    0xFF);
-        item->getItemId = shopItemEntry->getItemId;
+        item->getItemId  = shopItemEntry->getItemId;
         item->canBuyFunc = shopItemEntry->canBuyFunc;
         if (item->getItemId == GI_TUNIC_GORON ||
             item->getItemId == GI_TUNIC_ZORA) { // Override buyable functions for tunics
             item->canBuyFunc = ShopsanityItem_CanBuy;
         }
-        item->itemGiveFunc = shopItemEntry->itemGiveFunc;
-        item->buyEventFunc = shopItemEntry->buyEventFunc;
-        item->basePrice = shopItemEntry->price;
-        item->itemCount = shopItemEntry->count;
-        item->actor.textId = shopItemEntry->itemDescTextId;
+        item->itemGiveFunc        = shopItemEntry->itemGiveFunc;
+        item->buyEventFunc        = shopItemEntry->buyEventFunc;
+        item->basePrice           = shopItemEntry->price;
+        item->itemCount           = shopItemEntry->count;
+        item->actor.textId        = shopItemEntry->itemDescTextId;
         item->itemBuyPromptTextId = shopItemEntry->itemBuyPromptTextId;
     }
 }
@@ -313,7 +314,7 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
         EnGirlA_Init(itemx, globalCtx);
 
         item->super.actionFunc2 = ShopsanityItem_InitializeRegularShopItem;
-        item->getItemId = override.value.itemId;
+        item->getItemId         = override.value.itemId;
 
         objBankIndex =
             ExtendedObject_GetIndex(&globalCtx->objectCtx, EnGirlA_ShopItemEntries[override.value.itemId].objId);
@@ -328,7 +329,7 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
         item->super.unk_1FC = 1.0f;
 
         item->super.actionFunc2 = ShopsanityItem_InitializeItem;
-        u16 id = override.value.itemId;
+        u16 id                  = override.value.itemId;
         // Ice trap models
         if (override.value.looksLikeItemId) {
             id = override.value.looksLikeItemId;
@@ -357,7 +358,7 @@ void ShopsanityItem_SellOut(Actor* itemx, u16 index) {
     }
 
     item->super.actor.params = SI_SOLD_OUT;
-    item->super.actionFunc2 = EnGirlA_InitializeItemAction;
+    item->super.actionFunc2  = EnGirlA_InitializeItemAction;
     item->super.actor.textId = EnGirlA_ShopItemEntries[SI_SOLD_OUT].itemDescTextId;
 }
 

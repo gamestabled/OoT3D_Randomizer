@@ -41,7 +41,8 @@ void EnDoor_Unlock(EnDoor* thisx) {
         return;
     }
     thisx->action_fn = &EnDoor_Unlocking;
-    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20, (s8*)0x54AC24); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20,
+            (s8*)0x54AC24); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }
 
 void EnDoor_Unlocking(EnDoor* thisx, GlobalContext* globalCtx) {
@@ -83,7 +84,8 @@ void DoorShutter_rUpdate(DoorShutter* thisx, GlobalContext* globalCtx) {
         return;
     }
 
-    if (thisx->lock_timer != 0 && prev_action_fn == DoorShutter_SlidingDoor_Idle && thisx->action_fn == DoorShutter_SlidingDoor_Open) {
+    if (thisx->lock_timer != 0 && prev_action_fn == DoorShutter_SlidingDoor_Idle &&
+        thisx->action_fn == DoorShutter_SlidingDoor_Open) {
         if (thisx->door_type_maybe != 5) {
             Multiplayer_Send_UnlockedDoor(thisx->base.params & 0x3F);
         }
@@ -133,5 +135,6 @@ void DoorGerudo_Unlock(DoorGerudo* thisx) {
         return;
     }
     thisx->action_fn = DoorGerudo_Unlocking;
-    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20, (s8*)0x54AC24); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20,
+            (s8*)0x54AC24); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }

@@ -22,7 +22,8 @@ void BgSpot02Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void BgSpot02Objects_ExplodeGrave(BgSpot02Objects* thisx) {
-    PlaySFX(0x1000219, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20, (s8*)0x54AC24); // NA_SE_EV_GRAVE_EXPLOSION
-    thisx->timer = 38;
+    PlaySFX(0x1000219, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20,
+            (s8*)0x54AC24); // NA_SE_EV_GRAVE_EXPLOSION
+    thisx->timer     = 38;
     thisx->action_fn = BgSpot02Objects_Explode;
 }

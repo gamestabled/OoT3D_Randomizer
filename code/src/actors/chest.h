@@ -4,10 +4,10 @@
 #include "z3D/z3D.h"
 
 typedef enum {
-  WOODEN_BIG,
-  WOODEN_SMALL,
-  DECORATED_BIG,
-  DECORATED_SMALL,
+    WOODEN_BIG,
+    WOODEN_SMALL,
+    DECORATED_BIG,
+    DECORATED_SMALL,
 } ChestType;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx);

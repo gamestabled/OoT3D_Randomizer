@@ -10,10 +10,10 @@ extern u32 dizzyCurseSeed;
 
 void IceTrap_Push(u32 key);
 void IceTrap_Give(void);
-u32  IceTrap_IsPending(void);
+u32 IceTrap_IsPending(void);
 void IceTrap_Update(void);
 void IceTrap_InitTypes(void);
-u8   IceTrap_ActivateCurseTrap(u8 curseType);
+u8 IceTrap_ActivateCurseTrap(u8 curseType);
 void IceTrap_DispelCurses(void);
 
 typedef enum {

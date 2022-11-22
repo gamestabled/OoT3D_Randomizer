@@ -25,7 +25,8 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             switchParams = 0x3E10; // Toggle-able floor switch, linked to temp_switch 0x1E (room temporary,
                                    // cleared when room unloads)
         } else {
-            switchParams = 0x3E81; // Frozen rusty switch, same flag as above. It's glitched and can't be pressed, which is perfect
+            switchParams =
+                0x3E81; // Frozen rusty switch, same flag as above. It's glitched and can't be pressed, which is perfect
         }
 
         // if Lake Hylia's water is lowered, set the temp_switch flag
@@ -34,7 +35,8 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         }
 
         // Spawn a floor switch
-        floorSwitch = Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x12A, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, switchParams);
+        floorSwitch =
+            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x12A, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, switchParams);
 
         // Spawn a sign
         Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x141, -970.0f, -1242.0f, 6954.0f, 0, 0, 0, 0x0046);
@@ -62,7 +64,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             gSaveContext.eventChkInf[6] &= ~0x0200;
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;
-            globalCtx->sceneLoadFlag = 0x14;
+            globalCtx->sceneLoadFlag     = 0x14;
             globalCtx->fadeOutTransition = 5;
         }
     } else {
@@ -72,7 +74,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             gSaveContext.eventChkInf[6] |= 0x0200;
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;
-            globalCtx->sceneLoadFlag = 0x14;
+            globalCtx->sceneLoadFlag     = 0x14;
             globalCtx->fadeOutTransition = 5;
         }
     }

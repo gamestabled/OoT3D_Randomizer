@@ -10,46 +10,41 @@
 #define ControlStick_Y *(float*)0x5655C4
 
 static u8 pendingFreezes = 0;
-static u8 cooldown = 0;
-static u8 modifyScale = 0;
+static u8 cooldown       = 0;
+static u8 modifyScale    = 0;
 
 static u32 source[16];
 
-s8 IceTrap_ActiveCurse = -1;
+s8 IceTrap_ActiveCurse         = -1;
 static s16 previousTimer1Value = 0;
 static s16 previousTimer2Value = 60;
-u32 dizzyCurseSeed = 0;
+u32 dizzyCurseSeed             = 0;
 
 // LUT for 1 - 0.5sin(0.5x) * 1.1^-x where x = 30 - INDEX
-const f32 SCALE_TRAP[] = {
-    1.000f, 0.971f, 0.966f, 0.969f, 0.982f,
-    1.003f, 1.027f, 1.049f, 1.061f, 1.059f,
-    1.040f, 1.006f, 0.963f, 0.921f, 0.892f,
-    0.888f, 0.914f, 0.969f, 1.045f, 1.124f,
-    1.185f, 1.207f, 1.177f, 1.090f, 0.960f,
-    0.814f, 0.690f, 0.625f, 0.652f, 0.782f
-};
+const f32 SCALE_TRAP[] = { 1.000f, 0.971f, 0.966f, 0.969f, 0.982f, 1.003f, 1.027f, 1.049f, 1.061f, 1.059f,
+                           1.040f, 1.006f, 0.963f, 0.921f, 0.892f, 0.888f, 0.914f, 0.969f, 1.045f, 1.124f,
+                           1.185f, 1.207f, 1.177f, 1.090f, 0.960f, 0.814f, 0.690f, 0.625f, 0.652f, 0.782f };
 
-u32 possibleChestTraps[20] = {ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA,
-                                ICETRAP_SHOCK, ICETRAP_BOMB_SIMPLE, ICETRAP_BOMB_KNOCKDOWN};
-u32 possibleChestTrapsAmount = 0;
-static u32 possibleItemTraps[20] = {ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA,
-                                    ICETRAP_SHOCK, ICETRAP_SCALE};
+u32 possibleChestTraps[20]         = { ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA,
+                                       ICETRAP_SHOCK,     ICETRAP_BOMB_SIMPLE,      ICETRAP_BOMB_KNOCKDOWN };
+u32 possibleChestTrapsAmount       = 0;
+static u32 possibleItemTraps[20]   = { ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA, ICETRAP_SHOCK,
+                                       ICETRAP_SCALE };
 static u32 possibleItemTrapsAmount = 0;
 
 void IceTrap_InitTypes(void) {
     possibleChestTrapsAmount = 6;
-    possibleItemTrapsAmount = 5;
+    possibleItemTrapsAmount  = 5;
 
     if (gSettingsContext.randomTrapDmg == RANDOMTRAPS_BASIC)
         return;
 
     possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_RUPPY;
-    possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_RUPPY;
+    possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_RUPPY;
 
     if (gSettingsContext.fireTrap) {
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_FIRE;
-        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_FIRE;
+        possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_FIRE;
     }
     if (gSettingsContext.antiFairyTrap) {
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_ANTIFAIRY;
@@ -59,10 +54,10 @@ void IceTrap_InitTypes(void) {
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_SHIELD;
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_DIZZY;
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_BLIND;
-        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_SWORD;
-        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_SHIELD;
-        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_DIZZY;
-        possibleItemTraps[possibleItemTrapsAmount++] = ICETRAP_CURSE_BLIND;
+        possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SWORD;
+        possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SHIELD;
+        possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_DIZZY;
+        possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_BLIND;
     }
 }
 
@@ -77,7 +72,7 @@ void IceTrap_Push(u32 key) {
 void LinkDamageNoKnockback(void) {
     if (PLAYER->invincibilityTimer >= 0) {
         s32 changeHealth = Settings_ApplyDamageMultiplier(gGlobalContext, -(PLAYER->actor.colChkInfo.damage));
-        gSaveContext.health += changeHealth / ((gSaveContext.doubleDefense)? 2 : 1);
+        gSaveContext.health += changeHealth / ((gSaveContext.doubleDefense) ? 2 : 1);
     }
     if (gSaveContext.health < 0) {
         gSaveContext.health = 0;
@@ -117,7 +112,8 @@ void IceTrap_Give(void) {
         if (trapType == ICETRAP_VANILLA || trapType == ICETRAP_FIRE) {
             PLAYER->actor.colChkInfo.damage = 0;
         } else {
-            PLAYER->actor.colChkInfo.damage = (gSettingsContext.mirrorWorld) ? 16 : 8; // Damage Multiplier is accounted for by the patch
+            PLAYER->actor.colChkInfo.damage =
+                (gSettingsContext.mirrorWorld) ? 16 : 8; // Damage Multiplier is accounted for by the patch
         }
 
         if (PLAYER->invincibilityTimer > 0) {
@@ -131,12 +127,17 @@ void IceTrap_Give(void) {
             LinkDamageNoKnockback();
         } else if (trapType == ICETRAP_RUPPY) {
             // Spawn 4 explosive rupees around the player
-            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x + 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z + 30, 0, 0, 0, 0x2);
-            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x + 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z - 30, 0, 0, 0, 0x2);
-            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x - 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z + 30, 0, 0, 0, 0x2);
-            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x - 30, PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z - 30, 0, 0, 0, 0x2);
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x + 30,
+                        PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z + 30, 0, 0, 0, 0x2);
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x + 30,
+                        PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z - 30, 0, 0, 0, 0x2);
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x - 30,
+                        PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z + 30, 0, 0, 0, 0x2);
+            Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, PLAYER->actor.world.pos.x - 30,
+                        PLAYER->actor.world.pos.y + 30, PLAYER->actor.world.pos.z - 30, 0, 0, 0, 0x2);
         } else {
-            // From testing 0-4 are all the unique damage types and 0 is boring (lava/spikes damage), so it's used for the Fire Trap
+            // From testing 0-4 are all the unique damage types and 0 is boring (lava/spikes damage), so it's used for
+            // the Fire Trap
             LinkDamage(gGlobalContext, PLAYER, trapType, 0.0f, 0.0f, 0, 20);
         }
         cooldown = 30;
@@ -149,7 +150,7 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
 
     do {
         switch (curseType) {
-            case ICETRAP_CURSE_SHIELD :
+            case ICETRAP_CURSE_SHIELD:
                 if (!(gSaveContext.equips.equipment & 0x70)) { // no shield equipped
                     curseType++;
                     continue;
@@ -160,26 +161,27 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
                 gGearUsabilityTable[GearSlot(ITEM_SHIELD_HYLIAN)] = 0x02;
                 gGearUsabilityTable[GearSlot(ITEM_SHIELD_MIRROR)] = 0x02;
                 break;
-            case ICETRAP_CURSE_SWORD :
+            case ICETRAP_CURSE_SWORD:
                 if (!(gSaveContext.equips.equipment & 0x07)) { // no sword equipped
                     curseType++;
                     continue;
                 }
                 break;
-            case ICETRAP_CURSE_DIZZY :
+            case ICETRAP_CURSE_DIZZY:
                 break;
-            case ICETRAP_CURSE_BLIND :
-                gStaticContext.dekuNutFlash = -1;
+            case ICETRAP_CURSE_BLIND:
+                gStaticContext.dekuNutFlash          = -1;
                 gStaticContext.renderGeometryDisable = 1;
                 break;
-            default : return 0;
+            default:
+                return 0;
         }
         break;
     } while (1);
 
     gSaveContext.timer2State = 4; // "active"
     gSaveContext.timer2Value = 60;
-    TimerFrameCounter = 30;
+    TimerFrameCounter        = 30;
     DisplayTextbox(gGlobalContext, 0x8FF0 + curseType - ICETRAP_CURSE_SHIELD, 0);
     PlaySound(0x100035C); // Poe laugh SFX
     IceTrap_ActiveCurse = (s8)curseType;
@@ -191,10 +193,10 @@ void IceTrap_DispelCurses(void) {
         gGearUsabilityTable[GearSlot(ITEM_SHIELD_DEKU)]   = gSettingsContext.dekuShieldAsAdult ? 0x09 : 0x01;
         gGearUsabilityTable[GearSlot(ITEM_SHIELD_HYLIAN)] = 0x09;
         gGearUsabilityTable[GearSlot(ITEM_SHIELD_MIRROR)] = gSettingsContext.mirrorShieldAsChild ? 0x09 : 0x00;
-        gStaticContext.renderGeometryDisable = 0;
-        previousTimer2Value = 60;
-        gSaveContext.timer2State = 0;
-        IceTrap_ActiveCurse = -1;
+        gStaticContext.renderGeometryDisable              = 0;
+        previousTimer2Value                               = 60;
+        gSaveContext.timer2State                          = 0;
+        IceTrap_ActiveCurse                               = -1;
     }
 }
 
@@ -211,18 +213,19 @@ void IceTrap_HandleCurses(void) {
     // During the blindness curse, show geometry for 1 second every 20
     if (IceTrap_ActiveCurse == ICETRAP_CURSE_BLIND) {
         if (gSaveContext.timer2Value != previousTimer2Value && gSaveContext.timer2Value % 20 == 0) {
-            gStaticContext.dekuNutFlash = -1;
+            gStaticContext.dekuNutFlash          = -1;
             gStaticContext.renderGeometryDisable = 0;
-        }
-        else if (gSaveContext.timer2Value != previousTimer2Value && gSaveContext.timer2Value % 20 == 19 && gSaveContext.timer2Value < 59) {
-            gStaticContext.dekuNutFlash = -1;
+        } else if (gSaveContext.timer2Value != previousTimer2Value && gSaveContext.timer2Value % 20 == 19 &&
+                   gSaveContext.timer2Value < 59) {
+            gStaticContext.dekuNutFlash          = -1;
             gStaticContext.renderGeometryDisable = 1;
         }
         previousTimer2Value = gSaveContext.timer2Value;
     }
 
     // Dispel curses if the timer is reset or runs out, or if the scene is Tower Collapse Exterior
-    if ((!IsInGame() || gSaveContext.timer2State != 4 || gSaveContext.timer2Value == 0 || gGlobalContext->sceneNum == 0x1A)) {
+    if ((!IsInGame() || gSaveContext.timer2State <= 1 || gSaveContext.timer2Value == 0 ||
+         gGlobalContext->sceneNum == 0x1A)) {
         IceTrap_DispelCurses();
         return;
     }
@@ -251,7 +254,8 @@ u8 IceTrap_IsCurseActive(void) {
 
 u8 IceTrap_IsSlashHitboxDisabled(void) {
     return IceTrap_ActiveCurse == ICETRAP_CURSE_SWORD &&
-            ((PLAYER->heldItemActionParam >= 3 && PLAYER->heldItemActionParam <= 5) || PLAYER->heldItemActionParam == 35);
+           ((PLAYER->heldItemActionParam >= 3 && PLAYER->heldItemActionParam <= 5) ||
+            PLAYER->heldItemActionParam == 35);
 }
 
 void IceTrap_ReverseStick(void) {
@@ -266,18 +270,18 @@ btn_t IceTrap_RandomizeButtons(btn_t in) {
         return in;
     }
 
-    uint32_t arr[4] = {in.a, in.b, in.r, in.l};
+    uint32_t arr[4] = { in.a, in.b, in.r, in.l };
     for (u32 i = 3; i > 0; i--) {
-        u32 j = dizzyCurseSeed % i;
+        u32 j    = dizzyCurseSeed % i;
         u32 temp = arr[j];
-        arr[j] = arr[i];
-        arr[i] = temp;
+        arr[j]   = arr[i];
+        arr[i]   = temp;
     }
 
     btn_t out = in;
-    out.a = arr[0];
-    out.b = arr[1];
-    out.r = arr[2];
-    out.l = arr[3];
+    out.a     = arr[0];
+    out.b     = arr[1];
+    out.r     = arr[2];
+    out.l     = arr[3];
     return out;
 }

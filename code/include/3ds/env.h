@@ -8,9 +8,9 @@
 
 /// System run-flags.
 enum {
-	RUNFLAG_APTWORKAROUND = BIT(0), ///< Use APT workaround.
-	RUNFLAG_APTREINIT     = BIT(1), ///< Reinitialize APT.
-	RUNFLAG_APTCHAINLOAD  = BIT(2), ///< Chainload APT on return.
+    RUNFLAG_APTWORKAROUND = BIT(0), ///< Use APT workaround.
+    RUNFLAG_APTREINIT     = BIT(1), ///< Reinitialize APT.
+    RUNFLAG_APTCHAINLOAD  = BIT(2), ///< Chainload APT on return.
 };
 
 #define __service_ptr NULL
@@ -20,7 +20,7 @@ enum {
  * @return Whether the application was launched from a homebrew environment.
  */
 static inline bool envIsHomebrew(void) {
-	return __service_ptr != NULL;
+    return __service_ptr != NULL;
 }
 
 /**
@@ -35,8 +35,8 @@ Handle envGetHandle(const char* name);
  * @return The APT app ID.
  */
 static inline u32 envGetAptAppId(void) {
-	extern u32 __apt_appid;
-	return __apt_appid;
+    extern u32 __apt_appid;
+    return __apt_appid;
 }
 
 /**
@@ -44,8 +44,8 @@ static inline u32 envGetAptAppId(void) {
  * @return The application heap size.
  */
 static inline u32 envGetHeapSize(void) {
-	extern u32 __ctru_heap_size;
-	return __ctru_heap_size;
+    extern u32 __ctru_heap_size;
+    return __ctru_heap_size;
 }
 
 /**
@@ -53,8 +53,8 @@ static inline u32 envGetHeapSize(void) {
  * @return The linear heap size.
  */
 static inline u32 envGetLinearHeapSize(void) {
-	extern u32 __ctru_linear_heap_size;
-	return __ctru_linear_heap_size;
+    extern u32 __ctru_linear_heap_size;
+    return __ctru_linear_heap_size;
 }
 
 /**
@@ -62,8 +62,8 @@ static inline u32 envGetLinearHeapSize(void) {
  * @return The argument list.
  */
 static inline const char* envGetSystemArgList(void) {
-	extern const char* __system_arglist;
-	return __system_arglist;
+    extern const char* __system_arglist;
+    return __system_arglist;
 }
 
 /**
@@ -71,6 +71,6 @@ static inline const char* envGetSystemArgList(void) {
  * @return The run flags.
  */
 static inline u32 envGetSystemRunFlags(void) {
-	extern u32 __system_runflags;
-	return __system_runflags;
+    extern u32 __system_runflags;
+    return __system_runflags;
 }

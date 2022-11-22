@@ -57,9 +57,8 @@ u8 IsInGame(void) {
 u8 IsInGameOrBossChallenge(void) {
     s32 entr = gSaveContext.entranceIndex;
     s32 mode = gSaveContext.gameMode;
-    return mode == 0 ||
-        (mode == 1 && (gSaveContext.cutsceneIndex < 0xFFF0 ||
-                       (entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D)));
+    return mode == 0 || (mode == 1 && (gSaveContext.cutsceneIndex < 0xFFF0 ||
+                                       (entr != 0x0629 && entr != 0x0147 && entr != 0x00A0 && entr != 0x008D)));
 }
 
 void CitraPrint(const char* message, ...) {

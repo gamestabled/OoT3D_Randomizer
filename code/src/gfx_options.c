@@ -47,7 +47,8 @@ void InitOptions(void) {
     strcpy(options[3].name, "Ignore Mask Reaction");
     strcpy(options[3].alternatives[0], "Off");
     strcpy(options[3].alternatives[1], "On");
-    strcpy(options[3].description, "Causes NPCs to respond normally when wearing\nmasks. Does not apply to trade quest dialogues.");
+    strcpy(options[3].description,
+           "Causes NPCs to respond normally when wearing\nmasks. Does not apply to trade quest dialogues.");
     options[3].optionPointer = &gExtSaveData.option_IgnoreMaskReaction;
 
     // Skip Song Replays
@@ -64,12 +65,16 @@ void Gfx_DrawOptions(void) {
 
     // Options
     for (u8 i = 0; i < ARRAY_SIZE(options); i++) {
-        Draw_DrawString(10, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].name);
-        Draw_DrawString(CHOICE_COLUMN, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].alternatives[*options[i].optionPointer]);
+        Draw_DrawString(10, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE,
+                        options[i].name);
+        Draw_DrawString(CHOICE_COLUMN, 16 + SPACING_Y + SPACING_Y * i,
+                        (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE,
+                        options[i].alternatives[*options[i].optionPointer]);
     }
 
     // Description
-    Draw_DrawRect(10 - BORDER_WIDTH, DESCRIPTION_ROW - BORDER_WIDTH, SCREEN_BOT_WIDTH - 20 + BORDER_WIDTH * 2, SPACING_Y * 3 + BORDER_WIDTH * 2, COLOR_WHITE);
+    Draw_DrawRect(10 - BORDER_WIDTH, DESCRIPTION_ROW - BORDER_WIDTH, SCREEN_BOT_WIDTH - 20 + BORDER_WIDTH * 2,
+                  SPACING_Y * 3 + BORDER_WIDTH * 2, COLOR_WHITE);
     Draw_DrawRect(10, DESCRIPTION_ROW, SCREEN_BOT_WIDTH - 20, SPACING_Y * 3, COLOR_BLACK);
     Draw_DrawString(10, DESCRIPTION_ROW, COLOR_WHITE, options[selectedOption].description);
 }
