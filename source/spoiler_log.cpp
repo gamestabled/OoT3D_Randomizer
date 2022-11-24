@@ -331,7 +331,7 @@ static void WriteSettings(tinyxml2::XMLDocument& spoilerLog, const bool printAll
             for (const Option* setting : *menu->settingsList) {
                 if (printAll || (!setting->IsHidden() && setting->IsCategory(OptionCategory::Setting))) {
                     auto node = parentNode->InsertNewChildElement("setting");
-                    node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
+                    node->SetAttribute("name", SanitizedString(setting->GetName()).c_str());
                     node->SetText(setting->GetSelectedOptionText().c_str());
                 }
             }
@@ -351,7 +351,7 @@ static void WriteExcludedLocations(tinyxml2::XMLDocument& spoilerLog) {
             }
 
             tinyxml2::XMLElement* node = spoilerLog.NewElement("location");
-            node->SetAttribute("name", RemoveLineBreaks(location->GetName()).c_str());
+            node->SetAttribute("name", SanitizedString(location->GetName()).c_str());
             parentNode->InsertEndChild(node);
         }
     }
@@ -401,7 +401,7 @@ static void WriteEnabledTricks(tinyxml2::XMLDocument& spoilerLog) {
         }
 
         auto node = parentNode->InsertNewChildElement("trick");
-        node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
+        node->SetAttribute("name", SanitizedString(setting->GetName()).c_str());
     }
 
     if (!parentNode->NoChildren()) {
@@ -429,7 +429,7 @@ static void WriteEnabledGlitches(tinyxml2::XMLDocument& spoilerLog) {
         }
 
         auto node = parentNode->InsertNewChildElement("misc-glitch");
-        node->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
+        node->SetAttribute("name", SanitizedString(setting->GetName()).c_str());
     }
 
     if (!parentNode->NoChildren()) {
