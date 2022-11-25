@@ -42,11 +42,11 @@ void SaveFile_Init(u32 fileBaseIndex) {
     /*-----------------------------------
     |       THINGS TO ALWAYS SET        |
     -----------------------------------*/
-    gSaveContext.cutsceneIndex = 0;        // no intro cutscene
-    gSaveContext.infTable[0x0] |= 0x01;    // greeted by Saria
-    gSaveContext.infTable[0x11] |= 0x0400; // Met Darunia in Fire Temple
-    gSaveContext.infTable[0x14] |=
-        0x0016; // Ruto in Jabu can be escorted immediately, skip cutscene entering Big Octo room
+    gSaveContext.cutsceneIndex = 0;          // no intro cutscene
+    gSaveContext.infTable[0x0] |= 0x01;      // greeted by Saria
+    gSaveContext.infTable[0x11] |= 0x0400;   // Met Darunia in Fire Temple
+    gSaveContext.infTable[0x14] |= 0x0016;   // Ruto in Jabu can be escorted immediately,
+                                             // skip cutscene entering Big Octo room
     gSaveContext.infTable[0x19] |= 0x0100;   // Picked up Magic Container
     gSaveContext.infTable[0x19] |= 0x0020;   // Talked to owl in Lake Hylia
     gSaveContext.infTable[0x8] |= 0x0810;    // Met Malon in Market/Castle Grounds and talked to her once
@@ -332,8 +332,7 @@ void SaveFile_SetStartingInventory(void) {
     }
 
     // give small keys
-    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) { // check if MQ dungeon               MQ : Vanilla key
-                                                              // count
+    if (gSettingsContext.keysanity == KEYSANITY_START_WITH) { // check if MQ dungeon -> MQ : Vanilla key count
         gSaveContext.dungeonKeys[DUNGEON_FOREST_TEMPLE]      = gSettingsContext.forestTempleDungeonMode ? 6 : 5;
         gSaveContext.dungeonKeys[DUNGEON_FIRE_TEMPLE]        = gSettingsContext.fireTempleDungeonMode ? 5 : 8;
         gSaveContext.dungeonKeys[DUNGEON_WATER_TEMPLE]       = gSettingsContext.waterTempleDungeonMode ? 2 : 6;

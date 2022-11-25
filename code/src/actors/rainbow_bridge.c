@@ -27,9 +27,8 @@ u32 BgGjyoBridge_ConditionDungeons(void) {
 
 u32 BgGjyoBridge_CheckCondition(void) {
     // Expand trigger from -70<x<300, 1340<y, 1340<z<1662 to uncapped cylinder with radius of 750
-    if ((PLAYER->actor.world.pos.x - 165.0) * (PLAYER->actor.world.pos.x - 165.0) +
-            (PLAYER->actor.world.pos.z - 1370.0) * (PLAYER->actor.world.pos.z - 1370.0) >
-        750 * 750)
+    if (((PLAYER->actor.world.pos.x - 165.0) * (PLAYER->actor.world.pos.x - 165.0) +
+         (PLAYER->actor.world.pos.z - 1370.0) * (PLAYER->actor.world.pos.z - 1370.0)) > 750 * 750)
         return 0;
 
     switch (gSettingsContext.rainbowBridge) {
