@@ -92,13 +92,13 @@ void AreaTable_Init_ForestTemple() {
                          { [] { return false; },
                            /*Glitched*/ [] { return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE); } }),
                 Entrance(FOREST_TEMPLE_BOSS_REGION, { [] { return ForestTempleMeg; } }),
-                Entrance(FOREST_TEMPLE_BOSS_ROOM, { [] { return false; },
-                                                    /*Glitched*/
-                                                    [] {
-                                                        return IsAdult &&
-                                                               (CanUse(HOOKSHOT) || CanUse(BOW) || CanUse(SLINGSHOT)) &&
-                                                               GlitchForestBKSkip;
-                                                    } }),
+                Entrance(FOREST_TEMPLE_BOSS_ENTRYWAY, { [] { return false; },
+                                                        /*Glitched*/
+                                                        [] {
+                                                            return IsAdult && GlitchForestBKSkip &&
+                                                                   (CanUse(HOOKSHOT) || CanUse(BOW) ||
+                                                                    CanUse(SLINGSHOT));
+                                                        } }),
             });
 
         areaTable[FOREST_TEMPLE_NORTH_CORRIDOR] =
@@ -175,12 +175,12 @@ void AreaTable_Init_ForestTemple() {
                 Entrance(FOREST_TEMPLE_SEWER, { [] {
                              return GoldScale || CanUse(IRON_BOOTS) || HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER);
                          } }),
-                Entrance(FOREST_TEMPLE_BOSS_ROOM, { [] { return false; },
-                                                    /*Glitched*/
-                                                    [] {
-                                                        return CanDoGlitch(GlitchType::HookshotJump_Boots,
-                                                                           GlitchDifficulty::INTERMEDIATE);
-                                                    } }),
+                Entrance(FOREST_TEMPLE_BOSS_ENTRYWAY, { [] { return false; },
+                                                        /*Glitched*/
+                                                        [] {
+                                                            return CanDoGlitch(GlitchType::HookshotJump_Boots,
+                                                                               GlitchDifficulty::INTERMEDIATE);
+                                                        } }),
             });
 
         areaTable[FOREST_TEMPLE_NW_OUTDOORS_UPPER] =
@@ -547,27 +547,7 @@ void AreaTable_Init_ForestTemple() {
                  {
                      // Exits
                      Entrance(FOREST_TEMPLE_LOBBY, { [] { return true; } }),
-                     Entrance(FOREST_TEMPLE_BOSS_ROOM, { [] { return BossKeyForestTemple; } }),
-                 });
-
-        areaTable[FOREST_TEMPLE_BOSS_ROOM] =
-            Area("Forest Temple Boss Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&ForestTempleClear, { [] {
-                         return ForestTempleClear ||
-                                ((CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) &&
-                                 (CanUse(HOOKSHOT) || CanUse(BOW) || CanUse(SLINGSHOT)));
-                     } }),
-                 },
-                 {
-                     // Locations
-                     LocationAccess(FOREST_TEMPLE_PHANTOM_GANON_HEART, { [] { return ForestTempleClear; } }),
-                     LocationAccess(PHANTOM_GANON, { [] { return ForestTempleClear; } }),
-                 },
-                 {
-                     // Exits
-                     Entrance(FOREST_TEMPLE_ENTRYWAY, { [] { return ForestTempleClear; } }),
+                     Entrance(FOREST_TEMPLE_BOSS_ENTRYWAY, { [] { return BossKeyForestTemple; } }),
                  });
     }
 
@@ -769,17 +749,46 @@ void AreaTable_Init_ForestTemple() {
                  });
 
         areaTable[FOREST_TEMPLE_MQ_BOSS_REGION] =
-            Area("Forest Temple MQ Boss Region", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&ForestTempleClear, { [] { return ForestTempleClear || BossKeyForestTemple; } }),
-                 },
+            Area("Forest Temple MQ Boss Region", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
                  {
                      // Locations
                      LocationAccess(FOREST_TEMPLE_MQ_BASEMENT_CHEST, { [] { return true; } }),
-                     LocationAccess(FOREST_TEMPLE_PHANTOM_GANON_HEART, { [] { return BossKeyForestTemple; } }),
-                     LocationAccess(PHANTOM_GANON, { [] { return BossKeyForestTemple; } }),
                  },
-                 {});
+                 {
+                     // Exits
+                     Entrance(FOREST_TEMPLE_BOSS_ENTRYWAY, { [] { return BossKeyForestTemple; } }),
+                 });
     }
+
+    /*---------------------------
+    |         BOSS ROOM         |
+    ---------------------------*/
+    areaTable[FOREST_TEMPLE_BOSS_ENTRYWAY] =
+        Area("Forest Temple Boss Entryway", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(FOREST_TEMPLE_BOSS_REGION, { [] { return Dungeon::ForestTemple.IsVanilla() && false; } }),
+                 Entrance(FOREST_TEMPLE_MQ_BOSS_REGION, { [] { return Dungeon::ForestTemple.IsMQ() && false; } }),
+                 Entrance(FOREST_TEMPLE_BOSS_ROOM, { [] { return true; } }),
+             });
+
+    areaTable[FOREST_TEMPLE_BOSS_ROOM] = Area(
+        "Forest Temple Boss Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE,
+        {
+            // Events
+            EventAccess(&ForestTempleClear, { [] {
+                return ForestTempleClear || ((CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) &&
+                                             (CanUse(HOOKSHOT) || CanUse(BOW) || CanUse(SLINGSHOT)));
+            } }),
+        },
+        {
+            // Locations
+            LocationAccess(FOREST_TEMPLE_PHANTOM_GANON_HEART, { [] { return ForestTempleClear; } }),
+            LocationAccess(PHANTOM_GANON, { [] { return ForestTempleClear; } }),
+        },
+        {
+            // Exits
+            Entrance(FOREST_TEMPLE_BOSS_ENTRYWAY, { [] { return false; } }),
+            Entrance(FOREST_TEMPLE_ENTRYWAY, { [] { return ForestTempleClear; } }),
+        });
 }
