@@ -78,16 +78,17 @@ void AreaTable_Init_HyruleField() {
                        [] { return Sticks && IsChild && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED); } }),
         });
 
-    areaTable[HF_SOUTHEAST_GROTTO] = Area("HF Southeast Grotto", "HF Southeast Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
-                                          {
-                                              // Locations
-                                              LocationAccess(HF_SOUTHEAST_GROTTO_CHEST, { [] { return true; } }),
-                                              LocationAccess(HF_SOUTHEAST_GROTTO_GOSSIP_STONE, { [] { return true; } }),
-                                          },
-                                          {
-                                              // Exits
-                                              Entrance(HYRULE_FIELD, { [] { return true; } }),
-                                          });
+    areaTable[HF_SOUTHEAST_GROTTO] =
+        Area("HF Southeast Grotto", "HF Southeast Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+             {
+                 // Locations
+                 LocationAccess(HF_SOUTHEAST_GROTTO_CHEST, { [] { return true; } }),
+                 LocationAccess(HF_SOUTHEAST_GROTTO_GOSSIP_STONE, { [] { return true; } }),
+             },
+             {
+                 // Exits
+                 Entrance(HYRULE_FIELD, { [] { return true; } }),
+             });
 
     areaTable[HF_OPEN_GROTTO] = Area("HF Open Grotto", "HF Open Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
                                      {
@@ -100,15 +101,16 @@ void AreaTable_Init_HyruleField() {
                                          Entrance(HYRULE_FIELD, { [] { return true; } }),
                                      });
 
-    areaTable[HF_INSIDE_FENCE_GROTTO] = Area("HF Inside Fence Grotto", "HF Inside Fence Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
-                                             {
-                                                 // Locations
-                                                 LocationAccess(HF_DEKU_SCRUB_GROTTO, { [] { return CanStunDeku; } }),
-                                             },
-                                             {
-                                                 // Exits
-                                                 Entrance(HYRULE_FIELD, { [] { return true; } }),
-                                             });
+    areaTable[HF_INSIDE_FENCE_GROTTO] =
+        Area("HF Inside Fence Grotto", "HF Inside Fence Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
+             {
+                 // Locations
+                 LocationAccess(HF_DEKU_SCRUB_GROTTO, { [] { return CanStunDeku; } }),
+             },
+             {
+                 // Exits
+                 Entrance(HYRULE_FIELD, { [] { return true; } }),
+             });
 
     areaTable[HF_COW_GROTTO] = Area(
         "HF Cow Grotto", "HF Cow Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,

@@ -427,16 +427,17 @@ void AreaTable_Init_Kakariko() {
                        } }),
         });
 
-    areaTable[GRAVEYARD_SHIELD_GRAVE] = Area("Graveyard Shield Grave", "Graveyard Shield Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
-                                             {
-                                                 // Locations
-                                                 LocationAccess(GRAVEYARD_SHIELD_GRAVE_CHEST, { [] { return true; } }),
-                                                 // Free Fairies
-                                             },
-                                             {
-                                                 // Exits
-                                                 Entrance(THE_GRAVEYARD, { [] { return true; } }),
-                                             });
+    areaTable[GRAVEYARD_SHIELD_GRAVE] =
+        Area("Graveyard Shield Grave", "Graveyard Shield Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
+             {
+                 // Locations
+                 LocationAccess(GRAVEYARD_SHIELD_GRAVE_CHEST, { [] { return true; } }),
+                 // Free Fairies
+             },
+             {
+                 // Exits
+                 Entrance(THE_GRAVEYARD, { [] { return true; } }),
+             });
 
     areaTable[GRAVEYARD_HEART_PIECE_GRAVE] =
         Area("Graveyard Heart Piece Grave", "Graveyard Heart Piece Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
@@ -516,11 +517,12 @@ void AreaTable_Init_Kakariko() {
                        } }),
         });
 
-    areaTable[GRAVEYARD_DAMPES_HOUSE] = Area("Graveyard Dampes House", "Graveyard Dampes House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
-                                             {
-                                                 // Exits
-                                                 Entrance(THE_GRAVEYARD, { [] { return true; } }),
-                                             });
+    areaTable[GRAVEYARD_DAMPES_HOUSE] =
+        Area("Graveyard Dampes House", "Graveyard Dampes House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(THE_GRAVEYARD, { [] { return true; } }),
+             });
 
     areaTable[GRAVEYARD_WARP_PAD_REGION] = Area(
         "Graveyard Warp Pad Region", "Graveyard", THE_GRAVEYARD, NO_DAY_NIGHT_CYCLE,

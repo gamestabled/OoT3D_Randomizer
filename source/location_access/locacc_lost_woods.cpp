@@ -167,11 +167,12 @@ void AreaTable_Init_LostWoods() {
                                             Entrance(KOKIRI_FOREST, { [] { return true; } }),
                                         });
 
-    areaTable[KF_KNOW_IT_ALL_HOUSE] = Area("KF Know It All House", "KF Know It All House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
-                                           {
-                                               // Exits
-                                               Entrance(KOKIRI_FOREST, { [] { return true; } }),
-                                           });
+    areaTable[KF_KNOW_IT_ALL_HOUSE] =
+        Area("KF Know It All House", "KF Know It All House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(KOKIRI_FOREST, { [] { return true; } }),
+             });
 
     areaTable[KF_KOKIRI_SHOP] = Area("KF Kokiri Shop", "KF Kokiri Shop", NONE, NO_DAY_NIGHT_CYCLE, {},
                                      {

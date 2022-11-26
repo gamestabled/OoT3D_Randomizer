@@ -413,19 +413,21 @@ void AreaTable_Init_CastleTown() {
                                               Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),
                                           });
 
-    areaTable[MARKET_DOG_LADY_HOUSE] = Area("Market Dog Lady House", "Market Dog Lady House", NONE, NO_DAY_NIGHT_CYCLE, {},
-                                            {
-                                                // Locations
-                                                LocationAccess(MARKET_LOST_DOG, { [] { return IsChild && AtNight; } }),
-                                            },
-                                            {
-                                                // Exits
-                                                Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),
-                                            });
+    areaTable[MARKET_DOG_LADY_HOUSE] =
+        Area("Market Dog Lady House", "Market Dog Lady House", NONE, NO_DAY_NIGHT_CYCLE, {},
+             {
+                 // Locations
+                 LocationAccess(MARKET_LOST_DOG, { [] { return IsChild && AtNight; } }),
+             },
+             {
+                 // Exits
+                 Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),
+             });
 
-    areaTable[MARKET_MAN_IN_GREEN_HOUSE] = Area("Market Man in Green House", "Market Man in Green House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
-                                                {
-                                                    // Exits
-                                                    Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),
-                                                });
+    areaTable[MARKET_MAN_IN_GREEN_HOUSE] =
+        Area("Market Man in Green House", "Market Man in Green House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),
+             });
 }

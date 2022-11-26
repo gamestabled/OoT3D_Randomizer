@@ -147,16 +147,17 @@ void AreaTable_Init_DeathMountain() {
 
              });
 
-    areaTable[DMT_STORMS_GROTTO] = Area("DMT Storms Grotto", "DMT Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
-                                        {
-                                            // Locations
-                                            LocationAccess(DMT_STORMS_GROTTO_CHEST, { [] { return true; } }),
-                                            LocationAccess(DMT_STORMS_GROTTO_GOSSIP_STONE, { [] { return true; } }),
-                                        },
-                                        {
-                                            // Exits
-                                            Entrance(DEATH_MOUNTAIN_TRAIL, { [] { return true; } }),
-                                        });
+    areaTable[DMT_STORMS_GROTTO] =
+        Area("DMT Storms Grotto", "DMT Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+             {
+                 // Locations
+                 LocationAccess(DMT_STORMS_GROTTO_CHEST, { [] { return true; } }),
+                 LocationAccess(DMT_STORMS_GROTTO_GOSSIP_STONE, { [] { return true; } }),
+             },
+             {
+                 // Exits
+                 Entrance(DEATH_MOUNTAIN_TRAIL, { [] { return true; } }),
+             });
 
     areaTable[DMT_GREAT_FAIRY_FOUNTAIN] =
         Area("DMT Great Fairy Fountain", "DMT Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},
