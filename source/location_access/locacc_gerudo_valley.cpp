@@ -171,19 +171,19 @@ void AreaTable_Init_GerudoValley() {
                        } }),
         });
 
-    areaTable[GV_CARPENTER_TENT] = Area("GV Carpenter Tent", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[GV_CARPENTER_TENT] = Area("GV Carpenter Tent", "GV Carpenter Tent", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                         {
                                             // Exits
                                             Entrance(GV_FORTRESS_SIDE, { [] { return true; } }),
                                         });
 
-    areaTable[GV_OCTOROK_GROTTO] = Area("GV Octorok Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[GV_OCTOROK_GROTTO] = Area("GV Octorok Grotto", "GV Octorok Grotto", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                         {
                                             // Exits
                                             Entrance(GV_GROTTO_LEDGE, { [] { return true; } }),
                                         });
 
-    areaTable[GV_STORMS_GROTTO] = Area("GV Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[GV_STORMS_GROTTO] = Area("GV Storms Grotto", "GV Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
                                        {
                                            // Locations
                                            LocationAccess(GV_DEKU_SCRUB_GROTTO_REAR, { [] { return CanStunDeku; } }),
@@ -316,7 +316,7 @@ void AreaTable_Init_GerudoValley() {
                  Entrance(WASTELAND_NEAR_FORTRESS, { [] { return true; } }),
              });
 
-    areaTable[GF_STORMS_GROTTO] = Area("GF Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE,
+    areaTable[GF_STORMS_GROTTO] = Area("GF Storms Grotto", "GF Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE,
                                        {
                                            // Events
                                            EventAccess(&FreeFairies, { [] { return true; } }),
@@ -469,7 +469,7 @@ void AreaTable_Init_GerudoValley() {
              });
 
     areaTable[COLOSSUS_GREAT_FAIRY_FOUNTAIN] =
-        Area("Colossus Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Colossus Great Fairy Fountain", "Colossus Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(COLOSSUS_GREAT_FAIRY_REWARD,
@@ -490,7 +490,7 @@ void AreaTable_Init_GerudoValley() {
              });
 
     areaTable[COLOSSUS_GROTTO] =
-        Area("Colossus Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Colossus Grotto", "Colossus Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(COLOSSUS_DEKU_SCRUB_GROTTO_REAR, { [] { return CanStunDeku; } }),

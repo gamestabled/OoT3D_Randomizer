@@ -124,7 +124,7 @@ void AreaTable_Init_LostWoods() {
              });
 
     areaTable[KF_LINKS_HOUSE] =
-        Area("KF Link's House", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("KF Link's House", "KF Link's House", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(KF_LINKS_HOUSE_COW,
@@ -142,7 +142,7 @@ void AreaTable_Init_LostWoods() {
              { // Exits
                Entrance(KOKIRI_FOREST, { [] { return true; } }) });
 
-    areaTable[KF_MIDOS_HOUSE] = Area("KF Mido's House", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[KF_MIDOS_HOUSE] = Area("KF Mido's House", "KF Mido's House", NONE, NO_DAY_NIGHT_CYCLE, {},
                                      {
                                          // Locations
                                          LocationAccess(KF_MIDOS_TOP_LEFT_CHEST, { [] { return true; } }),
@@ -155,25 +155,25 @@ void AreaTable_Init_LostWoods() {
                                          Entrance(KOKIRI_FOREST, { [] { return true; } }),
                                      });
 
-    areaTable[KF_SARIAS_HOUSE] = Area("KF Saria's House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[KF_SARIAS_HOUSE] = Area("KF Saria's House", "KF Saria's House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                       {
                                           // Exits
                                           Entrance(KOKIRI_FOREST, { [] { return true; } }),
                                       });
 
-    areaTable[KF_HOUSE_OF_TWINS] = Area("KF House of Twins", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[KF_HOUSE_OF_TWINS] = Area("KF House of Twins", "KF House of Twins", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                         {
                                             // Exits
                                             Entrance(KOKIRI_FOREST, { [] { return true; } }),
                                         });
 
-    areaTable[KF_KNOW_IT_ALL_HOUSE] = Area("KF Know It All House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[KF_KNOW_IT_ALL_HOUSE] = Area("KF Know It All House", "KF Know It All House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                            {
                                                // Exits
                                                Entrance(KOKIRI_FOREST, { [] { return true; } }),
                                            });
 
-    areaTable[KF_KOKIRI_SHOP] = Area("KF Kokiri Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[KF_KOKIRI_SHOP] = Area("KF Kokiri Shop", "KF Kokiri Shop", NONE, NO_DAY_NIGHT_CYCLE, {},
                                      {
                                          // Locations
                                          LocationAccess(KF_SHOP_ITEM_1, { [] { return true; } }),
@@ -190,7 +190,7 @@ void AreaTable_Init_LostWoods() {
                                          Entrance(KOKIRI_FOREST, { [] { return true; } }),
                                      });
 
-    areaTable[KF_STORMS_GROTTO] = Area("KF Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+    areaTable[KF_STORMS_GROTTO] = Area("KF Storms Grotto", "KF Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
                                        {
                                            // Locations
                                            LocationAccess(KF_STORMS_GROTTO_CHEST, { [] { return true; } }),
@@ -367,7 +367,7 @@ void AreaTable_Init_LostWoods() {
         });
 
     areaTable[LW_NEAR_SHORTCUTS_GROTTO] =
-        Area("LW Near Shortcuts Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+        Area("LW Near Shortcuts Grotto", "LW Near Shortcuts Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
              {
                  // Locations
                  LocationAccess(LW_NEAR_SHORTCUTS_GROTTO_CHEST, { [] { return true; } }),
@@ -379,7 +379,7 @@ void AreaTable_Init_LostWoods() {
              });
 
     areaTable[DEKU_THEATER] =
-        Area("Deku Theater", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Deku Theater", "Deku Theater", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(DEKU_THEATER_SKULL_MASK, { [] { return IsChild && SkullMask; } }),
@@ -390,7 +390,7 @@ void AreaTable_Init_LostWoods() {
                  Entrance(LW_BEYOND_MIDO, { [] { return true; } }),
              });
 
-    areaTable[LW_SCRUBS_GROTTO] = Area("LW Scrubs Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[LW_SCRUBS_GROTTO] = Area("LW Scrubs Grotto", "LW Scrubs Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
                                        {
                                            // Locations
                                            LocationAccess(LW_DEKU_SCRUB_GROTTO_REAR, { [] { return CanStunDeku; } }),
@@ -449,7 +449,7 @@ void AreaTable_Init_LostWoods() {
                        } }),
         });
 
-    areaTable[SFM_FAIRY_GROTTO] = Area("SFM Fairy Grotto", "", NONE, NO_DAY_NIGHT_CYCLE,
+    areaTable[SFM_FAIRY_GROTTO] = Area("SFM Fairy Grotto", "SFM Fairy Grotto", NONE, NO_DAY_NIGHT_CYCLE,
                                        {
                                            // Events
                                            EventAccess(&FreeFairies, { [] { return true; } }),
@@ -460,7 +460,7 @@ void AreaTable_Init_LostWoods() {
                                            Entrance(SACRED_FOREST_MEADOW, { [] { return true; } }),
                                        });
 
-    areaTable[SFM_WOLFOS_GROTTO] = Area("SFM Wolfos Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[SFM_WOLFOS_GROTTO] = Area("SFM Wolfos Grotto", "SFM Wolfos Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
                                         {
                                             // Locations
                                             LocationAccess(SFM_WOLFOS_GROTTO_CHEST, { [] {
@@ -475,7 +475,7 @@ void AreaTable_Init_LostWoods() {
                                             Entrance(SFM_ENTRYWAY, { [] { return true; } }),
                                         });
 
-    areaTable[SFM_STORMS_GROTTO] = Area("SFM Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[SFM_STORMS_GROTTO] = Area("SFM Storms Grotto", "SFM Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
                                         {
                                             // Locations
                                             LocationAccess(SFM_DEKU_SCRUB_GROTTO_REAR, { [] { return CanStunDeku; } }),
