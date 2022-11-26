@@ -17,6 +17,7 @@
 #include "debug.hpp"
 #include "menu.hpp"
 #include "pool_functions.hpp"
+#include "utils.hpp"
 
 class Option {
   public:
@@ -24,16 +25,32 @@ class Option {
                        std::vector<std::string_view> optionDescriptions_,
                        OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
                        bool defaultHidden_ = false) {
-        return Option{ false,     std::move(name_), std::move(options_), std::move(optionDescriptions_),
-                       category_, defaultOption_,   defaultHidden_ };
+        return Option{ false,     u8{ 0 },        std::move(name_), std::move(options_), std::move(optionDescriptions_),
+                       category_, defaultOption_, defaultHidden_ };
     }
 
     static Option U8(std::string name_, std::vector<std::string> options_,
                      std::vector<std::string_view> optionDescriptions_,
                      OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
                      bool defaultHidden_ = false) {
-        return Option{ u8{ 0 },   std::move(name_), std::move(options_), std::move(optionDescriptions_),
-                       category_, defaultOption_,   defaultHidden_ };
+        return Option{ u8{ 0 },   u8{ 0 },        std::move(name_), std::move(options_), std::move(optionDescriptions_),
+                       category_, defaultOption_, defaultHidden_ };
+    }
+
+    static Option Bool(u8 indent_, std::string name_, std::vector<std::string> options_,
+                       std::vector<std::string_view> optionDescriptions_,
+                       OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
+                       bool defaultHidden_ = false) {
+        return Option{ false,     indent_,        std::move(name_), std::move(options_), std::move(optionDescriptions_),
+                       category_, defaultOption_, defaultHidden_ };
+    }
+
+    static Option U8(u8 indent_, std::string name_, std::vector<std::string> options_,
+                     std::vector<std::string_view> optionDescriptions_,
+                     OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
+                     bool defaultHidden_ = false) {
+        return Option{ u8{ 0 },   indent_,        std::move(name_), std::move(options_), std::move(optionDescriptions_),
+                       category_, defaultOption_, defaultHidden_ };
     }
 
     template <typename T> T Value() const {
@@ -73,6 +90,10 @@ class Option {
 
     size_t GetOptionCount() const {
         return options.size();
+    }
+
+    u8 GetIndent() const {
+        return indent;
     }
 
     const std::string& GetName() const {
@@ -165,7 +186,7 @@ class Option {
         }
 
         for (size_t i = 0; i < options.size(); i++) {
-            std::string settingName = options[i];
+            std::string settingName = SanitizedString(options[i]);
             if (settingName == newSetting) {
                 SetSelectedIndex(i);
                 return;
@@ -202,10 +223,10 @@ class Option {
     }
 
   private:
-    Option(u8 var_, std::string name_, std::vector<std::string> options_,
+    Option(u8 var_, u8 indent_, std::string name_, std::vector<std::string> options_,
            std::vector<std::string_view> optionDescriptions_, OptionCategory category_, u8 defaultOption_,
            bool defaultHidden_)
-        : var(var_), name(std::move(name_)), options(std::move(options_)),
+        : var(var_), indent(indent_), name(std::move(name_)), options(std::move(options_)),
           optionDescriptions(std::move(optionDescriptions_)), category(category_), defaultOption(defaultOption_),
           defaultHidden(defaultHidden_) {
         selectedOption = defaultOption;
@@ -213,10 +234,10 @@ class Option {
         SetVariable();
     }
 
-    Option(bool var_, std::string name_, std::vector<std::string> options_,
+    Option(bool var_, u8 indent_, std::string name_, std::vector<std::string> options_,
            std::vector<std::string_view> optionDescriptions_, OptionCategory category_, u8 defaultOption_,
            bool defaultHidden_)
-        : var(var_), name(std::move(name_)), options(std::move(options_)),
+        : var(var_), indent(indent_), name(std::move(name_)), options(std::move(options_)),
           optionDescriptions(std::move(optionDescriptions_)), category(category_), defaultOption(defaultOption_),
           defaultHidden(defaultHidden_) {
         selectedOption = defaultOption;
@@ -225,6 +246,7 @@ class Option {
     }
 
     std::variant<bool, u8> var;
+    u8 indent = 0;
     std::string name;
     std::vector<std::string> options;
     std::vector<std::string_view> optionDescriptions;

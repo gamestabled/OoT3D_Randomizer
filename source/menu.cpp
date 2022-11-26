@@ -480,22 +480,52 @@ void PrintOptionSubMenu() {
         Option* setting = currentMenu->settingsList->at(i + currentMenu->settingBound);
 
         u8 row = 3 + ((i - hiddenSettings) * 2);
+
+        const auto PrintSettingAndOption = [&](std::string color) {
+            size_t newlinePos;
+            bool hasNewline;
+
+            printf(color.data());
+
+            // Selection Arrow
+            if (color == GREEN) {
+                printf("\x1b[%d;%dH>", row, 1);
+            }
+
+            // Setting
+            newlinePos = setting->GetName().find('\n');
+            hasNewline = newlinePos != std::string::npos;
+            printf("\x1b[%d;%dH%.*s%s", row, 2 + setting->GetIndent(), newlinePos, setting->GetName().data(),
+                   hasNewline ? "" : ":");
+            if (hasNewline) {
+                printf("\x1b[%d;%dH%s:", row + 1, 2 + setting->GetIndent(), setting->GetName().data() + newlinePos + 1);
+            }
+
+            // Option
+            newlinePos = setting->GetSelectedOptionText().find('\n');
+            hasNewline = newlinePos != std::string::npos;
+            printf("\x1b[%d;%dH%.*s", row, 26, newlinePos, setting->GetSelectedOptionText().data());
+            if (hasNewline) {
+                printf("\x1b[%d;%dH%s", row + 1, 26, setting->GetSelectedOptionText().data() + newlinePos + 1);
+            }
+
+            printf(RESET);
+        };
+
         // make the current setting green
         if (currentMenu->menuIdx == i + currentMenu->settingBound) {
-            printf("\x1b[%d;%dH%s>", row, 1, GREEN);
-            printf("\x1b[%d;%dH%s:", row, 2, setting->GetName().data());
-            printf("\x1b[%d;%dH%s%s", row, 26, setting->GetSelectedOptionText().data(), RESET);
-            // dim to make a locked setting grey
-        } else if (setting->IsLocked()) {
-            printf("\x1b[%d;%dH%s%s:", row, 2, DIM, setting->GetName().data());
-            printf("\x1b[%d;%dH%s%s", row, 26, setting->GetSelectedOptionText().data(), RESET);
-            // don't display hidden settings
-        } else if (setting->IsHidden()) {
+            PrintSettingAndOption(GREEN);
+        }
+        // dim to make a locked setting grey
+        else if (setting->IsLocked()) {
+            PrintSettingAndOption(DIM);
+        }
+        // don't display hidden settings
+        else if (setting->IsHidden()) {
             hiddenSettings++;
             continue;
         } else {
-            printf("\x1b[%d;%dH%s:", row, 2, setting->GetName().data());
-            printf("\x1b[%d;%dH%s", row, 26, setting->GetSelectedOptionText().data());
+            PrintSettingAndOption(WHITE);
         }
     }
 

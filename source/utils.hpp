@@ -3,4 +3,5 @@
 #include <algorithm>
 #include <string>
 
-std::string RemoveLineBreaks(std::string s);
+// Returns a new string with line breaks and consecutive spaces removed
+std::string SanitizedString(std::string s);

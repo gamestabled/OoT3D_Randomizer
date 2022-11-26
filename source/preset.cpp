@@ -103,8 +103,8 @@ bool SavePreset(std::string_view presetName, OptionCategory category) {
             }
 
             XMLElement* newSetting = rootNode->InsertNewChildElement("setting");
-            newSetting->SetAttribute("name", RemoveLineBreaks(setting->GetName()).c_str());
-            newSetting->SetText(setting->GetSelectedOptionText().c_str());
+            newSetting->SetAttribute("name", SanitizedString(setting->GetName()).c_str());
+            newSetting->SetText(SanitizedString(setting->GetSelectedOptionText()).c_str());
         }
     }
 
@@ -142,8 +142,8 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
 
             // Since presets are saved linearly, we can simply loop through the nodes as
             // we loop through the settings to find most of the matching elements.
-            const std::string& settingToFind = RemoveLineBreaks(setting->GetName());
-            if (settingToFind == RemoveLineBreaks(curNode->Attribute("name"))) {
+            const std::string& settingToFind = SanitizedString(setting->GetName());
+            if (settingToFind == SanitizedString(curNode->Attribute("name"))) {
                 setting->SetSelectedIndexByString(curNode->GetText());
                 curNode = curNode->NextSiblingElement();
             } else {
@@ -152,7 +152,7 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
                 // next setting and element line up with each other.
                 curNode = rootNode->FirstChildElement();
                 while (curNode != nullptr) {
-                    if (settingToFind == RemoveLineBreaks(curNode->Attribute("name"))) {
+                    if (settingToFind == SanitizedString(curNode->Attribute("name"))) {
                         setting->SetSelectedIndexByString(curNode->GetText());
                         curNode = curNode->NextSiblingElement();
                         break;
