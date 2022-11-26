@@ -156,8 +156,14 @@ void WriteIngameSpoilerLog() {
         }
 
         auto locItem = loc->GetPlacedItemName().GetNAEnglish();
-        if (loc->GetPlacedItemKey() == ICE_TRAP && loc->IsCategory(Category::cShop)) {
-            locItem = NonShopItems[TransformShopIndex(GetShopIndex(key))].Name.GetNAEnglish();
+        if (loc->IsCategory(Category::cShop)) {
+            if (loc->GetPlacedItemKey() == ICE_TRAP) {
+                locItem = NonShopItems[TransformShopIndex(GetShopIndex(key))].Name.GetNAEnglish();
+            }
+            locItem += ": " + std::to_string(loc->GetPrice()) + " Rupees";
+            if (locItem.size() > 49) {
+                locItem.resize(49);
+            }
         }
         if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
             if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
@@ -180,6 +186,13 @@ void WriteIngameSpoilerLog() {
         if (key == GANON) {
             spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_NEVER;
             spoilerData.ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
+        } else if (key == TOT_LIGHT_ARROWS_CUTSCENE && (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA) ||
+                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS) ||
+                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES) ||
+                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS) ||
+                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS) ||
+                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS))) {
+            spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
         } else if (key == MARKET_BOMBCHU_BOWLING_BOMBCHUS) {
             spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
             spoilerData.ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;

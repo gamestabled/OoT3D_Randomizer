@@ -491,7 +491,7 @@ bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
             if (setDifficulty < static_cast<u8>(difficulty)) {
                 return false;
             }
-            return CanShield && CanJumpslash;
+            return CanShield && (CanJumpslash || CanUse(MEGATON_HAMMER));
 
         // Bomb Hover
         case GlitchType::BombHover:

@@ -348,6 +348,7 @@ void UpdateCustomPresetsMenu(u32 kDown) {
     // clear any potential message
     ClearDescription();
     if (kDown & KEY_A && currentMenu->mode == LOAD_CUSTOM_PRESET && !presetEntries.empty()) {
+        Settings::SetDefaultSettings();
         if (LoadPreset(presetEntries[currentMenu->menuIdx], OptionCategory::Setting)) {
             Settings::ResolveExcludedLocationConflicts();
             for (Menu* menu : Settings::GetAllOptionMenus()) {
