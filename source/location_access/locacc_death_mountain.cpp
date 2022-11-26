@@ -125,7 +125,7 @@ void AreaTable_Init_DeathMountain() {
                                      });
 
     areaTable[DMT_COW_GROTTO] =
-        Area("DMT Cow Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("DMT Cow Grotto", "DMT Cow Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(DMT_COW_GROTTO_COW,
@@ -147,7 +147,7 @@ void AreaTable_Init_DeathMountain() {
 
              });
 
-    areaTable[DMT_STORMS_GROTTO] = Area("DMT Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+    areaTable[DMT_STORMS_GROTTO] = Area("DMT Storms Grotto", "DMT Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
                                         {
                                             // Locations
                                             LocationAccess(DMT_STORMS_GROTTO_CHEST, { [] { return true; } }),
@@ -159,7 +159,7 @@ void AreaTable_Init_DeathMountain() {
                                         });
 
     areaTable[DMT_GREAT_FAIRY_FOUNTAIN] =
-        Area("DMT Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("DMT Great Fairy Fountain", "DMT Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(DMT_GREAT_FAIRY_REWARD,
@@ -334,7 +334,7 @@ void AreaTable_Init_DeathMountain() {
                                                       } }),
                                          });
 
-    areaTable[GC_SHOP] = Area("GC Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[GC_SHOP] = Area("GC Shop", "GC Shop", NONE, NO_DAY_NIGHT_CYCLE, {},
                               {
                                   // Locations
                                   LocationAccess(GC_SHOP_ITEM_1, { [] { return true; } }),
@@ -351,7 +351,7 @@ void AreaTable_Init_DeathMountain() {
                                   Entrance(GORON_CITY, { [] { return true; } }),
                               });
 
-    areaTable[GC_GROTTO] = Area("GC Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[GC_GROTTO] = Area("GC Grotto", "GC Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
                                 {
                                     // Locations
                                     LocationAccess(GC_DEKU_SCRUB_GROTTO_LEFT, { [] { return CanStunDeku; } }),
@@ -540,7 +540,7 @@ void AreaTable_Init_DeathMountain() {
         });
 
     areaTable[DMC_GREAT_FAIRY_FOUNTAIN] =
-        Area("DMC Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("DMC Great Fairy Fountain", "DMC Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(DMC_GREAT_FAIRY_REWARD,
@@ -561,7 +561,7 @@ void AreaTable_Init_DeathMountain() {
                  Entrance(DMC_LOWER_LOCAL, { [] { return true; } }),
              });
 
-    areaTable[DMC_UPPER_GROTTO] = Area("DMC Upper Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+    areaTable[DMC_UPPER_GROTTO] = Area("DMC Upper Grotto", "DMC Upper Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
                                        {
                                            // Locations
                                            LocationAccess(DMC_UPPER_GROTTO_CHEST, { [] { return true; } }),
@@ -573,7 +573,7 @@ void AreaTable_Init_DeathMountain() {
                                        });
 
     areaTable[DMC_HAMMER_GROTTO] =
-        Area("DMC Hammer Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("DMC Hammer Grotto", "DMC Hammer Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(DMC_DEKU_SCRUB_GROTTO_LEFT, { [] { return CanStunDeku; } }),

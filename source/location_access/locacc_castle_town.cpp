@@ -58,7 +58,7 @@ void AreaTable_Init_CastleTown() {
              });
 
     areaTable[TEMPLE_OF_TIME] =
-        Area("Temple of Time", "", TEMPLE_OF_TIME, NO_DAY_NIGHT_CYCLE, {},
+        Area("Temple of Time", "Temple of Time", TEMPLE_OF_TIME, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(TOT_MASTER_SWORD, { [] { return IsAdult; } }),
@@ -84,7 +84,7 @@ void AreaTable_Init_CastleTown() {
              });
 
     areaTable[TOT_BEYOND_DOOR_OF_TIME] =
-        Area("Beyond Door of Time", "", TEMPLE_OF_TIME, NO_DAY_NIGHT_CYCLE,
+        Area("Beyond Door of Time", "Beyond Door of Time", TEMPLE_OF_TIME, NO_DAY_NIGHT_CYCLE,
              {
                  // Events
                  // EventAccess(&TimeTravel, {[]{return true;}}),
@@ -157,7 +157,7 @@ void AreaTable_Init_CastleTown() {
                                 });
 
     areaTable[HC_GREAT_FAIRY_FOUNTAIN] =
-        Area("HC Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("HC Great Fairy Fountain", "HC Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(HC_GREAT_FAIRY_REWARD,
@@ -179,7 +179,7 @@ void AreaTable_Init_CastleTown() {
              });
 
     areaTable[HC_STORMS_GROTTO] = Area(
-        "HC Storms Grotto", "", NONE, NO_DAY_NIGHT_CYCLE,
+        "HC Storms Grotto", "HC Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE,
         {
             // Events
             EventAccess(&NutPot, { [] { return NutPot || CanBlastOrSmash; } }),
@@ -226,7 +226,7 @@ void AreaTable_Init_CastleTown() {
         });
 
     areaTable[OGC_GREAT_FAIRY_FOUNTAIN] =
-        Area("OGC Great Fairy Fountain", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("OGC Great Fairy Fountain", "OGC Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(OGC_GREAT_FAIRY_REWARD,
@@ -248,7 +248,7 @@ void AreaTable_Init_CastleTown() {
              });
 
     areaTable[MARKET_GUARD_HOUSE] =
-        Area("Market Guard House", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Market Guard House", "Market Guard House", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(MARKET_10_BIG_POES, { [] { return IsAdult && BigPoeKill; } }),
@@ -259,7 +259,7 @@ void AreaTable_Init_CastleTown() {
                  Entrance(MARKET_ENTRANCE, { [] { return true; } }),
              });
 
-    areaTable[MARKET_BAZAAR] = Area("Market Bazaar", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[MARKET_BAZAAR] = Area("Market Bazaar", "Market Bazaar", NONE, NO_DAY_NIGHT_CYCLE, {},
                                     {
                                         // Locations
                                         LocationAccess(MARKET_BAZAAR_ITEM_1, { [] { return true; } }),
@@ -277,7 +277,7 @@ void AreaTable_Init_CastleTown() {
                                     });
 
     areaTable[MARKET_MASK_SHOP] = Area(
-        "Market Mask Shop", "", NONE, NO_DAY_NIGHT_CYCLE,
+        "Market Mask Shop", "Market Mask Shop", NONE, NO_DAY_NIGHT_CYCLE,
         {
             // Events
             EventAccess(&SkullMask, { [] {
@@ -297,7 +297,7 @@ void AreaTable_Init_CastleTown() {
         });
 
     areaTable[MARKET_SHOOTING_GALLERY] =
-        Area("Market Shooting Gallery", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Market Shooting Gallery", "Market Shooting Gallery", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(MARKET_SHOOTING_GALLERY_REWARD, { [] { return IsChild; } }),
@@ -308,7 +308,7 @@ void AreaTable_Init_CastleTown() {
              });
 
     areaTable[MARKET_BOMBCHU_BOWLING] =
-        Area("Market Bombchu Bowling", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Market Bombchu Bowling", "Market Bombchu Bowling", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(MARKET_BOMBCHU_BOWLING_FIRST_PRIZE, { [] { return CanPlayBowling; } }),
@@ -320,7 +320,7 @@ void AreaTable_Init_CastleTown() {
                  Entrance(THE_MARKET, { [] { return true; } }),
              });
 
-    areaTable[MARKET_POTION_SHOP] = Area("Market Potion Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[MARKET_POTION_SHOP] = Area("Market Potion Shop", "Market Potion Shop", NONE, NO_DAY_NIGHT_CYCLE, {},
                                          {
                                              // Locations
                                              LocationAccess(MARKET_POTION_SHOP_ITEM_1, { [] { return true; } }),
@@ -338,7 +338,7 @@ void AreaTable_Init_CastleTown() {
                                          });
 
     areaTable[MARKET_TREASURE_CHEST_GAME] =
-        Area("Market Treasure Chest Game", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Market Treasure Chest Game", "Market Treasure Chest Game", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(MARKET_TREASURE_CHEST_GAME_REWARD,
@@ -396,7 +396,7 @@ void AreaTable_Init_CastleTown() {
                  Entrance(THE_MARKET, { [] { return true; } }),
              });
 
-    areaTable[MARKET_BOMBCHU_SHOP] = Area("Market Bombchu Shop", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[MARKET_BOMBCHU_SHOP] = Area("Market Bombchu Shop", "Market Bombchu Shop", NONE, NO_DAY_NIGHT_CYCLE, {},
                                           {
                                               // Locations
                                               LocationAccess(MARKET_BOMBCHU_SHOP_ITEM_1, { [] { return true; } }),
@@ -413,7 +413,7 @@ void AreaTable_Init_CastleTown() {
                                               Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),
                                           });
 
-    areaTable[MARKET_DOG_LADY_HOUSE] = Area("Market Dog Lady House", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[MARKET_DOG_LADY_HOUSE] = Area("Market Dog Lady House", "Market Dog Lady House", NONE, NO_DAY_NIGHT_CYCLE, {},
                                             {
                                                 // Locations
                                                 LocationAccess(MARKET_LOST_DOG, { [] { return IsChild && AtNight; } }),
@@ -423,7 +423,7 @@ void AreaTable_Init_CastleTown() {
                                                 Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),
                                             });
 
-    areaTable[MARKET_MAN_IN_GREEN_HOUSE] = Area("Market Man in Green House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[MARKET_MAN_IN_GREEN_HOUSE] = Area("Market Man in Green House", "Market Man in Green House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                                 {
                                                     // Exits
                                                     Entrance(MARKET_BACK_ALLEY, { [] { return true; } }),

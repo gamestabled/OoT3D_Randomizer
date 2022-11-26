@@ -156,7 +156,7 @@ void AreaTable_Init_Kakariko() {
         });
 
     areaTable[KAK_CARPENTER_BOSS_HOUSE] =
-        Area("Kak Carpenter Boss House", "", NONE, NO_DAY_NIGHT_CYCLE,
+        Area("Kak Carpenter Boss House", "Kak Carpenter Boss House", NONE, NO_DAY_NIGHT_CYCLE,
              {
                  // Events
                  EventAccess(&WakeUpAdultTalon, { [] { return WakeUpAdultTalon || (IsAdult && PocketEgg); } }),
@@ -168,7 +168,7 @@ void AreaTable_Init_Kakariko() {
              });
 
     areaTable[KAK_HOUSE_OF_SKULLTULA] =
-        Area("Kak House of Skulltula", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Kak House of Skulltula", "Kak House of Skulltula", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(KAK_10_GOLD_SKULLTULA_REWARD, { [] { return GoldSkulltulaTokens >= 10; } }),
@@ -182,7 +182,7 @@ void AreaTable_Init_Kakariko() {
                  Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
              });
 
-    areaTable[KAK_IMPAS_HOUSE] = Area("Kak Impas House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[KAK_IMPAS_HOUSE] = Area("Kak Impas House", "Kak Impas House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                       {
                                           // Exits
                                           Entrance(KAK_IMPAS_HOUSE_NEAR_COW, { [] { return true; } }),
@@ -190,7 +190,7 @@ void AreaTable_Init_Kakariko() {
                                       });
 
     areaTable[KAK_IMPAS_HOUSE_BACK] =
-        Area("Kak Impas House Back", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Kak Impas House Back", "Kak Impas House", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(KAK_IMPAS_HOUSE_FREESTANDING_POH, { [] { return true; } }),
@@ -202,7 +202,7 @@ void AreaTable_Init_Kakariko() {
              });
 
     areaTable[KAK_IMPAS_HOUSE_NEAR_COW] =
-        Area("Kak Impas House Near Cow", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Kak Impas House Near Cow", "Kak Impas House", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(KAK_IMPAS_HOUSE_COW,
@@ -219,7 +219,7 @@ void AreaTable_Init_Kakariko() {
              {});
 
     areaTable[KAK_WINDMILL] = Area(
-        "Kak Windmill", "", NONE, NO_DAY_NIGHT_CYCLE,
+        "Kak Windmill", "Windmill and Dampes Grave", NONE, NO_DAY_NIGHT_CYCLE,
         {
             // Events
             EventAccess(&DrainWell,
@@ -266,7 +266,7 @@ void AreaTable_Init_Kakariko() {
             Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
         });
 
-    areaTable[KAK_BAZAAR] = Area("Kak Bazaar", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[KAK_BAZAAR] = Area("Kak Bazaar", "Kak Bazaar", NONE, NO_DAY_NIGHT_CYCLE, {},
                                  {
                                      // Locations
                                      LocationAccess(KAK_BAZAAR_ITEM_1, { [] { return true; } }),
@@ -284,7 +284,7 @@ void AreaTable_Init_Kakariko() {
                                  });
 
     areaTable[KAK_SHOOTING_GALLERY] =
-        Area("Kak Shooting Gallery", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Kak Shooting Gallery", "Kak Shooting Gallery", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(KAK_SHOOTING_GALLERY_REWARD, { [] { return IsAdult && Bow; } }),
@@ -294,7 +294,7 @@ void AreaTable_Init_Kakariko() {
                  Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
              });
 
-    areaTable[KAK_POTION_SHOP_FRONT] = Area("Kak Potion Shop Front", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[KAK_POTION_SHOP_FRONT] = Area("Kak Potion Shop Front", "Kak Potion Shop", NONE, NO_DAY_NIGHT_CYCLE, {},
                                             {
                                                 // Locations
                                                 LocationAccess(KAK_POTION_SHOP_ITEM_1, { [] { return IsAdult; } }),
@@ -312,7 +312,7 @@ void AreaTable_Init_Kakariko() {
                                                 Entrance(KAK_POTION_SHOP_BACK, { [] { return IsAdult; } }),
                                             });
 
-    areaTable[KAK_POTION_SHOP_BACK] = Area("Kak Potion Shop Back", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[KAK_POTION_SHOP_BACK] = Area("Kak Potion Shop Back", "Kak Potion Shop", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                            {
                                                // Exits
                                                Entrance(KAK_BACKYARD, { [] { return IsAdult; } }),
@@ -320,7 +320,7 @@ void AreaTable_Init_Kakariko() {
                                            });
 
     areaTable[KAK_ODD_POULTICE_BUILDING] = Area(
-        "Kak Granny's Potion Shop", "", NONE, NO_DAY_NIGHT_CYCLE,
+        "Kak Granny's Potion Shop", "Kak Granny's Potion Shop", NONE, NO_DAY_NIGHT_CYCLE,
         {
             // Events
             EventAccess(&OddPoulticeAccess, { [] {
@@ -336,7 +336,7 @@ void AreaTable_Init_Kakariko() {
             Entrance(KAK_BACKYARD, { [] { return true; } }),
         });
 
-    areaTable[KAK_REDEAD_GROTTO] = Area("Kak Redead Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[KAK_REDEAD_GROTTO] = Area("Kak Redead Grotto", "Kak Redead Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
                                         {
                                             // Locations
                                             LocationAccess(KAK_REDEAD_GROTTO_CHEST, { [] {
@@ -350,7 +350,7 @@ void AreaTable_Init_Kakariko() {
                                             Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
                                         });
 
-    areaTable[KAK_OPEN_GROTTO] = Area("Kak Open Grotto", "", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+    areaTable[KAK_OPEN_GROTTO] = Area("Kak Open Grotto", "Kak Open Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
                                       {
                                           // Locations
                                           LocationAccess(KAK_OPEN_GROTTO_CHEST, { [] { return true; } }),
@@ -427,7 +427,7 @@ void AreaTable_Init_Kakariko() {
                        } }),
         });
 
-    areaTable[GRAVEYARD_SHIELD_GRAVE] = Area("Graveyard Shield Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+    areaTable[GRAVEYARD_SHIELD_GRAVE] = Area("Graveyard Shield Grave", "Graveyard Shield Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
                                              {
                                                  // Locations
                                                  LocationAccess(GRAVEYARD_SHIELD_GRAVE_CHEST, { [] { return true; } }),
@@ -439,7 +439,7 @@ void AreaTable_Init_Kakariko() {
                                              });
 
     areaTable[GRAVEYARD_HEART_PIECE_GRAVE] =
-        Area("Graveyard Heart Piece Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Graveyard Heart Piece Grave", "Graveyard Heart Piece Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(GRAVEYARD_HEART_PIECE_GRAVE_CHEST,
@@ -461,7 +461,7 @@ void AreaTable_Init_Kakariko() {
              });
 
     areaTable[GRAVEYARD_COMPOSERS_GRAVE] =
-        Area("Graveyard Composers Grave", "", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Graveyard Composers Grave", "Graveyard Composers Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(
@@ -478,7 +478,7 @@ void AreaTable_Init_Kakariko() {
              });
 
     areaTable[GRAVEYARD_DAMPES_GRAVE] = Area(
-        "Graveyard Dampes Grave", "", NONE, NO_DAY_NIGHT_CYCLE,
+        "Graveyard Dampes Grave", "Windmill and Dampes Grave", NONE, NO_DAY_NIGHT_CYCLE,
         {
             // Events
             EventAccess(&NutPot, { [] { return true; } }),
@@ -516,7 +516,7 @@ void AreaTable_Init_Kakariko() {
                        } }),
         });
 
-    areaTable[GRAVEYARD_DAMPES_HOUSE] = Area("Graveyard Dampes House", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[GRAVEYARD_DAMPES_HOUSE] = Area("Graveyard Dampes House", "Graveyard Dampes House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
                                              {
                                                  // Exits
                                                  Entrance(THE_GRAVEYARD, { [] { return true; } }),
