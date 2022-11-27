@@ -222,12 +222,6 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
                   frenchText, spanishText, italianText, germanText);
 }
 
-void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, std::string NAEnglishText,
-                   std::string NAFrenchText, std::string NASpanishText) {
-    CreateMessage(textId, unk_04, textBoxType, textBoxPosition, NAEnglishText, NAFrenchText, NASpanishText,
-                  NAEnglishText, NAFrenchText, NASpanishText, NAEnglishText, NAEnglishText);
-}
-
 void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text) {
     CreateMessage(textId, unk_04, textBoxType, textBoxPosition, text.GetNAEnglish(), text.GetNAFrench(),
                   text.GetNASpanish(), text.GetEUREnglish(), text.GetEURFrench(), text.GetEURSpanish(),
