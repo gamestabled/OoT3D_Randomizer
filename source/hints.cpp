@@ -402,7 +402,9 @@ static void CreateJunkHint() {
     PlacementLog_Msg(hint.NAenglish);
     PlacementLog_Msg("\n\n");
 
-    AddHint(hint, gossipStone, { QM_PINK });
+    bool tingle = hint.GetNAEnglish().find("Tingle") != std::string::npos;
+    u8 color    = tingle ? QM_GREEN : QM_PINK;
+    AddHint(hint, gossipStone, { color });
 }
 
 static std::vector<LocationKey> CalculateBarrenRegions() {

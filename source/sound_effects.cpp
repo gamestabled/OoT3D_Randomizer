@@ -598,7 +598,7 @@ const std::array<SeqType, SFX_COUNT> seqTypesSFX = {
     /* NA_SE_EV_EXPLOSION_FOR_RENZOKU */    SEQ_NOCAT,
     /* NA_SE_EV_ELEVATOR_MOVE_KABE1 */      SEQ_NOCAT,
     /* NA_SE_EV_RIVER_STREAM_F_IDO */       SEQ_AMBIENCE,
-    /* NA_SE_EV_GUILLOTINE_BOUND */         SEQ_NOCAT,
+    /* NA_SE_EV_GUILLOTINE_BOUND_copyOrigin */SEQ_NOCAT,
     /* NA_SE_EV_HEALING_TOU */              SEQ_NOCAT,
     /* NA_SE_EV_RUMUBLE_KEMURI */           SEQ_NOCAT,
     /* NA_SE_EV_GANON_HADOU */              SEQ_NOCAT,
