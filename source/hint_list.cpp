@@ -710,7 +710,7 @@ void HintTable_Init() {
 
     hintTable[LINKS_POCKET] = HintText::Exclude({
                      // obscure text
-                     Text{"Link's Pocket", /*french*/"les poches de @", /*spanish*/"el bolsillo de @", /*italian*/"le tasche di @", /*german*/"in @s Tasche"},
+                     Text{"Link's Pocket", /*french*/"les poches de @", /*spanish*/"el bolsillo de @", /*italian*/"la tasca di @", /*german*/"in @s Tasche"},
     });
 
     hintTable[KOKIRI_FOREST] = HintText::Exclude({
