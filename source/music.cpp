@@ -1,4 +1,5 @@
 #include "music.hpp"
+#include "random.hpp"
 #include <3ds.h>
 #include <cstdlib>
 
@@ -114,7 +115,7 @@ void ShuffleSequences(int type) {
 
     // Shuffle the vector...
     for (std::size_t i = 0; i < seqs.size(); i++) {
-        std::swap(seqs[i], seqs[rand() % seqs.size()]);
+        std::swap(seqs[i], seqs[Random(0, seqs.size(), true)]);
     }
 
     // ...and feed it back into the overrides array
