@@ -2,6 +2,7 @@ name: Code Linting On Push To Main and Development
 
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -29,7 +30,7 @@ jobs:
         committer_email: 41898282+github-actions[bot]@users.noreply.github.com
         message: |
           Run automatic format script as code does not match clang format rules.
-          
+
           Developers please rebase to avoid merge conflicts!
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

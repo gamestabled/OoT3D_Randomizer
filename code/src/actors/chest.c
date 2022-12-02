@@ -173,8 +173,9 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
                 PLAYER->stateFlags1 &= ~0x20000C00;
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 return 1;
-            } else
+            } else {
                 trapType = ICETRAP_BOMB_KNOCKDOWN; // if the curse can't trigger, use a bomb trap
+            }
         }
 
         if (trapType == ICETRAP_VANILLA) {

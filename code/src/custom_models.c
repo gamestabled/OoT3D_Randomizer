@@ -137,34 +137,28 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR) {
     EDIT_BYTE(0x5B26, 0xA0);
 
     // title_logo_us.cmb: Edit positionOffset of each shape
-    //        blade                     hilt                      diamond                  "3D"
-    EDIT_BYTE(0x36BF3, 0x40);
-    EDIT_BYTE(0x36D33, 0x40);
-    EDIT_BYTE(0x36E73, 0x40);
-    EDIT_BYTE(0x36FB3, 0x40);
-    //       "A"                       "A" shadow                "D"                       "D" shadow
-    EDIT_BYTE(0x370F3, 0x40);
-    EDIT_BYTE(0x37233, 0x40);
-    EDIT_BYTE(0x37373, 0x40);
-    EDIT_BYTE(0x374B3, 0x40);
-    //       "E"                       "E" shadow                "L"                       "L" shadow
-    EDIT_BYTE(0x375F3, 0x40);
-    EDIT_BYTE(0x37733, 0x40);
-    EDIT_BYTE(0x37873, 0x40);
-    EDIT_BYTE(0x379B3, 0x40);
-    //   "THE LEGEND OF"               "Z"                       "Z" shadow          "OCARINA OF TIME"
-    EDIT_BYTE(0x37AF3, 0x40);
-    EDIT_BYTE(0x37C33, 0x40);
-    EDIT_BYTE(0x37D73, 0x40);
-    EDIT_BYTE(0x37EB3, 0x40);
-    //        triforce                 shield body              shield border             shield strap
-    EDIT_BYTE(0x37FF3, 0x40);
-    EDIT_BYTE(0x38133, 0x40);
-    EDIT_BYTE(0x38273, 0x40);
-    EDIT_BYTE(0x383B3, 0x40);
-    //        "TM" (zelda)             "TM" (ocarina of time, only present in the US logo)
-    EDIT_BYTE(0x384F3, 0x40);
-    EDIT_BYTE(0x38633, 0x40);
+    EDIT_BYTE(0x36BF3, 0x40); // Blade
+    EDIT_BYTE(0x36D33, 0x40); // Hilt
+    EDIT_BYTE(0x36E73, 0x40); // Diamond
+    EDIT_BYTE(0x36FB3, 0x40); // "3D"
+    EDIT_BYTE(0x370F3, 0x40); // "A"
+    EDIT_BYTE(0x37233, 0x40); // "A" shadow
+    EDIT_BYTE(0x37373, 0x40); // "D"
+    EDIT_BYTE(0x374B3, 0x40); // "D" shadow
+    EDIT_BYTE(0x375F3, 0x40); // "E"
+    EDIT_BYTE(0x37733, 0x40); // "E" shadow
+    EDIT_BYTE(0x37873, 0x40); // "L"
+    EDIT_BYTE(0x379B3, 0x40); // "L" shadow
+    EDIT_BYTE(0x37AF3, 0x40); // "THE LEGEND OF"
+    EDIT_BYTE(0x37C33, 0x40); // "Z"
+    EDIT_BYTE(0x37D73, 0x40); // "Z" shadow
+    EDIT_BYTE(0x37EB3, 0x40); // "OCARINA OF TIME"
+    EDIT_BYTE(0x37FF3, 0x40); // Triforce
+    EDIT_BYTE(0x38133, 0x40); // Shield body
+    EDIT_BYTE(0x38273, 0x40); // Shield border
+    EDIT_BYTE(0x383B3, 0x40); // Shield strap
+    EDIT_BYTE(0x384F3, 0x40); // "TM" (zelda)
+    EDIT_BYTE(0x38633, 0x40); // "TM" (ocarina of time, only present in the US logo)
 
     // title_logo_jpeu.cmb: Edit positionOffset of each shape
     EDIT_BYTE(0xF31B, 0x40);

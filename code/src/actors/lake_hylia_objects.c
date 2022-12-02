@@ -25,8 +25,8 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             switchParams = 0x3E10; // Toggle-able floor switch, linked to temp_switch 0x1E (room temporary,
                                    // cleared when room unloads)
         } else {
-            switchParams =
-                0x3E81; // Frozen rusty switch, same flag as above. It's glitched and can't be pressed, which is perfect
+            switchParams = 0x3E81; // Frozen rusty switch, same flag as above.
+                                   // It's glitched and can't be pressed, which is perfect
         }
 
         // if Lake Hylia's water is lowered, set the temp_switch flag

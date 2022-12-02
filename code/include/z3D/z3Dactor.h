@@ -65,8 +65,8 @@ typedef void (*ActorFunc)(struct Actor*, struct GlobalContext*);
 typedef struct {
     /* 0x00 */ s16 id;
     /* 0x02 */ u8 type; // Classifies actor and determines when actor will execute
-    /* 0x03 */ u8
-        room; // Room instance was spawned in. If value set to FF in rom, instance does not despawn when swapping rooms
+    /* 0x03 */ u8 room; // Room instance was spawned in. If value set to FF in rom,
+                        // instance does not despawn when swapping rooms
     /* 0x04 */ u32 flags;
     /* 0x08 */ s16 objectId;
     /* 0x0C */ u32 instanceSize;
@@ -289,8 +289,8 @@ typedef struct {
     /* 0x2220 */ char unk_2220[0x0007];
     /* 0x2227 */ s8 meleeWeaponState;
     /* 0x2228 */ char unk_2228[0x260];
-    /* 0x2488 */ s8
-        invincibilityTimer; // prevents damage when nonzero (positive = visible, counts towards zero each frame)
+    /* 0x2488 */ s8 invincibilityTimer; // prevents damage when nonzero
+                                        // (positive = visible, counts towards zero each frame)
     /* 0x2489 */ char unk_2489[0x27B];
     /* 0x2704 */ struct SkeletonAnimationModel_unk_0C* bodyTexAnim;
 } Player; // total size (from init vars): 2A4C
