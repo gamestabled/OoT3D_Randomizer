@@ -42,6 +42,7 @@ std::string DELAY_FRAMES(u8 x);
 std::string CLOSE_AFTER(u8 x);
 std::string PLAYER_NAME();
 std::string PLAY_OCARINA();
+std::string PLAY_SFX(u16 x);
 std::string ITEM_OBTAINED(u8 x);
 std::string SET_SPEED(u8 x);
 std::string SKULLTULAS_DESTROYED();

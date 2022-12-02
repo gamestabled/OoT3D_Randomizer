@@ -1062,6 +1062,15 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
                 }
             }
         }
+
+        // add SFX
+        size_t brace = textStr->find('{');
+        while (brace != std::string::npos) {
+            std::string sfxString = textStr->substr(brace + 1, brace + 3);
+            u16 sfxNumber         = stoi(sfxString, nullptr, 16);
+            textStr->replace(brace, 5, PLAY_SFX(sfxNumber));
+            brace = textStr->find('{');
+        }
     }
     return Text{ "" } + UNSKIPPABLE() + INSTANT_TEXT_ON() + text + INSTANT_TEXT_OFF() + MESSAGE_END();
 }
@@ -1108,6 +1117,9 @@ std::string PLAYER_NAME() {
 }
 std::string PLAY_OCARINA() {
     return "\x7F\x0C"s;
+}
+std::string PLAY_SFX(u16 x) {
+    return "\x7F\x0E\x00\x01\x00"s + char(x >> 8) + char(x & 0x00FF);
 }
 std::string ITEM_OBTAINED(u8 x) {
     return "\x7F\x0F"s + char(x);
