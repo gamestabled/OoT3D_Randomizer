@@ -981,61 +981,37 @@ void CreateAlwaysIncludedMessages() {
 
     // Ruto picking up the dungeon reward
     {
-        std::string itemColor;
+        u8 itemColor;
         switch (Location(BARINADE)->GetPlacedItem().GetHintKey()) {
             case KOKIRI_EMERALD:
             case FOREST_MEDALLION:
-                itemColor = COLOR(QM_GREEN);
+                itemColor = QM_GREEN;
                 break;
             case ZORA_SAPPHIRE:
             case WATER_MEDALLION:
-                itemColor = COLOR(QM_BLUE);
+                itemColor = QM_BLUE;
                 break;
             case SHADOW_MEDALLION:
-                itemColor = COLOR(QM_PINK);
+                itemColor = QM_PINK;
                 break;
             case LIGHT_MEDALLION:
             case SPIRIT_MEDALLION:
             case GOLD_SKULLTULA_TOKEN:
-                itemColor = COLOR(QM_YELLOW);
+                itemColor = QM_YELLOW;
                 break;
             default:
-                itemColor = COLOR(QM_RED);
+                itemColor = QM_RED;
                 break;
         }
-        CreateMessage(0x4050, 0, 2, 3,
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + "Princess Ruto got the " + NEWLINE() + itemColor +
-                          Location(BARINADE)->GetPlacedItemName().GetNAEnglish() + COLOR(QM_WHITE) + "!" +
-                          WAIT_FOR_INPUT() + INSTANT_TEXT_OFF() + "But why Princess Ruto?" + MESSAGE_END(),
 
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + "La princesse Ruto a trouvé la " + NEWLINE() + itemColor +
-                          Location(BARINADE)->GetPlacedItemName().GetNAFrench() + COLOR(QM_WHITE) + "!" +
-                          WAIT_FOR_INPUT() + INSTANT_TEXT_OFF() + "Mais pourquoi la princesse Ruto?" + MESSAGE_END(),
+        Text rutoDialog = Text{ "Princess Ruto got #", "La princesse Ruto a trouvé #", "¡La princesa Ruto tiene #",
+                                "La Principessa Ruto ha recuperato #", "Prinzessin Ruto hat #" } +
+                          Location(BARINADE)->GetPlacedItem().GetHint().GetClear() +
+                          Text{ "#!^But why Princess Ruto?", "#!^Mais pourquoi la princesse Ruto?",
+                                "#!^Tú te quedas con las ganas...", "#...", "#!^Aber warum Prinzessin Ruto?" };
 
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡La princesa Ruto tiene la " + NEWLINE() +
-                          itemColor + Location(BARINADE)->GetPlacedItemName().GetNASpanish() + COLOR(QM_WHITE) + "!" +
-                          WAIT_FOR_INPUT() + INSTANT_TEXT_OFF() + "Tú te quedas sin ella..." + MESSAGE_END(),
-
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + "Princess Ruto got the " + NEWLINE() + itemColor +
-                          Location(BARINADE)->GetPlacedItemName().GetEUREnglish() + COLOR(QM_WHITE) + "!" +
-                          WAIT_FOR_INPUT() + INSTANT_TEXT_OFF() + "But why Princess Ruto?" + MESSAGE_END(),
-
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "La princesse Ruto trouve" + NEWLINE() +
-                          "la " + itemColor + Location(BARINADE)->GetPlacedItemName().GetEURFrench() + COLOR(QM_WHITE) +
-                          " !" + WAIT_FOR_INPUT() + INSTANT_TEXT_OFF() + "Mais pourquoi la princesse Ruto ?" +
-                          MESSAGE_END(),
-
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡La princesa Ruto tiene la " + NEWLINE() +
-                          itemColor + Location(BARINADE)->GetPlacedItemName().GetEURSpanish() + COLOR(QM_WHITE) + "!" +
-                          WAIT_FOR_INPUT() + INSTANT_TEXT_OFF() + "Tú te quedas con las ganas..." + MESSAGE_END(),
-
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + "La Principessa Ruto ha recuperato" + NEWLINE() + "la " +
-                          itemColor + Location(BARINADE)->GetPlacedItemName().GetEURItalian() + COLOR(QM_WHITE) +
-                          "..." + INSTANT_TEXT_OFF() + MESSAGE_END(),
-
-                      UNSKIPPABLE() + INSTANT_TEXT_ON() + "Prinzessin Ruto hat den" + NEWLINE() + itemColor +
-                          Location(BARINADE)->GetPlacedItemName().GetEURGerman() + COLOR(QM_WHITE) + " wieder!" +
-                          WAIT_FOR_INPUT() + INSTANT_TEXT_OFF() + "Aber warum Prinzessin Ruto?" + MESSAGE_END());
+        rutoDialog.Replace("$", ""); // Plural marker
+        CreateMessageFromTextObject(0x4050, 0, 2, 3, AddColorsAndFormat(rutoDialog, { itemColor }));
     }
 }
 
