@@ -1701,11 +1701,6 @@ LinkReflection_patch:
 ChildCanOpenBowSubMenu_patch:
     b hook_ChildCanOpenBowSubMenu
 
-.section .patch_BrownBoulderExplode
-.global BrownBoulderExplode_patch
-BrownBoulderExplode_patch:
-    bl hook_BrownBoulderExplode
-
 .section .patch_RedBoulderExplode
 .global RedBoulderExplode_patch
 RedBoulderExplode_patch:

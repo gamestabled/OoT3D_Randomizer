@@ -972,6 +972,41 @@ void CreateAlwaysIncludedMessages() {
                           COLOR(QM_RED) + "Schlüsselbund " + COLOR(QM_WHITE) + "der" + NEWLINE() + COLOR(QM_RED) +
                           "Truhenlotterie " + COLOR(QM_WHITE) + "erhalten!" + INSTANT_TEXT_OFF() + MESSAGE_END());
     }
+
+    // Ruto picking up the dungeon reward
+    {
+        u8 itemColor;
+        switch (Location(BARINADE)->GetPlacedItem().GetHintKey()) {
+            case KOKIRI_EMERALD:
+            case FOREST_MEDALLION:
+                itemColor = QM_GREEN;
+                break;
+            case ZORA_SAPPHIRE:
+            case WATER_MEDALLION:
+                itemColor = QM_BLUE;
+                break;
+            case SHADOW_MEDALLION:
+                itemColor = QM_PINK;
+                break;
+            case LIGHT_MEDALLION:
+            case SPIRIT_MEDALLION:
+            case GOLD_SKULLTULA_TOKEN:
+                itemColor = QM_YELLOW;
+                break;
+            default:
+                itemColor = QM_RED;
+                break;
+        }
+
+        Text rutoDialog = Text{ "Princess Ruto got #", "La princesse Ruto a trouvé #", "¡La princesa Ruto tiene #",
+                                "La Principessa Ruto ha recuperato #", "Prinzessin Ruto hat #" } +
+                          Location(BARINADE)->GetPlacedItem().GetHint().GetClear() +
+                          Text{ "#!^But why Princess Ruto?", "#!^Mais pourquoi la princesse Ruto?",
+                                "#!^Tú te quedas con las ganas...", "#...", "#!^Aber warum Prinzessin Ruto?" };
+
+        rutoDialog.Replace("$", ""); // Plural marker
+        CreateMessageFromTextObject(0x4050, 0, 2, 3, AddColorsAndFormat(rutoDialog, { itemColor }));
+    }
 }
 
 Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {

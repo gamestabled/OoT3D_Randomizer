@@ -1357,17 +1357,6 @@ hook_ChildCanOpenBowSubMenu:
     cmp r12,#0x0
     b 0x2EB2DC
 
-.global hook_BrownBoulderExplode
-hook_BrownBoulderExplode:
-    push {r0-r12, lr}
-    cpy r0,r5
-    cpy r1,r7
-    bl ObjBombiwa_GetFlag
-    cmp r0,#0x0
-    pop {r0-r12, lr}
-    bne 0x26FA7C
-    b 0x346D94
-
 .global hook_RedBoulderExplode
 hook_RedBoulderExplode:
     ldrb r0,[r5,#0x1B5]

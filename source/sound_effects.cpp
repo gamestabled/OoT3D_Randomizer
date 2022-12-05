@@ -1,5 +1,6 @@
 #include "sound_effects.hpp"
 #include "settings.hpp"
+#include "random.hpp"
 #include <3ds.h>
 #include <cstdlib>
 
@@ -1453,7 +1454,7 @@ void ShuffleSequences(bool shuffleCategorically) {
 
             // Shuffle the vector...
             for (size_t i = 0; i < seqs.size(); i++) {
-                std::swap(seqs[i], seqs[rand() % seqs.size()]);
+                std::swap(seqs[i], seqs[Random(0, seqs.size(), true)]);
             }
 
             // ...and feed it back into the overrides arrays
@@ -1481,7 +1482,7 @@ void ShuffleSequences(bool shuffleCategorically) {
 
         // Shuffle the vector...
         for (size_t i = 0; i < seqs.size(); i++) {
-            std::swap(seqs[i], seqs[rand() % seqs.size()]);
+            std::swap(seqs[i], seqs[Random(0, seqs.size(), true)]);
         }
 
         // ...and feed it back into the overrides arrays

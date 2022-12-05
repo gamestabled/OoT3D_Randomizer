@@ -147,7 +147,7 @@ const std::array<std::string_view, 13> weaponTrailColors = {
 // Generate random hex color
 std::string RandomColor() {
     std::ostringstream color;
-    color << std::hex << (rand() % 0x1000000); // use default rand to not interfere with main settings
+    color << std::hex << (Random(0, 0x1000000, true));
     return color.str();
 }
 } // namespace Cosmetics

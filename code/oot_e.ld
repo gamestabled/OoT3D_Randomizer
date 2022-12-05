@@ -576,10 +576,6 @@ SECTIONS
 		*(.patch_BoleroLocation)
 	}
 
-	.patch_BrownBoulderExplode 0x26F9F8 : {
-		*(.patch_BrownBoulderExplode)
-	}
-
 	.patch_RedBoulderExplode 0x26FE7C : {
 		*(.patch_RedBoulderExplode)
 	}

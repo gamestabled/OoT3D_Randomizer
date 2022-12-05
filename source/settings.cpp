@@ -2590,7 +2590,7 @@ static void ChooseFinalColor(Option& cosmeticOption, std::string& colorStr, cons
     if (cosmeticOption.Is(CUSTOM_COLOR)) {
         colorStr = GetCustomColor(cosmeticOption.GetSelectedOptionText());
     } else if (cosmeticOption.Is(RANDOM_CHOICE)) {
-        size_t randomIndex = rand() % colors.size(); // use default rand to not interfere with seed
+        size_t randomIndex = Random(0, colors.size(), true);
         cosmeticOption.SetSelectedIndex(
             randomIndex + NON_COLOR_COUNT); // set index so it can be copied for other settings (Navi outer color)
         colorStr = colors[randomIndex];
