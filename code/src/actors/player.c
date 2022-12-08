@@ -33,18 +33,23 @@ u8 storedMask       = 0;
 void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void* cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
 
-    if (gSaveContext.linkAge == 0) {
-        void* cmb = (void*)(((char*)zarInfo->buf) + 0xDAE8);
-        CustomModel_EditLinkToCustomTunic(cmb);
-    } else {
-        void* cmb = (void*)(((char*)zarInfo->buf) + 0xDACC);
-        CustomModel_EditChildLinkToCustomTunic(cmb);
+    if (gSettingsContext.customTunicColors == ON) {
+        if (gSaveContext.linkAge == 0) {
+            void* cmb = (void*)(((char*)zarInfo->buf) + 0xDAE8);
+            CustomModel_EditLinkToCustomTunic(cmb);
+        } else {
+            void* cmb = (void*)(((char*)zarInfo->buf) + 0xDACC);
+            CustomModel_EditChildLinkToCustomTunic(cmb);
+        }
     }
 
     return cmbMan;
 }
 
-void* Player_GetCustomTunicCMAB(void) {
+void* Player_GetCustomTunicCMAB(ZARInfo* originalZarInfo, u32 originalIndex) {
+    if (gSettingsContext.customTunicColors == OFF) {
+        return ZAR_GetCMABByIndex(originalZarInfo, originalIndex);
+    }
     s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
     if (exObjectBankIdx < 0) {
         exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
@@ -57,6 +62,9 @@ void* Player_GetCustomTunicCMAB(void) {
 }
 
 void Player_SetChildCustomTunicCMAB(void) {
+    if (gSettingsContext.customTunicColors == OFF) {
+        return;
+    }
     s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
     void* cmabMan;
     if (exObjectBankIdx < 0) {
