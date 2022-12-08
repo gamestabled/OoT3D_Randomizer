@@ -1066,6 +1066,11 @@ ReadGossipStoneHints_patch:
     nop
     nop
 
+.section .patch_GossipStoneAddSariaHint
+.global GossipStoneAddSariaHint_patch
+GossipStoneAddSariaHint_patch:
+    bl hook_GossipStoneAddSariaHint
+
 .section .patch_DecoratedChest
 .global DecoratedChest_patch
 DecoratedChest_patch:

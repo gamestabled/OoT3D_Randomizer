@@ -577,7 +577,11 @@ hook_CanReadHints:
     ldrh r0,[r4,#0x1C]
     and r0,r0,#0xFF
     add r0,r0,#0x400
-    # Register hint for Saria's Song
+    bx lr
+
+.global hook_GossipStoneAddSariaHint
+hook_GossipStoneAddSariaHint:
+    ldrh r0,[r5,#0x16]
     push {r0-r12, lr}
     add r0,r0,#0x600
     bl Hints_AddSariasSongHint
