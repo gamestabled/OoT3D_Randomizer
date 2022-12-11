@@ -30,6 +30,9 @@ u8 Hints_GetHintsSetting(void) {
 }
 
 void Hints_AddSariasSongHint(u16 textId) {
+    if ((textId & 0xFF00) != 0xA00) { // Skip non-hint texts from Gossip Stones
+        return;
+    }
     u8 textIdSceneOffset = (textId & 0xF0) >> 4;
     u8 textIdLookupBit   = textId & 0xF;
 
