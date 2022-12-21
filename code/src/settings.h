@@ -312,9 +312,11 @@ typedef enum {
 } ChestAnimationsSetting;
 
 typedef enum {
-    CHESTSIZE_VANILLA,
-    CHESTSIZE_MATCHCONTENT,
-} ChestSizeSetting;
+    CHESTAPPEARANCE_VANILLA,
+    CHESTAPPEARANCE_TEXTURE,
+    CHESTAPPEARANCE_SIZE_AND_TEXTURE,
+    CHESTAPPEARANCE_CLASSIC,
+} ChestAppearanceSetting;
 
 typedef enum {
     RANDOMTRAPS_OFF,
@@ -530,7 +532,7 @@ typedef struct {
     u8 compassesShowWotH;
     u8 mapsShowDungeonMode;
     u8 chestAnimations;
-    u8 chestSize;
+    u8 chestAppearance;
     u8 generateSpoilerLog;
     u8 ingameSpoilers;
     u8 menuOpeningButton;

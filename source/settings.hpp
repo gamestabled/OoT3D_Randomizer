@@ -448,7 +448,7 @@ extern Option MapsShowDungeonMode;
 extern Option DamageMultiplier;
 extern Option StartingTime;
 extern Option ChestAnimations;
-extern Option ChestSize;
+extern Option ChestAppearance;
 extern Option GenerateSpoilerLog;
 extern Option IngameSpoilers;
 extern Option MenuOpeningButton;

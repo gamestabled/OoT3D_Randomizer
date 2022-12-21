@@ -3,11 +3,17 @@
 
 #include "z3D/z3D.h"
 
+typedef struct EnBox {
+    /* 0x0000 */ DynaPolyActor dyna;
+    /* 0x01BC */ SkelAnime skelAnime;
+    /* 0x0240 */ char unk_240[0x158];
+} EnBox; // size = 0x398
+
 typedef enum {
-    WOODEN_BIG,
-    WOODEN_SMALL,
-    DECORATED_BIG,
-    DECORATED_SMALL,
+    CHEST_MAJOR,
+    CHEST_JUNK,
+    CHEST_BOSS_KEY,
+    CHEST_SMALL_KEY,
 } ChestType;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx);

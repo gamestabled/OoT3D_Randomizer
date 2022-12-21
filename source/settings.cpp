@@ -327,7 +327,7 @@ Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"
 Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
 Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
 Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
-Option ChestSize           = Option::Bool("Chest Size and Color",   {"Vanilla", "Match Contents"},                                          {chestSizeDesc});
+Option ChestAppearance     = Option::U8  ("Chest Appearance",       {"Vanilla", "Texture", "Size & Texture", "Classic"},                    {chestVanillaDesc, chestTextureDesc, chestSizeTextureDesc, chestClassicDesc});
 Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    ON);
 Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
 Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
@@ -350,7 +350,7 @@ std::vector<Option *> miscOptions = {
     &DamageMultiplier,
     &StartingTime,
     &ChestAnimations,
-    &ChestSize,
+    &ChestAppearance,
     &GenerateSpoilerLog,
     &IngameSpoilers,
     &RandomTrapDmg,
@@ -1427,7 +1427,7 @@ SettingsContext FillContext() {
     ctx.damageMultiplier    = DamageMultiplier.Value<u8>();
     ctx.startingTime        = StartingTime.Value<u8>();
     ctx.chestAnimations     = (ChestAnimations) ? 1 : 0;
-    ctx.chestSize           = (ChestSize) ? 1 : 0;
+    ctx.chestAppearance     = ChestAppearance.Value<u8>();
     ctx.generateSpoilerLog  = (GenerateSpoilerLog) ? 1 : 0;
     ctx.ingameSpoilers      = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton   = MenuOpeningButton.Value<u8>();
