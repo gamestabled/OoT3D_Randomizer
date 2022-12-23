@@ -10,12 +10,11 @@
 #define NA_SE_EV_ICE_MELT 0x10001F9
 
 void RedIce_CheckIceArrow(Collider* at, Collider* ac) {
-    if (gSettingsContext.extraArrowEffects &&
-        at->actor != 0 && at->actor->id == ACTOR_EN_ARROW && at->actor->params == ARROW_ICE &&
-        ac->actor != 0 && ac->actor->id == ACTOR_BG_ICE_SHELTER) {
+    if (gSettingsContext.extraArrowEffects && at->actor != 0 && at->actor->id == ACTOR_EN_ARROW &&
+        at->actor->params == ARROW_ICE && ac->actor != 0 && ac->actor->id == ACTOR_BG_ICE_SHELTER) {
 
-        BgIceShelter* ice = (BgIceShelter*) ac->actor;
-        s16 type = (ice->dyna.actor.params >> 8) & 7;
+        BgIceShelter* ice = (BgIceShelter*)ac->actor;
+        s16 type          = (ice->dyna.actor.params >> 8) & 7;
 
         if (type == RED_ICE_KING_ZORA) {
             if (ice->dyna.actor.parent != 0) {
@@ -24,7 +23,7 @@ void RedIce_CheckIceArrow(Collider* at, Collider* ac) {
         }
 
         ice->actionFunc = BgIceShelter_Melt;
-        ice->alpha = 0xFF;
+        ice->alpha      = 0xFF;
         Audio_PlayActorSfx2(&ice->dyna.actor, NA_SE_EV_ICE_MELT);
     }
 }

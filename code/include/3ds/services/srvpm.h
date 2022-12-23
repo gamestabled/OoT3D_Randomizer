@@ -15,7 +15,7 @@ void srvPmExit(void);
  * @brief Gets the current srv:pm session handle.
  * @return The current srv:pm session handle.
  */
-Handle *srvPmGetSessionHandle(void);
+Handle* srvPmGetSessionHandle(void);
 
 /**
  * @brief Publishes a notification to a process.
@@ -43,4 +43,3 @@ Result SRVPM_RegisterProcess(u32 pid, u32 count, const char (*serviceAccessContr
  * @param pid ID of the process.
  */
 Result SRVPM_UnregisterProcess(u32 pid);
-

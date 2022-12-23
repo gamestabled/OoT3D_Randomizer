@@ -4,8 +4,10 @@
 
 using string_view = std::string_view;
 
-extern string_view personalizationDesc;
-extern string_view ingameDefaultsDesc;
+extern string_view menuOpenSettingsDesc;
+extern string_view menuGlitchOptionsDesc;
+extern string_view menuPersonalizationDesc;
+extern string_view menuIngameDefaultsDesc;
 
 extern string_view presetNintendedDesc;
 extern string_view presetAllsanityDesc;
@@ -336,7 +338,11 @@ extern string_view alwaysSimpleModeDesc;
 extern string_view coloredKeysDesc;
 extern string_view coloredBossKeysDesc;
 
-extern string_view mirrorWorldDesc;
+extern string_view mirrorWorldOffDesc;
+extern string_view mirrorWorldOnDesc;
+extern string_view mirrorWorldSceneDesc;
+extern string_view mirrorWorldEntranceDesc;
+extern string_view mirrorWorldRandomDesc;
 
 extern string_view musicRandoDesc;
 extern string_view shuffleBGMDesc;

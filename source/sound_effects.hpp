@@ -8,10 +8,10 @@
 #include "../code/src/sfx.h"
 
 namespace SFX {
-    extern const std::array<SeqType, SFX_COUNT> seqTypesSFX;
+extern const std::array<SeqType, SFX_COUNT> seqTypesSFX;
 
-    const SFXData& GetSFXData();
+const SFXData& GetSFXData();
 
-    void InitSFXRandomizer();
-    void ShuffleSequences(bool shuffleCategorically);
+void InitSFXRandomizer();
+void ShuffleSequences(bool shuffleCategorically);
 } // namespace SFX

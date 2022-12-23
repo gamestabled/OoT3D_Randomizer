@@ -41,14 +41,14 @@ typedef struct {
     u8 extInf[EXTINF_SIZE]; // Used for various bit flags
     struct {
         Vec3i pos;
-        s32  yaw;
-        s32  playerParams;
-        s32  entranceIndex;
-        s32  roomIndex;
-        s32  set;
-        s32  tempSwchFlags;
-        s32  tempCollectFlags;
-    }   fwStored;
+        s32 yaw;
+        s32 playerParams;
+        s32 entranceIndex;
+        s32 roomIndex;
+        s32 set;
+        s32 tempSwchFlags;
+        s32 tempCollectFlags;
+    } fwStored;
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
@@ -61,9 +61,9 @@ typedef struct {
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA
-#define EXTERN
+    #define EXTERN
 #else
-#define EXTERN extern
+    #define EXTERN extern
 #endif
 
 EXTERN ExtSaveData gExtSaveData;

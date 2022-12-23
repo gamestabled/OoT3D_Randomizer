@@ -1,10 +1,16 @@
+// clang-format off
 #include "descriptions.hpp"
 
 /*------------------------------
 |      MENU DESCRIPTIONS       |                            *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
-string_view personalizationDesc       = "These options do not affect seed generation.";    //
-string_view ingameDefaultsDesc        = "These options decide what the ingame options are\n"
+string_view menuOpenSettingsDesc      = "Depending on the enabled glitches and item place-\n"
+                                        "ments, some of these may be logically bypassed.\n"//
+                                        "For example, bomb hovering to Ganon's Castle.";   //
+string_view menuGlitchOptionsDesc     = "These are only taken into account when logic is\n"
+                                        "set to Glitched.";                                //
+string_view menuPersonalizationDesc   = "These options do not affect seed generation.";    //
+string_view menuIngameDefaultsDesc    = "These options decide what the ingame options are\n"
                                         "set to when creating a save file. The new ingame\n"
                                         "options can be changed in the Custom Info Menu."; //
 
@@ -1078,14 +1084,20 @@ string_view coloredBossKeysDesc       = "If set, boss key models will be colored
 /*------------------------------                                                           //
 |         MIRROR WORLD         |                                                           //
 ------------------------------*/                                                           //
-string_view mirrorWorldDesc           = "If set, the world will be mirrored.";             //
-                                                                                           //
+string_view mirrorWorldOffDesc        = "The world will not be mirrored.";                 //
+string_view mirrorWorldOnDesc         = "The world will be mirrored.";                     //
+string_view mirrorWorldSceneDesc      = "Some regions will be mirrored while others won't.";
+string_view mirrorWorldEntranceDesc   = "Different entrances to the same region will alter\n"
+                                        "whether it is mirrored or not.";                  //
+string_view mirrorWorldRandomDesc     = "Whether the world is mirrored may change after\n" //
+                                        "every loading zone inconsistently.";              //
 /*------------------------------                                                           //
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
 string_view musicRandoDesc            = "Randomize the music in the game.";                //
 string_view shuffleBGMDesc            = "Randomize area background music, either\n"        //
-                                        "grouped into categories or all mixed together.";  //
+                                        "grouped into categories or all mixed together.\n" //
+                                        "The group categories are World, Event, and Battle.";
 string_view fanfaresOffDesc           = "Fanfares are not shuffled.";                      //
 string_view onlyFanfaresDesc          = "Fanfares and ocarina songs are shuffled in\n"     //
                                         "separate pools.";                                 //
@@ -1477,7 +1489,7 @@ string_view LogicShadowStatueDesc                     = "Difficulty: Novice\n"  
                                                         "you can knock down the statue without needing a\n"//
                                                         "Bow. Applies in both vanilla and MQ Shadow.";     //
 string_view LogicChildDeadhandDesc                    = "Difficulty: Novice\n"                             //
-                                                        "Requires 9 sticks or 5 jump slashes.";            //
+                                                        "Requires 10 stick slashes.";                      //
 string_view LogicGtgWithoutHookshotDesc               = "Difficulty: Expert\n"                             //
                                                         "The final silver rupee on the ceiling can be\n"   //
                                                         "reached by being pulled up into it by the\n"      //

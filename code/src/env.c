@@ -16,51 +16,51 @@
  */
 
 typedef struct {
-	u32 num;
+    u32 num;
 
-	struct {
-		char name[8];
-		Handle handle;
-	} services[];
+    struct {
+        char name[8];
+        Handle handle;
+    } services[];
 } service_list_t;
 
 static int __name_cmp(const char* a, const char* b) {
-	u32 i;
+    u32 i;
 
-	for(i=0; i<8; i++) {
-		if(a[i] != b[i])
-			return 1;
-		if(a[i] == '\0')
-			return 0;
-	}
+    for (i = 0; i < 8; i++) {
+        if (a[i] != b[i])
+            return 1;
+        if (a[i] == '\0')
+            return 0;
+    }
 
-	return 0;
+    return 0;
 }
 
 Handle __attribute__((weak)) envGetHandle(const char* name) {
-	if(__service_ptr == NULL)
-		return 0;
+    if (__service_ptr == NULL)
+        return 0;
 
-	service_list_t* service_list = (service_list_t*) __service_ptr;
-	u32 i, num = service_list->num;
+    service_list_t* service_list = (service_list_t*)__service_ptr;
+    u32 i, num = service_list->num;
 
-	for(i=0; i<num; i++) {
-		if(__name_cmp(service_list->services[i].name, name) == 0)
-			return service_list->services[i].handle;
-	}
+    for (i = 0; i < num; i++) {
+        if (__name_cmp(service_list->services[i].name, name) == 0)
+            return service_list->services[i].handle;
+    }
 
-	return 0;
+    return 0;
 }
 
 void __attribute__((weak)) envDestroyHandles(void) {
-	if(__service_ptr == NULL)
-		return;
+    if (__service_ptr == NULL)
+        return;
 
-	service_list_t* service_list = (service_list_t*) __service_ptr;
-	u32 i, num = service_list->num;
+    service_list_t* service_list = (service_list_t*)__service_ptr;
+    u32 i, num = service_list->num;
 
-	for(i=0; i<num; i++)
-		svcCloseHandle(service_list->services[i].handle);
+    for (i = 0; i < num; i++)
+        svcCloseHandle(service_list->services[i].handle);
 
-	service_list->num = 0;
+    service_list->num = 0;
 }

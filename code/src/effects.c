@@ -31,7 +31,7 @@ typedef struct {
     /* 0x283 */ u8 unkDrawMode2;
 } EffectBlure; // size = ??
 
-#define EffectBlure_Update ((void(*)(EffectBlure*))0x227000)
+#define EffectBlure_Update ((void (*)(EffectBlure*))0x227000)
 
 // This function is called when a new effect element tries to spawn but there's no space left.
 // The vanilla game simply fails to spawn the new element, but with the randomizer extended duration setting,
@@ -46,7 +46,7 @@ s32 forceTrailEffectUpdate(EffectBlure* effect) {
 }
 
 void changeRainbowColorRGBA8(Color_RGBA8* color) {
-    #define COLOR_SPEED 17 //255 = 3*17*5
+#define COLOR_SPEED 17 // 255 = 3*17*5
     if (color->r == 0xFF && color->g != 0xFF && color->b == 0)
         color->g += COLOR_SPEED;
     else if (color->r != 0 && color->g == 0xFF && color->b == 0)
@@ -79,11 +79,9 @@ void updateSwordTrailColors(EffectBlure* effect) {
 
 // This function is used to extend the duration of trails by drawing them less frequently.
 s32 handleLongTrails(u8 durationSetting, EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
-    if (durationSetting <= TRAILDURATION_VANILLA ||
-            effect->elements[0].timer % (effect->elemDuration / 16) == 0) {
+    if (durationSetting <= TRAILDURATION_VANILLA || effect->elements[0].timer % (effect->elemDuration / 16) == 0) {
         return 1;
-    }
-    else {
+    } else {
         // If not drawing a new trail element, "pull" the most recent one to the new position
         for (s32 i = 15; i > 0; i--) {
             if (effect->elements[i].state == 1) {
@@ -115,17 +113,23 @@ u32 updateBoomerangTrailEffect(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
     if (effect->elemDuration == 8) { // using duration as a "flag" to set the colors only once (8 is vanilla)
         switch (gSettingsContext.boomerangTrailDuration) {
             case TRAILDURATION_DISABLED:
-                effect->elemDuration = 0; break;
+                effect->elemDuration = 0;
+                break;
             case TRAILDURATION_VERYSHORT:
-                effect->elemDuration = 4; break;
+                effect->elemDuration = 4;
+                break;
             case TRAILDURATION_VANILLA:
-                effect->elemDuration = 9; break;
+                effect->elemDuration = 9;
+                break;
             case TRAILDURATION_LONG:
-                effect->elemDuration = 16; break;
+                effect->elemDuration = 16;
+                break;
             case TRAILDURATION_VERYLONG:
-                effect->elemDuration = 32; break;
+                effect->elemDuration = 32;
+                break;
             case TRAILDURATION_LIGHTSABER:
-                effect->elemDuration = 64; break;
+                effect->elemDuration = 64;
+                break;
         }
 
         effect->p1StartColor.r = gSettingsContext.boomerangTrailColor.r;
@@ -138,15 +142,15 @@ u32 updateBoomerangTrailEffect(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
         effect->p2StartColor.b = gSettingsContext.boomerangTrailColor.b;
         effect->p2StartColor.a = isSimpleMode ? 0x82 : 0xFF;
 
-        effect->p1EndColor.r   = gSettingsContext.boomerangTrailColor.r;
-        effect->p1EndColor.g   = gSettingsContext.boomerangTrailColor.g;
-        effect->p1EndColor.b   = gSettingsContext.boomerangTrailColor.b;
-        effect->p1EndColor.a   = isSimpleMode ? 0x10 : 0xFF;
+        effect->p1EndColor.r = gSettingsContext.boomerangTrailColor.r;
+        effect->p1EndColor.g = gSettingsContext.boomerangTrailColor.g;
+        effect->p1EndColor.b = gSettingsContext.boomerangTrailColor.b;
+        effect->p1EndColor.a = isSimpleMode ? 0x10 : 0xFF;
 
-        effect->p2EndColor.r   = gSettingsContext.boomerangTrailColor.r;
-        effect->p2EndColor.g   = gSettingsContext.boomerangTrailColor.g;
-        effect->p2EndColor.b   = gSettingsContext.boomerangTrailColor.b;
-        effect->p2EndColor.a   = isSimpleMode ? 0x10 : 0xFF;
+        effect->p2EndColor.r = gSettingsContext.boomerangTrailColor.r;
+        effect->p2EndColor.g = gSettingsContext.boomerangTrailColor.g;
+        effect->p2EndColor.b = gSettingsContext.boomerangTrailColor.b;
+        effect->p2EndColor.a = isSimpleMode ? 0x10 : 0xFF;
     }
 
     if (isRainbow) {
@@ -172,17 +176,23 @@ u32 updateChuTrailColors(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
 
     switch (gSettingsContext.bombchuTrailDuration) {
         case TRAILDURATION_DISABLED:
-            effect->elemDuration = 0; break;
+            effect->elemDuration = 0;
+            break;
         case TRAILDURATION_VERYSHORT:
-            effect->elemDuration = 8; break;
+            effect->elemDuration = 8;
+            break;
         case TRAILDURATION_VANILLA:
-            effect->elemDuration = 16; break;
+            effect->elemDuration = 16;
+            break;
         case TRAILDURATION_LONG:
-            effect->elemDuration = 32; break;
+            effect->elemDuration = 32;
+            break;
         case TRAILDURATION_VERYLONG:
-            effect->elemDuration = 64; break;
+            effect->elemDuration = 64;
+            break;
         case TRAILDURATION_LIGHTSABER:
-            effect->elemDuration = 128; break;
+            effect->elemDuration = 128;
+            break;
     }
 
     return handleLongTrails(gSettingsContext.bombchuTrailDuration, effect, p1, p2);

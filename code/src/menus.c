@@ -16,10 +16,12 @@
 typedef void (*MenuSpritesManager_RegisterItemSprite_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 itemId);
 #define MenuSpritesManager_RegisterItemSprite ((MenuSpritesManager_RegisterItemSprite_proc)0x2F8D74)
 
-typedef void (*MenuSpritesManager_SetSpriteAt_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 x, s32 y, s32 width, s32 height);
+typedef void (*MenuSpritesManager_SetSpriteAt_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 x, s32 y, s32 width,
+                                                    s32 height);
 #define MenuSpritesManager_SetSpriteAt ((MenuSpritesManager_SetSpriteAt_proc)0x2F8D40)
 
-typedef void (*MenuSpritesManager_OffsetSpriteAt_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 x, s32 y, s32 width, s32 height, s32 xOffset, s32 yOffset);
+typedef void (*MenuSpritesManager_OffsetSpriteAt_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 x, s32 y,
+                                                       s32 width, s32 height, s32 xOffset, s32 yOffset);
 #define MenuSpritesManager_OffsetSpriteAt ((MenuSpritesManager_OffsetSpriteAt_proc)0x2EB3D8)
 
 void ItemsMenu_Draw(void) {
@@ -32,9 +34,9 @@ void ItemsMenu_Draw(void) {
         }
 
         if (selectedItemSlot == SLOT_TRADE_ADULT) {
-            u8 startingItem = gSaveContext.items[selectedItemSlot];
+            u8 startingItem  = gSaveContext.items[selectedItemSlot];
             u8 potentialItem = startingItem;
-        
+
             if (rInputCtx.pressed.l) {
                 potentialItem = startingItem - 1;
                 while ((potentialItem != startingItem) && !SaveFile_TradeItemIsOwned(potentialItem)) {
@@ -55,13 +57,16 @@ void ItemsMenu_Draw(void) {
 
             if (potentialItem != startingItem) {
                 gSaveContext.items[selectedItemSlot] = potentialItem;
-                MenuSpritesManager_RegisterItemSprite(gItemsMenuSpritesManager, gItemsMenuSelectedSlot, gSaveContext.items[selectedItemSlot]);
-                MenuSpritesManager_RegisterItemSprite(gItemsMenuGlowSpritesManager, 0, gSaveContext.items[selectedItemSlot]);
+                MenuSpritesManager_RegisterItemSprite(gItemsMenuSpritesManager, gItemsMenuSelectedSlot,
+                                                      gSaveContext.items[selectedItemSlot]);
+                MenuSpritesManager_RegisterItemSprite(gItemsMenuGlowSpritesManager, 0,
+                                                      gSaveContext.items[selectedItemSlot]);
             }
         }
     }
 }
 
 u16 SaveMenu_IgnoreOpen(void) {
-    return (gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) || (gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt);
+    return (gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) ||
+           (gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt);
 }

@@ -14,14 +14,14 @@ u32 GetCurrentPadState(void) {
 InputContext rInputCtx;
 
 void Input_Update(void) {
-    rInputCtx.cur.val = real_hid.pad.pads[real_hid.pad.index].curr.val;
-    rInputCtx.pressed.val = (rInputCtx.cur.val) & (~rInputCtx.old.val);
-    rInputCtx.up.val = (~rInputCtx.cur.val) & (rInputCtx.old.val);
-    rInputCtx.old.val = rInputCtx.cur.val;
-    rInputCtx.touchX = real_hid.touch.touches[real_hid.touch.index].touch.x;
-    rInputCtx.touchY = real_hid.touch.touches[real_hid.touch.index].touch.y;
+    rInputCtx.cur.val      = real_hid.pad.pads[real_hid.pad.index].curr.val;
+    rInputCtx.pressed.val  = (rInputCtx.cur.val) & (~rInputCtx.old.val);
+    rInputCtx.up.val       = (~rInputCtx.cur.val) & (rInputCtx.old.val);
+    rInputCtx.old.val      = rInputCtx.cur.val;
+    rInputCtx.touchX       = real_hid.touch.touches[real_hid.touch.index].touch.x;
+    rInputCtx.touchY       = real_hid.touch.touches[real_hid.touch.index].touch.y;
     rInputCtx.touchPressed = real_hid.touch.touches[real_hid.touch.index].updated && !rInputCtx.touchHeld;
-    rInputCtx.touchHeld = real_hid.touch.touches[real_hid.touch.index].updated;
+    rInputCtx.touchHeld    = real_hid.touch.touches[real_hid.touch.index].updated;
 }
 
 u32 buttonCheck(u32 key) {
@@ -33,9 +33,9 @@ u32 buttonCheck(u32 key) {
 }
 
 u32 Input_WaitWithTimeout(u32 msec, u32 closingButton) {
-    u32 pressedKey = 0;
-    u32 key = 0;
-    u32 n = 0;
+    u32 pressedKey          = 0;
+    u32 key                 = 0;
+    u32 n                   = 0;
     u32 startingButtonState = HID_PAD;
 
     // Wait for no keys to be pressed

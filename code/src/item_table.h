@@ -13,12 +13,12 @@ typedef struct {
 
     u16 objectId;
     s8 objectModelIdx;
-    s8 cmabIndex; // 0xFF if none
+    s8 cmabIndex;       // 0xFF if none
     s8 objectModelIdx2; // 0xFF if none
-    s8 cmabIndex2; // 0xFF if none
-    s8 special; /* 0xFF if none. objectMeshIdx for rupees
-                                 TexAnim frame for songs
-                                 key ID for small keys */
+    s8 cmabIndex2;      // 0xFF if none
+    s8 special;         /* 0xFF if none. objectMeshIdx for rupees
+                                         TexAnim frame for songs
+                                         key ID for small keys */
     u8 chestType;
     s16 graphicId;
 

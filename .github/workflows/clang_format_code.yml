@@ -1,0 +1,36 @@
+name: Code Linting On Push To Main and Development
+
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  auto-formatter-on-main:
+    name: Auto Format Code and Commit If Any Changes
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: DoozyX/clang-format-lint-action@v0.14
+      with:
+        source: "./code ./source"
+        extensions: 'h,cpp,c,hpp'
+        clangFormatVersion: 14
+        style: file
+        inplace: True
+
+    - uses: EndBug/add-and-commit@v9.1.0
+      with:
+        committer_name: GitHub Actions
+        committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+        message: |
+          Run automatic format script as code does not match clang format rules.
+
+          Developers please rebase to avoid merge conflicts!
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -4,7 +4,7 @@
 #include "z3D/z3D.h"
 
 typedef enum {
-    /* 00 */ FROG_ZL, 
+    /* 00 */ FROG_ZL,
     /* 01 */ FROG_EPONA,
     /* 02 */ FROG_SARIA,
     /* 03 */ FROG_SUNS,

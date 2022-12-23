@@ -8,25 +8,28 @@
 #include "common.h"
 #include "grotto.h"
 
-typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag, u32 transition);
+typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entranceIndex, u32 sceneLoadFlag,
+                                     u32 transition);
 #define SetNextEntrance_addr 0x3716F0
 #define SetNextEntrance ((SetNextEntrance_proc)SetNextEntrance_addr)
 
 #define dynamicExitList_addr 0x53C094
-#define dynamicExitList ((s16*)dynamicExitList_addr) // = { 0x045B, 0x0482, 0x0340, 0x044B, 0x02A2, 0x0201, 0x03B8, 0x04EE, 0x03C0, 0x0463, 0x01CD, 0x0394, 0x0340, 0x057C }
+#define dynamicExitList \
+    ((s16*)dynamicExitList_addr) // = { 0x045B, 0x0482, 0x0340, 0x044B, 0x02A2, 0x0201, 0x03B8, 0x04EE, 0x03C0, 0x0463,
+                                 // 0x01CD, 0x0394, 0x0340, 0x057C }
 
 // Warp Song indices array : 0x53C33C = { 0x0600, 0x04F6, 0x0604, 0x01F1, 0x0568, 0x05F4 }
 
 // Owl Flights : 0x492064 and 0x492080
 
-EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
-EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT] = {0};
-EntranceTrackingData gEntranceTrackingData = {0};
-static s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE] = {0};
+EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
+EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT]           = { 0 };
+EntranceTrackingData gEntranceTrackingData                        = { 0 };
+static s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE]             = { 0 };
 
-//These variables store the new entrance indices for dungeons so that
-//savewarping and game overs respawn players at the proper entrance.
-//By default, these will be their vanilla values.
+// These variables store the new entrance indices for dungeons so that
+// savewarping and game overs respawn players at the proper entrance.
+// By default, these will be their vanilla values.
 static s16 newDekuTreeEntrance              = DEKU_TREE_ENTRANCE;
 static s16 newDodongosCavernEntrance        = DODONGOS_CAVERN_ENTRANCE;
 static s16 newJabuJabusBellyEntrance        = JABU_JABUS_BELLY_ENTRANCE;
@@ -39,29 +42,62 @@ static s16 newBottomOfTheWellEntrance       = BOTTOM_OF_THE_WELL_ENTRANCE;
 static s16 newGerudoTrainingGroundsEntrance = GERUDO_TRAINING_GROUNDS_ENTRANCE;
 static s16 newIceCavernEntrance             = ICE_CAVERN_ENTRANCE;
 
-static const EntranceOverride emptyOverride = {0};
+static const EntranceOverride emptyOverride = { 0 };
 
 u8 EntranceIsNull(EntranceOverride* entranceOverride) {
-    return entranceOverride->index == 0 && entranceOverride->destination == 0 && entranceOverride->blueWarp == 0
-        && entranceOverride->override == 0 && entranceOverride->overrideDestination == 0;
+    return entranceOverride->index == 0 && entranceOverride->destination == 0 && entranceOverride->blueWarp == 0 &&
+           entranceOverride->override == 0 && entranceOverride->overrideDestination == 0;
 }
 
 void Scene_Init(void) {
-    memcpy(&gSceneTable[0],  gSettingsContext.dekuTreeDungeonMode              == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0]  : &gDungeonSceneTable[0],  sizeof(Scene));
-    memcpy(&gSceneTable[1],  gSettingsContext.dodongosCavernDungeonMode        == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[1]  : &gDungeonSceneTable[1],  sizeof(Scene));
-    memcpy(&gSceneTable[2],  gSettingsContext.jabuJabusBellyDungeonMode        == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[2]  : &gDungeonSceneTable[2],  sizeof(Scene));
-    memcpy(&gSceneTable[3],  gSettingsContext.forestTempleDungeonMode          == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[3]  : &gDungeonSceneTable[3],  sizeof(Scene));
-    memcpy(&gSceneTable[4],  gSettingsContext.fireTempleDungeonMode            == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[4]  : &gDungeonSceneTable[4],  sizeof(Scene));
-    memcpy(&gSceneTable[5],  gSettingsContext.waterTempleDungeonMode           == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[5]  : &gDungeonSceneTable[5],  sizeof(Scene));
-    memcpy(&gSceneTable[6],  gSettingsContext.spiritTempleDungeonMode          == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[6]  : &gDungeonSceneTable[6],  sizeof(Scene));
-    memcpy(&gSceneTable[7],  gSettingsContext.shadowTempleDungeonMode          == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[7]  : &gDungeonSceneTable[7],  sizeof(Scene));
-    memcpy(&gSceneTable[8],  gSettingsContext.bottomOfTheWellDungeonMode       == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[8]  : &gDungeonSceneTable[8],  sizeof(Scene));
-    memcpy(&gSceneTable[9],  gSettingsContext.iceCavernDungeonMode             == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[9]  : &gDungeonSceneTable[9],  sizeof(Scene));
-    memcpy(&gSceneTable[11], gSettingsContext.gerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[11] : &gDungeonSceneTable[11], sizeof(Scene));
-    memcpy(&gSceneTable[13], gSettingsContext.ganonsCastleDungeonMode          == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[13] : &gDungeonSceneTable[13], sizeof(Scene));
+    memcpy(&gSceneTable[0],
+           gSettingsContext.dekuTreeDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[0] : &gDungeonSceneTable[0],
+           sizeof(Scene));
+    memcpy(&gSceneTable[1],
+           gSettingsContext.dodongosCavernDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[1]
+                                                                        : &gDungeonSceneTable[1],
+           sizeof(Scene));
+    memcpy(&gSceneTable[2],
+           gSettingsContext.jabuJabusBellyDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[2]
+                                                                        : &gDungeonSceneTable[2],
+           sizeof(Scene));
+    memcpy(&gSceneTable[3],
+           gSettingsContext.forestTempleDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[3]
+                                                                      : &gDungeonSceneTable[3],
+           sizeof(Scene));
+    memcpy(&gSceneTable[4],
+           gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[4] : &gDungeonSceneTable[4],
+           sizeof(Scene));
+    memcpy(&gSceneTable[5],
+           gSettingsContext.waterTempleDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[5]
+                                                                     : &gDungeonSceneTable[5],
+           sizeof(Scene));
+    memcpy(&gSceneTable[6],
+           gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[6]
+                                                                      : &gDungeonSceneTable[6],
+           sizeof(Scene));
+    memcpy(&gSceneTable[7],
+           gSettingsContext.shadowTempleDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[7]
+                                                                      : &gDungeonSceneTable[7],
+           sizeof(Scene));
+    memcpy(&gSceneTable[8],
+           gSettingsContext.bottomOfTheWellDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[8]
+                                                                         : &gDungeonSceneTable[8],
+           sizeof(Scene));
+    memcpy(&gSceneTable[9],
+           gSettingsContext.iceCavernDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[9] : &gDungeonSceneTable[9],
+           sizeof(Scene));
+    memcpy(&gSceneTable[11],
+           gSettingsContext.gerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[11]
+                                                                               : &gDungeonSceneTable[11],
+           sizeof(Scene));
+    memcpy(&gSceneTable[13],
+           gSettingsContext.ganonsCastleDungeonMode == DUNGEONMODE_MQ ? &gMQDungeonSceneTable[13]
+                                                                      : &gDungeonSceneTable[13],
+           sizeof(Scene));
 
     gRestrictionFlags[72].flags2 = 0; // Allows warp songs in GTG
-    //gRestrictionFlags[93].flags2 = 0; // Allows warp songs in Windmill / Dampe's grave
+    // gRestrictionFlags[93].flags2 = 0; // Allows warp songs in Windmill / Dampe's grave
     gRestrictionFlags[94].flags2 = 0; // Allows warp songs in Ganon's Castle
 
     gRestrictionFlags[72].flags3 = 0; // Allows farore's wind in GTG
@@ -69,14 +105,14 @@ void Scene_Init(void) {
 }
 
 static void Entrance_SeparateOGCFairyFountainExit(void) {
-    //Overwrite unused entrance 0x03E8 with values from 0x0340 to use it as the
-    //exit from OGC Great Fairy Fountain -> Castle Grounds
+    // Overwrite unused entrance 0x03E8 with values from 0x0340 to use it as the
+    // exit from OGC Great Fairy Fountain -> Castle Grounds
     for (size_t i = 0; i < 4; ++i) {
         gEntranceTable[0x3E8 + i] = gEntranceTable[0x340 + i];
     }
 
-    //Overwrite the dynamic exit for the OGC Fairy Fountain to be 0x3E8 instead
-    //of 0x340 (0x340 will stay as the exit for the HC Fairy Fountain -> Castle Grounds)
+    // Overwrite the dynamic exit for the OGC Fairy Fountain to be 0x3E8 instead
+    // of 0x340 (0x340 will stay as the exit for the HC Fairy Fountain -> Castle Grounds)
     dynamicExitList[2] = 0x03E8;
 }
 
@@ -133,7 +169,7 @@ void Entrance_Init(void) {
         s16 blueWarpIndex = rEntranceOverrides[i].blueWarp;
         s16 overrideIndex = rEntranceOverrides[i].override;
 
-        //Overwrite grotto related indices
+        // Overwrite grotto related indices
         if (originalIndex >= 0x0800) {
             Grotto_SetExitOverride(originalIndex, overrideIndex);
             continue;
@@ -151,10 +187,10 @@ void Entrance_Init(void) {
             entranceOverrideTable[blueWarpIndex] = overrideIndex;
         }
 
-        //Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
-        if (originalIndex == 0x00EA) { //Hyrule Field -> ZR Front land entrance
+        // Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
+        if (originalIndex == 0x00EA) { // Hyrule Field -> ZR Front land entrance
             entranceOverrideTable[0x01D9] = overrideIndex;
-        } else if (originalIndex == 0x0181) { //ZR Front -> Hyrule Field land entrance
+        } else if (originalIndex == 0x0181) { // ZR Front -> Hyrule Field land entrance
             entranceOverrideTable[0x0311] = overrideIndex;
         }
     }
@@ -200,7 +236,7 @@ s16 Entrance_GetOverride(s16 index) {
 s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
     // When entering Spirit Temple, clear temp flags so they don't carry over to the randomized dungeon
     if (nextEntranceIndex == 0x0082 && Entrance_GetOverride(nextEntranceIndex) != nextEntranceIndex) {
-        gGlobalContext->actorCtx.flags.tempSwch = 0;
+        gGlobalContext->actorCtx.flags.tempSwch    = 0;
         gGlobalContext->actorCtx.flags.tempCollect = 0;
     }
     SaveFile_SetEntranceDiscovered(nextEntranceIndex);
@@ -209,7 +245,8 @@ s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
 
 void Entrance_OverrideDynamicExit(void) {
     SaveFile_SetEntranceDiscovered(gGlobalContext->nextEntranceIndex);
-    gGlobalContext->nextEntranceIndex = Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex));
+    gGlobalContext->nextEntranceIndex =
+        Grotto_CheckSpecialEntrance(Entrance_GetOverride(gGlobalContext->nextEntranceIndex));
 }
 
 void Entrance_DeathInGanonBattle(void) {
@@ -228,9 +265,9 @@ u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn) {
 u32 Entrance_IsLostWoodsBridge(void) {
     //  Kokiri Forest -> LW Bridge, index 05E0   Hyrule Field -> LW Bridge, index 04DE
     if (Entrance_SceneAndSpawnAre(0x5B, 0x09) || Entrance_SceneAndSpawnAre(0x5B, 0x08)) {
-      return 1;
+        return 1;
     } else {
-      return 0;
+        return 0;
     }
 }
 
@@ -241,48 +278,48 @@ void Entrance_EnteredLocation(void) {
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
 }
 
-//Properly respawn the player after a game over, accounding for dungeon entrance
-//randomizer. It's easier to rewrite this entirely compared to performing an ASM
-//dance for just the boss rooms. Entrance Indexes can be found here:
-//https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
+// Properly respawn the player after a game over, accounding for dungeon entrance
+// randomizer. It's easier to rewrite this entirely compared to performing an ASM
+// dance for just the boss rooms. Entrance Indexes can be found here:
+// https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetGameOverEntrance(void) {
 
-    //Set the current entrance depending on which entrance the player last came through
+    // Set the current entrance depending on which entrance the player last came through
     switch (gSaveContext.entranceIndex) {
-        case 0x040F : //Deku Tree Boss Room
+        case 0x040F: // Deku Tree Boss Room
             gSaveContext.entranceIndex = newDekuTreeEntrance;
             return;
-        case 0x040B : //Dodongos Cavern Boss Room
+        case 0x040B: // Dodongos Cavern Boss Room
             gSaveContext.entranceIndex = newDodongosCavernEntrance;
             return;
-        case 0x0301 : //Jabu Jabus Belly Boss Room
+        case 0x0301: // Jabu Jabus Belly Boss Room
             gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
             return;
-        case 0x000C : //Forest Temple Boss Room
+        case 0x000C: // Forest Temple Boss Room
             gSaveContext.entranceIndex = newForestTempleEntrance;
             return;
-        case 0x0305 : //Fire Temple Boss Room
+        case 0x0305: // Fire Temple Boss Room
             gSaveContext.entranceIndex = newFireTempleEntrance;
             return;
-        case 0x0417 : //Water Temple Boss Room
+        case 0x0417: // Water Temple Boss Room
             gSaveContext.entranceIndex = newWaterTempleEntrance;
             return;
-        case 0x008D : //Spirit Temple Boss Room
+        case 0x008D: // Spirit Temple Boss Room
             gSaveContext.entranceIndex = newSpiritTempleEntrance;
             return;
-        case 0x0413 : //Shadow Temple Boss Room
+        case 0x0413: // Shadow Temple Boss Room
             gSaveContext.entranceIndex = newShadowTempleEntrance;
             return;
-        case 0x041F : //Ganondorf Boss Room
+        case 0x041F:                             // Ganondorf Boss Room
             gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower Climb
             return;
     }
 }
 
-//Properly savewarp the player accounting for dungeon entrance randomizer.
-//It's easier to rewrite this entirely compared to performing an ASM
-//dance for just the boss rooms.
-//https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
+// Properly savewarp the player accounting for dungeon entrance randomizer.
+// It's easier to rewrite this entirely compared to performing an ASM
+// dance for just the boss rooms.
+// https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetSavewarpEntrance(void) {
 
     s16 scene = gSaveContext.sceneIndex;
@@ -293,15 +330,15 @@ void Entrance_SetSavewarpEntrance(void) {
         gSaveContext.entranceIndex = newDodongosCavernEntrance;
     } else if (scene == DUNGEON_JABUJABUS_BELLY || scene == DUNGEON_JABUJABUS_BELLY_BOSS_ROOM) {
         gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
-    } else if (scene == DUNGEON_FOREST_TEMPLE || scene == 0x14) { //Forest Temple Boss Room
+    } else if (scene == DUNGEON_FOREST_TEMPLE || scene == 0x14) { // Forest Temple Boss Room
         gSaveContext.entranceIndex = newForestTempleEntrance;
-    } else if (scene == DUNGEON_FIRE_TEMPLE || scene == 0x15) { //Fire Temple Boss Room
+    } else if (scene == DUNGEON_FIRE_TEMPLE || scene == 0x15) { // Fire Temple Boss Room
         gSaveContext.entranceIndex = newFireTempleEntrance;
-    } else if (scene == DUNGEON_WATER_TEMPLE || scene == 0x16) { //Water Temple Boss Room
+    } else if (scene == DUNGEON_WATER_TEMPLE || scene == 0x16) { // Water Temple Boss Room
         gSaveContext.entranceIndex = newWaterTempleEntrance;
-    } else if (scene == DUNGEON_SPIRIT_TEMPLE || scene == 0x17) { //Spirit Temple Boss Room
+    } else if (scene == DUNGEON_SPIRIT_TEMPLE || scene == 0x17) { // Spirit Temple Boss Room
         gSaveContext.entranceIndex = newSpiritTempleEntrance;
-    } else if (scene == DUNGEON_SHADOW_TEMPLE || scene == 0x18) { //Shadow Temple Boss Room
+    } else if (scene == DUNGEON_SHADOW_TEMPLE || scene == 0x18) { // Shadow Temple Boss Room
         gSaveContext.entranceIndex = newShadowTempleEntrance;
     } else if (scene == DUNGEON_BOTTOM_OF_THE_WELL) {
         gSaveContext.entranceIndex = newBottomOfTheWellEntrance;
@@ -311,7 +348,8 @@ void Entrance_SetSavewarpEntrance(void) {
         gSaveContext.entranceIndex = newIceCavernEntrance;
     } else if (scene == DUNGEON_INSIDE_GANONS_CASTLE) {
         gSaveContext.entranceIndex = GANONS_CASTLE_ENTRANCE;
-    } else if (scene == DUNGEON_GANONS_TOWER || scene == DUNGEON_GANONS_CASTLE_COLLAPSING || scene == DUNGEON_GANONS_TOWER_COLLAPSING_INTERIOR || scene == 0x4F || scene == 0x1A) {
+    } else if (scene == DUNGEON_GANONS_TOWER || scene == DUNGEON_GANONS_CASTLE_COLLAPSING ||
+               scene == DUNGEON_GANONS_TOWER_COLLAPSING_INTERIOR || scene == 0x4F || scene == 0x1A) {
         gSaveContext.entranceIndex = 0x041B; // Inside Ganon's Castle -> Ganon's Tower Climb
     } else if (scene == DUNGEON_THIEVES_HIDEOUT) {
         gSaveContext.entranceIndex = 0x0486; // Gerudo Fortress -> Thieve's Hideout spawn 0
@@ -320,22 +358,23 @@ void Entrance_SetSavewarpEntrance(void) {
     } else if (gSaveContext.linkAge == AGE_CHILD) {
         gSaveContext.entranceIndex = Entrance_OverrideNextIndex(LINK_HOUSE_SAVEWARP_ENTRANCE); // Child Overworld Spawn
     } else {
-        gSaveContext.entranceIndex = Entrance_OverrideNextIndex(0x0282); // Adult Overworld Spawn (Normally 0x5F4, but 0x282 has been repurposed to differentiate from Prelude which also uses 0x5F4)
+        gSaveContext.entranceIndex =
+            Entrance_OverrideNextIndex(0x0282); // Adult Overworld Spawn (Normally 0x5F4, but 0x282 has been repurposed
+                                                // to differentiate from Prelude which also uses 0x5F4)
     }
 }
 
 void EnableFW(void) {
     // Leave restriction in Tower Collapse Interior, Castle Collapse, Treasure Box Shop, Tower Collapse Exterior,
     // Grottos area, Fishing Pond, Ganon Battle and for states that disable buttons.
-    if (!gSettingsContext.faroresWindAnywhere ||
-        gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 || (gGlobalContext->sceneNum == 16 && !gSettingsContext.shuffleChestMinigame) ||
-        gGlobalContext->sceneNum == 26 || gGlobalContext->sceneNum == 62 || gGlobalContext->sceneNum == 73 ||
-        gGlobalContext->sceneNum == 79 ||
+    if (!gSettingsContext.faroresWindAnywhere || gGlobalContext->sceneNum == 14 || gGlobalContext->sceneNum == 15 ||
+        (gGlobalContext->sceneNum == 16 && !gSettingsContext.shuffleChestMinigame) || gGlobalContext->sceneNum == 26 ||
+        gGlobalContext->sceneNum == 62 || gGlobalContext->sceneNum == 73 || gGlobalContext->sceneNum == 79 ||
         gSaveContext.eventInf[0] & 0x1 ||   // Ingo's Minigame state
         PLAYER->stateFlags1 & 0x08A02000 || // Swimming, riding horse, Down A, hanging from a ledge
         PLAYER->stateFlags2 & 0x00040000    // Blank A
         // Shielding, spinning and getting skull tokens still disable buttons automatically
-        ) {
+    ) {
         return;
     }
 
@@ -354,13 +393,13 @@ u8 EntranceCutscene_ShouldPlay(u8 flag) {
         return 1; // cutscene will play normally in DHWW, or always if it's freeing Epona or clearing a Trial
     }
     EventSet(flag);
-    return 0; //cutscene will not play
+    return 0; // cutscene will not play
 }
 
 void Entrance_CheckEpona(void) {
     s32 entrance = gGlobalContext->nextEntranceIndex;
-    //If Link is riding Epona but he's about to go through an entrance where she can't spawn,
-    //unset the Epona flag to avoid Master glitch, and restore temp B.
+    // If Link is riding Epona but he's about to go through an entrance where she can't spawn,
+    // unset the Epona flag to avoid Master glitch, and restore temp B.
     if (gSettingsContext.shuffleOverworldEntrances && (PLAYER->stateFlags1 & 0x00800000)) {
 
         static const s16 validEponaEntrances[] = {
@@ -400,11 +439,11 @@ void Entrance_CheckEpona(void) {
                 return;
             }
         }
-        gStaticContext.spawnOnEpona = 0;
+        gStaticContext.spawnOnEpona        = 0;
         gSaveContext.equips.buttonItems[0] = gSaveContext.buttonStatus[0]; //"temp B"
     }
 }
-
+// clang-format off
 const EntranceData entranceData[] = {
     //index,   source name,          destination name,           source group,           destination group,      type,                 oneExit
     { 0x00BB, "Child Spawn",        "Link's House",              ENTRANCE_GROUP_ONE_WAY, ENTRANCE_GROUP_ONE_WAY, ENTRANCE_TYPE_ONE_WAY},
@@ -689,7 +728,7 @@ const EntranceData entranceData[] = {
     { 0x03E8, "OGC Great Fairy Fountain", "OGC",                      ENTRANCE_GROUP_HYRULE_CASTLE, ENTRANCE_GROUP_HYRULE_CASTLE, ENTRANCE_TYPE_INTERIOR},
     { 0x023D, "Ganon's Castle",           "OGC",                      ENTRANCE_GROUP_HYRULE_CASTLE, ENTRANCE_GROUP_HYRULE_CASTLE, ENTRANCE_TYPE_DUNGEON}
 };
-
+// clang-format on
 const EntranceData* GetEntranceData(s16 index) {
     for (size_t i = 0; i < ARRAY_SIZE(entranceData); i++) {
         if (index == entranceData[i].index) {
@@ -769,11 +808,11 @@ void SortEntranceList(EntranceOverride* entranceList, u8 byDest) {
 
                     if (strcmp(curEntrance->source, curOverride->destination) == 0 &&
                         strcmp(curEntrance->destination, curOverride->source) == 0) {
-                            entranceList[idx] = tempList[j];
-                            // "Remove" this entrance from the tempList by setting it's values to zero
-                            tempList[j] = emptyOverride;
-                            idx++;
-                            break;
+                        entranceList[idx] = tempList[j];
+                        // "Remove" this entrance from the tempList by setting it's values to zero
+                        tempList[j] = emptyOverride;
+                        idx++;
+                        break;
                     }
                 }
             }
@@ -785,7 +824,7 @@ void SortEntranceList(EntranceOverride* entranceList, u8 byDest) {
                 const EntranceData* curOverride = GetEntranceData(tempList[i].override);
                 if (curOverride->dstGroup == group) {
                     entranceList[idx] = tempList[i];
-                    tempList[i] = emptyOverride;
+                    tempList[i]       = emptyOverride;
                     idx++;
                 }
             }
@@ -804,7 +843,7 @@ void InitEntranceTrackingData(void) {
         if (EntranceIsNull(&rEntranceOverrides[i])) {
             break;
         }
-        const EntranceData* index = GetEntranceData(rEntranceOverrides[i].index);
+        const EntranceData* index    = GetEntranceData(rEntranceOverrides[i].index);
         const EntranceData* override = GetEntranceData(rEntranceOverrides[i].override);
 
         if (index->srcGroup == ENTRANCE_GROUP_ONE_WAY) {
@@ -833,4 +872,19 @@ void InitEntranceTrackingData(void) {
         destList[i] = rEntranceOverrides[i];
     }
     SortEntranceList(destList, 1);
+}
+
+void Entrance_UpdateMQFlag(void) {
+    if (IsInGame()) {
+        switch (gSettingsContext.mirrorWorld) {
+            case MIRRORWORLD_SCENESPECIFIC:
+                gSaveContext.masterQuestFlag = Hash(gGlobalContext->sceneNum) & 1;
+                return;
+            case MIRRORWORLD_ENTRANCESPECIFIC:
+                gSaveContext.masterQuestFlag = Hash(gSaveContext.entranceIndex) & 1;
+                return;
+            case MIRRORWORLD_RANDOM:
+                gSaveContext.masterQuestFlag = gRandInt & 1;
+        }
+    }
 }

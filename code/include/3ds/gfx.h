@@ -2,28 +2,27 @@
  * @file gfx.h
  * @brief LCD Screens manipulation
  *
- * This header provides functions to configure and manipulate the two screens, including double buffering and 3D activation.
- * It is mainly an abstraction over the gsp service.
+ * This header provides functions to configure and manipulate the two screens, including double buffering and 3D
+ * activation. It is mainly an abstraction over the gsp service.
  */
 #pragma once
 
 #include "types.h"
 #include "services/gspgpu.h"
 
-#define RGB8(r,g,b) (((b)&0xFF)|(((g)&0xFF)<<8)|(((r)&0xFF)<<16))
+#define RGB8(r, g, b) (((b)&0xFF) | (((g)&0xFF) << 8) | (((r)&0xFF) << 16))
 
 /// Converts red, green, and blue components to packed RGB565.
-#define RGB565(r,g,b)  (((b)&0x1f)|(((g)&0x3f)<<5)|(((r)&0x1f)<<11))
+#define RGB565(r, g, b) (((b)&0x1f) | (((g)&0x3f) << 5) | (((r)&0x1f) << 11))
 
 /// Converts packed RGB8 to packed RGB565.
-#define RGB8_to_565(r,g,b)  (((b)>>3)&0x1f)|((((g)>>2)&0x3f)<<5)|((((r)>>3)&0x1f)<<11)
+#define RGB8_to_565(r, g, b) (((b) >> 3) & 0x1f) | ((((g) >> 2) & 0x3f) << 5) | ((((r) >> 3) & 0x1f) << 11)
 
 /// Available screens.
-typedef enum
-{
-	GFX_TOP = 0,   ///< Top screen
-	GFX_BOTTOM = 1 ///< Bottom screen
-}gfxScreen_t;
+typedef enum {
+    GFX_TOP    = 0, ///< Top screen
+    GFX_BOTTOM = 1  ///< Bottom screen
+} gfxScreen_t;
 
 /**
  * @brief Side of top screen framebuffer.
@@ -31,12 +30,10 @@ typedef enum
  * This is to be used only when the 3D is enabled.
  * Use only GFX_LEFT if this concerns the bottom screen or if 3D is disabled.
  */
-typedef enum
-{
-	GFX_LEFT = 0, ///< Left eye framebuffer
-	GFX_RIGHT = 1,///< Right eye framebuffer
-}gfx3dSide_t;
-
+typedef enum {
+    GFX_LEFT  = 0, ///< Left eye framebuffer
+    GFX_RIGHT = 1, ///< Right eye framebuffer
+} gfx3dSide_t;
 
 ///@name System related
 ///@{
@@ -120,15 +117,16 @@ void gfxSetDoubleBuffering(gfxScreen_t screen, bool doubleBuffering);
 /**
  * @brief Flushes the current framebuffers
  *
- * Use this if the data within your framebuffers changes a lot and that you want to make sure everything was updated correctly.
- * This shouldn't be needed and has a significant overhead.
+ * Use this if the data within your framebuffers changes a lot and that you want to make sure everything was updated
+ * correctly. This shouldn't be needed and has a significant overhead.
  */
 void gfxFlushBuffers(void);
 
 /**
  * @brief Updates the configuration of the specified screen (swapping the buffers if double-buffering is enabled).
  * @param scr Screen to configure.
- * @param immediate Whether to apply the updated configuration immediately or let GSPGPU apply it after the next GX transfer completes.
+ * @param immediate Whether to apply the updated configuration immediately or let GSPGPU apply it after the next GX
+ * transfer completes.
  */
 void gfxConfigScreen(gfxScreen_t scr, bool immediate);
 
@@ -151,7 +149,6 @@ void gfxSwapBuffersGpu(void);
 
 ///@}
 
-
 ///@name Helper
 ///@{
 /**
@@ -162,12 +159,13 @@ void gfxSwapBuffersGpu(void);
  * @param height Pointer that will hold the height of the framebuffer in pixels.
  * @return A pointer to the current framebuffer of the choosen screen.
  *
- * Please remember that the returned pointer will change after each call to gfxSwapBuffers if double buffering is enabled.
+ * Please remember that the returned pointer will change after each call to gfxSwapBuffers if double buffering is
+ * enabled.
  */
 u8* gfxGetFramebuffer(gfxScreen_t screen, gfx3dSide_t side, u16* width, u16* height);
 ///@}
 
-//global variables
+// global variables
 extern u8* gfxTopLeftFramebuffers[2];
 extern u8* gfxTopRightFramebuffers[2];
 extern u8* gfxBottomFramebuffers[2];
