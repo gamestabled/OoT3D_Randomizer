@@ -1041,6 +1041,9 @@ void GenerateItemPool() {
         }
     }
     PendingJunkPool.clear();
+
+    // Prevent excluded locations from always containing the same items
+    Shuffle(ItemPool);
 }
 
 void AddJunk() {
