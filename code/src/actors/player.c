@@ -104,7 +104,7 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     Arrow_HandleSwap(this, globalCtx);
 
     if (this->naviActor != 0) {
-        updateNaviColors((EnElf*)this->naviActor);
+        Fairy_UpdateRainbowNaviColors((EnElf*)this->naviActor);
     }
 
     if (IceTrap_ActiveCurse == ICETRAP_CURSE_SWORD && PLAYER->meleeWeaponState != 0 &&
