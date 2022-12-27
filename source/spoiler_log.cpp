@@ -111,6 +111,10 @@ void WriteIngameSpoilerLog() {
         if (loc->IsExcluded()) {
             continue;
         }
+        // Master Sword
+        else if (!Settings::ShuffleMasterSword && key == TOT_MASTER_SWORD) {
+            continue;
+        }
         // Cows
         else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
             continue;
@@ -161,9 +165,6 @@ void WriteIngameSpoilerLog() {
                 locItem = NonShopItems[TransformShopIndex(GetShopIndex(key))].Name.GetNAEnglish();
             }
             locItem += ": " + std::to_string(loc->GetPrice()) + " Rupees";
-            if (locItem.size() > 49) {
-                locItem.resize(49);
-            }
         }
         if (stringOffsetMap.find(locItem) == stringOffsetMap.end()) {
             if (spoilerStringOffset + locItem.size() + 1 >= SPOILER_STRING_DATA_SIZE) {
