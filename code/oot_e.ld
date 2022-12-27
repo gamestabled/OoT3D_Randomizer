@@ -1340,6 +1340,14 @@ SECTIONS
 		*(.patch_StoreTargetActorType)
 	}
 
+	.patch_TargetReticleColor 0x47B2A4 : {
+		*(.patch_TargetReticleColor)
+	}
+
+	.patch_TargetPointerColor 0x47BB08 : {
+		*(.patch_TargetPointerColor)
+	}
+
 	.patch_FWKeepWarpPoint 0x47C3E0 : {
 		*(.patch_FWKeepWarpPoint)
 	}

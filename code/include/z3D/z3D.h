@@ -479,6 +479,26 @@ typedef struct {
     /* 0x03 */ u8 flags3;
 } RestrictionFlags;
 
+typedef struct TargetIndicatorModels {
+    /* 0x00 */ SkeletonAnimationModel* pointer;                 // arrow above targetable actor
+    /* 0x04 */ SkeletonAnimationModel* reticle[4];              // four arrows circling around target
+    /* 0x14 */ SkeletonAnimationModel* reticleAfterimageOne[4]; // four arrows trailing behind `reticle`
+    /* 0x24 */ SkeletonAnimationModel* reticleAfterimageTwo[4]; // four arrows trailing behind `reticleAfterimageOne`
+} TargetIndicatorModels;
+
+typedef struct TargetContext {
+    /* 0x000 */ char unk_000[0x4E];
+    /* 0x04E */ u8 reticleActorType;
+    /* 0x04F */ char unk_04F[0x61];
+    /* 0x0B0 */ TargetIndicatorModels visibleTargetIndicators; // culled when behind a wall
+    /* 0x0E4 */ TargetIndicatorModels hiddenTargetIndicators;  // drawn even when behind walls
+    /* 0x118 */ char unk_118[0x08];
+    /* 0x120 */ ZARInfo* zarInfo;
+    /* 0x124 */ char unk_120[0x04];
+    /* 0x128 */ u32 pointerActorType;
+    // ... size unknown
+} TargetContext;
+
 extern GlobalContext* gGlobalContext;
 extern const u32 ItemSlots[];
 extern const char DungeonNames[][25];
