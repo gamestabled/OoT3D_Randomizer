@@ -20,9 +20,9 @@
 static u8 type = 0;
 
 static u8 checkedForBombchus = 0;
-Actor* lastTrapChest = 0;
-Actor* bomb = 0;
-EnElf* fairy = 0;
+Actor* lastTrapChest         = 0;
+Actor* bomb                  = 0;
+EnElf* fairy                 = 0;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     lastTrapChest = 0;
@@ -89,7 +89,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     if (bomb != 0 && thisx == lastTrapChest) {
         *(((u8*)(bomb)) + 0x26C) = 2; // bomb timer
-        bomb = 0;
+        bomb                     = 0;
     }
 
     if (fairy != 0 && thisx == lastTrapChest) {
@@ -99,17 +99,13 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
         if (gSaveContext.health <= 16 || gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO) {
             gSaveContext.health = 0;
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_HALF) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_HALF) {
             healthDecrement = 64; // 4 Hearts
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DEFAULT) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DEFAULT) {
             healthDecrement = 128; // 8 Hearts
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DOUBLE) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_DOUBLE) {
             healthDecrement = 256; // 16 Hearts
-        }
-        else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_QUADRUPLE) {
+        } else if (gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_QUADRUPLE) {
             healthDecrement = 512; // 32 Hearts
         } else {
             healthDecrement = 640; // 40 Hearts
@@ -139,7 +135,8 @@ u8 Chest_OverrideAnimation() {
 
 u8 Chest_OverrideDecoration() {
 
-    if (type == DECORATED_BIG || ((gSettingsContext.chestSize == CHESTSIZE_MATCHCONTENT) && (type == DECORATED_SMALL))) {
+    if (type == DECORATED_BIG ||
+        ((gSettingsContext.chestSize == CHESTSIZE_MATCHCONTENT) && (type == DECORATED_SMALL))) {
         return 1;
     }
     return 0;
@@ -176,9 +173,9 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
                 PLAYER->stateFlags1 &= ~0x20000C00;
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 return 1;
-            }
-            else
+            } else {
                 trapType = ICETRAP_BOMB_KNOCKDOWN; // if the curse can't trigger, use a bomb trap
+            }
         }
 
         if (trapType == ICETRAP_VANILLA) {
@@ -202,14 +199,17 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
                 break;
             case ICETRAP_BOMB_SIMPLE:
             case ICETRAP_BOMB_KNOCKDOWN:
-                bomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
+                bomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x,
+                                   thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
                 break;
             case ICETRAP_ANTIFAIRY:
-                fairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
+                fairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x,
+                                            thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
             case ICETRAP_RUPPY:
-                Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x, thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2);
+                Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x,
+                            thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
             case ICETRAP_FIRE:

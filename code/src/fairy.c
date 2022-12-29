@@ -9,7 +9,7 @@ void Fairy_StoreTargetActorType(u8 targetActorType) {
 }
 
 void changeRainbowColorRGBAf(Color_RGBAf* color) {
-    #define COLOR_SPEED 17 //255 = 3*17*5
+#define COLOR_SPEED 17 // 255 = 3*17*5
     if (color->r == 255.0f && color->g != 255.0f && color->b == 0)
         color->g += COLOR_SPEED;
     else if (color->r != 0 && color->g == 255.0f && color->b == 0)
@@ -31,20 +31,17 @@ void updateNaviColors(EnElf* navi) {
             changeRainbowColorRGBAf(&(navi->innerColor));
         if (gSettingsContext.rainbowIdleNaviOuterColor)
             changeRainbowColorRGBAf(&(navi->outerColor));
-    }
-    else if (lastTargetActorType == ACTORTYPE_NPC) {
+    } else if (lastTargetActorType == ACTORTYPE_NPC) {
         if (gSettingsContext.rainbowNPCNaviInnerColor)
             changeRainbowColorRGBAf(&(navi->innerColor));
         if (gSettingsContext.rainbowNPCNaviOuterColor)
             changeRainbowColorRGBAf(&(navi->outerColor));
-    }
-    else if (lastTargetActorType == ACTORTYPE_ENEMY || lastTargetActorType == ACTORTYPE_BOSS) {
+    } else if (lastTargetActorType == ACTORTYPE_ENEMY || lastTargetActorType == ACTORTYPE_BOSS) {
         if (gSettingsContext.rainbowEnemyNaviInnerColor)
             changeRainbowColorRGBAf(&(navi->innerColor));
         if (gSettingsContext.rainbowEnemyNaviOuterColor)
             changeRainbowColorRGBAf(&(navi->outerColor));
-    }
-    else {
+    } else {
         if (gSettingsContext.rainbowPropNaviInnerColor)
             changeRainbowColorRGBAf(&(navi->innerColor));
         if (gSettingsContext.rainbowPropNaviOuterColor)

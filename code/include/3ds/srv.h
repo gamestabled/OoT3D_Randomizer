@@ -13,7 +13,8 @@ Result srvInit(void);
 void srvExit(void);
 
 /**
- * @brief Makes srvGetServiceHandle non-blocking for the current thread (or blocking, the default), in case of unavailable (full) requested services.
+ * @brief Makes srvGetServiceHandle non-blocking for the current thread (or blocking, the default), in case of
+ * unavailable (full) requested services.
  * @param blocking Whether srvGetServiceHandle should be non-blocking.
  *                 srvGetServiceHandle will always block if the service hasn't been registered yet,
  *                 use srvIsServiceRegistered to check whether that is the case or not.
@@ -24,7 +25,7 @@ void srvExit(void);
  * @brief Gets the current service API session handle.
  * @return The current service API session handle.
  */
-Handle *srvGetSessionHandle(void);
+Handle* srvGetSessionHandle(void);
 
 /**
  * @brief Retrieves a service handle, retrieving from the environment handle list if possible.
@@ -32,7 +33,8 @@ Handle *srvGetSessionHandle(void);
  * @param name Name of the service.
  * @return 0 if no error occured,
  *         0xD8E06406 if the caller has no right to access the service,
- *         0xD0401834 if the requested service port is full and srvGetServiceHandle is non-blocking (see @ref srvSetBlockingPolicy).
+ *         0xD0401834 if the requested service port is full and srvGetServiceHandle is non-blocking (see @ref
+ * srvSetBlockingPolicy).
  */
 Result srvGetServiceHandle(Handle* out, const char* name);
 
@@ -65,7 +67,8 @@ Result srvUnregisterService(const char* name);
  * @param name Name of the service.
  * * @return 0 if no error occured,
  *           0xD8E06406 if the caller has no right to access the service,
- *           0xD0401834 if the requested service port is full and srvGetServiceHandle is non-blocking (see @ref srvSetBlockingPolicy).
+ *           0xD0401834 if the requested service port is full and srvGetServiceHandle is non-blocking (see @ref
+ * srvSetBlockingPolicy).
  */
 Result srvGetServiceHandleDirect(Handle* out, const char* name);
 
@@ -116,7 +119,8 @@ Result srvReceiveNotification(u32* notificationIdOut);
 /**
  * @brief Publishes a notification to subscribers.
  * @param notificationId ID of the notification.
- * @param flags Flags to publish with. (bit 0 = only fire if not fired, bit 1 = do not report an error if there are more than 16 pending notifications)
+ * @param flags Flags to publish with. (bit 0 = only fire if not fired, bit 1 = do not report an error if there are more
+ * than 16 pending notifications)
  */
 Result srvPublishToSubscriber(u32 notificationId, u32 flags);
 

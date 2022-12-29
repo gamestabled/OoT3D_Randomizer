@@ -5,52 +5,48 @@
 #pragma once
 #include "svc.h"
 
-#define SYSCLOCK_SOC       (16756991)
-#define SYSCLOCK_ARM9      (SYSCLOCK_SOC * 8)
-#define SYSCLOCK_ARM11     (SYSCLOCK_ARM9 * 2)
+#define SYSCLOCK_SOC (16756991)
+#define SYSCLOCK_ARM9 (SYSCLOCK_SOC * 8)
+#define SYSCLOCK_ARM11 (SYSCLOCK_ARM9 * 2)
 #define SYSCLOCK_ARM11_NEW (SYSCLOCK_ARM11 * 3)
 
 #define CPU_TICKS_PER_MSEC (SYSCLOCK_ARM11 / 1000.0)
 #define CPU_TICKS_PER_USEC (SYSCLOCK_ARM11 / 1000000.0)
 
 /// Packs a system version from its components.
-#define SYSTEM_VERSION(major, minor, revision) \
-	(((major)<<24)|((minor)<<16)|((revision)<<8))
+#define SYSTEM_VERSION(major, minor, revision) (((major) << 24) | ((minor) << 16) | ((revision) << 8))
 
 /// Retrieves the major version from a packed system version.
-#define GET_VERSION_MAJOR(version)    ((version) >>24)
+#define GET_VERSION_MAJOR(version) ((version) >> 24)
 
 /// Retrieves the minor version from a packed system version.
-#define GET_VERSION_MINOR(version)    (((version)>>16)&0xFF)
+#define GET_VERSION_MINOR(version) (((version) >> 16) & 0xFF)
 
 /// Retrieves the revision version from a packed system version.
-#define GET_VERSION_REVISION(version) (((version)>> 8)&0xFF)
+#define GET_VERSION_REVISION(version) (((version) >> 8) & 0xFF)
 
 /// Memory regions.
-typedef enum
-{
-	MEMREGION_ALL = 0,         ///< All regions.
-	MEMREGION_APPLICATION = 1, ///< APPLICATION memory.
-	MEMREGION_SYSTEM = 2,      ///< SYSTEM memory.
-	MEMREGION_BASE = 3,        ///< BASE memory.
+typedef enum {
+    MEMREGION_ALL         = 0, ///< All regions.
+    MEMREGION_APPLICATION = 1, ///< APPLICATION memory.
+    MEMREGION_SYSTEM      = 2, ///< SYSTEM memory.
+    MEMREGION_BASE        = 3, ///< BASE memory.
 } MemRegion;
 
 /// Tick counter.
-typedef struct
-{
-	u64 elapsed;   ///< Elapsed CPU ticks between measurements.
-	u64 reference; ///< Point in time used as reference.
+typedef struct {
+    u64 elapsed;   ///< Elapsed CPU ticks between measurements.
+    u64 reference; ///< Point in time used as reference.
 } TickCounter;
 
 /// OS_VersionBin. Format of the system version: "<major>.<minor>.<build>-<nupver><region>"
-typedef struct
-{
-	u8 build;
-	u8 minor;
-	u8 mainver;//"major" in CVER, NUP version in NVer.
-	u8 reserved_x3;
-	char region;//"ASCII character for the system version region"
-	u8 reserved_x5[0x3];
+typedef struct {
+    u8 build;
+    u8 minor;
+    u8 mainver; //"major" in CVER, NUP version in NVer.
+    u8 reserved_x3;
+    char region; //"ASCII character for the system version region"
+    u8 reserved_x5[0x3];
 } OS_VersionBin;
 
 /**
@@ -64,7 +60,8 @@ u32 osConvertVirtToPhys(const void* vaddr);
 /**
  * @brief Converts 0x14* vmem to 0x30*.
  * @param vaddr Input virtual address.
- * @return The corresponding address in the 0x30* range, the input address if it's already within the new vmem, or 0 if it's outside of both ranges.
+ * @return The corresponding address in the 0x30* range, the input address if it's already within the new vmem, or 0 if
+ * it's outside of both ranges.
  */
 void* osConvertOldLINEARMemToNew(const void* vaddr);
 
@@ -83,9 +80,8 @@ const char* osStrError(u32 error);
  *
  * This can be used to compare system versions easily with @ref SYSTEM_VERSION.
  */
-static inline u32 osGetFirmVersion(void)
-{
-	return (*(vu32*)0x1FF80060) & ~0xFF;
+static inline u32 osGetFirmVersion(void) {
+    return (*(vu32*)0x1FF80060) & ~0xFF;
 }
 
 /**
@@ -98,9 +94,8 @@ static inline u32 osGetFirmVersion(void)
  * if(osGetKernelVersion() > SYSTEM_VERSION(2,46,0)) printf("You are running 9.0 or higher\n");
  * @endcode
  */
-static inline u32 osGetKernelVersion(void)
-{
-	return (*(vu32*)0x1FF80000) & ~0xFF;
+static inline u32 osGetKernelVersion(void) {
+    return (*(vu32*)0x1FF80000) & ~0xFF;
 }
 
 /**
@@ -108,13 +103,13 @@ static inline u32 osGetKernelVersion(void)
  * @param region Memory region to check.
  * @return The size of the memory region, in bytes.
  */
-static inline u32 osGetMemRegionSize(MemRegion region)
-{
-	if(region == MEMREGION_ALL) {
-		return osGetMemRegionSize(MEMREGION_APPLICATION) + osGetMemRegionSize(MEMREGION_SYSTEM) + osGetMemRegionSize(MEMREGION_BASE);
-	} else {
-		return *(vu32*) (0x1FF80040 + (region - 1) * 0x4);
-	}
+static inline u32 osGetMemRegionSize(MemRegion region) {
+    if (region == MEMREGION_ALL) {
+        return osGetMemRegionSize(MEMREGION_APPLICATION) + osGetMemRegionSize(MEMREGION_SYSTEM) +
+               osGetMemRegionSize(MEMREGION_BASE);
+    } else {
+        return *(vu32*)(0x1FF80040 + (region - 1) * 0x4);
+    }
 }
 
 /**
@@ -129,9 +124,8 @@ s64 osGetMemRegionUsed(MemRegion region);
  * @param region Memory region to check.
  * @return The number of free bytes of memory.
  */
-static inline s64 osGetMemRegionFree(MemRegion region)
-{
-	return (s64) osGetMemRegionSize(region) - osGetMemRegionUsed(region);
+static inline s64 osGetMemRegionFree(MemRegion region) {
+    return (s64)osGetMemRegionSize(region) - osGetMemRegionUsed(region);
 }
 
 /**
@@ -144,20 +138,18 @@ u64 osGetTime(void);
  * @brief Starts a tick counter.
  * @param cnt The tick counter.
  */
-static inline void osTickCounterStart(TickCounter* cnt)
-{
-	cnt->reference = svcGetSystemTick();
+static inline void osTickCounterStart(TickCounter* cnt) {
+    cnt->reference = svcGetSystemTick();
 }
 
 /**
  * @brief Updates the elapsed time in a tick counter.
  * @param cnt The tick counter.
  */
-static inline void osTickCounterUpdate(TickCounter* cnt)
-{
-	u64 now = svcGetSystemTick();
-	cnt->elapsed = now - cnt->reference;
-	cnt->reference = now;
+static inline void osTickCounterUpdate(TickCounter* cnt) {
+    u64 now        = svcGetSystemTick();
+    cnt->elapsed   = now - cnt->reference;
+    cnt->reference = now;
 }
 
 /**
@@ -182,18 +174,16 @@ double osTickCounterRead(const TickCounter* cnt);
  *
  * These values correspond with the number of wifi bars displayed by Home Menu.
  */
-static inline u8 osGetWifiStrength(void)
-{
-	return *(vu8*)0x1FF81066;
+static inline u8 osGetWifiStrength(void) {
+    return *(vu8*)0x1FF81066;
 }
 
 /**
  * @brief Gets the state of the 3D slider.
  * @return The state of the 3D slider (0.0~1.0)
  */
-static inline float osGet3DSliderState(void)
-{
-	return *(volatile float*)0x1FF81080;
+static inline float osGet3DSliderState(void) {
+    return *(volatile float*)0x1FF81080;
 }
 
 /**
@@ -206,16 +196,19 @@ void osSetSpeedupEnable(bool enable);
  * @brief Gets the NAND system-version stored in NVer/CVer.
  * @param nver_versionbin Output OS_VersionBin structure for the data read from NVer.
  * @param cver_versionbin Output OS_VersionBin structure for the data read from CVer.
- * @return The result-code. This value can be positive if opening "romfs:/version.bin" fails with stdio, since errno would be returned in that case. In some cases the error can be special negative values as well.
+ * @return The result-code. This value can be positive if opening "romfs:/version.bin" fails with stdio, since errno
+ * would be returned in that case. In some cases the error can be special negative values as well.
  */
-Result osGetSystemVersionData(OS_VersionBin *nver_versionbin, OS_VersionBin *cver_versionbin);
+Result osGetSystemVersionData(OS_VersionBin* nver_versionbin, OS_VersionBin* cver_versionbin);
 
 /**
  * @brief This is a wrapper for osGetSystemVersionData.
  * @param nver_versionbin Optional output OS_VersionBin structure for the data read from NVer, can be NULL.
  * @param cver_versionbin Optional output OS_VersionBin structure for the data read from CVer, can be NULL.
- * @param sysverstr Output string where the printed system-version will be written, in the same format displayed by the System Settings title.
+ * @param sysverstr Output string where the printed system-version will be written, in the same format displayed by the
+ * System Settings title.
  * @param sysverstr_maxsize Max size of the above string buffer, *including* NULL-terminator.
  * @return See osGetSystemVersionData.
  */
-Result osGetSystemVersionDataString(OS_VersionBin *nver_versionbin, OS_VersionBin *cver_versionbin, char *sysverstr, u32 sysverstr_maxsize);
+Result osGetSystemVersionDataString(OS_VersionBin* nver_versionbin, OS_VersionBin* cver_versionbin, char* sysverstr,
+                                    u32 sysverstr_maxsize);

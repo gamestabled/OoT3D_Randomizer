@@ -15,7 +15,7 @@ PosRot lastBeanPlant_Home;
 s16 lastBeanPlant_Params;
 
 void ObjBean_rInit(ObjBean* thisx, GlobalContext* globalCtx) {
-    lastBeanPlant_Home = thisx->base.home;
+    lastBeanPlant_Home   = thisx->base.home;
     lastBeanPlant_Params = thisx->base.params;
     ObjBean_Init((Actor*)thisx, globalCtx);
 }
@@ -34,7 +34,7 @@ void ObjBean_StartGrowth(ObjBean* thisx) {
     if (thisx->action_fn != ObjBean_UnplantedWait) {
         return;
     }
-    thisx->action_fn = ObjBean_GrowSprout;
+    thisx->action_fn    = ObjBean_GrowSprout;
     thisx->unk_bitfield = ((thisx->unk_bitfield & 0xF0) | 3);
     thisx->base.scale.x = 0.01;
     thisx->base.scale.y = 0.01;

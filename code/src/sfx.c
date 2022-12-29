@@ -5,17 +5,11 @@
 #include "common.h"
 #include "multiplayer.h"
 
-SFXData rSfxData = {0};
+SFXData rSfxData = { 0 };
 
 u8 SeqTypeIsMovement(SeqType type) {
-    return type == SEQ_WALK ||
-        type == SEQ_WALK_LOUD ||
-        type == SEQ_JUMP ||
-        type == SEQ_LAND ||
-        type == SEQ_SLIP ||
-        type == SEQ_SLIP_LOOP ||
-        type == SEQ_BOUND ||
-        type == SEQ_CRAWL;
+    return type == SEQ_WALK || type == SEQ_WALK_LOUD || type == SEQ_JUMP || type == SEQ_LAND || type == SEQ_SLIP ||
+           type == SEQ_SLIP_LOOP || type == SEQ_BOUND || type == SEQ_CRAWL;
 }
 
 u32 SetSFX(u32 original) {
@@ -23,7 +17,7 @@ u32 SetSFX(u32 original) {
     if (original == 0x100050D && gSaveContext.linkAge == 1) {
         original = 0x100050B;
     }
-    u16 sfxID = original - SFX_BASE;
+    u16 sfxID    = original - SFX_BASE;
     SeqType type = rSfxData.rSeqTypesSFX[sfxID];
 
     // Send SFX
@@ -35,7 +29,8 @@ u32 SetSFX(u32 original) {
     mp_duplicateSendProtection = false;
 
     static const u16 GET_BOXITEM_ID = 1205; // Treat GET_BOXITEM as a fanfare
-    if (IsInGameOrBossChallenge() && ((!gExtSaveData.option_EnableSFX && sfxID != GET_BOXITEM_ID) || (!gExtSaveData.option_EnableBGM && sfxID == GET_BOXITEM_ID))) {
+    if (IsInGameOrBossChallenge() && ((!gExtSaveData.option_EnableSFX && sfxID != GET_BOXITEM_ID) ||
+                                      (!gExtSaveData.option_EnableBGM && sfxID == GET_BOXITEM_ID))) {
         return SEQ_AUDIO_BLANK;
     }
 
@@ -49,15 +44,13 @@ u32 SetSFX(u32 original) {
     if (gSettingsContext.shuffleSFXCategorically) {
         if (gSettingsContext.shuffleSFX == SHUFFLESFX_SCENESPECIFIC) {
             return rSfxData.rSFXOverrides_Types[type][(sfxID + gGlobalContext->sceneNum) % rSfxData.rSeqMaxes[type]];
-        }
-        else if (gSettingsContext.shuffleSFX == SHUFFLESFX_CHAOS) {
+        } else if (gSettingsContext.shuffleSFX == SHUFFLESFX_CHAOS) {
             return rSfxData.rSFXOverrides_Types[type][(sfxID + gRandInt) % rSfxData.rSeqMaxes[type]];
         }
     } else {
         if (gSettingsContext.shuffleSFX == SHUFFLESFX_SCENESPECIFIC) {
             return rSfxData.rSFXOverrides_AllTrimmed[(sfxID + gGlobalContext->sceneNum) % SFX_COUNT_TRIMMED];
-        }
-        else if (gSettingsContext.shuffleSFX == SHUFFLESFX_CHAOS) {
+        } else if (gSettingsContext.shuffleSFX == SHUFFLESFX_CHAOS) {
             return rSfxData.rSFXOverrides_AllTrimmed[(sfxID + gRandInt) % SFX_COUNT_TRIMMED];
         }
     }
