@@ -1728,6 +1728,15 @@ hook_AboutToPickUpActor:
     subeq lr,lr,#0x8
     bx lr
 
+.global hook_GoronPotGuaranteeReward
+hook_GoronPotGuaranteeReward:
+    mov r3,#0x0
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl BgSpot18Basket_SetRotation
+    pop {r0-r12, lr}
+    bx lr
+
 @ ----------------------------------
 @ ----------------------------------
 

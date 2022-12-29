@@ -968,6 +968,10 @@ SECTIONS
 		*(.patch_ForestTempleBasementPuzzleDelay)
 	}
 
+	.patch_GoronPotGuaranteeReward 0x3C148C : {
+		*(.patch_GoronPotGuaranteeReward)
+	}
+
 	.patch_GerudoArcheryTwo 0x3C2D80 : {
 		*(.patch_GerudoArcheryTwo)
 	}

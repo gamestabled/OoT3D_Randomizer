@@ -1996,6 +1996,11 @@ SetFWPlayerParams_patch:
 AboutToPickUpActor_patch:
     bl hook_AboutToPickUpActor
 
+.section .patch_GoronPotGuaranteeReward
+.global GoronPotGuaranteeReward_patch
+GoronPotGuaranteeReward_patch:
+    bl hook_GoronPotGuaranteeReward
+
 @ ----------------------------------
 @ ----------------------------------
 
