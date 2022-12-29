@@ -6,7 +6,7 @@
 #ifndef _NEWCODEINFO_H_
 #define _NEWCODEINFO_H_
 
-#define NEWCODE_OFFSET 0x005C7000 //TODO: this 
-#define NEWCODE_SIZE   0x00050000 //TODO: this. even now, this is too big.
+#define NEWCODE_OFFSET 0x005C7000 // TODO: this
+#define NEWCODE_SIZE 0x00050000   // TODO: this. even now, this is too big.
 
 #endif //_NEWCODEINFO_H_

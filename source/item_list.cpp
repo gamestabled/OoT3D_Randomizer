@@ -1,3 +1,4 @@
+
 #include "item_list.hpp"
 
 #include "logic.hpp"
@@ -7,7 +8,7 @@
 using namespace Logic;
 
 static std::array<Item, KEY_ENUM_MAX> itemTable;
-
+// clang-format off
 void ItemTable_Init() {                               //Item Type                   getItemID             advancement  logic                       hint key                                English name                       French                              Spanish                                     Italian                                     German
     itemTable[NONE]                              = Item(ITEMTYPE_EVENT,             GI_RUPEE_GREEN,       false,       &noVariable,                NONE,                              Text{"No Item",                         "Rien",                             "Sin Objeto",                               "Nessun Oggetto",                           "Nichts"});
     itemTable[KOKIRI_SWORD]                      = Item(ITEMTYPE_ITEM,              GI_SWORD_KOKIRI,      true,        &KokiriSword,               KOKIRI_SWORD,                      Text{"Kokiri Sword",                    "Épée Kokiri",                      "Espada Kokiri",                            "Spada dei Kokiri",                         "Kokiri-Schwert"});
@@ -62,7 +63,7 @@ void ItemTable_Init() {                               //Item Type               
 
     itemTable[GOLD_SKULLTULA_TOKEN]              = Item(ITEMTYPE_TOKEN,             GI_SKULL_TOKEN,       true,        &GoldSkulltulaTokens,       GOLD_SKULLTULA_TOKEN,              Text{"Gold Skulltula Token",            "Jeton de Skulltula dorée",         "Símbolo de skulltula dorada",              "Teschio d'oro",                            "Skulltula-Symbol"});
 
-    //Progression Items
+    // Progression Items
     itemTable[PROGRESSIVE_HOOKSHOT]              = Item(ITEMTYPE_ITEM,              0x80,                 true,        &ProgressiveHookshot,       PROGRESSIVE_HOOKSHOT,              Text{"Progressive Hookshot",            "Grappin (prog.)",                  "Gancho progresivo",                        "Arpione progressivo",                      "Fanghaken Aufwertung"});
     itemTable[PROGRESSIVE_STRENGTH]              = Item(ITEMTYPE_ITEM,              0x81,                 true,        &ProgressiveStrength,       PROGRESSIVE_STRENGTH,              Text{"Progressive Strength Upgrade",    "Amélioration de force (prog.)",    "Fuerza progresiva",                        "Potenziamento di forza progressivo",       "Stärke Aufwertung"});
     itemTable[PROGRESSIVE_BOMB_BAG]              = Item(ITEMTYPE_ITEM,              0x82,                 true,        &ProgressiveBombBag,        PROGRESSIVE_BOMB_BAG,              Text{"Progressive Bomb Bag",            "Sac de bombes (prog.)",            "Saco de bombas progresivo",                "Portabombe progressivo",                   "Bombentaschen Aufwertung"});
@@ -77,7 +78,7 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[PROGRESSIVE_OCARINA]               = Item(ITEMTYPE_ITEM,              0x8B,                 true,        &ProgressiveOcarina,        PROGRESSIVE_OCARINA,               Text{"Progressive Ocarina",             "Ocarina (prog.)",                  "Ocarina progresiva",                       "Ocarina progressiva",                      "Okarina Aufwertung"});
     itemTable[PROGRESSIVE_GORONSWORD]            = Item(ITEMTYPE_ITEM,              0xD4,                 true,        &ProgressiveGiantKnife,     PROGRESSIVE_GORONSWORD,            Text{"Progressive Goron Sword",         "Épée Goron (prog.)",               "Espada Goron progresiva",                  "Spada Goron progressiva",                  "Goronen-Schwert Aufwertung"});
 
-    //Bottles
+    // Bottles
     itemTable[EMPTY_BOTTLE]                      = Item(ITEMTYPE_ITEM,              0x0F,                 true,        &Bottles,                   EMPTY_BOTTLE,                      Text{"Empty Bottle",                    "Flacon vide",                      "Botella vacía",                            "Ampolla",                                  "Leere Flasche"});
     itemTable[BOTTLE_WITH_RED_POTION]            = Item(ITEMTYPE_ITEM,              0x8C,                 true,        &Bottles,                   BOTTLE_WITH_RED_POTION,            Text{"Bottle with Red Potion",          "Flacon de potion rouge",           "Botella de poción roja",                   "Ampolla di pozione vita",                  "Flasche (Rotes Elixier)"});
     itemTable[BOTTLE_WITH_MILK]                  = Item(ITEMTYPE_ITEM,              0x14,                 true,        &Bottles,                   BOTTLE_WITH_MILK,                  Text{"Bottle with Milk",                "Flacon de lait",                   "Botella de leche Lon Lon",                 "Ampolla di latte Lon Lon",                 "Flasche (Lon Lon-Milch)"});
@@ -89,11 +90,11 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[BOTTLE_WITH_BUGS]                  = Item(ITEMTYPE_ITEM,              0x92,                 true,        &Bottles,                   BOTTLE_WITH_BUGS,                  Text{"Bottle with Bugs",                "Flacon d'insectes",                "Insecto en una botella",                   "Insetto in un'ampolla",                    "Flasche (Käfer)"});
     itemTable[BOTTLE_WITH_POE]                   = Item(ITEMTYPE_ITEM,              0x94,                 true,        &Bottles,                   BOTTLE_WITH_POE,                   Text{"Bottle with Poe",                 "Flacon avec un Esprit",            "Poe en una botella",                       "Poo in un'ampolla",                        "Flasche (Irrlicht)"});
 
-    //Special bottles that can't immediately dump contents
+    // Special bottles that can't immediately dump contents
     itemTable[RUTOS_LETTER]                      = Item(ITEMTYPE_ITEM,              0x15,                 true,        &RutosLetter,               RUTOS_LETTER,                      Text{"Bottle with Ruto's Letter",       "Flacon avec une lettre",           "Carta de Ruto",                            "Lettera in un'ampolla",                    "Flasche (Rutos Brief)"});
     itemTable[BOTTLE_WITH_BIG_POE]               = Item(ITEMTYPE_ITEM,              0x93,                 true,        &BottleWithBigPoe,          BOTTLE_WITH_BIG_POE,               Text{"Bottle with Big Poe",             "Flacon avec une Âme",              "Gran Poe en una botella",                  "Grande Poo in un'ampolla",                 "Flasche (Nachtschwärmer)"});
 
-    //Songs
+    // Songs
     itemTable[ZELDAS_LULLABY]                    = Item(ITEMTYPE_SONG,              0xC1,                 true,        &ZeldasLullaby,             ZELDAS_LULLABY,                    Text{"Zelda's Lullaby",                 "Berceuse de Zelda",                "Nana de Zelda",                            "Ninna nanna di Zelda",                     "Zeldas Wiegenlied"});
     itemTable[EPONAS_SONG]                       = Item(ITEMTYPE_SONG,              0xC2,                 true,        &EponasSong,                EPONAS_SONG,                       Text{"Epona's Song",                    "Chant d'Épona",                    "Canción de Epona",                         "Canzone di Epona",                         "Eponas Lied"});
     itemTable[SARIAS_SONG]                       = Item(ITEMTYPE_SONG,              0xC3,                 true,        &SariasSong,                SARIAS_SONG,                       Text{"Saria's Song",                    "Chant de Saria",                   "Canción de Saria",                         "Canzone di Saria",                         "Salias Lied"});
@@ -107,7 +108,7 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[NOCTURNE_OF_SHADOW]                = Item(ITEMTYPE_SONG,              0xBF,                 true,        &NocturneOfShadow,          NOCTURNE_OF_SHADOW,                Text{"Nocturne of Shadow",              "Nocturne de l'ombre",              "Nocturno de la sombra",                    "Notturno delle ombre",                     "Nocturne des Schattens"});
     itemTable[PRELUDE_OF_LIGHT]                  = Item(ITEMTYPE_SONG,              0xC0,                 true,        &PreludeOfLight,            PRELUDE_OF_LIGHT,                  Text{"Prelude of Light",                "Prélude de la lumière",            "Preludio de la luz",                       "Preludio della luce",                      "Kantate des Lichts"});
 
-    //Maps and Compasses
+    // Maps and Compasses
     itemTable[DEKU_TREE_MAP]                     = Item(ITEMTYPE_MAP,               0xA5,                 false,       &noVariable,                DEKU_TREE_MAP,                     Text{"Great Deku Tree Map",             "Carte de l'arbre Mojo",            "Mapa del Gran Árbol Deku",                 "Mappa del Grande Albero Deku",             "Labyrinth-Karte des Deku-Baumes"});
     itemTable[DODONGOS_CAVERN_MAP]               = Item(ITEMTYPE_MAP,               0xA6,                 false,       &noVariable,                DODONGOS_CAVERN_MAP,               Text{"Dodongo's Cavern Map",            "Carte de la grotte Dodongo",       "Mapa de la Cueva de los Dodongos",         "Mappa della caverna dei Dodongo",          "Labyrinth-Karte von Dodongos Höhle"});
     itemTable[JABU_JABUS_BELLY_MAP]              = Item(ITEMTYPE_MAP,               0xA7,                 false,       &noVariable,                JABU_JABUS_BELLY_MAP,              Text{"Jabu-Jabu's Belly Map",           "Carte de Jabu-Jabu",               "Mapa de la tripa de Jabu-Jabu",            "Mappa della pancia di Jabu Jabu",          "Labyrinth-Karte von Jabu-Jabus Bauch"});
@@ -130,7 +131,7 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[BOTTOM_OF_THE_WELL_COMPASS]        = Item(ITEMTYPE_COMPASS,           0xA3,                 false,       &noVariable,                BOTTOM_OF_THE_WELL_COMPASS,        Text{"Bottom of the Well Compass",      "Boussole du fond du puits",        "Brújula del fondo del pozo",               "Bussola del fondo del pozzo",              "Kompass vom Grund des Brunnens"});
     itemTable[ICE_CAVERN_COMPASS]                = Item(ITEMTYPE_COMPASS,           0xA4,                 false,       &noVariable,                ICE_CAVERN_COMPASS,                Text{"Ice Cavern Compass",              "Boussole de la caverne polaire",   "Brújula de la caverna de hielo",           "Bussola della caverna di ghiaccio",        "Kompass der Eishöhle"});
 
-    //Boss Keys
+    // Boss Keys
     itemTable[FOREST_TEMPLE_BOSS_KEY]            = Item(ITEMTYPE_BOSSKEY,           0x95,                 true,        &BossKeyForestTemple,       FOREST_TEMPLE_BOSS_KEY,            Text{"Forest Temple Big Key",           "Clé d'or du temple de la forêt",   "Gran llave del Templo del Bosque",         "Grande chiave del Santuario della Foresta","Master-Schlüssel des Waldtempels"});
     itemTable[FIRE_TEMPLE_BOSS_KEY]              = Item(ITEMTYPE_BOSSKEY,           0x96,                 true,        &BossKeyFireTemple,         FIRE_TEMPLE_BOSS_KEY,              Text{"Fire Temple Big Key",             "Clé d'or du temple du feu",        "Gran llave del Templo del Fuego",          "Grande chiave del Santuario del Fuoco",    "Master-Schlüssel des Feuertempels"});
     itemTable[WATER_TEMPLE_BOSS_KEY]             = Item(ITEMTYPE_BOSSKEY,           0x97,                 true,        &BossKeyWaterTemple,        WATER_TEMPLE_BOSS_KEY,             Text{"Water Temple Big Key",            "Clé d'or du temple de l'eau",      "Gran llave del Templo del Agua",           "Grande chiave del Santuario dell'Acqua",   "Master-Schlüssel des Wassertempels"});
@@ -138,7 +139,7 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[SHADOW_TEMPLE_BOSS_KEY]            = Item(ITEMTYPE_BOSSKEY,           0x99,                 true,        &BossKeyShadowTemple,       SHADOW_TEMPLE_BOSS_KEY,            Text{"Shadow Temple Big Key",           "Clé d'or du temple de l'ombre",    "Gran llave del Templo de las Sombras",     "Grande chiave del Santuario dell'Ombra",   "Master-Schlüssel des Schattentempels"});
     itemTable[GANONS_CASTLE_BOSS_KEY]            = Item(ITEMTYPE_BOSSKEY,           0x9A,                 true,        &BossKeyGanonsCastle,       GANONS_CASTLE_BOSS_KEY,            Text{"Ganon's Castle Big Key",          "Clé d'or du château de Ganon",     "Gran llave del Castillo de Ganon",         "Grande chiave del castello di Ganon",      "Master-Schlüssel von Ganons Schloss"});
 
-    //Small Keys
+    // Small Keys
     itemTable[FOREST_TEMPLE_SMALL_KEY]           = Item(ITEMTYPE_SMALLKEY,          0xAF,                 true,        &ForestTempleKeys,          FOREST_TEMPLE_SMALL_KEY,           Text{"Forest Temple Small Key",         "Petite clé du temple de la forêt", "Llave del Templo del Bosque",              "Chiave del Santuario della Foresta",       "Kleiner Schlüssel des Waldtempels"});
     itemTable[FIRE_TEMPLE_SMALL_KEY]             = Item(ITEMTYPE_SMALLKEY,          0xB0,                 true,        &FireTempleKeys,            FIRE_TEMPLE_SMALL_KEY,             Text{"Fire Temple Small Key",           "Petite clé du temple du feu",      "Llave del Templo del Fuego",               "Chiave del Santuario del Fuoco",           "Kleiner Schlüssel des Feuertempels"});
     itemTable[WATER_TEMPLE_SMALL_KEY]            = Item(ITEMTYPE_SMALLKEY,          0xB1,                 true,        &WaterTempleKeys,           WATER_TEMPLE_SMALL_KEY,            Text{"Water Temple Small Key",          "Petite clé du temple de l'eau",    "Llave del Templo del Agua",                "Chiave del Santuario dell'Acqua",          "Kleiner Schlüssel des Wassertempels"});
@@ -161,7 +162,7 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[GERUDO_FORTRESS_KEY_RING]          = Item(ITEMTYPE_FORTRESS_SMALLKEY, 0xDC,                 true,        &GerudoFortressKeys,        GERUDO_FORTRESS_KEY_RING,          Text{"Gerudo Fortress Key Ring",        "Trousseau du repaire Gerudo",      "Llavero de la Fortaleza Gerudo",           "Chiavi della fortezza Gerudo",             "Schlüsselbund des Diebesverstecks"});
     itemTable[GANONS_CASTLE_KEY_RING]            = Item(ITEMTYPE_SMALLKEY,          0xDD,                 true,        &GanonsCastleKeys,          GANONS_CASTLE_KEY_RING,            Text{"Ganon's Castle Key Ring",         "Trousseau du château de Ganon",    "Llavero del Castillo de Ganon",            "Chiavi del castello di Ganon",             "Schlüsselbund von Ganons Schloss"});
 
-    //Stones and Medallions
+    // Stones and Medallions
     itemTable[KOKIRI_EMERALD]                    = Item(ITEMTYPE_DUNGEONREWARD,     0xCB,                 true,        &KokiriEmerald,             KOKIRI_EMERALD,                    Text{"Kokiri's Emerald",                "Émeraude Kokiri",                  "Esmeralda de los Kokiri",                  "Smeraldo dei Kokiri",                      "Kokiri-Smaragd"});
     itemTable[GORON_RUBY]                        = Item(ITEMTYPE_DUNGEONREWARD,     0xCC,                 true,        &GoronRuby,                 GORON_RUBY,                        Text{"Goron's Ruby",                    "Rubis Goron",                      "Rubí de los Goron",                        "Rubino dei Goron",                         "Goronen-Rubin"});
     itemTable[ZORA_SAPPHIRE]                     = Item(ITEMTYPE_DUNGEONREWARD,     0xCD,                 true,        &ZoraSapphire,              ZORA_SAPPHIRE,                     Text{"Zora's Sapphire",                 "Saphir Zora",                      "Zafiro de los Zora",                       "Zaffiro degli Zora",                       "Zora-Saphir"});
@@ -172,7 +173,7 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[SHADOW_MEDALLION]                  = Item(ITEMTYPE_DUNGEONREWARD,     0xD2,                 true,        &ShadowMedallion,           SHADOW_MEDALLION,                  Text{"Shadow Medallion",                "Médaillon de l'ombre",             "Medallón de la Sombra",                    "Medaglione dell'Ombra",                    "Amulett des Schattens"});
     itemTable[LIGHT_MEDALLION]                   = Item(ITEMTYPE_DUNGEONREWARD,     0xD3,                 true,        &LightMedallion,            LIGHT_MEDALLION,                   Text{"Light Medallion",                 "Médaillon de la lumière",          "Medallón de la Luz",                       "Medaglione della Luce",                    "Amulett des Lichts"});
 
-    //Generic Items
+    // Generic Items
     itemTable[RECOVERY_HEART]                    = Item(ITEMTYPE_ITEM,              GI_HEART,             false,       &noVariable,                RECOVERY_HEART,                    Text{"Recovery Heart",                  "Cœur d'énergie",                   "Corazón",                                  "Cuore",                                    "Herz"});
     itemTable[GREEN_RUPEE]                       = Item(ITEMTYPE_ITEM,              GI_RUPEE_GREEN,       false,       &noVariable,                GREEN_RUPEE,                       Text{"Green Rupee",                     "Rubis vert",                       "Rupia verde",                              "Rupia verde",                              "Rubin"});
     itemTable[BLUE_RUPEE]                        = Item(ITEMTYPE_ITEM,              GI_RUPEE_BLUE,        false,       &noVariable,                BLUE_RUPEE,                        Text{"Blue Rupee",                      "Rubis bleu",                       "Rupia azul",                               "Rupia blu",                                "5 Rubine"});
@@ -184,7 +185,7 @@ void ItemTable_Init() {                               //Item Type               
     itemTable[ICE_TRAP]                          = Item(ITEMTYPE_ITEM,              GI_ICE_TRAP,          false,       &noVariable,                ICE_TRAP,                          Text{"Ice Trap",                        "Piège de glace",                   "Trampa de hielo",                          "Trappola",                                 "Eisfalle"});
     itemTable[MILK]                              = Item(ITEMTYPE_ITEM,              GI_MILK,              false,       &noVariable,                NONE,                              Text{"Milk",                            "Lait",                             "Leche Lon Lon",                            "Latte Lon Lon",                            "Lon Lon-Milch"});
 
-    //Refills
+    // Refills
     itemTable[BOMBS_5]                           = Item(ITEMTYPE_REFILL,            GI_BOMBS_5,           false,       &noVariable,                BOMBS_5,                           Text{"Bombs (5)",                       "Bombes (5)",                       "Bombas (5)",                               "5 bombe",                                  "Bomben (5 Stück)"});
     itemTable[BOMBS_10]                          = Item(ITEMTYPE_REFILL,            GI_BOMBS_10,          false,       &noVariable,                BOMBS_10,                          Text{"Bombs (10)",                      "Bombes (10)",                      "Bombas (10)",                              "10 bombe",                                 "Bomben (10 Stück)"});
     itemTable[BOMBS_20]                          = Item(ITEMTYPE_REFILL,            GI_BOMBS_20,          false,       &noVariable,                BOMBS_20,                          Text{"Bombs (20)",                      "Bombes (20)",                      "Bombas (20)",                              "20 bombe",                                 "Bomben (20 Stück)"});
@@ -272,17 +273,17 @@ void ItemTable_Init() {                               //Item Type               
 //  itemTable[ENHANCED_MAGIC_METER]              = Item(ITEMTYPE_ITEM,              0x8A,                 true,        &ProgressiveMagic,          ENHANCED_MAGIC_METER,              Text{"Enhanced Magic Meter",            "Jauge de magie améliorée",         "Poder mágico mejorado",                    "Barra della magia aumentata",              "Erhöhte Magische Kraft"});
 
 }
-
+// clang-format on
 Item& ItemTable(const ItemKey itemKey) {
     return itemTable[itemKey];
 }
 
-//This function should only be used to place items containing hint text
-//at gossip stone locations.
+// This function should only be used to place items containing hint text
+// at gossip stone locations.
 void NewItem(const ItemKey itemKey, const Item item) {
     if (itemKey <= BUY_RED_POTION_50) {
-      printf("\x1b[25;0HWARNING: ATTEMPTED TO OVERWRITE ITEM %lu\n", itemKey);
-      return;
+        printf("\x1b[25;0HWARNING: ATTEMPTED TO OVERWRITE ITEM %lu\n", itemKey);
+        return;
     }
 
     itemTable[itemKey] = item;

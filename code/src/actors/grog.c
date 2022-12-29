@@ -6,9 +6,11 @@
 #define EnHs_ActionAfterTradeCojiro ((EnHs_ActionFunc)0x3B02C0)
 
 void EnHs_CheckForShouldDespawn(EnHs* self) {
-    if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_ON) && (gSaveContext.itemGetInf[2] & 0x2000)) {
+    if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_ON) &&
+        (gSaveContext.itemGetInf[2] & 0x2000)) {
         Actor_Kill(&self->actor);
-    } else if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_OFF) && (gSaveContext.itemGetInf[3] & 0x1)) {
+    } else if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_OFF) &&
+               (gSaveContext.itemGetInf[3] & 0x1)) {
         Actor_Kill(&self->actor);
     }
 }

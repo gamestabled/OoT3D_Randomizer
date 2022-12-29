@@ -18,7 +18,7 @@
 #define BOSS_BATTLE_BGM 0x1000589
 
 static u8 fightStarted = 0;
-static u8 appeared = 0;
+static u8 appeared     = 0;
 
 void Boss_Tw_rInit(Actor* thisx, GlobalContext* globalCtx) {
     Boss_Tw_Init(thisx, globalCtx);
@@ -60,7 +60,7 @@ void Boss_Tw_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 void Boss_Tw_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
     if (thisx->params == 0x0001) { // Koume. This check is needed because the elemental
         fightStarted = 0;          // attacks are different instances of the actor
-        appeared = 0;
+        appeared     = 0;
     }
 
     Boss_Tw_Destroy(thisx, globalCtx);

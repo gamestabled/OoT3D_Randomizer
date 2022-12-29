@@ -19,10 +19,10 @@ const MessageEntry* Message_GetCustomEntry(void* param_1, u32 textId) {
     s32 end;
 
     start = 0;
-    end = numCustomMessageEntries - 1;
+    end   = numCustomMessageEntries - 1;
     while ((end >= 0) && (start <= end)) {
         s32 cur = (start + end) / 2;
-        s32 id = ptrCustomMessageEntries[cur].id;
+        s32 id  = ptrCustomMessageEntries[cur].id;
         if (textId < id) {
             end = cur - 1;
         } else if (textId > id) {

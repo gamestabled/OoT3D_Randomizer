@@ -9,7 +9,7 @@ typedef struct {
     SkeletonAnimationModel* fireModel;
     SkeletonAnimationModel* copyrightModel;
     char unk_1B0[0x30];
-} EnMag; //size 0x1E0;
+} EnMag; // size 0x1E0;
 
 void EnMag_rInit(Actor* thisx, GlobalContext* globalCtx);
 

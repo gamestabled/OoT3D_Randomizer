@@ -22,7 +22,8 @@ void Model_DestroyAll(void);
 s32 Model_DrawByActor(Actor* actor);
 void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimIdx);
 
-typedef SkeletonAnimationModel* (*SkeletonAnimationModel_Spawn_proc)(Actor* actor, GlobalContext* globalCtx, s16 objId, s32 objModelIdX);
+typedef SkeletonAnimationModel* (*SkeletonAnimationModel_Spawn_proc)(Actor* actor, GlobalContext* globalCtx, s16 objId,
+                                                                     s32 objModelIdX);
 #define SkeletonAnimationModel_Spawn_addr 0x36A924
 #define SkeletonAnimationModel_Spawn ((SkeletonAnimationModel_Spawn_proc)SkeletonAnimationModel_Spawn_addr)
 
