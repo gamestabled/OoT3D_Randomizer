@@ -40,6 +40,8 @@ typedef enum {
     DOUBLE_DEFENSE,
     GOLD_SKULLTULA_TOKEN,
 
+    BUNNY_HOOD,
+
     POCKET_EGG,
     POCKET_CUCCO,
     COJIRO,
