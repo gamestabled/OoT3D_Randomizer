@@ -473,6 +473,10 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.items[SLOT_BOTTLE_4] = gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN ? ITEM_BOTTLE : ITEM_LETTER_RUTO;
     }
 
+    if (gSettingsContext.startingChildTrade) {
+        gSaveContext.items[SLOT_TRADE_CHILD] = ITEM_MASK_BUNNY;
+    }
+
     if (gSettingsContext.startingOcarina > 0) {
         gSaveContext.items[SLOT_OCARINA] = ITEM_OCARINA_FAIRY + (gSettingsContext.startingOcarina - 1);
     }
