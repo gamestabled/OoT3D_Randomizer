@@ -1,7 +1,13 @@
 #include "utils.hpp"
 
-// Removes any line breaks from s.
-std::string RemoveLineBreaks(std::string s) {
-  s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
-  return s;
+std::string SanitizedString(std::string s) {
+    // Remove line breaks
+    s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
+
+    // Remove consecutive spaces
+    while (s.find("  ") != std::string::npos) {
+        s.erase(s.find("  "), 1);
+    }
+
+    return s;
 }

@@ -3,6 +3,6 @@
 #include "item.hpp"
 #include "keys.hpp"
 
-void  ItemTable_Init();
+void ItemTable_Init();
 Item& ItemTable(ItemKey itemKey);
-void  NewItem(ItemKey itemKey, Item item);
+void NewItem(ItemKey itemKey, Item item);

@@ -348,6 +348,10 @@ SECTIONS
 		*(.patch_KotakeDontPlayBattleMusic)
 	}
 
+	.patch_GossipStoneAddSariaHint 0x1B3968 : {
+		*(.patch_GossipStoneAddSariaHint)
+	}
+
 	.patch_ReadGossipStoneHints 0x1B3A44 : {
 		*(.patch_ReadGossipStoneHints)
 	}
@@ -574,10 +578,6 @@ SECTIONS
 
 	.patch_BoleroLocation 0x26C448 : {
 		*(.patch_BoleroLocation)
-	}
-
-	.patch_BrownBoulderExplode 0x26F9F8 : {
-		*(.patch_BrownBoulderExplode)
 	}
 
 	.patch_RedBoulderExplode 0x26FE7C : {
@@ -966,6 +966,10 @@ SECTIONS
 
 	.patch_ForestTempleBasementPuzzleDelay 0x3BFA8C : {
 		*(.patch_ForestTempleBasementPuzzleDelay)
+	}
+
+	.patch_GoronPotGuaranteeReward 0x3C148C : {
+		*(.patch_GoronPotGuaranteeReward)
 	}
 
 	.patch_GerudoArcheryTwo 0x3C2D80 : {

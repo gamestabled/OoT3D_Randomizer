@@ -35,9 +35,9 @@ typedef struct {
 
 typedef struct {
     char magic[4]; //"QM\0\0"
-    u32  unk_04;
-    u32  numEntries;
-    u32  unk_0C;
+    u32 unk_04;
+    u32 numEntries;
+    u32 unk_0C;
 } MessageFileHeader;
 
 #endif //_MESSAGE_H_

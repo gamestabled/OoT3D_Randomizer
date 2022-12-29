@@ -7,8 +7,7 @@ s32 EnGm_CheckRewardFlag(void) {
     // 2: continue like normal
     if (gSettingsContext.shuffleMerchants != SHUFFLEMERCHANTS_OFF && (gSaveContext.eventChkInf[3] & 0x20) == 0) {
         return 0;
-    }
-    else if (gSettingsContext.progressiveGoronSword && ((gSaveContext.equipment >> 2) & 0x1) == 0) {
+    } else if (gSettingsContext.progressiveGoronSword && ((gSaveContext.equipment >> 2) & 0x1) == 0) {
         return 1;
     }
     return 2;

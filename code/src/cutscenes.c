@@ -85,7 +85,8 @@ void Cutscene_OverrideSerenade(void) {
 }
 
 u32 Cutscene_OverrideRequiem(void) {
-    if (!EventCheck(0xAC) && Entrance_SceneAndSpawnAre(0x5C, 0x01)) { //Spirit Temple -> Desert Colossus, index 01E1 in the entrance table
+    if (!EventCheck(0xAC) &&
+        Entrance_SceneAndSpawnAre(0x5C, 0x01)) { // Spirit Temple -> Desert Colossus, index 01E1 in the entrance table
         ItemOverride_PushDelayedOverride(0x23);
         EventSet(0xAC);
         gSaveContext.entranceIndex = 0x1ED;
@@ -122,8 +123,8 @@ void Cutscene_OverrideLullaby(void) {
     gSaveContext.eventChkInf[5] |= 0x200;
     ItemOverride_PushDelayedOverride(0x26);
     gGlobalContext->nextEntranceIndex = 0x594;
-    gGlobalContext->sceneLoadFlag = 0x14;
-    PLAYER->actor.draw = NULL;
+    gGlobalContext->sceneLoadFlag     = 0x14;
+    PLAYER->actor.draw                = NULL;
 }
 
 u32 Cutscene_CheckEponasSongFlag(void) {
@@ -158,7 +159,7 @@ void Cutscene_OverrideSongOfTime(Actor* ocarina) {
     gSaveContext.eventChkInf[10] |= 0x200;
     ItemOverride_PushDelayedOverride(0x2A);
     gGlobalContext->nextEntranceIndex = 0x50F;
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
 }
 
 void Cutscene_OverrideSongOfStorms(void) {
@@ -184,7 +185,7 @@ void Cutscene_OverrideFairyReward(BgDyYoseizo* fairy) {
     }
 
     gSaveContext.healthAccumulator = 0x140;
-    gSaveContext.magic = gSaveContext.magicLevel * 0x30;
+    gSaveContext.magic             = gSaveContext.magicLevel * 0x30;
     Actor_Kill(&fairy->actor);
 }
 
@@ -203,9 +204,9 @@ void Cutscene_OverrideDekuTree(void) {
         }
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x457);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Custcene_OverrideDodongosCavern(void) {
@@ -220,9 +221,9 @@ void Custcene_OverrideDodongosCavern(void) {
         }
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x47A);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Custcene_OverrideJabuJabusBelly(void) {
@@ -238,9 +239,9 @@ void Custcene_OverrideJabuJabusBelly(void) {
         }
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x221);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Custcene_OverrideForestTemple(void) {
@@ -249,9 +250,9 @@ void Custcene_OverrideForestTemple(void) {
         ItemOverride_PushDungeonReward(DUNGEON_FOREST_TEMPLE);
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x608);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Cutscene_OverrideFireTemple(void) {
@@ -267,9 +268,9 @@ void Cutscene_OverrideFireTemple(void) {
         }
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x564);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Custcene_OverrideWaterTemple(void) {
@@ -279,9 +280,9 @@ void Custcene_OverrideWaterTemple(void) {
         gSaveContext.eventChkInf[6] |= 0x0200; // Raise Lake Hylia's Water
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x60C);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Custcene_OverrideSpiritTemple(void) {
@@ -290,9 +291,9 @@ void Custcene_OverrideSpiritTemple(void) {
         ItemOverride_PushDungeonReward(DUNGEON_SPIRIT_TEMPLE);
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x610);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Custcene_OverrideShadowTemple(void) {
@@ -301,9 +302,9 @@ void Custcene_OverrideShadowTemple(void) {
         ItemOverride_PushDungeonReward(DUNGEON_SHADOW_TEMPLE);
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x580);
-    gGlobalContext->sceneLoadFlag = 0x14;
+    gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
-    gSaveContext.nextCutsceneIndex = 0x0;
+    gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
 void Cutscene_BlueWarpOverride(void) {

@@ -7,11 +7,10 @@
 #include "3ds/types.h"
 
 /// IPC buffer access rights.
-typedef enum
-{
-	IPC_BUFFER_R  = BIT(1),                     ///< Readable
-	IPC_BUFFER_W  = BIT(2),                     ///< Writable
-	IPC_BUFFER_RW = IPC_BUFFER_R | IPC_BUFFER_W ///< Readable and Writable
+typedef enum {
+    IPC_BUFFER_R  = BIT(1),                     ///< Readable
+    IPC_BUFFER_W  = BIT(2),                     ///< Writable
+    IPC_BUFFER_RW = IPC_BUFFER_R | IPC_BUFFER_W ///< Readable and Writable
 } IPC_BufferRights;
 
 /**
@@ -21,14 +20,14 @@ typedef enum
  * @param translate_params Size of the translate parameters in words. Up to 63.
  * @return The created IPC header.
  *
- * Normal parameters are sent directly to the process while the translate parameters might go through modifications and checks by the kernel.
- * The translate parameters are described by headers generated with the IPC_Desc_* functions.
+ * Normal parameters are sent directly to the process while the translate parameters might go through modifications and
+ * checks by the kernel. The translate parameters are described by headers generated with the IPC_Desc_* functions.
  *
- * @note While #normal_params is equivalent to the number of normal parameters, #translate_params includes the size occupied by the translate parameters headers.
+ * @note While #normal_params is equivalent to the number of normal parameters, #translate_params includes the size
+ * occupied by the translate parameters headers.
  */
-static inline u32 IPC_MakeHeader(u16 command_id, unsigned normal_params, unsigned translate_params)
-{
-	return ((u32) command_id << 16) | (((u32) normal_params & 0x3F) << 6) | (((u32) translate_params & 0x3F) << 0);
+static inline u32 IPC_MakeHeader(u16 command_id, unsigned normal_params, unsigned translate_params) {
+    return ((u32)command_id << 16) | (((u32)normal_params & 0x3F) << 6) | (((u32)translate_params & 0x3F) << 0);
 }
 
 /**
@@ -40,9 +39,8 @@ static inline u32 IPC_MakeHeader(u16 command_id, unsigned normal_params, unsigne
  *
  * @note Zero values will have no effect.
  */
-static inline u32 IPC_Desc_SharedHandles(unsigned number)
-{
-	return ((u32)(number - 1) << 26);
+static inline u32 IPC_Desc_SharedHandles(unsigned number) {
+    return ((u32)(number - 1) << 26);
 }
 
 /**
@@ -54,9 +52,8 @@ static inline u32 IPC_Desc_SharedHandles(unsigned number)
  *
  * @note Zero values will have no effect.
  */
-static inline u32 IPC_Desc_MoveHandles(unsigned number)
-{
-	return ((u32)(number - 1) << 26) | 0x10;
+static inline u32 IPC_Desc_MoveHandles(unsigned number) {
+    return ((u32)(number - 1) << 26) | 0x10;
 }
 
 /**
@@ -65,14 +62,12 @@ static inline u32 IPC_Desc_MoveHandles(unsigned number)
  *
  * The next value is a placeholder that will be replaced by the current process ID by the kernel.
  */
-static inline u32 IPC_Desc_CurProcessId(void)
-{
-	return 0x20;
+static inline u32 IPC_Desc_CurProcessId(void) {
+    return 0x20;
 }
 
-static inline DEPRECATED u32 IPC_Desc_CurProcessHandle(void)
-{
-	return IPC_Desc_CurProcessId();
+static inline DEPRECATED u32 IPC_Desc_CurProcessHandle(void) {
+    return IPC_Desc_CurProcessId();
 }
 
 /**
@@ -83,9 +78,8 @@ static inline DEPRECATED u32 IPC_Desc_CurProcessHandle(void)
  *
  * The next value is a pointer to the buffer. It will be copied to TLS offset 0x180 + static_buffer_id*8.
  */
-static inline u32 IPC_Desc_StaticBuffer(size_t size, unsigned buffer_id)
-{
-	return (size << 14) | ((buffer_id & 0xF) << 10) | 0x2;
+static inline u32 IPC_Desc_StaticBuffer(size_t size, unsigned buffer_id) {
+    return (size << 14) | ((buffer_id & 0xF) << 10) | 0x2;
 }
 
 /**
@@ -97,11 +91,11 @@ static inline u32 IPC_Desc_StaticBuffer(size_t size, unsigned buffer_id)
  *
  * The next value is a phys-address of a table located in the BASE memregion.
  */
-static inline u32 IPC_Desc_PXIBuffer(size_t size, unsigned buffer_id, bool is_read_only)
-{
-	u8 type = 0x4;
-	if(is_read_only)type = 0x6;
-	return (size << 8) | ((buffer_id & 0xF) << 4) | type;
+static inline u32 IPC_Desc_PXIBuffer(size_t size, unsigned buffer_id, bool is_read_only) {
+    u8 type = 0x4;
+    if (is_read_only)
+        type = 0x6;
+    return (size << 8) | ((buffer_id & 0xF) << 4) | type;
 }
 
 /**
@@ -112,7 +106,6 @@ static inline u32 IPC_Desc_PXIBuffer(size_t size, unsigned buffer_id, bool is_re
  *
  * The next value is a pointer to the buffer.
  */
-static inline u32 IPC_Desc_Buffer(size_t size, IPC_BufferRights rights)
-{
-	return (size << 4) | 0x8 | rights;
+static inline u32 IPC_Desc_Buffer(size_t size, IPC_BufferRights rights) {
+    return (size << 4) | 0x8 | rights;
 }

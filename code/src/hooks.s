@@ -577,7 +577,11 @@ hook_CanReadHints:
     ldrh r0,[r4,#0x1C]
     and r0,r0,#0xFF
     add r0,r0,#0x400
-    # Register hint for Saria's Song
+    bx lr
+
+.global hook_GossipStoneAddSariaHint
+hook_GossipStoneAddSariaHint:
+    ldrh r0,[r5,#0x16]
     push {r0-r12, lr}
     add r0,r0,#0x600
     bl Hints_AddSariasSongHint
@@ -1357,17 +1361,6 @@ hook_ChildCanOpenBowSubMenu:
     cmp r12,#0x0
     b 0x2EB2DC
 
-.global hook_BrownBoulderExplode
-hook_BrownBoulderExplode:
-    push {r0-r12, lr}
-    cpy r0,r5
-    cpy r1,r7
-    bl ObjBombiwa_GetFlag
-    cmp r0,#0x0
-    pop {r0-r12, lr}
-    bne 0x26FA7C
-    b 0x346D94
-
 .global hook_RedBoulderExplode
 hook_RedBoulderExplode:
     ldrb r0,[r5,#0x1B5]
@@ -1733,6 +1726,15 @@ hook_AboutToPickUpActor:
     cmp r0,#0x0
     pop {r0-r12,lr}
     subeq lr,lr,#0x8
+    bx lr
+
+.global hook_GoronPotGuaranteeReward
+hook_GoronPotGuaranteeReward:
+    mov r3,#0x0
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl BgSpot18Basket_SetRotation
+    pop {r0-r12, lr}
     bx lr
 
 @ ----------------------------------

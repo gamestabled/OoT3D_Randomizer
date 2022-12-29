@@ -4,8 +4,10 @@
 
 using string_view = std::string_view;
 
-extern string_view personalizationDesc;
-extern string_view ingameDefaultsDesc;
+extern string_view menuOpenSettingsDesc;
+extern string_view menuGlitchOptionsDesc;
+extern string_view menuPersonalizationDesc;
+extern string_view menuIngameDefaultsDesc;
 
 extern string_view presetNintendedDesc;
 extern string_view presetAllsanityDesc;

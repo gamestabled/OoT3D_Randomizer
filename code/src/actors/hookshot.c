@@ -16,6 +16,6 @@ void ArmsHook_rInit(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-f32 Hookshot_GetZRotation(void){
+f32 Hookshot_GetZRotation(void) {
     return gSaveContext.linkAge == 0 ? *HookshotRotation : -1.4; // TODO find position and lower that
 }

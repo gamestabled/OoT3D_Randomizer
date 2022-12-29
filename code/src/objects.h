@@ -12,7 +12,7 @@ typedef s32 (*Object_proc)(ObjectContext* objectCtx, s16 objectId);
 #define Object_GetIndex ((Object_proc)Object_GetIndex_addr)
 
 #define Object_IsLoaded_addr 0x373074
-#define Object_IsLoaded ((Object_proc)Object_IsLoaded_addr) //For Object_IsLoaded, second param is bankIndex
+#define Object_IsLoaded ((Object_proc)Object_IsLoaded_addr) // For Object_IsLoaded, second param is bankIndex
 
 typedef void (*Object_UpdateBank_proc)(ObjectContext* objectCtx);
 #define Object_UpdateBank_addr 0x2E4EA0

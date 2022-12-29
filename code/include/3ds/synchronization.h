@@ -13,30 +13,26 @@ typedef _LOCK_T LightLock;
 typedef _LOCK_RECURSIVE_T RecursiveLock;
 
 /// A light event.
-typedef struct
-{
-	s32 state;      ///< State of the event: -2=cleared sticky, -1=cleared oneshot, 0=signaled oneshot, 1=signaled sticky
-	LightLock lock; ///< Lock used for sticky timer operation
+typedef struct {
+    s32 state; ///< State of the event: -2=cleared sticky, -1=cleared oneshot, 0=signaled oneshot, 1=signaled sticky
+    LightLock lock; ///< Lock used for sticky timer operation
 } LightEvent;
 
 /// A light semaphore.
-typedef struct
-{
-	s32 current_count;      ///< The current release count of the semaphore
-	s16 num_threads_acq;    ///< Number of threads concurrently acquiring the semaphore
-	s16 max_count;          ///< The maximum release count of the semaphore
+typedef struct {
+    s32 current_count;   ///< The current release count of the semaphore
+    s16 num_threads_acq; ///< Number of threads concurrently acquiring the semaphore
+    s16 max_count;       ///< The maximum release count of the semaphore
 } LightSemaphore;
 
 /// Performs a Data Synchronization Barrier operation.
-static inline void __dsb(void)
-{
-	__asm__ __volatile__("mcr p15, 0, %[val], c7, c10, 4" :: [val] "r" (0) : "memory");
+static inline void __dsb(void) {
+    __asm__ __volatile__("mcr p15, 0, %[val], c7, c10, 4" ::[val] "r"(0) : "memory");
 }
 
 /// Performs a clrex operation.
-static inline void __clrex(void)
-{
-	__asm__ __volatile__("clrex" ::: "memory");
+static inline void __clrex(void) {
+    __asm__ __volatile__("clrex" ::: "memory");
 }
 
 /**
@@ -44,11 +40,10 @@ static inline void __clrex(void)
  * @param addr Address to perform the operation on.
  * @return The resulting value.
  */
-static inline s32 __ldrex(s32* addr)
-{
-	s32 val;
-	__asm__ __volatile__("ldrex %[val], %[addr]" : [val] "=r" (val) : [addr] "Q" (*addr));
-	return val;
+static inline s32 __ldrex(s32* addr) {
+    s32 val;
+    __asm__ __volatile__("ldrex %[val], %[addr]" : [val] "=r"(val) : [addr] "Q"(*addr));
+    return val;
 }
 
 /**
@@ -57,11 +52,10 @@ static inline s32 __ldrex(s32* addr)
  * @param val Value to store.
  * @return Whether the operation was successful.
  */
-static inline bool __strex(s32* addr, s32 val)
-{
-	bool res;
-	__asm__ __volatile__("strex %[res], %[val], %[addr]" : [res] "=&r" (res) : [val] "r" (val), [addr] "Q" (*addr));
-	return res;
+static inline bool __strex(s32* addr, s32 val) {
+    bool res;
+    __asm__ __volatile__("strex %[res], %[val], %[addr]" : [res] "=&r"(res) : [val] "r"(val), [addr] "Q"(*addr));
+    return res;
 }
 
 /**
@@ -69,11 +63,10 @@ static inline bool __strex(s32* addr, s32 val)
  * @param addr Address to perform the operation on.
  * @return The resulting value.
  */
-static inline u16 __ldrexh(u16* addr)
-{
-	u16 val;
-	__asm__ __volatile__("ldrexh %[val], %[addr]" : [val] "=r" (val) : [addr] "Q" (*addr));
-	return val;
+static inline u16 __ldrexh(u16* addr) {
+    u16 val;
+    __asm__ __volatile__("ldrexh %[val], %[addr]" : [val] "=r"(val) : [addr] "Q"(*addr));
+    return val;
 }
 
 /**
@@ -82,11 +75,10 @@ static inline u16 __ldrexh(u16* addr)
  * @param val Value to store.
  * @return Whether the operation was successful.
  */
-static inline bool __strexh(u16* addr, u16 val)
-{
-	bool res;
-	__asm__ __volatile__("strexh %[res], %[val], %[addr]" : [res] "=&r" (res) : [val] "r" (val), [addr] "Q" (*addr));
-	return res;
+static inline bool __strexh(u16* addr, u16 val) {
+    bool res;
+    __asm__ __volatile__("strexh %[res], %[val], %[addr]" : [res] "=&r"(res) : [val] "r"(val), [addr] "Q"(*addr));
+    return res;
 }
 
 /**
@@ -94,11 +86,10 @@ static inline bool __strexh(u16* addr, u16 val)
  * @param addr Address to perform the operation on.
  * @return The resulting value.
  */
-static inline u8 __ldrexb(u8* addr)
-{
-	u8 val;
-	__asm__ __volatile__("ldrexb %[val], %[addr]" : [val] "=r" (val) : [addr] "Q" (*addr));
-	return val;
+static inline u8 __ldrexb(u8* addr) {
+    u8 val;
+    __asm__ __volatile__("ldrexb %[val], %[addr]" : [val] "=r"(val) : [addr] "Q"(*addr));
+    return val;
 }
 
 /**
@@ -107,11 +98,10 @@ static inline u8 __ldrexb(u8* addr)
  * @param val Value to store.
  * @return Whether the operation was successful.
  */
-static inline bool __strexb(u8* addr, u8 val)
-{
-	bool res;
-	__asm__ __volatile__("strexb %[res], %[val], %[addr]" : [res] "=&r" (res) : [val] "r" (val), [addr] "Q" (*addr));
-	return res;
+static inline bool __strexb(u8* addr, u8 val) {
+    bool res;
+    __asm__ __volatile__("strexb %[res], %[val], %[addr]" : [res] "=&r"(res) : [val] "r"(val), [addr] "Q"(*addr));
+    return res;
 }
 
 /// Performs an atomic pre-increment operation.
@@ -195,7 +185,8 @@ void LightEvent_Init(LightEvent* event, ResetType reset_type);
 void LightEvent_Clear(LightEvent* event);
 
 /**
- * @brief Wakes up threads waiting on a sticky light event without signaling it. If the event had been signaled before, it is cleared instead.
+ * @brief Wakes up threads waiting on a sticky light event without signaling it. If the event had been signaled before,
+ * it is cleared instead.
  * @param event Pointer to the event.
  */
 void LightEvent_Pulse(LightEvent* event);

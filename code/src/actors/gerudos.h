@@ -6,7 +6,7 @@
 typedef enum {
     /* 0x00 */ GE1_TYPE_GATE_GUARD,
     /* 0x01 */ GE1_TYPE_GATE_OPERATOR,
-    /* 0x02 */ GE1_TYPE_EXTRA_GATE_OPERATOR, //Custom new guard type for the extra gate opener
+    /* 0x02 */ GE1_TYPE_EXTRA_GATE_OPERATOR, // Custom new guard type for the extra gate opener
     /* 0x04 */ GE1_TYPE_NORMAL = 4,
     /* 0x05 */ GE1_TYPE_VALLEY_FLOOR,
     /* 0x45 */ GE1_TYPE_HORSEBACK_ARCHERY = 0x45,
