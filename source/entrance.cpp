@@ -31,21 +31,6 @@ typedef struct {
     s16 blueWarp;
 } EntranceLinkInfo;
 
-typedef struct {
-    s16 dungeonIndex;
-    s16 exitIndex;
-    s16 exitBlueWarp;
-} DungeonEntranceInfo;
-
-typedef struct {
-    EntranceType type;
-    AreaKey bossDoor;
-    AreaKey bossRoom;
-    AreaKey dungeon;
-    s16 index;
-    s16 exitIndex;
-} EntranceBossRoomInfo;
-
 EntranceLinkInfo NO_RETURN_ENTRANCE = { EntranceType::None, NONE, NONE, -1 };
 
 typedef struct {
@@ -56,7 +41,6 @@ typedef struct {
 using EntranceInfoPair = std::pair<EntranceLinkInfo, EntranceLinkInfo>;
 using EntrancePair     = std::pair<Entrance*, Entrance*>;
 using EntrancePools    = std::map<EntranceType, std::vector<Entrance*>>;
-using DungeonData      = std::map<AreaKey, DungeonEntranceInfo>;
 
 // The entrance randomization algorithm used here is a direct copy of
 // the algorithm used in the original N64 randomizer (except now in C++ instead
@@ -1018,6 +1002,23 @@ int ShuffleAllEntrances() {
         { { EntranceType::WarpSong, REQUIEM_OF_SPIRIT_WARP, DESERT_COLOSSUS, 0x01F1 }, NO_RETURN_ENTRANCE },
         { { EntranceType::WarpSong, NOCTURNE_OF_SHADOW_WARP, GRAVEYARD_WARP_PAD_REGION, 0x0568 }, NO_RETURN_ENTRANCE },
         { { EntranceType::WarpSong, PRELUDE_OF_LIGHT_WARP, TEMPLE_OF_TIME, 0x05F4 }, NO_RETURN_ENTRANCE },
+
+        { { EntranceType::ChildBoss, DEKU_TREE_BOSS_ENTRYWAY, DEKU_TREE_BOSS_ROOM, 0x040F },
+          { EntranceType::ChildBoss, DEKU_TREE_BOSS_ROOM, DEKU_TREE_BOSS_ENTRYWAY, 0x0252, 0x0457 } },
+        { { EntranceType::ChildBoss, DODONGOS_CAVERN_BOSS_ENTRYWAY, DODONGOS_CAVERN_BOSS_ROOM, 0x040B },
+          { EntranceType::ChildBoss, DODONGOS_CAVERN_BOSS_ROOM, DODONGOS_CAVERN_BOSS_ENTRYWAY, 0x00C5, 0x047A } },
+        { { EntranceType::ChildBoss, JABU_JABUS_BELLY_BOSS_ENTRYWAY, JABU_JABUS_BELLY_BOSS_ROOM, 0x0301 },
+          { EntranceType::ChildBoss, JABU_JABUS_BELLY_BOSS_ROOM, JABU_JABUS_BELLY_BOSS_ENTRYWAY, 0x0407, 0x010E } },
+        { { EntranceType::AdultBoss, FOREST_TEMPLE_BOSS_ENTRYWAY, FOREST_TEMPLE_BOSS_ROOM, 0x000C },
+          { EntranceType::AdultBoss, FOREST_TEMPLE_BOSS_ROOM, FOREST_TEMPLE_BOSS_ENTRYWAY, 0x024E, 0x0608 } },
+        { { EntranceType::AdultBoss, FIRE_TEMPLE_BOSS_ENTRYWAY, FIRE_TEMPLE_BOSS_ROOM, 0x0305 },
+          { EntranceType::AdultBoss, FIRE_TEMPLE_BOSS_ROOM, FIRE_TEMPLE_BOSS_ENTRYWAY, 0x0175, 0x0564 } },
+        { { EntranceType::AdultBoss, WATER_TEMPLE_BOSS_ENTRYWAY, WATER_TEMPLE_BOSS_ROOM, 0x0417 },
+          { EntranceType::AdultBoss, WATER_TEMPLE_BOSS_ROOM, WATER_TEMPLE_BOSS_ENTRYWAY, 0x0423, 0x060C } },
+        { { EntranceType::AdultBoss, SPIRIT_TEMPLE_BOSS_ENTRYWAY, SPIRIT_TEMPLE_BOSS_ROOM, 0x008D },
+          { EntranceType::AdultBoss, SPIRIT_TEMPLE_BOSS_ROOM, SPIRIT_TEMPLE_BOSS_ENTRYWAY, 0x02F5, 0x0610 } },
+        { { EntranceType::AdultBoss, SHADOW_TEMPLE_BOSS_ENTRYWAY, SHADOW_TEMPLE_BOSS_ROOM, 0x0413 },
+          { EntranceType::AdultBoss, SHADOW_TEMPLE_BOSS_ROOM, SHADOW_TEMPLE_BOSS_ENTRYWAY, 0x02B2, 0x0580 } },
     };
 
     std::map<std::string, PriorityEntrance> priorityEntranceTable = {
@@ -1028,42 +1029,6 @@ int ShuffleAllEntrances() {
           { { DESERT_COLOSSUS, DESERT_COLOSSUS_FROM_SPIRIT_ENTRYWAY },
             { EntranceType::OwlDrop, EntranceType::Spawn, EntranceType::WarpSong } } },
     };
-
-    DungeonData dungeonData = {};
-
-    // Grab dungeon info from above to avoid having it written out twice
-    for (auto entrance : entranceShuffleTable) {
-        if (entrance.first.type != EntranceType::Dungeon || entrance.second.type == EntranceType::None ||
-            entrance.second.blueWarp == -1) {
-            continue;
-        }
-
-        dungeonData[entrance.second.parentRegion] = { entrance.first.index, entrance.second.index,
-                                                      entrance.second.blueWarp };
-    }
-
-    // clang-format off
-    std::vector<EntranceBossRoomInfo> bossRoomTable = {
-        //                        Boss Door Region,               Boss Room Region,           Dungeon entrance Region,   boss room, exit
-        {EntranceType::ChildBoss, DEKU_TREE_BOSS_ENTRYWAY,        DEKU_TREE_BOSS_ROOM,        DEKU_TREE_ENTRYWAY,        0x040F, 0x0252},
-        {EntranceType::ChildBoss, DODONGOS_CAVERN_BOSS_ENTRYWAY,  DODONGOS_CAVERN_BOSS_ROOM,  DODONGOS_CAVERN_ENTRYWAY,  0x040B, 0x00C5},
-        {EntranceType::ChildBoss, JABU_JABUS_BELLY_BOSS_ENTRYWAY, JABU_JABUS_BELLY_BOSS_ROOM, JABU_JABUS_BELLY_ENTRYWAY, 0x0301, 0x0407},
-        {EntranceType::AdultBoss, FOREST_TEMPLE_BOSS_ENTRYWAY,    FOREST_TEMPLE_BOSS_ROOM,    FOREST_TEMPLE_ENTRYWAY,    0x000C, 0x024E},
-        {EntranceType::AdultBoss, FIRE_TEMPLE_BOSS_ENTRYWAY,      FIRE_TEMPLE_BOSS_ROOM,      FIRE_TEMPLE_ENTRYWAY,      0x0305, 0x0175},
-        {EntranceType::AdultBoss, WATER_TEMPLE_BOSS_ENTRYWAY,     WATER_TEMPLE_BOSS_ROOM,     WATER_TEMPLE_ENTRYWAY,     0x0417, 0x0423},
-        {EntranceType::AdultBoss, SPIRIT_TEMPLE_BOSS_ENTRYWAY,    SPIRIT_TEMPLE_BOSS_ROOM,    SPIRIT_TEMPLE_ENTRYWAY,    0x008D, 0x02F5},
-        {EntranceType::AdultBoss, SHADOW_TEMPLE_BOSS_ENTRYWAY,    SHADOW_TEMPLE_BOSS_ROOM,    SHADOW_TEMPLE_ENTRYWAY,    0x0413, 0x02B2},
-    };
-    // clang-format on
-
-    // Add in boss room entrances and their reverse entrances with the bluewarp index
-    for (auto bossRoomInfo : bossRoomTable) {
-        entranceShuffleTable.push_back({
-            { bossRoomInfo.type, bossRoomInfo.bossDoor, bossRoomInfo.bossRoom, bossRoomInfo.index },
-            { bossRoomInfo.type, bossRoomInfo.bossRoom, bossRoomInfo.bossDoor, bossRoomInfo.exitIndex,
-              dungeonData[bossRoomInfo.dungeon].exitBlueWarp },
-        });
-    }
 
     entranceShuffleFailure = false;
     SetAllEntrancesData(entranceShuffleTable);
