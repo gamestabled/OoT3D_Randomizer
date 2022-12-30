@@ -13,6 +13,6 @@ typedef struct EnElf {
 
 #define gNaviColorList ((NaviColor*)0x50C998)
 
-void updateNaviColors(EnElf* navi);
+void Fairy_UpdateRainbowNaviColors(EnElf* navi);
 
 #endif //_FAIRY_H_

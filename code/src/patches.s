@@ -2001,6 +2001,16 @@ AboutToPickUpActor_patch:
 GoronPotGuaranteeReward_patch:
     bl hook_GoronPotGuaranteeReward
 
+.section .patch_TargetReticleColor
+.global TargetReticleColor_patch
+TargetReticleColor_patch:
+    bl hook_TargetReticleColor
+
+.section .patch_TargetPointerColor
+.global TargetPointerColor_patch
+TargetPointerColor_patch:
+    bl hook_TargetPointerColor
+
 @ ----------------------------------
 @ ----------------------------------
 

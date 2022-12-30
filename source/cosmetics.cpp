@@ -72,7 +72,7 @@ const std::array<std::string_view, 28> tunicColors = {
     "7E705B", // Beige
     "583923", // Brown
     "72602B", // Sand
-    "6b7E5D", // Tea Green
+    "6B7E5D", // Tea Green
     "3C5800", // Dark Green
     "6CFFF8", // Powder Blue
     "005A4B", // Teal
