@@ -51,6 +51,7 @@ enum class Category {
     cTempleOfTime,
     cFairies,
     cOutsideGanonsCastle,
+    cDungeonReward,
     cSong,
     cSongDungeonReward,
     cCow,

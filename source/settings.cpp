@@ -1707,7 +1707,15 @@ void ResolveExcludedLocationConflicts() {
         IncludeAndHide(songDungeonRewards);
     }
 
-    // Force Include Vanilla Skulltula locations
+    //Force Include Dungeon Rewards if set to End of Dungeons
+    std::vector<LocationKey> rewardsLocations = GetLocations(everyPossibleLocation, Category::cDungeonReward);
+    if (ShuffleRewards.IsNot(REWARDSHUFFLE_END_OF_DUNGEON)) {
+      Unhide(rewardsLocations);
+    } else {
+      IncludeAndHide(rewardsLocations);
+    }
+
+    //Force Include Vanilla Skulltula locations
     std::vector<LocationKey> skulltulaLocations = GetLocations(everyPossibleLocation, Category::cSkulltula);
     Unhide(skulltulaLocations);
     if (Tokensanity.IsNot(TOKENSANITY_ALL_TOKENS)) {
@@ -1762,11 +1770,11 @@ void ResolveExcludedLocationConflicts() {
         IncludeAndHide({ HC_MALON_EGG });
     }
 
-    // Force include Gerudo Token Location if it's not shuffled
-    if (ShuffleGerudoToken) {
-        Unhide({ GF_GERUDO_TOKEN });
+    //Force include Gerudo Token Location if it's not shuffled
+    if (!ShuffleGerudoToken || GerudoFortress.Is(GERUDOFORTRESS_OPEN)) {
+      IncludeAndHide({GF_GERUDO_TOKEN});
     } else {
-        IncludeAndHide({ GF_GERUDO_TOKEN });
+      Unhide({GF_GERUDO_TOKEN});
     }
 
     // Force include Magic Bean salesman if Shuffle Magic Beans is off
