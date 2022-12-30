@@ -45,7 +45,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     Settings_SkipSongReplays();
 
     Multiplayer_Run();
-    
+
     ItemEffect_RupeeAmmo(&gSaveContext);
 }
 

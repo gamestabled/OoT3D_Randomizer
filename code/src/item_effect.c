@@ -278,35 +278,39 @@ void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
 }
 
-//Use rupees as ammo when count gets to 0 and the player has the corresponding item
+// Use rupees as ammo when count gets to 0 and the player has the corresponding item
 void ItemEffect_RupeeAmmo(SaveContext* saveCtx) {
-    if(gSettingsContext.retroAmmo){
-        if(saveCtx->ammo[SLOT_BOW] == 0 && saveCtx->rupees >= 4 && (saveCtx->items[SLOT_BOW] == ITEM_BOW || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_FIRE || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_ICE || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_LIGHT)){
+    if (gSettingsContext.retroAmmo) {
+        if (saveCtx->ammo[SLOT_BOW] == 0 && saveCtx->rupees >= 4 &&
+            (saveCtx->items[SLOT_BOW] == ITEM_BOW || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_FIRE ||
+             saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_ICE || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_LIGHT)) {
             saveCtx->rupeeAccumulator -= 4;
             saveCtx->ammo[SLOT_BOW] += 1;
         }
-        if(saveCtx->ammo[SLOT_BOMB] == 0 && saveCtx->rupees >= 8 && saveCtx->items[SLOT_BOMB] == ITEM_BOMB){
+        if (saveCtx->ammo[SLOT_BOMB] == 0 && saveCtx->rupees >= 8 && saveCtx->items[SLOT_BOMB] == ITEM_BOMB) {
             saveCtx->rupeeAccumulator -= 8;
             saveCtx->ammo[SLOT_BOMB] += 1;
         }
-        if(saveCtx->ammo[SLOT_BOMBCHU] == 0 && saveCtx->rupees >= 12 && saveCtx->items[SLOT_BOMBCHU] == ITEM_BOMBCHU){
+        if (saveCtx->ammo[SLOT_BOMBCHU] == 0 && saveCtx->rupees >= 12 && saveCtx->items[SLOT_BOMBCHU] == ITEM_BOMBCHU) {
             saveCtx->rupeeAccumulator -= 12;
             saveCtx->ammo[SLOT_BOMBCHU] += 1;
         }
-        if(saveCtx->ammo[SLOT_SLINGSHOT] == 0 && saveCtx->rupees >= 2 && saveCtx->items[SLOT_SLINGSHOT] == ITEM_SLINGSHOT){
+        if (saveCtx->ammo[SLOT_SLINGSHOT] == 0 && saveCtx->rupees >= 2 &&
+            saveCtx->items[SLOT_SLINGSHOT] == ITEM_SLINGSHOT) {
             saveCtx->rupeeAccumulator -= 2;
             saveCtx->ammo[SLOT_SLINGSHOT] += 1;
         }
-        if(saveCtx->ammo[SLOT_STICK] == 0 && saveCtx->rupees >= 15 && saveCtx->items[SLOT_STICK] == ITEM_STICK){
+        if (saveCtx->ammo[SLOT_STICK] == 0 && saveCtx->rupees >= 15 && saveCtx->items[SLOT_STICK] == ITEM_STICK) {
             saveCtx->rupeeAccumulator -= 15;
             saveCtx->ammo[SLOT_STICK] += 1;
         }
-        if(saveCtx->ammo[SLOT_NUT] == 0 && saveCtx->rupees >= 4 && saveCtx->items[SLOT_NUT] == ITEM_NUT){
+        if (saveCtx->ammo[SLOT_NUT] == 0 && saveCtx->rupees >= 4 && saveCtx->items[SLOT_NUT] == ITEM_NUT) {
             saveCtx->rupeeAccumulator -= 4;
             saveCtx->ammo[SLOT_NUT] += 1;
         }
-        //Use rupees as magic when it becomes low, when the player has magic, and when magic isn't being filled
-        if(saveCtx->magic < 0x18 && saveCtx->rupees >= 1 && (saveCtx->magicState == 0 || saveCtx->magicState == 7) && saveCtx->magicLevel > 0){
+        // Use rupees as magic when it becomes low, when the player has magic, and when magic isn't being filled
+        if (saveCtx->magic < 0x18 && saveCtx->rupees >= 1 && (saveCtx->magicState == 0 || saveCtx->magicState == 7) &&
+            saveCtx->magicLevel > 0) {
             saveCtx->rupeeAccumulator -= 1;
             saveCtx->magic += 0x01;
         }
