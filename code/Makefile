@@ -59,15 +59,21 @@ ifeq ($(USA), $(REGION))
   LINK_SCRIPT 	:= oot.ld
   ASFLAGS += -D _USA_=1 -D _EUR_=0 -D _JP_=0
   CFLAGS += -g -DVersion_USA
+  BUILD  := build_usa
+  TARGET := code_usa
 else
 ifeq ($(EUR), $(REGION))
   LINK_SCRIPT 	:= oot_e.ld
   ASFLAGS += -D _USA_=0 -D _EUR_=1 -D _JP_=0
   CFLAGS += -g -DVersion_EUR
+  BUILD  := build_eur
+  TARGET := code_eur
 ifeq ($(JP), $(REGION))
   LINK_SCRIPT 	:= oot_j.ld
   ASFLAGS += -D _USA_=0 -D _EUR_=0 -D _JP_=1
   CFLAGS += -g -DVersion_JP
+  BUILD  := build_jp
+  TARGET := code_jp
 endif
 endif
 endif
@@ -166,7 +172,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD)  $(TARGET).elf
+	@rm -fr build build_eur build_usa *.elf ../source/patch_symbols*
 
 
 #---------------------------------------------------------------------------------

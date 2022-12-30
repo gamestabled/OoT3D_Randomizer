@@ -70,6 +70,9 @@ ifneq ($(debug), 0)
 	CXXFLAGS += -g -DENABLE_DEBUG
 endif
 
+# Enable this to skip building the basecode patches
+app_only ?= 0
+
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
@@ -172,15 +175,21 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: delete3DSX create_basecode $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
-$(BUILD):
-	$(MAKE) REGION=USA -C code
+delete3DSX:
+	@rm -fr $(TARGET).3dsx
+
+create_basecode:
+ifeq ($(app_only), 0)
+	$(MAKE) --no-print-directory REGION=USA -C code
 	@mv code/basecode_USA.ips $(ROMFS)
-	$(MAKE) clean -C code
-	$(MAKE) REGION=EUR -C code
+	$(MAKE) --no-print-directory REGION=EUR -C code
 	@mv code/basecode_EUR.ips $(ROMFS)
+endif
+
+$(BUILD):
 	@mkdir -p $@
 
 ifneq ($(GFXBUILD),$(BUILD))
@@ -196,7 +205,8 @@ endif
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) $(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) \
+		$(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips
 	$(MAKE) clean -C code
 
 #---------------------------------------------------------------------------------
