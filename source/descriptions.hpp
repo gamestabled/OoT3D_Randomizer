@@ -320,6 +320,7 @@ extern string_view restoreISGdesc;
 extern string_view gkDurabilityVanilla;
 extern string_view gkDurabilityRandomRisk;
 extern string_view gkDurabilityRandomSafe;
+extern string_view retroAmmoDesc;
 
 extern string_view mp_EnabledDesc;
 extern string_view mp_SharedProgressDesc;

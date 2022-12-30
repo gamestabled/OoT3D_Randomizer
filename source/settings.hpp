@@ -474,6 +474,7 @@ extern Option GoronTunicAsChild;
 extern Option ZoraTunicAsChild;
 extern Option RestoreISG;
 extern Option GkDurability;
+extern Option RetroAmmo;
 
 extern Option ItemPoolValue;
 extern Option IceTrapValue;

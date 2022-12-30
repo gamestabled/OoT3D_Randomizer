@@ -1021,6 +1021,11 @@ string_view gkDurabilityRandomSafe    = "Each Giant's Knife will get a random du
                                         "between 10 and 50, with an average of 30.";       //
                                                                                            //
 /*------------------------------                                                           //
+|       RUPEES AS AMMO         |                                                           //
+------------------------------*/                                                           //
+string_view retroAmmoDesc             = "If you run out of ammo or magic, you'll use\n"    //
+                                        "rupees instead.";                                 //
+/*------------------------------                                                           //
 |         MULTIPLAYER          |                                                           //
 ------------------------------*/                                                           //
 string_view mp_EnabledDesc            = "Enables multiplayer.\n"                           //
