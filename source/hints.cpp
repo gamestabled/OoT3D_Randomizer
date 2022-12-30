@@ -359,10 +359,10 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
     LocationKey gossipStone = RandomElement(gossipStoneLocations);
 
     // form hint text
-    Text itemText = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
+    Text itemText     = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
+    Text locationText = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
+    // TODO: reconsider dungeon vs non-dungeon item location hints when boss shuffle mixed pools happens
     if (Location(hintedLocation)->IsDungeon()) {
-        AreaKey parentRegion = Location(hintedLocation)->GetParentRegionKey();
-        Text locationText    = AreaTable(parentRegion)->GetHint().GetText();
         Text finalHint =
             Hint(PREFIX).GetText() + "#" + locationText + "# " + Hint(HOARDS).GetText() + " #" + itemText + "#.";
         finalHint.SetFormPerLanguage();
@@ -371,8 +371,7 @@ static void CreateRandomLocationHint(const bool goodItem = false) {
         PlacementLog_Msg("\n\n");
         AddHint(finalHint, gossipStone, { QM_GREEN, QM_RED });
     } else {
-        Text locationText = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
-        Text finalHint    = Hint(PREFIX).GetText() + "#" + itemText + "# " + Hint(CAN_BE_FOUND_AT).GetText() + " #" +
+        Text finalHint = Hint(PREFIX).GetText() + "#" + itemText + "# " + Hint(CAN_BE_FOUND_AT).GetText() + " #" +
                          locationText + "#.";
         finalHint.SetFormPerLanguage();
         PlacementLog_Msg("\tMessage: ");
