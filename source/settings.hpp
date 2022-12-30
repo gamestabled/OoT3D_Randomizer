@@ -357,6 +357,7 @@ extern Option StartingAge;
 extern u8 ResolvedStartingAge;
 extern Option ShuffleEntrances;
 extern Option ShuffleDungeonEntrances;
+extern Option ShuffleBossEntrances;
 extern Option ShuffleOverworldEntrances;
 extern Option ShuffleInteriorEntrances;
 extern Option ShuffleGrottoEntrances;
