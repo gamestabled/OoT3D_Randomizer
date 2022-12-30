@@ -390,6 +390,18 @@ typedef struct {
     /* 0x40 */ u32 size;
 } ObjectFile;
 
+typedef struct {
+    /* 0x00 */ s16 id;
+    /* 0x02 */ Vec3s pos;
+    /* 0x08 */ Vec3s rot;
+    /* 0x0E */ s16 params;
+} ActorEntry; // size = 0x10
+
+typedef struct {
+    /* 0x00 */ u8 spawn;
+    /* 0x01 */ u8 room;
+} EntranceEntry;
+
 typedef struct GameState {
     /* 0x00 */ GraphicsContext* gfxCtx;
     /* 0x04 */ void (*main)(struct GameState*);
@@ -426,7 +438,12 @@ typedef struct GlobalContext {
     /* 0x4C30 */ u8 roomNum;
     /* 0x4C31 */ char unk_4C31[0x0FCF];
     /* 0x5C00 */ u8 linkAgeOnLoad;
-    /* 0x5C01 */ char unk_5C01[0x001B];
+    /* 0x5C01 */ u8 unk_5C01;
+    /* 0x5C02 */ u8 curSpawn;
+    /* 0x5C03 */ char unk_5C03[0x0006];
+    /* 0x5C09 */ ActorEntry* linkActorEntry;
+    /* 0x5C0D */ char unk_5C0D[0x0008];
+    /* 0x5C19 */ EntranceEntry* setupEntranceList;
     /* 0x5C1C */ s16* setupExitList;
     /* 0x5C20 */ char unk_5C20[0x000D];
     /* 0x5C2D */ s8 sceneLoadFlag; // "fade_direction"

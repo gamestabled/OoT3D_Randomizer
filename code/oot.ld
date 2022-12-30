@@ -1164,6 +1164,10 @@ SECTIONS
 		*(.patch_InitSceneMirrorWorld)
 	}
 
+	.patch_InitSceneEntranceOverride 0x449190 : {
+		*(.patch_InitSceneEntranceOverride)
+	}
+
 	.patch_InitSceneClearExtendedObjects 0x449218 : {
 		*(.patch_InitSceneClearExtendedObjects)
 	}

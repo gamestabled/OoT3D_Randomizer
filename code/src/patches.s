@@ -1976,6 +1976,11 @@ CriticalHealthCheckThree_patch:
 InitSceneMirrorWorld_patch:
     bl hook_InitSceneMirrorWorld
 
+.section .patch_InitSceneEntranceOverride
+.global InitSceneEntranceOverride_patch
+InitSceneEntranceOverride_patch:
+    bl hook_InitSceneEntranceOverride
+
 .section .patch_CollisionATvsAC
 .global CollisionATvsAC_patch
 CollisionATvsAC_patch:

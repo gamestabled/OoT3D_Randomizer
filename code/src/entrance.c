@@ -980,3 +980,27 @@ void Entrance_UpdateMQFlag(void) {
         }
     }
 }
+
+// Allows us to modify information pertaining to a scene just after scene init, but before the entrance is loaded
+void Entrance_OverrideSpawnScene(void) {
+    if (!IsInGame()) {
+        return;
+    }
+    // Repair the authentically bugged scene/spawn info for leaving Barinade's boss room -> JabuJabu's belly
+    // to load the correct room outside the boss room, and slightly adjust Link's position
+    // to prevent him from falling through the floor
+    if (gGlobalContext->sceneNum == DUNGEON_JABUJABUS_BELLY && gGlobalContext->curSpawn == 1) { // Barinade -> Jabu
+        gGlobalContext->linkActorEntry->pos.z                            = 0xF7F4;
+        gGlobalContext->setupEntranceList[gGlobalContext->curSpawn].room = 5;
+    }
+    // Repair the authentically bugged scene/spawn info for leaving Morhpa's boss room -> Water Temple
+    // to load the correct room for the hallway before Morpha's boss room
+    // and place Link's position/rotation in the hallway, instead of the temple entrance
+    if (gGlobalContext->sceneNum == DUNGEON_WATER_TEMPLE && gGlobalContext->curSpawn == 1) { // Morpha -> Water Temple
+        gGlobalContext->linkActorEntry->pos.x                            = 0xFF4C;
+        gGlobalContext->linkActorEntry->pos.y                            = 0x0406;
+        gGlobalContext->linkActorEntry->pos.z                            = 0xF828;
+        gGlobalContext->linkActorEntry->rot.y                            = 0;
+        gGlobalContext->setupEntranceList[gGlobalContext->curSpawn].room = 11;
+    }
+}
