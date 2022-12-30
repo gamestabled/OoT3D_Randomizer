@@ -22,10 +22,41 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 
 // Owl Flights : 0x492064 and 0x492080
 
+typedef struct {
+    s16 blueWarp;
+    s16 destination;
+} BlueWarpReplacement;
+
+typedef struct {
+    s16 entryway;
+    s16 exit;
+    s16 bossDoor;
+    s16 bossDoorReverse;
+    s16 blueWarp;
+    s16 scene;
+    s16 bossScene;
+} DungeonEntranceInfo;
+
+// Boss scenes (maps normalized boss scenes range to 0 on lookup) to the replaced dungeon scene it is connected to
+static s16 dungeonBossSceneOverrides[SHUFFLEABLE_BOSS_COUNT]      = { 0 };
 EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
 EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT]           = { 0 };
 EntranceTrackingData gEntranceTrackingData                        = { 0 };
 static s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE]             = { 0 };
+
+// clang-format off
+static DungeonEntranceInfo dungeons[] = {
+    //entryway,                  exit,   boss,   reverse,bluewarp,dungeon scene,           boss scene
+    { DEKU_TREE_ENTRANCE,        0x0209, 0x040F, 0x0252, 0x0457,  DUNGEON_DEKU_TREE,       DUNGEON_DEKU_TREE_BOSS_ROOM },
+    { DODONGOS_CAVERN_ENTRANCE,  0x0242, 0x040B, 0x00C5, 0x047A,  DUNGEON_DODONGOS_CAVERN, DUNGEON_DODONGOS_CAVERN_BOSS_ROOM },
+    { JABU_JABUS_BELLY_ENTRANCE, 0x0221, 0x0301, 0x0407, 0x010E,  DUNGEON_JABUJABUS_BELLY, DUNGEON_JABUJABUS_BELLY_BOSS_ROOM },
+    { FOREST_TEMPLE_ENTRANCE,    0x0215, 0x000C, 0x024E, 0x0608,  DUNGEON_FOREST_TEMPLE,   DUNGEON_FOREST_TEMPLE_BOSS_ROOM },
+    { FIRE_TEMPLE_ENTRANCE,      0x024A, 0x0305, 0x0175, 0x0564,  DUNGEON_FIRE_TEMPLE,     DUNGEON_FIRE_TEMPLE_BOSS_ROOM },
+    { WATER_TEMPLE_ENTRANCE,     0x021D, 0x0417, 0x0423, 0x060C,  DUNGEON_WATER_TEMPLE,    DUNGEON_WATER_TEMPLE_BOSS_ROOM },
+    { SPIRIT_TEMPLE_ENTRANCE,    0x01E1, 0x008D, 0x02F5, 0x0610,  DUNGEON_SPIRIT_TEMPLE,   DUNGEON_SPIRIT_TEMPLE_BOSS_ROOM},
+    { SHADOW_TEMPLE_ENTRANCE,    0x0205, 0x0413, 0x02B2, 0x0580,  DUNGEON_SHADOW_TEMPLE,   DUNGEON_SHADOW_TEMPLE_BOSS_ROOM },
+};
+// clang-format on
 
 // These variables store the new entrance indices for dungeons so that
 // savewarping and game overs respawn players at the proper entrance.
@@ -127,6 +158,9 @@ static void Entrance_SeparateAdultSpawnAndPrelude() {
 void Entrance_Init(void) {
     s32 index;
 
+    size_t blueWarpRemapIdx                               = 0;
+    BlueWarpReplacement bluewarps[SHUFFLEABLE_BOSS_COUNT] = { 0 };
+
     // Skip Child Stealth if given by settings
     if (gSettingsContext.skipChildStealth == SKIP) {
         gEntranceTable[0x07A].scene = 0x4A;
@@ -153,6 +187,11 @@ void Entrance_Init(void) {
     // index referring to itself means that the entrance is not currently shuffled.
     for (s16 i = 0; i < ENTRANCE_TABLE_SIZE; i++) {
         entranceOverrideTable[i] = i;
+    }
+
+    // Initialize all boss rooms connected to their vanilla dungeon
+    for (s16 i = 1; i < SHUFFLEABLE_BOSS_COUNT; i++) {
+        dungeonBossSceneOverrides[i] = i;
     }
 
     // Initialize the grotto exit and load lists
@@ -184,7 +223,33 @@ void Entrance_Init(void) {
         entranceOverrideTable[originalIndex] = overrideIndex;
 
         if (blueWarpIndex != 0) {
-            entranceOverrideTable[blueWarpIndex] = overrideIndex;
+            // When boss shuffle is enabled, we need to know what dungeon the boss room is connected to for
+            // death/save warping, and for the blue warp
+            if (gSettingsContext.shuffleBossEntrances != OFF) {
+                s16 bossScene            = -1;
+                s16 replacedDungeonScene = -1;
+                s16 replacedDungeonExit  = -1;
+                // Search for the boss scene and replaced blue warp exits
+                for (s16 j = 0; j <= SHUFFLEABLE_BOSS_COUNT; j++) {
+                    if (blueWarpIndex == dungeons[j].blueWarp) {
+                        bossScene = dungeons[j].bossScene;
+                    }
+                    if (overrideIndex == dungeons[j].bossDoorReverse) {
+                        replacedDungeonScene = dungeons[j].scene;
+                        replacedDungeonExit  = dungeons[j].exit;
+                    }
+                }
+
+                // assign the boss scene override
+                if (bossScene != -1 && replacedDungeonScene != -1 && replacedDungeonExit != -1) {
+                    dungeonBossSceneOverrides[bossScene - DUNGEON_DEKU_TREE_BOSS_ROOM] = replacedDungeonScene;
+                    bluewarps[blueWarpRemapIdx].blueWarp                               = blueWarpIndex;
+                    bluewarps[blueWarpRemapIdx].destination                            = replacedDungeonExit;
+                    blueWarpRemapIdx++;
+                }
+            } else {
+                entranceOverrideTable[blueWarpIndex] = overrideIndex;
+            }
         }
 
         // Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
@@ -192,6 +257,14 @@ void Entrance_Init(void) {
             entranceOverrideTable[0x01D9] = overrideIndex;
         } else if (originalIndex == 0x0181) { // ZR Front -> Hyrule Field land entrance
             entranceOverrideTable[0x0311] = overrideIndex;
+        }
+    }
+
+    // If we have remapped blue warps from boss shuffle, handle setting those and grabbing the override for
+    // the replaced dungeons exit in the event that dungeon shuffle is also turned on
+    for (size_t i = 0; i < ARRAY_SIZE(bluewarps); i++) {
+        if (bluewarps[i].blueWarp != 0 && bluewarps[i].destination != 0) {
+            entranceOverrideTable[bluewarps[i].blueWarp] = Entrance_GetOverride(bluewarps[i].destination);
         }
     }
 
@@ -278,11 +351,22 @@ void Entrance_EnteredLocation(void) {
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
 }
 
-// Properly respawn the player after a game over, accounding for dungeon entrance
+// Properly respawn the player after a game over, accounting for dungeon entrance
 // randomizer. It's easier to rewrite this entirely compared to performing an ASM
 // dance for just the boss rooms. Entrance Indexes can be found here:
 // https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetGameOverEntrance(void) {
+
+    s16 scene = gGlobalContext->sceneNum;
+
+    // When in a boss room and boss shuffle is on, get the connected dungeon's original boss room entrance
+    // then run the normal game over overrides on it
+    if (gSettingsContext.shuffleBossEntrances != OFF && scene >= DUNGEON_DEKU_TREE_BOSS_ROOM &&
+        scene <= DUNGEON_SHADOW_TEMPLE_BOSS_ROOM) {
+        // Normalize boss scene range to 0 on lookup
+        scene                      = dungeonBossSceneOverrides[scene - DUNGEON_DEKU_TREE_BOSS_ROOM];
+        gSaveContext.entranceIndex = dungeons[scene].bossDoor;
+    }
 
     // Set the current entrance depending on which entrance the player last came through
     switch (gSaveContext.entranceIndex) {
@@ -324,21 +408,29 @@ void Entrance_SetSavewarpEntrance(void) {
 
     s16 scene = gSaveContext.sceneIndex;
 
+    // When in a boss room and boss shuffle is on, use the boss scene override to remap to its
+    // connected dungeon and use that for the final entrance
+    if (gSettingsContext.shuffleBossEntrances != OFF && scene >= DUNGEON_DEKU_TREE_BOSS_ROOM &&
+        scene <= DUNGEON_SHADOW_TEMPLE_BOSS_ROOM) {
+        // Normalize boss scene range to 0 on lookup
+        scene = dungeonBossSceneOverrides[scene - DUNGEON_DEKU_TREE_BOSS_ROOM];
+    }
+
     if (scene == DUNGEON_DEKU_TREE || scene == DUNGEON_DEKU_TREE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newDekuTreeEntrance;
     } else if (scene == DUNGEON_DODONGOS_CAVERN || scene == DUNGEON_DODONGOS_CAVERN_BOSS_ROOM) {
         gSaveContext.entranceIndex = newDodongosCavernEntrance;
     } else if (scene == DUNGEON_JABUJABUS_BELLY || scene == DUNGEON_JABUJABUS_BELLY_BOSS_ROOM) {
         gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
-    } else if (scene == DUNGEON_FOREST_TEMPLE || scene == 0x14) { // Forest Temple Boss Room
+    } else if (scene == DUNGEON_FOREST_TEMPLE || scene == DUNGEON_FOREST_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newForestTempleEntrance;
-    } else if (scene == DUNGEON_FIRE_TEMPLE || scene == 0x15) { // Fire Temple Boss Room
+    } else if (scene == DUNGEON_FIRE_TEMPLE || scene == DUNGEON_FIRE_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newFireTempleEntrance;
-    } else if (scene == DUNGEON_WATER_TEMPLE || scene == 0x16) { // Water Temple Boss Room
+    } else if (scene == DUNGEON_WATER_TEMPLE || scene == DUNGEON_WATER_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newWaterTempleEntrance;
-    } else if (scene == DUNGEON_SPIRIT_TEMPLE || scene == 0x17) { // Spirit Temple Boss Room
+    } else if (scene == DUNGEON_SPIRIT_TEMPLE || scene == DUNGEON_SPIRIT_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newSpiritTempleEntrance;
-    } else if (scene == DUNGEON_SHADOW_TEMPLE || scene == 0x18) { // Shadow Temple Boss Room
+    } else if (scene == DUNGEON_SHADOW_TEMPLE || scene == DUNGEON_SHADOW_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newShadowTempleEntrance;
     } else if (scene == DUNGEON_BOTTOM_OF_THE_WELL) {
         gSaveContext.entranceIndex = newBottomOfTheWellEntrance;
