@@ -2011,6 +2011,21 @@ TargetReticleColor_patch:
 TargetPointerColor_patch:
     bl hook_TargetPointerColor
 
+.section .patch_ShadowShip_CSTimer
+.global ShadowShip_CSTimer_patch
+ShadowShip_CSTimer_patch:
+    .word 0xC3
+
+.section .patch_ShadowShip_Accel
+.global ShadowShip_Accel_patch
+ShadowShip_Accel_patch:
+    .word 0x3F800000
+
+.section .patch_ShadowShip_TopSpeed
+.global ShadowShip_TopSpeed_patch
+ShadowShip_TopSpeed_patch:
+    .word 0x41A00000
+
 @ ----------------------------------
 @ ----------------------------------
 
