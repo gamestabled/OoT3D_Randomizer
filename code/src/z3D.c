@@ -7,7 +7,21 @@ const u32 ItemSlots[] = {
 };
 
 const char DungeonNames[][25] = {
-    "Deku Tree",     "Dodongo's Cavern",        "Jabu-Jabu's Belly", "Forest Temple",      "Fire Temple",
-    "Water Temple",  "Spirit Temple",           "Shadow Temple",     "Bottom of the Well", "Ice Cavern",
-    "Ganon's Tower", "Gerudo Training Grounds", "Gerudo Fortress",   "Ganon's Castle",
+    "Deku Tree",
+    "Dodongo's Cavern",
+    "Jabu-Jabu's Belly",
+    "Forest Temple",
+    "Fire Temple",
+    "Water Temple",
+    "Spirit Temple",
+    "Shadow Temple",
+    "Bottom of the Well",
+    "Ice Cavern",
+    "Ganon's Tower",
+    "Gerudo Training Grounds",
+    "Gerudo Fortress",
+    "Ganon's Castle",
+    "",
+    "",
+    "Treasure Chest Shop",
 };

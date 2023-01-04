@@ -233,7 +233,7 @@ Option LACSStoneCount      = Option::U8  (2, "Stone Count",            {NumOpts(
 Option LACSRewardCount     = Option::U8  (2, "Reward Count",           {NumOpts(0, 9)},                                                        {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
 Option LACSDungeonCount    = Option::U8  (2, "Dungeon Count",          {NumOpts(0, 8)},                                                        {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
 Option LACSTokenCount      = Option::U8  (2, "Token Count",            {NumOpts(0, 100)},                                                      {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
-Option KeyRings            = Option::Bool("Key Rings",                 {"Off", "On"},                                                          {keyRingDesc});
+Option KeyRings            = Option::U8  ("Key Rings",                 {"Off", "On", "Random"},                                                {keyRingDesc});
 Option RingFortress        = Option::Bool(2, "Gerudo Fortress",        {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
 Option RingForest          = Option::Bool(2, "Forest Temple",          {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
 Option RingFire            = Option::Bool(2, "Fire Temple",            {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
@@ -2136,7 +2136,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
             LACSTokenCount.Hide();
         }
 
-        if (KeyRings) {
+        if (KeyRings.Is(ON)) {
             for (Option* option : keyRingOptions) {
                 option->Unhide();
             }
@@ -2781,6 +2781,14 @@ void UpdateSettings() {
         dungeons[i]->ClearKeyRing();
     }
     if (KeyRings) {
+        // Rangom Key Rings
+        if (KeyRings.Is(2)) {
+            auto keyRings = keyRingOptions;
+            Shuffle(keyRings);
+            for (size_t i = 0; i < Random(0, keyRings.size()); i++) {
+                keyRings[i]->SetSelectedIndex(ON);
+            }
+        }
         if (RingWell) {
             BottomOfTheWell.SetKeyRing();
         }

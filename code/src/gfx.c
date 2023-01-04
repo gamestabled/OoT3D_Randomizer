@@ -16,6 +16,7 @@
 #include "draw.h"
 #include "input.h"
 #include "multiplayer.h"
+#include "dungeon.h"
 
 u32 pressed;
 bool handledInput;
@@ -192,22 +193,21 @@ static bool IsEntranceDiscovered(s16 index) {
 }
 
 static bool IsDungeonDiscovered(DungeonId dungeonId) {
-    if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
-        if (gSettingsContext.dungeonModesKnown[dungeonId]) {
-            return true;
-        }
-
-        // A dungeon is considered discovered if we've visited the dungeon at least once, we have the map,
-        // or the dungeon mode is known due to settings.
-        // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
-        bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
-        bool dungeonIsDiscovered =
-            (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId) ||
-            (dungeonId == DUNGEON_GANONS_TOWER && SaveFile_GetIsSceneDiscovered(DUNGEON_INSIDE_GANONS_CASTLE));
-
-        return dungeonIsDiscovered;
+    if (dungeonId == DUNGEON_GANONS_TOWER || dungeonId == DUNGEON_THIEVES_HIDEOUT ||
+        dungeonId > DUNGEON_INSIDE_GANONS_CASTLE) {
+        return false;
     }
-    return false;
+
+    u8 idToModeKnown[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, 10, -1, 11 };
+    if (gSettingsContext.dungeonModesKnown[idToModeKnown[dungeonId]]) {
+        return true;
+    }
+
+    // A dungeon is considered discovered if we've visited the dungeon at least once, we have the map,
+    // or the dungeon mode is known due to settings.
+    // Ganon's Tower and Gerudo Training Grounds don't have maps, so they are only revealed by visiting them
+    bool hasMap = gSaveContext.dungeonItems[dungeonId] & 4;
+    return (gSettingsContext.mapsShowDungeonMode && hasMap) || SaveFile_GetIsSceneDiscovered(dungeonId);
 }
 
 static bool CanShowSpoilerGroup(SpoilerCollectionCheckGroup group) {
@@ -391,36 +391,38 @@ static void Gfx_DrawSeedHash(void) {
 }
 
 static void Gfx_DrawDungeonItems(void) {
+    static const u8 spacingY = 13;
+
     if (showingLegend) {
-        Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items Legend");
-        Draw_DrawIcon(10, 43, COLOR_ICON_VANILLA, ICON_VANILLA);
-        Draw_DrawIcon(10, 56, COLOR_ICON_MASTER_QUEST, ICON_MASTER_QUEST);
+        u8 offsetY = 0;
 
-        Draw_DrawIcon(10, 82, COLOR_WHITE, ICON_SMALL_KEY);
-        Draw_DrawIcon(10, 95, COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
-        Draw_DrawIcon(10, 108, COLOR_ICON_MAP, ICON_MAP);
-        Draw_DrawIcon(10, 121, COLOR_ICON_COMPASS, ICON_COMPASS);
-
-        Draw_DrawIcon(10, 147, COLOR_ICON_WOTH, ICON_TRIFORCE);
-        Draw_DrawIcon(10, 160, COLOR_ICON_FOOL, ICON_FOOL);
-        Draw_DrawString(10, 173, COLOR_WHITE, "-");
-
-        Draw_DrawString(24, 43, COLOR_WHITE, "Vanilla Dungeon");
-        Draw_DrawString(24, 56, COLOR_WHITE, "Master Quest Dungeon");
-
-        Draw_DrawString(24, 82, COLOR_WHITE, "Small Key");
-        Draw_DrawString(24, 95, COLOR_WHITE, "Boss Key");
-        Draw_DrawString(24, 108, COLOR_WHITE, "Map");
-        Draw_DrawString(24, 121, COLOR_WHITE, "Compass");
-
-        Draw_DrawString(24, 147, COLOR_WHITE, "Way of the Hero");
-        Draw_DrawString(24, 160, COLOR_WHITE, "Barren Location");
-        Draw_DrawString(24, 173, COLOR_WHITE, "Non-WotH / Non-Barren Location");
+        Draw_DrawString(10, 16 + (spacingY * offsetY++), COLOR_TITLE, "Dungeon Items Legend");
+        offsetY++;
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_VANILLA, ICON_VANILLA);
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Vanilla Dungeon");
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_MASTER_QUEST, ICON_MASTER_QUEST);
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Master Quest Dungeon");
+        offsetY++;
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_WHITE, ICON_SMALL_KEY);
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Small Keys: Have / Found");
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
+        Draw_DrawString(24, 16 + (spacingY * offsetY), COLOR_WHITE, "Boss Key");
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_MAP, ICON_MAP);
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Map");
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_COMPASS, ICON_COMPASS);
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Compass");
+        offsetY++;
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_WOTH, ICON_TRIFORCE);
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Way of the Hero");
+        Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_FOOL, ICON_FOOL);
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Barren Location");
+        Draw_DrawString(10, 16 + (spacingY * offsetY), COLOR_WHITE, "-");
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Non-WotH / Non-Barren Location");
         return;
     }
     Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Items");
     // Draw header icons
-    Draw_DrawIcon(220, 16, COLOR_WHITE, ICON_SMALL_KEY);
+    Draw_DrawIcon(214, 16, COLOR_WHITE, ICON_SMALL_KEY);
     Draw_DrawIcon(240, 16, COLOR_WHITE, ICON_BOSS_KEY);
     Draw_DrawIcon(260, 16, COLOR_WHITE, ICON_MAP);
     Draw_DrawIcon(280, 16, COLOR_WHITE, ICON_COMPASS);
@@ -428,14 +430,24 @@ static void Gfx_DrawDungeonItems(void) {
         Draw_DrawIcon(300, 16, COLOR_WHITE, ICON_TRIFORCE);
     }
 
-    u8 yPos = 0;
-    for (u32 dungeonId = 0; dungeonId <= DUNGEON_THIEVES_HIDEOUT; ++dungeonId) {
-        yPos            = 30 + (dungeonId * 13);
-        bool hasBossKey = gSaveContext.dungeonItems[dungeonId] & 1;
+    u8 yPos = 30;
+    for (u32 dungeonId = 0; dungeonId <= DUNGEON_TREASURE_CHEST_SHOP; ++dungeonId) {
+        if (dungeonId == DUNGEON_GANONS_TOWER || dungeonId == DUNGEON_GANONS_TOWER_COLLAPSING_INTERIOR ||
+            dungeonId == DUNGEON_GANONS_CASTLE_COLLAPSING ||
+            (dungeonId == DUNGEON_THIEVES_HIDEOUT && gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) ||
+            (dungeonId == DUNGEON_TREASURE_CHEST_SHOP &&
+             gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_OFF)) {
+            continue;
+        }
+
+        bool hasBossKey = dungeonId == DUNGEON_INSIDE_GANONS_CASTLE
+                              ? gSaveContext.dungeonItems[DUNGEON_GANONS_TOWER] & 1
+                              : gSaveContext.dungeonItems[dungeonId] & 1;
         bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
         bool hasMap     = gSaveContext.dungeonItems[dungeonId] & 4;
 
-        if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS) {
+        // Dungeon Type
+        if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS || dungeonId == DUNGEON_INSIDE_GANONS_CASTLE) {
             if (IsDungeonDiscovered(dungeonId)) {
                 bool isMasterQuest         = gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
                 u32 modeIconColor          = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
@@ -445,30 +457,41 @@ static void Gfx_DrawDungeonItems(void) {
                 Draw_DrawCharacter(10, yPos, COLOR_DARK_GRAY, '?');
             }
         }
-        Draw_DrawString(24, yPos, COLOR_WHITE,
-                        DungeonNames[dungeonId == DUNGEON_GANONS_TOWER ? DUNGEON_INSIDE_GANONS_CASTLE : dungeonId]);
+        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
 
-        if (dungeonId > DUNGEON_JABUJABUS_BELLY && dungeonId != DUNGEON_ICE_CAVERN) {
-            // special case for Ganon's Castle small keys
-            s32 keys = 0;
-            if (dungeonId == DUNGEON_GANONS_TOWER) {
-                keys = (gSaveContext.dungeonKeys[DUNGEON_INSIDE_GANONS_CASTLE] >= 0)
-                           ? gSaveContext.dungeonKeys[DUNGEON_INSIDE_GANONS_CASTLE]
-                           : 0;
-            } else {
-                keys = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
+        // Small Keys
+        if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_BOTTOM_OF_THE_WELL) ||
+            (dungeonId >= DUNGEON_GERUDO_TRAINING_GROUNDS && dungeonId <= DUNGEON_INSIDE_GANONS_CASTLE) ||
+            dungeonId == DUNGEON_TREASURE_CHEST_SHOP) {
+
+            u8 keysHave = (gSaveContext.dungeonKeys[dungeonId] >= 0) ? gSaveContext.dungeonKeys[dungeonId] : 0;
+            Draw_DrawFormattedString(208, yPos, keysHave > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keysHave);
+            Draw_DrawString(214, yPos, COLOR_WHITE, "/");
+
+            u8 keysFound       = Dungeon_FoundSmallKeys(dungeonId);
+            u32 keysFoundColor = COLOR_WHITE;
+            if (keysFound >= Dungeon_KeyAmount(dungeonId) &&
+                (dungeonId == DUNGEON_THIEVES_HIDEOUT || dungeonId == DUNGEON_TREASURE_CHEST_SHOP ||
+                 IsDungeonDiscovered(dungeonId))) {
+                keysFoundColor = COLOR_GREEN;
+            } else if (keysFound == 0) {
+                keysFoundColor = COLOR_DARK_GRAY;
             }
-            Draw_DrawFormattedString(220, yPos, keys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keys);
+            Draw_DrawFormattedString(220, yPos, keysFoundColor, "%d", keysFound);
         }
 
+        // Boss Key
         if ((dungeonId >= DUNGEON_FOREST_TEMPLE && dungeonId <= DUNGEON_SHADOW_TEMPLE) ||
-            dungeonId == DUNGEON_GANONS_TOWER) {
+            dungeonId == DUNGEON_INSIDE_GANONS_CASTLE) {
             Draw_DrawIcon(240, yPos, hasBossKey ? COLOR_ICON_BOSS_KEY : COLOR_DARK_GRAY, ICON_BOSS_KEY);
         }
+
         if (dungeonId <= DUNGEON_ICE_CAVERN) {
+            // Map and Compass
             Draw_DrawIcon(260, yPos, hasMap ? COLOR_ICON_MAP : COLOR_DARK_GRAY, ICON_MAP);
             Draw_DrawIcon(280, yPos, hasCompass ? COLOR_ICON_COMPASS : COLOR_DARK_GRAY, ICON_COMPASS);
 
+            // Way of the Hero
             if (gSettingsContext.compassesShowWotH) {
                 if (hasCompass) {
                     if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
@@ -483,16 +506,8 @@ static void Gfx_DrawDungeonItems(void) {
                 }
             }
         }
-    }
 
-    // Show key count for Treasure Chest Shop if the option is enabled
-    yPos += 13;
-    if (gSettingsContext.shuffleChestMinigame) {
-        Draw_DrawString(24, yPos, COLOR_WHITE, "Treasure Chest Shop");
-        s32 chestGameKeys = (gSaveContext.dungeonKeys[DUNGEON_TREASURE_CHEST_SHOP] >= 0)
-                                ? gSaveContext.dungeonKeys[DUNGEON_TREASURE_CHEST_SHOP]
-                                : 0;
-        Draw_DrawFormattedString(220, yPos, chestGameKeys > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", chestGameKeys);
+        yPos += spacingY;
     }
 }
 

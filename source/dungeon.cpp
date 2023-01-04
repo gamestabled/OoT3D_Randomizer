@@ -1,4 +1,5 @@
 #include "dungeon.hpp"
+#include "../code/src/dungeon.h"
 
 #include "category.hpp"
 #include "item_location.hpp"
@@ -45,7 +46,7 @@ void DungeonInfo::PlaceVanillaMap() {
 
     auto dungeonLocations = GetDungeonLocations();
     auto mapLocation      = FilterFromPool(
-             dungeonLocations, [](const LocationKey loc) { return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
+        dungeonLocations, [](const LocationKey loc) { return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
     PlaceItemInLocation(mapLocation, map);
 }
 
@@ -218,57 +219,58 @@ DungeonInfo JabuJabusBelly =
                     BARINADE,
                 });
 
-DungeonInfo ForestTemple = DungeonInfo("Forest Temple", FOREST_TEMPLE_MAP, FOREST_TEMPLE_COMPASS,
-                                       FOREST_TEMPLE_SMALL_KEY, FOREST_TEMPLE_KEY_RING, FOREST_TEMPLE_BOSS_KEY, 5, 6,
-                                       {
-                                           // Vanilla Locations
-                                           FOREST_TEMPLE_FIRST_ROOM_CHEST,
-                                           FOREST_TEMPLE_FIRST_STALFOS_CHEST,
-                                           FOREST_TEMPLE_RAISED_ISLAND_COURTYARD_CHEST,
-                                           FOREST_TEMPLE_MAP_CHEST,
-                                           FOREST_TEMPLE_WELL_CHEST,
-                                           FOREST_TEMPLE_FALLING_CEILING_ROOM_CHEST,
-                                           FOREST_TEMPLE_EYE_SWITCH_CHEST,
-                                           FOREST_TEMPLE_BOSS_KEY_CHEST,
-                                           FOREST_TEMPLE_FLOORMASTER_CHEST,
-                                           FOREST_TEMPLE_BOW_CHEST,
-                                           FOREST_TEMPLE_RED_POE_CHEST,
-                                           FOREST_TEMPLE_BLUE_POE_CHEST,
-                                           FOREST_TEMPLE_BASEMENT_CHEST,
-                                           FOREST_TEMPLE_GS_RAISED_ISLAND_COURTYARD,
-                                           FOREST_TEMPLE_GS_FIRST_ROOM,
-                                           FOREST_TEMPLE_GS_LEVEL_ISLAND_COURTYARD,
-                                           FOREST_TEMPLE_GS_LOBBY,
-                                           FOREST_TEMPLE_GS_BASEMENT,
-                                       },
-                                       {
-                                           // MQ Locations
-                                           FOREST_TEMPLE_MQ_FIRST_ROOM_CHEST,
-                                           FOREST_TEMPLE_MQ_WOLFOS_CHEST,
-                                           FOREST_TEMPLE_MQ_BOW_CHEST,
-                                           FOREST_TEMPLE_MQ_RAISED_ISLAND_COURTYARD_LOWER_CHEST,
-                                           FOREST_TEMPLE_MQ_RAISED_ISLAND_COURTYARD_UPPER_CHEST,
-                                           FOREST_TEMPLE_MQ_WELL_CHEST,
-                                           FOREST_TEMPLE_MQ_MAP_CHEST,
-                                           FOREST_TEMPLE_MQ_COMPASS_CHEST,
-                                           FOREST_TEMPLE_MQ_FALLING_CEILING_ROOM_CHEST,
-                                           FOREST_TEMPLE_MQ_BASEMENT_CHEST,
-                                           FOREST_TEMPLE_MQ_REDEAD_CHEST,
-                                           FOREST_TEMPLE_MQ_BOSS_KEY_CHEST,
-                                           FOREST_TEMPLE_MQ_GS_FIRST_HALLWAY,
-                                           FOREST_TEMPLE_MQ_GS_BLOCK_PUSH_ROOM,
-                                           FOREST_TEMPLE_MQ_GS_RAISED_ISLAND_COURTYARD,
-                                           FOREST_TEMPLE_MQ_GS_LEVEL_ISLAND_COURTYARD,
-                                           FOREST_TEMPLE_MQ_GS_WELL,
-                                       },
-                                       {
-                                           // Shared Locations
-                                           FOREST_TEMPLE_PHANTOM_GANON_HEART,
-                                           PHANTOM_GANON,
-                                       });
+DungeonInfo ForestTemple =
+    DungeonInfo("Forest Temple", FOREST_TEMPLE_MAP, FOREST_TEMPLE_COMPASS, FOREST_TEMPLE_SMALL_KEY,
+                FOREST_TEMPLE_KEY_RING, FOREST_TEMPLE_BOSS_KEY, FOREST_KEY_COUNT, FOREST_MQ_KEY_COUNT,
+                {
+                    // Vanilla Locations
+                    FOREST_TEMPLE_FIRST_ROOM_CHEST,
+                    FOREST_TEMPLE_FIRST_STALFOS_CHEST,
+                    FOREST_TEMPLE_RAISED_ISLAND_COURTYARD_CHEST,
+                    FOREST_TEMPLE_MAP_CHEST,
+                    FOREST_TEMPLE_WELL_CHEST,
+                    FOREST_TEMPLE_FALLING_CEILING_ROOM_CHEST,
+                    FOREST_TEMPLE_EYE_SWITCH_CHEST,
+                    FOREST_TEMPLE_BOSS_KEY_CHEST,
+                    FOREST_TEMPLE_FLOORMASTER_CHEST,
+                    FOREST_TEMPLE_BOW_CHEST,
+                    FOREST_TEMPLE_RED_POE_CHEST,
+                    FOREST_TEMPLE_BLUE_POE_CHEST,
+                    FOREST_TEMPLE_BASEMENT_CHEST,
+                    FOREST_TEMPLE_GS_RAISED_ISLAND_COURTYARD,
+                    FOREST_TEMPLE_GS_FIRST_ROOM,
+                    FOREST_TEMPLE_GS_LEVEL_ISLAND_COURTYARD,
+                    FOREST_TEMPLE_GS_LOBBY,
+                    FOREST_TEMPLE_GS_BASEMENT,
+                },
+                {
+                    // MQ Locations
+                    FOREST_TEMPLE_MQ_FIRST_ROOM_CHEST,
+                    FOREST_TEMPLE_MQ_WOLFOS_CHEST,
+                    FOREST_TEMPLE_MQ_BOW_CHEST,
+                    FOREST_TEMPLE_MQ_RAISED_ISLAND_COURTYARD_LOWER_CHEST,
+                    FOREST_TEMPLE_MQ_RAISED_ISLAND_COURTYARD_UPPER_CHEST,
+                    FOREST_TEMPLE_MQ_WELL_CHEST,
+                    FOREST_TEMPLE_MQ_MAP_CHEST,
+                    FOREST_TEMPLE_MQ_COMPASS_CHEST,
+                    FOREST_TEMPLE_MQ_FALLING_CEILING_ROOM_CHEST,
+                    FOREST_TEMPLE_MQ_BASEMENT_CHEST,
+                    FOREST_TEMPLE_MQ_REDEAD_CHEST,
+                    FOREST_TEMPLE_MQ_BOSS_KEY_CHEST,
+                    FOREST_TEMPLE_MQ_GS_FIRST_HALLWAY,
+                    FOREST_TEMPLE_MQ_GS_BLOCK_PUSH_ROOM,
+                    FOREST_TEMPLE_MQ_GS_RAISED_ISLAND_COURTYARD,
+                    FOREST_TEMPLE_MQ_GS_LEVEL_ISLAND_COURTYARD,
+                    FOREST_TEMPLE_MQ_GS_WELL,
+                },
+                {
+                    // Shared Locations
+                    FOREST_TEMPLE_PHANTOM_GANON_HEART,
+                    PHANTOM_GANON,
+                });
 
 DungeonInfo FireTemple = DungeonInfo("Fire Temple", FIRE_TEMPLE_MAP, FIRE_TEMPLE_COMPASS, FIRE_TEMPLE_SMALL_KEY,
-                                     FIRE_TEMPLE_KEY_RING, FIRE_TEMPLE_BOSS_KEY, 8, 5,
+                                     FIRE_TEMPLE_KEY_RING, FIRE_TEMPLE_BOSS_KEY, FIRE_KEY_COUNT, FIRE_MQ_KEY_COUNT,
                                      {
                                          // Vanilla Locations
                                          FIRE_TEMPLE_NEAR_BOSS_CHEST,
@@ -318,7 +320,7 @@ DungeonInfo FireTemple = DungeonInfo("Fire Temple", FIRE_TEMPLE_MAP, FIRE_TEMPLE
                                      });
 
 DungeonInfo WaterTemple = DungeonInfo("Water Temple", WATER_TEMPLE_MAP, WATER_TEMPLE_COMPASS, WATER_TEMPLE_SMALL_KEY,
-                                      WATER_TEMPLE_KEY_RING, WATER_TEMPLE_BOSS_KEY, 6, 2,
+                                      WATER_TEMPLE_KEY_RING, WATER_TEMPLE_BOSS_KEY, WATER_KEY_COUNT, WATER_MQ_KEY_COUNT,
                                       {
                                           // Vanilla Locations
                                           WATER_TEMPLE_MAP_CHEST,
@@ -357,164 +359,167 @@ DungeonInfo WaterTemple = DungeonInfo("Water Temple", WATER_TEMPLE_MAP, WATER_TE
                                           MORPHA,
                                       });
 
-DungeonInfo SpiritTemple = DungeonInfo("Spirit Temple", SPIRIT_TEMPLE_MAP, SPIRIT_TEMPLE_COMPASS,
-                                       SPIRIT_TEMPLE_SMALL_KEY, SPIRIT_TEMPLE_KEY_RING, SPIRIT_TEMPLE_BOSS_KEY, 5, 7,
-                                       {
-                                           // Vanilla Locations
-                                           SPIRIT_TEMPLE_CHILD_BRIDGE_CHEST,
-                                           SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST,
-                                           SPIRIT_TEMPLE_COMPASS_CHEST,
-                                           SPIRIT_TEMPLE_EARLY_ADULT_RIGHT_CHEST,
-                                           SPIRIT_TEMPLE_FIRST_MIRROR_LEFT_CHEST,
-                                           SPIRIT_TEMPLE_FIRST_MIRROR_RIGHT_CHEST,
-                                           SPIRIT_TEMPLE_MAP_CHEST,
-                                           SPIRIT_TEMPLE_CHILD_CLIMB_NORTH_CHEST,
-                                           SPIRIT_TEMPLE_CHILD_CLIMB_EAST_CHEST,
-                                           SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST,
-                                           SPIRIT_TEMPLE_STATUE_ROOM_HAND_CHEST,
-                                           SPIRIT_TEMPLE_STATUE_ROOM_NORTHEAST_CHEST,
-                                           SPIRIT_TEMPLE_NEAR_FOUR_ARMOS_CHEST,
-                                           SPIRIT_TEMPLE_HALLWAY_LEFT_INVISIBLE_CHEST,
-                                           SPIRIT_TEMPLE_HALLWAY_RIGHT_INVISIBLE_CHEST,
-                                           SPIRIT_TEMPLE_BOSS_KEY_CHEST,
-                                           SPIRIT_TEMPLE_TOPMOST_CHEST,
-                                           SPIRIT_TEMPLE_GS_HALL_AFTER_SUN_BLOCK_ROOM,
-                                           SPIRIT_TEMPLE_GS_BOULDER_ROOM,
-                                           SPIRIT_TEMPLE_GS_LOBBY,
-                                           SPIRIT_TEMPLE_GS_SUN_ON_FLOOR_ROOM,
-                                           SPIRIT_TEMPLE_GS_METAL_FENCE,
-                                       },
-                                       {
-                                           // MQ Locations
-                                           SPIRIT_TEMPLE_MQ_ENTRANCE_FRONT_LEFT_CHEST,
-                                           SPIRIT_TEMPLE_MQ_ENTRANCE_BACK_RIGHT_CHEST,
-                                           SPIRIT_TEMPLE_MQ_ENTRANCE_FRONT_RIGHT_CHEST,
-                                           SPIRIT_TEMPLE_MQ_ENTRANCE_BACK_LEFT_CHEST,
-                                           SPIRIT_TEMPLE_MQ_CHILD_HAMMER_SWITCH_CHEST,
-                                           SPIRIT_TEMPLE_MQ_MAP_CHEST,
-                                           SPIRIT_TEMPLE_MQ_MAP_ROOM_ENEMY_CHEST,
-                                           SPIRIT_TEMPLE_MQ_CHILD_CLIMB_NORTH_CHEST,
-                                           SPIRIT_TEMPLE_MQ_CHILD_CLIMB_SOUTH_CHEST,
-                                           SPIRIT_TEMPLE_MQ_COMPASS_CHEST,
-                                           SPIRIT_TEMPLE_MQ_STATUE_ROOM_LULLABY_CHEST,
-                                           SPIRIT_TEMPLE_MQ_STATUE_ROOM_INVISIBLE_CHEST,
-                                           SPIRIT_TEMPLE_MQ_SILVER_BLOCK_HALLWAY_CHEST,
-                                           SPIRIT_TEMPLE_MQ_SUN_BLOCK_ROOM_CHEST,
-                                           SPIRIT_TEMPLE_MQ_SYMPHONY_ROOM_CHEST,
-                                           SPIRIT_TEMPLE_MQ_LEEVER_ROOM_CHEST,
-                                           SPIRIT_TEMPLE_MQ_BEAMOS_ROOM_CHEST,
-                                           SPIRIT_TEMPLE_MQ_CHEST_SWITCH_CHEST,
-                                           SPIRIT_TEMPLE_MQ_BOSS_KEY_CHEST,
-                                           SPIRIT_TEMPLE_MQ_MIRROR_PUZZLE_INVISIBLE_CHEST,
-                                           SPIRIT_TEMPLE_MQ_GS_SYMPHONY_ROOM,
-                                           SPIRIT_TEMPLE_MQ_GS_LEEVER_ROOM,
-                                           SPIRIT_TEMPLE_MQ_GS_NINE_THRONES_ROOM_WEST,
-                                           SPIRIT_TEMPLE_MQ_GS_NINE_THRONES_ROOM_NORTH,
-                                           SPIRIT_TEMPLE_MQ_GS_SUN_BLOCK_ROOM,
-                                       },
-                                       {
-                                           // Shared Locations
-                                           SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST,
-                                           SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST,
-                                           SPIRIT_TEMPLE_TWINROVA_HEART,
-                                           TWINROVA,
-                                       });
+DungeonInfo SpiritTemple =
+    DungeonInfo("Spirit Temple", SPIRIT_TEMPLE_MAP, SPIRIT_TEMPLE_COMPASS, SPIRIT_TEMPLE_SMALL_KEY,
+                SPIRIT_TEMPLE_KEY_RING, SPIRIT_TEMPLE_BOSS_KEY, SPIRIT_KEY_COUNT, SPIRIT_MQ_KEY_COUNT,
+                {
+                    // Vanilla Locations
+                    SPIRIT_TEMPLE_CHILD_BRIDGE_CHEST,
+                    SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST,
+                    SPIRIT_TEMPLE_COMPASS_CHEST,
+                    SPIRIT_TEMPLE_EARLY_ADULT_RIGHT_CHEST,
+                    SPIRIT_TEMPLE_FIRST_MIRROR_LEFT_CHEST,
+                    SPIRIT_TEMPLE_FIRST_MIRROR_RIGHT_CHEST,
+                    SPIRIT_TEMPLE_MAP_CHEST,
+                    SPIRIT_TEMPLE_CHILD_CLIMB_NORTH_CHEST,
+                    SPIRIT_TEMPLE_CHILD_CLIMB_EAST_CHEST,
+                    SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST,
+                    SPIRIT_TEMPLE_STATUE_ROOM_HAND_CHEST,
+                    SPIRIT_TEMPLE_STATUE_ROOM_NORTHEAST_CHEST,
+                    SPIRIT_TEMPLE_NEAR_FOUR_ARMOS_CHEST,
+                    SPIRIT_TEMPLE_HALLWAY_LEFT_INVISIBLE_CHEST,
+                    SPIRIT_TEMPLE_HALLWAY_RIGHT_INVISIBLE_CHEST,
+                    SPIRIT_TEMPLE_BOSS_KEY_CHEST,
+                    SPIRIT_TEMPLE_TOPMOST_CHEST,
+                    SPIRIT_TEMPLE_GS_HALL_AFTER_SUN_BLOCK_ROOM,
+                    SPIRIT_TEMPLE_GS_BOULDER_ROOM,
+                    SPIRIT_TEMPLE_GS_LOBBY,
+                    SPIRIT_TEMPLE_GS_SUN_ON_FLOOR_ROOM,
+                    SPIRIT_TEMPLE_GS_METAL_FENCE,
+                },
+                {
+                    // MQ Locations
+                    SPIRIT_TEMPLE_MQ_ENTRANCE_FRONT_LEFT_CHEST,
+                    SPIRIT_TEMPLE_MQ_ENTRANCE_BACK_RIGHT_CHEST,
+                    SPIRIT_TEMPLE_MQ_ENTRANCE_FRONT_RIGHT_CHEST,
+                    SPIRIT_TEMPLE_MQ_ENTRANCE_BACK_LEFT_CHEST,
+                    SPIRIT_TEMPLE_MQ_CHILD_HAMMER_SWITCH_CHEST,
+                    SPIRIT_TEMPLE_MQ_MAP_CHEST,
+                    SPIRIT_TEMPLE_MQ_MAP_ROOM_ENEMY_CHEST,
+                    SPIRIT_TEMPLE_MQ_CHILD_CLIMB_NORTH_CHEST,
+                    SPIRIT_TEMPLE_MQ_CHILD_CLIMB_SOUTH_CHEST,
+                    SPIRIT_TEMPLE_MQ_COMPASS_CHEST,
+                    SPIRIT_TEMPLE_MQ_STATUE_ROOM_LULLABY_CHEST,
+                    SPIRIT_TEMPLE_MQ_STATUE_ROOM_INVISIBLE_CHEST,
+                    SPIRIT_TEMPLE_MQ_SILVER_BLOCK_HALLWAY_CHEST,
+                    SPIRIT_TEMPLE_MQ_SUN_BLOCK_ROOM_CHEST,
+                    SPIRIT_TEMPLE_MQ_SYMPHONY_ROOM_CHEST,
+                    SPIRIT_TEMPLE_MQ_LEEVER_ROOM_CHEST,
+                    SPIRIT_TEMPLE_MQ_BEAMOS_ROOM_CHEST,
+                    SPIRIT_TEMPLE_MQ_CHEST_SWITCH_CHEST,
+                    SPIRIT_TEMPLE_MQ_BOSS_KEY_CHEST,
+                    SPIRIT_TEMPLE_MQ_MIRROR_PUZZLE_INVISIBLE_CHEST,
+                    SPIRIT_TEMPLE_MQ_GS_SYMPHONY_ROOM,
+                    SPIRIT_TEMPLE_MQ_GS_LEEVER_ROOM,
+                    SPIRIT_TEMPLE_MQ_GS_NINE_THRONES_ROOM_WEST,
+                    SPIRIT_TEMPLE_MQ_GS_NINE_THRONES_ROOM_NORTH,
+                    SPIRIT_TEMPLE_MQ_GS_SUN_BLOCK_ROOM,
+                },
+                {
+                    // Shared Locations
+                    SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST,
+                    SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST,
+                    SPIRIT_TEMPLE_TWINROVA_HEART,
+                    TWINROVA,
+                });
 
-DungeonInfo ShadowTemple = DungeonInfo("Shadow Temple", SHADOW_TEMPLE_MAP, SHADOW_TEMPLE_COMPASS,
-                                       SHADOW_TEMPLE_SMALL_KEY, SHADOW_TEMPLE_KEY_RING, SHADOW_TEMPLE_BOSS_KEY, 5, 6,
-                                       {
-                                           // Vanilla Locations
-                                           SHADOW_TEMPLE_MAP_CHEST,
-                                           SHADOW_TEMPLE_HOVER_BOOTS_CHEST,
-                                           SHADOW_TEMPLE_COMPASS_CHEST,
-                                           SHADOW_TEMPLE_EARLY_SILVER_RUPEE_CHEST,
-                                           SHADOW_TEMPLE_INVISIBLE_BLADES_VISIBLE_CHEST,
-                                           SHADOW_TEMPLE_INVISIBLE_BLADES_INVISIBLE_CHEST,
-                                           SHADOW_TEMPLE_FALLING_SPIKES_LOWER_CHEST,
-                                           SHADOW_TEMPLE_FALLING_SPIKES_UPPER_CHEST,
-                                           SHADOW_TEMPLE_FALLING_SPIKES_SWITCH_CHEST,
-                                           SHADOW_TEMPLE_INVISIBLE_SPIKES_CHEST,
-                                           SHADOW_TEMPLE_WIND_HINT_CHEST,
-                                           SHADOW_TEMPLE_AFTER_WIND_ENEMY_CHEST,
-                                           SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST,
-                                           SHADOW_TEMPLE_SPIKE_WALLS_LEFT_CHEST,
-                                           SHADOW_TEMPLE_BOSS_KEY_CHEST,
-                                           SHADOW_TEMPLE_INVISIBLE_FLOORMASTER_CHEST,
-                                           SHADOW_TEMPLE_FREESTANDING_KEY,
-                                           SHADOW_TEMPLE_GS_SINGLE_GIANT_POT,
-                                           SHADOW_TEMPLE_GS_FALLING_SPIKES_ROOM,
-                                           SHADOW_TEMPLE_GS_TRIPLE_GIANT_POT,
-                                           SHADOW_TEMPLE_GS_LIKE_LIKE_ROOM,
-                                           SHADOW_TEMPLE_GS_NEAR_SHIP,
-                                       },
-                                       {
-                                           // MQ Locations
-                                           SHADOW_TEMPLE_MQ_COMPASS_CHEST,
-                                           SHADOW_TEMPLE_MQ_HOVER_BOOTS_CHEST,
-                                           SHADOW_TEMPLE_MQ_EARLY_GIBDOS_CHEST,
-                                           SHADOW_TEMPLE_MQ_MAP_CHEST,
-                                           SHADOW_TEMPLE_MQ_BEAMOS_SILVER_RUPEES_CHEST,
-                                           SHADOW_TEMPLE_MQ_FALLING_SPIKES_SWITCH_CHEST,
-                                           SHADOW_TEMPLE_MQ_FALLING_SPIKES_LOWER_CHEST,
-                                           SHADOW_TEMPLE_MQ_FALLING_SPIKES_UPPER_CHEST,
-                                           SHADOW_TEMPLE_MQ_INVISIBLE_SPIKES_CHEST,
-                                           SHADOW_TEMPLE_MQ_BOSS_KEY_CHEST,
-                                           SHADOW_TEMPLE_MQ_SPIKE_WALLS_LEFT_CHEST,
-                                           SHADOW_TEMPLE_MQ_STALFOS_ROOM_CHEST,
-                                           SHADOW_TEMPLE_MQ_INVISIBLE_BLADES_INVISIBLE_CHEST,
-                                           SHADOW_TEMPLE_MQ_INVISIBLE_BLADES_VISIBLE_CHEST,
-                                           SHADOW_TEMPLE_MQ_BOMB_FLOWER_CHEST,
-                                           SHADOW_TEMPLE_MQ_WIND_HINT_CHEST,
-                                           SHADOW_TEMPLE_MQ_AFTER_WIND_HIDDEN_CHEST,
-                                           SHADOW_TEMPLE_MQ_AFTER_WIND_ENEMY_CHEST,
-                                           SHADOW_TEMPLE_MQ_NEAR_SHIP_INVISIBLE_CHEST,
-                                           SHADOW_TEMPLE_MQ_FREESTANDING_KEY,
-                                           SHADOW_TEMPLE_MQ_GS_FALLING_SPIKES_ROOM,
-                                           SHADOW_TEMPLE_MQ_GS_WIND_HINT_ROOM,
-                                           SHADOW_TEMPLE_MQ_GS_AFTER_WIND,
-                                           SHADOW_TEMPLE_MQ_GS_AFTER_SHIP,
-                                           SHADOW_TEMPLE_MQ_GS_NEAR_BOSS,
-                                       },
-                                       {
-                                           // Shared Locations
-                                           SHADOW_TEMPLE_BONGO_BONGO_HEART,
-                                           BONGO_BONGO,
-                                       });
+DungeonInfo ShadowTemple =
+    DungeonInfo("Shadow Temple", SHADOW_TEMPLE_MAP, SHADOW_TEMPLE_COMPASS, SHADOW_TEMPLE_SMALL_KEY,
+                SHADOW_TEMPLE_KEY_RING, SHADOW_TEMPLE_BOSS_KEY, SHADOW_KEY_COUNT, SHADOW_MQ_KEY_COUNT,
+                {
+                    // Vanilla Locations
+                    SHADOW_TEMPLE_MAP_CHEST,
+                    SHADOW_TEMPLE_HOVER_BOOTS_CHEST,
+                    SHADOW_TEMPLE_COMPASS_CHEST,
+                    SHADOW_TEMPLE_EARLY_SILVER_RUPEE_CHEST,
+                    SHADOW_TEMPLE_INVISIBLE_BLADES_VISIBLE_CHEST,
+                    SHADOW_TEMPLE_INVISIBLE_BLADES_INVISIBLE_CHEST,
+                    SHADOW_TEMPLE_FALLING_SPIKES_LOWER_CHEST,
+                    SHADOW_TEMPLE_FALLING_SPIKES_UPPER_CHEST,
+                    SHADOW_TEMPLE_FALLING_SPIKES_SWITCH_CHEST,
+                    SHADOW_TEMPLE_INVISIBLE_SPIKES_CHEST,
+                    SHADOW_TEMPLE_WIND_HINT_CHEST,
+                    SHADOW_TEMPLE_AFTER_WIND_ENEMY_CHEST,
+                    SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST,
+                    SHADOW_TEMPLE_SPIKE_WALLS_LEFT_CHEST,
+                    SHADOW_TEMPLE_BOSS_KEY_CHEST,
+                    SHADOW_TEMPLE_INVISIBLE_FLOORMASTER_CHEST,
+                    SHADOW_TEMPLE_FREESTANDING_KEY,
+                    SHADOW_TEMPLE_GS_SINGLE_GIANT_POT,
+                    SHADOW_TEMPLE_GS_FALLING_SPIKES_ROOM,
+                    SHADOW_TEMPLE_GS_TRIPLE_GIANT_POT,
+                    SHADOW_TEMPLE_GS_LIKE_LIKE_ROOM,
+                    SHADOW_TEMPLE_GS_NEAR_SHIP,
+                },
+                {
+                    // MQ Locations
+                    SHADOW_TEMPLE_MQ_COMPASS_CHEST,
+                    SHADOW_TEMPLE_MQ_HOVER_BOOTS_CHEST,
+                    SHADOW_TEMPLE_MQ_EARLY_GIBDOS_CHEST,
+                    SHADOW_TEMPLE_MQ_MAP_CHEST,
+                    SHADOW_TEMPLE_MQ_BEAMOS_SILVER_RUPEES_CHEST,
+                    SHADOW_TEMPLE_MQ_FALLING_SPIKES_SWITCH_CHEST,
+                    SHADOW_TEMPLE_MQ_FALLING_SPIKES_LOWER_CHEST,
+                    SHADOW_TEMPLE_MQ_FALLING_SPIKES_UPPER_CHEST,
+                    SHADOW_TEMPLE_MQ_INVISIBLE_SPIKES_CHEST,
+                    SHADOW_TEMPLE_MQ_BOSS_KEY_CHEST,
+                    SHADOW_TEMPLE_MQ_SPIKE_WALLS_LEFT_CHEST,
+                    SHADOW_TEMPLE_MQ_STALFOS_ROOM_CHEST,
+                    SHADOW_TEMPLE_MQ_INVISIBLE_BLADES_INVISIBLE_CHEST,
+                    SHADOW_TEMPLE_MQ_INVISIBLE_BLADES_VISIBLE_CHEST,
+                    SHADOW_TEMPLE_MQ_BOMB_FLOWER_CHEST,
+                    SHADOW_TEMPLE_MQ_WIND_HINT_CHEST,
+                    SHADOW_TEMPLE_MQ_AFTER_WIND_HIDDEN_CHEST,
+                    SHADOW_TEMPLE_MQ_AFTER_WIND_ENEMY_CHEST,
+                    SHADOW_TEMPLE_MQ_NEAR_SHIP_INVISIBLE_CHEST,
+                    SHADOW_TEMPLE_MQ_FREESTANDING_KEY,
+                    SHADOW_TEMPLE_MQ_GS_FALLING_SPIKES_ROOM,
+                    SHADOW_TEMPLE_MQ_GS_WIND_HINT_ROOM,
+                    SHADOW_TEMPLE_MQ_GS_AFTER_WIND,
+                    SHADOW_TEMPLE_MQ_GS_AFTER_SHIP,
+                    SHADOW_TEMPLE_MQ_GS_NEAR_BOSS,
+                },
+                {
+                    // Shared Locations
+                    SHADOW_TEMPLE_BONGO_BONGO_HEART,
+                    BONGO_BONGO,
+                });
 
-DungeonInfo BottomOfTheWell = DungeonInfo("Bottom of the Well", BOTTOM_OF_THE_WELL_MAP, BOTTOM_OF_THE_WELL_COMPASS,
-                                          BOTTOM_OF_THE_WELL_SMALL_KEY, BOTTOM_OF_THE_WELL_KEY_RING, NONE, 3, 2,
-                                          {
-                                              // Vanilla Locations
-                                              BOTTOM_OF_THE_WELL_FRONT_LEFT_FAKE_WALL_CHEST,
-                                              BOTTOM_OF_THE_WELL_FRONT_CENTER_BOMBABLE_CHEST,
-                                              BOTTOM_OF_THE_WELL_RIGHT_BOTTOM_FAKE_WALL_CHEST,
-                                              BOTTOM_OF_THE_WELL_COMPASS_CHEST,
-                                              BOTTOM_OF_THE_WELL_CENTER_SKULLTULA_CHEST,
-                                              BOTTOM_OF_THE_WELL_BACK_LEFT_BOMBABLE_CHEST,
-                                              BOTTOM_OF_THE_WELL_LENS_OF_TRUTH_CHEST,
-                                              BOTTOM_OF_THE_WELL_INVISIBLE_CHEST,
-                                              BOTTOM_OF_THE_WELL_UNDERWATER_FRONT_CHEST,
-                                              BOTTOM_OF_THE_WELL_UNDERWATER_LEFT_CHEST,
-                                              BOTTOM_OF_THE_WELL_MAP_CHEST,
-                                              BOTTOM_OF_THE_WELL_FIRE_KEESE_CHEST,
-                                              BOTTOM_OF_THE_WELL_LIKE_LIKE_CHEST,
-                                              BOTTOM_OF_THE_WELL_FREESTANDING_KEY,
-                                              BOTTOM_OF_THE_WELL_GS_LIKE_LIKE_CAGE,
-                                              BOTTOM_OF_THE_WELL_GS_EAST_INNER_ROOM,
-                                              BOTTOM_OF_THE_WELL_GS_WEST_INNER_ROOM,
-                                          },
-                                          {
-                                              // MQ Locations
-                                              BOTTOM_OF_THE_WELL_MQ_MAP_CHEST,
-                                              BOTTOM_OF_THE_WELL_MQ_LENS_OF_TRUTH_CHEST,
-                                              BOTTOM_OF_THE_WELL_MQ_COMPASS_CHEST,
-                                              BOTTOM_OF_THE_WELL_MQ_DEAD_HAND_FREESTANDING_KEY,
-                                              BOTTOM_OF_THE_WELL_MQ_EAST_INNER_ROOM_FREESTANDING_KEY,
-                                              BOTTOM_OF_THE_WELL_MQ_GS_BASEMENT,
-                                              BOTTOM_OF_THE_WELL_MQ_GS_COFFIN_ROOM,
-                                              BOTTOM_OF_THE_WELL_MQ_GS_WEST_INNER_ROOM,
-                                          },
-                                          {});
+DungeonInfo BottomOfTheWell =
+    DungeonInfo("Bottom of the Well", BOTTOM_OF_THE_WELL_MAP, BOTTOM_OF_THE_WELL_COMPASS, BOTTOM_OF_THE_WELL_SMALL_KEY,
+                BOTTOM_OF_THE_WELL_KEY_RING, NONE, BOTW_KEY_COUNT, BOTW_MQ_KEY_COUNT,
+                {
+                    // Vanilla Locations
+                    BOTTOM_OF_THE_WELL_FRONT_LEFT_FAKE_WALL_CHEST,
+                    BOTTOM_OF_THE_WELL_FRONT_CENTER_BOMBABLE_CHEST,
+                    BOTTOM_OF_THE_WELL_RIGHT_BOTTOM_FAKE_WALL_CHEST,
+                    BOTTOM_OF_THE_WELL_COMPASS_CHEST,
+                    BOTTOM_OF_THE_WELL_CENTER_SKULLTULA_CHEST,
+                    BOTTOM_OF_THE_WELL_BACK_LEFT_BOMBABLE_CHEST,
+                    BOTTOM_OF_THE_WELL_LENS_OF_TRUTH_CHEST,
+                    BOTTOM_OF_THE_WELL_INVISIBLE_CHEST,
+                    BOTTOM_OF_THE_WELL_UNDERWATER_FRONT_CHEST,
+                    BOTTOM_OF_THE_WELL_UNDERWATER_LEFT_CHEST,
+                    BOTTOM_OF_THE_WELL_MAP_CHEST,
+                    BOTTOM_OF_THE_WELL_FIRE_KEESE_CHEST,
+                    BOTTOM_OF_THE_WELL_LIKE_LIKE_CHEST,
+                    BOTTOM_OF_THE_WELL_FREESTANDING_KEY,
+                    BOTTOM_OF_THE_WELL_GS_LIKE_LIKE_CAGE,
+                    BOTTOM_OF_THE_WELL_GS_EAST_INNER_ROOM,
+                    BOTTOM_OF_THE_WELL_GS_WEST_INNER_ROOM,
+                },
+                {
+                    // MQ Locations
+                    BOTTOM_OF_THE_WELL_MQ_MAP_CHEST,
+                    BOTTOM_OF_THE_WELL_MQ_LENS_OF_TRUTH_CHEST,
+                    BOTTOM_OF_THE_WELL_MQ_COMPASS_CHEST,
+                    BOTTOM_OF_THE_WELL_MQ_DEAD_HAND_FREESTANDING_KEY,
+                    BOTTOM_OF_THE_WELL_MQ_EAST_INNER_ROOM_FREESTANDING_KEY,
+                    BOTTOM_OF_THE_WELL_MQ_GS_BASEMENT,
+                    BOTTOM_OF_THE_WELL_MQ_GS_COFFIN_ROOM,
+                    BOTTOM_OF_THE_WELL_MQ_GS_WEST_INNER_ROOM,
+                },
+                {});
 
 DungeonInfo IceCavern = DungeonInfo("Ice Cavern", ICE_CAVERN_MAP, ICE_CAVERN_COMPASS, NONE, NONE, NONE, 0, 0,
                                     {
@@ -544,7 +549,7 @@ DungeonInfo IceCavern = DungeonInfo("Ice Cavern", ICE_CAVERN_MAP, ICE_CAVERN_COM
 
 DungeonInfo GerudoTrainingGrounds =
     DungeonInfo("Gerudo Training Grounds", NONE, NONE, GERUDO_TRAINING_GROUNDS_SMALL_KEY,
-                GERUDO_TRAINING_GROUNDS_KEY_RING, NONE, 9, 3,
+                GERUDO_TRAINING_GROUNDS_KEY_RING, NONE, GTG_KEY_COUNT, GTG_MQ_KEY_COUNT,
                 {
                     // Vanilla Locations
                     GERUDO_TRAINING_GROUNDS_LOBBY_LEFT_CHEST,
@@ -593,7 +598,7 @@ DungeonInfo GerudoTrainingGrounds =
                 {});
 
 DungeonInfo GanonsCastle = DungeonInfo("Ganon's Castle", NONE, NONE, GANONS_CASTLE_SMALL_KEY, GANONS_CASTLE_KEY_RING,
-                                       GANONS_CASTLE_BOSS_KEY, 2, 3,
+                                       GANONS_CASTLE_BOSS_KEY, GANON_KEY_COUNT, GANON_MQ_KEY_COUNT,
                                        {
                                            // Vanilla Locations
                                            GANONS_CASTLE_FOREST_TRIAL_CHEST,
