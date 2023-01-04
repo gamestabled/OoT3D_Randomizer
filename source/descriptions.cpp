@@ -877,6 +877,14 @@ string_view startingHealthDesc        = "If you start with 0 hearts, Link will b
                                         "at least one heart.";                             //
                                                                                            //
 /*------------------------------                                                           //
+|      STARTING BUNNY HOOD     |                                                           //
+------------------------------*/                                                           //
+string_view startingBunnyHoodDesc     = "NOTE: Staring with the bunny hood is experimental."
+                                        "Currently the bunny hood will get overwriten when "
+                                        "you obtain the Weird Egg and you will need to get "
+                                        "it again afterwards.";                            //
+                                                                                           //
+/*------------------------------                                                           //
 |          ITEM POOL           |                                                           //
 ------------------------------*/                                                           //
 string_view itemPoolPlentiful         = "Extra major items are added to the pool.";        //

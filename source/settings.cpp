@@ -504,7 +504,7 @@ Option StartingBottle2          = Option::U8  ("Bottle 2",             bottleOpt
 Option StartingBottle3          = Option::U8  ("Bottle 3",             bottleOptions,                                                                   {""});
 Option StartingBottle4          = Option::U8  ("Bottle 4",             bottleOptions,                                                                   {""});
 Option StartingRutoBottle       = Option::U8  ("Ruto's Letter",        {"Off",             "On"},                                                       {""});
-Option StartingChildTrade       = Option::U8  ("Bunny Hood",           {"Off",             "On"},                                                       {""});
+Option StartingChildTrade       = Option::U8  ("Bunny Hood",           {"Off",             "On"},                                                       {startingBunnyHoodDesc});
 std::vector<Option *> startingItemsOptions = {
     &StartingStickCapacity,
     &StartingNutCapacity,
