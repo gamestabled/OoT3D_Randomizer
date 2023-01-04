@@ -29,7 +29,7 @@ jobs:
           echo "last_nightly=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
       - name: Generate changelog
         id: changelog
-        uses: metcalfc/changelog-generator@v3.0.0
+        uses: metcalfc/changelog-generator@v4.0.1
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
           base-ref: ${{ env.last_nightly }}
@@ -42,7 +42,7 @@ jobs:
     name: Build CIA and 3DSX Files
     runs-on: ubuntu-latest
     container:
-      image: phlex/oot3dr-build-tools
+      image: ghcr.io/z3dr/randotools:latest
 
     steps:
       - name: Checkout Project
@@ -59,7 +59,7 @@ jobs:
 
       - if: ${{ github.event.inputs.build_type == 'Nightly' }}
         name: Create Pre-release
-        uses: ncipollo/release-action@v1.8.3
+        uses: ncipollo/release-action@v1.12.0
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
@@ -82,7 +82,7 @@ jobs:
 
       - if: ${{ github.event.inputs.build_type == 'Release' }}
         name: Create Release
-        uses: ncipollo/release-action@v1.8.3
+        uses: ncipollo/release-action@v1.12.0
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
@@ -432,7 +432,7 @@ jobs:
           done
 
       - name: Deploy to Gist
-        uses: exuanbo/actions-deploy-gist@v1
+        uses: exuanbo/actions-deploy-gist@v1.1.4
         with:
           token: ${{ secrets.TOKEN }}
           gist_id: fa5ea9b42b99377c63bede1cf8ddfdad
