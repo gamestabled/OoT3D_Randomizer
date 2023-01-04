@@ -111,7 +111,7 @@ void GenerateStartingInventory() {
         AddItemToInventory(EMPTY_BOTTLE, 1);
     }
     AddItemToInventory(RUTOS_LETTER, StartingRutoBottle.Value<u8>());
-    //AddItemToInventory(BUNNY_HOOD, StartingChildTrade.Value<u8>());
+    // AddItemToInventory(BUNNY_HOOD, StartingChildTrade.Value<u8>());
 
     AddItemToInventory(PROGRESSIVE_OCARINA, StartingOcarina.Value<u8>());
     AddItemToInventory(ZELDAS_LULLABY, StartingZeldasLullaby.Value<u8>());
