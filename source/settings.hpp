@@ -509,6 +509,7 @@ extern Option StartingBottle2;
 extern Option StartingBottle3;
 extern Option StartingBottle4;
 extern Option StartingRutoBottle;
+extern Option StartingChildTrade;
 extern Option StartingOcarina;
 extern Option StartingZeldasLullaby;
 extern Option StartingEponasSong;

@@ -504,6 +504,7 @@ Option StartingBottle2          = Option::U8  ("Bottle 2",             bottleOpt
 Option StartingBottle3          = Option::U8  ("Bottle 3",             bottleOptions,                                                                   {""});
 Option StartingBottle4          = Option::U8  ("Bottle 4",             bottleOptions,                                                                   {""});
 Option StartingRutoBottle       = Option::U8  ("Ruto's Letter",        {"Off",             "On"},                                                       {""});
+Option StartingChildTrade       = Option::U8  ("Bunny Hood",           {"Off",             "On"},                                                       {""});
 std::vector<Option *> startingItemsOptions = {
     &StartingStickCapacity,
     &StartingNutCapacity,
@@ -530,6 +531,7 @@ std::vector<Option *> startingItemsOptions = {
     &StartingBottle3,
     &StartingBottle4,
     &StartingRutoBottle,
+    &StartingChildTrade,
 };
 
 Option StartingZeldasLullaby    = Option::U8  ("Zelda's Lullaby",      {"Off",             "On"},                                                       {""});
@@ -1549,6 +1551,7 @@ SettingsContext FillContext() {
     ctx.startingBottle3       = StartingBottle3.Value<u8>();
     ctx.startingBottle4       = StartingBottle4.Value<u8>();
     ctx.startingRutoBottle    = StartingRutoBottle.Value<u8>();
+    ctx.startingChildTrade    = StartingChildTrade.Value<u8>();
     ctx.startingOcarina       = StartingOcarina.Value<u8>();
     ctx.startingKokiriSword   = StartingKokiriSword.Value<u8>();
     ctx.startingBiggoronSword = StartingBiggoronSword.Value<u8>();
