@@ -46,7 +46,7 @@ void DungeonInfo::PlaceVanillaMap() {
 
     auto dungeonLocations = GetDungeonLocations();
     auto mapLocation      = FilterFromPool(
-        dungeonLocations, [](const LocationKey loc) { return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
+             dungeonLocations, [](const LocationKey loc) { return Location(loc)->IsCategory(Category::cVanillaMap); })[0];
     PlaceItemInLocation(mapLocation, map);
 }
 
